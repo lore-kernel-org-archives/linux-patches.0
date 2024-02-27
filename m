@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4399C13B2B9;
-	Tue, 27 Feb 2024 13:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D8313B78A;
+	Tue, 27 Feb 2024 13:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042177; cv=none; b=NODOoqXckktttQxQGFVp61wZKUMgLdNgktAe4yjXnk+H6UHeBwkrVj4YJMKgLFiRE/2IQOjyBvy84IhZF9P2NQDfxkujtfg+WkCL2VzTNuLXIqTJ5pW+ryV09G8AxcWE2iF0bBlfbLBpxEvPBtO9ugLyN1lFZD+7qjn5oK4qOGY=
+	t=1709042179; cv=none; b=EZsNV/wS1Mfa56Rl1idPxu0q7PyAqMdWwaZZVExXo4zxQva6XfwmHnjo2R6riEISs6K4le5T4hgZrm08tQnohH5VJFBQWt/trCb7wTtwQUmp+deOxO4Yflyt2uuSN7eXwiHRFhOGr5RkWib3bpEZduU3lpXX7kf6VKTwfo/0pLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042177; c=relaxed/simple;
-	bh=gJS78PW3o4d4+MUuu/cL+NNLoogLybE5qEBweK76M78=;
+	s=arc-20240116; t=1709042179; c=relaxed/simple;
+	bh=3oCtFxkFqntxu1zboWLW4ImIv2R5+6azK5kaBj01V6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzwnbz06iJs+GPmIFQZG6kYsLE5ZzLweULr6so47qDzHo2pMRLQeugJPgRGvNEqAhhyp4WdOUBUu5ofOwqwUxZEPbHl5MDXXDWydrJaXrfJT3KR91bGNsubmm8rUuqzWxwxSx6jlG0WognNDSqnZzME1bdZj4tb0QnJpcdqyz4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVvFrVWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYv2/AqTxKD87hfFGNS1d8P+cuQhJYiAsgomKGXLibb4pBJ0XMEDqHWQ+Lh554h6Mq3bMYOU1dMUkjBj1hOqt8MLBR2BDyaUdGmAuxHVdWaq+SHtbMwq2XFm8wsQdw/VRfXLsd6qetkwcdwmpLUv9maZ7s3t5/XhFS1XrKU5+To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtUYGJ6h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVvFrVWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F58FC433C7;
-	Tue, 27 Feb 2024 13:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtUYGJ6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FC8C433F1;
+	Tue, 27 Feb 2024 13:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042176;
-	bh=gJS78PW3o4d4+MUuu/cL+NNLoogLybE5qEBweK76M78=;
+	s=korg; t=1709042179;
+	bh=3oCtFxkFqntxu1zboWLW4ImIv2R5+6azK5kaBj01V6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVvFrVWzt+SNkLk66koZ/R9X+pk3Li/LLSwL/E5eJEb3qWfhkWD9Que+7XOGw9peD
-	 QVmldWycoQCc7aI3rAanPuVhWimn8P77ZZP7t87oHAxSkP8B+VAbeLRmgF+CeooVbY
-	 S776mCOB1l08zKhvEHFv3jGFwQaCuhvH8YM1heo4=
+	b=GtUYGJ6hDmj9xQfYSGb2elSgprz9vo/wSAQYBM3JCpzB2AOKzv49lBiHukepKMi+W
+	 oBldwU1V94m7MgomK+zo9WoTpp9pzxU0MGKdlJha+5siw6iddPRTFIw+PWclUFW8pt
+	 GkWiarLh1DPYPCzLD1omjHfOtNZUfRwkdmx/6h7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	PeiChen Huang <peichen.huang@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 206/299] drm/amd/display: Avoid enum conversion warning
-Date: Tue, 27 Feb 2024 14:25:17 +0100
-Message-ID: <20240227131632.429653087@linuxfoundation.org>
+Subject: [PATCH 6.6 207/299] drm/amd/display: Fix buffer overflow in get_host_router_total_dp_tunnel_bw()
+Date: Tue, 27 Feb 2024 14:25:18 +0100
+Message-ID: <20240227131632.459948745@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -50,44 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit d7643fe6fb76edb1f2f1497bf5e8b8f4774b5129 upstream.
+commit 97cba232549b9fe7e491fb60a69cf93075015f29 upstream.
 
-Clang warns (or errors with CONFIG_WERROR=y) when performing arithmetic
-with different enumerated types, which is usually a bug:
+The error message buffer overflow 'dc->links' 12 <= 12 suggests that the
+code is trying to access an element of the dc->links array that is
+beyond its bounds. In C, arrays are zero-indexed, so an array with 12
+elements has valid indices from 0 to 11. Trying to access dc->links[12]
+would be an attempt to access the 13th element of a 12-element array,
+which is a buffer overflow.
 
-    drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:548:24: error: arithmetic between different enumeration types ('const enum dc_link_rate' and 'const enum dc_lane_count') [-Werror,-Wenum-enum-conversion]
-      548 |                         link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-          |                         ~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~
-    1 error generated.
+To fix this, ensure that the loop does not go beyond the last valid
+index when accessing dc->links[i + 1] by subtracting 1 from the loop
+condition.
 
-In this case, there is not a problem because the enumerated types are
-basically treated as '#define' values. Add an explicit cast to an
-integral type to silence the warning.
+This would ensure that i + 1 is always a valid index in the array.
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1976
-Fixes: 5f3bce13266e ("drm/amd/display: Request usb4 bw for mst streams")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:208 get_host_router_total_dp_tunnel_bw() error: buffer overflow 'dc->links' 12 <= 12
+
+Fixes: 59f1622a5f05 ("drm/amd/display: Add dpia display mode validation logic")
+Cc: PeiChen Huang <peichen.huang@amd.com>
+Cc: Aric Cyr <aric.cyr@amd.com>
+Cc: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
 +++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -544,8 +544,9 @@ int link_dp_dpia_get_dp_overhead_in_dp_t
- 		 */
- 		const struct dc_link_settings *link_cap =
- 			dc_link_get_link_cap(link);
--		uint32_t link_bw_in_kbps =
--			link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-+		uint32_t link_bw_in_kbps = (uint32_t)link_cap->link_rate *
-+					   (uint32_t)link_cap->lane_count *
-+					   LINK_RATE_REF_FREQ_IN_KHZ * 8;
- 		link_mst_overhead = (link_bw_in_kbps / 64) + ((link_bw_in_kbps % 64) ? 1 : 0);
- 	}
+@@ -196,7 +196,7 @@ static int get_host_router_total_dp_tunn
+ 	struct dc_link *link_dpia_primary, *link_dpia_secondary;
+ 	int total_bw = 0;
  
+-	for (uint8_t i = 0; i < MAX_PIPES * 2; ++i) {
++	for (uint8_t i = 0; i < (MAX_PIPES * 2) - 1; ++i) {
+ 
+ 		if (!dc->links[i] || dc->links[i]->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
+ 			continue;
 
 
