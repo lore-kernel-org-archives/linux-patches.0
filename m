@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FFA13B29B;
-	Tue, 27 Feb 2024 13:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADAA13B797;
+	Tue, 27 Feb 2024 13:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041923; cv=none; b=KpeKkJ4epYXAm2QvBcl7lbH9zIJhY8gf42zsp9z/0fDK7RXQixaRzaSPCh6OiKQbY9VQPaFIa1tvfUxwIFBjoul3f0EOMnFJE+2ffol3YwNgZmNVPmkSReaXu3WCv01b689TQUyM+DwhXgTS6kiux9Sqq6Gly6Oau+OMyHTLnmo=
+	t=1709041926; cv=none; b=Woa9mOelGCGZaTCMYJphRvNF1wgix2wrRJcS2HTGbnqbNYuOrqoc6DgmaGEScOCif48lzu4ya5co6kc9iBoLDH/4Y3q/uSwgVK2HksDCkd5ka1pKzumMlTN8cj5oIRQHtmwX+pOCqH2WYQDi6BBxWT0fXBurfg8Mu2cKm3zPjvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041923; c=relaxed/simple;
-	bh=WuZgNhYEutUfzvM+sm6RXj51q03hUbuF8hja8zgA6qw=;
+	s=arc-20240116; t=1709041926; c=relaxed/simple;
+	bh=d5DAqzYxdc2sD+cwmRkqXq2lsFLihmZGBnKPwTbEkE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBgrXu2f6x+3HaZVQDLtgXBISXNLQQ07Tb0LRa/8p1ojp7hxfhcQ1DAgV6o3sKYlhkKQLYbyyS71Yh9vz9jFLrkoolQCD+m/LXNRwyJzTgpM8XwjNaLJm9GV3jDvzkMTBnR3+B8jw2T9iVMQ36USf6ywfV8vKs8TNH3lh/uHHMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y76NP9cK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFy82n1wAOizwfVUvKnI12cWL6d1WDqsd2+zrD00HAjWyla8irfWHanc8GOQ4Uz+/4y1M+axBK32Zhj2kt5E4vKYFu062BwZg273aNNxQ5tTWRAqqAyrTfAj2qGivpbsTyaz2XnaHHPUNFfUeUnfgcYLce3QC/WE+V5Rh5eoZ6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gM7ysjwY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y76NP9cK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B8AC43390;
-	Tue, 27 Feb 2024 13:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gM7ysjwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CD0C43394;
+	Tue, 27 Feb 2024 13:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041923;
-	bh=WuZgNhYEutUfzvM+sm6RXj51q03hUbuF8hja8zgA6qw=;
+	s=korg; t=1709041926;
+	bh=d5DAqzYxdc2sD+cwmRkqXq2lsFLihmZGBnKPwTbEkE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y76NP9cKLRKgEZyhXIBrWsixeJKNwatjc93GrglIXL2JXToP2QGQ0tFRyyoqdf/Or
-	 Tpl453/g3c0rkGLlojjMVqYT6wOJ/daoAT8T6VPiEFq8nYbJlxjmTLVWzkajnpSPwy
-	 dLMzbs3Nx/RSe1cXWhokOWXLJ9StfQ2YE33sExvI=
+	b=gM7ysjwY9IrAbIY2AU1LLH2AVAYVCyIWjDCNUTknF33045Tq9tKdo73ki0hDX0w1x
+	 z0ctuBRRnAansc+g07cK0PEybIBI4Mi3z8/nT/JOT/vlFHW4KzgkG9eVWTWK61TT3V
+	 lFkMI04Tb1IejYdXkIM5cyxrCYjrHKjYH5BXi8hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@unisoc.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/299] virtio-blk: Ensure no requests in virtqueues before deleting vqs.
-Date: Tue, 27 Feb 2024 14:23:47 +0100
-Message-ID: <20240227131629.599588545@linuxfoundation.org>
+Subject: [PATCH 6.6 117/299] cifs: change tcon status when need_reconnect is set on it
+Date: Tue, 27 Feb 2024 14:23:48 +0100
+Message-ID: <20240227131629.629456915@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,62 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Sun <yi.sun@unisoc.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 4ce6e2db00de8103a0687fb0f65fd17124a51aaa ]
+[ Upstream commit c6e02eefd6ace3da3369c764f15429f5647056af ]
 
-Ensure no remaining requests in virtqueues before resetting vdev and
-deleting virtqueues. Otherwise these requests will never be completed.
-It may cause the system to become unresponsive.
+When a tcon is marked for need_reconnect, the intention
+is to have it reconnected.
 
-Function blk_mq_quiesce_queue() can ensure that requests have become
-in_flight status, but it cannot guarantee that requests have been
-processed by the device. Virtqueues should never be deleted before
-all requests become complete status.
+This change adjusts tcon->status in cifs_tree_connect
+when need_reconnect is set. Also, this change has a minor
+correction in resetting need_reconnect on success. It makes
+sure that it is done with tc_lock held.
 
-Function blk_mq_freeze_queue() ensure that all requests in virtqueues
-become complete status. And no requests can enter in virtqueues.
-
-Signed-off-by: Yi Sun <yi.sun@unisoc.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20240129085250.1550594-1-yi.sun@unisoc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/client/connect.c | 5 +++++
+ fs/smb/client/dfs.c     | 7 ++++++-
+ fs/smb/client/file.c    | 3 +++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 225c86c74d4e9..41b2fd7e1b9e5 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1629,14 +1629,15 @@ static int virtblk_freeze(struct virtio_device *vdev)
- {
- 	struct virtio_blk *vblk = vdev->priv;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 19440255944b0..c19eae07fa69a 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4226,6 +4226,11 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
  
-+	/* Ensure no requests in virtqueues before deleting vqs. */
-+	blk_mq_freeze_queue(vblk->disk->queue);
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
 +
- 	/* Ensure we don't receive any more interrupts */
- 	virtio_reset_device(vdev);
++	/* if tcon is marked for needing reconnect, update state */
++	if (tcon->need_reconnect)
++		tcon->status = TID_NEED_TCON;
++
+ 	if (tcon->status == TID_GOOD) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return 0;
+diff --git a/fs/smb/client/dfs.c b/fs/smb/client/dfs.c
+index a8a1d386da656..449c59830039b 100644
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -565,6 +565,11 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
  
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vblk->config_work);
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
++
++	/* if tcon is marked for needing reconnect, update state */
++	if (tcon->need_reconnect)
++		tcon->status = TID_NEED_TCON;
++
+ 	if (tcon->status == TID_GOOD) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return 0;
+@@ -625,8 +630,8 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
+ 		spin_lock(&tcon->tc_lock);
+ 		if (tcon->status == TID_IN_TCON)
+ 			tcon->status = TID_GOOD;
+-		spin_unlock(&tcon->tc_lock);
+ 		tcon->need_reconnect = false;
++		spin_unlock(&tcon->tc_lock);
+ 	}
  
--	blk_mq_quiesce_queue(vblk->disk->queue);
--
- 	vdev->config->del_vqs(vdev);
- 	kfree(vblk->vqs);
+ 	return rc;
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 32a8525415d96..4cbb5487bd8d0 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -175,6 +175,9 @@ cifs_mark_open_files_invalid(struct cifs_tcon *tcon)
  
-@@ -1654,7 +1655,7 @@ static int virtblk_restore(struct virtio_device *vdev)
- 
- 	virtio_device_ready(vdev);
- 
--	blk_mq_unquiesce_queue(vblk->disk->queue);
-+	blk_mq_unfreeze_queue(vblk->disk->queue);
- 	return 0;
- }
- #endif
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
++	if (tcon->need_reconnect)
++		tcon->status = TID_NEED_RECON;
++
+ 	if (tcon->status != TID_NEED_RECON) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return;
 -- 
 2.43.0
 
