@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D833F14532C;
-	Tue, 27 Feb 2024 14:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F59213EFE9;
+	Tue, 27 Feb 2024 14:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043917; cv=none; b=qFwAaLyiC8mmAKaHzbTM/EUiKcVrtzQLVMnqHRmv1VrPktMUbQLuz4dz2J1DoesGMaB/gQjc5KZMVkmuR4E6ZVZDtoHgV0OPFzKDBn3QjCYjVcvCz76uz3ea826h8ax1JFd2rlHIhE59YE7LRSQWcwY+8L0Mx3fPvjHGcfKX5iE=
+	t=1709043920; cv=none; b=qS+Rd5lfPD7Wvx8a+4W2l3R2SifnJ6VjJxei7E2/9GHcRzbvQ+gwhuJ6qlfc2F4cwNCcNk5MoZuflmxIfFYcpG7+h1Nzvs65ua94B3SmvgHdQdWHlAaWB0rZSC+EHurZR5zCNqZSXtLokeosdPMCmJAW2hZ3j/qFUzfX4N9Vg4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043917; c=relaxed/simple;
-	bh=N9pixrSa9mF/1WuDrPCRnpLYX0fpQot0iYBF8jOV2qs=;
+	s=arc-20240116; t=1709043920; c=relaxed/simple;
+	bh=cySr/GMR3/1PrlZE658pwPrkJTfCpzBqHcphQNwIAB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxUAxNa4n/8A5ZNEtPuNzJ+zOCsZGEYdSj7edQi37CKhJrQSDR+jpR/OQT3lRMbK62/uIwGoD0op8Lc8Dy+otLnr/j2qnHhEEq/Ji+GKmsu0O3StxJ2hGKhBbgbRMC87X5MAuxvZsNl3cCSBwxBGZ0pevBrgRoi+bhWss7FJgkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpUcB2gT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbvdHdfvkSavh4jz9+3siaS56/9Qf1RVUEpKTLc9psnu5vu7Yjy28qTDoDmzBmWi6wGfFFhUpUbqh6OtodnhcfC8HdXkNOAtrnceIBODY4jcGWAjvGsGRA68Gr4xWEh3Nj5PpRxPd54QURdMiSnhko5iWGksnCtenKgggyy0Fhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slcYW9Wq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpUcB2gT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AF7C43394;
-	Tue, 27 Feb 2024 14:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slcYW9Wq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A394C433F1;
+	Tue, 27 Feb 2024 14:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043917;
-	bh=N9pixrSa9mF/1WuDrPCRnpLYX0fpQot0iYBF8jOV2qs=;
+	s=korg; t=1709043920;
+	bh=cySr/GMR3/1PrlZE658pwPrkJTfCpzBqHcphQNwIAB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpUcB2gTPZDR6Yg3jh8SFqapNUK0A6d29It7mPuhGVd5oVaG+yd9QF6L4oT2b5vL+
-	 y42YwdzqWiuCHNVN5vyrZBLWPkCOknU4t1W49VL6upIaHBdQSo+/KItFRnu1NzZ42z
-	 F0hDq7+Q7Y4np1Ux/FqjyXL9AWQegB7xn7WcAWUw=
+	b=slcYW9Wq5RvvP4wEJvrWvSJnrhBdt49DarE90TaL8eDSovcZiK/fbyoiQDvfOgPuk
+	 xgFWveDDOJqtlEMmWI/BduaWGrnneBcSPQKsrU0RSysrm9AwvJnS2zcgVsXkop3nkb
+	 8zf7jZ7SDms290fjhua9h7H6ZkjmWcz+DJt/uNKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Kurzinger <ekurzinger@nvidia.com>,
-	Simon Ser <contact@emersion.fr>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 82/84] drm/syncobj: call drm_syncobj_fence_add_wait when WAIT_AVAILABLE flag is set
-Date: Tue, 27 Feb 2024 14:27:49 +0100
-Message-ID: <20240227131555.545442293@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>,
+	Avi Kivity <avi@scylladb.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.4 83/84] fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
+Date: Tue, 27 Feb 2024 14:27:50 +0100
+Message-ID: <20240227131555.580101633@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -52,74 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erik Kurzinger <ekurzinger@nvidia.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 3c43177ffb54ea5be97505eb8e2690e99ac96bc9 ]
+commit b820de741ae48ccf50dd95e297889c286ff4f760 upstream.
 
-When waiting for a syncobj timeline point whose fence has not yet been
-submitted with the WAIT_FOR_SUBMIT flag, a callback is registered using
-drm_syncobj_fence_add_wait and the thread is put to sleep until the
-timeout expires. If the fence is submitted before then,
-drm_syncobj_add_point will wake up the sleeping thread immediately which
-will proceed to wait for the fence to be signaled.
+If kiocb_set_cancel_fn() is called for I/O submitted via io_uring, the
+following kernel warning appears:
 
-However, if the WAIT_AVAILABLE flag is used instead,
-drm_syncobj_fence_add_wait won't get called, meaning the waiting thread
-will always sleep for the full timeout duration, even if the fence gets
-submitted earlier. If it turns out that the fence *has* been submitted
-by the time it eventually wakes up, it will still indicate to userspace
-that the wait completed successfully (it won't return -ETIME), but it
-will have taken much longer than it should have.
+WARNING: CPU: 3 PID: 368 at fs/aio.c:598 kiocb_set_cancel_fn+0x9c/0xa8
+Call trace:
+ kiocb_set_cancel_fn+0x9c/0xa8
+ ffs_epfile_read_iter+0x144/0x1d0
+ io_read+0x19c/0x498
+ io_issue_sqe+0x118/0x27c
+ io_submit_sqes+0x25c/0x5fc
+ __arm64_sys_io_uring_enter+0x104/0xab0
+ invoke_syscall+0x58/0x11c
+ el0_svc_common+0xb4/0xf4
+ do_el0_svc+0x2c/0xb0
+ el0_svc+0x2c/0xa4
+ el0t_64_sync_handler+0x68/0xb4
+ el0t_64_sync+0x1a4/0x1a8
 
-To fix this, we must call drm_syncobj_fence_add_wait if *either* the
-WAIT_FOR_SUBMIT flag or the WAIT_AVAILABLE flag is set. The only
-difference being that with WAIT_FOR_SUBMIT we will also wait for the
-fence to be signaled after it has been submitted while with
-WAIT_AVAILABLE we will return immediately.
+Fix this by setting the IOCB_AIO_RW flag for read and write I/O that is
+submitted by libaio.
 
-IGT test patch: https://lists.freedesktop.org/archives/igt-dev/2024-January/067537.html
-
-v1 -> v2: adjust lockdep_assert_none_held_once condition
-
-(cherry picked from commit 8c44ea81634a4a337df70a32621a5f3791be23df)
-
-Fixes: 01d6c3578379 ("drm/syncobj: add support for timeline point wait v8")
-Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Reviewed-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240119163208.3723457-1-ekurzinger@nvidia.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Jens Axboe <axboe@kernel.dk>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Avi Kivity <avi@scylladb.com>
+Cc: Sandeep Dhavale <dhavale@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240215204739.2677806-2-bvanassche@acm.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/aio.c           |    9 ++++++++-
+ include/linux/fs.h |    2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index a1d2a3dc00768..9baf95a4fc9ff 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -898,7 +898,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
- 	uint64_t *points;
- 	uint32_t signaled_count, i;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -570,6 +570,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
+ 	struct kioctx *ctx = req->ki_ctx;
+ 	unsigned long flags;
  
--	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT)
-+	if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
-+		     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE))
- 		lockdep_assert_none_held_once();
++	/*
++	 * kiocb didn't come from aio or is neither a read nor a write, hence
++	 * ignore it.
++	 */
++	if (!(iocb->ki_flags & IOCB_AIO_RW))
++		return;
++
+ 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
+ 		return;
  
- 	points = kmalloc_array(count, sizeof(*points), GFP_KERNEL);
-@@ -967,7 +968,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
- 	 * fallthough and try a 0 timeout wait!
- 	 */
+@@ -1455,7 +1462,7 @@ static int aio_prep_rw(struct kiocb *req
+ 	req->ki_complete = aio_complete_rw;
+ 	req->private = NULL;
+ 	req->ki_pos = iocb->aio_offset;
+-	req->ki_flags = iocb_flags(req->ki_filp);
++	req->ki_flags = iocb_flags(req->ki_filp) | IOCB_AIO_RW;
+ 	if (iocb->aio_flags & IOCB_FLAG_RESFD)
+ 		req->ki_flags |= IOCB_EVENTFD;
+ 	req->ki_hint = ki_hint_validate(file_write_hint(req->ki_filp));
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -314,6 +314,8 @@ enum rw_hint {
+ #define IOCB_SYNC		(1 << 5)
+ #define IOCB_WRITE		(1 << 6)
+ #define IOCB_NOWAIT		(1 << 7)
++/* kiocb is a read or write operation submitted by fs/aio.c. */
++#define IOCB_AIO_RW		(1 << 23)
  
--	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
-+	if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
-+		     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE)) {
- 		for (i = 0; i < count; ++i)
- 			drm_syncobj_fence_add_wait(syncobjs[i], &entries[i]);
- 	}
--- 
-2.43.0
-
+ struct kiocb {
+ 	struct file		*ki_filp;
 
 
