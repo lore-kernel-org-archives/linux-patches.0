@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAE6141988;
-	Tue, 27 Feb 2024 13:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774801419B4;
+	Tue, 27 Feb 2024 13:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041804; cv=none; b=f+6t7Xvynz6JvKzR8lB7Oi5tOKgm7HYM0aE7UKxRlEmm+i8tF06E6+To+cy3pr+xFTcMXxuRNAiNjfuMBEEyWGFe4hl4fhpZEgqrIb6Ylt4U2bo3qq8ZJ9tE4DaXr+IT9ForGfplQlt9xZGc+yTzLNVRVEIjN5R15oYKu5nsP4I=
+	t=1709041807; cv=none; b=aLbLMPHA0dws1GNUpBTjVKuSHNrbhOJBOlkU7zr6mSYu5if3DlY7SRE2JISj6qmZSo697Boq/28YSmxgzSPvs5fVT7/Ar+3zgtZaZoLFSietciQ/GNK9aRtNUNa+r5pWj+dU0xFkRFwWpgObGWRcC7YgsQo2HfUZ5UUDOMQo6ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041804; c=relaxed/simple;
-	bh=FIjyFLPtglGtUEizBJxRTOxcnfSzpYLS4EPyK9p39bg=;
+	s=arc-20240116; t=1709041807; c=relaxed/simple;
+	bh=hMkpYx+xLaCGvM4agDqjCyK9AoRUWRb3nG+HzJBkb2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iu4zzAMCyiygzopbR45zpcDDC6MLFl6rvhqHCuWO1p7mvUVSkEky2cAyQup3LDkipGpN6eg0vlCmse45b94FNyl+PQc+bdg1iKmOR0CKadxWzLN/ghHxBEfrWrTxPQWY+gUImWH7LQV5Jx0/hv5pWZYSG/j4PuOF1qgDyzDBzp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sx9nNWxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdFrBjPpy5kZ+Ujx62Q5okvrnWoLNTnk5HR6QeC9Xd+B7BFUx8Mym1dCV+L6vmCX81i0LSfVHwpX9mK+QRadY8go5S3Hr8OPRoO7UNQp5GiXgjU3xtpncOkT9nefBUov8p+v8M3eUnU+caQF5XNWB7OpgJES6fAF8hfWUAnoMqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2T97gX/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sx9nNWxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC34C433F1;
-	Tue, 27 Feb 2024 13:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2T97gX/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075B6C433F1;
+	Tue, 27 Feb 2024 13:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041804;
-	bh=FIjyFLPtglGtUEizBJxRTOxcnfSzpYLS4EPyK9p39bg=;
+	s=korg; t=1709041807;
+	bh=hMkpYx+xLaCGvM4agDqjCyK9AoRUWRb3nG+HzJBkb2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sx9nNWxm08dyrrmhUKx4FQpHpPf6PheCd42PbXEfkM4cEuqUmZPtXlDRGgFj1pUGU
-	 qh+GA4O9bRW2Ym02OR5VJCLffUriekiy7wp5txB3jxQnUC1PrNDT8D0rv5tPyItbh3
-	 S56QPX1XaTv6SmoLO5NFOBpLLwUDxja2gNTJzvMU=
+	b=2T97gX/AmLiXZ7hQnsiK7TARzimwjh08BnEbmG07F2sJFpagr2XwRrjEIB4FyXpJl
+	 /t82+hFOxLjiP4wreGnJ/Io0RmefB56N+8mvTdxBc/VmDjyeinTaWE2MKgc/rESrOH
+	 LEj8wL5VFuuzEbHqla+sJMfoCQos2ibCLJfR8mO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/299] fs/ntfs3: Fix multithreaded stress test
-Date: Tue, 27 Feb 2024 14:23:07 +0100
-Message-ID: <20240227131628.381334081@linuxfoundation.org>
+Subject: [PATCH 6.6 077/299] fs/ntfs3: Fix detected field-spanning write (size 8) of single field "le->name"
+Date: Tue, 27 Feb 2024 14:23:08 +0100
+Message-ID: <20240227131628.411665827@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,60 +52,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a8b0c9fc3a2dba07f697ef7825e04363ff12f071 ]
+[ Upstream commit d155617006ebc172a80d3eb013c4b867f9a8ada4 ]
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/ntfs3/ntfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 63f70259edc0d..4b78b669a3bdb 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -886,7 +886,7 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 	struct runs_tree *run = &ni->file.run;
- 	struct ntfs_sb_info *sbi;
- 	u8 cluster_bits;
--	struct ATTRIB *attr = NULL, *attr_b;
-+	struct ATTRIB *attr, *attr_b;
- 	struct ATTR_LIST_ENTRY *le, *le_b;
- 	struct mft_inode *mi, *mi_b;
- 	CLST hint, svcn, to_alloc, evcn1, next_svcn, asize, end, vcn0, alen;
-@@ -904,12 +904,8 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 		*len = 0;
- 	up_read(&ni->file.run_lock);
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 86aecbb01a92f..13e96fc63dae5 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -523,7 +523,7 @@ struct ATTR_LIST_ENTRY {
+ 	__le64 vcn;		// 0x08: Starting VCN of this attribute.
+ 	struct MFT_REF ref;	// 0x10: MFT record number with attribute.
+ 	__le16 id;		// 0x18: struct ATTRIB ID.
+-	__le16 name[3];		// 0x1A: Just to align. To get real name can use bNameOffset.
++	__le16 name[];		// 0x1A: Just to align. To get real name can use name_off.
  
--	if (*len) {
--		if (*lcn != SPARSE_LCN || !new)
--			return 0; /* Fast normal way without allocation. */
--		else if (clen > *len)
--			clen = *len;
--	}
-+	if (*len && (*lcn != SPARSE_LCN || !new))
-+		return 0; /* Fast normal way without allocation. */
+ }; // sizeof(0x20)
  
- 	/* No cluster in cache or we need to allocate cluster in hole. */
- 	sbi = ni->mi.sbi;
-@@ -918,6 +914,17 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 	ni_lock(ni);
- 	down_write(&ni->file.run_lock);
- 
-+	/* Repeat the code above (under write lock). */
-+	if (!run_lookup_entry(run, vcn, lcn, len, NULL))
-+		*len = 0;
-+
-+	if (*len) {
-+		if (*lcn != SPARSE_LCN || !new)
-+			goto out; /* normal way without allocation. */
-+		if (clen > *len)
-+			clen = *len;
-+	}
-+
- 	le_b = NULL;
- 	attr_b = ni_find_attr(ni, NULL, &le_b, ATTR_DATA, NULL, 0, NULL, &mi_b);
- 	if (!attr_b) {
 -- 
 2.43.0
 
