@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8326D13AA2F;
-	Tue, 27 Feb 2024 13:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3F513EFE4;
+	Tue, 27 Feb 2024 13:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041060; cv=none; b=OM6fvJwXcmMyBP3PcjzUhMpyNDgz5+zt2CjxoP0ZRPkI4IUMf4sd9wftbBDfML2VOuyo6h4Qp+A+iZ/Ga6PT/SYzKDmCxrq6RF3gMKPzkcVpJnytLhbpSBeyvJ6D0uRf0U2HFwbXj3Amk1hZvlFx5RqEhLgwey+P9FOZA1koXqk=
+	t=1709041063; cv=none; b=CokqiJDlzhjJGjhrwn42cuoNg6xfzfZKD0+1pvy5Ce3B0sIAjNw7u7TFCiHKpQx3Z6fR7GdqSWajv4jiMhJ8v9Z4a7YylCc2U6NxJe39zyOHLOSX6gsg2XypNleiFOsRUGQaZnyM2jL0AtB6aGXGe4XZlDZMyu7x8CwQL2xM5bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041060; c=relaxed/simple;
-	bh=BSKFrkmqe0wIwvsy0cl0v3aVuBXubAaWFAFIMLOvvB0=;
+	s=arc-20240116; t=1709041063; c=relaxed/simple;
+	bh=KJMpjgXQ7CiP4KvpXOvjCyFMJHJjMlBTy2N1t9tpbJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhA4PKtbAmYOY1847bX8Kmod4Yr6hcPpphKlU/fgG7ymwqFj8IiOtptJ77k+g/V6NVF0G8+crOkx8Sb1iXkf3knuShyL/Cv/989hfDjnj/T1IuhOQ+l+NdBCkhb0Z+BKcaWDxSdcvox74BTF6OlaCHHF64iqi28imzGUf4srRHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlQn3FpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtONiFfr8CvUrefD3cBuMgZZHo/CqCX7DLqtgz2NyYwAhO4B3W4ZehlkEb/KvIrXAkxbZc0NhPT7DTvj7XmkhaD/q6NwcNtcuvPrOXEGBi+/2NE4UdHog2oB+Xzfpyiyzatdr1HEnItRG40tgp2SbpAC18rKL/W+UILgkUuTgns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+wICRVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlQn3FpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC9FC433F1;
-	Tue, 27 Feb 2024 13:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+wICRVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFC9C433B1;
+	Tue, 27 Feb 2024 13:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041060;
-	bh=BSKFrkmqe0wIwvsy0cl0v3aVuBXubAaWFAFIMLOvvB0=;
+	s=korg; t=1709041063;
+	bh=KJMpjgXQ7CiP4KvpXOvjCyFMJHJjMlBTy2N1t9tpbJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlQn3FpTU+B17ITI6/sZCD0BG88Q8bn2D8Udrk9IhKSZJ3uol3ThOtXzbmRo0OG3f
-	 j/Jq8IDUYVgQYCWg49nh3e4O3WnD2kkQDTXDKGXfRCdaF3xqUxNGdk47fLn+86djEO
-	 Ss1+WFlFc2BMmK1X/Sgx+j0ZhG8fTk3AHxGiBFA4=
+	b=0+wICRVMg7oAtaB2L+SL2/lye2Jh3a46EhSgeLrbDByW2hQhtFCAXhilTkBEQBMqu
+	 AS57M0utIM7px9YCMNxvWMViuJbLrszf0MQegOwLuEuymX4/7hZWjCTuN81tOHl3YS
+	 aiQh8w7YJM9n4To6Q/SmRwmE2jmWyzvvmxxhl1GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.7 205/334] usb: cdnsp: blocked some cdns3 specific code
-Date: Tue, 27 Feb 2024 14:21:03 +0100
-Message-ID: <20240227131637.364643562@linuxfoundation.org>
+Subject: [PATCH 6.7 206/334] usb: cdnsp: fixed issue with incorrect detecting CDNSP family controllers
+Date: Tue, 27 Feb 2024 14:21:04 +0100
+Message-ID: <20240227131637.412481698@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,63 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawel Laszczak <pawell@cadence.com>
 
-commit 18a6be674306c9acb05c08e5c3fd376ef50a917c upstream.
+commit 47625b018c6bc788bc10dd654c82696eb0a5ef11 upstream.
 
-host.c file has some parts of code that were introduced for CDNS3 driver
-and should not be used with CDNSP driver.
-This patch blocks using these parts of codes by CDNSP driver.
-These elements include:
-- xhci_plat_cdns3_xhci object
-- cdns3 specific XECP_PORT_CAP_REG register
-- cdns3 specific XECP_AUX_CTRL_REG1 register
+Cadence have several controllers from 0x000403xx family but current
+driver suuport detecting only one with DID equal 0x0004034E.
+It causes that if someone uses different CDNSP controller then driver
+will use incorrect version and register space.
+Patch fix this issue.
 
 cc: stable@vger.kernel.org
 Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
 Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20240206104018.48272-1-pawell@cadence.com
+Link: https://lore.kernel.org/r/20240215121609.259772-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/host.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/usb/cdns3/core.c |    1 -
+ drivers/usb/cdns3/drd.c  |   13 +++++++++----
+ drivers/usb/cdns3/drd.h  |    6 +++++-
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/cdns3/host.c
-+++ b/drivers/usb/cdns3/host.c
-@@ -18,6 +18,11 @@
- #include "../host/xhci.h"
- #include "../host/xhci-plat.h"
+--- a/drivers/usb/cdns3/core.c
++++ b/drivers/usb/cdns3/core.c
+@@ -395,7 +395,6 @@ pm_put:
+ 	return ret;
+ }
  
-+/*
-+ * The XECP_PORT_CAP_REG and XECP_AUX_CTRL_REG1 exist only
-+ * in Cadence USB3 dual-role controller, so it can't be used
-+ * with Cadence CDNSP dual-role controller.
-+ */
- #define XECP_PORT_CAP_REG	0x8000
- #define XECP_AUX_CTRL_REG1	0x8120
+-
+ /**
+  * cdns_wakeup_irq - interrupt handler for wakeup events
+  * @irq: irq number for cdns3/cdnsp core device
+--- a/drivers/usb/cdns3/drd.c
++++ b/drivers/usb/cdns3/drd.c
+@@ -156,7 +156,8 @@ bool cdns_is_device(struct cdns *cdns)
+  */
+ static void cdns_otg_disable_irq(struct cdns *cdns)
+ {
+-	writel(0, &cdns->otg_irq_regs->ien);
++	if (cdns->version)
++		writel(0, &cdns->otg_irq_regs->ien);
+ }
  
-@@ -57,6 +62,8 @@ static const struct xhci_plat_priv xhci_
- 	.resume_quirk = xhci_cdns3_resume_quirk,
+ /**
+@@ -422,15 +423,20 @@ int cdns_drd_init(struct cdns *cdns)
+ 
+ 		cdns->otg_regs = (void __iomem *)&cdns->otg_v1_regs->cmd;
+ 
+-		if (readl(&cdns->otg_cdnsp_regs->did) == OTG_CDNSP_DID) {
++		state = readl(&cdns->otg_cdnsp_regs->did);
++
++		if (OTG_CDNSP_CHECK_DID(state)) {
+ 			cdns->otg_irq_regs = (struct cdns_otg_irq_regs __iomem *)
+ 					      &cdns->otg_cdnsp_regs->ien;
+ 			cdns->version  = CDNSP_CONTROLLER_V2;
+-		} else {
++		} else if (OTG_CDNS3_CHECK_DID(state)) {
+ 			cdns->otg_irq_regs = (struct cdns_otg_irq_regs __iomem *)
+ 					      &cdns->otg_v1_regs->ien;
+ 			writel(1, &cdns->otg_v1_regs->simulate);
+ 			cdns->version  = CDNS3_CONTROLLER_V1;
++		} else {
++			dev_err(cdns->dev, "not supporte DID=0x%08x\n", state);
++			return -EINVAL;
+ 		}
+ 
+ 		dev_dbg(cdns->dev, "DRD version v1 (ID: %08x, rev: %08x)\n",
+@@ -483,7 +489,6 @@ int cdns_drd_exit(struct cdns *cdns)
+ 	return 0;
+ }
+ 
+-
+ /* Indicate the cdns3 core was power lost before */
+ bool cdns_power_is_lost(struct cdns *cdns)
+ {
+--- a/drivers/usb/cdns3/drd.h
++++ b/drivers/usb/cdns3/drd.h
+@@ -79,7 +79,11 @@ struct cdnsp_otg_regs {
+ 	__le32 susp_timing_ctrl;
  };
  
-+static const struct xhci_plat_priv xhci_plat_cdnsp_xhci;
+-#define OTG_CDNSP_DID	0x0004034E
++/* CDNSP driver supports 0x000403xx Cadence USB controller family. */
++#define OTG_CDNSP_CHECK_DID(did) (((did) & GENMASK(31, 8)) == 0x00040300)
 +
- static int __cdns_host_init(struct cdns *cdns)
- {
- 	struct platform_device *xhci;
-@@ -81,8 +88,13 @@ static int __cdns_host_init(struct cdns
- 		goto err1;
- 	}
++/* CDNS3 driver supports 0x000402xx Cadence USB controller family. */
++#define OTG_CDNS3_CHECK_DID(did) (((did) & GENMASK(31, 8)) == 0x00040200)
  
--	cdns->xhci_plat_data = kmemdup(&xhci_plat_cdns3_xhci,
--			sizeof(struct xhci_plat_priv), GFP_KERNEL);
-+	if (cdns->version < CDNSP_CONTROLLER_V2)
-+		cdns->xhci_plat_data = kmemdup(&xhci_plat_cdns3_xhci,
-+				sizeof(struct xhci_plat_priv), GFP_KERNEL);
-+	else
-+		cdns->xhci_plat_data = kmemdup(&xhci_plat_cdnsp_xhci,
-+				sizeof(struct xhci_plat_priv), GFP_KERNEL);
-+
- 	if (!cdns->xhci_plat_data) {
- 		ret = -ENOMEM;
- 		goto err1;
+ /*
+  * Common registers interface for both CDNS3 and CDNSP version of DRD.
 
 
