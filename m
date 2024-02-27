@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D584954BD4;
-	Tue, 27 Feb 2024 14:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DCD13AA50;
+	Tue, 27 Feb 2024 14:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042415; cv=none; b=fD3T7fQu01LBWB8Sgi2YxhWGZJEBF20YwyVsk8aR5TOmXEEAgxA98gANQ52tuufz4IWX5AII6RTvrFpSSKJh2CRrurGFU/n11SvD8Ti5LiLQFoJ4LGQxfwWnyi6lZlozDbA/X6w/enwBGykHN8T/Y46HyQo1BHFd/P0xFQYr8hM=
+	t=1709042418; cv=none; b=bqS09JzQnDa6l4xKtNQpoAtinmQj/xAt1eYSQ9O4Gn8ZMojPN1d9tsmr/NgQeQ7jYUQqSydT25iWuxYG8Hl1WgB2xQ41rQSlO3xAHEP3tAIrh/h0C5aDfu2RCZ0jKM1nZTEW74QaUCKotKXMtjBmeybkGSLcadFmXG9ceM0Gugc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042415; c=relaxed/simple;
-	bh=YjaIUWO1B8lCChG31sKc3wwbBNG/apkNjHYSfbwUxL0=;
+	s=arc-20240116; t=1709042418; c=relaxed/simple;
+	bh=SD15WUtworu67RdKTJfSTOitXNUYsVhF4YSypO0IAtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f0IOU/tE3PY3BnrVhS1pVMi4hUvsdwDu/Cp741lPgMLr1RQtDuOPO371QOKTCLEgFcf4aduVFr/PnR/oEhvMGCxIE+R6o35ksTj+6axl3GnWix+PPcI21tQ3pg5l+1+tSTULX0CQnPfTzdk6LzzYQmkPqjXEqcbMk0UTFlmGkPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jzvvolp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPgfDW25GyApriR2omlC9Qx94OQbu1LKxaMIIzAtEfiwQKSdr1MZa/Uebt+J6+14wnbuWVKFd/yOmvU0B8Gozxs11ktImhDCvums0O93NgTEQhCuJKqMGRZRqHxIEJat39q948e6llb5JkMwaxW4gNLwIFeuCBLeiVzDdloETq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJmolzBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jzvvolp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64570C433C7;
-	Tue, 27 Feb 2024 14:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJmolzBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4EFC433C7;
+	Tue, 27 Feb 2024 14:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042415;
-	bh=YjaIUWO1B8lCChG31sKc3wwbBNG/apkNjHYSfbwUxL0=;
+	s=korg; t=1709042418;
+	bh=SD15WUtworu67RdKTJfSTOitXNUYsVhF4YSypO0IAtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Jzvvolpe1ENutdEOccFy5vnHzT7714NLfwjO/GZUbopT534C931L7Tb8ugFXuIRN
-	 eCt+DeOCw1tUuLFQSseEDc8rt+pA0T0815D0bw+PG+jH8iY/sz71bN8CuEmrfSDjEV
-	 GCrReawfbvdRgFHkJQbVdildqkAOSk1hx21/sH/o=
+	b=pJmolzBPoyis7jS8RHizxOMrju2GnNKGU2aVCtXajNHYcdaUUNhOntnMcSoppWI30
+	 8iyQWKQwy89lxxXrjot/NlV+7/uu4TRLAuf73oZx7ZG0O/eSad9sdks0SUBE3gtseJ
+	 DFliIxHk9iQPKFFZfdATCF407nC7/kMVpv0AIemg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 288/299] selftests/iommu: fix the config fragment
-Date: Tue, 27 Feb 2024 14:26:39 +0100
-Message-ID: <20240227131634.944726482@linuxfoundation.org>
+Subject: [PATCH 6.6 289/299] drm/amd/display: Fix memory leak in dm_sw_fini()
+Date: Tue, 27 Feb 2024 14:26:40 +0100
+Message-ID: <20240227131634.973839157@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,51 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 510325e5ac5f45c1180189d3bfc108c54bf64544 ]
+[ Upstream commit bae67893578d608e35691dcdfa90c4957debf1d3 ]
 
-The config fragment doesn't follow the correct format to enable those
-config options which make the config options getting missed while
-merging with other configs.
+After destroying dmub_srv, the memory associated with it is
+not freed, causing a memory leak:
 
-➜ merge_config.sh -m .config tools/testing/selftests/iommu/config
-Using .config as base
-Merging tools/testing/selftests/iommu/config
-➜ make olddefconfig
-.config:5295:warning: unexpected data: CONFIG_IOMMUFD
-.config:5296:warning: unexpected data: CONFIG_IOMMUFD_TEST
+unreferenced object 0xffff896302b45800 (size 1024):
+  comm "(udev-worker)", pid 222, jiffies 4294894636
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 6265fd77):
+    [<ffffffff993495ed>] kmalloc_trace+0x29d/0x340
+    [<ffffffffc0ea4a94>] dm_dmub_sw_init+0xb4/0x450 [amdgpu]
+    [<ffffffffc0ea4e55>] dm_sw_init+0x15/0x2b0 [amdgpu]
+    [<ffffffffc0ba8557>] amdgpu_device_init+0x1417/0x24e0 [amdgpu]
+    [<ffffffffc0bab285>] amdgpu_driver_load_kms+0x15/0x190 [amdgpu]
+    [<ffffffffc0ba09c7>] amdgpu_pci_probe+0x187/0x4e0 [amdgpu]
+    [<ffffffff9968fd1e>] local_pci_probe+0x3e/0x90
+    [<ffffffff996918a3>] pci_device_probe+0xc3/0x230
+    [<ffffffff99805872>] really_probe+0xe2/0x480
+    [<ffffffff99805c98>] __driver_probe_device+0x78/0x160
+    [<ffffffff99805daf>] driver_probe_device+0x1f/0x90
+    [<ffffffff9980601e>] __driver_attach+0xce/0x1c0
+    [<ffffffff99803170>] bus_for_each_dev+0x70/0xc0
+    [<ffffffff99804822>] bus_add_driver+0x112/0x210
+    [<ffffffff99807245>] driver_register+0x55/0x100
+    [<ffffffff990012d1>] do_one_initcall+0x41/0x300
 
-While at it, add CONFIG_FAULT_INJECTION as well which is needed for
-CONFIG_IOMMUFD_TEST. If CONFIG_FAULT_INJECTION isn't present in base
-config (such as x86 defconfig), CONFIG_IOMMUFD_TEST doesn't get enabled.
+Fix this by freeing dmub_srv after destroying it.
 
-Fixes: 57f0988706fe ("iommufd: Add a selftest")
-Link: https://lore.kernel.org/r/20240222074934.71380-1-usama.anjum@collabora.com
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 743b9786b14a ("drm/amd/display: Hook up the DMUB service in DM")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/iommu/config | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/iommu/config b/tools/testing/selftests/iommu/config
-index 6c4f901d6fed3..110d73917615d 100644
---- a/tools/testing/selftests/iommu/config
-+++ b/tools/testing/selftests/iommu/config
-@@ -1,2 +1,3 @@
--CONFIG_IOMMUFD
--CONFIG_IOMMUFD_TEST
-+CONFIG_IOMMUFD=y
-+CONFIG_FAULT_INJECTION=y
-+CONFIG_IOMMUFD_TEST=y
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 3194c10f345fc..50444ab7b3cc0 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2247,6 +2247,7 @@ static int dm_sw_fini(void *handle)
+ 
+ 	if (adev->dm.dmub_srv) {
+ 		dmub_srv_destroy(adev->dm.dmub_srv);
++		kfree(adev->dm.dmub_srv);
+ 		adev->dm.dmub_srv = NULL;
+ 	}
+ 
 -- 
 2.43.0
 
