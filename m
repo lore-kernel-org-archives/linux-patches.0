@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA2778B61;
-	Tue, 27 Feb 2024 14:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA7678B61;
+	Tue, 27 Feb 2024 14:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042556; cv=none; b=uNzzh9uGUz/8S9U0odco3yHrPa1IfZkkug2282cNHQ3AGsItHpTy7ZCYmEVFs2kHMrFM3MT/Z4uTNekhnv5yeodGuXoGl7U6LE/pd5YAOH3WMxtj5ZuoPO0w4/o2zD1hQpANkj6G73xGMZqBzMzO0j62mIGKxyg3V4kMhfNwTKU=
+	t=1709042564; cv=none; b=cI0q5Lkz4oBTJthd6aKraw8i4tJgdJq5f2/2TRXCfPbjEDLtjnm2xxWjhpo/w+VvY7w39jXpzluc3HRLwnEcGzeAN2K+1K2lKQZDL2HDroFy7nNkS1zjyypPloIMZsXQabgGC+ALDsayiA8Qlls76F5n7OnITEcvzFd+1YM1EUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042556; c=relaxed/simple;
-	bh=xibtZyiCRPu3aaIgIYbqRKWG7Ui1gtSFbowFcgimuMQ=;
+	s=arc-20240116; t=1709042564; c=relaxed/simple;
+	bh=vgquAS39ogx4KyR+xztAcrIbcty83WtkqxPfvMVY8cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxp3wqB1IHZKhRgk0U1N44E2L7rfkOcx5yOC4hdCcnkaiS68kheK4k2WG6RCbcDjv7ArdwWgBP2AXUpIcu4qboBuyKJRQl9pokbVijrBZlN47ejflHkLldqDAt8UcQWd3UvN09cczhriCudw5JZn+eFFno0KtIxD+EfFdHNOOU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewDLS0TR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKHIDV8miME/0zqLgeVGRjJqmV07/v3ee7oP/JCxZ1/b9XDoI8vy2YX8JOq+2bSVsnQ7bXxeSGHDyMkOJv2O3Y9vBJi4YZIOsSrKrZvrPOjz8gPiLMV+Z6VTt4msTyyuxNo5xhuqAlCJ9U6vmI9RqLlx8AC1EmwKgYJ9Qh8qzRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2QMhkZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewDLS0TR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D43C433F1;
-	Tue, 27 Feb 2024 14:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2QMhkZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEBDC433C7;
+	Tue, 27 Feb 2024 14:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042556;
-	bh=xibtZyiCRPu3aaIgIYbqRKWG7Ui1gtSFbowFcgimuMQ=;
+	s=korg; t=1709042564;
+	bh=vgquAS39ogx4KyR+xztAcrIbcty83WtkqxPfvMVY8cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewDLS0TRdAnSCzlIJzA1c3maFxDb2wd4B14HHOOlu9X81CuCYA2evU1eDCrIgHobb
-	 yBI70Y8SoyhTMqWm1a4PLRDCGyv8xldIkE3EJloEnQ8bCvqbn2shGi3mAx+gdg7Zg/
-	 v2/TDOmxDe1TFVEeCgzDDeA3uQn962+t5hmqBXBk=
+	b=c2QMhkZzXiL/jd6OZaMS9NqUu4KmooEyUGJEYyoHdaaUxHuBjA3P6yYHyGCd7LML+
+	 cyG6tzxxHjAMHLtyCgVfaUCs0PYxPocR8oRKXrCgiAZT+ApGjKwNbxWksYnSF9C1C7
+	 +fIL64USb3PSOz1LOWwUsH18kphzo4dILwktl400=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brenton Simpson <appsforartists@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/245] Input: xpad - add Lenovo Legion Go controllers
-Date: Tue, 27 Feb 2024 14:23:47 +0100
-Message-ID: <20240227131616.391059957@linuxfoundation.org>
+Subject: [PATCH 5.15 040/245] netfilter: conntrack: check SCTP_CID_SHUTDOWN_ACK for vtag setting in sctp_new
+Date: Tue, 27 Feb 2024 14:23:48 +0100
+Message-ID: <20240227131616.423704855@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,67 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brenton Simpson <appsforartists@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 80441f76ee67002437db61f3b317ed80cce085d2 ]
+[ Upstream commit 6e348067ee4bc5905e35faa3a8fafa91c9124bc7 ]
 
-The Lenovo Legion Go is a handheld gaming system, similar to a Steam Deck.
-It has a gamepad (including rear paddles), 3 gyroscopes, a trackpad,
-volume buttons, a power button, and 2 LED ring lights.
+The annotation says in sctp_new(): "If it is a shutdown ack OOTB packet, we
+expect a return shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8)".
+However, it does not check SCTP_CID_SHUTDOWN_ACK before setting vtag[REPLY]
+in the conntrack entry(ct).
 
-The Legion Go firmware presents these controls as a USB hub with various
-devices attached.  In its default state, the gamepad is presented as an
-Xbox controller connected to this hub.  (By holding a combination of
-buttons, it can be changed to use the older DirectInput API.)
+Because of that, if the ct in Router disappears for some reason in [1]
+with the packet sequence like below:
 
-This patch teaches the existing Xbox controller module `xpad` to bind to
-the controller in the Legion Go, which enables support for the:
+   Client > Server: sctp (1) [INIT] [init tag: 3201533963]
+   Server > Client: sctp (1) [INIT ACK] [init tag: 972498433]
+   Client > Server: sctp (1) [COOKIE ECHO]
+   Server > Client: sctp (1) [COOKIE ACK]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057809]
+   Server > Client: sctp (1) [SACK] [cum ack 3075057809]
+   Server > Client: sctp (1) [HB REQ]
+   (the ct in Router disappears somehow)  <-------- [1]
+   Client > Server: sctp (1) [HB ACK]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [HB REQ]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [HB REQ]
+   Client > Server: sctp (1) [ABORT]
 
-- directional pad,
-- analog sticks (including clicks),
-- X, Y, A, B,
-- start and select (or menu and capture),
-- shoulder buttons, and
-- rumble.
+when processing HB ACK packet in Router it calls sctp_new() to initialize
+the new ct with vtag[REPLY] set to HB_ACK packet's vtag.
 
-The trackpad, touchscreen, volume controls, and power button are already
-supported via existing kernel modules.  Two of the face buttons, the
-gyroscopes, rear paddles, and LEDs are not.
+Later when sending DATA from Client, all the SACKs from Server will get
+dropped in Router, as the SACK packet's vtag does not match vtag[REPLY]
+in the ct. The worst thing is the vtag in this ct will never get fixed
+by the upcoming packets from Server.
 
-After this patch lands, the Legion Go will be mostly functional in Linux,
-out-of-the-box.  The various components of the USB hub can be synthesized
-into a single logical controller (including the additional buttons) in
-userspace with [Handheld Daemon](https://github.com/hhd-dev/hhd), which
-makes the Go fully functional.
+This patch fixes it by checking SCTP_CID_SHUTDOWN_ACK before setting
+vtag[REPLY] in the ct in sctp_new() as the annotation says. With this
+fix, it will leave vtag[REPLY] in ct to 0 in the case above, and the
+next HB REQ/ACK from Server is able to fix the vtag as its value is 0
+in nf_conntrack_sctp_packet().
 
-Signed-off-by: Brenton Simpson <appsforartists@google.com>
-Link: https://lore.kernel.org/r/20240118183546.418064-1-appsforartists@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_conntrack_proto_sctp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 1ff0d4e24fe68..f0b1dac938222 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -276,6 +276,7 @@ static const struct xpad_device {
- 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-+	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
-@@ -464,6 +465,7 @@ static const struct usb_device_id xpad_table[] = {
- 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
-+	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harminix Rock Band Guitar and Drums */
- 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA Controllers */
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index c94a9971d790c..7ffd698497f2a 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -299,7 +299,7 @@ sctp_new(struct nf_conn *ct, const struct sk_buff *skb,
+ 			pr_debug("Setting vtag %x for secondary conntrack\n",
+ 				 sh->vtag);
+ 			ct->proto.sctp.vtag[IP_CT_DIR_ORIGINAL] = sh->vtag;
+-		} else {
++		} else if (sch->type == SCTP_CID_SHUTDOWN_ACK) {
+ 		/* If it is a shutdown ack OOTB packet, we expect a return
+ 		   shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8) */
+ 			pr_debug("Setting vtag %x for new conn OOTB\n",
 -- 
 2.43.0
 
