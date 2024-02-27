@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E56813B2B3;
-	Tue, 27 Feb 2024 14:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2247E54BFE;
+	Tue, 27 Feb 2024 14:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044278; cv=none; b=CRxSDvkxjoZK+8XAU/lA1m6aagV45qpJEHNi4p/7LuQaUX7H1XuW+giuVW7Kc3rhK7DRb31Si5KxRIAvdO1Uehi52G9QylFaxbYQQ3VHMYVZNh5sHCackPHYog7tgX/fAy0A4CThp6YJIPKytcOP3+7zgg1uzdmSny/pQBn0n44=
+	t=1709044281; cv=none; b=EbnOpU/fju3LtKQxclWl3thkiQuKVAUuBaP4QDhkCP7OJwCs4Cbw9yc9HXn881g5yHcosqZKJhG4Bn5dE64hWNqkuWPlBCdYUy+W0rquKbqZMomRUxDVScHYyoVN+eSVyugk3CiWkC8Tqls7mvV31HkGoodmWDOtOfIYMOehgdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044278; c=relaxed/simple;
-	bh=0ivcT5Vb9Rbd+gSHw8z9sVZBkWFxFe90lrHoNRpXk6U=;
+	s=arc-20240116; t=1709044281; c=relaxed/simple;
+	bh=TDCcoxVPkuZgn9z+SycdHfbd4HGb5fMJV0X3emaS82A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0bJaiC2mZnTU6ylARudNK17rPQGIlkTZ3+On4V7AlMi1xs0kONSzNZfA+QzHwOHvrWMlndYEfYmM8Olr1vK5CcITCzvH0rhz1j0nqW6rfg4u7tsqz+HIDRdyTdllTXYKPw57HBI1BkIPQnBQdou5wBB7RiiXu0TIXvAZjrQl6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhq6BZGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RypC9b9KuHZTV9AZKby5u+xKYZ2yiLgbqt0CtUhSCT0Su2ZevkU2nYsAJv23mfu85ys7thjl8IXFyR1t8OUG854RLynoJwjziyZF9sPhr6Ka/ZPou0ORbuzli2kBkpuE07iCg/KEcjezMQ48VEWPtAusfJLvW4p7yfFdgQo4Hfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taX/jNDd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhq6BZGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC924C433C7;
-	Tue, 27 Feb 2024 14:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taX/jNDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3422C433F1;
+	Tue, 27 Feb 2024 14:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044278;
-	bh=0ivcT5Vb9Rbd+gSHw8z9sVZBkWFxFe90lrHoNRpXk6U=;
+	s=korg; t=1709044281;
+	bh=TDCcoxVPkuZgn9z+SycdHfbd4HGb5fMJV0X3emaS82A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhq6BZGuhl2ANknKGfbPusN3/20h8HhHZIjw9IvqShM9bvgEXXSY4x3bV5dVFHDxf
-	 znu8LVqlEVixa2U2GLTHu0LvVO8T5aRuDlVGxzpQQrMyCpji9gIBo9mJ/vToS4NEi4
-	 1F9iwyNUficDzoZGtbwpcapia6HsA7KQbfOYuC9E=
+	b=taX/jNDd0ZhaUH1M0Tej+ZEr7fDeDCG4wwiOXx0VlxzB0DIr48ZQnjP4nEUHwQYbs
+	 Xxobi/nMk16IjqrSTx8X1cD8CdSHl9VucftahAFvEzfRiyvpgFn4aeu+5Wuz3rSN8o
+	 QOfqKlyjTZV0yb245UAjM0aXROm0OUf+HqbopiAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/122] ipv4: properly combine dev_base_seq and ipv4.dev_addr_genid
-Date: Tue, 27 Feb 2024 14:27:46 +0100
-Message-ID: <20240227131602.141630918@linuxfoundation.org>
+Subject: [PATCH 5.10 106/122] ipv6: properly combine dev_base_seq and ipv6.dev_addr_genid
+Date: Tue, 27 Feb 2024 14:27:47 +0100
+Message-ID: <20240227131602.174100636@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -54,36 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 081a0e3b0d4c061419d3f4679dec9f68725b17e4 ]
+[ Upstream commit e898e4cd1aab271ca414f9ac6e08e4c761f6913c ]
 
-net->dev_base_seq and ipv4.dev_addr_genid are monotonically increasing.
+net->dev_base_seq and ipv6.dev_addr_genid are monotonically increasing.
 
 If we XOR their values, we could miss to detect if both values
 were changed with the same amount.
 
-Fixes: 0465277f6b3f ("ipv4: provide addr and netconf dump consistency info")
+Fixes: 63998ac24f83 ("ipv6: provide addr and netconf dump consistency info")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ net/ipv6/addrconf.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index da1ca8081c035..9ac7d47d27b81 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -1798,6 +1798,21 @@ static int in_dev_dump_addr(struct in_device *in_dev, struct sk_buff *skb,
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 79787a1f5ab34..150c2f71ec89f 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -698,6 +698,22 @@ static int inet6_netconf_get_devconf(struct sk_buff *in_skb,
  	return err;
  }
  
 +/* Combine dev_addr_genid and dev_base_seq to detect changes.
 + */
-+static u32 inet_base_seq(const struct net *net)
++static u32 inet6_base_seq(const struct net *net)
 +{
-+	u32 res = atomic_read(&net->ipv4.dev_addr_genid) +
++	u32 res = atomic_read(&net->ipv6.dev_addr_genid) +
 +		  net->dev_base_seq;
 +
 +	/* Must not return 0 (see nl_dump_check_consistent()).
@@ -94,29 +96,29 @@ index da1ca8081c035..9ac7d47d27b81 100644
 +	return res;
 +}
 +
- static int inet_dump_ifaddr(struct sk_buff *skb, struct netlink_callback *cb)
++
+ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
+ 				      struct netlink_callback *cb)
  {
- 	const struct nlmsghdr *nlh = cb->nlh;
-@@ -1849,8 +1864,7 @@ static int inet_dump_ifaddr(struct sk_buff *skb, struct netlink_callback *cb)
- 		idx = 0;
- 		head = &tgt_net->dev_index_head[h];
- 		rcu_read_lock();
--		cb->seq = atomic_read(&tgt_net->ipv4.dev_addr_genid) ^
--			  tgt_net->dev_base_seq;
-+		cb->seq = inet_base_seq(tgt_net);
- 		hlist_for_each_entry_rcu(dev, head, index_hlist) {
- 			if (idx < s_idx)
- 				goto cont;
-@@ -2249,8 +2263,7 @@ static int inet_netconf_dump_devconf(struct sk_buff *skb,
+@@ -731,8 +747,7 @@ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
  		idx = 0;
  		head = &net->dev_index_head[h];
  		rcu_read_lock();
--		cb->seq = atomic_read(&net->ipv4.dev_addr_genid) ^
+-		cb->seq = atomic_read(&net->ipv6.dev_addr_genid) ^
 -			  net->dev_base_seq;
-+		cb->seq = inet_base_seq(net);
++		cb->seq = inet6_base_seq(net);
  		hlist_for_each_entry_rcu(dev, head, index_hlist) {
  			if (idx < s_idx)
  				goto cont;
+@@ -5288,7 +5303,7 @@ static int inet6_dump_addr(struct sk_buff *skb, struct netlink_callback *cb,
+ 	}
+ 
+ 	rcu_read_lock();
+-	cb->seq = atomic_read(&tgt_net->ipv6.dev_addr_genid) ^ tgt_net->dev_base_seq;
++	cb->seq = inet6_base_seq(tgt_net);
+ 	for (h = s_h; h < NETDEV_HASHENTRIES; h++, s_idx = 0) {
+ 		idx = 0;
+ 		head = &tgt_net->dev_index_head[h];
 -- 
 2.43.0
 
