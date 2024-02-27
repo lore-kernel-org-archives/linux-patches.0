@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F25813AA43;
-	Tue, 27 Feb 2024 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F77813A26F;
+	Tue, 27 Feb 2024 14:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042945; cv=none; b=MKpZAZNtqoinzHatrZSUlTsjpQuVZpLxYYtaCUjWQ7dYDgRK9l/3DJO6LB6Gemi2XwWMdCr50KNStiDIp8pgjGi0E9Ot3Y2DF9KbHndtaA+tFQIrTj/DirClxXu0XeQnDePOeKmC+NPpAmD/FVDq6oAP3GTsMVeN5rxWcuxKrgM=
+	t=1709042948; cv=none; b=D9nkYPAdh9XGU5zhxeoKBe4DqEsl0AhbeBPB3zmBtGsEThKxi9NAmNWXwpRXNdUQkxdxG/PV9IvVOqDJ5ZYW2poCLiS4/vfK4SkP58UTaLaJtPTSxV1qOQBc6ZJyMRO0aDPk6WVd7UCx0opXYFnIP1hug8ry2VrQa1LVDbSIMpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042945; c=relaxed/simple;
-	bh=FTFeaPAU5XD6SqQQsjRSgmbTagYJHDJFP59t7oGjb3s=;
+	s=arc-20240116; t=1709042948; c=relaxed/simple;
+	bh=UPS40LtNeJiQcW7y61i2qm0nQyelygsWhAuoOnbvVl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uR2E/JxZmwj8u4EKS63g/oapKllaAH+pLzHjomwt3VygB39b7b4y3GRK6cLQPgPcj1Tt4ASwi/+HH2jZqjCXFHuHbQRfl4ctwP3lH5Zis+NcRm3AjeJ95+eO+fm3yMuJwiy+lVPHsNUr/jMAfuqvdm5KkZmcAmr6XBJtMM7cmd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdmcNAjX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J599x4eh3AAkuEnpvzrUHWa6hB+llUUr0PWTi9dJV4InRiutwuYe9/YvSNOiMtiId2vUJ1ColDdkrhPIMdV+kqHEexapxVwmH0RsacOSGSoHvUx6EJDDgTt4Eliqamx9qIzhOcxbTK0dMFNCyHAbte/DlDnngjJw8l5hdlw1ey0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKt08T2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdmcNAjX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF833C433F1;
-	Tue, 27 Feb 2024 14:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKt08T2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAFCC433C7;
+	Tue, 27 Feb 2024 14:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042945;
-	bh=FTFeaPAU5XD6SqQQsjRSgmbTagYJHDJFP59t7oGjb3s=;
+	s=korg; t=1709042948;
+	bh=UPS40LtNeJiQcW7y61i2qm0nQyelygsWhAuoOnbvVl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdmcNAjX2r5wPc2wVBYddXPv117cSN0wBVDczA2qRww5H/AO0REzhA8btDt/3M0PV
-	 eNHx5rh2P0Nw2Nk6bEYZUnlL5jtOMQcCNBI61eZ3KXZPm21ejBTtl4wNMl5+zzFyEm
-	 svlh5qFF/xoNLR3Y2kSqUylIKc9swCP5zBIzynkU=
+	b=SKt08T2UbZSvqQE9BndIJgU33HxCID76wxFg9MVSFbfUY1EVr7P1IPYW90EDzYRty
+	 aAW91Vo8NQU9Ss/GcjEWQqzz+oAEZLwja7p2ef5C7wMZsfRovWAJVX4bl907TUIMQ3
+	 n2t5K16dgLymGDqbTV8pyh691j6CdSnQIQf3AMro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 177/245] wifi: ath11k: fix registration of 6Ghz-only phy without the full channel range
-Date: Tue, 27 Feb 2024 14:26:05 +0100
-Message-ID: <20240227131620.962261791@linuxfoundation.org>
+Subject: [PATCH 5.15 178/245] bpf: Address KCSAN report on bpf_lru_list
+Date: Tue, 27 Feb 2024 14:26:06 +0100
+Message-ID: <20240227131620.992679247@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,68 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Bizon <mbizon@freebox.fr>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit e2ceb1de2f83aafd8003f0b72dfd4b7441e97d14 ]
+[ Upstream commit ee9fd0ac3017c4313be91a220a9ac4c99dde7ad4 ]
 
-Because of what seems to be a typo, a 6Ghz-only phy for which the BDF
-does not allow the 7115Mhz channel will fail to register:
+KCSAN reported a data-race when accessing node->ref.
+Although node->ref does not have to be accurate,
+take this chance to use a more common READ_ONCE() and WRITE_ONCE()
+pattern instead of data_race().
 
-  WARNING: CPU: 2 PID: 106 at net/wireless/core.c:907 wiphy_register+0x914/0x954
-  Modules linked in: ath11k_pci sbsa_gwdt
-  CPU: 2 PID: 106 Comm: kworker/u8:5 Not tainted 6.3.0-rc7-next-20230418-00549-g1e096a17625a-dirty #9
-  Hardware name: Freebox V7R Board (DT)
-  Workqueue: ath11k_qmi_driver_event ath11k_qmi_driver_event_work
-  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : wiphy_register+0x914/0x954
-  lr : ieee80211_register_hw+0x67c/0xc10
-  sp : ffffff800b123aa0
-  x29: ffffff800b123aa0 x28: 0000000000000000 x27: 0000000000000000
-  x26: 0000000000000000 x25: 0000000000000006 x24: ffffffc008d51418
-  x23: ffffffc008cb0838 x22: ffffff80176c2460 x21: 0000000000000168
-  x20: ffffff80176c0000 x19: ffffff80176c03e0 x18: 0000000000000014
-  x17: 00000000cbef338c x16: 00000000d2a26f21 x15: 00000000ad6bb85f
-  x14: 0000000000000020 x13: 0000000000000020 x12: 00000000ffffffbd
-  x11: 0000000000000208 x10: 00000000fffffdf7 x9 : ffffffc009394718
-  x8 : ffffff80176c0528 x7 : 000000007fffffff x6 : 0000000000000006
-  x5 : 0000000000000005 x4 : ffffff800b304284 x3 : ffffff800b304284
-  x2 : ffffff800b304d98 x1 : 0000000000000000 x0 : 0000000000000000
-  Call trace:
-   wiphy_register+0x914/0x954
-   ieee80211_register_hw+0x67c/0xc10
-   ath11k_mac_register+0x7c4/0xe10
-   ath11k_core_qmi_firmware_ready+0x1f4/0x570
-   ath11k_qmi_driver_event_work+0x198/0x590
-   process_one_work+0x1b8/0x328
-   worker_thread+0x6c/0x414
-   kthread+0x100/0x104
-   ret_from_fork+0x10/0x20
-  ---[ end trace 0000000000000000 ]---
-  ath11k_pci 0002:01:00.0: ieee80211 registration failed: -22
-  ath11k_pci 0002:01:00.0: failed register the radio with mac80211: -22
-  ath11k_pci 0002:01:00.0: failed to create pdev core: -22
+There is an existing bpf_lru_node_is_ref() and bpf_lru_node_set_ref().
+This patch also adds bpf_lru_node_clear_ref() to do the
+WRITE_ONCE(node->ref, 0) also.
 
-Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230421145445.2612280-1-mbizon@freebox.fr
+==================================================================
+BUG: KCSAN: data-race in __bpf_lru_list_rotate / __htab_lru_percpu_map_update_elem
+
+write to 0xffff888137038deb of 1 bytes by task 11240 on cpu 1:
+__bpf_lru_node_move kernel/bpf/bpf_lru_list.c:113 [inline]
+__bpf_lru_list_rotate_active kernel/bpf/bpf_lru_list.c:149 [inline]
+__bpf_lru_list_rotate+0x1bf/0x750 kernel/bpf/bpf_lru_list.c:240
+bpf_lru_list_pop_free_to_local kernel/bpf/bpf_lru_list.c:329 [inline]
+bpf_common_lru_pop_free kernel/bpf/bpf_lru_list.c:447 [inline]
+bpf_lru_pop_free+0x638/0xe20 kernel/bpf/bpf_lru_list.c:499
+prealloc_lru_pop kernel/bpf/hashtab.c:290 [inline]
+__htab_lru_percpu_map_update_elem+0xe7/0x820 kernel/bpf/hashtab.c:1316
+bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
+bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
+generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
+bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
+__sys_bpf+0x338/0x810
+__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff888137038deb of 1 bytes by task 11241 on cpu 0:
+bpf_lru_node_set_ref kernel/bpf/bpf_lru_list.h:70 [inline]
+__htab_lru_percpu_map_update_elem+0x2f1/0x820 kernel/bpf/hashtab.c:1332
+bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
+bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
+generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
+bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
+__sys_bpf+0x338/0x810
+__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x01 -> 0x00
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 11241 Comm: syz-executor.3 Not tainted 6.3.0-rc7-syzkaller-00136-g6a66fdd29ea1 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+==================================================================
+
+Reported-by: syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230511043748.1384166-1-martin.lau@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/bpf_lru_list.c | 21 +++++++++++++--------
+ kernel/bpf/bpf_lru_list.h |  7 ++-----
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index ae6e14fe03c72..c58fd836d4ade 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6312,7 +6312,7 @@ static int ath11k_mac_setup_channels_rates(struct ath11k *ar,
+diff --git a/kernel/bpf/bpf_lru_list.c b/kernel/bpf/bpf_lru_list.c
+index d99e89f113c43..3dabdd137d102 100644
+--- a/kernel/bpf/bpf_lru_list.c
++++ b/kernel/bpf/bpf_lru_list.c
+@@ -41,7 +41,12 @@ static struct list_head *local_pending_list(struct bpf_lru_locallist *loc_l)
+ /* bpf_lru_node helpers */
+ static bool bpf_lru_node_is_ref(const struct bpf_lru_node *node)
+ {
+-	return node->ref;
++	return READ_ONCE(node->ref);
++}
++
++static void bpf_lru_node_clear_ref(struct bpf_lru_node *node)
++{
++	WRITE_ONCE(node->ref, 0);
+ }
+ 
+ static void bpf_lru_list_count_inc(struct bpf_lru_list *l,
+@@ -89,7 +94,7 @@ static void __bpf_lru_node_move_in(struct bpf_lru_list *l,
+ 
+ 	bpf_lru_list_count_inc(l, tgt_type);
+ 	node->type = tgt_type;
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
+ 	list_move(&node->list, &l->lists[tgt_type]);
+ }
+ 
+@@ -110,7 +115,7 @@ static void __bpf_lru_node_move(struct bpf_lru_list *l,
+ 		bpf_lru_list_count_inc(l, tgt_type);
+ 		node->type = tgt_type;
+ 	}
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
+ 
+ 	/* If the moving node is the next_inactive_rotation candidate,
+ 	 * move the next_inactive_rotation pointer also.
+@@ -353,7 +358,7 @@ static void __local_list_add_pending(struct bpf_lru *lru,
+ 	*(u32 *)((void *)node + lru->hash_offset) = hash;
+ 	node->cpu = cpu;
+ 	node->type = BPF_LRU_LOCAL_LIST_T_PENDING;
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
+ 	list_add(&node->list, local_pending_list(loc_l));
+ }
+ 
+@@ -419,7 +424,7 @@ static struct bpf_lru_node *bpf_percpu_lru_pop_free(struct bpf_lru *lru,
+ 	if (!list_empty(free_list)) {
+ 		node = list_first_entry(free_list, struct bpf_lru_node, list);
+ 		*(u32 *)((void *)node + lru->hash_offset) = hash;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_INACTIVE);
  	}
  
- 	if (supported_bands & WMI_HOST_WLAN_5G_CAP) {
--		if (reg_cap->high_5ghz_chan >= ATH11K_MAX_6G_FREQ) {
-+		if (reg_cap->high_5ghz_chan >= ATH11K_MIN_6G_FREQ) {
- 			channels = kmemdup(ath11k_6ghz_channels,
- 					   sizeof(ath11k_6ghz_channels), GFP_KERNEL);
- 			if (!channels) {
+@@ -522,7 +527,7 @@ static void bpf_common_lru_push_free(struct bpf_lru *lru,
+ 		}
+ 
+ 		node->type = BPF_LRU_LOCAL_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_move(&node->list, local_free_list(loc_l));
+ 
+ 		raw_spin_unlock_irqrestore(&loc_l->lock, flags);
+@@ -568,7 +573,7 @@ static void bpf_common_lru_populate(struct bpf_lru *lru, void *buf,
+ 
+ 		node = (struct bpf_lru_node *)(buf + node_offset);
+ 		node->type = BPF_LRU_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
+ 		buf += elem_size;
+ 	}
+@@ -594,7 +599,7 @@ static void bpf_percpu_lru_populate(struct bpf_lru *lru, void *buf,
+ 		node = (struct bpf_lru_node *)(buf + node_offset);
+ 		node->cpu = cpu;
+ 		node->type = BPF_LRU_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
+ 		i++;
+ 		buf += elem_size;
+diff --git a/kernel/bpf/bpf_lru_list.h b/kernel/bpf/bpf_lru_list.h
+index 6b12f06ee18c3..9c12ee453c616 100644
+--- a/kernel/bpf/bpf_lru_list.h
++++ b/kernel/bpf/bpf_lru_list.h
+@@ -63,11 +63,8 @@ struct bpf_lru {
+ 
+ static inline void bpf_lru_node_set_ref(struct bpf_lru_node *node)
+ {
+-	/* ref is an approximation on access frequency.  It does not
+-	 * have to be very accurate.  Hence, no protection is used.
+-	 */
+-	if (!node->ref)
+-		node->ref = 1;
++	if (!READ_ONCE(node->ref))
++		WRITE_ONCE(node->ref, 1);
+ }
+ 
+ int bpf_lru_init(struct bpf_lru *lru, bool percpu, u32 hash_offset,
 -- 
 2.43.0
 
