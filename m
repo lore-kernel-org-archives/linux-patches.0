@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519632F2D;
-	Tue, 27 Feb 2024 13:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F35B13A25D;
+	Tue, 27 Feb 2024 13:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041416; cv=none; b=rPqV3tllSYhL9gSqIArCjdYj/tP5mGNyllm3LvkathVIROMRCDFc0zdONc51+G8flZQA7DimfzjeWh8SFLZPJpGvLA1VD1mO2JCr1jyGxjzjj9BIYPtboDTYKEbh7fD68rOJon/BgbFqgNZZy86qmqkUEwv4N+8odMF503ahbow=
+	t=1709041419; cv=none; b=Fcd2UPQ/EiFCwbiayjRmnYUCoJuuRilgw43Xz2OS8gWXQwlg3j6EVL8Mu4S4NLVxqMVBer7WxhkNkovhjqggZPXl7aIC70snxfu91FgS44H/ccc/wDHJmwmuk4dLUE63d5BA7rbty64/HkuUUA02BuQ0gjS3eZRbbXM1pdVkIbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041416; c=relaxed/simple;
-	bh=eG2xMOqPBGcR+sLvAhvODFuxpyd6tY4kKVPTIoK0vXs=;
+	s=arc-20240116; t=1709041419; c=relaxed/simple;
+	bh=IP0JscJYBt34ipl9xRqas4WfOqRU4Ojo2bdayiURJYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyD8ZlE2CfBh05/M07pcKVeq9vxzdhni368U7Ihy8H4eIbbu4JmEW/DqylqN700lxGr7DYj8aS8HZFo80TyGN1+mshLNRoSC2WnMTwWcxrkiq87skrdTJRQW6H47sLGFrohlQX76Qx9gcwh5eyT+LSnDRByd1HDC9J/BWKZ8JeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqR08y5M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsZuakCtN7YGUCXcp3dzD08Z1yTj+QkVadZpOKUQYj1pB5R0f4o00KJhflH+VRpUVsnaeFmDMrBnb/Qh3FrHPPsvxOPzGzaEFNrpBb8Ko0gNdlG9m85T1gxQJZdsS4bANOcFFinBtKPM6I/us6DnG7AyfkGhhbe33nQv3UcNNJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Z3J7AuY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqR08y5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8221C433F1;
-	Tue, 27 Feb 2024 13:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Z3J7AuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D46C43394;
+	Tue, 27 Feb 2024 13:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041416;
-	bh=eG2xMOqPBGcR+sLvAhvODFuxpyd6tY4kKVPTIoK0vXs=;
+	s=korg; t=1709041419;
+	bh=IP0JscJYBt34ipl9xRqas4WfOqRU4Ojo2bdayiURJYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqR08y5Moenw9LnpTBm9xVj3porU1rHupV374ozGHmyQ30KhjJ2/NE7Dzht6ChR08
-	 VQcZ1k4nm0f2ni+nRuMtPRDebFN7aLWGJOeNgaAZMgGgVxD8B7nZsQPDTdpnYdLs5i
-	 ozpjWeyXBlki9kGg8jw28OIlgpCfVOeGHLZUmvVw=
+	b=0Z3J7AuY/Heh2TkWlDa7Li8Yo8Fl3W3HITwdNUshZA8mp/x0vFNpMhztyxEb7lGCS
+	 JLq08F7cpYEx68QA6+A4Np2hnG+KFabEiJ559dO9/P1W92MSyA6Frm2G91i0YIVxPx
+	 m7YzWDF7jMg+HYOfJvJyBF7MzetK1vrDyAo2LrOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 332/334] mm/zswap: invalidate duplicate entry when !zswap_enabled
-Date: Tue, 27 Feb 2024 14:23:10 +0100
-Message-ID: <20240227131641.857057816@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Geliang Tang <geliang@kernel.org>
+Subject: [PATCH 6.7 333/334] selftests: mptcp: join: stop transfer when check is done (part 2)
+Date: Tue, 27 Feb 2024 14:23:11 +0100
+Message-ID: <20240227131641.895829765@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,49 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 678e54d4bb9a4822f8ae99690ac131c5d490cdb1 upstream.
+commit 04b57c9e096a9479fe0ad31e3956e336fa589cb2 upstream.
 
-We have to invalidate any duplicate entry even when !zswap_enabled since
-zswap can be disabled anytime.  If the folio store success before, then
-got dirtied again but zswap disabled, we won't invalidate the old
-duplicate entry in the zswap_store().  So later lru writeback may
-overwrite the new data in swapfile.
+Since the "Fixes" commits mentioned below, the newly added "userspace
+pm" subtests of mptcp_join selftests are launching the whole transfer in
+the background, do the required checks, then wait for the end of
+transfer.
 
-Link: https://lkml.kernel.org/r/20240208023254.3873823-1-chengming.zhou@linux.dev
-Fixes: 42c06a0e8ebe ("mm: kill frontswap")
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+There is no need to wait longer, especially because the checks at the
+end of the transfer are ignored (which is fine). This saves quite a few
+seconds on slow environments.
+
+While at it, use 'mptcp_lib_kill_wait()' helper everywhere, instead of
+on a specific one with 'kill_tests_wait()'.
+
+Fixes: b2e2248f365a ("selftests: mptcp: userspace pm create id 0 subflow")
+Fixes: e3b47e460b4b ("selftests: mptcp: userspace pm remove initial subflow")
+Fixes: b9fb176081fb ("selftests: mptcp: userspace pm send RM_ADDR for ID 0")
+Cc: stable@vger.kernel.org
+Reviewed-and-tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-9-4c1c11e571ff@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zswap.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1222,7 +1222,7 @@ bool zswap_store(struct folio *folio)
- 	if (folio_test_large(folio))
- 		return false;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -688,13 +688,6 @@ kill_events_pids()
+ 	mptcp_lib_kill_wait $evts_ns2_pid
+ }
  
--	if (!zswap_enabled || !tree)
-+	if (!tree)
- 		return false;
+-kill_tests_wait()
+-{
+-	#shellcheck disable=SC2046
+-	kill -SIGUSR1 $(ip netns pids $ns2) $(ip netns pids $ns1)
+-	wait
+-}
+-
+ pm_nl_set_limits()
+ {
+ 	local ns=$1
+@@ -3466,7 +3459,8 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns2 2 2
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+ 		speed=slow \
+-			run_tests $ns1 $ns2 10.0.1.1 2>/dev/null &
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
  
- 	/*
-@@ -1238,6 +1238,9 @@ bool zswap_store(struct folio *folio)
- 	}
- 	spin_unlock(&tree->lock);
+ 		wait_mpj $ns1
+ 		pm_nl_check_endpoint "creation" \
+@@ -3481,7 +3475,7 @@ endpoint_tests()
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 flags signal
+ 		pm_nl_check_endpoint "modif is allowed" \
+ 			$ns2 10.0.2.2 id 1 flags signal
+-		kill_tests_wait
++		mptcp_lib_kill_wait $tests_pid
+ 	fi
  
-+	if (!zswap_enabled)
-+		return false;
-+
- 	/*
- 	 * XXX: zswap reclaim does not work with cgroups yet. Without a
- 	 * cgroup-aware entry LRU, we will push out entries system-wide based on
+ 	if reset "delete and re-add" &&
+@@ -3490,7 +3484,8 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns2 1 1
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
+ 		test_linkfail=4 speed=20 \
+-			run_tests $ns1 $ns2 10.0.1.1 2>/dev/null &
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
+ 
+ 		wait_mpj $ns2
+ 		chk_subflow_nr "before delete" 2
+@@ -3505,7 +3500,7 @@ endpoint_tests()
+ 		wait_mpj $ns2
+ 		chk_subflow_nr "after re-add" 2
+ 		chk_mptcp_info subflows 1 subflows 1
+-		kill_tests_wait
++		mptcp_lib_kill_wait $tests_pid
+ 	fi
+ }
+ 
 
 
