@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791C51420A8;
-	Tue, 27 Feb 2024 13:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D70E13B7AE;
+	Tue, 27 Feb 2024 13:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041303; cv=none; b=IXgxuwTH6Q5xIF9yKALVpg3ZheqwviFyTkpPxdXAVl7Nk2QCupe+Xv1EqyPof9ZuufJEsnWf/8JOXrmM5n152qjgCQbnPHXzZvhjO7HiHB0T0m4JCuqWvwSRBSgOJZgTZLZ/FdRMVfm+1SQfTGsW9D02EoQLle5sx1y5opDSA0I=
+	t=1709041306; cv=none; b=T8UlRH7r+Bxg9W9rNIwgyhHIlygSQih1p+Q0/Qv4lUKqlBltd/8rHopJGFy2syxOS1MOEQ9s/7SZ2hPCxu9/yFQR0nhq38b6lbLzUrKn6BbAgw/MuqZw7k1mvPQPgFfoCC1X0looPW3kJ+FjZqLMdanZhdSowLbyejxgfbmzE34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041303; c=relaxed/simple;
-	bh=xXWOOYCL0LSFKppksqUDYK051GxK+3YEYo3WuPBbGtU=;
+	s=arc-20240116; t=1709041306; c=relaxed/simple;
+	bh=3rOox24WtDbh8o/soyWG/NkgeRHaz5XNE1+wqT1UZCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMeajPjqsOLY8Rg4OOjbKsHZ7SLACZ+fmCkWgud9hxLMMtDsJjqZCxyJ2JpsARSBps/7RqFQGoyYa3jFb5RAo1tG6fzKZx17oKS6oDnaAFG3aZgkyB6MyCNMBSOFKX/3AoevpKIQVMSPFv3nI01rok6F1MUD5tWOcpXVYeXGbu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeKHKzGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCmnapjfUcX+iNmranrwz0Tg3H0ZmkeoRBzIfZLrRZvibdCeXIyK3il4Z49yvnKVXQFFCXdiwP7Da2AaTuKAAUQlRSHzw65ySY0wC6n31J8bfZXzx7ExnQVJLUOnhCpy5eR5tgcklYETnJXfvQtkUnzJ8ifMqxH21GfBRpkNB74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AljRYGvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeKHKzGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058AEC43390;
-	Tue, 27 Feb 2024 13:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AljRYGvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C437BC433F1;
+	Tue, 27 Feb 2024 13:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041303;
-	bh=xXWOOYCL0LSFKppksqUDYK051GxK+3YEYo3WuPBbGtU=;
+	s=korg; t=1709041306;
+	bh=3rOox24WtDbh8o/soyWG/NkgeRHaz5XNE1+wqT1UZCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeKHKzGHvNbdkeYV5iotdbPo9JAR7ji+n8nXFiAK4+/jeRd03tQNDc7PL7iGpLjw9
-	 C1CsL/lvnECFbmiluFYFX+iY66wRKVnatdKMsRmdw8DNyEU97NVfvyeR4zsfR1LwCE
-	 FlGkdPEwgrtdmvFAQRw3UUubFXxySgypghchtrso=
+	b=AljRYGvCr4yzN7/CxrHx+ngEUMzC9+I4UO3JOaGt/Z2ptM+9CCPwV9jJgjaGzNIIM
+	 m7FC944cibR5+XR8frssZAGnPn/4Fq6WpHWArpg3EMMn4i4GveaXpbSTpte43bFra9
+	 K74Be7f1vWc0O3YWIzx3j7zk3M/2088ltt/Wy23g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Liu <yi.l.liu@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 292/334] iommu/vt-d: Wrap the dirty tracking loop to be a helper
-Date: Tue, 27 Feb 2024 14:22:30 +0100
-Message-ID: <20240227131640.442207711@linuxfoundation.org>
+Subject: [PATCH 6.7 275/334] ata: ahci_ceva: fix error handling for Xilinx GT PHY support
+Date: Tue, 27 Feb 2024 14:22:13 +0100
+Message-ID: <20240227131639.871975533@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -54,88 +52,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 0c7f2497b39da44253d7bcf2b41f52b0048859ad ]
+[ Upstream commit 26c8404e162b43dddcb037ba2d0cb58c0ed60aab ]
 
-Add device_set_dirty_tracking() to loop all the devices and set the dirty
-tracking per the @enable parameter.
+Platform clock and phy error resources are not cleaned up in Xilinx GT PHY
+error path.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20240208082307.15759-8-yi.l.liu@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: f1e1610950ea ("iommu/vt-d: Add missing dirty tracking set for parent domain")
+To fix introduce the function ceva_ahci_platform_enable_resources() which
+is a customized version of ahci_platform_enable_resources() and inline with
+SATA IP programming sequence it does:
+
+- Assert SATA reset
+- Program PS GTR phy
+- Bring SATA by de-asserting the reset
+- Wait for GT lane PLL to be locked
+
+ceva_ahci_platform_enable_resources() is also used in the resume path
+as the same SATA programming sequence (as in probe) should be followed.
+Also cleanup the mixed usage of ahci_platform_enable_resources() and custom
+implementation in the probe function as both are not required.
+
+Fixes: 9a9d3abe24bb ("ata: ahci: ceva: Update the driver to support xilinx GT phy")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ drivers/ata/ahci_ceva.c | 125 +++++++++++++++++++++++++---------------
+ 1 file changed, 79 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 88f9b4ffd5774..e3b3ab506b185 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4865,23 +4865,38 @@ static void *intel_iommu_hw_info(struct device *dev, u32 *length, u32 *type)
- 	return vtd;
- }
+diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
+index 64f7f7d6ba84e..11a2c199a7c24 100644
+--- a/drivers/ata/ahci_ceva.c
++++ b/drivers/ata/ahci_ceva.c
+@@ -88,7 +88,6 @@ struct ceva_ahci_priv {
+ 	u32 axicc;
+ 	bool is_cci_enabled;
+ 	int flags;
+-	struct reset_control *rst;
+ };
  
-+/*
-+ * Set dirty tracking for the device list of a domain. The caller must
-+ * hold the domain->lock when calling it.
-+ */
-+static int device_set_dirty_tracking(struct list_head *devices, bool enable)
+ static unsigned int ceva_ahci_read_id(struct ata_device *dev,
+@@ -189,6 +188,60 @@ static const struct scsi_host_template ahci_platform_sht = {
+ 	AHCI_SHT(DRV_NAME),
+ };
+ 
++static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
 +{
-+	struct device_domain_info *info;
-+	int ret = 0;
++	int rc, i;
 +
-+	list_for_each_entry(info, devices, link) {
-+		ret = intel_pasid_setup_dirty_tracking(info->iommu, info->dev,
-+						       IOMMU_NO_PASID, enable);
-+		if (ret)
-+			break;
++	rc = ahci_platform_enable_regulators(hpriv);
++	if (rc)
++		return rc;
++
++	rc = ahci_platform_enable_clks(hpriv);
++	if (rc)
++		goto disable_regulator;
++
++	/* Assert the controller reset */
++	rc = ahci_platform_assert_rsts(hpriv);
++	if (rc)
++		goto disable_clks;
++
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_init(hpriv->phys[i]);
++		if (rc)
++			goto disable_rsts;
 +	}
 +
-+	return ret;
++	/* De-assert the controller reset */
++	ahci_platform_deassert_rsts(hpriv);
++
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_power_on(hpriv->phys[i]);
++		if (rc) {
++			phy_exit(hpriv->phys[i]);
++			goto disable_phys;
++		}
++	}
++
++	return 0;
++
++disable_rsts:
++	ahci_platform_deassert_rsts(hpriv);
++
++disable_phys:
++	while (--i >= 0) {
++		phy_power_off(hpriv->phys[i]);
++		phy_exit(hpriv->phys[i]);
++	}
++
++disable_clks:
++	ahci_platform_disable_clks(hpriv);
++
++disable_regulator:
++	ahci_platform_disable_regulators(hpriv);
++
++	return rc;
 +}
 +
- static int intel_iommu_set_dirty_tracking(struct iommu_domain *domain,
- 					  bool enable)
+ static int ceva_ahci_probe(struct platform_device *pdev)
  {
- 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
--	struct device_domain_info *info;
- 	int ret;
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -203,47 +256,19 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- 	spin_lock(&dmar_domain->lock);
- 	if (dmar_domain->dirty_tracking == enable)
- 		goto out_unlock;
+ 	cevapriv->ahci_pdev = pdev;
+-
+-	cevapriv->rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
+-								  NULL);
+-	if (IS_ERR(cevapriv->rst))
+-		dev_err_probe(&pdev->dev, PTR_ERR(cevapriv->rst),
+-			      "failed to get reset\n");
+-
+ 	hpriv = ahci_platform_get_resources(pdev, 0);
+ 	if (IS_ERR(hpriv))
+ 		return PTR_ERR(hpriv);
  
--	list_for_each_entry(info, &dmar_domain->devices, link) {
--		ret = intel_pasid_setup_dirty_tracking(info->iommu, info->dev,
--						       IOMMU_NO_PASID, enable);
--		if (ret)
--			goto err_unwind;
+-	if (!cevapriv->rst) {
+-		rc = ahci_platform_enable_resources(hpriv);
+-		if (rc)
+-			return rc;
+-	} else {
+-		int i;
++	hpriv->rsts = devm_reset_control_get_optional_exclusive(&pdev->dev,
++								NULL);
++	if (IS_ERR(hpriv->rsts))
++		return dev_err_probe(&pdev->dev, PTR_ERR(hpriv->rsts),
++				     "failed to get reset\n");
+ 
+-		rc = ahci_platform_enable_clks(hpriv);
+-		if (rc)
+-			return rc;
+-		/* Assert the controller reset */
+-		reset_control_assert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_init(hpriv->phys[i]);
+-			if (rc)
+-				return rc;
+-		}
+-
+-		/* De-assert the controller reset */
+-		reset_control_deassert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_power_on(hpriv->phys[i]);
+-			if (rc) {
+-				phy_exit(hpriv->phys[i]);
+-				return rc;
+-			}
+-		}
 -	}
-+	ret = device_set_dirty_tracking(&dmar_domain->devices, enable);
-+	if (ret)
-+		goto err_unwind;
++	rc = ceva_ahci_platform_enable_resources(hpriv);
++	if (rc)
++		return rc;
  
- 	dmar_domain->dirty_tracking = enable;
- out_unlock:
-@@ -4890,10 +4905,8 @@ static int intel_iommu_set_dirty_tracking(struct iommu_domain *domain,
- 	return 0;
+ 	if (of_property_read_bool(np, "ceva,broken-gen2"))
+ 		cevapriv->flags = CEVA_FLAG_BROKEN_GEN2;
+@@ -252,52 +277,60 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 	if (of_property_read_u8_array(np, "ceva,p0-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
  
- err_unwind:
--	list_for_each_entry(info, &dmar_domain->devices, link)
--		intel_pasid_setup_dirty_tracking(info->iommu, info->dev,
--						 IOMMU_NO_PASID,
--						 dmar_domain->dirty_tracking);
-+	device_set_dirty_tracking(&dmar_domain->devices,
-+				  dmar_domain->dirty_tracking);
- 	spin_unlock(&dmar_domain->lock);
- 	return ret;
- }
+ 	if (of_property_read_u8_array(np, "ceva,p1-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read OOB timing value for COMWAKE from device-tree*/
+ 	if (of_property_read_u8_array(np, "ceva,p0-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy BURST timing value from device-tree */
+ 	if (of_property_read_u8_array(np, "ceva,p0-burst-params",
+ 					(u8 *)&cevapriv->pp4c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-burst-params",
+ 					(u8 *)&cevapriv->pp4c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy RETRY interval timing value from device-tree */
+ 	if (of_property_read_u16_array(np, "ceva,p0-retry-params",
+ 					(u16 *)&cevapriv->pp5c[0], 2) < 0) {
+ 		dev_warn(dev, "ceva,p0-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u16_array(np, "ceva,p1-retry-params",
+ 					(u16 *)&cevapriv->pp5c[1], 2) < 0) {
+ 		dev_warn(dev, "ceva,p1-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/*
+@@ -335,7 +368,7 @@ static int __maybe_unused ceva_ahci_resume(struct device *dev)
+ 	struct ahci_host_priv *hpriv = host->private_data;
+ 	int rc;
+ 
+-	rc = ahci_platform_enable_resources(hpriv);
++	rc = ceva_ahci_platform_enable_resources(hpriv);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.43.0
 
