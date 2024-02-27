@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902A413AA50;
-	Tue, 27 Feb 2024 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A45D1419B3;
+	Tue, 27 Feb 2024 14:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042432; cv=none; b=ItNibaKXB8DE+uMQaUkHMu6LHjgohTQTIrJ/zlm+sAXgndUEcA6boFjqM6M5jVgrJrVURuXHDsghVYvz+ZzsAesLf6RCisCigzS2rYcsdmN3vnNDx58ioQ/DZGvDnK6/rciyD9citOUtPsxu3wF9MTd6aP2LWdunCR1LVdlDHNU=
+	t=1709042435; cv=none; b=TqwRVqMW8GcQHIeRbwCtudrpNmSBHi9nJ0dSXDje3XdLo9J4BiTKGb3CViRPxpJpnfKw9/bEhOy3LW2kDuzK7jHRuy3eEENGC0CmcTiPYQpWvMZFu/ybCgQUM20/KEdgwQvZLhNQXYk3j0AUghfv+C+j+R7vsWVQhbJSlAtK/wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042432; c=relaxed/simple;
-	bh=pgAVC2dHh9B6PxywGItIfpUm/JA3wM3Ly/6Unt+Juiw=;
+	s=arc-20240116; t=1709042435; c=relaxed/simple;
+	bh=x5+6jh+vVf53uo3fzm/2lISI4qCWlIHHh5nFP7ne0Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5SwGHfQ5eP0LimSvAd1MqdDFXG0j9QsQwT/oexh/GoZ625EXywrAH6lFnPeiGuDxpwmkCl2S8Ws4ngtNxYnfnBPZrLqryu3jg3T9E5tPMDePqy4iaatO5fI/kd/YTlIuaoxK1nIXPRI+aQ7csiJM5CbvMCAWrculj0xbRNcpoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHjtnnyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q657SvYtBWcV7OLLmlBxjUDWw5Vc5D10rLpvwt7wOLJHVA3syB9OHTI2bsxD8Eqjg3yaXBJetWxEOYVjfzVPj6aXsXiYrMGqS6Xhm/e5tQG/8PW+RkKJEGn4aWZahH+NhxzEC8j7E4yNBA/v4fxwaUF5Z7rjx2PgCQaBAWmNtj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oH/zLD4O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHjtnnyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7FCC433F1;
-	Tue, 27 Feb 2024 14:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oH/zLD4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A90C433C7;
+	Tue, 27 Feb 2024 14:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042432;
-	bh=pgAVC2dHh9B6PxywGItIfpUm/JA3wM3Ly/6Unt+Juiw=;
+	s=korg; t=1709042435;
+	bh=x5+6jh+vVf53uo3fzm/2lISI4qCWlIHHh5nFP7ne0Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHjtnnyZ/b6zqmBWFZMPuIFnFfbQ7xoiR7g9e1ah6wNNDRe4YiWQAGdZu96Mhik6u
-	 E3XYHdNMBMAXxHL+7xeS8Xi/c73wdNAwI+ktyiQ5bEB7pItZDZ73NL8XrVw9gB/VId
-	 Wy7I4+tIDEQCEX9MnYmusYcjQxQGn8ZpinkKN21M=
+	b=oH/zLD4O9eekOTYN/gqTELrCgVbHjL3GfGQOtJdsCFIpy3jYNbzumbJrq5i8Z+0jm
+	 YrLnPCOnR7mncAlviqBQG4qdAP/ghgNfZh7XIH67aFBHbc1B60iqAh0LgvqoSjIcxy
+	 ZlpO4gYY4A6Umk0FlGQyeV9FvyZja7BB3aUJh8ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 293/299] mm: zswap: fix missing folio cleanup in writeback race path
-Date: Tue, 27 Feb 2024 14:26:44 +0100
-Message-ID: <20240227131635.099623139@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Geliang Tang <geliang@kernel.org>
+Subject: [PATCH 6.6 294/299] selftests: mptcp: join: stop transfer when check is done (part 2)
+Date: Tue, 27 Feb 2024 14:26:45 +0100
+Message-ID: <20240227131635.129703038@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -54,48 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosryahmed@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit e3b63e966cac0bf78aaa1efede1827a252815a1d upstream.
+commit 04b57c9e096a9479fe0ad31e3956e336fa589cb2 upstream.
 
-In zswap_writeback_entry(), after we get a folio from
-__read_swap_cache_async(), we grab the tree lock again to check that the
-swap entry was not invalidated and recycled.  If it was, we delete the
-folio we just added to the swap cache and exit.
+Since the "Fixes" commits mentioned below, the newly added "userspace
+pm" subtests of mptcp_join selftests are launching the whole transfer in
+the background, do the required checks, then wait for the end of
+transfer.
 
-However, __read_swap_cache_async() returns the folio locked when it is
-newly allocated, which is always true for this path, and the folio is
-ref'd.  Make sure to unlock and put the folio before returning.
+There is no need to wait longer, especially because the checks at the
+end of the transfer are ignored (which is fine). This saves quite a few
+seconds on slow environments.
 
-This was discovered by code inspection, probably because this path handles
-a race condition that should not happen often, and the bug would not crash
-the system, it will only strand the folio indefinitely.
+While at it, use 'mptcp_lib_kill_wait()' helper everywhere, instead of
+on a specific one with 'kill_tests_wait()'.
 
-Link: https://lkml.kernel.org/r/20240125085127.1327013-1-yosryahmed@google.com
-Fixes: 04fc7816089c ("mm: fix zswap writeback race condition")
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-Reviewed-by: Chengming Zhou <zhouchengming@bytedance.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+Fixes: b2e2248f365a ("selftests: mptcp: userspace pm create id 0 subflow")
+Fixes: e3b47e460b4b ("selftests: mptcp: userspace pm remove initial subflow")
+Fixes: b9fb176081fb ("selftests: mptcp: userspace pm send RM_ADDR for ID 0")
+Cc: stable@vger.kernel.org
+Reviewed-and-tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-9-4c1c11e571ff@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zswap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1100,6 +1100,8 @@ static int zswap_writeback_entry(struct
- 	if (zswap_rb_search(&tree->rbroot, swp_offset(entry->swpentry)) != entry) {
- 		spin_unlock(&tree->lock);
- 		delete_from_swap_cache(page_folio(page));
-+		unlock_page(page);
-+		put_page(page);
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -688,13 +688,6 @@ kill_events_pids()
+ 	mptcp_lib_kill_wait $evts_ns2_pid
+ }
+ 
+-kill_tests_wait()
+-{
+-	#shellcheck disable=SC2046
+-	kill -SIGUSR1 $(ip netns pids $ns2) $(ip netns pids $ns1)
+-	wait
+-}
+-
+ pm_nl_set_limits()
+ {
+ 	local ns=$1
+@@ -3463,7 +3456,8 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns2 2 2
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+ 		speed=slow \
+-			run_tests $ns1 $ns2 10.0.1.1 2>/dev/null &
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
+ 
+ 		wait_mpj $ns1
+ 		pm_nl_check_endpoint "creation" \
+@@ -3478,7 +3472,7 @@ endpoint_tests()
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 flags signal
+ 		pm_nl_check_endpoint "modif is allowed" \
+ 			$ns2 10.0.2.2 id 1 flags signal
+-		kill_tests_wait
++		mptcp_lib_kill_wait $tests_pid
+ 	fi
+ 
+ 	if reset "delete and re-add" &&
+@@ -3487,7 +3481,8 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns2 1 1
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
+ 		test_linkfail=4 speed=20 \
+-			run_tests $ns1 $ns2 10.0.1.1 2>/dev/null &
++			run_tests $ns1 $ns2 10.0.1.1 &
++		local tests_pid=$!
+ 
+ 		wait_mpj $ns2
+ 		chk_subflow_nr "before delete" 2
+@@ -3502,7 +3497,7 @@ endpoint_tests()
+ 		wait_mpj $ns2
+ 		chk_subflow_nr "after re-add" 2
+ 		chk_mptcp_info subflows 1 subflows 1
+-		kill_tests_wait
++		mptcp_lib_kill_wait $tests_pid
+ 	fi
+ }
+ 
 
 
