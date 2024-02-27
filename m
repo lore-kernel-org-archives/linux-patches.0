@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5CA13B7A0;
-	Tue, 27 Feb 2024 13:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860C354BD4;
+	Tue, 27 Feb 2024 13:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042360; cv=none; b=Vvgu1/7s5n2yHjUGr5CMLbZAhtT0s1suKvJUWL7OFMG0u7jqGvx8OVcEnpbsCVjb5ttha/94SKR5JxjHv0UoXSj+zeDviapxeeLxbmV7Ez1VovtyVTSnP8dNhHua289XpXz6JDp67ekGFJoX+5pO+uoqFRmJGJiFKf/oMxlzuio=
+	t=1709042363; cv=none; b=msTnaRhCgPFlaPlVNbnBVi6tpzPQB+G8GXnIGX28/LkJwzTHJMWw0dX6ERL+5BoZGTKNeP5Z/LQfFGH03wxgcDzJVDoyTuhIEypI4YkmoN8De+Rm0OmOx313MGYDGkrfMOBU780Q/cSw4m7saq0GEML5H8Shh+Q9pgOexz5IHvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042360; c=relaxed/simple;
-	bh=SqSKL7wUN0y1clpB+dPiPOgIQtlUs/BDQbJDxN97YCM=;
+	s=arc-20240116; t=1709042363; c=relaxed/simple;
+	bh=a2t6ng3tDJ5aeZ/uQxy4LZLr3111RtBqznST3VLTb5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGeVpnhswHaxytqBTBvkgjTYs8rvh4/lT6XMB7iF4RZlM1mCrSRwaHfsevVz6QDfbxMxeWnlXdP946/uk/ZIZjjO0N5YNUYK9mEhcSWzq2A6urNLT4+On0Pt2k5IDyq4J6R8EWWFWieILN4RlR90EK+9nfFlPBT6iZsQTeF3LH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFgSIsSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pBx6O6mKENTUE4v7UX/N8FYufI8v2tatfHDQcZzRZaTTfIcwisoODHvBZYvy0ffgag6eQYWquNF0qnQMOY4107tRdJr03NYirm+8kbmDBFPT8kswJcYrlPAQ0NtGYb+AZbyBjHEjywr26hrLpRpIm3VkAjnVcmIjAkzjPEIUDhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpIh8PSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFgSIsSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4EDC433F1;
-	Tue, 27 Feb 2024 13:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpIh8PSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F2AC433C7;
+	Tue, 27 Feb 2024 13:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042360;
-	bh=SqSKL7wUN0y1clpB+dPiPOgIQtlUs/BDQbJDxN97YCM=;
+	s=korg; t=1709042363;
+	bh=a2t6ng3tDJ5aeZ/uQxy4LZLr3111RtBqznST3VLTb5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFgSIsSZX67tLV6kQ31k1Bu8U7HJHVRYHlLXjQRtR6V409WwUJ/LhWS6bGlPsKjvS
-	 sULvUr25cvEP47UWu0lGwfzpi+Q9CUlRq0QnkOZQBQZ6c7Q0FVHzLpR6TgM5T2mNan
-	 CoYeRUPvR0U5UoRq4WnD/U5copOn3DAMYG/mKcBQ=
+	b=HpIh8PSgt1iv6CIaRJ4SfInS/iQB/NWp+K1bvL9qFqo+QZXinLhJkBEXxYEnsyI7x
+	 +Dhhwou8a4a8VldCTtnXNJKNkW86biSS3BGtEUTD3+Hntcmp1PCsuTcu2350ZfikF+
+	 yZdI2r5mmr7ZG2Cy7AjhMFyAAEfruoYDoKtQj7CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/299] hwmon: (nct6775) Fix access to temperature configuration registers
-Date: Tue, 27 Feb 2024 14:26:18 +0100
-Message-ID: <20240227131634.280229182@linuxfoundation.org>
+Subject: [PATCH 6.6 268/299] tls: break out of main loop when PEEK gets a non-data record
+Date: Tue, 27 Feb 2024 14:26:19 +0100
+Message-ID: <20240227131634.310736916@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,115 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit d56e460e19ea8382f813eb489730248ec8d7eb73 ]
+[ Upstream commit 10f41d0710fc81b7af93fa6106678d57b1ff24a7 ]
 
-The number of temperature configuration registers does
-not always match the total number of temperature registers.
-This can result in access errors reported if KASAN is enabled.
+PEEK needs to leave decrypted records on the rx_list so that we can
+receive them later on, so it jumps back into the async code that
+queues the skb. Unfortunately that makes us skip the
+TLS_RECORD_TYPE_DATA check at the bottom of the main loop, so if two
+records of the same (non-DATA) type are queued, we end up merging
+them.
 
-BUG: KASAN: global-out-of-bounds in nct6775_probe+0x5654/0x6fe9 nct6775_core
+Add the same record type check, and make it unlikely to not penalize
+the async fastpath. Async decrypt only applies to data record, so this
+check is only needed for PEEK.
 
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/linux-hwmon/d51181d1-d26b-42b2-b002-3f5a4037721f@roeck-us.net/
-Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
-Cc: Ahmad Khalifa <ahmad@khalifa.ws>
-Tested-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+process_rx_list also has similar issues.
+
+Fixes: 692d7b5d1f91 ("tls: Fix recvmsg() to be able to peek across multiple records")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/3df2eef4fdae720c55e69472b5bea668772b45a2.1708007371.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index 92a49fafe2c02..f3bf2e4701c38 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -3512,6 +3512,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 	const u16 *reg_temp_mon, *reg_temp_alternate, *reg_temp_crit;
- 	const u16 *reg_temp_crit_l = NULL, *reg_temp_crit_h = NULL;
- 	int num_reg_temp, num_reg_temp_mon, num_reg_tsi_temp;
-+	int num_reg_temp_config;
- 	struct device *hwmon_dev;
- 	struct sensor_template_group tsi_temp_tg;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index e1f8ff6e9a739..67c8323b7cd11 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2064,6 +2064,8 @@ int tls_sw_recvmsg(struct sock *sk,
+ 				decrypted += chunk;
+ 				len -= chunk;
+ 				__skb_queue_tail(&ctx->rx_list, skb);
++				if (unlikely(control != TLS_RECORD_TYPE_DATA))
++					break;
+ 				continue;
+ 			}
  
-@@ -3594,6 +3595,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6106_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
- 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
- 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
-@@ -3669,6 +3671,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6106_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
- 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
- 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
-@@ -3746,6 +3749,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6775_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
- 		reg_temp_config = NCT6775_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6775_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6775_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6775_REG_TEMP_CRIT;
- 
-@@ -3821,6 +3825,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6775_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
- 		reg_temp_config = NCT6776_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6776_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6776_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6776_REG_TEMP_CRIT;
- 
-@@ -3900,6 +3905,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6779_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
- 
-@@ -4034,6 +4040,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6779_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
- 
-@@ -4123,6 +4130,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6798_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6798_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6798_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6798_REG_TEMP_CRIT;
- 
-@@ -4204,7 +4212,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 				  = reg_temp_crit[src - 1];
- 			if (reg_temp_crit_l && reg_temp_crit_l[i])
- 				data->reg_temp[4][src - 1] = reg_temp_crit_l[i];
--			data->reg_temp_config[src - 1] = reg_temp_config[i];
-+			if (i < num_reg_temp_config)
-+				data->reg_temp_config[src - 1] = reg_temp_config[i];
- 			data->temp_src[src - 1] = src;
- 			continue;
- 		}
-@@ -4217,7 +4226,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		data->reg_temp[0][s] = reg_temp[i];
- 		data->reg_temp[1][s] = reg_temp_over[i];
- 		data->reg_temp[2][s] = reg_temp_hyst[i];
--		data->reg_temp_config[s] = reg_temp_config[i];
-+		if (i < num_reg_temp_config)
-+			data->reg_temp_config[s] = reg_temp_config[i];
- 		if (reg_temp_crit_h && reg_temp_crit_h[i])
- 			data->reg_temp[3][s] = reg_temp_crit_h[i];
- 		else if (reg_temp_crit[src - 1])
 -- 
 2.43.0
 
