@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5F814533E;
-	Tue, 27 Feb 2024 13:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DEA13AA55;
+	Tue, 27 Feb 2024 13:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042121; cv=none; b=HxLnVsouzPY7PCorZR2XgSuj0CFJ3H6WdeTmmdeqzCPsbWyKPfRdVdElhJR/rWfys6YRt4+DW2M/6L+jcZxKMT2i+qJ0byXl+p1IdeeEAG/5tSGP0vu6gF25l8heP9wyRlZoc0g2RqFW2Umy9YsMg+T3AEKMue4AJBDa/pJxIbk=
+	t=1709042124; cv=none; b=Se9TNAZFq9gw0paXv34EDqCsWG2Ur5ceQ6LiHoQiwY35D1JRZGu9IuCTE4SkfsyzcwUmKE24RuNvuikKeGycQqyKRe104ttdnupTF9jBWJn0pnYrVmAgMtDuZY0XFHmn0XEcdFhdMDCUYKTTjLB+rRlxOytqSRfTzhXoHYkViwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042121; c=relaxed/simple;
-	bh=HXbMIeAfjAeJJ949pWg4Ghe7PAESmwtUZY9GZtrrhTE=;
+	s=arc-20240116; t=1709042124; c=relaxed/simple;
+	bh=uVqjvABWR6SrMUtKij+VIVevZwLr/rd559aw9tX8WOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWzdz+o/9sNAi9ueNyhs6qmp0+mfORr4loG7GL/2eMaaBPXQf61vu8vBEJ4o7C9qbYiZ/fCIEypt8KJFoSc80Vd+8oR8/yNiHxSidq2BppOuCtObAofLjkvvRabK//CdiYy1NpjcCiVhsVXSC97j7HMigwlFmf4etNvj0Yg7mIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnsAxz2b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PXg1X0obP6eB7ir0MG1IJscDlbc8qItRIuVHFQsCQ41rpxRtWsd3tigMhpI+ZhOjw+b/E0qZAFh+CGl7o7XaUqPHcFYKSCJR38M11R93G6XgPg8rQdxyca8x0v0HuDo+D7MgHebqGIe5NZSOFWkBxkGRz1RZHgFitrLtmQxfUx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jID8VYAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnsAxz2b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D9AC433C7;
-	Tue, 27 Feb 2024 13:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jID8VYAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0171BC433F1;
+	Tue, 27 Feb 2024 13:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042121;
-	bh=HXbMIeAfjAeJJ949pWg4Ghe7PAESmwtUZY9GZtrrhTE=;
+	s=korg; t=1709042124;
+	bh=uVqjvABWR6SrMUtKij+VIVevZwLr/rd559aw9tX8WOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnsAxz2bIOekBdBOok65nQI49bNcZVnVB6L9ZBmK4O5n9CRQsEjbphrAzVmmkclLA
-	 Pu80Ff4LFULLV1gjhBpEY74Ub6bWdKhv6cqvYh/woBn/4hPzQwzbtYzLhnuWlKmFCX
-	 i/BoZs0Gxun0ik7xwMznfp9ydBTPRNL61zd3vnWc=
+	b=jID8VYARWyWay+5JIV01oeiNmF9CqDlTpp0KZzKhgLizod6xlaRH74pw50Kbx6wut
+	 +geaSL8wm7stj5SCAXbn/Tw0b1/CiJtaF1oLqMb0pvr/nA5V1t652D6X9aUETS25/n
+	 AOwMvN9HgxsPEtZpWbH/ImKksB4PM98MrnhpQRtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	=?UTF-8?q?Jonas=20Sch=C3=A4fer?= <jonas@wielicki.name>,
+	Narcis Garcia <debianlists@actiu.net>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 159/299] mm/damon/lru_sort: fix quota status loss due to online tunings
-Date: Tue, 27 Feb 2024 14:24:30 +0100
-Message-ID: <20240227131630.972857586@linuxfoundation.org>
+Subject: [PATCH 6.6 160/299] mm: memcontrol: clarify swapaccount=0 deprecation warning
+Date: Tue, 27 Feb 2024 14:24:31 +0100
+Message-ID: <20240227131631.009790249@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -44,107 +51,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 13d0599ab3b2ff17f798353f24bcbef1659d3cfc upstream.
+commit 118642d7f606fc9b9c92ee611275420320290ffb upstream.
 
-For online parameters change, DAMON_LRU_SORT creates new schemes based on
-latest values of the parameters and replaces the old schemes with the new
-one.  When creating it, the internal status of the quotas of the old
-schemes is not preserved.  As a result, charging of the quota starts from
-zero after the online tuning.  The data that collected to estimate the
-throughput of the scheme's action is also reset, and therefore the
-estimation should start from the scratch again.  Because the throughput
-estimation is being used to convert the time quota to the effective size
-quota, this could result in temporal time quota inaccuracy.  It would be
-recovered over time, though.  In short, the quota accuracy could be
-temporarily degraded after online parameters update.
+The swapaccount deprecation warning is throwing false positives.  Since we
+deprecated the knob and defaulted to enabling, the only reports we've been
+getting are from folks that set swapaccount=1.  While this is a nice
+affirmation that always-enabling was the right choice, we certainly don't
+want to warn when users request the supported mode.
 
-Fix the problem by checking the case and copying the internal fields for
-the status.
+Only warn when disabling is requested, and clarify the warning.
 
-Link: https://lkml.kernel.org/r/20240216194025.9207-3-sj@kernel.org
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.0+]
+[colin.i.king@gmail.com: spelling: "commdandline" -> "commandline"]
+  Link: https://lkml.kernel.org/r/20240215090544.1649201-1-colin.i.king@gmail.com
+Link: https://lkml.kernel.org/r/20240213081634.3652326-1-hannes@cmpxchg.org
+Fixes: b25806dcd3d5 ("mm: memcontrol: deprecate swapaccounting=0 mode")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reported-by: "Jonas Schäfer" <jonas@wielicki.name>
+Reported-by: Narcis Garcia <debianlists@actiu.net>
+Suggested-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/lru_sort.c |   43 ++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 7 deletions(-)
+ mm/memcontrol.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -183,9 +183,21 @@ static struct damos *damon_lru_sort_new_
- 	return damon_lru_sort_new_scheme(&pattern, DAMOS_LRU_DEPRIO);
- }
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -7613,9 +7613,13 @@ bool mem_cgroup_swap_full(struct folio *
  
-+static void damon_lru_sort_copy_quota_status(struct damos_quota *dst,
-+		struct damos_quota *src)
-+{
-+	dst->total_charged_sz = src->total_charged_sz;
-+	dst->total_charged_ns = src->total_charged_ns;
-+	dst->charged_sz = src->charged_sz;
-+	dst->charged_from = src->charged_from;
-+	dst->charge_target_from = src->charge_target_from;
-+	dst->charge_addr_from = src->charge_addr_from;
-+}
-+
- static int damon_lru_sort_apply_parameters(void)
+ static int __init setup_swap_account(char *s)
  {
--	struct damos *scheme;
-+	struct damos *scheme, *hot_scheme, *cold_scheme;
-+	struct damos *old_hot_scheme = NULL, *old_cold_scheme = NULL;
- 	unsigned int hot_thres, cold_thres;
- 	int err = 0;
- 
-@@ -193,18 +205,35 @@ static int damon_lru_sort_apply_paramete
- 	if (err)
- 		return err;
- 
-+	damon_for_each_scheme(scheme, ctx) {
-+		if (!old_hot_scheme) {
-+			old_hot_scheme = scheme;
-+			continue;
-+		}
-+		old_cold_scheme = scheme;
-+	}
+-	pr_warn_once("The swapaccount= commandline option is deprecated. "
+-		     "Please report your usecase to linux-mm@kvack.org if you "
+-		     "depend on this functionality.\n");
++	bool res;
 +
- 	hot_thres = damon_max_nr_accesses(&damon_lru_sort_mon_attrs) *
- 		hot_thres_access_freq / 1000;
--	scheme = damon_lru_sort_new_hot_scheme(hot_thres);
--	if (!scheme)
-+	hot_scheme = damon_lru_sort_new_hot_scheme(hot_thres);
-+	if (!hot_scheme)
- 		return -ENOMEM;
--	damon_set_schemes(ctx, &scheme, 1);
-+	if (old_hot_scheme)
-+		damon_lru_sort_copy_quota_status(&hot_scheme->quota,
-+				&old_hot_scheme->quota);
- 
- 	cold_thres = cold_min_age / damon_lru_sort_mon_attrs.aggr_interval;
--	scheme = damon_lru_sort_new_cold_scheme(cold_thres);
--	if (!scheme)
-+	cold_scheme = damon_lru_sort_new_cold_scheme(cold_thres);
-+	if (!cold_scheme) {
-+		damon_destroy_scheme(hot_scheme);
- 		return -ENOMEM;
--	damon_add_scheme(ctx, scheme);
-+	}
-+	if (old_cold_scheme)
-+		damon_lru_sort_copy_quota_status(&cold_scheme->quota,
-+				&old_cold_scheme->quota);
-+
-+	damon_set_schemes(ctx, &hot_scheme, 1);
-+	damon_add_scheme(ctx, cold_scheme);
- 
- 	return damon_set_region_biggest_system_ram_default(target,
- 					&monitor_region_start,
++	if (!kstrtobool(s, &res) && !res)
++		pr_warn_once("The swapaccount=0 commandline option is deprecated "
++			     "in favor of configuring swap control via cgroupfs. "
++			     "Please report your usecase to linux-mm@kvack.org if you "
++			     "depend on this functionality.\n");
+ 	return 1;
+ }
+ __setup("swapaccount=", setup_swap_account);
 
 
