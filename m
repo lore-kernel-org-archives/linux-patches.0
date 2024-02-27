@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BCF1419AE;
-	Tue, 27 Feb 2024 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E271419AE;
+	Tue, 27 Feb 2024 13:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041637; cv=none; b=e9MIfys7hoZHxyCoLTz/9iEIhjWcdRQ5FWcNhI9vl+y2UTA3morZ3m9g8y+cG7GTMw9pEmjckezcQgB0MQlNW/oOGJZuEsUr+mt+O1VplAM9F++47p8F+wzKbnSiXbDEUd29UxApSnx9HgJEtpXojM6wHOoFv60+ILD5jim7I5Y=
+	t=1709041640; cv=none; b=PKqae7l8RwoLxcU73XplMvn1iJpgh4QpkiScH0F2RBlwBZn+E2Ap3UmNbOkiuMNgkzBaSGSYECAQhF7QjMyYTHmePX5zajw3uDxl7tPzOvtAp6XAqdo2jPRd9xvuOjXzRwfCZRlRxUz8vnQW0OEXyaf0/RiuCggZCYALxP5+QoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041637; c=relaxed/simple;
-	bh=m/WGF5wg8VoisUxeQFgcuwxxjJHtwluntDHZvPGXqi8=;
+	s=arc-20240116; t=1709041640; c=relaxed/simple;
+	bh=fk0srsabfFKssPzuZlsG06H+s40/Ap5oUBM8TwtSalU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIkw2TiVksVHY7InsoB03VYe4VyPBsM0mxPCJlkYQPrDJVvNfNGjc/dSPw60N30u052H3lqS2uNOyC3p78WzymkmEyeevSjHC19YgiGfy7LTnubm6sk3li5Ff7Jr6crNy90dcNw3yEPp9QzORzgjJHjJjqA3+wPThoid+OLMJ9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxndp+21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=adOVT6/gOXRWx1vYY+3ZMirgK05Ti4Pv688EtETSKiUYBk5/85DwvtI2ABzbO2FrADD5fqdGB9UIiWJrTwD349KMxVedQpVCw4ZjYqd1KRRgDFJfOlKltsfWVIZdadJONYA4s9xijk8v7rwFOUBFctNeeiizCs89Ca/qdmIU0IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/PkjiLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxndp+21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625EAC433F1;
-	Tue, 27 Feb 2024 13:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/PkjiLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6F5C433C7;
+	Tue, 27 Feb 2024 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041637;
-	bh=m/WGF5wg8VoisUxeQFgcuwxxjJHtwluntDHZvPGXqi8=;
+	s=korg; t=1709041640;
+	bh=fk0srsabfFKssPzuZlsG06H+s40/Ap5oUBM8TwtSalU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cxndp+21ZhQhO3EDf8F7lL+fMn8aNJVeDrN3r2iLlfafIlszWuutE65IfwXb0Ka4d
-	 3YqWr7ofiLi1pxj8nXJMEfdNvGYFYtxN3VGIwETm5NAZjGYKROPEceRHD4vkpMKt5w
-	 eYfdTlsqgi/6biss7Jn5PALGzIalPxMPxz9Hv3C8=
+	b=a/PkjiLXc2BeJ3j9vqweR8C84b3qleULOjoKwPAgTq3rcZoMBfaj1tg9iRR5dD7L+
+	 YYIXT/pf1/Z/3ELDDtgHYzMyZj9GbD/te0hD1LQSH3oHL8My99r28ZqgmOKvZ8EsCo
+	 yTuE+Yb820l2cpe0k6aEO19bAi7f/FkpIA6XN41A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/299] spi: intel-pci: Add support for Arrow Lake SPI serial flash
-Date: Tue, 27 Feb 2024 14:22:10 +0100
-Message-ID: <20240227131626.454098187@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.6 002/299] PCI: dwc: Fix a 64bit bug in dw_pcie_ep_raise_msix_irq()
+Date: Tue, 27 Feb 2024 14:21:53 +0100
+Message-ID: <20240227131625.927684742@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,42 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 8afe3c7fcaf72fca1e7d3dab16a5b7f4201ece17 ]
+commit b5d1b4b46f856da1473c7ba9a5cdfcb55c9b2478 upstream.
 
-This adds the PCI ID of the Arrow Lake and Meteor Lake-S PCH SPI serial
-flash controller. This one supports all the necessary commands Linux
-SPI-NOR stack requires.
+The "msg_addr" variable is u64.  However, the "aligned_offset" is an
+unsigned int.  This means that when the code does:
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://msgid.link/r/20240122120034.2664812-3-mika.westerberg@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  msg_addr &= ~aligned_offset;
+
+it will unintentionally zero out the high 32 bits.  Use ALIGN_DOWN() to do
+the alignment instead.
+
+Fixes: 2217fffcd63f ("PCI: dwc: endpoint: Fix dw_pcie_ep_raise_msix_irq() alignment support")
+Link: https://lore.kernel.org/r/af59c7ad-ab93-40f7-ad4a-7ac0b14d37f5@moroto.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-intel-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/dwc/pcie-designware-ep.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
-index b9918dcc38027..07d20ca1164c3 100644
---- a/drivers/spi/spi-intel-pci.c
-+++ b/drivers/spi/spi-intel-pci.c
-@@ -76,6 +76,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0x7a24), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0x7aa4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0x7e23), (unsigned long)&cnl_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f24), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0x9d24), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0x9da4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa0a4), (unsigned long)&cnl_info },
--- 
-2.43.0
-
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -6,6 +6,7 @@
+  * Author: Kishon Vijay Abraham I <kishon@ti.com>
+  */
+ 
++#include <linux/align.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ 
+@@ -598,7 +599,7 @@ int dw_pcie_ep_raise_msix_irq(struct dw_
+ 	}
+ 
+ 	aligned_offset = msg_addr & (epc->mem->window.page_size - 1);
+-	msg_addr &= ~aligned_offset;
++	msg_addr = ALIGN_DOWN(msg_addr, epc->mem->window.page_size);
+ 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+ 				  epc->mem->window.page_size);
+ 	if (ret)
 
 
