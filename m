@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9E778B61;
-	Tue, 27 Feb 2024 14:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6DC13B2BA;
+	Tue, 27 Feb 2024 14:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042633; cv=none; b=RdgUUGFFTlU2BQlJsEGmoUR0QOnyBmX6wFhk7x8EyDstOmSCswZ/JXb29S/eakBuEl52ipxXEeqS4VxdALDisIk4VO9vqNyje5YjLOLOKjSZ7u/OvBxrtRtB1MqqKPJDhG7sn7jS3s2ib31x/WT2sX5+ZGDd+hsCvBjsnweQnUU=
+	t=1709042635; cv=none; b=WGAgo6lUPNIVbo0sA29rwtSo16X8AD1PYsjJ+woD3LKRMc6RxGbOYV6aTauxnqaSBd98adctu1hqvaJbh9y/qmiMyOUIHQBROgm+EcNtlI9ynfo+M55CmhrMtJ96MnpG8Kgm6kk0lRxK1Gyy4DlzU4wmbrxl/cZrY54eyxHYivU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042633; c=relaxed/simple;
-	bh=YisPQyRG20T8Jh3Ah1CQC69CIuF3OrSMEo1sMrSmvps=;
+	s=arc-20240116; t=1709042635; c=relaxed/simple;
+	bh=ce9HRv4AyoUo+k+hI5ODnjVjBb/x15ZwPk8RExUlTNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7ge7zV05kSHiwvqac2sFo1gfhTd46boiVf1fzF3mt6EkXZN8NaoQNZRkNht+vuMtZorQBFRtoJA/gduSSdTv8heE7nkz1YWCEvGwEo1nVJXrWWlBFgYgfD51bNc+vZ9ICnhTpdxpQOr1Uvo76BLM/NKPG1xlUrtGRt6nSSsMv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHTubced; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFXHxAoOaGY/2I5q3HE9v34MoOYIpjD3CkqgzoOP59TSkp9+PTLadZrkzw5PB+x/7280MzPa5rIaLLVIIeuNFXahJIicrPJVfw+cxeAGLHQFDvhkrPx0Km9i3eTacxKJM4npueZV2drGgdS7f6Pwl5pgbZPKYXrsW/9W7QkgEHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBIY1KnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHTubced"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7353DC433F1;
-	Tue, 27 Feb 2024 14:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBIY1KnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A25FC433F1;
+	Tue, 27 Feb 2024 14:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042632;
-	bh=YisPQyRG20T8Jh3Ah1CQC69CIuF3OrSMEo1sMrSmvps=;
+	s=korg; t=1709042635;
+	bh=ce9HRv4AyoUo+k+hI5ODnjVjBb/x15ZwPk8RExUlTNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHTubcedmlx24w9jzW8LR6wpIoYwthbG4VowUIQruooR5mWrfablw0uKHgVboQp1+
-	 wvA9GhrdzOqIU6ufYj0arLIRI/dDNJaAlukuYkd4vruqEhqhK+9AL+GXMnEwttTtQD
-	 uAqnaQ1Fg6zcx/44GRndjii1duZ86r9ZJk6ENyY8=
+	b=XBIY1KnAljrIeECeS3a6INzq577DxWYmjv9ZyrCEcujbWxQFAmnF0lwRIgVUsiZQD
+	 1/eGG1l6bjQ/u/MHGu/rHpFLgXnSHFl5bz+qqG8en3XygFp4h7TbPJMH+9JkNQ56nc
+	 79oBPG3HCbKMOkQgF4tkQzi5kWd+xSjmJnl4v3+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Tsoy <alexander@tsoy.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lennert Buytenhek <kernel@wantstofly.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/245] ALSA: usb-audio: Check presence of valid altsetting control
-Date: Tue, 27 Feb 2024 14:23:44 +0100
-Message-ID: <20240227131616.293867068@linuxfoundation.org>
+Subject: [PATCH 5.15 027/245] ahci: add 43-bit DMA address quirk for ASMedia ASM1061 controllers
+Date: Tue, 27 Feb 2024 14:23:35 +0100
+Message-ID: <20240227131615.999317463@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,84 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Tsoy <alexander@tsoy.me>
+From: Lennert Buytenhek <kernel@wantstofly.org>
 
-[ Upstream commit 346f59d1e8ed0eed41c80e1acb657e484c308e6a ]
+[ Upstream commit 20730e9b277873deeb6637339edcba64468f3da3 ]
 
-Many devices with a single alternate setting do not have a Valid
-Alternate Setting Control and validation performed by
-validate_sample_rate_table_v2v3() doesn't work on them and is not
-really needed. So check the presense of control before sending
-altsetting validation requests.
+With one of the on-board ASM1061 AHCI controllers (1b21:0612) on an
+ASUSTeK Pro WS WRX80E-SAGE SE WIFI mainboard, a controller hang was
+observed that was immediately preceded by the following kernel
+messages:
 
-MOTU Microbook IIc is suffering the most without this check. It
-takes up to 40 seconds to bootup due to how slow it switches
-sampling rates:
+ahci 0000:28:00.0: Using 64-bit DMA addresses
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00000 flags=0x0000]
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00300 flags=0x0000]
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00380 flags=0x0000]
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00400 flags=0x0000]
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00680 flags=0x0000]
+ahci 0000:28:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0035 address=0x7fffff00700 flags=0x0000]
 
-[ 2659.164824] usb 3-2: New USB device found, idVendor=07fd, idProduct=0004, bcdDevice= 0.60
-[ 2659.164827] usb 3-2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-[ 2659.164829] usb 3-2: Product: MicroBook IIc
-[ 2659.164830] usb 3-2: Manufacturer: MOTU
-[ 2659.166204] usb 3-2: Found last interface = 3
-[ 2679.322298] usb 3-2: No valid sample rate available for 1:1, assuming a firmware bug
-[ 2679.322306] usb 3-2: 1:1: add audio endpoint 0x3
-[ 2679.322321] usb 3-2: Creating new data endpoint #3
-[ 2679.322552] usb 3-2: 1:1 Set sample rate 96000, clock 1
-[ 2684.362250] usb 3-2: 2:1: cannot get freq (v2/v3): err -110
-[ 2694.444700] usb 3-2: No valid sample rate available for 2:1, assuming a firmware bug
-[ 2694.444707] usb 3-2: 2:1: add audio endpoint 0x84
-[ 2694.444721] usb 3-2: Creating new data endpoint #84
-[ 2699.482103] usb 3-2: 2:1 Set sample rate 96000, clock 1
+The first message is produced by code in drivers/iommu/dma-iommu.c
+which is accompanied by the following comment that seems to apply:
 
-Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
-Link: https://lore.kernel.org/r/20240129121254.3454481-1-alexander@tsoy.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+        /*
+         * Try to use all the 32-bit PCI addresses first. The original SAC vs.
+         * DAC reasoning loses relevance with PCIe, but enough hardware and
+         * firmware bugs are still lurking out there that it's safest not to
+         * venture into the 64-bit space until necessary.
+         *
+         * If your device goes wrong after seeing the notice then likely either
+         * its driver is not setting DMA masks accurately, the hardware has
+         * some inherent bug in handling >32-bit addresses, or not all the
+         * expected address bits are wired up between the device and the IOMMU.
+         */
+
+Asking the ASM1061 on a discrete PCIe card to DMA from I/O virtual
+address 0xffffffff00000000 produces the following I/O page faults:
+
+vfio-pci 0000:07:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0x7ff00000000 flags=0x0010]
+vfio-pci 0000:07:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0x7ff00000500 flags=0x0010]
+
+Note that the upper 21 bits of the logged DMA address are zero.  (When
+asking a different PCIe device in the same PCIe slot to DMA to the
+same I/O virtual address, we do see all the upper 32 bits of the DMA
+address as 1, so this is not an issue with the chipset or IOMMU
+configuration on the test system.)
+
+Also, hacking libahci to always set the upper 21 bits of all DMA
+addresses to 1 produces no discernible effect on the behavior of the
+ASM1061, and mkfs/mount/scrub/etc work as without this hack.
+
+This all strongly suggests that the ASM1061 has a 43 bit DMA address
+limit, and this commit therefore adds a quirk to deal with this limit.
+
+This issue probably applies to (some of) the other supported ASMedia
+parts as well, but we limit it to the PCI IDs known to refer to
+ASM1061 parts, as that's the only part we know for sure to be affected
+by this issue at this point.
+
+Link: https://lore.kernel.org/linux-ide/ZaZ2PIpEId-rl6jv@wantstofly.org/
+Signed-off-by: Lennert Buytenhek <kernel@wantstofly.org>
+[cassel: drop date from error messages in commit log]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/ata/ahci.c | 29 +++++++++++++++++++++++------
+ drivers/ata/ahci.h |  1 +
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index ab5fed9f55b60..3b45d0ee76938 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -470,9 +470,11 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
- 					   int clock)
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 56fcb1dec6af8..b0a8aac008bae 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -49,6 +49,7 @@ enum {
+ enum board_ids {
+ 	/* board IDs by feature in alphabetical order */
+ 	board_ahci,
++	board_ahci_43bit_dma,
+ 	board_ahci_ign_iferr,
+ 	board_ahci_low_power,
+ 	board_ahci_no_debounce_delay,
+@@ -129,6 +130,13 @@ static const struct ata_port_info ahci_port_info[] = {
+ 		.udma_mask	= ATA_UDMA6,
+ 		.port_ops	= &ahci_ops,
+ 	},
++	[board_ahci_43bit_dma] = {
++		AHCI_HFLAGS	(AHCI_HFLAG_43BIT_ONLY),
++		.flags		= AHCI_FLAG_COMMON,
++		.pio_mask	= ATA_PIO4,
++		.udma_mask	= ATA_UDMA6,
++		.port_ops	= &ahci_ops,
++	},
+ 	[board_ahci_ign_iferr] = {
+ 		AHCI_HFLAGS	(AHCI_HFLAG_IGN_IRQ_IF_ERR),
+ 		.flags		= AHCI_FLAG_COMMON,
+@@ -598,11 +606,11 @@ static const struct pci_device_id ahci_pci_tbl[] = {
+ 	{ PCI_VDEVICE(PROMISE, 0x3f20), board_ahci },	/* PDC42819 */
+ 	{ PCI_VDEVICE(PROMISE, 0x3781), board_ahci },   /* FastTrak TX8660 ahci-mode */
+ 
+-	/* Asmedia */
++	/* ASMedia */
+ 	{ PCI_VDEVICE(ASMEDIA, 0x0601), board_ahci },	/* ASM1060 */
+ 	{ PCI_VDEVICE(ASMEDIA, 0x0602), board_ahci },	/* ASM1060 */
+-	{ PCI_VDEVICE(ASMEDIA, 0x0611), board_ahci },	/* ASM1061 */
+-	{ PCI_VDEVICE(ASMEDIA, 0x0612), board_ahci },	/* ASM1062 */
++	{ PCI_VDEVICE(ASMEDIA, 0x0611), board_ahci_43bit_dma },	/* ASM1061 */
++	{ PCI_VDEVICE(ASMEDIA, 0x0612), board_ahci_43bit_dma },	/* ASM1061/1062 */
+ 	{ PCI_VDEVICE(ASMEDIA, 0x0621), board_ahci },   /* ASM1061R */
+ 	{ PCI_VDEVICE(ASMEDIA, 0x0622), board_ahci },   /* ASM1062R */
+ 
+@@ -955,11 +963,20 @@ static int ahci_pci_device_resume(struct device *dev)
+ 
+ #endif /* CONFIG_PM */
+ 
+-static int ahci_configure_dma_masks(struct pci_dev *pdev, int using_dac)
++static int ahci_configure_dma_masks(struct pci_dev *pdev,
++				    struct ahci_host_priv *hpriv)
  {
- 	struct usb_device *dev = chip->dev;
-+	struct usb_host_interface *alts;
- 	unsigned int *table;
- 	unsigned int nr_rates;
- 	int i, err;
-+	u32 bmControls;
+-	const int dma_bits = using_dac ? 64 : 32;
++	int dma_bits;
+ 	int rc;
  
- 	/* performing the rate verification may lead to unexpected USB bus
- 	 * behavior afterwards by some unknown reason.  Do this only for the
-@@ -481,6 +483,24 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
- 	if (!(chip->quirk_flags & QUIRK_FLAG_VALIDATE_RATES))
- 		return 0; /* don't perform the validation as default */
- 
-+	alts = snd_usb_get_host_interface(chip, fp->iface, fp->altsetting);
-+	if (!alts)
-+		return 0;
-+
-+	if (fp->protocol == UAC_VERSION_3) {
-+		struct uac3_as_header_descriptor *as = snd_usb_find_csint_desc(
-+				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
-+		bmControls = le32_to_cpu(as->bmControls);
++	if (hpriv->cap & HOST_CAP_64) {
++		dma_bits = 64;
++		if (hpriv->flags & AHCI_HFLAG_43BIT_ONLY)
++			dma_bits = 43;
 +	} else {
-+		struct uac2_as_header_descriptor *as = snd_usb_find_csint_desc(
-+				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
-+		bmControls = as->bmControls;
++		dma_bits = 32;
 +	}
 +
-+	if (!uac_v2v3_control_is_readable(bmControls,
-+				UAC2_AS_VAL_ALT_SETTINGS))
-+		return 0;
-+
- 	table = kcalloc(fp->nr_rates, sizeof(*table), GFP_KERNEL);
- 	if (!table)
- 		return -ENOMEM;
+ 	/*
+ 	 * If the device fixup already set the dma_mask to some non-standard
+ 	 * value, don't extend it here. This happens on STA2X11, for example.
+@@ -1937,7 +1954,7 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	ahci_gtf_filter_workaround(host);
+ 
+ 	/* initialize adapter */
+-	rc = ahci_configure_dma_masks(pdev, hpriv->cap & HOST_CAP_64);
++	rc = ahci_configure_dma_masks(pdev, hpriv);
+ 	if (rc)
+ 		return rc;
+ 
+diff --git a/drivers/ata/ahci.h b/drivers/ata/ahci.h
+index dcc2d92cf6b62..69557e602e2ea 100644
+--- a/drivers/ata/ahci.h
++++ b/drivers/ata/ahci.h
+@@ -244,6 +244,7 @@ enum {
+ 	AHCI_HFLAG_IGN_NOTSUPP_POWER_ON	= BIT(27), /* ignore -EOPNOTSUPP
+ 						      from phy_power_on() */
+ 	AHCI_HFLAG_NO_SXS		= BIT(28), /* SXS not supported */
++	AHCI_HFLAG_43BIT_ONLY		= BIT(29), /* 43bit DMA addr limit */
+ 
+ 	/* ap->flags bits */
+ 
 -- 
 2.43.0
 
