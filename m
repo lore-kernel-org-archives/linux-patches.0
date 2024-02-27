@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994221419B5;
-	Tue, 27 Feb 2024 13:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498113DB92;
+	Tue, 27 Feb 2024 13:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042254; cv=none; b=Mf7jFPRfjnFHShIx6TgK1tSoS18dwLlstcQZTbF0Lo91fPyhFYTGiRKB3Vxipo+T0N7iOIE9qdRCKDXP14Q8XC1UJItBZ8uyqKrEly1p+h9lqnWk12QPrWeBLLgVEKqOyV8tPO1MAXDQz9o5eqTHvWdpFlUb40ctIBjA5nPnCKE=
+	t=1709042257; cv=none; b=Gad/70w6nX5uHxE3LE5z3/zRfaVvEk+zNZM4OKsDH00MT+8cQrpSGEdmw8vXSOeT2anPmd+BzMgGeMzg2iu4GMgWp7u2m/yOdPbL5VsZ7qSv5rnLFeWtfH8UEDt/TRdvSNsKRsEqY9cO3nAz5uCHwGxnRca54UhTHxGkyGv90og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042254; c=relaxed/simple;
-	bh=f7K5HBNtrAz74U/GybPyGCFskuO9XYU4DTrQzZE6w1E=;
+	s=arc-20240116; t=1709042257; c=relaxed/simple;
+	bh=aQ/u2/3H2Uc5up69ifREAXUw9VOLfj4pTBmx70CtcxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcdKn0xyJ8/55a961+0fGkJmi7VRDBEsewS/lPyiWWf573YkGrkXOmo4teP5saKsxBGLUhIylMFDx2oOocUh+y9p3mPVhOZyKi8H65Z6/67k/YrYnamRgZJSrvmBSwVg6fWlI9d30UVeL0ZoWqU0Jhanlm23tIQtH+joe/hXv3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2jte5S7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZbeVCyPHQu3PVxnO7MisuDQlTnbRkBCNMwAJ+eE5wYfntc4l3U3ROHAgYTJ0w4QWNjnf2I51kbwoebw3G6UJgp8LnUXU4M+ukgd4zyVnc8Pa4bzdrirKbQT3l9IXDHS1XbvD5PSYWAJ6V3Z8EHDhg7DGa669HzM6gduQL+lBx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWOPYpMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2jte5S7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7591C433F1;
-	Tue, 27 Feb 2024 13:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWOPYpMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B654C433F1;
+	Tue, 27 Feb 2024 13:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042254;
-	bh=f7K5HBNtrAz74U/GybPyGCFskuO9XYU4DTrQzZE6w1E=;
+	s=korg; t=1709042256;
+	bh=aQ/u2/3H2Uc5up69ifREAXUw9VOLfj4pTBmx70CtcxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2jte5S7H9xYXvTPrDbxvx0UvCZ+9sBuUnDFib0tRyrFoALoyYm1gEXd0Et0CBi41
-	 2sCkWyM/6xY96TEa8gDAnzkRoqcQEosTj6a8+QCA3c2jZEjPZkOkrCJke1hRTkq0DX
-	 uZhXk5TVFHhzHzI2DdFsCfIH8R6cAXIYl6u/129c=
+	b=jWOPYpMltvmDQsQ6KFhp8JDN7xnZr9nG8y5SZHVBes7lScxokHWEhH4RbvB9KGOle
+	 O9MtT+1pNHNBnV1mQdjGNC6eMTTn1iK9nxaZOcQyUL6HzbC9yXmfKxAxfii6yhDIt1
+	 JMIYDyEV2tqxnspdqVmmEP0NRw40JjCThommyVXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 215/299] arm64: dts: imx8mp: Disable UART4 by default on Data Modul i.MX8M Plus eDM SBC
-Date: Tue, 27 Feb 2024 14:25:26 +0100
-Message-ID: <20240227131632.700619143@linuxfoundation.org>
+Subject: [PATCH 6.6 233/299] scsi: jazz_esp: Only build if SCSI core is builtin
+Date: Tue, 27 Feb 2024 14:25:44 +0100
+Message-ID: <20240227131633.242826884@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,38 +60,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit f03869698bc3bd6d9d2d9f216b20da08a8c2508a ]
+[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
 
-UART4 is used as CM7 coprocessor debug UART and may not be accessible from
-Linux in case it is protected by RDC. The RDC protection is set up by the
-platform firmware. UART4 is not used on this platform by Linux. Disable
-UART4 by default to prevent boot hangs, which occur when the RDC protection
-is in place.
+JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
+CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
+causes many undefined symbol linker errors.
 
-Fixes: 562d222f23f0 ("arm64: dts: imx8mp: Add support for Data Modul i.MX8M Plus eDM SBC")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fix this by only offering to build this driver when CONFIG_SCSI=y.
+
+[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
+module unlike the remaining SPI SCSI HBA drivers]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: James E.J. Bottomley <jejb@linux.ibm.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts | 2 +-
+ drivers/scsi/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-index 13674dc64be9d..116bf9738a8a4 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-@@ -484,7 +484,7 @@
- &uart4 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_uart4>;
--	status = "okay";
-+	status = "disabled";
- };
+diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
+index 695a57d894cdd..23bce8995a557 100644
+--- a/drivers/scsi/Kconfig
++++ b/drivers/scsi/Kconfig
+@@ -1285,7 +1285,7 @@ source "drivers/scsi/arm/Kconfig"
  
- &usb3_phy0 {
+ config JAZZ_ESP
+ 	bool "MIPS JAZZ FAS216 SCSI support"
+-	depends on MACH_JAZZ && SCSI
++	depends on MACH_JAZZ && SCSI=y
+ 	select SCSI_SPI_ATTRS
+ 	help
+ 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
 -- 
 2.43.0
 
