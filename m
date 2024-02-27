@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A818913DBB3;
-	Tue, 27 Feb 2024 13:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614332F2D;
+	Tue, 27 Feb 2024 13:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041311; cv=none; b=oK9KGRjIxeyz/EEaDG9ZeEUdJUGmn+FdmDMGISIZIoTIBE3YVG4bp+jo6yY1Z3dyQodZ2jdSrhMn9pjdwCXAKAK9ZMhIo7Xgh2ssL+amw4oF+ErERnX24DWYu1kpb92FU3I4XyUjXi8G8CT9tNWrNyIw29fh+0tvHZTpVuAHVAA=
+	t=1709041314; cv=none; b=h84G0JQcZB+NljFGsWj8BCvs9Tzan4Hc9jjkO0hv688dvoJCnAXEPcCHAmnWBEbh44OQ/aUu56pcDEVSur+jPWhF4nxBzSPn5EuWj57OTx+U/kSmaEqgDEVYvKNPuIM5JNi5X1UpdbBiZU7NWtIZEItqv7ySDfkPj1NWYquA+9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041311; c=relaxed/simple;
-	bh=p8m+iCoT+Bua/UK+9m/weYSYsSB9P5VDc/nW4nTX+TM=;
+	s=arc-20240116; t=1709041314; c=relaxed/simple;
+	bh=8Q0VOCrZ6nQyJ5byS3BBZfqw5hsOMUl4e2lBG/yBmB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bx3DGJPaIOdw04I1x8uUbKMRTDoFcOBZm/hbsj6tPFgHnsxhLnLSkdFWe6xF0L6Nx6Ek2hgUXpZvru2Z3ahKJ5PLU5Xjx0Au62lo0VU9xVzmmsgyyjcO6Rg6L8c2W3LunS+zu842pbjMw9Rq/JrKPOQuEJ3DTQREv2iqrKPCoHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7Uhlaro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXdpfyClG7mg1mfQFIoTU/UYrE0gmGeSDHJCnejM0dd0ewUCWc/NW0YdGzUbRyFwlMC93OZ46ejENjmrr4mdyeNnJ8W+67FaYHb/VEexz8nC6hkyepuwK6pO2yZpBcJMpJN4Zlndm0MUf6jUUJiulJm3RqRG9dvWy5KoZuL7KTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne//Gnwq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7Uhlaro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374A2C433C7;
-	Tue, 27 Feb 2024 13:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne//Gnwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4205C433F1;
+	Tue, 27 Feb 2024 13:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041311;
-	bh=p8m+iCoT+Bua/UK+9m/weYSYsSB9P5VDc/nW4nTX+TM=;
+	s=korg; t=1709041314;
+	bh=8Q0VOCrZ6nQyJ5byS3BBZfqw5hsOMUl4e2lBG/yBmB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7UhlaroKqh7wVatPTJ3DCOOxbz54mUBfOKxj8iAACaFuBKYyGFZKnclaqMGhO2qY
-	 aprtVgfuvIxIdO2RFMe2fa5jsxH63Ipb03rOlYLpC4b4hfzikIBCfvOxZ33F9UxBeK
-	 QaL7WwksIzZK+fH/NQMcGpS3tzH3/vHFUuUwhA4A=
+	b=Ne//GnwqadDlTGLfToR8w61WmqUZO5eynJsxEgOdrTyMcvIjluRxs9at2ng90z56L
+	 n2ZuDU7vKdh30T6pICyeA+eTz2RKsPaypP0cd5Z3zBp20hVO42XEPyJLsRhC91xp0n
+	 PPNaK5WmsrW1nrldRrZMMbNd/e0wWF7Yj9xY+tCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Liu <yi.l.liu@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 294/334] iommu/vt-d: Set SSADE when attaching to a parent with dirty tracking
-Date: Tue, 27 Feb 2024 14:22:32 +0100
-Message-ID: <20240227131640.527814065@linuxfoundation.org>
+Subject: [PATCH 6.7 295/334] octeontx2-af: Consider the action set by PF
+Date: Tue, 27 Feb 2024 14:22:33 +0100
+Message-ID: <20240227131640.564029844@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 1f0198fce68340e0da2d438f4ea9fc20d2c958da ]
+[ Upstream commit 3b1ae9b71c2a97f848b00fb085a2bd29bddbe8d9 ]
 
-Should set the SSADE (Second Stage Access/Dirty bit Enable) bit of the
-pasid entry when attaching a device to a nested domain if its parent
-has already enabled dirty tracking.
+AF reserves MCAM entries for each PF, VF present in the
+system and populates the entry with DMAC and action with
+default RSS so that basic packet I/O works. Since PF/VF is
+not aware of the RSS action installed by AF, AF only fixup
+the actions of the rules installed by PF/VF with corresponding
+default RSS action. This worked well for rules installed by
+PF/VF for features like RX VLAN offload and DMAC filters but
+rules involving action like drop/forward to queue are also
+getting modified by AF. Hence fix it by setting the default
+RSS action only if requested by PF/VF.
 
-Fixes: 111bf85c68f6 ("iommu/vt-d: Add helper to setup pasid nested translation")
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Link: https://lore.kernel.org/r/20240208091414.28133-1-yi.l.liu@intel.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 967db3529eca ("octeontx2-af: add support for multicast/promisc packet replication feature")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/pasid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 9f8f389ff255c..6e102cbbde845 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -925,6 +925,8 @@ int intel_pasid_setup_nested(struct intel_iommu *iommu, struct device *dev,
- 	pasid_set_domain_id(pte, did);
- 	pasid_set_address_width(pte, s2_domain->agaw);
- 	pasid_set_page_snoop(pte, !!ecap_smpwc(iommu->ecap));
-+	if (s2_domain->dirty_tracking)
-+		pasid_set_ssade(pte);
- 	pasid_set_translation_type(pte, PASID_ENTRY_PGTT_NESTED);
- 	pasid_set_present(pte);
- 	spin_unlock(&iommu->lock);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 3784347b6fd88..55639c133dd02 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -437,6 +437,10 @@ static void npc_fixup_vf_rule(struct rvu *rvu, struct npc_mcam *mcam,
+ 			return;
+ 	}
+ 
++	/* AF modifies given action iff PF/VF has requested for it */
++	if ((entry->action & 0xFULL) != NIX_RX_ACTION_DEFAULT)
++		return;
++
+ 	/* copy VF default entry action to the VF mcam entry */
+ 	rx_action = npc_get_default_entry_action(rvu, mcam, blkaddr,
+ 						 target_func);
 -- 
 2.43.0
 
