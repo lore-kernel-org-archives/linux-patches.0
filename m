@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDB713B2B8;
-	Tue, 27 Feb 2024 14:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F713B2B8;
+	Tue, 27 Feb 2024 14:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043835; cv=none; b=e7r4Y5ce2jXIjiAa5uXseJ6+3cdDXGNBMn9zST5M67dzVidpOkFxkmAk0p64oeBsPvQjSDWczsQD4SOo9PnTk2geMWd2uOL9mb0coJPh/CgY6/LwLzW6ZwzF74JwFoWam173VX904T6auJPKlo0zeoujncS5f9KdhXeajOE+6XY=
+	t=1709043838; cv=none; b=LHjeESU4HSeXBxrRT9iDk5WOdltwVvJXxeR6HHk+SHIJKhBU5+3OAN2RdPcohMhYK4x8enVVW4UzBD4pUNfyHJ8gzGc+WxJP7rqw3IdRrgxYFznjcO2xIuRezEdgdkZ16IK6qgai8kasPhH/S0/Kkb0O/wSIZcMcDBVvvjZNC5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043835; c=relaxed/simple;
-	bh=35YDHMdZ0Kpo3Cymdx2tZrMvRMQ070wZ5AySUZ0jpZw=;
+	s=arc-20240116; t=1709043838; c=relaxed/simple;
+	bh=2cyMhVaofgoCIZnJwWdi1tq6YOVZdlKFd03ALcugQQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9IUe0a0iHDcPe+Fg9f/dn6XPmEthY1o/00alH7jOMKJFcslOGw+z3Lpw56BAo0JZOXBo79QzUilSnCYVYtmNSP6DZ8GZU81dCqrXGwaaJI9spcU5gdD+LIq4hj52EAyz8+h3zrVW/Ooefnvr3kVw5KadW0FlDF0HnvFT/EQPh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ph7ClWSr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SH5YRsbqd0nkoQ5Uui5vQTk2i0FWhJ+oIB4i0j//ZfvebrDPAt771+3l28frmZFuqxRR/Z1DWwhjHk8OhDCAd4j7kyVhDpJTbsg8ejKxTtFuTt8CcJ6Jp2ozqNuS0ITSV4plrGatTvOJu+1MdJuPzmWWLgqQeZHvCigndOlsCAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYvYul6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ph7ClWSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EA2C433F1;
-	Tue, 27 Feb 2024 14:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYvYul6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B37C433F1;
+	Tue, 27 Feb 2024 14:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043835;
-	bh=35YDHMdZ0Kpo3Cymdx2tZrMvRMQ070wZ5AySUZ0jpZw=;
+	s=korg; t=1709043837;
+	bh=2cyMhVaofgoCIZnJwWdi1tq6YOVZdlKFd03ALcugQQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ph7ClWSraivUNooIY7+Swq4mPIgXiOijHd1sjXbm25nDbQV0mp6xehRS43SHzAKuB
-	 Bp7RK1EvKhE3bHdglPpb8fiCGP2+7DxcONrMH/obfIypkw5wzanriJETpbf8nZ9HR3
-	 yM1oaXYRTld/4or/vffGOMRjLSjSE51q6eg1CuxY=
+	b=VYvYul6QVHxJBMkEYLBxWzzBBYu79qWI3BjD7cVSkMEv/d4ImNs2S2lI0h+O4VQxn
+	 jxQoxpzQ6uEKQTEpav1NlAlpdbKOu8WfZmmsQmzeUaItPa0QbptcdzElZ91eZqYfEN
+	 mLGy6vp7uui3mccSzZWkVIDVVlkOoGJ4sozHh96g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.4 54/84] dm-crypt: dont modify the data when using authenticated encryption
-Date: Tue, 27 Feb 2024 14:27:21 +0100
-Message-ID: <20240227131554.629560899@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 55/84] gtp: fix use-after-free and null-ptr-deref in gtp_genl_dump_pdp()
+Date: Tue, 27 Feb 2024 14:27:22 +0100
+Message-ID: <20240227131554.661534472@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -50,43 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 50c70240097ce41fe6bce6478b80478281e4d0f7 upstream.
+commit 136cfaca22567a03bbb3bf53a43d8cb5748b80ec upstream.
 
-It was said that authenticated encryption could produce invalid tag when
-the data that is being encrypted is modified [1]. So, fix this problem by
-copying the data into the clone bio first and then encrypt them inside the
-clone bio.
+The gtp_net_ops pernet operations structure for the subsystem must be
+registered before registering the generic netlink family.
 
-This may reduce performance, but it is needed to prevent the user from
-corrupting the device by writing data with O_DIRECT and modifying them at
-the same time.
+Syzkaller hit 'general protection fault in gtp_genl_dump_pdp' bug:
 
-[1] https://lore.kernel.org/all/20240207004723.GA35324@sol.localdomain/T/
+general protection fault, probably for non-canonical address
+0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+CPU: 1 PID: 5826 Comm: gtp Not tainted 6.8.0-rc3-std-def-alt1 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-alt1 04/01/2014
+RIP: 0010:gtp_genl_dump_pdp+0x1be/0x800 [gtp]
+Code: c6 89 c6 e8 64 e9 86 df 58 45 85 f6 0f 85 4e 04 00 00 e8 c5 ee 86
+      df 48 8b 54 24 18 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80>
+      3c 02 00 0f 85 de 05 00 00 48 8b 44 24 18 4c 8b 30 4c 39 f0 74
+RSP: 0018:ffff888014107220 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000002 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+R13: ffff88800fcda588 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f1be4eb05c0(0000) GS:ffff88806ce80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1be4e766cf CR3: 000000000c33e000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? show_regs+0x90/0xa0
+ ? die_addr+0x50/0xd0
+ ? exc_general_protection+0x148/0x220
+ ? asm_exc_general_protection+0x22/0x30
+ ? gtp_genl_dump_pdp+0x1be/0x800 [gtp]
+ ? __alloc_skb+0x1dd/0x350
+ ? __pfx___alloc_skb+0x10/0x10
+ genl_dumpit+0x11d/0x230
+ netlink_dump+0x5b9/0xce0
+ ? lockdep_hardirqs_on_prepare+0x253/0x430
+ ? __pfx_netlink_dump+0x10/0x10
+ ? kasan_save_track+0x10/0x40
+ ? __kasan_kmalloc+0x9b/0xa0
+ ? genl_start+0x675/0x970
+ __netlink_dump_start+0x6fc/0x9f0
+ genl_family_rcv_msg_dumpit+0x1bb/0x2d0
+ ? __pfx_genl_family_rcv_msg_dumpit+0x10/0x10
+ ? genl_op_from_small+0x2a/0x440
+ ? cap_capable+0x1d0/0x240
+ ? __pfx_genl_start+0x10/0x10
+ ? __pfx_genl_dumpit+0x10/0x10
+ ? __pfx_genl_done+0x10/0x10
+ ? security_capable+0x9d/0xe0
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Link: https://lore.kernel.org/r/20240214162733.34214-1-kovalev@altlinux.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/gtp.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -1627,6 +1627,12 @@ static void kcryptd_crypt_write_convert(
- 	io->ctx.bio_out = clone;
- 	io->ctx.iter_out = clone->bi_iter;
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1381,20 +1381,20 @@ static int __init gtp_init(void)
+ 	if (err < 0)
+ 		goto error_out;
  
-+	if (crypt_integrity_aead(cc)) {
-+		bio_copy_data(clone, io->base_bio);
-+		io->ctx.bio_in = clone;
-+		io->ctx.iter_in = clone->bi_iter;
-+	}
-+
- 	sector += bio_sectors(clone);
+-	err = genl_register_family(&gtp_genl_family);
++	err = register_pernet_subsys(&gtp_net_ops);
+ 	if (err < 0)
+ 		goto unreg_rtnl_link;
  
- 	crypt_inc_pending(io);
+-	err = register_pernet_subsys(&gtp_net_ops);
++	err = genl_register_family(&gtp_genl_family);
+ 	if (err < 0)
+-		goto unreg_genl_family;
++		goto unreg_pernet_subsys;
+ 
+ 	pr_info("GTP module loaded (pdp ctx size %zd bytes)\n",
+ 		sizeof(struct pdp_ctx));
+ 	return 0;
+ 
+-unreg_genl_family:
+-	genl_unregister_family(&gtp_genl_family);
++unreg_pernet_subsys:
++	unregister_pernet_subsys(&gtp_net_ops);
+ unreg_rtnl_link:
+ 	rtnl_link_unregister(&gtp_link_ops);
+ error_out:
 
 
