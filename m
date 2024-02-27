@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACC613AA4C;
-	Tue, 27 Feb 2024 13:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4562F2D;
+	Tue, 27 Feb 2024 13:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041266; cv=none; b=MLc7yhh6sJu38vCB1seoFJe+rGIKd8jF5D8+4MZpgZH/c7oQcIKFXTukM/Onim5r8Ta2no9Os1TYhJknGgYJT5+m8Ye991NIhaFItgBXDJgBrGJ8WAAkJATNFbhsGTBqiwzFc1MnL0uik/rHba3MJf65uCctuwmuo/ndjCneU68=
+	t=1709041269; cv=none; b=UxD51WW9An0gLWc3Y395vkHAslcPlu+atXA6sarKMIf3Gu7KIItfmuZBMaLtOvvnBxhoz+2WXdGWhK7WCa5UiY5Smb1ll3O1/jznHJ9gaWnY4YstXMdW8WkpbfCgCNd0Yv7FgqSNE/r83U/BUXSj/s0Mg/r9vlDV4qMO1z6tTe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041266; c=relaxed/simple;
-	bh=tKNyB9EbHs7v5vYz9/7m4lM/87J9gNSyzwCWcIGrcug=;
+	s=arc-20240116; t=1709041269; c=relaxed/simple;
+	bh=kTuSzsbQBi3yu0BX85erbFmdqCpMLGkSQycgaK0gcLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+LSzp+BA/guK+QfXlAXSknKZZVxg9WVTQXvQM5fAKG7RM80wrhxoLIezqQWHqmQbE5VMWNtwCvsqM7Jqf6VpyTAUMJADbEDk3kFMVAAkB2LpNOVOPD0Uj9o/ZXfTljqPzXDVevZTYeCME3vBP+xvmTRxoP45R01BVVT8SAuEnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9HvUBr+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZVdSLF35Lmodh+0NEgw3FW7+1VGLVPjG1B86n1NNcfRqZYdUBAoXIYIilTzEIVaPl0WlCpvHvKiVIINKw/Fxt8fsBw/3yd6286nmkFOJ1c3SfWG9V5pHGFDGtNBl1hNEEn1Kq9bp678GkkviBd8BbRHrHci6ojU9QN1ggS65IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ8Y5lmR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9HvUBr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F0AC433C7;
-	Tue, 27 Feb 2024 13:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ8Y5lmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DC0C433F1;
+	Tue, 27 Feb 2024 13:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041266;
-	bh=tKNyB9EbHs7v5vYz9/7m4lM/87J9gNSyzwCWcIGrcug=;
+	s=korg; t=1709041269;
+	bh=kTuSzsbQBi3yu0BX85erbFmdqCpMLGkSQycgaK0gcLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9HvUBr+3VOK2nhCTjp0h4tBspBgdp8ACmJyfdixyNgRmZWNGX3cQ/1xherl9EVLI
-	 fClOCqxK+hGivNGOxnpqkIBpTwknalT4TJSyM4tLXoCX+v4DWg36WtlXIA9KcIZ0ck
-	 MkA9Z99yx/j+koje83yom3evNLyRLyTghLVQRyWw=
+	b=WQ8Y5lmRrvpes80yn1idcRKemKss5kdc1GqJIUAbw01m1LnUU587YXlhNXtMzCGzK
+	 AmUmHPiOe/KzdXdhrCBSMtJQzHaF4+hFSaIeauj1IbDx6rAgeHcFoUe6CCbemx0Gfd
+	 yhPCAMIFwljMfptz7bpTGQ8BiabqapxRhfu4BjSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 250/334] arm64: dts: rockchip: Correct Indiedroid Nova GPIO Names
-Date: Tue, 27 Feb 2024 14:21:48 +0100
-Message-ID: <20240227131638.984468121@linuxfoundation.org>
+Subject: [PATCH 6.7 251/334] xsk: Add truesize to skb_add_rx_frag().
+Date: Tue, 27 Feb 2024 14:21:49 +0100
+Message-ID: <20240227131639.014926286@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,59 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit c22d03a95b0d815cd186302fdd93f74d99f1c914 ]
+[ Upstream commit 2127c604383666675789fd4a5fc2aead46c73aad ]
 
-Correct the names given to a few of the GPIO pins. The original names
-were unknowingly based on the header from a pre-production board. The
-production board has a slightly different pin assignment for the 40-pin
-GPIO header.
+xsk_build_skb() allocates a page and adds it to the skb via
+skb_add_rx_frag() and specifies 0 for truesize. This leads to a warning
+in skb_add_rx_frag() with CONFIG_DEBUG_NET enabled because size is
+larger than truesize.
 
-Fixes: 3900160e164b ("arm64: dts: rockchip: Add Indiedroid Nova board")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://lore.kernel.org/r/20240125201943.90476-2-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Increasing truesize requires to add the same amount to socket's
+sk_wmem_alloc counter in order not to underflow the counter during
+release in the destructor (sock_wfree()).
+
+Pass the size of the allocated page as truesize to skb_add_rx_frag().
+Add this mount to socket's sk_wmem_alloc counter.
+
+Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/bpf/20240202163221.2488589-1-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3588s-indiedroid-nova.dts      | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/xdp/xsk.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts b/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
-index 60f00ceb630e1..3b675fd0c5ea5 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-indiedroid-nova.dts
-@@ -196,13 +196,13 @@
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 688e641cd2784..da1582de6e84a 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -711,7 +711,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 			memcpy(vaddr, buffer, len);
+ 			kunmap_local(vaddr);
  
- &gpio1 {
- 	gpio-line-names = /* GPIO1 A0-A7 */
--			  "HEADER_27_3v3", "HEADER_28_3v3", "", "",
-+			  "HEADER_27_3v3", "", "", "",
- 			  "HEADER_29_1v8", "", "HEADER_7_1v8", "",
- 			  /* GPIO1 B0-B7 */
- 			  "", "HEADER_31_1v8", "HEADER_33_1v8", "",
- 			  "HEADER_11_1v8", "HEADER_13_1v8", "", "",
- 			  /* GPIO1 C0-C7 */
--			  "", "", "", "",
-+			  "", "HEADER_28_3v3", "", "",
- 			  "", "", "", "",
- 			  /* GPIO1 D0-D7 */
- 			  "", "", "", "",
-@@ -226,11 +226,11 @@
+-			skb_add_rx_frag(skb, nr_frags, page, 0, len, 0);
++			skb_add_rx_frag(skb, nr_frags, page, 0, len, PAGE_SIZE);
++			refcount_add(PAGE_SIZE, &xs->sk.sk_wmem_alloc);
+ 		}
+ 	}
  
- &gpio4 {
- 	gpio-line-names = /* GPIO4 A0-A7 */
--			  "", "", "HEADER_37_3v3", "HEADER_32_3v3",
--			  "HEADER_36_3v3", "", "HEADER_35_3v3", "HEADER_38_3v3",
-+			  "", "", "HEADER_37_3v3", "HEADER_8_3v3",
-+			  "HEADER_10_3v3", "", "HEADER_32_3v3", "HEADER_35_3v3",
- 			  /* GPIO4 B0-B7 */
- 			  "", "", "", "HEADER_40_3v3",
--			  "HEADER_8_3v3", "HEADER_10_3v3", "", "",
-+			  "HEADER_38_3v3", "HEADER_36_3v3", "", "",
- 			  /* GPIO4 C0-C7 */
- 			  "", "", "", "",
- 			  "", "", "", "",
 -- 
 2.43.0
 
