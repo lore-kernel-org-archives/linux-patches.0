@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D5478B61;
-	Tue, 27 Feb 2024 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323B316423;
+	Tue, 27 Feb 2024 14:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042520; cv=none; b=OAqF53Epklpn+Fv4FiYPEL5gDXsDmrBVcyIw35Y5bx8va43EcAJRLo3PjxRCBVgbm3QbnOqF9YnzeX8LeP6l1Ao/wPI56oVJSexrks1nKPlotMFaJQqkv11p64WsZC6JbmoeBK6wzGFW6krXvlj/BALN2XdtLw1XUzzlkZa7KAw=
+	t=1709042523; cv=none; b=RUv8dmuFlWKbuq06OV1pteBDwKxnBQOPifTqld9nfhzxU2OEYkRxUlSvlozFVHs2IaR8+Lq0qVY7brW8Nz6XQ6Ags5TLUMF6PyFVPGPBOs/xtLQd3k2iKkYV5RJ5cXLLn2oSq7xqDfFIMRLh3QP2CDA0QlAcE1EKQ5iQNCXisTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042520; c=relaxed/simple;
-	bh=xveWrUHk4MfJuxxROPHL6SSoKsGrq0zPiWe2DQdjxzw=;
+	s=arc-20240116; t=1709042523; c=relaxed/simple;
+	bh=MWMDAXsKgBb3ZWPg5CuGkRtd+IQ7ZHIMnc+Kg8Nu8M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiUhTM/jSyUQhwi6DWaU44jM7ruz4J4eYFIa+mBDb5tmHLKTG4K8G2MokzKveAqStNNHAUbVYu/okUIlugCf0I5CPtEkOObXaEaij1IwZ/GYXmjikfW7xdacZvOBntIR8jMqr7I0Te+ffhNM0wqRLsVqyMpIDM4+HnQRg0kIP+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/gQNXLu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=epQ35q1A8+1q4G5gKwnBdrLLn3DmDeFZGlSdQ2SfcJtex/Zh1Z8ZdBpK0evM8MztvZKS2fNYWDVNEd6GtIbi8aBnuCqGiAK3CRMcmVAktO6xKl3plLMBY+nt2Mt34i9vQJnpYu7BNt9MuE0dE6u3gkFamqyOP3pHKQDbABOn4ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8JalUnM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/gQNXLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1821C433C7;
-	Tue, 27 Feb 2024 14:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8JalUnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ED3C433C7;
+	Tue, 27 Feb 2024 14:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042520;
-	bh=xveWrUHk4MfJuxxROPHL6SSoKsGrq0zPiWe2DQdjxzw=;
+	s=korg; t=1709042522;
+	bh=MWMDAXsKgBb3ZWPg5CuGkRtd+IQ7ZHIMnc+Kg8Nu8M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/gQNXLuywOiLb1hglTAFm78BFrprQKno476mPmSHIGdSqQX/mmaFZTu8z+NL+Kdo
-	 XgXMH5PFsiIjkQ4oR1hEl3cuw5PMEcaGr/GwHSuBj1bd+BybUSXf4opT/db6TuBxZX
-	 HhgZLTM1NppDysKlChAd7TdqAWmrCO6EoCZhNS50=
+	b=r8JalUnMJsoj3Rmd1gMtyQQqMWRkbsxrMEvDOF3UVNzpw2yP9m47GKANxjE+khNs3
+	 JLqkFVXmZtmRV76UxaFn24oOR8JhvvKWU3UdHNfGCoQBWzPXpdUtLGnzpKNKpoFLtM
+	 M9KTxWVrhL+7gZdLhuc1hlKUfA/AUtr0msRSfIKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devyn Liu <liudingyuan@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Conrad Kostecki <conikost@gentoo.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/245] spi: hisi-sfc-v3xx: Return IRQ_NONE if no interrupts were detected
-Date: Tue, 27 Feb 2024 14:23:33 +0100
-Message-ID: <20240227131615.935079129@linuxfoundation.org>
+Subject: [PATCH 5.15 026/245] ahci: asm1166: correct count of reported ports
+Date: Tue, 27 Feb 2024 14:23:34 +0100
+Message-ID: <20240227131615.966966532@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,45 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devyn Liu <liudingyuan@huawei.com>
+From: Conrad Kostecki <conikost@gentoo.org>
 
-[ Upstream commit de8b6e1c231a95abf95ad097b993d34b31458ec9 ]
+[ Upstream commit 0077a504e1a4468669fd2e011108db49133db56e ]
 
-Return IRQ_NONE from the interrupt handler when no interrupt was
-detected. Because an empty interrupt will cause a null pointer error:
+The ASM1166 SATA host controller always reports wrongly,
+that it has 32 ports. But in reality, it only has six ports.
 
-    Unable to handle kernel NULL pointer dereference at virtual
-  address 0000000000000008
-    Call trace:
-        complete+0x54/0x100
-        hisi_sfc_v3xx_isr+0x2c/0x40 [spi_hisi_sfc_v3xx]
-        __handle_irq_event_percpu+0x64/0x1e0
-        handle_irq_event+0x7c/0x1cc
+This seems to be a hardware issue, as all tested ASM1166
+SATA host controllers reports such high count of ports.
 
-Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
-Link: https://msgid.link/r/20240123071149.917678-1-liudingyuan@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Example output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0xffffff3f impl SATA mode.
+
+By adjusting the port_map, the count is limited to six ports.
+
+New output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0x3f impl SATA mode.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=211873
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218346
+Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-sfc-v3xx.c | 5 +++++
+ drivers/ata/ahci.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-hisi-sfc-v3xx.c b/drivers/spi/spi-hisi-sfc-v3xx.c
-index d3a23b1c2a4c5..61bf00dfe9c33 100644
---- a/drivers/spi/spi-hisi-sfc-v3xx.c
-+++ b/drivers/spi/spi-hisi-sfc-v3xx.c
-@@ -377,6 +377,11 @@ static const struct spi_controller_mem_ops hisi_sfc_v3xx_mem_ops = {
- static irqreturn_t hisi_sfc_v3xx_isr(int irq, void *data)
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 3147b2e6cd8c9..56fcb1dec6af8 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -658,6 +658,11 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
  {
- 	struct hisi_sfc_v3xx_host *host = data;
-+	u32 reg;
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA && pdev->device == 0x1166) {
++		dev_info(&pdev->dev, "ASM1166 has only six ports\n");
++		hpriv->saved_port_map = 0x3f;
++	}
 +
-+	reg = readl(host->regbase + HISI_SFC_V3XX_INT_STAT);
-+	if (!reg)
-+		return IRQ_NONE;
- 
- 	hisi_sfc_v3xx_disable_int(host);
- 
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
+ 		dev_info(&pdev->dev, "JMB361 has only one port\n");
+ 		hpriv->force_port_map = 1;
 -- 
 2.43.0
 
