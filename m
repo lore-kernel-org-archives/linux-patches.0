@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADE613B2B8;
-	Tue, 27 Feb 2024 14:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144DE13B2B8;
+	Tue, 27 Feb 2024 14:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043613; cv=none; b=IHCsS5J5wgXjpmrCW5NEMWKdjKdeUb/uZkXpeXGrWmvvgii3v5QzJPpxss88kp80GXLMgYFHcOhDAlC9pV71gVIV2napKWT1/0vLHP0HDAlvjbn0J7kOPq145CCyKr2TMZg53G7MX8dKnybwdsfKzQ+jekrtLgXxwcVzuw+HUmk=
+	t=1709043616; cv=none; b=paEZ4ButUFyJa2pJSiZ1zQ0TTCgJrnH2v3opQ41DEvX1sHGkeB4kUpDXpGYCa0IZkVRIMj87SKJmzUcoW58pTjxFYIkVRku2iD9gr0sqCQPaVcR8XjbrAFcsxcy8ed3X4y7PHIi6qHY1C5Z/b83526kCku/Sx4PacZGjJmWkzxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043613; c=relaxed/simple;
-	bh=0I+Ngm3tPv2gPAC8bwNTwabUkEaSIUbl/16q7/PeTvY=;
+	s=arc-20240116; t=1709043616; c=relaxed/simple;
+	bh=DqTYB7Jcbsx4T9syOm0i7m2WNKz0PBYLdu/jlABSCKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGXL5sqRGZeB56/gZFUVX12rSxvgnDKozvbLHobf2W9SrAv6GJ4McJ4zvBW0sYwlHZu1BSyMH458P+x2b+r0PsenAgrwTsAjXbMjfpaQejxzQtJhRArCPTyEWVoajlzHadcQs3cGrPPjPWaFLj27t/5UB6JupjZ8F2LlouHbSwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVgmmXnx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgwaEAPi5tTwhenhLLz0fKa6gskUXPB3azmhX4L8XfvsV7ye8U0w8MB0WFWJHwLK2LNshvDpjpuworQby4CZIz47r4ZCpsO7I2bc0gB2xsB5WFR1WUVDvQOZCAHl7ivPpDlrsugpCJjaUx1xdFCALf+EACBEQJx0rdOzGscduYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCqMrhTq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVgmmXnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A79C433F1;
-	Tue, 27 Feb 2024 14:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCqMrhTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91316C433F1;
+	Tue, 27 Feb 2024 14:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043613;
-	bh=0I+Ngm3tPv2gPAC8bwNTwabUkEaSIUbl/16q7/PeTvY=;
+	s=korg; t=1709043615;
+	bh=DqTYB7Jcbsx4T9syOm0i7m2WNKz0PBYLdu/jlABSCKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVgmmXnxX8AtBs/KVJQFvSeEZFBggl3illSjp221KyMN2M4LFt/ozrGMuAetNEZeS
-	 bwQeBjUHECCIXjjoAs/Zwk5o3QmChGF76rdHkdXkQ2aVmyVea5cTJgeYho6oIN23mF
-	 acbYL6g7INtiHgh+VD/QMpyQ/olwakBBlPw5EqJs=
+	b=dCqMrhTq5zmCJfRSu9tmtdUVjRuwjc545D+YfkNT7VGFpvCV0+NdB4/T9kE5f7D3w
+	 aeaOobO+Id4CM5lfiOMv0cktZ9Zyy21nXDkNNoBJ9/peww62k91d+zG9TbSXkcVCcw
+	 ZSLWI+7PO2rfmjMYd8Nr57Uf1mcZ02ABkWxyxDTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/195] netfilter: nft_flow_offload: release dst in case direct xmit path is used
-Date: Tue, 27 Feb 2024 14:27:13 +0100
-Message-ID: <20240227131616.086509134@linuxfoundation.org>
+Subject: [PATCH 6.1 173/195] netfilter: nf_tables: rename function to destroy hook list
+Date: Tue, 27 Feb 2024 14:27:14 +0100
+Message-ID: <20240227131616.118462766@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -53,56 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 8762785f459be1cfe6fcf7285c123aad6a3703f0 ]
+[ Upstream commit cdc32546632354305afdcf399a5431138a31c9e0 ]
 
-Direct xmit does not use it since it calls dev_queue_xmit() to send
-packets, hence it calls dst_release().
+Rename nft_flowtable_hooks_destroy() by nft_hooks_destroy() to prepare
+for netdev chain device updates.
 
-kmemleak reports:
-
-unreferenced object 0xffff88814f440900 (size 184):
-  comm "softirq", pid 0, jiffies 4294951896
-  hex dump (first 32 bytes):
-    00 60 5b 04 81 88 ff ff 00 e6 e8 82 ff ff ff ff  .`[.............
-    21 0b 50 82 ff ff ff ff 00 00 00 00 00 00 00 00  !.P.............
-  backtrace (crc cb2bf5d6):
-    [<000000003ee17107>] kmem_cache_alloc+0x286/0x340
-    [<0000000021a5de2c>] dst_alloc+0x43/0xb0
-    [<00000000f0671159>] rt_dst_alloc+0x2e/0x190
-    [<00000000fe5092c9>] __mkroute_output+0x244/0x980
-    [<000000005fb96fb0>] ip_route_output_flow+0xc0/0x160
-    [<0000000045367433>] nf_ip_route+0xf/0x30
-    [<0000000085da1d8e>] nf_route+0x2d/0x60
-    [<00000000d1ecd1cb>] nft_flow_route+0x171/0x6a0 [nft_flow_offload]
-    [<00000000d9b2fb60>] nft_flow_offload_eval+0x4e8/0x700 [nft_flow_offload]
-    [<000000009f447dbb>] expr_call_ops_eval+0x53/0x330 [nf_tables]
-    [<00000000072e1be6>] nft_do_chain+0x17c/0x840 [nf_tables]
-    [<00000000d0551029>] nft_do_chain_inet+0xa1/0x210 [nf_tables]
-    [<0000000097c9d5c6>] nf_hook_slow+0x5b/0x160
-    [<0000000005eccab1>] ip_forward+0x8b6/0x9b0
-    [<00000000553a269b>] ip_rcv+0x221/0x230
-    [<00000000412872e5>] __netif_receive_skb_one_core+0xfe/0x110
-
-Fixes: fa502c865666 ("netfilter: flowtable: simplify route logic")
-Reported-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: d472e9853d7b ("netfilter: nf_tables: register hooks last when adding new chain/flowtable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_tables_api.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 2036c7a27075b..99195cf6b2657 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -132,6 +132,7 @@ static int flow_offload_fill_route(struct flow_offload *flow,
- 		       ETH_ALEN);
- 		flow_tuple->out.ifidx = route->tuple[dir].out.ifindex;
- 		flow_tuple->out.hw_ifidx = route->tuple[dir].out.hw_ifindex;
-+		dst_release(dst);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index f1a74b0949999..c7b543d1a0516 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7938,7 +7938,7 @@ static int nft_register_flowtable_net_hooks(struct net *net,
+ 	return err;
+ }
+ 
+-static void nft_flowtable_hooks_destroy(struct list_head *hook_list)
++static void nft_hooks_destroy(struct list_head *hook_list)
+ {
+ 	struct nft_hook *hook, *next;
+ 
+@@ -8123,7 +8123,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 					       &flowtable->hook_list,
+ 					       flowtable);
+ 	if (err < 0) {
+-		nft_flowtable_hooks_destroy(&flowtable->hook_list);
++		nft_hooks_destroy(&flowtable->hook_list);
+ 		goto err4;
+ 	}
+ 
+@@ -8893,7 +8893,7 @@ static void nft_commit_release(struct nft_trans *trans)
  		break;
- 	case FLOW_OFFLOAD_XMIT_XFRM:
- 	case FLOW_OFFLOAD_XMIT_NEIGH:
+ 	case NFT_MSG_DELFLOWTABLE:
+ 		if (nft_trans_flowtable_update(trans))
+-			nft_flowtable_hooks_destroy(&nft_trans_flowtable_hooks(trans));
++			nft_hooks_destroy(&nft_trans_flowtable_hooks(trans));
+ 		else
+ 			nf_tables_flowtable_destroy(nft_trans_flowtable(trans));
+ 		break;
+@@ -9850,7 +9850,7 @@ static void nf_tables_abort_release(struct nft_trans *trans)
+ 		break;
+ 	case NFT_MSG_NEWFLOWTABLE:
+ 		if (nft_trans_flowtable_update(trans))
+-			nft_flowtable_hooks_destroy(&nft_trans_flowtable_hooks(trans));
++			nft_hooks_destroy(&nft_trans_flowtable_hooks(trans));
+ 		else
+ 			nf_tables_flowtable_destroy(nft_trans_flowtable(trans));
+ 		break;
 -- 
 2.43.0
 
