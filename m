@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0514513DB83;
-	Tue, 27 Feb 2024 13:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000A13B78A;
+	Tue, 27 Feb 2024 13:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041127; cv=none; b=C76OwHPy2kDMKWmGYj0vGixQwpgL2F/QaUR+DPu2MdCNbcTXLSs+WufBC7FA99G+K1mWZFojxhwWiKEU3YSTDa3H2zJKUgZ2NGBSAJAWYDFw2xVIcvGSJlcTskljtpM8LgfbuTxDD3JhhCGD22Uqji+DNJtQaOknkW8nzLDCSdA=
+	t=1709041129; cv=none; b=oihxDx3sOLdq0lBGYgqfqEjUtuGf0dYR3nYXdTrDL6xLGcunAURi9QiWXIpw+Ju3MUMfBJkI6/KiTRuG5rGIo/0FHFZA1qqheJvj9r38Up3OAf12un9Dh8H2w98gtSAgJTlZX8jkfCfcMqQqgqaReCVcJXQkMhb5Fsnuby1EbTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041127; c=relaxed/simple;
-	bh=CiDLfkBzP6vn30WzsHVmWxwY6f6OYgofS+UrKadcCK0=;
+	s=arc-20240116; t=1709041129; c=relaxed/simple;
+	bh=E8RnJSKONpJ9gD9MKHJHWgpdp6Lp090Tp2pZreHaFc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dR7OnYqMsFHZMUHM7TlTiO5BvPrCXjQoRTFHPG9eTMVaOPTL40+wUcjdW99Ao7MQz4EyXhURHwOKMLbtgUevZR223HIEqmzgds+fotQAsiW5CWmLPiXweITqFXFAVPlz9mrFs6cnhC3+4PMy9jbUUn6qBdzNeTLilLceVeC88hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDWBk97P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PhsVPXF/GrbkE0IlvZbkoN364lgI8hHBO7UO7KiRR7BDxeSNis3pAy5c8MZHHQvFR/Yke9OOxJIsGgvWo1qSc49wIx9IKuIOn/gkwXNK/5kwEQpzAebpnTFNczlO+DR1tDlMDb2nsYUWi4X99umzFdyAMQWLscN9LE7Yk1wB3w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb/68iND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDWBk97P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874B4C433F1;
-	Tue, 27 Feb 2024 13:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb/68iND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47578C433C7;
+	Tue, 27 Feb 2024 13:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041126;
-	bh=CiDLfkBzP6vn30WzsHVmWxwY6f6OYgofS+UrKadcCK0=;
+	s=korg; t=1709041129;
+	bh=E8RnJSKONpJ9gD9MKHJHWgpdp6Lp090Tp2pZreHaFc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDWBk97POC0Q1E88ft7/t5VW+uThB4oM3xCnV9srfD7gxqu1VkhcUxtNaFmf632Ln
-	 QthTxdLxKehEns+xGvmvNQBG1qxvWAm4ekWqWZ2UVWl33sGRQPd4I8X69nm5vYeXOU
-	 23p0WLyeVLYOxYipMcHrIiyC+0JKiM58OBCXc54A=
+	b=Cb/68iNDjhvzHAIaV6g6B7hll/wSk/SFUtH3lwqCXpcjAfM6p16khEcbUYAz25C54
+	 5cwpIe1xRFzDw01HXhz3a/rBP9kcephrNKBCSDyfKgIGKgDYYiYuO1I4VY3/4OGOZ5
+	 ASHmCuWgRHw60Q4++exugHo7irS40eLrUF2CoYMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.7 212/334] usb: roles: dont get/set_role() when usb_role_switch is unregistered
-Date: Tue, 27 Feb 2024 14:21:10 +0100
-Message-ID: <20240227131637.623869213@linuxfoundation.org>
+	PeiChen Huang <peichen.huang@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 230/334] drm/amd/display: Fix buffer overflow in get_host_router_total_dp_tunnel_bw()
+Date: Tue, 27 Feb 2024 14:21:28 +0100
+Message-ID: <20240227131638.225042961@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,76 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
+commit 97cba232549b9fe7e491fb60a69cf93075015f29 upstream.
 
-There is a possibility that usb_role_switch device is unregistered before
-the user put usb_role_switch. In this case, the user may still want to
-get/set_role() since the user can't sense the changes of usb_role_switch.
+The error message buffer overflow 'dc->links' 12 <= 12 suggests that the
+code is trying to access an element of the dc->links array that is
+beyond its bounds. In C, arrays are zero-indexed, so an array with 12
+elements has valid indices from 0 to 11. Trying to access dc->links[12]
+would be an attempt to access the 13th element of a 12-element array,
+which is a buffer overflow.
 
-This will add a flag to show if usb_role_switch is already registered and
-avoid unwanted behaviors.
+To fix this, ensure that the loop does not go beyond the last valid
+index when accessing dc->links[i + 1] by subtracting 1 from the loop
+condition.
 
-Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
-cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
+This would ensure that i + 1 is always a valid index in the array.
+
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:208 get_host_router_total_dp_tunnel_bw() error: buffer overflow 'dc->links' 12 <= 12
+
+Fixes: 59f1622a5f05 ("drm/amd/display: Add dpia display mode validation logic")
+Cc: PeiChen Huang <peichen.huang@amd.com>
+Cc: Aric Cyr <aric.cyr@amd.com>
+Cc: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -23,6 +23,7 @@ struct usb_role_switch {
- 	struct mutex lock; /* device lock*/
- 	struct module *module; /* the module this device depends on */
- 	enum usb_role role;
-+	bool registered;
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
+@@ -196,7 +196,7 @@ static int get_host_router_total_dp_tunn
+ 	struct dc_link *link_dpia_primary, *link_dpia_secondary;
+ 	int total_bw = 0;
  
- 	/* From descriptor */
- 	struct device *usb2_port;
-@@ -49,6 +50,9 @@ int usb_role_switch_set_role(struct usb_
- 	if (IS_ERR_OR_NULL(sw))
- 		return 0;
+-	for (uint8_t i = 0; i < MAX_PIPES * 2; ++i) {
++	for (uint8_t i = 0; i < (MAX_PIPES * 2) - 1; ++i) {
  
-+	if (!sw->registered)
-+		return -EOPNOTSUPP;
-+
- 	mutex_lock(&sw->lock);
- 
- 	ret = sw->set(sw, role);
-@@ -74,7 +78,7 @@ enum usb_role usb_role_switch_get_role(s
- {
- 	enum usb_role role;
- 
--	if (IS_ERR_OR_NULL(sw))
-+	if (IS_ERR_OR_NULL(sw) || !sw->registered)
- 		return USB_ROLE_NONE;
- 
- 	mutex_lock(&sw->lock);
-@@ -357,6 +361,8 @@ usb_role_switch_register(struct device *
- 		return ERR_PTR(ret);
- 	}
- 
-+	sw->registered = true;
-+
- 	/* TODO: Symlinks for the host port and the device controller. */
- 
- 	return sw;
-@@ -371,8 +377,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
-  */
- void usb_role_switch_unregister(struct usb_role_switch *sw)
- {
--	if (!IS_ERR_OR_NULL(sw))
-+	if (!IS_ERR_OR_NULL(sw)) {
-+		sw->registered = false;
- 		device_unregister(&sw->dev);
-+	}
- }
- EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
- 
+ 		if (!dc->links[i] || dc->links[i]->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
+ 			continue;
 
 
