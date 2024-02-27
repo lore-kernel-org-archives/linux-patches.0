@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C38A1448F1;
-	Tue, 27 Feb 2024 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0805B145B11;
+	Tue, 27 Feb 2024 13:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042052; cv=none; b=SowF7umgf9sb7wl7vgfg7As6h7lYLKxFfZwRcGTvE5jkrXYg9256jAhqV/IoXnGa4aE2lW6Hv6p7UN2KL4KF+JOvaQn4UZnuWRCzJQxXGu8NRyKHEp9dMiLwMtb5cnxBURInfAzlNfxHBYc5blPAFfz/llaHKa2TnMPaPMAC5tk=
+	t=1709042055; cv=none; b=k2AgZPzObXMGpJWsQY17+VhcR207hJvzuPdM+TQzzXLH7y0J6rUdag7dVlf2aKWzYDDCUUXikwGoK6wedj6Qb29tcToUN9ya/paD1QUjs/8HaGHOWotKzIhNotGhOsBzxh52RHsLYLXa/zmus0oEf+d7Sev0o/91LEjvBcwTdgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042052; c=relaxed/simple;
-	bh=V/u1uscCmUy/I/qWyz1fBrs7KqkVhnOhKIjqAU2G6tQ=;
+	s=arc-20240116; t=1709042055; c=relaxed/simple;
+	bh=7cmV6aZtS5Wi/xoK2XYo5g3yrKhEzGRjEhpIW9oT+a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSYd2gfYoMaFnTCzqrFNwxlVnl5g280CLk0GPeUSG/KJMIs7wfxeHk2WIseLQEXJ1PZcQ88wSRwxzVFJkhfZa/2b5ma2oQj1RmLLsrCiJ7OuJcDCsX+UdMNILvi5EXUcAJqGTykP1PTrSLe894kXGB47eJxeWkZwzdvIA71tRoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGV9majF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZGbrH5FYR3LDW6C8MmjQclwtCn40j0vss72dNK4BpFP4A/z9ni2IGY0woS2Xh6REp8SeOUDahMBEvcjY9ZtYCaYrbs8D1pu2JbKapIdmspFe9CjjWIdTt5VigtIm8YNbxQm5DiX1YGN3TdS3L3GJ/vzV+ztwc3v7Tc6UkCIazI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJpLKfiA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGV9majF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD5AC433F1;
-	Tue, 27 Feb 2024 13:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJpLKfiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C36AC433C7;
+	Tue, 27 Feb 2024 13:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042052;
-	bh=V/u1uscCmUy/I/qWyz1fBrs7KqkVhnOhKIjqAU2G6tQ=;
+	s=korg; t=1709042054;
+	bh=7cmV6aZtS5Wi/xoK2XYo5g3yrKhEzGRjEhpIW9oT+a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGV9majFVInVg4SfgBPM4ar2fCLQvYk/MkIR44lVIeS1FcNO2P3njv30DmZT6e/qt
-	 rAAfOx3UkYsFtC0uoDcLWgaUIfEXz0EBreHd75et9l3gCIBciZoZyvnjblHK4MKHxo
-	 qX4L9oK049B/fGbeci5BCOpKTQv1L2raWXQifl2w=
+	b=oJpLKfiAS+dIizXui2aqkW6guZbX/i94rtGOAms80pRr9noNG4IAQI4nqt8bxWL6p
+	 KGdMnS2qaywS3ag6M+e/mGDPytuue1H+nzPs7lpYn3yjsdala0ucvB8ztanSBQkBEC
+	 FvVkWb84mWtr5a1SiVm2gQBZVbcJb2xYoGSdJDpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kobel <a-kobel@a-kobel.de>,
-	regressions@lists.linux.dev,
-	Arnold Gozum <arngozum@gmail.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.6 162/299] platform/x86: intel-vbtn: Stop calling "VBDL" from notify_handler
-Date: Tue, 27 Feb 2024 14:24:33 +0100
-Message-ID: <20240227131631.070692170@linuxfoundation.org>
+Subject: [PATCH 6.6 163/299] platform/x86: touchscreen_dmi: Allow partial (prefix) matches for ACPI names
+Date: Tue, 27 Feb 2024 14:24:34 +0100
+Message-ID: <20240227131631.100194584@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -54,48 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 84c16d01ff219bc0a5dca5219db6b8b86a6854fb upstream.
+commit dbcbfd662a725641d118fb3ae5ffb7be4e3d0fb0 upstream.
 
-Commit 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing
-tablet-mode-switch events") causes 2 issues on the ThinkPad X1 Tablet Gen2:
+On some devices the ACPI name of the touchscreen is e.g. either
+MSSL1680:00 or MSSL1680:01 depending on the BIOS version.
 
-1. The ThinkPad will wake up immediately from suspend
-2. When put in tablet mode SW_TABLET_MODE reverts to 0 after about 1 second
+This happens for example on the "Chuwi Hi8 Air" tablet where the initial
+commit's ts_data uses "MSSL1680:00" but the tablets from the github issue
+and linux-hardware.org probe linked below both use "MSSL1680:01".
 
-Both these issues are caused by the "VBDL" ACPI method call added
-at the end of the notify_handler.
+Replace the strcmp() match on ts_data->acpi_name with a strstarts()
+check to allow using a partial match on just the ACPI HID of "MSSL1680"
+and change the ts_data->acpi_name for the "Chuwi Hi8 Air" accordingly
+to fix the touchscreen not working on models where it is "MSSL1680:01".
 
-And it never became entirely clear if this call is even necessary to fix
-the issue of missing tablet-mode-switch events on the Dell Inspiron 7352.
+Note this drops the length check for I2C_NAME_SIZE. This never was
+necessary since the ACPI names used are never more then 11 chars and
+I2C_NAME_SIZE is 20 so the replaced strncmp() would always stop long
+before reaching I2C_NAME_SIZE.
 
-Drop the "VBDL" ACPI method call again to fix the 2 issues this is
-causing on the ThinkPad X1 Tablet Gen2.
-
-Fixes: 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing tablet-mode-switch events")
-Reported-by: Alexander Kobel <a-kobel@a-kobel.de>
-Closes: https://lore.kernel.org/platform-driver-x86/295984ce-bd4b-49bd-adc5-ffe7c898d7f0@a-kobel.de/
-Cc: regressions@lists.linux.dev
-Cc: Arnold Gozum <arngozum@gmail.com>
+Link: https://linux-hardware.org/?computer=AC4301C0542A
+Fixes: bbb97d728f77 ("platform/x86: touchscreen_dmi: Add info for the Chuwi Hi8 Air tablet")
+Closes: https://github.com/onitake/gsl-firmware/issues/91
 Cc: stable@vger.kernel.org
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Alexander Kobel <a-kobel@a-kobel.de>
-Link: https://lore.kernel.org/r/20240216203300.245826-1-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20240212120608.30469-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vbtn.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/platform/x86/touchscreen_dmi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/intel/vbtn.c
-+++ b/drivers/platform/x86/intel/vbtn.c
-@@ -200,9 +200,6 @@ static void notify_handler(acpi_handle h
- 	autorelease = val && (!ke_rel || ke_rel->type == KE_IGNORE);
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -81,7 +81,7 @@ static const struct property_entry chuwi
+ };
  
- 	sparse_keymap_report_event(input_dev, event, val, autorelease);
--
--	/* Some devices need this to report further events */
--	acpi_evaluate_object(handle, "VBDL", NULL, NULL);
- }
+ static const struct ts_dmi_data chuwi_hi8_air_data = {
+-	.acpi_name	= "MSSL1680:00",
++	.acpi_name	= "MSSL1680",
+ 	.properties	= chuwi_hi8_air_props,
+ };
  
- /*
+@@ -1821,7 +1821,7 @@ static void ts_dmi_add_props(struct i2c_
+ 	int error;
+ 
+ 	if (has_acpi_companion(dev) &&
+-	    !strncmp(ts_data->acpi_name, client->name, I2C_NAME_SIZE)) {
++	    strstarts(client->name, ts_data->acpi_name)) {
+ 		error = device_create_managed_software_node(dev, ts_data->properties, NULL);
+ 		if (error)
+ 			dev_err(dev, "failed to add properties: %d\n", error);
 
 
