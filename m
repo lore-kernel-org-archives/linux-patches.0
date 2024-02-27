@@ -1,91 +1,127 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888882421D
-	for <patches@lists.linux.dev>; Tue, 27 Feb 2024 17:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D55F13A884;
+	Tue, 27 Feb 2024 17:22:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709053248; cv=none; b=XGevoAOYCTtJqEW00IuCgWsykS8llZ//Pli5qobFcxGCWBiSQG40NVGhrqgcdiYpK0SpxytH8vZJa3js2ZAIkidKk2eFLkqMw51CYPU6ui0ybXQy7kSr9y8SdgGkd94xQfL6ZonIg4+4bkA4+q/hQL/kHLBSHWwLi/f5N7DoWrw=
+	t=1709054572; cv=none; b=HbA2pVsKoRScba5O0uzcSYs188CmyA/eVnD+Z7/LPyyCvnhuBez94u75iue/afQKxKBf1FBNnZOEh+jgQLJR8ZVs1ybYQI2YbkRmiZHnUatVpDWZP+Rsf8nHkPXNcnOURNX6ePwIUIaDGZSoBdPuMebgoXjtgPkh5LSlUg06f4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709053248; c=relaxed/simple;
-	bh=kaZPwy1DnnJwKmEiqW49+N4tGBugK5KqDPoQuOPHqX4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EeRI7hyuqPvvyV8gWtOFALLQ9BsU2RM/3y5TkbVM/vElahZVPw70LK4uqOn0GBoJuaXCs8I7bkd0JPsPQgVox6+qslAdcEF5uBGKLmwWXr7bVMiWCsG5dZ9e3Ny8MsSFAQJEHmQFbCPOn+EBb6RP+oiWliNfQxICsQ0hBZcPkFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=LB34cpw9; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1709054572; c=relaxed/simple;
+	bh=OZd+QJFTU/LwgL/Zknn60/sBgfvG6r1OawibkMwoaGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XbZE8uL7AGM6Vgk6U4wEpVhROd/dBvPlfLT6nV7wGt1tGKaUDhohMKffXNosS8wcErA4elPeJRW7s++SQf/TqRSFjh6Uqth4mBXP9zZaQOe9KbtNJ0dDraNhS1vQUra26JQlZwr+zB4rjyiuo17KN5k1Ef6L/S9q4E+5YM1OvNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZCTy7ll7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="LB34cpw9"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-5d8ddbac4fbso3749860a12.0
-        for <patches@lists.linux.dev>; Tue, 27 Feb 2024 09:00:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709053247; x=1709658047; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fVB/mgTuOok+gnoF/FjLnOVs65Yn1KQT4qK8xBXRKZk=;
-        b=LB34cpw9VFyN1TaB/I8aqkFH9pnHcjyzDpzV+3tQ2Ge0vG6tg6LQgrWM1edF6cPzxZ
-         3d4HEI7oKRw37b/GgcSyNXtkSnWwWzAHAuN21a1ssgYphww6pXxxsUYHtJo8KBnWyYUx
-         0tzNG1IYdEDlquZwzV2PGoWYJHbBUdM7we8os=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709053247; x=1709658047;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fVB/mgTuOok+gnoF/FjLnOVs65Yn1KQT4qK8xBXRKZk=;
-        b=WT12V+YZ/c4iCrIij3PzoSF/K4ojKLlD/Zup8aGqD2YNtOOflif7ygcBraPyAZkmtt
-         01hMd4g8biJdw0E8hkis9RF3eQXzh2lhcios3Uq80xCozS9ioNuX/Lvlr011dqcLx7kM
-         2V6G9CPyd4cY9RqY5qpfC33tfnLkV0GnVwl8ld2S6m6CERXPlut9NtkVpmirj4VixSa3
-         bAYhMWaFbNigg3GqFxbXVRSV4fDc5LVls17/hEUc/NRzwkpThYmZAdj0+Nz3Q+uYVdGP
-         WzB4NdOpUEceV3M8bIR0izlA4PhAcUJHUXfbE8YojI8yDtocVk4ncNpaldd7sueF8IfJ
-         sGUg==
-X-Forwarded-Encrypted: i=1; AJvYcCXTywpX3E+vqsMpAeeIgDR+6JWatr4n1kgiS1SDhL5skHV/bFkVpbaoBtAvDtdKgHTFudnh80vOIqpNYOOkSxtgB1Ey4x4WAA==
-X-Gm-Message-State: AOJu0Yw5S2Fl8B+Qv9C7A7ozr1NvIYxdePFbbc+zmv3LPlkvSnZyIADS
-	fDCBMT5BJ00hQ0Gz8Ikf+xaqJ13c0lloJLCrd+WZINVCVCdD1pyDg6runkIKEA==
-X-Google-Smtp-Source: AGHT+IFg0NCtYbETJpvRCOpzy0XTL7KtmhpC1VhxZupEkO0MpW4B3yevf7ZLibVvBRAtyz/LEba0cQ==
-X-Received: by 2002:a17:90a:d90d:b0:29a:a39e:e651 with SMTP id c13-20020a17090ad90d00b0029aa39ee651mr7555235pjv.11.1709053246818;
-        Tue, 27 Feb 2024 09:00:46 -0800 (PST)
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id u3-20020a17090ac88300b0029a4db713b9sm8760981pjt.39.2024.02.27.09.00.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 09:00:46 -0800 (PST)
-Date: Tue, 27 Feb 2024 09:00:44 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>, rui.zhang@intel.com,
-	lukasz.luba@arm.com, gustavoars@kernel.org, morbo@google.com,
-	justinstitt@google.com, stanislaw.gruszka@linux.intel.com,
-	linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] thermal: core: Move initial num_trips assignment before
- memcpy()
-Message-ID: <202402270852.E46A5268@keescook>
-References: <20240226-thermal-fix-fortify-panic-num_trips-v1-1-accc12a341d7@kernel.org>
- <6a6be01d-3453-4268-8b2e-0279cc20835d@linaro.org>
- <CAJZ5v0h87k6xoi-9V0Cfb2rHQcr-STfG_bNWpzfoj4Dy46U0Lw@mail.gmail.com>
- <f81af0ae-7458-47d3-90ae-71d5217ee7dd@linaro.org>
- <202402270816.0EA3349A76@keescook>
- <bbc65508-eb0e-4d63-921b-85d242cc556f@linaro.org>
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZCTy7ll7"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RBX79s001966;
+	Tue, 27 Feb 2024 17:22:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=g5/OtNFrU+q0HQTPqi/YEqGkmh+JvEMc5GWZqEAuWTI=; b=ZC
+	Ty7ll71rN8DODt66sNrLm4IsEKMm6JRxG05CVnpfRXo6OegPCKDvFzQ4GxX0CMA7
+	4HNUafYKe5AudJDKFjmcea1gMW0KGeT6PdWPywzN1AVEplxwVG0CooOWxTp/myOt
+	2mjU2d+DqRe2gTvEHJH23s5DgpDKagmG76roSWmoOHbXcJ+Svi3c2aE5FNC5/HgH
+	aFhE3aMXbor6h74LbXirvAOe7/ZsQPsAPM2netNnHAdy0bdZLdhLkcwKAt6Jqqo6
+	SCMqsHjNKWyeU7bOtGu69TrxoBzgWC/IxrmU5iFyQKYepTgcuOKquSWi7keqMaIQ
+	pneMgdpWLPJqaymHobug==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh64h22ex-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 17:22:23 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RHMMUH001769
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 17:22:22 GMT
+Received: from [10.71.110.192] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 09:22:21 -0800
+Message-ID: <9336c99d-ca56-4d01-b9b2-18539ef0b725@quicinc.com>
+Date: Tue, 27 Feb 2024 09:22:13 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bbc65508-eb0e-4d63-921b-85d242cc556f@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/7] arm64: Unconditionally call
+ unflatten_device_tree()
+Content-Language: en-US
+To: Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
+        <linux-um@lists.infradead.org>, <linux-arm-kernel@lists.infradead.org>,
+        <kunit-dev@googlegroups.com>, <linux-kselftest@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Frank Rowand <frowand.list@gmail.com>,
+        Catalin
+ Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Mark
+ Rutland <mark.rutland@arm.com>
+References: <20240217010557.2381548-1-sboyd@kernel.org>
+ <20240217010557.2381548-6-sboyd@kernel.org>
+From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+In-Reply-To: <20240217010557.2381548-6-sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: U-zGZIHscjx7uttOwzY-n83UKqVrV9ux
+X-Proofpoint-GUID: U-zGZIHscjx7uttOwzY-n83UKqVrV9ux
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_03,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ bulkscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 phishscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402270134
 
-On Tue, Feb 27, 2024 at 05:47:44PM +0100, Daniel Lezcano wrote:
-> Ok my misunderstanding was I thought sizeof() was calling _bdos under the
-> hood, so when calling sizeof(flex_array), it was returning the computed size
-> inferring from the __counted_by field.
+On 2/16/2024 5:05 PM, Stephen Boyd wrote:
 
-Yeah, sizeof() has a very limited scope. __builtin_object_size() has
-more flexibility (via the 2nd argument, "type"), but it was still
-compile-time only. __builtin_dynamic_object_size() was added to bring
-runtime evaluations into the mix (initially to support the alloc_size
-attribute, and now includes the counted_by attribute too).
+> Call this function unconditionally so that we can populate an empty DTB
+> on platforms that don't boot with a firmware provided or builtin DTB.
+> When ACPI is in use, unflatten_device_tree() ignores the
+> 'initial_boot_params' pointer so the live DT on those systems won't be
+> whatever that's pointing to. Similarly, when kexec copies the DT data
+> the previous kernel to the new one on ACPI systems,
+> of_kexec_alloc_and_setup_fdt() will ignore the live DT (the empty root
+> one) and copy the 'initial_boot_params' data.
+>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Frank Rowand <frowand.list@gmail.com>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: <linux-arm-kernel@lists.infradead.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 
--- 
-Kees Cook
+This change looks good to me. I am working on a patch set that will benefit from this.
+Reviewed-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+
+Regards,
+Oreoluwa
+
+> ---
+>  arch/arm64/kernel/setup.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+> index 42c690bb2d60..0d210720d47d 100644
+> --- a/arch/arm64/kernel/setup.c
+> +++ b/arch/arm64/kernel/setup.c
+> @@ -351,8 +351,7 @@ void __init __no_sanitize_address setup_arch(char **cmdline_p)
+>  	/* Parse the ACPI tables for possible boot-time configuration */
+>  	acpi_boot_table_init();
+>  
+> -	if (acpi_disabled)
+> -		unflatten_device_tree();
+> +	unflatten_device_tree();
+>  
+>  	bootmem_init();
