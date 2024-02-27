@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C0E13B2B4;
-	Tue, 27 Feb 2024 14:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A479413B2B4;
+	Tue, 27 Feb 2024 14:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043840; cv=none; b=R3OaG9j2GdPSPaEYD8apoIKp5lvjipi8YN+GlJ4AlBpmyB4t1nli8BUz8A8u9TCUxsct+8BEZTccQfFqwuXuhaYhIlkUkSc3QHhWRQSsGS21oOjrEQ5+mzBTR4WVKW39a4LiK2+wrYHIvY35Zob8NXmLcsXHaOe01u83TEdsZFc=
+	t=1709043843; cv=none; b=WHr6GwC76nhKctIzUkVepdD9Tl8zl8oMaXVXjYJ4X24ESIyLAPI206xVyw9wPI3YuKT+fsxiSZj4EKPjg/dbd0eAEPZYGBU3LCDFRp+ieEwREL+ZW56c7qqiBmlnTD6hts1mvd6hqwGDj5bdaRooWvfP/aBUDh/qkfJ0Fu4Z3LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043840; c=relaxed/simple;
-	bh=sqW2u8l+9zR9zkQ+STBcSeLmrs9Hnk5J1Dkyx62m3Mc=;
+	s=arc-20240116; t=1709043843; c=relaxed/simple;
+	bh=+b20WmULnicPUNZX/VpD7KAY+fS0SNISy4R0S7+StE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UlC1HTgUmH5OeiesHopKLnsUGr98A5nnBa3z02BaWLMNcq79T4n5L9qYcD5ntFliXxJcywIaNh00PhrJ5gX3+k7CAv4Gn4VRnGfBERXumaVJLYiqHuSa7JJUng/mDv9fd1ymBLzmlywUAYOmfwA2Xem2bYqIHtHeIVCbj6nw0II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnuTEuR3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bswZo3FCzuooQbXaJqrDec/QA30DmI+7Y5tQJRpwUqSxQhhKppSHXer1yp2DEjPr7ooUI48La6PagbFHR9+lAR/kyBiGtGplZOA5NjMqKQTWcD9xRdm3xTv3z9niCtx6wAySqNt3yifHBiiI5FLXoHRovH7L4gFhgpzO5SvBh6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYtUtI7f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnuTEuR3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E774C433F1;
-	Tue, 27 Feb 2024 14:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYtUtI7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27719C433C7;
+	Tue, 27 Feb 2024 14:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043840;
-	bh=sqW2u8l+9zR9zkQ+STBcSeLmrs9Hnk5J1Dkyx62m3Mc=;
+	s=korg; t=1709043843;
+	bh=+b20WmULnicPUNZX/VpD7KAY+fS0SNISy4R0S7+StE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnuTEuR3RqPhCXs4aXT18t7QJbkkxu2RwItvgRCNHNgo9+Kz9fzlyNrlONgNWxNxB
-	 cXf+1qA+YfBj/x1u146XB6us+wI4L6M2zgEX6sCp/HEG6doNfpBnK+f5Pz270voUUB
-	 rRvmiFOK5Z7iTAqA6iUmFO8MjpJVGOZXkjW0PSYM=
+	b=gYtUtI7f6JVqu8+q/qLzrqGG5PZ2qzmN+6ZawvqpY3+BypId6ax3sK0Zzot2AiUNf
+	 xUJtC990Ka9VBASfHrEovD8p9ut30VCpR1QnCrvutEMwhmGk1POyJ+UMBbDcNrMfPJ
+	 KEsb78mBtytwX7bYKXl11Kafzs1nd2gdx3GKP9Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Shanker Donthineni <sdonthineni@nvidia.com>
-Subject: [PATCH 5.4 56/84] PCI/MSI: Prevent MSI hardware interrupt number truncation
-Date: Tue, 27 Feb 2024 14:27:23 +0100
-Message-ID: <20240227131554.694454547@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 57/84] l2tp: pass correct message length to ip6_append_data
+Date: Tue, 27 Feb 2024 14:27:24 +0100
+Message-ID: <20240227131554.726924165@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Tom Parkin <tparkin@katalix.com>
 
-commit db744ddd59be798c2627efbfc71f707f5a935a40 upstream.
+commit 359e54a93ab43d32ee1bff3c2f9f10cb9f6b6e79 upstream.
 
-While calculating the hardware interrupt number for a MSI interrupt, the
-higher bits (i.e. from bit-5 onwards a.k.a domain_nr >= 32) of the PCI
-domain number gets truncated because of the shifted value casting to return
-type of pci_domain_nr() which is 'int'. This for example is resulting in
-same hardware interrupt number for devices 0019:00:00.0 and 0039:00:00.0.
+l2tp_ip6_sendmsg needs to avoid accounting for the transport header
+twice when splicing more data into an already partially-occupied skbuff.
 
-To address this cast the PCI domain number to 'irq_hw_number_t' before left
-shifting it to calculate the hardware interrupt number.
+To manage this, we check whether the skbuff contains data using
+skb_queue_empty when deciding how much data to append using
+ip6_append_data.
 
-Please note that this fixes the issue only on 64-bit systems and doesn't
-change the behavior for 32-bit systems i.e. the 32-bit systems continue to
-have the issue. Since the issue surfaces only if there are too many PCIe
-controllers in the system which usually is the case in modern server
-systems and they don't tend to run 32-bit kernels.
+However, the code which performed the calculation was incorrect:
 
-Fixes: 3878eaefb89a ("PCI/MSI: Enhance core to support hierarchy irqdomain")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Shanker Donthineni <sdonthineni@nvidia.com>
+     ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
+
+...due to C operator precedence, this ends up setting ulen to
+transhdrlen for messages with a non-zero length, which results in
+corrupted packets on the wire.
+
+Add parentheses to correct the calculation in line with the original
+intent.
+
+Fixes: 9d4c75800f61 ("ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()")
+Cc: David Howells <dhowells@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240115135649.708536-1-vidyas@nvidia.com
+Signed-off-by: Tom Parkin <tparkin@katalix.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240220122156.43131-1-tparkin@katalix.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/msi.c |    2 +-
+ net/l2tp/l2tp_ip6.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/msi.c
-+++ b/drivers/pci/msi.c
-@@ -1428,7 +1428,7 @@ irq_hw_number_t pci_msi_domain_calc_hwir
- {
- 	return (irq_hw_number_t)desc->msi_attrib.entry_nr |
- 		pci_dev_id(dev) << 11 |
--		(pci_domain_nr(dev->bus) & 0xFFFFFFFF) << 27;
-+		((irq_hw_number_t)(pci_domain_nr(dev->bus) & 0xFFFFFFFF)) << 27;
- }
+--- a/net/l2tp/l2tp_ip6.c
++++ b/net/l2tp/l2tp_ip6.c
+@@ -644,7 +644,7 @@ static int l2tp_ip6_sendmsg(struct sock
  
- static inline bool pci_msi_desc_is_multi_msi(struct msi_desc *desc)
+ back_from_confirm:
+ 	lock_sock(sk);
+-	ulen = len + skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0;
++	ulen = len + (skb_queue_empty(&sk->sk_write_queue) ? transhdrlen : 0);
+ 	err = ip6_append_data(sk, ip_generic_getfrag, msg,
+ 			      ulen, transhdrlen, &ipc6,
+ 			      &fl6, (struct rt6_info *)dst,
 
 
