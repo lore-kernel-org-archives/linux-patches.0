@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E8A54FA5;
-	Tue, 27 Feb 2024 13:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677F054FA5;
+	Tue, 27 Feb 2024 13:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040703; cv=none; b=MinE1s0o4C6hLvuAQy9Amb6ofKYpp+rNFG6nitl7FZCR2f38q1XEXwIaum8vqNxu8V3nuJgvJ8TIwadlrWZDone745Ld4dljgZPl0Vvz/MrC/ZUkP8j6JHghPCFUr5EjjurnluHYzNgKG9UnxnWtdiIutgY2EUvcb4OTqhOknGE=
+	t=1709040705; cv=none; b=G11WE1YPF+Pzs3ec5VQXBn0ZnCufZuDgbDCSBf7pSsuFveU7UPp6PVOgiHdjpIsL9IYvDsCebnVKl2yKEVDtNK3MOr9eyAQr6xBUCRSUQUZoSlmvMVzGzoH16ks3iWQqyn1QPRR5cPcm+0UwUUHGnN3l3ud0AOe0sANYP+pAwLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040703; c=relaxed/simple;
-	bh=uXGKQ/YdkFHOuqLXrQkWgqIvW8UHHhlCoTmmVsok4s4=;
+	s=arc-20240116; t=1709040705; c=relaxed/simple;
+	bh=mWrU7HBx1t51AkMqP4drYEzMQSLL2L4mNKmIshkxaAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmR8L3FmuzaW+5fNgJpOC5VXWR5g8FghN8c0dhnRIHL1S+8b577FQoRWLZENaVusnMl42zfqaD9yIpmhT9KiLFvzbSrOJHJUL0Mvw03Se2XBtePk+R0piOKKnJ/h+r5faMdJPYcxBmhMs/wBAZRhcAPsqaYyX4xEXgPmYY41GqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiZ1w6QP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJ7VD9Xv13vtpky6oQ9RyaqxRgVMhUS3LXY00HWVvjY0RZtkGWLjrwsEOyFM4K4fiYFLCjUrdekqjqHYOClHhBxsinwgFBKk+JEsFgHIGPFhk0N+rhXhGTU7diysBwPB1VfIhCEsdMds3Bl7JZDW0yOO59UEhr5cb1hLKiUtNe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxibAdzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiZ1w6QP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD3BC433C7;
-	Tue, 27 Feb 2024 13:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxibAdzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA96AC43394;
+	Tue, 27 Feb 2024 13:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040702;
-	bh=uXGKQ/YdkFHOuqLXrQkWgqIvW8UHHhlCoTmmVsok4s4=;
+	s=korg; t=1709040705;
+	bh=mWrU7HBx1t51AkMqP4drYEzMQSLL2L4mNKmIshkxaAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiZ1w6QPyiSfulSiS8mEi1fUtZZWRlEU1aSNafITi2lkfaz9IllmGd1qTKMWMcKbN
-	 GC4eKPsWgl0SXPsq143GfIQQu5fQdCuqYDYI2tdlDj9Qp2c0eTGwLdCsXf9sXMB7yx
-	 Pwt1lUtQpuvVNL4VmuqoJaLSQ9kJX8rJ3CIed2Zk=
+	b=yxibAdzH5bIwjWbWMFHXJF9PaxQCbLa2pwpWPFG/FRIu3ofVUcvBtY2oGRHWJfZ4z
+	 p6LbF4CfypTXiwNT4Fe0JUJ9MhdIOS2Zc8iOsmOsvDgYgBE/bgNe7bpFAUrGU+RArq
+	 hPlghdPvlTc9mcJsoIk6DGAXMdTNL5WAK+hhP7/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 079/334] fs/ntfs3: Correct hard links updating when dealing with DOS names
-Date: Tue, 27 Feb 2024 14:18:57 +0100
-Message-ID: <20240227131633.090373177@linuxfoundation.org>
+Subject: [PATCH 6.7 080/334] fs/ntfs3: Print warning while fixing hard links count
+Date: Tue, 27 Feb 2024 14:18:58 +0100
+Message-ID: <20240227131633.120192038@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,41 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 1918c10e137eae266b8eb0ab1cc14421dcb0e3e2 ]
+[ Upstream commit 85ba2a75faee759809a7e43b4c103ac59bac1026 ]
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/record.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/ntfs3/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index 53629b1f65e99..7b6423584eaee 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -535,8 +535,20 @@ bool mi_remove_attr(struct ntfs_inode *ni, struct mft_inode *mi,
- 		return false;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 5e3d713749185..fa6c7965473c8 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -412,7 +412,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		goto out;
  
- 	if (ni && is_attr_indexed(attr)) {
--		le16_add_cpu(&ni->mi.mrec->hard_links, -1);
--		ni->mi.dirty = true;
-+		u16 links = le16_to_cpu(ni->mi.mrec->hard_links);
-+		struct ATTR_FILE_NAME *fname =
-+			attr->type != ATTR_NAME ?
-+				NULL :
-+				resident_data_ex(attr,
-+						 SIZEOF_ATTRIBUTE_FILENAME);
-+		if (fname && fname->type == FILE_NAME_DOS) {
-+			/* Do not decrease links count deleting DOS name. */
-+		} else if (!links) {
-+			/* minor error. Not critical. */
-+		} else {
-+			ni->mi.mrec->hard_links = cpu_to_le16(links - 1);
-+			ni->mi.dirty = true;
-+		}
+ 	if (!is_match && name) {
+-		/* Reuse rec as buffer for ascii name. */
+ 		err = -ENOENT;
+ 		goto out;
  	}
+@@ -427,6 +426,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
  
- 	used -= asize;
+ 	if (names != le16_to_cpu(rec->hard_links)) {
+ 		/* Correct minor error on the fly. Do not mark inode as dirty. */
++		ntfs_inode_warn(inode, "Correct links count -> %u.", names);
+ 		rec->hard_links = cpu_to_le16(names);
+ 		ni->mi.dirty = true;
+ 	}
 -- 
 2.43.0
 
