@@ -1,104 +1,125 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A772148CE0
-	for <patches@lists.linux.dev>; Tue, 27 Feb 2024 17:35:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7808C4D9EF;
+	Tue, 27 Feb 2024 17:45:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709055309; cv=none; b=iyWESmO5JKafzO12+h5hs8BQLv/AAHfQNs83esjgvX1nHcQYNp0f4a9f2SbwgfZTFlryj6RgpqZ6WRYPXsocehuvtCBDe1qdsbiGoOETU153rAcuVrkEscFCUo4aSXKjZx4Wlg8+636wE6rdv69FABQs1uQrPpvKl5rle1eDDdc=
+	t=1709055920; cv=none; b=PSezO5029gxv/OGLvUfw5WXjj5ec+WQvRIsod4LdSjMemVBvjcgAbiUhCoss/Lm71Fj0hoj4ud4t+XtbPTPEag6/eJd7IOrYnPE9T+qmMy0z9Uni0RI69pyfhm+UW1KZGaI3nTmCRoTxBTQdlqwtXriWDJx8i8J0LSHjNj43GFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709055309; c=relaxed/simple;
-	bh=hQ2ryKGeq/r38RlaFN/f0EoXXlr9M7MA/Gh4pDclvGs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OmgrA+LxR1vPSh4nLA6SnD0oV25KnR+m53QWWveLmWEDpWTAhihzvuTu7LcPRcyj63EviA8NkV75ntKJdm6ssCj5Yxkia8trJUHcF/++6QMh8V7A1x2isgN/lrHBewu+X078tQBqDR/sswIDKlI5lxvUY0/m30x+Us2wVGnEtaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6984ADA7;
-	Tue, 27 Feb 2024 09:35:43 -0800 (PST)
-Received: from FVFF77S0Q05N.cambridge.arm.com (FVFF77S0Q05N.cambridge.arm.com [10.1.28.137])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DFCFE3F73F;
-	Tue, 27 Feb 2024 09:35:02 -0800 (PST)
-Date: Tue, 27 Feb 2024 17:34:58 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Will Deacon <will@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [PATCH v4 5/7] arm64: Unconditionally call
- unflatten_device_tree()
-Message-ID: <Zd4dQpHO7em1ji67@FVFF77S0Q05N.cambridge.arm.com>
-References: <20240217010557.2381548-1-sboyd@kernel.org>
- <20240217010557.2381548-6-sboyd@kernel.org>
- <20240223000317.GA3835346-robh@kernel.org>
- <20240223102345.GA10274@willie-the-truck>
- <CAL_JsqJSeSHeWV3YJE9n2NuY+s_iE6f7N5C_oguEJn7jTZ20xA@mail.gmail.com>
+	s=arc-20240116; t=1709055920; c=relaxed/simple;
+	bh=sOFkxAkKRZFKZTlMH2xddSerrSsW//EcW35qssmo0cM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VCL3qiz6yHKOIHs5MyZcutBFm8qbpeVoAYOYAOjx9Y4CUQzMGsoi/aiOWuk3dMfQEHePb2YYj2kexq6hm8ikayP9IPuJWgHHjLQk+QoEFABCLnr5pZNSR08nMd7vBziqvCadYY8tT4r5XwpOk26j7G3IFaxUdwl+tT3MZlNLHwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odgz/RyR; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odgz/RyR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892D4C433C7;
+	Tue, 27 Feb 2024 17:45:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709055920;
+	bh=sOFkxAkKRZFKZTlMH2xddSerrSsW//EcW35qssmo0cM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=odgz/RyR61B1LTk3iZ2wf8hg4+Tg26rV/BsA1Y4fyayjEJ2dVu7D3I2IydS8E/Xxr
+	 d950H3PGOJGzaJbNgMX6RY6B2y+8Lhm7ebvMV0nNIg0Ik9jHabTPgwjr/6DNDqc6yH
+	 x+Zan6+8KB0iEI2z5a704e3IS/FnEH6btH6/QhmpevvOD0WNuV7vrL2+o1R/noClWx
+	 mrO6asxJ3xOwlUAFig7Q03pJ/eIJFlPl1K01nw7WlKe7H3dmVozNub7qdweUGVbQ5l
+	 roV33GBhragydZXzBY0a8gfDRe6hXb9hpH74pzod47kUR7LQ3VlHqCtCiWrtBL6MVm
+	 25sIjQvIUsFHg==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.6 000/299] 6.6.19-rc1 review
+Date: Tue, 27 Feb 2024 09:45:17 -0800
+Message-Id: <20240227174517.170160-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_JsqJSeSHeWV3YJE9n2NuY+s_iE6f7N5C_oguEJn7jTZ20xA@mail.gmail.com>
 
-On Fri, Feb 23, 2024 at 11:17:02AM -0700, Rob Herring wrote:
-> On Fri, Feb 23, 2024 at 3:23 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Thu, Feb 22, 2024 at 05:03:17PM -0700, Rob Herring wrote:
-> > > On Fri, Feb 16, 2024 at 05:05:54PM -0800, Stephen Boyd wrote:
-> > > > Call this function unconditionally so that we can populate an empty DTB
-> > > > on platforms that don't boot with a firmware provided or builtin DTB.
-> > > > When ACPI is in use, unflatten_device_tree() ignores the
-> > > > 'initial_boot_params' pointer so the live DT on those systems won't be
-> > > > whatever that's pointing to. Similarly, when kexec copies the DT data
-> > > > the previous kernel to the new one on ACPI systems,
-> > > > of_kexec_alloc_and_setup_fdt() will ignore the live DT (the empty root
-> > > > one) and copy the 'initial_boot_params' data.
-> > > >
-> > > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > > Cc: Frank Rowand <frowand.list@gmail.com>
-> > > > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > > > Cc: Will Deacon <will@kernel.org>
-> > > > Cc: Mark Rutland <mark.rutland@arm.com>
-> > > > Cc: <linux-arm-kernel@lists.infradead.org>
-> > > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > > > ---
-> > > >  arch/arm64/kernel/setup.c | 3 +--
-> > > >  1 file changed, 1 insertion(+), 2 deletions(-)
-> > >
-> > > Catalin, Will, Can I get an ack on this so I can take the series via the
-> > > DT tree.
-> >
-> > Mark had strong pretty strong objections to this in version one:
+Hello,
+
+On Tue, 27 Feb 2024 14:21:51 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.6.19 release.
+> There are 299 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Yes, I had concerns with it as well.
+> Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
+> Anything received after that time might be too late.
 > 
-> > https://lore.kernel.org/all/ZaZtbU9hre3YhZam@FVFF77S0Q05N/
-> >
-> > and this patch looks the same now as it did then. Did something else
-> > change?
-> 
-> Yes, that version unflattened the bootloader passed DT. Now within
-> unflatten_devicetree(), the bootloader DT is ignored if ACPI is
-> enabled and we unflatten an empty tree. That will prevent the kernel
-> getting 2 h/w descriptions if/when a platform does such a thing. Also,
-> kexec still uses the bootloader provided DT as before.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.19-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 
-That avoids the main instance of my concern, and means that this'll boot
-without issue, but IIUC this opens the door to dynamically instantiating DT
-devices atop an ACPI base system, which I think in general is something that's
-liable to cause more problems than it solves.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-I understand that's desireable for the selftests, though I still don't believe
-it's strictly necessary -- there are plenty of other things that only work if
-the kernel is booted in a specific configuration.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Putting the selftests aside, why do we need to do this? Is there any other
-reason to enable this?
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 3c05aa9775af ("Linux 6.6.19-rc1")
 
-Mark.
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
