@@ -1,123 +1,307 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543FF1419BF;
-	Tue, 27 Feb 2024 13:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD11419B5;
+	Tue, 27 Feb 2024 13:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041529; cv=none; b=NykcCV4/4prpmBW1iExwYlZOYnlluAcgcdKd9UWzD5ISUILKypLdaDJR34F40Wsd3OOkTyQ9qaNnxI23FtNW0ivx5ZiXYp+1ImL1GkEpo8w7+F4S1qmcilfSsCb+ndfdLbS5ssVr6kMFYF3lBd8HZfSTFV2UZYar1C7p+JnSHTM=
+	t=1709041531; cv=none; b=kd5ZAwJmaKk5Um7wVScQ5oAJ2W7Mp8NmoNvv5kct11Vy8ltMUNYwmyZvysQtTBRBrrIXCVCfmyIyuMwyOHuosh21n2d4Hg8DbGqOv1Oaun7PnjfJSt6ghrbHR3dqxjeZ/5H7eoKvOGWl2aN/x8JbVa4emA2VX36FJc5z2qBnn78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041529; c=relaxed/simple;
-	bh=fZNKfbDnlLi9b11tBSSydSYr+RDZIUOMVkJhITj0J38=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=namI4O1ghkSU0p5sDp0sU0o9l/xFABVqXolMxMe8CGJ52OZAHQb/486tOp6QknN6/c6p5V2FwtFTy2Dd7J6X0X/JM2o4iNi5vsAMUweJl79lzVRhjcuKUwciQ3mpfVb6Sr6uhfeFm4tKcwnkF5I5szpnuRusIdSkzWOC4Y2hyMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meuEMvVB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709041531; c=relaxed/simple;
+	bh=oI0YsBN5IXwuXiTa5ndwSnjgtw+sgMN08yHCIlyYX10=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FmAL5a+QQ9smr9ym6lSFHguePXIoF1Z/SVQNNa8uwM7IfCKB6mHcbh8yad2PjYxHIwmPXc2qhv0eKQSi8mP/mCoOhUC5VvdI/JIJKF35lgcXx4m7SB/W7a+uE3Ad9aQw//FHbDAzaLsHMz+emJTGFzhz0XE6Fa1o+NTWZJDn/M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuXcsUyH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meuEMvVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83353C43390;
-	Tue, 27 Feb 2024 13:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuXcsUyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDE6C433F1;
+	Tue, 27 Feb 2024 13:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041528;
-	bh=fZNKfbDnlLi9b11tBSSydSYr+RDZIUOMVkJhITj0J38=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meuEMvVBj8GKqWrn3jMGN5e+7WrkOp+gC4FxyOxkObbpckFlfkKmgpslwR2rx0FFf
-	 YK5+o1k1sZBQoNOIfMXLdNWK9LeKgM5alUmaocHpM4q/7Ho4St8Sl8uVrVQIXwAGo/
-	 7DFT+LmS4FUXJV+V3gKq+sLMghkaW02qRy5YSTgg=
+	s=korg; t=1709041531;
+	bh=oI0YsBN5IXwuXiTa5ndwSnjgtw+sgMN08yHCIlyYX10=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZuXcsUyHmo8oqNEIdD+THb111+C01CSaADZ4RSpzhSNHUJXEBEZshSZR9F3c0zEEq
+	 yEXzKrvpbmGidezHoht7aFbQOa9qBSoaFUoYWDnb6XGrda2/jEo6eyvsupGLS5ns4c
+	 vuSmcJTPAFhbR2+Uutxa6nYlmC9pT4htMIz5fCE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyril Hrubis <chrubis@suse.cz>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Petr Vorel <pvorel@suse.cz>,
-	Mel Gorman <mgorman@suse.de>
-Subject: [PATCH 4.19 09/52] sched/rt: Fix sysctl_sched_rr_timeslice intial value
-Date: Tue, 27 Feb 2024 14:25:56 +0100
-Message-ID: <20240227131548.839660733@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 4.19 00/52] 4.19.308-rc1 review
+Date: Tue, 27 Feb 2024 14:25:47 +0100
+Message-ID: <20240227131548.514622258@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
-References: <20240227131548.514622258@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.308-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.308-rc1
+X-KernelTest-Deadline: 2024-02-29T13:15+00:00
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 4.19.308 release.
+There are 52 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
+Anything received after that time might be too late.
 
-From: Cyril Hrubis <chrubis@suse.cz>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.308-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-[ Upstream commit c7fcb99877f9f542c918509b2801065adcaf46fa ]
+thanks,
 
-There is a 10% rounding error in the intial value of the
-sysctl_sched_rr_timeslice with CONFIG_HZ_300=y.
+greg k-h
 
-This was found with LTP test sched_rr_get_interval01:
+-------------
+Pseudo-Shortlog of commits:
 
-sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
-sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
-sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
-sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
-sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
-sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.308-rc1
 
-What this test does is to compare the return value from the
-sched_rr_get_interval() and the sched_rr_timeslice_ms sysctl file and
-fails if they do not match.
+Andrii Nakryiko <andriin@fb.com>
+    scripts/bpf: Fix xdp_md forward declaration typo
 
-The problem it found is the intial sysctl file value which was computed as:
+Bart Van Assche <bvanassche@acm.org>
+    fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
 
-static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+Oliver Upton <oliver.upton@linux.dev>
+    KVM: arm64: vgic-its: Test for valid IRQ in MOVALL handler
 
-which works fine as long as MSEC_PER_SEC is multiple of HZ, however it
-introduces 10% rounding error for CONFIG_HZ_300:
+Oliver Upton <oliver.upton@linux.dev>
+    KVM: arm64: vgic-its: Test for valid IRQ in its_sync_lpi_pending_table()
 
-(MSEC_PER_SEC / HZ) * (100 * HZ / 1000)
+Vidya Sagar <vidyas@nvidia.com>
+    PCI/MSI: Prevent MSI hardware interrupt number truncation
 
-(1000 / 300) * (100 * 300 / 1000)
+Jason Gunthorpe <jgg@nvidia.com>
+    s390: use the correct count for __iowrite64_copy()
 
-3 * 30 = 90
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    packet: move from strlcpy with unused retval to strscpy
 
-This can be easily fixed by reversing the order of the multiplication
-and division. After this fix we get:
+Vasiliy Kovalev <kovalev@altlinux.org>
+    ipv6: sr: fix possible use-after-free and null-ptr-deref
 
-(MSEC_PER_SEC * (100 * HZ / 1000)) / HZ
+Arnd Bergmann <arnd@arndb.de>
+    nouveau: fix function cast warnings
 
-(1000 * (100 * 300 / 1000)) / 300
+Randy Dunlap <rdunlap@infradead.org>
+    scsi: jazz_esp: Only build if SCSI core is builtin
 
-(1000 * 30) / 300 = 100
+Gianmarco Lusvardi <glusvardi@posteo.net>
+    bpf, scripts: Correct GPL license name
 
-Fixes: 975e155ed873 ("sched/rt: Show the 'sched_rr_timeslice' SCHED_RR timeslice tuning knob in milliseconds")
-Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Acked-by: Mel Gorman <mgorman@suse.de>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Link: https://lore.kernel.org/r/20230802151906.25258-2-chrubis@suse.cz
-[ pvorel: rebased for 4.19 ]
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/sched/rt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Andrii Nakryiko <andriin@fb.com>
+    scripts/bpf: teach bpf_helpers_doc.py to dump BPF helper definitions
 
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -8,7 +8,7 @@
- #include "pelt.h"
- 
- int sched_rr_timeslice = RR_TIMESLICE;
--int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
-+int sysctl_sched_rr_timeslice = (MSEC_PER_SEC * RR_TIMESLICE) / HZ;
- 
- static int do_sched_rt_period_timer(struct rt_bandwidth *rt_b, int overrun);
- 
+Arnd Bergmann <arnd@arndb.de>
+    RDMA/srpt: fix function pointer cast warnings
+
+Bart Van Assche <bvanassche@acm.org>
+    RDMA/srpt: Make debug output more detailed
+
+Jason Gunthorpe <jgg@ziepe.ca>
+    RDMA/ulp: Use dev_name instead of ibdev->name
+
+Bart Van Assche <bvanassche@acm.org>
+    RDMA/srpt: Support specifying the srpt_service_guid parameter
+
+Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+    RDMA/bnxt_re: Return error for SRQ resize
+
+Zhipeng Lu <alexious@zju.edu.cn>
+    IB/hfi1: Fix a memleak in init_credit_return
+
+Xu Yang <xu.yang_2@nxp.com>
+    usb: roles: don't get/set_role() when usb_role_switch is unregistered
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    usb: gadget: ncm: Avoid dropping datagrams of properly parsed NTBs
+
+Nikita Shubin <nikita.shubin@maquefel.me>
+    ARM: ep93xx: Add terminator to gpiod_lookup_table
+
+Tom Parkin <tparkin@katalix.com>
+    l2tp: pass correct message length to ip6_append_data
+
+Vasiliy Kovalev <kovalev@altlinux.org>
+    gtp: fix use-after-free and null-ptr-deref in gtp_genl_dump_pdp()
+
+Mikulas Patocka <mpatocka@redhat.com>
+    dm-crypt: don't modify the data when using authenticated encryption
+
+Roman Gushchin <guro@fb.com>
+    mm: memcontrol: switch to rcu protection in drain_all_stock()
+
+Daniel Vacek <neelx@redhat.com>
+    IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    pmdomain: renesas: r8a77980-sysc: CR7 must be always on
+
+Alexandra Winter <wintera@linux.ibm.com>
+    s390/qeth: Fix potential loss of L3-IP@ in case of network issues
+
+Yi Sun <yi.sun@unisoc.com>
+    virtio-blk: Ensure no requests in virtqueues before deleting vqs.
+
+Takashi Sakamoto <o-takashi@sakamocchi.jp>
+    firewire: core: send bus reset promptly on gap count error
+
+Zhang Rui <rui.zhang@intel.com>
+    hwmon: (coretemp) Enlarge per package core count limit
+
+Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+    regulator: pwm-regulator: Add validity checks in continuous .get_voltage
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: avoid allocating blocks from corrupted group in ext4_mb_find_by_goal()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: avoid allocating blocks from corrupted group in ext4_mb_try_best_found()
+
+Conrad Kostecki <conikost@gentoo.org>
+    ahci: asm1166: correct count of reported ports
+
+Fullway Wang <fullwaywang@outlook.com>
+    fbdev: sis: Error out if pixclock equals zero
+
+Fullway Wang <fullwaywang@outlook.com>
+    fbdev: savage: Error out if pixclock equals zero
+
+Felix Fietkau <nbd@nbd.name>
+    wifi: mac80211: fix race condition on enabling fast-xmit
+
+Michal Kazior <michal@plume.com>
+    wifi: cfg80211: fix missing interfaces when dumping
+
+Vinod Koul <vkoul@kernel.org>
+    dmaengine: shdma: increase size of 'dev_id'
+
+Dmitry Bogdanov <d.bogdanov@yadro.com>
+    scsi: target: core: Add TMF to tmr_list handling
+
+Cyril Hrubis <chrubis@suse.cz>
+    sched/rt: Disallow writing invalid values to sched_rt_period_us
+
+Cyril Hrubis <chrubis@suse.cz>
+    sched/rt: sysctl_sched_rr_timeslice show default timeslice after reset
+
+Cyril Hrubis <chrubis@suse.cz>
+    sched/rt: Fix sysctl_sched_rr_timeslice intial value
+
+Lokesh Gidra <lokeshgidra@google.com>
+    userfaultfd: fix mmap_changing checking in mfill_atomic_hugetlb
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: replace WARN_ONs for invalid DAT metadata block requests
+
+GONG, Ruiqi <gongruiqi1@huawei.com>
+    memcg: add refcnt for pcpu stock to avoid UAF problem in drain_all_stock()
+
+Aaro Koskinen <aaro.koskinen@nokia.com>
+    net: stmmac: fix notifier registration
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    stmmac: no need to check return value of debugfs_create functions
+
+Jamal Hadi Salim <jhs@mojatatu.com>
+    net/sched: Retire dsmark qdisc
+
+Jamal Hadi Salim <jhs@mojatatu.com>
+    net/sched: Retire ATM qdisc
+
+Jamal Hadi Salim <jhs@mojatatu.com>
+    net/sched: Retire CBQ qdisc
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                          |    4 +-
+ arch/arm/mach-ep93xx/core.c                       |    1 +
+ arch/s390/pci/pci.c                               |    2 +-
+ drivers/ata/ahci.c                                |    5 +
+ drivers/block/virtio_blk.c                        |    7 +-
+ drivers/dma/sh/shdma.h                            |    2 +-
+ drivers/firewire/core-card.c                      |   18 +-
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c |    8 +-
+ drivers/hwmon/coretemp.c                          |    2 +-
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c          |    5 +-
+ drivers/infiniband/hw/hfi1/pio.c                  |    6 +-
+ drivers/infiniband/hw/hfi1/sdma.c                 |    2 +-
+ drivers/infiniband/ulp/ipoib/ipoib_verbs.c        |    2 +-
+ drivers/infiniband/ulp/iser/iser_verbs.c          |    9 +-
+ drivers/infiniband/ulp/isert/ib_isert.c           |    2 +-
+ drivers/infiniband/ulp/opa_vnic/opa_vnic_vema.c   |    3 +-
+ drivers/infiniband/ulp/srp/ib_srp.c               |   10 +-
+ drivers/infiniband/ulp/srpt/ib_srpt.c             |   52 +-
+ drivers/md/dm-crypt.c                             |    6 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h      |    2 -
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   65 +-
+ drivers/net/gtp.c                                 |   10 +-
+ drivers/pci/msi.c                                 |    2 +-
+ drivers/regulator/pwm-regulator.c                 |    3 +
+ drivers/s390/net/qeth_l3_main.c                   |    9 +-
+ drivers/scsi/Kconfig                              |    2 +-
+ drivers/soc/renesas/r8a77980-sysc.c               |    3 +-
+ drivers/target/target_core_device.c               |    5 -
+ drivers/target/target_core_transport.c            |    4 +
+ drivers/usb/gadget/function/f_ncm.c               |   10 +-
+ drivers/usb/roles/class.c                         |   12 +-
+ drivers/video/fbdev/savage/savagefb_driver.c      |    3 +
+ drivers/video/fbdev/sis/sis_main.c                |    2 +
+ fs/aio.c                                          |    9 +-
+ fs/ext4/mballoc.c                                 |   13 +-
+ fs/nilfs2/dat.c                                   |   27 +-
+ include/linux/fs.h                                |    2 +
+ include/rdma/rdma_vt.h                            |    2 +-
+ kernel/sched/rt.c                                 |   10 +-
+ kernel/sysctl.c                                   |    5 +
+ mm/memcontrol.c                                   |   23 +-
+ mm/userfaultfd.c                                  |   14 +-
+ net/ipv6/seg6.c                                   |   20 +-
+ net/l2tp/l2tp_ip6.c                               |    2 +-
+ net/mac80211/sta_info.c                           |    2 +
+ net/mac80211/tx.c                                 |    2 +-
+ net/packet/af_packet.c                            |    4 +-
+ net/sched/Kconfig                                 |   42 -
+ net/sched/Makefile                                |    3 -
+ net/sched/sch_atm.c                               |  708 --------
+ net/sched/sch_cbq.c                               | 1823 ---------------------
+ net/sched/sch_dsmark.c                            |  519 ------
+ net/wireless/nl80211.c                            |    1 +
+ scripts/bpf_helpers_doc.py                        |  157 +-
+ virt/kvm/arm/vgic/vgic-its.c                      |    5 +
+ 55 files changed, 412 insertions(+), 3259 deletions(-)
 
 
