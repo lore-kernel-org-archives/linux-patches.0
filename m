@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09A913B2A7;
-	Tue, 27 Feb 2024 13:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC7F13B2A7;
+	Tue, 27 Feb 2024 13:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040742; cv=none; b=GWjnMy1LOPWVNgCe22XzVaXNq4GNE5133RX7pJNtuT0yx8/dCZB5VabJ5ZNOb3+E3vuxCqIpU6K4N5XqvY85ytP5xqrvvHeddb6x1y22US9EkGcrX4crFKpfU9Ku7LuU+SRPxY6vI8x+rphZ+gVOdahf959t2kpaM9T/hnVaOEc=
+	t=1709040744; cv=none; b=SfjizNYGkOYDTJqkgjYR5OJlDJ+4Ci68c9h1hGxY5mkUO3JNEmbRmItEOgtJRwB7Tr77UOzKiwvl0mbqVCcLuYJ6hBpwI84/GgAGI49qTpXt//1Lyw4J1rvvKj7F59Lk0G6rk75vQZWhUtUfYSfaWqcT24/TwjastYpMqsqepgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040742; c=relaxed/simple;
-	bh=4wupQrzjWk6uINCKq1go0UG4xFJS69wzTux+wM1gb7A=;
+	s=arc-20240116; t=1709040744; c=relaxed/simple;
+	bh=SYbgp3pTBKfuq9q6B9up3iVKscQMnV970rvDlUX5LlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sc9LAYqrGq689KOrQzn8/iJEwUaevNzTG6wpDIlPHVeqKGIJ1rpA+FymBOVWy5wCCGzucO4mSsTCn1C21fMQcblkvRbszpao0qSpikhO+97WRK4hTe5W2ctzKVSe5JhU6eWhlXMuv2jw8iOcG/7/tslxuvIa8q1F9SsmSEk7VMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDKFPheq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRvS3DPL8LCUh7vBPNaTcyZJAT5dWl/S5lAVXxyd/dwK6JbmNnh1Bf0eYcbgO8hqg2A67tSSSzadpo3ONSqLGaIOBf0A7sCMXu79uGQyULbBQhvvmY3JwKrWEWHheb1/euFFm/6LocXlDYTabHyEGX3bf9hFwOnyNl/J5K0Zgno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek1uL5k8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDKFPheq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C896C433F1;
-	Tue, 27 Feb 2024 13:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek1uL5k8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBF9C433F1;
+	Tue, 27 Feb 2024 13:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040741;
-	bh=4wupQrzjWk6uINCKq1go0UG4xFJS69wzTux+wM1gb7A=;
+	s=korg; t=1709040744;
+	bh=SYbgp3pTBKfuq9q6B9up3iVKscQMnV970rvDlUX5LlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDKFPheq8fXq7DyA9yDCQ5/iO2zAbKR7Oq3rOjSMOJ0xq//0Yr+MkhZtPStiA1Xu0
-	 VCVP3C+pz268cwzkg77GTGvzsli5KZPmbPGR0LJ5EmEZdhdyNKHa+513X3dw2Sj2Um
-	 z1dpAn9v1cQ2uiCRzOArNV65e1AWV/MVsewA9wIs=
+	b=ek1uL5k83zUBS3TYSh+YqrxA+Ec48msJFcZfmQd79myIrVVRgfExxY6lCXlOibici
+	 XjhYu78TO+PYfirVQ2BkJkGtFEl/QV8++EQt6h4TY8LIgKcV6ugfhjwbQv+E8GLUVO
+	 K9HTFSfyVM1lXIku/FM+LD5Rs70HrHTvYdcjd5W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 086/334] fs/ntfs3: Drop suid and sgid bits as a part of fpunch
-Date: Tue, 27 Feb 2024 14:19:04 +0100
-Message-ID: <20240227131633.300517531@linuxfoundation.org>
+Subject: [PATCH 6.7 095/334] fs/ntfs3: Prevent generic message "attempt to access beyond end of device"
+Date: Tue, 27 Feb 2024 14:19:13 +0100
+Message-ID: <20240227131633.574331154@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,59 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit e50f9560b8168a625703a3e7fe1fde9fa53f0837 ]
+[ Upstream commit 5ca87d01eba7bdfe9536a157ca33c1455bb8d16c ]
+
+It used in test environment.
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ntfs3/fsntfs.c  | 24 ++++++++++++++++++++++++
+ fs/ntfs3/ntfs_fs.h | 14 +-------------
+ 2 files changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index bb80ce2eec2f7..0ff5d3af28897 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -498,10 +498,14 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
- 		ni_lock(ni);
- 		err = attr_punch_hole(ni, vbo, len, &frame_size);
- 		ni_unlock(ni);
-+		if (!err)
-+			goto ok;
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 321978019407f..ae2ef5c11868c 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -1007,6 +1007,30 @@ static inline __le32 security_hash(const void *sd, size_t bytes)
+ 	return cpu_to_le32(hash);
+ }
+ 
++/*
++ * simple wrapper for sb_bread_unmovable.
++ */
++struct buffer_head *ntfs_bread(struct super_block *sb, sector_t block)
++{
++	struct ntfs_sb_info *sbi = sb->s_fs_info;
++	struct buffer_head *bh;
 +
- 		if (err != E_NTFS_NOTALIGNED)
- 			goto out;
++	if (unlikely(block >= sbi->volume.blocks)) {
++		/* prevent generic message "attempt to access beyond end of device" */
++		ntfs_err(sb, "try to read out of volume at offset 0x%llx",
++			 (u64)block << sb->s_blocksize_bits);
++		return NULL;
++	}
++
++	bh = sb_bread_unmovable(sb, block);
++	if (bh)
++		return bh;
++
++	ntfs_err(sb, "failed to read volume at offset 0x%llx",
++		 (u64)block << sb->s_blocksize_bits);
++	return NULL;
++}
++
+ int ntfs_sb_read(struct super_block *sb, u64 lbo, size_t bytes, void *buffer)
+ {
+ 	struct block_device *bdev = sb->s_bdev;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 38e0570729c6f..627419bd6f778 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -586,6 +586,7 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes);
+ int log_replay(struct ntfs_inode *ni, bool *initialized);
  
- 		/* Process not aligned punch. */
-+		err = 0;
- 		mask = frame_size - 1;
- 		vbo_a = (vbo + mask) & ~mask;
- 		end_a = end & ~mask;
-@@ -524,6 +528,8 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
- 			ni_lock(ni);
- 			err = attr_punch_hole(ni, vbo_a, end_a - vbo_a, NULL);
- 			ni_unlock(ni);
-+			if (err)
-+				goto out;
- 		}
- 	} else if (mode & FALLOC_FL_COLLAPSE_RANGE) {
- 		/*
-@@ -563,6 +569,8 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
- 		ni_lock(ni);
- 		err = attr_insert_range(ni, vbo, len);
- 		ni_unlock(ni);
-+		if (err)
-+			goto out;
- 	} else {
- 		/* Check new size. */
- 		u8 cluster_bits = sbi->cluster_bits;
-@@ -639,6 +647,7 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
- 		}
- 	}
+ /* Globals from fsntfs.c */
++struct buffer_head *ntfs_bread(struct super_block *sb, sector_t block);
+ bool ntfs_fix_pre_write(struct NTFS_RECORD_HEADER *rhdr, size_t bytes);
+ int ntfs_fix_post_read(struct NTFS_RECORD_HEADER *rhdr, size_t bytes,
+ 		       bool simple);
+@@ -1032,19 +1033,6 @@ static inline u64 bytes_to_block(const struct super_block *sb, u64 size)
+ 	return (size + sb->s_blocksize - 1) >> sb->s_blocksize_bits;
+ }
  
-+ok:
- 	err = file_modified(file);
- 	if (err)
- 		goto out;
+-static inline struct buffer_head *ntfs_bread(struct super_block *sb,
+-					     sector_t block)
+-{
+-	struct buffer_head *bh = sb_bread_unmovable(sb, block);
+-
+-	if (bh)
+-		return bh;
+-
+-	ntfs_err(sb, "failed to read volume at offset 0x%llx",
+-		 (u64)block << sb->s_blocksize_bits);
+-	return NULL;
+-}
+-
+ static inline struct ntfs_inode *ntfs_i(struct inode *inode)
+ {
+ 	return container_of(inode, struct ntfs_inode, vfs_inode);
 -- 
 2.43.0
 
