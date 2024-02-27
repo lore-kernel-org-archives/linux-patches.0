@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E4D1420A0;
-	Tue, 27 Feb 2024 14:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548A878B61;
+	Tue, 27 Feb 2024 14:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043332; cv=none; b=um7PGqK8TbnNyQ1h+77tZ2Dr2pATvPXu0xNOtQzh/SQxVIKtVyZB2JELkL03a+7S0NC3wHXJ/GTFfYpM9xCLV1liBNfQIomVPtmDpmTxORcBJd33qV9En1zrD9Q2+kZoI9tCGoibPD17oVj9c5lnRyPgilG92fiu/++jn6c5kEo=
+	t=1709043335; cv=none; b=hR9ucQd3KG4E0eVf0jnWIlPeXaHVC1lr6EkEdaKTJjaT6pu/PzFYFzu/GBe8594HM54kZMdvkBr95+x3FpLv6+LzuUKOhnY6Y/Gn8gIl+L7RdZiidqetUHmQ9G5Y/t2+Bh9+XWlYFvjUZbLKgi7hgPRJcuEvB51uoPonL3N1Pqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043332; c=relaxed/simple;
-	bh=2KGaPHaFLIQsRJt0jlpW7v2UA+FghOTuyfkmIjRrpLw=;
+	s=arc-20240116; t=1709043335; c=relaxed/simple;
+	bh=3RKcjg5ML6bunxSm5ClYtYwIEDlPxARltfTAiZAVF0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dx2aZhhDowEUh4Br8i9HoqoIcfWeIzI6WZcfCvQoZOtb1DK8vGN0QjDysrJXI9YUpqVyMIp8FLrUT7UINGXEP5/9KrVU4KkMCAIPcRbs8TVC8nkGb8HFNWNKTAC7ltM3rt9aCfbjDF52zbMLceJ/eaa/Lwe5UmZ+rfwhvpWVSVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRwAH+HF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EAgzJzReUlAvrFpNK8kIj5/nZciUyoTpjY+oxHF4Iy39mnH1JXWgVKxpnFfKNK5LLJhsDHu0PoyGKGs6KITHpd0/UlFk1bxtJZDgziYuM6/8XOzgR/7F2BUvJ+tsvTZQ04kTpXPIbA14/qaVsSOonhoh3RszgK/rvXY9ffGYZ7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhYkcFi1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRwAH+HF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2120C433F1;
-	Tue, 27 Feb 2024 14:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhYkcFi1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B1FC433C7;
+	Tue, 27 Feb 2024 14:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043332;
-	bh=2KGaPHaFLIQsRJt0jlpW7v2UA+FghOTuyfkmIjRrpLw=;
+	s=korg; t=1709043334;
+	bh=3RKcjg5ML6bunxSm5ClYtYwIEDlPxARltfTAiZAVF0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRwAH+HFbbEPZzKrMbQOKxXqkRRnpsPXXkI8pKTH8oTms/s+nLl+XQTMIwtLyy1vD
-	 V+N61Uz1OiVPRWKHR9Gu9pPMsyxyB/N6JjSzb/HLzGXx/J8phY1DGFfkOrbHNk9RcM
-	 G7x8AYcj4KXyz80k7OT9TyVIQHVkeCU4nphjd5PQ=
+	b=uhYkcFi1Hi3lOnxfhwgAPfPzDX4Rtcxd4qIBje6zp13H0YAaUUy3VLY77D6MEJJYq
+	 ThbhzKudb1vIuD+xAQ66AFoHHBaUrmteDVipFd3h5UU8QMeL8xTDaoqoB4acPCw/sE
+	 gWilMxrBsyJ1Bs4bF06+kIC0PqpLi/xSZc7JLMHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexander Tsoy <alexander@tsoy.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/195] ASoC: wm_adsp: Dont overwrite fwf_name with the default
-Date: Tue, 27 Feb 2024 14:25:02 +0100
-Message-ID: <20240227131611.746001397@linuxfoundation.org>
+Subject: [PATCH 6.1 042/195] ALSA: usb-audio: Ignore clock selector errors for single connection
+Date: Tue, 27 Feb 2024 14:25:03 +0100
+Message-ID: <20240227131611.778533066@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,100 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Alexander Tsoy <alexander@tsoy.me>
 
-[ Upstream commit daf3f0f99cde93a066240462b7a87cdfeedc04c0 ]
+[ Upstream commit eaa1b01fe709d6a236a9cec74813e0400601fd23 ]
 
-There's no need to overwrite fwf_name with a kstrdup() of the cs_dsp part
-name. It is trivial to select either fwf_name or cs_dsp.part as the string
-to use when building the filename in wm_adsp_request_firmware_file().
+For devices with multiple clock sources connected to a selector, we need
+to check what a clock selector control request has returned. This is
+needed to ensure that a requested clock source is indeed selected and for
+autoclock feature to work.
 
-This leaves fwf_name entirely owned by the codec driver.
+For devices with single clock source connected, if we get an error there
+is nothing else we can do about it. We can't skip clock selector setup as
+it is required by some devices. So lets just ignore error in this case.
 
-It also avoids problems with freeing the pointer. With the original code
-fwf_name was either a pointer owned by the codec driver, or a kstrdup()
-created by wm_adsp. This meant wm_adsp must free it if it set it, but not
-if the codec driver set it. The code was handling this by using
-devm_kstrdup().
-But there is no absolute requirement that wm_adsp_common_init() must be
-called from probe(), so this was a pseudo-memory leak - each new call to
-wm_adsp_common_init() would allocate another block of memory but these
-would only be freed if the owning codec driver was removed.
+This should fix various buggy Mackie devices:
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://msgid.link/r/20240129162737.497-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[  649.109785] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
+[  649.111946] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
+[  649.113822] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
+
+There is also interesting info from the Windows documentation [1] (this
+is probably why manufacturers dont't even test this feature):
+
+"The USB Audio 2.0 driver doesn't support clock selection. The driver
+uses the Clock Source Entity, which is selected by default and never
+issues a Clock Selector Control SET CUR request."
+
+Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/audio/usb-2-0-audio-drivers [1]
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217314
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218175
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218342
+Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
+Link: https://lore.kernel.org/r/20240201115308.17838-1-alexander@tsoy.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm_adsp.c | 29 ++++++++++++-----------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ sound/usb/clock.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 2cfca78f0401f..47a4c363227cc 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -740,19 +740,25 @@ static int wm_adsp_request_firmware_file(struct wm_adsp *dsp,
- 					 const char *filetype)
- {
- 	struct cs_dsp *cs_dsp = &dsp->cs_dsp;
-+	const char *fwf;
- 	char *s, c;
- 	int ret = 0;
+diff --git a/sound/usb/clock.c b/sound/usb/clock.c
+index 33db334e65566..a676ad093d189 100644
+--- a/sound/usb/clock.c
++++ b/sound/usb/clock.c
+@@ -328,8 +328,16 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
+ 			if (chip->quirk_flags & QUIRK_FLAG_SKIP_CLOCK_SELECTOR)
+ 				return ret;
+ 			err = uac_clock_selector_set_val(chip, entity_id, cur);
+-			if (err < 0)
++			if (err < 0) {
++				if (pins == 1) {
++					usb_audio_dbg(chip,
++						      "%s(): selector returned an error, "
++						      "assuming a firmware bug, id %d, ret %d\n",
++						      __func__, clock_id, err);
++					return ret;
++				}
+ 				return err;
++			}
+ 		}
  
-+	if (dsp->fwf_name)
-+		fwf = dsp->fwf_name;
-+	else
-+		fwf = dsp->cs_dsp.name;
-+
- 	if (system_name && asoc_component_prefix)
- 		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s-%s-%s.%s", dir, dsp->part,
--				      dsp->fwf_name, wm_adsp_fw[dsp->fw].file, system_name,
-+				      fwf, wm_adsp_fw[dsp->fw].file, system_name,
- 				      asoc_component_prefix, filetype);
- 	else if (system_name)
- 		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s-%s.%s", dir, dsp->part,
--				      dsp->fwf_name, wm_adsp_fw[dsp->fw].file, system_name,
-+				      fwf, wm_adsp_fw[dsp->fw].file, system_name,
- 				      filetype);
- 	else
--		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s.%s", dir, dsp->part, dsp->fwf_name,
-+		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s.%s", dir, dsp->part, fwf,
- 				      wm_adsp_fw[dsp->fw].file, filetype);
- 
- 	if (*filename == NULL)
-@@ -842,29 +848,18 @@ static int wm_adsp_request_firmware_files(struct wm_adsp *dsp,
- 	}
- 
- 	adsp_err(dsp, "Failed to request firmware <%s>%s-%s-%s<-%s<%s>>.wmfw\n",
--		 cirrus_dir, dsp->part, dsp->fwf_name, wm_adsp_fw[dsp->fw].file,
--		 system_name, asoc_component_prefix);
-+		 cirrus_dir, dsp->part,
-+		 dsp->fwf_name ? dsp->fwf_name : dsp->cs_dsp.name,
-+		 wm_adsp_fw[dsp->fw].file, system_name, asoc_component_prefix);
- 
- 	return -ENOENT;
- }
- 
- static int wm_adsp_common_init(struct wm_adsp *dsp)
- {
--	char *p;
--
- 	INIT_LIST_HEAD(&dsp->compr_list);
- 	INIT_LIST_HEAD(&dsp->buffer_list);
- 
--	if (!dsp->fwf_name) {
--		p = devm_kstrdup(dsp->cs_dsp.dev, dsp->cs_dsp.name, GFP_KERNEL);
--		if (!p)
--			return -ENOMEM;
--
--		dsp->fwf_name = p;
--		for (; *p != 0; ++p)
--			*p = tolower(*p);
--	}
--
- 	return 0;
- }
- 
+ 		if (!validate || ret > 0 || !chip->autoclock)
 -- 
 2.43.0
 
