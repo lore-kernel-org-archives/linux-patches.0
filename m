@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDBB13B7A0;
-	Tue, 27 Feb 2024 13:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994221419B5;
+	Tue, 27 Feb 2024 13:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042251; cv=none; b=JLOu6HzDPbM20D/ym+Va2CEn50NkU7Jbhi0vpe7FuE3dJou6r62zaVJavHZqVacu8iGEVBNmz72m+xM7kNn7lAhLy9SvfTBkdRKF6R8GUafv5wheu44KJZjHLcUteNmqRwakwvxpI4Y51Sl2SMlAOAeEHojQPQxHtDDHEgDtjjc=
+	t=1709042254; cv=none; b=Mf7jFPRfjnFHShIx6TgK1tSoS18dwLlstcQZTbF0Lo91fPyhFYTGiRKB3Vxipo+T0N7iOIE9qdRCKDXP14Q8XC1UJItBZ8uyqKrEly1p+h9lqnWk12QPrWeBLLgVEKqOyV8tPO1MAXDQz9o5eqTHvWdpFlUb40ctIBjA5nPnCKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042251; c=relaxed/simple;
-	bh=jhsO3kd28QjavsOCUbbgGoXVTwGpp8ntc7La45B48sg=;
+	s=arc-20240116; t=1709042254; c=relaxed/simple;
+	bh=f7K5HBNtrAz74U/GybPyGCFskuO9XYU4DTrQzZE6w1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4ZIuIvnZzAeJjbKBHf8DS4+dAJA0xATs8bMSYIIEYi0vvAa5jX88c2c7D10IEFbKq8Q9ok9p7hsV5TThXACCpBwgPaNSN++gyduHRJDhWRxQFgeeA70Gy/o+OhGSNPKAlcsF7bSJqg9eiQmTcFA4oRYT/WT4R7Hx8RZqvgikkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGMBK8c7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcdKn0xyJ8/55a961+0fGkJmi7VRDBEsewS/lPyiWWf573YkGrkXOmo4teP5saKsxBGLUhIylMFDx2oOocUh+y9p3mPVhOZyKi8H65Z6/67k/YrYnamRgZJSrvmBSwVg6fWlI9d30UVeL0ZoWqU0Jhanlm23tIQtH+joe/hXv3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2jte5S7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGMBK8c7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BD1C433C7;
-	Tue, 27 Feb 2024 13:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2jte5S7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7591C433F1;
+	Tue, 27 Feb 2024 13:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042251;
-	bh=jhsO3kd28QjavsOCUbbgGoXVTwGpp8ntc7La45B48sg=;
+	s=korg; t=1709042254;
+	bh=f7K5HBNtrAz74U/GybPyGCFskuO9XYU4DTrQzZE6w1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGMBK8c7hye0HZ7Lky9umXpu68ecxiTz7Gry5qXlsm4zLXhi6NgPJIoWIWWrui/9A
-	 hFV7IDH2EUZwwVV8lbSmdfonxrae5zm5FjkIc0wnRA3vzE4DZeoFyZbFi/XKK5Q89i
-	 2j+9bYQy//nphdSUPYi2QJCVk0qOafRm4IbZJ3IE=
+	b=H2jte5S7H9xYXvTPrDbxvx0UvCZ+9sBuUnDFib0tRyrFoALoyYm1gEXd0Et0CBi41
+	 2sCkWyM/6xY96TEa8gDAnzkRoqcQEosTj6a8+QCA3c2jZEjPZkOkrCJke1hRTkq0DX
+	 uZhXk5TVFHhzHzI2DdFsCfIH8R6cAXIYl6u/129c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Chandra Pandey <YogeshChandra.Pandey@microchip.com>,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Kevin Barnett <kevin.barnett@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marek Vasut <marex@denx.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/299] scsi: smartpqi: Fix disable_managed_interrupts
-Date: Tue, 27 Feb 2024 14:25:43 +0100
-Message-ID: <20240227131633.212172509@linuxfoundation.org>
+Subject: [PATCH 6.6 215/299] arm64: dts: imx8mp: Disable UART4 by default on Data Modul i.MX8M Plus eDM SBC
+Date: Tue, 27 Feb 2024 14:25:26 +0100
+Message-ID: <20240227131632.700619143@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -59,90 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Don Brace <don.brace@microchip.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 5761eb9761d2d5fe8248a9b719efc4d8baf1f24a ]
+[ Upstream commit f03869698bc3bd6d9d2d9f216b20da08a8c2508a ]
 
-Correct blk-mq registration issue with module parameter
-disable_managed_interrupts enabled.
+UART4 is used as CM7 coprocessor debug UART and may not be accessible from
+Linux in case it is protected by RDC. The RDC protection is set up by the
+platform firmware. UART4 is not used on this platform by Linux. Disable
+UART4 by default to prevent boot hangs, which occur when the RDC protection
+is in place.
 
-When we turn off the default PCI_IRQ_AFFINITY flag, the driver needs to
-register with blk-mq using blk_mq_map_queues(). The driver is currently
-calling blk_mq_pci_map_queues() which results in a stack trace and possibly
-undefined behavior.
-
-Stack Trace:
-[    7.860089] scsi host2: smartpqi
-[    7.871934] WARNING: CPU: 0 PID: 238 at block/blk-mq-pci.c:52 blk_mq_pci_map_queues+0xca/0xd0
-[    7.889231] Modules linked in: sd_mod t10_pi sg uas smartpqi(+) crc32c_intel scsi_transport_sas usb_storage dm_mirror dm_region_hash dm_log dm_mod ipmi_devintf ipmi_msghandler fuse
-[    7.924755] CPU: 0 PID: 238 Comm: kworker/0:3 Not tainted 4.18.0-372.88.1.el8_6_smartpqi_test.x86_64 #1
-[    7.944336] Hardware name: HPE ProLiant DL380 Gen10/ProLiant DL380 Gen10, BIOS U30 03/08/2022
-[    7.963026] Workqueue: events work_for_cpu_fn
-[    7.978275] RIP: 0010:blk_mq_pci_map_queues+0xca/0xd0
-[    7.978278] Code: 48 89 de 89 c7 e8 f6 0f 4f 00 3b 05 c4 b7 8e 01 72 e1 5b 31 c0 5d 41 5c 41 5d 41 5e 41 5f e9 7d df 73 00 31 c0 e9 76 df 73 00 <0f> 0b eb bc 90 90 0f 1f 44 00 00 41 57 49 89 ff 41 56 41 55 41 54
-[    7.978280] RSP: 0018:ffffa95fc3707d50 EFLAGS: 00010216
-[    7.978283] RAX: 00000000ffffffff RBX: 0000000000000000 RCX: 0000000000000010
-[    7.978284] RDX: 0000000000000004 RSI: 0000000000000000 RDI: ffff9190c32d4310
-[    7.978286] RBP: 0000000000000000 R08: ffffa95fc3707d38 R09: ffff91929b81ac00
-[    7.978287] R10: 0000000000000001 R11: ffffa95fc3707ac0 R12: 0000000000000000
-[    7.978288] R13: ffff9190c32d4000 R14: 00000000ffffffff R15: ffff9190c4c950a8
-[    7.978290] FS:  0000000000000000(0000) GS:ffff9193efc00000(0000) knlGS:0000000000000000
-[    7.978292] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    8.172814] CR2: 000055d11166c000 CR3: 00000002dae10002 CR4: 00000000007706f0
-[    8.172816] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[    8.172817] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[    8.172818] PKRU: 55555554
-[    8.172819] Call Trace:
-[    8.172823]  blk_mq_alloc_tag_set+0x12e/0x310
-[    8.264339]  scsi_add_host_with_dma.cold.9+0x30/0x245
-[    8.279302]  pqi_ctrl_init+0xacf/0xc8e [smartpqi]
-[    8.294085]  ? pqi_pci_probe+0x480/0x4c8 [smartpqi]
-[    8.309015]  pqi_pci_probe+0x480/0x4c8 [smartpqi]
-[    8.323286]  local_pci_probe+0x42/0x80
-[    8.337855]  work_for_cpu_fn+0x16/0x20
-[    8.351193]  process_one_work+0x1a7/0x360
-[    8.364462]  ? create_worker+0x1a0/0x1a0
-[    8.379252]  worker_thread+0x1ce/0x390
-[    8.392623]  ? create_worker+0x1a0/0x1a0
-[    8.406295]  kthread+0x10a/0x120
-[    8.418428]  ? set_kthread_struct+0x50/0x50
-[    8.431532]  ret_from_fork+0x1f/0x40
-[    8.444137] ---[ end trace 1bf0173d39354506 ]---
-
-Fixes: cf15c3e734e8 ("scsi: smartpqi: Add module param to disable managed ints")
-Tested-by: Yogesh Chandra Pandey <YogeshChandra.Pandey@microchip.com>
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mahesh Rajashekhara <mahesh.rajashekhara@microchip.com>
-Reviewed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Reviewed-by: Kevin Barnett <kevin.barnett@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/20240213162200.1875970-2-don.brace@microchip.com
-Reviewed-by: Tomas Henzl <thenzl@redhat.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 562d222f23f0 ("arm64: dts: imx8mp: Add support for Data Modul i.MX8M Plus eDM SBC")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 081bb2c098063..868453b18c9ae 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -6533,8 +6533,11 @@ static void pqi_map_queues(struct Scsi_Host *shost)
- {
- 	struct pqi_ctrl_info *ctrl_info = shost_to_hba(shost);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
+index 13674dc64be9d..116bf9738a8a4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
+@@ -484,7 +484,7 @@
+ &uart4 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_uart4>;
+-	status = "okay";
++	status = "disabled";
+ };
  
--	blk_mq_pci_map_queues(&shost->tag_set.map[HCTX_TYPE_DEFAULT],
-+	if (!ctrl_info->disable_managed_interrupts)
-+		return blk_mq_pci_map_queues(&shost->tag_set.map[HCTX_TYPE_DEFAULT],
- 			      ctrl_info->pci_dev, 0);
-+	else
-+		return blk_mq_map_queues(&shost->tag_set.map[HCTX_TYPE_DEFAULT]);
- }
- 
- static inline bool pqi_is_tape_changer_device(struct pqi_scsi_dev *device)
+ &usb3_phy0 {
 -- 
 2.43.0
 
