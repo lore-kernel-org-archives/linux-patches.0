@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5D113B7AB;
-	Tue, 27 Feb 2024 14:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3759D13B2B4;
+	Tue, 27 Feb 2024 14:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043923; cv=none; b=ObcjRvn7hcCKSBOLe2xXsg5WxS77c/ySjSO5xUJUKtpiki4BQLqBM4HwJWNBXi4xQ1iWoysrbbWmywKT1Ku25xDrSvmS4R+nVTVD1V+/RIZvU2qDEif3B7/sBHeTSNC82sbm2nB+9PZ9v7TXJy5oWECGLVMZMG7I/kMwTfOfAPE=
+	t=1709043927; cv=none; b=PwFs4HwjyuNp9IEB+XVyh4KtxXsHpefx4wND+CDCgHWfA1dz7rSnnLx4Zecm2CNUKwI1vYguK/Nm1anY1PenjmYo5WqD1qZApe1L14PI+Z5OTj4GlROsjRUIxl1MafvxlNVF/hQE0jnIamCwy+3IlBYh92bQUoJKu2joeCq2GLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043923; c=relaxed/simple;
-	bh=G4r0macorRXP+Ju/F02ws0p9P7Ed0PhmeX8jdszdUaI=;
+	s=arc-20240116; t=1709043927; c=relaxed/simple;
+	bh=C5w2seccK0YTu103fpgTwsfq4WQYNHbfwmQvqYQKu10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kn82MjPOAMiBRKHJXKmTG6L/tUq+CMshCarO61h8NUDOUcPJzcFP4OF541xIo87T2Yj7ZeAjaQhdCHeBdnHwDYTADXdRIsQGRD/bHFnInsoIbIMxip6m1m+cv8aNNO2M36Twe0GRZWlXW/arNsl3wwhiG3vF+58zbOMm8JWlp0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTNZTdQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eTnsd7vb2O+ZIRjUgxDaPxbOyQFiVpmnG10Pxvp21E5zzJwIAK67ZG7s/LL+vEvLXnudRFmVAfQxdD4AAhHNkdyufMQdxy+DGaY4P5QxFePrePndSUJppiGZyMIumn2bwdpCmnI95IC8GR+K+eOP6PRCbrJHpxAkjfTnA5C8LmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBuJyWOr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTNZTdQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB04AC433F1;
-	Tue, 27 Feb 2024 14:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBuJyWOr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A720BC433F1;
+	Tue, 27 Feb 2024 14:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043923;
-	bh=G4r0macorRXP+Ju/F02ws0p9P7Ed0PhmeX8jdszdUaI=;
+	s=korg; t=1709043926;
+	bh=C5w2seccK0YTu103fpgTwsfq4WQYNHbfwmQvqYQKu10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oTNZTdQIcayf6p2OZBo6gFpuucQyvieybuCk/lMXY3PIKHtOe6RVhF0K7qAT5h9H3
-	 39DtHFVhQbM+AvdBL6+RG1/PDMIHKX7QhyF8lXCHT3bpRdCAPFSd75LKdqTefZsKEB
-	 FJbhx8qUYZitlOmALAD4xyVIN51u900G8ggYEaNs=
+	b=fBuJyWOrTXif48iDqO2uwKquyRpM4H/0U7EzgzkSjq/QiSAR4ivWf0DBDFnnFOLli
+	 qk0BlP2jbANqAMw7RuW90DKgyw7xZcVeK4JyPmKFZlrLgQf/0cRu1c1B8LVQgduWkb
+	 0YqiAtOfHmeO+8MJ1gT+fOMgEcWgjWGbd67pGitw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andriin@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 5.4 84/84] scripts/bpf: Fix xdp_md forward declaration typo
-Date: Tue, 27 Feb 2024 14:27:51 +0100
-Message-ID: <20240227131555.612933290@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 72/84] ipv6: properly combine dev_base_seq and ipv6.dev_addr_genid
+Date: Tue, 27 Feb 2024 14:27:39 +0100
+Message-ID: <20240227131555.212737588@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -50,32 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andriin@fb.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit e0b68fb186b251374adbd870f99b1ecea236e770 upstream.
+[ Upstream commit e898e4cd1aab271ca414f9ac6e08e4c761f6913c ]
 
-Fix typo in struct xpd_md, generated from bpf_helpers_doc.py, which is
-causing compilation warnings for programs using bpf_helpers.h
+net->dev_base_seq and ipv6.dev_addr_genid are monotonically increasing.
 
-Fixes: 7a387bed47f7 ("scripts/bpf: teach bpf_helpers_doc.py to dump BPF helper definitions")
-Signed-off-by: Andrii Nakryiko <andriin@fb.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/bpf/20191010042534.290562-1-andriin@fb.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If we XOR their values, we could miss to detect if both values
+were changed with the same amount.
+
+Fixes: 63998ac24f83 ("ipv6: provide addr and netconf dump consistency info")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/bpf_helpers_doc.py |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/scripts/bpf_helpers_doc.py
-+++ b/scripts/bpf_helpers_doc.py
-@@ -418,7 +418,7 @@ class PrinterHelpers(Printer):
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 4bec4c0617412..6fcbe8912b431 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -696,6 +696,22 @@ static int inet6_netconf_get_devconf(struct sk_buff *in_skb,
+ 	return err;
+ }
  
-             'struct __sk_buff',
-             'struct sk_msg_md',
--            'struct xpd_md',
-+            'struct xdp_md',
-     ]
-     known_types = {
-             '...',
++/* Combine dev_addr_genid and dev_base_seq to detect changes.
++ */
++static u32 inet6_base_seq(const struct net *net)
++{
++	u32 res = atomic_read(&net->ipv6.dev_addr_genid) +
++		  net->dev_base_seq;
++
++	/* Must not return 0 (see nl_dump_check_consistent()).
++	 * Chose a value far away from 0.
++	 */
++	if (!res)
++		res = 0x80000000;
++	return res;
++}
++
++
+ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
+ 				      struct netlink_callback *cb)
+ {
+@@ -729,8 +745,7 @@ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
+ 		idx = 0;
+ 		head = &net->dev_index_head[h];
+ 		rcu_read_lock();
+-		cb->seq = atomic_read(&net->ipv6.dev_addr_genid) ^
+-			  net->dev_base_seq;
++		cb->seq = inet6_base_seq(net);
+ 		hlist_for_each_entry_rcu(dev, head, index_hlist) {
+ 			if (idx < s_idx)
+ 				goto cont;
+@@ -5232,7 +5247,7 @@ static int inet6_dump_addr(struct sk_buff *skb, struct netlink_callback *cb,
+ 	}
+ 
+ 	rcu_read_lock();
+-	cb->seq = atomic_read(&tgt_net->ipv6.dev_addr_genid) ^ tgt_net->dev_base_seq;
++	cb->seq = inet6_base_seq(tgt_net);
+ 	for (h = s_h; h < NETDEV_HASHENTRIES; h++, s_idx = 0) {
+ 		idx = 0;
+ 		head = &tgt_net->dev_index_head[h];
+-- 
+2.43.0
+
 
 
