@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF87513B2B4;
-	Tue, 27 Feb 2024 14:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB0713B2B8;
+	Tue, 27 Feb 2024 14:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043867; cv=none; b=o4c9uYmMmjS54nxBlNITbO+QApcdECKeWOq3BtdsGWDvv3GK6cG85xrKzktPMeRCn6eUAmFCLjkbqrJB7J+G/x7umsSdAtnuuuS/NXd5nFykm2oKrekuBPfdRv7X9sHYSfy/qFC73adAiBoSzmr+czKCcIc/clS5C23/XLwa3LQ=
+	t=1709043870; cv=none; b=Fx39YMQsOT1zbk3c4yce2RtVei8kgw7Gz1i13UNuun39Rz+RgDbFPZL3oJh2jwiNoCefqUA/aUcZ5L+bFud+1AVfPhHAXJOiwxVjo1sz3mpv3D2JJWuUV9iSUeDhbbso8dLHxVOKSRSsCl0hQ39H83P3WcuXS0YWYdAnaCZbYNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043867; c=relaxed/simple;
-	bh=6/uyTvG8nYq22fxSWROY4A0wxU9uB6vSZKjnbBmxwX4=;
+	s=arc-20240116; t=1709043870; c=relaxed/simple;
+	bh=urVwESKAPbYwzk9lRkDNB4g5/1VzRr+r/46DLK5795Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OelEFUizrCloZkJy+UFA3tPHV4zTv0qHh5rIDCGtXZtKlwSCe9DkO42j6TXzvNvSfYrfPe9BNQnYeGMGDcqxheH0vYk5zFGw/pSXbbMfy1ELTq0lRFo9CWsqPb/MCGVUe10DsMFslQBPhphDRyJBw1nklkHgbKSN0149w6n/9fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdlhjV7h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZNmVLNrTBC2E42kHKQzIndfic+hH3LSlyBa0sh/u0wB3AyBk1cPXd96uw8l/UGU2sj2aVRxbnRpul8MoBm4/3RWiuPnuZNS281BTBUshJoOsPYrm4ABNBVjioY6QHVAFUcbSAPMl5ZntHPXiSyyejeeXzvanKcun1co5JF8uWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaB2vwtz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdlhjV7h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5F5C43390;
-	Tue, 27 Feb 2024 14:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaB2vwtz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1A1C433F1;
+	Tue, 27 Feb 2024 14:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043867;
-	bh=6/uyTvG8nYq22fxSWROY4A0wxU9uB6vSZKjnbBmxwX4=;
+	s=korg; t=1709043870;
+	bh=urVwESKAPbYwzk9lRkDNB4g5/1VzRr+r/46DLK5795Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdlhjV7htjtq4J9A1ukds2cKdDk8LBHixGj5Vd3vzJGNDp3sgJCmxlZV/xiMG5a2Y
-	 a1TMafRJM7CIPKfnloZQsD8TmrK1E+6CnriCbNhaLKXB5DHiUjiTPuOi9y2Aij6tir
-	 jxmhytz9tIuUQSAST2d0zPPVeGHFjWFuWWv+I/r4=
+	b=LaB2vwtz7s2p1aG2FvAIT90SofonDE2c5OUMVUKuCVI8VsYySU6/s2S/UxF/WzWzy
+	 4pIcBpfqIIOLuJ/ySYESQgTCXvgqEjnMr+nfXEiPdU7SkvMVYmrUNe2LodDC3tQo3C
+	 P/xnkahAZiJeP4lfEjo1TlTL61jeWjkFodkfw4/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 63/84] IB/hfi1: Fix a memleak in init_credit_return
-Date: Tue, 27 Feb 2024 14:27:30 +0100
-Message-ID: <20240227131554.922957649@linuxfoundation.org>
+Subject: [PATCH 5.4 64/84] RDMA/bnxt_re: Return error for SRQ resize
+Date: Tue, 27 Feb 2024 14:27:31 +0100
+Message-ID: <20240227131554.954911532@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -52,49 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 809aa64ebff51eb170ee31a95f83b2d21efa32e2 ]
+[ Upstream commit 3687b450c5f32e80f179ce4b09e0454da1449eac ]
 
-When dma_alloc_coherent fails to allocate dd->cr_base[i].va,
-init_credit_return should deallocate dd->cr_base and
-dd->cr_base[i] that allocated before. Or those resources
-would be never freed and a memleak is triggered.
+SRQ resize is not supported in the driver. But driver is not
+returning error from bnxt_re_modify_srq() for SRQ resize.
 
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Link: https://lore.kernel.org/r/20240112085523.3731720-1-alexious@zju.edu.cn
-Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1705985677-15551-5-git-send-email-selvin.xavier@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/pio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/pio.c b/drivers/infiniband/hw/hfi1/pio.c
-index fa5de362010f2..8303c506733cc 100644
---- a/drivers/infiniband/hw/hfi1/pio.c
-+++ b/drivers/infiniband/hw/hfi1/pio.c
-@@ -2131,7 +2131,7 @@ int init_credit_return(struct hfi1_devdata *dd)
- 				   "Unable to allocate credit return DMA range for NUMA %d\n",
- 				   i);
- 			ret = -ENOMEM;
--			goto done;
-+			goto free_cr_base;
- 		}
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 183f1c3c1f5ef..c9a7c03403ac0 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1623,7 +1623,7 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
+ 	switch (srq_attr_mask) {
+ 	case IB_SRQ_MAX_WR:
+ 		/* SRQ resize is not supported */
+-		break;
++		return -EINVAL;
+ 	case IB_SRQ_LIMIT:
+ 		/* Change the SRQ threshold */
+ 		if (srq_attr->srq_limit > srq->qplib_srq.max_wqe)
+@@ -1638,13 +1638,12 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
+ 		/* On success, update the shadow */
+ 		srq->srq_limit = srq_attr->srq_limit;
+ 		/* No need to Build and send response back to udata */
+-		break;
++		return 0;
+ 	default:
+ 		dev_err(rdev_to_dev(rdev),
+ 			"Unsupported srq_attr_mask 0x%x", srq_attr_mask);
+ 		return -EINVAL;
  	}
- 	set_dev_node(&dd->pcidev->dev, dd->node);
-@@ -2139,6 +2139,10 @@ int init_credit_return(struct hfi1_devdata *dd)
- 	ret = 0;
- done:
- 	return ret;
-+
-+free_cr_base:
-+	free_credit_return(dd);
-+	goto done;
+-	return 0;
  }
  
- void free_credit_return(struct hfi1_devdata *dd)
+ int bnxt_re_query_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr)
 -- 
 2.43.0
 
