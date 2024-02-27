@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0420F145351;
-	Tue, 27 Feb 2024 14:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7FB145FE2;
+	Tue, 27 Feb 2024 14:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044054; cv=none; b=rsoYxlac9o3VLRDaveKv9mYfpd7GEr0QwdA560mU2c4ij/azRwtMiL7hvDtL69SkvY2ABjdVijqa181QKNvsRfqxA+276yIIOX3irwxUqWapPoCYg1FBe9qo3Mj3sakuBZP2meX9DTlX/b99rl43G628/ywaCVl5/h1UxpNpbWU=
+	t=1709044056; cv=none; b=LCXpiju6S4+3soa3Yg6w5dkZePGgfCpKGnLlRM1CpJw0kue6n+Drf11+N3EkfEE4MZFtT0mufu2k3jev6rp30o5mCZdmz1jj3yvCQ85RO+jwy2Z64kSq/449HPww5QO5oNEEkRUM4rKe1Lsyu4Nb+8Smzc42fbRX9ebi5RHIz6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044054; c=relaxed/simple;
-	bh=assZ9TZioukfYaYFrlaf95Vb+HUKhNFX7nfvZBJabXg=;
+	s=arc-20240116; t=1709044056; c=relaxed/simple;
+	bh=KijjZTtmrt7LZjEzotS0Mm6ZwNOJ4IWCJ7W58qOZUoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpfahcZhxbyuPZ0uGGEGzg3Q6c1FYYxLKUB/wDaJbYn7WDIhIqP9PPFqoNIS2CVUxlZd+zGVmMpr3KYvfu/U0nTKcjDvovgHu+TLZY/dNfP9gGb2Cb8HsXQ5lcNVjoYOU/7itHCtFlL7zEt/AS4hV17ckBltTEBQSEO5cGEJ+/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFvJTXtm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X8ijO5/7D3QGw5M+yUs8Phjd9EnV+NzIcxBj5ALvlT+apsk+PgNVrgkYqNEJLF1fDMr9DUbHiZnD+1vxdRS6HC2Ob0KTcIgq60+F9FvgOuwKA3B4gKPqd1dwNbw2oPezWRlqfG1EPgTF3byB4He3xkgZOdD2PJ28ZWkLjDrZEeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzkoI1MC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFvJTXtm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03230C43601;
-	Tue, 27 Feb 2024 14:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzkoI1MC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC010C433F1;
+	Tue, 27 Feb 2024 14:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044053;
-	bh=assZ9TZioukfYaYFrlaf95Vb+HUKhNFX7nfvZBJabXg=;
+	s=korg; t=1709044056;
+	bh=KijjZTtmrt7LZjEzotS0Mm6ZwNOJ4IWCJ7W58qOZUoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFvJTXtmFdj15HuMlPh/kudEMCv30DC6FryWYMXzG+QxqaU42VjK4lFkyiK5NvQwx
-	 RYJthOk54pY1SKXUbzTta0vzvuuxhByKq8sgZbFlfyPwkGZp/fBD3T3EBUXKS5Lhtp
-	 GAOAy7DLMQW7llpAbfYmumC+/ToJ1JznJo4qOJpk=
+	b=rzkoI1MC4BD4/4+TrpvyFaFZoCS4DFjYnlSoHIvLMf3Mc+7JV3oQL4atIj8tdD71D
+	 qvDXXhxY962OljhXntVPVGLTddeitF4eeVnNmO1OEgfCvJaXAEvkS9c4eH6keC7ltK
+	 WvnKRDPVXcqB3Epi6KIdgHbAsmzdKxAcYrd3GfI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Guruswamy Basavaiah <guruswamy.basavaiah@broadcom.com>
-Subject: [PATCH 5.10 006/122] smb: client: fix parsing of SMB3.1.1 POSIX create context
-Date: Tue, 27 Feb 2024 14:26:07 +0100
-Message-ID: <20240227131558.911439966@linuxfoundation.org>
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 039/122] scsi: lpfc: Use unsigned type for num_sge
+Date: Tue, 27 Feb 2024 14:26:40 +0100
+Message-ID: <20240227131559.986085986@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,38 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 76025cc2285d9ede3d717fe4305d66f8be2d9346 ]
+[ Upstream commit d6c1b19153f92e95e5e1801d540e98771053afae ]
 
-The data offset for the SMB3.1.1 POSIX create context will always be
-8-byte aligned so having the check 'noff + nlen >= doff' in
-smb2_parse_contexts() is wrong as it will lead to -EINVAL because noff
-+ nlen == doff.
+LUNs going into "failed ready running" state observed on >1T and on even
+numbers of size (2T, 4T, 6T, 8T and 10T). The issue occurs when DIF is
+enabled at the host.
 
-Fix the sanity check to correctly handle aligned create context data.
+The kernel logs:
 
-Fixes: af1689a9b770 ("smb: client: fix potential OOBs in smb2_parse_contexts()")
-Signed-off-by: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[Guru:smb2_parse_contexts()  is present in file smb2ops.c,
-smb2ops.c file location is changed, modified patch accordingly.]
-Signed-off-by: Guruswamy Basavaiah <guruswamy.basavaiah@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Cannot setup S/G List for HBAIO segs 1/1 SGL 512 SCSI 256: 3 0
+
+The host lpfc driver is failing to setup scatter/gather list (protection
+data) for the I/Os.
+
+The return type lpfc_bg_setup_sgl()/lpfc_bg_setup_sgl_prot() causes the
+compiler to remove the most significant bit. Use an unsigned type instead.
+
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+[dwagner: added commit message]
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Link: https://lore.kernel.org/r/20231220162658.12392-1-dwagner@suse.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_scsi.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -2030,7 +2030,7 @@ int smb2_parse_contexts(struct TCP_Serve
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 983eeb0e3d07e..b4b87e5d8b291 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -1944,7 +1944,7 @@ lpfc_bg_setup_bpl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+  *
+  * Returns the number of SGEs added to the SGL.
+  **/
+-static int
++static uint32_t
+ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 		struct sli4_sge *sgl, int datasegcnt,
+ 		struct lpfc_io_buf *lpfc_cmd)
+@@ -1952,8 +1952,8 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 	struct scatterlist *sgde = NULL; /* s/g data entry */
+ 	struct sli4_sge_diseed *diseed = NULL;
+ 	dma_addr_t physaddr;
+-	int i = 0, num_sge = 0, status;
+-	uint32_t reftag;
++	int i = 0, status;
++	uint32_t reftag, num_sge = 0;
+ 	uint8_t txop, rxop;
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+ 	uint32_t rc;
+@@ -2124,7 +2124,7 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+  *
+  * Returns the number of SGEs added to the SGL.
+  **/
+-static int
++static uint32_t
+ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 		struct sli4_sge *sgl, int datacnt, int protcnt,
+ 		struct lpfc_io_buf *lpfc_cmd)
+@@ -2148,8 +2148,8 @@ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 	uint32_t rc;
+ #endif
+ 	uint32_t checking = 1;
+-	uint32_t dma_offset = 0;
+-	int num_sge = 0, j = 2;
++	uint32_t dma_offset = 0, num_sge = 0;
++	int j = 2;
+ 	struct sli4_hybrid_sgl *sgl_xtra = NULL;
  
- 		noff = le16_to_cpu(cc->NameOffset);
- 		nlen = le16_to_cpu(cc->NameLength);
--		if (noff + nlen >= doff)
-+		if (noff + nlen > doff)
- 			return -EINVAL;
- 
- 		name = (char *)cc + noff;
+ 	sgpe = scsi_prot_sglist(sc);
+-- 
+2.43.0
+
 
 
