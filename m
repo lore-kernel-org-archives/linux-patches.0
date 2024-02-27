@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CA11419A1;
-	Tue, 27 Feb 2024 14:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEF78B61;
+	Tue, 27 Feb 2024 14:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043509; cv=none; b=iIkybYsdxBHO4f8RX51htlzP0NZBXE34Ln1TRboD3SIGc0Xw0II3Xsuh1iOOwMkntOGTRk06iHSbvmNQsfAR7yJ51papyAh+Vi/BA7VS4mLSS58Vi/EyYgnVXoxW4rlBjVd1mu+fhWTf+oMAqiz9JYFVdKWv+iiZDqkXrF7ndvY=
+	t=1709043511; cv=none; b=YrRAf+3PsGOCEPg592f8Blnd4c4L3Qke/288J7FyPq+kgE+ZNMl/krBagy/NxBcP7qT7yNABZ7cHrM85aqOT7R/RgytLvBHftfJbTCMkx+K+HHOY2m4IzpE2LhVadLFgO/xejoSUN+F+Gjups8BehAqotx3PuJBC+9l8aFfNCUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043509; c=relaxed/simple;
-	bh=B5N+0XO5IH4b1XJzSf2/P8QaeZdafkZd5PjpEs46JrQ=;
+	s=arc-20240116; t=1709043511; c=relaxed/simple;
+	bh=NOHSWGr4Ic29x3+ulHbJ2FfxvyVAE6CJzhvPLVcBIhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NObIvBIit6qd6+IgSxGX78KK+OiOM8wL7Pu425azr1PP0xAM3wxP8XEXOr/RneIHI5Bfx3u2n1YtsrVGagM5u2Jk6r/w5y3ajpxEP0bf94+Vu6T6Qi4eRt7piZRKxCVlcBQ6OWx21dYRVphuXOJsQRs6pU38P3yaj43dSPCyGJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNSniUdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnSsYiuUiQIhffatrhiMCtaR17dF7wFeReOv7oeItPJd1Ag4AFvnWQVLJaAL/vOcTSaD3cXy6eNcTUxZul/0f/Ufx4tWhvG6kY+FgBPxXqtctrgCt4SkglC8BlMf6MS/d+O5A8Cp7djg/z2iQAggUOzOuIE0RKQ9iVzs3lYGNe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5Zb0TW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNSniUdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E64C43390;
-	Tue, 27 Feb 2024 14:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5Zb0TW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8B4C43390;
+	Tue, 27 Feb 2024 14:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043508;
-	bh=B5N+0XO5IH4b1XJzSf2/P8QaeZdafkZd5PjpEs46JrQ=;
+	s=korg; t=1709043511;
+	bh=NOHSWGr4Ic29x3+ulHbJ2FfxvyVAE6CJzhvPLVcBIhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNSniUdtKNtTfQk1qL8lnyxM6vWrQZgDENN3ikGhex+hKotoDRmuYUwZrvX+0VNHy
-	 qDwzrVv57sRzIeF0Uil07Dpo/6MRrq9EUQXyzVl5rTTykkxI+xBjR22QMXSXbJ79jJ
-	 92ryfl6CYX5iIqg7qd+D836LhGqF7JVo1kk1BHzE=
+	b=v5Zb0TW6oBWKnYfdYBx3TzhWjLcRveVaTOmi9FwHDKdy/l7TtZFBKr9l3d8xXHqH5
+	 nTRB+qARLeQOG/QU5brWnl0Qpb7ACev0bM8Dpv1jXDQhkj+FWdMS1CK+jnuohhQc3T
+	 WL8gbrti2tFq0j74dwp68rWw4a5WD+OIAfDz1434=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 105/195] gtp: fix use-after-free and null-ptr-deref in gtp_genl_dump_pdp()
-Date: Tue, 27 Feb 2024 14:26:06 +0100
-Message-ID: <20240227131613.933962722@linuxfoundation.org>
+	zhenwei pi <pizhenwei@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 106/195] crypto: virtio/akcipher - Fix stack overflow on memcpy
+Date: Tue, 27 Feb 2024 14:26:07 +0100
+Message-ID: <20240227131613.965849715@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -50,97 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-commit 136cfaca22567a03bbb3bf53a43d8cb5748b80ec upstream.
+commit c0ec2a712daf133d9996a8a1b7ee2d4996080363 upstream.
 
-The gtp_net_ops pernet operations structure for the subsystem must be
-registered before registering the generic netlink family.
+sizeof(struct virtio_crypto_akcipher_session_para) is less than
+sizeof(struct virtio_crypto_op_ctrl_req::u), copying more bytes from
+stack variable leads stack overflow. Clang reports this issue by
+commands:
+make -j CC=clang-14 mrproper >/dev/null 2>&1
+make -j O=/tmp/crypto-build CC=clang-14 allmodconfig >/dev/null 2>&1
+make -j O=/tmp/crypto-build W=1 CC=clang-14 drivers/crypto/virtio/
+  virtio_crypto_akcipher_algs.o
 
-Syzkaller hit 'general protection fault in gtp_genl_dump_pdp' bug:
-
-general protection fault, probably for non-canonical address
-0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-CPU: 1 PID: 5826 Comm: gtp Not tainted 6.8.0-rc3-std-def-alt1 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-alt1 04/01/2014
-RIP: 0010:gtp_genl_dump_pdp+0x1be/0x800 [gtp]
-Code: c6 89 c6 e8 64 e9 86 df 58 45 85 f6 0f 85 4e 04 00 00 e8 c5 ee 86
-      df 48 8b 54 24 18 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80>
-      3c 02 00 0f 85 de 05 00 00 48 8b 44 24 18 4c 8b 30 4c 39 f0 74
-RSP: 0018:ffff888014107220 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000002 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
-R13: ffff88800fcda588 R14: 0000000000000001 R15: 0000000000000000
-FS:  00007f1be4eb05c0(0000) GS:ffff88806ce80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1be4e766cf CR3: 000000000c33e000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? show_regs+0x90/0xa0
- ? die_addr+0x50/0xd0
- ? exc_general_protection+0x148/0x220
- ? asm_exc_general_protection+0x22/0x30
- ? gtp_genl_dump_pdp+0x1be/0x800 [gtp]
- ? __alloc_skb+0x1dd/0x350
- ? __pfx___alloc_skb+0x10/0x10
- genl_dumpit+0x11d/0x230
- netlink_dump+0x5b9/0xce0
- ? lockdep_hardirqs_on_prepare+0x253/0x430
- ? __pfx_netlink_dump+0x10/0x10
- ? kasan_save_track+0x10/0x40
- ? __kasan_kmalloc+0x9b/0xa0
- ? genl_start+0x675/0x970
- __netlink_dump_start+0x6fc/0x9f0
- genl_family_rcv_msg_dumpit+0x1bb/0x2d0
- ? __pfx_genl_family_rcv_msg_dumpit+0x10/0x10
- ? genl_op_from_small+0x2a/0x440
- ? cap_capable+0x1d0/0x240
- ? __pfx_genl_start+0x10/0x10
- ? __pfx_genl_dumpit+0x10/0x10
- ? __pfx_genl_done+0x10/0x10
- ? security_capable+0x9d/0xe0
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Link: https://lore.kernel.org/r/20240214162733.34214-1-kovalev@altlinux.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 59ca6c93387d ("virtio-crypto: implement RSA algorithm")
+Link: https://lore.kernel.org/all/0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net/
+Cc: <stable@vger.kernel.org>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/crypto/virtio/virtio_crypto_akcipher_algs.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1906,20 +1906,20 @@ static int __init gtp_init(void)
- 	if (err < 0)
- 		goto error_out;
+--- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
++++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
+@@ -104,7 +104,8 @@ static void virtio_crypto_dataq_akcipher
+ }
  
--	err = genl_register_family(&gtp_genl_family);
-+	err = register_pernet_subsys(&gtp_net_ops);
- 	if (err < 0)
- 		goto unreg_rtnl_link;
+ static int virtio_crypto_alg_akcipher_init_session(struct virtio_crypto_akcipher_ctx *ctx,
+-		struct virtio_crypto_ctrl_header *header, void *para,
++		struct virtio_crypto_ctrl_header *header,
++		struct virtio_crypto_akcipher_session_para *para,
+ 		const uint8_t *key, unsigned int keylen)
+ {
+ 	struct scatterlist outhdr_sg, key_sg, inhdr_sg, *sgs[3];
+@@ -128,7 +129,7 @@ static int virtio_crypto_alg_akcipher_in
  
--	err = register_pernet_subsys(&gtp_net_ops);
-+	err = genl_register_family(&gtp_genl_family);
- 	if (err < 0)
--		goto unreg_genl_family;
-+		goto unreg_pernet_subsys;
+ 	ctrl = &vc_ctrl_req->ctrl;
+ 	memcpy(&ctrl->header, header, sizeof(ctrl->header));
+-	memcpy(&ctrl->u, para, sizeof(ctrl->u));
++	memcpy(&ctrl->u.akcipher_create_session.para, para, sizeof(*para));
+ 	input = &vc_ctrl_req->input;
+ 	input->status = cpu_to_le32(VIRTIO_CRYPTO_ERR);
  
- 	pr_info("GTP module loaded (pdp ctx size %zd bytes)\n",
- 		sizeof(struct pdp_ctx));
- 	return 0;
- 
--unreg_genl_family:
--	genl_unregister_family(&gtp_genl_family);
-+unreg_pernet_subsys:
-+	unregister_pernet_subsys(&gtp_net_ops);
- unreg_rtnl_link:
- 	rtnl_link_unregister(&gtp_link_ops);
- error_out:
 
 
