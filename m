@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C04D13B2B3;
-	Tue, 27 Feb 2024 13:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDE713B2B3;
+	Tue, 27 Feb 2024 13:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041856; cv=none; b=dnsadG7Q15BbX66R2L/8+YamKDL/NB+VWoRc3Dr4pRJrONo2WyItpwQzIKeXVOLVEmKzpXirZloWzipX3w7UQjhRgfvkZvN+cS4LqNC68iUA0H8NDLy98Xd9i4nTe/uaTBEE7arhJdOn2UPGw0aNJ1bxL5KleDANf80pTcTl6bA=
+	t=1709041859; cv=none; b=K9BhahEr4Aq3TaNYI3m+EVbqmhLybKdltaK0LGnALs4a7UNlh7c1cJA6ZoFFCM8qfs/eQAei4glrkX2JeQFFsUI5hv8PV/ciuwpv3RXKhl0hLHPoG5ZbYnSwB8jRTV/nkUPIxspDf2TBT/M0hnYvXa4HRW7w2NX+nxGpil5Lt+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041856; c=relaxed/simple;
-	bh=jX3ODlRu2Jl7eReh0oDtj+HJZgCRh4AmTfz2LeKfvsA=;
+	s=arc-20240116; t=1709041859; c=relaxed/simple;
+	bh=0RYbqvGwM7tPCsedhilQJUamBLwitS77yrIoxYuG0WU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtnCIIfdhg863zd2LHxTpF4UQIvF9p2BQMm1uXAN0ZaJTmtLnzAPwPUlPSMM1SWowQaR1ePig5M9qX8P2eTiJGSI0DcBBcmHXt/S+ycKYx/9ciLWxMSfBjpZA8isvK6CBdfWz64MrZLMHmiYftABC8UEON0XzEKAz1blnv4Tbno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7o/zUcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sem1r8wEiQ1DvAiP/K+1swESo9ZzLTJhQMfV48t4KVk+3jJrcRyymPaAvIkU/zHrKsBQFYZFfXtYBoExyJEIo9v79XcJNPIib01exyv1lM1kAXD26elD5Vv4MkzEus423ZG1u38FDAoAhvwlUpVfTYBB0AfDyF4G7ZTNYmorngk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvX0rPJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7o/zUcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEABC433C7;
-	Tue, 27 Feb 2024 13:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvX0rPJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5B5C433C7;
+	Tue, 27 Feb 2024 13:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041856;
-	bh=jX3ODlRu2Jl7eReh0oDtj+HJZgCRh4AmTfz2LeKfvsA=;
+	s=korg; t=1709041859;
+	bh=0RYbqvGwM7tPCsedhilQJUamBLwitS77yrIoxYuG0WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7o/zUcEsbg5gkd5S0EjZvTcJrX+2plZqWecuraSLGgSm+y9IA6CSTolPiNY/XWRo
-	 o4Rub7yUR3zDaBFJb5JaroPnX8mORp5ruAJwwQs4DrNMUO/lZFJbzdP3krOaBggCnL
-	 BrldUo3IMJvVV4fb99xcCwkkdKCFTi4YwuMefE84=
+	b=IvX0rPJTrWerez7tT0ygMjSr4dM/rR21i4UQxzLbArSx7wBAXHjyTSD/jpO1CHajC
+	 VCBedNVEk5t1TrqHXXNhg3r0VvndxfZipPbkteVzY7ZDlQ2ZO07689D/REQrvmUBkv
+	 N9BKAypLz/E5aSQIzfjYkCFs2ze8CaSYpsn80xEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/299] nvmet-fc: take ref count on tgtport before delete assoc
-Date: Tue, 27 Feb 2024 14:22:56 +0100
-Message-ID: <20240227131628.041768626@linuxfoundation.org>
+Subject: [PATCH 6.6 066/299] cifs: do not search for channel if server is terminating
+Date: Tue, 27 Feb 2024 14:22:57 +0100
+Message-ID: <20240227131628.072891505@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,102 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit fe506a74589326183297d5abdda02d0c76ae5a8b ]
+[ Upstream commit 88675b22d34e6e815ad4bde09c590ccb2d50c59d ]
 
-We have to ensure that the tgtport is not going away
-before be have remove all the associations.
+In order to scale down the channels, the following sequence
+of operations happen:
+1. server struct is marked for terminate
+2. the channel is deallocated in the ses->chans array
+3. at a later point the cifsd thread actually terminates the server
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Between 2 and 3, there can be calls to find the channel for
+a server struct. When that happens, there can be an ugly warning
+that's logged. But this is expected.
+
+So this change does two things:
+1. in cifs_ses_get_chan_index, if server->terminate is set, return
+2. always make sure server->terminate is set with chan_lock held
+
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ fs/smb/client/sess.c    | 4 ++++
+ fs/smb/client/smb2pdu.c | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 36cae038eb045..8a02ed63b1566 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1092,13 +1092,28 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
- }
- 
- static void
--nvmet_fc_delete_assoc(struct work_struct *work)
-+nvmet_fc_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
-+{
-+	nvmet_fc_delete_target_assoc(assoc);
-+	nvmet_fc_tgt_a_put(assoc);
-+}
-+
-+static void
-+nvmet_fc_delete_assoc_work(struct work_struct *work)
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index a20a5d0836dc9..52f7a411e2bbf 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -75,6 +75,10 @@ cifs_ses_get_chan_index(struct cifs_ses *ses,
  {
- 	struct nvmet_fc_tgt_assoc *assoc =
- 		container_of(work, struct nvmet_fc_tgt_assoc, del_work);
-+	struct nvmet_fc_tgtport *tgtport = assoc->tgtport;
+ 	unsigned int i;
  
--	nvmet_fc_delete_target_assoc(assoc);
--	nvmet_fc_tgt_a_put(assoc);
-+	nvmet_fc_delete_assoc(assoc);
-+	nvmet_fc_tgtport_put(tgtport);
-+}
++	/* if the channel is waiting for termination */
++	if (server->terminate)
++		return CIFS_INVAL_CHAN_INDEX;
 +
-+static void
-+nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
-+{
-+	nvmet_fc_tgtport_get(assoc->tgtport);
-+	queue_work(nvmet_wq, &assoc->del_work);
- }
- 
- static struct nvmet_fc_tgt_assoc *
-@@ -1132,7 +1147,7 @@ nvmet_fc_alloc_target_assoc(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
- 	assoc->a_id = idx;
- 	INIT_LIST_HEAD(&assoc->a_list);
- 	kref_init(&assoc->ref);
--	INIT_WORK(&assoc->del_work, nvmet_fc_delete_assoc);
-+	INIT_WORK(&assoc->del_work, nvmet_fc_delete_assoc_work);
- 	atomic_set(&assoc->terminating, 0);
- 
- 	while (needrandom) {
-@@ -1491,7 +1506,7 @@ __nvmet_fc_free_assocs(struct nvmet_fc_tgtport *tgtport)
- 	list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
- 		if (!nvmet_fc_tgt_a_get(assoc))
- 			continue;
--		queue_work(nvmet_wq, &assoc->del_work);
-+		nvmet_fc_schedule_delete_assoc(assoc);
- 		nvmet_fc_tgt_a_put(assoc);
- 	}
- 	rcu_read_unlock();
-@@ -1545,7 +1560,7 @@ nvmet_fc_invalidate_host(struct nvmet_fc_target_port *target_port,
- 			continue;
- 		assoc->hostport->invalid = 1;
- 		noassoc = false;
--		queue_work(nvmet_wq, &assoc->del_work);
-+		nvmet_fc_schedule_delete_assoc(assoc);
- 		nvmet_fc_tgt_a_put(assoc);
- 	}
- 	spin_unlock_irqrestore(&tgtport->lock, flags);
-@@ -1590,7 +1605,7 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
- 		nvmet_fc_tgtport_put(tgtport);
- 
- 		if (found_ctrl) {
--			queue_work(nvmet_wq, &assoc->del_work);
-+			nvmet_fc_schedule_delete_assoc(assoc);
- 			nvmet_fc_tgt_a_put(assoc);
- 			return;
+ 	for (i = 0; i < ses->chan_count; i++) {
+ 		if (ses->chans[i].server == server)
+ 			return i;
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index ce2d28537bc8a..97fc2f85b429d 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -178,6 +178,7 @@ cifs_chan_skip_or_disable(struct cifs_ses *ses,
  		}
-@@ -1897,7 +1912,7 @@ nvmet_fc_ls_disconnect(struct nvmet_fc_tgtport *tgtport,
- 		nvmet_fc_xmt_ls_rsp(tgtport, oldls);
- 	}
  
--	queue_work(nvmet_wq, &assoc->del_work);
-+	nvmet_fc_schedule_delete_assoc(assoc);
- 	nvmet_fc_tgt_a_put(assoc);
+ 		ses->chans[chan_index].server = NULL;
++		server->terminate = true;
+ 		spin_unlock(&ses->chan_lock);
  
- 	return false;
+ 		/*
+@@ -188,7 +189,6 @@ cifs_chan_skip_or_disable(struct cifs_ses *ses,
+ 		 */
+ 		cifs_put_tcp_session(server, from_reconnect);
+ 
+-		server->terminate = true;
+ 		cifs_signal_cifsd_for_reconnect(server, false);
+ 
+ 		/* mark primary server as needing reconnect */
 -- 
 2.43.0
 
