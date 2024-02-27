@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A8013B2BA;
-	Tue, 27 Feb 2024 13:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FFA13B29B;
+	Tue, 27 Feb 2024 13:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041920; cv=none; b=imQ6uViQVyhQl0kWplJ8CRAWqTSOlcADjOFE5OOKdJTPylIW4wnOEdVGCvs5WuPQNQEiX09AIJhdLSjtPZ8+GDQdzoRpS0oRUcDD7rXPuvT/lJ0c2W5eFHQNizSsng1TNOZ+0q/W5u7+TosFM4TSgRuQfNw+2129LSYnHCByaT4=
+	t=1709041923; cv=none; b=KpeKkJ4epYXAm2QvBcl7lbH9zIJhY8gf42zsp9z/0fDK7RXQixaRzaSPCh6OiKQbY9VQPaFIa1tvfUxwIFBjoul3f0EOMnFJE+2ffol3YwNgZmNVPmkSReaXu3WCv01b689TQUyM+DwhXgTS6kiux9Sqq6Gly6Oau+OMyHTLnmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041920; c=relaxed/simple;
-	bh=QreihzIB57f/2PpATDnXBn6skCWjCc3wdLOm0idjtMs=;
+	s=arc-20240116; t=1709041923; c=relaxed/simple;
+	bh=WuZgNhYEutUfzvM+sm6RXj51q03hUbuF8hja8zgA6qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlaOkwtYQnPuKfCTcr4oGAX2LO+KPzRQXPSdrB59/Z2qxiscAmjnuQYK1fx34PAcjPrty/HuxrFi5vHD1g5+CP/vqPqO5sfOrbLMUzXyGSqPxopsTFot1biHdG8KF8ozDJULJ68zvMlVB+RIOjRDiw8bHjXudTCVg9v/gO9dgP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2TsZdED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UBgrXu2f6x+3HaZVQDLtgXBISXNLQQ07Tb0LRa/8p1ojp7hxfhcQ1DAgV6o3sKYlhkKQLYbyyS71Yh9vz9jFLrkoolQCD+m/LXNRwyJzTgpM8XwjNaLJm9GV3jDvzkMTBnR3+B8jw2T9iVMQ36USf6ywfV8vKs8TNH3lh/uHHMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y76NP9cK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2TsZdED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611D7C433F1;
-	Tue, 27 Feb 2024 13:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y76NP9cK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B8AC43390;
+	Tue, 27 Feb 2024 13:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041920;
-	bh=QreihzIB57f/2PpATDnXBn6skCWjCc3wdLOm0idjtMs=;
+	s=korg; t=1709041923;
+	bh=WuZgNhYEutUfzvM+sm6RXj51q03hUbuF8hja8zgA6qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2TsZdEDrXhlNtKgHFJfK5d342kOrdWpu4tydYnof1Y9qVlww5nmwGNJF3V/l+wx0
-	 M2nQgU2dybGppXs7uzh04XZLC4P+bn1Cqm/9ttOS7rttm3j78uwW7KHlJC2A2F1cG2
-	 lA7FJ5vlcmrcF8zxwKuz9+9uu/AgDkzAUrfSHeas=
+	b=y76NP9cKLRKgEZyhXIBrWsixeJKNwatjc93GrglIXL2JXToP2QGQ0tFRyyoqdf/Or
+	 Tpl453/g3c0rkGLlojjMVqYT6wOJ/daoAT8T6VPiEFq8nYbJlxjmTLVWzkajnpSPwy
+	 dLMzbs3Nx/RSe1cXWhokOWXLJ9StfQ2YE33sExvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Yi Sun <yi.sun@unisoc.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/299] smb: client: set correct d_type for reparse points under DFS mounts
-Date: Tue, 27 Feb 2024 14:23:46 +0100
-Message-ID: <20240227131629.568923730@linuxfoundation.org>
+Subject: [PATCH 6.6 116/299] virtio-blk: Ensure no requests in virtqueues before deleting vqs.
+Date: Tue, 27 Feb 2024 14:23:47 +0100
+Message-ID: <20240227131629.599588545@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,95 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Yi Sun <yi.sun@unisoc.com>
 
-[ Upstream commit 55c7788c37242702868bfac7861cdf0c358d6c3d ]
+[ Upstream commit 4ce6e2db00de8103a0687fb0f65fd17124a51aaa ]
 
-Send query dir requests with an info level of
-SMB_FIND_FILE_FULL_DIRECTORY_INFO rather than
-SMB_FIND_FILE_DIRECTORY_INFO when the client is generating its own
-inode numbers (e.g. noserverino) so that reparse tags still
-can be parsed directly from the responses, but server won't
-send UniqueId (server inode number)
+Ensure no remaining requests in virtqueues before resetting vdev and
+deleting virtqueues. Otherwise these requests will never be completed.
+It may cause the system to become unresponsive.
 
-Signed-off-by: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Function blk_mq_quiesce_queue() can ensure that requests have become
+in_flight status, but it cannot guarantee that requests have been
+processed by the device. Virtqueues should never be deleted before
+all requests become complete status.
+
+Function blk_mq_freeze_queue() ensure that all requests in virtqueues
+become complete status. And no requests can enter in virtqueues.
+
+Signed-off-by: Yi Sun <yi.sun@unisoc.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20240129085250.1550594-1-yi.sun@unisoc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 15 ++++++++-------
- fs/smb/client/smb2pdu.c |  6 ++++++
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ drivers/block/virtio_blk.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index d30ea2005eb36..e23cd216bffbe 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -299,14 +299,16 @@ cifs_dir_info_to_fattr(struct cifs_fattr *fattr, FILE_DIRECTORY_INFO *info,
- }
- 
- static void cifs_fulldir_info_to_fattr(struct cifs_fattr *fattr,
--				       SEARCH_ID_FULL_DIR_INFO *info,
-+				       const void *info,
- 				       struct cifs_sb_info *cifs_sb)
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 225c86c74d4e9..41b2fd7e1b9e5 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -1629,14 +1629,15 @@ static int virtblk_freeze(struct virtio_device *vdev)
  {
-+	const FILE_FULL_DIRECTORY_INFO *di = info;
+ 	struct virtio_blk *vblk = vdev->priv;
+ 
++	/* Ensure no requests in virtqueues before deleting vqs. */
++	blk_mq_freeze_queue(vblk->disk->queue);
 +
- 	__dir_info_to_fattr(fattr, info);
+ 	/* Ensure we don't receive any more interrupts */
+ 	virtio_reset_device(vdev);
  
--	/* See MS-FSCC 2.4.19 FileIdFullDirectoryInformation */
-+	/* See MS-FSCC 2.4.14, 2.4.19 */
- 	if (fattr->cf_cifsattrs & ATTR_REPARSE)
--		fattr->cf_cifstag = le32_to_cpu(info->EaSize);
-+		fattr->cf_cifstag = le32_to_cpu(di->EaSize);
- 	cifs_fill_common_info(fattr, cifs_sb);
+ 	/* Make sure no work handler is accessing the device. */
+ 	flush_work(&vblk->config_work);
+ 
+-	blk_mq_quiesce_queue(vblk->disk->queue);
+-
+ 	vdev->config->del_vqs(vdev);
+ 	kfree(vblk->vqs);
+ 
+@@ -1654,7 +1655,7 @@ static int virtblk_restore(struct virtio_device *vdev)
+ 
+ 	virtio_device_ready(vdev);
+ 
+-	blk_mq_unquiesce_queue(vblk->disk->queue);
++	blk_mq_unfreeze_queue(vblk->disk->queue);
+ 	return 0;
  }
- 
-@@ -420,7 +422,7 @@ _initiate_cifs_search(const unsigned int xid, struct file *file,
- 	} else if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_SERVER_INUM) {
- 		cifsFile->srch_inf.info_level = SMB_FIND_FILE_ID_FULL_DIR_INFO;
- 	} else /* not srvinos - BB fixme add check for backlevel? */ {
--		cifsFile->srch_inf.info_level = SMB_FIND_FILE_DIRECTORY_INFO;
-+		cifsFile->srch_inf.info_level = SMB_FIND_FILE_FULL_DIRECTORY_INFO;
- 	}
- 
- 	search_flags = CIFS_SEARCH_CLOSE_AT_END | CIFS_SEARCH_RETURN_RESUME;
-@@ -1014,10 +1016,9 @@ static int cifs_filldir(char *find_entry, struct file *file,
- 				       (FIND_FILE_STANDARD_INFO *)find_entry,
- 				       cifs_sb);
- 		break;
-+	case SMB_FIND_FILE_FULL_DIRECTORY_INFO:
- 	case SMB_FIND_FILE_ID_FULL_DIR_INFO:
--		cifs_fulldir_info_to_fattr(&fattr,
--					   (SEARCH_ID_FULL_DIR_INFO *)find_entry,
--					   cifs_sb);
-+		cifs_fulldir_info_to_fattr(&fattr, find_entry, cifs_sb);
- 		break;
- 	default:
- 		cifs_dir_info_to_fattr(&fattr,
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 97fc2f85b429d..9d34a55fdb5e4 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -5092,6 +5092,9 @@ int SMB2_query_directory_init(const unsigned int xid,
- 	case SMB_FIND_FILE_POSIX_INFO:
- 		req->FileInformationClass = SMB_FIND_FILE_POSIX_INFO;
- 		break;
-+	case SMB_FIND_FILE_FULL_DIRECTORY_INFO:
-+		req->FileInformationClass = FILE_FULL_DIRECTORY_INFORMATION;
-+		break;
- 	default:
- 		cifs_tcon_dbg(VFS, "info level %u isn't supported\n",
- 			info_level);
-@@ -5161,6 +5164,9 @@ smb2_parse_query_directory(struct cifs_tcon *tcon,
- 		/* note that posix payload are variable size */
- 		info_buf_size = sizeof(struct smb2_posix_info);
- 		break;
-+	case SMB_FIND_FILE_FULL_DIRECTORY_INFO:
-+		info_buf_size = sizeof(FILE_FULL_DIRECTORY_INFO);
-+		break;
- 	default:
- 		cifs_tcon_dbg(VFS, "info level %u isn't supported\n",
- 			 srch_inf->info_level);
+ #endif
 -- 
 2.43.0
 
