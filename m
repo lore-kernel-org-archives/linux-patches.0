@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30112145FF5;
-	Tue, 27 Feb 2024 14:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA17414690A;
+	Tue, 27 Feb 2024 14:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044153; cv=none; b=YZu9wkEw9VjHJouh56o7E54sJfmMQNZGq2CKyZKjb35RyhHu654PG5XeYqPfbHSIEwStpD7s8nUy47xIRlcLyswvG26ywMu4ohLF0Ne8Uh/jCXsZZfCWXFFwSNMMftBS3iJ6DkNmBMKZiqNQKbzTHdzFAMJQA5RVo6KJ0nknJAk=
+	t=1709044156; cv=none; b=CeV+Oj3VTuDmJEpT8t6y7/Q+5hEnX30x1J85SDSCoFjKNSikRpeJ1sGA4S/sov+RKuSg+s8gVYm0N4p86tekOLcmR43s86qrbbLwez/X++lb1/fGmmfoVsWqBETfBpoiEMaEqVnqPI1OCfOe3saTtmXhMiecbjA35H4aGR0MnsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044153; c=relaxed/simple;
-	bh=GZFzKAtUCEuLJIQ9O4/s+lmye2Zqbq510S37oXKsEYA=;
+	s=arc-20240116; t=1709044156; c=relaxed/simple;
+	bh=syD7NxbW8LaxVz2YfDjv7jQZqqbUDqrf6yP+fqbHQM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocKcwQnJlAi+G+LDaZ0IM8kCh0b7mgz47sIx5JNu7ErQHpcfefYpK3NvMlJ9I9tQKus7E6ADEEqyfL6cLaCdonayecNnk8r6+KL+FXxcwnUSyx0Ofx5be76w/EM4U+hkjNHzb3Y5QWGHegmBQ/pZhqwfzej+tRW8aFkIygTSyR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJX2/rx2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeOWodHRBMzdqj/al8kh7AtMzR79uxh+ZNQ4aVllhufQeO2d5cIi6vTGYOWSm5VFOk/WAeTizsDxB3wsqM8MZFGH5ntebwNQOmObt8jEJZyru/ykzaibXLVYmjTLol0gbEYalUloNUe001iqpObFER63NjLKfNmfDEm9GDGTIaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmmgYT3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJX2/rx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CB3C433F1;
-	Tue, 27 Feb 2024 14:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmmgYT3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7866DC43390;
+	Tue, 27 Feb 2024 14:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044153;
-	bh=GZFzKAtUCEuLJIQ9O4/s+lmye2Zqbq510S37oXKsEYA=;
+	s=korg; t=1709044155;
+	bh=syD7NxbW8LaxVz2YfDjv7jQZqqbUDqrf6yP+fqbHQM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJX2/rx2x2TFZECZFR7mysK/Jqv+6LHtKwPaftC3UFZX9GCa9BK9gapPUFvBldjuZ
-	 yPlfr+zlrAxUNc1iy11+lR6z9vBGjurqPzIQ48SP/X47AxxbuFX22nlPCObpAiY/NG
-	 ZwNsi/R/u2/lMsomUJBzLdUZtVKPu+pdngTQYPUk=
+	b=UmmgYT3KA27AzbHeLWpxdGsRFrO2Hal79JkAEgAKWtADOohTB5j0azEekcauvXT/a
+	 DkEh6PTKXl6tGZh5l9BUG8Y9cck++M4MVffTL+J69nhiUYAVGYBJ2vZLBI6ti+u+DM
+	 RpCxLw6APh25kSKJbepxkR8zfuQmgzlO5xWSlU+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 082/122] ARM: ep93xx: Add terminator to gpiod_lookup_table
-Date: Tue, 27 Feb 2024 14:27:23 +0100
-Message-ID: <20240227131601.391052191@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.10 083/122] Revert "x86/ftrace: Use alternative RET encoding"
+Date: Tue, 27 Feb 2024 14:27:24 +0100
+Message-ID: <20240227131601.423307712@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -53,37 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Shubin <nikita.shubin@maquefel.me>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit fdf87a0dc26d0550c60edc911cda42f9afec3557 upstream.
+This reverts commit 3eb602ad6a94a76941f93173131a71ad36fa1324.
 
-Without the terminator, if a con_id is passed to gpio_find() that
-does not exist in the lookup table the function will not stop looping
-correctly, and eventually cause an oops.
+Revert the backport of upstream commit
 
-Cc: stable@vger.kernel.org
-Fixes: b2e63555592f ("i2c: gpio: Convert to use descriptors")
-Reported-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://lore.kernel.org/r/20240205102337.439002-1-alexander.sverdlin@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+  1f001e9da6bb ("x86/ftrace: Use alternative RET encoding")
+
+in favor of a proper backport after backporting the commit which adds
+__text_gen_insn().
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-ep93xx/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/ftrace.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/arch/arm/mach-ep93xx/core.c
-+++ b/arch/arm/mach-ep93xx/core.c
-@@ -337,6 +337,7 @@ static struct gpiod_lookup_table ep93xx_
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
- 		GPIO_LOOKUP_IDX("G", 0, NULL, 1,
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
-+		{ }
- 	},
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -311,7 +311,7 @@ union ftrace_op_code_union {
+ 	} __attribute__((packed));
  };
  
+-#define RET_SIZE		(IS_ENABLED(CONFIG_RETPOLINE) ? 5 : 1 + IS_ENABLED(CONFIG_SLS))
++#define RET_SIZE		1 + IS_ENABLED(CONFIG_SLS)
+ 
+ static unsigned long
+ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+@@ -367,12 +367,7 @@ create_trampoline(struct ftrace_ops *ops
+ 		goto fail;
+ 
+ 	ip = trampoline + size;
+-
+-	/* The trampoline ends with ret(q) */
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
+-		memcpy(ip, text_gen_insn(JMP32_INSN_OPCODE, ip, &__x86_return_thunk), JMP32_INSN_SIZE);
+-	else
+-		memcpy(ip, retq, sizeof(retq));
++	memcpy(ip, retq, RET_SIZE);
+ 
+ 	/* No need to test direct calls on created trampolines */
+ 	if (ops->flags & FTRACE_OPS_FL_SAVE_REGS) {
 
 
