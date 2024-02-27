@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F23F14264A;
-	Tue, 27 Feb 2024 13:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157821419B3;
+	Tue, 27 Feb 2024 13:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042110; cv=none; b=dy71lPGybbtBfnQDqOBM+7b0mlpvXJtdf1Iq4ZwemzKObAcsg2xGQuVPCy2YceuDpbBWUGjN773UM/9xWn6dFQIeIDXirhLFuXDsuhFZbqaNRZ9RX0PLj9Tcc0zfBhC/FZbsw8I5J8SwIbpffkE/AN+K9oLdcfXeyzRtLBAHM78=
+	t=1709042113; cv=none; b=O0z4x+mudX7hBwRTrmSwZW8H3uGmVPTJq+SnD/y0C9MApOTyzAreMfnNPA9YfIhsJ+sNm4Ha5PkpDItJ8pdKXakt02jrIuGd3InkcvPmlCN+u1PCXL6TnxjcwS0q4h4Rka+x6LXOZfTG1cDuzVtPttwXIhhefiimSa0U3kJveaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042110; c=relaxed/simple;
-	bh=VVeiTU9tZD0pvTDYzrXDQlVGrCjYlFIpj/TxcQsB09U=;
+	s=arc-20240116; t=1709042113; c=relaxed/simple;
+	bh=gqOjMEGJZ4SJ8mczMcsWpxVYjVEsmMOpLelTuwPFxdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANb4NndchwyqtfKII3xp4Kg8q0Wn2Up8pLt5AxC7gGjh71B45rFbrQuarvja9eNc8s+ynjGuMA4dW9ow7JUI7LPNLXXFm5uxn3AibshXw4YekygVHh3OvtAsrM0dRFYCw8gn6PN6N+0T5XzL5j1Eu1knz2W9OlQKVEJW+pNXrxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWQZ6tQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQuY31D3anvyclbUm0UjOcY4MEfOjqNzGmlHB/0CUIdwdKGzGoYpMKJRnHOcbLKyUOAML991RPgDOMg0+0oewSanZfofoTvVyg6aGbX6VEEaxi79zt7poan33l1LzBi3/zpqP0sYz6Mf8hYqkzwLNKRUqQSAXvDDaiio6JWBGZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=et0pvHPQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWQZ6tQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF145C433F1;
-	Tue, 27 Feb 2024 13:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="et0pvHPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953F0C433F1;
+	Tue, 27 Feb 2024 13:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042110;
-	bh=VVeiTU9tZD0pvTDYzrXDQlVGrCjYlFIpj/TxcQsB09U=;
+	s=korg; t=1709042113;
+	bh=gqOjMEGJZ4SJ8mczMcsWpxVYjVEsmMOpLelTuwPFxdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWQZ6tQi+dcKfdJidnSORfLnFucsji0HX3QXx7uI88ULg82+fxgmJRP+Hsde/7pS/
-	 jvhAHiS+3TWCiESjV7hDIlz8EoAFIG9EhVrq2XcZSzsapqOr46LrCGvkg2ooEdz3R2
-	 oukXvcfPJ+uk1FT/yMkJdWIC9TrAsQW9uMQb4Sa0=
+	b=et0pvHPQVLMgHqTvmCQ4X23Gx3EZWri8hfpcY0E02rED7ZmNFsyFgh/tAN3M8Q7nO
+	 wlxh4B5FtQ+h2+T+GVaVKLzHUhYxQ7WIgOAmKcW0h4B5WIAJ+QtDZgJ4B+BBB7VTZx
+	 Lz8VOvSyBJfMVEUl1mlnJ0w7YafHKRY6t97qAk48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Julian Sikorski <belegdol@gmail.com>,
+	Lee Duncan <lee.duncan@suse.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 155/299] scsi: target: pscsi: Fix bio_put() for error case
-Date: Tue, 27 Feb 2024 14:24:26 +0100
-Message-ID: <20240227131630.850066811@linuxfoundation.org>
+Subject: [PATCH 6.6 156/299] scsi: core: Consult supported VPD page list prior to fetching page
+Date: Tue, 27 Feb 2024 14:24:27 +0100
+Message-ID: <20240227131630.880590906@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,47 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-commit de959094eb2197636f7c803af0943cb9d3b35804 upstream.
+commit b5fc07a5fb56216a49e6c1d0b172d5464d99a89b upstream.
 
-As of commit 066ff571011d ("block: turn bio_kmalloc into a simple kmalloc
-wrapper"), a bio allocated by bio_kmalloc() must be freed by bio_uninit()
-and kfree(). That is not done properly for the error case, hitting WARN and
-NULL pointer dereference in bio_free().
+Commit c92a6b5d6335 ("scsi: core: Query VPD size before getting full
+page") removed the logic which checks whether a VPD page is present on
+the supported pages list before asking for the page itself. That was
+done because SPC helpfully states "The Supported VPD Pages VPD page
+list may or may not include all the VPD pages that are able to be
+returned by the device server". Testing had revealed a few devices
+that supported some of the 0xBn pages but didn't actually list them in
+page 0.
 
-Fixes: 066ff571011d ("block: turn bio_kmalloc into a simple kmalloc wrapper")
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Link: https://lore.kernel.org/r/20240214144356.101814-1-naohiro.aota@wdc.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Julian Sikorski bisected a problem with his drive resetting during
+discovery to the commit above. As it turns out, this particular drive
+firmware will crash if we attempt to fetch page 0xB9.
+
+Various approaches were attempted to work around this. In the end,
+reinstating the logic that consults VPD page 0 before fetching any
+other page was the path of least resistance. A firmware update for the
+devices which originally compelled us to remove the check has since
+been released.
+
+Link: https://lore.kernel.org/r/20240214221411.2888112-1-martin.petersen@oracle.com
+Fixes: c92a6b5d6335 ("scsi: core: Query VPD size before getting full page")
+Cc: stable@vger.kernel.org
+Cc: Bart Van Assche <bvanassche@acm.org>
+Reported-by: Julian Sikorski <belegdol@gmail.com>
+Tested-by: Julian Sikorski <belegdol@gmail.com>
+Reviewed-by: Lee Duncan <lee.duncan@suse.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_pscsi.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi.c        |   22 ++++++++++++++++++++--
+ include/scsi/scsi_device.h |    4 ----
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
---- a/drivers/target/target_core_pscsi.c
-+++ b/drivers/target/target_core_pscsi.c
-@@ -907,12 +907,15 @@ new_bio:
+--- a/drivers/scsi/scsi.c
++++ b/drivers/scsi/scsi.c
+@@ -328,21 +328,39 @@ static int scsi_vpd_inquiry(struct scsi_
+ 	return result + 4;
+ }
  
- 	return 0;
- fail:
--	if (bio)
--		bio_put(bio);
-+	if (bio) {
-+		bio_uninit(bio);
-+		kfree(bio);
++enum scsi_vpd_parameters {
++	SCSI_VPD_HEADER_SIZE = 4,
++	SCSI_VPD_LIST_SIZE = 36,
++};
++
+ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
+ {
+-	unsigned char vpd_header[SCSI_VPD_HEADER_SIZE] __aligned(4);
++	unsigned char vpd[SCSI_VPD_LIST_SIZE] __aligned(4);
+ 	int result;
+ 
+ 	if (sdev->no_vpd_size)
+ 		return SCSI_DEFAULT_VPD_LEN;
+ 
+ 	/*
++	 * Fetch the supported pages VPD and validate that the requested page
++	 * number is present.
++	 */
++	if (page != 0) {
++		result = scsi_vpd_inquiry(sdev, vpd, 0, sizeof(vpd));
++		if (result < SCSI_VPD_HEADER_SIZE)
++			return 0;
++
++		result -= SCSI_VPD_HEADER_SIZE;
++		if (!memchr(&vpd[SCSI_VPD_HEADER_SIZE], page, result))
++			return 0;
 +	}
- 	while (req->bio) {
- 		bio = req->bio;
- 		req->bio = bio->bi_next;
--		bio_put(bio);
-+		bio_uninit(bio);
-+		kfree(bio);
- 	}
- 	req->biotail = NULL;
- 	return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
++	/*
+ 	 * Fetch the VPD page header to find out how big the page
+ 	 * is. This is done to prevent problems on legacy devices
+ 	 * which can not handle allocation lengths as large as
+ 	 * potentially requested by the caller.
+ 	 */
+-	result = scsi_vpd_inquiry(sdev, vpd_header, page, sizeof(vpd_header));
++	result = scsi_vpd_inquiry(sdev, vpd, page, SCSI_VPD_HEADER_SIZE);
+ 	if (result < 0)
+ 		return 0;
+ 
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -100,10 +100,6 @@ struct scsi_vpd {
+ 	unsigned char	data[];
+ };
+ 
+-enum scsi_vpd_parameters {
+-	SCSI_VPD_HEADER_SIZE = 4,
+-};
+-
+ struct scsi_device {
+ 	struct Scsi_Host *host;
+ 	struct request_queue *request_queue;
 
 
