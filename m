@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893B413B2B8;
-	Tue, 27 Feb 2024 13:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F7F13AA55;
+	Tue, 27 Feb 2024 13:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041328; cv=none; b=GZBUt2Ae4NsT8VBt7/iECABMkT1tPRTqcgy1chFaxfsCm9ikhf38xkDiV8wTxTE0V5lDFAIONoNIje/uVQyIdyzyD+sBJDbnWwhj8qGWVhZIu9sELh0aFYMhtm6tjSbH0sLrE0u6EWhBPPXclNIxqD8vZzMjJT0XB5AHelZzZP8=
+	t=1709041330; cv=none; b=YSJdsfGxoSEE6X351BeENrOjvu3qReQ0ZsVIdVxeNrtQ+3M99oACI1PZTNnbOs9mp53I3L4cZrYBGRvbaZ/mqPCeZh8xcfQ4fu3EhQR6Uyi3egLjkYxBr/ejByQtuUGDEzqUt5cIIWNSadyOBMxGOOtQ0niR4lWkIapbJi9ziL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041328; c=relaxed/simple;
-	bh=5vOf7dW1vOvYJ2rsnkvPq8jrXtUgLVTyu/XP/8MKFoM=;
+	s=arc-20240116; t=1709041330; c=relaxed/simple;
+	bh=9UwR1hrATnc+XP4vkwJmEXWu8r+1ay0r8zivhAOYfPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXEiODw6qKs1pETYcnxT5nunz/FH1UHJA0F9a0I4Rvx7dPkFuCM6ecXZDZZC31EdEXDGWx8LqQNBGY79ZCwythJ2Y34q1b7qg+Cy9WaYPPj5pgM77gtD5hWVGfshibrBPnOORcaUv0G/wWRjLy6a8COkSKtXRDTJi26d2KCy0UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9CWoJxj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kysmbA1RdJ76PBt3DqN4rh2G9HgCWWaM8SL5PAYj5nV8PvWKVZcF9SsPir2Lx6cCL2uuM3z5BV6+eyBB9ksn6FrpD1pHSwoVQnJrkXVTvC4Y0XvKAuP84zXFU8sY4av7fN/7AQcwizPSBaH1NMRIPUhn6fXj85EGd4j/bQcq5F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm17icxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9CWoJxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF958C433F1;
-	Tue, 27 Feb 2024 13:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm17icxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAE3C433F1;
+	Tue, 27 Feb 2024 13:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041328;
-	bh=5vOf7dW1vOvYJ2rsnkvPq8jrXtUgLVTyu/XP/8MKFoM=;
+	s=korg; t=1709041330;
+	bh=9UwR1hrATnc+XP4vkwJmEXWu8r+1ay0r8zivhAOYfPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e9CWoJxjUjQJYz8WDgnD7HWHYkoLn+Nc8Da5CIBN4AdYrTL7wpaasT46FHtPNZG/Z
-	 /9Z49DEVV8WiuwQdwEhD4mzAcRk/vdhlyTgl1yocpSKKz7ATeaQ8qdfDpePXyaTSyr
-	 WjHTywBXjWJsR67IAKeyKchGQe87OYAjffx0q0zg=
+	b=zm17icxEkUfmMQsD0epEOsA42gghAbjND8D6XYXpDWl+teYcYmCTgP16eN4DJO5QF
+	 GD2CtAtNkO4Pi4RYdsAR8kwsPheWAahsqQr5pvRij5u26GEzk7h9eSzbTw3b39Ed0G
+	 DJ5b7LKnkPy8ulZ6im0hmfLve2H9MmYKMCbJz4lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Pavel Machek <pavel@denx.de>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 300/334] bpf, sockmap: Fix NULL pointer dereference in sk_psock_verdict_data_ready()
-Date: Tue, 27 Feb 2024 14:22:38 +0100
-Message-ID: <20240227131640.720755218@linuxfoundation.org>
+Subject: [PATCH 6.7 301/334] cache: ax45mp_cache: Align end size to cache boundary in ax45mp_dma_cache_wback()
+Date: Tue, 27 Feb 2024 14:22:39 +0100
+Message-ID: <20240227131640.751326122@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 4cd12c6065dfcdeba10f49949bffcf383b3952d8 ]
+[ Upstream commit 9bd405c48b0ac4de087c0c4440fd79597201b8a7 ]
 
-syzbot reported the following NULL pointer dereference issue [1]:
+Align the end size to cache boundary size in ax45mp_dma_cache_wback()
+callback likewise done in ax45mp_dma_cache_inv() callback.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  [...]
-  RIP: 0010:0x0
-  [...]
-  Call Trace:
-   <TASK>
-   sk_psock_verdict_data_ready+0x232/0x340 net/core/skmsg.c:1230
-   unix_stream_sendmsg+0x9b4/0x1230 net/unix/af_unix.c:2293
-   sock_sendmsg_nosec net/socket.c:730 [inline]
-   __sock_sendmsg+0x221/0x270 net/socket.c:745
-   ____sys_sendmsg+0x525/0x7d0 net/socket.c:2584
-   ___sys_sendmsg net/socket.c:2638 [inline]
-   __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2667
-   do_syscall_64+0xf9/0x240
-   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+Additionally return early in case of start == end.
 
-If sk_psock_verdict_data_ready() and sk_psock_stop_verdict() are called
-concurrently, psock->saved_data_ready can be NULL, causing the above issue.
-
-This patch fixes this issue by calling the appropriate data ready function
-using the sk_psock_data_ready() helper and protecting it from concurrency
-with sk->sk_callback_lock.
-
-Fixes: 6df7f764cd3c ("bpf, sockmap: Wake up polling after data copy")
-Reported-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=fd7b34375c1c8ce29c93 [1]
-Link: https://lore.kernel.org/bpf/20240218150933.6004-1-syoshida@redhat.com
+Fixes: d34599bcd2e4 ("cache: Add L2 cache management for Andes AX45MP RISC-V core")
+Reported-by: Pavel Machek <pavel@denx.de>
+Link: https://lore.kernel.org/cip-dev/ZYsdKDiw7G+kxQ3m@duo.ucw.cz/
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cache/ax45mp_cache.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 93ecfceac1bc4..4d75ef9d24bfa 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1226,8 +1226,11 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
+diff --git a/drivers/cache/ax45mp_cache.c b/drivers/cache/ax45mp_cache.c
+index 57186c58dc849..1d7dd3d2c101c 100644
+--- a/drivers/cache/ax45mp_cache.c
++++ b/drivers/cache/ax45mp_cache.c
+@@ -129,8 +129,12 @@ static void ax45mp_dma_cache_wback(phys_addr_t paddr, size_t size)
+ 	unsigned long line_size;
+ 	unsigned long flags;
  
- 		rcu_read_lock();
- 		psock = sk_psock(sk);
--		if (psock)
--			psock->saved_data_ready(sk);
-+		if (psock) {
-+			read_lock_bh(&sk->sk_callback_lock);
-+			sk_psock_data_ready(sk, psock);
-+			read_unlock_bh(&sk->sk_callback_lock);
-+		}
- 		rcu_read_unlock();
- 	}
- }
++	if (unlikely(start == end))
++		return;
++
+ 	line_size = ax45mp_priv.ax45mp_cache_line_size;
+ 	start = start & (~(line_size - 1));
++	end = ((end + line_size - 1) & (~(line_size - 1)));
+ 	local_irq_save(flags);
+ 	ax45mp_cpu_dcache_wb_range(start, end);
+ 	local_irq_restore(flags);
 -- 
 2.43.0
 
