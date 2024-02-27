@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB3C13B2B8;
-	Tue, 27 Feb 2024 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D7678B61;
+	Tue, 27 Feb 2024 13:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041256; cv=none; b=FSoxTfQpKXkiUr/8mOKnzfrkXhTjS5iqev+G2XNsb/AacxbK4ZE0W1QuW6LorfPFpu+Ykwl6Z4XjX+PUW4tikQ8V9z1Bbm/UbQKo8Ng+XNa5rXtcxQ9iYa6nCXSesUbrt6GiQDjsdfE/Jph7A+m//CsiMiLBJydX7/BpGgb+t5g=
+	t=1709041258; cv=none; b=DvRsHgUtSR4dCn0rx3w7JMegsdI6M6Z5q1z0Z8H8GUHxbK2cWWaevWaDJpDqKljSVXme1fktCfzuzZWSlF+p79D1Z0BoQ8JU58Y3qSvVn4OvGrF8iKf0w8FpW11jA7GmVSajbu7NnyT+qD9+7sxt8pYi6ixJ8mnAOOB4t48PdVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041256; c=relaxed/simple;
-	bh=lm0+2W/2ecFckhTsGc+OCB+g8BjMF0BwUsg98aOMBuk=;
+	s=arc-20240116; t=1709041258; c=relaxed/simple;
+	bh=ifMaEGFbFIfB0Gdg7aSdF/Pxap9tRiyjCpRk/VGTpXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjUJmdmaRqTLuMwCTpi/inyWZ6M7qHj5B8cJlK9Va0ErxZMwbDyGDCoOulxnvkOCYtqwoKFoYhbZyWU/FOhr2Ezh3M0eyviu8sOlnzm8XSARNtXeMSlA/GfWPO8EnOrPoBwnuJcvHkcw2ms8G5hKlxpzi7MV+YvXq/cHwtVARXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaPe9YQc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQRj/4sLwph954Guoiw5/43gvUPvCnjr9uCTI66hKkBmzS+d8Mz5vFltCwoXQbAZ49E3gyy5oZR71NnppdL+lOiUzmv+GL3lVEGYelaF4+M3wNGt5/H1ZabQ90EYhvGtVo5TrmsEyVOcXR9KCp1NQu/LbNP2riAakhDp/6RxgFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwPhCrMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaPe9YQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E90BC433F1;
-	Tue, 27 Feb 2024 13:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwPhCrMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3053DC433F1;
+	Tue, 27 Feb 2024 13:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041255;
-	bh=lm0+2W/2ecFckhTsGc+OCB+g8BjMF0BwUsg98aOMBuk=;
+	s=korg; t=1709041258;
+	bh=ifMaEGFbFIfB0Gdg7aSdF/Pxap9tRiyjCpRk/VGTpXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaPe9YQcr1QQ4zG2hK+1okXw6zVAUiVYuVE50WOPpZszHoS7dsZXkQj3mxumW9uOn
-	 3vrHa3jEPyvjyr+HF7giNHF2nQmUVaGz8Vje6HjF8jAG6uyrBQdnWfgtAk4tiuIN4X
-	 60dZAJ5jbFZIe+LBl85Z53TX0heT5rKw7+AweyGk=
+	b=PwPhCrMxbWc/LFZUenWqrwLW8mVwSmvpbNw8pUvZL2q1nCwt7ATRp3mcuCc1gPXUQ
+	 AJqaM3RpAxCzzO4V1H0FACBqddan5zH83/jHFxXZQJWzejVuKCSg5+taG2c3I2EoAs
+	 rOiBJux7vkV2yYJiq4watRUx0UmESIIpCvc6+fQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avihai Horon <avihaih@nvidia.com>,
 	Joao Martins <joao.m.martins@oracle.com>,
+	Avihai Horon <avihaih@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 246/334] iommufd/iova_bitmap: Handle recording beyond the mapped pages
-Date: Tue, 27 Feb 2024 14:21:44 +0100
-Message-ID: <20240227131638.838119284@linuxfoundation.org>
+Subject: [PATCH 6.7 247/334] iommufd/iova_bitmap: Consider page offset for the pages to be pinned
+Date: Tue, 27 Feb 2024 14:21:45 +0100
+Message-ID: <20240227131638.868489511@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -54,111 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit 2780025e01e2e1c92f83ee7da91d9727c2e58a3e ]
+[ Upstream commit 4bbcbc6ea2fa379632a24c14cfb47aa603816ac6 ]
 
-IOVA bitmap is a zero-copy scheme of recording dirty bits that iterate the
-different bitmap user pages at chunks of a maximum of
-PAGE_SIZE/sizeof(struct page*) pages.
+For small bitmaps that aren't PAGE_SIZE aligned *and* that are less than
+512 pages in bitmap length, use an extra page to be able to cover the
+entire range e.g. [1M..3G] which would be iterated more efficiently in a
+single iteration, rather than two.
 
-When the iterations are split up into 64G, the end of the range may be
-broken up in a way that's aligned with a non base page PTE size. This
-leads to only part of the huge page being recorded in the bitmap. Note
-that in pratice this is only a problem for IOMMU dirty tracking i.e. when
-the backing PTEs are in IOMMU hugepages and the bitmap is in base page
-granularity. So far this not something that affects VF dirty trackers
-(which reports and records at the same granularity).
-
-To fix that, if there is a remainder of bits left to set in which the
-current IOVA bitmap doesn't cover, make a copy of the bitmap structure and
-iterate-and-set the rest of the bits remaining. Finally, when advancing
-the iterator, skip all the bits that were set ahead.
-
-Link: https://lore.kernel.org/r/20240202133415.23819-5-joao.m.martins@oracle.com
-Reported-by: Avihai Horon <avihaih@nvidia.com>
-Fixes: f35f22cc760e ("iommu/vt-d: Access/Dirty bit support for SS domains")
-Fixes: 421a511a293f ("iommu/amd: Access/Dirty bit support in IOPTEs")
+Fixes: b058ea3ab5af ("vfio/iova_bitmap: refactor iova_bitmap_set() to better handle page boundaries")
+Link: https://lore.kernel.org/r/20240202133415.23819-10-joao.m.martins@oracle.com
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 Tested-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/iova_bitmap.c | 43 +++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/iommu/iommufd/iova_bitmap.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/iommu/iommufd/iova_bitmap.c b/drivers/iommu/iommufd/iova_bitmap.c
-index 9d42ab51a6bb3..b370e8ee88665 100644
+index b370e8ee88665..db8c46bee1559 100644
 --- a/drivers/iommu/iommufd/iova_bitmap.c
 +++ b/drivers/iommu/iommufd/iova_bitmap.c
-@@ -113,6 +113,9 @@ struct iova_bitmap {
+@@ -178,18 +178,19 @@ static int iova_bitmap_get(struct iova_bitmap *bitmap)
+ 			       bitmap->mapped_base_index) *
+ 			       sizeof(*bitmap->bitmap), PAGE_SIZE);
  
- 	/* length of the IOVA range for the whole bitmap */
- 	size_t length;
-+
-+	/* length of the IOVA range set ahead the pinned pages */
-+	unsigned long set_ahead_length;
- };
+-	/*
+-	 * We always cap at max number of 'struct page' a base page can fit.
+-	 * This is, for example, on x86 means 2M of bitmap data max.
+-	 */
+-	npages = min(npages,  PAGE_SIZE / sizeof(struct page *));
+-
+ 	/*
+ 	 * Bitmap address to be pinned is calculated via pointer arithmetic
+ 	 * with bitmap u64 word index.
+ 	 */
+ 	addr = bitmap->bitmap + bitmap->mapped_base_index;
  
- /*
-@@ -341,6 +344,32 @@ static bool iova_bitmap_done(struct iova_bitmap *bitmap)
- 	return bitmap->mapped_base_index >= bitmap->mapped_total_index;
- }
- 
-+static int iova_bitmap_set_ahead(struct iova_bitmap *bitmap,
-+				 size_t set_ahead_length)
-+{
-+	int ret = 0;
++	/*
++	 * We always cap at max number of 'struct page' a base page can fit.
++	 * This is, for example, on x86 means 2M of bitmap data max.
++	 */
++	npages = min(npages + !!offset_in_page(addr),
++		     PAGE_SIZE / sizeof(struct page *));
 +
-+	while (set_ahead_length > 0 && !iova_bitmap_done(bitmap)) {
-+		unsigned long length = iova_bitmap_mapped_length(bitmap);
-+		unsigned long iova = iova_bitmap_mapped_iova(bitmap);
-+
-+		ret = iova_bitmap_get(bitmap);
-+		if (ret)
-+			break;
-+
-+		length = min(length, set_ahead_length);
-+		iova_bitmap_set(bitmap, iova, length);
-+
-+		set_ahead_length -= length;
-+		bitmap->mapped_base_index +=
-+			iova_bitmap_offset_to_index(bitmap, length - 1) + 1;
-+		iova_bitmap_put(bitmap);
-+	}
-+
-+	bitmap->set_ahead_length = 0;
-+	return ret;
-+}
-+
- /*
-  * Advances to the next range, releases the current pinned
-  * pages and pins the next set of bitmap pages.
-@@ -357,6 +386,15 @@ static int iova_bitmap_advance(struct iova_bitmap *bitmap)
- 	if (iova_bitmap_done(bitmap))
- 		return 0;
- 
-+	/* Iterate, set and skip any bits requested for next iteration */
-+	if (bitmap->set_ahead_length) {
-+		int ret;
-+
-+		ret = iova_bitmap_set_ahead(bitmap, bitmap->set_ahead_length);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* When advancing the index we pin the next set of bitmap pages */
- 	return iova_bitmap_get(bitmap);
- }
-@@ -426,5 +464,10 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
- 		kunmap_local(kaddr);
- 		cur_bit += nbits;
- 	} while (cur_bit <= last_bit);
-+
-+	if (unlikely(cur_bit <= last_bit)) {
-+		bitmap->set_ahead_length =
-+			((last_bit - cur_bit + 1) << bitmap->mapped.pgshift);
-+	}
- }
- EXPORT_SYMBOL_NS_GPL(iova_bitmap_set, IOMMUFD);
+ 	ret = pin_user_pages_fast((unsigned long)addr, npages,
+ 				  FOLL_WRITE, mapped->pages);
+ 	if (ret <= 0)
 -- 
 2.43.0
 
