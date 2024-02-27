@@ -1,66 +1,42 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9263E14A095
-	for <patches@lists.linux.dev>; Tue, 27 Feb 2024 16:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424651487C7;
+	Tue, 27 Feb 2024 16:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709051170; cv=none; b=lAVRB3mB/sKtfEm5qtMteGHwRo9JTvENwidL1z+ZzEnOENJjmbyWopW1eYR/LPdNivI2w1KdClDoOCL0GGeKUU5nVUskrf+M1Jy0vV73N8RUAGpX7yOGUFkhxS6ufcm7jfmh9ptrYQepBAZbcvzs1nMZ7ehAqrtdQYRFofWWOiY=
+	t=1709051222; cv=none; b=mnTMbB3wf5YGZrxvk0z8m+MZ+K2iP/DzJyf4mACe2c9fVGRB5O5AgXR97dfks2eev1pjj5AsHCYDS9c7y8qPAW7CgMQJdaSWvq8NUTBae+C/WLDzQzRj8kMiqOT4p+pSZUK5xpSLdXV49MZPwznnH64WUcEhOpDrWGiXcm77+/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709051170; c=relaxed/simple;
-	bh=6SkUnP9RGBvWR4IoA2E6NHjide+8sSSiyPtcwNOOa3A=;
+	s=arc-20240116; t=1709051222; c=relaxed/simple;
+	bh=8jFZAo+3Rlkk8YpfU62JRB7rR92Dw98Vakvf43eEjpQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dLkqVyIAkEzSagDrM03dPhLIum1GxZ9BQUyubuzL12d7jzF74DCEFxeZ1LXdS3bh+LW1MBl156ax4qqzxFxwAJIj6TZ4EahLEajsqTlI3k5rBBKZvhHF70GApIjSoUi4cA/fQkFTrTzcvJ2H086P7+Bh6/pT6nFNI2NuEY7wX3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=DRXujEac; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZLn91P5KaegznosU1HgXT/ohOvp9VKDIhd44SJ9QjWZs6yHIB0sgDx9h1VOkPccAN1FG4ITHlwyrip0hV00bsgOx6tKpVh37N0ElU7FI4nHtxOPGKWqK23O+YEdOh2NrQhdP3BSD05cBKdK8OZqqbgteHt66DnfoSTjut3XAfNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VlBgnWT7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DRXujEac"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-5d81b08d6f2so4407945a12.0
-        for <patches@lists.linux.dev>; Tue, 27 Feb 2024 08:26:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709051168; x=1709655968; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hBKFu0Ya5JmP4az7C2cHxRd0awbl84xqh3yGGRws2Po=;
-        b=DRXujEacrVZAX7qLVMO+9qE1/GPz1EjhYXrrVhLXuYJyc0IUWXan18MEZAxbn//eUG
-         XcBT57aQSfpkLRWTBh/7YIGSBdHq6vjTKPW60f6hvX6Ifw6dMimVwqBvzW5noPjSi7t4
-         RXrA8ZiJ6yEnbCLfGFkhMH4WHb9+0UyThj+f8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709051168; x=1709655968;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBKFu0Ya5JmP4az7C2cHxRd0awbl84xqh3yGGRws2Po=;
-        b=P7wTUSe7EZxncTY76sjJU/qK+BgxpAuzbxr/eukYBqKagiyB6mPKqbdI113vsiwWEN
-         Dlj5sOmKyQCyczZ9+DsEWIW2yXGnXnAGeW48jS+T4sZQoxiMVi+LL7Ze0BhlUaRvv+Xm
-         VQD84SR8gWBdHZ9yw9Ly3OGi0xfDmcVg1ziGtdWf95jd37vSqcXD8zmrkXhMoYRbpPKC
-         7quLxqPQx+C4p7ypmgVScg1PTdPn2Jhynr8wSlg6sFB2zh2Ro5FToQ2mj8JkXOaw3Fdt
-         r2f0px6O9pP5bASrYrpNb5l59o2nly1JhYDjEa8J52wtZIm0MbtDsuOpXnbcJUOfpy/w
-         YasA==
-X-Forwarded-Encrypted: i=1; AJvYcCVjzgjS6GFNqaNVsv+qQxezMSX8friyyajsQxwi1sMt15gYM6Ug65kkX/O9MbVx4GI7gon2kyWS3xioALF0N00El1uYiaMvGg==
-X-Gm-Message-State: AOJu0YyuL1FMTGi+2C20AMcEmXaoXb1VstLm7lnlEoQpplnNRSBRXlcq
-	oyU3vPU6Menev2Fz9Z2c5oRCdXRWHaXN13h5NoltXa2nuSGjG6AIICUCydZMuA==
-X-Google-Smtp-Source: AGHT+IF5A7otWY6j9n+RuyI5RPoqh6fnGIgjMJzPafRPfezs1JD//wxGP07nyFU8qtveZBY9jAwrNQ==
-X-Received: by 2002:a17:90b:804:b0:29a:6436:ed59 with SMTP id bk4-20020a17090b080400b0029a6436ed59mr8967426pjb.2.1709051167889;
-        Tue, 27 Feb 2024 08:26:07 -0800 (PST)
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id su6-20020a17090b534600b0029a7951c4a3sm8622065pjb.41.2024.02.27.08.26.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 08:26:07 -0800 (PST)
-Date: Tue, 27 Feb 2024 08:26:06 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>, rui.zhang@intel.com,
-	lukasz.luba@arm.com, gustavoars@kernel.org, morbo@google.com,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlBgnWT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B4AC43390;
+	Tue, 27 Feb 2024 16:27:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709051221;
+	bh=8jFZAo+3Rlkk8YpfU62JRB7rR92Dw98Vakvf43eEjpQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VlBgnWT7rsdBa5BM/FJZpKlHcUnBmWUo8v2UFXJi+QII9XK2wfAucQGOFk2dwt3Vw
+	 ekdluhlkh1VRWuNBkd6QLak3InKZhPX4gd4WQV+8q86+Dt0b39ion8OFRfMXd+7rOS
+	 fi+wQRfo4Cd8mbHs9o79L+z+OvRIFpBaZG6YIuWydzUl4vHKuzanK4nP6HDc+g0baO
+	 /bYfL7LJxrqwnuBGeY0/SrQPcuuA4YIiTrDq8SyLSOzzfKld8KGcCpr4QoNDRF3YJu
+	 DSaAydna3XbLQKZWjaeacWazGaTNRmHm3NHsV6Xv1tBWWn0lY2vcBxJxKr2tDGoPq/
+	 gofkM6v5kYCTQ==
+Date: Tue, 27 Feb 2024 09:26:59 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Daniel Lezcano <daniel.lezcano@linaro.org>, lukasz.luba@arm.com
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, rui.zhang@intel.com,
+	keescook@chromium.org, gustavoars@kernel.org, morbo@google.com,
 	justinstitt@google.com, stanislaw.gruszka@linux.intel.com,
 	linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org,
 	llvm@lists.linux.dev, patches@lists.linux.dev
 Subject: Re: [PATCH] thermal: core: Move initial num_trips assignment before
  memcpy()
-Message-ID: <202402270816.0EA3349A76@keescook>
+Message-ID: <20240227162659.GB819789@dev-arch.thelio-3990X>
 References: <20240226-thermal-fix-fortify-panic-num_trips-v1-1-accc12a341d7@kernel.org>
  <6a6be01d-3453-4268-8b2e-0279cc20835d@linaro.org>
  <CAJZ5v0h87k6xoi-9V0Cfb2rHQcr-STfG_bNWpzfoj4Dy46U0Lw@mail.gmail.com>
@@ -75,6 +51,8 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <f81af0ae-7458-47d3-90ae-71d5217ee7dd@linaro.org>
+
+Hi Daniel and Lukasz,
 
 On Tue, Feb 27, 2024 at 04:37:36PM +0100, Daniel Lezcano wrote:
 > On 27/02/2024 12:09, Rafael J. Wysocki wrote:
@@ -143,11 +121,12 @@ On Tue, Feb 27, 2024 at 04:37:36PM +0100, Daniel Lezcano wrote:
 > 
 > 	sizeof(*trips) == 24 bytes * num_trips
 
-I think you're misunderstanding. The above sizeof() only evaluates a
-single instance -- it has no idea how many more there may be.
-Specifically:
-
-	sizeof(*trips) == sizeof(struct thermal_trip)
+No, this is incorrect. sizeof(*trips) == sizeof(struct thermal_trip),
+which is never affected by __counted_by. As far as I am aware,
+sizeof() in general is never affected by __counted_by because calling
+sizeof() on a flexible array member (which are the only things currently
+allowed to have __counted_by) is invalid because a FAM is by definition
+an unknown size at compile time.
 
 > 	then:
 > 
@@ -156,31 +135,41 @@ Specifically:
 > 	memcpy(tz->trips, trips, num_trips * 24 * num_trips);
 > 
 > 	==> memory size = 24 * num_trips^2
+> 
+>  (2) if the compiler does not support it:
+> 
+> 	sizeof(*trips) == 24 bytes
+> 
+> 	then:
+> 
+> 	memcpy(tz->trips, trips, num_trips * sizeof(*trips));
+> 
+> 	memcpy(tz->trips, trips, num_trips * 24);
+> 
+> 	==> memory size = 24 * num_trips
+> 
+> Or did I misunderstand __counted_by ?
 
-It's not counted twice. Under CONFIG_FORTIFY_SOURCE=y, memcpy is a macro
-that expands to a checking routine (see include/linux/fortify-string.h),
-which is using __builtin_dynamic_object_size() to determine the
-available size of the destination buffer (tz->trips). Specifically:
+I see there has been some confusion around this change from both
+yourself and Lukasz, so I will try to make things as clear and concise
+as I can.
 
-	__builtin_dynamic_object_size(tz->trips)
+The fortify routines in the kernel rely on __builtin_dynamic_object_size
+to get the size of flexible array members (see the macro soup around
+memcpy() in include/linux/fortify-string.h). Before __counted_by,
+__builtin_dynamic_object_size() on a FAM would return -1. With
+__counted_by, __builtin_dynamic_object_size() will be able to return the
+correct size of the FAM by looking at the counted by member.
 
-When __bdos evaluates a flexible array (i.e. tz->trips), it will see the
-associated 'counted_by' attribute, and go look up the value of the
-designated struct member (tz->num_trips). It then calculates:
+In this case, memcpy() was called with tz->num_trips (the counted by
+member) == 0 (meaning that __bdos() will return 0) while trying to copy
+'sizeof(*trips) * num_trips' bytes into it, triggering the fortify panic
+routine. Moving the tz->num_trips assignment before the memcpy() call
+ensures that __bdos() returns the correct amount for checking in the
+fortify routines.
 
-	sizeof(*tz->trips) /* a single instance */
-		*
-	tz->num_trips
+Hope that helps clear things up, I will make sure to write a clearer
+commit message next time.
 
-Before the patch, tz->num_trips is 0, so the destination buffer size
-appears to be of size 0 bytes. After the patch, it contains the
-same value as the "num_trips" function argument, so the destination
-buffer appears to be the matching size of "num_trips * sizeof(struct
-thermal_trip)".
-
-Hopefully that helps! If not, I can try again. :)
-
--Kees
-
--- 
-Kees Cook
+Cheers,
+Nathan
