@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2820513B78F;
-	Tue, 27 Feb 2024 13:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4E813EFED;
+	Tue, 27 Feb 2024 13:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041008; cv=none; b=DMLrlZzk7H4cwmwib3TYXzNiyLWeO+Be+kFQOgTaA92HTwmmkXCJaFCye20r+watCoAlO2Owz8K7pGWhWAEfNMy1tUgTZZ0nOWLK19ged+H51v6ZPumMMWfoSoo81Kiyj7Indx9+nC2OPQaDvS1fgf3gmKqYzi58adY157EfYNs=
+	t=1709041011; cv=none; b=VtvkGeA4J/HwLA5hGoTa6gr7Xyxh6YZmJglTrSiVARWvd1IU0n/YE8eV3eXA3U0CPymS/5dp1tpOMO9xByPzfnZgH2vioBT7kGZqtmydvD8j7De8wsxIIWcpLfbAMegMoU+I6YMMDGzQByPiuYv0S4tE1G93EalKAcN5olj0o/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041008; c=relaxed/simple;
-	bh=RxcInxed/5NTzzpVkrYXgQAo47oZXBqOOH8K8AhXp+U=;
+	s=arc-20240116; t=1709041011; c=relaxed/simple;
+	bh=l3NrOUo8gKws86L4qcXUyM4GHXbNi1LFe//kssKfj70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HB9iOBlit2iTm5yJVgLFfGIfaBno5yBC6tbXHbaUfujYMKz53TZqBzc2Fh1wSDvP2w3Wo0nm6Er81VxfpVLRJ5emna1AiacgaqGYeHApTEMS8lRYDFG68vmKYG/3nJnA9UtpAk97zgHtjIOahYVI79hpPSxftcRc+rcyzvoiwO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPgXnS6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pu0kOQG3ze+tdNLepispcLcL6Z1L9BKIrxHEoEYf7itrkYoAxGadv267SyvO554VScsqRadIzoEqYkAwDAE9VRy15gC7e8/33feg0NdanwZDy2eqYxCV9pXpgV9sCdsIXkzIr5bJkaG48HvzB8wnv6/U68T/wiiNJylCrz5iHjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVGHUs1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPgXnS6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02A3C433C7;
-	Tue, 27 Feb 2024 13:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVGHUs1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A9BC433F1;
+	Tue, 27 Feb 2024 13:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041008;
-	bh=RxcInxed/5NTzzpVkrYXgQAo47oZXBqOOH8K8AhXp+U=;
+	s=korg; t=1709041010;
+	bh=l3NrOUo8gKws86L4qcXUyM4GHXbNi1LFe//kssKfj70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPgXnS6QwEOmCPmBal05FdEi38/aeMcH7iU7BZcstiO88NFBXnA+UBGhKHuMLIN1q
-	 Ic/vNyh4S1fDdNWgsV/wWFs0OyTxmuhNpgUbkW4xC8HqWYruQYcVYcJR+FazQX0iFf
-	 vml8ML/aSshGdHmauwQhIdW7xn5UEp3d0NIHq8HI=
+	b=kVGHUs1lXVKMs2rO1xNffDXFBx0nSMpVDl42NAvMuc8aHq9tcGGnPzJ17os0pL3Es
+	 qgIxhFG2lf8RXn3W46BUeHI5mOSJh5xKdcNVsG5HaGsRvNgtjQJxmlAtNiUYRtEGR5
+	 qiqd+iICvkxPS6TiWXeR+4jjjWssWPPZbYOskZVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.7 179/334] platform/x86: touchscreen_dmi: Allow partial (prefix) matches for ACPI names
-Date: Tue, 27 Feb 2024 14:20:37 +0100
-Message-ID: <20240227131636.365738434@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.7 188/334] KVM: arm64: vgic-its: Test for valid IRQ in MOVALL handler
+Date: Tue, 27 Feb 2024 14:20:46 +0100
+Message-ID: <20240227131636.750697106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,58 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit dbcbfd662a725641d118fb3ae5ffb7be4e3d0fb0 upstream.
+commit 85a71ee9a0700f6c18862ef3b0011ed9dad99aca upstream.
 
-On some devices the ACPI name of the touchscreen is e.g. either
-MSSL1680:00 or MSSL1680:01 depending on the BIOS version.
+It is possible that an LPI mapped in a different ITS gets unmapped while
+handling the MOVALL command. If that is the case, there is no state that
+can be migrated to the destination. Silently ignore it and continue
+migrating other LPIs.
 
-This happens for example on the "Chuwi Hi8 Air" tablet where the initial
-commit's ts_data uses "MSSL1680:00" but the tablets from the github issue
-and linux-hardware.org probe linked below both use "MSSL1680:01".
-
-Replace the strcmp() match on ts_data->acpi_name with a strstarts()
-check to allow using a partial match on just the ACPI HID of "MSSL1680"
-and change the ts_data->acpi_name for the "Chuwi Hi8 Air" accordingly
-to fix the touchscreen not working on models where it is "MSSL1680:01".
-
-Note this drops the length check for I2C_NAME_SIZE. This never was
-necessary since the ACPI names used are never more then 11 chars and
-I2C_NAME_SIZE is 20 so the replaced strncmp() would always stop long
-before reaching I2C_NAME_SIZE.
-
-Link: https://linux-hardware.org/?computer=AC4301C0542A
-Fixes: bbb97d728f77 ("platform/x86: touchscreen_dmi: Add info for the Chuwi Hi8 Air tablet")
-Closes: https://github.com/onitake/gsl-firmware/issues/91
 Cc: stable@vger.kernel.org
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240212120608.30469-1-hdegoede@redhat.com
+Fixes: ff9c114394aa ("KVM: arm/arm64: GICv4: Handle MOVALL applied to a vPE")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240221092732.4126848-3-oliver.upton@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -81,7 +81,7 @@ static const struct property_entry chuwi
- };
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -1432,6 +1432,8 @@ static int vgic_its_cmd_handle_movall(st
  
- static const struct ts_dmi_data chuwi_hi8_air_data = {
--	.acpi_name	= "MSSL1680:00",
-+	.acpi_name	= "MSSL1680",
- 	.properties	= chuwi_hi8_air_props,
- };
+ 	for (i = 0; i < irq_count; i++) {
+ 		irq = vgic_get_irq(kvm, NULL, intids[i]);
++		if (!irq)
++			continue;
  
-@@ -1821,7 +1821,7 @@ static void ts_dmi_add_props(struct i2c_
- 	int error;
+ 		update_affinity(irq, vcpu2);
  
- 	if (has_acpi_companion(dev) &&
--	    !strncmp(ts_data->acpi_name, client->name, I2C_NAME_SIZE)) {
-+	    strstarts(client->name, ts_data->acpi_name)) {
- 		error = device_create_managed_software_node(dev, ts_data->properties, NULL);
- 		if (error)
- 			dev_err(dev, "failed to add properties: %d\n", error);
 
 
