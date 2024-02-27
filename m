@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E289913B2B8;
-	Tue, 27 Feb 2024 14:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D413B2B4;
+	Tue, 27 Feb 2024 14:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043664; cv=none; b=eYo7Bsv2gLGWWTItsiuKA3PbhhCbHoSzqUPGX8qM2lBTuPn095pwi9h1znQo1XL2IZidUwiIjl6PXw0+lmjBRMjbXp+0XpK8u0Q4ZXCccJYT/zOu4sCOefEtExccFf8AXItu9hxqT8DpARiAMEzRoO7pXLB3eWPxfI8fzZVGHb8=
+	t=1709043666; cv=none; b=UIIsx+nUyg3lHxHA1OMa4eOULGEV+2Xs/AFH3X96xDT4aFvWQ9zxv/YrzbbafeVjFT2w6a9+nPFdUkfi01UR5Gp0dSt2S0spyWlbgPAl/zrIqDR9OtMALeYfCqIk5301TtKCGzVAQ3BtgQnFLd8Ka7fif63ZzVjsV9Pl8/OGhDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043664; c=relaxed/simple;
-	bh=Rl8zk2vz8mMeKSZyBPK4W2tOjw9TzWaEGzZ2F05eHUo=;
+	s=arc-20240116; t=1709043666; c=relaxed/simple;
+	bh=zWxBq+om0JkHUCR44v+dp6+c8DIlwvP4ZrWy8vOGS2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cr1t3TlKYSYpFN6KLCLMcj9EKOAB8vkylcqikspLczCgGqiuAhLRSj1o2o1tMKzLaoQ4H9ATSsoqBphsDuBTl2o5dSTBLs/AB/eE2u98KQjIB0FMe3tZGRa60OgVC/9gLydclCA7VeRtoSDV+ImjWB0cA3hjudf6+/F4UEKBDtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlnvX6Bu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/8H9GmFDOPzKXOl1WXJxdOXdye4fuHHK/+pfMdrlj/w8AF53eEKXw9ASQo+21ZiG/KMQM51lPyxWm7qr6BHazoDcId2tBcyzYVvK0BEiS/1eEJkL+lf89m5lvu6cbVDcljDELsj7GXz5beH3WVPgYKAeE7fgtylVKcJbw+qZzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCIla8Vf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlnvX6Bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2879FC433C7;
-	Tue, 27 Feb 2024 14:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCIla8Vf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC74C433F1;
+	Tue, 27 Feb 2024 14:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043663;
-	bh=Rl8zk2vz8mMeKSZyBPK4W2tOjw9TzWaEGzZ2F05eHUo=;
+	s=korg; t=1709043666;
+	bh=zWxBq+om0JkHUCR44v+dp6+c8DIlwvP4ZrWy8vOGS2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlnvX6Bu6A7L+lbH/UtbHDMBhQhPXjA9YkAmjHEhNa3qp3z56Rbvs4bsBMA9Q/Wlk
-	 D1vG4j6rbv0OnGf27E6nQrTv00Bs+E9Xft49zkqrjeVUxSoxiHZnFtfZLoR/Gnha84
-	 GmiuVXHv5uKjpptIPXTswC5QEpStqPzYSngBiad0=
+	b=lCIla8Vf2Jxzq4S/XghNEVVY7vyVLnv9rfme6iQc8puGw6usUdDuZC8SxmG0rQYZo
+	 ZIZ99Uvbc1sVMYG8vS8o6oGq4mxd91hj5ln5p+w8tu+ivM9rK5SWHqwxLeNTdqpLeK
+	 FIRFQlsSVp0rOn3QgylOLGdWjD42FiYNvMrMVYWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 189/195] mm: zswap: fix missing folio cleanup in writeback race path
-Date: Tue, 27 Feb 2024 14:27:30 +0100
-Message-ID: <20240227131616.645069638@linuxfoundation.org>
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 163/195] octeontx2-af: Consider the action set by PF
+Date: Tue, 27 Feb 2024 14:27:04 +0100
+Message-ID: <20240227131615.793411317@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -54,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosryahmed@google.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-commit e3b63e966cac0bf78aaa1efede1827a252815a1d upstream.
+[ Upstream commit 3b1ae9b71c2a97f848b00fb085a2bd29bddbe8d9 ]
 
-In zswap_writeback_entry(), after we get a folio from
-__read_swap_cache_async(), we grab the tree lock again to check that the
-swap entry was not invalidated and recycled.  If it was, we delete the
-folio we just added to the swap cache and exit.
+AF reserves MCAM entries for each PF, VF present in the
+system and populates the entry with DMAC and action with
+default RSS so that basic packet I/O works. Since PF/VF is
+not aware of the RSS action installed by AF, AF only fixup
+the actions of the rules installed by PF/VF with corresponding
+default RSS action. This worked well for rules installed by
+PF/VF for features like RX VLAN offload and DMAC filters but
+rules involving action like drop/forward to queue are also
+getting modified by AF. Hence fix it by setting the default
+RSS action only if requested by PF/VF.
 
-However, __read_swap_cache_async() returns the folio locked when it is
-newly allocated, which is always true for this path, and the folio is
-ref'd.  Make sure to unlock and put the folio before returning.
-
-This was discovered by code inspection, probably because this path handles
-a race condition that should not happen often, and the bug would not crash
-the system, it will only strand the folio indefinitely.
-
-Link: https://lkml.kernel.org/r/20240125085127.1327013-1-yosryahmed@google.com
-Fixes: 04fc7816089c ("mm: fix zswap writeback race condition")
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-Reviewed-by: Chengming Zhou <zhouchengming@bytedance.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 967db3529eca ("octeontx2-af: add support for multicast/promisc packet replication feature")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/zswap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1013,6 +1013,8 @@ static int zswap_writeback_entry(struct
- 		if (zswap_rb_search(&tree->rbroot, entry->offset) != entry) {
- 			spin_unlock(&tree->lock);
- 			delete_from_swap_cache(page_folio(page));
-+			unlock_page(page);
-+			put_page(page);
- 			ret = -ENOMEM;
- 			goto fail;
- 		}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 3784347b6fd88..55639c133dd02 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -437,6 +437,10 @@ static void npc_fixup_vf_rule(struct rvu *rvu, struct npc_mcam *mcam,
+ 			return;
+ 	}
+ 
++	/* AF modifies given action iff PF/VF has requested for it */
++	if ((entry->action & 0xFULL) != NIX_RX_ACTION_DEFAULT)
++		return;
++
+ 	/* copy VF default entry action to the VF mcam entry */
+ 	rx_action = npc_get_default_entry_action(rvu, mcam, blkaddr,
+ 						 target_func);
+-- 
+2.43.0
+
 
 
