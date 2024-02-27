@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D22178B61;
-	Tue, 27 Feb 2024 14:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832113A26F;
+	Tue, 27 Feb 2024 14:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043434; cv=none; b=hB/bQGuC85pifzT26MHZiS+Ruvg69gZF1iZ2xU0RFi0vDZitzPQxuep93qwvg3QKFQwnHzfs1UcuoA2Pd0XQZ6qs8t2ylgvBWS6af5rfYr5suzOk47W1EeUNPDY9exi5x5QWdMBr4bXUAXatuQSNKGwwQ2cKkHz+seDco6IfwiY=
+	t=1709043437; cv=none; b=Dj5C2QTvkjE5q29k4yCGBMpdgGzlVyAGXKKQCSIyGSbVjo5ghKO+/9LowFxeRnzyza29/5dS0tDMeyPXczJHqn6hNxqpWp7yP1pURT6smDo8e9LcJZZbSzRTrkjQLOETjtmYfszSATzODQi9nKuWJ90zuJufCyC7FRIKrD8KmBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043434; c=relaxed/simple;
-	bh=GFA+adsAkFEBpHy06e4QtkXU29KFuRpAYHGiy7vj1Kk=;
+	s=arc-20240116; t=1709043437; c=relaxed/simple;
+	bh=VsrTB/tql4nkYzusXn+iCSmffjbdlr9OqJIvhRB0OsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESelx21sKLjCK3w8FUC82sC74fSmGV0dBlJf42/GLBKS+1FEvcVRGQCB98bi+tA8fagdB/64iU+E1L5DtkfJmrHcMEbCiQXpoceW3ZcirdKboXFxBLrCsWED7ctguHgp7jybPAVlW0Uofha2gCm3Zm3JOYOd/zROukmYrsWoInA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkukOLLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JvSl4FYPuHs8VIZG2LEn1sKT3iMkGHhhMIPaeGKHsFSNLu/m1g9heRrpBpsnhit/DMsw2to+nCjQ32kzvUbsdyrx16R8CMwPZHIkzrlMDWryB2V6iVTIGajWd22mis59wdMLotJoZnNncoEcZsj3zVOl+U6SDad0u0cqPCBx0+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgn5jNrR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkukOLLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16D2C433F1;
-	Tue, 27 Feb 2024 14:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgn5jNrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA86EC433C7;
+	Tue, 27 Feb 2024 14:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043434;
-	bh=GFA+adsAkFEBpHy06e4QtkXU29KFuRpAYHGiy7vj1Kk=;
+	s=korg; t=1709043437;
+	bh=VsrTB/tql4nkYzusXn+iCSmffjbdlr9OqJIvhRB0OsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkukOLLMdMLS/QDAnlZihbAGZIH4Iw9WMcjzXH0VgeVZ1HdFpUQcSrfsUkWWeAe2q
-	 UH7Kwv5E4ZHzMqFWWrpIR78Ijrwd6LAWbPuiEO4HaBLKxkXTtmustRW0EB8dsvuhKe
-	 XLMfiMgsYAssY83kPmG9St8KwRWMRFlQOoi7HcfY=
+	b=kgn5jNrRtueo3qvqLtmR7duX+rja7D1FUsr4cDpnWyG32pStH6aY7vrANU1MXplgX
+	 Z9CT97kTzABKFuWj1yYiJhYqbI7rnKmGOubfpHGzC6vmHEIPeFGnSI6QHuJm7ijdmZ
+	 syW4+RMO4qVhff96gxtqrhXZMs4PoqdryY3ZBAQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kobel <a-kobel@a-kobel.de>,
-	regressions@lists.linux.dev,
-	Arnold Gozum <arngozum@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 099/195] platform/x86: intel-vbtn: Stop calling "VBDL" from notify_handler
-Date: Tue, 27 Feb 2024 14:26:00 +0100
-Message-ID: <20240227131613.742771568@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Guo Ren <guoren@kernel.org>,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH 6.1 108/195] irqchip/sifive-plic: Enable interrupt if needed before EOI
+Date: Tue, 27 Feb 2024 14:26:09 +0100
+Message-ID: <20240227131614.031609537@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,50 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 84c16d01ff219bc0a5dca5219db6b8b86a6854fb upstream.
+commit 9c92006b896c767218aabe8947b62026a571cfd0 upstream.
 
-Commit 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing
-tablet-mode-switch events") causes 2 issues on the ThinkPad X1 Tablet Gen2:
+RISC-V PLIC cannot "end-of-interrupt" (EOI) disabled interrupts, as
+explained in the description of Interrupt Completion in the PLIC spec:
 
-1. The ThinkPad will wake up immediately from suspend
-2. When put in tablet mode SW_TABLET_MODE reverts to 0 after about 1 second
+"The PLIC signals it has completed executing an interrupt handler by
+writing the interrupt ID it received from the claim to the claim/complete
+register. The PLIC does not check whether the completion ID is the same
+as the last claim ID for that target. If the completion ID does not match
+an interrupt source that *is currently enabled* for the target, the
+completion is silently ignored."
 
-Both these issues are caused by the "VBDL" ACPI method call added
-at the end of the notify_handler.
+Commit 69ea463021be ("irqchip/sifive-plic: Fixup EOI failed when masked")
+ensured that EOI is successful by enabling interrupt first, before EOI.
 
-And it never became entirely clear if this call is even necessary to fix
-the issue of missing tablet-mode-switch events on the Dell Inspiron 7352.
+Commit a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask
+operations") removed the interrupt enabling code from the previous
+commit, because it assumes that interrupt should already be enabled at the
+point of EOI.
 
-Drop the "VBDL" ACPI method call again to fix the 2 issues this is
-causing on the ThinkPad X1 Tablet Gen2.
+However, this is incorrect: there is a window after a hart claiming an
+interrupt and before irq_desc->lock getting acquired, interrupt can be
+disabled during this window. Thus, EOI can be invoked while the interrupt
+is disabled, effectively nullify this EOI. This results in the interrupt
+never gets asserted again, and the device who uses this interrupt appears
+frozen.
 
-Fixes: 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing tablet-mode-switch events")
-Reported-by: Alexander Kobel <a-kobel@a-kobel.de>
-Closes: https://lore.kernel.org/platform-driver-x86/295984ce-bd4b-49bd-adc5-ffe7c898d7f0@a-kobel.de/
-Cc: regressions@lists.linux.dev
-Cc: Arnold Gozum <arngozum@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Alexander Kobel <a-kobel@a-kobel.de>
-Link: https://lore.kernel.org/r/20240216203300.245826-1-hdegoede@redhat.com
+Make sure that interrupt is really enabled before EOI.
+
+Fixes: a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask operations")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Samuel Holland <samuel@sholland.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Guo Ren <guoren@kernel.org>
+Cc: linux-riscv@lists.infradead.org
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240131081933.144512-1-namcao@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vbtn.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/vbtn.c
-+++ b/drivers/platform/x86/intel/vbtn.c
-@@ -200,9 +200,6 @@ static void notify_handler(acpi_handle h
- 	autorelease = val && (!ke_rel || ke_rel->type == KE_IGNORE);
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -144,7 +144,13 @@ static void plic_irq_eoi(struct irq_data
+ {
+ 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
  
- 	sparse_keymap_report_event(input_dev, event, val, autorelease);
--
--	/* Some devices need this to report further events */
--	acpi_evaluate_object(handle, "VBDL", NULL, NULL);
+-	writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++	if (unlikely(irqd_irq_disabled(d))) {
++		plic_toggle(handler, d->hwirq, 1);
++		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++		plic_toggle(handler, d->hwirq, 0);
++	} else {
++		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++	}
  }
  
- /*
+ #ifdef CONFIG_SMP
 
 
