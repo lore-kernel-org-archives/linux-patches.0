@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187E13B293;
-	Tue, 27 Feb 2024 13:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2264E13B293;
+	Tue, 27 Feb 2024 13:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041099; cv=none; b=rVIV1HcWMgoypFHY5W3KUuRKBUL/aFxsdvhoVcPjJ27Xi0vnRhcXvtQwWKS9echg+7SBrqDheQgF72hhK3cD1o5sWlKaOFjMnvCOSUIAt3MqOTO6G3cD2Pva0BPHlv3jwq4lzJf3TsTBSJjkVqngn1YFvLW7sPZKMVItA/TOcsI=
+	t=1709041102; cv=none; b=OBWpjQW3yzOCu0IkJhGjWjLB5o9nRMqSFLzQwaFNpWn4BAU+pFW10yfqcoSDfSXANWaMtgTqOjRzDZt+z1nGghZNKBUpKG5n+O3tkHIGPsxXBIGWWKu0gNhq3nhrwO6leFD9OKxHbByWz3iyO3hmyOxwbdjcvFZWBiWU0tbeFlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041099; c=relaxed/simple;
-	bh=dbfcXWoa9UhulJ0c/FG3C67WmfGloDGs45yCbDl0iHw=;
+	s=arc-20240116; t=1709041102; c=relaxed/simple;
+	bh=r/8Rfk+wx2pvpQ4oAKPjXvu/5mDQKUYS/wuUNbW0hUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+bdHX7044vRP2YjXQJodmaYGVVUrdegRRWdDZRAfaFReILLm1ggbhbq9syVx4ORoxU76k8Uxym316C42HYqWJq71O17KhJAEw9H/r0o+dLAdCvHFKTlnjWdITh+R0maeyKPbNg+r25Sg0Q2DoqRP5ereLgrBhbBruFZ8AJ0Dqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5eqyBJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usqZdI9/JTQpm7K5loqfWisKo31gxVA8D43rUVq0uwpzAxL7gvXevBZ3xrx+EwZ9kvcYPELznw8+89tcZIplIXey1g/gcYB62dIiJ9K25IRA6fEiCHqzLaoBHE3K8gMQb75XmX2MNw6QuQ9yvY/oyNahVW6JYzzW6ltZDMcyBr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpYKPHUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5eqyBJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD34C433F1;
-	Tue, 27 Feb 2024 13:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpYKPHUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CFC43394;
+	Tue, 27 Feb 2024 13:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041099;
-	bh=dbfcXWoa9UhulJ0c/FG3C67WmfGloDGs45yCbDl0iHw=;
+	s=korg; t=1709041102;
+	bh=r/8Rfk+wx2pvpQ4oAKPjXvu/5mDQKUYS/wuUNbW0hUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5eqyBJUJRXIHBFE0/sncfP/RNQ5S1mRvTvufniUDIEVYv93IbWw5kUPTbfaLNNZp
-	 Os2DFJsxVkyihQGyNNN6isMTW63y+SykzFIlcVdc7bDzDGuC9LWo3EuYYjcE63L4j1
-	 ksuoGLLud0Ns5lAJtT/9Jg+hgNSy0il7IszpxeVU=
+	b=FpYKPHUq8wMyT5cHLOaOdo8dn9orAzE7ZIPz9QaFrfYTYGHZ9ZbeQVvJvPBiif2bi
+	 9+HkY7oYuUsjygR4DHN36ny7kBC0mntieHAeuwy2MsIpzqz6xUfC2dT/tMQs2BjGGz
+	 m1iNTMwJiIdX0aZg2qX/+4N6kN7EHe7LdlP7SGZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 220/334] selftests: mptcp: simult flows: fix some subtest names
-Date: Tue, 27 Feb 2024 14:21:18 +0100
-Message-ID: <20240227131637.869373743@linuxfoundation.org>
+Subject: [PATCH 6.7 221/334] selftests: mptcp: pm nl: also list skipped tests
+Date: Tue, 27 Feb 2024 14:21:19 +0100
+Message-ID: <20240227131637.903583489@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,35 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 4d8e0dde0403b5a86aa83e243f020711a9c3e31f upstream.
+commit d2a2547565a9f1ad7989f7e21f97cbf065a9390d upstream.
 
-The selftest was correctly recording all the results, but the 'reverse
-direction' part was missing in the name when needed.
+If the feature is not supported by older kernels, and instead of just
+ignoring some tests, we should mark them as skipped, so we can still
+track them.
 
-It is important to have a unique (sub)test name in TAP, because some CI
-environments drop tests with duplicated name.
-
-Fixes: 675d99338e7a ("selftests: mptcp: simult flows: format subtests results in TAP")
+Fixes: d85555ac11f9 ("selftests: mptcp: pm_netlink: format subtests results in TAP")
 Cc: stable@vger.kernel.org
 Reviewed-by: Geliang Tang <geliang@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -267,7 +267,8 @@ run_test()
- 		[ $bail -eq 0 ] || exit $ret
- 	fi
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -194,6 +194,12 @@ subflow 10.0.1.1" "          (nofullmesh
+ 	ip netns exec $ns1 ./pm_nl_ctl set id 1 flags backup,fullmesh
+ 	check "ip netns exec $ns1 ./pm_nl_ctl dump" "id 1 flags \
+ subflow,backup,fullmesh 10.0.1.1" "          (backup,fullmesh)"
++else
++	for st in fullmesh nofullmesh backup,fullmesh; do
++		st="          (${st})"
++		printf "%-50s%s\n" "${st}" "[SKIP]"
++		mptcp_lib_result_skip "${st}"
++	done
+ fi
  
--	printf "%-60s" "$msg - reverse direction"
-+	msg+=" - reverse direction"
-+	printf "%-60s" "${msg}"
- 	do_transfer $large $small $time
- 	lret=$?
- 	mptcp_lib_result_code "${lret}" "${msg}"
+ mptcp_lib_result_print_all_tap
 
 
