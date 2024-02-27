@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A5613AA50;
-	Tue, 27 Feb 2024 13:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B23C54BD4;
+	Tue, 27 Feb 2024 13:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042338; cv=none; b=ojfzmo4XNCpMRO10KATLxBKfsSbktj0U4TW6JBz4cdAkDt0+vK6u9eagq1FKQs608w+G95PAiDkO+EykQxy01RabZNE2au49lptYku/ej/PhKXZONx30xIXzVkg/uExVSchYlbnRfpas9JLLjpcx+Caz2I4lLzZQ5RZtUwCQ2Q4=
+	t=1709042341; cv=none; b=jGZlAygjheWwTwfCWSkZQNJ8keKb6/nGa5brYUx+HvvEkdBmmpxcaaVgUqceNVIdXOuL58DbCA+J/r7q25DZR/Z4/ravl3a5YrCnaKRMg8SgMgifn8V7+wsENvKD8knRX/2wSWOF2zWSHpgCM7s7HP9fRh+XpZ50Jdz4PrN+RrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042338; c=relaxed/simple;
-	bh=UrYo1fI1aVVsQs2huk3IvS4RTSXvEI/11YWLwKXPiOs=;
+	s=arc-20240116; t=1709042341; c=relaxed/simple;
+	bh=kLJ7U0J3fY9FM16+Gi9XqA3/DomgSDcceOdTxiuQ+s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gT9T1h0hYk/XUJkzTyX37mdeXpEbcugzzmjO7u+Z+iZV6PtCQO2S9ov1gfVj/wizxeISuEZMW3ZmisOIdSrQmGVbHECLapIwSeymJMmkDLuNHBzRz4Y0A3taBkr+4XyFxzNO46+6vk02GzQNtY05COz3RVc4bOqxUmBgqcQ+On8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQpFwRqr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ESahPePuLv1Ybtvn4oXcl5R+XWmaHlwRFIeIIrZSanho5RNXj7BMtbqHEvOnqh7gkl7agGOo7t7v/nAiqQ9/IDGOmKJYBAlKSbkzZxG1g7TcZnHBRi/j+CoHg9H/qsQP9lgt1M6r2L1+P6qIyJhjtmf73q29o1iSHWk01vuEzdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYZuPGp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQpFwRqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409C7C433C7;
-	Tue, 27 Feb 2024 13:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYZuPGp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE927C433F1;
+	Tue, 27 Feb 2024 13:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042338;
-	bh=UrYo1fI1aVVsQs2huk3IvS4RTSXvEI/11YWLwKXPiOs=;
+	s=korg; t=1709042341;
+	bh=kLJ7U0J3fY9FM16+Gi9XqA3/DomgSDcceOdTxiuQ+s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQpFwRqrTNnsrEbGl5tI5OtZ2i5E+byB9IS2yte2H1G6HSv7ZLkPLA1Q9SMh5+6YH
-	 8a6oe6voUrGLXm4gNlLs7oUpuVpykgKm6ZbZvsaGYG6E/cRbgG9DQG8X8VhSe0kQAi
-	 M92d27hTGZCnxxH5zBij5M9hSvyl+qaGbfinowXs=
+	b=QYZuPGp2yiyyPgHk23FIDAKv/v5skX0K63IwKJ8RdY4H0VeCsKvr5pIM+n9K8nZCg
+	 AX9Fg6tGaSEoXk47KuFwYTYxmBi8MOGkRYM8iKXK8Z5U0SoL0V2KQh6zyJJzpC9z36
+	 VJPNbmNgfwm8LvyzN5ySzS1Mb5b2/OPDX4uWSZ1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 260/299] platform/x86: thinkpad_acpi: Only update profile if successfully converted
-Date: Tue, 27 Feb 2024 14:26:11 +0100
-Message-ID: <20240227131634.071129630@linuxfoundation.org>
+Subject: [PATCH 6.6 261/299] drm/i915/tv: Fix TV mode
+Date: Tue, 27 Feb 2024 14:26:12 +0100
+Message-ID: <20240227131634.100768741@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,64 +47,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit 427c70dec738318b7f71e1b9d829ff0e9771d493 ]
+[ Upstream commit fb1e881273f432e593f8789f99e725b09304cc97 ]
 
-Randomly a Lenovo Z13 will trigger a kernel warning traceback from this
-condition:
+Commit 1fd4a5a36f9f ("drm/connector: Rename legacy TV property") failed
+to update all the users of the struct drm_tv_connector_state mode field,
+which resulted in a build failure in i915.
 
-```
-if (WARN_ON((profile < 0) || (profile >= ARRAY_SIZE(profile_names))))
-```
+However, a subsequent commit in the same series reintroduced a mode
+field in that structure, with a different semantic but the same type,
+with the assumption that all previous users were updated.
 
-This happens because thinkpad-acpi always assumes that
-convert_dytc_to_profile() successfully updated the profile. On the
-contrary a condition can occur that when dytc_profile_refresh() is called
-the profile doesn't get updated as there is a -EOPNOTSUPP branch.
+Since that didn't happen, the i915 driver now compiles, but mixes
+accesses to the legacy_mode field and the newer mode field, but with the
+previous semantics.
 
-Catch this situation and avoid updating the profile. Also log this into
-dynamic debugging in case any other modes should be added in the future.
+This obviously doesn't work very well, so we need to update the accesses
+that weren't in the legacy renaming commit.
 
-Fixes: c3bfcd4c6762 ("platform/x86: thinkpad_acpi: Add platform profile support")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240217022311.113879-1-mario.limonciello@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 1fd4a5a36f9f ("drm/connector: Rename legacy TV property")
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240220131251.453060-1-mripard@kernel.org
+(cherry picked from commit bf7626f19d6ff14b9722273e23700400cc4d78ba)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_sdvo.c | 10 +++++-----
+ drivers/gpu/drm/i915/display/intel_tv.c   | 10 +++++-----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index d73cbae4aa218..89c37a83d7fcd 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -10308,6 +10308,7 @@ static int convert_dytc_to_profile(int funcmode, int dytcmode,
- 		return 0;
- 	default:
- 		/* Unknown function */
-+		pr_debug("unknown function 0x%x\n", funcmode);
- 		return -EOPNOTSUPP;
- 	}
- 	return 0;
-@@ -10493,8 +10494,8 @@ static void dytc_profile_refresh(void)
- 		return;
+diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+index 0ce935efe5dfd..18ae41d5f4f98 100644
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -1212,7 +1212,7 @@ static bool intel_sdvo_set_tv_format(struct intel_sdvo *intel_sdvo,
+ 	struct intel_sdvo_tv_format format;
+ 	u32 format_map;
  
- 	perfmode = (output >> DYTC_GET_MODE_BIT) & 0xF;
--	convert_dytc_to_profile(funcmode, perfmode, &profile);
--	if (profile != dytc_current_profile) {
-+	err = convert_dytc_to_profile(funcmode, perfmode, &profile);
-+	if (!err && profile != dytc_current_profile) {
- 		dytc_current_profile = profile;
- 		platform_profile_notify();
+-	format_map = 1 << conn_state->tv.mode;
++	format_map = 1 << conn_state->tv.legacy_mode;
+ 	memset(&format, 0, sizeof(format));
+ 	memcpy(&format, &format_map, min(sizeof(format), sizeof(format_map)));
+ 
+@@ -2295,7 +2295,7 @@ static int intel_sdvo_get_tv_modes(struct drm_connector *connector)
+ 	 * Read the list of supported input resolutions for the selected TV
+ 	 * format.
+ 	 */
+-	format_map = 1 << conn_state->tv.mode;
++	format_map = 1 << conn_state->tv.legacy_mode;
+ 	memcpy(&tv_res, &format_map,
+ 	       min(sizeof(format_map), sizeof(struct intel_sdvo_sdtv_resolution_request)));
+ 
+@@ -2360,7 +2360,7 @@ intel_sdvo_connector_atomic_get_property(struct drm_connector *connector,
+ 		int i;
+ 
+ 		for (i = 0; i < intel_sdvo_connector->format_supported_num; i++)
+-			if (state->tv.mode == intel_sdvo_connector->tv_format_supported[i]) {
++			if (state->tv.legacy_mode == intel_sdvo_connector->tv_format_supported[i]) {
+ 				*val = i;
+ 
+ 				return 0;
+@@ -2416,7 +2416,7 @@ intel_sdvo_connector_atomic_set_property(struct drm_connector *connector,
+ 	struct intel_sdvo_connector_state *sdvo_state = to_intel_sdvo_connector_state(state);
+ 
+ 	if (property == intel_sdvo_connector->tv_format) {
+-		state->tv.mode = intel_sdvo_connector->tv_format_supported[val];
++		state->tv.legacy_mode = intel_sdvo_connector->tv_format_supported[val];
+ 
+ 		if (state->crtc) {
+ 			struct drm_crtc_state *crtc_state =
+@@ -3071,7 +3071,7 @@ static bool intel_sdvo_tv_create_property(struct intel_sdvo *intel_sdvo,
+ 		drm_property_add_enum(intel_sdvo_connector->tv_format, i,
+ 				      tv_format_names[intel_sdvo_connector->tv_format_supported[i]]);
+ 
+-	intel_sdvo_connector->base.base.state->tv.mode = intel_sdvo_connector->tv_format_supported[0];
++	intel_sdvo_connector->base.base.state->tv.legacy_mode = intel_sdvo_connector->tv_format_supported[0];
+ 	drm_object_attach_property(&intel_sdvo_connector->base.base.base,
+ 				   intel_sdvo_connector->tv_format, 0);
+ 	return true;
+diff --git a/drivers/gpu/drm/i915/display/intel_tv.c b/drivers/gpu/drm/i915/display/intel_tv.c
+index d84a79491da23..042ed966807ed 100644
+--- a/drivers/gpu/drm/i915/display/intel_tv.c
++++ b/drivers/gpu/drm/i915/display/intel_tv.c
+@@ -949,7 +949,7 @@ intel_disable_tv(struct intel_atomic_state *state,
+ 
+ static const struct tv_mode *intel_tv_mode_find(const struct drm_connector_state *conn_state)
+ {
+-	int format = conn_state->tv.mode;
++	int format = conn_state->tv.legacy_mode;
+ 
+ 	return &tv_modes[format];
+ }
+@@ -1710,7 +1710,7 @@ static void intel_tv_find_better_format(struct drm_connector *connector)
+ 			break;
  	}
+ 
+-	connector->state->tv.mode = i;
++	connector->state->tv.legacy_mode = i;
+ }
+ 
+ static int
+@@ -1865,7 +1865,7 @@ static int intel_tv_atomic_check(struct drm_connector *connector,
+ 	old_state = drm_atomic_get_old_connector_state(state, connector);
+ 	new_crtc_state = drm_atomic_get_new_crtc_state(state, new_state->crtc);
+ 
+-	if (old_state->tv.mode != new_state->tv.mode ||
++	if (old_state->tv.legacy_mode != new_state->tv.legacy_mode ||
+ 	    old_state->tv.margins.left != new_state->tv.margins.left ||
+ 	    old_state->tv.margins.right != new_state->tv.margins.right ||
+ 	    old_state->tv.margins.top != new_state->tv.margins.top ||
+@@ -1902,7 +1902,7 @@ static void intel_tv_add_properties(struct drm_connector *connector)
+ 	conn_state->tv.margins.right = 46;
+ 	conn_state->tv.margins.bottom = 37;
+ 
+-	conn_state->tv.mode = 0;
++	conn_state->tv.legacy_mode = 0;
+ 
+ 	/* Create TV properties then attach current values */
+ 	for (i = 0; i < ARRAY_SIZE(tv_modes); i++) {
+@@ -1916,7 +1916,7 @@ static void intel_tv_add_properties(struct drm_connector *connector)
+ 
+ 	drm_object_attach_property(&connector->base,
+ 				   i915->drm.mode_config.legacy_tv_mode_property,
+-				   conn_state->tv.mode);
++				   conn_state->tv.legacy_mode);
+ 	drm_object_attach_property(&connector->base,
+ 				   i915->drm.mode_config.tv_left_margin_property,
+ 				   conn_state->tv.margins.left);
 -- 
 2.43.0
 
