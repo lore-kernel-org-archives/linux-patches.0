@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB16113B2B8;
-	Tue, 27 Feb 2024 14:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E0113B2B8;
+	Tue, 27 Feb 2024 14:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043821; cv=none; b=l/D4i2hIfbn0HZ1OGVi+60L7hODFTC3UvVNC7MMU/oSlXMb9foMouHJDPA127U3S8p6bSAM6RqFFkxV5Go/x+c0eTGgxnSWvUzB8Ie6pPN0S2giTjJkJBvDrLnrGxVrzBbGh7ipHCchW/GajgLWEyV9lCDeGl/z4LaqN27tGwbg=
+	t=1709043824; cv=none; b=Gb2xibFmNVRvjIjH9wviIleBGm1smdQx/rc145v9xptdq2gmbdXvvK+/lHn9tGTouw/Lh51jblYdj1oOIcAbrGQXI4TTJMalFKB8p+j4T8xSObZ+OUo76YhQnvCn8NZO5rBfZZKa35vls56H7hWaMpDsfIhvZnEsASFZf4vxCkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043821; c=relaxed/simple;
-	bh=iueUy3s++iWTzShwDJz9nPO9YKIkJupKPRUs2mhUO9s=;
+	s=arc-20240116; t=1709043824; c=relaxed/simple;
+	bh=+9/kufDGxF3wxGRkS/+UFuwliwRV/Q4+9KmT0OkFm3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvYOgWPIubxjt1bwEvbtXTFviZ6ojyT+YVFD9QiaIGnJ6G6tqFf8Uue+vyYG7lGpmQuJvAPWpRkDgQ3cFjREJplnHixWh/PnDfaA6YLHWF5BY3O0tuRd2Hq4eY+AkrzZfn3qed4C0zSGoK4z9P4hcyqbrDJZL8FIvW+m3XN8JGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jU0w79d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BGmJI0Qv3nHv/VajwZe1cjAUjuKYeudGGGfnlv3nGkHXGElTcQqWCSHVv0JVQtmU62ef3t8sFKZ2mFrQzlEKytKpsnGdaOrs6oXezwfjvPh3/6ck11NRXXC0JDBg+1cmwDjotJaKVYsbBQdwuRkjzTXRdRynuECi4pUpW2XSXzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPFBbFHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jU0w79d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC937C433F1;
-	Tue, 27 Feb 2024 14:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPFBbFHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1316C433F1;
+	Tue, 27 Feb 2024 14:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043821;
-	bh=iueUy3s++iWTzShwDJz9nPO9YKIkJupKPRUs2mhUO9s=;
+	s=korg; t=1709043824;
+	bh=+9/kufDGxF3wxGRkS/+UFuwliwRV/Q4+9KmT0OkFm3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jU0w79dmhfCXpQY7GwoJdIBuvfR60w14gqu3a5nLMl5l8EMFgZQ0X0kM/VmonNLj
-	 eTlTWAFeL7wvTkVlBjewy7Cs0/3MYMRYJ4QKaoQggtRNeMdUyJWrR4g2qIxv/qYMZK
-	 3oG0F8Y1UdrHiw+Pp5UJxKk1sbxx3a3omTQUNU1g=
+	b=LPFBbFHHZMvypadCJ4pVZGyB5NnXPQum7kaVT/01a6c3RWOxtVWgr5etSA8d8QmbW
+	 pUhizRlYB782EdA2jqE9/fQ53P9FjQ15V4AZ7uAaTaYmZYuna5+/adQitiRmknLLa+
+	 F1El9RiIyXKtC5TafJbWezJM4UTIOhWcBWdkU5zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sireesh Kodali <sireeshkodali1@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 49/84] drm/amdgpu: Fix type of second parameter in trans_msg() callback
-Date: Tue, 27 Feb 2024 14:27:16 +0100
-Message-ID: <20240227131554.468186406@linuxfoundation.org>
+Subject: [PATCH 5.4 50/84] arm64: dts: qcom: msm8916: Fix typo in pronto remoteproc node
+Date: Tue, 27 Feb 2024 14:27:17 +0100
+Message-ID: <20240227131554.500322618@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -53,64 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Sireesh Kodali <sireeshkodali1@gmail.com>
 
-[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
+[ Upstream commit 5458d6f2827cd30218570f266b8d238417461f2f ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+The smem-state properties for the pronto node were incorrectly labelled,
+reading `qcom,state*` rather than `qcom,smem-state*`. Fix that, allowing
+the stop state to be used.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_ai_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_nv_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-The type of the second parameter in the prototype should be 'enum
-idh_request' instead of 'u32'. Update it to clear up the warnings.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 88106096cbf8 ("ARM: dts: msm8916: Add and enable wcnss node")
+Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20220526141740.15834-3-sireeshkodali1@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index b0b2bdc750df9..3e59b4e150237 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -48,6 +48,8 @@ struct amdgpu_vf_error_buffer {
- 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
- };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index bf40500adef73..e1097ba6c9481 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1097,8 +1097,8 @@
+ 			vddmx-supply = <&pm8916_l3>;
+ 			vddpx-supply = <&pm8916_l7>;
  
-+enum idh_request;
-+
- /**
-  * struct amdgpu_virt_ops - amdgpu device virt operations
-  */
-@@ -56,7 +58,8 @@ struct amdgpu_virt_ops {
- 	int (*rel_full_gpu)(struct amdgpu_device *adev, bool init);
- 	int (*reset_gpu)(struct amdgpu_device *adev);
- 	int (*wait_reset)(struct amdgpu_device *adev);
--	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
-+	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
-+			  u32 data1, u32 data2, u32 data3);
- 	int (*get_pp_clk)(struct amdgpu_device *adev, u32 type, char *buf);
- 	int (*force_dpm_level)(struct amdgpu_device *adev, u32 level);
- };
+-			qcom,state = <&wcnss_smp2p_out 0>;
+-			qcom,state-names = "stop";
++			qcom,smem-states = <&wcnss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
+ 
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&wcnss_pin_a>;
 -- 
 2.43.0
 
