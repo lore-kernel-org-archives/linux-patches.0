@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000A13B78A;
-	Tue, 27 Feb 2024 13:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826EC78B61;
+	Tue, 27 Feb 2024 13:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041129; cv=none; b=oihxDx3sOLdq0lBGYgqfqEjUtuGf0dYR3nYXdTrDL6xLGcunAURi9QiWXIpw+Ju3MUMfBJkI6/KiTRuG5rGIo/0FHFZA1qqheJvj9r38Up3OAf12un9Dh8H2w98gtSAgJTlZX8jkfCfcMqQqgqaReCVcJXQkMhb5Fsnuby1EbTc=
+	t=1709041132; cv=none; b=MaFqew++QgWmYkiCcsuBtIrMSxVIoOGJv6DikBSK3BunWA8S4mWF2txJ98C0Dc08p7YlWvq1B4McD5ZJy56OGRV2XEhEjTK8iKCNKfRHs59UaBvjgpAjoCCr6WJFZvAdNa9mlv0GZDhpc4LXRGw6S3R6j/Vq+eZ7QBF0wgJAU2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041129; c=relaxed/simple;
-	bh=E8RnJSKONpJ9gD9MKHJHWgpdp6Lp090Tp2pZreHaFc0=;
+	s=arc-20240116; t=1709041132; c=relaxed/simple;
+	bh=3kv5iGh7VeNF1fX1gZarobEV7x/dm8+krnPdExuy8I0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhsVPXF/GrbkE0IlvZbkoN364lgI8hHBO7UO7KiRR7BDxeSNis3pAy5c8MZHHQvFR/Yke9OOxJIsGgvWo1qSc49wIx9IKuIOn/gkwXNK/5kwEQpzAebpnTFNczlO+DR1tDlMDb2nsYUWi4X99umzFdyAMQWLscN9LE7Yk1wB3w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb/68iND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpK72396OVax9xqwYqCJzGd6CphMwk9EDpDt/TUI1lDJd0wJUPlaSqXBOvbPKC3wlGTRdkI/aowB5f6a2VIE2IUuibpQ+eehwnxbWBqIiDGyCsedk8ceOIY6vYVMNXFESBARV9nRrkENuMJKEvZohKSm71+TuZhtE+g6lI+WtaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSNM36bt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb/68iND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47578C433C7;
-	Tue, 27 Feb 2024 13:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSNM36bt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0800EC433F1;
+	Tue, 27 Feb 2024 13:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041129;
-	bh=E8RnJSKONpJ9gD9MKHJHWgpdp6Lp090Tp2pZreHaFc0=;
+	s=korg; t=1709041132;
+	bh=3kv5iGh7VeNF1fX1gZarobEV7x/dm8+krnPdExuy8I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cb/68iNDjhvzHAIaV6g6B7hll/wSk/SFUtH3lwqCXpcjAfM6p16khEcbUYAz25C54
-	 5cwpIe1xRFzDw01HXhz3a/rBP9kcephrNKBCSDyfKgIGKgDYYiYuO1I4VY3/4OGOZ5
-	 ASHmCuWgRHw60Q4++exugHo7irS40eLrUF2CoYMQ=
+	b=sSNM36btnvAM7ToS5iPd7o5FWP9cIV/46EhVLYiRnUWU2C9y0wx9rGhQu1BDsGeu8
+	 Lzxuztf5luAaYnq5AuZbiGyYc1QJ7O20SvV8W0iioDjr5nDBx/JQaVzJoqd0FieC4j
+	 x8ia97xanQTqdiOv/3WyY4fRix7xrYfwwRlh5rPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	PeiChen Huang <peichen.huang@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 230/334] drm/amd/display: Fix buffer overflow in get_host_router_total_dp_tunnel_bw()
-Date: Tue, 27 Feb 2024 14:21:28 +0100
-Message-ID: <20240227131638.225042961@linuxfoundation.org>
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.7 231/334] Revert "drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz"
+Date: Tue, 27 Feb 2024 14:21:29 +0100
+Message-ID: <20240227131638.275835594@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -56,50 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Sohaib Nadeem <sohaib.nadeem@amd.com>
 
-commit 97cba232549b9fe7e491fb60a69cf93075015f29 upstream.
+commit a538dabf772c169641e151834e161e241802ab33 upstream.
 
-The error message buffer overflow 'dc->links' 12 <= 12 suggests that the
-code is trying to access an element of the dc->links array that is
-beyond its bounds. In C, arrays are zero-indexed, so an array with 12
-elements has valid indices from 0 to 11. Trying to access dc->links[12]
-would be an attempt to access the 13th element of a 12-element array,
-which is a buffer overflow.
+[why]:
+This reverts commit 2ff33c759a4247c84ec0b7815f1f223e155ba82a.
 
-To fix this, ensure that the loop does not go beyond the last valid
-index when accessing dc->links[i + 1] by subtracting 1 from the loop
-condition.
+The commit caused corruption when running some applications in fullscreen
 
-This would ensure that i + 1 is always a valid index in the array.
-
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:208 get_host_router_total_dp_tunnel_bw() error: buffer overflow 'dc->links' 12 <= 12
-
-Fixes: 59f1622a5f05 ("drm/amd/display: Add dpia display mode validation logic")
-Cc: PeiChen Huang <peichen.huang@amd.com>
-Cc: Aric Cyr <aric.cyr@amd.com>
-Cc: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    2 +-
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -196,7 +196,7 @@ static int get_host_router_total_dp_tunn
- 	struct dc_link *link_dpia_primary, *link_dpia_secondary;
- 	int total_bw = 0;
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2719,7 +2719,7 @@ static int build_synthetic_soc_states(bo
+ 	struct _vcs_dpi_voltage_scaling_st entry = {0};
+ 	struct clk_limit_table_entry max_clk_data = {0};
  
--	for (uint8_t i = 0; i < MAX_PIPES * 2; ++i) {
-+	for (uint8_t i = 0; i < (MAX_PIPES * 2) - 1; ++i) {
+-	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
++	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
  
- 		if (!dc->links[i] || dc->links[i]->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
- 			continue;
+ 	static const unsigned int num_dcfclk_stas = 5;
+ 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
 
 
