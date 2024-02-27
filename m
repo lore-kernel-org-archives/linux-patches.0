@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C987E13B78F;
-	Tue, 27 Feb 2024 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8456613B78F;
+	Tue, 27 Feb 2024 14:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043486; cv=none; b=By2NHjjXD5uOBzd4Y35zqT4NylVuwOjD9TlzLV1V1PmJbMFa47RCxgD1FbObqVQLRtM5PKJm+8JdW7rPxMCAzrGSyGvEWJbXX5DwoYYUyKDYFYJvcOC7ASVi/QCiL2i30SyVZkAZ3HvifxqdSA6bn12NRBl/TjluzKkqTQTRdl8=
+	t=1709043489; cv=none; b=KEg8YuC9O2iVYZGvovwyEGrFSYaC9qCFskm2GxqWKb8LDXRONJ5f5p9z1/cFiuFPAZW2835Yv6cpTAqoJyZxNl56Fd0AtRkq6LbYmphiju8Jz3ijtFJNhOyjZTBQoRgDE+JVuvjjbTYOIcLH6bluFCQuydqAFcbULqiqCNdibmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043486; c=relaxed/simple;
-	bh=J7tl2VeAfXnwp6EunvFB4aJKpGoL7o0otVYvPNTf244=;
+	s=arc-20240116; t=1709043489; c=relaxed/simple;
+	bh=HMzUSWLnYM2gmTwzSjZYCYRKUaWCUeIjfkcl9HL4ADE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=caxJcpjCQ50kVCqpbLdr2ZBIY/WztCKN7GnPcpV9JJP1aC8eC8R2SjCehTXSqs41DHNSjYgKQW1OlGNy1M3kHeZj3ECDrcdyjpCeMFesd3LpS9XEs21TkasUXdLajoXVOOlMey2UE1aP9wk0Mm3Z+KsX0WFWzo3XMy20uqo3LMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M63/sfpY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJDK8Vjb9jhLR2rdKgpW9mesxZS+VYEU/vJ7UD7Al8jzgXKExUDoHU6yJEKVJdcwOjH0L6Kq1IKTU35g2t5gZhLeoioz6kPhwFEM2aEqU8ln9nwYUM6yRhMe2NZxE+zUpj/lvkjkteN42ZPXKcs9ys80/wtyByEYqzX7fa5ykMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfLmgJj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M63/sfpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57662C433F1;
-	Tue, 27 Feb 2024 14:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfLmgJj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158FCC433F1;
+	Tue, 27 Feb 2024 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043486;
-	bh=J7tl2VeAfXnwp6EunvFB4aJKpGoL7o0otVYvPNTf244=;
+	s=korg; t=1709043489;
+	bh=HMzUSWLnYM2gmTwzSjZYCYRKUaWCUeIjfkcl9HL4ADE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M63/sfpY+Hu1qnkNV1NQUdbyPQRz50lP06mmujVk0oMOs/rD4iqDGH/0RLDZmvIAk
-	 SQcHsr6LW4kkhHFGfnYqr3cjk4ZAXC66HqsDs0CD5luAksyOpb3FzJCsGUrv9jAE5H
-	 EFIrfHy6VhV1U7xetD/r+KeNNKcFSQNVG8/lqtzw=
+	b=mfLmgJj/cQT1zccEUXFH1m3BJIQWAQl548bhTWzX0RRi4Peccudvz0RnyDk7MQu2C
+	 grjmNy3iJbacd4bi/1LBCxVY/+E6xDcshfeV2WvEOvjhoHKqkMaqDVEBPf7Fwp77QQ
+	 mXHGCx5/wPUI2F+Ml4PqOVQT26w08Sjwcsz5VFz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 125/195] usb: roles: dont get/set_role() when usb_role_switch is unregistered
-Date: Tue, 27 Feb 2024 14:26:26 +0100
-Message-ID: <20240227131614.575186771@linuxfoundation.org>
+	Geliang Tang <geliang.tang@suse.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 126/195] mptcp: make userspace_pm_append_new_local_addr static
+Date: Tue, 27 Feb 2024 14:26:27 +0100
+Message-ID: <20240227131614.606100332@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -50,76 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
+commit aa5887dca2d236fc50000e27023d4d78dce3af30 upstream.
 
-There is a possibility that usb_role_switch device is unregistered before
-the user put usb_role_switch. In this case, the user may still want to
-get/set_role() since the user can't sense the changes of usb_role_switch.
+mptcp_userspace_pm_append_new_local_addr() has always exclusively been
+used in pm_userspace.c since its introduction in
+commit 4638de5aefe5 ("mptcp: handle local addrs announced by userspace PMs").
 
-This will add a flag to show if usb_role_switch is already registered and
-avoid unwanted behaviors.
+So make it static.
 
-Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
-cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/mptcp/pm_userspace.c |    4 ++--
+ net/mptcp/protocol.h     |    2 --
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -21,6 +21,7 @@ struct usb_role_switch {
- 	struct mutex lock; /* device lock*/
- 	struct module *module; /* the module this device depends on */
- 	enum usb_role role;
-+	bool registered;
- 
- 	/* From descriptor */
- 	struct device *usb2_port;
-@@ -47,6 +48,9 @@ int usb_role_switch_set_role(struct usb_
- 	if (IS_ERR_OR_NULL(sw))
- 		return 0;
- 
-+	if (!sw->registered)
-+		return -EOPNOTSUPP;
-+
- 	mutex_lock(&sw->lock);
- 
- 	ret = sw->set(sw, role);
-@@ -72,7 +76,7 @@ enum usb_role usb_role_switch_get_role(s
- {
- 	enum usb_role role;
- 
--	if (IS_ERR_OR_NULL(sw))
-+	if (IS_ERR_OR_NULL(sw) || !sw->registered)
- 		return USB_ROLE_NONE;
- 
- 	mutex_lock(&sw->lock);
-@@ -356,6 +360,8 @@ usb_role_switch_register(struct device *
- 		return ERR_PTR(ret);
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -25,8 +25,8 @@ void mptcp_free_local_addr_list(struct m
  	}
- 
-+	sw->registered = true;
-+
- 	/* TODO: Symlinks for the host port and the device controller. */
- 
- 	return sw;
-@@ -370,8 +376,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
-  */
- void usb_role_switch_unregister(struct usb_role_switch *sw)
- {
--	if (!IS_ERR_OR_NULL(sw))
-+	if (!IS_ERR_OR_NULL(sw)) {
-+		sw->registered = false;
- 		device_unregister(&sw->dev);
-+	}
  }
- EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
  
+-int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
+-					     struct mptcp_pm_addr_entry *entry)
++static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
++						    struct mptcp_pm_addr_entry *entry)
+ {
+ 	DECLARE_BITMAP(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	struct mptcp_pm_addr_entry *match = NULL;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -834,8 +834,6 @@ void mptcp_pm_remove_addrs(struct mptcp_
+ void mptcp_pm_remove_addrs_and_subflows(struct mptcp_sock *msk,
+ 					struct list_head *rm_list);
+ 
+-int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
+-					     struct mptcp_pm_addr_entry *entry);
+ void mptcp_free_local_addr_list(struct mptcp_sock *msk);
+ int mptcp_nl_cmd_announce(struct sk_buff *skb, struct genl_info *info);
+ int mptcp_nl_cmd_remove(struct sk_buff *skb, struct genl_info *info);
 
 
