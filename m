@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7805513EFE9;
-	Tue, 27 Feb 2024 14:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C0013AA4C;
+	Tue, 27 Feb 2024 14:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043140; cv=none; b=bCUwFBEEHV5QuVgivRddkCEl26d9+9brHY+Bvy8Dt1opjMkSqnsfBgXIYAeUoE2ji3Hu7byP/EkeA7/eJoxwxpkB4Q16+ZctSCxjioZGBsq/FixaA27IvK+g9dgGZxVP+E2rkd/3ffjSNPfQVZsb1IbTFmdP/A7cKYkAoNlMJDM=
+	t=1709043145; cv=none; b=PXBn7kkSbpZrmIl6/oJpVlH4L7thSmfYvJyYzImmcmRto/dyK7k+40HCkYAa4jHlfUynqNfLDvo5cVyuz7VioOhYU1Fxm/WgeLDrMmf+otKwxVpUMGqMf7Z/ckG2tLpaqsIWfAp7b/ma02UP89p7a5tU53hQwu43aNoeRw8R3QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043140; c=relaxed/simple;
-	bh=xUkwcD1F9qpmHR5Ceeg8rvPo0oBppN817Yeg8jlCSqc=;
+	s=arc-20240116; t=1709043145; c=relaxed/simple;
+	bh=GDqF3eZttv8I5nffzcnWAWrShh9NPmYOPKLpF/LYiW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0CQCTVLUjVm2UBG4WRy0j4V5VEMUIjlvCdA2+YvkbeGlRMSilN8AgWMwMr04T2AvfS1BXIlZcykIxnsG2FRdWIflFMVaHkXhggQUfnorDTk8TdA2wCoz3CBNgFsxaYZRphCPvOaQyiw75buXXlxU4sjyS0+UhtK60Wbxubx39s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpDANVjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMlhQziEVxsYjSHG9gPL4jY4uGyt7gRonrn4axbTIIMXj1tVHjlWu56WOKETfG56MRT1maB619cmZ5DE0fa5+bCVEc51jjm/R4YgtBQgcyN5ZcrJFy0b84uRGWodLQcMsDjTxb11HbK4nO95j+nc6R/yAM4FtgyHlaAvhLFnEUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRYeIeB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpDANVjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0454DC433F1;
-	Tue, 27 Feb 2024 14:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRYeIeB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D944C433F1;
+	Tue, 27 Feb 2024 14:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043140;
-	bh=xUkwcD1F9qpmHR5Ceeg8rvPo0oBppN817Yeg8jlCSqc=;
+	s=korg; t=1709043143;
+	bh=GDqF3eZttv8I5nffzcnWAWrShh9NPmYOPKLpF/LYiW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpDANVjVakZki/EWMZTEF3BMN5DoB9QPia5F1q07UlRFx76cRTajGqgURxmhUs9/0
-	 /u0OrBHFZt+Jhl5LmXPSfkoWyBxtcinVJRU2NNKZJj9oEhSuIormkA6bS3XLG5LfSv
-	 eVyRZKk96R0zgZWMuYBGJ2f3tDGJB9nr5+EQFRys=
+	b=ZRYeIeB6jyapIVk7WM59zc7Tz5iL2h0IuNlkjY5aENrcx680Tj4zOAsRmR+FpQpt6
+	 5WHdVXZYTxFaH7ubYxSjdoIjqrndfjkVfpzMSBp07JZppv0xbKvtpIXTNGVNHd1q2e
+	 sjO3axFrc4D9DEBHgC5S0Dme7FHhyIWdYnP0hlCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/245] afs: Increase buffer size in afs_update_volume_status()
-Date: Tue, 27 Feb 2024 14:26:49 +0100
-Message-ID: <20240227131622.378220623@linuxfoundation.org>
+Subject: [PATCH 5.15 212/245] scsi: jazz_esp: Only build if SCSI core is builtin
+Date: Tue, 27 Feb 2024 14:26:40 +0100
+Message-ID: <20240227131622.093437879@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,51 +60,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 6ea38e2aeb72349cad50e38899b0ba6fbcb2af3d ]
+[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
 
-The max length of volume->vid value is 20 characters.
-So increase idbuf[] size up to 24 to avoid overflow.
+JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
+CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
+causes many undefined symbol linker errors.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix this by only offering to build this driver when CONFIG_SCSI=y.
 
-[DH: Actually, it's 20 + NUL, so increase it to 24 and use snprintf()]
+[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
+module unlike the remaining SPI SCSI HBA drivers]
 
-Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20240211150442.3416-1-d.dulov@aladdin.ru/ # v1
-Link: https://lore.kernel.org/r/20240212083347.10742-1-d.dulov@aladdin.ru/ # v2
-Link: https://lore.kernel.org/r/20240219143906.138346-3-dhowells@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: James E.J. Bottomley <jejb@linux.ibm.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/volume.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/volume.c b/fs/afs/volume.c
-index 137a970c19fb3..3d39ce5a23f22 100644
---- a/fs/afs/volume.c
-+++ b/fs/afs/volume.c
-@@ -327,7 +327,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
- {
- 	struct afs_server_list *new, *old, *discard;
- 	struct afs_vldb_entry *vldb;
--	char idbuf[16];
-+	char idbuf[24];
- 	int ret, idsz;
+diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
+index eea574e89b872..43e6f86e08c33 100644
+--- a/drivers/scsi/Kconfig
++++ b/drivers/scsi/Kconfig
+@@ -1296,7 +1296,7 @@ source "drivers/scsi/arm/Kconfig"
  
- 	_enter("");
-@@ -335,7 +335,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
- 	/* We look up an ID by passing it as a decimal string in the
- 	 * operation's name parameter.
- 	 */
--	idsz = sprintf(idbuf, "%llu", volume->vid);
-+	idsz = snprintf(idbuf, sizeof(idbuf), "%llu", volume->vid);
- 
- 	vldb = afs_vl_lookup_vldb(volume->cell, key, idbuf, idsz);
- 	if (IS_ERR(vldb)) {
+ config JAZZ_ESP
+ 	bool "MIPS JAZZ FAS216 SCSI support"
+-	depends on MACH_JAZZ && SCSI
++	depends on MACH_JAZZ && SCSI=y
+ 	select SCSI_SPI_ATTRS
+ 	help
+ 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
 -- 
 2.43.0
 
