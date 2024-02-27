@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A521419AD;
-	Tue, 27 Feb 2024 13:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41C7145FE1;
+	Tue, 27 Feb 2024 13:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041962; cv=none; b=J7dNz84y8xcmQTZ2zBTtaDuDD3CSzDAP66bSnjjzssyIa9E9/umzYVJxRXg5xy64NMmtOcikoCYfzBIy1y5s7l+eswRpT/Mf5RRDDnwI+pkV7isx1lAF+AVrYc1Vd9F/BRphVgxmv73bjtRGbOJrdXzMK7iDtxRW3UPUf61MAr8=
+	t=1709041964; cv=none; b=iS1ScZA1O71q39JmLtiY3okbQksXYgjdAgleM2UBXuclVdhr8i29ib7Usa5aRMCrBjBeiY0TdTJefsWGPLs+dHlmBAncGQcgaFf0A+h7ut+t2QZceW9EXhgFHYqC2LyU0/RgeGmw5JGbOkPJq6DMUwJqiOiKhotefMQ20vaPjAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041962; c=relaxed/simple;
-	bh=k0pVXXgDJLEp9ZCDFufYNZLHAhRTcHII0/fq42i2t08=;
+	s=arc-20240116; t=1709041964; c=relaxed/simple;
+	bh=5wkpnkJv3754w+CEWX8zvgd/bOLm+Xb0mAdTaXW7r2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bh6K6IDfMUcpaYqyxJaE8T6Hs9KEDEKW6WlrfaaFMqh2u85hu7nHSk8y91R3NkzgcfKJvj8zwIsL2zqjuQDjm+oow1P4O//8NUctkuKwhqH3+hgCEHGz+aCwE2JlG5h60maS3W5fcqnsdMzwThiMJIIpOXEQuKsCwlOy4/mcX0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvI4K7T0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBaXM0GNpbNxsC3+++a7+C6Fqdc33At4qh9uH98465VVwmAX4qBw/0xjtMxDzki1vigmfkeXRvUe5BxholOzgAXR3AEim3bng+hqmendgwHhIVRucpTM3Lvj4N07JY1lADI2/N/TgrrTBUySGJ/idR90C4Srt9Gbp5s/4vtKIPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWgEYFbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvI4K7T0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842E4C43390;
-	Tue, 27 Feb 2024 13:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWgEYFbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B69C433A6;
+	Tue, 27 Feb 2024 13:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041961;
-	bh=k0pVXXgDJLEp9ZCDFufYNZLHAhRTcHII0/fq42i2t08=;
+	s=korg; t=1709041964;
+	bh=5wkpnkJv3754w+CEWX8zvgd/bOLm+Xb0mAdTaXW7r2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvI4K7T0nosFWpz3dLWJGYxduGPEy0YveJnUIt0P2sK4WnaHOte5XlDCdGEIFDz5m
-	 yjN7Cb1qYDPOuVI8peOtmqSkthNYE6sqV/vNYUYm6FROysHj8/9/G+Hpzua8H5bPQt
-	 Z3pJoh0tvfLLOgO4HVqf8P9vuHGx9TvtyLX1tRpM=
+	b=nWgEYFbLLgRLdm6OaZTOjwTOrgZBJk23wX73RSMty4FORYPv9bVBF8GSWBLgNNlQ5
+	 lIwxVVOISu5FqUmAQ8DQoEx0aRkgquM9dDotaiMSrMA1pV0G3q/ywpFD4Aet7+lVcX
+	 SQgPU9PTA96u3ITYLC9ARVUPjMNrRSiKwD4LOc+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/299] mptcp: corner case locking for rx path fields initialization
-Date: Tue, 27 Feb 2024 14:23:54 +0100
-Message-ID: <20240227131629.828054722@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Panyakin <apanyaki@amazon.com>
+Subject: [PATCH 6.6 132/299] xen/events: close evtchn after mapping cleanup
+Date: Tue, 27 Feb 2024 14:24:03 +0100
+Message-ID: <20240227131630.107456549@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,278 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Maximilian Heyne <mheyne@amazon.de>
 
-[ Upstream commit e4a0fa47e816e186f6b4c0055d07eeec42d11871 ]
+[ Upstream commit fa765c4b4aed2d64266b694520ecb025c862c5a9 ]
 
-Most MPTCP-level related fields are under the mptcp data lock
-protection, but are written one-off without such lock at MPC
-complete time, both for the client and the server
+shutdown_pirq and startup_pirq are not taking the
+irq_mapping_update_lock because they can't due to lock inversion. Both
+are called with the irq_desc->lock being taking. The lock order,
+however, is first irq_mapping_update_lock and then irq_desc->lock.
 
-Leverage the mptcp_propagate_state() infrastructure to move such
-initialization under the proper lock client-wise.
+This opens multiple races:
+- shutdown_pirq can be interrupted by a function that allocates an event
+  channel:
 
-The server side critical init steps are done by
-mptcp_subflow_fully_established(): ensure the caller properly held the
-relevant lock, and avoid acquiring the same lock in the nested scopes.
+  CPU0                        CPU1
+  shutdown_pirq {
+    xen_evtchn_close(e)
+                              __startup_pirq {
+                                EVTCHNOP_bind_pirq
+                                  -> returns just freed evtchn e
+                                set_evtchn_to_irq(e, irq)
+                              }
+    xen_irq_info_cleanup() {
+      set_evtchn_to_irq(e, -1)
+    }
+  }
 
-There are no real potential races, as write access to such fields
-is implicitly serialized by the MPTCP state machine; the primary
-goal is consistency.
+  Assume here event channel e refers here to the same event channel
+  number.
+  After this race the evtchn_to_irq mapping for e is invalid (-1).
 
-Fixes: d22f4988ffec ("mptcp: process MP_CAPABLE data option")
+- __startup_pirq races with __unbind_from_irq in a similar way. Because
+  __startup_pirq doesn't take irq_mapping_update_lock it can grab the
+  evtchn that __unbind_from_irq is currently freeing and cleaning up. In
+  this case even though the event channel is allocated, its mapping can
+  be unset in evtchn_to_irq.
+
+The fix is to first cleanup the mappings and then close the event
+channel. In this way, when an event channel gets allocated it's
+potential previous evtchn_to_irq mappings are guaranteed to be unset already.
+This is also the reverse order of the allocation where first the event
+channel is allocated and then the mappings are setup.
+
+On a 5.10 kernel prior to commit 3fcdaf3d7634 ("xen/events: modify internal
+[un]bind interfaces"), we hit a BUG like the following during probing of NVMe
+devices. The issue is that during nvme_setup_io_queues, pci_free_irq
+is called for every device which results in a call to shutdown_pirq.
+With many nvme devices it's therefore likely to hit this race during
+boot because there will be multiple calls to shutdown_pirq and
+startup_pirq are running potentially in parallel.
+
+  ------------[ cut here ]------------
+  blkfront: xvda: barrier or flush: disabled; persistent grants: enabled; indirect descriptors: enabled; bounce buffer: enabled
+  kernel BUG at drivers/xen/events/events_base.c:499!
+  invalid opcode: 0000 [#1] SMP PTI
+  CPU: 44 PID: 375 Comm: kworker/u257:23 Not tainted 5.10.201-191.748.amzn2.x86_64 #1
+  Hardware name: Xen HVM domU, BIOS 4.11.amazon 08/24/2006
+  Workqueue: nvme-reset-wq nvme_reset_work
+  RIP: 0010:bind_evtchn_to_cpu+0xdf/0xf0
+  Code: 5d 41 5e c3 cc cc cc cc 44 89 f7 e8 2b 55 ad ff 49 89 c5 48 85 c0 0f 84 64 ff ff ff 4c 8b 68 30 41 83 fe ff 0f 85 60 ff ff ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 0f 1f 44 00 00
+  RSP: 0000:ffffc9000d533b08 EFLAGS: 00010046
+  RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000006
+  RDX: 0000000000000028 RSI: 00000000ffffffff RDI: 00000000ffffffff
+  RBP: ffff888107419680 R08: 0000000000000000 R09: ffffffff82d72b00
+  R10: 0000000000000000 R11: 0000000000000000 R12: 00000000000001ed
+  R13: 0000000000000000 R14: 00000000ffffffff R15: 0000000000000002
+  FS:  0000000000000000(0000) GS:ffff88bc8b500000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 0000000002610001 CR4: 00000000001706e0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   ? show_trace_log_lvl+0x1c1/0x2d9
+   ? show_trace_log_lvl+0x1c1/0x2d9
+   ? set_affinity_irq+0xdc/0x1c0
+   ? __die_body.cold+0x8/0xd
+   ? die+0x2b/0x50
+   ? do_trap+0x90/0x110
+   ? bind_evtchn_to_cpu+0xdf/0xf0
+   ? do_error_trap+0x65/0x80
+   ? bind_evtchn_to_cpu+0xdf/0xf0
+   ? exc_invalid_op+0x4e/0x70
+   ? bind_evtchn_to_cpu+0xdf/0xf0
+   ? asm_exc_invalid_op+0x12/0x20
+   ? bind_evtchn_to_cpu+0xdf/0xf0
+   ? bind_evtchn_to_cpu+0xc5/0xf0
+   set_affinity_irq+0xdc/0x1c0
+   irq_do_set_affinity+0x1d7/0x1f0
+   irq_setup_affinity+0xd6/0x1a0
+   irq_startup+0x8a/0xf0
+   __setup_irq+0x639/0x6d0
+   ? nvme_suspend+0x150/0x150
+   request_threaded_irq+0x10c/0x180
+   ? nvme_suspend+0x150/0x150
+   pci_request_irq+0xa8/0xf0
+   ? __blk_mq_free_request+0x74/0xa0
+   queue_request_irq+0x6f/0x80
+   nvme_create_queue+0x1af/0x200
+   nvme_create_io_queues+0xbd/0xf0
+   nvme_setup_io_queues+0x246/0x320
+   ? nvme_irq_check+0x30/0x30
+   nvme_reset_work+0x1c8/0x400
+   process_one_work+0x1b0/0x350
+   worker_thread+0x49/0x310
+   ? process_one_work+0x350/0x350
+   kthread+0x11b/0x140
+   ? __kthread_bind_mask+0x60/0x60
+   ret_from_fork+0x22/0x30
+  Modules linked in:
+  ---[ end trace a11715de1eee1873 ]---
+
+Fixes: d46a78b05c0e ("xen: implement pirq type event channels")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Co-debugged-by: Andrew Panyakin <apanyaki@amazon.com>
+Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20240124163130.31324-1-mheyne@amazon.de
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/fastopen.c |  6 ++---
- net/mptcp/options.c  |  9 +++----
- net/mptcp/protocol.c |  9 ++++---
- net/mptcp/protocol.h |  9 +++----
- net/mptcp/subflow.c  | 56 +++++++++++++++++++++++++-------------------
- 5 files changed, 50 insertions(+), 39 deletions(-)
+ drivers/xen/events/events_base.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/fastopen.c b/net/mptcp/fastopen.c
-index 74698582a2859..ad28da655f8bc 100644
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -59,13 +59,12 @@ void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subf
- 	mptcp_data_unlock(sk);
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index 6f57ef78f5507..36ba3ef6ef01e 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -908,8 +908,8 @@ static void shutdown_pirq(struct irq_data *data)
+ 		return;
+ 
+ 	do_mask(info, EVT_MASK_REASON_EXPLICIT);
+-	xen_evtchn_close(evtchn);
+ 	xen_irq_info_cleanup(info);
++	xen_evtchn_close(evtchn);
  }
  
--void mptcp_fastopen_gen_msk_ackseq(struct mptcp_sock *msk, struct mptcp_subflow_context *subflow,
--				   const struct mptcp_options_received *mp_opt)
-+void __mptcp_fastopen_gen_msk_ackseq(struct mptcp_sock *msk, struct mptcp_subflow_context *subflow,
-+				     const struct mptcp_options_received *mp_opt)
+ static void enable_pirq(struct irq_data *data)
+@@ -941,6 +941,7 @@ EXPORT_SYMBOL_GPL(xen_irq_from_gsi);
+ static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
  {
- 	struct sock *sk = (struct sock *)msk;
- 	struct sk_buff *skb;
+ 	evtchn_port_t evtchn;
++	bool close_evtchn = false;
  
--	mptcp_data_lock(sk);
- 	skb = skb_peek_tail(&sk->sk_receive_queue);
- 	if (skb) {
- 		WARN_ON_ONCE(MPTCP_SKB_CB(skb)->end_seq);
-@@ -77,5 +76,4 @@ void mptcp_fastopen_gen_msk_ackseq(struct mptcp_sock *msk, struct mptcp_subflow_
- 	}
+ 	if (!info) {
+ 		xen_irq_free_desc(irq);
+@@ -960,7 +961,7 @@ static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
+ 		struct xenbus_device *dev;
  
- 	pr_debug("msk=%p ack_seq=%llx", msk, msk->ack_seq);
--	mptcp_data_unlock(sk);
- }
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index d2527d189a799..e3e96a49f9229 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -962,9 +962,7 @@ static bool check_fully_established(struct mptcp_sock *msk, struct sock *ssk,
- 		/* subflows are fully established as soon as we get any
- 		 * additional ack, including ADD_ADDR.
- 		 */
--		subflow->fully_established = 1;
--		WRITE_ONCE(msk->fully_established, true);
--		goto check_notify;
-+		goto set_fully_established;
- 	}
+ 		if (!info->is_static)
+-			xen_evtchn_close(evtchn);
++			close_evtchn = true;
  
- 	/* If the first established packet does not contain MP_CAPABLE + data
-@@ -986,7 +984,10 @@ static bool check_fully_established(struct mptcp_sock *msk, struct sock *ssk,
- set_fully_established:
- 	if (unlikely(!READ_ONCE(msk->pm.server_side)))
- 		pr_warn_once("bogus mpc option on established client sk");
--	mptcp_subflow_fully_established(subflow, mp_opt);
-+
-+	mptcp_data_lock((struct sock *)msk);
-+	__mptcp_subflow_fully_established(msk, subflow, mp_opt);
-+	mptcp_data_unlock((struct sock *)msk);
- 
- check_notify:
- 	/* if the subflow is not already linked into the conn_list, we can't
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 55a90a7b7b517..d369274113108 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3195,6 +3195,7 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- {
- 	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
- 	struct sock *nsk = sk_clone_lock(sk, GFP_ATOMIC);
-+	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk;
- 
- 	if (!nsk)
-@@ -3235,7 +3236,8 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 
- 	/* The msk maintain a ref to each subflow in the connections list */
- 	WRITE_ONCE(msk->first, ssk);
--	list_add(&mptcp_subflow_ctx(ssk)->node, &msk->conn_list);
-+	subflow = mptcp_subflow_ctx(ssk);
-+	list_add(&subflow->node, &msk->conn_list);
- 	sock_hold(ssk);
- 
- 	/* new mpc subflow takes ownership of the newly
-@@ -3250,6 +3252,9 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	__mptcp_propagate_sndbuf(nsk, ssk);
- 
- 	mptcp_rcv_space_init(msk, ssk);
-+
-+	if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
-+		__mptcp_subflow_fully_established(msk, subflow, mp_opt);
- 	bh_unlock_sock(nsk);
- 
- 	/* note: the newly allocated socket refcount is 2 now */
-@@ -3525,8 +3530,6 @@ void mptcp_finish_connect(struct sock *ssk)
- 	 * accessing the field below
- 	 */
- 	WRITE_ONCE(msk->local_key, subflow->local_key);
--	WRITE_ONCE(msk->snd_una, subflow->idsn + 1);
--	WRITE_ONCE(msk->wnd_end, subflow->idsn + 1 + tcp_sk(ssk)->snd_wnd);
- 
- 	mptcp_pm_new_connection(msk, ssk, 0);
- }
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 01778ffa86be1..c9516882cdd4c 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -623,8 +623,9 @@ int mptcp_allow_join_id0(const struct net *net);
- unsigned int mptcp_stale_loss_cnt(const struct net *net);
- int mptcp_get_pm_type(const struct net *net);
- const char *mptcp_get_scheduler(const struct net *net);
--void mptcp_subflow_fully_established(struct mptcp_subflow_context *subflow,
--				     const struct mptcp_options_received *mp_opt);
-+void __mptcp_subflow_fully_established(struct mptcp_sock *msk,
-+				       struct mptcp_subflow_context *subflow,
-+				       const struct mptcp_options_received *mp_opt);
- bool __mptcp_retransmit_pending_data(struct sock *sk);
- void mptcp_check_and_set_pending(struct sock *sk);
- void __mptcp_push_pending(struct sock *sk, unsigned int flags);
-@@ -938,8 +939,8 @@ void mptcp_event_pm_listener(const struct sock *ssk,
- 			     enum mptcp_event_type event);
- bool mptcp_userspace_pm_active(const struct mptcp_sock *msk);
- 
--void mptcp_fastopen_gen_msk_ackseq(struct mptcp_sock *msk, struct mptcp_subflow_context *subflow,
--				   const struct mptcp_options_received *mp_opt);
-+void __mptcp_fastopen_gen_msk_ackseq(struct mptcp_sock *msk, struct mptcp_subflow_context *subflow,
-+				     const struct mptcp_options_received *mp_opt);
- void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subflow,
- 					      struct request_sock *req);
- 
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index ba739e7009221..43d6ee4328141 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -441,20 +441,6 @@ void __mptcp_sync_state(struct sock *sk, int state)
- 	}
- }
- 
--static void mptcp_propagate_state(struct sock *sk, struct sock *ssk)
--{
--	struct mptcp_sock *msk = mptcp_sk(sk);
--
--	mptcp_data_lock(sk);
--	if (!sock_owned_by_user(sk)) {
--		__mptcp_sync_state(sk, ssk->sk_state);
--	} else {
--		msk->pending_state = ssk->sk_state;
--		__set_bit(MPTCP_SYNC_STATE, &msk->cb_flags);
--	}
--	mptcp_data_unlock(sk);
--}
--
- static void subflow_set_remote_key(struct mptcp_sock *msk,
- 				   struct mptcp_subflow_context *subflow,
- 				   const struct mptcp_options_received *mp_opt)
-@@ -476,6 +462,31 @@ static void subflow_set_remote_key(struct mptcp_sock *msk,
- 	atomic64_set(&msk->rcv_wnd_sent, subflow->iasn);
- }
- 
-+static void mptcp_propagate_state(struct sock *sk, struct sock *ssk,
-+				  struct mptcp_subflow_context *subflow,
-+				  const struct mptcp_options_received *mp_opt)
-+{
-+	struct mptcp_sock *msk = mptcp_sk(sk);
-+
-+	mptcp_data_lock(sk);
-+	if (mp_opt) {
-+		/* Options are available only in the non fallback cases
-+		 * avoid updating rx path fields otherwise
-+		 */
-+		WRITE_ONCE(msk->snd_una, subflow->idsn + 1);
-+		WRITE_ONCE(msk->wnd_end, subflow->idsn + 1 + tcp_sk(ssk)->snd_wnd);
-+		subflow_set_remote_key(msk, subflow, mp_opt);
-+	}
-+
-+	if (!sock_owned_by_user(sk)) {
-+		__mptcp_sync_state(sk, ssk->sk_state);
-+	} else {
-+		msk->pending_state = ssk->sk_state;
-+		__set_bit(MPTCP_SYNC_STATE, &msk->cb_flags);
-+	}
-+	mptcp_data_unlock(sk);
-+}
-+
- static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
-@@ -510,10 +521,9 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
- 		if (mp_opt.deny_join_id0)
- 			WRITE_ONCE(msk->pm.remote_deny_join_id0, true);
- 		subflow->mp_capable = 1;
--		subflow_set_remote_key(msk, subflow, &mp_opt);
- 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEACTIVEACK);
- 		mptcp_finish_connect(sk);
--		mptcp_propagate_state(parent, sk);
-+		mptcp_propagate_state(parent, sk, subflow, &mp_opt);
- 	} else if (subflow->request_join) {
- 		u8 hmac[SHA256_DIGEST_SIZE];
- 
-@@ -556,7 +566,7 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
+ 		switch (info->type) {
+ 		case IRQT_VIRQ:
+@@ -980,6 +981,9 @@ static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
  		}
- 	} else if (mptcp_check_fallback(sk)) {
- fallback:
--		mptcp_propagate_state(parent, sk);
-+		mptcp_propagate_state(parent, sk, subflow, NULL);
- 	}
- 	return;
  
-@@ -741,17 +751,16 @@ void mptcp_subflow_drop_ctx(struct sock *ssk)
- 	kfree_rcu(ctx, rcu);
- }
- 
--void mptcp_subflow_fully_established(struct mptcp_subflow_context *subflow,
--				     const struct mptcp_options_received *mp_opt)
-+void __mptcp_subflow_fully_established(struct mptcp_sock *msk,
-+				       struct mptcp_subflow_context *subflow,
-+				       const struct mptcp_options_received *mp_opt)
- {
--	struct mptcp_sock *msk = mptcp_sk(subflow->conn);
--
- 	subflow_set_remote_key(msk, subflow, mp_opt);
- 	subflow->fully_established = 1;
- 	WRITE_ONCE(msk->fully_established, true);
- 
- 	if (subflow->is_mptfo)
--		mptcp_fastopen_gen_msk_ackseq(msk, subflow, mp_opt);
-+		__mptcp_fastopen_gen_msk_ackseq(msk, subflow, mp_opt);
- }
- 
- static struct sock *subflow_syn_recv_sock(const struct sock *sk,
-@@ -844,7 +853,6 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 			 * mpc option
- 			 */
- 			if (mp_opt.suboptions & OPTION_MPTCP_MPC_ACK) {
--				mptcp_subflow_fully_established(ctx, &mp_opt);
- 				mptcp_pm_fully_established(owner, child);
- 				ctx->pm_notified = 1;
- 			}
-@@ -1748,7 +1756,7 @@ static void subflow_state_change(struct sock *sk)
- 		mptcp_do_fallback(sk);
- 		pr_fallback(msk);
- 		subflow->conn_finished = 1;
--		mptcp_propagate_state(parent, sk);
-+		mptcp_propagate_state(parent, sk, subflow, NULL);
+ 		xen_irq_info_cleanup(info);
++
++		if (close_evtchn)
++			xen_evtchn_close(evtchn);
  	}
  
- 	/* as recvmsg() does not acquire the subflow socket for ssk selection
+ 	xen_free_irq(info);
 -- 
 2.43.0
 
