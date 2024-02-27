@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA7513B78A;
-	Tue, 27 Feb 2024 13:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDEB13B79F;
+	Tue, 27 Feb 2024 13:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040581; cv=none; b=MvBZ5oa6osg8HXQUC4H4FVcuRMEQGPnOL/R/6S3oAHdIfk+L7zfQeZZZ0zaJzkBSzZNbRJR8T0xlo53yjYc2odjn+idcrpQ1KQDShpJyUg4bSsDf7P67iA/G+pkk1sPZvZEn1V0XXW2eRZAWoTb9vNTGHvar/hOeoJDonCUjbVs=
+	t=1709040584; cv=none; b=e5DBRPwaTazceMIgwVrYtIjpRnCMqwh9uFYlX4PCSRk8+34eZGy7khgK4n4MP/7hj5IyFiiXrYOuLA5nGYc+DjspeocbZ8W7LpickLQOFqxwgr1YUewz7llU2np+bq1qo0u0zcfTHrsacT/43+h1fRfn+MBZlW0MPBpgccenfJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040581; c=relaxed/simple;
-	bh=rDPWJWJfCEMS6QOskFKvC4b0se/xGZDy4c6wYbFFtdQ=;
+	s=arc-20240116; t=1709040584; c=relaxed/simple;
+	bh=VEGvg/cd/8KpTcwTV+FXTW0RVt8WBdf2pc3fn9B5gTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxYwJ/oDc5k6kuqdiGJYX2vJeXf9ZyLtdrNRRBXzjXdT1liS/UoLKDXoxUZ/6Y/lw1IHpPmfG0K8/PLJpRJZawD/EyQTv1Fkdu+abgE5sNGZ5af32n+cgrCAS/2ka3xOsKPQj2WlOcN9hTLpQ1ljMfIlUzHvlUvXdW/fFZ+qUk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbNBe7P5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/wMsvMO16LuGevEHWpMqxzzF6mWIZ94/RQmrB2WGmOshXE1kDe0a3LdT37pJdmEF1CgfWXtBsbbJ/RJXci7EjYNEGe0HUQYGtA421wZOY6LImfbFoc09jQ/gei4q1Weux0x1uvgsCeCqjdCG1vV2X7+t0lMHWaB3rAPuWKw1SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwmrvwtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbNBe7P5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA2EC433C7;
-	Tue, 27 Feb 2024 13:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwmrvwtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF60C433A6;
+	Tue, 27 Feb 2024 13:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040581;
-	bh=rDPWJWJfCEMS6QOskFKvC4b0se/xGZDy4c6wYbFFtdQ=;
+	s=korg; t=1709040584;
+	bh=VEGvg/cd/8KpTcwTV+FXTW0RVt8WBdf2pc3fn9B5gTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbNBe7P5mcADAsjkaZocWRaFn1Ua75NVHKZ3kg6P5981d1gIydC+lkhFkiIS/GI+i
-	 8BEtIhh1xpo3VXDq3f43bfNCbYds2zwvbgskekQy8XIo+ikssa4vTuThvOL5hIrEKW
-	 5+iFLWm/szvDaYELhQIpMe13WmxjiJiaCrI0zzc8=
+	b=JwmrvwtS68cFYdS5HlKCVGN7gnKxN566aqXArO//ZFzn550FZnVaAOEST7wIWCs1R
+	 gqxQhEWiFn7UoEaGnCExiurCe76zEPhkg8K+MSXkK7T48HWpLV5fMhw41oHXj3B5Ev
+	 j74aS/chfLmvU6bK9MdTmVD5jKUzeOOFiurO2A78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 036/334] ext4: avoid allocating blocks from corrupted group in ext4_mb_find_by_goal()
-Date: Tue, 27 Feb 2024 14:18:14 +0100
-Message-ID: <20240227131631.761649947@linuxfoundation.org>
+Subject: [PATCH 6.7 037/334] Input: goodix - accept ACPI resources with gpio_count == 3 && gpio_int_idx == 0
+Date: Tue, 27 Feb 2024 14:18:15 +0100
+Message-ID: <20240227131631.791567167@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,51 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 832698373a25950942c04a512daa652c18a9b513 ]
+[ Upstream commit 180a8f12c21f41740fee09ca7f7aa98ff5bb99f8 ]
 
-Places the logic for checking if the group's block bitmap is corrupt under
-the protection of the group lock to avoid allocating blocks from the group
-with a corrupted block bitmap.
+Some devices list 3 Gpio resources in the ACPI resource list for
+the touchscreen:
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-8-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+1. GpioInt resource pointing to the GPIO used for the interrupt
+2. GpioIo resource pointing to the reset GPIO
+3. GpioIo resource pointing to the GPIO used for the interrupt
+
+Note how the third extra GpioIo resource really is a duplicate
+of the GpioInt provided info.
+
+Ignore this extra GPIO, treating this setup the same as gpio_count == 2 &&
+gpio_int_idx == 0 fixes the touchscreen not working on the Thunderbook
+Colossus W803 rugged tablet and likely also on the CyberBook_T116K.
+
+Reported-by: Maarten van der Schrieck
+Closes: https://gitlab.com/AdyaAdya/goodix-touchscreen-linux-driver/-/issues/22
+Suggested-by: Maarten van der Schrieck
+Tested-by: Maarten van der Schrieck
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231223141650.10679-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/input/touchscreen/goodix.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 1bc615d621917..7497a789d002e 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -2342,12 +2342,10 @@ int ext4_mb_find_by_goal(struct ext4_allocation_context *ac,
- 	if (err)
- 		return err;
- 
--	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info))) {
--		ext4_mb_unload_buddy(e4b);
--		return 0;
--	}
--
- 	ext4_lock_group(ac->ac_sb, group);
-+	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(e4b->bd_info)))
-+		goto out;
-+
- 	max = mb_find_extent(e4b, ac->ac_g_ex.fe_start,
- 			     ac->ac_g_ex.fe_len, &ex);
- 	ex.fe_logical = 0xDEADFA11; /* debug value */
-@@ -2380,6 +2378,7 @@ int ext4_mb_find_by_goal(struct ext4_allocation_context *ac,
- 		ac->ac_b_ex = ex;
- 		ext4_mb_use_best_found(ac, e4b);
+diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
+index af32fbe57b630..b068ff8afbc9a 100644
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -884,7 +884,8 @@ static int goodix_add_acpi_gpio_mappings(struct goodix_ts_data *ts)
+ 		}
  	}
-+out:
- 	ext4_unlock_group(ac->ac_sb, group);
- 	ext4_mb_unload_buddy(e4b);
  
+-	if (ts->gpio_count == 2 && ts->gpio_int_idx == 0) {
++	/* Some devices with gpio_int_idx 0 list a third unused GPIO */
++	if ((ts->gpio_count == 2 || ts->gpio_count == 3) && ts->gpio_int_idx == 0) {
+ 		ts->irq_pin_access_method = IRQ_PIN_ACCESS_ACPI_GPIO;
+ 		gpio_mapping = acpi_goodix_int_first_gpios;
+ 	} else if (ts->gpio_count == 2 && ts->gpio_int_idx == 1) {
 -- 
 2.43.0
 
