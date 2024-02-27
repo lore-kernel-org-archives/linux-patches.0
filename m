@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3833913EFF4;
-	Tue, 27 Feb 2024 14:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213FE13B7AB;
+	Tue, 27 Feb 2024 14:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043976; cv=none; b=lGqdpos46XaVoZh7KpUYdqemx+brQfLtYHwDiogR+7KtAE7bKAqEUvktbO1onJUSk6p3URgBVggjTO2hvC7cPO4ZVyvpTzGW+L7fp5kM7kAuNRptsIqWTNzzNa5rJfNao5cbQ42AZ2U9iRlTNgVHFbOM9dc8NkF8CCz2ITvwSec=
+	t=1709043979; cv=none; b=k4uW1MRUG2hqE65BnDfUsrFEyi1uELP/iB6BwIYWlnaULTcY9DRvKMzm/R1G1/kF65yLBSi4t9XC9sJMHVjjmBgPwvfMARhieQaBBnfGggA5xFrWm1lQXwnLXZ3lSoMEyo4I5kfiNn+Kllt74Y/up+GGPxFZ4aes2tZT7w9NhVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043976; c=relaxed/simple;
-	bh=UE6pKw1DPcltReTPQjQhE4MeEAAKsVDYf1dKmJUAH2k=;
+	s=arc-20240116; t=1709043979; c=relaxed/simple;
+	bh=fb6syoblvWzbaUbkPZQfanFW1SvNXK65ofjzplMK3No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/5Ho5erOVcVmik/A0xjSlZ11i4ykHeOELUQQPmzp74USPdA1lJ+mzPWQqa4Hl13C6L1akheN1fYhZLo5It0HD53Ldc1XTSEzNB1yF5WlRyBE7XTeX8otlY9riASqr/Re6pNIoOhN+Oxa4mgW21eHccBfm2C0kTF1btdA0Ri//s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6ez7tNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5XKWvUL+KZI4jm7SsmGK360L6+c8VF9+0CgTf7bNu0TwY8ANBQyRrrY/W6gUAfvXgDR1grcNOagVM9PriOQI6HpsVjmmJeYjWz9r++c4WmDrWkQwfOamKFuzZSKaXYyOt2ixawxn6A968K6Hv6HL2D+xGmhrIAlW4MFJuX6clw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiXyvb0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6ez7tNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8572C433C7;
-	Tue, 27 Feb 2024 14:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiXyvb0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03EDC43390;
+	Tue, 27 Feb 2024 14:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043976;
-	bh=UE6pKw1DPcltReTPQjQhE4MeEAAKsVDYf1dKmJUAH2k=;
+	s=korg; t=1709043979;
+	bh=fb6syoblvWzbaUbkPZQfanFW1SvNXK65ofjzplMK3No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6ez7tNYXo95GtMNuS+zBTqDd3y/8HdPZxDdrcHiUI/SPmohfWiTiD3kPCrxPgU5T
-	 EYREEDHWS48f+Kf3KnLflS6TpPkUX8QqBnymMZ4uuoXvHaXqKkejjLp74YWCAvZKkV
-	 p0LopxeCV2L1GP/VrQD8czjoBiV/Ic+a4aNoFAQ4=
+	b=kiXyvb0lEYgvktaW6yGA9p5aXzvN1OWjEcUl5SrNsr6zGp7djJSDB4yxsr4fTFNzL
+	 j6CdURkGRtybc8bcocwXRs09yDkNllvI3s38J24+aMTGmphrSVDhzkyAGHwDEh/vbM
+	 tF3/VdpGTcF3ZMbknwSwDonSGpIkHUXMrrI1dTyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fullway Wang <fullwaywang@outlook.com>,
-	Helge Deller <deller@gmx.de>,
+	Devyn Liu <liudingyuan@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/122] fbdev: sis: Error out if pixclock equals zero
-Date: Tue, 27 Feb 2024 14:26:19 +0100
-Message-ID: <20240227131559.302230674@linuxfoundation.org>
+Subject: [PATCH 5.10 019/122] spi: hisi-sfc-v3xx: Return IRQ_NONE if no interrupts were detected
+Date: Tue, 27 Feb 2024 14:26:20 +0100
+Message-ID: <20240227131559.334779733@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fullway Wang <fullwaywang@outlook.com>
+From: Devyn Liu <liudingyuan@huawei.com>
 
-[ Upstream commit e421946be7d9bf545147bea8419ef8239cb7ca52 ]
+[ Upstream commit de8b6e1c231a95abf95ad097b993d34b31458ec9 ]
 
-The userspace program could pass any values to the driver through
-ioctl() interface. If the driver doesn't check the value of pixclock,
-it may cause divide-by-zero error.
+Return IRQ_NONE from the interrupt handler when no interrupt was
+detected. Because an empty interrupt will cause a null pointer error:
 
-In sisfb_check_var(), var->pixclock is used as a divisor to caculate
-drate before it is checked against zero. Fix this by checking it
-at the beginning.
+    Unable to handle kernel NULL pointer dereference at virtual
+  address 0000000000000008
+    Call trace:
+        complete+0x54/0x100
+        hisi_sfc_v3xx_isr+0x2c/0x40 [spi_hisi_sfc_v3xx]
+        __handle_irq_event_percpu+0x64/0x1e0
+        handle_irq_event+0x7c/0x1cc
 
-This is similar to CVE-2022-3061 in i740fb which was fixed by
-commit 15cf0b8.
-
-Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
+Link: https://msgid.link/r/20240123071149.917678-1-liudingyuan@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/sis_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-hisi-sfc-v3xx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/video/fbdev/sis/sis_main.c b/drivers/video/fbdev/sis/sis_main.c
-index 03c736f6f3d08..e540cb0c51726 100644
---- a/drivers/video/fbdev/sis/sis_main.c
-+++ b/drivers/video/fbdev/sis/sis_main.c
-@@ -1474,6 +1474,8 @@ sisfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
+diff --git a/drivers/spi/spi-hisi-sfc-v3xx.c b/drivers/spi/spi-hisi-sfc-v3xx.c
+index 4650b483a33d3..e0c3ad73c576d 100644
+--- a/drivers/spi/spi-hisi-sfc-v3xx.c
++++ b/drivers/spi/spi-hisi-sfc-v3xx.c
+@@ -365,6 +365,11 @@ static const struct spi_controller_mem_ops hisi_sfc_v3xx_mem_ops = {
+ static irqreturn_t hisi_sfc_v3xx_isr(int irq, void *data)
+ {
+ 	struct hisi_sfc_v3xx_host *host = data;
++	u32 reg;
++
++	reg = readl(host->regbase + HISI_SFC_V3XX_INT_STAT);
++	if (!reg)
++		return IRQ_NONE;
  
- 	vtotal = var->upper_margin + var->lower_margin + var->vsync_len;
+ 	hisi_sfc_v3xx_disable_int(host);
  
-+	if (!var->pixclock)
-+		return -EINVAL;
- 	pixclock = var->pixclock;
- 
- 	if((var->vmode & FB_VMODE_MASK) == FB_VMODE_NONINTERLACED) {
 -- 
 2.43.0
 
