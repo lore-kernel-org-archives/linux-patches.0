@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3A13B7A0;
-	Tue, 27 Feb 2024 13:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE04A13AA55;
+	Tue, 27 Feb 2024 13:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042199; cv=none; b=rewh257WOuCfRGAzIJjRp4EFgs8KSzvZx5aT2MiMxeUAEojKXbwcWnLFt3zyTUmfYUWZlgWf8y0bxnx6Rd38Yq4eP3zhR8PsKq7PRNXOBBFb/8QxfOiSyaoynO86whJ7sobayMOP6ZTN2PwoTf2e6PGQT0bM4FSyGKhVqQzQAKQ=
+	t=1709042201; cv=none; b=rOISEikMTxYSsYzWJ8QJKktEoSoxkQ4t64lXjI8juUow2Ev3T1KUZsiebiac5MhYyzLcx+Q+YQ156WjgO7Pac2GAQXYmuQ7+76bBDeW04vzEsAz2GTbrvDjQABYoGis1jayFESXJzDJVs2aAZ3dkATDtHnefgAOHmhVuf5c6cSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042199; c=relaxed/simple;
-	bh=+XcYTZw71YZI0GLdwdmvF5yqpZ/flLEuGNfXW9ohBeU=;
+	s=arc-20240116; t=1709042201; c=relaxed/simple;
+	bh=qqDdx7MyJQYVoowt3+JZZVvxtP6VfTsNpL02ywaV0j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1c6SnxXXhqhV8wboc6FN3xsJ/TIGKGRzsbs7pKJtVQec0SRnmcFM/aBl/0nU4VqbxS714I4OXoCKoQe+3y1KVflDNZO3lJlLEsiChyyM9YQlnhQxXn8bIBYU3KRq1i5RYrW/87pCGxQX4NFuodDPsCGYaHnb1Kl4DJbw7HO8fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YMhpAAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cp2GaMCP24/vjNtnPNV5ZIuX5YjWJdHeg/O2pjXA2fouhh9bnC5M/3VX2h/9yXX0QFsACY4rLWCinyCK2ZdvwEc9cItkn1irOFvMdBJwSRq7wQLE6e6v5RXkv5wuuWeTtWNYxeFZASyU3rSU9oeUYRp1gNrPEe7m+5M6zZuScE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymPk77K3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YMhpAAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB67EC433F1;
-	Tue, 27 Feb 2024 13:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymPk77K3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0CBC433C7;
+	Tue, 27 Feb 2024 13:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042198;
-	bh=+XcYTZw71YZI0GLdwdmvF5yqpZ/flLEuGNfXW9ohBeU=;
+	s=korg; t=1709042200;
+	bh=qqDdx7MyJQYVoowt3+JZZVvxtP6VfTsNpL02ywaV0j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YMhpAABJ9+I3Ozo3/d+CFe3TtTNIaniab1RIFvaFRowvxS4AF5sgJ0tW+IUNO147
-	 2KpxSayJRea9ysVpjPwKiv4T/vGzJw/VXLhQAMKYpqaypJVu8E9AR4d+xeWFEef8Dd
-	 rOnQydm4eAjULxeJDWcgg5XR49OMt9nM729Eu1Mg=
+	b=ymPk77K3/6Ek9kch0zqhhHsep0173OmhYaxy37xopgdkV8fNWMYHdKu3490vYNDEY
+	 dfKEbbOdVwXNH9VX1NoYRXt14St6MSDYOEDZcZUiyvqdITyruleQlTkMzIu56qe9rl
+	 LVi7vl1MG94WEJCABD5uQ1/Z8i98BBpGwRy7TiOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.6 185/299] usb: cdnsp: fixed issue with incorrect detecting CDNSP family controllers
-Date: Tue, 27 Feb 2024 14:24:56 +0100
-Message-ID: <20240227131631.790600024@linuxfoundation.org>
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 212/299] RDMA/bnxt_re: Return error for SRQ resize
+Date: Tue, 27 Feb 2024 14:25:23 +0100
+Message-ID: <20240227131632.610554156@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -49,94 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-commit 47625b018c6bc788bc10dd654c82696eb0a5ef11 upstream.
+[ Upstream commit 3687b450c5f32e80f179ce4b09e0454da1449eac ]
 
-Cadence have several controllers from 0x000403xx family but current
-driver suuport detecting only one with DID equal 0x0004034E.
-It causes that if someone uses different CDNSP controller then driver
-will use incorrect version and register space.
-Patch fix this issue.
+SRQ resize is not supported in the driver. But driver is not
+returning error from bnxt_re_modify_srq() for SRQ resize.
 
-cc: stable@vger.kernel.org
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20240215121609.259772-1-pawell@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1705985677-15551-5-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/core.c |    1 -
- drivers/usb/cdns3/drd.c  |   13 +++++++++----
- drivers/usb/cdns3/drd.h  |    6 +++++-
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/cdns3/core.c
-+++ b/drivers/usb/cdns3/core.c
-@@ -395,7 +395,6 @@ pm_put:
- 	return ret;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index faa88d12ee868..cc466dfd792b0 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1809,7 +1809,7 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
+ 	switch (srq_attr_mask) {
+ 	case IB_SRQ_MAX_WR:
+ 		/* SRQ resize is not supported */
+-		break;
++		return -EINVAL;
+ 	case IB_SRQ_LIMIT:
+ 		/* Change the SRQ threshold */
+ 		if (srq_attr->srq_limit > srq->qplib_srq.max_wqe)
+@@ -1824,13 +1824,12 @@ int bnxt_re_modify_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr,
+ 		/* On success, update the shadow */
+ 		srq->srq_limit = srq_attr->srq_limit;
+ 		/* No need to Build and send response back to udata */
+-		break;
++		return 0;
+ 	default:
+ 		ibdev_err(&rdev->ibdev,
+ 			  "Unsupported srq_attr_mask 0x%x", srq_attr_mask);
+ 		return -EINVAL;
+ 	}
+-	return 0;
  }
  
--
- /**
-  * cdns_wakeup_irq - interrupt handler for wakeup events
-  * @irq: irq number for cdns3/cdnsp core device
---- a/drivers/usb/cdns3/drd.c
-+++ b/drivers/usb/cdns3/drd.c
-@@ -156,7 +156,8 @@ bool cdns_is_device(struct cdns *cdns)
-  */
- static void cdns_otg_disable_irq(struct cdns *cdns)
- {
--	writel(0, &cdns->otg_irq_regs->ien);
-+	if (cdns->version)
-+		writel(0, &cdns->otg_irq_regs->ien);
- }
- 
- /**
-@@ -422,15 +423,20 @@ int cdns_drd_init(struct cdns *cdns)
- 
- 		cdns->otg_regs = (void __iomem *)&cdns->otg_v1_regs->cmd;
- 
--		if (readl(&cdns->otg_cdnsp_regs->did) == OTG_CDNSP_DID) {
-+		state = readl(&cdns->otg_cdnsp_regs->did);
-+
-+		if (OTG_CDNSP_CHECK_DID(state)) {
- 			cdns->otg_irq_regs = (struct cdns_otg_irq_regs __iomem *)
- 					      &cdns->otg_cdnsp_regs->ien;
- 			cdns->version  = CDNSP_CONTROLLER_V2;
--		} else {
-+		} else if (OTG_CDNS3_CHECK_DID(state)) {
- 			cdns->otg_irq_regs = (struct cdns_otg_irq_regs __iomem *)
- 					      &cdns->otg_v1_regs->ien;
- 			writel(1, &cdns->otg_v1_regs->simulate);
- 			cdns->version  = CDNS3_CONTROLLER_V1;
-+		} else {
-+			dev_err(cdns->dev, "not supporte DID=0x%08x\n", state);
-+			return -EINVAL;
- 		}
- 
- 		dev_dbg(cdns->dev, "DRD version v1 (ID: %08x, rev: %08x)\n",
-@@ -483,7 +489,6 @@ int cdns_drd_exit(struct cdns *cdns)
- 	return 0;
- }
- 
--
- /* Indicate the cdns3 core was power lost before */
- bool cdns_power_is_lost(struct cdns *cdns)
- {
---- a/drivers/usb/cdns3/drd.h
-+++ b/drivers/usb/cdns3/drd.h
-@@ -79,7 +79,11 @@ struct cdnsp_otg_regs {
- 	__le32 susp_timing_ctrl;
- };
- 
--#define OTG_CDNSP_DID	0x0004034E
-+/* CDNSP driver supports 0x000403xx Cadence USB controller family. */
-+#define OTG_CDNSP_CHECK_DID(did) (((did) & GENMASK(31, 8)) == 0x00040300)
-+
-+/* CDNS3 driver supports 0x000402xx Cadence USB controller family. */
-+#define OTG_CDNS3_CHECK_DID(did) (((did) & GENMASK(31, 8)) == 0x00040200)
- 
- /*
-  * Common registers interface for both CDNS3 and CDNSP version of DRD.
+ int bnxt_re_query_srq(struct ib_srq *ib_srq, struct ib_srq_attr *srq_attr)
+-- 
+2.43.0
+
 
 
