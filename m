@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E12D78B61;
-	Tue, 27 Feb 2024 13:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0153A13B79B;
+	Tue, 27 Feb 2024 13:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041224; cv=none; b=jzYWod45IGmlQ0XMhX+qrUHEVKoyij3ez28woXQEy9hFVaWzPRDzZInLUvfwE9ZtIGsh+UcBvFqwwwMdbjnanwMtPr1s5MeJSpfUceJFTn5MCheZwUk1DmtNGMWw+U7S26xoKmzZIYUAvoywgDRKdVWLS3KBWcZse6NwFHmjBE4=
+	t=1709041226; cv=none; b=aaES/VYeCJC//Mhl00q/GptpY7fepCreOR7kq1ID0lJHimc4SEMY7ZE+eYIUm6UsO2JmsebMqWvFS1etzAC9UWyt1/Nm5dotZHFFhxO3GUbcqW++HitoGoNAr9FvKMkMjYZln38y70ou6qLV2DkIRdrpjKIoJeqjX2E0+rTpUZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041224; c=relaxed/simple;
-	bh=zOdP6bGX8AeB5y0WdSl6EyvLwOpPeHw8Z5tjpFgBV/s=;
+	s=arc-20240116; t=1709041226; c=relaxed/simple;
+	bh=fR7fi8YhyyVWUZbPL5r24a9Nzn14Gef5sda+lqoKV5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNcMX5qFoRx2ANC+6+r9i7f2YCq76bi0wGSmaDYEMNwtII/4hFXuO0NVJ+W1j7ysABPcrPLgBoUveuClOsqyP8XWREEwtliJ0EqsV9jXBaSDy2hQ3wjapoQ8bNUnC52iZY7quszv5/TRLVLKoR7jEuMEwscvJFjQS3k7t45VJKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVcofxEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IVI1f5z4sA0cZPnfSs4kZ6FcXqJcavvAJ1BzW5aLLDdxPY/bfJ/9AeWrWXtalyQARTqSC7BZ1XcWT99BY8AXpk0A5ju1GMO+cABjRBq4WgCEl838wQXfbJzj+ZoWZK/qvEwcJN0reVGH4tAb2AMMdqhB95lW9luRC9TIMYtX9U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Rg48AFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVcofxEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ECAC433C7;
-	Tue, 27 Feb 2024 13:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Rg48AFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8369CC433C7;
+	Tue, 27 Feb 2024 13:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041223;
-	bh=zOdP6bGX8AeB5y0WdSl6EyvLwOpPeHw8Z5tjpFgBV/s=;
+	s=korg; t=1709041225;
+	bh=fR7fi8YhyyVWUZbPL5r24a9Nzn14Gef5sda+lqoKV5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVcofxEdwEl+hEUu/9jw9qhRAKtiLfgtoys2uNTJ2OasGprV3wjo9nU9DgygInJjp
-	 LHIlCzzjTpxpK4dRU4lRwO+xhF1wTRUfGZQl8AhKho66rXwMAQFXehEv4lbgx51cQK
-	 cuoGziNdpB2Wdhb1zm76T3umjwOCIdtrF8Ocu6as=
+	b=2Rg48AFW5jIINa//c7HIJOA8RFemnGz8LjxKFmpXNYAv5zmg1CVgKheX00nBiU2bK
+	 dDszFSkuHhTYSYoQEGu7RYxfKKgBvr9Q3I7QsNg4jLheaWf10+zs7/9FT6tpYo6E+p
+	 w0VUWvUGrJHLlFqRlMfdC3ibQ2wSvLHovRD53VyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 264/334] nouveau: fix function cast warnings
-Date: Tue, 27 Feb 2024 14:22:02 +0100
-Message-ID: <20240227131639.478531248@linuxfoundation.org>
+Subject: [PATCH 6.7 265/334] drm/nouveau/mmu/r535: uninitialized variable in r535_bar_new_()
+Date: Tue, 27 Feb 2024 14:22:03 +0100
+Message-ID: <20240227131639.516431105@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
+[ Upstream commit 65323796debe49a1922ba507020f7530a4b3f9af ]
 
-clang-16 warns about casting between incompatible function types:
+If gf100_bar_new_() fails then "bar" is not initialized.
 
-drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-  161 |         .fini = (void(*)(void *))release_firmware,
-
-This one was done to use the generic shadow_fw_release() function as a
-callback for struct nvbios_source. Change it to use the same prototype
-as the other five instances, with a trivial helper function that actually
-calls release_firmware.
-
-Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 5bf0257136a2 ("drm/nouveau/mmu/r535: initial support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/dab21df7-4d90-4479-97d8-97e5d228c714@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bar/r535.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-index 19188683c8fca..8c2bf1c16f2a9 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
- 	return (void *)fw;
- }
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bar/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bar/r535.c
+index 4135690326f44..3a30bea30e366 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bar/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bar/r535.c
+@@ -168,12 +168,11 @@ r535_bar_new_(const struct nvkm_bar_func *hw, struct nvkm_device *device,
+ 	rm->flush = r535_bar_flush;
  
-+static void
-+shadow_fw_release(void *fw)
-+{
-+	release_firmware(fw);
-+}
-+
- static const struct nvbios_source
- shadow_fw = {
- 	.name = "firmware",
- 	.init = shadow_fw_init,
--	.fini = (void(*)(void *))release_firmware,
-+	.fini = shadow_fw_release,
- 	.read = shadow_fw_read,
- 	.rw = false,
- };
+ 	ret = gf100_bar_new_(rm, device, type, inst, &bar);
+-	*pbar = bar;
+ 	if (ret) {
+-		if (!bar)
+-			kfree(rm);
++		kfree(rm);
+ 		return ret;
+ 	}
++	*pbar = bar;
+ 
+ 	bar->flushBAR2PhysMode = ioremap(device->func->resource_addr(device, 3), PAGE_SIZE);
+ 	if (!bar->flushBAR2PhysMode)
 -- 
 2.43.0
 
