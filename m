@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A477B1419AA;
-	Tue, 27 Feb 2024 13:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EE3146015;
+	Tue, 27 Feb 2024 13:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041520; cv=none; b=ebpe/QqKtB/2IvlMWNZo0dJrV2XM29KNbhJSM1OkLrsEnynjWP20oi9YdMD6znibDqzd4clcydht1F4Gm2YzMv7NxZjCqJuUN4FOU2pcAxcARjj8psacC8mcttFI8zkNLJAw9matMCSVeEzx8Qen1hhgZ9fv137mmynB0OR6sPs=
+	t=1709041523; cv=none; b=G6vBPfjGAzT8zidGT+Lyne0Zn0inL+DwCf3SivR6lYECPF6H5S2OQkXvHoYWaib9PvZwPDO3XFB9pdNXoHhA/xcMcG5v/GhcHBX7Kuiwe6uzHZpc+HnS4PddxdkfT/d+X2nXX7CN2h6GxNO81J14ilhpajwWsb5g+yJJuOTJqZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041520; c=relaxed/simple;
-	bh=RsUrhUhjlpocM/7KjPpNSfww7UptShZ50wD+dzgX2tA=;
+	s=arc-20240116; t=1709041523; c=relaxed/simple;
+	bh=Z5tzvBrZ5YQ37mtb2A30sUwr1h06N0/iUzzOtVqRrH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxUWwPdlcQGYPpafna+c0JROMGHgoS4gpNRHXqpKmJ2Nra6F9P1b6hI6n3x+32ksxOZKJPF80RyrQVKttSMfPj7kaUiOyYmDZSUi28t+jof1WkXOCnmOlsGTcGmXqDvck3o6xtCH9hv9cOn9vVUMj/6vCCka944qbVF4F9wLNuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCLO7t46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9ZFSFnxqwaESajeVa81e6o2NJmq/v3+KwopH7a6mHYMPPyd26W///DBK3navG1TSXjF59ybFeGBkc+/+WvG5O27pbHCW1RTRR1utxL86J2Wa7wOcNbigpq+3Nwyq6ztQdBuGiEVe2XWuRpTA0FQzvdMz1LjSZx8aEedWtYcYuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4Yf7Vi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCLO7t46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE01C433A6;
-	Tue, 27 Feb 2024 13:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4Yf7Vi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE26FC433C7;
+	Tue, 27 Feb 2024 13:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041520;
-	bh=RsUrhUhjlpocM/7KjPpNSfww7UptShZ50wD+dzgX2tA=;
+	s=korg; t=1709041523;
+	bh=Z5tzvBrZ5YQ37mtb2A30sUwr1h06N0/iUzzOtVqRrH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCLO7t46WTynNrdV4xATMx3fjyOFeoUBdRK6jpbXQbFDKdC4C52mnbm60atX1n9OJ
-	 X+KDeMa/h0nefuA15+iHM61KYc/3tU9cO/g1HzRxnOLusnVShp0Y5uH83H/zBkmN1H
-	 uMzwlhELKtSVP4HWqh3ElgZMVLBV8iCC6wq5ed40=
+	b=U4Yf7Vi7aEgCvCQFjOB4mvGiJU3hshsbSxpsY+GEXQ7TZRvYVJShQrw8PPdvolfk+
+	 Ug3eoH3nY//UaJRHibNxOh6DZR/LiXDUwpUkGnj8ZyuTjed2Q2DqJL9r5gsijiZ/nS
+	 zpQKtC9KaMuUIl9s3k+UyKU9V8ZXA2yqoIKiQq1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	GONG
-Subject: [PATCH 4.19 06/52] memcg: add refcnt for pcpu stock to avoid UAF problem in drain_all_stock()
-Date: Tue, 27 Feb 2024 14:25:53 +0100
-Message-ID: <20240227131548.736821200@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 07/52] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
+Date: Tue, 27 Feb 2024 14:25:54 +0100
+Message-ID: <20240227131548.770650929@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -51,132 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "GONG, Ruiqi" <gongruiqi1@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 1a3e1f40962c445b997151a542314f3c6097f8c3 upstream.
+commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
 
-NOTE: This is a partial backport since we only need the refcnt between
-memcg and stock to fix the problem stated below, and in this way
-multiple versions use the same code and align with each other.
+If DAT metadata file block access fails due to corruption of the DAT file
+or abnormal virtual block numbers held by b-trees or inodes, a kernel
+warning is generated.
 
-There was a kernel panic happened on an in-house environment running
-3.10, and the same problem was reproduced on 4.19:
+This replaces the WARN_ONs by error output, so that a kernel, booted with
+panic_on_warn, does not panic.  This patch also replaces the detected
+return code -ENOENT with another internal code -EINVAL to notify the bmap
+layer of metadata corruption.  When the bmap layer sees -EINVAL, it
+handles the abnormal situation with nilfs_bmap_convert_error() and finally
+returns code -EIO as it should.
 
-general protection fault: 0000 [#1] SMP PTI
-CPU: 1 PID: 2085 Comm: bash Kdump: loaded Tainted: G             L    4.19.90+ #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010 drain_all_stock+0xad/0x140
-Code: 00 00 4d 85 ff 74 2c 45 85 c9 74 27 4d 39 fc 74 42 41 80 bc 24 28 04 00 00 00 74 17 49 8b 04 24 49 8b 17 48 8b 88 90 02 00 00 <48> 39 8a 90 02 00 00 74 02 eb 86 48 63 88 3c 01 00 00 39 8a 3c 01
-RSP: 0018:ffffa7efc5813d70 EFLAGS: 00010202
-RAX: ffff8cb185548800 RBX: ffff8cb89f420160 RCX: ffff8cb1867b6000
-RDX: babababababababa RSI: 0000000000000001 RDI: 0000000000231876
-RBP: 0000000000000000 R08: 0000000000000415 R09: 0000000000000002
-R10: 0000000000000000 R11: 0000000000000001 R12: ffff8cb186f89040
-R13: 0000000000020160 R14: 0000000000000001 R15: ffff8cb186b27040
-FS:  00007f4a308d3740(0000) GS:ffff8cb89f440000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffe4d634a68 CR3: 000000010b022000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- mem_cgroup_force_empty_write+0x31/0xb0
- cgroup_file_write+0x60/0x140
- ? __check_object_size+0x136/0x147
- kernfs_fop_write+0x10e/0x190
- __vfs_write+0x37/0x1b0
- ? selinux_file_permission+0xe8/0x130
- ? security_file_permission+0x2e/0xb0
- vfs_write+0xb6/0x1a0
- ksys_write+0x57/0xd0
- do_syscall_64+0x63/0x250
- ? async_page_fault+0x8/0x30
- entry_SYSCALL_64_after_hwframe+0x5c/0xc1
-Modules linked in: ...
-
-It is found that in case of stock->nr_pages == 0, the memcg on
-stock->cached could be freed due to its refcnt decreased to 0, which
-made stock->cached become a dangling pointer. It could cause a UAF
-problem in drain_all_stock() in the following concurrent scenario. Note
-that drain_all_stock() doesn't disable irq but only preemption.
-
-CPU1                             CPU2
-==============================================================================
-stock->cached = memcgA (freed)
-                                 drain_all_stock(memcgB)
-                                  rcu_read_lock()
-                                  memcg = CPU1's stock->cached (memcgA)
-                                  (interrupted)
-refill_stock(memcgC)
- drain_stock(memcgA)
- stock->cached = memcgC
- stock->nr_pages += xxx (> 0)
-                                  stock->nr_pages > 0
-                                  mem_cgroup_is_descendant(memcgA, memcgB) [UAF]
-                                  rcu_read_unlock()
-
-This problem is, unintentionally, fixed at 5.9, where commit
-1a3e1f40962c ("mm: memcontrol: decouple reference counting from page
-accounting") adds memcg refcnt for stock. Therefore affected LTS
-versions include 4.19 and 5.4.
-
-For 4.19, memcg's css offline process doesn't call drain_all_stock(). so
-it's easier for the released memcg to be left on the stock. For 5.4,
-although mem_cgroup_css_offline() does call drain_all_stock(), but the
-flushing could be skipped when stock->nr_pages happens to be 0, and
-besides the async draining could be delayed and take place after the UAF
-problem has happened.
-
-Fix this problem by adding (and decreasing) memcg's refcnt when memcg is
-put onto (and removed from) stock, just like how commit 1a3e1f40962c
-("mm: memcontrol: decouple reference counting from page accounting")
-does. After all, "being on the stock" is a kind of reference with
-regards to memcg. As such, it's guaranteed that a css on stock would not
-be freed.
-
-It's good to mention that refill_stock() is executed in an irq-disabled
-context, so the drain_stock() patched with css_put() would not actually
-free memcgA until the end of refill_stock(), since css_put() is an RCU
-free and it's still in grace period. For CPU2, the access to CPU1's
-stock->cached is protected by rcu_read_lock(), so in this case it gets
-either NULL from stock->cached or a memcgA that is still good.
-
-Cc: stable@vger.kernel.org      # 4.19 5.4
-Fixes: cdec2e4265df ("memcg: coalesce charging via percpu storage")
-Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
+Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
+Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nilfs2/dat.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2015,6 +2015,9 @@ static void drain_stock(struct memcg_sto
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
+ static int nilfs_dat_prepare_entry(struct inode *dat,
+ 				   struct nilfs_palloc_req *req, int create)
  {
- 	struct mem_cgroup *old = stock->cached;
- 
-+	if (!old)
-+		return;
+-	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
+-					    create, &req->pr_entry_bh);
++	int ret;
 +
- 	if (stock->nr_pages) {
- 		page_counter_uncharge(&old->memory, stock->nr_pages);
- 		if (do_memsw_account())
-@@ -2022,6 +2025,8 @@ static void drain_stock(struct memcg_sto
- 		css_put_many(&old->css, stock->nr_pages);
- 		stock->nr_pages = 0;
- 	}
-+
-+	css_put(&old->css);
- 	stock->cached = NULL;
++	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
++					   create, &req->pr_entry_bh);
++	if (unlikely(ret == -ENOENT)) {
++		nilfs_msg(dat->i_sb, KERN_ERR,
++			  "DAT doesn't have a block to manage vblocknr = %llu",
++			  (unsigned long long)req->pr_entry_nr);
++		/*
++		 * Return internal code -EINVAL to notify bmap layer of
++		 * metadata corruption.
++		 */
++		ret = -EINVAL;
++	}
++	return ret;
  }
  
-@@ -2057,6 +2062,7 @@ static void refill_stock(struct mem_cgro
- 	stock = this_cpu_ptr(&memcg_stock);
- 	if (stock->cached != memcg) { /* reset if necessary */
- 		drain_stock(stock);
-+		css_get(&memcg->css);
- 		stock->cached = memcg;
- 	}
- 	stock->nr_pages += nr_pages;
+ static void nilfs_dat_commit_entry(struct inode *dat,
+@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
+ 
+ int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
+ {
+-	int ret;
+-
+-	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	WARN_ON(ret == -ENOENT);
+-	return ret;
++	return nilfs_dat_prepare_entry(dat, req, 0);
+ }
+ 
+ void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
+@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
+ 	int ret;
+ 
+ 	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	if (ret < 0) {
+-		WARN_ON(ret == -ENOENT);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
+ 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
 
 
