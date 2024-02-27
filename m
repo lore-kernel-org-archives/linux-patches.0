@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D54145350;
-	Tue, 27 Feb 2024 14:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9E314532C;
+	Tue, 27 Feb 2024 14:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044175; cv=none; b=MHT+LxQlgP3L/Y96+yerb/GAPjnvlJ1iZQhJlU2/JrHO0dcad7Hj4W8SVAMFD75rMYXe/a/0faa00IZHVtb90Zq9sPJb2W7puqsfURQ5+7JYFrHGEM04OJspUCFLa0O2NcYVTapWtdQ7Q6brj8HPLkw/0wErJxvm+i4AmtXUFe0=
+	t=1709044178; cv=none; b=fYMbjaoecnCx78B/5VaYDAkSzu3+ph0jYiqglTNLFJaTTtEpsApp0K/EMRxPAIYi+7oD6sJ1j1uo8889w96LY9J2+X9jThxyZyFBpaJzfayHC56qTaVSRHqhQmynE+Cr7f3FtSQJmxt9PmFAO9eeY/JGsqyhQF3FHUtUTTzcb70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044175; c=relaxed/simple;
-	bh=Ulqts0juJFOVBLJenLoqMWIHny5lUEKAet9TESZ+y40=;
+	s=arc-20240116; t=1709044178; c=relaxed/simple;
+	bh=Dt7H2YQ4w+tTl1q7wfOkyBhw8iDL7+TEkZw+Raf2AF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8D7Y4VVl5j3xsZiImwQrzOU5I+W1AC/7K/bkxjjQ/u5Px6XbqYKZsjdNTFjvtFDBRcBMmYNAessNND+PJUT4gCwo2m1n2ron3EF1kGtiCfO3rdradQqxw3kv7Z6Qd0YLMwrGobd+rn26LdDE/YQABOkciUYlGs28Rex2TYMzTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYssHczK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6OoZtrBBVwCJh3NrHra6tWbV8oLl60qBqqGJegSgwHGSYDJ+bTG5NcUtQ5GPsCQXUc74NrWppFpQ9nfoUu0oR7KBLjP1+bvR2IAZo4rgJzFVoRBSZwgcAsyTxB5qeWjWmNp0pESYdf46XeArFBTRtgTo6xOmrjmw35YDt2Kcp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v89NM7oS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYssHczK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144B4C433F1;
-	Tue, 27 Feb 2024 14:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v89NM7oS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2002C433C7;
+	Tue, 27 Feb 2024 14:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044175;
-	bh=Ulqts0juJFOVBLJenLoqMWIHny5lUEKAet9TESZ+y40=;
+	s=korg; t=1709044178;
+	bh=Dt7H2YQ4w+tTl1q7wfOkyBhw8iDL7+TEkZw+Raf2AF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYssHczKdEuHfW58b1b62j+skP0azvbX2mhSyRcNzquV+Nf+Q0vR43sz25G8ccCJ9
-	 PTnXoUc/9FeLA2pJeOZdeC+PAZ49H5PWlaFFjhH/pAj3wP/6A5yJYlpl/q4VLzrYtD
-	 M6KGYiQORVBGFX+AbSQRhBtL/0BMKFBBGtYNjblE=
+	b=v89NM7oSgBKJdhZzc4pdp0/n5eMNTp81MZtIB2dzARfJSGI4AtNmdxTcpN+wzb+GT
+	 oaLhr66+PBHZGGYT9Titpqegcr7rgbV9o1qWokvX9+rFepoPtftGw8924b1n2+/nl/
+	 7Up/RXIJYbRJ95QyrFPpfhMdhQvZO/sPoeTpSMQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 089/122] x86/alternative: Make custom return thunk unconditional
-Date: Tue, 27 Feb 2024 14:27:30 +0100
-Message-ID: <20240227131601.618509293@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.10 090/122] usb: cdns3: fixed memory use after free at cdns3_gadget_ep_disable()
+Date: Tue, 27 Feb 2024 14:27:31 +0100
+Message-ID: <20240227131601.651492487@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -50,77 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-Upstream commit: 095b8303f3835c68ac4a8b6d754ca1c3b6230711
+commit cd45f99034b0c8c9cb346dd0d6407a95ca3d36f6 upstream.
 
-There is infrastructure to rewrite return thunks to point to any
-random thunk one desires, unwrap that from CALL_THUNKS, which up to
-now was the sole user of that.
+  ...
+  cdns3_gadget_ep_free_request(&priv_ep->endpoint, &priv_req->request);
+  list_del_init(&priv_req->list);
+  ...
 
-  [ bp: Make the thunks visible on 32-bit and add ifdeffery for the
-    32-bit builds. ]
+'priv_req' actually free at cdns3_gadget_ep_free_request(). But
+list_del_init() use priv_req->list after it.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230814121148.775293785@infradead.org
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+[ 1542.642868][  T534] BUG: KFENCE: use-after-free read in __list_del_entry_valid+0x10/0xd4
+[ 1542.642868][  T534]
+[ 1542.653162][  T534] Use-after-free read at 0x000000009ed0ba99 (in kfence-#3):
+[ 1542.660311][  T534]  __list_del_entry_valid+0x10/0xd4
+[ 1542.665375][  T534]  cdns3_gadget_ep_disable+0x1f8/0x388 [cdns3]
+[ 1542.671571][  T534]  usb_ep_disable+0x44/0xe4
+[ 1542.675948][  T534]  ffs_func_eps_disable+0x64/0xc8
+[ 1542.680839][  T534]  ffs_func_set_alt+0x74/0x368
+[ 1542.685478][  T534]  ffs_func_disable+0x18/0x28
+
+Move list_del_init() before cdns3_gadget_ep_free_request() to resolve this
+problem.
+
+Cc: stable@vger.kernel.org
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20240202154217.661867-1-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    8 ++++----
- arch/x86/kernel/alternative.c        |    4 ----
- arch/x86/kernel/cpu/bugs.c           |    2 ++
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/usb/cdns3/gadget.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -190,7 +190,11 @@
- 	_ASM_PTR " 999b\n\t"					\
- 	".popsection\n\t"
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -2538,11 +2538,11 @@ static int cdns3_gadget_ep_disable(struc
  
-+#ifdef CONFIG_RETHUNK
- extern void __x86_return_thunk(void);
-+#else
-+static inline void __x86_return_thunk(void) {}
-+#endif
+ 	while (!list_empty(&priv_ep->wa2_descmiss_req_list)) {
+ 		priv_req = cdns3_next_priv_request(&priv_ep->wa2_descmiss_req_list);
++		list_del_init(&priv_req->list);
  
- extern void retbleed_return_thunk(void);
- extern void srso_return_thunk(void);
-@@ -203,11 +207,7 @@ extern void srso_alias_untrain_ret(void)
- extern void entry_untrain_ret(void);
- extern void entry_ibpb(void);
+ 		kfree(priv_req->request.buf);
+ 		cdns3_gadget_ep_free_request(&priv_ep->endpoint,
+ 					     &priv_req->request);
+-		list_del_init(&priv_req->list);
+ 		--priv_ep->wa2_counter;
+ 	}
  
--#ifdef CONFIG_CALL_THUNKS
- extern void (*x86_return_thunk)(void);
--#else
--#define x86_return_thunk	(&__x86_return_thunk)
--#endif
- 
- #ifdef CONFIG_RETPOLINE
- 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -677,10 +677,6 @@ void __init_or_module noinline apply_ret
- 
- #ifdef CONFIG_RETHUNK
- 
--#ifdef CONFIG_CALL_THUNKS
--void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
--#endif
--
- /*
-  * Rewrite the compiler generated return thunk tail-calls.
-  *
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -61,6 +61,8 @@ EXPORT_SYMBOL_GPL(x86_pred_cmd);
- 
- static DEFINE_MUTEX(spec_ctrl_mutex);
- 
-+void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
-+
- /* Update SPEC_CTRL MSR and its cached copy unconditionally */
- static void update_spec_ctrl(u64 val)
- {
 
 
