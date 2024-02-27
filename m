@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2072613B2B4;
-	Tue, 27 Feb 2024 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF87513B2B4;
+	Tue, 27 Feb 2024 14:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043865; cv=none; b=k9kt8O0Tx8UtdWE2OZpN6VqF9sjpSQrvnq3LYq22NuqLCV7b3+89oANhl83i4OEu9F68VbrKRD/S1RYLXHXqOkF3A9JUaBxUFNLSxogp7fsHzwq1kyJlNhJ2kgxwaddPr+u2M8h9TeMRzYby3swANnlpxd/MD+uFqd5hdIEIJKE=
+	t=1709043867; cv=none; b=o4c9uYmMmjS54nxBlNITbO+QApcdECKeWOq3BtdsGWDvv3GK6cG85xrKzktPMeRCn6eUAmFCLjkbqrJB7J+G/x7umsSdAtnuuuS/NXd5nFykm2oKrekuBPfdRv7X9sHYSfy/qFC73adAiBoSzmr+czKCcIc/clS5C23/XLwa3LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043865; c=relaxed/simple;
-	bh=oy7FPWfNCDlOrgObzUK13GEVVOsNt2B8V5ztzMfLho4=;
+	s=arc-20240116; t=1709043867; c=relaxed/simple;
+	bh=6/uyTvG8nYq22fxSWROY4A0wxU9uB6vSZKjnbBmxwX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jgu6UNrdPyfXWlXhOvX21d7GnMtxDEZ4Vw/NpkCFyobRDleHfBUZ18fUjYwWRoaq1NDApfzmDfl68IdCvHv02s2u18GbCPmXTgQ9x5FNj3/6mFMJMQzjJ66BQlE1JkbataEhzVVqnqVU6muNGpCNU0J44SrpqHB7HS6EcZrC12U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgDT0gTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OelEFUizrCloZkJy+UFA3tPHV4zTv0qHh5rIDCGtXZtKlwSCe9DkO42j6TXzvNvSfYrfPe9BNQnYeGMGDcqxheH0vYk5zFGw/pSXbbMfy1ELTq0lRFo9CWsqPb/MCGVUe10DsMFslQBPhphDRyJBw1nklkHgbKSN0149w6n/9fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdlhjV7h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgDT0gTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AB4C433C7;
-	Tue, 27 Feb 2024 14:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdlhjV7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5F5C43390;
+	Tue, 27 Feb 2024 14:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043865;
-	bh=oy7FPWfNCDlOrgObzUK13GEVVOsNt2B8V5ztzMfLho4=;
+	s=korg; t=1709043867;
+	bh=6/uyTvG8nYq22fxSWROY4A0wxU9uB6vSZKjnbBmxwX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgDT0gTk2Ynv2ocB4zlMT1rVP13fNtMVqzxKvR6tVRVpV9DtDaOvlF1y7cltocII+
-	 JYbVbPxDsUXz21FKpJhe2Y/Qsmkrp5fUV2G4/q1LMXqKdl+aHVi4eI0fH7TeGpfY5V
-	 djyzLLviQ8kIDxP2JaRIE7tu7EfjT5UPKcv/A/s8=
+	b=rdlhjV7htjtq4J9A1ukds2cKdDk8LBHixGj5Vd3vzJGNDp3sgJCmxlZV/xiMG5a2Y
+	 a1TMafRJM7CIPKfnloZQsD8TmrK1E+6CnriCbNhaLKXB5DHiUjiTPuOi9y2Aij6tir
+	 jxmhytz9tIuUQSAST2d0zPPVeGHFjWFuWWv+I/r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.4 62/84] usb: roles: dont get/set_role() when usb_role_switch is unregistered
-Date: Tue, 27 Feb 2024 14:27:29 +0100
-Message-ID: <20240227131554.889882065@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 63/84] IB/hfi1: Fix a memleak in init_credit_return
+Date: Tue, 27 Feb 2024 14:27:30 +0100
+Message-ID: <20240227131554.922957649@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -50,76 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
+[ Upstream commit 809aa64ebff51eb170ee31a95f83b2d21efa32e2 ]
 
-There is a possibility that usb_role_switch device is unregistered before
-the user put usb_role_switch. In this case, the user may still want to
-get/set_role() since the user can't sense the changes of usb_role_switch.
+When dma_alloc_coherent fails to allocate dd->cr_base[i].va,
+init_credit_return should deallocate dd->cr_base and
+dd->cr_base[i] that allocated before. Or those resources
+would be never freed and a memleak is triggered.
 
-This will add a flag to show if usb_role_switch is already registered and
-avoid unwanted behaviors.
-
-Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
-cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Link: https://lore.kernel.org/r/20240112085523.3731720-1-alexious@zju.edu.cn
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/roles/class.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hfi1/pio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -20,6 +20,7 @@ struct usb_role_switch {
- 	struct device dev;
- 	struct mutex lock; /* device lock*/
- 	enum usb_role role;
-+	bool registered;
- 
- 	/* From descriptor */
- 	struct device *usb2_port;
-@@ -46,6 +47,9 @@ int usb_role_switch_set_role(struct usb_
- 	if (IS_ERR_OR_NULL(sw))
- 		return 0;
- 
-+	if (!sw->registered)
-+		return -EOPNOTSUPP;
-+
- 	mutex_lock(&sw->lock);
- 
- 	ret = sw->set(sw->dev.parent, role);
-@@ -69,7 +73,7 @@ enum usb_role usb_role_switch_get_role(s
- {
- 	enum usb_role role;
- 
--	if (IS_ERR_OR_NULL(sw))
-+	if (IS_ERR_OR_NULL(sw) || !sw->registered)
- 		return USB_ROLE_NONE;
- 
- 	mutex_lock(&sw->lock);
-@@ -319,6 +323,8 @@ usb_role_switch_register(struct device *
- 		return ERR_PTR(ret);
+diff --git a/drivers/infiniband/hw/hfi1/pio.c b/drivers/infiniband/hw/hfi1/pio.c
+index fa5de362010f2..8303c506733cc 100644
+--- a/drivers/infiniband/hw/hfi1/pio.c
++++ b/drivers/infiniband/hw/hfi1/pio.c
+@@ -2131,7 +2131,7 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 				   "Unable to allocate credit return DMA range for NUMA %d\n",
+ 				   i);
+ 			ret = -ENOMEM;
+-			goto done;
++			goto free_cr_base;
+ 		}
  	}
- 
-+	sw->registered = true;
+ 	set_dev_node(&dd->pcidev->dev, dd->node);
+@@ -2139,6 +2139,10 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 	ret = 0;
+ done:
+ 	return ret;
 +
- 	/* TODO: Symlinks for the host port and the device controller. */
- 
- 	return sw;
-@@ -333,8 +339,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
-  */
- void usb_role_switch_unregister(struct usb_role_switch *sw)
- {
--	if (!IS_ERR_OR_NULL(sw))
-+	if (!IS_ERR_OR_NULL(sw)) {
-+		sw->registered = false;
- 		device_unregister(&sw->dev);
-+	}
++free_cr_base:
++	free_credit_return(dd);
++	goto done;
  }
- EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
  
+ void free_credit_return(struct hfi1_devdata *dd)
+-- 
+2.43.0
+
 
 
