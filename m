@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C7C13A26F;
-	Tue, 27 Feb 2024 14:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD1413B2B3;
+	Tue, 27 Feb 2024 14:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042825; cv=none; b=RuHLsdgFOmc/LuIAi0etEht2ObUdfzmihTwkoafh2Hx27htzh3pQ7Bx21XiF/+J5SLB9giw4MrtXG/pEG1af73rsyIWrGN1qAXsHOvdTOwwO76pNJWlkL+edJ6W8wRztN5Pnrkdu+pW7xSSx+NQOxmkqpBQEtHL2sZfVktstdvM=
+	t=1709042828; cv=none; b=tnnie5rQ9q1x3QTku+mrnSuzwWgDb3MBziYxOMkhL2rPcxk9Cm6hRwYp4l9EkZUBxi2xfiT5RpbqjcQBWlI6iFzPP2RrjnKiJPnlpYdkDykglS2YsRy7xtSBMSMM3I1I6ANTZi6F7BhvRp6oJJ7nhXqVNdtZr4TD34gGAZv4iEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042825; c=relaxed/simple;
-	bh=i3gnM6hDC24XQkyb0C/jSdLUK+g5kxYea98dwIROdnQ=;
+	s=arc-20240116; t=1709042828; c=relaxed/simple;
+	bh=NvBke//oTVEsye27O0J4EbYRJdSk0lRI8tJZ2XR99dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULhZMedTYClXVltpViD5YBdvWkl1WIrOZN1jfgZ6A5/OeqWaSqdSl/KqtJKwRjeBncJH2xcwHxKp394aElK0S79sMNHXW43lrsO4hhgvpkLsKg2Q+8NcYol6Yp4zsMPfyWue7voMJul0BOgZsUsg9pZWcOr5dLil8kmhHa+o16Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj9qOeYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NM+G0+CvgIDYn50d6Xyl7KJcpCem7K4zFGgLfZzCpxsmFdm1i8m5NrenK1t75sLAqKGc1SwN5sYp7Y/tdfr1Qaa4/OICYdg1qbrvpW8DduEIz2mAUHUwmkLwEWgkSm3Z/aIsxT9kfSkmf7ZAJIajkjjT+icD3Av+hEYJguSAUIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoszFYWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj9qOeYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620C8C433C7;
-	Tue, 27 Feb 2024 14:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoszFYWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5DBC433C7;
+	Tue, 27 Feb 2024 14:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042825;
-	bh=i3gnM6hDC24XQkyb0C/jSdLUK+g5kxYea98dwIROdnQ=;
+	s=korg; t=1709042828;
+	bh=NvBke//oTVEsye27O0J4EbYRJdSk0lRI8tJZ2XR99dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aj9qOeYLPwtlHZFgO9nTcL79x/g4M6/W73em6u/ByfQckSuHX7falrkA5lS3Imp7v
-	 KZhQZrzCv/iKfOrL43F0vLAF8Vcm5h9zNYIUiSJw2WAHli5xKd7KBGmAwkMFrHq1Fo
-	 mCUC3xnJVwYEnTxmER+UZR9sxzYZF6rSGyjO5ygs=
+	b=DoszFYWR5ycXPLgXpGKYqBolHqyDaCALk6/kPeGbrRxxdCkhOtqtJEsYNMKdW5Djp
+	 xPstnukifCxK58ZUFO8zZ9ZPOuQ89HYbbHsZJXnNLUExISE1uZTvIUXJXb7RBD3OwS
+	 Hm4nEL12Ihc1Rnr3m57VvVyq4SpXGGb/eAR3Nwus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/245] acpi: property: Let args be NULL in __acpi_node_get_property_reference
-Date: Tue, 27 Feb 2024 14:25:23 +0100
-Message-ID: <20240227131619.599114576@linuxfoundation.org>
+Subject: [PATCH 5.15 136/245] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
+Date: Tue, 27 Feb 2024 14:25:24 +0100
+Message-ID: <20240227131619.634812489@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -46,55 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit bef52aa0f3de1b7d8c258c13b16e577361dabf3a ]
+[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
 
-fwnode_get_property_reference_args() may not be called with args argument
-NULL on ACPI, OF already supports this. Add the missing NULL checks and
-document this.
+There is no such trigger documented or implemented in Linux. It was a
+copy & paste mistake.
 
-The purpose is to be able to count the references.
+This fixes:
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+        'default-off' does not match '^cpu[0-9]*$'
+        'default-off' does not match '^hci[0-9]+-power$'
+        'default-off' does not match '^mmc[0-9]+$'
+        'default-off' does not match '^phy[0-9]+tx$'
+        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
 
-Fixes: 977d5ad39f3e ("ACPI: Convert ACPI reference args to generic fwnode reference args")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231109101010.1329587-2-sakari.ailus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
+ arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 488915328646e..9ab7f7184343a 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -639,6 +639,7 @@ acpi_fwnode_get_named_child_node(const struct fwnode_handle *fwnode,
-  * @index: Index of the reference to return
-  * @num_args: Maximum number of arguments after each reference
-  * @args: Location to store the returned reference with optional arguments
-+ *	  (may be NULL)
-  *
-  * Find property with @name, verifify that it is a package containing at least
-  * one object reference and if so, store the ACPI device object pointer to the
-@@ -697,6 +698,9 @@ int __acpi_node_get_property_reference(const struct fwnode_handle *fwnode,
- 		if (ret)
- 			return ret == -ENODEV ? -EINVAL : ret;
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+index 00e688b45d981..5901160919dcd 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+@@ -26,7 +26,6 @@ leds {
+ 		wlan {
+ 			label = "bcm53xx:blue:wlan";
+ 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
+-			linux,default-trigger = "default-off";
+ 		};
  
-+		if (!args)
-+			return 0;
-+
- 		args->fwnode = acpi_fwnode_handle(device);
- 		args->nargs = 0;
- 		return 0;
+ 		system {
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+index 78c80a5d3f4fa..8e7483272d47d 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+@@ -26,7 +26,6 @@ leds {
+ 		5ghz {
+ 			label = "bcm53xx:blue:5ghz";
+ 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 
+ 		system {
+@@ -42,7 +41,6 @@ pcie0_leds {
+ 		2ghz {
+ 			label = "bcm53xx:blue:2ghz";
+ 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 	};
+ 
 -- 
 2.43.0
 
