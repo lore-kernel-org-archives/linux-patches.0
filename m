@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097B813B2A2;
-	Tue, 27 Feb 2024 13:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7037513B2BF;
+	Tue, 27 Feb 2024 13:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041163; cv=none; b=PstXSwZFi4unHEzt+vyDsZUAxOBVhtvIeEHwaPuTYD87ke5gPT+vaOfWYcKbjIR4QWO91fXgoiPbFI7RwE+SnWZm+d41E7OMeFfBZpD6ruPCVFR2Lt9N63pJEOr7jVcgiLMSReZ05rxifB8Ab8X9J8i+mci4adEhIRoLFaW3SZ0=
+	t=1709041165; cv=none; b=HL6cMRfufZKFmlZxR6MrphW6J/rr1LH6fxbdJnLMWfb4TkL7YR8aQMTeruqSqQzvimgrp3xBA/i4tDqW46yBwERXnM6GRmN7AEM+oxjzGpzye/AZRw2F8t6tGZTvGm87jhHSZvHZ5E6ua7k1UNjca15rpGGqLrBJOMLqtNHcehk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041163; c=relaxed/simple;
-	bh=cqPKplUFaAYDmNf4DSib52HT+arog18Ed5NpwT213xM=;
+	s=arc-20240116; t=1709041165; c=relaxed/simple;
+	bh=+PI9cLgBN0nLlOAog0GeiQlhqVVzMfc9NROfBpNeEsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSoXLATfO6PHXLferc++LXBkmfyLFcTbYsTXssVL2szruy0mLHY59beKzah/uaxHSrh9JfZ9Sk47ov0QuK0vzEDXS3fk8tOPWdXoFc+tPi41q7pbnht2EfUP3nqiNunjBmDHtB9c+FILcH1m6ez+xpGd5w6gjTKzejECSyfKKyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0JVC3Qr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFQKx8asjWN7n6xpxHGCYtWfbHqrJf+yPwxGFrT3wv/PZNefr9ZNDE8oo9GkQ5CpV6SgGIWNaCXWQqxMSINvKK4u7YkVM7ZQXKUj4aJQcNT8CJAVpsmA18pCcIhiGo/UKn6GI1jCkEhOaok1kx9T5TTFtVKIUVPr1TcsE0T9zOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/5O+YVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0JVC3Qr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313FDC433C7;
-	Tue, 27 Feb 2024 13:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/5O+YVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC65FC43390;
+	Tue, 27 Feb 2024 13:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041162;
-	bh=cqPKplUFaAYDmNf4DSib52HT+arog18Ed5NpwT213xM=;
+	s=korg; t=1709041165;
+	bh=+PI9cLgBN0nLlOAog0GeiQlhqVVzMfc9NROfBpNeEsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0JVC3QrCwypfFoeyTe6zraLButxIquuMlbnBPqYme6EL0ZjUb7EA2Gl0dBJtAFwJ
-	 0rZrZYzSAsndyJFz+8aDw4tT80bVZ+Di2HdDrO4UAypWPJXGxwKtTHB+MAIU/kmdcw
-	 dhGVzHbQYwlJgHRr6GQPfvgvZl9wTux4Qzy9SfOM=
+	b=I/5O+YVUShLRtedNwd+LMTMvFEI9A24VgSzP8BZXlmwj8BoBcwLCsh1VD039f6I+F
+	 S2t6vvXayOlhkCD3lnJgnMcZ57n/7ae2XnG2aazgs3yYYHPB6h+WsfHMpqqG5eE7jn
+	 PV0TSFTNZ91eycRjtVNmNnrfd5Pc/jKbrNku+85M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiHonggang <honggangli@163.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 241/334] RDMA/srpt: Support specifying the srpt_service_guid parameter
-Date: Tue, 27 Feb 2024 14:21:39 +0100
-Message-ID: <20240227131638.653413286@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.7 214/334] mptcp: add needs_id for netlink appending addr
+Date: Tue, 27 Feb 2024 14:21:12 +0100
+Message-ID: <20240227131637.684501106@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,62 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit fdfa083549de5d50ebf7f6811f33757781e838c0 ]
+commit 584f3894262634596532cf43a5e782e34a0ce374 upstream.
 
-Make loading ib_srpt with this parameter set work. The current behavior is
-that setting that parameter while loading the ib_srpt kernel module
-triggers the following kernel crash:
+Just the same as userspace PM, a new parameter needs_id is added for
+in-kernel PM mptcp_pm_nl_append_new_local_addr() too.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-Call Trace:
- <TASK>
- parse_one+0x18c/0x1d0
- parse_args+0xe1/0x230
- load_module+0x8de/0xa60
- init_module_from_file+0x8b/0xd0
- idempotent_init_module+0x181/0x240
- __x64_sys_finit_module+0x5a/0xb0
- do_syscall_64+0x5f/0xe0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
+Add a new helper mptcp_pm_has_addr_attr_id() to check whether an address
+ID is set from PM or not.
 
-Cc: LiHonggang <honggangli@163.com>
-Reported-by: LiHonggang <honggangli@163.com>
-Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240205004207.17031-1-bvanassche@acm.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In mptcp_pm_nl_get_local_id(), needs_id is always true, but in
+mptcp_pm_nl_add_addr_doit(), pass mptcp_pm_has_addr_attr_id() to
+needs_it.
+
+Fixes: efd5a4c04e18 ("mptcp: add the address ID assignment bitmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/mptcp/pm_netlink.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 58f70cfec45a7..d2dce6ce30a94 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -79,12 +79,16 @@ module_param(srpt_srq_size, int, 0444);
- MODULE_PARM_DESC(srpt_srq_size,
- 		 "Shared receive queue (SRQ) size.");
- 
-+static int srpt_set_u64_x(const char *buffer, const struct kernel_param *kp)
-+{
-+	return kstrtou64(buffer, 16, (u64 *)kp->arg);
-+}
- static int srpt_get_u64_x(char *buffer, const struct kernel_param *kp)
- {
- 	return sprintf(buffer, "0x%016llx\n", *(u64 *)kp->arg);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -901,7 +901,8 @@ static void __mptcp_pm_release_addr_entr
  }
--module_param_call(srpt_service_guid, NULL, srpt_get_u64_x, &srpt_service_guid,
--		  0444);
-+module_param_call(srpt_service_guid, srpt_set_u64_x, srpt_get_u64_x,
-+		  &srpt_service_guid, 0444);
- MODULE_PARM_DESC(srpt_service_guid,
- 		 "Using this value for ioc_guid, id_ext, and cm_listen_id instead of using the node_guid of the first HCA.");
  
--- 
-2.43.0
-
+ static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
+-					     struct mptcp_pm_addr_entry *entry)
++					     struct mptcp_pm_addr_entry *entry,
++					     bool needs_id)
+ {
+ 	struct mptcp_pm_addr_entry *cur, *del_entry = NULL;
+ 	unsigned int addr_max;
+@@ -949,7 +950,7 @@ static int mptcp_pm_nl_append_new_local_
+ 		}
+ 	}
+ 
+-	if (!entry->addr.id) {
++	if (!entry->addr.id && needs_id) {
+ find_next:
+ 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
+ 						    MPTCP_PM_MAX_ADDR_ID + 1,
+@@ -960,7 +961,7 @@ find_next:
+ 		}
+ 	}
+ 
+-	if (!entry->addr.id)
++	if (!entry->addr.id && needs_id)
+ 		goto out;
+ 
+ 	__set_bit(entry->addr.id, pernet->id_bitmap);
+@@ -1092,7 +1093,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 	entry->ifindex = 0;
+ 	entry->flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
+ 	entry->lsk = NULL;
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
+ 	if (ret < 0)
+ 		kfree(entry);
+ 
+@@ -1285,6 +1286,18 @@ next:
+ 	return 0;
+ }
+ 
++static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
++				      struct genl_info *info)
++{
++	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
++
++	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
++					 mptcp_pm_address_nl_policy, info->extack) &&
++	    tb[MPTCP_PM_ADDR_ATTR_ID])
++		return true;
++	return false;
++}
++
+ int mptcp_pm_nl_add_addr_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct nlattr *attr = info->attrs[MPTCP_PM_ENDPOINT_ADDR];
+@@ -1326,7 +1339,8 @@ int mptcp_pm_nl_add_addr_doit(struct sk_
+ 			goto out_free;
+ 		}
+ 	}
+-	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
++	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
++						!mptcp_pm_has_addr_attr_id(attr, info));
+ 	if (ret < 0) {
+ 		GENL_SET_ERR_MSG_FMT(info, "too many addresses or duplicate one: %d", ret);
+ 		goto out_free;
 
 
