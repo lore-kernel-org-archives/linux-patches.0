@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A422E13B2B9;
-	Tue, 27 Feb 2024 13:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FD71448F1;
+	Tue, 27 Feb 2024 13:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041551; cv=none; b=nYjaOvwIspbT0fzQ2y+JEd1yXhqsc0t1vXA0N74QoLn3YaLoSR1ABWz7kEAtNuGCNWdNCz9bjlcmwsJxcFwlLZMwBbpCwutjkoLfcheiI1vHYz20Dz/UNE6+e8jE9SnH5513/0TugKgBawMWYg/KErwx2M6x2h23YbUyyQHAX0I=
+	t=1709041554; cv=none; b=NyKJOYpKo45aenCIU/HKJxFv9kE/JdZCQJcXPQ1MGvwUCbvJE5eRLi6u0OP7kGvuunisSsmcgvaYjSIJhH9BvN+c/bQsAm9DSPkiVg/OBQ50+kzkMS6rUFaBqgyN2c0qAm1nDynclyAk24hLEa1l1CMMqE34G8Lbbf9GhIAQ6kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041551; c=relaxed/simple;
-	bh=0t6bQujChL++YSyyGglJ4E54wmPSW/u3juzNWHbMrlw=;
+	s=arc-20240116; t=1709041554; c=relaxed/simple;
+	bh=pabyUPGumAtK5LkNQfxRny6vvotcj6hyWS+DXAC7Lvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s63uf2djI+R6f9QxuKpSz6E6UDnovIgt2jslCSXBh0et/cvD+KKZ/7mNJELGzu/nkGv5o1Mq6Pu1E7v40FYj589eeFWDJ7/Ork8LVHiRPgLgkoSYLjn64QOM+YXINMz9+gZ9ilUSRPbuTtfZOoLTXRzxVKj08+G4MiuDl0caU0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMVygS/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQsbRy5b7aN8niuGIQppozfqwejhqC+BdZcrZcy5yTN7SsGTCMl1VRTnnTLOav/XJjuoi3pN3qLY08GnXX7vFk1dMNrdjSrKal1kZOD56pKQXP+CvEXHJl+qnolwfRG8zIknMcXp9Aum8VPxJGtdkmLzVoFz1ZT/mvb6IGy+QzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8h10WEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMVygS/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41D7C433F1;
-	Tue, 27 Feb 2024 13:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8h10WEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BB1C433C7;
+	Tue, 27 Feb 2024 13:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041551;
-	bh=0t6bQujChL++YSyyGglJ4E54wmPSW/u3juzNWHbMrlw=;
+	s=korg; t=1709041553;
+	bh=pabyUPGumAtK5LkNQfxRny6vvotcj6hyWS+DXAC7Lvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMVygS/P3sXAe9YBcLITui/mGe6WZS8qtpwfohm+/V8w1s7cuT5+qR+pE2GO4R2Zl
-	 ieXwDWEeNlM3J0qyNCKfJPF8RHEX3oB2GEWV3+loFmApoB9fKGS+AuG5o0m1BEfw9n
-	 m/LyKrMr7fmSTiB5lYeEX/lvzZl23FNY6JNHnuBg=
+	b=L8h10WEtX7YfI5qUvLT7OCsedCRajAX74u786zYxbatviGsWSqoj6II2BeGgwoucM
+	 d0K2wkUlvW90JbdPn/IdnpdiUpEbga2rOVzUGS850vQn55G7GaPS5Afhgrf5Xh4oj8
+	 0F+wtOpu8g4io/a4fEBcx1IaQrmeH7xt7kpkaZKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 44/52] nouveau: fix function cast warnings
-Date: Tue, 27 Feb 2024 14:26:31 +0100
-Message-ID: <20240227131549.982093662@linuxfoundation.org>
+Subject: [PATCH 4.19 45/52] ipv6: sr: fix possible use-after-free and null-ptr-deref
+Date: Tue, 27 Feb 2024 14:26:32 +0100
+Message-ID: <20240227131550.015311375@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -51,52 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
+[ Upstream commit 5559cea2d5aa3018a5f00dd2aca3427ba09b386b ]
 
-clang-16 warns about casting between incompatible function types:
+The pernet operations structure for the subsystem must be registered
+before registering the generic netlink family.
 
-drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-  161 |         .fini = (void(*)(void *))release_firmware,
-
-This one was done to use the generic shadow_fw_release() function as a
-callback for struct nvbios_source. Change it to use the same prototype
-as the other five instances, with a trivial helper function that actually
-calls release_firmware.
-
-Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
+Fixes: 915d7e5e5930 ("ipv6: sr: add code base for control plane support of SR-IPv6")
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20240215202717.29815-1-kovalev@altlinux.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/ipv6/seg6.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-index 4b571cc6bc70f..6597def18627e 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
-@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
- 	return (void *)fw;
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index 89d55770ac74b..4bd601c964343 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -445,22 +445,24 @@ int __init seg6_init(void)
+ {
+ 	int err = -ENOMEM;
+ 
+-	err = genl_register_family(&seg6_genl_family);
++	err = register_pernet_subsys(&ip6_segments_ops);
+ 	if (err)
+ 		goto out;
+ 
+-	err = register_pernet_subsys(&ip6_segments_ops);
++	err = genl_register_family(&seg6_genl_family);
+ 	if (err)
+-		goto out_unregister_genl;
++		goto out_unregister_pernet;
+ 
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ 	err = seg6_iptunnel_init();
+ 	if (err)
+-		goto out_unregister_pernet;
++		goto out_unregister_genl;
+ 
+ 	err = seg6_local_init();
+-	if (err)
+-		goto out_unregister_pernet;
++	if (err) {
++		seg6_iptunnel_exit();
++		goto out_unregister_genl;
++	}
+ #endif
+ 
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+@@ -481,11 +483,11 @@ int __init seg6_init(void)
+ #endif
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+-out_unregister_pernet:
+-	unregister_pernet_subsys(&ip6_segments_ops);
+-#endif
+ out_unregister_genl:
+ 	genl_unregister_family(&seg6_genl_family);
++#endif
++out_unregister_pernet:
++	unregister_pernet_subsys(&ip6_segments_ops);
+ 	goto out;
  }
  
-+static void
-+shadow_fw_release(void *fw)
-+{
-+	release_firmware(fw);
-+}
-+
- static const struct nvbios_source
- shadow_fw = {
- 	.name = "firmware",
- 	.init = shadow_fw_init,
--	.fini = (void(*)(void *))release_firmware,
-+	.fini = shadow_fw_release,
- 	.read = shadow_fw_read,
- 	.rw = false,
- };
 -- 
 2.43.0
 
