@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41C7145FE1;
-	Tue, 27 Feb 2024 13:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB8145B15;
+	Tue, 27 Feb 2024 13:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041964; cv=none; b=iS1ScZA1O71q39JmLtiY3okbQksXYgjdAgleM2UBXuclVdhr8i29ib7Usa5aRMCrBjBeiY0TdTJefsWGPLs+dHlmBAncGQcgaFf0A+h7ut+t2QZceW9EXhgFHYqC2LyU0/RgeGmw5JGbOkPJq6DMUwJqiOiKhotefMQ20vaPjAs=
+	t=1709041967; cv=none; b=IKZ3eedly2Wpx5pqg4+qe2L4U/PREOnFT6Jbx7KJlWNJ5hirNf0ULboYVhxUnDk/JoE2hwjHJf1UNjpnzIE8GGiMN8o/AytOtZxZNe7XEYnUme39FjIW2dmGjOmatyHhyNBUPbxokF+Ewh9ZYx4f/SW7IQIOfXWJYNsflJ78XQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041964; c=relaxed/simple;
-	bh=5wkpnkJv3754w+CEWX8zvgd/bOLm+Xb0mAdTaXW7r2M=;
+	s=arc-20240116; t=1709041967; c=relaxed/simple;
+	bh=1fiS/4n1G7ejBvk+D9UXLHjwRZpOboKybwOB5Pf0OSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBaXM0GNpbNxsC3+++a7+C6Fqdc33At4qh9uH98465VVwmAX4qBw/0xjtMxDzki1vigmfkeXRvUe5BxholOzgAXR3AEim3bng+hqmendgwHhIVRucpTM3Lvj4N07JY1lADI2/N/TgrrTBUySGJ/idR90C4Srt9Gbp5s/4vtKIPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWgEYFbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jpORc9rVrABSYdnN0K2+s/657cQ42RYPvUg934QvYLeq0nGFD4kBF6Z9m9WSG6ZbV9WwCUkFpLMcgO2jj2JNzTjtLh376anPnByaLssQ9Mu5rHim+uN4SkShdrPCZa062Z0u9txtBnAYLdvtz6PvRrKFyhUCGmRF0cg6uvoAE+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYovHsnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWgEYFbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B69C433A6;
-	Tue, 27 Feb 2024 13:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYovHsnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BFBC433C7;
+	Tue, 27 Feb 2024 13:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041964;
-	bh=5wkpnkJv3754w+CEWX8zvgd/bOLm+Xb0mAdTaXW7r2M=;
+	s=korg; t=1709041967;
+	bh=1fiS/4n1G7ejBvk+D9UXLHjwRZpOboKybwOB5Pf0OSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWgEYFbLLgRLdm6OaZTOjwTOrgZBJk23wX73RSMty4FORYPv9bVBF8GSWBLgNNlQ5
-	 lIwxVVOISu5FqUmAQ8DQoEx0aRkgquM9dDotaiMSrMA1pV0G3q/ywpFD4Aet7+lVcX
-	 SQgPU9PTA96u3ITYLC9ARVUPjMNrRSiKwD4LOc+k=
+	b=OYovHsnl7rXKgogR/Tig4TEEh2z2WJ/HsxoSaFHd2htQohlLn7nlwNtxGl1pRtH+a
+	 rBToE/8C4pv+Jsn6pSYtmsa5dnBuPNRN06jj9qofMozf2R5y5XI4QeRDd5Qv2Cv2h2
+	 zyPD61ALb3ZWNVRMbBHBQFmuBKmVcQbmbtu9skNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Panyakin <apanyaki@amazon.com>
-Subject: [PATCH 6.6 132/299] xen/events: close evtchn after mapping cleanup
-Date: Tue, 27 Feb 2024 14:24:03 +0100
-Message-ID: <20240227131630.107456549@linuxfoundation.org>
+	Mats Kronberg <kronberg@nsc.liu.se>,
+	Daniel Vacek <neelx@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.6 133/299] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
+Date: Tue, 27 Feb 2024 14:24:04 +0100
+Message-ID: <20240227131630.137706007@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,171 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Daniel Vacek <neelx@redhat.com>
 
-[ Upstream commit fa765c4b4aed2d64266b694520ecb025c862c5a9 ]
+commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
 
-shutdown_pirq and startup_pirq are not taking the
-irq_mapping_update_lock because they can't due to lock inversion. Both
-are called with the irq_desc->lock being taking. The lock order,
-however, is first irq_mapping_update_lock and then irq_desc->lock.
+Unfortunately the commit `fd8958efe877` introduced another error
+causing the `descs` array to overflow. This reults in further crashes
+easily reproducible by `sendmsg` system call.
 
-This opens multiple races:
-- shutdown_pirq can be interrupted by a function that allocates an event
-  channel:
+[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
+[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
+--
+[ 1080.974535] Call Trace:
+[ 1080.976990]  <TASK>
+[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
+[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
+[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
+[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
+[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
+--
+[ 1081.148347]  __sys_sendmsg+0x59/0xa0
 
-  CPU0                        CPU1
-  shutdown_pirq {
-    xen_evtchn_close(e)
-                              __startup_pirq {
-                                EVTCHNOP_bind_pirq
-                                  -> returns just freed evtchn e
-                                set_evtchn_to_irq(e, irq)
-                              }
-    xen_irq_info_cleanup() {
-      set_evtchn_to_irq(e, -1)
-    }
-  }
+crash> ipoib_txreq 0xffff9cfeba229f00
+struct ipoib_txreq {
+  txreq = {
+    list = {
+      next = 0xffff9cfeba229f00,
+      prev = 0xffff9cfeba229f00
+    },
+    descp = 0xffff9cfeba229f40,
+    coalesce_buf = 0x0,
+    wait = 0xffff9cfea4e69a48,
+    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
+    packet_len = 0x46d,
+    tlen = 0x0,
+    num_desc = 0x0,
+    desc_limit = 0x6,
+    next_descq_idx = 0x45c,
+    coalesce_idx = 0x0,
+    flags = 0x0,
+    descs = {{
+        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
+      }, {
+        qw = {  0x3800014231b108, 0x4}
+      }, {
+        qw = { 0x310000e4ee0fcf0, 0x8}
+      }, {
+        qw = {  0x3000012e9f8000, 0x8}
+      }, {
+        qw = {  0x59000dfb9d0000, 0x8}
+      }, {
+        qw = {  0x78000e02e40000, 0x8}
+      }}
+  },
+  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
+  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
+  complete = 0x0,
+  priv = 0x0,
+  txq = 0xffff9cfea4e69880,
+  skb = 0xffff9d099809f400
+}
 
-  Assume here event channel e refers here to the same event channel
-  number.
-  After this race the evtchn_to_irq mapping for e is invalid (-1).
+If an SDMA send consists of exactly 6 descriptors and requires dword
+padding (in the 7th descriptor), the sdma_txreq descriptor array is not
+properly expanded and the packet will overflow into the container
+structure. This results in a panic when the send completion runs. The
+exact panic varies depending on what elements of the container structure
+get corrupted. The fix is to use the correct expression in
+_pad_sdma_tx_descs() to test the need to expand the descriptor array.
 
-- __startup_pirq races with __unbind_from_irq in a similar way. Because
-  __startup_pirq doesn't take irq_mapping_update_lock it can grab the
-  evtchn that __unbind_from_irq is currently freeing and cleaning up. In
-  this case even though the event channel is allocated, its mapping can
-  be unset in evtchn_to_irq.
+With this patch the crashes are no longer reproducible and the machine is
+stable.
 
-The fix is to first cleanup the mappings and then close the event
-channel. In this way, when an event channel gets allocated it's
-potential previous evtchn_to_irq mappings are guaranteed to be unset already.
-This is also the reverse order of the allocation where first the event
-channel is allocated and then the mappings are setup.
-
-On a 5.10 kernel prior to commit 3fcdaf3d7634 ("xen/events: modify internal
-[un]bind interfaces"), we hit a BUG like the following during probing of NVMe
-devices. The issue is that during nvme_setup_io_queues, pci_free_irq
-is called for every device which results in a call to shutdown_pirq.
-With many nvme devices it's therefore likely to hit this race during
-boot because there will be multiple calls to shutdown_pirq and
-startup_pirq are running potentially in parallel.
-
-  ------------[ cut here ]------------
-  blkfront: xvda: barrier or flush: disabled; persistent grants: enabled; indirect descriptors: enabled; bounce buffer: enabled
-  kernel BUG at drivers/xen/events/events_base.c:499!
-  invalid opcode: 0000 [#1] SMP PTI
-  CPU: 44 PID: 375 Comm: kworker/u257:23 Not tainted 5.10.201-191.748.amzn2.x86_64 #1
-  Hardware name: Xen HVM domU, BIOS 4.11.amazon 08/24/2006
-  Workqueue: nvme-reset-wq nvme_reset_work
-  RIP: 0010:bind_evtchn_to_cpu+0xdf/0xf0
-  Code: 5d 41 5e c3 cc cc cc cc 44 89 f7 e8 2b 55 ad ff 49 89 c5 48 85 c0 0f 84 64 ff ff ff 4c 8b 68 30 41 83 fe ff 0f 85 60 ff ff ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 0f 1f 44 00 00
-  RSP: 0000:ffffc9000d533b08 EFLAGS: 00010046
-  RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000006
-  RDX: 0000000000000028 RSI: 00000000ffffffff RDI: 00000000ffffffff
-  RBP: ffff888107419680 R08: 0000000000000000 R09: ffffffff82d72b00
-  R10: 0000000000000000 R11: 0000000000000000 R12: 00000000000001ed
-  R13: 0000000000000000 R14: 00000000ffffffff R15: 0000000000000002
-  FS:  0000000000000000(0000) GS:ffff88bc8b500000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 0000000002610001 CR4: 00000000001706e0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   ? show_trace_log_lvl+0x1c1/0x2d9
-   ? show_trace_log_lvl+0x1c1/0x2d9
-   ? set_affinity_irq+0xdc/0x1c0
-   ? __die_body.cold+0x8/0xd
-   ? die+0x2b/0x50
-   ? do_trap+0x90/0x110
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? do_error_trap+0x65/0x80
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? exc_invalid_op+0x4e/0x70
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? asm_exc_invalid_op+0x12/0x20
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? bind_evtchn_to_cpu+0xc5/0xf0
-   set_affinity_irq+0xdc/0x1c0
-   irq_do_set_affinity+0x1d7/0x1f0
-   irq_setup_affinity+0xd6/0x1a0
-   irq_startup+0x8a/0xf0
-   __setup_irq+0x639/0x6d0
-   ? nvme_suspend+0x150/0x150
-   request_threaded_irq+0x10c/0x180
-   ? nvme_suspend+0x150/0x150
-   pci_request_irq+0xa8/0xf0
-   ? __blk_mq_free_request+0x74/0xa0
-   queue_request_irq+0x6f/0x80
-   nvme_create_queue+0x1af/0x200
-   nvme_create_io_queues+0xbd/0xf0
-   nvme_setup_io_queues+0x246/0x320
-   ? nvme_irq_check+0x30/0x30
-   nvme_reset_work+0x1c8/0x400
-   process_one_work+0x1b0/0x350
-   worker_thread+0x49/0x310
-   ? process_one_work+0x350/0x350
-   kthread+0x11b/0x140
-   ? __kthread_bind_mask+0x60/0x60
-   ret_from_fork+0x22/0x30
-  Modules linked in:
-  ---[ end trace a11715de1eee1873 ]---
-
-Fixes: d46a78b05c0e ("xen: implement pirq type event channels")
+Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
 Cc: stable@vger.kernel.org
-Co-debugged-by: Andrew Panyakin <apanyaki@amazon.com>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20240124163130.31324-1-mheyne@amazon.de
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
+Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
+Signed-off-by: Daniel Vacek <neelx@redhat.com>
+Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/events/events_base.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hfi1/sdma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index 6f57ef78f5507..36ba3ef6ef01e 100644
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -908,8 +908,8 @@ static void shutdown_pirq(struct irq_data *data)
- 		return;
- 
- 	do_mask(info, EVT_MASK_REASON_EXPLICIT);
--	xen_evtchn_close(evtchn);
- 	xen_irq_info_cleanup(info);
-+	xen_evtchn_close(evtchn);
- }
- 
- static void enable_pirq(struct irq_data *data)
-@@ -941,6 +941,7 @@ EXPORT_SYMBOL_GPL(xen_irq_from_gsi);
- static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -3158,7 +3158,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
  {
- 	evtchn_port_t evtchn;
-+	bool close_evtchn = false;
+ 	int rval = 0;
  
- 	if (!info) {
- 		xen_irq_free_desc(irq);
-@@ -960,7 +961,7 @@ static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
- 		struct xenbus_device *dev;
- 
- 		if (!info->is_static)
--			xen_evtchn_close(evtchn);
-+			close_evtchn = true;
- 
- 		switch (info->type) {
- 		case IRQT_VIRQ:
-@@ -980,6 +981,9 @@ static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
- 		}
- 
- 		xen_irq_info_cleanup(info);
-+
-+		if (close_evtchn)
-+			xen_evtchn_close(evtchn);
- 	}
- 
- 	xen_free_irq(info);
--- 
-2.43.0
-
+-	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
++	if ((unlikely(tx->num_desc == tx->desc_limit))) {
+ 		rval = _extend_sdma_tx_descs(dd, tx);
+ 		if (rval) {
+ 			__sdma_txclean(dd, tx);
 
 
