@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5F52F2D;
-	Tue, 27 Feb 2024 13:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A2A13AA55;
+	Tue, 27 Feb 2024 13:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041347; cv=none; b=jGQ0/72eMqGsMUImC7JqkN0PHXEBMitln20uR/s84ZxT6mBzf4NOXjM38SU1TlPqwOvHCxgKcJUQrSl37eeFAWlpioQTIiQV0vsJyJhit1gjSpoMKZWVK8PVO22jb9/EW8Tf7Ofsk0JD77QTHLZ8ikIlcSZfnzDIga92+fVcD4A=
+	t=1709041350; cv=none; b=BBIZf5dcOYrh0bTSg9DiBIoCwQChE6UzqpXG6uVUyWP4iVpVQHn0/adugA77ygyrmQB9Iemr+zn9KV8MIjHuIskX6ZLsPQdu5crihYE7P/7ZiZW7yL+k265LTYQvtJiZjNLoe+a03NddQuecrWLT/LwaHf+tbvUqrfvaAAPXpGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041347; c=relaxed/simple;
-	bh=md1G/vCaW8j0pCAnbPH3cedRLYvLiBtiRj5yXrvPohw=;
+	s=arc-20240116; t=1709041350; c=relaxed/simple;
+	bh=xxMvpZ8rOhxo94DDDPaJob/PysbYlM5QyrATDmwIcGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GpOm78rrgNYFKHdSChTzUO7B3ifd3RBL5vZmv7RwoAsMp8Cc2aPkuhtKu/eDhn+sKoj7uogQ5Vhn7RyVmPR/T/egwF4Ty34fr5impujLl0p5CI4wKxw/sF2fH07iOgbxcoNLOYLohd2HOyFQLmoBL/LUXOjT9O3r0vjCKpdBZjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kk1lHIGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=grrUB5rGLyP0/0KpdkQrd/2OOWwC11DdqJzXr0TSiTGJJ+uTWCQ61C/r01n0zRe3RNxL0HBJKRaWJFRIjaXqL5gcr0XDAuoGFoKx8S66zvgJWpnGDQKU3VVqmGQgJtsi7r19kxWqZnh9UWlYG7Zj/Q7w8PhtUPlsLyDkj2MKxQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bj0aqvop; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kk1lHIGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFE4C433C7;
-	Tue, 27 Feb 2024 13:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bj0aqvop"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A1BC433C7;
+	Tue, 27 Feb 2024 13:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041347;
-	bh=md1G/vCaW8j0pCAnbPH3cedRLYvLiBtiRj5yXrvPohw=;
+	s=korg; t=1709041350;
+	bh=xxMvpZ8rOhxo94DDDPaJob/PysbYlM5QyrATDmwIcGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kk1lHIGkWBvTz8cpvEbp7H1EQ3p5kKK+BN7qIlDrpVs25YHvJ6De9Uj01ISQOaOgx
-	 g+XXe5yDuKh5nuK5ddWaaJ8N4ZP9ZPBaLG5++Lyn2xytJDN+1Z0rPTiJtb6Tj1OiWh
-	 KZ7qyR/9QqaiNceAuKMQAZzyb7hWBqk9677gmi5U=
+	b=Bj0aqvopS890ik4cRX5Ho/Ez1+2ZeSCtDXipV9xCOkmz06ns9kcPDdfycdUX/FTfU
+	 0yFdyKeDpCK/1q+K1jgdkoaL9Zu7/XrDBKgKPHPkaDYwkiQFxhL/CvPR7O2nwDZehh
+	 dFQ6Ica35tHDHHvZBrCkXEmH23KzsqDrHX0neGpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Helge Deller <deller@gmx.de>,
+	Sven Schnelle <svens@stackframe.org>,
+	John David Anglin <dave.anglin@bell.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 277/334] platform/x86: think-lmi: Fix password opcode ordering for workstations
-Date: Tue, 27 Feb 2024 14:22:15 +0100
-Message-ID: <20240227131639.930126707@linuxfoundation.org>
+Subject: [PATCH 6.7 278/334] parisc: Fix stack unwinder
+Date: Tue, 27 Feb 2024 14:22:16 +0100
+Message-ID: <20240227131639.965122617@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -46,74 +49,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 6f7d0f5fd8e440c3446560100ac4ff9a55eec340 ]
+[ Upstream commit 882a2a724ee964c1ebe7268a91d5c8c8ddc796bf ]
 
-The Lenovo workstations require the password opcode to be run before
-the attribute value is changed (if Admin password is enabled).
+Debugging shows a large number of unaligned access traps in the unwinder
+code. Code analysis reveals a number of issues with this code:
 
-Tested on some Thinkpads to confirm they are OK with this order too.
+- handle_interruption is passed twice through
+  dereference_kernel_function_descriptor()
+- ret_from_kernel_thread, syscall_exit, intr_return,
+  _switch_to_ret, and _call_on_stack are passed through
+  dereference_kernel_function_descriptor() even though they are
+  not declared as function pointers.
 
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Fixes: 640a5fa50a42 ("platform/x86: think-lmi: Opcode support")
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240209152359.528919-1-mpearson-lenovo@squebb.ca
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+To fix the problems, drop one of the calls to
+dereference_kernel_function_descriptor() for handle_interruption,
+and compare the other pointers directly.
+
+Fixes: 6414b30b39f9 ("parisc: unwind: Avoid missing prototype warning for handle_interruption()")
+Fixes: 8e0ba125c2bf ("parisc/unwind: fix unwinder when CONFIG_64BIT is enabled")
+Cc: Helge Deller <deller@gmx.de>
+Cc: Sven Schnelle <svens@stackframe.org>
+Cc: John David Anglin <dave.anglin@bell.net>
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ arch/parisc/kernel/unwind.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 3a396b763c496..ce3e08815a8e6 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -1009,7 +1009,16 @@ static ssize_t current_value_store(struct kobject *kobj,
- 		 * Note - this sets the variable and then the password as separate
- 		 * WMI calls. Function tlmi_save_bios_settings will error if the
- 		 * password is incorrect.
-+		 * Workstation's require the opcode to be set before changing the
-+		 * attribute.
- 		 */
-+		if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
-+			ret = tlmi_opcode_setting("WmiOpcodePasswordAdmin",
-+						  tlmi_priv.pwd_admin->password);
-+			if (ret)
-+				goto out;
-+		}
-+
- 		set_str = kasprintf(GFP_KERNEL, "%s,%s;", setting->display_name,
- 				    new_setting);
- 		if (!set_str) {
-@@ -1021,17 +1030,10 @@ static ssize_t current_value_store(struct kobject *kobj,
- 		if (ret)
- 			goto out;
+diff --git a/arch/parisc/kernel/unwind.c b/arch/parisc/kernel/unwind.c
+index 27ae40a443b80..f7e0fee5ee55a 100644
+--- a/arch/parisc/kernel/unwind.c
++++ b/arch/parisc/kernel/unwind.c
+@@ -228,10 +228,8 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ #ifdef CONFIG_IRQSTACKS
+ 	extern void * const _call_on_stack;
+ #endif /* CONFIG_IRQSTACKS */
+-	void *ptr;
  
--		if (tlmi_priv.save_mode == TLMI_SAVE_BULK) {
-+		if (tlmi_priv.save_mode == TLMI_SAVE_BULK)
- 			tlmi_priv.save_required = true;
--		} else {
--			if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
--				ret = tlmi_opcode_setting("WmiOpcodePasswordAdmin",
--							  tlmi_priv.pwd_admin->password);
--				if (ret)
--					goto out;
--			}
-+		else
- 			ret = tlmi_save_bios_settings("");
--		}
- 	} else { /* old non-opcode based authentication method (deprecated) */
- 		if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
- 			auth_str = kasprintf(GFP_KERNEL, "%s,%s,%s;",
+-	ptr = dereference_kernel_function_descriptor(&handle_interruption);
+-	if (pc_is_kernel_fn(pc, ptr)) {
++	if (pc_is_kernel_fn(pc, handle_interruption)) {
+ 		struct pt_regs *regs = (struct pt_regs *)(info->sp - frame_size - PT_SZ_ALGN);
+ 		dbg("Unwinding through handle_interruption()\n");
+ 		info->prev_sp = regs->gr[30];
+@@ -239,13 +237,13 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ 		return 1;
+ 	}
+ 
+-	if (pc_is_kernel_fn(pc, ret_from_kernel_thread) ||
+-	    pc_is_kernel_fn(pc, syscall_exit)) {
++	if (pc == (unsigned long)&ret_from_kernel_thread ||
++	    pc == (unsigned long)&syscall_exit) {
+ 		info->prev_sp = info->prev_ip = 0;
+ 		return 1;
+ 	}
+ 
+-	if (pc_is_kernel_fn(pc, intr_return)) {
++	if (pc == (unsigned long)&intr_return) {
+ 		struct pt_regs *regs;
+ 
+ 		dbg("Found intr_return()\n");
+@@ -257,14 +255,14 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ 	}
+ 
+ 	if (pc_is_kernel_fn(pc, _switch_to) ||
+-	    pc_is_kernel_fn(pc, _switch_to_ret)) {
++	    pc == (unsigned long)&_switch_to_ret) {
+ 		info->prev_sp = info->sp - CALLEE_SAVE_FRAME_SIZE;
+ 		info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
+ 		return 1;
+ 	}
+ 
+ #ifdef CONFIG_IRQSTACKS
+-	if (pc_is_kernel_fn(pc, _call_on_stack)) {
++	if (pc == (unsigned long)&_call_on_stack) {
+ 		info->prev_sp = *(unsigned long *)(info->sp - FRAME_SIZE - REG_SZ);
+ 		info->prev_ip = *(unsigned long *)(info->sp - FRAME_SIZE - RP_OFFSET);
+ 		return 1;
 -- 
 2.43.0
 
