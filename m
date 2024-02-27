@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2326213B2B3;
-	Tue, 27 Feb 2024 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C258813B29B;
+	Tue, 27 Feb 2024 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041862; cv=none; b=MeBbZ7vrb5jBLIo1W0KTl2by9GvfrmMs+ZJDd+FUNXSo1pjY0NW3dvPQ5v26ouVHyUnBPPkHysxvPY+e5qQbAhDxvGIdJjripcXHTld7QUFhngDtxkZ9sgml+UI/SrEAgivvV5bTQeO6p+LaoYXAZvIsTPnpmg0cq7RptheM2W4=
+	t=1709041864; cv=none; b=keqhpsKX56VdntJvyx8Z2fShRaowxaycXIiGGIftqSiJrRe3olTVs64A1d9PpFl81LCdlbH+53UVyEDKKNUprcGMD6L+4+csp49z5e43ZA0EEJUqS90mbGdaqDSCGgDctb++2PAAwZrg1Q7Y+Sl8QbFYb9bcbQIpZGrdPvIVkZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041862; c=relaxed/simple;
-	bh=DeC5yoOAtV/NbpdjWBzQVGiMuEAek7TXtWdNubWwEi8=;
+	s=arc-20240116; t=1709041864; c=relaxed/simple;
+	bh=HVFsUvvZPW33hvbGZt1obaDj2zzHnCq74FzKpQaRc2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxQ5Tj7Fq7F4oeXwTSAABTzPicWuVRhr+yRtIWWKCsFCkE4WjtZmISVPGco+Q7KpozTHQzdoBAvfb9X5sJFsClhQsMmJdSNb7K7jMTH+dJxkMLBYSg/h/bNm/gmo88HQ/31XnxaYko0xdJqr5krhZ4c6ByHQJyp4YFM1/nWX/vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9fFn7IM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCBe3b5RDUIKbBRuezrcdt8LS4P2JHdXQ9Pv8H7fiOfdPRD4Hwxr5hiMfX/14dGXOdwHcvaDXYJz43kfrR3syHHLSKY0vSv5DNwV8DoLtYHfrqjJ0em2txpXeT9nq4YrZ/eiuI39KMFW0gcdEIGZmdoXTUopNbcsMPOvwQzuFIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eqa7OdRo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9fFn7IM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52A4C433C7;
-	Tue, 27 Feb 2024 13:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eqa7OdRo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C74BC43390;
+	Tue, 27 Feb 2024 13:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041862;
-	bh=DeC5yoOAtV/NbpdjWBzQVGiMuEAek7TXtWdNubWwEi8=;
+	s=korg; t=1709041864;
+	bh=HVFsUvvZPW33hvbGZt1obaDj2zzHnCq74FzKpQaRc2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9fFn7IMLnMlv1aE5mqWc+2obi9kWBaVjZtpVtRPqhvJeNuafGV6LLyFLe9G9KA0l
-	 +5ka+n0IVye8lzLN8PCp4v7cFQkvpEtvvUI0Js5r1dYZg04FNy8cIDcIgMP6ozdVTW
-	 8Ix4wqOeIy04YEgf56Kkq2D468UfJn2jn3HHIRPk=
+	b=Eqa7OdRoxaEiuCixAp6NL3SpsKXRlnJ95v88HL8cjK+PRt2tDcNXir01xD6Y3+T8y
+	 6YJsPTlC39/zuvZIeGMfF5m+fN1t1ukarTPjDoCMWja7J0SaXpaW/TKSVuX65SUCsD
+	 VK/7YInbvBC2srtz1uuFDVIo+hch+FamB+gkN6qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/299] smb: client: increase number of PDUs allowed in a compound request
-Date: Tue, 27 Feb 2024 14:22:58 +0100
-Message-ID: <20240227131628.103110954@linuxfoundation.org>
+Subject: [PATCH 6.6 068/299] ext4: correct the hole length returned by ext4_map_blocks()
+Date: Tue, 27 Feb 2024 14:22:59 +0100
+Message-ID: <20240227131628.133819526@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,59 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 11d4d1dba3315f73d2d1d386f5bf4811a8241d45 ]
+[ Upstream commit 6430dea07e85958fa87d0276c0c4388dd51e630b ]
 
-With the introduction of SMB2_OP_QUERY_WSL_EA, the client may now send
-5 commands in a single compound request in order to query xattrs from
-potential WSL reparse points, which should be fine as we currently
-allow up to 5 PDUs in a single compound request.  However, if
-encryption is enabled (e.g. 'seal' mount option) or enforced by the
-server, current MAX_COMPOUND(5) won't be enough as we require an extra
-PDU for the transform header.
+In ext4_map_blocks(), if we can't find a range of mapping in the
+extents cache, we are calling ext4_ext_map_blocks() to search the real
+path and ext4_ext_determine_hole() to determine the hole range. But if
+the querying range was partially or completely overlaped by a delalloc
+extent, we can't find it in the real extent path, so the returned hole
+length could be incorrect.
 
-Fix this by increasing MAX_COMPOUND to 7 and, while we're at it, add
-an WARN_ON_ONCE() and return -EIO instead of -ENOMEM in case we
-attempt to send a compound request that couldn't include the extra
-transform header.
+Fortunately, ext4_ext_put_gap_in_cache() have already handle delalloc
+extent, but it searches start from the expanded hole_start, doesn't
+start from the querying range, so the delalloc extent found could not be
+the one that overlaped the querying range, plus, it also didn't adjust
+the hole length. Let's just remove ext4_ext_put_gap_in_cache(), handle
+delalloc and insert adjusted hole extent in ext4_ext_determine_hole().
 
-Signed-off-by: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240127015825.1608160-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h  | 2 +-
- fs/smb/client/transport.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/extents.c | 111 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 70 insertions(+), 41 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index dcc41fe33b705..462554917e5a1 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -82,7 +82,7 @@
- #define SMB_INTERFACE_POLL_INTERVAL	600
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 4c3e2f38349de..d393df22431a0 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2229,7 +2229,7 @@ static int ext4_fill_es_cache_info(struct inode *inode,
  
- /* maximum number of PDUs in one compound */
--#define MAX_COMPOUND 5
-+#define MAX_COMPOUND 7
  
  /*
-  * Default number of credits to keep available for SMB3.
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index e00278fcfa4fa..994d701934329 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -435,8 +435,8 @@ smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 	if (!(flags & CIFS_TRANSFORM_REQ))
- 		return __smb_send_rqst(server, num_rqst, rqst);
+- * ext4_ext_determine_hole - determine hole around given block
++ * ext4_ext_find_hole - find hole around given block according to the given path
+  * @inode:	inode we lookup in
+  * @path:	path in extent tree to @lblk
+  * @lblk:	pointer to logical block around which we want to determine hole
+@@ -2241,9 +2241,9 @@ static int ext4_fill_es_cache_info(struct inode *inode,
+  * The function returns the length of a hole starting at @lblk. We update @lblk
+  * to the beginning of the hole if we managed to find it.
+  */
+-static ext4_lblk_t ext4_ext_determine_hole(struct inode *inode,
+-					   struct ext4_ext_path *path,
+-					   ext4_lblk_t *lblk)
++static ext4_lblk_t ext4_ext_find_hole(struct inode *inode,
++				      struct ext4_ext_path *path,
++				      ext4_lblk_t *lblk)
+ {
+ 	int depth = ext_depth(inode);
+ 	struct ext4_extent *ex;
+@@ -2270,30 +2270,6 @@ static ext4_lblk_t ext4_ext_determine_hole(struct inode *inode,
+ 	return len;
+ }
  
--	if (num_rqst > MAX_COMPOUND - 1)
--		return -ENOMEM;
-+	if (WARN_ON_ONCE(num_rqst > MAX_COMPOUND - 1))
-+		return -EIO;
+-/*
+- * ext4_ext_put_gap_in_cache:
+- * calculate boundaries of the gap that the requested block fits into
+- * and cache this gap
+- */
+-static void
+-ext4_ext_put_gap_in_cache(struct inode *inode, ext4_lblk_t hole_start,
+-			  ext4_lblk_t hole_len)
+-{
+-	struct extent_status es;
+-
+-	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
+-				  hole_start + hole_len - 1, &es);
+-	if (es.es_len) {
+-		/* There's delayed extent containing lblock? */
+-		if (es.es_lblk <= hole_start)
+-			return;
+-		hole_len = min(es.es_lblk - hole_start, hole_len);
+-	}
+-	ext_debug(inode, " -> %u:%u\n", hole_start, hole_len);
+-	ext4_es_insert_extent(inode, hole_start, hole_len, ~0,
+-			      EXTENT_STATUS_HOLE);
+-}
+-
+ /*
+  * ext4_ext_rm_idx:
+  * removes index from the index block.
+@@ -4062,6 +4038,69 @@ static int get_implied_cluster_alloc(struct super_block *sb,
+ 	return 0;
+ }
  
- 	if (!server->ops->init_transform_rq) {
- 		cifs_server_dbg(VFS, "Encryption requested but transform callback is missing\n");
++/*
++ * Determine hole length around the given logical block, first try to
++ * locate and expand the hole from the given @path, and then adjust it
++ * if it's partially or completely converted to delayed extents, insert
++ * it into the extent cache tree if it's indeed a hole, finally return
++ * the length of the determined extent.
++ */
++static ext4_lblk_t ext4_ext_determine_insert_hole(struct inode *inode,
++						  struct ext4_ext_path *path,
++						  ext4_lblk_t lblk)
++{
++	ext4_lblk_t hole_start, len;
++	struct extent_status es;
++
++	hole_start = lblk;
++	len = ext4_ext_find_hole(inode, path, &hole_start);
++again:
++	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
++				  hole_start + len - 1, &es);
++	if (!es.es_len)
++		goto insert_hole;
++
++	/*
++	 * There's a delalloc extent in the hole, handle it if the delalloc
++	 * extent is in front of, behind and straddle the queried range.
++	 */
++	if (lblk >= es.es_lblk + es.es_len) {
++		/*
++		 * The delalloc extent is in front of the queried range,
++		 * find again from the queried start block.
++		 */
++		len -= lblk - hole_start;
++		hole_start = lblk;
++		goto again;
++	} else if (in_range(lblk, es.es_lblk, es.es_len)) {
++		/*
++		 * The delalloc extent containing lblk, it must have been
++		 * added after ext4_map_blocks() checked the extent status
++		 * tree, adjust the length to the delalloc extent's after
++		 * lblk.
++		 */
++		len = es.es_lblk + es.es_len - lblk;
++		return len;
++	} else {
++		/*
++		 * The delalloc extent is partially or completely behind
++		 * the queried range, update hole length until the
++		 * beginning of the delalloc extent.
++		 */
++		len = min(es.es_lblk - hole_start, len);
++	}
++
++insert_hole:
++	/* Put just found gap into cache to speed up subsequent requests */
++	ext_debug(inode, " -> %u:%u\n", hole_start, len);
++	ext4_es_insert_extent(inode, hole_start, len, ~0, EXTENT_STATUS_HOLE);
++
++	/* Update hole_len to reflect hole size after lblk */
++	if (hole_start != lblk)
++		len -= lblk - hole_start;
++
++	return len;
++}
+ 
+ /*
+  * Block allocation/map/preallocation routine for extents based files
+@@ -4179,22 +4218,12 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	 * we couldn't try to create block if create flag is zero
+ 	 */
+ 	if ((flags & EXT4_GET_BLOCKS_CREATE) == 0) {
+-		ext4_lblk_t hole_start, hole_len;
++		ext4_lblk_t len;
+ 
+-		hole_start = map->m_lblk;
+-		hole_len = ext4_ext_determine_hole(inode, path, &hole_start);
+-		/*
+-		 * put just found gap into cache to speed up
+-		 * subsequent requests
+-		 */
+-		ext4_ext_put_gap_in_cache(inode, hole_start, hole_len);
++		len = ext4_ext_determine_insert_hole(inode, path, map->m_lblk);
+ 
+-		/* Update hole_len to reflect hole size after map->m_lblk */
+-		if (hole_start != map->m_lblk)
+-			hole_len -= map->m_lblk - hole_start;
+ 		map->m_pblk = 0;
+-		map->m_len = min_t(unsigned int, map->m_len, hole_len);
+-
++		map->m_len = min_t(unsigned int, map->m_len, len);
+ 		goto out;
+ 	}
+ 
 -- 
 2.43.0
 
