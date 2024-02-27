@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D171386CB;
-	Tue, 27 Feb 2024 14:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE19278B61;
+	Tue, 27 Feb 2024 14:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043360; cv=none; b=S0RhwX4UMxL4r+i+EkOQPX/Dgdos6j3CbeIZaKA8qL9uZn5ptCnLWGcu/qbQO1Bvp0o90HB7eppPQcb/lLvMjpDp1GJ+AzO/QMxdAeEZpXNfvTO9KZvgGiMnTMKdBNLNB/lZ9pkz+GIC44Jw92w5GG8O68q+6/cEeJgt9UShxUc=
+	t=1709043362; cv=none; b=IbReL/mhhI/AJXxSyv58NL0wnzJhJHmVEv3iFMZLhZvXZ+W2+Hiz8KTFshzWWdLStiU/7qbjEYbmO1ZQ3ePz10Fs2BUi1zBspk87Znp9jKlCf0xKWmbZ7m8vlHwHQ8jjdV7UD+tl4WCF7/jkJjkLAN9e9vwqN7vTQJaoe5y1Wjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043360; c=relaxed/simple;
-	bh=OC+rZDBBaI0AeYiAvDV45KX3sTV7POUjLrEztzn0BxE=;
+	s=arc-20240116; t=1709043362; c=relaxed/simple;
+	bh=QTdxjl4S0vDuwM362glNowwqOS+ZcNR03nKL1bKuuS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUE7owRHsOI1fMvqybS4yGsjWjL7mStF27+4zeowGd5HllcvZfHfATGpZxNEhwUC/ZgnOAiEwqMPa+w5NByvmYOM2s7iCCye6JzO0dUWzhM1vsT+NzrBYjfuMmF7kCk8YdpoFb8oaXPOLnRgd/OLFyeIJkAdE4FJQsOAMuM0uxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puW71W2Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLIlDRq+8PldkBneaKwtwIfFZVOngKczDDpbf2RS6lP29zhDkLmpm7lto5COdPD0FWSpdELlJU/qxJj4Q6nUTozJvRMW6+R/0JgQyYVITEbY/TVcOvn9jS3ao0i2hnyelNjzsirovUwibBkn+/SWUk9sFpcYadhGx096NQ+1+6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQjNQquA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puW71W2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87213C433C7;
-	Tue, 27 Feb 2024 14:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQjNQquA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E179C433C7;
+	Tue, 27 Feb 2024 14:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043359;
-	bh=OC+rZDBBaI0AeYiAvDV45KX3sTV7POUjLrEztzn0BxE=;
+	s=korg; t=1709043362;
+	bh=QTdxjl4S0vDuwM362glNowwqOS+ZcNR03nKL1bKuuS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puW71W2YZ2+Avo7DfBQSOuI4yGYKRMGmGZr6QEpfiKvvjOLFcsMTRjgGmr4A1/It9
-	 tNRTzIQVNnT7geMTZc0CAeZcTxPYkUR4FMbqYDL/b/cS+yjnC+CW2LiSvxnedD8ElS
-	 fZe0rdNPYjPyCaHM05Zx0GxjOHuogjDtDInsCfX8=
+	b=BQjNQquAaTo3dqS7JqgjAZJZBEzORBK1q7apc06z19Xny83xdgiO/W6wTRsPFk0kN
+	 a+2GlQrIPL9mtypgODQrMRwc8PU5GSTSgpiuUp4AXXstIqUmRBjgwIHpaIPf3sw1ry
+	 s/jGgPJsRBoBBPAKOEMMQ34r4M3wYtaxLFF+DxzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/195] smb3: clarify mount warning
-Date: Tue, 27 Feb 2024 14:25:41 +0100
-Message-ID: <20240227131613.132322071@linuxfoundation.org>
+Subject: [PATCH 6.1 081/195] pmdomain: mediatek: fix race conditions with genpd
+Date: Tue, 27 Feb 2024 14:25:42 +0100
+Message-ID: <20240227131613.164562141@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,36 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-[ Upstream commit a5cc98eba2592d6e3c5a4351319595ddde2a5901 ]
+[ Upstream commit c41336f4d69057cbf88fed47951379b384540df5 ]
 
-When a user tries to use the "sec=krb5p" mount parameter to encrypt
-data on connection to a server (when authenticating with Kerberos), we
-indicate that it is not supported, but do not note the equivalent
-recommended mount parameter ("sec=krb5,seal") which turns on encryption
-for that mount (and uses Kerberos for auth).  Update the warning message.
+If the power domains are registered first with genpd and *after that*
+the driver attempts to power them on in the probe sequence, then it is
+possible that a race condition occurs if genpd tries to power them on
+in the same time.
+The same is valid for powering them off before unregistering them
+from genpd.
+Attempt to fix race conditions by first removing the domains from genpd
+and *after that* powering down domains.
+Also first power up the domains and *after that* register them
+to genpd.
 
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231225133615.78993-1-eugen.hristev@collabora.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-pm-domains.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index f4818599c00a2..4d5302b58b534 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -209,7 +209,7 @@ cifs_parse_security_flavors(struct fs_context *fc, char *value, struct smb3_fs_c
+diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
+index 474b272f9b02d..832adb570b501 100644
+--- a/drivers/soc/mediatek/mtk-pm-domains.c
++++ b/drivers/soc/mediatek/mtk-pm-domains.c
+@@ -499,6 +499,11 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
+ 			goto err_put_node;
+ 		}
  
- 	switch (match_token(value, cifs_secflavor_tokens, args)) {
- 	case Opt_sec_krb5p:
--		cifs_errorf(fc, "sec=krb5p is not supported!\n");
-+		cifs_errorf(fc, "sec=krb5p is not supported. Use sec=krb5,seal instead\n");
- 		return 1;
- 	case Opt_sec_krb5i:
- 		ctx->sign = true;
++		/* recursive call to add all subdomains */
++		ret = scpsys_add_subdomain(scpsys, child);
++		if (ret)
++			goto err_put_node;
++
+ 		ret = pm_genpd_add_subdomain(parent_pd, child_pd);
+ 		if (ret) {
+ 			dev_err(scpsys->dev, "failed to add %s subdomain to parent %s\n",
+@@ -508,11 +513,6 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
+ 			dev_dbg(scpsys->dev, "%s add subdomain: %s\n", parent_pd->name,
+ 				child_pd->name);
+ 		}
+-
+-		/* recursive call to add all subdomains */
+-		ret = scpsys_add_subdomain(scpsys, child);
+-		if (ret)
+-			goto err_put_node;
+ 	}
+ 
+ 	return 0;
+@@ -526,9 +526,6 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
+ {
+ 	int ret;
+ 
+-	if (scpsys_domain_is_on(pd))
+-		scpsys_power_off(&pd->genpd);
+-
+ 	/*
+ 	 * We're in the error cleanup already, so we only complain,
+ 	 * but won't emit another error on top of the original one.
+@@ -538,6 +535,8 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
+ 		dev_err(pd->scpsys->dev,
+ 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
+ 			pd->genpd.name, ret);
++	if (scpsys_domain_is_on(pd))
++		scpsys_power_off(&pd->genpd);
+ 
+ 	clk_bulk_put(pd->num_clks, pd->clks);
+ 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
 -- 
 2.43.0
 
