@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F3E1419A6;
-	Tue, 27 Feb 2024 13:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4EB13AA4C;
+	Tue, 27 Feb 2024 13:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042085; cv=none; b=sqUB4iEajZLM592wQCzrIh50mR9dvK7zq6widcuSszzkU4YQ9CqTDAUJRER8Kh+c3SN+ywIR1vGusHcDZMGXEwglLTLb9UCt0mI4PcSp9DSumZXpwxMEIBBFYlABcH4UUlC3zy7mD37dVLPrreLT2vK9Y+MM1GSWg0LE8wrv3jY=
+	t=1709042088; cv=none; b=gPv6wlWBci4cgul4xyMPw370QEbxrC1I5pC6+j05DSwdc1IuyuZY7JALfqYASmf87HyLWAzoZkKMYWXBw0e87Ef8iopxqJD1vY55bKie1D6U7V3XngPS2H8hehK8xPsGFrcxPIketaoIEQzSXS4Yc6TQlIZppLcmt3b0ZjxLYH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042085; c=relaxed/simple;
-	bh=mmwJekYvedMH6NUdYVUGFOwYMDdRgwabtdt/JGD3GZo=;
+	s=arc-20240116; t=1709042088; c=relaxed/simple;
+	bh=8g9igAS6XNbdCE44JYLHdJTnFV3PzUd0YqSZnxnJ4kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNagdfnoXXDIaklCW9H8iEDxLPfM6CvY0nIM4YDb5/Aydq2zsxGbDW/IaUjFSyoJJ1IjuFsDBa4dvTZVog7zJzFJoyNjPP/6cLvXa0PbpuO541n697XIKU29vUCDmJXolY9yz+WXprqyjuRad0sem8tMJZiBp5lN1mbV16ISwGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy/xUx4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6yHD2hIqBI8hCJBqw44OBTw2i4rBLVAey7mi4PcGzTUEmGtrbfLkBMyQw89tWG7Nz9IDBam76opsQY7j50thJVhWhVbKgcqSO1ub0IvO8hykxOzl1eHCwg6BRfJFHzMxKHNz+y1u3G81GqmDIt2JgTxNXiWkuhsBqsCFDXpnF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzL4igmL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy/xUx4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E676EC433F1;
-	Tue, 27 Feb 2024 13:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzL4igmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94051C433C7;
+	Tue, 27 Feb 2024 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042085;
-	bh=mmwJekYvedMH6NUdYVUGFOwYMDdRgwabtdt/JGD3GZo=;
+	s=korg; t=1709042087;
+	bh=8g9igAS6XNbdCE44JYLHdJTnFV3PzUd0YqSZnxnJ4kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sy/xUx4GbGRHVe+DwgQKOWVsKGfIIRb+N8+sqDxtPa05HLds8nKG3QoHMAU/1aWF8
-	 fhbKcFJRMRK7h/D9cO5zWXzG1obIGailQQgb9NY/C6MNP417XBD/JraOE3On8Z/rZp
-	 LXh7zKN/7QO6282VWRTEqG8g2z59fk1xxgx20I1Q=
+	b=hzL4igmLht1FS5SAJSFFaOnxttOzhobJoT7l+fU2Z7HBlmJN7E4TWba6QvwwknEvt
+	 YMR2pivbYYHgUXI3lsX14ySdYq3125SpdfmUwnEt9zduCx4mhDLjsLQ2gbwsOt2pR2
+	 DScYuaR0Mjoo0azFit+Xc/mS5/wU1yDxolMg7sBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Cherian <gcherian@marvell.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel@sholland.org>,
 	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 173/299] irqchip/gic-v3-its: Do not assume vPE tables are preallocated
-Date: Tue, 27 Feb 2024 14:24:44 +0100
-Message-ID: <20240227131631.408116624@linuxfoundation.org>
+	Guo Ren <guoren@kernel.org>,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH 6.6 174/299] irqchip/sifive-plic: Enable interrupt if needed before EOI
+Date: Tue, 27 Feb 2024 14:24:45 +0100
+Message-ID: <20240227131631.437918244@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,55 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Nam Cao <namcao@linutronix.de>
 
-commit ec4308ecfc887128a468f03fb66b767559c57c23 upstream.
+commit 9c92006b896c767218aabe8947b62026a571cfd0 upstream.
 
-The GIC/ITS code is designed to ensure to pick up any preallocated LPI
-tables on the redistributors, as enabling LPIs is a one-way switch. There
-is no such restriction for vLPIs, and for GICv4.1 it is expected to
-allocate a new vPE table at boot.
+RISC-V PLIC cannot "end-of-interrupt" (EOI) disabled interrupts, as
+explained in the description of Interrupt Completion in the PLIC spec:
 
-This works as intended when initializing an ITS, however when setting up a
-redistributor in cpu_init_lpis() the early return for preallocated RD
-tables skips straight past the GICv4 setup. This all comes to a head when
-trying to kexec() into a new kernel, as the new kernel silently fails to
-set up GICv4, leading to a complete loss of SGIs and LPIs for KVM VMs.
+"The PLIC signals it has completed executing an interrupt handler by
+writing the interrupt ID it received from the claim to the claim/complete
+register. The PLIC does not check whether the completion ID is the same
+as the last claim ID for that target. If the completion ID does not match
+an interrupt source that *is currently enabled* for the target, the
+completion is silently ignored."
 
-Slap a band-aid on the problem by ensuring its_cpu_init_lpis() always
-initializes GICv4 on the way out, even if the other RD tables were
-preallocated.
+Commit 69ea463021be ("irqchip/sifive-plic: Fixup EOI failed when masked")
+ensured that EOI is successful by enabling interrupt first, before EOI.
 
-Fixes: 6479450f72c1 ("irqchip/gic-v4: Fix occasional VLPI drop")
-Reported-by: George Cherian <gcherian@marvell.com>
-Co-developed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Commit a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask
+operations") removed the interrupt enabling code from the previous
+commit, because it assumes that interrupt should already be enabled at the
+point of EOI.
+
+However, this is incorrect: there is a window after a hart claiming an
+interrupt and before irq_desc->lock getting acquired, interrupt can be
+disabled during this window. Thus, EOI can be invoked while the interrupt
+is disabled, effectively nullify this EOI. This results in the interrupt
+never gets asserted again, and the device who uses this interrupt appears
+frozen.
+
+Make sure that interrupt is really enabled before EOI.
+
+Fixes: a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask operations")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240219185809.286724-2-oliver.upton@linux.dev
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Samuel Holland <samuel@sholland.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Guo Ren <guoren@kernel.org>
+Cc: linux-riscv@lists.infradead.org
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240131081933.144512-1-namcao@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-sifive-plic.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3181,6 +3181,7 @@ static void its_cpu_init_lpis(void)
- 	val |= GICR_CTLR_ENABLE_LPIS;
- 	writel_relaxed(val, rbase + GICR_CTLR);
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -148,7 +148,13 @@ static void plic_irq_eoi(struct irq_data
+ {
+ 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
  
-+out:
- 	if (gic_rdists->has_vlpis && !gic_rdists->has_rvpeid) {
- 		void __iomem *vlpi_base = gic_data_rdist_vlpi_base();
+-	writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++	if (unlikely(irqd_irq_disabled(d))) {
++		plic_toggle(handler, d->hwirq, 1);
++		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++		plic_toggle(handler, d->hwirq, 0);
++	} else {
++		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
++	}
+ }
  
-@@ -3216,7 +3217,6 @@ static void its_cpu_init_lpis(void)
- 
- 	/* Make sure the GIC has seen the above */
- 	dsb(sy);
--out:
- 	gic_data_rdist()->flags |= RD_LOCAL_LPI_ENABLED;
- 	pr_info("GICv3: CPU%d: using %s LPI pending table @%pa\n",
- 		smp_processor_id(),
+ #ifdef CONFIG_SMP
 
 
