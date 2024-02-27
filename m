@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6D7145356;
-	Tue, 27 Feb 2024 14:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB98145356;
+	Tue, 27 Feb 2024 14:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044076; cv=none; b=hzAyR8wwrhuthZuWIqWg5Hys2PxJ/4Cs4I4xen6f3+ObdXcTr3C9K3caoRq4IaST6ZAa4ME4pkcmov4Z9yBhXAAY1+1+4ElrnVgSm917dBQmmM/l2lrd36ncmrCnIOMXeo6cK1k7bVKkHfw/F/GsJ0yqEPe2sfMnxZ4vsFHEwf8=
+	t=1709044078; cv=none; b=UM9hJzX9SoCDhYgwqKeT2id1ZXsAw3v/baFMzC1Pm8CocOQ92Y5WQlDpMw7aeuZrWzoc2BR8+Pe09ocoJ/q+GKEXIjtrUHwlPsO3aAMAkFi2fqtJ/CC7d+3NjBYyQQ/LuUytsAcOth1ai/W456gtBeOzdLQGavHxc/af0SohdiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044076; c=relaxed/simple;
-	bh=YVwBqWLauGOwlq1gWGNcYUuP7a1XHJOE+wftncEfZBY=;
+	s=arc-20240116; t=1709044078; c=relaxed/simple;
+	bh=s8OaApCdEFGh7MMABZbmwSGTxRZ/m1kubGcoyHJhWm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUnzHm88aOEZ2Ut6SccAE2Cipx7NhFVzowTtz6U68M9l8sbHxxsuL9VinilCQMmcz9k1K2A3lvMF3w+QFUWlcafC2VHlgRmj/rgTAnwszQe0lBcLK3zfpHMANm3GjarQLQRfEzvhsHQ1eDMsrK+F5zFyEY3WR8dLND3ZtHwtnQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn/HGacr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2Zv/xQUUQ4Uwk8rrJadgGgTeZxPA4WJGxI3hJg5wotN0qFocjMn/2FEx+V/SLR3WB6BxjkpUCo5p4GObHAp7gabKVgaxy9spxFew2jPBSMFApH2PBI6xPkGQ1fzyRtIiQ5gGMHP41MOiaDJHgpL1Pjl20W/4WeSVKQB9wHDT+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGB36+eS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn/HGacr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549EFC43390;
-	Tue, 27 Feb 2024 14:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGB36+eS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9D8C433C7;
+	Tue, 27 Feb 2024 14:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044075;
-	bh=YVwBqWLauGOwlq1gWGNcYUuP7a1XHJOE+wftncEfZBY=;
+	s=korg; t=1709044078;
+	bh=s8OaApCdEFGh7MMABZbmwSGTxRZ/m1kubGcoyHJhWm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dn/HGacri2wtky7+srPbqqFLaqqDAi/OXCDTWV0XMzWlAgkBnXrntv/EuGy0Rvrjj
-	 iOJazPjRQt/QGxKXz2xhTxRr3ZbURM5MBEiMAViYrzpA6ysE9Q0xbeVPkuShY4VNfF
-	 NWrU6Sm7WALqATl/oDBLDq1I0JKoQm7POQ3LD2Jw=
+	b=pGB36+eS7c8rM70cDLZ4ICpn8jpfjlgm60EsF0ZtfwlJYW/U2mLPor4rgM2kuAp2L
+	 HFhvV+1LsYePzZhgSdDEA2oA5qXJYxWqw/2McxVw3/0JZ9/mafwz7vz5dxb3kjVL9Q
+	 dntWTziQfZ7xMs/ADt8zjH2yaJQNmkxWmPKPfG8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/122] powerpc/watchpoints: Annotate atomic context in more places
-Date: Tue, 27 Feb 2024 14:26:55 +0100
-Message-ID: <20240227131600.476671712@linuxfoundation.org>
+Subject: [PATCH 5.10 055/122] cifs: add a warning when the in-flight count goes negative
+Date: Tue, 27 Feb 2024 14:26:56 +0100
+Message-ID: <20240227131600.508814013@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,56 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 27646b2e02b096a6936b3e3b6ba334ae20763eab ]
+[ Upstream commit e4645cc2f1e2d6f268bb8dcfac40997c52432aed ]
 
-It can be easy to miss that the notifier mechanism invokes the callbacks
-in an atomic context, so add some comments to that effect on the two
-handlers we register here.
+We've seen the in-flight count go into negative with some
+internal stress testing in Microsoft.
 
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230829063457.54157-4-bgray@linux.ibm.com
+Adding a WARN when this happens, in hope of understanding
+why this happens when it happens.
+
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/hw_breakpoint.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/cifs/smb2ops.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/kernel/hw_breakpoint.c b/arch/powerpc/kernel/hw_breakpoint.c
-index 49273f67c7498..ca3374c6f3749 100644
---- a/arch/powerpc/kernel/hw_breakpoint.c
-+++ b/arch/powerpc/kernel/hw_breakpoint.c
-@@ -611,6 +611,11 @@ static void handle_p10dd1_spurious_exception(struct arch_hw_breakpoint **info,
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index f83901c1c17a5..b2a7238a34221 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -82,6 +82,7 @@ smb2_add_credits(struct TCP_Server_Info *server,
+ 		*val = 65000; /* Don't get near 64K credits, avoid srv bugs */
+ 		pr_warn_once("server overflowed SMB3 credits\n");
  	}
- }
- 
-+/*
-+ * Handle a DABR or DAWR exception.
-+ *
-+ * Called in atomic context.
-+ */
- int hw_breakpoint_handler(struct die_args *args)
- {
- 	bool err = false;
-@@ -737,6 +742,8 @@ NOKPROBE_SYMBOL(hw_breakpoint_handler);
- 
- /*
-  * Handle single-step exceptions following a DABR hit.
-+ *
-+ * Called in atomic context.
-  */
- static int single_step_dabr_instruction(struct die_args *args)
- {
-@@ -794,6 +801,8 @@ NOKPROBE_SYMBOL(single_step_dabr_instruction);
- 
- /*
-  * Handle debug exception notifications.
-+ *
-+ * Called in atomic context.
-  */
- int hw_breakpoint_exceptions_notify(
- 		struct notifier_block *unused, unsigned long val, void *data)
++	WARN_ON_ONCE(server->in_flight == 0);
+ 	server->in_flight--;
+ 	if (server->in_flight == 0 && (optype & CIFS_OP_MASK) != CIFS_NEG_OP)
+ 		rc = change_conf(server);
 -- 
 2.43.0
 
