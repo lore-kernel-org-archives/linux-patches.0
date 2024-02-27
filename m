@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82CF13B7A2;
-	Tue, 27 Feb 2024 13:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D4713B7A2;
+	Tue, 27 Feb 2024 13:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041845; cv=none; b=VQjhJRJkCVAAyztN5zrbxEuo0X6VVP4WY3LCkA1UVdBhfKCTlUWnuVkAVFrpG+dCN4a5qiCsAJor8w4uHq8s+ZPkbKXEM8POkSb7sVVds2h2VP0jWRD6TVmFEKJe8LUYV/tRL6A1ftr8OE1KqkPCzbXtYM/E817I64qFi9xpeRA=
+	t=1709041848; cv=none; b=LPFfk79+oxCIyHPJz5kAMkB6QT45hxC1h4fGpIEVLL5dJ3xnIOmHMLxZ36RZ1Drob9NSBIqTcn+tceMMoSTCnV5QbO9nXMR0uLu5z34NMAHsaJvA87QZKo0lCqWujeTzIeY9o1Wu6w/W3LS6g6QiEp5kIB1eJAYd07Lz2d6HIVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041845; c=relaxed/simple;
-	bh=/jy5Rgrn6GQ/wkg7j8r51CGRXo3DcpHBYVFPwhwbPqU=;
+	s=arc-20240116; t=1709041848; c=relaxed/simple;
+	bh=1GSPrAlfI9/XPzxmsmwc4/tBrKZa0bT6yD4rbUADj8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gW12qx5k4zWdmeIvrNajI6iw/2cVPKt4Y8Zhp5aM5sdIXoDp7PfBH2/bHVXD32Po76ok41SbcFboY1vgNsHkefggNiu7TtwRfMo6kdCFF921gMGgGoLhRnZb0Z4rAW52mieEqjosm/mZTpkUa8r/qHjvzcSGg/gS/GtcV+MgX4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ao5M0e9C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JM9CnBpgPBhyKyFHmh0S4u6OxdOU1C1V76IGnpq+Td+PJJJy6dnlOzLNGwQ1NHgXFrwqdm2n7v3HMRsTrWgwfysFpC0JD4r+dq76wcimvMT3BFLR/nPXifv8D3GuJKyVm/pBVgy4Gw55He2Wnpx7GxEjQD+HUKGu9MY8llgokMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7bBQkMJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ao5M0e9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3698C433C7;
-	Tue, 27 Feb 2024 13:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7bBQkMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96362C433F1;
+	Tue, 27 Feb 2024 13:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041845;
-	bh=/jy5Rgrn6GQ/wkg7j8r51CGRXo3DcpHBYVFPwhwbPqU=;
+	s=korg; t=1709041848;
+	bh=1GSPrAlfI9/XPzxmsmwc4/tBrKZa0bT6yD4rbUADj8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ao5M0e9CAwWY3ASyV7agE2+3r+aMfFxcW8ZJ2yZfnowP9R8mBSHAST+J3qPK/+64z
-	 ludqd9j5LWXEl86IRjObaiDtet8SD28QUIeODZaDSNmtkez5xV3qDmTvs9GLHXQvAF
-	 E40ejiu07VlpibS69Gf7MQqaHHphmt773U+VDAT8=
+	b=i7bBQkMJ4aUTogNlxWaLHu6NcgLG3w2CDrZtl6IsuC7/CwkxDuvM44G8VhqSqg6nq
+	 LII/nXXCixpFfzyaZDtDzGoxktLT+UQvlw430HpakSpx96pRcty94hqOCnQlop2er7
+	 mkM0NmhbK1ZH/ktWdM78fXJiPjV78Y0dEuw+Vd/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Morris <rtm@csail.mit.edu>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/299] fs/ntfs3: Correct function is_rst_area_valid
-Date: Tue, 27 Feb 2024 14:23:19 +0100
-Message-ID: <20240227131628.744503686@linuxfoundation.org>
+Subject: [PATCH 6.6 089/299] fs/ntfs3: Fixed overflow check in mi_enum_attr()
+Date: Tue, 27 Feb 2024 14:23:20 +0100
+Message-ID: <20240227131628.775018792@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,49 +53,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 1b7dd28e14c4728ae1a815605ca33ffb4ce1b309 ]
+[ Upstream commit 652cfeb43d6b9aba5c7c4902bed7a7340df131fb ]
 
 Reported-by: Robert Morris <rtm@csail.mit.edu>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/ntfs3/record.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 7dbb000fc6911..855519713bf79 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -465,7 +465,7 @@ static inline bool is_rst_area_valid(const struct RESTART_HDR *rhdr)
- {
- 	const struct RESTART_AREA *ra;
- 	u16 cl, fl, ul;
--	u32 off, l_size, file_dat_bits, file_size_round;
-+	u32 off, l_size, seq_bits;
- 	u16 ro = le16_to_cpu(rhdr->ra_off);
- 	u32 sys_page = le32_to_cpu(rhdr->sys_page_size);
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 7b6423584eaee..6aa3a9d44df1b 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -279,7 +279,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		if (t16 > asize)
+ 			return NULL;
  
-@@ -511,13 +511,15 @@ static inline bool is_rst_area_valid(const struct RESTART_HDR *rhdr)
- 	/* Make sure the sequence number bits match the log file size. */
- 	l_size = le64_to_cpu(ra->l_size);
+-		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
++		if (le32_to_cpu(attr->res.data_size) > asize - t16)
+ 			return NULL;
  
--	file_dat_bits = sizeof(u64) * 8 - le32_to_cpu(ra->seq_num_bits);
--	file_size_round = 1u << (file_dat_bits + 3);
--	if (file_size_round != l_size &&
--	    (file_size_round < l_size || (file_size_round / 2) > l_size)) {
--		return false;
-+	seq_bits = sizeof(u64) * 8 + 3;
-+	while (l_size) {
-+		l_size >>= 1;
-+		seq_bits -= 1;
- 	}
- 
-+	if (seq_bits != ra->seq_num_bits)
-+		return false;
-+
- 	/* The log page data offset and record header length must be quad-aligned. */
- 	if (!IS_ALIGNED(le16_to_cpu(ra->data_off), 8) ||
- 	    !IS_ALIGNED(le16_to_cpu(ra->rec_hdr_len), 8))
+ 		t32 = sizeof(short) * attr->name_len;
 -- 
 2.43.0
 
