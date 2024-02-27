@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B078B61;
-	Tue, 27 Feb 2024 14:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7805513EFE9;
+	Tue, 27 Feb 2024 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043137; cv=none; b=rwcVJn7D0vVli3wKWcYONzrTObz5fK+IZOrvCJ/5pJBdIBLfoWg9V/Wfn+Jh/1tN+NvoUBoG5QMrFw40k+0qOOg5ypLWDSbjvGg43v3ujE/ihEpko5pD5xXIIlG9uhgJ/I8u/ModEBMkCXfZYv8CIVzApjMvZaegvDaw9jA3XpY=
+	t=1709043140; cv=none; b=bCUwFBEEHV5QuVgivRddkCEl26d9+9brHY+Bvy8Dt1opjMkSqnsfBgXIYAeUoE2ji3Hu7byP/EkeA7/eJoxwxpkB4Q16+ZctSCxjioZGBsq/FixaA27IvK+g9dgGZxVP+E2rkd/3ffjSNPfQVZsb1IbTFmdP/A7cKYkAoNlMJDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043137; c=relaxed/simple;
-	bh=z2/7Gj13yedvBLUL5VKnq+tLvRWcW9gdTZQ1nOOiQx0=;
+	s=arc-20240116; t=1709043140; c=relaxed/simple;
+	bh=xUkwcD1F9qpmHR5Ceeg8rvPo0oBppN817Yeg8jlCSqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRVkfUOl4eD3Klur5jZLno8jnnt/UKOhTA/n5yw7tj680zoFuWHqOrBXTu1f4JBfvEnRteHAt5shc1hXxyJoeheQIdcgK0dkoWHnv+y6BFtah1f6FQ8zY0yxKCK36hCfE1XWAMR4rq5k7FKCJTBxLXNhdoCrIHTkYW+uYzQ11rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twOSoksK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0CQCTVLUjVm2UBG4WRy0j4V5VEMUIjlvCdA2+YvkbeGlRMSilN8AgWMwMr04T2AvfS1BXIlZcykIxnsG2FRdWIflFMVaHkXhggQUfnorDTk8TdA2wCoz3CBNgFsxaYZRphCPvOaQyiw75buXXlxU4sjyS0+UhtK60Wbxubx39s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpDANVjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twOSoksK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AABC433F1;
-	Tue, 27 Feb 2024 14:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpDANVjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0454DC433F1;
+	Tue, 27 Feb 2024 14:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043137;
-	bh=z2/7Gj13yedvBLUL5VKnq+tLvRWcW9gdTZQ1nOOiQx0=;
+	s=korg; t=1709043140;
+	bh=xUkwcD1F9qpmHR5Ceeg8rvPo0oBppN817Yeg8jlCSqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twOSoksKtEkZohBu9y3/fJmafaQvB7X/AVvz2j8tRR8d7ht8ivVvdIupUZ61WNZCo
-	 2SDktmQ2vy/3ir3Pg6YYnTGuAEPfxopAh77ZYEU800+B3fAZq994EGVYo2RPYp4fWw
-	 rLUNgFsHgi8z97VY7LGQUiIH925uuYw6+ABPcggI=
+	b=DpDANVjVakZki/EWMZTEF3BMN5DoB9QPia5F1q07UlRFx76cRTajGqgURxmhUs9/0
+	 /u0OrBHFZt+Jhl5LmXPSfkoWyBxtcinVJRU2NNKZJj9oEhSuIormkA6bS3XLG5LfSv
+	 eVyRZKk96R0zgZWMuYBGJ2f3tDGJB9nr5+EQFRys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Hou Tao <houtao1@huawei.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 220/245] bpf: Fix racing between bpf_timer_cancel_and_free and bpf_timer_cancel
-Date: Tue, 27 Feb 2024 14:26:48 +0100
-Message-ID: <20240227131622.348191075@linuxfoundation.org>
+Subject: [PATCH 5.15 221/245] afs: Increase buffer size in afs_update_volume_status()
+Date: Tue, 27 Feb 2024 14:26:49 +0100
+Message-ID: <20240227131622.378220623@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -53,95 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 0281b919e175bb9c3128bd3872ac2903e9436e3f ]
+[ Upstream commit 6ea38e2aeb72349cad50e38899b0ba6fbcb2af3d ]
 
-The following race is possible between bpf_timer_cancel_and_free
-and bpf_timer_cancel. It will lead a UAF on the timer->timer.
+The max length of volume->vid value is 20 characters.
+So increase idbuf[] size up to 24 to avoid overflow.
 
-bpf_timer_cancel();
-	spin_lock();
-	t = timer->time;
-	spin_unlock();
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-					bpf_timer_cancel_and_free();
-						spin_lock();
-						t = timer->timer;
-						timer->timer = NULL;
-						spin_unlock();
-						hrtimer_cancel(&t->timer);
-						kfree(t);
+[DH: Actually, it's 20 + NUL, so increase it to 24 and use snprintf()]
 
-	/* UAF on t */
-	hrtimer_cancel(&t->timer);
-
-In bpf_timer_cancel_and_free, this patch frees the timer->timer
-after a rcu grace period. This requires a rcu_head addition
-to the "struct bpf_hrtimer". Another kfree(t) happens in bpf_timer_init,
-this does not need a kfree_rcu because it is still under the
-spin_lock and timer->timer has not been visible by others yet.
-
-In bpf_timer_cancel, rcu_read_lock() is added because this helper
-can be used in a non rcu critical section context (e.g. from
-a sleepable bpf prog). Other timer->timer usages in helpers.c
-have been audited, bpf_timer_cancel() is the only place where
-timer->timer is used outside of the spin_lock.
-
-Another solution considered is to mark a t->flag in bpf_timer_cancel
-and clear it after hrtimer_cancel() is done.  In bpf_timer_cancel_and_free,
-it busy waits for the flag to be cleared before kfree(t). This patch
-goes with a straight forward solution and frees timer->timer after
-a rcu grace period.
-
-Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/bpf/20240215211218.990808-1-martin.lau@linux.dev
+Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20240211150442.3416-1-d.dulov@aladdin.ru/ # v1
+Link: https://lore.kernel.org/r/20240212083347.10742-1-d.dulov@aladdin.ru/ # v2
+Link: https://lore.kernel.org/r/20240219143906.138346-3-dhowells@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/afs/volume.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index c8827d1ff3c59..870127c895c49 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1048,6 +1048,7 @@ struct bpf_hrtimer {
- 	struct bpf_prog *prog;
- 	void __rcu *callback_fn;
- 	void *value;
-+	struct rcu_head rcu;
- };
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index 137a970c19fb3..3d39ce5a23f22 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -327,7 +327,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ {
+ 	struct afs_server_list *new, *old, *discard;
+ 	struct afs_vldb_entry *vldb;
+-	char idbuf[16];
++	char idbuf[24];
+ 	int ret, idsz;
  
- /* the actual struct hidden inside uapi struct bpf_timer */
-@@ -1269,6 +1270,7 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_timer_kern *, timer)
- 
- 	if (in_nmi())
- 		return -EOPNOTSUPP;
-+	rcu_read_lock();
- 	__bpf_spin_lock_irqsave(&timer->lock);
- 	t = timer->timer;
- 	if (!t) {
-@@ -1290,6 +1292,7 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_timer_kern *, timer)
- 	 * if it was running.
+ 	_enter("");
+@@ -335,7 +335,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ 	/* We look up an ID by passing it as a decimal string in the
+ 	 * operation's name parameter.
  	 */
- 	ret = ret ?: hrtimer_cancel(&t->timer);
-+	rcu_read_unlock();
- 	return ret;
- }
+-	idsz = sprintf(idbuf, "%llu", volume->vid);
++	idsz = snprintf(idbuf, sizeof(idbuf), "%llu", volume->vid);
  
-@@ -1344,7 +1347,7 @@ void bpf_timer_cancel_and_free(void *val)
- 	 */
- 	if (this_cpu_read(hrtimer_running) != t)
- 		hrtimer_cancel(&t->timer);
--	kfree(t);
-+	kfree_rcu(t, rcu);
- }
- 
- const struct bpf_func_proto bpf_get_current_task_proto __weak;
+ 	vldb = afs_vl_lookup_vldb(volume->cell, key, idbuf, idsz);
+ 	if (IS_ERR(vldb)) {
 -- 
 2.43.0
 
