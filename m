@@ -1,89 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FC2138480;
-	Tue, 27 Feb 2024 10:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA691386C4;
+	Tue, 27 Feb 2024 11:07:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709031014; cv=none; b=WmAA8j2T4G8xX9EpWQ4yMpiKYB89LZKb8puOXbVkxAkhYXfMyxLTiHKwAy0aHJwZj3gUtdYgtf3Lyi66i0R8TvVuEsbDVztSjlVU4ZWvgMtkk5vOzJiIk+Z9jCjib5/Ru6Oak80jXlq7F7wkyamEHObA9NNl9xlyHHlP+27URtA=
+	t=1709032078; cv=none; b=P66eAhGObu/Ve6JS0L3V/OPNTS9573H+HVYuhAtLblPmO5b4K3KXTu4FMgCRhuGcTe2zsV1pHcGZ7MoepIO2IpcW2ZSCZOwn9PaBmCDOh1tssEiB0gTZLEKteT7GJCrkQXSCzoxKeYNCKu16KNc5ly4QKjoDIchI9jzZkwmmYwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709031014; c=relaxed/simple;
-	bh=h/XPnR9/Of74e57QRgQwK4utsjer1UJrLhZg11kJf9E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OhniqNj0pU1PVjcrKwCaPrxNCJNIxFX6BNYl4RbYyaY7QRjxwTH4BMct3cofe5fs/9xLHo3RgsGxYR9FwhLZTbim2m7VwNvjgbVOdWmItS8txipAT6wEDy8fJKBZ0KsWuqYTLqB6Mi0naIquFMGS3NtIBBFKy2MzugT8V2cwr1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArRbrzzk; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArRbrzzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE34C433C7;
-	Tue, 27 Feb 2024 10:50:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709031014;
-	bh=h/XPnR9/Of74e57QRgQwK4utsjer1UJrLhZg11kJf9E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ArRbrzzkRv2DPl31GDKc2bQzlz9XV2Kd3q/cN28EQDl0wb7IzkqVYnFqoZoTOH0R9
-	 6cTKAjWYxCnZw6gvXOHoOeHhbCq/ZYghidbOW06ryrO8KV4f/Yi4vJskd20OFf0utH
-	 GqzyNgqXtvcYh7sqsveTNby6WAa6VLT1nMxjkdvbid7p1xBBqQY7AizQQW8Zl1TER/
-	 Qd01DP7+og2GkcmzD5HDreBYLD1DmCFGq8cdaS6N0o2/4HAzh2BiU+riEg311Rvr3h
-	 v0wNZ5UEzsDSwIG7K34Jsamx5tli3V72And1hL/IuskBJ1hsUkB7ooDt8O1Ks7F+7e
-	 mk/3N614ouRxw==
-Date: Tue, 27 Feb 2024 10:50:08 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Robin Murphy <robin.murphy@arm.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 02/17] iommu/arm-smmu-v3: Consolidate the STE
- generation for abort/bypass
-Message-ID: <20240227105007.GA13859@willie-the-truck>
-References: <2-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <2ca7f64e-a9e3-4d47-b04f-726c86223fd6@arm.com>
- <20240223185358.GA791502@nvidia.com>
+	s=arc-20240116; t=1709032078; c=relaxed/simple;
+	bh=34F9Z4iZf+zhWbYhtZNRE0IqJQ27+A+XKn1T0p8dgKM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tZxwMldgoMFiL+Kcm8DC+/BbvnY5szacs8mcBu6MIuuQTaJSaPSBWROUn42iXZrLsgVeCm7RbBxTbA32QuD4AUTTvAZtneB+5Lp9vBmbDLjSSPrpQia/+ADKEbvo6KB0cPBp17bn4D5KzR5rGYQEk3gP63nBwv90D+deKKGRBb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3bc21303a35so1723791b6e.0;
+        Tue, 27 Feb 2024 03:07:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709032076; x=1709636876;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=skOPLIuxWMEaf7NIrg2gBG0ipla5NBpvoy48o/0tCL4=;
+        b=LOb5GKg8MVcYSKby0dv4wOIuE1DURrjIQ2+ubfAwDgPXSl5EgyYx159azrnu1F0kiK
+         dOWRh2Hr/F2OjHKXMxyaHNntK/MYNRiR6RF7rtY8Xdlu6G29e+7+HyZC7w90XDMpIzh5
+         Vu4+0milD0zsT7TxWeSJaJ8sDSjcmQrTAH5rbmlDlkWjbPUJ7xrPNffjvxMytMflpGKD
+         iW+XbJAMXmwUW0M9GZZr9cUYLXaSmrt0hYrG8HX/QcCdqxsjgj9Q+yq/OXGww0zMBKer
+         l/NM+qkL8BlKbjKnsSSUbg/m/HjsK4vvStPTwnklNNLyZjGmaezS30Xj4hWulfvz3U8N
+         tmVw==
+X-Forwarded-Encrypted: i=1; AJvYcCXVe20nPm0R81czilzQoqMWgy19Po5eGwT5t8yMHb6n+/JpuUPnoVXtrwnuW6AQq8LdDjxVw5QaBbsdzqcO0rrQ1X9Ps3kiq5Mw+JzulWr1RjJb83XeYi+v2ccG3Ic=
+X-Gm-Message-State: AOJu0YysY4aA7r60sEBibIZMrs6c2lqlVvyXeqqbfq567VCe6tPgkk2D
+	w28EA5+1vgQ8kYHqsqKZV/rUPc8qn9jkoy8tM2oXYX5V59v3YuXJ+sqIuUOTaYCwv42LQxBeAId
+	LnzL4MF8ldZpdd8v0wADVjV27s54=
+X-Google-Smtp-Source: AGHT+IGkYlkdOebTrB+0a3ntjFHyIn86N1gDBuhwNRPmsGOjLy1F2kZT0BIFzCuMQhVJVW9189Lkoh5I24vW3xNhKcU=
+X-Received: by 2002:a4a:d037:0:b0:5a0:3d13:a45a with SMTP id
+ w23-20020a4ad037000000b005a03d13a45amr9152893oor.0.1709032075843; Tue, 27 Feb
+ 2024 03:07:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240223185358.GA791502@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20240226-thermal-fix-fortify-panic-num_trips-v1-1-accc12a341d7@kernel.org>
+ <202402261806.A8340C71D@keescook>
+In-Reply-To: <202402261806.A8340C71D@keescook>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 27 Feb 2024 12:07:43 +0100
+Message-ID: <CAJZ5v0gcTZxrgQxbrAFnfEw_Efzud70bg9tVW6Mypu_G6N7hOg@mail.gmail.com>
+Subject: Re: [PATCH] thermal: core: Move initial num_trips assignment before memcpy()
+To: Kees Cook <keescook@chromium.org>, Nathan Chancellor <nathan@kernel.org>
+Cc: daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
+	gustavoars@kernel.org, morbo@google.com, justinstitt@google.com, 
+	stanislaw.gruszka@linux.intel.com, linux-pm@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 23, 2024 at 02:53:58PM -0400, Jason Gunthorpe wrote:
-> On Thu, Feb 15, 2024 at 05:27:09PM +0000, Robin Murphy wrote:
-> > > @@ -1583,22 +1595,20 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
-> > >   	arm_smmu_write_ste(master, sid, dst, &target);
-> > >   }
-> > > +/*
-> > > + * This can safely directly manipulate the STE memory without a sync sequence
-> > > + * because the STE table has not been installed in the SMMU yet.
-> > > + */
-> > >   static void arm_smmu_init_bypass_stes(struct arm_smmu_ste *strtab,
-> > 
-> > This name is long out-of-date - if we're refreshing this area, please rename
-> > to something relevant to what it actually does, e.g. s/bypass/initial/.
-> 
-> Done
-> 
-> > Although frankly I also think that at this point we should just get rid of
-> > the disable_bypass parameter altogether - it's been almost entirely
-> > meaningless since default domain support was added, and any tenuous cases
-> > for wanting inital STEs to be bypass should probably be using RMRs now
-> > anyway.
-> 
-> I can write the patch for this if you and Will agree
+On Tue, Feb 27, 2024 at 3:08=E2=80=AFAM Kees Cook <keescook@chromium.org> w=
+rote:
+>
+> On Mon, Feb 26, 2024 at 05:54:58PM -0700, Nathan Chancellor wrote:
+> > When booting a CONFIG_FORTIFY_SOURCE=3Dy kernel compiled with a toolcha=
+in
+> > that supports __counted_by() (such as clang-18 and newer), there is a
+> > panic on boot:
+> >
+> >   [    2.913770] memcpy: detected buffer overflow: 72 byte write of buf=
+fer size 0
+>
+> Yay, the "better details" output is working. :)
+>
+> >   [    2.920834] WARNING: CPU: 2 PID: 1 at lib/string_helpers.c:1027 __=
+fortify_report+0x5c/0x74
+> >   ...
+> >   [    3.039208] Call trace:
+> >   [    3.041643]  __fortify_report+0x5c/0x74
+> >   [    3.045469]  __fortify_panic+0x18/0x20
+> >   [    3.049209]  thermal_zone_device_register_with_trips+0x4c8/0x4f8
+> >
+> > This panic occurs because trips is counted by num_trips but num_trips i=
+s
+> > assigned after the call to memcpy(), so the fortify checks think the
+> > buffer size is zero because tz was allocated with kzalloc().
+> >
+> > Move the num_trips assignment before the memcpy() to resolve the panic
+> > and ensure that the fortify checks work properly.
+> >
+> > Fixes: 9b0a62758665 ("thermal: core: Store zone trips table in struct t=
+hermal_zone_device")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  drivers/thermal/thermal_core.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_c=
+ore.c
+> > index bb21f78b4bfa..1eabc8ebe27d 100644
+> > --- a/drivers/thermal/thermal_core.c
+> > +++ b/drivers/thermal/thermal_core.c
+> > @@ -1354,8 +1354,8 @@ thermal_zone_device_register_with_trips(const cha=
+r *type,
+> >
+> >       tz->device.class =3D thermal_class;
+> >       tz->devdata =3D devdata;
+> > -     memcpy(tz->trips, trips, num_trips * sizeof(*trips));
+> >       tz->num_trips =3D num_trips;
+> > +     memcpy(tz->trips, trips, num_trips * sizeof(*trips));
+>
+> Looks good to me; thanks for catching this!
+>
+> Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Yes, please! I'll be glad to see the back of that option. Since you just
-posted v6 of your "part 1", feel free to send a patch which applies on top
-of that (rather than having to rebase the whole shebang).
-
-Will
+Applied, thanks!
