@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F101B13B293;
-	Tue, 27 Feb 2024 13:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A217C13B293;
+	Tue, 27 Feb 2024 13:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041105; cv=none; b=mJ7/NiA3xqjOLtm/wx6ZeHMGNesuNC2Wkf9v/FBwd3Yn48qLbDJoXcWHfcH4eP/SUN/fU/OFLPWcQbT/nNu2+SIC0r/PDFdlRuPmrps5Zgv+VjbOGyp2nPBqk+3IRhjo8J5uLg4y9UnDnBCPUCaX6P9V+6QeuVZleSdlHeV1fgA=
+	t=1709041107; cv=none; b=kVl2D8Lmt286JXO53XAWJqmMWdbOv5mR1M0PTuka2wp5Ssmter03STZJSezXyyjT41hdTSHfzTBcfeeSBOOCzH+Cmk+nXM0YM0VaVVopE3IfQvAzqhpiezZwNZZ+WgsmongU4S3Khb9QSu4la6dU5DXKEixhZWCZ8u8u4o/Qfj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041105; c=relaxed/simple;
-	bh=QxQ8GbroggAaEbpZpOrenWcuD+TYnBg0pO3LA463ICA=;
+	s=arc-20240116; t=1709041107; c=relaxed/simple;
+	bh=uhTJAWCB3Ky5zPzvdWhavVHe6QdpFLQSBvOsv5lZXuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltgmSS7RXIKwrSm8Ww9Zk153k2YapNKlF2rdUsqUbLEbtFDWq98OSAwtzEFhlCXJcKoBamcB+ggGanKhM0QZ32R2zSQdKv2XndVQazq9N4+SrCVQoO/JsigjbCpiMeOurWTzJVS6Xp5FXR2naPiPvsWsLFD0cv29yffI8D4cENc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyDRUcbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+8zOuzkQMYR2F+iqlW9WWH9RaTVh7K2woyHpiZYsFTZ9qjDplWuPCoYwyp9q08hsRcEc6Rybop8gihDU1mcpd4xZjhfWp9sZBuVE3rROQZeL7JHcFxAexdgFvZ0etBCOxjgdbrZ8ShfeHTvCLhjyz8zv2aDdRwZ9lvG5J1tRsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0ASkMia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyDRUcbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCCFC433F1;
-	Tue, 27 Feb 2024 13:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0ASkMia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3494FC433F1;
+	Tue, 27 Feb 2024 13:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041104;
-	bh=QxQ8GbroggAaEbpZpOrenWcuD+TYnBg0pO3LA463ICA=;
+	s=korg; t=1709041107;
+	bh=uhTJAWCB3Ky5zPzvdWhavVHe6QdpFLQSBvOsv5lZXuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyDRUcbThKgONpbsE63JLn5NVg6kGocFn0lKGfmarzW8/wNTrRm72mc6EoZ09NiXl
-	 aVhi4/M0aL0REEmBbNmb96fOU51vY/6m8T8AkEdzGYlUAMSFkh8ruMvbRBrWuX+uZ5
-	 svXqYi6MUN/68nIYoXHtspDmDuDzUN4PSD7EcKOI=
+	b=q0ASkMiafeH7UjoRHny3g3HtXDhz9jZkwcH6YVCQTCftlBxzzLm1QaUynYF4f+wBY
+	 J3sCYK5PcxWRkk9LWEflkm2JTs+2ENZ+cSwg2U7NOvqdCdIxengolB0MEpqE8iuAuh
+	 ALpnAMtpvKBL1EcdOZiy01q6j4An0dPiYcaTRAzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <geliang.tang@linux.dev>,
+	Matthieu Baerts <matttbe@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 222/334] selftests: mptcp: pm nl: avoid error msg on older kernels
-Date: Tue, 27 Feb 2024 14:21:20 +0100
-Message-ID: <20240227131637.933714127@linuxfoundation.org>
+Subject: [PATCH 6.7 223/334] selftests: mptcp: diag: check CURRESTAB counters
+Date: Tue, 27 Feb 2024 14:21:21 +0100
+Message-ID: <20240227131637.975728380@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,40 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Geliang Tang <geliang.tang@linux.dev>
 
-commit 662f084f3396d8a804d56cb53ac05c9e39902a7b upstream.
+commit 81ab772819da408977ac79c0a17d8be57283379f upstream.
 
-Since the 'Fixes' commit mentioned below, and if the kernel being tested
-doesn't support the 'fullmesh' flag, this error will be printed:
+This patch adds a new helper chk_msk_cestab() to check the current
+established connections counter MIB_CURRESTAB in diag.sh. Invoke it
+to check the counter during the connection after every chk_msk_inuse().
 
-  netlink error -22 (Invalid argument)
-  ./pm_nl_ctl: bailing out due to netlink error[s]
-
-But that can be normal if the kernel doesn't support the feature, no
-need to print this worrying error message while everything else looks
-OK. So we can mute stderr. Failures will still be detected if any.
-
-Fixes: 1dc88d241f92 ("selftests: mptcp: pm_nl_ctl: always look for errors")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <geliang.tang@linux.dev>
+Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_netlink.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/diag.sh |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
-+++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
-@@ -183,7 +183,7 @@ check "ip netns exec $ns1 ./pm_nl_ctl du
- subflow 10.0.1.1" "          (nobackup)"
+--- a/tools/testing/selftests/net/mptcp/diag.sh
++++ b/tools/testing/selftests/net/mptcp/diag.sh
+@@ -56,7 +56,7 @@ __chk_nr()
+ 	local command="$1"
+ 	local expected=$2
+ 	local msg="$3"
+-	local skip="${4:-SKIP}"
++	local skip="${4-SKIP}"
+ 	local nr
  
- # fullmesh support has been added later
--ip netns exec $ns1 ./pm_nl_ctl set id 1 flags fullmesh
-+ip netns exec $ns1 ./pm_nl_ctl set id 1 flags fullmesh 2>/dev/null
- if ip netns exec $ns1 ./pm_nl_ctl dump | grep -q "fullmesh" ||
-    mptcp_lib_expect_all_features; then
- 	check "ip netns exec $ns1 ./pm_nl_ctl dump" "id 1 flags \
+ 	nr=$(eval $command)
+@@ -199,6 +199,15 @@ wait_local_port_listen()
+ 	done
+ }
+ 
++# $1: cestab nr
++chk_msk_cestab()
++{
++	local cestab=$1
++
++	__chk_nr "mptcp_lib_get_counter ${ns} MPTcpExtMPCurrEstab" \
++		 "${cestab}" "....chk ${cestab} cestab" ""
++}
++
+ wait_connected()
+ {
+ 	local listener_ns="${1}"
+@@ -236,9 +245,11 @@ chk_msk_nr 2 "after MPC handshake "
+ chk_msk_remote_key_nr 2 "....chk remote_key"
+ chk_msk_fallback_nr 0 "....chk no fallback"
+ chk_msk_inuse 2 "....chk 2 msk in use"
++chk_msk_cestab 2
+ flush_pids
+ 
+ chk_msk_inuse 0 "....chk 0 msk in use after flush"
++chk_msk_cestab 0
+ 
+ echo "a" | \
+ 	timeout ${timeout_test} \
+@@ -254,9 +265,11 @@ echo "b" | \
+ wait_connected $ns 10001
+ chk_msk_fallback_nr 1 "check fallback"
+ chk_msk_inuse 1 "....chk 1 msk in use"
++chk_msk_cestab 1
+ flush_pids
+ 
+ chk_msk_inuse 0 "....chk 0 msk in use after flush"
++chk_msk_cestab 0
+ 
+ NR_CLIENTS=100
+ for I in `seq 1 $NR_CLIENTS`; do
+@@ -278,9 +291,11 @@ done
+ 
+ wait_msk_nr $((NR_CLIENTS*2)) "many msk socket present"
+ chk_msk_inuse $((NR_CLIENTS*2)) "....chk many msk in use"
++chk_msk_cestab $((NR_CLIENTS*2))
+ flush_pids
+ 
+ chk_msk_inuse 0 "....chk 0 msk in use after flush"
++chk_msk_cestab 0
+ 
+ mptcp_lib_result_print_all_tap
+ exit $ret
 
 
