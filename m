@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034BC13F016;
-	Tue, 27 Feb 2024 14:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FA71420DA;
+	Tue, 27 Feb 2024 14:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043061; cv=none; b=LAf8cI3hJVWlDNjKZhBIG+HyfH3NKX2kkAcBQQdrVqouw0Vw8jdg/hkRdaTk/vvYG4Nmx+cfpjGZXBEjQlmJBLI9J2JeFkE4CgK/leQ80gq7DL2PSyKqiTtlyrF0xvt2sWILbFazEmLnciQoZf5sPUAKLUor6DsSnsDvZmivGTk=
+	t=1709043063; cv=none; b=FScU9/ZBtWa/JRBf0mRt4AXjvcChbu063H/c9o4PFIr/YVmPp27GYdetiJMDsb/HnbZgDfW85Hg0UJNqCyi9gCuN9doKq+bkA3HhdYOsNi5tCmsRuwOScTH2c21U4VZKcgIbz1Q6L2djiaSkzik3Ic5nZbs8xFT2xfEZ9uAdXJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043061; c=relaxed/simple;
-	bh=NBehIRW8kc0XfLyiQRz57Gmh4TpUxpFtKcR0UpOEKsg=;
+	s=arc-20240116; t=1709043063; c=relaxed/simple;
+	bh=vw2tkzQcvH24IYtBtA0NsLmKlAoy7UGBrFfCvChtTpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbRNAFPS55Mwk1Y3U3b+obYdfiMkIG+UKhPfA8nhEMtvWhkhy52Jl2cGJtJgDw4KsJ7obeyvNQGCIPQ+6X8bykowiU36DzuNlbWm0l9FFvvJq7Tfy977AuxA+3ZwtKlR3U6RVY9d60DieAcu+MVRFJ9+ItVxj4SHfk7Lxhy7TcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DXqGxUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kA2vO1Q9EqYuWyPryby2bnTshXRZmCjPxuQyFVLuUvut9gk5JptVVIjgBlpHv2RRGsIzdMH62FPAo872+4Z7zIxlwiPrsK995vt6QW+NNK/LIqjea9tYUOrQ7NKYQm7Xl+34ubpDl2gCYAeYnGsjKykUNc/zv5agvIHTYpDLH20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCOldF8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DXqGxUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8140AC433F1;
-	Tue, 27 Feb 2024 14:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCOldF8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C607C43399;
+	Tue, 27 Feb 2024 14:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043060;
-	bh=NBehIRW8kc0XfLyiQRz57Gmh4TpUxpFtKcR0UpOEKsg=;
+	s=korg; t=1709043063;
+	bh=vw2tkzQcvH24IYtBtA0NsLmKlAoy7UGBrFfCvChtTpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DXqGxUA7BwOMugs2ZtDcbKho2REMufOf7Wp9k0xRcLWkyL+NDBSEajf6MrAMmKUv
-	 59R9mFmCaGpBF5t9ocBpa9i6Uq7Nhaa8qJsgeR8HC1eq4ozY8sm4Gswg3v7LFBEB32
-	 QJxGbSrJI7SjlpGyql/jERXi6gZOgZKOjU1SNxLM=
+	b=GCOldF8VbChda/SG08O+J9/AZPay9ZKgnxlU+juVMP8vwccbTlHbcbxeu4P1YXUVY
+	 hDtQZAuomUAAUycnleo8hrywfWpnfn8RW3RSNaDE+Th/2XctSmkQ7mPFJI9iEmnBPK
+	 epoZv54GaHsJ3ChSSyfpcXZXWXoA0r4U7wVqKQZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.15 181/245] igb: Fix igb_down hung on surprise removal
-Date: Tue, 27 Feb 2024 14:26:09 +0100
-Message-ID: <20240227131621.090276563@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Danilo Krummrich <dakr@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 213/245] nouveau: fix function cast warnings
+Date: Tue, 27 Feb 2024 14:26:41 +0100
+Message-ID: <20240227131622.124379232@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -54,87 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 004d25060c78fc31f66da0fa439c544dda1ac9d5 ]
+[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
 
-In a setup where a Thunderbolt hub connects to Ethernet and a display
-through USB Type-C, users may experience a hung task timeout when they
-remove the cable between the PC and the Thunderbolt hub.
-This is because the igb_down function is called multiple times when
-the Thunderbolt hub is unplugged. For example, the igb_io_error_detected
-triggers the first call, and the igb_remove triggers the second call.
-The second call to igb_down will block at napi_synchronize.
-Here's the call trace:
-    __schedule+0x3b0/0xddb
-    ? __mod_timer+0x164/0x5d3
-    schedule+0x44/0xa8
-    schedule_timeout+0xb2/0x2a4
-    ? run_local_timers+0x4e/0x4e
-    msleep+0x31/0x38
-    igb_down+0x12c/0x22a [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    __igb_close+0x6f/0x9c [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    igb_close+0x23/0x2b [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    __dev_close_many+0x95/0xec
-    dev_close_many+0x6e/0x103
-    unregister_netdevice_many+0x105/0x5b1
-    unregister_netdevice_queue+0xc2/0x10d
-    unregister_netdev+0x1c/0x23
-    igb_remove+0xa7/0x11c [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    pci_device_remove+0x3f/0x9c
-    device_release_driver_internal+0xfe/0x1b4
-    pci_stop_bus_device+0x5b/0x7f
-    pci_stop_bus_device+0x30/0x7f
-    pci_stop_bus_device+0x30/0x7f
-    pci_stop_and_remove_bus_device+0x12/0x19
-    pciehp_unconfigure_device+0x76/0xe9
-    pciehp_disable_slot+0x6e/0x131
-    pciehp_handle_presence_or_link_change+0x7a/0x3f7
-    pciehp_ist+0xbe/0x194
-    irq_thread_fn+0x22/0x4d
-    ? irq_thread+0x1fd/0x1fd
-    irq_thread+0x17b/0x1fd
-    ? irq_forced_thread_fn+0x5f/0x5f
-    kthread+0x142/0x153
-    ? __irq_get_irqchip_state+0x46/0x46
-    ? kthread_associate_blkcg+0x71/0x71
-    ret_from_fork+0x1f/0x30
+clang-16 warns about casting between incompatible function types:
 
-In this case, igb_io_error_detected detaches the network interface
-and requests a PCIE slot reset, however, the PCIE reset callback is
-not being invoked and thus the Ethernet connection breaks down.
-As the PCIE error in this case is a non-fatal one, requesting a
-slot reset can be avoided.
-This patch fixes the task hung issue and preserves Ethernet
-connection by ignoring non-fatal PCIE errors.
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+  161 |         .fini = (void(*)(void *))release_firmware,
 
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230620174732.4145155-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This one was done to use the generic shadow_fw_release() function as a
+callback for struct nvbios_source. Change it to use the same prototype
+as the other five instances, with a trivial helper function that actually
+calls release_firmware.
+
+Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index c01114cabbb09..7c42a99be5065 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -9451,6 +9451,11 @@ static pci_ers_result_t igb_io_error_detected(struct pci_dev *pdev,
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct igb_adapter *adapter = netdev_priv(netdev);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+index 4b571cc6bc70f..6597def18627e 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
+ 	return (void *)fw;
+ }
  
-+	if (state == pci_channel_io_normal) {
-+		dev_warn(&pdev->dev, "Non-correctable non-fatal error reported.\n");
-+		return PCI_ERS_RESULT_CAN_RECOVER;
-+	}
++static void
++shadow_fw_release(void *fw)
++{
++	release_firmware(fw);
++}
 +
- 	netif_device_detach(netdev);
- 
- 	if (state == pci_channel_io_perm_failure)
+ static const struct nvbios_source
+ shadow_fw = {
+ 	.name = "firmware",
+ 	.init = shadow_fw_init,
+-	.fini = (void(*)(void *))release_firmware,
++	.fini = shadow_fw_release,
+ 	.read = shadow_fw_read,
+ 	.rw = false,
+ };
 -- 
 2.43.0
 
