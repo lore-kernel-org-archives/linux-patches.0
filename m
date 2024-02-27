@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D1B13B798;
-	Tue, 27 Feb 2024 13:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA6414534A;
+	Tue, 27 Feb 2024 13:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040606; cv=none; b=oXL5BbSWUiH2qMCgHFnTUFwQsZpsG67ebc6b8s/O4J09Dwp7hCBnpXC/hraF4iXPHi+vou7tIu9XfbRAySCBvSzUYXuiWnmlUw/b9YOXasxl2MtyibAkbTLh1jFFKrMjBHI92msVPsYL3WPC28exHxFoHqly3JEVosV13BZ1Sxs=
+	t=1709040609; cv=none; b=QAFuJTmpbEaCLxMi/OdWUYirI5mmd0acer8VqbV5/ECO5Hoxvky/EHZ8hv2610pSJyiumYT5sw9KxdgojuOXd6xS3Y/rOvgXY4bqEC9HUVEJt67k7ccJdTaYuEwqbB7iEQD+FEK6lNPcKQSRI0lLktwar+o9cYKrn51mW/KTg5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040606; c=relaxed/simple;
-	bh=TNPR1fvDQ86pEWofGy2jzAiontViDap+lYUfLTtzeNg=;
+	s=arc-20240116; t=1709040609; c=relaxed/simple;
+	bh=YrO4UiRY+opecO4J0BSh001ZjDAQY0707q+amBdbhs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZM2/S7s6eBntlF4zAsexXP8/+0j9F3y6StadLWcInjSzU7to5WkY7uyZ7HFvV8piK+IfcDqXy0/7NGC6aEuI88BZn7gNB760PpQZapBnKMF89ZwiakkqGJVDcNbkX7BBbPpWjbn8R83gF1H4KYGmxg8hj8t1zqTgl11b4AoHJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX2CcmSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LeNedql9hMVSwZQYi5/Tk42gJuh28yDI22fJ5f570AS3q0Vzi6Cusb6JmQzL7fRg5PLULGXafvwchMVxTXQP9oa6fIysBYNn1Y68a9Mheuh4PuSqPmU6NVz7DpoQ2B/Ix2NNoLiDbj2DK7joJuy/SNZMvCgEiO6iNWUWdC0TYfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5/h22yi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX2CcmSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844DEC433C7;
-	Tue, 27 Feb 2024 13:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5/h22yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E16AC433C7;
+	Tue, 27 Feb 2024 13:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040605;
-	bh=TNPR1fvDQ86pEWofGy2jzAiontViDap+lYUfLTtzeNg=;
+	s=korg; t=1709040608;
+	bh=YrO4UiRY+opecO4J0BSh001ZjDAQY0707q+amBdbhs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CX2CcmSAgF7KcB95bi0qpMY1nrWDCKeQQJktUk39K4LNazyLfB5L+3k7qnyoRydxB
-	 zmHj5ELoT/wOTmUrqay7ceOWAoWUP2lAILa/kElkKjFoOjQAWVvUMmAwgJXT2lFA7Z
-	 tv4ZnR5KejBv75+lw77PQE4eGyevFJK5jhSoWfC4=
+	b=L5/h22yiqm5QsBalIgSCXHtxJzAqCivZ3xAxqr0UmIA1lCvchNTTO619xirFOAQiF
+	 ogwv+x1fc9vpy+AB2xJGMd2pyZYmMf0ruX7YKTO4ce+JKci+U5CkOqaIm2Aw37uMkf
+	 PgVb5V5/m2cMpK9spoGSzBQG3KBqQNdvRshxWZB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 044/334] HID: nvidia-shield: Add missing null pointer checks to LED initialization
-Date: Tue, 27 Feb 2024 14:18:22 +0100
-Message-ID: <20240227131632.007470275@linuxfoundation.org>
+Subject: [PATCH 6.7 045/334] nvmet-tcp: fix nvme tcp ida memory leak
+Date: Tue, 27 Feb 2024 14:18:23 +0100
+Message-ID: <20240227131632.038000709@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,45 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit b6eda11c44dc89a681e1c105f0f4660e69b1e183 ]
+[ Upstream commit 47c5dd66c1840524572dcdd956f4af2bdb6fbdff ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+The nvmet_tcp_queue_ida should be destroy when the nvmet-tcp module
+exit.
 
-[jkosina@suse.com: tweak changelog a bit]
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-nvidia-shield.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/target/tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-nvidia-shield.c b/drivers/hid/hid-nvidia-shield.c
-index 82d0a77359c46..58b15750dbb0a 100644
---- a/drivers/hid/hid-nvidia-shield.c
-+++ b/drivers/hid/hid-nvidia-shield.c
-@@ -800,6 +800,8 @@ static inline int thunderstrike_led_create(struct thunderstrike *ts)
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 80db64a4b09f6..bb42ae42b1c6e 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -2204,6 +2204,7 @@ static void __exit nvmet_tcp_exit(void)
+ 	flush_workqueue(nvmet_wq);
  
- 	led->name = devm_kasprintf(&ts->base.hdev->dev, GFP_KERNEL,
- 				   "thunderstrike%d:blue:led", ts->id);
-+	if (!led->name)
-+		return -ENOMEM;
- 	led->max_brightness = 1;
- 	led->flags = LED_CORE_SUSPENDRESUME | LED_RETAIN_AT_SHUTDOWN;
- 	led->brightness_get = &thunderstrike_led_get_brightness;
-@@ -831,6 +833,8 @@ static inline int thunderstrike_psy_create(struct shield_device *shield_dev)
- 	shield_dev->battery_dev.desc.name =
- 		devm_kasprintf(&ts->base.hdev->dev, GFP_KERNEL,
- 			       "thunderstrike_%d", ts->id);
-+	if (!shield_dev->battery_dev.desc.name)
-+		return -ENOMEM;
+ 	destroy_workqueue(nvmet_tcp_wq);
++	ida_destroy(&nvmet_tcp_queue_ida);
+ }
  
- 	shield_dev->battery_dev.psy = power_supply_register(
- 		&hdev->dev, &shield_dev->battery_dev.desc, &psy_cfg);
+ module_init(nvmet_tcp_init);
 -- 
 2.43.0
 
