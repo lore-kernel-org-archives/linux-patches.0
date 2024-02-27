@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FFB13B78A;
-	Tue, 27 Feb 2024 13:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D011C13B78A;
+	Tue, 27 Feb 2024 13:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040559; cv=none; b=M0Tta7TldUeMd5Xdvpp9jxlZyzDVM0Z3IKE90/7JshxpCbL2Zn3fNstVNUn3OXkygc69cJn7mNSKhBdyZ9/2Zue9wwXOwI//33jhNjBH0yoOylzxIXuC3SkfHx8CzzGYPlmhxF3mwrnVn3PM/Y31nfVg3nujBnPFecMopoTpS5Q=
+	t=1709040561; cv=none; b=bTHuUMEB7zD9y6ButFMjd0LToExpwamdSCudgZHoXA/YHLE+sX5z+hGs3gzlM3B/yv1FZj9/i4NoTHSaBtRmEyGvm2Xs/Mp6eH7T/wgwkng8y8YYmdx2QBfCl2zfZdqVDRDU23nP1JqzKDzuoBhoYjr/JdEu/K7XonsqMhesifw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040559; c=relaxed/simple;
-	bh=lBkBZkQLaUd9Zu5sfPJuZe42sG64+nWLQoyyeqa4Js8=;
+	s=arc-20240116; t=1709040561; c=relaxed/simple;
+	bh=zDenOAlQ7Gr8XIudi6CHBbeJ87Tyc1S7Fd/0PA070to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MxFS9eDyZpB/Vt8HY6JDlDGRnh668PX641keQk0YV9pnHAbgh4+aIzyhvN5+3+kcFJ7LtGLXiE2XdbvKvFXNWXWHLZW++yuEuOOFUYOgYftroeCQzpI6HuHMkfcbwm6WgXLd+Cg+UtwmFrpgiS3sGFriyuiHISEvNSyKaNPM93I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qobgha+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZDoU45nOajmbS9mY0ssNyLb4jeqGBqlc0NfPdmxy6SjGWFXyacnzCwTS82iwGvwhoX4Ls4AzvvL8cFMuqfzzTdZ+UQ8lyvEfYU2vRm4SmLd6GhABk2Epa21IMvCHI08aTwz00oxhLmn4HF18p4NhaJJ1mLIA7liJXV+58tSj+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1I9CqgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qobgha+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7578CC433F1;
-	Tue, 27 Feb 2024 13:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1I9CqgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62185C433F1;
+	Tue, 27 Feb 2024 13:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040558;
-	bh=lBkBZkQLaUd9Zu5sfPJuZe42sG64+nWLQoyyeqa4Js8=;
+	s=korg; t=1709040561;
+	bh=zDenOAlQ7Gr8XIudi6CHBbeJ87Tyc1S7Fd/0PA070to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qobgha+ZOf396prcyCutM66+I7l1QAmfx8zJ/Y5UKsWlsh4Qbs6Dt4WnVYBlx9D+3
-	 6aR5vhjKM8nvMjKlUgiXoxXfoBrgqqfEwdUie5zgoHRfwlhi6t5uBYBQNJtHcpM8AY
-	 8qGHGwobD+EL8+0x1giRecf5J5s7RqGQO8cHLAVI=
+	b=H1I9CqgReYLUogvCcpnUDGnX5b7XSmVsBic1UUBssJqq/OuZOKIYEHhZNjfMbwF0R
+	 EbZxw8dtpeQl8sxNl7XE/VF4WdES5UoZpuX5kfR3kL/JaW7T3ZyDdKRsDy3XIjFfH6
+	 Po7R4+ZqOI40aLzfL6l6zlP9y+Jf3ypkJWGPUw1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 008/334] tools: selftests: riscv: Fix compile warnings in mm tests
-Date: Tue, 27 Feb 2024 14:17:46 +0100
-Message-ID: <20240227131630.902289811@linuxfoundation.org>
+Subject: [PATCH 6.7 009/334] scsi: target: core: Add TMF to tmr_list handling
+Date: Tue, 27 Feb 2024 14:17:47 +0100
+Message-ID: <20240227131630.931988044@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -47,54 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Müllner <christoph.muellner@vrull.eu>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit 12c16919652b5873f524c8b361336ecfa5ce5e6b ]
+[ Upstream commit 83ab68168a3d990d5ff39ab030ad5754cbbccb25 ]
 
-When building the mm tests with a riscv32 compiler, we see a range
-of shift-count-overflow errors from shifting 1UL by more than 32 bits
-in do_mmaps(). Since, the relevant code is only called from code that
-is gated by `__riscv_xlen == 64`, we can just apply the same gating
-to do_mmaps().
+An abort that is responded to by iSCSI itself is added to tmr_list but does
+not go to target core. A LUN_RESET that goes through tmr_list takes a
+refcounter on the abort and waits for completion. However, the abort will
+be never complete because it was not started in target core.
 
-Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20231123185821.2272504-6-christoph.muellner@vrull.eu
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+ Unable to locate ITT: 0x05000000 on CID: 0
+ Unable to locate RefTaskTag: 0x05000000 on CID: 0.
+ wait_for_tasks: Stopping tmf LUN_RESET with tag 0x0 ref_task_tag 0x0 i_state 34 t_state ISTATE_PROCESSING refcnt 2 transport_state active,stop,fabric_stop
+ wait for tasks: tmf LUN_RESET with tag 0x0 ref_task_tag 0x0 i_state 34 t_state ISTATE_PROCESSING refcnt 2 transport_state active,stop,fabric_stop
+...
+ INFO: task kworker/0:2:49 blocked for more than 491 seconds.
+ task:kworker/0:2     state:D stack:    0 pid:   49 ppid:     2 flags:0x00000800
+ Workqueue: events target_tmr_work [target_core_mod]
+Call Trace:
+ __switch_to+0x2c4/0x470
+ _schedule+0x314/0x1730
+ schedule+0x64/0x130
+ schedule_timeout+0x168/0x430
+ wait_for_completion+0x140/0x270
+ target_put_cmd_and_wait+0x64/0xb0 [target_core_mod]
+ core_tmr_lun_reset+0x30/0xa0 [target_core_mod]
+ target_tmr_work+0xc8/0x1b0 [target_core_mod]
+ process_one_work+0x2d4/0x5d0
+ worker_thread+0x78/0x6c0
+
+To fix this, only add abort to tmr_list if it will be handled by target
+core.
+
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://lore.kernel.org/r/20240111125941.8688-1-d.bogdanov@yadro.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/riscv/mm/mmap_test.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/target/target_core_device.c    | 5 -----
+ drivers/target/target_core_transport.c | 4 ++++
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/riscv/mm/mmap_test.h b/tools/testing/selftests/riscv/mm/mmap_test.h
-index 9b8434f62f570..2e0db9c5be6c3 100644
---- a/tools/testing/selftests/riscv/mm/mmap_test.h
-+++ b/tools/testing/selftests/riscv/mm/mmap_test.h
-@@ -18,6 +18,8 @@ struct addresses {
- 	int *on_56_addr;
- };
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 506193e870c49..7a85e6477e465 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -147,7 +147,6 @@ int transport_lookup_tmr_lun(struct se_cmd *se_cmd)
+ 	struct se_session *se_sess = se_cmd->se_sess;
+ 	struct se_node_acl *nacl = se_sess->se_node_acl;
+ 	struct se_tmr_req *se_tmr = se_cmd->se_tmr_req;
+-	unsigned long flags;
  
-+// Only works on 64 bit
-+#if __riscv_xlen == 64
- static inline void do_mmaps(struct addresses *mmap_addresses)
- {
- 	/*
-@@ -50,6 +52,7 @@ static inline void do_mmaps(struct addresses *mmap_addresses)
- 	mmap_addresses->on_56_addr =
- 		mmap(on_56_bits, 5 * sizeof(int), prot, flags, 0, 0);
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, se_cmd->orig_fe_lun);
+@@ -178,10 +177,6 @@ int transport_lookup_tmr_lun(struct se_cmd *se_cmd)
+ 	se_cmd->se_dev = rcu_dereference_raw(se_lun->lun_se_dev);
+ 	se_tmr->tmr_dev = rcu_dereference_raw(se_lun->lun_se_dev);
+ 
+-	spin_lock_irqsave(&se_tmr->tmr_dev->se_tmr_lock, flags);
+-	list_add_tail(&se_tmr->tmr_list, &se_tmr->tmr_dev->dev_tmr_list);
+-	spin_unlock_irqrestore(&se_tmr->tmr_dev->se_tmr_lock, flags);
+-
+ 	return 0;
  }
-+#endif /* __riscv_xlen == 64 */
+ EXPORT_SYMBOL(transport_lookup_tmr_lun);
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index 670cfb7bd426a..73d0d6133ac8f 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -3629,6 +3629,10 @@ int transport_generic_handle_tmr(
+ 	unsigned long flags;
+ 	bool aborted = false;
  
- static inline int memory_layout(void)
- {
++	spin_lock_irqsave(&cmd->se_dev->se_tmr_lock, flags);
++	list_add_tail(&cmd->se_tmr_req->tmr_list, &cmd->se_dev->dev_tmr_list);
++	spin_unlock_irqrestore(&cmd->se_dev->se_tmr_lock, flags);
++
+ 	spin_lock_irqsave(&cmd->t_state_lock, flags);
+ 	if (cmd->transport_state & CMD_T_ABORTED) {
+ 		aborted = true;
 -- 
 2.43.0
 
