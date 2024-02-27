@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3934754BFE;
-	Tue, 27 Feb 2024 14:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7AC54BFE;
+	Tue, 27 Feb 2024 14:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044264; cv=none; b=uxNR5he9HEg4ce58b5zQUwG+ysRtcmFWd9ET/AWvHRS+7ENAU2pgf2mkh7D7r+SkyrbYqvfV/ki2D1SQCuvVS9MWrDAAiG7casgF6dzoUKg2aP7O16jZE09KCkZEkEMTI/MmlwFErx4pKzd76JywqEYp+5Ab8a4UB7rqvKfvSaU=
+	t=1709044267; cv=none; b=OAJA6DcvKFQnsSY2qxEbFH+CnaV9oK1nDdRsW6/3dD2nw6iET/t4AXXcfZC5cjvpfgJVEgzz8cw42Bd8KDXpX136h1bKtCuXxDpXDeFx5R9Zodq3pYyUkGtsLyCf5PQx0BpwvtKzcUW2ZrYpid+YJKkzyXs+CJtK6/yZoaJRjBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044264; c=relaxed/simple;
-	bh=dmBsjs64NX/i+iZAuhpXSN2GRj0ZqLLlZv00jNwY23I=;
+	s=arc-20240116; t=1709044267; c=relaxed/simple;
+	bh=VC4FH3+AUmDp3YCXUK0PT5dkmEz4IMhHYeIzFaS/EqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgT+KwNR2DLGhgHQJIYlr1EHMn4aIvk/JPdaEuWdw3ENC68PoQtEjM6lpVJc3nlTG4aynx0DgiiPZXjIJ3fPC7kld86tlF7SrIbEiRKJJrHhPGTyo8i2022KoO/UNmat+fOj3xcYDBsHuOrLtrYKCDJddWtNGKwjVxSEZzaCXTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeIQPWKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K15V6IHdqAAer9Xp0ibligGRlp8IbDBZnQhridbBjb88srjn8sO51JuVKXNaGnUzHN78mKy1hsUBBuOk+nduKLCZEqsc91cRaRjyoghPluWmVYPaPXI6acNWqO8Omno29nwzHx6mZrRGeHIUxywwGLOFNLEDd0DRuPDfkpHjTVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+G2oMEC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeIQPWKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C1AC433C7;
-	Tue, 27 Feb 2024 14:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+G2oMEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5408C433C7;
+	Tue, 27 Feb 2024 14:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044264;
-	bh=dmBsjs64NX/i+iZAuhpXSN2GRj0ZqLLlZv00jNwY23I=;
+	s=korg; t=1709044267;
+	bh=VC4FH3+AUmDp3YCXUK0PT5dkmEz4IMhHYeIzFaS/EqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeIQPWKSNDq2hnmRYL5HSZvGQV2k8QODBHalqNyMmweHq7V2bN01UKLviwfs/KdQQ
-	 gxFXu98gdrIHSpFPYq0NvV0vtvbzFWCclrqus8R6fmvqTuJAdy0GkWfW+Ll8mK/71A
-	 57JXYyfm048HpDtGdPnw0MStZtvNAWr6w9Dkt1FI=
+	b=c+G2oMECTareVErcyaWduUu6CsBaq7+vuZZmLUe/hrrDEjcV7tGlllrAKktYdfQI1
+	 X5HBMQk7Q7IOc2GIDnUgp50F9DPzxy0DMulWuXWq6w9duqRbyfBHtdebeXvgnESPnX
+	 jw66lAL/pt9pvpJdsafU2a33vdhCy+n5iGeZHkxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 121/122] arp: Prevent overflow in arp_req_get().
-Date: Tue, 27 Feb 2024 14:28:02 +0100
-Message-ID: <20240227131602.662533021@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 122/122] ext4: regenerate buddy after block freeing failed if under fc replay
+Date: Tue, 27 Feb 2024 14:28:03 +0100
+Message-ID: <20240227131602.695436866@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,96 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit a7d6027790acea24446ddd6632d394096c0f4667 upstream.
+commit c9b528c35795b711331ed36dc3dbee90d5812d4e upstream.
 
-syzkaller reported an overflown write in arp_req_get(). [0]
+This mostly reverts commit 6bd97bf273bd ("ext4: remove redundant
+mb_regenerate_buddy()") and reintroduces mb_regenerate_buddy(). Based on
+code in mb_free_blocks(), fast commit replay can end up marking as free
+blocks that are already marked as such. This causes corruption of the
+buddy bitmap so we need to regenerate it in that case.
 
-When ioctl(SIOCGARP) is issued, arp_req_get() looks up an neighbour
-entry and copies neigh->ha to struct arpreq.arp_ha.sa_data.
-
-The arp_ha here is struct sockaddr, not struct sockaddr_storage, so
-the sa_data buffer is just 14 bytes.
-
-In the splat below, 2 bytes are overflown to the next int field,
-arp_flags.  We initialise the field just after the memcpy(), so it's
-not a problem.
-
-However, when dev->addr_len is greater than 22 (e.g. MAX_ADDR_LEN),
-arp_netmask is overwritten, which could be set as htonl(0xFFFFFFFFUL)
-in arp_ioctl() before calling arp_req_get().
-
-To avoid the overflow, let's limit the max length of memcpy().
-
-Note that commit b5f0de6df6dc ("net: dev: Convert sa_data to flexible
-array in struct sockaddr") just silenced syzkaller.
-
-[0]:
-memcpy: detected field-spanning write (size 16) of single field "r->arp_ha.sa_data" at net/ipv4/arp.c:1128 (size 14)
-WARNING: CPU: 0 PID: 144638 at net/ipv4/arp.c:1128 arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Modules linked in:
-CPU: 0 PID: 144638 Comm: syz-executor.4 Not tainted 6.1.74 #31
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-5 04/01/2014
-RIP: 0010:arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Code: fd ff ff e8 41 42 de fb b9 0e 00 00 00 4c 89 fe 48 c7 c2 20 6d ab 87 48 c7 c7 80 6d ab 87 c6 05 25 af 72 04 01 e8 5f 8d ad fb <0f> 0b e9 6c fd ff ff e8 13 42 de fb be 03 00 00 00 4c 89 e7 e8 a6
-RSP: 0018:ffffc900050b7998 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff88803a815000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffffffff8641a44a RDI: 0000000000000001
-RBP: ffffc900050b7a98 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 203a7970636d656d R12: ffff888039c54000
-R13: 1ffff92000a16f37 R14: ffff88803a815084 R15: 0000000000000010
-FS:  00007f172bf306c0(0000) GS:ffff88805aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f172b3569f0 CR3: 0000000057f12005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- arp_ioctl+0x33f/0x4b0 net/ipv4/arp.c:1261
- inet_ioctl+0x314/0x3a0 net/ipv4/af_inet.c:981
- sock_do_ioctl+0xdf/0x260 net/socket.c:1204
- sock_ioctl+0x3ef/0x650 net/socket.c:1321
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18e/0x220 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x37/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x64/0xce
-RIP: 0033:0x7f172b262b8d
-Code: 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f172bf300b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f172b3abf80 RCX: 00007f172b262b8d
-RDX: 0000000020000000 RSI: 0000000000008954 RDI: 0000000000000003
-RBP: 00007f172b2d3493 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007f172b3abf80 R15: 00007f172bf10000
- </TASK>
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: Bjoern Doebel <doebel@amazon.de>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240215230516.31330-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Jan Kara <jack@suse.cz>
+Fixes: 6bd97bf273bd ("ext4: remove redundant mb_regenerate_buddy()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/arp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1104,7 +1104,8 @@ static int arp_req_get(struct arpreq *r,
- 	if (neigh) {
- 		if (!(neigh->nud_state & NUD_NOARP)) {
- 			read_lock_bh(&neigh->lock);
--			memcpy(r->arp_ha.sa_data, neigh->ha, dev->addr_len);
-+			memcpy(r->arp_ha.sa_data, neigh->ha,
-+			       min(dev->addr_len, sizeof(r->arp_ha.sa_data_min)));
- 			r->arp_flags = arp_state_to_flags(neigh);
- 			read_unlock_bh(&neigh->lock);
- 			r->arp_ha.sa_family = dev->type;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -823,6 +823,24 @@ void ext4_mb_generate_buddy(struct super
+ 	atomic64_add(period, &sbi->s_mb_generation_time);
+ }
+ 
++static void mb_regenerate_buddy(struct ext4_buddy *e4b)
++{
++	int count;
++	int order = 1;
++	void *buddy;
++
++	while ((buddy = mb_find_buddy(e4b, order++, &count)))
++		ext4_set_bits(buddy, 0, count);
++
++	e4b->bd_info->bb_fragments = 0;
++	memset(e4b->bd_info->bb_counters, 0,
++		sizeof(*e4b->bd_info->bb_counters) *
++		(e4b->bd_sb->s_blocksize_bits + 2));
++
++	ext4_mb_generate_buddy(e4b->bd_sb, e4b->bd_buddy,
++		e4b->bd_bitmap, e4b->bd_group, e4b->bd_info);
++}
++
+ /* The buddy information is attached the buddy cache inode
+  * for convenience. The information regarding each group
+  * is loaded via ext4_mb_load_buddy. The information involve
+@@ -1505,6 +1523,8 @@ static void mb_free_blocks(struct inode
+ 			ext4_mark_group_bitmap_corrupted(
+ 				sb, e4b->bd_group,
+ 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
++		} else {
++			mb_regenerate_buddy(e4b);
+ 		}
+ 		goto done;
+ 	}
 
 
