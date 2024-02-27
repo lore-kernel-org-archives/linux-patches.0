@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C66878B61;
-	Tue, 27 Feb 2024 14:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D000778B61;
+	Tue, 27 Feb 2024 14:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043495; cv=none; b=rQbN1k0+Ne6T7o2/+LYWkHqRpDHregoD4YnJO+3U7kN0qW3wYg2qPTd+iKMem9Uh9N3/eJAx4loZs6v9YdhvV8f3hF8b5ZNHR/lSXP+zrIQ7L09MmKwCzRmv7RENpUeVV6Jl43eh2rExVvrc+XUG0Yj9xldBfsXdql7b/IasMiQ=
+	t=1709043497; cv=none; b=LcgMNjfPN06CvEyWCenATupy9KI09DKAWAMN5pJd5T9dCcKmoqLlODtKJepTqi2ry4ixE41Fh1E+AR1ZZqmO0j4xrhmexYL9pfo4CPU1ughpqmEcReGhbxguwaXHJ6nakbg10K2vbyqnoYoXf7Xv04uhI2w8/mF8Yv+F7BMEECA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043495; c=relaxed/simple;
-	bh=ZPIrUjQfaRp5Kf7S9ttsPY9vJrCa8wqieksMJiRDzVw=;
+	s=arc-20240116; t=1709043497; c=relaxed/simple;
+	bh=hlD73QU9XZQv7HaBve14GNPP6FnfXSNS7UzEYbVDN1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beHdhk6vw6WEvuQ24kKmsEs0AfDXCV9tILsy02zuOL1d6fBl+4pApP9yPS0mgvWdDoW7elbVGCWhClYmkMw8zeAMr6lvXklYMIJRL7ilaiJxi0l583edlDxnh/C5b4AZVqQfaaLCOv/E2HBE7OebqxS8nX2giCawPDMU0D+8jl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qewofy37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2qR5Cp/CcIVehPVNdeMeMxjf83rLTW2tOZfleY1PDkiy0xjkqFGF626wn4hpajcXckyY3ypn7BhOhGi+hdKssj+PXRPd53uOminRi90me1N8eWhiG2aBc5CBp+PJcCHDkXxFG0IwR+DZVIGrgroO49a+h8C5TxeQu8McfONF6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRb/8aUT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qewofy37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E201C433F1;
-	Tue, 27 Feb 2024 14:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRb/8aUT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D759C433F1;
+	Tue, 27 Feb 2024 14:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043495;
-	bh=ZPIrUjQfaRp5Kf7S9ttsPY9vJrCa8wqieksMJiRDzVw=;
+	s=korg; t=1709043497;
+	bh=hlD73QU9XZQv7HaBve14GNPP6FnfXSNS7UzEYbVDN1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qewofy37oUbWTWnYpsRRdve5Pwq14aHQFLXC6JJ2DWECUniGJP7nD82qIW+zbYJ9J
-	 JXHgvVE1hF6jncHWc1pRkZai4NOuQAtuM2yRd6ockH+ff9bjhNNpHKCo3Enth7Hi3o
-	 sHwlTNG14f7XScleHv/AdusamHmQyEFlyiJrapAM=
+	b=eRb/8aUTZcXMeScr+APyaTvUjlKQ9Mlbr6EE5DGyjzHoRQsi6CwhFpJqfkqUbEVsw
+	 52wZiyUvWAOUMgm3mL+Fd0X1bQ44yhwZ645GJaZb0+3js6aUAGAOrQbZo1UizB1Qk+
+	 KX09VJftW695Op4x5JqZfvXTuVAkfxo1qtvpxzzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	David Howells <dhowells@redhat.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 101/195] cachefiles: fix memory leak in cachefiles_add_cache()
-Date: Tue, 27 Feb 2024 14:26:02 +0100
-Message-ID: <20240227131613.808225072@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 128/195] mptcp: fix lockless access in subflow ULP diag
+Date: Tue, 27 Feb 2024 14:26:29 +0100
+Message-ID: <20240227131614.669221206@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -53,68 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit e21a2f17566cbd64926fb8f16323972f7a064444 upstream.
+commit b8adb69a7d29c2d33eb327bca66476fb6066516b upstream.
 
-The following memory leak was reported after unbinding /dev/cachefiles:
+Since the introduction of the subflow ULP diag interface, the
+dump callback accessed all the subflow data with lockless.
 
-==================================================================
-unreferenced object 0xffff9b674176e3c0 (size 192):
-  comm "cachefilesd2", pid 680, jiffies 4294881224
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc ea38a44b):
-    [<ffffffff8eb8a1a5>] kmem_cache_alloc+0x2d5/0x370
-    [<ffffffff8e917f86>] prepare_creds+0x26/0x2e0
-    [<ffffffffc002eeef>] cachefiles_determine_cache_security+0x1f/0x120
-    [<ffffffffc00243ec>] cachefiles_add_cache+0x13c/0x3a0
-    [<ffffffffc0025216>] cachefiles_daemon_write+0x146/0x1c0
-    [<ffffffff8ebc4a3b>] vfs_write+0xcb/0x520
-    [<ffffffff8ebc5069>] ksys_write+0x69/0xf0
-    [<ffffffff8f6d4662>] do_syscall_64+0x72/0x140
-    [<ffffffff8f8000aa>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
-==================================================================
+We need either to annotate all the read and write operation accordingly,
+or acquire the subflow socket lock. Let's do latter, even if slower, to
+avoid a diffstat havoc.
 
-Put the reference count of cache_cred in cachefiles_daemon_unbind() to
-fix the problem. And also put cache_cred in cachefiles_add_cache() error
-branch to avoid memory leaks.
-
-Fixes: 9ae326a69004 ("CacheFiles: A cache that backs onto a mounted filesystem")
-CC: stable@vger.kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240217081431.796809-1-libaokun1@huawei.com
-Acked-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 5147dfb50832 ("mptcp: allow dumping subflow context to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cachefiles/cache.c  |    2 ++
- fs/cachefiles/daemon.c |    1 +
- 2 files changed, 3 insertions(+)
+ include/net/tcp.h  |    2 +-
+ net/mptcp/diag.c   |    6 +++++-
+ net/tls/tls_main.c |    2 +-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/cachefiles/cache.c
-+++ b/fs/cachefiles/cache.c
-@@ -168,6 +168,8 @@ error_unsupported:
- 	dput(root);
- error_open_root:
- 	cachefiles_end_secure(cache, saved_cred);
-+	put_cred(cache->cache_cred);
-+	cache->cache_cred = NULL;
- error_getsec:
- 	fscache_relinquish_cache(cache_cookie);
- 	cache->cache = NULL;
---- a/fs/cachefiles/daemon.c
-+++ b/fs/cachefiles/daemon.c
-@@ -805,6 +805,7 @@ static void cachefiles_daemon_unbind(str
- 	cachefiles_put_directory(cache->graveyard);
- 	cachefiles_put_directory(cache->store);
- 	mntput(cache->mnt);
-+	put_cred(cache->cache_cred);
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2290,7 +2290,7 @@ struct tcp_ulp_ops {
+ 	/* cleanup ulp */
+ 	void (*release)(struct sock *sk);
+ 	/* diagnostic */
+-	int (*get_info)(const struct sock *sk, struct sk_buff *skb);
++	int (*get_info)(struct sock *sk, struct sk_buff *skb);
+ 	size_t (*get_info_size)(const struct sock *sk);
+ 	/* clone ulp */
+ 	void (*clone)(const struct request_sock *req, struct sock *newsk,
+--- a/net/mptcp/diag.c
++++ b/net/mptcp/diag.c
+@@ -13,17 +13,19 @@
+ #include <uapi/linux/mptcp.h>
+ #include "protocol.h"
  
- 	kfree(cache->rootdirname);
- 	kfree(cache->secctx);
+-static int subflow_get_info(const struct sock *sk, struct sk_buff *skb)
++static int subflow_get_info(struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct mptcp_subflow_context *sf;
+ 	struct nlattr *start;
+ 	u32 flags = 0;
++	bool slow;
+ 	int err;
+ 
+ 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
+ 	if (!start)
+ 		return -EMSGSIZE;
+ 
++	slow = lock_sock_fast(sk);
+ 	rcu_read_lock();
+ 	sf = rcu_dereference(inet_csk(sk)->icsk_ulp_data);
+ 	if (!sf) {
+@@ -69,11 +71,13 @@ static int subflow_get_info(const struct
+ 	}
+ 
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_end(skb, start);
+ 	return 0;
+ 
+ nla_failure:
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_cancel(skb, start);
+ 	return err;
+ }
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -1098,7 +1098,7 @@ static u16 tls_user_config(struct tls_co
+ 	return 0;
+ }
+ 
+-static int tls_get_info(const struct sock *sk, struct sk_buff *skb)
++static int tls_get_info(struct sock *sk, struct sk_buff *skb)
+ {
+ 	u16 version, cipher_type;
+ 	struct tls_context *ctx;
 
 
