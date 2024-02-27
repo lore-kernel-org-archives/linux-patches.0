@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D000778B61;
-	Tue, 27 Feb 2024 14:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832B178B61;
+	Tue, 27 Feb 2024 14:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043497; cv=none; b=LcgMNjfPN06CvEyWCenATupy9KI09DKAWAMN5pJd5T9dCcKmoqLlODtKJepTqi2ry4ixE41Fh1E+AR1ZZqmO0j4xrhmexYL9pfo4CPU1ughpqmEcReGhbxguwaXHJ6nakbg10K2vbyqnoYoXf7Xv04uhI2w8/mF8Yv+F7BMEECA=
+	t=1709043500; cv=none; b=mVXqGzpWJbVptWhf9sMWBaipZa+0It2xj3jtj2nM9gJBrLHO2OaG92maXbHQHPkOpvTLPFiRkbitjTkiN7S6+DwBmNwm9jN5vVQTXmDNHpTXQXZjap+s59W/rR+2VV48vHcnR4tzL2rZwaltCelP+y93kLwS07a0Ung8/i/QViw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043497; c=relaxed/simple;
-	bh=hlD73QU9XZQv7HaBve14GNPP6FnfXSNS7UzEYbVDN1s=;
+	s=arc-20240116; t=1709043500; c=relaxed/simple;
+	bh=/s6cQKnapZ1mVOvVWfci6gnmxEh6vzTnN4ngBj4U0B8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2qR5Cp/CcIVehPVNdeMeMxjf83rLTW2tOZfleY1PDkiy0xjkqFGF626wn4hpajcXckyY3ypn7BhOhGi+hdKssj+PXRPd53uOminRi90me1N8eWhiG2aBc5CBp+PJcCHDkXxFG0IwR+DZVIGrgroO49a+h8C5TxeQu8McfONF6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRb/8aUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSvFwQa+jEAHOY4RuAgUg9DXRRtoJYi/HXrcR4Bq/mWTly2pg1VpH4w68Sc6I3To2Aks3a0SGSGCOhvX1GW9aMwFQ4HNsjwZgKQ+I5zBRpxfFsZZdrRpQVItLFetBb2Oa5m/F8j40vKrRybZ6s9aFSwe2oIpmZDRF78ohNqPsFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oywcZH05; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRb/8aUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D759C433F1;
-	Tue, 27 Feb 2024 14:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oywcZH05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A7AC433C7;
+	Tue, 27 Feb 2024 14:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043497;
-	bh=hlD73QU9XZQv7HaBve14GNPP6FnfXSNS7UzEYbVDN1s=;
+	s=korg; t=1709043500;
+	bh=/s6cQKnapZ1mVOvVWfci6gnmxEh6vzTnN4ngBj4U0B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRb/8aUTZcXMeScr+APyaTvUjlKQ9Mlbr6EE5DGyjzHoRQsi6CwhFpJqfkqUbEVsw
-	 52wZiyUvWAOUMgm3mL+Fd0X1bQ44yhwZ645GJaZb0+3js6aUAGAOrQbZo1UizB1Qk+
-	 KX09VJftW695Op4x5JqZfvXTuVAkfxo1qtvpxzzo=
+	b=oywcZH05Br3u80nhd+MBPH8ettDrPPN0bxQDVpR3PnoNpSUivMYdNwLd5q1pkRNXz
+	 HOZEG0iNPw0YwFSgx7ruMmWxClfT/hkGt+eQMx1NDbfmxJkWLvc1eMqXzDoGe3qWuV
+	 RyuFS2cZ14s1dW/F5AsMwLsuF1qLl2T9Jew+gFfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 128/195] mptcp: fix lockless access in subflow ULP diag
-Date: Tue, 27 Feb 2024 14:26:29 +0100
-Message-ID: <20240227131614.669221206@linuxfoundation.org>
+	Blazej Kucman <blazej.kucman@linux.intel.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 102/195] md: Fix missing release of active_io for flush
+Date: Tue, 27 Feb 2024 14:26:03 +0100
+Message-ID: <20240227131613.839114814@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,88 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit b8adb69a7d29c2d33eb327bca66476fb6066516b upstream.
+commit 855678ed8534518e2b428bcbcec695de9ba248e8 upstream.
 
-Since the introduction of the subflow ULP diag interface, the
-dump callback accessed all the subflow data with lockless.
+submit_flushes
+ atomic_set(&mddev->flush_pending, 1);
+ rdev_for_each_rcu(rdev, mddev)
+  atomic_inc(&mddev->flush_pending);
+  bi->bi_end_io = md_end_flush
+  submit_bio(bi);
+                        /* flush io is done first */
+                        md_end_flush
+                         if (atomic_dec_and_test(&mddev->flush_pending))
+                          percpu_ref_put(&mddev->active_io)
+                          -> active_io is not released
 
-We need either to annotate all the read and write operation accordingly,
-or acquire the subflow socket lock. Let's do latter, even if slower, to
-avoid a diffstat havoc.
+ if (atomic_dec_and_test(&mddev->flush_pending))
+  -> missing release of active_io
 
-Fixes: 5147dfb50832 ("mptcp: allow dumping subflow context to userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+For consequence, mddev_suspend() will wait for 'active_io' to be zero
+forever.
+
+Fix this problem by releasing 'active_io' in submit_flushes() if
+'flush_pending' is decreased to zero.
+
+Fixes: fa2bbff7b0b4 ("md: synchronize flush io with array reconfiguration")
+Cc: stable@vger.kernel.org # v6.1+
+Reported-by: Blazej Kucman <blazej.kucman@linux.intel.com>
+Closes: https://lore.kernel.org/lkml/20240130172524.0000417b@linux.intel.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240201092559.910982-7-yukuai1@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h  |    2 +-
- net/mptcp/diag.c   |    6 +++++-
- net/tls/tls_main.c |    2 +-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/md/md.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -2290,7 +2290,7 @@ struct tcp_ulp_ops {
- 	/* cleanup ulp */
- 	void (*release)(struct sock *sk);
- 	/* diagnostic */
--	int (*get_info)(const struct sock *sk, struct sk_buff *skb);
-+	int (*get_info)(struct sock *sk, struct sk_buff *skb);
- 	size_t (*get_info_size)(const struct sock *sk);
- 	/* clone ulp */
- 	void (*clone)(const struct request_sock *req, struct sock *newsk,
---- a/net/mptcp/diag.c
-+++ b/net/mptcp/diag.c
-@@ -13,17 +13,19 @@
- #include <uapi/linux/mptcp.h>
- #include "protocol.h"
- 
--static int subflow_get_info(const struct sock *sk, struct sk_buff *skb)
-+static int subflow_get_info(struct sock *sk, struct sk_buff *skb)
- {
- 	struct mptcp_subflow_context *sf;
- 	struct nlattr *start;
- 	u32 flags = 0;
-+	bool slow;
- 	int err;
- 
- 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
- 	if (!start)
- 		return -EMSGSIZE;
- 
-+	slow = lock_sock_fast(sk);
- 	rcu_read_lock();
- 	sf = rcu_dereference(inet_csk(sk)->icsk_ulp_data);
- 	if (!sf) {
-@@ -69,11 +71,13 @@ static int subflow_get_info(const struct
- 	}
- 
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -564,8 +564,12 @@ static void submit_flushes(struct work_s
+ 			rcu_read_lock();
+ 		}
  	rcu_read_unlock();
-+	unlock_sock_fast(sk, slow);
- 	nla_nest_end(skb, start);
- 	return 0;
- 
- nla_failure:
- 	rcu_read_unlock();
-+	unlock_sock_fast(sk, slow);
- 	nla_nest_cancel(skb, start);
- 	return err;
- }
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -1098,7 +1098,7 @@ static u16 tls_user_config(struct tls_co
- 	return 0;
+-	if (atomic_dec_and_test(&mddev->flush_pending))
++	if (atomic_dec_and_test(&mddev->flush_pending)) {
++		/* The pair is percpu_ref_get() from md_flush_request() */
++		percpu_ref_put(&mddev->active_io);
++
+ 		queue_work(md_wq, &mddev->flush_work);
++	}
  }
  
--static int tls_get_info(const struct sock *sk, struct sk_buff *skb)
-+static int tls_get_info(struct sock *sk, struct sk_buff *skb)
- {
- 	u16 version, cipher_type;
- 	struct tls_context *ctx;
+ static void md_submit_flush_data(struct work_struct *ws)
 
 
