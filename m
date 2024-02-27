@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4A613B7A0;
-	Tue, 27 Feb 2024 13:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318413AA2F;
+	Tue, 27 Feb 2024 13:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042060; cv=none; b=FcIj7sx4o5EpJRiRHl+BU0lweaZ9Wnbm1l1PCXxJCG2yUBTc6j+qZ+8X5CDfvfjU15tK33PeI9iVxerPzuEMOL7BFuo2/wMwAko3EBlXqVkPxvdfVFhSTmwkjK1uaNvAhu4Fy9eEdNmKgyQBWqv1YQ6KxUGnmoU11MWFWHi9sX0=
+	t=1709042063; cv=none; b=s+NOy3V4QvWGANpphB1n7buvDtyEOuyZZnbYml96gHm/9IyAkUXix53eMACznw/9ttO/6Lgp2Y4W6ccx7ytTeIggEMohaawarbCoaqiOy3svkN2qzunVDEvWF0tGyh9y6TvpBlVGBDnO41a54LL9kAYb6Aiuf8ZeS4clxslsysU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042060; c=relaxed/simple;
-	bh=LpQfHC3AdMpBJVRZ50PWjCQX8sYiOssbqJtXeojRtD4=;
+	s=arc-20240116; t=1709042063; c=relaxed/simple;
+	bh=H7BRoho90oWjl92rULfoflKmdEWksg7EsYUJt3Wu0Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDI+fwaQilY/C8POAumktJZ4ijw3D3go6jo6XQz+NUZxrRcF0XEkLkBF867mPm8ILSZDZ6Z9cYt3+JrEESqHjf4tcZk4IDAZA6vXe1rIOgy7mSRh40CU4gyeSGz4vLetDhGVT8+THSNyxdjUknzMNj8HN8wHIWsZwzk9wduxfWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vW06nBVi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiR4vPgf6NzmLJSbiCOontTvz2C1tIb1QkFR9eLiPaBIH+Is8r1ITZ/d3zI15RQyM6ojejY55Z/Izlyf4E+Vq2RN874NFEis9/2uLVKHhvYQoHAVA9wX9ioWlv/wEjeEdXXUS4MZovBzvLBJGowv/eXRD+wPYnNKSH/AkpY/gYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9yLV+T2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vW06nBVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA09C433F1;
-	Tue, 27 Feb 2024 13:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9yLV+T2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D5AC433C7;
+	Tue, 27 Feb 2024 13:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042060;
-	bh=LpQfHC3AdMpBJVRZ50PWjCQX8sYiOssbqJtXeojRtD4=;
+	s=korg; t=1709042063;
+	bh=H7BRoho90oWjl92rULfoflKmdEWksg7EsYUJt3Wu0Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vW06nBViQ2GOkANB2+H7xuuADPbh64tjOdJTyTdTOSNCVOumjHCzAOiMa6qlfyL5E
-	 VtN1tbbtfoa7Vh/iMOCy210uF7YzNr/Wi1QtFnU92RntexNDzKlc7ukx9HES3ZiF/w
-	 LWI1bO1xYU6iX/6FZYdT2BAsU5w1iKW/bhfna9ng=
+	b=Q9yLV+T2kh8IViPIfK3+id8lHBYCUBr+RHo1pOPyWSiugYG64vGW2TpqlNVM8KVCK
+	 HM9EtJDZ6ud06BR0+JROCxkG8fc1bV/m/qzuMa7EboOJ6N3KmRTe0hz8YlIUDo6ITu
+	 mEFOHy+FGxKCBquWeCI5u3SShPuX3JUr6l02llRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.6 165/299] sparc: Fix undefined reference to fb_is_primary_device
-Date: Tue, 27 Feb 2024 14:24:36 +0100
-Message-ID: <20240227131631.160053744@linuxfoundation.org>
+	Blazej Kucman <blazej.kucman@linux.intel.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.6 166/299] md: Fix missing release of active_io for flush
+Date: Tue, 27 Feb 2024 14:24:37 +0100
+Message-ID: <20240227131631.190587138@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,60 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit ed683b9bb91fc274383e222ba5873a9ee9033462 upstream.
+commit 855678ed8534518e2b428bcbcec695de9ba248e8 upstream.
 
-Commit 55bffc8170bb ("fbdev: Split frame buffer support in FB and FB_CORE
-symbols") added a new FB_CORE Kconfig symbol, that can be enabled to only
-have fbcon/VT and DRM fbdev emulation, but without support for any legacy
-fbdev driver.
+submit_flushes
+ atomic_set(&mddev->flush_pending, 1);
+ rdev_for_each_rcu(rdev, mddev)
+  atomic_inc(&mddev->flush_pending);
+  bi->bi_end_io = md_end_flush
+  submit_bio(bi);
+                        /* flush io is done first */
+                        md_end_flush
+                         if (atomic_dec_and_test(&mddev->flush_pending))
+                          percpu_ref_put(&mddev->active_io)
+                          -> active_io is not released
 
-Unfortunately, it missed to change the CONFIG_FB in arch/sparc makefiles,
-which leads to the following linking error in some sparc64 configurations:
+ if (atomic_dec_and_test(&mddev->flush_pending))
+  -> missing release of active_io
 
-   sparc64-linux-ld: drivers/video/fbdev/core/fbcon.o: in function `fbcon_fb_registered':
->> fbcon.c:(.text+0x4f60): undefined reference to `fb_is_primary_device'
+For consequence, mddev_suspend() will wait for 'active_io' to be zero
+forever.
 
-Fixes: 55bffc8170bb ("fbdev: Split frame buffer support in FB and FB_CORE symbols")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202401290306.IV8rhJ02-lkp@intel.com/
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240220095428.3341195-1-javierm@redhat.com
+Fix this problem by releasing 'active_io' in submit_flushes() if
+'flush_pending' is decreased to zero.
+
+Fixes: fa2bbff7b0b4 ("md: synchronize flush io with array reconfiguration")
+Cc: stable@vger.kernel.org # v6.1+
+Reported-by: Blazej Kucman <blazej.kucman@linux.intel.com>
+Closes: https://lore.kernel.org/lkml/20240130172524.0000417b@linux.intel.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240201092559.910982-7-yukuai1@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/Makefile       | 2 +-
- arch/sparc/video/Makefile | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sparc/Makefile b/arch/sparc/Makefile
-index 5f6035936131..2a03daa68f28 100644
---- a/arch/sparc/Makefile
-+++ b/arch/sparc/Makefile
-@@ -60,7 +60,7 @@ libs-y                 += arch/sparc/prom/
- libs-y                 += arch/sparc/lib/
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -530,8 +530,12 @@ static void submit_flushes(struct work_s
+ 			rcu_read_lock();
+ 		}
+ 	rcu_read_unlock();
+-	if (atomic_dec_and_test(&mddev->flush_pending))
++	if (atomic_dec_and_test(&mddev->flush_pending)) {
++		/* The pair is percpu_ref_get() from md_flush_request() */
++		percpu_ref_put(&mddev->active_io);
++
+ 		queue_work(md_wq, &mddev->flush_work);
++	}
+ }
  
- drivers-$(CONFIG_PM) += arch/sparc/power/
--drivers-$(CONFIG_FB) += arch/sparc/video/
-+drivers-$(CONFIG_FB_CORE) += arch/sparc/video/
- 
- boot := arch/sparc/boot
- 
-diff --git a/arch/sparc/video/Makefile b/arch/sparc/video/Makefile
-index 6baddbd58e4d..d4d83f1702c6 100644
---- a/arch/sparc/video/Makefile
-+++ b/arch/sparc/video/Makefile
-@@ -1,3 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- 
--obj-$(CONFIG_FB) += fbdev.o
-+obj-$(CONFIG_FB_CORE) += fbdev.o
--- 
-2.44.0
-
+ static void md_submit_flush_data(struct work_struct *ws)
 
 
