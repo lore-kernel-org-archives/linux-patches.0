@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AEA13AA43;
-	Tue, 27 Feb 2024 14:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E10A13AA43;
+	Tue, 27 Feb 2024 14:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042909; cv=none; b=fsmnIE2g1ZGeJPMXyN8DXcYRMiss0uQrDkQkp580PEdNeiRF9J4AZgCixKoukKx4NNb9wRc1MMNiNaZH2ude2pHPfkJDxNK/PU9vD4V1zQFCtkQvG5Jy1WhVKNtZGhTsM/zQUvZ7KpijGAq58M+NDk8NVoBP6rK1n793QdmuNCI=
+	t=1709042912; cv=none; b=AhI9zHapv4geHx5wyrSE2iGNK2Yq8Le7zAw+6EKs0aiL3pptELCK/xqlmAKUMtcDSaK2qt92s1rwFBTgPlpLvxNZu0QwpYXkOOjGFHZuIfBttvs2MnRnPZbHlpUe7RwPL3ispUlvaIox/d5aFIbq0ORLelYciIQQG2cFJtvYja4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042909; c=relaxed/simple;
-	bh=L3JIfm2UgTlEBDaOGn/vIXk3C2WHTnnc3+Zp1wgoJMU=;
+	s=arc-20240116; t=1709042912; c=relaxed/simple;
+	bh=IgKGvP6sEwsFraTkiUTVLM0B4muXHshIprtDsD8+vfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0c8JCXffFUMBK3idDV3h7aWtV5Sd2rtIbAivKnAre5zNvc39QFxIsUIbaMizrKG/Y1+sg9suDw+ri1TlbpnYBvqx5LkAUNL4rt9zf2bvWeKTkCSmqg9MUFRS8e7j0twqqHQijCsZB+U6e0TqMS+FuIXXjGBLWNG+aDYTgf3xA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=085aUNzn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dKGjWSUeEiEcu4BKrzBLed7x7Gfa+MlrF2Fg/I8LwW+YwTyr6uQZ6jfzdjj3WKRH78bAkNASYXKfnlPWIXR+yF2hg2JHGT95W6rhzBcr7YGM5LfeAyT5ptDLETYMeGN3tOBa4kOFUI5/4B1DIy6aEJpkK7Nr6B3FMOG1TcWC1BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xg1gBqnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="085aUNzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40F7C433F1;
-	Tue, 27 Feb 2024 14:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xg1gBqnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4557C433F1;
+	Tue, 27 Feb 2024 14:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042909;
-	bh=L3JIfm2UgTlEBDaOGn/vIXk3C2WHTnnc3+Zp1wgoJMU=;
+	s=korg; t=1709042912;
+	bh=IgKGvP6sEwsFraTkiUTVLM0B4muXHshIprtDsD8+vfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=085aUNznP2yNu2wdep++K7eNmPON1BumLsONYGrb986julISei6P+sq4GZ1dF2/LJ
-	 +U8FFWdrTqhVh+b9is8A3bsB5VEeCRYg78xkufQ6R8C2bNJ6qWD7oOFoYjffW0Skzq
-	 CN/QusUPtzZgP012C8ZDItQ0wjjbhfjxrJc0cQXA=
+	b=Xg1gBqnXqH55DG09Ah7pNbiUVKOw0sCtjB/sTfHmEgMAScGx8K0tIYqUruqI5y4Pb
+	 psSSZLWc+CnT66AqfTvOFKmLFvwY8pLmSlvfqMJemMfzgzSYkQb5dqIzaAQfgKAeVC
+	 4U0TiCOdmABsFEfn7OKqbDvc6Hqyb6IRmfLyRDZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Zhong Jinghua <zhongjinghua@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 165/245] debugobjects: Recheck debug_objects_enabled before reporting
-Date: Tue, 27 Feb 2024 14:25:53 +0100
-Message-ID: <20240227131620.571925925@linuxfoundation.org>
+Subject: [PATCH 5.15 166/245] nbd: Add the maximum limit of allocated index in nbd_dev_add
+Date: Tue, 27 Feb 2024 14:25:54 +0100
+Message-ID: <20240227131620.603340303@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,72 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Zhong Jinghua <zhongjinghua@huawei.com>
 
-[ Upstream commit 8b64d420fe2450f82848178506d3e3a0bd195539 ]
+[ Upstream commit f12bc113ce904777fd6ca003b473b427782b3dde ]
 
-syzbot is reporting false a positive ODEBUG message immediately after
-ODEBUG was disabled due to OOM.
+If the index allocated by idr_alloc greater than MINORMASK >> part_shift,
+the device number will overflow, resulting in failure to create a block
+device.
 
-  [ 1062.309646][T22911] ODEBUG: Out of memory. ODEBUG disabled
-  [ 1062.886755][ T5171] ------------[ cut here ]------------
-  [ 1062.892770][ T5171] ODEBUG: assert_init not available (active state 0) object: ffffc900056afb20 object type: timer_list hint: process_timeout+0x0/0x40
+Fix it by imiting the size of the max allocation.
 
-  CPU 0 [ T5171]                CPU 1 [T22911]
-  --------------                --------------
-  debug_object_assert_init() {
-    if (!debug_objects_enabled)
-      return;
-    db = get_bucket(addr);
-                                lookup_object_or_alloc() {
-                                  debug_objects_enabled = 0;
-                                  return NULL;
-                                }
-                                debug_objects_oom() {
-                                  pr_warn("Out of memory. ODEBUG disabled\n");
-                                  // all buckets get emptied here, and
-                                }
-    lookup_object_or_alloc(addr, db, descr, false, true) {
-      // this bucket is already empty.
-      return ERR_PTR(-ENOENT);
-    }
-    // Emits false positive warning.
-    debug_print_object(&o, "assert_init");
-  }
-
-Recheck debug_object_enabled in debug_print_object() to avoid that.
-
-Reported-by: syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/492fe2ae-5141-d548-ebd5-62f5fe2e57f7@I-love.SAKURA.ne.jp
-Closes: https://syzkaller.appspot.com/bug?extid=7937ba6a50bdd00fffdf
+Signed-off-by: Zhong Jinghua <zhongjinghua@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230605122159.2134384-1-zhongjinghua@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/block/nbd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 09fddc0ea6d39..3972e2123e554 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -501,6 +501,15 @@ static void debug_print_object(struct debug_obj *obj, char *msg)
- 	const struct debug_obj_descr *descr = obj->descr;
- 	static int limit;
- 
-+	/*
-+	 * Don't report if lookup_object_or_alloc() by the current thread
-+	 * failed because lookup_object_or_alloc()/debug_objects_oom() by a
-+	 * concurrent thread turned off debug_objects_enabled and cleared
-+	 * the hash buckets.
-+	 */
-+	if (!debug_objects_enabled)
-+		return;
-+
- 	if (limit < 5 && descr != descr_test) {
- 		void *hint = descr->debug_hint ?
- 			descr->debug_hint(obj->object) : NULL;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index e563aa407e888..d379a047d4273 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1715,7 +1715,8 @@ static struct nbd_device *nbd_dev_add(int index, unsigned int refs)
+ 		if (err == -ENOSPC)
+ 			err = -EEXIST;
+ 	} else {
+-		err = idr_alloc(&nbd_index_idr, nbd, 0, 0, GFP_KERNEL);
++		err = idr_alloc(&nbd_index_idr, nbd, 0,
++				(MINORMASK >> part_shift) + 1, GFP_KERNEL);
+ 		if (err >= 0)
+ 			index = err;
+ 	}
 -- 
 2.43.0
 
