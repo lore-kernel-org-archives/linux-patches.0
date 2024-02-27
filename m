@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F7E14037E;
-	Tue, 27 Feb 2024 14:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28175145B0B;
+	Tue, 27 Feb 2024 14:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044092; cv=none; b=aEk8O/SZ2sQjlyONhc64OOXFKBw/+n5Be9hjm/LVjs6+8M4SeJRFs4OQTS9NzrB1dMtyLVVqryQ83e3SPtqiKJbO84IB3B+8ecmc+htBDftlC5+92/TSRyPu3YAnfiXgyBuaty8jpRTgmuQFIvyJ8CCsj5V4ptry8fm9uGmfOjQ=
+	t=1709044095; cv=none; b=lZU81HkSIcoj7wZ2Q/7lHWidwgGHXLAvbP4+Q6mPLCSu3nz2iqmUOJ4HTioDZickYWy5Df7nEUgzZzwhDu9O/b9eakZoCYiTCLKYL5INJGwXH74w1z6hTRWCwHXMj53VadH6qywo4OR0HDnO2pSXGqeAz30WDVN9t8d8R70NlJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044092; c=relaxed/simple;
-	bh=oHfnojN0JdqDJc8T1HfWiaLv1veTeq0B6Y2eug0hlQQ=;
+	s=arc-20240116; t=1709044095; c=relaxed/simple;
+	bh=8HwEkuRgXD2ksPH81p0RCLNaD1aYKfALWpFq8ccu+KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rl3ssbE1qbn9KxmO3zdFkRNj3a/5EoBrbgzaO4TZdpI/w8ccge1csE8EZUxUtgFU+V/m4bqWBXo4ZoZLuCMUp7wG2k0y8yH8sSWTewB8zXJTClg0CTt4VGhk6BF0YXs9PXu+152TRgVFTuv/Bn802jBJi+AgIXTvNUkcEogPLUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+nk6GzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDjLDHHQWh93ZGEjakZ3soxwYPsbO7QwAywBJdUucCAiV36iVKgMpIC24rCscMX0GaKp1mEnLJjtTqSs6eSPKbXMnzn01tJBMHZZoXUNLEA9zs8egebytGzox5/0tg8hMt9Eu/qy4feSFbWd0fsd3liIt7XZ6O5YdGfQLAbuduI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+heiPdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+nk6GzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D594EC433C7;
-	Tue, 27 Feb 2024 14:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+heiPdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6180C433C7;
+	Tue, 27 Feb 2024 14:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044092;
-	bh=oHfnojN0JdqDJc8T1HfWiaLv1veTeq0B6Y2eug0hlQQ=;
+	s=korg; t=1709044095;
+	bh=8HwEkuRgXD2ksPH81p0RCLNaD1aYKfALWpFq8ccu+KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+nk6GzFTuulll1P9eVICXV4S1t2QD+P/MqVblkWNNHw/iLDWhpT1lzkE3vZTQGdi
-	 eKgQBZWuSmS+XcJYxO32DpOOaYt827DOuvHOf6hOVphTaHHAjnlk7R8iQoCkzw64D3
-	 YkNWPvo7XX+O1u3WZihv6rc/bA/2nJphh4D3uBPA=
+	b=r+heiPdiFs87hTeZIqZDm2VfdCoQ7QQLn4RZRztEWBOvYxsJHV/JEwjNDme4ddWK+
+	 4fBe4YK9o7hBe9ulR51YFtTB2VLI12aJdml68N/TF+WGdV4UOJ5tEwBd/vCFc2oqQH
+	 VRz6uiw+iOHpRNvZL00JU2ykvwu7KANsabdBdG1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Borislav Petkov <bp@suse.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/122] ASoC: Intel: bytcr_rt5651: Drop reference count of ACPI device after use
-Date: Tue, 27 Feb 2024 14:27:00 +0100
-Message-ID: <20240227131600.637492789@linuxfoundation.org>
+Subject: [PATCH 5.10 060/122] task_stack, x86/cea: Force-inline stack helpers
+Date: Tue, 27 Feb 2024 14:27:01 +0100
+Message-ID: <20240227131600.670336905@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,49 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit 721858823d7cdc8f2a897579b040e935989f6f02 ]
+[ Upstream commit e87f4152e542610d0b4c6c8548964a68a59d2040 ]
 
-Theoretically the device might gone if its reference count drops to 0.
-This might be the case when we try to find the first physical node of
-the ACPI device. We need to keep reference to it until we get a result
-of the above mentioned call. Refactor the code to drop the reference
-count at the correct place.
+Force-inline two stack helpers to fix the following objtool warnings:
 
-While at it, move to acpi_dev_put() as symmetrical call to the
-acpi_dev_get_first_match_dev().
+  vmlinux.o: warning: objtool: in_task_stack()+0xc: call to task_stack_page() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: in_entry_stack()+0x10: call to cpu_entry_stack() leaves .noinstr.text section
 
-Fixes: 02c0a3b3047f ("ASoC: Intel: bytcr_rt5651: add MCLK, quirks and cleanups")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230112112852.67714-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220324183607.31717-2-bp@alien8.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/cpu_entry_area.h | 2 +-
+ include/linux/sched/task_stack.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 472f6e3327960..a8289f74463e9 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -919,7 +919,6 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
- 	if (adev) {
- 		snprintf(byt_rt5651_codec_name, sizeof(byt_rt5651_codec_name),
- 			 "i2c-%s", acpi_dev_name(adev));
--		put_device(&adev->dev);
- 		byt_rt5651_dais[dai_index].codecs->name = byt_rt5651_codec_name;
- 	} else {
- 		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
-@@ -927,6 +926,7 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
- 	}
+diff --git a/arch/x86/include/asm/cpu_entry_area.h b/arch/x86/include/asm/cpu_entry_area.h
+index dd5ea1bdf04c5..75efc4c6f0766 100644
+--- a/arch/x86/include/asm/cpu_entry_area.h
++++ b/arch/x86/include/asm/cpu_entry_area.h
+@@ -143,7 +143,7 @@ extern void cea_set_pte(void *cea_vaddr, phys_addr_t pa, pgprot_t flags);
  
- 	codec_dev = acpi_get_first_physical_node(adev);
-+	acpi_dev_put(adev);
- 	if (!codec_dev)
- 		return -EPROBE_DEFER;
- 	priv->codec_dev = get_device(codec_dev);
+ extern struct cpu_entry_area *get_cpu_entry_area(int cpu);
+ 
+-static inline struct entry_stack *cpu_entry_stack(int cpu)
++static __always_inline struct entry_stack *cpu_entry_stack(int cpu)
+ {
+ 	return &get_cpu_entry_area(cpu)->entry_stack_page.stack;
+ }
+diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
+index f24575942dabe..879a5c8f930b6 100644
+--- a/include/linux/sched/task_stack.h
++++ b/include/linux/sched/task_stack.h
+@@ -16,7 +16,7 @@
+  * try_get_task_stack() instead.  task_stack_page will return a pointer
+  * that could get freed out from under you.
+  */
+-static inline void *task_stack_page(const struct task_struct *task)
++static __always_inline void *task_stack_page(const struct task_struct *task)
+ {
+ 	return task->stack;
+ }
 -- 
 2.43.0
 
