@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9C013B78F;
-	Tue, 27 Feb 2024 14:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C66878B61;
+	Tue, 27 Feb 2024 14:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043492; cv=none; b=UnNZBev1KTa6a5G+YiFOi3QkTfgzprG+PYd5IbzoHYIFFtWSM/igXkfeDXudhQoaTUZL5deR2DQfp2qBXNjHy03SPYT5r01PeGT2j7kTu0Klg6/cy60B5To/myzJLwjzFmSWLiLxzMRincx8JJn+uzDXLeV//ZITnmngRsNdv5A=
+	t=1709043495; cv=none; b=rQbN1k0+Ne6T7o2/+LYWkHqRpDHregoD4YnJO+3U7kN0qW3wYg2qPTd+iKMem9Uh9N3/eJAx4loZs6v9YdhvV8f3hF8b5ZNHR/lSXP+zrIQ7L09MmKwCzRmv7RENpUeVV6Jl43eh2rExVvrc+XUG0Yj9xldBfsXdql7b/IasMiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043492; c=relaxed/simple;
-	bh=CI6Shwh/HQCcthnN3PB++AQTgLi/brfB0nDAUWASVWk=;
+	s=arc-20240116; t=1709043495; c=relaxed/simple;
+	bh=ZPIrUjQfaRp5Kf7S9ttsPY9vJrCa8wqieksMJiRDzVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQZXmMGqjnTZpOF1NIyZ0J73PC+Db8NXPJEI487+LCb0DEwXFrOMtvTUkZzPrIT3UOI9/EKPhFbdRiS4iyMlwk3BARiO1xyVY0QP/6tuShB1zKAQh9brnRBx3GRpTiJRhz/9yaLPpzVYKG3MNkpAn19PZoJdBv9Y3GsjVTHsOEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2v+bHW7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beHdhk6vw6WEvuQ24kKmsEs0AfDXCV9tILsy02zuOL1d6fBl+4pApP9yPS0mgvWdDoW7elbVGCWhClYmkMw8zeAMr6lvXklYMIJRL7ilaiJxi0l583edlDxnh/C5b4AZVqQfaaLCOv/E2HBE7OebqxS8nX2giCawPDMU0D+8jl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qewofy37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2v+bHW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09BDC433F1;
-	Tue, 27 Feb 2024 14:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qewofy37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E201C433F1;
+	Tue, 27 Feb 2024 14:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043492;
-	bh=CI6Shwh/HQCcthnN3PB++AQTgLi/brfB0nDAUWASVWk=;
+	s=korg; t=1709043495;
+	bh=ZPIrUjQfaRp5Kf7S9ttsPY9vJrCa8wqieksMJiRDzVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2v+bHW7/o2u2h1fpq15tzz+/5QZPyIqxtpEKgp2WS7pE6E8WGF+rPTOcfoUVyzD6
-	 7W/sO8MINHXlLCcNZBryqDq7Cm58+i1LLpvBtGRIvK+bdSCqTQ6i1mKmRELJj5SOQe
-	 lq7rNDQGgwkKjPG2Qk19g35RPWQJcWA0ZDZyzrcU=
+	b=qewofy37oUbWTWnYpsRRdve5Pwq14aHQFLXC6JJ2DWECUniGJP7nD82qIW+zbYJ9J
+	 JXHgvVE1hF6jncHWc1pRkZai4NOuQAtuM2yRd6ockH+ff9bjhNNpHKCo3Enth7Hi3o
+	 sHwlTNG14f7XScleHv/AdusamHmQyEFlyiJrapAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 127/195] mptcp: add needs_id for userspace appending addr
-Date: Tue, 27 Feb 2024 14:26:28 +0100
-Message-ID: <20240227131614.637824589@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 101/195] cachefiles: fix memory leak in cachefiles_add_cache()
+Date: Tue, 27 Feb 2024 14:26:02 +0100
+Message-ID: <20240227131613.808225072@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,100 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 6c347be62ae963b301ead8e7fa7b9973e6e0d6e1 upstream.
+commit e21a2f17566cbd64926fb8f16323972f7a064444 upstream.
 
-When userspace PM requires to create an ID 0 subflow in "userspace pm
-create id 0 subflow" test like this:
+The following memory leak was reported after unbinding /dev/cachefiles:
 
-        userspace_pm_add_sf $ns2 10.0.3.2 0
+==================================================================
+unreferenced object 0xffff9b674176e3c0 (size 192):
+  comm "cachefilesd2", pid 680, jiffies 4294881224
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc ea38a44b):
+    [<ffffffff8eb8a1a5>] kmem_cache_alloc+0x2d5/0x370
+    [<ffffffff8e917f86>] prepare_creds+0x26/0x2e0
+    [<ffffffffc002eeef>] cachefiles_determine_cache_security+0x1f/0x120
+    [<ffffffffc00243ec>] cachefiles_add_cache+0x13c/0x3a0
+    [<ffffffffc0025216>] cachefiles_daemon_write+0x146/0x1c0
+    [<ffffffff8ebc4a3b>] vfs_write+0xcb/0x520
+    [<ffffffff8ebc5069>] ksys_write+0x69/0xf0
+    [<ffffffff8f6d4662>] do_syscall_64+0x72/0x140
+    [<ffffffff8f8000aa>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
+==================================================================
 
-An ID 1 subflow, in fact, is created.
+Put the reference count of cache_cred in cachefiles_daemon_unbind() to
+fix the problem. And also put cache_cred in cachefiles_add_cache() error
+branch to avoid memory leaks.
 
-Since in mptcp_pm_nl_append_new_local_addr(), 'id 0' will be treated as
-no ID is set by userspace, and will allocate a new ID immediately:
-
-     if (!e->addr.id)
-             e->addr.id = find_next_zero_bit(pernet->id_bitmap,
-                                             MPTCP_PM_MAX_ADDR_ID + 1,
-                                             1);
-
-To solve this issue, a new parameter needs_id is added for
-mptcp_userspace_pm_append_new_local_addr() to distinguish between
-whether userspace PM has set an ID 0 or whether userspace PM has
-not set any address.
-
-needs_id is true in mptcp_userspace_pm_get_local_id(), but false in
-mptcp_pm_nl_announce_doit() and mptcp_pm_nl_subflow_create_doit().
-
-Fixes: e5ed101a6028 ("mptcp: userspace pm allow creating id 0 subflow")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9ae326a69004 ("CacheFiles: A cache that backs onto a mounted filesystem")
+CC: stable@vger.kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240217081431.796809-1-libaokun1@huawei.com
+Acked-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/cachefiles/cache.c  |    2 ++
+ fs/cachefiles/daemon.c |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -26,7 +26,8 @@ void mptcp_free_local_addr_list(struct m
- }
+--- a/fs/cachefiles/cache.c
++++ b/fs/cachefiles/cache.c
+@@ -168,6 +168,8 @@ error_unsupported:
+ 	dput(root);
+ error_open_root:
+ 	cachefiles_end_secure(cache, saved_cred);
++	put_cred(cache->cache_cred);
++	cache->cache_cred = NULL;
+ error_getsec:
+ 	fscache_relinquish_cache(cache_cookie);
+ 	cache->cache = NULL;
+--- a/fs/cachefiles/daemon.c
++++ b/fs/cachefiles/daemon.c
+@@ -805,6 +805,7 @@ static void cachefiles_daemon_unbind(str
+ 	cachefiles_put_directory(cache->graveyard);
+ 	cachefiles_put_directory(cache->store);
+ 	mntput(cache->mnt);
++	put_cred(cache->cache_cred);
  
- static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
--						    struct mptcp_pm_addr_entry *entry)
-+						    struct mptcp_pm_addr_entry *entry,
-+						    bool needs_id)
- {
- 	DECLARE_BITMAP(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 	struct mptcp_pm_addr_entry *match = NULL;
-@@ -41,7 +42,7 @@ static int mptcp_userspace_pm_append_new
- 	spin_lock_bh(&msk->pm.lock);
- 	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
- 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
--		if (addr_match && entry->addr.id == 0)
-+		if (addr_match && entry->addr.id == 0 && needs_id)
- 			entry->addr.id = e->addr.id;
- 		id_match = (e->addr.id == entry->addr.id);
- 		if (addr_match && id_match) {
-@@ -64,7 +65,7 @@ static int mptcp_userspace_pm_append_new
- 		}
- 
- 		*e = *entry;
--		if (!e->addr.id)
-+		if (!e->addr.id && needs_id)
- 			e->addr.id = find_next_zero_bit(id_bitmap,
- 							MPTCP_PM_MAX_ADDR_ID + 1,
- 							1);
-@@ -155,7 +156,7 @@ int mptcp_userspace_pm_get_local_id(stru
- 	if (new_entry.addr.port == msk_sport)
- 		new_entry.addr.port = 0;
- 
--	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry);
-+	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry, true);
- }
- 
- int mptcp_nl_cmd_announce(struct sk_buff *skb, struct genl_info *info)
-@@ -197,7 +198,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 		goto announce_err;
- 	}
- 
--	err = mptcp_userspace_pm_append_new_local_addr(msk, &addr_val);
-+	err = mptcp_userspace_pm_append_new_local_addr(msk, &addr_val, false);
- 	if (err < 0) {
- 		GENL_SET_ERR_MSG(info, "did not match address and id");
- 		goto announce_err;
-@@ -335,7 +336,7 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
- 	}
- 
- 	local.addr = addr_l;
--	err = mptcp_userspace_pm_append_new_local_addr(msk, &local);
-+	err = mptcp_userspace_pm_append_new_local_addr(msk, &local, false);
- 	if (err < 0) {
- 		GENL_SET_ERR_MSG(info, "did not match address and id");
- 		goto create_err;
+ 	kfree(cache->rootdirname);
+ 	kfree(cache->secctx);
 
 
