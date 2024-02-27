@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CB954BD4;
-	Tue, 27 Feb 2024 14:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C289C54BD4;
+	Tue, 27 Feb 2024 14:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042402; cv=none; b=Pvpm9krlAyNs3/MFfLrr7KtuHBsad6ZnamNDgjutW4WcTttLlZVaVuFJztkFQgkaPouc3+KkTc9g0ptpSnx2YE+KiMLo3kPMriEtpGmJP2oXkoTEptK0yp8+fMdPQ6g6ZamzTtq+kEzk3KYwBX6fqAe+5DbEwbIts4XsQJhlMUQ=
+	t=1709042404; cv=none; b=bp9M9T69IedqYNlv5pdyhJz+riU+qJnUlw/L0l6MiV+4lBtfCiBv/JEpnK0iiZjPuxpPD+vcHdVf79gUzCj2/Cpj1aAdoOaQQMG58Ou65noN4g6i2mVVrGXe0+urRQzvI4aDDEF5HwUJKHNVNaaSsSUquG/vPOh3eGqezvol+/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042402; c=relaxed/simple;
-	bh=AirJX+IIWadhigqu5Xk1Bt18IisW3TwlbX0ZR7e8Xe4=;
+	s=arc-20240116; t=1709042404; c=relaxed/simple;
+	bh=kEtX4YFbh+05tN+vouklYy1AoKvgQ8Gc+AKgQJXlb4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BguHpPFlnQOJnF3BynRYodoZe8GYFlnQ8s/kFtwxKtUiHicjsll73rQwA0r4ktmnawgmQZmMHbUKwKWYbvr/8RScQerlLZkSC67CU+7/M6loU4Mes6iLVun8vv1FGdcgIzidVQo3ijbGSJk9o132XhX7QJHXdXWXr+ocHM8nXQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ciX7PDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G57xkdnS522N2ONX444NjnRfQucH1jZfV7y5wpZa6PpOAXoqRlnoYhky1q2RluBznsIOLWo9qUCxThYkvwZE7hqRVtBoxDGO+e8mpOHx/qoEaZcBKeKgwGH6KoZqnO7rBbg49w0VSjB5NUSonY0myWBtqmVmjRPaKlxnrsjILk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6cswFbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ciX7PDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96304C433F1;
-	Tue, 27 Feb 2024 14:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6cswFbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531C6C433C7;
+	Tue, 27 Feb 2024 14:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042402;
-	bh=AirJX+IIWadhigqu5Xk1Bt18IisW3TwlbX0ZR7e8Xe4=;
+	s=korg; t=1709042404;
+	bh=kEtX4YFbh+05tN+vouklYy1AoKvgQ8Gc+AKgQJXlb4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ciX7PDAX1X113atiRiTj0e+579x+W4UQDMoQcY8ISt0HaqFTN8JDZ53CkMIJYfg1
-	 yhrXKYCkyumQLlnHE6V9kddUzeOXoTSPkv1vnY7JgEpoNtpKmJlQcBUiJKOoynKMt4
-	 Rvk5tSfnyVSYTQAZFOfG3k5LWms/8dXgbid+cWTM=
+	b=y6cswFbhylY5JndIvj8DVf4XOl9Q8ptCGcpFumMo+a6scvFBfDt55p5Y0z/c71LGm
+	 W+A/TklHbiU2QauZWBbN+CVzmdiw5w5vqJJwmpTydoX1kubHvhl4Z/zwg8PWEYZ99I
+	 aVN/ROXf04q1E1JNWMv5wlBtNyL6Wrve7LBaSCpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <courmisch@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/299] phonet/pep: fix racy skb_queue_empty() use
-Date: Tue, 27 Feb 2024 14:26:34 +0100
-Message-ID: <20240227131634.788020418@linuxfoundation.org>
+Subject: [PATCH 6.6 284/299] Fix write to cloned skb in ipv6_hop_ioam()
+Date: Tue, 27 Feb 2024 14:26:35 +0100
+Message-ID: <20240227131634.817527902@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,89 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rémi Denis-Courmont <courmisch@gmail.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 7d2a894d7f487dcb894df023e9d3014cf5b93fe5 ]
+[ Upstream commit f198d933c2e4f8f89e0620fbaf1ea7eac384a0eb ]
 
-The receive queues are protected by their respective spin-lock, not
-the socket lock. This could lead to skb_peek() unexpectedly
-returning NULL or a pointer to an already dequeued socket buffer.
+ioam6_fill_trace_data() writes inside the skb payload without ensuring
+it's writeable (e.g., not cloned). This function is called both from the
+input and output path. The output path (ioam6_iptunnel) already does the
+check. This commit provides a fix for the input path, inside
+ipv6_hop_ioam(). It also updates ip6_parse_tlv() to refresh the network
+header pointer ("nh") when returning from ipv6_hop_ioam().
 
-Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
-Signed-off-by: Rémi Denis-Courmont <courmisch@gmail.com>
-Link: https://lore.kernel.org/r/20240218081214.4806-2-remi@remlab.net
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pep.c | 41 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 32 insertions(+), 9 deletions(-)
+ net/ipv6/exthdrs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/phonet/pep.c b/net/phonet/pep.c
-index faba31f2eff29..3dd5f52bc1b58 100644
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -917,6 +917,37 @@ static int pep_sock_enable(struct sock *sk, struct sockaddr *addr, int len)
- 	return 0;
- }
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 4952ae7924505..02e9ffb63af19 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -177,6 +177,8 @@ static bool ip6_parse_tlv(bool hopbyhop,
+ 				case IPV6_TLV_IOAM:
+ 					if (!ipv6_hop_ioam(skb, off))
+ 						return false;
++
++					nh = skb_network_header(skb);
+ 					break;
+ 				case IPV6_TLV_JUMBO:
+ 					if (!ipv6_hop_jumbo(skb, off))
+@@ -943,6 +945,14 @@ static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
+ 		if (!skb_valid_dst(skb))
+ 			ip6_route_input(skb);
  
-+static unsigned int pep_first_packet_length(struct sock *sk)
-+{
-+	struct pep_sock *pn = pep_sk(sk);
-+	struct sk_buff_head *q;
-+	struct sk_buff *skb;
-+	unsigned int len = 0;
-+	bool found = false;
++		/* About to mangle packet header */
++		if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
++			goto drop;
 +
-+	if (sock_flag(sk, SOCK_URGINLINE)) {
-+		q = &pn->ctrlreq_queue;
-+		spin_lock_bh(&q->lock);
-+		skb = skb_peek(q);
-+		if (skb) {
-+			len = skb->len;
-+			found = true;
-+		}
-+		spin_unlock_bh(&q->lock);
-+	}
++		/* Trace pointer may have changed */
++		trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
++						   + optoff + sizeof(*hdr));
 +
-+	if (likely(!found)) {
-+		q = &sk->sk_receive_queue;
-+		spin_lock_bh(&q->lock);
-+		skb = skb_peek(q);
-+		if (skb)
-+			len = skb->len;
-+		spin_unlock_bh(&q->lock);
-+	}
-+
-+	return len;
-+}
-+
- static int pep_ioctl(struct sock *sk, int cmd, int *karg)
- {
- 	struct pep_sock *pn = pep_sk(sk);
-@@ -929,15 +960,7 @@ static int pep_ioctl(struct sock *sk, int cmd, int *karg)
- 			break;
- 		}
- 
--		lock_sock(sk);
--		if (sock_flag(sk, SOCK_URGINLINE) &&
--		    !skb_queue_empty(&pn->ctrlreq_queue))
--			*karg = skb_peek(&pn->ctrlreq_queue)->len;
--		else if (!skb_queue_empty(&sk->sk_receive_queue))
--			*karg = skb_peek(&sk->sk_receive_queue)->len;
--		else
--			*karg = 0;
--		release_sock(sk);
-+		*karg = pep_first_packet_length(sk);
- 		ret = 0;
+ 		ioam6_fill_trace_data(skb, ns, trace, true);
  		break;
- 
+ 	default:
 -- 
 2.43.0
 
