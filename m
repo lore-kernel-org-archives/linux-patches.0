@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4562F2D;
-	Tue, 27 Feb 2024 13:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446B713AA4C;
+	Tue, 27 Feb 2024 13:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041269; cv=none; b=UxD51WW9An0gLWc3Y395vkHAslcPlu+atXA6sarKMIf3Gu7KIItfmuZBMaLtOvvnBxhoz+2WXdGWhK7WCa5UiY5Smb1ll3O1/jznHJ9gaWnY4YstXMdW8WkpbfCgCNd0Yv7FgqSNE/r83U/BUXSj/s0Mg/r9vlDV4qMO1z6tTe8=
+	t=1709041272; cv=none; b=BsUv8EtlTd7DxCaqsNCJKDI6aZkY9TPYyXfWloNdwnBWl4ympmhE4HIvV1XEFeDybZeNw3NYaPa+oUaBWSt94bzyb+Wc7J+KAghvkhnhsEGAPYTy5KV2Ll5PtYoF+xaD22Nexv2OWjK4IfC2RuMJM1I7PGaXfXaDlgW96s9ue8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041269; c=relaxed/simple;
-	bh=kTuSzsbQBi3yu0BX85erbFmdqCpMLGkSQycgaK0gcLI=;
+	s=arc-20240116; t=1709041272; c=relaxed/simple;
+	bh=TmbaytMUNPnMReqU0GknpyqKvaC6UQGfCRohTYNKsiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZVdSLF35Lmodh+0NEgw3FW7+1VGLVPjG1B86n1NNcfRqZYdUBAoXIYIilTzEIVaPl0WlCpvHvKiVIINKw/Fxt8fsBw/3yd6286nmkFOJ1c3SfWG9V5pHGFDGtNBl1hNEEn1Kq9bp678GkkviBd8BbRHrHci6ojU9QN1ggS65IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ8Y5lmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXvp9QjtnD2cE0b4tfMDBDaJYIrEWSRAlH9p0YCpJjSELHvxAgOv3jowyfnvPKCEAN4kgWKkS8FAqzIeu9BFMnkqrC8J742iam/b8eiFtKejeUmb5aaYUtNrVqcFQ+2eIMm6yHucL5zwp0VgfR8bUFTfqVOIJ/KS2eyqdqbdBKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU+Pu8cz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ8Y5lmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DC0C433F1;
-	Tue, 27 Feb 2024 13:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU+Pu8cz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78B1C43390;
+	Tue, 27 Feb 2024 13:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041269;
-	bh=kTuSzsbQBi3yu0BX85erbFmdqCpMLGkSQycgaK0gcLI=;
+	s=korg; t=1709041272;
+	bh=TmbaytMUNPnMReqU0GknpyqKvaC6UQGfCRohTYNKsiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQ8Y5lmRrvpes80yn1idcRKemKss5kdc1GqJIUAbw01m1LnUU587YXlhNXtMzCGzK
-	 AmUmHPiOe/KzdXdhrCBSMtJQzHaF4+hFSaIeauj1IbDx6rAgeHcFoUe6CCbemx0Gfd
-	 yhPCAMIFwljMfptz7bpTGQ8BiabqapxRhfu4BjSk=
+	b=yU+Pu8cz0GqzChJj8dqa0N65/IzRRHzK/oqY6NHfpKyaGAHi3VrYSjMvoOzLE3rIF
+	 Foz2qXeQSk7lqKFWpUEQoW2XwiSGPOrZJPHyvpGw9oEdL+ZxtrFNLNyEj5/X1v/KZr
+	 U+PJSy8hoPdohio5IH6nstW0fU3MbkzAkZ2ymL6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 251/334] xsk: Add truesize to skb_add_rx_frag().
-Date: Tue, 27 Feb 2024 14:21:49 +0100
-Message-ID: <20240227131639.014926286@linuxfoundation.org>
+Subject: [PATCH 6.7 242/334] arm64: dts: tqma8mpql: fix audio codec iov-supply
+Date: Tue, 27 Feb 2024 14:21:40 +0100
+Message-ID: <20240227131638.682843800@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 2127c604383666675789fd4a5fc2aead46c73aad ]
+[ Upstream commit a620a7f2ae8b08c5beea6369f61e87064ee222dc ]
 
-xsk_build_skb() allocates a page and adds it to the skb via
-skb_add_rx_frag() and specifies 0 for truesize. This leads to a warning
-in skb_add_rx_frag() with CONFIG_DEBUG_NET enabled because size is
-larger than truesize.
+IOVDD is supplied by 1.8V, fix the referenced regulator.
 
-Increasing truesize requires to add the same amount to socket's
-sk_wmem_alloc counter in order not to underflow the counter during
-release in the destructor (sock_wfree()).
-
-Pass the size of the allocated page as truesize to skb_add_rx_frag().
-Add this mount to socket's sk_wmem_alloc counter.
-
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/bpf/20240202163221.2488589-1-bigeasy@linutronix.de
+Fixes: d8f9d8126582d ("arm64: dts: imx8mp: Add analog audio output on i.MX8MP TQMa8MPxL/MBa8MPxL")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts     | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 688e641cd2784..da1582de6e84a 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -711,7 +711,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
- 			memcpy(vaddr, buffer, len);
- 			kunmap_local(vaddr);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
+index 4240e20d38ac3..258e90cc16ff3 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
+@@ -168,6 +168,13 @@
+ 		enable-active-high;
+ 	};
  
--			skb_add_rx_frag(skb, nr_frags, page, 0, len, 0);
-+			skb_add_rx_frag(skb, nr_frags, page, 0, len, PAGE_SIZE);
-+			refcount_add(PAGE_SIZE, &xs->sk.sk_wmem_alloc);
- 		}
- 	}
++	reg_vcc_1v8: regulator-1v8 {
++		compatible = "regulator-fixed";
++		regulator-name = "VCC_1V8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
+ 	reg_vcc_3v3: regulator-3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "VCC_3V3";
+@@ -464,7 +471,7 @@
+ 		clock-names = "mclk";
+ 		clocks = <&audio_blk_ctrl IMX8MP_CLK_AUDIOMIX_SAI3_MCLK1>;
+ 		reset-gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
+-		iov-supply = <&reg_vcc_3v3>;
++		iov-supply = <&reg_vcc_1v8>;
+ 		ldoin-supply = <&reg_vcc_3v3>;
+ 	};
  
 -- 
 2.43.0
