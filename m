@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4788413DB90;
-	Tue, 27 Feb 2024 13:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A02313DB98;
+	Tue, 27 Feb 2024 13:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041747; cv=none; b=dCiB1cweLcRSsVh0rIzpDWVfCaob17D6zkucIcv78cLobuXibVlIDgBu9C8IVXOkITxPBRJfohDc16CYJD3YrH32J7CN2X1+2jLnaAexdEkGuYeBSlSDJJVwwfQTESvZbC5Otog4BsezmKFE6PxmLDmgwFRMMluERjGCcpmjTes=
+	t=1709041750; cv=none; b=DzVpk5mcSv23opLu/2cK201uJMRXTqTeoIsEuZVVwcI16EFJS9Fuu7MIWJ0UcWedNvAq8/XjefTJ27Tp//sB6eKStFrOskukNk3IgY8UoVlyM6Zr+jOtqqsnrb7gxuu9MRoCeCu65Jc8XMKYNV9u68R5cp3FlW3yTXvNO6Cmp8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041747; c=relaxed/simple;
-	bh=P8COGbEsSur0ozsaJysALXFF/d3K2HVRSwn4sMUw7yg=;
+	s=arc-20240116; t=1709041750; c=relaxed/simple;
+	bh=YxQYmz+BXDFInpHlziyve4SC+5DG5WpK0m0/iE+52rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlHd+dKcO7DdpR5G9kqq21BjqK46nEFhJju9ZdOllglAVHvGpN8djba/U7N0J7Qcxy4hoHOBzsByUc2Gqy+8cp4W9R83iDVL6gxCy4oZfsYPqBafwNFdhCSMfknTU1z053YVEhoDfGvh1t2SJJtWEriAmNZSGvUmkPq6H5BblEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSMO2rlZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwVp8S+sKAPujXZSBGDxaPSGGOJnKgpVAovENLMMn3kss7Ivdl1dtpIVX3Qf8U3bqV+aNnM1Yc7YvZNGxombox5omoMszHAdKKRXFySxYV4M2muaSkYTt8H2B0y3guMxlnm5IHu8bJn8CXqnOxwDtJvuC+dSEy812fuRwnPK+Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7lbeKTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSMO2rlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF277C433F1;
-	Tue, 27 Feb 2024 13:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7lbeKTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E2FC433C7;
+	Tue, 27 Feb 2024 13:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041747;
-	bh=P8COGbEsSur0ozsaJysALXFF/d3K2HVRSwn4sMUw7yg=;
+	s=korg; t=1709041749;
+	bh=YxQYmz+BXDFInpHlziyve4SC+5DG5WpK0m0/iE+52rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSMO2rlZFy1deyxgN6DdMddSsstPNxnWn2NsVGlEiqdCMiFOQGfQNVFXoyTtg0hqK
-	 g9EaU7dWMoYr4DBFhk8uKk3UJ/CYMENBfFOwkg0cjTfEv+BqQUezWawKn9nFiED9+w
-	 F9SPIru1rSf12NSyu+9eikab/AOEXqwglSSLCnMw=
+	b=x7lbeKTfbUsemgxHsSAUMwVBalOfDD7ZH3GCWOfyAq0nmWM9qMwwwwTj1KWTkn90q
+	 t1eke4+SKbyHGzDW/leQdiEV3uXuQq6BlpOiVDTl+hBWjMRPK2KmK7siC2M9IUHTB0
+	 HsbOnLnCbwwjnoq0w5VoSrvw7/8rfpparBv8xvn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Dhere <chaitanya.dhere@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Sohaib Nadeem <sohaib.nadeem@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/299] drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz
-Date: Tue, 27 Feb 2024 14:22:45 +0100
-Message-ID: <20240227131627.706120269@linuxfoundation.org>
+Subject: [PATCH 6.6 055/299] cifs: make sure that channel scaling is done only once
+Date: Tue, 27 Feb 2024 14:22:46 +0100
+Message-ID: <20240227131627.736254727@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -55,44 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 2ff33c759a4247c84ec0b7815f1f223e155ba82a ]
+[ Upstream commit ee36a3b345c433a846effcdcfba437c2298eeda5 ]
 
-[why]
-Originally, PMFW said min FCLK is 300Mhz, but min DCFCLK can be increased
-to 400Mhz because min FCLK is now 600Mhz so FCLK >= 1.5 * DCFCLK hardware
-requirement will still be satisfied. Increasing min DCFCLK addresses
-underflow issues (underflow occurs when phantom pipe is turned on for some
-Sub-Viewport configs).
+Following a successful cifs_tree_connect, we have the code
+to scale up/down the number of channels in the session.
+However, it is not protected by a lock today.
 
-[how]
-Increasing DCFCLK by raising the min_dcfclk_mhz
+As a result, this code can be executed by several processes
+that select the same channel. The core functions handle this
+well, as they pick chan_lock. However, we've seen cases where
+smb2_reconnect throws some warnings.
 
-Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To fix that, this change introduces a flags bitmap inside the
+cifs_ses structure. A new flag type is used to ensure that
+only one process enters this section at any time.
+
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsglob.h |  3 +++
+ fs/smb/client/smb2pdu.c  | 18 +++++++++++++++++-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index cf3b400c8619b..ec09d5a8876be 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2452,7 +2452,7 @@ static int build_synthetic_soc_states(bool disable_dc_mode_overwrite, struct clk
- 	struct _vcs_dpi_voltage_scaling_st entry = {0};
- 	struct clk_limit_table_entry max_clk_data = {0};
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index f794b16095e43..dcc41fe33b705 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1018,6 +1018,8 @@ struct cifs_chan {
+ 	__u8 signkey[SMB3_SIGN_KEY_SIZE];
+ };
  
--	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
-+	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
++#define CIFS_SES_FLAG_SCALE_CHANNELS (0x1)
++
+ /*
+  * Session structure.  One of these for each uid session with a particular host
+  */
+@@ -1050,6 +1052,7 @@ struct cifs_ses {
+ 	enum securityEnum sectype; /* what security flavor was specified? */
+ 	bool sign;		/* is signing required? */
+ 	bool domainAuto:1;
++	unsigned int flags;
+ 	__u16 session_flags;
+ 	__u8 smb3signingkey[SMB3_SIGN_KEY_SIZE];
+ 	__u8 smb3encryptionkey[SMB3_ENC_DEC_KEY_SIZE];
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 5d9c87d2e1e01..ce2d28537bc8a 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -399,6 +399,15 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 		goto out;
+ 	}
  
- 	static const unsigned int num_dcfclk_stas = 5;
- 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
++	spin_lock(&ses->ses_lock);
++	if (ses->flags & CIFS_SES_FLAG_SCALE_CHANNELS) {
++		spin_unlock(&ses->ses_lock);
++		mutex_unlock(&ses->session_mutex);
++		goto skip_add_channels;
++	}
++	ses->flags |= CIFS_SES_FLAG_SCALE_CHANNELS;
++	spin_unlock(&ses->ses_lock);
++
+ 	if (!rc &&
+ 	    (server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
+ 		mutex_unlock(&ses->session_mutex);
+@@ -428,15 +437,22 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
+ 		if (ses->chan_max > ses->chan_count &&
+ 		    ses->iface_count &&
+ 		    !SERVER_IS_CHAN(server)) {
+-			if (ses->chan_count == 1)
++			if (ses->chan_count == 1) {
+ 				cifs_server_dbg(VFS, "supports multichannel now\n");
++				queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
++						 (SMB_INTERFACE_POLL_INTERVAL * HZ));
++			}
+ 
+ 			cifs_try_adding_channels(ses);
+ 		}
+ 	} else {
+ 		mutex_unlock(&ses->session_mutex);
+ 	}
++
+ skip_add_channels:
++	spin_lock(&ses->ses_lock);
++	ses->flags &= ~CIFS_SES_FLAG_SCALE_CHANNELS;
++	spin_unlock(&ses->ses_lock);
+ 
+ 	if (smb2_command != SMB2_INTERNAL_CMD)
+ 		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
 -- 
 2.43.0
 
