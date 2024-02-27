@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864F813B29C;
-	Tue, 27 Feb 2024 14:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6E8145359;
+	Tue, 27 Feb 2024 14:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044006; cv=none; b=GplTOw34SzYQylEKFl0BIf/bn8S6v1GlqTgpnhd7LOb08DW4Kj8G8sWzcPmR1jadkZiu8bo/kG2FUp1ODY7CZuoIn3CBvgY7xa2TmkKjfuuMjYqNHWkMYAxjILugPVnplz9ewExCkPyrFxsUYwj3zEmEL/bj6+AtnZ5VCZxKbUI=
+	t=1709044009; cv=none; b=VmvjtOq+VwhLO0RSDzM0JclU7Y89Ba/uPxSWAGwwrdEClI06R0btYarH1pYg2smmsvMWub+eWE+KrS8yIntivvtbXFmIsuHy9PHNlJX06n071xfi/i+RJj0Xid7mb+f3fy1+cPMWkJZBRJkp9rnT2JI5T6iw+JOfBg2mHfJ1IV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044006; c=relaxed/simple;
-	bh=Gbk+rw2JcJBKOiS6LFXXCbGyXVZPgrKHFfoXA9ganbE=;
+	s=arc-20240116; t=1709044009; c=relaxed/simple;
+	bh=bEm7qB9y5Bwtj5YWq9ddgt2xS+FCczrU9Vq749paHjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHKA9tRdy5WlHCbmI+OtWxZvpnKpNsrymNchKLvrG2zQ2BMLwOH6l4huX7HmTqOL8cu7ozpzc5UrQOsdpzQJeUeKaqx41YSFhBUnTJye3GMSw0UnW9SSaaHftGlpikGilIiWNAGs+d99vOVho/xoyxwPLAlUfWntS/nRHUPbVnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZGD+t0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lK81dVADk/icuS0qz4em08oFEzEHj3wSDs5iwM+0lKmCmzPt2Xtb8Zxz9UiREFYxf0EXKCDRGtYTtW2oTNgoADkzjM47LRR5VERMOWKeitB1MgGMkPz5daQZG2iSwO25MkimMQFQIPZbCw63GP0xZFkfw6BOA5uW3B0BPwgelJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yR6mYYEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZGD+t0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09554C433C7;
-	Tue, 27 Feb 2024 14:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yR6mYYEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D467EC433F1;
+	Tue, 27 Feb 2024 14:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044006;
-	bh=Gbk+rw2JcJBKOiS6LFXXCbGyXVZPgrKHFfoXA9ganbE=;
+	s=korg; t=1709044009;
+	bh=bEm7qB9y5Bwtj5YWq9ddgt2xS+FCczrU9Vq749paHjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZGD+t0Y2zFg1uYf9I9/sBijkBl7Y08ClH5RKCTFj12IbOT1TE1nzPT5G50KZNczn
-	 neUzK5eGU9cpsqj0FbP2gLyPU+Luu5FPGegr8544sOtxKIwWqcGC9K/oTDjLaygSoS
-	 VQ/8+IIB5m945u6e9orRZGUOCs9EQd+eUR3il4L8=
+	b=yR6mYYEMCPhYDXhSKCRDsGyL3oi2C+lUX8f65onJ8prtilUkRbqZrRqtOpFCyLXdx
+	 +55uPvin6MTEPH+unvahnMJnbfK5SsHSnfGcd3vgWLSo4OB+KL0nK+cxFiIH+fweCV
+	 my40G3H/e2daCeLr5TM2rSXtc+dk5FWeMZmFw8zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/122] spi: sh-msiof: avoid integer overflow in constants
-Date: Tue, 27 Feb 2024 14:26:29 +0100
-Message-ID: <20240227131559.627671897@linuxfoundation.org>
+Subject: [PATCH 5.10 029/122] netfilter: conntrack: check SCTP_CID_SHUTDOWN_ACK for vtag setting in sctp_new
+Date: Tue, 27 Feb 2024 14:26:30 +0100
+Message-ID: <20240227131559.659732950@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,51 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 6500ad28fd5d67d5ca0fee9da73c463090842440 ]
+[ Upstream commit 6e348067ee4bc5905e35faa3a8fafa91c9124bc7 ]
 
-cppcheck rightfully warned:
+The annotation says in sctp_new(): "If it is a shutdown ack OOTB packet, we
+expect a return shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8)".
+However, it does not check SCTP_CID_SHUTDOWN_ACK before setting vtag[REPLY]
+in the conntrack entry(ct).
 
- drivers/spi/spi-sh-msiof.c:792:28: warning: Signed integer overflow for expression '7<<29'. [integerOverflow]
- sh_msiof_write(p, SIFCTR, SIFCTR_TFWM_1 | SIFCTR_RFWM_1);
+Because of that, if the ct in Router disappears for some reason in [1]
+with the packet sequence like below:
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://msgid.link/r/20240130094053.10672-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+   Client > Server: sctp (1) [INIT] [init tag: 3201533963]
+   Server > Client: sctp (1) [INIT ACK] [init tag: 972498433]
+   Client > Server: sctp (1) [COOKIE ECHO]
+   Server > Client: sctp (1) [COOKIE ACK]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057809]
+   Server > Client: sctp (1) [SACK] [cum ack 3075057809]
+   Server > Client: sctp (1) [HB REQ]
+   (the ct in Router disappears somehow)  <-------- [1]
+   Client > Server: sctp (1) [HB ACK]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [HB REQ]
+   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
+   Client > Server: sctp (1) [HB REQ]
+   Client > Server: sctp (1) [ABORT]
+
+when processing HB ACK packet in Router it calls sctp_new() to initialize
+the new ct with vtag[REPLY] set to HB_ACK packet's vtag.
+
+Later when sending DATA from Client, all the SACKs from Server will get
+dropped in Router, as the SACK packet's vtag does not match vtag[REPLY]
+in the ct. The worst thing is the vtag in this ct will never get fixed
+by the upcoming packets from Server.
+
+This patch fixes it by checking SCTP_CID_SHUTDOWN_ACK before setting
+vtag[REPLY] in the ct in sctp_new() as the annotation says. With this
+fix, it will leave vtag[REPLY] in ct to 0 in the case above, and the
+next HB REQ/ACK from Server is able to fix the vtag as its value is 0
+in nf_conntrack_sctp_packet().
+
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/netfilter/nf_conntrack_proto_sctp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 35d30378256f6..12fd02f92e37b 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -137,14 +137,14 @@ struct sh_msiof_spi_priv {
- 
- /* SIFCTR */
- #define SIFCTR_TFWM_MASK	GENMASK(31, 29)	/* Transmit FIFO Watermark */
--#define SIFCTR_TFWM_64		(0 << 29)	/*  Transfer Request when 64 empty stages */
--#define SIFCTR_TFWM_32		(1 << 29)	/*  Transfer Request when 32 empty stages */
--#define SIFCTR_TFWM_24		(2 << 29)	/*  Transfer Request when 24 empty stages */
--#define SIFCTR_TFWM_16		(3 << 29)	/*  Transfer Request when 16 empty stages */
--#define SIFCTR_TFWM_12		(4 << 29)	/*  Transfer Request when 12 empty stages */
--#define SIFCTR_TFWM_8		(5 << 29)	/*  Transfer Request when 8 empty stages */
--#define SIFCTR_TFWM_4		(6 << 29)	/*  Transfer Request when 4 empty stages */
--#define SIFCTR_TFWM_1		(7 << 29)	/*  Transfer Request when 1 empty stage */
-+#define SIFCTR_TFWM_64		(0UL << 29)	/*  Transfer Request when 64 empty stages */
-+#define SIFCTR_TFWM_32		(1UL << 29)	/*  Transfer Request when 32 empty stages */
-+#define SIFCTR_TFWM_24		(2UL << 29)	/*  Transfer Request when 24 empty stages */
-+#define SIFCTR_TFWM_16		(3UL << 29)	/*  Transfer Request when 16 empty stages */
-+#define SIFCTR_TFWM_12		(4UL << 29)	/*  Transfer Request when 12 empty stages */
-+#define SIFCTR_TFWM_8		(5UL << 29)	/*  Transfer Request when 8 empty stages */
-+#define SIFCTR_TFWM_4		(6UL << 29)	/*  Transfer Request when 4 empty stages */
-+#define SIFCTR_TFWM_1		(7UL << 29)	/*  Transfer Request when 1 empty stage */
- #define SIFCTR_TFUA_MASK	GENMASK(26, 20) /* Transmit FIFO Usable Area */
- #define SIFCTR_TFUA_SHIFT	20
- #define SIFCTR_TFUA(i)		((i) << SIFCTR_TFUA_SHIFT)
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index e7545bcca805e..6b2a215b27862 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -299,7 +299,7 @@ sctp_new(struct nf_conn *ct, const struct sk_buff *skb,
+ 			pr_debug("Setting vtag %x for secondary conntrack\n",
+ 				 sh->vtag);
+ 			ct->proto.sctp.vtag[IP_CT_DIR_ORIGINAL] = sh->vtag;
+-		} else {
++		} else if (sch->type == SCTP_CID_SHUTDOWN_ACK) {
+ 		/* If it is a shutdown ack OOTB packet, we expect a return
+ 		   shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8) */
+ 			pr_debug("Setting vtag %x for new conn OOTB\n",
 -- 
 2.43.0
 
