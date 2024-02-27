@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B329A13B2B4;
-	Tue, 27 Feb 2024 14:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0CF145339;
+	Tue, 27 Feb 2024 14:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043884; cv=none; b=RWh64f1gS12SVvXZU4QvZHuBbuvLGy6hMFmVCBAaCp/I6L1uxuAkmwpDEfYnitm0ikxSb1DQpsYvvo82/UARJSa0IfU08g8BplP23pIgrZ6sxcug6/KX1Qw/5TVbyfssaJFAmpGXmuf03pWTiD0mfNuZYqCaLlB7XfcqNtCIgQA=
+	t=1709043887; cv=none; b=SHIpZszL2tifcZIY+4mz/rtU0N3d5U2yx3rbSUr35xvSeiMDKfaNyy3Ufz/ymX/D3ATIn5bWtlB9BzVdRrHnGMLUWEZJL7+02gI6HKlgLl/HkFdqydGZNLLR6XRa7x6w7ZZwNSv7MOK2n+GDfbjU3oBWpDFwvDEK2rVjDOenDbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043884; c=relaxed/simple;
-	bh=J8UoQyh6MyWS26gmqvfixyLcyjVA8zmnom8OMSmC4HQ=;
+	s=arc-20240116; t=1709043887; c=relaxed/simple;
+	bh=DCqJMQ7xrttugh9SJCioyCWUWhkVuGpEROc6wsdqI0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tY7GNfrqTG28LkJsKhFFhjyQ7Jb3KpJEuxAw3T7zs7iwZCm6QNysylCV/aeR80BBibq9G8hqmL2sccx3SoAxCYT4534k4367Th3apY89zswBF2LYGRmEC921KexRrT9U/VOf2OFAPVrAPEoZMaVC5mZL0mXUsBZKFzjDak6gYA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDSnlcsg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+dlZWf6aEBVqlR5M+eujuTRt13WzxCa8EyFlWtfdlmiakGb9MUNjIvyVU+p7QN1aAOqfgziBY6wyQikxL3B/onRkCWiwZxvviN3s4QZX0+TDktpHvx8DMWc3UIFxxVoM1iOmfiM3LID1qhX/KDBNVWkY+bP445Yt3g3UTayAzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMANkhtQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDSnlcsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCC8C43394;
-	Tue, 27 Feb 2024 14:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMANkhtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E87CC43399;
+	Tue, 27 Feb 2024 14:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043884;
-	bh=J8UoQyh6MyWS26gmqvfixyLcyjVA8zmnom8OMSmC4HQ=;
+	s=korg; t=1709043887;
+	bh=DCqJMQ7xrttugh9SJCioyCWUWhkVuGpEROc6wsdqI0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDSnlcsgY2xwsmebWZm8HJm2leUlSROmTOeFZLEGxWse2ro/2UPi2oKTfwmaILDTq
-	 F5xJkjka32RuOkW7NwNMsC82xt6/X4jDAvD0WoNeCHu2XISMU9kZeJdumUtjndzh3M
-	 IApME596HQfpIRZHG/sHcRc3+qtENUhsWQx3qOs0=
+	b=PMANkhtQZPsPe3GnC0Ie1FufglSA7nqGp6bUdhO9ftS9DhDZax5PRqWdiJF7QxLJU
+	 p4Qc1ERR2R5+LWYubEPCdS+JCIz0A++f6V8PERnoNlFHZk2Cn3mBXKI86hKWuVD0oI
+	 bL3RDopB98dwRhMxHc2DtE8I8Hfrk1e5lGy85xb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn.topel@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Luke Nelson <luke.r.nels@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 42/84] selftests/bpf: Avoid running unprivileged tests with alignment requirements
-Date: Tue, 27 Feb 2024 14:27:09 +0100
-Message-ID: <20240227131554.242956588@linuxfoundation.org>
+Subject: [PATCH 5.4 69/84] scsi: jazz_esp: Only build if SCSI core is builtin
+Date: Tue, 27 Feb 2024 14:27:36 +0100
+Message-ID: <20240227131555.116557092@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -46,61 +54,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn.topel@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c77b0589ca29ad1859fe7d7c1ecd63c0632379fa ]
+[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
 
-Some architectures have strict alignment requirements. In that case,
-the BPF verifier detects if a program has unaligned accesses and
-rejects them. A user can pass BPF_F_ANY_ALIGNMENT to a program to
-override this check. That, however, will only work when a privileged
-user loads a program. An unprivileged user loading a program with this
-flag will be rejected prior entering the verifier.
+JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
+CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
+causes many undefined symbol linker errors.
 
-Hence, it does not make sense to load unprivileged programs without
-strict alignment when testing the verifier. This patch avoids exactly
-that.
+Fix this by only offering to build this driver when CONFIG_SCSI=y.
 
-Signed-off-by: Björn Töpel <bjorn.topel@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Luke Nelson <luke.r.nels@gmail.com>
-Link: https://lore.kernel.org/bpf/20201118071640.83773-3-bjorn.topel@gmail.com
+[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
+module unlike the remaining SPI SCSI HBA drivers]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: James E.J. Bottomley <jejb@linux.ibm.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_verifier.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/scsi/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_verifier.c b/tools/testing/selftests/bpf/test_verifier.c
-index 43224c5ec1e9b..1bd285dc55e94 100644
---- a/tools/testing/selftests/bpf/test_verifier.c
-+++ b/tools/testing/selftests/bpf/test_verifier.c
-@@ -1091,6 +1091,19 @@ static void get_unpriv_disabled()
+diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
+index 51bbc858a944c..cab6e67ea606b 100644
+--- a/drivers/scsi/Kconfig
++++ b/drivers/scsi/Kconfig
+@@ -1286,7 +1286,7 @@ source "drivers/scsi/arm/Kconfig"
  
- static bool test_as_unpriv(struct bpf_test *test)
- {
-+#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	/* Some architectures have strict alignment requirements. In
-+	 * that case, the BPF verifier detects if a program has
-+	 * unaligned accesses and rejects them. A user can pass
-+	 * BPF_F_ANY_ALIGNMENT to a program to override this
-+	 * check. That, however, will only work when a privileged user
-+	 * loads a program. An unprivileged user loading a program
-+	 * with this flag will be rejected prior entering the
-+	 * verifier.
-+	 */
-+	if (test->flags & F_NEEDS_EFFICIENT_UNALIGNED_ACCESS)
-+		return false;
-+#endif
- 	return !test->prog_type ||
- 	       test->prog_type == BPF_PROG_TYPE_SOCKET_FILTER ||
- 	       test->prog_type == BPF_PROG_TYPE_CGROUP_SKB;
+ config JAZZ_ESP
+ 	bool "MIPS JAZZ FAS216 SCSI support"
+-	depends on MACH_JAZZ && SCSI
++	depends on MACH_JAZZ && SCSI=y
+ 	select SCSI_SPI_ATTRS
+ 	help
+ 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
 -- 
 2.43.0
 
