@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A2E13B7BE;
-	Tue, 27 Feb 2024 13:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967FC13B7BE;
+	Tue, 27 Feb 2024 13:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040527; cv=none; b=F/aCa14fQe20hwo8uhpgQXAwF19+oN4CLsjQsjrDoBL0PZSyuI4OqvXLK1CE1aZ0Phcf9PuvvJ5etbNbce9/PF4tza+O3JIjHtIIMB857/mNm6AGqXdbu0Nqg3n/kQcg3+DiidKVLm4pmvB+wEwvHWImcYWgEXJJWGEu2LJ/Anc=
+	t=1709040530; cv=none; b=KYE3bw7/f+7FyxDI10YU//68Gj1JyOuF7nxqvGLe88snOEdNtOraNoUa1L2W+R+ScRsb9NxpOn/LV41jjE0Jp/opbU9brvJK1zkv3Lo4929ohyCEr7XB7rJIK4w3K4S1TXrQqL9iD91ocz8Amn6afXCMQjxvkwgZO9PBtq7ZUAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040527; c=relaxed/simple;
-	bh=UYHKf+D4jQB6O3bCTeizUcIjU4MjHQv4ZBGd0RWNSsw=;
+	s=arc-20240116; t=1709040530; c=relaxed/simple;
+	bh=7EHSH4D8tKmzS8wtvf7z2wz0ngeM6oXACbcmQmXgK2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vjiahc6M22Htr5juBEC+LgJOI/Dec6P40D2GSN1qb9eq3dHpJ2SCbcsKpO968As89Gjy0T8dNhV6t7/PoIl+C32brmLAxLws8E9ib8JY0Q36KivarwBM2hgk+RrJllIWjTceEKrE6qQf8ghAAlcW65+Y3yVoKqyIEkzqt8VX5f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgPmquaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X/dy0qsP43Yyz4h7In1sZrJn/parTTwGvTBRARIdnnL1hxlkJiR1xwFZubYzvfXuZtqQQwTwsQB4HBRcvbsRfB6XKO+EnBPnJix7gi5pfMqDTAmJMGDtT5i+kPIBddGC3FT6gh/N/nATXc4xYD/noMHueroYOdoW8aMTJWmJOpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNoVtq0F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgPmquaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51009C433F1;
-	Tue, 27 Feb 2024 13:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNoVtq0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20668C433C7;
+	Tue, 27 Feb 2024 13:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040527;
-	bh=UYHKf+D4jQB6O3bCTeizUcIjU4MjHQv4ZBGd0RWNSsw=;
+	s=korg; t=1709040530;
+	bh=7EHSH4D8tKmzS8wtvf7z2wz0ngeM6oXACbcmQmXgK2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgPmquajrLpk6rvadbun5EjvnT6hyE4dciLUzsw4EmP3GPvdNBwd9VTmr6VG0MYKF
-	 A/6YgzzqQVVdmH3lMqNFhcyqSu67y8IxVCt3xaQvfMQDpI4WoznNe3AgDm6i6gDq9L
-	 sV2pbG4mUwBuJz27p9K+2XcvMUv8FLz5KTZrhVp8=
+	b=gNoVtq0FhagOwY2QMmxrUkCg0Qy8JcoLJ13YAwUEnWiRHws1L8c/YrdBkdxBTovf1
+	 /AKHM44+OOD4oZI4Wgtfmr/19UQZBiRUUpb5GzaAZcu9jgZnUdbVSTUZ4zTh5diWu+
+	 p+yvxFXx0gENHi3+WfgQy0mwz6kJgeqTVmlX6EX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fullway Wang <fullwaywang@outlook.com>,
-	Helge Deller <deller@gmx.de>,
+	Liming Sun <limings@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 017/334] fbdev: sis: Error out if pixclock equals zero
-Date: Tue, 27 Feb 2024 14:17:55 +0100
-Message-ID: <20240227131631.172372254@linuxfoundation.org>
+Subject: [PATCH 6.7 018/334] platform/mellanox: mlxbf-tmfifo: Drop Tx network packet when Tx TmFIFO is full
+Date: Tue, 27 Feb 2024 14:17:56 +0100
+Message-ID: <20240227131631.203011039@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -45,47 +46,180 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fullway Wang <fullwaywang@outlook.com>
+From: Liming Sun <limings@nvidia.com>
 
-[ Upstream commit e421946be7d9bf545147bea8419ef8239cb7ca52 ]
+[ Upstream commit 8cbc756b802605dee3dd40019bd75960772bacf5 ]
 
-The userspace program could pass any values to the driver through
-ioctl() interface. If the driver doesn't check the value of pixclock,
-it may cause divide-by-zero error.
+Starting from Linux 5.16 kernel, Tx timeout mechanism was added
+in the virtio_net driver which prints the "Tx timeout" warning
+message when a packet stays in Tx queue for too long. Below is an
+example of the reported message:
 
-In sisfb_check_var(), var->pixclock is used as a divisor to caculate
-drate before it is checked against zero. Fix this by checking it
-at the beginning.
+"[494105.316739] virtio_net virtio1 tmfifo_net0: TX timeout on
+queue: 0, sq: output.0, vq: 0×1, name: output.0, usecs since
+last trans: 3079892256".
 
-This is similar to CVE-2022-3061 in i740fb which was fixed by
-commit 15cf0b8.
+This issue could happen when external host driver which drains the
+FIFO is restared, stopped or upgraded. To avoid such confusing
+"Tx timeout" messages, this commit adds logic to drop the outstanding
+Tx packet if it's not able to transmit in two seconds due to Tx FIFO
+full, which can be considered as congestion or out-of-resource drop.
 
-Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This commit also handles the special case that the packet is half-
+transmitted into the Tx FIFO. In such case, the packet is discarded
+with remaining length stored in vring->rem_padding. So paddings with
+zeros can be sent out when Tx space is available to maintain the
+integrity of the packet format. The padded packet will be dropped on
+the receiving side.
+
+Signed-off-by: Liming Sun <limings@nvidia.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240111173106.96958-1-limings@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/sis_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 67 ++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
-diff --git a/drivers/video/fbdev/sis/sis_main.c b/drivers/video/fbdev/sis/sis_main.c
-index 6ad47b6b60046..431b1a138c111 100644
---- a/drivers/video/fbdev/sis/sis_main.c
-+++ b/drivers/video/fbdev/sis/sis_main.c
-@@ -1475,6 +1475,8 @@ sisfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 5c683b4eaf10a..f39b7b9d2bfea 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -47,6 +47,9 @@
+ /* Message with data needs at least two words (for header & data). */
+ #define MLXBF_TMFIFO_DATA_MIN_WORDS		2
  
- 	vtotal = var->upper_margin + var->lower_margin + var->vsync_len;
++/* Tx timeout in milliseconds. */
++#define TMFIFO_TX_TIMEOUT			2000
++
+ /* ACPI UID for BlueField-3. */
+ #define TMFIFO_BF3_UID				1
  
-+	if (!var->pixclock)
-+		return -EINVAL;
- 	pixclock = var->pixclock;
+@@ -62,12 +65,14 @@ struct mlxbf_tmfifo;
+  * @drop_desc: dummy desc for packet dropping
+  * @cur_len: processed length of the current descriptor
+  * @rem_len: remaining length of the pending packet
++ * @rem_padding: remaining bytes to send as paddings
+  * @pkt_len: total length of the pending packet
+  * @next_avail: next avail descriptor id
+  * @num: vring size (number of descriptors)
+  * @align: vring alignment size
+  * @index: vring index
+  * @vdev_id: vring virtio id (VIRTIO_ID_xxx)
++ * @tx_timeout: expire time of last tx packet
+  * @fifo: pointer to the tmfifo structure
+  */
+ struct mlxbf_tmfifo_vring {
+@@ -79,12 +84,14 @@ struct mlxbf_tmfifo_vring {
+ 	struct vring_desc drop_desc;
+ 	int cur_len;
+ 	int rem_len;
++	int rem_padding;
+ 	u32 pkt_len;
+ 	u16 next_avail;
+ 	int num;
+ 	int align;
+ 	int index;
+ 	int vdev_id;
++	unsigned long tx_timeout;
+ 	struct mlxbf_tmfifo *fifo;
+ };
  
- 	if((var->vmode & FB_VMODE_MASK) == FB_VMODE_NONINTERLACED) {
+@@ -819,6 +826,50 @@ static bool mlxbf_tmfifo_rxtx_one_desc(struct mlxbf_tmfifo_vring *vring,
+ 	return true;
+ }
+ 
++static void mlxbf_tmfifo_check_tx_timeout(struct mlxbf_tmfifo_vring *vring)
++{
++	unsigned long flags;
++
++	/* Only handle Tx timeout for network vdev. */
++	if (vring->vdev_id != VIRTIO_ID_NET)
++		return;
++
++	/* Initialize the timeout or return if not expired. */
++	if (!vring->tx_timeout) {
++		/* Initialize the timeout. */
++		vring->tx_timeout = jiffies +
++			msecs_to_jiffies(TMFIFO_TX_TIMEOUT);
++		return;
++	} else if (time_before(jiffies, vring->tx_timeout)) {
++		/* Return if not timeout yet. */
++		return;
++	}
++
++	/*
++	 * Drop the packet after timeout. The outstanding packet is
++	 * released and the remaining bytes will be sent with padding byte 0x00
++	 * as a recovery. On the peer(host) side, the padding bytes 0x00 will be
++	 * either dropped directly, or appended into existing outstanding packet
++	 * thus dropped as corrupted network packet.
++	 */
++	vring->rem_padding = round_up(vring->rem_len, sizeof(u64));
++	mlxbf_tmfifo_release_pkt(vring);
++	vring->cur_len = 0;
++	vring->rem_len = 0;
++	vring->fifo->vring[0] = NULL;
++
++	/*
++	 * Make sure the load/store are in order before
++	 * returning back to virtio.
++	 */
++	virtio_mb(false);
++
++	/* Notify upper layer. */
++	spin_lock_irqsave(&vring->fifo->spin_lock[0], flags);
++	vring_interrupt(0, vring->vq);
++	spin_unlock_irqrestore(&vring->fifo->spin_lock[0], flags);
++}
++
+ /* Rx & Tx processing of a queue. */
+ static void mlxbf_tmfifo_rxtx(struct mlxbf_tmfifo_vring *vring, bool is_rx)
+ {
+@@ -841,6 +892,7 @@ static void mlxbf_tmfifo_rxtx(struct mlxbf_tmfifo_vring *vring, bool is_rx)
+ 		return;
+ 
+ 	do {
++retry:
+ 		/* Get available FIFO space. */
+ 		if (avail == 0) {
+ 			if (is_rx)
+@@ -851,6 +903,17 @@ static void mlxbf_tmfifo_rxtx(struct mlxbf_tmfifo_vring *vring, bool is_rx)
+ 				break;
+ 		}
+ 
++		/* Insert paddings for discarded Tx packet. */
++		if (!is_rx) {
++			vring->tx_timeout = 0;
++			while (vring->rem_padding >= sizeof(u64)) {
++				writeq(0, vring->fifo->tx.data);
++				vring->rem_padding -= sizeof(u64);
++				if (--avail == 0)
++					goto retry;
++			}
++		}
++
+ 		/* Console output always comes from the Tx buffer. */
+ 		if (!is_rx && devid == VIRTIO_ID_CONSOLE) {
+ 			mlxbf_tmfifo_console_tx(fifo, avail);
+@@ -860,6 +923,10 @@ static void mlxbf_tmfifo_rxtx(struct mlxbf_tmfifo_vring *vring, bool is_rx)
+ 		/* Handle one descriptor. */
+ 		more = mlxbf_tmfifo_rxtx_one_desc(vring, is_rx, &avail);
+ 	} while (more);
++
++	/* Check Tx timeout. */
++	if (avail <= 0 && !is_rx)
++		mlxbf_tmfifo_check_tx_timeout(vring);
+ }
+ 
+ /* Handle Rx or Tx queues. */
 -- 
 2.43.0
 
