@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C7713B2B3;
-	Tue, 27 Feb 2024 13:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0514513DB83;
+	Tue, 27 Feb 2024 13:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041124; cv=none; b=Du3fFFfXz4ZKDe0ZEq6k1LrJhC562MEDpOXw1PufqaehG7aGegVSZyEOaYtm9DfaLW+EEUDJVBYP5a5Zhp2gdmxV2NYcHQQpvgvrzUj0yx9u8BeuVe1iEey7wDesL2XV5V0CYJzp4nJ9SYwhcIsaHwcXztxmM0pNnUSuq1oGVyY=
+	t=1709041127; cv=none; b=C76OwHPy2kDMKWmGYj0vGixQwpgL2F/QaUR+DPu2MdCNbcTXLSs+WufBC7FA99G+K1mWZFojxhwWiKEU3YSTDa3H2zJKUgZ2NGBSAJAWYDFw2xVIcvGSJlcTskljtpM8LgfbuTxDD3JhhCGD22Uqji+DNJtQaOknkW8nzLDCSdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041124; c=relaxed/simple;
-	bh=9770UkrV3bupLekcnOiypFP2yMhzfd3+oL5c9lqfnyI=;
+	s=arc-20240116; t=1709041127; c=relaxed/simple;
+	bh=CiDLfkBzP6vn30WzsHVmWxwY6f6OYgofS+UrKadcCK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5OvKZ/CWfQLlTsYEHGJfWqAOervCQA2jh6WVqStqB5du6aldMNEiil8vjMr3QY4uXsSsnXOrkCh0z4rtt4uzOQ0vnkdIfy4/DDTE+jZlshtFtOLtTTbjT8icMBoCXLuc/m4a5BcyLKsBzpLiVmj17X6EQlaic0AtB/EYc1yBXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hB6M7rDC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dR7OnYqMsFHZMUHM7TlTiO5BvPrCXjQoRTFHPG9eTMVaOPTL40+wUcjdW99Ao7MQz4EyXhURHwOKMLbtgUevZR223HIEqmzgds+fotQAsiW5CWmLPiXweITqFXFAVPlz9mrFs6cnhC3+4PMy9jbUUn6qBdzNeTLilLceVeC88hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDWBk97P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hB6M7rDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6173C43394;
-	Tue, 27 Feb 2024 13:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDWBk97P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874B4C433F1;
+	Tue, 27 Feb 2024 13:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041124;
-	bh=9770UkrV3bupLekcnOiypFP2yMhzfd3+oL5c9lqfnyI=;
+	s=korg; t=1709041126;
+	bh=CiDLfkBzP6vn30WzsHVmWxwY6f6OYgofS+UrKadcCK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hB6M7rDC/fnmZMiFp6zOmF6BAkCQhwTF0lwHh5tgi6MgKU1TuWdAglbp0WB2y50sz
-	 3h+0CfdIUrgqu3aEDJ/ckNYR9JJToItLZXLUuLwNhM4g8sY9ILgBTYaBFEGlRcEXv7
-	 uzVY+ESj6hNC5JmcrjsudVZyIlovLHIrhNOIKYrY=
+	b=BDWBk97POC0Q1E88ft7/t5VW+uThB4oM3xCnV9srfD7gxqu1VkhcUxtNaFmf632Ln
+	 QthTxdLxKehEns+xGvmvNQBG1qxvWAm4ekWqWZ2UVWl33sGRQPd4I8X69nm5vYeXOU
+	 23p0WLyeVLYOxYipMcHrIiyC+0JKiM58OBCXc54A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 229/334] drm/amd/display: Avoid enum conversion warning
-Date: Tue, 27 Feb 2024 14:21:27 +0100
-Message-ID: <20240227131638.194841104@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.7 212/334] usb: roles: dont get/set_role() when usb_role_switch is unregistered
+Date: Tue, 27 Feb 2024 14:21:10 +0100
+Message-ID: <20240227131637.623869213@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,44 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit d7643fe6fb76edb1f2f1497bf5e8b8f4774b5129 upstream.
+commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
 
-Clang warns (or errors with CONFIG_WERROR=y) when performing arithmetic
-with different enumerated types, which is usually a bug:
+There is a possibility that usb_role_switch device is unregistered before
+the user put usb_role_switch. In this case, the user may still want to
+get/set_role() since the user can't sense the changes of usb_role_switch.
 
-    drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_dpia_bw.c:548:24: error: arithmetic between different enumeration types ('const enum dc_link_rate' and 'const enum dc_lane_count') [-Werror,-Wenum-enum-conversion]
-      548 |                         link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-          |                         ~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~
-    1 error generated.
+This will add a flag to show if usb_role_switch is already registered and
+avoid unwanted behaviors.
 
-In this case, there is not a problem because the enumerated types are
-basically treated as '#define' values. Add an explicit cast to an
-integral type to silence the warning.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1976
-Fixes: 5f3bce13266e ("drm/amd/display: Request usb4 bw for mst streams")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
+cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/roles/class.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -544,8 +544,9 @@ int link_dp_dpia_get_dp_overhead_in_dp_t
- 		 */
- 		const struct dc_link_settings *link_cap =
- 			dc_link_get_link_cap(link);
--		uint32_t link_bw_in_kbps =
--			link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-+		uint32_t link_bw_in_kbps = (uint32_t)link_cap->link_rate *
-+					   (uint32_t)link_cap->lane_count *
-+					   LINK_RATE_REF_FREQ_IN_KHZ * 8;
- 		link_mst_overhead = (link_bw_in_kbps / 64) + ((link_bw_in_kbps % 64) ? 1 : 0);
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -23,6 +23,7 @@ struct usb_role_switch {
+ 	struct mutex lock; /* device lock*/
+ 	struct module *module; /* the module this device depends on */
+ 	enum usb_role role;
++	bool registered;
+ 
+ 	/* From descriptor */
+ 	struct device *usb2_port;
+@@ -49,6 +50,9 @@ int usb_role_switch_set_role(struct usb_
+ 	if (IS_ERR_OR_NULL(sw))
+ 		return 0;
+ 
++	if (!sw->registered)
++		return -EOPNOTSUPP;
++
+ 	mutex_lock(&sw->lock);
+ 
+ 	ret = sw->set(sw, role);
+@@ -74,7 +78,7 @@ enum usb_role usb_role_switch_get_role(s
+ {
+ 	enum usb_role role;
+ 
+-	if (IS_ERR_OR_NULL(sw))
++	if (IS_ERR_OR_NULL(sw) || !sw->registered)
+ 		return USB_ROLE_NONE;
+ 
+ 	mutex_lock(&sw->lock);
+@@ -357,6 +361,8 @@ usb_role_switch_register(struct device *
+ 		return ERR_PTR(ret);
  	}
+ 
++	sw->registered = true;
++
+ 	/* TODO: Symlinks for the host port and the device controller. */
+ 
+ 	return sw;
+@@ -371,8 +377,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
+  */
+ void usb_role_switch_unregister(struct usb_role_switch *sw)
+ {
+-	if (!IS_ERR_OR_NULL(sw))
++	if (!IS_ERR_OR_NULL(sw)) {
++		sw->registered = false;
+ 		device_unregister(&sw->dev);
++	}
+ }
+ EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
  
 
 
