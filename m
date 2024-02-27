@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F0B14264A;
-	Tue, 27 Feb 2024 14:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9BE13AA4C;
+	Tue, 27 Feb 2024 14:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044037; cv=none; b=bLbhxGj/RXP6g8F73iTV00ga+39kvRlrTbfQz6TD8f3Y2H/qe5O7q4y8fAAU9HRkSrGPE5KKGD2SCglm1aT5cTrnfHnvmkvrlRvB4yiGHy497wMmZtWHASOSyB+2ldt4XteJAA2CuV1o9SuPWyVysjE/jWMM1wWejQGUwT+eGF4=
+	t=1709044040; cv=none; b=AKujoiFXHpBEFVb6mFeHXID5dluVt4q10w8c6JrK/9dORaWxMdIUN9nhXZlzH+MKyGtxPXKHO1LVOQuI36oCZDHQjP2XKm6+wY8PoigdMLhg0HJSW9FfZ1E4qbxklxMnX7V6NmvIoOHdIdxV6U+pUCj1EjY4KN+or4Io1FZgoJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044037; c=relaxed/simple;
-	bh=oVDEWH0UvPuqFaly31k7rR6lJTEmD6vqA3Cmihj4rKM=;
+	s=arc-20240116; t=1709044040; c=relaxed/simple;
+	bh=PArotD1YPAv3ucFifxlwhHZG6vqSH5woFd0XByBIm5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNRy3yzOEmRhMDO7LBGdCtsWpfMqVIkhK9WnSphOjrAprYF82DgnRN/vA2kVX97Ea5BxlvYMkP6cVin89xhZSD/JayJOQ7WgPSbvM17iwbffE13rurT8QbaGas7vk2M/3MJulQ0TUEzCr5QwQUOhg769qQhJaK5oJlcZPrCeVQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyNu81E1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kYuVv0J3Ph5oNFxKozKQH30rP2oaP6B2PNt0gjD7o5j8o0h3zCWDzhnB3jAPOdi2DC4f3ImoOoJWBH99LjZGCD2Uq8rO7pRoF0vpRPjkQqsLu9MUg0gPAUXKwW6YSQpmNeQgECwGqZ6luur+4WTblhd4JSKfOiJD5nH9HFEe6/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv+BM+NB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyNu81E1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E901C433C7;
-	Tue, 27 Feb 2024 14:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv+BM+NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12778C433F1;
+	Tue, 27 Feb 2024 14:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044036;
-	bh=oVDEWH0UvPuqFaly31k7rR6lJTEmD6vqA3Cmihj4rKM=;
+	s=korg; t=1709044039;
+	bh=PArotD1YPAv3ucFifxlwhHZG6vqSH5woFd0XByBIm5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyNu81E1J5bxYBOphGdeDNr8XHnvyBClp+ksP8W9bwlQBUyDt0YAciztHNOTiEykr
-	 ektVWHmLA22RQVc8MgBjWoSXZDYme1M+s8QLzWvGKV3CpS/r8z7sCNfb/F9ibbzr9/
-	 nBdy9sIBWO6bMgGdV/vzvxathmy5ut9PXJA/U7ik=
+	b=jv+BM+NBwz6poggHzO0NrY3blSmoQsHTeM/77/rGEAZ9ds392cnu4kqhwf6WdC8Je
+	 B5UDQsQeMlgrBG9/Wi4GmEOcbxHgHibq67syekkNkS51A/NhlS60YQMOpk4/ipCCTA
+	 kZtjum9VlBBNuTmrcdfom+hLjA437V/ANTlwyKPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cyril Hrubis <chrubis@suse.cz>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Petr Vorel <pvorel@suse.cz>,
-	Mel Gorman <mgorman@suse.de>
-Subject: [PATCH 5.10 010/122] sched/rt: Fix sysctl_sched_rr_timeslice intial value
-Date: Tue, 27 Feb 2024 14:26:11 +0100
-Message-ID: <20240227131559.044397307@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Petr Vorel <pvorel@suse.cz>
+Subject: [PATCH 5.10 011/122] sched/rt: Disallow writing invalid values to sched_rt_period_us
+Date: Tue, 27 Feb 2024 14:26:12 +0100
+Message-ID: <20240227131559.076952635@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -54,70 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Cyril Hrubis <chrubis@suse.cz>
 
-commit c7fcb99877f9f542c918509b2801065adcaf46fa upstream.
+commit 079be8fc630943d9fc70a97807feb73d169ee3fc upstream.
 
-There is a 10% rounding error in the intial value of the
-sysctl_sched_rr_timeslice with CONFIG_HZ_300=y.
+The validation of the value written to sched_rt_period_us was broken
+because:
 
-This was found with LTP test sched_rr_get_interval01:
+  - the sysclt_sched_rt_period is declared as unsigned int
+  - parsed by proc_do_intvec()
+  - the range is asserted after the value parsed by proc_do_intvec()
 
-sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
-sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
-sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
-sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
-sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
-sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+Because of this negative values written to the file were written into a
+unsigned integer that were later on interpreted as large positive
+integers which did passed the check:
 
-What this test does is to compare the return value from the
-sched_rr_get_interval() and the sched_rr_timeslice_ms sysctl file and
-fails if they do not match.
+  if (sysclt_sched_rt_period <= 0)
+	return EINVAL;
 
-The problem it found is the intial sysctl file value which was computed as:
+This commit fixes the parsing by setting explicit range for both
+perid_us and runtime_us into the sched_rt_sysctls table and processes
+the values with proc_dointvec_minmax() instead.
 
-static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+Alternatively if we wanted to use full range of unsigned int for the
+period value we would have to split the proc_handler and use
+proc_douintvec() for it however even the
+Documentation/scheduller/sched-rt-group.rst describes the range as 1 to
+INT_MAX.
 
-which works fine as long as MSEC_PER_SEC is multiple of HZ, however it
-introduces 10% rounding error for CONFIG_HZ_300:
+As far as I can tell the only problem this causes is that the sysctl
+file allows writing negative values which when read back may confuse
+userspace.
 
-(MSEC_PER_SEC / HZ) * (100 * HZ / 1000)
+There is also a LTP test being submitted for these sysctl files at:
 
-(1000 / 300) * (100 * 300 / 1000)
+  http://patchwork.ozlabs.org/project/ltp/patch/20230901144433.2526-1-chrubis@suse.cz/
 
-3 * 30 = 90
-
-This can be easily fixed by reversing the order of the multiplication
-and division. After this fix we get:
-
-(MSEC_PER_SEC * (100 * HZ / 1000)) / HZ
-
-(1000 * (100 * 300 / 1000)) / 300
-
-(1000 * 30) / 300 = 100
-
-Fixes: 975e155ed873 ("sched/rt: Show the 'sched_rr_timeslice' SCHED_RR timeslice tuning knob in milliseconds")
 Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Acked-by: Mel Gorman <mgorman@suse.de>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Link: https://lore.kernel.org/r/20230802151906.25258-2-chrubis@suse.cz
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20231002115553.3007-2-chrubis@suse.cz
 [ pvorel: rebased for 5.15, 5.10 ]
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/rt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/rt.c |    5 +----
+ kernel/sysctl.c   |    4 ++++
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 --- a/kernel/sched/rt.c
 +++ b/kernel/sched/rt.c
-@@ -8,7 +8,7 @@
- #include "pelt.h"
+@@ -2727,9 +2727,6 @@ static int sched_rt_global_constraints(v
  
- int sched_rr_timeslice = RR_TIMESLICE;
--int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
-+int sysctl_sched_rr_timeslice = (MSEC_PER_SEC * RR_TIMESLICE) / HZ;
- /* More than 4 hours if BW_SHIFT equals 20. */
- static const u64 max_rt_runtime = MAX_BW;
+ static int sched_rt_global_validate(void)
+ {
+-	if (sysctl_sched_rt_period <= 0)
+-		return -EINVAL;
+-
+ 	if ((sysctl_sched_rt_runtime != RUNTIME_INF) &&
+ 		((sysctl_sched_rt_runtime > sysctl_sched_rt_period) ||
+ 		 ((u64)sysctl_sched_rt_runtime *
+@@ -2760,7 +2757,7 @@ int sched_rt_handler(struct ctl_table *t
+ 	old_period = sysctl_sched_rt_period;
+ 	old_runtime = sysctl_sched_rt_runtime;
  
+-	ret = proc_dointvec(table, write, buffer, lenp, ppos);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+ 
+ 	if (!ret && write) {
+ 		ret = sched_rt_global_validate();
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -1859,6 +1859,8 @@ static struct ctl_table kern_table[] = {
+ 		.maxlen		= sizeof(unsigned int),
+ 		.mode		= 0644,
+ 		.proc_handler	= sched_rt_handler,
++		.extra1		= SYSCTL_ONE,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	{
+ 		.procname	= "sched_rt_runtime_us",
+@@ -1866,6 +1868,8 @@ static struct ctl_table kern_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= sched_rt_handler,
++		.extra1		= SYSCTL_NEG_ONE,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	{
+ 		.procname	= "sched_deadline_period_max_us",
 
 
