@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC5F13AA4C;
-	Tue, 27 Feb 2024 14:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC2A13AA4C;
+	Tue, 27 Feb 2024 14:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044125; cv=none; b=qpre2PWTrT4jhHJhtiNinIebQhrK97ShzPUScWcO5xE9INDcTWZ44BzFoFtcH3Hjj/LU1heGWzkihpnK+vdEdp5H/BfPO7AjBlqGBRCjC9FS8S0jrKSoI5PK5CGCNFb2MbcEULmsBZ4jEPaCntQVG8UbFcz+kK+wvhtZJqRaygE=
+	t=1709044128; cv=none; b=g+b3fCc1aYPWUFsqhGnDEwNq01D/FWZjbOdEsESTim6p1INqr/fRZNtWY37woPS3XHgt5oSKDZLzzWw8BKk4vvmxSf8vCezSbJ8yiROeH0nFIHDLbFOFv6eiI4n+CQDlvfWoPlVmos8EMYT+nZahetUgxal7W2QgKU4pQPdGhEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044125; c=relaxed/simple;
-	bh=BoguvoyAGxvfb4jKv56AS6ldI+WHjp9VqJHlSAB2p5o=;
+	s=arc-20240116; t=1709044128; c=relaxed/simple;
+	bh=8XDS2wVv85M/xIKsSEqkiIGBra4tSNWYz84nYsF2yLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hoJGYA4mQ+WylWaBT+FndvPfkVX0/ojAcnwwjBXmVPdlBkg/5AS0qwVTBHVVdQf7+w+vpZbBDj1kZ+fV9kESJj6jL9yrLh2Ywn2OSy+xpnE1UA9msFWAYzMFfihszu1Ru0z9+fWhM0soo8pVJGCHhqH4Yu3it1lC1s6IOUse1kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQwRZqu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S3cZQIBH0WSiW43poXYRZ6hseFp07hu+nY5xnPDBmNbMlw+m64RAwPWXvHZ891q+JgP5h/5vRMdDqyJs4wcELTcUSHgX9Vv93C95VtH47qQoq926NTN9XcJl4XcNnnqcdQtMxUAnsXO3P0DGxN+B8wfMxWeMinaw+6JintQMB9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk2+uZCT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQwRZqu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF61C433F1;
-	Tue, 27 Feb 2024 14:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk2+uZCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF509C433F1;
+	Tue, 27 Feb 2024 14:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044125;
-	bh=BoguvoyAGxvfb4jKv56AS6ldI+WHjp9VqJHlSAB2p5o=;
+	s=korg; t=1709044128;
+	bh=8XDS2wVv85M/xIKsSEqkiIGBra4tSNWYz84nYsF2yLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQwRZqu0CaqRKYTnu3/xvM0UpbRgGrO6imC7fE2qE6WU57tQwUD4TAAlgP8OluACB
-	 /pXfBkH50F3WKQRm2MVWzp2tFQrKMzbGmPO/I5d7OuPaWFonNoVZQTOaJni4Isddd8
-	 Qx9FkEKWlene76Zns5V8S8cLmLzF6Js7hPZcFWag=
+	b=Lk2+uZCTTPTRP6mDKE+/bQrlwdVp1xTESTEZTQLsggHnILgjta5Y8g2Uh1N2PyuJf
+	 ZuxgDZ9k83UUN4AnFwXGn76LzoNi0IRj1SmXpfa2xw4BUyBKW1gHOD9uwwQKrOc2cL
+	 b4xdLyKtHX96IVDjrA0y1yyPKYgPnujS6GI1Ekwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/122] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
-Date: Tue, 27 Feb 2024 14:26:44 +0100
-Message-ID: <20240227131600.118833299@linuxfoundation.org>
+Subject: [PATCH 5.10 044/122] irqchip/mips-gic: Dont touch vl_map if a local interrupt is not routable
+Date: Tue, 27 Feb 2024 14:26:45 +0100
+Message-ID: <20240227131600.152135161@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -45,70 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
+[ Upstream commit 2c6c9c049510163090b979ea5f92a68ae8d93c45 ]
 
-There is no such trigger documented or implemented in Linux. It was a
-copy & paste mistake.
+When a GIC local interrupt is not routable, it's vl_map will be used
+to control some internal states for core (providing IPTI, IPPCI, IPFDC
+input signal for core). Overriding it will interfere core's intetrupt
+controller.
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
-        'default-off' does not match '^cpu[0-9]*$'
-        'default-off' does not match '^hci[0-9]+-power$'
-        'default-off' does not match '^mmc[0-9]+$'
-        'default-off' does not match '^phy[0-9]+tx$'
-        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+Do not touch vl_map if a local interrupt is not routable, we are not
+going to remap it.
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Before dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on
+irq_cpu_online()"), if a local interrupt is not routable, then it won't
+be requested from GIC Local domain, and thus gic_all_vpes_irq_cpu_online
+won't be called for that particular interrupt.
+
+Fixes: dd098a0e0319 (" irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Tested-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230424103156.66753-2-jiaxun.yang@flygoat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
- 2 files changed, 3 deletions(-)
+ drivers/irqchip/irq-mips-gic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 00e688b45d981..5901160919dcd 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -26,7 +26,6 @@ leds {
- 		wlan {
- 			label = "bcm53xx:blue:wlan";
- 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
--			linux,default-trigger = "default-off";
- 		};
+diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
+index fc25b900cef71..7888e3c08df40 100644
+--- a/drivers/irqchip/irq-mips-gic.c
++++ b/drivers/irqchip/irq-mips-gic.c
+@@ -398,6 +398,8 @@ static void gic_all_vpes_irq_cpu_online(void)
+ 		unsigned int intr = local_intrs[i];
+ 		struct gic_all_vpes_chip_data *cd;
  
- 		system {
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 78c80a5d3f4fa..8e7483272d47d 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -26,7 +26,6 @@ leds {
- 		5ghz {
- 			label = "bcm53xx:blue:5ghz";
- 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 
- 		system {
-@@ -42,7 +41,6 @@ pcie0_leds {
- 		2ghz {
- 			label = "bcm53xx:blue:2ghz";
- 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 	};
- 
++		if (!gic_local_irq_is_routable(intr))
++			continue;
+ 		cd = &gic_all_vpes_chip_data[intr];
+ 		write_gic_vl_map(mips_gic_vx_map_reg(intr), cd->map);
+ 		if (cd->mask)
 -- 
 2.43.0
 
