@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF9413AA50;
-	Tue, 27 Feb 2024 13:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E9354BD4;
+	Tue, 27 Feb 2024 13:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042388; cv=none; b=RBI/wSn6BYUpBQr5gAyxOV/VKliOj5eIWLqE+17XXM7XGdEr4m47/D5/6D7x82bb7G3BKpgSX/FvETaotN9VeZT/9okU1fHjyTkpm9AgRSBjoQmEjyt7YIn2/zUjKTwdzzK2R680Zbg+5W2/HZ4F4Dng0GqK4AU7IALDtpp9jBM=
+	t=1709042391; cv=none; b=c3oTGYL+ZCnUTUD9ySzH3xvDCMA98ifO7sn3VB7Z2IaUGHMZfQOgJ8tqeqyUTYhHA7HttoZoKL5xInGAvRQiWxG2hE7IWyKFNs31OUSFPhSyxMpVTPsJ6E6WfWSWR6ghAsWvGDyHmA39YjOPOt3tI2L7NbWkPafozhpc0ueNTLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042388; c=relaxed/simple;
-	bh=L9F7dL7L9nKaRh8rQvZfkvh9grS71Xssgj1NTWReZdU=;
+	s=arc-20240116; t=1709042391; c=relaxed/simple;
+	bh=OOH8kjT2t3HLLGTzChpx7+wgcAbWtVFCZosJrok0l7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHBssQR4k6APNdFJjZk1EeeT+znGXjmR3Ar1+Dq5Trr5Qw2ytgIJVH9JeFUUO3S7rm/vWdwRbP7Smg6Bs/o39NLUoGTPU+Kodbq7MQn6ITL7mSafKLwQTRx+zVcSsMJDrQdox/tIK1CHnJgqqKk9l8tS+u+QUxw9tlr9XcpWWmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulSkMbPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpKbWYvajenAzE7K7ibtUQmZ2fcWxE/m0eFNOh0LBjyLJ7gcxub0qZrs4LkKfeN11bkGBa+ZcI6RcFRo9h7+8/EEJe9dZxZsdsELqjtejTVPeln0ONp2AtJNQotmcQmj3tFQ2PyhLhry1cDpN/lXPebw3JlJjVFStW5bnyhwER8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENo6djFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulSkMbPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC86C433C7;
-	Tue, 27 Feb 2024 13:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENo6djFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716C8C433F1;
+	Tue, 27 Feb 2024 13:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042388;
-	bh=L9F7dL7L9nKaRh8rQvZfkvh9grS71Xssgj1NTWReZdU=;
+	s=korg; t=1709042390;
+	bh=OOH8kjT2t3HLLGTzChpx7+wgcAbWtVFCZosJrok0l7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulSkMbPG9hZn7UUnHcO+5yEkjaA15Xp+6rKTGDzQv3IkAum6qM/uIgdQ31oUhHffi
-	 D2PrN5vL2H8HmKFWNTAHesCES6yUh3j9Cl3+VQNv1A6mJI9YY5SUFJTnszgPPUYkFs
-	 ACH2OsuIy4awtVbv2pXKjqLjCjNMsoAfVXtxIDb4=
+	b=ENo6djFOB373ZkgJ2nidZ0yqA6kPXGl2XTxL2o6Z/Dyq1VVslkC39loze0kKWt+L/
+	 YaZu41AdHRkbiC/Gufa2rGjf1uGCJyIPUgB9YCz3At4s16NzwUfqF2Is1bf6W719Vu
+	 5Q22qCJgRrrIjiuvugrfRHjJRHofhqtf6ViwM18s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/299] selftests: bonding: set active slave to primary eth1 specifically
-Date: Tue, 27 Feb 2024 14:26:01 +0100
-Message-ID: <20240227131633.770362352@linuxfoundation.org>
+Subject: [PATCH 6.6 251/299] ata: ahci_ceva: fix error handling for Xilinx GT PHY support
+Date: Tue, 27 Feb 2024 14:26:02 +0100
+Message-ID: <20240227131633.800675478@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,65 +52,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit cd65c48d66920457129584553f217005d09b1edb ]
+[ Upstream commit 26c8404e162b43dddcb037ba2d0cb58c0ed60aab ]
 
-In bond priority testing, we set the primary interface to eth1 and add
-eth0,1,2 to bond in serial. This is OK in normal times. But when in
-debug kernel, the bridge port that eth0,1,2 connected would start
-slowly (enter blocking, forwarding state), which caused the primary
-interface down for a while after enslaving and active slave changed.
-Here is a test log from Jakub's debug test[1].
+Platform clock and phy error resources are not cleaned up in Xilinx GT PHY
+error path.
 
- [  400.399070][   T50] br0: port 1(s0) entered disabled state
- [  400.400168][   T50] br0: port 4(s2) entered disabled state
- [  400.941504][ T2791] bond0: (slave eth0): making interface the new active one
- [  400.942603][ T2791] bond0: (slave eth0): Enslaving as an active interface with an up link
- [  400.943633][ T2766] br0: port 1(s0) entered blocking state
- [  400.944119][ T2766] br0: port 1(s0) entered forwarding state
- [  401.128792][ T2792] bond0: (slave eth1): making interface the new active one
- [  401.130771][ T2792] bond0: (slave eth1): Enslaving as an active interface with an up link
- [  401.131643][   T69] br0: port 2(s1) entered blocking state
- [  401.132067][   T69] br0: port 2(s1) entered forwarding state
- [  401.346201][ T2793] bond0: (slave eth2): Enslaving as a backup interface with an up link
- [  401.348414][   T50] br0: port 4(s2) entered blocking state
- [  401.348857][   T50] br0: port 4(s2) entered forwarding state
- [  401.519669][  T250] bond0: (slave eth0): link status definitely down, disabling slave
- [  401.526522][  T250] bond0: (slave eth1): link status definitely down, disabling slave
- [  401.526986][  T250] bond0: (slave eth2): making interface the new active one
- [  401.629470][  T250] bond0: (slave eth0): link status definitely up
- [  401.630089][  T250] bond0: (slave eth1): link status definitely up
- [...]
- # TEST: prio (active-backup ns_ip6_target primary_reselect 1)         [FAIL]
- # Current active slave is eth2 but not eth1
+To fix introduce the function ceva_ahci_platform_enable_resources() which
+is a customized version of ahci_platform_enable_resources() and inline with
+SATA IP programming sequence it does:
 
-Fix it by setting active slave to primary slave specifically before
-testing.
+- Assert SATA reset
+- Program PS GTR phy
+- Bring SATA by de-asserting the reset
+- Wait for GT lane PLL to be locked
 
-[1] https://netdev-3.bots.linux.dev/vmksft-bonding-dbg/results/464301/1-bond-options-sh/stdout
+ceva_ahci_platform_enable_resources() is also used in the resume path
+as the same SATA programming sequence (as in probe) should be followed.
+Also cleanup the mixed usage of ahci_platform_enable_resources() and custom
+implementation in the probe function as both are not required.
 
-Fixes: 481b56e0391e ("selftests: bonding: re-format bond option tests")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9a9d3abe24bb ("ata: ahci: ceva: Update the driver to support xilinx GT phy")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/bonding/bond_options.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/ahci_ceva.c | 125 +++++++++++++++++++++++++---------------
+ 1 file changed, 79 insertions(+), 46 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_options.sh b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-index d508486cc0bdc..9a3d3c389dadd 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
-@@ -62,6 +62,8 @@ prio_test()
+diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
+index 64f7f7d6ba84e..11a2c199a7c24 100644
+--- a/drivers/ata/ahci_ceva.c
++++ b/drivers/ata/ahci_ceva.c
+@@ -88,7 +88,6 @@ struct ceva_ahci_priv {
+ 	u32 axicc;
+ 	bool is_cci_enabled;
+ 	int flags;
+-	struct reset_control *rst;
+ };
  
- 	# create bond
- 	bond_reset "${param}"
-+	# set active_slave to primary eth1 specifically
-+	ip -n ${s_ns} link set bond0 type bond active_slave eth1
+ static unsigned int ceva_ahci_read_id(struct ata_device *dev,
+@@ -189,6 +188,60 @@ static const struct scsi_host_template ahci_platform_sht = {
+ 	AHCI_SHT(DRV_NAME),
+ };
  
- 	# check bonding member prio value
- 	ip -n ${s_ns} link set eth0 type bond_slave prio 0
++static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
++{
++	int rc, i;
++
++	rc = ahci_platform_enable_regulators(hpriv);
++	if (rc)
++		return rc;
++
++	rc = ahci_platform_enable_clks(hpriv);
++	if (rc)
++		goto disable_regulator;
++
++	/* Assert the controller reset */
++	rc = ahci_platform_assert_rsts(hpriv);
++	if (rc)
++		goto disable_clks;
++
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_init(hpriv->phys[i]);
++		if (rc)
++			goto disable_rsts;
++	}
++
++	/* De-assert the controller reset */
++	ahci_platform_deassert_rsts(hpriv);
++
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_power_on(hpriv->phys[i]);
++		if (rc) {
++			phy_exit(hpriv->phys[i]);
++			goto disable_phys;
++		}
++	}
++
++	return 0;
++
++disable_rsts:
++	ahci_platform_deassert_rsts(hpriv);
++
++disable_phys:
++	while (--i >= 0) {
++		phy_power_off(hpriv->phys[i]);
++		phy_exit(hpriv->phys[i]);
++	}
++
++disable_clks:
++	ahci_platform_disable_clks(hpriv);
++
++disable_regulator:
++	ahci_platform_disable_regulators(hpriv);
++
++	return rc;
++}
++
+ static int ceva_ahci_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -203,47 +256,19 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	cevapriv->ahci_pdev = pdev;
+-
+-	cevapriv->rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
+-								  NULL);
+-	if (IS_ERR(cevapriv->rst))
+-		dev_err_probe(&pdev->dev, PTR_ERR(cevapriv->rst),
+-			      "failed to get reset\n");
+-
+ 	hpriv = ahci_platform_get_resources(pdev, 0);
+ 	if (IS_ERR(hpriv))
+ 		return PTR_ERR(hpriv);
+ 
+-	if (!cevapriv->rst) {
+-		rc = ahci_platform_enable_resources(hpriv);
+-		if (rc)
+-			return rc;
+-	} else {
+-		int i;
++	hpriv->rsts = devm_reset_control_get_optional_exclusive(&pdev->dev,
++								NULL);
++	if (IS_ERR(hpriv->rsts))
++		return dev_err_probe(&pdev->dev, PTR_ERR(hpriv->rsts),
++				     "failed to get reset\n");
+ 
+-		rc = ahci_platform_enable_clks(hpriv);
+-		if (rc)
+-			return rc;
+-		/* Assert the controller reset */
+-		reset_control_assert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_init(hpriv->phys[i]);
+-			if (rc)
+-				return rc;
+-		}
+-
+-		/* De-assert the controller reset */
+-		reset_control_deassert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_power_on(hpriv->phys[i]);
+-			if (rc) {
+-				phy_exit(hpriv->phys[i]);
+-				return rc;
+-			}
+-		}
+-	}
++	rc = ceva_ahci_platform_enable_resources(hpriv);
++	if (rc)
++		return rc;
+ 
+ 	if (of_property_read_bool(np, "ceva,broken-gen2"))
+ 		cevapriv->flags = CEVA_FLAG_BROKEN_GEN2;
+@@ -252,52 +277,60 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 	if (of_property_read_u8_array(np, "ceva,p0-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read OOB timing value for COMWAKE from device-tree*/
+ 	if (of_property_read_u8_array(np, "ceva,p0-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy BURST timing value from device-tree */
+ 	if (of_property_read_u8_array(np, "ceva,p0-burst-params",
+ 					(u8 *)&cevapriv->pp4c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-burst-params",
+ 					(u8 *)&cevapriv->pp4c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy RETRY interval timing value from device-tree */
+ 	if (of_property_read_u16_array(np, "ceva,p0-retry-params",
+ 					(u16 *)&cevapriv->pp5c[0], 2) < 0) {
+ 		dev_warn(dev, "ceva,p0-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u16_array(np, "ceva,p1-retry-params",
+ 					(u16 *)&cevapriv->pp5c[1], 2) < 0) {
+ 		dev_warn(dev, "ceva,p1-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/*
+@@ -335,7 +368,7 @@ static int __maybe_unused ceva_ahci_resume(struct device *dev)
+ 	struct ahci_host_priv *hpriv = host->private_data;
+ 	int rc;
+ 
+-	rc = ahci_platform_enable_resources(hpriv);
++	rc = ceva_ahci_platform_enable_resources(hpriv);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.43.0
 
