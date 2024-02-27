@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBF978B61;
-	Tue, 27 Feb 2024 14:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716A078B61;
+	Tue, 27 Feb 2024 14:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043129; cv=none; b=nMOFvMOpieww9xi6dBhcsFsNr8mICXou8LxRoGx0rrPOEYGLYZEpwWb2Jg2ExMweEr/l8I6b4MAAmvQAtiWrEDhSohXsC1S0QHJ3LdwYW/PW6Wq0UbS3RKrFHC2Ux3FjvKvEFp15pFavNvj8ffCAgJ6cTcgvN0W0mDE3JDvDkoo=
+	t=1709043132; cv=none; b=Re+Njk4NqOBpaWwYAEn9fcsTU8Hp+KGgz1Xb698PR0NpuSaJvVyTtnMmI1e2Yf0NGnoM35m7DKZyYjNz98iPu2C3B5umEMGDMVwQIwma1wMp5c21smoEYey93i9AfPuDHxs3cqkDZOpE+7e7Yzcwr9SWTk3bMPYMQ3N5taxfXlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043129; c=relaxed/simple;
-	bh=t9HGQ4OPz+njZTA84HJB9eKw1D8cdWcy0FFQkpTXNYc=;
+	s=arc-20240116; t=1709043132; c=relaxed/simple;
+	bh=B6bpFGLrnswU5s/AgxEOq3MrG81x7H+eRft5l8kzN+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvN6lEsHd9gIosd1pOVGUS9Lk7zNm9QGBEzg+XyfEZCTeDuFWPymVLWiO0KpFo2vlIVtsZsxbbkfHwsxpxtrhm2XdPIB2/UIg1IwnauXXmPo0XgeinuQEVmiCjdumBLoD3/VyOgQE6d1813434SSlF3m7e2qY8RjewDVyCI8m64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXSw59Ba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrGa0ErEw3UoSiyf9FRTVsF2/XDboxqYhA2c3Bq7kBIuzHomYDhWP106sCtvRTruNvQCztNT1wR1wuKJ0NJZPI6PLUDGSzfwDNydGpbQNHvXQV2CyraZ6c9hxbr2z5Ekfs2b9Wnzrp5h1NICsCtZhOcNiQeTxFygdidlEkob19c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aj8OYsYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXSw59Ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AC8C433F1;
-	Tue, 27 Feb 2024 14:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aj8OYsYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CE0C433F1;
+	Tue, 27 Feb 2024 14:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043129;
-	bh=t9HGQ4OPz+njZTA84HJB9eKw1D8cdWcy0FFQkpTXNYc=;
+	s=korg; t=1709043132;
+	bh=B6bpFGLrnswU5s/AgxEOq3MrG81x7H+eRft5l8kzN+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXSw59BapcYNOuFuFEQt3epz/PkRQn8ggBQS89ZX3UOrEUzPB6khcUjfAg9yrU1Q8
-	 5gc2xJ5PcNe83U9EdIJpUDjQOaR19eUK97Aeq0CTw8gFzdKvpleKXabwN1x6xqfpGd
-	 BAYpDyg7vXwbu0keq6hSACt5rnURf9RZCmFMQjkQ=
+	b=aj8OYsYpZQS0oduxEaG6wyKn/Rz3jUqNk2hWx6TuqdLd5aIEaKPPpE7UhXGhICHcZ
+	 T1GyqiBaDrYKO5G1Gm647H+lzfR6dai69hLn+wrsuXN/dWAkbj66WMX4lt2okW6UdI
+	 WNf6y+cLqAHV3N+r1goaeDio76MihbfkTph36d4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hannes Reinecke <hare@suse.de>,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/245] ata: libahci_platform: Convert to using devm bulk clocks API
-Date: Tue, 27 Feb 2024 14:26:45 +0100
-Message-ID: <20240227131622.255840757@linuxfoundation.org>
+Subject: [PATCH 5.15 218/245] ata: libahci_platform: Introduce reset assertion/deassertion methods
+Date: Tue, 27 Feb 2024 14:26:46 +0100
+Message-ID: <20240227131622.286788468@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -54,47 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit e28b3abf8020a884bd3b7758ea8915365af8fadf ]
+[ Upstream commit f67f12ff57bcfcd7d64280f748787793217faeaf ]
 
-In order to simplify the clock-related code there is a way to convert the
-current fixed clocks array into using the common bulk clocks kernel API
-with dynamic set of the clock handlers and device-managed clock-resource
-tracking. It's a bit tricky due to the complication coming from the
-requirement to support the platforms (da850, spear13xx) with the
-non-OF-based clock source, but still doable.
+Currently the ACHI-platform library supports only the assert and deassert
+reset signals and ignores the platforms with self-deasserting reset lines.
+That prone to having the platforms with self-deasserting reset method
+misbehaviour when it comes to resuming from sleep state after the clocks
+have been fully disabled. For such cases the controller needs to be fully
+reset all over after the reference clocks are enabled and stable,
+otherwise the controller state machine might be in an undetermined state.
 
-Before this modification there are two methods have been used to get the
-clocks connected to an AHCI device: clk_get() - to get the very first
-clock in the list and of_clk_get() - to get the rest of them. Basically
-the platforms with non-OF-based clocks definition could specify only a
-single reference clock source. The platforms with OF-hw clocks have been
-luckier and could setup up to AHCI_MAX_CLKS clocks. Such semantic can be
-retained with using devm_clk_bulk_get_all() to retrieve the clocks defined
-via the DT firmware and devm_clk_get_optional() otherwise. In both cases
-using the device-managed version of the methods will cause the automatic
-resources deallocation on the AHCI device removal event. The only
-complicated part in the suggested approach is the explicit allocation and
-initialization of the clk_bulk_data structure instance for the non-OF
-reference clocks. It's required in order to use the Bulk Clocks API for
-the both denoted cases of the clocks definition.
+The best solution would be to auto-detect which reset method is supported
+by the particular platform and use it implicitly in the framework of the
+ahci_platform_enable_resources()/ahci_platform_disable_resources()
+methods. Alas it can't be implemented due to the AHCI-platform library
+already supporting the shared reset control lines. As [1] says in such
+case we have to use only one of the next methods:
++ reset_control_assert()/reset_control_deassert();
++ reset_control_reset()/reset_control_rearm().
+If the driver had an exclusive control over the reset lines we could have
+been able to manipulate the lines with no much limitation and just used
+the combination of the methods above to cover all the possible
+reset-control cases. Since the shared reset control has already been
+advertised and couldn't be changed with no risk to breaking the platforms
+relying on it, we have no choice but to make the platform drivers to
+determine which reset methods the platform reset system supports.
 
-Note aside with the clock-related code reduction and natural
-simplification, there are several bonuses the suggested modification
-provides. First of all the limitation of having no greater than
-AHCI_MAX_CLKS clocks is now removed, since the devm_clk_bulk_get_all()
-method will allocate as many reference clocks data descriptors as there
-are clocks specified for the device. Secondly the clock names are
-auto-detected. So the LLDD (glue) drivers can make sure that the required
-clocks are specified just by checking the clock IDs in the clk_bulk_data
-array.  Thirdly using the handy Bulk Clocks kernel API improves the
-clocks-handling code readability. And the last but not least this
-modification implements a true optional clocks support to the
-ahci_platform_get_resources() method. Indeed the previous clocks getting
-procedure just stopped getting the clocks on any errors (aside from
-non-critical -EPROBE_DEFER) in a way so the callee wasn't even informed
-about abnormal loop termination. The new implementation lacks of such
-problem. The ahci_platform_get_resources() will return an error code if
-the corresponding clocks getting method ends execution abnormally.
+In order to implement both types of reset control support we suggest to
+introduce the new AHCI-platform flag: AHCI_PLATFORM_RST_TRIGGER, which
+when passed to the ahci_platform_get_resources() method together with the
+AHCI_PLATFORM_GET_RESETS flag will indicate that the reset lines are
+self-deasserting thus the reset_control_reset()/reset_control_rearm() will
+be used to control the reset state. Otherwise the
+reset_control_deassert()/reset_control_assert() methods will be utilized.
+
+[1] Documentation/driver-api/reset.rst
 
 Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
@@ -102,265 +96,135 @@ Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Stable-dep-of: 26c8404e162b ("ata: ahci_ceva: fix error handling for Xilinx GT PHY support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.h             |  4 +-
- drivers/ata/ahci_da850.c       | 47 ++++++++-----------
- drivers/ata/ahci_dm816.c       |  4 +-
- drivers/ata/libahci_platform.c | 83 ++++++++++++++++------------------
- 4 files changed, 61 insertions(+), 77 deletions(-)
+ drivers/ata/ahci.h             |  1 +
+ drivers/ata/libahci_platform.c | 50 ++++++++++++++++++++++++++++++----
+ include/linux/ahci_platform.h  |  5 +++-
+ 3 files changed, 50 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/ata/ahci.h b/drivers/ata/ahci.h
-index 69557e602e2ea..54e79f966444c 100644
+index 54e79f966444c..b4c59fe2db60a 100644
 --- a/drivers/ata/ahci.h
 +++ b/drivers/ata/ahci.h
-@@ -39,7 +39,6 @@
- 
- enum {
- 	AHCI_MAX_PORTS		= 32,
--	AHCI_MAX_CLKS		= 5,
- 	AHCI_MAX_SG		= 168, /* hardware max is 64K */
- 	AHCI_DMA_BOUNDARY	= 0xffffffff,
- 	AHCI_MAX_CMDS		= 32,
-@@ -343,7 +342,8 @@ struct ahci_host_priv {
- 	u32			em_msg_type;	/* EM message type */
- 	u32			remapped_nvme;	/* NVMe remapped device count */
+@@ -344,6 +344,7 @@ struct ahci_host_priv {
  	bool			got_runtime_pm; /* Did we do pm_runtime_get? */
--	struct clk		*clks[AHCI_MAX_CLKS]; /* Optional */
-+	unsigned int		n_clks;
-+	struct clk_bulk_data	*clks;		/* Optional */
+ 	unsigned int		n_clks;
+ 	struct clk_bulk_data	*clks;		/* Optional */
++	unsigned int		f_rsts;
  	struct reset_control	*rsts;		/* Optional */
  	struct regulator	**target_pwrs;	/* Optional */
  	struct regulator	*ahci_regulator;/* Optional */
-diff --git a/drivers/ata/ahci_da850.c b/drivers/ata/ahci_da850.c
-index 0e82766007128..389268c1ef456 100644
---- a/drivers/ata/ahci_da850.c
-+++ b/drivers/ata/ahci_da850.c
-@@ -163,7 +163,6 @@ static int ahci_da850_probe(struct platform_device *pdev)
- 	struct ahci_host_priv *hpriv;
- 	void __iomem *pwrdn_reg;
- 	struct resource *res;
--	struct clk *clk;
- 	u32 mpy;
- 	int rc;
- 
-@@ -172,36 +171,28 @@ static int ahci_da850_probe(struct platform_device *pdev)
- 		return PTR_ERR(hpriv);
- 
- 	/*
--	 * Internally ahci_platform_get_resources() calls clk_get(dev, NULL)
--	 * when trying to obtain the functional clock. This SATA controller
--	 * uses two clocks for which we specify two connection ids. If we don't
--	 * have the functional clock at this point - call clk_get() again with
--	 * con_id = "fck".
-+	 * Internally ahci_platform_get_resources() calls the bulk clocks
-+	 * get method or falls back to using a single clk_get_optional().
-+	 * This AHCI SATA controller uses two clocks: functional clock
-+	 * with "fck" connection id and external reference clock with
-+	 * "refclk" id. If we haven't got all of them re-try the clocks
-+	 * getting procedure with the explicitly specified ids.
- 	 */
--	if (!hpriv->clks[0]) {
--		clk = clk_get(dev, "fck");
--		if (IS_ERR(clk))
--			return PTR_ERR(clk);
--
--		hpriv->clks[0] = clk;
--	}
--
--	/*
--	 * The second clock used by ahci-da850 is the external REFCLK. If we
--	 * didn't get it from ahci_platform_get_resources(), let's try to
--	 * specify the con_id in clk_get().
--	 */
--	if (!hpriv->clks[1]) {
--		clk = clk_get(dev, "refclk");
--		if (IS_ERR(clk)) {
--			dev_err(dev, "unable to obtain the reference clock");
--			return -ENODEV;
--		}
--
--		hpriv->clks[1] = clk;
-+	if (hpriv->n_clks < 2) {
-+		hpriv->clks = devm_kcalloc(dev, 2, sizeof(*hpriv->clks), GFP_KERNEL);
-+		if (!hpriv->clks)
-+			return -ENOMEM;
-+
-+		hpriv->clks[0].id = "fck";
-+		hpriv->clks[1].id = "refclk";
-+		hpriv->n_clks = 2;
-+
-+		rc = devm_clk_bulk_get(dev, hpriv->n_clks, hpriv->clks);
-+		if (rc)
-+			return rc;
- 	}
- 
--	mpy = ahci_da850_calculate_mpy(clk_get_rate(hpriv->clks[1]));
-+	mpy = ahci_da850_calculate_mpy(clk_get_rate(hpriv->clks[1].clk));
- 	if (mpy == 0) {
- 		dev_err(dev, "invalid REFCLK multiplier value: 0x%x", mpy);
- 		return -EINVAL;
-diff --git a/drivers/ata/ahci_dm816.c b/drivers/ata/ahci_dm816.c
-index 8bec410416714..ec83ba8858060 100644
---- a/drivers/ata/ahci_dm816.c
-+++ b/drivers/ata/ahci_dm816.c
-@@ -69,12 +69,12 @@ static int ahci_dm816_phy_init(struct ahci_host_priv *hpriv, struct device *dev)
- 	 * keep-alive clock and the external reference clock. We need the
- 	 * rate of the latter to calculate the correct value of MPY bits.
- 	 */
--	if (!hpriv->clks[1]) {
-+	if (hpriv->n_clks < 2) {
- 		dev_err(dev, "reference clock not supplied\n");
- 		return -EINVAL;
- 	}
- 
--	refclk_rate = clk_get_rate(hpriv->clks[1]);
-+	refclk_rate = clk_get_rate(hpriv->clks[1].clk);
- 	if ((refclk_rate % 100) != 0) {
- 		dev_err(dev, "reference clock rate must be divisible by 100\n");
- 		return -EINVAL;
 diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
-index 64d6da0a53035..6ae1d8b870a2d 100644
+index 6ae1d8b870a2d..43380d1a410e2 100644
 --- a/drivers/ata/libahci_platform.c
 +++ b/drivers/ata/libahci_platform.c
-@@ -97,28 +97,14 @@ EXPORT_SYMBOL_GPL(ahci_platform_disable_phys);
-  * ahci_platform_enable_clks - Enable platform clocks
-  * @hpriv: host private area to store config values
-  *
-- * This function enables all the clks found in hpriv->clks, starting at
-- * index 0. If any clk fails to enable it disables all the clks already
-- * enabled in reverse order, and then returns an error.
-+ * This function enables all the clks found for the AHCI device.
-  *
-  * RETURNS:
-  * 0 on success otherwise a negative error code
-  */
- int ahci_platform_enable_clks(struct ahci_host_priv *hpriv)
- {
--	int c, rc;
--
--	for (c = 0; c < AHCI_MAX_CLKS && hpriv->clks[c]; c++) {
--		rc = clk_prepare_enable(hpriv->clks[c]);
--		if (rc)
--			goto disable_unprepare_clk;
--	}
--	return 0;
--
--disable_unprepare_clk:
--	while (--c >= 0)
--		clk_disable_unprepare(hpriv->clks[c]);
--	return rc;
-+	return clk_bulk_prepare_enable(hpriv->n_clks, hpriv->clks);
- }
- EXPORT_SYMBOL_GPL(ahci_platform_enable_clks);
- 
-@@ -126,16 +112,13 @@ EXPORT_SYMBOL_GPL(ahci_platform_enable_clks);
-  * ahci_platform_disable_clks - Disable platform clocks
-  * @hpriv: host private area to store config values
-  *
-- * This function disables all the clks found in hpriv->clks, in reverse
-- * order of ahci_platform_enable_clks (starting at the end of the array).
-+ * This function disables all the clocks enabled before
-+ * (bulk-clocks-disable function is supposed to do that in reverse
-+ * from the enabling procedure order).
-  */
- void ahci_platform_disable_clks(struct ahci_host_priv *hpriv)
- {
--	int c;
--
--	for (c = AHCI_MAX_CLKS - 1; c >= 0; c--)
--		if (hpriv->clks[c])
--			clk_disable_unprepare(hpriv->clks[c]);
-+	clk_bulk_disable_unprepare(hpriv->n_clks, hpriv->clks);
+@@ -122,6 +122,44 @@ void ahci_platform_disable_clks(struct ahci_host_priv *hpriv)
  }
  EXPORT_SYMBOL_GPL(ahci_platform_disable_clks);
  
-@@ -292,8 +275,6 @@ static void ahci_platform_put_resources(struct device *dev, void *res)
- 		pm_runtime_disable(dev);
- 	}
- 
--	for (c = 0; c < AHCI_MAX_CLKS && hpriv->clks[c]; c++)
--		clk_put(hpriv->clks[c]);
- 	/*
- 	 * The regulators are tied to child node device and not to the
- 	 * SATA device itself. So we can't use devm for automatically
-@@ -374,8 +355,8 @@ static int ahci_platform_get_regulator(struct ahci_host_priv *hpriv, u32 port,
-  * 1) mmio registers (IORESOURCE_MEM 0, mandatory)
-  * 2) regulator for controlling the targets power (optional)
-  *    regulator for controlling the AHCI controller (optional)
-- * 3) 0 - AHCI_MAX_CLKS clocks, as specified in the devs devicetree node,
-- *    or for non devicetree enabled platforms a single clock
-+ * 3) all clocks specified in the devicetree node, or a single
-+ *    clock for non-OF platforms (optional)
-  * 4) resets, if flags has AHCI_PLATFORM_GET_RESETS (optional)
-  * 5) phys (optional)
-  *
-@@ -385,11 +366,10 @@ static int ahci_platform_get_regulator(struct ahci_host_priv *hpriv, u32 port,
- struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 						   unsigned int flags)
- {
-+	int child_nodes, rc = -ENOMEM, enabled_ports = 0;
- 	struct device *dev = &pdev->dev;
- 	struct ahci_host_priv *hpriv;
--	struct clk *clk;
- 	struct device_node *child;
--	int i, enabled_ports = 0, rc = -ENOMEM, child_nodes;
- 	u32 mask_port_map = 0;
- 
- 	if (!devres_open_group(dev, NULL, GFP_KERNEL))
-@@ -409,25 +389,38 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 		goto err_out;
- 	}
- 
--	for (i = 0; i < AHCI_MAX_CLKS; i++) {
-+	/*
-+	 * Bulk clocks getting procedure can fail to find any clock due to
-+	 * running on a non-OF platform or due to the clocks being defined in
-+	 * bypass of the DT firmware (like da850, spear13xx). In that case we
-+	 * fallback to getting a single clock source right from the dev clocks
-+	 * list.
-+	 */
-+	rc = devm_clk_bulk_get_all(dev, &hpriv->clks);
-+	if (rc < 0)
-+		goto err_out;
++/**
++ * ahci_platform_deassert_rsts - Deassert/trigger platform resets
++ * @hpriv: host private area to store config values
++ *
++ * This function deasserts or triggers all the reset lines found for
++ * the AHCI device.
++ *
++ * RETURNS:
++ * 0 on success otherwise a negative error code
++ */
++int ahci_platform_deassert_rsts(struct ahci_host_priv *hpriv)
++{
++	if (hpriv->f_rsts & AHCI_PLATFORM_RST_TRIGGER)
++		return reset_control_reset(hpriv->rsts);
 +
-+	if (rc > 0) {
-+		/* Got clocks in bulk */
-+		hpriv->n_clks = rc;
-+	} else {
- 		/*
--		 * For now we must use clk_get(dev, NULL) for the first clock,
--		 * because some platforms (da850, spear13xx) are not yet
--		 * converted to use devicetree for clocks.  For new platforms
--		 * this is equivalent to of_clk_get(dev->of_node, 0).
-+		 * No clock bulk found: fallback to manually getting
-+		 * the optional clock.
- 		 */
--		if (i == 0)
--			clk = clk_get(dev, NULL);
--		else
--			clk = of_clk_get(dev->of_node, i);
--
--		if (IS_ERR(clk)) {
--			rc = PTR_ERR(clk);
--			if (rc == -EPROBE_DEFER)
--				goto err_out;
--			break;
-+		hpriv->clks = devm_kzalloc(dev, sizeof(*hpriv->clks), GFP_KERNEL);
-+		if (!hpriv->clks) {
-+			rc = -ENOMEM;
-+			goto err_out;
-+		}
-+		hpriv->clks->clk = devm_clk_get_optional(dev, NULL);
-+		if (IS_ERR(hpriv->clks->clk)) {
-+			rc = PTR_ERR(hpriv->clks->clk);
-+			goto err_out;
-+		} else if (hpriv->clks->clk) {
-+			hpriv->clks->id = "ahci";
-+			hpriv->n_clks = 1;
++	return reset_control_deassert(hpriv->rsts);
++}
++EXPORT_SYMBOL_GPL(ahci_platform_deassert_rsts);
++
++/**
++ * ahci_platform_assert_rsts - Assert/rearm platform resets
++ * @hpriv: host private area to store config values
++ *
++ * This function asserts or rearms (for self-deasserting resets) all
++ * the reset controls found for the AHCI device.
++ *
++ * RETURNS:
++ * 0 on success otherwise a negative error code
++ */
++int ahci_platform_assert_rsts(struct ahci_host_priv *hpriv)
++{
++	if (hpriv->f_rsts & AHCI_PLATFORM_RST_TRIGGER)
++		return reset_control_rearm(hpriv->rsts);
++
++	return reset_control_assert(hpriv->rsts);
++}
++EXPORT_SYMBOL_GPL(ahci_platform_assert_rsts);
++
+ /**
+  * ahci_platform_enable_regulators - Enable regulators
+  * @hpriv: host private area to store config values
+@@ -219,18 +257,18 @@ int ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
+ 	if (rc)
+ 		goto disable_regulator;
+ 
+-	rc = reset_control_deassert(hpriv->rsts);
++	rc = ahci_platform_deassert_rsts(hpriv);
+ 	if (rc)
+ 		goto disable_clks;
+ 
+ 	rc = ahci_platform_enable_phys(hpriv);
+ 	if (rc)
+-		goto disable_resets;
++		goto disable_rsts;
+ 
+ 	return 0;
+ 
+-disable_resets:
+-	reset_control_assert(hpriv->rsts);
++disable_rsts:
++	ahci_platform_assert_rsts(hpriv);
+ 
+ disable_clks:
+ 	ahci_platform_disable_clks(hpriv);
+@@ -257,7 +295,7 @@ void ahci_platform_disable_resources(struct ahci_host_priv *hpriv)
+ {
+ 	ahci_platform_disable_phys(hpriv);
+ 
+-	reset_control_assert(hpriv->rsts);
++	ahci_platform_assert_rsts(hpriv);
+ 
+ 	ahci_platform_disable_clks(hpriv);
+ 
+@@ -442,6 +480,8 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 			rc = PTR_ERR(hpriv->rsts);
+ 			goto err_out;
  		}
--		hpriv->clks[i] = clk;
++
++		hpriv->f_rsts = flags & AHCI_PLATFORM_RST_TRIGGER;
  	}
  
- 	hpriv->ahci_regulator = devm_regulator_get(dev, "ahci");
+ 	/*
+diff --git a/include/linux/ahci_platform.h b/include/linux/ahci_platform.h
+index 49e5383d42222..6d7dd472d3703 100644
+--- a/include/linux/ahci_platform.h
++++ b/include/linux/ahci_platform.h
+@@ -23,6 +23,8 @@ int ahci_platform_enable_phys(struct ahci_host_priv *hpriv);
+ void ahci_platform_disable_phys(struct ahci_host_priv *hpriv);
+ int ahci_platform_enable_clks(struct ahci_host_priv *hpriv);
+ void ahci_platform_disable_clks(struct ahci_host_priv *hpriv);
++int ahci_platform_deassert_rsts(struct ahci_host_priv *hpriv);
++int ahci_platform_assert_rsts(struct ahci_host_priv *hpriv);
+ int ahci_platform_enable_regulators(struct ahci_host_priv *hpriv);
+ void ahci_platform_disable_regulators(struct ahci_host_priv *hpriv);
+ int ahci_platform_enable_resources(struct ahci_host_priv *hpriv);
+@@ -41,6 +43,7 @@ int ahci_platform_resume_host(struct device *dev);
+ int ahci_platform_suspend(struct device *dev);
+ int ahci_platform_resume(struct device *dev);
+ 
+-#define AHCI_PLATFORM_GET_RESETS	0x01
++#define AHCI_PLATFORM_GET_RESETS	BIT(0)
++#define AHCI_PLATFORM_RST_TRIGGER	BIT(1)
+ 
+ #endif /* _AHCI_PLATFORM_H */
 -- 
 2.43.0
 
