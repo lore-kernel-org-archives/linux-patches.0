@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0612813AA43;
-	Tue, 27 Feb 2024 14:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A727A13B78F;
+	Tue, 27 Feb 2024 14:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042940; cv=none; b=cGO4NLNajpAEShu1klByPzd9zvCDm7Hu6wJjcMOG7of3bdbTOLc7zPXd6IZrmEsr1nprGCtbl/gmMfQo+DECWIhQ+jZipZ5OXBkoeFVkP/KWEGUDJeSn9cgOIYsRyVQyaGtn+rjtp1RpfX0niBhHEam5YHxZVTduPG1kp1UZMaw=
+	t=1709042942; cv=none; b=ZMaW+KlgeQLOGMVbj0pCXGKLgVdllPvXqbOJxCD5gwuDdP187WY9bx3Jm2lYCnD64xYoQhYjvMRSdcT4JWt1cIKSSyY7Q+ciDPi2XdBKOANLN+hkx/hnxMAWv3uoyTt156yo2PKkzL/2aiEIkYIKWFZyJFCG+W8SD3eKA+XTlDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042940; c=relaxed/simple;
-	bh=wEaCxng6fvpAl1sgNsiirdPEMz9fCqUwjJbRCc94Mj8=;
+	s=arc-20240116; t=1709042942; c=relaxed/simple;
+	bh=kI8lAR1ifJgHaTZQjea7XCRWt1WGFDnrTt0z2mVjNIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFXWNTHguv8huTnF9raM8qTu+uRgdnfg/T9hMF0f9l9S1eO+v7iVoK1XAsmtV1dPTwwGuKMF5QQw6FHfptAOE70wj/3Ia6F05/EqUIjtflrgUVnGIN2si4j6fwFKSlxS2faf5dwhGz9t1BsiebwFsCgqMO2nzAeRJhpZyDcyHug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6lZKs++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fi4Lo9Wtw8od5Kfoct7WoFqjnMusRp/vdeQHC80EJJkrBURQOeT5hFTTSMtidtBQw4/Syofw7y3w9OGOkktWKbiNLyZKM56EVjWbESuX+DBYhCMPO1Ax6jEAl3JMdlV8x4yGyNLaZsNYwiCgUkUAqaws4wRqhvO7J+sSf3Toi58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8BPXpB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6lZKs++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8771AC433C7;
-	Tue, 27 Feb 2024 14:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8BPXpB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36582C433C7;
+	Tue, 27 Feb 2024 14:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042939;
-	bh=wEaCxng6fvpAl1sgNsiirdPEMz9fCqUwjJbRCc94Mj8=;
+	s=korg; t=1709042942;
+	bh=kI8lAR1ifJgHaTZQjea7XCRWt1WGFDnrTt0z2mVjNIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6lZKs++u6Q9fp+H8HLkwaWC2PZ933jug8dAfEmmmw/mAg3rq+15/Zj3QPWL8+euv
-	 4A1rh9gQVlwye0lhkk7NwzIRIkck7xCRtl+WK/F0cCUHDA5t8QHLFOdk8JBanDNsTT
-	 mxIAzZ1pW8g8bsihz47zJwiaCHm6e/PFI5t6rWms=
+	b=J8BPXpB1xclp7ECD4OeLqf2wiqEpZVbv0YRbEBjS/EspTTlnui6iMGhVPkEgYD4dt
+	 F3HIlEnpU4N3F3p7dbOvIZr7RJk/gzOU2dbIAGtTVQ453/E9uO+ebVpR4UKniQQgmP
+	 J4BvFBc8gROtXinSverzfTGkd5VfIN3qO4tSWg30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Steve Capper <steve.capper@arm.com>,
-	Will Deacon <will@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 175/245] arm64: mm: fix VA-range sanity check
-Date: Tue, 27 Feb 2024 14:26:03 +0100
-Message-ID: <20240227131620.896994595@linuxfoundation.org>
+Subject: [PATCH 5.15 176/245] sched/fair: Dont balance task to its current running CPU
+Date: Tue, 27 Feb 2024 14:26:04 +0100
+Message-ID: <20240227131620.927644749@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -55,104 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit ab9b4008092c86dc12497af155a0901cc1156999 ]
+[ Upstream commit 0dd37d6dd33a9c23351e6115ae8cdac7863bc7de ]
 
-Both create_mapping_noalloc() and update_mapping_prot() sanity-check
-their 'virt' parameter, but the check itself doesn't make much sense.
-The condition used today appears to be a historical accident.
+We've run into the case that the balancer tries to balance a migration
+disabled task and trigger the warning in set_task_cpu() like below:
 
-The sanity-check condition:
+ ------------[ cut here ]------------
+ WARNING: CPU: 7 PID: 0 at kernel/sched/core.c:3115 set_task_cpu+0x188/0x240
+ Modules linked in: hclgevf xt_CHECKSUM ipt_REJECT nf_reject_ipv4 <...snip>
+ CPU: 7 PID: 0 Comm: swapper/7 Kdump: loaded Tainted: G           O       6.1.0-rc4+ #1
+ Hardware name: Huawei TaiShan 2280 V2/BC82AMDC, BIOS 2280-V2 CS V5.B221.01 12/09/2021
+ pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : set_task_cpu+0x188/0x240
+ lr : load_balance+0x5d0/0xc60
+ sp : ffff80000803bc70
+ x29: ffff80000803bc70 x28: ffff004089e190e8 x27: ffff004089e19040
+ x26: ffff007effcabc38 x25: 0000000000000000 x24: 0000000000000001
+ x23: ffff80000803be84 x22: 000000000000000c x21: ffffb093e79e2a78
+ x20: 000000000000000c x19: ffff004089e19040 x18: 0000000000000000
+ x17: 0000000000001fad x16: 0000000000000030 x15: 0000000000000000
+ x14: 0000000000000003 x13: 0000000000000000 x12: 0000000000000000
+ x11: 0000000000000001 x10: 0000000000000400 x9 : ffffb093e4cee530
+ x8 : 00000000fffffffe x7 : 0000000000ce168a x6 : 000000000000013e
+ x5 : 00000000ffffffe1 x4 : 0000000000000001 x3 : 0000000000000b2a
+ x2 : 0000000000000b2a x1 : ffffb093e6d6c510 x0 : 0000000000000001
+ Call trace:
+  set_task_cpu+0x188/0x240
+  load_balance+0x5d0/0xc60
+  rebalance_domains+0x26c/0x380
+  _nohz_idle_balance.isra.0+0x1e0/0x370
+  run_rebalance_domains+0x6c/0x80
+  __do_softirq+0x128/0x3d8
+  ____do_softirq+0x18/0x24
+  call_on_irq_stack+0x2c/0x38
+  do_softirq_own_stack+0x24/0x3c
+  __irq_exit_rcu+0xcc/0xf4
+  irq_exit_rcu+0x18/0x24
+  el1_interrupt+0x4c/0xe4
+  el1h_64_irq_handler+0x18/0x2c
+  el1h_64_irq+0x74/0x78
+  arch_cpu_idle+0x18/0x4c
+  default_idle_call+0x58/0x194
+  do_idle+0x244/0x2b0
+  cpu_startup_entry+0x30/0x3c
+  secondary_start_kernel+0x14c/0x190
+  __secondary_switched+0xb0/0xb4
+ ---[ end trace 0000000000000000 ]---
 
-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
+Further investigation shows that the warning is superfluous, the migration
+disabled task is just going to be migrated to its current running CPU.
+This is because that on load balance if the dst_cpu is not allowed by the
+task, we'll re-select a new_dst_cpu as a candidate. If no task can be
+balanced to dst_cpu we'll try to balance the task to the new_dst_cpu
+instead. In this case when the migration disabled task is not on CPU it
+only allows to run on its current CPU, load balance will select its
+current CPU as new_dst_cpu and later triggers the warning above.
 
-... can only be true for the KASAN shadow region or the module region,
-and there's no reason to exclude these specifically for creating and
-updateing mappings.
+The new_dst_cpu is chosen from the env->dst_grpmask. Currently it
+contains CPUs in sched_group_span() and if we have overlapped groups it's
+possible to run into this case. This patch makes env->dst_grpmask of
+group_balance_mask() which exclude any CPUs from the busiest group and
+solve the issue. For balancing in a domain with no overlapped groups
+the behaviour keeps same as before.
 
-When arm64 support was first upstreamed in commit:
-
-  c1cc1552616d0f35 ("arm64: MMU initialisation")
-
-... the condition was:
-
-	if (virt < VMALLOC_START) {
-		[ ... warning here ... ]
-		return;
-	}
-
-At the time, VMALLOC_START was the lowest kernel address, and this was
-checking whether 'virt' would be translated via TTBR1.
-
-Subsequently in commit:
-
-  14c127c957c1c607 ("arm64: mm: Flip kernel VA space")
-
-... the condition was changed to:
-
-	if ((virt >= VA_START) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
-
-This appear to have been a thinko. The commit moved the linear map to
-the bottom of the kernel address space, with VMALLOC_START being at the
-halfway point. The old condition would warn for changes to the linear
-map below this, and at the time VA_START was the end of the linear map.
-
-Subsequently we cleaned up the naming of VA_START in commit:
-
-  77ad4ce69321abbe ("arm64: memory: rename VA_START to PAGE_END")
-
-... keeping the erroneous condition as:
-
-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-		[ ... warning here ... ]
-		return;
-	}
-
-Correct the condition to check against the start of the TTBR1 address
-space, which is currently PAGE_OFFSET. This simplifies the logic, and
-more clearly matches the "outside kernel range" message in the warning.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Steve Capper <steve.capper@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20230615102628.1052103-1-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Suggested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230530082507.10444-1-yangyicong@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 6680689242df3..fc86e7465df42 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -435,7 +435,7 @@ static phys_addr_t pgd_pgtable_alloc(int shift)
- static void __init create_mapping_noalloc(phys_addr_t phys, unsigned long virt,
- 				  phys_addr_t size, pgprot_t prot)
- {
--	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-+	if (virt < PAGE_OFFSET) {
- 		pr_warn("BUG: not creating mapping for %pa at 0x%016lx - outside kernel range\n",
- 			&phys, virt);
- 		return;
-@@ -462,7 +462,7 @@ void __init create_pgd_mapping(struct mm_struct *mm, phys_addr_t phys,
- static void update_mapping_prot(phys_addr_t phys, unsigned long virt,
- 				phys_addr_t size, pgprot_t prot)
- {
--	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
-+	if (virt < PAGE_OFFSET) {
- 		pr_warn("BUG: not updating mapping for %pa at 0x%016lx - outside kernel range\n",
- 			&phys, virt);
- 		return;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index fd8b5656641b7..b55d51b4105cd 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -10177,7 +10177,7 @@ static int load_balance(int this_cpu, struct rq *this_rq,
+ 		.sd		= sd,
+ 		.dst_cpu	= this_cpu,
+ 		.dst_rq		= this_rq,
+-		.dst_grpmask    = sched_group_span(sd->groups),
++		.dst_grpmask    = group_balance_mask(sd->groups),
+ 		.idle		= idle,
+ 		.loop_break	= sched_nr_migrate_break,
+ 		.cpus		= cpus,
 -- 
 2.43.0
 
