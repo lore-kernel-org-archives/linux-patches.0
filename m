@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BBF54FA5;
-	Tue, 27 Feb 2024 13:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4B613DB90;
+	Tue, 27 Feb 2024 13:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040977; cv=none; b=UvXFHdbnHH+AOEtHCPgkzRC6+ymFfXmwPDCfmZhvHYuzOg8GA1MsEkuymWXmEciwbevF18W3uigBXAYU6AlUKCqrTs/aQH5x7f42UuaF/E/D1qJKaraYQpvW1rEInzvOLcQSbOd1pXODV6HbjmFoVs+9CJMFMDRLa/G5LtYN7NA=
+	t=1709040980; cv=none; b=eqpcZqZOWV/RbWuBgnrZ9K6jXzxwUBxKfq8qZsg0HOC/2oO0Tz1wr8UoijdDsNjLSx1y2cRis9+oDH3jWZ7C2wFG71drXhFF3lCJbK1xdh83XzycqRSJuXtFcDEDrymUAA4arKsHKHVT5jqIM6377tOf6EqAj7rbRuPT/jV0efg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040977; c=relaxed/simple;
-	bh=WtgOI4XETUdvn7lkHJk9+toO1LnURE+j2wEvLRvoBws=;
+	s=arc-20240116; t=1709040980; c=relaxed/simple;
+	bh=2sMLx5hXtqTnf8rIegNCyazw2KUbmnG18nsy8ZjXxsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nwq7coAbqdNx3OV03OwQAd0TqlJbOvy0BV4TufsdxWKRPITtgZ2iL2Gqsk2QM5oaAR8AOu1HTk6LCsMFpmcfngEIsEOyjDWIm5iIeummK0ky2KsqgXjBnCWEdbQ7p2hh3GQIQ9hh7FBGF4bv0LMZWW7VDF5HrSaaiKz9WfUiZOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIxSkL/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9fkm2LWVQB1FnE9UE/AlVjWxw42UFu2teoCQCMEa4SMW1ekca1jV1Ogu7q+51cn5uFVGiH00M8yb7x+Eh3HjXuJB8WwdXeNmZ+5ed4M+RhGgeiJVjkLRfXyb+ioxEYbp/9QJMM3yPhGhgd4pbYK7zUiPr/DyUwA5x6b05LG0HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7XWqZms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIxSkL/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDBFC433F1;
-	Tue, 27 Feb 2024 13:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7XWqZms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFCFC433F1;
+	Tue, 27 Feb 2024 13:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040977;
-	bh=WtgOI4XETUdvn7lkHJk9+toO1LnURE+j2wEvLRvoBws=;
+	s=korg; t=1709040980;
+	bh=2sMLx5hXtqTnf8rIegNCyazw2KUbmnG18nsy8ZjXxsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIxSkL/jVJ4jBa0rO3UlTkJSAysH8MxwXzKUtN+Gss/xHJMn7KSMh+1uETovdZY67
-	 TBUkli76BbyAMPKCb0IRIX5ltrqaOVPq2nSL0bfFzXtVVF38a76kFbeVF930SZ6uLt
-	 1IS6l5V4CTuIynv2VLFDldJuhhwMPC6XI5r1IovU=
+	b=x7XWqZmsYhr/yLhILBHj9ZWhe0rLCP6CFadIgBsXD0jju0flAPvd1Z797K5kVfHMe
+	 Um7LiXOGZpA2hsVccOFfBXGIkM+OaSP1Y5DeJVKY0feMx18zwJRW50B17Jtyjb/oZ5
+	 v6Gj3nk9qhjQ5uAOyiKuCLtetcotgymGhCa2COYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mike Rapoport <rppt@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 175/334] mm/damon/reclaim: fix quota stauts loss due to online tunings
-Date: Tue, 27 Feb 2024 14:20:33 +0100
-Message-ID: <20240227131636.208291226@linuxfoundation.org>
+Subject: [PATCH 6.7 176/334] mm/memblock: add MEMBLOCK_RSRV_NOINIT into flagname[] array
+Date: Tue, 27 Feb 2024 14:20:34 +0100
+Message-ID: <20240227131636.248497324@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,80 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit 1b0ca4e4ff10a2c8402e2cf70132c683e1c772e4 upstream.
+commit 4f155af0ae4464134bfcfd9f043b6b727c84e947 upstream.
 
-Patch series "mm/damon: fix quota status loss due to online tunings".
+The commit 77e6c43e137c ("memblock: introduce MEMBLOCK_RSRV_NOINIT flag")
+skipped adding this newly introduced memblock flag into flagname[] array,
+thus preventing a correct memblock flags output for applicable memblock
+regions.
 
-DAMON_RECLAIM and DAMON_LRU_SORT is not preserving internal quota status
-when applying new user parameters, and hence could cause temporal quota
-accuracy degradation.  Fix it by preserving the status.
-
-
-This patch (of 2):
-
-For online parameters change, DAMON_RECLAIM creates new scheme based on
-latest values of the parameters and replaces the old scheme with the new
-one.  When creating it, the internal status of the quota of the old
-scheme is not preserved.  As a result, charging of the quota starts from
-zero after the online tuning.  The data that collected to estimate the
-throughput of the scheme's action is also reset, and therefore the
-estimation should start from the scratch again.  Because the throughput
-estimation is being used to convert the time quota to the effective size
-quota, this could result in temporal time quota inaccuracy.  It would be
-recovered over time, though.  In short, the quota accuracy could be
-temporarily degraded after online parameters update.
-
-Fix the problem by checking the case and copying the internal fields for
-the status.
-
-Link: https://lkml.kernel.org/r/20240216194025.9207-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240216194025.9207-2-sj@kernel.org
-Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.19+]
+Link: https://lkml.kernel.org/r/20240209030912.1382251-1-anshuman.khandual@arm.com
+Fixes: 77e6c43e137c ("memblock: introduce MEMBLOCK_RSRV_NOINIT flag")
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/reclaim.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ mm/memblock.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -150,9 +150,20 @@ static struct damos *damon_reclaim_new_s
- 			&damon_reclaim_wmarks);
- }
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -2214,6 +2214,7 @@ static const char * const flagname[] = {
+ 	[ilog2(MEMBLOCK_MIRROR)] = "MIRROR",
+ 	[ilog2(MEMBLOCK_NOMAP)] = "NOMAP",
+ 	[ilog2(MEMBLOCK_DRIVER_MANAGED)] = "DRV_MNG",
++	[ilog2(MEMBLOCK_RSRV_NOINIT)] = "RSV_NIT",
+ };
  
-+static void damon_reclaim_copy_quota_status(struct damos_quota *dst,
-+		struct damos_quota *src)
-+{
-+	dst->total_charged_sz = src->total_charged_sz;
-+	dst->total_charged_ns = src->total_charged_ns;
-+	dst->charged_sz = src->charged_sz;
-+	dst->charged_from = src->charged_from;
-+	dst->charge_target_from = src->charge_target_from;
-+	dst->charge_addr_from = src->charge_addr_from;
-+}
-+
- static int damon_reclaim_apply_parameters(void)
- {
--	struct damos *scheme;
-+	struct damos *scheme, *old_scheme;
- 	struct damos_filter *filter;
- 	int err = 0;
- 
-@@ -164,6 +175,11 @@ static int damon_reclaim_apply_parameter
- 	scheme = damon_reclaim_new_scheme();
- 	if (!scheme)
- 		return -ENOMEM;
-+	if (!list_empty(&ctx->schemes)) {
-+		damon_for_each_scheme(old_scheme, ctx)
-+			damon_reclaim_copy_quota_status(&scheme->quota,
-+					&old_scheme->quota);
-+	}
- 	if (skip_anon) {
- 		filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true);
- 		if (!filter) {
+ static int memblock_debug_show(struct seq_file *m, void *private)
 
 
