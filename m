@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1D2145FE3;
-	Tue, 27 Feb 2024 14:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2731474C9;
+	Tue, 27 Feb 2024 14:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044214; cv=none; b=oNq9NwKKPKnPW8iMyCv9agBFQTanqrWP/ZV+tFBrVXYcrHRtbHVIuy0IhCRRHqEsCNCR0tNtIGm2MNNs5KBqdR7P8fz92mHuqLLhTiRHUymE5gydOGyR/QBmEYNwFSUHgBbzKDTdxQgB7MFeHPVJCL7ltNDPqNLcgwbOSay/OOo=
+	t=1709044217; cv=none; b=HsERiVz0sx/coTQXdLa3aqlqmd5bsAV69G1Mf0DaNqGbZZlO5PHmOXlRXoKz+XhSIPXGKMA9rFENBtr6pAybhUcQIjzCbYaVhDAws06vnXpp7E4KGotkfueFFQJmGkxtl+cvRVzPPKdAOsocj+zwKoDYzUQIu5PpnRh9kiZl3cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044214; c=relaxed/simple;
-	bh=vFBPWm6LckukMVwo3vGAvIYXWqHPP0tV2HYhLNsff0o=;
+	s=arc-20240116; t=1709044217; c=relaxed/simple;
+	bh=feii9K7xDS6buJ29i9Gl1PPsBNioYYONyZRy396AR+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2+ixzy66glgfdsZ2vsvlrSN4zlFzY0nXxBwX8jK+qHlMHadD5c0wTKMa0Xb8LsD4QtZWWU/b1rjlr0sYBv02kx5zigU0ZhOPAfJUvHwznyZK7E2lIGsIV9V5lX3/KUQrfei+SL6W5YGSrFt3omONZHGwZaS51lbY+T5QU1A8Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/M23ZmG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6MQsZwGAKjkg5dKOvLyij5LD0I3sV1EH4zFEqng1vLFse9j+Z5HpiLeXK6BfF/uKLnpfIY6tB0SoRS3ea1LW9+19bRBIrRieW4NdFX+Ft1KZscGiTalFENFga+EmrZTkBNG137EuLnKxwEpQ6dr4CMTIStkXa8yrrqryEErL88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY4xiAOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/M23ZmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8461C433F1;
-	Tue, 27 Feb 2024 14:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY4xiAOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D37DC433C7;
+	Tue, 27 Feb 2024 14:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044214;
-	bh=vFBPWm6LckukMVwo3vGAvIYXWqHPP0tV2HYhLNsff0o=;
+	s=korg; t=1709044217;
+	bh=feii9K7xDS6buJ29i9Gl1PPsBNioYYONyZRy396AR+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/M23ZmG40zh/6ZvddGWT1ad8rh2CWzuZ0tyuT6Gweu/20ltjuaB/RC0R2vKue8Mo
-	 Pn9qAeo0foGrzu6sQSRZ7lKWaWLYYVCpJUCFx3JF/TJNvogEbISkNFHWs7LtOE1es3
-	 CNNGFuKEpyu4i2drbDWoubUOJ7ehOqcIqF1kOXjM=
+	b=uY4xiAOApZxBxFn5C9xjVz8y6IEKoOw3GsYTqp7gpsMKQUIotBtS1vcvgvPAGDVBS
+	 zHrTpcPCkweoc0eAOylMdou4j+uQM3M4SwulqeDerN47UzGhbH+ZDLDPMR0wzpnbCJ
+	 duC//WBPx+31rOzJQN4XuD+iD12BDhfQUI3dKb1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 076/122] dm-crypt: dont modify the data when using authenticated encryption
-Date: Tue, 27 Feb 2024 14:27:17 +0100
-Message-ID: <20240227131601.193523159@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 077/122] KVM: arm64: vgic-its: Test for valid IRQ in MOVALL handler
+Date: Tue, 27 Feb 2024 14:27:18 +0100
+Message-ID: <20240227131601.225565731@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -50,43 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit 50c70240097ce41fe6bce6478b80478281e4d0f7 upstream.
+commit 85a71ee9a0700f6c18862ef3b0011ed9dad99aca upstream.
 
-It was said that authenticated encryption could produce invalid tag when
-the data that is being encrypted is modified [1]. So, fix this problem by
-copying the data into the clone bio first and then encrypt them inside the
-clone bio.
+It is possible that an LPI mapped in a different ITS gets unmapped while
+handling the MOVALL command. If that is the case, there is no state that
+can be migrated to the destination. Silently ignore it and continue
+migrating other LPIs.
 
-This may reduce performance, but it is needed to prevent the user from
-corrupting the device by writing data with O_DIRECT and modifying them at
-the same time.
-
-[1] https://lore.kernel.org/all/20240207004723.GA35324@sol.localdomain/T/
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: ff9c114394aa ("KVM: arm/arm64: GICv4: Handle MOVALL applied to a vPE")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240221092732.4126848-3-oliver.upton@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/kvm/vgic/vgic-its.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -2064,6 +2064,12 @@ static void kcryptd_crypt_write_convert(
- 	io->ctx.bio_out = clone;
- 	io->ctx.iter_out = clone->bi_iter;
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -1374,6 +1374,8 @@ static int vgic_its_cmd_handle_movall(st
  
-+	if (crypt_integrity_aead(cc)) {
-+		bio_copy_data(clone, io->base_bio);
-+		io->ctx.bio_in = clone;
-+		io->ctx.iter_in = clone->bi_iter;
-+	}
-+
- 	sector += bio_sectors(clone);
+ 	for (i = 0; i < irq_count; i++) {
+ 		irq = vgic_get_irq(kvm, NULL, intids[i]);
++		if (!irq)
++			continue;
  
- 	crypt_inc_pending(io);
+ 		update_affinity(irq, vcpu2);
+ 
 
 
