@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347016423;
-	Tue, 27 Feb 2024 14:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F0C16423;
+	Tue, 27 Feb 2024 14:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042627; cv=none; b=YguPQB38EUzELSf3n3puwSs7qKShWtAKo88Pe0+v4eEsGss2QoLyhJTP2V2z7AJh+4bPgl/M0PEMes3C0ngBzrtlD42IwN6r95yQXpQid6wmmOwSxYtGUEQwXNJ18M3Y1oy3S21fezIf3AkRzNksFawFPFMpYGC6JJ18Nn9RIII=
+	t=1709042630; cv=none; b=lpTsRQikliLBujYzweHTwpj/IgZhwHqKkkRkKtRNfyqztSkiJT+QI01uBhBPVFVrVDH73fle0p9lC7u1mr3F/KpBMYx9yGnh8LGPYHZqJjJta3BtBumpYVr1F/qJLBLvEyoUZagxxr7ZuEbqLnou+JpmrDvJ/b/l9EPQHYISZ0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042627; c=relaxed/simple;
-	bh=r50VYOBJ6DVYL+VmPPdJuzNQZe2oE+H2JLou+/zY7Nw=;
+	s=arc-20240116; t=1709042630; c=relaxed/simple;
+	bh=Y7gfWtVbA8fWAo8mMZg8q0vBxZ14qEL0dN8VxiWgv7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pZWQlSEPn98scBtc4mmMN02ANLUJf/Nz71Z1wdtDIN8n+4F066KhbyA2al5K/FKmqGYG5dh2hNKh51mRrGJEVQlLJswKHgbdgh55YsbdpahLG53HcDbjWJ8Ue+I491CjwiupepCcyM+nMMI5C7zU5vPWGluzNTWj5OGdVdab7g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVAzuu5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UI3tOa6DdSSP1GLIKYwW6n/MstU9g2hCzWhkWniV8g+vjotbtAeLf697bUEEuKqB0NxDxQZkZV5JDN35E/0qlzqOgGCr0meykXLUIzUe9Vm49aYtqoVFt/9VO6BVMNuDrtHKV9OvBGJ5PV63ZggOEgwgEuAxwh4rg4jQpp3omwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IqjuQnz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVAzuu5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4487C433F1;
-	Tue, 27 Feb 2024 14:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IqjuQnz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3513C433C7;
+	Tue, 27 Feb 2024 14:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042627;
-	bh=r50VYOBJ6DVYL+VmPPdJuzNQZe2oE+H2JLou+/zY7Nw=;
+	s=korg; t=1709042630;
+	bh=Y7gfWtVbA8fWAo8mMZg8q0vBxZ14qEL0dN8VxiWgv7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVAzuu5FztSs8kxPvMCCq76WvxnIpkjvE1f24KY/YBJWYxSl2MVG8JRyGojXdhyUY
-	 xioV5G2RqE7hhiunYzfjxyvcmivVZVP5f+dPQR/pTRAnaMNjV1nJEtFiefjL19P4L4
-	 3oE9EAs/IqCzjZibHIQRSlyZsciw+WCKOB3CUPuM=
+	b=0IqjuQnzMDgpvZBl8EDg0ghz5ziEuWgOVcttiq7pLAcb1Ycc8cWlotKeQQ5VstoGw
+	 vBpyxsKnjCfYP9poIp0cKgqgZCXj9iP6+L6HwAHTFXPqoKJXm7MYKStjc/T9YOUKvk
+	 5RxznrT1JaUJYsVJMGZSj9eUAUSFF1T7nKPtPrGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/245] regulator: pwm-regulator: Add validity checks in continuous .get_voltage
-Date: Tue, 27 Feb 2024 14:23:42 +0100
-Message-ID: <20240227131616.227543981@linuxfoundation.org>
+Subject: [PATCH 5.15 035/245] nvmet-tcp: fix nvme tcp ida memory leak
+Date: Tue, 27 Feb 2024 14:23:43 +0100
+Message-ID: <20240227131616.260942272@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -46,44 +47,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit c92688cac239794e4a1d976afa5203a4d3a2ac0e ]
+[ Upstream commit 47c5dd66c1840524572dcdd956f4af2bdb6fbdff ]
 
-Continuous regulators can be configured to operate only in a certain
-duty cycle range (for example from 0..91%). Add a check to error out if
-the duty cycle translates to an unsupported (or out of range) voltage.
+The nvmet_tcp_queue_ida should be destroy when the nvmet-tcp module
+exit.
 
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://msgid.link/r/20240113224628.377993-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pwm-regulator.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/target/tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/pwm-regulator.c b/drivers/regulator/pwm-regulator.c
-index 7629476d94aeb..f4d9d9455dea6 100644
---- a/drivers/regulator/pwm-regulator.c
-+++ b/drivers/regulator/pwm-regulator.c
-@@ -158,6 +158,9 @@ static int pwm_regulator_get_voltage(struct regulator_dev *rdev)
- 	pwm_get_state(drvdata->pwm, &pstate);
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 4f2164a3f466b..8468a41322f25 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1884,6 +1884,7 @@ static void __exit nvmet_tcp_exit(void)
+ 	flush_workqueue(nvmet_wq);
  
- 	voltage = pwm_get_relative_duty_cycle(&pstate, duty_unit);
-+	if (voltage < min(max_uV_duty, min_uV_duty) ||
-+	    voltage > max(max_uV_duty, min_uV_duty))
-+		return -ENOTRECOVERABLE;
+ 	destroy_workqueue(nvmet_tcp_wq);
++	ida_destroy(&nvmet_tcp_queue_ida);
+ }
  
- 	/*
- 	 * The dutycycle for min_uV might be greater than the one for max_uV.
+ module_init(nvmet_tcp_init);
 -- 
 2.43.0
 
