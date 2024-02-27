@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C365A14690A;
-	Tue, 27 Feb 2024 14:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B705754BFE;
+	Tue, 27 Feb 2024 14:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044244; cv=none; b=S7bROImD+3SN3Yn22keeKMg6F9tTGb36EdYA8ve0IGdiJ/McOOxszyJQxODxdEcCAGHuHqj0Lm2AGTUsOe5vV+HjzEIc3hJi7vRdfGY+9jvBL3x6I8ONKfsm+TkzE53v83FVBjn+5p4OLSxP+r1m4bk1NFy45iGIcTkCw4SCFvs=
+	t=1709044247; cv=none; b=XKVBz4x9kV5/jgEbhArJKShcRhiF5h3fPhFPWzp2sIAb9MCFqfI3eNn8qIlcvYdfwc+9AVkwdkorvjRqav3hn4+4panRilPcwSRsaZyUr0HsngpYNOfLsZQU32BuFZqUuFBSMgZ3aLba6u31erLX69T53Zl/Sg3cB//uBTTSL6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044244; c=relaxed/simple;
-	bh=bMdqMXB/j5nesPrOyrQmRXHYukqM858/IHO4ns5xGPM=;
+	s=arc-20240116; t=1709044247; c=relaxed/simple;
+	bh=vDHOPQRgTPaE/UQR7zqGSgpUQZyei9xNaMIJhVG/SVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2fcsMQmujtMJy9M7aq31ihTqLpG5Rgs4nh9JCI5DPww+7ou4hZ4fluzTF+aLk5AH4aJMNG1+7gn84rJwIjK9tgQdgJ8/LpCSG22pUFPmMmYt+nVtAa01FWMHrrnZDc8HBFfa7Afrs7NzHTsKECi0kivb6boV+1cK1vcEgH6pK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbzkv459; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=STW0dIMyrNAWl+6nH2TcRoNlS7H+AgHo2pF6XpvQGzCOH3TwRPkkrOPLxlI+v4MSd520LH0pUddqTMsVK9m/jydllDXFJHuEHwBxJJe9ljrgv6Taz128kgQSbO2lk33M/5z9Nz1B9G6QBEHeftfingi5HBM76suhFaG/jWTXd24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ci62WQZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbzkv459"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B6AC433F1;
-	Tue, 27 Feb 2024 14:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ci62WQZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E806C433F1;
+	Tue, 27 Feb 2024 14:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044244;
-	bh=bMdqMXB/j5nesPrOyrQmRXHYukqM858/IHO4ns5xGPM=;
+	s=korg; t=1709044247;
+	bh=vDHOPQRgTPaE/UQR7zqGSgpUQZyei9xNaMIJhVG/SVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbzkv459hvMzEyMl5Oqicwx5T+oga2koDyPLRD/Bn3oreiI/vZTjbcUDv6edLPvKu
-	 EtJt7itI3tcNmWz0G5stHVBBXmN+lfrJAamJJUnaCF3HB98oP25uwFPi1Ewk5+Z+RQ
-	 mOaZoJy2WocGSY6rYnWzpYKAR++sUooixH9Rs3Gk=
+	b=Ci62WQZQPkUeTN2toRoCaTojXtDn2FJSpibeinzHfmTO13AhxVIcb5DAvQYEGGKhm
+	 cJEoSzpaOAeAV69ClnuoupR+2RglI+Z24kzzgCHYrrfUuKN2jq0O1H/NcWCtrXjko9
+	 An7RwfhMgmVv82G93HdCsNxE9Lbe0Sxoi9qTDtus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+de4025c006ec68ac56fc@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 115/122] netfilter: nf_tables: set dormant flag on hook register failure
-Date: Tue, 27 Feb 2024 14:27:56 +0100
-Message-ID: <20240227131602.466379837@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 116/122] drm/syncobj: make lockdep complain on WAIT_FOR_SUBMIT v3
+Date: Tue, 27 Feb 2024 14:27:57 +0100
+Message-ID: <20240227131602.498289910@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -46,46 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit bccebf64701735533c8db37773eeacc6566cc8ec ]
+[ Upstream commit 7621350c6bb20fb6ab7eb988833ab96eac3dcbef ]
 
-We need to set the dormant flag again if we fail to register
-the hooks.
+DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT can't be used when we hold locks
+since we are basically waiting for userspace to do something.
 
-During memory pressure hook registration can fail and we end up
-with a table marked as active but no registered hooks.
+Holding a lock while doing so can trivial deadlock with page faults
+etc...
 
-On table/base chain deletion, nf_tables will attempt to unregister
-the hook again which yields a warn splat from the nftables core.
+So make lockdep complain when a driver tries to do this.
 
-Reported-and-tested-by: syzbot+de4025c006ec68ac56fc@syzkaller.appspotmail.com
-Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+v2: Add lockdep_assert_none_held() macro.
+v3: Add might_sleep() and also use lockdep_assert_none_held() in the
+    IOCTL path.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patchwork.freedesktop.org/patch/414944/
+Stable-dep-of: 3c43177ffb54 ("drm/syncobj: call drm_syncobj_fence_add_wait when WAIT_AVAILABLE flag is set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_syncobj.c | 12 ++++++++++++
+ include/linux/lockdep.h       |  5 +++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f586e8b3c6cfa..73b0a6925304c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1132,6 +1132,7 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
- 	return 0;
+diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
+index 738e60139db90..4c3c8f8da0215 100644
+--- a/drivers/gpu/drm/drm_syncobj.c
++++ b/drivers/gpu/drm/drm_syncobj.c
+@@ -387,6 +387,15 @@ int drm_syncobj_find_fence(struct drm_file *file_private,
+ 	if (!syncobj)
+ 		return -ENOENT;
  
- err_register_hooks:
-+	ctx->table->flags |= NFT_TABLE_F_DORMANT;
- 	nft_trans_destroy(trans);
- 	return ret;
- }
++	/* Waiting for userspace with locks help is illegal cause that can
++	 * trivial deadlock with page faults for example. Make lockdep complain
++	 * about it early on.
++	 */
++	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
++		might_sleep();
++		lockdep_assert_none_held_once();
++	}
++
+ 	*fence = drm_syncobj_fence_get(syncobj);
+ 
+ 	if (*fence) {
+@@ -951,6 +960,9 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
+ 	uint64_t *points;
+ 	uint32_t signaled_count, i;
+ 
++	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT)
++		lockdep_assert_none_held_once();
++
+ 	points = kmalloc_array(count, sizeof(*points), GFP_KERNEL);
+ 	if (points == NULL)
+ 		return -ENOMEM;
+diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
+index 2c2586312b447..3eca9f91b9a56 100644
+--- a/include/linux/lockdep.h
++++ b/include/linux/lockdep.h
+@@ -321,6 +321,10 @@ extern void lock_unpin_lock(struct lockdep_map *lock, struct pin_cookie);
+ 		WARN_ON_ONCE(debug_locks && !lockdep_is_held(l));	\
+ 	} while (0)
+ 
++#define lockdep_assert_none_held_once()	do {				\
++		WARN_ON_ONCE(debug_locks && current->lockdep_depth);	\
++	} while (0)
++
+ #define lockdep_recursing(tsk)	((tsk)->lockdep_recursion)
+ 
+ #define lockdep_pin_lock(l)	lock_pin_lock(&(l)->dep_map)
+@@ -394,6 +398,7 @@ static inline void lockdep_unregister_key(struct lock_class_key *key)
+ #define lockdep_assert_held_write(l)	do { (void)(l); } while (0)
+ #define lockdep_assert_held_read(l)		do { (void)(l); } while (0)
+ #define lockdep_assert_held_once(l)		do { (void)(l); } while (0)
++#define lockdep_assert_none_held_once()	do { } while (0)
+ 
+ #define lockdep_recursing(tsk)			(0)
+ 
 -- 
 2.43.0
 
