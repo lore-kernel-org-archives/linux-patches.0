@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DEA13AA55;
-	Tue, 27 Feb 2024 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFA513AA55;
+	Tue, 27 Feb 2024 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042124; cv=none; b=Se9TNAZFq9gw0paXv34EDqCsWG2Ur5ceQ6LiHoQiwY35D1JRZGu9IuCTE4SkfsyzcwUmKE24RuNvuikKeGycQqyKRe104ttdnupTF9jBWJn0pnYrVmAgMtDuZY0XFHmn0XEcdFhdMDCUYKTTjLB+rRlxOytqSRfTzhXoHYkViwU=
+	t=1709042127; cv=none; b=k8SPtcduKnhYuLTmLKhn91K036hfJxYnP88s2E5nDQBEMEHx7u9GTvM7EukFw6iYJGhKp7Vf12TTYH+ExW444uX+NUDo0j8TTHA0jeUK6hWJxbx6GrhNHvriv55zf8r40fHRQ8VjkwlS/DI7twRd/1L7Ey6pZLcy86RSyYSls/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042124; c=relaxed/simple;
-	bh=uVqjvABWR6SrMUtKij+VIVevZwLr/rd559aw9tX8WOw=;
+	s=arc-20240116; t=1709042127; c=relaxed/simple;
+	bh=S8zsSj1PL2GQY/ySkagaTMIYUYwFa4N23N42O4+Fhwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PXg1X0obP6eB7ir0MG1IJscDlbc8qItRIuVHFQsCQ41rpxRtWsd3tigMhpI+ZhOjw+b/E0qZAFh+CGl7o7XaUqPHcFYKSCJR38M11R93G6XgPg8rQdxyca8x0v0HuDo+D7MgHebqGIe5NZSOFWkBxkGRz1RZHgFitrLtmQxfUx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jID8VYAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=flSlmUf+ieDTju7euMuWVYZU+C0iiIX9XA98r/1EExZKiV8R+UlCXqjTxQA5avXnwfbValiQ834wTL6HynAIBaobT1nLGXOYtQxHP/yIU0BQ6xArih2cBn7Vt0Namis7QhdMlbBqNCFnSAkxu0BPNPbKbDUXv2nJwgfvnZCLYz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1alVHS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jID8VYAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0171BC433F1;
-	Tue, 27 Feb 2024 13:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1alVHS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7ED9C433C7;
+	Tue, 27 Feb 2024 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042124;
-	bh=uVqjvABWR6SrMUtKij+VIVevZwLr/rd559aw9tX8WOw=;
+	s=korg; t=1709042127;
+	bh=S8zsSj1PL2GQY/ySkagaTMIYUYwFa4N23N42O4+Fhwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jID8VYARWyWay+5JIV01oeiNmF9CqDlTpp0KZzKhgLizod6xlaRH74pw50Kbx6wut
-	 +geaSL8wm7stj5SCAXbn/Tw0b1/CiJtaF1oLqMb0pvr/nA5V1t652D6X9aUETS25/n
-	 AOwMvN9HgxsPEtZpWbH/ImKksB4PM98MrnhpQRtU=
+	b=O1alVHS+3MyWa8HDrUlA9ydn/lO9S1/lESgFDnwvhOVcjqScmNXkgRlZATId7IfBP
+	 LffLZ272o9/Aq59uAc+WX7NiI46l9hrSuphlFVSnIWGpTza6frv113BU6U+P9De6Re
+	 ORa4kGwXiz0xl9orstYL8zq8NZ3dpLLG+QzNVckY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	=?UTF-8?q?Jonas=20Sch=C3=A4fer?= <jonas@wielicki.name>,
-	Narcis Garcia <debianlists@actiu.net>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 160/299] mm: memcontrol: clarify swapaccount=0 deprecation warning
-Date: Tue, 27 Feb 2024 14:24:31 +0100
-Message-ID: <20240227131631.009790249@linuxfoundation.org>
+Subject: [PATCH 6.6 161/299] mm/damon/reclaim: fix quota stauts loss due to online tunings
+Date: Tue, 27 Feb 2024 14:24:32 +0100
+Message-ID: <20240227131631.040373204@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,63 +44,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit 118642d7f606fc9b9c92ee611275420320290ffb upstream.
+commit 1b0ca4e4ff10a2c8402e2cf70132c683e1c772e4 upstream.
 
-The swapaccount deprecation warning is throwing false positives.  Since we
-deprecated the knob and defaulted to enabling, the only reports we've been
-getting are from folks that set swapaccount=1.  While this is a nice
-affirmation that always-enabling was the right choice, we certainly don't
-want to warn when users request the supported mode.
+Patch series "mm/damon: fix quota status loss due to online tunings".
 
-Only warn when disabling is requested, and clarify the warning.
+DAMON_RECLAIM and DAMON_LRU_SORT is not preserving internal quota status
+when applying new user parameters, and hence could cause temporal quota
+accuracy degradation.  Fix it by preserving the status.
 
-[colin.i.king@gmail.com: spelling: "commdandline" -> "commandline"]
-  Link: https://lkml.kernel.org/r/20240215090544.1649201-1-colin.i.king@gmail.com
-Link: https://lkml.kernel.org/r/20240213081634.3652326-1-hannes@cmpxchg.org
-Fixes: b25806dcd3d5 ("mm: memcontrol: deprecate swapaccounting=0 mode")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reported-by: "Jonas Schäfer" <jonas@wielicki.name>
-Reported-by: Narcis Garcia <debianlists@actiu.net>
-Suggested-by: Yosry Ahmed <yosryahmed@google.com>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
+
+This patch (of 2):
+
+For online parameters change, DAMON_RECLAIM creates new scheme based on
+latest values of the parameters and replaces the old scheme with the new
+one.  When creating it, the internal status of the quota of the old
+scheme is not preserved.  As a result, charging of the quota starts from
+zero after the online tuning.  The data that collected to estimate the
+throughput of the scheme's action is also reset, and therefore the
+estimation should start from the scratch again.  Because the throughput
+estimation is being used to convert the time quota to the effective size
+quota, this could result in temporal time quota inaccuracy.  It would be
+recovered over time, though.  In short, the quota accuracy could be
+temporarily degraded after online parameters update.
+
+Fix the problem by checking the case and copying the internal fields for
+the status.
+
+Link: https://lkml.kernel.org/r/20240216194025.9207-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20240216194025.9207-2-sj@kernel.org
+Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[5.19+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/damon/reclaim.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -7613,9 +7613,13 @@ bool mem_cgroup_swap_full(struct folio *
- 
- static int __init setup_swap_account(char *s)
- {
--	pr_warn_once("The swapaccount= commandline option is deprecated. "
--		     "Please report your usecase to linux-mm@kvack.org if you "
--		     "depend on this functionality.\n");
-+	bool res;
-+
-+	if (!kstrtobool(s, &res) && !res)
-+		pr_warn_once("The swapaccount=0 commandline option is deprecated "
-+			     "in favor of configuring swap control via cgroupfs. "
-+			     "Please report your usecase to linux-mm@kvack.org if you "
-+			     "depend on this functionality.\n");
- 	return 1;
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -148,9 +148,20 @@ static struct damos *damon_reclaim_new_s
+ 			&damon_reclaim_wmarks);
  }
- __setup("swapaccount=", setup_swap_account);
+ 
++static void damon_reclaim_copy_quota_status(struct damos_quota *dst,
++		struct damos_quota *src)
++{
++	dst->total_charged_sz = src->total_charged_sz;
++	dst->total_charged_ns = src->total_charged_ns;
++	dst->charged_sz = src->charged_sz;
++	dst->charged_from = src->charged_from;
++	dst->charge_target_from = src->charge_target_from;
++	dst->charge_addr_from = src->charge_addr_from;
++}
++
+ static int damon_reclaim_apply_parameters(void)
+ {
+-	struct damos *scheme;
++	struct damos *scheme, *old_scheme;
+ 	struct damos_filter *filter;
+ 	int err = 0;
+ 
+@@ -162,6 +173,11 @@ static int damon_reclaim_apply_parameter
+ 	scheme = damon_reclaim_new_scheme();
+ 	if (!scheme)
+ 		return -ENOMEM;
++	if (!list_empty(&ctx->schemes)) {
++		damon_for_each_scheme(old_scheme, ctx)
++			damon_reclaim_copy_quota_status(&scheme->quota,
++					&old_scheme->quota);
++	}
+ 	if (skip_anon) {
+ 		filter = damos_new_filter(DAMOS_FILTER_TYPE_ANON, true);
+ 		if (!filter) {
 
 
