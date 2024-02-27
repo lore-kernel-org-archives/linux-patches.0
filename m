@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CB613B78F;
-	Tue, 27 Feb 2024 14:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C02A1386CB;
+	Tue, 27 Feb 2024 14:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043348; cv=none; b=oMhkKhfwAU3evaR/4J8aHHiwOFZs7KvPdt6RhIGijN0Q2Ue1eIf7+1T4AGa377B+iZI5V0R01/sCt/YvRxCB5BgjSCV06ZhSghjgWVEYiCng5DVllkpwQ9MjZf+rvAaJuffQ/PCGjR1yqCLSYylkJAMAFo7L+2gkEKQ3Lr5tBsQ=
+	t=1709043351; cv=none; b=ai4NG6TFxwW1ADuit7AA1W8x8IOWLbF9bCfFA1BKSXZluuLRv5JTxdVwX3mi7dCLVkLyRup9nncvMq6cbEJnYhV23Yd6XEItu5r9308TBj3snb1BXtQO9tK554eXtCq+fWSfxS7hSQJQxIVn9NGrGdcj/GoWUA06+Qmz4PZZm6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043348; c=relaxed/simple;
-	bh=oOQWcHrudQuPTnJzvVq8n/06mdfTyd/rN4Lc7Mwgi0A=;
+	s=arc-20240116; t=1709043351; c=relaxed/simple;
+	bh=ouiQvd3hpx29Dwat0NJXjmFpBFng7c1y+M+y68oRZyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkJWxCpmQLbwBTgjK/reL7fkizc8woB/ZN1DQIGXwLiJFWcl0Bbw/iuc2s6nzhJvHp7poxk+nZX7MOOEnn9EkBBh7qaBrGQ7NIxFbxFGSOgS2yCSyXN2yWWLAcUCHSpdjw7YEvx8bHcoqMXMLpLzFWobLuHSd8A1jZNzDS5KMhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY3creQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6EqnBvly2j0VQofJuS6M9AfL4n5jI0obtufLa5ryszEfKcIJ/9g9lxxkQENSACVdnyKXMbwlrKiUBK6/geFWA/JgwA2UfO/HZaiTQCTmEEzIXNf0TMs32uyyx66bzzmCsq9i3QH1rjM4PoIbzbGpHYGKlBmRkOE+gKK0pTjAvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04bmZen3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY3creQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF8AC433F1;
-	Tue, 27 Feb 2024 14:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04bmZen3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BDFC433C7;
+	Tue, 27 Feb 2024 14:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043348;
-	bh=oOQWcHrudQuPTnJzvVq8n/06mdfTyd/rN4Lc7Mwgi0A=;
+	s=korg; t=1709043351;
+	bh=ouiQvd3hpx29Dwat0NJXjmFpBFng7c1y+M+y68oRZyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YY3creQvqbqbieceAmZ3rlpH7PTOpMd9C/Ll95aKNtig0v1QnGYPOkVl4c4LP9vvH
-	 5/4zRXPAucR6dNWJZ3RGhq64PR7s4l6k0T9g2JCpktW9KNS6ZNG5SQfm8mli0a7daI
-	 G+CrAExrJdvddpXyeJpnlP8x/Jdyv/IH973FzMCc=
+	b=04bmZen3lJjs7wkpl2oW++f4pVgafOiYTR0mqeIbzHX+gNssbenRFMj7I9yiKKPLB
+	 TfxiyYbRlGgEa6xT/nYBtfnP8H98pPwLi6AstJ6EsZ1nu50Lv7DlNQECCdDU56z40q
+	 6HxA4jszDPkL9lT7MY2Q6h84xJxJzakpsrSh7z34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Bresticker <abrestic@rivosinc.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/195] efi: runtime: Fix potential overflow of soft-reserved region size
-Date: Tue, 27 Feb 2024 14:25:29 +0100
-Message-ID: <20240227131612.746084413@linuxfoundation.org>
+Subject: [PATCH 6.1 077/195] drm/amdgpu: reset gpu for s3 suspend abort case
+Date: Tue, 27 Feb 2024 14:25:38 +0100
+Message-ID: <20240227131613.037227564@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,47 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Bresticker <abrestic@rivosinc.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit de1034b38a346ef6be25fe8792f5d1e0684d5ff4 ]
+[ Upstream commit 6ef82ac664bb9568ca3956e0d9c9c478e25077ff ]
 
-md_size will have been narrowed if we have >= 4GB worth of pages in a
-soft-reserved region.
+In the s3 suspend abort case some type of gfx9 power
+rail not turn off from FCH side and this will put the
+GPU in an unknown power status, so let's reset the gpu
+to a known good power state before reinitialize gpu
+device.
 
-Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/arm-runtime.c   | 2 +-
- drivers/firmware/efi/riscv-runtime.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/firmware/efi/arm-runtime.c b/drivers/firmware/efi/arm-runtime.c
-index 7c48c380d722c..1995f0a2e0fc0 100644
---- a/drivers/firmware/efi/arm-runtime.c
-+++ b/drivers/firmware/efi/arm-runtime.c
-@@ -107,7 +107,7 @@ static int __init arm_enable_runtime_services(void)
- 		efi_memory_desc_t *md;
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index 811dd3ea63620..489c89465c78b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -1285,10 +1285,32 @@ static int soc15_common_suspend(void *handle)
+ 	return soc15_common_hw_fini(adev);
+ }
  
- 		for_each_efi_memory_desc(md) {
--			int md_size = md->num_pages << EFI_PAGE_SHIFT;
-+			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
- 			struct resource *res;
++static bool soc15_need_reset_on_resume(struct amdgpu_device *adev)
++{
++	u32 sol_reg;
++
++	sol_reg = RREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_81);
++
++	/* Will reset for the following suspend abort cases.
++	 * 1) Only reset limit on APU side, dGPU hasn't checked yet.
++	 * 2) S3 suspend abort and TOS already launched.
++	 */
++	if (adev->flags & AMD_IS_APU && adev->in_s3 &&
++			!adev->suspend_complete &&
++			sol_reg)
++		return true;
++
++	return false;
++}
++
+ static int soc15_common_resume(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
  
- 			if (!(md->attribute & EFI_MEMORY_SP))
-diff --git a/drivers/firmware/efi/riscv-runtime.c b/drivers/firmware/efi/riscv-runtime.c
-index d0daacd2c903f..6b142aa35389e 100644
---- a/drivers/firmware/efi/riscv-runtime.c
-+++ b/drivers/firmware/efi/riscv-runtime.c
-@@ -85,7 +85,7 @@ static int __init riscv_enable_runtime_services(void)
- 		efi_memory_desc_t *md;
++	if (soc15_need_reset_on_resume(adev)) {
++		dev_info(adev->dev, "S3 suspend abort case, let's reset ASIC.\n");
++		soc15_asic_reset(adev);
++	}
+ 	return soc15_common_hw_init(adev);
+ }
  
- 		for_each_efi_memory_desc(md) {
--			int md_size = md->num_pages << EFI_PAGE_SHIFT;
-+			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
- 			struct resource *res;
- 
- 			if (!(md->attribute & EFI_MEMORY_SP))
 -- 
 2.43.0
 
