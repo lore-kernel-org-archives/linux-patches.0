@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4884D13B79F;
-	Tue, 27 Feb 2024 13:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9A913B79F;
+	Tue, 27 Feb 2024 13:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040592; cv=none; b=CGOSkh024BQrpR6FZsE7EEy7Grg3YE/c/UhwUWssRkSz4Bnz/sDZHF9KZEaAvgUajDa2ya6GnLsn/Q8Pj1Rj66q9Ep9KvQVtfxwN6d/3pm5aCL5tRzyjVICx2Jf62ZYvjjAolHOFneO/fkr8k2AYCFXqRT8WmkE9pNvNr96enT0=
+	t=1709040595; cv=none; b=LJU1j9YbXiXcGoQozddp9URNA/CB4fDLi7Tyr2gF1HrIreJpWKehy1eJX0miHVw8ztm7VUUzUbOyUt4KVgtaWX6HB6n7wx++tGA2l0tqWZtXg1IuD3zjxWqFiVXhc1HXtGiIY1pflIzjdGIviB3ARlFJTtEM3ckwt63i/bZe+yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040592; c=relaxed/simple;
-	bh=sx0QXexfYMUBpXyHLDC/zpN/cL5IRJk2FbiOaZqx1Sg=;
+	s=arc-20240116; t=1709040595; c=relaxed/simple;
+	bh=4pbr+1xD1DUkfILtLwUrAUSu23Qin227K5/X9zBTg9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hhD1+YjwTtXzJKIFmcV9+uQYrpjvCc1vzrMur3fCt9MU+emrTIbmy8tsd236lAOxFYUUfjvhvYKnxIY3B82I7jMcNdEu0SayIW2VASrx3SRSvTgRBQzgNzfoDYsK4PNyD1zFtzado1S1sVXZr8jLQfPK1tbfvBZv+WiOJGzuJ7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtWRlVJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yo7Axe+echeDd3rBV4q6vhl9ZRfTCmmJ4LhfOVTNAIA6EZJALc4ouw99+ia4g6fsCaN3vK9Ya2ZPav6FIKfvkQ45qrjxPED4oD8kbVzhTKO/OA0k/yfdrBcopPZa+Vku6qMdN51TIUDcDU9O1UM2b6kZ8Cp4rpQZwDUtfH0UFr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f14DmgsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtWRlVJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA152C43394;
-	Tue, 27 Feb 2024 13:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f14DmgsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A6CC433F1;
+	Tue, 27 Feb 2024 13:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040592;
-	bh=sx0QXexfYMUBpXyHLDC/zpN/cL5IRJk2FbiOaZqx1Sg=;
+	s=korg; t=1709040594;
+	bh=4pbr+1xD1DUkfILtLwUrAUSu23Qin227K5/X9zBTg9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtWRlVJezR3ChSHZBBzUq5gMoOsBNo+SzvgrnAIKB+HcqzFPGPuNxnTqblP6ZmfGC
-	 WQhSprWWH3h9IJBFc4AFavpwsuV8DfcZBUyKamjsR8b60c+KDSDQlntYzTmGppp/nW
-	 ulPgHsmHvxe6PI+kCwdhbMfGIiQw4c75jl0ockB8=
+	b=f14DmgsJF0fd7QOE4peGwrfDfDdo9nVoBaTDXxAqhTeIyWH9MBIYNJbRqeOhihAxH
+	 YsrBOpWJHhK5w3DLDVRLDCBd8oIhNnkczb/NJ3eY1GQrpzbmrwhwxYYL9+cw6HFPPn
+	 boMy5tCJf9xBPmsSh529plK6pmcx4wJPjgeU68Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Marcus=20R=C3=BCckert?= <darix@opensu.se>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 040/334] regulator: pwm-regulator: Add validity checks in continuous .get_voltage
-Date: Tue, 27 Feb 2024 14:18:18 +0100
-Message-ID: <20240227131631.882763646@linuxfoundation.org>
+Subject: [PATCH 6.7 041/334] HID: logitech-hidpp: add support for Logitech G Pro X Superlight 2
+Date: Tue, 27 Feb 2024 14:18:19 +0100
+Message-ID: <20240227131631.912676505@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,37 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit c92688cac239794e4a1d976afa5203a4d3a2ac0e ]
+[ Upstream commit afa6ac2690bb9904ff883c6e942281e1032a484d ]
 
-Continuous regulators can be configured to operate only in a certain
-duty cycle range (for example from 0..91%). Add a check to error out if
-the duty cycle translates to an unsupported (or out of range) voltage.
+Let logitech-hidpp driver claim Logitech G Pro X Superlight 2.
 
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://msgid.link/r/20240113224628.377993-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Marcus Rückert <darix@opensu.se>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pwm-regulator.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/regulator/pwm-regulator.c b/drivers/regulator/pwm-regulator.c
-index 2aff6db748e2c..e33d10df7a763 100644
---- a/drivers/regulator/pwm-regulator.c
-+++ b/drivers/regulator/pwm-regulator.c
-@@ -158,6 +158,9 @@ static int pwm_regulator_get_voltage(struct regulator_dev *rdev)
- 	pwm_get_state(drvdata->pwm, &pstate);
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index fd6d8f1d9b8f6..6ef0c88e3e60a 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4610,6 +4610,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC088) },
+ 	{ /* Logitech G Pro X Superlight Gaming Mouse over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC094) },
++	{ /* Logitech G Pro X Superlight 2 Gaming Mouse over USB */
++	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC09b) },
  
- 	voltage = pwm_get_relative_duty_cycle(&pstate, duty_unit);
-+	if (voltage < min(max_uV_duty, min_uV_duty) ||
-+	    voltage > max(max_uV_duty, min_uV_duty))
-+		return -ENOTRECOVERABLE;
- 
- 	/*
- 	 * The dutycycle for min_uV might be greater than the one for max_uV.
+ 	{ /* G935 Gaming Headset */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0x0a87),
 -- 
 2.43.0
 
