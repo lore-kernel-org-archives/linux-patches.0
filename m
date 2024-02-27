@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B01E13B797;
-	Tue, 27 Feb 2024 13:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ED113B797;
+	Tue, 27 Feb 2024 13:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041821; cv=none; b=hZu/smdiRuaJ5Hp45u9tBxXul6Wlxi33kGivQBkI1MRr7jlluY+GAPGf5w3FFB388oZZyW8qD6dt1eij9A7XkbJT4zKnL0qiEQLs7ZTTxIYdl+QfZgbtZHIBy3Jj3NHeVHDauAndnEjjI+i1ROZiJRT0TwcHR6L8BwzsXgFKfhs=
+	t=1709041824; cv=none; b=FTov3OmFqoYoGU0NLbSESQRkpk2sMbWwAtSXPQE9H2OFnwKcp24QMnzqVj4SgO0+05MlFAj/O3ZkG+Mz+Ss0dLNgrPALBX13NhaAOAa2oiPs1x4JsTms5qg/1UN+DYLxrbaYzau600odpD7o05/jnVYR6tz8ft0LWUFFZhboXrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041821; c=relaxed/simple;
-	bh=A6R2+P+88TO1ESoAZ5UjoT4blw3yazRo81F8AQ/lfig=;
+	s=arc-20240116; t=1709041824; c=relaxed/simple;
+	bh=T1+Tksmcsv9DtaIO5vcaXWMwhnR6X6vQDQOsVtp0iVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aab887H8jLJMalb9uOrx5SZKmope+A4JjA7AZjgaOMjMih3wuh9qItNFSJL1kSDqbXj4Ksad5NMjOkunHV5g5NA6UxtUpszrepW0lNH6+YWj6LwTc4nOeLoor3WSYaYA1HXArWddzwREHTH0xm8ap1K2PeZUuL2ede57MgTC25E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zl4Hxiw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YC56nU1cmzLfkc9ErA8Bkml6zbI6YGwKVyPhQGes/mektNxtzUCi3l+j15PqQRDK7K5Szjw/u7zOOizKifHRhmlzQQxiI62PQZnM2mtdbkPyvpFscJcJ4pn1D7g7Dt8Su/1fbv1tTIXaXtgbbeNvAIWuVbG1BVzqgXZTmf7P+iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5R20++d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zl4Hxiw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F10C433F1;
-	Tue, 27 Feb 2024 13:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5R20++d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93BDC433F1;
+	Tue, 27 Feb 2024 13:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041821;
-	bh=A6R2+P+88TO1ESoAZ5UjoT4blw3yazRo81F8AQ/lfig=;
+	s=korg; t=1709041824;
+	bh=T1+Tksmcsv9DtaIO5vcaXWMwhnR6X6vQDQOsVtp0iVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zl4Hxiw+Or8s0QPzff0VTRtjXWR7dHqaPWMmNByhvJwU2xS2BSZwcY1WyJXPvlCeh
-	 gu9cBPVQAlLrwPgBH8n0cMC0xSRWNxiL9EVv2U4sD899CrIQ9rHySgvxKVOlSl0ru9
-	 gBpW4N+6qOPmgPdYgouVBCkVtbXkgXostxsN47oY=
+	b=O5R20++dfvKboRLxQsXwe93Iq5h9/bBFinCOby443KClwV4h5jGHXI27poHW1bCpB
+	 e2LkIoc4NAdAbOaHuNJCBNmZAPBfr4cnb9eteNEbUGeRgYEDpYoaWVlfGoQXn2vmFZ
+	 XXDwy/Oxx/lsKDD+/oHyl9TrYsM9bgfd8s7FR0VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/299] fs/ntfs3: ntfs3_forced_shutdown use int instead of bool
-Date: Tue, 27 Feb 2024 14:23:12 +0100
-Message-ID: <20240227131628.533114172@linuxfoundation.org>
+Subject: [PATCH 6.6 082/299] fs/ntfs3: Add NULL ptr dereference checking at the end of attr_allocate_frame()
+Date: Tue, 27 Feb 2024 14:23:13 +0100
+Message-ID: <20240227131628.562842444@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,68 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 97ec56d390a3a0077b36cb38627f671c72dddce6 ]
+[ Upstream commit aaab47f204aaf47838241d57bf8662c8840de60a ]
+
+It is preferable to exit through the out: label because
+internal debugging functions are located there.
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c  | 3 ++-
- fs/ntfs3/ntfs_fs.h | 6 +++---
- fs/ntfs3/super.c   | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ fs/ntfs3/attrib.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index fbfe21dbb4259..350461d8cece5 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -853,7 +853,8 @@ void ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait)
- 	/*
- 	 * sb can be NULL here. In this case sbi->flags should be 0 too.
- 	 */
--	if (!sb || !(sbi->flags & NTFS_FLAGS_MFTMIRR))
-+	if (!sb || !(sbi->flags & NTFS_FLAGS_MFTMIRR) ||
-+	    unlikely(ntfs3_forced_shutdown(sb)))
- 		return;
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 4b78b669a3bdb..646e2dad1b757 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1743,8 +1743,10 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+ 			le_b = NULL;
+ 			attr_b = ni_find_attr(ni, NULL, &le_b, ATTR_DATA, NULL,
+ 					      0, NULL, &mi_b);
+-			if (!attr_b)
+-				return -ENOENT;
++			if (!attr_b) {
++				err = -ENOENT;
++				goto out;
++			}
  
- 	blocksize = sb->s_blocksize;
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 466ee5bd62260..c71a1eca427a3 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -62,7 +62,7 @@ enum utf16_endian;
- /* sbi->flags */
- #define NTFS_FLAGS_NODISCARD		0x00000001
- /* ntfs in shutdown state. */
--#define NTFS_FLAGS_SHUTDOWN		0x00000002
-+#define NTFS_FLAGS_SHUTDOWN_BIT		0x00000002  /* == 4*/
- /* Set when LogFile is replaying. */
- #define NTFS_FLAGS_LOG_REPLAYING	0x00000008
- /* Set when we changed first MFT's which copy must be updated in $MftMirr. */
-@@ -1001,9 +1001,9 @@ static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
- 	return sb->s_fs_info;
- }
+ 			attr = attr_b;
+ 			le = le_b;
+@@ -1825,13 +1827,15 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+ ok:
+ 	run_truncate_around(run, vcn);
+ out:
+-	if (new_valid > data_size)
+-		new_valid = data_size;
++	if (attr_b) {
++		if (new_valid > data_size)
++			new_valid = data_size;
  
--static inline bool ntfs3_forced_shutdown(struct super_block *sb)
-+static inline int ntfs3_forced_shutdown(struct super_block *sb)
- {
--	return test_bit(NTFS_FLAGS_SHUTDOWN, &ntfs_sb(sb)->flags);
-+	return test_bit(NTFS_FLAGS_SHUTDOWN_BIT, &ntfs_sb(sb)->flags);
- }
+-	valid_size = le64_to_cpu(attr_b->nres.valid_size);
+-	if (new_valid != valid_size) {
+-		attr_b->nres.valid_size = cpu_to_le64(valid_size);
+-		mi_b->dirty = true;
++		valid_size = le64_to_cpu(attr_b->nres.valid_size);
++		if (new_valid != valid_size) {
++			attr_b->nres.valid_size = cpu_to_le64(valid_size);
++			mi_b->dirty = true;
++		}
+ 	}
  
- /*
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index a313b4ddee16f..378e261e23b04 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -719,7 +719,7 @@ static int ntfs_show_options(struct seq_file *m, struct dentry *root)
-  */
- static void ntfs_shutdown(struct super_block *sb)
- {
--	set_bit(NTFS_FLAGS_SHUTDOWN, &ntfs_sb(sb)->flags);
-+	set_bit(NTFS_FLAGS_SHUTDOWN_BIT, &ntfs_sb(sb)->flags);
- }
- 
- /*
+ 	return err;
 -- 
 2.43.0
 
