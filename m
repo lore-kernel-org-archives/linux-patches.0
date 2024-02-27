@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446B713AA4C;
-	Tue, 27 Feb 2024 13:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079802F2D;
+	Tue, 27 Feb 2024 13:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041272; cv=none; b=BsUv8EtlTd7DxCaqsNCJKDI6aZkY9TPYyXfWloNdwnBWl4ympmhE4HIvV1XEFeDybZeNw3NYaPa+oUaBWSt94bzyb+Wc7J+KAghvkhnhsEGAPYTy5KV2Ll5PtYoF+xaD22Nexv2OWjK4IfC2RuMJM1I7PGaXfXaDlgW96s9ue8s=
+	t=1709041275; cv=none; b=t3PkIiWckXbA9gz7x0DJcs1apBnpQ3SvMwMxuMgH3E5A+exsRq33m0RxG7sddgSQcX7YDXUV7ku3LX0Nr3NWZp9HoQFVqhw4LYl9P3ClxIlF14nwXmMymJw7zRZSOHjb00GpgBk/9XMDDRTK2GzSG+M6pU3W0rVRgqgnofx0/GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041272; c=relaxed/simple;
-	bh=TmbaytMUNPnMReqU0GknpyqKvaC6UQGfCRohTYNKsiM=;
+	s=arc-20240116; t=1709041275; c=relaxed/simple;
+	bh=DmPfHAf30jK81LTb5oXh/FlPcAogRxqFynMBoHInHqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXvp9QjtnD2cE0b4tfMDBDaJYIrEWSRAlH9p0YCpJjSELHvxAgOv3jowyfnvPKCEAN4kgWKkS8FAqzIeu9BFMnkqrC8J742iam/b8eiFtKejeUmb5aaYUtNrVqcFQ+2eIMm6yHucL5zwp0VgfR8bUFTfqVOIJ/KS2eyqdqbdBKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU+Pu8cz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJklixyfa1/uXOk4dDMccV2WQ/YCh/vWTEaVlW6+Cgn4xHjgB644jxcjx6FVb5zYE6p4FSsHmtEpHK9t7f6+d6nz744ekP7LojOGHIfEIjPJiNdov+shPZNwp1aHeFOwB23vCcmtsdmSCnq78ZJ6lnmPmuTAp3+YqVp/uPVLaX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLo/bx8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU+Pu8cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78B1C43390;
-	Tue, 27 Feb 2024 13:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLo/bx8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A732C433F1;
+	Tue, 27 Feb 2024 13:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041272;
-	bh=TmbaytMUNPnMReqU0GknpyqKvaC6UQGfCRohTYNKsiM=;
+	s=korg; t=1709041274;
+	bh=DmPfHAf30jK81LTb5oXh/FlPcAogRxqFynMBoHInHqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU+Pu8cz0GqzChJj8dqa0N65/IzRRHzK/oqY6NHfpKyaGAHi3VrYSjMvoOzLE3rIF
-	 Foz2qXeQSk7lqKFWpUEQoW2XwiSGPOrZJPHyvpGw9oEdL+ZxtrFNLNyEj5/X1v/KZr
-	 U+PJSy8hoPdohio5IH6nstW0fU3MbkzAkZ2ymL6s=
+	b=rLo/bx8yPUWXe1sqJU/hK8W/8j4pwyhnyLMANBjCy9+NZxD3RilqKR8MHgdZzZZxF
+	 Cb5jM35Md5ioCg9ZKx4voZPeaSqtgHxNpZqW0DK/wlQ+k9mqW7prG8jVrJ1TwCCDAr
+	 eQjXTlot6F5SDTMHItpR3G3nocBz+GvMV6+AUeKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 242/334] arm64: dts: tqma8mpql: fix audio codec iov-supply
-Date: Tue, 27 Feb 2024 14:21:40 +0100
-Message-ID: <20240227131638.682843800@linuxfoundation.org>
+Subject: [PATCH 6.7 274/334] selftests: bonding: set active slave to primary eth1 specifically
+Date: Tue, 27 Feb 2024 14:22:12 +0100
+Message-ID: <20240227131639.834998330@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,47 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a620a7f2ae8b08c5beea6369f61e87064ee222dc ]
+[ Upstream commit cd65c48d66920457129584553f217005d09b1edb ]
 
-IOVDD is supplied by 1.8V, fix the referenced regulator.
+In bond priority testing, we set the primary interface to eth1 and add
+eth0,1,2 to bond in serial. This is OK in normal times. But when in
+debug kernel, the bridge port that eth0,1,2 connected would start
+slowly (enter blocking, forwarding state), which caused the primary
+interface down for a while after enslaving and active slave changed.
+Here is a test log from Jakub's debug test[1].
 
-Fixes: d8f9d8126582d ("arm64: dts: imx8mp: Add analog audio output on i.MX8MP TQMa8MPxL/MBa8MPxL")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+ [  400.399070][   T50] br0: port 1(s0) entered disabled state
+ [  400.400168][   T50] br0: port 4(s2) entered disabled state
+ [  400.941504][ T2791] bond0: (slave eth0): making interface the new active one
+ [  400.942603][ T2791] bond0: (slave eth0): Enslaving as an active interface with an up link
+ [  400.943633][ T2766] br0: port 1(s0) entered blocking state
+ [  400.944119][ T2766] br0: port 1(s0) entered forwarding state
+ [  401.128792][ T2792] bond0: (slave eth1): making interface the new active one
+ [  401.130771][ T2792] bond0: (slave eth1): Enslaving as an active interface with an up link
+ [  401.131643][   T69] br0: port 2(s1) entered blocking state
+ [  401.132067][   T69] br0: port 2(s1) entered forwarding state
+ [  401.346201][ T2793] bond0: (slave eth2): Enslaving as a backup interface with an up link
+ [  401.348414][   T50] br0: port 4(s2) entered blocking state
+ [  401.348857][   T50] br0: port 4(s2) entered forwarding state
+ [  401.519669][  T250] bond0: (slave eth0): link status definitely down, disabling slave
+ [  401.526522][  T250] bond0: (slave eth1): link status definitely down, disabling slave
+ [  401.526986][  T250] bond0: (slave eth2): making interface the new active one
+ [  401.629470][  T250] bond0: (slave eth0): link status definitely up
+ [  401.630089][  T250] bond0: (slave eth1): link status definitely up
+ [...]
+ # TEST: prio (active-backup ns_ip6_target primary_reselect 1)         [FAIL]
+ # Current active slave is eth2 but not eth1
+
+Fix it by setting active slave to primary slave specifically before
+testing.
+
+[1] https://netdev-3.bots.linux.dev/vmksft-bonding-dbg/results/464301/1-bond-options-sh/stdout
+
+Fixes: 481b56e0391e ("selftests: bonding: re-format bond option tests")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts     | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/testing/selftests/drivers/net/bonding/bond_options.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-index 4240e20d38ac3..258e90cc16ff3 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-@@ -168,6 +168,13 @@
- 		enable-active-high;
- 	};
+diff --git a/tools/testing/selftests/drivers/net/bonding/bond_options.sh b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
+index d508486cc0bdc..9a3d3c389dadd 100755
+--- a/tools/testing/selftests/drivers/net/bonding/bond_options.sh
++++ b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
+@@ -62,6 +62,8 @@ prio_test()
  
-+	reg_vcc_1v8: regulator-1v8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VCC_1V8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
- 	reg_vcc_3v3: regulator-3v3 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "VCC_3V3";
-@@ -464,7 +471,7 @@
- 		clock-names = "mclk";
- 		clocks = <&audio_blk_ctrl IMX8MP_CLK_AUDIOMIX_SAI3_MCLK1>;
- 		reset-gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
--		iov-supply = <&reg_vcc_3v3>;
-+		iov-supply = <&reg_vcc_1v8>;
- 		ldoin-supply = <&reg_vcc_3v3>;
- 	};
+ 	# create bond
+ 	bond_reset "${param}"
++	# set active_slave to primary eth1 specifically
++	ip -n ${s_ns} link set bond0 type bond active_slave eth1
  
+ 	# check bonding member prio value
+ 	ip -n ${s_ns} link set eth0 type bond_slave prio 0
 -- 
 2.43.0
 
