@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4251419A0;
-	Tue, 27 Feb 2024 14:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792471420D3;
+	Tue, 27 Feb 2024 14:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043235; cv=none; b=Gv0xUq6/jBZes6myxW5vAJWwZL9+nGRybVavL8CFWNe4BbUGe2lFXhkEkucKgm0xSOggNg0G0eP2ccI6VcP3VBlPM6OqXHizr2oRCDr/eG3Wo/l3DSbTsWgmom9YRQFfMITSnoXKRuH/2najYcydvDjmF5A4g49LCRY+81glX0w=
+	t=1709043238; cv=none; b=CByjV8Hl4Qbwpj/AJm6Kw98JKQSntksjc5qXvwWKMrmpMdtc7+rw4D167rfEc/fmI/GMJ46jI4cbtpWkG4ILUTx7FPUiteOc3vZR4bA0pP9855KNFez3XfK5HxsY6oh6LqvOlC/rLHpk3TJPrA1Qng9lY7BiPHeJlPyCzjaR7n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043235; c=relaxed/simple;
-	bh=kVVIwxNL196GyA4Cb5pI844pd8NwSMyhrQ0cCPUHbI0=;
+	s=arc-20240116; t=1709043238; c=relaxed/simple;
+	bh=hF9M86fSbEQTP+5QZmnHe/BXZIPazxfenQL0iJjjuVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhvkqjF37TQoAhIyZaKF01Ni59rypATfp5L2Id3JIy0qP8o0uugdg2zt+ImOg268UcG/Tq/I27opFvEv5CHIWMM1zXvfDYO7h+Fi8nk6YmXTRWk0C1rpvdgRD3vOJ+AcqgFmwRuC3BDguRcfvM+n+z9x5rSgCrY535Dp1EHYX8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMr8pB20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WSzueTbJZM5wDWGcbXFJMjzvcro54QqjrDrqLLZiieqKkgMo0lZT6klzHBTRZ1itJe/bDRjE+5mDy/ChmRqtNQOku2foYFKA+z0TcUfok6QdY1lR35wHaqEobAkTHZIwiCPBV8fTMZoDXKO+mriy6H4hqvj3FqNOb2g27Fej0yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nfmq4gGI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMr8pB20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4667FC433F1;
-	Tue, 27 Feb 2024 14:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nfmq4gGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09449C433F1;
+	Tue, 27 Feb 2024 14:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043235;
-	bh=kVVIwxNL196GyA4Cb5pI844pd8NwSMyhrQ0cCPUHbI0=;
+	s=korg; t=1709043238;
+	bh=hF9M86fSbEQTP+5QZmnHe/BXZIPazxfenQL0iJjjuVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMr8pB20bsvSUQTQEEAU7LoFx0Cj5Oq9UkanG573QDsKHRW+zEsgsgw5vFxJTO1uW
-	 zgc1vxIpl6M/9zsaDvKhzJsXN3ZPlr8aNx3zF1xRt7ziKPQFWYrKhiUcZdNM7t8hHN
-	 jkN1/HTDwm1JYO06IcLVLDgJ9/1QZzdZLN6dxO0E=
+	b=Nfmq4gGIWYOusSHbMs/wNSws8YlvPko21pp5TqrZyxt8pqk3DmH+gx6BpBjfdbSBJ
+	 xxaMRFid3326Ob35KwUaf+Ogp6zGY5zP/M9SCRER1d/caB2dio9Oq1ApdjZ/+OQfQs
+	 5OhuFxFZRgALmjT7OjuCAr9SYFR3I3dOY0iIKdNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Tsoy <alexander@tsoy.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hector Martin <marcan@marcan.st>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/195] ALSA: usb-audio: Check presence of valid altsetting control
-Date: Tue, 27 Feb 2024 14:24:55 +0100
-Message-ID: <20240227131611.518152068@linuxfoundation.org>
+Subject: [PATCH 6.1 008/195] dmaengine: apple-admac: Keep upper bits of REG_BUS_WIDTH
+Date: Tue, 27 Feb 2024 14:24:29 +0100
+Message-ID: <20240227131610.678676801@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -45,90 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Tsoy <alexander@tsoy.me>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 346f59d1e8ed0eed41c80e1acb657e484c308e6a ]
+[ Upstream commit 306f5df81fcc89b462fbeb9dbe26d9a8ad7c7582 ]
 
-Many devices with a single alternate setting do not have a Valid
-Alternate Setting Control and validation performed by
-validate_sample_rate_table_v2v3() doesn't work on them and is not
-really needed. So check the presense of control before sending
-altsetting validation requests.
+For RX channels, REG_BUS_WIDTH seems to default to a value of 0xf00, and
+macOS preserves the upper bits when setting the configuration in the
+lower ones. If we reset the upper bits to 0, this causes framing errors
+on suspend/resume (the data stream "tears" and channels get swapped
+around). Keeping the upper bits untouched, like the macOS driver does,
+fixes this issue.
 
-MOTU Microbook IIc is suffering the most without this check. It
-takes up to 40 seconds to bootup due to how slow it switches
-sampling rates:
-
-[ 2659.164824] usb 3-2: New USB device found, idVendor=07fd, idProduct=0004, bcdDevice= 0.60
-[ 2659.164827] usb 3-2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-[ 2659.164829] usb 3-2: Product: MicroBook IIc
-[ 2659.164830] usb 3-2: Manufacturer: MOTU
-[ 2659.166204] usb 3-2: Found last interface = 3
-[ 2679.322298] usb 3-2: No valid sample rate available for 1:1, assuming a firmware bug
-[ 2679.322306] usb 3-2: 1:1: add audio endpoint 0x3
-[ 2679.322321] usb 3-2: Creating new data endpoint #3
-[ 2679.322552] usb 3-2: 1:1 Set sample rate 96000, clock 1
-[ 2684.362250] usb 3-2: 2:1: cannot get freq (v2/v3): err -110
-[ 2694.444700] usb 3-2: No valid sample rate available for 2:1, assuming a firmware bug
-[ 2694.444707] usb 3-2: 2:1: add audio endpoint 0x84
-[ 2694.444721] usb 3-2: Creating new data endpoint #84
-[ 2699.482103] usb 3-2: 2:1 Set sample rate 96000, clock 1
-
-Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
-Link: https://lore.kernel.org/r/20240129121254.3454481-1-alexander@tsoy.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Reviewed-by: Martin Povišer <povik+lin@cutebit.org>
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+Link: https://lore.kernel.org/r/20231029170704.82238-1-povik+lin@cutebit.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/dma/apple-admac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index ab5fed9f55b60..3b45d0ee76938 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -470,9 +470,11 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
- 					   int clock)
- {
- 	struct usb_device *dev = chip->dev;
-+	struct usb_host_interface *alts;
- 	unsigned int *table;
- 	unsigned int nr_rates;
- 	int i, err;
-+	u32 bmControls;
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 4cf8da77bdd91..cac4532fe23a9 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -56,6 +56,8 @@
  
- 	/* performing the rate verification may lead to unexpected USB bus
- 	 * behavior afterwards by some unknown reason.  Do this only for the
-@@ -481,6 +483,24 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
- 	if (!(chip->quirk_flags & QUIRK_FLAG_VALIDATE_RATES))
- 		return 0; /* don't perform the validation as default */
+ #define REG_BUS_WIDTH(ch)	(0x8040 + (ch) * 0x200)
  
-+	alts = snd_usb_get_host_interface(chip, fp->iface, fp->altsetting);
-+	if (!alts)
-+		return 0;
-+
-+	if (fp->protocol == UAC_VERSION_3) {
-+		struct uac3_as_header_descriptor *as = snd_usb_find_csint_desc(
-+				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
-+		bmControls = le32_to_cpu(as->bmControls);
-+	} else {
-+		struct uac2_as_header_descriptor *as = snd_usb_find_csint_desc(
-+				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
-+		bmControls = as->bmControls;
-+	}
-+
-+	if (!uac_v2v3_control_is_readable(bmControls,
-+				UAC2_AS_VAL_ALT_SETTINGS))
-+		return 0;
-+
- 	table = kcalloc(fp->nr_rates, sizeof(*table), GFP_KERNEL);
- 	if (!table)
- 		return -ENOMEM;
++#define BUS_WIDTH_WORD_SIZE	GENMASK(3, 0)
++#define BUS_WIDTH_FRAME_SIZE	GENMASK(7, 4)
+ #define BUS_WIDTH_8BIT		0x00
+ #define BUS_WIDTH_16BIT		0x01
+ #define BUS_WIDTH_32BIT		0x02
+@@ -739,7 +741,8 @@ static int admac_device_config(struct dma_chan *chan,
+ 	struct admac_data *ad = adchan->host;
+ 	bool is_tx = admac_chan_direction(adchan->no) == DMA_MEM_TO_DEV;
+ 	int wordsize = 0;
+-	u32 bus_width = 0;
++	u32 bus_width = readl_relaxed(ad->base + REG_BUS_WIDTH(adchan->no)) &
++		~(BUS_WIDTH_WORD_SIZE | BUS_WIDTH_FRAME_SIZE);
+ 
+ 	switch (is_tx ? config->dst_addr_width : config->src_addr_width) {
+ 	case DMA_SLAVE_BUSWIDTH_1_BYTE:
 -- 
 2.43.0
 
