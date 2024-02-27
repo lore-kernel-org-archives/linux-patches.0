@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884AC1420B0;
-	Tue, 27 Feb 2024 14:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA0D13EFE4;
+	Tue, 27 Feb 2024 14:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042721; cv=none; b=dHTvyu4oxQxftjWlGlQhKfoqvJkXUlAqwZarF0db6hlecxnF8joUfp/VZO88id77kfKniQiEaaRVzhEC8uXnVp94k0s4we5pmnaWOb3zdST4tu7curyeMZf6nq5XDBPJ1RmwYkiQdb7w57yggpJEXIMsQEBvWXqrceAGAGj/DG0=
+	t=1709042724; cv=none; b=tGKVMPjqRkSmibZNAEt3Z0KX5ja+fDtOaeb4mbF85K+FpGPY4ZsRiNfo9b14TXDM5J9J4XJEo4YgAfbu7TsIfQkJqyaDFwYkskCBW2MnmvKk8Sctq8pXrnM3H04d1rG7y5MoDiXDUfI2C3NBh9mcuSKLKJzmKTeRQHemgcVL3i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042721; c=relaxed/simple;
-	bh=QmCyReZdU4Ddr/j2U0i7TRKgJBI583auz1Hz5WkrbOM=;
+	s=arc-20240116; t=1709042724; c=relaxed/simple;
+	bh=Jh+b6TCfAgioBFXuto7ERJtyfjVTWR85Pd/Tx9iU98o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdPpkfTax5MJaqKhr0hbCXeRNDOf3I6cqdgpqThDd6Prmq+y6xJbfLq5S3MG+lut2iPzq6NSSm/Zsl9HG0LijlW0419NkgUU2UuLSriFQIEfDF4oW/IqGq7A43eSYBnk0qgdtBVhpCcBfXSLKTcZUu471ugDN5H058tzfM0MYjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpB3zohb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aah1eHpNHDPCGsx98ejDwA4HhMgFDMzGk0B5FzbwWcpBK1nB6V1fcH0JeAj+GGYGVGA2BgBMqKACx0xtdGfLJSzcNLTvTAyt2vZCb/t8Cc7AffZCNeTW77IQ7aPUU7eErBOfZYAHHZQPJ/12/0VJlG5MjStwCSpS7wGRI4/bwpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ayh3GjtC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpB3zohb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9582C433C7;
-	Tue, 27 Feb 2024 14:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ayh3GjtC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C15C433F1;
+	Tue, 27 Feb 2024 14:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042721;
-	bh=QmCyReZdU4Ddr/j2U0i7TRKgJBI583auz1Hz5WkrbOM=;
+	s=korg; t=1709042723;
+	bh=Jh+b6TCfAgioBFXuto7ERJtyfjVTWR85Pd/Tx9iU98o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bpB3zohbsoOshFw0RKncswCwIPwD/hcSJwNGgaTUGoha5ECiXIpSs6riom6jba8r7
-	 bQhJ47prwSo6IMXSBxOLqtLB9RT4aALTwe7JmIVvR8zOcWeNmht6hH5bZLbDAJpdej
-	 ZwXkPueorMBjA3ESI0bXj9rBmz2EBzmA/k6o93O0=
+	b=Ayh3GjtCs27O8PhxLtPLVBMHAtalLz0b0H+td/LEEueGMhy1x/ZNLhHE8HawyyXni
+	 YPMEAm7gdqcrvlfAZi3pRSwanN123FxU/uFmB0tAiXg797LQuJUud1MeS/RWWzwrfO
+	 Z1PYYPksdj9DQ7tuWqxTZommslfxS8a2g5tCDJos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/245] fs/ntfs3: Disable ATTR_LIST_ENTRY size check
-Date: Tue, 27 Feb 2024 14:24:06 +0100
-Message-ID: <20240227131617.118844782@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 090/245] x86/ibt,paravirt: Use text_gen_insn() for paravirt_patch()
+Date: Tue, 27 Feb 2024 14:24:38 +0100
+Message-ID: <20240227131618.152566601@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,75 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 4cdfb6e7bc9c80142d33bf1d4653a73fa678ba56 ]
+Upstream commit: ba27d1a80871eb8dbeddf34ec7d396c149cbb8d7
 
-The use of sizeof(struct ATTR_LIST_ENTRY) has been replaced with le_size(0)
-due to alignment peculiarities on different platforms.
+Less duplication is more better.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312071005.g6YrbaIe-lkp@intel.com/
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Link: https://lore.kernel.org/r/20220308154317.697253958@infradead.org
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/attrlist.c | 8 ++++----
- fs/ntfs3/ntfs.h     | 2 --
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/text-patching.h |   20 ++++++++++++++------
+ arch/x86/kernel/paravirt.c           |   23 +++--------------------
+ 2 files changed, 17 insertions(+), 26 deletions(-)
 
-diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
-index 0c6a68e71e7d4..723e49ec83ce7 100644
---- a/fs/ntfs3/attrlist.c
-+++ b/fs/ntfs3/attrlist.c
-@@ -127,12 +127,13 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
- {
- 	size_t off;
- 	u16 sz;
-+	const unsigned le_min_size = le_size(0);
+--- a/arch/x86/include/asm/text-patching.h
++++ b/arch/x86/include/asm/text-patching.h
+@@ -96,32 +96,40 @@ union text_poke_insn {
+ };
  
- 	if (!le) {
- 		le = ni->attr_list.le;
- 	} else {
- 		sz = le16_to_cpu(le->size);
--		if (sz < sizeof(struct ATTR_LIST_ENTRY)) {
-+		if (sz < le_min_size) {
- 			/* Impossible 'cause we should not return such le. */
- 			return NULL;
+ static __always_inline
+-void *text_gen_insn(u8 opcode, const void *addr, const void *dest)
++void __text_gen_insn(void *buf, u8 opcode, const void *addr, const void *dest, int size)
+ {
+-	static union text_poke_insn insn; /* per instance */
+-	int size = text_opcode_size(opcode);
++	union text_poke_insn *insn = buf;
++
++	BUG_ON(size < text_opcode_size(opcode));
+ 
+ 	/*
+ 	 * Hide the addresses to avoid the compiler folding in constants when
+ 	 * referencing code, these can mess up annotations like
+ 	 * ANNOTATE_NOENDBR.
+ 	 */
++	OPTIMIZER_HIDE_VAR(insn);
+ 	OPTIMIZER_HIDE_VAR(addr);
+ 	OPTIMIZER_HIDE_VAR(dest);
+ 
+-	insn.opcode = opcode;
++	insn->opcode = opcode;
+ 
+ 	if (size > 1) {
+-		insn.disp = (long)dest - (long)(addr + size);
++		insn->disp = (long)dest - (long)(addr + size);
+ 		if (size == 2) {
+ 			/*
+ 			 * Ensure that for JMP8 the displacement
+ 			 * actually fits the signed byte.
+ 			 */
+-			BUG_ON((insn.disp >> 31) != (insn.disp >> 7));
++			BUG_ON((insn->disp >> 31) != (insn->disp >> 7));
  		}
-@@ -141,7 +142,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
- 
- 	/* Check boundary. */
- 	off = PtrOffset(ni->attr_list.le, le);
--	if (off + sizeof(struct ATTR_LIST_ENTRY) > ni->attr_list.size) {
-+	if (off + le_min_size > ni->attr_list.size) {
- 		/* The regular end of list. */
- 		return NULL;
  	}
-@@ -149,8 +150,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
- 	sz = le16_to_cpu(le->size);
++}
  
- 	/* Check le for errors. */
--	if (sz < sizeof(struct ATTR_LIST_ENTRY) ||
--	    off + sz > ni->attr_list.size ||
-+	if (sz < le_min_size || off + sz > ni->attr_list.size ||
- 	    sz < le->name_off + le->name_len * sizeof(short)) {
- 		return NULL;
- 	}
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index 8b580515b1d6e..ba26a465b3091 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -521,8 +521,6 @@ struct ATTR_LIST_ENTRY {
++static __always_inline
++void *text_gen_insn(u8 opcode, const void *addr, const void *dest)
++{
++	static union text_poke_insn insn; /* per instance */
++	__text_gen_insn(&insn, opcode, addr, dest, text_opcode_size(opcode));
+ 	return &insn.text;
+ }
  
- }; // sizeof(0x20)
+--- a/arch/x86/kernel/paravirt.c
++++ b/arch/x86/kernel/paravirt.c
+@@ -58,29 +58,12 @@ static void paravirt_BUG(void)
+ 	BUG();
+ }
  
--static_assert(sizeof(struct ATTR_LIST_ENTRY) == 0x20);
+-struct branch {
+-	unsigned char opcode;
+-	u32 delta;
+-} __attribute__((packed));
 -
- static inline u32 le_size(u8 name_len)
+ static unsigned paravirt_patch_call(void *insn_buff, const void *target,
+ 				    unsigned long addr, unsigned len)
  {
- 	return ALIGN(offsetof(struct ATTR_LIST_ENTRY, name) +
--- 
-2.43.0
-
+-	const int call_len = 5;
+-	struct branch *b = insn_buff;
+-	unsigned long delta = (unsigned long)target - (addr+call_len);
+-
+-	if (len < call_len) {
+-		pr_warn("paravirt: Failed to patch indirect CALL at %ps\n", (void *)addr);
+-		/* Kernel might not be viable if patching fails, bail out: */
+-		BUG_ON(1);
+-	}
+-
+-	b->opcode = 0xe8; /* call */
+-	b->delta = delta;
+-	BUILD_BUG_ON(sizeof(*b) != call_len);
+-
+-	return call_len;
++	__text_gen_insn(insn_buff, CALL_INSN_OPCODE,
++			(void *)addr, target, CALL_INSN_SIZE);
++	return CALL_INSN_SIZE;
+ }
+ 
+ #ifdef CONFIG_PARAVIRT_XXL
 
 
