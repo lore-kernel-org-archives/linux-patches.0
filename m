@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0A02F2D;
-	Tue, 27 Feb 2024 13:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF452F2D;
+	Tue, 27 Feb 2024 13:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040829; cv=none; b=iPzp0q2tdjbxuAhwtaESNzvUOxEjCXXK3CIkX44RSwI/KKYgvNY0ON7z1u2Ie6EUtBuxlU/DNuGmULIj6Ahl6wfqX+O3MMN0obpZmKkhPgboeQ41XCoVIZOGyHpG72SVYtvAy70Khcdl6FGPfjQfyDoThF2D9A4OJr5eNRw/fuA=
+	t=1709040832; cv=none; b=QVN3bjqw5kk3OIB7grZGFC3cA287QZ08Kqm7pe1skdHlXPlZzk4YlA4+uNZSb+5Bm75b97HXv6T5/A+z3uT8kQpuo644ZKLOOxwF7mrUlMmOlbhUfzP4sStzUXslf45q//y3mnpq2OZN50GFuuxNqzenSNcO3bhBCu+HQCq8pg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040829; c=relaxed/simple;
-	bh=DJqKSSfPwLOwJ0UttebUwkqnm9WYv0wu7LqQKDIxvVQ=;
+	s=arc-20240116; t=1709040832; c=relaxed/simple;
+	bh=QXDdmCkpFPXFNPH5UR0ZjO7wTAHIO+/XpI/vSwRhIzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfZ1aUncV6Zgfx35TUeJlR+wR7hRQQ+i4pH4tjIoDWa8fZLPdHzja++WELJ6MGWSwonXofWwqelaHPTcbaZO4E+DyGAEPnH8tb01QOg3yNeHnJwpEAu1CU0KRDIQg0QH/mdZNlqP77yXWNxtIhkKfLkgG2xRVEgKYNyVHiN5PU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zR/VxuOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCFCUu+MkorBoIXFbgV9rH+psroPEC/YiRH+DmxUpJ8VXa+/WPa9inkRjF38vpL5jjhec+IYJ8ZdgRZtmhNdAZLwdHdQ1ePORIPpgrp4cLltTmwRUdmnk2fgYkDprOHElUQqip1euC9zMkS6bnFORxJLeS7OrYpsboIWJ5GLDsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOHNUctW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zR/VxuOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A8DC433C7;
-	Tue, 27 Feb 2024 13:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOHNUctW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E4AC433C7;
+	Tue, 27 Feb 2024 13:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040829;
-	bh=DJqKSSfPwLOwJ0UttebUwkqnm9WYv0wu7LqQKDIxvVQ=;
+	s=korg; t=1709040832;
+	bh=QXDdmCkpFPXFNPH5UR0ZjO7wTAHIO+/XpI/vSwRhIzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zR/VxuODLRtOr933bIAucGbdAb/bJgwTLXrpIOJB/B4Ie8WUKGCJDYy4iAVdC2e9v
-	 hYNc6sFwrE52dEQ0VtT72vmtT0o6lL7TftxpB7M2TBn507yOm9UMoizlqEvQN9faf3
-	 mSYcGcZ9QPvFTvfccso0KJpO1YzFqJn/EylpM4iQ=
+	b=wOHNUctWRzpX6YkIOmAH/fyQ0oR/yptb51ROB7DOYYUVXfi1HvDqrCqdDZMY+8a5H
+	 EwD73vPRoIQU9oIBW/tL8ENmPCsU84RQl+X1pTx1dMn8uXiopOBCJ9ti9UIWzeF92N
+	 XZralcyfm5Yym1a5e8Rwy1IPaY2PUImWt7ndSDvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ism Hong <ism.hong@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 094/334] fs/ntfs3: use non-movable memory for ntfs3 MFT buffer cache
-Date: Tue, 27 Feb 2024 14:19:12 +0100
-Message-ID: <20240227131633.543939509@linuxfoundation.org>
+Subject: [PATCH 6.7 085/334] fs/ntfs3: Add file_modified
+Date: Tue, 27 Feb 2024 14:19:03 +0100
+Message-ID: <20240227131633.270369212@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,77 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ism Hong <ism.hong@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit d6d33f03baa43d763fe094ca926eeae7d3421d07 ]
+[ Upstream commit 4dea9cd522424d3002894c20b729c6fbfb6fc22b ]
 
-Since the buffer cache for ntfs3 metadata is not released until the file
-system is unmounted, allocating from the movable zone may result in cma
-allocation failures. This is due to the page still being used by ntfs3,
-leading to migration failures.
-
-To address this, this commit use sb_bread_umovable() instead of
-sb_bread(). This change prevents allocation from the movable zone,
-ensuring compatibility with scenarios where the buffer head is not
-released until unmount. This patch is inspired by commit
-a8ac900b8163("ext4: use non-movable memory for the ext4 superblock").
-
-The issue is found when playing video files stored in NTFS on the
-Android TV platform. During this process, the media parser reads the
-video file, causing ntfs3 to allocate buffer cache from the CMA area.
-Subsequently, the hardware decoder attempts to allocate memory from the
-same CMA area. However, the page is still in use by ntfs3, resulting in
-a migrate failure in alloc_contig_range().
-
-The pinned page and allocating stacktrace reported by page owner shows
-below:
-
-page:ffffffff00b68880 refcount:3 mapcount:0 mapping:ffffff80046aa828
-        index:0xc0040 pfn:0x20fa4
-    aops:def_blk_aops ino:0
-    flags: 0x2020(active|private)
-    page dumped because: migration failure
-    page last allocated via order 0, migratetype Movable,
-        gfp_mask 0x108c48
-        (GFP_NOFS|__GFP_NOFAIL|__GFP_HARDWALL|__GFP_MOVABLE),
-    page_owner tracks the page as allocated
-     prep_new_page
-     get_page_from_freelist
-     __alloc_pages_nodemask
-     pagecache_get_page
-     __getblk_gfp
-     __bread_gfp
-     ntfs_read_run_nb
-     ntfs_read_bh
-     mi_read
-     ntfs_iget5
-     dir_search_u
-     ntfs_lookup
-     __lookup_slow
-     lookup_slow
-     walk_component
-     path_lookupat
-
-Signed-off-by: Ism Hong <ism.hong@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/file.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 8079f3069a1bf..38e0570729c6f 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -1035,7 +1035,7 @@ static inline u64 bytes_to_block(const struct super_block *sb, u64 size)
- static inline struct buffer_head *ntfs_bread(struct super_block *sb,
- 					     sector_t block)
- {
--	struct buffer_head *bh = sb_bread(sb, block);
-+	struct buffer_head *bh = sb_bread_unmovable(sb, block);
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 5691f04e6751a..bb80ce2eec2f7 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -632,11 +632,17 @@ static long ntfs_fallocate(struct file *file, int mode, loff_t vbo, loff_t len)
+ 					    &ni->file.run, i_size, &ni->i_valid,
+ 					    true, NULL);
+ 			ni_unlock(ni);
++			if (err)
++				goto out;
+ 		} else if (new_size > i_size) {
+ 			inode->i_size = new_size;
+ 		}
+ 	}
  
- 	if (bh)
- 		return bh;
++	err = file_modified(file);
++	if (err)
++		goto out;
++
+ out:
+ 	if (map_locked)
+ 		filemap_invalidate_unlock(mapping);
+@@ -1040,6 +1046,7 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	struct address_space *mapping = file->f_mapping;
+ 	struct inode *inode = mapping->host;
+ 	ssize_t ret;
++	int err;
+ 	struct ntfs_inode *ni = ntfs_i(inode);
+ 
+ 	if (is_encrypted(ni)) {
+@@ -1067,6 +1074,12 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if (ret <= 0)
+ 		goto out;
+ 
++	err = file_modified(iocb->ki_filp);
++	if (err) {
++		ret = err;
++		goto out;
++	}
++
+ 	if (WARN_ON(ni->ni_flags & NI_FLAG_COMPRESSED_MASK)) {
+ 		/* Should never be here, see ntfs_file_open(). */
+ 		ret = -EOPNOTSUPP;
 -- 
 2.43.0
 
