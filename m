@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0731854FA5;
-	Tue, 27 Feb 2024 13:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08E81E534;
+	Tue, 27 Feb 2024 13:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040920; cv=none; b=MTj4IPGkPrCLXK8Gje43qnOrpLYXIpM6/qCz/hQdzkCMSR6OU7pFBSi8Js8bx5N4JdKWhUSyI2JQ8tVw9tvfaqn8etUhLrsPnludN7hkwI/7+Z5DAxgkSG0Zw5WFlpWxvtsNn1mO58z+P1iGndn7mAKUoOSiUZ5eiSq2ybkb0EI=
+	t=1709040922; cv=none; b=OHO/2Sqq1XXaLOgLdzy7ZJoqyf1zD0JI3x+ICRwVkHwCizEh6Tr9I+w0oEW1XhBdX1vQxRty9LkcuDoJzmLfn4OTbLmmkspPCPyBMm2zVaI3h+rwCbfYP4my47tq0wDvIvFfKr16q+3u/qHSDlNA7eZxEtLYxg8QPhD2xLJlh7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040920; c=relaxed/simple;
-	bh=BjD48eO0ncryy69jvBn8vaB5qadO4+iBFiQpvSrfJsI=;
+	s=arc-20240116; t=1709040922; c=relaxed/simple;
+	bh=AGKNVRvHuSC01turs7w63LGWQTUOaj7vqNBmFf9NS3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJLaG1l8wNNcy3w7BT+bIG/Iyxz0vetCiRHzb3+MR2vQlDKfOo7Ed0FL1T+3xMwIm7w2gPvvb1Ew0DU+NWscx9HTsfulQL0Z4k16pFtqRUaayFt0epB19pqM2LFmt73/AQ7hibpJFt76dJUZzUWxY5qqAbQvmVaq1JRG9wgXqck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8gpb1B+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gkwga84EQxck4FSGUe9PqQ67zrHWhRMiJM5OlEigFPRx5s2eDH0LOEQ9H3nEQU17AYFOX8i2pZ2JoYI217by85oe5v6cKeeK1WcZP6N+2Y3ol6F2+ASAOcI+57CP/3PMae3N67E7drwzpCRiH0/9oaG6uCKxWFEMLoLjiKgzjTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcHnRFxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8gpb1B+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C480C433F1;
-	Tue, 27 Feb 2024 13:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcHnRFxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F56EC433C7;
+	Tue, 27 Feb 2024 13:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040919;
-	bh=BjD48eO0ncryy69jvBn8vaB5qadO4+iBFiQpvSrfJsI=;
+	s=korg; t=1709040922;
+	bh=AGKNVRvHuSC01turs7w63LGWQTUOaj7vqNBmFf9NS3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8gpb1B+H8iBJF+Lv29ymQMMYwWDSmB+NXpqqeGHs3Iw5UBUZCUXRTBIYkRuI9yur
-	 GXc3e6Z/8xqpHONWA36jh2cQ14ld1yePRRUf3MsytjC4UBM1ZjsqCmFhvXzB5zbZTF
-	 c2M1I7M6Y75hyEUPB08g+2enbziqC9M+iHl1ms5o=
+	b=ZcHnRFxYyk0OHbmwdXSdBm9QvldLgV/2X+6KIUziZw2BazgZemqo1aRqvmuvVe73/
+	 mIY4PSmRg1XJU/aylcC+uQ8awumOEmGlnpiVdZ0prp8sNxZ0zYMFulE3/QQ81WkTnT
+	 i+COi3tuNLbhe0Db5Tbct3rwPU1MVLw/U7qqRRgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Fangrui Song <maskray@google.com>,
-	loongarch@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 117/334] LoongArch: vDSO: Disable UBSAN instrumentation
-Date: Tue, 27 Feb 2024 14:19:35 +0100
-Message-ID: <20240227131634.246209554@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Huang Rui <ray.huang@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	Matthew Auld <matthew.auld@intel.com>
+Subject: [PATCH 6.7 148/334] drm/ttm: Fix an invalid freeing on already freed page in error path
+Date: Tue, 27 Feb 2024 14:20:06 +0100
+Message-ID: <20240227131635.229615976@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,52 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit cca5efe77a6a2d02b3da4960f799fa233e460ab1 ]
+commit 40510a941d27d405a82dc3320823d875f94625df upstream.
 
-The vDSO executes in userspace, so the kernel's UBSAN should not
-instrument it. Solves these kind of build errors:
+If caching mode change fails due to, for example, OOM we
+free the allocated pages in a two-step process. First the pages
+for which the caching change has already succeeded. Secondly
+the pages for which a caching change did not succeed.
 
-  loongarch64-linux-ld: arch/loongarch/vdso/vgettimeofday.o: in function `vdso_shift_ns':
-  lib/vdso/gettimeofday.c:23:(.text+0x3f8): undefined reference to `__ubsan_handle_shift_out_of_bounds'
+However the second step was incorrectly freeing the pages already
+freed in the first step.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401310530.lZHCj1Zl-lkp@intel.com/
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Fangrui Song <maskray@google.com>
-Cc: loongarch@lists.linux.dev
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix.
+
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 379989e7cbdc ("drm/ttm/pool: Fix ttm_pool_alloc error path")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.4+
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240221073324.3303-1-thomas.hellstrom@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/vdso/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/ttm/ttm_pool.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/vdso/Makefile b/arch/loongarch/vdso/Makefile
-index c74c9921304f2..f597cd08a96be 100644
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -2,6 +2,7 @@
- # Objects to go into the VDSO.
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -387,7 +387,7 @@ static void ttm_pool_free_range(struct t
+ 				enum ttm_caching caching,
+ 				pgoff_t start_page, pgoff_t end_page)
+ {
+-	struct page **pages = tt->pages;
++	struct page **pages = &tt->pages[start_page];
+ 	unsigned int order;
+ 	pgoff_t i, nr;
  
- KASAN_SANITIZE := n
-+UBSAN_SANITIZE := n
- KCOV_INSTRUMENT := n
- 
- # Include the generic Makefile to check the built vdso.
--- 
-2.43.0
-
 
 
