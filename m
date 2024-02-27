@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659BD1386CB;
-	Tue, 27 Feb 2024 14:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6DB13B29C;
+	Tue, 27 Feb 2024 14:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043426; cv=none; b=SGcqrUgjhQkPekaRgE60FgqRL+OPOOyP9xXzNq2c4ocxqRvw2MrUXlTjKa05wcgPWW5/dpqY+K41EmG2sx6qP3lNomJmO8E3NYqXkxlkRleDEoOmiQyn/u19bX12wOYS8laJpO3YWqGETHBnlNjsC3o+oYU0m1rptDT4eEWP108=
+	t=1709043429; cv=none; b=iX4pm9Ux4gXFW8VzRi1HZROk5BmZKxJ2M/2H4U78qh+qrfaeSNHiu+ntjL+2kfskf5ZHxEJRivBtA8ZaG5gWNB/jZJZfsNwhKv6TbpaTq373mUpwDf7xlU7f7ewNpuhPF60pWR3BmOYfwrSF20TMUvzbxPG2QiXhlhDO5q57Tgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043426; c=relaxed/simple;
-	bh=5iFfRwSIs9D+Xpw46UxHstMoJ2xa364gmvSr2+gJbDY=;
+	s=arc-20240116; t=1709043429; c=relaxed/simple;
+	bh=Se5QTSaatmTMLtaQlrD4MOreypTzdbBeVuRdp7ZtIhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TI2O2YJQUytxEiyceCtPcmIXKChy+XRQ3cunep5O4iVnshpv/VifFy7p1LR1MgGuRIJQe+d7wDnvYi2xkmzr7NQiUTzfahp58b5OlH/7vzpvv2n+/H6MZhiAY90h40zFgwRuczMh1JTKyqFpJV2EFv09I9VRgKHviVtxn1N/C6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0AHmd5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rgdRKmxuI/HhWMblcwfro71iEhVr7ofbojvTA3jT4qLcG/5aBoQAYjBEItwAuIn/MOoLnpUr5t1s2HJLcudDnAGRj4IsvLk8uiy5xxM1545fuK7GfbxT6dcF7iJiupIfm3YH/gvN4ptUEibWr1jPOpoJZMvtnQQE4lecjLlkZY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTOAIkxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0AHmd5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5020C433C7;
-	Tue, 27 Feb 2024 14:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTOAIkxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3111C433F1;
+	Tue, 27 Feb 2024 14:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043426;
-	bh=5iFfRwSIs9D+Xpw46UxHstMoJ2xa364gmvSr2+gJbDY=;
+	s=korg; t=1709043429;
+	bh=Se5QTSaatmTMLtaQlrD4MOreypTzdbBeVuRdp7ZtIhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0AHmd5kaZ7nxhfmqQF2M+qj8sdmwtwdeSA0TljZ3xfoHxfoerYi4zCgu6ervEmwL
-	 TFwiRK/ubLeQF1/IE55R7O5XuD0ARMubgJjNsTpoRXrV717mZaSPT9faJ/aCz72sqC
-	 Azx/wWasf5lm4FesFl2LhUxhLTOBlDlP1vWpaQEo=
+	b=RTOAIkxcJ++6Rmx7eE0LYjOMTY69x2ycz1bTWEpf8RPTxqAeUnk9PR6pq/UVFFPn1
+	 2pLC0PpShwd+NlYRcr6LJXFT6Cq9fSOK9Ujpn9LJhaLShJkVU0nbHsJR//shPIPOdf
+	 Ea4RuKNZJj0pn/gSAcxAuF+ADk/6aAD6vBlQwto8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Goldman <adamg@pobox.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/195] firewire: core: send bus reset promptly on gap count error
-Date: Tue, 27 Feb 2024 14:25:36 +0100
-Message-ID: <20240227131612.973284718@linuxfoundation.org>
+Subject: [PATCH 6.1 076/195] drm/amdgpu: skip to program GFXDEC registers for suspend abort
+Date: Tue, 27 Feb 2024 14:25:37 +0100
+Message-ID: <20240227131613.005625629@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,127 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 7ed4380009e96d9e9c605e12822e987b35b05648 ]
+[ Upstream commit 93bafa32a6918154aa0caf9f66679a32c2431357 ]
 
-If we are bus manager and the bus has inconsistent gap counts, send a
-bus reset immediately instead of trying to read the root node's config
-ROM first. Otherwise, we could spend a lot of time trying to read the
-config ROM but never succeeding.
+In the suspend abort cases, the gfx power rail doesn't turn off so
+some GFXDEC registers/CSB can't reset to default value and at this
+moment reinitialize GFXDEC/CSB will result in an unexpected error.
+So let skip those program sequence for the suspend abort case.
 
-This eliminates a 50+ second delay before the FireWire bus is usable after
-a newly connected device is powered on in certain circumstances.
-
-The delay occurs if a gap count inconsistency occurs, we are not the root
-node, and we become bus manager. One scenario that causes this is with a TI
-XIO2213B OHCI, the first time a Sony DSR-25 is powered on after being
-connected to the FireWire cable. In this configuration, the Linux box will
-not receive the initial PHY configuration packet sent by the DSR-25 as IRM,
-resulting in the DSR-25 having a gap count of 44 while the Linux box has a
-gap count of 63.
-
-FireWire devices have a gap count parameter, which is set to 63 on power-up
-and can be changed with a PHY configuration packet. This determines the
-duration of the subaction and arbitration gaps. For reliable communication,
-all nodes on a FireWire bus must have the same gap count.
-
-A node may have zero or more of the following roles: root node, bus manager
-(BM), isochronous resource manager (IRM), and cycle master. Unless a root
-node was forced with a PHY configuration packet, any node might become root
-node after a bus reset. Only the root node can become cycle master. If the
-root node is not cycle master capable, the BM or IRM should force a change
-of root node.
-
-After a bus reset, each node sends a self-ID packet, which contains its
-current gap count. A single bus reset does not change the gap count, but
-two bus resets in a row will set the gap count to 63. Because a consistent
-gap count is required for reliable communication, IEEE 1394a-2000 requires
-that the bus manager generate a bus reset if it detects that the gap count
-is inconsistent.
-
-When the gap count is inconsistent, build_tree() will notice this after the
-self identification process. It will set card->gap_count to the invalid
-value 0. If we become bus master, this will force bm_work() to send a bus
-reset when it performs gap count optimization.
-
-After a bus reset, there is no bus manager. We will almost always try to
-become bus manager. Once we become bus manager, we will first determine
-whether the root node is cycle master capable. Then, we will determine if
-the gap count should be changed. If either the root node or the gap count
-should be changed, we will generate a bus reset.
-
-To determine if the root node is cycle master capable, we read its
-configuration ROM. bm_work() will wait until we have finished trying to
-read the configuration ROM.
-
-However, an inconsistent gap count can make this take a long time.
-read_config_rom() will read the first few quadlets from the config ROM. Due
-to the gap count inconsistency, eventually one of the reads will time out.
-When read_config_rom() fails, fw_device_init() calls it again until
-MAX_RETRIES is reached. This takes 50+ seconds.
-
-Once we give up trying to read the configuration ROM, bm_work() will wake
-up, assume that the root node is not cycle master capable, and do a bus
-reset. Hopefully, this will resolve the gap count inconsistency.
-
-This change makes bm_work() check for an inconsistent gap count before
-waiting for the root node's configuration ROM. If the gap count is
-inconsistent, bm_work() will immediately do a bus reset. This eliminates
-the 50+ second delay and rapidly brings the bus to a working state.
-
-I considered that if the gap count is inconsistent, a PHY configuration
-packet might not be successful, so it could be desirable to skip the PHY
-configuration packet before the bus reset in this case. However, IEEE
-1394a-2000 and IEEE 1394-2008 say that the bus manager may transmit a PHY
-configuration packet before a bus reset when correcting a gap count error.
-Since the standard endorses this, I decided it's safe to retain the PHY
-configuration packet transmission.
-
-Normally, after a topology change, we will reset the bus a maximum of 5
-times to change the root node and perform gap count optimization. However,
-if there is a gap count inconsistency, we must always generate a bus reset.
-Otherwise the gap count inconsistency will persist and communication will
-be unreliable. For that reason, if there is a gap count inconstency, we
-generate a bus reset even if we already reached the 5 reset limit.
-
-Signed-off-by: Adam Goldman <adamg@pobox.com>
-Reference: https://sourceforge.net/p/linux1394/mailman/message/58727806/
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-card.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h     | 2 ++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   | 8 ++++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/drivers/firewire/core-card.c b/drivers/firewire/core-card.c
-index 6ac5ff20a2fe2..8aaa7fcb2630d 100644
---- a/drivers/firewire/core-card.c
-+++ b/drivers/firewire/core-card.c
-@@ -429,7 +429,23 @@ static void bm_work(struct work_struct *work)
- 	 */
- 	card->bm_generation = generation;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index c46c6fbd235e8..e636c7850f777 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -999,6 +999,8 @@ struct amdgpu_device {
+ 	bool				in_s3;
+ 	bool				in_s4;
+ 	bool				in_s0ix;
++	/* indicate amdgpu suspension status */
++	bool				suspend_complete;
  
--	if (root_device == NULL) {
-+	if (card->gap_count == 0) {
-+		/*
-+		 * If self IDs have inconsistent gap counts, do a
-+		 * bus reset ASAP. The config rom read might never
-+		 * complete, so don't wait for it. However, still
-+		 * send a PHY configuration packet prior to the
-+		 * bus reset. The PHY configuration packet might
-+		 * fail, but 1394-2008 8.4.5.2 explicitly permits
-+		 * it in this case, so it should be safe to try.
-+		 */
-+		new_root_id = local_id;
-+		/*
-+		 * We must always send a bus reset if the gap count
-+		 * is inconsistent, so bypass the 5-reset limit.
-+		 */
-+		card->bm_retries = 0;
-+	} else if (root_device == NULL) {
- 		/*
- 		 * Either link_on is false, or we failed to read the
- 		 * config rom.  In either case, pick another root.
+ 	enum pp_mp1_state               mp1_state;
+ 	struct amdgpu_doorbell_index doorbell_index;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index b9983ca99eb7d..f24c3a20e901d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2414,6 +2414,7 @@ static int amdgpu_pmops_suspend(struct device *dev)
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
+ 
++	adev->suspend_complete = false;
+ 	if (amdgpu_acpi_is_s0ix_active(adev))
+ 		adev->in_s0ix = true;
+ 	else if (amdgpu_acpi_is_s3_active(adev))
+@@ -2428,6 +2429,7 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
+ 
++	adev->suspend_complete = true;
+ 	if (amdgpu_acpi_should_gpu_reset(adev))
+ 		return amdgpu_asic_reset(adev);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 84ca601f7d5f3..195b298923543 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -3064,6 +3064,14 @@ static int gfx_v9_0_cp_gfx_start(struct amdgpu_device *adev)
+ 
+ 	gfx_v9_0_cp_gfx_enable(adev, true);
+ 
++	/* Now only limit the quirk on the APU gfx9 series and already
++	 * confirmed that the APU gfx10/gfx11 needn't such update.
++	 */
++	if (adev->flags & AMD_IS_APU &&
++			adev->in_s3 && !adev->suspend_complete) {
++		DRM_INFO(" Will skip the CSB packet resubmit\n");
++		return 0;
++	}
+ 	r = amdgpu_ring_alloc(ring, gfx_v9_0_get_csb_size(adev) + 4 + 3);
+ 	if (r) {
+ 		DRM_ERROR("amdgpu: cp failed to lock ring (%d).\n", r);
 -- 
 2.43.0
 
