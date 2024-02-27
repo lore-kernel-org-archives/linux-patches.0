@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5115F13B2B8;
-	Tue, 27 Feb 2024 13:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305F4145B24;
+	Tue, 27 Feb 2024 13:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040617; cv=none; b=Nnu2RtWyKNm+WdJLhGDmtQgTtfzycRz/zSUqWWlmgMdtyBC6NtzBloe0K0yQBVKsP9Scy3Ci1vtsl3G9E2FLACBvbOoAP5njNRy0IpW6bMm+Vy5TxadlEZ+H/LjZZpwZhoRr9CzhnWSCcIpPdXqbKsQg99wHnMaOx9cpTib1AUg=
+	t=1709040620; cv=none; b=EzXTDZNkmqdaaBTz7MWOPSjuqX2hnFHYlJLPRpvkDJQyjadeFvt/S+uDk8z9PT0lg/2A/S7XlPLhvL5VDz7iWgdJq4W7SeSOaKwF6hTce40Iz0XtSkFtrM+uyFurQ0TzURnBhKosbS9hFdyUY7zozaEO85MC/h55yiTB/2mTFHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040617; c=relaxed/simple;
-	bh=mM8sRygUV0q4FoHx9HID+Xv9BcE3ytl2wNdaB8DuPxI=;
+	s=arc-20240116; t=1709040620; c=relaxed/simple;
+	bh=gXFfDRicLDZS/HTPalYSX6AcPAg+OlEhb7VNc3KFPXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSrrffm0m5qPGtEEBgyHiJv+z4KVwPSufE/T+rJsuxW+MKhwNw8fjXWsBBPPHqYDd3B3rKhN78fI+hU2DACSZYR3EO6RQ1U/PcLw7VsXZ3+zXd4zkQiiAZdPwSdngpTYFUDADTJ25tytAG5HhB1YdVO6Mq8BAflgTjjdp6Nl80c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/5H25mc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PPXy8sRg7m3uFi5L8k4uXYxyUOkJvtxKaYuvNEzcwLI5wnHNYjbSwc7eMsCCdmMuruU93hQ5HQhoWG+R/aOY1Sf3r5Xiqp2tb7cT4Yi+QnOiRWDXj2u0zY70MQXTB4lnSAog4x+ORosiSqbxAC7nkrYcdl41Io0MjwhdIbtVjU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugAlbXX+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/5H25mc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F441C433C7;
-	Tue, 27 Feb 2024 13:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugAlbXX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5278EC43390;
+	Tue, 27 Feb 2024 13:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040616;
-	bh=mM8sRygUV0q4FoHx9HID+Xv9BcE3ytl2wNdaB8DuPxI=;
+	s=korg; t=1709040619;
+	bh=gXFfDRicLDZS/HTPalYSX6AcPAg+OlEhb7VNc3KFPXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/5H25mcN0uGBMF+fy7l0zqKYeIcHid+qEYzOKrJvei6dev+NGJQGDxxn36+IezW1
-	 om2wGCn397P1S0uisoC+j/5R+stj+tkrr67G4+W/Nt3tQz2kC6bjUx0oWjj8POlDOk
-	 1Yx7CFP9RTnKzJYq/xWiLOm6v9zi7mfspV7070u0=
+	b=ugAlbXX+fbZz5S6eHfdtDvEdk0jUKK3Gve6FVMDQf8Ju5ZdMHsBDIKv5TvZri83yd
+	 W+EmKUVCXD/2eGjWESPq6bxmYNNVAk7SpRe4zAkI/LGYkqCyPLjeH0CR0EIo9C36UE
+	 afRx5HDSZ/5fPJfg7vxqSglLZvzwXQz4/tDUyRWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kenzo Gomez <kenzo.sgomez@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 048/334] ASoC: sunxi: sun4i-spdif: Add support for Allwinner H616
-Date: Tue, 27 Feb 2024 14:18:26 +0100
-Message-ID: <20240227131632.137426122@linuxfoundation.org>
+Subject: [PATCH 6.7 049/334] ALSA: hda: cs35l41: Support additional ASUS Zenbook UX3402VA
+Date: Tue, 27 Feb 2024 14:18:27 +0100
+Message-ID: <20240227131632.167617349@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Kenzo Gomez <kenzo.sgomez@gmail.com>
 
-[ Upstream commit 0adf963b8463faa44653e22e56ce55f747e68868 ]
+[ Upstream commit c16dfab33f99fc3ff43d48253bc2784ccb84c1de ]
 
-The SPDIF hardware block found in the H616 SoC has the same layout as
-the one found in the H6 SoC, except that it is missing the receiver
-side.
+Add new model entry into configuration table.
 
-Since the driver currently only supports the transmit function, support
-for the H616 is identical to what is currently done for the H6.
-
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://msgid.link/r/20240127163247.384439-4-wens@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Kenzo Gomez <kenzo.sgomez@gmail.com>
+Link: https://lore.kernel.org/r/20240127164621.26431-1-kenzo.sgomez@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sunxi/sun4i-spdif.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/cs35l41_hda_property.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sunxi/sun4i-spdif.c b/sound/soc/sunxi/sun4i-spdif.c
-index 702386823d172..f41c309558579 100644
---- a/sound/soc/sunxi/sun4i-spdif.c
-+++ b/sound/soc/sunxi/sun4i-spdif.c
-@@ -577,6 +577,11 @@ static const struct of_device_id sun4i_spdif_of_match[] = {
- 		.compatible = "allwinner,sun50i-h6-spdif",
- 		.data = &sun50i_h6_spdif_quirks,
- 	},
-+	{
-+		.compatible = "allwinner,sun50i-h616-spdif",
-+		/* Essentially the same as the H6, but without RX */
-+		.data = &sun50i_h6_spdif_quirks,
-+	},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, sun4i_spdif_of_match);
+diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
+index 35277ce890a46..59504852adc69 100644
+--- a/sound/pci/hda/cs35l41_hda_property.c
++++ b/sound/pci/hda/cs35l41_hda_property.c
+@@ -76,6 +76,7 @@ static const struct cs35l41_config cs35l41_config_table[] = {
+ 	{ "10431533", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 1000, 4500, 24 },
+ 	{ "10431573", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "10431663", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, -1, 0, 1000, 4500, 24 },
++	{ "104316A3", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 0, 0, 0 },
+ 	{ "104316D3", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 0, 0, 0 },
+ 	{ "104316F3", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 0, 0, 0 },
+ 	{ "104317F3", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 1000, 4500, 24 },
+@@ -410,6 +411,7 @@ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
+ 	{ "CSC3551", "10431533", generic_dsd_config },
+ 	{ "CSC3551", "10431573", generic_dsd_config },
+ 	{ "CSC3551", "10431663", generic_dsd_config },
++	{ "CSC3551", "104316A3", generic_dsd_config },
+ 	{ "CSC3551", "104316D3", generic_dsd_config },
+ 	{ "CSC3551", "104316F3", generic_dsd_config },
+ 	{ "CSC3551", "104317F3", generic_dsd_config },
 -- 
 2.43.0
 
