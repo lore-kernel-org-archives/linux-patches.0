@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4BF140391;
-	Tue, 27 Feb 2024 13:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BBB13B7A0;
+	Tue, 27 Feb 2024 13:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042303; cv=none; b=eDE7Sy/oTMV153pTqYc93/M6nXO32fABjzHhAnZGT5JfeMlOdj25nCKDVVrDn/bpYz1fIs6TT+opOlp7O/j9LOy9PUgb+4J9EMIGmX7v+9qwhKtQ5snD6rTcEwEruj4kQ6NmcEwNE60hUZrtA8qEKGEJxzwLw+oSyu80D++h1TE=
+	t=1709042306; cv=none; b=LgoybjIJn/dzLP6s7ajef/78qnRVyXFvw6qSZNHIZLFFl4psUR91rOmwE4HRPDOKxKPX8HU01TjmDumdsU+yBC7zZkhtaipctJD6aHKWdvZ9LJoODaH1sUE9kAivY34j3DFok6b+0tdwxpHEra54VL0I6Lh5A/yE9otrEZ0AeyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042303; c=relaxed/simple;
-	bh=dTdgKysP7BpBxE46/y75pzYut0LrqINtJ47XEwFau08=;
+	s=arc-20240116; t=1709042306; c=relaxed/simple;
+	bh=/e23Qz8WUJhf+pQjvHvl6t2m5307Mdss3ys0DOO1rms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjQ7WbBJyYuqN+lMGN6bZSBCxEpujWYMKZYbgeuGpa9Zj2VU93NRR7ywyiJ5d9MJ/00n3t6FANmmclGyMpwn2Dxao1j9kX72BcTv1HbFxJ4ZFr2sCKLGp5z5xV0GzWDXSTXM5BJiL2Li2FT5cxJ+BdnIaWjwIACoowPNyr9XUv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yc1vZFKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IuUNxqp1geSefe6lAYNL7bzlYyqnMQZn97nt8U4EDUhkCzFDubwiTFLQDU2WhNtgmaezUFng9FhRtSQL9LY90eNc2AsfQmi8iH4k+KAuPrvrEoaYFqzF27rcmtG2UvhI24lSYhYLYzBCBCeH0culc59eRNrxn5l4EACmciN6PhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR+PTpJL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yc1vZFKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04C0C433F1;
-	Tue, 27 Feb 2024 13:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR+PTpJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD87FC433C7;
+	Tue, 27 Feb 2024 13:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042303;
-	bh=dTdgKysP7BpBxE46/y75pzYut0LrqINtJ47XEwFau08=;
+	s=korg; t=1709042306;
+	bh=/e23Qz8WUJhf+pQjvHvl6t2m5307Mdss3ys0DOO1rms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yc1vZFKDThKzK0nHFEoICIsUWWjXHEkvKfABnXvijgS8LsV3MFxh7RGVgIUnymjXs
-	 nEiPWuDIW+SS8LjFBVHyMBzHFVK6hP5xjLu8o5XVuZrH2wp99IFnOoKs2RDB3NX43W
-	 jNUOGyG0FJKvevi8UEeoOTBLTQAdThTvhK5xjn0s=
+	b=KR+PTpJLIxhcsfL3vRHAQIYwvo7SqJmSXpzkBAMSOj4bkp4K2viwtzAssZTIryLDc
+	 kWJM/pr4JmD4SEAklGrf0JpYcGbRjtDcFn8W6RQa0wJDnCUiZaP29YXB7paVYTchxb
+	 h03VU2olYdxlifV4OthjZZaWtTCN0sNWZyeSN2do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 221/299] arm64: dts: tqma8mpql: fix audio codec iov-supply
-Date: Tue, 27 Feb 2024 14:25:32 +0100
-Message-ID: <20240227131632.880533770@linuxfoundation.org>
+Subject: [PATCH 6.6 222/299] bus: imx-weim: fix valid range check
+Date: Tue, 27 Feb 2024 14:25:33 +0100
+Message-ID: <20240227131632.910333522@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit a620a7f2ae8b08c5beea6369f61e87064ee222dc ]
+[ Upstream commit 7bca405c986075c99b9f729d3587b5c45db39d01 ]
 
-IOVDD is supplied by 1.8V, fix the referenced regulator.
+When the range parsing was open-coded the number of u32 entries to
+parse had to be a multiple of 4 and the driver checks this. With
+the range parsing converted to the range parser the counting changes
+from individual u32 entries to a complete range, so the check must
+not reject counts not divisible by 4.
 
-Fixes: d8f9d8126582d ("arm64: dts: imx8mp: Add analog audio output on i.MX8MP TQMa8MPxL/MBa8MPxL")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: 2a88e4792c6d ("bus: imx-weim: Remove open coded "ranges" parsing")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts     | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/bus/imx-weim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-index 4240e20d38ac3..258e90cc16ff3 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-@@ -168,6 +168,13 @@
- 		enable-active-high;
- 	};
+diff --git a/drivers/bus/imx-weim.c b/drivers/bus/imx-weim.c
+index 42c9386a7b423..f9fd1582f150d 100644
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -117,7 +117,7 @@ static int imx_weim_gpr_setup(struct platform_device *pdev)
+ 		i++;
+ 	}
  
-+	reg_vcc_1v8: regulator-1v8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VCC_1V8";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
- 	reg_vcc_3v3: regulator-3v3 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "VCC_3V3";
-@@ -464,7 +471,7 @@
- 		clock-names = "mclk";
- 		clocks = <&audio_blk_ctrl IMX8MP_CLK_AUDIOMIX_SAI3_MCLK1>;
- 		reset-gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
--		iov-supply = <&reg_vcc_3v3>;
-+		iov-supply = <&reg_vcc_1v8>;
- 		ldoin-supply = <&reg_vcc_3v3>;
- 	};
+-	if (i == 0 || i % 4)
++	if (i == 0)
+ 		goto err;
  
+ 	for (i = 0; i < ARRAY_SIZE(gprvals); i++) {
 -- 
 2.43.0
 
