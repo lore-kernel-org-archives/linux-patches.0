@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECB613B295;
-	Tue, 27 Feb 2024 13:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9577854FA5;
+	Tue, 27 Feb 2024 13:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040989; cv=none; b=UBYVNcgtx1+524ndEVzrf4G9VNT0ANC389LplX3g3lfLBb0qdGU5WVty8wQ+t2Ukh1APKx3lO+2sUwPApcz9qU4N2HoXWaqM1f8hDeCEfBMUytIHsBavaFxe2WKo2zxckM4h6Q7t9cwH6suyVBrRfrc+B3Z+u13BWLO2pRIRa4M=
+	t=1709040991; cv=none; b=eYBsgVKiZntCyJ5nedrTmdU15N2yTwtg73fC0+VYW7YNVtJm8hK6cXpugOhixnivfNEPJqZmAhYDAB5NFRMHkgcMcUsG/7uKVW5e8gUTcKVD4Xd5pW+9ui8JGHZne+RWtQLGLkNgi07zU8i/chnVZjOGLLK2kh5jEbESYx7b3+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040989; c=relaxed/simple;
-	bh=kPXmSpfo6GAK8llEz5NBvhuAxlJhae+f7LX7w3Cot7A=;
+	s=arc-20240116; t=1709040991; c=relaxed/simple;
+	bh=ZkaJ2UhqRUk4FCN2M+MkA6LB3g6p7W7oaKigC95Qr/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIqt/g4EweNAMxQdh+5PCUc4NvqKZNBrZWKsdKpbsCyXm2laeYAQBcix4iQRT0EfLaINpv6+3li+cjNiykfH8tYachS2PabL0yZU1U21drj4MP9ctaES76tmDvWlVytws/sW2QAhsa/GG58ECwJ66O4yCDANU1VpUD+cAXHs/sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plC2INQA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnnsNRr75NNLs1/8aH9w+hprCMuCRzmAZ16iVRiNg6XuAL9lAKlxU2A7usEfnEAqFSmlYEpRdKFMrucvabjuBVt299pDjrZJoD4/MeUDyzzTuPqMQnjpzdDqHIlrtpkkRbDFG+dN71qu6Vn/UzbAjFx7rHbBDEeHh6XSxHR8IY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFajpdpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plC2INQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFFEC433F1;
-	Tue, 27 Feb 2024 13:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFajpdpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2220FC433F1;
+	Tue, 27 Feb 2024 13:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040988;
-	bh=kPXmSpfo6GAK8llEz5NBvhuAxlJhae+f7LX7w3Cot7A=;
+	s=korg; t=1709040991;
+	bh=ZkaJ2UhqRUk4FCN2M+MkA6LB3g6p7W7oaKigC95Qr/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plC2INQA3LVGo0PuINTweTds21yYLgrym6nfuEOU4BatWD+ESrE3MLOy3xuENnx10
-	 GEsrHVcPdyCFMRjDDPxbOu2/MWLRFvnfurM+mNjXJ1icOXLvv5/G8GR4FdObEskP58
-	 NL9htMcit/2cTWqzYxS+KmRr631yuhznr2thc3+U=
+	b=lFajpdptdBksC6aKtTaBBURnYzCVXoKoyEqFu13iOpseKqUrlhZVeoMEy5XMzWAw3
+	 5pwp04KuyPRxuZS/38i8AtbnPVqJjsn8YJxtSXN2ITHZ3qv4sCVlzzFNSm5AYJodlh
+	 zY275Z/aT4Cc+Z7xATnQfGd/qiyIsuUGYTUw4A4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Anthony Koo <anthony.koo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Lewis Huang <lewis.huang@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 151/334] drm/amd/display: Only allow dig mapping to pwrseq in new asic
-Date: Tue, 27 Feb 2024 14:20:09 +0100
-Message-ID: <20240227131635.333629692@linuxfoundation.org>
+Subject: [PATCH 6.7 152/334] drm/amd/display: adjust few initialization order in dm
+Date: Tue, 27 Feb 2024 14:20:10 +0100
+Message-ID: <20240227131635.363480102@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -54,131 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lewis Huang <lewis.huang@amd.com>
+From: Wayne Lin <wayne.lin@amd.com>
 
-commit 4e73826089ce899357580bbf6e0afe4e6f9900b7 upstream.
+commit 22e1dc4b2fec17af70f297a4295c5f19a0f3fbeb upstream.
 
 [Why]
-The old asic only have 1 pwrseq hw.
-We don't need to map the diginst to pwrseq inst in old asic.
+Observe error message "Can't retrieve aconnector in hpd_rx_irq_offload_work"
+when boot up with a mst tbt4 dock connected. After analyzing, there are few
+parts needed to be adjusted:
+
+1. hpd_rx_offload_wq[].aconnector is not initialzed before the dmub outbox
+hpd_irq handler get registered which causes the error message.
+
+2. registeration of hpd and hpd_rx_irq event for usb4 dp tunneling is not
+aligned with legacy interface sequence
 
 [How]
-1. Only mapping dig to pwrseq for new asic.
-2. Move mapping function into dcn specific panel control component
+Put DMUB_NOTIFICATION_HPD and DMUB_NOTIFICATION_HPD_IRQ handler
+registration into register_hpd_handlers() to align other interfaces and
+get hpd_rx_offload_wq[].aconnector initialized earlier than that.
 
-Cc: Stable <stable@vger.kernel.org> # v6.6+
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3122
-Reviewed-by: Anthony Koo <anthony.koo@amd.com>
+Leave DMUB_NOTIFICATION_AUX_REPLY registered as it was since we need that
+while calling dc_link_detect(). USB4 connection status will be proactively
+detected by dc_link_detect_connection_type() in amdgpu_dm_initialize_drm_device()
+
+Cc: Stable <stable@vger.kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Lewis Huang <lewis.huang@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_panel_cntl.c       |    1 
- drivers/gpu/drm/amd/display/dc/dcn301/dcn301_panel_cntl.c |    1 
- drivers/gpu/drm/amd/display/dc/dcn31/dcn31_panel_cntl.c   |   18 +++++++++
- drivers/gpu/drm/amd/display/dc/inc/hw/panel_cntl.h        |    2 -
- drivers/gpu/drm/amd/display/dc/link/link_factory.c        |   26 --------------
- 5 files changed, 21 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   37 ++++++++++------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_panel_cntl.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_panel_cntl.c
-@@ -290,4 +290,5 @@ void dce_panel_cntl_construct(
- 	dce_panel_cntl->base.funcs = &dce_link_panel_cntl_funcs;
- 	dce_panel_cntl->base.ctx = init_data->ctx;
- 	dce_panel_cntl->base.inst = init_data->inst;
-+	dce_panel_cntl->base.pwrseq_inst = 0;
- }
---- a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_panel_cntl.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_panel_cntl.c
-@@ -215,4 +215,5 @@ void dcn301_panel_cntl_construct(
- 	dcn301_panel_cntl->base.funcs = &dcn301_link_panel_cntl_funcs;
- 	dcn301_panel_cntl->base.ctx = init_data->ctx;
- 	dcn301_panel_cntl->base.inst = init_data->inst;
-+	dcn301_panel_cntl->base.pwrseq_inst = 0;
- }
---- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_panel_cntl.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_panel_cntl.c
-@@ -154,8 +154,24 @@ void dcn31_panel_cntl_construct(
- 	struct dcn31_panel_cntl *dcn31_panel_cntl,
- 	const struct panel_cntl_init_data *init_data)
- {
-+	uint8_t pwrseq_inst = 0xF;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1810,21 +1810,12 @@ static int amdgpu_dm_init(struct amdgpu_
+ 			DRM_ERROR("amdgpu: fail to register dmub aux callback");
+ 			goto error;
+ 		}
+-		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD, dmub_hpd_callback, true)) {
+-			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
+-			goto error;
+-		}
+-		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD_IRQ, dmub_hpd_callback, true)) {
+-			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
+-			goto error;
+-		}
+-	}
+-
+-	/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
+-	 * It is expected that DMUB will resend any pending notifications at this point, for
+-	 * example HPD from DPIA.
+-	 */
+-	if (dc_is_dmub_outbox_supported(adev->dm.dc)) {
++		/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
++		 * It is expected that DMUB will resend any pending notifications at this point. Note
++		 * that hpd and hpd_irq handler registration are deferred to register_hpd_handlers() to
++		 * align legacy interface initialization sequence. Connection status will be proactivly
++		 * detected once in the amdgpu_dm_initialize_drm_device.
++		 */
+ 		dc_enable_dmub_outbox(adev->dm.dc);
+ 
+ 		/* DPIA trace goes to dmesg logs only if outbox is enabled */
+@@ -3494,6 +3485,14 @@ static void register_hpd_handlers(struct
+ 	int_params.requested_polarity = INTERRUPT_POLARITY_DEFAULT;
+ 	int_params.current_polarity = INTERRUPT_POLARITY_DEFAULT;
+ 
++	if (dc_is_dmub_outbox_supported(adev->dm.dc)) {
++		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD, dmub_hpd_callback, true))
++			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
 +
- 	dcn31_panel_cntl->base.funcs = &dcn31_link_panel_cntl_funcs;
- 	dcn31_panel_cntl->base.ctx = init_data->ctx;
- 	dcn31_panel_cntl->base.inst = init_data->inst;
--	dcn31_panel_cntl->base.pwrseq_inst = init_data->pwrseq_inst;
-+
-+	switch (init_data->eng_id) {
-+	case ENGINE_ID_DIGA:
-+		pwrseq_inst = 0;
-+		break;
-+	case ENGINE_ID_DIGB:
-+		pwrseq_inst = 1;
-+		break;
-+	default:
-+		DC_LOG_WARNING("Unsupported pwrseq engine id: %d!\n", init_data->eng_id);
-+		ASSERT(false);
-+		break;
++		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD_IRQ, dmub_hpd_callback, true))
++			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
 +	}
 +
-+	dcn31_panel_cntl->base.pwrseq_inst = pwrseq_inst;
- }
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/panel_cntl.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/panel_cntl.h
-@@ -56,7 +56,7 @@ struct panel_cntl_funcs {
- struct panel_cntl_init_data {
- 	struct dc_context *ctx;
- 	uint32_t inst;
--	uint32_t pwrseq_inst;
-+	uint32_t eng_id;
- };
+ 	list_for_each_entry(connector,
+ 			&dev->mode_config.connector_list, head)	{
  
- struct panel_cntl {
---- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-@@ -368,30 +368,6 @@ static enum transmitter translate_encode
+@@ -3519,10 +3518,6 @@ static void register_hpd_handlers(struct
+ 					handle_hpd_rx_irq,
+ 					(void *) aconnector);
+ 		}
+-
+-		if (adev->dm.hpd_rx_offload_wq)
+-			adev->dm.hpd_rx_offload_wq[connector->index].aconnector =
+-				aconnector;
  	}
  }
  
--static uint8_t translate_dig_inst_to_pwrseq_inst(struct dc_link *link)
--{
--	uint8_t pwrseq_inst = 0xF;
--	struct dc_context *dc_ctx = link->dc->ctx;
--
--	DC_LOGGER_INIT(dc_ctx->logger);
--
--	switch (link->eng_id) {
--	case ENGINE_ID_DIGA:
--		pwrseq_inst = 0;
--		break;
--	case ENGINE_ID_DIGB:
--		pwrseq_inst = 1;
--		break;
--	default:
--		DC_LOG_WARNING("Unsupported pwrseq engine id: %d!\n", link->eng_id);
--		ASSERT(false);
--		break;
--	}
--
--	return pwrseq_inst;
--}
--
--
- static void link_destruct(struct dc_link *link)
- {
- 	int i;
-@@ -655,7 +631,7 @@ static bool construct_phy(struct dc_link
- 			link->link_id.id == CONNECTOR_ID_LVDS)) {
- 		panel_cntl_init_data.ctx = dc_ctx;
- 		panel_cntl_init_data.inst = panel_cntl_init_data.ctx->dc_edp_id_count;
--		panel_cntl_init_data.pwrseq_inst = translate_dig_inst_to_pwrseq_inst(link);
-+		panel_cntl_init_data.eng_id = link->eng_id;
- 		link->panel_cntl =
- 			link->dc->res_pool->funcs->panel_cntl_create(
- 								&panel_cntl_init_data);
+@@ -4493,6 +4488,10 @@ static int amdgpu_dm_initialize_drm_devi
+ 
+ 		link = dc_get_link_at_index(dm->dc, i);
+ 
++		if (dm->hpd_rx_offload_wq)
++			dm->hpd_rx_offload_wq[aconnector->base.index].aconnector =
++				aconnector;
++
+ 		if (!dc_link_detect_connection_type(link, &new_connection_type))
+ 			DRM_ERROR("KMS: Failed to detect connector\n");
+ 
 
 
