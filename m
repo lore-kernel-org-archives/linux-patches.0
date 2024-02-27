@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4B054BFE;
-	Tue, 27 Feb 2024 14:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661F1145FF9;
+	Tue, 27 Feb 2024 14:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044253; cv=none; b=HGEH0S13OaEy+ONmHDqA0/iKfu5M3pR9nU9XJ9fI8WDBTu8qBIYZ55gmkoVx4TQEphOb9M6mz3LqS3cneG39TlNpvOb+KUyj42NGzwgJURCiPV5W2lH9kdC6+jPt5LN08fLKOeF0NFj67zvMzuyCPMJjwgnF9f4VButtihmdv88=
+	t=1709044256; cv=none; b=BJx5zN3lYfdqXXVjXPZHLH2o+MPZ4IeGNRtAmNEk+9ZC4+sku4lpRJlWQ5sPXYpw/pehYLdOSaJHzK2XRss3YQ2teXHo48oPpIrCRNFMnmOOLuVoPSbAKs7e2IKcCsaiWw9oncpXJWGJiP9Ie+2Oq8H5UToMLxIglfUbYKPPRc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044253; c=relaxed/simple;
-	bh=r9U5p3Cxy/g3OkoBC7ZA6xOEu74ul0MVBsuR+8VZuUs=;
+	s=arc-20240116; t=1709044256; c=relaxed/simple;
+	bh=H639s2txC6U3bmMIjCTM9nqMxyEUi9MNtrb5HPPm0sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRK1KIift2RVPWOWHRfzqSMBtNfNBGLELyVW9uZ7bY9PvaXEtmu1rhTgcmCDNmRndgD/8V/AELCaGK9jfYmgbnAz4V2ITufEZk77A4QpXUQS6XBjG0klXd/ccMyx8KOrFrXcqvx7UVsxmwVCQF3TwUTj3Uz68rCbV0O2H+FdJ4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXqxRkYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmJ4yxEAWEtcoKFLYbSOww7SwnrTXcvkrrvzfHgDiY61bF3bJctdpC6NCR/k3+TkA8OB6kdeePDafZhNQXdpTWvwf1H+sak/sQCC1feb4bLH3rssAvno0fK8ceMQ4ONvnHKZ3CpC9n/mHRzyXZQF4639D/mDb4VOn+OZDMjHKjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWGFuTS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXqxRkYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC123C433F1;
-	Tue, 27 Feb 2024 14:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWGFuTS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBA7C433F1;
+	Tue, 27 Feb 2024 14:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044253;
-	bh=r9U5p3Cxy/g3OkoBC7ZA6xOEu74ul0MVBsuR+8VZuUs=;
+	s=korg; t=1709044255;
+	bh=H639s2txC6U3bmMIjCTM9nqMxyEUi9MNtrb5HPPm0sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXqxRkYKe0dpM5nvXPFaE+2h4wQkq0SZ1wMdV8g5FJ2S+qRZLnO1HVLqlys/61Zs6
-	 RwqLQo5QGjizi4V54akvkRdftH63OIi2mvXQVuVQtYewlxcSkKO1QA8LqpstbcjJQH
-	 Z8uvnLTlYMum/xvWeD1ybYYKIsQdjgJ8wiFBfQbo=
+	b=vWGFuTS/iINLC902eDkiiOmUrXxDXXanVLhUcPbwbcdb5vCC4R7hGuf1n1iWt/z9e
+	 8OJHwYkN9fu38OW3uYxI0b6w/uXRFIBQrpJjqtn49QwN0Dhb/ZE6Uod8qsHFKAdDdH
+	 WOCgE2mJDQmFMvbleQUdN7TAmoIRPVXMWLNnpsbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/122] drm/amd/display: Fix memory leak in dm_sw_fini()
-Date: Tue, 27 Feb 2024 14:27:59 +0100
-Message-ID: <20240227131602.562736053@linuxfoundation.org>
+Subject: [PATCH 5.10 101/122] RDMA/srpt: fix function pointer cast warnings
+Date: Tue, 27 Feb 2024 14:27:42 +0100
+Message-ID: <20240227131602.010156395@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,58 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bae67893578d608e35691dcdfa90c4957debf1d3 ]
+[ Upstream commit eb5c7465c3240151cd42a55c7ace9da0026308a1 ]
 
-After destroying dmub_srv, the memory associated with it is
-not freed, causing a memory leak:
+clang-16 notices that srpt_qp_event() gets called through an incompatible
+pointer here:
 
-unreferenced object 0xffff896302b45800 (size 1024):
-  comm "(udev-worker)", pid 222, jiffies 4294894636
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 6265fd77):
-    [<ffffffff993495ed>] kmalloc_trace+0x29d/0x340
-    [<ffffffffc0ea4a94>] dm_dmub_sw_init+0xb4/0x450 [amdgpu]
-    [<ffffffffc0ea4e55>] dm_sw_init+0x15/0x2b0 [amdgpu]
-    [<ffffffffc0ba8557>] amdgpu_device_init+0x1417/0x24e0 [amdgpu]
-    [<ffffffffc0bab285>] amdgpu_driver_load_kms+0x15/0x190 [amdgpu]
-    [<ffffffffc0ba09c7>] amdgpu_pci_probe+0x187/0x4e0 [amdgpu]
-    [<ffffffff9968fd1e>] local_pci_probe+0x3e/0x90
-    [<ffffffff996918a3>] pci_device_probe+0xc3/0x230
-    [<ffffffff99805872>] really_probe+0xe2/0x480
-    [<ffffffff99805c98>] __driver_probe_device+0x78/0x160
-    [<ffffffff99805daf>] driver_probe_device+0x1f/0x90
-    [<ffffffff9980601e>] __driver_attach+0xce/0x1c0
-    [<ffffffff99803170>] bus_for_each_dev+0x70/0xc0
-    [<ffffffff99804822>] bus_add_driver+0x112/0x210
-    [<ffffffff99807245>] driver_register+0x55/0x100
-    [<ffffffff990012d1>] do_one_initcall+0x41/0x300
+drivers/infiniband/ulp/srpt/ib_srpt.c:1815:5: error: cast from 'void (*)(struct ib_event *, struct srpt_rdma_ch *)' to 'void (*)(struct ib_event *, void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+ 1815 |                 = (void(*)(struct ib_event *, void*))srpt_qp_event;
 
-Fix this by freeing dmub_srv after destroying it.
+Change srpt_qp_event() to use the correct prototype and adjust the
+argument inside of it.
 
-Fixes: 743b9786b14a ("drm/amd/display: Hook up the DMUB service in DM")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240213100728.458348-1-arnd@kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 54d6b4128721e..3578e3b3536e3 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1456,6 +1456,7 @@ static int dm_sw_fini(void *handle)
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index 80e99e9e97172..41abf9cf11c67 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -214,10 +214,12 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
+ /**
+  * srpt_qp_event - QP event callback function
+  * @event: Description of the event that occurred.
+- * @ch: SRPT RDMA channel.
++ * @ptr: SRPT RDMA channel.
+  */
+-static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
++static void srpt_qp_event(struct ib_event *event, void *ptr)
+ {
++	struct srpt_rdma_ch *ch = ptr;
++
+ 	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
+ 		 event->event, ch, ch->sess_name, ch->qp->qp_num,
+ 		 get_ch_state_name(ch->state));
+@@ -1807,8 +1809,7 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
+ 	ch->cq_size = ch->rq_size + sq_size;
  
- 	if (adev->dm.dmub_srv) {
- 		dmub_srv_destroy(adev->dm.dmub_srv);
-+		kfree(adev->dm.dmub_srv);
- 		adev->dm.dmub_srv = NULL;
- 	}
- 
+ 	qp_init->qp_context = (void *)ch;
+-	qp_init->event_handler
+-		= (void(*)(struct ib_event *, void*))srpt_qp_event;
++	qp_init->event_handler = srpt_qp_event;
+ 	qp_init->send_cq = ch->cq;
+ 	qp_init->recv_cq = ch->cq;
+ 	qp_init->sq_sig_type = IB_SIGNAL_REQ_WR;
 -- 
 2.43.0
 
