@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C89713AA4C;
-	Tue, 27 Feb 2024 14:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0041713B29C;
+	Tue, 27 Feb 2024 14:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043088; cv=none; b=WGkxMXgPCdpjivfbqUFTnljeIaZahvm9KQKcoeHaThggw/YAQ3qyd30LuzrSmXfAdiGuJaJAblgriD1x7Lx+7IXTg3LBhMt4cBuJK0VHxyaNJDQTn8br18Yht+FsLTNV518FeoTcvcWudOAH5+wlDGGoqWFK/sajhVXBEnYRKJs=
+	t=1709043091; cv=none; b=OPveKjYYT2dGO9WeMzNUQQwoRxXN/dgFKzwGcaqQVcb7TZkIkVgEyvR+2K4WQ6PJkmkqCLxWMpAHdfXJEkDbj5m8PmzD7zzJSllf+zlfjJNatXqosqKDnBalR8kDMovn0UjIzchnr+w8N7Npd9ymo9mkdNLglsxEGsxE6Te6F2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043088; c=relaxed/simple;
-	bh=mFCKyS6j7oZt92RcgUIEjrtOSUWvL8Uy5zxuN/m8JCw=;
+	s=arc-20240116; t=1709043091; c=relaxed/simple;
+	bh=nm+Klt5uGxseDP3uwLVBw941tceUa8u6EQbflQyiLzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSVs8p52IpGyWwPlqD+WHtXFDcr3+AeEMEZ5mOKmQOGKJCVOsaId6hZxES7Ft4hEjHQAuulq/I4ghFeaRROVmQgd2tLGDGzk8z7BoAkdzkPc3eg7Z/Z3XdvB1WthyxfY00p2QIb4i6fE16Cvb70uh4lXwaJpGmJkn6GjDJSCGac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcMfJUqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiTUKPaoeQ5j/YZBYM5lkSffRIKaqDFFcHQz5pp3lh3G3d8yNKEuVfrYlVTmnOIcxyHUvgvn5CtWQsqv0txYlzij8bVsiCCKWsmX5WSBoVHoq4K8J5i6X9F1mBFJOf8CTubtfE92zUsPUorkHuYR1Axx2+TQrgTbMAJ+xUOUwPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooYD3i5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcMfJUqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8FDC433C7;
-	Tue, 27 Feb 2024 14:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooYD3i5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FA0C433F1;
+	Tue, 27 Feb 2024 14:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043088;
-	bh=mFCKyS6j7oZt92RcgUIEjrtOSUWvL8Uy5zxuN/m8JCw=;
+	s=korg; t=1709043090;
+	bh=nm+Klt5uGxseDP3uwLVBw941tceUa8u6EQbflQyiLzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcMfJUqsGbEjNtIhYi+Vy7tsX6/VpYCZ/PwnNOtv59PWI7i1SYw2QaIoRnO0WHcbC
-	 ChnlnOXxRmSxt+7aaL0pCcYw19OM0SOA5lBwf+43GPooHqvp2FgfGKjxF4L0NGqx3o
-	 Dwu7r1dwItt6E7DhJyIg2V5dHBcdrgkUP3uk5eC0=
+	b=ooYD3i5nyk9qx0mgLpr9M2xZFvY6AgtDvD33KO2EoYw0+QUd28ytoy6psATrIR9t5
+	 +jo4acQpeoczFoEqcFLb0teUp2wZ8NAKc2UEZ+vfzukoXSIV7Su0hHjGfUCrm+8hYV
+	 WBuJsZaO6hQjCWtl9EtOyU2wbK6lL+a/PwZ9sCwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/245] tls: stop recv() if initial process_rx_list gave us non-DATA
-Date: Tue, 27 Feb 2024 14:26:58 +0100
-Message-ID: <20240227131622.658412194@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+de4025c006ec68ac56fc@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 231/245] netfilter: nf_tables: set dormant flag on hook register failure
+Date: Tue, 27 Feb 2024 14:26:59 +0100
+Message-ID: <20240227131622.689067738@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit fdfbaec5923d9359698cbb286bc0deadbb717504 ]
+[ Upstream commit bccebf64701735533c8db37773eeacc6566cc8ec ]
 
-If we have a non-DATA record on the rx_list and another record of the
-same type still on the queue, we will end up merging them:
- - process_rx_list copies the non-DATA record
- - we start the loop and process the first available record since it's
-   of the same type
- - we break out of the loop since the record was not DATA
+We need to set the dormant flag again if we fail to register
+the hooks.
 
-Just check the record type and jump to the end in case process_rx_list
-did some work.
+During memory pressure hook registration can fail and we end up
+with a table marked as active but no registered hooks.
 
-Fixes: 692d7b5d1f91 ("tls: Fix recvmsg() to be able to peek across multiple records")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/bd31449e43bd4b6ff546f5c51cf958c31c511deb.1708007371.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On table/base chain deletion, nf_tables will attempt to unregister
+the hook again which yields a warn splat from the nftables core.
+
+Reported-and-tested-by: syzbot+de4025c006ec68ac56fc@syzkaller.appspotmail.com
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 92eab4a7a80b5..e6f700f67c010 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1787,7 +1787,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 361fbbd430ad8..1a7bfd4be61d5 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1193,6 +1193,7 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
+ 	return 0;
  
- 	copied = err;
--	if (len <= copied)
-+	if (len <= copied || (copied && control != TLS_RECORD_TYPE_DATA))
- 		goto end;
- 
- 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
+ err_register_hooks:
++	ctx->table->flags |= NFT_TABLE_F_DORMANT;
+ 	nft_trans_destroy(trans);
+ 	return ret;
+ }
 -- 
 2.43.0
 
