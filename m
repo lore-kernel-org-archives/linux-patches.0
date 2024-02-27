@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7EB78B61;
-	Tue, 27 Feb 2024 14:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4E278B61;
+	Tue, 27 Feb 2024 14:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043552; cv=none; b=QEfzRLZnQmo9o/FRsFAG+3Vd32isYdAi17m7wgxVeDfEpi1xY36nVw0lD1qWl0lNv/4+7tx4HoJjFq4uG8ZWPAG3zzYdAaCX43oQn/DDUH4iPNFYEoyhXw9DzlA6SfuOMym6+ot0K6zHUMZ61CwyXvCC8if7BjKbf0lNeP5Opm8=
+	t=1709043555; cv=none; b=a8cniVgEUZSy/QFFW9MyJcm61c5NSs6QtI5vTGHK4ZxTmyhp4bXnx0TmMqwb3hR1qgKAANJ+9buwmhhKJgFdWuISUoq/oPKxmxlqTt+YIWCzx1pKtFOYTtGWuD1ohWqU8khqmR4TxSVtpX9qDBG3unF4AJphhJkwqSuzF4zLtVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043552; c=relaxed/simple;
-	bh=r5GZW9a+F29x34GFV7nDmKB2J6OxCkJT5pc3P9PpbdM=;
+	s=arc-20240116; t=1709043555; c=relaxed/simple;
+	bh=W/uLes4f23gTGx7/opiPSLfm5I79VtsQ1K114xCnZdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAEl5+zeYprBQhBY689dfcSSNbSs1iZN2BbZEv+nBCwct1yIsQTXQeS6oBOKFKVjF+jXIyDvZqzMI0aniKkbwyQRKGsR/yqH6aR1yZRZZQAdOh8gBeMNRN7OtaqfJV+HVsrQWPartSZGv3A5AKOp9ZwpzmLLdgO/Vg+I1hFXYTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raRPppU6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Weu1IoxgDpRmxcXsoIxKTbvyzQ2N4LJ5B3p+5GtAXByGeD0tJKiNfT95mijnb7NTw05vmQ/mgo/BIGGen6oXPERkxX/Y3c5/pilf7Joe19KtKp+EYFqXBcDpChxV/b/2pBZhoa0LtjiA1OeJL524uF2qUl+Lp9rxVSkRiOD0dPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8qgjOd8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raRPppU6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF12C43390;
-	Tue, 27 Feb 2024 14:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8qgjOd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAE4C433F1;
+	Tue, 27 Feb 2024 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043552;
-	bh=r5GZW9a+F29x34GFV7nDmKB2J6OxCkJT5pc3P9PpbdM=;
+	s=korg; t=1709043555;
+	bh=W/uLes4f23gTGx7/opiPSLfm5I79VtsQ1K114xCnZdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raRPppU652BIfsAjL+SBuHDR9JI6ILgHISGyqwQUe8sHdfqvRdzoh6SR12T3R1JMo
-	 2EL9bx7wHXIQfnsW1/pWzr5gSXBV4ijcWCAt7xLaGzOFl/4PXXG/GvKS4af6kn+UZ7
-	 ScJovbmyewmrLyBzGCDAe01z7X9jcBi3xtXifGRM=
+	b=m8qgjOd8sypJao7AEtgbyrIN/Tm4AVeN16kFLffHfUPk1AdsGx8Xl9gxjTf3kYGd6
+	 O793utGD9xE6mdUoVQiqAlGn3eK1Hdk44girHwqlJejh13DmdRhYv3kAuhbVaXIHF6
+	 ywiR0UGc0aO9zOQnf4OEHazJcMtNnbT8/S0aoxHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Lennart Franzen <lennart@lfdomain.com>,
-	Alexandru Tachici <alexandru.tachici@analog.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org,
-	Nuno Sa <nuno.sa@analog.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/195] net: ethernet: adi: requires PHYLIB support
-Date: Tue, 27 Feb 2024 14:26:50 +0100
-Message-ID: <20240227131615.340879732@linuxfoundation.org>
+Subject: [PATCH 6.1 150/195] nouveau: fix function cast warnings
+Date: Tue, 27 Feb 2024 14:26:51 +0100
+Message-ID: <20240227131615.372429648@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -59,68 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a9f80df4f51440303d063b55bb98720857693821 ]
+[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
 
-This driver uses functions that are supplied by the Kconfig symbol
-PHYLIB, so select it to ensure that they are built as needed.
+clang-16 warns about casting between incompatible function types:
 
-When CONFIG_ADIN1110=y and CONFIG_PHYLIB=m, there are multiple build
-(linker) errors that are resolved by this Kconfig change:
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+  161 |         .fini = (void(*)(void *))release_firmware,
 
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_net_open':
-   drivers/net/ethernet/adi/adin1110.c:933: undefined reference to `phy_start'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_probe_netdevs':
-   drivers/net/ethernet/adi/adin1110.c:1603: undefined reference to `get_phy_device'
-   ld: drivers/net/ethernet/adi/adin1110.c:1609: undefined reference to `phy_connect'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_disconnect_phy':
-   drivers/net/ethernet/adi/adin1110.c:1226: undefined reference to `phy_disconnect'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `devm_mdiobus_alloc':
-   include/linux/phy.h:455: undefined reference to `devm_mdiobus_alloc_size'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_register_mdiobus':
-   drivers/net/ethernet/adi/adin1110.c:529: undefined reference to `__devm_mdiobus_register'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_net_stop':
-   drivers/net/ethernet/adi/adin1110.c:958: undefined reference to `phy_stop'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_disconnect_phy':
-   drivers/net/ethernet/adi/adin1110.c:1226: undefined reference to `phy_disconnect'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_adjust_link':
-   drivers/net/ethernet/adi/adin1110.c:1077: undefined reference to `phy_print_status'
-   ld: drivers/net/ethernet/adi/adin1110.o: in function `adin1110_ioctl':
-   drivers/net/ethernet/adi/adin1110.c:790: undefined reference to `phy_do_ioctl'
-   ld: drivers/net/ethernet/adi/adin1110.o:(.rodata+0xf60): undefined reference to `phy_ethtool_get_link_ksettings'
-   ld: drivers/net/ethernet/adi/adin1110.o:(.rodata+0xf68): undefined reference to `phy_ethtool_set_link_ksettings'
+This one was done to use the generic shadow_fw_release() function as a
+callback for struct nvbios_source. Change it to use the same prototype
+as the other five instances, with a trivial helper function that actually
+calls release_firmware.
 
-Fixes: bc93e19d088b ("net: ethernet: adi: Add ADIN1110 support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402070626.eZsfVHG5-lkp@intel.com/
-Cc: Lennart Franzen <lennart@lfdomain.com>
-Cc: Alexandru Tachici <alexandru.tachici@analog.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: netdev@vger.kernel.org
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/adi/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/adi/Kconfig b/drivers/net/ethernet/adi/Kconfig
-index da3bdd3025022..c91b4dcef4ec2 100644
---- a/drivers/net/ethernet/adi/Kconfig
-+++ b/drivers/net/ethernet/adi/Kconfig
-@@ -7,6 +7,7 @@ config NET_VENDOR_ADI
- 	bool "Analog Devices devices"
- 	default y
- 	depends on SPI
-+	select PHYLIB
- 	help
- 	  If you have a network (Ethernet) card belonging to this class, say Y.
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+index 19188683c8fca..8c2bf1c16f2a9 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
+ 	return (void *)fw;
+ }
  
++static void
++shadow_fw_release(void *fw)
++{
++	release_firmware(fw);
++}
++
+ static const struct nvbios_source
+ shadow_fw = {
+ 	.name = "firmware",
+ 	.init = shadow_fw_init,
+-	.fini = (void(*)(void *))release_firmware,
++	.fini = shadow_fw_release,
+ 	.read = shadow_fw_read,
+ 	.rw = false,
+ };
 -- 
 2.43.0
 
