@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1E813B7BE;
-	Tue, 27 Feb 2024 13:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C04D13B2B3;
+	Tue, 27 Feb 2024 13:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041853; cv=none; b=nsMEHTVwcR76n2jiRS9qT/063u30Wuqj1GSv9aOXl8/9dRCE8FLJ/VN51SXVzAR3+xKU8cvSitOgsex9AJOTh7Sx5z07bqPfQWsfZ4TDgeDQ0xRYDhEb1K7RAtV7MTTl/iZGPOhLQlpmvJtVYHeZxUHPwg2+DG7dGuAt2da9k94=
+	t=1709041856; cv=none; b=dnsadG7Q15BbX66R2L/8+YamKDL/NB+VWoRc3Dr4pRJrONo2WyItpwQzIKeXVOLVEmKzpXirZloWzipX3w7UQjhRgfvkZvN+cS4LqNC68iUA0H8NDLy98Xd9i4nTe/uaTBEE7arhJdOn2UPGw0aNJ1bxL5KleDANf80pTcTl6bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041853; c=relaxed/simple;
-	bh=usY7IW5sEwBwUhgBv6y6UhTQla7UVxbWjf50BMhHO6Q=;
+	s=arc-20240116; t=1709041856; c=relaxed/simple;
+	bh=jX3ODlRu2Jl7eReh0oDtj+HJZgCRh4AmTfz2LeKfvsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0WOCeEB5BgqVkc5ojtrJiQYHPGCqYH7xtbkAeBX0m14N2TtguYenClbz5e6Tn7/wjki8bxCQ91F47PcZfeoUvfMfveywsfo9GuZxHaI6+fmd/2QhOCIv4uREKvNWCwXwabWdmLquIIVm7yFD173JbW1+us0MrIxZ53b56kQLDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mphDi3p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtnCIIfdhg863zd2LHxTpF4UQIvF9p2BQMm1uXAN0ZaJTmtLnzAPwPUlPSMM1SWowQaR1ePig5M9qX8P2eTiJGSI0DcBBcmHXt/S+ycKYx/9ciLWxMSfBjpZA8isvK6CBdfWz64MrZLMHmiYftABC8UEON0XzEKAz1blnv4Tbno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7o/zUcE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mphDi3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29951C433F1;
-	Tue, 27 Feb 2024 13:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7o/zUcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEABC433C7;
+	Tue, 27 Feb 2024 13:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041853;
-	bh=usY7IW5sEwBwUhgBv6y6UhTQla7UVxbWjf50BMhHO6Q=;
+	s=korg; t=1709041856;
+	bh=jX3ODlRu2Jl7eReh0oDtj+HJZgCRh4AmTfz2LeKfvsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mphDi3pycmBKv3GFtU48LVY/v2jxcYIHUZzWq/LnGpgeuswpve7L1kYethzKTSVU
-	 LXUif7pIp7s1Ivsj8mzen7RUtr5pNibcU+VRzpCaQeBNK9oOtpfY/4fIr5F+aD9KyV
-	 HIedPHn3mga/SL7yym2GVWQo3OBZKOYRKTk7tT+c=
+	b=T7o/zUcEsbg5gkd5S0EjZvTcJrX+2plZqWecuraSLGgSm+y9IA6CSTolPiNY/XWRo
+	 o4Rub7yUR3zDaBFJb5JaroPnX8mORp5ruAJwwQs4DrNMUO/lZFJbzdP3krOaBggCnL
+	 BrldUo3IMJvVV4fb99xcCwkkdKCFTi4YwuMefE84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wagner <dwagner@suse.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/299] nvmet-fc: avoid deadlock on delete association path
-Date: Tue, 27 Feb 2024 14:22:55 +0100
-Message-ID: <20240227131628.011625917@linuxfoundation.org>
+Subject: [PATCH 6.6 065/299] nvmet-fc: take ref count on tgtport before delete assoc
+Date: Tue, 27 Feb 2024 14:22:56 +0100
+Message-ID: <20240227131628.041768626@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -54,75 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 710c69dbaccdac312e32931abcb8499c1525d397 ]
+[ Upstream commit fe506a74589326183297d5abdda02d0c76ae5a8b ]
 
-When deleting an association the shutdown path is deadlocking because we
-try to flush the nvmet_wq nested. Avoid this by deadlock by deferring
-the put work into its own work item.
+We have to ensure that the tgtport is not going away
+before be have remove all the associations.
 
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Daniel Wagner <dwagner@suse.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/nvme/target/fc.c | 31 +++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index b4b2631eb530e..36cae038eb045 100644
+index 36cae038eb045..8a02ed63b1566 100644
 --- a/drivers/nvme/target/fc.c
 +++ b/drivers/nvme/target/fc.c
-@@ -111,6 +111,8 @@ struct nvmet_fc_tgtport {
- 	struct nvmet_fc_port_entry	*pe;
- 	struct kref			ref;
- 	u32				max_sg_cnt;
-+
-+	struct work_struct		put_work;
- };
- 
- struct nvmet_fc_port_entry {
-@@ -248,6 +250,13 @@ static int nvmet_fc_tgt_a_get(struct nvmet_fc_tgt_assoc *assoc);
- static void nvmet_fc_tgt_q_put(struct nvmet_fc_tgt_queue *queue);
- static int nvmet_fc_tgt_q_get(struct nvmet_fc_tgt_queue *queue);
- static void nvmet_fc_tgtport_put(struct nvmet_fc_tgtport *tgtport);
-+static void nvmet_fc_put_tgtport_work(struct work_struct *work)
-+{
-+	struct nvmet_fc_tgtport *tgtport =
-+		container_of(work, struct nvmet_fc_tgtport, put_work);
-+
-+	nvmet_fc_tgtport_put(tgtport);
-+}
- static int nvmet_fc_tgtport_get(struct nvmet_fc_tgtport *tgtport);
- static void nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
- 					struct nvmet_fc_fcp_iod *fod);
-@@ -359,7 +368,7 @@ __nvmet_fc_finish_ls_req(struct nvmet_fc_ls_req_op *lsop)
- 
- 	if (!lsop->req_queued) {
- 		spin_unlock_irqrestore(&tgtport->lock, flags);
--		goto out_puttgtport;
-+		goto out_putwork;
- 	}
- 
- 	list_del(&lsop->lsreq_list);
-@@ -372,8 +381,8 @@ __nvmet_fc_finish_ls_req(struct nvmet_fc_ls_req_op *lsop)
- 				  (lsreq->rqstlen + lsreq->rsplen),
- 				  DMA_BIDIRECTIONAL);
- 
--out_puttgtport:
--	nvmet_fc_tgtport_put(tgtport);
-+out_putwork:
-+	queue_work(nvmet_wq, &tgtport->put_work);
+@@ -1092,13 +1092,28 @@ nvmet_fc_alloc_hostport(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
  }
  
- static int
-@@ -1404,6 +1413,7 @@ nvmet_fc_register_targetport(struct nvmet_fc_port_info *pinfo,
- 	kref_init(&newrec->ref);
- 	ida_init(&newrec->assoc_cnt);
- 	newrec->max_sg_cnt = template->max_sgl_segments;
-+	INIT_WORK(&newrec->put_work, nvmet_fc_put_tgtport_work);
+ static void
+-nvmet_fc_delete_assoc(struct work_struct *work)
++nvmet_fc_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
++{
++	nvmet_fc_delete_target_assoc(assoc);
++	nvmet_fc_tgt_a_put(assoc);
++}
++
++static void
++nvmet_fc_delete_assoc_work(struct work_struct *work)
+ {
+ 	struct nvmet_fc_tgt_assoc *assoc =
+ 		container_of(work, struct nvmet_fc_tgt_assoc, del_work);
++	struct nvmet_fc_tgtport *tgtport = assoc->tgtport;
  
- 	ret = nvmet_fc_alloc_ls_iodlist(newrec);
- 	if (ret) {
+-	nvmet_fc_delete_target_assoc(assoc);
+-	nvmet_fc_tgt_a_put(assoc);
++	nvmet_fc_delete_assoc(assoc);
++	nvmet_fc_tgtport_put(tgtport);
++}
++
++static void
++nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
++{
++	nvmet_fc_tgtport_get(assoc->tgtport);
++	queue_work(nvmet_wq, &assoc->del_work);
+ }
+ 
+ static struct nvmet_fc_tgt_assoc *
+@@ -1132,7 +1147,7 @@ nvmet_fc_alloc_target_assoc(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
+ 	assoc->a_id = idx;
+ 	INIT_LIST_HEAD(&assoc->a_list);
+ 	kref_init(&assoc->ref);
+-	INIT_WORK(&assoc->del_work, nvmet_fc_delete_assoc);
++	INIT_WORK(&assoc->del_work, nvmet_fc_delete_assoc_work);
+ 	atomic_set(&assoc->terminating, 0);
+ 
+ 	while (needrandom) {
+@@ -1491,7 +1506,7 @@ __nvmet_fc_free_assocs(struct nvmet_fc_tgtport *tgtport)
+ 	list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
+ 		if (!nvmet_fc_tgt_a_get(assoc))
+ 			continue;
+-		queue_work(nvmet_wq, &assoc->del_work);
++		nvmet_fc_schedule_delete_assoc(assoc);
+ 		nvmet_fc_tgt_a_put(assoc);
+ 	}
+ 	rcu_read_unlock();
+@@ -1545,7 +1560,7 @@ nvmet_fc_invalidate_host(struct nvmet_fc_target_port *target_port,
+ 			continue;
+ 		assoc->hostport->invalid = 1;
+ 		noassoc = false;
+-		queue_work(nvmet_wq, &assoc->del_work);
++		nvmet_fc_schedule_delete_assoc(assoc);
+ 		nvmet_fc_tgt_a_put(assoc);
+ 	}
+ 	spin_unlock_irqrestore(&tgtport->lock, flags);
+@@ -1590,7 +1605,7 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
+ 		nvmet_fc_tgtport_put(tgtport);
+ 
+ 		if (found_ctrl) {
+-			queue_work(nvmet_wq, &assoc->del_work);
++			nvmet_fc_schedule_delete_assoc(assoc);
+ 			nvmet_fc_tgt_a_put(assoc);
+ 			return;
+ 		}
+@@ -1897,7 +1912,7 @@ nvmet_fc_ls_disconnect(struct nvmet_fc_tgtport *tgtport,
+ 		nvmet_fc_xmt_ls_rsp(tgtport, oldls);
+ 	}
+ 
+-	queue_work(nvmet_wq, &assoc->del_work);
++	nvmet_fc_schedule_delete_assoc(assoc);
+ 	nvmet_fc_tgt_a_put(assoc);
+ 
+ 	return false;
 -- 
 2.43.0
 
