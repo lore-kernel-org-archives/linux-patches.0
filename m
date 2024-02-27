@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCF513A25D;
-	Tue, 27 Feb 2024 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C67A13B2A7;
+	Tue, 27 Feb 2024 13:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040719; cv=none; b=G2SIorKuYr4NjjhgnuHcuO68ww9oCSAkZARY2xArBGYNqKwM2QafzL7naIWQW3FA7uU0LrQkHnrgZJTse6qIp4XyS9xDtK7Nkrw854rYgQFvQEJI9sgnZjDQlfGr2zvmyhYchgHPnS5MNMA8gHG2kUcd6wlUc4d+hEaM8Yzr+SA=
+	t=1709040722; cv=none; b=FtzuLn+K0qFY13yEhJtpcP4PvihKmjbIteF/KapBj8I3cOtJN3MlwUOFDXE2RjuZAIGmzUmXc0mVxn2IbL5g5P+lAQOrAkTWJcA0eYkPqbg6i0i2iyjXAJ+YPiOX3aYNusficR55urxQnKB6iOQ6Y9LiRzPnE/FFOJPaLfhi8jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040719; c=relaxed/simple;
-	bh=F3KRkCtKgIlBsu0PAyJFF4Yflu4TQ1wg6/hyIfRcGR0=;
+	s=arc-20240116; t=1709040722; c=relaxed/simple;
+	bh=HFxPnuBSmN2M8zLid3izKvhjKieRQKmCjEradV4I2UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYuUvUz80AG+1eSWk0xoQ1PocyhbLPkVe2MEmvHa/ELcsZlbj3fzjD2+8nRtDHkhBAtZ9BAeGm9RyLlC66S07r9Ey2sAHeW5Qu71njms1aksBLD4hMQ/jVKQ7PBvHZBPkUm2q7K725lOUepzg1T81hw1Q7Sve2SUNOp0IejbWoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKZP35oe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FNkqLD3m4w7cuYIlxH15PM0C0qFGBVuQErzpxdw2VoeoY9MBYmPW1ACY6uGWjypC2pGr+bAAh8lO/5dsN6Gfxx/i5Eyok8CZG+3OQVXZd6oUY/0qExflISr43SYR787UnymCcqOowvYD6za8IUiMiTNdjoihD28wwklhNynPSKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKb9Auuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKZP35oe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4ADC433C7;
-	Tue, 27 Feb 2024 13:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKb9Auuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968CCC433F1;
+	Tue, 27 Feb 2024 13:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040719;
-	bh=F3KRkCtKgIlBsu0PAyJFF4Yflu4TQ1wg6/hyIfRcGR0=;
+	s=korg; t=1709040722;
+	bh=HFxPnuBSmN2M8zLid3izKvhjKieRQKmCjEradV4I2UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKZP35oeJWHnExg59SCPhgw48/kFfs3rJoQ5OZnYMl3FBUegC23aXbpIAERfNhHo9
-	 wwH4ToB3mCxFjUL74VfTHJGTzc7jCXvxEaastQhJG66TrkfJMnWd7FCxARROWRozY/
-	 Cc6IxM/yMQEJIEdEFl4MB+f2qE/8/SvMU/qrIyUE=
+	b=yKb9Auuo+ZGNdtxzYltx1vKXq7yuhRyvE5tM8GEZud2HWwg6yMMaq0AOwfrden2S6
+	 XEyS2nUiGqyezTvrmnB2jDe4vaSbIWNUI425r8/b9EdEyC4bstmQpLqfd/75+kfoRi
+	 CylpJyHCgslVPtqumU176n5rQAbjSY1IWi1VGwoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 084/334] fs/ntfs3: Correct use bh_read
-Date: Tue, 27 Feb 2024 14:19:02 +0100
-Message-ID: <20240227131633.240614582@linuxfoundation.org>
+Subject: [PATCH 6.7 057/334] drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz
+Date: Tue, 27 Feb 2024 14:18:35 +0100
+Message-ID: <20240227131632.407821252@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,94 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Sohaib Nadeem <sohaib.nadeem@amd.com>
 
-[ Upstream commit a40b73f608e7de2120fdb9ddc8970421b3c50bc9 ]
+[ Upstream commit 2ff33c759a4247c84ec0b7815f1f223e155ba82a ]
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[why]
+Originally, PMFW said min FCLK is 300Mhz, but min DCFCLK can be increased
+to 400Mhz because min FCLK is now 600Mhz so FCLK >= 1.5 * DCFCLK hardware
+requirement will still be satisfied. Increasing min DCFCLK addresses
+underflow issues (underflow occurs when phantom pipe is turned on for some
+Sub-Viewport configs).
+
+[how]
+Increasing DCFCLK by raising the min_dcfclk_mhz
+
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c  | 19 +++++++++----------
- fs/ntfs3/inode.c |  7 +++----
- 2 files changed, 12 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index a5a30a24ce5df..5691f04e6751a 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -188,6 +188,7 @@ static int ntfs_zero_range(struct inode *inode, u64 vbo, u64 vbo_to)
- 	u32 bh_next, bh_off, to;
- 	sector_t iblock;
- 	struct folio *folio;
-+	bool dirty = false;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index fe2b67d745f0d..3386eb4150fc6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2719,7 +2719,7 @@ static int build_synthetic_soc_states(bool disable_dc_mode_overwrite, struct clk
+ 	struct _vcs_dpi_voltage_scaling_st entry = {0};
+ 	struct clk_limit_table_entry max_clk_data = {0};
  
- 	for (; idx < idx_end; idx += 1, from = 0) {
- 		page_off = (loff_t)idx << PAGE_SHIFT;
-@@ -223,29 +224,27 @@ static int ntfs_zero_range(struct inode *inode, u64 vbo, u64 vbo_to)
- 			/* Ok, it's mapped. Make sure it's up-to-date. */
- 			if (folio_test_uptodate(folio))
- 				set_buffer_uptodate(bh);
--
--			if (!buffer_uptodate(bh)) {
--				err = bh_read(bh, 0);
--				if (err < 0) {
--					folio_unlock(folio);
--					folio_put(folio);
--					goto out;
--				}
-+			else if (bh_read(bh, 0) < 0) {
-+				err = -EIO;
-+				folio_unlock(folio);
-+				folio_put(folio);
-+				goto out;
- 			}
+-	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
++	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
  
- 			mark_buffer_dirty(bh);
--
- 		} while (bh_off = bh_next, iblock += 1,
- 			 head != (bh = bh->b_this_page));
- 
- 		folio_zero_segment(folio, from, to);
-+		dirty = true;
- 
- 		folio_unlock(folio);
- 		folio_put(folio);
- 		cond_resched();
- 	}
- out:
--	mark_inode_dirty(inode);
-+	if (dirty)
-+		mark_inode_dirty(inode);
- 	return err;
- }
- 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index fa6c7965473c8..bba0208c4afde 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -345,9 +345,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 			inode->i_size = le16_to_cpu(rp.SymbolicLinkReparseBuffer
- 							    .PrintNameLength) /
- 					sizeof(u16);
--
- 			ni->i_valid = inode->i_size;
--
- 			/* Clear directory bit. */
- 			if (ni->ni_flags & NI_FLAG_DIR) {
- 				indx_clear(&ni->dir);
-@@ -653,9 +651,10 @@ static noinline int ntfs_get_block_vbo(struct inode *inode, u64 vbo,
- 			off = vbo & (PAGE_SIZE - 1);
- 			folio_set_bh(bh, folio, off);
- 
--			err = bh_read(bh, 0);
--			if (err < 0)
-+			if (bh_read(bh, 0) < 0) {
-+				err = -EIO;
- 				goto out;
-+			}
- 			folio_zero_segment(folio, off + voff, off + block_size);
- 		}
- 	}
+ 	static const unsigned int num_dcfclk_stas = 5;
+ 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
 -- 
 2.43.0
 
