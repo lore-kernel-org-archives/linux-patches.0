@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7037513B2BF;
-	Tue, 27 Feb 2024 13:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ED513B2A2;
+	Tue, 27 Feb 2024 13:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041165; cv=none; b=HL6cMRfufZKFmlZxR6MrphW6J/rr1LH6fxbdJnLMWfb4TkL7YR8aQMTeruqSqQzvimgrp3xBA/i4tDqW46yBwERXnM6GRmN7AEM+oxjzGpzye/AZRw2F8t6tGZTvGm87jhHSZvHZ5E6ua7k1UNjca15rpGGqLrBJOMLqtNHcehk=
+	t=1709041168; cv=none; b=fSV+rEzfXI7mtNFklpFXydjRODHs1geSWH1RU1lhwI+uXwiKYp7Pydbn9iYMd/oQ3ExsTyudoLxR6HqTUFzMYU+qtOsT5MZyQrteffAE0qdF601i48tfdGp1inBg5HU1epHlAFFPsNNsOhcFIho0yhulHdjmukvQJOyxhtNu28g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041165; c=relaxed/simple;
-	bh=+PI9cLgBN0nLlOAog0GeiQlhqVVzMfc9NROfBpNeEsY=;
+	s=arc-20240116; t=1709041168; c=relaxed/simple;
+	bh=t9dTvVJdBnUr1rTXJkdG/piiWvP9ETTRgc2faxbwwKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFQKx8asjWN7n6xpxHGCYtWfbHqrJf+yPwxGFrT3wv/PZNefr9ZNDE8oo9GkQ5CpV6SgGIWNaCXWQqxMSINvKK4u7YkVM7ZQXKUj4aJQcNT8CJAVpsmA18pCcIhiGo/UKn6GI1jCkEhOaok1kx9T5TTFtVKIUVPr1TcsE0T9zOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/5O+YVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuXVTVSxBiQdsUTGgVhhaRIDU77cuiguS03LF0S0NP2z/09rhp9WCiLUwEgYBT2parKd5BeSlmzAhSeaysXVEJ1yUDh8xyUaZl7/9amZnOsPp+eWmzkHcglctEsNJFSXCrSNnDA+gP2D4tlIpauprfBDFAnT6E2nM9qkOstcO98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdmwIViy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/5O+YVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC65FC43390;
-	Tue, 27 Feb 2024 13:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdmwIViy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97971C433C7;
+	Tue, 27 Feb 2024 13:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041165;
-	bh=+PI9cLgBN0nLlOAog0GeiQlhqVVzMfc9NROfBpNeEsY=;
+	s=korg; t=1709041168;
+	bh=t9dTvVJdBnUr1rTXJkdG/piiWvP9ETTRgc2faxbwwKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/5O+YVUShLRtedNwd+LMTMvFEI9A24VgSzP8BZXlmwj8BoBcwLCsh1VD039f6I+F
-	 S2t6vvXayOlhkCD3lnJgnMcZ57n/7ae2XnG2aazgs3yYYHPB6h+WsfHMpqqG5eE7jn
-	 PV0TSFTNZ91eycRjtVNmNnrfd5Pc/jKbrNku+85M=
+	b=mdmwIViypeTY++pTZx32USZjHwlwEfMhdQYGsbpwdU5uPW4sdM7+eFIC4pW0aGV6e
+	 spk8Wud5eJX/fVz8VPXvH9FSeoNdKUPj7P4rl3L8OqzdOW6G1rhj9Su+nAknFtepN5
+	 /a1MgDq/lVtNhEvUmdgNzfP7XSiX7bR5HfU5Vb54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 214/334] mptcp: add needs_id for netlink appending addr
-Date: Tue, 27 Feb 2024 14:21:12 +0100
-Message-ID: <20240227131637.684501106@linuxfoundation.org>
+Subject: [PATCH 6.7 215/334] mptcp: fix lockless access in subflow ULP diag
+Date: Tue, 27 Feb 2024 14:21:13 +0100
+Message-ID: <20240227131637.716266321@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,98 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 584f3894262634596532cf43a5e782e34a0ce374 upstream.
+commit b8adb69a7d29c2d33eb327bca66476fb6066516b upstream.
 
-Just the same as userspace PM, a new parameter needs_id is added for
-in-kernel PM mptcp_pm_nl_append_new_local_addr() too.
+Since the introduction of the subflow ULP diag interface, the
+dump callback accessed all the subflow data with lockless.
 
-Add a new helper mptcp_pm_has_addr_attr_id() to check whether an address
-ID is set from PM or not.
+We need either to annotate all the read and write operation accordingly,
+or acquire the subflow socket lock. Let's do latter, even if slower, to
+avoid a diffstat havoc.
 
-In mptcp_pm_nl_get_local_id(), needs_id is always true, but in
-mptcp_pm_nl_add_addr_doit(), pass mptcp_pm_has_addr_attr_id() to
-needs_it.
-
-Fixes: efd5a4c04e18 ("mptcp: add the address ID assignment bitmap")
+Fixes: 5147dfb50832 ("mptcp: allow dumping subflow context to userspace")
 Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ include/net/tcp.h  |    2 +-
+ net/mptcp/diag.c   |    6 +++++-
+ net/tls/tls_main.c |    2 +-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -901,7 +901,8 @@ static void __mptcp_pm_release_addr_entr
- }
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2502,7 +2502,7 @@ struct tcp_ulp_ops {
+ 	/* cleanup ulp */
+ 	void (*release)(struct sock *sk);
+ 	/* diagnostic */
+-	int (*get_info)(const struct sock *sk, struct sk_buff *skb);
++	int (*get_info)(struct sock *sk, struct sk_buff *skb);
+ 	size_t (*get_info_size)(const struct sock *sk);
+ 	/* clone ulp */
+ 	void (*clone)(const struct request_sock *req, struct sock *newsk,
+--- a/net/mptcp/diag.c
++++ b/net/mptcp/diag.c
+@@ -13,17 +13,19 @@
+ #include <uapi/linux/mptcp.h>
+ #include "protocol.h"
  
- static int mptcp_pm_nl_append_new_local_addr(struct pm_nl_pernet *pernet,
--					     struct mptcp_pm_addr_entry *entry)
-+					     struct mptcp_pm_addr_entry *entry,
-+					     bool needs_id)
+-static int subflow_get_info(const struct sock *sk, struct sk_buff *skb)
++static int subflow_get_info(struct sock *sk, struct sk_buff *skb)
  {
- 	struct mptcp_pm_addr_entry *cur, *del_entry = NULL;
- 	unsigned int addr_max;
-@@ -949,7 +950,7 @@ static int mptcp_pm_nl_append_new_local_
- 		}
+ 	struct mptcp_subflow_context *sf;
+ 	struct nlattr *start;
+ 	u32 flags = 0;
++	bool slow;
+ 	int err;
+ 
+ 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
+ 	if (!start)
+ 		return -EMSGSIZE;
+ 
++	slow = lock_sock_fast(sk);
+ 	rcu_read_lock();
+ 	sf = rcu_dereference(inet_csk(sk)->icsk_ulp_data);
+ 	if (!sf) {
+@@ -69,11 +71,13 @@ static int subflow_get_info(const struct
  	}
  
--	if (!entry->addr.id) {
-+	if (!entry->addr.id && needs_id) {
- find_next:
- 		entry->addr.id = find_next_zero_bit(pernet->id_bitmap,
- 						    MPTCP_PM_MAX_ADDR_ID + 1,
-@@ -960,7 +961,7 @@ find_next:
- 		}
- 	}
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_end(skb, start);
+ 	return 0;
  
--	if (!entry->addr.id)
-+	if (!entry->addr.id && needs_id)
- 		goto out;
- 
- 	__set_bit(entry->addr.id, pernet->id_bitmap);
-@@ -1092,7 +1093,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
- 	entry->ifindex = 0;
- 	entry->flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
- 	entry->lsk = NULL;
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, true);
- 	if (ret < 0)
- 		kfree(entry);
- 
-@@ -1285,6 +1286,18 @@ next:
+ nla_failure:
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_cancel(skb, start);
+ 	return err;
+ }
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -1003,7 +1003,7 @@ static u16 tls_user_config(struct tls_co
  	return 0;
  }
  
-+static bool mptcp_pm_has_addr_attr_id(const struct nlattr *attr,
-+				      struct genl_info *info)
-+{
-+	struct nlattr *tb[MPTCP_PM_ADDR_ATTR_MAX + 1];
-+
-+	if (!nla_parse_nested_deprecated(tb, MPTCP_PM_ADDR_ATTR_MAX, attr,
-+					 mptcp_pm_address_nl_policy, info->extack) &&
-+	    tb[MPTCP_PM_ADDR_ATTR_ID])
-+		return true;
-+	return false;
-+}
-+
- int mptcp_pm_nl_add_addr_doit(struct sk_buff *skb, struct genl_info *info)
+-static int tls_get_info(const struct sock *sk, struct sk_buff *skb)
++static int tls_get_info(struct sock *sk, struct sk_buff *skb)
  {
- 	struct nlattr *attr = info->attrs[MPTCP_PM_ENDPOINT_ADDR];
-@@ -1326,7 +1339,8 @@ int mptcp_pm_nl_add_addr_doit(struct sk_
- 			goto out_free;
- 		}
- 	}
--	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
-+	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry,
-+						!mptcp_pm_has_addr_attr_id(attr, info));
- 	if (ret < 0) {
- 		GENL_SET_ERR_MSG_FMT(info, "too many addresses or duplicate one: %d", ret);
- 		goto out_free;
+ 	u16 version, cipher_type;
+ 	struct tls_context *ctx;
 
 
