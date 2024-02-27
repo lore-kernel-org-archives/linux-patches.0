@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A69354BD4;
-	Tue, 27 Feb 2024 13:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC4954BD4;
+	Tue, 27 Feb 2024 13:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042223; cv=none; b=pJiKQYnRWZV6snaV6PGahPK5S5sM+SBauVjmUw39wcS2yCpk9dw6UZrtJNScXl9BNWQU9t60ECu6ShsiOLnt39+1+dGBS4AE1E0gmeV8412u/W/E0dGzWiJkf+NdF0m932uUKEgGX9A+nBkY6XHCssFrsGX7jc6nR6nWL614fgk=
+	t=1709042226; cv=none; b=qbPeEMKOHlexeGmvsotYmIm/iCECQChzby9ZNSlkDqx84wW4ug60OObnIU8tTyVUaquGXWC01J3cJiGdrUXuXaddy+NQgpdFEwN70voRUZS4aamZZVMK3nEd51Z0Q+Dv/DeVzD3RHUxmq0N2YfV+WaXUlqaSzxEo0UL01acJhvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042223; c=relaxed/simple;
-	bh=KOAjKEEH9u003kvICTRN0RcQnmW/mIctr+MIpihvHqc=;
+	s=arc-20240116; t=1709042226; c=relaxed/simple;
+	bh=MQlifOGa5JfunQ5wcmyFAJ+0SftqrH8emq1znIpci+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRWp9l3jwkoPLYw80g/20FTyinqixyUDBXCD6u7nOFGP1KhcAIw1HEqXzpKGyF7txHjL96V4MuFSWv1CYGXDzhxl5E+77ADrCrwiFE7TzSIMuO5mgQGbSKQ4x1fs4Lld5ml0QfPHnAmUE+hLbL7JVgsdieXitZY/ko9K+ZlpB00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL9c//oG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noX17pu+hcjFs5eb1/HQhzk7LztRvecV3df2mU0Uskh2/zcCyek0cicxhf5iVS4TOpbekavi/aDQk57zOdnb438ydfqVAodFThtu7wE7RPBCTLHxsXzGMqcX+uDnmOZEixDgQytNGoeHLsWDR5eIqh7GHtMsIp1oEhXdW4WITXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnefQSe1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL9c//oG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA360C433F1;
-	Tue, 27 Feb 2024 13:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnefQSe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666B7C433C7;
+	Tue, 27 Feb 2024 13:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042223;
-	bh=KOAjKEEH9u003kvICTRN0RcQnmW/mIctr+MIpihvHqc=;
+	s=korg; t=1709042225;
+	bh=MQlifOGa5JfunQ5wcmyFAJ+0SftqrH8emq1znIpci+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TL9c//oGXR/pb7oVXlpGcAhUzQLuBdw34uSSQq1z79dG4O7Z+ffLfnpPCYW0qiFL7
-	 JRU7+6b70gLlXmsdIk10nwDKCxnM2ziu3nz0j5UoqfVwVEffajf/i0Hz/+xW7EFxBC
-	 pLiASdK4bmMw/8/Oi+lC/M5nwrP7a7W8LJ37sm9U=
+	b=LnefQSe1dp8WyPHxw/UD7L/asPHqXQwbiM/I0zNh9n1nz26jk4Nyc1KbCElcHUnZO
+	 Lq5QlQoZ2riIXDbYVrrO0PHZsFc4QNSbtQ0BDBfDAQvlMuNnN2CMOARqDfawmG75GX
+	 ZvfpLeOKTN2iFEqiG32kc5nGEfJK2pYp1kaErwcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Srouji <edwards@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Avihai Horon <avihaih@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 214/299] IB/mlx5: Dont expose debugfs entries for RRoCE general parameters if not supported
-Date: Tue, 27 Feb 2024 14:25:25 +0100
-Message-ID: <20240227131632.670181978@linuxfoundation.org>
+Subject: [PATCH 6.6 223/299] iommufd/iova_bitmap: Bounds check mapped::pages access
+Date: Tue, 27 Feb 2024 14:25:34 +0100
+Message-ID: <20240227131632.939756745@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,60 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit 43fdbd140238d44e7e847232719fef7d20f9d326 ]
+[ Upstream commit a4ab7dedaee0e39b15653c5fd0367e420739f7ef ]
 
-debugfs entries for RRoCE general CC parameters must be exposed only when
-they are supported, otherwise when accessing them there may be a syndrome
-error in kernel log, for example:
+Dirty IOMMU hugepages reported on a base page page-size granularity can
+lead to an attempt to set dirty pages in the bitmap beyond the limits that
+are pinned.
 
-$ cat /sys/kernel/debug/mlx5/0000:08:00.1/cc_params/rtt_resp_dscp
-cat: '/sys/kernel/debug/mlx5/0000:08:00.1/cc_params/rtt_resp_dscp': Invalid argument
-$ dmesg
- mlx5_core 0000:08:00.1: mlx5_cmd_out_err:805:(pid 1253): QUERY_CONG_PARAMS(0x824) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0x325a82), err(-22)
+Bounds check the page index of the array we are trying to access is within
+the limits before we kmap() and return otherwise.
 
-Fixes: 66fb1d5df6ac ("IB/mlx5: Extend debug control for CC parameters")
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/e7ade70bad52b7468bdb1de4d41d5fad70c8b71c.1706433934.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+While it is also a defensive check, this is also in preparation to defer
+setting bits (outside the mapped range) to the next iteration(s) when the
+pages become available.
+
+Fixes: b058ea3ab5af ("vfio/iova_bitmap: refactor iova_bitmap_set() to better handle page boundaries")
+Link: https://lore.kernel.org/r/20240202133415.23819-2-joao.m.martins@oracle.com
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Tested-by: Avihai Horon <avihaih@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cong.c | 6 ++++++
- include/linux/mlx5/mlx5_ifc.h     | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/vfio/iova_bitmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/cong.c b/drivers/infiniband/hw/mlx5/cong.c
-index f87531318feb8..a78a067e3ce7f 100644
---- a/drivers/infiniband/hw/mlx5/cong.c
-+++ b/drivers/infiniband/hw/mlx5/cong.c
-@@ -458,6 +458,12 @@ void mlx5_ib_init_cong_debugfs(struct mlx5_ib_dev *dev, u32 port_num)
- 	dbg_cc_params->root = debugfs_create_dir("cc_params", mlx5_debugfs_get_dev_root(mdev));
+diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
+index 0848f920efb7c..997134a24c025 100644
+--- a/drivers/vfio/iova_bitmap.c
++++ b/drivers/vfio/iova_bitmap.c
+@@ -406,6 +406,7 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
+ 	unsigned long last_bit = (((iova + length - 1) - mapped->iova) >>
+ 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
++	unsigned long last_page_idx = mapped->npages - 1;
  
- 	for (i = 0; i < MLX5_IB_DBG_CC_MAX; i++) {
-+		if ((i == MLX5_IB_DBG_CC_GENERAL_RTT_RESP_DSCP_VALID ||
-+		     i == MLX5_IB_DBG_CC_GENERAL_RTT_RESP_DSCP))
-+			if (!MLX5_CAP_GEN(mdev, roce) ||
-+			    !MLX5_CAP_ROCE(mdev, roce_cc_general))
-+				continue;
+ 	do {
+ 		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
+@@ -414,6 +415,9 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 					 last_bit - cur_bit + 1);
+ 		void *kaddr;
+ 
++		if (unlikely(page_idx > last_page_idx))
++			break;
 +
- 		dbg_cc_params->params[i].offset = i;
- 		dbg_cc_params->params[i].dev = dev;
- 		dbg_cc_params->params[i].port_num = port_num;
-diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index 51eb83f779388..643e9ba4e64bd 100644
---- a/include/linux/mlx5/mlx5_ifc.h
-+++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -1102,7 +1102,7 @@ struct mlx5_ifc_roce_cap_bits {
- 	u8         sw_r_roce_src_udp_port[0x1];
- 	u8         fl_rc_qp_when_roce_disabled[0x1];
- 	u8         fl_rc_qp_when_roce_enabled[0x1];
--	u8         reserved_at_7[0x1];
-+	u8         roce_cc_general[0x1];
- 	u8	   qp_ooo_transmit_default[0x1];
- 	u8         reserved_at_9[0x15];
- 	u8	   qp_ts_format[0x2];
+ 		kaddr = kmap_local_page(mapped->pages[page_idx]);
+ 		bitmap_set(kaddr, offset, nbits);
+ 		kunmap_local(kaddr);
 -- 
 2.43.0
 
