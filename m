@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7527013B7AB;
-	Tue, 27 Feb 2024 14:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F7E14037E;
+	Tue, 27 Feb 2024 14:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044089; cv=none; b=ATr8/4lDP0aqPxt4SQq6nh99fXbRhf7VB4YuX9TKRKE9lN+zGGCPdn8t5A0us5cP6kMzicoB2hA9FdACBwKHfRvZUmscvxxTsd8ojBRkK4PwkSlm/MiiNZpu2d/ALpIAE5T12PvqGiyTiPGVR8dB1h5PvwlFVA0y+RsiywoD33Y=
+	t=1709044092; cv=none; b=aEk8O/SZ2sQjlyONhc64OOXFKBw/+n5Be9hjm/LVjs6+8M4SeJRFs4OQTS9NzrB1dMtyLVVqryQ83e3SPtqiKJbO84IB3B+8ecmc+htBDftlC5+92/TSRyPu3YAnfiXgyBuaty8jpRTgmuQFIvyJ8CCsj5V4ptry8fm9uGmfOjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044089; c=relaxed/simple;
-	bh=PGRXWPYbVVmsb4+FGa4kTog/PtB/vf96SeB0nZMQqL4=;
+	s=arc-20240116; t=1709044092; c=relaxed/simple;
+	bh=oHfnojN0JdqDJc8T1HfWiaLv1veTeq0B6Y2eug0hlQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7o5i50d54LtAXGAKrN+H0p/wi3A+vHufXq01X7K5+JUh8Jkq+ckpF7Sjy9fF3hscz/zV28STo4pdlD8CnfcNrzkTFQYkEi+FAUPGxVYZw4tI3+++4FhUwGZvMaeqcomHQBQXCW6r726Nsdd/nGSvTxe2S5gHc7KuLU3AQkeVy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rScmn814; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rl3ssbE1qbn9KxmO3zdFkRNj3a/5EoBrbgzaO4TZdpI/w8ccge1csE8EZUxUtgFU+V/m4bqWBXo4ZoZLuCMUp7wG2k0y8yH8sSWTewB8zXJTClg0CTt4VGhk6BF0YXs9PXu+152TRgVFTuv/Bn802jBJi+AgIXTvNUkcEogPLUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+nk6GzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rScmn814"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05896C433F1;
-	Tue, 27 Feb 2024 14:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+nk6GzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D594EC433C7;
+	Tue, 27 Feb 2024 14:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044089;
-	bh=PGRXWPYbVVmsb4+FGa4kTog/PtB/vf96SeB0nZMQqL4=;
+	s=korg; t=1709044092;
+	bh=oHfnojN0JdqDJc8T1HfWiaLv1veTeq0B6Y2eug0hlQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rScmn8144oJwwwOrOkVQl/0oAMGu2NC9xo8uS8GmHOjsCy9v9daKX1lEjEni5zd5J
-	 IC9YXsmT/Drq6ImQ6Xey6e/8cI9Ro7gJlfDwQ/Wm6kOYBTljlhaW0hxjjpocZa2Cz9
-	 pRpqkQbIjlOOEo2R4lWiIgyDRkstDwZziix84Aw0=
+	b=D+nk6GzFTuulll1P9eVICXV4S1t2QD+P/MqVblkWNNHw/iLDWhpT1lzkE3vZTQGdi
+	 eKgQBZWuSmS+XcJYxO32DpOOaYt827DOuvHOf6hOVphTaHHAjnlk7R8iQoCkzw64D3
+	 YkNWPvo7XX+O1u3WZihv6rc/bA/2nJphh4D3uBPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/122] ASoC: Intel: boards: get codec device with ACPI instead of bus search
-Date: Tue, 27 Feb 2024 14:26:59 +0100
-Message-ID: <20240227131600.604705683@linuxfoundation.org>
+Subject: [PATCH 5.10 059/122] ASoC: Intel: bytcr_rt5651: Drop reference count of ACPI device after use
+Date: Tue, 27 Feb 2024 14:27:00 +0100
+Message-ID: <20240227131600.637492789@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -53,95 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d3409eb20d3ed7d9e021cd13243e9e63255a315f ]
+[ Upstream commit 721858823d7cdc8f2a897579b040e935989f6f02 ]
 
-We have an existing 'adev' handle from which we can find the codec
-device, no need for an I2C bus search.
+Theoretically the device might gone if its reference count drops to 0.
+This might be the case when we try to find the first physical node of
+the ACPI device. We need to keep reference to it until we get a result
+of the above mentioned call. Refactor the code to drop the reference
+count at the correct place.
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20210813151116.23931-4-pierre-louis.bossart@linux.intel.com
+While at it, move to acpi_dev_put() as symmetrical call to the
+acpi_dev_get_first_match_dev().
+
+Fixes: 02c0a3b3047f ("ASoC: Intel: bytcr_rt5651: add MCLK, quirks and cleanups")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230112112852.67714-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 721858823d7c ("ASoC: Intel: bytcr_rt5651: Drop reference count of ACPI device after use")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 4 ++--
- sound/soc/intel/boards/bytcr_rt5640.c  | 5 ++---
- sound/soc/intel/boards/bytcr_rt5651.c  | 6 ++----
- 3 files changed, 6 insertions(+), 9 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5651.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 91351b8536aa1..03b9cdbd3170f 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -550,9 +550,10 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
- 	}
- 
- 	/* get speaker enable GPIO */
--	codec_dev = bus_find_device_by_name(&i2c_bus_type, NULL, codec_name);
-+	codec_dev = acpi_get_first_physical_node(adev);
- 	if (!codec_dev)
- 		return -EPROBE_DEFER;
-+	priv->codec_dev = get_device(codec_dev);
- 
- 	if (quirk & BYT_CHT_ES8316_JD_INVERTED)
- 		props[cnt++] = PROPERTY_ENTRY_BOOL("everest,jack-detect-inverted");
-@@ -570,7 +571,6 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
- 		gpiod_get_index(codec_dev, "speaker-enable", 0,
- 				/* see comment in byt_cht_es8316_resume */
- 				GPIOD_OUT_LOW | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
--	priv->codec_dev = codec_dev;
- 
- 	if (IS_ERR(priv->speaker_en_gpio)) {
- 		ret = PTR_ERR(priv->speaker_en_gpio);
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index b531c348fb697..f5b1b3b876980 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -1425,11 +1425,10 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
- 		byt_rt5640_quirk = quirk_override;
- 	}
- 
--	codec_dev = bus_find_device_by_name(&i2c_bus_type, NULL, byt_rt5640_codec_name);
-+	codec_dev = acpi_get_first_physical_node(adev);
- 	if (!codec_dev)
- 		return -EPROBE_DEFER;
--
--	priv->codec_dev = codec_dev;
-+	priv->codec_dev = get_device(codec_dev);
- 
- 	/* Must be called before register_card, also see declaration comment. */
- 	ret_val = byt_rt5640_add_codec_device_props(codec_dev, priv);
 diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index acea83e814acb..472f6e3327960 100644
+index 472f6e3327960..a8289f74463e9 100644
 --- a/sound/soc/intel/boards/bytcr_rt5651.c
 +++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -926,10 +926,10 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
- 		return -ENODEV;
+@@ -919,7 +919,6 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
+ 	if (adev) {
+ 		snprintf(byt_rt5651_codec_name, sizeof(byt_rt5651_codec_name),
+ 			 "i2c-%s", acpi_dev_name(adev));
+-		put_device(&adev->dev);
+ 		byt_rt5651_dais[dai_index].codecs->name = byt_rt5651_codec_name;
+ 	} else {
+ 		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
+@@ -927,6 +926,7 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
  	}
  
--	codec_dev = bus_find_device_by_name(&i2c_bus_type, NULL,
--					    byt_rt5651_codec_name);
-+	codec_dev = acpi_get_first_physical_node(adev);
+ 	codec_dev = acpi_get_first_physical_node(adev);
++	acpi_dev_put(adev);
  	if (!codec_dev)
  		return -EPROBE_DEFER;
-+	priv->codec_dev = get_device(codec_dev);
- 
- 	/*
- 	 * swap SSP0 if bytcr is detected
-@@ -996,8 +996,6 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
- 		byt_rt5651_quirk = quirk_override;
- 	}
- 
--	priv->codec_dev = codec_dev;
--
- 	/* Must be called before register_card, also see declaration comment. */
- 	ret_val = byt_rt5651_add_codec_device_props(codec_dev);
- 	if (ret_val)
+ 	priv->codec_dev = get_device(codec_dev);
 -- 
 2.43.0
 
