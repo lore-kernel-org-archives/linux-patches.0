@@ -1,39 +1,62 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEDF4DA0C;
-	Tue, 27 Feb 2024 21:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A875674B
+	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 00:00:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709070559; cv=none; b=N+E5JiTnkFfpoYF7p8EDbRgxPFMrQjUaaDYddyHgSWwUmFSAqk6Kz4E/+cCuXTZoVBoh5Nin1P2MoBdbhXy7NJTF+goQD87lNmNfTQi8OH90tnqf7p0nqrcoVOhAMOFbb8p4KwEv5dtUj6Ks1Hx5z0z7BK9DYLZ1QSVcgCF7XV8=
+	t=1709078414; cv=none; b=IMri23s0cj/+Ew649QpsN/iMmwovpE5PLW3Vn+LvoO35zavEZVUi5/p9BHaH0L6ni8MT9zQJ1lLFsGeyR0gbZo+wCESpvfO2pVYn0kTiZFoqSf2sSDuuq/Fez6EXyFbLOFPSd1BWiSEP3gqQMs81N8UR+1v5vPFq6Qx5IHDUmqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709070559; c=relaxed/simple;
-	bh=yywVcx58lrrC7hHOpkaIRUe4Yk4DkQzzbNNNfM6vqFY=;
+	s=arc-20240116; t=1709078414; c=relaxed/simple;
+	bh=XMvSEHgj6FQQX4NJYV38kUge5WnC01AhhZdR4QqmNxo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kNUJpiaXlnOdvbcBnAG8Bdh5Y8BPB+PgNHVW+vKMSHUkKMKcqIyRAud8zZDvgEN0Sta7QYIK2tb0xwjMn3nz6cBE/HFunSar6bb3iXitghBK7VAjvMfKZMA3tycdvNeBum6H7hmzUwViqHwRuU0JRNjxdB6SWz3xfVSb9L51IZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZSHRPpK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=kDhtr7MvXUcRzCIhjBr7vj40Ez8w+odKYiC5BKpCdfAb/TgZZ+kZAsNZ2UXj/H7znY8tQ2kHGj9zG6+MBnj9TNArvusqadwGMQ5Jeq7karuPBTLzR3K2jEXJjiSP0GyeA+958eF7G3MXR/lle1M425JgX1U+pLc7luYP94OpjHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=rHh4bTQi; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=u4s7fxyU; arc=none smtp.client-ip=91.121.71.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZSHRPpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D647C433C7;
-	Tue, 27 Feb 2024 21:49:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709070558;
-	bh=yywVcx58lrrC7hHOpkaIRUe4Yk4DkQzzbNNNfM6vqFY=;
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="rHh4bTQi";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="u4s7fxyU"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id B57CDC021; Wed, 28 Feb 2024 01:00:03 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709078403; bh=oCAghHCq7o9/mLKl8vCyRB9FOEm/PiJ08Ap1ZVGb68I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XZSHRPpKfn5/vZqio3VM3gkYjvWmTck2Guj3yKg81q13RX8x57TLLrBK11fT3Y57F
-	 HPer7Hv+g1q06tyrUfGCLeI62kN2yeDZaaoseMfVxOUFgsm/jHZUOBin82vcBEhfbK
-	 0BRqDc+Okz+o91UkDdFTsAenAY5s3N4FgerMY0mMu0oILuABh4VLwOkkafA1Ovimln
-	 /nXlIcjzF6a3zxHN/sjBmrQBod7UQPwVLv4zNlqYu0JRit6q0VyWv50faLbuS0q8Wh
-	 x+53hXmF1vgPrljVowyIs3m+F2v/SNDbX5SGAKTE31etL4SG1wjWnVFHLdI7Xf3aes
-	 pDrMH7+TCVqtg==
-Date: Tue, 27 Feb 2024 14:49:16 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: "Ricardo B. Marliere" <ricardo@marliere.net>
-Cc: sre@kernel.org, linux-pm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] power: supply: core: Fix power_supply_init_attrs() stub
-Message-ID: <20240227214916.GA3699076@dev-arch.thelio-3990X>
-References: <20240227-fix-power_supply_init_attrs-stub-v1-1-43365e68d4b3@kernel.org>
- <mlfrfarnnv3i4xwgqd3pavpwxjktkqf2afidoc4ogdq3634jah@kposnyo6725z>
+	b=rHh4bTQiCzBMFvXnVLp6OtOhZIoMihbGmxJBh+BS5m8sC/LE6XNXVoAhXXPp0St3Y
+	 YgEAzOHRQdTsAXvQm83At5wLADiPIOi/9dAgFwSGmx7TZ/Ut/hnH74tVkl7R5RWe0c
+	 ODGuMBqc4v1yy6g8FtO1AYjmy04QcV61iKu8Pp4elXZCzHSbkbgu6XeaJH19BpQ5h3
+	 5GgbWt6DjbBhEQXuFX0I9Pf2EdByJNsTm3ZuDR10e1WSdH5eGHTqlg1yb9qYWuuG4B
+	 Lb3QptenCLXoW3gsCuTLlYu8dAVlF+pBWhJ/Qloe4ycJrWY2i9UVtb57HtY67GjtWV
+	 lQMJfH631hG0w==
+X-Spam-Level: 
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id 1A12FC009;
+	Wed, 28 Feb 2024 00:59:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709078402; bh=oCAghHCq7o9/mLKl8vCyRB9FOEm/PiJ08Ap1ZVGb68I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u4s7fxyUSwVq1NFrwlLciyYj/9RaHErzURUU7S/vphtyffEPZSA4WLxfeWelC8OX8
+	 pUQOjLP4KYQKDY/RFlHG/t+N9MuqrpGvV4zkybPrfZE8XlAJnrv2gQMoejBlVItUCs
+	 VSYGckN6TQ1l77pg4MzwSIIAEtArx6Q/Sf1W2gnyIWZ5XuT5wFapdHrnkoJmpZDoFn
+	 3wuJED/8VJU4hkrxDNXqoLHAGrKYMU5yhW4bGajc8AR1APHafikzaonU05arqQHWmp
+	 TLc5A2gLUVs3i6izt/DYDQt0i8dM8RgSW7sHLM5iBb3s9/ZSUWOdGR9iSwDFYSqu4d
+	 runJGul2yVivQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 9661d174;
+	Tue, 27 Feb 2024 23:59:51 +0000 (UTC)
+Date: Wed, 28 Feb 2024 08:59:36 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 000/122] 5.10.211-rc1 review
+Message-ID: <Zd53aNc1aFrCYxFd@codewreck.org>
+References: <20240227131558.694096204@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,78 +65,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <mlfrfarnnv3i4xwgqd3pavpwxjktkqf2afidoc4ogdq3634jah@kposnyo6725z>
+In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 
-On Tue, Feb 27, 2024 at 05:39:55PM -0300, Ricardo B. Marliere wrote:
-> Hi Nathan,
-> 
-> On 27 Feb 13:34, Nathan Chancellor wrote:
-> > When building without CONFIG_SYSFS, there is an error because of a
-> > recent refactoring that failed to update the stub of
-> > power_supply_init_attrs():
-> > 
-> >   drivers/power/supply/power_supply_core.c: In function 'power_supply_class_init':
-> >   drivers/power/supply/power_supply_core.c:1630:9: error: too few arguments to function 'power_supply_init_attrs'
-> >    1630 |         power_supply_init_attrs();
-> >         |         ^~~~~~~~~~~~~~~~~~~~~~~
-> >   In file included from drivers/power/supply/power_supply_core.c:25:
-> >   drivers/power/supply/power_supply.h:25:20: note: declared here
-> >      25 | static inline void power_supply_init_attrs(struct device_type *dev_type) {}
-> >         |                    ^~~~~~~~~~~~~~~~~~~~~~~
-> > 
-> > Update the stub function to take no parameters like the rest of the
-> > refactoring, which resolves the build error.
-> > 
-> > Fixes: 7b46b60944d7 ("power: supply: core: constify the struct device_type usage")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >  drivers/power/supply/power_supply.h | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > 
-> > ────────────────────────────────────────────────────────────────────────────────
-> > modified: drivers/power/supply/power_supply.h
-> > ────────────────────────────────────────────────────────────────────────────────
-> > @ drivers/power/supply/power_supply.h:25 @ extern int power_supply_uevent(const struct device *dev, struct kobj_uevent_env
-> > 
-> > #else
-> > 
-> > static inline void power_supply_init_attrs(struct device_type *dev_type) {}
-> > static inline void power_supply_init_attrs(void) {}
-> 
-> I've missed that #else in my building test. Thanks for catching it.
-> 
-> Reviewed-by: Ricardo B. Marliere <ricardo@marliere.net>
+Greg Kroah-Hartman wrote on Tue, Feb 27, 2024 at 02:26:01PM +0100:
+> Kees Cook <keescook@chromium.org>
+>     net: dev: Convert sa_data to flexible array in struct sockaddr
+> (ca13c2b1e9e4b5d982c2f1e75f28b1586e5c0f7f in this tree,
+> b5f0de6df6dce8d641ef58ef7012f3304dffb9a1 upstream)
 
-Thanks a lot for the quick feedback and no worries, it is hard to test
-to catch these without doing a lot of build tests.
+This commit breaks build of some 3rd party wireless module we use here
+(because sizeof(sa->sa_data) no longer works and needs to use
+sa_data_min)
+With that said I guess it really is a dependency on the arp_req_get
+overflow, so probably necessary evil, and I don't think we explicitly
+pretend to preserve APIs for 3rd party modules so this is probably
+fine... The new warnings that poped up (and were reported in other
+messages) a probably worth checking though.
 
-Unfortunately, I caught another problem with that change that is
-independent of this one:
 
-  ld.lld: error: undefined symbol: power_supply_attr_group
-  >>> referenced by power_supply_core.c
-  >>>               drivers/power/supply/power_supply_core.o:(power_supply_attr_groups) in archive vmlinux.a
-  >>> did you mean: power_supply_attr_groups
-  >>> defined in: vmlinux.a(drivers/power/supply/power_supply_core.o)
+That aside no particular problem actually running this, so--
+Tested 5d69d611e74d ("Linux 5.10.211-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-It looks like power_supply_attr_groups refers to power_supply_attr_group
-but power_supply_attr_group is declared extern without a definition with
-CONFIG_SYSFS=n. It is not immediately obvious to me what the fix is.
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-Cheers,
-Nathan
-
-> > #define power_supply_uevent NULL
-> > 
-> > #endif /* CONFIG_SYSFS */
-> > 
-> > --
-> > base-commit: 3da8d71754d3c1aa0b72d74c8a324a4bc7fab473
-> > change-id: 20240227-fix-power_supply_init_attrs-stub-7be5328b4e72
-> > 
-> > Best regards,
-> > - 
-> > Nathan Chancellor <nathan@kernel.org>
-> > 
+-- 
+Dominique Martinet | Asmadeus
