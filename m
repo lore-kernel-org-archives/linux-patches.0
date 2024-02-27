@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8508D78B61;
-	Tue, 27 Feb 2024 14:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E4D1420A0;
+	Tue, 27 Feb 2024 14:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043329; cv=none; b=gm7d7tx4Qm9LAS1DTaF7O8ntTB+FcRorXCP7wvrd83KFK/zZWhU6KISGPeXA4MlXFnEPGwwafbAdcZUE8qI+yEhw3UvkgTvnZ2cR4kCWl+rv2cI3Lqa04mymTX+mPXk7UGL9FCJWhixyaq9mwZpU0KQNPIQfs4BS3ZqsvUrXNZ4=
+	t=1709043332; cv=none; b=um7PGqK8TbnNyQ1h+77tZ2Dr2pATvPXu0xNOtQzh/SQxVIKtVyZB2JELkL03a+7S0NC3wHXJ/GTFfYpM9xCLV1liBNfQIomVPtmDpmTxORcBJd33qV9En1zrD9Q2+kZoI9tCGoibPD17oVj9c5lnRyPgilG92fiu/++jn6c5kEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043329; c=relaxed/simple;
-	bh=81VC0zTFDkeqapCThWzDkYAqj76acHiF1ZVs8XFHjNU=;
+	s=arc-20240116; t=1709043332; c=relaxed/simple;
+	bh=2KGaPHaFLIQsRJt0jlpW7v2UA+FghOTuyfkmIjRrpLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mi90IJHfFYHq2HO3SS8KbcO/3zNvHHY914NVHJR0oMKTFOvOSXGMwzUxalexTxjO/ZiDRWzHBaZiBHXGPCrE+4/3cjVNRb+yMNZB9CAXXh+KLsPdhG4BJqnEyWqvasAyov/cUNpxLoryBzSne+ERlMQgW/mBvMU0aUnqigjxdS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFoBRj3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dx2aZhhDowEUh4Br8i9HoqoIcfWeIzI6WZcfCvQoZOtb1DK8vGN0QjDysrJXI9YUpqVyMIp8FLrUT7UINGXEP5/9KrVU4KkMCAIPcRbs8TVC8nkGb8HFNWNKTAC7ltM3rt9aCfbjDF52zbMLceJ/eaa/Lwe5UmZ+rfwhvpWVSVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRwAH+HF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFoBRj3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC92C433F1;
-	Tue, 27 Feb 2024 14:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRwAH+HF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2120C433F1;
+	Tue, 27 Feb 2024 14:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043329;
-	bh=81VC0zTFDkeqapCThWzDkYAqj76acHiF1ZVs8XFHjNU=;
+	s=korg; t=1709043332;
+	bh=2KGaPHaFLIQsRJt0jlpW7v2UA+FghOTuyfkmIjRrpLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFoBRj3oBleMgHwtf6tC1moo71smzMZU579uGzC+eNm4HkwcNjLAzg5B7tCESnzwg
-	 ExeK868VozaJElsGNzBud5Om17RKj/YUhwaiFzMES4kqFjJw51TjmlpxoJFI8zeioA
-	 iifXTKr8DFTiTvudb24ymAB/jHIXv0lRCWk7gef8=
+	b=YRwAH+HFbbEPZzKrMbQOKxXqkRRnpsPXXkI8pKTH8oTms/s+nLl+XQTMIwtLyy1vD
+	 V+N61Uz1OiVPRWKHR9Gu9pPMsyxyB/N6JjSzb/HLzGXx/J8phY1DGFfkOrbHNk9RcM
+	 G7x8AYcj4KXyz80k7OT9TyVIQHVkeCU4nphjd5PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Dhere <chaitanya.dhere@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Sohaib Nadeem <sohaib.nadeem@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/195] drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz
-Date: Tue, 27 Feb 2024 14:25:01 +0100
-Message-ID: <20240227131611.714270412@linuxfoundation.org>
+Subject: [PATCH 6.1 041/195] ASoC: wm_adsp: Dont overwrite fwf_name with the default
+Date: Tue, 27 Feb 2024 14:25:02 +0100
+Message-ID: <20240227131611.746001397@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -55,44 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 2ff33c759a4247c84ec0b7815f1f223e155ba82a ]
+[ Upstream commit daf3f0f99cde93a066240462b7a87cdfeedc04c0 ]
 
-[why]
-Originally, PMFW said min FCLK is 300Mhz, but min DCFCLK can be increased
-to 400Mhz because min FCLK is now 600Mhz so FCLK >= 1.5 * DCFCLK hardware
-requirement will still be satisfied. Increasing min DCFCLK addresses
-underflow issues (underflow occurs when phantom pipe is turned on for some
-Sub-Viewport configs).
+There's no need to overwrite fwf_name with a kstrdup() of the cs_dsp part
+name. It is trivial to select either fwf_name or cs_dsp.part as the string
+to use when building the filename in wm_adsp_request_firmware_file().
 
-[how]
-Increasing DCFCLK by raising the min_dcfclk_mhz
+This leaves fwf_name entirely owned by the codec driver.
 
-Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It also avoids problems with freeing the pointer. With the original code
+fwf_name was either a pointer owned by the codec driver, or a kstrdup()
+created by wm_adsp. This meant wm_adsp must free it if it set it, but not
+if the codec driver set it. The code was handling this by using
+devm_kstrdup().
+But there is no absolute requirement that wm_adsp_common_init() must be
+called from probe(), so this was a pseudo-memory leak - each new call to
+wm_adsp_common_init() would allocate another block of memory but these
+would only be freed if the owning codec driver was removed.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://msgid.link/r/20240129162737.497-3-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm_adsp.c | 29 ++++++++++++-----------------
+ 1 file changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 85e0d1c2a9085..baecc0ffe7580 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2123,7 +2123,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
- 	unsigned int max_dcfclk_mhz = 0, max_dispclk_mhz = 0, max_dppclk_mhz = 0,
- 			max_phyclk_mhz = 0, max_dtbclk_mhz = 0, max_fclk_mhz = 0, max_uclk_mhz = 0;
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index 2cfca78f0401f..47a4c363227cc 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -740,19 +740,25 @@ static int wm_adsp_request_firmware_file(struct wm_adsp *dsp,
+ 					 const char *filetype)
+ {
+ 	struct cs_dsp *cs_dsp = &dsp->cs_dsp;
++	const char *fwf;
+ 	char *s, c;
+ 	int ret = 0;
  
--	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
-+	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
++	if (dsp->fwf_name)
++		fwf = dsp->fwf_name;
++	else
++		fwf = dsp->cs_dsp.name;
++
+ 	if (system_name && asoc_component_prefix)
+ 		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s-%s-%s.%s", dir, dsp->part,
+-				      dsp->fwf_name, wm_adsp_fw[dsp->fw].file, system_name,
++				      fwf, wm_adsp_fw[dsp->fw].file, system_name,
+ 				      asoc_component_prefix, filetype);
+ 	else if (system_name)
+ 		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s-%s.%s", dir, dsp->part,
+-				      dsp->fwf_name, wm_adsp_fw[dsp->fw].file, system_name,
++				      fwf, wm_adsp_fw[dsp->fw].file, system_name,
+ 				      filetype);
+ 	else
+-		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s.%s", dir, dsp->part, dsp->fwf_name,
++		*filename = kasprintf(GFP_KERNEL, "%s%s-%s-%s.%s", dir, dsp->part, fwf,
+ 				      wm_adsp_fw[dsp->fw].file, filetype);
  
- 	static const unsigned int num_dcfclk_stas = 5;
- 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
+ 	if (*filename == NULL)
+@@ -842,29 +848,18 @@ static int wm_adsp_request_firmware_files(struct wm_adsp *dsp,
+ 	}
+ 
+ 	adsp_err(dsp, "Failed to request firmware <%s>%s-%s-%s<-%s<%s>>.wmfw\n",
+-		 cirrus_dir, dsp->part, dsp->fwf_name, wm_adsp_fw[dsp->fw].file,
+-		 system_name, asoc_component_prefix);
++		 cirrus_dir, dsp->part,
++		 dsp->fwf_name ? dsp->fwf_name : dsp->cs_dsp.name,
++		 wm_adsp_fw[dsp->fw].file, system_name, asoc_component_prefix);
+ 
+ 	return -ENOENT;
+ }
+ 
+ static int wm_adsp_common_init(struct wm_adsp *dsp)
+ {
+-	char *p;
+-
+ 	INIT_LIST_HEAD(&dsp->compr_list);
+ 	INIT_LIST_HEAD(&dsp->buffer_list);
+ 
+-	if (!dsp->fwf_name) {
+-		p = devm_kstrdup(dsp->cs_dsp.dev, dsp->cs_dsp.name, GFP_KERNEL);
+-		if (!p)
+-			return -ENOMEM;
+-
+-		dsp->fwf_name = p;
+-		for (; *p != 0; ++p)
+-			*p = tolower(*p);
+-	}
+-
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
