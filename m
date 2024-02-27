@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197A578B61;
-	Tue, 27 Feb 2024 14:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6AA13B29C;
+	Tue, 27 Feb 2024 14:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043404; cv=none; b=piKC82wdJ2sCVC9mdlNnixqhkvX0pkqMQPwY+cAmofzox3tbKTJ+qhin/NwAp0x2EGpoflHWOzBXugJFgRgZIfRJrs3sv3DMQZPn8RfZsFnvnXjUs5vgMaiBgoBlJso4WZtSDP7WxQbg0u0Iyi95KiYUCE5jFrCMafR7TJ8niks=
+	t=1709043406; cv=none; b=Ivi/bz/SBEdKXky2ICo7H31F9LsPCwKF//dR+jsY3krXVA0W39U9gvdcUHrVqzXYxXqtTKB/enM08vIeCdN49HJ8bry5skMH5grgY1UPQ/STOXdzMYAU8lZ+P3EddDDdk1HXypi0G2wCeck/gYwGHkvT1Duysvuc2CPgSzz9XXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043404; c=relaxed/simple;
-	bh=pdFDwYt6Kvw1xFsOB1caUSIE5JST1RAofptsUc7FN4s=;
+	s=arc-20240116; t=1709043406; c=relaxed/simple;
+	bh=gABBWsE6tAz7ZHLm0A4YnZoUZNmuVnrbMm5/PoFhaiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dliRffHff0d1hCLrbFysZBI+++UQ72IgklDSoxCaZdE3QpqpHuESrB6Yt5kwsiyQf32Kb6vvZ3lqERF04d0wv0sPoK0y0ia4EcNzAzR97mxfl0MUuocH3BZJK3iSJrDhXsBowenmkjw6xqGOrPfyD3wfd8SmTyD+waumGCx/4Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfhPm1gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O12toWWTUAcBwFQm/KC3NlucNCCNELCzLQGqH7qQjnr7QFoR1K5oGMkEgGMGGc38EQf9eF+ULtKy3cSN60JoTflmUiXGPBLrG9NbrFHBIFWKhmPe5hmZYkQdyTTYFUC8RIBk4ejFdZN601UKFFHPxH1B5dwrStfHoc4+BtHlRqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYMxVh6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfhPm1gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97256C433C7;
-	Tue, 27 Feb 2024 14:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYMxVh6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C52C433C7;
+	Tue, 27 Feb 2024 14:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043404;
-	bh=pdFDwYt6Kvw1xFsOB1caUSIE5JST1RAofptsUc7FN4s=;
+	s=korg; t=1709043406;
+	bh=gABBWsE6tAz7ZHLm0A4YnZoUZNmuVnrbMm5/PoFhaiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfhPm1gctQrD5ucKPe75cJsyeDiWSQDPNN0Bux9jSp6mjOBkQGCWnw4niJeEopl1G
-	 aJym3F1FcYMZ/q/qtUR7Fcl5A8fmjkBiT4+B/rO18h5lWlSrrka5sMSolT3gmAfL+f
-	 RC+bKWyMxoAMzBYn9+WpMrEy5a0zS2NtpUYuJ8qk=
+	b=pYMxVh6qxKJNnB4jFJ4YhF8fu/L3YvNDSta0WvQobLGTb6UjA0lJGUBqvBObcM9S2
+	 2UGWRnaVYHYXOIO8j7Ezj/b4jaDTOhJU5ZJdSPXsE+1gKRONAXHfSieUOBFJeKvANb
+	 hLn4Qd+8sTKFVXiWhHjti0/NCyjI2CXhv1bwc134=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Julian Sikorski <belegdol@gmail.com>,
-	Lee Duncan <lee.duncan@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 095/195] scsi: core: Consult supported VPD page list prior to fetching page
-Date: Tue, 27 Feb 2024 14:25:56 +0100
-Message-ID: <20240227131613.612916760@linuxfoundation.org>
+	"Huang, Ying" <ying.huang@intel.com>,
+	Kairui Song <kasong@tencent.com>,
+	Yu Zhao <yuzhao@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Chris Li <chrisl@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Barry Song <21cnbao@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 096/195] mm/swap: fix race when skipping swapcache
+Date: Tue, 27 Feb 2024 14:25:57 +0100
+Message-ID: <20240227131613.644649376@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,100 +62,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit b5fc07a5fb56216a49e6c1d0b172d5464d99a89b upstream.
+commit 13ddaf26be324a7f951891ecd9ccd04466d27458 upstream.
 
-Commit c92a6b5d6335 ("scsi: core: Query VPD size before getting full
-page") removed the logic which checks whether a VPD page is present on
-the supported pages list before asking for the page itself. That was
-done because SPC helpfully states "The Supported VPD Pages VPD page
-list may or may not include all the VPD pages that are able to be
-returned by the device server". Testing had revealed a few devices
-that supported some of the 0xBn pages but didn't actually list them in
-page 0.
+When skipping swapcache for SWP_SYNCHRONOUS_IO, if two or more threads
+swapin the same entry at the same time, they get different pages (A, B).
+Before one thread (T0) finishes the swapin and installs page (A) to the
+PTE, another thread (T1) could finish swapin of page (B), swap_free the
+entry, then swap out the possibly modified page reusing the same entry.
+It breaks the pte_same check in (T0) because PTE value is unchanged,
+causing ABA problem.  Thread (T0) will install a stalled page (A) into the
+PTE and cause data corruption.
 
-Julian Sikorski bisected a problem with his drive resetting during
-discovery to the commit above. As it turns out, this particular drive
-firmware will crash if we attempt to fetch page 0xB9.
+One possible callstack is like this:
 
-Various approaches were attempted to work around this. In the end,
-reinstating the logic that consults VPD page 0 before fetching any
-other page was the path of least resistance. A firmware update for the
-devices which originally compelled us to remove the check has since
-been released.
+CPU0                                 CPU1
+----                                 ----
+do_swap_page()                       do_swap_page() with same entry
+<direct swapin path>                 <direct swapin path>
+<alloc page A>                       <alloc page B>
+swap_read_folio() <- read to page A  swap_read_folio() <- read to page B
+<slow on later locks or interrupt>   <finished swapin first>
+...                                  set_pte_at()
+                                     swap_free() <- entry is free
+                                     <write to page B, now page A stalled>
+                                     <swap out page B to same swap entry>
+pte_same() <- Check pass, PTE seems
+              unchanged, but page A
+              is stalled!
+swap_free() <- page B content lost!
+set_pte_at() <- staled page A installed!
 
-Link: https://lore.kernel.org/r/20240214221411.2888112-1-martin.petersen@oracle.com
-Fixes: c92a6b5d6335 ("scsi: core: Query VPD size before getting full page")
-Cc: stable@vger.kernel.org
-Cc: Bart Van Assche <bvanassche@acm.org>
-Reported-by: Julian Sikorski <belegdol@gmail.com>
-Tested-by: Julian Sikorski <belegdol@gmail.com>
-Reviewed-by: Lee Duncan <lee.duncan@suse.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+And besides, for ZRAM, swap_free() allows the swap device to discard the
+entry content, so even if page (B) is not modified, if swap_read_folio()
+on CPU0 happens later than swap_free() on CPU1, it may also cause data
+loss.
+
+To fix this, reuse swapcache_prepare which will pin the swap entry using
+the cache flag, and allow only one thread to swap it in, also prevent any
+parallel code from putting the entry in the cache.  Release the pin after
+PT unlocked.
+
+Racers just loop and wait since it's a rare and very short event.  A
+schedule_timeout_uninterruptible(1) call is added to avoid repeated page
+faults wasting too much CPU, causing livelock or adding too much noise to
+perf statistics.  A similar livelock issue was described in commit
+029c4628b2eb ("mm: swap: get rid of livelock in swapin readahead")
+
+Reproducer:
+
+This race issue can be triggered easily using a well constructed
+reproducer and patched brd (with a delay in read path) [1]:
+
+With latest 6.8 mainline, race caused data loss can be observed easily:
+$ gcc -g -lpthread test-thread-swap-race.c && ./a.out
+  Polulating 32MB of memory region...
+  Keep swapping out...
+  Starting round 0...
+  Spawning 65536 workers...
+  32746 workers spawned, wait for done...
+  Round 0: Error on 0x5aa00, expected 32746, got 32743, 3 data loss!
+  Round 0: Error on 0x395200, expected 32746, got 32743, 3 data loss!
+  Round 0: Error on 0x3fd000, expected 32746, got 32737, 9 data loss!
+  Round 0 Failed, 15 data loss!
+
+This reproducer spawns multiple threads sharing the same memory region
+using a small swap device.  Every two threads updates mapped pages one by
+one in opposite direction trying to create a race, with one dedicated
+thread keep swapping out the data out using madvise.
+
+The reproducer created a reproduce rate of about once every 5 minutes, so
+the race should be totally possible in production.
+
+After this patch, I ran the reproducer for over a few hundred rounds and
+no data loss observed.
+
+Performance overhead is minimal, microbenchmark swapin 10G from 32G
+zram:
+
+Before:     10934698 us
+After:      11157121 us
+Cached:     13155355 us (Dropping SWP_SYNCHRONOUS_IO flag)
+
+[kasong@tencent.com: v4]
+  Link: https://lkml.kernel.org/r/20240219082040.7495-1-ryncsn@gmail.com
+Link: https://lkml.kernel.org/r/20240206182559.32264-1-ryncsn@gmail.com
+Fixes: 0bcac06f27d7 ("mm, swap: skip swapcache for swapin of synchronous device")
+Reported-by: "Huang, Ying" <ying.huang@intel.com>
+Closes: https://lore.kernel.org/lkml/87bk92gqpx.fsf_-_@yhuang6-desk2.ccr.corp.intel.com/
+Link: https://github.com/ryncsn/emm-test-project/tree/master/swap-stress-race [1]
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Acked-by: Yu Zhao <yuzhao@google.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Chris Li <chrisl@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Yosry Ahmed <yosryahmed@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c        |   22 ++++++++++++++++++++--
- include/scsi/scsi_device.h |    4 ----
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ include/linux/swap.h |    5 +++++
+ mm/memory.c          |   20 ++++++++++++++++++++
+ mm/swap.h            |    5 +++++
+ mm/swapfile.c        |   13 +++++++++++++
+ 4 files changed, 43 insertions(+)
 
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -328,21 +328,39 @@ static int scsi_vpd_inquiry(struct scsi_
- 	return result + 4;
+--- a/include/linux/swap.h
++++ b/include/linux/swap.h
+@@ -571,6 +571,11 @@ static inline int swap_duplicate(swp_ent
+ 	return 0;
  }
  
-+enum scsi_vpd_parameters {
-+	SCSI_VPD_HEADER_SIZE = 4,
-+	SCSI_VPD_LIST_SIZE = 36,
-+};
++static inline int swapcache_prepare(swp_entry_t swp)
++{
++	return 0;
++}
 +
- static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
+ static inline void swap_free(swp_entry_t swp)
  {
--	unsigned char vpd_header[SCSI_VPD_HEADER_SIZE] __aligned(4);
-+	unsigned char vpd[SCSI_VPD_LIST_SIZE] __aligned(4);
- 	int result;
- 
- 	if (sdev->no_vpd_size)
- 		return SCSI_DEFAULT_VPD_LEN;
- 
- 	/*
-+	 * Fetch the supported pages VPD and validate that the requested page
-+	 * number is present.
-+	 */
-+	if (page != 0) {
-+		result = scsi_vpd_inquiry(sdev, vpd, 0, sizeof(vpd));
-+		if (result < SCSI_VPD_HEADER_SIZE)
-+			return 0;
+ }
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3761,6 +3761,7 @@ vm_fault_t do_swap_page(struct vm_fault
+ 	struct page *page;
+ 	struct swap_info_struct *si = NULL;
+ 	rmap_t rmap_flags = RMAP_NONE;
++	bool need_clear_cache = false;
+ 	bool exclusive = false;
+ 	swp_entry_t entry;
+ 	pte_t pte;
+@@ -3822,6 +3823,20 @@ vm_fault_t do_swap_page(struct vm_fault
+ 	if (!folio) {
+ 		if (data_race(si->flags & SWP_SYNCHRONOUS_IO) &&
+ 		    __swap_count(entry) == 1) {
++			/*
++			 * Prevent parallel swapin from proceeding with
++			 * the cache flag. Otherwise, another thread may
++			 * finish swapin first, free the entry, and swapout
++			 * reusing the same entry. It's undetectable as
++			 * pte_same() returns true due to entry reuse.
++			 */
++			if (swapcache_prepare(entry)) {
++				/* Relax a bit to prevent rapid repeated page faults */
++				schedule_timeout_uninterruptible(1);
++				goto out;
++			}
++			need_clear_cache = true;
 +
-+		result -= SCSI_VPD_HEADER_SIZE;
-+		if (!memchr(&vpd[SCSI_VPD_HEADER_SIZE], page, result))
-+			return 0;
-+	}
-+	/*
- 	 * Fetch the VPD page header to find out how big the page
- 	 * is. This is done to prevent problems on legacy devices
- 	 * which can not handle allocation lengths as large as
- 	 * potentially requested by the caller.
- 	 */
--	result = scsi_vpd_inquiry(sdev, vpd_header, page, sizeof(vpd_header));
-+	result = scsi_vpd_inquiry(sdev, vpd, page, SCSI_VPD_HEADER_SIZE);
- 	if (result < 0)
- 		return 0;
+ 			/* skip swapcache */
+ 			folio = vma_alloc_folio(GFP_HIGHUSER_MOVABLE, 0,
+ 						vma, vmf->address, false);
+@@ -4073,6 +4088,9 @@ vm_fault_t do_swap_page(struct vm_fault
+ unlock:
+ 	pte_unmap_unlock(vmf->pte, vmf->ptl);
+ out:
++	/* Clear the swap cache pin for direct swapin after PTL unlock */
++	if (need_clear_cache)
++		swapcache_clear(si, entry);
+ 	if (si)
+ 		put_swap_device(si);
+ 	return ret;
+@@ -4086,6 +4104,8 @@ out_release:
+ 		folio_unlock(swapcache);
+ 		folio_put(swapcache);
+ 	}
++	if (need_clear_cache)
++		swapcache_clear(si, entry);
+ 	if (si)
+ 		put_swap_device(si);
+ 	return ret;
+--- a/mm/swap.h
++++ b/mm/swap.h
+@@ -39,6 +39,7 @@ void __delete_from_swap_cache(struct fol
+ void delete_from_swap_cache(struct folio *folio);
+ void clear_shadow_from_swap_cache(int type, unsigned long begin,
+ 				  unsigned long end);
++void swapcache_clear(struct swap_info_struct *si, swp_entry_t entry);
+ struct folio *swap_cache_get_folio(swp_entry_t entry,
+ 		struct vm_area_struct *vma, unsigned long addr);
+ struct page *find_get_incore_page(struct address_space *mapping, pgoff_t index);
+@@ -98,6 +99,10 @@ static inline int swap_writepage(struct
+ 	return 0;
+ }
  
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -100,10 +100,6 @@ struct scsi_vpd {
- 	unsigned char	data[];
- };
++static inline void swapcache_clear(struct swap_info_struct *si, swp_entry_t entry)
++{
++}
++
+ static inline struct folio *swap_cache_get_folio(swp_entry_t entry,
+ 		struct vm_area_struct *vma, unsigned long addr)
+ {
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -3373,6 +3373,19 @@ int swapcache_prepare(swp_entry_t entry)
+ 	return __swap_duplicate(entry, SWAP_HAS_CACHE);
+ }
  
--enum scsi_vpd_parameters {
--	SCSI_VPD_HEADER_SIZE = 4,
--};
--
- struct scsi_device {
- 	struct Scsi_Host *host;
- 	struct request_queue *request_queue;
++void swapcache_clear(struct swap_info_struct *si, swp_entry_t entry)
++{
++	struct swap_cluster_info *ci;
++	unsigned long offset = swp_offset(entry);
++	unsigned char usage;
++
++	ci = lock_cluster_or_swap_info(si, offset);
++	usage = __swap_entry_free_locked(si, offset, SWAP_HAS_CACHE);
++	unlock_cluster_or_swap_info(si, ci);
++	if (!usage)
++		free_swap_slot(entry);
++}
++
+ struct swap_info_struct *swp_swap_info(swp_entry_t entry)
+ {
+ 	return swap_type_to_swap_info(swp_type(entry));
 
 
