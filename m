@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742C13DBBC;
-	Tue, 27 Feb 2024 14:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6514313B2B4;
+	Tue, 27 Feb 2024 14:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043674; cv=none; b=A9q5LgA8anFSELsWu7pt38UZTPxOqmHyWTyyaWDRejPm8DrxosIiWK+dbd67WuFsSAcRbbtpKrOva+rU2AF2ZkQ/R0B9lJVsnzQSHm6Fugid3Qzsk00O2M2MenWJTxSSm5Kd9nbsJ1WLYhfhyIA5RtpWHBjhyZ2RgV+4Y/Sw/2o=
+	t=1709043677; cv=none; b=kXDc1ZOxADJYNpAyAbumci/nxzfivQyzQrJ5hN5JzgkNtpO6xZSzYm7A0qUr0Qa+VRCsMMjInhSFp7YdSYGCJvln5TCPailf1xyfTDCJ6gJF5phNaLv2hVMWl6VxDSriFBjYsfBV2qIA3cIYOXr+U7jCt9D68qxYlADnlYLZ2BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043674; c=relaxed/simple;
-	bh=5r+mWdfozsf0b+D/7pNPkVNvhWnKyalh5kog5rurgr8=;
+	s=arc-20240116; t=1709043677; c=relaxed/simple;
+	bh=JKiG8+C1Ja4pMwg3vPAO3Dvp9Y88xyfB+H2XYvVI8uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f482CC/f5ylMv4uHFA4vibjp8Ifpt5gc1HJM6DXQ8jQ0i1h6qs8GuJsiG7Ilw7qHQIV+1wx/2dXYyedcXN9FwbVA+BnB/FY4oO4lczUAI2NlGhue9uVx95zuwTMPnkSMOAKK7jykKJLSU347YtGQdYgqute9cgRa7McH5bRy+1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18WbBVhe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZFGNlPBM9h6M8xL8wAPLnrR6ZssSgE2XY3z1VJcNzKRqIxTAuTEh3ZP9RXfjLFA0bMe7UBEVcN8a5AV2/vaqzPAqm3AsCCsHZ5a1bH0N0NsM1nxe64p1fER5Fi1mGhHtnQgv4J+2XcelxovxPsBlHq7PFRTZZs3wvpI5walElI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/FCooUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18WbBVhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323EFC433F1;
-	Tue, 27 Feb 2024 14:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/FCooUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62F1C433C7;
+	Tue, 27 Feb 2024 14:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043674;
-	bh=5r+mWdfozsf0b+D/7pNPkVNvhWnKyalh5kog5rurgr8=;
+	s=korg; t=1709043677;
+	bh=JKiG8+C1Ja4pMwg3vPAO3Dvp9Y88xyfB+H2XYvVI8uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18WbBVhenZkPu2hGhcaZTjtBF1TluVRBr140oTRQNkLXKCyynr0CKHBTDCAWbKoYB
-	 N8K7nDhmd1isUEHmAHeb5dzA6bqHApZOhPG2Ob9yhAlbMH8QqsxCSWc3IY4M0gbsIn
-	 2hU9fi6K3d7XlJOJj6DaI62Vr0LbFjykvxSr3mt4=
+	b=Q/FCooUSevWL6Ycjl+V52pThDVOeZEhOfng/2hEu6N1KhUJ8V2kIS6LEWkC2nVjv/
+	 TlkMwThN32hPJVEpES+czdIaJXbxai1Gmx/X5Q6XuZzXZajHZEmcoLxRWd/ySTn7Og
+	 uQUImKNPUIcXq/FC22taU5R+dVSzMX3cFLfiP3QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/195] bpf, sockmap: Fix NULL pointer dereference in sk_psock_verdict_data_ready()
-Date: Tue, 27 Feb 2024 14:27:06 +0100
-Message-ID: <20240227131615.859367107@linuxfoundation.org>
+Subject: [PATCH 6.1 166/195] tls: break out of main loop when PEEK gets a non-data record
+Date: Tue, 27 Feb 2024 14:27:07 +0100
+Message-ID: <20240227131615.891632388@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -53,66 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 4cd12c6065dfcdeba10f49949bffcf383b3952d8 ]
+[ Upstream commit 10f41d0710fc81b7af93fa6106678d57b1ff24a7 ]
 
-syzbot reported the following NULL pointer dereference issue [1]:
+PEEK needs to leave decrypted records on the rx_list so that we can
+receive them later on, so it jumps back into the async code that
+queues the skb. Unfortunately that makes us skip the
+TLS_RECORD_TYPE_DATA check at the bottom of the main loop, so if two
+records of the same (non-DATA) type are queued, we end up merging
+them.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  [...]
-  RIP: 0010:0x0
-  [...]
-  Call Trace:
-   <TASK>
-   sk_psock_verdict_data_ready+0x232/0x340 net/core/skmsg.c:1230
-   unix_stream_sendmsg+0x9b4/0x1230 net/unix/af_unix.c:2293
-   sock_sendmsg_nosec net/socket.c:730 [inline]
-   __sock_sendmsg+0x221/0x270 net/socket.c:745
-   ____sys_sendmsg+0x525/0x7d0 net/socket.c:2584
-   ___sys_sendmsg net/socket.c:2638 [inline]
-   __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2667
-   do_syscall_64+0xf9/0x240
-   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+Add the same record type check, and make it unlikely to not penalize
+the async fastpath. Async decrypt only applies to data record, so this
+check is only needed for PEEK.
 
-If sk_psock_verdict_data_ready() and sk_psock_stop_verdict() are called
-concurrently, psock->saved_data_ready can be NULL, causing the above issue.
+process_rx_list also has similar issues.
 
-This patch fixes this issue by calling the appropriate data ready function
-using the sk_psock_data_ready() helper and protecting it from concurrency
-with sk->sk_callback_lock.
-
-Fixes: 6df7f764cd3c ("bpf, sockmap: Wake up polling after data copy")
-Reported-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=fd7b34375c1c8ce29c93 [1]
-Link: https://lore.kernel.org/bpf/20240218150933.6004-1-syoshida@redhat.com
+Fixes: 692d7b5d1f91 ("tls: Fix recvmsg() to be able to peek across multiple records")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/3df2eef4fdae720c55e69472b5bea668772b45a2.1708007371.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 3818035ea0021..39643f78cf782 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1217,8 +1217,11 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index c8cbdd02a784e..cd86c271c1348 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2137,6 +2137,8 @@ int tls_sw_recvmsg(struct sock *sk,
+ 				decrypted += chunk;
+ 				len -= chunk;
+ 				__skb_queue_tail(&ctx->rx_list, skb);
++				if (unlikely(control != TLS_RECORD_TYPE_DATA))
++					break;
+ 				continue;
+ 			}
  
- 		rcu_read_lock();
- 		psock = sk_psock(sk);
--		if (psock)
--			psock->saved_data_ready(sk);
-+		if (psock) {
-+			read_lock_bh(&sk->sk_callback_lock);
-+			sk_psock_data_ready(sk, psock);
-+			read_unlock_bh(&sk->sk_callback_lock);
-+		}
- 		rcu_read_unlock();
- 	}
- }
 -- 
 2.43.0
 
