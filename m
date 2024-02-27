@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C09654BD4;
-	Tue, 27 Feb 2024 13:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EBC54BD4;
+	Tue, 27 Feb 2024 13:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042311; cv=none; b=UKd0aO21ZuKC8/dAnw6M57MlpPwYqpsYRhCCQ7PqP64yM/wwcRVGFaBbgSU2HLXyBypyHlNoTvSOZo0ljPCNK1U/YE/bY71NSchkWyvbZPU/FjP7TevIVWTwbU9K/xlWhfE10KZhrnFT7cGUS+WZcrpcQL8AZlY6C22t+KjYia0=
+	t=1709042314; cv=none; b=O5N9dnIu/FvAJZ0ynYq4mS70T1h3Wgt4IVbpBkTAxOw8TfYGRgvj8+2JKuSkPypqFG0qb2pJhyGF0w4FY/3hoqXJGcVr0A8Zj7BpDwLA54FH0CAiaO8onNHqkd+yQF4YSSpapAOAYQduCzbknj8k6V1/a+CsH4GIeJYABwBySTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042311; c=relaxed/simple;
-	bh=N0yLrMNiu//0OAgJexN6lR6vSEYf/Hd1KzGppZH9DNM=;
+	s=arc-20240116; t=1709042314; c=relaxed/simple;
+	bh=tkWIgMZJG3xOq9A3wdQJN1BNTk9SIef/tpf0JP+urFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMbtz+zLtZpjrHHsgPruNZNT01OotFkNWCleLYbbG8kisxbeR7OmhZzXOnoO7R9nyDZXoj1FLJMthAV24lBOAeWsq/tfYdcGRn/QhFKjup4aYMaaHDD7fmhjJrRlr+1tJkU/VziSoZiwnEnCpp8DGTFzAhYONLPjbBUHhiGvbgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXJKH9N+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHdiNDPBLVa3Zrclwe4iLafcogwHtrozs6d5z2QTe/oV6aPUT0eK6rqkVQjjkawFj6AK+7NghUCAYGJQ5oqOzibp7U1o9kTSNfbgHpzSlyRP8nLirZNFL7Dyxl/K+9nIJbtAyLBf6XIknNqPixzGe697ieju66AL5JI6jysKgNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qjlosi1e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXJKH9N+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA4AC433C7;
-	Tue, 27 Feb 2024 13:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qjlosi1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA392C433F1;
+	Tue, 27 Feb 2024 13:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042311;
-	bh=N0yLrMNiu//0OAgJexN6lR6vSEYf/Hd1KzGppZH9DNM=;
+	s=korg; t=1709042314;
+	bh=tkWIgMZJG3xOq9A3wdQJN1BNTk9SIef/tpf0JP+urFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXJKH9N+dP7C8t6EWX98R76C1Tb3l8WTieOBWe7bXbAwHL9Vn0uYC29s2xD4cYUj9
-	 y8QTtYoSYS+v5ftj2zNuw6IsGYdhgjCuZ2piy24bKgN85b7oTWbK+IftEvUdwmM7eK
-	 vWVACxdPa3Ed9fsttovwMcfjvtOmTzGrooHSOPhg=
+	b=Qjlosi1e/+TbSpeL/c8K6YUeHV16T05mz3IrnQlr8c06o5Hpk04Td+8cTk3jRSH/U
+	 I7wXVl71TIVnFgLVZDxcyim2GisXkEYgJGwEBuM3vRz27t6ex8Vr9jKfwQc/mpGLpJ
+	 1lwzAb5dwow8h+/6mwVLKDPxTIw+izte+5AmALNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Sakharov <p.sakharov@ispras.ru>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Helge Deller <deller@gmx.de>,
+	Sven Schnelle <svens@stackframe.org>,
+	John David Anglin <dave.anglin@bell.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/299] net: stmmac: Fix incorrect dereference in interrupt handlers
-Date: Tue, 27 Feb 2024 14:25:55 +0100
-Message-ID: <20240227131633.579878110@linuxfoundation.org>
+Subject: [PATCH 6.6 253/299] parisc: Fix stack unwinder
+Date: Tue, 27 Feb 2024 14:26:04 +0100
+Message-ID: <20240227131633.860842006@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,82 +55,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Sakharov <p.sakharov@ispras.ru>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 97dde84026339e4b4af9a6301f825d1828d7874b ]
+[ Upstream commit 882a2a724ee964c1ebe7268a91d5c8c8ddc796bf ]
 
-If 'dev' or 'data' is NULL, the 'priv' variable has an incorrect address
-when dereferencing calling netdev_err().
+Debugging shows a large number of unaligned access traps in the unwinder
+code. Code analysis reveals a number of issues with this code:
 
-Since we get as 'dev_id' or 'data' what was passed as the 'dev' argument
-to request_irq() during interrupt initialization (that is, the net_device
-and rx/tx queue pointers initialized at the time of the call) and since
-there are usually no checks for the 'dev_id' argument in such handlers
-in other drivers, remove these checks from the handlers in stmmac driver.
+- handle_interruption is passed twice through
+  dereference_kernel_function_descriptor()
+- ret_from_kernel_thread, syscall_exit, intr_return,
+  _switch_to_ret, and _call_on_stack are passed through
+  dereference_kernel_function_descriptor() even though they are
+  not declared as function pointers.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To fix the problems, drop one of the calls to
+dereference_kernel_function_descriptor() for handle_interruption,
+and compare the other pointers directly.
 
-Fixes: 8532f613bc78 ("net: stmmac: introduce MSI Interrupt routines for mac, safety, RX & TX")
-Signed-off-by: Pavel Sakharov <p.sakharov@ispras.ru>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6414b30b39f9 ("parisc: unwind: Avoid missing prototype warning for handle_interruption()")
+Fixes: 8e0ba125c2bf ("parisc/unwind: fix unwinder when CONFIG_64BIT is enabled")
+Cc: Helge Deller <deller@gmx.de>
+Cc: Sven Schnelle <svens@stackframe.org>
+Cc: John David Anglin <dave.anglin@bell.net>
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 -------------------
- 1 file changed, 20 deletions(-)
+ arch/parisc/kernel/unwind.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f1614ad2daaa7..5b3423d1af3f3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5951,11 +5951,6 @@ static irqreturn_t stmmac_mac_interrupt(int irq, void *dev_id)
- 	struct net_device *dev = (struct net_device *)dev_id;
- 	struct stmmac_priv *priv = netdev_priv(dev);
+diff --git a/arch/parisc/kernel/unwind.c b/arch/parisc/kernel/unwind.c
+index 27ae40a443b80..f7e0fee5ee55a 100644
+--- a/arch/parisc/kernel/unwind.c
++++ b/arch/parisc/kernel/unwind.c
+@@ -228,10 +228,8 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ #ifdef CONFIG_IRQSTACKS
+ 	extern void * const _call_on_stack;
+ #endif /* CONFIG_IRQSTACKS */
+-	void *ptr;
  
--	if (unlikely(!dev)) {
--		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
--		return IRQ_NONE;
--	}
--
- 	/* Check if adapter is up */
- 	if (test_bit(STMMAC_DOWN, &priv->state))
- 		return IRQ_HANDLED;
-@@ -5971,11 +5966,6 @@ static irqreturn_t stmmac_safety_interrupt(int irq, void *dev_id)
- 	struct net_device *dev = (struct net_device *)dev_id;
- 	struct stmmac_priv *priv = netdev_priv(dev);
+-	ptr = dereference_kernel_function_descriptor(&handle_interruption);
+-	if (pc_is_kernel_fn(pc, ptr)) {
++	if (pc_is_kernel_fn(pc, handle_interruption)) {
+ 		struct pt_regs *regs = (struct pt_regs *)(info->sp - frame_size - PT_SZ_ALGN);
+ 		dbg("Unwinding through handle_interruption()\n");
+ 		info->prev_sp = regs->gr[30];
+@@ -239,13 +237,13 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ 		return 1;
+ 	}
  
--	if (unlikely(!dev)) {
--		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
--		return IRQ_NONE;
--	}
--
- 	/* Check if adapter is up */
- 	if (test_bit(STMMAC_DOWN, &priv->state))
- 		return IRQ_HANDLED;
-@@ -5997,11 +5987,6 @@ static irqreturn_t stmmac_msi_intr_tx(int irq, void *data)
- 	dma_conf = container_of(tx_q, struct stmmac_dma_conf, tx_queue[chan]);
- 	priv = container_of(dma_conf, struct stmmac_priv, dma_conf);
+-	if (pc_is_kernel_fn(pc, ret_from_kernel_thread) ||
+-	    pc_is_kernel_fn(pc, syscall_exit)) {
++	if (pc == (unsigned long)&ret_from_kernel_thread ||
++	    pc == (unsigned long)&syscall_exit) {
+ 		info->prev_sp = info->prev_ip = 0;
+ 		return 1;
+ 	}
  
--	if (unlikely(!data)) {
--		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
--		return IRQ_NONE;
--	}
--
- 	/* Check if adapter is up */
- 	if (test_bit(STMMAC_DOWN, &priv->state))
- 		return IRQ_HANDLED;
-@@ -6028,11 +6013,6 @@ static irqreturn_t stmmac_msi_intr_rx(int irq, void *data)
- 	dma_conf = container_of(rx_q, struct stmmac_dma_conf, rx_queue[chan]);
- 	priv = container_of(dma_conf, struct stmmac_priv, dma_conf);
+-	if (pc_is_kernel_fn(pc, intr_return)) {
++	if (pc == (unsigned long)&intr_return) {
+ 		struct pt_regs *regs;
  
--	if (unlikely(!data)) {
--		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
--		return IRQ_NONE;
--	}
--
- 	/* Check if adapter is up */
- 	if (test_bit(STMMAC_DOWN, &priv->state))
- 		return IRQ_HANDLED;
+ 		dbg("Found intr_return()\n");
+@@ -257,14 +255,14 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ 	}
+ 
+ 	if (pc_is_kernel_fn(pc, _switch_to) ||
+-	    pc_is_kernel_fn(pc, _switch_to_ret)) {
++	    pc == (unsigned long)&_switch_to_ret) {
+ 		info->prev_sp = info->sp - CALLEE_SAVE_FRAME_SIZE;
+ 		info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
+ 		return 1;
+ 	}
+ 
+ #ifdef CONFIG_IRQSTACKS
+-	if (pc_is_kernel_fn(pc, _call_on_stack)) {
++	if (pc == (unsigned long)&_call_on_stack) {
+ 		info->prev_sp = *(unsigned long *)(info->sp - FRAME_SIZE - REG_SZ);
+ 		info->prev_ip = *(unsigned long *)(info->sp - FRAME_SIZE - RP_OFFSET);
+ 		return 1;
 -- 
 2.43.0
 
