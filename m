@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A86213B29C;
-	Tue, 27 Feb 2024 14:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9D413A259;
+	Tue, 27 Feb 2024 14:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043050; cv=none; b=KBiN2zVlaMGtFRdPDVIqCPzy70rYG+SK19/xtkA+ne9WGJeWUM9w6kcZa6US063HJd9AfBQZzIBWQSeWXNx8nUKM1NjvwDXv0w9JSqE0RattR4HXGC9mWW4SrgF2TeHlS1VmpYv+QU+A18FBwf85L4SmMVP55oaeCMzp6bxSToY=
+	t=1709043052; cv=none; b=o4tdiXLVqhNjrfwqCga4wcFAk5tevCWVYRfMVk/om2Lti6IEpUl3mf7VecSp1wO5XXTAuh/jMuJ5/ol76GR7bZxnAISnXsWMiHogD8a+nyoBPb8vmLCP6EgLDBTHyj8CKZtl+3wra9sS12JkRhgYAQJI5P+oxGkqKnTg5nN/XN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043050; c=relaxed/simple;
-	bh=XZOVmUX1v7wW5oZzim0Sau018fuEVh7rJBHOLuR6ECI=;
+	s=arc-20240116; t=1709043052; c=relaxed/simple;
+	bh=UDTmr9jMupQG49DXMxtqxso6FSpmdd5G0T6wW8QTdT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uDdAQcBMgNwvFAjV/eBAoZcRFxogz4sToldnhpa8jUCkmddLItvezIKpv/2BcItqV5nOZNXoIOfOKZKTOrp7j1Mv3rEzOPgA+Peixwerapg60EI9rSxdEhqf284XcsFQcBvNuif6us3H4Ejnx7XVyKswAfE0Hstem3qsrElct9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SV0yFADb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rsf/UKlIO6tZ1af7RCcEnm0C749xTqO4JbvO54wpuhOJhPoLti9B1481B4EzNiYaoDMaXhj+UHHVjQHkwhqmBIm+DRmhr9KTF/SiE7xORSldVkeL2s1+y0j41LH69fEGmPc+66GVsum7s4hV1l6uyqboyn/Fxk1Qbst2yrHQquM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2j/Tf/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SV0yFADb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A175AC433C7;
-	Tue, 27 Feb 2024 14:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2j/Tf/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3EAC433F1;
+	Tue, 27 Feb 2024 14:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043050;
-	bh=XZOVmUX1v7wW5oZzim0Sau018fuEVh7rJBHOLuR6ECI=;
+	s=korg; t=1709043052;
+	bh=UDTmr9jMupQG49DXMxtqxso6FSpmdd5G0T6wW8QTdT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SV0yFADbglWVCfRt8bB6rjZh30DmctAmQeQGdpE//eozfSxH2MyicIa4E+o080IFd
-	 0EZp2s4iWLG9h3ghJ2o7qSYM5YUUe7glNnDWKvEOkcusrHVbGD+2oev1eSAej+DEnk
-	 ipMW+0AlkIRmUYid57b1n42JY/iLPPF8QQ2IP7NM=
+	b=h2j/Tf/JMoko/XbiYWhVxAHRfKdPLaFyKIMcav1SI3g181j3re4SPWnI8+DzvLrFl
+	 59xuyBeEWb2kBm3K0wZYfwXnAXiK+WAsys1nzBK1YoDYX0Pfn/JQMy28eHf4lfeJ9S
+	 u1Ao8jJK9IO8Qfke61wAcOVHSMr1IiB+oPuucZ3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/245] ARM: dts: BCM53573: Describe on-SoC BCM53125 rev 4 switch
-Date: Tue, 27 Feb 2024 14:26:15 +0100
-Message-ID: <20240227131621.276850526@linuxfoundation.org>
+Subject: [PATCH 5.15 188/245] ACPI: video: Add backlight=native DMI quirk for Apple iMac12,1 and iMac12,2
+Date: Tue, 27 Feb 2024 14:26:16 +0100
+Message-ID: <20240227131621.307067503@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -45,56 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9fb90ae6cae7f8fe4fbf626945f32cd9da2c3892 ]
+[ Upstream commit 8cf04bb321f036dd2e523e993897e0789bd5265c ]
 
-BCM53573 family SoC have Ethernet switch connected to the first Ethernet
-controller (accessible over MDIO).
+Linux defaults to picking the non-working ACPI video backlight interface
+on the Apple iMac12,1 and iMac12,2.
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Add a DMI quirk to pick the working native radeon_bl0 interface instead.
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1838
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2753
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm53573.dtsi | 18 ++++++++++++++++++
+ drivers/acpi/video_detect.c | 18 ++++++++++++++++++
  1 file changed, 18 insertions(+)
 
-diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
-index 85a23dc52423c..eed1a6147f0bf 100644
---- a/arch/arm/boot/dts/bcm53573.dtsi
-+++ b/arch/arm/boot/dts/bcm53573.dtsi
-@@ -181,6 +181,24 @@ ohci_port2: port@2 {
- 
- 		gmac0: ethernet@5000 {
- 			reg = <0x5000 0x1000>;
-+
-+			mdio {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				switch: switch@1e {
-+					compatible = "brcm,bcm53125";
-+					reg = <0x1e>;
-+
-+					status = "disabled";
-+
-+					/* ports are defined in board DTS */
-+					ports {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+					};
-+				};
-+			};
- 		};
- 
- 		gmac1: ethernet@b000 {
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 28e816be4753e..a5cb9e1d48bcc 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -357,6 +357,24 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "iMac11,3"),
+ 		},
+ 	},
++	{
++	 /* https://gitlab.freedesktop.org/drm/amd/-/issues/1838 */
++	 .callback = video_detect_force_native,
++	 /* Apple iMac12,1 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "iMac12,1"),
++		},
++	},
++	{
++	 /* https://gitlab.freedesktop.org/drm/amd/-/issues/2753 */
++	 .callback = video_detect_force_native,
++	 /* Apple iMac12,2 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "iMac12,2"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1217249 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.43.0
 
