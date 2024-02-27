@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902781419A1;
-	Tue, 27 Feb 2024 14:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCFA13B79B;
+	Tue, 27 Feb 2024 14:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042812; cv=none; b=MXT+PBbyymvHC2sJlY2u+DMTceA9Z3BqWTWfs3d+1A3iO64uAEC2HkZZbpEWPqkcQc9jxSM34NHduJLMRjczaY+VFOWbYBdhrGn6BpVUGIbBnG9y5oiMJu6YgB63NmekRL/joZH7XDGh6TbwCWqpk6GBm3o3QJAqalTI7uSNdJI=
+	t=1709042815; cv=none; b=lXe8wsIJPa9toucLp/uOvftgrSoIK8fmgv2gj0wlzt+Wxro1Wo+y/dmu8DR8e0qVvu392oNnRPGvUWMKJg3iiUStCQA0TzYQDhV3R+vi8okFEF2nwzVABtZ+hxp6uW4ViIWgoHWUIKfFihcm7oYC3gbjDYutHQLQ2PnOSbYDutw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042812; c=relaxed/simple;
-	bh=smSzktnpvWvRDzmh+cIm7PWdvFILjrKEUS4+UgguX4Q=;
+	s=arc-20240116; t=1709042815; c=relaxed/simple;
+	bh=ykv4ttsmdjSn2jQECC8ZyeJ7znlGaCFxzziHsUPPCVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uJl6VJgW2v/4HJN5R9kGmjx7llFxf19ycZhLi0/kTA0KrB0vMWpJf1ujgGFAV1rvxhX4AYNJjhMMhF8oJyNegpFtPoR3fWQCIIm0J5hMIuW4zyFl+ALGCukZB7tbTRPjEphGKRpo6KcwEMrpDNNDOE3gHlJHo5xKd7/HFNweqhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0f6+Oi8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KjZvpGrVntVAfdcqRmB/yQv1bIELKAX74PjnPhT0B623hSbQVF9+xp364J2LXNEVxtjPRysxX2mutg680TaipNSYzgPbrMtkVLpqeVG5A5QztaR5TVb1cOlxZTMPBsuW4QwAWIR3QdL2RTJrc0reuY1GZ/3ej/nBK1zmNxxcWFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHiq0XFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0f6+Oi8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB51C433C7;
-	Tue, 27 Feb 2024 14:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHiq0XFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE2AC433F1;
+	Tue, 27 Feb 2024 14:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042812;
-	bh=smSzktnpvWvRDzmh+cIm7PWdvFILjrKEUS4+UgguX4Q=;
+	s=korg; t=1709042814;
+	bh=ykv4ttsmdjSn2jQECC8ZyeJ7znlGaCFxzziHsUPPCVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0f6+Oi8iJSaibMgcgIXZ0oafxnuyxC936iStueZ68BwcEG5KS7J8pY++LP4H4CDRh
-	 20S5BAudafqdKEWQItkRWwJ0RL40y/MYucMQjTpWdD6EnQ3pzsM9Knq1RbUduUkNtH
-	 iupNTX5BGP0WWvOhLBpK2iZZDAjUGOEam3PDkpxA=
+	b=yHiq0XFQYXWOcpdLrtzwws6FgiwK6XBFWOycZ2y9eVtsReP1pTZ7PHtGkJRAYOWbs
+	 eiPgkKg50LwbqW8byx2sPxE/OK2pcWUupWSswrzdbFxY+y2BxyIanLHH90eGeLAV4i
+	 bD66tuZq6+METsK0ApSBwH29NsEky/RheNpE68/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/245] ARM: dts: BCM53573: Drop nonexistent #usb-cells
-Date: Tue, 27 Feb 2024 14:25:18 +0100
-Message-ID: <20240227131619.441857299@linuxfoundation.org>
+Subject: [PATCH 5.15 131/245] RDMA/siw: Balance the reference of cep->kref in the error path
+Date: Tue, 27 Feb 2024 14:25:19 +0100
+Message-ID: <20240227131619.470957045@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -45,44 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 05d2c3d552b8c92fc397377d9d1112fc58e2cd59 ]
+[ Upstream commit b056327bee09e6b86683d3f709a438ccd6031d72 ]
 
-Such property simply doesn't exist (is not documented or used anywhere).
+The siw_connect can go to err in below after cep is allocated successfully:
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: usb@d000: Unevaluated properties are not allowed ('#usb-cells' was unexpected)
-        From schema: Documentation/devicetree/bindings/usb/generic-ohci.yaml
+1. If siw_cm_alloc_work returns failure. In this case socket is not
+assoicated with cep so siw_cep_put can't be called by siw_socket_disassoc.
+We need to call siw_cep_put twice since cep->kref is increased once after
+it was initialized.
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-2-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+2. If siw_cm_queue_work can't find a work, which means siw_cep_get is not
+called in siw_cm_queue_work, so cep->kref is increased twice by siw_cep_get
+and when associate socket with cep after it was initialized. So we need to
+call siw_cep_put three times (one in siw_socket_disassoc).
+
+3. siw_send_mpareqrep returns error, this scenario is similar as 2.
+
+So we need to remove one siw_cep_put in the error path.
+
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20230821133255.31111-2-guoqing.jiang@linux.dev
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm53573.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/bcm53573.dtsi b/arch/arm/boot/dts/bcm53573.dtsi
-index 933b6a380c367..85a23dc52423c 100644
---- a/arch/arm/boot/dts/bcm53573.dtsi
-+++ b/arch/arm/boot/dts/bcm53573.dtsi
-@@ -159,8 +159,6 @@ ehci_port2: port@2 {
- 			};
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index ecd19a7408679..116f1c38384b6 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1504,7 +1504,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  
- 			ohci: usb@d000 {
--				#usb-cells = <0>;
--
- 				compatible = "generic-ohci";
- 				reg = <0xd000 0x1000>;
- 				interrupt-parent = <&gic>;
+ 		cep->cm_id = NULL;
+ 		id->rem_ref(id);
+-		siw_cep_put(cep);
+ 
+ 		qp->cep = NULL;
+ 		siw_cep_put(cep);
 -- 
 2.43.0
 
