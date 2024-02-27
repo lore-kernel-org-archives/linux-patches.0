@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AFC13B2B8;
-	Tue, 27 Feb 2024 14:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341313B798;
+	Tue, 27 Feb 2024 14:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043901; cv=none; b=Eo+E97+FegwPHDKl36ILtWJrLNZAJWtuwR39NV4bdw/ysKex205kHad3n37BMPhXZh5cFlKO40d1Ui6OZG2jK3aglR+1Ur727TljDtvpmJJq8d4irjYndJ0Ovr7QBmrDKXHIWb0Kw5PhNIxEMxCpOJ6GezeUYE8pscVD96SqdQ0=
+	t=1709043903; cv=none; b=H79zImbe1/fGjIzuwEBKwhetLhDvc9BG3VtNcNgjYNdsb/lJf0BiMhrMZdFiUX30kg27gw3QO8+XRA1qDyVxZE/G8iurHGI7lFGIMxX0hOgLmoXnQyi/3Yupd2bJH6/8skjcUVA9OT/pmV5EVumenWFrhzOKSTGvYoFKRwDvb/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043901; c=relaxed/simple;
-	bh=SsFKL5kUxnYBMCRlebLm6t0sR32ljhtGJgEabGzZlEk=;
+	s=arc-20240116; t=1709043903; c=relaxed/simple;
+	bh=j9HgWxnUV/ukXj363mktYSdEUtLl5DotR6u8ejNZpQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlH07IRkuc39TmtMAnvJ0tH6FpXQrLr8z+6bj36lCUHxyFz1pVLdauxV6cdKNHUYms6aNIb9QO9dOq8/Aatln5i3SNxnc2sumxsFEJYB5m7xIB1LjamU+0OvuaMZRwHkYN37ccwTU2SRdJzBoFkieXJVI02ShrNwnepE1GqJ0Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVy71mx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJKJ+lic0v4A9zGVbXZ0Vn+yGDfeW8vfDahzgrnWffuxt95pglfZMM/fOUV0m3XQLos+8TbcLBv5UW9rp0mGFevvOFefp0PbAy9Khr5OQv1UBAM8154r/HEE8VCa/ENU8Ven5KocY/Ul6Eywu4ZUN8OvZWjfdvxIzTk51J19e5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgJOXHZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVy71mx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57818C433C7;
-	Tue, 27 Feb 2024 14:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgJOXHZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10516C433F1;
+	Tue, 27 Feb 2024 14:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043900;
-	bh=SsFKL5kUxnYBMCRlebLm6t0sR32ljhtGJgEabGzZlEk=;
+	s=korg; t=1709043903;
+	bh=j9HgWxnUV/ukXj363mktYSdEUtLl5DotR6u8ejNZpQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVy71mx1HyL38BI0oiJ7qLke3X4wTdRughwFxtrSmturSVPw/VssylPQrUnzySixP
-	 0uTaR2SHdyEXzBNO57ApG+PWAZ7pW9iy4VCyOu3+XZltfVIl12eUa6x6McKq90cJe2
-	 QvxfmoPixWa+PFb2zcusc1H2XruaDHsOJ009z+Fs=
+	b=OgJOXHZRzyDPyLKuXXyGfRDLfZNxsVHFv0jUlhAxyK2ZB5V9U+ZVssGloGTc1nc0N
+	 VZqHIjqu5HyWlK8StXjwFOpLY9bfsVe+QWtquKzUC4UIdqdBeILwXmAsVPq5s0To6+
+	 wmpFgeCoEQZxZ8+VC5loTn8bKscKGGXINJP7oRNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Qian Cai <cai@redhat.com>,
+	Brian Foster <bfoster@redhat.com>,
+	Gao Xiang <hsiangkao@redhat.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 47/84] dm-integrity: dont modify bios immutable bio_vec in integrity_metadata()
-Date: Tue, 27 Feb 2024 14:27:14 +0100
-Message-ID: <20240227131554.401660652@linuxfoundation.org>
+Subject: [PATCH 5.4 48/84] iomap: Set all uptodate bits for an Uptodate page
+Date: Tue, 27 Feb 2024 14:27:15 +0100
+Message-ID: <20240227131554.435924966@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,70 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit b86f4b790c998afdbc88fe1aa55cfe89c4068726 upstream.
+[ Upstream commit 4595a298d5563cf76c1d852970f162051fd1a7a6 ]
 
-__bio_for_each_segment assumes that the first struct bio_vec argument
-doesn't change - it calls "bio_advance_iter_single((bio), &(iter),
-(bvl).bv_len)" to advance the iterator. Unfortunately, the dm-integrity
-code changes the bio_vec with "bv.bv_len -= pos". When this code path
-is taken, the iterator would be out of sync and dm-integrity would
-report errors. This happens if the machine is out of memory and
-"kmalloc" fails.
+For filesystems with block size < page size, we need to set all the
+per-block uptodate bits if the page was already uptodate at the time
+we create the per-block metadata.  This can happen if the page is
+invalidated (eg by a write to drop_caches) but ultimately not removed
+from the page cache.
 
-Fix this bug by making a copy of "bv" and changing the copy instead.
+This is a data corruption issue as page writeback skips blocks which
+are marked !uptodate.
 
-Fixes: 7eada909bfd7 ("dm: add integrity target")
-Cc: stable@vger.kernel.org	# v4.12+
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reported-by: Qian Cai <cai@redhat.com>
+Cc: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Gao Xiang <hsiangkao@redhat.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/iomap/buffered-io.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index 81157801a3dc6..f3246f7407d61 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1582,11 +1582,12 @@ static void integrity_metadata(struct work_struct *w)
- 		}
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 53cd7b2bb580b..c28ba474a25e7 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -23,6 +23,7 @@ static struct iomap_page *
+ iomap_page_create(struct inode *inode, struct page *page)
+ {
+ 	struct iomap_page *iop = to_iomap_page(page);
++	unsigned int nr_blocks = PAGE_SIZE / i_blocksize(inode);
  
- 		__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
-+			struct bio_vec bv_copy = bv;
- 			unsigned pos;
- 			char *mem, *checksums_ptr;
+ 	if (iop || i_blocksize(inode) == PAGE_SIZE)
+ 		return iop;
+@@ -32,6 +33,8 @@ iomap_page_create(struct inode *inode, struct page *page)
+ 	atomic_set(&iop->write_count, 0);
+ 	spin_lock_init(&iop->uptodate_lock);
+ 	bitmap_zero(iop->uptodate, PAGE_SIZE / SECTOR_SIZE);
++	if (PageUptodate(page))
++		bitmap_fill(iop->uptodate, nr_blocks);
  
- again:
--			mem = (char *)kmap_atomic(bv.bv_page) + bv.bv_offset;
-+			mem = (char *)kmap_atomic(bv_copy.bv_page) + bv_copy.bv_offset;
- 			pos = 0;
- 			checksums_ptr = checksums;
- 			do {
-@@ -1595,7 +1596,7 @@ static void integrity_metadata(struct work_struct *w)
- 				sectors_to_process -= ic->sectors_per_block;
- 				pos += ic->sectors_per_block << SECTOR_SHIFT;
- 				sector += ic->sectors_per_block;
--			} while (pos < bv.bv_len && sectors_to_process && checksums != checksums_onstack);
-+			} while (pos < bv_copy.bv_len && sectors_to_process && checksums != checksums_onstack);
- 			kunmap_atomic(mem);
- 
- 			r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
-@@ -1615,9 +1616,9 @@ static void integrity_metadata(struct work_struct *w)
- 			if (!sectors_to_process)
- 				break;
- 
--			if (unlikely(pos < bv.bv_len)) {
--				bv.bv_offset += pos;
--				bv.bv_len -= pos;
-+			if (unlikely(pos < bv_copy.bv_len)) {
-+				bv_copy.bv_offset += pos;
-+				bv_copy.bv_len -= pos;
- 				goto again;
- 			}
- 		}
+ 	/*
+ 	 * migrate_page_move_mapping() assumes that pages with private data have
 -- 
 2.43.0
 
