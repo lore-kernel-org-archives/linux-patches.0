@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929D71420B0;
-	Tue, 27 Feb 2024 14:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0420F145351;
+	Tue, 27 Feb 2024 14:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044050; cv=none; b=iPL63+A8tCW0v0hZv129qtAuJfyDIxp4whMV6iG6fxsZo5edHHQe2O21qa14ay77mTiTd+hByo7G226VMmP+IW85CmPoGpHdKRstuC3Gj2E8vfKDF3Gt9QzsK11wGUvAh7Fq+G+x2Jyw2ibcmsF2kpVSiA3d3FzlCWSglLhLXEY=
+	t=1709044054; cv=none; b=rsoYxlac9o3VLRDaveKv9mYfpd7GEr0QwdA560mU2c4ij/azRwtMiL7hvDtL69SkvY2ABjdVijqa181QKNvsRfqxA+276yIIOX3irwxUqWapPoCYg1FBe9qo3Mj3sakuBZP2meX9DTlX/b99rl43G628/ywaCVl5/h1UxpNpbWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044050; c=relaxed/simple;
-	bh=pML8lvTB6Jlna/wYbDLyfuNPBP4LwiCqKKbAOkTmZ/Y=;
+	s=arc-20240116; t=1709044054; c=relaxed/simple;
+	bh=assZ9TZioukfYaYFrlaf95Vb+HUKhNFX7nfvZBJabXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQwEJC1/BFXdUg6mRhnijQ2xBn2X4A/tkC4KKe4TgnkqqETZ5pgsPriYmwS4zr9yYqopR72NVpWmel79B3DjQXDen6TAL3gGNFG9eK395r0g20cLiCLpdtjLpGAfI9nLu0v0BT5NpWAoM/a5tqrBOVsOb4S+g8S0dKKTro1ZMm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWNzpoUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NpfahcZhxbyuPZ0uGGEGzg3Q6c1FYYxLKUB/wDaJbYn7WDIhIqP9PPFqoNIS2CVUxlZd+zGVmMpr3KYvfu/U0nTKcjDvovgHu+TLZY/dNfP9gGb2Cb8HsXQ5lcNVjoYOU/7itHCtFlL7zEt/AS4hV17ckBltTEBQSEO5cGEJ+/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFvJTXtm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWNzpoUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193D4C433F1;
-	Tue, 27 Feb 2024 14:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFvJTXtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03230C43601;
+	Tue, 27 Feb 2024 14:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044050;
-	bh=pML8lvTB6Jlna/wYbDLyfuNPBP4LwiCqKKbAOkTmZ/Y=;
+	s=korg; t=1709044053;
+	bh=assZ9TZioukfYaYFrlaf95Vb+HUKhNFX7nfvZBJabXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWNzpoUP7nr6Vyr05KorjFS3DQPPECGwaUNIXgQVnawhjT32QRQUnGKQf5huhTfW2
-	 0gx1aY5xZVHhLOOFfic132B6FXyJwMYDXq9bFyeSerrYFYEYcMQfyaii2d+ezv0lnK
-	 IFlTnZMGUPoQJPnS01MH+pN056Hi7KGi84rFs3DE=
+	b=sFvJTXtmFdj15HuMlPh/kudEMCv30DC6FryWYMXzG+QxqaU42VjK4lFkyiK5NvQwx
+	 RYJthOk54pY1SKXUbzTta0vzvuuxhByKq8sgZbFlfyPwkGZp/fBD3T3EBUXKS5Lhtp
+	 GAOAy7DLMQW7llpAbfYmumC+/ToJ1JznJo4qOJpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kazior <michal@plume.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/122] wifi: cfg80211: fix missing interfaces when dumping
-Date: Tue, 27 Feb 2024 14:26:16 +0100
-Message-ID: <20240227131559.205478392@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Guruswamy Basavaiah <guruswamy.basavaiah@broadcom.com>
+Subject: [PATCH 5.10 006/122] smb: client: fix parsing of SMB3.1.1 POSIX create context
+Date: Tue, 27 Feb 2024 14:26:07 +0100
+Message-ID: <20240227131558.911439966@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,71 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kazior <michal@plume.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit a6e4f85d3820d00694ed10f581f4c650445dbcda ]
+[ Upstream commit 76025cc2285d9ede3d717fe4305d66f8be2d9346 ]
 
-The nl80211_dump_interface() supports resumption
-in case nl80211_send_iface() doesn't have the
-resources to complete its work.
+The data offset for the SMB3.1.1 POSIX create context will always be
+8-byte aligned so having the check 'noff + nlen >= doff' in
+smb2_parse_contexts() is wrong as it will lead to -EINVAL because noff
++ nlen == doff.
 
-The logic would store the progress as iteration
-offsets for rdev and wdev loops.
+Fix the sanity check to correctly handle aligned create context data.
 
-However the logic did not properly handle
-resumption for non-last rdev. Assuming a system
-with 2 rdevs, with 2 wdevs each, this could
-happen:
-
- dump(cb=[0, 0]):
-  if_start=cb[1] (=0)
-  send rdev0.wdev0 -> ok
-  send rdev0.wdev1 -> yield
-  cb[1] = 1
-
- dump(cb=[0, 1]):
-  if_start=cb[1] (=1)
-  send rdev0.wdev1 -> ok
-  // since if_start=1 the rdev0.wdev0 got skipped
-  // through if_idx < if_start
-  send rdev1.wdev1 -> ok
-
-The if_start needs to be reset back to 0 upon wdev
-loop end.
-
-The problem is actually hard to hit on a desktop,
-and even on most routers. The prerequisites for
-this manifesting was:
- - more than 1 wiphy
- - a few handful of interfaces
- - dump without rdev or wdev filter
-
-I was seeing this with 4 wiphys 9 interfaces each.
-It'd miss 6 interfaces from the last wiphy
-reported to userspace.
-
-Signed-off-by: Michal Kazior <michal@plume.com>
-Link: https://msgid.link/20240116142340.89678-1-kazikcz@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af1689a9b770 ("smb: client: fix potential OOBs in smb2_parse_contexts()")
+Signed-off-by: Paulo Alcantara <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[Guru:smb2_parse_contexts()  is present in file smb2ops.c,
+smb2ops.c file location is changed, modified patch accordingly.]
+Signed-off-by: Guruswamy Basavaiah <guruswamy.basavaiah@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/smb2pdu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 0ac829c8f1888..279f4977e2eed 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3595,6 +3595,7 @@ static int nl80211_dump_interface(struct sk_buff *skb, struct netlink_callback *
- 			if_idx++;
- 		}
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -2030,7 +2030,7 @@ int smb2_parse_contexts(struct TCP_Serve
  
-+		if_start = 0;
- 		wp_idx++;
- 	}
-  out:
--- 
-2.43.0
-
+ 		noff = le16_to_cpu(cc->NameOffset);
+ 		nlen = le16_to_cpu(cc->NameLength);
+-		if (noff + nlen >= doff)
++		if (noff + nlen > doff)
+ 			return -EINVAL;
+ 
+ 		name = (char *)cc + noff;
 
 
