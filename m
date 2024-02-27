@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354A91420DC;
-	Tue, 27 Feb 2024 14:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0502D1420B3;
+	Tue, 27 Feb 2024 14:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044117; cv=none; b=cu9lrKklXsEWFyXN8c01HJVXW7v6EvLAOHKGwGRjr7Sjbixt5S3dC4Vi72RFGctpVzrdWqDAH2qaNFumlaHiGz11DUsnZ+kho7InShaJzj19/moYY6GpgKQS1hx+qGKei/cHFxQEoilq2OLPnjl+ToaYJc50E3JBwXbw0G8tOG0=
+	t=1709044120; cv=none; b=nB56YlONaVgHvE062yX53CyyqRbHy48T1icIj8YrqbqlCAoF/kR9PhoR7k5ppXdK4Tjf6ETxsSU6JPVuEFfwTcG9gp4HKJXyTP/cXvMzc3rgp185AUuwHip9VoU2ONFsT9z85SecBCLZXoALSSG+XfQPrq6pX9JL3EhzNbzTJg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044117; c=relaxed/simple;
-	bh=UO4DAPSjHv4VK6ZcAOcTurMS0S/pp6MbHQUGtm3MmWs=;
+	s=arc-20240116; t=1709044120; c=relaxed/simple;
+	bh=r5NhY1zyJJUuwQsXNl44pXkOaL9f3s5cN1q4S4IDLc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdx2AswUDFX6+F+Rg26CL1TK/sieORGS/i0Dvx7RKchlieJ4+Pn72B/VZzL3hpwZKN0c9c11TzUgvETe/jGyKc0qo1r5nF1r3uo188YHnDOqy/jjMOGLiwEp9LNKIZ8dcnX10g3vFj9lrPOPq6QPsTD0Z+rxzUGQmt5bDdaKKx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6ScsPSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RFTvpX7xTWgW1BZni6vFjNuuJEwapVErdgP+sqIJEqbNNq28zcd+bs5WPXW3fu3WAQ2lMTsqyrWG9TW7FCZI6IqX5ihdkG5bFrGUIQfeljuPjnRw7DPRntOa2bx+ZjFK7H/Ld5SwJZjmeEjA/Dpn+mFERGTNS4iho/ItBj0lDAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MF4qqxDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6ScsPSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3250C433C7;
-	Tue, 27 Feb 2024 14:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF4qqxDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878B3C433F1;
+	Tue, 27 Feb 2024 14:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044117;
-	bh=UO4DAPSjHv4VK6ZcAOcTurMS0S/pp6MbHQUGtm3MmWs=;
+	s=korg; t=1709044119;
+	bh=r5NhY1zyJJUuwQsXNl44pXkOaL9f3s5cN1q4S4IDLc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6ScsPSgZXg1G0Uwcn6/pIgqe+Ejsspe/2W+MLGK8gNZOEmrMhB/+uNN/cpebVZju
-	 0ZvOpktI1wgaGekTJqvNcrkW2llGsEy4vQNgyYFMGN8eTnadWAswAdJ5wcjuiyKTEk
-	 q3LpdjIXzBuD1WgK0p0iwD57qpSacTu2wbbvZbVU=
+	b=MF4qqxDg4o6FNXJsvBxep82129fjmg1sNRh36lOn2s4VgPgBlUgBbga6E8rvDuwKE
+	 JOiONdsy11tPAWkWwSjXKBAnZOZqCoj3hWEJr3vxVqdhM7PwEtRvzDhtq3oQq4NtVm
+	 iCKMSvQAza4CfdpXzzPWBoDGmG7O0+lk5ouEw86w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@unisoc.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/122] virtio-blk: Ensure no requests in virtqueues before deleting vqs.
-Date: Tue, 27 Feb 2024 14:26:42 +0100
-Message-ID: <20240227131600.051968766@linuxfoundation.org>
+Subject: [PATCH 5.10 068/122] iwlwifi: mvm: write queue_sync_state only for sync
+Date: Tue, 27 Feb 2024 14:27:09 +0100
+Message-ID: <20240227131600.926898633@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,62 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Sun <yi.sun@unisoc.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4ce6e2db00de8103a0687fb0f65fd17124a51aaa ]
+[ Upstream commit 5f8a3561ea8bf75ad52cb16dafe69dd550fa542e ]
 
-Ensure no remaining requests in virtqueues before resetting vdev and
-deleting virtqueues. Otherwise these requests will never be completed.
-It may cause the system to become unresponsive.
+We use mvm->queue_sync_state to wait for synchronous queue sync
+messages, but if an async one happens inbetween we shouldn't
+clear mvm->queue_sync_state after sending the async one, that
+can run concurrently (at least from the CPU POV) with another
+synchronous queue sync.
 
-Function blk_mq_quiesce_queue() can ensure that requests have become
-in_flight status, but it cannot guarantee that requests have been
-processed by the device. Virtqueues should never be deleted before
-all requests become complete status.
-
-Function blk_mq_freeze_queue() ensure that all requests in virtqueues
-become complete status. And no requests can enter in virtqueues.
-
-Signed-off-by: Yi Sun <yi.sun@unisoc.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20240129085250.1550594-1-yi.sun@unisoc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/r/iwlwifi.20210331121101.d11c9bcdb4aa.I0772171dbaec87433a11513e9586d98b5d920b5f@changeid
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 9b54eec9b17eb..7eae3f3732336 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -952,14 +952,15 @@ static int virtblk_freeze(struct virtio_device *vdev)
- {
- 	struct virtio_blk *vblk = vdev->priv;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index f2096729ac5ac..08008b0c0637c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -5177,9 +5177,10 @@ void iwl_mvm_sync_rx_queues_internal(struct iwl_mvm *mvm,
+ 	}
  
-+	/* Ensure no requests in virtqueues before deleting vqs. */
-+	blk_mq_freeze_queue(vblk->disk->queue);
-+
- 	/* Ensure we don't receive any more interrupts */
- 	vdev->config->reset(vdev);
- 
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vblk->config_work);
- 
--	blk_mq_quiesce_queue(vblk->disk->queue);
--
- 	vdev->config->del_vqs(vdev);
- 	kfree(vblk->vqs);
- 
-@@ -977,7 +978,7 @@ static int virtblk_restore(struct virtio_device *vdev)
- 
- 	virtio_device_ready(vdev);
- 
--	blk_mq_unquiesce_queue(vblk->disk->queue);
-+	blk_mq_unfreeze_queue(vblk->disk->queue);
- 	return 0;
+ out:
+-	mvm->queue_sync_state = 0;
+-	if (notif->sync)
++	if (notif->sync) {
++		mvm->queue_sync_state = 0;
+ 		mvm->queue_sync_cookie++;
++	}
  }
- #endif
+ 
+ static void iwl_mvm_sync_rx_queues(struct ieee80211_hw *hw)
 -- 
 2.43.0
 
