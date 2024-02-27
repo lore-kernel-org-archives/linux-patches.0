@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B76713A259;
-	Tue, 27 Feb 2024 14:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034BC13F016;
+	Tue, 27 Feb 2024 14:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043058; cv=none; b=AkGmt6VXSvwYyuJjPGuI5m7cTpkBrwY6TzwEwidOSuKKkudjJe66Jvgecydembs5ldlwSbf+xWU5vlJWRKriFwL3u6MOGyren1CJSuiZVBR15dMcjY3IKvImKI9xmEvRgP8fVaUwDQFBTtIwJ+YWz6SzS0QrhLnEgmxW+DB7SYM=
+	t=1709043061; cv=none; b=LAf8cI3hJVWlDNjKZhBIG+HyfH3NKX2kkAcBQQdrVqouw0Vw8jdg/hkRdaTk/vvYG4Nmx+cfpjGZXBEjQlmJBLI9J2JeFkE4CgK/leQ80gq7DL2PSyKqiTtlyrF0xvt2sWILbFazEmLnciQoZf5sPUAKLUor6DsSnsDvZmivGTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043058; c=relaxed/simple;
-	bh=B5Sledx1v2Mp3YWDl5ddsiSrnwlkbAnZUGVv9gq0EVM=;
+	s=arc-20240116; t=1709043061; c=relaxed/simple;
+	bh=NBehIRW8kc0XfLyiQRz57Gmh4TpUxpFtKcR0UpOEKsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ah+ZVG5TsZlkQCafw4Opm7SmhAVmVdpStikiDt+ubPuUS2fES6Hctc/p8a2aSr5y2S/Uy3hL47vG2jMdDCLXd1ecKDBV2NB4H5WRpGEsJb+ovowrf5vg4nX37Bg6vUah2EgUFCBX8FESUvyOYbvsYAghtnn+wPexZ3gHZiNqmXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6UPjU14; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbRNAFPS55Mwk1Y3U3b+obYdfiMkIG+UKhPfA8nhEMtvWhkhy52Jl2cGJtJgDw4KsJ7obeyvNQGCIPQ+6X8bykowiU36DzuNlbWm0l9FFvvJq7Tfy977AuxA+3ZwtKlR3U6RVY9d60DieAcu+MVRFJ9+ItVxj4SHfk7Lxhy7TcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DXqGxUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6UPjU14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBD1C433F1;
-	Tue, 27 Feb 2024 14:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DXqGxUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8140AC433F1;
+	Tue, 27 Feb 2024 14:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043058;
-	bh=B5Sledx1v2Mp3YWDl5ddsiSrnwlkbAnZUGVv9gq0EVM=;
+	s=korg; t=1709043060;
+	bh=NBehIRW8kc0XfLyiQRz57Gmh4TpUxpFtKcR0UpOEKsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6UPjU140DpOkdKsQnxIIsmthiabvvgrrkgiE+VhMwcrDdC9+L9UR8Rm96xYWCe4A
-	 EQOuBeN+HBpfl6RNczF40qKDtT0IGazeA7z7xnozRmN4IPMzw//g70j50Mgdw3JpIj
-	 gNheDaQBeEmZZnNvlc/Atvp5qse7k13mgxDSgN+Q=
+	b=0DXqGxUA7BwOMugs2ZtDcbKho2REMufOf7Wp9k0xRcLWkyL+NDBSEajf6MrAMmKUv
+	 59R9mFmCaGpBF5t9ocBpa9i6Uq7Nhaa8qJsgeR8HC1eq4ozY8sm4Gswg3v7LFBEB32
+	 QJxGbSrJI7SjlpGyql/jERXi6gZOgZKOjU1SNxLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry <wrkedm@gmail.com>,
-	Tamim Khan <tamim@fusetak.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/245] ACPI: resource: Skip IRQ override on Asus Vivobook S5602ZA
-Date: Tue, 27 Feb 2024 14:26:18 +0100
-Message-ID: <20240227131621.368873707@linuxfoundation.org>
+	Ying Hsu <yinghsu@chromium.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 181/245] igb: Fix igb_down hung on surprise removal
+Date: Tue, 27 Feb 2024 14:26:09 +0100
+Message-ID: <20240227131621.090276563@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,43 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamim Khan <tamim@fusetak.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit b5f9223a105d9b56954ad1ca3eace4eaf26c99ed ]
+[ Upstream commit 004d25060c78fc31f66da0fa439c544dda1ac9d5 ]
 
-Like the Asus Vivobook K3402ZA/K3502ZA/S5402ZA Asus Vivobook S5602ZA
-has an ACPI DSDT table the describes IRQ 1 as ActiveLow while the kernel
-overrides it to Edge_High. This prevents the keyboard on this laptop
-from working. To fix this add this laptop to the skip_override_table so
-that the kernel does not override IRQ 1.
+In a setup where a Thunderbolt hub connects to Ethernet and a display
+through USB Type-C, users may experience a hung task timeout when they
+remove the cable between the PC and the Thunderbolt hub.
+This is because the igb_down function is called multiple times when
+the Thunderbolt hub is unplugged. For example, the igb_io_error_detected
+triggers the first call, and the igb_remove triggers the second call.
+The second call to igb_down will block at napi_synchronize.
+Here's the call trace:
+    __schedule+0x3b0/0xddb
+    ? __mod_timer+0x164/0x5d3
+    schedule+0x44/0xa8
+    schedule_timeout+0xb2/0x2a4
+    ? run_local_timers+0x4e/0x4e
+    msleep+0x31/0x38
+    igb_down+0x12c/0x22a [igb 6615058754948bfde0bf01429257eb59f13030d4]
+    __igb_close+0x6f/0x9c [igb 6615058754948bfde0bf01429257eb59f13030d4]
+    igb_close+0x23/0x2b [igb 6615058754948bfde0bf01429257eb59f13030d4]
+    __dev_close_many+0x95/0xec
+    dev_close_many+0x6e/0x103
+    unregister_netdevice_many+0x105/0x5b1
+    unregister_netdevice_queue+0xc2/0x10d
+    unregister_netdev+0x1c/0x23
+    igb_remove+0xa7/0x11c [igb 6615058754948bfde0bf01429257eb59f13030d4]
+    pci_device_remove+0x3f/0x9c
+    device_release_driver_internal+0xfe/0x1b4
+    pci_stop_bus_device+0x5b/0x7f
+    pci_stop_bus_device+0x30/0x7f
+    pci_stop_bus_device+0x30/0x7f
+    pci_stop_and_remove_bus_device+0x12/0x19
+    pciehp_unconfigure_device+0x76/0xe9
+    pciehp_disable_slot+0x6e/0x131
+    pciehp_handle_presence_or_link_change+0x7a/0x3f7
+    pciehp_ist+0xbe/0x194
+    irq_thread_fn+0x22/0x4d
+    ? irq_thread+0x1fd/0x1fd
+    irq_thread+0x17b/0x1fd
+    ? irq_forced_thread_fn+0x5f/0x5f
+    kthread+0x142/0x153
+    ? __irq_get_irqchip_state+0x46/0x46
+    ? kthread_associate_blkcg+0x71/0x71
+    ret_from_fork+0x1f/0x30
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216579
-Tested-by: Dzmitry <wrkedm@gmail.com>
-Signed-off-by: Tamim Khan <tamim@fusetak.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+In this case, igb_io_error_detected detaches the network interface
+and requests a PCIE slot reset, however, the PCIE reset callback is
+not being invoked and thus the Ethernet connection breaks down.
+As the PCIE error in this case is a non-fatal one, requesting a
+slot reset can be avoided.
+This patch fixes the task hung issue and preserves Ethernet
+connection by ignoring non-fatal PCIE errors.
+
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230620174732.4145155-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 4d1db2def7ae4..5f56839ed71df 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -428,6 +428,13 @@ static const struct dmi_system_id asus_laptop[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "S5402ZA"),
- 		},
- 	},
-+	{
-+		.ident = "Asus Vivobook S5602ZA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "S5602ZA"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index c01114cabbb09..7c42a99be5065 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -9451,6 +9451,11 @@ static pci_ers_result_t igb_io_error_detected(struct pci_dev *pdev,
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct igb_adapter *adapter = netdev_priv(netdev);
  
++	if (state == pci_channel_io_normal) {
++		dev_warn(&pdev->dev, "Non-correctable non-fatal error reported.\n");
++		return PCI_ERS_RESULT_CAN_RECOVER;
++	}
++
+ 	netif_device_detach(netdev);
+ 
+ 	if (state == pci_channel_io_perm_failure)
 -- 
 2.43.0
 
