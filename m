@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18A413AA4C;
-	Tue, 27 Feb 2024 13:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4178613AA55;
+	Tue, 27 Feb 2024 13:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041366; cv=none; b=iYDaDx9jt99r+KlRmJrZD04SAFElan4vk0OnxcwBxXtOxbgOTHP4/Wu26GEV+GxGpVHKDiuqbOj4lhqrzIEgtYXo+4YQufiFC4FMVKoJE3q12ovCtAMCPVY30apFHEzq02cDnBQtBUkljmPgVxCLJzg297wEuIuz55+mDjkoUSo=
+	t=1709041369; cv=none; b=i2RD0CffQlCtPDo2jLLrirHYl+jsuK29BB7ox8mS6IKcPBOkEeuNPKIlefDO5rJDW3OKcXnzOBkrSLPmVNj+ljTDjj6pvUx+HuE8XewLniXQyYrk16xIB8Flaiw6g2Q9460Mc8ymtwIP5zlXZwl4v5WcS8E6cbuUqHm93D0QtU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041366; c=relaxed/simple;
-	bh=rULKSNiQbH2p3xNymx5G6oGihxfAH2ifTcg+vv5tXH0=;
+	s=arc-20240116; t=1709041369; c=relaxed/simple;
+	bh=jk6kR+vBEleZjHcodmvzfw2trtpQRwU2CO1TUN4FYhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Psjm7ZIe0ktgW5OnTDhh1doxGYnEtfY2lfcL6dHvEoayMrIvmPo7vOj8LGesjp2JeWxsMDkVXs5FRVjsieylF6n0G02sYvwpJ/5Qovo53xU58Myg/zYowRlR+Q0bSiSSp80Q6sZ1vwjXOX8zt7NgIus1QRx59WVGmhBARRpXvt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9MQsIhp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJO+nCaJWXkTz98NSZNvSIPa6GticxCE778GHwbwFmpxKzW3HdmweddCKIW5yfsDmb7nmAzXGVPbopacWkRWhDq3fDFmkv36oXWYC7OUqY5LNCL2ksWkr2Yq/wnWUQOiTJMqPxXrmyV4Xk39OQG7kbsA7zI12Lvoq7l3ux/xDhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dl6xMHI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9MQsIhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B1BC433C7;
-	Tue, 27 Feb 2024 13:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dl6xMHI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62FAC433C7;
+	Tue, 27 Feb 2024 13:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041366;
-	bh=rULKSNiQbH2p3xNymx5G6oGihxfAH2ifTcg+vv5tXH0=;
+	s=korg; t=1709041369;
+	bh=jk6kR+vBEleZjHcodmvzfw2trtpQRwU2CO1TUN4FYhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9MQsIhpJu8UMlnU3l9b6flVHYHQjZrr15L6MA2960rZzZdqwk8BZEvWeTF38BxbG
-	 tipiHI0icerIQ16N4W+yLgpaajra3bFJrnnPOwuU7t4+3ixpagKTRbEF1/jMfxqyNI
-	 TvkbjAZwaNo/oug3jN/xihpc1WS7/uWZE1oIjrPU=
+	b=dl6xMHI3HNBuTZxZWY6w3StlJb0F/k9OQquKeJ5nmu/RbMK+r6t+j7cTO0LoeOA5T
+	 JfwSHjsielurc9FwJQcltTO2UywaA/FQpW8jhZ95Iy2DD3YvplyqLoBxbdho/uJaAN
+	 aE1Cf8J/N8oZ9/u2hdogyIB6p2p7dCrZfB2ZM1+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 307/334] netfilter: nft_flow_offload: reset dst in route object after setting up flow
-Date: Tue, 27 Feb 2024 14:22:45 +0100
-Message-ID: <20240227131640.964094896@linuxfoundation.org>
+Subject: [PATCH 6.7 316/334] net: sparx5: Add spinlock for frame transmission from CPU
+Date: Tue, 27 Feb 2024 14:22:54 +0100
+Message-ID: <20240227131641.286307432@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,73 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 9e0f0430389be7696396c62f037be4bf72cf93e3 ]
+[ Upstream commit 603ead96582d85903baec2d55f021b8dac5c25d2 ]
 
-dst is transferred to the flow object, route object does not own it
-anymore.  Reset dst in route object, otherwise if flow_offload_add()
-fails, error path releases dst twice, leading to a refcount underflow.
+Both registers used when doing manual injection or fdma injection are
+shared between all the net devices of the switch. It was noticed that
+when having two process which each of them trying to inject frames on
+different ethernet ports, that the HW started to behave strange, by
+sending out more frames then expected. When doing fdma injection it is
+required to set the frame in the DCB and then make sure that the next
+pointer of the last DCB is invalid. But because there is no locks for
+this, then easily this pointer between the DCB can be broken and then it
+would create a loop of DCBs. And that means that the HW will
+continuously transmit these frames in a loop. Until the SW will break
+this loop.
+Therefore to fix this issue, add a spin lock for when accessing the
+registers for manual or fdma injection.
 
-Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Link: https://lore.kernel.org/r/20240219080043.1561014-1-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_flow_table.h |  2 +-
- net/netfilter/nf_flow_table_core.c    | 16 +++++++++++++---
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.h   | 1 +
+ drivers/net/ethernet/microchip/sparx5/sparx5_packet.c | 2 ++
+ 3 files changed, 4 insertions(+)
 
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index 692d5955911c7..4a767b3d20b9d 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -275,7 +275,7 @@ nf_flow_table_offload_del_cb(struct nf_flowtable *flow_table,
- }
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index d1f7fc8b1b71a..3c066b62e6894 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -757,6 +757,7 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, sparx5);
+ 	sparx5->pdev = pdev;
+ 	sparx5->dev = &pdev->dev;
++	spin_lock_init(&sparx5->tx_lock);
  
- void flow_offload_route_init(struct flow_offload *flow,
--			     const struct nf_flow_route *route);
-+			     struct nf_flow_route *route);
+ 	/* Do switch core reset if available */
+ 	reset = devm_reset_control_get_optional_shared(&pdev->dev, "switch");
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+index 6f565c0c0c3dc..316fed5f27355 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.h
+@@ -280,6 +280,7 @@ struct sparx5 {
+ 	int xtr_irq;
+ 	/* Frame DMA */
+ 	int fdma_irq;
++	spinlock_t tx_lock; /* lock for frame transmission */
+ 	struct sparx5_rx rx;
+ 	struct sparx5_tx tx;
+ 	/* PTP */
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+index 6db6ac6a3bbc2..ac7e1cffbcecf 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+@@ -244,10 +244,12 @@ netdev_tx_t sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev)
+ 	}
  
- int flow_offload_add(struct nf_flowtable *flow_table, struct flow_offload *flow);
- void flow_offload_refresh(struct nf_flowtable *flow_table,
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 920a5a29ae1dc..7502d6d73a600 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -87,12 +87,22 @@ static u32 flow_offload_dst_cookie(struct flow_offload_tuple *flow_tuple)
- 	return 0;
- }
+ 	skb_tx_timestamp(skb);
++	spin_lock(&sparx5->tx_lock);
+ 	if (sparx5->fdma_irq > 0)
+ 		ret = sparx5_fdma_xmit(sparx5, ifh, skb);
+ 	else
+ 		ret = sparx5_inject(sparx5, ifh, skb, dev);
++	spin_unlock(&sparx5->tx_lock);
  
-+static struct dst_entry *nft_route_dst_fetch(struct nf_flow_route *route,
-+					     enum flow_offload_tuple_dir dir)
-+{
-+	struct dst_entry *dst = route->tuple[dir].dst;
-+
-+	route->tuple[dir].dst = NULL;
-+
-+	return dst;
-+}
-+
- static int flow_offload_fill_route(struct flow_offload *flow,
--				   const struct nf_flow_route *route,
-+				   struct nf_flow_route *route,
- 				   enum flow_offload_tuple_dir dir)
- {
- 	struct flow_offload_tuple *flow_tuple = &flow->tuplehash[dir].tuple;
--	struct dst_entry *dst = route->tuple[dir].dst;
-+	struct dst_entry *dst = nft_route_dst_fetch(route, dir);
- 	int i, j = 0;
- 
- 	switch (flow_tuple->l3proto) {
-@@ -146,7 +156,7 @@ static void nft_flow_dst_release(struct flow_offload *flow,
- }
- 
- void flow_offload_route_init(struct flow_offload *flow,
--			    const struct nf_flow_route *route)
-+			     struct nf_flow_route *route)
- {
- 	flow_offload_fill_route(flow, route, FLOW_OFFLOAD_DIR_ORIGINAL);
- 	flow_offload_fill_route(flow, route, FLOW_OFFLOAD_DIR_REPLY);
+ 	if (ret == -EBUSY)
+ 		goto busy;
 -- 
 2.43.0
 
