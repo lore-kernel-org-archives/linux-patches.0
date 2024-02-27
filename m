@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8467E13A259;
-	Tue, 27 Feb 2024 14:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4297913B2B4;
+	Tue, 27 Feb 2024 14:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043033; cv=none; b=Y7DgrbUod3btjZfhFf3ZDYf5HyFS0ZldlNXZOGOJJIGFdXLG1zxkfxf+rSw+93iY/hLNgsqmP3wfE0WAGSzAwIJwEVkvBMnQlTfWB9p4s0TxeAqZ5X5LZIGaSm2ejYEtaFRetEg1hdaxdR5fl6j1A8+92MvNcn7r/7Eped2tqAA=
+	t=1709043036; cv=none; b=YBMCKh9WJUBlae5tk13He5Xb6ArEl6PlLsz4nVM7zkcv/rFJDT0BNY8Tlo89sgj5jQC4J64/LRfLhEub+NT3EiTfLBVKflHfaKpHZ0L3DFA/sglofSoedMWkehREBWJhQfuSOBS5uJKUW5t1GydvIi9XFoSkW8D8avcQGaVd12Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043033; c=relaxed/simple;
-	bh=ktVG5eetdJ+o7oxozaWYj3Cena4OqKPyHTRTiFXM0VM=;
+	s=arc-20240116; t=1709043036; c=relaxed/simple;
+	bh=BsiPkmdNHD6dekigrfRDSVn5Lm/11QE+6PFuN4AjnfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jc9t7z308VyXS68+T8WucNgP6YfTULnLWgOy/u/fA/7HVWOz+y1r/uU06MfaPqMmCoxdLi+C2PNMlwa5df+RndweN7IMQ7eQ4SjiXIzcjzpMDjEWcf5X/ZdIe35uhc1h5OluDppgLCwqO8DlbX//krCGZfh1Qy/0hgQRwRL9EPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeSHjkr8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLYjFx1vuWPhBHf+IMRD+zdfqEfsR/1N2GLWecwRal9FIRnqRvzBkVFtsTgwwNRTwtZdf15lEPs4fwyE/H+myfpRYmLdzD342Tddflv0ZoZz/kw5ZFtW5ODwtIIjyOESJ5BcaQW+kwnZTeBVyIcGx6zb8o9+QpJ57IYxD4ob0FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un+DeDqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeSHjkr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA46C43394;
-	Tue, 27 Feb 2024 14:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un+DeDqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F34C43390;
+	Tue, 27 Feb 2024 14:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043033;
-	bh=ktVG5eetdJ+o7oxozaWYj3Cena4OqKPyHTRTiFXM0VM=;
+	s=korg; t=1709043035;
+	bh=BsiPkmdNHD6dekigrfRDSVn5Lm/11QE+6PFuN4AjnfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeSHjkr87PJ9eV/GcGjC9WZJGVtNB4gNynzYG3zwua2nxtADmZ9Q6O5x1jOap67Dj
-	 99bFs9v1iVmkheKM+QGH1vIL1izqMnxSCm27aAn4ZjDtjvbUPtY4k53alP0ujoaKmC
-	 M75YCxzw0lvbygMO4aWYqJ3AQVccKRof7K6fNSwM=
+	b=Un+DeDqQCZeSPa0BGSy1BYZMB48n5ztxONKOFusb+dVJP4/HvooqoiEs1Cub91sPh
+	 /c9/Ofl96y24CKmt1Pr0uW3YNUqhA7OswE7UnEcycjabwTn6M/NuiF6b3ZwPjjRbUK
+	 jXSh11B9DN1x/F+X9kr18nIS3mZaJpDNKMf6ccU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 209/245] arm64: dts: rockchip: set num-cs property for spi on px30
-Date: Tue, 27 Feb 2024 14:26:37 +0100
-Message-ID: <20240227131621.981424349@linuxfoundation.org>
+Subject: [PATCH 5.15 210/245] RDMA/srpt: fix function pointer cast warnings
+Date: Tue, 27 Feb 2024 14:26:38 +0100
+Message-ID: <20240227131622.032489579@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,48 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko.stuebner@cherry.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 334bf0710c98d391f4067b72f535d6c4c84dfb6f ]
+[ Upstream commit eb5c7465c3240151cd42a55c7ace9da0026308a1 ]
 
-The px30 has two spi controllers with two chip-selects each.
-The num-cs property is specified as the total number of chip
-selects a controllers has and is used since 2020 to find uses
-of chipselects outside that range in the Rockchip spi driver.
+clang-16 notices that srpt_qp_event() gets called through an incompatible
+pointer here:
 
-Without the property set, the default is 1, so spi devices
-using the second chipselect will not be created.
+drivers/infiniband/ulp/srpt/ib_srpt.c:1815:5: error: cast from 'void (*)(struct ib_event *, struct srpt_rdma_ch *)' to 'void (*)(struct ib_event *, void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+ 1815 |                 = (void(*)(struct ib_event *, void*))srpt_qp_event;
 
-Fixes: eb1262e3cc8b ("spi: spi-rockchip: use num-cs property and ctlr->enable_gpiods")
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20240119101656.965744-1-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Change srpt_qp_event() to use the correct prototype and adjust the
+argument inside of it.
+
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240213100728.458348-1-arnd@kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/px30.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30.dtsi b/arch/arm64/boot/dts/rockchip/px30.dtsi
-index 5200d0bbd9e9c..b2dae28a98502 100644
---- a/arch/arm64/boot/dts/rockchip/px30.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/px30.dtsi
-@@ -585,6 +585,7 @@
- 		clock-names = "spiclk", "apb_pclk";
- 		dmas = <&dmac 12>, <&dmac 13>;
- 		dma-names = "tx", "rx";
-+		num-cs = <2>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spi0_clk &spi0_csn &spi0_miso &spi0_mosi>;
- 		#address-cells = <1>;
-@@ -600,6 +601,7 @@
- 		clock-names = "spiclk", "apb_pclk";
- 		dmas = <&dmac 14>, <&dmac 15>;
- 		dma-names = "tx", "rx";
-+		num-cs = <2>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spi1_clk &spi1_csn0 &spi1_csn1 &spi1_miso &spi1_mosi>;
- 		#address-cells = <1>;
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index deb834a7d75cd..60f9c612eb3c3 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -214,10 +214,12 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
+ /**
+  * srpt_qp_event - QP event callback function
+  * @event: Description of the event that occurred.
+- * @ch: SRPT RDMA channel.
++ * @ptr: SRPT RDMA channel.
+  */
+-static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
++static void srpt_qp_event(struct ib_event *event, void *ptr)
+ {
++	struct srpt_rdma_ch *ch = ptr;
++
+ 	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
+ 		 event->event, ch, ch->sess_name, ch->qp->qp_num,
+ 		 get_ch_state_name(ch->state));
+@@ -1811,8 +1813,7 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
+ 	ch->cq_size = ch->rq_size + sq_size;
+ 
+ 	qp_init->qp_context = (void *)ch;
+-	qp_init->event_handler
+-		= (void(*)(struct ib_event *, void*))srpt_qp_event;
++	qp_init->event_handler = srpt_qp_event;
+ 	qp_init->send_cq = ch->cq;
+ 	qp_init->recv_cq = ch->cq;
+ 	qp_init->sq_sig_type = IB_SIGNAL_REQ_WR;
 -- 
 2.43.0
 
