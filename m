@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4297913B2B4;
-	Tue, 27 Feb 2024 14:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FBC13B78E;
+	Tue, 27 Feb 2024 14:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043036; cv=none; b=YBMCKh9WJUBlae5tk13He5Xb6ArEl6PlLsz4nVM7zkcv/rFJDT0BNY8Tlo89sgj5jQC4J64/LRfLhEub+NT3EiTfLBVKflHfaKpHZ0L3DFA/sglofSoedMWkehREBWJhQfuSOBS5uJKUW5t1GydvIi9XFoSkW8D8avcQGaVd12Q=
+	t=1709043039; cv=none; b=sh0Nb46Gb/m+07/+rx97DugIIJ8gpjGinAAOTdZnDQjEWxBs9HadlgnhJsyVEfIGadxs1TXjjcacl2ESBnro1qfo53lqocgq3qRILO2oAk2Ap1Yyjs3kr45Dsj7FV7QnANCcMMNfQsIJ7Zmr712KfL4+5obadt1KgnRFGH01iC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043036; c=relaxed/simple;
-	bh=BsiPkmdNHD6dekigrfRDSVn5Lm/11QE+6PFuN4AjnfE=;
+	s=arc-20240116; t=1709043039; c=relaxed/simple;
+	bh=7C7KZ9ed40VG8V4ERg/Qp93OC00c6TE/1Ms62MK5MJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLYjFx1vuWPhBHf+IMRD+zdfqEfsR/1N2GLWecwRal9FIRnqRvzBkVFtsTgwwNRTwtZdf15lEPs4fwyE/H+myfpRYmLdzD342Tddflv0ZoZz/kw5ZFtW5ODwtIIjyOESJ5BcaQW+kwnZTeBVyIcGx6zb8o9+QpJ57IYxD4ob0FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un+DeDqQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+//w8HytQ+oJoeiR0wv8Xqucj7828A50DCaMeY8WP4gKtpdgd4HWEgV177h+ctRL2sv+vY8h6DdTQ21S7zjpZYh3cWlDrrGxgWGJzcK9yl40sbppsavLAKj2YeYZKurP1qL9aKcZJdyKmFDiLrBryedPUvVE6pkKkQHo+gd0Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEYgadJz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un+DeDqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F34C43390;
-	Tue, 27 Feb 2024 14:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEYgadJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650B8C433F1;
+	Tue, 27 Feb 2024 14:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043035;
-	bh=BsiPkmdNHD6dekigrfRDSVn5Lm/11QE+6PFuN4AjnfE=;
+	s=korg; t=1709043038;
+	bh=7C7KZ9ed40VG8V4ERg/Qp93OC00c6TE/1Ms62MK5MJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un+DeDqQCZeSPa0BGSy1BYZMB48n5ztxONKOFusb+dVJP4/HvooqoiEs1Cub91sPh
-	 /c9/Ofl96y24CKmt1Pr0uW3YNUqhA7OswE7UnEcycjabwTn6M/NuiF6b3ZwPjjRbUK
-	 jXSh11B9DN1x/F+X9kr18nIS3mZaJpDNKMf6ccU8=
+	b=HEYgadJzRxZU8vjRRSED69bMIc5ESV5tfABtqCXqXqPHTli+CQwqFq/STkixT3b26
+	 B2NchD8LUh5xaG8XzDCEkqIuakw6Rt/3GnfUVyyqPlFR4O/8InXXDhl48LawNauzJH
+	 iTdhxK4Rk5vVzq+BzCM/sN8rA3eGEwkLeid7fUCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	FUKAUMI Naoki <naoki@radxa.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/245] RDMA/srpt: fix function pointer cast warnings
-Date: Tue, 27 Feb 2024 14:26:38 +0100
-Message-ID: <20240227131622.032489579@linuxfoundation.org>
+Subject: [PATCH 5.15 184/245] arm64: dts: rockchip: fix regulator name on rk3399-rock-4
+Date: Tue, 27 Feb 2024 14:26:12 +0100
+Message-ID: <20240227131621.185586788@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,58 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: FUKAUMI Naoki <naoki@radxa.com>
 
-[ Upstream commit eb5c7465c3240151cd42a55c7ace9da0026308a1 ]
+[ Upstream commit 69448624b770aa88a71536a16900dd3cc6002919 ]
 
-clang-16 notices that srpt_qp_event() gets called through an incompatible
-pointer here:
+fix regulator name
 
-drivers/infiniband/ulp/srpt/ib_srpt.c:1815:5: error: cast from 'void (*)(struct ib_event *, struct srpt_rdma_ch *)' to 'void (*)(struct ib_event *, void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
- 1815 |                 = (void(*)(struct ib_event *, void*))srpt_qp_event;
+ref:
+ https://dl.radxa.com/rockpi4/docs/hw/rockpi4/rockpi4_v13_sch_20181112.pdf
 
-Change srpt_qp_event() to use the correct prototype and adjust the
-argument inside of it.
-
-Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240213100728.458348-1-arnd@kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
+Link: https://lore.kernel.org/r/20220909195006.127957-4-naoki@radxa.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 25 ++++++++++---------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index deb834a7d75cd..60f9c612eb3c3 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -214,10 +214,12 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
- /**
-  * srpt_qp_event - QP event callback function
-  * @event: Description of the event that occurred.
-- * @ch: SRPT RDMA channel.
-+ * @ptr: SRPT RDMA channel.
-  */
--static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
-+static void srpt_qp_event(struct ib_event *event, void *ptr)
- {
-+	struct srpt_rdma_ch *ch = ptr;
-+
- 	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
- 		 event->event, ch, ch->sess_name, ch->qp->qp_num,
- 		 get_ch_state_name(ch->state));
-@@ -1811,8 +1813,7 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
- 	ch->cq_size = ch->rq_size + sq_size;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+index 8b70e831aff23..203460d46f182 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
+@@ -98,24 +98,25 @@ vcc5v0_host: vcc5v0-host-regulator {
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
  
- 	qp_init->qp_context = (void *)ch;
--	qp_init->event_handler
--		= (void(*)(struct ib_event *, void*))srpt_qp_event;
-+	qp_init->event_handler = srpt_qp_event;
- 	qp_init->send_cq = ch->cq;
- 	qp_init->recv_cq = ch->cq;
- 	qp_init->sq_sig_type = IB_SIGNAL_REQ_WR;
+-	vcc5v0_typec: vcc5v0-typec-regulator {
++	vbus_typec: vbus-typec-regulator {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+ 		gpio = <&gpio1 RK_PA3 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vcc5v0_typec_en>;
+-		regulator-name = "vcc5v0_typec";
++		regulator-name = "vbus_typec";
+ 		regulator-always-on;
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
+ 
+-	vcc_lan: vcc3v3-phy-regulator {
++	vcc3v3_lan: vcc3v3-lan-regulator {
+ 		compatible = "regulator-fixed";
+-		regulator-name = "vcc_lan";
++		regulator-name = "vcc3v3_lan";
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vcc3v3_sys>;
+ 	};
+ 
+ 	vdd_log: vdd-log {
+@@ -162,7 +163,7 @@ &gmac {
+ 	assigned-clocks = <&cru SCLK_RMII_SRC>;
+ 	assigned-clock-parents = <&clkin_gmac>;
+ 	clock_in_out = "input";
+-	phy-supply = <&vcc_lan>;
++	phy-supply = <&vcc3v3_lan>;
+ 	phy-mode = "rgmii";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&rgmii_pins>;
+@@ -267,8 +268,8 @@ regulator-state-mem {
+ 				};
+ 			};
+ 
+-			vcc1v8_codec: LDO_REG1 {
+-				regulator-name = "vcc1v8_codec";
++			vcca1v8_codec: LDO_REG1 {
++				regulator-name = "vcca1v8_codec";
+ 				regulator-always-on;
+ 				regulator-boot-on;
+ 				regulator-min-microvolt = <1800000>;
+@@ -278,8 +279,8 @@ regulator-state-mem {
+ 				};
+ 			};
+ 
+-			vcc1v8_hdmi: LDO_REG2 {
+-				regulator-name = "vcc1v8_hdmi";
++			vcca1v8_hdmi: LDO_REG2 {
++				regulator-name = "vcca1v8_hdmi";
+ 				regulator-always-on;
+ 				regulator-boot-on;
+ 				regulator-min-microvolt = <1800000>;
+@@ -336,8 +337,8 @@ regulator-state-mem {
+ 				};
+ 			};
+ 
+-			vcc0v9_hdmi: LDO_REG7 {
+-				regulator-name = "vcc0v9_hdmi";
++			vcca0v9_hdmi: LDO_REG7 {
++				regulator-name = "vcca0v9_hdmi";
+ 				regulator-always-on;
+ 				regulator-boot-on;
+ 				regulator-min-microvolt = <900000>;
+@@ -456,7 +457,7 @@ &io_domains {
+ 	status = "okay";
+ 
+ 	bt656-supply = <&vcc_3v0>;
+-	audio-supply = <&vcc1v8_codec>;
++	audio-supply = <&vcca1v8_codec>;
+ 	sdmmc-supply = <&vcc_sdio>;
+ 	gpio1830-supply = <&vcc_3v0>;
+ };
 -- 
 2.43.0
 
