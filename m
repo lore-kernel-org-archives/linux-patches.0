@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E7C78B61;
-	Tue, 27 Feb 2024 14:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C07378B61;
+	Tue, 27 Feb 2024 14:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043199; cv=none; b=AggBA4Gc4p8ThGm+SwQeQj8txTMogcMPf3OEGzUUd/7hw0RllsePJD2hyBo+m2CT8SeLqoBNXPQTp5c3qb1X0ayKVql9D8/Sx+J3DvzYIYd5fN9k2tmpPvH2UK8a1HnttjbgIwNoyV1k/7w1QFyoJ5sUVxqFtMnITVlI7OTMwE0=
+	t=1709043202; cv=none; b=YTUcQpn4NjM/1pMkGBbs33uM2ygCtiv7v44rBLckB+4eKdNwEkd8tESZcvc1JjemkEyO+7PZ4xnJgx4kwcEmHuNL12lQsR6gAzRu2Bxhl6uwtHpPeGygSEUS1ie4DYBwrL7RkXFyVsPVsciqLyrmi4OubruNulle/vNaqkrQCKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043199; c=relaxed/simple;
-	bh=pseK6M990om+kS/rrVy5sG2hIWicWvX3yMHbzAxldUE=;
+	s=arc-20240116; t=1709043202; c=relaxed/simple;
+	bh=RkkeFGxE44mfSTWi/PhWy3JCexcBOC9nll9Zqt+H1rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7P5L8n0vxY0+LcxyFPxpI7xaKJTXLCwiCwHsZrrG62kgqy8wluDJlJLtPGsHw4d3Myxe6318xMI4rfyYYNLk24oznZW6vUMRpDvmHfhZ+CrdK06YZq7pNJlBqru8koDWJsqRHbrMHBOb1CZmDqI+k5anvkuv9TihgtnZk7SMrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMmnyHR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6PMN63whNDhBVeJQ0XANpDaa/p/OzFlckJoiUSHzU03cE8x3XmvV9HjDtYHX/RnmaedvqpKRlPfmnXpWFsQnLqcVncJ7J6WIxX83KL76mv7HRYHk+VuAEbX2ZFtpo9MgA7YDQEvn3KjjPaHhSYXktDsHJIDR6WuIAFlgOw5NVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuIETrqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMmnyHR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F457C433C7;
-	Tue, 27 Feb 2024 14:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuIETrqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15219C433F1;
+	Tue, 27 Feb 2024 14:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043199;
-	bh=pseK6M990om+kS/rrVy5sG2hIWicWvX3yMHbzAxldUE=;
+	s=korg; t=1709043202;
+	bh=RkkeFGxE44mfSTWi/PhWy3JCexcBOC9nll9Zqt+H1rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMmnyHR/VAmLR/EmJ6p8/5xNYyzdCr6QB+1bZ1XsITvhp7whimpDInDJ9F1iU3gkd
-	 E7hx7fKAZgk7GVJ+9Hu7SsnYLdfOevop2LW2+Y4N9wXXf8nt60zedtV06x2nr7K0el
-	 giosyEsL4M3SqC8k4+SbeRJzwNjF0/6qVhI8Xpyk=
+	b=SuIETrqJCqqha1ci1vLghdMoYKqakoxzuGrSkRki8aDcA+A2fqn6YjEIyFrJ9iIf2
+	 ArXfQoaA8y5wVuhNSk4nYfAaeHMpqUBzyuO7DtEj+VUmpujdZpbOPoh7m46KxUugEJ
+	 gnZOGp43Kc0hD8YNsmTLW/Cy4RqJ1Oq5IAwi35WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Huang Pei <huangpei@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/195] MIPS: reserve exception vector space ONLY ONCE
-Date: Tue, 27 Feb 2024 14:24:45 +0100
-Message-ID: <20240227131611.194973905@linuxfoundation.org>
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 007/195] riscv/efistub: Ensure GP-relative addressing is not used
+Date: Tue, 27 Feb 2024 14:24:28 +0100
+Message-ID: <20240227131610.647407373@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,45 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Pei <huangpei@loongson.cn>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-[ Upstream commit abcabb9e30a1f9a69c76776f8abffc31c377b542 ]
+commit afb2a4fb84555ef9e61061f6ea63ed7087b295d5 upstream.
 
-"cpu_probe" is called both by BP and APs, but reserving exception vector
-(like 0x0-0x1000) called by "cpu_probe" need once and calling on APs is
-too late since memblock is unavailable at that time.
+The cflags for the RISC-V efistub were missing -mno-relax, thus were
+under the risk that the compiler could use GP-relative addressing. That
+happened for _edata with binutils-2.41 and kernel 6.1, causing the
+relocation to fail due to an invalid kernel_size in handle_kernel_image.
+It was not yet observed with newer versions, but that may just be luck.
 
-So, reserve exception vector ONLY by BP.
-
-Suggested-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Huang Pei <huangpei@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/traps.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/kernel/traps.c b/arch/mips/kernel/traps.c
-index 246c6a6b02614..5b778995d4483 100644
---- a/arch/mips/kernel/traps.c
-+++ b/arch/mips/kernel/traps.c
-@@ -2007,7 +2007,13 @@ unsigned long vi_handlers[64];
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -25,7 +25,7 @@ cflags-$(CONFIG_ARM)		:= $(subst $(CC_FL
+ 				   -fno-builtin -fpic \
+ 				   $(call cc-option,-mno-single-pic-base)
+ cflags-$(CONFIG_RISCV)		:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) \
+-				   -fpic
++				   -fpic -mno-relax
+ cflags-$(CONFIG_LOONGARCH)	:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) \
+ 				   -fpie
  
- void reserve_exception_space(phys_addr_t addr, unsigned long size)
- {
--	memblock_reserve(addr, size);
-+	/*
-+	 * reserve exception space on CPUs other than CPU0
-+	 * is too late, since memblock is unavailable when APs
-+	 * up
-+	 */
-+	if (smp_processor_id() == 0)
-+		memblock_reserve(addr, size);
- }
- 
- void __init *set_except_vector(int n, void *addr)
--- 
-2.43.0
-
 
 
