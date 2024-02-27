@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38D613B29C;
-	Tue, 27 Feb 2024 14:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8593037B;
+	Tue, 27 Feb 2024 14:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044208; cv=none; b=TJ1EBHgZPNnuo7Hwld1NuomYLgtOn0Hr0VZMN1/Oco88eKRS0Bh0ugImO1hHuMZb2FUVO+PhypKLtGaYcsC7Z5bBBSFs0vsflH91CDMJ76Ci/SToBfN7xXjmXCYZThq7Lm/Qe4dY0Sm/b3+IhM7tb88S6XMGOGPrtiwIrAo8XGo=
+	t=1709044211; cv=none; b=tJfzOVKJWNZPiG5UdF12N/yuzIFBtfGGCM60D9al28Orgq8npBeT+Phai7pBJIXxk7U69p3ze12OpUG+6CxAWt5JOi3y6AwqQD3GD8JF+SKcX3DcvGor8EOLFk+dAhdWSqKzPeTPzp/+2PMUwJYKmGLFZLSz7pM38mdAmyu27Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044208; c=relaxed/simple;
-	bh=LiGSFnMgIzpx7Xa05ACt611SVQNjOTtFpXsDaC4hPYY=;
+	s=arc-20240116; t=1709044211; c=relaxed/simple;
+	bh=XnK3HgJ7MUGlmu1MjiziNY+p8QkWHISMrHUN0wDfhY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNlD/i0JAGGK3/dxY+fLCg7KWmg5SCKx31XoYxWLfDeQU5L2aiU6qkBx/qjshkigo41TY1U98Ca5bQLajDDhTHy/xlbeO1hxbcjsJzzQftQPVDaYmzHq0IcmmZLnbfT1aoZ7mFtlvad8ZzF6HlW+1kcH49A0Bopk6zQdgDjx1aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X37wo8LX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ficybqkSKiqSu9dyOE15fZRxtkJ3c38iR90Cg1aq8SDPHT3Y6fFjsmMlr6ixCRW8hWFNtqhGPirFrZl9mvIkeK8vkdQDs4UzswWza4TjKyX/panq2YJHvlCF1cJ2SqoPnG9XB9zHOvsMbF4Ih+FYaSac5KLsIPclQJOPddnuhUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPVvy6tQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X37wo8LX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A721C433F1;
-	Tue, 27 Feb 2024 14:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPVvy6tQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10638C43390;
+	Tue, 27 Feb 2024 14:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044208;
-	bh=LiGSFnMgIzpx7Xa05ACt611SVQNjOTtFpXsDaC4hPYY=;
+	s=korg; t=1709044211;
+	bh=XnK3HgJ7MUGlmu1MjiziNY+p8QkWHISMrHUN0wDfhY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X37wo8LXzVq1K4xjjNSrC4OfhhgWyrPK2scqAsEvbWfFO3FIM4nvuW88PMRxDRPdE
-	 butwDIs7bBGMbfhzKXhiJ0S2Afm20e1KY7/iDVqxVV7ZsnNXpABJF0MRhhWZdHNhrw
-	 dM6DWzs8HCEFkYlhglgjhI1jKWAku9LiEPqJAUI0=
+	b=CPVvy6tQPbtzIu0AKgTr5SyZ6kiI1uZTt5o+f9rVS9XPkaweBtdmrpT/TC1wzp/Bi
+	 PnCPRu6IFt4NJzBQcDGLZy4gJ6E0MY7xvmV+lcS1Ws0kLirwNdRBuBl++SgEDbsQRx
+	 knnpvf8S4UwhonB1Jed1W86HWIQN+DW8VrtXNfM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mats Kronberg <kronberg@nsc.liu.se>,
-	Daniel Vacek <neelx@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 074/122] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-Date: Tue, 27 Feb 2024 14:27:15 +0100
-Message-ID: <20240227131601.125622734@linuxfoundation.org>
+	Thorsten Winkler <twinkler@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.10 075/122] s390/cio: fix invalid -EBUSY on ccw_device_start
+Date: Tue, 27 Feb 2024 14:27:16 +0100
+Message-ID: <20240227131601.159189596@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,100 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
+commit 5ef1dc40ffa6a6cb968b0fdc43c3a61727a9e950 upstream.
 
-Unfortunately the commit `fd8958efe877` introduced another error
-causing the `descs` array to overflow. This reults in further crashes
-easily reproducible by `sendmsg` system call.
+The s390 common I/O layer (CIO) returns an unexpected -EBUSY return code
+when drivers try to start I/O while a path-verification (PV) process is
+pending. This can lead to failed device initialization attempts with
+symptoms like broken network connectivity after boot.
 
-[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
-[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
---
-[ 1080.974535] Call Trace:
-[ 1080.976990]  <TASK>
-[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
-[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
-[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
-[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
-[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
---
-[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+Fix this by replacing the -EBUSY return code with a deferred condition
+code 1 reply to make path-verification handling consistent from a
+driver's point of view.
 
-crash> ipoib_txreq 0xffff9cfeba229f00
-struct ipoib_txreq {
-  txreq = {
-    list = {
-      next = 0xffff9cfeba229f00,
-      prev = 0xffff9cfeba229f00
-    },
-    descp = 0xffff9cfeba229f40,
-    coalesce_buf = 0x0,
-    wait = 0xffff9cfea4e69a48,
-    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
-    packet_len = 0x46d,
-    tlen = 0x0,
-    num_desc = 0x0,
-    desc_limit = 0x6,
-    next_descq_idx = 0x45c,
-    coalesce_idx = 0x0,
-    flags = 0x0,
-    descs = {{
-        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
-      }, {
-        qw = {  0x3800014231b108, 0x4}
-      }, {
-        qw = { 0x310000e4ee0fcf0, 0x8}
-      }, {
-        qw = {  0x3000012e9f8000, 0x8}
-      }, {
-        qw = {  0x59000dfb9d0000, 0x8}
-      }, {
-        qw = {  0x78000e02e40000, 0x8}
-      }}
-  },
-  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
-  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
-  complete = 0x0,
-  priv = 0x0,
-  txq = 0xffff9cfea4e69880,
-  skb = 0xffff9d099809f400
-}
+The problem can be reproduced semi-regularly using the following process,
+while repeating steps 2-3 as necessary (example assumes an OSA device
+with bus-IDs 0.0.a000-0.0.a002 on CHPID 0.02):
 
-If an SDMA send consists of exactly 6 descriptors and requires dword
-padding (in the 7th descriptor), the sdma_txreq descriptor array is not
-properly expanded and the packet will overflow into the container
-structure. This results in a panic when the send completion runs. The
-exact panic varies depending on what elements of the container structure
-get corrupted. The fix is to use the correct expression in
-_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+1. echo 0.0.a000,0.0.a001,0.0.a002 >/sys/bus/ccwgroup/drivers/qeth/group
+2. echo 0 > /sys/bus/ccwgroup/devices/0.0.a000/online
+3. echo 1 > /sys/bus/ccwgroup/devices/0.0.a000/online ; \
+   echo on > /sys/devices/css0/chp0.02/status
 
-With this patch the crashes are no longer reproducible and the machine is
-stable.
+Background information:
 
-Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
-Cc: stable@vger.kernel.org
-Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
-Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
-Signed-off-by: Daniel Vacek <neelx@redhat.com>
-Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The common I/O layer starts path-verification I/Os when it receives
+indications about changes in a device path's availability. This occurs
+for example when hardware events indicate a change in channel-path
+status, or when a manual operation such as a CHPID vary or configure
+operation is performed.
+
+If a driver attempts to start I/O while a PV is running, CIO reports a
+successful I/O start (ccw_device_start() return code 0). Then, after
+completion of PV, CIO synthesizes an interrupt response that indicates
+an asynchronous status condition that prevented the start of the I/O
+(deferred condition code 1).
+
+If a PV indication arrives while a device is busy with driver-owned I/O,
+PV is delayed until after I/O completion was reported to the driver's
+interrupt handler. To ensure that PV can be started eventually, CIO
+reports a device busy condition (ccw_device_start() return code -EBUSY)
+if a driver tries to start another I/O while PV is pending.
+
+In some cases this -EBUSY return code causes device drivers to consider
+a device not operational, resulting in failed device initialization.
+
+Note: The code that introduced the problem was added in 2003. Symptoms
+started appearing with the following CIO commit that causes a PV
+indication when a device is removed from the cio_ignore list after the
+associated parent subchannel device was probed, but before online
+processing of the CCW device has started:
+
+2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
+
+During boot, the cio_ignore list is modified by the cio_ignore dracut
+module [1] as well as Linux vendor-specific systemd service scripts[2].
+When combined, this commit and boot scripts cause a frequent occurrence
+of the problem during boot.
+
+[1] https://github.com/dracutdevs/dracut/tree/master/modules.d/81cio_ignore
+[2] https://github.com/SUSE/s390-tools/blob/master/cio_ignore.service
+
+Cc: stable@vger.kernel.org # v5.15+
+Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
+Tested-By: Thorsten Winkler <twinkler@linux.ibm.com>
+Reviewed-by: Thorsten Winkler <twinkler@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/cio/device_ops.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3200,7 +3200,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
- {
- 	int rval = 0;
- 
--	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
+diff --git a/drivers/s390/cio/device_ops.c b/drivers/s390/cio/device_ops.c
+index c533d1dadc6b..a5dba3829769 100644
+--- a/drivers/s390/cio/device_ops.c
++++ b/drivers/s390/cio/device_ops.c
+@@ -202,7 +202,8 @@ int ccw_device_start_timeout_key(struct ccw_device *cdev, struct ccw1 *cpa,
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_NOT_OPER)
+ 		return -ENODEV;
+-	if (cdev->private->state == DEV_STATE_VERIFY) {
++	if (cdev->private->state == DEV_STATE_VERIFY ||
++	    cdev->private->flags.doverify) {
+ 		/* Remember to fake irb when finished. */
+ 		if (!cdev->private->flags.fake_irb) {
+ 			cdev->private->flags.fake_irb = FAKE_CMD_IRB;
+@@ -214,8 +215,7 @@ int ccw_device_start_timeout_key(struct ccw_device *cdev, struct ccw1 *cpa,
+ 	}
+ 	if (cdev->private->state != DEV_STATE_ONLINE ||
+ 	    ((sch->schib.scsw.cmd.stctl & SCSW_STCTL_PRIM_STATUS) &&
+-	     !(sch->schib.scsw.cmd.stctl & SCSW_STCTL_SEC_STATUS)) ||
+-	    cdev->private->flags.doverify)
++	     !(sch->schib.scsw.cmd.stctl & SCSW_STCTL_SEC_STATUS)))
+ 		return -EBUSY;
+ 	ret = cio_set_options (sch, flags);
+ 	if (ret)
+-- 
+2.44.0
+
 
 
