@@ -1,90 +1,63 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B294C7003E
-	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 21:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D3A1361B5;
+	Wed, 28 Feb 2024 22:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709156338; cv=none; b=JlAOSFgIQJqoGj67lo/MDNH2m7hPhEMbskWVinePmh7tDvhzoE9FOtaVIdag6zptNnlxs/w/0MYdV8FtlhkKX/Jd1Wr2DklOF9wYyyExFhLDaQ5ZcUF9N19YkcRERKambdFrEQ7wvuDpVRmjJbrtwyXpqB4JJa3p9SQh8Ilz1Q4=
+	t=1709158136; cv=none; b=SjoeDubgVM2WJxwlTVCZFWjtEZK2XnFX4SR4xTuBcPegwcc9oVcdbvMwB/U0Ai5rj3rTq8V889NRxlwBIuhDVxwoE5+/cMCONR0CjZvOqUEI0huHwxyQ6I5+RWZxKLr+7hkQykVX/qKELyelrzKQ1nlcQXOw2YH6KkUxs5kess4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709156338; c=relaxed/simple;
-	bh=ZZYMMkvnT8rMcTzALb9auQy9jBxDCGxw/nkLNgFjKsA=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oEKxlGt7VFO/miZTEYTHM4YtzwPPMeKzORKoKtAXJSLuffUUtI07fHInMM8EnT6BcVPym/VPewhSaC6ywZlWsYaJfc5+G+mTwIcLm04MOdBSs8p9EZEvxbOa7qjfd9tmgL/CZMQlzxth5qWriz2vvtaQ0aVAoVxZJmN6OU4NrvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Mg2jqR4H; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Mg2jqR4H"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5131a9b3d5bso164634e87.0
-        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 13:38:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709156335; x=1709761135; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZYMMkvnT8rMcTzALb9auQy9jBxDCGxw/nkLNgFjKsA=;
-        b=Mg2jqR4HoSuJqccINIVHijmyZF+gcQUlimJTRHoFP9yupfyC00mWWC4H4IT3Z7oevv
-         57nA4rnQGH2ty2qa8a31OeQbfZVx73+51fBqKy2NNgSng/waSnv8eOYIdiLDYRucGfjw
-         3H2i2wqrGeRwKpzCG2wDAGmEMR8z3SjKFRycs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709156335; x=1709761135;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZZYMMkvnT8rMcTzALb9auQy9jBxDCGxw/nkLNgFjKsA=;
-        b=ezAQBcEjUrBcMsA8G1r5ijygRvOtE2D8Fqu39ulRgITe87hmIGOipl+BzAkxobgPSE
-         l2scFlWuIk3mxpyyQoUZWIVuA0BEFBvr9IPmKzkTdzeTJl+KSWSX8DY/NlLUgGE2VomO
-         JCEaCl3gckJOZLnMfKqnAg955CVN/+ek0HG/7Q2PAy6rfiOsT49c3Cw3m+XmiQl2VZmn
-         ZtPmBkS0fOQt++WcvDRA1aBdKQKEtPMotrG6HyNQTqyhyVdiWz0qXrxjD+Ug9arK2GWt
-         F3NqZdtpSyhkiq/rbTGtS8dhX4kWJgcu9qKy90DF2ks/lkDKcXohs5zobLDsY0Co975D
-         Cuew==
-X-Forwarded-Encrypted: i=1; AJvYcCXf5g/oIPbDM4wnrJBeEu6ucxv1fbP2CTwjzzLjeJQif9REZ6lR6D+sAk1bMc0rFtGXr9p9Wbyl70WnJJp5OAKF1o2AWvRqSw==
-X-Gm-Message-State: AOJu0YzInWWya4uk139wT89mNz2/ysgD0Ps+phy2uyLTI0ud/ufeLP+k
-	5JRXseFw/oErdjSBTOyX5a4y0eT+bI/oeP4Mp9CrnsFyIo8jAuo3ESjcgrxLoGvn3HzZh29tLF2
-	6Q3Rw8nZ9/tXh5OWJTSzJMK0kIcFguyiPIHXo
-X-Google-Smtp-Source: AGHT+IETIffCFIqYQK+u9ZTlRcZaGK6oBiJ82QRaqg2mZdkQFQuCEw+hnjwQN/Y1e0VJoJC6rZCYqp34iNcxXmVtIdg=
-X-Received: by 2002:ac2:5976:0:b0:513:1a38:2406 with SMTP id
- h22-20020ac25976000000b005131a382406mr159441lfp.13.1709156334984; Wed, 28 Feb
- 2024 13:38:54 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 28 Feb 2024 13:38:54 -0800
+	s=arc-20240116; t=1709158136; c=relaxed/simple;
+	bh=PfymlF7wlCOlT9tf+m4N9IdC5oUXuI/3KCzManRYmOA=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=KWqXdtJMTfg3ICiBoSDR8QGG0fFi3OcRD0uKzKw3fjcuNTwdNxqhORsEnfS0YYS/xduDLbH+uwJIHXRBH4MMmxhB4lE9gVPlSZ9gF2IvLLJx2FhAuQ11noXaaSnmsExBVIrwwdiqg0KdVLHVrC+rE3H1xZSJsVf2mgKicnhhY3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B09DC433F1;
+	Wed, 28 Feb 2024 22:08:56 +0000 (UTC)
+Received: by mercury (Postfix, from userid 1000)
+	id 5C2DC1067A0C; Wed, 28 Feb 2024 23:08:53 +0100 (CET)
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: sre@kernel.org, ricardo@marliere.net, linux-pm@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+In-Reply-To: <20240227-fix-power_supply_init_attrs-stub-v1-1-43365e68d4b3@kernel.org>
+References: <20240227-fix-power_supply_init_attrs-stub-v1-1-43365e68d4b3@kernel.org>
+Subject: Re: [PATCH] power: supply: core: Fix power_supply_init_attrs()
+ stub
+Message-Id: <170915813332.50142.14586523550606175263.b4-ty@collabora.com>
+Date: Wed, 28 Feb 2024 23:08:53 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Zd-nI9XoYW3hrPXx@smile.fi.intel.com>
-References: <20240223065254.3795204-1-swboyd@chromium.org> <Zd-CJHkCHpuIEnWh@smile.fi.intel.com>
- <CAMRc=Mdapd2jTACGqm-ujZrAunRmNeJ8_3+bpsN4ieCre52yrg@mail.gmail.com> <Zd-nI9XoYW3hrPXx@smile.fi.intel.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 28 Feb 2024 13:38:54 -0800
-Message-ID: <CAE-0n52cgFvaHPDLBd-cn0WMisxX41-fPJHkroTucxHNk39SZQ@mail.gmail.com>
-Subject: Re: [PATCH v2] gpiolib: Pass consumer device through to core in devm_fwnode_gpiod_get_index()
-To: Andy Shevchenko <andriy.shevchenko@intel.com>, Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-gpio@vger.kernel.org, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-Quoting Andy Shevchenko (2024-02-28 13:35:31)
-> On Wed, Feb 28, 2024 at 10:28:07PM +0100, Bartosz Golaszewski wrote:
-> > On Wed, Feb 28, 2024 at 7:57=E2=80=AFPM Andy Shevchenko
-> > <andriy.shevchenko@intel.com> wrote:
-> > >
-> > > Have you seen this?
-> > > https://lore.kernel.org/r/20231019173457.2445119-1-andriy.shevchenko@=
-linux.intel.com
-> >
-> > Clearly yes as I queued the first one in that series. The rest did not
-> > make its way upstream for whatever reason. What is your point? You
-> > want to respin it?
->
-> It was a reply to Stephen. :-)
->
 
-I saw it but it hadn't gone anywhere for many months so I fixed the
-problem I saw. Will you resend it?
+On Tue, 27 Feb 2024 13:34:42 -0700, Nathan Chancellor wrote:
+> When building without CONFIG_SYSFS, there is an error because of a
+> recent refactoring that failed to update the stub of
+> power_supply_init_attrs():
+> 
+>   drivers/power/supply/power_supply_core.c: In function 'power_supply_class_init':
+>   drivers/power/supply/power_supply_core.c:1630:9: error: too few arguments to function 'power_supply_init_attrs'
+>    1630 |         power_supply_init_attrs();
+>         |         ^~~~~~~~~~~~~~~~~~~~~~~
+>   In file included from drivers/power/supply/power_supply_core.c:25:
+>   drivers/power/supply/power_supply.h:25:20: note: declared here
+>      25 | static inline void power_supply_init_attrs(struct device_type *dev_type) {}
+>         |                    ^~~~~~~~~~~~~~~~~~~~~~~
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] power: supply: core: Fix power_supply_init_attrs() stub
+      commit: b683d738c0a1c4c8fcf83fdf5eb4c6ce3d5130c6
+
+Best regards,
+-- 
+Sebastian Reichel <sebastian.reichel@collabora.com>
+
