@@ -1,122 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC2122F1E;
-	Wed, 28 Feb 2024 07:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2765925618
+	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 08:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709104058; cv=none; b=Ld222y3oc/4vkdpQF+JdkcQFPLCyP3zLaV07ohc7JRi27szpoVr/22t74XiyEa9E7Rl4BhhIVX8hViEWygDRbczja57v6E0zmckjfw8ZbygRutLY2e7mcIhnnHMsedYqntGdf7LZLeVjyhWoUdlQ5nh+E5NPov/0HOVFETJO+Z0=
+	t=1709107585; cv=none; b=VdXwJifVG4Vzv8+56WYHh+WTQPqWFM38Cvbth9AIlT7wwuCl1H/bvK3BNE+GWTMgrhw/9/9dNyjY3nGR2lYHkcc0lODNxSjT9BLAMRQ1aJpsB4t/QAs2z7gVcscHnzdZI4+kZAc/7q83QO5MpuW4k0Kdov/mSU86S6tCgPuZ/TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709104058; c=relaxed/simple;
-	bh=crVUTJppSiBoHshvxxfL9ijmddEMhjmw34CMlqepejg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=odVSsBGh4mDfdLXJNGSDb75HH+ehsyE/Bb59H4kLnFaIK3rLPVwLlKfg70nqG4m9LPSTTJJ6+RxyAMBA03rzaV5AsZJupStXlWuAU9oRi8F3RuS2SxJ1XoEBC+sHl8NnQcOFoMm/nbgcJf5gZVpl5Gbaf/diSq41feMGSzCLTa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flqfirZ5; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flqfirZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3719C433C7;
-	Wed, 28 Feb 2024 07:07:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709104057;
-	bh=crVUTJppSiBoHshvxxfL9ijmddEMhjmw34CMlqepejg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=flqfirZ5dmPwtrZAYOyoc64thr+j+rfbqCHhiz13hSYVleFtFoaG57j3vAPc37OQp
-	 LR/wKGjPDbXSjBKUiq2M0hNu50foGafScud5d5xKomEgzbMV5z0gs2q238KYG2jkdM
-	 hPw06k+Je3XRQPE/TmAT2zQt2rDhf7NBuzlPb3ak=
-Date: Wed, 28 Feb 2024 08:07:34 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: John Stultz <jstultz@google.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-pm@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>,
-	Thierry Reding <treding@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Todd Kjos <tkjos@google.com>, Len Brown <len.brown@intel.com>,
-	Pavel Machek <pavel@ucw.cz>, Ulf Hansson <ulf.hansson@linaro.org>,
-	Kevin Hilman <khilman@kernel.org>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
-	Rob Herring <robh@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	John Stultz <john.stultz@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4 39/84] driver core: Set deferred_probe_timeout to a
- longer default if CONFIG_MODULES is set
-Message-ID: <2024022838-enrage-upheld-1529@gregkh>
-References: <20240227131552.864701583@linuxfoundation.org>
- <20240227131554.144760148@linuxfoundation.org>
- <CANDhNCoGL7voc11QFt5rBXXibMSvDM2YxZ8ocV1fkGYh=Mm0nA@mail.gmail.com>
+	s=arc-20240116; t=1709107585; c=relaxed/simple;
+	bh=Zrb1Im0gyCJMmIpkGfi7j9ua8LfAnbVRAV3y1zOnEVw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LpDnrVp/fnxdxgD7LlvggP8U4rtAzJ1C1UTbnT/PcJ8NKbmKKIE0L/owvoKxL1Lm8ljN31rhvbx7rU6Xpj1MTWBbQtA3SHX1kFdSneJTkAXT3EdwpDpTSedDCnMXbPtBaKzsl/sQkUX+OBVK5k3eYqto6a5E6HSM6NzsB+jN5S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-55a8fd60af0so7074093a12.1
+        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 00:06:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709107582; x=1709712382;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VTt0UEcuAb9psXmCcUBx6ZOtMfL5OgqRETrZ6CLppsE=;
+        b=QimlALh8t0GPMPpK2J6Ef9JaO89OhLI8zDlxxNgQeSmfIwq7R62BwBNMMhpyfqv1zD
+         ehOc6vf3+HZojJzB89DjvVKwrSqDjosNR9Wr5SfeKz9n4JAOg11A1HTTmDGCUb106wmX
+         XjGv77rZgOrDYm7ex+Z8e/oUEju3hppjgE1g7rPe6JISXSyxmpzjNnFbH4PuLu27pyeN
+         nZo3yLb2uO/SvJ1D9XpTGYzU+KW/KHasGRevY8Q2QZTSPazn+x2cnMPT0DnP+I5LRTIA
+         j5GwedsyKgp9C30luNo215ecwN1A1fnwjslIAq4jQ39PjOZmg39oFTjeFqQO4Im+QkRr
+         +qIA==
+X-Gm-Message-State: AOJu0YwUCyB5KkVm8ohE9ji+J9EDDtRQnFHHh+ZG57ueAEblzzufTzta
+	qQod4LAI6KeQfejV9E6TgPluWHIAtUIF75/sjMJT30QDQqav+OT+
+X-Google-Smtp-Source: AGHT+IH1JBpt+MdWDNLhuquh077VbpRCP+RvoNk0YOGGWWk/NTyCcSBOj4ByQKislWyBOROgMCgCCg==
+X-Received: by 2002:a05:6402:1ca4:b0:565:a5bb:cc4c with SMTP id cz4-20020a0564021ca400b00565a5bbcc4cmr7014988edb.42.1709107582272;
+        Wed, 28 Feb 2024 00:06:22 -0800 (PST)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:59? ([2a0b:e7c0:0:107::aaaa:59])
+        by smtp.gmail.com with ESMTPSA id r3-20020aa7c143000000b0056676b80a38sm153757edp.3.2024.02.28.00.06.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Feb 2024 00:06:21 -0800 (PST)
+Message-ID: <66b4f46f-bcbd-42da-b4d6-0ecd507f8bd8@kernel.org>
+Date: Wed, 28 Feb 2024 09:06:20 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANDhNCoGL7voc11QFt5rBXXibMSvDM2YxZ8ocV1fkGYh=Mm0nA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.7 260/334] net: ethernet: adi: requires PHYLIB support
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Randy Dunlap <rdunlap@infradead.org>,
+ kernel test robot <lkp@intel.com>, Lennart Franzen <lennart@lfdomain.com>,
+ Alexandru Tachici <alexandru.tachici@analog.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ netdev@vger.kernel.org, Nuno Sa <nuno.sa@analog.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20240227131630.636392135@linuxfoundation.org>
+ <20240227131639.320153289@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20240227131639.320153289@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 27, 2024 at 11:38:01AM -0800, John Stultz wrote:
-> On Tue, Feb 27, 2024 at 5:27 AM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > 5.4-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: John Stultz <john.stultz@linaro.org>
-> >
-> > [ Upstream commit e2cec7d6853712295cef5377762165a489b2957f ]
-> >
-> > When using modules, its common for the modules not to be loaded
-> > until quite late by userland. With the current code,
-> > driver_deferred_probe_check_state() will stop returning
-> > EPROBE_DEFER after late_initcall, which can cause module
-> > dependency resolution to fail after that.
-> >
-> > So allow a longer window of 30 seconds (picked somewhat
-> > arbitrarily, but influenced by the similar regulator core
-> > timeout value) in the case where modules are enabled.
-> >
-> > Cc: linux-pm@vger.kernel.org
-> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > Cc: Thierry Reding <treding@nvidia.com>
-> > Cc: Mark Brown <broonie@kernel.org>
-> > Cc: Liam Girdwood <lgirdwood@gmail.com>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Saravana Kannan <saravanak@google.com>
-> > Cc: Todd Kjos <tkjos@google.com>
-> > Cc: Len Brown <len.brown@intel.com>
-> > Cc: Pavel Machek <pavel@ucw.cz>
-> > Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> > Cc: Kevin Hilman <khilman@kernel.org>
-> > Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-> > Cc: Rob Herring <robh@kernel.org>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> > Signed-off-by: John Stultz <john.stultz@linaro.org>
-> > Link: https://lore.kernel.org/r/20200225050828.56458-3-john.stultz@linaro.org
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  drivers/base/dd.c | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
+On 27. 02. 24, 14:21, Greg Kroah-Hartman wrote:
+> 6.7-stable review patch.  If anyone has any objections, please let me know.
+
+This patch is not nice and should wait for its fixup IMO:
+https://lore.kernel.org/all/20240226074820.29250-1-rdunlap@infradead.org/
+
+It makes PHYLIB=y even when not needed to be actually built in.
+
+> From: Randy Dunlap <rdunlap@infradead.org>
 > 
-> This change ended up being reverted upstream in ce68929f07de
+> [ Upstream commit a9f80df4f51440303d063b55bb98720857693821 ]
 > 
-> Is there some specific reason it got selected to be pulled into -stable?
-
-It was an attempt to sync up with what had been added to the 4.19.y tree
-but not newer kernels.  I'll go drop this from 5.4.y now, thanks for
-noticing the revert, my scripts did not pick that up :(
-
-Also, this is in the 4.19.y tree, but in a different form, and one that
-no one seemed to have problems with, so I'll leave it alone there for
-now.
+> This driver uses functions that are supplied by the Kconfig symbol
+> PHYLIB, so select it to ensure that they are built as needed.
 
 thanks,
+-- 
+js
+suse labs
 
-greg k-h
