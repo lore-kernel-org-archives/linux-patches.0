@@ -1,68 +1,60 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA8871ECB
-	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 18:45:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399716EF1C
+	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 18:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709145914; cv=none; b=Rc2qLyeIp4A2ZhiWAYNzbI0vMtfG27E2qaIz8sWa+oy1KOwld0AegdIgq+2JvzQi34PXo/wDQ+LVkDcgZPlE7k7WvSrme4+T0QcErfpPwfD3DAvmf7iMxkM+65+mzfobpRE0Ua+oAbOgdwa/blPiw2QH/k/gdsfvz6S/50Z8cmc=
+	t=1709146668; cv=none; b=IsxQMsFWK/gKeqEAZ5x1py3WJQouok04cWSw2aADJvcfzs4Qtj/c6+YKHVsN9SWaobk+NoPQ+Y/HoO+jNP8gn2Qln6YMckhDLlXj1qagIrQkUQT+dI5TXz897O6lmpMlgNMAdT+yT0DpnYfkvFF3dLW+YrNiaS3SOOxtkKCAW00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709145914; c=relaxed/simple;
-	bh=JtRdfLpzL/ZV8ADjgH1+r8boDnPhsaWyXxdUuNrJxxE=;
+	s=arc-20240116; t=1709146668; c=relaxed/simple;
+	bh=gDw3jRm0AM60tHCxqaG2rfJ1npT2cZmBML0MaxvzlBA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lyWIdjsOMbiZlLEG8YxklU5w3vqh2O8LFayhe67tLde4LVRPEa/QbgpL334RI2FZNeXIn9Ngz6l2GTsucmSwr9Dc//ujguLFpz1Ag4zdFNe2T35VFL0byPWa8mAi/vWZhgG4/PsqXqPSpeQ+MNjT5vEJdlmL+h1OSvqbrxzYu64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=BOt0vmp6; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=fdPZxV5KZW1zOf+QNikWvWAGcKo2M6wR1E8D+/hCt/T41imBdqrp7fDquz3Ys6RmN+VampM0cJtrBLAZfljr6XcfKtT1DEjiWr4+oV/xvmZ2AAe3xTprNGrUi/Tz0e43Sgs5716WQ14iTR4VA8Mtsr9SXzB7Vc+Jij82UpKnJII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ge53Hj89; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="BOt0vmp6"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6e4bbd7314eso5770a34.2
-        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 10:45:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1709145911; x=1709750711; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WYSW/dDZJk0AWK1P14MQeXGDy5+2acJ2m/1QBAbC748=;
-        b=BOt0vmp6RlNNMmrpg3Nrblvhp/203of/VCSyGMOxhdF5WCFwJZYQm6iEpiti1DK13L
-         xzAW0lKT5eT0btLdnWTWYR7F6t+O4IO4W5iA1XgvFyGMiPQOr2imSEwrVVVZaKDyzeoV
-         eh1z6Cu9F3GfT2Itrc4XfI552fkDwma2NZNhE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709145911; x=1709750711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WYSW/dDZJk0AWK1P14MQeXGDy5+2acJ2m/1QBAbC748=;
-        b=wkJnDQRUlSnbI9x2Uunye6PWYrfeyBSexgUcNw/pY4GkMZ8KQ2EWiKKOAqO93me17V
-         4dkIP206ohjfEs/4MrMGjpvPJNTonHW2bUdCV20n3hQ6iS3chJgDwBO2oPw2mxHc0NSY
-         fqcsaw60M4lBEydzelgJWwqnk/uE3AhhGJodCuahZVcVnjRryQgdRBQpdMGOotAg6gbd
-         c1B5oAX3gsSsrVJms33RoBXF5nUaeCWl4PFWNXdeI+F2yZX6RlpGOlctaFEArtuOsU0b
-         sfIuoggGsltiWKSMSfHcHpO6lLuKU4rKu7M5K8JLIkWUNW+I358BbPmlLs/mHsN2wMW0
-         2iEw==
-X-Forwarded-Encrypted: i=1; AJvYcCX7VQPDmLkcRX2UyxtRXt/BU9cIiigBxJzvCBt65458cFdpgjUvpCbwkjjoVKhhk/pFOoPT2rdZayoNioCaHZEz4LE8zhQQfQ==
-X-Gm-Message-State: AOJu0YwQCoBt7O+Oc8+czqGElo+lDsqJzjDjIEt4CKj7GwXiviNYbvcK
-	o0qV6/tmhTHSGepm2uW+I8SUDo37dO8cbRwk4ZpUfQG/oZz14CWweobeF925bw==
-X-Google-Smtp-Source: AGHT+IHwJyaRoEm/YQfCjyx+WogJ05QIwcidCk3H5iKaBfOekKEk67mfRLlcJEz6WQoDdGUJrI9xmQ==
-X-Received: by 2002:a05:6871:750c:b0:21f:aa57:4637 with SMTP id ny12-20020a056871750c00b0021faa574637mr546894oac.58.1709145911442;
-        Wed, 28 Feb 2024 10:45:11 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id nf3-20020a056871460300b0022027f66c2csm12942oab.24.2024.02.28.10.45.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 10:45:11 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 28 Feb 2024 12:45:09 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.7 000/334] 6.7.7-rc1 review
-Message-ID: <Zd9_NbbahAGDqscb@fedora64.linuxtx.org>
-References: <20240227131630.636392135@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ge53Hj89"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1709146666; x=1740682666;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gDw3jRm0AM60tHCxqaG2rfJ1npT2cZmBML0MaxvzlBA=;
+  b=Ge53Hj89Bz13xZN8xUwvtddTidhJIa9KLlg/TfFBwl6RuvxVl2GT0OpA
+   qxgGG9/Az1kEYANDlenFYxRuWGrBOpj99Jw2f+xczaoPqxejLAq8igWj9
+   UnvsGd6udK8RJE3FcK4tb7LOLNcwWpWxfgl56THWoGIp51jMVb9fQDpKW
+   2+E52tTGw3/HPoVT3bwIobL/Mc1M3E5TSo7MzTOYMQ1ULe4HhWfFIGME7
+   5KbfzJr4iy2QFxAsLvFea4HoAIE0SqWcNlbX3HU/UubyVUkqZSz4aIx7a
+   6SsTzqwoWoPGUo5Fj4KV0jZ/+YEOwFFYpktL4k6HgYOjMz9xqIKJnwwKb
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="21025986"
+X-IronPort-AV: E=Sophos;i="6.06,191,1705392000"; 
+   d="scan'208";a="21025986"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2024 10:57:46 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="913958400"
+X-IronPort-AV: E=Sophos;i="6.06,191,1705392000"; 
+   d="scan'208";a="913958400"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2024 10:57:43 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1rfP7c-00000008Izz-2Ern;
+	Wed, 28 Feb 2024 20:57:40 +0200
+Date: Wed, 28 Feb 2024 20:57:40 +0200
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-gpio@vger.kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: Re: [PATCH v2] gpiolib: Pass consumer device through to core in
+ devm_fwnode_gpiod_get_index()
+Message-ID: <Zd-CJHkCHpuIEnWh@smile.fi.intel.com>
+References: <20240223065254.3795204-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,28 +63,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
+In-Reply-To: <20240223065254.3795204-1-swboyd@chromium.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Feb 27, 2024 at 02:17:38PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.7 release.
-> There are 334 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Feb 22, 2024 at 10:52:53PM -0800, Stephen Boyd wrote:
+> This devm API takes a consumer device as an argument to setup the devm
+> action, but throws it away when calling further into gpiolib. This leads
+> to odd debug messages like this:
 > 
-> Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
-> Anything received after that time might be too late.
+>  (NULL device *): using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
+> Let's pass the consumer device down, by directly calling what
+> fwnode_gpiod_get_index() calls but pass the device used for devm. This
+> changes the message to look like this instead:
 > 
-> thanks,
+>  gpio-keys gpio-keys: using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
 > 
-> greg k-h
+> Note that callers of fwnode_gpiod_get_index() will still see the NULL
+> device pointer debug message, but there's not much we can do about that
+> because the API doesn't take a struct device.
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+Have you seen this?
+https://lore.kernel.org/r/20231019173457.2445119-1-andriy.shevchenko@linux.intel.com
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
