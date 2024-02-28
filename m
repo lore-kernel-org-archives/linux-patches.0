@@ -1,230 +1,117 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A69E77840
-	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 19:37:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F37E74418
+	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 20:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709149052; cv=none; b=lq+Rqa1ZRtsooEbtSuj2EhXpo2QjA0EWsSXWpn3ZU726u+dPnX3TLYg1TYidLLf94vBbOk8WnF7qmzb3SV6m0RNc9fdlfIhMFFZjuXrXlxmY7skUMV05pIo/dxAuEO/wZm/6oX+LrN5MJ3+8QgUbBfldqqXEzjUrRnZI1mJ9DtY=
+	t=1709152785; cv=none; b=R/6wgEJ0D+S/wL5ZCizZT55hE4GCBxmyDvZwaQODVOgL6aRg7og37OzzIHneMrWetiYWENHTgACv9cOr5x0bYgFcWYJSVULwfut0arNGaeL0pd76lAG+oQGsRlbzGFBUa6OHaAVgJJa3zI8+8wDhEbhIodvMG1YVrLu87IMt3Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709149052; c=relaxed/simple;
-	bh=GZ6Fxz5NTAguSBgG4QB2OlKuE6tlPVQE9QuNQQhOdSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXrUGMnXVDjOQJLpaby2YO6NlyDMdsqgH6qcEDF8OrDgIWELRmz7e88tkpxvgv04YwbejxRNCHbfgeqKOnbIq9pEIEkPc4bRAP+bElhEnGLM/uxPL3GuFwr5Q2M3b7CoiSyikv8ngUk3uWaRghiS5So210afG/8sI0OLJ1iStbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=II6Ees7V; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1709152785; c=relaxed/simple;
+	bh=XGVStHb8y9qSUzs6dep3cN+bk9roRYQbeBfT9knwOIQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YXFPOs+gjOUqSook8+y2hA9k8vUM4OT1mV7OuBWMXpzLDfokbIumy8iawiACw/Fe81KzuNIvhldf9d84TTdiH/N4P2DUWbtnbMj/nT1fx0SLydnm83HvLkYNIenPotAg+tI9M3+EVoORERNUjCHOB6txlZnFC+EnI2CsBKeVKBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fVxgmahr; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="II6Ees7V"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1709149051; x=1740685051;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=GZ6Fxz5NTAguSBgG4QB2OlKuE6tlPVQE9QuNQQhOdSs=;
-  b=II6Ees7VrMxztFWfsBs8SNgnw9eKdrhtskpwyAPw9nAYFBaQBI0ROD6B
-   ppCGxXHdY7S219jFlbyY5U/NQJyDJlNCnxdsM21ow+Jo0foJhfcohYa4s
-   Thu91uzZRPnJZDI4czwH8PO/qd/oZzZC641lusqhjnTUUg9VBSWxhVSCB
-   ffbhcIGYIRehwqL+QnPT+g2OHsxVfedgKb2UOH2z1mVDK7WZsOpzF5C71
-   8dhFjL6VX62QWCHkpRioL5VJjyDxUja1wE+YPHGd+Mq5pLeTIuy5/oRot
-   9sxzKB8hk/fT/sn975JkwM4j90Lx2/p275A/jzAbNQz7Hzy9fTp2ACb44
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3495562"
-X-IronPort-AV: E=Sophos;i="6.06,191,1705392000"; 
-   d="scan'208";a="3495562"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2024 11:37:21 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,191,1705392000"; 
-   d="scan'208";a="7485401"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2024 11:37:20 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Drew Fustini <dfustini@baylibre.com>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v15 6/8] x86/resctrl: Introduce snc_nodes_per_l3_cache
-Date: Wed, 28 Feb 2024 11:37:01 -0800
-Message-ID: <20240228193717.8170-8-tony.luck@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240228112935.8087-tony.luck@intel.com>
-References: <20240228112215.8044-tony.luck@intel.com>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fVxgmahr"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-29996cc6382so75123a91.3
+        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 12:39:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1709152783; x=1709757583; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SN804jzc01partIzI2Ah9KqFEvJhnq4W2RCgOUJ5uBM=;
+        b=fVxgmahrS3BWDqmJiCZ9xH3N9pfE0kWfo56iG+FtKGVJCDUwlfUGitPog4Wk3X9VtC
+         848N7mYgkx8Rvw5zIbSCX4dV61lc72hdfjxorE7oggqibpJaCHNeXcxji2pWBXOHYez6
+         BI9MgFXems7sQlQtYeBEBDI4v/xePaUQrkoz0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709152783; x=1709757583;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SN804jzc01partIzI2Ah9KqFEvJhnq4W2RCgOUJ5uBM=;
+        b=ozRb+iIxuq1FEjPqOOtQo4o+FOkBKl9FEFTvNrQQCgdvapjGAfGI9MuRjNAoXPA5Ys
+         G15FeRAg5qGikHUCuIcKsG+Id6fTSpaps2crQDvTyPslNZ4NDEfkRqcbQLW2CWrKqIck
+         dSC5qDp9GKWJzQr9lJ0lSkrXqpU0AQnpT+AI8Owv0nWo41BKxpUzcZp034+Sb10K9cLG
+         +weo+VlPooaEBie6G3z5ZRXvmQ88FBTqKJqZH7+LZr4nWs0SigQhtKkKESQmajCT3kP/
+         RYMOf27mDLDy81FNVE2uM43hlXEjsPh9eVmavhle1AS+hxEfH/SwpGKPnU0cyybgwCXK
+         JrnA==
+X-Forwarded-Encrypted: i=1; AJvYcCXq7bwkvTDzyRQ0CzgE24jkv9lZxz7/LWuxEnjMFrkmKXIMX82pwJT51CkuMYG0JVfetzvgNGnxhHRmebe1NYpsRW9EZFiUTQ==
+X-Gm-Message-State: AOJu0YzA8jJARdJZagMT6ai+BAZ3NeUayHH8e8+mujoQTBylxVrdxhkG
+	H0ry+EOGzC/qhP9WXYecYKizJqYOLhPcyyZNKYOKt/tizJNG5UT7Rl8QrJRppw==
+X-Google-Smtp-Source: AGHT+IFLfWxA/Th4MZy8uxTVg4Aj3LQW9lYFKKfkZwp409nzeV0dHtSQ5wDsY3J6R2HhEBTSJ2b2OQ==
+X-Received: by 2002:a17:90b:314e:b0:299:4a63:9e50 with SMTP id ip14-20020a17090b314e00b002994a639e50mr298019pjb.14.1709152783512;
+        Wed, 28 Feb 2024 12:39:43 -0800 (PST)
+Received: from www.outflux.net ([198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id f4-20020a17090a4a8400b00299a0efa221sm29805pjh.35.2024.02.28.12.39.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Feb 2024 12:39:42 -0800 (PST)
+Date: Wed, 28 Feb 2024 12:39:42 -0800
+From: Kees Cook <keescook@chromium.org>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 000/122] 5.10.211-rc1 review
+Message-ID: <202402281231.F7A20FCE@keescook>
+References: <20240227131558.694096204@linuxfoundation.org>
+ <Zd53aNc1aFrCYxFd@codewreck.org>
+ <2024022804-askew-stung-cba8@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2024022804-askew-stung-cba8@gregkh>
 
-Intel Sub-NUMA Cluster (SNC) is a feature that subdivides the CPU cores
-and memory controllers on a socket into two or more groups. These are
-presented to the operating system as NUMA nodes.
+On Wed, Feb 28, 2024 at 07:06:38AM +0100, Greg Kroah-Hartman wrote:
+> On Wed, Feb 28, 2024 at 08:59:36AM +0900, Dominique Martinet wrote:
+> > Greg Kroah-Hartman wrote on Tue, Feb 27, 2024 at 02:26:01PM +0100:
+> > > Kees Cook <keescook@chromium.org>
+> > >     net: dev: Convert sa_data to flexible array in struct sockaddr
+> > > (ca13c2b1e9e4b5d982c2f1e75f28b1586e5c0f7f in this tree,
+> > > b5f0de6df6dce8d641ef58ef7012f3304dffb9a1 upstream)
+> > 
+> > This commit breaks build of some 3rd party wireless module we use here
+> > (because sizeof(sa->sa_data) no longer works and needs to use
+> > sa_data_min)
 
-This may enable some workloads to have slightly lower latency to memory
-as the memory controller(s) in an SNC node are electrically closer to the
-CPU cores on that SNC node. This cost may be offset by lower bandwidth
-since the memory accesses for each core can only be interleaved between
-the memory controllers on the same SNC node.
+Just FYI, it's possible that things using sizeof(sa->sa_data) were buggy
+to begin with since the struct size isn't actually dictated by that size
+(it's only the minimum possible size).
 
-Resctrl monitoring on an Intel system depends upon attaching RMIDs to tasks
-to track L3 cache occupancy and memory bandwidth. There is an MSR that
-controls how the RMIDs are shared between SNC nodes.
+> > With that said I guess it really is a dependency on the arp_req_get
+> > overflow, so probably necessary evil, and I don't think we explicitly
+> > pretend to preserve APIs for 3rd party modules so this is probably
+> > fine... The new warnings that poped up (and were reported in other
+> > messages) a probably worth checking though.
+> 
+> We NEVER preserve in-kernel APIs for any out-of-tree code as obviously,
+> we have no idea what out-of-tree code is actually using, so it would be
+> impossible to do so.
+> 
+> Also, it's odd that a driver is hit by this as no in-kernel driver was,
+> so perhaps it's using the wrong api to start with :)
 
-The default mode divides them numerically. E.g. when there are two SNC
-nodes on a socket the lower number half of the RMIDs are given to the
-first node, the remainder to the second node. This would be difficult
-to use with the Linux resctrl interface as specific RMID values assigned
-to resctrl groups are not visible to users.
+The reason is that most drivers don't want this size (see above) and
+all the in-tree code that did need adjustment got adjusted (visible in
+the referenced patch). :) But that's the risk of an out-of-tree driver:
+it doesn't get those fixes automatically.
 
-The other mode divides the RMIDs and renumbers the ones on the second
-SNC node to start from zero.
+Out of curiosity, which drivers broke and what's needed to get them into
+upstream (or at least staging)?
 
-Even with this renumbering SNC mode requires several changes in resctrl
-behavior for correct operation.
+-Kees
 
-Add a global integer "snc_nodes_per_l3_cache" that shows how many
-SNC nodes share each L3 cache. When "snc_nodes_per_l3_cache" is "1",
-SNC mode is either not implemented, or not enabled.
-
-Update all places to take appropriate action when SNC mode is enabled:
-1) The number of logical RMIDs per L3 cache available for use is the
-   number of physical RMIDs divided by the number of SNC nodes.
-2) Likewise the "mon_scale" value must be divided by the number of SNC
-   nodes.
-3) The RMID renumbering operates when using the value from the
-   IA32_PQR_ASSOC MSR to count accesses by a task. When reading an RMID
-   counter, adjust from the logical RMID to the physical
-   RMID value for the SNC node that it wishes to read and load the
-   adjusted value into the IA32_QM_EVTSEL MSR.
-4) Divide the L3 cache between the SNC nodes. Divide the value
-   reported in the resctrl "size" file by the number of SNC
-   nodes because the effective amount of cache that can be allocated
-   is reduced by that factor.
-5) Disable the "-o mba_MBps" mount option in SNC mode
-   because the monitoring is being done per SNC node, while the
-   bandwidth allocation is still done at the L3 cache scope.
-   Trying to use this feedback loop might result in contradictory
-   changes to the throttling level coming from each of the SNC
-   node bandwidth measurements.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/kernel/cpu/resctrl/internal.h |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c     |  6 ++++++
- arch/x86/kernel/cpu/resctrl/monitor.c  | 16 +++++++++++++---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |  5 +++--
- 4 files changed, 24 insertions(+), 5 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 41a093feb744..786035eff7fb 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -483,6 +483,8 @@ extern struct rdt_hw_resource rdt_resources_all[];
- extern struct rdtgroup rdtgroup_default;
- extern struct dentry *debugfs_resctrl;
- 
-+extern unsigned int snc_nodes_per_l3_cache;
-+
- enum resctrl_res_level {
- 	RDT_RESOURCE_L3,
- 	RDT_RESOURCE_L2,
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index c34ce367c456..cb181796f73b 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -331,6 +331,12 @@ static u32 delay_bw_map(unsigned long bw, struct rdt_resource *r)
- 	return r->default_ctrl;
- }
- 
-+/*
-+ * Number of SNC nodes that share each L3 cache.  Default is 1 for
-+ * systems that do not support SNC, or have SNC disabled.
-+ */
-+unsigned int snc_nodes_per_l3_cache = 1;
-+
- static void mba_wrmsr_intel(struct msr_param *m)
- {
- 	struct rdt_hw_ctrl_domain *hw_dom = resctrl_to_arch_ctrl_dom(m->dom);
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 08d53ce61d01..87badcec2834 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -186,8 +186,18 @@ static inline struct rmid_entry *__rmid_entry(u32 idx)
- 
- static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- {
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
-+	int cpu = smp_processor_id();
-+	int rmid_offset = 0;
- 	u64 msr_val;
- 
-+	/*
-+	 * When SNC mode is on, need to compute the offset to read the
-+	 * physical RMID counter for the node to which this CPU belongs.
-+	 */
-+	if (snc_nodes_per_l3_cache > 1)
-+		rmid_offset = (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
-+
- 	/*
- 	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
- 	 * with a valid event code for supported resource type and the bits
-@@ -196,7 +206,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- 	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
- 	 * are error bits.
- 	 */
--	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
-+	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + rmid_offset);
- 	rdmsrl(MSR_IA32_QM_CTR, msr_val);
- 
- 	if (msr_val & RMID_VAL_ERROR)
-@@ -1011,8 +1021,8 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- 	int ret;
- 
- 	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
--	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale;
--	r->num_rmid = boot_cpu_data.x86_cache_max_rmid + 1;
-+	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_nodes_per_l3_cache;
-+	r->num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_nodes_per_l3_cache;
- 	hw_res->mbm_width = MBM_CNTR_WIDTH_BASE;
- 
- 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 821c32876cc1..1afc64bf46fa 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1466,7 +1466,7 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 		}
- 	}
- 
--	return size;
-+	return size / snc_nodes_per_l3_cache;
- }
- 
- /*
-@@ -2346,7 +2346,8 @@ static bool supports_mba_mbps(void)
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
- 
- 	return (is_mbm_local_enabled() &&
--		r->alloc_capable && is_mba_linear());
-+		r->alloc_capable && is_mba_linear() &&
-+		snc_nodes_per_l3_cache == 1);
- }
- 
- /*
 -- 
-2.43.0
-
+Kees Cook
