@@ -1,51 +1,31 @@
-Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A875674B
-	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 00:00:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E0D4111E
+	for <patches@lists.linux.dev>; Wed, 28 Feb 2024 00:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709078414; cv=none; b=IMri23s0cj/+Ew649QpsN/iMmwovpE5PLW3Vn+LvoO35zavEZVUi5/p9BHaH0L6ni8MT9zQJ1lLFsGeyR0gbZo+wCESpvfO2pVYn0kTiZFoqSf2sSDuuq/Fez6EXyFbLOFPSd1BWiSEP3gqQMs81N8UR+1v5vPFq6Qx5IHDUmqQ=
+	t=1709079934; cv=none; b=mpmWA00r4qtz2hUo0FExtmd64T+8Op5GVFS/V/77N5zZbOYGN+RRFWBO+X56z5qV9Pbfon+rtNSv1U39wRFYgTqXdVCKbQSX348sDyTrtrShk3KkVC6jNYwlvzMxoGIYkpRn0oIJ40AoNVPcdyRPPZBnihYyOlTkW9LpRVWIFyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709078414; c=relaxed/simple;
-	bh=XMvSEHgj6FQQX4NJYV38kUge5WnC01AhhZdR4QqmNxo=;
+	s=arc-20240116; t=1709079934; c=relaxed/simple;
+	bh=9PkFuAQnvHLgybqYTSuG4miDXpSkxYeaVLIU3V8OPXc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kDhtr7MvXUcRzCIhjBr7vj40Ez8w+odKYiC5BKpCdfAb/TgZZ+kZAsNZ2UXj/H7znY8tQ2kHGj9zG6+MBnj9TNArvusqadwGMQ5Jeq7karuPBTLzR3K2jEXJjiSP0GyeA+958eF7G3MXR/lle1M425JgX1U+pLc7luYP94OpjHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=rHh4bTQi; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=u4s7fxyU; arc=none smtp.client-ip=91.121.71.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=kZ/tsDFUTNpQtOrX7SFOw6gvNylUdrRZwoEqM2h4G0HuUFuMrU8kJM2TWq640oh2c6GLBKcFEmacLOE8p5lU2I7TUei4cAS+BLzFO8r82bHbbyet1CGsXZSWvVfSQUt3ELzh1+XfAju6bFuWCxGlw9MOI+9XbU0TjoxFioKGZfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=TAEJ8tYb; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="rHh4bTQi";
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="u4s7fxyU"
-Received: by nautica.notk.org (Postfix, from userid 108)
-	id B57CDC021; Wed, 28 Feb 2024 01:00:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1709078403; bh=oCAghHCq7o9/mLKl8vCyRB9FOEm/PiJ08Ap1ZVGb68I=;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="TAEJ8tYb"
+Received: by linux.microsoft.com (Postfix, from userid 1131)
+	id C07CF20B74C0; Tue, 27 Feb 2024 16:25:32 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C07CF20B74C0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1709079932;
+	bh=/XtuIasPbJ+pa8jkpkpOnHa9UC5OeliChPUOffyAgm4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rHh4bTQiCzBMFvXnVLp6OtOhZIoMihbGmxJBh+BS5m8sC/LE6XNXVoAhXXPp0St3Y
-	 YgEAzOHRQdTsAXvQm83At5wLADiPIOi/9dAgFwSGmx7TZ/Ut/hnH74tVkl7R5RWe0c
-	 ODGuMBqc4v1yy6g8FtO1AYjmy04QcV61iKu8Pp4elXZCzHSbkbgu6XeaJH19BpQ5h3
-	 5GgbWt6DjbBhEQXuFX0I9Pf2EdByJNsTm3ZuDR10e1WSdH5eGHTqlg1yb9qYWuuG4B
-	 Lb3QptenCLXoW3gsCuTLlYu8dAVlF+pBWhJ/Qloe4ycJrWY2i9UVtb57HtY67GjtWV
-	 lQMJfH631hG0w==
-X-Spam-Level: 
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by nautica.notk.org (Postfix) with ESMTPS id 1A12FC009;
-	Wed, 28 Feb 2024 00:59:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1709078402; bh=oCAghHCq7o9/mLKl8vCyRB9FOEm/PiJ08Ap1ZVGb68I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u4s7fxyUSwVq1NFrwlLciyYj/9RaHErzURUU7S/vphtyffEPZSA4WLxfeWelC8OX8
-	 pUQOjLP4KYQKDY/RFlHG/t+N9MuqrpGvV4zkybPrfZE8XlAJnrv2gQMoejBlVItUCs
-	 VSYGckN6TQ1l77pg4MzwSIIAEtArx6Q/Sf1W2gnyIWZ5XuT5wFapdHrnkoJmpZDoFn
-	 3wuJED/8VJU4hkrxDNXqoLHAGrKYMU5yhW4bGajc8AR1APHafikzaonU05arqQHWmp
-	 TLc5A2gLUVs3i6izt/DYDQt0i8dM8RgSW7sHLM5iBb3s9/ZSUWOdGR9iSwDFYSqu4d
-	 runJGul2yVivQ==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 9661d174;
-	Tue, 27 Feb 2024 23:59:51 +0000 (UTC)
-Date: Wed, 28 Feb 2024 08:59:36 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
+	b=TAEJ8tYb2k+C87Sr6K8P1CHW6PPqCqH0+HOsis+93dQB0CtTb3oFzSp4nrQsFbnkM
+	 4qByworn2L2nOAWrWxJ6shC8ZxbdGvSry3ftKycBquHWNoiQaciNDMH7qjaizngDGC
+	 fQaQjUo2dqIBJjNipGE/J4a+VwdK6fCSSxBc1MhI=
+Date: Tue, 27 Feb 2024 16:25:32 -0800
+From: Kelsey Steele <kelseysteele@linux.microsoft.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -54,42 +34,34 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 5.10 000/122] 5.10.211-rc1 review
-Message-ID: <Zd53aNc1aFrCYxFd@codewreck.org>
-References: <20240227131558.694096204@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/195] 6.1.80-rc1 review
+Message-ID: <20240228002532.GA24086@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20240227131610.391465389@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
+In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-Greg Kroah-Hartman wrote on Tue, Feb 27, 2024 at 02:26:01PM +0100:
-> Kees Cook <keescook@chromium.org>
->     net: dev: Convert sa_data to flexible array in struct sockaddr
-> (ca13c2b1e9e4b5d982c2f1e75f28b1586e5c0f7f in this tree,
-> b5f0de6df6dce8d641ef58ef7012f3304dffb9a1 upstream)
+On Tue, Feb 27, 2024 at 02:24:21PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.80 release.
+> There are 195 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
+> Anything received after that time might be too late.
 
-This commit breaks build of some 3rd party wireless module we use here
-(because sizeof(sa->sa_data) no longer works and needs to use
-sa_data_min)
-With that said I guess it really is a dependency on the arp_req_get
-overflow, so probably necessary evil, and I don't think we explicitly
-pretend to preserve APIs for 3rd party modules so this is probably
-fine... The new warnings that poped up (and were reported in other
-messages) a probably worth checking though.
+No regressions found on WSL (x86 and arm64).
 
+Built, booted, and reviewed dmesg.
 
-That aside no particular problem actually running this, so--
-Tested 5d69d611e74d ("Linux 5.10.211-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Thank you. :)
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-
--- 
-Dominique Martinet | Asmadeus
+Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com>
+ 
