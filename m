@@ -1,196 +1,148 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2081.outbound.protection.outlook.com [40.107.100.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D70E13F44E
-	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 20:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709237987; cv=none; b=Ogycz6sqeRKwB+pkIxTHcaSzDZmDZLOD7D6GHbMWYFdKtrXx1Qj8nazmi22Ptknb2Qu7hQqm/5nIUIb7a4tHV3rea/qdSyLWdgZzskY2alE2PyyPPAMLf3LYmR04CI0jOk21d1a0U0DvK6z5lzq0K3E2qVxOmp3q8vjpLEG81m4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709237987; c=relaxed/simple;
-	bh=LN/IOb5JU0DH2uYb2n+cydKcHYsF2OCAvDHl0807OAI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ksem9hJH3xbTvLNOEKD3Wn6HXENivSbIHNj6lRuMPxg88g/J27MAnSxXLoz8N/HQt1ECpEYh2IOmtunxns86LG+kmpjS7XyPkJ4lVbRwy3XV76TKA+AV0qi7Gc1Hqv2a5U2pktNwWIubchfgCNno/5urFsCEUXBTEOxIp+OWbwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OrRLY9KR; arc=none smtp.client-ip=209.85.166.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F771428ED;
+	Thu, 29 Feb 2024 20:23:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709238220; cv=fail; b=Ir3cAvpyz1SVzXnd2gec6mU1OoT13h5v2pB0R0H0UHHMTbR5jeZd/3o4tBJoTSBXpDvp7r8rtaDJDoziWRjtg4udHEPcJStS1Dm0rTTNi9js6SRuLUevHEz0X0Byqz5ToTafpB2cCGIM251muTOygq7NbWuI5Ae4wEWpC6PXxKY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709238220; c=relaxed/simple;
+	bh=otcLA7Y5wo5LK6rFj+1cavVHsu/ZqmUeCNBrwsDg3oY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=OvrsnAAC7US97afE2gkplPcGImsuazkDPNB57m/2m5Yzq5xL8SqjICCdNvcBHNMmSFSaDfK0xwe6OfN+DMsx6T/jmgm0ckNAw4EqA3+8OdZzqSMbho6+bPABDMxWRXGGhnKrFHcRTG2BTO56YYIwpDBZMIarkREujGrKMScDbdM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mPOYiluj; arc=fail smtp.client-ip=40.107.100.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OrRLY9KR"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-7c48e13e0d7so66860139f.1
-        for <patches@lists.linux.dev>; Thu, 29 Feb 2024 12:19:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709237984; x=1709842784; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=DWx+JJzrhA8O/5RetxNWqwuYRfxHSKh4F82WaKom4aE=;
-        b=OrRLY9KRIuD2Q0u/K9g30sE8NTQ8cJ5EuXFfo+Rsy9hiD0lwofRWMqrprJYtoKO4Ht
-         Df3nfTsafVASd8l4J2DClCVexnmTyAcXj3K7CcsTuzHUuxpYmhgIhCUaDSYUHeb5tsWp
-         hhnXFT20/v7W9I7dBlHw4h9fxUCUHLjeLqNsWssEkq33DoOMkbO7T6KVgZ1M60Yh7elB
-         75WRmALYH4ipBkQgIgy1lI8WwZvKvE9j2FEUqV5+QhrgDRwWnT20JnSeb2FcB6roivyd
-         Y66nxD3Ulkp+0aoagdP4a2jD0TeXZjBcbadMFO3BvL6rYfK5F1DU+TWK4AfibdrNQuAo
-         APlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709237984; x=1709842784;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DWx+JJzrhA8O/5RetxNWqwuYRfxHSKh4F82WaKom4aE=;
-        b=bI6AEG8usmFgqLe1IQqc/XGYTDtIn+Acny5brjnCtDvM589/smyZoXksREGJ9HYxTA
-         zmLC77bmM5olkaJ3pcf1/UrEGwjZU7TZi3CK5W9ZHLQIsih834Pgz1+c8paD5PqW0tCs
-         FoVSqp31MWXhFIQ+1B1OacGBr7aHsCsi+t3g5aDvi7vcs8NfVISuHw1SmQNMUv2fv3TM
-         1UN0wbAIG5/VqFfJuT4SoQpGUtfZpLE+QSBcSnIcK5AY7XolA6sleuNp8i8bYLmsJndn
-         3CNdDG3xLJkliYp8uZ4k63iEb4UQQ09Bb7iRlqx/1mrubJUCrcgivTTaCrGy4/LXM5hQ
-         OQaA==
-X-Forwarded-Encrypted: i=1; AJvYcCWx26VFAxkTcvhf5Z4LMZGLhZymTJKGK74ZMWsCCr2QnEk0ysR2Z55IczFttvysfn/S5Fv5pt9dLubSHXb8xkZeqJBDPh8qdg==
-X-Gm-Message-State: AOJu0YysSWW77gaXnca6qu35LFVJX80VcGVRGIirJU7aMzMshtOSq79z
-	0T9k+D0CGTWAb55A8RmbC3V+6Gw9mdOBtYWvIyXjiZ2WY78zQxcQ
-X-Google-Smtp-Source: AGHT+IHIds1jDIwJe86p1OdWPAbmQy+dsnlCtndULGVYG0lmpl5RrYamh/8HeZJ9rlizB5DApykSmQ==
-X-Received: by 2002:a5e:8d11:0:b0:7c7:908b:f375 with SMTP id m17-20020a5e8d11000000b007c7908bf375mr52854ioj.10.1709237984397;
-        Thu, 29 Feb 2024 12:19:44 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id g10-20020a02b70a000000b00474558a20a3sm473305jam.140.2024.02.29.12.19.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 12:19:43 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <1223812f-1dc3-40c2-a58a-2485d68e92b6@roeck-us.net>
-Date: Thu, 29 Feb 2024 12:19:40 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mPOYiluj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Iz6t0j6O/DFTJbUT+gBBrU7JcoIJYGg+EUYlNogcyLtxV2sNmjSFWcBu5KxmVuQDAO5E1yDsu6ZCCrz58SfWZAjz9e+jao68RIm/DWJI9dxDAE1TD+CvX0CTh3vTBqNR5pGO8hvOcEKOM9OhCHEAqOufbmqSCGHqRo7YEnG9HjJNPOk/Jkz1WLpPgG4NOknO7T/IF6TxRMdVk02gdK5lY2pX/PDB9ENsIP5a2xsP6y4XefmSpR8vCTwVjIBne0xTlW2mQRop2lGtbuyZjI8ZVoZIX8enWUN5iGEvXgI7qky+jGPQDfIVwSU/iYBiuMfJzi4msoS6G8jiBTav0bJOtg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=shior3ur48hvQ//+aeYxlcen2/aPxeT+bqHzjYHu2/Q=;
+ b=Bu3ROBBZe9VjzqqYw+SX38rOKrZ8uLVT2vmEq4ZPvT59mFreUNQmMd3vFWbV1LpSoQOinVcVVg0M0oH3e8+czyGbdLHeK5Qsh4NfMVU9YS7cGH2zzhtu3Svzmm0qML4gwmyDQlRKd0iTKB7bKuI5PEXCxQEXISyolFkFjvWkGqrnI4irlNC4YbEjdDW3rKCssQZnxugFtWrb/jng5YuuFXhBFze904xFYsRPHIi2Qd3s9raDRYtrg6BMycKQ9Xwz9wz8HmDm+/hr+CuoUKh9jayScnxxLRXgdAemo5vpUvKyyJU4ESy54RTLtkSfnr0FNd1ItuHryjy07De9EnTsSg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=shior3ur48hvQ//+aeYxlcen2/aPxeT+bqHzjYHu2/Q=;
+ b=mPOYiluj8Y+0TtD/fl/H8DR4JILOijU055THUQVqNDalXV3X+vySYF4vR3AeDXaCijTAtFcnpSBQEYmSQewYqYRf9YQMcgQNd6vs8LIJ7mMJRjrURR1uibVqJk08Wb3FqtwWkk6FFHbad48wnDIAVqWxgmEpB8FZv9nYI70vKNlgflJDAbcRJLGEopHNBs93agfhPQ8wNF5BrZI7MHFvii47JQneIi8JRFimEChoX/H0ZYaZlQLKtcKyp6N56z3bdNbgjF1WmEtU2wJM4ZT0US4U0bwHSj+lPhmh2ctvnsuQe2tkUM03tar80ZpaW1RS87tFNM4qZ8XYMUMze8I66w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by CYXPR12MB9318.namprd12.prod.outlook.com (2603:10b6:930:de::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.39; Thu, 29 Feb
+ 2024 20:23:32 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::2e3e:c7c0:84da:3941]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::2e3e:c7c0:84da:3941%6]) with mapi id 15.20.7316.037; Thu, 29 Feb 2024
+ 20:23:32 +0000
+Date: Thu, 29 Feb 2024 16:23:31 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Will Deacon <will@kernel.org>
+Cc: Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	catalin.marinas@arm.com, kernel-team@android.com,
+	Michael Shavit <mshavit@google.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>, Lu Baolu <baolu.lu@linux.intel.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+	Moritz Fischer <moritzf@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Moritz Fischer <mdf@kernel.org>
+Subject: Re: [PATCH v6 00/16] Update SMMUv3 to the modern iommu API (part 1/3)
+Message-ID: <20240229202331.GL9179@nvidia.com>
+References: <0-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
+ <170921954415.3073552.7948276252050662200.b4-ty@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <170921954415.3073552.7948276252050662200.b4-ty@kernel.org>
+X-ClientProxiedBy: BL0PR01CA0031.prod.exchangelabs.com (2603:10b6:208:71::44)
+ To DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/245] 5.15.150-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, paul@crapouillou.net
-References: <20240227131615.098467438@linuxfoundation.org>
- <ac2c579e-4ff0-42e2-ab70-efb8ded2d257@linaro.org>
- <2024022905-skinny-making-7852@gregkh>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <2024022905-skinny-making-7852@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CYXPR12MB9318:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8268d58-5789-4765-4c35-08dc39644c95
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	IXOwri6jxhOYUoq4fUsV0i+RL54PPUPbqa5tEcKHzY3/ga/miXUimD784WjFOK5O1hsYe7VFeeNiPohFKfVOi8QRpUCShFjbSTGXjspISBLCXboDv2OvXy99Sq/MaDvd5k7LoioSFsyTdN59dtPMqDjsA+lxnbuF2N6siZ1pfO1TI6upf2y/SuFfMmD3ZtEGL2AXSxgsTLJwc/KGuxsCQvTEyETkTIS75nB2GpOjztUFJy12ZB7Sagrb8P2/84+vpQswFYU/S7d8QRgvajB9om0nvZTKte72c0Z1cpe8V1mnw5B+9lslNMEAjE6WWcVBuqOGPYh0FOXsF7erw6AcxQnKqOUobhq08ZxKi8qzUPU4g2KlYMxSNkU4dumqNx8ehNxsQSxARkm6yhbbhIN5sOS4VESRg7oaXZVnwgGWBUg00DIPwAkFECoIspIDI9mUGL5pvx3zNggrE0vtWOxISUuemdnO+T7VOfTRUOCG26naIJKDLuQcdNpYz8jzz/yiwlxIAuMJujeHh/WZhNgtYW+p6KLhWppOjwFH8aqxLxtvPOSWQHDqXKq+Aii1bFWdLmVor/pEFHjN2ikhdrwXUhFAEnvE0sCYKcWNJqWwW+g1oVS/3bz1ezD+KPr9j8JcVbao68f76SPxcgm8GBGG/A==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?5HQsXXN01hUf8f+TNHrdQ6jzCj68ZDB+f9+XCzLcXZ3PCYtw9+M/h0bXXfgN?=
+ =?us-ascii?Q?TmBZoT2+SRijuIWNV8GfuDTamNxb8+I1qbzQO0C1nkz6OKt1s5lUA6AGqMCN?=
+ =?us-ascii?Q?QCj0FIt12hKltzzXLYZGIZTVh/gyp4q4zaFCFEXnzpDaWSkTXSUbele97Zfh?=
+ =?us-ascii?Q?JaUzpZ3jXj0Mqjir1sMvXAijJY3cO//t1xmeZLuzzEC34ukZG35oSXFK+GHE?=
+ =?us-ascii?Q?9080Y+fcuIuECg+1PJvNnVaW/aoowEvWLpP1jwGJFG+yRxi4QgzqyuZMrPFd?=
+ =?us-ascii?Q?uoAtlzC9USp9w3uZs29QGUWB9hlbg+AqfD696ynsauu9WCx0ivzk3Ncft0K3?=
+ =?us-ascii?Q?Dgo6YbNRcTu7pu6bYPrm3Ga4Ok6kKigMFhE1eh3gOPH2Eji2XT1OuFlXjb8R?=
+ =?us-ascii?Q?QHIj0xEJJAoH4UOpKujrFxv0xqkpMhboQ0x+WXnFTZCg3cxU9DzJYduX4mMM?=
+ =?us-ascii?Q?sYWKod+mQeZfbT8BwCv0a8uxIOtvxAMSSW+ocI3h1MZV9Ahz12GxdNn+uDQ3?=
+ =?us-ascii?Q?+YsYf6VwUHsPinyvEApiVQHB8ff2dsmp+cSIPUUZ+jMyBghaUcyx9E52mFgo?=
+ =?us-ascii?Q?U2cdiXlvQ0L3JTANHU33lWI1ZLnMXlP642s7UqlEDcN0Gw61khA0FtBXl8yK?=
+ =?us-ascii?Q?GQpeGjyITVVXLDC7A7euNLf/1DCESaSriqNWkM/oGqYk/28io3aoo5wnaikD?=
+ =?us-ascii?Q?eWt/WhF/t/9NEnC2OTi3Ba50/Ec6fkVX/OcAUUt7eQPEDtf1Ox9JcF7Hw1n8?=
+ =?us-ascii?Q?p3dFqOkGLNWU3MAps443LMGoCyHD7vXRKi8SrP5Y3W2bmMoNBqPJGxJLZrT9?=
+ =?us-ascii?Q?ptDGj0JN+wK/NJshkZNGEHgEQarWZWfYc25OxzAtuAxU3vzinohETkFMkn6s?=
+ =?us-ascii?Q?soU/KyWn9OY/dRtqEuzFYGJfbgeLBPV2+no05JHVgMuBCi+XPHqg4PyvCOhX?=
+ =?us-ascii?Q?LKBLrC0+LOIr6IejtVTbOHBjm4Te0ItGTwwQTPBAVcCX1ABUgHs1zLK68lSu?=
+ =?us-ascii?Q?HvFjTcXZByxsDCITww6BlJQIfLh9xB6HvF/rPx74IE8LPwWo9FzjKqvwKdMz?=
+ =?us-ascii?Q?h58qMc0dXoCDNKthTjQJr1fnXo0g9p86lEWCKLiNt3TJkqCIzWaIXeTS+/CH?=
+ =?us-ascii?Q?gGBMqV7YpTZgxrvbMQwYvRR9Fciyhco888pN0x7kJuOh3wbdKxbSiCgJIj1X?=
+ =?us-ascii?Q?4lIGrOYbIELlqvCqJWc8hw5op/Eekusr9sFTeaqB749zsL1PwNkE3HEnpwj7?=
+ =?us-ascii?Q?MLADJP9HgKqpyG8iFXp2dWn/2ELt6INjmLmz4b15sCJ6F+tuqs66jvWbAy2+?=
+ =?us-ascii?Q?tvc6kwIO+B8/exPcS441aZz176D67eWTru0cAszHL+OZmXaQuTjyA0DOKWoy?=
+ =?us-ascii?Q?2eiZJCjP7avao4ckoa4Mbwm4fnG3bk5CRheOskLfVHGfKs+GZchAU1TKwLmN?=
+ =?us-ascii?Q?/6pmBctsJyAgZY4WxChedqDIaKHI9AONwpkKLToIARDCjjvNrmFdO+DPnehJ?=
+ =?us-ascii?Q?13S0QFGQ7ySKiiwnpvVoOwALvP8YlpAOBytKPZaNZweWfAQ4BKXfBLSdOfRr?=
+ =?us-ascii?Q?mV9zjLMS1wEWqU+Vt8BnwEwSZk+oGlaKHL+mW2Ng?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8268d58-5789-4765-4c35-08dc39644c95
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Feb 2024 20:23:32.5491
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: c+R9n7igqIbkHWIgu0/ufkvQoWudZ/nVv4HFFG1xumz9w+6lFR+nT+ng29wWDd7A
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9318
 
-On 2/29/24 11:54, Greg Kroah-Hartman wrote:
-> On Tue, Feb 27, 2024 at 12:56:32PM -0600, Daniel Díaz wrote:
->> Hello!
->>
->> On 27/02/24 7:23 a. m., Greg Kroah-Hartman wrote:
->>> This is the start of the stable review cycle for the 5.15.150 release.
->>> There are 245 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
->>> Anything received after that time might be too late.
->>>
->>> The whole patch series can be found in one patch at:
->>> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.150-rc1.gz
->>> or in the git tree and branch at:
->>> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->>> and the diffstat can be found below.
->>>
->>> thanks,
->>>
->>> greg k-h
->>
->> We're seeing build regressions here with RISC-V, with GCC 8, GCC 12, and Clang 17:
->>
->> -----8<-----
->>    In file included from /builds/linux/include/linux/list.h:9,
->>                     from /builds/linux/include/linux/module.h:12,
->>                     from /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:12:
->>    /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:5512:35: error: 'rtl8169_pm_ops' undeclared here (not in a function); did you mean 'rtl8169_poll'?
->>     5512 |         .driver.pm      = pm_ptr(&rtl8169_pm_ops),
->>          |                                   ^~~~~~~~~~~~~~
->>    /builds/linux/include/linux/kernel.h:46:44: note: in definition of macro 'PTR_IF'
->>       46 | #define PTR_IF(cond, ptr)       ((cond) ? (ptr) : NULL)
->>          |                                            ^~~
->>    /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:5512:27: note: in expansion of macro 'pm_ptr'
->>     5512 |         .driver.pm      = pm_ptr(&rtl8169_pm_ops),
->>          |                           ^~~~~~
->>    make[5]: *** [/builds/linux/scripts/Makefile.build:289: drivers/net/ethernet/realtek/r8169_main.o] Error 1
->> ----->8-----
->>
->> Bisection points to:
->>
->>    commit ac2871f646a8f556203f5b6be875ce406d855ddb
->>    Author: Paul Cercueil <paul@crapouillou.net>
->>    Date:   Tue Dec 7 00:20:59 2021 +0000
->>        PM: core: Redefine pm_ptr() macro
->>        [ Upstream commit c06ef740d401d0f4ab188882bf6f8d9cf0f75eaf ]
->>
->> A revert could not be done cleanly.
->>
->> Tuxmake reproducer:
->>
->>    tuxmake --runtime podman --target-arch riscv --toolchain gcc-12 --kconfig defconfig
->>
->> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+On Thu, Feb 29, 2024 at 04:34:13PM +0000, Will Deacon wrote:
+> On Mon, 26 Feb 2024 13:07:11 -0400, Jason Gunthorpe wrote:
+> > The SMMUv3 driver was originally written in 2015 when the iommu driver
+> > facing API looked quite different. The API has evolved, especially lately,
+> > and the driver has fallen behind.
+> > 
+> > This work aims to bring make the SMMUv3 driver the best IOMMU driver with
+> > the most comprehensive implementation of the API. After all parts it
+> > addresses:
+> > 
+> > [...]
 > 
-> I've been beating on this for a while and I really don't know what is
-> happening, sorry.  The driver looks fine, something is "odd" with riscv
+> Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-No, the driver is not fine. Upstream has commit 8fe6e670640e ("r8169: use new
-PM macros") which makes rtl8169_pm_ops unconditional. That commit is missing
-in v5.15.y. Applying it makes the problem disappear.
+Thanks Will! I'll post the rebased part 2 and start getting tags
+hopefully next week (I got a flu, just getting back to work now).
 
-In other words, the problem is not riscv specific, but will be seen if the
-realtek driver is built with CONFIG_PM=n (which happens to be the case with
-riscv:defconfig).
+Did you notice any contentious patches in there that could use more
+attention?
 
-Guenter
+https://lore.kernel.org/linux-iommu/0-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com/
 
+Jason
