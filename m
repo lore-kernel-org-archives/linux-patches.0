@@ -1,148 +1,129 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2081.outbound.protection.outlook.com [40.107.100.81])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F771428ED;
-	Thu, 29 Feb 2024 20:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.81
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709238220; cv=fail; b=Ir3cAvpyz1SVzXnd2gec6mU1OoT13h5v2pB0R0H0UHHMTbR5jeZd/3o4tBJoTSBXpDvp7r8rtaDJDoziWRjtg4udHEPcJStS1Dm0rTTNi9js6SRuLUevHEz0X0Byqz5ToTafpB2cCGIM251muTOygq7NbWuI5Ae4wEWpC6PXxKY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709238220; c=relaxed/simple;
-	bh=otcLA7Y5wo5LK6rFj+1cavVHsu/ZqmUeCNBrwsDg3oY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=OvrsnAAC7US97afE2gkplPcGImsuazkDPNB57m/2m5Yzq5xL8SqjICCdNvcBHNMmSFSaDfK0xwe6OfN+DMsx6T/jmgm0ckNAw4EqA3+8OdZzqSMbho6+bPABDMxWRXGGhnKrFHcRTG2BTO56YYIwpDBZMIarkREujGrKMScDbdM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mPOYiluj; arc=fail smtp.client-ip=40.107.100.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D9B7BAEB;
+	Thu, 29 Feb 2024 20:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709238668; cv=none; b=g/d6PDfzFrB8vgzYEwqBcCdeGeQz9Fp1nIysTxHycMCIHqWVB4oGac4Gf3OgCrbQ61VnQMEisgwSKDJVRMWJTJugDWPqgyaLLBtKqK61hoWTu/uSxB4Fdq4rZ9GW8cxKTiajTMPY1VrvSDVDTMY0nvmRKaKN6W1INfdxZRmRZDs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709238668; c=relaxed/simple;
+	bh=M4+6vQFkD+CYyHpmKhFMZOuZsQkEWvXMWLciVnbbYrA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p1ZDE4oQaWFsqGREBK78XDJOIUBCMG8uCv23LQ6gTtYi28PVjaVgPOAYJzTgkqh8CCU8+H7XY+Vk17uUTe3ymNx9B35AHOm4+uq7eH8rLX9zga+xLxHvIr965XgLhEwTg13nVLAmX2xozkC/yEBu4bftQf0UL2K4YqOQMIRBfPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1YbtChL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mPOYiluj"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Iz6t0j6O/DFTJbUT+gBBrU7JcoIJYGg+EUYlNogcyLtxV2sNmjSFWcBu5KxmVuQDAO5E1yDsu6ZCCrz58SfWZAjz9e+jao68RIm/DWJI9dxDAE1TD+CvX0CTh3vTBqNR5pGO8hvOcEKOM9OhCHEAqOufbmqSCGHqRo7YEnG9HjJNPOk/Jkz1WLpPgG4NOknO7T/IF6TxRMdVk02gdK5lY2pX/PDB9ENsIP5a2xsP6y4XefmSpR8vCTwVjIBne0xTlW2mQRop2lGtbuyZjI8ZVoZIX8enWUN5iGEvXgI7qky+jGPQDfIVwSU/iYBiuMfJzi4msoS6G8jiBTav0bJOtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=shior3ur48hvQ//+aeYxlcen2/aPxeT+bqHzjYHu2/Q=;
- b=Bu3ROBBZe9VjzqqYw+SX38rOKrZ8uLVT2vmEq4ZPvT59mFreUNQmMd3vFWbV1LpSoQOinVcVVg0M0oH3e8+czyGbdLHeK5Qsh4NfMVU9YS7cGH2zzhtu3Svzmm0qML4gwmyDQlRKd0iTKB7bKuI5PEXCxQEXISyolFkFjvWkGqrnI4irlNC4YbEjdDW3rKCssQZnxugFtWrb/jng5YuuFXhBFze904xFYsRPHIi2Qd3s9raDRYtrg6BMycKQ9Xwz9wz8HmDm+/hr+CuoUKh9jayScnxxLRXgdAemo5vpUvKyyJU4ESy54RTLtkSfnr0FNd1ItuHryjy07De9EnTsSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=shior3ur48hvQ//+aeYxlcen2/aPxeT+bqHzjYHu2/Q=;
- b=mPOYiluj8Y+0TtD/fl/H8DR4JILOijU055THUQVqNDalXV3X+vySYF4vR3AeDXaCijTAtFcnpSBQEYmSQewYqYRf9YQMcgQNd6vs8LIJ7mMJRjrURR1uibVqJk08Wb3FqtwWkk6FFHbad48wnDIAVqWxgmEpB8FZv9nYI70vKNlgflJDAbcRJLGEopHNBs93agfhPQ8wNF5BrZI7MHFvii47JQneIi8JRFimEChoX/H0ZYaZlQLKtcKyp6N56z3bdNbgjF1WmEtU2wJM4ZT0US4U0bwHSj+lPhmh2ctvnsuQe2tkUM03tar80ZpaW1RS87tFNM4qZ8XYMUMze8I66w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by CYXPR12MB9318.namprd12.prod.outlook.com (2603:10b6:930:de::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.39; Thu, 29 Feb
- 2024 20:23:32 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::2e3e:c7c0:84da:3941]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::2e3e:c7c0:84da:3941%6]) with mapi id 15.20.7316.037; Thu, 29 Feb 2024
- 20:23:32 +0000
-Date: Thu, 29 Feb 2024 16:23:31 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Will Deacon <will@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	catalin.marinas@arm.com, kernel-team@android.com,
-	Michael Shavit <mshavit@google.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Lu Baolu <baolu.lu@linux.intel.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Moritz Fischer <moritzf@google.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Moritz Fischer <mdf@kernel.org>
-Subject: Re: [PATCH v6 00/16] Update SMMUv3 to the modern iommu API (part 1/3)
-Message-ID: <20240229202331.GL9179@nvidia.com>
-References: <0-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
- <170921954415.3073552.7948276252050662200.b4-ty@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <170921954415.3073552.7948276252050662200.b4-ty@kernel.org>
-X-ClientProxiedBy: BL0PR01CA0031.prod.exchangelabs.com (2603:10b6:208:71::44)
- To DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1YbtChL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF60C433F1;
+	Thu, 29 Feb 2024 20:31:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1709238667;
+	bh=M4+6vQFkD+CYyHpmKhFMZOuZsQkEWvXMWLciVnbbYrA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=z1YbtChLPxbWtp5lARHdveXbF//APjjq3sKO2oW7h6SARgdWdLmMXJDhqLOMai56C
+	 qXG3/zWQhqYf/PEfHYOOUxKvle47M3Z1EpwBF8gqwnGhRqdkJhJGDEHtbLz3Feljkh
+	 G2wxTxt1bfuy5odd/agjuZXDTG8rTNcsiDjl7uJY=
+Date: Thu, 29 Feb 2024 21:31:04 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, paul@crapouillou.net
+Subject: Re: [PATCH 5.15 000/245] 5.15.150-rc1 review
+Message-ID: <2024022927-bluish-anime-d70a@gregkh>
+References: <20240227131615.098467438@linuxfoundation.org>
+ <ac2c579e-4ff0-42e2-ab70-efb8ded2d257@linaro.org>
+ <2024022905-skinny-making-7852@gregkh>
+ <1223812f-1dc3-40c2-a58a-2485d68e92b6@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CYXPR12MB9318:EE_
-X-MS-Office365-Filtering-Correlation-Id: d8268d58-5789-4765-4c35-08dc39644c95
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	IXOwri6jxhOYUoq4fUsV0i+RL54PPUPbqa5tEcKHzY3/ga/miXUimD784WjFOK5O1hsYe7VFeeNiPohFKfVOi8QRpUCShFjbSTGXjspISBLCXboDv2OvXy99Sq/MaDvd5k7LoioSFsyTdN59dtPMqDjsA+lxnbuF2N6siZ1pfO1TI6upf2y/SuFfMmD3ZtEGL2AXSxgsTLJwc/KGuxsCQvTEyETkTIS75nB2GpOjztUFJy12ZB7Sagrb8P2/84+vpQswFYU/S7d8QRgvajB9om0nvZTKte72c0Z1cpe8V1mnw5B+9lslNMEAjE6WWcVBuqOGPYh0FOXsF7erw6AcxQnKqOUobhq08ZxKi8qzUPU4g2KlYMxSNkU4dumqNx8ehNxsQSxARkm6yhbbhIN5sOS4VESRg7oaXZVnwgGWBUg00DIPwAkFECoIspIDI9mUGL5pvx3zNggrE0vtWOxISUuemdnO+T7VOfTRUOCG26naIJKDLuQcdNpYz8jzz/yiwlxIAuMJujeHh/WZhNgtYW+p6KLhWppOjwFH8aqxLxtvPOSWQHDqXKq+Aii1bFWdLmVor/pEFHjN2ikhdrwXUhFAEnvE0sCYKcWNJqWwW+g1oVS/3bz1ezD+KPr9j8JcVbao68f76SPxcgm8GBGG/A==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?5HQsXXN01hUf8f+TNHrdQ6jzCj68ZDB+f9+XCzLcXZ3PCYtw9+M/h0bXXfgN?=
- =?us-ascii?Q?TmBZoT2+SRijuIWNV8GfuDTamNxb8+I1qbzQO0C1nkz6OKt1s5lUA6AGqMCN?=
- =?us-ascii?Q?QCj0FIt12hKltzzXLYZGIZTVh/gyp4q4zaFCFEXnzpDaWSkTXSUbele97Zfh?=
- =?us-ascii?Q?JaUzpZ3jXj0Mqjir1sMvXAijJY3cO//t1xmeZLuzzEC34ukZG35oSXFK+GHE?=
- =?us-ascii?Q?9080Y+fcuIuECg+1PJvNnVaW/aoowEvWLpP1jwGJFG+yRxi4QgzqyuZMrPFd?=
- =?us-ascii?Q?uoAtlzC9USp9w3uZs29QGUWB9hlbg+AqfD696ynsauu9WCx0ivzk3Ncft0K3?=
- =?us-ascii?Q?Dgo6YbNRcTu7pu6bYPrm3Ga4Ok6kKigMFhE1eh3gOPH2Eji2XT1OuFlXjb8R?=
- =?us-ascii?Q?QHIj0xEJJAoH4UOpKujrFxv0xqkpMhboQ0x+WXnFTZCg3cxU9DzJYduX4mMM?=
- =?us-ascii?Q?sYWKod+mQeZfbT8BwCv0a8uxIOtvxAMSSW+ocI3h1MZV9Ahz12GxdNn+uDQ3?=
- =?us-ascii?Q?+YsYf6VwUHsPinyvEApiVQHB8ff2dsmp+cSIPUUZ+jMyBghaUcyx9E52mFgo?=
- =?us-ascii?Q?U2cdiXlvQ0L3JTANHU33lWI1ZLnMXlP642s7UqlEDcN0Gw61khA0FtBXl8yK?=
- =?us-ascii?Q?GQpeGjyITVVXLDC7A7euNLf/1DCESaSriqNWkM/oGqYk/28io3aoo5wnaikD?=
- =?us-ascii?Q?eWt/WhF/t/9NEnC2OTi3Ba50/Ec6fkVX/OcAUUt7eQPEDtf1Ox9JcF7Hw1n8?=
- =?us-ascii?Q?p3dFqOkGLNWU3MAps443LMGoCyHD7vXRKi8SrP5Y3W2bmMoNBqPJGxJLZrT9?=
- =?us-ascii?Q?ptDGj0JN+wK/NJshkZNGEHgEQarWZWfYc25OxzAtuAxU3vzinohETkFMkn6s?=
- =?us-ascii?Q?soU/KyWn9OY/dRtqEuzFYGJfbgeLBPV2+no05JHVgMuBCi+XPHqg4PyvCOhX?=
- =?us-ascii?Q?LKBLrC0+LOIr6IejtVTbOHBjm4Te0ItGTwwQTPBAVcCX1ABUgHs1zLK68lSu?=
- =?us-ascii?Q?HvFjTcXZByxsDCITww6BlJQIfLh9xB6HvF/rPx74IE8LPwWo9FzjKqvwKdMz?=
- =?us-ascii?Q?h58qMc0dXoCDNKthTjQJr1fnXo0g9p86lEWCKLiNt3TJkqCIzWaIXeTS+/CH?=
- =?us-ascii?Q?gGBMqV7YpTZgxrvbMQwYvRR9Fciyhco888pN0x7kJuOh3wbdKxbSiCgJIj1X?=
- =?us-ascii?Q?4lIGrOYbIELlqvCqJWc8hw5op/Eekusr9sFTeaqB749zsL1PwNkE3HEnpwj7?=
- =?us-ascii?Q?MLADJP9HgKqpyG8iFXp2dWn/2ELt6INjmLmz4b15sCJ6F+tuqs66jvWbAy2+?=
- =?us-ascii?Q?tvc6kwIO+B8/exPcS441aZz176D67eWTru0cAszHL+OZmXaQuTjyA0DOKWoy?=
- =?us-ascii?Q?2eiZJCjP7avao4ckoa4Mbwm4fnG3bk5CRheOskLfVHGfKs+GZchAU1TKwLmN?=
- =?us-ascii?Q?/6pmBctsJyAgZY4WxChedqDIaKHI9AONwpkKLToIARDCjjvNrmFdO+DPnehJ?=
- =?us-ascii?Q?13S0QFGQ7ySKiiwnpvVoOwALvP8YlpAOBytKPZaNZweWfAQ4BKXfBLSdOfRr?=
- =?us-ascii?Q?mV9zjLMS1wEWqU+Vt8BnwEwSZk+oGlaKHL+mW2Ng?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8268d58-5789-4765-4c35-08dc39644c95
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Feb 2024 20:23:32.5491
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: c+R9n7igqIbkHWIgu0/ufkvQoWudZ/nVv4HFFG1xumz9w+6lFR+nT+ng29wWDd7A
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9318
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1223812f-1dc3-40c2-a58a-2485d68e92b6@roeck-us.net>
 
-On Thu, Feb 29, 2024 at 04:34:13PM +0000, Will Deacon wrote:
-> On Mon, 26 Feb 2024 13:07:11 -0400, Jason Gunthorpe wrote:
-> > The SMMUv3 driver was originally written in 2015 when the iommu driver
-> > facing API looked quite different. The API has evolved, especially lately,
-> > and the driver has fallen behind.
+On Thu, Feb 29, 2024 at 12:19:40PM -0800, Guenter Roeck wrote:
+> On 2/29/24 11:54, Greg Kroah-Hartman wrote:
+> > On Tue, Feb 27, 2024 at 12:56:32PM -0600, Daniel Díaz wrote:
+> > > Hello!
+> > > 
+> > > On 27/02/24 7:23 a. m., Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 5.15.150 release.
+> > > > There are 245 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > > The whole patch series can be found in one patch at:
+> > > > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.150-rc1.gz
+> > > > or in the git tree and branch at:
+> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > > and the diffstat can be found below.
+> > > > 
+> > > > thanks,
+> > > > 
+> > > > greg k-h
+> > > 
+> > > We're seeing build regressions here with RISC-V, with GCC 8, GCC 12, and Clang 17:
+> > > 
+> > > -----8<-----
+> > >    In file included from /builds/linux/include/linux/list.h:9,
+> > >                     from /builds/linux/include/linux/module.h:12,
+> > >                     from /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:12:
+> > >    /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:5512:35: error: 'rtl8169_pm_ops' undeclared here (not in a function); did you mean 'rtl8169_poll'?
+> > >     5512 |         .driver.pm      = pm_ptr(&rtl8169_pm_ops),
+> > >          |                                   ^~~~~~~~~~~~~~
+> > >    /builds/linux/include/linux/kernel.h:46:44: note: in definition of macro 'PTR_IF'
+> > >       46 | #define PTR_IF(cond, ptr)       ((cond) ? (ptr) : NULL)
+> > >          |                                            ^~~
+> > >    /builds/linux/drivers/net/ethernet/realtek/r8169_main.c:5512:27: note: in expansion of macro 'pm_ptr'
+> > >     5512 |         .driver.pm      = pm_ptr(&rtl8169_pm_ops),
+> > >          |                           ^~~~~~
+> > >    make[5]: *** [/builds/linux/scripts/Makefile.build:289: drivers/net/ethernet/realtek/r8169_main.o] Error 1
+> > > ----->8-----
+> > > 
+> > > Bisection points to:
+> > > 
+> > >    commit ac2871f646a8f556203f5b6be875ce406d855ddb
+> > >    Author: Paul Cercueil <paul@crapouillou.net>
+> > >    Date:   Tue Dec 7 00:20:59 2021 +0000
+> > >        PM: core: Redefine pm_ptr() macro
+> > >        [ Upstream commit c06ef740d401d0f4ab188882bf6f8d9cf0f75eaf ]
+> > > 
+> > > A revert could not be done cleanly.
+> > > 
+> > > Tuxmake reproducer:
+> > > 
+> > >    tuxmake --runtime podman --target-arch riscv --toolchain gcc-12 --kconfig defconfig
+> > > 
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > > 
-> > This work aims to bring make the SMMUv3 driver the best IOMMU driver with
-> > the most comprehensive implementation of the API. After all parts it
-> > addresses:
-> > 
-> > [...]
+> > I've been beating on this for a while and I really don't know what is
+> > happening, sorry.  The driver looks fine, something is "odd" with riscv
 > 
-> Applied to will (for-joerg/arm-smmu/updates), thanks!
+> No, the driver is not fine. Upstream has commit 8fe6e670640e ("r8169: use new
+> PM macros") which makes rtl8169_pm_ops unconditional. That commit is missing
+> in v5.15.y. Applying it makes the problem disappear.
+> 
+> In other words, the problem is not riscv specific, but will be seen if the
+> realtek driver is built with CONFIG_PM=n (which happens to be the case with
+> riscv:defconfig).
 
-Thanks Will! I'll post the rebased part 2 and start getting tags
-hopefully next week (I got a flu, just getting back to work now).
+Ugh, that wasn't obvious, I was thinking that the CONFIG_PM thing would
+have worked properly there and was digging in riscv code all over the
+place...
 
-Did you notice any contentious patches in there that could use more
-attention?
+Thanks for this, now queued up.
 
-https://lore.kernel.org/linux-iommu/0-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com/
-
-Jason
+greg k-h
