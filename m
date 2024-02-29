@@ -1,115 +1,92 @@
-Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4014383A5
-	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 04:42:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.33
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 899694594B;
+	Thu, 29 Feb 2024 07:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709181745; cv=none; b=pAMyMKfQHNCzIDHgHIjyiz0kz4tS22fBJoh/Z+PJ4b6tZYq20z7ft45PRw1OhNsWyP1ggwnUTMI6LNn3jVXtsXqid9tAn6LwLJS7BTF3Jp4cAVDGz4MjvdmwSOFLmV+e1GyMmw691GAuQeDqyXIrKpPOatzBBUvVGg5vYZnEMtM=
+	t=1709192546; cv=none; b=bMoQ3Uqlv4pVyZ6kFjVJOp/ci40feguy0lmaD+Pa5SyHw0jpMrMT+Tb400AT1gghujf1qE6N564wSNe4sb3dJP8j82Mfq2uJdXWnoYruW+E8XSACFEf1W8Em3D67FNbfnsR4DnNVAkI7fjLKxB7tKHMPkpDNI39Mpu3xz8SyVi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709181745; c=relaxed/simple;
-	bh=7MdowiYFtd1YVdbQPrEzPUsEd/NWiP+n7PYwa3sOkvQ=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=miGNQObU1yePepsWW1MH4E/E/Zj+YLkTszVXFdvKBZXJULODAzpZ4r3KOUjwhT+PlC6oseJQI7bJVNUV+g+ml5ocV5T0gPGlfyphlqrLBTu5ZkuXUstsy+RfYYmf2kWT2ktv4nvgzC5ablA4V9ZC7Aj5L/XoYx73gQhcc6td3RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Vlse2Mbf; arc=none smtp.client-ip=44.202.169.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Vlse2Mbf"
-Received: from eig-obgw-5004a.ext.cloudfilter.net ([10.0.29.221])
-	by cmsmtp with ESMTPS
-	id fSS5r4OGCs4yTfYFQrjgLi; Thu, 29 Feb 2024 04:42:20 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id fYFPrTaN3pZ2hfYFPrwcyq; Thu, 29 Feb 2024 04:42:20 +0000
-X-Authority-Analysis: v=2.4 cv=EZvOQumC c=1 sm=1 tr=0 ts=65e00b2c
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=k7vzHIieQBIA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=KyoLkmSyMt9Nb96WE4AA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=TqFmvHG+z+uzSLFLtBkJ2F44Thyw1ppS6+xzDkfk1W8=; b=Vlse2MbfSBM27PGyIBxpZjHGEm
-	oVkHIefNnEiXZLm02rVvzHsa4tT44fyy9Yz61F3jAQXRkS0Os7PECmol2zqTIngQXqy/T47yAIIKh
-	pgH/bG+Mzw9qU0IHse/1hddYnq4ymyg7NIwUXRZlyPcTms6s1/Nx17Fx5AE3PVIumlE4w9z8kH7Gc
-	8UkOCe2a8ZNwTzmOu76hRxzz7COyZ+Hk+5518UV/L7HaO5XrydVsZ9Swg/c1dWQtN8GVez+F5t0+G
-	knhEFjdXasODBFd7AJ/ATe14kNViFtCkkNegExKSCqqfHEKZvwqk/FjuAyG8V2hm4Wl/ibG1966es
-	bd/3UIdA==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:48354 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rfYFN-000KVl-1E;
-	Wed, 28 Feb 2024 21:42:17 -0700
-Subject: Re: [PATCH 6.1 000/195] 6.1.80-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20240227131610.391465389@linuxfoundation.org>
-In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <1cfaf521-fef8-bfb6-060f-8f69d96396d2@w6rz.net>
-Date: Wed, 28 Feb 2024 20:42:14 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	s=arc-20240116; t=1709192546; c=relaxed/simple;
+	bh=Q/11Q49KEKt/Spi4akngBYieCr5yha8+eBtEahXuFrI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W0r9mYdXi+BTz+IoFHI5EPjR/lo4ofxa8ljv306U+I6StIT3LfLbYKAczyworJgOb5UfDoUzBQU0JtG60ZHajcA3oQVeXlxXzrPShkG2OkWDLwyWNaj1Z8yGQ2M0YiScngMzLwgTSrr0WteLUMh1DScTOj9KqpMsz5/XcbmJUCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 76EFA1FB;
+	Wed, 28 Feb 2024 23:43:02 -0800 (PST)
+Received: from [10.57.12.184] (unknown [10.57.12.184])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 41FBD3F6C4;
+	Wed, 28 Feb 2024 23:42:21 -0800 (PST)
+Message-ID: <2496f490-fbfb-403c-a86c-73960afb4e76@arm.com>
+Date: Thu, 29 Feb 2024 07:42:38 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] thermal: core: Move initial num_trips assignment before
+ memcpy()
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rfYFN-000KVl-1E
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:48354
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfNqHaNl6JN+d4FCBBHgv/Mid2ve5+gfigmtTi+Pu/WWjsNtGSuIhskCBk/qa58L7UX2Lj37LoldDlIqYUVGPhK985S+YgsJpqZJAOKOuOy99rqRbM1X7
- NJYuYF0js0RCBoGmeYcnJe4HqTmfmKONl6GdaJUTMg51EXHLIdYp2D62OPnyRb7m8GaJBLLotfMGNw==
+To: Kees Cook <keescook@chromium.org>, Nathan Chancellor <nathan@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, rui.zhang@intel.com,
+ gustavoars@kernel.org, morbo@google.com, justinstitt@google.com,
+ stanislaw.gruszka@linux.intel.com, linux-pm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev, Daniel Lezcano <daniel.lezcano@linaro.org>
+References: <20240226-thermal-fix-fortify-panic-num_trips-v1-1-accc12a341d7@kernel.org>
+ <6a6be01d-3453-4268-8b2e-0279cc20835d@linaro.org>
+ <CAJZ5v0h87k6xoi-9V0Cfb2rHQcr-STfG_bNWpzfoj4Dy46U0Lw@mail.gmail.com>
+ <f81af0ae-7458-47d3-90ae-71d5217ee7dd@linaro.org>
+ <202402270816.0EA3349A76@keescook>
+ <bbc65508-eb0e-4d63-921b-85d242cc556f@linaro.org>
+ <202402270852.E46A5268@keescook>
+ <3ed4ad69-1229-4834-95b7-9397364ea401@arm.com>
+ <20240228165651.GA2158263@dev-arch.thelio-3990X>
+ <202402280944.CE26D81@keescook>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <202402280944.CE26D81@keescook>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2/27/24 5:24 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.80 release.
-> There are 195 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.80-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Ron Economos <re@w6rz.net>
+On 2/28/24 17:48, Kees Cook wrote:
+> On Wed, Feb 28, 2024 at 09:56:51AM -0700, Nathan Chancellor wrote:
+>> On Wed, Feb 28, 2024 at 08:41:07AM +0000, Lukasz Luba wrote:
+>>> Hi Nathan and Kees,
+>>>
+>>> On 2/27/24 17:00, Kees Cook wrote:
+>>>> On Tue, Feb 27, 2024 at 05:47:44PM +0100, Daniel Lezcano wrote:
+>>>>> Ok my misunderstanding was I thought sizeof() was calling _bdos under the
+>>>>> hood, so when calling sizeof(flex_array), it was returning the computed size
+>>>>> inferring from the __counted_by field.
+>>>>
+>>>> Yeah, sizeof() has a very limited scope. __builtin_object_size() has
+>>>> more flexibility (via the 2nd argument, "type"), but it was still
+>>>> compile-time only. __builtin_dynamic_object_size() was added to bring
+>>>> runtime evaluations into the mix (initially to support the alloc_size
+>>>> attribute, and now includes the counted_by attribute too).
+>>>>
+>>>
+>>> Thanks for your earlier emails explaining these stuff.
+>>> Do you have maybe some presentation about those features
+>>> for the kernel (ideally w/ a video from some conference)?
+>>
+>> I think Kees's 2022 and 2023 talks at LPC are a good place to start:
+>>
+>> https://youtu.be/tQwv79i02ks?si=Nj9hpvmQwPB4K3Y4&t=452
+>> https://youtu.be/OEFFqhP5sts?si=u6RnOP641S8FkouD&t=614
+>>
+>> https://outflux.net/slides/2022/lpc/features.pdf
+>> https://outflux.net/slides/2023/lpc/features.pdf
+> 
+> I've also got a write-up on the entire topic of array bounds, which ends
+> with some discussion of "the future" (which is now) involving the use of
+> the "counted_by" attribute:
+> https://people.kernel.org/kees/bounded-flexible-arrays-in-c#coming-soon-annotate-bounds-of-flexible-arrays
+> 
 
+Thank you guys!
