@@ -1,105 +1,131 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7372437714
-	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 01:51:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE852D046
+	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 02:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709171485; cv=none; b=muGKBCj0VVBAnZ0Fq9hnRlq2VkuLHlYQrofFesXmhJrHwUz/FbUVzXX8gv6bbSe7kJVhQE1Dg56Y2cXaO7IBY6Tv5f09BQpfgX8CBpRwAe8OuytLm/luMcU1wD8Lp3VXiFdhrzH0/S5t2sJ/dBAB3wpBiFl578ZFZLxAUl3pl1I=
+	t=1709173393; cv=none; b=ItJ1SzdOEAzxtVksJ7LvfKGL16ijALtk/gpIAQTVMKM4FP/PhBf20oUAAKy5XhRvdCb9CXZUCpN3nsyzQjs+GrczENR1MvOYWgtLvzC1X2lSRIGUChHzm8uH9HUPuC8Ug8EIe4Wvhot7Yh4e4MkGNWhqdfjqTKbZcSbe03klGxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709171485; c=relaxed/simple;
-	bh=dyNQOsNqoX691z3lmsUE0UqeK3j+5UYGTMnTcRHjwiQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eP2Ep5FiRaJAEnmmcDLOCGgccY1CpZtgb5vdcv4tzW9fg4+D4CIVXwGBF0kaZ8qBy6te6UYlAbm5sEwoxGfhgW91l0RT6e6KLqOMClHftlQoJeNl7WfNHhKKAMieRlDouauWUCWDnuy4L0vyLQ3mYvww3YZDx5qaWGVZgu4JpxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=h3Gwg93c; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1709173393; c=relaxed/simple;
+	bh=0Fbi5ZAg7Uf7prUv2XS6xmsOLyEbnEHlNUw6NlOeY9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iedgfrmauHWWU0d+An0wJx/qOBMFmZ/r8HKWjkKRGQPfGu24BrsCT6aJb/THt2ESm22MhErHPRf7R46IR0Jrgis3P+IA5GoFi4+hSAvQnVac/mxeAyK9+6hl+e8DRtScEEIWd61ME59bhCnhuBGVn3ysKjo5uEKhCZzZyZAI7fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=OH+LSqhQ; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=ihh1gmTk; arc=none smtp.client-ip=91.121.71.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="h3Gwg93c"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56682b85220so700425a12.1
-        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 17:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709171480; x=1709776280; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BA3HNtaKQLlopR5HvEpA7g8ezYuwOK+W5LJ79NFDZrw=;
-        b=h3Gwg93cIURFNP4ENjw19KmKt74gqHZL9Ppv6FWpemDnIEoUTSO2aqffBpfpMH263o
-         V/LehpYQusdkK+kdSaNUEfyJkrAdI5Dhx3B6wLSi9AxMF8wF3rO4zajlAl3hSkUG6szd
-         6mb666gKeYRyXFMo2tK2+G0eBCmCgPoLbGlqs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709171480; x=1709776280;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BA3HNtaKQLlopR5HvEpA7g8ezYuwOK+W5LJ79NFDZrw=;
-        b=ZOClIcsDR44fZdBhzImUlyAlJVVel3dO5yfuXxQQlEeOaB+UHwz1VzkVBTL7eO91ZX
-         ZRQdijMkieB6PdR4JpxjQbELTNO7fwRbBUtb9ICXSLQDwxC8+ljrYOgCEoeT6sbFsUfh
-         n7vfQgVCFVkV3uf+MCJhwKCMPvt8IjIgfdugPjkwsb+z0KEX0yEu/rE0ZoUHd7yYidju
-         oY6K6RviY/0RWX+Oo9UfC98mK6pAOUbqNmxOF1Vg42IJvoYwsDVnL7rsLlG/ZEZY+S+O
-         wTKW64TcbiM67UbCeGYSUhP0mNoBC6hYYpVCtXKK3pcFBcSeoIseZKeH+TktMwGZLbnq
-         NuhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVVUR02sxfAoq8WkN5fQg2NLrOuA6riQKU8BuiFG1m7wnbLEIUTRjPJ83TsGSaN5B+cGmTbR3vwtCiPd0lt3XT25ADG1TXjFw==
-X-Gm-Message-State: AOJu0Yw7m3SKwaRg8OP+sYHCjUj5FlewHFSs95axpX44Z7uMZBOlT9II
-	sPCC2BMOQzvOUhNlWbOQY5P9EgH4tzQI6VUQy40CKstIRJjIG30MHFwqBLGtYrpAuDmEsK6dkto
-	lXJOj
-X-Google-Smtp-Source: AGHT+IFq0r6axz+CMgoxOTq0TG2/frtizfGFPw6fZs7x8f62qpHpwCeNUADAv0b6/b7lyoxKGGUL7Q==
-X-Received: by 2002:a05:6402:1e87:b0:566:4ccd:b81d with SMTP id f7-20020a0564021e8700b005664ccdb81dmr480182edf.7.1709171480061;
-        Wed, 28 Feb 2024 17:51:20 -0800 (PST)
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
-        by smtp.gmail.com with ESMTPSA id i16-20020aa7c710000000b005662e63cbfesm118043edq.55.2024.02.28.17.50.59
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Feb 2024 17:51:19 -0800 (PST)
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-412a2c2ce88so19495e9.1
-        for <patches@lists.linux.dev>; Wed, 28 Feb 2024 17:50:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUEYpo8dS/Aywdasgdxe9okcLpdbWotxm6ix0SPsa+f8oOpwQFtbcxohU8Fm7qcZ1aE229xClXpsQYn2jg91CKNTgDrvaqiuA==
-X-Received: by 2002:a05:600c:a384:b0:412:ba22:fe90 with SMTP id
- hn4-20020a05600ca38400b00412ba22fe90mr11378wmb.7.1709171458829; Wed, 28 Feb
- 2024 17:50:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="OH+LSqhQ";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="ihh1gmTk"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id 3AC37C024; Thu, 29 Feb 2024 03:23:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709173382; bh=kHqYKpzkFMSrtvJ6fyOrRsaNmM72iJYg8f1LNIssPbI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OH+LSqhQo7hIHUT3o7cRs7jCL9VUq6kbaz+k+0lj4eXEL7WYEcwokoXapW9o/ZJxt
+	 iv1zOIE7Z0HDOr1sVWAWN07XBfa4ku5I4PTnQdzHCppek1r0mKZE24yrjCbOcg4FTv
+	 aXiRQ8+VrrT4Deez/gyX4W5RlIjrNHcKTHcrWptw+LvPmm4/ZQ23qHB4CretMmljOy
+	 nRMDO7jcjxQ6fvOQxGpBBqyYnTzCjq8X79/Z8GnoQPnjzAHOVn3T1Y238Yh/Y6MYdP
+	 +clKQO0LrIlabv3AVH5X+05qmAPuRa5WmtYcrsNv593+vH1GWb8JYqoZgSqQnAXmvY
+	 IxpZUAZT0eXug==
+X-Spam-Level: 
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id 5A98DC009;
+	Thu, 29 Feb 2024 03:22:55 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709173380; bh=kHqYKpzkFMSrtvJ6fyOrRsaNmM72iJYg8f1LNIssPbI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ihh1gmTk1f1wUHyWQLFRPjxL+nUJBOK893eWBUjJzucPyOEL09wCcsxKMjptcWAq8
+	 WhkmwHMjNxlUiuxvnVxFw4VAuQgKghZ+PjjxcbM3YGoy5BDMm30uteyuRiFdxdHFte
+	 haCy2l5YJdduAelXfHpUtJ4w6eVlUXlevXw9aG65HtzOhupWtT/5V/K5vY+s+1IOtH
+	 S2g4gjVgA7nzpV7qBs2fbKqSbzRd2DfWl/4iaUH/ViVtFQX5LVQpPAOTHs3K6PXuPk
+	 4uesdBoLkdalD2QD0kz1U24Ea9+HUSKTbXn+DGLNtbAQZAZgJ5RLcvNFK4c0P/E5BH
+	 8ku6nkWBGqzyA==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id f503bea0;
+	Thu, 29 Feb 2024 02:22:50 +0000 (UTC)
+Date: Thu, 29 Feb 2024 11:22:35 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Kees Cook <keescook@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 000/122] 5.10.211-rc1 review
+Message-ID: <Zd_qaxKc9V6dMkOA@codewreck.org>
+References: <20240227131558.694096204@linuxfoundation.org>
+ <Zd53aNc1aFrCYxFd@codewreck.org>
+ <2024022804-askew-stung-cba8@gregkh>
+ <202402281231.F7A20FCE@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240229013503.483651-1-swboyd@chromium.org>
-In-Reply-To: <20240229013503.483651-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 28 Feb 2024 17:50:44 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Xba76ZER=rqWm8H6dQTgkTRM38Edi81Y8-QXETvsmDCw@mail.gmail.com>
-Message-ID: <CAD=FV=Xba76ZER=rqWm8H6dQTgkTRM38Edi81Y8-QXETvsmDCw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Disable DCC node by default
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org, 
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <202402281231.F7A20FCE@keescook>
 
-Hi,
+Kees Cook wrote on Wed, Feb 28, 2024 at 12:39:42PM -0800:
+> > > This commit breaks build of some 3rd party wireless module we use here
+> > > (because sizeof(sa->sa_data) no longer works and needs to use
+> > > sa_data_min)
+> 
+> Just FYI, it's possible that things using sizeof(sa->sa_data) were buggy
+> to begin with since the struct size isn't actually dictated by that size
+> (it's only the minimum possible size).
 
-On Wed, Feb 28, 2024 at 5:35=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> =
-wrote:
->
-> We don't use this device on Trogdor boards. If we did, it would be
-> enabled in the sc7180-trogdor.dtsi file. Let's disable this here so that
-> boards with t he sc7180 SoC can decide to enable or disable this device.
+Yes, I definitely agree with this.
+As it's "vendor stuff" I just replaced with sa_data_min because that
+preserves the values, but it ought to get a second look.
+I'd love to pretend that driver's upstream will do the right thing and
+use proper values here on newer kernel but upon checking its >6.2 tree
+support now they apparently did the same instead of getting the size
+properly.
 
-s/t he/the/
+> > We NEVER preserve in-kernel APIs for any out-of-tree code as obviously,
+> > we have no idea what out-of-tree code is actually using, so it would be
+> > impossible to do so.
+
+Right, I just don't see much "common struct" changes in stable tree
+patches -- stuff like livepatches or weak modules and whatsnot don't
+like these so some downstreams (redhat to name them) try very hard to
+keep these constants for the lifetime of a given stable release... iirc
+they go as far as adding some padding fields to some structs that are
+likely to need fiddling so they can do this while preserving binary
+compatibility.
+
+I understand the upstream stable kernels don't make such promise (and
+given the amount of work that probably goes into it, rightfully so! I
+wouldn't exect you or anyone to do this here), just pointed it out
+as part of my usual test round for anyone else who'd care.
+
+> Out of curiosity, which drivers broke and what's needed to get them into
+> upstream (or at least staging)?
+
+Sure, it was NXP's wifi chips driver:
+https://github.com/nxp-imx/mwifiex/
+
+It's mostly based on drivers/net/wireless/marvell/mwifiex but has since
+been quite extensively modified, so it'd take quite a bit of effort to
+upstream as a separate entity (changing a few names to avoid conflcts so
+both can be built together... Add to that the requirement for a
+compatible firmware with a restrictive license... And that NXP isn't
+exactly focused on upstreaming); I have little hope of seeing it
+upstream at this point unfortunately and gave up on it as part of
+maintaining an embedded kernel "port" as it's sadly far from being
+only one :/
+
+(I especially don't get it as I consider maintaining a bunch of
+spaghetti ifdef on kernel versions to be much more work than getting the
+driver upstream once, but I guess I'm barking at the wrong tree here)
 
 
-> Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Fixes: add74cad7c9d ("arm64: dts: qcom: sc7180: Add Data Capture and Comp=
-are(DCC) support node")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-
-Seems fine to me. I guess the driver never landed, but if/when it
-lands then it makes sense to just enable the device it for boards that
-need it.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Thanks,
+-- 
+Dominique Martinet | Asmadeus
