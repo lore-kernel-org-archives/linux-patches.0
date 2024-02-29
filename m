@@ -1,103 +1,90 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A167A709
-	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 10:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDC47C6F6
+	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 11:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709204324; cv=none; b=nuBZ/E3DE39wk9CWuBzR60jkKnULJdf8wzH7JUuE+ps1ViE3FS28M7nZhnOl9bqjuC7R/LyGH6LG/30rkMrJWzVlKV5K2WQvg8evRtoJlS8a0iIU/b/LiHcVGhzI1vV0wYLR0IS5UKysl5DAX2PptFAw2SgKgf1l4H6qwkAxwwU=
+	t=1709207637; cv=none; b=f/G6yltTCCT6SIoUy1P2Lz08LoTZ9spxrO9qxNQT0yPO9dnTtb6RYUBiNIslVdn1XYTVGjznPwD1ACx5hl7keAqqXqYkrSqSsBBAIJf6UiVkUcGElS0x4iyHW6tT57Wirq9CafScYn3Npa6yOBeVpF0LW9Vk9x3qrVS5EM2pPg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709204324; c=relaxed/simple;
-	bh=a/GVLuUrTUXA8L8R4irxd4Al3SblyPKMDzQJ/K5AMdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=olQreu3zqGt3okfhdBRE6c1p5XlzPZ/mBAJ99Cvd6aRMoEpwhyDHYlBKQNnNfaXXtOvAujQ5iihY2pq7aXtn8g004bhi+sTwUyqh/HP45qUZX4xM3SJiNPcsQhoyOY6gTa+T+pT/Sqkdkp7dOUOyKWEYN3uIBNDgzr7jNmlIeQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kUj+VfAm; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1709207637; c=relaxed/simple;
+	bh=aPkZ1pZjNnJJI5Q/fiChvIDLNBuCtmd06jZTdL+Ggyc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FXyWLrVGpjZLVgHAMiSvArKblGdESA1Uqj6Eb8cm0dFDT7BX9UL80YmUnuVjWEcg6zPcZn0UP5ftEw7EUVdhws3l5uccTezDEpiUMspd5q9+9udZ3AaShN0CjxLiAGM9utKP0BnlawaEEr4/0S0g7qz0jMdOEhz9TNBTNcb7v0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qYe5K3Wh; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kUj+VfAm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1709204323; x=1740740323;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=a/GVLuUrTUXA8L8R4irxd4Al3SblyPKMDzQJ/K5AMdE=;
-  b=kUj+VfAmaHPr/JlpAtOiJqtmIqvb+M7gz2ENHVlNjyRqxyyxaGq26U/+
-   KF3jI826whARDXQrq7PEhquUSAyZgdeAWc5aDRieDKe8wZRS59W0Jd6k3
-   5Y77Npxg0XPif0djlBxIFRiJff/j90KNdhk7biVuyVhs6PXZ/8ko4E1Vq
-   ftGXlSJgx3KoHMYnEg12HTb4TfQraCd2tD4gBSYSeWYOCaD3CJUZJi37f
-   UBXUW4Ozaj9f/X2n5YuWmOSepd1CQ9DTMHae/Szhw3sey1yj135X+iTn7
-   uZtnChZMNDuULr/cTJgoJ1YaarSAbnH0IoUwfNFrl9FfgI43bNV1sumZB
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3789905"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="3789905"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Feb 2024 02:58:42 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="913979058"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="913979058"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Feb 2024 02:58:40 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1rfe7Z-00000008eCZ-1cLi;
-	Thu, 29 Feb 2024 12:58:37 +0200
-Date: Thu, 29 Feb 2024 12:58:37 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-gpio@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: Re: [PATCH v2] gpiolib: Pass consumer device through to core in
- devm_fwnode_gpiod_get_index()
-Message-ID: <ZeBjXfKH_Wl2Giai@smile.fi.intel.com>
-References: <20240223065254.3795204-1-swboyd@chromium.org>
- <Zd-CJHkCHpuIEnWh@smile.fi.intel.com>
- <CAMRc=Mdapd2jTACGqm-ujZrAunRmNeJ8_3+bpsN4ieCre52yrg@mail.gmail.com>
- <Zd-nI9XoYW3hrPXx@smile.fi.intel.com>
- <CAE-0n52cgFvaHPDLBd-cn0WMisxX41-fPJHkroTucxHNk39SZQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qYe5K3Wh"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5131a9b3d5bso803838e87.0
+        for <patches@lists.linux.dev>; Thu, 29 Feb 2024 03:53:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709207634; x=1709812434; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sLTFaT7Nkx/eCJKDRCtLdc30QfXkBoGZ+x/B0puoFKM=;
+        b=qYe5K3WhSNGWqEoc/bnNasAi5scLHJQ+7T/ZGNZbuDxjKBMpGNoPS0piF2yncEYEHP
+         LCHprBMFbIhJ8PYjZoHPrevJ+ewryWasWXEPbDzmmc+kErS3dn0tUfOSfwsaF715FtIr
+         2SNAmRIU4cxomDJs1ygdgg8CiuE93FWuOiLESuJWBDtJ36O+e+dGXUlpXX9QIWwEAfY7
+         3xdK3RoDn7dze/g5bDbHllcZI+8rp4UZTBrrtqSpcI17kAm/WFADVSPeaTKJzCTq6srr
+         6MANQeLr2rLvBsRXARfeYLLjvq95a4rFc3reNfcIoBYsr+bMF5hIM2vyIuzDnX+6HLcu
+         nNAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709207634; x=1709812434;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sLTFaT7Nkx/eCJKDRCtLdc30QfXkBoGZ+x/B0puoFKM=;
+        b=rT/pUY+kgqkNx91RAiants7txu7BfwlNhtIDB6Rd4IBPu9KltgguUcAwld1cK3GTCK
+         e683Z1CcOqfXygjziSem39Wgx33Qg9sFgIuHR188JyD7qS8eodVxO1sv9PUSk5NA9Bbm
+         R1I9VNgPV95ttuRrT1mLPVXyOwiLjnrTEvK8zR0M2GTqv8AXk+EkjX4E2e/Y1QrSxnA+
+         r4DuMhNtj24gvmzN+69hv9wNDeec872sKly97Xu4RrprU9Mr8sun+MSdDJlcTORZkXPC
+         Tb9+l4DvWeHPaRYmt2Lu+y0FsaFSN0M6L5M3hsyFzEMQ3xGrl2E8Hn6ZJ/GI85orTFtl
+         4SxA==
+X-Forwarded-Encrypted: i=1; AJvYcCUDg4koHWAHfV8AKmrnEG2nOJAZdqZbHABqed7pGwYV3u1Nb+Q+UBJSIWgOBMWtnnKnJIzrkjXzuvq4Else+5TVvt1man7j7w==
+X-Gm-Message-State: AOJu0Yx/vTzJCXr/LfZifCkMVKYCwuN7A6zlBFrqRPIckd7e5HwjQbdH
+	pCAwadm2S7/IkXPZMH+lwyW7/ejr134Q4zn50IVkLQ0WssQ7LfgrfxTA8TmM6rk=
+X-Google-Smtp-Source: AGHT+IGP0/pA++rl3U7efvrQPpAwssqlcxwqZNQ6Tt9Nv8HtPUR9CpPCo6oXDAAXGe9esJJngWtvkQ==
+X-Received: by 2002:a05:651c:2105:b0:2d3:776:a8ab with SMTP id a5-20020a05651c210500b002d30776a8abmr967147ljq.45.1709207633804;
+        Thu, 29 Feb 2024 03:53:53 -0800 (PST)
+Received: from [172.30.204.118] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id b10-20020a2e894a000000b002d0d02e50fdsm201372ljk.78.2024.02.29.03.53.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Feb 2024 03:53:53 -0800 (PST)
+Message-ID: <2f6bf03f-b0c4-46d2-baad-4047c78663bc@linaro.org>
+Date: Thu, 29 Feb 2024 12:53:51 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAE-0n52cgFvaHPDLBd-cn0WMisxX41-fPJHkroTucxHNk39SZQ@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Disable pmic pinctrl node on
+ Trogdor
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
+References: <20240229012828.438020-1-swboyd@chromium.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240229012828.438020-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 28, 2024 at 01:38:54PM -0800, Stephen Boyd wrote:
-> Quoting Andy Shevchenko (2024-02-28 13:35:31)
-> > On Wed, Feb 28, 2024 at 10:28:07PM +0100, Bartosz Golaszewski wrote:
-> > > On Wed, Feb 28, 2024 at 7:57 PM Andy Shevchenko
-> > > <andriy.shevchenko@intel.com> wrote:
 
-...
 
-> > > > Have you seen this?
-> > > > https://lore.kernel.org/r/20231019173457.2445119-1-andriy.shevchenko@linux.intel.com
-> > >
-> > > Clearly yes as I queued the first one in that series. The rest did not
-> > > make its way upstream for whatever reason. What is your point? You
-> > > want to respin it?
-> >
-> > It was a reply to Stephen. :-)
+On 2/29/24 02:28, Stephen Boyd wrote:
+> We don't use this pmic pinctrl node on any Trogdor devices. The
+> AP_SUSPEND pin is here, but this pinctrl device isn't a supplier to
+> anything in the devicetrees that include this file. Disable this device
+> node in the DTS so that we don't waste time or memory on this device.
 > 
-> I saw it but it hadn't gone anywhere for many months so I fixed the
-> problem I saw. Will you resend it?
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
 
-Yes, this is the plan, too many things are ongoing, so have had no time (yet)
-to address comments and resubmit. In any case I'm not against your change, it
-makes it better anyway without hacking the code.
+If you don't use this pmic, perhaps the pins should be explicitly
+"parked" instead?
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Konrad
