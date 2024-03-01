@@ -1,52 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA21137705;
-	Fri,  1 Mar 2024 17:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAB38C1B;
+	Fri,  1 Mar 2024 18:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709315816; cv=none; b=iRVk1y9rwKGX+vXJbINlZibQt6pf6SX7x9IF4HUEt6XI9bDlUyH3piyIQ8E2DcuC7z1FjY9o9WWPMhhVnw02Dox5HbDYp4Nd9v/9Ieoj3a++xMuU/0HlPrBLMfe4MRHvvfbvonlCts8tY6278hZNNEMqioM0r73XfJIxFpWmcY4=
+	t=1709319162; cv=none; b=cheF4U6b+hRQQ2NiIR09czDVxD3LrZYDzQyVF9O4/T+xrKNHbZsEpKHAdFMhJv4x8pQ6sQSCXyKqIMbNmo6dTQ2v7cFAxOnRr3xdhMY6Ij8UAbmY8EnEsjaaGNCj6kdY/ZXUASELI4dEHRs0yDnVkvV9BTgAQ09i5viSrqNuv/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709315816; c=relaxed/simple;
-	bh=UmK8sxWHdvXqQrq6yVG8FKBXn33bDgOtlshuAqAxznU=;
+	s=arc-20240116; t=1709319162; c=relaxed/simple;
+	bh=44S/7fMa4t3C3sreMd4jk5F0uk+BmeF1MV2xSiGfrrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QdXP/fLxYtqaa+5pnaFJBfsWq7S+PoDn26ouQnvMuqiFMQMtlvN4Z1+ILp6eyLY013s8LmqdGFORsNsc6j9xHT6QBnrppGzpNSt/4ugOxw7ItlNWBKo2qnHouq8GNLvRYZRlVVn9O/kKchQeOBJXHXSpd+YcTJCUY7TmPBs3Tpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d9hn+JQI; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d9hn+JQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19005C433C7;
-	Fri,  1 Mar 2024 17:56:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709315815;
-	bh=UmK8sxWHdvXqQrq6yVG8FKBXn33bDgOtlshuAqAxznU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d9hn+JQIOgUbaIs1I+C2YIFcyyswjIPzUWJoyiVEaqZLsGLx9TBMCrUS9tIaoI0QS
-	 K21bkP1ERcXbumhNOhgHHI8qXG5q6vy3uNXHdMInXos9erU7BqcXcXxDYfL+2wE8FV
-	 z1CwrC+LgPQXdm5eoviDxU5LVlKnb79LCKJb3fe5XtnAWIZXVkZEQTJVXhx+ZqPFpi
-	 MqiHQoC4q4O7fW0dsBkSY9U8VLQeBSc1bGtrwX2M3YMJ2AqVPQ7f9lY7IkOwDCYY3e
-	 6LwcFnYa2wDNsJEyMR+3WHDysa8Q1pI+MKPIhxge+504UUwcFZno7UMstr1BRwvHq8
-	 1W2TVF8wz63Lw==
-Date: Fri, 1 Mar 2024 11:56:53 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Roy Luo <royluo@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Matthias Kaehlcke <mka@chromium.org>, linux-usb@vger.kernel.org,
-	maciek swiech <drmasquatch@google.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add downstream facing ports to
- realtek binding
-Message-ID: <20240301175653.GA2469610-robh@kernel.org>
-References: <20240223005823.3074029-1-swboyd@chromium.org>
- <20240223005823.3074029-2-swboyd@chromium.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=QjwjDv1rQGT/oFdo6ZeSv9Aua86UiMp76PljyAdWAEo41kSiEKd+3HrOMOoI3hwxoXnqVPHdpQ4KUcM4xkx6uzHh9mb+zOnNpGyCTfv8NgEE7fVYurG9FQ/4B1bb91VnKlVgzNeNaaK9HwTs0Ox43iWqrzGP339drIvLebFhPkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C1AC433F1;
+	Fri,  1 Mar 2024 18:52:34 +0000 (UTC)
+Date: Fri, 1 Mar 2024 18:52:32 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 4/6] arm64/io: Provide a WC friendly __iowriteXX_copy()
+Message-ID: <ZeIj8HtdbKS3eqG6@arm.com>
+References: <0-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+ <4-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,28 +60,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240223005823.3074029-2-swboyd@chromium.org>
+In-Reply-To: <4-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
 
-On Thu, Feb 22, 2024 at 04:58:20PM -0800, Stephen Boyd wrote:
-> Add a graph with 4 output endpoints to this hub binding to support the
-> scenario where a downstream facing port is connected to a device that
-> isn't a connector or a USB device with a VID:PID. This will be used to
-> connect downstream facing ports to USB type-c switches so the USB
-> superspeed and high speed lanes can be put onto USB connectors.
+On Tue, Feb 20, 2024 at 09:17:08PM -0400, Jason Gunthorpe wrote:
+> The kernel provides driver support for using write combining IO memory
+> through the __iowriteXX_copy() API which is commonly used as an optional
+> optimization to generate 16/32/64 byte MemWr TLPs in a PCIe environment.
 > 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: <linux-usb@vger.kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Cc: maciek swiech <drmasquatch@google.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/usb/realtek,rts5411.yaml         | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
+> iomap_copy.c provides a generic implementation as a simple 4/8 byte at a
+> time copy loop that has worked well with past ARM64 CPUs, giving a high
+> frequency of large TLPs being successfully formed.
+> 
+> However modern ARM64 CPUs are quite sensitive to how the write combining
+> CPU HW is operated and a compiler generated loop with intermixed
+> load/store is not sufficient to frequently generate a large TLP. The CPUs
+> would like to see the entire TLP generated by consecutive store
+> instructions from registers. Compilers like gcc tend to intermix loads and
+> stores and have poor code generation, in part, due to the ARM64 situation
+> that writeq() does not codegen anything other than "[xN]". However even
+> with that resolved compilers like clang still do not have good code
+> generation.
+> 
+> This means on modern ARM64 CPUs the rate at which __iowriteXX_copy()
+> successfully generates large TLPs is very small (less than 1 in 10,000)
+> tries), to the point that the use of WC is pointless.
+> 
+> Implement __iowrite32/64_copy() specifically for ARM64 and use inline
+> assembly to build consecutive blocks of STR instructions. Provide direct
+> support for 64/32/16 large TLP generation in this manner. Optimize for
+> common constant lengths so that the compiler can directly inline the store
+> blocks.
+> 
+> This brings the frequency of large TLP generation up to a high level that
+> is comparable with older CPU generations.
+> 
+> As the __iowriteXX_copy() family of APIs is intended for use with WC
+> incorporate the DGH hint directly into the function.
+> 
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: linux-arch@vger.kernel.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-I think we need a usb-hub.yaml schema... For now,
+Apart from the slightly more complicated code, I don't expect it to make
+things worse on any of the existing hardware.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+So, with the typo fix that Will mentioned:
+
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
