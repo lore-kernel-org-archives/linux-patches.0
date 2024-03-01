@@ -1,112 +1,92 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE4016FF2B
-	for <patches@lists.linux.dev>; Thu, 29 Feb 2024 21:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA09E67E6C;
+	Fri,  1 Mar 2024 08:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709242413; cv=none; b=B+8aMFX8ulIwgRD7l/rRA9xMqjU2s0r/Mv0/OnOzGwN78HtWFL83L2v7A2ZnUH0ZDI44wVTyx69PjfhSKFdWCGb7roggm9fiXEyrGtCBPSJjqe7ju4BmnHSN/yep1mSTGugkDSfocp1KSGnr3iWKXCK5R7wMJZBVXvgK8bmaWdo=
+	t=1709280079; cv=none; b=CknOwg8u5Pjq0L6KORdo7bfCmR15k5tou2RQOT7MX3mp/8p9HYjD+y7GVomHtfNIpw4mAYFyVt7BwSsYQ502rEvn9D2sWoHdemidYsvZ7V9i7lH8oxhl+wqHAYVNR+Ep1aGk6LG0WZIA8QDKFHAySyqg25SRPg+LeM1IkISlE1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709242413; c=relaxed/simple;
-	bh=BnJoVXU1CaeQbXBgRnIHjar/FV4NrO1c9oIQRiWiPpU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oRmnQ8rRwLuKPMGiRM5Lh174bp6kZOK5KPCETdzXSeGVK4wIHcRjNK2ti1YhAwYfLS8tsdTaokYOUzhSoHD2JA6+qJvhseMIV2pU6jOfjKB4NsWbzsvMRL43B8rp9DhklOQpM9fIEpstoC+DVTwSNka1xMb3visERnJU1AHHeT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bgiRNYxU; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709280079; c=relaxed/simple;
+	bh=Zb2L2WzD8PVMX2bYMAsevFuTAVlp9+0GKUvQ4oj/GYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cxSBoFQ0jivIeiVyLeKS+hVeNsTIEhED58Wj7XSKQyQpvvFSz0Amiaux8e9rTV91SWoFbn7/H3Jv3+6GCouhIarMHGYhQltMAA6dJiVDbpbbxyt/2Kl7/C2xjsv9AJMrPsF9wDSU6LxFLR4arcSiNzw/ZoTN7HgKpbKd2Wawuzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vlr4L9zm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bgiRNYxU"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2998950e951so982050a91.2
-        for <patches@lists.linux.dev>; Thu, 29 Feb 2024 13:33:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709242411; x=1709847211; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BnJoVXU1CaeQbXBgRnIHjar/FV4NrO1c9oIQRiWiPpU=;
-        b=bgiRNYxUemHwycHcD528wPdSHVVuWVLlYqj26+wyj35wDG/ZpxYCYO2NlMQ33cseSo
-         i16COCOOkEoswEOZiQsVGREtFjTBWxyzm8bfNbN/Jd2+ZA+uvBuZ2w3Iuc+1feeOHjHB
-         YHBEFfw3q+BmqY0cHiwWRnSOBVhNawtuLF+5zABIpeSWhmKCrTTIUnPTT+KWAjR1EYyZ
-         /TzghlNmSyIC0tUiQoYigkMPAYdQStuSQFQrN6UGfQlGmX9+8erM1TMlquYCOLrOFSsK
-         hprFjWyWljk1S5t3EfdzAWKApc0P1j/V5cOCQIyGj3rHw2qZ4SDVWwd1Xf0XneOQCxCt
-         M4XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709242411; x=1709847211;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BnJoVXU1CaeQbXBgRnIHjar/FV4NrO1c9oIQRiWiPpU=;
-        b=Wn2O/ymEB93K1O+aVRp/5t9IlX5KsJ3Sebfr9UZtZiACzYX+9mOixZeXYmetmFOEWD
-         lve7J4r1SN+PWK8RfgfjFXqS7A74g9fnaKYMyBCjDcF/w6J8GwbbG6N5IHt5KIP3/PjC
-         uwP/ICb+QduR9jqrxA+VVWDO9qjzJSpFVFh5Z9pNTBmn8ar7MFOMC3sjcbB5IrjRcov3
-         sWYqv59QxBThs029FkSbV+J7VjZuodhrQgOB6tgtvH98MhdQR3midrXrbidTdxEvCnXR
-         eeH/74xZg5vGaQy8wEI5aKurFAywQjMSgKeWzGNAmm8JhtTYXaybJI49/9i2cng0KarW
-         LSPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUuqJ8b+8OV/a8OjDOcRZSfDViKvwfM23tagVVmbqnhETCwb1ymZpkEH8ci/zMtym1b5eBXMXBxyVZTMcsPJfyNN9QxznAmDA==
-X-Gm-Message-State: AOJu0Yxdv9GkGFbPUDSeiuOE1uLCE2WZ6Jez71J0qwfo6TjIs3zbrHyP
-	EblxBcu23v4hDzgXzVaaIQvnFEW8dtGHpS0M8Is9G/eeKqRf6MDH+1QVKOmi/VF66XQeXkpmzeu
-	oBrR4tOFSnZRce+HIVUfy5JS00Dw=
-X-Google-Smtp-Source: AGHT+IF7bVmqxeMhoRHyZpvokOgbCs4iWKcEFiGPNztP7CIoyae8cJUfmp8uTM3OBZKV4OvFKxKIP+IJE5Ov5jLH6Xw=
-X-Received: by 2002:a17:90b:104b:b0:29a:cbfb:5b28 with SMTP id
- gq11-20020a17090b104b00b0029acbfb5b28mr300141pjb.13.1709242411118; Thu, 29
- Feb 2024 13:33:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vlr4L9zm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0A6C433F1;
+	Fri,  1 Mar 2024 08:01:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709280079;
+	bh=Zb2L2WzD8PVMX2bYMAsevFuTAVlp9+0GKUvQ4oj/GYE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Vlr4L9zmONGyE8gzURxIxpQ4BhpoP0Eb3gnewrHzd8qlQJ0rPfA1LOMBrMpdLBV+q
+	 AtjhEiKNZP4CothoQJhcSYBTzMAnXA3RxRigJg72HAhlDppd6Tblh0BbYVMBsA6AFN
+	 P7hof8veyOzj/2bM3J77R0IcFLoN/FRIhmnH8S3YZoKx1xC3iazXqW2QspIoGAWNAI
+	 n4cmKD7CtvIuVmnllgYE6FYWKqTMUYigCoGjuMg+cHk9MJzLJK0y6mo810ZpJ5F3Bp
+	 wcug2jvw4Qu7VQ/T0vtNMT0tx8azbHF9Fw373nwNtPdpRBBZUcT6t6Kwt/srEYq9BD
+	 P2xqn5kz02i2w==
+Date: Fri, 1 Mar 2024 08:01:12 +0000
+From: Will Deacon <will@kernel.org>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	Jason Gunthorpe <jgg@nvidia.com>, catalin.marinas@arm.com,
+	kernel-team@android.com, Michael Shavit <mshavit@google.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>, Lu Baolu <baolu.lu@linux.intel.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+	Moritz Fischer <moritzf@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>, patches@lists.linux.dev,
+	Moritz Fischer <mdf@kernel.org>
+Subject: Re: [PATCH v6 00/16] Update SMMUv3 to the modern iommu API (part 1/3)
+Message-ID: <20240301080112.GA17394@willie-the-truck>
+References: <0-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
+ <170921954415.3073552.7948276252050662200.b4-ty@kernel.org>
+ <ZeDtfKMUXnOnJOic@Asurada-Nvidia>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240217002638.57373-1-ojeda@kernel.org>
-In-Reply-To: <20240217002638.57373-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 29 Feb 2024 22:33:18 +0100
-Message-ID: <CANiq72nPiVDV2WY_jCuONz_arWRVyMMiRT5iVb=2xqoXnZYW+g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] kbuild: mark `rustc` (and others) invocations as recursive
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZeDtfKMUXnOnJOic@Asurada-Nvidia>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Sat, Feb 17, 2024 at 1:26=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> `rustc` (like Cargo) may take advantage of the jobserver at any time
-> (e.g. for backend parallelism, or eventually frontend too). In the kernel=
-,
-> we call `rustc` with `-Ccodegen-units=3D1` (and `-Zthreads` is 1 so far),
-> so we do not expect parallelism. However, in the upcoming Rust 1.76.0, a
-> warning is emitted by `rustc` when it cannot connect to the jobserver it
-> was passed (in many cases, but not all: compiling and `--print sysroot`
-> do, but `--version` does not). And given GNU Make always passes
-> the jobserver in the environment variable (even when a line is deemed
-> non-recursive), `rustc` will end up complaining about it (in particular
-> in Make 4.3 where there is only the simple pipe jobserver style).
->
-> One solution is to remove the jobserver from `MAKEFLAGS`. However, we
-> can mark the lines with calls to `rustc` (and Cargo) as recursive, which
-> looks simpler. This is what is now documented and recommended by `rustc`
-> and allows us to be ready for the time we may use parallelism inside
-> `rustc` (potentially now, if a user passes `-Zthreads`). Thus do so.
->
-> Similarly, do the same for `rustdoc` and `cargo` calls.
->
-> Finally, there is one case that the solution does not cover, which is the
-> `$(shell ...)` call we have. Thus, for that one, set an empty `MAKEFLAGS`
-> environment variable.
->
-> Link: https://github.com/rust-lang/rust/issues/120515
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Thu, Feb 29, 2024 at 12:47:56PM -0800, Nicolin Chen wrote:
+> On Thu, Feb 29, 2024 at 04:34:13PM +0000, Will Deacon wrote:
+> > On Mon, 26 Feb 2024 13:07:11 -0400, Jason Gunthorpe wrote:
+> > > The SMMUv3 driver was originally written in 2015 when the iommu driver
+> > > facing API looked quite different. The API has evolved, especially lately,
+> > > and the driver has fallen behind.
+> > >
+> > > This work aims to bring make the SMMUv3 driver the best IOMMU driver with
+> > > the most comprehensive implementation of the API. After all parts it
+> > > addresses:
+> > >
+> > > [...]
+> > 
+> > Applied to will (for-joerg/arm-smmu/updates), thanks!
+> 
+> Oh, that's a great one!
+> 
+> I just found that I forgot to leave my tag at this updated PATCH-1.
+> I have rerun sanity with this part-1 series and more nesting cases
+> with the other two parts. If it's not to late:
+> 
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> 
+> > [01/16] iommu/arm-smmu-v3: Make STE programming independent of the callers
+> >         https://git.kernel.org/will/c/ae91f6552c30
+> 
+> This link somehow doesn't correspond to the PATCH-1? :)
 
-Applied (i.e. including the upgrade to 1.76.0) to `rust-next` --
-thanks everyone!
+Huh! That's all generated by an ancient version of the 'b4' tool. By the
+looks of it, it doesn't like more than ten patches in a series. Given
+the other patchsets kicking around, I guess it's time for me to update
+it.
 
-[ Reworded to add link to PR documenting the recommendation. ]
-
-Cheers,
-Miguel
+Will
