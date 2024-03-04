@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EEA10A35;
-	Mon,  4 Mar 2024 21:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F08647A5D;
+	Mon,  4 Mar 2024 21:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588250; cv=none; b=TagDKlESENY/YYrMxjw6MKxjgzCRz1PBisDgw8KUtUqoXqI0YmPZVNFLEZsd0h8sOZGcnKJKvbygFNm/O7Rey8sbLoJWmy42mgIX2eTq0eYHAUfeKwAxhJ6nXwW7FNqstTmSUNngy4cjBo0M2czmBG62//e75RB2FRso5HkAzbM=
+	t=1709588253; cv=none; b=bhUdQpBZ6InUA5svB1Jkkft74BlZb8Fd1uBfdoM0z1u+GOLCZYNn0CUCsXwBncqV6B4dBXDURrUY1WthlJn9bvEJTN/65+W9DaXRRF6DokFqxr3T4gQO04v15Zq9TX/XwrSkwnOn3We4yE28PxhFQGC6ttxKXGp+XoFJSuXc0Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588250; c=relaxed/simple;
-	bh=KUHpH/HqiukTRPXfm+de3jarokwpqEHspiFEI9Kbhqs=;
+	s=arc-20240116; t=1709588253; c=relaxed/simple;
+	bh=WMn91iR0S8+VoJuSRKDkbOQmGT29gw8kHxgCUZunCF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eS97APoywOsuZ4DC9G0z3RlwK7YC/2NO+qhpDsfHx1B1db1RJYdcTn7bq7Dn7/96p28fuwME7ZzFnCF+yjIxnPiVEhGnIQ6xSaSjoxnec9I7ayNcsNdTABLMEXavUsJ5j7MRnhW3/GhZ3Wg1k6xgptK8AB25FL+qgpGawaJITBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjVGUOWI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTqRz3l1An4IGT9G37Ip3hRylzIZEzYsCzMjy9LVvmIhMNUaky18bDbRLL8G/0eI+13SOQz75SAGomaGEE0tZocqBGnHHnb4XPSaksc8QCq5y8HULu+z2WuXtM09txZVPBiqMBHIgAS8ounInuYwHK7qJByKOoMt8PNhIeRzPg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZmXlGxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjVGUOWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCE7C433F1;
-	Mon,  4 Mar 2024 21:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZmXlGxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B172FC433C7;
+	Mon,  4 Mar 2024 21:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588250;
-	bh=KUHpH/HqiukTRPXfm+de3jarokwpqEHspiFEI9Kbhqs=;
+	s=korg; t=1709588253;
+	bh=WMn91iR0S8+VoJuSRKDkbOQmGT29gw8kHxgCUZunCF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjVGUOWIHZajeiAO6e+KdxYGO577/0Hd9hjGUxSgiokXv1hkgbJlLXvccNDlUKnT/
-	 WVgHzfx/ooaf4ceKxpDecNR3SSbxGxAO4MWdnFpOnd8XFm3jNqJm4CoNs7RUZFAZ6o
-	 U44YG+1oaYTGvu8HDKC1HTWkG0NHPxoxYH445ct0=
+	b=iZmXlGxEsT2tNEeicxgBhUzQ5lhmjPmDyigCix+8gG7ZO4AK3PHTZ3pOpLB30A8u7
+	 Gmpihzo49bgxA9uDWHBBGgOVyvSMHS23eqjThkzJJAM8eJxoAhptAaD3F95knu0GH/
+	 9EDfYPf7UtLuRhFmspvulRridQV/D6GlxsKGWb08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 036/143] igb: extend PTP timestamp adjustments to i211
-Date: Mon,  4 Mar 2024 21:22:36 +0000
-Message-ID: <20240304211551.091703959@linuxfoundation.org>
+	Lukasz Majewski <lukma@denx.de>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 037/143] net: hsr: Use correct offset for HSR TLV values in supervisory HSR frames
+Date: Mon,  4 Mar 2024 21:22:37 +0000
+Message-ID: <20240304211551.129426675@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -54,60 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Lukasz Majewski <lukma@denx.de>
 
-[ Upstream commit 0bb7b09392eb74b152719ae87b1ba5e4bf910ef0 ]
+[ Upstream commit 51dd4ee0372228ffb0f7709fa7aa0678d4199d06 ]
 
-The i211 requires the same PTP timestamp adjustments as the i210,
-according to its datasheet. To ensure consistent timestamping across
-different platforms, this change extends the existing adjustments to
-include the i211.
+Current HSR implementation uses following supervisory frame (even for
+HSRv1 the HSR tag is not is not present):
 
-The adjustment result are tested and comparable for i210 and i211 based
-systems.
+00000000: 01 15 4e 00 01 2d XX YY ZZ 94 77 10 88 fb 00 01
+00000010: 7e 1c 17 06 XX YY ZZ 94 77 10 1e 06 XX YY ZZ 94
+00000020: 77 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00000030: 00 00 00 00 00 00 00 00 00 00 00 00
 
-Fixes: 3f544d2a4d5c ("igb: adjust PTP timestamps for Tx/Rx latency")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240227184942.362710-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The current code adds extra two bytes (i.e. sizeof(struct hsr_sup_tlv))
+when offset for skb_pull() is calculated.
+This is wrong, as both 'struct hsrv1_ethhdr_sp' and 'hsrv0_ethhdr_sp'
+already have 'struct hsr_sup_tag' defined in them, so there is no need
+for adding extra two bytes.
+
+This code was working correctly as with no RedBox support, the check for
+HSR_TLV_EOT (0x00) was off by two bytes, which were corresponding to
+zeroed padded bytes for minimal packet size.
+
+Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")
+Signed-off-by: Lukasz Majewski <lukma@denx.de>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20240228085644.3618044-1-lukma@denx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ptp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/hsr/hsr_forward.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
-index 319c544b9f04c..f945705561200 100644
---- a/drivers/net/ethernet/intel/igb/igb_ptp.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
-@@ -957,7 +957,7 @@ static void igb_ptp_tx_hwtstamp(struct igb_adapter *adapter)
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 80cdc6f6b34c9..0323ab5023c69 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -83,7 +83,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
+ 		return false;
  
- 	igb_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
- 	/* adjust timestamp for the TX latency based on link speed */
--	if (adapter->hw.mac.type == e1000_i210) {
-+	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
- 		switch (adapter->link_speed) {
- 		case SPEED_10:
- 			adjust = IGB_I210_TX_LATENCY_10;
-@@ -1003,6 +1003,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
- 			ktime_t *timestamp)
- {
- 	struct igb_adapter *adapter = q_vector->adapter;
-+	struct e1000_hw *hw = &adapter->hw;
- 	struct skb_shared_hwtstamps ts;
- 	__le64 *regval = (__le64 *)va;
- 	int adjust = 0;
-@@ -1022,7 +1023,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
- 	igb_ptp_systim_to_hwtstamp(adapter, &ts, le64_to_cpu(regval[1]));
- 
- 	/* adjust timestamp for the RX latency based on link speed */
--	if (adapter->hw.mac.type == e1000_i210) {
-+	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
- 		switch (adapter->link_speed) {
- 		case SPEED_10:
- 			adjust = IGB_I210_RX_LATENCY_10;
+ 	/* Get next tlv */
+-	total_length += sizeof(struct hsr_sup_tlv) + hsr_sup_tag->tlv.HSR_TLV_length;
++	total_length += hsr_sup_tag->tlv.HSR_TLV_length;
+ 	if (!pskb_may_pull(skb, total_length))
+ 		return false;
+ 	skb_pull(skb, total_length);
 -- 
 2.43.0
 
