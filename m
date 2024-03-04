@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E478B1C680;
-	Mon,  4 Mar 2024 21:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B13A7AE6F;
+	Mon,  4 Mar 2024 21:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587972; cv=none; b=IjZ5lpmQnZ6Qrso8b5MxVTCA7M51spf/DJmgRQL3bT+QGTL0W9rFc0rZeG6HXgiLBobv75j4mqK0hxMW9pePAtRZrtkXEGZOuHTsJMviQQ0eNbvqTqymfzKbJcHQhBZGyC+49LV1FuU0KvS9McL8208Zb7LVfd4iucORU+/I9LM=
+	t=1709587974; cv=none; b=NVjX3iGnTcwd9e9274TvC4s7Wz49nWyZD/jQ/OkssOEhCkF/ReqzLJ4bAmAzXHw5oY/OZMA0eNce9tXAaybthgZ9Dowi0kqAZ1EvD6k1SQtkJ8jgfc27ZPfRm02cBKthsdoCRsXF/0jl3FKMN7660SE9t0WVTtPn6YsVGA6sVJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587972; c=relaxed/simple;
-	bh=DDYqF/roflMhPyP8P/yE2tasV7ay+E2z5mdXK3IwV4s=;
+	s=arc-20240116; t=1709587974; c=relaxed/simple;
+	bh=jUlFXB6PuwTdauMsHqtb2m4B+q41vO6QVVbH3IH5s3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRlC2sFp4sVKuVsAjzRWQnB/q2CfrDtvSclqtbvRE+o5oz4xtPqCr4KjdGIXwW+hWna+f3ljoexGn3P19zZzk4SKTFIgs5NhX/PaMe8Axoh9/9dTMCjqPDk+w64NRkRQalPscN1n94rT9UrshIQH4fIACm3ZxGWi06t9nbEJQeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5u1Hdiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5E1WqwIKuMdLmxexB/mIXZulRlSsCkHzt6+21hl/CVIIS0iXJnBaFRslGC6NGNB6o7u4+70YtAgQNWrWiMFEtCxhzMfAkzgQU1t1gbep4rtIU2ESf857kbRqvW8DCdDf+iUw3K41lIXFvM+bbTsJLpMDXFrhORZOr2rVuhrNgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsfWrDzr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5u1Hdiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776A4C433C7;
-	Mon,  4 Mar 2024 21:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsfWrDzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEC3C433F1;
+	Mon,  4 Mar 2024 21:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587971;
-	bh=DDYqF/roflMhPyP8P/yE2tasV7ay+E2z5mdXK3IwV4s=;
+	s=korg; t=1709587974;
+	bh=jUlFXB6PuwTdauMsHqtb2m4B+q41vO6QVVbH3IH5s3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5u1HdiwfRtbZM8BcRaOOihd4xUr5P1bt4TvHaauho3MU3sF/faB8sGxzHwivu+c2
-	 0TSXcK1be4W0j49bnnUPpbQsPIX7ODbfS5MvwhiJJXBtAyRD5G4U6JMJeT0NFjc8kY
-	 mH4lVhaKqjX1ryWBZpuQjAIqkhWu2sRE7ikTEnpA=
+	b=dsfWrDzraaKAdW25zHLp2AZOSntRnLK7MuYaFiZOW/IRx7KTm/RFDKO7oEn5s/vqX
+	 h0Zg/1nSo1lbtNMssKKGCr5YlUY8GU8DrPC84A19IUb2p9z/vlFLNSCE4/wrqHFZmS
+	 48rHZgTlIKk6uIvgqIUfMOvyRfZVU38B4jiIBmfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 161/162] selftests: mptcp: rm subflow with v4/v4mapped addr
-Date: Mon,  4 Mar 2024 21:23:46 +0000
-Message-ID: <20240304211556.812012901@linuxfoundation.org>
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 144/162] dmaengine: idxd: Remove shadow Event Log head stored in idxd
+Date: Mon,  4 Mar 2024 21:23:29 +0000
+Message-ID: <20240304211556.313598431@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,100 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-commit 7092dbee23282b6fcf1313fc64e2b92649ee16e8 upstream.
+[ Upstream commit ecec7c9f29a7114a3e23a14020b1149ea7dffb4f ]
 
-Now both a v4 address and a v4-mapped address are supported when
-destroying a userspace pm subflow, this patch adds a second subflow
-to "userspace pm add & remove address" test, and two subflows could
-be removed two different ways, one with the v4mapped and one with v4.
+head is defined in idxd->evl as a shadow of head in the EVLSTATUS register.
+There are two issues related to the shadow head:
 
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/387
-Fixes: 48d73f609dcc ("selftests: mptcp: update userspace pm addr tests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-2-162e87e48497@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+1. Mismatch between the shadow head and the state of the EVLSTATUS
+   register:
+   If Event Log is supported, upon completion of the Enable Device command,
+   the Event Log head in the variable idxd->evl->head should be cleared to
+   match the state of the EVLSTATUS register. But the variable is not reset
+   currently, leading mismatch between the variable and the register state.
+   The mismatch causes incorrect processing of Event Log entries.
+
+2. Unnecessary shadow head definition:
+   The shadow head is unnecessary as head can be read directly from the
+   EVLSTATUS register. Reading head from the register incurs no additional
+   cost because event log head and tail are always read together and
+   tail is already read directly from the register as required by hardware.
+
+Remove the shadow Event Log head stored in idxd->evl to address the
+mentioned issues.
+
+Fixes: 244da66cda35 ("dmaengine: idxd: setup event log configuration")
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20240215024931.1739621-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   28 +++++++++++++-----------
- tools/testing/selftests/net/mptcp/mptcp_lib.sh  |    4 +--
- 2 files changed, 18 insertions(+), 14 deletions(-)
+ drivers/dma/idxd/cdev.c    | 2 +-
+ drivers/dma/idxd/debugfs.c | 2 +-
+ drivers/dma/idxd/idxd.h    | 1 -
+ drivers/dma/idxd/irq.c     | 3 +--
+ 4 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3328,16 +3328,17 @@ userspace_pm_rm_sf()
- {
- 	local evts=$evts_ns1
- 	local t=${3:-1}
--	local ip=4
-+	local ip
- 	local tk da dp sp
- 	local cnt
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 0423655f5a880..3dd25a9a04f18 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -345,7 +345,7 @@ static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid)
+ 	spin_lock(&evl->lock);
+ 	status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
+ 	t = status.tail;
+-	h = evl->head;
++	h = status.head;
+ 	size = evl->size;
  
- 	[ "$1" == "$ns2" ] && evts=$evts_ns2
--	if mptcp_lib_is_v6 $2; then ip=6; fi
-+	[ -n "$(mptcp_lib_evts_get_info "saddr4" "$evts" $t)" ] && ip=4
-+	[ -n "$(mptcp_lib_evts_get_info "saddr6" "$evts" $t)" ] && ip=6
- 	tk=$(mptcp_lib_evts_get_info token "$evts")
--	da=$(mptcp_lib_evts_get_info "daddr$ip" "$evts" $t)
--	dp=$(mptcp_lib_evts_get_info dport "$evts" $t)
--	sp=$(mptcp_lib_evts_get_info sport "$evts" $t)
-+	da=$(mptcp_lib_evts_get_info "daddr$ip" "$evts" $t $2)
-+	dp=$(mptcp_lib_evts_get_info dport "$evts" $t $2)
-+	sp=$(mptcp_lib_evts_get_info sport "$evts" $t $2)
+ 	while (h != t) {
+diff --git a/drivers/dma/idxd/debugfs.c b/drivers/dma/idxd/debugfs.c
+index 9cfbd9b14c4c4..f3f25ee676f30 100644
+--- a/drivers/dma/idxd/debugfs.c
++++ b/drivers/dma/idxd/debugfs.c
+@@ -68,9 +68,9 @@ static int debugfs_evl_show(struct seq_file *s, void *d)
  
- 	cnt=$(rm_sf_count ${1})
- 	ip netns exec $1 ./pm_nl_ctl dsf lip $2 lport $sp \
-@@ -3424,20 +3425,23 @@ userspace_tests()
- 	if reset_with_events "userspace pm add & remove address" &&
- 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
- 		set_userspace_pm $ns1
--		pm_nl_set_limits $ns2 1 1
-+		pm_nl_set_limits $ns2 2 2
- 		speed=5 \
- 			run_tests $ns1 $ns2 10.0.1.1 &
- 		local tests_pid=$!
- 		wait_mpj $ns1
- 		userspace_pm_add_addr $ns1 10.0.2.1 10
--		chk_join_nr 1 1 1
--		chk_add_nr 1 1
--		chk_mptcp_info subflows 1 subflows 1
--		chk_subflows_total 2 2
--		chk_mptcp_info add_addr_signal 1 add_addr_accepted 1
-+		userspace_pm_add_addr $ns1 10.0.3.1 20
-+		chk_join_nr 2 2 2
-+		chk_add_nr 2 2
-+		chk_mptcp_info subflows 2 subflows 2
-+		chk_subflows_total 3 3
-+		chk_mptcp_info add_addr_signal 2 add_addr_accepted 2
- 		userspace_pm_rm_addr $ns1 10
- 		userspace_pm_rm_sf $ns1 "::ffff:10.0.2.1" $SUB_ESTABLISHED
--		chk_rm_nr 1 1 invert
-+		userspace_pm_rm_addr $ns1 20
-+		userspace_pm_rm_sf $ns1 10.0.3.1 $SUB_ESTABLISHED
-+		chk_rm_nr 2 2 invert
- 		chk_mptcp_info subflows 0 subflows 0
- 		chk_subflows_total 1 1
- 		kill_events_pids
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -213,9 +213,9 @@ mptcp_lib_get_info_value() {
- 	grep "${2}" | sed -n 's/.*\('"${1}"':\)\([0-9a-f:.]*\).*$/\2/p;q'
- }
+ 	spin_lock(&evl->lock);
  
--# $1: info name ; $2: evts_ns ; $3: event type
-+# $1: info name ; $2: evts_ns ; [$3: event type; [$4: addr]]
- mptcp_lib_evts_get_info() {
--	mptcp_lib_get_info_value "${1}" "^type:${3:-1}," < "${2}"
-+	grep "${4:-}" "${2}" | mptcp_lib_get_info_value "${1}" "^type:${3:-1},"
- }
+-	h = evl->head;
+ 	evl_status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
+ 	t = evl_status.tail;
++	h = evl_status.head;
+ 	evl_size = evl->size;
  
- # $1: PID
+ 	seq_printf(s, "Event Log head %u tail %u interrupt pending %u\n\n",
+diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
+index 1e89c80a07fc2..96062ae39f9a2 100644
+--- a/drivers/dma/idxd/idxd.h
++++ b/drivers/dma/idxd/idxd.h
+@@ -290,7 +290,6 @@ struct idxd_evl {
+ 	unsigned int log_size;
+ 	/* The number of entries in the event log. */
+ 	u16 size;
+-	u16 head;
+ 	unsigned long *bmap;
+ 	bool batch_fail[IDXD_MAX_BATCH_IDENT];
+ };
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 2183d7f9cdbdd..3bdfc1797f620 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -367,9 +367,9 @@ static void process_evl_entries(struct idxd_device *idxd)
+ 	/* Clear interrupt pending bit */
+ 	iowrite32(evl_status.bits_upper32,
+ 		  idxd->reg_base + IDXD_EVLSTATUS_OFFSET + sizeof(u32));
+-	h = evl->head;
+ 	evl_status.bits = ioread64(idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
+ 	t = evl_status.tail;
++	h = evl_status.head;
+ 	size = idxd->evl->size;
+ 
+ 	while (h != t) {
+@@ -378,7 +378,6 @@ static void process_evl_entries(struct idxd_device *idxd)
+ 		h = (h + 1) % size;
+ 	}
+ 
+-	evl->head = h;
+ 	evl_status.head = h;
+ 	iowrite32(evl_status.bits_lower32, idxd->reg_base + IDXD_EVLSTATUS_OFFSET);
+ 	spin_unlock(&evl->lock);
+-- 
+2.43.0
+
 
 
