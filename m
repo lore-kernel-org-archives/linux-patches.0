@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD71F60A;
-	Mon,  4 Mar 2024 21:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F82E1EB5A;
+	Mon,  4 Mar 2024 21:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587766; cv=none; b=jS8S8q9xkKtj7u9K/dF11EZUc7jtrsiKUshzACVpoiq2xiCPEw2IFhN6AqqYZTjTWb/c4N6uvtHsZakuA2PKcgAQZCpA/k5yb0M8+a/DrUmFElQhhveRVKo/avwLEZp9fEFLWXV1cGueFxj2PK9eJga25NIC66WJUCijeBc8hlc=
+	t=1709587769; cv=none; b=NUZqJNghCHG8aCMxRnOkcg84+KU93Qlb31fuj4luy6WvNa82Xx2N2HLx6SofpTipNQvbiaiGZeaZZoV0CeiDq5cDucg4Q4i/dL8L7fPIWRGyOLYs82CQdxHSRwyllHGVZHOc3WGYzaZAkpKskMeD/Ju/mY0m1xPGt6FoMv6mVk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587766; c=relaxed/simple;
-	bh=tTCTzMgLzAIkStGicEz0hSjAZhzOg5ZbnYM/KjFpto4=;
+	s=arc-20240116; t=1709587769; c=relaxed/simple;
+	bh=sNfME22/uSDSU9lQFZm64yki6E4KF8ONngganK0XOOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pE0c9u7QnAifLLiYqksnNUSeLE9Zp+gX2bSnHje3zMCsPZ7yqSoJGEfZ8ZfXVaGDdoS9/mbGHwLRoItHXpBbK+Qr7IAy7aEshd6VVVgJUzTtNFQ/2HQ3uh36ka1SIHvkbOz216FmQ9Am3WFB1/YJfqAB6RP60iNy/CcFDVU+Kyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eilz6cps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qMem6bpIGfHkTdnBR9HqmqMIx9wa55oeCYimZobamv4GhN6ndAJZe68rPkLFOPzY5SsybRemT3QSQ5FHMrr+XY4jYtctiDMSCMRMq+/0C5B3QtFW51I1+rpSusZDlQbnoW5vCHE2u8OQPa9gA5IbJX/B9PmZPBQjsjsVAc+LC/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMAs01ie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eilz6cps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F7C433F1;
-	Mon,  4 Mar 2024 21:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMAs01ie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B858C433F1;
+	Mon,  4 Mar 2024 21:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587766;
-	bh=tTCTzMgLzAIkStGicEz0hSjAZhzOg5ZbnYM/KjFpto4=;
+	s=korg; t=1709587769;
+	bh=sNfME22/uSDSU9lQFZm64yki6E4KF8ONngganK0XOOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eilz6cpsnQt66f3rPmszU8GSOTxJBdrp8LXufAlyfOr0Xxsaur0KJmz1XS5T3F76X
-	 U39M9STxyTMt6SqqhGFUUeba7o4/CHAvEFjhDlJqKmWm4EJOHyMgvigkP8HsRc2V2z
-	 Lvp7Y1PBDXV0hqDjAAbsOchUYZGaKx6ItaF9VGrI=
+	b=XMAs01iegJezheNkrvy/tnR9OTB1hsR8GMcbPDsR51EgzQUZlFS4c0TEe6HC+TrRn
+	 j1cvM2w/3V9wBqAa5GLE/ZdKsrqzhx8Z8e3FjEYUSprSuK3ctwsyonwXYSHQKASE1u
+	 SI29Nq+c7vbgxLE5GAd8LIaCOUSVQAX0GQYT6CuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Qingqing Zhuo <Qingqing.Zhuo@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 064/162] drm/amd/display: Prevent potential buffer overflow in map_hw_resources
-Date: Mon,  4 Mar 2024 21:22:09 +0000
-Message-ID: <20240304211553.900522211@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Jann Horn <jannh@google.com>,
+	Shervin Oloumi <enlightened@chromium.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.7 082/162] landlock: Fix asymmetric private inodes referring
+Date: Mon,  4 Mar 2024 21:22:27 +0000
+Message-ID: <20240304211554.460901842@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -50,64 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 0f8ca019544a252d1afb468ce840c6dcbac73af4 ]
+commit d9818b3e906a0ee1ab02ea79e74a2f755fc5461a upstream.
 
-Adds a check in the map_hw_resources function to prevent a potential
-buffer overflow. The function was accessing arrays using an index that
-could potentially be greater than the size of the arrays, leading to a
-buffer overflow.
+When linking or renaming a file, if only one of the source or
+destination directory is backed by an S_PRIVATE inode, then the related
+set of layer masks would be used as uninitialized by
+is_access_to_paths_allowed().  This would result to indeterministic
+access for one side instead of always being allowed.
 
-Adds a check to ensure that the index is within the bounds of the
-arrays. If the index is out of bounds, an error message is printed and
-break it will continue execution with just ignoring extra data early to
-prevent the buffer overflow.
+This bug could only be triggered with a mounted filesystem containing
+both S_PRIVATE and !S_PRIVATE inodes, which doesn't seem possible.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml2_wrapper.c:79 map_hw_resources() error: buffer overflow 'dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_stream_id' 6 <= 7
-drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml2_wrapper.c:81 map_hw_resources() error: buffer overflow 'dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_plane_id' 6 <= 7
+The collect_domain_accesses() calls return early if
+is_nouser_or_private() returns false, which means that the directory's
+superblock has SB_NOUSER or its inode has S_PRIVATE.  Because rename or
+link actions are only allowed on the same mounted filesystem, the
+superblock is always the same for both source and destination
+directories.  However, it might be possible in theory to have an
+S_PRIVATE parent source inode with an !S_PRIVATE parent destination
+inode, or vice versa.
 
-Fixes: 7966f319c66d ("drm/amd/display: Introduce DML2")
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Qingqing Zhuo <Qingqing.Zhuo@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Roman Li <roman.li@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To make sure this case is not an issue, explicitly initialized both set
+of layer masks to 0, which means to allow all actions on the related
+side.  If at least on side has !S_PRIVATE, then
+collect_domain_accesses() and is_access_to_paths_allowed() check for the
+required access rights.
+
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Shervin Oloumi <enlightened@chromium.org>
+Cc: stable@vger.kernel.org
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Link: https://lore.kernel.org/r/20240219190345.2928627-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ security/landlock/fs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-index 8f231418870f2..c62b61ac45d27 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-@@ -76,6 +76,11 @@ static void map_hw_resources(struct dml2_context *dml2,
- 			in_out_display_cfg->hw.DLGRefClkFreqMHz = 50;
- 		}
- 		for (j = 0; j < mode_support_info->DPPPerSurface[i]; j++) {
-+			if (i >= __DML2_WRAPPER_MAX_STREAMS_PLANES__) {
-+				dml_print("DML::%s: Index out of bounds: i=%d, __DML2_WRAPPER_MAX_STREAMS_PLANES__=%d\n",
-+					  __func__, i, __DML2_WRAPPER_MAX_STREAMS_PLANES__);
-+				break;
-+			}
- 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_stream_id[num_pipes] = dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_stream_id[i];
- 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_stream_id_valid[num_pipes] = true;
- 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_plane_id[num_pipes] = dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_plane_id[i];
--- 
-2.43.0
-
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -737,8 +737,8 @@ static int current_check_refer_path(stru
+ 	bool allow_parent1, allow_parent2;
+ 	access_mask_t access_request_parent1, access_request_parent2;
+ 	struct path mnt_dir;
+-	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS],
+-		layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS];
++	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS] = {},
++		     layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS] = {};
+ 
+ 	if (!dom)
+ 		return 0;
 
 
