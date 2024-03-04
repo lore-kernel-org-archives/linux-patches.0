@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE2810A35;
-	Mon,  4 Mar 2024 21:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596B8F58;
+	Mon,  4 Mar 2024 21:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588575; cv=none; b=PJFhVCtFnRyz4FngqSmjsZKrAXvVfHdD/rodfNMbSvQaMhW7N9jnbs8vfONicVjRzlU9aJYQp5mQtt0d4mTC41+Sdbg195NzKHZJ9F59sX5wsshdy1Hwbt0bdGCsfoACaGTsAXRKnwRf3Jo5z12sledSPANiRkbvTDIXpyPDUKM=
+	t=1709588578; cv=none; b=FvrZwYlgMmZq/ZSgu08duqAUS0c/GrtPWvTy0WAiZD2OQO2MMPiQIKcuvWD9VjZBBYCnqFeGgbZO6CaIAwphNmpiA3hk4Yh9bor5HLbKWIiu9BTJsg1Fd5cjci/bln75RyqzP0yoOL6uv+Yzq1qMJbDD11V7pLwM/Ar4wbtYcHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588575; c=relaxed/simple;
-	bh=3C9U6Lli1tV6EAcSgdDEeeWRWFGFc5n3qlqYibuZ8PU=;
+	s=arc-20240116; t=1709588578; c=relaxed/simple;
+	bh=wRyUSlsFdMotdmc4sXapbn9u5dpqnrf1I+Qzw8ACrJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvHPwj0v4qPCfn3eyH0pjOPhrmNb/CuGiNCXiV7+/NQ4UdsGUSxUrYH7fANMkA9thbkjo4rOExmH143GxRE/72vNMYUY6HIzA62K0mgcHadyNA8KR0vluhgDRGKpPVGOAqUH2OO8ZU8MCBO2emAu20rLjyCpp/ANY3cnNwRPuLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8nkIU7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XxyE7BWdZZUgCcQ1diOjviMYtkOvK2yYUjP3IIyp0p0o6vnBX2lOlbPjdzcK7w/l15ZayJtu9Igq5H+HqGW7bxCFnav3a8HWmHq/vBgQM1NgLVnaMZscPA2MG6r2KJdHNIm931E6aspfq2gYDejSXbmZLSWs/U37IKyhWesmxus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmdT69YG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8nkIU7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D4C433C7;
-	Mon,  4 Mar 2024 21:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmdT69YG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC210C433C7;
+	Mon,  4 Mar 2024 21:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588575;
-	bh=3C9U6Lli1tV6EAcSgdDEeeWRWFGFc5n3qlqYibuZ8PU=;
+	s=korg; t=1709588578;
+	bh=wRyUSlsFdMotdmc4sXapbn9u5dpqnrf1I+Qzw8ACrJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8nkIU7w2nTYq0quFGVfalBMXD7bA1m9Slb1miDqhS0nDLf8XUlOnOZAJ7IzE/0zR
-	 exu9HcdfaejqH0TopXdDDW1fwamTl3cH4iEzjN2W3Izjf39MQqvHyX6agx6wf7vP6r
-	 ezy/sFYzkjP8U6huIBkD9+4F9RCnljnDJbGKinTo=
+	b=ZmdT69YGW95oNR7WVfn/Hnk4pb0IY2J1gJ+Q4GS2k7DcO0OU3AF66y3Jp92na79mv
+	 9MUEGaB74XjzzeaTuWpbzTOt03jViwlsOdTEhMPtQSuhAEyfgHnpVnBfQJNii55AWb
+	 vP2lzZ58HsSr7qRDSKgtq5/yQ+Kd7VQ2dBWnewhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+4fa4a2d1f5a5ee06f006@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/215] scsi: sd: usb_storage: uas: Access media prior to querying device properties
-Date: Mon,  4 Mar 2024 21:21:08 +0000
-Message-ID: <20240304211557.173185622@linuxfoundation.org>
+Subject: [PATCH 6.1 006/215] af_unix: Fix task hung while purging oob_skb in GC.
+Date: Mon,  4 Mar 2024 21:21:09 +0000
+Message-ID: <20240304211557.208032437@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -53,153 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 321da3dc1f3c92a12e3c5da934090d2992a8814c ]
+[ Upstream commit 25236c91b5ab4a26a56ba2e79b8060cf4e047839 ]
 
-It has been observed that some USB/UAS devices return generic properties
-hardcoded in firmware for mode pages for a period of time after a device
-has been discovered. The reported properties are either garbage or they do
-not accurately reflect the characteristics of the physical storage device
-attached in the case of a bridge.
+syzbot reported a task hung; at the same time, GC was looping infinitely
+in list_for_each_entry_safe() for OOB skb.  [0]
 
-Prior to commit 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to
-avoid calling revalidate twice") we would call revalidate several
-times during device discovery. As a result, incorrect values would
-eventually get replaced with ones accurately describing the attached
-storage. When we did away with the redundant revalidate pass, several
-cases were reported where devices reported nonsensical values or would
-end up in write-protected state.
+syzbot demonstrated that the list_for_each_entry_safe() was not actually
+safe in this case.
 
-An initial attempt at addressing this issue involved introducing a
-delayed second revalidate invocation. However, this approach still
-left some devices reporting incorrect characteristics.
+A single skb could have references for multiple sockets.  If we free such
+a skb in the list_for_each_entry_safe(), the current and next sockets could
+be unlinked in a single iteration.
 
-Tasos Sahanidis debugged the problem further and identified that
-introducing a READ operation prior to MODE SENSE fixed the problem and that
-it wasn't a timing issue. Issuing a READ appears to cause the devices to
-update their state to reflect the actual properties of the storage
-media. Device properties like vendor, model, and storage capacity appear to
-be correctly reported from the get-go. It is unclear why these devices
-defer populating the remaining characteristics.
+unix_notinflight() uses list_del_init() to unlink the socket, so the
+prefetched next socket forms a loop itself and list_for_each_entry_safe()
+never stops.
 
-Match the behavior of a well known commercial operating system and
-trigger a READ operation prior to querying device characteristics to
-force the device to populate the mode pages.
+Here, we must use while() and make sure we always fetch the first socket.
 
-The additional READ is triggered by a flag set in the USB storage and
-UAS drivers. We avoid issuing the READ for other transport classes
-since some storage devices identify Linux through our particular
-discovery command sequence.
+[0]:
+Sending NMI from CPU 0 to CPUs 1:
+NMI backtrace for cpu 1
+CPU: 1 PID: 5065 Comm: syz-executor236 Not tainted 6.8.0-rc3-syzkaller-00136-g1f719a2f3fa6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
+RIP: 0010:preempt_count arch/x86/include/asm/preempt.h:26 [inline]
+RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
+RIP: 0010:__sanitizer_cov_trace_pc+0xd/0x60 kernel/kcov.c:207
+Code: cc cc cc cc 66 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 65 48 8b 14 25 40 c2 03 00 <65> 8b 05 b4 7c 78 7e a9 00 01 ff 00 48 8b 34 24 74 0f f6 c4 01 74
+RSP: 0018:ffffc900033efa58 EFLAGS: 00000283
+RAX: ffff88807b077800 RBX: ffff88807b077800 RCX: 1ffffffff27b1189
+RDX: ffff88802a5a3b80 RSI: ffffffff8968488d RDI: ffff88807b077f70
+RBP: ffffc900033efbb0 R08: 0000000000000001 R09: fffffbfff27a900c
+R10: ffffffff93d48067 R11: ffffffff8ae000eb R12: ffff88807b077800
+R13: dffffc0000000000 R14: ffff88807b077e40 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000564f4fc1e3a8 CR3: 000000000d57a000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <TASK>
+ unix_gc+0x563/0x13b0 net/unix/garbage.c:319
+ unix_release_sock+0xa93/0xf80 net/unix/af_unix.c:683
+ unix_release+0x91/0xf0 net/unix/af_unix.c:1064
+ __sock_release+0xb0/0x270 net/socket.c:659
+ sock_close+0x1c/0x30 net/socket.c:1421
+ __fput+0x270/0xb80 fs/file_table.c:376
+ task_work_run+0x14f/0x250 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0xa8a/0x2ad0 kernel/exit.c:871
+ do_group_exit+0xd4/0x2a0 kernel/exit.c:1020
+ __do_sys_exit_group kernel/exit.c:1031 [inline]
+ __se_sys_exit_group kernel/exit.c:1029 [inline]
+ __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1029
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd5/0x270 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x6f/0x77
+RIP: 0033:0x7f9d6cbdac09
+Code: Unable to access opcode bytes at 0x7f9d6cbdabdf.
+RSP: 002b:00007fff5952feb8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f9d6cbdac09
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
+RBP: 00007f9d6cc552b0 R08: ffffffffffffffb8 R09: 0000000000000006
+R10: 0000000000000006 R11: 0000000000000246 R12: 00007f9d6cc552b0
+R13: 0000000000000000 R14: 00007f9d6cc55d00 R15: 00007f9d6cbabe70
+ </TASK>
 
-Link: https://lore.kernel.org/r/20240213143306.2194237-1-martin.petersen@oracle.com
-Fixes: 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to avoid calling revalidate twice")
-Cc: stable@vger.kernel.org
-Reported-by: Tasos Sahanidis <tasos@tasossah.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Tested-by: Tasos Sahanidis <tasos@tasossah.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+4fa4a2d1f5a5ee06f006@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4fa4a2d1f5a5ee06f006
+Fixes: 1279f9d9dec2 ("af_unix: Call kfree_skb() for dead unix_(sk)->oob_skb in GC.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240209220453.96053-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c              | 26 +++++++++++++++++++++++++-
- drivers/usb/storage/scsiglue.c |  7 +++++++
- drivers/usb/storage/uas.c      |  7 +++++++
- include/scsi/scsi_device.h     |  1 +
- 4 files changed, 40 insertions(+), 1 deletion(-)
+ net/unix/garbage.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 31b5273f43a71..4433b02c8935f 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3284,6 +3284,24 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
- 	return true;
- }
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 767b338a7a2d4..9e1bab97c05ba 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -315,10 +315,11 @@ void unix_gc(void)
+ 	__skb_queue_purge(&hitlist);
  
-+static void sd_read_block_zero(struct scsi_disk *sdkp)
-+{
-+	unsigned int buf_len = sdkp->device->sector_size;
-+	char *buffer, cmd[10] = { };
-+
-+	buffer = kmalloc(buf_len, GFP_KERNEL);
-+	if (!buffer)
-+		return;
-+
-+	cmd[0] = READ_10;
-+	put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
-+	put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
-+
-+	scsi_execute_cmd(sdkp->device, cmd, REQ_OP_DRV_IN, buffer, buf_len,
-+			 SD_TIMEOUT, sdkp->max_retries, NULL);
-+	kfree(buffer);
-+}
-+
- /**
-  *	sd_revalidate_disk - called the first time a new disk is seen,
-  *	performs disk spin up, read_capacity, etc.
-@@ -3323,7 +3341,13 @@ static int sd_revalidate_disk(struct gendisk *disk)
- 	 */
- 	if (sdkp->media_present) {
- 		sd_read_capacity(sdkp, buffer);
--
-+		/*
-+		 * Some USB/UAS devices return generic values for mode pages
-+		 * until the media has been accessed. Trigger a READ operation
-+		 * to force the device to populate mode pages.
-+		 */
-+		if (sdp->read_before_ms)
-+			sd_read_block_zero(sdkp);
- 		/*
- 		 * set the default to rotational.  All non-rotational devices
- 		 * support the block characteristics VPD page, which will
-diff --git a/drivers/usb/storage/scsiglue.c b/drivers/usb/storage/scsiglue.c
-index c54e9805da536..12cf9940e5b67 100644
---- a/drivers/usb/storage/scsiglue.c
-+++ b/drivers/usb/storage/scsiglue.c
-@@ -179,6 +179,13 @@ static int slave_configure(struct scsi_device *sdev)
- 		 */
- 		sdev->use_192_bytes_for_3f = 1;
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+-	list_for_each_entry_safe(u, next, &gc_candidates, link) {
+-		struct sk_buff *skb = u->oob_skb;
++	while (!list_empty(&gc_candidates)) {
++		u = list_entry(gc_candidates.next, struct unix_sock, link);
++		if (u->oob_skb) {
++			struct sk_buff *skb = u->oob_skb;
  
-+		/*
-+		 * Some devices report generic values until the media has been
-+		 * accessed. Force a READ(10) prior to querying device
-+		 * characteristics.
-+		 */
-+		sdev->read_before_ms = 1;
-+
- 		/*
- 		 * Some devices don't like MODE SENSE with page=0x3f,
- 		 * which is the command used for checking if a device
-diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
-index de3836412bf32..ed22053b3252f 100644
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -878,6 +878,13 @@ static int uas_slave_configure(struct scsi_device *sdev)
- 	if (devinfo->flags & US_FL_CAPACITY_HEURISTICS)
- 		sdev->guess_capacity = 1;
- 
-+	/*
-+	 * Some devices report generic values until the media has been
-+	 * accessed. Force a READ(10) prior to querying device
-+	 * characteristics.
-+	 */
-+	sdev->read_before_ms = 1;
-+
- 	/*
- 	 * Some devices don't like MODE SENSE with page=0x3f,
- 	 * which is the command used for checking if a device
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index b407807cc6695..a64713fe52640 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -204,6 +204,7 @@ struct scsi_device {
- 	unsigned use_10_for_rw:1; /* first try 10-byte read / write */
- 	unsigned use_10_for_ms:1; /* first try 10-byte mode sense/select */
- 	unsigned set_dbd_for_ms:1; /* Set "DBD" field in mode sense */
-+	unsigned read_before_ms:1;	/* perform a READ before MODE SENSE */
- 	unsigned no_report_opcodes:1;	/* no REPORT SUPPORTED OPERATION CODES */
- 	unsigned no_write_same:1;	/* no WRITE SAME command */
- 	unsigned use_16_for_rw:1; /* Use read/write(16) over read/write(10) */
+-		if (skb) {
+ 			u->oob_skb = NULL;
+ 			kfree_skb(skb);
+ 		}
 -- 
 2.43.0
 
