@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923EE7CF18;
-	Mon,  4 Mar 2024 21:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372577A124;
+	Mon,  4 Mar 2024 21:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587904; cv=none; b=O4STc9nNRb/y8C5XoeG736RwsQ9mMxJDBzGlJhAN0QW7CTYVBhW0GxesnftrQR0dcvLFvV5f8MeqFDPWTGb9frUT+7/4+uOKw6EBR4Itc6unOboK71C6V/+GaE2mDJDGlYRUEB/I+29N0scdjbQ2rH+0f4ir+z/osF+kLnEpdnY=
+	t=1709587907; cv=none; b=Z1QMUT5MLR1/7HeFYG9ZRncx94ynRbwIwl9/iUpb14AvSFjsTd+QNxk9uu7XPbfL7Y6yyxucKMqzC2h3LewncQoPfU/oWMMdhY2bFMkkTLDKWbkt6dVsQ0s23AVwAKPDuitHJl8A77M09+TuKPSsqfzBy1LFN7KD9fgMQ9Avp6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587904; c=relaxed/simple;
-	bh=eain4lAB6ngw/EYFGJE8S/GekDPPy6sCq/XOawazIU0=;
+	s=arc-20240116; t=1709587907; c=relaxed/simple;
+	bh=CMwhRlVMRvxGnxRu9N3wdEVm2cbyADTyM0DbUeGTOFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XM84V5VcmssNxALNIRFNfTweN3Z8vL4qQEVNxZdih7M/DNhaOxMFwrqmOsUuHyu6Ug+XW24dYgdIMFQ6PzdJw+u1scwZoLEjtJ+kQnkMFSAyRhOXVvtYFZ1nkSPz2tFyJXZxCzEP6mxN/x6fmaEnj8qe5WFs3LmIwISrchpXyWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1PMhKMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgVsKxrXQ+MtN8Lw4oUixEK32uGNNo3BefTzErD8N6X0pint+e8HoGJ3PmdPOr0gTHMcT7nJ6p/yh3WwwZQwV9gfZGKxGc15gZchdvWX7xxRa7qt/wexiIJJzSGq+x5PpedTRzYtEDLUZipY1T97ncV+QN8as0kcl+Retgi6F+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpAy7kGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1PMhKMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C36C433C7;
-	Mon,  4 Mar 2024 21:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpAy7kGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE122C433F1;
+	Mon,  4 Mar 2024 21:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587904;
-	bh=eain4lAB6ngw/EYFGJE8S/GekDPPy6sCq/XOawazIU0=;
+	s=korg; t=1709587907;
+	bh=CMwhRlVMRvxGnxRu9N3wdEVm2cbyADTyM0DbUeGTOFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1PMhKMo4w8cCynAyAyYl0ngtgVphRQp605NIqqlgmKchnKjtiA0mRM0fML6U93Dh
-	 Gw8WpGdOTIW4Cp3wRPEbTccLp0BUTF22TQKF5VXoa1iiob6qu9IBwykuI0w8fOUB5M
-	 J1uJ6oEDS8rXBMEWWFuePCv/eTqi+xcuuVrQ60b8=
+	b=BpAy7kGy7oMBXmnTLf89A2NQ+5u74U6F+eabxUV0FFTEc3wLCpKQrEB9JG56m7ECD
+	 Yf6KfxoJoDuQ99D9oyZ+OiYUw3d6eGAoX/AMWQGaTWJ4Anm1PN/snMXPewolUcoMpw
+	 ysE+/pzHYJCfnTiRiHaNnqPtPmS3MUavcm+Q/5WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V (IBM)" <aneesh.kumar@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 117/162] mm/debug_vm_pgtable: fix BUG_ON with pud advanced test
-Date: Mon,  4 Mar 2024 21:23:02 +0000
-Message-ID: <20240304211555.507877682@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 135/162] dmaengine: dw-edma: Fix the ch_count hdma callback
+Date: Mon,  4 Mar 2024 21:23:20 +0000
+Message-ID: <20240304211556.041098453@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,81 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aneesh Kumar K.V (IBM) <aneesh.kumar@kernel.org>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-commit 720da1e593b85a550593b415bf1d79a053133451 upstream.
+[ Upstream commit cd665bfc757c71e9b7e0abff0f362d8abd38a805 ]
 
-Architectures like powerpc add debug checks to ensure we find only devmap
-PUD pte entries.  These debug checks are only done with CONFIG_DEBUG_VM.
-This patch marks the ptes used for PUD advanced test devmap pte entries so
-that we don't hit on debug checks on architecture like ppc64 as below.
+The current check of ch_en enabled to know the maximum number of available
+hardware channels is wrong as it check the number of ch_en register set
+but all of them are unset at probe. This register is set at the
+dw_hdma_v0_core_start function which is run lately before a DMA transfer.
 
-WARNING: CPU: 2 PID: 1 at arch/powerpc/mm/book3s64/radix_pgtable.c:1382 radix__pud_hugepage_update+0x38/0x138
-....
-NIP [c0000000000a7004] radix__pud_hugepage_update+0x38/0x138
-LR [c0000000000a77a8] radix__pudp_huge_get_and_clear+0x28/0x60
-Call Trace:
-[c000000004a2f950] [c000000004a2f9a0] 0xc000000004a2f9a0 (unreliable)
-[c000000004a2f980] [000d34c100000000] 0xd34c100000000
-[c000000004a2f9a0] [c00000000206ba98] pud_advanced_tests+0x118/0x334
-[c000000004a2fa40] [c00000000206db34] debug_vm_pgtable+0xcbc/0x1c48
-[c000000004a2fc10] [c00000000000fd28] do_one_initcall+0x60/0x388
+The HDMA IP have no way to know the number of hardware channels available
+like the eDMA IP, then let set it to maximum channels and let the platform
+set the right number of channels.
 
-Also
-
- kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:202!
- ....
-
- NIP [c000000000096510] pudp_huge_get_and_clear_full+0x98/0x174
- LR [c00000000206bb34] pud_advanced_tests+0x1b4/0x334
- Call Trace:
- [c000000004a2f950] [000d34c100000000] 0xd34c100000000 (unreliable)
- [c000000004a2f9a0] [c00000000206bb34] pud_advanced_tests+0x1b4/0x334
- [c000000004a2fa40] [c00000000206db34] debug_vm_pgtable+0xcbc/0x1c48
- [c000000004a2fc10] [c00000000000fd28] do_one_initcall+0x60/0x388
-
-Link: https://lkml.kernel.org/r/20240129060022.68044-1-aneesh.kumar@kernel.org
-Fixes: 27af67f35631 ("powerpc/book3s64/mm: enable transparent pud hugepage")
-Signed-off-by: Aneesh Kumar K.V (IBM) <aneesh.kumar@kernel.org>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://lore.kernel.org/r/20240129-b4-feature_hdma_mainline-v7-1-8e8c1acb7a46@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/debug_vm_pgtable.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
---- a/mm/debug_vm_pgtable.c
-+++ b/mm/debug_vm_pgtable.c
-@@ -362,6 +362,12 @@ static void __init pud_advanced_tests(st
- 	vaddr &= HPAGE_PUD_MASK;
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 00b735a0202ab..1f4cb7db54756 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -65,18 +65,12 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
  
- 	pud = pfn_pud(args->pud_pfn, args->page_prot);
+ static u16 dw_hdma_v0_core_ch_count(struct dw_edma *dw, enum dw_edma_dir dir)
+ {
+-	u32 num_ch = 0;
+-	int id;
+-
+-	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
+-		if (GET_CH_32(dw, id, dir, ch_en) & BIT(0))
+-			num_ch++;
+-	}
+-
+-	if (num_ch > HDMA_V0_MAX_NR_CH)
+-		num_ch = HDMA_V0_MAX_NR_CH;
+-
+-	return (u16)num_ch;
 +	/*
-+	 * Some architectures have debug checks to make sure
-+	 * huge pud mapping are only found with devmap entries
-+	 * For now test with only devmap entries.
++	 * The HDMA IP have no way to know the number of hardware channels
++	 * available, we set it to maximum channels and let the platform
++	 * set the right number of channels.
 +	 */
-+	pud = pud_mkdevmap(pud);
- 	set_pud_at(args->mm, vaddr, args->pudp, pud);
- 	flush_dcache_page(page);
- 	pudp_set_wrprotect(args->mm, vaddr, args->pudp);
-@@ -374,6 +380,7 @@ static void __init pud_advanced_tests(st
- 	WARN_ON(!pud_none(pud));
- #endif /* __PAGETABLE_PMD_FOLDED */
- 	pud = pfn_pud(args->pud_pfn, args->page_prot);
-+	pud = pud_mkdevmap(pud);
- 	pud = pud_wrprotect(pud);
- 	pud = pud_mkclean(pud);
- 	set_pud_at(args->mm, vaddr, args->pudp, pud);
-@@ -391,6 +398,7 @@ static void __init pud_advanced_tests(st
- #endif /* __PAGETABLE_PMD_FOLDED */
++	return HDMA_V0_MAX_NR_CH;
+ }
  
- 	pud = pfn_pud(args->pud_pfn, args->page_prot);
-+	pud = pud_mkdevmap(pud);
- 	pud = pud_mkyoung(pud);
- 	set_pud_at(args->mm, vaddr, args->pudp, pud);
- 	flush_dcache_page(page);
+ static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+-- 
+2.43.0
+
 
 
