@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBCE8F58;
-	Mon,  4 Mar 2024 21:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F104010A35;
+	Mon,  4 Mar 2024 21:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588505; cv=none; b=SkBbXC/5qmmt2vK+S4AFWlWSrT2kuDGCn6J1xsjdyFUp+7SodPD7o4ZfkJVnYYiN/nejSh3FThWvqxhC7XbZwK4s6MgaZnU/s4zIq4KcE3P1+HeoPBooQkeikg9k/iFA9Ush24yodA1Qvt1k6ioggo+Agpe1tciFb2Yb3YFjqAM=
+	t=1709588508; cv=none; b=ue9m2h7auucs/1E3AXqT2aD1+haJ4xxt5bqgZKKhKbJkv6tTf1hSIwU6dpYDw/g2p7ow3tuaLC1iCCwQ4z9Z5uWw3rzdAW9rzFHUH+/hLhmcksnkzBOHI23ON2IA18tHqnTXART5Lx0zUkCq+BBR+Zda1LLF4qKJVMCFl7oVnxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588505; c=relaxed/simple;
-	bh=R/DBVhNdyuth3uJ3+KsqlZtzMiH2Doojip/KLaYras4=;
+	s=arc-20240116; t=1709588508; c=relaxed/simple;
+	bh=C5mQrRNba0UE4y2eOczRXQlgfuNvUTT0LHAD26H1OJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aM1u8o9Vw19Qq0wIKFaoFh/yrAK7Nr5wJgBFFWjZpEw3cf2DoMdJre2miXil6j+Bmgm7JRNFXNzs0GogzqGVsT6k2AVVSCpsBPKPGLIcmYC3YO5AwxJs9q2YXdyVuX2sdsP7TTJcNdIuBm5n2gJLynRdsoqq2HTWBelqL4No/LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnxDVF8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpzxk3d9UH/6VxHxsJgSkkPb5pVZnbeifTenmWHsS3LZfP6nX78JwAkdKdTdBWgONA6Gwlrkp0J5aX3dnDhlsALcv06qWx8Ek3y93vqYb6l5GiSlTifteDZLeYy5ybpNECsKZYyx8NX1IZpjNcsAvcnx+RlZ9T6xW236D0cVVGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oh/iCDtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnxDVF8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2663C433C7;
-	Mon,  4 Mar 2024 21:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oh/iCDtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83713C433F1;
+	Mon,  4 Mar 2024 21:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588505;
-	bh=R/DBVhNdyuth3uJ3+KsqlZtzMiH2Doojip/KLaYras4=;
+	s=korg; t=1709588507;
+	bh=C5mQrRNba0UE4y2eOczRXQlgfuNvUTT0LHAD26H1OJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnxDVF8HTDzqZBRWSqZ4IxH1w+wSyEBr/PHkIm9r6C6S90evPYMyBIi6FkcioQW1+
-	 6LDkokkgt4SAXuFPVahSQ21DpT28n7mQJA9m0QgVSApAaWMrfFw8YB4PbKCntccuZQ
-	 cLdOlyErq9cRWomdeZl/ialdZpgoW0gs50MKt2Ug=
+	b=Oh/iCDtvLaxBMj0fMv2SvSRwmr5337cHcXXkCSANKUpli6Mj74W4+2mywFEn7ym+v
+	 HSWQtpEhyoGXrRD/ejvW/5NjHJucsrUP8pg4XMxVR7S9Aa3fD0lyJPToanxGI5OXlK
+	 QR/6BiLhpEHU1AglVCEFpddcjS05bTUQtrabq76k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 109/143] selftests: mptcp: join: add ss mptcp support check
-Date: Mon,  4 Mar 2024 21:23:49 +0000
-Message-ID: <20240304211553.405805581@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.6 100/143] iommufd: Fix iopt_access_list_id overwrite bug
+Date: Mon,  4 Mar 2024 21:23:40 +0000
+Message-ID: <20240304211553.106159939@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,38 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 9480f388a2ef54fba911d9325372abd69a328601 upstream.
+commit aeb004c0cd6958e910123a1607634401009c9539 upstream.
 
-Commands 'ss -M' are used in script mptcp_join.sh to display only MPTCP
-sockets. So it must be checked if ss tool supports MPTCP in this script.
+Syzkaller reported the following WARN_ON:
+  WARNING: CPU: 1 PID: 4738 at drivers/iommu/iommufd/io_pagetable.c:1360
 
-Fixes: e274f7154008 ("selftests: mptcp: add subflow limits test-cases")
+  Call Trace:
+   iommufd_access_change_ioas+0x2fe/0x4e0
+   iommufd_access_destroy_object+0x50/0xb0
+   iommufd_object_remove+0x2a3/0x490
+   iommufd_object_destroy_user
+   iommufd_access_destroy+0x71/0xb0
+   iommufd_test_staccess_release+0x89/0xd0
+   __fput+0x272/0xb50
+   __fput_sync+0x4b/0x60
+   __do_sys_close
+   __se_sys_close
+   __x64_sys_close+0x8b/0x110
+   do_syscall_x64
+
+The mismatch between the access pointer in the list and the passed-in
+pointer is resulting from an overwrite of access->iopt_access_list_id, in
+iopt_add_access(). Called from iommufd_access_change_ioas() when
+xa_alloc() succeeds but iopt_calculate_iova_alignment() fails.
+
+Add a new_id in iopt_add_access() and only update iopt_access_list_id when
+returning successfully.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-7-162e87e48497@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9227da7816dd ("iommufd: Add iommufd_access_change_ioas(_id) helpers")
+Link: https://lore.kernel.org/r/2dda7acb25b8562ec5f1310de828ef5da9ef509c.1708636627.git.nicolinc@nvidia.com
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -159,6 +159,11 @@ check_tools()
- 		exit $ksft_skip
- 	fi
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -1158,20 +1158,23 @@ out_unlock:
  
-+	if ! ss -h | grep -q MPTCP; then
-+		echo "SKIP: ss tool does not support MPTCP"
-+		exit $ksft_skip
-+	fi
+ int iopt_add_access(struct io_pagetable *iopt, struct iommufd_access *access)
+ {
++	u32 new_id;
+ 	int rc;
+ 
+ 	down_write(&iopt->domains_rwsem);
+ 	down_write(&iopt->iova_rwsem);
+-	rc = xa_alloc(&iopt->access_list, &access->iopt_access_list_id, access,
+-		      xa_limit_16b, GFP_KERNEL_ACCOUNT);
++	rc = xa_alloc(&iopt->access_list, &new_id, access, xa_limit_16b,
++		      GFP_KERNEL_ACCOUNT);
 +
- 	# Use the legacy version if available to support old kernel versions
- 	if iptables-legacy -V &> /dev/null; then
- 		iptables="iptables-legacy"
+ 	if (rc)
+ 		goto out_unlock;
+ 
+ 	rc = iopt_calculate_iova_alignment(iopt);
+ 	if (rc) {
+-		xa_erase(&iopt->access_list, access->iopt_access_list_id);
++		xa_erase(&iopt->access_list, new_id);
+ 		goto out_unlock;
+ 	}
++	access->iopt_access_list_id = new_id;
+ 
+ out_unlock:
+ 	up_write(&iopt->iova_rwsem);
 
 
