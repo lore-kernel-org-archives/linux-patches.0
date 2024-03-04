@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC797C0A0;
-	Mon,  4 Mar 2024 21:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F101B2C689;
+	Mon,  4 Mar 2024 21:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587842; cv=none; b=Txx5H6swFzdErG/N1UAGt2fHEnX2EidWEHAf2ZqiotlMGRu75StcYRUBpEoxPVhl1yQbgkxwPOk8F0iL7X3OUv1GJSWn0u/RLJ0PpKWdl6giP5Loo+kIzqyVL80dyka6U/oGuLY2MW+OW+piFgirC4mPQhyjgCVlkCZq4/44slk=
+	t=1709587845; cv=none; b=MQnu7x1ebgtuuo8HtFguG2h+IZ6hrv2W6vztmZPB4cejmeQCQ3oIu8Ak+IMY9Qx3fXKJSoRCK0hglfPGcjPha9EZjZiH33Up2eqxXysrKvA1YcZZdF5qK7Lge/IW/KGtBVVo3IiyiEDicPNnESXPdub4LUpszlKXA2lEE6e+4Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587842; c=relaxed/simple;
-	bh=UmUPL4AiO8kQvLGymU/OFaXnd7KWVYIHAvw+SC2shBg=;
+	s=arc-20240116; t=1709587845; c=relaxed/simple;
+	bh=9FD+0731GuDdT2jTuz/IpoTvooUPvDI8DvjQeviEhUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1Y6San1VI1Its1naV9mztKkqws96/sAD6sDSyksXw9TueTUFXqSjnwfrq9GVOYXPxJ9S5tJhYIwdWlihqDZaLpR2YXNCwbPhzI14lbKMthb4nix806gYt5Fke0QENejhlWfLTEkuMR6Vfc7lPkDKyuWJPNNWfs+WmWIizx+fRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6qGQk4Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qeLM6KjSNUZp+xuei+KjOzb+S1o7Ju1aH2wqmJNIrWy+b17RtU+Eul/j/JGRjL7U24+oA/gstG3gOSLQJaQVn4kFZKmjsd0e5VwvbuU8jx5k0C8c/243iLMMi7akkCAO0VnA8mwEz5rUoZIypFJAGm0rFL/bMB5rJOTfV2DKy0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+drpqgk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6qGQk4Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8663C433C7;
-	Mon,  4 Mar 2024 21:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+drpqgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6C1C433F1;
+	Mon,  4 Mar 2024 21:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587842;
-	bh=UmUPL4AiO8kQvLGymU/OFaXnd7KWVYIHAvw+SC2shBg=;
+	s=korg; t=1709587844;
+	bh=9FD+0731GuDdT2jTuz/IpoTvooUPvDI8DvjQeviEhUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6qGQk4YKlIXr34ByFYjyNIs9VPW9mpHlZXE4/RmIGTGzNG362yzfq8t3OeYYQK+O
-	 jGAZV8ePZE2KPlM4HYKd59cvfsuuz33NlyofUMOsCdarQcMbA2R9vUxvFToJRe0bAb
-	 HDV80624sqv7HRuUHuPGyIcrwpgpyVfIbnWCK0mI=
+	b=u+drpqgkqSvK4l6zV6/FKATU2xwz+dz8dpRkwTqutfraHJpqWDNy6uPjgMrQjxAxY
+	 fofM/NeSn8tddMYbN9r5qgSXpSi/Z7ycoT0GRCEhVBXZrqrc9SzZE+Tr+GETfe0Xcg
+	 Y9CPEQmCoKqyjzVMXzumN5S83khrlpL/NLmhUVis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Andy Chiu <andybnac@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.7 110/162] kbuild: Add -Wa,--fatal-warnings to as-instr invocation
-Date: Mon,  4 Mar 2024 21:22:55 +0000
-Message-ID: <20240304211555.301711741@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.7 111/162] iommufd: Fix iopt_access_list_id overwrite bug
+Date: Mon,  4 Mar 2024 21:22:56 +0000
+Message-ID: <20240304211555.331925520@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -55,60 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 0ee695a471a750cad4fff22286d91e038b1ef62f upstream.
+commit aeb004c0cd6958e910123a1607634401009c9539 upstream.
 
-Certain assembler instruction tests may only induce warnings from the
-assembler on an unsupported instruction or option, which causes as-instr
-to succeed when it was expected to fail. Some tests workaround this
-limitation by additionally testing that invalid input fails as expected.
-However, this is fragile if the assembler is changed to accept the
-invalid input, as it will cause the instruction/option to be unavailable
-like it was unsupported even when it is.
+Syzkaller reported the following WARN_ON:
+  WARNING: CPU: 1 PID: 4738 at drivers/iommu/iommufd/io_pagetable.c:1360
 
-Use '-Wa,--fatal-warnings' in the as-instr macro to turn these warnings
-into hard errors, which avoids this fragility and makes tests more
-robust and well formed.
+  Call Trace:
+   iommufd_access_change_ioas+0x2fe/0x4e0
+   iommufd_access_destroy_object+0x50/0xb0
+   iommufd_object_remove+0x2a3/0x490
+   iommufd_object_destroy_user
+   iommufd_access_destroy+0x71/0xb0
+   iommufd_test_staccess_release+0x89/0xd0
+   __fput+0x272/0xb50
+   __fput_sync+0x4b/0x60
+   __do_sys_close
+   __se_sys_close
+   __x64_sys_close+0x8b/0x110
+   do_syscall_x64
+
+The mismatch between the access pointer in the list and the passed-in
+pointer is resulting from an overwrite of access->iopt_access_list_id, in
+iopt_add_access(). Called from iommufd_access_change_ioas() when
+xa_alloc() succeeds but iopt_calculate_iova_alignment() fails.
+
+Add a new_id in iopt_add_access() and only update iopt_access_list_id when
+returning successfully.
 
 Cc: stable@vger.kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Andy Chiu <andybnac@gmail.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240125-fix-riscv-option-arch-llvm-18-v1-1-390ac9cc3cd0@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 9227da7816dd ("iommufd: Add iommufd_access_change_ioas(_id) helpers")
+Link: https://lore.kernel.org/r/2dda7acb25b8562ec5f1310de828ef5da9ef509c.1708636627.git.nicolinc@nvidia.com
+Reported-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Kconfig.include   |    2 +-
- scripts/Makefile.compiler |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/io_pagetable.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/scripts/Kconfig.include
-+++ b/scripts/Kconfig.include
-@@ -33,7 +33,7 @@ ld-option = $(success,$(LD) -v $(1))
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -1330,20 +1330,23 @@ out_unlock:
  
- # $(as-instr,<instr>)
- # Return y if the assembler supports <instr>, n otherwise
--as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler-with-cpp -o /dev/null -)
-+as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o /dev/null -)
+ int iopt_add_access(struct io_pagetable *iopt, struct iommufd_access *access)
+ {
++	u32 new_id;
+ 	int rc;
  
- # check if $(CC) and $(LD) exist
- $(error-if,$(failure,command -v $(CC)),C compiler '$(CC)' not found)
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -38,7 +38,7 @@ as-option = $(call try-run,\
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 	down_write(&iopt->domains_rwsem);
+ 	down_write(&iopt->iova_rwsem);
+-	rc = xa_alloc(&iopt->access_list, &access->iopt_access_list_id, access,
+-		      xa_limit_16b, GFP_KERNEL_ACCOUNT);
++	rc = xa_alloc(&iopt->access_list, &new_id, access, xa_limit_16b,
++		      GFP_KERNEL_ACCOUNT);
++
+ 	if (rc)
+ 		goto out_unlock;
  
- as-instr = $(call try-run,\
--	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
-+	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 	rc = iopt_calculate_iova_alignment(iopt);
+ 	if (rc) {
+-		xa_erase(&iopt->access_list, access->iopt_access_list_id);
++		xa_erase(&iopt->access_list, new_id);
+ 		goto out_unlock;
+ 	}
++	access->iopt_access_list_id = new_id;
  
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+ out_unlock:
+ 	up_write(&iopt->iova_rwsem);
 
 
