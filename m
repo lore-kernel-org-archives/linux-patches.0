@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707021F5FA;
-	Mon,  4 Mar 2024 21:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367817BAE6;
+	Mon,  4 Mar 2024 21:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587860; cv=none; b=CpECUAz5SrwtCKFANgpu7qkKRAk+fb8g2lb/ZbdjDBFhtqd9aCsCi0qgI4zP7nuqGFIq/G38Lv1igv9oCVAnfZGEbXZffet5kJckw0cP/OtOZqfLlBYx69gsmKP6cVl56449bxu7ITzHF/0ag/yFJlp1woIjoDK2ktgsuD/aiHQ=
+	t=1709587863; cv=none; b=VFW5iFoURGBV9YTajYK9xEHQOezxP+Jwv4LAKYUhKukP+XYd+IpMd2TzIjep255nZmHAUOEx4uTcr+SeiuX4IPjCKipS8YGLIOVKCdjhceLMOFoCXQzGOCFYhICcUrE4A6N5nGiC7UIPSm95Dhr/dkHtah26uR18eyoyCdjNMkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587860; c=relaxed/simple;
-	bh=bYKeDtNiGrPj2+NY4NA9yY/S3bib2qMFxLGlTbMwmfc=;
+	s=arc-20240116; t=1709587863; c=relaxed/simple;
+	bh=LbmuggYAQ6sbiyoVyvVlpD0YSJbX+08Qe1u/YUra64I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bq7wDhrrGLc18inSOYKGslQusaS+0cJ3GnenZKRrYmunYo4Ntg9xbEhCuvDxTnbZfztXZmCpmePHgtZ/Eadq4XfyI1Le4rmgMMtOeLlx6rsJ2GjZW55BTvnfyF3ocQoS/oW7QWjnt2I6uYDJPdvRVWkebkFygmj0tenLVcRn4M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s31sPSFv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Re3eQfn7Uu2bpMoFLyuLPTNIDLtvsFSA9j3gaBef8/gpAoIWiuZeWS59gz7AzoIlN1qEgY7b5wofgJL4IRe+SbBT2QvEOyuSpQxWFD2JsqfrGV6WWL+m3I7VvJDigd15kd2EJ+TzxR+vYLD/cm4azcrL4z6g1t1QNDEDEtO90lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhHunPv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s31sPSFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0275FC433C7;
-	Mon,  4 Mar 2024 21:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhHunPv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE2CC433F1;
+	Mon,  4 Mar 2024 21:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587860;
-	bh=bYKeDtNiGrPj2+NY4NA9yY/S3bib2qMFxLGlTbMwmfc=;
+	s=korg; t=1709587863;
+	bh=LbmuggYAQ6sbiyoVyvVlpD0YSJbX+08Qe1u/YUra64I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s31sPSFvwy0BT6tmf6XaqkN9iFtZSp1nMxo6F/HgVqGbKVRpcWigdKUIUBG0wnJne
-	 kE8PiZeo9Ggt3r1SolhHB/LzGFQxMtVStEDdtJ0dNJSd78BWx8pjqEBIqRtmGjJb/3
-	 QZP+Mm9b3ddD54+t/CraOsn3oT0doUuqXzcGvblE=
+	b=fhHunPv8Qu94Xjkrte3npI/eCrfJsQarnRb26AaRWDqJNN/UhZQK3MwEa2LdIQw7T
+	 SiHdeyr4SlnxK0CcDkIq2utnmgfbkGDW7krKGUV8WtXsiDdmbSDlI+5vku73yFadwa
+	 2XRe61/yQW6PvJ09WQFxLtA6nuLxCyJnO6WWRyjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tsung-hua Lin <tsung-hua.lin@amd.com>,
-	Chris Chi <moukong.chi@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 6.7 093/162] drm/amd/display: Add monitor patch for specific eDP
-Date: Mon,  4 Mar 2024 21:22:38 +0000
-Message-ID: <20240304211554.821061178@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.7 094/162] soc: qcom: pmic_glink: Fix boot when QRTR=m
+Date: Mon,  4 Mar 2024 21:22:39 +0000
+Message-ID: <20240304211554.859280809@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -54,60 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lin <tsung-hua.lin@amd.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit b7cdccc6a849568775f738b1e233f751a8fed013 upstream.
+commit f79ee78767ca60e7a2c89eacd2dbdf237d97e838 upstream.
 
-[WHY]
-Some eDP panels' ext caps don't write initial values. The value of
-dpcd_addr (0x317) can be random and the backlight control interface
-will be incorrect.
+We need to bail out before adding/removing devices if we are going to
+-EPROBE_DEFER. Otherwise boot can get stuck in a probe deferral loop due
+to a long-standing issue in driver core (see commit fbc35b45f9f6 ("Add
+documentation on meaning of -EPROBE_DEFER")).
 
-[HOW]
-Add new panel patches to remove sink ext caps.
+Deregistering the altmode child device can potentially also trigger bugs
+in the DRM bridge implementation, which does not expect bridges to go
+away.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.5.x
-Cc: Tsung-hua Lin <tsung-hua.lin@amd.com>
-Cc: Chris Chi <moukong.chi@amd.com>
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Ryan Lin <tsung-hua.lin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[DB: slightly fixed commit message by adding the word 'commit']
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://lore.kernel.org/r/20231213210644.8702-1-robdclark@gmail.com
+[ johan: rebase on 6.8-rc4, amend commit message and mention DRM ]
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
+Cc: <stable@vger.kernel.org>      # 6.3
+Cc: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240217150228.5788-5-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/pmic_glink.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -66,6 +66,8 @@ static void apply_edid_quirks(struct edi
- 	/* Workaround for some monitors that do not clear DPCD 0x317 if FreeSync is unsupported */
- 	case drm_edid_encode_panel_id('A', 'U', 'O', 0xA7AB):
- 	case drm_edid_encode_panel_id('A', 'U', 'O', 0xE69B):
-+	case drm_edid_encode_panel_id('B', 'O', 'E', 0x092A):
-+	case drm_edid_encode_panel_id('L', 'G', 'D', 0x06D1):
- 		DRM_DEBUG_DRIVER("Clearing DPCD 0x317 on monitor with panel id %X\n", panel_id);
- 		edid_caps->panel_patch.remove_sink_ext_caps = true;
- 		break;
-@@ -119,6 +121,8 @@ enum dc_edid_status dm_helpers_parse_edi
- 
- 	edid_caps->edid_hdmi = connector->display_info.is_hdmi;
- 
-+	apply_edid_quirks(edid_buf, edid_caps);
-+
- 	sad_count = drm_edid_to_sad((struct edid *) edid->raw_edid, &sads);
- 	if (sad_count <= 0)
- 		return result;
-@@ -145,8 +149,6 @@ enum dc_edid_status dm_helpers_parse_edi
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -268,10 +268,17 @@ static int pmic_glink_probe(struct platf
  	else
- 		edid_caps->speaker_flags = DEFAULT_SPEAKER_LOCATION;
+ 		pg->client_mask = PMIC_GLINK_CLIENT_DEFAULT;
  
--	apply_edid_quirks(edid_buf, edid_caps);
++	pg->pdr = pdr_handle_alloc(pmic_glink_pdr_callback, pg);
++	if (IS_ERR(pg->pdr)) {
++		ret = dev_err_probe(&pdev->dev, PTR_ERR(pg->pdr),
++				    "failed to initialize pdr\n");
++		return ret;
++	}
++
+ 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI)) {
+ 		ret = pmic_glink_add_aux_device(pg, &pg->ucsi_aux, "ucsi");
+ 		if (ret)
+-			return ret;
++			goto out_release_pdr_handle;
+ 	}
+ 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_ALTMODE)) {
+ 		ret = pmic_glink_add_aux_device(pg, &pg->altmode_aux, "altmode");
+@@ -284,17 +291,11 @@ static int pmic_glink_probe(struct platf
+ 			goto out_release_altmode_aux;
+ 	}
+ 
+-	pg->pdr = pdr_handle_alloc(pmic_glink_pdr_callback, pg);
+-	if (IS_ERR(pg->pdr)) {
+-		ret = dev_err_probe(&pdev->dev, PTR_ERR(pg->pdr), "failed to initialize pdr\n");
+-		goto out_release_aux_devices;
+-	}
 -
- 	kfree(sads);
- 	kfree(sadb);
+ 	service = pdr_add_lookup(pg->pdr, "tms/servreg", "msm/adsp/charger_pd");
+ 	if (IS_ERR(service)) {
+ 		ret = dev_err_probe(&pdev->dev, PTR_ERR(service),
+ 				    "failed adding pdr lookup for charger_pd\n");
+-		goto out_release_pdr_handle;
++		goto out_release_aux_devices;
+ 	}
  
+ 	mutex_lock(&__pmic_glink_lock);
+@@ -303,8 +304,6 @@ static int pmic_glink_probe(struct platf
+ 
+ 	return 0;
+ 
+-out_release_pdr_handle:
+-	pdr_handle_release(pg->pdr);
+ out_release_aux_devices:
+ 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_BATT))
+ 		pmic_glink_del_aux_device(pg, &pg->ps_aux);
+@@ -314,6 +313,8 @@ out_release_altmode_aux:
+ out_release_ucsi_aux:
+ 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI))
+ 		pmic_glink_del_aux_device(pg, &pg->ucsi_aux);
++out_release_pdr_handle:
++	pdr_handle_release(pg->pdr);
+ 
+ 	return ret;
+ }
 
 
