@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6615B1EB5A;
-	Mon,  4 Mar 2024 21:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD7E1EB5A;
+	Mon,  4 Mar 2024 21:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588960; cv=none; b=OYdqgqFYv1YM6VgdluiRSPGj+xosqhVFUV+OJjmyXyR1zekgR/QrcMDi8R9PI7kUrtyr0e/U21fIDvcNTFx1fC2lcMhd+81Sdvia2foTPG6SI2WCD5aDld5mE3jNgT+kqbQe6HyRQLhozHH93GtQJQ9lOY1NXzaBAQOwc6jJp/g=
+	t=1709588963; cv=none; b=S8Ox0NAoxNaiC8McsDo8Z/DqP1duwbdV4Kh/w2fUDifbNk9uOtMtbytY1tNRF2yMHUOiI/adRoYnWqEiI3QXmDX9kuFpk9IbIUJtRzo1wTJTpBTGos63J2Pt1tIwstl+g5HN3h7s/7ly9ViUn0RHPlTloDt/j+9aA+iO7csFu3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588960; c=relaxed/simple;
-	bh=peXt+e7HEDHXZDBUOvOHNaAO/XcJDLusnexGcz13Aso=;
+	s=arc-20240116; t=1709588963; c=relaxed/simple;
+	bh=cSGlSAkWbbDJkzsjAU9WByVrnga9Q0nVLa7gsJ2urDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXbo7cQh6w49Qwby6SEZkHsify3sEK4IGExPc2ZJEinJ5aXhqmlqZstbahseRwMb3Toee4Gv80ek3nNRjuXEaGy3fu2teM6K1U0NTYFUjousfVhIUXbSdqCc6aOHrEXncTfV6A6XHsvTYzyVteCeo7kQJNekmujXQ3oMhayJzls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8l77lWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMQy/ZKen4G8hioA5UMiEaDt4kBQPylRr79egww4nj3nVUE+u6hrQM+Bndwan5OQLhldsIaEkMVQOgQjHLYGXPq/5RVVwyVjigyFjefE9qxz8hLgJqBNGT818FRvewE22gHC25fEv0jsjHK49DEj8uEZj5jqHDmAEjdFUh9dW1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPHulFKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8l77lWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED12CC433C7;
-	Mon,  4 Mar 2024 21:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPHulFKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91926C433C7;
+	Mon,  4 Mar 2024 21:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588960;
-	bh=peXt+e7HEDHXZDBUOvOHNaAO/XcJDLusnexGcz13Aso=;
+	s=korg; t=1709588962;
+	bh=cSGlSAkWbbDJkzsjAU9WByVrnga9Q0nVLa7gsJ2urDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8l77lWi9iVxeZ0t/gPVfJ/ofUGZF9fHThEpsk0TmHQYnpYr7BIvXn42VMs7Uqq4h
-	 GeFRasm9a8rkKaryUbK9P+4fQ5cBah0oZSamuNRuGmQGk2nHnVPt26g3z7u0t7hlZn
-	 HGqlQiY0FWv3VmTP8bhrZDmdFpTE3veTOoMYa6Vc=
+	b=ZPHulFKt0gMi5TciFfidw9owiYtlk3QmKd8um20596SflYhbtqeHMKhSTv0NmTWtS
+	 pX4JWT5m54Wb0cRqf3XXvn+dOkJlJrbPNuwlHosloh5iJ91JnTaYiM1WF54sEbm0XN
+	 mfp6UsGhhKeZ/k7WFI2qJX3TFu9CUiYWaJetz55E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 6.1 123/215] x86/boot/compressed: Move startup32_check_sev_cbit() out of head_64.S
-Date: Mon,  4 Mar 2024 21:23:06 +0000
-Message-ID: <20240304211600.973938762@linuxfoundation.org>
+Subject: [PATCH 6.1 124/215] x86/boot/compressed: Adhere to calling convention in get_sev_encryption_bit()
+Date: Mon,  4 Mar 2024 21:23:07 +0000
+Message-ID: <20240304211601.004589522@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,177 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 9d7eaae6a071ff1f718e0aa5e610bb712f8cc632 upstream.
+commit 30c9ca16a5271ba6f8ad9c86507ff1c789c94677 upstream.
 
-Now that the startup32_check_sev_cbit() routine can execute from
-anywhere and behaves like an ordinary function, it can be moved where it
-belongs.
+Make get_sev_encryption_bit() follow the ordinary i386 calling
+convention, and only call it if CONFIG_AMD_MEM_ENCRYPT is actually
+enabled. This clarifies the calling code, and makes it more
+maintainable.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20221122161017.2426828-15-ardb@kernel.org
+Link: https://lore.kernel.org/r/20221122161017.2426828-16-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/head_64.S     |   71 ---------------------------------
- arch/x86/boot/compressed/mem_encrypt.S |   68 +++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+), 71 deletions(-)
+ arch/x86/boot/compressed/head_64.S     |    5 +++--
+ arch/x86/boot/compressed/mem_encrypt.S |   10 ----------
+ 2 files changed, 3 insertions(+), 12 deletions(-)
 
 --- a/arch/x86/boot/compressed/head_64.S
 +++ b/arch/x86/boot/compressed/head_64.S
-@@ -727,77 +727,6 @@ SYM_DATA_START(boot_idt)
- SYM_DATA_END_LABEL(boot_idt, SYM_L_GLOBAL, boot_idt_end)
- 
- /*
-- * Check for the correct C-bit position when the startup_32 boot-path is used.
-- *
-- * The check makes use of the fact that all memory is encrypted when paging is
-- * disabled. The function creates 64 bits of random data using the RDRAND
-- * instruction. RDRAND is mandatory for SEV guests, so always available. If the
-- * hypervisor violates that the kernel will crash right here.
-- *
-- * The 64 bits of random data are stored to a memory location and at the same
-- * time kept in the %eax and %ebx registers. Since encryption is always active
-- * when paging is off the random data will be stored encrypted in main memory.
-- *
-- * Then paging is enabled. When the C-bit position is correct all memory is
-- * still mapped encrypted and comparing the register values with memory will
-- * succeed. An incorrect C-bit position will map all memory unencrypted, so that
-- * the compare will use the encrypted random data and fail.
-- */
--#ifdef CONFIG_AMD_MEM_ENCRYPT
--	.text
--SYM_FUNC_START(startup32_check_sev_cbit)
--	pushl	%ebx
--	pushl	%ebp
--
--	call	0f
--0:	popl	%ebp
--
--	/* Check for non-zero sev_status */
--	movl	(sev_status - 0b)(%ebp), %eax
--	testl	%eax, %eax
--	jz	4f
--
--	/*
--	 * Get two 32-bit random values - Don't bail out if RDRAND fails
--	 * because it is better to prevent forward progress if no random value
--	 * can be gathered.
--	 */
--1:	rdrand	%eax
--	jnc	1b
--2:	rdrand	%ebx
--	jnc	2b
--
--	/* Store to memory and keep it in the registers */
--	leal	(sev_check_data - 0b)(%ebp), %ebp
--	movl	%eax, 0(%ebp)
--	movl	%ebx, 4(%ebp)
--
--	/* Enable paging to see if encryption is active */
--	movl	%cr0, %edx			 /* Backup %cr0 in %edx */
--	movl	$(X86_CR0_PG | X86_CR0_PE), %ecx /* Enable Paging and Protected mode */
--	movl	%ecx, %cr0
--
--	cmpl	%eax, 0(%ebp)
--	jne	3f
--	cmpl	%ebx, 4(%ebp)
--	jne	3f
--
--	movl	%edx, %cr0	/* Restore previous %cr0 */
--
--	jmp	4f
--
--3:	/* Check failed - hlt the machine */
--	hlt
--	jmp	3b
--
--4:
--	popl	%ebp
--	popl	%ebx
--	RET
--SYM_FUNC_END(startup32_check_sev_cbit)
--#endif
--
--/*
-  * Stack and heap for uncompression
-  */
- 	.bss
+@@ -180,12 +180,13 @@ SYM_FUNC_START(startup_32)
+   */
+ 	/*
+ 	 * If SEV is active then set the encryption mask in the page tables.
+-	 * This will insure that when the kernel is copied and decompressed
++	 * This will ensure that when the kernel is copied and decompressed
+ 	 * it will be done so encrypted.
+ 	 */
+-	call	get_sev_encryption_bit
+ 	xorl	%edx, %edx
+ #ifdef	CONFIG_AMD_MEM_ENCRYPT
++	call	get_sev_encryption_bit
++	xorl	%edx, %edx
+ 	testl	%eax, %eax
+ 	jz	1f
+ 	subl	$32, %eax	/* Encryption bit is always above bit 31 */
 --- a/arch/x86/boot/compressed/mem_encrypt.S
 +++ b/arch/x86/boot/compressed/mem_encrypt.S
-@@ -243,6 +243,74 @@ SYM_FUNC_START(startup32_load_idt)
+@@ -18,12 +18,7 @@
+ 	.text
+ 	.code32
+ SYM_FUNC_START(get_sev_encryption_bit)
+-	xor	%eax, %eax
+-
+-#ifdef CONFIG_AMD_MEM_ENCRYPT
+ 	push	%ebx
+-	push	%ecx
+-	push	%edx
+ 
+ 	movl	$0x80000000, %eax	/* CPUID to check the highest leaf */
+ 	cpuid
+@@ -54,12 +49,7 @@ SYM_FUNC_START(get_sev_encryption_bit)
+ 	xor	%eax, %eax
+ 
+ .Lsev_exit:
+-	pop	%edx
+-	pop	%ecx
+ 	pop	%ebx
+-
+-#endif	/* CONFIG_AMD_MEM_ENCRYPT */
+-
  	RET
- SYM_FUNC_END(startup32_load_idt)
+ SYM_FUNC_END(get_sev_encryption_bit)
  
-+/*
-+ * Check for the correct C-bit position when the startup_32 boot-path is used.
-+ *
-+ * The check makes use of the fact that all memory is encrypted when paging is
-+ * disabled. The function creates 64 bits of random data using the RDRAND
-+ * instruction. RDRAND is mandatory for SEV guests, so always available. If the
-+ * hypervisor violates that the kernel will crash right here.
-+ *
-+ * The 64 bits of random data are stored to a memory location and at the same
-+ * time kept in the %eax and %ebx registers. Since encryption is always active
-+ * when paging is off the random data will be stored encrypted in main memory.
-+ *
-+ * Then paging is enabled. When the C-bit position is correct all memory is
-+ * still mapped encrypted and comparing the register values with memory will
-+ * succeed. An incorrect C-bit position will map all memory unencrypted, so that
-+ * the compare will use the encrypted random data and fail.
-+ */
-+SYM_FUNC_START(startup32_check_sev_cbit)
-+	pushl	%ebx
-+	pushl	%ebp
-+
-+	call	0f
-+0:	popl	%ebp
-+
-+	/* Check for non-zero sev_status */
-+	movl	(sev_status - 0b)(%ebp), %eax
-+	testl	%eax, %eax
-+	jz	4f
-+
-+	/*
-+	 * Get two 32-bit random values - Don't bail out if RDRAND fails
-+	 * because it is better to prevent forward progress if no random value
-+	 * can be gathered.
-+	 */
-+1:	rdrand	%eax
-+	jnc	1b
-+2:	rdrand	%ebx
-+	jnc	2b
-+
-+	/* Store to memory and keep it in the registers */
-+	leal	(sev_check_data - 0b)(%ebp), %ebp
-+	movl	%eax, 0(%ebp)
-+	movl	%ebx, 4(%ebp)
-+
-+	/* Enable paging to see if encryption is active */
-+	movl	%cr0, %edx			 /* Backup %cr0 in %edx */
-+	movl	$(X86_CR0_PG | X86_CR0_PE), %ecx /* Enable Paging and Protected mode */
-+	movl	%ecx, %cr0
-+
-+	cmpl	%eax, 0(%ebp)
-+	jne	3f
-+	cmpl	%ebx, 4(%ebp)
-+	jne	3f
-+
-+	movl	%edx, %cr0	/* Restore previous %cr0 */
-+
-+	jmp	4f
-+
-+3:	/* Check failed - hlt the machine */
-+	hlt
-+	jmp	3b
-+
-+4:
-+	popl	%ebp
-+	popl	%ebx
-+	RET
-+SYM_FUNC_END(startup32_check_sev_cbit)
-+
- 	.code64
- 
- #include "../../kernel/sev_verify_cbit.S"
 
 
