@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3791A7BAF5;
-	Mon,  4 Mar 2024 21:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CFB1C687;
+	Mon,  4 Mar 2024 21:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588113; cv=none; b=Y+PAKx6UK7DbzaXtCRH4rkkyqkNnwVa/I7ekAcZV+f9mWhFKBiNBVoz60IFL9J5xxpioxm9DDbEHG0Ti2gSRskFJgMssLqH3sdRJbS5HDrWqw+YS7EjWX9S9abjcg4p3xrrxxHpg4Uyhs/ZoYwI34oMiX08TgR7+MYbv37lLrI0=
+	t=1709588115; cv=none; b=WioRugqpjugNwRi8Kufzvf5kAHSZkpAh4e1e9+cp9xC0I0R7mWrApWJgkuQgfTaT/ASxAzB2m29/y1DaQnx/Wv/soOJyd4wtWc8L3JaDyC64TwqielynXZciDtxgU2DkFO40hmdZDJ6ar/L2kUzYXTT+pQeCaySKyJlJY2vDw70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588113; c=relaxed/simple;
-	bh=Yy5TPoqDrUjXWRAOrA3qYS7mEcZtszQ7a2f+KQxtUKk=;
+	s=arc-20240116; t=1709588115; c=relaxed/simple;
+	bh=JwSo3bHjgsZFJA79pCypt98drCsDZpD19vima9wIjTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYpQaolqkW9eNqLqPT1JdyiysLlkP19WUjPUASNtnGsBAaeAuoFymv2L82TRfywRIPLNp0hQelEEQO/NLZTe57mWZve04puRnE1x9XgoEyZQC/udP6DTAXyZnIZkev/M+v2NjWyK0DgE3X6NBSN1K8exrliEvHLBSwtYJN6BrUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2dqwgMQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPjqTroC/mV8C5VJn/CIXCdqdMOhczMzNDDM7Sh6KxuHQCbswVbbNfzWMmXafv0NhkenP0R2Idla0H+rb88kkmhaL9oWHUi1Ftvu0muyo2MDYeohQd6YMTQsmdXcW4CBsAdmdLGDGlgYlhUj1ZOvsPApDfPGFHv5Xmro7UtgEhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u8OOBcU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2dqwgMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68727C433F1;
-	Mon,  4 Mar 2024 21:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u8OOBcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061C0C433F1;
+	Mon,  4 Mar 2024 21:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588112;
-	bh=Yy5TPoqDrUjXWRAOrA3qYS7mEcZtszQ7a2f+KQxtUKk=;
+	s=korg; t=1709588115;
+	bh=JwSo3bHjgsZFJA79pCypt98drCsDZpD19vima9wIjTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2dqwgMQWlVB7fzCL5+/YslkO8nUniWVj/DeInLH6i27aaN8cI36F/tbvHp8cFA7C
-	 39n8f9+NUFl9r2AfJf4jiAI9OpVnzrNHNNfGM7VgIRsung8K6+S660J2t1iqk2fMy/
-	 tbSRjVimrS7aEfxUha/4MUw6s3oAXavGGsqrqnEw=
+	b=2u8OOBcUJpPE6X29Em++wrT+ICdCnZezSjtKcCnPNfxzqNIjyZLHTFjHfNnEdhG7k
+	 KF1i/nBIMBIqawsZZdf+0DiVxe54I4vgkPdaaSwZ4n0m1FaI3PSseDAqPWFTUcfND9
+	 RAnuPjkpeb9LGrv55sNrxbhjdxYQ4J9IMtqk9CVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 18/42] power: supply: bq27xxx-i2c: Do not free non existing IRQ
-Date: Mon,  4 Mar 2024 21:23:45 +0000
-Message-ID: <20240304211538.240722720@linuxfoundation.org>
+	Curtis Klein <curtis.klein@hpe.com>,
+	Yi Zhao <yi.zhao@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 27/42] dmaengine: fsl-qdma: init irq after reg initialization
+Date: Mon,  4 Mar 2024 21:23:54 +0000
+Message-ID: <20240304211538.551765232@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -51,51 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Curtis Klein <curtis.klein@hpe.com>
 
-[ Upstream commit 2df70149e73e79783bcbc7db4fa51ecef0e2022c ]
+commit 87a39071e0b639f45e05d296cc0538eef44ec0bd upstream.
 
-The bq27xxx i2c-client may not have an IRQ, in which case
-client->irq will be 0. bq27xxx_battery_i2c_probe() already has
-an if (client->irq) check wrapping the request_threaded_irq().
+Initialize the qDMA irqs after the registers are configured so that
+interrupts that may have been pending from a primary kernel don't get
+processed by the irq handler before it is ready to and cause panic with
+the following trace:
 
-But bq27xxx_battery_i2c_remove() unconditionally calls
-free_irq(client->irq) leading to:
+  Call trace:
+   fsl_qdma_queue_handler+0xf8/0x3e8
+   __handle_irq_event_percpu+0x78/0x2b0
+   handle_irq_event_percpu+0x1c/0x68
+   handle_irq_event+0x44/0x78
+   handle_fasteoi_irq+0xc8/0x178
+   generic_handle_irq+0x24/0x38
+   __handle_domain_irq+0x90/0x100
+   gic_handle_irq+0x5c/0xb8
+   el1_irq+0xb8/0x180
+   _raw_spin_unlock_irqrestore+0x14/0x40
+   __setup_irq+0x4bc/0x798
+   request_threaded_irq+0xd8/0x190
+   devm_request_threaded_irq+0x74/0xe8
+   fsl_qdma_probe+0x4d4/0xca8
+   platform_drv_probe+0x50/0xa0
+   really_probe+0xe0/0x3f8
+   driver_probe_device+0x64/0x130
+   device_driver_attach+0x6c/0x78
+   __driver_attach+0xbc/0x158
+   bus_for_each_dev+0x5c/0x98
+   driver_attach+0x20/0x28
+   bus_add_driver+0x158/0x220
+   driver_register+0x60/0x110
+   __platform_driver_register+0x44/0x50
+   fsl_qdma_driver_init+0x18/0x20
+   do_one_initcall+0x48/0x258
+   kernel_init_freeable+0x1a4/0x23c
+   kernel_init+0x10/0xf8
+   ret_from_fork+0x10/0x18
 
-[  190.310742] ------------[ cut here ]------------
-[  190.310843] Trying to free already-free IRQ 0
-[  190.310861] WARNING: CPU: 2 PID: 1304 at kernel/irq/manage.c:1893 free_irq+0x1b8/0x310
-
-Followed by a backtrace when unbinding the driver. Add
-an if (client->irq) to bq27xxx_battery_i2c_remove() mirroring
-probe() to fix this.
-
-Fixes: 444ff00734f3 ("power: supply: bq27xxx: Fix I2C IRQ race on remove")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240215155133.70537-1-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
+Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
+Signed-off-by: Yi Zhao <yi.zhao@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240201220406.440145-1-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery_i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/fsl-qdma.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-index 0e32efb10ee78..6fbae8fc2e501 100644
---- a/drivers/power/supply/bq27xxx_battery_i2c.c
-+++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-@@ -209,7 +209,9 @@ static int bq27xxx_battery_i2c_remove(struct i2c_client *client)
- {
- 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -1203,10 +1203,6 @@ static int fsl_qdma_probe(struct platfor
+ 	if (!fsl_qdma->queue)
+ 		return -ENOMEM;
  
--	free_irq(client->irq, di);
-+	if (client->irq)
-+		free_irq(client->irq, di);
+-	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
+-	if (ret)
+-		return ret;
+-
+ 	fsl_qdma->irq_base = platform_get_irq_byname(pdev, "qdma-queue0");
+ 	if (fsl_qdma->irq_base < 0)
+ 		return fsl_qdma->irq_base;
+@@ -1245,16 +1241,19 @@ static int fsl_qdma_probe(struct platfor
+ 
+ 	platform_set_drvdata(pdev, fsl_qdma);
+ 
+-	ret = dma_async_device_register(&fsl_qdma->dma_dev);
++	ret = fsl_qdma_reg_init(fsl_qdma);
+ 	if (ret) {
+-		dev_err(&pdev->dev,
+-			"Can't register NXP Layerscape qDMA engine.\n");
++		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
+ 		return ret;
+ 	}
+ 
+-	ret = fsl_qdma_reg_init(fsl_qdma);
++	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
++	if (ret)
++		return ret;
 +
- 	bq27xxx_battery_teardown(di);
++	ret = dma_async_device_register(&fsl_qdma->dma_dev);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
++		dev_err(&pdev->dev, "Can't register NXP Layerscape qDMA engine.\n");
+ 		return ret;
+ 	}
  
- 	mutex_lock(&battery_mutex);
--- 
-2.43.0
-
 
 
