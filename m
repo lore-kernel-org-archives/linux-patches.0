@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936B71EB5A;
-	Mon,  4 Mar 2024 21:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4FC1C6AB;
+	Mon,  4 Mar 2024 21:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589145; cv=none; b=UG6k8xxRupTrX9MAH3vcFiSDOBvKBPxeU9nHH5ySRFGSjk4AMWigVXGzQ1inDGMA1fagpRG8AHPaawByE/hJs2LjNl4aCYy/H/85OLCPTQ2yB7EramWKoDOzAQJhmFyBSJVc3lzQEDrMvMYC6H/psNvUvWFLgCkgj2YTo3oPtMc=
+	t=1709589148; cv=none; b=j+aedvrhSxWTmJiQXqcKHvG/o/025IAkvQG5Y5ML0MqM/rBPc1dWhEC3K6SLkahs4xSb84H3PgbBV9OtK/rQH5hWXo0h4km9oKF3Z/dnUsOac3sBm+quFk3HCpUEKClMxJ8PU5jtYiztF8ki8mU/S9u0tPrMfQEafyw1Rk10GXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589145; c=relaxed/simple;
-	bh=hMRi/NVCfiO2nxmaN92Bo8booXrwHr2rULJRWlpFwH4=;
+	s=arc-20240116; t=1709589148; c=relaxed/simple;
+	bh=yBDwWNjRTsrD0euOLwiVQrlMxKsrQnt9XWrqBBO4PIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwEykCL1cKWCMJtczES6A5Ai3ZGe+IGI22L1VrjU2fRK/c2j/DGcWETARGQ1w5BAAVM4gkwigIT+lK1aUopPf50r1Qq0+C+42psepefdkTjN4STEIvx/LSB1k+Fw2CexKRxdG8wABi8cX+uc2/BEubKXXyYPfqdFiOj1nDjdu2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCmlWKFL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEZTO6pFb2GKNbYJ93wkj6ebrML7Fq8rXut/YsIpZGrWcAMDWBBpSOUFl5JaFW0+s5uSRQvtTmXJmRgZJEQFaedk6c9x3bXDJsPN9n/SuUPfJUGCVXkKZUJR2dG9gqnM8+2vHD9tKojZufKx8WlziE/B0kRIZidjnx1Yqwruj04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYu5b2Da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCmlWKFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D82C433F1;
-	Mon,  4 Mar 2024 21:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYu5b2Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38ADC433F1;
+	Mon,  4 Mar 2024 21:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589145;
-	bh=hMRi/NVCfiO2nxmaN92Bo8booXrwHr2rULJRWlpFwH4=;
+	s=korg; t=1709589148;
+	bh=yBDwWNjRTsrD0euOLwiVQrlMxKsrQnt9XWrqBBO4PIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCmlWKFLYWHwTzKNJ+FKB1vqPVaf2LCKYextCg2swika/ULuaRQRwCm9P+9ShEilW
-	 0/C+cPRy0R/7//z3pBLSCfeprtwrcUZ5tGbL1uTMVWoIB9t5/GHSiGxnccH+MMWqEx
-	 3S4Ibm3pqAqpg9ryP9kT2aQXRhLHkjErB552yHyw=
+	b=oYu5b2DaJ3jRn5rrKXLS4nXov0hxX+Pm5/F8hmEgyvcFuDsRIeeZ93J3ZGI3Z3wyp
+	 ch2onpQXMTcxuSOFVgX/BTeK96BaHs+lh4kgKZKe0eVj9/kFr52KGhniGG3M7Xyi9J
+	 GwGtrshU0UnB5Dh0pEgmWBLxW04REuME9MPDc+yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martynas Pumputis <m@lambda.lt>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.1 213/215] bpf: Derive source IP addr via bpf_*_fib_lookup()
-Date: Mon,  4 Mar 2024 21:24:36 +0000
-Message-ID: <20240304211603.738799034@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 214/215] x86/efistub: Give up if memory attribute protocol returns an error
+Date: Mon,  4 Mar 2024 21:24:37 +0000
+Message-ID: <20240304211603.773167945@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,199 +49,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martynas Pumputis <m@lambda.lt>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit dab4e1f06cabb6834de14264394ccab197007302 upstream.
+commit a7a6a01f88e87dec4bf2365571dd2dc7403d52d0 upstream.
 
-Extend the bpf_fib_lookup() helper by making it to return the source
-IPv4/IPv6 address if the BPF_FIB_LOOKUP_SRC flag is set.
+The recently introduced EFI memory attributes protocol should be used
+if it exists to ensure that the memory allocation created for the kernel
+permits execution. This is needed for compatibility with tightened
+requirements related to Windows logo certification for x86 PCs.
 
-For example, the following snippet can be used to derive the desired
-source IP address:
+Currently, we simply strip the execute protect (XP) attribute from the
+entire range, but this might be rejected under some firmware security
+policies, and so in a subsequent patch, this will be changed to only
+strip XP from the executable region that runs early, and make it
+read-only (RO) as well.
 
-    struct bpf_fib_lookup p = { .ipv4_dst = ip4->daddr };
+In order to catch any issues early, ensure that the memory attribute
+protocol works as intended, and give up if it produces spurious errors.
 
-    ret = bpf_skb_fib_lookup(skb, p, sizeof(p),
-            BPF_FIB_LOOKUP_SRC | BPF_FIB_LOOKUP_SKIP_NEIGH);
-    if (ret != BPF_FIB_LKUP_RET_SUCCESS)
-        return TC_ACT_SHOT;
+Note that the DXE services based fallback was always based on best
+effort, so don't propagate any errors returned by that API.
 
-    /* the p.ipv4_src now contains the source address */
-
-The inability to derive the proper source address may cause malfunctions
-in BPF-based dataplanes for hosts containing netdevs with more than one
-routable IP address or for multi-homed hosts.
-
-For example, Cilium implements packet masquerading in BPF. If an
-egressing netdev to which the Cilium's BPF prog is attached has
-multiple IP addresses, then only one [hardcoded] IP address can be used for
-masquerading. This breaks connectivity if any other IP address should have
-been selected instead, for example, when a public and private addresses
-are attached to the same egress interface.
-
-The change was tested with Cilium [1].
-
-Nikolay Aleksandrov helped to figure out the IPv6 addr selection.
-
-[1]: https://github.com/cilium/cilium/pull/28283
-
-Signed-off-by: Martynas Pumputis <m@lambda.lt>
-Link: https://lore.kernel.org/r/20231007081415.33502-2-m@lambda.lt
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Fixes: a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ipv6_stubs.h       |    5 +++++
- include/uapi/linux/bpf.h       |   10 ++++++++++
- net/core/filter.c              |   18 +++++++++++++++++-
- net/ipv6/af_inet6.c            |    1 +
- tools/include/uapi/linux/bpf.h |   10 ++++++++++
- 5 files changed, 43 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/x86-stub.c |   24 ++++++++++++++----------
+ drivers/firmware/efi/libstub/x86-stub.h |    4 ++--
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
---- a/include/net/ipv6_stubs.h
-+++ b/include/net/ipv6_stubs.h
-@@ -85,6 +85,11 @@ struct ipv6_bpf_stub {
- 			       sockptr_t optval, unsigned int optlen);
- 	int (*ipv6_getsockopt)(struct sock *sk, int level, int optname,
- 			       sockptr_t optval, sockptr_t optlen);
-+	int (*ipv6_dev_get_saddr)(struct net *net,
-+				  const struct net_device *dst_dev,
-+				  const struct in6_addr *daddr,
-+				  unsigned int prefs,
-+				  struct in6_addr *saddr);
- };
- extern const struct ipv6_bpf_stub *ipv6_bpf_stub __read_mostly;
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -212,8 +212,8 @@ static void retrieve_apple_device_proper
+ 	}
+ }
  
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -3121,6 +3121,11 @@ union bpf_attr {
-  *			and *params*->smac will not be set as output. A common
-  *			use case is to call **bpf_redirect_neigh**\ () after
-  *			doing **bpf_fib_lookup**\ ().
-+ *		**BPF_FIB_LOOKUP_SRC**
-+ *			Derive and set source IP addr in *params*->ipv{4,6}_src
-+ *			for the nexthop. If the src addr cannot be derived,
-+ *			**BPF_FIB_LKUP_RET_NO_SRC_ADDR** is returned. In this
-+ *			case, *params*->dmac and *params*->smac are not set either.
-  *
-  *		*ctx* is either **struct xdp_md** for XDP programs or
-  *		**struct sk_buff** tc cls_act programs.
-@@ -6692,6 +6697,7 @@ enum {
- 	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
- 	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
- 	BPF_FIB_LOOKUP_TBID    = (1U << 3),
-+	BPF_FIB_LOOKUP_SRC     = (1U << 4),
- };
+-void efi_adjust_memory_range_protection(unsigned long start,
+-					unsigned long size)
++efi_status_t efi_adjust_memory_range_protection(unsigned long start,
++						unsigned long size)
+ {
+ 	efi_status_t status;
+ 	efi_gcd_memory_space_desc_t desc;
+@@ -225,13 +225,17 @@ void efi_adjust_memory_range_protection(
+ 	rounded_end = roundup(start + size, EFI_PAGE_SIZE);
  
- enum {
-@@ -6704,6 +6710,7 @@ enum {
- 	BPF_FIB_LKUP_RET_UNSUPP_LWT,   /* fwd requires encapsulation */
- 	BPF_FIB_LKUP_RET_NO_NEIGH,     /* no neighbor entry for nh */
- 	BPF_FIB_LKUP_RET_FRAG_NEEDED,  /* fragmentation required to fwd */
-+	BPF_FIB_LKUP_RET_NO_SRC_ADDR,  /* failed to derive IP src addr */
- };
+ 	if (memattr != NULL) {
+-		efi_call_proto(memattr, clear_memory_attributes, rounded_start,
+-			       rounded_end - rounded_start, EFI_MEMORY_XP);
+-		return;
++		status = efi_call_proto(memattr, clear_memory_attributes,
++					rounded_start,
++					rounded_end - rounded_start,
++					EFI_MEMORY_XP);
++		if (status != EFI_SUCCESS)
++			efi_warn("Failed to clear EFI_MEMORY_XP attribute\n");
++		return status;
+ 	}
  
- struct bpf_fib_lookup {
-@@ -6738,6 +6745,9 @@ struct bpf_fib_lookup {
- 		__u32	rt_metric;
- 	};
+ 	if (efi_dxe_table == NULL)
+-		return;
++		return EFI_SUCCESS;
  
-+	/* input: source address to consider for lookup
-+	 * output: source address result from lookup
-+	 */
- 	union {
- 		__be32		ipv4_src;
- 		__u32		ipv6_src[4];  /* in6_addr; network order */
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -5809,6 +5809,9 @@ static int bpf_ipv4_fib_lookup(struct ne
- 	params->rt_metric = res.fi->fib_priority;
- 	params->ifindex = dev->ifindex;
+ 	/*
+ 	 * Don't modify memory region attributes, they are
+@@ -244,7 +248,7 @@ void efi_adjust_memory_range_protection(
+ 		status = efi_dxe_call(get_memory_space_descriptor, start, &desc);
  
-+	if (flags & BPF_FIB_LOOKUP_SRC)
-+		params->ipv4_src = fib_result_prefsrc(net, &res);
-+
- 	/* xdp and cls_bpf programs are run in RCU-bh so
- 	 * rcu_read_lock_bh is not needed here
- 	 */
-@@ -5951,6 +5954,18 @@ static int bpf_ipv6_fib_lookup(struct ne
- 	params->rt_metric = res.f6i->fib6_metric;
- 	params->ifindex = dev->ifindex;
+ 		if (status != EFI_SUCCESS)
+-			return;
++			break;
  
-+	if (flags & BPF_FIB_LOOKUP_SRC) {
-+		if (res.f6i->fib6_prefsrc.plen) {
-+			*src = res.f6i->fib6_prefsrc.addr;
-+		} else {
-+			err = ipv6_bpf_stub->ipv6_dev_get_saddr(net, dev,
-+								&fl6.daddr, 0,
-+								src);
-+			if (err)
-+				return BPF_FIB_LKUP_RET_NO_SRC_ADDR;
-+		}
-+	}
-+
- 	if (flags & BPF_FIB_LOOKUP_SKIP_NEIGH)
- 		goto set_fwd_params;
+ 		next = desc.base_address + desc.length;
  
-@@ -5969,7 +5984,8 @@ set_fwd_params:
- #endif
+@@ -269,8 +273,10 @@ void efi_adjust_memory_range_protection(
+ 				 unprotect_start,
+ 				 unprotect_start + unprotect_size,
+ 				 status);
++			break;
+ 		}
+ 	}
++	return EFI_SUCCESS;
+ }
  
- #define BPF_FIB_LOOKUP_MASK (BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_OUTPUT | \
--			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID)
-+			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID | \
-+			     BPF_FIB_LOOKUP_SRC)
+ static efi_char16_t *efistub_fw_vendor(void)
+@@ -800,9 +806,7 @@ static efi_status_t efi_decompress_kerne
  
- BPF_CALL_4(bpf_xdp_fib_lookup, struct xdp_buff *, ctx,
- 	   struct bpf_fib_lookup *, params, int, plen, u32, flags)
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -1077,6 +1077,7 @@ static const struct ipv6_bpf_stub ipv6_b
- 	.udp6_lib_lookup = __udp6_lib_lookup,
- 	.ipv6_setsockopt = do_ipv6_setsockopt,
- 	.ipv6_getsockopt = do_ipv6_getsockopt,
-+	.ipv6_dev_get_saddr = ipv6_dev_get_saddr,
- };
+ 	*kernel_entry = addr + entry;
  
- static int __init inet6_init(void)
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -3121,6 +3121,11 @@ union bpf_attr {
-  *			and *params*->smac will not be set as output. A common
-  *			use case is to call **bpf_redirect_neigh**\ () after
-  *			doing **bpf_fib_lookup**\ ().
-+ *		**BPF_FIB_LOOKUP_SRC**
-+ *			Derive and set source IP addr in *params*->ipv{4,6}_src
-+ *			for the nexthop. If the src addr cannot be derived,
-+ *			**BPF_FIB_LKUP_RET_NO_SRC_ADDR** is returned. In this
-+ *			case, *params*->dmac and *params*->smac are not set either.
-  *
-  *		*ctx* is either **struct xdp_md** for XDP programs or
-  *		**struct sk_buff** tc cls_act programs.
-@@ -6692,6 +6697,7 @@ enum {
- 	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
- 	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
- 	BPF_FIB_LOOKUP_TBID    = (1U << 3),
-+	BPF_FIB_LOOKUP_SRC     = (1U << 4),
- };
+-	efi_adjust_memory_range_protection(addr, kernel_total_size);
+-
+-	return EFI_SUCCESS;
++	return efi_adjust_memory_range_protection(addr, kernel_total_size);
+ }
  
- enum {
-@@ -6704,6 +6710,7 @@ enum {
- 	BPF_FIB_LKUP_RET_UNSUPP_LWT,   /* fwd requires encapsulation */
- 	BPF_FIB_LKUP_RET_NO_NEIGH,     /* no neighbor entry for nh */
- 	BPF_FIB_LKUP_RET_FRAG_NEEDED,  /* fragmentation required to fwd */
-+	BPF_FIB_LKUP_RET_NO_SRC_ADDR,  /* failed to derive IP src addr */
- };
+ static void __noreturn enter_kernel(unsigned long kernel_addr,
+--- a/drivers/firmware/efi/libstub/x86-stub.h
++++ b/drivers/firmware/efi/libstub/x86-stub.h
+@@ -5,8 +5,8 @@
+ extern void trampoline_32bit_src(void *, bool);
+ extern const u16 trampoline_ljmp_imm_offset;
  
- struct bpf_fib_lookup {
-@@ -6738,6 +6745,9 @@ struct bpf_fib_lookup {
- 		__u32	rt_metric;
- 	};
+-void efi_adjust_memory_range_protection(unsigned long start,
+-					unsigned long size);
++efi_status_t efi_adjust_memory_range_protection(unsigned long start,
++						unsigned long size);
  
-+	/* input: source address to consider for lookup
-+	 * output: source address result from lookup
-+	 */
- 	union {
- 		__be32		ipv4_src;
- 		__u32		ipv6_src[4];  /* in6_addr; network order */
+ #ifdef CONFIG_X86_64
+ efi_status_t efi_setup_5level_paging(void);
 
 
