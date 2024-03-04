@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76D57BAF0;
-	Mon,  4 Mar 2024 21:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C7F7BAFF;
+	Mon,  4 Mar 2024 21:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587941; cv=none; b=eWcgJfGaPMVpvT6IhVuOiMa6p/4SyzOZeI/CORi37nmTRtTRCCeOt7V3WKORCcshzTzUd75OdjA5qxtQRbn7nfuyc6O+ZvAvG3gx/cScIvy/saj2r4DdFFZ4yd3ivR3urbVcQeNRhCuX+smGx/s+xnXJI/8CeM32NuDgXSMn2x8=
+	t=1709587943; cv=none; b=bHlIY0YJu6Ykq4++/DK0KzwQPCaZBjkg038rZsKUFHw/cj2KqpFu1OU1bPAlF//nmeZ1InwXUKXRWEO0cM5jbY8u30wr+RwCW8IJW7MBXG7CRzA0GQl3HSwmU75EQZUWhVKpYopG968ElQKMJHe43IuUuXm419c/XyX7mhC5jpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587941; c=relaxed/simple;
-	bh=OVA0+2XrB5nLxXZNxoFORCzWCLWIeZ2lCc++BmMjVCk=;
+	s=arc-20240116; t=1709587943; c=relaxed/simple;
+	bh=7ZehKQYTmUhTJxX+ZQtFcbNc3SoJuscgYt+lXjjDVTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daqxf3ZMZulMZWwE1Ie6kI3Jwd8sV1yRVN8fSCzcSwSPzDBgP/8WR0fIg/qn4nVsiyRPmX1aSCc4qgyXuIXHPumt0dBxI88sDLR6Lhfs88VsS78qW7XW35QrFmg1Q2n1Zi4hFP9VCMao73ddNRESEpkzI04vmIwj5NMv7veBrxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSbJNW1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r3uubENqY6n/TMwtN6tCODUnt2GahV3TnGWCkQpNU2IjwvdyqalRliGwbOs4Jta+OeqWXqzwfX7Ejhru/tVFP2LXizmuTn6uOA0+RTwJbeeYKEfOkgWRi8kvuc4Rpv0Y3ltiMgdhspOQ7yar8KWWnNDvuldYw608KZx6sVxJXxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSnmzceW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSbJNW1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C39AC433C7;
-	Mon,  4 Mar 2024 21:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSnmzceW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1769FC43390;
+	Mon,  4 Mar 2024 21:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587940;
-	bh=OVA0+2XrB5nLxXZNxoFORCzWCLWIeZ2lCc++BmMjVCk=;
+	s=korg; t=1709587943;
+	bh=7ZehKQYTmUhTJxX+ZQtFcbNc3SoJuscgYt+lXjjDVTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSbJNW1TJvkN7bw/yXtlb6m8gNI7L5DoJ5Ogk1P0ml8PDnU7LRUJkAPOgn20wm4UP
-	 7KgrYzbwJbkZihxJT3GHRn9Cr5XYSCu+l3GAp69esJ2pFae83EuDIfwTaM5OqwWKvd
-	 TOKFO0ehUpMunKUtVPUy0Zt4zXHpKSxQjGyT4lQg=
+	b=FSnmzceW2p2RgZgb25GdC6mtiem2qOW3VGzJkb8ZfeuHG8+u9FRO607YVOZ9kAQxy
+	 p2N0eDrV6tmFW5ThuCrkkZSlvzrmxvVSb0PrI9sNaI4M/FJN/WphEOQ1PGNZQSAvqi
+	 HjBN5WG5hZHqUK87itiSjkQyxwDqZuWlB0A1QPNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 124/162] mptcp: push at DSS boundaries
-Date: Mon,  4 Mar 2024 21:23:09 +0000
-Message-ID: <20240304211555.717506695@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 115/162] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
+Date: Mon,  4 Mar 2024 21:23:00 +0000
+Message-ID: <20240304211555.452673002@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,41 +56,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-commit b9cd26f640a308ea314ad23532de9a8592cd09d2 upstream.
+commit 2a93c6cbd5a703d44c414a3c3945a87ce11430ba upstream.
 
-when inserting not contiguous data in the subflow write queue,
-the protocol creates a new skb and prevent the TCP stack from
-merging it later with already queued skbs by setting the EOR marker.
+Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
+the domain")' aimed to make sure that a power-domain that is being
+enabled without any particular performance-state requested will at least
+turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
+required-opps properties.
 
-Still no push flag is explicitly set at the end of previous GSO
-packet, making the aggregation on the receiver side sub-optimal -
-and packetdrill self-tests less predictable.
+But in the event that aggregation happens on a disabled power-domain, with
+an enabled peer without performance-state, both the local and peer
+corner are 0. The peer's enabled_corner is not considered, with the
+result that the underlying (shared) resource is disabled.
 
-Explicitly mark the end of not contiguous DSS with the push flag.
+One case where this can be observed is when the display stack keeps mmcx
+enabled (but without a particular performance-state vote) in order to
+access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
+is flushed the state of the peer (mmcx) is not considered and mmcx_ao
+ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
+several times, but has been painted over in DeviceTree by adding an
+explicit vote for the lowest non-disabled performance-state.
 
-Fixes: 6d0060f600ad ("mptcp: Write MPTCP DSS headers to outgoing data packets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-4-162e87e48497@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
+Reported-by: Johan Hovold <johan@kernel.org>
+Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pmdomain/qcom/rpmhpd.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1274,6 +1274,7 @@ static int mptcp_sendmsg_frag(struct soc
- 		mpext = mptcp_get_ext(skb);
- 		if (!mptcp_skb_can_collapse_to(data_seq, skb, mpext)) {
- 			TCP_SKB_CB(skb)->eor = 1;
-+			tcp_mark_push(tcp_sk(ssk), skb);
- 			goto alloc_skb;
- 		}
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -692,6 +692,7 @@ static int rpmhpd_aggregate_corner(struc
+ 	unsigned int active_corner, sleep_corner;
+ 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
+ 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
++	unsigned int peer_enabled_corner;
+ 
+ 	if (pd->state_synced) {
+ 		to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
+@@ -701,9 +702,11 @@ static int rpmhpd_aggregate_corner(struc
+ 		this_sleep_corner = pd->level_count - 1;
+ 	}
+ 
+-	if (peer && peer->enabled)
+-		to_active_sleep(peer, peer->corner, &peer_active_corner,
++	if (peer && peer->enabled) {
++		peer_enabled_corner = max(peer->corner, peer->enable_corner);
++		to_active_sleep(peer, peer_enabled_corner, &peer_active_corner,
+ 				&peer_sleep_corner);
++	}
+ 
+ 	active_corner = max(this_active_corner, peer_active_corner);
  
 
 
