@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D1110A1F;
-	Mon,  4 Mar 2024 21:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6185A10A1F;
+	Mon,  4 Mar 2024 21:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587714; cv=none; b=IzDwkZvi06FZQu/JEiVYauJWw+RjaxldcGoJ9i/d9T88UV4w6pHEfoqaJRP4HQFNEo7ynsklCoEa3q16xt8JmXRlc23BrS96xCqksmr9kTHLINhtlzdQYeuuiJk/68q53r8SivNvPLd2N0dWSDXW9wXz821FBKhpM9sRnD6mIIE=
+	t=1709587717; cv=none; b=FwnvzaVccksqSlUcwl9Z28cL/X144Hk0lbHG44SRYDBYOScmyEMFaJb9QjX13UY7VzsmwHE3+u9sK0wjpgYozOQHums13qy8XfDaHdH0/L5pLrNxMpu7A8znkak5oOTYu9WsL9bQg0K/t0TWcjC8UJGkfDadYVZo/NI07i9YW1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587714; c=relaxed/simple;
-	bh=JWJpJcF1FnieVMGraMIWIl5Kr6JULoTwvwjEQLiAG4g=;
+	s=arc-20240116; t=1709587717; c=relaxed/simple;
+	bh=LwKF/EoVjn/SFEpaEWGlZ3kL4mTPh0SVb/+YUYYBqkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAyXr8lacVTE0wiqBFsXDz57u0CJjRzs57C3jxGB5dJueAO+gJcPEdtXy9VtLHsyQw/sSQFbyy4B7LKauVJnAAVOBR9XzsyXwRM6YRy/fl7xpM5KzRV80xLl37vJCsWSRn0pDHbuVo32MS0Lw4A2zxd3sTeaA6MxFMdbUi1IiOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MRoRHFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pa27/YeLB9kwKrmEAbYSr5QE/SXPrO9fhztjepatbQBH65SEaQ5+8pW+DObBeZDWhZE1/TrrZYmdgS7zzzGkDfwgMBygD/w3Ojrbals5bbiqvO9nyPingPUq0KCRYWZCaEAXGbjS1cksrapFl6VLO7k38qsEJHsPqgxoDdQ/JXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C28at9vD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MRoRHFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6DDC433F1;
-	Mon,  4 Mar 2024 21:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C28at9vD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAD5C433C7;
+	Mon,  4 Mar 2024 21:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587713;
-	bh=JWJpJcF1FnieVMGraMIWIl5Kr6JULoTwvwjEQLiAG4g=;
+	s=korg; t=1709587716;
+	bh=LwKF/EoVjn/SFEpaEWGlZ3kL4mTPh0SVb/+YUYYBqkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MRoRHFz+UYOi9KbJTSGBr+Oz7sxs6Fsym9zbdIXovsUeTdOA3A1ODDpUGn6C17dC
-	 PRXeE3WczjBB9bIH0X2wyWOWrpNvkoM4ZCx4wGzVHKOBQGhMQSZnsv1y/XY5PkrxK7
-	 GPPP+jv0JQHlYB8HBf9PaxWmhQlvrdkJOcIRrHRY=
+	b=C28at9vDPZiHggrtO3BtBX1fG1vBiHWHtFMHPQK02GCKfaPlbKmz4rwRCt+YdYkb1
+	 lj3hib2T7nXGGR1NzOBRdM+Cn3poriTyG65K2O7PVEN7xcLG+WbCHz+0UxJEQwdb//
+	 c30AU0eBE9fhYQtUqmE+Bf8/0LS9gikbidwKKU6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 061/162] drm/tegra: Remove existing framebuffer only if we support display
-Date: Mon,  4 Mar 2024 21:22:06 +0000
-Message-ID: <20240304211553.797339515@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.7 038/162] igb: extend PTP timestamp adjustments to i211
+Date: Mon,  4 Mar 2024 21:21:43 +0000
+Message-ID: <20240304211553.058685099@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -53,61 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 86bf8cfda6d2a6720fa2e6e676c98f0882c9d3d7 ]
+[ Upstream commit 0bb7b09392eb74b152719ae87b1ba5e4bf910ef0 ]
 
-Tegra DRM doesn't support display on Tegra234 and later, so make sure
-not to remove any existing framebuffers in that case.
+The i211 requires the same PTP timestamp adjustments as the i210,
+according to its datasheet. To ensure consistent timestamping across
+different platforms, this change extends the existing adjustments to
+include the i211.
 
-v2: - add comments explaining how this situation can come about
-    - clear DRIVER_MODESET and DRIVER_ATOMIC feature bits
+The adjustment result are tested and comparable for i210 and i211 based
+systems.
 
-Fixes: 6848c291a54f ("drm/aperture: Convert drivers to aperture interfaces")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240223150333.1401582-1-thierry.reding@gmail.com
+Fixes: 3f544d2a4d5c ("igb: adjust PTP timestamps for Tx/Rx latency")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240227184942.362710-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/drm.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
-index ff36171c8fb70..373bcd79257e0 100644
---- a/drivers/gpu/drm/tegra/drm.c
-+++ b/drivers/gpu/drm/tegra/drm.c
-@@ -1242,9 +1242,26 @@ static int host1x_drm_probe(struct host1x_device *dev)
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 319c544b9f04c..f945705561200 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -957,7 +957,7 @@ static void igb_ptp_tx_hwtstamp(struct igb_adapter *adapter)
  
- 	drm_mode_config_reset(drm);
+ 	igb_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
+ 	/* adjust timestamp for the TX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_TX_LATENCY_10;
+@@ -1003,6 +1003,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 			ktime_t *timestamp)
+ {
+ 	struct igb_adapter *adapter = q_vector->adapter;
++	struct e1000_hw *hw = &adapter->hw;
+ 	struct skb_shared_hwtstamps ts;
+ 	__le64 *regval = (__le64 *)va;
+ 	int adjust = 0;
+@@ -1022,7 +1023,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 	igb_ptp_systim_to_hwtstamp(adapter, &ts, le64_to_cpu(regval[1]));
  
--	err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
--	if (err < 0)
--		goto hub;
-+	/*
-+	 * Only take over from a potential firmware framebuffer if any CRTCs
-+	 * have been registered. This must not be a fatal error because there
-+	 * are other accelerators that are exposed via this driver.
-+	 *
-+	 * Another case where this happens is on Tegra234 where the display
-+	 * hardware is no longer part of the host1x complex, so this driver
-+	 * will not expose any modesetting features.
-+	 */
-+	if (drm->mode_config.num_crtc > 0) {
-+		err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
-+		if (err < 0)
-+			goto hub;
-+	} else {
-+		/*
-+		 * Indicate to userspace that this doesn't expose any display
-+		 * capabilities.
-+		 */
-+		drm->driver_features &= ~(DRIVER_MODESET | DRIVER_ATOMIC);
-+	}
- 
- 	err = drm_dev_register(drm, 0);
- 	if (err < 0)
+ 	/* adjust timestamp for the RX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_RX_LATENCY_10;
 -- 
 2.43.0
 
