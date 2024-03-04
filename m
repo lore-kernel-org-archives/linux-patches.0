@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F4A7B3E7;
-	Mon,  4 Mar 2024 21:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93377BAEE;
+	Mon,  4 Mar 2024 21:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588696; cv=none; b=Xg/50kpC/ZH/V92yh2DQdDF8SO4O2v0SjKmwsuDzNVWXZpd4f9VTI/axjwOPMDapYM9RFEUSvSNSSvpTAVWPmoBHmE+Ag/Ht4vZBUQiCZuIN6yNiLNvRxvcUVEGrFPGu20JlG5HoJphuw/trmpgMz3juFCpxQ6PgYtctPpe2HXc=
+	t=1709588698; cv=none; b=eEOPKlZNUL/ZfVxBYvlMsKKbnCaOZP+CAlC1S6AFPMEGJnZDsx91EFJsTV6sGyfmTxiErQsvdeJvqubNyT4Gxs/NiOXhQBpwBVOiGZC6AIcmY+ef+GWdugqj5t4NyzVmtqymaoDAIO9U4q2Rhq5fjF46smbj3WR24d0FLALOUTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588696; c=relaxed/simple;
-	bh=t2UHTZZ/nNBDwjFyyZNsd9PxvVFFsHklIpQRBV142IA=;
+	s=arc-20240116; t=1709588698; c=relaxed/simple;
+	bh=ti0H7dU2hmqdOcgLjganOQ9Pg9ntidTNkJLuuI4T1JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOtWauWOW1LkpNxWaOxYHLkNepv909Zp26iuQsn1bFGqYXqQkYZqqLJAbWJf+0F1cTo4Hl23uh7zfjPDRJ96h88+KGhzN5yopi842RM6I/21E3b4cntaiYbYqPIu1b3QKUogm8oVzW6ZMKFVmjTjm/QXI2aKMsqPbMOZyCfTDaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFESQ8MQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukNBsYs5WcVP4YzteF5ywP1NJFtgV/8cElVmRXza22LLIBMHRy6AvGmDwMi87dI9FPGr/v3ZY8JuhS1eBUed9apalGGozhsGmqdTRUn9hG76SD2NTPGofujwzRit3YMk3h06MaPYjt1RkXQg+V/zoPEWJ/iNOWJs8QlTvFUVze8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vavsoGlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFESQ8MQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823D0C433C7;
-	Mon,  4 Mar 2024 21:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vavsoGlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA20C43390;
+	Mon,  4 Mar 2024 21:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588695;
-	bh=t2UHTZZ/nNBDwjFyyZNsd9PxvVFFsHklIpQRBV142IA=;
+	s=korg; t=1709588698;
+	bh=ti0H7dU2hmqdOcgLjganOQ9Pg9ntidTNkJLuuI4T1JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFESQ8MQHgMZkk9RBiW8ZiFbthgVO9tCMLjaH21TUhoiTtulyLVE9kn3fzksNsJYv
-	 560PNm6f8KkH8F5b/xAQYJl5DEjksGsof7UneuOEs/OrF0eSSNw4U2RZgAD+vS2IBs
-	 ukCpp3C5fPjbLpZ1fZhsyZ3odSEzU5Poyt878onE=
+	b=vavsoGlLGbMzzwJ224YZJQfZRqqv0R9sCBTIeEbIREHBV2mC0oMI5HfYJPa/KrW7w
+	 0kf/1zXNY218KffMsUhiM3JGNpVRPkCCiiQ5M5DUzEEJWR96l039Yy9vpBLp0dtMUG
+	 H7RooPKOFWtbS33wQRqRYJn5Vp5kVSOZeKrWHcMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Majewski <lukma@denx.de>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/215] net: hsr: Use correct offset for HSR TLV values in supervisory HSR frames
-Date: Mon,  4 Mar 2024 21:22:04 +0000
-Message-ID: <20240304211558.913669980@linuxfoundation.org>
+Subject: [PATCH 6.1 062/215] tls: decrement decrypt_pending if no async completion will be called
+Date: Mon,  4 Mar 2024 21:22:05 +0000
+Message-ID: <20240304211558.946021614@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,51 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Majewski <lukma@denx.de>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 51dd4ee0372228ffb0f7709fa7aa0678d4199d06 ]
+[ Upstream commit f7fa16d49837f947ee59492958f9e6f0e51d9a78 ]
 
-Current HSR implementation uses following supervisory frame (even for
-HSRv1 the HSR tag is not is not present):
+With mixed sync/async decryption, or failures of crypto_aead_decrypt,
+we increment decrypt_pending but we never do the corresponding
+decrement since tls_decrypt_done will not be called. In this case, we
+should decrement decrypt_pending immediately to avoid getting stuck.
 
-00000000: 01 15 4e 00 01 2d XX YY ZZ 94 77 10 88 fb 00 01
-00000010: 7e 1c 17 06 XX YY ZZ 94 77 10 1e 06 XX YY ZZ 94
-00000020: 77 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00000030: 00 00 00 00 00 00 00 00 00 00 00 00
+For example, the prequeue prequeue test gets stuck with mixed
+modes (one async decrypt + one sync decrypt).
 
-The current code adds extra two bytes (i.e. sizeof(struct hsr_sup_tlv))
-when offset for skb_pull() is calculated.
-This is wrong, as both 'struct hsrv1_ethhdr_sp' and 'hsrv0_ethhdr_sp'
-already have 'struct hsr_sup_tag' defined in them, so there is no need
-for adding extra two bytes.
-
-This code was working correctly as with no RedBox support, the check for
-HSR_TLV_EOT (0x00) was off by two bytes, which were corresponding to
-zeroed padded bytes for minimal packet size.
-
-Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")
-Signed-off-by: Lukasz Majewski <lukma@denx.de>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20240228085644.3618044-1-lukma@denx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 94524d8fc965 ("net/tls: Add support for async decryption of tls records")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/c56d5fc35543891d5319f834f25622360e1bfbec.1709132643.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_sw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 80cdc6f6b34c9..0323ab5023c69 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -83,7 +83,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
- 		return false;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 93e1bfa72d791..c6ad435a44218 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -273,6 +273,8 @@ static int tls_do_decryption(struct sock *sk,
+ 			return 0;
  
- 	/* Get next tlv */
--	total_length += sizeof(struct hsr_sup_tlv) + hsr_sup_tag->tlv.HSR_TLV_length;
-+	total_length += hsr_sup_tag->tlv.HSR_TLV_length;
- 	if (!pskb_may_pull(skb, total_length))
- 		return false;
- 	skb_pull(skb, total_length);
+ 		ret = crypto_wait_req(ret, &ctx->async_wait);
++	} else if (darg->async) {
++		atomic_dec(&ctx->decrypt_pending);
+ 	}
+ 	darg->async = false;
+ 
 -- 
 2.43.0
 
