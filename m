@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367817BAE6;
-	Mon,  4 Mar 2024 21:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADA47B3DE;
+	Mon,  4 Mar 2024 21:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587863; cv=none; b=VFW5iFoURGBV9YTajYK9xEHQOezxP+Jwv4LAKYUhKukP+XYd+IpMd2TzIjep255nZmHAUOEx4uTcr+SeiuX4IPjCKipS8YGLIOVKCdjhceLMOFoCXQzGOCFYhICcUrE4A6N5nGiC7UIPSm95Dhr/dkHtah26uR18eyoyCdjNMkg=
+	t=1709587866; cv=none; b=vEY0gpmpNnDCN304VaLcJkb5f+Fg72wV9MYUoTUWw0rRMH00uJRd8RbvMBgxVQx4wEQMe96sjnlHWOgMiyEJBHEfUPYRDQDoOXc++w+IcZWyYcXFBLqizR5zodQonVIV553V0AE+ZteylpeHViBumKF0vdYin0PXI5EMEd6Kro4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587863; c=relaxed/simple;
-	bh=LbmuggYAQ6sbiyoVyvVlpD0YSJbX+08Qe1u/YUra64I=;
+	s=arc-20240116; t=1709587866; c=relaxed/simple;
+	bh=/OqL8W465GhakLur0dVe15oCJkGyFHkBJrDzvPEdZQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Re3eQfn7Uu2bpMoFLyuLPTNIDLtvsFSA9j3gaBef8/gpAoIWiuZeWS59gz7AzoIlN1qEgY7b5wofgJL4IRe+SbBT2QvEOyuSpQxWFD2JsqfrGV6WWL+m3I7VvJDigd15kd2EJ+TzxR+vYLD/cm4azcrL4z6g1t1QNDEDEtO90lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhHunPv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JHca4hxsNGNmIqKsOEBC+Clkey/lE0XQt+G2nnkOSnlr8zINcXxeN/yNRPkEZm9Z/71/Dpc0i4gZst1YHJ+LlXXqgmUeKpS87gQJTTm0/rE3eTnTuNLgQrArnkS2C7mLvK1QOBTrItwFvSGcMlTcw0ypDBHm2AoR9FEbPNCRKCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQUek0KB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhHunPv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE2CC433F1;
-	Mon,  4 Mar 2024 21:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQUek0KB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B582C433C7;
+	Mon,  4 Mar 2024 21:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587863;
-	bh=LbmuggYAQ6sbiyoVyvVlpD0YSJbX+08Qe1u/YUra64I=;
+	s=korg; t=1709587865;
+	bh=/OqL8W465GhakLur0dVe15oCJkGyFHkBJrDzvPEdZQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhHunPv8Qu94Xjkrte3npI/eCrfJsQarnRb26AaRWDqJNN/UhZQK3MwEa2LdIQw7T
-	 SiHdeyr4SlnxK0CcDkIq2utnmgfbkGDW7krKGUV8WtXsiDdmbSDlI+5vku73yFadwa
-	 2XRe61/yQW6PvJ09WQFxLtA6nuLxCyJnO6WWRyjc=
+	b=LQUek0KBX+xgfUuFRWuuM9fYJBSFrW2pitl079w28lxLfNq4PWvyV39FH+//V6+mn
+	 tL5QMNDvDIlS21Z5W+KpQjxUuf74qHZHVj1YnuRT1T/VAZ3bTqA3/gRiFrXbRjPl82
+	 AhpxYBv9akHqEjJES1loideRGWOeizrAa/zlG0Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.7 094/162] soc: qcom: pmic_glink: Fix boot when QRTR=m
-Date: Mon,  4 Mar 2024 21:22:39 +0000
-Message-ID: <20240304211554.859280809@linuxfoundation.org>
+	Peng Ma <peng.ma@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.7 095/162] dmaengine: fsl-qdma: fix SoC may hang on 16 byte unaligned read
+Date: Mon,  4 Mar 2024 21:22:40 +0000
+Message-ID: <20240304211554.885787468@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -53,95 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Peng Ma <peng.ma@nxp.com>
 
-commit f79ee78767ca60e7a2c89eacd2dbdf237d97e838 upstream.
+commit 9d739bccf261dd93ec1babf82f5c5d71dd4caa3e upstream.
 
-We need to bail out before adding/removing devices if we are going to
--EPROBE_DEFER. Otherwise boot can get stuck in a probe deferral loop due
-to a long-standing issue in driver core (see commit fbc35b45f9f6 ("Add
-documentation on meaning of -EPROBE_DEFER")).
+There is chip (ls1028a) errata:
 
-Deregistering the altmode child device can potentially also trigger bugs
-in the DRM bridge implementation, which does not expect bridges to go
-away.
+The SoC may hang on 16 byte unaligned read transactions by QDMA.
 
-[DB: slightly fixed commit message by adding the word 'commit']
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Link: https://lore.kernel.org/r/20231213210644.8702-1-robdclark@gmail.com
-[ johan: rebase on 6.8-rc4, amend commit message and mention DRM ]
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-Cc: <stable@vger.kernel.org>      # 6.3
-Cc: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240217150228.5788-5-johan+linaro@kernel.org
+Unaligned read transactions initiated by QDMA may stall in the NOC
+(Network On-Chip), causing a deadlock condition. Stalled transactions will
+trigger completion timeouts in PCIe controller.
+
+Workaround:
+Enable prefetch by setting the source descriptor prefetchable bit
+( SD[PF] = 1 ).
+
+Implement this workaround.
+
+Cc: stable@vger.kernel.org
+Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
+Signed-off-by: Peng Ma <peng.ma@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240201215007.439503-1-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/pmic_glink.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/dma/fsl-qdma.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -268,10 +268,17 @@ static int pmic_glink_probe(struct platf
- 	else
- 		pg->client_mask = PMIC_GLINK_CLIENT_DEFAULT;
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -109,6 +109,7 @@
+ #define FSL_QDMA_CMD_WTHROTL_OFFSET	20
+ #define FSL_QDMA_CMD_DSEN_OFFSET	19
+ #define FSL_QDMA_CMD_LWC_OFFSET		16
++#define FSL_QDMA_CMD_PF			BIT(17)
  
-+	pg->pdr = pdr_handle_alloc(pmic_glink_pdr_callback, pg);
-+	if (IS_ERR(pg->pdr)) {
-+		ret = dev_err_probe(&pdev->dev, PTR_ERR(pg->pdr),
-+				    "failed to initialize pdr\n");
-+		return ret;
-+	}
-+
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI)) {
- 		ret = pmic_glink_add_aux_device(pg, &pg->ucsi_aux, "ucsi");
- 		if (ret)
--			return ret;
-+			goto out_release_pdr_handle;
- 	}
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_ALTMODE)) {
- 		ret = pmic_glink_add_aux_device(pg, &pg->altmode_aux, "altmode");
-@@ -284,17 +291,11 @@ static int pmic_glink_probe(struct platf
- 			goto out_release_altmode_aux;
- 	}
+ /* Field definition for Descriptor status */
+ #define QDMA_CCDF_STATUS_RTE		BIT(5)
+@@ -384,7 +385,8 @@ static void fsl_qdma_comp_fill_memcpy(st
+ 	qdma_csgf_set_f(csgf_dest, len);
+ 	/* Descriptor Buffer */
+ 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
+-			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
++			  FSL_QDMA_CMD_RWTTYPE_OFFSET) |
++			  FSL_QDMA_CMD_PF;
+ 	sdf->data = QDMA_SDDF_CMD(cmd);
  
--	pg->pdr = pdr_handle_alloc(pmic_glink_pdr_callback, pg);
--	if (IS_ERR(pg->pdr)) {
--		ret = dev_err_probe(&pdev->dev, PTR_ERR(pg->pdr), "failed to initialize pdr\n");
--		goto out_release_aux_devices;
--	}
--
- 	service = pdr_add_lookup(pg->pdr, "tms/servreg", "msm/adsp/charger_pd");
- 	if (IS_ERR(service)) {
- 		ret = dev_err_probe(&pdev->dev, PTR_ERR(service),
- 				    "failed adding pdr lookup for charger_pd\n");
--		goto out_release_pdr_handle;
-+		goto out_release_aux_devices;
- 	}
- 
- 	mutex_lock(&__pmic_glink_lock);
-@@ -303,8 +304,6 @@ static int pmic_glink_probe(struct platf
- 
- 	return 0;
- 
--out_release_pdr_handle:
--	pdr_handle_release(pg->pdr);
- out_release_aux_devices:
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_BATT))
- 		pmic_glink_del_aux_device(pg, &pg->ps_aux);
-@@ -314,6 +313,8 @@ out_release_altmode_aux:
- out_release_ucsi_aux:
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI))
- 		pmic_glink_del_aux_device(pg, &pg->ucsi_aux);
-+out_release_pdr_handle:
-+	pdr_handle_release(pg->pdr);
- 
- 	return ret;
- }
+ 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
 
 
