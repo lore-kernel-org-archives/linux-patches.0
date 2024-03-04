@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479467868F;
-	Mon,  4 Mar 2024 21:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEDE7994A;
+	Mon,  4 Mar 2024 21:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587693; cv=none; b=KpEcLl82YI4FtYMN9HGLXlJgBjqYQqklfw4Ma2CgnzUKUUkaXVM7Levtt1rxdOcTZfGCaRTVJvB6Fem+igo8PcOdYWEaMpRfHeEqRAbReUOrmURUrtLoL9uIXzrWfY4bQM3ZRHPhp3s7HVU0xUqddkzRBUPsZvH2v5fnvCc/4s4=
+	t=1709587696; cv=none; b=MVT/56zpIphotmR/HYKTDvQtNSZYrROR16vwW93xLmZikEhSCZfcoGa98FLNpzG0+y1j52yP/25SUMeZK+qWWdsZPojvGhiEOVc3KtdP0GJCsjtnPEblr87ca4IkW0lAybd5lyr0dDtUOz6/B1VYyiqgbXOeAVPqbq9jeLyVn+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587693; c=relaxed/simple;
-	bh=AUWTc7BI5lXOb7jv1k8ukISmwwG+l+xAssiC1fpoblw=;
+	s=arc-20240116; t=1709587696; c=relaxed/simple;
+	bh=93MgnCzicdbIg1ZqWmsrjGdMeBjJFNsD4EYxw8UKKjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkWbM4CIIPvYd5jtMXibAqoSTv1wrOJQRG6EaaZTX3CJeIGLkhcS95KQl/VgTQQjGxIKNgAf+MAfe1rBuaLHf6PdFjgrPo8z/5s5rcQ1sw6iSbf4J1y4Td1l13X2eabo2epWIvONkNJV2K0qobU1ce5xlN5c/Dk/qBdK2r5w0Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3t/aufc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExhwfT/tTBt9pJ/ZNCowm0+dLK7qTE8w+vdRGzpmVj4FcxARRyxalmnibgXuXCb0DwhBDpj2ieZLt2UZFAUOalbsYfYiKCIRkkbSlItVBwK7ryTYNbGEYZ7904IEt/DpKpgNRn1khWYGYUlzdjpCSjAeZ/zMOde0vMLZRfzvAMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdXXgzQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3t/aufc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAE3C433F1;
-	Mon,  4 Mar 2024 21:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdXXgzQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68953C433F1;
+	Mon,  4 Mar 2024 21:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587693;
-	bh=AUWTc7BI5lXOb7jv1k8ukISmwwG+l+xAssiC1fpoblw=;
+	s=korg; t=1709587695;
+	bh=93MgnCzicdbIg1ZqWmsrjGdMeBjJFNsD4EYxw8UKKjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3t/aufc0kjoeGnfvmvJ621eP4FAiHmxOJSQVYPY47kHBUIO1anRYpu6rfbdLsMPn
-	 i+QVtBqePrDePl9OmTgArUo1hQY3OTExFpOOABZc8e2xjFxFZ3/ohUeK8X5QVmTmLK
-	 5wRoJi/tq7u7jJw6q5O9WnbczzmhmFbH9wNJKEA0=
+	b=xdXXgzQOvuF01WI3foVECvhaCx0IfLfHAQjIyna8TriLLbZ4pK7stghUitcUouUZG
+	 fLfRQl3WMkN2C3HifcnkF8XmM8hc/lBBBMeRAqBdPV4QcmSt3a5fW1gcuDIbe6jDQo
+	 iyh4HAkI0PvQEQuguQzV5AZNFCxXVosQwmySvPz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 054/162] ASoC: cs35l56: cs35l56_component_remove() must clean up wm_adsp
-Date: Mon,  4 Mar 2024 21:21:59 +0000
-Message-ID: <20240304211553.584061918@linuxfoundation.org>
+Subject: [PATCH 6.7 037/162] rtnetlink: fix error logic of IFLA_BRIDGE_FLAGS writing back
+Date: Mon,  4 Mar 2024 21:21:42 +0000
+Message-ID: <20240304211553.023090236@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,39 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit cd38ccbecdace1469b4e0cfb3ddeec72a3fad226 ]
+[ Upstream commit 743ad091fb46e622f1b690385bb15e3cd3daf874 ]
 
-cs35l56_component_remove() must call wm_adsp_power_down() and
-wm_adsp2_component_remove().
+In the commit d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks
+IFLA_BRIDGE_MODE length"), an adjustment was made to the old loop logic
+in the function `rtnl_bridge_setlink` to enable the loop to also check
+the length of the IFLA_BRIDGE_MODE attribute. However, this adjustment
+removed the `break` statement and led to an error logic of the flags
+writing back at the end of this function.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Link: https://msgid.link/r/20240129162737.497-5-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: eba2eb2495f4 ("ASoC: soc-card: Fix missing locking in snd_soc_card_get_kcontrol()")
+if (have_flags)
+    memcpy(nla_data(attr), &flags, sizeof(flags));
+    // attr should point to IFLA_BRIDGE_FLAGS NLA !!!
+
+Before the mentioned commit, the `attr` is granted to be IFLA_BRIDGE_FLAGS.
+However, this is not necessarily true fow now as the updated loop will let
+the attr point to the last NLA, even an invalid NLA which could cause
+overflow writes.
+
+This patch introduces a new variable `br_flag` to save the NLA pointer
+that points to IFLA_BRIDGE_FLAGS and uses it to resolve the mentioned
+error logic.
+
+Fixes: d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20240227121128.608110-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/rtnetlink.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 09944db4db30d..491da77112c34 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -810,6 +810,11 @@ static void cs35l56_component_remove(struct snd_soc_component *component)
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index bf4c3f65ad99c..8f9cd6b7926e3 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -5164,10 +5164,9 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	struct net *net = sock_net(skb->sk);
+ 	struct ifinfomsg *ifm;
+ 	struct net_device *dev;
+-	struct nlattr *br_spec, *attr = NULL;
++	struct nlattr *br_spec, *attr, *br_flags_attr = NULL;
+ 	int rem, err = -EOPNOTSUPP;
+ 	u16 flags = 0;
+-	bool have_flags = false;
  
- 	cancel_work_sync(&cs35l56->dsp_work);
+ 	if (nlmsg_len(nlh) < sizeof(*ifm))
+ 		return -EINVAL;
+@@ -5185,11 +5184,11 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	br_spec = nlmsg_find_attr(nlh, sizeof(struct ifinfomsg), IFLA_AF_SPEC);
+ 	if (br_spec) {
+ 		nla_for_each_nested(attr, br_spec, rem) {
+-			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !have_flags) {
++			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !br_flags_attr) {
+ 				if (nla_len(attr) < sizeof(flags))
+ 					return -EINVAL;
  
-+	if (cs35l56->dsp.cs_dsp.booted)
-+		wm_adsp_power_down(&cs35l56->dsp);
-+
-+	wm_adsp2_component_remove(&cs35l56->dsp, component);
-+
- 	cs35l56->component = NULL;
+-				have_flags = true;
++				br_flags_attr = attr;
+ 				flags = nla_get_u16(attr);
+ 			}
+ 
+@@ -5233,8 +5232,8 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		}
+ 	}
+ 
+-	if (have_flags)
+-		memcpy(nla_data(attr), &flags, sizeof(flags));
++	if (br_flags_attr)
++		memcpy(nla_data(br_flags_attr), &flags, sizeof(flags));
+ out:
+ 	return err;
  }
- 
 -- 
 2.43.0
 
