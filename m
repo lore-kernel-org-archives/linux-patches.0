@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD1F78B69;
-	Mon,  4 Mar 2024 21:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C2F10A35;
+	Mon,  4 Mar 2024 21:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588305; cv=none; b=GOMVv+KD9QZFn+tRNEEiy39KdFNC1qruYFQOpWMmjiH2PAZ8Lu6dmPcC54OKAkfsMm4MfBd1ySH8qxG8JpfZE6PSbiRa4Qb5ADGp0uiSw1mPIOLypuhg+2AoHIQ/Nqbgpt80k8r5UlAeRkR8JfNNDSieq13rgs9s3/Wjc2eNmGk=
+	t=1709588307; cv=none; b=sBEj4T8prr58I+fHrtDIcHpnhPqN1IC28vwfIW7zDC+o6RJtTcmHrVwgV8DcLgsCxtgHhqzXtxhDYmy2HMSqmFgCRlfOOqlW1UD/OPDOrsh5Chv+6kwaUuyMO800znCdgEY3cFs9gh1EmwbwD3/UEad7dgtBk+4h9CDO+pyy+8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588305; c=relaxed/simple;
-	bh=r+t7GI1mckC+3PB7SahgkK5OTKmwt/f1C72W1Usg0uM=;
+	s=arc-20240116; t=1709588307; c=relaxed/simple;
+	bh=4E65vfBBwmo6mUT2PSlZX5jz52v9C0GnIDqsKnJHM28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4J7lqGCkkDtErc7cuH7wH4Swhg+69rh4/pe5hWVoGmOuBnjmg49K8Vh9z2DJkoj4D1EjEjTp9M/i9UjKsS6OKMUzPCvHhR1qTHIU05w2a/8ZW+dfQRMKTlY8/hL2QMVB8zlYhD+q6Q/ncTMIU4hy2VEXl4TBhKq3tBtN81afWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mm/c5B47; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQdsRAUwovauuVXLwHXN/6ZI2qcCRTzHxqh+r5ZxZuLjD8V6Ey1wC1eNSDs8VcmL5tqRtggpr2ik5uI0D+JQLqC4QOdYYt32HJPf6HAfU4XlBuKxRKWMZS5XNLOwhpdDUcU7kZCpsLn+gs7/+K/aH5HETWFMtEDcRm8IL1zE43E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPzKwmKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mm/c5B47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A986AC433F1;
-	Mon,  4 Mar 2024 21:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPzKwmKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47503C433C7;
+	Mon,  4 Mar 2024 21:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588305;
-	bh=r+t7GI1mckC+3PB7SahgkK5OTKmwt/f1C72W1Usg0uM=;
+	s=korg; t=1709588307;
+	bh=4E65vfBBwmo6mUT2PSlZX5jz52v9C0GnIDqsKnJHM28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mm/c5B47yUqT+EHcfTUHBy/CpKmcB2bFgcFb8UsZWMrY/wc84mToflfey4fWog4d9
-	 Wt9DrQVuulHvTpmDJtsXQHY/2N8KcAtjLpBKvHX5eeBq1q69j7bM/vRhpzR0u2jRIQ
-	 IvEqeBRT57IrTs+pxU90CgvOZpqUaO0/quTksksg=
+	b=MPzKwmKskUJVaBfxshYsfMik7KcRHBjdhYLcP2XZr6wh8hNAdUKEjgDvArtPfJxFD
+	 0q5zWt/nvPMrf636yYvUyhWTkA7tP+Ta8xqWaUEdcd8WtQuVwstUue+gUL0wDM5D+k
+	 0anjwepDK2+ycGGYawhA4LSYiN+FJUhSP0acjofY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/143] RISC-V: Ignore V from the riscv,isa DT property on older T-Head CPUs
-Date: Mon,  4 Mar 2024 21:22:57 +0000
-Message-ID: <20240304211551.745456636@linuxfoundation.org>
+Subject: [PATCH 6.6 058/143] drm/tegra: Remove existing framebuffer only if we support display
+Date: Mon,  4 Mar 2024 21:22:58 +0000
+Message-ID: <20240304211551.780301252@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,69 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor@kernel.org>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit d82f32202e0df7bf40d4b67c8a4ff9cea32df4d9 ]
+[ Upstream commit 86bf8cfda6d2a6720fa2e6e676c98f0882c9d3d7 ]
 
-Before attempting to support the pre-ratification version of vector
-found on older T-Head CPUs, disallow "v" in riscv,isa on these
-platforms. The deprecated property has no clear way to communicate
-the specific version of vector that is supported and much of the vendor
-provided software puts "v" in the isa string. riscv,isa-extensions
-should be used instead. This should not be too much of a burden for
-these systems, as the vendor shipped devicetrees and firmware do not
-work with a mainline kernel and will require updating.
+Tegra DRM doesn't support display on Tegra234 and later, so make sure
+not to remove any existing framebuffers in that case.
 
-We can limit this restriction to only ignore v in riscv,isa on CPUs
-that report T-Head's vendor ID and a zero marchid. Newer T-Head CPUs
-that support the ratified version of vector should report non-zero
-marchid, according to Guo Ren [1].
+v2: - add comments explaining how this situation can come about
+    - clear DRIVER_MODESET and DRIVER_ATOMIC feature bits
 
-Link: https://lore.kernel.org/linux-riscv/CAJF2gTRy5eK73=d6s7CVy9m9pB8p4rAoMHM3cZFwzg=AuF7TDA@mail.gmail.com/ [1]
-Fixes: dc6667a4e7e3 ("riscv: Extending cpufeature.c to detect V-extension")
-Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20240223-tidings-shabby-607f086cb4d7@spud
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 6848c291a54f ("drm/aperture: Convert drivers to aperture interfaces")
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240223150333.1401582-1-thierry.reding@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpufeature.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/tegra/drm.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index e12cd22755c78..e39a905aca248 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -21,6 +21,7 @@
- #include <asm/hwprobe.h>
- #include <asm/patch.h>
- #include <asm/processor.h>
-+#include <asm/sbi.h>
- #include <asm/vector.h>
+diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
+index ff36171c8fb70..373bcd79257e0 100644
+--- a/drivers/gpu/drm/tegra/drm.c
++++ b/drivers/gpu/drm/tegra/drm.c
+@@ -1242,9 +1242,26 @@ static int host1x_drm_probe(struct host1x_device *dev)
  
- #include "copy-unaligned.h"
-@@ -396,6 +397,20 @@ static void __init riscv_fill_hwcap_from_isa_string(unsigned long *isa2hwcap)
- 			set_bit(RISCV_ISA_EXT_ZIHPM, isainfo->isa);
- 		}
+ 	drm_mode_config_reset(drm);
  
+-	err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
+-	if (err < 0)
+-		goto hub;
++	/*
++	 * Only take over from a potential firmware framebuffer if any CRTCs
++	 * have been registered. This must not be a fatal error because there
++	 * are other accelerators that are exposed via this driver.
++	 *
++	 * Another case where this happens is on Tegra234 where the display
++	 * hardware is no longer part of the host1x complex, so this driver
++	 * will not expose any modesetting features.
++	 */
++	if (drm->mode_config.num_crtc > 0) {
++		err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
++		if (err < 0)
++			goto hub;
++	} else {
 +		/*
-+		 * "V" in ISA strings is ambiguous in practice: it should mean
-+		 * just the standard V-1.0 but vendors aren't well behaved.
-+		 * Many vendors with T-Head CPU cores which implement the 0.7.1
-+		 * version of the vector specification put "v" into their DTs.
-+		 * CPU cores with the ratified spec will contain non-zero
-+		 * marchid.
++		 * Indicate to userspace that this doesn't expose any display
++		 * capabilities.
 +		 */
-+		if (acpi_disabled && riscv_cached_mvendorid(cpu) == THEAD_VENDOR_ID &&
-+		    riscv_cached_marchid(cpu) == 0x0) {
-+			this_hwcap &= ~isa2hwcap[RISCV_ISA_EXT_v];
-+			clear_bit(RISCV_ISA_EXT_v, isainfo->isa);
-+		}
-+
- 		/*
- 		 * All "okay" hart should have same isa. Set HWCAP based on
- 		 * common capabilities of every "okay" hart, in case they don't
++		drm->driver_features &= ~(DRIVER_MODESET | DRIVER_ATOMIC);
++	}
+ 
+ 	err = drm_dev_register(drm, 0);
+ 	if (err < 0)
 -- 
 2.43.0
 
