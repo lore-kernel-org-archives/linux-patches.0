@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC847B3DE;
-	Mon,  4 Mar 2024 21:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8177B3C3;
+	Mon,  4 Mar 2024 21:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588014; cv=none; b=SA4FYPseJ1pryynM4NH2SEqk+6JQOZ2bbrbPuLJNJwFw/n+N2f4L3RoB39L6lGEzdoG8mXyPp6FjGYeTBEAultlFjJ1cx+DNLcttj8FgbYy5kAbzXtilMffUaqouRjUcIB2iQcFonzlH4Rz5eM/8PIZ/Wgrgc7AX/jAeGTk2PCQ=
+	t=1709588016; cv=none; b=Bwz/3LHGhctvlLYV8Y3vpWqkcieQNC1VLcg6Oy0ETh48X2VyFtLCo5433fATOV7tloYSu6ygHrVFUap9hKi42y6dYjrHIjRTHyzf2IThlnOSkFnozgRAB7ebH6pgHBgOLKBQyRTACQlb2AvolOeMZ4C9fOghuAqJJhUM8Y4xoN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588014; c=relaxed/simple;
-	bh=YvggHiq0HSmmm8IXZlNAgtlwV7JxtMC/13yZ51v+H3Q=;
+	s=arc-20240116; t=1709588016; c=relaxed/simple;
+	bh=XQ1pjmjFPCOlvHE0ATSTeyHTRZsvChImDuySMHv3Td0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6N0OzEJFzC3lJFfuH2ViYUkL2GlzgRQgaVubT2zb7eMFN67+FWLeq+Yqs3Q+f9Upw6GKeYbtqBmcIqmgTf0hDyfkBZjCoTWC6N4I56WGLbntpPDE3X9skg5ZV/JUegnavRWFXpWLadHEu92l81CZKv0HBOgQd0Gt2hbG2MqlpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yX+N5AOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MmbjrA9NGWOHjS7tT19/gwr0jetQLBvSOY+IdaWzxnxU8epLhfn3KBOxIqe3zXL18SGdAvpJJogVkw2bXZKboDub7zOSiWPqI/sJmBQS70Z4+5VGy+NYbkTuSChQ1k+0sil+ltH1Bp4gnAjGDzgmgGd+tzuLeJF45jIsI54rP6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syrETlyX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yX+N5AOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313AAC433C7;
-	Mon,  4 Mar 2024 21:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syrETlyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31FBC433F1;
+	Mon,  4 Mar 2024 21:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588013;
-	bh=YvggHiq0HSmmm8IXZlNAgtlwV7JxtMC/13yZ51v+H3Q=;
+	s=korg; t=1709588016;
+	bh=XQ1pjmjFPCOlvHE0ATSTeyHTRZsvChImDuySMHv3Td0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yX+N5AOrF1nqdHpVDS7ercQHSRDLSpTaJBnxdm487KicyCTa4IjKHFgSZge3DuoOZ
-	 ZobSAPf+Ho9b/PBCVdDNIicIh/8LAAyAMKZ5rB2WHQNcUe4b65hMLCmr3sGBZA7vuQ
-	 vQOJbz7Su9D20wVmt4GGzs5SdjI4JtkuQx9/hbPA=
+	b=syrETlyXT2q8Gv5VmtwUte0vlvvsil7Q8koMvoZ+1E3shsdighLkupUbaEdanAF6R
+	 ETTZxFkbYHLfkECfPYTWQdCSrEcLaRkfwOHs0CBRkbpyD8vYL5M+Z9FaWBsMMUYm0f
+	 AdGdYshG8QpiokZ7dsK47BGNttNt6A7a/DrljpK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 14/25] ALSA: Drop leftover snd-rtctimer stuff from Makefile
-Date: Mon,  4 Mar 2024 21:23:50 +0000
-Message-ID: <20240304211536.221082904@linuxfoundation.org>
+Subject: [PATCH 5.4 15/25] afs: Fix endless loop in directory parsing
+Date: Mon,  4 Mar 2024 21:23:51 +0000
+Message-ID: <20240304211536.253048464@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -50,33 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 4df49712eb54141be00a9312547436d55677f092 ]
+[ Upstream commit 5f7a07646655fb4108da527565dcdc80124b14c4 ]
 
-We forgot to remove the line for snd-rtctimer from Makefile while
-dropping the functionality.  Get rid of the stale line.
+If a directory has a block with only ".__afsXXXX" files in it (from
+uncompleted silly-rename), these .__afsXXXX files are skipped but without
+advancing the file position in the dir_context.  This leads to
+afs_dir_iterate() repeating the block again and again.
 
-Fixes: 34ce71a96dcb ("ALSA: timer: remove legacy rtctimer")
-Link: https://lore.kernel.org/r/20240221092156.28695-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by making the code that skips the .__afsXXXX file also manually
+advance the file position.
+
+The symptoms are a soft lookup:
+
+        watchdog: BUG: soft lockup - CPU#3 stuck for 52s! [check:5737]
+        ...
+        RIP: 0010:afs_dir_iterate_block+0x39/0x1fd
+        ...
+         ? watchdog_timer_fn+0x1a6/0x213
+        ...
+         ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+         ? afs_dir_iterate_block+0x39/0x1fd
+         afs_dir_iterate+0x10a/0x148
+         afs_readdir+0x30/0x4a
+         iterate_dir+0x93/0xd3
+         __do_sys_getdents64+0x6b/0xd4
+
+This is almost certainly the actual fix for:
+
+        https://bugzilla.kernel.org/show_bug.cgi?id=218496
+
+Fixes: 57e9d49c5452 ("afs: Hide silly-rename files from userspace")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/786185.1708694102@warthog.procyon.org.uk
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Markus Suvanto <markus.suvanto@gmail.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ fs/afs/dir.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/Makefile b/sound/core/Makefile
-index d123587c0fd8f..bc04acf4a45ce 100644
---- a/sound/core/Makefile
-+++ b/sound/core/Makefile
-@@ -32,7 +32,6 @@ snd-pcm-dmaengine-objs := pcm_dmaengine.o
- snd-rawmidi-objs  := rawmidi.o
- snd-timer-objs    := timer.o
- snd-hrtimer-objs  := hrtimer.o
--snd-rtctimer-objs := rtctimer.o
- snd-hwdep-objs    := hwdep.o
- snd-seq-device-objs := seq_device.o
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index 8bed9df092301..1ada9b9cb21ec 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -426,8 +426,10 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+ 		    dire->u.name[0] == '.' &&
+ 		    ctx->actor != afs_lookup_filldir &&
+ 		    ctx->actor != afs_lookup_one_filldir &&
+-		    memcmp(dire->u.name, ".__afs", 6) == 0)
++		    memcmp(dire->u.name, ".__afs", 6) == 0) {
++			ctx->pos = blkoff + next * sizeof(union afs_xdr_dirent);
+ 			continue;
++		}
  
+ 		/* found the next entry */
+ 		if (!dir_emit(ctx, dire->u.name, nlen,
 -- 
 2.43.0
 
