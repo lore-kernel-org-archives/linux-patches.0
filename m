@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA64010A35;
-	Mon,  4 Mar 2024 21:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A2C1C6AB;
+	Mon,  4 Mar 2024 21:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588313; cv=none; b=ec8NP9YFPt/XuBnRH2+Gh+q5BL1yJBQUdkXcAKk6OcV1z5bHZeC9sL9hco5NnWBb6Xypg2jfx78UHHsB82rXLZLpgotJrChaTPu7rS+y/Nyh6pPrr/fngrYL2ZjlSC3YGuFMRSKsLtL4A2ZTQUgyCyL3v7D65Etss1kpIwBPeq0=
+	t=1709588315; cv=none; b=ubgkexSlg2v+JQma8vi4BpaDn+t6WMpeuJqHr+iy69Veatz4Z6nRR8GqPj7Bz9b+dZmYeNw1DpZmwgKc99RzPxSMfboUO41jw+QTvAbIVXubZON+bQJEoN2cMHX3hZV4oLyzztwYu8BitfZkGZR8W/LFqnBCLjsEsgKlDJovi7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588313; c=relaxed/simple;
-	bh=z+hXGgrEuNL9CEjlpPMXqlwFIy3gj0fLfb+DBll0y5A=;
+	s=arc-20240116; t=1709588315; c=relaxed/simple;
+	bh=KRK8sSuKJgaZt3Mne677eF5ocvjk/emfbleeXwCjQ7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+pOFvDdOL8Lzn+AQ1VyhNA764Kg1vaUb4NnAYTI4r3PEgoF5QSZtvjrQU7nQO3DDIAFsqrh+H04hfXmH0vVKXGzHwPynb886HwwrRU81hz5Bg3s8b09x53mOtFPSJHS9Xn3v+lkBl1wuwjj5mteHWcHSSZXyEUAmgL81iz5OeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+MAIuK2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HloQfxLX5YIPu+axUclbA29BmztCEzoCLL/3K8JULszeV/BVbdMXpj60qTFTXSJ5DQhVSvVmZ9L5rEPjgLE6c2L+zbr+sVOcFDFrp6oZDM2NPaGf+NochNIuhvxu4tTPboAx4EcRdGemtjgCwzZ9WUSPR+kRl8Idrx6u20bfRCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFFfpxPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+MAIuK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDA7C433F1;
-	Mon,  4 Mar 2024 21:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFFfpxPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BE4C43390;
+	Mon,  4 Mar 2024 21:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588312;
-	bh=z+hXGgrEuNL9CEjlpPMXqlwFIy3gj0fLfb+DBll0y5A=;
+	s=korg; t=1709588315;
+	bh=KRK8sSuKJgaZt3Mne677eF5ocvjk/emfbleeXwCjQ7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+MAIuK2b5BcHIIz5340D3KJYYZzkNQbQO8egMVttCp7oImxCGo82bEnkOyEZyqjW
-	 7QyWVc+HRkIeFhJWX/OWCOkK/xldjI92eczseeswIMVpT5VWVwolY1onACA09Ydqw5
-	 lzIGelPulSqet8FnkqyDEm4PVtUqMG6/EnUJkF78=
+	b=lFFfpxPEv0J5WtqROlsLMqrhbGxcv9VWzTu8pFYLvbxGK7EIxgIYsUVQQBtr8FEMa
+	 HlhppSGYJ8BDn4HsNUIpBHDpRGcGEe3cdqgaDtsakDm0V8l1ORrflfiAH95KGMu+IN
+	 bdhF2JXxYrlznzSGbzrxuQK/leVLzxHfsYC4XFik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Atish Patra <atishp@rivosinc.com>,
+	Vadim Shakirov <vadim.shakirov@syntacore.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/143] afs: Fix endless loop in directory parsing
-Date: Mon,  4 Mar 2024 21:23:00 +0000
-Message-ID: <20240304211551.845551694@linuxfoundation.org>
+Subject: [PATCH 6.6 061/143] drivers: perf: added capabilities for legacy PMU
+Date: Mon,  4 Mar 2024 21:23:01 +0000
+Message-ID: <20240304211551.878049190@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -54,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Vadim Shakirov <vadim.shakirov@syntacore.com>
 
-[ Upstream commit 5f7a07646655fb4108da527565dcdc80124b14c4 ]
+[ Upstream commit 65730fe8f4fb039683d76fa8ea7e8d18a53c6cc6 ]
 
-If a directory has a block with only ".__afsXXXX" files in it (from
-uncompleted silly-rename), these .__afsXXXX files are skipped but without
-advancing the file position in the dir_context.  This leads to
-afs_dir_iterate() repeating the block again and again.
+Added the PERF_PMU_CAP_NO_INTERRUPT flag because the legacy pmu driver
+does not provide sampling capabilities
 
-Fix this by making the code that skips the .__afsXXXX file also manually
-advance the file position.
+Added the PERF_PMU_CAP_NO_EXCLUDE flag because the legacy pmu driver
+does not provide the ability to disable counter incrementation in
+different privilege modes
 
-The symptoms are a soft lookup:
-
-        watchdog: BUG: soft lockup - CPU#3 stuck for 52s! [check:5737]
-        ...
-        RIP: 0010:afs_dir_iterate_block+0x39/0x1fd
-        ...
-         ? watchdog_timer_fn+0x1a6/0x213
-        ...
-         ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-         ? afs_dir_iterate_block+0x39/0x1fd
-         afs_dir_iterate+0x10a/0x148
-         afs_readdir+0x30/0x4a
-         iterate_dir+0x93/0xd3
-         __do_sys_getdents64+0x6b/0xd4
-
-This is almost certainly the actual fix for:
-
-        https://bugzilla.kernel.org/show_bug.cgi?id=218496
-
-Fixes: 57e9d49c5452 ("afs: Hide silly-rename files from userspace")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/786185.1708694102@warthog.procyon.org.uk
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Markus Suvanto <markus.suvanto@gmail.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Suggested-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Fixes: 9b3e150e310e ("RISC-V: Add a simple platform driver for RISC-V  legacy perf")
+Link: https://lore.kernel.org/r/20240227170002.188671-2-vadim.shakirov@syntacore.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/perf/riscv_pmu_legacy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 2df2e9ee130d8..e222fa68be847 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -479,8 +479,10 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
- 		    dire->u.name[0] == '.' &&
- 		    ctx->actor != afs_lookup_filldir &&
- 		    ctx->actor != afs_lookup_one_filldir &&
--		    memcmp(dire->u.name, ".__afs", 6) == 0)
-+		    memcmp(dire->u.name, ".__afs", 6) == 0) {
-+			ctx->pos = blkoff + next * sizeof(union afs_xdr_dirent);
- 			continue;
-+		}
+diff --git a/drivers/perf/riscv_pmu_legacy.c b/drivers/perf/riscv_pmu_legacy.c
+index 79fdd667922e8..a85fc9a15f039 100644
+--- a/drivers/perf/riscv_pmu_legacy.c
++++ b/drivers/perf/riscv_pmu_legacy.c
+@@ -117,6 +117,8 @@ static void pmu_legacy_init(struct riscv_pmu *pmu)
+ 	pmu->event_mapped = pmu_legacy_event_mapped;
+ 	pmu->event_unmapped = pmu_legacy_event_unmapped;
+ 	pmu->csr_index = pmu_legacy_csr_index;
++	pmu->pmu.capabilities |= PERF_PMU_CAP_NO_INTERRUPT;
++	pmu->pmu.capabilities |= PERF_PMU_CAP_NO_EXCLUDE;
  
- 		/* found the next entry */
- 		if (!dir_emit(ctx, dire->u.name, nlen,
+ 	perf_pmu_register(&pmu->pmu, "cpu", PERF_TYPE_RAW);
+ }
 -- 
 2.43.0
 
