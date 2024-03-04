@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B1A1EB5A;
-	Mon,  4 Mar 2024 21:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EEB1EB5A;
+	Mon,  4 Mar 2024 21:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588973; cv=none; b=CVe5MuGmuZCnZJd4UowsDDYeh/qYoxIDRbbv7Ge3JTP4/UAuoy05h0+uvaph3PSJ6wYH4kpekceQfWE8tdmlC2RE/pg6BJf+tLvRoJVUXjzLUwzI6rh3LPQYIG0i1QrNfpsUFthnDtsTjdswWBfIgFDa8+lz8cUaMq7yzxuwJ28=
+	t=1709588976; cv=none; b=cwXFpmogL3Pp6giA+WLY8zz/OnbsLQOZcK8s/1E8HewE57bwWhdWQaY4WJRkXeoR4YlufT6dM8PAIfYbftN3vU7zLAR+kpznhwJxefevzj5MxprWUxdpULb8GUlIxar07DjvoK7LVGHh24+w95xfTs96HCa/4Pp86mW8hPooQB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588973; c=relaxed/simple;
-	bh=UFOkhs73GcUliKPV+efJqr4BoJa5t3z80OLs/b7RNN8=;
+	s=arc-20240116; t=1709588976; c=relaxed/simple;
+	bh=JE+EA/Gf1fGu4iZ2UlztxxU0LkvMbTzst+vjTs0SWKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+rI/09SBg2v1UB5djJf2AvsWR+4qWE2N+YTArdWoN2fTTLpN+LqF04v/ieD70LwNaNf5NFMhTqc9DgsfaLBMwkU3+BGQuYFuFh/uItkN/XiEL0yYHDXClAvJkJs/r7OrF9kWRLFX8icxDh1BOfmFoISZu64UJgxIUMEHC35VSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpKEJ0pq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pVXodmc5um1Fl3YhFJOL4EE+XnP22824/KE1PhUoIyjc4KGgbMAnriyhm/SHKR2nXHyb0aJKGerOJYG+NeJNT2fyNhUA+ODs3/sdn25rE935AlNfhRvvXZ61WOJiq0QUd/3/spbU/5opUOtQ41CrnI+NNkc7RViqFwhFZDpTXn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwofT81I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpKEJ0pq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF728C433F1;
-	Mon,  4 Mar 2024 21:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwofT81I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF92C433F1;
+	Mon,  4 Mar 2024 21:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588973;
-	bh=UFOkhs73GcUliKPV+efJqr4BoJa5t3z80OLs/b7RNN8=;
+	s=korg; t=1709588975;
+	bh=JE+EA/Gf1fGu4iZ2UlztxxU0LkvMbTzst+vjTs0SWKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpKEJ0pqCepVxlTAkY/m8M4r/IWVJO8IYOuaPurojgd5rzZPHZ6vgLRhChNXbwrvx
-	 lMT8m6dpQBRN16MQL8aRXEzSo4+liLivbab/QOqWP6Mw6P1xDg4I11C0jwYicbRhav
-	 mXOEShls5B4RE4yZ/sj0Lb+QzlarFU0w6kezpxZU=
+	b=DwofT81If6iruHV529b6KmNRs7P/goxFYRsVJiFDGHm/THzUkirOIc3LclTEcz7qx
+	 JoniLit9aRCr/sYfEUQP7qjrK9rEWJmO7Mdo3SKSF+Gcmt0ZaPx//KP/dYfprfw4hr
+	 j0a/+1GaMDhKyPePskKHb0bAnGxY5rPcAivr2qiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 128/215] x86/boot: Robustify calling startup_{32,64}() from the decompressor code
-Date: Mon,  4 Mar 2024 21:23:11 +0000
-Message-ID: <20240304211601.130294874@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.1 119/215] x86/boot/compressed: Pull global variable reference into startup32_load_idt()
+Date: Mon,  4 Mar 2024 21:23:02 +0000
+Message-ID: <20240304211600.840636668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -53,141 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <alexandr.lobakin@intel.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 7734a0f31e99c433df3063bbb7e8ee5a16a2cb82 upstream.
+commit d73a257f7f86871c3aac24dc20538e3983096647 upstream.
 
-After commit ce697ccee1a8 ("kbuild: remove head-y syntax"), I
-started digging whether x86 is ready for removing this old cruft.
-Removing its objects from the list makes the kernel unbootable.
-This applies only to bzImage, vmlinux still works correctly.
-The reason is that with no strict object order determined by the
-linker arguments, not the linker script, startup_64 can be placed
-not right at the beginning of the kernel.
-Here's vmlinux.map's beginning before removing:
+In preparation for moving startup32_load_idt() out of head_64.S and
+turning it into an ordinary function using the ordinary 32-bit calling
+convention, pull the global variable reference to boot32_idt up into
+startup32_load_idt() so that startup32_set_idt_entry() does not need to
+discover its own runtime physical address, which will no longer be
+correlated with startup_32 once this code is moved into .text.
 
-  ffffffff81000000         vmlinux.o:(.head.text)
-  ffffffff81000000                 startup_64
-  ffffffff81000070                 secondary_startup_64
-  ffffffff81000075                 secondary_startup_64_no_verify
-  ffffffff81000160                 verify_cpu
+While at it, give startup32_set_idt_entry() static linkage.
 
-and after:
-
-  ffffffff81000000         vmlinux.o:(.head.text)
-  ffffffff81000000                 pvh_start_xen
-  ffffffff81000080                 startup_64
-  ffffffff810000f0                 secondary_startup_64
-  ffffffff810000f5                 secondary_startup_64_no_verify
-
-Not a problem itself, but the self-extractor code has the address of
-that function hardcoded the beginning, not looking onto the ELF
-header, which always contains the address of startup_{32,64}().
-
-So, instead of doing an "act of blind faith", just take the address
-from the ELF header and extract a relative offset to the entry
-point. The decompressor function already returns a pointer to the
-beginning of the kernel to the Asm code, which then jumps to it,
-so add that offset to the return value.
-This doesn't change anything for now, but allows to resign from the
-"head object list" for x86 and makes sure valid Kbuild or any other
-improvements won't break anything here in general.
-
-Signed-off-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20230109170403.4117105-2-alexandr.lobakin@intel.com
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20221122161017.2426828-11-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/head_32.S |    2 +-
- arch/x86/boot/compressed/head_64.S |    2 +-
- arch/x86/boot/compressed/misc.c    |   18 +++++++++++-------
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ arch/x86/boot/compressed/head_64.S |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/arch/x86/boot/compressed/head_32.S
-+++ b/arch/x86/boot/compressed/head_32.S
-@@ -187,7 +187,7 @@ SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated
- 	leal	boot_heap@GOTOFF(%ebx), %eax
- 	pushl	%eax			/* heap area */
- 	pushl	%esi			/* real mode pointer */
--	call	extract_kernel		/* returns kernel location in %eax */
-+	call	extract_kernel		/* returns kernel entry point in %eax */
- 	addl	$24, %esp
- 
- /*
 --- a/arch/x86/boot/compressed/head_64.S
 +++ b/arch/x86/boot/compressed/head_64.S
-@@ -580,7 +580,7 @@ SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated
- 	movl	input_len(%rip), %ecx	/* input_len */
- 	movq	%rbp, %r8		/* output target address */
- 	movl	output_len(%rip), %r9d	/* decompressed length, end of relocs */
--	call	extract_kernel		/* returns kernel location in %rax */
-+	call	extract_kernel		/* returns kernel entry point in %rax */
- 	popq	%rsi
+@@ -744,16 +744,11 @@ SYM_DATA_END_LABEL(boot32_idt, SYM_L_GLO
+  *
+  * %eax:	Handler address
+  * %edx:	Vector number
+- *
+- * Physical offset is expected in %ebp
++ * %ecx:	IDT address
+  */
+-SYM_FUNC_START(startup32_set_idt_entry)
+-	push    %ebx
+-
+-	/* IDT entry address to %ebx */
+-	leal    rva(boot32_idt)(%ebp), %ebx
+-	shl	$3, %edx
+-	addl    %edx, %ebx
++SYM_FUNC_START_LOCAL(startup32_set_idt_entry)
++	/* IDT entry address to %ecx */
++	leal	(%ecx, %edx, 8), %ecx
  
- /*
---- a/arch/x86/boot/compressed/misc.c
-+++ b/arch/x86/boot/compressed/misc.c
-@@ -277,7 +277,7 @@ static inline void handle_relocations(vo
- { }
+ 	/* Build IDT entry, lower 4 bytes */
+ 	movl    %eax, %edx
+@@ -761,7 +756,7 @@ SYM_FUNC_START(startup32_set_idt_entry)
+ 	orl	$(__KERNEL32_CS << 16), %edx	# Target code segment selector
+ 
+ 	/* Store lower 4 bytes to IDT */
+-	movl    %edx, (%ebx)
++	movl    %edx, (%ecx)
+ 
+ 	/* Build IDT entry, upper 4 bytes */
+ 	movl    %eax, %edx
+@@ -769,15 +764,16 @@ SYM_FUNC_START(startup32_set_idt_entry)
+ 	orl     $0x00008e00, %edx	# Present, Type 32-bit Interrupt Gate
+ 
+ 	/* Store upper 4 bytes to IDT */
+-	movl    %edx, 4(%ebx)
++	movl    %edx, 4(%ecx)
+ 
+-	pop     %ebx
+ 	RET
+ SYM_FUNC_END(startup32_set_idt_entry)
  #endif
  
--static void parse_elf(void *output)
-+static size_t parse_elf(void *output)
- {
- #ifdef CONFIG_X86_64
- 	Elf64_Ehdr ehdr;
-@@ -293,10 +293,8 @@ static void parse_elf(void *output)
- 	if (ehdr.e_ident[EI_MAG0] != ELFMAG0 ||
- 	   ehdr.e_ident[EI_MAG1] != ELFMAG1 ||
- 	   ehdr.e_ident[EI_MAG2] != ELFMAG2 ||
--	   ehdr.e_ident[EI_MAG3] != ELFMAG3) {
-+	   ehdr.e_ident[EI_MAG3] != ELFMAG3)
- 		error("Kernel is not a valid ELF file");
--		return;
--	}
- 
- 	debug_putstr("Parsing ELF... ");
- 
-@@ -328,6 +326,8 @@ static void parse_elf(void *output)
- 	}
- 
- 	free(phdrs);
+ SYM_FUNC_START(startup32_load_idt)
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
++	leal    rva(boot32_idt)(%ebp), %ecx
 +
-+	return ehdr.e_entry - LOAD_PHYSICAL_ADDR;
- }
- 
- /*
-@@ -356,6 +356,7 @@ asmlinkage __visible void *extract_kerne
- 	const unsigned long kernel_total_size = VO__end - VO__text;
- 	unsigned long virt_addr = LOAD_PHYSICAL_ADDR;
- 	unsigned long needed_size;
-+	size_t entry_offset;
- 
- 	/* Retain x86 boot parameters pointer passed from startup_32/64. */
- 	boot_params = rmode;
-@@ -456,14 +457,17 @@ asmlinkage __visible void *extract_kerne
- 	debug_putstr("\nDecompressing Linux... ");
- 	__decompress(input_data, input_len, NULL, NULL, output, output_len,
- 			NULL, error);
--	parse_elf(output);
-+	entry_offset = parse_elf(output);
- 	handle_relocations(output, output_len, virt_addr);
--	debug_putstr("done.\nBooting the kernel.\n");
-+
-+	debug_putstr("done.\nBooting the kernel (entry_offset: 0x");
-+	debug_puthex(entry_offset);
-+	debug_putstr(").\n");
- 
- 	/* Disable exception handling before booting the kernel */
- 	cleanup_exception_handling();
- 
--	return output;
-+	return output + entry_offset;
- }
- 
- void fortify_panic(const char *name)
+ 	/* #VC handler */
+ 	leal    rva(startup32_vc_handler)(%ebp), %eax
+ 	movl    $X86_TRAP_VC, %edx
 
 
