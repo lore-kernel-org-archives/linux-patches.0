@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15621EB5A;
-	Mon,  4 Mar 2024 21:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C3E1EB5A;
+	Mon,  4 Mar 2024 21:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588983; cv=none; b=LHR+8EVG0q5PVaTirm7pB/xoUDNFhJkPw3QzSvUo8zJkaALmgtQPXXZ70UQ4+jCEHVQUOqF5DHhhQ4nLQoIPEWPE7VvxumOJn1F+R1zEzN2iUeaEJr2YMwkWEvk7dBQt6A9USB/vlnmz8rTEhehrE/tcSNRol6ndLX1E76ml5gI=
+	t=1709588986; cv=none; b=Amp9I8jxyKiJy2e/00frdxNhjBAX2dZQrXtnYRm5O02NJ10Qd9vZtEnaam0SF9XHWDoJlc0C3Iwk/mQ8PdREXCqKyQi4J3oxd50Rwh9SFwr9s3GlhV73V4l+iLSlajNnFwl9xL56DE84fIOXHInRiike2KPoBvHpRd8iUxYCEcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588983; c=relaxed/simple;
-	bh=fT86dAU3p0ZfnzBP96XBtn9hSvzUsW9sjQEzlmolLsk=;
+	s=arc-20240116; t=1709588986; c=relaxed/simple;
+	bh=G3/zD0RvUt+GwNVpCiqANitI+a4u6d/19WqKy2GMl0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2+ngd6a1P9xGx0octKWyGf8sdCRWkctVMK/8/sGx0bQGVAxv06p/cinT5MAcVWO/1P/RjC6tMqVZHqDAj9bfHkfy2swCgVOnhxgt0ajiPzQrRvQH1wDar8nbV/6bsch3td6FER3pt/73766eoI+52BBHL0BZrmXuRdM3uo/2G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnqdY/OP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTD4nvnVkgcN6xZGPXEU/2O+jH13rbqh7Aaq6kgXpVwc6Ma2+t/1KJz1XHTE9SvdOfrP2bfxmhWX8EmHvaW1kFky8TjcV7QAD5zsja7k8vRfSZztHMT1mnOT9J690D0RTH8LqUJQYDLj5H3akKt56QqI96BI8pntRD/xMpzcNrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkGdKcOv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnqdY/OP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC52C433F1;
-	Mon,  4 Mar 2024 21:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkGdKcOv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0C5C433C7;
+	Mon,  4 Mar 2024 21:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588983;
-	bh=fT86dAU3p0ZfnzBP96XBtn9hSvzUsW9sjQEzlmolLsk=;
+	s=korg; t=1709588986;
+	bh=G3/zD0RvUt+GwNVpCiqANitI+a4u6d/19WqKy2GMl0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnqdY/OPGes1XgMgPmwe12o9YZkh9o3XzvWvSVz8PVvvbyJeyTN0SRzTOGg6uY4QY
-	 PsIyI5h5qUPiGETyt7VSfHXDOWwgwa0kP5BUrwrQBWQSpqF5dT1NgrRORPl9QbPMFJ
-	 XcAAmBl93W4AjE15Tcb9rBqkEygwjOMyxQtu9Z7o=
+	b=VkGdKcOv5TgDXhRuzM0SAD0oANWYERrJb+pHSEwD3DS3Ggua/ogMVy4B0gRg3Vm7p
+	 i1hljgg9MKu3Y4Sh85TTkHusl2Zy7m+wWSrVHy+nwxPPn413swhnyaJzjQgmRLoLRf
+	 bmHkK2zDig7OAJkL3F25I1gb1JPIjMx2trP6/hZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
-	NeilBrown <neilb@suse.de>
-Subject: [PATCH 6.1 157/215] NFSD: Clean up find_or_add_file()
-Date: Mon,  4 Mar 2024 21:23:40 +0000
-Message-ID: <20240304211601.982728377@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 6.1 158/215] NFSD: Refactor find_file()
+Date: Mon,  4 Mar 2024 21:23:41 +0000
+Message-ID: <20240304211602.011227934@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,84 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 9270fc514ba7d415636b23bcb937573a1ce54f6a ]
+[ Upstream commit 15424748001a9b5ea62b3e6ad45f0a8b27f01df9 ]
 
-Remove the call to find_file_locked() in insert_nfs4_file(). Tracing
-shows that over 99% of these calls return NULL. Thus it is not worth
-the expense of the extra bucket list traversal. insert_file() already
-deals correctly with the case where the item is already in the hash
-bucket.
-
-Since nfsd4_file_hash_insert() is now just a wrapper around
-insert_file(), move the meat of insert_file() into
-nfsd4_file_hash_insert() and get rid of it.
+find_file() is now the only caller of find_file_locked(), so just
+fold these two together.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   64 ++++++++++++++++++++++------------------------------
- 1 file changed, 28 insertions(+), 36 deletions(-)
+ fs/nfsd/nfs4state.c |   36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4699,24 +4699,42 @@ find_file_locked(const struct svc_fh *fh
- 	return NULL;
+@@ -4683,31 +4683,24 @@ move_to_close_lru(struct nfs4_ol_stateid
+ 		nfs4_put_stid(&last->st_stid);
  }
  
--static struct nfs4_file *insert_file(struct nfs4_file *new, struct svc_fh *fh,
--				     unsigned int hashval)
-+static struct nfs4_file * find_file(struct svc_fh *fh)
- {
- 	struct nfs4_file *fp;
-+	unsigned int hashval = file_hashval(fh);
-+
-+	rcu_read_lock();
-+	fp = find_file_locked(fh, hashval);
-+	rcu_read_unlock();
-+	return fp;
-+}
-+
-+/*
-+ * On hash insertion, identify entries with the same inode but
-+ * distinct filehandles. They will all be in the same hash bucket
-+ * because nfs4_file's are hashed by the address in the fi_inode
-+ * field.
-+ */
+-/* search file_hashtbl[] for file */
+-static struct nfs4_file *
+-find_file_locked(const struct svc_fh *fh, unsigned int hashval)
 +static noinline_for_stack struct nfs4_file *
-+nfsd4_file_hash_insert(struct nfs4_file *new, const struct svc_fh *fhp)
-+{
++nfsd4_file_hash_lookup(const struct svc_fh *fhp)
+ {
+-	struct nfs4_file *fp;
 +	unsigned int hashval = file_hashval(fhp);
- 	struct nfs4_file *ret = NULL;
- 	bool alias_found = false;
 +	struct nfs4_file *fi;
  
- 	spin_lock(&state_lock);
 -	hlist_for_each_entry_rcu(fp, &file_hashtbl[hashval], fi_hash,
-+	hlist_for_each_entry_rcu(fi, &file_hashtbl[hashval], fi_hash,
- 				 lockdep_is_held(&state_lock)) {
+-				lockdep_is_held(&state_lock)) {
 -		if (fh_match(&fp->fi_fhandle, &fh->fh_handle)) {
 -			if (refcount_inc_not_zero(&fp->fi_ref))
--				ret = fp;
--		} else if (d_inode(fh->fh_dentry) == fp->fi_inode)
--			fp->fi_aliased = alias_found = true;
+-				return fp;
++	rcu_read_lock();
++	hlist_for_each_entry_rcu(fi, &file_hashtbl[hashval], fi_hash,
++				 lockdep_is_held(&state_lock)) {
 +		if (fh_match(&fi->fi_fhandle, &fhp->fh_handle)) {
-+			if (refcount_inc_not_zero(&fi->fi_ref))
-+				ret = fi;
-+		} else if (d_inode(fhp->fh_dentry) == fi->fi_inode)
-+			fi->fi_aliased = alias_found = true;
++			if (refcount_inc_not_zero(&fi->fi_ref)) {
++				rcu_read_unlock();
++				return fi;
++			}
+ 		}
  	}
- 	if (likely(ret == NULL)) {
--		nfsd4_file_init(fh, new);
-+		nfsd4_file_init(fhp, new);
- 		hlist_add_head_rcu(&new->fi_hash, &file_hashtbl[hashval]);
- 		new->fi_aliased = alias_found;
- 		ret = new;
-@@ -4725,32 +4743,6 @@ static struct nfs4_file *insert_file(str
- 	return ret;
- }
- 
+-	return NULL;
+-}
+-
 -static struct nfs4_file * find_file(struct svc_fh *fh)
 -{
 -	struct nfs4_file *fp;
@@ -137,36 +108,23 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -
 -	rcu_read_lock();
 -	fp = find_file_locked(fh, hashval);
--	rcu_read_unlock();
+ 	rcu_read_unlock();
 -	return fp;
--}
--
--static struct nfs4_file *
--find_or_add_file(struct nfs4_file *new, struct svc_fh *fh)
--{
--	struct nfs4_file *fp;
--	unsigned int hashval = file_hashval(fh);
--
--	rcu_read_lock();
--	fp = find_file_locked(fh, hashval);
--	rcu_read_unlock();
--	if (fp)
--		return fp;
--
--	return insert_file(new, fh, hashval);
--}
--
- static noinline_for_stack void nfsd4_file_hash_remove(struct nfs4_file *fi)
- {
- 	hlist_del_rcu(&fi->fi_hash);
-@@ -5661,7 +5653,7 @@ nfsd4_process_open2(struct svc_rqst *rqs
- 	 * and check for delegations in the process of being recalled.
- 	 * If not found, create the nfs4_file struct
- 	 */
--	fp = find_or_add_file(open->op_file, current_fh);
-+	fp = nfsd4_file_hash_insert(open->op_file, current_fh);
- 	if (fp != open->op_file) {
- 		status = nfs4_check_deleg(cl, open, &dp);
- 		if (status)
++	return NULL;
+ }
+ 
+ /*
+@@ -4758,9 +4751,10 @@ nfs4_share_conflict(struct svc_fh *curre
+ 	struct nfs4_file *fp;
+ 	__be32 ret = nfs_ok;
+ 
+-	fp = find_file(current_fh);
++	fp = nfsd4_file_hash_lookup(current_fh);
+ 	if (!fp)
+ 		return ret;
++
+ 	/* Check for conflicting share reservations */
+ 	spin_lock(&fp->fi_lock);
+ 	if (fp->fi_share_deny & deny_type)
 
 
