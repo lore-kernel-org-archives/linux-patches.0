@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F191C6AB;
-	Mon,  4 Mar 2024 21:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970271C6AB;
+	Mon,  4 Mar 2024 21:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589275; cv=none; b=oo3ginTWKufMx2IHZ17AB+gjbjRHK8p53+5OO8l4P2mrLySpPg4kPiZwkv2ZtJTAmT7Wj6jlcob+90gYbQTz8033Hau42JUd7uVxDmFLzPxi2PRLkKGTYP8b3Sy0jJTggr3qzNaB7WWXVVWe1BESmN6hQtgadKZm4mrgllfNtp4=
+	t=1709589277; cv=none; b=uYZ11bh8L1cIxgwMGXiviMU2oMOBnVjpnp/E07aMRfqYONGXsbwn6EMl250nlbLXPK+U8VpStgFSN55j6m3UGEVdH0RyV+hBHeA7TfLHT5s7VKLqByKlqnUPpSGpaRi/ifntbmFWPd9pe0cZaAygaAZpVuk10bGaLyGQ0GuDtkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589275; c=relaxed/simple;
-	bh=hmlFIvBYn/eEyKYhNXbTmVcsREXCVybG+0F68q0pCac=;
+	s=arc-20240116; t=1709589277; c=relaxed/simple;
+	bh=++VUFxvspSsfzjgyAgGF5Gs/90sYEVbfP41CN6sxBzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcNM1o6wY/liqb5ZgjnMRFEhFgw5O+T63H4ATVyShb9xs1fSay54+TPQBjeiRs5P2xdayI3vnwo6ARo3MpbWG3RABxEkgaOcZvSjxIbFD+gormsivbL/9GZtgiFSyE8GzQbCfHhh2tmnWt9s4svBXU/gV8GSeHxg9YD4BIbD/5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzyyaIeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axcsODnGIyJatnjL/4MIX/uebWstDQDwR7fuQbJUGohmvXRP8emKlitOH3KiqdrAq2YnUe4KDNqOSPD13j/qPmjlzd7fupuNwFBE2aMGwSkY5/vvfXs9wVPKAH+CmhqnFL901C32TKFzWozk5149djNPFTWEZ1ne3zl6KGoI7fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJN158M/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzyyaIeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8DEC433C7;
-	Mon,  4 Mar 2024 21:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJN158M/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763BC433C7;
+	Mon,  4 Mar 2024 21:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589274;
-	bh=hmlFIvBYn/eEyKYhNXbTmVcsREXCVybG+0F68q0pCac=;
+	s=korg; t=1709589277;
+	bh=++VUFxvspSsfzjgyAgGF5Gs/90sYEVbfP41CN6sxBzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzyyaIeh+FahB8+cg86xnsiBAmW5JrJxCZI1OWRZHwgvCAwmQyNhMnddFolVP28KW
-	 hkjJckMGb3TEr+GhDyLx7kEjeHwfAicaYQMvUYW/hhOyO0p9C+dUcWAgfPMrJQBbYI
-	 IEK1zpkUAqtODdTedpivEUmkjtY2FB3E0cgInRjE=
+	b=iJN158M/DeS/rN+w4HDCCppGdf4uFimW8q1Q7TF6bZqmd0EKvrSRI2XDdrpQAoQ5S
+	 ueAt9JB7tgX4Gis9ifv59DFfboBmS23lrgAHlCY5lSQI6k2p6/+zurjulsSiZemMvd
+	 1N+CWZG4IbpKD/GFaj+aLYUXZnxw7EQvmHHt3arg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Russel King <linux@armlinux.org.uk>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/84] netfilter: make function op structures const
-Date: Mon,  4 Mar 2024 21:23:55 +0000
-Message-ID: <20240304211543.068927166@linuxfoundation.org>
+Subject: [PATCH 5.15 23/84] netfilter: let reset rules clean out conntrack entries
+Date: Mon,  4 Mar 2024 21:23:56 +0000
+Message-ID: <20240304211543.097262040@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -53,204 +54,225 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 285c8a7a58158cb1805c97ff03875df2ba2ea1fe ]
+[ Upstream commit 2954fe60e33da0f4de4d81a4c95c7dddb517d00c ]
 
-No functional changes, these structures should be const.
+iptables/nftables support responding to tcp packets with tcp resets.
 
+The generated tcp reset packet passes through both output and postrouting
+netfilter hooks, but conntrack will never see them because the generated
+skb has its ->nfct pointer copied over from the packet that triggered the
+reset rule.
+
+If the reset rule is used for established connections, this
+may result in the conntrack entry to be around for a very long
+time (default timeout is 5 days).
+
+One way to avoid this would be to not copy the nf_conn pointer
+so that the rest packet passes through conntrack too.
+
+Problem is that output rules might not have the same conntrack
+zone setup as the prerouting ones, so its possible that the
+reset skb won't find the correct entry.  Generating a template
+entry for the skb seems error prone as well.
+
+Add an explicit "closing" function that switches a confirmed
+conntrack entry to closed state and wire this up for tcp.
+
+If the entry isn't confirmed, no action is needed because
+the conntrack entry will never be committed to the table.
+
+Reported-by: Russel King <linux@armlinux.org.uk>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter.h            |  8 ++++----
- net/netfilter/core.c                 | 10 +++++-----
- net/netfilter/nf_conntrack_core.c    |  4 ++--
- net/netfilter/nf_conntrack_netlink.c |  4 ++--
- net/netfilter/nf_nat_core.c          |  2 +-
- net/netfilter/nfnetlink_queue.c      |  8 ++++----
- 6 files changed, 18 insertions(+), 18 deletions(-)
+ include/linux/netfilter.h              |  3 +++
+ include/net/netfilter/nf_conntrack.h   |  8 ++++++
+ net/ipv4/netfilter/nf_reject_ipv4.c    |  1 +
+ net/ipv6/netfilter/nf_reject_ipv6.c    |  1 +
+ net/netfilter/core.c                   | 16 ++++++++++++
+ net/netfilter/nf_conntrack_core.c      | 12 +++++++++
+ net/netfilter/nf_conntrack_proto_tcp.c | 35 ++++++++++++++++++++++++++
+ 7 files changed, 76 insertions(+)
 
 diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
-index 64acdf22eb4fa..5a665034c30be 100644
+index 5a665034c30be..c92bb1580f419 100644
 --- a/include/linux/netfilter.h
 +++ b/include/linux/netfilter.h
-@@ -376,13 +376,13 @@ struct nf_nat_hook {
- 				  enum ip_conntrack_dir dir);
- };
+@@ -436,11 +436,13 @@ nf_nat_decode_session(struct sk_buff *skb, struct flowi *fl, u_int8_t family)
+ #include <linux/netfilter/nf_conntrack_zones_common.h>
  
--extern struct nf_nat_hook __rcu *nf_nat_hook;
-+extern const struct nf_nat_hook __rcu *nf_nat_hook;
- 
- static inline void
- nf_nat_decode_session(struct sk_buff *skb, struct flowi *fl, u_int8_t family)
- {
- #if IS_ENABLED(CONFIG_NF_NAT)
--	struct nf_nat_hook *nat_hook;
-+	const struct nf_nat_hook *nat_hook;
- 
- 	rcu_read_lock();
- 	nat_hook = rcu_dereference(nf_nat_hook);
-@@ -459,7 +459,7 @@ struct nf_ct_hook {
+ void nf_ct_attach(struct sk_buff *, const struct sk_buff *);
++void nf_ct_set_closing(struct nf_conntrack *nfct);
+ struct nf_conntrack_tuple;
+ bool nf_ct_get_tuple_skb(struct nf_conntrack_tuple *dst_tuple,
+ 			 const struct sk_buff *skb);
+ #else
+ static inline void nf_ct_attach(struct sk_buff *new, struct sk_buff *skb) {}
++static inline void nf_ct_set_closing(struct nf_conntrack *nfct) {}
+ struct nf_conntrack_tuple;
+ static inline bool nf_ct_get_tuple_skb(struct nf_conntrack_tuple *dst_tuple,
+ 				       const struct sk_buff *skb)
+@@ -458,6 +460,7 @@ struct nf_ct_hook {
+ 	bool (*get_tuple_skb)(struct nf_conntrack_tuple *,
  			      const struct sk_buff *);
  	void (*attach)(struct sk_buff *nskb, const struct sk_buff *skb);
++	void (*set_closing)(struct nf_conntrack *nfct);
  };
--extern struct nf_ct_hook __rcu *nf_ct_hook;
-+extern const struct nf_ct_hook __rcu *nf_ct_hook;
+ extern const struct nf_ct_hook __rcu *nf_ct_hook;
  
- struct nlattr;
- 
-@@ -474,7 +474,7 @@ struct nfnl_ct_hook {
- 	void (*seq_adjust)(struct sk_buff *skb, struct nf_conn *ct,
- 			   enum ip_conntrack_info ctinfo, s32 off);
+diff --git a/include/net/netfilter/nf_conntrack.h b/include/net/netfilter/nf_conntrack.h
+index 34c266502a50e..39541ab912a16 100644
+--- a/include/net/netfilter/nf_conntrack.h
++++ b/include/net/netfilter/nf_conntrack.h
+@@ -123,6 +123,12 @@ struct nf_conn {
+ 	union nf_conntrack_proto proto;
  };
--extern struct nfnl_ct_hook __rcu *nfnl_ct_hook;
-+extern const struct nfnl_ct_hook __rcu *nfnl_ct_hook;
  
- /**
-  * nf_skb_duplicated - TEE target has sent a packet
++static inline struct nf_conn *
++nf_ct_to_nf_conn(const struct nf_conntrack *nfct)
++{
++	return container_of(nfct, struct nf_conn, ct_general);
++}
++
+ static inline struct nf_conn *
+ nf_ct_tuplehash_to_ctrack(const struct nf_conntrack_tuple_hash *hash)
+ {
+@@ -173,6 +179,8 @@ nf_ct_get(const struct sk_buff *skb, enum ip_conntrack_info *ctinfo)
+ 
+ void nf_ct_destroy(struct nf_conntrack *nfct);
+ 
++void nf_conntrack_tcp_set_closing(struct nf_conn *ct);
++
+ /* decrement reference count on a conntrack */
+ static inline void nf_ct_put(struct nf_conn *ct)
+ {
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index f2edb40c0db00..350aaca126181 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -278,6 +278,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 		goto free_nskb;
+ 
+ 	nf_ct_attach(nskb, oldskb);
++	nf_ct_set_closing(skb_nfct(oldskb));
+ 
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+ 	/* If we use ip_local_out for bridged traffic, the MAC source on
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index dffeaaaadcded..c0057edd84cfc 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -345,6 +345,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	nf_reject_ip6_tcphdr_put(nskb, oldskb, otcph, otcplen);
+ 
+ 	nf_ct_attach(nskb, oldskb);
++	nf_ct_set_closing(skb_nfct(oldskb));
+ 
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+ 	/* If we use ip6_local_out for bridged traffic, the MAC source on
 diff --git a/net/netfilter/core.c b/net/netfilter/core.c
-index 5396d27ba6a71..aa3f7d3228fda 100644
+index aa3f7d3228fda..fe81824799d95 100644
 --- a/net/netfilter/core.c
 +++ b/net/netfilter/core.c
-@@ -632,14 +632,14 @@ EXPORT_SYMBOL(nf_hook_slow_list);
- /* This needs to be compiled in any case to avoid dependencies between the
-  * nfnetlink_queue code and nf_conntrack.
-  */
--struct nfnl_ct_hook __rcu *nfnl_ct_hook __read_mostly;
-+const struct nfnl_ct_hook __rcu *nfnl_ct_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nfnl_ct_hook);
+@@ -674,6 +674,22 @@ void nf_conntrack_destroy(struct nf_conntrack *nfct)
+ }
+ EXPORT_SYMBOL(nf_conntrack_destroy);
  
--struct nf_ct_hook __rcu *nf_ct_hook __read_mostly;
-+const struct nf_ct_hook __rcu *nf_ct_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_ct_hook);
- 
- #if IS_ENABLED(CONFIG_NF_CONNTRACK)
--struct nf_nat_hook __rcu *nf_nat_hook __read_mostly;
-+const struct nf_nat_hook __rcu *nf_nat_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_nat_hook);
- 
- /* This does not belong here, but locally generated errors need it if connection
-@@ -662,7 +662,7 @@ EXPORT_SYMBOL(nf_ct_attach);
- 
- void nf_conntrack_destroy(struct nf_conntrack *nfct)
- {
--	struct nf_ct_hook *ct_hook;
++void nf_ct_set_closing(struct nf_conntrack *nfct)
++{
 +	const struct nf_ct_hook *ct_hook;
- 
- 	rcu_read_lock();
- 	ct_hook = rcu_dereference(nf_ct_hook);
-@@ -677,7 +677,7 @@ EXPORT_SYMBOL(nf_conntrack_destroy);
++
++	if (!nfct)
++		return;
++
++	rcu_read_lock();
++	ct_hook = rcu_dereference(nf_ct_hook);
++	if (ct_hook)
++		ct_hook->set_closing(nfct);
++
++	rcu_read_unlock();
++}
++EXPORT_SYMBOL_GPL(nf_ct_set_closing);
++
  bool nf_ct_get_tuple_skb(struct nf_conntrack_tuple *dst_tuple,
  			 const struct sk_buff *skb)
  {
--	struct nf_ct_hook *ct_hook;
-+	const struct nf_ct_hook *ct_hook;
- 	bool ret = false;
- 
- 	rcu_read_lock();
 diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index 779e41d1afdce..2a4222eefc894 100644
+index 2a4222eefc894..e0f4f76439d3d 100644
 --- a/net/netfilter/nf_conntrack_core.c
 +++ b/net/netfilter/nf_conntrack_core.c
-@@ -2145,9 +2145,9 @@ static int __nf_conntrack_update(struct net *net, struct sk_buff *skb,
- 				 struct nf_conn *ct,
- 				 enum ip_conntrack_info ctinfo)
- {
-+	const struct nf_nat_hook *nat_hook;
- 	struct nf_conntrack_tuple_hash *h;
- 	struct nf_conntrack_tuple tuple;
--	struct nf_nat_hook *nat_hook;
- 	unsigned int status;
- 	int dataoff;
- 	u16 l3num;
-@@ -2833,7 +2833,7 @@ int nf_conntrack_init_start(void)
+@@ -2833,11 +2833,23 @@ int nf_conntrack_init_start(void)
  	return ret;
  }
  
--static struct nf_ct_hook nf_conntrack_hook = {
-+static const struct nf_ct_hook nf_conntrack_hook = {
++static void nf_conntrack_set_closing(struct nf_conntrack *nfct)
++{
++	struct nf_conn *ct = nf_ct_to_nf_conn(nfct);
++
++	switch (nf_ct_protonum(ct)) {
++	case IPPROTO_TCP:
++		nf_conntrack_tcp_set_closing(ct);
++		break;
++	}
++}
++
+ static const struct nf_ct_hook nf_conntrack_hook = {
  	.update		= nf_conntrack_update,
  	.destroy	= nf_ct_destroy,
  	.get_tuple_skb  = nf_conntrack_get_tuple_skb,
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index c427f7625a3b5..1466015bc56dc 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -1816,7 +1816,7 @@ ctnetlink_parse_nat_setup(struct nf_conn *ct,
- 			  const struct nlattr *attr)
- 	__must_hold(RCU)
- {
--	struct nf_nat_hook *nat_hook;
-+	const struct nf_nat_hook *nat_hook;
- 	int err;
- 
- 	nat_hook = rcu_dereference(nf_nat_hook);
-@@ -2922,7 +2922,7 @@ static void ctnetlink_glue_seqadj(struct sk_buff *skb, struct nf_conn *ct,
- 	nf_ct_tcp_seqadj_set(skb, ct, ctinfo, diff);
- }
- 
--static struct nfnl_ct_hook ctnetlink_glue_hook = {
-+static const struct nfnl_ct_hook ctnetlink_glue_hook = {
- 	.build_size	= ctnetlink_glue_build_size,
- 	.build		= ctnetlink_glue_build,
- 	.parse		= ctnetlink_glue_parse,
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index 2731176839228..b776b3af78ca2 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1120,7 +1120,7 @@ static struct pernet_operations nat_net_ops = {
- 	.size = sizeof(struct nat_net),
+ 	.attach		= nf_conntrack_attach,
++	.set_closing	= nf_conntrack_set_closing,
  };
  
--static struct nf_nat_hook nat_hook = {
-+static const struct nf_nat_hook nat_hook = {
- 	.parse_nat_setup	= nfnetlink_parse_nat_setup,
- #ifdef CONFIG_XFRM
- 	.decode_session		= __nf_nat_decode_session,
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index f4468ef3d0a94..8c96e01f6a023 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -225,7 +225,7 @@ find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
- 
- static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- {
--	struct nf_ct_hook *ct_hook;
-+	const struct nf_ct_hook *ct_hook;
- 	int err;
- 
- 	if (verdict == NF_ACCEPT ||
-@@ -388,7 +388,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 	struct net_device *outdev;
- 	struct nf_conn *ct = NULL;
- 	enum ip_conntrack_info ctinfo = 0;
--	struct nfnl_ct_hook *nfnl_ct;
-+	const struct nfnl_ct_hook *nfnl_ct;
- 	bool csum_verify;
- 	char *secdata = NULL;
- 	u32 seclen = 0;
-@@ -1115,7 +1115,7 @@ static int nfqnl_recv_verdict_batch(struct sk_buff *skb,
- 	return 0;
+ void nf_conntrack_init_end(void)
+diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
+index 1ecfdc4f23be8..f33e6aea7f4da 100644
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -870,6 +870,41 @@ static bool tcp_can_early_drop(const struct nf_conn *ct)
+ 	return false;
  }
  
--static struct nf_conn *nfqnl_ct_parse(struct nfnl_ct_hook *nfnl_ct,
-+static struct nf_conn *nfqnl_ct_parse(const struct nfnl_ct_hook *nfnl_ct,
- 				      const struct nlmsghdr *nlh,
- 				      const struct nlattr * const nfqa[],
- 				      struct nf_queue_entry *entry,
-@@ -1182,11 +1182,11 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
++void nf_conntrack_tcp_set_closing(struct nf_conn *ct)
++{
++	enum tcp_conntrack old_state;
++	const unsigned int *timeouts;
++	u32 timeout;
++
++	if (!nf_ct_is_confirmed(ct))
++		return;
++
++	spin_lock_bh(&ct->lock);
++	old_state = ct->proto.tcp.state;
++	ct->proto.tcp.state = TCP_CONNTRACK_CLOSE;
++
++	if (old_state == TCP_CONNTRACK_CLOSE ||
++	    test_bit(IPS_FIXED_TIMEOUT_BIT, &ct->status)) {
++		spin_unlock_bh(&ct->lock);
++		return;
++	}
++
++	timeouts = nf_ct_timeout_lookup(ct);
++	if (!timeouts) {
++		const struct nf_tcp_net *tn;
++
++		tn = nf_tcp_pernet(nf_ct_net(ct));
++		timeouts = tn->timeouts;
++	}
++
++	timeout = timeouts[TCP_CONNTRACK_CLOSE];
++	WRITE_ONCE(ct->timeout, timeout + nfct_time_stamp);
++
++	spin_unlock_bh(&ct->lock);
++
++	nf_conntrack_event_cache(IPCT_PROTOINFO, ct);
++}
++
+ static void nf_ct_tcp_state_reset(struct ip_ct_tcp_state *state)
  {
- 	struct nfnl_queue_net *q = nfnl_queue_pernet(info->net);
- 	u_int16_t queue_num = ntohs(info->nfmsg->res_id);
-+	const struct nfnl_ct_hook *nfnl_ct;
- 	struct nfqnl_msg_verdict_hdr *vhdr;
- 	enum ip_conntrack_info ctinfo;
- 	struct nfqnl_instance *queue;
- 	struct nf_queue_entry *entry;
--	struct nfnl_ct_hook *nfnl_ct;
- 	struct nf_conn *ct = NULL;
- 	unsigned int verdict;
- 	int err;
+ 	state->td_end		= 0;
 -- 
 2.43.0
 
