@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F789DDCB;
-	Mon,  4 Mar 2024 21:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A56DDCB;
+	Mon,  4 Mar 2024 21:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588211; cv=none; b=VO7ko/aRDf9vlRBAVlPD6pQfZa/O4OL+Rx+5TVN3UQBk3WY8R4/mHHUYlfdO8lafH/WYJGqy5fEmH0zyx36JKaDuI8cgaik7VcAEPp6NqovB1v077loA0L0xChMMcJpYndAEFxPn/l4P/3oHQ/xWJyLlo6h70Pl+ID58h8J7c14=
+	t=1709588214; cv=none; b=ZNdbTqpcrp/puBT+r8uL2uKn3q4wRXLcaZMeoofLP80UaNivflcCWusBuyj9rfPU2HramKpNC1o0zuZaUlIuEthePxZH5vnKesyyvx5Uzt2kdWr32Hu044mqXiK9N8W9vvGP57HpLAIEmn8CMAR8z349lFGAutTX+pTbijpSbQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588211; c=relaxed/simple;
-	bh=0tPqminUxoUDDDTuAuOgWsLODCBKsviktsnOP+PftzY=;
+	s=arc-20240116; t=1709588214; c=relaxed/simple;
+	bh=MrvJBib84WWm7uKk/1piyiGeLQS2O8LkXgUgVu3E8MM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRiRWZFl10IxMKu6nx/AutchqGLwYYjkW7XsO6O+FtwR/5ctluiouRSvWxKPa0CNsR9Ps2c6Hpm8pKcYpcU3kER9JAKM6p3MTWaDUZG8eNQG5nCJRpjoWPII0MLgepsY60K5pp/inMNM0rzQ9/dydP91axt9L48GCI44aQ0QlDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7fYwRhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Na1Ucgv+7YfMXTr9sbBHrp1hdh4H/kYadk3PyrZr2yvwjQvRmPfnTkfvNkOSj7klfSaV4N/D5WMw+xQxZuJaYnjd6OCr21WSXIfvTq+Tk81LW8/jjn/7yxaG2ATPmaYii+DVyM8+d/3tzJ1k5dudXMsBL5mpXFOpICADjY7lLeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5uN5QG2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7fYwRhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1FFC433C7;
-	Mon,  4 Mar 2024 21:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5uN5QG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF3CC433C7;
+	Mon,  4 Mar 2024 21:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588211;
-	bh=0tPqminUxoUDDDTuAuOgWsLODCBKsviktsnOP+PftzY=;
+	s=korg; t=1709588214;
+	bh=MrvJBib84WWm7uKk/1piyiGeLQS2O8LkXgUgVu3E8MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7fYwRhV0nqd8tGvnqZdoGY7dRbPPYfqv/D7p4Whq8yMADSUo695HbUnG+yNilRzA
-	 MPEGJq+i8Au17GbbopfzY0J1LWnpjNRNwhKtBqzLll9CrKFyUuHZ9/OL61sCe3E6Mt
-	 T7GDzrGZ8fgeKplo2uciTQBJIZoAXLcNCUysjy/w=
+	b=s5uN5QG2yNnUTHzQ8kyixLxS+OF28CM8zbrGnh5KEJqEpKNLjabY2unrdbeo4q7Ti
+	 53NBeJpFBzwZB3CmTUxuZNe8rPcP1d2aZgOlEUzo6INadfo0RyErxlMhDvn85w4Ue+
+	 fyEu9m5Bgi/OEq0IZLihx+V/x1CT4+HPDdPzxfLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/143] ksmbd: fix wrong allocation size update in smb2_open()
-Date: Mon,  4 Mar 2024 21:22:04 +0000
-Message-ID: <20240304211550.034312021@linuxfoundation.org>
+Subject: [PATCH 6.6 005/143] ublk: move ublk_cancel_dev() out of ub->mutex
+Date: Mon,  4 Mar 2024 21:22:05 +0000
+Message-ID: <20240304211550.068059273@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,82 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit a9f106c765c12d2f58aa33431bd8ce8e9d8a404a ]
+[ Upstream commit 85248d670b71d9edda9459ee14fdc85c8e9632c0 ]
 
-When client send SMB2_CREATE_ALLOCATION_SIZE create context, ksmbd update
-old size to ->AllocationSize in smb2 create response. ksmbd_vfs_getattr()
-should be called after it to get updated stat result.
+ublk_cancel_dev() just calls ublk_cancel_queue() to cancel all pending
+io commands after ublk request queue is idle. The only protection is just
+the read & write of ubq->nr_io_ready and avoid duplicated command cancel,
+so add one per-queue lock with cancel flag for providing this protection,
+meantime move ublk_cancel_dev() out of ub->mutex.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Then we needn't to call io_uring_cmd_complete_in_task() to cancel
+pending command. And the same cancel logic will be re-used for
+cancelable uring command.
+
+This patch basically reverts commit ac5902f84bb5 ("ublk: fix AB-BA lockdep warning").
+
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20231009093324.957829-4-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/block/ublk_drv.c | 40 +++++++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 3e885cdc5ffc7..e8c03445271d0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2529,7 +2529,7 @@ static void smb2_new_xattrs(struct ksmbd_tree_connect *tcon, const struct path *
- 	da.flags = XATTR_DOSINFO_ATTRIB | XATTR_DOSINFO_CREATE_TIME |
- 		XATTR_DOSINFO_ITIME;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 630ddfe6657bc..f4e0573c47114 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -115,6 +115,9 @@ struct ublk_uring_cmd_pdu {
+  */
+ #define UBLK_IO_FLAG_NEED_GET_DATA 0x08
  
--	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_idmap(path->mnt), path, &da, false);
-+	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_idmap(path->mnt), path, &da, true);
- 	if (rc)
- 		ksmbd_debug(SMB, "failed to store file attribute into xattr\n");
++/* atomic RW with ubq->cancel_lock */
++#define UBLK_IO_FLAG_CANCELED	0x80000000
++
+ struct ublk_io {
+ 	/* userspace buffer address from io cmd */
+ 	__u64	addr;
+@@ -139,6 +142,7 @@ struct ublk_queue {
+ 	bool force_abort;
+ 	bool timeout;
+ 	unsigned short nr_io_ready;	/* how many ios setup */
++	spinlock_t		cancel_lock;
+ 	struct ublk_device *dev;
+ 	struct ublk_io ios[];
+ };
+@@ -1477,28 +1481,28 @@ static inline bool ublk_queue_ready(struct ublk_queue *ubq)
+ 	return ubq->nr_io_ready == ubq->q_depth;
  }
-@@ -3198,23 +3198,6 @@ int smb2_open(struct ksmbd_work *work)
- 		goto err_out;
- 	}
  
--	rc = ksmbd_vfs_getattr(&path, &stat);
--	if (rc)
--		goto err_out;
+-static void ublk_cmd_cancel_cb(struct io_uring_cmd *cmd, unsigned issue_flags)
+-{
+-	io_uring_cmd_done(cmd, UBLK_IO_RES_ABORT, 0, issue_flags);
+-}
 -
--	if (stat.result_mask & STATX_BTIME)
--		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
--	else
--		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
--	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
--		fp->f_ci->m_fattr =
--			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
+ static void ublk_cancel_queue(struct ublk_queue *ubq)
+ {
+ 	int i;
+ 
+-	if (!ublk_queue_ready(ubq))
+-		return;
 -
--	if (!created)
--		smb2_update_xattrs(tcon, &path, fp);
--	else
--		smb2_new_xattrs(tcon, &path, fp);
--
- 	if (file_present || created)
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 	for (i = 0; i < ubq->q_depth; i++) {
+ 		struct ublk_io *io = &ubq->ios[i];
  
-@@ -3315,6 +3298,23 @@ int smb2_open(struct ksmbd_work *work)
- 		}
- 	}
+-		if (io->flags & UBLK_IO_FLAG_ACTIVE)
+-			io_uring_cmd_complete_in_task(io->cmd,
+-						      ublk_cmd_cancel_cb);
+-	}
++		if (io->flags & UBLK_IO_FLAG_ACTIVE) {
++			bool done;
  
-+	rc = ksmbd_vfs_getattr(&path, &stat);
-+	if (rc)
-+		goto err_out1;
+-	/* all io commands are canceled */
+-	ubq->nr_io_ready = 0;
++			spin_lock(&ubq->cancel_lock);
++			done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
++			if (!done)
++				io->flags |= UBLK_IO_FLAG_CANCELED;
++			spin_unlock(&ubq->cancel_lock);
 +
-+	if (stat.result_mask & STATX_BTIME)
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.btime);
-+	else
-+		fp->create_time = ksmbd_UnixTimeToNT(stat.ctime);
-+	if (req->FileAttributes || fp->f_ci->m_fattr == 0)
-+		fp->f_ci->m_fattr =
-+			cpu_to_le32(smb2_get_dos_mode(&stat, le32_to_cpu(req->FileAttributes)));
-+
-+	if (!created)
-+		smb2_update_xattrs(tcon, &path, fp);
-+	else
-+		smb2_new_xattrs(tcon, &path, fp);
-+
- 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
++			if (!done)
++				io_uring_cmd_done(io->cmd,
++						UBLK_IO_RES_ABORT, 0,
++						IO_URING_F_UNLOCKED);
++		}
++	}
+ }
  
- 	rsp->StructureSize = cpu_to_le16(89);
+ /* Cancel all pending commands, must be called after del_gendisk() returns */
+@@ -1545,7 +1549,6 @@ static void __ublk_quiesce_dev(struct ublk_device *ub)
+ 	blk_mq_quiesce_queue(ub->ub_disk->queue);
+ 	ublk_wait_tagset_rqs_idle(ub);
+ 	ub->dev_info.state = UBLK_S_DEV_QUIESCED;
+-	ublk_cancel_dev(ub);
+ 	/* we are going to release task_struct of ubq_daemon and resets
+ 	 * ->ubq_daemon to NULL. So in monitor_work, check on ubq_daemon causes UAF.
+ 	 * Besides, monitor_work is not necessary in QUIESCED state since we have
+@@ -1568,6 +1571,7 @@ static void ublk_quiesce_work_fn(struct work_struct *work)
+ 	__ublk_quiesce_dev(ub);
+  unlock:
+ 	mutex_unlock(&ub->mutex);
++	ublk_cancel_dev(ub);
+ }
+ 
+ static void ublk_unquiesce_dev(struct ublk_device *ub)
+@@ -1607,8 +1611,8 @@ static void ublk_stop_dev(struct ublk_device *ub)
+ 	put_disk(ub->ub_disk);
+ 	ub->ub_disk = NULL;
+  unlock:
+-	ublk_cancel_dev(ub);
+ 	mutex_unlock(&ub->mutex);
++	ublk_cancel_dev(ub);
+ 	cancel_delayed_work_sync(&ub->monitor_work);
+ }
+ 
+@@ -1962,6 +1966,7 @@ static int ublk_init_queue(struct ublk_device *ub, int q_id)
+ 	void *ptr;
+ 	int size;
+ 
++	spin_lock_init(&ubq->cancel_lock);
+ 	ubq->flags = ub->dev_info.flags;
+ 	ubq->q_id = q_id;
+ 	ubq->q_depth = ub->dev_info.queue_depth;
+@@ -2569,8 +2574,9 @@ static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
+ 	int i;
+ 
+ 	WARN_ON_ONCE(!(ubq->ubq_daemon && ubq_daemon_is_dying(ubq)));
++
+ 	/* All old ioucmds have to be completed */
+-	WARN_ON_ONCE(ubq->nr_io_ready);
++	ubq->nr_io_ready = 0;
+ 	/* old daemon is PF_EXITING, put it now */
+ 	put_task_struct(ubq->ubq_daemon);
+ 	/* We have to reset it to NULL, otherwise ub won't accept new FETCH_REQ */
 -- 
 2.43.0
 
