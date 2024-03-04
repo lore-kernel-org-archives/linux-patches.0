@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA907B3D8;
-	Mon,  4 Mar 2024 21:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925D37868F;
+	Mon,  4 Mar 2024 21:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589348; cv=none; b=urY9HsG14JT4QqMN42/dwmm+3RIx+KJZdEKezILu65rCQMOcd27Kb7JNOFkWc0WJ/umE12baBrcIpLkkbvfIjr4YiO4zJ+RqlLL8mXrWQY8/hlTZ3dJoz1KON3rBCDT/UA+CxU2JtEdeKd4SPKSdQWOfAz3E12EZwdYz4gAEFbs=
+	t=1709589350; cv=none; b=WTG3rxKIfAOrtoyk1+hezuJY5zI6TSx4xlYexBk62RdSWEyESVzXQwgVm7BIUFqND/ttie/8PFaxfzR378cWwktjx9rTJ95reg9BGTVFo4DZelHQWGrWy+jLjGrXoazp4z8hq/T5i39chR4x4QkPBa+gXA2PH37R+bDKEn6fd54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589348; c=relaxed/simple;
-	bh=A9o8AUdEJZo7V5NnkF0ylxIvUvZAC7h8UldQvLFs8Xk=;
+	s=arc-20240116; t=1709589350; c=relaxed/simple;
+	bh=9AlQ1D7Ir3nBoTE76zeTP+rZIv/Vg+xYLIYn+4bwrr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1bfqgO7AjhAw4gUNfyYxgKbir5pSVyDR3u0+HAJ4nwPMX6WV/SJCiGuy+TeI+ehhP+Gh9+gE68OCuQgU+LhieVA3qclw3k4dipgmL2DPhMgsJQ6MsmCJKYen1PmFjfG6s3gnKjIrOGtPGyCoFslRvXyld8iNuHBj1Ia4pFXs8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWuH1bee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtZaawT7FLh/TkhPYVvSTH0PmBA3apC+mRZzJX9JqjAaSiJeo5Rfp5Asakuaac8uwiPJja1Lf3zwa/GvTGw8p6/BQegdURThr1+fyW9fOzQUz29p4TNr1NnLKZt2ltfTwKkCakrI7Df7bxA1tkO8Q9X5/w1ehfknS3PAL1wwlU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8qckFQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWuH1bee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C39C433F1;
-	Mon,  4 Mar 2024 21:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8qckFQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265C8C433F1;
+	Mon,  4 Mar 2024 21:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589347;
-	bh=A9o8AUdEJZo7V5NnkF0ylxIvUvZAC7h8UldQvLFs8Xk=;
+	s=korg; t=1709589350;
+	bh=9AlQ1D7Ir3nBoTE76zeTP+rZIv/Vg+xYLIYn+4bwrr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWuH1bee39H5E+Rpdt0LujTHGfQlpICf9U+LeIoN//xxsk7ozkQ065JIoqfMpkXJE
-	 pAFPn+BTx1WvmNoExDwgLVIo0PbJsaZBCT69lZOjzfgvBm97F3jyIZu9tZfapxcD3P
-	 JAI7Dut66ompsZbZB7BeeXOd+oiJNm9YfdzI47Yo=
+	b=B8qckFQoK+njlhqNPexSdR6bzm+dZWcOzanU0bTPf+a8B+1Y0bVEQbi39u/Dh3vZ3
+	 oygJ3Fo28ogfSxNJCO4DtCxObVjjlv8/8o05efAlcBBY5I/NMb6oCP1K0m/UCrHBFZ
+	 lUKzF70S/+kXzeSubeE74Po6cX51CeiOc7js8aGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dd4779978217b1973180@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 50/84] wifi: nl80211: reject iftype change with mesh ID change
-Date: Mon,  4 Mar 2024 21:24:23 +0000
-Message-ID: <20240304211544.029514096@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	syzbot+33f23b49ac24f986c9e8@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 51/84] btrfs: dev-replace: properly validate device names
+Date: Mon,  4 Mar 2024 21:24:24 +0000
+Message-ID: <20240304211544.067154481@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -50,42 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: David Sterba <dsterba@suse.com>
 
-commit f78c1375339a291cba492a70eaf12ec501d28a8e upstream.
+commit 9845664b9ee47ce7ee7ea93caf47d39a9d4552c4 upstream.
 
-It's currently possible to change the mesh ID when the
-interface isn't yet in mesh mode, at the same time as
-changing it into mesh mode. This leads to an overwrite
-of data in the wdev->u union for the interface type it
-currently has, causing cfg80211_change_iface() to do
-wrong things when switching.
+There's a syzbot report that device name buffers passed to device
+replace are not properly checked for string termination which could lead
+to a read out of bounds in getname_kernel().
 
-We could probably allow setting an interface to mesh
-while setting the mesh ID at the same time by doing a
-different order of operations here, but realistically
-there's no userspace that's going to do this, so just
-disallow changes in iftype when setting mesh ID.
+Add a helper that validates both source and target device name buffers.
+For devid as the source initialize the buffer to empty string in case
+something tries to read it later.
 
-Cc: stable@vger.kernel.org
-Fixes: 29cbe68c516a ("cfg80211/mac80211: add mesh join/leave commands")
-Reported-by: syzbot+dd4779978217b1973180@syzkaller.appspotmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This was originally analyzed and fixed in a different way by Edward Adam
+Davis (see links).
+
+Link: https://lore.kernel.org/linux-btrfs/000000000000d1a1d1060cc9c5e7@google.com/
+Link: https://lore.kernel.org/linux-btrfs/tencent_44CA0665C9836EF9EEC80CB9E7E206DF5206@qq.com/
+CC: stable@vger.kernel.org # 4.19+
+CC: Edward Adam Davis <eadavis@qq.com>
+Reported-and-tested-by: syzbot+33f23b49ac24f986c9e8@syzkaller.appspotmail.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/dev-replace.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3914,6 +3914,8 @@ static int nl80211_set_interface(struct
+--- a/fs/btrfs/dev-replace.c
++++ b/fs/btrfs/dev-replace.c
+@@ -763,6 +763,23 @@ leave:
+ 	return ret;
+ }
  
- 		if (ntype != NL80211_IFTYPE_MESH_POINT)
- 			return -EINVAL;
-+		if (otype != NL80211_IFTYPE_MESH_POINT)
-+			return -EINVAL;
- 		if (netif_running(dev))
- 			return -EBUSY;
++static int btrfs_check_replace_dev_names(struct btrfs_ioctl_dev_replace_args *args)
++{
++	if (args->start.srcdevid == 0) {
++		if (memchr(args->start.srcdev_name, 0,
++			   sizeof(args->start.srcdev_name)) == NULL)
++			return -ENAMETOOLONG;
++	} else {
++		args->start.srcdev_name[0] = 0;
++	}
++
++	if (memchr(args->start.tgtdev_name, 0,
++		   sizeof(args->start.tgtdev_name)) == NULL)
++	    return -ENAMETOOLONG;
++
++	return 0;
++}
++
+ int btrfs_dev_replace_by_ioctl(struct btrfs_fs_info *fs_info,
+ 			    struct btrfs_ioctl_dev_replace_args *args)
+ {
+@@ -775,10 +792,9 @@ int btrfs_dev_replace_by_ioctl(struct bt
+ 	default:
+ 		return -EINVAL;
+ 	}
+-
+-	if ((args->start.srcdevid == 0 && args->start.srcdev_name[0] == '\0') ||
+-	    args->start.tgtdev_name[0] == '\0')
+-		return -EINVAL;
++	ret = btrfs_check_replace_dev_names(args);
++	if (ret < 0)
++		return ret;
  
+ 	ret = btrfs_dev_replace_start(fs_info, args->start.tgtdev_name,
+ 					args->start.srcdevid,
 
 
