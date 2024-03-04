@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69181C6AB;
-	Mon,  4 Mar 2024 21:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FACC1C6AB;
+	Mon,  4 Mar 2024 21:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589190; cv=none; b=qYSsLauyI99ym/XehOX+u3nz3zXGNQXEl9Wm6p5og1apzVni2/h2OUPThQij4tUYz1OqFKaRawMLu1UxP8jRr/G7q3ealzrfWKBCxlX5RsDC34k/S+FckcvY2cFhYir8O6VwqdfmTw7YCFXh7qjDYkR4BJQxK8TBX2BZO8bJ5tM=
+	t=1709589192; cv=none; b=BLszmbGuJpMgIXf1qc2bq1QGiYeV5WES2XJD1EUFccrYPRQ1OvUBachKQoHIjiQuZ3V6IANgnj4wD8tc5vpx+eYLxVk75ESG8BxU56j26m5mb1tqhRXqrzWDM5VsDSlr0NBLgcinpqwgUAkg5AAgDasQ055Mgbot7HbyuyOMJOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589190; c=relaxed/simple;
-	bh=bYa5oSCTxZ6CZYnKQdQVTdw1X68k/2PR17RQUQHayfc=;
+	s=arc-20240116; t=1709589192; c=relaxed/simple;
+	bh=aevAlS9CIa95pKoO317HsyEsngtYZtdlrkWLDWxOHe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tckwg8iUiSpEQ6k41DHf3eGSngrH5hs9gRtofveWRKfiPm57BRC7h8/1khOTNyoyB1ngzc9q7ykm71kL+CLsRSqkN6lqrf0UjnVXsNUfI6h3dYUIc9iepxS+JixagrMiyDB78yq8p3aM1Ab/CBRXCTzWGh+r7LWYHhPCm0quBqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxRNng4Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASqNqkf1MUGpfzVLm1JabSe8yaF+o67QrJyqIN5rOekkXydfRYLwCyDkphB3TldG7pon8LsGN7aEGQa1VjbjgRWwUDKGdqJqvRAWJm3JdUCusFSRn49n46sGY+m26mOCregjo+9Xxrht7ss2/YTsC1NTrQdcDprt/0eePjnpZlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qevr4EXv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxRNng4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC1FC433F1;
-	Mon,  4 Mar 2024 21:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qevr4EXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A9EC433C7;
+	Mon,  4 Mar 2024 21:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589189;
-	bh=bYa5oSCTxZ6CZYnKQdQVTdw1X68k/2PR17RQUQHayfc=;
+	s=korg; t=1709589192;
+	bh=aevAlS9CIa95pKoO317HsyEsngtYZtdlrkWLDWxOHe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxRNng4Zr369E8jzqTpRhdjRJON8bPdPfK34bcWnUh80/RmSM0qAvbi73vP+Yx7n8
-	 3s8B5K8KNclcUG4SXeRvV0nZ9mq/mECNBGGMjk75JU7n5K6upS6zEi0LyWgC9v7U2E
-	 4LfDWXbyc6UzQkvSUN+qGyJUdXP0Q8bRQ9UintCE=
+	b=Qevr4EXvqJ8u9KKEjdMJEj+D9KCSZLGcdDG8tv+D2IrlorgnpQLW449cr7LTh/oqo
+	 wKA+5pqn8HHe4X0FvQqHL79Y/9asnpD+x5m+B//aL5EpUdMO9l7/DDeIylJFphwZ0q
+	 djGhPCUYetQgUQWCkbqUbR/FzZUMnqDIKaflxNGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/84] stmmac: Clear variable when destroying workqueue
-Date: Mon,  4 Mar 2024 21:23:47 +0000
-Message-ID: <20240304211542.819742853@linuxfoundation.org>
+Subject: [PATCH 5.15 15/84] Bluetooth: Avoid potential use-after-free in hci_error_reset
+Date: Mon,  4 Mar 2024 21:23:48 +0000
+Message-ID: <20240304211542.848322831@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -52,81 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Raczynski <j.raczynski@samsung.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 8af411bbba1f457c33734795f024d0ef26d0963f ]
+[ Upstream commit 2449007d3f73b2842c9734f45f0aadb522daf592 ]
 
-Currently when suspending driver and stopping workqueue it is checked whether
-workqueue is not NULL and if so, it is destroyed.
-Function destroy_workqueue() does drain queue and does clear variable, but
-it does not set workqueue variable to NULL. This can cause kernel/module
-panic if code attempts to clear workqueue that was not initialized.
+While handling the HCI_EV_HARDWARE_ERROR event, if the underlying
+BT controller is not responding, the GPIO reset mechanism would
+free the hci_dev and lead to a use-after-free in hci_error_reset.
 
-This scenario is possible when resuming suspended driver in stmmac_resume(),
-because there is no handling for failed stmmac_hw_setup(),
-which can fail and return if DMA engine has failed to initialize,
-and workqueue is initialized after DMA engine.
-Should DMA engine fail to initialize, resume will proceed normally,
-but interface won't work and TX queue will eventually timeout,
-causing 'Reset adapter' error.
-This then does destroy workqueue during reset process.
-And since workqueue is initialized after DMA engine and can be skipped,
-it will cause kernel/module panic.
+Here's the call trace observed on a ChromeOS device with Intel AX201:
+   queue_work_on+0x3e/0x6c
+   __hci_cmd_sync_sk+0x2ee/0x4c0 [bluetooth <HASH:3b4a6>]
+   ? init_wait_entry+0x31/0x31
+   __hci_cmd_sync+0x16/0x20 [bluetooth <HASH:3b4a 6>]
+   hci_error_reset+0x4f/0xa4 [bluetooth <HASH:3b4a 6>]
+   process_one_work+0x1d8/0x33f
+   worker_thread+0x21b/0x373
+   kthread+0x13a/0x152
+   ? pr_cont_work+0x54/0x54
+   ? kthread_blkcg+0x31/0x31
+    ret_from_fork+0x1f/0x30
 
-To secure against this possible crash, set workqueue variable to NULL when
-destroying workqueue.
+This patch holds the reference count on the hci_dev while processing
+a HCI_EV_HARDWARE_ERROR event to avoid potential crash.
 
-Log/backtrace from crash goes as follows:
-[88.031977]------------[ cut here ]------------
-[88.031985]NETDEV WATCHDOG: eth0 (sxgmac): transmit queue 1 timed out
-[88.032017]WARNING: CPU: 0 PID: 0 at net/sched/sch_generic.c:477 dev_watchdog+0x390/0x398
-           <Skipping backtrace for watchdog timeout>
-[88.032251]---[ end trace e70de432e4d5c2c0 ]---
-[88.032282]sxgmac 16d88000.ethernet eth0: Reset adapter.
-[88.036359]------------[ cut here ]------------
-[88.036519]Call trace:
-[88.036523] flush_workqueue+0x3e4/0x430
-[88.036528] drain_workqueue+0xc4/0x160
-[88.036533] destroy_workqueue+0x40/0x270
-[88.036537] stmmac_fpe_stop_wq+0x4c/0x70
-[88.036541] stmmac_release+0x278/0x280
-[88.036546] __dev_close_many+0xcc/0x158
-[88.036551] dev_close_many+0xbc/0x190
-[88.036555] dev_close.part.0+0x70/0xc0
-[88.036560] dev_close+0x24/0x30
-[88.036564] stmmac_service_task+0x110/0x140
-[88.036569] process_one_work+0x1d8/0x4a0
-[88.036573] worker_thread+0x54/0x408
-[88.036578] kthread+0x164/0x170
-[88.036583] ret_from_fork+0x10/0x20
-[88.036588]---[ end trace e70de432e4d5c2c1 ]---
-[88.036597]Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-
-Fixes: 5a5586112b929 ("net: stmmac: support FPE link partner hand-shaking procedure")
-Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c7741d16a57c ("Bluetooth: Perform a power cycle when receiving hardware error event")
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a1c1e353ca072..b0ab8f6986f8b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3825,8 +3825,10 @@ static void stmmac_fpe_stop_wq(struct stmmac_priv *priv)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index b3b597960c562..a8854b24f4cfb 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2330,6 +2330,7 @@ static void hci_error_reset(struct work_struct *work)
  {
- 	set_bit(__FPE_REMOVING, &priv->fpe_task_state);
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev, error_reset);
  
--	if (priv->fpe_wq)
-+	if (priv->fpe_wq) {
- 		destroy_workqueue(priv->fpe_wq);
-+		priv->fpe_wq = NULL;
-+	}
++	hci_dev_hold(hdev);
+ 	BT_DBG("%s", hdev->name);
  
- 	netdev_info(priv->dev, "FPE workqueue stop");
+ 	if (hdev->hw_error)
+@@ -2337,10 +2338,10 @@ static void hci_error_reset(struct work_struct *work)
+ 	else
+ 		bt_dev_err(hdev, "hardware error 0x%2.2x", hdev->hw_error_code);
+ 
+-	if (hci_dev_do_close(hdev))
+-		return;
++	if (!hci_dev_do_close(hdev))
++		hci_dev_do_open(hdev);
+ 
+-	hci_dev_do_open(hdev);
++	hci_dev_put(hdev);
  }
+ 
+ void hci_uuids_clear(struct hci_dev *hdev)
 -- 
 2.43.0
 
