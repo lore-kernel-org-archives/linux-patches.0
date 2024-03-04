@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C559626B2;
-	Mon,  4 Mar 2024 21:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0498A1CA94;
+	Mon,  4 Mar 2024 21:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587576; cv=none; b=QnZPCiHHOc3mRI1ylmuPD6ervzoSlxQQhEsD0PxcAtLmnPA3SFdRlXavI1XDtBpSKQnk2MFOU5dazbyYrGitiYNB4/cRVUIPXNLNrRaf9Gef0/PMPNAewItg+YXxmjLiys5c0azluz57LJKIbfYyF5iYWduPZWD7p8NlMJE3ijA=
+	t=1709587579; cv=none; b=KHD6pB1m7kzQmqwvs5HOp4hhk1mKkxuqv549aIqOk08V3+oy2yFlFBGExKQHtblWhTCo5VAcsAOLFoJNV1DC5uT6j1NUm0Z752MRJ6i1vUxlG7RCUKo1m/c9T/PXez82s0QF1xxjkLUtHKu4HenlWoycFnEJMvdC019oq6f++sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587576; c=relaxed/simple;
-	bh=Luzpjhc8Z/c26O6jvwqkDz/cJEwRdFc04qJMqI2i/aQ=;
+	s=arc-20240116; t=1709587579; c=relaxed/simple;
+	bh=IssPXHeWzBdwJ9mtwzJk+ix2jJwCwD0AZFghp+fDd4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBT5x3jn5V6X2xBQ31CcDSM8ipeMxn2XA8Ek2v7+GJEikrWWsJ0311HppBKs7NOc3Dzw4LZ3d41kLvwt7fqZ0KC0MoA0NnYyDRLqQy+PLbcvF2gy3hlAqwMdyCRY6ef8/JD0lFM+ZG7aVJCZEygjukb3RCZje4w2omhLmq5N9zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXLtbNO6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/mXsLWKs5GLA2sDB+KXeIFsAp7l3M7dqDE0aPy7jtQg3n6OBI00aAFavoAbMFmQTpxgCZKXu7fx53jfuPr0Fa0pH6PUuVshwmYko3rmPDaNXf4E7QDhrXmPLGaSSpSA5qZT0L9l1J6aqQwrUK9CxWEk7CDlbzpCCAS8mrpBwr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzfSE1uJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXLtbNO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F73C433C7;
-	Mon,  4 Mar 2024 21:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzfSE1uJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33414C433C7;
+	Mon,  4 Mar 2024 21:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587576;
-	bh=Luzpjhc8Z/c26O6jvwqkDz/cJEwRdFc04qJMqI2i/aQ=;
+	s=korg; t=1709587578;
+	bh=IssPXHeWzBdwJ9mtwzJk+ix2jJwCwD0AZFghp+fDd4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXLtbNO6+DcnzSe1B266od2w3c7sl/f0w6DvjdelzH67iQpIMWfggxMO3sqK63BHG
-	 6CDkmcg4GWjI6LPL9uggGkKZn/Gcl0JNbm8Ma/bEQKLqrbVQASj6ws5G65w9EEGpXo
-	 9hXEDAiNyeYGlS9elJEPSGT0ducl5Btxca0+l78U=
+	b=zzfSE1uJmOe6X78HxJmR/BSuiEqWO42MRlkXD1U93EVc/C0IBnv1zZGiMjSVSrvBk
+	 +7yncERe22Cpd7wvYO2O1MpbK8DZxVQJYN9Jy7m8Jqi5+5K+YwXiComMu5iw6/1UF1
+	 uw9lvjUAsbs8SClPtN70BiQolMBzGebUVdysBm/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Han Xu <han.xu@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 001/162] btrfs: fix deadlock with fiemap and extent locking
-Date: Mon,  4 Mar 2024 21:21:06 +0000
-Message-ID: <20240304211551.880347593@linuxfoundation.org>
+Subject: [PATCH 6.7 002/162] mtd: spinand: gigadevice: Fix the get ecc status issue
+Date: Mon,  4 Mar 2024 21:21:07 +0000
+Message-ID: <20240304211551.916114527@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,244 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit b0ad381fa7690244802aed119b478b4bdafc31dd ]
+[ Upstream commit 59950610c0c00c7a06d8a75d2ee5d73dba4274cf ]
 
-While working on the patchset to remove extent locking I got a lockdep
-splat with fiemap and pagefaulting with my new extent lock replacement
-lock.
+Some GigaDevice ecc_get_status functions use on-stack buffer for
+spi_mem_op causes spi_mem_check_op failing, fix the issue by using
+spinand scratchbuf.
 
-This deadlock exists with our normal code, we just don't have lockdep
-annotations with the extent locking so we've never noticed it.
-
-Since we're copying the fiemap extent to user space on every iteration
-we have the chance of pagefaulting.  Because we hold the extent lock for
-the entire range we could mkwrite into a range in the file that we have
-mmap'ed.  This would deadlock with the following stack trace
-
-[<0>] lock_extent+0x28d/0x2f0
-[<0>] btrfs_page_mkwrite+0x273/0x8a0
-[<0>] do_page_mkwrite+0x50/0xb0
-[<0>] do_fault+0xc1/0x7b0
-[<0>] __handle_mm_fault+0x2fa/0x460
-[<0>] handle_mm_fault+0xa4/0x330
-[<0>] do_user_addr_fault+0x1f4/0x800
-[<0>] exc_page_fault+0x7c/0x1e0
-[<0>] asm_exc_page_fault+0x26/0x30
-[<0>] rep_movs_alternative+0x33/0x70
-[<0>] _copy_to_user+0x49/0x70
-[<0>] fiemap_fill_next_extent+0xc8/0x120
-[<0>] emit_fiemap_extent+0x4d/0xa0
-[<0>] extent_fiemap+0x7f8/0xad0
-[<0>] btrfs_fiemap+0x49/0x80
-[<0>] __x64_sys_ioctl+0x3e1/0xb50
-[<0>] do_syscall_64+0x94/0x1a0
-[<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
-
-I wrote an fstest to reproduce this deadlock without my replacement lock
-and verified that the deadlock exists with our existing locking.
-
-To fix this simply don't take the extent lock for the entire duration of
-the fiemap.  This is safe in general because we keep track of where we
-are when we're searching the tree, so if an ordered extent updates in
-the middle of our fiemap call we'll still emit the correct extents
-because we know what offset we were on before.
-
-The only place we maintain the lock is searching delalloc.  Since the
-delalloc stuff can change during writeback we want to lock the extent
-range so we have a consistent view of delalloc at the time we're
-checking to see if we need to set the delalloc flag.
-
-With this patch applied we no longer deadlock with my testcase.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: c40c7a990a46 ("mtd: spinand: Add support for GigaDevice GD5F1GQ4UExxG")
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231108150701.593912-1-han.xu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 62 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 45 insertions(+), 17 deletions(-)
+ drivers/mtd/nand/spi/gigadevice.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 8f724c54fc8e9..197b41d02735b 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2645,16 +2645,34 @@ static int fiemap_process_hole(struct btrfs_inode *inode,
- 	 * it beyond i_size.
- 	 */
- 	while (cur_offset < end && cur_offset < i_size) {
-+		struct extent_state *cached_state = NULL;
- 		u64 delalloc_start;
- 		u64 delalloc_end;
- 		u64 prealloc_start;
-+		u64 lockstart;
-+		u64 lockend;
- 		u64 prealloc_len = 0;
- 		bool delalloc;
- 
-+		lockstart = round_down(cur_offset, inode->root->fs_info->sectorsize);
-+		lockend = round_up(end, inode->root->fs_info->sectorsize);
-+
-+		/*
-+		 * We are only locking for the delalloc range because that's the
-+		 * only thing that can change here.  With fiemap we have a lock
-+		 * on the inode, so no buffered or direct writes can happen.
-+		 *
-+		 * However mmaps and normal page writeback will cause this to
-+		 * change arbitrarily.  We have to lock the extent lock here to
-+		 * make sure that nobody messes with the tree while we're doing
-+		 * btrfs_find_delalloc_in_range.
-+		 */
-+		lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 		delalloc = btrfs_find_delalloc_in_range(inode, cur_offset, end,
- 							delalloc_cached_state,
- 							&delalloc_start,
- 							&delalloc_end);
-+		unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 		if (!delalloc)
- 			break;
- 
-@@ -2822,15 +2840,15 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		  u64 start, u64 len)
+diff --git a/drivers/mtd/nand/spi/gigadevice.c b/drivers/mtd/nand/spi/gigadevice.c
+index 987710e09441a..6023cba748bb8 100644
+--- a/drivers/mtd/nand/spi/gigadevice.c
++++ b/drivers/mtd/nand/spi/gigadevice.c
+@@ -186,7 +186,7 @@ static int gd5fxgq4uexxg_ecc_get_status(struct spinand_device *spinand,
  {
- 	const u64 ino = btrfs_ino(inode);
--	struct extent_state *cached_state = NULL;
- 	struct extent_state *delalloc_cached_state = NULL;
- 	struct btrfs_path *path;
- 	struct fiemap_cache cache = { 0 };
- 	struct btrfs_backref_share_check_ctx *backref_ctx;
- 	u64 last_extent_end;
- 	u64 prev_extent_end;
--	u64 lockstart;
--	u64 lockend;
-+	u64 range_start;
-+	u64 range_end;
-+	const u64 sectorsize = inode->root->fs_info->sectorsize;
- 	bool stopped = false;
+ 	u8 status2;
+ 	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(GD5FXGQXXEXXG_REG_STATUS2,
+-						      &status2);
++						      spinand->scratchbuf);
  	int ret;
  
-@@ -2841,12 +2859,11 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		goto out;
- 	}
- 
--	lockstart = round_down(start, inode->root->fs_info->sectorsize);
--	lockend = round_up(start + len, inode->root->fs_info->sectorsize);
--	prev_extent_end = lockstart;
-+	range_start = round_down(start, sectorsize);
-+	range_end = round_up(start + len, sectorsize);
-+	prev_extent_end = range_start;
- 
- 	btrfs_inode_lock(inode, BTRFS_ILOCK_SHARED);
--	lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 
- 	ret = fiemap_find_last_extent_offset(inode, path, &last_extent_end);
- 	if (ret < 0)
-@@ -2854,7 +2871,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 	btrfs_release_path(path);
- 
- 	path->reada = READA_FORWARD;
--	ret = fiemap_search_slot(inode, path, lockstart);
-+	ret = fiemap_search_slot(inode, path, range_start);
- 	if (ret < 0) {
- 		goto out_unlock;
- 	} else if (ret > 0) {
-@@ -2866,7 +2883,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		goto check_eof_delalloc;
- 	}
- 
--	while (prev_extent_end < lockend) {
-+	while (prev_extent_end < range_end) {
- 		struct extent_buffer *leaf = path->nodes[0];
- 		struct btrfs_file_extent_item *ei;
- 		struct btrfs_key key;
-@@ -2889,19 +2906,19 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		 * The first iteration can leave us at an extent item that ends
- 		 * before our range's start. Move to the next item.
+ 	switch (status & STATUS_ECC_MASK) {
+@@ -207,6 +207,7 @@ static int gd5fxgq4uexxg_ecc_get_status(struct spinand_device *spinand,
+ 		 * report the maximum of 4 in this case
  		 */
--		if (extent_end <= lockstart)
-+		if (extent_end <= range_start)
- 			goto next_item;
+ 		/* bits sorted this way (3...0): ECCS1,ECCS0,ECCSE1,ECCSE0 */
++		status2 = *(spinand->scratchbuf);
+ 		return ((status & STATUS_ECC_MASK) >> 2) |
+ 			((status2 & STATUS_ECC_MASK) >> 4);
  
- 		backref_ctx->curr_leaf_bytenr = leaf->start;
+@@ -228,7 +229,7 @@ static int gd5fxgq5xexxg_ecc_get_status(struct spinand_device *spinand,
+ {
+ 	u8 status2;
+ 	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(GD5FXGQXXEXXG_REG_STATUS2,
+-						      &status2);
++						      spinand->scratchbuf);
+ 	int ret;
  
- 		/* We have in implicit hole (NO_HOLES feature enabled). */
- 		if (prev_extent_end < key.offset) {
--			const u64 range_end = min(key.offset, lockend) - 1;
-+			const u64 hole_end = min(key.offset, range_end) - 1;
+ 	switch (status & STATUS_ECC_MASK) {
+@@ -248,6 +249,7 @@ static int gd5fxgq5xexxg_ecc_get_status(struct spinand_device *spinand,
+ 		 * 1 ... 4 bits are flipped (and corrected)
+ 		 */
+ 		/* bits sorted this way (1...0): ECCSE1, ECCSE0 */
++		status2 = *(spinand->scratchbuf);
+ 		return ((status2 & STATUS_ECC_MASK) >> 4) + 1;
  
- 			ret = fiemap_process_hole(inode, fieinfo, &cache,
- 						  &delalloc_cached_state,
- 						  backref_ctx, 0, 0, 0,
--						  prev_extent_end, range_end);
-+						  prev_extent_end, hole_end);
- 			if (ret < 0) {
- 				goto out_unlock;
- 			} else if (ret > 0) {
-@@ -2911,7 +2928,7 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 			}
- 
- 			/* We've reached the end of the fiemap range, stop. */
--			if (key.offset >= lockend) {
-+			if (key.offset >= range_end) {
- 				stopped = true;
- 				break;
- 			}
-@@ -3005,29 +3022,41 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 	btrfs_free_path(path);
- 	path = NULL;
- 
--	if (!stopped && prev_extent_end < lockend) {
-+	if (!stopped && prev_extent_end < range_end) {
- 		ret = fiemap_process_hole(inode, fieinfo, &cache,
- 					  &delalloc_cached_state, backref_ctx,
--					  0, 0, 0, prev_extent_end, lockend - 1);
-+					  0, 0, 0, prev_extent_end, range_end - 1);
- 		if (ret < 0)
- 			goto out_unlock;
--		prev_extent_end = lockend;
-+		prev_extent_end = range_end;
- 	}
- 
- 	if (cache.cached && cache.offset + cache.len >= last_extent_end) {
- 		const u64 i_size = i_size_read(&inode->vfs_inode);
- 
- 		if (prev_extent_end < i_size) {
-+			struct extent_state *cached_state = NULL;
- 			u64 delalloc_start;
- 			u64 delalloc_end;
-+			u64 lockstart;
-+			u64 lockend;
- 			bool delalloc;
- 
-+			lockstart = round_down(prev_extent_end, sectorsize);
-+			lockend = round_up(i_size, sectorsize);
-+
-+			/*
-+			 * See the comment in fiemap_process_hole as to why
-+			 * we're doing the locking here.
-+			 */
-+			lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 			delalloc = btrfs_find_delalloc_in_range(inode,
- 								prev_extent_end,
- 								i_size - 1,
- 								&delalloc_cached_state,
- 								&delalloc_start,
- 								&delalloc_end);
-+			unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 			if (!delalloc)
- 				cache.flags |= FIEMAP_EXTENT_LAST;
- 		} else {
-@@ -3038,7 +3067,6 @@ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 	ret = emit_last_fiemap_cache(fieinfo, &cache);
- 
- out_unlock:
--	unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 	btrfs_inode_unlock(inode, BTRFS_ILOCK_SHARED);
- out:
- 	free_extent_state(delalloc_cached_state);
+ 	case STATUS_ECC_UNCOR_ERROR:
 -- 
 2.43.0
 
