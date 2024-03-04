@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC1B1F60A;
-	Mon,  4 Mar 2024 21:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D051F60A;
+	Mon,  4 Mar 2024 21:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587928; cv=none; b=E9qOM6SySBnfc/L2HffjSMWeu0BRkWJxrU4CppgJ27VHvKV1EqhDUL1J5c87mCjk53+VIHIhHUSUzhoaG9DYNJz1D7aJvYuGrRMabVOsj2/cL1LWmk+rS9OZUJNiiX5KlJQZc1/C92BzTzYRBMEEePySGncSsmEJk+d9E2TLMHY=
+	t=1709587930; cv=none; b=hNjJEbZKa6ZSfTsgl3Wim61n7ldqtcetVN0WaL8XRyNjvutHq2cgQU4r4i9ngu6GFop9q5UJz6HbjCI/Y63qDwgQeKa1IaHcLpwZWv3eOSRBMVNFLU0JfyHULw2A+E8WiyNefSLQh88F6Z3ztxLDVGBm8SvgtX1kliUIA3rnz6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587928; c=relaxed/simple;
-	bh=RsR9Ns1txt4ZyZNU8NMfXfTPsabALy1HqOqcSZRTC54=;
+	s=arc-20240116; t=1709587930; c=relaxed/simple;
+	bh=diqakf/+tvfWKyaKWbda71oNxRjusugvnoL4uFgQuoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8LDZy0gULcnjwZ56f1u9f/XVywZlCtEQovgyYsDYHnm7wBNxjfAtfDb5sqOfNZHl8sUY9b+1Pggqpyw6WUbjPBzMKmzwynt5pjI9Yu7YR21C6v4qSsoNljJbEj/iTwTAO2w0WBzpIIhaHgj4IU0BPXcV7N/nbfC8dOwdRW2VGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVxxzPP7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nyZK0fxHyB79oFyI/1+am1I7uZ3G7PqKvWBkaG7L63htgJUFvDeJQZdiCV1D2swHBubOkixY5V5tmbR/6TnSwkAMXwma7nbVwkNdUco/ajx+KvDwWHSJRN6yhF1QpkrZznxbu+LxngD87UkgU1WnoV1vcau1/hFk+kvdjzZD7D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV+E6Yf2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVxxzPP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E90C433F1;
-	Mon,  4 Mar 2024 21:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV+E6Yf2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1463DC433F1;
+	Mon,  4 Mar 2024 21:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587927;
-	bh=RsR9Ns1txt4ZyZNU8NMfXfTPsabALy1HqOqcSZRTC54=;
+	s=korg; t=1709587930;
+	bh=diqakf/+tvfWKyaKWbda71oNxRjusugvnoL4uFgQuoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVxxzPP7TOkT6jjYb9w7/CZFaKxykAg4dkedkQqwAtuJoPLOHJqIEAxSfCZO903nk
-	 jFEiJ4qzziwSc1+KhqTeD8biPqCiwap39Pqd8Fr6CmS4mctUGFvp9CKEudhwEjvhVW
-	 ivBOD8JV0FVZBZZ6woZnxtThnF98V7RDwYxIVA7U=
+	b=wV+E6Yf2BZg76NRbsPWO4FwJYqPTeVTQ9lJvZnyn+LLGMv1GQy60bS1QRxavNmVdF
+	 k1KANRA7enV4jiJnPYBFaOPLWbi/nvRGvCEsJI80dgUdmB/YvJGk/y51qlGS4TQwdB
+	 4ODT8FUysWUQPQuznlB4LIxTczRAmmVSXZ2jH+9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Bohac <jbohac@suse.cz>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.7 119/162] x86/e820: Dont reserve SETUP_RNG_SEED in e820
-Date: Mon,  4 Mar 2024 21:23:04 +0000
-Message-ID: <20240304211555.561440499@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.7 120/162] x86/cpu: Allow reducing x86_phys_bits during early_identify_cpu()
+Date: Mon,  4 Mar 2024 21:23:05 +0000
+Message-ID: <20240304211555.589854941@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,51 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Bohac <jbohac@suse.cz>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 7fd817c906503b6813ea3b41f5fdf4192449a707 upstream.
+commit 9a458198eba98b7207669a166e64d04b04cb651b upstream.
 
-SETUP_RNG_SEED in setup_data is supplied by kexec and should
-not be reserved in the e820 map.
+In commit fbf6449f84bf ("x86/sev-es: Set x86_virt_bits to the correct
+value straight away, instead of a two-phase approach"), the initialization
+of c->x86_phys_bits was moved after this_cpu->c_early_init(c).  This is
+incorrect because early_init_amd() expected to be able to reduce the
+value according to the contents of CPUID leaf 0x8000001f.
 
-Doing so reserves 16 bytes of RAM when booting with kexec.
-(16 bytes because data->len is zeroed by parse_setup_data so only
-sizeof(setup_data) is reserved.)
+Fortunately, the bug was negated by init_amd()'s call to early_init_amd(),
+which does reduce x86_phys_bits in the end.  However, this is very
+late in the boot process and, most notably, the wrong value is used for
+x86_phys_bits when setting up MTRRs.
 
-When kexec is used repeatedly, each boot adds two entries in the
-kexec-provided e820 map as the 16-byte range splits a larger
-range of usable memory. Eventually all of the 128 available entries
-get used up. The next split will result in losing usable memory
-as the new entries cannot be added to the e820 map.
+To fix this, call get_cpu_address_sizes() as soon as X86_FEATURE_CPUID is
+set/cleared, and c->extended_cpuid_level is retrieved.
 
-Fixes: 68b8e9713c8e ("x86/setup: Use rng seeds from setup_data")
-Signed-off-by: Jiri Bohac <jbohac@suse.cz>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: fbf6449f84bf ("x86/sev-es: Set x86_virt_bits to the correct value straight away, instead of a two-phase approach")
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/ZbmOjKnARGiaYBd5@dwarf.suse.cz
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240131230902.1867092-2-pbonzini%40redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/e820.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/common.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/e820.c
-+++ b/arch/x86/kernel/e820.c
-@@ -1017,10 +1017,12 @@ void __init e820__reserve_setup_data(voi
- 		e820__range_update(pa_data, sizeof(*data)+data->len, E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1596,6 +1596,7 @@ static void __init early_identify_cpu(st
+ 		get_cpu_vendor(c);
+ 		get_cpu_cap(c);
+ 		setup_force_cpu_cap(X86_FEATURE_CPUID);
++		get_cpu_address_sizes(c);
+ 		cpu_parse_early_param();
  
- 		/*
--		 * SETUP_EFI and SETUP_IMA are supplied by kexec and do not need
--		 * to be reserved.
-+		 * SETUP_EFI, SETUP_IMA and SETUP_RNG_SEED are supplied by
-+		 * kexec and do not need to be reserved.
- 		 */
--		if (data->type != SETUP_EFI && data->type != SETUP_IMA)
-+		if (data->type != SETUP_EFI &&
-+		    data->type != SETUP_IMA &&
-+		    data->type != SETUP_RNG_SEED)
- 			e820__range_update_kexec(pa_data,
- 						 sizeof(*data) + data->len,
- 						 E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
+ 		if (this_cpu->c_early_init)
+@@ -1608,10 +1609,9 @@ static void __init early_identify_cpu(st
+ 			this_cpu->c_bsp_init(c);
+ 	} else {
+ 		setup_clear_cpu_cap(X86_FEATURE_CPUID);
++		get_cpu_address_sizes(c);
+ 	}
+ 
+-	get_cpu_address_sizes(c);
+-
+ 	setup_force_cpu_cap(X86_FEATURE_ALWAYS);
+ 
+ 	cpu_set_bug_bits(c);
 
 
