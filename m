@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986857868F;
-	Mon,  4 Mar 2024 21:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBD010A35;
+	Mon,  4 Mar 2024 21:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588557; cv=none; b=C3sUywkbbNAHsF5neCQ8xTlQY7FjR1lvXs5ou9dsPdOPY0qwxi17Wf0qXNUPOjIrW+TGuejKHVWS0NHnstswv0z0GidofnzgHm8hhJWb4sTsojrwvRVyvld5Jl2O9okX1FaXDNV33u7QNXTAxc1OdtHRjXRwYCdz7ua5as49yr8=
+	t=1709588560; cv=none; b=jVvvweWmtZNWEH+j1IGH5Py7rC+OXuvs7RWc8CowEVRmTsm61T0zTZqt5/g6FgdyzKGgjDYAaAfW8jt3l8oVKSMSPgzqkf6LpKm2/DtxZlVfsm7vmCYbRjWbVwZHfqOq/Opq045xZ4pCGn5A0AtwslyUibiu/4DMp3wp1oQOZok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588557; c=relaxed/simple;
-	bh=xQifYyR6YVaXRGob2JEoJD+PsWZ9SGlF1UKn3xNYc6U=;
+	s=arc-20240116; t=1709588560; c=relaxed/simple;
+	bh=GSw/wkq4oUKIdMN5b5IPskoQyCA/m6sY77X7VrD54so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPe9bWlWRsvMwB3279UNmKR9D8XJXBCw6RzLLQQINwpyLenE5UwhhsEQB7IqzkDrvpxRvvUTniAg4y/keT9ItSyg7Mp/YZ2/rc400G8YmIFLj62wixiWSz8FNRkEWOqkJnwDSNBfcqDbhRYkbKjolxnK/AmwqXeRGz7rSMRSuQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRbt9uyj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6GYIvYBBbDzTEGhww2eAG4yU3BLzIBS41MWKcYRaJFMOdgU1LbBWO8ZfWIELdkrXQvqLdpEHkL7j5LKUOpePVY9HK706UIfUxfid7nN81Ar+zR8r00v2P+LTPUYJc7UozXNnySGPLAzCYSahvRLdKdCBuyTvYJ2s/Y7Ocni0OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EpUwH7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRbt9uyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A36C433F1;
-	Mon,  4 Mar 2024 21:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EpUwH7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96D1C43390;
+	Mon,  4 Mar 2024 21:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588557;
-	bh=xQifYyR6YVaXRGob2JEoJD+PsWZ9SGlF1UKn3xNYc6U=;
+	s=korg; t=1709588560;
+	bh=GSw/wkq4oUKIdMN5b5IPskoQyCA/m6sY77X7VrD54so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRbt9uyjsSI+1fd4/5f6jP85ruXnyvWtPmz61nXmCDtbSCJj6eyf20uEj0l+ZOdhQ
-	 HOCRlQv+1kLNZ9KYpHgs5ILTdgCRlyeUnPVK/iJJyxJ1spLGzep7fIzE8NX5tjgIBn
-	 43EmG3aV3nGVqLb38/vXYK++pZjrlRQr3fTYO+oU=
+	b=2EpUwH7iD+mtjtlRsxcJ0BYWeZ2FgHNQIyndrhEICiYdgZPfen4p9Wthvsu7hqs2r
+	 OQek4Pqjp1zNeLuaMidYGUJ0tmd5rxe4swpiQV4RAmvaMNwrCy44bTLMdWk1jTuG2y
+	 2cNsGdjgrhL0GVrd0NUBrqolGipmTIBtaZWHRlyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 001/215] netfilter: nf_tables: disallow timeout for anonymous sets
-Date: Mon,  4 Mar 2024 21:21:04 +0000
-Message-ID: <20240304211557.045931635@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/215] mlxsw: spectrum_acl_tcam: Add missing mutex_destroy()
+Date: Mon,  4 Mar 2024 21:21:13 +0000
+Message-ID: <20240304211557.341849644@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -49,40 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit e26d3009efda338f19016df4175f354a9bd0a4ab upstream.
+[ Upstream commit 65823e07b1e4055b6278725fd92f4d7e6f8d53fd ]
 
-Never used from userspace, disallow these parameters.
+Pair mutex_init() with a mutex_destroy() in the error path. Found during
+code review. No functional changes.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4752,6 +4752,9 @@ static int nf_tables_newset(struct sk_bu
- 		if (!(flags & NFT_SET_TIMEOUT))
- 			return -EINVAL;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+index 2107de4e9d99b..41eac7dfb67e7 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.c
+@@ -52,8 +52,10 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
+ 		max_regions = max_tcam_regions;
  
-+		if (flags & NFT_SET_ANONYMOUS)
-+			return -EOPNOTSUPP;
-+
- 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &desc.timeout);
- 		if (err)
- 			return err;
-@@ -4760,6 +4763,10 @@ static int nf_tables_newset(struct sk_bu
- 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
- 		if (!(flags & NFT_SET_TIMEOUT))
- 			return -EINVAL;
-+
-+		if (flags & NFT_SET_ANONYMOUS)
-+			return -EOPNOTSUPP;
-+
- 		desc.gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
- 	}
+ 	tcam->used_regions = bitmap_zalloc(max_regions, GFP_KERNEL);
+-	if (!tcam->used_regions)
+-		return -ENOMEM;
++	if (!tcam->used_regions) {
++		err = -ENOMEM;
++		goto err_alloc_used_regions;
++	}
+ 	tcam->max_regions = max_regions;
  
+ 	max_groups = MLXSW_CORE_RES_GET(mlxsw_sp->core, ACL_MAX_GROUPS);
+@@ -78,6 +80,8 @@ int mlxsw_sp_acl_tcam_init(struct mlxsw_sp *mlxsw_sp,
+ 	bitmap_free(tcam->used_groups);
+ err_alloc_used_groups:
+ 	bitmap_free(tcam->used_regions);
++err_alloc_used_regions:
++	mutex_destroy(&tcam->lock);
+ 	return err;
+ }
+ 
+-- 
+2.43.0
+
 
 
