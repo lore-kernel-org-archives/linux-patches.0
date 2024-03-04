@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E2E8F58;
-	Mon,  4 Mar 2024 21:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC648F58;
+	Mon,  4 Mar 2024 21:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588677; cv=none; b=f4b5LvMpfjrU/xwCCyUU35tF0sf3anX3xdSx+XXqHZk+9FstdKn+npmUdoQ/97/kIQ6O/uZ3Dl6Gzbdl2tJM+VswGTpfadP0HnyzaYuxgR28jHk670yfm4Tl0fuI2HJsJsdjSYexfYFNbXjge1+qY+0ZARqc+Gb+vhJLmc6KHvQ=
+	t=1709588680; cv=none; b=Wjeqmc8MfKsRjRrFjDidHwBJ+0OVvv9TnbsXHTjhbQFiqSLbhXM8x5ab4lIm0bKA8nFVDU3tsxBj0CkUM4qfsiWIaFpWSCgmpVPY10/3jvF/d3Ff93vUL1GQMMIZ2lnRM+in63/B3VJN0xsd9bo//tFV0BWAz2lsK1QhT/3LDBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588677; c=relaxed/simple;
-	bh=RK0HBy+8wiKD9e1thcjSDMDchD5ydIsGFk/y22OILhk=;
+	s=arc-20240116; t=1709588680; c=relaxed/simple;
+	bh=WMkBKNQ3EVAh4ceP+BjOQ6tJtvXWw+JCR9Pr4BjqnwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hteprMRQcYGrxLdvErdHzrOWz9eIxqRWpnMZrM7Vhug3HFHVTrEegBU+Vuhfbo9Pwq9mGky+R/N5NsdSYlWX6eN3+voKKLnEL3TqoCvssgIIvGv5YBxYg7WuBY+FqUlmaUF1iBHxLnYJiwyhHyuDoR7M9usP31PoGlMdwS2lKBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDRgibRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ioQAEqQt31JimyZjYfjxcJ+wODQuQiL1wtOfcTw4WpgU3SISE+rcsPqnNmbQEvmv2hMOCgHX6EX7d6aZZ+nXUk4NUQ9zDs3jGmIDh51im2lvSf1wQQ7DOp2+fbeHe18uZ5ljHxNDQzdcQgaTvYA9A/dp1P/9WWzr2saxSj5UYTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/QnODJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDRgibRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533FAC433C7;
-	Mon,  4 Mar 2024 21:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/QnODJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0A5C433F1;
+	Mon,  4 Mar 2024 21:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588677;
-	bh=RK0HBy+8wiKD9e1thcjSDMDchD5ydIsGFk/y22OILhk=;
+	s=korg; t=1709588680;
+	bh=WMkBKNQ3EVAh4ceP+BjOQ6tJtvXWw+JCR9Pr4BjqnwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDRgibRMSCztuxdWR40uIrXhs5tspNo/ZjwiPNx66XwTf7O2ifTrVJpddL6Zx0p71
-	 OiMJUKS+4Rp0K+4WSF2l73QNYdWuf01Yy8E/tl3Y+PsMIK2cwjEN9T+wbK72XhCRBC
-	 MZvJWffpwEyBcccCH9B920pO7WK+kD/r09qRrl3A=
+	b=T/QnODJP5tlvO7pHbfUbfHPiVfIdUTFBFNlCoUeCfAJb7VY6CtlXxFdM26FmuocQb
+	 btFFq+V43OZMu/h7uNdHuDRf130rhQ2jxP3M8KErLWiW2pvy3Iw38wmjAOaSa6JkO0
+	 z2XmcaW++gDhlWDPglE2o3kKQ51yT2m1HjR6S+Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jordan Griege <jgriege@cloudflare.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/215] Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT
-Date: Mon,  4 Mar 2024 21:21:58 +0000
-Message-ID: <20240304211558.729721448@linuxfoundation.org>
+Subject: [PATCH 6.1 056/215] netfilter: nf_tables: allow NFPROTO_INET in nft_(match/target)_validate()
+Date: Mon,  4 Mar 2024 21:21:59 +0000
+Message-ID: <20240304211558.759633730@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,60 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit 7dcd3e014aa7faeeaf4047190b22d8a19a0db696 ]
+[ Upstream commit 7e0f122c65912740327e4c54472acaa5f85868cb ]
 
-BT adapter going into UNCONFIGURED state during BT turn ON when
-devicetree has no local-bd-address node.
+Commit d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family") added
+some validation of NFPROTO_* families in the nft_compat module, but it broke
+the ability to use legacy iptables modules in dual-stack nftables.
 
-Bluetooth will not work out of the box on such devices, to avoid this
-problem, added check to set HCI_QUIRK_USE_BDADDR_PROPERTY based on
-local-bd-address node entry.
+While with legacy iptables one had to independently manage IPv4 and IPv6
+tables, with nftables it is possible to have dual-stack tables sharing the
+rules. Moreover, it was possible to use rules based on legacy iptables
+match/target modules in dual-stack nftables.
 
-When this quirk is not set, the public Bluetooth address read by host
-from controller though HCI Read BD Address command is
-considered as valid.
+As an example, the program from [2] creates an INET dual-stack family table
+using an xt_bpf based rule, which looks like the following (the actual output
+was generated with a patched nft tool as the current nft tool does not parse
+dual stack tables with legacy match rules, so consider it for illustrative
+purposes only):
 
-Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+table inet testfw {
+  chain input {
+    type filter hook prerouting priority filter; policy accept;
+    bytecode counter packets 0 bytes 0 accept
+  }
+}
+
+After d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family") we get
+EOPNOTSUPP for the above program.
+
+Fix this by allowing NFPROTO_INET for nft_(match/target)_validate(), but also
+restrict the functions to classic iptables hooks.
+
+Changes in v3:
+  * clarify that upstream nft will not display such configuration properly and
+    that the output was generated with a patched nft tool
+  * remove example program from commit description and link to it instead
+  * no code changes otherwise
+
+Changes in v2:
+  * restrict nft_(match/target)_validate() to classic iptables hooks
+  * rewrite example program to use unmodified libnftnl
+
+Fixes: d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family")
+Link: https://lore.kernel.org/all/Zc1PfoWN38UuFJRI@calendula/T/#mc947262582c90fec044c7a3398cc92fac7afea72 [1]
+Link: https://lore.kernel.org/all/20240220145509.53357-1-ignat@cloudflare.com/ [2]
+Reported-by: Jordan Griege <jgriege@cloudflare.com>
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/netfilter/nft_compat.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 43abdaf92a0ed..8bfef7f81b417 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -7,6 +7,7 @@
-  *
-  *  Copyright (C) 2007 Texas Instruments, Inc.
-  *  Copyright (c) 2010, 2012, 2018 The Linux Foundation. All rights reserved.
-+ *  Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  *
-  *  Acknowledgements:
-  *  This file is based on hci_ll.c, which was...
-@@ -1844,7 +1845,17 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+
-+		/* Set BDA quirk bit for reading BDA value from fwnode property
-+		 * only if that property exist in DT.
-+		 */
-+		if (fwnode_property_present(dev_fwnode(hdev->dev.parent), "local-bd-address")) {
-+			set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+			bt_dev_info(hdev, "setting quirk bit to read BDA from fwnode later");
-+		} else {
-+			bt_dev_dbg(hdev, "local-bd-address` is not present in the devicetree so not setting quirk bit for BDA");
-+		}
-+
- 		hci_set_aosp_capable(hdev);
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index e1623fbf36548..e4b8c02c5e6ae 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -358,10 +358,20 @@ static int nft_target_validate(const struct nft_ctx *ctx,
  
- 		ret = qca_read_soc_version(hdev, &ver, soc_type);
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET &&
+ 	    ctx->family != NFPROTO_BRIDGE &&
+ 	    ctx->family != NFPROTO_ARP)
+ 		return -EOPNOTSUPP;
+ 
++	ret = nft_chain_validate_hooks(ctx->chain,
++				       (1 << NF_INET_PRE_ROUTING) |
++				       (1 << NF_INET_LOCAL_IN) |
++				       (1 << NF_INET_FORWARD) |
++				       (1 << NF_INET_LOCAL_OUT) |
++				       (1 << NF_INET_POST_ROUTING));
++	if (ret)
++		return ret;
++
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
+@@ -607,10 +617,20 @@ static int nft_match_validate(const struct nft_ctx *ctx,
+ 
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET &&
+ 	    ctx->family != NFPROTO_BRIDGE &&
+ 	    ctx->family != NFPROTO_ARP)
+ 		return -EOPNOTSUPP;
+ 
++	ret = nft_chain_validate_hooks(ctx->chain,
++				       (1 << NF_INET_PRE_ROUTING) |
++				       (1 << NF_INET_LOCAL_IN) |
++				       (1 << NF_INET_FORWARD) |
++				       (1 << NF_INET_LOCAL_OUT) |
++				       (1 << NF_INET_POST_ROUTING));
++	if (ret)
++		return ret;
++
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
 -- 
 2.43.0
 
