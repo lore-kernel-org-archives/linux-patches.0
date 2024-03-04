@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C2F10A35;
-	Mon,  4 Mar 2024 21:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8985B10A35;
+	Mon,  4 Mar 2024 21:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588307; cv=none; b=sBEj4T8prr58I+fHrtDIcHpnhPqN1IC28vwfIW7zDC+o6RJtTcmHrVwgV8DcLgsCxtgHhqzXtxhDYmy2HMSqmFgCRlfOOqlW1UD/OPDOrsh5Chv+6kwaUuyMO800znCdgEY3cFs9gh1EmwbwD3/UEad7dgtBk+4h9CDO+pyy+8s=
+	t=1709588310; cv=none; b=o51pXPQGcN3Zh3lVBgwLnJu0D6CdWOiukkosde5bzd7DQgRrqUniRzwrE2HZqaacqSO7gb3TlR/0HzyzhOh64zUupdRiBtwlwf/s/tuUu+uajpSk817XcI+jhEgn5oiFoklf9p2orVgYqH5s3+eWg6t0O7kQSMahwZLTwngBJ1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588307; c=relaxed/simple;
-	bh=4E65vfBBwmo6mUT2PSlZX5jz52v9C0GnIDqsKnJHM28=;
+	s=arc-20240116; t=1709588310; c=relaxed/simple;
+	bh=PC6zL4h3LKIdUzzqZrucuPaH7GDCAhLJZG936/nd77Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQdsRAUwovauuVXLwHXN/6ZI2qcCRTzHxqh+r5ZxZuLjD8V6Ey1wC1eNSDs8VcmL5tqRtggpr2ik5uI0D+JQLqC4QOdYYt32HJPf6HAfU4XlBuKxRKWMZS5XNLOwhpdDUcU7kZCpsLn+gs7/+K/aH5HETWFMtEDcRm8IL1zE43E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPzKwmKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+vi5JhpvHrPPYCP2TCj/ivmKvwrO90d7Ga5ykRKr4jE0fLFhUq99d24YZgpD0DdwRcGuwULGZ+iq9zhVB4+1sx+hza4Ig+kxzigMtPG94vJhOmsNNUm5qk/oK2Tyab+pNmXifI9Crfs1TGaNvZ0tUiJSJJzBdGXpmyaDWlvIB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGPvFLP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPzKwmKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47503C433C7;
-	Mon,  4 Mar 2024 21:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGPvFLP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7C3C433C7;
+	Mon,  4 Mar 2024 21:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588307;
-	bh=4E65vfBBwmo6mUT2PSlZX5jz52v9C0GnIDqsKnJHM28=;
+	s=korg; t=1709588310;
+	bh=PC6zL4h3LKIdUzzqZrucuPaH7GDCAhLJZG936/nd77Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPzKwmKskUJVaBfxshYsfMik7KcRHBjdhYLcP2XZr6wh8hNAdUKEjgDvArtPfJxFD
-	 0q5zWt/nvPMrf636yYvUyhWTkA7tP+Ta8xqWaUEdcd8WtQuVwstUue+gUL0wDM5D+k
-	 0anjwepDK2+ycGGYawhA4LSYiN+FJUhSP0acjofY=
+	b=xGPvFLP+Ch3YDCfMXNq1DJJQmgxcHBTEEpjE4j/23/z+b81vx9+Yy2mznJKbYB0Sg
+	 N3HJIVle84Y8wfeizCidOCqs3YIdsNsvpEigJkNvXHkYN1lJ8PbWzecFUFkOnAa4/G
+	 w7jlAvuTo+LJyLQti6H6KBO2np1m70bDDKhIfUZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Robert Foss <rfoss@kernel.org>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Ubisectech Sirius <bugreport@ubisectech.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Helge Deller <deller@gmx.de>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/143] drm/tegra: Remove existing framebuffer only if we support display
-Date: Mon,  4 Mar 2024 21:22:58 +0000
-Message-ID: <20240304211551.780301252@linuxfoundation.org>
+Subject: [PATCH 6.6 059/143] fbcon: always restore the old font data in fbcon_do_set_font()
+Date: Mon,  4 Mar 2024 21:22:59 +0000
+Message-ID: <20240304211551.816836539@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -53,61 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 86bf8cfda6d2a6720fa2e6e676c98f0882c9d3d7 ]
+[ Upstream commit 00d6a284fcf3fad1b7e1b5bc3cd87cbfb60ce03f ]
 
-Tegra DRM doesn't support display on Tegra234 and later, so make sure
-not to remove any existing framebuffers in that case.
+Commit a5a923038d70 (fbdev: fbcon: Properly revert changes when
+vc_resize() failed) started restoring old font data upon failure (of
+vc_resize()). But it performs so only for user fonts. It means that the
+"system"/internal fonts are not restored at all. So in result, the very
+first call to fbcon_do_set_font() performs no restore at all upon
+failing vc_resize().
 
-v2: - add comments explaining how this situation can come about
-    - clear DRIVER_MODESET and DRIVER_ATOMIC feature bits
+This can be reproduced by Syzkaller to crash the system on the next
+invocation of font_get(). It's rather hard to hit the allocation failure
+in vc_resize() on the first font_set(), but not impossible. Esp. if
+fault injection is used to aid the execution/failure. It was
+demonstrated by Sirius:
+  BUG: unable to handle page fault for address: fffffffffffffff8
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD cb7b067 P4D cb7b067 PUD cb7d067 PMD 0
+  Oops: 0000 [#1] PREEMPT SMP KASAN
+  CPU: 1 PID: 8007 Comm: poc Not tainted 6.7.0-g9d1694dc91ce #20
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:fbcon_get_font+0x229/0x800 drivers/video/fbdev/core/fbcon.c:2286
+  Call Trace:
+   <TASK>
+   con_font_get drivers/tty/vt/vt.c:4558 [inline]
+   con_font_op+0x1fc/0xf20 drivers/tty/vt/vt.c:4673
+   vt_k_ioctl drivers/tty/vt/vt_ioctl.c:474 [inline]
+   vt_ioctl+0x632/0x2ec0 drivers/tty/vt/vt_ioctl.c:752
+   tty_ioctl+0x6f8/0x1570 drivers/tty/tty_io.c:2803
+   vfs_ioctl fs/ioctl.c:51 [inline]
+  ...
 
-Fixes: 6848c291a54f ("drm/aperture: Convert drivers to aperture interfaces")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240223150333.1401582-1-thierry.reding@gmail.com
+So restore the font data in any case, not only for user fonts. Note the
+later 'if' is now protected by 'old_userfont' and not 'old_data' as the
+latter is always set now. (And it is supposed to be non-NULL. Otherwise
+we would see the bug above again.)
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+Reported-and-tested-by: Ubisectech Sirius <bugreport@ubisectech.com>
+Cc: Ubisectech Sirius <bugreport@ubisectech.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Helge Deller <deller@gmx.de>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240208114411.14604-1-jirislaby@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/drm.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
-index ff36171c8fb70..373bcd79257e0 100644
---- a/drivers/gpu/drm/tegra/drm.c
-+++ b/drivers/gpu/drm/tegra/drm.c
-@@ -1242,9 +1242,26 @@ static int host1x_drm_probe(struct host1x_device *dev)
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index f157a5a1dffcf..24035b4f2cd70 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2398,11 +2398,9 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	struct fbcon_display *p = &fb_display[vc->vc_num];
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+-	char *old_data = NULL;
++	u8 *old_data = vc->vc_font.data;
  
- 	drm_mode_config_reset(drm);
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+-	if (p->userfont)
+-		old_data = vc->vc_font.data;
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+ 	old_userfont = p->userfont;
+ 	if ((p->userfont = userfont))
+@@ -2436,13 +2434,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 		update_screen(vc);
+ 	}
  
--	err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
--	if (err < 0)
--		goto hub;
-+	/*
-+	 * Only take over from a potential firmware framebuffer if any CRTCs
-+	 * have been registered. This must not be a fatal error because there
-+	 * are other accelerators that are exposed via this driver.
-+	 *
-+	 * Another case where this happens is on Tegra234 where the display
-+	 * hardware is no longer part of the host1x complex, so this driver
-+	 * will not expose any modesetting features.
-+	 */
-+	if (drm->mode_config.num_crtc > 0) {
-+		err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
-+		if (err < 0)
-+			goto hub;
-+	} else {
-+		/*
-+		 * Indicate to userspace that this doesn't expose any display
-+		 * capabilities.
-+		 */
-+		drm->driver_features &= ~(DRIVER_MODESET | DRIVER_ATOMIC);
-+	}
+-	if (old_data && (--REFCOUNT(old_data) == 0))
++	if (old_userfont && (--REFCOUNT(old_data) == 0))
+ 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
+ 	return 0;
  
- 	err = drm_dev_register(drm, 0);
- 	if (err < 0)
+ err_out:
+ 	p->fontdata = old_data;
+-	vc->vc_font.data = (void *)old_data;
++	vc->vc_font.data = old_data;
+ 
+ 	if (userfont) {
+ 		p->userfont = old_userfont;
 -- 
 2.43.0
 
