@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD06E1EB5A;
-	Mon,  4 Mar 2024 21:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB781EB5A;
+	Mon,  4 Mar 2024 21:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588868; cv=none; b=ACsaRO5LDYWuxhdjxXA0QrFY/UJWg4r4FaoK+GXPPqBbUhHPHSBpKeEskc7X2yWMDzGmWl60+DL0kcBkAagNvy1sVsSrVIILa9t1clJMntiUqmz165iy7Wd6ZYTq9CcR6KzI1OAjM67DN8YbXF19e5Pv1OoXA8s8LZk2gtSqMyI=
+	t=1709588873; cv=none; b=VZh1ndQUGAMtJ9JH2t2JLpdT2Cs5mKntE505fl8XUX1z2dpmohNJj9UcqZRTHWCrYQWGJBl/yjTQ3CEKIQ7klNQqhnDXg6oZvhq8Hs/55If5K1xILGPvY/H11WGus0dfuh2w3Zur1zSVGc4WTKT2HlXRLILuHF5bm436HkZeT2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588868; c=relaxed/simple;
-	bh=9bvQX9zbxX+CxJhzJMp3Zx4hUpW/mOIcPyOP+1yswNQ=;
+	s=arc-20240116; t=1709588873; c=relaxed/simple;
+	bh=6dJbstobldXJgTw6c5EGKGrMAQEUFDS70GNG4W5AJqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wi0D30Jd5zWE4Ct9dVOqY63Fd9FrvUKORouNMKOpW6cyksGHatm4+zLEMGoVkIMFiIQJs2pBjStZLf4c42+bJQjMn5oW1EAt88JHDQZuepEyQCcIGumAPXkcQUOnyaBcDZITewtBNn+YHR6JaOdqObCxXLOJ8pD3WTbuEFwjgLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgjO3hKo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mp7tFy1ft7+OM2V1RKrjcXPYNyGoIVcWov40JxW2imnE5Z1i8TXWjx1yoXffsqvv6RLQ074VHKfspD9W7F93n2ZRryiZV+OoQ+NrefYiRADV9gOhxXadsdym7cMvc44G6l0Smp68UKpGtUlGVJQpsy0EHASJxJcL2pL74KS41v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtReCKnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgjO3hKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72170C43390;
-	Mon,  4 Mar 2024 21:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtReCKnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5EFC433C7;
+	Mon,  4 Mar 2024 21:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588868;
-	bh=9bvQX9zbxX+CxJhzJMp3Zx4hUpW/mOIcPyOP+1yswNQ=;
+	s=korg; t=1709588873;
+	bh=6dJbstobldXJgTw6c5EGKGrMAQEUFDS70GNG4W5AJqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgjO3hKojB1rib7w5ov3DVU2zjXjFQnKZuMYExixXFE93pzOseiegNLg1WYOJoVId
-	 PnHNXyp3UABvk0l1s7evWjPTjsb5GgKha6hzFQyFjkufViQF1AjZBvucKCYKUYzIRQ
-	 succV6BUbhwO3BVGddnoqUEprn4+p/B0L9U0r42s=
+	b=LtReCKnTF+83+gF7el+O2nQm8g21Sjw7NbrgiSmCsJdiUd/uG7B99ZfEDg/1b5BVs
+	 U210dnzuiF1SP5fJWKVlw6Fa6EvFVw0/i8m4TdS4L6JYIBuaN9K4rMNi+ThLUWBAq6
+	 tPD/UHwQEq85gjbf7mcR3srCUMdsW6Yv26Qa95kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 101/215] mptcp: map v4 address to v6 when destroying subflow
-Date: Mon,  4 Mar 2024 21:22:44 +0000
-Message-ID: <20240304211600.239455280@linuxfoundation.org>
+Subject: [PATCH 6.1 102/215] mptcp: push at DSS boundaries
+Date: Mon,  4 Mar 2024 21:22:45 +0000
+Message-ID: <20240304211600.270196993@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,55 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 535d620ea5ff1a033dc64ee3d912acadc7470619 upstream.
+commit b9cd26f640a308ea314ad23532de9a8592cd09d2 upstream.
 
-Address family of server side mismatches with that of client side, like
-in "userspace pm add & remove address" test:
+when inserting not contiguous data in the subflow write queue,
+the protocol creates a new skb and prevent the TCP stack from
+merging it later with already queued skbs by setting the EOR marker.
 
-    userspace_pm_add_addr $ns1 10.0.2.1 10
-    userspace_pm_rm_sf $ns1 "::ffff:10.0.2.1" $SUB_ESTABLISHED
+Still no push flag is explicitly set at the end of previous GSO
+packet, making the aggregation on the receiver side sub-optimal -
+and packetdrill self-tests less predictable.
 
-That's because on the server side, the family is set to AF_INET6 and the
-v4 address is mapped in a v6 one.
+Explicitly mark the end of not contiguous DSS with the push flag.
 
-This patch fixes this issue. In mptcp_pm_nl_subflow_destroy_doit(), before
-checking local address family with remote address family, map an IPv4
-address to an IPv6 address if the pair is a v4-mapped address.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/387
-Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
+Fixes: 6d0060f600ad ("mptcp: Write MPTCP DSS headers to outgoing data packets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-1-162e87e48497@kernel.org
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-4-162e87e48497@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/mptcp/protocol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -489,6 +489,16 @@ int mptcp_nl_cmd_sf_destroy(struct sk_bu
- 		goto destroy_err;
- 	}
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1319,6 +1319,7 @@ static int mptcp_sendmsg_frag(struct soc
+ 		mpext = skb_ext_find(skb, SKB_EXT_MPTCP);
+ 		if (!mptcp_skb_can_collapse_to(data_seq, skb, mpext)) {
+ 			TCP_SKB_CB(skb)->eor = 1;
++			tcp_mark_push(tcp_sk(ssk), skb);
+ 			goto alloc_skb;
+ 		}
  
-+#if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+	if (addr_l.family == AF_INET && ipv6_addr_v4mapped(&addr_r.addr6)) {
-+		ipv6_addr_set_v4mapped(addr_l.addr.s_addr, &addr_l.addr6);
-+		addr_l.family = AF_INET6;
-+	}
-+	if (addr_r.family == AF_INET && ipv6_addr_v4mapped(&addr_l.addr6)) {
-+		ipv6_addr_set_v4mapped(addr_r.addr.s_addr, &addr_r.addr6);
-+		addr_r.family = AF_INET6;
-+	}
-+#endif
- 	if (addr_l.family != addr_r.family) {
- 		GENL_SET_ERR_MSG(info, "address families do not match");
- 		err = -EINVAL;
 
 
