@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09D71C6AB;
-	Mon,  4 Mar 2024 21:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCD37868F;
+	Mon,  4 Mar 2024 21:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589303; cv=none; b=m7QArvlYLfOa78cw2KgaNxIBTfG8DKCNMYQs9zYgdAvFMOqyqfo7g3yqmeNGj2CKV99L3J0pe2X9I1xrjVMVa+LfbucMusIVuEC1OEs3dvtST1TS8aAe1DCT3JcrNUpvxcqF10bA7GYKKqozohvo0NTVJKzG8NqluPDDSkBB0Mo=
+	t=1709589306; cv=none; b=B6PKpFTOdilvffQvTHcEq0w5Pvbuxta3NvGjD1v1VJuLUq8FW2ZsojpfilS7un1Lq8VU0wKggZeWmuYUU4qlJmogViKRu2XW/iWL0WaKREFGzpRQOec5FCUQJk7eHLco+v/lm00YfB1WNWRXnCL8Tj0orQFRyogz0w012aNWecM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589303; c=relaxed/simple;
-	bh=TouZBcNo/Z/Z0xpV0D9+VfVKzouzJ8/SDkjbECWTDrc=;
+	s=arc-20240116; t=1709589306; c=relaxed/simple;
+	bh=UL1PqPNNgMFnVdNS1K3Y13MKCTaxunhrSHNsDIeCsk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XuOr2uyYM9J4RszokwLRDy95Sw0vhxXW7aEl0fFnSZYprzvIRo6mWVDIz61z+W8f61yNxpuVd2NeZcbluE5cxdYKN6SE+p+0nbyk4g6CDB9VVb6YQuGs0pjdK+2RMWyNbZp8WVI+R++i5J3hCI9Em0Jc0xAMTFQUXcy5RNigNDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVKs+TVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vD7vftoSnicDFHoiy7z0IXhzF2SlyqeTE1DKXurck5QmZW1Gv7qUGAHlQg7SUrriy6PFvUxN0IkqYqfmUoVZGAW1g7tIqZHjvj3WeWyOEMN0uBH3gDyfSUMt4f0BXPQh9eXZ/ep6KJxDPCIh5GxyqZasrO8KauVWMJQUoC26kr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qImzzquz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVKs+TVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C55C433C7;
-	Mon,  4 Mar 2024 21:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qImzzquz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F99C43390;
+	Mon,  4 Mar 2024 21:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589303;
-	bh=TouZBcNo/Z/Z0xpV0D9+VfVKzouzJ8/SDkjbECWTDrc=;
+	s=korg; t=1709589306;
+	bh=UL1PqPNNgMFnVdNS1K3Y13MKCTaxunhrSHNsDIeCsk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NVKs+TVygKOf2DD2SIWUqzkVpZMRjGhDwyNtfb4YULzJGLHlt0cEjWgKjX6YOUQgd
-	 zhJUy24pP37ieDl22C2npKuoDJI3Nh+tYmydR7+QsYScrpdjd6MBaxVwwg64hh7bFv
-	 QLpdDFlLcP7S+iccaT8cWD6jP7BU794LudWYkaIg=
+	b=qImzzquzGj/0yhR+uQlxcNovM6HdNUtBArlYodx/Jhbcma2hNMb2BVgw5bK9E5mOi
+	 KDIVRBFGPKlLM2TOkzyayrH9r66xbHAf6KD5Gm3QWefdWQ6W6olir7ueZJ8PFgGgGE
+	 8l+DrbYXAQIiUilzfM4jKRpWodiWqGNwsQOIuL4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Zong Li <zong.li@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 58/84] riscv: add CALLER_ADDRx support
-Date: Mon,  4 Mar 2024 21:24:31 +0000
-Message-ID: <20240304211544.309767329@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 59/84] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
+Date: Mon,  4 Mar 2024 21:24:32 +0000
+Message-ID: <20240304211544.345021086@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,122 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong Li <zong.li@sifive.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-commit 680341382da56bd192ebfa4e58eaf4fec2e5bca7 upstream.
+commit 2a93c6cbd5a703d44c414a3c3945a87ce11430ba upstream.
 
-CALLER_ADDRx returns caller's address at specified level, they are used
-for several tracers. These macros eventually use
-__builtin_return_address(n) to get the caller's address if arch doesn't
-define their own implementation.
+Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
+the domain")' aimed to make sure that a power-domain that is being
+enabled without any particular performance-state requested will at least
+turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
+required-opps properties.
 
-In RISC-V, __builtin_return_address(n) only works when n == 0, we need
-to walk the stack frame to get the caller's address at specified level.
+But in the event that aggregation happens on a disabled power-domain, with
+an enabled peer without performance-state, both the local and peer
+corner are 0. The peer's enabled_corner is not considered, with the
+result that the underlying (shared) resource is disabled.
 
-data.level started from 'level + 3' due to the call flow of getting
-caller's address in RISC-V implementation. If we don't have additional
-three iteration, the level is corresponding to follows:
+One case where this can be observed is when the display stack keeps mmcx
+enabled (but without a particular performance-state vote) in order to
+access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
+is flushed the state of the peer (mmcx) is not considered and mmcx_ao
+ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
+several times, but has been painted over in DeviceTree by adding an
+explicit vote for the lowest non-disabled performance-state.
 
-callsite -> return_address -> arch_stack_walk -> walk_stackframe
-|           |                 |                  |
-level 3     level 2           level 1            level 0
-
-Fixes: 10626c32e382 ("riscv/ftrace: Add basic support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Link: https://lore.kernel.org/r/20240202015102.26251-1-zong.li@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
+Reported-by: Johan Hovold <johan@kernel.org>
+Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/ftrace.h    |    5 +++
- arch/riscv/kernel/Makefile         |    2 +
- arch/riscv/kernel/return_address.c |   48 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+)
- create mode 100644 arch/riscv/kernel/return_address.c
+ drivers/soc/qcom/rpmhpd.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -25,6 +25,11 @@
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -351,12 +351,15 @@ static int rpmhpd_aggregate_corner(struc
+ 	unsigned int active_corner, sleep_corner;
+ 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
+ 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
++	unsigned int peer_enabled_corner;
  
- #define ARCH_SUPPORTS_FTRACE_OPS 1
- #ifndef __ASSEMBLY__
-+
-+extern void *return_address(unsigned int level);
-+
-+#define ftrace_return_address(n) return_address(n)
-+
- void MCOUNT_NAME(void);
- static inline unsigned long ftrace_call_adjust(unsigned long addr)
- {
---- a/arch/riscv/kernel/Makefile
-+++ b/arch/riscv/kernel/Makefile
-@@ -7,6 +7,7 @@ ifdef CONFIG_FTRACE
- CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
- endif
- CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
+ 	to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
  
-@@ -25,6 +26,7 @@ obj-y	+= irq.o
- obj-y	+= process.o
- obj-y	+= ptrace.o
- obj-y	+= reset.o
-+obj-y	+= return_address.o
- obj-y	+= setup.o
- obj-y	+= signal.o
- obj-y	+= syscall_table.o
---- /dev/null
-+++ b/arch/riscv/kernel/return_address.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * This code come from arch/arm64/kernel/return_address.c
-+ *
-+ * Copyright (C) 2023 SiFive.
-+ */
-+
-+#include <linux/export.h>
-+#include <linux/kprobes.h>
-+#include <linux/stacktrace.h>
-+
-+struct return_address_data {
-+	unsigned int level;
-+	void *addr;
-+};
-+
-+static bool save_return_addr(void *d, unsigned long pc)
-+{
-+	struct return_address_data *data = d;
-+
-+	if (!data->level) {
-+		data->addr = (void *)pc;
-+		return false;
+-	if (peer && peer->enabled)
+-		to_active_sleep(peer, peer->corner, &peer_active_corner,
++	if (peer && peer->enabled) {
++		peer_enabled_corner = max(peer->corner, peer->enable_corner);
++		to_active_sleep(peer, peer_enabled_corner, &peer_active_corner,
+ 				&peer_sleep_corner);
 +	}
-+
-+	--data->level;
-+
-+	return true;
-+}
-+NOKPROBE_SYMBOL(save_return_addr);
-+
-+noinline void *return_address(unsigned int level)
-+{
-+	struct return_address_data data;
-+
-+	data.level = level + 3;
-+	data.addr = NULL;
-+
-+	arch_stack_walk(save_return_addr, &data, current, NULL);
-+
-+	if (!data.level)
-+		return data.addr;
-+	else
-+		return NULL;
-+
-+}
-+EXPORT_SYMBOL_GPL(return_address);
-+NOKPROBE_SYMBOL(return_address);
+ 
+ 	active_corner = max(this_active_corner, peer_active_corner);
+ 
 
 
