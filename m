@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC5B8F58;
-	Mon,  4 Mar 2024 21:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FB48F58;
+	Mon,  4 Mar 2024 21:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588369; cv=none; b=aAy1YB4+Ru9Kj/PFaczCHOHa5FGqgm3JlobSNwG6b6g/1Zd8IjRjnH7DX2IYFc2zmyjaaox34FmneSPwjW6v39r46anFloW0VsuQDQOhPbVu2H9V/vdazHx35vSt6l2EP9fFWpl4cs1/m1MpKydU+rK+qwLcC3JGo2TiD223A8c=
+	t=1709588371; cv=none; b=tbZBjHISRnzNjZEd2FOxuZVaEXNztOcMWaqR28cpMtesGN40LmYL5VjvgXcIRZ3NB9u4j05WSswGWdIUnaTvHoMRcH/LXujpM/sSDc7bwbEpcPh/ZU7sF5NB4T2Gp5qd2Wa0op8YSnXWtXQgdz/VImtz0ete2zfS6V1gPWffW2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588369; c=relaxed/simple;
-	bh=ov//4nn9LVKjc8M5Loex2QhDVVm4/D3QgCZYYNuEoCk=;
+	s=arc-20240116; t=1709588371; c=relaxed/simple;
+	bh=ZxxEBA2guoOsePoVgyvueOnvQLe970bBOO3e2AYJjpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSdglYtj0Voa8xN3KeYUYjh+Yy+TFkzs5tkfc7X1iEFBPAfWctLYVTlMwfpP/Wb8knNhJnEWASaNEszEQVqEZh0ldETv6zcAPFYRQiwQwzFWIX0TVToryxeYo19w4uKiofCZtJCEDbJCMnPa+k48sT9NMPGV8bGjZbuvTg+jsOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3P3w3LR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnyM4b9EsPbR7tApmc8S7LblBiRCEmfZIGYM0YGgYs/YiVPPJkQaXrNICkzV+fnPoaNrxzdxfYWEIQk3KIj8AtK6/9G+Kb0JgTiIlwYzRr8CGYru8R7fv4NcsslD+l0ru8xDiD3O5K1+YB+gAVtpJCChU1z8mTa6haQzL6wrhsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpzSa7qe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3P3w3LR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F98C433C7;
-	Mon,  4 Mar 2024 21:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpzSa7qe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1702FC433F1;
+	Mon,  4 Mar 2024 21:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588368;
-	bh=ov//4nn9LVKjc8M5Loex2QhDVVm4/D3QgCZYYNuEoCk=;
+	s=korg; t=1709588371;
+	bh=ZxxEBA2guoOsePoVgyvueOnvQLe970bBOO3e2AYJjpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3P3w3LRAPMncmn2WUXvKtnlJlFCOwLsbKXimdNo5YRwFomn3e/fCVwhLuTXl1edZ
-	 Pps+Z93oHHMNuow+sTUBfBc9AXcEH/VJux0m9As0zkvld5WWp2J8AnBSCXhJb4LwxC
-	 qH21UuC/bSEsBqI8Axxg2JrHrRyu1PnJ4kwgxrYM=
+	b=xpzSa7qeQurIKs5I3oJrhz+ouf/kvVtVYH8kFOsEcQUaJeB9nW80ST+jMmSTZSWiU
+	 oONimbsOxX9o/PgvZWe/3TkYGr4TqWb97VUeNc0wWBF1O2XitUF21pR2Mb3rXAiaWQ
+	 2fJpg9BTYPifSRrlG4ZeOQ+ackA9/IV/hQ1j275M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/143] ASoC: soc.h: convert asoc_xxx() to snd_soc_xxx()
-Date: Mon,  4 Mar 2024 21:22:46 +0000
-Message-ID: <20240304211551.401468525@linuxfoundation.org>
+	Willian Wang <git@willian.wang>,
+	Gergo Koteles <soyer@irl.hu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 074/143] ALSA: hda/realtek: Add special fixup for Lenovo 14IRP8
+Date: Mon,  4 Mar 2024 21:23:14 +0000
+Message-ID: <20240304211552.287066905@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,176 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Willian Wang <git@willian.wang>
 
-[ Upstream commit 1d5a2b5dd0a8d2b2b535b5266699429dbd48e62f ]
+commit 0ac32a396e4f41e88df76ce2282423188a2d2ed0 upstream.
 
-ASoC is using 2 type of prefix (asoc_xxx() vs snd_soc_xxx()), but there
-is no particular reason about that [1].
-To reduce confusing, standarding these to snd_soc_xxx() is sensible.
+Lenovo Slim/Yoga Pro 9 14IRP8 requires a special fixup because there is
+a collision of its PCI SSID (17aa:3802) with Lenovo Yoga DuetITL 2021
+codec SSID.
 
-This patch adds asoc_xxx() macro to keep compatible for a while.
-It will be removed if all drivers were switched to new style.
-
-Link: https://lore.kernel.org/r/87h6td3hus.wl-kuninori.morimoto.gx@renesas.com [1]
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87fs3ks26i.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1382d8b55129 ("ASoC: qcom: Fix uninitialized pointer dmactl")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3babae915f4c ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=208555
+Link: https://lore.kernel.org/all/d5b42e483566a3815d229270abd668131a0d9f3a.camel@irl.hu
+Cc: stable@vger.kernel.org
+Signed-off-by: Willian Wang <git@willian.wang>
+Reviewed-by: Gergo Koteles <soyer@irl.hu>
+Link: https://lore.kernel.org/r/170879111795.8.6687687359006700715.273812184@willian.wang
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/soc-card.h |  4 ++--
- include/sound/soc.h      | 42 ++++++++++++++++++++++++++--------------
- sound/soc/soc-utils.c    |  4 ++--
- 3 files changed, 32 insertions(+), 18 deletions(-)
+ sound/pci/hda/patch_realtek.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/soc-card.h b/include/sound/soc-card.h
-index e8ff2e089cd00..ecc02e955279f 100644
---- a/include/sound/soc-card.h
-+++ b/include/sound/soc-card.h
-@@ -115,8 +115,8 @@ struct snd_soc_dai *snd_soc_card_get_codec_dai(struct snd_soc_card *card,
- 	struct snd_soc_pcm_runtime *rtd;
- 
- 	for_each_card_rtds(card, rtd) {
--		if (!strcmp(asoc_rtd_to_codec(rtd, 0)->name, dai_name))
--			return asoc_rtd_to_codec(rtd, 0);
-+		if (!strcmp(snd_soc_rtd_to_codec(rtd, 0)->name, dai_name))
-+			return snd_soc_rtd_to_codec(rtd, 0);
- 	}
- 
- 	return NULL;
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index 49ec688eed606..c1acc46529b9d 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -774,37 +774,42 @@ struct snd_soc_dai_link {
- #endif
- };
- 
-+/* REMOVE ME */
-+#define asoc_link_to_cpu	snd_soc_link_to_cpu
-+#define asoc_link_to_codec	snd_soc_link_to_codec
-+#define asoc_link_to_platform	snd_soc_link_to_platform
-+
- static inline struct snd_soc_dai_link_component*
--asoc_link_to_cpu(struct snd_soc_dai_link *link, int n) {
-+snd_soc_link_to_cpu(struct snd_soc_dai_link *link, int n) {
- 	return &(link)->cpus[n];
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7352,6 +7352,7 @@ enum {
+ 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
+ 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
+ 	ALC298_FIXUP_LENOVO_C940_DUET7,
++	ALC287_FIXUP_LENOVO_14IRP8_DUETITL,
+ 	ALC287_FIXUP_13S_GEN2_SPEAKERS,
+ 	ALC256_FIXUP_SET_COEF_DEFAULTS,
+ 	ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
+@@ -7401,6 +7402,26 @@ static void alc298_fixup_lenovo_c940_due
+ 	__snd_hda_apply_fixup(codec, id, action, 0);
  }
  
- static inline struct snd_soc_dai_link_component*
--asoc_link_to_codec(struct snd_soc_dai_link *link, int n) {
-+snd_soc_link_to_codec(struct snd_soc_dai_link *link, int n) {
- 	return &(link)->codecs[n];
- }
- 
- static inline struct snd_soc_dai_link_component*
--asoc_link_to_platform(struct snd_soc_dai_link *link, int n) {
-+snd_soc_link_to_platform(struct snd_soc_dai_link *link, int n) {
- 	return &(link)->platforms[n];
- }
- 
- #define for_each_link_codecs(link, i, codec)				\
- 	for ((i) = 0;							\
- 	     ((i) < link->num_codecs) &&				\
--		     ((codec) = asoc_link_to_codec(link, i));		\
-+		     ((codec) = snd_soc_link_to_codec(link, i));		\
- 	     (i)++)
- 
- #define for_each_link_platforms(link, i, platform)			\
- 	for ((i) = 0;							\
- 	     ((i) < link->num_platforms) &&				\
--		     ((platform) = asoc_link_to_platform(link, i));	\
-+		     ((platform) = snd_soc_link_to_platform(link, i));	\
- 	     (i)++)
- 
- #define for_each_link_cpus(link, i, cpu)				\
- 	for ((i) = 0;							\
- 	     ((i) < link->num_cpus) &&					\
--		     ((cpu) = asoc_link_to_cpu(link, i));		\
-+		     ((cpu) = snd_soc_link_to_cpu(link, i));		\
- 	     (i)++)
- 
- /*
-@@ -894,8 +899,11 @@ asoc_link_to_platform(struct snd_soc_dai_link *link, int n) {
- #define COMP_CODEC_CONF(_name)		{ .name = _name }
- #define COMP_DUMMY()			{ .name = "snd-soc-dummy", .dai_name = "snd-soc-dummy-dai", }
- 
-+/* REMOVE ME */
-+#define asoc_dummy_dlc		snd_soc_dummy_dlc
++/* A special fixup for Lenovo Slim/Yoga Pro 9 14IRP8 and Yoga DuetITL 2021;
++ * 14IRP8 PCI SSID will mistakenly be matched with the DuetITL codec SSID,
++ * so we need to apply a different fixup in this case. The only DuetITL codec
++ * SSID reported so far is the 17aa:3802 while the 14IRP8 has the 17aa:38be
++ * and 17aa:38bf. If it weren't for the PCI SSID, the 14IRP8 models would
++ * have matched correctly by their codecs.
++ */
++static void alc287_fixup_lenovo_14irp8_duetitl(struct hda_codec *codec,
++					      const struct hda_fixup *fix,
++					      int action)
++{
++	int id;
 +
- extern struct snd_soc_dai_link_component null_dailink_component[0];
--extern struct snd_soc_dai_link_component asoc_dummy_dlc;
-+extern struct snd_soc_dai_link_component snd_soc_dummy_dlc;
- 
- 
- struct snd_soc_codec_conf {
-@@ -1113,8 +1121,8 @@ struct snd_soc_pcm_runtime {
- 	 * dais = cpu_dai + codec_dai
- 	 * see
- 	 *	soc_new_pcm_runtime()
--	 *	asoc_rtd_to_cpu()
--	 *	asoc_rtd_to_codec()
-+	 *	snd_soc_rtd_to_cpu()
-+	 *	snd_soc_rtd_to_codec()
- 	 */
- 	struct snd_soc_dai **dais;
- 
-@@ -1142,10 +1150,16 @@ struct snd_soc_pcm_runtime {
- 	int num_components;
- 	struct snd_soc_component *components[]; /* CPU/Codec/Platform */
- };
++	if (codec->core.subsystem_id == 0x17aa3802)
++		id = ALC287_FIXUP_YOGA7_14ITL_SPEAKERS; /* DuetITL */
++	else
++		id = ALC287_FIXUP_TAS2781_I2C; /* 14IRP8 */
++	__snd_hda_apply_fixup(codec, id, action, 0);
++}
 +
-+/* REMOVE ME */
-+#define asoc_rtd_to_cpu		snd_soc_rtd_to_cpu
-+#define asoc_rtd_to_codec	snd_soc_rtd_to_codec
-+#define asoc_substream_to_rtd	snd_soc_substream_to_rtd
-+
- /* see soc_new_pcm_runtime()  */
--#define asoc_rtd_to_cpu(rtd, n)   (rtd)->dais[n]
--#define asoc_rtd_to_codec(rtd, n) (rtd)->dais[n + (rtd)->dai_link->num_cpus]
--#define asoc_substream_to_rtd(substream) \
-+#define snd_soc_rtd_to_cpu(rtd, n)   (rtd)->dais[n]
-+#define snd_soc_rtd_to_codec(rtd, n) (rtd)->dais[n + (rtd)->dai_link->num_cpus]
-+#define snd_soc_substream_to_rtd(substream) \
- 	(struct snd_soc_pcm_runtime *)snd_pcm_substream_chip(substream)
- 
- #define for_each_rtd_components(rtd, i, component)			\
-@@ -1154,11 +1168,11 @@ struct snd_soc_pcm_runtime {
- 	     (i)++)
- #define for_each_rtd_cpu_dais(rtd, i, dai)				\
- 	for ((i) = 0;							\
--	     ((i) < rtd->dai_link->num_cpus) && ((dai) = asoc_rtd_to_cpu(rtd, i)); \
-+	     ((i) < rtd->dai_link->num_cpus) && ((dai) = snd_soc_rtd_to_cpu(rtd, i)); \
- 	     (i)++)
- #define for_each_rtd_codec_dais(rtd, i, dai)				\
- 	for ((i) = 0;							\
--	     ((i) < rtd->dai_link->num_codecs) && ((dai) = asoc_rtd_to_codec(rtd, i)); \
-+	     ((i) < rtd->dai_link->num_codecs) && ((dai) = snd_soc_rtd_to_codec(rtd, i)); \
- 	     (i)++)
- #define for_each_rtd_dais(rtd, i, dai)					\
- 	for ((i) = 0;							\
-diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
-index 9c746e4edef71..941ba0639a4e6 100644
---- a/sound/soc/soc-utils.c
-+++ b/sound/soc/soc-utils.c
-@@ -225,12 +225,12 @@ int snd_soc_component_is_dummy(struct snd_soc_component *component)
- 		(component->driver == &dummy_codec));
- }
- 
--struct snd_soc_dai_link_component asoc_dummy_dlc = {
-+struct snd_soc_dai_link_component snd_soc_dummy_dlc = {
- 	.of_node	= NULL,
- 	.dai_name	= "snd-soc-dummy-dai",
- 	.name		= "snd-soc-dummy",
- };
--EXPORT_SYMBOL_GPL(asoc_dummy_dlc);
-+EXPORT_SYMBOL_GPL(snd_soc_dummy_dlc);
- 
- static int snd_soc_dummy_probe(struct platform_device *pdev)
- {
--- 
-2.43.0
-
+ static const struct hda_fixup alc269_fixups[] = {
+ 	[ALC269_FIXUP_GPIO2] = {
+ 		.type = HDA_FIXUP_FUNC,
+@@ -9285,6 +9306,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc298_fixup_lenovo_c940_duet7,
+ 	},
++	[ALC287_FIXUP_LENOVO_14IRP8_DUETITL] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc287_fixup_lenovo_14irp8_duetitl,
++	},
+ 	[ALC287_FIXUP_13S_GEN2_SPEAKERS] = {
+ 		.type = HDA_FIXUP_VERBS,
+ 		.v.verbs = (const struct hda_verb[]) {
+@@ -10134,7 +10159,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x31af, "ThinkCentre Station", ALC623_FIXUP_LENOVO_THINKSTATION_P340),
+ 	SND_PCI_QUIRK(0x17aa, 0x334b, "Lenovo ThinkCentre M70 Gen5", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+-	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
++	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8 / DuetITL 2021", ALC287_FIXUP_LENOVO_14IRP8_DUETITL),
+ 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
+ 	SND_PCI_QUIRK(0x17aa, 0x3819, "Lenovo 13s Gen2 ITL", ALC287_FIXUP_13S_GEN2_SPEAKERS),
 
 
