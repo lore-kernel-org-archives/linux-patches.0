@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C9C7868F;
-	Mon,  4 Mar 2024 21:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D508F7868F;
+	Mon,  4 Mar 2024 21:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588819; cv=none; b=lM/fXu4ERBa4r0I7xeC/mHhHxjaB7HhpSWfEJM26tZN3ATUQ6Q64/OalPJfmEvq0Zy15rHa/h0B4JUyWTeMdrL33m0Fu3HBi7bbKYkRxk/EHlmjpHJmoDBzJIDLAc49BlITi66nDmbMU8vZzOjxciyv1xWATCPWkuIFnE8wyHog=
+	t=1709588821; cv=none; b=JpcFxI4OezOJAycr/b4JeHIU9gJo1GWz1pM8oZxCWRm213zwgGqrXNaWmYd116Wi/1tNnGeT7AybKphbhELe7ofpABdrQnzRQptI1isj8iyR3AWqUqmvIdS1zFe4SPjt65fAeoJnP1qSnd8UpSHzbXvnfTa37mSWZHPShe0j/dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588819; c=relaxed/simple;
-	bh=uM4+O1OacFrAJFSB/x+yKPX9u/h+2k4/dRKw5fawdNw=;
+	s=arc-20240116; t=1709588821; c=relaxed/simple;
+	bh=Ce/hSECyxaGV5opsgF26cKq5SdwG/3/F7hA1gbfEUy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeP1nJL+NPhrnUFfFt6iQMDbNSDDEQmETB732ZlXkWDX6rzD74OVn9Yn0W9XeYclGYkekqg5Aoj7ka3CW4R4ZMc39X0+KiksN9qs43QleRFGAGYz13RSJiHV5kwBaD7ty1OiZQO/2WwVGNEAg18MIeexqmZBvlVPNrk+TEZ/7aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rf+TrxXG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGt4rjAaI0pwjAjVixEMYdq9eumgw4WyMF4s3CpzC1bZVaYrvfTqgzZ/wohl0KUQUcLQwL9neuHlGLyOBb2HmwlCoCmGyg/PMRZKdkH1HJiR5CWviuRQJCz5+JgbwibAW/sqdkJekIGhqGcW5ntv5+fbxz2JnwF+Lk3o2S4jnBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMmVvwvs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rf+TrxXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA21C433F1;
-	Mon,  4 Mar 2024 21:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMmVvwvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1747AC433C7;
+	Mon,  4 Mar 2024 21:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588818;
-	bh=uM4+O1OacFrAJFSB/x+yKPX9u/h+2k4/dRKw5fawdNw=;
+	s=korg; t=1709588821;
+	bh=Ce/hSECyxaGV5opsgF26cKq5SdwG/3/F7hA1gbfEUy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rf+TrxXG3ez+/2XftypNlC5dehoQicLNVqs0ZXUShPBQffO/zQCe5cgOYvtLmOFnr
-	 lJCFNMy5UQkPoEgRTjWvPZ0pDNUZx5LoMrPVUVUr8IFzWuBFdlRsbj7r7wuEqBZ4YP
-	 QPFy/O1BJnJNwSPgHLInGbELo9PKnrGc1gUDkWXg=
+	b=QMmVvwvszQPgQu/kSJrA+FtY4yQLBMAOx/HSbwdko3ztXPcHAz4K5CzagBwwudNqe
+	 2ZXnfHJxgzEFsskbCnAGJlXpL9iSiw/8PAKPUIfZT1n8mf1uuijrnZ27TvU0euxEVP
+	 EHyCXYQvwH5jWVqkwynZXWBnbGZX3ReC7w69b1WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 109/215] efi: libstub: use EFI_LOADER_CODE region when moving the kernel in memory
-Date: Mon,  4 Mar 2024 21:22:52 +0000
-Message-ID: <20240304211600.493214147@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.1 110/215] x86/boot/compressed: Rename efi_thunk_64.S to efi-mixed.S
+Date: Mon,  4 Mar 2024 21:22:53 +0000
+Message-ID: <20240304211600.524533936@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,124 +52,439 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 9cf42bca30e98a1c6c9e8abf876940a551eaa3d1 upstream.
+commit cb8bda8ad4438b4bcfcf89697fc84803fb210017 upstream.
 
-The EFI spec is not very clear about which permissions are being given
-when allocating pages of a certain type. However, it is quite obvious
-that EFI_LOADER_CODE is more likely to permit execution than
-EFI_LOADER_DATA, which becomes relevant once we permit booting the
-kernel proper with the firmware's 1:1 mapping still active.
+In preparation for moving the mixed mode specific code out of head_64.S,
+rename the existing file to clarify that it contains more than just the
+mixed mode thunk.
 
-Ostensibly, recent systems such as the Surface Pro X grant executable
-permissions to EFI_LOADER_CODE regions but not EFI_LOADER_DATA regions.
+While at it, clean up the Makefile rules that add it to the build.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20221122161017.2426828-2-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/alignedmem.c  |    5 +++--
- drivers/firmware/efi/libstub/arm64-stub.c  |    6 ++++--
- drivers/firmware/efi/libstub/efistub.h     |    6 ++++--
- drivers/firmware/efi/libstub/mem.c         |    3 ++-
- drivers/firmware/efi/libstub/randomalloc.c |    5 +++--
- 5 files changed, 16 insertions(+), 9 deletions(-)
+ arch/x86/boot/compressed/Makefile                        | 6 +++---
+ arch/x86/boot/compressed/{efi_thunk_64.S => efi_mixed.S} | 0
+ arch/x86/boot/compressed/Makefile       |    6 
+ arch/x86/boot/compressed/efi_mixed.S    |  195 ++++++++++++++++++++++++++++++++
+ arch/x86/boot/compressed/efi_thunk_64.S |  195 --------------------------------
+ 3 files changed, 198 insertions(+), 198 deletions(-)
+ rename arch/x86/boot/compressed/{efi_thunk_64.S => efi_mixed.S} (100%)
 
---- a/drivers/firmware/efi/libstub/alignedmem.c
-+++ b/drivers/firmware/efi/libstub/alignedmem.c
-@@ -22,7 +22,8 @@
-  * Return:	status code
-  */
- efi_status_t efi_allocate_pages_aligned(unsigned long size, unsigned long *addr,
--					unsigned long max, unsigned long align)
-+					unsigned long max, unsigned long align,
-+					int memory_type)
- {
- 	efi_physical_addr_t alloc_addr;
- 	efi_status_t status;
-@@ -36,7 +37,7 @@ efi_status_t efi_allocate_pages_aligned(
- 	slack = align / EFI_PAGE_SIZE - 1;
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -108,11 +108,11 @@ endif
+ vmlinux-objs-$(CONFIG_ACPI) += $(obj)/acpi.o
+ vmlinux-objs-$(CONFIG_INTEL_TDX_GUEST) += $(obj)/tdx.o $(obj)/tdcall.o
  
- 	status = efi_bs_call(allocate_pages, EFI_ALLOCATE_MAX_ADDRESS,
--			     EFI_LOADER_DATA, size / EFI_PAGE_SIZE + slack,
-+			     memory_type, size / EFI_PAGE_SIZE + slack,
- 			     &alloc_addr);
- 	if (status != EFI_SUCCESS)
- 		return status;
---- a/drivers/firmware/efi/libstub/arm64-stub.c
-+++ b/drivers/firmware/efi/libstub/arm64-stub.c
-@@ -180,7 +180,8 @@ efi_status_t handle_kernel_image(unsigne
- 		 * locate the kernel at a randomized offset in physical memory.
- 		 */
- 		status = efi_random_alloc(*reserve_size, min_kimg_align,
--					  reserve_addr, phys_seed);
-+					  reserve_addr, phys_seed,
-+					  EFI_LOADER_CODE);
- 		if (status != EFI_SUCCESS)
- 			efi_warn("efi_random_alloc() failed: 0x%lx\n", status);
- 	} else {
-@@ -201,7 +202,8 @@ efi_status_t handle_kernel_image(unsigne
- 		}
+-vmlinux-objs-$(CONFIG_EFI_MIXED) += $(obj)/efi_thunk_$(BITS).o
+ vmlinux-objs-$(CONFIG_EFI) += $(obj)/efi.o
+-efi-obj-$(CONFIG_EFI_STUB) = $(objtree)/drivers/firmware/efi/libstub/lib.a
++vmlinux-objs-$(CONFIG_EFI_MIXED) += $(obj)/efi_mixed.o
++vmlinux-objs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
  
- 		status = efi_allocate_pages_aligned(*reserve_size, reserve_addr,
--						    ULONG_MAX, min_kimg_align);
-+						    ULONG_MAX, min_kimg_align,
-+						    EFI_LOADER_CODE);
+-$(obj)/vmlinux: $(vmlinux-objs-y) $(efi-obj-y) FORCE
++$(obj)/vmlinux: $(vmlinux-objs-y) FORCE
+ 	$(call if_changed,ld)
  
- 		if (status != EFI_SUCCESS) {
- 			efi_err("Failed to relocate kernel\n");
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -880,7 +880,8 @@ void efi_get_virtmap(efi_memory_desc_t *
- efi_status_t efi_get_random_bytes(unsigned long size, u8 *out);
- 
- efi_status_t efi_random_alloc(unsigned long size, unsigned long align,
--			      unsigned long *addr, unsigned long random_seed);
-+			      unsigned long *addr, unsigned long random_seed,
-+			      int memory_type);
- 
- efi_status_t efi_random_get_seed(void);
- 
-@@ -907,7 +908,8 @@ efi_status_t efi_allocate_pages(unsigned
- 				unsigned long max);
- 
- efi_status_t efi_allocate_pages_aligned(unsigned long size, unsigned long *addr,
--					unsigned long max, unsigned long align);
-+					unsigned long max, unsigned long align,
-+					int memory_type);
- 
- efi_status_t efi_low_alloc_above(unsigned long size, unsigned long align,
- 				 unsigned long *addr, unsigned long min);
---- a/drivers/firmware/efi/libstub/mem.c
-+++ b/drivers/firmware/efi/libstub/mem.c
-@@ -91,7 +91,8 @@ efi_status_t efi_allocate_pages(unsigned
- 
- 	if (EFI_ALLOC_ALIGN > EFI_PAGE_SIZE)
- 		return efi_allocate_pages_aligned(size, addr, max,
--						  EFI_ALLOC_ALIGN);
-+						  EFI_ALLOC_ALIGN,
-+						  EFI_LOADER_DATA);
- 
- 	alloc_addr = ALIGN_DOWN(max + 1, EFI_ALLOC_ALIGN) - 1;
- 	status = efi_bs_call(allocate_pages, EFI_ALLOCATE_MAX_ADDRESS,
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -53,7 +53,8 @@ static unsigned long get_entry_num_slots
- efi_status_t efi_random_alloc(unsigned long size,
- 			      unsigned long align,
- 			      unsigned long *addr,
--			      unsigned long random_seed)
-+			      unsigned long random_seed,
-+			      int memory_type)
- {
- 	unsigned long total_slots = 0, target_slot;
- 	unsigned long total_mirrored_slots = 0;
-@@ -118,7 +119,7 @@ efi_status_t efi_random_alloc(unsigned l
- 		pages = size / EFI_PAGE_SIZE;
- 
- 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
--				     EFI_LOADER_DATA, pages, &target);
-+				     memory_type, pages, &target);
- 		if (status == EFI_SUCCESS)
- 			*addr = target;
- 		break;
+ OBJCOPYFLAGS_vmlinux.bin :=  -R .comment -S
+--- /dev/null
++++ b/arch/x86/boot/compressed/efi_mixed.S
+@@ -0,0 +1,195 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2014, 2015 Intel Corporation; author Matt Fleming
++ *
++ * Early support for invoking 32-bit EFI services from a 64-bit kernel.
++ *
++ * Because this thunking occurs before ExitBootServices() we have to
++ * restore the firmware's 32-bit GDT and IDT before we make EFI service
++ * calls.
++ *
++ * On the plus side, we don't have to worry about mangling 64-bit
++ * addresses into 32-bits because we're executing with an identity
++ * mapped pagetable and haven't transitioned to 64-bit virtual addresses
++ * yet.
++ */
++
++#include <linux/linkage.h>
++#include <asm/msr.h>
++#include <asm/page_types.h>
++#include <asm/processor-flags.h>
++#include <asm/segment.h>
++
++	.code64
++	.text
++SYM_FUNC_START(__efi64_thunk)
++	push	%rbp
++	push	%rbx
++
++	movl	%ds, %eax
++	push	%rax
++	movl	%es, %eax
++	push	%rax
++	movl	%ss, %eax
++	push	%rax
++
++	/* Copy args passed on stack */
++	movq	0x30(%rsp), %rbp
++	movq	0x38(%rsp), %rbx
++	movq	0x40(%rsp), %rax
++
++	/*
++	 * Convert x86-64 ABI params to i386 ABI
++	 */
++	subq	$64, %rsp
++	movl	%esi, 0x0(%rsp)
++	movl	%edx, 0x4(%rsp)
++	movl	%ecx, 0x8(%rsp)
++	movl	%r8d, 0xc(%rsp)
++	movl	%r9d, 0x10(%rsp)
++	movl	%ebp, 0x14(%rsp)
++	movl	%ebx, 0x18(%rsp)
++	movl	%eax, 0x1c(%rsp)
++
++	leaq	0x20(%rsp), %rbx
++	sgdt	(%rbx)
++
++	addq	$16, %rbx
++	sidt	(%rbx)
++
++	leaq	1f(%rip), %rbp
++
++	/*
++	 * Switch to IDT and GDT with 32-bit segments. This is the firmware GDT
++	 * and IDT that was installed when the kernel started executing. The
++	 * pointers were saved at the EFI stub entry point in head_64.S.
++	 *
++	 * Pass the saved DS selector to the 32-bit code, and use far return to
++	 * restore the saved CS selector.
++	 */
++	leaq	efi32_boot_idt(%rip), %rax
++	lidt	(%rax)
++	leaq	efi32_boot_gdt(%rip), %rax
++	lgdt	(%rax)
++
++	movzwl	efi32_boot_ds(%rip), %edx
++	movzwq	efi32_boot_cs(%rip), %rax
++	pushq	%rax
++	leaq	efi_enter32(%rip), %rax
++	pushq	%rax
++	lretq
++
++1:	addq	$64, %rsp
++	movq	%rdi, %rax
++
++	pop	%rbx
++	movl	%ebx, %ss
++	pop	%rbx
++	movl	%ebx, %es
++	pop	%rbx
++	movl	%ebx, %ds
++	/* Clear out 32-bit selector from FS and GS */
++	xorl	%ebx, %ebx
++	movl	%ebx, %fs
++	movl	%ebx, %gs
++
++	/*
++	 * Convert 32-bit status code into 64-bit.
++	 */
++	roll	$1, %eax
++	rorq	$1, %rax
++
++	pop	%rbx
++	pop	%rbp
++	RET
++SYM_FUNC_END(__efi64_thunk)
++
++	.code32
++/*
++ * EFI service pointer must be in %edi.
++ *
++ * The stack should represent the 32-bit calling convention.
++ */
++SYM_FUNC_START_LOCAL(efi_enter32)
++	/* Load firmware selector into data and stack segment registers */
++	movl	%edx, %ds
++	movl	%edx, %es
++	movl	%edx, %fs
++	movl	%edx, %gs
++	movl	%edx, %ss
++
++	/* Reload pgtables */
++	movl	%cr3, %eax
++	movl	%eax, %cr3
++
++	/* Disable paging */
++	movl	%cr0, %eax
++	btrl	$X86_CR0_PG_BIT, %eax
++	movl	%eax, %cr0
++
++	/* Disable long mode via EFER */
++	movl	$MSR_EFER, %ecx
++	rdmsr
++	btrl	$_EFER_LME, %eax
++	wrmsr
++
++	call	*%edi
++
++	/* We must preserve return value */
++	movl	%eax, %edi
++
++	/*
++	 * Some firmware will return with interrupts enabled. Be sure to
++	 * disable them before we switch GDTs and IDTs.
++	 */
++	cli
++
++	lidtl	(%ebx)
++	subl	$16, %ebx
++
++	lgdtl	(%ebx)
++
++	movl	%cr4, %eax
++	btsl	$(X86_CR4_PAE_BIT), %eax
++	movl	%eax, %cr4
++
++	movl	%cr3, %eax
++	movl	%eax, %cr3
++
++	movl	$MSR_EFER, %ecx
++	rdmsr
++	btsl	$_EFER_LME, %eax
++	wrmsr
++
++	xorl	%eax, %eax
++	lldt	%ax
++
++	pushl	$__KERNEL_CS
++	pushl	%ebp
++
++	/* Enable paging */
++	movl	%cr0, %eax
++	btsl	$X86_CR0_PG_BIT, %eax
++	movl	%eax, %cr0
++	lret
++SYM_FUNC_END(efi_enter32)
++
++	.data
++	.balign	8
++SYM_DATA_START(efi32_boot_gdt)
++	.word	0
++	.quad	0
++SYM_DATA_END(efi32_boot_gdt)
++
++SYM_DATA_START(efi32_boot_idt)
++	.word	0
++	.quad	0
++SYM_DATA_END(efi32_boot_idt)
++
++SYM_DATA_START(efi32_boot_cs)
++	.word	0
++SYM_DATA_END(efi32_boot_cs)
++
++SYM_DATA_START(efi32_boot_ds)
++	.word	0
++SYM_DATA_END(efi32_boot_ds)
+--- a/arch/x86/boot/compressed/efi_thunk_64.S
++++ /dev/null
+@@ -1,195 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-/*
+- * Copyright (C) 2014, 2015 Intel Corporation; author Matt Fleming
+- *
+- * Early support for invoking 32-bit EFI services from a 64-bit kernel.
+- *
+- * Because this thunking occurs before ExitBootServices() we have to
+- * restore the firmware's 32-bit GDT and IDT before we make EFI service
+- * calls.
+- *
+- * On the plus side, we don't have to worry about mangling 64-bit
+- * addresses into 32-bits because we're executing with an identity
+- * mapped pagetable and haven't transitioned to 64-bit virtual addresses
+- * yet.
+- */
+-
+-#include <linux/linkage.h>
+-#include <asm/msr.h>
+-#include <asm/page_types.h>
+-#include <asm/processor-flags.h>
+-#include <asm/segment.h>
+-
+-	.code64
+-	.text
+-SYM_FUNC_START(__efi64_thunk)
+-	push	%rbp
+-	push	%rbx
+-
+-	movl	%ds, %eax
+-	push	%rax
+-	movl	%es, %eax
+-	push	%rax
+-	movl	%ss, %eax
+-	push	%rax
+-
+-	/* Copy args passed on stack */
+-	movq	0x30(%rsp), %rbp
+-	movq	0x38(%rsp), %rbx
+-	movq	0x40(%rsp), %rax
+-
+-	/*
+-	 * Convert x86-64 ABI params to i386 ABI
+-	 */
+-	subq	$64, %rsp
+-	movl	%esi, 0x0(%rsp)
+-	movl	%edx, 0x4(%rsp)
+-	movl	%ecx, 0x8(%rsp)
+-	movl	%r8d, 0xc(%rsp)
+-	movl	%r9d, 0x10(%rsp)
+-	movl	%ebp, 0x14(%rsp)
+-	movl	%ebx, 0x18(%rsp)
+-	movl	%eax, 0x1c(%rsp)
+-
+-	leaq	0x20(%rsp), %rbx
+-	sgdt	(%rbx)
+-
+-	addq	$16, %rbx
+-	sidt	(%rbx)
+-
+-	leaq	1f(%rip), %rbp
+-
+-	/*
+-	 * Switch to IDT and GDT with 32-bit segments. This is the firmware GDT
+-	 * and IDT that was installed when the kernel started executing. The
+-	 * pointers were saved at the EFI stub entry point in head_64.S.
+-	 *
+-	 * Pass the saved DS selector to the 32-bit code, and use far return to
+-	 * restore the saved CS selector.
+-	 */
+-	leaq	efi32_boot_idt(%rip), %rax
+-	lidt	(%rax)
+-	leaq	efi32_boot_gdt(%rip), %rax
+-	lgdt	(%rax)
+-
+-	movzwl	efi32_boot_ds(%rip), %edx
+-	movzwq	efi32_boot_cs(%rip), %rax
+-	pushq	%rax
+-	leaq	efi_enter32(%rip), %rax
+-	pushq	%rax
+-	lretq
+-
+-1:	addq	$64, %rsp
+-	movq	%rdi, %rax
+-
+-	pop	%rbx
+-	movl	%ebx, %ss
+-	pop	%rbx
+-	movl	%ebx, %es
+-	pop	%rbx
+-	movl	%ebx, %ds
+-	/* Clear out 32-bit selector from FS and GS */
+-	xorl	%ebx, %ebx
+-	movl	%ebx, %fs
+-	movl	%ebx, %gs
+-
+-	/*
+-	 * Convert 32-bit status code into 64-bit.
+-	 */
+-	roll	$1, %eax
+-	rorq	$1, %rax
+-
+-	pop	%rbx
+-	pop	%rbp
+-	RET
+-SYM_FUNC_END(__efi64_thunk)
+-
+-	.code32
+-/*
+- * EFI service pointer must be in %edi.
+- *
+- * The stack should represent the 32-bit calling convention.
+- */
+-SYM_FUNC_START_LOCAL(efi_enter32)
+-	/* Load firmware selector into data and stack segment registers */
+-	movl	%edx, %ds
+-	movl	%edx, %es
+-	movl	%edx, %fs
+-	movl	%edx, %gs
+-	movl	%edx, %ss
+-
+-	/* Reload pgtables */
+-	movl	%cr3, %eax
+-	movl	%eax, %cr3
+-
+-	/* Disable paging */
+-	movl	%cr0, %eax
+-	btrl	$X86_CR0_PG_BIT, %eax
+-	movl	%eax, %cr0
+-
+-	/* Disable long mode via EFER */
+-	movl	$MSR_EFER, %ecx
+-	rdmsr
+-	btrl	$_EFER_LME, %eax
+-	wrmsr
+-
+-	call	*%edi
+-
+-	/* We must preserve return value */
+-	movl	%eax, %edi
+-
+-	/*
+-	 * Some firmware will return with interrupts enabled. Be sure to
+-	 * disable them before we switch GDTs and IDTs.
+-	 */
+-	cli
+-
+-	lidtl	(%ebx)
+-	subl	$16, %ebx
+-
+-	lgdtl	(%ebx)
+-
+-	movl	%cr4, %eax
+-	btsl	$(X86_CR4_PAE_BIT), %eax
+-	movl	%eax, %cr4
+-
+-	movl	%cr3, %eax
+-	movl	%eax, %cr3
+-
+-	movl	$MSR_EFER, %ecx
+-	rdmsr
+-	btsl	$_EFER_LME, %eax
+-	wrmsr
+-
+-	xorl	%eax, %eax
+-	lldt	%ax
+-
+-	pushl	$__KERNEL_CS
+-	pushl	%ebp
+-
+-	/* Enable paging */
+-	movl	%cr0, %eax
+-	btsl	$X86_CR0_PG_BIT, %eax
+-	movl	%eax, %cr0
+-	lret
+-SYM_FUNC_END(efi_enter32)
+-
+-	.data
+-	.balign	8
+-SYM_DATA_START(efi32_boot_gdt)
+-	.word	0
+-	.quad	0
+-SYM_DATA_END(efi32_boot_gdt)
+-
+-SYM_DATA_START(efi32_boot_idt)
+-	.word	0
+-	.quad	0
+-SYM_DATA_END(efi32_boot_idt)
+-
+-SYM_DATA_START(efi32_boot_cs)
+-	.word	0
+-SYM_DATA_END(efi32_boot_cs)
+-
+-SYM_DATA_START(efi32_boot_ds)
+-	.word	0
+-SYM_DATA_END(efi32_boot_ds)
 
 
