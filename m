@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518B078B69;
-	Mon,  4 Mar 2024 21:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E21A61675;
+	Mon,  4 Mar 2024 21:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589241; cv=none; b=BSKBp2hAdbxyHsfS9/DSEsLMfj2yIvViSFajnlUld+FYdoM5LeviMa3GtirMuI3G963qp3HAtisr+8lMGhOVK/9KxPFhYLxdhEUr8qVWmJ+vpyps/PCsdyLHMO00ImVstHP0f1vPEG2dj9ia7AioAeHc+wmJA8HK8JOyXjmQhYc=
+	t=1709589244; cv=none; b=IfozB/HbGjJLMB157/PxpNMXmia1zY8tw8aob86mBvs20rTgeqOF7KPjmB+d1UZOsFHJRPmr+cE+JVYvLA6W3kOxm+n7R8+8koj9aazkPl5WkAls0dp/hsHiqO0iDAozAhRT8Lt/Ij69T/DHkCVX5/nDfxLU47VSDNWqoqU7ON0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589241; c=relaxed/simple;
-	bh=fGv7rByy8GGDxnURe3sB6OXMZQBnpRBy/42AYPtx8hI=;
+	s=arc-20240116; t=1709589244; c=relaxed/simple;
+	bh=mZ/Sw8uig77pK7X2NpI9BDB72KRHPAx+UMMWqyJn/K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JydTA0rfxq0JGz/eNNzbpu7X5mXoMBvRHFCAKut8OIyMPh2zi36Ix78hAulGIXBdO9Kik1gtR25ougxC8/annlO8PDThrMGjGQKP0Bl0dKh8Bk2O24hzSVf88f9EQfffbMUrAjCUthCtbNeAUzBOucVv+Y71dfJAZkNlJahYf4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNrMSP5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmhLz3VQxvImRv6OYrraUCEa36mvl18SQ2AyKznYrkZA9eKtmjT7qnHtnhgItZCOPMpVm0fkekOHrUb1QN8u8Vqm19klrAIn56jO7XCFhWSkG+04cf72a/CskR4+1Dv8dbpac8cdrChUvc/SYNsrypjOkb2Ye3kIcU6lJdvkdUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=St9KrJXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNrMSP5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94A2C433C7;
-	Mon,  4 Mar 2024 21:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="St9KrJXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CEEC433F1;
+	Mon,  4 Mar 2024 21:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589241;
-	bh=fGv7rByy8GGDxnURe3sB6OXMZQBnpRBy/42AYPtx8hI=;
+	s=korg; t=1709589243;
+	bh=mZ/Sw8uig77pK7X2NpI9BDB72KRHPAx+UMMWqyJn/K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNrMSP5EvfvSTCLDr4FYR9/X9I/CvCpCD9rrn02HY/Ow29SJJezUGWiSlsv8C5/aC
-	 vUtJJmp2FB9Alif30KpuqxrodxOYTS+WSl5pK5c5gBM6bw3eaf+bouw1qdK6uM+fit
-	 09QxrBDjD/hl1y5obihrIdmxKiBiN/i67hEe57Ts=
+	b=St9KrJXOse2PeoZaxUkxdbQYLYwFVp3qjdOzyPV8ha5aGm1g1IFsRVfO4fw/WDhJc
+	 vA4IHmJJ0FEUpmdJGDSKcNABQ2oi/at4QH4J0I1y+ZxCXT2b84bYBaAeoejPgEW7ia
+	 /+TVula4uox6utJPI6kfh9Sl+Pg8spY7zIcRzydI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 34/84] tls: rx: wrap decryption arguments in a structure
-Date: Mon,  4 Mar 2024 21:24:07 +0000
-Message-ID: <20240304211543.474699398@linuxfoundation.org>
+Subject: [PATCH 5.15 35/84] tls: rx: factor out writing ContentType to cmsg
+Date: Mon,  4 Mar 2024 21:24:08 +0000
+Message-ID: <20240304211543.511609155@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -53,193 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 4175eac37123a68ebee71f288826339fb89bfec7 ]
+[ Upstream commit 06554f4ffc2595ae52ee80aec4a13bd77d22bed7 ]
 
-We pass zc as a pointer to bool a few functions down as an in/out
-argument. This is error prone since C will happily evalue a pointer
-as a boolean (IOW forgetting *zc and writing zc leads to loss of
-developer time..). Wrap the arguments into a structure.
+cmsg can be filled in during rx_list processing or normal
+receive. Consolidate the code.
+
+We don't need to keep the boolean to track if the cmsg was
+created. 0 is an invalid content type.
 
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: f7fa16d49837 ("tls: decrement decrypt_pending if no async completion will be called")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 49 ++++++++++++++++++++++++++----------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+ net/tls/tls_sw.c | 91 +++++++++++++++++++-----------------------------
+ 1 file changed, 36 insertions(+), 55 deletions(-)
 
 diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index fc1fa98d21937..c491cde30504e 100644
+index c491cde30504e..ca71a9f559b37 100644
 --- a/net/tls/tls_sw.c
 +++ b/net/tls/tls_sw.c
-@@ -44,6 +44,11 @@
- #include <net/strparser.h>
- #include <net/tls.h>
+@@ -1634,6 +1634,29 @@ static bool tls_sw_advance_skb(struct sock *sk, struct sk_buff *skb,
+ 	return true;
+ }
  
-+struct tls_decrypt_arg {
-+	bool zc;
-+	bool async;
-+};
++static int tls_record_content_type(struct msghdr *msg, struct tls_msg *tlm,
++				   u8 *control)
++{
++	int err;
 +
- noinline void tls_err_abort(struct sock *sk, int err)
++	if (!*control) {
++		*control = tlm->control;
++		if (!*control)
++			return -EBADMSG;
++
++		err = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
++			       sizeof(*control), control);
++		if (*control != TLS_RECORD_TYPE_DATA) {
++			if (err || msg->msg_flags & MSG_CTRUNC)
++				return -EIO;
++		}
++	} else if (*control != tlm->control) {
++		return 0;
++	}
++
++	return 1;
++}
++
+ /* This function traverses the rx_list in tls receive context to copies the
+  * decrypted records into the buffer provided by caller zero copy is not
+  * true. Further, the records are removed from the rx_list if it is not a peek
+@@ -1642,31 +1665,23 @@ static bool tls_sw_advance_skb(struct sock *sk, struct sk_buff *skb,
+ static int process_rx_list(struct tls_sw_context_rx *ctx,
+ 			   struct msghdr *msg,
+ 			   u8 *control,
+-			   bool *cmsg,
+ 			   size_t skip,
+ 			   size_t len,
+ 			   bool zc,
+ 			   bool is_peek)
  {
- 	WARN_ON_ONCE(err >= 0);
-@@ -1415,7 +1420,7 @@ static int tls_setup_from_iter(struct iov_iter *from,
- static int decrypt_internal(struct sock *sk, struct sk_buff *skb,
- 			    struct iov_iter *out_iov,
- 			    struct scatterlist *out_sg,
--			    bool *zc, bool async)
-+			    struct tls_decrypt_arg *darg)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
-@@ -1432,7 +1437,7 @@ static int decrypt_internal(struct sock *sk, struct sk_buff *skb,
- 			     prot->tail_size;
- 	int iv_offset = 0;
+ 	struct sk_buff *skb = skb_peek(&ctx->rx_list);
+-	u8 ctrl = *control;
+-	u8 msgc = *cmsg;
+ 	struct tls_msg *tlm;
+ 	ssize_t copied = 0;
+-
+-	/* Set the record type in 'control' if caller didn't pass it */
+-	if (!ctrl && skb) {
+-		tlm = tls_msg(skb);
+-		ctrl = tlm->control;
+-	}
++	int err;
  
--	if (*zc && (out_iov || out_sg)) {
-+	if (darg->zc && (out_iov || out_sg)) {
- 		if (out_iov)
- 			n_sgout = iov_iter_npages(out_iov, INT_MAX) + 1;
- 		else
-@@ -1441,7 +1446,7 @@ static int decrypt_internal(struct sock *sk, struct sk_buff *skb,
- 				 rxm->full_len - prot->prepend_size);
- 	} else {
- 		n_sgout = 0;
--		*zc = false;
-+		darg->zc = false;
- 		n_sgin = skb_cow_data(skb, 0, &unused);
+ 	while (skip && skb) {
+ 		struct strp_msg *rxm = strp_msg(skb);
+ 		tlm = tls_msg(skb);
+ 
+-		/* Cannot process a record of different type */
+-		if (ctrl != tlm->control)
+-			return 0;
++		err = tls_record_content_type(msg, tlm, control);
++		if (err <= 0)
++			return err;
+ 
+ 		if (skip < rxm->full_len)
+ 			break;
+@@ -1682,27 +1697,12 @@ static int process_rx_list(struct tls_sw_context_rx *ctx,
+ 
+ 		tlm = tls_msg(skb);
+ 
+-		/* Cannot process a record of different type */
+-		if (ctrl != tlm->control)
+-			return 0;
+-
+-		/* Set record type if not already done. For a non-data record,
+-		 * do not proceed if record type could not be copied.
+-		 */
+-		if (!msgc) {
+-			int cerr = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
+-					    sizeof(ctrl), &ctrl);
+-			msgc = true;
+-			if (ctrl != TLS_RECORD_TYPE_DATA) {
+-				if (cerr || msg->msg_flags & MSG_CTRUNC)
+-					return -EIO;
+-
+-				*cmsg = msgc;
+-			}
+-		}
++		err = tls_record_content_type(msg, tlm, control);
++		if (err <= 0)
++			return err;
+ 
+ 		if (!zc || (rxm->full_len - skip) > len) {
+-			int err = skb_copy_datagram_msg(skb, rxm->offset + skip,
++			err = skb_copy_datagram_msg(skb, rxm->offset + skip,
+ 						    msg, chunk);
+ 			if (err < 0)
+ 				return err;
+@@ -1739,7 +1739,6 @@ static int process_rx_list(struct tls_sw_context_rx *ctx,
+ 		skb = next_skb;
  	}
  
-@@ -1531,12 +1536,12 @@ static int decrypt_internal(struct sock *sk, struct sk_buff *skb,
- fallback_to_reg_recv:
- 		sgout = sgin;
- 		pages = 0;
--		*zc = false;
-+		darg->zc = false;
- 	}
- 
- 	/* Prepare and submit AEAD request */
- 	err = tls_do_decryption(sk, skb, sgin, sgout, iv,
--				data_len, aead_req, async);
-+				data_len, aead_req, darg->async);
- 	if (err == -EINPROGRESS)
- 		return err;
- 
-@@ -1549,7 +1554,8 @@ static int decrypt_internal(struct sock *sk, struct sk_buff *skb,
+-	*control = ctrl;
+ 	return copied;
  }
  
- static int decrypt_skb_update(struct sock *sk, struct sk_buff *skb,
--			      struct iov_iter *dest, bool *zc, bool async)
-+			      struct iov_iter *dest,
-+			      struct tls_decrypt_arg *darg)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_prot_info *prot = &tls_ctx->prot_info;
-@@ -1558,7 +1564,7 @@ static int decrypt_skb_update(struct sock *sk, struct sk_buff *skb,
- 	int pad, err;
- 
- 	if (tlm->decrypted) {
--		*zc = false;
-+		darg->zc = false;
- 		return 0;
- 	}
- 
-@@ -1568,12 +1574,12 @@ static int decrypt_skb_update(struct sock *sk, struct sk_buff *skb,
- 			return err;
- 		if (err > 0) {
- 			tlm->decrypted = 1;
--			*zc = false;
-+			darg->zc = false;
- 			goto decrypt_done;
- 		}
- 	}
- 
--	err = decrypt_internal(sk, skb, dest, NULL, zc, async);
-+	err = decrypt_internal(sk, skb, dest, NULL, darg);
- 	if (err < 0) {
- 		if (err == -EINPROGRESS)
- 			tls_advance_record_sn(sk, prot, &tls_ctx->rx);
-@@ -1599,9 +1605,9 @@ static int decrypt_skb_update(struct sock *sk, struct sk_buff *skb,
- int decrypt_skb(struct sock *sk, struct sk_buff *skb,
- 		struct scatterlist *sgout)
- {
--	bool zc = true;
-+	struct tls_decrypt_arg darg = { .zc = true, };
- 
--	return decrypt_internal(sk, skb, NULL, sgout, &zc, false);
-+	return decrypt_internal(sk, skb, NULL, sgout, &darg);
- }
- 
- static bool tls_sw_advance_skb(struct sock *sk, struct sk_buff *skb,
-@@ -1790,11 +1796,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 	decrypted = 0;
- 	num_async = 0;
- 	while (len && (decrypted + copied < target || ctx->recv_pkt)) {
-+		struct tls_decrypt_arg darg = {};
- 		bool retain_skb = false;
- 		int to_decrypt, chunk;
--		bool zc = false;
--		bool async_capable;
--		bool async = false;
-+		bool async;
- 
- 		skb = tls_wait_data(sk, psock, flags & MSG_DONTWAIT, timeo, &err);
- 		if (!skb) {
-@@ -1820,16 +1825,15 @@ int tls_sw_recvmsg(struct sock *sk,
- 		    tlm->control == TLS_RECORD_TYPE_DATA &&
- 		    prot->version != TLS_1_3_VERSION &&
- 		    !bpf_strp_enabled)
--			zc = true;
-+			darg.zc = true;
- 
- 		/* Do not use async mode if record is non-data */
- 		if (tlm->control == TLS_RECORD_TYPE_DATA && !bpf_strp_enabled)
--			async_capable = ctx->async_capable;
-+			darg.async = ctx->async_capable;
- 		else
--			async_capable = false;
-+			darg.async = false;
- 
--		err = decrypt_skb_update(sk, skb, &msg->msg_iter,
--					 &zc, async_capable);
-+		err = decrypt_skb_update(sk, skb, &msg->msg_iter, &darg);
- 		if (err < 0 && err != -EINPROGRESS) {
- 			tls_err_abort(sk, -EBADMSG);
- 			goto recv_end;
-@@ -1875,7 +1879,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 		/* TLS 1.3 may have updated the length by more than overhead */
- 		chunk = rxm->full_len;
- 
--		if (!zc) {
-+		if (!darg.zc) {
- 			if (bpf_strp_enabled) {
- 				err = sk_psock_tls_strp_read(psock, skb);
- 				if (err != __SK_PASS) {
-@@ -1991,7 +1995,6 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	int err = 0;
+@@ -1761,7 +1760,6 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	struct tls_msg *tlm;
+ 	struct sk_buff *skb;
+ 	ssize_t copied = 0;
+-	bool cmsg = false;
+ 	int target, err = 0;
  	long timeo;
- 	int chunk;
--	bool zc = false;
+ 	bool is_kvec = iov_iter_is_kvec(&msg->msg_iter);
+@@ -1778,8 +1776,7 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	bpf_strp_enabled = sk_psock_strp_enabled(psock);
  
- 	lock_sock(sk);
+ 	/* Process pending decrypted records. It must be non-zero-copy */
+-	err = process_rx_list(ctx, msg, &control, &cmsg, 0, len, false,
+-			      is_peek);
++	err = process_rx_list(ctx, msg, &control, 0, len, false, is_peek);
+ 	if (err < 0) {
+ 		tls_err_abort(sk, err);
+ 		goto end;
+@@ -1851,26 +1848,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 		 * is known just after record is dequeued from stream parser.
+ 		 * For tls1.3, we disable async.
+ 		 */
+-
+-		if (!control)
+-			control = tlm->control;
+-		else if (control != tlm->control)
++		err = tls_record_content_type(msg, tlm, &control);
++		if (err <= 0)
+ 			goto recv_end;
  
-@@ -2001,12 +2004,14 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	if (from_queue) {
- 		skb = __skb_dequeue(&ctx->rx_list);
- 	} else {
-+		struct tls_decrypt_arg darg = {};
-+
- 		skb = tls_wait_data(sk, NULL, flags & SPLICE_F_NONBLOCK, timeo,
- 				    &err);
- 		if (!skb)
- 			goto splice_read_end;
+-		if (!cmsg) {
+-			int cerr;
+-
+-			cerr = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
+-					sizeof(control), &control);
+-			cmsg = true;
+-			if (control != TLS_RECORD_TYPE_DATA) {
+-				if (cerr || msg->msg_flags & MSG_CTRUNC) {
+-					err = -EIO;
+-					goto recv_end;
+-				}
+-			}
+-		}
+-
+ 		if (async) {
+ 			/* TLS 1.2-only, to_decrypt must be text length */
+ 			chunk = min_t(int, to_decrypt, len);
+@@ -1959,10 +1940,10 @@ int tls_sw_recvmsg(struct sock *sk,
  
--		err = decrypt_skb_update(sk, skb, NULL, &zc, false);
-+		err = decrypt_skb_update(sk, skb, NULL, &darg);
+ 		/* Drain records from the rx_list & copy if required */
+ 		if (is_peek || is_kvec)
+-			err = process_rx_list(ctx, msg, &control, &cmsg, copied,
++			err = process_rx_list(ctx, msg, &control, copied,
+ 					      decrypted, false, is_peek);
+ 		else
+-			err = process_rx_list(ctx, msg, &control, &cmsg, 0,
++			err = process_rx_list(ctx, msg, &control, 0,
+ 					      decrypted, true, is_peek);
  		if (err < 0) {
- 			tls_err_abort(sk, -EBADMSG);
- 			goto splice_read_end;
+ 			tls_err_abort(sk, err);
 -- 
 2.43.0
 
