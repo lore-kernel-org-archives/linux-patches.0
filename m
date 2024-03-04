@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE2F1F60A;
-	Mon,  4 Mar 2024 21:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC1079DCE;
+	Mon,  4 Mar 2024 21:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587803; cv=none; b=Ffn44s8awu7/hrAKYx/IYIxtaebHOiBxamI83jQjgsHp0myeTbdmc1E6XVO30KDktHVL7C35Xji4x1hnFUsDmYIXNgVq+iY0Mq+L69VcPavwCaWzH81HN+7/SfXXHa3x70HXbNlnCIjXctuqoFWOy7PoXQPEU9okVZfFsB3OQy0=
+	t=1709587806; cv=none; b=mZGJ6wL94kYYlf93CK208NWMOPfmaWeSZ9oGi1dWotgU6asC4qGt1NgC9wVQ4tFxjZjhtnI62eRnmCSSDD2IIONEYS7vkt7HKfHi2uJ/QflnBhjd1yHVirVpGr0ygksYAoduMaMSOYpxocDoNViVL7yz9zbCS6L1Tztqw8YRyxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587803; c=relaxed/simple;
-	bh=ZJBwGmk47ic449+qQnD+JLpO9z5oW7nb5N16ISZAkYc=;
+	s=arc-20240116; t=1709587806; c=relaxed/simple;
+	bh=S6omAwZ2CfFpilWItzQsSWP2wUDlksLr+NS3L9elFEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RU6DXlfc1rSelAGiknIpAqBipmBvE5buVIdyfZ5fiaDGLnIYGVFU8KuLp0KcrtybZ/4/GoK1COF75bEPSB1Vn7nZ2OhF42GUk6fQ2pn8THr91MZ5ZCvNEfLPacOLlF0rsRLm59w4tUxTPcVP+NvulyCaY2wziOuo4aGmQQp/hw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7Moknq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHMGAPhOL0iH+/ef67Wue4NFqueOSkzQ2lg1tKUGPBXDj7J7ZPIdY71wM2Kwu37zcNwwZGLvBdoCmKiAr6foDG0uQ/8gsxx+Rnw2gR3cBhYRmFL8QNYP19yhyTMOt/rVnStTjdksmb59+RNonfuDtOHhedec+TNB4IJSioF4Lp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+TLhfON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7Moknq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F625C433C7;
-	Mon,  4 Mar 2024 21:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+TLhfON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A561AC433C7;
+	Mon,  4 Mar 2024 21:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587803;
-	bh=ZJBwGmk47ic449+qQnD+JLpO9z5oW7nb5N16ISZAkYc=;
+	s=korg; t=1709587806;
+	bh=S6omAwZ2CfFpilWItzQsSWP2wUDlksLr+NS3L9elFEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7Moknq/dApOSYYjwD+QyhU3tc3zNA7e6zy8fRweP7F4aKVavSLIhWNbn2jxK+X43
-	 iJLxqayEMDOmIC3XnRKW+F4kfSkDIvhqZQ3+DkYdho5WnfAE4XlOTZTllAVb0RCm4V
-	 2fWqkkJo/KvyMjbNxczRdznMZvc6/XP8/GH5SjXc=
+	b=m+TLhfONtqW/2uLnpu3CUBr+5Y12p5GqXX1VntjBqrA/Cr+CPaJ52hfJlXoDgk+q0
+	 7rsPpJflwFSeHKW8by3dakwesTcrVKnKwuxDvGwBFZmEepEvCpfe24POxjMRjcn1jF
+	 LVm9GARmkRU3q5S6CEsA5SoFrdJfso08IzhKZpes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Ubisectech Sirius <bugreport@ubisectech.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 062/162] fbcon: always restore the old font data in fbcon_do_set_font()
-Date: Mon,  4 Mar 2024 21:22:07 +0000
-Message-ID: <20240304211553.833429338@linuxfoundation.org>
+	Dorai Ashok S A <dash.btrfs@inix.me>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.7 089/162] btrfs: send: dont issue unnecessary zero writes for trailing hole
+Date: Mon,  4 Mar 2024 21:22:34 +0000
+Message-ID: <20240304211554.681503330@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -56,95 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 00d6a284fcf3fad1b7e1b5bc3cd87cbfb60ce03f ]
+commit 5897710b28cabab04ea6c7547f27b7989de646ae upstream.
 
-Commit a5a923038d70 (fbdev: fbcon: Properly revert changes when
-vc_resize() failed) started restoring old font data upon failure (of
-vc_resize()). But it performs so only for user fonts. It means that the
-"system"/internal fonts are not restored at all. So in result, the very
-first call to fbcon_do_set_font() performs no restore at all upon
-failing vc_resize().
+If we have a sparse file with a trailing hole (from the last extent's end
+to i_size) and then create an extent in the file that ends before the
+file's i_size, then when doing an incremental send we will issue a write
+full of zeroes for the range that starts immediately after the new extent
+ends up to i_size. While this isn't incorrect because the file ends up
+with exactly the same data, it unnecessarily results in using extra space
+at the destination with one or more extents full of zeroes instead of
+having a hole. In same cases this results in using megabytes or even
+gigabytes of unnecessary space.
 
-This can be reproduced by Syzkaller to crash the system on the next
-invocation of font_get(). It's rather hard to hit the allocation failure
-in vc_resize() on the first font_set(), but not impossible. Esp. if
-fault injection is used to aid the execution/failure. It was
-demonstrated by Sirius:
-  BUG: unable to handle page fault for address: fffffffffffffff8
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD cb7b067 P4D cb7b067 PUD cb7d067 PMD 0
-  Oops: 0000 [#1] PREEMPT SMP KASAN
-  CPU: 1 PID: 8007 Comm: poc Not tainted 6.7.0-g9d1694dc91ce #20
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:fbcon_get_font+0x229/0x800 drivers/video/fbdev/core/fbcon.c:2286
-  Call Trace:
-   <TASK>
-   con_font_get drivers/tty/vt/vt.c:4558 [inline]
-   con_font_op+0x1fc/0xf20 drivers/tty/vt/vt.c:4673
-   vt_k_ioctl drivers/tty/vt/vt_ioctl.c:474 [inline]
-   vt_ioctl+0x632/0x2ec0 drivers/tty/vt/vt_ioctl.c:752
-   tty_ioctl+0x6f8/0x1570 drivers/tty/tty_io.c:2803
-   vfs_ioctl fs/ioctl.c:51 [inline]
-  ...
+Example, reproducer:
 
-So restore the font data in any case, not only for user fonts. Note the
-later 'if' is now protected by 'old_userfont' and not 'old_data' as the
-latter is always set now. (And it is supposed to be non-NULL. Otherwise
-we would see the bug above again.)
+   $ cat test.sh
+   #!/bin/bash
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
-Reported-and-tested-by: Ubisectech Sirius <bugreport@ubisectech.com>
-Cc: Ubisectech Sirius <bugreport@ubisectech.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240208114411.14604-1-jirislaby@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+   DEV=/dev/sdh
+   MNT=/mnt/sdh
+
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   # Create 1G sparse file.
+   xfs_io -f -c "truncate 1G" $MNT/foobar
+
+   # Create base snapshot.
+   btrfs subvolume snapshot -r $MNT $MNT/mysnap1
+
+   # Create send stream (full send) for the base snapshot.
+   btrfs send -f /tmp/1.snap $MNT/mysnap1
+
+   # Now write one extent at the beginning of the file and one somewhere
+   # in the middle, leaving a gap between the end of this second extent
+   # and the file's size.
+   xfs_io -c "pwrite -S 0xab 0 128K" \
+          -c "pwrite -S 0xcd 512M 128K" \
+          $MNT/foobar
+
+   # Now create a second snapshot which is going to be used for an
+   # incremental send operation.
+   btrfs subvolume snapshot -r $MNT $MNT/mysnap2
+
+   # Create send stream (incremental send) for the second snapshot.
+   btrfs send -p $MNT/mysnap1 -f /tmp/2.snap $MNT/mysnap2
+
+   # Now recreate the filesystem by receiving both send streams and
+   # verify we get the same content that the original filesystem had
+   # and file foobar has only two extents with a size of 128K each.
+   umount $MNT
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   btrfs receive -f /tmp/1.snap $MNT
+   btrfs receive -f /tmp/2.snap $MNT
+
+   echo -e "\nFile fiemap in the second snapshot:"
+   # Should have:
+   #
+   # 128K extent at file range [0, 128K[
+   # hole at file range [128K, 512M[
+   # 128K extent file range [512M, 512M + 128K[
+   # hole at file range [512M + 128K, 1G[
+   xfs_io -r -c "fiemap -v" $MNT/mysnap2/foobar
+
+   # File should be using 256K of data (two 128K extents).
+   echo -e "\nSpace used by the file: $(du -h $MNT/mysnap2/foobar | cut -f 1)"
+
+   umount $MNT
+
+Running the test, we can see with fiemap that we get an extent for the
+range [512M, 1G[, while in the source filesystem we have an extent for
+the range [512M, 512M + 128K[ and a hole for the rest of the file (the
+range [512M + 128K, 1G[):
+
+   $ ./test.sh
+   (...)
+   File fiemap in the second snapshot:
+   /mnt/sdh/mysnap2/foobar:
+    EXT: FILE-OFFSET        BLOCK-RANGE        TOTAL FLAGS
+      0: [0..255]:          26624..26879         256   0x0
+      1: [256..1048575]:    hole             1048320
+      2: [1048576..2097151]: 2156544..3205119 1048576   0x1
+
+   Space used by the file: 513M
+
+This happens because once we finish processing an inode, at
+finish_inode_if_needed(), we always issue a hole (write operations full
+of zeros) if there's a gap between the end of the last processed extent
+and the file's size, even if that range is already a hole in the parent
+snapshot. Fix this by issuing the hole only if the range is not already
+a hole.
+
+After this change, running the test above, we get the expected layout:
+
+   $ ./test.sh
+   (...)
+   File fiemap in the second snapshot:
+   /mnt/sdh/mysnap2/foobar:
+    EXT: FILE-OFFSET        BLOCK-RANGE      TOTAL FLAGS
+      0: [0..255]:          26624..26879       256   0x0
+      1: [256..1048575]:    hole             1048320
+      2: [1048576..1048831]: 26880..27135       256   0x1
+      3: [1048832..2097151]: hole             1048320
+
+   Space used by the file: 256K
+
+A test case for fstests will follow soon.
+
+CC: stable@vger.kernel.org # 6.1+
+Reported-by: Dorai Ashok S A <dash.btrfs@inix.me>
+Link: https://lore.kernel.org/linux-btrfs/c0bf7818-9c45-46a8-b3d3-513230d0c86e@inix.me/
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/btrfs/send.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 63af6ab034b5f..e6c45d585482f 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2400,11 +2400,9 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	struct fbcon_ops *ops = info->fbcon_par;
- 	struct fbcon_display *p = &fb_display[vc->vc_num];
- 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
--	char *old_data = NULL;
-+	u8 *old_data = vc->vc_font.data;
- 
- 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
--	if (p->userfont)
--		old_data = vc->vc_font.data;
- 	vc->vc_font.data = (void *)(p->fontdata = data);
- 	old_userfont = p->userfont;
- 	if ((p->userfont = userfont))
-@@ -2438,13 +2436,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 		update_screen(vc);
- 	}
- 
--	if (old_data && (--REFCOUNT(old_data) == 0))
-+	if (old_userfont && (--REFCOUNT(old_data) == 0))
- 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
- 	return 0;
- 
- err_out:
- 	p->fontdata = old_data;
--	vc->vc_font.data = (void *)old_data;
-+	vc->vc_font.data = old_data;
- 
- 	if (userfont) {
- 		p->userfont = old_userfont;
--- 
-2.43.0
-
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -6705,11 +6705,20 @@ static int finish_inode_if_needed(struct
+ 				if (ret)
+ 					goto out;
+ 			}
+-			if (sctx->cur_inode_last_extent <
+-			    sctx->cur_inode_size) {
+-				ret = send_hole(sctx, sctx->cur_inode_size);
+-				if (ret)
++			if (sctx->cur_inode_last_extent < sctx->cur_inode_size) {
++				ret = range_is_hole_in_parent(sctx,
++						      sctx->cur_inode_last_extent,
++						      sctx->cur_inode_size);
++				if (ret < 0) {
+ 					goto out;
++				} else if (ret == 0) {
++					ret = send_hole(sctx, sctx->cur_inode_size);
++					if (ret < 0)
++						goto out;
++				} else {
++					/* Range is already a hole, skip. */
++					ret = 0;
++				}
+ 			}
+ 		}
+ 		if (need_truncate) {
 
 
