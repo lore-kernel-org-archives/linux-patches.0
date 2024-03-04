@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1A91C6AB;
-	Mon,  4 Mar 2024 21:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2DC1C6AB;
+	Mon,  4 Mar 2024 21:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588787; cv=none; b=ipqUIemUNpoCVujMw76MzUKYUnRI5N5gX6dGSx+5JBiYyoK/RK36fqAJhmPZwRJD6elCCRR7Nr8md2Ro0K68ODJQgUZX3va38qpvKn0Om7VfSlJwgKoffvhtLL6tPMCRkcVDAHTFFLzVHNROpmr/lIekOC7L2QdTIPutKEiPOpI=
+	t=1709588790; cv=none; b=jAlHaqlbLfn0/ZEK7bhs5ehoYdz7MfmtxkPY0DVyf4kW99rDd21soCcYeCQuCTCowYxPdCJJUVPHk+mKAXhqMDCX7nFyw9s0fgzltq2xxkaak+aWEf4fkIErK7Xr7wTjL3t85mN8miinITcU7rzyHcWxl3D1uHVJgkA8U4FFKEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588787; c=relaxed/simple;
-	bh=UTuIVDMYcL3Yj8YnfPJXnl2w7S4JKSyFVERO2EGaxgo=;
+	s=arc-20240116; t=1709588790; c=relaxed/simple;
+	bh=57DxTgJzmRyyUblSpM+GWY86fQVE3mgG7pPqq/Xw3dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9MBr/Gfzx8VJUa3wZugga++eCXEb75ksniYbfRZMRZ5Gp+o9qXhbJsq6MTahPvBmH9CXeIBMAuk4aIaFbyY9gDkFjm5x8Yk98ZfOGIXN5BZncybC9zcvE24VUMp6pO4EPXJJATOXG57qQRi1LIZ95p4p6ZMgZgg+ckTw3R+6U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUoRnHv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1hl3ZOGbZRhuQczZ+VBNDyUVHXuXjDOH6nIct6buFYG1AgdqvF1XkQrlTumSOJRBDQr9uBumZbtdb5AkahRM6qRwn4vOwfb69+qbu8tHK///ATzMdDXvxhBbBJ9GiTWPlSeK520JVe15fE0rQSR7zL+sPJeHgaxBJ8Qtk6nd+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4EXknaT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUoRnHv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C31C433F1;
-	Mon,  4 Mar 2024 21:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4EXknaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845D0C433F1;
+	Mon,  4 Mar 2024 21:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588787;
-	bh=UTuIVDMYcL3Yj8YnfPJXnl2w7S4JKSyFVERO2EGaxgo=;
+	s=korg; t=1709588789;
+	bh=57DxTgJzmRyyUblSpM+GWY86fQVE3mgG7pPqq/Xw3dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lUoRnHv3dzPqnpyy65/RlVVwVQHuzz1IcERJtBInGx79Uc10GJG+B6f4dFHhbnY37
-	 Nm7izBu5Xpv0Bmr8s/+ev+6702D5tKPyhca/nME7lybwb8FARjZdYNvpfOkq2XPNgB
-	 xDOzjPiwFmYEut4NvviRWfmENHN019JSkOpEHGC0=
+	b=M4EXknaTT3QspNcfqgntIb+z9XvQ7cRzDtX33Ize+HxF3I381+zt1a/jMVejXnKfx
+	 W9Hr7WqNVBzp0RMSCHcag/e4lZflD1kKMij6LvFfG+0n8ydEEMllaa24Lz0CpwSlyX
+	 DN61K7jbLLltKHtCXNmD5yX8Rogh1cC3c4BBM+Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 072/215] tomoyo: fix UAF write bug in tomoyo_write_control()
-Date: Mon,  4 Mar 2024 21:22:15 +0000
-Message-ID: <20240304211559.264564763@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 073/215] ALSA: firewire-lib: fix to check cycle continuity
+Date: Mon,  4 Mar 2024 21:22:16 +0000
+Message-ID: <20240304211559.299733351@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,43 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 2f03fc340cac9ea1dc63cbf8c93dd2eb0f227815 upstream.
+commit 77ce96543b03f437c6b45f286d8110db2b6622a3 upstream.
 
-Since tomoyo_write_control() updates head->write_buf when write()
-of long lines is requested, we need to fetch head->write_buf after
-head->io_sem is held.  Otherwise, concurrent write() requests can
-cause use-after-free-write and double-free problems.
+The local helper function to compare the given pair of cycle count
+evaluates them. If the left value is less than the right value, the
+function returns negative value.
 
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Closes: https://lkml.kernel.org/r/CAEkJfYNDspuGxYx5kym8Lvp--D36CMDUErg4rxfWFJuPbbji8g@mail.gmail.com
-Fixes: bd03a3e4c9a9 ("TOMOYO: Add policy namespace support.")
-Cc:  <stable@vger.kernel.org> # Linux 3.1+
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+If the safe cycle is less than the current cycle, it is the case of
+cycle lost. However, it is not currently handled properly.
+
+This commit fixes the bug.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 705794c53b00 ("ALSA: firewire-lib: check cycle continuity")
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20240218033026.72577-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/tomoyo/common.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/firewire/amdtp-stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/tomoyo/common.c
-+++ b/security/tomoyo/common.c
-@@ -2648,13 +2648,14 @@ ssize_t tomoyo_write_control(struct tomo
- {
- 	int error = buffer_len;
- 	size_t avail_len = buffer_len;
--	char *cp0 = head->write_buf;
-+	char *cp0;
- 	int idx;
- 
- 	if (!head->write)
- 		return -EINVAL;
- 	if (mutex_lock_interruptible(&head->io_sem))
- 		return -EINTR;
-+	cp0 = head->write_buf;
- 	head->read_user_buf_avail = 0;
- 	idx = tomoyo_read_lock();
- 	/* Read a line and dispatch it to the policy handler. */
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -934,7 +934,7 @@ static int generate_device_pkt_descs(str
+ 				// to the reason.
+ 				unsigned int safe_cycle = increment_ohci_cycle_count(next_cycle,
+ 								IR_JUMBO_PAYLOAD_MAX_SKIP_CYCLES);
+-				lost = (compare_ohci_cycle_count(safe_cycle, cycle) > 0);
++				lost = (compare_ohci_cycle_count(safe_cycle, cycle) < 0);
+ 			}
+ 			if (lost) {
+ 				dev_err(&s->unit->device, "Detect discontinuity of cycle: %d %d\n",
 
 
