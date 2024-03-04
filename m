@@ -1,118 +1,196 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45091C687;
-	Mon,  4 Mar 2024 21:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BDB1C687;
+	Mon,  4 Mar 2024 21:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588057; cv=none; b=eutHh6RY30OTyU5J56GWEDSSdHGP2YYMbiGxOn/MMMA1sTgWdYyX2OE6g1uonVQEJghXMR7LFH7qQUNowX3xECoDmbF6vAziwA4EpxKlMqlGfZu3kreBdAayYiQpldGDTU3eqdfxqgUrUjyfyIwCj6n5IaShsoRT5yk4KPbv8Gg=
+	t=1709588060; cv=none; b=U9Mx69LEz5b3C4lDHHNS8aeo1s6FB8+lIIfDApw/7OJcx2dzWoRxsGD4C8qJ8VhSB2A+x+fK7aqUE7E4tPz7qUXjk7Uo5jGlSpumYuCd4VQCLWSEtN13ZUOCqPKrEIBMOP43PlT1Jier/1oqlrE2bOgWf7+E9OoS4z6k3BOZd6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588057; c=relaxed/simple;
-	bh=p4S53VepP7xT1CLxnieYXQl5NvuRz0K/0lJrBu2Um6Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAOCQBMpUy7TYDWUwe+tSlmQXQ3aRwx8pJf18haauOOBfjU5/orqe1SssUfp8cnbpO6dS6DGy6uxy2IDUKk02bBkvCXRdeQXlridVrLPsX8dxZvUqc2HJIxFT9tYJr3NJ5al64EIgqcB0XU7pDPgglvvJkJrptVSyJPmAfNfpNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKFA6n+4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709588060; c=relaxed/simple;
+	bh=VnKqfkwyAFyA+ZRicMXYrGEZ/VrBK3sumHKGFquZuN8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hl31QioWqD3GeP4elnPtpKd0g4B/gRggxqycftXvsGzD6fh/5e8S6hW5MmIEBBL1p7P0sHorCQW3IfFz/QwbTfmRxE4noY66NlQl0b9VINbJo/Oqoa9j/W7CGM3+XKbLxcP2B/yQeO/PoEsdC+m4IFabUXoBxsPt1IIiDzXn6d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtrSXnDM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKFA6n+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DA6C433C7;
-	Mon,  4 Mar 2024 21:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtrSXnDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7520C433C7;
+	Mon,  4 Mar 2024 21:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588057;
-	bh=p4S53VepP7xT1CLxnieYXQl5NvuRz0K/0lJrBu2Um6Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKFA6n+4SCJ4vocA/mxCb+9Mx3IyYPF+ZWQo+muEIsMx5TPjSYgMXzN80Y15Oy6qU
-	 1Dnc7ghOoLJjMcR9kXckY7uvxvRim8yqWmRQuhFPrIFZ+APUHlq9FwVA3GH0kfAxQQ
-	 RlM51wTtzpC/H8jdYYtpIWusTBEV2iFG4BYBu36k=
+	s=korg; t=1709588060;
+	bh=VnKqfkwyAFyA+ZRicMXYrGEZ/VrBK3sumHKGFquZuN8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=dtrSXnDMDQhEXh00AEjpMmutlYIUlTUUdNtNtLImxTzN03F7wBksL5kPTgIQgjC+2
+	 c2eYRoilj9asdZkcKgR6GDGDZGmafHjGqdH2UkwekroypSDyhZz0Npcbg5ExBxD+kC
+	 6LFsmlm7E68O7gBvNwfTfyLn5sp5PSqXBkaUYBPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 09/25] Bluetooth: Enforce validation on max value of connection interval
-Date: Mon,  4 Mar 2024 21:23:45 +0000
-Message-ID: <20240304211536.060034780@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 5.4 00/25] 5.4.271-rc1 review
+Date: Mon,  4 Mar 2024 21:23:36 +0000
+Message-ID: <20240304211535.741936181@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
-References: <20240304211535.741936181@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.271-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.271-rc1
+X-KernelTest-Deadline: 2024-03-06T21:15+00:00
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.4.271 release.
+There are 25 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
+Anything received after that time might be too late.
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.271-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
-[ Upstream commit e4b019515f950b4e6e5b74b2e1bb03a90cb33039 ]
+thanks,
 
-Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
-'Connection Parameter Update Procedure Invalid Parameters Central
-Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
+greg k-h
 
-That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
-connection interval updates"), but later got reverted due to devices
-like keyboards and mice may require low connection interval.
+-------------
+Pseudo-Shortlog of commits:
 
-So only validate the max value connection interval to pass the Test
-Suite, and let devices to request low connection interval if needed.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.271-rc1
 
-[0] https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=229869
+Arturas Moskvinas <arturas.moskvinas@gmail.com>
+    gpio: 74x164: Enable output pins after registers are reset
 
-Fixes: 68d19d7d9957 ("Revert "Bluetooth: validate BLE connection interval updates"")
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/bluetooth/hci_event.c  | 4 ++++
- net/bluetooth/l2cap_core.c | 8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+Oscar Salvador <osalvador@suse.de>
+    fs,hugetlb: fix NULL pointer dereference in hugetlbs_fill_super
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 6d1c7ec051a20..32793d22ba61c 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5769,6 +5769,10 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev,
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_UNKNOWN_CONN_ID);
- 
-+	if (max > hcon->le_conn_max_interval)
-+		return send_conn_param_neg_reply(hdev, handle,
-+						 HCI_ERROR_INVALID_LL_PARAMS);
-+
- 	if (hci_check_conn_params(min, max, latency, timeout))
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_INVALID_LL_PARAMS);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 61bf489265505..9c06f5ffd1b5f 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5331,7 +5331,13 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
- 
- 	memset(&rsp, 0, sizeof(rsp));
- 
--	err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	if (max > hcon->le_conn_max_interval) {
-+		BT_DBG("requested connection interval exceeds current bounds.");
-+		err = -EINVAL;
-+	} else {
-+		err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	}
-+
- 	if (err)
- 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
- 	else
--- 
-2.43.0
+Baokun Li <libaokun1@huawei.com>
+    cachefiles: fix memory leak in cachefiles_add_cache()
 
+Paolo Bonzini <pbonzini@redhat.com>
+    x86/cpu/intel: Detect TME keyid bits before setting MTRR mask registers
+
+Ivan Semenov <ivan@semenov.dev>
+    mmc: core: Fix eMMC initialization with 1-bit bus connection
+
+Curtis Klein <curtis.klein@hpe.com>
+    dmaengine: fsl-qdma: init irq after reg initialization
+
+Peng Ma <peng.ma@nxp.com>
+    dmaengine: fsl-qdma: fix SoC may hang on 16 byte unaligned read
+
+David Sterba <dsterba@suse.com>
+    btrfs: dev-replace: properly validate device names
+
+Johannes Berg <johannes.berg@intel.com>
+    wifi: nl80211: reject iftype change with mesh ID change
+
+Alexander Ofitserov <oficerovas@altlinux.org>
+    gtp: fix use-after-free and null-ptr-deref in gtp_newlink()
+
+David Howells <dhowells@redhat.com>
+    afs: Fix endless loop in directory parsing
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: Drop leftover snd-rtctimer stuff from Makefile
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx-i2c: Do not free non existing IRQ
+
+Arnd Bergmann <arnd@arndb.de>
+    efi/capsule-loader: fix incorrect allocation size
+
+Lin Ma <linma@zju.edu.cn>
+    rtnetlink: fix error logic of IFLA_BRIDGE_FLAGS writing back
+
+Ignat Korchagin <ignat@cloudflare.com>
+    netfilter: nf_tables: allow NFPROTO_INET in nft_(match/target)_validate()
+
+Kai-Heng Feng <kai.heng.feng@canonical.com>
+    Bluetooth: Enforce validation on max value of connection interval
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Fix handling of HCI_EV_IO_CAPA_REQUEST
+
+Ying Hsu <yinghsu@chromium.org>
+    Bluetooth: Avoid potential use-after-free in hci_error_reset
+
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+    net: usb: dm9601: fix wrong return value in dm9601_mdio_read
+
+Oleksij Rempel <linux@rempel-privat.de>
+    lan78xx: enable auto speed configuration for LAN7850 if no EEPROM is detected
+
+Eric Dumazet <edumazet@google.com>
+    ipv6: fix potential "struct net" leak in inet6_rtm_getaddr()
+
+Yunjian Wang <wangyunjian@huawei.com>
+    tun: Fix xdp_rxq_info's queue_index when detaching
+
+Florian Westphal <fw@strlen.de>
+    net: ip_tunnel: prevent perpetual headroom growth
+
+Ryosuke Yasuoka <ryasuoka@redhat.com>
+    netlink: Fix kernel-infoleak-after-free in __skb_datagram_iter
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                   |   4 +-
+ arch/x86/kernel/cpu/intel.c                | 178 +++++++++++++++--------------
+ drivers/dma/fsl-qdma.c                     |  25 ++--
+ drivers/firmware/efi/capsule-loader.c      |   2 +-
+ drivers/gpio/gpio-74x164.c                 |   4 +-
+ drivers/mmc/core/mmc.c                     |   2 +
+ drivers/net/gtp.c                          |  12 +-
+ drivers/net/tun.c                          |   1 +
+ drivers/net/usb/dm9601.c                   |   2 +-
+ drivers/net/usb/lan78xx.c                  |   3 +-
+ drivers/power/supply/bq27xxx_battery_i2c.c |   4 +-
+ fs/afs/dir.c                               |   4 +-
+ fs/btrfs/dev-replace.c                     |  24 +++-
+ fs/cachefiles/bind.c                       |   3 +
+ fs/hugetlbfs/inode.c                       |   6 +-
+ net/bluetooth/hci_core.c                   |   7 +-
+ net/bluetooth/hci_event.c                  |   9 +-
+ net/bluetooth/l2cap_core.c                 |   8 +-
+ net/core/rtnetlink.c                       |  11 +-
+ net/ipv4/ip_tunnel.c                       |  28 +++--
+ net/ipv6/addrconf.c                        |   7 +-
+ net/netfilter/nft_compat.c                 |  20 ++++
+ net/netlink/af_netlink.c                   |   2 +-
+ net/wireless/nl80211.c                     |   2 +
+ sound/core/Makefile                        |   1 -
+ 25 files changed, 226 insertions(+), 143 deletions(-)
 
 
