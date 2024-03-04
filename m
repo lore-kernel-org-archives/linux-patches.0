@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E7246BA0;
-	Mon,  4 Mar 2024 21:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6810F46BA0;
+	Mon,  4 Mar 2024 21:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588005; cv=none; b=NECarzBr4R3SoP/+Jz/9Ji4btYXGyjtz/t5Z8tNNBZ/wbOAEiz6zAaJyiLM6Tu7LsKVpox4ukYPdoux2xjoGPhRa/8teV7w/X8CSuaVHzyPRJ+qx3uGRxF8y50Frc5PWakRPEqDRjdrAxBoxoKh0XGzUzuXXxE3T0fGCK+t2a8I=
+	t=1709588008; cv=none; b=BcdABIXi1jqsDK12hbyIqPwT+wVVUIGQqtw0DE/2J/cJxzTmaKzgLjXlUOtRT88HxxUHXb4k6nXeJOsFG5Q6eAQ7/mAnXw8vDS26dV4lmYnjVNPmUGfFiuC1IH7NnIAW5/xifppVBI/RXWKZBkBtKE//9lGb1vrqFRlk4soEnAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588005; c=relaxed/simple;
-	bh=CC9BkcDaGEotCKVIFtAVv5Luf93OK7xSeSCGFjwdoSA=;
+	s=arc-20240116; t=1709588008; c=relaxed/simple;
+	bh=j0qgxw7OeYVUY79yhC7WH4Gl3xEqyNw8yckMxFcvwFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUobmtX6ZzqSNMsT6Y04PEG70PVKuFpzqDaz72YVUx8UoS7y0SEe3BSoA29vku0+qLlWGe/mbkRsg1Q6nVOGQMnLF7t4HVZZS37cno2fEa/qmDpUMoKVu7MKv3ic2PY2owlxK7pMQ2ltWXf1cQoohDFPZ+SzeAYHx3nNtzT7m2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckm1en/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HwXtFHW6+2FiU/OSgaNnsxqGzqFkh+1jG9aVHke4E82W2pdHsjtFkD+UXaghkRxIBNIwizApsJObaDYIvWtCac+x07jDyRv614JDjXNvASmf/7I9/Q1KLiYT+SqllDVCubosRQbWs7FEJZiaAEXRAzghc+AvmLtSHgOvJUuUK2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWqyxoSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckm1en/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394DAC433C7;
-	Mon,  4 Mar 2024 21:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWqyxoSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF53DC433F1;
+	Mon,  4 Mar 2024 21:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588005;
-	bh=CC9BkcDaGEotCKVIFtAVv5Luf93OK7xSeSCGFjwdoSA=;
+	s=korg; t=1709588008;
+	bh=j0qgxw7OeYVUY79yhC7WH4Gl3xEqyNw8yckMxFcvwFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckm1en/jwnByJx2DfPL3vyzszBd2/Nlporce4xcyc6estdFTY3LJsMLPzu4GeZ/Ko
-	 sAbmlMpU4aIv9TpG3ijk24DMyPsLS9MaWI7Od0u4Q8SDmsZDnMCVCevsbP6tuWAjgT
-	 5FA1uhIY2QLk2Bn019vXLjqyiDMuqhI4D6LXVTr8=
+	b=PWqyxoSqjMaQDDXraAuoM9QAR/FFXZW2Mp5uDe2tzIkz0iHxYRhDdfxh/x4yYKJ2t
+	 JJQC6g1G34l8XnWuIq3FEUnOcKQu1R2+uEo6TlHn44zxcWc2q6oATVY9mSvahkhEkG
+	 wS8JhbkoKdt5z0+lFmi50Tqdg7lQ0o+JpM69jmoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 11/25] rtnetlink: fix error logic of IFLA_BRIDGE_FLAGS writing back
-Date: Mon,  4 Mar 2024 21:23:47 +0000
-Message-ID: <20240304211536.119148478@linuxfoundation.org>
+Subject: [PATCH 5.4 12/25] efi/capsule-loader: fix incorrect allocation size
+Date: Mon,  4 Mar 2024 21:23:48 +0000
+Message-ID: <20240304211536.152680968@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -52,81 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 743ad091fb46e622f1b690385bb15e3cd3daf874 ]
+[ Upstream commit fccfa646ef3628097d59f7d9c1a3e84d4b6bb45e ]
 
-In the commit d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks
-IFLA_BRIDGE_MODE length"), an adjustment was made to the old loop logic
-in the function `rtnl_bridge_setlink` to enable the loop to also check
-the length of the IFLA_BRIDGE_MODE attribute. However, this adjustment
-removed the `break` statement and led to an error logic of the flags
-writing back at the end of this function.
+gcc-14 notices that the allocation with sizeof(void) on 32-bit architectures
+is not enough for a 64-bit phys_addr_t:
 
-if (have_flags)
-    memcpy(nla_data(attr), &flags, sizeof(flags));
-    // attr should point to IFLA_BRIDGE_FLAGS NLA !!!
+drivers/firmware/efi/capsule-loader.c: In function 'efi_capsule_open':
+drivers/firmware/efi/capsule-loader.c:295:24: error: allocation of insufficient size '4' for type 'phys_addr_t' {aka 'long long unsigned int'} with size '8' [-Werror=alloc-size]
+  295 |         cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
+      |                        ^
 
-Before the mentioned commit, the `attr` is granted to be IFLA_BRIDGE_FLAGS.
-However, this is not necessarily true fow now as the updated loop will let
-the attr point to the last NLA, even an invalid NLA which could cause
-overflow writes.
+Use the correct type instead here.
 
-This patch introduces a new variable `br_flag` to save the NLA pointer
-that points to IFLA_BRIDGE_FLAGS and uses it to resolve the mentioned
-error logic.
-
-Fixes: d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240227121128.608110-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/firmware/efi/capsule-loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index bb1a273840775..ee599636f817f 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4586,10 +4586,9 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct ifinfomsg *ifm;
- 	struct net_device *dev;
--	struct nlattr *br_spec, *attr = NULL;
-+	struct nlattr *br_spec, *attr, *br_flags_attr = NULL;
- 	int rem, err = -EOPNOTSUPP;
- 	u16 flags = 0;
--	bool have_flags = false;
- 
- 	if (nlmsg_len(nlh) < sizeof(*ifm))
- 		return -EINVAL;
-@@ -4607,11 +4606,11 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	br_spec = nlmsg_find_attr(nlh, sizeof(struct ifinfomsg), IFLA_AF_SPEC);
- 	if (br_spec) {
- 		nla_for_each_nested(attr, br_spec, rem) {
--			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !have_flags) {
-+			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !br_flags_attr) {
- 				if (nla_len(attr) < sizeof(flags))
- 					return -EINVAL;
- 
--				have_flags = true;
-+				br_flags_attr = attr;
- 				flags = nla_get_u16(attr);
- 			}
- 
-@@ -4655,8 +4654,8 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
+diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
+index b82cc8beac671..78c02717c368d 100644
+--- a/drivers/firmware/efi/capsule-loader.c
++++ b/drivers/firmware/efi/capsule-loader.c
+@@ -291,7 +291,7 @@ static int efi_capsule_open(struct inode *inode, struct file *file)
+ 		return -ENOMEM;
  	}
  
--	if (have_flags)
--		memcpy(nla_data(attr), &flags, sizeof(flags));
-+	if (br_flags_attr)
-+		memcpy(nla_data(br_flags_attr), &flags, sizeof(flags));
- out:
- 	return err;
- }
+-	cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
++	cap_info->phys = kzalloc(sizeof(phys_addr_t), GFP_KERNEL);
+ 	if (!cap_info->phys) {
+ 		kfree(cap_info->pages);
+ 		kfree(cap_info);
 -- 
 2.43.0
 
