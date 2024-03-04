@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBD81EB5A;
-	Mon,  4 Mar 2024 21:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7DA79950;
+	Mon,  4 Mar 2024 21:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589130; cv=none; b=HU5aUnxWaJYaTvOmL7akk7TGl9EyxCc5gKbq+yr8tELqQdSwMw35rP39YoDCKJe4URfmAtOPQnJrsyohY0GTIj1tc/XsEkhGgiNt4fTX1IvzGgXqzfDIOb++9XDpr/mLuLhEZYu+8K845JYmGe7P8jVeR6094rwqA5oN7UuA+0Q=
+	t=1709589132; cv=none; b=hC5Q7sgeOeZ//fW6Z8IBVwJZP6Px+DlDb5OfBHCcRe1TcSr6AL0ZZ+JxEE3S7rf4bZZ/GM7rwMsY7bR69pwHReaYsAotOI5QxgISbJvfmkCsXuXNgGrgbGBr/5iwQujqMVMRDUYJmtZIeMkk6kvGKeeBaIVLxrY6l+YNGYjB8Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589130; c=relaxed/simple;
-	bh=ayZQnL6EvrPfImgG4OiUK4wNRmVSYu0ai2MQLvCLJ9w=;
+	s=arc-20240116; t=1709589132; c=relaxed/simple;
+	bh=YxrDZW0yiJ5h1TMhc8IcSGdBv4dMoatjw899kjtkHpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjZV60QcskCcN66UY2J6I+lbOPuG8wqNGF61QfRMabWaxtGOHh7Sqr4U8gKtGsR3PSYW1kTN0eYqH6lLMZAJ216NaxXztERbnLBUjk0podW217glnQXwhymbf+pWVuHQaaYkFppDBJwKVfFtOkoZkorq44ONi8ipSPIM0BZ9sro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRr339sQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbIl6kjfH/xCZ1kRNgALNrqaLrjW6LCPWUcbCNRaPuSkGhHTj+Q7EU4gGtjAGKnX4UVcnsnkcaPAC5rKfqBN2Jq9czlMSQdSgCyrK7WuLayf8zuWY4JNJqFN4G/tvBwAxZvwIMd4EOuqo+MQ6th9PwJX+58SPE60bnlQaX/3rtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PONd86HJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRr339sQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A7FC433C7;
-	Mon,  4 Mar 2024 21:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PONd86HJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D64FC433F1;
+	Mon,  4 Mar 2024 21:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589129;
-	bh=ayZQnL6EvrPfImgG4OiUK4wNRmVSYu0ai2MQLvCLJ9w=;
+	s=korg; t=1709589132;
+	bh=YxrDZW0yiJ5h1TMhc8IcSGdBv4dMoatjw899kjtkHpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRr339sQrZf3d5QWFrFHn/uyYsiio//6EFgdSrbzj1rUakxwastHLZcwJkkbo+Hh1
-	 7MrV+8eLnZ8VZt9HlZz0QyZupQGLlBYLoDN5Uimoe6hnn+2v6DziY72yv+5vTfpGQI
-	 TeZrR/aGZuhZIvj726vrRctS4ZWg+M3pZibxfs+8=
+	b=PONd86HJs7O4MBhqtga8lgRPtB5CwHNWhhd+irkc1wPBUkPu1uCKqHCWGetVNOd2X
+	 +hWNcuKaSbGKSRolOp0ywjeS3KvO1/TtJn14GcSJWKsnjqCbgt/DIElA9fMmQxMJYc
+	 7TFa4XP9gRByOjy2nQn0Z4jE52anwXmJaxEHyO7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 173/215] NFSD: add CB_RECALL_ANY tracepoints
-Date: Mon,  4 Mar 2024 21:23:56 +0000
-Message-ID: <20240304211602.434774424@linuxfoundation.org>
+	Arturas Moskvinas <arturas.moskvinas@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 200/215] gpio: 74x164: Enable output pins after registers are reset
+Date: Mon,  4 Mar 2024 21:24:23 +0000
+Message-ID: <20240304211603.328264611@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,136 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Arturas Moskvinas <arturas.moskvinas@gmail.com>
 
-[ Upstream commit 638593be55c0b37a1930038460a9918215d5c24b ]
+[ Upstream commit 530b1dbd97846b110ea8a94c7cc903eca21786e5 ]
 
-Add tracepoints to trace start and end of CB_RECALL_ANY operation.
+Chip outputs are enabled[1] before actual reset is performed[2] which might
+cause pin output value to flip flop if previous pin value was set to 1.
+Fix that behavior by making sure chip is fully reset before all outputs are
+enabled.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-[ cel: added show_rca_mask() macro ]
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Flip-flop can be noticed when module is removed and inserted again and one of
+the pins was changed to 1 before removal. 100 microsecond flipping is
+noticeable on oscilloscope (100khz SPI bus).
+
+For a properly reset chip - output is enabled around 100 microseconds (on 100khz
+SPI bus) later during probing process hence should be irrelevant behavioral
+change.
+
+Fixes: 7ebc194d0fd4 (gpio: 74x164: Introduce 'enable-gpios' property)
+Link: https://elixir.bootlin.com/linux/v6.7.4/source/drivers/gpio/gpio-74x164.c#L130 [1]
+Link: https://elixir.bootlin.com/linux/v6.7.4/source/drivers/gpio/gpio-74x164.c#L150 [2]
+Signed-off-by: Arturas Moskvinas <arturas.moskvinas@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c      |    2 +
- fs/nfsd/trace.h          |   50 +++++++++++++++++++++++++++++++++++++++++++++++
- include/trace/misc/nfs.h |   12 +++++++++++
- 3 files changed, 64 insertions(+)
+ drivers/gpio/gpio-74x164.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2877,6 +2877,7 @@ static int
- nfsd4_cb_recall_any_done(struct nfsd4_callback *cb,
- 				struct rpc_task *task)
- {
-+	trace_nfsd_cb_recall_any_done(cb, task);
- 	switch (task->tk_status) {
- 	case -NFS4ERR_DELAY:
- 		rpc_delay(task, 2 * HZ);
-@@ -6254,6 +6255,7 @@ deleg_reaper(struct nfsd_net *nn)
- 		list_del_init(&clp->cl_ra_cblist);
- 		clp->cl_ra->ra_keep = 0;
- 		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG);
-+		trace_nfsd_cb_recall_any(clp->cl_ra);
- 		nfsd4_run_cb(&clp->cl_ra->ra_cb);
+diff --git a/drivers/gpio/gpio-74x164.c b/drivers/gpio/gpio-74x164.c
+index e00c333105170..753e7be039e4d 100644
+--- a/drivers/gpio/gpio-74x164.c
++++ b/drivers/gpio/gpio-74x164.c
+@@ -127,8 +127,6 @@ static int gen_74x164_probe(struct spi_device *spi)
+ 	if (IS_ERR(chip->gpiod_oe))
+ 		return PTR_ERR(chip->gpiod_oe);
+ 
+-	gpiod_set_value_cansleep(chip->gpiod_oe, 1);
+-
+ 	spi_set_drvdata(spi, chip);
+ 
+ 	chip->gpio_chip.label = spi->modalias;
+@@ -153,6 +151,8 @@ static int gen_74x164_probe(struct spi_device *spi)
+ 		goto exit_destroy;
  	}
- }
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -9,9 +9,12 @@
- #define _NFSD_TRACE_H
  
- #include <linux/tracepoint.h>
-+#include <linux/sunrpc/xprt.h>
-+#include <trace/misc/nfs.h>
- 
- #include "export.h"
- #include "nfsfh.h"
-+#include "xdr4.h"
- 
- #define NFSD_TRACE_PROC_RES_FIELDS \
- 		__field(unsigned int, netns_ino) \
-@@ -1492,6 +1495,32 @@ TRACE_EVENT(nfsd_cb_offload,
- 		__entry->fh_hash, __entry->count, __entry->status)
- );
- 
-+TRACE_EVENT(nfsd_cb_recall_any,
-+	TP_PROTO(
-+		const struct nfsd4_cb_recall_any *ra
-+	),
-+	TP_ARGS(ra),
-+	TP_STRUCT__entry(
-+		__field(u32, cl_boot)
-+		__field(u32, cl_id)
-+		__field(u32, keep)
-+		__field(unsigned long, bmval0)
-+		__sockaddr(addr, ra->ra_cb.cb_clp->cl_cb_conn.cb_addrlen)
-+	),
-+	TP_fast_assign(
-+		__entry->cl_boot = ra->ra_cb.cb_clp->cl_clientid.cl_boot;
-+		__entry->cl_id = ra->ra_cb.cb_clp->cl_clientid.cl_id;
-+		__entry->keep = ra->ra_keep;
-+		__entry->bmval0 = ra->ra_bmval[0];
-+		__assign_sockaddr(addr, &ra->ra_cb.cb_clp->cl_addr,
-+				  ra->ra_cb.cb_clp->cl_cb_conn.cb_addrlen);
-+	),
-+	TP_printk("addr=%pISpc client %08x:%08x keep=%u bmval0=%s",
-+		__get_sockaddr(addr), __entry->cl_boot, __entry->cl_id,
-+		__entry->keep, show_rca_mask(__entry->bmval0)
-+	)
-+);
++	gpiod_set_value_cansleep(chip->gpiod_oe, 1);
 +
- DECLARE_EVENT_CLASS(nfsd_cb_done_class,
- 	TP_PROTO(
- 		const stateid_t *stp,
-@@ -1531,6 +1560,27 @@ DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_notify
- DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_layout_done);
- DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_offload_done);
- 
-+TRACE_EVENT(nfsd_cb_recall_any_done,
-+	TP_PROTO(
-+		const struct nfsd4_callback *cb,
-+		const struct rpc_task *task
-+	),
-+	TP_ARGS(cb, task),
-+	TP_STRUCT__entry(
-+		__field(u32, cl_boot)
-+		__field(u32, cl_id)
-+		__field(int, status)
-+	),
-+	TP_fast_assign(
-+		__entry->status = task->tk_status;
-+		__entry->cl_boot = cb->cb_clp->cl_clientid.cl_boot;
-+		__entry->cl_id = cb->cb_clp->cl_clientid.cl_id;
-+	),
-+	TP_printk("client %08x:%08x status=%d",
-+		__entry->cl_boot, __entry->cl_id, __entry->status
-+	)
-+);
-+
- #endif /* _NFSD_TRACE_H */
- 
- #undef TRACE_INCLUDE_PATH
---- a/include/trace/misc/nfs.h
-+++ b/include/trace/misc/nfs.h
-@@ -360,6 +360,18 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
- 		{ IOMODE_RW,			"RW" }, \
- 		{ IOMODE_ANY,			"ANY" })
- 
-+#define show_rca_mask(x) \
-+	__print_flags(x, "|", \
-+		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
-+		{ BIT(RCA4_TYPE_MASK_WDATA_DLG),	"WDATA_DLG" }, \
-+		{ BIT(RCA4_TYPE_MASK_DIR_DLG),		"DIR_DLG" }, \
-+		{ BIT(RCA4_TYPE_MASK_FILE_LAYOUT),	"FILE_LAYOUT" }, \
-+		{ BIT(RCA4_TYPE_MASK_BLK_LAYOUT),	"BLK_LAYOUT" }, \
-+		{ BIT(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN),	"OBJ_LAYOUT_MIN" }, \
-+		{ BIT(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX),	"OBJ_LAYOUT_MAX" }, \
-+		{ BIT(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN),	"OTHER_LAYOUT_MIN" }, \
-+		{ BIT(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX),	"OTHER_LAYOUT_MAX" })
-+
- #define show_nfs4_seq4_status(x) \
- 	__print_flags(x, "|", \
- 		{ SEQ4_STATUS_CB_PATH_DOWN,		"CB_PATH_DOWN" }, \
+ 	ret = gpiochip_add_data(&chip->gpio_chip, chip);
+ 	if (!ret)
+ 		return 0;
+-- 
+2.43.0
+
 
 
