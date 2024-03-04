@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADA47B3DE;
-	Mon,  4 Mar 2024 21:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665B37C082;
+	Mon,  4 Mar 2024 21:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587866; cv=none; b=vEY0gpmpNnDCN304VaLcJkb5f+Fg72wV9MYUoTUWw0rRMH00uJRd8RbvMBgxVQx4wEQMe96sjnlHWOgMiyEJBHEfUPYRDQDoOXc++w+IcZWyYcXFBLqizR5zodQonVIV553V0AE+ZteylpeHViBumKF0vdYin0PXI5EMEd6Kro4=
+	t=1709587868; cv=none; b=Ad+1ELfzP7mfFk7p9astBrkkYHgeq9PWFHfPvm1fWjNgpu2tUAJSwq9FwbGlHpXP3AFd7q0FuQgnKe9+70mfjZCakFX3p09V4ilHcX4HA9ZaYoohwcs1W2Qig3KgsdUVXayeiHvF7LRv0lbJcMajXvhEj+4DqNL/j6eK0qkpQEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587866; c=relaxed/simple;
-	bh=/OqL8W465GhakLur0dVe15oCJkGyFHkBJrDzvPEdZQE=;
+	s=arc-20240116; t=1709587868; c=relaxed/simple;
+	bh=HzW3cvsD1LllZ/81BdyWAI5b662q2UYbUHEj/B4aRBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHca4hxsNGNmIqKsOEBC+Clkey/lE0XQt+G2nnkOSnlr8zINcXxeN/yNRPkEZm9Z/71/Dpc0i4gZst1YHJ+LlXXqgmUeKpS87gQJTTm0/rE3eTnTuNLgQrArnkS2C7mLvK1QOBTrItwFvSGcMlTcw0ypDBHm2AoR9FEbPNCRKCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQUek0KB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIthnMe/fe/9wtTGTu9iZl4Ea74GMa7LczNUy37lH1/1hJG8h8OM+k/LePrbfbjnOZHGqw+LxaN2LrJxqvfI8U1MmOKASP2SgwI4wJ+eQODttL8luFDbpc25UxCYZR9dqOK7Wwdf4VxDgZaiorDBfaY4QMjPTeUgkwDOATeElOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hV7Qryep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQUek0KB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B582C433C7;
-	Mon,  4 Mar 2024 21:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hV7Qryep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C12C433F1;
+	Mon,  4 Mar 2024 21:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587865;
-	bh=/OqL8W465GhakLur0dVe15oCJkGyFHkBJrDzvPEdZQE=;
+	s=korg; t=1709587868;
+	bh=HzW3cvsD1LllZ/81BdyWAI5b662q2UYbUHEj/B4aRBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQUek0KBX+xgfUuFRWuuM9fYJBSFrW2pitl079w28lxLfNq4PWvyV39FH+//V6+mn
-	 tL5QMNDvDIlS21Z5W+KpQjxUuf74qHZHVj1YnuRT1T/VAZ3bTqA3/gRiFrXbRjPl82
-	 AhpxYBv9akHqEjJES1loideRGWOeizrAa/zlG0Ik=
+	b=hV7Qryep3y+oWd7lI87T5crwTAyq8EnKYeRMGT0mQkJXZovFjGszIvWZmmHWg4nV4
+	 cMOg3MxCCyHkQDVwR7VW8VC9PfQAFybI3BP0LjzfOZ1X+IugKjlA4DRB+GvGv9K0wU
+	 /GffK+j3ZSmMsZR1nXYMYFapj8LDf5WXfWWWwtss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Ma <peng.ma@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.7 095/162] dmaengine: fsl-qdma: fix SoC may hang on 16 byte unaligned read
-Date: Mon,  4 Mar 2024 21:22:40 +0000
-Message-ID: <20240304211554.885787468@linuxfoundation.org>
+	syzbot+f1ceaa1a09ab891e1934@syzkaller.appspotmail.com,
+	Eric Biggers <ebiggers@google.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.7 096/162] crypto: arm64/neonbs - fix out-of-bounds access on short input
+Date: Mon,  4 Mar 2024 21:22:41 +0000
+Message-ID: <20240304211554.913615595@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,54 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Ma <peng.ma@nxp.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 9d739bccf261dd93ec1babf82f5c5d71dd4caa3e upstream.
+commit 1c0cf6d19690141002889d72622b90fc01562ce4 upstream.
 
-There is chip (ls1028a) errata:
+The bit-sliced implementation of AES-CTR operates on blocks of 128
+bytes, and will fall back to the plain NEON version for tail blocks or
+inputs that are shorter than 128 bytes to begin with.
 
-The SoC may hang on 16 byte unaligned read transactions by QDMA.
+It will call straight into the plain NEON asm helper, which performs all
+memory accesses in granules of 16 bytes (the size of a NEON register).
+For this reason, the associated plain NEON glue code will copy inputs
+shorter than 16 bytes into a temporary buffer, given that this is a rare
+occurrence and it is not worth the effort to work around this in the asm
+code.
 
-Unaligned read transactions initiated by QDMA may stall in the NOC
-(Network On-Chip), causing a deadlock condition. Stalled transactions will
-trigger completion timeouts in PCIe controller.
+The fallback from the bit-sliced NEON version fails to take this into
+account, potentially resulting in out-of-bounds accesses. So clone the
+same workaround, and use a temp buffer for short in/outputs.
 
-Workaround:
-Enable prefetch by setting the source descriptor prefetchable bit
-( SD[PF] = 1 ).
-
-Implement this workaround.
-
-Cc: stable@vger.kernel.org
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Peng Ma <peng.ma@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240201215007.439503-1-Frank.Li@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: fc074e130051 ("crypto: arm64/aes-neonbs-ctr - fallback to plain NEON for final chunk")
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+f1ceaa1a09ab891e1934@syzkaller.appspotmail.com
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-qdma.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/crypto/aes-neonbs-glue.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -109,6 +109,7 @@
- #define FSL_QDMA_CMD_WTHROTL_OFFSET	20
- #define FSL_QDMA_CMD_DSEN_OFFSET	19
- #define FSL_QDMA_CMD_LWC_OFFSET		16
-+#define FSL_QDMA_CMD_PF			BIT(17)
- 
- /* Field definition for Descriptor status */
- #define QDMA_CCDF_STATUS_RTE		BIT(5)
-@@ -384,7 +385,8 @@ static void fsl_qdma_comp_fill_memcpy(st
- 	qdma_csgf_set_f(csgf_dest, len);
- 	/* Descriptor Buffer */
- 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
--			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
-+			  FSL_QDMA_CMD_RWTTYPE_OFFSET) |
-+			  FSL_QDMA_CMD_PF;
- 	sdf->data = QDMA_SDDF_CMD(cmd);
- 
- 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
+--- a/arch/arm64/crypto/aes-neonbs-glue.c
++++ b/arch/arm64/crypto/aes-neonbs-glue.c
+@@ -227,8 +227,19 @@ static int ctr_encrypt(struct skcipher_r
+ 			src += blocks * AES_BLOCK_SIZE;
+ 		}
+ 		if (nbytes && walk.nbytes == walk.total) {
++			u8 buf[AES_BLOCK_SIZE];
++			u8 *d = dst;
++
++			if (unlikely(nbytes < AES_BLOCK_SIZE))
++				src = dst = memcpy(buf + sizeof(buf) - nbytes,
++						   src, nbytes);
++
+ 			neon_aes_ctr_encrypt(dst, src, ctx->enc, ctx->key.rounds,
+ 					     nbytes, walk.iv);
++
++			if (unlikely(nbytes < AES_BLOCK_SIZE))
++				memcpy(d, dst, nbytes);
++
+ 			nbytes = 0;
+ 		}
+ 		kernel_neon_end();
 
 
