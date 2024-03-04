@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4382211193;
-	Mon,  4 Mar 2024 21:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AAB11193;
+	Mon,  4 Mar 2024 21:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588466; cv=none; b=f062XagDWT03eIwppbMqLrd7RxmUn54RwpzJxOEmL1YFrBO0aLrDMK9Z9Bfvs8CaStOO7rgQYGmHqDbj82KE8hz5gyTDrpqhVT75o79ZjxiOttp2GhpxUtI2LCsyVoD8t5QZSFevWMgde3Lmerp/17Iv1BCcD52xoJFEG9+R1SU=
+	t=1709588469; cv=none; b=Oumwh7CtpfKIZ5rJxorjHRSstgDlP9MNPaMvJVw6HsB6Er+qEdo96g5eIRicOAWMU+wze9dqGMblwUIwbvpXo7UMeXeo0pPAEGCiK7H+KvZ4+GnBuzTXwnGiB51nBNORBcYtMdn6oa2KLuFBN0aXwJV6F27+7UhPXuLLrAUPgjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588466; c=relaxed/simple;
-	bh=dXH7xTM0+YlebJHtdKYlmmRcwvSp417lxRG5kxnv6co=;
+	s=arc-20240116; t=1709588469; c=relaxed/simple;
+	bh=kTQSZqsvZ77A16EAkWtiry/gb/I5BZ98F+XZ5ONa8P0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaOtjEd0NbRN1v1zqkz5iq+VU6avMjnN4A7ypZ1IgwwAusAd4/EZLqZaNoWMYmu7bXaSMDh4luRqGWr0xha2S+kIZ3RYgEkAdS7jcdxl8mk1Nd1jI2wWK0AHi5G/6wq7ijV2Z1I/7VKCvFxQchVDecJf4+GxeI9ilEzXy1u8gag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mw9b4PeV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WccEUJU5DXR8uGz4EA4YtJPXMADRX5wdYCZ5d0bfL0eFwrqnjCKeSzp9GubBRUSTKSCrIw0sh8hHbQ7FLjpa9BP+HnwQIS0AXlG8RVBBCGHBYMCGN0ol/nvX0b2WDBZ8hHmPE+aZ6DyUCLeSUXbd7ZpRYQ1Ef/lhPrpD04Bo784=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsR8X5D0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mw9b4PeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93DCC433F1;
-	Mon,  4 Mar 2024 21:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsR8X5D0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC80C433C7;
+	Mon,  4 Mar 2024 21:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588466;
-	bh=dXH7xTM0+YlebJHtdKYlmmRcwvSp417lxRG5kxnv6co=;
+	s=korg; t=1709588468;
+	bh=kTQSZqsvZ77A16EAkWtiry/gb/I5BZ98F+XZ5ONa8P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mw9b4PeVblr44Jwi8Kx3oB1M0K6MzNv9aDFto1nxo1yGv/4EfJPQ2hzWh5pREjzdb
-	 +tir2c60l364/aAzY13OXcfFOXLB2mPhQJ9QU5xM02qZ/d2pHOFCusWio+NIo/sLGw
-	 WZfAPiO36o+U+64vJ/WkuA1wUogjlmCfC4r93sdo=
+	b=XsR8X5D0hxymNCpM/ujWUv3r5smB9mWw/UH0m43d70TbuB43uyn44XLHH87EHRhji
+	 Lhb6Mdt0faC3yqr0/we0uUTI4yC6kvIQ0mtH1iVIQX40t4Q1VDsVqRhVo/vSfxhOmg
+	 /otTgs3xTOdEbBTEcmeDc6U1cxQ0cNs8yT9eLHM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Serge Semin <fancer.lancer@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Kory Maincent <kory.maincent@bootlin.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/143] dmaengine: dw-edma: Fix the ch_count hdma callback
-Date: Mon,  4 Mar 2024 21:23:58 +0000
-Message-ID: <20240304211553.691538280@linuxfoundation.org>
+Subject: [PATCH 6.6 119/143] dmaengine: dw-edma: Fix wrong interrupt bit set for HDMA
+Date: Mon,  4 Mar 2024 21:23:59 +0000
+Message-ID: <20240304211553.720128549@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -55,57 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit cd665bfc757c71e9b7e0abff0f362d8abd38a805 ]
+[ Upstream commit 7b52ba8616e978bf4f38f207f11a8176517244d0 ]
 
-The current check of ch_en enabled to know the maximum number of available
-hardware channels is wrong as it check the number of ch_en register set
-but all of them are unset at probe. This register is set at the
-dw_hdma_v0_core_start function which is run lately before a DMA transfer.
-
-The HDMA IP have no way to know the number of hardware channels available
-like the eDMA IP, then let set it to maximum channels and let the platform
-set the right number of channels.
+Instead of setting HDMA_V0_LOCAL_ABORT_INT_EN bit, HDMA_V0_LOCAL_STOP_INT_EN
+bit got set twice, due to which the abort interrupt is not getting generated for
+HDMA. Fix it by setting the correct interrupt enable bit.
 
 Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://lore.kernel.org/r/20240129-b4-feature_hdma_mainline-v7-1-8e8c1acb7a46@bootlin.com
+Link: https://lore.kernel.org/r/20240129-b4-feature_hdma_mainline-v7-2-8e8c1acb7a46@bootlin.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-hdma-v0-core.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-index 00b735a0202ab..1f4cb7db54756 100644
+index 1f4cb7db54756..108f9127aaaaf 100644
 --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
 +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-@@ -65,18 +65,12 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
- 
- static u16 dw_hdma_v0_core_ch_count(struct dw_edma *dw, enum dw_edma_dir dir)
- {
--	u32 num_ch = 0;
--	int id;
--
--	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
--		if (GET_CH_32(dw, id, dir, ch_en) & BIT(0))
--			num_ch++;
--	}
--
--	if (num_ch > HDMA_V0_MAX_NR_CH)
--		num_ch = HDMA_V0_MAX_NR_CH;
--
--	return (u16)num_ch;
-+	/*
-+	 * The HDMA IP have no way to know the number of hardware channels
-+	 * available, we set it to maximum channels and let the platform
-+	 * set the right number of channels.
-+	 */
-+	return HDMA_V0_MAX_NR_CH;
- }
- 
- static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+@@ -236,7 +236,7 @@ static void dw_hdma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 		/* Interrupt enable&unmask - done, abort */
+ 		tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup) |
+ 		      HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK |
+-		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_STOP_INT_EN;
++		      HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
+ 		SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
+ 		/* Channel control */
+ 		SET_CH_32(dw, chan->dir, chan->id, control1, HDMA_V0_LINKLIST_EN);
 -- 
 2.43.0
 
