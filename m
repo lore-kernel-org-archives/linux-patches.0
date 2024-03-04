@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E1A11193;
-	Mon,  4 Mar 2024 21:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA1761675;
+	Mon,  4 Mar 2024 21:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588782; cv=none; b=r/wqa/ugLILe0Qs+YCnl6bTVPlrh7yIw9cA8/NBoT9Wzo2sr69R9dUx2jzXFRGPsDjAhWBn4ynC9Jnrh8Z/L2iVrsE8wcaIPgBLyAV+cbtJB5CjixxrTlXnZaPZH1OZ3ABzLJ9L+QODgpHEeGKV/Wcwjf8488aufzWbSg2AF2ik=
+	t=1709588784; cv=none; b=tl5I6r6VT0UTN0oP7BqfcOz37skC0qgR9HaTfxf9rY0x1pPfXYzRmc7BNggpX2gmj3bVHwbn8VIX3nVsJtDr09lq2+ke2OtZ30Q2/tyvVNvSLff0pppjeZVsaZDQMpRCULiHRQu3ulNguZkh9xGFkggC+1Zp9dzSawU0yZ6MkxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588782; c=relaxed/simple;
-	bh=c5qA1cZgyhViFFWouX5E7j+Thl/HIxiq6gSq3ZeMAO0=;
+	s=arc-20240116; t=1709588784; c=relaxed/simple;
+	bh=/M08V7ypiaVQXObtpKoKIpbgmZX0mpYx0J+1S78BAck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZO/03nIlWB7JEKtgbX6xpgOF7yrudbimQNYW3B2zSu85xSKBpLVGQ7CpFk2hYrIv2FHv4swCxbGiy8aQ7mxRKRRBYo1xzvr+UVft+bzilNiYOJCkdKIrp1epROzriNjI2tCs/dUiUB1kMBYDnCN/YP/W1OD8Mrj3fxsYCQqgNYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldyLRwUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzVospiN+h09aV8ivXcMIcmlhQU5jYjZ/CpAmg9skyaL0rlJOyhPaow8HwMmSaNyg6RnFUpNzwePQfKIrVHJYQkrcEScpugp+nuX0JjPbFpZD4ljBZ7swCO8jb3Bt4qmup98+FhZ5eIJ9FqIFe1i7bmGiiqgaX1P4uwaI16C4E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEzwmfal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldyLRwUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBAEC433F1;
-	Mon,  4 Mar 2024 21:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEzwmfal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6CCC433F1;
+	Mon,  4 Mar 2024 21:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588782;
-	bh=c5qA1cZgyhViFFWouX5E7j+Thl/HIxiq6gSq3ZeMAO0=;
+	s=korg; t=1709588784;
+	bh=/M08V7ypiaVQXObtpKoKIpbgmZX0mpYx0J+1S78BAck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldyLRwUJsZeuy9K2bN88j5j+QyzWU0d+Cq1c6VhLqtgQ6iU8VEfSNfcRLEAvusZyz
-	 EJVnvsLkWwq8RvQ6LVdeP/aj3VRArdy2r2qPIUVeBKkOvAbE1MF6u2CNGzlJ8LiRP/
-	 7Vuu6XYRpyV5b0Ko3xJDzEUqA45VPOxwGPrx28XM=
+	b=yEzwmfal7x7Yi8ENZTWWldVYU8dP5v0T7nw/a3t73hEqXDNxaPE5tX4vq/2bSj+Du
+	 wVsDHwigVeGii8ss4oLtx1UZxGflphF/UKMhE5CTuUgMDQdQLdV2kteGnnxszO5FNv
+	 w/B8WahhXI5yLq19+mrmgb9xwPOXFybJB71s27OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Dimitris Vlachos <dvlachos@ics.forth.gr>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/215] riscv: Sparse-Memory/vmemmap out-of-bounds fix
-Date: Mon,  4 Mar 2024 21:22:13 +0000
-Message-ID: <20240304211559.205772451@linuxfoundation.org>
+Subject: [PATCH 6.1 071/215] of: property: fw_devlink: Fix stupid bug in remote-endpoint parsing
+Date: Mon,  4 Mar 2024 21:22:14 +0000
+Message-ID: <20240304211559.233592708@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -46,52 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dimitris Vlachos <dvlachos@ics.forth.gr>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit a11dd49dcb9376776193e15641f84fcc1e5980c9 ]
+[ Upstream commit 7cb50f6c9fbaa1c0b80100b8971bf13db5d75d06 ]
 
-Offset vmemmap so that the first page of vmemmap will be mapped
-to the first page of physical memory in order to ensure that
-vmemmap’s bounds will be respected during
-pfn_to_page()/page_to_pfn() operations.
-The conversion macros will produce correct SV39/48/57 addresses
-for every possible/valid DRAM_BASE inside the physical memory limits.
+Introduced a stupid bug in commit 782bfd03c3ae ("of: property: Improve
+finding the supplier of a remote-endpoint property") due to a last minute
+incorrect edit of "index !=0" into "!index". This patch fixes it to be
+"index > 0" to match the comment right next to it.
 
-v2:Address Alex's comments
-
-Suggested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
-Reported-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
-Closes: https://lore.kernel.org/linux-riscv/20240202135030.42265-1-csd4492@csd.uoc.gr
-Fixes: d95f1a542c3d ("RISC-V: Implement sparsemem")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240229191723.32779-1-dvlachos@ics.forth.gr
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://lore.kernel.org/lkml/20240223171849.10f9901d@booty/
+Fixes: 782bfd03c3ae ("of: property: Improve finding the supplier of a remote-endpoint property")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://lore.kernel.org/r/20240224052436.3552333-1-saravanak@google.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 2 +-
+ drivers/of/property.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 59bb53da473dd..63055c6ad2c25 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -79,7 +79,7 @@
-  * Define vmemmap for pfn_to_page & page_to_pfn calls. Needed if kernel
-  * is configured with CONFIG_SPARSEMEM_VMEMMAP enabled.
-  */
--#define vmemmap		((struct page *)VMEMMAP_START)
-+#define vmemmap		((struct page *)VMEMMAP_START - (phys_ram_base >> PAGE_SHIFT))
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index 33d5f16c81204..da5d712197704 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1332,7 +1332,7 @@ static struct device_node *parse_remote_endpoint(struct device_node *np,
+ 						 int index)
+ {
+ 	/* Return NULL for index > 0 to signify end of remote-endpoints. */
+-	if (!index || strcmp(prop_name, "remote-endpoint"))
++	if (index > 0 || strcmp(prop_name, "remote-endpoint"))
+ 		return NULL;
  
- #define PCI_IO_SIZE      SZ_16M
- #define PCI_IO_END       VMEMMAP_START
+ 	return of_graph_get_remote_port_parent(np);
 -- 
 2.43.0
 
