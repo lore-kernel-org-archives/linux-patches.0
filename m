@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA558F58;
-	Mon,  4 Mar 2024 21:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD498F58;
+	Mon,  4 Mar 2024 21:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588295; cv=none; b=EtD3i5my49cDT6KoPpwe/kaGq/n27EOw35pJny5kzMNszksJMuIl2czBw6mdHty9Ofexueg6JgQEdRGxn9IjIFKfkB08Bk7T3yqHjLfkhE96DurEwb0eQUTYX8jW0miDayCWYa0WWTRu3FDX98CL4cUcagziMvq6yWNjulYDP3A=
+	t=1709588297; cv=none; b=k6wCQELDNqx++0GbT4Kdl472hNRQVYumQJHvFUqKyJTiyGVI6LbreaK+gYqD57JD1lrcBMRXVV8Ygf/tnvJqMkiPRNMDeKKoLVIxlc07szN0N2wy2LHf9Zx7RcrCXYq0i+b1SHuiLTQYrMkO33C9lfSUIVVcNafKFOgTWQuVL7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588295; c=relaxed/simple;
-	bh=yCcdOca24ZmwLRW9aey4FOvOAVt0dB3+1ZquERhMwMQ=;
+	s=arc-20240116; t=1709588297; c=relaxed/simple;
+	bh=XpUgsN+l7ReqHCOikUuk9TIQTcn2q+d6DBMDZzdf9qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8PfJfL6eWKm3Q5C8GA/gAx3hAUjBIirSgaqQi4O0NRd/+VGf6RPP7CkzFjSh+w1S0axFiJaRuXTmnIJA0x3+y3as9t98TF1yck/Ez6dCxnRhkC/T4ri/guWslax5i0qO7f6xmgZI7H5jXOVu/9dlaMZnmDOvuHWZPZ94qy2e24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJigsFA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMWaptWAF/vESBn3SksQPUVj+iDmCabUKWwmxUgFX4Ys1zH3AZMrEWbQfEivWOWbJrZMw/bTLFX2Dp8wkhIsHs1SSjk3dA92XICwl+Oy5+9WMbJeyreN1vV7zurL1KLxOJNBXZrm0eXr0WTahUFUfN2Erv8fT9dt+FPwf1Xe8mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ds+sXWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJigsFA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208C4C433C7;
-	Mon,  4 Mar 2024 21:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ds+sXWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5A1C433F1;
+	Mon,  4 Mar 2024 21:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588294;
-	bh=yCcdOca24ZmwLRW9aey4FOvOAVt0dB3+1ZquERhMwMQ=;
+	s=korg; t=1709588297;
+	bh=XpUgsN+l7ReqHCOikUuk9TIQTcn2q+d6DBMDZzdf9qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJigsFA8fTbky+rmzdB5Zm+P6lz/bultkBLgYU0sQWfZx07dxOEhppRKd/EPoTjSw
-	 x+kjxiwUAKPXOladZYdiPIiPJVFU9S/S3kVQg5JLErIaYj/GBAwZ0Wq4Y/D1lKq3UZ
-	 HkBJLKjz5PJRdwDnDEa7RtubGWDU+c1bCQYpRqIs=
+	b=1Ds+sXWOD2ONEmLevpExNPUzLD6PylTKPkyncYqIwDwdEpY78snvqeR26lhBB2jzm
+	 2iMdA+bfAtE6r8YmRsVx3prj+l6y3Y0iwbNxH7/n4Pwq7v1rqiWO9PIX3dMSvxyeMk
+	 aEtQgN5SJ1pLEZv26UpkJjRPiUz+UmBa/CURtEsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/143] Bluetooth: Enforce validation on max value of connection interval
-Date: Mon,  4 Mar 2024 21:22:28 +0000
-Message-ID: <20240304211550.841474354@linuxfoundation.org>
+Subject: [PATCH 6.6 019/143] net: usb: dm9601: fix wrong return value in dm9601_mdio_read
+Date: Mon,  4 Mar 2024 21:22:19 +0000
+Message-ID: <20240304211550.551810609@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,66 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit e4b019515f950b4e6e5b74b2e1bb03a90cb33039 ]
+[ Upstream commit c68b2c9eba38ec3f60f4894b189090febf4d8d22 ]
 
-Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
-'Connection Parameter Update Procedure Invalid Parameters Central
-Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
+The MII code does not check the return value of mdio_read (among
+others), and therefore no error code should be sent. A previous fix to
+the use of an uninitialized variable propagates negative error codes,
+that might lead to wrong operations by the MII library.
 
-That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
-connection interval updates"), but later got reverted due to devices
-like keyboards and mice may require low connection interval.
+An example of such issues is the use of mii_nway_restart by the dm9601
+driver. The mii_nway_restart function does not check the value returned
+by mdio_read, which in this case might be a negative number which could
+contain the exact bit the function checks (BMCR_ANENABLE = 0x1000).
 
-So only validate the max value connection interval to pass the Test
-Suite, and let devices to request low connection interval if needed.
+Return zero in case of error, as it is common practice in users of
+mdio_read to avoid wrong uses of the return value.
 
-[0] https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=229869
-
-Fixes: 68d19d7d9957 ("Revert "Bluetooth: validate BLE connection interval updates"")
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 8f8abb863fa5 ("net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20240225-dm9601_ret_err-v1-1-02c1d959ea59@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c  | 4 ++++
- net/bluetooth/l2cap_core.c | 8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/usb/dm9601.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 58ce6e155d34a..bc383b680db87 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6797,6 +6797,10 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_UNKNOWN_CONN_ID);
+diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
+index 99ec1d4a972db..8b6d6a1b3c2ec 100644
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -232,7 +232,7 @@ static int dm9601_mdio_read(struct net_device *netdev, int phy_id, int loc)
+ 	err = dm_read_shared_word(dev, 1, loc, &res);
+ 	if (err < 0) {
+ 		netdev_err(dev->net, "MDIO read error: %d\n", err);
+-		return err;
++		return 0;
+ 	}
  
-+	if (max > hcon->le_conn_max_interval)
-+		return send_conn_param_neg_reply(hdev, handle,
-+						 HCI_ERROR_INVALID_LL_PARAMS);
-+
- 	if (hci_check_conn_params(min, max, latency, timeout))
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_INVALID_LL_PARAMS);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 60298975d5c45..656f49b299d20 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5613,7 +5613,13 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
- 
- 	memset(&rsp, 0, sizeof(rsp));
- 
--	err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	if (max > hcon->le_conn_max_interval) {
-+		BT_DBG("requested connection interval exceeds current bounds.");
-+		err = -EINVAL;
-+	} else {
-+		err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	}
-+
- 	if (err)
- 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
- 	else
+ 	netdev_dbg(dev->net,
 -- 
 2.43.0
 
