@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE1C1C6AB;
-	Mon,  4 Mar 2024 21:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936B71EB5A;
+	Mon,  4 Mar 2024 21:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589143; cv=none; b=SwW9J3CEdrDDWd5p3x5GftPdnbduZpgk2vBF7SogpEsR/bpTprx3bHvkXjTZU41CHkhYTymwbKEB1eXj9ZmkMPuOMuUKDeisPs1rCy9sCd28lh3qcqzFUPi7Y/NGLhxKWLFc0vWyZKjz90ufZSXojiIXKccMaU350S49l3k6FZw=
+	t=1709589145; cv=none; b=UG6k8xxRupTrX9MAH3vcFiSDOBvKBPxeU9nHH5ySRFGSjk4AMWigVXGzQ1inDGMA1fagpRG8AHPaawByE/hJs2LjNl4aCYy/H/85OLCPTQ2yB7EramWKoDOzAQJhmFyBSJVc3lzQEDrMvMYC6H/psNvUvWFLgCkgj2YTo3oPtMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589143; c=relaxed/simple;
-	bh=OZF6LD3usQ2OKU2ho360fAoTgOoR+vT1JDSHRg1jsF0=;
+	s=arc-20240116; t=1709589145; c=relaxed/simple;
+	bh=hMRi/NVCfiO2nxmaN92Bo8booXrwHr2rULJRWlpFwH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOtWApGfbmHt+WkV7NSzC5yXyrsxm0m8C/AdAM6K6WLnlI4e/twudJ9HXMCmT44ms+561KV46AnsmJ7GIb7CJbHDyqKAACoxRc7nI6f9WepuR+YWazQ86Q7Ap7aPyA+2/2iINmwptpvt/CtVKCTlbu4hY8Xjstry9ob1RcjZ8lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkuApbcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwEykCL1cKWCMJtczES6A5Ai3ZGe+IGI22L1VrjU2fRK/c2j/DGcWETARGQ1w5BAAVM4gkwigIT+lK1aUopPf50r1Qq0+C+42psepefdkTjN4STEIvx/LSB1k+Fw2CexKRxdG8wABi8cX+uc2/BEubKXXyYPfqdFiOj1nDjdu2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCmlWKFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkuApbcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E05EC433C7;
-	Mon,  4 Mar 2024 21:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCmlWKFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D82C433F1;
+	Mon,  4 Mar 2024 21:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589142;
-	bh=OZF6LD3usQ2OKU2ho360fAoTgOoR+vT1JDSHRg1jsF0=;
+	s=korg; t=1709589145;
+	bh=hMRi/NVCfiO2nxmaN92Bo8booXrwHr2rULJRWlpFwH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkuApbcUxWZP/zLhyf3bvTR+wOTd9LvYlTDW62bIYqVyikfdiHo3mLG62zjFLzpKc
-	 rQlQQQLIlMy7ctNJkCElD+6ceeLbSCOBVXBakZtbdquL/o17XqeZ5njByvemT18V6R
-	 Q7ebR+f+cfmZbCCoXEKu+rrHmW9jyJsj0msakAlg=
+	b=kCmlWKFLYWHwTzKNJ+FKB1vqPVaf2LCKYextCg2swika/ULuaRQRwCm9P+9ShEilW
+	 0/C+cPRy0R/7//z3pBLSCfeprtwrcUZ5tGbL1uTMVWoIB9t5/GHSiGxnccH+MMWqEx
+	 3S4Ibm3pqAqpg9ryP9kT2aQXRhLHkjErB552yHyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis DeLosSantos <louis.delos.devel@gmail.com>,
+	Martynas Pumputis <m@lambda.lt>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.1 212/215] bpf: Add table ID to bpf_fib_lookup BPF helper
-Date: Mon,  4 Mar 2024 21:24:35 +0000
-Message-ID: <20240304211603.711180329@linuxfoundation.org>
+Subject: [PATCH 6.1 213/215] bpf: Derive source IP addr via bpf_*_fib_lookup()
+Date: Mon,  4 Mar 2024 21:24:36 +0000
+Message-ID: <20240304211603.738799034@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,177 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis DeLosSantos <louis.delos.devel@gmail.com>
+From: Martynas Pumputis <m@lambda.lt>
 
-commit 8ad77e72caae22a1ddcfd0c03f2884929e93b7a4 upstream.
+commit dab4e1f06cabb6834de14264394ccab197007302 upstream.
 
-Add ability to specify routing table ID to the `bpf_fib_lookup` BPF
-helper.
+Extend the bpf_fib_lookup() helper by making it to return the source
+IPv4/IPv6 address if the BPF_FIB_LOOKUP_SRC flag is set.
 
-A new field `tbid` is added to `struct bpf_fib_lookup` used as
-parameters to the `bpf_fib_lookup` BPF helper.
+For example, the following snippet can be used to derive the desired
+source IP address:
 
-When the helper is called with the `BPF_FIB_LOOKUP_DIRECT` and
-`BPF_FIB_LOOKUP_TBID` flags the `tbid` field in `struct bpf_fib_lookup`
-will be used as the table ID for the fib lookup.
+    struct bpf_fib_lookup p = { .ipv4_dst = ip4->daddr };
 
-If the `tbid` does not exist the fib lookup will fail with
-`BPF_FIB_LKUP_RET_NOT_FWDED`.
+    ret = bpf_skb_fib_lookup(skb, p, sizeof(p),
+            BPF_FIB_LOOKUP_SRC | BPF_FIB_LOOKUP_SKIP_NEIGH);
+    if (ret != BPF_FIB_LKUP_RET_SUCCESS)
+        return TC_ACT_SHOT;
 
-The `tbid` field becomes a union over the vlan related output fields
-in `struct bpf_fib_lookup` and will be zeroed immediately after usage.
+    /* the p.ipv4_src now contains the source address */
 
-This functionality is useful in containerized environments.
+The inability to derive the proper source address may cause malfunctions
+in BPF-based dataplanes for hosts containing netdevs with more than one
+routable IP address or for multi-homed hosts.
 
-For instance, if a CNI wants to dictate the next-hop for traffic leaving
-a container it can create a container-specific routing table and perform
-a fib lookup against this table in a "host-net-namespace-side" TC program.
+For example, Cilium implements packet masquerading in BPF. If an
+egressing netdev to which the Cilium's BPF prog is attached has
+multiple IP addresses, then only one [hardcoded] IP address can be used for
+masquerading. This breaks connectivity if any other IP address should have
+been selected instead, for example, when a public and private addresses
+are attached to the same egress interface.
 
-This functionality also allows `ip rule` like functionality at the TC
-layer, allowing an eBPF program to pick a routing table based on some
-aspect of the sk_buff.
+The change was tested with Cilium [1].
 
-As a concrete use case, this feature will be used in Cilium's SRv6 L3VPN
-datapath.
+Nikolay Aleksandrov helped to figure out the IPv6 addr selection.
 
-When egress traffic leaves a Pod an eBPF program attached by Cilium will
-determine which VRF the egress traffic should target, and then perform a
-FIB lookup in a specific table representing this VRF's FIB.
+[1]: https://github.com/cilium/cilium/pull/28283
 
-Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Signed-off-by: Martynas Pumputis <m@lambda.lt>
+Link: https://lore.kernel.org/r/20231007081415.33502-2-m@lambda.lt
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230505-bpf-add-tbid-fib-lookup-v2-1-0a31c22c748c@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/bpf.h       |   21 ++++++++++++++++++---
- net/core/filter.c              |   14 +++++++++++++-
- tools/include/uapi/linux/bpf.h |   21 ++++++++++++++++++---
- 3 files changed, 49 insertions(+), 7 deletions(-)
+ include/net/ipv6_stubs.h       |    5 +++++
+ include/uapi/linux/bpf.h       |   10 ++++++++++
+ net/core/filter.c              |   18 +++++++++++++++++-
+ net/ipv6/af_inet6.c            |    1 +
+ tools/include/uapi/linux/bpf.h |   10 ++++++++++
+ 5 files changed, 43 insertions(+), 1 deletion(-)
 
+--- a/include/net/ipv6_stubs.h
++++ b/include/net/ipv6_stubs.h
+@@ -85,6 +85,11 @@ struct ipv6_bpf_stub {
+ 			       sockptr_t optval, unsigned int optlen);
+ 	int (*ipv6_getsockopt)(struct sock *sk, int level, int optname,
+ 			       sockptr_t optval, sockptr_t optlen);
++	int (*ipv6_dev_get_saddr)(struct net *net,
++				  const struct net_device *dst_dev,
++				  const struct in6_addr *daddr,
++				  unsigned int prefs,
++				  struct in6_addr *saddr);
+ };
+ extern const struct ipv6_bpf_stub *ipv6_bpf_stub __read_mostly;
+ 
 --- a/include/uapi/linux/bpf.h
 +++ b/include/uapi/linux/bpf.h
-@@ -3109,6 +3109,10 @@ union bpf_attr {
-  *		**BPF_FIB_LOOKUP_DIRECT**
-  *			Do a direct table lookup vs full lookup using FIB
-  *			rules.
-+ *		**BPF_FIB_LOOKUP_TBID**
-+ *			Used with BPF_FIB_LOOKUP_DIRECT.
-+ *			Use the routing table ID present in *params*->tbid
-+ *			for the fib lookup.
-  *		**BPF_FIB_LOOKUP_OUTPUT**
-  *			Perform lookup from an egress perspective (default is
-  *			ingress).
-@@ -6687,6 +6691,7 @@ enum {
- 	BPF_FIB_LOOKUP_DIRECT  = (1U << 0),
+@@ -3121,6 +3121,11 @@ union bpf_attr {
+  *			and *params*->smac will not be set as output. A common
+  *			use case is to call **bpf_redirect_neigh**\ () after
+  *			doing **bpf_fib_lookup**\ ().
++ *		**BPF_FIB_LOOKUP_SRC**
++ *			Derive and set source IP addr in *params*->ipv{4,6}_src
++ *			for the nexthop. If the src addr cannot be derived,
++ *			**BPF_FIB_LKUP_RET_NO_SRC_ADDR** is returned. In this
++ *			case, *params*->dmac and *params*->smac are not set either.
+  *
+  *		*ctx* is either **struct xdp_md** for XDP programs or
+  *		**struct sk_buff** tc cls_act programs.
+@@ -6692,6 +6697,7 @@ enum {
  	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
  	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
-+	BPF_FIB_LOOKUP_TBID    = (1U << 3),
+ 	BPF_FIB_LOOKUP_TBID    = (1U << 3),
++	BPF_FIB_LOOKUP_SRC     = (1U << 4),
  };
  
  enum {
-@@ -6747,9 +6752,19 @@ struct bpf_fib_lookup {
- 		__u32		ipv6_dst[4];  /* in6_addr; network order */
+@@ -6704,6 +6710,7 @@ enum {
+ 	BPF_FIB_LKUP_RET_UNSUPP_LWT,   /* fwd requires encapsulation */
+ 	BPF_FIB_LKUP_RET_NO_NEIGH,     /* no neighbor entry for nh */
+ 	BPF_FIB_LKUP_RET_FRAG_NEEDED,  /* fragmentation required to fwd */
++	BPF_FIB_LKUP_RET_NO_SRC_ADDR,  /* failed to derive IP src addr */
+ };
+ 
+ struct bpf_fib_lookup {
+@@ -6738,6 +6745,9 @@ struct bpf_fib_lookup {
+ 		__u32	rt_metric;
  	};
  
--	/* output */
--	__be16	h_vlan_proto;
--	__be16	h_vlan_TCI;
-+	union {
-+		struct {
-+			/* output */
-+			__be16	h_vlan_proto;
-+			__be16	h_vlan_TCI;
-+		};
-+		/* input: when accompanied with the
-+		 * 'BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_TBID` flags, a
-+		 * specific routing table to use for the fib lookup.
-+		 */
-+		__u32	tbid;
-+	};
-+
- 	__u8	smac[6];     /* ETH_ALEN */
- 	__u8	dmac[6];     /* ETH_ALEN */
- };
++	/* input: source address to consider for lookup
++	 * output: source address result from lookup
++	 */
+ 	union {
+ 		__be32		ipv4_src;
+ 		__u32		ipv6_src[4];  /* in6_addr; network order */
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -5752,6 +5752,12 @@ static int bpf_ipv4_fib_lookup(struct ne
- 		u32 tbid = l3mdev_fib_table_rcu(dev) ? : RT_TABLE_MAIN;
- 		struct fib_table *tb;
+@@ -5809,6 +5809,9 @@ static int bpf_ipv4_fib_lookup(struct ne
+ 	params->rt_metric = res.fi->fib_priority;
+ 	params->ifindex = dev->ifindex;
  
-+		if (flags & BPF_FIB_LOOKUP_TBID) {
-+			tbid = params->tbid;
-+			/* zero out for vlan output */
-+			params->tbid = 0;
-+		}
++	if (flags & BPF_FIB_LOOKUP_SRC)
++		params->ipv4_src = fib_result_prefsrc(net, &res);
 +
- 		tb = fib_get_table(net, tbid);
- 		if (unlikely(!tb))
- 			return BPF_FIB_LKUP_RET_NOT_FWDED;
-@@ -5885,6 +5891,12 @@ static int bpf_ipv6_fib_lookup(struct ne
- 		u32 tbid = l3mdev_fib_table_rcu(dev) ? : RT_TABLE_MAIN;
- 		struct fib6_table *tb;
+ 	/* xdp and cls_bpf programs are run in RCU-bh so
+ 	 * rcu_read_lock_bh is not needed here
+ 	 */
+@@ -5951,6 +5954,18 @@ static int bpf_ipv6_fib_lookup(struct ne
+ 	params->rt_metric = res.f6i->fib6_metric;
+ 	params->ifindex = dev->ifindex;
  
-+		if (flags & BPF_FIB_LOOKUP_TBID) {
-+			tbid = params->tbid;
-+			/* zero out for vlan output */
-+			params->tbid = 0;
++	if (flags & BPF_FIB_LOOKUP_SRC) {
++		if (res.f6i->fib6_prefsrc.plen) {
++			*src = res.f6i->fib6_prefsrc.addr;
++		} else {
++			err = ipv6_bpf_stub->ipv6_dev_get_saddr(net, dev,
++								&fl6.daddr, 0,
++								src);
++			if (err)
++				return BPF_FIB_LKUP_RET_NO_SRC_ADDR;
 +		}
++	}
 +
- 		tb = ipv6_stub->fib6_get_table(net, tbid);
- 		if (unlikely(!tb))
- 			return BPF_FIB_LKUP_RET_NOT_FWDED;
-@@ -5957,7 +5969,7 @@ set_fwd_params:
+ 	if (flags & BPF_FIB_LOOKUP_SKIP_NEIGH)
+ 		goto set_fwd_params;
+ 
+@@ -5969,7 +5984,8 @@ set_fwd_params:
  #endif
  
  #define BPF_FIB_LOOKUP_MASK (BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_OUTPUT | \
--			     BPF_FIB_LOOKUP_SKIP_NEIGH)
-+			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID)
+-			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID)
++			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID | \
++			     BPF_FIB_LOOKUP_SRC)
  
  BPF_CALL_4(bpf_xdp_fib_lookup, struct xdp_buff *, ctx,
  	   struct bpf_fib_lookup *, params, int, plen, u32, flags)
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -1077,6 +1077,7 @@ static const struct ipv6_bpf_stub ipv6_b
+ 	.udp6_lib_lookup = __udp6_lib_lookup,
+ 	.ipv6_setsockopt = do_ipv6_setsockopt,
+ 	.ipv6_getsockopt = do_ipv6_getsockopt,
++	.ipv6_dev_get_saddr = ipv6_dev_get_saddr,
+ };
+ 
+ static int __init inet6_init(void)
 --- a/tools/include/uapi/linux/bpf.h
 +++ b/tools/include/uapi/linux/bpf.h
-@@ -3109,6 +3109,10 @@ union bpf_attr {
-  *		**BPF_FIB_LOOKUP_DIRECT**
-  *			Do a direct table lookup vs full lookup using FIB
-  *			rules.
-+ *		**BPF_FIB_LOOKUP_TBID**
-+ *			Used with BPF_FIB_LOOKUP_DIRECT.
-+ *			Use the routing table ID present in *params*->tbid
-+ *			for the fib lookup.
-  *		**BPF_FIB_LOOKUP_OUTPUT**
-  *			Perform lookup from an egress perspective (default is
-  *			ingress).
-@@ -6687,6 +6691,7 @@ enum {
- 	BPF_FIB_LOOKUP_DIRECT  = (1U << 0),
+@@ -3121,6 +3121,11 @@ union bpf_attr {
+  *			and *params*->smac will not be set as output. A common
+  *			use case is to call **bpf_redirect_neigh**\ () after
+  *			doing **bpf_fib_lookup**\ ().
++ *		**BPF_FIB_LOOKUP_SRC**
++ *			Derive and set source IP addr in *params*->ipv{4,6}_src
++ *			for the nexthop. If the src addr cannot be derived,
++ *			**BPF_FIB_LKUP_RET_NO_SRC_ADDR** is returned. In this
++ *			case, *params*->dmac and *params*->smac are not set either.
+  *
+  *		*ctx* is either **struct xdp_md** for XDP programs or
+  *		**struct sk_buff** tc cls_act programs.
+@@ -6692,6 +6697,7 @@ enum {
  	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
  	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
-+	BPF_FIB_LOOKUP_TBID    = (1U << 3),
+ 	BPF_FIB_LOOKUP_TBID    = (1U << 3),
++	BPF_FIB_LOOKUP_SRC     = (1U << 4),
  };
  
  enum {
-@@ -6747,9 +6752,19 @@ struct bpf_fib_lookup {
- 		__u32		ipv6_dst[4];  /* in6_addr; network order */
+@@ -6704,6 +6710,7 @@ enum {
+ 	BPF_FIB_LKUP_RET_UNSUPP_LWT,   /* fwd requires encapsulation */
+ 	BPF_FIB_LKUP_RET_NO_NEIGH,     /* no neighbor entry for nh */
+ 	BPF_FIB_LKUP_RET_FRAG_NEEDED,  /* fragmentation required to fwd */
++	BPF_FIB_LKUP_RET_NO_SRC_ADDR,  /* failed to derive IP src addr */
+ };
+ 
+ struct bpf_fib_lookup {
+@@ -6738,6 +6745,9 @@ struct bpf_fib_lookup {
+ 		__u32	rt_metric;
  	};
  
--	/* output */
--	__be16	h_vlan_proto;
--	__be16	h_vlan_TCI;
-+	union {
-+		struct {
-+			/* output */
-+			__be16	h_vlan_proto;
-+			__be16	h_vlan_TCI;
-+		};
-+		/* input: when accompanied with the
-+		 * 'BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_TBID` flags, a
-+		 * specific routing table to use for the fib lookup.
-+		 */
-+		__u32	tbid;
-+	};
-+
- 	__u8	smac[6];     /* ETH_ALEN */
- 	__u8	dmac[6];     /* ETH_ALEN */
- };
++	/* input: source address to consider for lookup
++	 * output: source address result from lookup
++	 */
+ 	union {
+ 		__be32		ipv4_src;
+ 		__u32		ipv6_src[4];  /* in6_addr; network order */
 
 
