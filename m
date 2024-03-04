@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1605411193;
-	Mon,  4 Mar 2024 21:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1002B11193;
+	Mon,  4 Mar 2024 21:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588777; cv=none; b=SKC0Mj9Q5Kqv5Pl/5bn9YJ5m6ZKAed1s1zmsCXDu9IunhbZkY+yYJILQ+Gp7axEp6YmJBFPhBAts7CEP0yesG48O1dudQAsxh2GCWIy4qodC+m0xuFfRuKwFdPvqXxBQbzLQCcbjvx0bpXav//vIIC3dD4pf3ajxdyrbKY1MQEA=
+	t=1709588780; cv=none; b=h9ClsBZvunEGIEMMeplG2/UK1yorFz8uIyLFuL89oO2tYX+AQxcjXZ2K1uUmV0WAXuQKMFy6On2caVPnoPp5nGB+Yw4iTe+z3aUGUwxhzEszLNSrYE0HXEej/QDXXGDXikR0wS64JKaKVZaeW2Cm0CpnUByXieUBmzWa4xO+ctc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588777; c=relaxed/simple;
-	bh=iVoEuxbZ8eqrV7o8UOFRUqpTskaLk15ivPQm9QoL8h4=;
+	s=arc-20240116; t=1709588780; c=relaxed/simple;
+	bh=XX9L2IUUK7RZbJ4dC0uSa7cp809IDGOZpGaFKhr6zHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSd8pLCoaInpBKqWNZJ+Sx+evVz6MVrxED8Io3A6yvgzGYU9DHhfPVMrKhOcLPBF+rz9rSaRhiInU2uR9lu8PohzMkeAZJgPST3p/sEZWZ7YLjrAHWYbwerBqJ6OqW5DLTsuwWNe8wcrlhAYq8qhry1a9pEFm5bBRfNK8v7y+5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcJxgGBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERMEAqMrQ5hAY1WhE3jCabNGqZgPWwr6JL9LoryFmpbf/ITP+Zf2lEZz2SzODYzyiyoFj3Z/pNmBYAUSixCN8OxJj+45X/QOJ4dHBfO6B569wWuVdiH/IdkzvETveb5b+M+k9O4sp09v4BpxgUifqft7RQo8tgbmQonUf54i3Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVm1W46s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcJxgGBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B031C433C7;
-	Mon,  4 Mar 2024 21:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVm1W46s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED83C433F1;
+	Mon,  4 Mar 2024 21:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588777;
-	bh=iVoEuxbZ8eqrV7o8UOFRUqpTskaLk15ivPQm9QoL8h4=;
+	s=korg; t=1709588779;
+	bh=XX9L2IUUK7RZbJ4dC0uSa7cp809IDGOZpGaFKhr6zHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcJxgGBltjsgtORzofkXsSiWy7SL3TGiqtzQzGW8fY6lHrbG2sdrCTwtJzl5wJ/YX
-	 HXvVyIdOpkmHQ9tQXO9hbvS5KHyRjkknT0z6tNUGoFpnCn5LseapjdvrMlycsGfJ7k
-	 aZc4NCZPbGH+bNJwPhPxu155BKUNc7ihrxBRRTvo=
+	b=sVm1W46sD488e/zamdKqlu7elXsHML28pcywk8thKCITYpfW3N+Oo97m4jNZW1qk4
+	 Cw2iSzHf582jqwQS4nc4fSPmas/Tmk0wFSPHnBGqtXj8ZO/vfUv/Aw1DhtCKdPqpOE
+	 ft9nfkv37Mv7kCImrb7D/ZZfvcbt/ghfz0W9EfXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Zong Li <zong.li@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 092/215] riscv: add CALLER_ADDRx support
-Date: Mon,  4 Mar 2024 21:22:35 +0000
-Message-ID: <20240304211559.919748947@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 069/215] afs: Fix endless loop in directory parsing
+Date: Mon,  4 Mar 2024 21:22:12 +0000
+Message-ID: <20240304211559.173681925@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,122 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong Li <zong.li@sifive.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 680341382da56bd192ebfa4e58eaf4fec2e5bca7 upstream.
+[ Upstream commit 5f7a07646655fb4108da527565dcdc80124b14c4 ]
 
-CALLER_ADDRx returns caller's address at specified level, they are used
-for several tracers. These macros eventually use
-__builtin_return_address(n) to get the caller's address if arch doesn't
-define their own implementation.
+If a directory has a block with only ".__afsXXXX" files in it (from
+uncompleted silly-rename), these .__afsXXXX files are skipped but without
+advancing the file position in the dir_context.  This leads to
+afs_dir_iterate() repeating the block again and again.
 
-In RISC-V, __builtin_return_address(n) only works when n == 0, we need
-to walk the stack frame to get the caller's address at specified level.
+Fix this by making the code that skips the .__afsXXXX file also manually
+advance the file position.
 
-data.level started from 'level + 3' due to the call flow of getting
-caller's address in RISC-V implementation. If we don't have additional
-three iteration, the level is corresponding to follows:
+The symptoms are a soft lookup:
 
-callsite -> return_address -> arch_stack_walk -> walk_stackframe
-|           |                 |                  |
-level 3     level 2           level 1            level 0
+        watchdog: BUG: soft lockup - CPU#3 stuck for 52s! [check:5737]
+        ...
+        RIP: 0010:afs_dir_iterate_block+0x39/0x1fd
+        ...
+         ? watchdog_timer_fn+0x1a6/0x213
+        ...
+         ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+         ? afs_dir_iterate_block+0x39/0x1fd
+         afs_dir_iterate+0x10a/0x148
+         afs_readdir+0x30/0x4a
+         iterate_dir+0x93/0xd3
+         __do_sys_getdents64+0x6b/0xd4
 
-Fixes: 10626c32e382 ("riscv/ftrace: Add basic support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Link: https://lore.kernel.org/r/20240202015102.26251-1-zong.li@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is almost certainly the actual fix for:
+
+        https://bugzilla.kernel.org/show_bug.cgi?id=218496
+
+Fixes: 57e9d49c5452 ("afs: Hide silly-rename files from userspace")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/786185.1708694102@warthog.procyon.org.uk
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Markus Suvanto <markus.suvanto@gmail.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/ftrace.h    |    5 +++
- arch/riscv/kernel/Makefile         |    2 +
- arch/riscv/kernel/return_address.c |   48 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+)
- create mode 100644 arch/riscv/kernel/return_address.c
+ fs/afs/dir.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -25,6 +25,11 @@
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index cf811b77ee671..6e2c967fae6fc 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -478,8 +478,10 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+ 		    dire->u.name[0] == '.' &&
+ 		    ctx->actor != afs_lookup_filldir &&
+ 		    ctx->actor != afs_lookup_one_filldir &&
+-		    memcmp(dire->u.name, ".__afs", 6) == 0)
++		    memcmp(dire->u.name, ".__afs", 6) == 0) {
++			ctx->pos = blkoff + next * sizeof(union afs_xdr_dirent);
+ 			continue;
++		}
  
- #define ARCH_SUPPORTS_FTRACE_OPS 1
- #ifndef __ASSEMBLY__
-+
-+extern void *return_address(unsigned int level);
-+
-+#define ftrace_return_address(n) return_address(n)
-+
- void MCOUNT_NAME(void);
- static inline unsigned long ftrace_call_adjust(unsigned long addr)
- {
---- a/arch/riscv/kernel/Makefile
-+++ b/arch/riscv/kernel/Makefile
-@@ -7,6 +7,7 @@ ifdef CONFIG_FTRACE
- CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
- endif
- CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
- CFLAGS_compat_syscall_table.o += $(call cc-option,-Wno-override-init,)
-@@ -41,6 +42,7 @@ obj-y	+= irq.o
- obj-y	+= process.o
- obj-y	+= ptrace.o
- obj-y	+= reset.o
-+obj-y	+= return_address.o
- obj-y	+= setup.o
- obj-y	+= signal.o
- obj-y	+= syscall_table.o
---- /dev/null
-+++ b/arch/riscv/kernel/return_address.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * This code come from arch/arm64/kernel/return_address.c
-+ *
-+ * Copyright (C) 2023 SiFive.
-+ */
-+
-+#include <linux/export.h>
-+#include <linux/kprobes.h>
-+#include <linux/stacktrace.h>
-+
-+struct return_address_data {
-+	unsigned int level;
-+	void *addr;
-+};
-+
-+static bool save_return_addr(void *d, unsigned long pc)
-+{
-+	struct return_address_data *data = d;
-+
-+	if (!data->level) {
-+		data->addr = (void *)pc;
-+		return false;
-+	}
-+
-+	--data->level;
-+
-+	return true;
-+}
-+NOKPROBE_SYMBOL(save_return_addr);
-+
-+noinline void *return_address(unsigned int level)
-+{
-+	struct return_address_data data;
-+
-+	data.level = level + 3;
-+	data.addr = NULL;
-+
-+	arch_stack_walk(save_return_addr, &data, current, NULL);
-+
-+	if (!data.level)
-+		return data.addr;
-+	else
-+		return NULL;
-+
-+}
-+EXPORT_SYMBOL_GPL(return_address);
-+NOKPROBE_SYMBOL(return_address);
+ 		/* found the next entry */
+ 		if (!dir_emit(ctx, dire->u.name, nlen,
+-- 
+2.43.0
+
 
 
