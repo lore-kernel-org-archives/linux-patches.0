@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C68978B47;
-	Mon,  4 Mar 2024 21:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2D578B47;
+	Mon,  4 Mar 2024 21:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588730; cv=none; b=bWB9NHFzk5aZqxvOo9FWgw3hcDbpaXRuqJdBIRFkjBRDza4zGjk8nO2JYzf57hggfd7+poLMOPFnLI6UEDHb4tWDjMTo0nGZcjz8T+CUvxUxscBjjv6IRZ84l6eYvehsOHLEfxbNHhxaeXfqPUjv9SKWbHbaoDJAfwo+GIbjoBw=
+	t=1709588733; cv=none; b=Hiv/PFe96fhm2jPOgOlSxwh6X+3KXwPFQANensGAyGx+5HoRdSpzDguYFa+5CxQLQw/MaNyqMT117d/xRoN4S/L0ozjn0yzh1/zUyhM/wt73CdGK28Mqacz4XEUZuYgofn5YIXjofv11g9JQYfwPpgMdmUzq8DLUoQqVlvc1xNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588730; c=relaxed/simple;
-	bh=nN9/CObQss8LsizPgNZ82hvmTHj+X2XHJuZSNETqySc=;
+	s=arc-20240116; t=1709588733; c=relaxed/simple;
+	bh=eHUrcp5VYUa2sqnG2RPE0UKUS9iM8LSzQ8ka9NFdRNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZXk8AzzSi8krbCep5qauan997+DuCDvnhBBUm5xYz/GbhSlv5xc0TCxxa0eHNpmRgatSDYYDubJtxgmIylp3hGEpYWGhAmDzVM2soE3mmr129dheaNW3dbsdbGjTQGh3PPYyizOInnyjTv6oyjhYY72SMnwc9cqzJZoBzumSnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zU8qPbi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b5eG5UpxqIvsPfvPodX+MOfie+wbsjJbmmzM8rtU64XmQWQ9bcfBL+VQ4FwLZCFtXMOcE3sjrJDOdcgLyLYsT5KDcfZ6Ae1ykA9A5OHd5Nuwgv44vC2bBX9/zFDpZTCyMEvrVOo0JxsOfo426sPy27U+9VxjvGa0vQLqlBoRqvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ca3HtBQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zU8qPbi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2898C433C7;
-	Mon,  4 Mar 2024 21:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ca3HtBQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8123FC433C7;
+	Mon,  4 Mar 2024 21:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588730;
-	bh=nN9/CObQss8LsizPgNZ82hvmTHj+X2XHJuZSNETqySc=;
+	s=korg; t=1709588732;
+	bh=eHUrcp5VYUa2sqnG2RPE0UKUS9iM8LSzQ8ka9NFdRNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zU8qPbi/ELzLmRr09jKGUCeWA3mzjaQ7viURTBVacRj/bNJk9vU/kI6d/N8AeDcGi
-	 zJKfgS24Jh+goX527GxHgonpt0YeRxHTNHOWjDGW1wdzj2zFYZZjS82QSb1XnrFS1T
-	 7xyKNoIiPStmVVWLtkIkOQyyi9UNwfiOlB69sYdo=
+	b=Ca3HtBQ3sYsYWrIw4UHSVe8e7zWiBLnruLAyYWI+asbpHvw6ozp1qSf7lkTIdQNwf
+	 OtU4FAN38gbxM4p67OpAc4FFN3sKieHXN3qhW+bzYd1h5HkU5J3ebTg/wVKRpoIZ3h
+	 xRIChA6L2V6ALAsl9JHEuvSJ6FLtiQ1SazGNHAvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/215] drm/tegra: Remove existing framebuffer only if we support display
-Date: Mon,  4 Mar 2024 21:22:10 +0000
-Message-ID: <20240304211559.109048773@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Jann Horn <jannh@google.com>,
+	Shervin Oloumi <enlightened@chromium.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.1 076/215] landlock: Fix asymmetric private inodes referring
+Date: Mon,  4 Mar 2024 21:22:19 +0000
+Message-ID: <20240304211559.388822539@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -47,69 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 86bf8cfda6d2a6720fa2e6e676c98f0882c9d3d7 ]
+commit d9818b3e906a0ee1ab02ea79e74a2f755fc5461a upstream.
 
-Tegra DRM doesn't support display on Tegra234 and later, so make sure
-not to remove any existing framebuffers in that case.
+When linking or renaming a file, if only one of the source or
+destination directory is backed by an S_PRIVATE inode, then the related
+set of layer masks would be used as uninitialized by
+is_access_to_paths_allowed().  This would result to indeterministic
+access for one side instead of always being allowed.
 
-v2: - add comments explaining how this situation can come about
-    - clear DRIVER_MODESET and DRIVER_ATOMIC feature bits
+This bug could only be triggered with a mounted filesystem containing
+both S_PRIVATE and !S_PRIVATE inodes, which doesn't seem possible.
 
-Fixes: 6848c291a54f ("drm/aperture: Convert drivers to aperture interfaces")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240223150333.1401582-1-thierry.reding@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The collect_domain_accesses() calls return early if
+is_nouser_or_private() returns false, which means that the directory's
+superblock has SB_NOUSER or its inode has S_PRIVATE.  Because rename or
+link actions are only allowed on the same mounted filesystem, the
+superblock is always the same for both source and destination
+directories.  However, it might be possible in theory to have an
+S_PRIVATE parent source inode with an !S_PRIVATE parent destination
+inode, or vice versa.
+
+To make sure this case is not an issue, explicitly initialized both set
+of layer masks to 0, which means to allow all actions on the related
+side.  If at least on side has !S_PRIVATE, then
+collect_domain_accesses() and is_access_to_paths_allowed() check for the
+required access rights.
+
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Shervin Oloumi <enlightened@chromium.org>
+Cc: stable@vger.kernel.org
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Link: https://lore.kernel.org/r/20240219190345.2928627-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/drm.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ security/landlock/fs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
-index 5fc55b9777cbf..6806779f8ecce 100644
---- a/drivers/gpu/drm/tegra/drm.c
-+++ b/drivers/gpu/drm/tegra/drm.c
-@@ -1252,9 +1252,26 @@ static int host1x_drm_probe(struct host1x_device *dev)
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -824,8 +824,8 @@ static int current_check_refer_path(stru
+ 	bool allow_parent1, allow_parent2;
+ 	access_mask_t access_request_parent1, access_request_parent2;
+ 	struct path mnt_dir;
+-	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS],
+-		layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS];
++	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS] = {},
++		     layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS] = {};
  
- 	drm_mode_config_reset(drm);
- 
--	err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
--	if (err < 0)
--		goto hub;
-+	/*
-+	 * Only take over from a potential firmware framebuffer if any CRTCs
-+	 * have been registered. This must not be a fatal error because there
-+	 * are other accelerators that are exposed via this driver.
-+	 *
-+	 * Another case where this happens is on Tegra234 where the display
-+	 * hardware is no longer part of the host1x complex, so this driver
-+	 * will not expose any modesetting features.
-+	 */
-+	if (drm->mode_config.num_crtc > 0) {
-+		err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
-+		if (err < 0)
-+			goto hub;
-+	} else {
-+		/*
-+		 * Indicate to userspace that this doesn't expose any display
-+		 * capabilities.
-+		 */
-+		drm->driver_features &= ~(DRIVER_MODESET | DRIVER_ATOMIC);
-+	}
- 
- 	err = tegra_drm_fb_init(drm);
- 	if (err < 0)
--- 
-2.43.0
-
+ 	if (!dom)
+ 		return 0;
 
 
