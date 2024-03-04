@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0905B7BB1E;
-	Mon,  4 Mar 2024 21:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA157BAE6;
+	Mon,  4 Mar 2024 21:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587662; cv=none; b=B9wx0rUNuTsa3vl3atoWWP41owoP2RWtK8Df8BMYKRdnvj7x6yWfhexATBXWcB8xXe65UD9vmlvt0FW/k1bktY6eBQw3Hplqg1ZgXqwbUa/Uv8KZ8X5ayhqPrydbJMt7f9Tj8fQg9D0T5jXFURN1p5UBl943R/WxDk01zW5KJ6M=
+	t=1709587665; cv=none; b=R6IOJ2xDeq5M2leA8yKa5E22KlxkUJ4P7uTc1DOEKk+hi8cK9404Nh7FtEMjmW3BJfM42Dpd3W9Jt1MCGamAfYtGwJ5tGBqt2ymvq8HCNxTDEbASN9PvZfPSdLozCWGyurBBJEzqzYnH0Amjepm66aytJybZ7m9kidn8P0BZu+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587662; c=relaxed/simple;
-	bh=EY64b2cAbcDHIDxigeSfopfMk/1XOwtPK1bSiYSjYlw=;
+	s=arc-20240116; t=1709587665; c=relaxed/simple;
+	bh=obur7sMhlZOaBv72BMP+9u0eFnuWTQXJSRmOskCCv2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=onPoEDkBPAMuRbuRnb/iUM7xOpKq3iOxEtOamG/MyOpiDNvGOM3DW5GTaqI2LiXVujyUbhG8sYqtEx/GMw9ZRRYoSMi7DBr/A86cyvtlO3NZyaDT86QzIynWsqG2uojCC/NefOQ3Qo+VvI2JrAPBOALiGcLexrmzg8FKRrzbnGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuipqNuB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hr5Kfh4tpTPPb/j5cBMRXIyhBwSSz+qdVma9sHgXTsS7mVtTVjTLw8M105OdSWQaBeJd3szXTdz+y8NBfCnLQskVL7CRnBtPCSlmBdyge+uNuz72MVJlOnqY0NDwp+F4LC5E+N1vxFuWm+45ouYHPJ65Qbk2P0PxsVKntB/8ieo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSIwQCVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuipqNuB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913C6C433C7;
-	Mon,  4 Mar 2024 21:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSIwQCVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C85C43390;
+	Mon,  4 Mar 2024 21:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587661;
-	bh=EY64b2cAbcDHIDxigeSfopfMk/1XOwtPK1bSiYSjYlw=;
+	s=korg; t=1709587664;
+	bh=obur7sMhlZOaBv72BMP+9u0eFnuWTQXJSRmOskCCv2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuipqNuB8aHvrJ75kPsqPE/cat4L4O0sqCFqK8Lq45z1dJZpMzh4MYbMp5ccEB6aN
-	 EaYC6BWZ9EU+NgPmhp1h3rkhfkWVPsizqxROVrInNMha9LT6mPcDKQSzHWLTRMOHiJ
-	 CxLwRl1xMFzlSOa2q6EyCVVMDFOlNNhKmGLQZqrg=
+	b=FSIwQCVPdI4DdBjHTCKZj/9QJMJiKpg4f0WLXHZvspr+btKhxXUJeEBv9mjWVx9+Q
+	 hCVE4kl1CgRkrvScbCs0GV+kpFNPZTfQ2krQc22yxIti3xy/+5ctlXBOdqZp3u8ICx
+	 kpzLk4PCCbBAS1cF9Qc9FaTngbilvk7Wwy3aTckA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	syzbot+039399a9b96297ddedca@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dhruva Gole <d-gole@ti.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 017/162] net: veth: clear GRO when clearing XDP even when down
-Date: Mon,  4 Mar 2024 21:21:22 +0000
-Message-ID: <20240304211552.383910205@linuxfoundation.org>
+Subject: [PATCH 6.7 008/162] spi: cadence-qspi: fix pointer reference in runtime PM hooks
+Date: Mon,  4 Mar 2024 21:21:13 +0000
+Message-ID: <20240304211552.096332848@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -55,116 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-[ Upstream commit fe9f801355f0b47668419f30f1fac1cf4539e736 ]
+[ Upstream commit 32ce3bb57b6b402de2aec1012511e7ac4e7449dc ]
 
-veth sets NETIF_F_GRO automatically when XDP is enabled,
-because both features use the same NAPI machinery.
+dev_get_drvdata() gets used to acquire the pointer to cqspi and the SPI
+controller. Neither embed the other; this lead to memory corruption.
 
-The logic to clear NETIF_F_GRO sits in veth_disable_xdp() which
-is called both on ndo_stop and when XDP is turned off.
-To avoid the flag from being cleared when the device is brought
-down, the clearing is skipped when IFF_UP is not set.
-Bringing the device down should indeed not modify its features.
+On a given platform (Mobileye EyeQ5) the memory corruption is hidden
+inside cqspi->f_pdata. Also, this uninitialised memory is used as a
+mutex (ctlr->bus_lock_mutex) by spi_controller_suspend().
 
-Unfortunately, this means that clearing is also skipped when
-XDP is disabled _while_ the device is down. And there's nothing
-on the open path to bring the device features back into sync.
-IOW if user enables XDP, disables it and then brings the device
-up we'll end up with a stray GRO flag set but no NAPI instances.
-
-We don't depend on the GRO flag on the datapath, so the datapath
-won't crash. We will crash (or hang), however, next time features
-are sync'ed (either by user via ethtool or peer changing its config).
-The GRO flag will go away, and veth will try to disable the NAPIs.
-But the open path never created them since XDP was off, the GRO flag
-was a stray. If NAPI was initialized before we'll hang in napi_disable().
-If it never was we'll crash trying to stop uninitialized hrtimer.
-
-Move the GRO flag updates to the XDP enable / disable paths,
-instead of mixing them with the ndo_open / ndo_close paths.
-
-Fixes: d3256efd8e8b ("veth: allow enabling NAPI even without XDP")
-Reported-by: Thomas Gleixner <tglx@linutronix.de>
-Reported-by: syzbot+039399a9b96297ddedca@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2087e85bb66e ("spi: cadence-quadspi: fix suspend-resume implementations")
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://msgid.link/r/20240222-cdns-qspi-pm-fix-v4-1-6b6af8bcbf59@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 977861c46b1fe..bf4da315ae01c 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1208,14 +1208,6 @@ static int veth_enable_xdp(struct net_device *dev)
- 				veth_disable_xdp_range(dev, 0, dev->real_num_rx_queues, true);
- 				return err;
- 			}
--
--			if (!veth_gro_requested(dev)) {
--				/* user-space did not require GRO, but adding XDP
--				 * is supposed to get GRO working
--				 */
--				dev->features |= NETIF_F_GRO;
--				netdev_features_change(dev);
--			}
- 		}
- 	}
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index f94e0d370d466..0d184d65dce76 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1930,10 +1930,9 @@ static void cqspi_remove(struct platform_device *pdev)
+ static int cqspi_suspend(struct device *dev)
+ {
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
+-	struct spi_controller *host = dev_get_drvdata(dev);
+ 	int ret;
  
-@@ -1235,18 +1227,9 @@ static void veth_disable_xdp(struct net_device *dev)
- 	for (i = 0; i < dev->real_num_rx_queues; i++)
- 		rcu_assign_pointer(priv->rq[i].xdp_prog, NULL);
+-	ret = spi_controller_suspend(host);
++	ret = spi_controller_suspend(cqspi->host);
+ 	cqspi_controller_enable(cqspi, 0);
  
--	if (!netif_running(dev) || !veth_gro_requested(dev)) {
-+	if (!netif_running(dev) || !veth_gro_requested(dev))
- 		veth_napi_del(dev);
+ 	clk_disable_unprepare(cqspi->clk);
+@@ -1944,7 +1943,6 @@ static int cqspi_suspend(struct device *dev)
+ static int cqspi_resume(struct device *dev)
+ {
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
+-	struct spi_controller *host = dev_get_drvdata(dev);
  
--		/* if user-space did not require GRO, since adding XDP
--		 * enabled it, clear it now
--		 */
--		if (!veth_gro_requested(dev) && netif_running(dev)) {
--			dev->features &= ~NETIF_F_GRO;
--			netdev_features_change(dev);
--		}
--	}
--
- 	veth_disable_xdp_range(dev, 0, dev->real_num_rx_queues, false);
+ 	clk_prepare_enable(cqspi->clk);
+ 	cqspi_wait_idle(cqspi);
+@@ -1953,7 +1951,7 @@ static int cqspi_resume(struct device *dev)
+ 	cqspi->current_cs = -1;
+ 	cqspi->sclk = 0;
+ 
+-	return spi_controller_resume(host);
++	return spi_controller_resume(cqspi->host);
  }
  
-@@ -1654,6 +1637,14 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 		}
- 
- 		if (!old_prog) {
-+			if (!veth_gro_requested(dev)) {
-+				/* user-space did not require GRO, but adding
-+				 * XDP is supposed to get GRO working
-+				 */
-+				dev->features |= NETIF_F_GRO;
-+				netdev_features_change(dev);
-+			}
-+
- 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
- 			peer->max_mtu = max_mtu;
- 		}
-@@ -1669,6 +1660,14 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 			if (dev->flags & IFF_UP)
- 				veth_disable_xdp(dev);
- 
-+			/* if user-space did not require GRO, since adding XDP
-+			 * enabled it, clear it now
-+			 */
-+			if (!veth_gro_requested(dev)) {
-+				dev->features &= ~NETIF_F_GRO;
-+				netdev_features_change(dev);
-+			}
-+
- 			if (peer) {
- 				peer->hw_features |= NETIF_F_GSO_SOFTWARE;
- 				peer->max_mtu = ETH_MAX_MTU;
+ static DEFINE_RUNTIME_DEV_PM_OPS(cqspi_dev_pm_ops, cqspi_suspend,
 -- 
 2.43.0
 
