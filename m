@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2237200D4;
-	Mon,  4 Mar 2024 21:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BC246BA0;
+	Mon,  4 Mar 2024 21:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588654; cv=none; b=PwK6PAAxEA/2DZH9et0S5rOVbaVgBZ6sAKyHRGEWCriLwfyUSJUr9Fhw1ewyfkyER2tUz35OgiALkBF0GZpN4GwPilbJWfBk5nORtP84HemjLSYly5s8FDSadmnwvx0qXHtw/qTWXPn7MVNKX7cd+Kb3uyVMwVlxOBaESc12grk=
+	t=1709588657; cv=none; b=pOlgLEhWa2VkeGsJsWC/fq/e8tezRqX7wF5ZS47wAV3k3uVYFynKdNzFPfvMPK87R7Ci2k42lSkfO+GM8ndPmV7+EImiIvZ76vlCuRBo31SzMi4mj4EWZKLl4qdeZwXBISi+BgyLjsEXCLKxCYuE7zDi1K1gMnC3mey4nQwf5jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588654; c=relaxed/simple;
-	bh=nrB3svpo/EZeLOlqjMBI5lUenFo0vKWd0t0SZs6rmk8=;
+	s=arc-20240116; t=1709588657; c=relaxed/simple;
+	bh=C7BfHZTF8qLHwX36pUAm4qK/hZCwc6j5V1FAQA0Bg/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVNqHJZFkCHaW8I+NzhBJXll4aSk3H7+HgGZr32gWkFJYQAy0yxJhfYdrv2pXhhAX0pbcraBkcMDDL66H+jByAu06TTeZFQbCZkiAXCeR8HIGhluOvci79pn77IXYZuv6n/JcS9S332v4m+6GzHv3/mA3BHzs13C09wZeqFUEsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+GIEF2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWucQfprBmq0XYsbTJNsp8tW/AX2Hvp+7JvenCicTyWI6KIJlZJn/6uKf/lbX/QxS6dO91AqlVD5/a5VyIhD4mnjSWlVk3wMl5lbxz7g52ooWhE5/zLH5r3OQhEeZQi/IRPQ1LACU4d7bLY0q9TYmTsfXipgnFHNF6WZWXOnfXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgONsmQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+GIEF2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F282AC433C7;
-	Mon,  4 Mar 2024 21:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgONsmQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8F2C43390;
+	Mon,  4 Mar 2024 21:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588654;
-	bh=nrB3svpo/EZeLOlqjMBI5lUenFo0vKWd0t0SZs6rmk8=;
+	s=korg; t=1709588656;
+	bh=C7BfHZTF8qLHwX36pUAm4qK/hZCwc6j5V1FAQA0Bg/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+GIEF2DfI/7y+RzEvDzEXbT7QY+E3JurjhQny7ICveEi4VBGiG6j7+EslQRtLJU/
-	 bFcIY/DXRDg7Eb25xhXvhkuGZJNqrC0HSS/b7d1xprHjXA2UtKeyMsLb1H8BeypWhx
-	 B0M261wxHVdyg4oovnEF/tTDnkNSsBoQMzOgfULM=
+	b=XgONsmQZHKWT/gZzQ3izwQnm3NrocvBctcTz8Say6wTTzL6Sw6nCHThj1gv7Zt1kJ
+	 6M1rPaNbD8CUuUwv0mWB7GzfTYKd5zvqeJiZDwydnbznXTJMTjtSofOgyAlwvviJwi
+	 iHzpr4OVt7DzZ60FXxAYWIzg5Yb4PLfMiIWafQw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f45957555ed4a808cc7a@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 022/215] fs/ntfs3: Fix NULL dereference in ni_write_inode
-Date: Mon,  4 Mar 2024 21:21:25 +0000
-Message-ID: <20240304211557.704318697@linuxfoundation.org>
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 013/215] ARM: dts: imx: Adjust dma-apbh node name
+Date: Mon,  4 Mar 2024 21:21:16 +0000
+Message-ID: <20240304211557.438955760@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,41 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Stefan Wahren <stefan.wahren@i2se.com>
 
-[ Upstream commit 8dae4f6341e335a09575be60b4fdf697c732a470 ]
+[ Upstream commit e9f5cd85f1f931bb7b64031492f7051187ccaac7 ]
 
-Syzbot reports a NULL dereference in ni_write_inode.
-When creating a new inode, if allocation fails in mi_init function
-(called in mi_format_new function), mi->mrec is set to NULL.
-In the error path of this inode creation, mi->mrec is later
-dereferenced in ni_write_inode.
+Currently the dtbs_check generates warnings like this:
 
-Add a NULL check to prevent NULL dereference.
+$nodename:0: 'dma-apbh@110000' does not match '^dma-controller(@.*)?$'
 
-Link: https://syzkaller.appspot.com/bug?extid=f45957555ed4a808cc7a
-Reported-and-tested-by: syzbot+f45957555ed4a808cc7a@syzkaller.appspotmail.com
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+So fix all affected dma-apbh node names.
+
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/imx23.dtsi   | 2 +-
+ arch/arm/boot/dts/imx28.dtsi   | 2 +-
+ arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
+ arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
+ arch/arm/boot/dts/imx6ul.dtsi  | 2 +-
+ arch/arm/boot/dts/imx7s.dtsi   | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 1f0e230ec9e2c..d260260900241 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -3255,6 +3255,9 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
- 		return 0;
- 	}
+diff --git a/arch/arm/boot/dts/imx23.dtsi b/arch/arm/boot/dts/imx23.dtsi
+index ec476b1596496..b236d23f80715 100644
+--- a/arch/arm/boot/dts/imx23.dtsi
++++ b/arch/arm/boot/dts/imx23.dtsi
+@@ -59,7 +59,7 @@ icoll: interrupt-controller@80000000 {
+ 				reg = <0x80000000 0x2000>;
+ 			};
  
-+	if (!ni->mi.mrec)
-+		goto out;
-+
- 	if (is_rec_inuse(ni->mi.mrec) &&
- 	    !(sbi->flags & NTFS_FLAGS_LOG_REPLAYING) && inode->i_nlink) {
- 		bool modified = false;
+-			dma_apbh: dma-apbh@80004000 {
++			dma_apbh: dma-controller@80004000 {
+ 				compatible = "fsl,imx23-dma-apbh";
+ 				reg = <0x80004000 0x2000>;
+ 				interrupts = <0 14 20 0
+diff --git a/arch/arm/boot/dts/imx28.dtsi b/arch/arm/boot/dts/imx28.dtsi
+index b15df16ecb01a..b81592a613112 100644
+--- a/arch/arm/boot/dts/imx28.dtsi
++++ b/arch/arm/boot/dts/imx28.dtsi
+@@ -78,7 +78,7 @@ hsadc: hsadc@80002000 {
+ 				status = "disabled";
+ 			};
+ 
+-			dma_apbh: dma-apbh@80004000 {
++			dma_apbh: dma-controller@80004000 {
+ 				compatible = "fsl,imx28-dma-apbh";
+ 				reg = <0x80004000 0x2000>;
+ 				interrupts = <82 83 84 85
+diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
+index ff1e0173b39be..2c6eada01d792 100644
+--- a/arch/arm/boot/dts/imx6qdl.dtsi
++++ b/arch/arm/boot/dts/imx6qdl.dtsi
+@@ -150,7 +150,7 @@ soc: soc {
+ 		interrupt-parent = <&gpc>;
+ 		ranges;
+ 
+-		dma_apbh: dma-apbh@110000 {
++		dma_apbh: dma-controller@110000 {
+ 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
+ 			reg = <0x00110000 0x2000>;
+ 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index 1f1053a898fbf..67d344ae76b51 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -209,7 +209,7 @@ gpu: gpu@1800000 {
+ 			power-domains = <&pd_pu>;
+ 		};
+ 
+-		dma_apbh: dma-apbh@1804000 {
++		dma_apbh: dma-controller@1804000 {
+ 			compatible = "fsl,imx6sx-dma-apbh", "fsl,imx28-dma-apbh";
+ 			reg = <0x01804000 0x2000>;
+ 			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
+index 2b5996395701a..aac081b6daaac 100644
+--- a/arch/arm/boot/dts/imx6ul.dtsi
++++ b/arch/arm/boot/dts/imx6ul.dtsi
+@@ -164,7 +164,7 @@ intc: interrupt-controller@a01000 {
+ 			      <0x00a06000 0x2000>;
+ 		};
+ 
+-		dma_apbh: dma-apbh@1804000 {
++		dma_apbh: dma-controller@1804000 {
+ 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
+ 			reg = <0x01804000 0x2000>;
+ 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 4b23630fc738d..2940dacaa56fc 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -1267,7 +1267,7 @@ fec1: ethernet@30be0000 {
+ 			};
+ 		};
+ 
+-		dma_apbh: dma-apbh@33000000 {
++		dma_apbh: dma-controller@33000000 {
+ 			compatible = "fsl,imx7d-dma-apbh", "fsl,imx28-dma-apbh";
+ 			reg = <0x33000000 0x2000>;
+ 			interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
