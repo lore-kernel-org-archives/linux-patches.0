@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E0E46BA0;
-	Mon,  4 Mar 2024 21:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71479200D4;
+	Mon,  4 Mar 2024 21:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588685; cv=none; b=qX6vaxDE6+wbY0BradOkliEwPESvlDNU0TDQaFu6oWvjD+BPB9IUEU3BNxkQwGOEH5qhjAaXpTaWldYmRl6W0T2jx4jMju9fFsGhEjqCrClRNHznMlq+OSF+fuV7/aV5EDe/xjup2KBfyC9VQj1a4x2uBADFfdzWgPyrQ9vqwiI=
+	t=1709588688; cv=none; b=CO/DpAyXtKyfu7IXznAB/BE/pyLX4L/cGN5nQLBPsFos2qZ8n1IQNc8WrcY9KH/3HVnnOD5C/DmE3NX7HxrZ9PSJPi7LslALjnzGzBrPwVt3WbBuVdQtOZ+2NDMSVuMWPl/WQzIDPmP5uLFQ6l+hHhjkxYzU0mM/2etm+wipkcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588685; c=relaxed/simple;
-	bh=ZJ5gQE3Q6PoH6hfY+iEMxDcm2/opYSdlnzabXmuHDtw=;
+	s=arc-20240116; t=1709588688; c=relaxed/simple;
+	bh=VBDz8AAekPNvuiqMndBrKY0C6xgDC/wkz7GcpVp5mrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkB3INew7dPUidjyfg49QJfEyZ6g3XNQFFCMhj9OwAhTOMS+TFD2CkE3ZlYHHOEkjN9b8wvJJdjXvxT3FIoK9vMfTfz4eSH2fbQTSxGzc75i06waCiuRp50mwuPITN3KllTxpoCUll7BHJWvcwNI1bHvB+SxNYstKIoW/LrpAbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0I4q5jQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBb2tI8gtSGBRDMCO3AeSYhnrvzrJVZv8deVsRLJRgTUUpm6xD3nnmgF7+3CxbViItiATN9kehRcomWA0q+CYeo51G0nwkGCwdYyIoOgRFCWtzFbi0igHRhFXdp3YhW/gMLmkY9emHXPNlZDDbLSFsDm7ogA91PN3iFhzehkIw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6yv+F+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0I4q5jQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B22C433F1;
-	Mon,  4 Mar 2024 21:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6yv+F+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99B2C433F1;
+	Mon,  4 Mar 2024 21:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588685;
-	bh=ZJ5gQE3Q6PoH6hfY+iEMxDcm2/opYSdlnzabXmuHDtw=;
+	s=korg; t=1709588688;
+	bh=VBDz8AAekPNvuiqMndBrKY0C6xgDC/wkz7GcpVp5mrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0I4q5jQ67kqmnp3iqQhqB4J5Pud7Zd+vKgymcZxAdR431ex9AypQrRvBxVMz2mU9
-	 yGZb95482+UqgeJh4vPPD3MtTDsATqZTICi0eFxAzxh9dkRvieX9Ky/0Nhndb9YxFA
-	 IqHfxnOnJHCG9B+9ipS4OcaogLzK+mJj7oIHgUqY=
+	b=B6yv+F+KtcD8RZ+3B1NzHZborfWGUfi9dKG+lnm+6NcqAlIpDSCQOIGVito8a1GOZ
+	 GKyMhkFg3/aOibNQftwnd9+FWFL6hO915zACiuZRuOOt0dpXUqLujtBaY6GZtupXfi
+	 6uonp6u6E9utdmQ9Oq8DdUNbiZ80/l72uBYnF4DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/215] netfilter: bridge: confirm multicast packets before passing them up the stack
-Date: Mon,  4 Mar 2024 21:22:01 +0000
-Message-ID: <20240304211558.821310303@linuxfoundation.org>
+Subject: [PATCH 6.1 041/215] stmmac: Clear variable when destroying workqueue
+Date: Mon,  4 Mar 2024 21:21:44 +0000
+Message-ID: <20240304211558.305995322@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,279 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jakub Raczynski <j.raczynski@samsung.com>
 
-[ Upstream commit 62e7151ae3eb465e0ab52a20c941ff33bb6332e9 ]
+[ Upstream commit 8af411bbba1f457c33734795f024d0ef26d0963f ]
 
-conntrack nf_confirm logic cannot handle cloned skbs referencing
-the same nf_conn entry, which will happen for multicast (broadcast)
-frames on bridges.
+Currently when suspending driver and stopping workqueue it is checked whether
+workqueue is not NULL and if so, it is destroyed.
+Function destroy_workqueue() does drain queue and does clear variable, but
+it does not set workqueue variable to NULL. This can cause kernel/module
+panic if code attempts to clear workqueue that was not initialized.
 
- Example:
-    macvlan0
-       |
-      br0
-     /  \
-  ethX    ethY
+This scenario is possible when resuming suspended driver in stmmac_resume(),
+because there is no handling for failed stmmac_hw_setup(),
+which can fail and return if DMA engine has failed to initialize,
+and workqueue is initialized after DMA engine.
+Should DMA engine fail to initialize, resume will proceed normally,
+but interface won't work and TX queue will eventually timeout,
+causing 'Reset adapter' error.
+This then does destroy workqueue during reset process.
+And since workqueue is initialized after DMA engine and can be skipped,
+it will cause kernel/module panic.
 
- ethX (or Y) receives a L2 multicast or broadcast packet containing
- an IP packet, flow is not yet in conntrack table.
+To secure against this possible crash, set workqueue variable to NULL when
+destroying workqueue.
 
- 1. skb passes through bridge and fake-ip (br_netfilter)Prerouting.
-    -> skb->_nfct now references a unconfirmed entry
- 2. skb is broad/mcast packet. bridge now passes clones out on each bridge
-    interface.
- 3. skb gets passed up the stack.
- 4. In macvlan case, macvlan driver retains clone(s) of the mcast skb
-    and schedules a work queue to send them out on the lower devices.
+Log/backtrace from crash goes as follows:
+[88.031977]------------[ cut here ]------------
+[88.031985]NETDEV WATCHDOG: eth0 (sxgmac): transmit queue 1 timed out
+[88.032017]WARNING: CPU: 0 PID: 0 at net/sched/sch_generic.c:477 dev_watchdog+0x390/0x398
+           <Skipping backtrace for watchdog timeout>
+[88.032251]---[ end trace e70de432e4d5c2c0 ]---
+[88.032282]sxgmac 16d88000.ethernet eth0: Reset adapter.
+[88.036359]------------[ cut here ]------------
+[88.036519]Call trace:
+[88.036523] flush_workqueue+0x3e4/0x430
+[88.036528] drain_workqueue+0xc4/0x160
+[88.036533] destroy_workqueue+0x40/0x270
+[88.036537] stmmac_fpe_stop_wq+0x4c/0x70
+[88.036541] stmmac_release+0x278/0x280
+[88.036546] __dev_close_many+0xcc/0x158
+[88.036551] dev_close_many+0xbc/0x190
+[88.036555] dev_close.part.0+0x70/0xc0
+[88.036560] dev_close+0x24/0x30
+[88.036564] stmmac_service_task+0x110/0x140
+[88.036569] process_one_work+0x1d8/0x4a0
+[88.036573] worker_thread+0x54/0x408
+[88.036578] kthread+0x164/0x170
+[88.036583] ret_from_fork+0x10/0x20
+[88.036588]---[ end trace e70de432e4d5c2c1 ]---
+[88.036597]Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
 
-    The clone skb->_nfct is not a copy, it is the same entry as the
-    original skb.  The macvlan rx handler then returns RX_HANDLER_PASS.
- 5. Normal conntrack hooks (in NF_INET_LOCAL_IN) confirm the orig skb.
-
-The Macvlan broadcast worker and normal confirm path will race.
-
-This race will not happen if step 2 already confirmed a clone. In that
-case later steps perform skb_clone() with skb->_nfct already confirmed (in
-hash table).  This works fine.
-
-But such confirmation won't happen when eb/ip/nftables rules dropped the
-packets before they reached the nf_confirm step in postrouting.
-
-Pablo points out that nf_conntrack_bridge doesn't allow use of stateful
-nat, so we can safely discard the nf_conn entry and let inet call
-conntrack again.
-
-This doesn't work for bridge netfilter: skb could have a nat
-transformation. Also bridge nf prevents re-invocation of inet prerouting
-via 'sabotage_in' hook.
-
-Work around this problem by explicit confirmation of the entry at LOCAL_IN
-time, before upper layer has a chance to clone the unconfirmed entry.
-
-The downside is that this disables NAT and conntrack helpers.
-
-Alternative fix would be to add locking to all code parts that deal with
-unconfirmed packets, but even if that could be done in a sane way this
-opens up other problems, for example:
-
--m physdev --physdev-out eth0 -j SNAT --snat-to 1.2.3.4
--m physdev --physdev-out eth1 -j SNAT --snat-to 1.2.3.5
-
-For multicast case, only one of such conflicting mappings will be
-created, conntrack only handles 1:1 NAT mappings.
-
-Users should set create a setup that explicitly marks such traffic
-NOTRACK (conntrack bypass) to avoid this, but we cannot auto-bypass
-them, ruleset might have accept rules for untracked traffic already,
-so user-visible behaviour would change.
-
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217777
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5a5586112b929 ("net: stmmac: support FPE link partner hand-shaking procedure")
+Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter.h                  |  1 +
- net/bridge/br_netfilter_hooks.c            | 96 ++++++++++++++++++++++
- net/bridge/netfilter/nf_conntrack_bridge.c | 30 +++++++
- net/netfilter/nf_conntrack_core.c          |  1 +
- 4 files changed, 128 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/netfilter.h b/include/linux/netfilter.h
-index c8e03bcaecaaa..e5f4b6f8d1c09 100644
---- a/include/linux/netfilter.h
-+++ b/include/linux/netfilter.h
-@@ -462,6 +462,7 @@ struct nf_ct_hook {
- 			      const struct sk_buff *);
- 	void (*attach)(struct sk_buff *nskb, const struct sk_buff *skb);
- 	void (*set_closing)(struct nf_conntrack *nfct);
-+	int (*confirm)(struct sk_buff *skb);
- };
- extern const struct nf_ct_hook __rcu *nf_ct_hook;
- 
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 202ad43e35d6b..bff48d5763635 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -43,6 +43,10 @@
- #include <linux/sysctl.h>
- #endif
- 
-+#if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+#include <net/netfilter/nf_conntrack_core.h>
-+#endif
-+
- static unsigned int brnf_net_id __read_mostly;
- 
- struct brnf_net {
-@@ -553,6 +557,90 @@ static unsigned int br_nf_pre_routing(void *priv,
- 	return NF_STOLEN;
- }
- 
-+#if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+/* conntracks' nf_confirm logic cannot handle cloned skbs referencing
-+ * the same nf_conn entry, which will happen for multicast (broadcast)
-+ * Frames on bridges.
-+ *
-+ * Example:
-+ *      macvlan0
-+ *      br0
-+ *  ethX  ethY
-+ *
-+ * ethX (or Y) receives multicast or broadcast packet containing
-+ * an IP packet, not yet in conntrack table.
-+ *
-+ * 1. skb passes through bridge and fake-ip (br_netfilter)Prerouting.
-+ *    -> skb->_nfct now references a unconfirmed entry
-+ * 2. skb is broad/mcast packet. bridge now passes clones out on each bridge
-+ *    interface.
-+ * 3. skb gets passed up the stack.
-+ * 4. In macvlan case, macvlan driver retains clone(s) of the mcast skb
-+ *    and schedules a work queue to send them out on the lower devices.
-+ *
-+ *    The clone skb->_nfct is not a copy, it is the same entry as the
-+ *    original skb.  The macvlan rx handler then returns RX_HANDLER_PASS.
-+ * 5. Normal conntrack hooks (in NF_INET_LOCAL_IN) confirm the orig skb.
-+ *
-+ * The Macvlan broadcast worker and normal confirm path will race.
-+ *
-+ * This race will not happen if step 2 already confirmed a clone. In that
-+ * case later steps perform skb_clone() with skb->_nfct already confirmed (in
-+ * hash table).  This works fine.
-+ *
-+ * But such confirmation won't happen when eb/ip/nftables rules dropped the
-+ * packets before they reached the nf_confirm step in postrouting.
-+ *
-+ * Work around this problem by explicit confirmation of the entry at
-+ * LOCAL_IN time, before upper layer has a chance to clone the unconfirmed
-+ * entry.
-+ *
-+ */
-+static unsigned int br_nf_local_in(void *priv,
-+				   struct sk_buff *skb,
-+				   const struct nf_hook_state *state)
-+{
-+	struct nf_conntrack *nfct = skb_nfct(skb);
-+	const struct nf_ct_hook *ct_hook;
-+	struct nf_conn *ct;
-+	int ret;
-+
-+	if (!nfct || skb->pkt_type == PACKET_HOST)
-+		return NF_ACCEPT;
-+
-+	ct = container_of(nfct, struct nf_conn, ct_general);
-+	if (likely(nf_ct_is_confirmed(ct)))
-+		return NF_ACCEPT;
-+
-+	WARN_ON_ONCE(skb_shared(skb));
-+	WARN_ON_ONCE(refcount_read(&nfct->use) != 1);
-+
-+	/* We can't call nf_confirm here, it would create a dependency
-+	 * on nf_conntrack module.
-+	 */
-+	ct_hook = rcu_dereference(nf_ct_hook);
-+	if (!ct_hook) {
-+		skb->_nfct = 0ul;
-+		nf_conntrack_put(nfct);
-+		return NF_ACCEPT;
-+	}
-+
-+	nf_bridge_pull_encap_header(skb);
-+	ret = ct_hook->confirm(skb);
-+	switch (ret & NF_VERDICT_MASK) {
-+	case NF_STOLEN:
-+		return NF_STOLEN;
-+	default:
-+		nf_bridge_push_encap_header(skb);
-+		break;
-+	}
-+
-+	ct = container_of(nfct, struct nf_conn, ct_general);
-+	WARN_ON_ONCE(!nf_ct_is_confirmed(ct));
-+
-+	return ret;
-+}
-+#endif
- 
- /* PF_BRIDGE/FORWARD *************************************************/
- static int br_nf_forward_finish(struct net *net, struct sock *sk, struct sk_buff *skb)
-@@ -962,6 +1050,14 @@ static const struct nf_hook_ops br_nf_ops[] = {
- 		.hooknum = NF_BR_PRE_ROUTING,
- 		.priority = NF_BR_PRI_BRNF,
- 	},
-+#if IS_ENABLED(CONFIG_NF_CONNTRACK)
-+	{
-+		.hook = br_nf_local_in,
-+		.pf = NFPROTO_BRIDGE,
-+		.hooknum = NF_BR_LOCAL_IN,
-+		.priority = NF_BR_PRI_LAST,
-+	},
-+#endif
- 	{
- 		.hook = br_nf_forward_ip,
- 		.pf = NFPROTO_BRIDGE,
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index 06d94b2c6b5de..c7c27ada67044 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -291,6 +291,30 @@ static unsigned int nf_ct_bridge_pre(void *priv, struct sk_buff *skb,
- 	return nf_conntrack_in(skb, &bridge_state);
- }
- 
-+static unsigned int nf_ct_bridge_in(void *priv, struct sk_buff *skb,
-+				    const struct nf_hook_state *state)
-+{
-+	enum ip_conntrack_info ctinfo;
-+	struct nf_conn *ct;
-+
-+	if (skb->pkt_type == PACKET_HOST)
-+		return NF_ACCEPT;
-+
-+	/* nf_conntrack_confirm() cannot handle concurrent clones,
-+	 * this happens for broad/multicast frames with e.g. macvlan on top
-+	 * of the bridge device.
-+	 */
-+	ct = nf_ct_get(skb, &ctinfo);
-+	if (!ct || nf_ct_is_confirmed(ct) || nf_ct_is_template(ct))
-+		return NF_ACCEPT;
-+
-+	/* let inet prerouting call conntrack again */
-+	skb->_nfct = 0;
-+	nf_ct_put(ct);
-+
-+	return NF_ACCEPT;
-+}
-+
- static void nf_ct_bridge_frag_save(struct sk_buff *skb,
- 				   struct nf_bridge_frag_data *data)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 91b2aa81914ba..e2d51014ab4bc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3900,8 +3900,10 @@ static void stmmac_fpe_stop_wq(struct stmmac_priv *priv)
  {
-@@ -415,6 +439,12 @@ static struct nf_hook_ops nf_ct_bridge_hook_ops[] __read_mostly = {
- 		.hooknum	= NF_BR_PRE_ROUTING,
- 		.priority	= NF_IP_PRI_CONNTRACK,
- 	},
-+	{
-+		.hook		= nf_ct_bridge_in,
-+		.pf		= NFPROTO_BRIDGE,
-+		.hooknum	= NF_BR_LOCAL_IN,
-+		.priority	= NF_IP_PRI_CONNTRACK_CONFIRM,
-+	},
- 	{
- 		.hook		= nf_ct_bridge_post,
- 		.pf		= NFPROTO_BRIDGE,
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index 6d30c64a5fe86..024f93fc8c0bb 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2789,6 +2789,7 @@ static const struct nf_ct_hook nf_conntrack_hook = {
- 	.get_tuple_skb  = nf_conntrack_get_tuple_skb,
- 	.attach		= nf_conntrack_attach,
- 	.set_closing	= nf_conntrack_set_closing,
-+	.confirm	= __nf_conntrack_confirm,
- };
+ 	set_bit(__FPE_REMOVING, &priv->fpe_task_state);
  
- void nf_conntrack_init_end(void)
+-	if (priv->fpe_wq)
++	if (priv->fpe_wq) {
+ 		destroy_workqueue(priv->fpe_wq);
++		priv->fpe_wq = NULL;
++	}
+ 
+ 	netdev_info(priv->dev, "FPE workqueue stop");
+ }
 -- 
 2.43.0
 
