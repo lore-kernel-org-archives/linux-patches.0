@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E21A61675;
-	Mon,  4 Mar 2024 21:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F391C6AB;
+	Mon,  4 Mar 2024 21:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589244; cv=none; b=IfozB/HbGjJLMB157/PxpNMXmia1zY8tw8aob86mBvs20rTgeqOF7KPjmB+d1UZOsFHJRPmr+cE+JVYvLA6W3kOxm+n7R8+8koj9aazkPl5WkAls0dp/hsHiqO0iDAozAhRT8Lt/Ij69T/DHkCVX5/nDfxLU47VSDNWqoqU7ON0=
+	t=1709589246; cv=none; b=AnHH+QcGNOWOUi9T/yQomUvTlkvMeLCpIbCmabb3xjT7R6ioF/690u2CyDYFrEiUpCNkr4UU6qgvb+mIJwuI/V5hPddKLSRFSIHzpUdv7DB3BMF33uRtEV4HvTMu7E+frfopW074ZMPvwvaYiXQdhmLX/qECOWEZ7aMx2N6wmO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589244; c=relaxed/simple;
-	bh=mZ/Sw8uig77pK7X2NpI9BDB72KRHPAx+UMMWqyJn/K8=;
+	s=arc-20240116; t=1709589246; c=relaxed/simple;
+	bh=PGCQauisv7pqXXrFtklwo+DziZUXnJkxYv1o12Vls/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmhLz3VQxvImRv6OYrraUCEa36mvl18SQ2AyKznYrkZA9eKtmjT7qnHtnhgItZCOPMpVm0fkekOHrUb1QN8u8Vqm19klrAIn56jO7XCFhWSkG+04cf72a/CskR4+1Dv8dbpac8cdrChUvc/SYNsrypjOkb2Ye3kIcU6lJdvkdUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=St9KrJXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=msM7TNQYF65v22ZybLdC5dnUolt/p9WjBSOYf1FbYEYlX4qeuvBzL7R6YKy+Tug7g3dFeKdg0uBbbPtYx5bkqjDt1i6zwG0t1BBcfD5fk10hI8VE4fUku1lbUXPCnCT5O9/3t/l32H7itaQaErbE5OpxPdL9jdkXrSftoXQEwrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAQG46as; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="St9KrJXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CEEC433F1;
-	Mon,  4 Mar 2024 21:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAQG46as"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106E9C433F1;
+	Mon,  4 Mar 2024 21:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589243;
-	bh=mZ/Sw8uig77pK7X2NpI9BDB72KRHPAx+UMMWqyJn/K8=;
+	s=korg; t=1709589246;
+	bh=PGCQauisv7pqXXrFtklwo+DziZUXnJkxYv1o12Vls/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=St9KrJXOse2PeoZaxUkxdbQYLYwFVp3qjdOzyPV8ha5aGm1g1IFsRVfO4fw/WDhJc
-	 vA4IHmJJ0FEUpmdJGDSKcNABQ2oi/at4QH4J0I1y+ZxCXT2b84bYBaAeoejPgEW7ia
-	 /+TVula4uox6utJPI6kfh9Sl+Pg8spY7zIcRzydI=
+	b=EAQG46asCcoC7kXkTRsZHRar6aVkox5NriI5Ithx2bfp8hS10UYW5rl3WfpisRfB1
+	 VAqZL3XOMOS0QtU+qFs+JYjolIx/1Fpqe0ALEpai5EGPg/L+N51pKCHcMSstl66zr4
+	 uhFmaAU/mR+C5O2z5KCIANjGxn9EjnZqygkXCs94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/84] tls: rx: factor out writing ContentType to cmsg
-Date: Mon,  4 Mar 2024 21:24:08 +0000
-Message-ID: <20240304211543.511609155@linuxfoundation.org>
+Subject: [PATCH 5.15 18/84] Bluetooth: Enforce validation on max value of connection interval
+Date: Mon,  4 Mar 2024 21:23:51 +0000
+Message-ID: <20240304211542.940753261@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,194 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-[ Upstream commit 06554f4ffc2595ae52ee80aec4a13bd77d22bed7 ]
+[ Upstream commit e4b019515f950b4e6e5b74b2e1bb03a90cb33039 ]
 
-cmsg can be filled in during rx_list processing or normal
-receive. Consolidate the code.
+Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
+'Connection Parameter Update Procedure Invalid Parameters Central
+Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
 
-We don't need to keep the boolean to track if the cmsg was
-created. 0 is an invalid content type.
+That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
+connection interval updates"), but later got reverted due to devices
+like keyboards and mice may require low connection interval.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: f7fa16d49837 ("tls: decrement decrypt_pending if no async completion will be called")
+So only validate the max value connection interval to pass the Test
+Suite, and let devices to request low connection interval if needed.
+
+[0] https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=229869
+
+Fixes: 68d19d7d9957 ("Revert "Bluetooth: validate BLE connection interval updates"")
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 91 +++++++++++++++++++-----------------------------
- 1 file changed, 36 insertions(+), 55 deletions(-)
+ net/bluetooth/hci_event.c  | 4 ++++
+ net/bluetooth/l2cap_core.c | 8 +++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index c491cde30504e..ca71a9f559b37 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1634,6 +1634,29 @@ static bool tls_sw_advance_skb(struct sock *sk, struct sk_buff *skb,
- 	return true;
- }
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 0bfd856d079d5..ba7242729a8fb 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6058,6 +6058,10 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev,
+ 		return send_conn_param_neg_reply(hdev, handle,
+ 						 HCI_ERROR_UNKNOWN_CONN_ID);
  
-+static int tls_record_content_type(struct msghdr *msg, struct tls_msg *tlm,
-+				   u8 *control)
-+{
-+	int err;
++	if (max > hcon->le_conn_max_interval)
++		return send_conn_param_neg_reply(hdev, handle,
++						 HCI_ERROR_INVALID_LL_PARAMS);
 +
-+	if (!*control) {
-+		*control = tlm->control;
-+		if (!*control)
-+			return -EBADMSG;
-+
-+		err = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
-+			       sizeof(*control), control);
-+		if (*control != TLS_RECORD_TYPE_DATA) {
-+			if (err || msg->msg_flags & MSG_CTRUNC)
-+				return -EIO;
-+		}
-+	} else if (*control != tlm->control) {
-+		return 0;
+ 	if (hci_check_conn_params(min, max, latency, timeout))
+ 		return send_conn_param_neg_reply(hdev, handle,
+ 						 HCI_ERROR_INVALID_LL_PARAMS);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 850b6aab73779..11bfc8737e6ce 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5614,7 +5614,13 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
+ 
+ 	memset(&rsp, 0, sizeof(rsp));
+ 
+-	err = hci_check_conn_params(min, max, latency, to_multiplier);
++	if (max > hcon->le_conn_max_interval) {
++		BT_DBG("requested connection interval exceeds current bounds.");
++		err = -EINVAL;
++	} else {
++		err = hci_check_conn_params(min, max, latency, to_multiplier);
 +	}
 +
-+	return 1;
-+}
-+
- /* This function traverses the rx_list in tls receive context to copies the
-  * decrypted records into the buffer provided by caller zero copy is not
-  * true. Further, the records are removed from the rx_list if it is not a peek
-@@ -1642,31 +1665,23 @@ static bool tls_sw_advance_skb(struct sock *sk, struct sk_buff *skb,
- static int process_rx_list(struct tls_sw_context_rx *ctx,
- 			   struct msghdr *msg,
- 			   u8 *control,
--			   bool *cmsg,
- 			   size_t skip,
- 			   size_t len,
- 			   bool zc,
- 			   bool is_peek)
- {
- 	struct sk_buff *skb = skb_peek(&ctx->rx_list);
--	u8 ctrl = *control;
--	u8 msgc = *cmsg;
- 	struct tls_msg *tlm;
- 	ssize_t copied = 0;
--
--	/* Set the record type in 'control' if caller didn't pass it */
--	if (!ctrl && skb) {
--		tlm = tls_msg(skb);
--		ctrl = tlm->control;
--	}
-+	int err;
- 
- 	while (skip && skb) {
- 		struct strp_msg *rxm = strp_msg(skb);
- 		tlm = tls_msg(skb);
- 
--		/* Cannot process a record of different type */
--		if (ctrl != tlm->control)
--			return 0;
-+		err = tls_record_content_type(msg, tlm, control);
-+		if (err <= 0)
-+			return err;
- 
- 		if (skip < rxm->full_len)
- 			break;
-@@ -1682,27 +1697,12 @@ static int process_rx_list(struct tls_sw_context_rx *ctx,
- 
- 		tlm = tls_msg(skb);
- 
--		/* Cannot process a record of different type */
--		if (ctrl != tlm->control)
--			return 0;
--
--		/* Set record type if not already done. For a non-data record,
--		 * do not proceed if record type could not be copied.
--		 */
--		if (!msgc) {
--			int cerr = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
--					    sizeof(ctrl), &ctrl);
--			msgc = true;
--			if (ctrl != TLS_RECORD_TYPE_DATA) {
--				if (cerr || msg->msg_flags & MSG_CTRUNC)
--					return -EIO;
--
--				*cmsg = msgc;
--			}
--		}
-+		err = tls_record_content_type(msg, tlm, control);
-+		if (err <= 0)
-+			return err;
- 
- 		if (!zc || (rxm->full_len - skip) > len) {
--			int err = skb_copy_datagram_msg(skb, rxm->offset + skip,
-+			err = skb_copy_datagram_msg(skb, rxm->offset + skip,
- 						    msg, chunk);
- 			if (err < 0)
- 				return err;
-@@ -1739,7 +1739,6 @@ static int process_rx_list(struct tls_sw_context_rx *ctx,
- 		skb = next_skb;
- 	}
- 
--	*control = ctrl;
- 	return copied;
- }
- 
-@@ -1761,7 +1760,6 @@ int tls_sw_recvmsg(struct sock *sk,
- 	struct tls_msg *tlm;
- 	struct sk_buff *skb;
- 	ssize_t copied = 0;
--	bool cmsg = false;
- 	int target, err = 0;
- 	long timeo;
- 	bool is_kvec = iov_iter_is_kvec(&msg->msg_iter);
-@@ -1778,8 +1776,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 	bpf_strp_enabled = sk_psock_strp_enabled(psock);
- 
- 	/* Process pending decrypted records. It must be non-zero-copy */
--	err = process_rx_list(ctx, msg, &control, &cmsg, 0, len, false,
--			      is_peek);
-+	err = process_rx_list(ctx, msg, &control, 0, len, false, is_peek);
- 	if (err < 0) {
- 		tls_err_abort(sk, err);
- 		goto end;
-@@ -1851,26 +1848,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 		 * is known just after record is dequeued from stream parser.
- 		 * For tls1.3, we disable async.
- 		 */
--
--		if (!control)
--			control = tlm->control;
--		else if (control != tlm->control)
-+		err = tls_record_content_type(msg, tlm, &control);
-+		if (err <= 0)
- 			goto recv_end;
- 
--		if (!cmsg) {
--			int cerr;
--
--			cerr = put_cmsg(msg, SOL_TLS, TLS_GET_RECORD_TYPE,
--					sizeof(control), &control);
--			cmsg = true;
--			if (control != TLS_RECORD_TYPE_DATA) {
--				if (cerr || msg->msg_flags & MSG_CTRUNC) {
--					err = -EIO;
--					goto recv_end;
--				}
--			}
--		}
--
- 		if (async) {
- 			/* TLS 1.2-only, to_decrypt must be text length */
- 			chunk = min_t(int, to_decrypt, len);
-@@ -1959,10 +1940,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 
- 		/* Drain records from the rx_list & copy if required */
- 		if (is_peek || is_kvec)
--			err = process_rx_list(ctx, msg, &control, &cmsg, copied,
-+			err = process_rx_list(ctx, msg, &control, copied,
- 					      decrypted, false, is_peek);
- 		else
--			err = process_rx_list(ctx, msg, &control, &cmsg, 0,
-+			err = process_rx_list(ctx, msg, &control, 0,
- 					      decrypted, true, is_peek);
- 		if (err < 0) {
- 			tls_err_abort(sk, err);
+ 	if (err)
+ 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
+ 	else
 -- 
 2.43.0
 
