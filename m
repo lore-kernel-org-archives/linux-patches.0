@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCD37868F;
-	Mon,  4 Mar 2024 21:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AAA7868F;
+	Mon,  4 Mar 2024 21:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589306; cv=none; b=B6PKpFTOdilvffQvTHcEq0w5Pvbuxta3NvGjD1v1VJuLUq8FW2ZsojpfilS7un1Lq8VU0wKggZeWmuYUU4qlJmogViKRu2XW/iWL0WaKREFGzpRQOec5FCUQJk7eHLco+v/lm00YfB1WNWRXnCL8Tj0orQFRyogz0w012aNWecM=
+	t=1709589308; cv=none; b=jNVxodMMGlmni/UHwhpqaEu7rUQkdfkvEf5maxpipjadg6fsr5KMVxv4RbgQD0fTybrNRTev0BRu5Hvzi4Fchty6xWyZFLCc+Vz43Mu0Mcy7TBSVbG1BzwRedzDj+Q1GHqUSe1YTbSRqqITK6o1kzVEmzgtrXg9SgrUJMr0IU8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589306; c=relaxed/simple;
-	bh=UL1PqPNNgMFnVdNS1K3Y13MKCTaxunhrSHNsDIeCsk8=;
+	s=arc-20240116; t=1709589308; c=relaxed/simple;
+	bh=gl4UN/XtrM4zCB2/ZEC26Nyx59IyeP7PdbBGehEFnyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vD7vftoSnicDFHoiy7z0IXhzF2SlyqeTE1DKXurck5QmZW1Gv7qUGAHlQg7SUrriy6PFvUxN0IkqYqfmUoVZGAW1g7tIqZHjvj3WeWyOEMN0uBH3gDyfSUMt4f0BXPQh9eXZ/ep6KJxDPCIh5GxyqZasrO8KauVWMJQUoC26kr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qImzzquz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpQsZ7Tben3n6w5bkr7E4LVZMUUBvfGao4p7illvMsikYvm422REHtnBRGjEC+jh2Xg9khKIdnrI8OhMOQpsskgg6Ih9YdvSfeZMYOSL8L43LgtuHLcd2I/xWXwdHngddy1cIm/stKyR1hz0hW0VBt7UcFVDi+qA4DPybypslek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG0rLcqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qImzzquz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F99C43390;
-	Mon,  4 Mar 2024 21:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG0rLcqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E30C433F1;
+	Mon,  4 Mar 2024 21:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589306;
-	bh=UL1PqPNNgMFnVdNS1K3Y13MKCTaxunhrSHNsDIeCsk8=;
+	s=korg; t=1709589308;
+	bh=gl4UN/XtrM4zCB2/ZEC26Nyx59IyeP7PdbBGehEFnyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qImzzquzGj/0yhR+uQlxcNovM6HdNUtBArlYodx/Jhbcma2hNMb2BVgw5bK9E5mOi
-	 KDIVRBFGPKlLM2TOkzyayrH9r66xbHAf6KD5Gm3QWefdWQ6W6olir7ueZJ8PFgGgGE
-	 8l+DrbYXAQIiUilzfM4jKRpWodiWqGNwsQOIuL4I=
+	b=RG0rLcqJwPL8xcAtY0YjwQdBuvccBejkfinAIZ/0j8yS6L2IPVnuezVJa0w49bGAR
+	 OlkGbKgCgTU2j7iRCAP5CSSOevuk7HVfg7obOjVz6+x4mqbB/ADbSsuPb6ESqgvRF6
+	 Znb3rbLvoZkbnoiryNyI6STsa35LfkoxCtwVZJiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 59/84] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
-Date: Mon,  4 Mar 2024 21:24:32 +0000
-Message-ID: <20240304211544.345021086@linuxfoundation.org>
+	Zixi Chen <zixchen@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 5.15 60/84] x86/cpu/intel: Detect TME keyid bits before setting MTRR mask registers
+Date: Mon,  4 Mar 2024 21:24:33 +0000
+Message-ID: <20240304211544.381586464@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -56,66 +51,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 2a93c6cbd5a703d44c414a3c3945a87ce11430ba upstream.
+commit 6890cb1ace350b4386c8aee1343dc3b3ddd214da upstream.
 
-Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
-the domain")' aimed to make sure that a power-domain that is being
-enabled without any particular performance-state requested will at least
-turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
-required-opps properties.
+MKTME repurposes the high bit of physical address to key id for encryption
+key and, even though MAXPHYADDR in CPUID[0x80000008] remains the same,
+the valid bits in the MTRR mask register are based on the reduced number
+of physical address bits.
 
-But in the event that aggregation happens on a disabled power-domain, with
-an enabled peer without performance-state, both the local and peer
-corner are 0. The peer's enabled_corner is not considered, with the
-result that the underlying (shared) resource is disabled.
+detect_tme() in arch/x86/kernel/cpu/intel.c detects TME and subtracts
+it from the total usable physical bits, but it is called too late.
+Move the call to early_init_intel() so that it is called in setup_arch(),
+before MTRRs are setup.
 
-One case where this can be observed is when the display stack keeps mmcx
-enabled (but without a particular performance-state vote) in order to
-access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
-is flushed the state of the peer (mmcx) is not considered and mmcx_ao
-ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
-several times, but has been painted over in DeviceTree by adding an
-explicit vote for the lowest non-disabled performance-state.
+This fixes boot on TDX-enabled systems, which until now only worked with
+"disable_mtrr_cleanup".  Without the patch, the values written to the
+MTRRs mask registers were 52-bit wide (e.g. 0x000fffff_80000800) and
+the writes failed; with the patch, the values are 46-bit wide, which
+matches the reduced MAXPHYADDR that is shown in /proc/cpuinfo.
 
-Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
-Reported-by: Johan Hovold <johan@kernel.org>
-Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reported-by: Zixi Chen <zixchen@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240131230902.1867092-3-pbonzini%40redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/rpmhpd.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/intel.c |  178 ++++++++++++++++++++++----------------------
+ 1 file changed, 91 insertions(+), 87 deletions(-)
 
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -351,12 +351,15 @@ static int rpmhpd_aggregate_corner(struc
- 	unsigned int active_corner, sleep_corner;
- 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
- 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
-+	unsigned int peer_enabled_corner;
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -181,6 +181,90 @@ static bool bad_spectre_microcode(struct
+ 	return false;
+ }
  
- 	to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
- 
--	if (peer && peer->enabled)
--		to_active_sleep(peer, peer->corner, &peer_active_corner,
-+	if (peer && peer->enabled) {
-+		peer_enabled_corner = max(peer->corner, peer->enable_corner);
-+		to_active_sleep(peer, peer_enabled_corner, &peer_active_corner,
- 				&peer_sleep_corner);
++#define MSR_IA32_TME_ACTIVATE		0x982
++
++/* Helpers to access TME_ACTIVATE MSR */
++#define TME_ACTIVATE_LOCKED(x)		(x & 0x1)
++#define TME_ACTIVATE_ENABLED(x)		(x & 0x2)
++
++#define TME_ACTIVATE_POLICY(x)		((x >> 4) & 0xf)	/* Bits 7:4 */
++#define TME_ACTIVATE_POLICY_AES_XTS_128	0
++
++#define TME_ACTIVATE_KEYID_BITS(x)	((x >> 32) & 0xf)	/* Bits 35:32 */
++
++#define TME_ACTIVATE_CRYPTO_ALGS(x)	((x >> 48) & 0xffff)	/* Bits 63:48 */
++#define TME_ACTIVATE_CRYPTO_AES_XTS_128	1
++
++/* Values for mktme_status (SW only construct) */
++#define MKTME_ENABLED			0
++#define MKTME_DISABLED			1
++#define MKTME_UNINITIALIZED		2
++static int mktme_status = MKTME_UNINITIALIZED;
++
++static void detect_tme_early(struct cpuinfo_x86 *c)
++{
++	u64 tme_activate, tme_policy, tme_crypto_algs;
++	int keyid_bits = 0, nr_keyids = 0;
++	static u64 tme_activate_cpu0 = 0;
++
++	rdmsrl(MSR_IA32_TME_ACTIVATE, tme_activate);
++
++	if (mktme_status != MKTME_UNINITIALIZED) {
++		if (tme_activate != tme_activate_cpu0) {
++			/* Broken BIOS? */
++			pr_err_once("x86/tme: configuration is inconsistent between CPUs\n");
++			pr_err_once("x86/tme: MKTME is not usable\n");
++			mktme_status = MKTME_DISABLED;
++
++			/* Proceed. We may need to exclude bits from x86_phys_bits. */
++		}
++	} else {
++		tme_activate_cpu0 = tme_activate;
 +	}
++
++	if (!TME_ACTIVATE_LOCKED(tme_activate) || !TME_ACTIVATE_ENABLED(tme_activate)) {
++		pr_info_once("x86/tme: not enabled by BIOS\n");
++		mktme_status = MKTME_DISABLED;
++		return;
++	}
++
++	if (mktme_status != MKTME_UNINITIALIZED)
++		goto detect_keyid_bits;
++
++	pr_info("x86/tme: enabled by BIOS\n");
++
++	tme_policy = TME_ACTIVATE_POLICY(tme_activate);
++	if (tme_policy != TME_ACTIVATE_POLICY_AES_XTS_128)
++		pr_warn("x86/tme: Unknown policy is active: %#llx\n", tme_policy);
++
++	tme_crypto_algs = TME_ACTIVATE_CRYPTO_ALGS(tme_activate);
++	if (!(tme_crypto_algs & TME_ACTIVATE_CRYPTO_AES_XTS_128)) {
++		pr_err("x86/mktme: No known encryption algorithm is supported: %#llx\n",
++				tme_crypto_algs);
++		mktme_status = MKTME_DISABLED;
++	}
++detect_keyid_bits:
++	keyid_bits = TME_ACTIVATE_KEYID_BITS(tme_activate);
++	nr_keyids = (1UL << keyid_bits) - 1;
++	if (nr_keyids) {
++		pr_info_once("x86/mktme: enabled by BIOS\n");
++		pr_info_once("x86/mktme: %d KeyIDs available\n", nr_keyids);
++	} else {
++		pr_info_once("x86/mktme: disabled by BIOS\n");
++	}
++
++	if (mktme_status == MKTME_UNINITIALIZED) {
++		/* MKTME is usable */
++		mktme_status = MKTME_ENABLED;
++	}
++
++	/*
++	 * KeyID bits effectively lower the number of physical address
++	 * bits.  Update cpuinfo_x86::x86_phys_bits accordingly.
++	 */
++	c->x86_phys_bits -= keyid_bits;
++}
++
+ static void early_init_intel(struct cpuinfo_x86 *c)
+ {
+ 	u64 misc_enable;
+@@ -332,6 +416,13 @@ static void early_init_intel(struct cpui
+ 	 */
+ 	if (detect_extended_topology_early(c) < 0)
+ 		detect_ht_early(c);
++
++	/*
++	 * Adjust the number of physical bits early because it affects the
++	 * valid bits of the MTRR mask registers.
++	 */
++	if (cpu_has(c, X86_FEATURE_TME))
++		detect_tme_early(c);
+ }
  
- 	active_corner = max(this_active_corner, peer_active_corner);
+ static void bsp_init_intel(struct cpuinfo_x86 *c)
+@@ -492,90 +583,6 @@ static void srat_detect_node(struct cpui
+ #endif
+ }
  
+-#define MSR_IA32_TME_ACTIVATE		0x982
+-
+-/* Helpers to access TME_ACTIVATE MSR */
+-#define TME_ACTIVATE_LOCKED(x)		(x & 0x1)
+-#define TME_ACTIVATE_ENABLED(x)		(x & 0x2)
+-
+-#define TME_ACTIVATE_POLICY(x)		((x >> 4) & 0xf)	/* Bits 7:4 */
+-#define TME_ACTIVATE_POLICY_AES_XTS_128	0
+-
+-#define TME_ACTIVATE_KEYID_BITS(x)	((x >> 32) & 0xf)	/* Bits 35:32 */
+-
+-#define TME_ACTIVATE_CRYPTO_ALGS(x)	((x >> 48) & 0xffff)	/* Bits 63:48 */
+-#define TME_ACTIVATE_CRYPTO_AES_XTS_128	1
+-
+-/* Values for mktme_status (SW only construct) */
+-#define MKTME_ENABLED			0
+-#define MKTME_DISABLED			1
+-#define MKTME_UNINITIALIZED		2
+-static int mktme_status = MKTME_UNINITIALIZED;
+-
+-static void detect_tme(struct cpuinfo_x86 *c)
+-{
+-	u64 tme_activate, tme_policy, tme_crypto_algs;
+-	int keyid_bits = 0, nr_keyids = 0;
+-	static u64 tme_activate_cpu0 = 0;
+-
+-	rdmsrl(MSR_IA32_TME_ACTIVATE, tme_activate);
+-
+-	if (mktme_status != MKTME_UNINITIALIZED) {
+-		if (tme_activate != tme_activate_cpu0) {
+-			/* Broken BIOS? */
+-			pr_err_once("x86/tme: configuration is inconsistent between CPUs\n");
+-			pr_err_once("x86/tme: MKTME is not usable\n");
+-			mktme_status = MKTME_DISABLED;
+-
+-			/* Proceed. We may need to exclude bits from x86_phys_bits. */
+-		}
+-	} else {
+-		tme_activate_cpu0 = tme_activate;
+-	}
+-
+-	if (!TME_ACTIVATE_LOCKED(tme_activate) || !TME_ACTIVATE_ENABLED(tme_activate)) {
+-		pr_info_once("x86/tme: not enabled by BIOS\n");
+-		mktme_status = MKTME_DISABLED;
+-		return;
+-	}
+-
+-	if (mktme_status != MKTME_UNINITIALIZED)
+-		goto detect_keyid_bits;
+-
+-	pr_info("x86/tme: enabled by BIOS\n");
+-
+-	tme_policy = TME_ACTIVATE_POLICY(tme_activate);
+-	if (tme_policy != TME_ACTIVATE_POLICY_AES_XTS_128)
+-		pr_warn("x86/tme: Unknown policy is active: %#llx\n", tme_policy);
+-
+-	tme_crypto_algs = TME_ACTIVATE_CRYPTO_ALGS(tme_activate);
+-	if (!(tme_crypto_algs & TME_ACTIVATE_CRYPTO_AES_XTS_128)) {
+-		pr_err("x86/mktme: No known encryption algorithm is supported: %#llx\n",
+-				tme_crypto_algs);
+-		mktme_status = MKTME_DISABLED;
+-	}
+-detect_keyid_bits:
+-	keyid_bits = TME_ACTIVATE_KEYID_BITS(tme_activate);
+-	nr_keyids = (1UL << keyid_bits) - 1;
+-	if (nr_keyids) {
+-		pr_info_once("x86/mktme: enabled by BIOS\n");
+-		pr_info_once("x86/mktme: %d KeyIDs available\n", nr_keyids);
+-	} else {
+-		pr_info_once("x86/mktme: disabled by BIOS\n");
+-	}
+-
+-	if (mktme_status == MKTME_UNINITIALIZED) {
+-		/* MKTME is usable */
+-		mktme_status = MKTME_ENABLED;
+-	}
+-
+-	/*
+-	 * KeyID bits effectively lower the number of physical address
+-	 * bits.  Update cpuinfo_x86::x86_phys_bits accordingly.
+-	 */
+-	c->x86_phys_bits -= keyid_bits;
+-}
+-
+ static void init_cpuid_fault(struct cpuinfo_x86 *c)
+ {
+ 	u64 msr;
+@@ -712,9 +719,6 @@ static void init_intel(struct cpuinfo_x8
+ 
+ 	init_ia32_feat_ctl(c);
+ 
+-	if (cpu_has(c, X86_FEATURE_TME))
+-		detect_tme(c);
+-
+ 	init_intel_misc_features(c);
+ 
+ 	split_lock_init();
 
 
