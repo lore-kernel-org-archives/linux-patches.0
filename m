@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC5979DDE;
-	Mon,  4 Mar 2024 21:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7417BAF0;
+	Mon,  4 Mar 2024 21:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588746; cv=none; b=Ozbbi38hYzRuSAS/HTrzEF4SPM5L5YEW2/JTBB46ZsL/eIPzJxiZbUsTvIAT61S8hTOSGo+y0ce1831XsGJN1EoNcMFSTbVbKyJLe/nGfnR+nEAuZwjTzQkhP3y5rIUB06MygawPm0P/v+emlb5TXFVNbrVnRK4qZQThQT9VcHM=
+	t=1709588748; cv=none; b=RJ3XYZ4IGm3kKYY2YFaPGyFrbKwYC65E5cimFiA9LL3w9Lf9+hBd+NdPz0D/Kc9p3Qnf0fXVQvPf5rCmfniy3l7ptwTz1r9oLvy34ADyBSVxyVMkhudd8oTlqIbM2WHnna52/cMZDwrxSFPa8RCbeZ5mPChdS6oCa0upZ7esGJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588746; c=relaxed/simple;
-	bh=kbfSrkJckFT6DzvaQuJqklzh3DnWP69GFQQCYATxrrc=;
+	s=arc-20240116; t=1709588748; c=relaxed/simple;
+	bh=GleRpfPPD4Cemg3vcx1Y2HW1tDOCrAJ4tVTee67KAgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejI/AnVgdr4Go3gCXUO25lNE/xdTOD3n3IP0aq2brEACIpcI2FAvs2fX3gyA5JsHIJDYYznQJ/uOwI62XTg8KXu4PZ8Aw6cno69hk32IM18+FuM8Y2UXOoA8x6J2v/6O4bxjW6fn+w6V/S2115nj6cP/q5qypy8GpZ93nz3Qz3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoIq8kRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8rgrGOAfWR3v95mMQnnXAABGyVBLOI0xc7U0G4C1dRHSvylq7HvZmipn9j6w7BmSO7R+TZEPY1iQPhGHrbFo2C5DAqpsU4pzfKha7mMu1iFzE1ojAN6dbq1wDF+5rHJZwobyJkf1jSXB7yIpUCCmU1NQeF91w1UmRPRAV3QiZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeWmoOMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoIq8kRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FCCC433C7;
-	Mon,  4 Mar 2024 21:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeWmoOMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10905C433A6;
+	Mon,  4 Mar 2024 21:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588745;
-	bh=kbfSrkJckFT6DzvaQuJqklzh3DnWP69GFQQCYATxrrc=;
+	s=korg; t=1709588748;
+	bh=GleRpfPPD4Cemg3vcx1Y2HW1tDOCrAJ4tVTee67KAgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoIq8kRr246u3XzwID04COg/dQ7iJAgfN/gEohgyvtIA4botQuzbqCKlmb96DsS4W
-	 kJt3cXTvkz7VnA0DnT7kg7JiNBbnu89sCdQcFzP+aUWZp5mCFrSMZpV5N29VY9OcvL
-	 4CJ9fQOk23RYD+mgrti+qMeK5A5dNQSxpValXZzE=
+	b=xeWmoOMPUoQFaE4KQsktvUvqSE6kaviCsKQRUG08Wj3sM5Ka38VZW9tbXa5lmxHI6
+	 Be0JdFEIbTzfweQUDLNvw+3YgmdAiJLsqKJduL2PocXoKdu9Ps1VUbQ+tCkWAbMRBA
+	 oEYVqIWP3ZlPlPvKqTS199YQteY05qQEFRkKx80Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dorai Ashok S A <dash.btrfs@inix.me>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 081/215] btrfs: send: dont issue unnecessary zero writes for trailing hole
-Date: Mon,  4 Mar 2024 21:22:24 +0000
-Message-ID: <20240304211559.556717957@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 082/215] Revert "drm/amd/pm: resolve reboot exception for si oland"
+Date: Mon,  4 Mar 2024 21:22:25 +0000
+Message-ID: <20240304211559.590263803@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -53,156 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 5897710b28cabab04ea6c7547f27b7989de646ae upstream.
+commit 955558030954b9637b41c97b730f9b38c92ac488 upstream.
 
-If we have a sparse file with a trailing hole (from the last extent's end
-to i_size) and then create an extent in the file that ends before the
-file's i_size, then when doing an incremental send we will issue a write
-full of zeroes for the range that starts immediately after the new extent
-ends up to i_size. While this isn't incorrect because the file ends up
-with exactly the same data, it unnecessarily results in using extra space
-at the destination with one or more extents full of zeroes instead of
-having a hole. In same cases this results in using megabytes or even
-gigabytes of unnecessary space.
+This reverts commit e490d60a2f76bff636c68ce4fe34c1b6c34bbd86.
 
-Example, reproducer:
+This causes hangs on SI when DC is enabled and errors on driver
+reboot and power off cycles.
 
-   $ cat test.sh
-   #!/bin/bash
-
-   DEV=/dev/sdh
-   MNT=/mnt/sdh
-
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   # Create 1G sparse file.
-   xfs_io -f -c "truncate 1G" $MNT/foobar
-
-   # Create base snapshot.
-   btrfs subvolume snapshot -r $MNT $MNT/mysnap1
-
-   # Create send stream (full send) for the base snapshot.
-   btrfs send -f /tmp/1.snap $MNT/mysnap1
-
-   # Now write one extent at the beginning of the file and one somewhere
-   # in the middle, leaving a gap between the end of this second extent
-   # and the file's size.
-   xfs_io -c "pwrite -S 0xab 0 128K" \
-          -c "pwrite -S 0xcd 512M 128K" \
-          $MNT/foobar
-
-   # Now create a second snapshot which is going to be used for an
-   # incremental send operation.
-   btrfs subvolume snapshot -r $MNT $MNT/mysnap2
-
-   # Create send stream (incremental send) for the second snapshot.
-   btrfs send -p $MNT/mysnap1 -f /tmp/2.snap $MNT/mysnap2
-
-   # Now recreate the filesystem by receiving both send streams and
-   # verify we get the same content that the original filesystem had
-   # and file foobar has only two extents with a size of 128K each.
-   umount $MNT
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   btrfs receive -f /tmp/1.snap $MNT
-   btrfs receive -f /tmp/2.snap $MNT
-
-   echo -e "\nFile fiemap in the second snapshot:"
-   # Should have:
-   #
-   # 128K extent at file range [0, 128K[
-   # hole at file range [128K, 512M[
-   # 128K extent file range [512M, 512M + 128K[
-   # hole at file range [512M + 128K, 1G[
-   xfs_io -r -c "fiemap -v" $MNT/mysnap2/foobar
-
-   # File should be using 256K of data (two 128K extents).
-   echo -e "\nSpace used by the file: $(du -h $MNT/mysnap2/foobar | cut -f 1)"
-
-   umount $MNT
-
-Running the test, we can see with fiemap that we get an extent for the
-range [512M, 1G[, while in the source filesystem we have an extent for
-the range [512M, 512M + 128K[ and a hole for the rest of the file (the
-range [512M + 128K, 1G[):
-
-   $ ./test.sh
-   (...)
-   File fiemap in the second snapshot:
-   /mnt/sdh/mysnap2/foobar:
-    EXT: FILE-OFFSET        BLOCK-RANGE        TOTAL FLAGS
-      0: [0..255]:          26624..26879         256   0x0
-      1: [256..1048575]:    hole             1048320
-      2: [1048576..2097151]: 2156544..3205119 1048576   0x1
-
-   Space used by the file: 513M
-
-This happens because once we finish processing an inode, at
-finish_inode_if_needed(), we always issue a hole (write operations full
-of zeros) if there's a gap between the end of the last processed extent
-and the file's size, even if that range is already a hole in the parent
-snapshot. Fix this by issuing the hole only if the range is not already
-a hole.
-
-After this change, running the test above, we get the expected layout:
-
-   $ ./test.sh
-   (...)
-   File fiemap in the second snapshot:
-   /mnt/sdh/mysnap2/foobar:
-    EXT: FILE-OFFSET        BLOCK-RANGE      TOTAL FLAGS
-      0: [0..255]:          26624..26879       256   0x0
-      1: [256..1048575]:    hole             1048320
-      2: [1048576..1048831]: 26880..27135       256   0x1
-      3: [1048832..2097151]: hole             1048320
-
-   Space used by the file: 256K
-
-A test case for fstests will follow soon.
-
-CC: stable@vger.kernel.org # 6.1+
-Reported-by: Dorai Ashok S A <dash.btrfs@inix.me>
-Link: https://lore.kernel.org/linux-btrfs/c0bf7818-9c45-46a8-b3d3-513230d0c86e@inix.me/
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3216
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2755
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -6462,11 +6462,20 @@ static int finish_inode_if_needed(struct
- 				if (ret)
- 					goto out;
- 			}
--			if (sctx->cur_inode_last_extent <
--			    sctx->cur_inode_size) {
--				ret = send_hole(sctx, sctx->cur_inode_size);
--				if (ret)
-+			if (sctx->cur_inode_last_extent < sctx->cur_inode_size) {
-+				ret = range_is_hole_in_parent(sctx,
-+						      sctx->cur_inode_last_extent,
-+						      sctx->cur_inode_size);
-+				if (ret < 0) {
- 					goto out;
-+				} else if (ret == 0) {
-+					ret = send_hole(sctx, sctx->cur_inode_size);
-+					if (ret < 0)
-+						goto out;
-+				} else {
-+					/* Range is already a hole, skip. */
-+					ret = 0;
-+				}
- 			}
- 		}
- 		if (need_truncate) {
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -6925,6 +6925,23 @@ static int si_dpm_enable(struct amdgpu_d
+ 	return 0;
+ }
+ 
++static int si_set_temperature_range(struct amdgpu_device *adev)
++{
++	int ret;
++
++	ret = si_thermal_enable_alert(adev, false);
++	if (ret)
++		return ret;
++	ret = si_thermal_set_temperature_range(adev, R600_TEMP_RANGE_MIN, R600_TEMP_RANGE_MAX);
++	if (ret)
++		return ret;
++	ret = si_thermal_enable_alert(adev, true);
++	if (ret)
++		return ret;
++
++	return ret;
++}
++
+ static void si_dpm_disable(struct amdgpu_device *adev)
+ {
+ 	struct rv7xx_power_info *pi = rv770_get_pi(adev);
+@@ -7608,6 +7625,18 @@ static int si_dpm_process_interrupt(stru
+ 
+ static int si_dpm_late_init(void *handle)
+ {
++	int ret;
++	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
++
++	if (!adev->pm.dpm_enabled)
++		return 0;
++
++	ret = si_set_temperature_range(adev);
++	if (ret)
++		return ret;
++#if 0 //TODO ?
++	si_dpm_powergate_uvd(adev, true);
++#endif
+ 	return 0;
+ }
+ 
 
 
