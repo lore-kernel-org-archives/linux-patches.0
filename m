@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618EE1C6AB;
-	Mon,  4 Mar 2024 21:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE2810A35;
+	Mon,  4 Mar 2024 21:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588573; cv=none; b=itCCdrE817FPtMqFQ6pt7jJs1w6rBLZ65MlrlwDeEBxXsIkIQkPLiuJFi2wds08UQh2u8HhkB4G7UAaIP4rPXN8KnrfkX6mFJ1e+DocveNjmrz/OcTD2AyRJdxBEFnVeUR3Vp8fOdCyf++UpguB+B0remCm6c4exACbf8ONh/6I=
+	t=1709588575; cv=none; b=PJFhVCtFnRyz4FngqSmjsZKrAXvVfHdD/rodfNMbSvQaMhW7N9jnbs8vfONicVjRzlU9aJYQp5mQtt0d4mTC41+Sdbg195NzKHZJ9F59sX5wsshdy1Hwbt0bdGCsfoACaGTsAXRKnwRf3Jo5z12sledSPANiRkbvTDIXpyPDUKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588573; c=relaxed/simple;
-	bh=tVsRB7KDkvgpr0dcPhxPGobLQm4fv95hL5yVbDb/qi8=;
+	s=arc-20240116; t=1709588575; c=relaxed/simple;
+	bh=3C9U6Lli1tV6EAcSgdDEeeWRWFGFc5n3qlqYibuZ8PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=de1Nqz79yoZ+EjF4xiI2et6LfACO2Ru/ss4+YcHeS1rf8EL+spm5DwhXAc9MtQ38Yy/OVXdBRBiR2ZQVfWWp7Ouk96oouWovzm79PA6iW57zRrtTNSIcc7GO4O92sYQgWUarUsDdrOh6VzR6WWrsX9XDJHiY4ZNO2T31W0pG9Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obZ3HxrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HvHPwj0v4qPCfn3eyH0pjOPhrmNb/CuGiNCXiV7+/NQ4UdsGUSxUrYH7fANMkA9thbkjo4rOExmH143GxRE/72vNMYUY6HIzA62K0mgcHadyNA8KR0vluhgDRGKpPVGOAqUH2OO8ZU8MCBO2emAu20rLjyCpp/ANY3cnNwRPuLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8nkIU7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obZ3HxrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9966FC433F1;
-	Mon,  4 Mar 2024 21:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8nkIU7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D4C433C7;
+	Mon,  4 Mar 2024 21:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588572;
-	bh=tVsRB7KDkvgpr0dcPhxPGobLQm4fv95hL5yVbDb/qi8=;
+	s=korg; t=1709588575;
+	bh=3C9U6Lli1tV6EAcSgdDEeeWRWFGFc5n3qlqYibuZ8PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obZ3HxrZvC7KWUjsQvwFxv31uBDAwb8VGnRsm5d1I3jAKwBkNHw067gbQwhqmpXz2
-	 PbUhX7QQLwcqBtNE+BHvsSOvqkG6tkW8kSdL7UzwLcmJuEHPbwCo1kgL/XO2rxpT33
-	 48csXKu7L0NhCN8lgZxhVU37zvreuo6z3NdB02iM=
+	b=f8nkIU7w2nTYq0quFGVfalBMXD7bA1m9Slb1miDqhS0nDLf8XUlOnOZAJ7IzE/0zR
+	 exu9HcdfaejqH0TopXdDDW1fwamTl3cH4iEzjN2W3Izjf39MQqvHyX6agx6wf7vP6r
+	 ezy/sFYzkjP8U6huIBkD9+4F9RCnljnDJbGKinTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
+	Tasos Sahanidis <tasos@tasossah.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
 	Bart Van Assche <bvanassche@acm.org>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/215] scsi: core: Add struct for args to execution functions
-Date: Mon,  4 Mar 2024 21:21:07 +0000
-Message-ID: <20240304211557.139702907@linuxfoundation.org>
+Subject: [PATCH 6.1 005/215] scsi: sd: usb_storage: uas: Access media prior to querying device properties
+Date: Mon,  4 Mar 2024 21:21:08 +0000
+Message-ID: <20240304211557.173185622@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -54,204 +53,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit d0949565811f0896c1c7e781ab2ad99d34273fdf ]
+[ Upstream commit 321da3dc1f3c92a12e3c5da934090d2992a8814c ]
 
-Move the SCSI execution functions to use a struct for passing in optional
-args. This commit adds the new struct, temporarily converts scsi_execute()
-and scsi_execute_req() ands a new helper, scsi_execute_cmd(), which takes
-the scsi_exec_args struct.
+It has been observed that some USB/UAS devices return generic properties
+hardcoded in firmware for mode pages for a period of time after a device
+has been discovered. The reported properties are either garbage or they do
+not accurately reflect the characteristics of the physical storage device
+attached in the case of a bridge.
 
-There should be no change in behavior. We no longer allow users to pass in
-any request->rq_flags value, but they were only passing in RQF_PM which we
-do support by allowing users to pass in the BLK_MQ_REQ flags used by
-blk_mq_alloc_request().
+Prior to commit 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to
+avoid calling revalidate twice") we would call revalidate several
+times during device discovery. As a result, incorrect values would
+eventually get replaced with ones accurately describing the attached
+storage. When we did away with the redundant revalidate pass, several
+cases were reported where devices reported nonsensical values or would
+end up in write-protected state.
 
-Subsequent commits will convert scsi_execute() and scsi_execute_req() users
-to the new helpers then remove scsi_execute() and scsi_execute_req().
+An initial attempt at addressing this issue involved introducing a
+delayed second revalidate invocation. However, this approach still
+left some devices reporting incorrect characteristics.
 
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Tasos Sahanidis debugged the problem further and identified that
+introducing a READ operation prior to MODE SENSE fixed the problem and that
+it wasn't a timing issue. Issuing a READ appears to cause the devices to
+update their state to reflect the actual properties of the storage
+media. Device properties like vendor, model, and storage capacity appear to
+be correctly reported from the get-go. It is unclear why these devices
+defer populating the remaining characteristics.
+
+Match the behavior of a well known commercial operating system and
+trigger a READ operation prior to querying device characteristics to
+force the device to populate the mode pages.
+
+The additional READ is triggered by a flag set in the USB storage and
+UAS drivers. We avoid issuing the READ for other transport classes
+since some storage devices identify Linux through our particular
+discovery command sequence.
+
+Link: https://lore.kernel.org/r/20240213143306.2194237-1-martin.petersen@oracle.com
+Fixes: 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to avoid calling revalidate twice")
+Cc: stable@vger.kernel.org
+Reported-by: Tasos Sahanidis <tasos@tasossah.com>
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
+Tested-by: Tasos Sahanidis <tasos@tasossah.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 321da3dc1f3c ("scsi: sd: usb_storage: uas: Access media prior to querying device properties")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c    | 52 ++++++++++++++++++--------------------
- include/scsi/scsi_device.h | 51 +++++++++++++++++++++++++++----------
- 2 files changed, 62 insertions(+), 41 deletions(-)
+ drivers/scsi/sd.c              | 26 +++++++++++++++++++++++++-
+ drivers/usb/storage/scsiglue.c |  7 +++++++
+ drivers/usb/storage/uas.c      |  7 +++++++
+ include/scsi/scsi_device.h     |  1 +
+ 4 files changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 5c5954b78585e..edd296f950a33 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -185,39 +185,37 @@ void scsi_queue_insert(struct scsi_cmnd *cmd, int reason)
- 	__scsi_queue_insert(cmd, reason, true);
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 31b5273f43a71..4433b02c8935f 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3284,6 +3284,24 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+ 	return true;
  }
  
--
++static void sd_read_block_zero(struct scsi_disk *sdkp)
++{
++	unsigned int buf_len = sdkp->device->sector_size;
++	char *buffer, cmd[10] = { };
++
++	buffer = kmalloc(buf_len, GFP_KERNEL);
++	if (!buffer)
++		return;
++
++	cmd[0] = READ_10;
++	put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
++	put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
++
++	scsi_execute_cmd(sdkp->device, cmd, REQ_OP_DRV_IN, buffer, buf_len,
++			 SD_TIMEOUT, sdkp->max_retries, NULL);
++	kfree(buffer);
++}
++
  /**
-- * __scsi_execute - insert request and wait for the result
-- * @sdev:	scsi device
-+ * scsi_execute_cmd - insert request and wait for the result
-+ * @sdev:	scsi_device
-  * @cmd:	scsi command
-- * @data_direction: data direction
-+ * @opf:	block layer request cmd_flags
-  * @buffer:	data buffer
-  * @bufflen:	len of buffer
-- * @sense:	optional sense buffer
-- * @sshdr:	optional decoded sense header
-  * @timeout:	request timeout in HZ
-  * @retries:	number of times to retry request
-- * @flags:	flags for ->cmd_flags
-- * @rq_flags:	flags for ->rq_flags
-- * @resid:	optional residual length
-+ * @args:	Optional args. See struct definition for field descriptions
-  *
-  * Returns the scsi_cmnd result field if a command was executed, or a negative
-  * Linux error code if we didn't get that far.
-  */
--int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
--		 int data_direction, void *buffer, unsigned bufflen,
--		 unsigned char *sense, struct scsi_sense_hdr *sshdr,
--		 int timeout, int retries, blk_opf_t flags,
--		 req_flags_t rq_flags, int *resid)
-+int scsi_execute_cmd(struct scsi_device *sdev, const unsigned char *cmd,
-+		     blk_opf_t opf, void *buffer, unsigned int bufflen,
-+		     int timeout, int retries,
-+		     const struct scsi_exec_args *args)
- {
-+	static const struct scsi_exec_args default_args;
- 	struct request *req;
- 	struct scsi_cmnd *scmd;
- 	int ret;
+  *	sd_revalidate_disk - called the first time a new disk is seen,
+  *	performs disk spin up, read_capacity, etc.
+@@ -3323,7 +3341,13 @@ static int sd_revalidate_disk(struct gendisk *disk)
+ 	 */
+ 	if (sdkp->media_present) {
+ 		sd_read_capacity(sdkp, buffer);
+-
++		/*
++		 * Some USB/UAS devices return generic values for mode pages
++		 * until the media has been accessed. Trigger a READ operation
++		 * to force the device to populate mode pages.
++		 */
++		if (sdp->read_before_ms)
++			sd_read_block_zero(sdkp);
+ 		/*
+ 		 * set the default to rotational.  All non-rotational devices
+ 		 * support the block characteristics VPD page, which will
+diff --git a/drivers/usb/storage/scsiglue.c b/drivers/usb/storage/scsiglue.c
+index c54e9805da536..12cf9940e5b67 100644
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -179,6 +179,13 @@ static int slave_configure(struct scsi_device *sdev)
+ 		 */
+ 		sdev->use_192_bytes_for_3f = 1;
  
--	req = scsi_alloc_request(sdev->request_queue,
--			data_direction == DMA_TO_DEVICE ?
--			REQ_OP_DRV_OUT : REQ_OP_DRV_IN,
--			rq_flags & RQF_PM ? BLK_MQ_REQ_PM : 0);
-+	if (!args)
-+		args = &default_args;
-+	else if (WARN_ON_ONCE(args->sense &&
-+			      args->sense_len != SCSI_SENSE_BUFFERSIZE))
-+		return -EINVAL;
++		/*
++		 * Some devices report generic values until the media has been
++		 * accessed. Force a READ(10) prior to querying device
++		 * characteristics.
++		 */
++		sdev->read_before_ms = 1;
 +
-+	req = scsi_alloc_request(sdev->request_queue, opf, args->req_flags);
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
+ 		/*
+ 		 * Some devices don't like MODE SENSE with page=0x3f,
+ 		 * which is the command used for checking if a device
+diff --git a/drivers/usb/storage/uas.c b/drivers/usb/storage/uas.c
+index de3836412bf32..ed22053b3252f 100644
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -878,6 +878,13 @@ static int uas_slave_configure(struct scsi_device *sdev)
+ 	if (devinfo->flags & US_FL_CAPACITY_HEURISTICS)
+ 		sdev->guess_capacity = 1;
  
-@@ -232,8 +230,7 @@ int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
- 	memcpy(scmd->cmnd, cmd, scmd->cmd_len);
- 	scmd->allowed = retries;
- 	req->timeout = timeout;
--	req->cmd_flags |= flags;
--	req->rq_flags |= rq_flags | RQF_QUIET;
-+	req->rq_flags |= RQF_QUIET;
- 
++	/*
++	 * Some devices report generic values until the media has been
++	 * accessed. Force a READ(10) prior to querying device
++	 * characteristics.
++	 */
++	sdev->read_before_ms = 1;
++
  	/*
- 	 * head injection *required* here otherwise quiesce won't work
-@@ -249,20 +246,21 @@ int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
- 	if (unlikely(scmd->resid_len > 0 && scmd->resid_len <= bufflen))
- 		memset(buffer + bufflen - scmd->resid_len, 0, scmd->resid_len);
- 
--	if (resid)
--		*resid = scmd->resid_len;
--	if (sense && scmd->sense_len)
--		memcpy(sense, scmd->sense_buffer, SCSI_SENSE_BUFFERSIZE);
--	if (sshdr)
-+	if (args->resid)
-+		*args->resid = scmd->resid_len;
-+	if (args->sense)
-+		memcpy(args->sense, scmd->sense_buffer, SCSI_SENSE_BUFFERSIZE);
-+	if (args->sshdr)
- 		scsi_normalize_sense(scmd->sense_buffer, scmd->sense_len,
--				     sshdr);
-+				     args->sshdr);
-+
- 	ret = scmd->result;
-  out:
- 	blk_mq_free_request(req);
- 
- 	return ret;
- }
--EXPORT_SYMBOL(__scsi_execute);
-+EXPORT_SYMBOL(scsi_execute_cmd);
- 
- /*
-  * Wake up the error handler if necessary. Avoid as follows that the error
+ 	 * Some devices don't like MODE SENSE with page=0x3f,
+ 	 * which is the command used for checking if a device
 diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index d2751ed536df2..b407807cc6695 100644
+index b407807cc6695..a64713fe52640 100644
 --- a/include/scsi/scsi_device.h
 +++ b/include/scsi/scsi_device.h
-@@ -479,28 +479,51 @@ extern const char *scsi_device_state_name(enum scsi_device_state);
- extern int scsi_is_sdev_device(const struct device *);
- extern int scsi_is_target_device(const struct device *);
- extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
--extern int __scsi_execute(struct scsi_device *sdev, const unsigned char *cmd,
--			int data_direction, void *buffer, unsigned bufflen,
--			unsigned char *sense, struct scsi_sense_hdr *sshdr,
--			int timeout, int retries, blk_opf_t flags,
--			req_flags_t rq_flags, int *resid);
-+
-+/* Optional arguments to scsi_execute_cmd */
-+struct scsi_exec_args {
-+	unsigned char *sense;		/* sense buffer */
-+	unsigned int sense_len;		/* sense buffer len */
-+	struct scsi_sense_hdr *sshdr;	/* decoded sense header */
-+	blk_mq_req_flags_t req_flags;	/* BLK_MQ_REQ flags */
-+	int *resid;			/* residual length */
-+};
-+
-+int scsi_execute_cmd(struct scsi_device *sdev, const unsigned char *cmd,
-+		     blk_opf_t opf, void *buffer, unsigned int bufflen,
-+		     int timeout, int retries,
-+		     const struct scsi_exec_args *args);
-+
- /* Make sure any sense buffer is the correct size. */
--#define scsi_execute(sdev, cmd, data_direction, buffer, bufflen, sense,	\
--		     sshdr, timeout, retries, flags, rq_flags, resid)	\
-+#define scsi_execute(_sdev, _cmd, _data_dir, _buffer, _bufflen, _sense,	\
-+		     _sshdr, _timeout, _retries, _flags, _rq_flags,	\
-+		     _resid)						\
- ({									\
--	BUILD_BUG_ON((sense) != NULL &&					\
--		     sizeof(sense) != SCSI_SENSE_BUFFERSIZE);		\
--	__scsi_execute(sdev, cmd, data_direction, buffer, bufflen,	\
--		       sense, sshdr, timeout, retries, flags, rq_flags,	\
--		       resid);						\
-+	scsi_execute_cmd(_sdev, _cmd, (_data_dir == DMA_TO_DEVICE ?	\
-+			 REQ_OP_DRV_OUT : REQ_OP_DRV_IN) | _flags,	\
-+			 _buffer, _bufflen, _timeout, _retries,	\
-+			 &(struct scsi_exec_args) {			\
-+				.sense = _sense,			\
-+				.sshdr = _sshdr,			\
-+				.req_flags = _rq_flags & RQF_PM  ?	\
-+						BLK_MQ_REQ_PM : 0,	\
-+				.resid = _resid,			\
-+			 });						\
- })
-+
- static inline int scsi_execute_req(struct scsi_device *sdev,
- 	const unsigned char *cmd, int data_direction, void *buffer,
- 	unsigned bufflen, struct scsi_sense_hdr *sshdr, int timeout,
- 	int retries, int *resid)
- {
--	return scsi_execute(sdev, cmd, data_direction, buffer,
--		bufflen, NULL, sshdr, timeout, retries,  0, 0, resid);
-+	return scsi_execute_cmd(sdev, cmd,
-+				data_direction == DMA_TO_DEVICE ?
-+				REQ_OP_DRV_OUT : REQ_OP_DRV_IN, buffer,
-+				bufflen, timeout, retries,
-+				&(struct scsi_exec_args) {
-+					.sshdr = sshdr,
-+					.resid = resid,
-+				});
- }
- extern void sdev_disable_disk_events(struct scsi_device *sdev);
- extern void sdev_enable_disk_events(struct scsi_device *sdev);
+@@ -204,6 +204,7 @@ struct scsi_device {
+ 	unsigned use_10_for_rw:1; /* first try 10-byte read / write */
+ 	unsigned use_10_for_ms:1; /* first try 10-byte mode sense/select */
+ 	unsigned set_dbd_for_ms:1; /* Set "DBD" field in mode sense */
++	unsigned read_before_ms:1;	/* perform a READ before MODE SENSE */
+ 	unsigned no_report_opcodes:1;	/* no REPORT SUPPORTED OPERATION CODES */
+ 	unsigned no_write_same:1;	/* no WRITE SAME command */
+ 	unsigned use_16_for_rw:1; /* Use read/write(16) over read/write(10) */
 -- 
 2.43.0
 
