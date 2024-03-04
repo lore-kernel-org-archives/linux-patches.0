@@ -1,101 +1,161 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1181CA94;
-	Mon,  4 Mar 2024 21:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18361CA94;
+	Mon,  4 Mar 2024 21:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587570; cv=none; b=qlb4G8uGpL8k6rT4kuSg+A0TqYH8lODEC+GW8Mc+wMcajKaJMuaJxRN0U14sMrKnWHo/IzfTax754FrRlpxNCcmI2dK7llc77fr1htDob8Wz4+kiIv7BYIH8EW+HWBSl6lH5aTYJh3ZaE62cGSppYB7+vcDT2VkS4JChLnXjEdw=
+	t=1709587573; cv=none; b=iyirjt0p6GOI1MaASR5tPiR4K4xuIw/tBS7hqKy70yxs03nvLjpsbJLlyXzJbBRPIsBecZJbm6ae3xFiAxKptVYrszCVnAlMEHeXFkcsMt5YQ3jheiTLKHlbAHT1P9njJGJTqc7jekBPZFkvlfg4fk8ddE1/4OmiYoorFYf7N8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587570; c=relaxed/simple;
-	bh=WgyqQZ1qU5dAGLy8FWVCx7SDYcITd0ZjxK2Ai2VaOO0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1iR8LHTFaSGk9P6xyt+CvcFbueFQbBcf2gYgz0p3a0na0ydWHrynR+EJipebB1LYS3sT9/pHQF8o3st0BKNOD6FhclhotXnAFFMBhaD2NLfM3TblRjnI2+Xe2DR7Zm57BS4C7UCCKVw9Gr/Hu7pqs42XshSJac5z3T9VJzOq+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4l/mRbz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709587573; c=relaxed/simple;
+	bh=j3/VuXcdAAUeB/9osjvAgkL6rASQvBSAah7VCvAx5wg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jvGSFS0I72WqvU+wkH9jONpOb8sPn/DzpZz/q/UeEKGHFl4LE+86E/eaSVyvRWQlQCJWr9kUAKU56oarAan02y8nqj7EYrG00ZCEObgQKlMBbwj/rf+GJB3rZnnmRfVql/Y6hq4XeuZ1mBhB6NgVSzPOAWWdXHAf01hRHetgRzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJTghnHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4l/mRbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649C0C433C7;
-	Mon,  4 Mar 2024 21:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJTghnHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CC1C433C7;
+	Mon,  4 Mar 2024 21:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587570;
-	bh=WgyqQZ1qU5dAGLy8FWVCx7SDYcITd0ZjxK2Ai2VaOO0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4l/mRbzAfrU/LvMuMJ3jO5Kec7C3iDUaTZ661c6yQLNb8jFNF2BhuhQmW10xQnne
-	 APwjYDokCOzhcAb7wIvnqRlXgej5dagbuN1ZuvPXjDlOoRivpPO7d3gVIrq/BwDeCd
-	 fQ+Qv968VM3SBMY+asIbeQXpvQk+Qcx1m3iKTn4U=
+	s=korg; t=1709587573;
+	bh=j3/VuXcdAAUeB/9osjvAgkL6rASQvBSAah7VCvAx5wg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=AJTghnHFzAZkVVOP3bTPWb0PI/JGS7hXwJuVBRfdKlN9FgW3WHe3Vz07oRnrljkcp
+	 9cVguoS36kVFCueuuhNdSP66VM/hihp8RmxIaXOqnpnIfT4JJwQuhj4/Vu0cT/YS0r
+	 rCq+wvoEp9w5siDgSdZLKhQZKydWCspuMJoAdlmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 09/16] power: supply: bq27xxx-i2c: Do not free non existing IRQ
-Date: Mon,  4 Mar 2024 21:23:30 +0000
-Message-ID: <20240304211534.678178706@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 4.19 00/16] 4.19.309-rc1 review
+Date: Mon,  4 Mar 2024 21:23:21 +0000
+Message-ID: <20240304211534.328737119@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240304211534.328737119@linuxfoundation.org>
-References: <20240304211534.328737119@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.309-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.309-rc1
+X-KernelTest-Deadline: 2024-03-06T21:15+00:00
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 4.19.309 release.
+There are 16 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
+Anything received after that time might be too late.
 
-From: Hans de Goede <hdegoede@redhat.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.309-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-[ Upstream commit 2df70149e73e79783bcbc7db4fa51ecef0e2022c ]
+thanks,
 
-The bq27xxx i2c-client may not have an IRQ, in which case
-client->irq will be 0. bq27xxx_battery_i2c_probe() already has
-an if (client->irq) check wrapping the request_threaded_irq().
+greg k-h
 
-But bq27xxx_battery_i2c_remove() unconditionally calls
-free_irq(client->irq) leading to:
+-------------
+Pseudo-Shortlog of commits:
 
-[  190.310742] ------------[ cut here ]------------
-[  190.310843] Trying to free already-free IRQ 0
-[  190.310861] WARNING: CPU: 2 PID: 1304 at kernel/irq/manage.c:1893 free_irq+0x1b8/0x310
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.309-rc1
 
-Followed by a backtrace when unbinding the driver. Add
-an if (client->irq) to bq27xxx_battery_i2c_remove() mirroring
-probe() to fix this.
+Arturas Moskvinas <arturas.moskvinas@gmail.com>
+    gpio: 74x164: Enable output pins after registers are reset
 
-Fixes: 444ff00734f3 ("power: supply: bq27xxx: Fix I2C IRQ race on remove")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240215155133.70537-1-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/power/supply/bq27xxx_battery_i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Baokun Li <libaokun1@huawei.com>
+    cachefiles: fix memory leak in cachefiles_add_cache()
 
-diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-index 0fbc221ee50ef..f5870b3493094 100644
---- a/drivers/power/supply/bq27xxx_battery_i2c.c
-+++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-@@ -217,7 +217,9 @@ static int bq27xxx_battery_i2c_remove(struct i2c_client *client)
- {
- 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
- 
--	free_irq(client->irq, di);
-+	if (client->irq)
-+		free_irq(client->irq, di);
-+
- 	bq27xxx_battery_teardown(di);
- 
- 	mutex_lock(&battery_mutex);
--- 
-2.43.0
+Ivan Semenov <ivan@semenov.dev>
+    mmc: core: Fix eMMC initialization with 1-bit bus connection
 
+David Sterba <dsterba@suse.com>
+    btrfs: dev-replace: properly validate device names
+
+Johannes Berg <johannes.berg@intel.com>
+    wifi: nl80211: reject iftype change with mesh ID change
+
+Alexander Ofitserov <oficerovas@altlinux.org>
+    gtp: fix use-after-free and null-ptr-deref in gtp_newlink()
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: Drop leftover snd-rtctimer stuff from Makefile
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx-i2c: Do not free non existing IRQ
+
+Arnd Bergmann <arnd@arndb.de>
+    efi/capsule-loader: fix incorrect allocation size
+
+Kai-Heng Feng <kai.heng.feng@canonical.com>
+    Bluetooth: Enforce validation on max value of connection interval
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Fix handling of HCI_EV_IO_CAPA_REQUEST
+
+Ying Hsu <yinghsu@chromium.org>
+    Bluetooth: Avoid potential use-after-free in hci_error_reset
+
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
+    net: usb: dm9601: fix wrong return value in dm9601_mdio_read
+
+Oleksij Rempel <o.rempel@pengutronix.de>
+    lan78xx: enable auto speed configuration for LAN7850 if no EEPROM is detected
+
+Yunjian Wang <wangyunjian@huawei.com>
+    tun: Fix xdp_rxq_info's queue_index when detaching
+
+Ryosuke Yasuoka <ryasuoka@redhat.com>
+    netlink: Fix kernel-infoleak-after-free in __skb_datagram_iter
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                   |  4 ++--
+ drivers/firmware/efi/capsule-loader.c      |  2 +-
+ drivers/gpio/gpio-74x164.c                 |  4 ++--
+ drivers/mmc/core/mmc.c                     |  2 ++
+ drivers/net/gtp.c                          | 12 ++++++------
+ drivers/net/tun.c                          |  1 +
+ drivers/net/usb/dm9601.c                   |  2 +-
+ drivers/net/usb/lan78xx.c                  |  3 ++-
+ drivers/power/supply/bq27xxx_battery_i2c.c |  4 +++-
+ fs/btrfs/dev-replace.c                     | 24 ++++++++++++++++++++----
+ fs/cachefiles/bind.c                       |  3 +++
+ net/bluetooth/hci_core.c                   |  7 ++++---
+ net/bluetooth/hci_event.c                  |  9 ++++++++-
+ net/bluetooth/l2cap_core.c                 |  8 +++++++-
+ net/netlink/af_netlink.c                   |  2 +-
+ net/wireless/nl80211.c                     |  2 ++
+ sound/core/Makefile                        |  1 -
+ 17 files changed, 65 insertions(+), 25 deletions(-)
 
 
