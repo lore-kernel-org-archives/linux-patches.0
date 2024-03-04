@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102A8200CD;
-	Mon,  4 Mar 2024 21:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D4A43AAE;
+	Mon,  4 Mar 2024 21:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587597; cv=none; b=k9VI1tFLs9dhL4X6EH2p17ts6aLnlKVBYi+2e3pqrzm30MMdI6DbNlcqNHIjkkMJChMIBqVa6Gn2Hl4U5Cq6byN5vDyJy8EGCdup2qNpA5GEkxaRioxs3AehhlQE+0lwaKKhMkvqO5tVtAK4hZ6oRqLjzF/xBHbmowLJ8yZpAqI=
+	t=1709587599; cv=none; b=leeyvKp2E0sBh2gAIYb3YLAbRpcidPXhpIoc060sj5dE7LTWGQHJOlXGU9zkCC+mM7YX3GDr2jL2QZuGtTiaRH+JhF98A9YtjbIEz5SeCg8bMvKQKNwKpYAlUP92bHMK6cwlTicrcSoT7eMrL2XqTh2/22Lq8UctTQazZYcGoO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587597; c=relaxed/simple;
-	bh=pTDTeZ/uiYPR5wGv0KCfOx6++bzXqq86Jfef6lCfATs=;
+	s=arc-20240116; t=1709587599; c=relaxed/simple;
+	bh=SQ5umCoD4QmB/WrEq8aEEcUJt+LohkbdS8tI4wJB49Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IwgpjsiHG9BKoJDOLZcGJdagVK+UA4tjP39LOi345WxhMVpkz9o6ObkAfGiRZ3RU8k8Ew1R1W4OSLqek4gRUZ2fpxWWwZgjSyvAGR3Q0Zgbkr4GTq2NZaylrggkeo/YM3mGnt2xyB067DujcYqZv6LD6osxA4G0gTKeAUE6WYOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3jjlMZp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IM1liOFCNgUDs5nhbxTurm+Kf2sr7VSVPYUtjqYzrvETDNcI2kQDdH7s07kaduYtXyU09PIO3QSKWMorW5BteQkQpDaM4X1arHzgzKaY71KpIjLVTfnKCr+of6/Io8ZqfpWcZriZ4Ni+VVP6x9+UlecMznoi1NPVuXJsAL07oIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRUoy4bG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3jjlMZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D15C433C7;
-	Mon,  4 Mar 2024 21:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRUoy4bG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E7AC433F1;
+	Mon,  4 Mar 2024 21:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587596;
-	bh=pTDTeZ/uiYPR5wGv0KCfOx6++bzXqq86Jfef6lCfATs=;
+	s=korg; t=1709587599;
+	bh=SQ5umCoD4QmB/WrEq8aEEcUJt+LohkbdS8tI4wJB49Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O3jjlMZpdFwSoDFoIqEe13Bsx9Y71rPqImgsJUkSv9E7MVJ/YmkcMflxeqSUvXWQf
-	 vpWgPdPbmYB0Kl0gbJxV9dRJh9YMMtqLiuRKAj8iytJSPnMHNY+62vIkSRR8PIdunL
-	 bmT/ptUpx5BLW8gBO6F+0wLQnzyk/fPwY7LZQVV0=
+	b=pRUoy4bGLZPZU/x8Gr7UEwhQqfiLVk5m5qESQUhpHhpnOmO957lcDJYshFhxOJFGN
+	 iXHSJ0aRhexG7RBAtoiA6weivyhhalvAqRs01ScmB4kYw2zjWlsUiJqp8S2qXoee1T
+	 iIaCWvU1+3DgA5dFf9t2wJVBWnl1IpZ5Ty3dQdEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 009/162] spi: cadence-qspi: remove system-wide suspend helper calls from runtime PM hooks
-Date: Mon,  4 Mar 2024 21:21:14 +0000
-Message-ID: <20240304211552.125642394@linuxfoundation.org>
+Subject: [PATCH 6.7 018/162] ipv6: fix potential "struct net" leak in inet6_rtm_getaddr()
+Date: Mon,  4 Mar 2024 21:21:23 +0000
+Message-ID: <20240304211552.411233803@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -45,90 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 959043afe53ae80633e810416cee6076da6e91c6 ]
+[ Upstream commit 10bfd453da64a057bcfd1a49fb6b271c48653cdb ]
 
-The ->runtime_suspend() and ->runtime_resume() callbacks are not
-expected to call spi_controller_suspend() and spi_controller_resume().
-Remove calls to those in the cadence-qspi driver.
+It seems that if userspace provides a correct IFA_TARGET_NETNSID value
+but no IFA_ADDRESS and IFA_LOCAL attributes, inet6_rtm_getaddr()
+returns -EINVAL with an elevated "struct net" refcount.
 
-Those helpers have two roles currently:
- - They stop/start the queue, including dealing with the kworker.
- - They toggle the SPI controller SPI_CONTROLLER_SUSPENDED flag. It
-   requires acquiring ctlr->bus_lock_mutex.
-
-Step one is irrelevant because cadence-qspi is not queued. Step two
-however has two implications:
- - A deadlock occurs, because ->runtime_resume() is called in a context
-   where the lock is already taken (in the ->exec_op() callback, where
-   the usage count is incremented).
- - It would disallow all operations once the device is auto-suspended.
-
-Here is a brief call tree highlighting the mutex deadlock:
-
-spi_mem_exec_op()
-        ...
-        spi_mem_access_start()
-                mutex_lock(&ctlr->bus_lock_mutex)
-
-        cqspi_exec_mem_op()
-                pm_runtime_resume_and_get()
-                        cqspi_resume()
-                                spi_controller_resume()
-                                        mutex_lock(&ctlr->bus_lock_mutex)
-                ...
-
-        spi_mem_access_end()
-                mutex_unlock(&ctlr->bus_lock_mutex)
-        ...
-
-Fixes: 0578a6dbfe75 ("spi: spi-cadence-quadspi: add runtime pm support")
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://msgid.link/r/20240222-cdns-qspi-pm-fix-v4-2-6b6af8bcbf59@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6ecf4c37eb3e ("ipv6: enable IFA_TARGET_NETNSID for RTM_GETADDR")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ net/ipv6/addrconf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 0d184d65dce76..731775d34d393 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1930,14 +1930,10 @@ static void cqspi_remove(struct platform_device *pdev)
- static int cqspi_suspend(struct device *dev)
- {
- 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
--	int ret;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 5a839c5fb1a5a..055230b669cf2 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -5509,9 +5509,10 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 	}
  
--	ret = spi_controller_suspend(cqspi->host);
- 	cqspi_controller_enable(cqspi, 0);
+ 	addr = extract_addr(tb[IFA_ADDRESS], tb[IFA_LOCAL], &peer);
+-	if (!addr)
+-		return -EINVAL;
 -
- 	clk_disable_unprepare(cqspi->clk);
--
--	return ret;
-+	return 0;
- }
- 
- static int cqspi_resume(struct device *dev)
-@@ -1950,8 +1946,7 @@ static int cqspi_resume(struct device *dev)
- 
- 	cqspi->current_cs = -1;
- 	cqspi->sclk = 0;
--
--	return spi_controller_resume(cqspi->host);
-+	return 0;
- }
- 
- static DEFINE_RUNTIME_DEV_PM_OPS(cqspi_dev_pm_ops, cqspi_suspend,
++	if (!addr) {
++		err = -EINVAL;
++		goto errout;
++	}
+ 	ifm = nlmsg_data(nlh);
+ 	if (ifm->ifa_index)
+ 		dev = dev_get_by_index(tgt_net, ifm->ifa_index);
 -- 
 2.43.0
 
