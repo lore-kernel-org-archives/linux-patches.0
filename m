@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B9D1F60A;
-	Mon,  4 Mar 2024 21:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38B81C687;
+	Mon,  4 Mar 2024 21:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588042; cv=none; b=PWLJtBa+y9tbJeXC4Rcx1VXEb9GLUuRsUdP2DRT9fCUPvrgsHY7nAOyMAEKoZv1Ual7j3Uq1zPFNnerHWHwHp+3c2IB8H4+ZfnzA5WLYK5sRG8gJdvVZ4SyxSSNE5iRQa2o7HHHAOWnbicUybH/2qMMBIwntuv93BmocGNpnqa0=
+	t=1709588044; cv=none; b=AXyHb6LX+I2JlXJoQs+a4k5M6JENGaA5boFh5b2NaPaGxuPvVl6+NWUDGje/3Dy2km8vmDikznN0I1oiqlrT2rqzj82QlJWES36YAGGirEbN6C4/C69hw2EQpTRUCJltaRQFMIq9bUOWWs0mA05/meJXTrOVOqHtRofcX2AIrkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588042; c=relaxed/simple;
-	bh=7JHSSWSkN2VZQYReShfxtKSpGAcrmghGyCsNX6g/PBk=;
+	s=arc-20240116; t=1709588044; c=relaxed/simple;
+	bh=AmnEXfjY2hLrm/npFDMPGzfcQF17ni69WO6KiXnovi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCzfTq8aO4QAOI1UZMffkCHw6fBvCOJMFkRdIPr9tBHkYdB9bQtASiu/GWVMBgXQfvZkeQEaIxYb38MJ08RwRqRDlFERAdyIzl6WlmaukhHbwp9mtF2PGaL/pVgSjkAlG2PTtmTYxdXIWTuCj7SGCv1orTXTFGwEHUT03+Zsfb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jepz6DsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AzP2IjGBtnvoRh0Wi+PGpgVL3hhuzBdYwctWdw5OA5VPXuoKBVCix9ao93e4kY2ctkMXUwgJsI9dezeRPk2Lj8PBpZYeQJawPj3x4UR0cmA9dmGsdgefmycYTrGCZd+dlLlikVbck8pN2J52kmx741gh+cwTW6D1+1GNb29P0OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzLcNrmr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jepz6DsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4B0C433F1;
-	Mon,  4 Mar 2024 21:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzLcNrmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DC9C433F1;
+	Mon,  4 Mar 2024 21:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588042;
-	bh=7JHSSWSkN2VZQYReShfxtKSpGAcrmghGyCsNX6g/PBk=;
+	s=korg; t=1709588044;
+	bh=AmnEXfjY2hLrm/npFDMPGzfcQF17ni69WO6KiXnovi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jepz6DsK4pOGgH+PDCtiJmx1kERpbAfLboki/4GoQ/LXS8UEmEqdlM2UfOp4+l30D
-	 KLhjJK7v459VGWcwGZkhSWOxnneZcN7cl8w02vHSYQdPc9jn7t6dx9tzReJPkk1nYG
-	 L7Nd2sk0KSYFHToptHiUf9miSR5frkWP1HP/JCbU=
+	b=rzLcNrmrJNvwk4MHJnBdxb61JqLWEH9D51RdgtnVb0IkJsh2oy8eaBU725pqQfi1b
+	 JfREodCLgmvAgVFNeP2CqRWUrp+k3VLeKYTa4iWv9M6PKDRDF56J1uPVOcXr1hGzcm
+	 fQRYJl+IXJ4F8IbtiUEEo9VZAZ6JWYcQ4XP4iZpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunjian Wang <wangyunjian@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 03/25] tun: Fix xdp_rxq_infos queue_index when detaching
-Date: Mon,  4 Mar 2024 21:23:39 +0000
-Message-ID: <20240304211535.854516610@linuxfoundation.org>
+Subject: [PATCH 5.4 04/25] ipv6: fix potential "struct net" leak in inet6_rtm_getaddr()
+Date: Mon,  4 Mar 2024 21:23:40 +0000
+Message-ID: <20240304211535.893182620@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -51,34 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunjian Wang <wangyunjian@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2a770cdc4382b457ca3d43d03f0f0064f905a0d0 ]
+[ Upstream commit 10bfd453da64a057bcfd1a49fb6b271c48653cdb ]
 
-When a queue(tfile) is detached, we only update tfile's queue_index,
-but do not update xdp_rxq_info's queue_index. This patch fixes it.
+It seems that if userspace provides a correct IFA_TARGET_NETNSID value
+but no IFA_ADDRESS and IFA_LOCAL attributes, inet6_rtm_getaddr()
+returns -EINVAL with an elevated "struct net" refcount.
 
-Fixes: 8bf5c4ee1889 ("tun: setup xdp_rxq_info")
-Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
-Link: https://lore.kernel.org/r/1708398727-46308-1-git-send-email-wangyunjian@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6ecf4c37eb3e ("ipv6: enable IFA_TARGET_NETNSID for RTM_GETADDR")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/addrconf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index c595262c109ac..47958e6bd77fb 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -715,6 +715,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
- 				   tun->tfiles[tun->numqueues - 1]);
- 		ntfile = rtnl_dereference(tun->tfiles[index]);
- 		ntfile->queue_index = index;
-+		ntfile->xdp_rxq.queue_index = index;
- 		rcu_assign_pointer(tun->tfiles[tun->numqueues - 1],
- 				   NULL);
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 6fcbe8912b431..974e650e749e6 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -5380,9 +5380,10 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 	}
  
+ 	addr = extract_addr(tb[IFA_ADDRESS], tb[IFA_LOCAL], &peer);
+-	if (!addr)
+-		return -EINVAL;
+-
++	if (!addr) {
++		err = -EINVAL;
++		goto errout;
++	}
+ 	ifm = nlmsg_data(nlh);
+ 	if (ifm->ifa_index)
+ 		dev = dev_get_by_index(tgt_net, ifm->ifa_index);
 -- 
 2.43.0
 
