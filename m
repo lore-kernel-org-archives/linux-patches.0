@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D497A706;
-	Mon,  4 Mar 2024 21:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF491C6AB;
+	Mon,  4 Mar 2024 21:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588646; cv=none; b=UqGvwEpNZdwRhskqwqpHj81wO5ehtVQPvDJc82Ubv/8bARPsN394sxd6660cl9FGjDw4R6FhG49htPj66lUJJ4RA54RcCNDydvs/XTiv4QzbaT+Xm574+//TDqE+jI0TuGyJ8WGYokeKKTwSftI4qzqECxZbJ/+gyhh1LBtZ9s4=
+	t=1709588649; cv=none; b=p9damFevon9RjTUWsdt8aajorCOXvLW9iy4PRV7iztIBEXRnexeucfx7e9jW5S6zJpM+6OJ9v2KgVEao0+8pialPQrZMYZI9GqmB3tnlZqyvC4TCylNyT+5Y2D/8YwIspGlgkpMwFvlKU16Q4R4pFz42nM/MGOqsMgpFwJepCp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588646; c=relaxed/simple;
-	bh=cZErp8feoudr9ZXJw1B7wnRbjMBU72DcdbLHXYqJ6Q8=;
+	s=arc-20240116; t=1709588649; c=relaxed/simple;
+	bh=jCMhsYrAAOsKsqInOqnHC8Nhxt63kF8wmTQqOHDtvfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5Lh3t4SfWHO6lCW2hEcKH2keMUFQltPGWNQ3b4/dH5gWejR7pAQhu8f+p5X9/z4jvJcSyUsAaWTR+TAdJ0YWlk1JwrJb3JHorgv+IYVeTQFKmpDa8bSqfouWITjdu1WuSJNNbq+TYg/zAB/4Qn1pMgWdjEoAZF5/+5GEaKNhkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmJarOr0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSbHzzlyi+iCPa+4A9TDC9iW+9jddUZGQTk1Pb8VKeJHSYRzTZbT5l9hbvQfRabdN2JetumsfcLi0O2KB9rD6vpBL1cmlq6NJlKpEwn6RFwJg7hrEqzURcXcKWc+EpwSEtGxOuRFblX1bnus4FoCYOR9ys/oRBmT1MxIdKcmPjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlnpoMIa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmJarOr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBE4C433C7;
-	Mon,  4 Mar 2024 21:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlnpoMIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F53C433C7;
+	Mon,  4 Mar 2024 21:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588646;
-	bh=cZErp8feoudr9ZXJw1B7wnRbjMBU72DcdbLHXYqJ6Q8=;
+	s=korg; t=1709588649;
+	bh=jCMhsYrAAOsKsqInOqnHC8Nhxt63kF8wmTQqOHDtvfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmJarOr0lIdpSSnFOyn4YF0ETte0jleXPRGQ6rX2+7JkYxiy4Xv99n6zKfmSiE7jH
-	 hw3/k46tFmgCVGpOYJEHGt9TrJJMz0u+iFfYAArq8w2FiLU+qy1isIHf0kjAgXlwHO
-	 O/a+0+0GLkWAY30pC5873bFeWCjmsfT0Fh/zZ+ck=
+	b=NlnpoMIaVOgyJga96pDr+cz8MmyEwrxeeZUIXP1N47rpZyJHDEbanQg7Mvj6deib0
+	 JlvgD490DhR5Cn2SFOW0W9L3XVzsgKHOSpGikf/ts/pLJ1YBu7yZ7JYQPFscCUn3sM
+	 Czpwcm4Cr0nURkP448yPGlYVKMrxSksTBqfVYsg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	TOTE Robot <oslab@tsinghua.edu.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/215] fs/ntfs3: Fix a possible null-pointer dereference in ni_clear()
-Date: Mon,  4 Mar 2024 21:21:22 +0000
-Message-ID: <20240304211557.610324346@linuxfoundation.org>
+Subject: [PATCH 6.1 020/215] clk: tegra20: fix gcc-7 constant overflow warning
+Date: Mon,  4 Mar 2024 21:21:23 +0000
+Message-ID: <20240304211557.646483866@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,47 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia-Ju Bai <baijiaju1990@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ec275bf9693d19cc0fdce8436f4c425ced86f6e7 ]
+[ Upstream commit b4a2adbf3586efa12fe78b9dec047423e01f3010 ]
 
-In a previous commit c1006bd13146, ni->mi.mrec in ni_write_inode()
-could be NULL, and thus a NULL check is added for this variable.
+Older gcc versions get confused by comparing a u32 value to a negative
+constant in a switch()/case block:
 
-However, in the same call stack, ni->mi.mrec can be also dereferenced
-in ni_clear():
+drivers/clk/tegra/clk-tegra20.c: In function 'tegra20_clk_measure_input_freq':
+drivers/clk/tegra/clk-tegra20.c:581:2: error: case label does not reduce to an integer constant
+  case OSC_CTRL_OSC_FREQ_12MHZ:
+  ^~~~
+drivers/clk/tegra/clk-tegra20.c:593:2: error: case label does not reduce to an integer constant
+  case OSC_CTRL_OSC_FREQ_26MHZ:
 
-ntfs_evict_inode(inode)
-  ni_write_inode(inode, ...)
-    ni = ntfs_i(inode);
-    is_rec_inuse(ni->mi.mrec) -> Add a NULL check by previous commit
-  ni_clear(ntfs_i(inode))
-    is_rec_inuse(ni->mi.mrec) -> No check
+Make the constants unsigned instead.
 
-Thus, a possible null-pointer dereference may exist in ni_clear().
-To fix it, a NULL check is added in this function.
-
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230227085914.2560984-1-arnd@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/tegra/clk-tegra20.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index bb7e33c240737..1f0e230ec9e2c 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -102,7 +102,7 @@ void ni_clear(struct ntfs_inode *ni)
- {
- 	struct rb_node *node;
+diff --git a/drivers/clk/tegra/clk-tegra20.c b/drivers/clk/tegra/clk-tegra20.c
+index 422d782475532..dcacc5064d339 100644
+--- a/drivers/clk/tegra/clk-tegra20.c
++++ b/drivers/clk/tegra/clk-tegra20.c
+@@ -21,24 +21,24 @@
+ #define MISC_CLK_ENB 0x48
  
--	if (!ni->vfs_inode.i_nlink && is_rec_inuse(ni->mi.mrec))
-+	if (!ni->vfs_inode.i_nlink && ni->mi.mrec && is_rec_inuse(ni->mi.mrec))
- 		ni_delete_all(ni);
+ #define OSC_CTRL 0x50
+-#define OSC_CTRL_OSC_FREQ_MASK (3<<30)
+-#define OSC_CTRL_OSC_FREQ_13MHZ (0<<30)
+-#define OSC_CTRL_OSC_FREQ_19_2MHZ (1<<30)
+-#define OSC_CTRL_OSC_FREQ_12MHZ (2<<30)
+-#define OSC_CTRL_OSC_FREQ_26MHZ (3<<30)
+-#define OSC_CTRL_MASK (0x3f2 | OSC_CTRL_OSC_FREQ_MASK)
+-
+-#define OSC_CTRL_PLL_REF_DIV_MASK (3<<28)
+-#define OSC_CTRL_PLL_REF_DIV_1		(0<<28)
+-#define OSC_CTRL_PLL_REF_DIV_2		(1<<28)
+-#define OSC_CTRL_PLL_REF_DIV_4		(2<<28)
++#define OSC_CTRL_OSC_FREQ_MASK (3u<<30)
++#define OSC_CTRL_OSC_FREQ_13MHZ (0u<<30)
++#define OSC_CTRL_OSC_FREQ_19_2MHZ (1u<<30)
++#define OSC_CTRL_OSC_FREQ_12MHZ (2u<<30)
++#define OSC_CTRL_OSC_FREQ_26MHZ (3u<<30)
++#define OSC_CTRL_MASK (0x3f2u | OSC_CTRL_OSC_FREQ_MASK)
++
++#define OSC_CTRL_PLL_REF_DIV_MASK	(3u<<28)
++#define OSC_CTRL_PLL_REF_DIV_1		(0u<<28)
++#define OSC_CTRL_PLL_REF_DIV_2		(1u<<28)
++#define OSC_CTRL_PLL_REF_DIV_4		(2u<<28)
  
- 	al_destroy(ni);
+ #define OSC_FREQ_DET 0x58
+-#define OSC_FREQ_DET_TRIG (1<<31)
++#define OSC_FREQ_DET_TRIG (1u<<31)
+ 
+ #define OSC_FREQ_DET_STATUS 0x5c
+-#define OSC_FREQ_DET_BUSY (1<<31)
+-#define OSC_FREQ_DET_CNT_MASK 0xFFFF
++#define OSC_FREQ_DET_BUSYu (1<<31)
++#define OSC_FREQ_DET_CNT_MASK 0xFFFFu
+ 
+ #define TEGRA20_CLK_PERIPH_BANKS	3
+ 
 -- 
 2.43.0
 
