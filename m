@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7C17BAE1;
-	Mon,  4 Mar 2024 21:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016041C6AB;
+	Mon,  4 Mar 2024 21:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589218; cv=none; b=rV8U+v3t0oGrbFn/Iw+sTwwoi99U40RslnmRh4QZdMCJrM6vJhOCjRFuo71Jag76dWGNvIiY4PfF//pFqTMsP+9H6/BnkXHy6Ef38l0E0nVaLRC+jmazd6kn3T2CjHFZ9LyRa9BGGXX1exAV9JpRYqzeTqnDEW8P6Txe1p3nZyU=
+	t=1709589221; cv=none; b=Z+SfUlIvrqMISbZDF2WvAcSKSAG2JNnPcP/sBIG4EKl+p+nIi9/6k09nEzCEPwviUmvTmuflPz8iwX1TBSSoc6+LTpdD8+tiYUWcQ7p4ht2bRN0PW3h7kbAHBWssXHxbjXnhYFAv3cROezcupgDY7riBQNJ8O8TaLtegW5XpCwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589218; c=relaxed/simple;
-	bh=YDF6dhdCl+GXb5MvmfV27ECmY9hble9bps9diRkxEXw=;
+	s=arc-20240116; t=1709589221; c=relaxed/simple;
+	bh=ybaH3riilrI6k2vdcY7OtCoj6O5NDh/eJRNhtMCCKRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONeqBSVdApBc73Vzwi3LB59XJuwWmFaehCuUJR969w+XDZBesWNdAuLZ7JXyhw/FaqWT0Nvxlgq32g5/UdPnoBEcbR5gSl0ZHCBzi6pHy0hJIi8wgFPZA1tBVwHfjMsLM5iObhzaqyt2gB8NtzLKG/t2HHUs1DrXa/yhOhE26dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoVe/Eay; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mw8leZS0tFHceiDcL2K3YhEkPiNvXuAVfbU1z+g8btGbelCHJZ5wJ4jeTrcBs5TlZYWwkO7qoZa+akLkEISY4YOEy9V6uWJoQBA5l1KVT3d2IT02p0Jl2rmd0NJJXif4nSf3AH/u+sbXi9RVB4sbkcf5m2svcoKMBdd0/9JJutw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T07Lz6/z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoVe/Eay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAFBC433C7;
-	Mon,  4 Mar 2024 21:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T07Lz6/z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8BBC43394;
+	Mon,  4 Mar 2024 21:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589218;
-	bh=YDF6dhdCl+GXb5MvmfV27ECmY9hble9bps9diRkxEXw=;
+	s=korg; t=1709589220;
+	bh=ybaH3riilrI6k2vdcY7OtCoj6O5NDh/eJRNhtMCCKRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoVe/EayxagAZM3S+qO0/ajSadE3r+gIMaBMb64lIuACHiiz63E5qF2IJiVzm+D++
-	 lJjbNzgIn3atdB+sC1UKYColvN04jfA1lyBKGSU5Jw5sRSxWibVjYEvp78GMl8Y5+1
-	 /VEoYKaNbi2HixHO3G5ZYA5PLOimr2SNPtGwE+yg=
+	b=T07Lz6/zAexEQZsyj9GuyagJHuDLiblMq+p14n2bzPv8J4GqiHTlVrVXcpMkBR2kX
+	 QDt/d3KXYk7ZuIwV4xPC3kIQ9B+4yQo7QRM1+QBwolo155X5veDZ9WrkOVAl+MD8jc
+	 VJ0+1VfqckaJubo7HIQKUNKgyylr4yfeTk9Q/+7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/84] Bluetooth: hci_event: Fix handling of HCI_EV_IO_CAPA_REQUEST
-Date: Mon,  4 Mar 2024 21:23:50 +0000
-Message-ID: <20240304211542.909719602@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.15 26/84] igb: extend PTP timestamp adjustments to i211
+Date: Mon,  4 Mar 2024 21:23:59 +0000
+Message-ID: <20240304211543.207855594@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -50,40 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 7e74aa53a68bf60f6019bd5d9a9a1406ec4d4865 ]
+[ Upstream commit 0bb7b09392eb74b152719ae87b1ba5e4bf910ef0 ]
 
-If we received HCI_EV_IO_CAPA_REQUEST while
-HCI_OP_READ_REMOTE_EXT_FEATURES is yet to be responded assume the remote
-does support SSP since otherwise this event shouldn't be generated.
+The i211 requires the same PTP timestamp adjustments as the i210,
+according to its datasheet. To ensure consistent timestamping across
+different platforms, this change extends the existing adjustments to
+include the i211.
 
-Link: https://lore.kernel.org/linux-bluetooth/CABBYNZ+9UdG1cMZVmdtN3U2aS16AKMCyTARZZyFX7xTEDWcMOw@mail.gmail.com/T/#t
-Fixes: c7f59461f5a7 ("Bluetooth: Fix a refcnt underflow problem for hci_conn")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The adjustment result are tested and comparable for i210 and i211 based
+systems.
+
+Fixes: 3f544d2a4d5c ("igb: adjust PTP timestamps for Tx/Rx latency")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240227184942.362710-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index c4a35d4612b05..0bfd856d079d5 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4720,9 +4720,12 @@ static void hci_io_capa_request_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 	hci_dev_lock(hdev);
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 9cdb7a856ab6c..1a1575e8577af 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -826,7 +826,7 @@ static void igb_ptp_tx_hwtstamp(struct igb_adapter *adapter)
  
- 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
--	if (!conn || !hci_conn_ssp_enabled(conn))
-+	if (!conn || !hci_dev_test_flag(hdev, HCI_SSP_ENABLED))
- 		goto unlock;
+ 	igb_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
+ 	/* adjust timestamp for the TX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_TX_LATENCY_10;
+@@ -872,6 +872,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 			ktime_t *timestamp)
+ {
+ 	struct igb_adapter *adapter = q_vector->adapter;
++	struct e1000_hw *hw = &adapter->hw;
+ 	struct skb_shared_hwtstamps ts;
+ 	__le64 *regval = (__le64 *)va;
+ 	int adjust = 0;
+@@ -891,7 +892,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 	igb_ptp_systim_to_hwtstamp(adapter, &ts, le64_to_cpu(regval[1]));
  
-+	/* Assume remote supports SSP since it has triggered this event */
-+	set_bit(HCI_CONN_SSP_ENABLED, &conn->flags);
-+
- 	hci_conn_hold(conn);
- 
- 	if (!hci_dev_test_flag(hdev, HCI_MGMT))
+ 	/* adjust timestamp for the RX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_RX_LATENCY_10;
 -- 
 2.43.0
 
