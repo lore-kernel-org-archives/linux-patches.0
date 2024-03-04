@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1648F58;
-	Mon,  4 Mar 2024 21:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F146D8F58;
+	Mon,  4 Mar 2024 21:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588258; cv=none; b=E+GHM07bPcSsqn4GgqMW9w+tSB360lTLgErwvGY4M3z6Jco5yssM6E0G90n44bFGkxjobLa5Z3a4GSUUrV2qsCYTEwZlXr5n/R2pWOfKrUzMxWY8NRG8uTaCyQ1w6Mh7/YkmsOD7LZq+jPW2Ptz93eZUrpB1e1R9oX8scyMU9oM=
+	t=1709588261; cv=none; b=jT4VI3TXvikHtXcqsZQCp1FnI0xnzIHPfgAxSiCm7i5/ScqWqXF23cU8nCB8yNJRBT5EHl/XeYCc9MLH/StGUPf2kg748YwyJAoNbcvHhRF9ZEqSBmh1dLe57gBOMbsEdT7lbNphfEXvkjc0dd7llWshWJxQ5ptPzF+jbwVYEmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588258; c=relaxed/simple;
-	bh=j6cydAnt5PSfskAhFD6kfRiyPxLMFCFprYF6gMP0DtM=;
+	s=arc-20240116; t=1709588261; c=relaxed/simple;
+	bh=ymOkYHpPT/Td9lCTfihwj/me0h1CMVisu5eFXuOgZzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDnSUDgIoSqx6jnaKXFNIWfK0/Nz8fNyrtS0b96XGNWI0WlS9SpTpyL94Hdqbg7LX6WAwYYShK0EfXfSygo87TqZcIh171ey+9Qc9P2I29R6A5vE5xB8UIS44i62Qs2eJU29OW+OhGKMmhaqoY6rozDlbnUq0Jb7rhdXB8NJGdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjFcq4eL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHIjfCNsiSf5jJ8c2/hUaDL0kdyGh7Qc8wRcfztsI8t7cHjceImGJ9DRrWQpTcqm12Cts/OMSz3Kteuy2gvf+gLvL9PYBOrfQCNbk6hvXJ0Q5vEIaKDHQ+0ep0jBvtXuNH2fb7kA2Q7LmMYJxi+QuEHvH5exx8eyq5q4lTvMvvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g4IaGsl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjFcq4eL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1592C433F1;
-	Mon,  4 Mar 2024 21:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g4IaGsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829B3C433C7;
+	Mon,  4 Mar 2024 21:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588258;
-	bh=j6cydAnt5PSfskAhFD6kfRiyPxLMFCFprYF6gMP0DtM=;
+	s=korg; t=1709588260;
+	bh=ymOkYHpPT/Td9lCTfihwj/me0h1CMVisu5eFXuOgZzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjFcq4eL3SxqQj7k5twWQ5Aj/8Wtqx4ITj0brh2z11k8gLjywBRZkDmZ0sYvXUpmf
-	 Ep8XcqnU2QvBwLDl0z2y2p5ICSg34B4mXpyWhlVurIOgMh8L1ar7y8ZTahzSIllOUB
-	 KGgX+3YlukVPNzuUyqX6l9jWnw05c/lmHWkPtH6E=
+	b=2g4IaGslOmFLC0VLKLzbYWplT3pJ7jOG7xX9NJK5+UiKhxqYQXreRXMjy0BE/X98c
+	 FUptMm/EndYP81WHJcAE/SG+tMrHtRM+rUd1XOAqXLT86+D4v3ObLQudRnVxs6+IL4
+	 6Q8o34u2XIrNhgXRNIWaHGxw+RkXvFlphr0LWakw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Simon Horman <horms@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/143] uapi: in6: replace temporary label with rfc9486
-Date: Mon,  4 Mar 2024 21:22:21 +0000
-Message-ID: <20240304211550.618059392@linuxfoundation.org>
+Subject: [PATCH 6.6 039/143] tls: fix peeking with sync+async decryption
+Date: Mon,  4 Mar 2024 21:22:39 +0000
+Message-ID: <20240304211551.187627233@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,37 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 6a2008641920a9c6fe1abbeb9acbec463215d505 ]
+[ Upstream commit 6caaf104423d809b49a67ee6500191d063b40dc6 ]
 
-Not really a fix per se, but IPV6_TLV_IOAM is still tagged as "TEMPORARY
-IANA allocation for IOAM", while RFC 9486 is available for some time
-now. Just update the reference.
+If we peek from 2 records with a currently empty rx_list, and the
+first record is decrypted synchronously but the second record is
+decrypted async, the following happens:
+  1. decrypt record 1 (sync)
+  2. copy from record 1 to the userspace's msg
+  3. queue the decrypted record to rx_list for future read(!PEEK)
+  4. decrypt record 2 (async)
+  5. queue record 2 to rx_list
+  6. call process_rx_list to copy data from the 2nd record
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240226124921.9097-1-justin.iurman@uliege.be
+We currently pass copied=0 as skip offset to process_rx_list, so we
+end up copying once again from the first record. We should skip over
+the data we've already copied.
+
+Seen with selftest tls.12_aes_gcm.recv_peek_large_buf_mult_recs
+
+Fixes: 692d7b5d1f91 ("tls: Fix recvmsg() to be able to peek across multiple records")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/1b132d2b2b99296bfde54e8a67672d90d6d16e71.1709132643.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/in6.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_sw.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/uapi/linux/in6.h b/include/uapi/linux/in6.h
-index c4c53a9ab9595..ff8d21f9e95b7 100644
---- a/include/uapi/linux/in6.h
-+++ b/include/uapi/linux/in6.h
-@@ -145,7 +145,7 @@ struct in6_flowlabel_req {
- #define IPV6_TLV_PADN		1
- #define IPV6_TLV_ROUTERALERT	5
- #define IPV6_TLV_CALIPSO	7	/* RFC 5570 */
--#define IPV6_TLV_IOAM		49	/* TEMPORARY IANA allocation for IOAM */
-+#define IPV6_TLV_IOAM		49	/* RFC 9486 */
- #define IPV6_TLV_JUMBO		194
- #define IPV6_TLV_HAO		201	/* home address option */
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index adc65a21cd667..0af2a698c3d08 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1950,6 +1950,7 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	struct strp_msg *rxm;
+ 	struct tls_msg *tlm;
+ 	ssize_t copied = 0;
++	ssize_t peeked = 0;
+ 	bool async = false;
+ 	int target, err;
+ 	bool is_kvec = iov_iter_is_kvec(&msg->msg_iter);
+@@ -2097,8 +2098,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 			if (err < 0)
+ 				goto put_on_rx_list_err;
  
+-			if (is_peek)
++			if (is_peek) {
++				peeked += chunk;
+ 				goto put_on_rx_list;
++			}
+ 
+ 			if (partially_consumed) {
+ 				rxm->offset += chunk;
+@@ -2137,8 +2140,8 @@ int tls_sw_recvmsg(struct sock *sk,
+ 
+ 		/* Drain records from the rx_list & copy if required */
+ 		if (is_peek || is_kvec)
+-			err = process_rx_list(ctx, msg, &control, copied,
+-					      decrypted, is_peek, NULL);
++			err = process_rx_list(ctx, msg, &control, copied + peeked,
++					      decrypted - peeked, is_peek, NULL);
+ 		else
+ 			err = process_rx_list(ctx, msg, &control, 0,
+ 					      async_copy_bytes, is_peek, NULL);
 -- 
 2.43.0
 
