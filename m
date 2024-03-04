@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D5861675;
-	Mon,  4 Mar 2024 21:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE2F1F60A;
+	Mon,  4 Mar 2024 21:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587800; cv=none; b=nhifQ2xwcnIDsnCEtMLHmnXbI+U7UN9OLpGNv8gEcGpEbrUrgDsFc2KX/8pY8YdyI+USqWpaBDfXSTxaHjZW3ZQdM0N8wz91dTiKR/oyoAWTn9Okn1VE2EkZJd+VdCDepZZy9qNLnRGGZJsjzcIY0wgoMhJrFQPiR4bdX9zFo3I=
+	t=1709587803; cv=none; b=Ffn44s8awu7/hrAKYx/IYIxtaebHOiBxamI83jQjgsHp0myeTbdmc1E6XVO30KDktHVL7C35Xji4x1hnFUsDmYIXNgVq+iY0Mq+L69VcPavwCaWzH81HN+7/SfXXHa3x70HXbNlnCIjXctuqoFWOy7PoXQPEU9okVZfFsB3OQy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587800; c=relaxed/simple;
-	bh=yb030ubKD9mJbGQE//r285ACHyo31kfXg+lI+EcZOKY=;
+	s=arc-20240116; t=1709587803; c=relaxed/simple;
+	bh=ZJBwGmk47ic449+qQnD+JLpO9z5oW7nb5N16ISZAkYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVc9KHuc5Mk9r/iz/93B/wODRwkpBf3hEXzrLlJT17q9u3iOugznhyIq+Nuk26FuOMoTiMuMYK9nmvUuOtpkqPmmjc06RlVYozQf61Pt0Bc9xKrPDWIcT5z7fde9v0hAsgTRSaXCbJ4ioPA7Z+H0aiha/ew2vlpqJOBvbCl+qzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlJnsZUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RU6DXlfc1rSelAGiknIpAqBipmBvE5buVIdyfZ5fiaDGLnIYGVFU8KuLp0KcrtybZ/4/GoK1COF75bEPSB1Vn7nZ2OhF42GUk6fQ2pn8THr91MZ5ZCvNEfLPacOLlF0rsRLm59w4tUxTPcVP+NvulyCaY2wziOuo4aGmQQp/hw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7Moknq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlJnsZUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69358C433C7;
-	Mon,  4 Mar 2024 21:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7Moknq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F625C433C7;
+	Mon,  4 Mar 2024 21:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587800;
-	bh=yb030ubKD9mJbGQE//r285ACHyo31kfXg+lI+EcZOKY=;
+	s=korg; t=1709587803;
+	bh=ZJBwGmk47ic449+qQnD+JLpO9z5oW7nb5N16ISZAkYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlJnsZUDpPMjvKO25Fn7ctgHpvfAPQjwbLIhsiuN3LGrTDcO90dDWI1JNCPp4hpeT
-	 XqSUG7S2URZHnR6Ot0PxYbr+Y9mvFrot+aqMpgiNdqVpDiGSFuFjiLSEARhkNV1P08
-	 +P96w3u98tCUjVBkfLzL9aqV+Eol7ef1kGv/dDPU=
+	b=y7Moknq/dApOSYYjwD+QyhU3tc3zNA7e6zy8fRweP7F4aKVavSLIhWNbn2jxK+X43
+	 iJLxqayEMDOmIC3XnRKW+F4kfSkDIvhqZQ3+DkYdho5WnfAE4XlOTZTllAVb0RCm4V
+	 2fWqkkJo/KvyMjbNxczRdznMZvc6/XP8/GH5SjXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sid Pranjale <sidpranjale127@protonmail.com>,
-	Dave Airlie <airlied@redhat.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Ubisectech Sirius <bugreport@ubisectech.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Helge Deller <deller@gmx.de>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 071/162] drm/nouveau: keep DMA buffers required for suspend/resume
-Date: Mon,  4 Mar 2024 21:22:16 +0000
-Message-ID: <20240304211554.129164305@linuxfoundation.org>
+Subject: [PATCH 6.7 062/162] fbcon: always restore the old font data in fbcon_do_set_font()
+Date: Mon,  4 Mar 2024 21:22:07 +0000
+Message-ID: <20240304211553.833429338@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,45 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sid Pranjale <sidpranjale127@protonmail.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit f6ecfdad359a01c7fd8a3bcfde3ef0acdf107e6e ]
+[ Upstream commit 00d6a284fcf3fad1b7e1b5bc3cd87cbfb60ce03f ]
 
-Nouveau deallocates a few buffers post GPU init which are required for GPU suspend/resume to function correctly.
-This is likely not as big an issue on systems where the NVGPU is the only GPU, but on multi-GPU set ups it leads to a regression where the kernel module errors and results in a system-wide rendering freeze.
+Commit a5a923038d70 (fbdev: fbcon: Properly revert changes when
+vc_resize() failed) started restoring old font data upon failure (of
+vc_resize()). But it performs so only for user fonts. It means that the
+"system"/internal fonts are not restored at all. So in result, the very
+first call to fbcon_do_set_font() performs no restore at all upon
+failing vc_resize().
 
-This commit addresses that regression by moving the two buffers required for suspend and resume to be deallocated at driver unload instead of post init.
+This can be reproduced by Syzkaller to crash the system on the next
+invocation of font_get(). It's rather hard to hit the allocation failure
+in vc_resize() on the first font_set(), but not impossible. Esp. if
+fault injection is used to aid the execution/failure. It was
+demonstrated by Sirius:
+  BUG: unable to handle page fault for address: fffffffffffffff8
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD cb7b067 P4D cb7b067 PUD cb7d067 PMD 0
+  Oops: 0000 [#1] PREEMPT SMP KASAN
+  CPU: 1 PID: 8007 Comm: poc Not tainted 6.7.0-g9d1694dc91ce #20
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:fbcon_get_font+0x229/0x800 drivers/video/fbdev/core/fbcon.c:2286
+  Call Trace:
+   <TASK>
+   con_font_get drivers/tty/vt/vt.c:4558 [inline]
+   con_font_op+0x1fc/0xf20 drivers/tty/vt/vt.c:4673
+   vt_k_ioctl drivers/tty/vt/vt_ioctl.c:474 [inline]
+   vt_ioctl+0x632/0x2ec0 drivers/tty/vt/vt_ioctl.c:752
+   tty_ioctl+0x6f8/0x1570 drivers/tty/tty_io.c:2803
+   vfs_ioctl fs/ioctl.c:51 [inline]
+  ...
 
-Fixes: 042b5f83841fb ("drm/nouveau: fix several DMA buffer leaks")
-Signed-off-by: Sid Pranjale <sidpranjale127@protonmail.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+So restore the font data in any case, not only for user fonts. Note the
+later 'if' is now protected by 'old_userfont' and not 'old_data' as the
+latter is always set now. (And it is supposed to be non-NULL. Otherwise
+we would see the bug above again.)
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+Reported-and-tested-by: Ubisectech Sirius <bugreport@ubisectech.com>
+Cc: Ubisectech Sirius <bugreport@ubisectech.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Helge Deller <deller@gmx.de>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240208114411.14604-1-jirislaby@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcon.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-index a41735ab60683..d66fc3570642b 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -1054,8 +1054,6 @@ r535_gsp_postinit(struct nvkm_gsp *gsp)
- 	/* Release the DMA buffers that were needed only for boot and init */
- 	nvkm_gsp_mem_dtor(gsp, &gsp->boot.fw);
- 	nvkm_gsp_mem_dtor(gsp, &gsp->libos);
--	nvkm_gsp_mem_dtor(gsp, &gsp->rmargs);
--	nvkm_gsp_mem_dtor(gsp, &gsp->wpr_meta);
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 63af6ab034b5f..e6c45d585482f 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2400,11 +2400,9 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 	struct fbcon_ops *ops = info->fbcon_par;
+ 	struct fbcon_display *p = &fb_display[vc->vc_num];
+ 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
+-	char *old_data = NULL;
++	u8 *old_data = vc->vc_font.data;
  
- 	return ret;
- }
-@@ -2163,6 +2161,8 @@ r535_gsp_dtor(struct nvkm_gsp *gsp)
+ 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
+-	if (p->userfont)
+-		old_data = vc->vc_font.data;
+ 	vc->vc_font.data = (void *)(p->fontdata = data);
+ 	old_userfont = p->userfont;
+ 	if ((p->userfont = userfont))
+@@ -2438,13 +2436,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
+ 		update_screen(vc);
+ 	}
  
- 	r535_gsp_dtor_fws(gsp);
+-	if (old_data && (--REFCOUNT(old_data) == 0))
++	if (old_userfont && (--REFCOUNT(old_data) == 0))
+ 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
+ 	return 0;
  
-+	nvkm_gsp_mem_dtor(gsp, &gsp->rmargs);
-+	nvkm_gsp_mem_dtor(gsp, &gsp->wpr_meta);
- 	nvkm_gsp_mem_dtor(gsp, &gsp->shm.mem);
- 	nvkm_gsp_mem_dtor(gsp, &gsp->loginit);
- 	nvkm_gsp_mem_dtor(gsp, &gsp->logintr);
+ err_out:
+ 	p->fontdata = old_data;
+-	vc->vc_font.data = (void *)old_data;
++	vc->vc_font.data = old_data;
+ 
+ 	if (userfont) {
+ 		p->userfont = old_userfont;
 -- 
 2.43.0
 
