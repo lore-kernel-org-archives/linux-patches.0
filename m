@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B4146BA0;
-	Mon,  4 Mar 2024 21:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339038F58;
+	Mon,  4 Mar 2024 21:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588418; cv=none; b=Huy0nGuvzcqHoNKNsl6QPeR+6QIJrQ2e+xctTP48lVv3f93Bap/jQ/ndSjpy+eha4Xttsxjj5nwSFXnRaOb6NXOAv1gSKOKYg11cWmoL+HB9WSo1SNFwbjAu5FhSf+RC96PUqS6ROTdkbgEJcQN3smHjIKEBuj3xCpYhI5U1kxY=
+	t=1709588421; cv=none; b=oCTPgyL+Z7ZQJKLcSqsy6qBM6qw5+sZh7r3wHWDgBuBb/7Cppn3jDLx6c+9OX3MXuhGjx4xBLGXdTV12iuYzWQw9Xvhr0X2ikZZpRbJPiGm3ZxzpeE0d4VorLhGmR55PyPcLjjyhwGmM4CFbfieXMJEKXwsem8qswIoRFudeaMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588418; c=relaxed/simple;
-	bh=tTN2LMswi9DtaiV/YI3ThWz7nxgMFMtQKYDkpaIt//k=;
+	s=arc-20240116; t=1709588421; c=relaxed/simple;
+	bh=AC0dypErLt0vscaPavG8u8hglEBMMEDp6qmcJwSeaJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3Yx1e1yaNGedXm2wgJRUVk106+o2uX8Sa+q12vJcXRh7gAii8WoH3AxCEdagk71TdoIBiGxm+los6DfbFz+F75UGJj4Kl+FhAm3j3NAlh6ffgUgt04hzM7dgH8H32opQH3XSr5I5YieYg7xSOYDAvZ1dxyeFxxHpnFZtK70o70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+KSuyjQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YoGBuz4mmh+1qjL7g6NfrnfsTMAt8EtJ6fNkhGnzzilRCmifT40UqjjE1m3D9pi/+PF+2F/bJrEf+Nntmo1A/GhNN1P8pQ61ipiNS6luL9oqPgR4iqumvjo7hstlY2k1qxukfkPq17ovtEJxJzgzW9mRXIaOdxzOXPKaY8CcRWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgOuf3rZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+KSuyjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE92C433F1;
-	Mon,  4 Mar 2024 21:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgOuf3rZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2E0C433C7;
+	Mon,  4 Mar 2024 21:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588418;
-	bh=tTN2LMswi9DtaiV/YI3ThWz7nxgMFMtQKYDkpaIt//k=;
+	s=korg; t=1709588421;
+	bh=AC0dypErLt0vscaPavG8u8hglEBMMEDp6qmcJwSeaJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+KSuyjQHXUGnnP/84sbzofmCuKz3hPw+y1/RTjQfdFarWtIiiq252pgXPOj4afmR
-	 QFYc7mWEGPpK95iIPr+LwCXmaME+wL/OCW8UbvNf2uTFrl22cEuBmvN56XYwro4+0S
-	 S07GnC1Sme5rkFsS6lrY6mWYZe+FoJZMeGFiSNb8=
+	b=UgOuf3rZP/wfkYFQA07xd96qY0K/UJi7Xh7y9iG0UoEtTnfdG0281u7FN1yg4A0Bu
+	 5yQer+3C1NVIlVe/8KjXQWWhSIZMh8CQP1Kz9+1nk2OMnO0MbOrIib3a+xuNrVXMq7
+	 jQHYV1q7HM6Ckmz/OcT4byLR9jLIR/35j51/sRhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Andy Chiu <andybnac@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 099/143] kbuild: Add -Wa,--fatal-warnings to as-instr invocation
-Date: Mon,  4 Mar 2024 21:23:39 +0000
-Message-ID: <20240304211553.078275708@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Jann Horn <jannh@google.com>,
+	Shervin Oloumi <enlightened@chromium.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.6 076/143] landlock: Fix asymmetric private inodes referring
+Date: Mon,  4 Mar 2024 21:23:16 +0000
+Message-ID: <20240304211552.350980376@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -49,66 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 0ee695a471a750cad4fff22286d91e038b1ef62f upstream.
+commit d9818b3e906a0ee1ab02ea79e74a2f755fc5461a upstream.
 
-Certain assembler instruction tests may only induce warnings from the
-assembler on an unsupported instruction or option, which causes as-instr
-to succeed when it was expected to fail. Some tests workaround this
-limitation by additionally testing that invalid input fails as expected.
-However, this is fragile if the assembler is changed to accept the
-invalid input, as it will cause the instruction/option to be unavailable
-like it was unsupported even when it is.
+When linking or renaming a file, if only one of the source or
+destination directory is backed by an S_PRIVATE inode, then the related
+set of layer masks would be used as uninitialized by
+is_access_to_paths_allowed().  This would result to indeterministic
+access for one side instead of always being allowed.
 
-Use '-Wa,--fatal-warnings' in the as-instr macro to turn these warnings
-into hard errors, which avoids this fragility and makes tests more
-robust and well formed.
+This bug could only be triggered with a mounted filesystem containing
+both S_PRIVATE and !S_PRIVATE inodes, which doesn't seem possible.
 
+The collect_domain_accesses() calls return early if
+is_nouser_or_private() returns false, which means that the directory's
+superblock has SB_NOUSER or its inode has S_PRIVATE.  Because rename or
+link actions are only allowed on the same mounted filesystem, the
+superblock is always the same for both source and destination
+directories.  However, it might be possible in theory to have an
+S_PRIVATE parent source inode with an !S_PRIVATE parent destination
+inode, or vice versa.
+
+To make sure this case is not an issue, explicitly initialized both set
+of layer masks to 0, which means to allow all actions on the related
+side.  If at least on side has !S_PRIVATE, then
+collect_domain_accesses() and is_access_to_paths_allowed() check for the
+required access rights.
+
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Shervin Oloumi <enlightened@chromium.org>
 Cc: stable@vger.kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Andy Chiu <andybnac@gmail.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240125-fix-riscv-option-arch-llvm-18-v1-1-390ac9cc3cd0@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Link: https://lore.kernel.org/r/20240219190345.2928627-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Kconfig.include   |    2 +-
- scripts/Makefile.compiler |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ security/landlock/fs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/scripts/Kconfig.include
-+++ b/scripts/Kconfig.include
-@@ -33,7 +33,7 @@ ld-option = $(success,$(LD) -v $(1))
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -820,8 +820,8 @@ static int current_check_refer_path(stru
+ 	bool allow_parent1, allow_parent2;
+ 	access_mask_t access_request_parent1, access_request_parent2;
+ 	struct path mnt_dir;
+-	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS],
+-		layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS];
++	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS] = {},
++		     layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS] = {};
  
- # $(as-instr,<instr>)
- # Return y if the assembler supports <instr>, n otherwise
--as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler-with-cpp -o /dev/null -)
-+as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o /dev/null -)
- 
- # check if $(CC) and $(LD) exist
- $(error-if,$(failure,command -v $(CC)),C compiler '$(CC)' not found)
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -38,7 +38,7 @@ as-option = $(call try-run,\
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
- 
- as-instr = $(call try-run,\
--	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
-+	printf "%b\n" "$(1)" | $(CC) -Werror $(CLANG_FLAGS) $(KBUILD_AFLAGS) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
- 
- # __cc-option
- # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+ 	if (!dom)
+ 		return 0;
 
 
