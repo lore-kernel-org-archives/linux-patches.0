@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AC68F58;
-	Mon,  4 Mar 2024 21:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531B68F58;
+	Mon,  4 Mar 2024 21:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588350; cv=none; b=m+KX6ReepRNJZJV2rWQ1Laa9Jap5ZYxvJFH7Hj+pP2W9mPLqXqJf9xfMncMFQBKVRHp5RubPWuXzCACh9xn1GgC0VrqFwNrlMLeRQmeb7DxgPXKSDQNH2y8Qla7ezrNvwuRAxTrtXly9S8D5SvV0fTUlk2z83XlP7Rum0aTmmIQ=
+	t=1709588353; cv=none; b=ZcUlESQ4jgL6kEENYXD/Dqecf6Oa2IZiWI0hEJX3KSQ+BF5sTh17gn9mOoDjJtMgvI270beuKblZpDz7gTykNaV/jZJ0r2znOI25a7xVZ6dlpFtkoMEDtaNFSAW2gCoJDzsRIquUfFv8+NwOlsz74f8Z/SSTMHnZ8JbgfTgJ/R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588350; c=relaxed/simple;
-	bh=DbwPAvBXqGCtNHcdP7WfSnRAsbynOSQ9VmkHtuvkcQE=;
+	s=arc-20240116; t=1709588353; c=relaxed/simple;
+	bh=QcdnzBoQGFibhZB2grVH3Hyh4VXo7epcu/sRRC+IaEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8rR+iW6bxNggFL+CCjFUUQPIya8KZRtJjJObtjFdCH5XG7qaj94QkFi+ABByLFH0lc1dnqH3UBg6fdDAX5Efys/krl5Ag+L8HmNLrxOqskXs8mQQou3Y4rJqoed+UP9gV2hVyYJgRNl1LjZ1EPxfSAUGd9ZdgjCVkN7s8xRtLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNlvyZ0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mict1BcZ4tq6ccvrCRj5BM15gpNlAwKQVOf/0y8QtJAYsZOH4QYqIlKxixicFPHECbeD1bjMk5e5RYLTeIzuSnk+gRfRWyOW7r6vIjw3f219aOmzfRbrKZi/W5rJEaDFQlEe8GhD1XxyMU6bykPRtoeKg6HYHS2cwPBvGIFQBjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08/nshdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNlvyZ0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D42C433F1;
-	Mon,  4 Mar 2024 21:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08/nshdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59E3C433C7;
+	Mon,  4 Mar 2024 21:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588350;
-	bh=DbwPAvBXqGCtNHcdP7WfSnRAsbynOSQ9VmkHtuvkcQE=;
+	s=korg; t=1709588353;
+	bh=QcdnzBoQGFibhZB2grVH3Hyh4VXo7epcu/sRRC+IaEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNlvyZ0IgvLtrvm6A7Opfn2hKaQeW1XFlBHLz+OXOtAIkhqNyd/9/ttDxSfjFa9L9
-	 J+vZwghMowdqXKg3c9DiD/+G+3seIIntbeZc0YIzddsICeDEYHXxYBFcwFn2lZYxuv
-	 Vj7Ykb+efJvjsj6yMhzJ7YjTL9cfDUl1xREilUq8=
+	b=08/nshdpsOI6xy8hM6fv087lfUUNDKULdchavDWjOWykqgaGw/5SLXlxiYCp9d0jq
+	 0viSHQw3kOOGZ0q8af3aCcXPDqfbEpEfsgTuGdyxHms1tevbYPmPHvX4F7gb/MJLWS
+	 dnlyKpWp4wx4ymGvjRpMkNT2eFZhmDA8Ru7yahYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/143] riscv: Fix build error if !CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION
-Date: Mon,  4 Mar 2024 21:22:49 +0000
-Message-ID: <20240304211551.495243218@linuxfoundation.org>
+Subject: [PATCH 6.6 050/143] ASoC: cs35l56: cs35l56_component_remove() must clear cs35l56->component
+Date: Mon,  4 Mar 2024 21:22:50 +0000
+Message-ID: <20240304211551.532251973@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,70 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit fc325b1a915f6d0c821bfcea21fb3f1354c4323b ]
+[ Upstream commit ae861c466ee57e15a29d97629e1c564e3f714a4f ]
 
-The new riscv specific arch_hugetlb_migration_supported() must be
-guarded with a #ifdef CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION to avoid
-the following build error:
+The cs35l56->component pointer is used by the suspend-resume handling to
+know whether the driver is fully instantiated. This is to prevent it
+queuing dsp_work which would result in calling wm_adsp when the driver
+is not an instantiated ASoC component. So this pointer must be cleared
+by cs35l56_component_remove().
 
-In file included from include/linux/hugetlb.h:851,
-                    from kernel/fork.c:52:
->> arch/riscv/include/asm/hugetlb.h:15:42: error: static declaration of 'arch_hugetlb_migration_supported' follows non-static declaration
-      15 | #define arch_hugetlb_migration_supported arch_hugetlb_migration_supported
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/hugetlb.h:916:20: note: in expansion of macro 'arch_hugetlb_migration_supported'
-     916 | static inline bool arch_hugetlb_migration_supported(struct hstate *h)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   arch/riscv/include/asm/hugetlb.h:14:6: note: previous declaration of 'arch_hugetlb_migration_supported' with type 'bool(struct hstate *)' {aka '_Bool(struct hstate *)'}
-      14 | bool arch_hugetlb_migration_supported(struct hstate *h);
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402110258.CV51JlEI-lkp@intel.com/
-Fixes: ce68c035457b ("riscv: Fix arch_hugetlb_migration_supported() for NAPOT")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240211083640.756583-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Link: https://msgid.link/r/20240129162737.497-4-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/hugetlb.h | 2 ++
- arch/riscv/mm/hugetlbpage.c      | 2 ++
- 2 files changed, 4 insertions(+)
+ sound/soc/codecs/cs35l56.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
-index 20f9c3ba23414..22deb7a2a6ec4 100644
---- a/arch/riscv/include/asm/hugetlb.h
-+++ b/arch/riscv/include/asm/hugetlb.h
-@@ -11,8 +11,10 @@ static inline void arch_clear_hugepage_flags(struct page *page)
- }
- #define arch_clear_hugepage_flags arch_clear_hugepage_flags
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 32d4ab2cd6724..e850f906f1079 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -809,6 +809,8 @@ static void cs35l56_component_remove(struct snd_soc_component *component)
+ 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
  
-+#ifdef CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION
- bool arch_hugetlb_migration_supported(struct hstate *h);
- #define arch_hugetlb_migration_supported arch_hugetlb_migration_supported
-+#endif
- 
- #ifdef CONFIG_RISCV_ISA_SVNAPOT
- #define __HAVE_ARCH_HUGE_PTE_CLEAR
-diff --git a/arch/riscv/mm/hugetlbpage.c b/arch/riscv/mm/hugetlbpage.c
-index e7b69281875b2..fbe918801667d 100644
---- a/arch/riscv/mm/hugetlbpage.c
-+++ b/arch/riscv/mm/hugetlbpage.c
-@@ -426,10 +426,12 @@ bool __init arch_hugetlb_valid_size(unsigned long size)
- 	return __hugetlb_valid_size(size);
+ 	cancel_work_sync(&cs35l56->dsp_work);
++
++	cs35l56->component = NULL;
  }
  
-+#ifdef CONFIG_ARCH_ENABLE_HUGEPAGE_MIGRATION
- bool arch_hugetlb_migration_supported(struct hstate *h)
- {
- 	return __hugetlb_valid_size(huge_page_size(h));
- }
-+#endif
- 
- #ifdef CONFIG_CONTIG_ALLOC
- static __init int gigantic_pages_init(void)
+ static int cs35l56_set_bias_level(struct snd_soc_component *component,
 -- 
 2.43.0
 
