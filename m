@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D336C200D4;
-	Mon,  4 Mar 2024 21:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763C21F60A;
+	Mon,  4 Mar 2024 21:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587617; cv=none; b=oDNh+RqLpUEKO69kwqcIkAzu7/Qp2GuX41wgqqJVQ4gDTS7niqt909DIFpvk77glHMAOToHV2afgtHOfPDl6c1UqaSA/pOSgJBNytwFDMSiYlfLC522mN8dg4FvRZKWjEXTkblZNnAvlNLbeJBWvl60pdIM17N5skbFpPBgSb7w=
+	t=1709587620; cv=none; b=uHqzmTOPkMJG7lLuu2lX468nHIs5R9eVAkAz1AvbBwG0rAaqfvDuUHNGj8EfxNGSWgqmrvA3muJDcXUG3flh2vcYcpR/EJDonm+6kFi8y0FAhLPoDFscnHWzPIiPw1/RP8yvMc9+1dGainqZkKEZI8VHpYrZwATg/XjowdsnQFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587617; c=relaxed/simple;
-	bh=7lQDGiH+NCeKc4Gd5uDuWrpF/UJnLgtAf7V9kMcLBBQ=;
+	s=arc-20240116; t=1709587620; c=relaxed/simple;
+	bh=OvTYF1fnCCNe3jQjCaAzh9zBsGJpEtXWn7HYISUiUOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=STJPssmSd8ePEsF88sVxmOXtlUQbBtozVI/pnkhQqR3nSrLNFg8PNzcaP6dDkWW6xr/kDpF68EiWB8olT25Quu41FWIC7WkqBiAvkgMPYU1azHJdWljXGprY+DFudZbJjESQzItF3elLvNceC1WwEisuY5jM9IdWp2CpMB8L0PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpNpmrpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6tqajfPTWfALYxgn37qU8+kC+wZyN7yI4Sb36yJIEqztGlfqIzsUBH3o7SYAbNlNHu5M1mfj9N/+fOaOWZh6h4qL1Xrypf5LU2PMFWC7eYsIDqbBNlVHAheje0AdtbmV5+k/MrtfwxvwszfnJK8otdgO9W+qqGCalvhLdEBwN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/VOIrNE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpNpmrpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F02C433F1;
-	Mon,  4 Mar 2024 21:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/VOIrNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38BCC43390;
+	Mon,  4 Mar 2024 21:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587617;
-	bh=7lQDGiH+NCeKc4Gd5uDuWrpF/UJnLgtAf7V9kMcLBBQ=;
+	s=korg; t=1709587620;
+	bh=OvTYF1fnCCNe3jQjCaAzh9zBsGJpEtXWn7HYISUiUOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpNpmrpFODSnTCp9U8TO2Mi5U+++ljVaoZ3NS9jW+tnaat6agEnsfzAU04Hqti4Fx
-	 983Z58cTREg44CVAlbhatIFj7HFewrC+kU69b5/uYDA0U8RxhDfpbvysJvrWQ1+/ip
-	 QZ66xqzdKA+xvv/HuDSIlMfnlcqDHB54suHlck7Q=
+	b=C/VOIrNEi2L+k5NsvMF+pzD28chs6XAvLAgn1pJnDyQDiDT6h9yxZY3pAEIQ01bJ0
+	 ercG12cHUb4WzL+i2tqyin8yaZ/6+S1RIPGRAGjfxsz47rdZnz7dkYLGHundGwmVMv
+	 Eq+Dn04kkl7MGfQnksHPSOZ3vk6nFLyFtq/TWRVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
-	Simon Horman <horms@kernel.org>,
+	Ying Hsu <yinghsu@chromium.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 025/162] Bluetooth: hci_sync: Check the correct flag before starting a scan
-Date: Mon,  4 Mar 2024 21:21:30 +0000
-Message-ID: <20240304211552.637478542@linuxfoundation.org>
+Subject: [PATCH 6.7 026/162] Bluetooth: Avoid potential use-after-free in hci_error_reset
+Date: Mon,  4 Mar 2024 21:21:31 +0000
+Message-ID: <20240304211552.673326726@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -46,51 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Dreßler <verdre@v0yd.nl>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 6b3899be24b16ff8ee0cb25f0bd59b01b15ba1d1 ]
+[ Upstream commit 2449007d3f73b2842c9734f45f0aadb522daf592 ]
 
-There's a very confusing mistake in the code starting a HCI inquiry: We're
-calling hci_dev_test_flag() to test for HCI_INQUIRY, but hci_dev_test_flag()
-checks hdev->dev_flags instead of hdev->flags. HCI_INQUIRY is a bit that's
-set on hdev->flags, not on hdev->dev_flags though.
+While handling the HCI_EV_HARDWARE_ERROR event, if the underlying
+BT controller is not responding, the GPIO reset mechanism would
+free the hci_dev and lead to a use-after-free in hci_error_reset.
 
-HCI_INQUIRY equals the integer 7, and in hdev->dev_flags, 7 means
-HCI_BONDABLE, so we were actually checking for HCI_BONDABLE here.
+Here's the call trace observed on a ChromeOS device with Intel AX201:
+   queue_work_on+0x3e/0x6c
+   __hci_cmd_sync_sk+0x2ee/0x4c0 [bluetooth <HASH:3b4a6>]
+   ? init_wait_entry+0x31/0x31
+   __hci_cmd_sync+0x16/0x20 [bluetooth <HASH:3b4a 6>]
+   hci_error_reset+0x4f/0xa4 [bluetooth <HASH:3b4a 6>]
+   process_one_work+0x1d8/0x33f
+   worker_thread+0x21b/0x373
+   kthread+0x13a/0x152
+   ? pr_cont_work+0x54/0x54
+   ? kthread_blkcg+0x31/0x31
+    ret_from_fork+0x1f/0x30
 
-The mistake is only present in the synchronous code for starting an inquiry,
-not in the async one. Also devices are typically bondable while doing an
-inquiry, so that might be the reason why nobody noticed it so far.
+This patch holds the reference count on the hci_dev while processing
+a HCI_EV_HARDWARE_ERROR event to avoid potential crash.
 
-Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
-Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: c7741d16a57c ("Bluetooth: Perform a power cycle when receiving hardware error event")
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 97284d9b2a2e3..39ccbb1be24c3 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5629,7 +5629,7 @@ static int hci_inquiry_sync(struct hci_dev *hdev, u8 length)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 65601aa52e0d8..2821a42cefdc6 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1049,6 +1049,7 @@ static void hci_error_reset(struct work_struct *work)
+ {
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev, error_reset);
  
- 	bt_dev_dbg(hdev, "");
++	hci_dev_hold(hdev);
+ 	BT_DBG("%s", hdev->name);
  
--	if (hci_dev_test_flag(hdev, HCI_INQUIRY))
-+	if (test_bit(HCI_INQUIRY, &hdev->flags))
- 		return 0;
+ 	if (hdev->hw_error)
+@@ -1056,10 +1057,10 @@ static void hci_error_reset(struct work_struct *work)
+ 	else
+ 		bt_dev_err(hdev, "hardware error 0x%2.2x", hdev->hw_error_code);
  
- 	hci_dev_lock(hdev);
+-	if (hci_dev_do_close(hdev))
+-		return;
++	if (!hci_dev_do_close(hdev))
++		hci_dev_do_open(hdev);
+ 
+-	hci_dev_do_open(hdev);
++	hci_dev_put(hdev);
+ }
+ 
+ void hci_uuids_clear(struct hci_dev *hdev)
 -- 
 2.43.0
 
