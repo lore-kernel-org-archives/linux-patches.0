@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0043A1F60A;
-	Mon,  4 Mar 2024 21:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD71F60A;
+	Mon,  4 Mar 2024 21:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587764; cv=none; b=oWj1IP3y4g52QUVi4ueqnqTSWcBLxAcwQGRRAkS6edcoolvSvDE5cXZZar9B42XpDtKF+Q4vB+pm4lYfRe/x+2+QxohE0iHigLHlvAAo0hbb4GyyuchOjKnMq9ikzsfZ5RUWf3ALh8RsiGjSFEdSL+lVfaipfbaiRhdcrC4azwo=
+	t=1709587766; cv=none; b=jS8S8q9xkKtj7u9K/dF11EZUc7jtrsiKUshzACVpoiq2xiCPEw2IFhN6AqqYZTjTWb/c4N6uvtHsZakuA2PKcgAQZCpA/k5yb0M8+a/DrUmFElQhhveRVKo/avwLEZp9fEFLWXV1cGueFxj2PK9eJga25NIC66WJUCijeBc8hlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587764; c=relaxed/simple;
-	bh=ls4m0Dag+rVZe+iYzn3VAS2BTpoO7xljaRpw4TLhAXk=;
+	s=arc-20240116; t=1709587766; c=relaxed/simple;
+	bh=tTCTzMgLzAIkStGicEz0hSjAZhzOg5ZbnYM/KjFpto4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssS8z0EsmcYSfEX7uiDc257259YlH6lE6WIxfgg9NmSZI7NsqoBYsOWgNKMBMQiCPHOwfU0ZgC/XXuduRrOc3p2+DdWZuNPSBYiJECKuLBwmeVCLr6m6w7MA64VMLJDE34f1ATl3LFcFJvCnjcN/Bg9Am8s8JOFnkfhj18yqwOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRQVd/um; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pE0c9u7QnAifLLiYqksnNUSeLE9Zp+gX2bSnHje3zMCsPZ7yqSoJGEfZ8ZfXVaGDdoS9/mbGHwLRoItHXpBbK+Qr7IAy7aEshd6VVVgJUzTtNFQ/2HQ3uh36ka1SIHvkbOz216FmQ9Am3WFB1/YJfqAB6RP60iNy/CcFDVU+Kyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eilz6cps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRQVd/um"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D0CC433F1;
-	Mon,  4 Mar 2024 21:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eilz6cps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F7C433F1;
+	Mon,  4 Mar 2024 21:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587763;
-	bh=ls4m0Dag+rVZe+iYzn3VAS2BTpoO7xljaRpw4TLhAXk=;
+	s=korg; t=1709587766;
+	bh=tTCTzMgLzAIkStGicEz0hSjAZhzOg5ZbnYM/KjFpto4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wRQVd/umsRlx0YE1U13O09iu/tVCYfpLr1s/NVZGq23sORyi4Sdg7EWpXX/JUtBl6
-	 o3hKxegx40UV4rmjOJs67uwoqEYfv4KuKfNmB+8i+G6mJEfyEzq0Ar8abIFi4rqO3I
-	 SXD7MBIRTTGvZEB/bmR05w4TPqdVI/Yx+2D0Tuaw=
+	b=Eilz6cpsnQt66f3rPmszU8GSOTxJBdrp8LXufAlyfOr0Xxsaur0KJmz1XS5T3F76X
+	 U39M9STxyTMt6SqqhGFUUeba7o4/CHAvEFjhDlJqKmWm4EJOHyMgvigkP8HsRc2V2z
+	 Lvp7Y1PBDXV0hqDjAAbsOchUYZGaKx6ItaF9VGrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Zhang <mrman@mrman314.tech>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Neal Gompa <neal@gompa.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.7 081/162] Bluetooth: hci_bcm4377: do not mark valid bd_addr as invalid
-Date: Mon,  4 Mar 2024 21:22:26 +0000
-Message-ID: <20240304211554.430628995@linuxfoundation.org>
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Qingqing Zhuo <Qingqing.Zhuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 064/162] drm/amd/display: Prevent potential buffer overflow in map_hw_resources
+Date: Mon,  4 Mar 2024 21:22:09 +0000
+Message-ID: <20240304211553.900522211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,55 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit c17d2a7b216e168c3ba62d93482179c01b369ac7 upstream.
+[ Upstream commit 0f8ca019544a252d1afb468ce840c6dcbac73af4 ]
 
-A recent commit restored the original (and still documented) semantics
-for the HCI_QUIRK_USE_BDADDR_PROPERTY quirk so that the device address
-is considered invalid unless an address is provided by firmware.
+Adds a check in the map_hw_resources function to prevent a potential
+buffer overflow. The function was accessing arrays using an index that
+could potentially be greater than the size of the arrays, leading to a
+buffer overflow.
 
-This specifically means that this flag must only be set for devices with
-invalid addresses, but the Broadcom BCM4377 driver has so far been
-setting this flag unconditionally.
+Adds a check to ensure that the index is within the bounds of the
+arrays. If the index is out of bounds, an error message is printed and
+break it will continue execution with just ignoring extra data early to
+prevent the buffer overflow.
 
-Fortunately the driver already checks for invalid addresses during setup
-and sets the HCI_QUIRK_INVALID_BDADDR flag, which can simply be replaced
-with HCI_QUIRK_USE_BDADDR_PROPERTY to indicate that the default address
-is invalid but can be overridden by firmware (long term, this should
-probably just always be allowed).
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml2_wrapper.c:79 map_hw_resources() error: buffer overflow 'dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_stream_id' 6 <= 7
+drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml2_wrapper.c:81 map_hw_resources() error: buffer overflow 'dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_plane_id' 6 <= 7
 
-Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
-Cc: stable@vger.kernel.org      # 6.5
-Reported-by: Felix Zhang <mrman@mrman314.tech>
-Link: https://lore.kernel.org/r/77419ffacc5b4875e920e038332575a2a5bff29f.camel@mrman314.tech/
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reported-by: Felix Zhang <mrman@mrman314.tech>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7966f319c66d ("drm/amd/display: Introduce DML2")
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Qingqing Zhuo <Qingqing.Zhuo@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Roman Li <roman.li@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcm4377.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/bluetooth/hci_bcm4377.c
-+++ b/drivers/bluetooth/hci_bcm4377.c
-@@ -1417,7 +1417,7 @@ static int bcm4377_check_bdaddr(struct b
- 
- 	bda = (struct hci_rp_read_bd_addr *)skb->data;
- 	if (!bcm4377_is_valid_bdaddr(bcm4377, &bda->bdaddr))
--		set_bit(HCI_QUIRK_INVALID_BDADDR, &bcm4377->hdev->quirks);
-+		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &bcm4377->hdev->quirks);
- 
- 	kfree_skb(skb);
- 	return 0;
-@@ -2368,7 +2368,6 @@ static int bcm4377_probe(struct pci_dev
- 	hdev->set_bdaddr = bcm4377_hci_set_bdaddr;
- 	hdev->setup = bcm4377_hci_setup;
- 
--	set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 	if (bcm4377->hw->broken_mws_transport_config)
- 		set_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &hdev->quirks);
- 	if (bcm4377->hw->broken_ext_scan)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+index 8f231418870f2..c62b61ac45d27 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+@@ -76,6 +76,11 @@ static void map_hw_resources(struct dml2_context *dml2,
+ 			in_out_display_cfg->hw.DLGRefClkFreqMHz = 50;
+ 		}
+ 		for (j = 0; j < mode_support_info->DPPPerSurface[i]; j++) {
++			if (i >= __DML2_WRAPPER_MAX_STREAMS_PLANES__) {
++				dml_print("DML::%s: Index out of bounds: i=%d, __DML2_WRAPPER_MAX_STREAMS_PLANES__=%d\n",
++					  __func__, i, __DML2_WRAPPER_MAX_STREAMS_PLANES__);
++				break;
++			}
+ 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_stream_id[num_pipes] = dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_stream_id[i];
+ 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_stream_id_valid[num_pipes] = true;
+ 			dml2->v20.scratch.dml_to_dc_pipe_mapping.dml_pipe_idx_to_plane_id[num_pipes] = dml2->v20.scratch.dml_to_dc_pipe_mapping.disp_cfg_to_plane_id[i];
+-- 
+2.43.0
+
 
 
