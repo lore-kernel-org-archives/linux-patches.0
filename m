@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F391C6AB;
-	Mon,  4 Mar 2024 21:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1973B1C6AB;
+	Mon,  4 Mar 2024 21:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589246; cv=none; b=AnHH+QcGNOWOUi9T/yQomUvTlkvMeLCpIbCmabb3xjT7R6ioF/690u2CyDYFrEiUpCNkr4UU6qgvb+mIJwuI/V5hPddKLSRFSIHzpUdv7DB3BMF33uRtEV4HvTMu7E+frfopW074ZMPvwvaYiXQdhmLX/qECOWEZ7aMx2N6wmO4=
+	t=1709589249; cv=none; b=owcHxMJlYPmnVyJITrW0W0anq90s3oNds2ZpbWeDlc9fqVr+sYXDSq61+el0o/GzGwtO8pW2bvmmK1XMU6Z8mimOOlbjOeYE1zBbV/9WZ6xU97L1WviJEdRJ8iO3QzaUwvr7Ob8Mm0srwAa12CNNVNCscdhP5qmr6qvvHfGFO2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589246; c=relaxed/simple;
-	bh=PGCQauisv7pqXXrFtklwo+DziZUXnJkxYv1o12Vls/k=;
+	s=arc-20240116; t=1709589249; c=relaxed/simple;
+	bh=LfhvCYunYY0JhLj8kmoHK48qXpWi+dj3JO6SHLh0koM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=msM7TNQYF65v22ZybLdC5dnUolt/p9WjBSOYf1FbYEYlX4qeuvBzL7R6YKy+Tug7g3dFeKdg0uBbbPtYx5bkqjDt1i6zwG0t1BBcfD5fk10hI8VE4fUku1lbUXPCnCT5O9/3t/l32H7itaQaErbE5OpxPdL9jdkXrSftoXQEwrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAQG46as; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BR8NOe4UXTDSZ3zo5C2h2bR2TGA7fxotVgjwb25Et0n09w+Oe1RjS6Ze+iItm2xKBMnquNPLkFMt/Zuk053w5FK7m3Xd83oGooVnW3jep8mlUuFY0TRGFzfb9NOBHxHSy9j4O/qZuui7tDl41infOSces+/Xhfx0dxzRuloemAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3C5lsSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAQG46as"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106E9C433F1;
-	Mon,  4 Mar 2024 21:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3C5lsSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DE5C433C7;
+	Mon,  4 Mar 2024 21:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589246;
-	bh=PGCQauisv7pqXXrFtklwo+DziZUXnJkxYv1o12Vls/k=;
+	s=korg; t=1709589249;
+	bh=LfhvCYunYY0JhLj8kmoHK48qXpWi+dj3JO6SHLh0koM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAQG46asCcoC7kXkTRsZHRar6aVkox5NriI5Ithx2bfp8hS10UYW5rl3WfpisRfB1
-	 VAqZL3XOMOS0QtU+qFs+JYjolIx/1Fpqe0ALEpai5EGPg/L+N51pKCHcMSstl66zr4
-	 uhFmaAU/mR+C5O2z5KCIANjGxn9EjnZqygkXCs94=
+	b=Z3C5lsSXmd/c0o22jAgv3Zn121ckHt6yPhxpLKFxp4QEK4vdv1eA4e2buxY0Lqd+/
+	 5X2glUV8N8ZeHfDNp0NWSqtAwcu5AJAvanmVngHjyjkyW7eEjCTcIa1mOoZAdxQqAA
+	 Gs97ybsiHPpF4OVeRmS3tOIkWgA0+Df8UYFrRRvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/84] Bluetooth: Enforce validation on max value of connection interval
-Date: Mon,  4 Mar 2024 21:23:51 +0000
-Message-ID: <20240304211542.940753261@linuxfoundation.org>
+Subject: [PATCH 5.15 36/84] tls: rx: dont track the async count
+Date: Mon,  4 Mar 2024 21:24:09 +0000
+Message-ID: <20240304211543.544299632@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,66 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit e4b019515f950b4e6e5b74b2e1bb03a90cb33039 ]
+[ Upstream commit 7da18bcc5e4cfd14ea520367546c5697e64ae592 ]
 
-Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
-'Connection Parameter Update Procedure Invalid Parameters Central
-Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
+We track both if the last record was handled by async crypto
+and how many records were async. This is not necessary. We
+implicitly assume once crypto goes async it will stay that
+way, otherwise we'd reorder records. So just track if we're
+in async mode, the exact number of records is not necessary.
 
-That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
-connection interval updates"), but later got reverted due to devices
-like keyboards and mice may require low connection interval.
+This change also forces us into "async" mode more consistently
+in case crypto ever decided to interleave async and sync.
 
-So only validate the max value connection interval to pass the Test
-Suite, and let devices to request low connection interval if needed.
-
-[0] https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=229869
-
-Fixes: 68d19d7d9957 ("Revert "Bluetooth: validate BLE connection interval updates"")
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f7fa16d49837 ("tls: decrement decrypt_pending if no async completion will be called")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c  | 4 ++++
- net/bluetooth/l2cap_core.c | 8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 0bfd856d079d5..ba7242729a8fb 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6058,6 +6058,10 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev,
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_UNKNOWN_CONN_ID);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index ca71a9f559b37..d3bbae9af9f41 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1753,13 +1753,13 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
+ 	struct tls_prot_info *prot = &tls_ctx->prot_info;
+ 	struct sk_psock *psock;
+-	int num_async, pending;
+ 	unsigned char control = 0;
+ 	ssize_t decrypted = 0;
+ 	struct strp_msg *rxm;
+ 	struct tls_msg *tlm;
+ 	struct sk_buff *skb;
+ 	ssize_t copied = 0;
++	bool async = false;
+ 	int target, err = 0;
+ 	long timeo;
+ 	bool is_kvec = iov_iter_is_kvec(&msg->msg_iter);
+@@ -1791,12 +1791,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
  
-+	if (max > hcon->le_conn_max_interval)
-+		return send_conn_param_neg_reply(hdev, handle,
-+						 HCI_ERROR_INVALID_LL_PARAMS);
+ 	decrypted = 0;
+-	num_async = 0;
+ 	while (len && (decrypted + copied < target || ctx->recv_pkt)) {
+ 		struct tls_decrypt_arg darg = {};
+ 		bool retain_skb = false;
+ 		int to_decrypt, chunk;
+-		bool async;
+ 
+ 		skb = tls_wait_data(sk, psock, flags & MSG_DONTWAIT, timeo, &err);
+ 		if (!skb) {
+@@ -1836,10 +1834,8 @@ int tls_sw_recvmsg(struct sock *sk,
+ 			goto recv_end;
+ 		}
+ 
+-		if (err == -EINPROGRESS) {
++		if (err == -EINPROGRESS)
+ 			async = true;
+-			num_async++;
+-		}
+ 
+ 		/* If the type of records being processed is not known yet,
+ 		 * set it to record type just dequeued. If it is already known,
+@@ -1914,7 +1910,9 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	}
+ 
+ recv_end:
+-	if (num_async) {
++	if (async) {
++		int pending;
 +
- 	if (hci_check_conn_params(min, max, latency, timeout))
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_INVALID_LL_PARAMS);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 850b6aab73779..11bfc8737e6ce 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5614,7 +5614,13 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
- 
- 	memset(&rsp, 0, sizeof(rsp));
- 
--	err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	if (max > hcon->le_conn_max_interval) {
-+		BT_DBG("requested connection interval exceeds current bounds.");
-+		err = -EINVAL;
-+	} else {
-+		err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	}
-+
- 	if (err)
- 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
- 	else
+ 		/* Wait for all previously submitted records to be decrypted */
+ 		spin_lock_bh(&ctx->decrypt_compl_lock);
+ 		ctx->async_notify = true;
 -- 
 2.43.0
 
