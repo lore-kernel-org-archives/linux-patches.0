@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994BA1C687;
-	Mon,  4 Mar 2024 21:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7F0626B2;
+	Mon,  4 Mar 2024 21:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588070; cv=none; b=j/uUmdVMF+yYVT3DxfAMxf/FZZfA6rnIoWHdzfEb/PFxJy28SoxGeoKLDgQ6Nh+VTWGzJpC1PeiwFKwPEaN1WHO1qQ7IU5vy6hJp35rrQnSL6vd+NRobK5nbI61dTDFHJKyM4q3+y8lAmuGqDNdJA6rvLlAIt86V7srOA3mB3e4=
+	t=1709588073; cv=none; b=HJYwT0EwjMSjG0o1H/GHDlTJ0nDp+qY3LaAeyHyxzSI1npEL0x7O+XPI56ddyMwf8VLkwwE5QRHDEDiRgY6FWgzQTTThre/z1wAiU/Gs4PBLIcSjdxKJru3ii37ZPXx+RkgZOZEmYA+dEBPcfO942gxTTx7Ptr1cV82tPAzAHDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588070; c=relaxed/simple;
-	bh=GcaKPwPJpjo2njfe60qvqSJ2cA8XHbsRhYjUPH0b6y4=;
+	s=arc-20240116; t=1709588073; c=relaxed/simple;
+	bh=omYvwM8MoDgltTYqeELVNYhOm0A/EEgU7HB/ECcXG8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHwuSWHgYT2RxS/JC5hD0t7dFN21JJuVAYQfkdNOYgO9s258w6HENLmZ2IHXvQOgIokzE7WrxbkE1uIx74+tHYy5/Vhy5Cq1mu9iWsKql9ix26AfEAxwSe9KQAT72QYjTRVjWgug42vss9BgqH9cTMNbajLwLgSqGgfrjuLb5Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4bplZzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quQHJQUC/q3zmHcfjyA/k8bHJ6PMCpw/kC+3cZLfBXhV6JxkLemg0GTJeXvk1cbpIGnn8vgUxwC1fiR8Ud30ZTw7EuFD5O09dGiqDGRGgFAJDqbzF9YDmU+LQ7uASbtUDmn/VF6HLwS/ubYxUktdEaq8IRMYoMpa44tI4jrayO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yg14rvyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4bplZzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFF8C433C7;
-	Mon,  4 Mar 2024 21:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yg14rvyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95BFC433C7;
+	Mon,  4 Mar 2024 21:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588070;
-	bh=GcaKPwPJpjo2njfe60qvqSJ2cA8XHbsRhYjUPH0b6y4=;
+	s=korg; t=1709588073;
+	bh=omYvwM8MoDgltTYqeELVNYhOm0A/EEgU7HB/ECcXG8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4bplZzrmVs/ZP08cfouZ9VFzx8v1hB0x1oecTEFnjDQvizGXRgiF1MUJGuroOslJ
-	 Kflp7bT0W2y2s/5oRN+RwTqDU7Sa1Nuvh1XMQxoLjzw2OAJ9uxfwXx3AsA3QmEddnX
-	 co010Uw5K/yK1lW8lTr4m/rr56FsnHx5KMS28Qj8=
+	b=yg14rvyPzEYl5rHB7bzwJ3AdpuXMPkjramqrzznIwf0iDTus+uAa0jsAjnmeCdwWs
+	 EgI6kTWA8TdtljtGrKC4Cj7HB2VApXPot3GVeVFqqx9k0rqsjPZSLqE2EhzywYqehV
+	 CtC8ZOuaD8SjZTDLiYf1lijGZeKbYCb7XiqkA1T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 10/42] net: usb: dm9601: fix wrong return value in dm9601_mdio_read
-Date: Mon,  4 Mar 2024 21:23:37 +0000
-Message-ID: <20240304211537.987910802@linuxfoundation.org>
+Subject: [PATCH 5.10 11/42] Bluetooth: Avoid potential use-after-free in hci_error_reset
+Date: Mon,  4 Mar 2024 21:23:38 +0000
+Message-ID: <20240304211538.019822426@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -53,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit c68b2c9eba38ec3f60f4894b189090febf4d8d22 ]
+[ Upstream commit 2449007d3f73b2842c9734f45f0aadb522daf592 ]
 
-The MII code does not check the return value of mdio_read (among
-others), and therefore no error code should be sent. A previous fix to
-the use of an uninitialized variable propagates negative error codes,
-that might lead to wrong operations by the MII library.
+While handling the HCI_EV_HARDWARE_ERROR event, if the underlying
+BT controller is not responding, the GPIO reset mechanism would
+free the hci_dev and lead to a use-after-free in hci_error_reset.
 
-An example of such issues is the use of mii_nway_restart by the dm9601
-driver. The mii_nway_restart function does not check the value returned
-by mdio_read, which in this case might be a negative number which could
-contain the exact bit the function checks (BMCR_ANENABLE = 0x1000).
+Here's the call trace observed on a ChromeOS device with Intel AX201:
+   queue_work_on+0x3e/0x6c
+   __hci_cmd_sync_sk+0x2ee/0x4c0 [bluetooth <HASH:3b4a6>]
+   ? init_wait_entry+0x31/0x31
+   __hci_cmd_sync+0x16/0x20 [bluetooth <HASH:3b4a 6>]
+   hci_error_reset+0x4f/0xa4 [bluetooth <HASH:3b4a 6>]
+   process_one_work+0x1d8/0x33f
+   worker_thread+0x21b/0x373
+   kthread+0x13a/0x152
+   ? pr_cont_work+0x54/0x54
+   ? kthread_blkcg+0x31/0x31
+    ret_from_fork+0x1f/0x30
 
-Return zero in case of error, as it is common practice in users of
-mdio_read to avoid wrong uses of the return value.
+This patch holds the reference count on the hci_dev while processing
+a HCI_EV_HARDWARE_ERROR event to avoid potential crash.
 
-Fixes: 8f8abb863fa5 ("net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20240225-dm9601_ret_err-v1-1-02c1d959ea59@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c7741d16a57c ("Bluetooth: Perform a power cycle when receiving hardware error event")
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/dm9601.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
-index 5aad26600b03e..9b7db5fd9e08f 100644
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -231,7 +231,7 @@ static int dm9601_mdio_read(struct net_device *netdev, int phy_id, int loc)
- 	err = dm_read_shared_word(dev, 1, loc, &res);
- 	if (err < 0) {
- 		netdev_err(dev->net, "MDIO read error: %d\n", err);
--		return err;
-+		return 0;
- 	}
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index e33fe4b1c4e29..5f1fbf86e0ceb 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2318,6 +2318,7 @@ static void hci_error_reset(struct work_struct *work)
+ {
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev, error_reset);
  
- 	netdev_dbg(dev->net,
++	hci_dev_hold(hdev);
+ 	BT_DBG("%s", hdev->name);
+ 
+ 	if (hdev->hw_error)
+@@ -2325,10 +2326,10 @@ static void hci_error_reset(struct work_struct *work)
+ 	else
+ 		bt_dev_err(hdev, "hardware error 0x%2.2x", hdev->hw_error_code);
+ 
+-	if (hci_dev_do_close(hdev))
+-		return;
++	if (!hci_dev_do_close(hdev))
++		hci_dev_do_open(hdev);
+ 
+-	hci_dev_do_open(hdev);
++	hci_dev_put(hdev);
+ }
+ 
+ void hci_uuids_clear(struct hci_dev *hdev)
 -- 
 2.43.0
 
