@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98751EB5A;
-	Mon,  4 Mar 2024 21:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768D1EB5A;
+	Mon,  4 Mar 2024 21:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589002; cv=none; b=T61V9vKQmpge4SBxk4E5rTl1cwIobW3Xtc5ji2z/V1r3xu0ggG3dM6c4JYjVoRMRceP+YUyUZ51Sw55IY8DjNu6IwEo0hO9vNpUaW77KiL++kOdlCn4fRfYO+HQbctPzomx/fq/ZJ9OLqnCpH285bj85xQA/WOJjGxMj2QdnM10=
+	t=1709589004; cv=none; b=eyIsqMdRoOCN6W+sU8M31ImAiX2x8GbxWGTupPQT77v6RFivkYAPg0398sLq7s7SsY0h6OobgEqS99VO9i3HUaNN55gWLlz1cLSWu96JRPv8CBqv/mqd/vWew9hWkEE2eFmnjVWrv3PLGBJnVOGtZtRi4OpNN3eiX4cKNuYIH4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589002; c=relaxed/simple;
-	bh=Nnd06aFz8opDEo1Su6PN/n1ZEWQopPirJm7bMXrL4fo=;
+	s=arc-20240116; t=1709589004; c=relaxed/simple;
+	bh=u6p3HJfnMcUChog5gOo6oFjvBF/Ap18AihaZ8ADw6nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gN0rXEv7iGZdhzScTRuxmPOqYZX2ldoYTDz95yxjKqmjIV7WMrQUC1PE3erT+JKdg7iGdVDWtJKiiBs6gki/5i4FQw1JmvrcWcBQ0XkaWLEmHZY4YRP9EKAlZiY+zHc9g4+YDA42KsdJSDyoJWEYcMyU/+j/YMLVAm7dGTmBxn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIzk+4p9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJBSZ0eRls9y9nxQ6+eQaXqrbtowd3PeM+yk+bBG0X6npBXLhb167UFzEgNrjnbQMfJXn+nf02YIZOriUBJ3DrXlkVF4+vAQxUqTaf8nhhXVnKyuuviLrPJAKuXElgbStnDQtIQ+6hsKLgJ2hRclKnkJgcTs1rrvc4zwMRdPx90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2vux8ZN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIzk+4p9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A67FC433C7;
-	Mon,  4 Mar 2024 21:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2vux8ZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE1DC433C7;
+	Mon,  4 Mar 2024 21:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589001;
-	bh=Nnd06aFz8opDEo1Su6PN/n1ZEWQopPirJm7bMXrL4fo=;
+	s=korg; t=1709589004;
+	bh=u6p3HJfnMcUChog5gOo6oFjvBF/Ap18AihaZ8ADw6nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIzk+4p9CYZq0iNZ+hkoRvdwlvKJ2we91PBX9bKyXGyK9gthfgjAjeFp0ANFlLgCX
-	 cE44hqHRTvb0CbnOXDKSq9p04wOQECh/wyFQh2gtuD7n3vMSEs2J5p9GKCkPh5Ramn
-	 fCFVlsEQdBv2SYXrGlK38eGepgbzeXuIf4V1w0Is=
+	b=p2vux8ZN7o94WGIf2G8+LrxuCo9VjMLKboJqYIgpcHElqSqLdkgMlRVhlrqs/L1Xx
+	 p0ScR1hM0P1FTTsfnl/y1gHAxyEDqHPnk5nW/mv78bcw6BUwXmZDr/+acNoopo0/lC
+	 rW+kzWb/LRrbrxplk8IQ7ok7wecaZq2vUbFrqZdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 164/215] nfsd: fix up the filecache laundrette scheduling
-Date: Mon,  4 Mar 2024 21:23:47 +0000
-Message-ID: <20240304211602.173929675@linuxfoundation.org>
+Subject: [PATCH 6.1 165/215] NFSD: Use struct_size() helper in alloc_session()
+Date: Mon,  4 Mar 2024 21:23:48 +0000
+Message-ID: <20240304211602.203711875@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,53 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 22ae4c114f77b55a4c5036e8f70409a0799a08f8 ]
+[ Upstream commit 85a0d0c9a58002ef7d1bf5e3ea630f4fbd42a4f0 ]
 
-We don't really care whether there are hashed entries when it comes to
-scheduling the laundrette. They might all be non-gc entries, after all.
-We only want to schedule it if there are entries on the LRU.
+Use struct_size() helper to simplify the code, no functional changes.
 
-Switch to using list_lru_count, and move the check into
-nfsd_file_gc_worker. The other callsite in nfsd_file_put doesn't need to
-count entries, since it only schedules the laundrette after adding an
-entry to the LRU.
-
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4state.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -211,12 +211,9 @@ static const struct rhashtable_params nf
- static void
- nfsd_file_schedule_laundrette(void)
- {
--	if ((atomic_read(&nfsd_file_rhash_tbl.nelems) == 0) ||
--	    test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 0)
--		return;
--
--	queue_delayed_work(system_wq, &nfsd_filecache_laundrette,
--			NFSD_LAUNDRETTE_DELAY);
-+	if (test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags))
-+		queue_delayed_work(system_wq, &nfsd_filecache_laundrette,
-+				   NFSD_LAUNDRETTE_DELAY);
- }
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1834,13 +1834,12 @@ static struct nfsd4_session *alloc_sessi
+ 	int numslots = fattrs->maxreqs;
+ 	int slotsize = slot_bytes(fattrs);
+ 	struct nfsd4_session *new;
+-	int mem, i;
++	int i;
  
- static void
-@@ -614,7 +611,8 @@ static void
- nfsd_file_gc_worker(struct work_struct *work)
- {
- 	nfsd_file_gc();
--	nfsd_file_schedule_laundrette();
-+	if (list_lru_count(&nfsd_file_lru))
-+		nfsd_file_schedule_laundrette();
- }
+-	BUILD_BUG_ON(NFSD_MAX_SLOTS_PER_SESSION * sizeof(struct nfsd4_slot *)
+-			+ sizeof(struct nfsd4_session) > PAGE_SIZE);
+-	mem = numslots * sizeof(struct nfsd4_slot *);
++	BUILD_BUG_ON(struct_size(new, se_slots, NFSD_MAX_SLOTS_PER_SESSION)
++		     > PAGE_SIZE);
  
- static unsigned long
+-	new = kzalloc(sizeof(*new) + mem, GFP_KERNEL);
++	new = kzalloc(struct_size(new, se_slots, numslots), GFP_KERNEL);
+ 	if (!new)
+ 		return NULL;
+ 	/* allocate each struct nfsd4_slot and data cache in one piece */
 
 
