@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D170B8F58;
-	Mon,  4 Mar 2024 21:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB311C6AB;
+	Mon,  4 Mar 2024 21:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588410; cv=none; b=tRIapdBhckK2/waDY7dMPVr09pH4QpeHo/uWA+3aaZXA1YYjLWtdXGH9q/OqFNjo6eHyRGEkYKR8Zjmgtzf9/oIdMyUxdJG4i184F96qGowLUXDggJ+9jZjZKcGlbUPIFK3Yc6/w1IKgzWZR3DP6SLRCHE/fartSTkR0nWehk7k=
+	t=1709588413; cv=none; b=Cr6De88WSV8o178yofqUsTtoSwcd3V4EZnGgAhVTSeV8Fw4kQHdcRTj2mFUu824eNHqgOnXGwHM7NkmqW4HPf40aMqNu8tMmarszrc3N/ChKBXxPOcvQQggzofCozESgVJiId+K9IcCKNRyFTecCeCg1lo8sj143U0zU871BmSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588410; c=relaxed/simple;
-	bh=BC1ZP65sRGxp4kbtbzN0oTgr8wk4cAMIl86/UZAfxKg=;
+	s=arc-20240116; t=1709588413; c=relaxed/simple;
+	bh=tKzvwcFIkIev3AQnqS0CwZTVXOI5nuuL7SHscmlfsYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz8o+VUUIG6hmIqfBzbjKxIcJrWSA4OfDZKlDESDOrP2gyRo26aKMByEMLfmx55u1agXjnvjDm1Vi26b4vt7hIt8gn8+BssaXVk9dqvURooDEoONMvVaInwh1Ksaapw42pwRUMmlcmeM2MQUAcu/+iWItmegXOlDdPukdLQZV/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nmnju7S1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PZAOueG6b86YeTPKk5yBetWRo++lq2mimnFxmyYoFzjkisWa8v/fnlsBPPbW+f4V1kjpeoy/GpUc7xUUqdsV9WVtZklIEBrb/Gf1HavGbeiKa6wV0qzGCoXeAWkmW/ZGwujf9TwCbtc4Rj4G5T6p3Vk48SiomL145JjgFMmb6zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TReKj8fq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nmnju7S1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64049C433F1;
-	Mon,  4 Mar 2024 21:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TReKj8fq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0259EC433F1;
+	Mon,  4 Mar 2024 21:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588410;
-	bh=BC1ZP65sRGxp4kbtbzN0oTgr8wk4cAMIl86/UZAfxKg=;
+	s=korg; t=1709588413;
+	bh=tKzvwcFIkIev3AQnqS0CwZTVXOI5nuuL7SHscmlfsYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nmnju7S1EStXpMAB0zsProz0FRyoxehZYNfDm9XfjXd4/7KKW8SAgtRmYD2JAdmKN
-	 BEoAeAMVRQ1218nxmTCO23DTLtzeH7lE0smTc/TjTY6YtM03ISiT0071ySPQmpKjAT
-	 ajKsc4h3i0zM9zXyygcBLzPUDQc7iXl1YdaHB4a4=
+	b=TReKj8fqokfYiJpSzjL/KqXvOELqX1aZYt6qYiduXhLBBKP3UEzjivwXiDlDjflI3
+	 wQwk+ZtaSbyBtQvtBWAUu1ssRulmxSs0+qg+vTVLeYs+Fig9Uhj0AIiyS52c7skXeo
+	 AYjx6mhZ9rMxeQD9nr52ot2TYxL8QDF2/RgDlWmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Elad Nachman <enachman@marvell.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 096/143] mmc: sdhci-xenon: fix PHY init clock stability
-Date: Mon,  4 Mar 2024 21:23:36 +0000
-Message-ID: <20240304211552.988301836@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Andy Chiu <andybnac@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.6 097/143] RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
+Date: Mon,  4 Mar 2024 21:23:37 +0000
+Message-ID: <20240304211553.013618744@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,68 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elad Nachman <enachman@marvell.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 8e9f25a290ae0016353c9ea13314c95fb3207812 upstream.
+commit 3aff0c459e77ac0fb1c4d6884433467f797f7357 upstream.
 
-Each time SD/mmc phy is initialized, at times, in some of
-the attempts, phy fails to completes its initialization
-which results into timeout error. Per the HW spec, it is
-a pre-requisite to ensure a stable SD clock before a phy
-initialization is attempted.
+Commit e4bb020f3dbb ("riscv: detect assembler support for .option arch")
+added two tests, one for a valid value to '.option arch' that should
+succeed and one for an invalid value that is expected to fail to make
+sure that support for '.option arch' is properly detected because Clang
+does not error when '.option arch' is not supported:
 
-Fixes: 06c8b667ff5b ("mmc: sdhci-xenon: Add support to PHYs of Marvell Xenon SDHC")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+  $ clang --target=riscv64-linux-gnu -Werror -x assembler -c -o /dev/null <(echo '.option arch, +m')
+  /dev/fd/63:1:9: warning: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
+  .option arch, +m
+          ^
+  $ echo $?
+  0
+
+Unfortunately, the invalid test started being accepted by Clang after
+the linked llvm-project change, which causes CONFIG_AS_HAS_OPTION_ARCH
+and configurations that depend on it to be silently disabled, even
+though those versions do support '.option arch'.
+
+The invalid test can be avoided altogether by using
+'-Wa,--fatal-warnings', which will turn all assembler warnings into
+errors, like '-Werror' does for the compiler:
+
+  $ clang --target=riscv64-linux-gnu -Werror -Wa,--fatal-warnings -x assembler -c -o /dev/null <(echo '.option arch, +m')
+  /dev/fd/63:1:9: error: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
+  .option arch, +m
+          ^
+  $ echo $?
+  1
+
+The as-instr macros have been updated to make use of this flag, so
+remove the invalid test, which allows CONFIG_AS_HAS_OPTION_ARCH to work
+for all compiler versions.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Elad Nachman <enachman@marvell.com>
-Link: https://lore.kernel.org/r/20240222200930.1277665-1-enachman@marvell.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: e4bb020f3dbb ("riscv: detect assembler support for .option arch")
+Link: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266daedbaaa7dc9c007a2a
+Reported-by: Eric Biggers <ebiggers@kernel.org>
+Closes: https://lore.kernel.org/r/20240121011341.GA97368@sol.localdomain/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Eric Biggers <ebiggers@google.com>
+Tested-by: Andy Chiu <andybnac@gmail.com>
+Reviewed-by: Andy Chiu <andybnac@gmail.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20240125-fix-riscv-option-arch-llvm-18-v1-2-390ac9cc3cd0@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-xenon-phy.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/riscv/Kconfig |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-xenon-phy.c
-+++ b/drivers/mmc/host/sdhci-xenon-phy.c
-@@ -11,6 +11,7 @@
- #include <linux/slab.h>
- #include <linux/delay.h>
- #include <linux/ktime.h>
-+#include <linux/iopoll.h>
- #include <linux/of_address.h>
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -287,7 +287,6 @@ config AS_HAS_OPTION_ARCH
+ 	# https://reviews.llvm.org/D123515
+ 	def_bool y
+ 	depends on $(as-instr, .option arch$(comma) +m)
+-	depends on !$(as-instr, .option arch$(comma) -i)
  
- #include "sdhci-pltfm.h"
-@@ -218,6 +219,19 @@ static int xenon_alloc_emmc_phy(struct s
- 	return 0;
- }
- 
-+static int xenon_check_stability_internal_clk(struct sdhci_host *host)
-+{
-+	u32 reg;
-+	int err;
-+
-+	err = read_poll_timeout(sdhci_readw, reg, reg & SDHCI_CLOCK_INT_STABLE,
-+				1100, 20000, false, host, SDHCI_CLOCK_CONTROL);
-+	if (err)
-+		dev_err(mmc_dev(host->mmc), "phy_init: Internal clock never stabilized.\n");
-+
-+	return err;
-+}
-+
- /*
-  * eMMC 5.0/5.1 PHY init/re-init.
-  * eMMC PHY init should be executed after:
-@@ -234,6 +248,11 @@ static int xenon_emmc_phy_init(struct sd
- 	struct xenon_priv *priv = sdhci_pltfm_priv(pltfm_host);
- 	struct xenon_emmc_phy_regs *phy_regs = priv->emmc_phy_regs;
- 
-+	int ret = xenon_check_stability_internal_clk(host);
-+
-+	if (ret)
-+		return ret;
-+
- 	reg = sdhci_readl(host, phy_regs->timing_adj);
- 	reg |= XENON_PHY_INITIALIZAION;
- 	sdhci_writel(host, reg, phy_regs->timing_adj);
+ source "arch/riscv/Kconfig.socs"
+ source "arch/riscv/Kconfig.errata"
 
 
