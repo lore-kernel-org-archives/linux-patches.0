@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A391C6AB;
-	Mon,  4 Mar 2024 21:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665A5200CD;
+	Mon,  4 Mar 2024 21:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588826; cv=none; b=W7+cjqgTKJsK3ZZOT38MnKcRyuP4oANODsbMH3Za974hdCiODipEL31/Zk/Awc6WepRrXxIpr8nB+xRxuTUJQGKXeN9Cz8dhj04GebrYbvJBvbmVHLQgWN4goUmerXJHXshIer+oQiXfDhFS1W4oh051n2fcDcvAQYHKW1nTqUQ=
+	t=1709588829; cv=none; b=lG+1MGElxcb62BjG2m9dNQwhyOEvSlbnGsfkP7gNaznoJxiuPDrYDZmYRluEiEHyb7V0x8FZmnZpWOgbjdS96ZXreWMqx8vaMg3yv6jFnd+R1KYGKnBIZyWelMX0hEoq/n2BQHkO3dzw5rJs6xq8gc62rzw37X/+HWdEN/LAFNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588826; c=relaxed/simple;
-	bh=DR/gZLco72wCgYCCEkBHAi+3C0YGkoggMfXoep5kF/o=;
+	s=arc-20240116; t=1709588829; c=relaxed/simple;
+	bh=0n6nD3YiMStxXwW4X2r2zjkYccV3JDr7EROAzf6LC/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Denju8I5H8OJGXS6mS3RGVFXC41j9Rkz2HksAJs2lDBB6YLPCeXnpwUNVgSY3YZlxhl/KjWZ9XYJNAf4vidA4VjIGLtaH0uxSYwGq2RxtHfhKFW4XRnQPXicJdBxCUZxeuTrhgqs1p7esUzB3hFr4DEf/4MGY61qEt8bl1twApc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXIeATZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uH85GIWqQr6HQok0x4Mz5cLs0zucOybZ83huc/p3S0C/jrFMQnJ47oIavO0DHxQHKjTFenK/mD28NCAtMslDX2fnuJLkrJwpiv2c4L2L5aghxH3O4TKUgiP7kg0OWpQPpgSAViTRoKrPzsk5KbvFDjKekimFrcqrenG7S5h4Ojc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy10zzYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXIeATZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A26C433C7;
-	Mon,  4 Mar 2024 21:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy10zzYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4E3C433C7;
+	Mon,  4 Mar 2024 21:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588826;
-	bh=DR/gZLco72wCgYCCEkBHAi+3C0YGkoggMfXoep5kF/o=;
+	s=korg; t=1709588829;
+	bh=0n6nD3YiMStxXwW4X2r2zjkYccV3JDr7EROAzf6LC/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXIeATZzt4vwXj+Ii5UitfwwzP4miiJMNGHvzBw6Skuj70j7kXvxkxDDlfCNYMDho
-	 WNuQqKcZErcs6/UQr4R25tbhTwilFVHB8V+gN4szUByMTMH7yK19+YNbAeDMzKDd/b
-	 IZel4VMWBgqsvBdKd9TvbdmFrctNb7mxX3hy8u4g=
+	b=vy10zzYdJtVPlhq8z6vJUDI4X49DXe+4cgmvq47Zgr99JHA4LFK6IH+w4lRwz0epA
+	 Cj3Eo318QsTImkLwPp1BufqnWTSNVo+w+IhGkhGNk3cd2ZRj+/Lo4HL27Jz70uJO9L
+	 6EkibHgR5X0NU0vAr87PbUMb5kBpS2+yrzeBXH14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 6.1 112/215] x86/boot/compressed: Move bootargs parsing out of 32-bit startup code
-Date: Mon,  4 Mar 2024 21:22:55 +0000
-Message-ID: <20240304211600.590951755@linuxfoundation.org>
+	Jiri Bohac <jbohac@suse.cz>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 095/215] x86/e820: Dont reserve SETUP_RNG_SEED in e820
+Date: Mon,  4 Mar 2024 21:22:38 +0000
+Message-ID: <20240304211600.042011798@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,115 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jiri Bohac <jbohac@suse.cz>
 
-commit 5c3a85f35b583259cf5ca0344cd79c8899ba1bb7 upstream.
+commit 7fd817c906503b6813ea3b41f5fdf4192449a707 upstream.
 
-Move the logic that chooses between the different EFI entrypoints out of
-the 32-bit boot path, and into a 64-bit helper that can perform the same
-task much more cleanly. While at it, document the mixed mode boot flow
-in a code comment.
+SETUP_RNG_SEED in setup_data is supplied by kexec and should
+not be reserved in the e820 map.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20221122161017.2426828-4-ardb@kernel.org
+Doing so reserves 16 bytes of RAM when booting with kexec.
+(16 bytes because data->len is zeroed by parse_setup_data so only
+sizeof(setup_data) is reserved.)
+
+When kexec is used repeatedly, each boot adds two entries in the
+kexec-provided e820 map as the 16-byte range splits a larger
+range of usable memory. Eventually all of the 128 available entries
+get used up. The next split will result in losing usable memory
+as the new entries cannot be added to the e820 map.
+
+Fixes: 68b8e9713c8e ("x86/setup: Use rng seeds from setup_data")
+Signed-off-by: Jiri Bohac <jbohac@suse.cz>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/ZbmOjKnARGiaYBd5@dwarf.suse.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/efi_mixed.S |   43 +++++++++++++++++++++++++++++++++++
- arch/x86/boot/compressed/head_64.S   |   24 +++----------------
- 2 files changed, 47 insertions(+), 20 deletions(-)
+ arch/x86/kernel/e820.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/x86/boot/compressed/efi_mixed.S
-+++ b/arch/x86/boot/compressed/efi_mixed.S
-@@ -22,6 +22,49 @@
+diff --git a/arch/x86/kernel/e820.c b/arch/x86/kernel/e820.c
+index fb8cf953380d..b66f540de054 100644
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -1017,10 +1017,12 @@ void __init e820__reserve_setup_data(void)
+ 		e820__range_update(pa_data, sizeof(*data)+data->len, E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
  
- 	.code64
- 	.text
-+/*
-+ * When booting in 64-bit mode on 32-bit EFI firmware, startup_64_mixed_mode()
-+ * is the first thing that runs after switching to long mode. Depending on
-+ * whether the EFI handover protocol or the compat entry point was used to
-+ * enter the kernel, it will either branch to the 64-bit EFI handover
-+ * entrypoint at offset 0x390 in the image, or to the 64-bit EFI PE/COFF
-+ * entrypoint efi_pe_entry(). In the former case, the bootloader must provide a
-+ * struct bootparams pointer as the third argument, so the presence of such a
-+ * pointer is used to disambiguate.
-+ *
-+ *                                                             +--------------+
-+ *  +------------------+     +------------+            +------>| efi_pe_entry |
-+ *  | efi32_pe_entry   |---->|            |            |       +-----------+--+
-+ *  +------------------+     |            |     +------+----------------+  |
-+ *                           | startup_32 |---->| startup_64_mixed_mode |  |
-+ *  +------------------+     |            |     +------+----------------+  V
-+ *  | efi32_stub_entry |---->|            |            |     +------------------+
-+ *  +------------------+     +------------+            +---->| efi64_stub_entry |
-+ *                                                           +-------------+----+
-+ *                           +------------+     +----------+               |
-+ *                           | startup_64 |<----| efi_main |<--------------+
-+ *                           +------------+     +----------+
-+ */
-+SYM_FUNC_START(startup_64_mixed_mode)
-+	lea	efi32_boot_args(%rip), %rdx
-+	mov	0(%rdx), %edi
-+	mov	4(%rdx), %esi
-+	mov	8(%rdx), %edx		// saved bootparams pointer
-+	test	%edx, %edx
-+	jnz	efi64_stub_entry
-+	/*
-+	 * efi_pe_entry uses MS calling convention, which requires 32 bytes of
-+	 * shadow space on the stack even if all arguments are passed in
-+	 * registers. We also need an additional 8 bytes for the space that
-+	 * would be occupied by the return address, and this also results in
-+	 * the correct stack alignment for entry.
-+	 */
-+	sub	$40, %rsp
-+	mov	%rdi, %rcx		// MS calling convention
-+	mov	%rsi, %rdx
-+	jmp	efi_pe_entry
-+SYM_FUNC_END(startup_64_mixed_mode)
-+
- SYM_FUNC_START(__efi64_thunk)
- 	push	%rbp
- 	push	%rbx
---- a/arch/x86/boot/compressed/head_64.S
-+++ b/arch/x86/boot/compressed/head_64.S
-@@ -261,25 +261,9 @@ SYM_FUNC_START(startup_32)
- 	 */
- 	leal	rva(startup_64)(%ebp), %eax
- #ifdef CONFIG_EFI_MIXED
--	movl	rva(efi32_boot_args)(%ebp), %edi
--	testl	%edi, %edi
--	jz	1f
--	leal	rva(efi64_stub_entry)(%ebp), %eax
--	movl	rva(efi32_boot_args+4)(%ebp), %esi
--	movl	rva(efi32_boot_args+8)(%ebp), %edx	// saved bootparams pointer
--	testl	%edx, %edx
--	jnz	1f
--	/*
--	 * efi_pe_entry uses MS calling convention, which requires 32 bytes of
--	 * shadow space on the stack even if all arguments are passed in
--	 * registers. We also need an additional 8 bytes for the space that
--	 * would be occupied by the return address, and this also results in
--	 * the correct stack alignment for entry.
--	 */
--	subl	$40, %esp
--	leal	rva(efi_pe_entry)(%ebp), %eax
--	movl	%edi, %ecx			// MS calling convention
--	movl	%esi, %edx
-+	cmpb	$1, rva(efi_is64)(%ebp)
-+	je	1f
-+	leal	rva(startup_64_mixed_mode)(%ebp), %eax
- 1:
- #endif
- 	/* Check if the C-bit position is correct when SEV is active */
-@@ -795,7 +779,7 @@ SYM_DATA_END_LABEL(boot32_idt, SYM_L_GLO
- SYM_DATA(image_offset, .long 0)
- #endif
- #ifdef CONFIG_EFI_MIXED
--SYM_DATA_LOCAL(efi32_boot_args, .long 0, 0, 0)
-+SYM_DATA(efi32_boot_args, .long 0, 0, 0)
- SYM_DATA(efi_is64, .byte 1)
- 
- #define ST32_boottime		60 // offsetof(efi_system_table_32_t, boottime)
+ 		/*
+-		 * SETUP_EFI and SETUP_IMA are supplied by kexec and do not need
+-		 * to be reserved.
++		 * SETUP_EFI, SETUP_IMA and SETUP_RNG_SEED are supplied by
++		 * kexec and do not need to be reserved.
+ 		 */
+-		if (data->type != SETUP_EFI && data->type != SETUP_IMA)
++		if (data->type != SETUP_EFI &&
++		    data->type != SETUP_IMA &&
++		    data->type != SETUP_RNG_SEED)
+ 			e820__range_update_kexec(pa_data,
+ 						 sizeof(*data) + data->len,
+ 						 E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
+-- 
+2.44.0
+
 
 
