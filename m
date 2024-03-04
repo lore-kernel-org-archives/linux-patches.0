@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101FF78B4C;
-	Mon,  4 Mar 2024 21:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E561C687;
+	Mon,  4 Mar 2024 21:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588081; cv=none; b=WwW00jRoAmY4CkN/C/+XHaFRaNUj4osBYe2X76SBKaY5HhSGaj7UySXiesRQ73dYpEzw6mGzB6gH9SMdNjKYNhg2bCkjkCV/TfFVwfOKbjKNOhp0M4FaX8LFTM8xp57M/XenQChHzssPyAnC/1Z6R4Oz7siMjMQ0A6vwyOMuwkI=
+	t=1709588083; cv=none; b=TqQLVc99uBmn4xYtFA67UENyoiz1XQNUoTsVZOE+Pd78AvbRZaWThy4Khl9XtP6duP4wE3u91rZndK2d7gmXgqOZFYbaeKevJgYVdVNE1vSSLjrzXXEYDHfI9QIhHb6qmIGy/DCR5M5hn7qb/mLVsJI5KlYrAX+YlcmjLO2vxfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588081; c=relaxed/simple;
-	bh=N1Ktf2iYkTxGgVWnoxZaJ8sIoE9rVkeKcRuhl78F3i4=;
+	s=arc-20240116; t=1709588083; c=relaxed/simple;
+	bh=IM9Qk1XKuSY6JKNY2ZK9fAbkWbx9NEVlZxsTARXswmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/XPZORTFUifqTpg0ViPmireFJV+01D8uQ5AgNpS4X1IQC4fCWoKzPGwGoAsMaVl6Cd8nedeLoSCrJKUtAB9p9rfr/ip8rp54Wzz4M4343Fb5iR6I9voZXQZCgPY4sQAJHJ3CFOD2gN7bQsMdGhKMCIqfdP9qTZAjnWYRgpN/Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCsbF8AO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qfdi1lqpmiTsTDlseN4wBbg/8W0SQnVJYvq2k/JxTM2ZBvIxwstZpVPw+KEbLMleIpShAtJlAwRTAcyBPpYWG44uxcOVdlOI3Sa9OPuX+GTWYhm0KNajnEuexpSUX+6S3eI7glKZE12WHicVfT5LpA/5pggwk2mbmY/IdlxuYvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyyrIpVc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCsbF8AO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F695C433C7;
-	Mon,  4 Mar 2024 21:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyyrIpVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FDDC433C7;
+	Mon,  4 Mar 2024 21:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588080;
-	bh=N1Ktf2iYkTxGgVWnoxZaJ8sIoE9rVkeKcRuhl78F3i4=;
+	s=korg; t=1709588083;
+	bh=IM9Qk1XKuSY6JKNY2ZK9fAbkWbx9NEVlZxsTARXswmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCsbF8AODy3Hl6Qn0dfeX8fuxxa+La/QAnn0j8OSPiZZAg1f0rXiym34B/GT7boBk
-	 G/NDTX2vDMXyUeFi4IanIO/8CM2BWE/wT3xqf8RtkZ32y1ASmHg7DIrL3ODllVm3xj
-	 ct2TPwioNlfs6thpdYdecKBEMIuZ4oCyFfCE69aI=
+	b=JyyrIpVcEYR9Uo9YKvOq7ptdb6U6TOCBYughml3WW0/BSBMHkIvZrzP+j2pEF66HP
+	 IoPCzJ8/DRCcURqgQrUC5UI+QTOAn0f0EltARevmi58UuHjk0Ur4pBPmXEnCHbtYbx
+	 QQzi914Kh5YM9QGica+W79f/Sd+9bkT9M/WHzSwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jordan Griege <jgriege@cloudflare.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/42] Bluetooth: Enforce validation on max value of connection interval
-Date: Mon,  4 Mar 2024 21:23:41 +0000
-Message-ID: <20240304211538.123171501@linuxfoundation.org>
+Subject: [PATCH 5.10 15/42] netfilter: nf_tables: allow NFPROTO_INET in nft_(match/target)_validate()
+Date: Mon,  4 Mar 2024 21:23:42 +0000
+Message-ID: <20240304211538.151289814@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -51,66 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit e4b019515f950b4e6e5b74b2e1bb03a90cb33039 ]
+[ Upstream commit 7e0f122c65912740327e4c54472acaa5f85868cb ]
 
-Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
-'Connection Parameter Update Procedure Invalid Parameters Central
-Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
+Commit d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family") added
+some validation of NFPROTO_* families in the nft_compat module, but it broke
+the ability to use legacy iptables modules in dual-stack nftables.
 
-That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
-connection interval updates"), but later got reverted due to devices
-like keyboards and mice may require low connection interval.
+While with legacy iptables one had to independently manage IPv4 and IPv6
+tables, with nftables it is possible to have dual-stack tables sharing the
+rules. Moreover, it was possible to use rules based on legacy iptables
+match/target modules in dual-stack nftables.
 
-So only validate the max value connection interval to pass the Test
-Suite, and let devices to request low connection interval if needed.
+As an example, the program from [2] creates an INET dual-stack family table
+using an xt_bpf based rule, which looks like the following (the actual output
+was generated with a patched nft tool as the current nft tool does not parse
+dual stack tables with legacy match rules, so consider it for illustrative
+purposes only):
 
-[0] https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=229869
+table inet testfw {
+  chain input {
+    type filter hook prerouting priority filter; policy accept;
+    bytecode counter packets 0 bytes 0 accept
+  }
+}
 
-Fixes: 68d19d7d9957 ("Revert "Bluetooth: validate BLE connection interval updates"")
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+After d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family") we get
+EOPNOTSUPP for the above program.
+
+Fix this by allowing NFPROTO_INET for nft_(match/target)_validate(), but also
+restrict the functions to classic iptables hooks.
+
+Changes in v3:
+  * clarify that upstream nft will not display such configuration properly and
+    that the output was generated with a patched nft tool
+  * remove example program from commit description and link to it instead
+  * no code changes otherwise
+
+Changes in v2:
+  * restrict nft_(match/target)_validate() to classic iptables hooks
+  * rewrite example program to use unmodified libnftnl
+
+Fixes: d0009effa886 ("netfilter: nf_tables: validate NFPROTO_* family")
+Link: https://lore.kernel.org/all/Zc1PfoWN38UuFJRI@calendula/T/#mc947262582c90fec044c7a3398cc92fac7afea72 [1]
+Link: https://lore.kernel.org/all/20240220145509.53357-1-ignat@cloudflare.com/ [2]
+Reported-by: Jordan Griege <jgriege@cloudflare.com>
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c  | 4 ++++
- net/bluetooth/l2cap_core.c | 8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ net/netfilter/nft_compat.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index ea25bb31b336a..47f37080c0c55 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5925,6 +5925,10 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev,
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_UNKNOWN_CONN_ID);
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index 77c7362a7db8e..3e0a6e7930c6c 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -336,10 +336,20 @@ static int nft_target_validate(const struct nft_ctx *ctx,
  
-+	if (max > hcon->le_conn_max_interval)
-+		return send_conn_param_neg_reply(hdev, handle,
-+						 HCI_ERROR_INVALID_LL_PARAMS);
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET &&
+ 	    ctx->family != NFPROTO_BRIDGE &&
+ 	    ctx->family != NFPROTO_ARP)
+ 		return -EOPNOTSUPP;
+ 
++	ret = nft_chain_validate_hooks(ctx->chain,
++				       (1 << NF_INET_PRE_ROUTING) |
++				       (1 << NF_INET_LOCAL_IN) |
++				       (1 << NF_INET_FORWARD) |
++				       (1 << NF_INET_LOCAL_OUT) |
++				       (1 << NF_INET_POST_ROUTING));
++	if (ret)
++		return ret;
 +
- 	if (hci_check_conn_params(min, max, latency, timeout))
- 		return send_conn_param_neg_reply(hdev, handle,
- 						 HCI_ERROR_INVALID_LL_PARAMS);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index a752032e12fcf..580b6d6b970d2 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5609,7 +5609,13 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
+@@ -584,10 +594,20 @@ static int nft_match_validate(const struct nft_ctx *ctx,
  
- 	memset(&rsp, 0, sizeof(rsp));
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET &&
+ 	    ctx->family != NFPROTO_BRIDGE &&
+ 	    ctx->family != NFPROTO_ARP)
+ 		return -EOPNOTSUPP;
  
--	err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	if (max > hcon->le_conn_max_interval) {
-+		BT_DBG("requested connection interval exceeds current bounds.");
-+		err = -EINVAL;
-+	} else {
-+		err = hci_check_conn_params(min, max, latency, to_multiplier);
-+	}
++	ret = nft_chain_validate_hooks(ctx->chain,
++				       (1 << NF_INET_PRE_ROUTING) |
++				       (1 << NF_INET_LOCAL_IN) |
++				       (1 << NF_INET_FORWARD) |
++				       (1 << NF_INET_LOCAL_OUT) |
++				       (1 << NF_INET_POST_ROUTING));
++	if (ret)
++		return ret;
 +
- 	if (err)
- 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
- 	else
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
 -- 
 2.43.0
 
