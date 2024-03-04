@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EAA61675;
-	Mon,  4 Mar 2024 21:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784C46BA0;
+	Mon,  4 Mar 2024 21:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588759; cv=none; b=hhaXznbaR+dXkcBtCZ7F2W4KJrghJOthAp5qBU2Vhr5JINLkt7AtsTEoEiZxsSCTdcQZIYEMzYUnQvoEl72SML2Go9t/gs+TG3Ax0Wr6EQrLTiE5dQoB/J0Xv4w50qbne39TQKmVA+0OJB4m5ikdjlEiUuDiwYlybj/ekyMWBXg=
+	t=1709588761; cv=none; b=I3EAVYS9HUgZZaJAxyNs2wEAkIJwdWDCz3OKad6fst7iAUpd1ObZnEjGt/o+B5wA0zPfg+rcKMpLh/NBzcv7Dxf/4c14p8b1+Zt/BWE5kX8hYO/uAU3FzO46WL/UfNj8gx4bT6E7FnPdTr6qwrh2NMYhDufg17M9ZJyhxmwoQMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588759; c=relaxed/simple;
-	bh=KebFIugYVCXkOlv7H6Xh4Ak3iGjYVdxCWWCuF0w//jo=;
+	s=arc-20240116; t=1709588761; c=relaxed/simple;
+	bh=Jn+kB99f+z90vL2KdP4yaZ54+f61+1KCC/1i2vHzmKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckliFOOpR7MeTZzxgjOUazfXiyqCP9By9jElOj5Gmndx2W7jniZwTiVMXIsiLgRvFNy6VRlDWHllh3diAjoKtpdXM6K8bOaSbPGrLSYM59A7I0hTV0640NzF0DhidfKxHmaBos+/r4sKEHVrPpMjylOw97cMp5vkEy2VVeXsnpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeLq7F7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETpvZDyd7U0ihgF4H+Zz0zE5NFoZekwia87ZgvRate+JsGlq/KSUnxsDPV7W6XndMAIo54wXUH/QEYdknVp2KoPBKDQqchchRVq7vLIenXK49xG30QQpwFYvA/OtzQt/ICigHD8DG7owvgYgKExN8NMo4nZ93EyW9B3DOwXXbOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2wlDMi9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeLq7F7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BD2C433F1;
-	Mon,  4 Mar 2024 21:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2wlDMi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5F4C433F1;
+	Mon,  4 Mar 2024 21:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588758;
-	bh=KebFIugYVCXkOlv7H6Xh4Ak3iGjYVdxCWWCuF0w//jo=;
+	s=korg; t=1709588761;
+	bh=Jn+kB99f+z90vL2KdP4yaZ54+f61+1KCC/1i2vHzmKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeLq7F7OqevbWhkEEQILaIHVvYAZEGQ3oaJFcJPlwNMAeB4SlPibmZF1DyyF32TLA
-	 16HHpGpXsI1Zq2fZiQQu+Dh7483HowBwp1fLViVxAgqFc23PiPSYIWSOtZR8AaRgot
-	 qxuF3c43qkZmEspY3Nf6+97PR3kNT1SH4/wQCOj4=
+	b=t2wlDMi9UC+nDA1bB9WJpgb10zLDiIlpSSx1lVtDKLNqEI0F7TAqcrNz1KPSsWJmf
+	 Dab7wu6PoahGOB4wT1Mq42XGJFhnqsN3O+U26X5YPYGS4e9R0zlB16Fqpgl/1DVpyo
+	 oCPpK+P3dTCOxJO1ZauO6HNSSnnoVJm9kzGKfJ2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Ubisectech Sirius <bugreport@ubisectech.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/215] fbcon: always restore the old font data in fbcon_do_set_font()
-Date: Mon,  4 Mar 2024 21:22:11 +0000
-Message-ID: <20240304211559.140747119@linuxfoundation.org>
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Tadeusz Struk <tstruk@gigaio.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 086/215] dmaengine: ptdma: use consistent DMA masks
+Date: Mon,  4 Mar 2024 21:22:29 +0000
+Message-ID: <20240304211559.724903381@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -56,95 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Tadeusz Struk <tstruk@gigaio.com>
 
-[ Upstream commit 00d6a284fcf3fad1b7e1b5bc3cd87cbfb60ce03f ]
+commit df2515a17914ecfc2a0594509deaf7fcb8d191ac upstream.
 
-Commit a5a923038d70 (fbdev: fbcon: Properly revert changes when
-vc_resize() failed) started restoring old font data upon failure (of
-vc_resize()). But it performs so only for user fonts. It means that the
-"system"/internal fonts are not restored at all. So in result, the very
-first call to fbcon_do_set_font() performs no restore at all upon
-failing vc_resize().
+The PTDMA driver sets DMA masks in two different places for the same
+device inconsistently. First call is in pt_pci_probe(), where it uses
+48bit mask. The second call is in pt_dmaengine_register(), where it
+uses a 64bit mask. Using 64bit dma mask causes IO_PAGE_FAULT errors
+on DMA transfers between main memory and other devices.
+Without the extra call it works fine. Additionally the second call
+doesn't check the return value so it can silently fail.
+Remove the superfluous dma_set_mask() call and only use 48bit mask.
 
-This can be reproduced by Syzkaller to crash the system on the next
-invocation of font_get(). It's rather hard to hit the allocation failure
-in vc_resize() on the first font_set(), but not impossible. Esp. if
-fault injection is used to aid the execution/failure. It was
-demonstrated by Sirius:
-  BUG: unable to handle page fault for address: fffffffffffffff8
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD cb7b067 P4D cb7b067 PUD cb7d067 PMD 0
-  Oops: 0000 [#1] PREEMPT SMP KASAN
-  CPU: 1 PID: 8007 Comm: poc Not tainted 6.7.0-g9d1694dc91ce #20
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:fbcon_get_font+0x229/0x800 drivers/video/fbdev/core/fbcon.c:2286
-  Call Trace:
-   <TASK>
-   con_font_get drivers/tty/vt/vt.c:4558 [inline]
-   con_font_op+0x1fc/0xf20 drivers/tty/vt/vt.c:4673
-   vt_k_ioctl drivers/tty/vt/vt_ioctl.c:474 [inline]
-   vt_ioctl+0x632/0x2ec0 drivers/tty/vt/vt_ioctl.c:752
-   tty_ioctl+0x6f8/0x1570 drivers/tty/tty_io.c:2803
-   vfs_ioctl fs/ioctl.c:51 [inline]
-  ...
-
-So restore the font data in any case, not only for user fonts. Note the
-later 'if' is now protected by 'old_userfont' and not 'old_data' as the
-latter is always set now. (And it is supposed to be non-NULL. Otherwise
-we would see the bug above again.)
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
-Reported-and-tested-by: Ubisectech Sirius <bugreport@ubisectech.com>
-Cc: Ubisectech Sirius <bugreport@ubisectech.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240208114411.14604-1-jirislaby@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b0b4a6b10577 ("dmaengine: ptdma: register PTDMA controller as a DMA resource")
+Reviewed-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Tadeusz Struk <tstruk@gigaio.com>
+Link: https://lore.kernel.org/r/20240222163053.13842-1-tstruk@gigaio.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/dma/ptdma/ptdma-dmaengine.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index fa205be94a4b8..14498a0d13e0b 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2397,11 +2397,9 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	struct fbcon_ops *ops = info->fbcon_par;
- 	struct fbcon_display *p = &fb_display[vc->vc_num];
- 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
--	char *old_data = NULL;
-+	u8 *old_data = vc->vc_font.data;
+--- a/drivers/dma/ptdma/ptdma-dmaengine.c
++++ b/drivers/dma/ptdma/ptdma-dmaengine.c
+@@ -385,8 +385,6 @@ int pt_dmaengine_register(struct pt_devi
+ 	chan->vc.desc_free = pt_do_cleanup;
+ 	vchan_init(&chan->vc, dma_dev);
  
- 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
--	if (p->userfont)
--		old_data = vc->vc_font.data;
- 	vc->vc_font.data = (void *)(p->fontdata = data);
- 	old_userfont = p->userfont;
- 	if ((p->userfont = userfont))
-@@ -2435,13 +2433,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 		update_screen(vc);
- 	}
- 
--	if (old_data && (--REFCOUNT(old_data) == 0))
-+	if (old_userfont && (--REFCOUNT(old_data) == 0))
- 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
- 	return 0;
- 
- err_out:
- 	p->fontdata = old_data;
--	vc->vc_font.data = (void *)old_data;
-+	vc->vc_font.data = old_data;
- 
- 	if (userfont) {
- 		p->userfont = old_userfont;
--- 
-2.43.0
-
+-	dma_set_mask_and_coherent(pt->dev, DMA_BIT_MASK(64));
+-
+ 	ret = dma_async_device_register(dma_dev);
+ 	if (ret)
+ 		goto err_reg;
 
 
