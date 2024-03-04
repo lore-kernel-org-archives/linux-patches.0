@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019C2200CD;
-	Mon,  4 Mar 2024 21:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C187D1F92C;
+	Mon,  4 Mar 2024 21:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588442; cv=none; b=llfMggAXBu0L68novVSUheuuFpOEYw9L1KQ/7Q9enkhFLABBsr9WYIgDluvMGhrmlhoZBj1lx0HPvsUXzmbJLJZsyGr2kvKqHWtC/CHZNxJshGDuwWuOGeurL/vviM3M7TsENvzTN8VDhkWVWgyKWlt4xYjnIwHJodZzGYE6QNA=
+	t=1709588444; cv=none; b=HMd5x5sgOkF9y2eDTc7UVP1SDdYMrMv/9HU5edKZzYO2NCOGCRaGcrDeVnRrSRh1+iIhMXPeO7ZD8AsJCh8DzyomgwRrlG6Lk7l+Wf+2b4tokMi/qNIQ6V74zApq56sD6Mvn/yY9Ja52Y5LdiL6BsA2yFtha9hYr/DhwO8gBpQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588442; c=relaxed/simple;
-	bh=XjQASu1lE01OguX3stwaMpBwnS7Ji0oPMlMokAp7I3U=;
+	s=arc-20240116; t=1709588444; c=relaxed/simple;
+	bh=xPdeTWpzQMAsUS0WWDtbLDBihfOce55kjtyZGn09Iyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1rX0gPKozWEVgRHgbZe3Y81jozUOniXErw86UUbb4Vp2AVD9F5MDKuty3PKmaEWTp92qzf4rNu2p4VsZ4kOtS27iYKgMfQ7IjGLFJv/KI+ULTkke6VcXt+Pbcfmv0jv2KZQUeEKZVu+LCOFsbOiTPo01ygNmD6r7p7rQqflUBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/a2tWxk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J14ApSWS8v4LRRTZ/rqp1E4yNNgIOcBjmQEaffScYSPmOp0iqLs43kOnH+/XQUSuWqpUpYlN7rDCipVkh9q00niUBLlEylhkLhj8GaowW8yX40c9oCD28MzraAt+jRF6bnAv0DnjultyqPqTqwj4PfMV6x7EnTqnZInQTwenNI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taW/yT9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/a2tWxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8891EC433F1;
-	Mon,  4 Mar 2024 21:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taW/yT9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFF2C433F1;
+	Mon,  4 Mar 2024 21:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588441;
-	bh=XjQASu1lE01OguX3stwaMpBwnS7Ji0oPMlMokAp7I3U=;
+	s=korg; t=1709588444;
+	bh=xPdeTWpzQMAsUS0WWDtbLDBihfOce55kjtyZGn09Iyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/a2tWxkJw1ljx+DuWYGb2ZYrXMnn/CZBMv7YSKtQv8GWahxBEii0tvJ/Iu0qbHlO
-	 q3I7pmfn3Jpt+OSdepaXLsPsUA0op2Bs0SRodLp9MdQ+Wg3JTOUD755Xo8cW7t8zAY
-	 HAe68QR+oGhgXiOhTLEZlEmi3dhkn5/ZCI9fJbYs=
+	b=taW/yT9q0gS5WFTpgOIDVt8RFn1odBQAG9F7HVwhaCGRbBacolvX/tEOg3BJZEp8W
+	 sGVZ6t/9CaC+vU0WxCxUDIBW+qHFAribZFPW1byoXF6jrG8kf65C8Gbm1S269GMcAG
+	 QwqJfWPDWgMqXPpERKV8TSZtt5mJnDz1pwDHvnV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Schumacher <timschumi@gmx.de>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 101/143] efivarfs: Request at most 512 bytes for variable names
-Date: Mon,  4 Mar 2024 21:23:41 +0000
-Message-ID: <20240304211553.137734231@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 110/143] mptcp: fix snd_wnd initialization for passive socket
+Date: Mon,  4 Mar 2024 21:23:50 +0000
+Message-ID: <20240304211553.442523762@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -50,74 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Schumacher <timschumi@gmx.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit f45812cc23fb74bef62d4eb8a69fe7218f4b9f2a upstream.
+commit adf1bb78dab55e36d4d557aa2fb446ebcfe9e5ce upstream.
 
-Work around a quirk in a few old (2011-ish) UEFI implementations, where
-a call to `GetNextVariableName` with a buffer size larger than 512 bytes
-will always return EFI_INVALID_PARAMETER.
+Such value should be inherited from the first subflow, but
+passive sockets always used 'rsk_rcv_wnd'.
 
-There is some lore around EFI variable names being up to 1024 bytes in
-size, but this has no basis in the UEFI specification, and the upper
-bounds are typically platform specific, and apply to the entire variable
-(name plus payload).
-
-Given that Linux does not permit creating files with names longer than
-NAME_MAX (255) bytes, 512 bytes (== 256 UTF-16 characters) is a
-reasonable limit.
-
-Cc: <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Tim Schumacher <timschumi@gmx.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 6f8a612a33e4 ("mptcp: keep track of advertised windows right edge")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-5-162e87e48497@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/efivarfs/vars.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/mptcp/protocol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/efivarfs/vars.c
-+++ b/fs/efivarfs/vars.c
-@@ -372,7 +372,7 @@ static void dup_variable_bug(efi_char16_
- int efivar_init(int (*func)(efi_char16_t *, efi_guid_t, unsigned long, void *),
- 		void *data, bool duplicates, struct list_head *head)
- {
--	unsigned long variable_name_size = 1024;
-+	unsigned long variable_name_size = 512;
- 	efi_char16_t *variable_name;
- 	efi_status_t status;
- 	efi_guid_t vendor_guid;
-@@ -389,12 +389,13 @@ int efivar_init(int (*func)(efi_char16_t
- 		goto free;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3220,7 +3220,7 @@ struct sock *mptcp_sk_clone_init(const s
+ 	msk->write_seq = subflow_req->idsn + 1;
+ 	msk->snd_nxt = msk->write_seq;
+ 	msk->snd_una = msk->write_seq;
+-	msk->wnd_end = msk->snd_nxt + req->rsk_rcv_wnd;
++	msk->wnd_end = msk->snd_nxt + tcp_sk(ssk)->snd_wnd;
+ 	msk->setsockopt_seq = mptcp_sk(sk)->setsockopt_seq;
+ 	mptcp_init_sched(msk, mptcp_sk(sk)->sched);
  
- 	/*
--	 * Per EFI spec, the maximum storage allocated for both
--	 * the variable name and variable data is 1024 bytes.
-+	 * A small set of old UEFI implementations reject sizes
-+	 * above a certain threshold, the lowest seen in the wild
-+	 * is 512.
- 	 */
- 
- 	do {
--		variable_name_size = 1024;
-+		variable_name_size = 512;
- 
- 		status = efivar_get_next_variable(&variable_name_size,
- 						  variable_name,
-@@ -431,9 +432,13 @@ int efivar_init(int (*func)(efi_char16_t
- 			break;
- 		case EFI_NOT_FOUND:
- 			break;
-+		case EFI_BUFFER_TOO_SMALL:
-+			pr_warn("efivars: Variable name size exceeds maximum (%lu > 512)\n",
-+				variable_name_size);
-+			status = EFI_NOT_FOUND;
-+			break;
- 		default:
--			printk(KERN_WARNING "efivars: get_next_variable: status=%lx\n",
--				status);
-+			pr_warn("efivars: get_next_variable: status=%lx\n", status);
- 			status = EFI_NOT_FOUND;
- 			break;
- 		}
 
 
