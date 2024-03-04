@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C335200CD;
-	Mon,  4 Mar 2024 21:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30191F92C;
+	Mon,  4 Mar 2024 21:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588811; cv=none; b=TbXIMVy7U3IdbqigfqSkTnf2ZK/iIxNB28jKSG8E79WwVIOFg9UNhTlrACwpogSTrnex4tWHwl3xZLfBajMhIu9u5SHgIoChhaf9qy+jWIjwJBxpQP2T1gUF5B8mH/LFpEzkGB0sWJXTk9C3eOLkV3UjP4pKP/LlRMtP+5kXQtA=
+	t=1709588813; cv=none; b=LHrZbGQB/3bJHo73AK9jWyPShb3xBpRn5M0qKqpvlEF8PuZJaB/ILpFGBwZREJJIjSKEKQLpvnIqWMHb4U7FUzD6VqKxByzkdPYpYxU7hPqWZ7EjgO5k8yzj71Lxxu8XpfuwKFosNyKsif44gV97d8OtlpNLauHvoIx4k4R5DAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588811; c=relaxed/simple;
-	bh=QdRO+ILC05wLtOnPOKWu0D+D7MIOmSmJQdTLbftY3PA=;
+	s=arc-20240116; t=1709588813; c=relaxed/simple;
+	bh=Twy/NCTY7Z3qguKNn2evexJcUwTuOhb4MDZCF7yf51M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwqPuM2m9WOX8Y+U+Mbwb+p1+Q3SwKLEWC/MNkJKcVDhuX557Zpam9lhOlWk4MG/MBbZNRxiIwlDKpY/R9bTtveSlUOrHkzMLUAukKwYMaqV0xx3AS6l3uGLZVEgO3MbKmD2BLD7qfoOiFT3CSvqTWVGjlWIIZTxSB87hSlS5LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B702Evg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dh1bZytrRoMcJbZNahXJVOoDfyONZuGV6StXUHFfvhrAGX/DfDa/yQdGqqiOMr4HdapkmLY/y9Sk6STAqBlRjDhCZYur3xq8PPr7++EsHaJ2Vl02usaFnITawVco2uzOdSPCetkyTscMEA48UFNtW8+p+y4Ecxu/nCQf4YO0NHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kpl83nMh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B702Evg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BEAC433F1;
-	Mon,  4 Mar 2024 21:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kpl83nMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46708C433F1;
+	Mon,  4 Mar 2024 21:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588811;
-	bh=QdRO+ILC05wLtOnPOKWu0D+D7MIOmSmJQdTLbftY3PA=;
+	s=korg; t=1709588813;
+	bh=Twy/NCTY7Z3qguKNn2evexJcUwTuOhb4MDZCF7yf51M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B702Evg0qR98TtxwU9QuE+qT2EHI4gF/YbEq1xR4f3DZB5kYIhaG/GJ9+Dq0HvD8E
-	 yqfork2DGekpNcge+Te4YzsBvboiApqp2WuI64PL8s/x73J//wqlm2HiI8v/A/BxkH
-	 UHkZU6wanIUjqGOl72M+fAAJOSRXL2kIiGA6bE1A=
+	b=Kpl83nMhrqH63XW8R6BNuuX8k1JL02SO2AxSF5ErqvIVsqBY2lFDMtjF6HOwWl5l1
+	 PHAiX+j+hdYy6GrX3XfS183bfdbxNYM2Wu7nOPu2rCVy/l2Wspq1rEsVNRXW+JKrGM
+	 GLuaGw+LM68G3Ygnw2fqP6g+MFUJ5sK/5YvM4pmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 106/215] mptcp: fix possible deadlock in subflow diag
-Date: Mon,  4 Mar 2024 21:22:49 +0000
-Message-ID: <20240304211600.396500377@linuxfoundation.org>
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 107/215] RDMA/core: Refactor rdma_bind_addr
+Date: Mon,  4 Mar 2024 21:22:50 +0000
+Message-ID: <20240304211600.430007582@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,117 +52,326 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-commit d6a9608af9a75d13243d217f6ce1e30e57d56ffe upstream.
+commit 8d037973d48c026224ab285e6a06985ccac6f7bf upstream.
 
-Syzbot and Eric reported a lockdep splat in the subflow diag:
+Refactor rdma_bind_addr function so that it doesn't require that the
+cma destination address be changed before calling it.
 
-   WARNING: possible circular locking dependency detected
-   6.8.0-rc4-syzkaller-00212-g40b9385dd8e6 #0 Not tainted
+So now it will update the destination address internally only when it is
+really needed and after passing all the required checks.
 
-   syz-executor.2/24141 is trying to acquire lock:
-   ffff888045870130 (k-sk_lock-AF_INET6){+.+.}-{0:0}, at:
-   tcp_diag_put_ulp net/ipv4/tcp_diag.c:100 [inline]
-   ffff888045870130 (k-sk_lock-AF_INET6){+.+.}-{0:0}, at:
-   tcp_diag_get_aux+0x738/0x830 net/ipv4/tcp_diag.c:137
+Which in turn results in a cleaner and more sensible call and error
+handling flows for the functions that call it directly or indirectly.
 
-   but task is already holding lock:
-   ffffc9000135e488 (&h->lhash2[i].lock){+.+.}-{2:2}, at: spin_lock
-   include/linux/spinlock.h:351 [inline]
-   ffffc9000135e488 (&h->lhash2[i].lock){+.+.}-{2:2}, at:
-   inet_diag_dump_icsk+0x39f/0x1f80 net/ipv4/inet_diag.c:1038
-
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #1 (&h->lhash2[i].lock){+.+.}-{2:2}:
-   lock_acquire+0x1e3/0x530 kernel/locking/lockdep.c:5754
-   __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
-   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
-   spin_lock include/linux/spinlock.h:351 [inline]
-   __inet_hash+0x335/0xbe0 net/ipv4/inet_hashtables.c:743
-   inet_csk_listen_start+0x23a/0x320 net/ipv4/inet_connection_sock.c:1261
-   __inet_listen_sk+0x2a2/0x770 net/ipv4/af_inet.c:217
-   inet_listen+0xa3/0x110 net/ipv4/af_inet.c:239
-   rds_tcp_listen_init+0x3fd/0x5a0 net/rds/tcp_listen.c:316
-   rds_tcp_init_net+0x141/0x320 net/rds/tcp.c:577
-   ops_init+0x352/0x610 net/core/net_namespace.c:136
-   __register_pernet_operations net/core/net_namespace.c:1214 [inline]
-   register_pernet_operations+0x2cb/0x660 net/core/net_namespace.c:1283
-   register_pernet_device+0x33/0x80 net/core/net_namespace.c:1370
-   rds_tcp_init+0x62/0xd0 net/rds/tcp.c:735
-   do_one_initcall+0x238/0x830 init/main.c:1236
-   do_initcall_level+0x157/0x210 init/main.c:1298
-   do_initcalls+0x3f/0x80 init/main.c:1314
-   kernel_init_freeable+0x42f/0x5d0 init/main.c:1551
-   kernel_init+0x1d/0x2a0 init/main.c:1441
-   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:242
-
-   -> #0 (k-sk_lock-AF_INET6){+.+.}-{0:0}:
-   check_prev_add kernel/locking/lockdep.c:3134 [inline]
-   check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-   validate_chain+0x18ca/0x58e0 kernel/locking/lockdep.c:3869
-   __lock_acquire+0x1345/0x1fd0 kernel/locking/lockdep.c:5137
-   lock_acquire+0x1e3/0x530 kernel/locking/lockdep.c:5754
-   lock_sock_fast include/net/sock.h:1723 [inline]
-   subflow_get_info+0x166/0xd20 net/mptcp/diag.c:28
-   tcp_diag_put_ulp net/ipv4/tcp_diag.c:100 [inline]
-   tcp_diag_get_aux+0x738/0x830 net/ipv4/tcp_diag.c:137
-   inet_sk_diag_fill+0x10ed/0x1e00 net/ipv4/inet_diag.c:345
-   inet_diag_dump_icsk+0x55b/0x1f80 net/ipv4/inet_diag.c:1061
-   __inet_diag_dump+0x211/0x3a0 net/ipv4/inet_diag.c:1263
-   inet_diag_dump_compat+0x1c1/0x2d0 net/ipv4/inet_diag.c:1371
-   netlink_dump+0x59b/0xc80 net/netlink/af_netlink.c:2264
-   __netlink_dump_start+0x5df/0x790 net/netlink/af_netlink.c:2370
-   netlink_dump_start include/linux/netlink.h:338 [inline]
-   inet_diag_rcv_msg_compat+0x209/0x4c0 net/ipv4/inet_diag.c:1405
-   sock_diag_rcv_msg+0xe7/0x410
-   netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2543
-   sock_diag_rcv+0x2a/0x40 net/core/sock_diag.c:280
-   netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
-   netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1367
-   netlink_sendmsg+0xa3b/0xd70 net/netlink/af_netlink.c:1908
-   sock_sendmsg_nosec net/socket.c:730 [inline]
-   __sock_sendmsg+0x221/0x270 net/socket.c:745
-   ____sys_sendmsg+0x525/0x7d0 net/socket.c:2584
-   ___sys_sendmsg net/socket.c:2638 [inline]
-   __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2667
-   do_syscall_64+0xf9/0x240
-   entry_SYSCALL_64_after_hwframe+0x6f/0x77
-
-As noted by Eric we can break the lock dependency chain avoid
-dumping any extended info for the mptcp subflow listener:
-nothing actually useful is presented there.
-
-Fixes: b8adb69a7d29 ("mptcp: fix lockless access in subflow ULP diag")
-Cc: stable@vger.kernel.org
-Reported-by: Eric Dumazet <edumazet@google.com>
-Closes: https://lore.kernel.org/netdev/CANn89iJ=Oecw6OZDwmSYc9HJKQ_G32uN11L+oUcMu+TOD5Xiaw@mail.gmail.com/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-9-162e87e48497@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/3d0e9a2fd62bc10ba02fed1c7c48a48638952320.1672819273.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/diag.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/cma.c |  253 +++++++++++++++++++++---------------------
+ 1 file changed, 130 insertions(+), 123 deletions(-)
 
---- a/net/mptcp/diag.c
-+++ b/net/mptcp/diag.c
-@@ -21,6 +21,9 @@ static int subflow_get_info(struct sock
- 	bool slow;
- 	int err;
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -3547,121 +3547,6 @@ err:
+ 	return ret;
+ }
  
-+	if (inet_sk_state_load(sk) == TCP_LISTEN)
-+		return 0;
+-static int cma_bind_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
+-			 const struct sockaddr *dst_addr)
+-{
+-	struct sockaddr_storage zero_sock = {};
+-
+-	if (src_addr && src_addr->sa_family)
+-		return rdma_bind_addr(id, src_addr);
+-
+-	/*
+-	 * When the src_addr is not specified, automatically supply an any addr
+-	 */
+-	zero_sock.ss_family = dst_addr->sa_family;
+-	if (IS_ENABLED(CONFIG_IPV6) && dst_addr->sa_family == AF_INET6) {
+-		struct sockaddr_in6 *src_addr6 =
+-			(struct sockaddr_in6 *)&zero_sock;
+-		struct sockaddr_in6 *dst_addr6 =
+-			(struct sockaddr_in6 *)dst_addr;
+-
+-		src_addr6->sin6_scope_id = dst_addr6->sin6_scope_id;
+-		if (ipv6_addr_type(&dst_addr6->sin6_addr) & IPV6_ADDR_LINKLOCAL)
+-			id->route.addr.dev_addr.bound_dev_if =
+-				dst_addr6->sin6_scope_id;
+-	} else if (dst_addr->sa_family == AF_IB) {
+-		((struct sockaddr_ib *)&zero_sock)->sib_pkey =
+-			((struct sockaddr_ib *)dst_addr)->sib_pkey;
+-	}
+-	return rdma_bind_addr(id, (struct sockaddr *)&zero_sock);
+-}
+-
+-/*
+- * If required, resolve the source address for bind and leave the id_priv in
+- * state RDMA_CM_ADDR_BOUND. This oddly uses the state to determine the prior
+- * calls made by ULP, a previously bound ID will not be re-bound and src_addr is
+- * ignored.
+- */
+-static int resolve_prepare_src(struct rdma_id_private *id_priv,
+-			       struct sockaddr *src_addr,
+-			       const struct sockaddr *dst_addr)
+-{
+-	int ret;
+-
+-	memcpy(cma_dst_addr(id_priv), dst_addr, rdma_addr_size(dst_addr));
+-	if (!cma_comp_exch(id_priv, RDMA_CM_ADDR_BOUND, RDMA_CM_ADDR_QUERY)) {
+-		/* For a well behaved ULP state will be RDMA_CM_IDLE */
+-		ret = cma_bind_addr(&id_priv->id, src_addr, dst_addr);
+-		if (ret)
+-			goto err_dst;
+-		if (WARN_ON(!cma_comp_exch(id_priv, RDMA_CM_ADDR_BOUND,
+-					   RDMA_CM_ADDR_QUERY))) {
+-			ret = -EINVAL;
+-			goto err_dst;
+-		}
+-	}
+-
+-	if (cma_family(id_priv) != dst_addr->sa_family) {
+-		ret = -EINVAL;
+-		goto err_state;
+-	}
+-	return 0;
+-
+-err_state:
+-	cma_comp_exch(id_priv, RDMA_CM_ADDR_QUERY, RDMA_CM_ADDR_BOUND);
+-err_dst:
+-	memset(cma_dst_addr(id_priv), 0, rdma_addr_size(dst_addr));
+-	return ret;
+-}
+-
+-int rdma_resolve_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
+-		      const struct sockaddr *dst_addr, unsigned long timeout_ms)
+-{
+-	struct rdma_id_private *id_priv =
+-		container_of(id, struct rdma_id_private, id);
+-	int ret;
+-
+-	ret = resolve_prepare_src(id_priv, src_addr, dst_addr);
+-	if (ret)
+-		return ret;
+-
+-	if (cma_any_addr(dst_addr)) {
+-		ret = cma_resolve_loopback(id_priv);
+-	} else {
+-		if (dst_addr->sa_family == AF_IB) {
+-			ret = cma_resolve_ib_addr(id_priv);
+-		} else {
+-			/*
+-			 * The FSM can return back to RDMA_CM_ADDR_BOUND after
+-			 * rdma_resolve_ip() is called, eg through the error
+-			 * path in addr_handler(). If this happens the existing
+-			 * request must be canceled before issuing a new one.
+-			 * Since canceling a request is a bit slow and this
+-			 * oddball path is rare, keep track once a request has
+-			 * been issued. The track turns out to be a permanent
+-			 * state since this is the only cancel as it is
+-			 * immediately before rdma_resolve_ip().
+-			 */
+-			if (id_priv->used_resolve_ip)
+-				rdma_addr_cancel(&id->route.addr.dev_addr);
+-			else
+-				id_priv->used_resolve_ip = 1;
+-			ret = rdma_resolve_ip(cma_src_addr(id_priv), dst_addr,
+-					      &id->route.addr.dev_addr,
+-					      timeout_ms, addr_handler,
+-					      false, id_priv);
+-		}
+-	}
+-	if (ret)
+-		goto err;
+-
+-	return 0;
+-err:
+-	cma_comp_exch(id_priv, RDMA_CM_ADDR_QUERY, RDMA_CM_ADDR_BOUND);
+-	return ret;
+-}
+-EXPORT_SYMBOL(rdma_resolve_addr);
+-
+ int rdma_set_reuseaddr(struct rdma_cm_id *id, int reuse)
+ {
+ 	struct rdma_id_private *id_priv;
+@@ -4064,27 +3949,26 @@ err:
+ }
+ EXPORT_SYMBOL(rdma_listen);
+ 
+-int rdma_bind_addr(struct rdma_cm_id *id, struct sockaddr *addr)
++static int rdma_bind_addr_dst(struct rdma_id_private *id_priv,
++			      struct sockaddr *addr, const struct sockaddr *daddr)
+ {
+-	struct rdma_id_private *id_priv;
++	struct sockaddr *id_daddr;
+ 	int ret;
+-	struct sockaddr  *daddr;
+ 
+ 	if (addr->sa_family != AF_INET && addr->sa_family != AF_INET6 &&
+ 	    addr->sa_family != AF_IB)
+ 		return -EAFNOSUPPORT;
+ 
+-	id_priv = container_of(id, struct rdma_id_private, id);
+ 	if (!cma_comp_exch(id_priv, RDMA_CM_IDLE, RDMA_CM_ADDR_BOUND))
+ 		return -EINVAL;
+ 
+-	ret = cma_check_linklocal(&id->route.addr.dev_addr, addr);
++	ret = cma_check_linklocal(&id_priv->id.route.addr.dev_addr, addr);
+ 	if (ret)
+ 		goto err1;
+ 
+ 	memcpy(cma_src_addr(id_priv), addr, rdma_addr_size(addr));
+ 	if (!cma_any_addr(addr)) {
+-		ret = cma_translate_addr(addr, &id->route.addr.dev_addr);
++		ret = cma_translate_addr(addr, &id_priv->id.route.addr.dev_addr);
+ 		if (ret)
+ 			goto err1;
+ 
+@@ -4104,8 +3988,10 @@ int rdma_bind_addr(struct rdma_cm_id *id
+ 		}
+ #endif
+ 	}
+-	daddr = cma_dst_addr(id_priv);
+-	daddr->sa_family = addr->sa_family;
++	id_daddr = cma_dst_addr(id_priv);
++	if (daddr != id_daddr)
++		memcpy(id_daddr, daddr, rdma_addr_size(addr));
++	id_daddr->sa_family = addr->sa_family;
+ 
+ 	ret = cma_get_port(id_priv);
+ 	if (ret)
+@@ -4121,6 +4007,127 @@ err1:
+ 	cma_comp_exch(id_priv, RDMA_CM_ADDR_BOUND, RDMA_CM_IDLE);
+ 	return ret;
+ }
 +
- 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
- 	if (!start)
- 		return -EMSGSIZE;
++static int cma_bind_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
++			 const struct sockaddr *dst_addr)
++{
++	struct rdma_id_private *id_priv =
++		container_of(id, struct rdma_id_private, id);
++	struct sockaddr_storage zero_sock = {};
++
++	if (src_addr && src_addr->sa_family)
++		return rdma_bind_addr_dst(id_priv, src_addr, dst_addr);
++
++	/*
++	 * When the src_addr is not specified, automatically supply an any addr
++	 */
++	zero_sock.ss_family = dst_addr->sa_family;
++	if (IS_ENABLED(CONFIG_IPV6) && dst_addr->sa_family == AF_INET6) {
++		struct sockaddr_in6 *src_addr6 =
++			(struct sockaddr_in6 *)&zero_sock;
++		struct sockaddr_in6 *dst_addr6 =
++			(struct sockaddr_in6 *)dst_addr;
++
++		src_addr6->sin6_scope_id = dst_addr6->sin6_scope_id;
++		if (ipv6_addr_type(&dst_addr6->sin6_addr) & IPV6_ADDR_LINKLOCAL)
++			id->route.addr.dev_addr.bound_dev_if =
++				dst_addr6->sin6_scope_id;
++	} else if (dst_addr->sa_family == AF_IB) {
++		((struct sockaddr_ib *)&zero_sock)->sib_pkey =
++			((struct sockaddr_ib *)dst_addr)->sib_pkey;
++	}
++	return rdma_bind_addr_dst(id_priv, (struct sockaddr *)&zero_sock, dst_addr);
++}
++
++/*
++ * If required, resolve the source address for bind and leave the id_priv in
++ * state RDMA_CM_ADDR_BOUND. This oddly uses the state to determine the prior
++ * calls made by ULP, a previously bound ID will not be re-bound and src_addr is
++ * ignored.
++ */
++static int resolve_prepare_src(struct rdma_id_private *id_priv,
++			       struct sockaddr *src_addr,
++			       const struct sockaddr *dst_addr)
++{
++	int ret;
++
++	if (!cma_comp_exch(id_priv, RDMA_CM_ADDR_BOUND, RDMA_CM_ADDR_QUERY)) {
++		/* For a well behaved ULP state will be RDMA_CM_IDLE */
++		ret = cma_bind_addr(&id_priv->id, src_addr, dst_addr);
++		if (ret)
++			return ret;
++		if (WARN_ON(!cma_comp_exch(id_priv, RDMA_CM_ADDR_BOUND,
++					   RDMA_CM_ADDR_QUERY)))
++			return -EINVAL;
++
++	}
++
++	if (cma_family(id_priv) != dst_addr->sa_family) {
++		ret = -EINVAL;
++		goto err_state;
++	}
++	return 0;
++
++err_state:
++	cma_comp_exch(id_priv, RDMA_CM_ADDR_QUERY, RDMA_CM_ADDR_BOUND);
++	return ret;
++}
++
++int rdma_resolve_addr(struct rdma_cm_id *id, struct sockaddr *src_addr,
++		      const struct sockaddr *dst_addr, unsigned long timeout_ms)
++{
++	struct rdma_id_private *id_priv =
++		container_of(id, struct rdma_id_private, id);
++	int ret;
++
++	ret = resolve_prepare_src(id_priv, src_addr, dst_addr);
++	if (ret)
++		return ret;
++
++	if (cma_any_addr(dst_addr)) {
++		ret = cma_resolve_loopback(id_priv);
++	} else {
++		if (dst_addr->sa_family == AF_IB) {
++			ret = cma_resolve_ib_addr(id_priv);
++		} else {
++			/*
++			 * The FSM can return back to RDMA_CM_ADDR_BOUND after
++			 * rdma_resolve_ip() is called, eg through the error
++			 * path in addr_handler(). If this happens the existing
++			 * request must be canceled before issuing a new one.
++			 * Since canceling a request is a bit slow and this
++			 * oddball path is rare, keep track once a request has
++			 * been issued. The track turns out to be a permanent
++			 * state since this is the only cancel as it is
++			 * immediately before rdma_resolve_ip().
++			 */
++			if (id_priv->used_resolve_ip)
++				rdma_addr_cancel(&id->route.addr.dev_addr);
++			else
++				id_priv->used_resolve_ip = 1;
++			ret = rdma_resolve_ip(cma_src_addr(id_priv), dst_addr,
++					      &id->route.addr.dev_addr,
++					      timeout_ms, addr_handler,
++					      false, id_priv);
++		}
++	}
++	if (ret)
++		goto err;
++
++	return 0;
++err:
++	cma_comp_exch(id_priv, RDMA_CM_ADDR_QUERY, RDMA_CM_ADDR_BOUND);
++	return ret;
++}
++EXPORT_SYMBOL(rdma_resolve_addr);
++
++int rdma_bind_addr(struct rdma_cm_id *id, struct sockaddr *addr)
++{
++	struct rdma_id_private *id_priv =
++		container_of(id, struct rdma_id_private, id);
++
++	return rdma_bind_addr_dst(id_priv, addr, cma_dst_addr(id_priv));
++}
+ EXPORT_SYMBOL(rdma_bind_addr);
+ 
+ static int cma_format_hdr(void *hdr, struct rdma_id_private *id_priv)
 
 
