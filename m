@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47E31F92C;
-	Mon,  4 Mar 2024 21:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF601F92C;
+	Mon,  4 Mar 2024 21:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588423; cv=none; b=OGr7py7zfmGlI5wfHn2EI4OlRsgzumM97NBkyux9+XuSdUzn0Vj8FwivqJYRKr0mv2ioIAy5n+NzBWhxtddwrIHphJ3qQ/nuet6qGgxfbQgZUSPOVo0jCmIRQyU0f325zOX+bAVCSIN8v6plyVsj0rJVVGopjzm+PK7FTR4O03Q=
+	t=1709588426; cv=none; b=m0FWtsApkl401ORX0ByI1jCT1JuLRLXN1xiE1lMlra6OuLydFD358ybECBufoeGTdmkgYSib+5UZ5BA8tlcxK6cRqCz07IXkiT/MDJT9KEASswCV2/IcTY/PRR7KXnqbdW0fE8jkFYcmdgbs/d15A7DI8dhC5FkzmcjzK9IfUp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588423; c=relaxed/simple;
-	bh=tNy2aP/XCe3/UBqvTOSJiXGpFGG8C963Swu6aASZKCs=;
+	s=arc-20240116; t=1709588426; c=relaxed/simple;
+	bh=+du1MZKiR8hM1pXxHxkIYuenE2Q8ZOp1MzOgIzNCyM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0a/qFAyTJWZtzDEZMJ8dFVVH87lUO+LUt/3B4FcLxfweIAbGFwBOqZvTXKY5ABwxJz2LiOuLMCK1oMQlD1ZgPkzQss54nB2OGZpNAXliFxj0HAV/iq3wyGRvCeZ0ofiNFcHcY1+7O+GYsqb69BcWUkXB+ZnPYokb+4939N7Tp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOvR8Z6e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f9fxruJcoXGbBLIgcQmde+JMnnftEp+8gkVa8mo5gSFzC3xkWpDgtYC395U/d/1UKp+nnD4kXAT3RkACnCqMxALW1puSaLsFajJGYynvjxGr76gfQkgnEqq+Dqu4a0vjynuNJAialIxRCHFNLFHND2068QRnXXGUow/60LI/r+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W22bEGsu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOvR8Z6e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564BCC433C7;
-	Mon,  4 Mar 2024 21:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W22bEGsu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED983C433F1;
+	Mon,  4 Mar 2024 21:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588423;
-	bh=tNy2aP/XCe3/UBqvTOSJiXGpFGG8C963Swu6aASZKCs=;
+	s=korg; t=1709588426;
+	bh=+du1MZKiR8hM1pXxHxkIYuenE2Q8ZOp1MzOgIzNCyM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOvR8Z6eqsGMVz5JHCFTpcGJbqvunORyyyGrKeknIC/PNX0abJsMIf4re25wt/XXd
-	 CYEnriJRBrRcVMddiZTyulZFRyYwjj/KDaDnUQChvyq2iREqxc2YetEVrpNb/JADaZ
-	 gZ2957p4PDmm1WCLOujkLKwZNdKUjJruKEoNiSN0=
+	b=W22bEGsuWOWRHvvqgCozemUblYacC0SWD/Y3vAlSDftxr3eNlTL9XHfn6yP9qLj1i
+	 8sfUZYzn3MWgMOWTXQYjva4JWskyQ/JOXO6Ex2zW0gc2HUiMP0+nORwSSb//kKWsFg
+	 4KN1gsVBOuHORkp3QQynOsecXH/aIN+uR6L9covg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Ofitserov <oficerovas@altlinux.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 077/143] gtp: fix use-after-free and null-ptr-deref in gtp_newlink()
-Date: Mon,  4 Mar 2024 21:23:17 +0000
-Message-ID: <20240304211552.389922266@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 078/143] mm: cachestat: fix folio read-after-free in cache walk
+Date: Mon,  4 Mar 2024 21:23:18 +0000
+Message-ID: <20240304211552.418320535@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -45,193 +47,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Ofitserov <oficerovas@altlinux.org>
+From: Nhat Pham <nphamcs@gmail.com>
 
-commit 616d82c3cfa2a2146dd7e3ae47bda7e877ee549e upstream.
+commit 3a75cb05d53f4a6823a32deb078de1366954a804 upstream.
 
-The gtp_link_ops operations structure for the subsystem must be
-registered after registering the gtp_net_ops pernet operations structure.
+In cachestat, we access the folio from the page cache's xarray to compute
+its page offset, and check for its dirty and writeback flags.  However, we
+do not hold a reference to the folio before performing these actions,
+which means the folio can concurrently be released and reused as another
+folio/page/slab.
 
-Syzkaller hit 'general protection fault in gtp_genl_dump_pdp' bug:
+Get around this altogether by just using xarray's existing machinery for
+the folio page offsets and dirty/writeback states.
 
-[ 1010.702740] gtp: GTP module unloaded
-[ 1010.715877] general protection fault, probably for non-canonical address=
- 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-[ 1010.715888] KASAN: null-ptr-deref in range [0x0000000000000008-0x0000000=
-00000000f]
-[ 1010.715895] CPU: 1 PID: 128616 Comm: a.out Not tainted 6.8.0-rc6-std-def=
--alt1 #1
-[ 1010.715899] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.1=
-6.0-alt1 04/01/2014
-[ 1010.715908] RIP: 0010:gtp_newlink+0x4d7/0x9c0 [gtp]
-[ 1010.715915] Code: 80 3c 02 00 0f 85 41 04 00 00 48 8b bb d8 05 00 00 e8 =
-ed f6 ff ff 48 89 c2 48 89 c5 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80=
-> 3c 02 00 0f 85 4f 04 00 00 4c 89 e2 4c 8b 6d 00 48 b8 00 00 00
-[ 1010.715920] RSP: 0018:ffff888020fbf180 EFLAGS: 00010203
-[ 1010.715929] RAX: dffffc0000000000 RBX: ffff88800399c000 RCX: 00000000000=
-00000
-[ 1010.715933] RDX: 0000000000000001 RSI: ffffffff84805280 RDI: 00000000000=
-00282
-[ 1010.715938] RBP: 000000000000000d R08: 0000000000000001 R09: 00000000000=
-00000
-[ 1010.715942] R10: 0000000000000001 R11: 0000000000000001 R12: ffff8880039=
-9cc80
-[ 1010.715947] R13: 0000000000000000 R14: 0000000000000000 R15: 00000000000=
-00400
-[ 1010.715953] FS:  00007fd1509ab5c0(0000) GS:ffff88805b300000(0000) knlGS:=
-0000000000000000
-[ 1010.715958] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 1010.715962] CR2: 0000000000000000 CR3: 000000001c07a000 CR4: 00000000007=
-50ee0
-[ 1010.715968] PKRU: 55555554
-[ 1010.715972] Call Trace:
-[ 1010.715985]  ? __die_body.cold+0x1a/0x1f
-[ 1010.715995]  ? die_addr+0x43/0x70
-[ 1010.716002]  ? exc_general_protection+0x199/0x2f0
-[ 1010.716016]  ? asm_exc_general_protection+0x1e/0x30
-[ 1010.716026]  ? gtp_newlink+0x4d7/0x9c0 [gtp]
-[ 1010.716034]  ? gtp_net_exit+0x150/0x150 [gtp]
-[ 1010.716042]  __rtnl_newlink+0x1063/0x1700
-[ 1010.716051]  ? rtnl_setlink+0x3c0/0x3c0
-[ 1010.716063]  ? is_bpf_text_address+0xc0/0x1f0
-[ 1010.716070]  ? kernel_text_address.part.0+0xbb/0xd0
-[ 1010.716076]  ? __kernel_text_address+0x56/0xa0
-[ 1010.716084]  ? unwind_get_return_address+0x5a/0xa0
-[ 1010.716091]  ? create_prof_cpu_mask+0x30/0x30
-[ 1010.716098]  ? arch_stack_walk+0x9e/0xf0
-[ 1010.716106]  ? stack_trace_save+0x91/0xd0
-[ 1010.716113]  ? stack_trace_consume_entry+0x170/0x170
-[ 1010.716121]  ? __lock_acquire+0x15c5/0x5380
-[ 1010.716139]  ? mark_held_locks+0x9e/0xe0
-[ 1010.716148]  ? kmem_cache_alloc_trace+0x35f/0x3c0
-[ 1010.716155]  ? __rtnl_newlink+0x1700/0x1700
-[ 1010.716160]  rtnl_newlink+0x69/0xa0
-[ 1010.716166]  rtnetlink_rcv_msg+0x43b/0xc50
-[ 1010.716172]  ? rtnl_fdb_dump+0x9f0/0x9f0
-[ 1010.716179]  ? lock_acquire+0x1fe/0x560
-[ 1010.716188]  ? netlink_deliver_tap+0x12f/0xd50
-[ 1010.716196]  netlink_rcv_skb+0x14d/0x440
-[ 1010.716202]  ? rtnl_fdb_dump+0x9f0/0x9f0
-[ 1010.716208]  ? netlink_ack+0xab0/0xab0
-[ 1010.716213]  ? netlink_deliver_tap+0x202/0xd50
-[ 1010.716220]  ? netlink_deliver_tap+0x218/0xd50
-[ 1010.716226]  ? __virt_addr_valid+0x30b/0x590
-[ 1010.716233]  netlink_unicast+0x54b/0x800
-[ 1010.716240]  ? netlink_attachskb+0x870/0x870
-[ 1010.716248]  ? __check_object_size+0x2de/0x3b0
-[ 1010.716254]  netlink_sendmsg+0x938/0xe40
-[ 1010.716261]  ? netlink_unicast+0x800/0x800
-[ 1010.716269]  ? __import_iovec+0x292/0x510
-[ 1010.716276]  ? netlink_unicast+0x800/0x800
-[ 1010.716284]  __sock_sendmsg+0x159/0x190
-[ 1010.716290]  ____sys_sendmsg+0x712/0x880
-[ 1010.716297]  ? sock_write_iter+0x3d0/0x3d0
-[ 1010.716304]  ? __ia32_sys_recvmmsg+0x270/0x270
-[ 1010.716309]  ? lock_acquire+0x1fe/0x560
-[ 1010.716315]  ? drain_array_locked+0x90/0x90
-[ 1010.716324]  ___sys_sendmsg+0xf8/0x170
-[ 1010.716331]  ? sendmsg_copy_msghdr+0x170/0x170
-[ 1010.716337]  ? lockdep_init_map_type+0x2c7/0x860
-[ 1010.716343]  ? lockdep_hardirqs_on_prepare+0x430/0x430
-[ 1010.716350]  ? debug_mutex_init+0x33/0x70
-[ 1010.716360]  ? percpu_counter_add_batch+0x8b/0x140
-[ 1010.716367]  ? lock_acquire+0x1fe/0x560
-[ 1010.716373]  ? find_held_lock+0x2c/0x110
-[ 1010.716384]  ? __fd_install+0x1b6/0x6f0
-[ 1010.716389]  ? lock_downgrade+0x810/0x810
-[ 1010.716396]  ? __fget_light+0x222/0x290
-[ 1010.716403]  __sys_sendmsg+0xea/0x1b0
-[ 1010.716409]  ? __sys_sendmsg_sock+0x40/0x40
-[ 1010.716419]  ? lockdep_hardirqs_on_prepare+0x2b3/0x430
-[ 1010.716425]  ? syscall_enter_from_user_mode+0x1d/0x60
-[ 1010.716432]  do_syscall_64+0x30/0x40
-[ 1010.716438]  entry_SYSCALL_64_after_hwframe+0x62/0xc7
-[ 1010.716444] RIP: 0033:0x7fd1508cbd49
-[ 1010.716452] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 =
-89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48=
-> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ef 70 0d 00 f7 d8 64 89 01 48
-[ 1010.716456] RSP: 002b:00007fff18872348 EFLAGS: 00000202 ORIG_RAX: 000000=
-000000002e
-[ 1010.716463] RAX: ffffffffffffffda RBX: 000055f72bf0eac0 RCX: 00007fd1508=
-cbd49
-[ 1010.716468] RDX: 0000000000000000 RSI: 0000000020000280 RDI: 00000000000=
-00006
-[ 1010.716473] RBP: 00007fff18872360 R08: 00007fff18872360 R09: 00007fff188=
-72360
-[ 1010.716478] R10: 00007fff18872360 R11: 0000000000000202 R12: 000055f72bf=
-0e1b0
-[ 1010.716482] R13: 0000000000000000 R14: 0000000000000000 R15: 00000000000=
-00000
-[ 1010.716491] Modules linked in: gtp(+) udp_tunnel ib_core uinput af_packe=
-t rfkill qrtr joydev hid_generic usbhid hid kvm_intel iTCO_wdt intel_pmc_bx=
-t iTCO_vendor_support kvm snd_hda_codec_generic ledtrig_audio irqbypass crc=
-t10dif_pclmul crc32_pclmul crc32c_intel ghash_clmulni_intel snd_hda_intel n=
-ls_utf8 snd_intel_dspcfg nls_cp866 psmouse aesni_intel vfat crypto_simd fat=
- cryptd glue_helper snd_hda_codec pcspkr snd_hda_core i2c_i801 snd_hwdep i2=
-c_smbus xhci_pci snd_pcm lpc_ich xhci_pci_renesas xhci_hcd qemu_fw_cfg tiny=
-_power_button button sch_fq_codel vboxvideo drm_vram_helper drm_ttm_helper =
-ttm vboxsf vboxguest snd_seq_midi snd_seq_midi_event snd_seq snd_rawmidi sn=
-d_seq_device snd_timer snd soundcore msr fuse efi_pstore dm_mod ip_tables x=
-_tables autofs4 virtio_gpu virtio_dma_buf drm_kms_helper cec rc_core drm vi=
-rtio_rng virtio_scsi rng_core virtio_balloon virtio_blk virtio_net virtio_c=
-onsole net_failover failover ahci libahci libata evdev scsi_mod input_leds =
-serio_raw virtio_pci intel_agp
-[ 1010.716674]  virtio_ring intel_gtt virtio [last unloaded: gtp]
-[ 1010.716693] ---[ end trace 04990a4ce61e174b ]---
+This changes behavior for tmpfs files to now always report zeroes in their
+dirty and writeback counters.  This is okay as tmpfs doesn't follow
+conventional writeback cache behavior: its pages get "cleaned" during
+swapout, after which they're no longer resident etc.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Ofitserov <oficerovas@altlinux.org>
-Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunnelin=
-g Protocol (GTP-U)")
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20240228114703.465107-1-oficerovas@altlinux=
-.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20240220153409.GA216065@cmpxchg.org
+Fixes: cf264e1329fb ("cachestat: implement cachestat syscall")
+Reported-by: Jann Horn <jannh@google.com>
+Suggested-by: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Nhat Pham <nphamcs@gmail.com>
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Tested-by: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>	[6.4+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/filemap.c |   51 ++++++++++++++++++++++++++-------------------------
+ 1 file changed, 26 insertions(+), 25 deletions(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1903,26 +1903,26 @@ static int __init gtp_init(void)
-=20
- 	get_random_bytes(&gtp_h_initval, sizeof(gtp_h_initval));
-=20
--	err =3D rtnl_link_register(&gtp_link_ops);
-+	err =3D register_pernet_subsys(&gtp_net_ops);
- 	if (err < 0)
- 		goto error_out;
-=20
--	err =3D register_pernet_subsys(&gtp_net_ops);
-+	err =3D rtnl_link_register(&gtp_link_ops);
- 	if (err < 0)
--		goto unreg_rtnl_link;
-+		goto unreg_pernet_subsys;
-=20
- 	err =3D genl_register_family(&gtp_genl_family);
- 	if (err < 0)
--		goto unreg_pernet_subsys;
-+		goto unreg_rtnl_link;
-=20
- 	pr_info("GTP module loaded (pdp ctx size %zd bytes)\n",
- 		sizeof(struct pdp_ctx));
- 	return 0;
-=20
--unreg_pernet_subsys:
--	unregister_pernet_subsys(&gtp_net_ops);
- unreg_rtnl_link:
- 	rtnl_link_unregister(&gtp_link_ops);
-+unreg_pernet_subsys:
-+	unregister_pernet_subsys(&gtp_net_ops);
- error_out:
- 	pr_err("error loading GTP module loaded\n");
- 	return err;
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -4159,28 +4159,40 @@ static void filemap_cachestat(struct add
+ 
+ 	rcu_read_lock();
+ 	xas_for_each(&xas, folio, last_index) {
++		int order;
+ 		unsigned long nr_pages;
+ 		pgoff_t folio_first_index, folio_last_index;
+ 
++		/*
++		 * Don't deref the folio. It is not pinned, and might
++		 * get freed (and reused) underneath us.
++		 *
++		 * We *could* pin it, but that would be expensive for
++		 * what should be a fast and lightweight syscall.
++		 *
++		 * Instead, derive all information of interest from
++		 * the rcu-protected xarray.
++		 */
++
+ 		if (xas_retry(&xas, folio))
+ 			continue;
+ 
++		order = xa_get_order(xas.xa, xas.xa_index);
++		nr_pages = 1 << order;
++		folio_first_index = round_down(xas.xa_index, 1 << order);
++		folio_last_index = folio_first_index + nr_pages - 1;
++
++		/* Folios might straddle the range boundaries, only count covered pages */
++		if (folio_first_index < first_index)
++			nr_pages -= first_index - folio_first_index;
++
++		if (folio_last_index > last_index)
++			nr_pages -= folio_last_index - last_index;
++
+ 		if (xa_is_value(folio)) {
+ 			/* page is evicted */
+ 			void *shadow = (void *)folio;
+ 			bool workingset; /* not used */
+-			int order = xa_get_order(xas.xa, xas.xa_index);
+-
+-			nr_pages = 1 << order;
+-			folio_first_index = round_down(xas.xa_index, 1 << order);
+-			folio_last_index = folio_first_index + nr_pages - 1;
+-
+-			/* Folios might straddle the range boundaries, only count covered pages */
+-			if (folio_first_index < first_index)
+-				nr_pages -= first_index - folio_first_index;
+-
+-			if (folio_last_index > last_index)
+-				nr_pages -= folio_last_index - last_index;
+ 
+ 			cs->nr_evicted += nr_pages;
+ 
+@@ -4198,24 +4210,13 @@ static void filemap_cachestat(struct add
+ 			goto resched;
+ 		}
+ 
+-		nr_pages = folio_nr_pages(folio);
+-		folio_first_index = folio_pgoff(folio);
+-		folio_last_index = folio_first_index + nr_pages - 1;
+-
+-		/* Folios might straddle the range boundaries, only count covered pages */
+-		if (folio_first_index < first_index)
+-			nr_pages -= first_index - folio_first_index;
+-
+-		if (folio_last_index > last_index)
+-			nr_pages -= folio_last_index - last_index;
+-
+ 		/* page is in cache */
+ 		cs->nr_cache += nr_pages;
+ 
+-		if (folio_test_dirty(folio))
++		if (xas_get_mark(&xas, PAGECACHE_TAG_DIRTY))
+ 			cs->nr_dirty += nr_pages;
+ 
+-		if (folio_test_writeback(folio))
++		if (xas_get_mark(&xas, PAGECACHE_TAG_WRITEBACK))
+ 			cs->nr_writeback += nr_pages;
+ 
+ resched:
 
 
