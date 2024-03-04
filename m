@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8E47C08C;
-	Mon,  4 Mar 2024 21:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA827C08B;
+	Mon,  4 Mar 2024 21:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587625; cv=none; b=MK54QsyedEIGoUvl1xV54YznAPaY7KXDmaR5PuWIdVeDVBlRjO/Yvc7R7OEeSWe0CLM095ld2Hvdf5Z5y5WpAAKlr/Z9rXODPONJpNSlNN+lBDy/+h+GaEJxkbtfTzZaoxfy8LyfuwIUAqyNPr75wWGoveP3I+zZtKNV5uRiz8g=
+	t=1709587628; cv=none; b=hgpoxol/dNa3S5qQkUkyB8pitD+kTN4ZxMbJG8k9w6uXKGZcj2x7wOPA49xWiZVP8qg6gScD8j+t5vTPksjUT3n5bTqgs6eQ2ekXW4//R6vX0q97tk+9clScKV1IPcra4+AKzUswxUoIhPWOwrTATZF5ctljuM10+V8MrXMhSFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587625; c=relaxed/simple;
-	bh=dIWYceK7kv6N2g02tC/KnOaS1B3715c2V/HRASyVuCk=;
+	s=arc-20240116; t=1709587628; c=relaxed/simple;
+	bh=8kgVeCBY9PloVqgO/TteUux6dd+2W88ZekvH2RZ9DdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2TBrqCTumQrlfe0miueDys459XpoMfTTtufvHoSqx6QCSjztJO1Et0HMSmmgXg9tXJPrHJEae8NJQwSbz/uc0Fzj5JKq0bnWJ2AD0Tw0I6LDZapkSbucve/81KxOGQeibk63ReOvo4o6KcBI2o+D/hD9hPC31R69bHwGFtNx28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jOlZZi7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjocuflmu2ZAmz54oWf7XGlnowoSKZeTWH0CvIFpjw5+JNL7sFuNXaGUDMSOumoXHFq0wihX8kAcg7woxqJ6lk+2ezp6mW39Y3wvUXFCWDkHu+TInvrfsJMLmwtsQ+Cg0XHAgWoXaxwRaCO62blqSfEIwGGWqmy/gaUYylFy/mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVKODyWz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jOlZZi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C28EC433B2;
-	Mon,  4 Mar 2024 21:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVKODyWz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2343C433F1;
+	Mon,  4 Mar 2024 21:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587625;
-	bh=dIWYceK7kv6N2g02tC/KnOaS1B3715c2V/HRASyVuCk=;
+	s=korg; t=1709587628;
+	bh=8kgVeCBY9PloVqgO/TteUux6dd+2W88ZekvH2RZ9DdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jOlZZi7yKb97R+idXOg+pgxzXKUPVYIJanuUq891f21oN1yKu+x4PAjdvm4ldirV
-	 dWEs5YdgM89OLQj1sc3omjfdBqOZs+hEnyKUsydzXOGAKfPUQ5EpzXquz/9/YTs534
-	 x1pIXDTOPYa+ytcUmd7OUw1wcl64ZC2QszTXStJE=
+	b=fVKODyWz1jdvkiAYD418+9QCURvAVXVlXp3Pav6SQAjoBgmLZqBlQki+/XHoB7HqA
+	 ImQFKM6QGUNBSwKFRaqS0QYWh7TlEE33SBq31oW6/k22itiASTmc+G1Q6PphWhD1Fm
+	 RwHvsD44eBIcBMVpYqyReVGqzKCd2tNvh69+aFOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+34ad5fab48f7bf510349@syzkaller.appspotmail.com
-Subject: [PATCH 6.7 010/162] netlink: Fix kernel-infoleak-after-free in __skb_datagram_iter
-Date: Mon,  4 Mar 2024 21:21:15 +0000
-Message-ID: <20240304211552.154631507@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 028/162] Bluetooth: hci_event: Fix wrongly recorded wakeup BD_ADDR
+Date: Mon,  4 Mar 2024 21:21:33 +0000
+Message-ID: <20240304211552.738338940@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -53,132 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 661779e1fcafe1b74b3f3fe8e980c1e207fea1fd ]
+[ Upstream commit 61a5ab72edea7ebc3ad2c6beea29d966f528ebfb ]
 
-syzbot reported the following uninit-value access issue [1]:
+hci_store_wake_reason() wrongly parses event HCI_Connection_Request
+as HCI_Connection_Complete and HCI_Connection_Complete as
+HCI_Connection_Request, so causes recording wakeup BD_ADDR error and
+potential stability issue, fix it by using the correct field.
 
-netlink_to_full_skb() creates a new `skb` and puts the `skb->data`
-passed as a 1st arg of netlink_to_full_skb() onto new `skb`. The data
-size is specified as `len` and passed to skb_put_data(). This `len`
-is based on `skb->end` that is not data offset but buffer offset. The
-`skb->end` contains data and tailroom. Since the tailroom is not
-initialized when the new `skb` created, KMSAN detects uninitialized
-memory area when copying the data.
-
-This patch resolved this issue by correct the len from `skb->end` to
-`skb->len`, which is the actual data offset.
-
-BUG: KMSAN: kernel-infoleak-after-free in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in copy_to_user_iter lib/iov_iter.c:24 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_ubuf include/linux/iov_iter.h:29 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_and_advance include/linux/iov_iter.h:271 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in _copy_to_iter+0x364/0x2520 lib/iov_iter.c:186
- instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- copy_to_user_iter lib/iov_iter.c:24 [inline]
- iterate_ubuf include/linux/iov_iter.h:29 [inline]
- iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- iterate_and_advance include/linux/iov_iter.h:271 [inline]
- _copy_to_iter+0x364/0x2520 lib/iov_iter.c:186
- copy_to_iter include/linux/uio.h:197 [inline]
- simple_copy_to_iter+0x68/0xa0 net/core/datagram.c:532
- __skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:420
- skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
- skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
- packet_recvmsg+0xd9c/0x2000 net/packet/af_packet.c:3482
- sock_recvmsg_nosec net/socket.c:1044 [inline]
- sock_recvmsg net/socket.c:1066 [inline]
- sock_read_iter+0x467/0x580 net/socket.c:1136
- call_read_iter include/linux/fs.h:2014 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x8f6/0xe00 fs/read_write.c:470
- ksys_read+0x20f/0x4c0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x93/0xd0 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Uninit was stored to memory at:
- skb_put_data include/linux/skbuff.h:2622 [inline]
- netlink_to_full_skb net/netlink/af_netlink.c:181 [inline]
- __netlink_deliver_tap_skb net/netlink/af_netlink.c:298 [inline]
- __netlink_deliver_tap+0x5be/0xc90 net/netlink/af_netlink.c:325
- netlink_deliver_tap net/netlink/af_netlink.c:338 [inline]
- netlink_deliver_tap_kernel net/netlink/af_netlink.c:347 [inline]
- netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
- netlink_unicast+0x10f1/0x1250 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x1238/0x13d0 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Uninit was created at:
- free_pages_prepare mm/page_alloc.c:1087 [inline]
- free_unref_page_prepare+0xb0/0xa40 mm/page_alloc.c:2347
- free_unref_page_list+0xeb/0x1100 mm/page_alloc.c:2533
- release_pages+0x23d3/0x2410 mm/swap.c:1042
- free_pages_and_swap_cache+0xd9/0xf0 mm/swap_state.c:316
- tlb_batch_pages_flush mm/mmu_gather.c:98 [inline]
- tlb_flush_mmu_free mm/mmu_gather.c:293 [inline]
- tlb_flush_mmu+0x6f5/0x980 mm/mmu_gather.c:300
- tlb_finish_mmu+0x101/0x260 mm/mmu_gather.c:392
- exit_mmap+0x49e/0xd30 mm/mmap.c:3321
- __mmput+0x13f/0x530 kernel/fork.c:1349
- mmput+0x8a/0xa0 kernel/fork.c:1371
- exit_mm+0x1b8/0x360 kernel/exit.c:567
- do_exit+0xd57/0x4080 kernel/exit.c:858
- do_group_exit+0x2fd/0x390 kernel/exit.c:1021
- __do_sys_exit_group kernel/exit.c:1032 [inline]
- __se_sys_exit_group kernel/exit.c:1030 [inline]
- __x64_sys_exit_group+0x3c/0x50 kernel/exit.c:1030
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Bytes 3852-3903 of 3904 are uninitialized
-Memory access of size 3904 starts at ffff88812ea1e000
-Data copied to user address 0000000020003280
-
-CPU: 1 PID: 5043 Comm: syz-executor297 Not tainted 6.7.0-rc5-syzkaller-00047-g5bd7ef53ffe5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-
-Fixes: 1853c9496460 ("netlink, mmap: transform mmap skb into full skb on taps")
-Reported-and-tested-by: syzbot+34ad5fab48f7bf510349@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=34ad5fab48f7bf510349 [1]
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240221074053.1794118-1-ryasuoka@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2f20216c1d6f ("Bluetooth: Emit controller suspend and resume events")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_event.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index d9107b545d360..6ae782efb1ee3 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -167,7 +167,7 @@ static inline u32 netlink_group_mask(u32 group)
- static struct sk_buff *netlink_to_full_skb(const struct sk_buff *skb,
- 					   gfp_t gfp_mask)
- {
--	unsigned int len = skb_end_offset(skb);
-+	unsigned int len = skb->len;
- 	struct sk_buff *new;
- 
- 	new = alloc_skb(len, gfp_mask);
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index ef8c3bed73617..22b22c264c2a5 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -7420,10 +7420,10 @@ static void hci_store_wake_reason(struct hci_dev *hdev, u8 event,
+ 	 * keep track of the bdaddr of the connection event that woke us up.
+ 	 */
+ 	if (event == HCI_EV_CONN_REQUEST) {
+-		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
++		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
+ 		hdev->wake_addr_type = BDADDR_BREDR;
+ 	} else if (event == HCI_EV_CONN_COMPLETE) {
+-		bacpy(&hdev->wake_addr, &conn_request->bdaddr);
++		bacpy(&hdev->wake_addr, &conn_complete->bdaddr);
+ 		hdev->wake_addr_type = BDADDR_BREDR;
+ 	} else if (event == HCI_EV_LE_META) {
+ 		struct hci_ev_le_meta *le_ev = (void *)skb->data;
 -- 
 2.43.0
 
