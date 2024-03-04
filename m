@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C52E1C6AB;
-	Mon,  4 Mar 2024 21:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE1C1C6AB;
+	Mon,  4 Mar 2024 21:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589140; cv=none; b=iK/ekWdUypMwj/c1pBFP3lph2K2DYe8Ng4c+3P9hxcWnNam9VtZMCWn5G7UAm1jl4QO9zzdhT2UBm0qUCx7fZULEp0xkVaOtZdn0Ug9Veu9MQn0S/UQ13oWoCIHjPsBlu2BLDSgvkdFydGRByE+To2dZO3VX629o9hP0uMYtGRo=
+	t=1709589143; cv=none; b=SwW9J3CEdrDDWd5p3x5GftPdnbduZpgk2vBF7SogpEsR/bpTprx3bHvkXjTZU41CHkhYTymwbKEB1eXj9ZmkMPuOMuUKDeisPs1rCy9sCd28lh3qcqzFUPi7Y/NGLhxKWLFc0vWyZKjz90ufZSXojiIXKccMaU350S49l3k6FZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589140; c=relaxed/simple;
-	bh=A1WGAfQTLiHLLkIfVCd3wuv+bPw+e6yplS7U6t7X1tI=;
+	s=arc-20240116; t=1709589143; c=relaxed/simple;
+	bh=OZF6LD3usQ2OKU2ho360fAoTgOoR+vT1JDSHRg1jsF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvUPyj5HANuhnfdJFaYOUcEf+3tUTeBsFfqdLfHFfGo2a7WrYU6s+oY780xX5He6B+99n3bsLLfhldcKQRyKpq28uWVX0+vyoS7KP7/3hN8yoTskicrgTg8E4HgrfHIhky8vFYmCaePSTZSAU4pkQAnF1HC8oSYaTzI7K463gRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCcpSgGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOtWApGfbmHt+WkV7NSzC5yXyrsxm0m8C/AdAM6K6WLnlI4e/twudJ9HXMCmT44ms+561KV46AnsmJ7GIb7CJbHDyqKAACoxRc7nI6f9WepuR+YWazQ86Q7Ap7aPyA+2/2iINmwptpvt/CtVKCTlbu4hY8Xjstry9ob1RcjZ8lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkuApbcU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCcpSgGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A39C433C7;
-	Mon,  4 Mar 2024 21:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkuApbcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E05EC433C7;
+	Mon,  4 Mar 2024 21:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589140;
-	bh=A1WGAfQTLiHLLkIfVCd3wuv+bPw+e6yplS7U6t7X1tI=;
+	s=korg; t=1709589142;
+	bh=OZF6LD3usQ2OKU2ho360fAoTgOoR+vT1JDSHRg1jsF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCcpSgGYYPyapNojyktE5ZrzhkWuhxgCMvkk52IReyCXeQkZGyeqSIRCEWbyc2/Fe
-	 HRaDTzHYEnzQNs/BgdkuyTqgDCtjbathj3ngx7FiRItbxjpDcSJQH2HZ/DSJ6p47p5
-	 h9kvxEIWjpsScsEtmBS1ke+SmqnFGr+PY/IDMDSg=
+	b=RkuApbcUxWZP/zLhyf3bvTR+wOTd9LvYlTDW62bIYqVyikfdiHo3mLG62zjFLzpKc
+	 rQlQQQLIlMy7ctNJkCElD+6ceeLbSCOBVXBakZtbdquL/o17XqeZ5njByvemT18V6R
+	 Q7ebR+f+cfmZbCCoXEKu+rrHmW9jyJsj0msakAlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 211/215] KVM/VMX: Move VERW closer to VMentry for MDS mitigation
-Date: Mon,  4 Mar 2024 21:24:34 +0000
-Message-ID: <20240304211603.681134981@linuxfoundation.org>
+	Louis DeLosSantos <louis.delos.devel@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 6.1 212/215] bpf: Add table ID to bpf_fib_lookup BPF helper
+Date: Mon,  4 Mar 2024 21:24:35 +0000
+Message-ID: <20240304211603.711180329@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,77 +50,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Louis DeLosSantos <louis.delos.devel@gmail.com>
 
-commit 43fb862de8f628c5db5e96831c915b9aebf62d33 upstream.
+commit 8ad77e72caae22a1ddcfd0c03f2884929e93b7a4 upstream.
 
-During VMentry VERW is executed to mitigate MDS. After VERW, any memory
-access like register push onto stack may put host data in MDS affected
-CPU buffers. A guest can then use MDS to sample host data.
+Add ability to specify routing table ID to the `bpf_fib_lookup` BPF
+helper.
 
-Although likelihood of secrets surviving in registers at current VERW
-callsite is less, but it can't be ruled out. Harden the MDS mitigation
-by moving the VERW mitigation late in VMentry path.
+A new field `tbid` is added to `struct bpf_fib_lookup` used as
+parameters to the `bpf_fib_lookup` BPF helper.
 
-Note that VERW for MMIO Stale Data mitigation is unchanged because of
-the complexity of per-guest conditional VERW which is not easy to handle
-that late in asm with no GPRs available. If the CPU is also affected by
-MDS, VERW is unconditionally executed late in asm regardless of guest
-having MMIO access.
+When the helper is called with the `BPF_FIB_LOOKUP_DIRECT` and
+`BPF_FIB_LOOKUP_TBID` flags the `tbid` field in `struct bpf_fib_lookup`
+will be used as the table ID for the fib lookup.
 
-  [ pawan: conflict resolved in backport ]
+If the `tbid` does not exist the fib lookup will fail with
+`BPF_FIB_LKUP_RET_NOT_FWDED`.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-6-a6216d83edb7%40linux.intel.com
+The `tbid` field becomes a union over the vlan related output fields
+in `struct bpf_fib_lookup` and will be zeroed immediately after usage.
+
+This functionality is useful in containerized environments.
+
+For instance, if a CNI wants to dictate the next-hop for traffic leaving
+a container it can create a container-specific routing table and perform
+a fib lookup against this table in a "host-net-namespace-side" TC program.
+
+This functionality also allows `ip rule` like functionality at the TC
+layer, allowing an eBPF program to pick a routing table based on some
+aspect of the sk_buff.
+
+As a concrete use case, this feature will be used in Cilium's SRv6 L3VPN
+datapath.
+
+When egress traffic leaves a Pod an eBPF program attached by Cilium will
+determine which VRF the egress traffic should target, and then perform a
+FIB lookup in a specific table representing this VRF's FIB.
+
+Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230505-bpf-add-tbid-fib-lookup-v2-1-0a31c22c748c@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmenter.S |    3 +++
- arch/x86/kvm/vmx/vmx.c     |   12 ++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ include/uapi/linux/bpf.h       |   21 ++++++++++++++++++---
+ net/core/filter.c              |   14 +++++++++++++-
+ tools/include/uapi/linux/bpf.h |   21 ++++++++++++++++++---
+ 3 files changed, 49 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/vmx/vmenter.S
-+++ b/arch/x86/kvm/vmx/vmenter.S
-@@ -128,6 +128,9 @@ SYM_FUNC_START(__vmx_vcpu_run)
- 	/* Load guest RAX.  This kills the @regs pointer! */
- 	mov VCPU_RAX(%_ASM_AX), %_ASM_AX
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -3109,6 +3109,10 @@ union bpf_attr {
+  *		**BPF_FIB_LOOKUP_DIRECT**
+  *			Do a direct table lookup vs full lookup using FIB
+  *			rules.
++ *		**BPF_FIB_LOOKUP_TBID**
++ *			Used with BPF_FIB_LOOKUP_DIRECT.
++ *			Use the routing table ID present in *params*->tbid
++ *			for the fib lookup.
+  *		**BPF_FIB_LOOKUP_OUTPUT**
+  *			Perform lookup from an egress perspective (default is
+  *			ingress).
+@@ -6687,6 +6691,7 @@ enum {
+ 	BPF_FIB_LOOKUP_DIRECT  = (1U << 0),
+ 	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
+ 	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
++	BPF_FIB_LOOKUP_TBID    = (1U << 3),
+ };
  
-+	/* Clobbers EFLAGS.ZF */
-+	CLEAR_CPU_BUFFERS
+ enum {
+@@ -6747,9 +6752,19 @@ struct bpf_fib_lookup {
+ 		__u32		ipv6_dst[4];  /* in6_addr; network order */
+ 	};
+ 
+-	/* output */
+-	__be16	h_vlan_proto;
+-	__be16	h_vlan_TCI;
++	union {
++		struct {
++			/* output */
++			__be16	h_vlan_proto;
++			__be16	h_vlan_TCI;
++		};
++		/* input: when accompanied with the
++		 * 'BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_TBID` flags, a
++		 * specific routing table to use for the fib lookup.
++		 */
++		__u32	tbid;
++	};
 +
- 	/* Check EFLAGS.CF from the VMX_RUN_VMRESUME bit test above. */
- 	jnc .Lvmlaunch
+ 	__u8	smac[6];     /* ETH_ALEN */
+ 	__u8	dmac[6];     /* ETH_ALEN */
+ };
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -5752,6 +5752,12 @@ static int bpf_ipv4_fib_lookup(struct ne
+ 		u32 tbid = l3mdev_fib_table_rcu(dev) ? : RT_TABLE_MAIN;
+ 		struct fib_table *tb;
  
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -407,7 +407,8 @@ static __always_inline void vmx_enable_f
++		if (flags & BPF_FIB_LOOKUP_TBID) {
++			tbid = params->tbid;
++			/* zero out for vlan output */
++			params->tbid = 0;
++		}
++
+ 		tb = fib_get_table(net, tbid);
+ 		if (unlikely(!tb))
+ 			return BPF_FIB_LKUP_RET_NOT_FWDED;
+@@ -5885,6 +5891,12 @@ static int bpf_ipv6_fib_lookup(struct ne
+ 		u32 tbid = l3mdev_fib_table_rcu(dev) ? : RT_TABLE_MAIN;
+ 		struct fib6_table *tb;
  
- static void vmx_update_fb_clear_dis(struct kvm_vcpu *vcpu, struct vcpu_vmx *vmx)
- {
--	vmx->disable_fb_clear = vmx_fb_clear_ctrl_available;
-+	vmx->disable_fb_clear = !cpu_feature_enabled(X86_FEATURE_CLEAR_CPU_BUF) &&
-+		vmx_fb_clear_ctrl_available;
++		if (flags & BPF_FIB_LOOKUP_TBID) {
++			tbid = params->tbid;
++			/* zero out for vlan output */
++			params->tbid = 0;
++		}
++
+ 		tb = ipv6_stub->fib6_get_table(net, tbid);
+ 		if (unlikely(!tb))
+ 			return BPF_FIB_LKUP_RET_NOT_FWDED;
+@@ -5957,7 +5969,7 @@ set_fwd_params:
+ #endif
  
- 	/*
- 	 * If guest will not execute VERW, there is no need to set FB_CLEAR_DIS
-@@ -7120,11 +7121,14 @@ static noinstr void vmx_vcpu_enter_exit(
- {
- 	guest_state_enter_irqoff();
+ #define BPF_FIB_LOOKUP_MASK (BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_OUTPUT | \
+-			     BPF_FIB_LOOKUP_SKIP_NEIGH)
++			     BPF_FIB_LOOKUP_SKIP_NEIGH | BPF_FIB_LOOKUP_TBID)
  
--	/* L1D Flush includes CPU buffer clear to mitigate MDS */
-+	/*
-+	 * L1D Flush includes CPU buffer clear to mitigate MDS, but VERW
-+	 * mitigation for MDS is done late in VMentry and is still
-+	 * executed in spite of L1D Flush. This is because an extra VERW
-+	 * should not matter much after the big hammer L1D Flush.
-+	 */
- 	if (static_branch_unlikely(&vmx_l1d_should_flush))
- 		vmx_l1d_flush(vcpu);
--	else if (cpu_feature_enabled(X86_FEATURE_CLEAR_CPU_BUF))
--		mds_clear_cpu_buffers();
- 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
- 		 kvm_arch_has_assigned_device(vcpu->kvm))
- 		mds_clear_cpu_buffers();
+ BPF_CALL_4(bpf_xdp_fib_lookup, struct xdp_buff *, ctx,
+ 	   struct bpf_fib_lookup *, params, int, plen, u32, flags)
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -3109,6 +3109,10 @@ union bpf_attr {
+  *		**BPF_FIB_LOOKUP_DIRECT**
+  *			Do a direct table lookup vs full lookup using FIB
+  *			rules.
++ *		**BPF_FIB_LOOKUP_TBID**
++ *			Used with BPF_FIB_LOOKUP_DIRECT.
++ *			Use the routing table ID present in *params*->tbid
++ *			for the fib lookup.
+  *		**BPF_FIB_LOOKUP_OUTPUT**
+  *			Perform lookup from an egress perspective (default is
+  *			ingress).
+@@ -6687,6 +6691,7 @@ enum {
+ 	BPF_FIB_LOOKUP_DIRECT  = (1U << 0),
+ 	BPF_FIB_LOOKUP_OUTPUT  = (1U << 1),
+ 	BPF_FIB_LOOKUP_SKIP_NEIGH = (1U << 2),
++	BPF_FIB_LOOKUP_TBID    = (1U << 3),
+ };
+ 
+ enum {
+@@ -6747,9 +6752,19 @@ struct bpf_fib_lookup {
+ 		__u32		ipv6_dst[4];  /* in6_addr; network order */
+ 	};
+ 
+-	/* output */
+-	__be16	h_vlan_proto;
+-	__be16	h_vlan_TCI;
++	union {
++		struct {
++			/* output */
++			__be16	h_vlan_proto;
++			__be16	h_vlan_TCI;
++		};
++		/* input: when accompanied with the
++		 * 'BPF_FIB_LOOKUP_DIRECT | BPF_FIB_LOOKUP_TBID` flags, a
++		 * specific routing table to use for the fib lookup.
++		 */
++		__u32	tbid;
++	};
++
+ 	__u8	smac[6];     /* ETH_ALEN */
+ 	__u8	dmac[6];     /* ETH_ALEN */
+ };
 
 
