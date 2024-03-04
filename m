@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC55C1EB5A;
-	Mon,  4 Mar 2024 21:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5231EB5A;
+	Mon,  4 Mar 2024 21:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588707; cv=none; b=QeTaLPnEcXdvIPZ3F5rfBTblC8M6e2e2Wxe6MxW0As7r/o5V7VfX4kcIYeGhZ7PWKfJ5499GuPtcVFOHDgX8epNT7ZQuK1319DQSiiD/6tJGd1oX3k4V4MKpjB7zfTnaLTAzg1xGYyepEADjorZRBqwwObLQ3VAlCgcVhfEivwc=
+	t=1709588709; cv=none; b=Xso1nB9QgmUOMPi7jEakESr54RD1GRfVw9Anf45bsIdTz1/1+XSTH+WhkjjsEHLqqIL7FU6yDlupG67ZHzsvMVWYSyPhnezlgywCfIcrUt3IlyJR9UuAhMasmn+ztymRIg7cpTvhp67QyANQRCECXuQBwMyUh6WHog85iy+tF8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588707; c=relaxed/simple;
-	bh=oOH5qJFaN5lG5micC0KsvclJ1LSbi0nTbZL8g41pFV4=;
+	s=arc-20240116; t=1709588709; c=relaxed/simple;
+	bh=KuB4GaJX8ZtuaRX+BSFzO+PpQnLAPpgdp4FkTMOFq08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVHCvR1VDYSdkmucvW2lpZriHxLUT1SFscFNJ9oV9lmvG0qQptiKub/wKaOHQS79/PdHg7643VZRXFlgusNA3l4G5qer+rC7Gzvtonwx+DINCXgKj214iK5J7k3UK1rg6Y/UovG+I11WMe0eLQKkgnPInDTqo67+PlWiOoHa4j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe9J0cw/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D7+B+ucdI4pxs3+1ooePWIJUajPg1x8+pla1hR7LbJqlb5MoE9dPw9BQl2IBH0Gd+NhvdiBKa6dKuD7TIlAU5nzck8Lys7wG1WR6WIx70k5VtL5D7AYNs3eJm2eL4yjpL96KAN1oOg5r/HPdy/AsDC1by/hLcDvsnU2bDWJ2VPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjXvKP4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe9J0cw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFF1C43394;
-	Mon,  4 Mar 2024 21:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjXvKP4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD02C433C7;
+	Mon,  4 Mar 2024 21:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588706;
-	bh=oOH5qJFaN5lG5micC0KsvclJ1LSbi0nTbZL8g41pFV4=;
+	s=korg; t=1709588709;
+	bh=KuB4GaJX8ZtuaRX+BSFzO+PpQnLAPpgdp4FkTMOFq08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xe9J0cw/RtFiSiLB8K1/TvIa8qglN9P36eb45n42e9H605HKrDBhGoOI6Ua20l4/i
-	 ckPmY0NZRAh66zHrmauizzvh1rLPb3QO8c2giMOtqwVYoFQhPLK6fIsqZT+n6nHEZu
-	 eImzIRjOyMk1EkWGojJeQLLB8cmQFZ9bWzEb+GiM=
+	b=yjXvKP4JerAPjCgeLKdHoQm9wHDDaEZQ7OyPRai7wxiChlbGvfwSnK1e7mAaR19bN
+	 MB5hgB5KUg8N1FIwkK0MIWF692QA2uySn5g5XFJ3EqyEKLnmH0Y0xSFdUNTwYVgOT2
+	 /HSL+hjg7ccyGm97Fv6xtPUtIvdwrxNTQyMYOlbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
+	Simon Horman <horms@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/215] power: supply: bq27xxx-i2c: Do not free non existing IRQ
-Date: Mon,  4 Mar 2024 21:22:08 +0000
-Message-ID: <20240304211559.046329714@linuxfoundation.org>
+Subject: [PATCH 6.1 042/215] Bluetooth: hci_sync: Check the correct flag before starting a scan
+Date: Mon,  4 Mar 2024 21:21:45 +0000
+Message-ID: <20240304211558.337105099@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -45,55 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jonas Dreßler <verdre@v0yd.nl>
 
-[ Upstream commit 2df70149e73e79783bcbc7db4fa51ecef0e2022c ]
+[ Upstream commit 6b3899be24b16ff8ee0cb25f0bd59b01b15ba1d1 ]
 
-The bq27xxx i2c-client may not have an IRQ, in which case
-client->irq will be 0. bq27xxx_battery_i2c_probe() already has
-an if (client->irq) check wrapping the request_threaded_irq().
+There's a very confusing mistake in the code starting a HCI inquiry: We're
+calling hci_dev_test_flag() to test for HCI_INQUIRY, but hci_dev_test_flag()
+checks hdev->dev_flags instead of hdev->flags. HCI_INQUIRY is a bit that's
+set on hdev->flags, not on hdev->dev_flags though.
 
-But bq27xxx_battery_i2c_remove() unconditionally calls
-free_irq(client->irq) leading to:
+HCI_INQUIRY equals the integer 7, and in hdev->dev_flags, 7 means
+HCI_BONDABLE, so we were actually checking for HCI_BONDABLE here.
 
-[  190.310742] ------------[ cut here ]------------
-[  190.310843] Trying to free already-free IRQ 0
-[  190.310861] WARNING: CPU: 2 PID: 1304 at kernel/irq/manage.c:1893 free_irq+0x1b8/0x310
+The mistake is only present in the synchronous code for starting an inquiry,
+not in the async one. Also devices are typically bondable while doing an
+inquiry, so that might be the reason why nobody noticed it so far.
 
-Followed by a backtrace when unbinding the driver. Add
-an if (client->irq) to bq27xxx_battery_i2c_remove() mirroring
-probe() to fix this.
-
-Fixes: 444ff00734f3 ("power: supply: bq27xxx: Fix I2C IRQ race on remove")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240215155133.70537-1-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery_i2c.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
-index 0713a52a25107..17b37354e32c0 100644
---- a/drivers/power/supply/bq27xxx_battery_i2c.c
-+++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-@@ -209,7 +209,9 @@ static void bq27xxx_battery_i2c_remove(struct i2c_client *client)
- {
- 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 45d19294aa772..13ed6cbfade3e 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5482,7 +5482,7 @@ static int hci_inquiry_sync(struct hci_dev *hdev, u8 length)
  
--	free_irq(client->irq, di);
-+	if (client->irq)
-+		free_irq(client->irq, di);
-+
- 	bq27xxx_battery_teardown(di);
+ 	bt_dev_dbg(hdev, "");
  
- 	mutex_lock(&battery_mutex);
+-	if (hci_dev_test_flag(hdev, HCI_INQUIRY))
++	if (test_bit(HCI_INQUIRY, &hdev->flags))
+ 		return 0;
+ 
+ 	hci_dev_lock(hdev);
 -- 
 2.43.0
 
