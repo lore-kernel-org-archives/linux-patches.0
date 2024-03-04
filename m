@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4248B1C6AB;
-	Mon,  4 Mar 2024 21:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3747200CD;
+	Mon,  4 Mar 2024 21:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588803; cv=none; b=byqwiVMgLQoteG9nknt7Jb4XF96y0xdVPRg5MpWvyMMJ20HBgiTWCOuTko3YrT5bjb+GCzbeVRV+YHo5j4jFvzJOw7/lZc/pF1VWXSyEtboCXDrLRf4tiIwz+VHIb2iYvOKilCsw3PcF3SHAV8EjSbx+Q+3mkBT2b4QLLQP99OY=
+	t=1709588806; cv=none; b=i45LaRZ7JSeyrXsd3TxwHKJDFJMUGlOtROliYXWACUtO6Mc9k0k7a0xoNAINROyY/l8U3U+pyXO7riZI6KZrmyf847Oyb/ikWNoR267cfgLMOUglrtLQ2D1+wrY22VT8EG43ZfO076CdkKR/rp1IXEe73c+AAkMi2s9oF1gVaXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588803; c=relaxed/simple;
-	bh=sAk81ZY7boZD1caiqbHzuWxVSPPHFyqhC0CJcDgjae0=;
+	s=arc-20240116; t=1709588806; c=relaxed/simple;
+	bh=mkXqU62BwGkzjny9KfWZPBJPggdWD7gmAg1z3PFln2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0SXq9QqlsRbmXIyFtAKDrFHZcf2E/lIIV+Jpe32JJFFouOw7XYYOAY67Zx0LLa8lj+tp+KYAsXxxiS845w9dt6Sx6oDIwEmg/hY3xzVh5/wSwsG6u0KVO4uQGRZ9tsxVcgHIw1Xf00SZMpjunOrIJcrqEkvBXo5sKfpl7qBBzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5LQBgQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GpiuC95Uuxcffi//tcExFiUsC71bAII9JpChbmue7KOPRtKOMhSWvIVS2iHk+4UCaPI+9kb+6diVCh4q/7/L7/YXqXnBNXwscs+WvDm+ssx4F+jb2bOFrjkhm2vTEvgxYozW7BgWWUD8vAf79R3q6am229UWjFYVqmoPbkNn1pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLyCk0qw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5LQBgQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8606C433F1;
-	Mon,  4 Mar 2024 21:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLyCk0qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651EFC43390;
+	Mon,  4 Mar 2024 21:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588803;
-	bh=sAk81ZY7boZD1caiqbHzuWxVSPPHFyqhC0CJcDgjae0=;
+	s=korg; t=1709588805;
+	bh=mkXqU62BwGkzjny9KfWZPBJPggdWD7gmAg1z3PFln2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5LQBgQsixcTaPGElJY3/DXgg28SBIDSOr9xU8dbNsYMsCQsSa6UM04m4+SkMO4E2
-	 1HylawCoOd5dlmsggmHSazxI/vGNXWEm0GNjMFHgtCFtmZ0YXjQY39Joj+TYBucysM
-	 xnkaEwRuJVDYskQb2H9WGG/2Oj0UfjH/oJMYUkUU=
+	b=QLyCk0qwv6MCSU0Q2Cq0Oge1l7f6SMmfX9EA4VaYy8shajuES8x8aSizM1dru7Tk+
+	 wjTc+CXdlqfLZytOOy1wdaQUrPInVnZ99Vx/9OAb53J44Nq+BDue7zCD/Xc9p8bJFZ
+	 f6JUN8yqr+zebls0p6RxMYusph/mIOV2yulmLwbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 103/215] selftests: mptcp: join: add ss mptcp support check
-Date: Mon,  4 Mar 2024 21:22:46 +0000
-Message-ID: <20240304211600.297499420@linuxfoundation.org>
+Subject: [PATCH 6.1 104/215] mptcp: fix snd_wnd initialization for passive socket
+Date: Mon,  4 Mar 2024 21:22:47 +0000
+Message-ID: <20240304211600.333733886@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,38 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 9480f388a2ef54fba911d9325372abd69a328601 upstream.
+commit adf1bb78dab55e36d4d557aa2fb446ebcfe9e5ce upstream.
 
-Commands 'ss -M' are used in script mptcp_join.sh to display only MPTCP
-sockets. So it must be checked if ss tool supports MPTCP in this script.
+Such value should be inherited from the first subflow, but
+passive sockets always used 'rsk_rcv_wnd'.
 
-Fixes: e274f7154008 ("selftests: mptcp: add subflow limits test-cases")
+Fixes: 6f8a612a33e4 ("mptcp: keep track of advertised windows right edge")
 Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-7-162e87e48497@kernel.org
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-5-162e87e48497@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/mptcp/protocol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -144,6 +144,11 @@ check_tools()
- 		exit $ksft_skip
- 	fi
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3203,7 +3203,7 @@ struct sock *mptcp_sk_clone_init(const s
+ 	msk->write_seq = subflow_req->idsn + 1;
+ 	msk->snd_nxt = msk->write_seq;
+ 	msk->snd_una = msk->write_seq;
+-	msk->wnd_end = msk->snd_nxt + req->rsk_rcv_wnd;
++	msk->wnd_end = msk->snd_nxt + tcp_sk(ssk)->snd_wnd;
+ 	msk->setsockopt_seq = mptcp_sk(sk)->setsockopt_seq;
  
-+	if ! ss -h | grep -q MPTCP; then
-+		echo "SKIP: ss tool does not support MPTCP"
-+		exit $ksft_skip
-+	fi
-+
- 	# Use the legacy version if available to support old kernel versions
- 	if iptables-legacy -V &> /dev/null; then
- 		iptables="iptables-legacy"
+ 	if (mp_opt->suboptions & OPTIONS_MPTCP_MPC) {
 
 
