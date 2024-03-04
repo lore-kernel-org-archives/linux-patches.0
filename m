@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C227A70D;
-	Mon,  4 Mar 2024 21:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B819E7D413;
+	Mon,  4 Mar 2024 21:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587826; cv=none; b=ofnIbtapvX/IiIk++bDPamaLgxv9Zq5EGbJ/KEz0wxmMIpsY4XJRqQYSrjmG0lorwUUbu0Q33E4pDByBf2JtmUqUzs9Ir4AZ5jGrud5xNYSWSWQSVZUALdDdILl3xsYkrKQsCnZD5KgfJsvtrbsFM2wr9PVWT7Il5sYSOcidDm0=
+	t=1709587829; cv=none; b=LwgTwLwAhuCfJAvuIIqReaZW7Pb5h6RaVS5fabaWACsUMlrTtHmjeAyBCLYEq2gfG63ppyStj6uvtSasXypCl3Db6RAno0wMU4W7n5t8vT/5sR3Iv6dXe4lHcx6ysfTKBNp3scET63RIF/70fADkq69OqWQt2AvbipTEsNXDCRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587826; c=relaxed/simple;
-	bh=cNkDu4OpqAtoLVP6cmdAV2Ytn5A0SuIwmevq4Z8JRjU=;
+	s=arc-20240116; t=1709587829; c=relaxed/simple;
+	bh=5d7+ZnI1hYmynVj1ZdxtG9F/IcC5fBB7gl8JyeIRF4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GArnm3mgH7kXOolQOCPpOToWl1VFjnEz4RguRWxSXWIkv3dlsXeJ5KNkey1PmatMfhjpGfVhtZstoqouxO/QvJOjuDtzG2c2gGuhupewQUB3J5njPrHHl9Z3GPAuDPeOMQ8ByouDlsd0RZ3DugZJbXdLlGyyIwZPr8nV5nijCEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF2HYhJ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iR6J2IJ42KqCa5xuG466fCH26IC5O+hS4zAiExgOjFMhZ3Nbx5/zh3hNoK7Fk7zSXBQeOqzPw4OVDLx2rV2WM635dVcf/0cf+WOrUeH7s1kw7bZdJGkV5v8T6eQpTXQ1rVJHsmhV3a6RfSi8qn+0yOr3r4oCHi5P5lCx8i9D9+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQZMV9uD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF2HYhJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2C1C433F1;
-	Mon,  4 Mar 2024 21:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQZMV9uD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09800C433F1;
+	Mon,  4 Mar 2024 21:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587826;
-	bh=cNkDu4OpqAtoLVP6cmdAV2Ytn5A0SuIwmevq4Z8JRjU=;
+	s=korg; t=1709587829;
+	bh=5d7+ZnI1hYmynVj1ZdxtG9F/IcC5fBB7gl8JyeIRF4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PF2HYhJ0a/tSqGQyhH/BegA1SHXMqo3IH5P/UhPQRcKBcTnpJNUDJg7ntJp5+v4yP
-	 mJ4uHTJTs5HnUfNrGh2tzdvFD9/WjMvwbB67sxillU8DcAn5wN+VDdf6+cTsagzUCF
-	 xvehAZ7523yzGiiUbmpWc+DzJqFv4MONM2J5+wUU=
+	b=sQZMV9uD2+vWzWK10Y1GnXemaDqmLVr1PGMQ2tEitsKTFaafyaBJ9ln6tkn3NmsL4
+	 NxqhwMROzHj9Mficcm5JwFir8ZDOiwFQVS9Si82nk6flydTRsuueOiyDk+cl2RWo1V
+	 CEJqs5Z40fDczqvNkXc2nAVBQaqIPVNLKBEepUpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Andy Chiu <andybnac@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Zong Li <zong.li@sifive.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.7 105/162] RISC-V: Drop invalid test from CONFIG_AS_HAS_OPTION_ARCH
-Date: Mon,  4 Mar 2024 21:22:50 +0000
-Message-ID: <20240304211555.161958348@linuxfoundation.org>
+Subject: [PATCH 6.7 106/162] riscv: add CALLER_ADDRx support
+Date: Mon,  4 Mar 2024 21:22:51 +0000
+Message-ID: <20240304211555.192204959@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -55,71 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Zong Li <zong.li@sifive.com>
 
-commit 3aff0c459e77ac0fb1c4d6884433467f797f7357 upstream.
+commit 680341382da56bd192ebfa4e58eaf4fec2e5bca7 upstream.
 
-Commit e4bb020f3dbb ("riscv: detect assembler support for .option arch")
-added two tests, one for a valid value to '.option arch' that should
-succeed and one for an invalid value that is expected to fail to make
-sure that support for '.option arch' is properly detected because Clang
-does not error when '.option arch' is not supported:
+CALLER_ADDRx returns caller's address at specified level, they are used
+for several tracers. These macros eventually use
+__builtin_return_address(n) to get the caller's address if arch doesn't
+define their own implementation.
 
-  $ clang --target=riscv64-linux-gnu -Werror -x assembler -c -o /dev/null <(echo '.option arch, +m')
-  /dev/fd/63:1:9: warning: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
-  .option arch, +m
-          ^
-  $ echo $?
-  0
+In RISC-V, __builtin_return_address(n) only works when n == 0, we need
+to walk the stack frame to get the caller's address at specified level.
 
-Unfortunately, the invalid test started being accepted by Clang after
-the linked llvm-project change, which causes CONFIG_AS_HAS_OPTION_ARCH
-and configurations that depend on it to be silently disabled, even
-though those versions do support '.option arch'.
+data.level started from 'level + 3' due to the call flow of getting
+caller's address in RISC-V implementation. If we don't have additional
+three iteration, the level is corresponding to follows:
 
-The invalid test can be avoided altogether by using
-'-Wa,--fatal-warnings', which will turn all assembler warnings into
-errors, like '-Werror' does for the compiler:
+callsite -> return_address -> arch_stack_walk -> walk_stackframe
+|           |                 |                  |
+level 3     level 2           level 1            level 0
 
-  $ clang --target=riscv64-linux-gnu -Werror -Wa,--fatal-warnings -x assembler -c -o /dev/null <(echo '.option arch, +m')
-  /dev/fd/63:1:9: error: unknown option, expected 'push', 'pop', 'rvc', 'norvc', 'relax' or 'norelax'
-  .option arch, +m
-          ^
-  $ echo $?
-  1
-
-The as-instr macros have been updated to make use of this flag, so
-remove the invalid test, which allows CONFIG_AS_HAS_OPTION_ARCH to work
-for all compiler versions.
-
+Fixes: 10626c32e382 ("riscv/ftrace: Add basic support")
 Cc: stable@vger.kernel.org
-Fixes: e4bb020f3dbb ("riscv: detect assembler support for .option arch")
-Link: https://github.com/llvm/llvm-project/commit/3ac9fe69f70a2b3541266daedbaaa7dc9c007a2a
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Closes: https://lore.kernel.org/r/20240121011341.GA97368@sol.localdomain/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Andy Chiu <andybnac@gmail.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240125-fix-riscv-option-arch-llvm-18-v1-2-390ac9cc3cd0@kernel.org
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Link: https://lore.kernel.org/r/20240202015102.26251-1-zong.li@sifive.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    1 -
- 1 file changed, 1 deletion(-)
+ arch/riscv/include/asm/ftrace.h    |    5 +++
+ arch/riscv/kernel/Makefile         |    2 +
+ arch/riscv/kernel/return_address.c |   48 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+)
+ create mode 100644 arch/riscv/kernel/return_address.c
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -294,7 +294,6 @@ config AS_HAS_OPTION_ARCH
- 	# https://reviews.llvm.org/D123515
- 	def_bool y
- 	depends on $(as-instr, .option arch$(comma) +m)
--	depends on !$(as-instr, .option arch$(comma) -i)
+--- a/arch/riscv/include/asm/ftrace.h
++++ b/arch/riscv/include/asm/ftrace.h
+@@ -25,6 +25,11 @@
  
- source "arch/riscv/Kconfig.socs"
- source "arch/riscv/Kconfig.errata"
+ #define ARCH_SUPPORTS_FTRACE_OPS 1
+ #ifndef __ASSEMBLY__
++
++extern void *return_address(unsigned int level);
++
++#define ftrace_return_address(n) return_address(n)
++
+ void MCOUNT_NAME(void);
+ static inline unsigned long ftrace_call_adjust(unsigned long addr)
+ {
+--- a/arch/riscv/kernel/Makefile
++++ b/arch/riscv/kernel/Makefile
+@@ -7,6 +7,7 @@ ifdef CONFIG_FTRACE
+ CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
+ endif
+ CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
+ CFLAGS_compat_syscall_table.o += $(call cc-option,-Wno-override-init,)
+@@ -46,6 +47,7 @@ obj-y	+= irq.o
+ obj-y	+= process.o
+ obj-y	+= ptrace.o
+ obj-y	+= reset.o
++obj-y	+= return_address.o
+ obj-y	+= setup.o
+ obj-y	+= signal.o
+ obj-y	+= syscall_table.o
+--- /dev/null
++++ b/arch/riscv/kernel/return_address.c
+@@ -0,0 +1,48 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * This code come from arch/arm64/kernel/return_address.c
++ *
++ * Copyright (C) 2023 SiFive.
++ */
++
++#include <linux/export.h>
++#include <linux/kprobes.h>
++#include <linux/stacktrace.h>
++
++struct return_address_data {
++	unsigned int level;
++	void *addr;
++};
++
++static bool save_return_addr(void *d, unsigned long pc)
++{
++	struct return_address_data *data = d;
++
++	if (!data->level) {
++		data->addr = (void *)pc;
++		return false;
++	}
++
++	--data->level;
++
++	return true;
++}
++NOKPROBE_SYMBOL(save_return_addr);
++
++noinline void *return_address(unsigned int level)
++{
++	struct return_address_data data;
++
++	data.level = level + 3;
++	data.addr = NULL;
++
++	arch_stack_walk(save_return_addr, &data, current, NULL);
++
++	if (!data.level)
++		return data.addr;
++	else
++		return NULL;
++
++}
++EXPORT_SYMBOL_GPL(return_address);
++NOKPROBE_SYMBOL(return_address);
 
 
