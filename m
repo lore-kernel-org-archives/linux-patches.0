@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768D1EB5A;
-	Mon,  4 Mar 2024 21:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5A578B4C;
+	Mon,  4 Mar 2024 21:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589004; cv=none; b=eyIsqMdRoOCN6W+sU8M31ImAiX2x8GbxWGTupPQT77v6RFivkYAPg0398sLq7s7SsY0h6OobgEqS99VO9i3HUaNN55gWLlz1cLSWu96JRPv8CBqv/mqd/vWew9hWkEE2eFmnjVWrv3PLGBJnVOGtZtRi4OpNN3eiX4cKNuYIH4M=
+	t=1709589008; cv=none; b=fQFrpu9bUgWoBRvhHCnm5eEeMr3qu3sWKJZNJNXgyG8ZJ03M3jvJp1Sblis7baWgnZswb5GuqnSJC814kgkSrIB3Z9AeQiZcu+kVCLATGj3P97t+8q6c6H/mzNNLGflc4fll9oSBI3LaS/LLC/yqsG8GDr89dccfcs7pEhRdS7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589004; c=relaxed/simple;
-	bh=u6p3HJfnMcUChog5gOo6oFjvBF/Ap18AihaZ8ADw6nU=;
+	s=arc-20240116; t=1709589008; c=relaxed/simple;
+	bh=MO3PA0xrieTV6UE1Bz2PgbEsocb1iAaR+2lj9PPhDg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJBSZ0eRls9y9nxQ6+eQaXqrbtowd3PeM+yk+bBG0X6npBXLhb167UFzEgNrjnbQMfJXn+nf02YIZOriUBJ3DrXlkVF4+vAQxUqTaf8nhhXVnKyuuviLrPJAKuXElgbStnDQtIQ+6hsKLgJ2hRclKnkJgcTs1rrvc4zwMRdPx90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2vux8ZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcUtWV9Ouj/fybUsDH2ShV3fW8ODWg7rDCw6Jccs86eLwkRYzD04/VF1qHopSS1osjhGOCxPO9RJWBcCdTnxfpJkAwmnmuzD32p8DEERcKP1Wqoc1atTvHkcrNZARtdFSuxRe5xmvcmTnKwca3b7cx8xnkTl1bWpn+QCFqD8/Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjaJSImG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2vux8ZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE1DC433C7;
-	Mon,  4 Mar 2024 21:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjaJSImG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71481C43390;
+	Mon,  4 Mar 2024 21:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589004;
-	bh=u6p3HJfnMcUChog5gOo6oFjvBF/Ap18AihaZ8ADw6nU=;
+	s=korg; t=1709589007;
+	bh=MO3PA0xrieTV6UE1Bz2PgbEsocb1iAaR+2lj9PPhDg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2vux8ZN7o94WGIf2G8+LrxuCo9VjMLKboJqYIgpcHElqSqLdkgMlRVhlrqs/L1Xx
-	 p0ScR1hM0P1FTTsfnl/y1gHAxyEDqHPnk5nW/mv78bcw6BUwXmZDr/+acNoopo0/lC
-	 rW+kzWb/LRrbrxplk8IQ7ok7wecaZq2vUbFrqZdI=
+	b=xjaJSImGkP5zd+aJqd2paL/Hixriq6Eve+bhUT3+luPsq8BpHB1tWj4mzdQ5QIe0f
+	 mEWvqruTjuLp/y9GJjYB5aj4H+KvK9RjKE6bP3vkwwIsjsAQxt0ypz8ht0tEcSxVfR
+	 8CGV1N15Oo6QZr4KbF2q6T3jha6NScHHIhKXjVE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	David Disseldorp <ddiss@suse.de>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 165/215] NFSD: Use struct_size() helper in alloc_session()
-Date: Mon,  4 Mar 2024 21:23:48 +0000
-Message-ID: <20240304211602.203711875@linuxfoundation.org>
+Subject: [PATCH 6.1 148/215] exportfs: use pr_debug for unreachable debug statements
+Date: Mon,  4 Mar 2024 21:23:31 +0000
+Message-ID: <20240304211601.724370408@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,39 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 85a0d0c9a58002ef7d1bf5e3ea630f4fbd42a4f0 ]
+[ Upstream commit 427505ffeaa464f683faba945a88d3e3248f6979 ]
 
-Use struct_size() helper to simplify the code, no functional changes.
+expfs.c has a bunch of dprintk statements which are unusable due to:
+ #define dprintk(fmt, args...) do{}while(0)
+Use pr_debug so that they can be enabled dynamically.
+Also make some minor changes to the debug statements to fix some
+incorrect types, and remove __func__ which can be handled by dynamic
+debug separately.
 
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Reviewed-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/exportfs/expfs.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1834,13 +1834,12 @@ static struct nfsd4_session *alloc_sessi
- 	int numslots = fattrs->maxreqs;
- 	int slotsize = slot_bytes(fattrs);
- 	struct nfsd4_session *new;
--	int mem, i;
-+	int i;
+--- a/fs/exportfs/expfs.c
++++ b/fs/exportfs/expfs.c
+@@ -18,7 +18,7 @@
+ #include <linux/sched.h>
+ #include <linux/cred.h>
  
--	BUILD_BUG_ON(NFSD_MAX_SLOTS_PER_SESSION * sizeof(struct nfsd4_slot *)
--			+ sizeof(struct nfsd4_session) > PAGE_SIZE);
--	mem = numslots * sizeof(struct nfsd4_slot *);
-+	BUILD_BUG_ON(struct_size(new, se_slots, NFSD_MAX_SLOTS_PER_SESSION)
-+		     > PAGE_SIZE);
+-#define dprintk(fmt, args...) do{}while(0)
++#define dprintk(fmt, args...) pr_debug(fmt, ##args)
  
--	new = kzalloc(sizeof(*new) + mem, GFP_KERNEL);
-+	new = kzalloc(struct_size(new, se_slots, numslots), GFP_KERNEL);
- 	if (!new)
- 		return NULL;
- 	/* allocate each struct nfsd4_slot and data cache in one piece */
+ 
+ static int get_name(const struct path *path, char *name, struct dentry *child);
+@@ -132,8 +132,8 @@ static struct dentry *reconnect_one(stru
+ 	inode_unlock(dentry->d_inode);
+ 
+ 	if (IS_ERR(parent)) {
+-		dprintk("%s: get_parent of %ld failed, err %d\n",
+-			__func__, dentry->d_inode->i_ino, PTR_ERR(parent));
++		dprintk("get_parent of %lu failed, err %ld\n",
++			dentry->d_inode->i_ino, PTR_ERR(parent));
+ 		return parent;
+ 	}
+ 
+@@ -147,7 +147,7 @@ static struct dentry *reconnect_one(stru
+ 	dprintk("%s: found name: %s\n", __func__, nbuf);
+ 	tmp = lookup_one_unlocked(mnt_user_ns(mnt), nbuf, parent, strlen(nbuf));
+ 	if (IS_ERR(tmp)) {
+-		dprintk("%s: lookup failed: %d\n", __func__, PTR_ERR(tmp));
++		dprintk("lookup failed: %ld\n", PTR_ERR(tmp));
+ 		err = PTR_ERR(tmp);
+ 		goto out_err;
+ 	}
 
 
