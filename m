@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8DD7A736;
-	Mon,  4 Mar 2024 21:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C767C6D5;
+	Mon,  4 Mar 2024 21:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587884; cv=none; b=iFzoXCZ2tsMn1t+1lxZyA99eNwWN+3iKDOzM/9kIThFuZwQ8ttYe0cqWrmygxuA0UWnkA3ERByVfg8wlcHvGnUpmxfTPxNlRpFGBJ3ZcOjwAMssK//2dVXh+EgtsGGcamHwxQq7l6DqK45N3XFeyWa9v+nbVcGyufya+lVuHbCQ=
+	t=1709587886; cv=none; b=WO6WOOWxr37pKANvHY/mKmXm22UCWDeS3En9IFIo5P+v8GCuxL30zxIRFK2YyjaeX4oK4OgCfvgRyCoTc7NuF1WVaAV3FBNkIcxnlqDkhim9uI7StJvvETf/0nXzCp/noA0m8vxjMBcmKr1nAxHfNHetq9OXp4mLKxZ1dw8O1no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587884; c=relaxed/simple;
-	bh=UF57pj+/1BJKmhE3SQz0+o69Vt4N5+oyj71J9xrRwUs=;
+	s=arc-20240116; t=1709587886; c=relaxed/simple;
+	bh=ebEmz0DvRm0llzc+67bmT0/kBk5kR7bclwL6dZep3oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXuqpPwIV1uLVr3pohtfHCFbaqGJ33JtHx1q66JQvFxeUXBLzFLG0LSVDK6aBT6WGCHvF1+J+gQux0xqLEckGjFZ3nqMwy7VEVJtk9GNWQx6qATF1gWKzpy1ahSgq6DR6MV2Vc3F1IRdsZOWtpEzo61/7dBEJWqxIn7k1hW1EUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CARVqQx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CC+lP+mijpbHT7/HdPuA8yJM13vOS3cBv7W5Iaqc7I2Mlj9y0BY+YrmPEd+QSvXyZA4iKa9Q9yb8RbtUCqtpkPqILmDG2QN1FTIAffDK4W9VSDhiqyHAu6fhU2ju3wlUHF4f2k1v5vlbYx2CAyfysKTYzAb8cM25XrNCzDvp6CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKt6JEZq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CARVqQx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807E4C433C7;
-	Mon,  4 Mar 2024 21:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKt6JEZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08336C433F1;
+	Mon,  4 Mar 2024 21:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587883;
-	bh=UF57pj+/1BJKmhE3SQz0+o69Vt4N5+oyj71J9xrRwUs=;
+	s=korg; t=1709587886;
+	bh=ebEmz0DvRm0llzc+67bmT0/kBk5kR7bclwL6dZep3oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CARVqQx1S2RQx0ABRUuXs2wSrgp/DmwzGWbULN+OPu3DHVMNtkNp066oJQ1J2j5dJ
-	 PslA0I1PPWgrLIx1LO7CUAIBwGTClyJ7yuonvtwNOV5UtPcfr7yxrKC8JSZ1immXhi
-	 1jZ8own05rqFUPYKbo8gCKiEZiTZGJAhNMk9dbFY=
+	b=OKt6JEZqfTdZc4OfzSphAQjBT5bNJIMjGilSUw003ZplJdetW1vBXGqqeg9Ixuae9
+	 EzluKJgehSd7R+dB3dvPJyBLww1PtRoO6FKQm+ad/zq6vOpBYi7VDEvxyysJ43LFzm
+	 SSyXVZlW1l7wYWddOV4JXzH20yjjpRKU7kPAOrNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 127/162] mptcp: fix potential wake-up event loss
-Date: Mon,  4 Mar 2024 21:23:12 +0000
-Message-ID: <20240304211555.807413023@linuxfoundation.org>
+Subject: [PATCH 6.7 128/162] mptcp: fix double-free on socket dismantle
+Date: Mon,  4 Mar 2024 21:23:13 +0000
+Message-ID: <20240304211555.837157296@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,72 +52,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit b111d8fbd2cbc63e05f3adfbbe0d4df655dfcc5b upstream.
+commit 10048689def7e40a4405acda16fdc6477d4ecc5c upstream.
 
-After the blamed commit below, the send buffer auto-tuning can
-happen after that the mptcp_propagate_sndbuf() completes - via
-the delegated action infrastructure.
+when MPTCP server accepts an incoming connection, it clones its listener
+socket. However, the pointer to 'inet_opt' for the new socket has the same
+value as the original one: as a consequence, on program exit it's possible
+to observe the following splat:
 
-We must check for write space even after such change or we risk
-missing the wake-up event.
+  BUG: KASAN: double-free in inet_sock_destruct+0x54f/0x8b0
+  Free of addr ffff888485950880 by task swapper/25/0
 
-Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+  CPU: 25 PID: 0 Comm: swapper/25 Kdump: loaded Not tainted 6.8.0-rc1+ #609
+  Hardware name: Supermicro SYS-6027R-72RF/X9DRH-7TF/7F/iTF/iF, BIOS 3.0  07/26/2013
+  Call Trace:
+   <IRQ>
+   dump_stack_lvl+0x32/0x50
+   print_report+0xca/0x620
+   kasan_report_invalid_free+0x64/0x90
+   __kasan_slab_free+0x1aa/0x1f0
+   kfree+0xed/0x2e0
+   inet_sock_destruct+0x54f/0x8b0
+   __sk_destruct+0x48/0x5b0
+   rcu_do_batch+0x34e/0xd90
+   rcu_core+0x559/0xac0
+   __do_softirq+0x183/0x5a4
+   irq_exit_rcu+0x12d/0x170
+   sysvec_apic_timer_interrupt+0x6b/0x80
+   </IRQ>
+   <TASK>
+   asm_sysvec_apic_timer_interrupt+0x16/0x20
+  RIP: 0010:cpuidle_enter_state+0x175/0x300
+  Code: 30 00 0f 84 1f 01 00 00 83 e8 01 83 f8 ff 75 e5 48 83 c4 18 44 89 e8 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc fb 45 85 ed <0f> 89 60 ff ff ff 48 c1 e5 06 48 c7 43 18 00 00 00 00 48 83 44 2b
+  RSP: 0018:ffff888481cf7d90 EFLAGS: 00000202
+  RAX: 0000000000000000 RBX: ffff88887facddc8 RCX: 0000000000000000
+  RDX: 1ffff1110ff588b1 RSI: 0000000000000019 RDI: ffff88887fac4588
+  RBP: 0000000000000004 R08: 0000000000000002 R09: 0000000000043080
+  R10: 0009b02ea273363f R11: ffff88887fabf42b R12: ffffffff932592e0
+  R13: 0000000000000004 R14: 0000000000000000 R15: 00000022c880ec80
+   cpuidle_enter+0x4a/0xa0
+   do_idle+0x310/0x410
+   cpu_startup_entry+0x51/0x60
+   start_secondary+0x211/0x270
+   secondary_startup_64_no_verify+0x184/0x18b
+   </TASK>
+
+  Allocated by task 6853:
+   kasan_save_stack+0x1c/0x40
+   kasan_save_track+0x10/0x30
+   __kasan_kmalloc+0xa6/0xb0
+   __kmalloc+0x1eb/0x450
+   cipso_v4_sock_setattr+0x96/0x360
+   netlbl_sock_setattr+0x132/0x1f0
+   selinux_netlbl_socket_post_create+0x6c/0x110
+   selinux_socket_post_create+0x37b/0x7f0
+   security_socket_post_create+0x63/0xb0
+   __sock_create+0x305/0x450
+   __sys_socket_create.part.23+0xbd/0x130
+   __sys_socket+0x37/0xb0
+   __x64_sys_socket+0x6f/0xb0
+   do_syscall_64+0x83/0x160
+   entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+  Freed by task 6858:
+   kasan_save_stack+0x1c/0x40
+   kasan_save_track+0x10/0x30
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x12c/0x1f0
+   kfree+0xed/0x2e0
+   inet_sock_destruct+0x54f/0x8b0
+   __sk_destruct+0x48/0x5b0
+   subflow_ulp_release+0x1f0/0x250
+   tcp_cleanup_ulp+0x6e/0x110
+   tcp_v4_destroy_sock+0x5a/0x3a0
+   inet_csk_destroy_sock+0x135/0x390
+   tcp_fin+0x416/0x5c0
+   tcp_data_queue+0x1bc8/0x4310
+   tcp_rcv_state_process+0x15a3/0x47b0
+   tcp_v4_do_rcv+0x2c1/0x990
+   tcp_v4_rcv+0x41fb/0x5ed0
+   ip_protocol_deliver_rcu+0x6d/0x9f0
+   ip_local_deliver_finish+0x278/0x360
+   ip_local_deliver+0x182/0x2c0
+   ip_rcv+0xb5/0x1c0
+   __netif_receive_skb_one_core+0x16e/0x1b0
+   process_backlog+0x1e3/0x650
+   __napi_poll+0xa6/0x500
+   net_rx_action+0x740/0xbb0
+   __do_softirq+0x183/0x5a4
+
+  The buggy address belongs to the object at ffff888485950880
+   which belongs to the cache kmalloc-64 of size 64
+  The buggy address is located 0 bytes inside of
+   64-byte region [ffff888485950880, ffff8884859508c0)
+
+  The buggy address belongs to the physical page:
+  page:0000000056d1e95e refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff888485950700 pfn:0x485950
+  flags: 0x57ffffc0000800(slab|node=1|zone=2|lastcpupid=0x1fffff)
+  page_type: 0xffffffff()
+  raw: 0057ffffc0000800 ffff88810004c640 ffffea00121b8ac0 dead000000000006
+  raw: ffff888485950700 0000000000200019 00000001ffffffff 0000000000000000
+  page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+   ffff888485950780: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+   ffff888485950800: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+  >ffff888485950880: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                     ^
+   ffff888485950900: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+   ffff888485950980: 00 00 00 00 00 01 fc fc fc fc fc fc fc fc fc fc
+
+Something similar (a refcount underflow) happens with CALIPSO/IPv6. Fix
+this by duplicating IP / IPv6 options after clone, so that
+ip{,6}_sock_destruct() doesn't end up freeing the same memory area twice.
+
+Fixes: cf7da0d66cc1 ("mptcp: Create SUBFLOW socket for incoming connections")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-6-162e87e48497@kernel.org
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-8-162e87e48497@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.h |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/mptcp/protocol.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -790,6 +790,16 @@ static inline bool mptcp_data_fin_enable
- 	       READ_ONCE(msk->write_seq) == READ_ONCE(msk->snd_nxt);
- }
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3192,8 +3192,50 @@ static struct ipv6_pinfo *mptcp_inet6_sk
  
-+static inline void mptcp_write_space(struct sock *sk)
+ 	return (struct ipv6_pinfo *)(((u8 *)sk) + offset);
+ }
++
++static void mptcp_copy_ip6_options(struct sock *newsk, const struct sock *sk)
 +{
-+	if (sk_stream_is_writeable(sk)) {
-+		/* pairs with memory barrier in mptcp_poll */
-+		smp_mb();
-+		if (test_and_clear_bit(MPTCP_NOSPACE, &mptcp_sk(sk)->flags))
-+			sk_stream_write_space(sk);
++	const struct ipv6_pinfo *np = inet6_sk(sk);
++	struct ipv6_txoptions *opt;
++	struct ipv6_pinfo *newnp;
++
++	newnp = inet6_sk(newsk);
++
++	rcu_read_lock();
++	opt = rcu_dereference(np->opt);
++	if (opt) {
++		opt = ipv6_dup_options(newsk, opt);
++		if (!opt)
++			net_warn_ratelimited("%s: Failed to copy ip6 options\n", __func__);
 +	}
++	RCU_INIT_POINTER(newnp->opt, opt);
++	rcu_read_unlock();
++}
+ #endif
+ 
++static void mptcp_copy_ip_options(struct sock *newsk, const struct sock *sk)
++{
++	struct ip_options_rcu *inet_opt, *newopt = NULL;
++	const struct inet_sock *inet = inet_sk(sk);
++	struct inet_sock *newinet;
++
++	newinet = inet_sk(newsk);
++
++	rcu_read_lock();
++	inet_opt = rcu_dereference(inet->inet_opt);
++	if (inet_opt) {
++		newopt = sock_kmalloc(newsk, sizeof(*inet_opt) +
++				      inet_opt->opt.optlen, GFP_ATOMIC);
++		if (newopt)
++			memcpy(newopt, inet_opt, sizeof(*inet_opt) +
++			       inet_opt->opt.optlen);
++		else
++			net_warn_ratelimited("%s: Failed to copy ip options\n", __func__);
++	}
++	RCU_INIT_POINTER(newinet->inet_opt, newopt);
++	rcu_read_unlock();
 +}
 +
- static inline void __mptcp_sync_sndbuf(struct sock *sk)
- {
- 	struct mptcp_subflow_context *subflow;
-@@ -808,6 +818,7 @@ static inline void __mptcp_sync_sndbuf(s
+ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 				 const struct mptcp_options_received *mp_opt,
+ 				 struct sock *ssk,
+@@ -3214,6 +3256,13 @@ struct sock *mptcp_sk_clone_init(const s
  
- 	/* the msk max wmem limit is <nr_subflows> * tcp wmem[2] */
- 	WRITE_ONCE(sk->sk_sndbuf, new_sndbuf);
-+	mptcp_write_space(sk);
- }
+ 	__mptcp_init_sock(nsk);
  
- /* The called held both the msk socket and the subflow socket locks,
-@@ -838,16 +849,6 @@ static inline void mptcp_propagate_sndbu
- 	local_bh_enable();
- }
- 
--static inline void mptcp_write_space(struct sock *sk)
--{
--	if (sk_stream_is_writeable(sk)) {
--		/* pairs with memory barrier in mptcp_poll */
--		smp_mb();
--		if (test_and_clear_bit(MPTCP_NOSPACE, &mptcp_sk(sk)->flags))
--			sk_stream_write_space(sk);
--	}
--}
--
- void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags);
- 
- #define MPTCP_TOKEN_MAX_RETRIES	4
++#if IS_ENABLED(CONFIG_MPTCP_IPV6)
++	if (nsk->sk_family == AF_INET6)
++		mptcp_copy_ip6_options(nsk, sk);
++	else
++#endif
++		mptcp_copy_ip_options(nsk, sk);
++
+ 	msk = mptcp_sk(nsk);
+ 	msk->local_key = subflow_req->local_key;
+ 	msk->token = subflow_req->token;
 
 
