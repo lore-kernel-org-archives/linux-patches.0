@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257E41C6AB;
-	Mon,  4 Mar 2024 21:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D332D1C6AB;
+	Mon,  4 Mar 2024 21:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589179; cv=none; b=oiZbplGi1xDtkvVrpHl06XoGI5im4Pc8YLUlokOeGgmSGTanWAU7AEZN3W43fXMg8TGbF+96vBxcTX0A9ySajeaaNJlXBJ6tgs5Bok8x2Fh70pMvPZzLuZ6VmQ/5doYqh/tLv0nqC3yU0v1bID1xzSZ3xvkoB3QLF0uG4aQxZgM=
+	t=1709589181; cv=none; b=rZLDLJfoMCfzKFbql3iGVg86KsmpneTke/rkSAROxhfr6QJ4imLFAipItGHhcigobmd+N3/jJose/pJ8tU/mpi867Ngf3xTkKQhIZ3vEUgu+Wx+v92qAYk7vSmYgcxJT+fMbbE/tNuODtL+xs7Dl2VyYPRPwmWufa2J5J6Wd5sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589179; c=relaxed/simple;
-	bh=3mVd6FmxEPYwbjvldeEGf+1fpKquUbZYkVlAY0RrHk8=;
+	s=arc-20240116; t=1709589181; c=relaxed/simple;
+	bh=nFW0o9edDUgCj/m6Hd9SR0QOuvdoErUcrMQs5WRWScs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFJl0tFCW2y66WXCLfs+dGmOJKsgdHOh3hxKrxpQDFy2kFwtqjzFAXL6tViNjw7yjmcXHyWBNW6PjU57pUU3WsbebP8DRJ/FXLd+TIp7Eqjme3qA6ZrzjTC9F7NGsqFVYkUXU2IPJJvFzHG1WU7S0a4UJbqq4ArwLntuUpKBThs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Z12UN7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uh0tqv1JW5ObYFrlLrjKtK5i0lyfNJgDDW1O7f/5KakuXpRxlvjn9GDsGb0uLkiHR4t0gDWE93mXIUCP71O7d90V86gLQStKcGT2ulNEhMKdMMylGZdr905s/s2+JyubcheKDK1zyEEyzfo7ilf2juonbgBTE+uZIFSj73oCOG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmgQDztX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Z12UN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBD2C433F1;
-	Mon,  4 Mar 2024 21:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmgQDztX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B1C43390;
+	Mon,  4 Mar 2024 21:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589179;
-	bh=3mVd6FmxEPYwbjvldeEGf+1fpKquUbZYkVlAY0RrHk8=;
+	s=korg; t=1709589181;
+	bh=nFW0o9edDUgCj/m6Hd9SR0QOuvdoErUcrMQs5WRWScs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8Z12UN7qgeGsXPKnctxse5fA1hfcDiunbHoiuIrCveUH1V1eeMBa40KHVM04TGLj
-	 iMtC40ap+0h8r2Y3Djz2tyrCOaSsd5F7Tbv4u+TYt9O2qBRy+saxspI30WI3b1RcEC
-	 GDL1gn75iytIK5Eu3estQKURTJr8YMW7wIj7Ja3U=
+	b=BmgQDztXFsA+jWL9tiyKiqKPqD4aAq/mtyyBT8zgoTIKWsP60TxaabtQJrWojL7ZD
+	 YOrCrBXFeuCiek4BMbj7uZjxHeFgzxFwIok3aVq4BKflwA13TS/6J23KN4KPruPLg0
+	 72sgkp+tch06HnFPddW+CjgARc5NQIDZVVwRo7YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@openvz.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/84] net: enable memcg accounting for veth queues
-Date: Mon,  4 Mar 2024 21:23:43 +0000
-Message-ID: <20240304211542.689475710@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Miao Wang <shankerwangmiao@gmail.com>
+Subject: [PATCH 5.15 11/84] veth: try harder when allocating queue memory
+Date: Mon,  4 Mar 2024 21:23:44 +0000
+Message-ID: <20240304211542.721162865@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,35 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Averin <vvs@openvz.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 961c6136359eef38a8c023d02028fdcd123f02a6 ]
+[ Upstream commit 1ce7d306ea63f3e379557c79abd88052e0483813 ]
 
-veth netdevice defines own rx queues and allocates array containing
-up to 4095 ~750-bytes-long 'struct veth_rq' elements. Such allocation
-is quite huge and should be accounted to memcg.
+struct veth_rq is pretty large, 832B total without debug
+options enabled. Since commit under Fixes we try to pre-allocate
+enough queues for every possible CPU. Miao Wang reports that
+this may lead to order-5 allocations which will fail in production.
 
-Signed-off-by: Vasily Averin <vvs@openvz.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 1ce7d306ea63 ("veth: try harder when allocating queue memory")
+Let the allocation fallback to vmalloc() and try harder.
+These are the same flags we pass to netdev queue allocation.
+
+Reported-and-tested-by: Miao Wang <shankerwangmiao@gmail.com>
+Fixes: 9d3684c24a52 ("veth: create by default nr_possible_cpus queues")
+Link: https://lore.kernel.org/all/5F52CAE2-2FB7-4712-95F1-3312FBBFA8DD@gmail.com/
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240223235908.693010-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/veth.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 85c3e12f83627..87cee614618ca 100644
+index 87cee614618ca..0102f86d48676 100644
 --- a/drivers/net/veth.c
 +++ b/drivers/net/veth.c
-@@ -1303,7 +1303,7 @@ static int veth_alloc_queues(struct net_device *dev)
+@@ -1303,7 +1303,8 @@ static int veth_alloc_queues(struct net_device *dev)
  	struct veth_priv *priv = netdev_priv(dev);
  	int i;
  
--	priv->rq = kcalloc(dev->num_rx_queues, sizeof(*priv->rq), GFP_KERNEL);
-+	priv->rq = kcalloc(dev->num_rx_queues, sizeof(*priv->rq), GFP_KERNEL_ACCOUNT);
+-	priv->rq = kcalloc(dev->num_rx_queues, sizeof(*priv->rq), GFP_KERNEL_ACCOUNT);
++	priv->rq = kvcalloc(dev->num_rx_queues, sizeof(*priv->rq),
++			    GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
  	if (!priv->rq)
  		return -ENOMEM;
  
+@@ -1319,7 +1320,7 @@ static void veth_free_queues(struct net_device *dev)
+ {
+ 	struct veth_priv *priv = netdev_priv(dev);
+ 
+-	kfree(priv->rq);
++	kvfree(priv->rq);
+ }
+ 
+ static int veth_dev_init(struct net_device *dev)
 -- 
 2.43.0
 
