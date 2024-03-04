@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5D21C687;
-	Mon,  4 Mar 2024 21:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FAB1C687;
+	Mon,  4 Mar 2024 21:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588065; cv=none; b=MS30CuQvoylLTLuAmjPxDXWCRaUKMY7jRNwhooToCpLBkE6NWKbHLQLd8s9rJLPeoj9jg08bSRWuHH2qnttfUzafb/rI2/xoUijHBjIM1uLbsKD/3yPx+Ib/E27mBdgzWfYhksfYMaKF3rRq7QWa7OYPsnmJhQ+UZsVlJHA4a9Q=
+	t=1709588068; cv=none; b=FOp48Sz+05+bXJWF+MviUDUobImnd9ixR+pZIYgUZTnuJqzjsqd4vOqP3Ht3EVA4Pi3zWqUQh2igxpVAED9Ee7SRJYcmgXzMAXXU7MCZ0Cug1ehvKrkXtg8zQY9I2dk9xNHm/Mw+aEcw4PvxAgNb+Pws5EHRXtmym1WYl5gDOQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588065; c=relaxed/simple;
-	bh=Lc64I/vcqIstVeycwSbFp0XnP5bAGs+dYb11XiVtgbU=;
+	s=arc-20240116; t=1709588068; c=relaxed/simple;
+	bh=971bjp9QehgN0+7BqILEz1RK8MKWg9Zv4XC3bUPi3Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gkr/2NUijqiq6JmmaXXOYMxMo9u8jgjrTcG1Blafhwy0RSaDk78m6c54sxtQnQR6KJYmP+/INl9mVulGirAuCXkTWRt/pNnaIKzju3QlOpufZ6sm2E5nrRWT6dKXWAl9BJP7J27II71IKErOxmNPk0owbLmRx1j09b5wOU73/Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuS8pcr9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1Rt7SMR3jRefoGv+Flp3F37enbr4iVMd3TU/0aKxHVPpcvIo7A/GmMAppsJzY2PD+rlj50U+OUJ6UTIxyaJEKWXqvNWzyGJwPWI9gA9gkp0rTAsIAHTKwpMXn6+OaN6CPpGGNVEdZk+uyMqeuq93OxQzGmK4Si6ck/x3DNojzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMn74fjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuS8pcr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0366DC433F1;
-	Mon,  4 Mar 2024 21:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMn74fjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9164CC433F1;
+	Mon,  4 Mar 2024 21:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588065;
-	bh=Lc64I/vcqIstVeycwSbFp0XnP5bAGs+dYb11XiVtgbU=;
+	s=korg; t=1709588067;
+	bh=971bjp9QehgN0+7BqILEz1RK8MKWg9Zv4XC3bUPi3Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuS8pcr9x4deqKFJyceGUrLZHw4p1eOu7Tr0i7bdg4OME2I+RnEaiEY2ImDtomDrl
-	 tMNzsLfdR5WECzoIPD68UqYH4ov7R9/Tb+IZQLFXf+ilVO0Xklk+QLvbxabs3n3xkV
-	 IObYgB3+qS62SODbEIvcmSkJTIKnyu7/B1tg1+fc=
+	b=SMn74fjfC2pLKmdjWNaO7jhCtu+0D1/ODEzX1T8SqcYgODGNPQEoGRFGAajVAvw1o
+	 iSkN4tCEmPe2v7Wa0pNlzKfKmFRGdejo62ZO0TzxPCCjAftYgk/rhBIszqLMZUGqKg
+	 DvNJRQ63gD4+YF93fQO7lUPcjyC3jH/TGZBNc3Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
-Subject: [PATCH 5.4 24/25] fs,hugetlb: fix NULL pointer dereference in hugetlbs_fill_super
-Date: Mon,  4 Mar 2024 21:24:00 +0000
-Message-ID: <20240304211536.574096064@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 01/42] platform/x86: touchscreen_dmi: Allow partial (prefix) matches for ACPI names
+Date: Mon,  4 Mar 2024 21:23:28 +0000
+Message-ID: <20240304211537.679129630@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
-References: <20240304211535.741936181@linuxfoundation.org>
+In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
+References: <20240304211537.631764077@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,191 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 79d72c68c58784a3e1cd2378669d51bfd0cb7498 upstream.
+[ Upstream commit dbcbfd662a725641d118fb3ae5ffb7be4e3d0fb0 ]
 
-When configuring a hugetlb filesystem via the fsconfig() syscall, there is
-a possible NULL dereference in hugetlbfs_fill_super() caused by assigning
-NULL to ctx->hstate in hugetlbfs_parse_param() when the requested pagesize
-is non valid.
+On some devices the ACPI name of the touchscreen is e.g. either
+MSSL1680:00 or MSSL1680:01 depending on the BIOS version.
 
-E.g: Taking the following steps:
+This happens for example on the "Chuwi Hi8 Air" tablet where the initial
+commit's ts_data uses "MSSL1680:00" but the tablets from the github issue
+and linux-hardware.org probe linked below both use "MSSL1680:01".
 
-     fd =3D fsopen("hugetlbfs", FSOPEN_CLOEXEC);
-     fsconfig(fd, FSCONFIG_SET_STRING, "pagesize", "1024", 0);
-     fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0);
+Replace the strcmp() match on ts_data->acpi_name with a strstarts()
+check to allow using a partial match on just the ACPI HID of "MSSL1680"
+and change the ts_data->acpi_name for the "Chuwi Hi8 Air" accordingly
+to fix the touchscreen not working on models where it is "MSSL1680:01".
 
-Given that the requested "pagesize" is invalid, ctxt->hstate will be replac=
-ed
-with NULL, losing its previous value, and we will print an error:
+Note this drops the length check for I2C_NAME_SIZE. This never was
+necessary since the ACPI names used are never more then 11 chars and
+I2C_NAME_SIZE is 20 so the replaced strncmp() would always stop long
+before reaching I2C_NAME_SIZE.
 
- ...
- ...
- case Opt_pagesize:
- ps =3D memparse(param->string, &rest);
- ctx->hstate =3D h;
- if (!ctx->hstate) {
-         pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
-         return -EINVAL;
- }
- return 0;
- ...
- ...
-
-This is a problem because later on, we will dereference ctxt->hstate in
-hugetlbfs_fill_super()
-
- ...
- ...
- sb->s_blocksize =3D huge_page_size(ctx->hstate);
- ...
- ...
-
-Causing below Oops.
-
-Fix this by replacing cxt->hstate value only when then pagesize is known
-to be valid.
-
- kernel: hugetlbfs: Unsupported page size 0 MB
- kernel: BUG: kernel NULL pointer dereference, address: 0000000000000028
- kernel: #PF: supervisor read access in kernel mode
- kernel: #PF: error_code(0x0000) - not-present page
- kernel: PGD 800000010f66c067 P4D 800000010f66c067 PUD 1b22f8067 PMD 0
- kernel: Oops: 0000 [#1] PREEMPT SMP PTI
- kernel: CPU: 4 PID: 5659 Comm: syscall Tainted: G            E      6.8.0-=
-rc2-default+ #22 5a47c3fef76212addcc6eb71344aabc35190ae8f
- kernel: Hardware name: Intel Corp. GROVEPORT/GROVEPORT, BIOS GVPRCRB1.86B.=
-0016.D04.1705030402 05/03/2017
- kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
- kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
-00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
-8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
- kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
- kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
- kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
- kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
- kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
- kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
- kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
-0000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
- kernel: Call Trace:
- kernel:  <TASK>
- kernel:  ? __die_body+0x1a/0x60
- kernel:  ? page_fault_oops+0x16f/0x4a0
- kernel:  ? search_bpf_extables+0x65/0x70
- kernel:  ? fixup_exception+0x22/0x310
- kernel:  ? exc_page_fault+0x69/0x150
- kernel:  ? asm_exc_page_fault+0x22/0x30
- kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
- kernel:  ? hugetlbfs_fill_super+0xb4/0x1a0
- kernel:  ? hugetlbfs_fill_super+0x28/0x1a0
- kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
- kernel:  vfs_get_super+0x40/0xa0
- kernel:  ? __pfx_bpf_lsm_capable+0x10/0x10
- kernel:  vfs_get_tree+0x25/0xd0
- kernel:  vfs_cmd_create+0x64/0xe0
- kernel:  __x64_sys_fsconfig+0x395/0x410
- kernel:  do_syscall_64+0x80/0x160
- kernel:  ? syscall_exit_to_user_mode+0x82/0x240
- kernel:  ? do_syscall_64+0x8d/0x160
- kernel:  ? syscall_exit_to_user_mode+0x82/0x240
- kernel:  ? do_syscall_64+0x8d/0x160
- kernel:  ? exc_page_fault+0x69/0x150
- kernel:  entry_SYSCALL_64_after_hwframe+0x6e/0x76
- kernel: RIP: 0033:0x7ffbc0cb87c9
- kernel: Code: 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 90 48 89 f8 =
-48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 0=
-1 f0 ff ff 73 01 c3 48 8b 0d 97 96 0d 00 f7 d8 64 89 01 48
- kernel: RSP: 002b:00007ffc29d2f388 EFLAGS: 00000206 ORIG_RAX: 000000000000=
-01af
- kernel: RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffbc0cb87c9
- kernel: RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
- kernel: RBP: 00007ffc29d2f3b0 R08: 0000000000000000 R09: 0000000000000000
- kernel: R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
- kernel: R13: 00007ffc29d2f4c0 R14: 0000000000000000 R15: 0000000000000000
- kernel:  </TASK>
- kernel: Modules linked in: rpcsec_gss_krb5(E) auth_rpcgss(E) nfsv4(E) dns_=
-resolver(E) nfs(E) lockd(E) grace(E) sunrpc(E) netfs(E) af_packet(E) bridge=
-(E) stp(E) llc(E) iscsi_ibft(E) iscsi_boot_sysfs(E) intel_rapl_msr(E) intel=
-_rapl_common(E) iTCO_wdt(E) intel_pmc_bxt(E) sb_edac(E) iTCO_vendor_support=
-(E) x86_pkg_temp_thermal(E) intel_powerclamp(E) coretemp(E) kvm_intel(E) rf=
-kill(E) ipmi_ssif(E) kvm(E) acpi_ipmi(E) irqbypass(E) pcspkr(E) igb(E) ipmi=
-_si(E) mei_me(E) i2c_i801(E) joydev(E) intel_pch_thermal(E) i2c_smbus(E) dc=
-a(E) lpc_ich(E) mei(E) ipmi_devintf(E) ipmi_msghandler(E) acpi_pad(E) tiny_=
-power_button(E) button(E) fuse(E) efi_pstore(E) configfs(E) ip_tables(E) x_=
-tables(E) ext4(E) mbcache(E) jbd2(E) hid_generic(E) usbhid(E) sd_mod(E) t10=
-_pi(E) crct10dif_pclmul(E) crc32_pclmul(E) crc32c_intel(E) polyval_clmulni(=
-E) ahci(E) xhci_pci(E) polyval_generic(E) gf128mul(E) ghash_clmulni_intel(E=
-) sha512_ssse3(E) sha256_ssse3(E) xhci_pci_renesas(E) libahci(E) ehci_pci(E=
-) sha1_ssse3(E) xhci_hcd(E) ehci_hcd(E) libata(E)
- kernel:  mgag200(E) i2c_algo_bit(E) usbcore(E) wmi(E) sg(E) dm_multipath(E=
-) dm_mod(E) scsi_dh_rdac(E) scsi_dh_emc(E) scsi_dh_alua(E) scsi_mod(E) scsi=
-_common(E) aesni_intel(E) crypto_simd(E) cryptd(E)
- kernel: Unloaded tainted modules: acpi_cpufreq(E):1 fjes(E):1
- kernel: CR2: 0000000000000028
- kernel: ---[ end trace 0000000000000000 ]---
- kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
- kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
-00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
-8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
- kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
- kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
- kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
- kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
- kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
- kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
- kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
-0000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
-
-Link: https://lkml.kernel.org/r/20240130210418.3771-1-osalvador@suse.de
-Fixes: 32021982a324 ("hugetlbfs: Convert to fs_context")
-Signed-off-by: Michal Hocko <mhocko@suse.com>
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@bro=
-adcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://linux-hardware.org/?computer=AC4301C0542A
+Fixes: bbb97d728f77 ("platform/x86: touchscreen_dmi: Add info for the Chuwi Hi8 Air tablet")
+Closes: https://github.com/onitake/gsl-firmware/issues/91
+Cc: stable@vger.kernel.org
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240212120608.30469-1-hdegoede@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/platform/x86/touchscreen_dmi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -1205,6 +1205,7 @@ static int hugetlbfs_parse_param(struct
- {
- 	struct hugetlbfs_fs_context *ctx =3D fc->fs_private;
- 	struct fs_parse_result result;
-+	struct hstate *h;
- 	char *rest;
- 	unsigned long ps;
- 	int opt;
-@@ -1249,11 +1250,12 @@ static int hugetlbfs_parse_param(struct
-=20
- 	case Opt_pagesize:
- 		ps =3D memparse(param->string, &rest);
--		ctx->hstate =3D size_to_hstate(ps);
--		if (!ctx->hstate) {
-+		h =3D size_to_hstate(ps);
-+		if (!h) {
- 			pr_err("Unsupported page size %lu MB\n", ps >> 20);
- 			return -EINVAL;
- 		}
-+		ctx->hstate =3D h;
- 		return 0;
-=20
- 	case Opt_min_size:
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -50,7 +50,7 @@ static const struct property_entry chuwi
+ };
+ 
+ static const struct ts_dmi_data chuwi_hi8_air_data = {
+-	.acpi_name	= "MSSL1680:00",
++	.acpi_name	= "MSSL1680",
+ 	.properties	= chuwi_hi8_air_props,
+ };
+ 
+@@ -1648,7 +1648,7 @@ static void ts_dmi_add_props(struct i2c_
+ 	int error;
+ 
+ 	if (has_acpi_companion(dev) &&
+-	    !strncmp(ts_data->acpi_name, client->name, I2C_NAME_SIZE)) {
++	    strstarts(client->name, ts_data->acpi_name)) {
+ 		error = device_add_properties(dev, ts_data->properties);
+ 		if (error)
+ 			dev_err(dev, "failed to add properties: %d\n", error);
 
 
