@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467181F60A;
-	Mon,  4 Mar 2024 21:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62451C687;
+	Mon,  4 Mar 2024 21:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588029; cv=none; b=god5ZFYx/T6x91qML6ayl3rgMVuoS4w2Tkdd3/CozubWutFCUQB7r5OpXchlhhd7bXU4xxnWM9gDlRDE9JonHbmNt7Ww1JKRmZcmULvQkqLOu9nBHQ3I+gmRRHU8UzxtXmZxiBW6pDMwg5G3G0ceLZEawO8ZDSZQH8hiQrcIsZA=
+	t=1709588031; cv=none; b=NbUXGCQ080rQ0QZSeWx/VDM5DSgjNiTOh1xiXU2B9SrwakogH7gnVriD6vMmXEMs0n3OUx+0Kjb8/jv8Q/LZARcFv850FVFwaO0zw4iSRsMNcxfQZTmaT0KPobeJp/46s54afOPrFqO9B+U7psFkeHqcJhqs/Q1xrVyut0BeWFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588029; c=relaxed/simple;
-	bh=q3dFDt5oV0R5AhtZbBTTvakrCOc7pikQDSdrOYhevsc=;
+	s=arc-20240116; t=1709588031; c=relaxed/simple;
+	bh=HrXtEb3LOsBq79Xc3wAur2nv4fF5+AaQPGenow+GQv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNvq00Sr27RddQUigQKZ21MLs3HrUDqKgTbsAts2dCGs/207wQl1c6lhy8MDOJ6eU7gzq3If4CQxeyeTQf9rE0fxzr0SsMBUobIiJigxBQasV+ZkSL2oAZtLRPGyQPCLWk0UtFk9hDkibwIz1ZMUmGd/9UlzLqh7jfXxqCaBUgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqTAp/Zu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ez40NH/7HCaLgkD8MZsuYaJ8OffLi/H580Q4OLSwsdvRkOllMtbagws4gURefakkVJ/2te1KD7Zdm1+owAj7xWsaJT+RoQShDShPr4QSbT7+t51gt46cZfRaTyQaHSfxIuKfGUwK3gFHvH87x3CXDXVGvY/h+IEUuI652ictgb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUTZA0BR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqTAp/Zu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C9C433F1;
-	Mon,  4 Mar 2024 21:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUTZA0BR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679C0C433C7;
+	Mon,  4 Mar 2024 21:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588029;
-	bh=q3dFDt5oV0R5AhtZbBTTvakrCOc7pikQDSdrOYhevsc=;
+	s=korg; t=1709588031;
+	bh=HrXtEb3LOsBq79Xc3wAur2nv4fF5+AaQPGenow+GQv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqTAp/ZupxCQ0TbVgMoxAs3kGEk+rb5W094K49IBVQQaPHTQpaU+2eXQwp2VUu4y6
-	 iqe0XPDRPziztU4Lu3hSc65f2RNwEKllK214c3zKCyhetT4WLQocIFCwO9NEOG4LSG
-	 QQjlWnonjTJb+dghOUsZWYtT2YWUCNhlQbzAfN+g=
+	b=MUTZA0BRPVqoMEamiWfc6oCIQmUq/++/sZA0Nvv8coIEv2cLIdsGNlj5qAW7qEjXD
+	 p5FfS8pq3BYC1fhqp1YNM2Jr86fNd+FfBK0dYiECOxPFCp4tyg+At90gHT1LBYvvSO
+	 gxpEXs4tuoKic/CO+3/aaFa0LIBK1yXfN6wO+3z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+bfde3bef047a81b8fde6@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 02/25] net: ip_tunnel: prevent perpetual headroom growth
-Date: Mon,  4 Mar 2024 21:23:38 +0000
-Message-ID: <20240304211535.821009358@linuxfoundation.org>
+	Curtis Klein <curtis.klein@hpe.com>,
+	Yi Zhao <yi.zhao@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.4 20/25] dmaengine: fsl-qdma: init irq after reg initialization
+Date: Mon,  4 Mar 2024 21:23:56 +0000
+Message-ID: <20240304211536.434173183@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -53,181 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Curtis Klein <curtis.klein@hpe.com>
 
-[ Upstream commit 5ae1e9922bbdbaeb9cfbe91085ab75927488ac0f ]
+commit 87a39071e0b639f45e05d296cc0538eef44ec0bd upstream.
 
-syzkaller triggered following kasan splat:
-BUG: KASAN: use-after-free in __skb_flow_dissect+0x19d1/0x7a50 net/core/flow_dissector.c:1170
-Read of size 1 at addr ffff88812fb4000e by task syz-executor183/5191
-[..]
- kasan_report+0xda/0x110 mm/kasan/report.c:588
- __skb_flow_dissect+0x19d1/0x7a50 net/core/flow_dissector.c:1170
- skb_flow_dissect_flow_keys include/linux/skbuff.h:1514 [inline]
- ___skb_get_hash net/core/flow_dissector.c:1791 [inline]
- __skb_get_hash+0xc7/0x540 net/core/flow_dissector.c:1856
- skb_get_hash include/linux/skbuff.h:1556 [inline]
- ip_tunnel_xmit+0x1855/0x33c0 net/ipv4/ip_tunnel.c:748
- ipip_tunnel_xmit+0x3cc/0x4e0 net/ipv4/ipip.c:308
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3564
- __dev_queue_xmit+0x7c1/0x3d60 net/core/dev.c:4349
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- neigh_connected_output+0x42c/0x5d0 net/core/neighbour.c:1592
- ...
- ip_finish_output2+0x833/0x2550 net/ipv4/ip_output.c:235
- ip_finish_output+0x31/0x310 net/ipv4/ip_output.c:323
- ..
- iptunnel_xmit+0x5b4/0x9b0 net/ipv4/ip_tunnel_core.c:82
- ip_tunnel_xmit+0x1dbc/0x33c0 net/ipv4/ip_tunnel.c:831
- ipgre_xmit+0x4a1/0x980 net/ipv4/ip_gre.c:665
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3564
- ...
+Initialize the qDMA irqs after the registers are configured so that
+interrupts that may have been pending from a primary kernel don't get
+processed by the irq handler before it is ready to and cause panic with
+the following trace:
 
-The splat occurs because skb->data points past skb->head allocated area.
-This is because neigh layer does:
-  __skb_pull(skb, skb_network_offset(skb));
+  Call trace:
+   fsl_qdma_queue_handler+0xf8/0x3e8
+   __handle_irq_event_percpu+0x78/0x2b0
+   handle_irq_event_percpu+0x1c/0x68
+   handle_irq_event+0x44/0x78
+   handle_fasteoi_irq+0xc8/0x178
+   generic_handle_irq+0x24/0x38
+   __handle_domain_irq+0x90/0x100
+   gic_handle_irq+0x5c/0xb8
+   el1_irq+0xb8/0x180
+   _raw_spin_unlock_irqrestore+0x14/0x40
+   __setup_irq+0x4bc/0x798
+   request_threaded_irq+0xd8/0x190
+   devm_request_threaded_irq+0x74/0xe8
+   fsl_qdma_probe+0x4d4/0xca8
+   platform_drv_probe+0x50/0xa0
+   really_probe+0xe0/0x3f8
+   driver_probe_device+0x64/0x130
+   device_driver_attach+0x6c/0x78
+   __driver_attach+0xbc/0x158
+   bus_for_each_dev+0x5c/0x98
+   driver_attach+0x20/0x28
+   bus_add_driver+0x158/0x220
+   driver_register+0x60/0x110
+   __platform_driver_register+0x44/0x50
+   fsl_qdma_driver_init+0x18/0x20
+   do_one_initcall+0x48/0x258
+   kernel_init_freeable+0x1a4/0x23c
+   kernel_init+0x10/0xf8
+   ret_from_fork+0x10/0x18
 
-... but skb_network_offset() returns a negative offset and __skb_pull()
-arg is unsigned.  IOW, we skb->data gets "adjusted" by a huge value.
-
-The negative value is returned because skb->head and skb->data distance is
-more than 64k and skb->network_header (u16) has wrapped around.
-
-The bug is in the ip_tunnel infrastructure, which can cause
-dev->needed_headroom to increment ad infinitum.
-
-The syzkaller reproducer consists of packets getting routed via a gre
-tunnel, and route of gre encapsulated packets pointing at another (ipip)
-tunnel.  The ipip encapsulation finds gre0 as next output device.
-
-This results in the following pattern:
-
-1). First packet is to be sent out via gre0.
-Route lookup found an output device, ipip0.
-
-2).
-ip_tunnel_xmit for gre0 bumps gre0->needed_headroom based on the future
-output device, rt.dev->needed_headroom (ipip0).
-
-3).
-ip output / start_xmit moves skb on to ipip0. which runs the same
-code path again (xmit recursion).
-
-4).
-Routing step for the post-gre0-encap packet finds gre0 as output device
-to use for ipip0 encapsulated packet.
-
-tunl0->needed_headroom is then incremented based on the (already bumped)
-gre0 device headroom.
-
-This repeats for every future packet:
-
-gre0->needed_headroom gets inflated because previous packets' ipip0 step
-incremented rt->dev (gre0) headroom, and ipip0 incremented because gre0
-needed_headroom was increased.
-
-For each subsequent packet, gre/ipip0->needed_headroom grows until
-post-expand-head reallocations result in a skb->head/data distance of
-more than 64k.
-
-Once that happens, skb->network_header (u16) wraps around when
-pskb_expand_head tries to make sure that skb_network_offset() is unchanged
-after the headroom expansion/reallocation.
-
-After this skb_network_offset(skb) returns a different (and negative)
-result post headroom expansion.
-
-The next trip to neigh layer (or anything else that would __skb_pull the
-network header) makes skb->data point to a memory location outside
-skb->head area.
-
-v2: Cap the needed_headroom update to an arbitarily chosen upperlimit to
-prevent perpetual increase instead of dropping the headroom increment
-completely.
-
-Reported-and-tested-by: syzbot+bfde3bef047a81b8fde6@syzkaller.appspotmail.com
-Closes: https://groups.google.com/g/syzkaller-bugs/c/fL9G6GtWskY/m/VKk_PR5FBAAJ
-Fixes: 243aad830e8a ("ip_gre: include route header_len in max_headroom calculation")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240220135606.4939-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
+Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
+Signed-off-by: Yi Zhao <yi.zhao@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240201220406.440145-1-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_tunnel.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/dma/fsl-qdma.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 4559edad8cec5..ba1decf81fe32 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -547,6 +547,20 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
- 	return 0;
- }
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -1152,10 +1152,6 @@ static int fsl_qdma_probe(struct platfor
+ 	if (!fsl_qdma->queue)
+ 		return -ENOMEM;
  
-+static void ip_tunnel_adj_headroom(struct net_device *dev, unsigned int headroom)
-+{
-+	/* we must cap headroom to some upperlimit, else pskb_expand_head
-+	 * will overflow header offsets in skb_headers_offset_update().
-+	 */
-+	static const unsigned int max_allowed = 512;
-+
-+	if (headroom > max_allowed)
-+		headroom = max_allowed;
-+
-+	if (headroom > READ_ONCE(dev->needed_headroom))
-+		WRITE_ONCE(dev->needed_headroom, headroom);
-+}
-+
- void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 		       u8 proto, int tunnel_hlen)
- {
-@@ -620,13 +634,13 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 	}
- 
- 	headroom += LL_RESERVED_SPACE(rt->dst.dev) + rt->dst.header_len;
--	if (headroom > READ_ONCE(dev->needed_headroom))
--		WRITE_ONCE(dev->needed_headroom, headroom);
+-	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
+-	if (ret)
+-		return ret;
 -
--	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
-+	if (skb_cow_head(skb, headroom)) {
- 		ip_rt_put(rt);
- 		goto tx_dropped;
- 	}
-+
-+	ip_tunnel_adj_headroom(dev, headroom);
-+
- 	iptunnel_xmit(NULL, rt, skb, fl4.saddr, fl4.daddr, proto, tos, ttl,
- 		      df, !net_eq(tunnel->net, dev_net(dev)));
- 	return;
-@@ -804,16 +818,16 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	fsl_qdma->irq_base = platform_get_irq_byname(pdev, "qdma-queue0");
+ 	if (fsl_qdma->irq_base < 0)
+ 		return fsl_qdma->irq_base;
+@@ -1194,16 +1190,19 @@ static int fsl_qdma_probe(struct platfor
  
- 	max_headroom = LL_RESERVED_SPACE(rt->dst.dev) + sizeof(struct iphdr)
- 			+ rt->dst.header_len + ip_encap_hlen(&tunnel->encap);
--	if (max_headroom > READ_ONCE(dev->needed_headroom))
--		WRITE_ONCE(dev->needed_headroom, max_headroom);
+ 	platform_set_drvdata(pdev, fsl_qdma);
  
--	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
-+	if (skb_cow_head(skb, max_headroom)) {
- 		ip_rt_put(rt);
- 		dev->stats.tx_dropped++;
- 		kfree_skb(skb);
- 		return;
+-	ret = dma_async_device_register(&fsl_qdma->dma_dev);
++	ret = fsl_qdma_reg_init(fsl_qdma);
+ 	if (ret) {
+-		dev_err(&pdev->dev,
+-			"Can't register NXP Layerscape qDMA engine.\n");
++		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
+ 		return ret;
  	}
  
-+	ip_tunnel_adj_headroom(dev, max_headroom);
+-	ret = fsl_qdma_reg_init(fsl_qdma);
++	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
++	if (ret)
++		return ret;
 +
- 	iptunnel_xmit(NULL, rt, skb, fl4.saddr, fl4.daddr, protocol, tos, ttl,
- 		      df, !net_eq(tunnel->net, dev_net(dev)));
- 	return;
--- 
-2.43.0
-
++	ret = dma_async_device_register(&fsl_qdma->dma_dev);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
++		dev_err(&pdev->dev, "Can't register NXP Layerscape qDMA engine.\n");
+ 		return ret;
+ 	}
+ 
 
 
