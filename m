@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6355B8F58;
-	Mon,  4 Mar 2024 21:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3E18F58;
+	Mon,  4 Mar 2024 21:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588400; cv=none; b=EbQiSxoBSLPiJf4cfJCoUb9D2F4XdX+Hm+GCzg6cwd49LnH5sWUM8oCcYlcFFcHJFDcBUXGtlg0jGhHkRf+shCQe1zc4vi6a6smL+vKcmh/ejV+3cD7DUo3PjhNhJe9H/Sh+C/EtSLo7ekCptQkyhS3dqIbVvaTphr6hereS22o=
+	t=1709588403; cv=none; b=JAAtMD8nTYK/RGF4rQn/ETb/hdu/q8iLpIEzXFDIrtdztPiLqY91scymjNccLzGx6ldmkyr3+9D2+vu3QrlqbQRC8GSedKVn0whJTKjGx2HTgxujXlVFZxXIBhmL9e0gj00790E6dydL73if2U+XmgI9+9oa2HwGdYTXlypk69Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588400; c=relaxed/simple;
-	bh=F3e4crSfJSJ9VkitZ0TaRm+3lSFEAGRjRaQZvzuxWFQ=;
+	s=arc-20240116; t=1709588403; c=relaxed/simple;
+	bh=qJt0UiCuWsZnUUotSycdD3Cfaidksn1ZUEHMTB0TjPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDY7rXnyddWtekxjnrzmJMG49F4QST5KMxx9dxmUyE1ZVFPrq0Rs1bASswCjRsIyiABd0Ux1MnXz8FWG+WPVBamm9lc+No7a1PTTqJMcIgNSZ/4BwcJpuzfwifUtr0ikeqC7V4AG+yhDZ+KdArRXXFOkrtKiWby1e+5QVMUfbQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jykMK/HQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxqtQqHsngMse+hUnuLho3AFqulzruiaq/vam4PGu5+Y+coV87f30Rp9eLRJSUUp3vChLI7ruZnWGEsEF+Hm8hfO5iemeRyzSJ+A5Ru/wJHHVVgngvi0nH80rgPsK3FgNDWzBGzh7+mu21lkHKzR4FITGYGxqyoALv6CA8HvnTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InoONB3u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jykMK/HQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E20C433F1;
-	Mon,  4 Mar 2024 21:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InoONB3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C40C433F1;
+	Mon,  4 Mar 2024 21:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588400;
-	bh=F3e4crSfJSJ9VkitZ0TaRm+3lSFEAGRjRaQZvzuxWFQ=;
+	s=korg; t=1709588402;
+	bh=qJt0UiCuWsZnUUotSycdD3Cfaidksn1ZUEHMTB0TjPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jykMK/HQfub5M2GzMg1loLr4kj00DvlUBfR3hk5aX3gmgLnlcVLPzZKV3QsFUgUBh
-	 cHfoz8C6UhGleWMvi3A3O1rHY6SXyXuYS6PYlQT+eHz/yDKfpCm5LIHpsPDJGCSr+T
-	 MIY9AXNiH0AlUKfoYEX8pfFkdM7V9/FCGoPrHVbA=
+	b=InoONB3uxhlD4uXth8aMb3Ayw2lyfV36vrJHkB7Y79379iDueO69YLczv/DJgVnWD
+	 dK6rXXqrYzLW80Syf0kZxTVGZLPMgiS4jKvrx6Ytx59I8n3KFekQl/1Fy6TA6Jd8sT
+	 LwQ/U9X9OEnG49Y7JXjKWB2DKe/A5OlTqpnKnIis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Zhang <mrman@mrman314.tech>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Neal Gompa <neal@gompa.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 075/143] Bluetooth: hci_bcm4377: do not mark valid bd_addr as invalid
-Date: Mon,  4 Mar 2024 21:23:15 +0000
-Message-ID: <20240304211552.314543750@linuxfoundation.org>
+	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 093/143] mmc: mmci: stm32: fix DMA API overlapping mappings warning
+Date: Mon,  4 Mar 2024 21:23:33 +0000
+Message-ID: <20240304211552.892779782@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,55 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Christophe Kerello <christophe.kerello@foss.st.com>
 
-commit c17d2a7b216e168c3ba62d93482179c01b369ac7 upstream.
+commit 6b1ba3f9040be5efc4396d86c9752cdc564730be upstream.
 
-A recent commit restored the original (and still documented) semantics
-for the HCI_QUIRK_USE_BDADDR_PROPERTY quirk so that the device address
-is considered invalid unless an address is provided by firmware.
+Turning on CONFIG_DMA_API_DEBUG_SG results in the following warning:
 
-This specifically means that this flag must only be set for devices with
-invalid addresses, but the Broadcom BCM4377 driver has so far been
-setting this flag unconditionally.
+DMA-API: mmci-pl18x 48220000.mmc: cacheline tracking EEXIST,
+overlapping mappings aren't supported
+WARNING: CPU: 1 PID: 51 at kernel/dma/debug.c:568
+add_dma_entry+0x234/0x2f4
+Modules linked in:
+CPU: 1 PID: 51 Comm: kworker/1:2 Not tainted 6.1.28 #1
+Hardware name: STMicroelectronics STM32MP257F-EV1 Evaluation Board (DT)
+Workqueue: events_freezable mmc_rescan
+Call trace:
+add_dma_entry+0x234/0x2f4
+debug_dma_map_sg+0x198/0x350
+__dma_map_sg_attrs+0xa0/0x110
+dma_map_sg_attrs+0x10/0x2c
+sdmmc_idma_prep_data+0x80/0xc0
+mmci_prep_data+0x38/0x84
+mmci_start_data+0x108/0x2dc
+mmci_request+0xe4/0x190
+__mmc_start_request+0x68/0x140
+mmc_start_request+0x94/0xc0
+mmc_wait_for_req+0x70/0x100
+mmc_send_tuning+0x108/0x1ac
+sdmmc_execute_tuning+0x14c/0x210
+mmc_execute_tuning+0x48/0xec
+mmc_sd_init_uhs_card.part.0+0x208/0x464
+mmc_sd_init_card+0x318/0x89c
+mmc_attach_sd+0xe4/0x180
+mmc_rescan+0x244/0x320
 
-Fortunately the driver already checks for invalid addresses during setup
-and sets the HCI_QUIRK_INVALID_BDADDR flag, which can simply be replaced
-with HCI_QUIRK_USE_BDADDR_PROPERTY to indicate that the default address
-is invalid but can be overridden by firmware (long term, this should
-probably just always be allowed).
+DMA API debug brings to light leaking dma-mappings as dma_map_sg and
+dma_unmap_sg are not correctly balanced.
 
-Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
-Cc: stable@vger.kernel.org      # 6.5
-Reported-by: Felix Zhang <mrman@mrman314.tech>
-Link: https://lore.kernel.org/r/77419ffacc5b4875e920e038332575a2a5bff29f.camel@mrman314.tech/
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reported-by: Felix Zhang <mrman@mrman314.tech>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+If an error occurs in mmci_cmd_irq function, only mmci_dma_error
+function is called and as this API is not managed on stm32 variant,
+dma_unmap_sg is never called in this error path.
+
+Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Fixes: 46b723dd867d ("mmc: mmci: add stm32 sdmmc variant")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240207143951.938144-1-christophe.kerello@foss.st.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_bcm4377.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mmc/host/mmci_stm32_sdmmc.c |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
---- a/drivers/bluetooth/hci_bcm4377.c
-+++ b/drivers/bluetooth/hci_bcm4377.c
-@@ -1417,7 +1417,7 @@ static int bcm4377_check_bdaddr(struct b
+--- a/drivers/mmc/host/mmci_stm32_sdmmc.c
++++ b/drivers/mmc/host/mmci_stm32_sdmmc.c
+@@ -225,6 +225,8 @@ static int sdmmc_idma_start(struct mmci_
+ 	struct scatterlist *sg;
+ 	int i;
  
- 	bda = (struct hci_rp_read_bd_addr *)skb->data;
- 	if (!bcm4377_is_valid_bdaddr(bcm4377, &bda->bdaddr))
--		set_bit(HCI_QUIRK_INVALID_BDADDR, &bcm4377->hdev->quirks);
-+		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &bcm4377->hdev->quirks);
- 
- 	kfree_skb(skb);
++	host->dma_in_progress = true;
++
+ 	if (!host->variant->dma_lli || data->sg_len == 1 ||
+ 	    idma->use_bounce_buffer) {
+ 		u32 dma_addr;
+@@ -263,9 +265,30 @@ static int sdmmc_idma_start(struct mmci_
  	return 0;
-@@ -2368,7 +2368,6 @@ static int bcm4377_probe(struct pci_dev
- 	hdev->set_bdaddr = bcm4377_hci_set_bdaddr;
- 	hdev->setup = bcm4377_hci_setup;
+ }
  
--	set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
- 	if (bcm4377->hw->broken_mws_transport_config)
- 		set_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &hdev->quirks);
- 	if (bcm4377->hw->broken_ext_scan)
++static void sdmmc_idma_error(struct mmci_host *host)
++{
++	struct mmc_data *data = host->data;
++	struct sdmmc_idma *idma = host->dma_priv;
++
++	if (!dma_inprogress(host))
++		return;
++
++	writel_relaxed(0, host->base + MMCI_STM32_IDMACTRLR);
++	host->dma_in_progress = false;
++	data->host_cookie = 0;
++
++	if (!idma->use_bounce_buffer)
++		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
++			     mmc_get_dma_dir(data));
++}
++
+ static void sdmmc_idma_finalize(struct mmci_host *host, struct mmc_data *data)
+ {
++	if (!dma_inprogress(host))
++		return;
++
+ 	writel_relaxed(0, host->base + MMCI_STM32_IDMACTRLR);
++	host->dma_in_progress = false;
+ 
+ 	if (!data->host_cookie)
+ 		sdmmc_idma_unprep_data(host, data, 0);
+@@ -676,6 +699,7 @@ static struct mmci_host_ops sdmmc_varian
+ 	.dma_setup = sdmmc_idma_setup,
+ 	.dma_start = sdmmc_idma_start,
+ 	.dma_finalize = sdmmc_idma_finalize,
++	.dma_error = sdmmc_idma_error,
+ 	.set_clkreg = mmci_sdmmc_set_clkreg,
+ 	.set_pwrreg = mmci_sdmmc_set_pwrreg,
+ 	.busy_complete = sdmmc_busy_complete,
 
 
