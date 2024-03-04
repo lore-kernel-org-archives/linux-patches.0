@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC5E1C6AB;
-	Mon,  4 Mar 2024 21:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AA41C6AB;
+	Mon,  4 Mar 2024 21:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589262; cv=none; b=hwPad5Igi8B2m+HzQYSVLF1Uj1jwcPoxG0/ibT6fL3UTRJ9dUIHkEBoXkOWAjxjfLj2lRmQnFDc7Ux0l8vN+xwcauYj3djFG5UmYZ+LCD+W5n6sePP7PVMAae3WRV1NYZX6/jCOMZksF90XH90G0Bgq/hfWNJ4AUA5F4Fx1Ijrc=
+	t=1709589264; cv=none; b=RpYDUGI4RWSfQObRk/zypU3tW07T0squUt/tTOc4C7QeFYNdb9fHqBnxc8lWiVKXfltlmq0CPeGC637maI6JAgtVrcPly/gLIrfsndjp33x4FMxACSg0XyQRtnuG758dDSZWHZNVxro/DbiIlRoUeRc95+aMwVlYkVWmInCNkxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589262; c=relaxed/simple;
-	bh=7uQwv7+ZHas6hv2qpx/wK0kqI3+9cmsPJVVoJ9n8h/A=;
+	s=arc-20240116; t=1709589264; c=relaxed/simple;
+	bh=h9hC/XqOTE8AlEb0+fcJX6KUGxD3dJiR1XwSAgbxvnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWdq5ZXFH4roGYgMRHA6h9lvd+8fV96+ZxxUer3hD5sCx1MLZvx8KIXwEdQ9C1e9jxkd0fYL9sGlIgn6jfI8EPBioVsB3CPrRxKF+MlZ5Iy+rHolNYR8IovBjjA4/hnWNIZON+i//mN9wdsEw/z3c56kAnM19LxriyJA8NUTnUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUFoUWA1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1VT4p25RkmJ2Ef/SICkjHoT4q/nCduldqyH2WhqJKzIPZtmg+ioQ1W7a5GoBP7ie5fq9UrBXCppnj2ogoF1OnKIWEtRNXomQ8by0jegT/xylrSYGwC/9WNmOkMAWK1j+d7iEYfFMXmTYl1+TLuuEexvbudhpTNk4wuS/FDhIyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p246ygM2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUFoUWA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A455BC433F1;
-	Mon,  4 Mar 2024 21:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p246ygM2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37953C433C7;
+	Mon,  4 Mar 2024 21:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589262;
-	bh=7uQwv7+ZHas6hv2qpx/wK0kqI3+9cmsPJVVoJ9n8h/A=;
+	s=korg; t=1709589264;
+	bh=h9hC/XqOTE8AlEb0+fcJX6KUGxD3dJiR1XwSAgbxvnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUFoUWA1rkskjC0aZYtXoorFcBYFuGCCkVqHN7tlFQwObRN6OGzTOOsDHYTIHZuY1
-	 nHcW++mNjSrBS6jy2bpMhUkRj152FsWukM09HqxXiYHBm1pvMGGAR5chSOMhG2IMzk
-	 ActecXpWzRXnSjRHTCMkLtZMs0O1YAIbgd7HeOw8=
+	b=p246ygM2wO0gdBqdAMDS4I0ZGLmTAwjLjFU0VH4OJGLjyDVPMAANLkrhrbnJRxGuL
+	 MsaajGB+dFbjMa918PZkRuup6YTXOiuX202e/pF10bXQzNXkrLNL9aqDL3yBkKBoga
+	 xNn6Q4hLsQ2VUv5ucnaUNYiQsxhRNOm5SYlpBWBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 41/84] efi/capsule-loader: fix incorrect allocation size
-Date: Mon,  4 Mar 2024 21:24:14 +0000
-Message-ID: <20240304211543.701474598@linuxfoundation.org>
+Subject: [PATCH 5.15 42/84] power: supply: bq27xxx-i2c: Do not free non existing IRQ
+Date: Mon,  4 Mar 2024 21:24:15 +0000
+Message-ID: <20240304211543.734321537@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit fccfa646ef3628097d59f7d9c1a3e84d4b6bb45e ]
+[ Upstream commit 2df70149e73e79783bcbc7db4fa51ecef0e2022c ]
 
-gcc-14 notices that the allocation with sizeof(void) on 32-bit architectures
-is not enough for a 64-bit phys_addr_t:
+The bq27xxx i2c-client may not have an IRQ, in which case
+client->irq will be 0. bq27xxx_battery_i2c_probe() already has
+an if (client->irq) check wrapping the request_threaded_irq().
 
-drivers/firmware/efi/capsule-loader.c: In function 'efi_capsule_open':
-drivers/firmware/efi/capsule-loader.c:295:24: error: allocation of insufficient size '4' for type 'phys_addr_t' {aka 'long long unsigned int'} with size '8' [-Werror=alloc-size]
-  295 |         cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
-      |                        ^
+But bq27xxx_battery_i2c_remove() unconditionally calls
+free_irq(client->irq) leading to:
 
-Use the correct type instead here.
+[  190.310742] ------------[ cut here ]------------
+[  190.310843] Trying to free already-free IRQ 0
+[  190.310861] WARNING: CPU: 2 PID: 1304 at kernel/irq/manage.c:1893 free_irq+0x1b8/0x310
 
-Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Followed by a backtrace when unbinding the driver. Add
+an if (client->irq) to bq27xxx_battery_i2c_remove() mirroring
+probe() to fix this.
+
+Fixes: 444ff00734f3 ("power: supply: bq27xxx: Fix I2C IRQ race on remove")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240215155133.70537-1-hdegoede@redhat.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/capsule-loader.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery_i2c.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
-index 3e8d4b51a8140..97bafb5f70389 100644
---- a/drivers/firmware/efi/capsule-loader.c
-+++ b/drivers/firmware/efi/capsule-loader.c
-@@ -292,7 +292,7 @@ static int efi_capsule_open(struct inode *inode, struct file *file)
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
+index b722ee2d7e142..4e5d773b3bf8d 100644
+--- a/drivers/power/supply/bq27xxx_battery_i2c.c
++++ b/drivers/power/supply/bq27xxx_battery_i2c.c
+@@ -209,7 +209,9 @@ static int bq27xxx_battery_i2c_remove(struct i2c_client *client)
+ {
+ 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
  
--	cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
-+	cap_info->phys = kzalloc(sizeof(phys_addr_t), GFP_KERNEL);
- 	if (!cap_info->phys) {
- 		kfree(cap_info->pages);
- 		kfree(cap_info);
+-	free_irq(client->irq, di);
++	if (client->irq)
++		free_irq(client->irq, di);
++
+ 	bq27xxx_battery_teardown(di);
+ 
+ 	mutex_lock(&battery_mutex);
 -- 
 2.43.0
 
