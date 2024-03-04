@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9427C080;
-	Mon,  4 Mar 2024 21:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C21EB5A;
+	Mon,  4 Mar 2024 21:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587667; cv=none; b=pAfpdOBGAqk06fsdC/WXEBONLg7e1nZsPKxeSkNYxOFjm7MaP8PLFxbvlZIjShquPjd+rk9Y8mdC6uRaLBDkbpxwKK74c9Fy/9IbLZLUCc5DiOPO7VKrNma3+ciPsTjUNXwH25PvH4SGELGYd6/IUWU86JFD8RZbME9H/nxaOCE=
+	t=1709587669; cv=none; b=IefrDGHLgly3NJqVF2XUPt3F73rtjx3d04FDdmYy6WJ5Fb4H1RYeovfexklB0+UdwuKaLrN+Jn1dpU+Gy7cEEHzjBIQaUDT/Rw7PssI+HeKmFX2V9Z5rWeaBQ/z2wWr6rTFJWjIll6vZZtJ7qAvrDXtl9EY3PIbhqrBy+kXCoVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587667; c=relaxed/simple;
-	bh=KngQK66CrU27lD5sGkjiuPEozQ0gIFvMm5gInAfRrgU=;
+	s=arc-20240116; t=1709587669; c=relaxed/simple;
+	bh=8g0gtRXL8yiiy92QCebRXWUdeJ+XX+ruZcEnxgomZUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpUXXpiEWgwzQSzXhIaSdWefo+ZObmsVq8GKxNjkNmHiw3LQEqgWU5pxpDgft46jTkk1NGbwg4uiVKNIJ+7bEpUUenGQfMaLUT3SO8TkkVTU89rLHtV/StjH536Q8Ya1N/sevB/w+CAibvFCEVVVjJ5ZsFDQ26an192AYD33H70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eii4E/EU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yay8pUkAmsq+icbOLMdICGf644y4jp84K1MhewRzdOUjv45zIBu0HXjYO5/JLrGHiar3iTA1lybOHQ5cS1ZY9sT4M6GE7ttiGj4OLTTHLS6HX+N+DYHq/5n4bRvp4HmPl6Awfl2XN40driy8KGRW9YCZ1KqRZ+QrTNOPB5QTOe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11vZN8lj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eii4E/EU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA012C433C7;
-	Mon,  4 Mar 2024 21:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11vZN8lj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575E6C433F1;
+	Mon,  4 Mar 2024 21:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587667;
-	bh=KngQK66CrU27lD5sGkjiuPEozQ0gIFvMm5gInAfRrgU=;
+	s=korg; t=1709587669;
+	bh=8g0gtRXL8yiiy92QCebRXWUdeJ+XX+ruZcEnxgomZUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eii4E/EUiUwZdIV6Rz8kPcRp6HuVq+WexfrpaCrj3xj17JyIrU9e8TTehSCRNEOhB
-	 h3SNZQEtgU7G8v2ruIrbp4aZSYBjuN/NRxIsWutcRfVGo4psoPlwvwsA2MyfORkbSj
-	 6nzB/LWmNKIjGqHrtAljFAVeExr82QTux/BDXVe0=
+	b=11vZN8ljq1T9WYXaQ7xey5d3iuUV33VuNCoygjX+fikCC5ztf9HFRcwe6ugyp1rx8
+	 lLy7ZhN7MDhmTgg7Mkkb+tz+BrMTX7UlVAmHS+eDaMRKjo9avW2MocBpER5ULMWeso
+	 S45xuGzR8yaBqGQG/YryfRyuuI5oiUFBvzxrg+Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 036/162] tools: ynl: fix handling of multiple mcast groups
-Date: Mon,  4 Mar 2024 21:21:41 +0000
-Message-ID: <20240304211552.992107987@linuxfoundation.org>
+Subject: [PATCH 6.7 045/162] efi/capsule-loader: fix incorrect allocation size
+Date: Mon,  4 Mar 2024 21:21:50 +0000
+Message-ID: <20240304211553.292581639@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,46 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b6c65eb20ffa8e3bd89f551427dbeee2876d72ca ]
+[ Upstream commit fccfa646ef3628097d59f7d9c1a3e84d4b6bb45e ]
 
-We never increment the group number iterator, so all groups
-get recorded into index 0 of the mcast_groups[] array.
+gcc-14 notices that the allocation with sizeof(void) on 32-bit architectures
+is not enough for a 64-bit phys_addr_t:
 
-As a result YNL can only handle using the last group.
-For example using the "netdev" sample on kernel with
-page pool commands results in:
+drivers/firmware/efi/capsule-loader.c: In function 'efi_capsule_open':
+drivers/firmware/efi/capsule-loader.c:295:24: error: allocation of insufficient size '4' for type 'phys_addr_t' {aka 'long long unsigned int'} with size '8' [-Werror=alloc-size]
+  295 |         cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
+      |                        ^
 
-  $ ./samples/netdev
-  YNL: Multicast group 'mgmt' not found
+Use the correct type instead here.
 
-Most families have only one multicast group, so this hasn't
-been noticed. Plus perhaps developers usually test the last
-group which would have worked.
-
-Fixes: 86878f14d71a ("tools: ynl: user space helpers")
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://lore.kernel.org/r/20240226214019.1255242-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/lib/ynl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/capsule-loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
-index 591f5f50ddaab..2aa19004fa0cf 100644
---- a/tools/net/ynl/lib/ynl.c
-+++ b/tools/net/ynl/lib/ynl.c
-@@ -519,6 +519,7 @@ ynl_get_family_info_mcast(struct ynl_sock *ys, const struct nlattr *mcasts)
- 				ys->mcast_groups[i].name[GENL_NAMSIZ - 1] = 0;
- 			}
- 		}
-+		i++;
+diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
+index 3e8d4b51a8140..97bafb5f70389 100644
+--- a/drivers/firmware/efi/capsule-loader.c
++++ b/drivers/firmware/efi/capsule-loader.c
+@@ -292,7 +292,7 @@ static int efi_capsule_open(struct inode *inode, struct file *file)
+ 		return -ENOMEM;
  	}
  
- 	return 0;
+-	cap_info->phys = kzalloc(sizeof(void *), GFP_KERNEL);
++	cap_info->phys = kzalloc(sizeof(phys_addr_t), GFP_KERNEL);
+ 	if (!cap_info->phys) {
+ 		kfree(cap_info->pages);
+ 		kfree(cap_info);
 -- 
 2.43.0
 
