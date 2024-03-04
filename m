@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C241C6AB;
-	Mon,  4 Mar 2024 21:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20171C6AB;
+	Mon,  4 Mar 2024 21:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589197; cv=none; b=FrsJHPeF6WcLJE0JcyvAxUbKmPvso8aInfSneWiPIRmie3MDlKphJQogLhY+cnO5Jgive+jfa3KKrJfHDnnOyQuyhfwXzrBEKq3kAOlfnyfXuy1EI85flPuwUFjkXPlh1mpy3roLIaTRNl8jib48cQary5rc2Op7vvR9OGkgRvA=
+	t=1709589200; cv=none; b=fSzwjdjkXx3RleNz3GEBzS1HBVBbypTWxEC32m7+amy0STndT3T990yQrRU4fktTxHUajTb03pPK84ATiANf74MGcUL5a7KTVq+aVtdpEvGQwhgkZGefDv24eLZbEeYglp3UdCl1BfxQBKbp50CeNud3C3s8eOMx2A9BuIxdILM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589197; c=relaxed/simple;
-	bh=uHu3UwmoiYAQsgLhfdVob6f/BeN4tTUAh9YHYVPJdU4=;
+	s=arc-20240116; t=1709589200; c=relaxed/simple;
+	bh=6wVKPU8eR8DfDTRXodPWJUftizJOxRk4zWdfvCwfFGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRnqSeS6QEZCrcZlFDH50zN2u4eobAk7+P8ZhhlS5GyH7OF334S7IrtZdwPqDpeS4tG7aeMGG77PINNibM+bagIJG7XvqsODwaVjJbwrS473umDu19eoxqh1TuUJSXSs7F1Me65eVmabJahbtTlRIjDhfetopTuMqZcrtuHRaJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/sT24lo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8gRyvnp48NwQl0xMlYU5wDMkUJ7ne3+pJ5zRp6OaG4CCzSc0YOVAi3appDORuM/VB8JSuGYYj1wINmxaBdgf1zIdInc6OcrWa6NuC2awyR65uigRV6Bz8Q3OFcKMwwJMTDSMjS1y7FtOoeBAykP3gKAKx/q42ZNB4T/cVQmDJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nf1hGLc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/sT24lo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04D7C433C7;
-	Mon,  4 Mar 2024 21:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nf1hGLc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82506C433C7;
+	Mon,  4 Mar 2024 21:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589197;
-	bh=uHu3UwmoiYAQsgLhfdVob6f/BeN4tTUAh9YHYVPJdU4=;
+	s=korg; t=1709589199;
+	bh=6wVKPU8eR8DfDTRXodPWJUftizJOxRk4zWdfvCwfFGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/sT24loQqqe/2N6E+ON4qPu/kONP2j/9yh9Cyguneq2DSrywDbHVRqFUjQxBf7a7
-	 Z/nvKIlz+7bi0csD8z0vLp4/FLFSPInEtTa2VOfpb1Kw1URAoIoP6y6A7xpCrfnDxa
-	 TF8d3rCfTU2MvMKhaK+3p3gQ6jWG81GdK//Out/A=
+	b=Nf1hGLc5HcuQff+YbjzY/ZKKH5Ys1h6OVPH/pvkwzQqdfhxPqXHhKgxuFfhlfzmZK
+	 ziUjLF8E4CMMif9Iy3QIqmOFAwzX5zhN2sL/cvimnGNtyurECZM9myCMvlY/OrUhTP
+	 O+aj0gw2Yks7auAk6uUzcaQCIc7WuL/mQAaUaKXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	syzbot+34ad5fab48f7bf510349@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 03/84] netlink: Fix kernel-infoleak-after-free in __skb_datagram_iter
-Date: Mon,  4 Mar 2024 21:23:36 +0000
-Message-ID: <20240304211542.458344863@linuxfoundation.org>
+	syzbot+bfde3bef047a81b8fde6@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 04/84] net: ip_tunnel: prevent perpetual headroom growth
+Date: Mon,  4 Mar 2024 21:23:37 +0000
+Message-ID: <20240304211542.488402195@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -53,132 +53,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 661779e1fcafe1b74b3f3fe8e980c1e207fea1fd ]
+[ Upstream commit 5ae1e9922bbdbaeb9cfbe91085ab75927488ac0f ]
 
-syzbot reported the following uninit-value access issue [1]:
+syzkaller triggered following kasan splat:
+BUG: KASAN: use-after-free in __skb_flow_dissect+0x19d1/0x7a50 net/core/flow_dissector.c:1170
+Read of size 1 at addr ffff88812fb4000e by task syz-executor183/5191
+[..]
+ kasan_report+0xda/0x110 mm/kasan/report.c:588
+ __skb_flow_dissect+0x19d1/0x7a50 net/core/flow_dissector.c:1170
+ skb_flow_dissect_flow_keys include/linux/skbuff.h:1514 [inline]
+ ___skb_get_hash net/core/flow_dissector.c:1791 [inline]
+ __skb_get_hash+0xc7/0x540 net/core/flow_dissector.c:1856
+ skb_get_hash include/linux/skbuff.h:1556 [inline]
+ ip_tunnel_xmit+0x1855/0x33c0 net/ipv4/ip_tunnel.c:748
+ ipip_tunnel_xmit+0x3cc/0x4e0 net/ipv4/ipip.c:308
+ __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+ xmit_one net/core/dev.c:3548 [inline]
+ dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3564
+ __dev_queue_xmit+0x7c1/0x3d60 net/core/dev.c:4349
+ dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+ neigh_connected_output+0x42c/0x5d0 net/core/neighbour.c:1592
+ ...
+ ip_finish_output2+0x833/0x2550 net/ipv4/ip_output.c:235
+ ip_finish_output+0x31/0x310 net/ipv4/ip_output.c:323
+ ..
+ iptunnel_xmit+0x5b4/0x9b0 net/ipv4/ip_tunnel_core.c:82
+ ip_tunnel_xmit+0x1dbc/0x33c0 net/ipv4/ip_tunnel.c:831
+ ipgre_xmit+0x4a1/0x980 net/ipv4/ip_gre.c:665
+ __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+ xmit_one net/core/dev.c:3548 [inline]
+ dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3564
+ ...
 
-netlink_to_full_skb() creates a new `skb` and puts the `skb->data`
-passed as a 1st arg of netlink_to_full_skb() onto new `skb`. The data
-size is specified as `len` and passed to skb_put_data(). This `len`
-is based on `skb->end` that is not data offset but buffer offset. The
-`skb->end` contains data and tailroom. Since the tailroom is not
-initialized when the new `skb` created, KMSAN detects uninitialized
-memory area when copying the data.
+The splat occurs because skb->data points past skb->head allocated area.
+This is because neigh layer does:
+  __skb_pull(skb, skb_network_offset(skb));
 
-This patch resolved this issue by correct the len from `skb->end` to
-`skb->len`, which is the actual data offset.
+... but skb_network_offset() returns a negative offset and __skb_pull()
+arg is unsigned.  IOW, we skb->data gets "adjusted" by a huge value.
 
-BUG: KMSAN: kernel-infoleak-after-free in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in copy_to_user_iter lib/iov_iter.c:24 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_ubuf include/linux/iov_iter.h:29 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in iterate_and_advance include/linux/iov_iter.h:271 [inline]
-BUG: KMSAN: kernel-infoleak-after-free in _copy_to_iter+0x364/0x2520 lib/iov_iter.c:186
- instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- copy_to_user_iter lib/iov_iter.c:24 [inline]
- iterate_ubuf include/linux/iov_iter.h:29 [inline]
- iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- iterate_and_advance include/linux/iov_iter.h:271 [inline]
- _copy_to_iter+0x364/0x2520 lib/iov_iter.c:186
- copy_to_iter include/linux/uio.h:197 [inline]
- simple_copy_to_iter+0x68/0xa0 net/core/datagram.c:532
- __skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:420
- skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
- skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
- packet_recvmsg+0xd9c/0x2000 net/packet/af_packet.c:3482
- sock_recvmsg_nosec net/socket.c:1044 [inline]
- sock_recvmsg net/socket.c:1066 [inline]
- sock_read_iter+0x467/0x580 net/socket.c:1136
- call_read_iter include/linux/fs.h:2014 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x8f6/0xe00 fs/read_write.c:470
- ksys_read+0x20f/0x4c0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x93/0xd0 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The negative value is returned because skb->head and skb->data distance is
+more than 64k and skb->network_header (u16) has wrapped around.
 
-Uninit was stored to memory at:
- skb_put_data include/linux/skbuff.h:2622 [inline]
- netlink_to_full_skb net/netlink/af_netlink.c:181 [inline]
- __netlink_deliver_tap_skb net/netlink/af_netlink.c:298 [inline]
- __netlink_deliver_tap+0x5be/0xc90 net/netlink/af_netlink.c:325
- netlink_deliver_tap net/netlink/af_netlink.c:338 [inline]
- netlink_deliver_tap_kernel net/netlink/af_netlink.c:347 [inline]
- netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
- netlink_unicast+0x10f1/0x1250 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x1238/0x13d0 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The bug is in the ip_tunnel infrastructure, which can cause
+dev->needed_headroom to increment ad infinitum.
 
-Uninit was created at:
- free_pages_prepare mm/page_alloc.c:1087 [inline]
- free_unref_page_prepare+0xb0/0xa40 mm/page_alloc.c:2347
- free_unref_page_list+0xeb/0x1100 mm/page_alloc.c:2533
- release_pages+0x23d3/0x2410 mm/swap.c:1042
- free_pages_and_swap_cache+0xd9/0xf0 mm/swap_state.c:316
- tlb_batch_pages_flush mm/mmu_gather.c:98 [inline]
- tlb_flush_mmu_free mm/mmu_gather.c:293 [inline]
- tlb_flush_mmu+0x6f5/0x980 mm/mmu_gather.c:300
- tlb_finish_mmu+0x101/0x260 mm/mmu_gather.c:392
- exit_mmap+0x49e/0xd30 mm/mmap.c:3321
- __mmput+0x13f/0x530 kernel/fork.c:1349
- mmput+0x8a/0xa0 kernel/fork.c:1371
- exit_mm+0x1b8/0x360 kernel/exit.c:567
- do_exit+0xd57/0x4080 kernel/exit.c:858
- do_group_exit+0x2fd/0x390 kernel/exit.c:1021
- __do_sys_exit_group kernel/exit.c:1032 [inline]
- __se_sys_exit_group kernel/exit.c:1030 [inline]
- __x64_sys_exit_group+0x3c/0x50 kernel/exit.c:1030
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The syzkaller reproducer consists of packets getting routed via a gre
+tunnel, and route of gre encapsulated packets pointing at another (ipip)
+tunnel.  The ipip encapsulation finds gre0 as next output device.
 
-Bytes 3852-3903 of 3904 are uninitialized
-Memory access of size 3904 starts at ffff88812ea1e000
-Data copied to user address 0000000020003280
+This results in the following pattern:
 
-CPU: 1 PID: 5043 Comm: syz-executor297 Not tainted 6.7.0-rc5-syzkaller-00047-g5bd7ef53ffe5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
+1). First packet is to be sent out via gre0.
+Route lookup found an output device, ipip0.
 
-Fixes: 1853c9496460 ("netlink, mmap: transform mmap skb into full skb on taps")
-Reported-and-tested-by: syzbot+34ad5fab48f7bf510349@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=34ad5fab48f7bf510349 [1]
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240221074053.1794118-1-ryasuoka@redhat.com
+2).
+ip_tunnel_xmit for gre0 bumps gre0->needed_headroom based on the future
+output device, rt.dev->needed_headroom (ipip0).
+
+3).
+ip output / start_xmit moves skb on to ipip0. which runs the same
+code path again (xmit recursion).
+
+4).
+Routing step for the post-gre0-encap packet finds gre0 as output device
+to use for ipip0 encapsulated packet.
+
+tunl0->needed_headroom is then incremented based on the (already bumped)
+gre0 device headroom.
+
+This repeats for every future packet:
+
+gre0->needed_headroom gets inflated because previous packets' ipip0 step
+incremented rt->dev (gre0) headroom, and ipip0 incremented because gre0
+needed_headroom was increased.
+
+For each subsequent packet, gre/ipip0->needed_headroom grows until
+post-expand-head reallocations result in a skb->head/data distance of
+more than 64k.
+
+Once that happens, skb->network_header (u16) wraps around when
+pskb_expand_head tries to make sure that skb_network_offset() is unchanged
+after the headroom expansion/reallocation.
+
+After this skb_network_offset(skb) returns a different (and negative)
+result post headroom expansion.
+
+The next trip to neigh layer (or anything else that would __skb_pull the
+network header) makes skb->data point to a memory location outside
+skb->head area.
+
+v2: Cap the needed_headroom update to an arbitarily chosen upperlimit to
+prevent perpetual increase instead of dropping the headroom increment
+completely.
+
+Reported-and-tested-by: syzbot+bfde3bef047a81b8fde6@syzkaller.appspotmail.com
+Closes: https://groups.google.com/g/syzkaller-bugs/c/fL9G6GtWskY/m/VKk_PR5FBAAJ
+Fixes: 243aad830e8a ("ip_gre: include route header_len in max_headroom calculation")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240220135606.4939-1-fw@strlen.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_tunnel.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 2169a9c3da1c3..82df02695bbdd 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -165,7 +165,7 @@ static inline u32 netlink_group_mask(u32 group)
- static struct sk_buff *netlink_to_full_skb(const struct sk_buff *skb,
- 					   gfp_t gfp_mask)
- {
--	unsigned int len = skb_end_offset(skb);
-+	unsigned int len = skb->len;
- 	struct sk_buff *new;
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 426dc910aaf87..96b7cd3049a33 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -540,6 +540,20 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
+ 	return 0;
+ }
  
- 	new = alloc_skb(len, gfp_mask);
++static void ip_tunnel_adj_headroom(struct net_device *dev, unsigned int headroom)
++{
++	/* we must cap headroom to some upperlimit, else pskb_expand_head
++	 * will overflow header offsets in skb_headers_offset_update().
++	 */
++	static const unsigned int max_allowed = 512;
++
++	if (headroom > max_allowed)
++		headroom = max_allowed;
++
++	if (headroom > READ_ONCE(dev->needed_headroom))
++		WRITE_ONCE(dev->needed_headroom, headroom);
++}
++
+ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 		       u8 proto, int tunnel_hlen)
+ {
+@@ -613,13 +627,13 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	}
+ 
+ 	headroom += LL_RESERVED_SPACE(rt->dst.dev) + rt->dst.header_len;
+-	if (headroom > READ_ONCE(dev->needed_headroom))
+-		WRITE_ONCE(dev->needed_headroom, headroom);
+-
+-	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
++	if (skb_cow_head(skb, headroom)) {
+ 		ip_rt_put(rt);
+ 		goto tx_dropped;
+ 	}
++
++	ip_tunnel_adj_headroom(dev, headroom);
++
+ 	iptunnel_xmit(NULL, rt, skb, fl4.saddr, fl4.daddr, proto, tos, ttl,
+ 		      df, !net_eq(tunnel->net, dev_net(dev)));
+ 	return;
+@@ -797,16 +811,16 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	max_headroom = LL_RESERVED_SPACE(rt->dst.dev) + sizeof(struct iphdr)
+ 			+ rt->dst.header_len + ip_encap_hlen(&tunnel->encap);
+-	if (max_headroom > READ_ONCE(dev->needed_headroom))
+-		WRITE_ONCE(dev->needed_headroom, max_headroom);
+ 
+-	if (skb_cow_head(skb, READ_ONCE(dev->needed_headroom))) {
++	if (skb_cow_head(skb, max_headroom)) {
+ 		ip_rt_put(rt);
+ 		dev->stats.tx_dropped++;
+ 		kfree_skb(skb);
+ 		return;
+ 	}
+ 
++	ip_tunnel_adj_headroom(dev, max_headroom);
++
+ 	iptunnel_xmit(NULL, rt, skb, fl4.saddr, fl4.daddr, protocol, tos, ttl,
+ 		      df, !net_eq(tunnel->net, dev_net(dev)));
+ 	return;
 -- 
 2.43.0
 
