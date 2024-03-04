@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FB48F58;
-	Mon,  4 Mar 2024 21:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAD8F58;
+	Mon,  4 Mar 2024 21:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588371; cv=none; b=tbZBjHISRnzNjZEd2FOxuZVaEXNztOcMWaqR28cpMtesGN40LmYL5VjvgXcIRZ3NB9u4j05WSswGWdIUnaTvHoMRcH/LXujpM/sSDc7bwbEpcPh/ZU7sF5NB4T2Gp5qd2Wa0op8YSnXWtXQgdz/VImtz0ete2zfS6V1gPWffW2U=
+	t=1709588374; cv=none; b=c1U8hwHFMnOZCeXX1G14UYQM+VQAmshO2fuoK/6Mj/hBdaha+AGkWLHkIsoJaDnzzp8LEAzPbTqhFUtBUKt9gFkKMDlsi5Thq4cLVEQAXeBgh0yNmEThdY0tDeI3vY4a54OjhfPbwdsWfHFYYKgXZ9t4fq0kmSNHe9sECOAxxBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588371; c=relaxed/simple;
-	bh=ZxxEBA2guoOsePoVgyvueOnvQLe970bBOO3e2AYJjpA=;
+	s=arc-20240116; t=1709588374; c=relaxed/simple;
+	bh=iXqvVUEjGGeu2Jaz5SGsjGa2DDGyyAWe4MDfWTrytTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnyM4b9EsPbR7tApmc8S7LblBiRCEmfZIGYM0YGgYs/YiVPPJkQaXrNICkzV+fnPoaNrxzdxfYWEIQk3KIj8AtK6/9G+Kb0JgTiIlwYzRr8CGYru8R7fv4NcsslD+l0ru8xDiD3O5K1+YB+gAVtpJCChU1z8mTa6haQzL6wrhsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpzSa7qe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i7/AwyI6M0Ks6MAuJDMl10VvQh7W1BrTdqRFCfz5cz3286glXukycqW9aUBhc4xOXaPugafSv7NO66VsoBZvWyqWhl0bHYpgv1XWql8x29Y5EcyJH5b8s5OICfx9oS2RgmAk8KP6+MSNbcsLLBsw2sGfIOCGJRz30AFT1Lx1rZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsmyHVMX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpzSa7qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1702FC433F1;
-	Mon,  4 Mar 2024 21:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsmyHVMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F77C433F1;
+	Mon,  4 Mar 2024 21:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588371;
-	bh=ZxxEBA2guoOsePoVgyvueOnvQLe970bBOO3e2AYJjpA=;
+	s=korg; t=1709588374;
+	bh=iXqvVUEjGGeu2Jaz5SGsjGa2DDGyyAWe4MDfWTrytTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpzSa7qeQurIKs5I3oJrhz+ouf/kvVtVYH8kFOsEcQUaJeB9nW80ST+jMmSTZSWiU
-	 oONimbsOxX9o/PgvZWe/3TkYGr4TqWb97VUeNc0wWBF1O2XitUF21pR2Mb3rXAiaWQ
-	 2fJpg9BTYPifSRrlG4ZeOQ+ackA9/IV/hQ1j275M=
+	b=gsmyHVMXr+3KdRx9sJPWdU4A4zZkz3gVYKiCPjXj78173FlMrekBGqiTbMhZK9KsM
+	 QVMqCWD0UtfRXJIDFpXIqXybmSmpmmGskNudesw/icGFc7Ne8Or8jBu9TE1ATT5j7P
+	 wqE3Emid0K3mPsrTTXs0JlQaGLCo+jB6JHXv84B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willian Wang <git@willian.wang>,
-	Gergo Koteles <soyer@irl.hu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 074/143] ALSA: hda/realtek: Add special fixup for Lenovo 14IRP8
-Date: Mon,  4 Mar 2024 21:23:14 +0000
-Message-ID: <20240304211552.287066905@linuxfoundation.org>
+	Dorai Ashok S A <dash.btrfs@inix.me>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 083/143] btrfs: send: dont issue unnecessary zero writes for trailing hole
+Date: Mon,  4 Mar 2024 21:23:23 +0000
+Message-ID: <20240304211552.579492062@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,83 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willian Wang <git@willian.wang>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 0ac32a396e4f41e88df76ce2282423188a2d2ed0 upstream.
+commit 5897710b28cabab04ea6c7547f27b7989de646ae upstream.
 
-Lenovo Slim/Yoga Pro 9 14IRP8 requires a special fixup because there is
-a collision of its PCI SSID (17aa:3802) with Lenovo Yoga DuetITL 2021
-codec SSID.
+If we have a sparse file with a trailing hole (from the last extent's end
+to i_size) and then create an extent in the file that ends before the
+file's i_size, then when doing an incremental send we will issue a write
+full of zeroes for the range that starts immediately after the new extent
+ends up to i_size. While this isn't incorrect because the file ends up
+with exactly the same data, it unnecessarily results in using extra space
+at the destination with one or more extents full of zeroes instead of
+having a hole. In same cases this results in using megabytes or even
+gigabytes of unnecessary space.
 
-Fixes: 3babae915f4c ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=208555
-Link: https://lore.kernel.org/all/d5b42e483566a3815d229270abd668131a0d9f3a.camel@irl.hu
-Cc: stable@vger.kernel.org
-Signed-off-by: Willian Wang <git@willian.wang>
-Reviewed-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/170879111795.8.6687687359006700715.273812184@willian.wang
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Example, reproducer:
+
+   $ cat test.sh
+   #!/bin/bash
+
+   DEV=/dev/sdh
+   MNT=/mnt/sdh
+
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   # Create 1G sparse file.
+   xfs_io -f -c "truncate 1G" $MNT/foobar
+
+   # Create base snapshot.
+   btrfs subvolume snapshot -r $MNT $MNT/mysnap1
+
+   # Create send stream (full send) for the base snapshot.
+   btrfs send -f /tmp/1.snap $MNT/mysnap1
+
+   # Now write one extent at the beginning of the file and one somewhere
+   # in the middle, leaving a gap between the end of this second extent
+   # and the file's size.
+   xfs_io -c "pwrite -S 0xab 0 128K" \
+          -c "pwrite -S 0xcd 512M 128K" \
+          $MNT/foobar
+
+   # Now create a second snapshot which is going to be used for an
+   # incremental send operation.
+   btrfs subvolume snapshot -r $MNT $MNT/mysnap2
+
+   # Create send stream (incremental send) for the second snapshot.
+   btrfs send -p $MNT/mysnap1 -f /tmp/2.snap $MNT/mysnap2
+
+   # Now recreate the filesystem by receiving both send streams and
+   # verify we get the same content that the original filesystem had
+   # and file foobar has only two extents with a size of 128K each.
+   umount $MNT
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   btrfs receive -f /tmp/1.snap $MNT
+   btrfs receive -f /tmp/2.snap $MNT
+
+   echo -e "\nFile fiemap in the second snapshot:"
+   # Should have:
+   #
+   # 128K extent at file range [0, 128K[
+   # hole at file range [128K, 512M[
+   # 128K extent file range [512M, 512M + 128K[
+   # hole at file range [512M + 128K, 1G[
+   xfs_io -r -c "fiemap -v" $MNT/mysnap2/foobar
+
+   # File should be using 256K of data (two 128K extents).
+   echo -e "\nSpace used by the file: $(du -h $MNT/mysnap2/foobar | cut -f 1)"
+
+   umount $MNT
+
+Running the test, we can see with fiemap that we get an extent for the
+range [512M, 1G[, while in the source filesystem we have an extent for
+the range [512M, 512M + 128K[ and a hole for the rest of the file (the
+range [512M + 128K, 1G[):
+
+   $ ./test.sh
+   (...)
+   File fiemap in the second snapshot:
+   /mnt/sdh/mysnap2/foobar:
+    EXT: FILE-OFFSET        BLOCK-RANGE        TOTAL FLAGS
+      0: [0..255]:          26624..26879         256   0x0
+      1: [256..1048575]:    hole             1048320
+      2: [1048576..2097151]: 2156544..3205119 1048576   0x1
+
+   Space used by the file: 513M
+
+This happens because once we finish processing an inode, at
+finish_inode_if_needed(), we always issue a hole (write operations full
+of zeros) if there's a gap between the end of the last processed extent
+and the file's size, even if that range is already a hole in the parent
+snapshot. Fix this by issuing the hole only if the range is not already
+a hole.
+
+After this change, running the test above, we get the expected layout:
+
+   $ ./test.sh
+   (...)
+   File fiemap in the second snapshot:
+   /mnt/sdh/mysnap2/foobar:
+    EXT: FILE-OFFSET        BLOCK-RANGE      TOTAL FLAGS
+      0: [0..255]:          26624..26879       256   0x0
+      1: [256..1048575]:    hole             1048320
+      2: [1048576..1048831]: 26880..27135       256   0x1
+      3: [1048832..2097151]: hole             1048320
+
+   Space used by the file: 256K
+
+A test case for fstests will follow soon.
+
+CC: stable@vger.kernel.org # 6.1+
+Reported-by: Dorai Ashok S A <dash.btrfs@inix.me>
+Link: https://lore.kernel.org/linux-btrfs/c0bf7818-9c45-46a8-b3d3-513230d0c86e@inix.me/
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ fs/btrfs/send.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7352,6 +7352,7 @@ enum {
- 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
- 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
- 	ALC298_FIXUP_LENOVO_C940_DUET7,
-+	ALC287_FIXUP_LENOVO_14IRP8_DUETITL,
- 	ALC287_FIXUP_13S_GEN2_SPEAKERS,
- 	ALC256_FIXUP_SET_COEF_DEFAULTS,
- 	ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
-@@ -7401,6 +7402,26 @@ static void alc298_fixup_lenovo_c940_due
- 	__snd_hda_apply_fixup(codec, id, action, 0);
- }
- 
-+/* A special fixup for Lenovo Slim/Yoga Pro 9 14IRP8 and Yoga DuetITL 2021;
-+ * 14IRP8 PCI SSID will mistakenly be matched with the DuetITL codec SSID,
-+ * so we need to apply a different fixup in this case. The only DuetITL codec
-+ * SSID reported so far is the 17aa:3802 while the 14IRP8 has the 17aa:38be
-+ * and 17aa:38bf. If it weren't for the PCI SSID, the 14IRP8 models would
-+ * have matched correctly by their codecs.
-+ */
-+static void alc287_fixup_lenovo_14irp8_duetitl(struct hda_codec *codec,
-+					      const struct hda_fixup *fix,
-+					      int action)
-+{
-+	int id;
-+
-+	if (codec->core.subsystem_id == 0x17aa3802)
-+		id = ALC287_FIXUP_YOGA7_14ITL_SPEAKERS; /* DuetITL */
-+	else
-+		id = ALC287_FIXUP_TAS2781_I2C; /* 14IRP8 */
-+	__snd_hda_apply_fixup(codec, id, action, 0);
-+}
-+
- static const struct hda_fixup alc269_fixups[] = {
- 	[ALC269_FIXUP_GPIO2] = {
- 		.type = HDA_FIXUP_FUNC,
-@@ -9285,6 +9306,10 @@ static const struct hda_fixup alc269_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_lenovo_c940_duet7,
- 	},
-+	[ALC287_FIXUP_LENOVO_14IRP8_DUETITL] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_lenovo_14irp8_duetitl,
-+	},
- 	[ALC287_FIXUP_13S_GEN2_SPEAKERS] = {
- 		.type = HDA_FIXUP_VERBS,
- 		.v.verbs = (const struct hda_verb[]) {
-@@ -10134,7 +10159,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x31af, "ThinkCentre Station", ALC623_FIXUP_LENOVO_THINKSTATION_P340),
- 	SND_PCI_QUIRK(0x17aa, 0x334b, "Lenovo ThinkCentre M70 Gen5", ALC283_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
--	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
-+	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8 / DuetITL 2021", ALC287_FIXUP_LENOVO_14IRP8_DUETITL),
- 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
- 	SND_PCI_QUIRK(0x17aa, 0x3819, "Lenovo 13s Gen2 ITL", ALC287_FIXUP_13S_GEN2_SPEAKERS),
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -6705,11 +6705,20 @@ static int finish_inode_if_needed(struct
+ 				if (ret)
+ 					goto out;
+ 			}
+-			if (sctx->cur_inode_last_extent <
+-			    sctx->cur_inode_size) {
+-				ret = send_hole(sctx, sctx->cur_inode_size);
+-				if (ret)
++			if (sctx->cur_inode_last_extent < sctx->cur_inode_size) {
++				ret = range_is_hole_in_parent(sctx,
++						      sctx->cur_inode_last_extent,
++						      sctx->cur_inode_size);
++				if (ret < 0) {
+ 					goto out;
++				} else if (ret == 0) {
++					ret = send_hole(sctx, sctx->cur_inode_size);
++					if (ret < 0)
++						goto out;
++				} else {
++					/* Range is already a hole, skip. */
++					ret = 0;
++				}
+ 			}
+ 		}
+ 		if (need_truncate) {
 
 
