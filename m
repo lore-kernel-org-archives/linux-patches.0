@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CE78B4C;
-	Mon,  4 Mar 2024 21:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE851C6AB;
+	Mon,  4 Mar 2024 21:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589161; cv=none; b=NmiWItE17y4xv+6xdHIfimd8IiH7AL3LsFAIVHVecocGVN10+DD4Wqcib2qrXhwSe/B5Vb1wdVww5wctvq9280DihkX04GxcBdvcDunWROFChWJYfRjTcQWMPr+jVLGiSNSjEh3uCCjIIGyAbdrAVF+hjMWn1w/RnBuj5Lip+mw=
+	t=1709589163; cv=none; b=ItRoHmQmb+oJ1kYIOW23R+I1ojmle+E1jOqzwb20CBPops+ne1uRzra8+DydzIsmbYisHU5q2VrlTDcJDI4m8SSNMFJ3D6gZUyjTw/4/y2eHZk8fJci/lKqPNMqNAu7XV+j0qHbOGwZ6+6AjG5v5HQhxksdxHfoxhbu5sbLjmlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589161; c=relaxed/simple;
-	bh=5BN0ttHZ0vMpne5hNf+XTwnw18pUEYEv3gelzx0Rx+g=;
+	s=arc-20240116; t=1709589163; c=relaxed/simple;
+	bh=vJ55UNsjpa8ED4IaEhieaVOaA9OHgQhs0eoTEjXA12s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCy+d+JoBc3yhsm4NGgj+owHiQhgDorJsHf+255QDdydtMvO7bsxrw/IeZKjZMT/4e02yNrbgG4KtC7e3la9FvzRd+VM35zVv+QBxS0hNqZSgMQqzvKhM6v5pZu3oBeSfjwR9T7eYds0t+lf9wZjnAGBHZaJMVPNRjLcFtIoTOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoKgGtnf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI5fFn+h5d0CydCPNOxscL8x1vaDMZQSSojbsn9QVBsndIFiq/IJD0MeugAgGAh1N2Ce88Tpp5I+iQ4ao2i2w3cN/CT9QHROXZbtrTGgdMxLXohhhIZAqVfg33o8wKKr2H6w80A3tcQ3jNBYUSgF1g0ypQ/fO6jOXNL347yA6RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWR4T273; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoKgGtnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974FEC433C7;
-	Mon,  4 Mar 2024 21:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWR4T273"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3194FC433F1;
+	Mon,  4 Mar 2024 21:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589160;
-	bh=5BN0ttHZ0vMpne5hNf+XTwnw18pUEYEv3gelzx0Rx+g=;
+	s=korg; t=1709589163;
+	bh=vJ55UNsjpa8ED4IaEhieaVOaA9OHgQhs0eoTEjXA12s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoKgGtnfNv4jj/t7mpiKlsX8PNIrRDlp3PovUWc7Hfs+vZMpai7maSQixniRSaeSk
-	 45rfqoDqs211QB+BC1+HhZl7WVd3rIFcB7VL7YQx6xezx0f8hA0diDY2Pb9DieQkFo
-	 jFw8Nnt1USrtsoUetKL3AHZio+YnoStYGk/vp1xg=
+	b=IWR4T273G35ivUsaxd4dcHmGS2JS0dbB25qKaa5wfG1Jnt4x9UemgY+5XXP7FUpVX
+	 sZu/YgjwWo06hX9XxevbqeT/Zc1ceXmCWgBTAWqy/aMAsanhyDGPMWmOw4ItCvUadq
+	 w2xDY4UZPxyYWF/R8CFM0tHAEGOIxK1WJCbGKB2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rob Clark <robdclark@chromium.org>,
 	Georgi Djakov <djakov@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/215] Revert "interconnect: Fix locking for runpm vs reclaim"
-Date: Mon,  4 Mar 2024 21:24:27 +0000
-Message-ID: <20240304211603.466168110@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.1 205/215] Revert "interconnect: Teach lockdep about icc_bw_lock order"
+Date: Mon,  4 Mar 2024 21:24:28 +0000
+Message-ID: <20240304211603.495045938@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -53,71 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-This reverts commit ee42bfc791aa3cd78e29046f26a09d189beb3efb which is
-commit af42269c3523492d71ebbe11fefae2653e9cdc78 upstream.
+This reverts commit 0db211ec0f1d32b93486e8f6565249ad4d1bece5 which is
+commit 13619170303878e1dae86d9a58b039475c957fcf upstream.
 
 It is reported to cause boot crashes in Android systems, so revert it
 from the stable trees for now.
 
 Cc: Rob Clark <robdclark@chromium.org>
 Cc: Georgi Djakov <djakov@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/interconnect/core.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/interconnect/core.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 --- a/drivers/interconnect/core.c
 +++ b/drivers/interconnect/core.c
-@@ -29,7 +29,6 @@ static LIST_HEAD(icc_providers);
- static int providers_count;
- static bool synced_state;
- static DEFINE_MUTEX(icc_lock);
--static DEFINE_MUTEX(icc_bw_lock);
- static struct dentry *icc_debugfs_dir;
- 
- static void icc_summary_show_one(struct seq_file *s, struct icc_node *n)
-@@ -636,7 +635,7 @@ int icc_set_bw(struct icc_path *path, u3
- 	if (WARN_ON(IS_ERR(path) || !path->num_nodes))
- 		return -EINVAL;
- 
--	mutex_lock(&icc_bw_lock);
-+	mutex_lock(&icc_lock);
- 
- 	old_avg = path->reqs[0].avg_bw;
- 	old_peak = path->reqs[0].peak_bw;
-@@ -668,7 +667,7 @@ int icc_set_bw(struct icc_path *path, u3
- 		apply_constraints(path);
+@@ -1146,21 +1146,13 @@ void icc_sync_state(struct device *dev)
+ 			}
+ 		}
  	}
- 
--	mutex_unlock(&icc_bw_lock);
-+	mutex_unlock(&icc_lock);
- 
- 	trace_icc_set_bw_end(path, ret);
- 
-@@ -971,7 +970,6 @@ void icc_node_add(struct icc_node *node,
- 		return;
- 
- 	mutex_lock(&icc_lock);
--	mutex_lock(&icc_bw_lock);
- 
- 	node->provider = provider;
- 	list_add_tail(&node->node_list, &provider->nodes);
-@@ -997,7 +995,6 @@ void icc_node_add(struct icc_node *node,
- 	node->avg_bw = 0;
- 	node->peak_bw = 0;
- 
 -	mutex_unlock(&icc_bw_lock);
  	mutex_unlock(&icc_lock);
  }
- EXPORT_SYMBOL_GPL(icc_node_add);
-@@ -1137,7 +1134,6 @@ void icc_sync_state(struct device *dev)
- 		return;
+ EXPORT_SYMBOL_GPL(icc_sync_state);
  
- 	mutex_lock(&icc_lock);
--	mutex_lock(&icc_bw_lock);
- 	synced_state = true;
- 	list_for_each_entry(p, &icc_providers, provider_list) {
- 		dev_dbg(p->dev, "interconnect provider is in synced state\n");
+ static int __init icc_init(void)
+ {
+-	struct device_node *root;
+-
+-	/* Teach lockdep about lock ordering wrt. shrinker: */
+-	fs_reclaim_acquire(GFP_KERNEL);
+-	might_lock(&icc_bw_lock);
+-	fs_reclaim_release(GFP_KERNEL);
+-
+-	root = of_find_node_by_path("/");
++	struct device_node *root = of_find_node_by_path("/");
+ 
+ 	providers_count = of_count_icc_providers(root);
+ 	of_node_put(root);
 
 
