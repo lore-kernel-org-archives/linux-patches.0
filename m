@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235982C689;
-	Mon,  4 Mar 2024 21:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7C41F5FA;
+	Mon,  4 Mar 2024 21:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587850; cv=none; b=d6LUyr1aQmah55GM0UCeC9E1nuhUig5o8go8JJl9O1Q4R6ZpSET4cMiUNK94hoMnTr/5UmfuQfoT8N1M6Uq638fex8KTkhX9MxaGnh8rK4NsegiX2PtibRNFWpXWWkMNstK/tF6Pw3BNfSF3zJmd00SQ/a+SwgMlRKVld7bn+4Q=
+	t=1709587853; cv=none; b=HsUmgfqHbBHU+i53Zyy+JDTs2TUKc8+PEpabNW3f7OI/NcGbFNfemld7dCtBmf5zkrytfJo0dXRRMH/Cn5xhIXX3cp2UnUbF/NpSIB7VF6HXrhuQ/faFdTMQxJimwFNBJ8uWHrzDDnqbzGFhLBZMmMGdeAv9Mm9Xf18HntIu6nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587850; c=relaxed/simple;
-	bh=xjxSSIbESFa5LgeDFWCwewUHd8SLBJhbVPJW/aF8HSM=;
+	s=arc-20240116; t=1709587853; c=relaxed/simple;
+	bh=WcANRqZeCfxcMBATQK4WsmVIBAdmmZg9lotHksAMHOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cg0TTuZmTElHaOZ7U7hrhen55/Ju2BH0hW/X55nKn+ygD87Qmp+V7KUY47XGzYR2l5RA+7CH/iFZTY2RuZLjgZd1NwoLrdJzNzA1dUev8iOBp3u5DHSXKxtMDZ+PfaSul0qEKIDgsW5+2rddSZLEGcP+OBRhRcE2YUE+GAi5MeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYepjdnv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEnwF8pC8Eis4z5Y8vua7J03WzE+KUAmuJstCZgNtyIrOIqZw8X5bipe5MFAUXV2TVSmXhoBE404nvIB+stXlteUyqPZ3mcIy1qgL3En8o9CD3jK79yiNx1EFvELBcPsC6GkQ8+m/96bTthQaeUEyWO3g5fYG6rVm8bPqHXMbH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBLf8LTI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYepjdnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A87C433F1;
-	Mon,  4 Mar 2024 21:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBLf8LTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D296C433C7;
+	Mon,  4 Mar 2024 21:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587850;
-	bh=xjxSSIbESFa5LgeDFWCwewUHd8SLBJhbVPJW/aF8HSM=;
+	s=korg; t=1709587852;
+	bh=WcANRqZeCfxcMBATQK4WsmVIBAdmmZg9lotHksAMHOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYepjdnvxJjsyrpCE8rnwR4JZ3uqnVSYBet609Q8wsuxIGdp1o9pqPgjIjnRdVc5N
-	 lNfUk9y12OiUIPrIbB7a4mqQxAqiB9D56KKFOkh9/UzWhxKBKujnxRfcFlUz1mXCz7
-	 4qfQJH0kR7jgrYctjr6UOPY+aNvOcqoRhgjZSqF0=
+	b=PBLf8LTIZUjepiPRxXmahVuaa7RtlhuJuWPgGrFitmxI+C/PdKPusbKAvt/KhGySO
+	 qNaVNuHDSmAxI+O+SpTfAKxIDE/boyV5ExTs/hmtUT+1R03ITK+ocRCUtLTJ3bTzrW
+	 VnatJOANDBqgLw2AMGyCb8KeyaiQqhyXUjlXBhMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Schumacher <timschumi@gmx.de>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.7 113/162] efivarfs: Request at most 512 bytes for variable names
-Date: Mon,  4 Mar 2024 21:22:58 +0000
-Message-ID: <20240304211555.395376674@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 114/162] pmdomain: arm: Fix NULL dereference on scmi_perf_domain removal
+Date: Mon,  4 Mar 2024 21:22:59 +0000
+Message-ID: <20240304211555.421498729@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -50,74 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Schumacher <timschumi@gmx.de>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit f45812cc23fb74bef62d4eb8a69fe7218f4b9f2a upstream.
+commit eb5555d422d0fc325e1574a7353d3c616f82d8b5 upstream.
 
-Work around a quirk in a few old (2011-ish) UEFI implementations, where
-a call to `GetNextVariableName` with a buffer size larger than 512 bytes
-will always return EFI_INVALID_PARAMETER.
+On unloading of the scmi_perf_domain module got the below splat, when in
+the DT provided to the system under test the '#power-domain-cells' property
+was missing. Indeed, this particular setup causes the probe to bail out
+early without giving any error, which leads to the ->remove() callback gets
+to run too, but without all the expected initialized structures in place.
 
-There is some lore around EFI variable names being up to 1024 bytes in
-size, but this has no basis in the UEFI specification, and the upper
-bounds are typically platform specific, and apply to the entire variable
-(name plus payload).
+Add a check and bail out early on remove too.
 
-Given that Linux does not permit creating files with names longer than
-NAME_MAX (255) bytes, 512 bytes (== 256 UTF-16 characters) is a
-reasonable limit.
+ Call trace:
+  scmi_perf_domain_remove+0x28/0x70 [scmi_perf_domain]
+  scmi_dev_remove+0x28/0x40 [scmi_core]
+  device_remove+0x54/0x90
+  device_release_driver_internal+0x1dc/0x240
+  driver_detach+0x58/0xa8
+  bus_remove_driver+0x78/0x108
+  driver_unregister+0x38/0x70
+  scmi_driver_unregister+0x28/0x180 [scmi_core]
+  scmi_perf_domain_driver_exit+0x18/0xb78 [scmi_perf_domain]
+  __arm64_sys_delete_module+0x1a8/0x2c0
+  invoke_syscall+0x50/0x128
+  el0_svc_common.constprop.0+0x48/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x34/0xb8
+  el0t_64_sync_handler+0x100/0x130
+  el0t_64_sync+0x190/0x198
+ Code: a90153f3 f9403c14 f9414800 955f8a05 (b9400a80)
+ ---[ end trace 0000000000000000 ]---
 
-Cc: <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Tim Schumacher <timschumi@gmx.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 2af23ceb8624 ("pmdomain: arm: Add the SCMI performance domain")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240125191756.868860-1-cristian.marussi@arm.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/efivarfs/vars.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/pmdomain/arm/scmi_perf_domain.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/efivarfs/vars.c
-+++ b/fs/efivarfs/vars.c
-@@ -372,7 +372,7 @@ static void dup_variable_bug(efi_char16_
- int efivar_init(int (*func)(efi_char16_t *, efi_guid_t, unsigned long, void *),
- 		void *data, bool duplicates, struct list_head *head)
- {
--	unsigned long variable_name_size = 1024;
-+	unsigned long variable_name_size = 512;
- 	efi_char16_t *variable_name;
- 	efi_status_t status;
- 	efi_guid_t vendor_guid;
-@@ -389,12 +389,13 @@ int efivar_init(int (*func)(efi_char16_t
- 		goto free;
+diff --git a/drivers/pmdomain/arm/scmi_perf_domain.c b/drivers/pmdomain/arm/scmi_perf_domain.c
+index 709bbc448fad..d7ef46ccd9b8 100644
+--- a/drivers/pmdomain/arm/scmi_perf_domain.c
++++ b/drivers/pmdomain/arm/scmi_perf_domain.c
+@@ -159,6 +159,9 @@ static void scmi_perf_domain_remove(struct scmi_device *sdev)
+ 	struct genpd_onecell_data *scmi_pd_data = dev_get_drvdata(dev);
+ 	int i;
  
- 	/*
--	 * Per EFI spec, the maximum storage allocated for both
--	 * the variable name and variable data is 1024 bytes.
-+	 * A small set of old UEFI implementations reject sizes
-+	 * above a certain threshold, the lowest seen in the wild
-+	 * is 512.
- 	 */
++	if (!scmi_pd_data)
++		return;
++
+ 	of_genpd_del_provider(dev->of_node);
  
- 	do {
--		variable_name_size = 1024;
-+		variable_name_size = 512;
- 
- 		status = efivar_get_next_variable(&variable_name_size,
- 						  variable_name,
-@@ -431,9 +432,13 @@ int efivar_init(int (*func)(efi_char16_t
- 			break;
- 		case EFI_NOT_FOUND:
- 			break;
-+		case EFI_BUFFER_TOO_SMALL:
-+			pr_warn("efivars: Variable name size exceeds maximum (%lu > 512)\n",
-+				variable_name_size);
-+			status = EFI_NOT_FOUND;
-+			break;
- 		default:
--			printk(KERN_WARNING "efivars: get_next_variable: status=%lx\n",
--				status);
-+			pr_warn("efivars: get_next_variable: status=%lx\n", status);
- 			status = EFI_NOT_FOUND;
- 			break;
- 		}
+ 	for (i = 0; i < scmi_pd_data->num_domains; i++)
+-- 
+2.44.0
+
 
 
