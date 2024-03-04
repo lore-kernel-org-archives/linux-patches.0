@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763C21F60A;
-	Mon,  4 Mar 2024 21:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158B71F92C;
+	Mon,  4 Mar 2024 21:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587620; cv=none; b=uHqzmTOPkMJG7lLuu2lX468nHIs5R9eVAkAz1AvbBwG0rAaqfvDuUHNGj8EfxNGSWgqmrvA3muJDcXUG3flh2vcYcpR/EJDonm+6kFi8y0FAhLPoDFscnHWzPIiPw1/RP8yvMc9+1dGainqZkKEZI8VHpYrZwATg/XjowdsnQFA=
+	t=1709587623; cv=none; b=rwHc9FQpEp2QIx0FiJHkvQNh6B+gM3VYxflKYJwW3tr2nEbqMeCof4k0SdA8CF9503fFRJTViC2P6GGsKmVEuFi0q6B4+kO3M4Y5qA1XcnCMqgzLvxcjH8NSMY71G5i3k+aROExver6xUVRRjqy52c+NpQiU/vPD38v9C92w5Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587620; c=relaxed/simple;
-	bh=OvTYF1fnCCNe3jQjCaAzh9zBsGJpEtXWn7HYISUiUOo=;
+	s=arc-20240116; t=1709587623; c=relaxed/simple;
+	bh=cAmTemXLgoGYQEjXU5H2GBUOLz3xYy0MZNdrYpJvWpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C6tqajfPTWfALYxgn37qU8+kC+wZyN7yI4Sb36yJIEqztGlfqIzsUBH3o7SYAbNlNHu5M1mfj9N/+fOaOWZh6h4qL1Xrypf5LU2PMFWC7eYsIDqbBNlVHAheje0AdtbmV5+k/MrtfwxvwszfnJK8otdgO9W+qqGCalvhLdEBwN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/VOIrNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0wSHa/6+axZUYvi4FzqALUY4ujdNLa9qI4/uOs65krNTB+HXpAsgiG9znkMCZ9hh3vvHrGrpk1e1643yPSi+hyqSxBURqBrs/TqI8p3XaM9eux3XqJfn8zs6RVo0j8pNXA4pbkTryF82ahXaVrxCVrfHleaGYEkdR/5eHUzO4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKm3TNP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/VOIrNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38BCC43390;
-	Mon,  4 Mar 2024 21:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKm3TNP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D487C433C7;
+	Mon,  4 Mar 2024 21:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587620;
-	bh=OvTYF1fnCCNe3jQjCaAzh9zBsGJpEtXWn7HYISUiUOo=;
+	s=korg; t=1709587623;
+	bh=cAmTemXLgoGYQEjXU5H2GBUOLz3xYy0MZNdrYpJvWpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/VOIrNEi2L+k5NsvMF+pzD28chs6XAvLAgn1pJnDyQDiDT6h9yxZY3pAEIQ01bJ0
-	 ercG12cHUb4WzL+i2tqyin8yaZ/6+S1RIPGRAGjfxsz47rdZnz7dkYLGHundGwmVMv
-	 Eq+Dn04kkl7MGfQnksHPSOZ3vk6nFLyFtq/TWRVA=
+	b=UKm3TNP5w76xry3zv/fKNGvfcRZ+a+QlLFZLckSBgtR8gUPX7/krwnLE1XipW6Tdo
+	 CudGsaLr158IDANGXAOKku4TuqVm8sLaEAOHRXc6kzjbe45juLmK/QegdeW/uLqeop
+	 N21X/z80QbiFuFTSvA/JKzRZxcem9GJ6H2uo5JqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
+	Clancy Shang <clancy.shang@quectel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 026/162] Bluetooth: Avoid potential use-after-free in hci_error_reset
-Date: Mon,  4 Mar 2024 21:21:31 +0000
-Message-ID: <20240304211552.673326726@linuxfoundation.org>
+Subject: [PATCH 6.7 027/162] Bluetooth: hci_sync: Fix accept_list when attempting to suspend
+Date: Mon,  4 Mar 2024 21:21:32 +0000
+Message-ID: <20240304211552.702178520@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,64 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2449007d3f73b2842c9734f45f0aadb522daf592 ]
+[ Upstream commit e5469adb2a7e930d96813316592302d9f8f1df4e ]
 
-While handling the HCI_EV_HARDWARE_ERROR event, if the underlying
-BT controller is not responding, the GPIO reset mechanism would
-free the hci_dev and lead to a use-after-free in hci_error_reset.
+During suspend, only wakeable devices can be in acceptlist, so if the
+device was previously added it needs to be removed otherwise the device
+can end up waking up the system prematurely.
 
-Here's the call trace observed on a ChromeOS device with Intel AX201:
-   queue_work_on+0x3e/0x6c
-   __hci_cmd_sync_sk+0x2ee/0x4c0 [bluetooth <HASH:3b4a6>]
-   ? init_wait_entry+0x31/0x31
-   __hci_cmd_sync+0x16/0x20 [bluetooth <HASH:3b4a 6>]
-   hci_error_reset+0x4f/0xa4 [bluetooth <HASH:3b4a 6>]
-   process_one_work+0x1d8/0x33f
-   worker_thread+0x21b/0x373
-   kthread+0x13a/0x152
-   ? pr_cont_work+0x54/0x54
-   ? kthread_blkcg+0x31/0x31
-    ret_from_fork+0x1f/0x30
-
-This patch holds the reference count on the hci_dev while processing
-a HCI_EV_HARDWARE_ERROR event to avoid potential crash.
-
-Fixes: c7741d16a57c ("Bluetooth: Perform a power cycle when receiving hardware error event")
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Fixes: 3b42055388c3 ("Bluetooth: hci_sync: Fix attempting to suspend with unfiltered passive scan")
+Signed-off-by: Clancy Shang <clancy.shang@quectel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_sync.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 65601aa52e0d8..2821a42cefdc6 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1049,6 +1049,7 @@ static void hci_error_reset(struct work_struct *work)
- {
- 	struct hci_dev *hdev = container_of(work, struct hci_dev, error_reset);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 39ccbb1be24c3..b90ee68bba1d6 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2274,8 +2274,11 @@ static int hci_le_add_accept_list_sync(struct hci_dev *hdev,
  
-+	hci_dev_hold(hdev);
- 	BT_DBG("%s", hdev->name);
+ 	/* During suspend, only wakeable devices can be in acceptlist */
+ 	if (hdev->suspended &&
+-	    !(params->flags & HCI_CONN_FLAG_REMOTE_WAKEUP))
++	    !(params->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)) {
++		hci_le_del_accept_list_sync(hdev, &params->addr,
++					    params->addr_type);
+ 		return 0;
++	}
  
- 	if (hdev->hw_error)
-@@ -1056,10 +1057,10 @@ static void hci_error_reset(struct work_struct *work)
- 	else
- 		bt_dev_err(hdev, "hardware error 0x%2.2x", hdev->hw_error_code);
- 
--	if (hci_dev_do_close(hdev))
--		return;
-+	if (!hci_dev_do_close(hdev))
-+		hci_dev_do_open(hdev);
- 
--	hci_dev_do_open(hdev);
-+	hci_dev_put(hdev);
- }
- 
- void hci_uuids_clear(struct hci_dev *hdev)
+ 	/* Select filter policy to accept all advertising */
+ 	if (*num_entries >= hdev->le_accept_list_size)
 -- 
 2.43.0
 
