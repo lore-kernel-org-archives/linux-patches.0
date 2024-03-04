@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD51DDCB;
-	Mon,  4 Mar 2024 21:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3253D1C6AB;
+	Mon,  4 Mar 2024 21:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588185; cv=none; b=rnFFaILK5l0ZO1IIOXOum6VQyKZwW5Kq6AbhjXZ8fX8eG+7/q/5NWoj4XPte74zqa2rEjuWphy31ZzKZsZRdysokgABzOkJzsbnNE0DEeRcxB9HsuWeuaxHZlF9xUqjS2awvvUl/ZfWChFq4a9r0ll7ATtvhUIIusDj5nPMqXiU=
+	t=1709588188; cv=none; b=q39x3YoF8PJDj72/FSZi+CN2olO1265mA2uctdewYtEIjfAN8BWVxUiqosUOJhTRYg6PaZARJpuUYbFuZ0w6jvf/B+TxvCTUbMHfdMw9UkXCOXfLxqx5WX+QqWLBamtIFCHLMGL949fUcdWNltwyXueoBM2fpVqrcuNmNWjCVbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588185; c=relaxed/simple;
-	bh=RJq2o1foJRUClSrgEy7FNtuwZ+lLUkEIbtAzr/uK728=;
+	s=arc-20240116; t=1709588188; c=relaxed/simple;
+	bh=pPANHrBK7DKAHEV66DcrsxlFW32VG/r3psHd6bNsJqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSmiQzCMko9PRvhRppBX+B/W4jol5sGRZCSJ36j7GyoFiIr2qA1hA0hELb/oFEwPx9lIJnqmAhwr6GEdn5TRdAYX+xo7z4T0NfJ6x6IEUUcs41hWtzJ7u0OLme2yBuPv8vsn234StnrKCHfAmIKM1c8y0x1o8p9mAVzjLYrCTnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kj4FEmV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FxglrPxtZ5JUS+7M5EhdOZidHIT21qDeBBZwGWOgx1cqSC0WFZIwX7JA8UkoCBvYMviAhPFfBJyccexzURvgnSX904oid1Ehh3SidDDEsEdlMc4qQ+yRQTBa1uj5ryJvyRVHrMbzHlzAVogMbAgZuRaln000ZrBVihk/u0fRVZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbRL1ipa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kj4FEmV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D413C433C7;
-	Mon,  4 Mar 2024 21:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbRL1ipa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9805C433C7;
+	Mon,  4 Mar 2024 21:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588185;
-	bh=RJq2o1foJRUClSrgEy7FNtuwZ+lLUkEIbtAzr/uK728=;
+	s=korg; t=1709588188;
+	bh=pPANHrBK7DKAHEV66DcrsxlFW32VG/r3psHd6bNsJqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kj4FEmV+ia/6+EEsgANME+q3np2Vgyg70nrB9QS9MhH4qE6UVugY918KCJOpMF19V
-	 Ytbg89e7Al1GmYmo0cPxXGMuzggIR+QNz2KE8vzo66AfvV31Ei20iWotSH4kEQFk+9
-	 9jDX0RfqqSIAsM8YlI9PmZHCn5blK3eVHqjR/hhY=
+	b=JbRL1ipa01CxjvyaMA0tPw+yDnZhPPJ1jYBXlwD6JNRT+1Sv6bk2yz9YAcoYUcp5d
+	 thgv8KIA9gnF71HZwY1XetXlAj/660dRROkQ9bwYsOWGtNQKdiPAfeebYDe/3PNIt3
+	 alFSZIaT/0JDxn/ZH/Zp/sVI8grqhRjDjNLjnz8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Madalin Bucur <madalin.bucur@oss.nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/143] net: mctp: take ownership of skb in mctp_local_output
-Date: Mon,  4 Mar 2024 21:22:11 +0000
-Message-ID: <20240304211550.280616557@linuxfoundation.org>
+Subject: [PATCH 6.6 012/143] net: dpaa: fman_memac: accept phy-interface-type = "10gbase-r" in the device tree
+Date: Mon,  4 Mar 2024 21:22:12 +0000
+Message-ID: <20240304211550.318210029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,81 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 3773d65ae5154ed7df404b050fd7387a36ab5ef3 ]
+[ Upstream commit 734f06db599f66d6a159c78abfdbadfea3b7d43b ]
 
-Currently, mctp_local_output only takes ownership of skb on success, and
-we may leak an skb if mctp_local_output fails in specific states; the
-skb ownership isn't transferred until the actual output routing occurs.
+Since commit 5d93cfcf7360 ("net: dpaa: Convert to phylink"), we support
+the "10gbase-r" phy-mode through a driver-based conversion of "xgmii",
+but we still don't actually support it when the device tree specifies
+"10gbase-r" proper.
 
-Instead, make mctp_local_output free the skb on all error paths up to
-the route action, so it always consumes the passed skb.
+This is because boards such as LS1046A-RDB do not define pcs-handle-names
+(for whatever reason) in the ethernet@f0000 device tree node, and the
+code enters through this code path:
 
-Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240220081053.1439104-1-jk@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	err = of_property_match_string(mac_node, "pcs-handle-names", "xfi");
+	// code takes neither branch and falls through
+	if (err >= 0) {
+		(...)
+	} else if (err != -EINVAL && err != -ENODATA) {
+		goto _return_fm_mac_free;
+	}
+
+	(...)
+
+	/* For compatibility, if pcs-handle-names is missing, we assume this
+	 * phy is the first one in pcsphy-handle
+	 */
+	err = of_property_match_string(mac_node, "pcs-handle-names", "sgmii");
+	if (err == -EINVAL || err == -ENODATA)
+		pcs = memac_pcs_create(mac_node, 0); // code takes this branch
+	else if (err < 0)
+		goto _return_fm_mac_free;
+	else
+		pcs = memac_pcs_create(mac_node, err);
+
+	// A default PCS is created and saved in "pcs"
+
+	// This determination fails and mistakenly saves the default PCS
+	// memac->sgmii_pcs instead of memac->xfi_pcs, because at this
+	// stage, mac_dev->phy_if == PHY_INTERFACE_MODE_10GBASER.
+	if (err && mac_dev->phy_if == PHY_INTERFACE_MODE_XGMII)
+		memac->xfi_pcs = pcs;
+	else
+		memac->sgmii_pcs = pcs;
+
+In other words, in the absence of pcs-handle-names, the default
+xfi_pcs assignment logic only works when in the device tree we have
+PHY_INTERFACE_MODE_XGMII.
+
+By reversing the order between the fallback xfi_pcs assignment and the
+"xgmii" overwrite with "10gbase-r", we are able to support both values
+in the device tree, with identical behavior.
+
+Currently, it is impossible to make the s/xgmii/10gbase-r/ device tree
+conversion, because it would break forward compatibility (new device
+tree with old kernel). The only way to modify existing device trees to
+phy-interface-mode = "10gbase-r" is to fix stable kernels to accept this
+value and handle it properly.
+
+One reason why the conversion is desirable is because with pre-phylink
+kernels, the Aquantia PHY driver used to warn about the improper use
+of PHY_INTERFACE_MODE_XGMII [1]. It is best to have a single (latest)
+device tree that works with all supported stable kernel versions.
+
+Note that the blamed commit does not constitute a regression per se.
+Older stable kernels like 6.1 still do not work with "10gbase-r", but
+for a different reason. That is a battle for another time.
+
+[1] https://lore.kernel.org/netdev/20240214-ls1046-dts-use-10gbase-r-v1-1-8c2d68547393@concurrent-rt.com/
+
+Fixes: 5d93cfcf7360 ("net: dpaa: Convert to phylink")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Sean Anderson <sean.anderson@seco.com>
+Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mctp.h |  1 +
- net/mctp/route.c   | 10 ++++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ .../net/ethernet/freescale/fman/fman_memac.c   | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/mctp.h b/include/net/mctp.h
-index da86e106c91d5..2bff5f47ce82f 100644
---- a/include/net/mctp.h
-+++ b/include/net/mctp.h
-@@ -249,6 +249,7 @@ struct mctp_route {
- struct mctp_route *mctp_route_lookup(struct net *net, unsigned int dnet,
- 				     mctp_eid_t daddr);
+diff --git a/drivers/net/ethernet/freescale/fman/fman_memac.c b/drivers/net/ethernet/freescale/fman/fman_memac.c
+index 3b75cc543be93..76e5181789cb9 100644
+--- a/drivers/net/ethernet/freescale/fman/fman_memac.c
++++ b/drivers/net/ethernet/freescale/fman/fman_memac.c
+@@ -1074,6 +1074,14 @@ int memac_initialization(struct mac_device *mac_dev,
+ 	unsigned long		 capabilities;
+ 	unsigned long		*supported;
  
-+/* always takes ownership of skb */
- int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 		      struct sk_buff *skb, mctp_eid_t daddr, u8 req_tag);
- 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 6218dcd07e184..ceee44ea09d97 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -888,7 +888,7 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 		dev = dev_get_by_index_rcu(sock_net(sk), cb->ifindex);
- 		if (!dev) {
- 			rcu_read_unlock();
--			return rc;
-+			goto out_free;
- 		}
- 		rt->dev = __mctp_dev_get(dev);
- 		rcu_read_unlock();
-@@ -903,7 +903,8 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 		rt->mtu = 0;
- 
- 	} else {
--		return -EINVAL;
-+		rc = -EINVAL;
-+		goto out_free;
- 	}
- 
- 	spin_lock_irqsave(&rt->dev->addrs_lock, flags);
-@@ -966,12 +967,17 @@ int mctp_local_output(struct sock *sk, struct mctp_route *rt,
- 		rc = mctp_do_fragment_route(rt, skb, mtu, tag);
- 	}
- 
-+	/* route output functions consume the skb, even on error */
-+	skb = NULL;
++	/* The internal connection to the serdes is XGMII, but this isn't
++	 * really correct for the phy mode (which is the external connection).
++	 * However, this is how all older device trees say that they want
++	 * 10GBASE-R (aka XFI), so just convert it for them.
++	 */
++	if (mac_dev->phy_if == PHY_INTERFACE_MODE_XGMII)
++		mac_dev->phy_if = PHY_INTERFACE_MODE_10GBASER;
 +
- out_release:
- 	if (!ext_rt)
- 		mctp_route_release(rt);
+ 	mac_dev->phylink_ops		= &memac_mac_ops;
+ 	mac_dev->set_promisc		= memac_set_promiscuous;
+ 	mac_dev->change_addr		= memac_modify_mac_address;
+@@ -1140,7 +1148,7 @@ int memac_initialization(struct mac_device *mac_dev,
+ 	 * (and therefore that xfi_pcs cannot be set). If we are defaulting to
+ 	 * XGMII, assume this is for XFI. Otherwise, assume it is for SGMII.
+ 	 */
+-	if (err && mac_dev->phy_if == PHY_INTERFACE_MODE_XGMII)
++	if (err && mac_dev->phy_if == PHY_INTERFACE_MODE_10GBASER)
+ 		memac->xfi_pcs = pcs;
+ 	else
+ 		memac->sgmii_pcs = pcs;
+@@ -1154,14 +1162,6 @@ int memac_initialization(struct mac_device *mac_dev,
+ 		goto _return_fm_mac_free;
+ 	}
  
- 	mctp_dev_put(tmp_rt.dev);
- 
-+out_free:
-+	kfree_skb(skb);
- 	return rc;
- }
- 
+-	/* The internal connection to the serdes is XGMII, but this isn't
+-	 * really correct for the phy mode (which is the external connection).
+-	 * However, this is how all older device trees say that they want
+-	 * 10GBASE-R (aka XFI), so just convert it for them.
+-	 */
+-	if (mac_dev->phy_if == PHY_INTERFACE_MODE_XGMII)
+-		mac_dev->phy_if = PHY_INTERFACE_MODE_10GBASER;
+-
+ 	/* TODO: The following interface modes are supported by (some) hardware
+ 	 * but not by this driver:
+ 	 * - 1000BASE-KX
 -- 
 2.43.0
 
