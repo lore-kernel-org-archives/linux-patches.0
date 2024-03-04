@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022BE1F92C;
-	Mon,  4 Mar 2024 21:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A60B8F58;
+	Mon,  4 Mar 2024 21:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588279; cv=none; b=vFb+zE9wAxbYd6P2ZFqCrXYXLAyBO7Mm4VW2EuIMVZxO6tfUqVUwQxE4XSAUOoLDwFB31oZPNpFU6q2II3hCsHTu5yFUcRdXNZiKgHjeASWQ0wpMb/X0Q0gwqy6mL8MmUfq8kLpia83CIzCWR41QK51lkcvPRJfpDOWLRfVruu4=
+	t=1709588281; cv=none; b=IgAFdv4C7hnMz+J4NfeLAzNphay+uAZkM0mpVFEhGAXataHMvzaeyjbINsYawwr/1vAKTjnUqN8YHCXi9y9fcn15ngiLv1o51i+xpXiTt1G81Oh7ncrzUZzgJ9hI83kQfwsd8pP0aTR6M0AfwSYrC7S6kHguOo646kKnEGrzXE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588279; c=relaxed/simple;
-	bh=cAO6AriFR2ac9ZnAB03NB7ku6223KcrVG5OrZlkAPcA=;
+	s=arc-20240116; t=1709588281; c=relaxed/simple;
+	bh=5JVm5yE9Nrs9wqydhYF32nzzLsp3olNWn2r59JoNyqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaBhlDhmIeJ/aLotIw4hRZq5JntWZSQEJRYhlT5I55tdHQ0t0noh4h/YnBDjWBLN7AUVMdjRaLEhAPVcP/FLHgvlA5ZlJBwf5SqpJYYeEn/YLUjOKlCOhfHJzoCbXH3CIBwWeXgrewNeM60QHVajiuBQ7UwPzYSysUbyA/WM770=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+lAUcoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SBW4XPn2Q7M0QR1mRqGgEPYvZAuqWJf9rel2Zjplck/bMBGf2yZhZssWtAqKWobuZt7lK0USAlYo4eBbt9eHVHQHzi7gorA1jRKaLeni1/GPxLO/J52BBRqpCtfV/OeLxwbu37KzhnK/PEi6wDqDDTTyYGHQEcFnKE9C0gAQO2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krmHydgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+lAUcoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A546C433F1;
-	Mon,  4 Mar 2024 21:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krmHydgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2469EC433C7;
+	Mon,  4 Mar 2024 21:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588278;
-	bh=cAO6AriFR2ac9ZnAB03NB7ku6223KcrVG5OrZlkAPcA=;
+	s=korg; t=1709588281;
+	bh=5JVm5yE9Nrs9wqydhYF32nzzLsp3olNWn2r59JoNyqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+lAUcoqZFpn9E0D637cIrbjKL/Gu9XOJ0SNdDuLyr2qDAC6h6vtJhlnpbxVCdAGA
-	 kEpFEU0xEJ98/T/oV4syrqZhHZmU7y13mDgWJkkOQeNvQYhKMhk0bJ9/X9SXR+tpxW
-	 PxTwTz1Zav4AAsW5wu/r73AvHQxKCwOwfvIiMakw=
+	b=krmHydgpH+yCzPgc+97+OQDAJ6pM1Wh5+bb5dZ6y4ba5iVIjBcGcQdR+dvk16/6t6
+	 ZHc/5irhfmsVXJ3CRV6mF5/3Y4buTXGcpSl6S91uxpadnwtFZPAqdTBt0Yn6pPetGR
+	 3FzdkdaoYcJiADMkKltjidQiR8tE/zUzS+Kp/pPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
+	Simon Horman <horms@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/143] stmmac: Clear variable when destroying workqueue
-Date: Mon,  4 Mar 2024 21:22:22 +0000
-Message-ID: <20240304211550.650087184@linuxfoundation.org>
+Subject: [PATCH 6.6 023/143] Bluetooth: hci_sync: Check the correct flag before starting a scan
+Date: Mon,  4 Mar 2024 21:22:23 +0000
+Message-ID: <20240304211550.687669718@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -46,87 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Raczynski <j.raczynski@samsung.com>
+From: Jonas Dreßler <verdre@v0yd.nl>
 
-[ Upstream commit 8af411bbba1f457c33734795f024d0ef26d0963f ]
+[ Upstream commit 6b3899be24b16ff8ee0cb25f0bd59b01b15ba1d1 ]
 
-Currently when suspending driver and stopping workqueue it is checked whether
-workqueue is not NULL and if so, it is destroyed.
-Function destroy_workqueue() does drain queue and does clear variable, but
-it does not set workqueue variable to NULL. This can cause kernel/module
-panic if code attempts to clear workqueue that was not initialized.
+There's a very confusing mistake in the code starting a HCI inquiry: We're
+calling hci_dev_test_flag() to test for HCI_INQUIRY, but hci_dev_test_flag()
+checks hdev->dev_flags instead of hdev->flags. HCI_INQUIRY is a bit that's
+set on hdev->flags, not on hdev->dev_flags though.
 
-This scenario is possible when resuming suspended driver in stmmac_resume(),
-because there is no handling for failed stmmac_hw_setup(),
-which can fail and return if DMA engine has failed to initialize,
-and workqueue is initialized after DMA engine.
-Should DMA engine fail to initialize, resume will proceed normally,
-but interface won't work and TX queue will eventually timeout,
-causing 'Reset adapter' error.
-This then does destroy workqueue during reset process.
-And since workqueue is initialized after DMA engine and can be skipped,
-it will cause kernel/module panic.
+HCI_INQUIRY equals the integer 7, and in hdev->dev_flags, 7 means
+HCI_BONDABLE, so we were actually checking for HCI_BONDABLE here.
 
-To secure against this possible crash, set workqueue variable to NULL when
-destroying workqueue.
+The mistake is only present in the synchronous code for starting an inquiry,
+not in the async one. Also devices are typically bondable while doing an
+inquiry, so that might be the reason why nobody noticed it so far.
 
-Log/backtrace from crash goes as follows:
-[88.031977]------------[ cut here ]------------
-[88.031985]NETDEV WATCHDOG: eth0 (sxgmac): transmit queue 1 timed out
-[88.032017]WARNING: CPU: 0 PID: 0 at net/sched/sch_generic.c:477 dev_watchdog+0x390/0x398
-           <Skipping backtrace for watchdog timeout>
-[88.032251]---[ end trace e70de432e4d5c2c0 ]---
-[88.032282]sxgmac 16d88000.ethernet eth0: Reset adapter.
-[88.036359]------------[ cut here ]------------
-[88.036519]Call trace:
-[88.036523] flush_workqueue+0x3e4/0x430
-[88.036528] drain_workqueue+0xc4/0x160
-[88.036533] destroy_workqueue+0x40/0x270
-[88.036537] stmmac_fpe_stop_wq+0x4c/0x70
-[88.036541] stmmac_release+0x278/0x280
-[88.036546] __dev_close_many+0xcc/0x158
-[88.036551] dev_close_many+0xbc/0x190
-[88.036555] dev_close.part.0+0x70/0xc0
-[88.036560] dev_close+0x24/0x30
-[88.036564] stmmac_service_task+0x110/0x140
-[88.036569] process_one_work+0x1d8/0x4a0
-[88.036573] worker_thread+0x54/0x408
-[88.036578] kthread+0x164/0x170
-[88.036583] ret_from_fork+0x10/0x20
-[88.036588]---[ end trace e70de432e4d5c2c1 ]---
-[88.036597]Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-
-Fixes: 5a5586112b929 ("net: stmmac: support FPE link partner hand-shaking procedure")
-Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 5b3423d1af3f3..d1adb102a1d49 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3926,8 +3926,10 @@ static void stmmac_fpe_stop_wq(struct stmmac_priv *priv)
- {
- 	set_bit(__FPE_REMOVING, &priv->fpe_task_state);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 5c4efa6246256..497b12e0374e0 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5633,7 +5633,7 @@ static int hci_inquiry_sync(struct hci_dev *hdev, u8 length)
  
--	if (priv->fpe_wq)
-+	if (priv->fpe_wq) {
- 		destroy_workqueue(priv->fpe_wq);
-+		priv->fpe_wq = NULL;
-+	}
+ 	bt_dev_dbg(hdev, "");
  
- 	netdev_info(priv->dev, "FPE workqueue stop");
- }
+-	if (hci_dev_test_flag(hdev, HCI_INQUIRY))
++	if (test_bit(HCI_INQUIRY, &hdev->flags))
+ 		return 0;
+ 
+ 	hci_dev_lock(hdev);
 -- 
 2.43.0
 
