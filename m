@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3227A46BA0;
-	Mon,  4 Mar 2024 21:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3831C6AB;
+	Mon,  4 Mar 2024 21:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589135; cv=none; b=a0sezBYnM7WM9apg8DZedcRJiiW2M6cx6lAfucfhGLdd8+P8to8AJgkTGqRNNU+c609KkO/JOdE3OKhj97GAtTb4NnzqfH1ocpPqfz5nKTmokU/S3q2/5L3wcUg/wk1BKg9DNepXaYlYqUwWdhHBGzSjjYZeefmR8DOdBiuayzo=
+	t=1709589137; cv=none; b=Yss22l4D0I+vyx/dVlhIPit71Nh5nx4vDGfriNbEcoUV0Mlr1VZJgC4JxGqaTXb1D3lCwYuGTAi+Lg6v8BfHH/jOT2gQzxdetVu9+qQ5WjNyLDlLLKBc9j+kUFBDwLstm/k+bhUlYnwOStsTn/EinWEgpHRMpSTc+bb4oD5uuwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589135; c=relaxed/simple;
-	bh=wOmCeOlEEzsaSXXuw+jOKxqV97bFbZlgb3UKhmMnOH4=;
+	s=arc-20240116; t=1709589137; c=relaxed/simple;
+	bh=12rtFWloHpi3YGUvsu9maMdceuOSyo0MZCziqP2EYwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKvYodibtj6oKYFqtrQwAyaIFNXkxz8CHAhY9/xE9P/p0k/NQ4glpQOTgLx4d4b29DJaWHiIK0Tpq59HzJ7ImLxJF5ewWh1H3g3xPt65x1KQarU0LJ+WPnLCbVcFVrgbbHFJKQJBPw3KHFWBuuTvFWQEQByzb2QHXiYqRVe1dWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuqDmgSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYXcrd8QB49bbnmagPV0+2UosbPxasE/jL5na3a57L9ACYICtqrhWTrRG7a0eeCVAMscw/gOaa5DsyPeQBm2BRIbx91lGMYS0/pk+KvXMvbjRjjkSy7iMhodPSvXu91SH7JKDd0cQiIoH3q1hwWTcYig5cjlj9O319/EiAOBrak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVz20OqN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuqDmgSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9B4C433F1;
-	Mon,  4 Mar 2024 21:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVz20OqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627AFC433F1;
+	Mon,  4 Mar 2024 21:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589135;
-	bh=wOmCeOlEEzsaSXXuw+jOKxqV97bFbZlgb3UKhmMnOH4=;
+	s=korg; t=1709589137;
+	bh=12rtFWloHpi3YGUvsu9maMdceuOSyo0MZCziqP2EYwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EuqDmgSGGsB/2mmQw0J2eC64OsaPEac7WfbO3aPZcJQGSyUA9CTYQOCMlg9VL888E
-	 20ZyInGO6mvKft/NJUKE3DCZgJkfmijD77Ip/C5pUOfYqEuicP4ICSNcdrpVKQbwhU
-	 uyLIsXt0lsJjqQAp+KoiWawQI5zrQP+7h0gldhAA=
+	b=eVz20OqNgkijCzieKmXi7RMmZMxjYB6nTjW5u/hOOhMN61ikjEevIlLkpsLDo1PnX
+	 aYwwPUdwCXS8H6XBkHzmQOLktwJkhWlNHfrzf1r0epU3AUgZBbkY9rvdDHM3T5NpoM
+	 YL56TmU5PicH/4DsdqkemHVbjLYd9Xo99Bo7AxYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Christopherson <seanjc@google.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 6.1 209/215] x86/bugs: Use ALTERNATIVE() instead of mds_user_clear static key
-Date: Mon,  4 Mar 2024 21:24:32 +0000
-Message-ID: <20240304211603.625913976@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>
+Subject: [PATCH 6.1 210/215] KVM/VMX: Use BT+JNC, i.e. EFLAGS.CF to select VMRESUME vs. VMLAUNCH
+Date: Mon,  4 Mar 2024 21:24:33 +0000
+Message-ID: <20240304211603.653169324@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,198 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 6613d82e617dd7eb8b0c40b2fe3acea655b1d611 upstream.
+From: Sean Christopherson <seanjc@google.com>
 
-The VERW mitigation at exit-to-user is enabled via a static branch
-mds_user_clear. This static branch is never toggled after boot, and can
-be safely replaced with an ALTERNATIVE() which is convenient to use in
-asm.
+commit 706a189dcf74d3b3f955e9384785e726ed6c7c80 upstream.
 
-Switch to ALTERNATIVE() to use the VERW mitigation late in exit-to-user
-path. Also remove the now redundant VERW in exc_nmi() and
-arch_exit_to_user_mode().
+Use EFLAGS.CF instead of EFLAGS.ZF to track whether to use VMRESUME versus
+VMLAUNCH.  Freeing up EFLAGS.ZF will allow doing VERW, which clobbers ZF,
+for MDS mitigations as late as possible without needing to duplicate VERW
+for both paths.
 
+  [ pawan: resolved merge conflict in __vmx_vcpu_run in backport. ]
+
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-4-a6216d83edb7%40linux.intel.com
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://lore.kernel.org/all/20240213-delay-verw-v8-5-a6216d83edb7%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/x86/mds.rst            |   36 +++++++++++++++++++++++++----------
- arch/x86/include/asm/entry-common.h  |    1 
- arch/x86/include/asm/nospec-branch.h |   12 -----------
- arch/x86/kernel/cpu/bugs.c           |   15 +++++---------
- arch/x86/kernel/nmi.c                |    3 --
- arch/x86/kvm/vmx/vmx.c               |    2 -
- 6 files changed, 33 insertions(+), 36 deletions(-)
+ arch/x86/kvm/vmx/run_flags.h |    7 +++++--
+ arch/x86/kvm/vmx/vmenter.S   |    6 +++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/Documentation/x86/mds.rst
-+++ b/Documentation/x86/mds.rst
-@@ -95,6 +95,9 @@ The kernel provides a function to invoke
+--- a/arch/x86/kvm/vmx/run_flags.h
++++ b/arch/x86/kvm/vmx/run_flags.h
+@@ -2,7 +2,10 @@
+ #ifndef __KVM_X86_VMX_RUN_FLAGS_H
+ #define __KVM_X86_VMX_RUN_FLAGS_H
  
-     mds_clear_cpu_buffers()
- 
-+Also macro CLEAR_CPU_BUFFERS can be used in ASM late in exit-to-user path.
-+Other than CFLAGS.ZF, this macro doesn't clobber any registers.
+-#define VMX_RUN_VMRESUME	(1 << 0)
+-#define VMX_RUN_SAVE_SPEC_CTRL	(1 << 1)
++#define VMX_RUN_VMRESUME_SHIFT		0
++#define VMX_RUN_SAVE_SPEC_CTRL_SHIFT	1
 +
- The mitigation is invoked on kernel/userspace, hypervisor/guest and C-state
- (idle) transitions.
++#define VMX_RUN_VMRESUME		BIT(VMX_RUN_VMRESUME_SHIFT)
++#define VMX_RUN_SAVE_SPEC_CTRL		BIT(VMX_RUN_SAVE_SPEC_CTRL_SHIFT)
  
-@@ -138,17 +141,30 @@ Mitigation points
+ #endif /* __KVM_X86_VMX_RUN_FLAGS_H */
+--- a/arch/x86/kvm/vmx/vmenter.S
++++ b/arch/x86/kvm/vmx/vmenter.S
+@@ -106,7 +106,7 @@ SYM_FUNC_START(__vmx_vcpu_run)
+ 	mov (%_ASM_SP), %_ASM_AX
  
-    When transitioning from kernel to user space the CPU buffers are flushed
-    on affected CPUs when the mitigation is not disabled on the kernel
--   command line. The migitation is enabled through the static key
--   mds_user_clear.
-+   command line. The mitigation is enabled through the feature flag
-+   X86_FEATURE_CLEAR_CPU_BUF.
+ 	/* Check if vmlaunch or vmresume is needed */
+-	testb $VMX_RUN_VMRESUME, %bl
++	bt   $VMX_RUN_VMRESUME_SHIFT, %bx
  
--   The mitigation is invoked in prepare_exit_to_usermode() which covers
--   all but one of the kernel to user space transitions.  The exception
--   is when we return from a Non Maskable Interrupt (NMI), which is
--   handled directly in do_nmi().
--
--   (The reason that NMI is special is that prepare_exit_to_usermode() can
--    enable IRQs.  In NMI context, NMIs are blocked, and we don't want to
--    enable IRQs with NMIs blocked.)
-+   The mitigation is invoked just before transitioning to userspace after
-+   user registers are restored. This is done to minimize the window in
-+   which kernel data could be accessed after VERW e.g. via an NMI after
-+   VERW.
-+
-+   **Corner case not handled**
-+   Interrupts returning to kernel don't clear CPUs buffers since the
-+   exit-to-user path is expected to do that anyways. But, there could be
-+   a case when an NMI is generated in kernel after the exit-to-user path
-+   has cleared the buffers. This case is not handled and NMI returning to
-+   kernel don't clear CPU buffers because:
-+
-+   1. It is rare to get an NMI after VERW, but before returning to userspace.
-+   2. For an unprivileged user, there is no known way to make that NMI
-+      less rare or target it.
-+   3. It would take a large number of these precisely-timed NMIs to mount
-+      an actual attack.  There's presumably not enough bandwidth.
-+   4. The NMI in question occurs after a VERW, i.e. when user state is
-+      restored and most interesting data is already scrubbed. Whats left
-+      is only the data that NMI touches, and that may or may not be of
-+      any interest.
+ 	/* Load guest registers.  Don't clobber flags. */
+ 	mov VCPU_RCX(%_ASM_AX), %_ASM_CX
+@@ -128,8 +128,8 @@ SYM_FUNC_START(__vmx_vcpu_run)
+ 	/* Load guest RAX.  This kills the @regs pointer! */
+ 	mov VCPU_RAX(%_ASM_AX), %_ASM_AX
  
- 
- 2. C-State transition
---- a/arch/x86/include/asm/entry-common.h
-+++ b/arch/x86/include/asm/entry-common.h
-@@ -91,7 +91,6 @@ static inline void arch_exit_to_user_mod
- 
- static __always_inline void arch_exit_to_user_mode(void)
- {
--	mds_user_clear_cpu_buffers();
- 	amd_clear_divider();
- }
- #define arch_exit_to_user_mode arch_exit_to_user_mode
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -381,7 +381,6 @@ DECLARE_STATIC_KEY_FALSE(switch_to_cond_
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_ibpb);
- DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
- 
--DECLARE_STATIC_KEY_FALSE(mds_user_clear);
- DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
- 
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
-@@ -416,17 +415,6 @@ static __always_inline void mds_clear_cp
- }
- 
- /**
-- * mds_user_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
-- *
-- * Clear CPU buffers if the corresponding static key is enabled
-- */
--static __always_inline void mds_user_clear_cpu_buffers(void)
--{
--	if (static_branch_likely(&mds_user_clear))
--		mds_clear_cpu_buffers();
--}
--
--/**
-  * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
-  *
-  * Clear CPU buffers if the corresponding static key is enabled
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -110,9 +110,6 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_cond_i
- /* Control unconditional IBPB in switch_mm() */
- DEFINE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
- 
--/* Control MDS CPU buffer clear before returning to user space */
--DEFINE_STATIC_KEY_FALSE(mds_user_clear);
--EXPORT_SYMBOL_GPL(mds_user_clear);
- /* Control MDS CPU buffer clear before idling (halt, mwait) */
- DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
- EXPORT_SYMBOL_GPL(mds_idle_clear);
-@@ -251,7 +248,7 @@ static void __init mds_select_mitigation
- 		if (!boot_cpu_has(X86_FEATURE_MD_CLEAR))
- 			mds_mitigation = MDS_MITIGATION_VMWERV;
- 
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 		if (!boot_cpu_has(X86_BUG_MSBDS_ONLY) &&
- 		    (mds_nosmt || cpu_mitigations_auto_nosmt()))
-@@ -355,7 +352,7 @@ static void __init taa_select_mitigation
- 	 * For guests that can't determine whether the correct microcode is
- 	 * present on host, enable the mitigation for UCODE_NEEDED as well.
- 	 */
--	static_branch_enable(&mds_user_clear);
-+	setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 	if (taa_nosmt || cpu_mitigations_auto_nosmt())
- 		cpu_smt_disable(false);
-@@ -423,7 +420,7 @@ static void __init mmio_select_mitigatio
- 	 */
- 	if (boot_cpu_has_bug(X86_BUG_MDS) || (boot_cpu_has_bug(X86_BUG_TAA) &&
- 					      boot_cpu_has(X86_FEATURE_RTM)))
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 	else
- 		static_branch_enable(&mmio_stale_data_clear);
- 
-@@ -483,12 +480,12 @@ static void __init md_clear_update_mitig
- 	if (cpu_mitigations_off())
- 		return;
- 
--	if (!static_key_enabled(&mds_user_clear))
-+	if (!boot_cpu_has(X86_FEATURE_CLEAR_CPU_BUF))
- 		goto out;
+-	/* Check EFLAGS.ZF from 'testb' above */
+-	jz .Lvmlaunch
++	/* Check EFLAGS.CF from the VMX_RUN_VMRESUME bit test above. */
++	jnc .Lvmlaunch
  
  	/*
--	 * mds_user_clear is now enabled. Update MDS, TAA and MMIO Stale Data
--	 * mitigation, if necessary.
-+	 * X86_FEATURE_CLEAR_CPU_BUF is now enabled. Update MDS, TAA and MMIO
-+	 * Stale Data mitigation, if necessary.
- 	 */
- 	if (mds_mitigation == MDS_MITIGATION_OFF &&
- 	    boot_cpu_has_bug(X86_BUG_MDS)) {
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -522,9 +522,6 @@ nmi_restart:
- 		write_cr2(this_cpu_read(nmi_cr2));
- 	if (this_cpu_dec_return(nmi_state))
- 		goto nmi_restart;
--
--	if (user_mode(regs))
--		mds_user_clear_cpu_buffers();
- }
- 
- #if defined(CONFIG_X86_64) && IS_ENABLED(CONFIG_KVM_INTEL)
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7123,7 +7123,7 @@ static noinstr void vmx_vcpu_enter_exit(
- 	/* L1D Flush includes CPU buffer clear to mitigate MDS */
- 	if (static_branch_unlikely(&vmx_l1d_should_flush))
- 		vmx_l1d_flush(vcpu);
--	else if (static_branch_unlikely(&mds_user_clear))
-+	else if (cpu_feature_enabled(X86_FEATURE_CLEAR_CPU_BUF))
- 		mds_clear_cpu_buffers();
- 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
- 		 kvm_arch_has_assigned_device(vcpu->kvm))
+ 	 * After a successful VMRESUME/VMLAUNCH, control flow "magically"
 
 
