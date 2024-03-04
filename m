@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256801EB5A;
-	Mon,  4 Mar 2024 21:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513D1EB5A;
+	Mon,  4 Mar 2024 21:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588941; cv=none; b=Kv4DmiiLrh5d/V6i1JOQYSg318zhu/VI+e/OU5Y1Yp938bNewAD07hgg/cctQxo4BgeZu5ndY9lhKXm+Jptk4mCXFLKhT469hfXGSGWLQTPQ8k/fM4RizCwcSEOZ4uu2SpNhfRfAoUUOqwcAyCWmOnHj1/hbyTKoeCVgx8HKINo=
+	t=1709588945; cv=none; b=uAptDMd9qm4Pj4eLMOYt//u7STzEiJFYKFubrMfn3HVz/BBMN2oAjSLvJxjWXQHwWFm2JD4jIqyKF1iG2tHWq/SYhMUUag3OQDr02yCfaPpMldXxras9nbjDOvZk7RS+Wm3dkfO7wv5bak250qXkedLxLUrwsFo2f+EDRMxBdRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588941; c=relaxed/simple;
-	bh=SUpGazP7vv8zJwQDnzmTv+SZ0F9qCT74g59sPl8lXQE=;
+	s=arc-20240116; t=1709588945; c=relaxed/simple;
+	bh=oa6t1T8qzUEYK0X6vmgV2OhqGUVuoZtKmfaDVYrHXaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9Orocroe20ak3wYctRDZ+SZ2Npij6ejX7S3jqWOGspLTOGR9CuJjO2EFZtOTlMtyzsotLm4RA+v2cI9oc0sRc/Ru/n8Z6IuxSqCsi+ujRV3cOKsjhVPbEwqLqSOx7FQCNdY2t2S7GHlS6E2s7TBEQqGcbsA9OTt3TXQgOp3s04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT3PEu6D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vzo1hJclxj/HEVh8c4v8GL3GWWVaFq0vcOQK0C2g61obN0LNspb2812Tr2Ab4ejR4GUOlhIIBXQ898b3/0s92xxGefFPTLjZoMQjsD9HNYWCymmxNTTxi1MnPvboOsAIh7ztK9HqKXf1ocOmX4vQB1h46OMvR2IuUzQEDc+lqF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwXGRePm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT3PEu6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4CFC433C7;
-	Mon,  4 Mar 2024 21:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwXGRePm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9668C43390;
+	Mon,  4 Mar 2024 21:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588941;
-	bh=SUpGazP7vv8zJwQDnzmTv+SZ0F9qCT74g59sPl8lXQE=;
+	s=korg; t=1709588944;
+	bh=oa6t1T8qzUEYK0X6vmgV2OhqGUVuoZtKmfaDVYrHXaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rT3PEu6DhSCEbxTOmxY/b8xD7RBVPFpH5AcGddAD/eWh2Rt3WcBnq7Lzt6EBu8yuA
-	 l1FY4AxGH8Z2iSn87L+DUzGx/tjKVyhHwH1J5tyjpRTIwOSPzdGMCiRlZ529ehbn4t
-	 SGTb3vaF78ppNBhuRXKUUw94UruRZihSnGps6FKI=
+	b=iwXGRePm94R5atnbjFrXNdse3UZXV6FtIkIJZ4Z9Ix9gHeXex+4VJIbOL8DFdgVm5
+	 MPprYpFZa7eH/ijkGDC9YCM3zEebelvV+G8eGo9nl5OoeCeJtbwjXhBsFk8Ne+OY0G
+	 t0jVAVc//k7el8bmLhApUY1xbMReKi0st0/7IDag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 140/215] decompress: Use 8 byte alignment
-Date: Mon,  4 Mar 2024 21:23:23 +0000
-Message-ID: <20240304211601.502033472@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Samson Tam <samson.tam@amd.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 141/215] drm/amd/display: Increase frame warning limit with KASAN or KCSAN in dml
+Date: Mon,  4 Mar 2024 21:23:24 +0000
+Message-ID: <20240304211601.528915648@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,31 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 8217ad0a435ff06d651d7298ea8ae8d72388179e upstream.
+commit 5b750b22530fe53bf7fd6a30baacd53ada26911b upstream.
 
-The ZSTD decompressor requires malloc() allocations to be 8 byte
-aligned, so ensure that this the case.
+Does the same thing as:
+commit 6740ec97bcdb ("drm/amd/display: Increase frame warning limit with KASAN or KCSAN in dml2")
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230807162720.545787-19-ardb@kernel.org
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311302107.hUDXVyWT-lkp@intel.com/
+Fixes: 67e38874b85b ("drm/amd/display: Increase num voltage states to 40")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Alvin Lee <alvin.lee2@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Cc: Samson Tam <samson.tam@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/decompress/mm.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/Makefile |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/decompress/mm.h
-+++ b/include/linux/decompress/mm.h
-@@ -48,7 +48,7 @@ MALLOC_VISIBLE void *malloc(int size)
- 	if (!malloc_ptr)
- 		malloc_ptr = free_mem_ptr;
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -51,8 +51,12 @@ endif
+ endif
  
--	malloc_ptr = (malloc_ptr + 3) & ~3;     /* Align */
-+	malloc_ptr = (malloc_ptr + 7) & ~7;     /* Align */
+ ifneq ($(CONFIG_FRAME_WARN),0)
++ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
++frame_warn_flag := -Wframe-larger-than=3072
++else
+ frame_warn_flag := -Wframe-larger-than=2048
+ endif
++endif
  
- 	p = (void *)malloc_ptr;
- 	malloc_ptr += size;
+ CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
+ 
 
 
