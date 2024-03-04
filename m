@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5628F58;
-	Mon,  4 Mar 2024 21:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022BE1F92C;
+	Mon,  4 Mar 2024 21:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588276; cv=none; b=SGYi1u/We/bITdmIkVqN1uaaZ/JL93j8dxBXuatAgxSrykRK3JsbCsMl/gpSz5l9+BZqcsFcASrtUHlq48WK42ZjzgBjZaG4t51IE09HQDzj/XbwYXDdywhyp8BLCD7qMM3AQRnju7a9spcRi7AmZWiL4sOqMT7ZpbpDvkANHzM=
+	t=1709588279; cv=none; b=vFb+zE9wAxbYd6P2ZFqCrXYXLAyBO7Mm4VW2EuIMVZxO6tfUqVUwQxE4XSAUOoLDwFB31oZPNpFU6q2II3hCsHTu5yFUcRdXNZiKgHjeASWQ0wpMb/X0Q0gwqy6mL8MmUfq8kLpia83CIzCWR41QK51lkcvPRJfpDOWLRfVruu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588276; c=relaxed/simple;
-	bh=PuPGujcXVY5oh4f6V2e/PNCxigiOhdu5/5ikG1dvEQ0=;
+	s=arc-20240116; t=1709588279; c=relaxed/simple;
+	bh=cAO6AriFR2ac9ZnAB03NB7ku6223KcrVG5OrZlkAPcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKkmltYIc9Kvrf8h4Whv150AOIK9KS4BSlzakjeyIct+pvrGlAqEUVrlLzXVCOqDg9JnwjKbxgBoljYkLfO97nQ7Atwtzq/EIjTHzaapwUtxsLz7ygux2pRb5Qn1e8F3JiaXhj1lCQFhlWkKpNYqH6GcDwCtUyFq9Q7Ic1YNvSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQmGzhCD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kaBhlDhmIeJ/aLotIw4hRZq5JntWZSQEJRYhlT5I55tdHQ0t0noh4h/YnBDjWBLN7AUVMdjRaLEhAPVcP/FLHgvlA5ZlJBwf5SqpJYYeEn/YLUjOKlCOhfHJzoCbXH3CIBwWeXgrewNeM60QHVajiuBQ7UwPzYSysUbyA/WM770=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+lAUcoq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQmGzhCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D04C433C7;
-	Mon,  4 Mar 2024 21:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+lAUcoq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A546C433F1;
+	Mon,  4 Mar 2024 21:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588276;
-	bh=PuPGujcXVY5oh4f6V2e/PNCxigiOhdu5/5ikG1dvEQ0=;
+	s=korg; t=1709588278;
+	bh=cAO6AriFR2ac9ZnAB03NB7ku6223KcrVG5OrZlkAPcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQmGzhCD9Uv/7WHJwAob/1KuTPaMqxFlhYVpWMeg2AxXNL9dME9d2AHFD7fOeeq+T
-	 ft1ln7dUe4qgFSURtq/ikK0CtDvDTFBxVCyu78plIT79LK01qdJyotb6BigRqOnUWh
-	 Ee3kn2JJerU2wBC9K9MKklARZW7H+0Qr7VJIdA2Q=
+	b=F+lAUcoqZFpn9E0D637cIrbjKL/Gu9XOJ0SNdDuLyr2qDAC6h6vtJhlnpbxVCdAGA
+	 kEpFEU0xEJ98/T/oV4syrqZhHZmU7y13mDgWJkkOQeNvQYhKMhk0bJ9/X9SXR+tpxW
+	 PxTwTz1Zav4AAsW5wu/r73AvHQxKCwOwfvIiMakw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/143] ALSA: Drop leftover snd-rtctimer stuff from Makefile
-Date: Mon,  4 Mar 2024 21:22:45 +0000
-Message-ID: <20240304211551.371955869@linuxfoundation.org>
+Subject: [PATCH 6.6 022/143] stmmac: Clear variable when destroying workqueue
+Date: Mon,  4 Mar 2024 21:22:22 +0000
+Message-ID: <20240304211550.650087184@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -50,33 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jakub Raczynski <j.raczynski@samsung.com>
 
-[ Upstream commit 4df49712eb54141be00a9312547436d55677f092 ]
+[ Upstream commit 8af411bbba1f457c33734795f024d0ef26d0963f ]
 
-We forgot to remove the line for snd-rtctimer from Makefile while
-dropping the functionality.  Get rid of the stale line.
+Currently when suspending driver and stopping workqueue it is checked whether
+workqueue is not NULL and if so, it is destroyed.
+Function destroy_workqueue() does drain queue and does clear variable, but
+it does not set workqueue variable to NULL. This can cause kernel/module
+panic if code attempts to clear workqueue that was not initialized.
 
-Fixes: 34ce71a96dcb ("ALSA: timer: remove legacy rtctimer")
-Link: https://lore.kernel.org/r/20240221092156.28695-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This scenario is possible when resuming suspended driver in stmmac_resume(),
+because there is no handling for failed stmmac_hw_setup(),
+which can fail and return if DMA engine has failed to initialize,
+and workqueue is initialized after DMA engine.
+Should DMA engine fail to initialize, resume will proceed normally,
+but interface won't work and TX queue will eventually timeout,
+causing 'Reset adapter' error.
+This then does destroy workqueue during reset process.
+And since workqueue is initialized after DMA engine and can be skipped,
+it will cause kernel/module panic.
+
+To secure against this possible crash, set workqueue variable to NULL when
+destroying workqueue.
+
+Log/backtrace from crash goes as follows:
+[88.031977]------------[ cut here ]------------
+[88.031985]NETDEV WATCHDOG: eth0 (sxgmac): transmit queue 1 timed out
+[88.032017]WARNING: CPU: 0 PID: 0 at net/sched/sch_generic.c:477 dev_watchdog+0x390/0x398
+           <Skipping backtrace for watchdog timeout>
+[88.032251]---[ end trace e70de432e4d5c2c0 ]---
+[88.032282]sxgmac 16d88000.ethernet eth0: Reset adapter.
+[88.036359]------------[ cut here ]------------
+[88.036519]Call trace:
+[88.036523] flush_workqueue+0x3e4/0x430
+[88.036528] drain_workqueue+0xc4/0x160
+[88.036533] destroy_workqueue+0x40/0x270
+[88.036537] stmmac_fpe_stop_wq+0x4c/0x70
+[88.036541] stmmac_release+0x278/0x280
+[88.036546] __dev_close_many+0xcc/0x158
+[88.036551] dev_close_many+0xbc/0x190
+[88.036555] dev_close.part.0+0x70/0xc0
+[88.036560] dev_close+0x24/0x30
+[88.036564] stmmac_service_task+0x110/0x140
+[88.036569] process_one_work+0x1d8/0x4a0
+[88.036573] worker_thread+0x54/0x408
+[88.036578] kthread+0x164/0x170
+[88.036583] ret_from_fork+0x10/0x20
+[88.036588]---[ end trace e70de432e4d5c2c1 ]---
+[88.036597]Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+
+Fixes: 5a5586112b929 ("net: stmmac: support FPE link partner hand-shaking procedure")
+Signed-off-by: Jakub Raczynski <j.raczynski@samsung.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/Makefile b/sound/core/Makefile
-index a6b444ee28326..f6526b3371375 100644
---- a/sound/core/Makefile
-+++ b/sound/core/Makefile
-@@ -32,7 +32,6 @@ snd-ump-objs      := ump.o
- snd-ump-$(CONFIG_SND_UMP_LEGACY_RAWMIDI) += ump_convert.o
- snd-timer-objs    := timer.o
- snd-hrtimer-objs  := hrtimer.o
--snd-rtctimer-objs := rtctimer.o
- snd-hwdep-objs    := hwdep.o
- snd-seq-device-objs := seq_device.o
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 5b3423d1af3f3..d1adb102a1d49 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3926,8 +3926,10 @@ static void stmmac_fpe_stop_wq(struct stmmac_priv *priv)
+ {
+ 	set_bit(__FPE_REMOVING, &priv->fpe_task_state);
  
+-	if (priv->fpe_wq)
++	if (priv->fpe_wq) {
+ 		destroy_workqueue(priv->fpe_wq);
++		priv->fpe_wq = NULL;
++	}
+ 
+ 	netdev_info(priv->dev, "FPE workqueue stop");
+ }
 -- 
 2.43.0
 
