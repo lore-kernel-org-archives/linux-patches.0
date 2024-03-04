@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A303C11193;
-	Mon,  4 Mar 2024 21:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4382211193;
+	Mon,  4 Mar 2024 21:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588463; cv=none; b=YE2p01g0ASa2rNqYeeBqc22m9SrpZXvFJGsLc+4/ABVJ2LzVh4e0C8aJfeXyIdBuFKklSUDHfN5cBeio4RLFvaAtwTgLqrL3eitXrnEj4N6AV5Q5zqwLsSDX6CU5NAmSio0nwumsbsTr14Ecqc39/RaB2WfTa3Cwsy/3GsS9UzA=
+	t=1709588466; cv=none; b=f062XagDWT03eIwppbMqLrd7RxmUn54RwpzJxOEmL1YFrBO0aLrDMK9Z9Bfvs8CaStOO7rgQYGmHqDbj82KE8hz5gyTDrpqhVT75o79ZjxiOttp2GhpxUtI2LCsyVoD8t5QZSFevWMgde3Lmerp/17Iv1BCcD52xoJFEG9+R1SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588463; c=relaxed/simple;
-	bh=lxMQWR3eA7KwruPLKN+2J9+MD3vIRPYPRpwgGQ+8jJA=;
+	s=arc-20240116; t=1709588466; c=relaxed/simple;
+	bh=dXH7xTM0+YlebJHtdKYlmmRcwvSp417lxRG5kxnv6co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpTG9BX9Am+KOKL49hzRGrhOx9LDUGWxbFyoLXq2dnRFuVbZuzRU3eh8gxei/Ur2gie/1f1BTA5ivJ1l8YpXuE7wXXrH8nYZbdVD8vh3kgpLoXWfjXil8g1WDW73ZgggMDYxRnHxSoPqdxU6lFpje7q5WAkkV/YwlxqHZSoGyko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm3MndlZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaOtjEd0NbRN1v1zqkz5iq+VU6avMjnN4A7ypZ1IgwwAusAd4/EZLqZaNoWMYmu7bXaSMDh4luRqGWr0xha2S+kIZ3RYgEkAdS7jcdxl8mk1Nd1jI2wWK0AHi5G/6wq7ijV2Z1I/7VKCvFxQchVDecJf4+GxeI9ilEzXy1u8gag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mw9b4PeV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm3MndlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31600C433F1;
-	Mon,  4 Mar 2024 21:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mw9b4PeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93DCC433F1;
+	Mon,  4 Mar 2024 21:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588463;
-	bh=lxMQWR3eA7KwruPLKN+2J9+MD3vIRPYPRpwgGQ+8jJA=;
+	s=korg; t=1709588466;
+	bh=dXH7xTM0+YlebJHtdKYlmmRcwvSp417lxRG5kxnv6co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bm3MndlZfbIaJGBOIFr2vfYK4jCLFVsiW77Pxjd7n+GWdsX8YeRVML+1iMUlW53oM
-	 RkFlOYIHDQdvECJHVSAYpeCJxA3Ht84mS0ln31EqP4jA+5qeUIi4f0AiM8JyX3YN+7
-	 3IN4RiN4zN0/fs+7OwDYR7aQyg1vB/712h5pCW78=
+	b=mw9b4PeVblr44Jwi8Kx3oB1M0K6MzNv9aDFto1nxo1yGv/4EfJPQ2hzWh5pREjzdb
+	 +tir2c60l364/aAzY13OXcfFOXLB2mPhQJ9QU5xM02qZ/d2pHOFCusWio+NIo/sLGw
+	 WZfAPiO36o+U+64vJ/WkuA1wUogjlmCfC4r93sdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 117/143] ASoC: cs35l56: fix reversed if statement in cs35l56_dspwait_asp1tx_put()
-Date: Mon,  4 Mar 2024 21:23:57 +0000
-Message-ID: <20240304211553.656421897@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 118/143] dmaengine: dw-edma: Fix the ch_count hdma callback
+Date: Mon,  4 Mar 2024 21:23:58 +0000
+Message-ID: <20240304211553.691538280@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,35 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-commit 4703b014f28bf7a2e56d1da238ee95ef6c5ce76b upstream.
+[ Upstream commit cd665bfc757c71e9b7e0abff0f362d8abd38a805 ]
 
-It looks like the "!" character was added accidentally.  The
-regmap_update_bits_check() function is normally going to succeed.  This
-means the rest of the function is unreachable and we don't handle the
-situation where "changed" is true correctly.
+The current check of ch_en enabled to know the maximum number of available
+hardware channels is wrong as it check the number of ch_en register set
+but all of them are unset at probe. This register is set at the
+dw_hdma_v0_core_start function which is run lately before a DMA transfer.
 
-Fixes: 07f7d6e7a124 ("ASoC: cs35l56: Fix for initializing ASP1 mixer registers")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/0c254c07-d1c0-4a5c-a22b-7e135cab032c@moroto.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The HDMA IP have no way to know the number of hardware channels available
+like the eDMA IP, then let set it to maximum channels and let the platform
+set the right number of channels.
+
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://lore.kernel.org/r/20240129-b4-feature_hdma_mainline-v7-1-8e8c1acb7a46@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -175,7 +175,7 @@ static int cs35l56_dspwait_asp1tx_put(st
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 00b735a0202ab..1f4cb7db54756 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -65,18 +65,12 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
  
- 	ret = regmap_update_bits_check(cs35l56->base.regmap, addr,
- 				       CS35L56_ASP_TXn_SRC_MASK, val, &changed);
--	if (!ret)
-+	if (ret)
- 		return ret;
+ static u16 dw_hdma_v0_core_ch_count(struct dw_edma *dw, enum dw_edma_dir dir)
+ {
+-	u32 num_ch = 0;
+-	int id;
+-
+-	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
+-		if (GET_CH_32(dw, id, dir, ch_en) & BIT(0))
+-			num_ch++;
+-	}
+-
+-	if (num_ch > HDMA_V0_MAX_NR_CH)
+-		num_ch = HDMA_V0_MAX_NR_CH;
+-
+-	return (u16)num_ch;
++	/*
++	 * The HDMA IP have no way to know the number of hardware channels
++	 * available, we set it to maximum channels and let the platform
++	 * set the right number of channels.
++	 */
++	return HDMA_V0_MAX_NR_CH;
+ }
  
- 	if (changed)
+ static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+-- 
+2.43.0
+
 
 
