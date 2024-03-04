@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F23947A5D;
-	Mon,  4 Mar 2024 21:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE5578B69;
+	Mon,  4 Mar 2024 21:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588232; cv=none; b=m6bla3GP5ag5W185OhPeiQVpZmFHhgu2nEMbCQdx4Qq/6S/VT/WlwHH3r4unJQ9jHMkrp1lCCg015hdWp6XREaSy/hg3ZXlXTHz25/odQvzCr5ru025RpSBF4dISSQ69etATPIYwcemc3egiBDvg4iK59J+kEGew9CPOEwkR8K4=
+	t=1709588234; cv=none; b=GzThFpH9/xgmR10X4ggYkR2rNgpGuMWqUeX6GxI3Mc38AjbGSl/46/HhQNL5HceIci1OP5fnppBvTCAZgGyilT0ZxyNcVfid4jJU+qsHhns2ZGiOp4CStSjtnHVakQn5DtUOnhyX1G1bftHpotYN9A9CYLZQN9jIABX7aFKlyWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588232; c=relaxed/simple;
-	bh=oUgmHhm3RnwkEsNCWrkRPh3AQtj3TpnyZdsrYrVa3A0=;
+	s=arc-20240116; t=1709588234; c=relaxed/simple;
+	bh=Xic21hfXbazXFigSmDiIH+pF5kwGtKAKR+0T6AxxwKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WPmeu/v7hssQAHKGeAYPa3i5/IAm/d6OVIrck6hz7sVLeWD4UUsUFmv94W7+cCuXs/7vr3L+VoTnm0T7RDuNY43ydUbna5RZUewUX8Bpmhq2DgrKEWaePZQK39b2wo608rx7LN8hWweGQK8EQClQrylRL+NrA4DH0oTQJ7zG5xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5vUdGXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3N84iNBSXGW/n6WgB6HUVOO5zC1uPUeVk4+KOtDEbfo/VvFjBy2fbe/NxNDtuU47ZIXs30Y01JYAc6d/KtYT2BX5jt/L8mNwSrWlyD+QW6jAnbDDA7Vjn0wVRdwwGrw5h0U7krpt8DyCQYlQJxVoHAwuRm9HFD/UYxJ2dInhpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZxEDnWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5vUdGXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21ACC43394;
-	Mon,  4 Mar 2024 21:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZxEDnWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0F7C43390;
+	Mon,  4 Mar 2024 21:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588232;
-	bh=oUgmHhm3RnwkEsNCWrkRPh3AQtj3TpnyZdsrYrVa3A0=;
+	s=korg; t=1709588234;
+	bh=Xic21hfXbazXFigSmDiIH+pF5kwGtKAKR+0T6AxxwKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5vUdGXoPN/AFkD3pbIJBiruH9ucPabIDZZrlTPk1EGCKfAqmEKzOKKzdK/D5dK/1
-	 YygKcmAyGz0hH1YuuBNosfNmpkO9hQPorUQAx01Af0JGUNm83o0tCw2faTn8opCilL
-	 7K+DDsmyucQ3Ibn/29b8DED2MoBopTkmH+tCi8C8=
+	b=JZxEDnWRYKa2i2jVdgy0Sx3XRASbsSSVrh5vabBVzPSNLDKMAuFFMxPoi46ytf04S
+	 Epto3K3Qls6XDc2V+LJJVPId1w44qvwGGPD3mbU8nbt1uY/Ty5QLq9VsQR77xcF4/2
+	 9xcyurn6qvXYwGaKMDJJWb0ceXieisC6A0TQ9fHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/143] Bluetooth: qca: Fix wrong event type for patch config command
-Date: Mon,  4 Mar 2024 21:22:29 +0000
-Message-ID: <20240304211550.872484864@linuxfoundation.org>
+Subject: [PATCH 6.6 030/143] Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT
+Date: Mon,  4 Mar 2024 21:22:30 +0000
+Message-ID: <20240304211550.904280874@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,43 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
 
-[ Upstream commit c0dbc56077ae759f2dd602c7561480bc2b1b712c ]
+[ Upstream commit 7dcd3e014aa7faeeaf4047190b22d8a19a0db696 ]
 
-Vendor-specific command patch config has HCI_Command_Complete event as
-response, but qca_send_patch_config_cmd() wrongly expects vendor-specific
-event for the command, fixed by using right event type.
+BT adapter going into UNCONFIGURED state during BT turn ON when
+devicetree has no local-bd-address node.
 
-Btmon log for the vendor-specific command are shown below:
-< HCI Command: Vendor (0x3f|0x0000) plen 5
-        28 01 00 00 00
-> HCI Event: Command Complete (0x0e) plen 5
-      Vendor (0x3f|0x0000) ncmd 1
-        Status: Success (0x00)
-        28
+Bluetooth will not work out of the box on such devices, to avoid this
+problem, added check to set HCI_QUIRK_USE_BDADDR_PROPERTY based on
+local-bd-address node entry.
 
-Fixes: 4fac8a7ac80b ("Bluetooth: btqca: sequential validation")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+When this quirk is not set, the public Bluetooth address read by host
+from controller though HCI Read BD Address command is
+considered as valid.
+
+Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
+Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5a35ac4138c6c..0211f704a358b 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -152,7 +152,7 @@ static int qca_send_patch_config_cmd(struct hci_dev *hdev)
- 	bt_dev_dbg(hdev, "QCA Patch config");
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index ad940027e4b51..f3fe4deee78da 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -7,6 +7,7 @@
+  *
+  *  Copyright (C) 2007 Texas Instruments, Inc.
+  *  Copyright (c) 2010, 2012, 2018 The Linux Foundation. All rights reserved.
++ *  Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  *
+  *  Acknowledgements:
+  *  This file is based on hci_ll.c, which was...
+@@ -1882,7 +1883,17 @@ static int qca_setup(struct hci_uart *hu)
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++
++		/* Set BDA quirk bit for reading BDA value from fwnode property
++		 * only if that property exist in DT.
++		 */
++		if (fwnode_property_present(dev_fwnode(hdev->dev.parent), "local-bd-address")) {
++			set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++			bt_dev_info(hdev, "setting quirk bit to read BDA from fwnode later");
++		} else {
++			bt_dev_dbg(hdev, "local-bd-address` is not present in the devicetree so not setting quirk bit for BDA");
++		}
++
+ 		hci_set_aosp_capable(hdev);
  
- 	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
--				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+				cmd, 0, HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		err = PTR_ERR(skb);
- 		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
+ 		ret = qca_read_soc_version(hdev, &ver, soc_type);
 -- 
 2.43.0
 
