@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE4710A35;
-	Mon,  4 Mar 2024 21:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986857868F;
+	Mon,  4 Mar 2024 21:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588555; cv=none; b=ZiWffvQOOT6U3PLiOM2jUcjzOIO8LoovxmYkWXeYzQo7ru4rldS17SFVRHH2jw/rsqIHQ0Gj1qvaUAMliE+gx7LuMRpZuuHhX+McKXe7Dw/u9Ht/vQivXeFrzH7YQNecB0pAxCG0g1Me7AtjlcY4BK0vrbJy1T9iypMSNxWsKvo=
+	t=1709588557; cv=none; b=C3sUywkbbNAHsF5neCQ8xTlQY7FjR1lvXs5ou9dsPdOPY0qwxi17Wf0qXNUPOjIrW+TGuejKHVWS0NHnstswv0z0GidofnzgHm8hhJWb4sTsojrwvRVyvld5Jl2O9okX1FaXDNV33u7QNXTAxc1OdtHRjXRwYCdz7ua5as49yr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588555; c=relaxed/simple;
-	bh=WMOU3LIX3FsMokwT3sP63w54X9OOPjlTfBpcjtLyyGU=;
+	s=arc-20240116; t=1709588557; c=relaxed/simple;
+	bh=xQifYyR6YVaXRGob2JEoJD+PsWZ9SGlF1UKn3xNYc6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1/1SkNEVXKX0wIJEkcXmtmPSh4K+cgs0kIbJrDLJ0MYt5wDdE9GKGjbZyXgzTNGwArZg7In4d+6I74K5P251A0EPAAhK2V1HYMcosnD1KpeP/PVQ9WVYoD5ADLG0XzlX3fJVov2Bp1Ouc7Bx12kbmTWHyL1RhGVdUFnPLKcg1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW/EXiwv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPe9bWlWRsvMwB3279UNmKR9D8XJXBCw6RzLLQQINwpyLenE5UwhhsEQB7IqzkDrvpxRvvUTniAg4y/keT9ItSyg7Mp/YZ2/rc400G8YmIFLj62wixiWSz8FNRkEWOqkJnwDSNBfcqDbhRYkbKjolxnK/AmwqXeRGz7rSMRSuQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRbt9uyj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW/EXiwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857A9C433C7;
-	Mon,  4 Mar 2024 21:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRbt9uyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A36C433F1;
+	Mon,  4 Mar 2024 21:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588554;
-	bh=WMOU3LIX3FsMokwT3sP63w54X9OOPjlTfBpcjtLyyGU=;
+	s=korg; t=1709588557;
+	bh=xQifYyR6YVaXRGob2JEoJD+PsWZ9SGlF1UKn3xNYc6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EW/EXiwv9Zt9Fheqx8EQYcZr8VdrqAM70i5YN6XPRztF12k0XcySg6NQJrK2SXHom
-	 Jo06KNbtVQ1WFRLBB9UOqOw4HG9FbBybZVhc57tTvu6JB9z+EeA0ipEn29SUeHbdTF
-	 K/lj9Cqr8kJLEQgUtIvKOl2Od5WXTeMgS2/R13/4=
+	b=mRbt9uyjsSI+1fd4/5f6jP85ruXnyvWtPmz61nXmCDtbSCJj6eyf20uEj0l+ZOdhQ
+	 HOCRlQv+1kLNZ9KYpHgs5ILTdgCRlyeUnPVK/iJJyxJ1spLGzep7fIzE8NX5tjgIBn
+	 43EmG3aV3nGVqLb38/vXYK++pZjrlRQr3fTYO+oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Zhu <tony.zhu@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Lijun Pan <lijun.pan@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/143] dmaengine: idxd: Ensure safe user copy of completion record
-Date: Mon,  4 Mar 2024 21:24:06 +0000
-Message-ID: <20240304211553.925805738@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 001/215] netfilter: nf_tables: disallow timeout for anonymous sets
+Date: Mon,  4 Mar 2024 21:21:04 +0000
+Message-ID: <20240304211557.045931635@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
-References: <20240304211549.876981797@linuxfoundation.org>
+In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
+References: <20240304211556.993132804@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,120 +45,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit d3ea125df37dc37972d581b74a5d3785c3f283ab ]
+commit e26d3009efda338f19016df4175f354a9bd0a4ab upstream.
 
-If CONFIG_HARDENED_USERCOPY is enabled, copying completion record from
-event log cache to user triggers a kernel bug.
+Never used from userspace, disallow these parameters.
 
-[ 1987.159822] usercopy: Kernel memory exposure attempt detected from SLUB object 'dsa0' (offset 74, size 31)!
-[ 1987.170845] ------------[ cut here ]------------
-[ 1987.176086] kernel BUG at mm/usercopy.c:102!
-[ 1987.180946] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[ 1987.186866] CPU: 17 PID: 528 Comm: kworker/17:1 Not tainted 6.8.0-rc2+ #5
-[ 1987.194537] Hardware name: Intel Corporation AvenueCity/AvenueCity, BIOS BHSDCRB1.86B.2492.D03.2307181620 07/18/2023
-[ 1987.206405] Workqueue: wq0.0 idxd_evl_fault_work [idxd]
-[ 1987.212338] RIP: 0010:usercopy_abort+0x72/0x90
-[ 1987.217381] Code: 58 65 9c 50 48 c7 c2 17 85 61 9c 57 48 c7 c7 98 fd 6b 9c 48 0f 44 d6 48 c7 c6 b3 08 62 9c 4c 89 d1 49 0f 44 f3 e8 1e 2e d5 ff <0f> 0b 49 c7 c1 9e 42 61 9c 4c 89 cf 4d 89 c8 eb a9 66 66 2e 0f 1f
-[ 1987.238505] RSP: 0018:ff62f5cf20607d60 EFLAGS: 00010246
-[ 1987.244423] RAX: 000000000000005f RBX: 000000000000001f RCX: 0000000000000000
-[ 1987.252480] RDX: 0000000000000000 RSI: ffffffff9c61429e RDI: 00000000ffffffff
-[ 1987.260538] RBP: ff62f5cf20607d78 R08: ff2a6a89ef3fffe8 R09: 00000000fffeffff
-[ 1987.268595] R10: ff2a6a89eed00000 R11: 0000000000000003 R12: ff2a66934849c89a
-[ 1987.276652] R13: 0000000000000001 R14: ff2a66934849c8b9 R15: ff2a66934849c899
-[ 1987.284710] FS:  0000000000000000(0000) GS:ff2a66b22fe40000(0000) knlGS:0000000000000000
-[ 1987.293850] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 1987.300355] CR2: 00007fe291a37000 CR3: 000000010fbd4005 CR4: 0000000000f71ef0
-[ 1987.308413] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 1987.316470] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 1987.324527] PKRU: 55555554
-[ 1987.327622] Call Trace:
-[ 1987.330424]  <TASK>
-[ 1987.332826]  ? show_regs+0x6e/0x80
-[ 1987.336703]  ? die+0x3c/0xa0
-[ 1987.339988]  ? do_trap+0xd4/0xf0
-[ 1987.343662]  ? do_error_trap+0x75/0xa0
-[ 1987.347922]  ? usercopy_abort+0x72/0x90
-[ 1987.352277]  ? exc_invalid_op+0x57/0x80
-[ 1987.356634]  ? usercopy_abort+0x72/0x90
-[ 1987.360988]  ? asm_exc_invalid_op+0x1f/0x30
-[ 1987.365734]  ? usercopy_abort+0x72/0x90
-[ 1987.370088]  __check_heap_object+0xb7/0xd0
-[ 1987.374739]  __check_object_size+0x175/0x2d0
-[ 1987.379588]  idxd_copy_cr+0xa9/0x130 [idxd]
-[ 1987.384341]  idxd_evl_fault_work+0x127/0x390 [idxd]
-[ 1987.389878]  process_one_work+0x13e/0x300
-[ 1987.394435]  ? __pfx_worker_thread+0x10/0x10
-[ 1987.399284]  worker_thread+0x2f7/0x420
-[ 1987.403544]  ? _raw_spin_unlock_irqrestore+0x2b/0x50
-[ 1987.409171]  ? __pfx_worker_thread+0x10/0x10
-[ 1987.414019]  kthread+0x107/0x140
-[ 1987.417693]  ? __pfx_kthread+0x10/0x10
-[ 1987.421954]  ret_from_fork+0x3d/0x60
-[ 1987.426019]  ? __pfx_kthread+0x10/0x10
-[ 1987.430281]  ret_from_fork_asm+0x1b/0x30
-[ 1987.434744]  </TASK>
-
-The issue arises because event log cache is created using
-kmem_cache_create() which is not suitable for user copy.
-
-Fix the issue by creating event log cache with
-kmem_cache_create_usercopy(), ensuring safe user copy.
-
-Fixes: c2f156bf168f ("dmaengine: idxd: create kmem cache for event log fault items")
-Reported-by: Tony Zhu <tony.zhu@intel.com>
-Tested-by: Tony Zhu <tony.zhu@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Lijun Pan <lijun.pan@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240209191412.1050270-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 0eb1c827a215f..d09a8553ea71d 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -342,7 +342,9 @@ static void idxd_cleanup_internals(struct idxd_device *idxd)
- static int idxd_init_evl(struct idxd_device *idxd)
- {
- 	struct device *dev = &idxd->pdev->dev;
-+	unsigned int evl_cache_size;
- 	struct idxd_evl *evl;
-+	const char *idxd_name;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4752,6 +4752,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
  
- 	if (idxd->hw.gen_cap.evl_support == 0)
- 		return 0;
-@@ -354,9 +356,16 @@ static int idxd_init_evl(struct idxd_device *idxd)
- 	spin_lock_init(&evl->lock);
- 	evl->size = IDXD_EVL_SIZE_MIN;
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
++
+ 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &desc.timeout);
+ 		if (err)
+ 			return err;
+@@ -4760,6 +4763,10 @@ static int nf_tables_newset(struct sk_bu
+ 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
++
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
++
+ 		desc.gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
+ 	}
  
--	idxd->evl_cache = kmem_cache_create(dev_name(idxd_confdev(idxd)),
--					    sizeof(struct idxd_evl_fault) + evl_ent_size(idxd),
--					    0, 0, NULL);
-+	idxd_name = dev_name(idxd_confdev(idxd));
-+	evl_cache_size = sizeof(struct idxd_evl_fault) + evl_ent_size(idxd);
-+	/*
-+	 * Since completion record in evl_cache will be copied to user
-+	 * when handling completion record page fault, need to create
-+	 * the cache suitable for user copy.
-+	 */
-+	idxd->evl_cache = kmem_cache_create_usercopy(idxd_name, evl_cache_size,
-+						     0, 0, 0, evl_cache_size,
-+						     NULL);
- 	if (!idxd->evl_cache) {
- 		kfree(evl);
- 		return -ENOMEM;
--- 
-2.43.0
-
 
 
