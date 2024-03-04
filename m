@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28B71EB5A;
-	Mon,  4 Mar 2024 21:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2411EB5A;
+	Mon,  4 Mar 2024 21:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588921; cv=none; b=jj4EbCtny0zD9M/cH6ekJOxTWtd4BLTa8RM8b0GMonX4IH4LOv+4F3ok5ZQWRfG9jbKnJqmSAbgZNwaRzU6ZYgMjff30MMLY9wnMcGpfIucaDwvB3BoXnE14Yn9BDzI5FpgvXh+FpdzGzJumyrAxr3WUt/azYGJt8jAiaA7QgzM=
+	t=1709588924; cv=none; b=P7iKLkvqDguukpGfVBI0tSQg+Gw4Z0joVuLh1xyY5g0JzEhKDZn5bNGOkhGWF/gn8mTkvEX5WMbcrWI49+RqWAdXupuuHhhqF4B1s1dNngWZ7Vxc1qjeVwLpPHWnHy/RbQM08ETd3l2zXXNElyKmwEXnC0FZBkoAbW6l4TAzWVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588921; c=relaxed/simple;
-	bh=Yeo7rpshA2XOmrPvOu5ux0TrxL4plwmM2IRqA0wwvKo=;
+	s=arc-20240116; t=1709588924; c=relaxed/simple;
+	bh=R9AmLYDS2sZTgqionYsHPzcRwnkYWQerRM4+jGXEGsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9aAr4CjGi38tcBmiVBBhstfPTQaTAizMKeLueJWDxt1r6XmCsaZGvZc/fPYdZ3Z5jWaBAlD3FucGIphToVy2Lbx8jXKlYgwE5LEr429SkvjEwbtUgXJv5x4NOhh1TKsNPRyfJeLK2Hunnc6Z6mx9ZmzPzfdrTlxKEa8KShYy9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+AnJhv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y7fGLerKNdtgKW2jBruqluTtLPMKnlCvVKNLI/clEP+1YyJjhUbTIJgbHTvua7QlBFipLwQOKEPkif/jd2XLEV3/GcTHITyruCetYsxnd+ygkSr8VrbDpkEFMFTXqGn9ezzIBi+VQrV+z40FkxJ89RlR4a+XmTfI+SPkAkAK+Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1SeAFuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+AnJhv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48634C433C7;
-	Mon,  4 Mar 2024 21:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1SeAFuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CD1C433F1;
+	Mon,  4 Mar 2024 21:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588921;
-	bh=Yeo7rpshA2XOmrPvOu5ux0TrxL4plwmM2IRqA0wwvKo=;
+	s=korg; t=1709588924;
+	bh=R9AmLYDS2sZTgqionYsHPzcRwnkYWQerRM4+jGXEGsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+AnJhv4JtwFTExfim+BVvswCbHJHup11OdNf/hXVFW5tsrpw+D0Zd5NqvZKUgjPt
-	 rYxWd31EW8m8F5uhgANpzcuwVUcvIYUq2ttlJQUCyG03QpMAHDALPWxHL/IVdGpU+A
-	 BtPv3+2srDY3k8XeAArTT5sK2eC8FSpsMz87yWyo=
+	b=Y1SeAFuClEdmtTK1YvAoHbBPnAfpAiXhJagIwmTO7ectpcTb9/5oCYEmVTn4F2fnT
+	 sCGGsv3GuLuZ70S9Ja7GJSwO4JpQMvCCVGCs4poraLfUh+z7PrMFeeC/YYYFi2BOmh
+	 0NfO71aE+Ujg1HD+BWuO4AtAnSyfJJs91cRQVhFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCH 6.1 135/215] x86/decompressor: Call trampoline directly from C code
-Date: Mon,  4 Mar 2024 21:23:18 +0000
-Message-ID: <20240304211601.356424867@linuxfoundation.org>
+Subject: [PATCH 6.1 136/215] x86/decompressor: Only call the trampoline when changing paging levels
+Date: Mon,  4 Mar 2024 21:23:19 +0000
+Message-ID: <20240304211601.385109941@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -53,185 +53,162 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 64ef578b6b6866bec012544416946533444036c8 upstream.
+commit f97b67a773cd84bd8b55c0a0ec32448a87fc56bb upstream.
 
-Instead of returning to the asm calling code to invoke the trampoline,
-call it straight from the C code that sets it up. That way, the struct
-return type is no longer needed for returning two values, and the call
-can be made conditional more cleanly in a subsequent patch.
+Since the current and desired number of paging levels are known when the
+trampoline is being prepared, avoid calling the trampoline at all if it
+is clear that calling it is not going to result in a change to the
+number of paging levels.
 
-This means that all callee save 64-bit registers need to be preserved
-and restored, as their contents may not survive the legacy mode switch.
+Given that the CPU is already running in long mode, the PAE and LA57
+settings are necessarily consistent with the currently active page
+tables, and other fields in CR4 will be initialized by the startup code
+in the kernel proper. So limit the manipulation of CR4 to toggling the
+LA57 bit, which is the only thing that really needs doing at this point
+in the boot. This also means that there is no need to pass the value of
+l5_required to toggle_la57(), as it will not be called unless CR4.LA57
+needs to toggle.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Link: https://lore.kernel.org/r/20230807162720.545787-13-ardb@kernel.org
+Link: https://lore.kernel.org/r/20230807162720.545787-14-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/head_64.S    |   31 +++++++++++++------------------
- arch/x86/boot/compressed/pgtable_64.c |   32 +++++++++++++-------------------
- 2 files changed, 26 insertions(+), 37 deletions(-)
+ arch/x86/boot/compressed/head_64.S    |   45 +++-------------------------------
+ arch/x86/boot/compressed/pgtable_64.c |   22 ++++++----------
+ 2 files changed, 13 insertions(+), 54 deletions(-)
 
 --- a/arch/x86/boot/compressed/head_64.S
 +++ b/arch/x86/boot/compressed/head_64.S
-@@ -433,25 +433,14 @@ SYM_CODE_START(startup_64)
- #endif
- 
- 	/*
--	 * paging_prepare() sets up the trampoline and checks if we need to
--	 * enable 5-level paging.
+@@ -390,10 +390,6 @@ SYM_CODE_START(startup_64)
+ 	 * For the trampoline, we need the top page table to reside in lower
+ 	 * memory as we don't have a way to load 64-bit values into CR3 in
+ 	 * 32-bit mode.
 -	 *
--	 * paging_prepare() returns a two-quadword structure which lands
--	 * into RDX:RAX:
--	 *   - Address of the trampoline is returned in RAX.
--	 *   - Non zero RDX means trampoline needs to enable 5-level
--	 *     paging.
-+	 * configure_5level_paging() updates the number of paging levels using
-+	 * a trampoline in 32-bit addressable memory if the current number does
-+	 * not match the desired number.
- 	 *
- 	 * Pass the boot_params pointer as the first argument.
+-	 * We go though the trampoline even if we don't have to: if we're
+-	 * already in a desired paging mode. This way the trampoline code gets
+-	 * tested on every boot.
  	 */
- 	movq	%r15, %rdi
--	call	paging_prepare
--
--	/* Pass the trampoline address and boolean flag as args #1 and #2 */
--	movq	%rax, %rdi
--	movq	%rdx, %rsi
--	leaq	TRAMPOLINE_32BIT_CODE_OFFSET(%rax), %rax
--	call	*%rax
-+	call	configure_5level_paging
  
- 	/*
- 	 * cleanup_trampoline() would restore trampoline memory.
-@@ -561,11 +550,14 @@ SYM_FUNC_END(.Lrelocated)
+ 	/* Make sure we have GDT with 32-bit code segment */
+@@ -544,8 +540,7 @@ SYM_FUNC_END(.Lrelocated)
+  *
+  * Return address is at the top of the stack (might be above 4G).
+  * The first argument (EDI) contains the 32-bit addressable base of the
+- * trampoline memory. A non-zero second argument (ESI) means that the
+- * trampoline needs to enable 5-level paging.
++ * trampoline memory.
+  */
  	.section ".rodata", "a", @progbits
  SYM_CODE_START(trampoline_32bit_src)
- 	/*
--	 * Preserve live 64-bit registers on the stack: this is necessary
--	 * because the architecture does not guarantee that GPRs will retain
--	 * their full 64-bit values across a 32-bit mode switch.
-+	 * Preserve callee save 64-bit registers on the stack: this is
-+	 * necessary because the architecture does not guarantee that GPRs will
-+	 * retain their full 64-bit values across a 32-bit mode switch.
- 	 */
- 	pushq	%r15
-+	pushq	%r14
-+	pushq	%r13
-+	pushq	%r12
- 	pushq	%rbp
- 	pushq	%rbx
+@@ -597,25 +592,10 @@ SYM_CODE_START(trampoline_32bit_src)
+ 	btrl	$X86_CR0_PG_BIT, %eax
+ 	movl	%eax, %cr0
  
-@@ -592,6 +584,9 @@ SYM_CODE_START(trampoline_32bit_src)
- 	/* Restore the preserved 64-bit registers */
- 	popq	%rbx
- 	popq	%rbp
-+	popq	%r12
-+	popq	%r13
-+	popq	%r14
- 	popq	%r15
- 	retq
+-	/* Check what paging mode we want to be in after the trampoline */
+-	testl	%esi, %esi
+-	jz	1f
+-
+-	/* We want 5-level paging: don't touch CR3 if it already points to 5-level page tables */
+-	movl	%cr4, %eax
+-	testl	$X86_CR4_LA57, %eax
+-	jnz	3f
+-	jmp	2f
+-1:
+-	/* We want 4-level paging: don't touch CR3 if it already points to 4-level page tables */
+-	movl	%cr4, %eax
+-	testl	$X86_CR4_LA57, %eax
+-	jz	3f
+-2:
+ 	/* Point CR3 to the trampoline's new top level page table */
+ 	leal	TRAMPOLINE_32BIT_PGTABLE_OFFSET(%edi), %eax
+ 	movl	%eax, %cr3
+-3:
++
+ 	/* Set EFER.LME=1 as a precaution in case hypervsior pulls the rug */
+ 	movl	$MSR_EFER, %ecx
+ 	rdmsr
+@@ -624,26 +604,9 @@ SYM_CODE_START(trampoline_32bit_src)
+ 	jc	1f
+ 	wrmsr
+ 1:
+-#ifdef CONFIG_X86_MCE
+-	/*
+-	 * Preserve CR4.MCE if the kernel will enable #MC support.
+-	 * Clearing MCE may fault in some environments (that also force #MC
+-	 * support). Any machine check that occurs before #MC support is fully
+-	 * configured will crash the system regardless of the CR4.MCE value set
+-	 * here.
+-	 */
++	/* Toggle CR4.LA57 */
+ 	movl	%cr4, %eax
+-	andl	$X86_CR4_MCE, %eax
+-#else
+-	movl	$0, %eax
+-#endif
+-
+-	/* Enable PAE and LA57 (if required) paging modes */
+-	orl	$X86_CR4_PAE, %eax
+-	testl	%esi, %esi
+-	jz	1f
+-	orl	$X86_CR4_LA57, %eax
+-1:
++	btcl	$X86_CR4_LA57_BIT, %eax
+ 	movl	%eax, %cr4
  
+ 	/* Enable paging again. */
 --- a/arch/x86/boot/compressed/pgtable_64.c
 +++ b/arch/x86/boot/compressed/pgtable_64.c
-@@ -16,11 +16,6 @@ unsigned int __section(".data") pgdir_sh
- unsigned int __section(".data") ptrs_per_p4d = 1;
- #endif
+@@ -103,7 +103,7 @@ static unsigned long find_trampoline_pla
  
--struct paging_config {
--	unsigned long trampoline_start;
--	unsigned long l5_required;
--};
--
- /* Buffer to preserve trampoline memory */
- static char trampoline_save[TRAMPOLINE_32BIT_SIZE];
- 
-@@ -29,7 +24,7 @@ static char trampoline_save[TRAMPOLINE_3
-  * purposes.
-  *
-  * Avoid putting the pointer into .bss as it will be cleared between
-- * paging_prepare() and extract_kernel().
-+ * configure_5level_paging() and extract_kernel().
-  */
- unsigned long *trampoline_32bit __section(".data");
- 
-@@ -106,13 +101,13 @@ static unsigned long find_trampoline_pla
- 	return bios_start - TRAMPOLINE_32BIT_SIZE;
- }
- 
--struct paging_config paging_prepare(void *rmode)
-+asmlinkage void configure_5level_paging(struct boot_params *bp)
+ asmlinkage void configure_5level_paging(struct boot_params *bp)
  {
--	struct paging_config paging_config = {};
--	void *tramp_code;
-+	void (*toggle_la57)(void *trampoline, bool enable_5lvl);
-+	bool l5_required = false;
+-	void (*toggle_la57)(void *trampoline, bool enable_5lvl);
++	void (*toggle_la57)(void *trampoline);
+ 	bool l5_required = false;
  
  	/* Initialize boot_params. Required for cmdline_find_option_bool(). */
--	boot_params = rmode;
-+	boot_params = bp;
- 
- 	/*
- 	 * Check if LA57 is desired and supported.
-@@ -130,7 +125,7 @@ struct paging_config paging_prepare(void
- 			!cmdline_find_option_bool("no5lvl") &&
- 			native_cpuid_eax(0) >= 7 &&
- 			(native_cpuid_ecx(7) & (1 << (X86_FEATURE_LA57 & 31)))) {
--		paging_config.l5_required = 1;
-+		l5_required = true;
- 
- 		/* Initialize variables for 5-level paging */
- 		__pgtable_l5_enabled = 1;
-@@ -138,9 +133,7 @@ struct paging_config paging_prepare(void
+@@ -133,6 +133,13 @@ asmlinkage void configure_5level_paging(
  		ptrs_per_p4d = 512;
  	}
  
--	paging_config.trampoline_start = find_trampoline_placement();
--
--	trampoline_32bit = (unsigned long *)paging_config.trampoline_start;
-+	trampoline_32bit = (unsigned long *)find_trampoline_placement();
++	/*
++	 * The trampoline will not be used if the paging mode is already set to
++	 * the desired one.
++	 */
++	if (l5_required == !!(native_read_cr4() & X86_CR4_LA57))
++		return;
++
+ 	trampoline_32bit = (unsigned long *)find_trampoline_placement();
  
  	/* Preserve trampoline memory */
- 	memcpy(trampoline_save, trampoline_32bit, TRAMPOLINE_32BIT_SIZE);
-@@ -149,7 +142,7 @@ struct paging_config paging_prepare(void
- 	memset(trampoline_32bit, 0, TRAMPOLINE_32BIT_SIZE);
- 
- 	/* Copy trampoline code in place */
--	tramp_code = memcpy(trampoline_32bit +
-+	toggle_la57 = memcpy(trampoline_32bit +
- 			TRAMPOLINE_32BIT_CODE_OFFSET / sizeof(unsigned long),
- 			&trampoline_32bit_src, TRAMPOLINE_32BIT_CODE_SIZE);
- 
-@@ -159,7 +152,8 @@ struct paging_config paging_prepare(void
- 	 * immediate absolute address, which needs to be adjusted based on the
- 	 * placement of the trampoline.
+@@ -160,18 +167,8 @@ asmlinkage void configure_5level_paging(
+ 	 *
+ 	 * The new page table will be used by trampoline code for switching
+ 	 * from 4- to 5-level paging or vice versa.
+-	 *
+-	 * If switching is not required, the page table is unused: trampoline
+-	 * code wouldn't touch CR3.
  	 */
--	*(u32 *)(tramp_code + trampoline_ljmp_imm_offset) += (unsigned long)tramp_code;
-+	*(u32 *)((u8 *)toggle_la57 + trampoline_ljmp_imm_offset) +=
-+						(unsigned long)toggle_la57;
  
- 	/*
- 	 * The code below prepares page table in trampoline memory.
-@@ -175,10 +169,10 @@ struct paging_config paging_prepare(void
- 	 * We are not going to use the page table in trampoline memory if we
- 	 * are already in the desired paging mode.
- 	 */
--	if (paging_config.l5_required == !!(native_read_cr4() & X86_CR4_LA57))
-+	if (l5_required == !!(native_read_cr4() & X86_CR4_LA57))
- 		goto out;
- 
--	if (paging_config.l5_required) {
-+	if (l5_required) {
+-	/*
+-	 * We are not going to use the page table in trampoline memory if we
+-	 * are already in the desired paging mode.
+-	 */
+-	if (l5_required == !!(native_read_cr4() & X86_CR4_LA57))
+-		goto out;
+-
+ 	if (l5_required) {
  		/*
  		 * For 4- to 5-level paging transition, set up current CR3 as
- 		 * the first and the only entry in a new top-level page table.
-@@ -201,7 +195,7 @@ struct paging_config paging_prepare(void
+@@ -194,8 +191,7 @@ asmlinkage void configure_5level_paging(
+ 		       (void *)src, PAGE_SIZE);
  	}
  
- out:
--	return paging_config;
-+	toggle_la57(trampoline_32bit, l5_required);
+-out:
+-	toggle_la57(trampoline_32bit, l5_required);
++	toggle_la57(trampoline_32bit);
  }
  
  void cleanup_trampoline(void *pgtable)
