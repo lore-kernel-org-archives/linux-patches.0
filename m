@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38B81C687;
-	Mon,  4 Mar 2024 21:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A401C687;
+	Mon,  4 Mar 2024 21:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588044; cv=none; b=AXyHb6LX+I2JlXJoQs+a4k5M6JENGaA5boFh5b2NaPaGxuPvVl6+NWUDGje/3Dy2km8vmDikznN0I1oiqlrT2rqzj82QlJWES36YAGGirEbN6C4/C69hw2EQpTRUCJltaRQFMIq9bUOWWs0mA05/meJXTrOVOqHtRofcX2AIrkU=
+	t=1709588047; cv=none; b=Y5HpYMATVjmPf1610YHhx1ydWjF0u4ZYXh1DWp9vxfn5ji8QEryB9qQ14i2biXc2Bwwghk9ZxauKf21cucnMaSfrqElaIvadg6BbsES7CmnBV115sfQtbfQAbN9uqJUfJdpr/ywIovcd/8U/AjIT/3XAN78rKYyZ1+5DF13VQNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588044; c=relaxed/simple;
-	bh=AmnEXfjY2hLrm/npFDMPGzfcQF17ni69WO6KiXnovi8=;
+	s=arc-20240116; t=1709588047; c=relaxed/simple;
+	bh=s4qr4ZcUhr3UtkSbC6qNU4lJSnjNyTnuisqRS1oHdgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzP2IjGBtnvoRh0Wi+PGpgVL3hhuzBdYwctWdw5OA5VPXuoKBVCix9ao93e4kY2ctkMXUwgJsI9dezeRPk2Lj8PBpZYeQJawPj3x4UR0cmA9dmGsdgefmycYTrGCZd+dlLlikVbck8pN2J52kmx741gh+cwTW6D1+1GNb29P0OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzLcNrmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k3ncqthU3TtCTZ3WOH2lrqeJj3MuI4ONftdrbVLtoeUeyPKN55Kv1eVSc4WU0mim5F59BrgBp2YCV72DiXuK49drBvhCbNfTrV4jcaKig7nh0wT7TKda5elv6wUwDSKsqas0mfATPl/ugjGF0mCk3A0H4+3Cy2xhpomHgE+YA2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duqRoR8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzLcNrmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DC9C433F1;
-	Mon,  4 Mar 2024 21:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duqRoR8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1BFC433C7;
+	Mon,  4 Mar 2024 21:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588044;
-	bh=AmnEXfjY2hLrm/npFDMPGzfcQF17ni69WO6KiXnovi8=;
+	s=korg; t=1709588047;
+	bh=s4qr4ZcUhr3UtkSbC6qNU4lJSnjNyTnuisqRS1oHdgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzLcNrmrJNvwk4MHJnBdxb61JqLWEH9D51RdgtnVb0IkJsh2oy8eaBU725pqQfi1b
-	 JfREodCLgmvAgVFNeP2CqRWUrp+k3VLeKYTa4iWv9M6PKDRDF56J1uPVOcXr1hGzcm
-	 fQRYJl+IXJ4F8IbtiUEEo9VZAZ6JWYcQ4XP4iZpU=
+	b=duqRoR8tQh7w8winXIMb36EsRtrgXO7erHsYvoo3OqDzaSn+nLXFJy0I5x2wdmxsf
+	 Ls/Czfog6m8BuvXnSrj0sWOTFFGXFURPWb3t88kgB1md3S1t/gN7/c/NJJ1oj8pGgD
+	 eESuEreXXy4v6NxsJKO3djHNhAPGKk/zqx6zT6fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/25] ipv6: fix potential "struct net" leak in inet6_rtm_getaddr()
-Date: Mon,  4 Mar 2024 21:23:40 +0000
-Message-ID: <20240304211535.893182620@linuxfoundation.org>
+Subject: [PATCH 5.4 05/25] lan78xx: enable auto speed configuration for LAN7850 if no EEPROM is detected
+Date: Mon,  4 Mar 2024 21:23:41 +0000
+Message-ID: <20240304211535.925883524@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -53,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 10bfd453da64a057bcfd1a49fb6b271c48653cdb ]
+[ Upstream commit 0e67899abfbfdea0c3c0ed3fd263ffc601c5c157 ]
 
-It seems that if userspace provides a correct IFA_TARGET_NETNSID value
-but no IFA_ADDRESS and IFA_LOCAL attributes, inet6_rtm_getaddr()
-returns -EINVAL with an elevated "struct net" refcount.
+Same as LAN7800, LAN7850 can be used without EEPROM. If EEPROM is not
+present or not flashed, LAN7850 will fail to sync the speed detected by the PHY
+with the MAC. In case link speed is 100Mbit, it will accidentally work,
+otherwise no data can be transferred.
 
-Fixes: 6ecf4c37eb3e ("ipv6: enable IFA_TARGET_NETNSID for RTM_GETADDR")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: David Ahern <dsahern@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Better way would be to implement link_up callback, or set auto speed
+configuration unconditionally. But this changes would be more intrusive.
+So, for now, set it only if no EEPROM is found.
+
+Fixes: e69647a19c87 ("lan78xx: Set ASD in MAC_CR when EEE is enabled.")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20240222123839.2816561-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/usb/lan78xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 6fcbe8912b431..974e650e749e6 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -5380,9 +5380,10 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 	}
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index b51017966bb37..454a03f0bc69f 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2535,7 +2535,8 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 	if (dev->chipid == ID_REV_CHIP_ID_7801_)
+ 		buf &= ~MAC_CR_GMII_EN_;
  
- 	addr = extract_addr(tb[IFA_ADDRESS], tb[IFA_LOCAL], &peer);
--	if (!addr)
--		return -EINVAL;
--
-+	if (!addr) {
-+		err = -EINVAL;
-+		goto errout;
-+	}
- 	ifm = nlmsg_data(nlh);
- 	if (ifm->ifa_index)
- 		dev = dev_get_by_index(tgt_net, ifm->ifa_index);
+-	if (dev->chipid == ID_REV_CHIP_ID_7800_) {
++	if (dev->chipid == ID_REV_CHIP_ID_7800_ ||
++	    dev->chipid == ID_REV_CHIP_ID_7850_) {
+ 		ret = lan78xx_read_raw_eeprom(dev, 0, 1, &sig);
+ 		if (!ret && sig != EEPROM_INDICATOR) {
+ 			/* Implies there is no external eeprom. Set mac speed */
 -- 
 2.43.0
 
