@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4CF7A736;
-	Mon,  4 Mar 2024 21:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8DD7A736;
+	Mon,  4 Mar 2024 21:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587881; cv=none; b=YvDmE8HBE5pAR3w3ItZHvEUncWGH47ZJ3O1i3ThZxzY+fRIbXWhUChxWwc4BrgSFW9y1ME3GkFWWsl0dxuxXk26Fy0NbqF2r/Vi0czb+B8hsfbjTDDBEo2gqWMYc8OXRjdvbGYuNGSo/NAFUhXRLkJRa9BtcMY9ouBbJzpoYMQE=
+	t=1709587884; cv=none; b=iFzoXCZ2tsMn1t+1lxZyA99eNwWN+3iKDOzM/9kIThFuZwQ8ttYe0cqWrmygxuA0UWnkA3ERByVfg8wlcHvGnUpmxfTPxNlRpFGBJ3ZcOjwAMssK//2dVXh+EgtsGGcamHwxQq7l6DqK45N3XFeyWa9v+nbVcGyufya+lVuHbCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587881; c=relaxed/simple;
-	bh=sYgPJf14L5zr06qJN5/ARMQu0lfDLDDqprcRorYsurg=;
+	s=arc-20240116; t=1709587884; c=relaxed/simple;
+	bh=UF57pj+/1BJKmhE3SQz0+o69Vt4N5+oyj71J9xrRwUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFGsUNjTu+REwSGcoCpC+Goa9GRdBrdxReAS//VZqVxujOnTqr/10hPHfhvv4DyyeWQ3CQ1ptUMvdOxr4OcZmJyAmTSpY24fLrEzSPiRC1nycPj33YaapY5N0R2ByxCqNKQQGf58xLP0GkXCgicGpTarbbMtZrmk2qrc758HfQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JH9HM1N7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qXuqpPwIV1uLVr3pohtfHCFbaqGJ33JtHx1q66JQvFxeUXBLzFLG0LSVDK6aBT6WGCHvF1+J+gQux0xqLEckGjFZ3nqMwy7VEVJtk9GNWQx6qATF1gWKzpy1ahSgq6DR6MV2Vc3F1IRdsZOWtpEzo61/7dBEJWqxIn7k1hW1EUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CARVqQx1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JH9HM1N7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF586C433C7;
-	Mon,  4 Mar 2024 21:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CARVqQx1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807E4C433C7;
+	Mon,  4 Mar 2024 21:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587881;
-	bh=sYgPJf14L5zr06qJN5/ARMQu0lfDLDDqprcRorYsurg=;
+	s=korg; t=1709587883;
+	bh=UF57pj+/1BJKmhE3SQz0+o69Vt4N5+oyj71J9xrRwUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JH9HM1N7EYvqEijv9xAvLWarbewsfgCyCZ/tNEIeEumXiTcqUK0pBH+Y1NBYD//Wi
-	 Ohh3uVif/F6A2PvYPSqtgV2sQghmaY9vKHnthK5x/RUJICIrzS5sdTbfyMLOI7ZKZC
-	 6GSghZCBKcMCAnAhRP53fbTldZESm3ITXgi0C5pM=
+	b=CARVqQx1S2RQx0ABRUuXs2wSrgp/DmwzGWbULN+OPu3DHVMNtkNp066oJQ1J2j5dJ
+	 PslA0I1PPWgrLIx1LO7CUAIBwGTClyJ7yuonvtwNOV5UtPcfr7yxrKC8JSZ1immXhi
+	 1jZ8own05rqFUPYKbo8gCKiEZiTZGJAhNMk9dbFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 126/162] mptcp: fix snd_wnd initialization for passive socket
-Date: Mon,  4 Mar 2024 21:23:11 +0000
-Message-ID: <20240304211555.776488270@linuxfoundation.org>
+Subject: [PATCH 6.7 127/162] mptcp: fix potential wake-up event loss
+Date: Mon,  4 Mar 2024 21:23:12 +0000
+Message-ID: <20240304211555.807413023@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -54,33 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit adf1bb78dab55e36d4d557aa2fb446ebcfe9e5ce upstream.
+commit b111d8fbd2cbc63e05f3adfbbe0d4df655dfcc5b upstream.
 
-Such value should be inherited from the first subflow, but
-passive sockets always used 'rsk_rcv_wnd'.
+After the blamed commit below, the send buffer auto-tuning can
+happen after that the mptcp_propagate_sndbuf() completes - via
+the delegated action infrastructure.
 
-Fixes: 6f8a612a33e4 ("mptcp: keep track of advertised windows right edge")
+We must check for write space even after such change or we risk
+missing the wake-up event.
+
+Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-5-162e87e48497@kernel.org
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-6-162e87e48497@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.h |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3225,7 +3225,7 @@ struct sock *mptcp_sk_clone_init(const s
- 	msk->write_seq = subflow_req->idsn + 1;
- 	msk->snd_nxt = msk->write_seq;
- 	msk->snd_una = msk->write_seq;
--	msk->wnd_end = msk->snd_nxt + req->rsk_rcv_wnd;
-+	msk->wnd_end = msk->snd_nxt + tcp_sk(ssk)->snd_wnd;
- 	msk->setsockopt_seq = mptcp_sk(sk)->setsockopt_seq;
- 	mptcp_init_sched(msk, mptcp_sk(sk)->sched);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -790,6 +790,16 @@ static inline bool mptcp_data_fin_enable
+ 	       READ_ONCE(msk->write_seq) == READ_ONCE(msk->snd_nxt);
+ }
  
++static inline void mptcp_write_space(struct sock *sk)
++{
++	if (sk_stream_is_writeable(sk)) {
++		/* pairs with memory barrier in mptcp_poll */
++		smp_mb();
++		if (test_and_clear_bit(MPTCP_NOSPACE, &mptcp_sk(sk)->flags))
++			sk_stream_write_space(sk);
++	}
++}
++
+ static inline void __mptcp_sync_sndbuf(struct sock *sk)
+ {
+ 	struct mptcp_subflow_context *subflow;
+@@ -808,6 +818,7 @@ static inline void __mptcp_sync_sndbuf(s
+ 
+ 	/* the msk max wmem limit is <nr_subflows> * tcp wmem[2] */
+ 	WRITE_ONCE(sk->sk_sndbuf, new_sndbuf);
++	mptcp_write_space(sk);
+ }
+ 
+ /* The called held both the msk socket and the subflow socket locks,
+@@ -838,16 +849,6 @@ static inline void mptcp_propagate_sndbu
+ 	local_bh_enable();
+ }
+ 
+-static inline void mptcp_write_space(struct sock *sk)
+-{
+-	if (sk_stream_is_writeable(sk)) {
+-		/* pairs with memory barrier in mptcp_poll */
+-		smp_mb();
+-		if (test_and_clear_bit(MPTCP_NOSPACE, &mptcp_sk(sk)->flags))
+-			sk_stream_write_space(sk);
+-	}
+-}
+-
+ void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags);
+ 
+ #define MPTCP_TOKEN_MAX_RETRIES	4
 
 
