@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C777BAFB;
-	Mon,  4 Mar 2024 21:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7257BB10;
+	Mon,  4 Mar 2024 21:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588531; cv=none; b=ntwFEzpon2oh0wfJ+0Y0kNA9z/DgBd90FghGguorCoU65XmUNilbZ/CuyQJQvwUCdKjuexWaKoMo6klSPgCXOvsAEn6HdAJ7zPpIqg0JxaRoBRxmFLccN/VbK5g2l2NQIdri3DH+qxtlYwZFdRN/WKiYzwclz6JDDsIHvEQF3EA=
+	t=1709588534; cv=none; b=gdBfukh+x1e3gRpT65uTxH8a9tNEgqk8sJMdF0l2skONHj05QOOfU88FfJgsFd/NM8cQQFYOBfL+ELvXR9A4nb1ge4UV93Ef/uoXCOxkyoz4ALOy42DbmmVhCdOsnzSRmi0J3K1gwGCBoBkx2ViXx6X4b+xIu7HWDCPdOSwdQVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588531; c=relaxed/simple;
-	bh=B1+w9+rHzNW4EMUgiRaMI1zJFrYkfIvTQQyh/JWMkjQ=;
+	s=arc-20240116; t=1709588534; c=relaxed/simple;
+	bh=KxhWlXRKQ83dyo7+sEb2vSdgw2YZqLbI/qZ97WQhCV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hptSgU8yrIm+ibhwziz6krAoDJM5kNedY4uKzEtS8Fk9t4WaPuJHSQH94gidV6WcVCVfZp9fTAFYghXLlNSMehua6QeLPyzEJb2cL6dWa1Fa3ZuJEpOschu8qy+rVjEUU3rv0fI+XCOtBDgQBMrPYho8VJmfmNvQnyhZmpUjboI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSPf4pI3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpwDNPWfTJYklH9+XjAMYPd71acMCTMA1XiQDvexQQYGuPf3nVzB2cT6H26nnVevfMw9dWhwyFi5qzGVjHMqHSSDYyHdeaxqrDZ891Um5eC0BE+LD7aCFjaAKQr9G9HCH6JUZ9wcgf9hpqah+hX+vnHDRG/rdncCfxK73UaxNnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZdJnKhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSPf4pI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295CDC433F1;
-	Mon,  4 Mar 2024 21:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZdJnKhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADEEC433F1;
+	Mon,  4 Mar 2024 21:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588531;
-	bh=B1+w9+rHzNW4EMUgiRaMI1zJFrYkfIvTQQyh/JWMkjQ=;
+	s=korg; t=1709588534;
+	bh=KxhWlXRKQ83dyo7+sEb2vSdgw2YZqLbI/qZ97WQhCV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSPf4pI3NJ6exySKWgmCZKmjhSOFufnkNtEJQMIwuhGMKky2enZOhnFRzqgAqIl+w
-	 Vqd5PezpNOwGdne7zba5SC2bSEhfakfyvbAm5bu6bES/0+XnNols491fY2ros2zRfJ
-	 yxaHJCXqMiKNGqbxg22jQl2R7ziIN8YcoqCI3dmE=
+	b=CZdJnKhvpK/32PtIJOTOG4/n1WnEufci1uGe0dteOAaFBoxST+eYIiFzdNkIZBk75
+	 TilbyBXJ2NOq0tETkp126HHIW5vsz8kNxvwfgnMXDBfESk546YisTZAVtl9/5NXtnS
+	 SO0M3/qn/4X46XYK+z+Iu4ZV7JWatLKBLab3fX04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>
-Subject: [PATCH 6.6 143/143] drm/nouveau: dont fini scheduler before entity flush
-Date: Mon,  4 Mar 2024 21:24:23 +0000
-Message-ID: <20240304211554.467600535@linuxfoundation.org>
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/143] powerpc/rtas: use correct function name for resetting TCE tables
+Date: Mon,  4 Mar 2024 21:24:08 +0000
+Message-ID: <20240304211553.991085876@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -50,164 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@redhat.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-This bug is present in v6.7 only, since the scheduler design has been
-re-worked in v6.8.
+[ Upstream commit fad87dbd48156ab940538f052f1820f4b6ed2819 ]
 
-Client scheduler entities must be flushed before an associated GPU
-scheduler is teared down. Otherwise the entitiy might still hold a
-pointer to the scheduler's runqueue which is freed at scheduler tear
-down already.
+The PAPR spec spells the function name as
 
-[  305.224293] ==================================================================
-[  305.224297] BUG: KASAN: slab-use-after-free in drm_sched_entity_flush+0x6c4/0x7b0 [gpu_sched]
-[  305.224310] Read of size 8 at addr ffff8881440a8f48 by task rmmod/4436
+  "ibm,reset-pe-dma-windows"
 
-[  305.224317] CPU: 10 PID: 4436 Comm: rmmod Tainted: G     U             6.7.6-100.fc38.x86_64+debug #1
-[  305.224321] Hardware name: Dell Inc. Precision 7550/01PXFR, BIOS 1.27.0 11/08/2023
-[  305.224324] Call Trace:
-[  305.224327]  <TASK>
-[  305.224329]  dump_stack_lvl+0x76/0xd0
-[  305.224336]  print_report+0xcf/0x670
-[  305.224342]  ? drm_sched_entity_flush+0x6c4/0x7b0 [gpu_sched]
-[  305.224352]  ? __virt_addr_valid+0x215/0x410
-[  305.224359]  ? drm_sched_entity_flush+0x6c4/0x7b0 [gpu_sched]
-[  305.224368]  kasan_report+0xa6/0xe0
-[  305.224373]  ? drm_sched_entity_flush+0x6c4/0x7b0 [gpu_sched]
-[  305.224385]  drm_sched_entity_flush+0x6c4/0x7b0 [gpu_sched]
-[  305.224395]  ? __pfx_drm_sched_entity_flush+0x10/0x10 [gpu_sched]
-[  305.224406]  ? rcu_is_watching+0x15/0xb0
-[  305.224413]  drm_sched_entity_destroy+0x17/0x20 [gpu_sched]
-[  305.224422]  nouveau_cli_fini+0x6c/0x120 [nouveau]
-[  305.224658]  nouveau_drm_device_fini+0x2ac/0x490 [nouveau]
-[  305.224871]  nouveau_drm_remove+0x18e/0x220 [nouveau]
-[  305.225082]  ? __pfx_nouveau_drm_remove+0x10/0x10 [nouveau]
-[  305.225290]  ? rcu_is_watching+0x15/0xb0
-[  305.225295]  ? _raw_spin_unlock_irqrestore+0x66/0x80
-[  305.225299]  ? trace_hardirqs_on+0x16/0x100
-[  305.225304]  ? _raw_spin_unlock_irqrestore+0x4f/0x80
-[  305.225310]  pci_device_remove+0xa3/0x1d0
-[  305.225316]  device_release_driver_internal+0x379/0x540
-[  305.225322]  driver_detach+0xc5/0x180
-[  305.225327]  bus_remove_driver+0x11e/0x2a0
-[  305.225333]  pci_unregister_driver+0x2a/0x250
-[  305.225339]  nouveau_drm_exit+0x1f/0x970 [nouveau]
-[  305.225548]  __do_sys_delete_module+0x350/0x580
-[  305.225554]  ? __pfx___do_sys_delete_module+0x10/0x10
-[  305.225562]  ? syscall_enter_from_user_mode+0x26/0x90
-[  305.225567]  ? rcu_is_watching+0x15/0xb0
-[  305.225571]  ? syscall_enter_from_user_mode+0x26/0x90
-[  305.225575]  ? trace_hardirqs_on+0x16/0x100
-[  305.225580]  do_syscall_64+0x61/0xe0
-[  305.225584]  ? rcu_is_watching+0x15/0xb0
-[  305.225587]  ? syscall_exit_to_user_mode+0x1f/0x50
-[  305.225592]  ? trace_hardirqs_on_prepare+0xe3/0x100
-[  305.225596]  ? do_syscall_64+0x70/0xe0
-[  305.225600]  ? trace_hardirqs_on_prepare+0xe3/0x100
-[  305.225604]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
-[  305.225609] RIP: 0033:0x7f6148f3592b
-[  305.225650] Code: 73 01 c3 48 8b 0d dd 04 0c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 b0 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d ad 04 0c 00 f7 d8 64 89 01 48
-[  305.225653] RSP: 002b:00007ffe89986f08 EFLAGS: 00000206 ORIG_RAX: 00000000000000b0
-[  305.225659] RAX: ffffffffffffffda RBX: 000055cbb036e900 RCX: 00007f6148f3592b
-[  305.225662] RDX: 0000000000000000 RSI: 0000000000000800 RDI: 000055cbb036e968
-[  305.225664] RBP: 00007ffe89986f30 R08: 1999999999999999 R09: 0000000000000000
-[  305.225667] R10: 00007f6148fa6ac0 R11: 0000000000000206 R12: 0000000000000000
-[  305.225670] R13: 00007ffe89987190 R14: 000055cbb036e900 R15: 0000000000000000
-[  305.225678]  </TASK>
+but in practice firmware uses the singular form:
 
-[  305.225683] Allocated by task 484:
-[  305.225685]  kasan_save_stack+0x33/0x60
-[  305.225690]  kasan_set_track+0x25/0x30
-[  305.225693]  __kasan_kmalloc+0x8f/0xa0
-[  305.225696]  drm_sched_init+0x3c7/0xce0 [gpu_sched]
-[  305.225705]  nouveau_sched_init+0xd2/0x110 [nouveau]
-[  305.225913]  nouveau_drm_device_init+0x130/0x3290 [nouveau]
-[  305.226121]  nouveau_drm_probe+0x1ab/0x6b0 [nouveau]
-[  305.226329]  local_pci_probe+0xda/0x190
-[  305.226333]  pci_device_probe+0x23a/0x780
-[  305.226337]  really_probe+0x3df/0xb80
-[  305.226341]  __driver_probe_device+0x18c/0x450
-[  305.226345]  driver_probe_device+0x4a/0x120
-[  305.226348]  __driver_attach+0x1e5/0x4a0
-[  305.226351]  bus_for_each_dev+0x106/0x190
-[  305.226355]  bus_add_driver+0x2a1/0x570
-[  305.226358]  driver_register+0x134/0x460
-[  305.226361]  do_one_initcall+0xd3/0x430
-[  305.226366]  do_init_module+0x238/0x770
-[  305.226370]  load_module+0x5581/0x6f10
-[  305.226374]  __do_sys_init_module+0x1f2/0x220
-[  305.226377]  do_syscall_64+0x61/0xe0
-[  305.226381]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+  "ibm,reset-pe-dma-window"
 
-[  305.226387] Freed by task 4436:
-[  305.226389]  kasan_save_stack+0x33/0x60
-[  305.226392]  kasan_set_track+0x25/0x30
-[  305.226396]  kasan_save_free_info+0x2b/0x50
-[  305.226399]  __kasan_slab_free+0x10b/0x1a0
-[  305.226402]  slab_free_freelist_hook+0x12b/0x1e0
-[  305.226406]  __kmem_cache_free+0xd4/0x1d0
-[  305.226410]  drm_sched_fini+0x178/0x320 [gpu_sched]
-[  305.226418]  nouveau_drm_device_fini+0x2a0/0x490 [nouveau]
-[  305.226624]  nouveau_drm_remove+0x18e/0x220 [nouveau]
-[  305.226832]  pci_device_remove+0xa3/0x1d0
-[  305.226836]  device_release_driver_internal+0x379/0x540
-[  305.226840]  driver_detach+0xc5/0x180
-[  305.226843]  bus_remove_driver+0x11e/0x2a0
-[  305.226847]  pci_unregister_driver+0x2a/0x250
-[  305.226850]  nouveau_drm_exit+0x1f/0x970 [nouveau]
-[  305.227056]  __do_sys_delete_module+0x350/0x580
-[  305.227060]  do_syscall_64+0x61/0xe0
-[  305.227064]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+in the device tree. Since we have the wrong spelling in the RTAS
+function table, reverse lookups (token -> name) fail and warn:
 
-[  305.227070] The buggy address belongs to the object at ffff8881440a8f00
-                which belongs to the cache kmalloc-128 of size 128
-[  305.227073] The buggy address is located 72 bytes inside of
-                freed 128-byte region [ffff8881440a8f00, ffff8881440a8f80)
+  unexpected failed lookup for token 86
+  WARNING: CPU: 1 PID: 545 at arch/powerpc/kernel/rtas.c:659 __do_enter_rtas_trace+0x2a4/0x2b4
+  CPU: 1 PID: 545 Comm: systemd-udevd Not tainted 6.8.0-rc4 #30
+  Hardware name: IBM,9105-22A POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NL1060_028) hv:phyp pSeries
+  NIP [c0000000000417f0] __do_enter_rtas_trace+0x2a4/0x2b4
+  LR [c0000000000417ec] __do_enter_rtas_trace+0x2a0/0x2b4
+  Call Trace:
+   __do_enter_rtas_trace+0x2a0/0x2b4 (unreliable)
+   rtas_call+0x1f8/0x3e0
+   enable_ddw.constprop.0+0x4d0/0xc84
+   dma_iommu_dma_supported+0xe8/0x24c
+   dma_set_mask+0x5c/0xd8
+   mlx5_pci_init.constprop.0+0xf0/0x46c [mlx5_core]
+   probe_one+0xfc/0x32c [mlx5_core]
+   local_pci_probe+0x68/0x12c
+   pci_call_probe+0x68/0x1ec
+   pci_device_probe+0xbc/0x1a8
+   really_probe+0x104/0x570
+   __driver_probe_device+0xb8/0x224
+   driver_probe_device+0x54/0x130
+   __driver_attach+0x158/0x2b0
+   bus_for_each_dev+0xa8/0x120
+   driver_attach+0x34/0x48
+   bus_add_driver+0x174/0x304
+   driver_register+0x8c/0x1c4
+   __pci_register_driver+0x68/0x7c
+   mlx5_init+0xb8/0x118 [mlx5_core]
+   do_one_initcall+0x60/0x388
+   do_init_module+0x7c/0x2a4
+   init_module_from_file+0xb4/0x108
+   idempotent_init_module+0x184/0x34c
+   sys_finit_module+0x90/0x114
 
-[  305.227078] The buggy address belongs to the physical page:
-[  305.227081] page:00000000627efa0a refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1440a8
-[  305.227085] head:00000000627efa0a order:1 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[  305.227088] flags: 0x17ffffc0000840(slab|head|node=0|zone=2|lastcpupid=0x1fffff)
-[  305.227093] page_type: 0xffffffff()
-[  305.227097] raw: 0017ffffc0000840 ffff8881000428c0 ffffea0005b33500 dead000000000002
-[  305.227100] raw: 0000000000000000 0000000000200020 00000001ffffffff 0000000000000000
-[  305.227102] page dumped because: kasan: bad access detected
+And oopses are possible when lockdep is enabled or the RTAS
+tracepoints are active, since those paths dereference the result of
+the lookup.
 
-[  305.227106] Memory state around the buggy address:
-[  305.227109]  ffff8881440a8e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  305.227112]  ffff8881440a8e80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  305.227114] >ffff8881440a8f00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[  305.227117]                                               ^
-[  305.227120]  ffff8881440a8f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  305.227122]  ffff8881440a9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc
-[  305.227125] ==================================================================
+Use the correct spelling to match firmware's behavior, adjusting the
+related constants to match.
 
-Cc: <stable@vger.kernel.org> # v6.7 only
-Reported-by: Karol Herbst <kherbst@redhat.com>
-Closes: https://gist.githubusercontent.com/karolherbst/a20eb0f937a06ed6aabe2ac2ca3d11b5/raw/9cd8b1dc5894872d0eeebbee3dd0fdd28bb576bc/gistfile1.txt
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Fixes: 8252b88294d2 ("powerpc/rtas: improve function information lookups")
+Reported-by: Gaurav Batra <gbatra@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240222-rtas-fix-ibm-reset-pe-dma-window-v1-1-7aaf235ac63c@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/rtas.h | 4 ++--
+ arch/powerpc/kernel/rtas.c      | 9 +++++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -708,10 +708,11 @@ nouveau_drm_device_fini(struct drm_devic
- 	}
- 	mutex_unlock(&drm->clients_lock);
- 
--	nouveau_sched_fini(drm);
--
- 	nouveau_cli_fini(&drm->client);
- 	nouveau_cli_fini(&drm->master);
-+
-+	nouveau_sched_fini(drm);
-+
- 	nvif_parent_dtor(&drm->parent);
- 	mutex_destroy(&drm->clients_lock);
- 	kfree(drm);
+diff --git a/arch/powerpc/include/asm/rtas.h b/arch/powerpc/include/asm/rtas.h
+index c697c3c746946..33024a2874a69 100644
+--- a/arch/powerpc/include/asm/rtas.h
++++ b/arch/powerpc/include/asm/rtas.h
+@@ -68,7 +68,7 @@ enum rtas_function_index {
+ 	RTAS_FNIDX__IBM_READ_SLOT_RESET_STATE,
+ 	RTAS_FNIDX__IBM_READ_SLOT_RESET_STATE2,
+ 	RTAS_FNIDX__IBM_REMOVE_PE_DMA_WINDOW,
+-	RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOWS,
++	RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOW,
+ 	RTAS_FNIDX__IBM_SCAN_LOG_DUMP,
+ 	RTAS_FNIDX__IBM_SET_DYNAMIC_INDICATOR,
+ 	RTAS_FNIDX__IBM_SET_EEH_OPTION,
+@@ -163,7 +163,7 @@ typedef struct {
+ #define RTAS_FN_IBM_READ_SLOT_RESET_STATE         rtas_fn_handle(RTAS_FNIDX__IBM_READ_SLOT_RESET_STATE)
+ #define RTAS_FN_IBM_READ_SLOT_RESET_STATE2        rtas_fn_handle(RTAS_FNIDX__IBM_READ_SLOT_RESET_STATE2)
+ #define RTAS_FN_IBM_REMOVE_PE_DMA_WINDOW          rtas_fn_handle(RTAS_FNIDX__IBM_REMOVE_PE_DMA_WINDOW)
+-#define RTAS_FN_IBM_RESET_PE_DMA_WINDOWS          rtas_fn_handle(RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOWS)
++#define RTAS_FN_IBM_RESET_PE_DMA_WINDOW           rtas_fn_handle(RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOW)
+ #define RTAS_FN_IBM_SCAN_LOG_DUMP                 rtas_fn_handle(RTAS_FNIDX__IBM_SCAN_LOG_DUMP)
+ #define RTAS_FN_IBM_SET_DYNAMIC_INDICATOR         rtas_fn_handle(RTAS_FNIDX__IBM_SET_DYNAMIC_INDICATOR)
+ #define RTAS_FN_IBM_SET_EEH_OPTION                rtas_fn_handle(RTAS_FNIDX__IBM_SET_EEH_OPTION)
+diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
+index 87d65bdd3ecae..46b9476d75824 100644
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -310,8 +310,13 @@ static struct rtas_function rtas_function_table[] __ro_after_init = {
+ 	[RTAS_FNIDX__IBM_REMOVE_PE_DMA_WINDOW] = {
+ 		.name = "ibm,remove-pe-dma-window",
+ 	},
+-	[RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOWS] = {
+-		.name = "ibm,reset-pe-dma-windows",
++	[RTAS_FNIDX__IBM_RESET_PE_DMA_WINDOW] = {
++		/*
++		 * Note: PAPR+ v2.13 7.3.31.4.1 spells this as
++		 * "ibm,reset-pe-dma-windows" (plural), but RTAS
++		 * implementations use the singular form in practice.
++		 */
++		.name = "ibm,reset-pe-dma-window",
+ 	},
+ 	[RTAS_FNIDX__IBM_SCAN_LOG_DUMP] = {
+ 		.name = "ibm,scan-log-dump",
+-- 
+2.43.0
+
 
 
