@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AE31C6AB;
-	Mon,  4 Mar 2024 21:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2EE1C6AB;
+	Mon,  4 Mar 2024 21:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589207; cv=none; b=nUWKRzFVD8naYIoQQFdCxzEuMjHapMHZEYZl0gO4f1KN9fno93/Mx7NlsIpx80c1Y2z0oHaLseByzqj9YdNkbFLoqw0/o3rlQuBYGfAj4NxGF46uAGNp2eW8xusKgbfq42Y+SMQ/heeD8YoygEzREG5Ncwr7z9V882n1efCW2wc=
+	t=1709589210; cv=none; b=AGaHU4emXxnrrrR+cCdFW3VeljXaXkdDTAjr53hY6B6WzDR0Y7UUqlBHyXn2C1g0lsRPtgZfQDz1IqFTQi0agkHxsQyAC0tayq5Ix8b0bw5CIC21xw1szR7bnNQ9p33CHBAzveTTC9Z0Bn8Wmvg1Uqf4RZVmYZy1CoapeJ0g9Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589207; c=relaxed/simple;
-	bh=VwXika4B7BAKizVSpMsUsn2eY3Kh9pcDGvrxF0PYjoQ=;
+	s=arc-20240116; t=1709589210; c=relaxed/simple;
+	bh=8CHpIqK/rpacUGC+m4xbwkBq8N/MGtg8SjQlKGBIOlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QClTFqShMrytaNvSzmTxq3fbcqfGRCZBPV5tygGZsSQ3XVniknW7Jred/Jhk7j+Ik+WGvkhTmD9L70caAp68JgNiXu87CAsj5hSemjV3jKQvwJzv0hXSkvAXV4mk/pxu0POji7Li3rU+Bv+FEOjljIACFuNHfxrXu6BKVIx6jXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwOWe8Kf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c7U1aLhxbs0Rr+OkA7nXisRHhNEq5gsMXdnOJhuH5PStZziR80kvqo+vczqPr10lu3E++jJRlI3ARKXg9LPauWuzWeY0pb9FWW2TfrwsoRZ3F4EWtOUr1RxkBFvdu7Ui7Izz3skor6/H2HIFElsjkruOITjCaQLTHJBxK+QrcjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbqqEDh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwOWe8Kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDABC433F1;
-	Mon,  4 Mar 2024 21:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbqqEDh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5C0C433C7;
+	Mon,  4 Mar 2024 21:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589207;
-	bh=VwXika4B7BAKizVSpMsUsn2eY3Kh9pcDGvrxF0PYjoQ=;
+	s=korg; t=1709589210;
+	bh=8CHpIqK/rpacUGC+m4xbwkBq8N/MGtg8SjQlKGBIOlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwOWe8KfVdD3QtfT4Zkm0i3J8b4E9Njbn+OU/NcL8IBOSG7DsJcjsJFcLj+CksOP/
-	 unq9GgQHfyobeDL3Hy/Mw54fehXHhus5yehsLaNA1+5EY/GeMZQZCmuDAIup/KTmlN
-	 lkUD+Owl2qMeFKTHic789vdPt/qV4/FR7AbPFjXI=
+	b=zbqqEDh3yZ5agOucUbH2dH1IyRh9idQV3DJvXGfBba//3+UtZ11gJ43/oH5O9nqLP
+	 l2mus3KvASKiZOxOJxPsW3K8YLteT0MHgAC/FAd+ceRYalbGDDhzyelYzNm6VGMDMW
+	 PFsZ2vLV5TY4nYSCADd91S+yWjv3NF+BPQJmCA8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	syzbot+039399a9b96297ddedca@syzkaller.appspotmail.com,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/84] net: veth: clear GRO when clearing XDP even when down
-Date: Mon,  4 Mar 2024 21:23:40 +0000
-Message-ID: <20240304211542.585279842@linuxfoundation.org>
+Subject: [PATCH 5.15 08/84] ipv6: fix potential "struct net" leak in inet6_rtm_getaddr()
+Date: Mon,  4 Mar 2024 21:23:41 +0000
+Message-ID: <20240304211542.617966502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -48,123 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fe9f801355f0b47668419f30f1fac1cf4539e736 ]
+[ Upstream commit 10bfd453da64a057bcfd1a49fb6b271c48653cdb ]
 
-veth sets NETIF_F_GRO automatically when XDP is enabled,
-because both features use the same NAPI machinery.
+It seems that if userspace provides a correct IFA_TARGET_NETNSID value
+but no IFA_ADDRESS and IFA_LOCAL attributes, inet6_rtm_getaddr()
+returns -EINVAL with an elevated "struct net" refcount.
 
-The logic to clear NETIF_F_GRO sits in veth_disable_xdp() which
-is called both on ndo_stop and when XDP is turned off.
-To avoid the flag from being cleared when the device is brought
-down, the clearing is skipped when IFF_UP is not set.
-Bringing the device down should indeed not modify its features.
-
-Unfortunately, this means that clearing is also skipped when
-XDP is disabled _while_ the device is down. And there's nothing
-on the open path to bring the device features back into sync.
-IOW if user enables XDP, disables it and then brings the device
-up we'll end up with a stray GRO flag set but no NAPI instances.
-
-We don't depend on the GRO flag on the datapath, so the datapath
-won't crash. We will crash (or hang), however, next time features
-are sync'ed (either by user via ethtool or peer changing its config).
-The GRO flag will go away, and veth will try to disable the NAPIs.
-But the open path never created them since XDP was off, the GRO flag
-was a stray. If NAPI was initialized before we'll hang in napi_disable().
-If it never was we'll crash trying to stop uninitialized hrtimer.
-
-Move the GRO flag updates to the XDP enable / disable paths,
-instead of mixing them with the ndo_open / ndo_close paths.
-
-Fixes: d3256efd8e8b ("veth: allow enabling NAPI even without XDP")
-Reported-by: Thomas Gleixner <tglx@linutronix.de>
-Reported-by: syzbot+039399a9b96297ddedca@syzkaller.appspotmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Fixes: 6ecf4c37eb3e ("ipv6: enable IFA_TARGET_NETNSID for RTM_GETADDR")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ net/ipv6/addrconf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 984a153804096..85c3e12f83627 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1079,14 +1079,6 @@ static int veth_enable_xdp(struct net_device *dev)
- 				veth_disable_xdp_range(dev, 0, dev->real_num_rx_queues, true);
- 				return err;
- 			}
--
--			if (!veth_gro_requested(dev)) {
--				/* user-space did not require GRO, but adding XDP
--				 * is supposed to get GRO working
--				 */
--				dev->features |= NETIF_F_GRO;
--				netdev_features_change(dev);
--			}
- 		}
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c52317184e3e2..968ca078191cd 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -5463,9 +5463,10 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
  	}
  
-@@ -1106,18 +1098,9 @@ static void veth_disable_xdp(struct net_device *dev)
- 	for (i = 0; i < dev->real_num_rx_queues; i++)
- 		rcu_assign_pointer(priv->rq[i].xdp_prog, NULL);
- 
--	if (!netif_running(dev) || !veth_gro_requested(dev)) {
-+	if (!netif_running(dev) || !veth_gro_requested(dev))
- 		veth_napi_del(dev);
- 
--		/* if user-space did not require GRO, since adding XDP
--		 * enabled it, clear it now
--		 */
--		if (!veth_gro_requested(dev) && netif_running(dev)) {
--			dev->features &= ~NETIF_F_GRO;
--			netdev_features_change(dev);
--		}
--	}
+ 	addr = extract_addr(tb[IFA_ADDRESS], tb[IFA_LOCAL], &peer);
+-	if (!addr)
+-		return -EINVAL;
 -
- 	veth_disable_xdp_range(dev, 0, dev->real_num_rx_queues, false);
- }
- 
-@@ -1497,6 +1480,14 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 		}
- 
- 		if (!old_prog) {
-+			if (!veth_gro_requested(dev)) {
-+				/* user-space did not require GRO, but adding
-+				 * XDP is supposed to get GRO working
-+				 */
-+				dev->features |= NETIF_F_GRO;
-+				netdev_features_change(dev);
-+			}
-+
- 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
- 			peer->max_mtu = max_mtu;
- 		}
-@@ -1507,6 +1498,14 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 			if (dev->flags & IFF_UP)
- 				veth_disable_xdp(dev);
- 
-+			/* if user-space did not require GRO, since adding XDP
-+			 * enabled it, clear it now
-+			 */
-+			if (!veth_gro_requested(dev)) {
-+				dev->features &= ~NETIF_F_GRO;
-+				netdev_features_change(dev);
-+			}
-+
- 			if (peer) {
- 				peer->hw_features |= NETIF_F_GSO_SOFTWARE;
- 				peer->max_mtu = ETH_MAX_MTU;
++	if (!addr) {
++		err = -EINVAL;
++		goto errout;
++	}
+ 	ifm = nlmsg_data(nlh);
+ 	if (ifm->ifa_index)
+ 		dev = dev_get_by_index(tgt_net, ifm->ifa_index);
 -- 
 2.43.0
 
