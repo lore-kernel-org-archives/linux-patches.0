@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC1079DCE;
-	Mon,  4 Mar 2024 21:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA554CE0E;
+	Mon,  4 Mar 2024 21:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587806; cv=none; b=mZGJ6wL94kYYlf93CK208NWMOPfmaWeSZ9oGi1dWotgU6asC4qGt1NgC9wVQ4tFxjZjhtnI62eRnmCSSDD2IIONEYS7vkt7HKfHi2uJ/QflnBhjd1yHVirVpGr0ygksYAoduMaMSOYpxocDoNViVL7yz9zbCS6L1Tztqw8YRyxI=
+	t=1709587808; cv=none; b=cNaUn0MLMLwivzSQ/7+/4fU90xAdN7gdbzfGBqtixCzltY/NggKEMKxxZjumEHWELplR9HxMfNmnFrsr9NgMDQ0Xno6kVx+NHk3W4QsflMaeXvvEk9PvsptV45Wd4JYWi4d1sULdgp3JnySaThDxVUXZgE/pz54E55vNrKV12Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587806; c=relaxed/simple;
-	bh=S6omAwZ2CfFpilWItzQsSWP2wUDlksLr+NS3L9elFEI=;
+	s=arc-20240116; t=1709587808; c=relaxed/simple;
+	bh=rq3sEmLH0GGZADYZ9ZLD8nCebluy3fmgHV448YO9wmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHMGAPhOL0iH+/ef67Wue4NFqueOSkzQ2lg1tKUGPBXDj7J7ZPIdY71wM2Kwu37zcNwwZGLvBdoCmKiAr6foDG0uQ/8gsxx+Rnw2gR3cBhYRmFL8QNYP19yhyTMOt/rVnStTjdksmb59+RNonfuDtOHhedec+TNB4IJSioF4Lp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+TLhfON; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5mGRDh4SNh0UGsj1FF7Z8hNSMumq9ES4rSU3st8QWp5eJGPcYn4uE/o/30rarEi5O972s3KRAZ7Csp2/oJx/eFH3Qvp5sXmGylgGvxjenyDIyXugG0S0qfToDOFh6+4Yj0IDeC9/loVmovA7/NPmbvCtML8rvDjcxCM8Kq+xxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3OtcxgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+TLhfON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A561AC433C7;
-	Mon,  4 Mar 2024 21:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3OtcxgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430A2C433C7;
+	Mon,  4 Mar 2024 21:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587806;
-	bh=S6omAwZ2CfFpilWItzQsSWP2wUDlksLr+NS3L9elFEI=;
+	s=korg; t=1709587808;
+	bh=rq3sEmLH0GGZADYZ9ZLD8nCebluy3fmgHV448YO9wmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+TLhfONtqW/2uLnpu3CUBr+5Y12p5GqXX1VntjBqrA/Cr+CPaJ52hfJlXoDgk+q0
-	 7rsPpJflwFSeHKW8by3dakwesTcrVKnKwuxDvGwBFZmEepEvCpfe24POxjMRjcn1jF
-	 LVm9GARmkRU3q5S6CEsA5SoFrdJfso08IzhKZpes=
+	b=a3OtcxgLUDgbMWN/lwtR7wsXNJ3wKF676jkab8mLDCnYzE8PRCFkiwIjd5DX+V+mf
+	 oWQ/td5fyCZ6hGolnp3E7zeqzrYF0kMMmd9w018nMzl/CcA0weoeKl8XTLiYwm7qWo
+	 v9jPPkQgP58lm+CUERLPSuKLO3G7s+U9HVdHbNc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dorai Ashok S A <dash.btrfs@inix.me>,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 089/162] btrfs: send: dont issue unnecessary zero writes for trailing hole
-Date: Mon,  4 Mar 2024 21:22:34 +0000
-Message-ID: <20240304211554.681503330@linuxfoundation.org>
+	Joy Zou <joy.zou@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.7 098/162] dmaengine: fsl-edma: correct calculation of nbytes in multi-fifo scenario
+Date: Mon,  4 Mar 2024 21:22:43 +0000
+Message-ID: <20240304211554.971841163@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -53,156 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Joy Zou <joy.zou@nxp.com>
 
-commit 5897710b28cabab04ea6c7547f27b7989de646ae upstream.
+commit 9ba17defd9edd87970b701085402bc8ecc3a11d4 upstream.
 
-If we have a sparse file with a trailing hole (from the last extent's end
-to i_size) and then create an extent in the file that ends before the
-file's i_size, then when doing an incremental send we will issue a write
-full of zeroes for the range that starts immediately after the new extent
-ends up to i_size. While this isn't incorrect because the file ends up
-with exactly the same data, it unnecessarily results in using extra space
-at the destination with one or more extents full of zeroes instead of
-having a hole. In same cases this results in using megabytes or even
-gigabytes of unnecessary space.
+The 'nbytes' should be equivalent to burst * width in audio multi-fifo
+setups. Given that the FIFO width is fixed at 32 bits, adjusts the burst
+size for multi-fifo configurations to match the slave maxburst in the
+configuration.
 
-Example, reproducer:
-
-   $ cat test.sh
-   #!/bin/bash
-
-   DEV=/dev/sdh
-   MNT=/mnt/sdh
-
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   # Create 1G sparse file.
-   xfs_io -f -c "truncate 1G" $MNT/foobar
-
-   # Create base snapshot.
-   btrfs subvolume snapshot -r $MNT $MNT/mysnap1
-
-   # Create send stream (full send) for the base snapshot.
-   btrfs send -f /tmp/1.snap $MNT/mysnap1
-
-   # Now write one extent at the beginning of the file and one somewhere
-   # in the middle, leaving a gap between the end of this second extent
-   # and the file's size.
-   xfs_io -c "pwrite -S 0xab 0 128K" \
-          -c "pwrite -S 0xcd 512M 128K" \
-          $MNT/foobar
-
-   # Now create a second snapshot which is going to be used for an
-   # incremental send operation.
-   btrfs subvolume snapshot -r $MNT $MNT/mysnap2
-
-   # Create send stream (incremental send) for the second snapshot.
-   btrfs send -p $MNT/mysnap1 -f /tmp/2.snap $MNT/mysnap2
-
-   # Now recreate the filesystem by receiving both send streams and
-   # verify we get the same content that the original filesystem had
-   # and file foobar has only two extents with a size of 128K each.
-   umount $MNT
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   btrfs receive -f /tmp/1.snap $MNT
-   btrfs receive -f /tmp/2.snap $MNT
-
-   echo -e "\nFile fiemap in the second snapshot:"
-   # Should have:
-   #
-   # 128K extent at file range [0, 128K[
-   # hole at file range [128K, 512M[
-   # 128K extent file range [512M, 512M + 128K[
-   # hole at file range [512M + 128K, 1G[
-   xfs_io -r -c "fiemap -v" $MNT/mysnap2/foobar
-
-   # File should be using 256K of data (two 128K extents).
-   echo -e "\nSpace used by the file: $(du -h $MNT/mysnap2/foobar | cut -f 1)"
-
-   umount $MNT
-
-Running the test, we can see with fiemap that we get an extent for the
-range [512M, 1G[, while in the source filesystem we have an extent for
-the range [512M, 512M + 128K[ and a hole for the rest of the file (the
-range [512M + 128K, 1G[):
-
-   $ ./test.sh
-   (...)
-   File fiemap in the second snapshot:
-   /mnt/sdh/mysnap2/foobar:
-    EXT: FILE-OFFSET        BLOCK-RANGE        TOTAL FLAGS
-      0: [0..255]:          26624..26879         256   0x0
-      1: [256..1048575]:    hole             1048320
-      2: [1048576..2097151]: 2156544..3205119 1048576   0x1
-
-   Space used by the file: 513M
-
-This happens because once we finish processing an inode, at
-finish_inode_if_needed(), we always issue a hole (write operations full
-of zeros) if there's a gap between the end of the last processed extent
-and the file's size, even if that range is already a hole in the parent
-snapshot. Fix this by issuing the hole only if the range is not already
-a hole.
-
-After this change, running the test above, we get the expected layout:
-
-   $ ./test.sh
-   (...)
-   File fiemap in the second snapshot:
-   /mnt/sdh/mysnap2/foobar:
-    EXT: FILE-OFFSET        BLOCK-RANGE      TOTAL FLAGS
-      0: [0..255]:          26624..26879       256   0x0
-      1: [256..1048575]:    hole             1048320
-      2: [1048576..1048831]: 26880..27135       256   0x1
-      3: [1048832..2097151]: hole             1048320
-
-   Space used by the file: 256K
-
-A test case for fstests will follow soon.
-
-CC: stable@vger.kernel.org # 6.1+
-Reported-by: Dorai Ashok S A <dash.btrfs@inix.me>
-Link: https://lore.kernel.org/linux-btrfs/c0bf7818-9c45-46a8-b3d3-513230d0c86e@inix.me/
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Joy Zou <joy.zou@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20240131163318.360315-1-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/dma/fsl-edma-common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -6705,11 +6705,20 @@ static int finish_inode_if_needed(struct
- 				if (ret)
- 					goto out;
- 			}
--			if (sctx->cur_inode_last_extent <
--			    sctx->cur_inode_size) {
--				ret = send_hole(sctx, sctx->cur_inode_size);
--				if (ret)
-+			if (sctx->cur_inode_last_extent < sctx->cur_inode_size) {
-+				ret = range_is_hole_in_parent(sctx,
-+						      sctx->cur_inode_last_extent,
-+						      sctx->cur_inode_size);
-+				if (ret < 0) {
- 					goto out;
-+				} else if (ret == 0) {
-+					ret = send_hole(sctx, sctx->cur_inode_size);
-+					if (ret < 0)
-+						goto out;
-+				} else {
-+					/* Range is already a hole, skip. */
-+					ret = 0;
-+				}
- 			}
- 		}
- 		if (need_truncate) {
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -503,7 +503,7 @@ void fsl_edma_fill_tcd(struct fsl_edma_c
+ 	if (fsl_chan->is_multi_fifo) {
+ 		/* set mloff to support multiple fifo */
+ 		burst = cfg->direction == DMA_DEV_TO_MEM ?
+-				cfg->src_addr_width : cfg->dst_addr_width;
++				cfg->src_maxburst : cfg->dst_maxburst;
+ 		nbytes |= EDMA_V3_TCD_NBYTES_MLOFF(-(burst * 4));
+ 		/* enable DMLOE/SMLOE */
+ 		if (cfg->direction == DMA_MEM_TO_DEV) {
 
 
