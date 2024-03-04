@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F119DDCB;
-	Mon,  4 Mar 2024 21:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91DCDDCB;
+	Mon,  4 Mar 2024 21:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588162; cv=none; b=eO54MvxqsePeRnxjtVVgAPk3CLZrR1kJMqyPCcEJZcLjKZiouaDm2/NybgbRehORqncfTBURtWGGUUcpvvLnW8atA2LGGA8O5cTK6FaIx94++YU7h9Qz3mrRnEAoBB6GQ8aBpsSRl1DwVNBy8XjrGrmjRZ+q1MJvGZu3i68nF48=
+	t=1709588164; cv=none; b=m4OBHjQJxiepJuS/pLOT0u7jt46pfpBMuMDSK3VYdnrQz7uBU6E4W2jSC4eLy5YEHanynFE8gWyQEvHpJyiPAnUJRB3pMeEQNq9sRR4vdNNw+df0eN6sLGRP5cgLr8ElgQvcDeAmS67bgiJvgK+11/W6qomlqmSkXMpka5osdg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588162; c=relaxed/simple;
-	bh=XXCQWMb2LuZsWQ9t+gNKfIjpgAAgL8VwO93HjfyGUIs=;
+	s=arc-20240116; t=1709588164; c=relaxed/simple;
+	bh=N+eXHdsaVhVQB3eCX3YDyGMI1kuKGUP2hT7CP2IKMs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bFZqn57PS8O8JT/BObBu2Y/K718JprqSJmbJ51p3Q/voI70qSw8NlshR5Tmub0jOFJ5aBrEDvKNeFFDly+mO7i8VOgKJ36+vMY+FuJqGi81wwbaKgpYY2tpvn1+LGOV8YnTLzEpnTW5WfxzafhhVm16ugdPs0RggIfwp9ldvNxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khGNq9IM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=To5yYcvKbhJ2kFGrZyg4+fN13vg4AbMs8UbkwYob+pLfuNDE+CuXxUC+DtT5SwgY81ENeOISdAtZ8KGqZMl0b+Xid6HSq/2lT15Qu4yL9anGSTVZjhzmPgCixcBCJ1TOSigfJMSWGeiyRU+rL+xk/w0QnRen0mHuXDPEM66JIA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3eKaQem; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khGNq9IM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6342C433C7;
-	Mon,  4 Mar 2024 21:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3eKaQem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC45C433C7;
+	Mon,  4 Mar 2024 21:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588162;
-	bh=XXCQWMb2LuZsWQ9t+gNKfIjpgAAgL8VwO93HjfyGUIs=;
+	s=korg; t=1709588164;
+	bh=N+eXHdsaVhVQB3eCX3YDyGMI1kuKGUP2hT7CP2IKMs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khGNq9IMXoNrJZGsTLwk2InkH6UktXp0ygGdp9Vs1AhwH4CGyXIM5hsRwc+yybwYW
-	 RZVsQEO2arVDD89Wap8WrFi4MM3ZB6mfcddho+mj8rFg5vXwZIInsM6oDHVtmK4T7s
-	 P9MGVGBUMH+qW1DSWKUoDhxqdxtSDLg5Lh4Y6Qnc=
+	b=c3eKaQemrGiufzQ+M6ItUmJ19VBO/96VvBsqMMMW6vIcyRjHlTChrWOl7HczlR6r5
+	 t3fUCblbjbXJ8yal1Mfl/amVe5ofpyU6Sun937FVKB5gLotOaMtMllPL3fOTzP85p+
+	 qZ7O/zP7Q3lsUV4GOUnnJ5iNtJQpP0NTUkI0WRKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Dimitris Vlachos <dvlachos@ics.forth.gr>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/42] riscv: Sparse-Memory/vmemmap out-of-bounds fix
-Date: Mon,  4 Mar 2024 21:23:48 +0000
-Message-ID: <20240304211538.340100085@linuxfoundation.org>
+	Sam Sun <samsun1006219@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 22/42] tomoyo: fix UAF write bug in tomoyo_write_control()
+Date: Mon,  4 Mar 2024 21:23:49 +0000
+Message-ID: <20240304211538.378797988@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -46,54 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dimitris Vlachos <dvlachos@ics.forth.gr>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit a11dd49dcb9376776193e15641f84fcc1e5980c9 ]
+commit 2f03fc340cac9ea1dc63cbf8c93dd2eb0f227815 upstream.
 
-Offset vmemmap so that the first page of vmemmap will be mapped
-to the first page of physical memory in order to ensure that
-vmemmap’s bounds will be respected during
-pfn_to_page()/page_to_pfn() operations.
-The conversion macros will produce correct SV39/48/57 addresses
-for every possible/valid DRAM_BASE inside the physical memory limits.
+Since tomoyo_write_control() updates head->write_buf when write()
+of long lines is requested, we need to fetch head->write_buf after
+head->io_sem is held.  Otherwise, concurrent write() requests can
+cause use-after-free-write and double-free problems.
 
-v2:Address Alex's comments
-
-Suggested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
-Reported-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
-Closes: https://lore.kernel.org/linux-riscv/20240202135030.42265-1-csd4492@csd.uoc.gr
-Fixes: d95f1a542c3d ("RISC-V: Implement sparsemem")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240229191723.32779-1-dvlachos@ics.forth.gr
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Closes: https://lkml.kernel.org/r/CAEkJfYNDspuGxYx5kym8Lvp--D36CMDUErg4rxfWFJuPbbji8g@mail.gmail.com
+Fixes: bd03a3e4c9a9 ("TOMOYO: Add policy namespace support.")
+Cc:  <stable@vger.kernel.org> # Linux 3.1+
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/pgtable.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/tomoyo/common.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index b16304fdf4489..5ab13570daa53 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -44,7 +44,7 @@
-  * Define vmemmap for pfn_to_page & page_to_pfn calls. Needed if kernel
-  * is configured with CONFIG_SPARSEMEM_VMEMMAP enabled.
-  */
--#define vmemmap		((struct page *)VMEMMAP_START)
-+#define vmemmap		((struct page *)VMEMMAP_START - (phys_ram_base >> PAGE_SHIFT))
+--- a/security/tomoyo/common.c
++++ b/security/tomoyo/common.c
+@@ -2657,13 +2657,14 @@ ssize_t tomoyo_write_control(struct tomo
+ {
+ 	int error = buffer_len;
+ 	size_t avail_len = buffer_len;
+-	char *cp0 = head->write_buf;
++	char *cp0;
+ 	int idx;
  
- #define PCI_IO_SIZE      SZ_16M
- #define PCI_IO_END       VMEMMAP_START
--- 
-2.43.0
-
+ 	if (!head->write)
+ 		return -EINVAL;
+ 	if (mutex_lock_interruptible(&head->io_sem))
+ 		return -EINTR;
++	cp0 = head->write_buf;
+ 	head->read_user_buf_avail = 0;
+ 	idx = tomoyo_read_lock();
+ 	/* Read a line and dispatch it to the policy handler. */
 
 
