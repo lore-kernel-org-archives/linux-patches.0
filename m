@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA611C6AB;
-	Mon,  4 Mar 2024 21:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17737868F;
+	Mon,  4 Mar 2024 21:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589366; cv=none; b=P+8SIxtTrels7OzSNhdTiIy8urROtYunUD0wJrvwWydm/uKeruJHnenu/dPpzHEOgWGErR4IrGp5c6X5dDy/f8d/k6zIzunzQs1+cZrpioPxGG4feUybjnM8EVa6djx4m9n8UEBFeYkOXgbBOXLzcMWfofpIZxcM1m4O4o4Lo4E=
+	t=1709589368; cv=none; b=soDgvBS1Kz/vRkaz96G6Jz5jvG1gzQL3D1ozVFkkZP5+nhVdl6pZ5sd0McJIW4uMleLmsPx657/S1qd2D5fTA5m/kFXheA/YtWJRVADEZtwq8tCiK9RSssEAfCqbgtUvse2VGElGSTK3DnZ+OH+X9bbZdTAJuE0pjBcRnfZ/3BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589366; c=relaxed/simple;
-	bh=v/mbIKJwf10ARs8js+JtnrJ8DBHTqAKh6abD8oHK/e8=;
+	s=arc-20240116; t=1709589368; c=relaxed/simple;
+	bh=tFdpaNtSy9wB1nE5Q3QW1Z6fPAGUGyyhYRDlh3DV6fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHcgZ91ZnfCkqp5vmlsHLbUv6xEm250IsgmlxUOaTsBVKlZb8JKh4d/g/5+mSxVjWxFDB1GJt20Zm2xyFXQptseQHqoifVfhXwKcNZAYHKBslfTe6nThGzWCtcfdTvRw5ax/K42oKhQDNpqym7+dzoMfr/ix/1L2jFNVmPqJFS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+32+PA/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcFv772h3OO7mv546KcNO0jhnBaxp0/V1FPHT5TruxO5Gh7I3jzJ80gI9gS/TI5MIkf7xz4UPiZuFwrbQdz7Gz1eyIV8Y+N0lYlWJhIMkMkTXsjTtYNBwgVQ8Q7njHIRfPou1K2a+gdYjdckeV3G0slMLDxQz3Zs0bYYN1Yg+Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9chVQ3i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+32+PA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CCAC433C7;
-	Mon,  4 Mar 2024 21:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9chVQ3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32592C433C7;
+	Mon,  4 Mar 2024 21:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589365;
-	bh=v/mbIKJwf10ARs8js+JtnrJ8DBHTqAKh6abD8oHK/e8=;
+	s=korg; t=1709589368;
+	bh=tFdpaNtSy9wB1nE5Q3QW1Z6fPAGUGyyhYRDlh3DV6fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+32+PA/SYF84Rcbo7JDZ7kiQkRiq2EtywOHRE/bsVRsO1KUfL8GwrIyNGV5GZnLb
-	 VJdCu5A/os584mWp9o5V3isd2cS+s53YS0MWY5RUCwtmAzA+RxsQOjFwMFylb20Zv8
-	 o1CkL7Ybj3bGs+52SPmAhBXatGeiFsxajAsvua9k=
+	b=l9chVQ3iLs30X1DGFDyFhAWa/BYm7EbS5m5iN/iPjW1pJryVQArD8a1y1f4SsTf9J
+	 Y96zxBVv2sbfA5ppkN73VXvLJ4kiA/lLVjccg/7+4aRXfWFGcADxvra0VlfTE7EW06
+	 Y5K1kpkWCbzvMmIZI0jJhG9pFTGnlfnh+y9dAB90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
+	Maxim Mikityanskiy <maximmi@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 82/84] net: tls: fix async vs NIC crypto offload
-Date: Mon,  4 Mar 2024 21:24:55 +0000
-Message-ID: <20240304211545.149405041@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 83/84] Revert "tls: rx: move counting TlsDecryptErrors for sync"
+Date: Mon,  4 Mar 2024 21:24:56 +0000
+Message-ID: <20240304211545.182872475@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -50,43 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Gal Pressman <gal@nvidia.com>
 
-commit c706b2b5ed74d30436b85cbd8e63e969f6b5873a upstream.
+commit a069a90554168ac4cc81af65f000557d2a8a0745 upstream.
 
-When NIC takes care of crypto (or the record has already
-been decrypted) we forget to update darg->async. ->async
-is supposed to mean whether record is async capable on
-input and whether record has been queued for async crypto
-on output.
+This reverts commit 284b4d93daee56dff3e10029ddf2e03227f50dbf.
+When using TLS device offload and coming from tls_device_reencrypt()
+flow, -EBADMSG error in tls_do_decryption() should not be counted
+towards the TLSTlsDecryptError counter.
 
-Reported-by: Gal Pressman <gal@nvidia.com>
-Fixes: 3547a1f9d988 ("tls: rx: use async as an in-out argument")
-Tested-by: Gal Pressman <gal@nvidia.com>
-Link: https://lore.kernel.org/r/20220425233309.344858-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move the counter increase back to the decrypt_internal() call site in
+decrypt_skb_update().
+This also fixes an issue where:
+	if (n_sgin < 1)
+		return -EBADMSG;
+
+Errors in decrypt_internal() were not counted after the cited patch.
+
+Fixes: 284b4d93daee ("tls: rx: move counting TlsDecryptErrors for sync")
+Cc: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Maxim Mikityanskiy <maximmi@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/tls/tls_sw.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/net/tls/tls_sw.c
 +++ b/net/tls/tls_sw.c
-@@ -1568,6 +1568,7 @@ static int decrypt_skb_update(struct soc
+@@ -278,9 +278,6 @@ static int tls_do_decryption(struct sock
+ 	}
+ 	darg->async = false;
  
- 	if (tlm->decrypted) {
- 		darg->zc = false;
-+		darg->async = false;
- 		return 0;
+-	if (ret == -EBADMSG)
+-		TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSDECRYPTERROR);
+-
+ 	return ret;
+ }
+ 
+@@ -1585,8 +1582,11 @@ static int decrypt_skb_update(struct soc
  	}
  
-@@ -1578,6 +1579,7 @@ static int decrypt_skb_update(struct soc
- 		if (err > 0) {
- 			tlm->decrypted = 1;
- 			darg->zc = false;
-+			darg->async = false;
- 			goto decrypt_done;
- 		}
- 	}
+ 	err = decrypt_internal(sk, skb, dest, NULL, darg);
+-	if (err < 0)
++	if (err < 0) {
++		if (err == -EBADMSG)
++			TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSDECRYPTERROR);
+ 		return err;
++	}
+ 	if (darg->async)
+ 		goto decrypt_next;
+ 
 
 
