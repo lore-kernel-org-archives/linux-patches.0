@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2596F79DCA;
-	Mon,  4 Mar 2024 21:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27481C6AB;
+	Mon,  4 Mar 2024 21:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589353; cv=none; b=mQDH+bUkDlCuwbjJjcCDAr+ZBXQNdns68UWW8yPoCkGJqD6PIctdvtqiuEs1ThTSQEO23ClyoVN7+VwqkYs1QOdKelGsNwlN+AMGNSA2vaqeApisH7f3MSReqnWhh/K5i0NMyGa0p6fXKjQac275UU+rX72s5o0a1WWTIdw+lHQ=
+	t=1709589355; cv=none; b=iBGIVIfQ17UCIsHHcIoqRboGkg0Ndfl6vrFCN3/sQixXojU/oMoDazkhHRl7Pn7e8V93xs4XuhpMTnktkdrG+va0Zwh78/Gg8dfm6Po9WMwrt5c+n9mVritlPkPc5fn2AXInViCGFjVeUHO94QwidwGKHotKFPtxtx5fi3miImU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589353; c=relaxed/simple;
-	bh=WOWt2kdJRqoiE+1nID2C05CwC8SUip7SQPJenFW8CCU=;
+	s=arc-20240116; t=1709589355; c=relaxed/simple;
+	bh=NDqMre9N3vu2arFuGOHGR/L8zUGNWlK4cF0tDwk5fO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+Fgce0SiFcJdH2GI6Pk6kIhePP7sOCFiEfyw6XWdBwLopstntTmDnFMfvC8NRP4PBSzgCQhIH8bgF55+rxyyKtOtE6OXGIDsS+Ue0hePd76gvm2tfVASaRZhHGILnZJ1hwYxhWIh0iSg9zqvl/uZ+Ph5f2u2NzVKdxV2a76xik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQ4BRYEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pd91UvMC6IfAkgIlnCZ4g64cSvvFT5H9zL14cpid6QE6QSU5tuvKldKy3eeuHNn9uMP8Dznut9hfEvrPxP1wvOXLyO5kRQwOmq60IXG4pDJJl0jp16oFg0HJsiXCQI511nJ3OQ8jo5Q5oJXAdSCL/2mEXF8FVUTRiaGndfyY5oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOuCsZTW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQ4BRYEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB35AC433C7;
-	Mon,  4 Mar 2024 21:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOuCsZTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46759C433C7;
+	Mon,  4 Mar 2024 21:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589353;
-	bh=WOWt2kdJRqoiE+1nID2C05CwC8SUip7SQPJenFW8CCU=;
+	s=korg; t=1709589355;
+	bh=NDqMre9N3vu2arFuGOHGR/L8zUGNWlK4cF0tDwk5fO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQ4BRYEqJSpU6U5fbA7Rpibzqm9vayoFPeYzx3k9nVW/hj56aZg9Qn5MlkP9SyjaQ
-	 RSKe1MvCeU4goaflye0Yc9HxsyaQ5TqorFO0sKISK7Vqk2buA6vWErHKeKOpDwWo9V
-	 HTGV5vB9+mhYbwX7iqxySBDqcAJJlqaVRYXdW+L4=
+	b=LOuCsZTWwLvhyoJjOuIdzaYe6rQy5yvnLYdW9xkj/XrbXRTSsgnj+3pyLnQjeNoxf
+	 ZEpPRDcnxl56jdlhMXjdchRTvqbSUoJ1jx1W4ZuMna+ZPWJ059V/LObS5XaKDqCBPc
+	 aFTe+lKR/qiiBmzSzWHaklQmfS2TbM37kdauOwuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Ma <peng.ma@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 52/84] dmaengine: fsl-qdma: fix SoC may hang on 16 byte unaligned read
-Date: Mon,  4 Mar 2024 21:24:25 +0000
-Message-ID: <20240304211544.105837323@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 43/84] ALSA: Drop leftover snd-rtctimer stuff from Makefile
+Date: Mon,  4 Mar 2024 21:24:16 +0000
+Message-ID: <20240304211543.772030714@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,54 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Ma <peng.ma@nxp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 9d739bccf261dd93ec1babf82f5c5d71dd4caa3e upstream.
+[ Upstream commit 4df49712eb54141be00a9312547436d55677f092 ]
 
-There is chip (ls1028a) errata:
+We forgot to remove the line for snd-rtctimer from Makefile while
+dropping the functionality.  Get rid of the stale line.
 
-The SoC may hang on 16 byte unaligned read transactions by QDMA.
-
-Unaligned read transactions initiated by QDMA may stall in the NOC
-(Network On-Chip), causing a deadlock condition. Stalled transactions will
-trigger completion timeouts in PCIe controller.
-
-Workaround:
-Enable prefetch by setting the source descriptor prefetchable bit
-( SD[PF] = 1 ).
-
-Implement this workaround.
-
-Cc: stable@vger.kernel.org
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Peng Ma <peng.ma@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240201215007.439503-1-Frank.Li@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 34ce71a96dcb ("ALSA: timer: remove legacy rtctimer")
+Link: https://lore.kernel.org/r/20240221092156.28695-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-qdma.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/core/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -109,6 +109,7 @@
- #define FSL_QDMA_CMD_WTHROTL_OFFSET	20
- #define FSL_QDMA_CMD_DSEN_OFFSET	19
- #define FSL_QDMA_CMD_LWC_OFFSET		16
-+#define FSL_QDMA_CMD_PF			BIT(17)
+diff --git a/sound/core/Makefile b/sound/core/Makefile
+index 79e1407cd0de7..7da92e0383e1c 100644
+--- a/sound/core/Makefile
++++ b/sound/core/Makefile
+@@ -33,7 +33,6 @@ snd-ctl-led-objs  := control_led.o
+ snd-rawmidi-objs  := rawmidi.o
+ snd-timer-objs    := timer.o
+ snd-hrtimer-objs  := hrtimer.o
+-snd-rtctimer-objs := rtctimer.o
+ snd-hwdep-objs    := hwdep.o
+ snd-seq-device-objs := seq_device.o
  
- /* Field definition for Descriptor status */
- #define QDMA_CCDF_STATUS_RTE		BIT(5)
-@@ -384,7 +385,8 @@ static void fsl_qdma_comp_fill_memcpy(st
- 	qdma_csgf_set_f(csgf_dest, len);
- 	/* Descriptor Buffer */
- 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
--			  FSL_QDMA_CMD_RWTTYPE_OFFSET);
-+			  FSL_QDMA_CMD_RWTTYPE_OFFSET) |
-+			  FSL_QDMA_CMD_PF;
- 	sdf->data = QDMA_SDDF_CMD(cmd);
- 
- 	cmd = cpu_to_le32(FSL_QDMA_CMD_RWTTYPE <<
+-- 
+2.43.0
+
 
 
