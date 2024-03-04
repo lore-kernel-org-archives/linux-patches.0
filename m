@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F7F7AE47;
-	Mon,  4 Mar 2024 21:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C68978B47;
+	Mon,  4 Mar 2024 21:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588727; cv=none; b=X3KZ0ShXzir28Lz1IFhXYp6pWnUnhObWZE8nyzclP8jcEBNIIQXqNXuWBYZ/vFHyPU6ptmCCJ0zicAqSjcqzfO1Vn1CeqovOWmq1fzTp4gmaILz4PPhvSc+q1oXKwfDjvOFDM/NonREcOVi8tQTFXepTj2NeQrERvu+2nc9WaFg=
+	t=1709588730; cv=none; b=bWB9NHFzk5aZqxvOo9FWgw3hcDbpaXRuqJdBIRFkjBRDza4zGjk8nO2JYzf57hggfd7+poLMOPFnLI6UEDHb4tWDjMTo0nGZcjz8T+CUvxUxscBjjv6IRZ84l6eYvehsOHLEfxbNHhxaeXfqPUjv9SKWbHbaoDJAfwo+GIbjoBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588727; c=relaxed/simple;
-	bh=pAzwTSktb4woCaUnmOb3KjpPz8pmpUR6XwBjJuSnZpQ=;
+	s=arc-20240116; t=1709588730; c=relaxed/simple;
+	bh=nN9/CObQss8LsizPgNZ82hvmTHj+X2XHJuZSNETqySc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qs1P6iNNLc2hVwjES3ndxV2U3w/2+4//Y6Wr0P1ksrB/E85MdMz/FRnKGAe8GR25it/Kps1uFdmR9SA+1dkUAUCgdTmuc0kNeCpxGjzBG3iXATb47DLA654uJ4+Ct75hnWRykX6xZZhrH2CiOX4ycGWFD0mTIp4qwW5ueTUR7/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh+OTShd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YZXk8AzzSi8krbCep5qauan997+DuCDvnhBBUm5xYz/GbhSlv5xc0TCxxa0eHNpmRgatSDYYDubJtxgmIylp3hGEpYWGhAmDzVM2soE3mmr129dheaNW3dbsdbGjTQGh3PPYyizOInnyjTv6oyjhYY72SMnwc9cqzJZoBzumSnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zU8qPbi/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh+OTShd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4614EC433F1;
-	Mon,  4 Mar 2024 21:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zU8qPbi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2898C433C7;
+	Mon,  4 Mar 2024 21:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588727;
-	bh=pAzwTSktb4woCaUnmOb3KjpPz8pmpUR6XwBjJuSnZpQ=;
+	s=korg; t=1709588730;
+	bh=nN9/CObQss8LsizPgNZ82hvmTHj+X2XHJuZSNETqySc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rh+OTShdrtZ4V/L9NUaLMYoDFld7KbfsOJ/inyvzjvsrQqjU/JFkm0lIuEqaMIreh
-	 0+mCchx42NvSJftTf+rwLs6agapnw1QlHho8ai2yj4UsbOwCB3DI3TRv8Y2ymWrOg1
-	 +wP1joD/1FJ0exmky/iWusfYSqylvsL81iYC/eEo=
+	b=zU8qPbi/ELzLmRr09jKGUCeWA3mzjaQ7viURTBVacRj/bNJk9vU/kI6d/N8AeDcGi
+	 zJKfgS24Jh+goX527GxHgonpt0YeRxHTNHOWjDGW1wdzj2zFYZZjS82QSb1XnrFS1T
+	 7xyKNoIiPStmVVWLtkIkOQyyi9UNwfiOlB69sYdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/215] net: lan78xx: fix "softirq work is pending" error
-Date: Mon,  4 Mar 2024 21:21:42 +0000
-Message-ID: <20240304211558.250980123@linuxfoundation.org>
+Subject: [PATCH 6.1 067/215] drm/tegra: Remove existing framebuffer only if we support display
+Date: Mon,  4 Mar 2024 21:22:10 +0000
+Message-ID: <20240304211559.109048773@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,37 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit e3d5d70cb483df8296dd44e9ae3b6355ef86494c ]
+[ Upstream commit 86bf8cfda6d2a6720fa2e6e676c98f0882c9d3d7 ]
 
-Disable BH around the call to napi_schedule() to avoid following
-error:
-NOHZ tick-stop error: local softirq work is pending, handler #08!!!
+Tegra DRM doesn't support display on Tegra234 and later, so make sure
+not to remove any existing framebuffers in that case.
 
-Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20240226110820.2113584-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2: - add comments explaining how this situation can come about
+    - clear DRIVER_MODESET and DRIVER_ATOMIC feature bits
+
+Fixes: 6848c291a54f ("drm/aperture: Convert drivers to aperture interfaces")
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240223150333.1401582-1-thierry.reding@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/tegra/drm.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 7b9d480e44fe4..4fd4563811299 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1501,7 +1501,9 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
+diff --git a/drivers/gpu/drm/tegra/drm.c b/drivers/gpu/drm/tegra/drm.c
+index 5fc55b9777cbf..6806779f8ecce 100644
+--- a/drivers/gpu/drm/tegra/drm.c
++++ b/drivers/gpu/drm/tegra/drm.c
+@@ -1252,9 +1252,26 @@ static int host1x_drm_probe(struct host1x_device *dev)
  
- 		lan78xx_rx_urb_submit_all(dev);
+ 	drm_mode_config_reset(drm);
  
-+		local_bh_disable();
- 		napi_schedule(&dev->napi);
-+		local_bh_enable();
- 	}
+-	err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
+-	if (err < 0)
+-		goto hub;
++	/*
++	 * Only take over from a potential firmware framebuffer if any CRTCs
++	 * have been registered. This must not be a fatal error because there
++	 * are other accelerators that are exposed via this driver.
++	 *
++	 * Another case where this happens is on Tegra234 where the display
++	 * hardware is no longer part of the host1x complex, so this driver
++	 * will not expose any modesetting features.
++	 */
++	if (drm->mode_config.num_crtc > 0) {
++		err = drm_aperture_remove_framebuffers(&tegra_drm_driver);
++		if (err < 0)
++			goto hub;
++	} else {
++		/*
++		 * Indicate to userspace that this doesn't expose any display
++		 * capabilities.
++		 */
++		drm->driver_features &= ~(DRIVER_MODESET | DRIVER_ATOMIC);
++	}
  
- 	return 0;
+ 	err = tegra_drm_fb_init(drm);
+ 	if (err < 0)
 -- 
 2.43.0
 
