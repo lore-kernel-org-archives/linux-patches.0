@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760FD7C083;
-	Mon,  4 Mar 2024 21:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE097BAE6;
+	Mon,  4 Mar 2024 21:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587876; cv=none; b=qTAUmQ3UgXVwHS7Dssp+OlhJ+vJ0nel4ZX/4HIhIGaJgcKdifrsqVBqEx/qOpYum/uGWJUEge0s6wNXDCc+ZTIX+4fvP/tFwhofk87RJ3AvaPyW6W7uM7tjVv0EQjd0MWK0kWf+BZU46tFGwWX9Ht6scJPGxJ8mscmUmO3Ulogc=
+	t=1709587878; cv=none; b=RY4taULe5ncy8v/+rrbLONNX5xBYx5OgczYSrtmB0zI5kQpvdO+bCdimGGOyR0Q29VtrzRU8CN/7Pyp31YO4APoCi6yjM3bXLVPIkEjMrzgin1IL96J7m/TxrcUGIIp3LKna5Yusgdbh5vFNUPCbFvWS0RyDyLRgO24+v57fb7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587876; c=relaxed/simple;
-	bh=go2k7jM8rbzmXuwfHusUmysWHE9GGr7uGBmSvUffi3I=;
+	s=arc-20240116; t=1709587878; c=relaxed/simple;
+	bh=TKfyOT8po29Og/gscZtvuKHHyeABgcQr2D4WX2HKfuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mc2kvR6JnjBIY5CLFTbr4AXEg/eNT25ddEJTUG6EBlvIBcXR61V1Moea9kW+Am2A+g9epCY1ZI0O8fYMGfhwh1WV6apCUEFp2RXgGXSH7On39BPvXSAG4Y/wd7tVpPpCwXMvxfaYCwrn8LVK+FZYdhaPh8BDi39HKTihEbOqWaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skvCa1by; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1lehC2gyObY29E6CV6ASsb0a5KEfCoffsU+ZgbQ9jxMGOBxakPabd/YScRuedIkeRdXByV9355X7lSpNWHtjwvOFTxod9wVwPwkdkChOZbVI2I5bAnfnLMmTn3+hRCSRatMc+u25OjK32P3hiUEyBYpDFB26+Hy6NcTsSEGgg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSt86MaQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skvCa1by"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6587C433F1;
-	Mon,  4 Mar 2024 21:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSt86MaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD27C433C7;
+	Mon,  4 Mar 2024 21:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587876;
-	bh=go2k7jM8rbzmXuwfHusUmysWHE9GGr7uGBmSvUffi3I=;
+	s=korg; t=1709587878;
+	bh=TKfyOT8po29Og/gscZtvuKHHyeABgcQr2D4WX2HKfuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skvCa1by01kIgWKNT/IpBMtwcgUMegAbqsRABSO4O/0VL4ybOH4K+SOrZJd6C87lw
-	 iRg6ySExXIricBxB0HqLOL9i/ADKvTwdaAZepBzRZkAdJ7ryISRGAMzZeCj7kmuSLf
-	 DPTPTfAbfDPm2bwMhr8msPKhHE9bEzzy/lkmt5vU=
+	b=vSt86MaQI4TFKyPeR7xYudL5FojL4+2roVaVX+ieG01AB63VKbRdfvjdtDZkNCkpg
+	 2S8Y7pvZXkir/RliX4c2AlNjom4RR2/n8Cn4+76bN6GNr1UyAcfHt0mFO5JqlcsJHn
+	 xH1qw/X8bki9sPXZTPR4ZIBbk/SjRNEFa2FIwiOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <olsajiri@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.7 116/162] fprobe: Fix to allocate entry_data_size buffer with rethook instances
-Date: Mon,  4 Mar 2024 21:23:01 +0000
-Message-ID: <20240304211555.480806046@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.7 125/162] selftests: mptcp: join: add ss mptcp support check
+Date: Mon,  4 Mar 2024 21:23:10 +0000
+Message-ID: <20240304211555.745865407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -50,66 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 6572786006fa96ad2c35bb31757f1f861298093b upstream.
+commit 9480f388a2ef54fba911d9325372abd69a328601 upstream.
 
-Fix to allocate fprobe::entry_data_size buffer with rethook instances.
-If fprobe doesn't allocate entry_data_size buffer for each rethook instance,
-fprobe entry handler can cause a buffer overrun when storing entry data in
-entry handler.
+Commands 'ss -M' are used in script mptcp_join.sh to display only MPTCP
+sockets. So it must be checked if ss tool supports MPTCP in this script.
 
-Link: https://lore.kernel.org/all/170920576727.107552.638161246679734051.stgit@devnote2/
-
-Reported-by: Jiri Olsa <olsajiri@gmail.com>
-Closes: https://lore.kernel.org/all/Zd9eBn2FTQzYyg7L@krava/
-Fixes: 4bbd93455659 ("kprobes: kretprobe scalability improvement")
+Fixes: e274f7154008 ("selftests: mptcp: add subflow limits test-cases")
 Cc: stable@vger.kernel.org
-Tested-by: Jiri Olsa <olsajiri@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-7-162e87e48497@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/trace/fprobe.c b/kernel/trace/fprobe.c
-index 6cd2a4e3afb8..9ff018245840 100644
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -189,9 +189,6 @@ static int fprobe_init_rethook(struct fprobe *fp, int num)
- {
- 	int size;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -159,6 +159,11 @@ check_tools()
+ 		exit $ksft_skip
+ 	fi
  
--	if (num <= 0)
--		return -EINVAL;
--
- 	if (!fp->exit_handler) {
- 		fp->rethook = NULL;
- 		return 0;
-@@ -199,15 +196,16 @@ static int fprobe_init_rethook(struct fprobe *fp, int num)
- 
- 	/* Initialize rethook if needed */
- 	if (fp->nr_maxactive)
--		size = fp->nr_maxactive;
-+		num = fp->nr_maxactive;
- 	else
--		size = num * num_possible_cpus() * 2;
--	if (size <= 0)
-+		num *= num_possible_cpus() * 2;
-+	if (num <= 0)
- 		return -EINVAL;
- 
-+	size = sizeof(struct fprobe_rethook_node) + fp->entry_data_size;
++	if ! ss -h | grep -q MPTCP; then
++		echo "SKIP: ss tool does not support MPTCP"
++		exit $ksft_skip
++	fi
 +
- 	/* Initialize rethook */
--	fp->rethook = rethook_alloc((void *)fp, fprobe_exit_handler,
--				sizeof(struct fprobe_rethook_node), size);
-+	fp->rethook = rethook_alloc((void *)fp, fprobe_exit_handler, size, num);
- 	if (IS_ERR(fp->rethook))
- 		return PTR_ERR(fp->rethook);
- 
--- 
-2.44.0
-
+ 	# Use the legacy version if available to support old kernel versions
+ 	if iptables-legacy -V &> /dev/null; then
+ 		iptables="iptables-legacy"
 
 
