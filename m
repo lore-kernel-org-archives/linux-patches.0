@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2E07A736;
-	Mon,  4 Mar 2024 21:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECF57D094;
+	Mon,  4 Mar 2024 21:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587894; cv=none; b=h4GylcEYEkaYaV7O4rcYMPHyW8f9vFaeUVBi1VuAPQZfAyaGO7HVlLiPgNg5bbzD8lOzIPa2WJu7mZzla7pRkqYJgzG8cS01Nz3etPNUYF77wKmfTSbzxRarnyvusSVXxhRBwbzt+1KZNWN0iEWCgxM5FPWXmZpUZ8POpCUO6LE=
+	t=1709587896; cv=none; b=MGelAOlu3qEozW3NurPbqLhoCpt7J3nHaeVLmKkGsbErhInfSzHPRBucmS5Lkqg8lt9/pZZVTK7stfRdEQPkxkzI0mmaFhkWC43CnRZq2nBFA75LKHss7RJz1peOAtFUUQBfKTak9SkE6ZJj1caCfBMD69qgjc/eesTrunim3cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587894; c=relaxed/simple;
-	bh=ED0KoT86vYYoJuGhhY4f3J1XxbumSTV1vvVwuHtqSfc=;
+	s=arc-20240116; t=1709587896; c=relaxed/simple;
+	bh=GGWjdAHxnO5fEC9u5DXKc9iqttmh6MUYiuJc6Vbm4Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqEbPPLo+ZnY+TzZUUgRnPgtLlVrKpzIVmjN1mJ6TZWD9WyjUDoNhCPTZCJti86eud9xo/ga03/4QAUONr+ky6TNxH4Enbcr8l8NdTv0zfapgbpT/TTW6jEL9Yz0bjkQTtzRQz1ZpDjP1D7tuNaaGy9hTSr+1cT5WgPFaTk0dLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVN1GsP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTgaxFcKzx/VsGLp8n8UjEqE98k6gK4zdB4lOTUQd4qNu2nOFYgE44FKioFJn5SWhlsXAVIUUw1o8JDRb8kCm3/jTyoSckqZlM7YlCwIAPum4l71hVAEZYXd62zs2/OlPCoQUSTGaZiawIBnFkft7WccmbNeqXVMHWlLzDSFy74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bY8dplrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVN1GsP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24C5C433C7;
-	Mon,  4 Mar 2024 21:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bY8dplrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B57C433C7;
+	Mon,  4 Mar 2024 21:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587894;
-	bh=ED0KoT86vYYoJuGhhY4f3J1XxbumSTV1vvVwuHtqSfc=;
+	s=korg; t=1709587896;
+	bh=GGWjdAHxnO5fEC9u5DXKc9iqttmh6MUYiuJc6Vbm4Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVN1GsP6+h6spU9CDWLFcYCFQ5MT/MfEJ2w7+AK5skug62mSQgLxLZOJN+n0m0cmn
-	 uf+6pU57S97RfiqW+NQa6dI+oTYJd+I7YmJ+rVF2qAVFT7ylWAdfDBrV519IW8Iv6Y
-	 h6XDXwfY+lIPocdvzNj0WcKNPrguCzOk2Xk3Vio4=
+	b=bY8dplrlbA0+KWdY8POREkXnGrwpwVL624FqduL/zFzlqr0Iv5P8l3fHwvT5oAm6w
+	 H3WowBE/R12TppJLnD2t/hxk78H7yRm6WiAZFbmjaL0a+ZIx/ILll1Es0gFi1E5eVe
+	 v1lTvf4HjGRFZHI+eyS/Tw+ioodgLWgV3ef5w1Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-nfs@vger.kernel.org,
-	NeilBrown <neilb@suse.de>,
-	Jacek Tomaka <Jacek.Tomaka@poczta.fm>
-Subject: [PATCH 6.7 131/162] NFS: Fix data corruption caused by congestion.
-Date: Mon,  4 Mar 2024 21:23:16 +0000
-Message-ID: <20240304211555.926791835@linuxfoundation.org>
+	syzbot+4fa4a2d1f5a5ee06f006@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.7 132/162] af_unix: Fix task hung while purging oob_skb in GC.
+Date: Mon,  4 Mar 2024 21:23:17 +0000
+Message-ID: <20240304211555.955542487@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,36 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-when AOP_WRITEPAGE_ACTIVATE is returned (as NFS does when it detects
-congestion) it is important that the folio is redirtied.
-nfs_writepage_locked() doesn't do this, so files can become corrupted as
-writes can be lost.
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-Note that this is not needed in v6.8 as AOP_WRITEPAGE_ACTIVATE cannot be
-returned.  It is needed for kernels v5.18..v6.7.  Prior to 6.3 the patch
-is different as it needs to mention "page", not "folio".
+commit 25236c91b5ab4a26a56ba2e79b8060cf4e047839 upstream.
 
-Reported-and-tested-by: Jacek Tomaka <Jacek.Tomaka@poczta.fm>
-Fixes: 6df25e58532b ("nfs: remove reliance on bdi congestion")
-Signed-off-by: NeilBrown <neilb@suse.de>
+syzbot reported a task hung; at the same time, GC was looping infinitely
+in list_for_each_entry_safe() for OOB skb.  [0]
+
+syzbot demonstrated that the list_for_each_entry_safe() was not actually
+safe in this case.
+
+A single skb could have references for multiple sockets.  If we free such
+a skb in the list_for_each_entry_safe(), the current and next sockets could
+be unlinked in a single iteration.
+
+unix_notinflight() uses list_del_init() to unlink the socket, so the
+prefetched next socket forms a loop itself and list_for_each_entry_safe()
+never stops.
+
+Here, we must use while() and make sure we always fetch the first socket.
+
+[0]:
+Sending NMI from CPU 0 to CPUs 1:
+NMI backtrace for cpu 1
+CPU: 1 PID: 5065 Comm: syz-executor236 Not tainted 6.8.0-rc3-syzkaller-00136-g1f719a2f3fa6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
+RIP: 0010:preempt_count arch/x86/include/asm/preempt.h:26 [inline]
+RIP: 0010:check_kcov_mode kernel/kcov.c:173 [inline]
+RIP: 0010:__sanitizer_cov_trace_pc+0xd/0x60 kernel/kcov.c:207
+Code: cc cc cc cc 66 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 65 48 8b 14 25 40 c2 03 00 <65> 8b 05 b4 7c 78 7e a9 00 01 ff 00 48 8b 34 24 74 0f f6 c4 01 74
+RSP: 0018:ffffc900033efa58 EFLAGS: 00000283
+RAX: ffff88807b077800 RBX: ffff88807b077800 RCX: 1ffffffff27b1189
+RDX: ffff88802a5a3b80 RSI: ffffffff8968488d RDI: ffff88807b077f70
+RBP: ffffc900033efbb0 R08: 0000000000000001 R09: fffffbfff27a900c
+R10: ffffffff93d48067 R11: ffffffff8ae000eb R12: ffff88807b077800
+R13: dffffc0000000000 R14: ffff88807b077e40 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000564f4fc1e3a8 CR3: 000000000d57a000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <TASK>
+ unix_gc+0x563/0x13b0 net/unix/garbage.c:319
+ unix_release_sock+0xa93/0xf80 net/unix/af_unix.c:683
+ unix_release+0x91/0xf0 net/unix/af_unix.c:1064
+ __sock_release+0xb0/0x270 net/socket.c:659
+ sock_close+0x1c/0x30 net/socket.c:1421
+ __fput+0x270/0xb80 fs/file_table.c:376
+ task_work_run+0x14f/0x250 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0xa8a/0x2ad0 kernel/exit.c:871
+ do_group_exit+0xd4/0x2a0 kernel/exit.c:1020
+ __do_sys_exit_group kernel/exit.c:1031 [inline]
+ __se_sys_exit_group kernel/exit.c:1029 [inline]
+ __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1029
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd5/0x270 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x6f/0x77
+RIP: 0033:0x7f9d6cbdac09
+Code: Unable to access opcode bytes at 0x7f9d6cbdabdf.
+RSP: 002b:00007fff5952feb8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f9d6cbdac09
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
+RBP: 00007f9d6cc552b0 R08: ffffffffffffffb8 R09: 0000000000000006
+R10: 0000000000000006 R11: 0000000000000246 R12: 00007f9d6cc552b0
+R13: 0000000000000000 R14: 00007f9d6cc55d00 R15: 00007f9d6cbabe70
+ </TASK>
+
+Reported-by: syzbot+4fa4a2d1f5a5ee06f006@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4fa4a2d1f5a5ee06f006
+Fixes: 1279f9d9dec2 ("af_unix: Call kfree_skb() for dead unix_(sk)->oob_skb in GC.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240209220453.96053-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/write.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/unix/garbage.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -668,8 +668,10 @@ static int nfs_writepage_locked(struct f
- 	int err;
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -315,10 +315,11 @@ void unix_gc(void)
+ 	__skb_queue_purge(&hitlist);
  
- 	if (wbc->sync_mode == WB_SYNC_NONE &&
--	    NFS_SERVER(inode)->write_congested)
-+	    NFS_SERVER(inode)->write_congested) {
-+		folio_redirty_for_writepage(wbc, folio);
- 		return AOP_WRITEPAGE_ACTIVATE;
-+	}
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+-	list_for_each_entry_safe(u, next, &gc_candidates, link) {
+-		struct sk_buff *skb = u->oob_skb;
++	while (!list_empty(&gc_candidates)) {
++		u = list_entry(gc_candidates.next, struct unix_sock, link);
++		if (u->oob_skb) {
++			struct sk_buff *skb = u->oob_skb;
  
- 	nfs_inc_stats(inode, NFSIOS_VFSWRITEPAGE);
- 	nfs_pageio_init_write(&pgio, inode, 0, false,
+-		if (skb) {
+ 			u->oob_skb = NULL;
+ 			kfree_skb(skb);
+ 		}
 
 
