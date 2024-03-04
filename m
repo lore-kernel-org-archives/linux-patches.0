@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED24B482DA;
-	Mon,  4 Mar 2024 21:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C28410A35;
+	Mon,  4 Mar 2024 21:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587639; cv=none; b=Yuirbd4FHuLj23EJIH+kXNCDbbaEkwljHb73mcPd0PRLPKn3yYPGJOzwwyZSW8HWID0ZEXvVjMvj+qonySKb8QvH5s4uvgp2FSkfIdU/2VsKgV99GerLvYGmgrn1vh55ZS/sg+8XB3kbUcdIlW3wxdo6vgVxiLLHFusVLAluPBo=
+	t=1709587641; cv=none; b=DazmNJXck6RzMvgSLJOuzrxT+6p67CABkRd3nGN/e3vI5olFFo10O7CC0c1l2fHX6zFj9scSFcfhMlHY9WvXs1c1ULiSsupBB11yUhfSPbp4lxDn6jsND26uIJzROQNlt8gee55ztzWRtTLxZUD3WkzLQn9jYxyw5SaK4yyYCAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587639; c=relaxed/simple;
-	bh=rj31HVGAxnQkBh/EB63q7RIZkpZLlUm/ysa+FQdvk9Q=;
+	s=arc-20240116; t=1709587641; c=relaxed/simple;
+	bh=TQWVPc+zWRH/ZUHlYBN+o8e/SHHChwHXvLlUrRI8A4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iochzYFnJLRZHgc8k0fiEL8/KF0u9PylU3MuVq2wFoqTUDgLcXMC72XWXkxxOm4O4/sHPhL3fyBmJ3HvhndhhWwP8zbTV+lEZ6OEvcPMxVburBI+fb6RCtperevbsGliWOnTKrMMUMIBKuTOGzIZ5rBnDoNMFa9EUw3qDHab46k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8Wm6uXK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSi6SfuINXkSj5NMUY0BuHvcMhYF/pwPJUxx+hA8NWIWtRtUO86GdkXtg1+XqMNUodM8yQcFXTvHXX4I2gSs1Otn6Q+ikSDV0bsK4UYSAC6MfkGlyuhRDjvB74jTtTY1eD9CV/VB+1kYkI4m+p+vjL2HIVQkSh8c0D/VE59WOLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJ5ZUaYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8Wm6uXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE74C433C7;
-	Mon,  4 Mar 2024 21:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJ5ZUaYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE60C433C7;
+	Mon,  4 Mar 2024 21:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587638;
-	bh=rj31HVGAxnQkBh/EB63q7RIZkpZLlUm/ysa+FQdvk9Q=;
+	s=korg; t=1709587641;
+	bh=TQWVPc+zWRH/ZUHlYBN+o8e/SHHChwHXvLlUrRI8A4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8Wm6uXKdQ4CspRaUfVhElcdkbWuEH7AvAIkh4ikzZ1wlStdC9Gi3qVHxtiy9r24X
-	 H5R/j+OKwCWcfTNl8j2YyZBaywckxZ5AnLcIZMZtFS7hprxbAPW3UqWQTagcRcLLIm
-	 GKNfSc61CyBbApBggRCwsNdFQihRMtAJUoK2RNJ4=
+	b=yJ5ZUaYemfD+uhx5WVlWEpOSy2bDvgndlcKC2T37LPp7YwN9NUKRLPgZiDiyEVN/L
+	 9kHiUnikKWKtlPUej+fLN0sIWMHjGV1cEUB/waQrWZ0F5dXML3vnpctb8hdMv1lzZa
+	 mfLWRg8BW2Ph/gs8OEPJUSCP4Gdw06ctjN/waHIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 032/162] Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT
-Date: Mon,  4 Mar 2024 21:21:37 +0000
-Message-ID: <20240304211552.859937045@linuxfoundation.org>
+Subject: [PATCH 6.7 033/162] Bluetooth: qca: Fix triggering coredump implementation
+Date: Mon,  4 Mar 2024 21:21:38 +0000
+Message-ID: <20240304211552.890704158@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 7dcd3e014aa7faeeaf4047190b22d8a19a0db696 ]
+[ Upstream commit 6abf9dd26bb1699c17d601b9a292577d01827c0e ]
 
-BT adapter going into UNCONFIGURED state during BT turn ON when
-devicetree has no local-bd-address node.
+hci_coredump_qca() uses __hci_cmd_sync() to send a vendor-specific command
+to trigger firmware coredump, but the command does not have any event as
+its sync response, so it is not suitable to use __hci_cmd_sync(), fixed by
+using __hci_cmd_send().
 
-Bluetooth will not work out of the box on such devices, to avoid this
-problem, added check to set HCI_QUIRK_USE_BDADDR_PROPERTY based on
-local-bd-address node entry.
-
-When this quirk is not set, the public Bluetooth address read by host
-from controller though HCI Read BD Address command is
-considered as valid.
-
-Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 35f74f209d1fc..cc6dabf6884d7 100644
+index cc6dabf6884d7..a65de7309da4c 100644
 --- a/drivers/bluetooth/hci_qca.c
 +++ b/drivers/bluetooth/hci_qca.c
-@@ -7,6 +7,7 @@
-  *
-  *  Copyright (C) 2007 Texas Instruments, Inc.
-  *  Copyright (c) 2010, 2012, 2018 The Linux Foundation. All rights reserved.
-+ *  Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  *
-  *  Acknowledgements:
-  *  This file is based on hci_ll.c, which was...
-@@ -1886,7 +1887,17 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+
-+		/* Set BDA quirk bit for reading BDA value from fwnode property
-+		 * only if that property exist in DT.
-+		 */
-+		if (fwnode_property_present(dev_fwnode(hdev->dev.parent), "local-bd-address")) {
-+			set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+			bt_dev_info(hdev, "setting quirk bit to read BDA from fwnode later");
-+		} else {
-+			bt_dev_dbg(hdev, "local-bd-address` is not present in the devicetree so not setting quirk bit for BDA");
-+		}
-+
- 		hci_set_aosp_capable(hdev);
+@@ -1807,13 +1807,12 @@ static int qca_power_on(struct hci_dev *hdev)
  
- 		ret = qca_read_soc_version(hdev, &ver, soc_type);
+ static void hci_coredump_qca(struct hci_dev *hdev)
+ {
++	int err;
+ 	static const u8 param[] = { 0x26 };
+-	struct sk_buff *skb;
+ 
+-	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
+-	if (IS_ERR(skb))
+-		bt_dev_err(hdev, "%s: trigger crash failed (%ld)", __func__, PTR_ERR(skb));
+-	kfree_skb(skb);
++	err = __hci_cmd_send(hdev, 0xfc0c, 1, param);
++	if (err < 0)
++		bt_dev_err(hdev, "%s: trigger crash failed (%d)", __func__, err);
+ }
+ 
+ static int qca_setup(struct hci_uart *hu)
 -- 
 2.43.0
 
