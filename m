@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FAB1C687;
-	Mon,  4 Mar 2024 21:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994BA1C687;
+	Mon,  4 Mar 2024 21:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588068; cv=none; b=FOp48Sz+05+bXJWF+MviUDUobImnd9ixR+pZIYgUZTnuJqzjsqd4vOqP3Ht3EVA4Pi3zWqUQh2igxpVAED9Ee7SRJYcmgXzMAXXU7MCZ0Cug1ehvKrkXtg8zQY9I2dk9xNHm/Mw+aEcw4PvxAgNb+Pws5EHRXtmym1WYl5gDOQ0=
+	t=1709588070; cv=none; b=j/uUmdVMF+yYVT3DxfAMxf/FZZfA6rnIoWHdzfEb/PFxJy28SoxGeoKLDgQ6Nh+VTWGzJpC1PeiwFKwPEaN1WHO1qQ7IU5vy6hJp35rrQnSL6vd+NRobK5nbI61dTDFHJKyM4q3+y8lAmuGqDNdJA6rvLlAIt86V7srOA3mB3e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588068; c=relaxed/simple;
-	bh=971bjp9QehgN0+7BqILEz1RK8MKWg9Zv4XC3bUPi3Gc=;
+	s=arc-20240116; t=1709588070; c=relaxed/simple;
+	bh=GcaKPwPJpjo2njfe60qvqSJ2cA8XHbsRhYjUPH0b6y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1Rt7SMR3jRefoGv+Flp3F37enbr4iVMd3TU/0aKxHVPpcvIo7A/GmMAppsJzY2PD+rlj50U+OUJ6UTIxyaJEKWXqvNWzyGJwPWI9gA9gkp0rTAsIAHTKwpMXn6+OaN6CPpGGNVEdZk+uyMqeuq93OxQzGmK4Si6ck/x3DNojzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMn74fjf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHwuSWHgYT2RxS/JC5hD0t7dFN21JJuVAYQfkdNOYgO9s258w6HENLmZ2IHXvQOgIokzE7WrxbkE1uIx74+tHYy5/Vhy5Cq1mu9iWsKql9ix26AfEAxwSe9KQAT72QYjTRVjWgug42vss9BgqH9cTMNbajLwLgSqGgfrjuLb5Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4bplZzr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMn74fjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9164CC433F1;
-	Mon,  4 Mar 2024 21:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4bplZzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFF8C433C7;
+	Mon,  4 Mar 2024 21:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588067;
-	bh=971bjp9QehgN0+7BqILEz1RK8MKWg9Zv4XC3bUPi3Gc=;
+	s=korg; t=1709588070;
+	bh=GcaKPwPJpjo2njfe60qvqSJ2cA8XHbsRhYjUPH0b6y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMn74fjfC2pLKmdjWNaO7jhCtu+0D1/ODEzX1T8SqcYgODGNPQEoGRFGAajVAvw1o
-	 iSkN4tCEmPe2v7Wa0pNlzKfKmFRGdejo62ZO0TzxPCCjAftYgk/rhBIszqLMZUGqKg
-	 DvNJRQ63gD4+YF93fQO7lUPcjyC3jH/TGZBNc3Rw=
+	b=u4bplZzrmVs/ZP08cfouZ9VFzx8v1hB0x1oecTEFnjDQvizGXRgiF1MUJGuroOslJ
+	 Kflp7bT0W2y2s/5oRN+RwTqDU7Sa1Nuvh1XMQxoLjzw2OAJ9uxfwXx3AsA3QmEddnX
+	 co010Uw5K/yK1lW8lTr4m/rr56FsnHx5KMS28Qj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/42] platform/x86: touchscreen_dmi: Allow partial (prefix) matches for ACPI names
-Date: Mon,  4 Mar 2024 21:23:28 +0000
-Message-ID: <20240304211537.679129630@linuxfoundation.org>
+Subject: [PATCH 5.10 10/42] net: usb: dm9601: fix wrong return value in dm9601_mdio_read
+Date: Mon,  4 Mar 2024 21:23:37 +0000
+Message-ID: <20240304211537.987910802@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -51,58 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit dbcbfd662a725641d118fb3ae5ffb7be4e3d0fb0 ]
+[ Upstream commit c68b2c9eba38ec3f60f4894b189090febf4d8d22 ]
 
-On some devices the ACPI name of the touchscreen is e.g. either
-MSSL1680:00 or MSSL1680:01 depending on the BIOS version.
+The MII code does not check the return value of mdio_read (among
+others), and therefore no error code should be sent. A previous fix to
+the use of an uninitialized variable propagates negative error codes,
+that might lead to wrong operations by the MII library.
 
-This happens for example on the "Chuwi Hi8 Air" tablet where the initial
-commit's ts_data uses "MSSL1680:00" but the tablets from the github issue
-and linux-hardware.org probe linked below both use "MSSL1680:01".
+An example of such issues is the use of mii_nway_restart by the dm9601
+driver. The mii_nway_restart function does not check the value returned
+by mdio_read, which in this case might be a negative number which could
+contain the exact bit the function checks (BMCR_ANENABLE = 0x1000).
 
-Replace the strcmp() match on ts_data->acpi_name with a strstarts()
-check to allow using a partial match on just the ACPI HID of "MSSL1680"
-and change the ts_data->acpi_name for the "Chuwi Hi8 Air" accordingly
-to fix the touchscreen not working on models where it is "MSSL1680:01".
+Return zero in case of error, as it is common practice in users of
+mdio_read to avoid wrong uses of the return value.
 
-Note this drops the length check for I2C_NAME_SIZE. This never was
-necessary since the ACPI names used are never more then 11 chars and
-I2C_NAME_SIZE is 20 so the replaced strncmp() would always stop long
-before reaching I2C_NAME_SIZE.
-
-Link: https://linux-hardware.org/?computer=AC4301C0542A
-Fixes: bbb97d728f77 ("platform/x86: touchscreen_dmi: Add info for the Chuwi Hi8 Air tablet")
-Closes: https://github.com/onitake/gsl-firmware/issues/91
-Cc: stable@vger.kernel.org
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240212120608.30469-1-hdegoede@redhat.com
+Fixes: 8f8abb863fa5 ("net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20240225-dm9601_ret_err-v1-1-02c1d959ea59@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/dm9601.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -50,7 +50,7 @@ static const struct property_entry chuwi
- };
+diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
+index 5aad26600b03e..9b7db5fd9e08f 100644
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -231,7 +231,7 @@ static int dm9601_mdio_read(struct net_device *netdev, int phy_id, int loc)
+ 	err = dm_read_shared_word(dev, 1, loc, &res);
+ 	if (err < 0) {
+ 		netdev_err(dev->net, "MDIO read error: %d\n", err);
+-		return err;
++		return 0;
+ 	}
  
- static const struct ts_dmi_data chuwi_hi8_air_data = {
--	.acpi_name	= "MSSL1680:00",
-+	.acpi_name	= "MSSL1680",
- 	.properties	= chuwi_hi8_air_props,
- };
- 
-@@ -1648,7 +1648,7 @@ static void ts_dmi_add_props(struct i2c_
- 	int error;
- 
- 	if (has_acpi_companion(dev) &&
--	    !strncmp(ts_data->acpi_name, client->name, I2C_NAME_SIZE)) {
-+	    strstarts(client->name, ts_data->acpi_name)) {
- 		error = device_add_properties(dev, ts_data->properties);
- 		if (error)
- 			dev_err(dev, "failed to add properties: %d\n", error);
+ 	netdev_dbg(dev->net,
+-- 
+2.43.0
+
 
 
