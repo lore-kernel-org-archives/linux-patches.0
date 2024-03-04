@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC881C6AB;
-	Mon,  4 Mar 2024 21:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6CC1C6AB;
+	Mon,  4 Mar 2024 21:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589174; cv=none; b=CRonwAOQhgiWjwyknvno19aT98/+1aP5C5DK/YSs/1104z9VCmsmPTk0Ux9EFOtC1BBlWJ2yEMsg8Wkyp0pVSE0ipc/dhtLQQ0cRfjGkDZ5URvDIYaPUiGi3cQ0NN+pLBQliBCx4WCRAyvOM+s/CjvBByC7Gpn6qNwoaK7gAGA8=
+	t=1709589176; cv=none; b=HEhvLTmDr1RAqkU4FHfFG6WY0JsbRdNCjO+haPhiBDTJ7lDz2SXJvdHdjmmbvhMaKWCERL/x/GosOM7rSgyd7o89OaFwkNU5Gi8weBDtZ4SNR9mDABdb75fmszqmjE6B1Wnlz92WS8zPNWQ7/IVVXSqrLQFeKvxnlUxRy/k49gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589174; c=relaxed/simple;
-	bh=SQdrJsGVJHigqAKARdbGEOmgOybFqNAISTfVbg6ehHY=;
+	s=arc-20240116; t=1709589176; c=relaxed/simple;
+	bh=lvwWW0pE8GnZgPKOUzmA3aMV2HDyJQ2xKSNFMohQdeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j18n/8cmRL2zKY4jHSbwKMC4GSoWXgQFSYcI01yuRfrN7aE7IPhOGmC1DCqwYqw54u5wrWsdsQzoFuJUWveEsudByez3RysTu8nScWgtxb/5h2pDXQVTf1bFvj75d/glVdOFw6ubqHEcNu4pG+0KPViNSD42oNz1n3JbNAK2vtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoQ+vJp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bi/LpAgMSSw0ABqn+eCsFpeBQB97mT4pmTOxcQmzyj/oMVJuZ4xhSnvgv3Xtnm9kTR44TY/h1Oj1NKEKLlgj7+uU4xtyROHyJr5ngq8zsh8lA71i4/oeONPS4Ez3dnkhPL4KFCGU8zmNL6PM3m8wL4XrtwtjzRe6azRNaH58Qig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3yD/+pP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoQ+vJp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81331C43394;
-	Mon,  4 Mar 2024 21:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3yD/+pP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0D4C433F1;
+	Mon,  4 Mar 2024 21:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589173;
-	bh=SQdrJsGVJHigqAKARdbGEOmgOybFqNAISTfVbg6ehHY=;
+	s=korg; t=1709589176;
+	bh=lvwWW0pE8GnZgPKOUzmA3aMV2HDyJQ2xKSNFMohQdeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UoQ+vJp3jR1l9sH8W4CcdN04kwcDUq+G1eIYtvLAtGUG+ZtuwzknXBcgXC/bsW05t
-	 rYAqBuPN6CN14Rl8ed+qAqfV1q/ntWQ/vIzliIatY+4MCYYhX4sAV1NJ82c3laFZrO
-	 Z3vO0QSAtUB1V+l1mfUEocZYbdjV6h3fQ7A6bjgo=
+	b=e3yD/+pPK5tfGaA4WjK3hl5UY5mF0MW3DvehdICs0zgZ9QkKL/7oZFc+mZxLQJmBx
+	 ZAxlObrKwqpidVbFR8nsN4+3OeZ4ISrrdbplQpaX/Gi62bMRh9LZx7gc6pV1bCJvsq
+	 Xip/VIWXJNRGDn64d4E7WIO7m7DwF2wTr64UcvQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/215] powerpc/pseries/iommu: IOMMU table is not initialized for kdump over SR-IOV
-Date: Mon,  4 Mar 2024 21:24:22 +0000
-Message-ID: <20240304211603.293083682@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 01/84] netfilter: nf_tables: disallow timeout for anonymous sets
+Date: Mon,  4 Mar 2024 21:23:34 +0000
+Message-ID: <20240304211542.384534173@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
-References: <20240304211556.993132804@linuxfoundation.org>
+In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
+References: <20240304211542.332206551@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,337 +45,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 09a3c1e46142199adcee372a420b024b4fc61051 ]
+commit e26d3009efda338f19016df4175f354a9bd0a4ab upstream.
 
-When kdump kernel tries to copy dump data over SR-IOV, LPAR panics due
-to NULL pointer exception:
+Never used from userspace, disallow these parameters.
 
-  Kernel attempted to read user page (0) - exploit attempt? (uid: 0)
-  BUG: Kernel NULL pointer dereference on read at 0x00000000
-  Faulting instruction address: 0xc000000020847ad4
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in: mlx5_core(+) vmx_crypto pseries_wdt papr_scm libnvdimm mlxfw tls psample sunrpc fuse overlay squashfs loop
-  CPU: 12 PID: 315 Comm: systemd-udevd Not tainted 6.4.0-Test102+ #12
-  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
-  NIP:  c000000020847ad4 LR: c00000002083b2dc CTR: 00000000006cd18c
-  REGS: c000000029162ca0 TRAP: 0300   Not tainted  (6.4.0-Test102+)
-  MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 48288244  XER: 00000008
-  CFAR: c00000002083b2d8 DAR: 0000000000000000 DSISR: 40000000 IRQMASK: 1
-  ...
-  NIP _find_next_zero_bit+0x24/0x110
-  LR  bitmap_find_next_zero_area_off+0x5c/0xe0
-  Call Trace:
-    dev_printk_emit+0x38/0x48 (unreliable)
-    iommu_area_alloc+0xc4/0x180
-    iommu_range_alloc+0x1e8/0x580
-    iommu_alloc+0x60/0x130
-    iommu_alloc_coherent+0x158/0x2b0
-    dma_iommu_alloc_coherent+0x3c/0x50
-    dma_alloc_attrs+0x170/0x1f0
-    mlx5_cmd_init+0xc0/0x760 [mlx5_core]
-    mlx5_function_setup+0xf0/0x510 [mlx5_core]
-    mlx5_init_one+0x84/0x210 [mlx5_core]
-    probe_one+0x118/0x2c0 [mlx5_core]
-    local_pci_probe+0x68/0x110
-    pci_call_probe+0x68/0x200
-    pci_device_probe+0xbc/0x1a0
-    really_probe+0x104/0x540
-    __driver_probe_device+0xb4/0x230
-    driver_probe_device+0x54/0x130
-    __driver_attach+0x158/0x2b0
-    bus_for_each_dev+0xa8/0x130
-    driver_attach+0x34/0x50
-    bus_add_driver+0x16c/0x300
-    driver_register+0xa4/0x1b0
-    __pci_register_driver+0x68/0x80
-    mlx5_init+0xb8/0x100 [mlx5_core]
-    do_one_initcall+0x60/0x300
-    do_init_module+0x7c/0x2b0
-
-At the time of LPAR dump, before kexec hands over control to kdump
-kernel, DDWs (Dynamic DMA Windows) are scanned and added to the FDT.
-For the SR-IOV case, default DMA window "ibm,dma-window" is removed from
-the FDT and DDW added, for the device.
-
-Now, kexec hands over control to the kdump kernel.
-
-When the kdump kernel initializes, PCI busses are scanned and IOMMU
-group/tables created, in pci_dma_bus_setup_pSeriesLP(). For the SR-IOV
-case, there is no "ibm,dma-window". The original commit: b1fc44eaa9ba,
-fixes the path where memory is pre-mapped (direct mapped) to the DDW.
-When TCEs are direct mapped, there is no need to initialize IOMMU
-tables.
-
-iommu_table_setparms_lpar() only considers "ibm,dma-window" property
-when initiallizing IOMMU table. In the scenario where TCEs are
-dynamically allocated for SR-IOV, newly created IOMMU table is not
-initialized. Later, when the device driver tries to enter TCEs for the
-SR-IOV device, NULL pointer execption is thrown from iommu_area_alloc().
-
-The fix is to initialize the IOMMU table with DDW property stored in the
-FDT. There are 2 points to remember:
-
-	1. For the dedicated adapter, kdump kernel would encounter both
-	   default and DDW in FDT. In this case, DDW property is used to
-	   initialize the IOMMU table.
-
-	2. A DDW could be direct or dynamic mapped. kdump kernel would
-	   initialize IOMMU table and mark the existing DDW as
-	   "dynamic". This works fine since, at the time of table
-	   initialization, iommu_table_clear() makes some space in the
-	   DDW, for some predefined number of TCEs which are needed for
-	   kdump to succeed.
-
-Fixes: b1fc44eaa9ba ("pseries/iommu/ddw: Fix kdump to work in absence of ibm,dma-window")
-Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240125203017.61014-1-gbatra@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c | 156 +++++++++++++++++--------
- 1 file changed, 105 insertions(+), 51 deletions(-)
+ net/netfilter/nf_tables_api.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index 97b026130c71b..1e5f083cdb720 100644
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -569,29 +569,6 @@ static void iommu_table_setparms(struct pci_controller *phb,
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4682,6 +4682,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
  
- struct iommu_table_ops iommu_table_lpar_multi_ops;
- 
--/*
-- * iommu_table_setparms_lpar
-- *
-- * Function: On pSeries LPAR systems, return TCE table info, given a pci bus.
-- */
--static void iommu_table_setparms_lpar(struct pci_controller *phb,
--				      struct device_node *dn,
--				      struct iommu_table *tbl,
--				      struct iommu_table_group *table_group,
--				      const __be32 *dma_window)
--{
--	unsigned long offset, size, liobn;
--
--	of_parse_dma_window(dn, dma_window, &liobn, &offset, &size);
--
--	iommu_table_setparms_common(tbl, phb->bus->number, liobn, offset, size, IOMMU_PAGE_SHIFT_4K, NULL,
--				    &iommu_table_lpar_multi_ops);
--
--
--	table_group->tce32_start = offset;
--	table_group->tce32_size = size;
--}
--
- struct iommu_table_ops iommu_table_pseries_ops = {
- 	.set = tce_build_pSeries,
- 	.clear = tce_free_pSeries,
-@@ -719,26 +696,71 @@ struct iommu_table_ops iommu_table_lpar_multi_ops = {
-  * dynamic 64bit DMA window, walking up the device tree.
-  */
- static struct device_node *pci_dma_find(struct device_node *dn,
--					const __be32 **dma_window)
-+					struct dynamic_dma_window_prop *prop)
- {
--	const __be32 *dw = NULL;
-+	const __be32 *default_prop = NULL;
-+	const __be32 *ddw_prop = NULL;
-+	struct device_node *rdn = NULL;
-+	bool default_win = false, ddw_win = false;
- 
- 	for ( ; dn && PCI_DN(dn); dn = dn->parent) {
--		dw = of_get_property(dn, "ibm,dma-window", NULL);
--		if (dw) {
--			if (dma_window)
--				*dma_window = dw;
--			return dn;
-+		default_prop = of_get_property(dn, "ibm,dma-window", NULL);
-+		if (default_prop) {
-+			rdn = dn;
-+			default_win = true;
-+		}
-+		ddw_prop = of_get_property(dn, DIRECT64_PROPNAME, NULL);
-+		if (ddw_prop) {
-+			rdn = dn;
-+			ddw_win = true;
-+			break;
-+		}
-+		ddw_prop = of_get_property(dn, DMA64_PROPNAME, NULL);
-+		if (ddw_prop) {
-+			rdn = dn;
-+			ddw_win = true;
-+			break;
- 		}
--		dw = of_get_property(dn, DIRECT64_PROPNAME, NULL);
--		if (dw)
--			return dn;
--		dw = of_get_property(dn, DMA64_PROPNAME, NULL);
--		if (dw)
--			return dn;
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
 +
-+		/* At least found default window, which is the case for normal boot */
-+		if (default_win)
-+			break;
+ 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &desc.timeout);
+ 		if (err)
+ 			return err;
+@@ -4690,6 +4693,10 @@ static int nf_tables_newset(struct sk_bu
+ 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
++
++		if (flags & NFT_SET_ANONYMOUS)
++			return -EOPNOTSUPP;
++
+ 		desc.gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
  	}
  
--	return NULL;
-+	/* For PCI devices there will always be a DMA window, either on the device
-+	 * or parent bus
-+	 */
-+	WARN_ON(!(default_win | ddw_win));
-+
-+	/* caller doesn't want to get DMA window property */
-+	if (!prop)
-+		return rdn;
-+
-+	/* parse DMA window property. During normal system boot, only default
-+	 * DMA window is passed in OF. But, for kdump, a dedicated adapter might
-+	 * have both default and DDW in FDT. In this scenario, DDW takes precedence
-+	 * over default window.
-+	 */
-+	if (ddw_win) {
-+		struct dynamic_dma_window_prop *p;
-+
-+		p = (struct dynamic_dma_window_prop *)ddw_prop;
-+		prop->liobn = p->liobn;
-+		prop->dma_base = p->dma_base;
-+		prop->tce_shift = p->tce_shift;
-+		prop->window_shift = p->window_shift;
-+	} else if (default_win) {
-+		unsigned long offset, size, liobn;
-+
-+		of_parse_dma_window(rdn, default_prop, &liobn, &offset, &size);
-+
-+		prop->liobn = cpu_to_be32((u32)liobn);
-+		prop->dma_base = cpu_to_be64(offset);
-+		prop->tce_shift = cpu_to_be32(IOMMU_PAGE_SHIFT_4K);
-+		prop->window_shift = cpu_to_be32(order_base_2(size));
-+	}
-+
-+	return rdn;
- }
- 
- static void pci_dma_bus_setup_pSeriesLP(struct pci_bus *bus)
-@@ -746,17 +768,20 @@ static void pci_dma_bus_setup_pSeriesLP(struct pci_bus *bus)
- 	struct iommu_table *tbl;
- 	struct device_node *dn, *pdn;
- 	struct pci_dn *ppci;
--	const __be32 *dma_window = NULL;
-+	struct dynamic_dma_window_prop prop;
- 
- 	dn = pci_bus_to_OF_node(bus);
- 
- 	pr_debug("pci_dma_bus_setup_pSeriesLP: setting up bus %pOF\n",
- 		 dn);
- 
--	pdn = pci_dma_find(dn, &dma_window);
-+	pdn = pci_dma_find(dn, &prop);
- 
--	if (dma_window == NULL)
--		pr_debug("  no ibm,dma-window property !\n");
-+	/* In PPC architecture, there will always be DMA window on bus or one of the
-+	 * parent bus. During reboot, there will be ibm,dma-window property to
-+	 * define DMA window. For kdump, there will at least be default window or DDW
-+	 * or both.
-+	 */
- 
- 	ppci = PCI_DN(pdn);
- 
-@@ -766,13 +791,24 @@ static void pci_dma_bus_setup_pSeriesLP(struct pci_bus *bus)
- 	if (!ppci->table_group) {
- 		ppci->table_group = iommu_pseries_alloc_group(ppci->phb->node);
- 		tbl = ppci->table_group->tables[0];
--		if (dma_window) {
--			iommu_table_setparms_lpar(ppci->phb, pdn, tbl,
--						  ppci->table_group, dma_window);
- 
--			if (!iommu_init_table(tbl, ppci->phb->node, 0, 0))
--				panic("Failed to initialize iommu table");
--		}
-+		iommu_table_setparms_common(tbl, ppci->phb->bus->number,
-+				be32_to_cpu(prop.liobn),
-+				be64_to_cpu(prop.dma_base),
-+				1ULL << be32_to_cpu(prop.window_shift),
-+				be32_to_cpu(prop.tce_shift), NULL,
-+				&iommu_table_lpar_multi_ops);
-+
-+		/* Only for normal boot with default window. Doesn't matter even
-+		 * if we set these with DDW which is 64bit during kdump, since
-+		 * these will not be used during kdump.
-+		 */
-+		ppci->table_group->tce32_start = be64_to_cpu(prop.dma_base);
-+		ppci->table_group->tce32_size = 1 << be32_to_cpu(prop.window_shift);
-+
-+		if (!iommu_init_table(tbl, ppci->phb->node, 0, 0))
-+			panic("Failed to initialize iommu table");
-+
- 		iommu_register_group(ppci->table_group,
- 				pci_domain_nr(bus), 0);
- 		pr_debug("  created table: %p\n", ppci->table_group);
-@@ -960,6 +996,12 @@ static void find_existing_ddw_windows_named(const char *name)
- 			continue;
- 		}
- 
-+		/* If at the time of system initialization, there are DDWs in OF,
-+		 * it means this is during kexec. DDW could be direct or dynamic.
-+		 * We will just mark DDWs as "dynamic" since this is kdump path,
-+		 * no need to worry about perforance. ddw_list_new_entry() will
-+		 * set window->direct = false.
-+		 */
- 		window = ddw_list_new_entry(pdn, dma64);
- 		if (!window) {
- 			of_node_put(pdn);
-@@ -1525,8 +1567,8 @@ static void pci_dma_dev_setup_pSeriesLP(struct pci_dev *dev)
- {
- 	struct device_node *pdn, *dn;
- 	struct iommu_table *tbl;
--	const __be32 *dma_window = NULL;
- 	struct pci_dn *pci;
-+	struct dynamic_dma_window_prop prop;
- 
- 	pr_debug("pci_dma_dev_setup_pSeriesLP: %s\n", pci_name(dev));
- 
-@@ -1539,7 +1581,7 @@ static void pci_dma_dev_setup_pSeriesLP(struct pci_dev *dev)
- 	dn = pci_device_to_OF_node(dev);
- 	pr_debug("  node is %pOF\n", dn);
- 
--	pdn = pci_dma_find(dn, &dma_window);
-+	pdn = pci_dma_find(dn, &prop);
- 	if (!pdn || !PCI_DN(pdn)) {
- 		printk(KERN_WARNING "pci_dma_dev_setup_pSeriesLP: "
- 		       "no DMA window found for pci dev=%s dn=%pOF\n",
-@@ -1552,8 +1594,20 @@ static void pci_dma_dev_setup_pSeriesLP(struct pci_dev *dev)
- 	if (!pci->table_group) {
- 		pci->table_group = iommu_pseries_alloc_group(pci->phb->node);
- 		tbl = pci->table_group->tables[0];
--		iommu_table_setparms_lpar(pci->phb, pdn, tbl,
--				pci->table_group, dma_window);
-+
-+		iommu_table_setparms_common(tbl, pci->phb->bus->number,
-+				be32_to_cpu(prop.liobn),
-+				be64_to_cpu(prop.dma_base),
-+				1ULL << be32_to_cpu(prop.window_shift),
-+				be32_to_cpu(prop.tce_shift), NULL,
-+				&iommu_table_lpar_multi_ops);
-+
-+		/* Only for normal boot with default window. Doesn't matter even
-+		 * if we set these with DDW which is 64bit during kdump, since
-+		 * these will not be used during kdump.
-+		 */
-+		pci->table_group->tce32_start = be64_to_cpu(prop.dma_base);
-+		pci->table_group->tce32_size = 1 << be32_to_cpu(prop.window_shift);
- 
- 		iommu_init_table(tbl, pci->phb->node, 0, 0);
- 		iommu_register_group(pci->table_group,
--- 
-2.43.0
-
 
 
