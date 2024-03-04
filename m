@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080A27868F;
-	Mon,  4 Mar 2024 21:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09D71C6AB;
+	Mon,  4 Mar 2024 21:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589301; cv=none; b=XX2Nr8+Ez4KeJDB4VHVmqZ67qAVjnHMstIOVifqcdtIIeDjWv8ZjplKYI2yqO1YkAVHP3AL60wUiZ4HN67wJqVRufCxHz4Tga4S/qRSDRlSpjZ1yEQLMaaX79G7J7Q2w7USyGu8wTc3VacUYey0izvhle5TuOcyhUZvRYLt8Tck=
+	t=1709589303; cv=none; b=m7QArvlYLfOa78cw2KgaNxIBTfG8DKCNMYQs9zYgdAvFMOqyqfo7g3yqmeNGj2CKV99L3J0pe2X9I1xrjVMVa+LfbucMusIVuEC1OEs3dvtST1TS8aAe1DCT3JcrNUpvxcqF10bA7GYKKqozohvo0NTVJKzG8NqluPDDSkBB0Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589301; c=relaxed/simple;
-	bh=zvlGhIzB3OsTf/HuB9NMmM37Rf9MXvbJUUndeIqtNWo=;
+	s=arc-20240116; t=1709589303; c=relaxed/simple;
+	bh=TouZBcNo/Z/Z0xpV0D9+VfVKzouzJ8/SDkjbECWTDrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnTy7dKRuobDJCe2aML3RWQtmg3SPRq6u6RZllpXKRvO2jIRrLz4rPVmkLmHknABaDmYJUx70nqQnCVR8AX5RoE9zV8RJEQhIf6kqYlYyYRmkn4fhtFK4Y8L5KlKj2bbz/OKtxmtQPyQSWpzvwjrl/PAGEIH/qhXDMT41Dip2r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crWX0Emr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XuOr2uyYM9J4RszokwLRDy95Sw0vhxXW7aEl0fFnSZYprzvIRo6mWVDIz61z+W8f61yNxpuVd2NeZcbluE5cxdYKN6SE+p+0nbyk4g6CDB9VVb6YQuGs0pjdK+2RMWyNbZp8WVI+R++i5J3hCI9Em0Jc0xAMTFQUXcy5RNigNDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVKs+TVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crWX0Emr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9D7C433F1;
-	Mon,  4 Mar 2024 21:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVKs+TVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C55C433C7;
+	Mon,  4 Mar 2024 21:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589300;
-	bh=zvlGhIzB3OsTf/HuB9NMmM37Rf9MXvbJUUndeIqtNWo=;
+	s=korg; t=1709589303;
+	bh=TouZBcNo/Z/Z0xpV0D9+VfVKzouzJ8/SDkjbECWTDrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crWX0Emr/8AgswOS9CBcePFBErEwZaL2fU4sAaUSE9CIsByekJ3TaeqljU1pJPP1l
-	 mMZgEArpWrFnby0cU+dK7ETyuaig59mEWxsMMPeTDiVS+X8XxOcsVIgU7PG5N6YyEd
-	 Mw8c3J7I1CN8pp5UxUAtTR1PP7bwqcto8nxUlh5Y=
+	b=NVKs+TVygKOf2DD2SIWUqzkVpZMRjGhDwyNtfb4YULzJGLHlt0cEjWgKjX6YOUQgd
+	 zhJUy24pP37ieDl22C2npKuoDJI3Nh+tYmydR7+QsYScrpdjd6MBaxVwwg64hh7bFv
+	 QLpdDFlLcP7S+iccaT8cWD6jP7BU794LudWYkaIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Elad Nachman <enachman@marvell.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 57/84] mmc: sdhci-xenon: fix PHY init clock stability
-Date: Mon,  4 Mar 2024 21:24:30 +0000
-Message-ID: <20240304211544.282435084@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Zong Li <zong.li@sifive.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 58/84] riscv: add CALLER_ADDRx support
+Date: Mon,  4 Mar 2024 21:24:31 +0000
+Message-ID: <20240304211544.309767329@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -51,68 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elad Nachman <enachman@marvell.com>
+From: Zong Li <zong.li@sifive.com>
 
-commit 8e9f25a290ae0016353c9ea13314c95fb3207812 upstream.
+commit 680341382da56bd192ebfa4e58eaf4fec2e5bca7 upstream.
 
-Each time SD/mmc phy is initialized, at times, in some of
-the attempts, phy fails to completes its initialization
-which results into timeout error. Per the HW spec, it is
-a pre-requisite to ensure a stable SD clock before a phy
-initialization is attempted.
+CALLER_ADDRx returns caller's address at specified level, they are used
+for several tracers. These macros eventually use
+__builtin_return_address(n) to get the caller's address if arch doesn't
+define their own implementation.
 
-Fixes: 06c8b667ff5b ("mmc: sdhci-xenon: Add support to PHYs of Marvell Xenon SDHC")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+In RISC-V, __builtin_return_address(n) only works when n == 0, we need
+to walk the stack frame to get the caller's address at specified level.
+
+data.level started from 'level + 3' due to the call flow of getting
+caller's address in RISC-V implementation. If we don't have additional
+three iteration, the level is corresponding to follows:
+
+callsite -> return_address -> arch_stack_walk -> walk_stackframe
+|           |                 |                  |
+level 3     level 2           level 1            level 0
+
+Fixes: 10626c32e382 ("riscv/ftrace: Add basic support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Elad Nachman <enachman@marvell.com>
-Link: https://lore.kernel.org/r/20240222200930.1277665-1-enachman@marvell.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Link: https://lore.kernel.org/r/20240202015102.26251-1-zong.li@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-xenon-phy.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/riscv/include/asm/ftrace.h    |    5 +++
+ arch/riscv/kernel/Makefile         |    2 +
+ arch/riscv/kernel/return_address.c |   48 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+)
+ create mode 100644 arch/riscv/kernel/return_address.c
 
---- a/drivers/mmc/host/sdhci-xenon-phy.c
-+++ b/drivers/mmc/host/sdhci-xenon-phy.c
-@@ -11,6 +11,7 @@
- #include <linux/slab.h>
- #include <linux/delay.h>
- #include <linux/ktime.h>
-+#include <linux/iopoll.h>
- #include <linux/of_address.h>
+--- a/arch/riscv/include/asm/ftrace.h
++++ b/arch/riscv/include/asm/ftrace.h
+@@ -25,6 +25,11 @@
  
- #include "sdhci-pltfm.h"
-@@ -218,6 +219,19 @@ static int xenon_alloc_emmc_phy(struct s
- 	return 0;
- }
+ #define ARCH_SUPPORTS_FTRACE_OPS 1
+ #ifndef __ASSEMBLY__
++
++extern void *return_address(unsigned int level);
++
++#define ftrace_return_address(n) return_address(n)
++
+ void MCOUNT_NAME(void);
+ static inline unsigned long ftrace_call_adjust(unsigned long addr)
+ {
+--- a/arch/riscv/kernel/Makefile
++++ b/arch/riscv/kernel/Makefile
+@@ -7,6 +7,7 @@ ifdef CONFIG_FTRACE
+ CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
+ endif
+ CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
  
-+static int xenon_check_stability_internal_clk(struct sdhci_host *host)
+@@ -25,6 +26,7 @@ obj-y	+= irq.o
+ obj-y	+= process.o
+ obj-y	+= ptrace.o
+ obj-y	+= reset.o
++obj-y	+= return_address.o
+ obj-y	+= setup.o
+ obj-y	+= signal.o
+ obj-y	+= syscall_table.o
+--- /dev/null
++++ b/arch/riscv/kernel/return_address.c
+@@ -0,0 +1,48 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * This code come from arch/arm64/kernel/return_address.c
++ *
++ * Copyright (C) 2023 SiFive.
++ */
++
++#include <linux/export.h>
++#include <linux/kprobes.h>
++#include <linux/stacktrace.h>
++
++struct return_address_data {
++	unsigned int level;
++	void *addr;
++};
++
++static bool save_return_addr(void *d, unsigned long pc)
 +{
-+	u32 reg;
-+	int err;
++	struct return_address_data *data = d;
 +
-+	err = read_poll_timeout(sdhci_readw, reg, reg & SDHCI_CLOCK_INT_STABLE,
-+				1100, 20000, false, host, SDHCI_CLOCK_CONTROL);
-+	if (err)
-+		dev_err(mmc_dev(host->mmc), "phy_init: Internal clock never stabilized.\n");
++	if (!data->level) {
++		data->addr = (void *)pc;
++		return false;
++	}
 +
-+	return err;
++	--data->level;
++
++	return true;
 +}
++NOKPROBE_SYMBOL(save_return_addr);
 +
- /*
-  * eMMC 5.0/5.1 PHY init/re-init.
-  * eMMC PHY init should be executed after:
-@@ -234,6 +248,11 @@ static int xenon_emmc_phy_init(struct sd
- 	struct xenon_priv *priv = sdhci_pltfm_priv(pltfm_host);
- 	struct xenon_emmc_phy_regs *phy_regs = priv->emmc_phy_regs;
- 
-+	int ret = xenon_check_stability_internal_clk(host);
++noinline void *return_address(unsigned int level)
++{
++	struct return_address_data data;
 +
-+	if (ret)
-+		return ret;
++	data.level = level + 3;
++	data.addr = NULL;
 +
- 	reg = sdhci_readl(host, phy_regs->timing_adj);
- 	reg |= XENON_PHY_INITIALIZAION;
- 	sdhci_writel(host, reg, phy_regs->timing_adj);
++	arch_stack_walk(save_return_addr, &data, current, NULL);
++
++	if (!data.level)
++		return data.addr;
++	else
++		return NULL;
++
++}
++EXPORT_SYMBOL_GPL(return_address);
++NOKPROBE_SYMBOL(return_address);
 
 
