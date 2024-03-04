@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29121C6AB;
-	Mon,  4 Mar 2024 21:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9358D1C6AB;
+	Mon,  4 Mar 2024 21:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589317; cv=none; b=O7uCXng8pgap/ettFxcM0eaDoker0vmepfPNBvzMSfC7UqjLja4r/eXElg1K7WgiRqarJDMLztDHZY+tv+HobDLdw8Nak0CRMsKy3DfuevgOIH4pKzM1tif7x3k2Sn2QTkIoA2xaGiOQMIOVU61N979WolZ0zovNN8iIQ7mjySg=
+	t=1709589319; cv=none; b=M8x7kRAdkJh38ckkdwxKtQJ/b0rJcHqM8pKoXiAQdWOmEUxJW4YpdQwtfWdOTrg70mKdlyrL6AZ7GAdPmwUAZfswGnUwLlwXphtRqjen2Um7MUeKgNXsBpjHmmPf/fG2g4IdDbT6rxhchhUPUG0AHzJwLXys69f9d3SP23NU2gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589317; c=relaxed/simple;
-	bh=LdSnXUHuHlc/u/1RDPYxXsUtvu6a8T274QmDedL2/78=;
+	s=arc-20240116; t=1709589319; c=relaxed/simple;
+	bh=CUXFRVnxq1WWOGPzEh5D5kMSTT/btEWHR6xpkPzJTkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zs+AMliHMxNrK3PG1gvvqgXjnUAf3Yn52ajyUCkTs1S3EXpjtxVa3d2/UnBKhgE6SSC+pOPGKE1P97DBWVf82FQK+oKBgrFckIC1e8p+27MlWr6jKDnE/r7kYwhyfo3OfkP5FBQgBoEIsuaA/GPSOxb0ak9IhwQIwztGXCn2Sk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XbEbHL6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Olgn7WWkpOnbnad3TDI7MPzyZKVcXMT2i31lWITRYVMFfzf9WwpQLT7tzEl525hDYe3Q+Pj6WzZnDrv606vQXrbhOBwSoxNDbpGljdkJ8bXDYAY3rDbnXqZw9kKZqpDEaqOdp114jyCaKH0qJpTmZ6NaxguU0XU2QFhV26hORHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/0Y8V2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XbEbHL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882D7C433C7;
-	Mon,  4 Mar 2024 21:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/0Y8V2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264C5C433F1;
+	Mon,  4 Mar 2024 21:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589316;
-	bh=LdSnXUHuHlc/u/1RDPYxXsUtvu6a8T274QmDedL2/78=;
+	s=korg; t=1709589319;
+	bh=CUXFRVnxq1WWOGPzEh5D5kMSTT/btEWHR6xpkPzJTkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0XbEbHL6rox9DhE+iANKhKleDahQyWN36xhKdeupKu3j0oVUdoJywA74IT7p2d4JL
-	 fqdUrAYQnzG0z2t5nyWoMYMyqU2vqXeBEkzla3WH9JM6kxrArRO2Cq9abFkbl4fzSb
-	 hgvhVdUFbzcH99Zrkr0qTITNgvKfxFKsKWgYIeRE=
+	b=e/0Y8V2Y8Z4SmRM2/cUO1OpyBjJjAgYI7Um6+QqNen3x/8N/oNrwrwUsYM/lCjtBN
+	 Yl8GX6S/8zegK33zso0fYSIxgaezwwLbYFWsD2N/V86BrfEhhEnOI72YYtuLUmO7Al
+	 OpO2laKE174yWVOcbX/42YwrR2ZYVY6FlWuth0MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/84] afs: Fix endless loop in directory parsing
-Date: Mon,  4 Mar 2024 21:24:18 +0000
-Message-ID: <20240304211543.839458004@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Mat Martineau <martineau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 5.15 63/84] mptcp: rename timer related helper to less confusing names
+Date: Mon,  4 Mar 2024 21:24:36 +0000
+Message-ID: <20240304211544.486431553@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -54,68 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 5f7a07646655fb4108da527565dcdc80124b14c4 ]
+commit f6909dc1c1f4452879278128012da6c76bc186a5 upstream.
 
-If a directory has a block with only ".__afsXXXX" files in it (from
-uncompleted silly-rename), these .__afsXXXX files are skipped but without
-advancing the file position in the dir_context.  This leads to
-afs_dir_iterate() repeating the block again and again.
+The msk socket uses to different timeout to track close related
+events and retransmissions. The existing helpers do not indicate
+clearly which timer they actually touch, making the related code
+quite confusing.
 
-Fix this by making the code that skips the .__afsXXXX file also manually
-advance the file position.
+Change the existing helpers name to avoid such confusion. No
+functional change intended.
 
-The symptoms are a soft lookup:
+This patch is linked to the next one ("mptcp: fix dangling connection
+hang-up"). The two patches are supposed to be backported together.
 
-        watchdog: BUG: soft lockup - CPU#3 stuck for 52s! [check:5737]
-        ...
-        RIP: 0010:afs_dir_iterate_block+0x39/0x1fd
-        ...
-         ? watchdog_timer_fn+0x1a6/0x213
-        ...
-         ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-         ? afs_dir_iterate_block+0x39/0x1fd
-         afs_dir_iterate+0x10a/0x148
-         afs_readdir+0x30/0x4a
-         iterate_dir+0x93/0xd3
-         __do_sys_getdents64+0x6b/0xd4
-
-This is almost certainly the actual fix for:
-
-        https://bugzilla.kernel.org/show_bug.cgi?id=218496
-
-Fixes: 57e9d49c5452 ("afs: Hide silly-rename files from userspace")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/786185.1708694102@warthog.procyon.org.uk
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Markus Suvanto <markus.suvanto@gmail.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.11+
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/dir.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 106426de50279..c4e22e9f7a666 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -497,8 +497,10 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
- 		    dire->u.name[0] == '.' &&
- 		    ctx->actor != afs_lookup_filldir &&
- 		    ctx->actor != afs_lookup_one_filldir &&
--		    memcmp(dire->u.name, ".__afs", 6) == 0)
-+		    memcmp(dire->u.name, ".__afs", 6) == 0) {
-+			ctx->pos = blkoff + next * sizeof(union afs_xdr_dirent);
- 			continue;
-+		}
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -330,7 +330,7 @@ drop:
+ 	return false;
+ }
  
- 		/* found the next entry */
- 		if (!dir_emit(ctx, dire->u.name, nlen,
--- 
-2.43.0
-
+-static void mptcp_stop_timer(struct sock *sk)
++static void mptcp_stop_rtx_timer(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 
+@@ -830,12 +830,12 @@ static void mptcp_flush_join_list(struct
+ 	mptcp_sockopt_sync_all(msk);
+ }
+ 
+-static bool mptcp_timer_pending(struct sock *sk)
++static bool mptcp_rtx_timer_pending(struct sock *sk)
+ {
+ 	return timer_pending(&inet_csk(sk)->icsk_retransmit_timer);
+ }
+ 
+-static void mptcp_reset_timer(struct sock *sk)
++static void mptcp_reset_rtx_timer(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	unsigned long tout;
+@@ -1145,10 +1145,10 @@ out:
+ 		__mptcp_mem_reclaim_partial(sk);
+ 
+ 	if (snd_una == READ_ONCE(msk->snd_nxt) && !msk->recovery) {
+-		if (mptcp_timer_pending(sk) && !mptcp_data_fin_enabled(msk))
+-			mptcp_stop_timer(sk);
++		if (mptcp_rtx_timer_pending(sk) && !mptcp_data_fin_enabled(msk))
++			mptcp_stop_rtx_timer(sk);
+ 	} else {
+-		mptcp_reset_timer(sk);
++		mptcp_reset_rtx_timer(sk);
+ 	}
+ }
+ 
+@@ -1640,8 +1640,8 @@ void __mptcp_push_pending(struct sock *s
+ 
+ out:
+ 	/* ensure the rtx timer is running */
+-	if (!mptcp_timer_pending(sk))
+-		mptcp_reset_timer(sk);
++	if (!mptcp_rtx_timer_pending(sk))
++		mptcp_reset_rtx_timer(sk);
+ 	if (copied)
+ 		mptcp_check_send_data_fin(sk);
+ }
+@@ -1700,8 +1700,8 @@ out:
+ 	if (copied) {
+ 		tcp_push(ssk, 0, info.mss_now, tcp_sk(ssk)->nonagle,
+ 			 info.size_goal);
+-		if (!mptcp_timer_pending(sk))
+-			mptcp_reset_timer(sk);
++		if (!mptcp_rtx_timer_pending(sk))
++			mptcp_reset_rtx_timer(sk);
+ 
+ 		if (msk->snd_data_fin_enable &&
+ 		    msk->snd_nxt + 1 == msk->write_seq)
+@@ -2173,7 +2173,7 @@ static void mptcp_retransmit_timer(struc
+ 	sock_put(sk);
+ }
+ 
+-static void mptcp_timeout_timer(struct timer_list *t)
++static void mptcp_tout_timer(struct timer_list *t)
+ {
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
+ 
+@@ -2465,8 +2465,8 @@ static void __mptcp_retrans(struct sock
+ 	release_sock(ssk);
+ 
+ reset_timer:
+-	if (!mptcp_timer_pending(sk))
+-		mptcp_reset_timer(sk);
++	if (!mptcp_rtx_timer_pending(sk))
++		mptcp_reset_rtx_timer(sk);
+ }
+ 
+ static void mptcp_worker(struct work_struct *work)
+@@ -2543,7 +2543,7 @@ static int __mptcp_init_sock(struct sock
+ 
+ 	/* re-use the csk retrans timer for MPTCP-level retrans */
+ 	timer_setup(&msk->sk.icsk_retransmit_timer, mptcp_retransmit_timer, 0);
+-	timer_setup(&sk->sk_timer, mptcp_timeout_timer, 0);
++	timer_setup(&sk->sk_timer, mptcp_tout_timer, 0);
+ 
+ 	return 0;
+ }
+@@ -2629,8 +2629,8 @@ void mptcp_subflow_shutdown(struct sock
+ 		} else {
+ 			pr_debug("Sending DATA_FIN on subflow %p", ssk);
+ 			tcp_send_ack(ssk);
+-			if (!mptcp_timer_pending(sk))
+-				mptcp_reset_timer(sk);
++			if (!mptcp_rtx_timer_pending(sk))
++				mptcp_reset_rtx_timer(sk);
+ 		}
+ 		break;
+ 	}
 
 
