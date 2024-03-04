@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665A5200CD;
-	Mon,  4 Mar 2024 21:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1A21EB5A;
+	Mon,  4 Mar 2024 21:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588829; cv=none; b=lG+1MGElxcb62BjG2m9dNQwhyOEvSlbnGsfkP7gNaznoJxiuPDrYDZmYRluEiEHyb7V0x8FZmnZpWOgbjdS96ZXreWMqx8vaMg3yv6jFnd+R1KYGKnBIZyWelMX0hEoq/n2BQHkO3dzw5rJs6xq8gc62rzw37X/+HWdEN/LAFNs=
+	t=1709588832; cv=none; b=eHb6qiACDMOc2RV71CuYySmk240nHxepmEXMeTMyJOkAPg3v4WVifGnuMdwDzlkTy35/TFnXd7bZSAQBf39SWVScEyJC5EpqtgUp/ZPM6eWDBQ2Mr4Ap11Oi0daE5q+dBYX4EqOFjEWyonw/eDw8i6s0by5OSej/6pzjnWeagfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588829; c=relaxed/simple;
-	bh=0n6nD3YiMStxXwW4X2r2zjkYccV3JDr7EROAzf6LC/E=;
+	s=arc-20240116; t=1709588832; c=relaxed/simple;
+	bh=yJSw6hQen/TH8atuJYcPDq7Sh5/EW1CAG0nGC1DSo+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uH85GIWqQr6HQok0x4Mz5cLs0zucOybZ83huc/p3S0C/jrFMQnJ47oIavO0DHxQHKjTFenK/mD28NCAtMslDX2fnuJLkrJwpiv2c4L2L5aghxH3O4TKUgiP7kg0OWpQPpgSAViTRoKrPzsk5KbvFDjKekimFrcqrenG7S5h4Ojc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy10zzYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FnvqsSy8EPuzB7/T/h+q4cSQTNWr8qU4IlogGHnUT18yEDx4W6OvLqP/ZAHqBGZt9475QuR+5KTtiXFDQSuaSFZXlPczIh6KWLAzqGoA/RYZiooemYCfSf3mv5m/L3pAlfvHanbpJo9erLanWulGtaGx5NQ77mu3HW75mXpVWa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZyP5imK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy10zzYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4E3C433C7;
-	Mon,  4 Mar 2024 21:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZyP5imK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2D9C433F1;
+	Mon,  4 Mar 2024 21:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588829;
-	bh=0n6nD3YiMStxXwW4X2r2zjkYccV3JDr7EROAzf6LC/E=;
+	s=korg; t=1709588831;
+	bh=yJSw6hQen/TH8atuJYcPDq7Sh5/EW1CAG0nGC1DSo+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vy10zzYdJtVPlhq8z6vJUDI4X49DXe+4cgmvq47Zgr99JHA4LFK6IH+w4lRwz0epA
-	 Cj3Eo318QsTImkLwPp1BufqnWTSNVo+w+IhGkhGNk3cd2ZRj+/Lo4HL27Jz70uJO9L
-	 6EkibHgR5X0NU0vAr87PbUMb5kBpS2+yrzeBXH14=
+	b=JZyP5imK8CLmVCGTYqVS92yqJuNcVW7ZKyYDihYadlS5alPUVWDziqjr0c2NiPQ7O
+	 LTs0UWpHmkbgPbh6DV5BVMPVg9n7CB+1Hw/fyJqIYg2hTSaz+oNTcecFCMxQf9HJUA
+	 8Dzh97gElF0Nv4Lg/asLXR7bQ2YRPietdRwtaMuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Bohac <jbohac@suse.cz>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 095/215] x86/e820: Dont reserve SETUP_RNG_SEED in e820
-Date: Mon,  4 Mar 2024 21:22:38 +0000
-Message-ID: <20240304211600.042011798@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.1 113/215] x86/boot/compressed: Move efi32_pe_entry into .text section
+Date: Mon,  4 Mar 2024 21:22:56 +0000
+Message-ID: <20240304211600.628138681@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,56 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Bohac <jbohac@suse.cz>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 7fd817c906503b6813ea3b41f5fdf4192449a707 upstream.
+commit 91592b5c0c2f076ff9d8cc0c14aa563448ac9fc4 upstream.
 
-SETUP_RNG_SEED in setup_data is supplied by kexec and should
-not be reserved in the e820 map.
+Move efi32_pe_entry() into the .text section, so that it can be moved
+out of head_64.S and into a separate compilation unit in a subsequent
+patch.
 
-Doing so reserves 16 bytes of RAM when booting with kexec.
-(16 bytes because data->len is zeroed by parse_setup_data so only
-sizeof(setup_data) is reserved.)
-
-When kexec is used repeatedly, each boot adds two entries in the
-kexec-provided e820 map as the 16-byte range splits a larger
-range of usable memory. Eventually all of the 128 available entries
-get used up. The next split will result in losing usable memory
-as the new entries cannot be added to the e820 map.
-
-Fixes: 68b8e9713c8e ("x86/setup: Use rng seeds from setup_data")
-Signed-off-by: Jiri Bohac <jbohac@suse.cz>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/ZbmOjKnARGiaYBd5@dwarf.suse.cz
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20221122161017.2426828-5-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/e820.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/boot/compressed/head_64.S |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/e820.c b/arch/x86/kernel/e820.c
-index fb8cf953380d..b66f540de054 100644
---- a/arch/x86/kernel/e820.c
-+++ b/arch/x86/kernel/e820.c
-@@ -1017,10 +1017,12 @@ void __init e820__reserve_setup_data(void)
- 		e820__range_update(pa_data, sizeof(*data)+data->len, E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
+--- a/arch/x86/boot/compressed/head_64.S
++++ b/arch/x86/boot/compressed/head_64.S
+@@ -786,7 +786,7 @@ SYM_DATA(efi_is64, .byte 1)
+ #define BS32_handle_protocol	88 // offsetof(efi_boot_services_32_t, handle_protocol)
+ #define LI32_image_base		32 // offsetof(efi_loaded_image_32_t, image_base)
  
- 		/*
--		 * SETUP_EFI and SETUP_IMA are supplied by kexec and do not need
--		 * to be reserved.
-+		 * SETUP_EFI, SETUP_IMA and SETUP_RNG_SEED are supplied by
-+		 * kexec and do not need to be reserved.
- 		 */
--		if (data->type != SETUP_EFI && data->type != SETUP_IMA)
-+		if (data->type != SETUP_EFI &&
-+		    data->type != SETUP_IMA &&
-+		    data->type != SETUP_RNG_SEED)
- 			e820__range_update_kexec(pa_data,
- 						 sizeof(*data) + data->len,
- 						 E820_TYPE_RAM, E820_TYPE_RESERVED_KERN);
--- 
-2.44.0
-
+-	__HEAD
++	.text
+ 	.code32
+ SYM_FUNC_START(efi32_pe_entry)
+ /*
+@@ -808,12 +808,11 @@ SYM_FUNC_START(efi32_pe_entry)
+ 
+ 	call	1f
+ 1:	pop	%ebx
+-	subl	$ rva(1b), %ebx
+ 
+ 	/* Get the loaded image protocol pointer from the image handle */
+ 	leal	-4(%ebp), %eax
+ 	pushl	%eax				// &loaded_image
+-	leal	rva(loaded_image_proto)(%ebx), %eax
++	leal	(loaded_image_proto - 1b)(%ebx), %eax
+ 	pushl	%eax				// pass the GUID address
+ 	pushl	8(%ebp)				// pass the image handle
+ 
+@@ -842,13 +841,13 @@ SYM_FUNC_START(efi32_pe_entry)
+ 	movl	12(%ebp), %edx			// sys_table
+ 	movl	-4(%ebp), %esi			// loaded_image
+ 	movl	LI32_image_base(%esi), %esi	// loaded_image->image_base
+-	movl	%ebx, %ebp			// startup_32 for efi32_pe_stub_entry
++	leal	(startup_32 - 1b)(%ebx), %ebp	// runtime address of startup_32
+ 	/*
+ 	 * We need to set the image_offset variable here since startup_32() will
+ 	 * use it before we get to the 64-bit efi_pe_entry() in C code.
+ 	 */
+-	subl	%esi, %ebx
+-	movl	%ebx, rva(image_offset)(%ebp)	// save image_offset
++	subl	%esi, %ebp			// calculate image_offset
++	movl	%ebp, (image_offset - 1b)(%ebx)	// save image_offset
+ 	xorl	%esi, %esi
+ 	jmp	efi32_entry			// pass %ecx, %edx, %esi
+ 						// no other registers remain live
 
 
