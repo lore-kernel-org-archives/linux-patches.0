@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5641A8F58;
-	Mon,  4 Mar 2024 21:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC5B8F58;
+	Mon,  4 Mar 2024 21:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588366; cv=none; b=UY3rwPCg+TTc1HZ4V/eEmKR1EOczF/iSZ/3K04WnrSSQ4olAqrt9NSnJL4JrQjQWDxb7oXOgglNmMvhYvgmqbHk0l2WwwiXyrAz6bbJzY5IVK9zPRruldQXhPhSG2eX+N3gmGQ6NKObizdoCMXDEXSQenmmp9jV3ER88YK1qVcA=
+	t=1709588369; cv=none; b=aAy1YB4+Ru9Kj/PFaczCHOHa5FGqgm3JlobSNwG6b6g/1Zd8IjRjnH7DX2IYFc2zmyjaaox34FmneSPwjW6v39r46anFloW0VsuQDQOhPbVu2H9V/vdazHx35vSt6l2EP9fFWpl4cs1/m1MpKydU+rK+qwLcC3JGo2TiD223A8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588366; c=relaxed/simple;
-	bh=ILCwAT38u20mZWRNNpJ0pIjejAVcO8eDPIucePubXCo=;
+	s=arc-20240116; t=1709588369; c=relaxed/simple;
+	bh=ov//4nn9LVKjc8M5Loex2QhDVVm4/D3QgCZYYNuEoCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZByacIL2eerjVNLlEI185yRB5QhqE/ivRojyiuMqNow5L1Aos6GjskOXxfdGy5anQ9chalTYs7DbBhNS8BQvu24UcOx6G5W5ntW8YsuarrKgCb0UpIH3/C35hei9r+vJHKLf8RRrUxshAlBfX49ttws8RGTRaOY+OVMgNNDpE1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFnCFIm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSdglYtj0Voa8xN3KeYUYjh+Yy+TFkzs5tkfc7X1iEFBPAfWctLYVTlMwfpP/Wb8knNhJnEWASaNEszEQVqEZh0ldETv6zcAPFYRQiwQwzFWIX0TVToryxeYo19w4uKiofCZtJCEDbJCMnPa+k48sT9NMPGV8bGjZbuvTg+jsOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3P3w3LR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFnCFIm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD670C433F1;
-	Mon,  4 Mar 2024 21:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3P3w3LR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F98C433C7;
+	Mon,  4 Mar 2024 21:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588366;
-	bh=ILCwAT38u20mZWRNNpJ0pIjejAVcO8eDPIucePubXCo=;
+	s=korg; t=1709588368;
+	bh=ov//4nn9LVKjc8M5Loex2QhDVVm4/D3QgCZYYNuEoCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFnCFIm/+LQ6rlTYJ5pQckuCtrzJbd8JLuaQVzfUPqvw1Swi+F9Yhz+N8gpk/Tw+X
-	 UuBUZUpsPTxn8ZX/y00Oj5sbC8Om3IXcU5BJLGWumR1DYIfLuJc+pEhQCP/G5/0797
-	 cTk0qnl8G8XTjH3JMnV9gsMlHzxmA2b/0GDgKkR8=
+	b=U3P3w3LRAPMncmn2WUXvKtnlJlFCOwLsbKXimdNo5YRwFomn3e/fCVwhLuTXl1edZ
+	 Pps+Z93oHHMNuow+sTUBfBc9AXcEH/VJux0m9As0zkvld5WWp2J8AnBSCXhJb4LwxC
+	 qH21UuC/bSEsBqI8Axxg2JrHrRyu1PnJ4kwgxrYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/143] ASoC: cs35l56: Fix deadlock in ASP1 mixer register initialization
-Date: Mon,  4 Mar 2024 21:22:55 +0000
-Message-ID: <20240304211551.688280749@linuxfoundation.org>
+Subject: [PATCH 6.6 046/143] ASoC: soc.h: convert asoc_xxx() to snd_soc_xxx()
+Date: Mon,  4 Mar 2024 21:22:46 +0000
+Message-ID: <20240304211551.401468525@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -51,298 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit c14f09f010cc569ae7e2f6ef02374f6bfef9917e ]
+[ Upstream commit 1d5a2b5dd0a8d2b2b535b5266699429dbd48e62f ]
 
-Rewrite the handling of ASP1 TX mixer mux initialization to prevent a
-deadlock during component_remove().
+ASoC is using 2 type of prefix (asoc_xxx() vs snd_soc_xxx()), but there
+is no particular reason about that [1].
+To reduce confusing, standarding these to snd_soc_xxx() is sensible.
 
-The firmware can overwrite the ASP1 TX mixer registers with
-system-specific settings. This is mainly for hardware that uses the
-ASP as a chip-to-chip link controlled by the firmware. Because of this
-the driver cannot know the starting state of the ASP1 mixer muxes until
-the firmware has been downloaded and rebooted.
+This patch adds asoc_xxx() macro to keep compatible for a while.
+It will be removed if all drivers were switched to new style.
 
-The original workaround for this was to queue a work function from the
-dsp_work() job. This work then read the register values (populating the
-regmap cache the first time around) and then called
-snd_soc_dapm_mux_update_power(). The problem with this is that it was
-ultimately triggered by cs35l56_component_probe() queueing dsp_work,
-which meant that it would be running in parallel with the rest of the
-ASoC component and card initialization. To prevent accessing DAPM before
-it was fully initialized the work function took the card mutex. But this
-would deadlock if cs35l56_component_remove() was called before the work job
-had completed, because ASoC calls component_remove() with the card mutex
-held.
-
-This new version removes the work function. Instead the regmap cache and
-DAPM mux widgets are initialized the first time any of the associated ALSA
-controls is read or written.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 07f7d6e7a124 ("ASoC: cs35l56: Fix for initializing ASP1 mixer registers")
-Link: https://lore.kernel.org/r/20240208123742.1278104-1-rf@opensource.cirrus.com
+Link: https://lore.kernel.org/r/87h6td3hus.wl-kuninori.morimoto.gx@renesas.com [1]
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87fs3ks26i.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1382d8b55129 ("ASoC: qcom: Fix uninitialized pointer dmactl")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 153 +++++++++++++++++--------------------
- sound/soc/codecs/cs35l56.h |   2 +-
- 2 files changed, 73 insertions(+), 82 deletions(-)
+ include/sound/soc-card.h |  4 ++--
+ include/sound/soc.h      | 42 ++++++++++++++++++++++++++--------------
+ sound/soc/soc-utils.c    |  4 ++--
+ 3 files changed, 32 insertions(+), 18 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 3a3782fb70bf0..83178d7c1197b 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -68,63 +68,7 @@ static const char * const cs35l56_asp1_mux_control_names[] = {
- 	"ASP1 TX1 Source", "ASP1 TX2 Source", "ASP1 TX3 Source", "ASP1 TX4 Source"
+diff --git a/include/sound/soc-card.h b/include/sound/soc-card.h
+index e8ff2e089cd00..ecc02e955279f 100644
+--- a/include/sound/soc-card.h
++++ b/include/sound/soc-card.h
+@@ -115,8 +115,8 @@ struct snd_soc_dai *snd_soc_card_get_codec_dai(struct snd_soc_card *card,
+ 	struct snd_soc_pcm_runtime *rtd;
+ 
+ 	for_each_card_rtds(card, rtd) {
+-		if (!strcmp(asoc_rtd_to_codec(rtd, 0)->name, dai_name))
+-			return asoc_rtd_to_codec(rtd, 0);
++		if (!strcmp(snd_soc_rtd_to_codec(rtd, 0)->name, dai_name))
++			return snd_soc_rtd_to_codec(rtd, 0);
+ 	}
+ 
+ 	return NULL;
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index 49ec688eed606..c1acc46529b9d 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -774,37 +774,42 @@ struct snd_soc_dai_link {
+ #endif
  };
  
--static int cs35l56_dspwait_asp1tx_get(struct snd_kcontrol *kcontrol,
--				      struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
--	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
--	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
--	int index = e->shift_l;
--	unsigned int addr, val;
--	int ret;
--
--	/* Wait for mux to be initialized */
--	cs35l56_wait_dsp_ready(cs35l56);
--	flush_work(&cs35l56->mux_init_work);
--
--	addr = cs35l56_asp1_mixer_regs[index];
--	ret = regmap_read(cs35l56->base.regmap, addr, &val);
--	if (ret)
--		return ret;
--
--	val &= CS35L56_ASP_TXn_SRC_MASK;
--	ucontrol->value.enumerated.item[0] = snd_soc_enum_val_to_item(e, val);
--
--	return 0;
--}
--
--static int cs35l56_dspwait_asp1tx_put(struct snd_kcontrol *kcontrol,
--				      struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
--	struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
--	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
--	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
--	int item = ucontrol->value.enumerated.item[0];
--	int index = e->shift_l;
--	unsigned int addr, val;
--	bool changed;
--	int ret;
--
--	/* Wait for mux to be initialized */
--	cs35l56_wait_dsp_ready(cs35l56);
--	flush_work(&cs35l56->mux_init_work);
--
--	addr = cs35l56_asp1_mixer_regs[index];
--	val = snd_soc_enum_item_to_val(e, item);
--
--	ret = regmap_update_bits_check(cs35l56->base.regmap, addr,
--				       CS35L56_ASP_TXn_SRC_MASK, val, &changed);
--	if (!ret)
--		return ret;
--
--	if (changed)
--		snd_soc_dapm_mux_update_power(dapm, kcontrol, item, e, NULL);
--
--	return changed;
--}
--
--static void cs35l56_mark_asp1_mixer_widgets_dirty(struct cs35l56_private *cs35l56)
-+static int cs35l56_sync_asp1_mixer_widgets_with_firmware(struct cs35l56_private *cs35l56)
- {
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(cs35l56->component);
- 	const char *prefix = cs35l56->component->name_prefix;
-@@ -135,13 +79,19 @@ static void cs35l56_mark_asp1_mixer_widgets_dirty(struct cs35l56_private *cs35l5
- 	unsigned int val[4];
- 	int i, item, ret;
- 
-+	if (cs35l56->asp1_mixer_widgets_initialized)
-+		return 0;
++/* REMOVE ME */
++#define asoc_link_to_cpu	snd_soc_link_to_cpu
++#define asoc_link_to_codec	snd_soc_link_to_codec
++#define asoc_link_to_platform	snd_soc_link_to_platform
 +
- 	/*
- 	 * Resume so we can read the registers from silicon if the regmap
- 	 * cache has not yet been populated.
+ static inline struct snd_soc_dai_link_component*
+-asoc_link_to_cpu(struct snd_soc_dai_link *link, int n) {
++snd_soc_link_to_cpu(struct snd_soc_dai_link *link, int n) {
+ 	return &(link)->cpus[n];
+ }
+ 
+ static inline struct snd_soc_dai_link_component*
+-asoc_link_to_codec(struct snd_soc_dai_link *link, int n) {
++snd_soc_link_to_codec(struct snd_soc_dai_link *link, int n) {
+ 	return &(link)->codecs[n];
+ }
+ 
+ static inline struct snd_soc_dai_link_component*
+-asoc_link_to_platform(struct snd_soc_dai_link *link, int n) {
++snd_soc_link_to_platform(struct snd_soc_dai_link *link, int n) {
+ 	return &(link)->platforms[n];
+ }
+ 
+ #define for_each_link_codecs(link, i, codec)				\
+ 	for ((i) = 0;							\
+ 	     ((i) < link->num_codecs) &&				\
+-		     ((codec) = asoc_link_to_codec(link, i));		\
++		     ((codec) = snd_soc_link_to_codec(link, i));		\
+ 	     (i)++)
+ 
+ #define for_each_link_platforms(link, i, platform)			\
+ 	for ((i) = 0;							\
+ 	     ((i) < link->num_platforms) &&				\
+-		     ((platform) = asoc_link_to_platform(link, i));	\
++		     ((platform) = snd_soc_link_to_platform(link, i));	\
+ 	     (i)++)
+ 
+ #define for_each_link_cpus(link, i, cpu)				\
+ 	for ((i) = 0;							\
+ 	     ((i) < link->num_cpus) &&					\
+-		     ((cpu) = asoc_link_to_cpu(link, i));		\
++		     ((cpu) = snd_soc_link_to_cpu(link, i));		\
+ 	     (i)++)
+ 
+ /*
+@@ -894,8 +899,11 @@ asoc_link_to_platform(struct snd_soc_dai_link *link, int n) {
+ #define COMP_CODEC_CONF(_name)		{ .name = _name }
+ #define COMP_DUMMY()			{ .name = "snd-soc-dummy", .dai_name = "snd-soc-dummy-dai", }
+ 
++/* REMOVE ME */
++#define asoc_dummy_dlc		snd_soc_dummy_dlc
++
+ extern struct snd_soc_dai_link_component null_dailink_component[0];
+-extern struct snd_soc_dai_link_component asoc_dummy_dlc;
++extern struct snd_soc_dai_link_component snd_soc_dummy_dlc;
+ 
+ 
+ struct snd_soc_codec_conf {
+@@ -1113,8 +1121,8 @@ struct snd_soc_pcm_runtime {
+ 	 * dais = cpu_dai + codec_dai
+ 	 * see
+ 	 *	soc_new_pcm_runtime()
+-	 *	asoc_rtd_to_cpu()
+-	 *	asoc_rtd_to_codec()
++	 *	snd_soc_rtd_to_cpu()
++	 *	snd_soc_rtd_to_codec()
  	 */
- 	ret = pm_runtime_resume_and_get(cs35l56->base.dev);
- 	if (ret < 0)
--		return;
-+		return ret;
-+
-+	/* Wait for firmware download and reboot */
-+	cs35l56_wait_dsp_ready(cs35l56);
+ 	struct snd_soc_dai **dais;
  
- 	ret = regmap_bulk_read(cs35l56->base.regmap, CS35L56_ASP1TX1_INPUT,
- 			       val, ARRAY_SIZE(val));
-@@ -151,12 +101,9 @@ static void cs35l56_mark_asp1_mixer_widgets_dirty(struct cs35l56_private *cs35l5
- 
- 	if (ret) {
- 		dev_err(cs35l56->base.dev, "Failed to read ASP1 mixer regs: %d\n", ret);
--		return;
-+		return ret;
- 	}
- 
--	snd_soc_card_mutex_lock(dapm->card);
--	WARN_ON(!dapm->card->instantiated);
--
- 	for (i = 0; i < ARRAY_SIZE(cs35l56_asp1_mux_control_names); ++i) {
- 		name = cs35l56_asp1_mux_control_names[i];
- 
-@@ -176,16 +123,65 @@ static void cs35l56_mark_asp1_mixer_widgets_dirty(struct cs35l56_private *cs35l5
- 		snd_soc_dapm_mux_update_power(dapm, kcontrol, item, e, NULL);
- 	}
- 
--	snd_soc_card_mutex_unlock(dapm->card);
-+	cs35l56->asp1_mixer_widgets_initialized = true;
-+
-+	return 0;
- }
- 
--static void cs35l56_mux_init_work(struct work_struct *work)
-+static int cs35l56_dspwait_asp1tx_get(struct snd_kcontrol *kcontrol,
-+				      struct snd_ctl_elem_value *ucontrol)
- {
--	struct cs35l56_private *cs35l56 = container_of(work,
--						       struct cs35l56_private,
--						       mux_init_work);
-+	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
-+	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
-+	int index = e->shift_l;
-+	unsigned int addr, val;
-+	int ret;
- 
--	cs35l56_mark_asp1_mixer_widgets_dirty(cs35l56);
-+	ret = cs35l56_sync_asp1_mixer_widgets_with_firmware(cs35l56);
-+	if (ret)
-+		return ret;
-+
-+	addr = cs35l56_asp1_mixer_regs[index];
-+	ret = regmap_read(cs35l56->base.regmap, addr, &val);
-+	if (ret)
-+		return ret;
-+
-+	val &= CS35L56_ASP_TXn_SRC_MASK;
-+	ucontrol->value.enumerated.item[0] = snd_soc_enum_val_to_item(e, val);
-+
-+	return 0;
-+}
-+
-+static int cs35l56_dspwait_asp1tx_put(struct snd_kcontrol *kcontrol,
-+				      struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
-+	struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
-+	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
-+	int item = ucontrol->value.enumerated.item[0];
-+	int index = e->shift_l;
-+	unsigned int addr, val;
-+	bool changed;
-+	int ret;
-+
-+	ret = cs35l56_sync_asp1_mixer_widgets_with_firmware(cs35l56);
-+	if (ret)
-+		return ret;
-+
-+	addr = cs35l56_asp1_mixer_regs[index];
-+	val = snd_soc_enum_item_to_val(e, item);
-+
-+	ret = regmap_update_bits_check(cs35l56->base.regmap, addr,
-+				       CS35L56_ASP_TXn_SRC_MASK, val, &changed);
-+	if (!ret)
-+		return ret;
-+
-+	if (changed)
-+		snd_soc_dapm_mux_update_power(dapm, kcontrol, item, e, NULL);
-+
-+	return changed;
- }
- 
- static DECLARE_TLV_DB_SCALE(vol_tlv, -10000, 25, 0);
-@@ -909,14 +905,6 @@ static void cs35l56_dsp_work(struct work_struct *work)
- 	else
- 		cs35l56_patch(cs35l56);
- 
--
--	/*
--	 * Set starting value of ASP1 mux widgets. Updating a mux takes
--	 * the DAPM mutex. Post this to a separate job so that DAPM
--	 * power-up can wait for dsp_work to complete without deadlocking
--	 * on the DAPM mutex.
--	 */
--	queue_work(cs35l56->dsp_wq, &cs35l56->mux_init_work);
- err:
- 	pm_runtime_mark_last_busy(cs35l56->base.dev);
- 	pm_runtime_put_autosuspend(cs35l56->base.dev);
-@@ -953,6 +941,13 @@ static int cs35l56_component_probe(struct snd_soc_component *component)
- 	debugfs_create_bool("can_hibernate", 0444, debugfs_root, &cs35l56->base.can_hibernate);
- 	debugfs_create_bool("fw_patched", 0444, debugfs_root, &cs35l56->base.fw_patched);
- 
-+	/*
-+	 * The widgets for the ASP1TX mixer can't be initialized
-+	 * until the firmware has been downloaded and rebooted.
-+	 */
-+	regcache_drop_region(cs35l56->base.regmap, CS35L56_ASP1TX1_INPUT, CS35L56_ASP1TX4_INPUT);
-+	cs35l56->asp1_mixer_widgets_initialized = false;
-+
- 	queue_work(cs35l56->dsp_wq, &cs35l56->dsp_work);
- 
- 	return 0;
-@@ -963,7 +958,6 @@ static void cs35l56_component_remove(struct snd_soc_component *component)
- 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
- 
- 	cancel_work_sync(&cs35l56->dsp_work);
--	cancel_work_sync(&cs35l56->mux_init_work);
- 
- 	if (cs35l56->dsp.cs_dsp.booted)
- 		wm_adsp_power_down(&cs35l56->dsp);
-@@ -1034,10 +1028,8 @@ int cs35l56_system_suspend(struct device *dev)
- 
- 	dev_dbg(dev, "system_suspend\n");
- 
--	if (cs35l56->component) {
-+	if (cs35l56->component)
- 		flush_work(&cs35l56->dsp_work);
--		cancel_work_sync(&cs35l56->mux_init_work);
--	}
- 
- 	/*
- 	 * The interrupt line is normally shared, but after we start suspending
-@@ -1188,7 +1180,6 @@ static int cs35l56_dsp_init(struct cs35l56_private *cs35l56)
- 		return -ENOMEM;
- 
- 	INIT_WORK(&cs35l56->dsp_work, cs35l56_dsp_work);
--	INIT_WORK(&cs35l56->mux_init_work, cs35l56_mux_init_work);
- 
- 	dsp = &cs35l56->dsp;
- 	cs35l56_init_cs_dsp(&cs35l56->base, &dsp->cs_dsp);
-diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
-index dc2fe4c91e67b..d9fbf568a1958 100644
---- a/sound/soc/codecs/cs35l56.h
-+++ b/sound/soc/codecs/cs35l56.h
-@@ -34,7 +34,6 @@ struct cs35l56_private {
- 	struct wm_adsp dsp; /* must be first member */
- 	struct cs35l56_base base;
- 	struct work_struct dsp_work;
--	struct work_struct mux_init_work;
- 	struct workqueue_struct *dsp_wq;
- 	struct snd_soc_component *component;
- 	struct regulator_bulk_data supplies[CS35L56_NUM_BULK_SUPPLIES];
-@@ -51,6 +50,7 @@ struct cs35l56_private {
- 	u8 asp_slot_count;
- 	bool tdm_mode;
- 	bool sysclk_set;
-+	bool asp1_mixer_widgets_initialized;
- 	u8 old_sdw_clock_scale;
+@@ -1142,10 +1150,16 @@ struct snd_soc_pcm_runtime {
+ 	int num_components;
+ 	struct snd_soc_component *components[]; /* CPU/Codec/Platform */
  };
++
++/* REMOVE ME */
++#define asoc_rtd_to_cpu		snd_soc_rtd_to_cpu
++#define asoc_rtd_to_codec	snd_soc_rtd_to_codec
++#define asoc_substream_to_rtd	snd_soc_substream_to_rtd
++
+ /* see soc_new_pcm_runtime()  */
+-#define asoc_rtd_to_cpu(rtd, n)   (rtd)->dais[n]
+-#define asoc_rtd_to_codec(rtd, n) (rtd)->dais[n + (rtd)->dai_link->num_cpus]
+-#define asoc_substream_to_rtd(substream) \
++#define snd_soc_rtd_to_cpu(rtd, n)   (rtd)->dais[n]
++#define snd_soc_rtd_to_codec(rtd, n) (rtd)->dais[n + (rtd)->dai_link->num_cpus]
++#define snd_soc_substream_to_rtd(substream) \
+ 	(struct snd_soc_pcm_runtime *)snd_pcm_substream_chip(substream)
  
+ #define for_each_rtd_components(rtd, i, component)			\
+@@ -1154,11 +1168,11 @@ struct snd_soc_pcm_runtime {
+ 	     (i)++)
+ #define for_each_rtd_cpu_dais(rtd, i, dai)				\
+ 	for ((i) = 0;							\
+-	     ((i) < rtd->dai_link->num_cpus) && ((dai) = asoc_rtd_to_cpu(rtd, i)); \
++	     ((i) < rtd->dai_link->num_cpus) && ((dai) = snd_soc_rtd_to_cpu(rtd, i)); \
+ 	     (i)++)
+ #define for_each_rtd_codec_dais(rtd, i, dai)				\
+ 	for ((i) = 0;							\
+-	     ((i) < rtd->dai_link->num_codecs) && ((dai) = asoc_rtd_to_codec(rtd, i)); \
++	     ((i) < rtd->dai_link->num_codecs) && ((dai) = snd_soc_rtd_to_codec(rtd, i)); \
+ 	     (i)++)
+ #define for_each_rtd_dais(rtd, i, dai)					\
+ 	for ((i) = 0;							\
+diff --git a/sound/soc/soc-utils.c b/sound/soc/soc-utils.c
+index 9c746e4edef71..941ba0639a4e6 100644
+--- a/sound/soc/soc-utils.c
++++ b/sound/soc/soc-utils.c
+@@ -225,12 +225,12 @@ int snd_soc_component_is_dummy(struct snd_soc_component *component)
+ 		(component->driver == &dummy_codec));
+ }
+ 
+-struct snd_soc_dai_link_component asoc_dummy_dlc = {
++struct snd_soc_dai_link_component snd_soc_dummy_dlc = {
+ 	.of_node	= NULL,
+ 	.dai_name	= "snd-soc-dummy-dai",
+ 	.name		= "snd-soc-dummy",
+ };
+-EXPORT_SYMBOL_GPL(asoc_dummy_dlc);
++EXPORT_SYMBOL_GPL(snd_soc_dummy_dlc);
+ 
+ static int snd_soc_dummy_probe(struct platform_device *pdev)
+ {
 -- 
 2.43.0
 
