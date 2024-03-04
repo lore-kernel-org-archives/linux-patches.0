@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030091EB5A;
-	Mon,  4 Mar 2024 21:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483461EB5A;
+	Mon,  4 Mar 2024 21:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588858; cv=none; b=uKs7NO4wK//qFwYWvi/wbwYhVaGf9O1+RkuB0H5XLyn9fHZ23h5K6I8ud4gbf6apIL47xkqzg6S2zVrHX52AviPRt6vbnoJdzBbzy3alGJUFs83KNER0eV3OA1HknvPELG/BUsXm7LZXKIQIeZ/lymc15+NA7vKL3CL9qqcH7JM=
+	t=1709588863; cv=none; b=bAVrcIYFjm9nRaK8RhGFK9AcmAUR8oxgaOPnTHhtiTLSH3KYxXdTtnBhYd6t/9AGCWDdo5I31BLRPeDa8kFh+9k6pv/aMJ0XLY6TmUv6kkQZrDk63YC5UezrqXNdTgzK0LKRjazJSXHZ/d+2jLtLKe+l+MgYH42RUi/jvc/ZrlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588858; c=relaxed/simple;
-	bh=DBQhIyxAiatgLWisGUKuuddHyqF5Rp6Hm/DFuz8pPmk=;
+	s=arc-20240116; t=1709588863; c=relaxed/simple;
+	bh=2qyxo47tr94K9NGAKIxrA0jmpTHC1gnHcvjyKOdPsEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvwlK6naYQ26dMf/yAM8sB8hWGunT/712YFDobxPKT0aYb78J0aB2h3XYbotXmC2z+rm4vSt/myFzbVwvumUvIpFS8PagyMkGy6KSYqt9rOLZ774zJ/LuzShBVPzDLvjQyKWZ0gEl/QsPCGfvIsUjmlTmjs7oQvnzrIEXHr2hT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHvQRUwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVGUMKuizfKMTTI8NDxcqq/N3JxRmIzJmQzOP6KORUXDytoGKdUYAeFQJ719bLGxL9m1sG1CER6H/viqBaGKbM8/CZeCTOLb9JJHMPjtrflq/WWcKmyBhKyhsEq8DxHvdfSYtfn4uYmUE4exia9Y2UawVBanjjgkR9u4c0Nqtgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWYwEO4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHvQRUwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851DAC433F1;
-	Mon,  4 Mar 2024 21:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWYwEO4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50468C433F1;
+	Mon,  4 Mar 2024 21:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588857;
-	bh=DBQhIyxAiatgLWisGUKuuddHyqF5Rp6Hm/DFuz8pPmk=;
+	s=korg; t=1709588863;
+	bh=2qyxo47tr94K9NGAKIxrA0jmpTHC1gnHcvjyKOdPsEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHvQRUwJy6PMfUa9gfnVh64188tHOi8+O84FsBWQ2U2okH+ULrlCfAuBAwS/JyJUN
-	 JU7TftuVPXbXKBysdvNHf5JwY2WjN1USY6eKQ6ZakN9nCu99mpxzmrEm78DGW0IP/g
-	 uXpBWAX07UvLg241XAa61c4zBKBCLZudvm8qZIdg=
+	b=iWYwEO4lEIk+adFAfNLWQ87g4PgJSD2rl6lMPRP2sgBRvQ2NtqlPryK7p7884lsol
+	 7btpCMFJnch9R2aVzbPFCHaTtcfcsYKw9UZDykFujs9mW+Cw0BvQbJNUopWD13P1pq
+	 FLhWAO3pIQEMJisWEJuYkzrQ3JMFfNLph91fxed8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 099/215] mptcp: fix duplicate subflow creation
-Date: Mon,  4 Mar 2024 21:22:42 +0000
-Message-ID: <20240304211600.175818877@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.1 100/215] mptcp: continue marking the first subflow as UNCONNECTED
+Date: Mon,  4 Mar 2024 21:22:43 +0000
+Message-ID: <20240304211600.206386851@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,107 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 045e9d812868a2d80b7a57b224ce8009444b7bbc upstream.
+After the 'Fixes' commit mentioned below, which is a partial backport,
+the MPTCP worker was no longer marking the first subflow as "UNCONNECTED"
+when the socket was transitioning to TCP_CLOSE state.
 
-Fullmesh endpoints could end-up unexpectedly generating duplicate
-subflows - same local and remote addresses - when multiple incoming
-ADD_ADDR are processed before the PM creates the subflow for the local
-endpoints.
+As a result, in v6.1, it was no longer possible to reconnect to the just
+disconnected socket. Continue to do that like before, only for the first
+subflow.
 
-Address the issue explicitly checking for duplicates at subflow
-creation time.
+A few refactoring have been done around the 'msk->subflow' in later
+versions, and it looks like this is not needed to do that there, but
+still needed in v6.1. Without that, the 'disconnect' tests from the
+mptcp_connect.sh selftest fail: they repeat the transfer 3 times by
+reconnecting to the server each time.
 
-To avoid a quadratic computational complexity, track the unavailable
-remote address ids in a temporary bitmap and initialize such bitmap
-with the remote ids of all the existing subflows matching the local
-address currently processed.
-
-The above allows additionally replacing the existing code checking
-for duplicate entry in the current set with a simple bit test
-operation.
-
-Fixes: 2843ff6f36db ("mptcp: remote addresses fullmesh")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/435
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Fixes: 7857e35ef10e ("mptcp: get rid of msk->subflow")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ net/mptcp/protocol.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -407,23 +407,12 @@ void mptcp_pm_free_anno_list(struct mptc
- 	}
- }
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2440,6 +2440,8 @@ static void __mptcp_close_ssk(struct soc
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+ 		__mptcp_subflow_disconnect(ssk, subflow, flags);
++		if (msk->subflow && ssk == msk->subflow->sk)
++			msk->subflow->state = SS_UNCONNECTED;
+ 		release_sock(ssk);
  
--static bool lookup_address_in_vec(const struct mptcp_addr_info *addrs, unsigned int nr,
--				  const struct mptcp_addr_info *addr)
--{
--	int i;
--
--	for (i = 0; i < nr; i++) {
--		if (addrs[i].id == addr->id)
--			return true;
--	}
--
--	return false;
--}
--
- /* Fill all the remote addresses into the array addrs[],
-  * and return the array size.
-  */
--static unsigned int fill_remote_addresses_vec(struct mptcp_sock *msk, bool fullmesh,
-+static unsigned int fill_remote_addresses_vec(struct mptcp_sock *msk,
-+					      struct mptcp_addr_info *local,
-+					      bool fullmesh,
- 					      struct mptcp_addr_info *addrs)
- {
- 	bool deny_id0 = READ_ONCE(msk->pm.remote_deny_join_id0);
-@@ -446,6 +435,16 @@ static unsigned int fill_remote_addresse
- 		msk->pm.subflows++;
- 		addrs[i++] = remote;
- 	} else {
-+		DECLARE_BITMAP(unavail_id, MPTCP_PM_MAX_ADDR_ID + 1);
-+
-+		/* Forbid creation of new subflows matching existing
-+		 * ones, possibly already created by incoming ADD_ADDR
-+		 */
-+		bitmap_zero(unavail_id, MPTCP_PM_MAX_ADDR_ID + 1);
-+		mptcp_for_each_subflow(msk, subflow)
-+			if (READ_ONCE(subflow->local_id) == local->id)
-+				__set_bit(subflow->remote_id, unavail_id);
-+
- 		mptcp_for_each_subflow(msk, subflow) {
- 			ssk = mptcp_subflow_tcp_sock(subflow);
- 			remote_address((struct sock_common *)ssk, &addrs[i]);
-@@ -453,8 +452,11 @@ static unsigned int fill_remote_addresse
- 			if (deny_id0 && !addrs[i].id)
- 				continue;
- 
--			if (!lookup_address_in_vec(addrs, i, &addrs[i]) &&
--			    msk->pm.subflows < subflows_max) {
-+			if (msk->pm.subflows < subflows_max) {
-+				/* forbid creating multiple address towards
-+				 * this id
-+				 */
-+				__set_bit(addrs[i].id, unavail_id);
- 				msk->pm.subflows++;
- 				i++;
- 			}
-@@ -603,7 +605,7 @@ static void mptcp_pm_create_subflow_or_s
- 		fullmesh = !!(local->flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
- 
- 		msk->pm.local_addr_used++;
--		nr = fill_remote_addresses_vec(msk, fullmesh, addrs);
-+		nr = fill_remote_addresses_vec(msk, &local->addr, fullmesh, addrs);
- 		if (nr)
- 			__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
- 		spin_unlock_bh(&msk->pm.lock);
+ 		goto out;
 
 
