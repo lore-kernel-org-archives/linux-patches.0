@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BE7200D4;
-	Mon,  4 Mar 2024 21:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850C4CE04;
+	Mon,  4 Mar 2024 21:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587604; cv=none; b=b/lyVgUg/k4PP2Yz+iT+qXUoH1kytjdR5odFJ2NEsnZZF/KJZ7VslglD5Ox9fITz678Y1UPiL/xusv6psrSm5GcMws600U4Sve8jbfg497qa8HoTtHPMoMjh0uC4oyLNuz2Ku6VeBkedmpDv5/vjhram+nB22uIdmshXRFXI4CY=
+	t=1709587607; cv=none; b=cLF5fD3KobEytrdsGovWGT5CVufWsphp8M9D+LoCAYT+pMbFtlFRHUP3++nabbde/Gf7Djs3qSstw88dXyyE9xxZG7IVUZepcaDttWv+gayoPZHBmDxLu3fb31EkYmuRps3a3Iyi35qnFjUhiPpxJVpmP+v1ME7SNGxC/TGrmIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587604; c=relaxed/simple;
-	bh=tRpIl2UMPoC2W9unTi5rY3ijblDsmacxkULzbpV9cQI=;
+	s=arc-20240116; t=1709587607; c=relaxed/simple;
+	bh=SR/lsGzD1bb08mlD4qY7pGWcCxFF30ep4ClHUcDWRLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y693/Ug34fDM6AJoBfNEgVaVGeaazI4PlwbM+JbjArpWUA4BhTIF/wUqm78USJHnNKx2xje6/ImxuNSxRdzH8GbP598cZx2aPV2m5HW5sYS6AFMWiNWC+ncLGSR63gwsP0uHS/tXovyRbIYVngtAr/P5RWCV2X4eS0twWVVKBMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfuKCQ8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNBmGkeToTOhY6/rmovNPeBbrD0Wn3bAP5PBfWuPo2La2pc0JqRFMCrwq+YU6prMzg8xFh478zQ8CF3tpxNErT/iqkOuLNZsKCX6JmMz9hjkZv780ABOGk5Qw2e/C/5x9JjIoW76UwiKPVlY20+008wwHGs/FKijbUn6V6D6yb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTT3k/pC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfuKCQ8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4A0C433F1;
-	Mon,  4 Mar 2024 21:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTT3k/pC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E86C433C7;
+	Mon,  4 Mar 2024 21:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587604;
-	bh=tRpIl2UMPoC2W9unTi5rY3ijblDsmacxkULzbpV9cQI=;
+	s=korg; t=1709587607;
+	bh=SR/lsGzD1bb08mlD4qY7pGWcCxFF30ep4ClHUcDWRLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfuKCQ8xWkJ4ZYTQ6xdxGEsFzKhmJkAZU2WmpiyomaHZQZSkFXlvvtmW7X1I42Uj8
-	 wRcCJEWi5wKLZy8zKSvaOijT56UfRNpNwmdPcPkwmhW0585sipTcfFVCzbltZYJnMk
-	 i07jj+ywuFLXx9B4IGBJPKda9VyxKHF9zTa7lzlU=
+	b=zTT3k/pCwVTnyHvPrVXTvhA/UZfle9UrNz0v14FqoQcRLPwOpgpEHGuc6zLrH2Wwk
+	 p6L91svfelsnDKBYeFELAwcvksbAUnMJitUc2zMXgrQphtn3zadUBxG9Yerpf6ODUD
+	 CCcABY9Rk2bUQdAUngooxV8DD2AE6oOTckyooADM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Peter Korsgaard <peter@korsgaard.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Miao Wang <shankerwangmiao@gmail.com>
-Subject: [PATCH 6.7 020/162] veth: try harder when allocating queue memory
-Date: Mon,  4 Mar 2024 21:21:25 +0000
-Message-ID: <20240304211552.479177870@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 021/162] net: usb: dm9601: fix wrong return value in dm9601_mdio_read
+Date: Mon,  4 Mar 2024 21:21:26 +0000
+Message-ID: <20240304211552.511405967@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -53,53 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 1ce7d306ea63f3e379557c79abd88052e0483813 ]
+[ Upstream commit c68b2c9eba38ec3f60f4894b189090febf4d8d22 ]
 
-struct veth_rq is pretty large, 832B total without debug
-options enabled. Since commit under Fixes we try to pre-allocate
-enough queues for every possible CPU. Miao Wang reports that
-this may lead to order-5 allocations which will fail in production.
+The MII code does not check the return value of mdio_read (among
+others), and therefore no error code should be sent. A previous fix to
+the use of an uninitialized variable propagates negative error codes,
+that might lead to wrong operations by the MII library.
 
-Let the allocation fallback to vmalloc() and try harder.
-These are the same flags we pass to netdev queue allocation.
+An example of such issues is the use of mii_nway_restart by the dm9601
+driver. The mii_nway_restart function does not check the value returned
+by mdio_read, which in this case might be a negative number which could
+contain the exact bit the function checks (BMCR_ANENABLE = 0x1000).
 
-Reported-and-tested-by: Miao Wang <shankerwangmiao@gmail.com>
-Fixes: 9d3684c24a52 ("veth: create by default nr_possible_cpus queues")
-Link: https://lore.kernel.org/all/5F52CAE2-2FB7-4712-95F1-3312FBBFA8DD@gmail.com/
+Return zero in case of error, as it is common practice in users of
+mdio_read to avoid wrong uses of the return value.
+
+Fixes: 8f8abb863fa5 ("net: usb: dm9601: fix uninitialized variable use in dm9601_mdio_read")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20240225-dm9601_ret_err-v1-1-02c1d959ea59@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240223235908.693010-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/usb/dm9601.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index bf4da315ae01c..a2e80278eb2f9 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1461,7 +1461,8 @@ static int veth_alloc_queues(struct net_device *dev)
- 	struct veth_priv *priv = netdev_priv(dev);
- 	int i;
+diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
+index 99ec1d4a972db..8b6d6a1b3c2ec 100644
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -232,7 +232,7 @@ static int dm9601_mdio_read(struct net_device *netdev, int phy_id, int loc)
+ 	err = dm_read_shared_word(dev, 1, loc, &res);
+ 	if (err < 0) {
+ 		netdev_err(dev->net, "MDIO read error: %d\n", err);
+-		return err;
++		return 0;
+ 	}
  
--	priv->rq = kcalloc(dev->num_rx_queues, sizeof(*priv->rq), GFP_KERNEL_ACCOUNT);
-+	priv->rq = kvcalloc(dev->num_rx_queues, sizeof(*priv->rq),
-+			    GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
- 	if (!priv->rq)
- 		return -ENOMEM;
- 
-@@ -1477,7 +1478,7 @@ static void veth_free_queues(struct net_device *dev)
- {
- 	struct veth_priv *priv = netdev_priv(dev);
- 
--	kfree(priv->rq);
-+	kvfree(priv->rq);
- }
- 
- static int veth_dev_init(struct net_device *dev)
+ 	netdev_dbg(dev->net,
 -- 
 2.43.0
 
