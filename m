@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D711193;
-	Mon,  4 Mar 2024 21:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5CE8F58;
+	Mon,  4 Mar 2024 21:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588690; cv=none; b=Hl900s3ajPIdzCvurfGf3Cu1oFOZhapp16Mke3OKG8oBOKGbSDw+4C6J7xhaTLLNbSlLKKEM9IdpAxhjKtLx+mZL5/fPKCqxFtuvsQaNqD0I9vBMp2kq2G9LuZBRhPkAxgPZLRf04VZWMG9fNqoieysN5gvDhQJi3buQdwcUZxY=
+	t=1709588693; cv=none; b=JMjmVMAQUUy6DACbYnqKS0Z0Ni0dLrIZXHBOe8fAYGkT/lBk7xh48U4PD+SwmsR6/vqFi3i4bqcjqLMMW06X7SEaMXKhkAZpHD4g2Tov5Y709n6r2mBT3TG7YF+wDU+kFT7ChQMM20KSbhha7/7hQanWpVq+E6cQM2uORRzE01g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588690; c=relaxed/simple;
-	bh=xNqjunxuknNlgL2R0jKRLQ+xlXpampVRalacxBuvlUI=;
+	s=arc-20240116; t=1709588693; c=relaxed/simple;
+	bh=vFWHFC7JQVwAX2+WB5Tgvb0odCeDKemVzISMHkMdW5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1JgbQwMTq3b2PGST8fWwR+Lj6QRglgDj80h7f4DRxxF54gzvhIEtKEbMYYu8zl46XpiQz2+jislY8Kx+vyGsz+PuIxUFvvCGKa4JZOkdXnxuOWKepJXZoEiTLjxqtI11T9JyDa6eB8rulb/ZMefV+YOuyrFavSVSdJCVmio+go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAFca2/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYSDfzMpBk4NTRspqEwAkafDoEhsW5qpMdssgmqcyp2gdLsH/t6simiASYLrxpvgPQB4x7z66+YKvBdjnfRr046jxnP4gO420fmZ6S0BNYA0ZeR2IrGphV7oDD0L9Vyce7ne30L+hSk3U0cjJrfVPtZYmwRa05UsHq4lQvSj35Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFucz2an; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAFca2/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2FDC433F1;
-	Mon,  4 Mar 2024 21:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFucz2an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59F7C433C7;
+	Mon,  4 Mar 2024 21:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588690;
-	bh=xNqjunxuknNlgL2R0jKRLQ+xlXpampVRalacxBuvlUI=;
+	s=korg; t=1709588693;
+	bh=vFWHFC7JQVwAX2+WB5Tgvb0odCeDKemVzISMHkMdW5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAFca2/gx/tC2akskAYku3KxGfkXnZlvCeHyOciEUBM2u9n+C8+xa+Ft7lhPgfMf0
-	 AJ6A/oA+c3A4ZgUOa9ovfu9Aj/F5GU99Sucfu3nNv3d+f6EU4uBP6O5Vreai4VciEK
-	 qyE8tf/iln8p1A84PbNM+0cX2T8BVSqYer79zh88=
+	b=aFucz2anqFFyIhS/eKyBIbILIVOV4xF3IJgc2rXELalIq5liK8vHc9sCXhKBuWJt5
+	 fS60cc/xMW0Vs+ahQCMsbNYrpX/3/Xf4QyAgffaMNNhak4cOt8Ycrd0Bwxyy91bIAq
+	 2dBmALkZGIHRR6BWws6WOxIxOM+oZGK07t6lkiI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/215] rtnetlink: fix error logic of IFLA_BRIDGE_FLAGS writing back
-Date: Mon,  4 Mar 2024 21:22:02 +0000
-Message-ID: <20240304211558.853871242@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 060/215] igb: extend PTP timestamp adjustments to i211
+Date: Mon,  4 Mar 2024 21:22:03 +0000
+Message-ID: <20240304211558.883448099@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,81 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 743ad091fb46e622f1b690385bb15e3cd3daf874 ]
+[ Upstream commit 0bb7b09392eb74b152719ae87b1ba5e4bf910ef0 ]
 
-In the commit d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks
-IFLA_BRIDGE_MODE length"), an adjustment was made to the old loop logic
-in the function `rtnl_bridge_setlink` to enable the loop to also check
-the length of the IFLA_BRIDGE_MODE attribute. However, this adjustment
-removed the `break` statement and led to an error logic of the flags
-writing back at the end of this function.
+The i211 requires the same PTP timestamp adjustments as the i210,
+according to its datasheet. To ensure consistent timestamping across
+different platforms, this change extends the existing adjustments to
+include the i211.
 
-if (have_flags)
-    memcpy(nla_data(attr), &flags, sizeof(flags));
-    // attr should point to IFLA_BRIDGE_FLAGS NLA !!!
+The adjustment result are tested and comparable for i210 and i211 based
+systems.
 
-Before the mentioned commit, the `attr` is granted to be IFLA_BRIDGE_FLAGS.
-However, this is not necessarily true fow now as the updated loop will let
-the attr point to the last NLA, even an invalid NLA which could cause
-overflow writes.
-
-This patch introduces a new variable `br_flag` to save the NLA pointer
-that points to IFLA_BRIDGE_FLAGS and uses it to resolve the mentioned
-error logic.
-
-Fixes: d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240227121128.608110-1-linma@zju.edu.cn
+Fixes: 3f544d2a4d5c ("igb: adjust PTP timestamps for Tx/Rx latency")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240227184942.362710-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_ptp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 7cf1e42d7f93b..ac379e4590f8d 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -5026,10 +5026,9 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct ifinfomsg *ifm;
- 	struct net_device *dev;
--	struct nlattr *br_spec, *attr = NULL;
-+	struct nlattr *br_spec, *attr, *br_flags_attr = NULL;
- 	int rem, err = -EOPNOTSUPP;
- 	u16 flags = 0;
--	bool have_flags = false;
+diff --git a/drivers/net/ethernet/intel/igb/igb_ptp.c b/drivers/net/ethernet/intel/igb/igb_ptp.c
+index 07171e574e7d7..36e62197fba0b 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ptp.c
++++ b/drivers/net/ethernet/intel/igb/igb_ptp.c
+@@ -976,7 +976,7 @@ static void igb_ptp_tx_hwtstamp(struct igb_adapter *adapter)
  
- 	if (nlmsg_len(nlh) < sizeof(*ifm))
- 		return -EINVAL;
-@@ -5047,11 +5046,11 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	br_spec = nlmsg_find_attr(nlh, sizeof(struct ifinfomsg), IFLA_AF_SPEC);
- 	if (br_spec) {
- 		nla_for_each_nested(attr, br_spec, rem) {
--			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !have_flags) {
-+			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !br_flags_attr) {
- 				if (nla_len(attr) < sizeof(flags))
- 					return -EINVAL;
+ 	igb_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
+ 	/* adjust timestamp for the TX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_TX_LATENCY_10;
+@@ -1022,6 +1022,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 			ktime_t *timestamp)
+ {
+ 	struct igb_adapter *adapter = q_vector->adapter;
++	struct e1000_hw *hw = &adapter->hw;
+ 	struct skb_shared_hwtstamps ts;
+ 	__le64 *regval = (__le64 *)va;
+ 	int adjust = 0;
+@@ -1041,7 +1042,7 @@ int igb_ptp_rx_pktstamp(struct igb_q_vector *q_vector, void *va,
+ 	igb_ptp_systim_to_hwtstamp(adapter, &ts, le64_to_cpu(regval[1]));
  
--				have_flags = true;
-+				br_flags_attr = attr;
- 				flags = nla_get_u16(attr);
- 			}
- 
-@@ -5095,8 +5094,8 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
- 	}
- 
--	if (have_flags)
--		memcpy(nla_data(attr), &flags, sizeof(flags));
-+	if (br_flags_attr)
-+		memcpy(nla_data(br_flags_attr), &flags, sizeof(flags));
- out:
- 	return err;
- }
+ 	/* adjust timestamp for the RX latency based on link speed */
+-	if (adapter->hw.mac.type == e1000_i210) {
++	if (hw->mac.type == e1000_i210 || hw->mac.type == e1000_i211) {
+ 		switch (adapter->link_speed) {
+ 		case SPEED_10:
+ 			adjust = IGB_I210_RX_LATENCY_10;
 -- 
 2.43.0
 
