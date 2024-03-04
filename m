@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B70D79DDE;
-	Mon,  4 Mar 2024 21:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7328F58;
+	Mon,  4 Mar 2024 21:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588631; cv=none; b=eR/2X70bJpxx4+cb0RsnSidLIjbt2m68KxYVuYKDRZzCcLSIvO6IF/8WYGTi2+euWOcplfMR0EkZPvXo3ov4i493NJPfxkWdZQsk9Mq4ztOHnuOAAYwps+RN1KvVdol+rv57m0gz0QSWT3h/sFKHMYWGeK7Gz2UKCL5vzSTWU+E=
+	t=1709588633; cv=none; b=WPs703vn4ugJOKjyj+cqHDK1l+haCAWzAZITwIWqcUufuCK1sThSYypAiEyhXfR0iPVL8cyKVUzRVzSB1Vw9XYOmYInCHZGJDSu97MttAyMSQhi85ObuxWwas3gLxdiu04GLEx7puyeWHQyn4ZezZfYyO4+WJMAUd/ZB/tWlTRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588631; c=relaxed/simple;
-	bh=pRyciyF/bFKCnjG1V46g8SyA2f7ziZ0aQ2eAh6xNpJ0=;
+	s=arc-20240116; t=1709588633; c=relaxed/simple;
+	bh=VqZoIDudaLGZAIEp6XEONv5O5RJv/07zQKYVe+KEJl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eotAdFR4676DlM7sxDXK12LPL12WMc+TFQVx3ggsS97w2fdgKSXKx1N5QFCfwPun80RI+zpJyCNHFRm3T6XF0RKrr3C0hAwtYWYMzCJkW8N2EDFpcQWTbc1pwC6t18dBPugwU1wv5BzhNBWKj6dhqJk7/8Br1DOKI2KUm+E8foA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjDfyfvM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDvMyUAR8l9g0nkMX+lFx4JKmmpWv0+Q4EaeggMnJQ2Txl8jjFAxb5tO6L6sJZQ4NeWDiWTmltzYlPPkgjXJiy+xCD03k7u9CGj1pIjCnzjrZOXlemoWejtI2srd7xTcxZ7tH68a4X2Xb+jLpqyJ8I8p4VrwVQEuTfZDP1RWJeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qodqHZ6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjDfyfvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936CEC433C7;
-	Mon,  4 Mar 2024 21:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qodqHZ6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC5AC433C7;
+	Mon,  4 Mar 2024 21:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588630;
-	bh=pRyciyF/bFKCnjG1V46g8SyA2f7ziZ0aQ2eAh6xNpJ0=;
+	s=korg; t=1709588633;
+	bh=VqZoIDudaLGZAIEp6XEONv5O5RJv/07zQKYVe+KEJl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjDfyfvM27zUCJFDFas7TxOwxD3fpMSW3j5+reiDDNaZlI1SnRGud9wHQVoXAhKN7
-	 zUmrXPveFFOarhadgUO2xnOBiUspes4IqoeoyYZs1izGlpMZ3R/uFjQ6j5SrDUyL/f
-	 dr24jOplCCY1VTiuJKdgqTAg77NoqOXltY4O+kxU=
+	b=qodqHZ6Du9drJarmNSl8mHpB7yLLAl8iKkmsgHW6rrv1OsSql7VGjGMbWbjOXm29j
+	 4qt+4+3++IqhstG3PpJC1hTXspm7MuxMB/tpfdpeckH1E1zx7DMGCDU5Qp4G+XeNQP
+	 gbTmowALGXEyDm2xmUW4nCAuSmBjZYRGPMqznPg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/215] lan78xx: enable auto speed configuration for LAN7850 if no EEPROM is detected
-Date: Mon,  4 Mar 2024 21:21:39 +0000
-Message-ID: <20240304211558.140855120@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Miao Wang <shankerwangmiao@gmail.com>
+Subject: [PATCH 6.1 037/215] veth: try harder when allocating queue memory
+Date: Mon,  4 Mar 2024 21:21:40 +0000
+Message-ID: <20240304211558.182557057@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,42 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0e67899abfbfdea0c3c0ed3fd263ffc601c5c157 ]
+[ Upstream commit 1ce7d306ea63f3e379557c79abd88052e0483813 ]
 
-Same as LAN7800, LAN7850 can be used without EEPROM. If EEPROM is not
-present or not flashed, LAN7850 will fail to sync the speed detected by the PHY
-with the MAC. In case link speed is 100Mbit, it will accidentally work,
-otherwise no data can be transferred.
+struct veth_rq is pretty large, 832B total without debug
+options enabled. Since commit under Fixes we try to pre-allocate
+enough queues for every possible CPU. Miao Wang reports that
+this may lead to order-5 allocations which will fail in production.
 
-Better way would be to implement link_up callback, or set auto speed
-configuration unconditionally. But this changes would be more intrusive.
-So, for now, set it only if no EEPROM is found.
+Let the allocation fallback to vmalloc() and try harder.
+These are the same flags we pass to netdev queue allocation.
 
-Fixes: e69647a19c87 ("lan78xx: Set ASD in MAC_CR when EEE is enabled.")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20240222123839.2816561-1-o.rempel@pengutronix.de
+Reported-and-tested-by: Miao Wang <shankerwangmiao@gmail.com>
+Fixes: 9d3684c24a52 ("veth: create by default nr_possible_cpus queues")
+Link: https://lore.kernel.org/all/5F52CAE2-2FB7-4712-95F1-3312FBBFA8DD@gmail.com/
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240223235908.693010-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index c458c030fadf6..7b9d480e44fe4 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -3035,7 +3035,8 @@ static int lan78xx_reset(struct lan78xx_net *dev)
- 	if (dev->chipid == ID_REV_CHIP_ID_7801_)
- 		buf &= ~MAC_CR_GMII_EN_;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index dea9cc8c39f7a..dd9f5f1461921 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1359,7 +1359,8 @@ static int veth_alloc_queues(struct net_device *dev)
+ 	struct veth_priv *priv = netdev_priv(dev);
+ 	int i;
  
--	if (dev->chipid == ID_REV_CHIP_ID_7800_) {
-+	if (dev->chipid == ID_REV_CHIP_ID_7800_ ||
-+	    dev->chipid == ID_REV_CHIP_ID_7850_) {
- 		ret = lan78xx_read_raw_eeprom(dev, 0, 1, &sig);
- 		if (!ret && sig != EEPROM_INDICATOR) {
- 			/* Implies there is no external eeprom. Set mac speed */
+-	priv->rq = kcalloc(dev->num_rx_queues, sizeof(*priv->rq), GFP_KERNEL_ACCOUNT);
++	priv->rq = kvcalloc(dev->num_rx_queues, sizeof(*priv->rq),
++			    GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
+ 	if (!priv->rq)
+ 		return -ENOMEM;
+ 
+@@ -1375,7 +1376,7 @@ static void veth_free_queues(struct net_device *dev)
+ {
+ 	struct veth_priv *priv = netdev_priv(dev);
+ 
+-	kfree(priv->rq);
++	kvfree(priv->rq);
+ }
+ 
+ static int veth_dev_init(struct net_device *dev)
 -- 
 2.43.0
 
