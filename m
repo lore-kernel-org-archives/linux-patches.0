@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B508F58;
-	Mon,  4 Mar 2024 21:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6355B8F58;
+	Mon,  4 Mar 2024 21:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588397; cv=none; b=uyxDWxTzWwSwt5dR1j9e0098XWR0/p+UuqaWK/TwssqTtwZf3MlKhyXq1++Gd1boauj/W1Lai4fSqBKR4TCIsLVi69vq+nU45aMK27ipebrYvL3ihvdEeVuNNz6KgcoJPBBEPQWNSaNnAYm1r8bN27tBClu3829LpF2DlBtLn6A=
+	t=1709588400; cv=none; b=EbQiSxoBSLPiJf4cfJCoUb9D2F4XdX+Hm+GCzg6cwd49LnH5sWUM8oCcYlcFFcHJFDcBUXGtlg0jGhHkRf+shCQe1zc4vi6a6smL+vKcmh/ejV+3cD7DUo3PjhNhJe9H/Sh+C/EtSLo7ekCptQkyhS3dqIbVvaTphr6hereS22o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588397; c=relaxed/simple;
-	bh=uswhbah/+42hlJS0N/kMLFCVowx8Xjwkg3YOqNVyxs4=;
+	s=arc-20240116; t=1709588400; c=relaxed/simple;
+	bh=F3e4crSfJSJ9VkitZ0TaRm+3lSFEAGRjRaQZvzuxWFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3Xq0OX/Muea+9Y/ew/gwE3BNbkUS+UB2euKYkYRs1H9Ucn/Qw7sytKGDKw2NHdTs/kZn3l8YBBnoiOFHTiTs+X2yzmJ+CApNscIxG1DOTfsnejAHrYM99guSg/tLX8Cf8U3hYaWGfcuLonQcHlOonJhIS+cyvBFS55xXeO6tsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdwOTdCA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDY7rXnyddWtekxjnrzmJMG49F4QST5KMxx9dxmUyE1ZVFPrq0Rs1bASswCjRsIyiABd0Ux1MnXz8FWG+WPVBamm9lc+No7a1PTTqJMcIgNSZ/4BwcJpuzfwifUtr0ikeqC7V4AG+yhDZ+KdArRXXFOkrtKiWby1e+5QVMUfbQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jykMK/HQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdwOTdCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B559C433F1;
-	Mon,  4 Mar 2024 21:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jykMK/HQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E20C433F1;
+	Mon,  4 Mar 2024 21:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588397;
-	bh=uswhbah/+42hlJS0N/kMLFCVowx8Xjwkg3YOqNVyxs4=;
+	s=korg; t=1709588400;
+	bh=F3e4crSfJSJ9VkitZ0TaRm+3lSFEAGRjRaQZvzuxWFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdwOTdCA3j1l+zlb3sHAIPy9xvNT7Rn4IqYxWjjM6H6p7Wd/XIUZouTNLZkF3B4oy
-	 gsuvWlUSj2s7YOPavM3xgPFaUkXzGG1lscWnDFzE+FY4mryYkl7FlBCH+4wxUO9GTL
-	 KoT5Et5/FlOyJ+iQXjvL1mCcwDy2Dzp5f5sZz8P4=
+	b=jykMK/HQfub5M2GzMg1loLr4kj00DvlUBfR3hk5aX3gmgLnlcVLPzZKV3QsFUgUBh
+	 cHfoz8C6UhGleWMvi3A3O1rHY6SXyXuYS6PYlQT+eHz/yDKfpCm5LIHpsPDJGCSr+T
+	 MIY9AXNiH0AlUKfoYEX8pfFkdM7V9/FCGoPrHVbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Klein <curtis.klein@hpe.com>,
-	Yi Zhao <yi.zhao@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 092/143] dmaengine: fsl-qdma: init irq after reg initialization
-Date: Mon,  4 Mar 2024 21:23:32 +0000
-Message-ID: <20240304211552.854007186@linuxfoundation.org>
+	Felix Zhang <mrman@mrman314.tech>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Neal Gompa <neal@gompa.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 075/143] Bluetooth: hci_bcm4377: do not mark valid bd_addr as invalid
+Date: Mon,  4 Mar 2024 21:23:15 +0000
+Message-ID: <20240304211552.314543750@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -52,95 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Curtis Klein <curtis.klein@hpe.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 87a39071e0b639f45e05d296cc0538eef44ec0bd upstream.
+commit c17d2a7b216e168c3ba62d93482179c01b369ac7 upstream.
 
-Initialize the qDMA irqs after the registers are configured so that
-interrupts that may have been pending from a primary kernel don't get
-processed by the irq handler before it is ready to and cause panic with
-the following trace:
+A recent commit restored the original (and still documented) semantics
+for the HCI_QUIRK_USE_BDADDR_PROPERTY quirk so that the device address
+is considered invalid unless an address is provided by firmware.
 
-  Call trace:
-   fsl_qdma_queue_handler+0xf8/0x3e8
-   __handle_irq_event_percpu+0x78/0x2b0
-   handle_irq_event_percpu+0x1c/0x68
-   handle_irq_event+0x44/0x78
-   handle_fasteoi_irq+0xc8/0x178
-   generic_handle_irq+0x24/0x38
-   __handle_domain_irq+0x90/0x100
-   gic_handle_irq+0x5c/0xb8
-   el1_irq+0xb8/0x180
-   _raw_spin_unlock_irqrestore+0x14/0x40
-   __setup_irq+0x4bc/0x798
-   request_threaded_irq+0xd8/0x190
-   devm_request_threaded_irq+0x74/0xe8
-   fsl_qdma_probe+0x4d4/0xca8
-   platform_drv_probe+0x50/0xa0
-   really_probe+0xe0/0x3f8
-   driver_probe_device+0x64/0x130
-   device_driver_attach+0x6c/0x78
-   __driver_attach+0xbc/0x158
-   bus_for_each_dev+0x5c/0x98
-   driver_attach+0x20/0x28
-   bus_add_driver+0x158/0x220
-   driver_register+0x60/0x110
-   __platform_driver_register+0x44/0x50
-   fsl_qdma_driver_init+0x18/0x20
-   do_one_initcall+0x48/0x258
-   kernel_init_freeable+0x1a4/0x23c
-   kernel_init+0x10/0xf8
-   ret_from_fork+0x10/0x18
+This specifically means that this flag must only be set for devices with
+invalid addresses, but the Broadcom BCM4377 driver has so far been
+setting this flag unconditionally.
 
-Cc: stable@vger.kernel.org
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
-Signed-off-by: Yi Zhao <yi.zhao@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240201220406.440145-1-Frank.Li@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fortunately the driver already checks for invalid addresses during setup
+and sets the HCI_QUIRK_INVALID_BDADDR flag, which can simply be replaced
+with HCI_QUIRK_USE_BDADDR_PROPERTY to indicate that the default address
+is invalid but can be overridden by firmware (long term, this should
+probably just always be allowed).
+
+Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
+Cc: stable@vger.kernel.org      # 6.5
+Reported-by: Felix Zhang <mrman@mrman314.tech>
+Link: https://lore.kernel.org/r/77419ffacc5b4875e920e038332575a2a5bff29f.camel@mrman314.tech/
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reported-by: Felix Zhang <mrman@mrman314.tech>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-qdma.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/bluetooth/hci_bcm4377.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -1199,10 +1199,6 @@ static int fsl_qdma_probe(struct platfor
- 	if (!fsl_qdma->queue)
- 		return -ENOMEM;
+--- a/drivers/bluetooth/hci_bcm4377.c
++++ b/drivers/bluetooth/hci_bcm4377.c
+@@ -1417,7 +1417,7 @@ static int bcm4377_check_bdaddr(struct b
  
--	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
--	if (ret)
--		return ret;
--
- 	fsl_qdma->irq_base = platform_get_irq_byname(pdev, "qdma-queue0");
- 	if (fsl_qdma->irq_base < 0)
- 		return fsl_qdma->irq_base;
-@@ -1241,16 +1237,19 @@ static int fsl_qdma_probe(struct platfor
+ 	bda = (struct hci_rp_read_bd_addr *)skb->data;
+ 	if (!bcm4377_is_valid_bdaddr(bcm4377, &bda->bdaddr))
+-		set_bit(HCI_QUIRK_INVALID_BDADDR, &bcm4377->hdev->quirks);
++		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &bcm4377->hdev->quirks);
  
- 	platform_set_drvdata(pdev, fsl_qdma);
+ 	kfree_skb(skb);
+ 	return 0;
+@@ -2368,7 +2368,6 @@ static int bcm4377_probe(struct pci_dev
+ 	hdev->set_bdaddr = bcm4377_hci_set_bdaddr;
+ 	hdev->setup = bcm4377_hci_setup;
  
--	ret = dma_async_device_register(&fsl_qdma->dma_dev);
-+	ret = fsl_qdma_reg_init(fsl_qdma);
- 	if (ret) {
--		dev_err(&pdev->dev,
--			"Can't register NXP Layerscape qDMA engine.\n");
-+		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
- 		return ret;
- 	}
- 
--	ret = fsl_qdma_reg_init(fsl_qdma);
-+	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
-+	if (ret)
-+		return ret;
-+
-+	ret = dma_async_device_register(&fsl_qdma->dma_dev);
- 	if (ret) {
--		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
-+		dev_err(&pdev->dev, "Can't register NXP Layerscape qDMA engine.\n");
- 		return ret;
- 	}
- 
+-	set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+ 	if (bcm4377->hw->broken_mws_transport_config)
+ 		set_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &hdev->quirks);
+ 	if (bcm4377->hw->broken_ext_scan)
 
 
