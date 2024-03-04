@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C7F7BAFF;
-	Mon,  4 Mar 2024 21:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C17B7C0B7;
+	Mon,  4 Mar 2024 21:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587943; cv=none; b=bHlIY0YJu6Ykq4++/DK0KzwQPCaZBjkg038rZsKUFHw/cj2KqpFu1OU1bPAlF//nmeZ1InwXUKXRWEO0cM5jbY8u30wr+RwCW8IJW7MBXG7CRzA0GQl3HSwmU75EQZUWhVKpYopG968ElQKMJHe43IuUuXm419c/XyX7mhC5jpI=
+	t=1709587946; cv=none; b=UFX8Gjpfkgmbq4gybKnAwuERGJUct/qSfCoS5l5Gxau56f9K4lVo4FU8j5lwNSZEmlZkWfog3kUnzI4kYEX9NIM3d2cMhzUvo1Rp2vCxXWd/fQiKa4HvUJvhAptgOcwMEvT0Wrw664U2efyFI1WG4Qhnjb+n0jzubwj+iF0VG1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587943; c=relaxed/simple;
-	bh=7ZehKQYTmUhTJxX+ZQtFcbNc3SoJuscgYt+lXjjDVTM=;
+	s=arc-20240116; t=1709587946; c=relaxed/simple;
+	bh=T5JeyUulc+GDqcg7iEqLI6YYqQLkoLT0kfxcr0vNbh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3uubENqY6n/TMwtN6tCODUnt2GahV3TnGWCkQpNU2IjwvdyqalRliGwbOs4Jta+OeqWXqzwfX7Ejhru/tVFP2LXizmuTn6uOA0+RTwJbeeYKEfOkgWRi8kvuc4Rpv0Y3ltiMgdhspOQ7yar8KWWnNDvuldYw608KZx6sVxJXxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSnmzceW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZOR2hQEwcpE3b92AZNyOmGvO5qN+QfrTld8B7G0BMhtFt0EI4moKKlAT+30QEGdn3ZofT1Oxnevnuh/i5G4SmEhOVTrk4oKEw+sNXaP0r9b7RbZ0mGT3ZQuOQ06V63bK1RELwbwB7nEmaAmuYsm0M+SfrQ0R/7TANwgVk+mmi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIKfPwfz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSnmzceW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1769FC43390;
-	Mon,  4 Mar 2024 21:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIKfPwfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BADC43394;
+	Mon,  4 Mar 2024 21:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587943;
-	bh=7ZehKQYTmUhTJxX+ZQtFcbNc3SoJuscgYt+lXjjDVTM=;
+	s=korg; t=1709587945;
+	bh=T5JeyUulc+GDqcg7iEqLI6YYqQLkoLT0kfxcr0vNbh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSnmzceW2p2RgZgb25GdC6mtiem2qOW3VGzJkb8ZfeuHG8+u9FRO607YVOZ9kAQxy
-	 p2N0eDrV6tmFW5ThuCrkkZSlvzrmxvVSb0PrI9sNaI4M/FJN/WphEOQ1PGNZQSAvqi
-	 HjBN5WG5hZHqUK87itiSjkQyxwDqZuWlB0A1QPNg=
+	b=ZIKfPwfz5Va3wY83MTkTrjrg9FgIibUEYJ8ufvgaRBtKwIyNfy0z7GyWWFqazxi9F
+	 xRZUrTPIRkvxlkQqUGDctN9hUFX7OpE/E9nO5padGq9I0btwyqOgT3oFwrIMGM6br/
+	 PXLm2W/KZrgE9uZryywQ9lRjY4wPGGzSLATgXq8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.7 115/162] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
-Date: Mon,  4 Mar 2024 21:23:00 +0000
-Message-ID: <20240304211555.452673002@linuxfoundation.org>
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 143/162] phy: qcom-qmp-usb: fix v3 offsets data
+Date: Mon,  4 Mar 2024 21:23:28 +0000
+Message-ID: <20240304211556.285888986@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -56,70 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 2a93c6cbd5a703d44c414a3c3945a87ce11430ba upstream.
+[ Upstream commit d4c08d8b23b22807c712208cd05cb047e92e7672 ]
 
-Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
-the domain")' aimed to make sure that a power-domain that is being
-enabled without any particular performance-state requested will at least
-turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
-required-opps properties.
+The MSM8996 platform has registers setup different to the rest of QMP v3
+USB platforms. It has PCS region at 0x600 and no PCS_MISC region, while
+other platforms have PCS region at 0x800 and PCS_MISC at 0x600.  This
+results in the malfunctioning USB host on some of the platforms.  The
+commit f74c35b630d4 ("phy: qcom-qmp-usb: fix register offsets for
+ipq8074/ipq6018") fixed the issue for IPQ platforms, but missed the
+SDM845 which has the same register layout.
 
-But in the event that aggregation happens on a disabled power-domain, with
-an enabled peer without performance-state, both the local and peer
-corner are 0. The peer's enabled_corner is not considered, with the
-result that the underlying (shared) resource is disabled.
+To simplify future platform addition and to make the driver more future
+proof, rename qmp_usb_offsets_v3 to qmp_usb_offsets_v3_msm8996 (to mark
+its peculiarity), rename qmp_usb_offsets_ipq8074 to qmp_usb_offsets_v3
+and use it for SDM845 platform.
 
-One case where this can be observed is when the display stack keeps mmcx
-enabled (but without a particular performance-state vote) in order to
-access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
-is flushed the state of the peer (mmcx) is not considered and mmcx_ao
-ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
-several times, but has been painted over in DeviceTree by adding an
-explicit vote for the lowest non-disabled performance-state.
-
-Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
-Reported-by: Johan Hovold <johan@kernel.org>
-Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2be22aae6b18 ("phy: qcom-qmp-usb: populate offsets configuration")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240213133824.2218916-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/qcom/rpmhpd.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -692,6 +692,7 @@ static int rpmhpd_aggregate_corner(struc
- 	unsigned int active_corner, sleep_corner;
- 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
- 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
-+	unsigned int peer_enabled_corner;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+index a3719719e2e0f..365f5d85847b8 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+@@ -1276,7 +1276,7 @@ static const char * const qmp_phy_vreg_l[] = {
+ 	"vdda-phy", "vdda-pll",
+ };
  
- 	if (pd->state_synced) {
- 		to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
-@@ -701,9 +702,11 @@ static int rpmhpd_aggregate_corner(struc
- 		this_sleep_corner = pd->level_count - 1;
- 	}
+-static const struct qmp_usb_offsets qmp_usb_offsets_ipq8074 = {
++static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
+ 	.serdes		= 0,
+ 	.pcs		= 0x800,
+ 	.pcs_misc	= 0x600,
+@@ -1292,7 +1292,7 @@ static const struct qmp_usb_offsets qmp_usb_offsets_ipq9574 = {
+ 	.rx		= 0x400,
+ };
  
--	if (peer && peer->enabled)
--		to_active_sleep(peer, peer->corner, &peer_active_corner,
-+	if (peer && peer->enabled) {
-+		peer_enabled_corner = max(peer->corner, peer->enable_corner);
-+		to_active_sleep(peer, peer_enabled_corner, &peer_active_corner,
- 				&peer_sleep_corner);
-+	}
+-static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
++static const struct qmp_usb_offsets qmp_usb_offsets_v3_msm8996 = {
+ 	.serdes		= 0,
+ 	.pcs		= 0x600,
+ 	.tx		= 0x200,
+@@ -1328,7 +1328,7 @@ static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
+ static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
+ 	.lanes			= 1,
  
- 	active_corner = max(this_active_corner, peer_active_corner);
+-	.offsets		= &qmp_usb_offsets_ipq8074,
++	.offsets		= &qmp_usb_offsets_v3,
  
+ 	.serdes_tbl		= ipq9574_usb3_serdes_tbl,
+ 	.serdes_tbl_num		= ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
+@@ -1346,7 +1346,7 @@ static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
+ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
+ 	.lanes			= 1,
+ 
+-	.offsets		= &qmp_usb_offsets_ipq8074,
++	.offsets		= &qmp_usb_offsets_v3,
+ 
+ 	.serdes_tbl		= ipq8074_usb3_serdes_tbl,
+ 	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_usb3_serdes_tbl),
+@@ -1382,7 +1382,7 @@ static const struct qmp_phy_cfg ipq9574_usb3phy_cfg = {
+ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+ 	.lanes			= 1,
+ 
+-	.offsets		= &qmp_usb_offsets_v3,
++	.offsets		= &qmp_usb_offsets_v3_msm8996,
+ 
+ 	.serdes_tbl		= msm8996_usb3_serdes_tbl,
+ 	.serdes_tbl_num		= ARRAY_SIZE(msm8996_usb3_serdes_tbl),
+-- 
+2.43.0
+
 
 
