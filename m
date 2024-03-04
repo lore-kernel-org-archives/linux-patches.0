@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF18C10A35;
-	Mon,  4 Mar 2024 21:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC5C10A35;
+	Mon,  4 Mar 2024 21:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587682; cv=none; b=Ylyd/aXptCE2NMUy2X2MkWma2Mcmti/smJI8LPMejLoBRkkHdEGZg7cSYe8gMMycojmtdw9di97gEUcBG+KQV8rW4WtDj8FcFOAssTZrYgmbIlQyEVZZGrH+K7pEHYusc8Y/I7nBWQBT5S5eIjfOZ747ERy8DYxEdz83+c7c6ZQ=
+	t=1709587685; cv=none; b=Azoztc7bWlWWHDAHDwK2u7fC37epyuugz85nP9LmxahwcpBEooYF4Ttaqy7gF4xvTir10eW91vKb9CjErF5V/bgCI1wGlDEqBsWN7l75ahiY1W8NBzQaBDBARvSZSiNyO2G3z61BTM65uHx2LrwrqE5HplBYsuviUThQy72usuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587682; c=relaxed/simple;
-	bh=jO+SIgPR5yhs4eMEI3u0FyuqhWW3qL/luuoy6xDxkBk=;
+	s=arc-20240116; t=1709587685; c=relaxed/simple;
+	bh=X79Lv/4jU8SrUl8gVZTdoIyNgo8Z8eJeT1ZNt4e/4H8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nssei0VX0PwjLhMV5KOUByzcxSHTbMOeTm+85FHbVhJixzHwq4m2gxIQpPSMX9fAv3fDl1NbQ+FBX59PtRqGPM66w2sHN/968hqBWhh5mO2QrCMf1zzwx4kAd2KxU/YO2a0EosXr0PBR7d9oNPKBPeDHkDN63iJbsTYJaa5tZHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6mtu0fX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iP717dXDm54A+dp0vx3+8mILQUrwP1EJdTB1szKCbsczxbjvA/vfrxxncp1QVED7hypGR7B2sCKOSmlUF5okHNhV7PPI691dhtf18f0VyCKLES9N+kJ2Nq3HQS3xc0BW6r0aTgIPM+vr8vq4B2QxzgL3NjcXPcDmz/cdCLzFSlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGGZ4w7a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6mtu0fX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FFEC433F1;
-	Mon,  4 Mar 2024 21:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGGZ4w7a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD7DC433C7;
+	Mon,  4 Mar 2024 21:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587682;
-	bh=jO+SIgPR5yhs4eMEI3u0FyuqhWW3qL/luuoy6xDxkBk=;
+	s=korg; t=1709587685;
+	bh=X79Lv/4jU8SrUl8gVZTdoIyNgo8Z8eJeT1ZNt4e/4H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6mtu0fX802UC/4aLwLgccgp+W9D/JKG8cMHnSQ2qdkyEU1Jc6VaNtAiiWM+2Lqc5
-	 +2OuQfk+qLBo+F0an8zV+hSp7dyszflvi2cW7aHvtPER/6jq5KjjFibQ3fPkQVWC40
-	 20gHjHsXfPJfsuhcqvHisEwB3/V9p/j19HUBOJ8M=
+	b=OGGZ4w7a95StQ2Nu2dDOBpvlxgJ9AmlcZwHaLc0HHxjCr0D24ltoGnBaxB9uPi6ja
+	 3tdyc+qGYGRWUeIMS/daat3McV2hG+JlEmgwa14uWTq6dDAVFifEjqGCYdbiEepOns
+	 qvLQrmBdk9ZdxhetqgOB+BQx0F/+gFH+kyxBufSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Guo Ren <guoren@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 050/162] gpu: host1x: Skip reset assert on Tegra186
-Date: Mon,  4 Mar 2024 21:21:55 +0000
-Message-ID: <20240304211553.457909241@linuxfoundation.org>
+Subject: [PATCH 6.7 051/162] riscv: mm: fix NOCACHE_THEAD does not set bit[61] correctly
+Date: Mon,  4 Mar 2024 21:21:56 +0000
+Message-ID: <20240304211553.491595509@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,82 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Yangyu Chen <cyy@cyyself.name>
 
-[ Upstream commit 1fa8d07ae1a5fa4e87de42c338e8fc27f46d8bb6 ]
+[ Upstream commit c21f014818600ae017f97ee087e7c136b1916aa7 ]
 
-On Tegra186, secure world applications may need to access host1x
-during suspend/resume, and rely on the kernel to keep Host1x out
-of reset during the suspend cycle. As such, as a quirk,
-skip asserting Host1x's reset on Tegra186.
+Previous commit dbfbda3bd6bf ("riscv: mm: update T-Head memory type
+definitions") from patch [1] missed a `<` for bit shifting, result in
+bit(61) does not set in _PAGE_NOCACHE_THEAD and leaves bit(0) set instead.
+This patch get this fixed.
 
-We don't need to keep the clocks enabled, as BPMP ensures the clock
-stays on while Host1x is being used. On newer SoC's, the reset line
-is inaccessible, so there is no need for the quirk.
-
-Fixes: b7c00cdf6df5 ("gpu: host1x: Enable system suspend callbacks")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240222010517.1573931-1-cyndis@kapsi.fi
+Link: https://lore.kernel.org/linux-riscv/20230912072510.2510-1-jszhang@kernel.org/ [1]
+Fixes: dbfbda3bd6bf ("riscv: mm: update T-Head memory type definitions")
+Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/tencent_E19FA1A095768063102E654C6FC858A32F06@qq.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/dev.c | 15 +++++++++------
- drivers/gpu/host1x/dev.h |  6 ++++++
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ arch/riscv/include/asm/pgtable-64.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/host1x/dev.c b/drivers/gpu/host1x/dev.c
-index 42fd504abbcda..89983d7d73ca1 100644
---- a/drivers/gpu/host1x/dev.c
-+++ b/drivers/gpu/host1x/dev.c
-@@ -169,6 +169,7 @@ static const struct host1x_info host1x06_info = {
- 	.num_sid_entries = ARRAY_SIZE(tegra186_sid_table),
- 	.sid_table = tegra186_sid_table,
- 	.reserve_vblank_syncpts = false,
-+	.skip_reset_assert = true,
- };
+diff --git a/arch/riscv/include/asm/pgtable-64.h b/arch/riscv/include/asm/pgtable-64.h
+index 9a2c780a11e95..783837bbd8783 100644
+--- a/arch/riscv/include/asm/pgtable-64.h
++++ b/arch/riscv/include/asm/pgtable-64.h
+@@ -136,7 +136,7 @@ enum napot_cont_order {
+  * 10010 - IO   Strongly-ordered, Non-cacheable, Non-bufferable, Shareable, Non-trustable
+  */
+ #define _PAGE_PMA_THEAD		((1UL << 62) | (1UL << 61) | (1UL << 60))
+-#define _PAGE_NOCACHE_THEAD	((1UL < 61) | (1UL << 60))
++#define _PAGE_NOCACHE_THEAD	((1UL << 61) | (1UL << 60))
+ #define _PAGE_IO_THEAD		((1UL << 63) | (1UL << 60))
+ #define _PAGE_MTMASK_THEAD	(_PAGE_PMA_THEAD | _PAGE_IO_THEAD | (1UL << 59))
  
- static const struct host1x_sid_entry tegra194_sid_table[] = {
-@@ -680,13 +681,15 @@ static int __maybe_unused host1x_runtime_suspend(struct device *dev)
- 	host1x_intr_stop(host);
- 	host1x_syncpt_save(host);
- 
--	err = reset_control_bulk_assert(host->nresets, host->resets);
--	if (err) {
--		dev_err(dev, "failed to assert reset: %d\n", err);
--		goto resume_host1x;
--	}
-+	if (!host->info->skip_reset_assert) {
-+		err = reset_control_bulk_assert(host->nresets, host->resets);
-+		if (err) {
-+			dev_err(dev, "failed to assert reset: %d\n", err);
-+			goto resume_host1x;
-+		}
- 
--	usleep_range(1000, 2000);
-+		usleep_range(1000, 2000);
-+	}
- 
- 	clk_disable_unprepare(host->clk);
- 	reset_control_bulk_release(host->nresets, host->resets);
-diff --git a/drivers/gpu/host1x/dev.h b/drivers/gpu/host1x/dev.h
-index c8e302de76257..925a118db23f5 100644
---- a/drivers/gpu/host1x/dev.h
-+++ b/drivers/gpu/host1x/dev.h
-@@ -116,6 +116,12 @@ struct host1x_info {
- 	 * the display driver disables VBLANK increments.
- 	 */
- 	bool reserve_vblank_syncpts;
-+	/*
-+	 * On Tegra186, secure world applications may require access to
-+	 * host1x during suspend/resume. To allow this, we need to leave
-+	 * host1x not in reset.
-+	 */
-+	bool skip_reset_assert;
- };
- 
- struct host1x {
 -- 
 2.43.0
 
