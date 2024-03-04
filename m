@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F78E1C687;
-	Mon,  4 Mar 2024 21:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8980F46BA0;
+	Mon,  4 Mar 2024 21:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588131; cv=none; b=JA9wc6o+P/UcG/kXBfkWjMc0+XZ3KSrHJpBUxtLCKlu/WbePN+USpCxqjZTPOZ27daK5EAENA6vjBAgyzYQT8cGkHnTJ9fs72m7Y+ZGeR41bLoAS8wg59JsNn5l4T8CNHKSR2TYsOfZBMprz3MzB9mzAXGu79RLWRfuHI2e3zg0=
+	t=1709588133; cv=none; b=kxQgyh9s512rMU2Uvfw/lJXAiVttX2HfwEXM1Ile0AxkD06fOShwd026cku8P37PP1lsTAzNp2aeD80CI7TxgowrfMwBOUWUDoeDsDm63riS00IsOOM0vNLIy0M6vSo7UvmtlOKGwEsoL/MfZm/wnu35ZdO2Zkc/Pjv/mOTn0MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588131; c=relaxed/simple;
-	bh=DI5iYntnIlkLAOGpByQPf7o0qy0G53f9lSrMthxPABo=;
+	s=arc-20240116; t=1709588133; c=relaxed/simple;
+	bh=p8g6RGW36QzXYF5QPbZBtUaTA6howCxtTGclQ1JQkHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNglQBmbuAgh1aJx/BySKpfT8oNc/0tx+R3h6g3vlkUN9sy3kM1M9DXYF6K+B5/3M1egZYa1aBB+Fc8uXf2urmj9bt+uQwBBzcLGduvF3SFD/H3k5gpkNNTQuohK38lYjPTG+RbI/JuBxeLyWiFOy+aAtDrQv5pSTIgh7gDhcM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+V+5t1H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWjLsl2DmpgARZfu4enPRyXp38tboPc+YWUT8pdzA8nfM99kF9lr2PR9oJ1qy4i/QdABjZdBDth/vU5xkxcP1bEpbga5+7Th65rz1XzsfNd0B86epEN/af109waqxsz2Le1ClcJ51Qa3/reZNrWuC//k6nZPp9QcCwm0ehpijSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzgbCD1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+V+5t1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C867C433F1;
-	Mon,  4 Mar 2024 21:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzgbCD1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D50BC433C7;
+	Mon,  4 Mar 2024 21:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588130;
-	bh=DI5iYntnIlkLAOGpByQPf7o0qy0G53f9lSrMthxPABo=;
+	s=korg; t=1709588133;
+	bh=p8g6RGW36QzXYF5QPbZBtUaTA6howCxtTGclQ1JQkHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+V+5t1HIGbswjJlYr6++GYVyIWpTJd4VnO+z3D10E5mxILZ5J7bK3yvZUjPBsq2Q
-	 UJ14ABJofOEIh5mfGmCMOMERIhPcZ1mK1P7vYKLV4d3DksP757A+Uq9MgvuGXnWTHS
-	 LcFwzmqThumux/KPHCkaRKlw6ZEG85n0W/ak3+38=
+	b=IzgbCD1l8APr4+ifFpy8wHcVvc+lio65BZCVGOB3Ur4nrrncL8mNSuUiZtO1BhnaF
+	 NQGJQKy+TIELTS2wsHPsTmO6GJEyCZ3jJp9rCji/P6ejTfPjSpWv6mM91fS3Hjnxwz
+	 dLlMWjlVEB8BPA2yu74TfvCJk7nXe/taM5n8f+ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixi Chen <zixchen@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.10 33/42] x86/cpu/intel: Detect TME keyid bits before setting MTRR mask registers
-Date: Mon,  4 Mar 2024 21:24:00 +0000
-Message-ID: <20240304211538.750907899@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 34/42] mptcp: fix possible deadlock in subflow diag
+Date: Mon,  4 Mar 2024 21:24:01 +0000
+Message-ID: <20240304211538.789224966@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -51,243 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 6890cb1ace350b4386c8aee1343dc3b3ddd214da upstream.
+commit d6a9608af9a75d13243d217f6ce1e30e57d56ffe upstream.
 
-MKTME repurposes the high bit of physical address to key id for encryption
-key and, even though MAXPHYADDR in CPUID[0x80000008] remains the same,
-the valid bits in the MTRR mask register are based on the reduced number
-of physical address bits.
+Syzbot and Eric reported a lockdep splat in the subflow diag:
 
-detect_tme() in arch/x86/kernel/cpu/intel.c detects TME and subtracts
-it from the total usable physical bits, but it is called too late.
-Move the call to early_init_intel() so that it is called in setup_arch(),
-before MTRRs are setup.
+   WARNING: possible circular locking dependency detected
+   6.8.0-rc4-syzkaller-00212-g40b9385dd8e6 #0 Not tainted
 
-This fixes boot on TDX-enabled systems, which until now only worked with
-"disable_mtrr_cleanup".  Without the patch, the values written to the
-MTRRs mask registers were 52-bit wide (e.g. 0x000fffff_80000800) and
-the writes failed; with the patch, the values are 46-bit wide, which
-matches the reduced MAXPHYADDR that is shown in /proc/cpuinfo.
+   syz-executor.2/24141 is trying to acquire lock:
+   ffff888045870130 (k-sk_lock-AF_INET6){+.+.}-{0:0}, at:
+   tcp_diag_put_ulp net/ipv4/tcp_diag.c:100 [inline]
+   ffff888045870130 (k-sk_lock-AF_INET6){+.+.}-{0:0}, at:
+   tcp_diag_get_aux+0x738/0x830 net/ipv4/tcp_diag.c:137
 
-Reported-by: Zixi Chen <zixchen@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240131230902.1867092-3-pbonzini%40redhat.com
+   but task is already holding lock:
+   ffffc9000135e488 (&h->lhash2[i].lock){+.+.}-{2:2}, at: spin_lock
+   include/linux/spinlock.h:351 [inline]
+   ffffc9000135e488 (&h->lhash2[i].lock){+.+.}-{2:2}, at:
+   inet_diag_dump_icsk+0x39f/0x1f80 net/ipv4/inet_diag.c:1038
+
+   which lock already depends on the new lock.
+
+   the existing dependency chain (in reverse order) is:
+
+   -> #1 (&h->lhash2[i].lock){+.+.}-{2:2}:
+   lock_acquire+0x1e3/0x530 kernel/locking/lockdep.c:5754
+   __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+   spin_lock include/linux/spinlock.h:351 [inline]
+   __inet_hash+0x335/0xbe0 net/ipv4/inet_hashtables.c:743
+   inet_csk_listen_start+0x23a/0x320 net/ipv4/inet_connection_sock.c:1261
+   __inet_listen_sk+0x2a2/0x770 net/ipv4/af_inet.c:217
+   inet_listen+0xa3/0x110 net/ipv4/af_inet.c:239
+   rds_tcp_listen_init+0x3fd/0x5a0 net/rds/tcp_listen.c:316
+   rds_tcp_init_net+0x141/0x320 net/rds/tcp.c:577
+   ops_init+0x352/0x610 net/core/net_namespace.c:136
+   __register_pernet_operations net/core/net_namespace.c:1214 [inline]
+   register_pernet_operations+0x2cb/0x660 net/core/net_namespace.c:1283
+   register_pernet_device+0x33/0x80 net/core/net_namespace.c:1370
+   rds_tcp_init+0x62/0xd0 net/rds/tcp.c:735
+   do_one_initcall+0x238/0x830 init/main.c:1236
+   do_initcall_level+0x157/0x210 init/main.c:1298
+   do_initcalls+0x3f/0x80 init/main.c:1314
+   kernel_init_freeable+0x42f/0x5d0 init/main.c:1551
+   kernel_init+0x1d/0x2a0 init/main.c:1441
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:242
+
+   -> #0 (k-sk_lock-AF_INET6){+.+.}-{0:0}:
+   check_prev_add kernel/locking/lockdep.c:3134 [inline]
+   check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+   validate_chain+0x18ca/0x58e0 kernel/locking/lockdep.c:3869
+   __lock_acquire+0x1345/0x1fd0 kernel/locking/lockdep.c:5137
+   lock_acquire+0x1e3/0x530 kernel/locking/lockdep.c:5754
+   lock_sock_fast include/net/sock.h:1723 [inline]
+   subflow_get_info+0x166/0xd20 net/mptcp/diag.c:28
+   tcp_diag_put_ulp net/ipv4/tcp_diag.c:100 [inline]
+   tcp_diag_get_aux+0x738/0x830 net/ipv4/tcp_diag.c:137
+   inet_sk_diag_fill+0x10ed/0x1e00 net/ipv4/inet_diag.c:345
+   inet_diag_dump_icsk+0x55b/0x1f80 net/ipv4/inet_diag.c:1061
+   __inet_diag_dump+0x211/0x3a0 net/ipv4/inet_diag.c:1263
+   inet_diag_dump_compat+0x1c1/0x2d0 net/ipv4/inet_diag.c:1371
+   netlink_dump+0x59b/0xc80 net/netlink/af_netlink.c:2264
+   __netlink_dump_start+0x5df/0x790 net/netlink/af_netlink.c:2370
+   netlink_dump_start include/linux/netlink.h:338 [inline]
+   inet_diag_rcv_msg_compat+0x209/0x4c0 net/ipv4/inet_diag.c:1405
+   sock_diag_rcv_msg+0xe7/0x410
+   netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2543
+   sock_diag_rcv+0x2a/0x40 net/core/sock_diag.c:280
+   netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
+   netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1367
+   netlink_sendmsg+0xa3b/0xd70 net/netlink/af_netlink.c:1908
+   sock_sendmsg_nosec net/socket.c:730 [inline]
+   __sock_sendmsg+0x221/0x270 net/socket.c:745
+   ____sys_sendmsg+0x525/0x7d0 net/socket.c:2584
+   ___sys_sendmsg net/socket.c:2638 [inline]
+   __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2667
+   do_syscall_64+0xf9/0x240
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+
+As noted by Eric we can break the lock dependency chain avoid
+dumping any extended info for the mptcp subflow listener:
+nothing actually useful is presented there.
+
+Fixes: b8adb69a7d29 ("mptcp: fix lockless access in subflow ULP diag")
+Cc: stable@vger.kernel.org
+Reported-by: Eric Dumazet <edumazet@google.com>
+Closes: https://lore.kernel.org/netdev/CANn89iJ=Oecw6OZDwmSYc9HJKQ_G32uN11L+oUcMu+TOD5Xiaw@mail.gmail.com/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240223-upstream-net-20240223-misc-fixes-v1-9-162e87e48497@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/intel.c |  178 ++++++++++++++++++++++----------------------
- 1 file changed, 91 insertions(+), 87 deletions(-)
+ net/mptcp/diag.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -178,6 +178,90 @@ static bool bad_spectre_microcode(struct
- 	return false;
- }
+--- a/net/mptcp/diag.c
++++ b/net/mptcp/diag.c
+@@ -21,6 +21,9 @@ static int subflow_get_info(struct sock
+ 	bool slow;
+ 	int err;
  
-+#define MSR_IA32_TME_ACTIVATE		0x982
++	if (inet_sk_state_load(sk) == TCP_LISTEN)
++		return 0;
 +
-+/* Helpers to access TME_ACTIVATE MSR */
-+#define TME_ACTIVATE_LOCKED(x)		(x & 0x1)
-+#define TME_ACTIVATE_ENABLED(x)		(x & 0x2)
-+
-+#define TME_ACTIVATE_POLICY(x)		((x >> 4) & 0xf)	/* Bits 7:4 */
-+#define TME_ACTIVATE_POLICY_AES_XTS_128	0
-+
-+#define TME_ACTIVATE_KEYID_BITS(x)	((x >> 32) & 0xf)	/* Bits 35:32 */
-+
-+#define TME_ACTIVATE_CRYPTO_ALGS(x)	((x >> 48) & 0xffff)	/* Bits 63:48 */
-+#define TME_ACTIVATE_CRYPTO_AES_XTS_128	1
-+
-+/* Values for mktme_status (SW only construct) */
-+#define MKTME_ENABLED			0
-+#define MKTME_DISABLED			1
-+#define MKTME_UNINITIALIZED		2
-+static int mktme_status = MKTME_UNINITIALIZED;
-+
-+static void detect_tme_early(struct cpuinfo_x86 *c)
-+{
-+	u64 tme_activate, tme_policy, tme_crypto_algs;
-+	int keyid_bits = 0, nr_keyids = 0;
-+	static u64 tme_activate_cpu0 = 0;
-+
-+	rdmsrl(MSR_IA32_TME_ACTIVATE, tme_activate);
-+
-+	if (mktme_status != MKTME_UNINITIALIZED) {
-+		if (tme_activate != tme_activate_cpu0) {
-+			/* Broken BIOS? */
-+			pr_err_once("x86/tme: configuration is inconsistent between CPUs\n");
-+			pr_err_once("x86/tme: MKTME is not usable\n");
-+			mktme_status = MKTME_DISABLED;
-+
-+			/* Proceed. We may need to exclude bits from x86_phys_bits. */
-+		}
-+	} else {
-+		tme_activate_cpu0 = tme_activate;
-+	}
-+
-+	if (!TME_ACTIVATE_LOCKED(tme_activate) || !TME_ACTIVATE_ENABLED(tme_activate)) {
-+		pr_info_once("x86/tme: not enabled by BIOS\n");
-+		mktme_status = MKTME_DISABLED;
-+		return;
-+	}
-+
-+	if (mktme_status != MKTME_UNINITIALIZED)
-+		goto detect_keyid_bits;
-+
-+	pr_info("x86/tme: enabled by BIOS\n");
-+
-+	tme_policy = TME_ACTIVATE_POLICY(tme_activate);
-+	if (tme_policy != TME_ACTIVATE_POLICY_AES_XTS_128)
-+		pr_warn("x86/tme: Unknown policy is active: %#llx\n", tme_policy);
-+
-+	tme_crypto_algs = TME_ACTIVATE_CRYPTO_ALGS(tme_activate);
-+	if (!(tme_crypto_algs & TME_ACTIVATE_CRYPTO_AES_XTS_128)) {
-+		pr_err("x86/mktme: No known encryption algorithm is supported: %#llx\n",
-+				tme_crypto_algs);
-+		mktme_status = MKTME_DISABLED;
-+	}
-+detect_keyid_bits:
-+	keyid_bits = TME_ACTIVATE_KEYID_BITS(tme_activate);
-+	nr_keyids = (1UL << keyid_bits) - 1;
-+	if (nr_keyids) {
-+		pr_info_once("x86/mktme: enabled by BIOS\n");
-+		pr_info_once("x86/mktme: %d KeyIDs available\n", nr_keyids);
-+	} else {
-+		pr_info_once("x86/mktme: disabled by BIOS\n");
-+	}
-+
-+	if (mktme_status == MKTME_UNINITIALIZED) {
-+		/* MKTME is usable */
-+		mktme_status = MKTME_ENABLED;
-+	}
-+
-+	/*
-+	 * KeyID bits effectively lower the number of physical address
-+	 * bits.  Update cpuinfo_x86::x86_phys_bits accordingly.
-+	 */
-+	c->x86_phys_bits -= keyid_bits;
-+}
-+
- static void early_init_intel(struct cpuinfo_x86 *c)
- {
- 	u64 misc_enable;
-@@ -329,6 +413,13 @@ static void early_init_intel(struct cpui
- 	 */
- 	if (detect_extended_topology_early(c) < 0)
- 		detect_ht_early(c);
-+
-+	/*
-+	 * Adjust the number of physical bits early because it affects the
-+	 * valid bits of the MTRR mask registers.
-+	 */
-+	if (cpu_has(c, X86_FEATURE_TME))
-+		detect_tme_early(c);
- }
- 
- static void bsp_init_intel(struct cpuinfo_x86 *c)
-@@ -489,90 +580,6 @@ static void srat_detect_node(struct cpui
- #endif
- }
- 
--#define MSR_IA32_TME_ACTIVATE		0x982
--
--/* Helpers to access TME_ACTIVATE MSR */
--#define TME_ACTIVATE_LOCKED(x)		(x & 0x1)
--#define TME_ACTIVATE_ENABLED(x)		(x & 0x2)
--
--#define TME_ACTIVATE_POLICY(x)		((x >> 4) & 0xf)	/* Bits 7:4 */
--#define TME_ACTIVATE_POLICY_AES_XTS_128	0
--
--#define TME_ACTIVATE_KEYID_BITS(x)	((x >> 32) & 0xf)	/* Bits 35:32 */
--
--#define TME_ACTIVATE_CRYPTO_ALGS(x)	((x >> 48) & 0xffff)	/* Bits 63:48 */
--#define TME_ACTIVATE_CRYPTO_AES_XTS_128	1
--
--/* Values for mktme_status (SW only construct) */
--#define MKTME_ENABLED			0
--#define MKTME_DISABLED			1
--#define MKTME_UNINITIALIZED		2
--static int mktme_status = MKTME_UNINITIALIZED;
--
--static void detect_tme(struct cpuinfo_x86 *c)
--{
--	u64 tme_activate, tme_policy, tme_crypto_algs;
--	int keyid_bits = 0, nr_keyids = 0;
--	static u64 tme_activate_cpu0 = 0;
--
--	rdmsrl(MSR_IA32_TME_ACTIVATE, tme_activate);
--
--	if (mktme_status != MKTME_UNINITIALIZED) {
--		if (tme_activate != tme_activate_cpu0) {
--			/* Broken BIOS? */
--			pr_err_once("x86/tme: configuration is inconsistent between CPUs\n");
--			pr_err_once("x86/tme: MKTME is not usable\n");
--			mktme_status = MKTME_DISABLED;
--
--			/* Proceed. We may need to exclude bits from x86_phys_bits. */
--		}
--	} else {
--		tme_activate_cpu0 = tme_activate;
--	}
--
--	if (!TME_ACTIVATE_LOCKED(tme_activate) || !TME_ACTIVATE_ENABLED(tme_activate)) {
--		pr_info_once("x86/tme: not enabled by BIOS\n");
--		mktme_status = MKTME_DISABLED;
--		return;
--	}
--
--	if (mktme_status != MKTME_UNINITIALIZED)
--		goto detect_keyid_bits;
--
--	pr_info("x86/tme: enabled by BIOS\n");
--
--	tme_policy = TME_ACTIVATE_POLICY(tme_activate);
--	if (tme_policy != TME_ACTIVATE_POLICY_AES_XTS_128)
--		pr_warn("x86/tme: Unknown policy is active: %#llx\n", tme_policy);
--
--	tme_crypto_algs = TME_ACTIVATE_CRYPTO_ALGS(tme_activate);
--	if (!(tme_crypto_algs & TME_ACTIVATE_CRYPTO_AES_XTS_128)) {
--		pr_err("x86/mktme: No known encryption algorithm is supported: %#llx\n",
--				tme_crypto_algs);
--		mktme_status = MKTME_DISABLED;
--	}
--detect_keyid_bits:
--	keyid_bits = TME_ACTIVATE_KEYID_BITS(tme_activate);
--	nr_keyids = (1UL << keyid_bits) - 1;
--	if (nr_keyids) {
--		pr_info_once("x86/mktme: enabled by BIOS\n");
--		pr_info_once("x86/mktme: %d KeyIDs available\n", nr_keyids);
--	} else {
--		pr_info_once("x86/mktme: disabled by BIOS\n");
--	}
--
--	if (mktme_status == MKTME_UNINITIALIZED) {
--		/* MKTME is usable */
--		mktme_status = MKTME_ENABLED;
--	}
--
--	/*
--	 * KeyID bits effectively lower the number of physical address
--	 * bits.  Update cpuinfo_x86::x86_phys_bits accordingly.
--	 */
--	c->x86_phys_bits -= keyid_bits;
--}
--
- static void init_cpuid_fault(struct cpuinfo_x86 *c)
- {
- 	u64 msr;
-@@ -708,9 +715,6 @@ static void init_intel(struct cpuinfo_x8
- 
- 	init_ia32_feat_ctl(c);
- 
--	if (cpu_has(c, X86_FEATURE_TME))
--		detect_tme(c);
--
- 	init_intel_misc_features(c);
- 
- 	if (tsx_ctrl_state == TSX_CTRL_ENABLE)
+ 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
+ 	if (!start)
+ 		return -EMSGSIZE;
 
 
