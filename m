@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7A81EB5A;
-	Mon,  4 Mar 2024 21:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668021EB5A;
+	Mon,  4 Mar 2024 21:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588887; cv=none; b=JP6PFiKvLurUR3JsKusKHgOpTmrZfKfCmNqKp8pjg/23o+uwCqEwRwoFmUcuxVogzsyxjVtuOIubaHwtok9UKJdsnce++ZPbuV46Fcw1zMgXmmapaYgKQSakhRzQ12FYb2NwBLNh7FeQax4qY7+T4fmwBxW531gVlYAqSsVBK1w=
+	t=1709588894; cv=none; b=NB4n4dD9lAgx9LOARMLqIlvGEldzgDRRMzjVanXKjQY51Ru6aoenOU2o8SH+nLY3xnCP/6mzz83qfyV65zvGspb6YfNYCen/o5qIL3QQHp4eKWAEWZtN2QYM+PRQY6dHPtZW0Sglu5A5W12TB+58vNQbO46oDjEgSVKwJzLPg8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588887; c=relaxed/simple;
-	bh=jKUnLj1cYMSjmrxE0wLLAtP7jkn3bA9Nv92d7se1XLk=;
+	s=arc-20240116; t=1709588894; c=relaxed/simple;
+	bh=iXCK+tO3GkclWl0c0ZcvbvmoEEkjIUUCrctvYlzH39w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zah+wgrYeLCkZtYbpXQ3oYIkLF2k4tB/M9Wz68Tlfg7hQZuyoAo/lUcjl5JLu0NWZqs9kvfqYEZp9g1P/Qj3M13R16+HcruZtD9IY4CB1Yu9NjBJ1ZVwmjaqO1dHhvhgFRLLdKqQL/3+8Cp0yRpmkrG1mwfqaD8j6JnAa4ko4JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8trGnby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RYJGK1KkjtFxi02U1JLFzKgpjPEPLLEpV0MWaWt1+rdon7WwQQlwCQzWNO91wSIXzp+imtTqU6GJ40F0JAE7tgGFFifTWE1lWxgXiKxoV/bLQJFHvyhQPUJpyPy5mJXjO8Skn9ccFY7Khd4vNl41PDJ17d+/0OpFE3jBRXq2NnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LW8OCllL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8trGnby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FDDC433F1;
-	Mon,  4 Mar 2024 21:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW8OCllL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032CBC433C7;
+	Mon,  4 Mar 2024 21:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588887;
-	bh=jKUnLj1cYMSjmrxE0wLLAtP7jkn3bA9Nv92d7se1XLk=;
+	s=korg; t=1709588894;
+	bh=iXCK+tO3GkclWl0c0ZcvbvmoEEkjIUUCrctvYlzH39w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8trGnbyGZI/9+vWs/VS6ziog17koxkU9NUIogSa+U5jRpILCJqqy4aGAW71z5V6p
-	 mp5wINuz1PKiXWx5Sb8C4na/ItrjAW+TmObsbZWVUJ8IQ2e2tLiz+pcI1AXzHFlkOA
-	 Fo6dy8Ujk9s7h+q4CRygiLEieTCSLT7YFBy1X/bo=
+	b=LW8OCllLVI5aDIgss49u+IQX9vxNhUXygYs7Opz45X4w7wVETE3dUwdiPdr3fsF24
+	 1x+v6Y0WEVMjZqtlAMlaRboWV8uDLPviPYlbmD9xN6gPR19wlcBnwkmLLlsoICzQu8
+	 VWaGUfxTY43rpUXiIxKy/AtOHhM1UUTlT5I9lh7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 6.1 120/215] x86/boot/compressed: Move startup32_load_idt() into .text section
-Date: Mon,  4 Mar 2024 21:23:03 +0000
-Message-ID: <20240304211600.876171962@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 129/215] x86/efistub: Branch straight to kernel entry point from C code
+Date: Mon,  4 Mar 2024 21:23:12 +0000
+Message-ID: <20240304211601.166350284@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,97 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit c6355995ba471d7ad574174e593192ce805c7e1a upstream.
+commit d2d7a54f69b67cd0a30e0ebb5307cb2de625baac upstream.
 
-Convert startup32_load_idt() into an ordinary function and move it into
-the .text section. This involves turning the rva() immediates into ones
-derived from a local label, and preserving/restoring the %ebp and %ebx
-as per the calling convention.
-
-Also move the #ifdef to the only existing call site. This makes it clear
-that the function call does nothing if support for memory encryption is
-not compiled in.
+Instead of returning to the calling code in assembler that does nothing
+more than perform an indirect call with the boot_params pointer in
+register ESI/RSI, perform the jump directly from the EFI stub C code.
+This will allow the asm entrypoint code to be dropped entirely in
+subsequent patches.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20221122161017.2426828-12-ardb@kernel.org
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230807162720.545787-4-ardb@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/head_64.S |   31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/firmware/efi/libstub/x86-stub.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/arch/x86/boot/compressed/head_64.S
-+++ b/arch/x86/boot/compressed/head_64.S
-@@ -118,7 +118,9 @@ SYM_FUNC_START(startup_32)
- 1:
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -279,7 +279,7 @@ adjust_memory_range_protection(unsigned
+ #define TRAMPOLINE_PLACEMENT_BASE ((128 - 8)*1024)
+ #define TRAMPOLINE_PLACEMENT_SIZE (640*1024 - (128 - 8)*1024)
  
- 	/* Setup Exception handling for SEV-ES */
-+#ifdef CONFIG_AMD_MEM_ENCRYPT
- 	call	startup32_load_idt
-+#endif
+-void startup_32(struct boot_params *boot_params);
++extern const u8 startup_32[], startup_64[];
  
- 	/* Make sure cpu supports long mode. */
- 	call	verify_cpu
-@@ -732,10 +734,8 @@ SYM_DATA_START(boot32_idt)
- 	.quad 0
- 	.endr
- SYM_DATA_END_LABEL(boot32_idt, SYM_L_GLOBAL, boot32_idt_end)
--#endif
+ static void
+ setup_memory_protection(unsigned long image_base, unsigned long image_size)
+@@ -760,10 +760,19 @@ static efi_status_t exit_boot(struct boo
+ 	return EFI_SUCCESS;
+ }
  
--#ifdef CONFIG_AMD_MEM_ENCRYPT
--	__HEAD
-+	.text
- 	.code32
++static void __noreturn enter_kernel(unsigned long kernel_addr,
++				    struct boot_params *boot_params)
++{
++	/* enter decompressed kernel with boot_params pointer in RSI/ESI */
++	asm("jmp *%0"::"r"(kernel_addr), "S"(boot_params));
++
++	unreachable();
++}
++
  /*
-  * Write an IDT entry into boot32_idt
-@@ -768,24 +768,32 @@ SYM_FUNC_START_LOCAL(startup32_set_idt_e
- 
- 	RET
- SYM_FUNC_END(startup32_set_idt_entry)
--#endif
- 
- SYM_FUNC_START(startup32_load_idt)
--#ifdef CONFIG_AMD_MEM_ENCRYPT
--	leal    rva(boot32_idt)(%ebp), %ecx
-+	push	%ebp
-+	push	%ebx
-+
-+	call	1f
-+1:	pop	%ebp
-+
-+	leal    (boot32_idt - 1b)(%ebp), %ebx
- 
- 	/* #VC handler */
--	leal    rva(startup32_vc_handler)(%ebp), %eax
-+	leal    (startup32_vc_handler - 1b)(%ebp), %eax
- 	movl    $X86_TRAP_VC, %edx
-+	movl	%ebx, %ecx
- 	call    startup32_set_idt_entry
- 
- 	/* Load IDT */
--	leal	rva(boot32_idt)(%ebp), %eax
--	movl	%eax, rva(boot32_idt_desc+2)(%ebp)
--	lidt    rva(boot32_idt_desc)(%ebp)
--#endif
-+	leal	(boot32_idt_desc - 1b)(%ebp), %ecx
-+	movl	%ebx, 2(%ecx)
-+	lidt    (%ecx)
-+
-+	pop	%ebx
-+	pop	%ebp
- 	RET
- SYM_FUNC_END(startup32_load_idt)
-+#endif
- 
- /*
-  * Check for the correct C-bit position when the startup_32 boot-path is used.
-@@ -804,6 +812,7 @@ SYM_FUNC_END(startup32_load_idt)
-  * succeed. An incorrect C-bit position will map all memory unencrypted, so that
-  * the compare will use the encrypted random data and fail.
+- * On success, we return the address of startup_32, which has potentially been
+- * relocated by efi_relocate_kernel.
+- * On failure, we exit to the firmware via efi_exit instead of returning.
++ * On success, this routine will jump to the relocated image directly and never
++ * return.  On failure, it will exit to the firmware via efi_exit() instead of
++ * returning.
   */
-+	__HEAD
- SYM_FUNC_START(startup32_check_sev_cbit)
- #ifdef CONFIG_AMD_MEM_ENCRYPT
- 	pushl	%eax
+ asmlinkage unsigned long efi_main(efi_handle_t handle,
+ 				  efi_system_table_t *sys_table_arg,
+@@ -905,7 +914,10 @@ asmlinkage unsigned long efi_main(efi_ha
+ 		goto fail;
+ 	}
+ 
+-	return bzimage_addr;
++	if (IS_ENABLED(CONFIG_X86_64))
++		bzimage_addr += startup_64 - startup_32;
++
++	enter_kernel(bzimage_addr, boot_params);
+ fail:
+ 	efi_err("efi_main() failed!\n");
+ 
 
 
