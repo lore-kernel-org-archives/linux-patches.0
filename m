@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F75B8F58;
-	Mon,  4 Mar 2024 21:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA238F58;
+	Mon,  4 Mar 2024 21:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588323; cv=none; b=YiUde3w7fSPvPVpqAD2ClSBIsWWVNrP7TFpvdr8Uuytd3vpAn48b4i/+abl6xkIYte/bj46m4vEoHWGCgoUEqu/Hqil5n6c7mtD0mDQqj5TmkR8nJHkoF4iu6qOGXxPORyOm82HQWlDgHev7h3Tz/D0tZ7//tv5O7s6dftGLmig=
+	t=1709588326; cv=none; b=AXYx00FE9VUGUUr0eDyrrZDG+PBGfv5OF1FT5c0gGG1WOPPGNFYn1gRsxDERQrWFebhQ6Wr1qla3LmLOwozFkBEBgfCdSn28Thjq/RvMmEL+rTFIG1p526bRWuz+y/+9KBrRm88sCqIfPO+D9y2mTQPUC7blNrUKe0zpSYiqcgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588323; c=relaxed/simple;
-	bh=PEExZG/kGN8hjv6g/VjgPiVkwnKrkiO46Sw1BmaRsJA=;
+	s=arc-20240116; t=1709588326; c=relaxed/simple;
+	bh=jT09ICd4onNnL2IPV7X0/ixKsQcM7hfm/+saMCCSwAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enRm/ldJTVgeGLFQSCgc2v6L8ylp+cJ2QzbYFvrENQr6FFaShvaUZITFmNR/c0cg2DtHbtB11rsSyXPGsQBfaJ00dftXLlDBx/z1Rb2gkaVjCyIIZi7Lb8mP7DMhoQ6WYWy/6O43kgS8BSwYNQaiOpLnpnVFU4G0NtJBKC4sbn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNp6tFqr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZE76MdrsJBb/OOa+Dr78oB10N6v35EVgW3LSwYo3G3Al3Ds3ce+iNjVbMe4fWf4Cz1vf0FTcEmmEpi7dikkYsxksOzSQRvqDTatIcmakgHE85wv6YMBPiibCGlEXKqc04k6SRf9sXF8jKoxrRyEx7A9f82i2BTY0sNE7HKkvmcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNcMfPWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNp6tFqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52E7C433C7;
-	Mon,  4 Mar 2024 21:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNcMfPWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE4BC433F1;
+	Mon,  4 Mar 2024 21:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588323;
-	bh=PEExZG/kGN8hjv6g/VjgPiVkwnKrkiO46Sw1BmaRsJA=;
+	s=korg; t=1709588325;
+	bh=jT09ICd4onNnL2IPV7X0/ixKsQcM7hfm/+saMCCSwAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNp6tFqrzsA9S3IOVXcR7ggt2UYb7MAw1Q7MwzF7yfOs1DcOWDGnO9VVq68kNPCvK
-	 pmz/2TyUlQKdH/u9bsftlOC9p0PxNZWy7onCERscUP74QsHatHcoHSCRrBMw+ZPg52
-	 J2/wWpL9U1YYb80oms0TrBJGNwjrY2e0eIRQgwUw=
+	b=VNcMfPWpkaqM8jRu6/8OU5XqTVyHNttNRHiuU5e6RePjZYsbL7VP3QSEcYaTLIXHk
+	 qX4m4WFXKLtOCtddZg6dWp7Ak4nOW6G5SDPCSxBfDydMW8dRRdgoRXq8vZ481cpbrD
+	 2AC5GRWkQENNRKHHvrDbWmHb5TezM6qItDvxE5bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Dimitris Vlachos <dvlachos@ics.forth.gr>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/143] riscv: Fix pte_leaf_size() for NAPOT
-Date: Mon,  4 Mar 2024 21:23:04 +0000
-Message-ID: <20240304211551.976338121@linuxfoundation.org>
+Subject: [PATCH 6.6 065/143] riscv: Sparse-Memory/vmemmap out-of-bounds fix
+Date: Mon,  4 Mar 2024 21:23:05 +0000
+Message-ID: <20240304211552.004822952@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -45,42 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Dimitris Vlachos <dvlachos@ics.forth.gr>
 
-[ Upstream commit e0fe5ab4192c171c111976dbe90bbd37d3976be0 ]
+[ Upstream commit a11dd49dcb9376776193e15641f84fcc1e5980c9 ]
 
-pte_leaf_size() must be reimplemented to add support for NAPOT mappings.
+Offset vmemmap so that the first page of vmemmap will be mapped
+to the first page of physical memory in order to ensure that
+vmemmap’s bounds will be respected during
+pfn_to_page()/page_to_pfn() operations.
+The conversion macros will produce correct SV39/48/57 addresses
+for every possible/valid DRAM_BASE inside the physical memory limits.
 
-Fixes: 82a1a1f3bfb6 ("riscv: mm: support Svnapot in hugetlb page")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240227205016.121901-3-alexghiti@rivosinc.com
+v2:Address Alex's comments
+
+Suggested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
+Reported-by: Dimitris Vlachos <dvlachos@ics.forth.gr>
+Closes: https://lore.kernel.org/linux-riscv/20240202135030.42265-1-csd4492@csd.uoc.gr
+Fixes: d95f1a542c3d ("RISC-V: Implement sparsemem")
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240229191723.32779-1-dvlachos@ics.forth.gr
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/riscv/include/asm/pgtable.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 511cb385be96b..93c1664361143 100644
+index 93c1664361143..c00bd5377db9a 100644
 --- a/arch/riscv/include/asm/pgtable.h
 +++ b/arch/riscv/include/asm/pgtable.h
-@@ -438,6 +438,10 @@ static inline pte_t pte_mkhuge(pte_t pte)
- 	return pte;
- }
+@@ -84,7 +84,7 @@
+  * Define vmemmap for pfn_to_page & page_to_pfn calls. Needed if kernel
+  * is configured with CONFIG_SPARSEMEM_VMEMMAP enabled.
+  */
+-#define vmemmap		((struct page *)VMEMMAP_START)
++#define vmemmap		((struct page *)VMEMMAP_START - (phys_ram_base >> PAGE_SHIFT))
  
-+#define pte_leaf_size(pte)	(pte_napot(pte) ?				\
-+					napot_cont_size(napot_cont_order(pte)) :\
-+					PAGE_SIZE)
-+
- #ifdef CONFIG_NUMA_BALANCING
- /*
-  * See the comment in include/asm-generic/pgtable.h
+ #define PCI_IO_SIZE      SZ_16M
+ #define PCI_IO_END       VMEMMAP_START
 -- 
 2.43.0
 
