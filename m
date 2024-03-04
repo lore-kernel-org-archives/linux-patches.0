@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C032061675;
-	Mon,  4 Mar 2024 21:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B1A1EB5A;
+	Mon,  4 Mar 2024 21:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588970; cv=none; b=qMLNQfFudW36t+AhO+PNYWmSJqj/iSrUDU3EZXMJeWx6Sl4ynCNXkhX73rOmSC6UDWAbEXyhsO8LFWDSDyeyrhwQXJnMGnIVWz2wGH22uaLiCD9GcjxVB3+d6UX5D1JFYJTMxU2LjGPvXV2DSWaonb9adyAezzPWvC8dCnFKNic=
+	t=1709588973; cv=none; b=CVe5MuGmuZCnZJd4UowsDDYeh/qYoxIDRbbv7Ge3JTP4/UAuoy05h0+uvaph3PSJ6wYH4kpekceQfWE8tdmlC2RE/pg6BJf+tLvRoJVUXjzLUwzI6rh3LPQYIG0i1QrNfpsUFthnDtsTjdswWBfIgFDa8+lz8cUaMq7yzxuwJ28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588970; c=relaxed/simple;
-	bh=h274z+cRGL3tK+n0YpNTcsWnl9toKTtxfD1afOmGF+o=;
+	s=arc-20240116; t=1709588973; c=relaxed/simple;
+	bh=UFOkhs73GcUliKPV+efJqr4BoJa5t3z80OLs/b7RNN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKM3C6DrpZyR+q9MQY/blhhqiSh1Gdr2UHyv/6ae6Yhy0v28K1ScoJ4LxCM6u3q4jFY3hMrZdquEZrEUWvvXHjvpY7HIBJLkK+JKEaF3QfwnDF/B4wokw0WIupBNVZ0K9D0PapzEvNOJv4MNmAXCeiW6Zwimv2yOOb+wFe9+NA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXpEI5jO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+rI/09SBg2v1UB5djJf2AvsWR+4qWE2N+YTArdWoN2fTTLpN+LqF04v/ieD70LwNaNf5NFMhTqc9DgsfaLBMwkU3+BGQuYFuFh/uItkN/XiEL0yYHDXClAvJkJs/r7OrF9kWRLFX8icxDh1BOfmFoISZu64UJgxIUMEHC35VSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpKEJ0pq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXpEI5jO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529FDC433F1;
-	Mon,  4 Mar 2024 21:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpKEJ0pq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF728C433F1;
+	Mon,  4 Mar 2024 21:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588970;
-	bh=h274z+cRGL3tK+n0YpNTcsWnl9toKTtxfD1afOmGF+o=;
+	s=korg; t=1709588973;
+	bh=UFOkhs73GcUliKPV+efJqr4BoJa5t3z80OLs/b7RNN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXpEI5jO8xLXu5KzT3d7rOveqsdlcm3zClJUNRuBCEGR0uVilqWpwwYxPr4sPvBXA
-	 jIS85iRwDz4zTZ3GjvZIxMB3lMlJTXeQsluQGhKbjbs7dyckHkp2Q4wu/eFwheLzAC
-	 L7wSicELO77+rOdJRSv2gFWEbtOBTS+9fLZ88J7w=
+	b=kpKEJ0pqCepVxlTAkY/m8M4r/IWVJO8IYOuaPurojgd5rzZPHZ6vgLRhChNXbwrvx
+	 lMT8m6dpQBRN16MQL8aRXEzSo4+liLivbab/QOqWP6Mw6P1xDg4I11C0jwYicbRhav
+	 mXOEShls5B4RE4yZ/sj0Lb+QzlarFU0w6kezpxZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 6.1 127/215] x86/efi: Make the deprecated EFI handover protocol optional
-Date: Mon,  4 Mar 2024 21:23:10 +0000
-Message-ID: <20240304211601.094999250@linuxfoundation.org>
+	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 128/215] x86/boot: Robustify calling startup_{32,64}() from the decompressor code
+Date: Mon,  4 Mar 2024 21:23:11 +0000
+Message-ID: <20240304211601.130294874@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -50,136 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Alexander Lobakin <alexandr.lobakin@intel.com>
 
-commit cc3fdda2876e58a7e83e558ab51853cf106afb6a upstream.
+commit 7734a0f31e99c433df3063bbb7e8ee5a16a2cb82 upstream.
 
-The EFI handover protocol permits a bootloader to invoke the kernel as a
-EFI PE/COFF application, while passing a bootparams struct as a third
-argument to the entrypoint function call.
+After commit ce697ccee1a8 ("kbuild: remove head-y syntax"), I
+started digging whether x86 is ready for removing this old cruft.
+Removing its objects from the list makes the kernel unbootable.
+This applies only to bzImage, vmlinux still works correctly.
+The reason is that with no strict object order determined by the
+linker arguments, not the linker script, startup_64 can be placed
+not right at the beginning of the kernel.
+Here's vmlinux.map's beginning before removing:
 
-This has no basis in the UEFI specification, and there are better ways
-to pass additional data to a UEFI application (UEFI configuration
-tables, UEFI variables, UEFI protocols) than going around the
-StartImage() boot service and jumping to a fixed offset in the loaded
-image, just to call a different function that takes a third parameter.
+  ffffffff81000000         vmlinux.o:(.head.text)
+  ffffffff81000000                 startup_64
+  ffffffff81000070                 secondary_startup_64
+  ffffffff81000075                 secondary_startup_64_no_verify
+  ffffffff81000160                 verify_cpu
 
-The reason for handling struct bootparams in the bootloader was that the
-EFI stub could only load initrd images from the EFI system partition,
-and so passing it via struct bootparams was needed for loaders like
-GRUB, which pass the initrd in memory, and may load it from anywhere,
-including from the network. Another motivation was EFI mixed mode, which
-could not use the initrd loader in the EFI stub at all due to 32/64 bit
-incompatibilities (which will be fixed shortly [0]), and could not
-invoke the ordinary PE/COFF entry point either, for the same reasons.
+and after:
 
-Given that loaders such as GRUB already carried the bootparams handling
-in order to implement non-EFI boot, retaining that code and just passing
-bootparams to the EFI stub was a reasonable choice (although defining an
-alternate entrypoint could have been avoided.) However, the GRUB side
-changes never made it upstream, and are only shipped by some of the
-distros in their downstream versions.
+  ffffffff81000000         vmlinux.o:(.head.text)
+  ffffffff81000000                 pvh_start_xen
+  ffffffff81000080                 startup_64
+  ffffffff810000f0                 secondary_startup_64
+  ffffffff810000f5                 secondary_startup_64_no_verify
 
-In the meantime, EFI support has been added to other Linux architecture
-ports, as well as to U-boot and systemd, including arch-agnostic methods
-for passing initrd images in memory [1], and for doing mixed mode boot
-[2], none of them requiring anything like the EFI handover protocol. So
-given that only out-of-tree distro GRUB relies on this, let's permit it
-to be omitted from the build, in preparation for retiring it completely
-at a later date. (Note that systemd-boot does have an implementation as
-well, but only uses it as a fallback for booting images that do not
-implement the LoadFile2 based initrd loading method, i.e., v5.8 or older)
+Not a problem itself, but the self-extractor code has the address of
+that function hardcoded the beginning, not looking onto the ELF
+header, which always contains the address of startup_{32,64}().
 
-[0] https://lore.kernel.org/all/20220927085842.2860715-1-ardb@kernel.org/
-[1] ec93fc371f01 ("efi/libstub: Add support for loading the initrd from a device path")
-[2] 97aa276579b2 ("efi/x86: Add true mixed mode entry point into .compat section")
+So, instead of doing an "act of blind faith", just take the address
+from the ELF header and extract a relative offset to the entry
+point. The decompressor function already returns a pointer to the
+beginning of the kernel to the Asm code, which then jumps to it,
+so add that offset to the return value.
+This doesn't change anything for now, but allows to resign from the
+"head object list" for x86 and makes sure valid Kbuild or any other
+improvements won't break anything here in general.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20221122161017.2426828-18-ardb@kernel.org
+Signed-off-by: Alexander Lobakin <alexandr.lobakin@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Jiri Slaby <jirislaby@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230109170403.4117105-2-alexandr.lobakin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig                   |   17 +++++++++++++++++
- arch/x86/boot/compressed/head_64.S |    4 +++-
- arch/x86/boot/header.S             |    2 +-
- arch/x86/boot/tools/build.c        |    2 ++
- 4 files changed, 23 insertions(+), 2 deletions(-)
+ arch/x86/boot/compressed/head_32.S |    2 +-
+ arch/x86/boot/compressed/head_64.S |    2 +-
+ arch/x86/boot/compressed/misc.c    |   18 +++++++++++-------
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -1982,6 +1982,23 @@ config EFI_STUB
+--- a/arch/x86/boot/compressed/head_32.S
++++ b/arch/x86/boot/compressed/head_32.S
+@@ -187,7 +187,7 @@ SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated
+ 	leal	boot_heap@GOTOFF(%ebx), %eax
+ 	pushl	%eax			/* heap area */
+ 	pushl	%esi			/* real mode pointer */
+-	call	extract_kernel		/* returns kernel location in %eax */
++	call	extract_kernel		/* returns kernel entry point in %eax */
+ 	addl	$24, %esp
  
- 	  See Documentation/admin-guide/efi-stub.rst for more information.
- 
-+config EFI_HANDOVER_PROTOCOL
-+	bool "EFI handover protocol (DEPRECATED)"
-+	depends on EFI_STUB
-+	default y
-+	help
-+	  Select this in order to include support for the deprecated EFI
-+	  handover protocol, which defines alternative entry points into the
-+	  EFI stub.  This is a practice that has no basis in the UEFI
-+	  specification, and requires a priori knowledge on the part of the
-+	  bootloader about Linux/x86 specific ways of passing the command line
-+	  and initrd, and where in memory those assets may be loaded.
-+
-+	  If in doubt, say Y. Even though the corresponding support is not
-+	  present in upstream GRUB or other bootloaders, most distros build
-+	  GRUB with numerous downstream patches applied, and may rely on the
-+	  handover protocol as as result.
-+
- config EFI_MIXED
- 	bool "EFI mixed-mode support"
- 	depends on EFI_STUB && X86_64
+ /*
 --- a/arch/x86/boot/compressed/head_64.S
 +++ b/arch/x86/boot/compressed/head_64.S
-@@ -286,7 +286,7 @@ SYM_FUNC_START(startup_32)
- 	lret
- SYM_FUNC_END(startup_32)
+@@ -580,7 +580,7 @@ SYM_FUNC_START_LOCAL_NOALIGN(.Lrelocated
+ 	movl	input_len(%rip), %ecx	/* input_len */
+ 	movq	%rbp, %r8		/* output target address */
+ 	movl	output_len(%rip), %r9d	/* decompressed length, end of relocs */
+-	call	extract_kernel		/* returns kernel location in %rax */
++	call	extract_kernel		/* returns kernel entry point in %rax */
+ 	popq	%rsi
  
--#ifdef CONFIG_EFI_MIXED
-+#if IS_ENABLED(CONFIG_EFI_MIXED) && IS_ENABLED(CONFIG_EFI_HANDOVER_PROTOCOL)
- 	.org 0x190
- SYM_FUNC_START(efi32_stub_entry)
- 	add	$0x4, %esp		/* Discard return address */
-@@ -535,7 +535,9 @@ trampoline_return:
- SYM_CODE_END(startup_64)
- 
- #ifdef CONFIG_EFI_STUB
-+#ifdef CONFIG_EFI_HANDOVER_PROTOCOL
- 	.org 0x390
-+#endif
- SYM_FUNC_START(efi64_stub_entry)
- 	and	$~0xf, %rsp			/* realign the stack */
- 	movq	%rdx, %rbx			/* save boot_params pointer */
---- a/arch/x86/boot/header.S
-+++ b/arch/x86/boot/header.S
-@@ -406,7 +406,7 @@ xloadflags:
- # define XLF1 0
+ /*
+--- a/arch/x86/boot/compressed/misc.c
++++ b/arch/x86/boot/compressed/misc.c
+@@ -277,7 +277,7 @@ static inline void handle_relocations(vo
+ { }
  #endif
  
--#ifdef CONFIG_EFI_STUB
-+#ifdef CONFIG_EFI_HANDOVER_PROTOCOL
- # ifdef CONFIG_EFI_MIXED
- #  define XLF23 (XLF_EFI_HANDOVER_32|XLF_EFI_HANDOVER_64)
- # else
---- a/arch/x86/boot/tools/build.c
-+++ b/arch/x86/boot/tools/build.c
-@@ -290,6 +290,7 @@ static void efi_stub_entry_update(void)
+-static void parse_elf(void *output)
++static size_t parse_elf(void *output)
  {
- 	unsigned long addr = efi32_stub_entry;
- 
-+#ifdef CONFIG_EFI_HANDOVER_PROTOCOL
  #ifdef CONFIG_X86_64
- 	/* Yes, this is really how we defined it :( */
- 	addr = efi64_stub_entry - 0x200;
-@@ -299,6 +300,7 @@ static void efi_stub_entry_update(void)
- 	if (efi32_stub_entry != addr)
- 		die("32-bit and 64-bit EFI entry points do not match\n");
- #endif
-+#endif
- 	put_unaligned_le32(addr, &buf[0x264]);
+ 	Elf64_Ehdr ehdr;
+@@ -293,10 +293,8 @@ static void parse_elf(void *output)
+ 	if (ehdr.e_ident[EI_MAG0] != ELFMAG0 ||
+ 	   ehdr.e_ident[EI_MAG1] != ELFMAG1 ||
+ 	   ehdr.e_ident[EI_MAG2] != ELFMAG2 ||
+-	   ehdr.e_ident[EI_MAG3] != ELFMAG3) {
++	   ehdr.e_ident[EI_MAG3] != ELFMAG3)
+ 		error("Kernel is not a valid ELF file");
+-		return;
+-	}
+ 
+ 	debug_putstr("Parsing ELF... ");
+ 
+@@ -328,6 +326,8 @@ static void parse_elf(void *output)
+ 	}
+ 
+ 	free(phdrs);
++
++	return ehdr.e_entry - LOAD_PHYSICAL_ADDR;
  }
  
+ /*
+@@ -356,6 +356,7 @@ asmlinkage __visible void *extract_kerne
+ 	const unsigned long kernel_total_size = VO__end - VO__text;
+ 	unsigned long virt_addr = LOAD_PHYSICAL_ADDR;
+ 	unsigned long needed_size;
++	size_t entry_offset;
+ 
+ 	/* Retain x86 boot parameters pointer passed from startup_32/64. */
+ 	boot_params = rmode;
+@@ -456,14 +457,17 @@ asmlinkage __visible void *extract_kerne
+ 	debug_putstr("\nDecompressing Linux... ");
+ 	__decompress(input_data, input_len, NULL, NULL, output, output_len,
+ 			NULL, error);
+-	parse_elf(output);
++	entry_offset = parse_elf(output);
+ 	handle_relocations(output, output_len, virt_addr);
+-	debug_putstr("done.\nBooting the kernel.\n");
++
++	debug_putstr("done.\nBooting the kernel (entry_offset: 0x");
++	debug_puthex(entry_offset);
++	debug_putstr(").\n");
+ 
+ 	/* Disable exception handling before booting the kernel */
+ 	cleanup_exception_handling();
+ 
+-	return output;
++	return output + entry_offset;
+ }
+ 
+ void fortify_panic(const char *name)
 
 
