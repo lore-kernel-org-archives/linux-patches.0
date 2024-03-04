@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161EE7A124;
-	Mon,  4 Mar 2024 21:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85C67BAF5;
+	Mon,  4 Mar 2024 21:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587610; cv=none; b=qKIhE0CZLSleZm5y6CE80ltoYvcmZ/VgCd5Mm9vI/PTtG4PdVIiyUqidenZuL/xNa+nN0QxvufO3yDLBYazdCVJiN3L/x9mK6rg/j3ivWX6O+qO7X8otxyGdA8pldR7EXtKHsG01fOuLjgGnYASRwi0ACnA4WBO2VwIerf2T+DU=
+	t=1709587612; cv=none; b=HQaPdQiKBQSHvVFja7LLJBgodkCA2lj2gmx7eGEMqEOTuMEDLJqhJ0XQ+Inm925rJ9cuM4ol59F8UQB4p3g42EAXTruM6t5J0vGLaFfWXF700BZpCMuTFGOOrB8gUSNBYq3hLqh09y+awqQGFJEUlhClZqDuOVv0f8UYk+DON10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587610; c=relaxed/simple;
-	bh=ApLvzvvlDkvIkumfw+29NxJpI1MkyhODOO4YdWsSEak=;
+	s=arc-20240116; t=1709587612; c=relaxed/simple;
+	bh=mFMQ+Dwdpo89a05mZXNMoHhf4TZU4ZtTKZ6fYtIw17g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PRtQVFyspP9JrKuBv/GTyeTVeXyzpwsIuCFCX05WahmkeBft/mTc0EyprPdRfksQ1Pz1BPUbkL8o0swX4o2aIlcT9G5jlFmBN+KRE15rLD4IumNp7iM/8t5CcVIzLBlXehu1Cmv2EmSCa2upaAzvCvjkVJkFljiovVP0TNUkAu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAyUGe+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OeyFbDJiE9n0XihvG8A0h6xKUiwOM/bHB5eWfjkeYNuA5xiDJygvCouL+bcyR6Z04GhXe6nGi0jUygWb/qMxlFb2JgNjqZBOaBHOq5M9xZFmyOU9P+NQiEvQyUVqTGKkoDNWZMbLMCR9k+rRR/g2n57m9YnMFDXJU4LGaTC1gHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrnS+TjB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAyUGe+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C51FC433F1;
-	Mon,  4 Mar 2024 21:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrnS+TjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39494C433C7;
+	Mon,  4 Mar 2024 21:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587610;
-	bh=ApLvzvvlDkvIkumfw+29NxJpI1MkyhODOO4YdWsSEak=;
+	s=korg; t=1709587612;
+	bh=mFMQ+Dwdpo89a05mZXNMoHhf4TZU4ZtTKZ6fYtIw17g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAyUGe+ztm7/77E6V8DfTp0jl/g4z3uBU1BLt5xpwvgte2QJrTxSFnI7aTX+lIzmn
-	 I+XlFczHgJAWIaBrKzhjWq7mnjBezDHytpP5rrLZT7ft2iBOjLOyTClKjFZHELbZFG
-	 MzBnawgcAFb9m5MQ9ZFDeVKk3IhjpGHddxNg6BcY=
+	b=nrnS+TjBgqPRSaASJw+9Yy4qr0P0iNhJgFiev3rQioVIKnQnbZSxYvOoLZqIIyg+k
+	 YMFpwUuZXDKwAzMbQYrWYTjN2DP7wv9/pwd0PgYQp5PLSBpiwlOyxigQXV5kVHVya3
+	 QTYQ4DwkZe0LtpSFmaZYLN6eBuHt3z1cEbWEhGRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 022/162] net: lan78xx: fix "softirq work is pending" error
-Date: Mon,  4 Mar 2024 21:21:27 +0000
-Message-ID: <20240304211552.541138802@linuxfoundation.org>
+Subject: [PATCH 6.7 023/162] uapi: in6: replace temporary label with rfc9486
+Date: Mon,  4 Mar 2024 21:21:28 +0000
+Message-ID: <20240304211552.574254001@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit e3d5d70cb483df8296dd44e9ae3b6355ef86494c ]
+[ Upstream commit 6a2008641920a9c6fe1abbeb9acbec463215d505 ]
 
-Disable BH around the call to napi_schedule() to avoid following
-error:
-NOHZ tick-stop error: local softirq work is pending, handler #08!!!
+Not really a fix per se, but IPV6_TLV_IOAM is still tagged as "TEMPORARY
+IANA allocation for IOAM", while RFC 9486 is available for some time
+now. Just update the reference.
 
-Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20240226110820.2113584-1-o.rempel@pengutronix.de
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240226124921.9097-1-justin.iurman@uliege.be
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/uapi/linux/in6.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 2e6d423f3a016..a2dde84499fdd 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1501,7 +1501,9 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
+diff --git a/include/uapi/linux/in6.h b/include/uapi/linux/in6.h
+index c4c53a9ab9595..ff8d21f9e95b7 100644
+--- a/include/uapi/linux/in6.h
++++ b/include/uapi/linux/in6.h
+@@ -145,7 +145,7 @@ struct in6_flowlabel_req {
+ #define IPV6_TLV_PADN		1
+ #define IPV6_TLV_ROUTERALERT	5
+ #define IPV6_TLV_CALIPSO	7	/* RFC 5570 */
+-#define IPV6_TLV_IOAM		49	/* TEMPORARY IANA allocation for IOAM */
++#define IPV6_TLV_IOAM		49	/* RFC 9486 */
+ #define IPV6_TLV_JUMBO		194
+ #define IPV6_TLV_HAO		201	/* home address option */
  
- 		lan78xx_rx_urb_submit_all(dev);
- 
-+		local_bh_disable();
- 		napi_schedule(&dev->napi);
-+		local_bh_enable();
- 	}
- 
- 	return 0;
 -- 
 2.43.0
 
