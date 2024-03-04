@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3003B200CD;
-	Mon,  4 Mar 2024 21:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F1910A35;
+	Mon,  4 Mar 2024 21:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588764; cv=none; b=IRxKDenD+Y6OJ3IFioB+lglLAaMf+lQcSnhEyvN1zW7mOS1K+98ERXcXK4qAjiHxwU2Eut6+xqh4ONBu8PZYy0t0P2YF8Wj2QApPkRRGIzWgQ0fA7kwK+kX2uJJdfxs99YYuWwGqRLOZrDyoyBPu+7OqIsB4rDfqUVVzaJfKORM=
+	t=1709588766; cv=none; b=o0Cpv7A1bn7FJdVczfoSos9/aE8iuFv8RP9mhj5lqwzXMXkGWx7ekpxmii6Gh6Ihw0D/qxwWx1u5oGUdzbH1h2kI3wbWcVtqiT9yG5KmtwFI+LiRzpSIrxgPVhuSOS8GAIWwPtk39NnQ1sbjzI4S78WuQ2wYpVsb+QOR2P/rHZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588764; c=relaxed/simple;
-	bh=kJkSoczkMhN/xGNqETes2bwJ5CAdMdmYSv1K2Kvgl6c=;
+	s=arc-20240116; t=1709588766; c=relaxed/simple;
+	bh=0H/MBMZzz/D4jDp0B1apamSQd/XNZx0OFR1P9io0dGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBB+8znXi8jy+gp7cwU7vLiFqtkvDb4O4js9sdz2sxmdHIUJtKAyo7YOiStdcmPVkHlt+XHeJL21FUwxAhnZtWvMfwoh+bhodWWFgf9rL4IF9uPK0jS/mV7M7YcEv/ICUYUm0mT/sR56VgnYUiCkdXEr8b0SsAg9cj4wikyQi0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEnDp2jc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlTayc8dM734DZH0EGl0rX9frlp+Usu96QkEXOpN+3ap+ts4bY4lisWp04krsTxxlZ2KPQkQw/xjHScEdpTLdZSai1xT2W6iGnlZBKn4NMv++r5nXpIXsDxaJ9e4yd/hgFOaWoBpendEo/RdDCsqeBE0DPDBosRy4EGd98czK+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFhYItJv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEnDp2jc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F8AC433F1;
-	Mon,  4 Mar 2024 21:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFhYItJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D21C433C7;
+	Mon,  4 Mar 2024 21:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588764;
-	bh=kJkSoczkMhN/xGNqETes2bwJ5CAdMdmYSv1K2Kvgl6c=;
+	s=korg; t=1709588766;
+	bh=0H/MBMZzz/D4jDp0B1apamSQd/XNZx0OFR1P9io0dGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEnDp2jcX4CJG9FbqFDMD4wdtY0d/NTQAFIogFIXMVGR5DhB6Lv/CIJ0keDAPDsKU
-	 n1IX3y/dseFqMD41UmBfgtHiBXzfq/NCyYYqSRuSt/Im3Kj0ZUhwqfxTRX3EB9DIXA
-	 hV440tTA2mrQRgl38uX3L9SUXd7xtwHafCHb1SKA=
+	b=ZFhYItJvZRJJ3hu7uMqWXJHvhbHj/0r5q+pL+F5m0BmSC0sg9KPoNb+Nb4CoY1yUo
+	 /2qF+xAOV/O9456klxY9WO1NOH5xCScqKJLOLCi4j5dL2bMKAcCPtlI2BnP54BWD9+
+	 nqjKSHHhSMzZBjwEIdPwYY50gZ7DHdV4foSC+r+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Klein <curtis.klein@hpe.com>,
-	Yi Zhao <yi.zhao@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 087/215] dmaengine: fsl-qdma: init irq after reg initialization
-Date: Mon,  4 Mar 2024 21:22:30 +0000
-Message-ID: <20240304211559.759361644@linuxfoundation.org>
+	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 088/215] mmc: mmci: stm32: fix DMA API overlapping mappings warning
+Date: Mon,  4 Mar 2024 21:22:31 +0000
+Message-ID: <20240304211559.792942188@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -52,95 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Curtis Klein <curtis.klein@hpe.com>
+From: Christophe Kerello <christophe.kerello@foss.st.com>
 
-commit 87a39071e0b639f45e05d296cc0538eef44ec0bd upstream.
+commit 6b1ba3f9040be5efc4396d86c9752cdc564730be upstream.
 
-Initialize the qDMA irqs after the registers are configured so that
-interrupts that may have been pending from a primary kernel don't get
-processed by the irq handler before it is ready to and cause panic with
-the following trace:
+Turning on CONFIG_DMA_API_DEBUG_SG results in the following warning:
 
-  Call trace:
-   fsl_qdma_queue_handler+0xf8/0x3e8
-   __handle_irq_event_percpu+0x78/0x2b0
-   handle_irq_event_percpu+0x1c/0x68
-   handle_irq_event+0x44/0x78
-   handle_fasteoi_irq+0xc8/0x178
-   generic_handle_irq+0x24/0x38
-   __handle_domain_irq+0x90/0x100
-   gic_handle_irq+0x5c/0xb8
-   el1_irq+0xb8/0x180
-   _raw_spin_unlock_irqrestore+0x14/0x40
-   __setup_irq+0x4bc/0x798
-   request_threaded_irq+0xd8/0x190
-   devm_request_threaded_irq+0x74/0xe8
-   fsl_qdma_probe+0x4d4/0xca8
-   platform_drv_probe+0x50/0xa0
-   really_probe+0xe0/0x3f8
-   driver_probe_device+0x64/0x130
-   device_driver_attach+0x6c/0x78
-   __driver_attach+0xbc/0x158
-   bus_for_each_dev+0x5c/0x98
-   driver_attach+0x20/0x28
-   bus_add_driver+0x158/0x220
-   driver_register+0x60/0x110
-   __platform_driver_register+0x44/0x50
-   fsl_qdma_driver_init+0x18/0x20
-   do_one_initcall+0x48/0x258
-   kernel_init_freeable+0x1a4/0x23c
-   kernel_init+0x10/0xf8
-   ret_from_fork+0x10/0x18
+DMA-API: mmci-pl18x 48220000.mmc: cacheline tracking EEXIST,
+overlapping mappings aren't supported
+WARNING: CPU: 1 PID: 51 at kernel/dma/debug.c:568
+add_dma_entry+0x234/0x2f4
+Modules linked in:
+CPU: 1 PID: 51 Comm: kworker/1:2 Not tainted 6.1.28 #1
+Hardware name: STMicroelectronics STM32MP257F-EV1 Evaluation Board (DT)
+Workqueue: events_freezable mmc_rescan
+Call trace:
+add_dma_entry+0x234/0x2f4
+debug_dma_map_sg+0x198/0x350
+__dma_map_sg_attrs+0xa0/0x110
+dma_map_sg_attrs+0x10/0x2c
+sdmmc_idma_prep_data+0x80/0xc0
+mmci_prep_data+0x38/0x84
+mmci_start_data+0x108/0x2dc
+mmci_request+0xe4/0x190
+__mmc_start_request+0x68/0x140
+mmc_start_request+0x94/0xc0
+mmc_wait_for_req+0x70/0x100
+mmc_send_tuning+0x108/0x1ac
+sdmmc_execute_tuning+0x14c/0x210
+mmc_execute_tuning+0x48/0xec
+mmc_sd_init_uhs_card.part.0+0x208/0x464
+mmc_sd_init_card+0x318/0x89c
+mmc_attach_sd+0xe4/0x180
+mmc_rescan+0x244/0x320
 
+DMA API debug brings to light leaking dma-mappings as dma_map_sg and
+dma_unmap_sg are not correctly balanced.
+
+If an error occurs in mmci_cmd_irq function, only mmci_dma_error
+function is called and as this API is not managed on stm32 variant,
+dma_unmap_sg is never called in this error path.
+
+Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Fixes: 46b723dd867d ("mmc: mmci: add stm32 sdmmc variant")
 Cc: stable@vger.kernel.org
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Curtis Klein <curtis.klein@hpe.com>
-Signed-off-by: Yi Zhao <yi.zhao@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240201220406.440145-1-Frank.Li@nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20240207143951.938144-1-christophe.kerello@foss.st.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-qdma.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/mmc/host/mmci_stm32_sdmmc.c |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -1203,10 +1203,6 @@ static int fsl_qdma_probe(struct platfor
- 	if (!fsl_qdma->queue)
- 		return -ENOMEM;
+--- a/drivers/mmc/host/mmci_stm32_sdmmc.c
++++ b/drivers/mmc/host/mmci_stm32_sdmmc.c
+@@ -200,6 +200,8 @@ static int sdmmc_idma_start(struct mmci_
+ 	struct scatterlist *sg;
+ 	int i;
  
--	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
--	if (ret)
--		return ret;
--
- 	fsl_qdma->irq_base = platform_get_irq_byname(pdev, "qdma-queue0");
- 	if (fsl_qdma->irq_base < 0)
- 		return fsl_qdma->irq_base;
-@@ -1245,16 +1241,19 @@ static int fsl_qdma_probe(struct platfor
- 
- 	platform_set_drvdata(pdev, fsl_qdma);
- 
--	ret = dma_async_device_register(&fsl_qdma->dma_dev);
-+	ret = fsl_qdma_reg_init(fsl_qdma);
- 	if (ret) {
--		dev_err(&pdev->dev,
--			"Can't register NXP Layerscape qDMA engine.\n");
-+		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
- 		return ret;
- 	}
- 
--	ret = fsl_qdma_reg_init(fsl_qdma);
-+	ret = fsl_qdma_irq_init(pdev, fsl_qdma);
-+	if (ret)
-+		return ret;
++	host->dma_in_progress = true;
 +
-+	ret = dma_async_device_register(&fsl_qdma->dma_dev);
- 	if (ret) {
--		dev_err(&pdev->dev, "Can't Initialize the qDMA engine.\n");
-+		dev_err(&pdev->dev, "Can't register NXP Layerscape qDMA engine.\n");
- 		return ret;
- 	}
+ 	if (!host->variant->dma_lli || data->sg_len == 1 ||
+ 	    idma->use_bounce_buffer) {
+ 		u32 dma_addr;
+@@ -238,9 +240,30 @@ static int sdmmc_idma_start(struct mmci_
+ 	return 0;
+ }
  
++static void sdmmc_idma_error(struct mmci_host *host)
++{
++	struct mmc_data *data = host->data;
++	struct sdmmc_idma *idma = host->dma_priv;
++
++	if (!dma_inprogress(host))
++		return;
++
++	writel_relaxed(0, host->base + MMCI_STM32_IDMACTRLR);
++	host->dma_in_progress = false;
++	data->host_cookie = 0;
++
++	if (!idma->use_bounce_buffer)
++		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
++			     mmc_get_dma_dir(data));
++}
++
+ static void sdmmc_idma_finalize(struct mmci_host *host, struct mmc_data *data)
+ {
++	if (!dma_inprogress(host))
++		return;
++
+ 	writel_relaxed(0, host->base + MMCI_STM32_IDMACTRLR);
++	host->dma_in_progress = false;
+ 
+ 	if (!data->host_cookie)
+ 		sdmmc_idma_unprep_data(host, data, 0);
+@@ -567,6 +590,7 @@ static struct mmci_host_ops sdmmc_varian
+ 	.dma_setup = sdmmc_idma_setup,
+ 	.dma_start = sdmmc_idma_start,
+ 	.dma_finalize = sdmmc_idma_finalize,
++	.dma_error = sdmmc_idma_error,
+ 	.set_clkreg = mmci_sdmmc_set_clkreg,
+ 	.set_pwrreg = mmci_sdmmc_set_pwrreg,
+ 	.busy_complete = sdmmc_busy_complete,
 
 
