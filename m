@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344321C687;
-	Mon,  4 Mar 2024 21:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E83200CD;
+	Mon,  4 Mar 2024 21:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588086; cv=none; b=GpdVGHTUlna+h9Wi5rXUuJIQfUzP9F55EJAydHMfE7UfkV934R+FX0MJG0B4aA6yEHydQrIwuux5PHyjVZ0IyKYBA9t2SxpwKOyDOYlSn70VSOtlTtZNA68k41fcpF/myR22rRG7/GIpqBpQ4EfZCgcfGFuw01FxPvHHQkghTvA=
+	t=1709588088; cv=none; b=WcMBXlZ/WNhJSiovWBtinP1PuhKGYTsrr49E4dP067qPC/6UiFwGqS1r5RZijkzHGM3/zA9VZ3g+zCmeGmlPxriiso0c+M10HZlng38gC1saMrAiCzDHe5nejD3WtT3AJyvkGcm0zM80ugdiFokhSZXB/gNmzzU+BEu+p0NfipA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588086; c=relaxed/simple;
-	bh=BmDy+IfogujLUPLm7Dzuq6GHwMLy4zh4Z38KNEvAvbM=;
+	s=arc-20240116; t=1709588088; c=relaxed/simple;
+	bh=V+W/ET5jxPsIRvZaqtIUKJ8vS+ELraFj9ZVd++JO37A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEO/BpO7OlWtDRKl/PDQAvRUpsZV99qLEFEkTdg9nonHm0fNHLdQCUUup5s5qkjWtDVkuKhxzqv54g2W90xdiVgxpJ5BP9UTrLz8CV1TleoHQfP2p/T3CrzCdchmgcHv1oWD70qonh6r+il89pZUWI8E3Z6pAkpOxTSexP5lFbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJck+M74; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DKjbmggiJ6AdFzFCiFhbtoxBqM+NRBBd3T6CHvMPfDLxSSG7XxG0loaVnGvtNd66/k+RU7+wVjTdAFs/rLtWW+tVkyGoYB+2xsy6TvlrY/oCAFCZawOCj3JhYCaLVfzAoP+1Cs6y7NadySCEPXS7izvP2gwaTV868kEL8g4W5BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz89ZUgo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJck+M74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD12C433F1;
-	Mon,  4 Mar 2024 21:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz89ZUgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5E4C433C7;
+	Mon,  4 Mar 2024 21:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588086;
-	bh=BmDy+IfogujLUPLm7Dzuq6GHwMLy4zh4Z38KNEvAvbM=;
+	s=korg; t=1709588088;
+	bh=V+W/ET5jxPsIRvZaqtIUKJ8vS+ELraFj9ZVd++JO37A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJck+M74nBmEbLFE2CkDgo2TDt2GASyQ2csC5L6yZXyOxU/t4cTKXHWnFZ6t6oPmo
-	 PMunOyC3baRyej4W74+OZ/KGNYKhzL3wBAH+ly2yMr32nmg66OjBmgWu/S6tZawmGz
-	 ViE+SPxATNnAO3odEVxCikAbjpDhe+l1LKux/KN8=
+	b=Hz89ZUgoYAv0w5vYQmb8xsoMF1aFLF182k5/+6/XGpcl+eqnmJwtVDWN+hHRx75jw
+	 AY5gxTDxnh1wKUy76WoUwWhpURPNwkce9Ra6BJU0OxxbGygrRmt9hXKaMzOwNf4+BA
+	 Gd+y8v3mexIEdKWRfhRh/K7W84gaRBX0VJpsa+js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 16/42] rtnetlink: fix error logic of IFLA_BRIDGE_FLAGS writing back
-Date: Mon,  4 Mar 2024 21:23:43 +0000
-Message-ID: <20240304211538.178832501@linuxfoundation.org>
+	zhenwei pi <pizhenwei@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.10 02/42] crypto: virtio/akcipher - Fix stack overflow on memcpy
+Date: Mon,  4 Mar 2024 21:23:29 +0000
+Message-ID: <20240304211537.713350016@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 References: <20240304211537.631764077@linuxfoundation.org>
@@ -52,81 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-[ Upstream commit 743ad091fb46e622f1b690385bb15e3cd3daf874 ]
+[ Upstream commit c0ec2a712daf133d9996a8a1b7ee2d4996080363 ]
 
-In the commit d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks
-IFLA_BRIDGE_MODE length"), an adjustment was made to the old loop logic
-in the function `rtnl_bridge_setlink` to enable the loop to also check
-the length of the IFLA_BRIDGE_MODE attribute. However, this adjustment
-removed the `break` statement and led to an error logic of the flags
-writing back at the end of this function.
+sizeof(struct virtio_crypto_akcipher_session_para) is less than
+sizeof(struct virtio_crypto_op_ctrl_req::u), copying more bytes from
+stack variable leads stack overflow. Clang reports this issue by
+commands:
+make -j CC=clang-14 mrproper >/dev/null 2>&1
+make -j O=/tmp/crypto-build CC=clang-14 allmodconfig >/dev/null 2>&1
+make -j O=/tmp/crypto-build W=1 CC=clang-14 drivers/crypto/virtio/
+  virtio_crypto_akcipher_algs.o
 
-if (have_flags)
-    memcpy(nla_data(attr), &flags, sizeof(flags));
-    // attr should point to IFLA_BRIDGE_FLAGS NLA !!!
-
-Before the mentioned commit, the `attr` is granted to be IFLA_BRIDGE_FLAGS.
-However, this is not necessarily true fow now as the updated loop will let
-the attr point to the last NLA, even an invalid NLA which could cause
-overflow writes.
-
-This patch introduces a new variable `br_flag` to save the NLA pointer
-that points to IFLA_BRIDGE_FLAGS and uses it to resolve the mentioned
-error logic.
-
-Fixes: d73ef2d69c0d ("rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240227121128.608110-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 59ca6c93387d ("virtio-crypto: implement RSA algorithm")
+Link: https://lore.kernel.org/all/0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net/
+Cc: <stable@vger.kernel.org>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/crypto/virtio/virtio_crypto_akcipher_algs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 021dcfdae2835..8938320f7ba3b 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4903,10 +4903,9 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct ifinfomsg *ifm;
- 	struct net_device *dev;
--	struct nlattr *br_spec, *attr = NULL;
-+	struct nlattr *br_spec, *attr, *br_flags_attr = NULL;
- 	int rem, err = -EOPNOTSUPP;
- 	u16 flags = 0;
--	bool have_flags = false;
- 
- 	if (nlmsg_len(nlh) < sizeof(*ifm))
- 		return -EINVAL;
-@@ -4924,11 +4923,11 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	br_spec = nlmsg_find_attr(nlh, sizeof(struct ifinfomsg), IFLA_AF_SPEC);
- 	if (br_spec) {
- 		nla_for_each_nested(attr, br_spec, rem) {
--			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !have_flags) {
-+			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !br_flags_attr) {
- 				if (nla_len(attr) < sizeof(flags))
- 					return -EINVAL;
- 
--				have_flags = true;
-+				br_flags_attr = attr;
- 				flags = nla_get_u16(attr);
- 			}
- 
-@@ -4972,8 +4971,8 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
- 	}
- 
--	if (have_flags)
--		memcpy(nla_data(attr), &flags, sizeof(flags));
-+	if (br_flags_attr)
-+		memcpy(nla_data(br_flags_attr), &flags, sizeof(flags));
- out:
- 	return err;
+diff --git a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
+index 2cfc36d141c07..c58fac5748359 100644
+--- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
++++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
+@@ -101,7 +101,8 @@ static void virtio_crypto_dataq_akcipher_callback(struct virtio_crypto_request *
  }
+ 
+ static int virtio_crypto_alg_akcipher_init_session(struct virtio_crypto_akcipher_ctx *ctx,
+-		struct virtio_crypto_ctrl_header *header, void *para,
++		struct virtio_crypto_ctrl_header *header,
++		struct virtio_crypto_akcipher_session_para *para,
+ 		const uint8_t *key, unsigned int keylen)
+ {
+ 	struct scatterlist outhdr_sg, key_sg, inhdr_sg, *sgs[3];
+@@ -125,7 +126,7 @@ static int virtio_crypto_alg_akcipher_init_session(struct virtio_crypto_akcipher
+ 
+ 	ctrl = &vc_ctrl_req->ctrl;
+ 	memcpy(&ctrl->header, header, sizeof(ctrl->header));
+-	memcpy(&ctrl->u, para, sizeof(ctrl->u));
++	memcpy(&ctrl->u.akcipher_create_session.para, para, sizeof(*para));
+ 	input = &vc_ctrl_req->input;
+ 	input->status = cpu_to_le32(VIRTIO_CRYPTO_ERR);
+ 
 -- 
 2.43.0
 
