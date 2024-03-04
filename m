@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CE31C6AB;
-	Mon,  4 Mar 2024 21:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29121C6AB;
+	Mon,  4 Mar 2024 21:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709589314; cv=none; b=aaAYhA3ssufsDH+id1icCJQxckrWoR345H+EEr8Ox8iMPii7vRAo698vrpvdToHk9zxEbv+6cRU4Fr2cyHYoJCsWye7fHOkgmPVt0Yv2mJWDVSoX1MvJZJ0ACeYvCikZZWHtyh8yICDkpVKHftfJkhQf8gVwVaYovfZVFMFGUDQ=
+	t=1709589317; cv=none; b=O7uCXng8pgap/ettFxcM0eaDoker0vmepfPNBvzMSfC7UqjLja4r/eXElg1K7WgiRqarJDMLztDHZY+tv+HobDLdw8Nak0CRMsKy3DfuevgOIH4pKzM1tif7x3k2Sn2QTkIoA2xaGiOQMIOVU61N979WolZ0zovNN8iIQ7mjySg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709589314; c=relaxed/simple;
-	bh=T7gaADTT4eo2O41DLS+pOJk22Iz01nFDGH/itpPyJcE=;
+	s=arc-20240116; t=1709589317; c=relaxed/simple;
+	bh=LdSnXUHuHlc/u/1RDPYxXsUtvu6a8T274QmDedL2/78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJCaGMjHYhxZAyuCiJR3gp2BnGnlujBYXlsaSjYsWNILo581YJ/RWMmGNJMX35yvovwuYSYUHIJFfNfaFVJtRFryZSDcuVR77ZcJBZU9uQ0PN6xoiRzkvarqMumMV68Fdnn7a4fKRT31Kx8zBv6Ko0dTIFEt3HZZhmTxzDfGgIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l87swLaf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zs+AMliHMxNrK3PG1gvvqgXjnUAf3Yn52ajyUCkTs1S3EXpjtxVa3d2/UnBKhgE6SSC+pOPGKE1P97DBWVf82FQK+oKBgrFckIC1e8p+27MlWr6jKDnE/r7kYwhyfo3OfkP5FBQgBoEIsuaA/GPSOxb0ak9IhwQIwztGXCn2Sk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XbEbHL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l87swLaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3DFC433F1;
-	Mon,  4 Mar 2024 21:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XbEbHL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882D7C433C7;
+	Mon,  4 Mar 2024 21:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709589314;
-	bh=T7gaADTT4eo2O41DLS+pOJk22Iz01nFDGH/itpPyJcE=;
+	s=korg; t=1709589316;
+	bh=LdSnXUHuHlc/u/1RDPYxXsUtvu6a8T274QmDedL2/78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l87swLafH7U5k+Mt/YQzqLORli7u6e3Y833Sbd4tFgdVEn714pBOcyc8t2oDflfX+
-	 iz+XRoHVQ22smph1u4qQUaPUOmFnJd/ZUmCOnnAAsdKCBbQUG4Vta0R0IJFiXZLfTn
-	 gSi6snFaWCkTHHyDfZ0liR9zSxwf0UbA7DBe/15g=
+	b=0XbEbHL6rox9DhE+iANKhKleDahQyWN36xhKdeupKu3j0oVUdoJywA74IT7p2d4JL
+	 fqdUrAYQnzG0z2t5nyWoMYMyqU2vqXeBEkzla3WH9JM6kxrArRO2Cq9abFkbl4fzSb
+	 hgvhVdUFbzcH99Zrkr0qTITNgvKfxFKsKWgYIeRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 5.15 62/84] mptcp: process pending subflow error on close
-Date: Mon,  4 Mar 2024 21:24:35 +0000
-Message-ID: <20240304211544.457489273@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 45/84] afs: Fix endless loop in directory parsing
+Date: Mon,  4 Mar 2024 21:24:18 +0000
+Message-ID: <20240304211543.839458004@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
 References: <20240304211542.332206551@linuxfoundation.org>
@@ -53,114 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 9f1a98813b4b686482e5ef3c9d998581cace0ba6 upstream.
+[ Upstream commit 5f7a07646655fb4108da527565dcdc80124b14c4 ]
 
-On incoming TCP reset, subflow closing could happen before error
-propagation. That in turn could cause the socket error being ignored,
-and a missing socket state transition, as reported by Daire-Byrne.
+If a directory has a block with only ".__afsXXXX" files in it (from
+uncompleted silly-rename), these .__afsXXXX files are skipped but without
+advancing the file position in the dir_context.  This leads to
+afs_dir_iterate() repeating the block again and again.
 
-Address the issues explicitly checking for subflow socket error at
-close time. To avoid code duplication, factor-out of __mptcp_error_report()
-a new helper implementing the relevant bits.
+Fix this by making the code that skips the .__afsXXXX file also manually
+advance the file position.
 
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/429
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The symptoms are a soft lookup:
+
+        watchdog: BUG: soft lockup - CPU#3 stuck for 52s! [check:5737]
+        ...
+        RIP: 0010:afs_dir_iterate_block+0x39/0x1fd
+        ...
+         ? watchdog_timer_fn+0x1a6/0x213
+        ...
+         ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+         ? afs_dir_iterate_block+0x39/0x1fd
+         afs_dir_iterate+0x10a/0x148
+         afs_readdir+0x30/0x4a
+         iterate_dir+0x93/0xd3
+         __do_sys_getdents64+0x6b/0xd4
+
+This is almost certainly the actual fix for:
+
+        https://bugzilla.kernel.org/show_bug.cgi?id=218496
+
+Fixes: 57e9d49c5452 ("afs: Hide silly-rename files from userspace")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/786185.1708694102@warthog.procyon.org.uk
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Markus Suvanto <markus.suvanto@gmail.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |   63 +++++++++++++++++++++++++++------------------------
- 1 file changed, 34 insertions(+), 29 deletions(-)
+ fs/afs/dir.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -688,40 +688,44 @@ static bool __mptcp_ofo_queue(struct mpt
- 	return moved;
- }
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index 106426de50279..c4e22e9f7a666 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -497,8 +497,10 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+ 		    dire->u.name[0] == '.' &&
+ 		    ctx->actor != afs_lookup_filldir &&
+ 		    ctx->actor != afs_lookup_one_filldir &&
+-		    memcmp(dire->u.name, ".__afs", 6) == 0)
++		    memcmp(dire->u.name, ".__afs", 6) == 0) {
++			ctx->pos = blkoff + next * sizeof(union afs_xdr_dirent);
+ 			continue;
++		}
  
--void __mptcp_error_report(struct sock *sk)
-+static bool __mptcp_subflow_error_report(struct sock *sk, struct sock *ssk)
- {
--	struct mptcp_subflow_context *subflow;
--	struct mptcp_sock *msk = mptcp_sk(sk);
-+	int err = sock_error(ssk);
-+	int ssk_state;
- 
--	mptcp_for_each_subflow(msk, subflow) {
--		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		int err = sock_error(ssk);
--		int ssk_state;
-+	if (!err)
-+		return false;
- 
--		if (!err)
--			continue;
-+	/* only propagate errors on fallen-back sockets or
-+	 * on MPC connect
-+	 */
-+	if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(mptcp_sk(sk)))
-+		return false;
- 
--		/* only propagate errors on fallen-back sockets or
--		 * on MPC connect
--		 */
--		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
--			continue;
-+	/* We need to propagate only transition to CLOSE state.
-+	 * Orphaned socket will see such state change via
-+	 * subflow_sched_work_if_closed() and that path will properly
-+	 * destroy the msk as needed.
-+	 */
-+	ssk_state = inet_sk_state_load(ssk);
-+	if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
-+		inet_sk_state_store(sk, ssk_state);
-+	WRITE_ONCE(sk->sk_err, -err);
-+
-+	/* This barrier is coupled with smp_rmb() in mptcp_poll() */
-+	smp_wmb();
-+	sk_error_report(sk);
-+	return true;
-+}
- 
--		/* We need to propagate only transition to CLOSE state.
--		 * Orphaned socket will see such state change via
--		 * subflow_sched_work_if_closed() and that path will properly
--		 * destroy the msk as needed.
--		 */
--		ssk_state = inet_sk_state_load(ssk);
--		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
--			inet_sk_state_store(sk, ssk_state);
--		WRITE_ONCE(sk->sk_err, -err);
--
--		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
--		smp_wmb();
--		sk_error_report(sk);
--		break;
--	}
-+void __mptcp_error_report(struct sock *sk)
-+{
-+	struct mptcp_subflow_context *subflow;
-+	struct mptcp_sock *msk = mptcp_sk(sk);
-+
-+	mptcp_for_each_subflow(msk, subflow)
-+		if (__mptcp_subflow_error_report(sk, mptcp_subflow_tcp_sock(subflow)))
-+			break;
- }
- 
- /* In most cases we will be able to lock the mptcp socket.  If its already
-@@ -2309,6 +2313,7 @@ static void __mptcp_close_ssk(struct soc
- 		/* close acquired an extra ref */
- 		__sock_put(ssk);
- 	}
-+	__mptcp_subflow_error_report(sk, ssk);
- 	release_sock(ssk);
- 
- 	sock_put(ssk);
+ 		/* found the next entry */
+ 		if (!dir_emit(ctx, dire->u.name, nlen,
+-- 
+2.43.0
+
 
 
