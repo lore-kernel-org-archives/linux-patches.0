@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFFC10A35;
-	Mon,  4 Mar 2024 21:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE4710A35;
+	Mon,  4 Mar 2024 21:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588552; cv=none; b=O48e6hq7ISPb30R5Ztk7474Ilgo3IDZeJVj3dbFJLrxAg55hQClCwRDNwSR1pqvulz7pZefRD+kPGuWS531bkmBwkiNWbMHJLSp95cbt6/aEeAZMwxMQJPiGjjoU6mqS1+kwyhR3iAhXdEf2OaZp9Fh6PWdPMBI4diu01GsNwUI=
+	t=1709588555; cv=none; b=ZiWffvQOOT6U3PLiOM2jUcjzOIO8LoovxmYkWXeYzQo7ru4rldS17SFVRHH2jw/rsqIHQ0Gj1qvaUAMliE+gx7LuMRpZuuHhX+McKXe7Dw/u9Ht/vQivXeFrzH7YQNecB0pAxCG0g1Me7AtjlcY4BK0vrbJy1T9iypMSNxWsKvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588552; c=relaxed/simple;
-	bh=j8WSSlER/VYhuEvcW//7/qZJxpFpETG5YzY7QEyp6aw=;
+	s=arc-20240116; t=1709588555; c=relaxed/simple;
+	bh=WMOU3LIX3FsMokwT3sP63w54X9OOPjlTfBpcjtLyyGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQtsAmrM6HqvtfEfwhhFpF7HtmgVoydzZkvPPROsE74Jbet2cd0XxsETf5h4v5qgIae/MQIHPORFiC+ZLOEsVzYCVuCZXsCFCcxafPQKVXvU6qyiHQR7+BvZkuqCdRf8DRPPYDOA5zhJtl5ss6SPxIOAvmUZ3DNEdS4cD5LT85s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDHy+C9k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N1/1SkNEVXKX0wIJEkcXmtmPSh4K+cgs0kIbJrDLJ0MYt5wDdE9GKGjbZyXgzTNGwArZg7In4d+6I74K5P251A0EPAAhK2V1HYMcosnD1KpeP/PVQ9WVYoD5ADLG0XzlX3fJVov2Bp1Ouc7Bx12kbmTWHyL1RhGVdUFnPLKcg1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW/EXiwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDHy+C9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB015C433F1;
-	Mon,  4 Mar 2024 21:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW/EXiwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857A9C433C7;
+	Mon,  4 Mar 2024 21:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588552;
-	bh=j8WSSlER/VYhuEvcW//7/qZJxpFpETG5YzY7QEyp6aw=;
+	s=korg; t=1709588554;
+	bh=WMOU3LIX3FsMokwT3sP63w54X9OOPjlTfBpcjtLyyGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDHy+C9kSk2wsAvB0lvRfjHWOmYck36Wdh9KwlW/NTeLO2rm/FsHphToL9FkmYI+F
-	 iQhumeS9EdS9PsqQLmuXL+xcUXSuORPkdDdu4REILem7Xl8pIZ0OJSPzmbra30Dj3v
-	 Q7iRLX8Y5/kJoFdFwSH5Cxa3l0CHVvVx3/M0uZeY=
+	b=EW/EXiwv9Zt9Fheqx8EQYcZr8VdrqAM70i5YN6XPRztF12k0XcySg6NQJrK2SXHom
+	 Jo06KNbtVQ1WFRLBB9UOqOw4HG9FbBybZVhc57tTvu6JB9z+EeA0ipEn29SUeHbdTF
+	 K/lj9Cqr8kJLEQgUtIvKOl2Od5WXTeMgS2/R13/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 6.6 135/143] x86/bugs: Use ALTERNATIVE() instead of mds_user_clear static key
-Date: Mon,  4 Mar 2024 21:24:15 +0000
-Message-ID: <20240304211554.222217564@linuxfoundation.org>
+	Tony Zhu <tony.zhu@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Lijun Pan <lijun.pan@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 126/143] dmaengine: idxd: Ensure safe user copy of completion record
+Date: Mon,  4 Mar 2024 21:24:06 +0000
+Message-ID: <20240304211553.925805738@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211549.876981797@linuxfoundation.org>
 References: <20240304211549.876981797@linuxfoundation.org>
@@ -50,200 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-commit 6613d82e617dd7eb8b0c40b2fe3acea655b1d611 upstream.
+[ Upstream commit d3ea125df37dc37972d581b74a5d3785c3f283ab ]
 
-The VERW mitigation at exit-to-user is enabled via a static branch
-mds_user_clear. This static branch is never toggled after boot, and can
-be safely replaced with an ALTERNATIVE() which is convenient to use in
-asm.
+If CONFIG_HARDENED_USERCOPY is enabled, copying completion record from
+event log cache to user triggers a kernel bug.
 
-Switch to ALTERNATIVE() to use the VERW mitigation late in exit-to-user
-path. Also remove the now redundant VERW in exc_nmi() and
-arch_exit_to_user_mode().
+[ 1987.159822] usercopy: Kernel memory exposure attempt detected from SLUB object 'dsa0' (offset 74, size 31)!
+[ 1987.170845] ------------[ cut here ]------------
+[ 1987.176086] kernel BUG at mm/usercopy.c:102!
+[ 1987.180946] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+[ 1987.186866] CPU: 17 PID: 528 Comm: kworker/17:1 Not tainted 6.8.0-rc2+ #5
+[ 1987.194537] Hardware name: Intel Corporation AvenueCity/AvenueCity, BIOS BHSDCRB1.86B.2492.D03.2307181620 07/18/2023
+[ 1987.206405] Workqueue: wq0.0 idxd_evl_fault_work [idxd]
+[ 1987.212338] RIP: 0010:usercopy_abort+0x72/0x90
+[ 1987.217381] Code: 58 65 9c 50 48 c7 c2 17 85 61 9c 57 48 c7 c7 98 fd 6b 9c 48 0f 44 d6 48 c7 c6 b3 08 62 9c 4c 89 d1 49 0f 44 f3 e8 1e 2e d5 ff <0f> 0b 49 c7 c1 9e 42 61 9c 4c 89 cf 4d 89 c8 eb a9 66 66 2e 0f 1f
+[ 1987.238505] RSP: 0018:ff62f5cf20607d60 EFLAGS: 00010246
+[ 1987.244423] RAX: 000000000000005f RBX: 000000000000001f RCX: 0000000000000000
+[ 1987.252480] RDX: 0000000000000000 RSI: ffffffff9c61429e RDI: 00000000ffffffff
+[ 1987.260538] RBP: ff62f5cf20607d78 R08: ff2a6a89ef3fffe8 R09: 00000000fffeffff
+[ 1987.268595] R10: ff2a6a89eed00000 R11: 0000000000000003 R12: ff2a66934849c89a
+[ 1987.276652] R13: 0000000000000001 R14: ff2a66934849c8b9 R15: ff2a66934849c899
+[ 1987.284710] FS:  0000000000000000(0000) GS:ff2a66b22fe40000(0000) knlGS:0000000000000000
+[ 1987.293850] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1987.300355] CR2: 00007fe291a37000 CR3: 000000010fbd4005 CR4: 0000000000f71ef0
+[ 1987.308413] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 1987.316470] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+[ 1987.324527] PKRU: 55555554
+[ 1987.327622] Call Trace:
+[ 1987.330424]  <TASK>
+[ 1987.332826]  ? show_regs+0x6e/0x80
+[ 1987.336703]  ? die+0x3c/0xa0
+[ 1987.339988]  ? do_trap+0xd4/0xf0
+[ 1987.343662]  ? do_error_trap+0x75/0xa0
+[ 1987.347922]  ? usercopy_abort+0x72/0x90
+[ 1987.352277]  ? exc_invalid_op+0x57/0x80
+[ 1987.356634]  ? usercopy_abort+0x72/0x90
+[ 1987.360988]  ? asm_exc_invalid_op+0x1f/0x30
+[ 1987.365734]  ? usercopy_abort+0x72/0x90
+[ 1987.370088]  __check_heap_object+0xb7/0xd0
+[ 1987.374739]  __check_object_size+0x175/0x2d0
+[ 1987.379588]  idxd_copy_cr+0xa9/0x130 [idxd]
+[ 1987.384341]  idxd_evl_fault_work+0x127/0x390 [idxd]
+[ 1987.389878]  process_one_work+0x13e/0x300
+[ 1987.394435]  ? __pfx_worker_thread+0x10/0x10
+[ 1987.399284]  worker_thread+0x2f7/0x420
+[ 1987.403544]  ? _raw_spin_unlock_irqrestore+0x2b/0x50
+[ 1987.409171]  ? __pfx_worker_thread+0x10/0x10
+[ 1987.414019]  kthread+0x107/0x140
+[ 1987.417693]  ? __pfx_kthread+0x10/0x10
+[ 1987.421954]  ret_from_fork+0x3d/0x60
+[ 1987.426019]  ? __pfx_kthread+0x10/0x10
+[ 1987.430281]  ret_from_fork_asm+0x1b/0x30
+[ 1987.434744]  </TASK>
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-4-a6216d83edb7%40linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The issue arises because event log cache is created using
+kmem_cache_create() which is not suitable for user copy.
+
+Fix the issue by creating event log cache with
+kmem_cache_create_usercopy(), ensuring safe user copy.
+
+Fixes: c2f156bf168f ("dmaengine: idxd: create kmem cache for event log fault items")
+Reported-by: Tony Zhu <tony.zhu@intel.com>
+Tested-by: Tony Zhu <tony.zhu@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Lijun Pan <lijun.pan@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20240209191412.1050270-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arch/x86/mds.rst       |   36 +++++++++++++++++++++++++----------
- arch/x86/include/asm/entry-common.h  |    1 
- arch/x86/include/asm/nospec-branch.h |   12 -----------
- arch/x86/kernel/cpu/bugs.c           |   15 +++++---------
- arch/x86/kernel/nmi.c                |    3 --
- arch/x86/kvm/vmx/vmx.c               |    2 -
- 6 files changed, 33 insertions(+), 36 deletions(-)
+ drivers/dma/idxd/init.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/Documentation/arch/x86/mds.rst
-+++ b/Documentation/arch/x86/mds.rst
-@@ -95,6 +95,9 @@ The kernel provides a function to invoke
- 
-     mds_clear_cpu_buffers()
- 
-+Also macro CLEAR_CPU_BUFFERS can be used in ASM late in exit-to-user path.
-+Other than CFLAGS.ZF, this macro doesn't clobber any registers.
-+
- The mitigation is invoked on kernel/userspace, hypervisor/guest and C-state
- (idle) transitions.
- 
-@@ -138,17 +141,30 @@ Mitigation points
- 
-    When transitioning from kernel to user space the CPU buffers are flushed
-    on affected CPUs when the mitigation is not disabled on the kernel
--   command line. The migitation is enabled through the static key
--   mds_user_clear.
-+   command line. The mitigation is enabled through the feature flag
-+   X86_FEATURE_CLEAR_CPU_BUF.
- 
--   The mitigation is invoked in prepare_exit_to_usermode() which covers
--   all but one of the kernel to user space transitions.  The exception
--   is when we return from a Non Maskable Interrupt (NMI), which is
--   handled directly in do_nmi().
--
--   (The reason that NMI is special is that prepare_exit_to_usermode() can
--    enable IRQs.  In NMI context, NMIs are blocked, and we don't want to
--    enable IRQs with NMIs blocked.)
-+   The mitigation is invoked just before transitioning to userspace after
-+   user registers are restored. This is done to minimize the window in
-+   which kernel data could be accessed after VERW e.g. via an NMI after
-+   VERW.
-+
-+   **Corner case not handled**
-+   Interrupts returning to kernel don't clear CPUs buffers since the
-+   exit-to-user path is expected to do that anyways. But, there could be
-+   a case when an NMI is generated in kernel after the exit-to-user path
-+   has cleared the buffers. This case is not handled and NMI returning to
-+   kernel don't clear CPU buffers because:
-+
-+   1. It is rare to get an NMI after VERW, but before returning to userspace.
-+   2. For an unprivileged user, there is no known way to make that NMI
-+      less rare or target it.
-+   3. It would take a large number of these precisely-timed NMIs to mount
-+      an actual attack.  There's presumably not enough bandwidth.
-+   4. The NMI in question occurs after a VERW, i.e. when user state is
-+      restored and most interesting data is already scrubbed. Whats left
-+      is only the data that NMI touches, and that may or may not be of
-+      any interest.
- 
- 
- 2. C-State transition
---- a/arch/x86/include/asm/entry-common.h
-+++ b/arch/x86/include/asm/entry-common.h
-@@ -91,7 +91,6 @@ static inline void arch_exit_to_user_mod
- 
- static __always_inline void arch_exit_to_user_mode(void)
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 0eb1c827a215f..d09a8553ea71d 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -342,7 +342,9 @@ static void idxd_cleanup_internals(struct idxd_device *idxd)
+ static int idxd_init_evl(struct idxd_device *idxd)
  {
--	mds_user_clear_cpu_buffers();
- 	amd_clear_divider();
- }
- #define arch_exit_to_user_mode arch_exit_to_user_mode
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -549,7 +549,6 @@ DECLARE_STATIC_KEY_FALSE(switch_to_cond_
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_ibpb);
- DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
+ 	struct device *dev = &idxd->pdev->dev;
++	unsigned int evl_cache_size;
+ 	struct idxd_evl *evl;
++	const char *idxd_name;
  
--DECLARE_STATIC_KEY_FALSE(mds_user_clear);
- DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
+ 	if (idxd->hw.gen_cap.evl_support == 0)
+ 		return 0;
+@@ -354,9 +356,16 @@ static int idxd_init_evl(struct idxd_device *idxd)
+ 	spin_lock_init(&evl->lock);
+ 	evl->size = IDXD_EVL_SIZE_MIN;
  
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
-@@ -584,17 +583,6 @@ static __always_inline void mds_clear_cp
- }
- 
- /**
-- * mds_user_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
-- *
-- * Clear CPU buffers if the corresponding static key is enabled
-- */
--static __always_inline void mds_user_clear_cpu_buffers(void)
--{
--	if (static_branch_likely(&mds_user_clear))
--		mds_clear_cpu_buffers();
--}
--
--/**
-  * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
-  *
-  * Clear CPU buffers if the corresponding static key is enabled
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -111,9 +111,6 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_cond_i
- /* Control unconditional IBPB in switch_mm() */
- DEFINE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
- 
--/* Control MDS CPU buffer clear before returning to user space */
--DEFINE_STATIC_KEY_FALSE(mds_user_clear);
--EXPORT_SYMBOL_GPL(mds_user_clear);
- /* Control MDS CPU buffer clear before idling (halt, mwait) */
- DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
- EXPORT_SYMBOL_GPL(mds_idle_clear);
-@@ -252,7 +249,7 @@ static void __init mds_select_mitigation
- 		if (!boot_cpu_has(X86_FEATURE_MD_CLEAR))
- 			mds_mitigation = MDS_MITIGATION_VMWERV;
- 
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 		if (!boot_cpu_has(X86_BUG_MSBDS_ONLY) &&
- 		    (mds_nosmt || cpu_mitigations_auto_nosmt()))
-@@ -356,7 +353,7 @@ static void __init taa_select_mitigation
- 	 * For guests that can't determine whether the correct microcode is
- 	 * present on host, enable the mitigation for UCODE_NEEDED as well.
- 	 */
--	static_branch_enable(&mds_user_clear);
-+	setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 	if (taa_nosmt || cpu_mitigations_auto_nosmt())
- 		cpu_smt_disable(false);
-@@ -424,7 +421,7 @@ static void __init mmio_select_mitigatio
- 	 */
- 	if (boot_cpu_has_bug(X86_BUG_MDS) || (boot_cpu_has_bug(X86_BUG_TAA) &&
- 					      boot_cpu_has(X86_FEATURE_RTM)))
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 	else
- 		static_branch_enable(&mmio_stale_data_clear);
- 
-@@ -484,12 +481,12 @@ static void __init md_clear_update_mitig
- 	if (cpu_mitigations_off())
- 		return;
- 
--	if (!static_key_enabled(&mds_user_clear))
-+	if (!boot_cpu_has(X86_FEATURE_CLEAR_CPU_BUF))
- 		goto out;
- 
- 	/*
--	 * mds_user_clear is now enabled. Update MDS, TAA and MMIO Stale Data
--	 * mitigation, if necessary.
-+	 * X86_FEATURE_CLEAR_CPU_BUF is now enabled. Update MDS, TAA and MMIO
-+	 * Stale Data mitigation, if necessary.
- 	 */
- 	if (mds_mitigation == MDS_MITIGATION_OFF &&
- 	    boot_cpu_has_bug(X86_BUG_MDS)) {
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -556,9 +556,6 @@ nmi_restart:
- 	}
- 	if (this_cpu_dec_return(nmi_state))
- 		goto nmi_restart;
--
--	if (user_mode(regs))
--		mds_user_clear_cpu_buffers();
- }
- 
- #if IS_ENABLED(CONFIG_KVM_INTEL)
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -7229,7 +7229,7 @@ static noinstr void vmx_vcpu_enter_exit(
- 	/* L1D Flush includes CPU buffer clear to mitigate MDS */
- 	if (static_branch_unlikely(&vmx_l1d_should_flush))
- 		vmx_l1d_flush(vcpu);
--	else if (static_branch_unlikely(&mds_user_clear))
-+	else if (cpu_feature_enabled(X86_FEATURE_CLEAR_CPU_BUF))
- 		mds_clear_cpu_buffers();
- 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
- 		 kvm_arch_has_assigned_device(vcpu->kvm))
+-	idxd->evl_cache = kmem_cache_create(dev_name(idxd_confdev(idxd)),
+-					    sizeof(struct idxd_evl_fault) + evl_ent_size(idxd),
+-					    0, 0, NULL);
++	idxd_name = dev_name(idxd_confdev(idxd));
++	evl_cache_size = sizeof(struct idxd_evl_fault) + evl_ent_size(idxd);
++	/*
++	 * Since completion record in evl_cache will be copied to user
++	 * when handling completion record page fault, need to create
++	 * the cache suitable for user copy.
++	 */
++	idxd->evl_cache = kmem_cache_create_usercopy(idxd_name, evl_cache_size,
++						     0, 0, 0, evl_cache_size,
++						     NULL);
+ 	if (!idxd->evl_cache) {
+ 		kfree(evl);
+ 		return -ENOMEM;
+-- 
+2.43.0
+
 
 
