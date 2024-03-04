@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513D1EB5A;
-	Mon,  4 Mar 2024 21:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786601F92C;
+	Mon,  4 Mar 2024 21:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588945; cv=none; b=uAptDMd9qm4Pj4eLMOYt//u7STzEiJFYKFubrMfn3HVz/BBMN2oAjSLvJxjWXQHwWFm2JD4jIqyKF1iG2tHWq/SYhMUUag3OQDr02yCfaPpMldXxras9nbjDOvZk7RS+Wm3dkfO7wv5bak250qXkedLxLUrwsFo2f+EDRMxBdRw=
+	t=1709588947; cv=none; b=hDYOy7Xy2Nn4Fl+X8tSMEjGtmoD4mD96f58ALS0Lqmp5TXHuPFFUWYSaPX+VWUYgNPG9OjQAy/fv2BqAvGdVnXKorM7WQeQbJOm78YvuA3GbN3mJE+a4O6SJZAWYHSjtj/A+ZAhX98oqhv+P7f5Jfz0cO9dtJ6X25W8VvztVhvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588945; c=relaxed/simple;
-	bh=oa6t1T8qzUEYK0X6vmgV2OhqGUVuoZtKmfaDVYrHXaU=;
+	s=arc-20240116; t=1709588947; c=relaxed/simple;
+	bh=AmRdIBxVA4+aB74YiWp7RyEdwbhLnPlH5oZpYOde/Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vzo1hJclxj/HEVh8c4v8GL3GWWVaFq0vcOQK0C2g61obN0LNspb2812Tr2Ab4ejR4GUOlhIIBXQ898b3/0s92xxGefFPTLjZoMQjsD9HNYWCymmxNTTxi1MnPvboOsAIh7ztK9HqKXf1ocOmX4vQB1h46OMvR2IuUzQEDc+lqF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwXGRePm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BjYTNo3QQYetwPXaQqCTQQJM01vpM+4RnBuIohFPqz438QdtAHv7Jo5BAy9xwO2hv2LmQXBylUlQxCB6mt9YsO6z6u8LZUypONA12CqyDNdt5B/RKtJP/3qGgLoq/NEf8q4p/RXsoyAnY2Rq4EfYotGzKY6IaFHVA4iKY5/6EDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+VJ0/V3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwXGRePm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9668C43390;
-	Mon,  4 Mar 2024 21:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+VJ0/V3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB4EC433C7;
+	Mon,  4 Mar 2024 21:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588944;
-	bh=oa6t1T8qzUEYK0X6vmgV2OhqGUVuoZtKmfaDVYrHXaU=;
+	s=korg; t=1709588947;
+	bh=AmRdIBxVA4+aB74YiWp7RyEdwbhLnPlH5oZpYOde/Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwXGRePm94R5atnbjFrXNdse3UZXV6FtIkIJZ4Z9Ix9gHeXex+4VJIbOL8DFdgVm5
-	 MPprYpFZa7eH/ijkGDC9YCM3zEebelvV+G8eGo9nl5OoeCeJtbwjXhBsFk8Ne+OY0G
-	 t0jVAVc//k7el8bmLhApUY1xbMReKi0st0/7IDag=
+	b=S+VJ0/V3rLcqWtnYMr0Xd4w9i21SHueX9rLOCq0b60Y9RQ6IRgSAG79F78uVpRkJ9
+	 Qnxg0Z3VPUx5cZaU4IdGL3XiumD3VGJrJlYGt02PQRIGwqvFS42hngUVuSUfDG46NO
+	 DBuw4DrjO8JikujcRVF3V5wqjcOLnxsAIVWel5yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	kernel test robot <lkp@intel.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Samson Tam <samson.tam@amd.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 141/215] drm/amd/display: Increase frame warning limit with KASAN or KCSAN in dml
-Date: Mon,  4 Mar 2024 21:23:24 +0000
-Message-ID: <20240304211601.528915648@linuxfoundation.org>
+	"linux-nfs@vger.kernel.org,  Jacek Tomaka" <Jacek.Tomaka@poczta.fm>,
+	NeilBrown <neilb@suse.de>,
+	Jacek Tomaka <Jacek.Tomaka@poczta.fm>
+Subject: [PATCH 6.1 142/215] NFS: Fix data corruption caused by congestion.
+Date: Mon,  4 Mar 2024 21:23:25 +0000
+Message-ID: <20240304211601.558292823@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -55,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: "NeilBrown" <neilb@suse.de>
 
-commit 5b750b22530fe53bf7fd6a30baacd53ada26911b upstream.
+when AOP_WRITEPAGE_ACTIVATE is returned (as NFS does when it detects
+congestion) it is important that the page is redirtied.
+nfs_writepage_locked() doesn't do this, so files can become corrupted as
+writes can be lost.
 
-Does the same thing as:
-commit 6740ec97bcdb ("drm/amd/display: Increase frame warning limit with KASAN or KCSAN in dml2")
+Note that this is not needed in v6.8 as AOP_WRITEPAGE_ACTIVATE cannot be
+returned.  It is needed for kernels v5.18..v6.7.  From 6.3 onward the patch
+is different as it needs to mention "folio", not "page".
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311302107.hUDXVyWT-lkp@intel.com/
-Fixes: 67e38874b85b ("drm/amd/display: Increase num voltage states to 40")
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Alvin Lee <alvin.lee2@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Cc: Samson Tam <samson.tam@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
+Reported-and-tested-by: Jacek Tomaka <Jacek.Tomaka@poczta.fm>
+Fixes: 6df25e58532b ("nfs: remove reliance on bdi congestion")
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfs/write.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -51,8 +51,12 @@ endif
- endif
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index f41d24b54fd1..6a0606668417 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -667,8 +667,10 @@ static int nfs_writepage_locked(struct page *page,
+ 	int err;
  
- ifneq ($(CONFIG_FRAME_WARN),0)
-+ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-+frame_warn_flag := -Wframe-larger-than=3072
-+else
- frame_warn_flag := -Wframe-larger-than=2048
- endif
-+endif
+ 	if (wbc->sync_mode == WB_SYNC_NONE &&
+-	    NFS_SERVER(inode)->write_congested)
++	    NFS_SERVER(inode)->write_congested) {
++		redirty_page_for_writepage(wbc, page);
+ 		return AOP_WRITEPAGE_ACTIVATE;
++	}
  
- CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
- 
+ 	nfs_inc_stats(inode, NFSIOS_VFSWRITEPAGE);
+ 	nfs_pageio_init_write(&pgio, inode, 0,
+-- 
+2.43.0
+
 
 
