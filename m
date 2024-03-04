@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04AE10A35;
-	Mon,  4 Mar 2024 21:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E34D4C62A;
+	Mon,  4 Mar 2024 21:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587675; cv=none; b=Qi1QQQ0c1Q1qhPUCPgTSudAqMdoOICo0Qz6kNxddr2o2eqekhi3FNJxXkBWHrVJvhJkzL2Suw1wWuPUMJRFpKXmWwiFegj00JkjxAvWJhSvcKkP1rn9Vy7x6w1O3xZFUq1GjWSWw7KKWZLsyL4JDvG8r6AY7gvN+lh85Wnp3pGs=
+	t=1709587677; cv=none; b=SECWOA44aGsD9NOftpBNiu4n/WZiF4oRlfYTYnHeQzG2adE3eMToYDoddM6WweNncXRdi1aw/rofjGjtH9EKOO9P4TDUP8iXcENEu+1vlJvG+oVc4GNJjCbAl+o+FzVw+81PBcstlk1pxJ9Ad0OThu99cd6GouSVHdOjr8ZikS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587675; c=relaxed/simple;
-	bh=RX9mim5+Kg/rX7bYvI2Mi4tefg4hiMPOeqL83NmsY/A=;
+	s=arc-20240116; t=1709587677; c=relaxed/simple;
+	bh=l2iV9vK+VdLOr2B86GJca5viwh6YfJeRO6r3kN/BOEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLP+5gWQ+7/fG4fa3L7NRnF4HMJnh6NzEdKwzt65St2onQU6nUb0DBxWhRujABwAqhOLamfe3X78Nz6VuzrSKR4Uz6LRXoRZXo4bcbuhhzThzhHfItjhs8Q1dgG15jFVkKVBFk72DZZnvr60KsOQCXZK0BeJol4sGzLjdkQSv48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5gxOsXd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I9px+Vd0jT+MpBXx59twXnBXR9DGNzX/eWIWbnMBNiQEoAc1iGgN3dDFTBsDjylS+jAMhiNilnQ2EzKdm8NQnwRaIwdAv8a1TarLJUwm/L1e1KWUBCApmuGX0dt95M7iK7MZ83914OmtWLo1/K/1cJQTEpKGujCGnc+9298QYXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0Fz9L+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5gxOsXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811CBC433F1;
-	Mon,  4 Mar 2024 21:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0Fz9L+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210D4C433F1;
+	Mon,  4 Mar 2024 21:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587674;
-	bh=RX9mim5+Kg/rX7bYvI2Mi4tefg4hiMPOeqL83NmsY/A=;
+	s=korg; t=1709587677;
+	bh=l2iV9vK+VdLOr2B86GJca5viwh6YfJeRO6r3kN/BOEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5gxOsXdAmxbL/nzQOSku2/CN8o7S8AGAUebc7KPXgcOj7TntO4LoDwGfCnlmloP9
-	 1lpdOmYdqI+hIoH6yQNOUVBlurTpGUdQh/fOeSL3vP6KcvqOCu89bxPFSguRZTI4jC
-	 kYNyBgTD9MdrVVTAMinRtkW08h+iT3+qAOpkRFyE=
+	b=b0Fz9L+PMgwzyTEgr3ZdFHFWml9FB98ksFZZisQXo3DohgQiwxOK2/bWyfM0SZ6Jh
+	 JUay2vEp2WuPq80a7CzzYxYXxUL39BjiFX8sLf4izOytFJaszXReWyVl5MXe1pjtmj
+	 7jOp+eT9r+VaiqwTfDMvaH+E9Oqgc1pJA0HnJdXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 047/162] ASoC: cs35l56: Must clear HALO_STATE before issuing SYSTEM_RESET
-Date: Mon,  4 Mar 2024 21:21:52 +0000
-Message-ID: <20240304211553.358759426@linuxfoundation.org>
+Subject: [PATCH 6.7 048/162] ALSA: Drop leftover snd-rtctimer stuff from Makefile
+Date: Mon,  4 Mar 2024 21:21:53 +0000
+Message-ID: <20240304211553.385326584@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -51,41 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e33625c84b75e4f078d7f9bf58f01fe71ab99642 ]
+[ Upstream commit 4df49712eb54141be00a9312547436d55677f092 ]
 
-The driver must write 0 to HALO_STATE before sending the SYSTEM_RESET
-command to the firmware.
+We forgot to remove the line for snd-rtctimer from Makefile while
+dropping the functionality.  Get rid of the stale line.
 
-HALO_STATE is in DSP memory, which is preserved across a soft reset.
-The SYSTEM_RESET command does not change the value of HALO_STATE.
-There is period of time while the CS35L56 is resetting, before the
-firmware has started to boot, where a read of HALO_STATE will return
-the value it had before the SYSTEM_RESET. If the driver does not
-clear HALO_STATE, this would return BOOT_DONE status even though the
-firmware has not booted.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 8a731fd37f8b ("ASoC: cs35l56: Move utility functions to shared file")
-Link: https://msgid.link/r/20240216140535.1434933-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 34ce71a96dcb ("ALSA: timer: remove legacy rtctimer")
+Link: https://lore.kernel.org/r/20240221092156.28695-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56-shared.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 953ba066bab1e..fc99bc92aeace 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -286,6 +286,7 @@ void cs35l56_wait_min_reset_pulse(void)
- EXPORT_SYMBOL_NS_GPL(cs35l56_wait_min_reset_pulse, SND_SOC_CS35L56_SHARED);
- 
- static const struct reg_sequence cs35l56_system_reset_seq[] = {
-+	REG_SEQ0(CS35L56_DSP1_HALO_STATE, 0),
- 	REG_SEQ0(CS35L56_DSP_VIRTUAL1_MBOX_1, CS35L56_MBOX_CMD_SYSTEM_RESET),
- };
+diff --git a/sound/core/Makefile b/sound/core/Makefile
+index a6b444ee28326..f6526b3371375 100644
+--- a/sound/core/Makefile
++++ b/sound/core/Makefile
+@@ -32,7 +32,6 @@ snd-ump-objs      := ump.o
+ snd-ump-$(CONFIG_SND_UMP_LEGACY_RAWMIDI) += ump_convert.o
+ snd-timer-objs    := timer.o
+ snd-hrtimer-objs  := hrtimer.o
+-snd-rtctimer-objs := rtctimer.o
+ snd-hwdep-objs    := hwdep.o
+ snd-seq-device-objs := seq_device.o
  
 -- 
 2.43.0
