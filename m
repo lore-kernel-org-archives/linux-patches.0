@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2267BB1B;
-	Mon,  4 Mar 2024 21:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7D67AE6B;
+	Mon,  4 Mar 2024 21:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587832; cv=none; b=HVg53PnkpUwMA1XyTMjMxGgAFKY6sIkwtnEZTfS6Zxl0ZF6sZSdZOQcDtwjsBF3uGgyA2MRWO1qpPuFiHAS9nU3aZV5n2GPK+ZXzntImvQQMOhy0OhCyCNgaW5lczjSNoQe0HZ6vPozzZNsT8yC8/WO4+KlA1EXizE62NsoG4es=
+	t=1709587835; cv=none; b=Q8Ku/rZutLYSITyjqUfzfnvuMwur07m5HucIPKuxgxqqQFIawYYxqh6Z0j4AI022/u/FlzYXwZpUiGBbso+VqZSCxUaXQP35RRpbulpqTzZ7nYn0s4ROoEbx9y29cO5UjS7ZakCGYWyiWVzxjw8PJJsCxzf6ckKn/m6e4y9Cpgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587832; c=relaxed/simple;
-	bh=v9Op5os/DDFyKV3lsBTCB81F8DKQpo1jHCty6lsklfo=;
+	s=arc-20240116; t=1709587835; c=relaxed/simple;
+	bh=FOfrGYCGclIzhGVDvT9SfbCrhuhC3Xey/M1KoOHeIXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJzVpyntGTbjFHWsi8j/JG/bRWaZ6EKF7fy+YCweba5i/RQczULj8+tGffxmaMeDhhVTESZyQh15Z4otEcXn1VgvKSRqT1KbXHLncY9sZcFY8UwdrCLAyU7cr1cuJ6s2T0o/U44XOzj0Q/wkIrUjhJ1V/ROXZUkeklCPav9tzcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb825whg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQDOHA47zdt1vNIgj4uDRJ6Rh5XxUoHB5avqeBRIs2B/40WVLm1VC5F3fTtPNPh2gwZ7euimAgBjgD+uXwRrjLz8oESrEj8UWZ4Zvl1Pp0dCPBv3Lbf6Yn5+G+tyxBX+5zUYqrqW13NUn++N1g6jdFuZNG1kop9MZRUdOSR99Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAnE1e02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb825whg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD9BC433C7;
-	Mon,  4 Mar 2024 21:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAnE1e02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3829AC433F1;
+	Mon,  4 Mar 2024 21:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709587832;
-	bh=v9Op5os/DDFyKV3lsBTCB81F8DKQpo1jHCty6lsklfo=;
+	s=korg; t=1709587834;
+	bh=FOfrGYCGclIzhGVDvT9SfbCrhuhC3Xey/M1KoOHeIXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sb825whgRszJMhj61frw/IsChPI6/io2HxOcarL0VdIHN3bCkoiIZTOq33MUaJp0/
-	 aDBbV3kF0GX7QBoM89Tmiq/X3VYv33TDsU0QNp8WBZWwKKlSvNT+/R6HtF90MSsS0+
-	 KxEOPgc4u9CXruI/dIokqfdpXSl0u7ZEJ39FdlHI=
+	b=NAnE1e02HKM4SRJcow1bogJI2TRCjVt4qG5b/PjdTO7rzVTMJyKhUOM6fIPoomYy9
+	 R5PsyrzPWtiCyuasqJ1H4Dik/+dS216/sgZ8k41aRo2i4wTfiGyN3IBQK72zR9cefy
+	 zEprSEbEhiKBl112HXH3OiD3fW41JtKD8kscU30k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.7 107/162] riscv: Fix enabling cbo.zero when running in M-mode
-Date: Mon,  4 Mar 2024 21:22:52 +0000
-Message-ID: <20240304211555.216977466@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 090/162] Revert "drm/amd/pm: resolve reboot exception for si oland"
+Date: Mon,  4 Mar 2024 21:22:35 +0000
+Message-ID: <20240304211554.716120576@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211551.833500257@linuxfoundation.org>
 References: <20240304211551.833500257@linuxfoundation.org>
@@ -52,54 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 3fb3f7164edc467450e650dca51dbe4823315a56 upstream.
+commit 955558030954b9637b41c97b730f9b38c92ac488 upstream.
 
-When the kernel is running in M-mode, the CBZE bit must be set in the
-menvcfg CSR, not in senvcfg.
+This reverts commit e490d60a2f76bff636c68ce4fe34c1b6c34bbd86.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 43c16d51a19b ("RISC-V: Enable cbo.zero in usermode")
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20240228065559.3434837-2-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+This causes hangs on SI when DC is enabled and errors on driver
+reboot and power off cycles.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3216
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2755
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/csr.h   |    2 ++
- arch/riscv/kernel/cpufeature.c |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/arch/riscv/include/asm/csr.h
-+++ b/arch/riscv/include/asm/csr.h
-@@ -415,6 +415,7 @@
- # define CSR_STATUS	CSR_MSTATUS
- # define CSR_IE		CSR_MIE
- # define CSR_TVEC	CSR_MTVEC
-+# define CSR_ENVCFG	CSR_MENVCFG
- # define CSR_SCRATCH	CSR_MSCRATCH
- # define CSR_EPC	CSR_MEPC
- # define CSR_CAUSE	CSR_MCAUSE
-@@ -439,6 +440,7 @@
- # define CSR_STATUS	CSR_SSTATUS
- # define CSR_IE		CSR_SIE
- # define CSR_TVEC	CSR_STVEC
-+# define CSR_ENVCFG	CSR_SENVCFG
- # define CSR_SCRATCH	CSR_SSCRATCH
- # define CSR_EPC	CSR_SEPC
- # define CSR_CAUSE	CSR_SCAUSE
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -740,7 +740,7 @@ arch_initcall(check_unaligned_access_all
- void riscv_user_isa_enable(void)
- {
- 	if (riscv_cpu_has_extension_unlikely(smp_processor_id(), RISCV_ISA_EXT_ZICBOZ))
--		csr_set(CSR_SENVCFG, ENVCFG_CBZE);
-+		csr_set(CSR_ENVCFG, ENVCFG_CBZE);
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -6925,6 +6925,23 @@ static int si_dpm_enable(struct amdgpu_d
+ 	return 0;
  }
  
- #ifdef CONFIG_RISCV_ALTERNATIVE
++static int si_set_temperature_range(struct amdgpu_device *adev)
++{
++	int ret;
++
++	ret = si_thermal_enable_alert(adev, false);
++	if (ret)
++		return ret;
++	ret = si_thermal_set_temperature_range(adev, R600_TEMP_RANGE_MIN, R600_TEMP_RANGE_MAX);
++	if (ret)
++		return ret;
++	ret = si_thermal_enable_alert(adev, true);
++	if (ret)
++		return ret;
++
++	return ret;
++}
++
+ static void si_dpm_disable(struct amdgpu_device *adev)
+ {
+ 	struct rv7xx_power_info *pi = rv770_get_pi(adev);
+@@ -7608,6 +7625,18 @@ static int si_dpm_process_interrupt(stru
+ 
+ static int si_dpm_late_init(void *handle)
+ {
++	int ret;
++	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
++
++	if (!adev->pm.dpm_enabled)
++		return 0;
++
++	ret = si_set_temperature_range(adev);
++	if (ret)
++		return ret;
++#if 0 //TODO ?
++	si_dpm_powergate_uvd(adev, true);
++#endif
+ 	return 0;
+ }
+ 
 
 
