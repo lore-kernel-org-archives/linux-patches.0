@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44227BAF7;
-	Mon,  4 Mar 2024 21:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5D21C687;
+	Mon,  4 Mar 2024 21:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588062; cv=none; b=JxLmaQVYao7t31e3Z9DSXz8hMsGxhAbCw+qMKLCuCmH/FoycO4OzSoCSqlo+46aXw5Iu440iEyJDFQeaSEo1n+11U4Y0EdtqbIP3rkdRelu7sQ/uZ/+ErKZwosX2XsPlDrpWBXE8yppTNxqvCRiD0V2rRITMCMdjrzGp/MfkZME=
+	t=1709588065; cv=none; b=MS30CuQvoylLTLuAmjPxDXWCRaUKMY7jRNwhooToCpLBkE6NWKbHLQLd8s9rJLPeoj9jg08bSRWuHH2qnttfUzafb/rI2/xoUijHBjIM1uLbsKD/3yPx+Ib/E27mBdgzWfYhksfYMaKF3rRq7QWa7OYPsnmJhQ+UZsVlJHA4a9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588062; c=relaxed/simple;
-	bh=3Cm2HjSE0gjzvliEhlP1rYD/xXdCCL2UInL9HdLKVRU=;
+	s=arc-20240116; t=1709588065; c=relaxed/simple;
+	bh=Lc64I/vcqIstVeycwSbFp0XnP5bAGs+dYb11XiVtgbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDJzIvr0LKncgUnEc1C5aVyKYmBK9MGqmQbNYr2TBGe3E+QNGOhMh8RNahMBC9gw5dsvZiSqF1JKEWjC2FlRQVb7dMfeq5XMZa2CJ0O0+eXDPPONT7TE6oernnGKNogljBiZx94TNkdgAc0GZWfmSdizGXMPHEDutCO1lOkhI6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sL8KJ43+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gkr/2NUijqiq6JmmaXXOYMxMo9u8jgjrTcG1Blafhwy0RSaDk78m6c54sxtQnQR6KJYmP+/INl9mVulGirAuCXkTWRt/pNnaIKzju3QlOpufZ6sm2E5nrRWT6dKXWAl9BJP7J27II71IKErOxmNPk0owbLmRx1j09b5wOU73/Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuS8pcr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sL8KJ43+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68346C43394;
-	Mon,  4 Mar 2024 21:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuS8pcr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0366DC433F1;
+	Mon,  4 Mar 2024 21:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588062;
-	bh=3Cm2HjSE0gjzvliEhlP1rYD/xXdCCL2UInL9HdLKVRU=;
+	s=korg; t=1709588065;
+	bh=Lc64I/vcqIstVeycwSbFp0XnP5bAGs+dYb11XiVtgbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sL8KJ43+lmsCbf1Q9pd0/Cu5VEBU/vUMYpdqZAOoLT5Bc5HS5zXZf9a/S9Akod5si
-	 0BS0vn1DUCt4CWDTyDN87HUyJT1RllN36DyB+Qe3rQmhpWDIrU3Prjq3L7uDUr3XvX
-	 hZnBRLqiDownLBSPXUVOGAS0aOk0GWoyee+pn8Xo=
+	b=WuS8pcr9x4deqKFJyceGUrLZHw4p1eOu7Tr0i7bdg4OME2I+RnEaiEY2ImDtomDrl
+	 tMNzsLfdR5WECzoIPD68UqYH4ov7R9/Tb+IZQLFXf+ilVO0Xklk+QLvbxabs3n3xkV
+	 IObYgB3+qS62SODbEIvcmSkJTIKnyu7/B1tg1+fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arturas Moskvinas <arturas.moskvinas@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/25] gpio: 74x164: Enable output pins after registers are reset
-Date: Mon,  4 Mar 2024 21:24:01 +0000
-Message-ID: <20240304211536.606584317@linuxfoundation.org>
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@broadcom.com>
+Subject: [PATCH 5.4 24/25] fs,hugetlb: fix NULL pointer dereference in hugetlbs_fill_super
+Date: Mon,  4 Mar 2024 21:24:00 +0000
+Message-ID: <20240304211536.574096064@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211535.741936181@linuxfoundation.org>
 References: <20240304211535.741936181@linuxfoundation.org>
@@ -45,63 +47,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arturas Moskvinas <arturas.moskvinas@gmail.com>
+From: Oscar Salvador <osalvador@suse.de>
 
-[ Upstream commit 530b1dbd97846b110ea8a94c7cc903eca21786e5 ]
+commit 79d72c68c58784a3e1cd2378669d51bfd0cb7498 upstream.
 
-Chip outputs are enabled[1] before actual reset is performed[2] which might
-cause pin output value to flip flop if previous pin value was set to 1.
-Fix that behavior by making sure chip is fully reset before all outputs are
-enabled.
+When configuring a hugetlb filesystem via the fsconfig() syscall, there is
+a possible NULL dereference in hugetlbfs_fill_super() caused by assigning
+NULL to ctx->hstate in hugetlbfs_parse_param() when the requested pagesize
+is non valid.
 
-Flip-flop can be noticed when module is removed and inserted again and one of
-the pins was changed to 1 before removal. 100 microsecond flipping is
-noticeable on oscilloscope (100khz SPI bus).
+E.g: Taking the following steps:
 
-For a properly reset chip - output is enabled around 100 microseconds (on 100khz
-SPI bus) later during probing process hence should be irrelevant behavioral
-change.
+     fd =3D fsopen("hugetlbfs", FSOPEN_CLOEXEC);
+     fsconfig(fd, FSCONFIG_SET_STRING, "pagesize", "1024", 0);
+     fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0);
 
-Fixes: 7ebc194d0fd4 (gpio: 74x164: Introduce 'enable-gpios' property)
-Link: https://elixir.bootlin.com/linux/v6.7.4/source/drivers/gpio/gpio-74x164.c#L130 [1]
-Link: https://elixir.bootlin.com/linux/v6.7.4/source/drivers/gpio/gpio-74x164.c#L150 [2]
-Signed-off-by: Arturas Moskvinas <arturas.moskvinas@gmail.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Given that the requested "pagesize" is invalid, ctxt->hstate will be replac=
+ed
+with NULL, losing its previous value, and we will print an error:
+
+ ...
+ ...
+ case Opt_pagesize:
+ ps =3D memparse(param->string, &rest);
+ ctx->hstate =3D h;
+ if (!ctx->hstate) {
+         pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
+         return -EINVAL;
+ }
+ return 0;
+ ...
+ ...
+
+This is a problem because later on, we will dereference ctxt->hstate in
+hugetlbfs_fill_super()
+
+ ...
+ ...
+ sb->s_blocksize =3D huge_page_size(ctx->hstate);
+ ...
+ ...
+
+Causing below Oops.
+
+Fix this by replacing cxt->hstate value only when then pagesize is known
+to be valid.
+
+ kernel: hugetlbfs: Unsupported page size 0 MB
+ kernel: BUG: kernel NULL pointer dereference, address: 0000000000000028
+ kernel: #PF: supervisor read access in kernel mode
+ kernel: #PF: error_code(0x0000) - not-present page
+ kernel: PGD 800000010f66c067 P4D 800000010f66c067 PUD 1b22f8067 PMD 0
+ kernel: Oops: 0000 [#1] PREEMPT SMP PTI
+ kernel: CPU: 4 PID: 5659 Comm: syscall Tainted: G            E      6.8.0-=
+rc2-default+ #22 5a47c3fef76212addcc6eb71344aabc35190ae8f
+ kernel: Hardware name: Intel Corp. GROVEPORT/GROVEPORT, BIOS GVPRCRB1.86B.=
+0016.D04.1705030402 05/03/2017
+ kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
+ kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
+00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
+8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
+ kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
+ kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
+ kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
+ kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
+ kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
+ kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
+ kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
+0000000000
+ kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
+ kernel: Call Trace:
+ kernel:  <TASK>
+ kernel:  ? __die_body+0x1a/0x60
+ kernel:  ? page_fault_oops+0x16f/0x4a0
+ kernel:  ? search_bpf_extables+0x65/0x70
+ kernel:  ? fixup_exception+0x22/0x310
+ kernel:  ? exc_page_fault+0x69/0x150
+ kernel:  ? asm_exc_page_fault+0x22/0x30
+ kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
+ kernel:  ? hugetlbfs_fill_super+0xb4/0x1a0
+ kernel:  ? hugetlbfs_fill_super+0x28/0x1a0
+ kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
+ kernel:  vfs_get_super+0x40/0xa0
+ kernel:  ? __pfx_bpf_lsm_capable+0x10/0x10
+ kernel:  vfs_get_tree+0x25/0xd0
+ kernel:  vfs_cmd_create+0x64/0xe0
+ kernel:  __x64_sys_fsconfig+0x395/0x410
+ kernel:  do_syscall_64+0x80/0x160
+ kernel:  ? syscall_exit_to_user_mode+0x82/0x240
+ kernel:  ? do_syscall_64+0x8d/0x160
+ kernel:  ? syscall_exit_to_user_mode+0x82/0x240
+ kernel:  ? do_syscall_64+0x8d/0x160
+ kernel:  ? exc_page_fault+0x69/0x150
+ kernel:  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+ kernel: RIP: 0033:0x7ffbc0cb87c9
+ kernel: Code: 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 90 48 89 f8 =
+48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 0=
+1 f0 ff ff 73 01 c3 48 8b 0d 97 96 0d 00 f7 d8 64 89 01 48
+ kernel: RSP: 002b:00007ffc29d2f388 EFLAGS: 00000206 ORIG_RAX: 000000000000=
+01af
+ kernel: RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffbc0cb87c9
+ kernel: RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+ kernel: RBP: 00007ffc29d2f3b0 R08: 0000000000000000 R09: 0000000000000000
+ kernel: R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+ kernel: R13: 00007ffc29d2f4c0 R14: 0000000000000000 R15: 0000000000000000
+ kernel:  </TASK>
+ kernel: Modules linked in: rpcsec_gss_krb5(E) auth_rpcgss(E) nfsv4(E) dns_=
+resolver(E) nfs(E) lockd(E) grace(E) sunrpc(E) netfs(E) af_packet(E) bridge=
+(E) stp(E) llc(E) iscsi_ibft(E) iscsi_boot_sysfs(E) intel_rapl_msr(E) intel=
+_rapl_common(E) iTCO_wdt(E) intel_pmc_bxt(E) sb_edac(E) iTCO_vendor_support=
+(E) x86_pkg_temp_thermal(E) intel_powerclamp(E) coretemp(E) kvm_intel(E) rf=
+kill(E) ipmi_ssif(E) kvm(E) acpi_ipmi(E) irqbypass(E) pcspkr(E) igb(E) ipmi=
+_si(E) mei_me(E) i2c_i801(E) joydev(E) intel_pch_thermal(E) i2c_smbus(E) dc=
+a(E) lpc_ich(E) mei(E) ipmi_devintf(E) ipmi_msghandler(E) acpi_pad(E) tiny_=
+power_button(E) button(E) fuse(E) efi_pstore(E) configfs(E) ip_tables(E) x_=
+tables(E) ext4(E) mbcache(E) jbd2(E) hid_generic(E) usbhid(E) sd_mod(E) t10=
+_pi(E) crct10dif_pclmul(E) crc32_pclmul(E) crc32c_intel(E) polyval_clmulni(=
+E) ahci(E) xhci_pci(E) polyval_generic(E) gf128mul(E) ghash_clmulni_intel(E=
+) sha512_ssse3(E) sha256_ssse3(E) xhci_pci_renesas(E) libahci(E) ehci_pci(E=
+) sha1_ssse3(E) xhci_hcd(E) ehci_hcd(E) libata(E)
+ kernel:  mgag200(E) i2c_algo_bit(E) usbcore(E) wmi(E) sg(E) dm_multipath(E=
+) dm_mod(E) scsi_dh_rdac(E) scsi_dh_emc(E) scsi_dh_alua(E) scsi_mod(E) scsi=
+_common(E) aesni_intel(E) crypto_simd(E) cryptd(E)
+ kernel: Unloaded tainted modules: acpi_cpufreq(E):1 fjes(E):1
+ kernel: CR2: 0000000000000028
+ kernel: ---[ end trace 0000000000000000 ]---
+ kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
+ kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
+00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
+8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
+ kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
+ kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
+ kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
+ kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
+ kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
+ kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
+ kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
+0000000000
+ kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
+
+Link: https://lkml.kernel.org/r/20240130210418.3771-1-osalvador@suse.de
+Fixes: 32021982a324 ("hugetlbfs: Convert to fs_context")
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Vamsi Krishna Brahmajosyula <vamsi-krishna.brahmajosyula@bro=
+adcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-74x164.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/hugetlbfs/inode.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-74x164.c b/drivers/gpio/gpio-74x164.c
-index e81307f9754e3..30aa7f82fc5b4 100644
---- a/drivers/gpio/gpio-74x164.c
-+++ b/drivers/gpio/gpio-74x164.c
-@@ -128,8 +128,6 @@ static int gen_74x164_probe(struct spi_device *spi)
- 	if (IS_ERR(chip->gpiod_oe))
- 		return PTR_ERR(chip->gpiod_oe);
- 
--	gpiod_set_value_cansleep(chip->gpiod_oe, 1);
--
- 	spi_set_drvdata(spi, chip);
- 
- 	chip->gpio_chip.label = spi->modalias;
-@@ -154,6 +152,8 @@ static int gen_74x164_probe(struct spi_device *spi)
- 		goto exit_destroy;
- 	}
- 
-+	gpiod_set_value_cansleep(chip->gpiod_oe, 1);
-+
- 	ret = gpiochip_add_data(&chip->gpio_chip, chip);
- 	if (!ret)
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -1205,6 +1205,7 @@ static int hugetlbfs_parse_param(struct
+ {
+ 	struct hugetlbfs_fs_context *ctx =3D fc->fs_private;
+ 	struct fs_parse_result result;
++	struct hstate *h;
+ 	char *rest;
+ 	unsigned long ps;
+ 	int opt;
+@@ -1249,11 +1250,12 @@ static int hugetlbfs_parse_param(struct
+=20
+ 	case Opt_pagesize:
+ 		ps =3D memparse(param->string, &rest);
+-		ctx->hstate =3D size_to_hstate(ps);
+-		if (!ctx->hstate) {
++		h =3D size_to_hstate(ps);
++		if (!h) {
+ 			pr_err("Unsupported page size %lu MB\n", ps >> 20);
+ 			return -EINVAL;
+ 		}
++		ctx->hstate =3D h;
  		return 0;
--- 
-2.43.0
-
+=20
+ 	case Opt_min_size:
 
 
