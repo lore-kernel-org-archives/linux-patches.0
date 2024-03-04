@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BC246BA0;
-	Mon,  4 Mar 2024 21:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A52C11193;
+	Mon,  4 Mar 2024 21:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709588657; cv=none; b=pOlgLEhWa2VkeGsJsWC/fq/e8tezRqX7wF5ZS47wAV3k3uVYFynKdNzFPfvMPK87R7Ci2k42lSkfO+GM8ndPmV7+EImiIvZ76vlCuRBo31SzMi4mj4EWZKLl4qdeZwXBISi+BgyLjsEXCLKxCYuE7zDi1K1gMnC3mey4nQwf5jE=
+	t=1709588659; cv=none; b=ctwNYNFP4o9B4jRDwQYow9HeS+7cAoqp9FSO0X9h9UkO6/KcCVgGZZPLbkQc+E2gcUme2kimc1xwtToz92vaFuFQlFTUcM4T1bQ+RzMQgNCB8AUxwjvo6BPFHaAv7WKrc8cEMsRlaGhvStmZCySqfcIjd81UDfNFOEQvQd3BLtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709588657; c=relaxed/simple;
-	bh=C7BfHZTF8qLHwX36pUAm4qK/hZCwc6j5V1FAQA0Bg/s=;
+	s=arc-20240116; t=1709588659; c=relaxed/simple;
+	bh=mNKcchx8l0Pe0vriT/DoTIxgtvzs1caJN3sNvmp+A/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWucQfprBmq0XYsbTJNsp8tW/AX2Hvp+7JvenCicTyWI6KIJlZJn/6uKf/lbX/QxS6dO91AqlVD5/a5VyIhD4mnjSWlVk3wMl5lbxz7g52ooWhE5/zLH5r3OQhEeZQi/IRPQ1LACU4d7bLY0q9TYmTsfXipgnFHNF6WZWXOnfXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgONsmQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6J2/qB9EWM1XlcW/XDzM/gW1+K/dJ3so3EJPTh3SvQmHBwNuaLj1C2gD/nFYuh5wZYBque/2zJa2nv9SZG693PmTKDOLeu/QAepAr+W/dzxGGFLFnKsse2dF57ly9dc5qmWaI0v4wK0tyIhF7CxT6FEJNVheNJVqWOCaf7byKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/NcYlmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgONsmQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8F2C43390;
-	Mon,  4 Mar 2024 21:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/NcYlmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D81EC433F1;
+	Mon,  4 Mar 2024 21:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709588656;
-	bh=C7BfHZTF8qLHwX36pUAm4qK/hZCwc6j5V1FAQA0Bg/s=;
+	s=korg; t=1709588659;
+	bh=mNKcchx8l0Pe0vriT/DoTIxgtvzs1caJN3sNvmp+A/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgONsmQZHKWT/gZzQ3izwQnm3NrocvBctcTz8Say6wTTzL6Sw6nCHThj1gv7Zt1kJ
-	 6M1rPaNbD8CUuUwv0mWB7GzfTYKd5zvqeJiZDwydnbznXTJMTjtSofOgyAlwvviJwi
-	 iHzpr4OVt7DzZ60FXxAYWIzg5Yb4PLfMiIWafQw0=
+	b=B/NcYlmNivyt0ZdQhvveDGG+QW5OW8reBSw2ARum5ynCY8CI9otZ7qCC+ANpPQOCM
+	 PBN4/HvxnG1YZgNRzYCEiW0O1kPK3ggJiQPOQuw8a76EOvhnbhHuY+POPgOqypXygY
+	 6IVerpttUX2aIhL0Iz/vvOVbPP10FRwddk0nrcPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/215] ARM: dts: imx: Adjust dma-apbh node name
-Date: Mon,  4 Mar 2024 21:21:16 +0000
-Message-ID: <20240304211557.438955760@linuxfoundation.org>
+Subject: [PATCH 6.1 040/215] uapi: in6: replace temporary label with rfc9486
+Date: Mon,  4 Mar 2024 21:21:43 +0000
+Message-ID: <20240304211558.275996809@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 References: <20240304211556.993132804@linuxfoundation.org>
@@ -51,106 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <stefan.wahren@i2se.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit e9f5cd85f1f931bb7b64031492f7051187ccaac7 ]
+[ Upstream commit 6a2008641920a9c6fe1abbeb9acbec463215d505 ]
 
-Currently the dtbs_check generates warnings like this:
+Not really a fix per se, but IPV6_TLV_IOAM is still tagged as "TEMPORARY
+IANA allocation for IOAM", while RFC 9486 is available for some time
+now. Just update the reference.
 
-$nodename:0: 'dma-apbh@110000' does not match '^dma-controller(@.*)?$'
-
-So fix all affected dma-apbh node names.
-
-Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240226124921.9097-1-justin.iurman@uliege.be
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx23.dtsi   | 2 +-
- arch/arm/boot/dts/imx28.dtsi   | 2 +-
- arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
- arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
- arch/arm/boot/dts/imx6ul.dtsi  | 2 +-
- arch/arm/boot/dts/imx7s.dtsi   | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ include/uapi/linux/in6.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx23.dtsi b/arch/arm/boot/dts/imx23.dtsi
-index ec476b1596496..b236d23f80715 100644
---- a/arch/arm/boot/dts/imx23.dtsi
-+++ b/arch/arm/boot/dts/imx23.dtsi
-@@ -59,7 +59,7 @@ icoll: interrupt-controller@80000000 {
- 				reg = <0x80000000 0x2000>;
- 			};
+diff --git a/include/uapi/linux/in6.h b/include/uapi/linux/in6.h
+index c4c53a9ab9595..ff8d21f9e95b7 100644
+--- a/include/uapi/linux/in6.h
++++ b/include/uapi/linux/in6.h
+@@ -145,7 +145,7 @@ struct in6_flowlabel_req {
+ #define IPV6_TLV_PADN		1
+ #define IPV6_TLV_ROUTERALERT	5
+ #define IPV6_TLV_CALIPSO	7	/* RFC 5570 */
+-#define IPV6_TLV_IOAM		49	/* TEMPORARY IANA allocation for IOAM */
++#define IPV6_TLV_IOAM		49	/* RFC 9486 */
+ #define IPV6_TLV_JUMBO		194
+ #define IPV6_TLV_HAO		201	/* home address option */
  
--			dma_apbh: dma-apbh@80004000 {
-+			dma_apbh: dma-controller@80004000 {
- 				compatible = "fsl,imx23-dma-apbh";
- 				reg = <0x80004000 0x2000>;
- 				interrupts = <0 14 20 0
-diff --git a/arch/arm/boot/dts/imx28.dtsi b/arch/arm/boot/dts/imx28.dtsi
-index b15df16ecb01a..b81592a613112 100644
---- a/arch/arm/boot/dts/imx28.dtsi
-+++ b/arch/arm/boot/dts/imx28.dtsi
-@@ -78,7 +78,7 @@ hsadc: hsadc@80002000 {
- 				status = "disabled";
- 			};
- 
--			dma_apbh: dma-apbh@80004000 {
-+			dma_apbh: dma-controller@80004000 {
- 				compatible = "fsl,imx28-dma-apbh";
- 				reg = <0x80004000 0x2000>;
- 				interrupts = <82 83 84 85
-diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
-index ff1e0173b39be..2c6eada01d792 100644
---- a/arch/arm/boot/dts/imx6qdl.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl.dtsi
-@@ -150,7 +150,7 @@ soc: soc {
- 		interrupt-parent = <&gpc>;
- 		ranges;
- 
--		dma_apbh: dma-apbh@110000 {
-+		dma_apbh: dma-controller@110000 {
- 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x00110000 0x2000>;
- 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
-index 1f1053a898fbf..67d344ae76b51 100644
---- a/arch/arm/boot/dts/imx6sx.dtsi
-+++ b/arch/arm/boot/dts/imx6sx.dtsi
-@@ -209,7 +209,7 @@ gpu: gpu@1800000 {
- 			power-domains = <&pd_pu>;
- 		};
- 
--		dma_apbh: dma-apbh@1804000 {
-+		dma_apbh: dma-controller@1804000 {
- 			compatible = "fsl,imx6sx-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x01804000 0x2000>;
- 			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
-index 2b5996395701a..aac081b6daaac 100644
---- a/arch/arm/boot/dts/imx6ul.dtsi
-+++ b/arch/arm/boot/dts/imx6ul.dtsi
-@@ -164,7 +164,7 @@ intc: interrupt-controller@a01000 {
- 			      <0x00a06000 0x2000>;
- 		};
- 
--		dma_apbh: dma-apbh@1804000 {
-+		dma_apbh: dma-controller@1804000 {
- 			compatible = "fsl,imx6q-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x01804000 0x2000>;
- 			interrupts = <0 13 IRQ_TYPE_LEVEL_HIGH>,
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 4b23630fc738d..2940dacaa56fc 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -1267,7 +1267,7 @@ fec1: ethernet@30be0000 {
- 			};
- 		};
- 
--		dma_apbh: dma-apbh@33000000 {
-+		dma_apbh: dma-controller@33000000 {
- 			compatible = "fsl,imx7d-dma-apbh", "fsl,imx28-dma-apbh";
- 			reg = <0x33000000 0x2000>;
- 			interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
