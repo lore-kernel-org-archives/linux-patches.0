@@ -1,103 +1,149 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A735C5FD
-	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 20:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0C012CD85;
+	Tue,  5 Mar 2024 21:53:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709671909; cv=none; b=e+LMMJiIu4HxpZ1cwi+jJSz3QH+TKpAtacP49cY9yADoFudacz5UZXORav6vk059s3oWe3AcryFkUumpUBhrcbqsq9j26jm+vzOHsHgSDqJRqbfn/pNQ+UCPlT3VZzkkUcDwiOE9xIc2MbH9JR0O/S7b9hbeiLRCcxdaR5cGEog=
+	t=1709675598; cv=none; b=dTwOkGu8e+PmvSpBxEmCjzBDEwHgIxFQdVgvaxnd6pQ1Cinl+LkLzA2An76MEMxgHx6wWTy/eXy8lZiuTyvZnCmAUYRn8AQL1LPO6wIKOgQkEferCEsI9NJSCo5BsZ9rDJy0RN1idKmmPA9Rzt7zAuieQTPb/lfoIQZB7uv3bfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709671909; c=relaxed/simple;
-	bh=SjSiPVcEcyD4W6ufsE2+x5JmNWbIASUDZW/T1vteaWg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n1X3dFwvLBCXMib2aTOVzped5rHr4Qqg6UFsXhj9wgS3AoXnjoKLYEZS8PdNp9Nn4yriOkl693RSuEzJeLx6tgrypcpE9jbUKEmjWxiFWvIbVhut6w75BioK959FalLJ/KSIOflN04gOTmQw1rcu0vh4P2/HDzX6WwWGCRsTz2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCarhDAQ; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709675598; c=relaxed/simple;
+	bh=w69YwNhhJUWrKvltEutpZXr1WsKvyjIHwp0BdHZURa4=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=nhe/t/OOo8DDuhI2nB1Q6FgvUB0agcol8yXjr9d9GTnGSDrV2TCWjM+qPKhfKRQJS05gbmfbCSOjn361HKYv5thKzZJSMveRyGN7twnXysdlc97x/S0aOZQM+rt3Q+2Vl0+j7i++RafkCvNF0Q/i7ApikWZG/qng6HmahI9JXPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=kBCfIsc1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PGmqYldx; arc=none smtp.client-ip=64.147.123.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCarhDAQ"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-5d8b276979aso4490306a12.2
-        for <patches@lists.linux.dev>; Tue, 05 Mar 2024 12:51:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709671907; x=1710276707; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fnn+qBNjgeLnA7Zdn1ytKrCjMf49ommBffpdqi1uL14=;
-        b=eCarhDAQcXquJNKrclnOQfQqMdrttguJf/0i/zizmN+At9ZQKdDr5PzhhGE8cG84EJ
-         gF7OjvROR4/wfmjSq9yKZXaY5awbvgNdmoJeyopF+InLnIan8L/t23XSH5LECN2cmYVh
-         5emNd+Di0Ti2vpTZcXjkZQhPrEPx+G66/30vHqSsdTQTOMCjRj6iEBzTQS3bWBmxO161
-         82/RBTqfSgKH+3tLpk41RuVL3hhtsj0zlFzyPY/IFU7gYf/Xs+3c4PQ1RwdVWjeXr7mc
-         KVks7AFATWOk6WwN6ZonUVl+0Rvxr65VmLuDWOrDl43xwbYWvm28nE4wgrvLh6dxky8n
-         L4KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709671907; x=1710276707;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fnn+qBNjgeLnA7Zdn1ytKrCjMf49ommBffpdqi1uL14=;
-        b=sdCkdquwI4Mmdbm4Plg1/euV2KaA0p1lswVmf15jZEhqjTEXre2M6t4n5RSDjsFvSR
-         da3pspgj713u124LT54YYGGBr5CLnmlbyvIzuQ9iJR4JYOFMwlUi3J5sxPnTS6jPXKHz
-         yWw5omFXf1motIyS8XLy3xWdZK8XjR6txoMf/jqieFlj+8fdjsCrI5lrWnyZfDUh8mmd
-         DG0qSPrikdR1IOFCUV2y6LYqemRUVAgtqPL7+x6/yRZVVkmpejqqvwuhntGiEyTuaOKr
-         4GJcQSOj7sSW1tVJv/ewPU0KOJ5c7e0/Ykz87V7Uh1ctd654OXnjqlaxy8yFjbuSVhBo
-         05Bw==
-X-Gm-Message-State: AOJu0Yy+bcHtjVShwe8XxpOWwf2QTQg2vrdLhXIXwVo3N2KVDtWqmsSo
-	JRS0iDlfGPuQ55ZljKcsspEga9vc1DOsAAMIsWYAU1SdkypjK7s3
-X-Google-Smtp-Source: AGHT+IF3mm4NwyqtTufGOJgmT7DBewSlt5bothb7FXlxENeR6anuCge2sR0DoCkr4rlTwamTf1QdZA==
-X-Received: by 2002:a17:90a:dd82:b0:299:489f:a126 with SMTP id l2-20020a17090add8200b00299489fa126mr9619659pjv.41.1709671907174;
-        Tue, 05 Mar 2024 12:51:47 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id ep2-20020a17090ae64200b0029932d175c3sm580395pjb.0.2024.03.05.12.51.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Mar 2024 12:51:45 -0800 (PST)
-Message-ID: <5a8f45b5-3199-433f-bbf5-cfe7c9e77e45@gmail.com>
-Date: Tue, 5 Mar 2024 12:51:41 -0800
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="kBCfIsc1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PGmqYldx"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfout.west.internal (Postfix) with ESMTP id C3C751C00087;
+	Tue,  5 Mar 2024 16:53:15 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Tue, 05 Mar 2024 16:53:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1709675595;
+	 x=1709761995; bh=QNEfkKLf+YoFMOvLOLaHBOHhoGsBFLnvQ4LA5YChDe8=; b=
+	kBCfIsc13o0inkSJN6s2rCCZXlGtZUy85CUt4VWoUMzRnosFKOqxHm4IaDnxJToM
+	+io8+RDJVMkqJLa0KZqiPoOeZ7d6Lm1yz9S777ouuGXBmiUkkVuV6Id+g2/FtdNq
+	b0/ro4rgslsftvSoPwLsoEoOt6ijY2ja4ts9Ta3F4XtR1ONVx85xl4Zj9niW5MLd
+	Dn6eSAoi3ooaI5X4Fgmj0dWwYUOr6lOgBEohlVGZ8DwK24YaJDpwVH9LZkRJrx8v
+	GR4mRa9gnFL32RZGP0GorrSyaJu64TXpa+y517eFq7JmAPI3oEjJKRRnEVMI64cP
+	rPxXmjCMQ5pCUDWhoNZ/lw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709675595; x=
+	1709761995; bh=QNEfkKLf+YoFMOvLOLaHBOHhoGsBFLnvQ4LA5YChDe8=; b=P
+	GmqYldxrcCLZebRG8Vo3qC6IDi4t/zGYIEFtqJEMvDNnIC9VBkBGGTEFkyu7dHOL
+	vMkiJpIp0iBIEXL5aIU0RHsnepdPMk6RJ8e8kjeNvhhAQ1PcVoJsayCpf9iEKeAj
+	8jJYR99p6QF99qL8JqAIfKGI5VCqPGHgJL71i6IDbiWsAkpJSBdYVVyo1fULia/j
+	m7Fd4nO+MWVHxptn4/5oB1J0cMoiEiofYfUrb1Tn+XpdGAHt7UwiDp9Q1Cro7pxz
+	PjBNZoDWR7O6xemHkW6J2TJF1JexdH8O6jUmmsrFsow6QhvG9ezHeOodq+KWPaoM
+	voEVjTvKDwzL4iyYoatTQ==
+X-ME-Sender: <xms:SpTnZdv_DZhYWD2X8sI750_zGOOHPFz1jvfwKfL850W6xedWTO2P6w>
+    <xme:SpTnZWfOrmFSlUCfVRkJOZNgcVWMC9q5j929x0oAymJkLlGbQEfzL-3EBYB8hqN1O
+    2gmJi9QdhwtPU1dZWY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgdduhedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdet
+    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
+    htthgvrhhnpeegfeejhedvledvffeijeeijeeivddvhfeliedvleevheejleetgedukedt
+    gfejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    grrhhnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:SpTnZQzEMjXCFglOKvTUq5O22x49kx-sveEWFm8IKxqCwLmQh8Efhg>
+    <xmx:SpTnZUOts6r1M9eM2F0eb_gKBH8ni69laCfZKpSroFnzcADLT8vU2A>
+    <xmx:SpTnZd-7MiyVNAK78opOGnMi-ur4reLRre-blpeEBJJ5yPBisljBHw>
+    <xmx:S5TnZe0DzO9qODO5JCHeijulFefAapAWDeMSF-u9Z_qhrG9K13bGNXXa1HA>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 6AD1BB6008F; Tue,  5 Mar 2024 16:53:14 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-208-g3f1d79aedb-fm-20240301.002-g3f1d79ae
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/83] 5.15.151-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com
-References: <20240305113135.403426564@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240305113135.403426564@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Message-Id: <5b4fa755-571e-4a99-8614-ca0df1db1563@app.fastmail.com>
+In-Reply-To: <20240305193015.GA1173426@dev-arch.thelio-3990X>
+References: 
+ <20240305-disable-extra-clang-enum-warnings-v1-1-6a93ef3d35ff@kernel.org>
+ <57abd8e9-3177-4260-b423-38d5cdcda44e@app.fastmail.com>
+ <CAKwvOd=V_Qtd2pK8AKc6bv=zMPnAaCf08=QO74ckqH26A3sefA@mail.gmail.com>
+ <20240305193015.GA1173426@dev-arch.thelio-3990X>
+Date: Tue, 05 Mar 2024 22:52:54 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Nathan Chancellor" <nathan@kernel.org>,
+ "Nick Desaulniers" <ndesaulniers@google.com>
+Cc: "Masahiro Yamada" <masahiroy@kernel.org>,
+ "Nicolas Schier" <nicolas@fjasle.eu>, "Bill Wendling" <morbo@google.com>,
+ "Justin Stitt" <justinstitt@google.com>,
+ "Yonghong Song" <yonghong.song@linux.dev>, linux-kbuild@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] kbuild: Disable two Clang specific enumeration warnings
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 3/5/24 03:31, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.151 release.
-> There are 83 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 07 Mar 2024 11:31:11 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.151-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Mar 5, 2024, at 20:30, Nathan Chancellor wrote:
+> On Tue, Mar 05, 2024 at 10:52:16AM -0800, Nick Desaulniers wrote:
+>> On Tue, Mar 5, 2024 at 10:50=E2=80=AFAM Arnd Bergmann <arnd@arndb.de>=
+ wrote:
+>> >
+>> > On Tue, Mar 5, 2024, at 18:42, Nathan Chancellor wrote:
+>> > >
+>> > > As the warnings do not appear to have a high signal to noise rati=
+o and
+>> > > the source level silencing options are not sustainable, disable t=
+he
+>> > > warnings unconditionally, as they will be enabled with -Wenum-con=
+version
+>> > > and are supported in all versions of clang that can build the ker=
+nel.
+>> >
+>> > I took a look at a sample of warnings in an allmodconfig build
+>> > and found a number that need attention. I would much prefer to
+>> > leave these turned on at the W=3D1 level and only disable them
+>> > at the default warning level.
+>>=20
+>> Sounds like these new diagnostics are very noisy. 0day bot sends
+>> people reports at W=3D1. Perhaps W=3D2?
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+It feels like this is not a great reason for moving it to W=3D2
+instead of W=3D1, but W=3D2 is still better than always disabling
+it I think.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Specifically, the 0day bot warns for newly added W=3D1 warnings
+but not for preexisting ones, and I think there are other warnings
+at the W=3D1 level that are similarly noisy to this one.
 
+> A number of subsystems test with W=3D1 as well and while opting into W=
+=3D1
+> means that you are potentially asking for new warnings across newer
+> compiler releases, a warning with this number of instances is going to
+> cause a lot of issues (I think of netdev for example).
+
+I only see a handful of warnings in net (devlink, bpf) and
+drivers/net (ethernet/{3com,amd8111e,funeth,hns,idpf,jme,mlx4} and
+wireless/{iwlwifi,mt76,rtw88,rtw89}).=20
+
+These are also some of the ones that I think need a closer look.
+
+> Fundamentally, I do not really care which avenue we take (either this
+> change or off by default, on at W=3D1), I am happy to do whatever.
+> Unfortunately, CONFIG_WERROR makes these decisions much more urgent
+> because it is either disable it and have other warnings creep in among=
+st
+> the sprawl of these warnings or leave it on and miss other errors for
+> the same reason.
+
+Agreed.
+
+       Arnd
