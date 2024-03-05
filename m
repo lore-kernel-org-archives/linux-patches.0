@@ -1,22 +1,22 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4852D5EE96
-	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 11:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F566548F3
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 11:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709637585; cv=none; b=BvRgxvZsRcQkuHv2cf5ar3CjQEgZj7n/yNX6X6rFBWzgCxgepyUbT9CIAd9RFFVM3fZJylhMS4SntbAuPG87a34n/rbNGU7gxg8Ga5ksac6tDOkpTT/4OcOYjZQth853EkRnQQZGdoUNjMC3c7qQ9/3XCI6BxlJQKChbeOWCbDM=
+	t=1709637702; cv=none; b=kjWSn5vsHlDW/SV5XNdR0egwVbcObet0WnyMMNH/ZxTc0vas18AMg+V95mMyxp9X+peO7QbXRAPHXjeKo/7M9m1bk+AlQ6N2f3X1WoV2GhQKLmuNYDqevfN5rZwmoHZJH5+92Ew6QyY+D8GUJxujIcZBU59y1DpSQCjZA+VfjzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709637585; c=relaxed/simple;
-	bh=TXwKsjRIw4Rdlth6z0m2VwUY45M3zkg3gPA5C9DK3m4=;
+	s=arc-20240116; t=1709637702; c=relaxed/simple;
+	bh=RbBE2wFhz7asgZ+ie0bK3lnfDIMD5/h+kBycKKOhwH0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hn5C8s35y3r8KtDSJU5S95DO23rLFj+/AsCKAYgSlp7kgE9i6HGDLnA3uYTEOIVPSHld+aYSWBORqNF5FKTqbUbqc9zMKEoTWgeVVrvgMGvX6IpvfpPtTRIlOABFP92AQPGMQ7HSWXWKKCJLzwu9MYBtnizLvDf7ZlqFlQlDgQM=
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ho/a7GiEUgzmX6umbnGETG4Wbk4ab5jgmx5pHiY6130itm/0OGrWJbAh2H9JDyUan1WbKKdgOi5EsDBlAe3TjdjTb0Ym1Q0dlVucxLF1r1lXYsS4qUwAPKiBXavLCS0rvyQBjpRW/dCsGjtq6b5XT5x6XGK39VV80LVQxmjJFZw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id C91AA1C006B; Tue,  5 Mar 2024 12:19:36 +0100 (CET)
-Date: Tue, 5 Mar 2024 12:19:36 +0100
+	id 8C22E1C006B; Tue,  5 Mar 2024 12:21:38 +0100 (CET)
+Date: Tue, 5 Mar 2024 12:21:38 +0100
 From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -26,9 +26,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.7 000/163] 6.7.9-rc2 review
-Message-ID: <Zeb/yLdhDLVy8hob@duo.ucw.cz>
-References: <20240305074649.580820283@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/215] 6.1.81-rc1 review
+Message-ID: <ZecAQoYNJmoX2mP9@duo.ucw.cz>
+References: <20240304211556.993132804@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,42 +36,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Dyv6ruP320k0RKr9"
+	protocol="application/pgp-signature"; boundary="HZcuudkTZvkbHRDi"
 Content-Disposition: inline
-In-Reply-To: <20240305074649.580820283@linuxfoundation.org>
+In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
 
 
---Dyv6ruP320k0RKr9
+--HZcuudkTZvkbHRDi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> This is the start of the stable review cycle for the 6.7.9 release.
-> There are 163 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.81 release.
+> There are 215 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-This break build on riscv:
+CIP testing did not find any problems here:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
-201117170
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
 Best regards,
-								Pavel
+                                                                Pavel
 --=20
 DENX Software Engineering GmbH,        Managing Director: Erika Unter
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---Dyv6ruP320k0RKr9
+--HZcuudkTZvkbHRDi
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZeb/yAAKCRAw5/Bqldv6
-8m8/AJ4uW2MW1g98CRFOVBQUr2inzbZqNgCfcrj7hJc4eNhB3Mr90Mhsj1ABSBU=
-=Tfpj
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZecAQgAKCRAw5/Bqldv6
+8vT/AJ9AkFKm1ABTGyzQ3qoYcU4Ee18GuwCeLw7O4Z98BIDC5ghSMDNHGf6d1dg=
+=KKTn
 -----END PGP SIGNATURE-----
 
---Dyv6ruP320k0RKr9--
+--HZcuudkTZvkbHRDi--
