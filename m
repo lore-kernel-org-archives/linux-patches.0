@@ -1,106 +1,107 @@
-Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF1F54F8C
-	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 09:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79804F5FA
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 09:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709629549; cv=none; b=h1LeVpQmNtDzK23j0yRlzChUa/G2btVUND0I8EBD8//lh1Qvni+9lx192laM3zdxJr1fvSey/IP8fEjH5J8LwORkHBNTUCc8BCl4Bte1RXEAg35yRQ17f3HWkElmJtorbN242SeHdGyYFtOrJgyVt+PoM/kv3YjQM1w2A8W33mE=
+	t=1709629672; cv=none; b=ZkKh4Spcc8DmHiz8yvGcFBExAP81MMNk9L49XqGxJZLFiKVIb/FY2aK9XkfCvdDpy1KNzIaLxxA8P9jtHEwYSKmG0rl0EYrTNrf4ub9T3BLk/uHlwR+3TJi6XiUbNFiYI94xiFDv4IQrmqYdf7gh3wyeL59Fg9S2GMAd1UI2RBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709629549; c=relaxed/simple;
-	bh=ohU9B1DK5+V+unoDo0qv6/ju2Tlc2qHsEeZXLDc3RqI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XLhUUzzxahGmo0FL/1DSBD7tdRzZ5wdf/Td1TPfcuIeOJ6VEGIwpCm6RWD/QH5qzuQSNYQi/y+hHg4jvDdlM7v8PT1tXtc5FCyzbCCu/qBa3c1guCFds4CrbZZ9PASRLfrzmvXxnFmA/pBiZK3ogxb8KnQruiLO2s8SbhMFAEy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=aWvKz81Z; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=yKdd4U6n; arc=none smtp.client-ip=91.121.71.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1709629672; c=relaxed/simple;
+	bh=9sSwvYiVNiVEMFJhGyHIfjkNYJ+8iisCRGyT03Xnpzc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=luSpWG/rLebRwjAdJTWdU2it6h/5Jl2SwNDb/ZxAPH1K7Y0jigLwCzs2eRWwHPfHQcYEPEphberhPW2dpc5Uf5umEZ4WBRRr/dnHPFYJNMrX11sx10eHVMYD5LQcCLMrMX0/25pYFIX36yF+6U1sKkkA7KX/IifaK9tGdUuKqY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ll6MYhkz; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="aWvKz81Z";
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="yKdd4U6n"
-Received: by nautica.notk.org (Postfix, from userid 108)
-	id EC534C01A; Tue,  5 Mar 2024 10:05:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1709629544; bh=TXA46+0MVcnuaVTMDKqrMYonAbd7/DorbREk8+b3k1E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aWvKz81ZfdOJGLgvU2iifSBcZkk9Tv6VWWop1o8OwMaTzbLS+0DLCr1mAGyjsgPqd
-	 41duWht2fOhXTm6RUENLc34yHLSTCPUThq53tVT6YVDDUNtWltLoq0u3tIsf1Cgbvt
-	 qES6X+c1+la7WXiXPX2U5EcyaYywCiQ8G7/d+znivkpOEB7BsClDK7udUmbltkWqUk
-	 BRxCLdMXPQOy2NAfwscjKeZ3TISJDsIIhjeN6SbUvsxVD0FtpH0DF91sL/ujLgVQfS
-	 ZdxYhKNBzgZOchX+zDOH3RLGhmhWzAr5t7iGMzHK5dY4gXMMhTGtyCvM8Kf8mgYmTW
-	 ntakB+aRUdNhA==
-X-Spam-Level: 
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by nautica.notk.org (Postfix) with ESMTPS id A6EA8C009;
-	Tue,  5 Mar 2024 10:05:25 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1709629534; bh=TXA46+0MVcnuaVTMDKqrMYonAbd7/DorbREk8+b3k1E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=yKdd4U6nWZRKpzI3kGIhpbCN3vRN8kFwDd5GS0xmzGeeSxyKuEkqtNAtUbOgh+1y+
-	 ZNU2QEpX0dZK+jQEzU7dMDzXVb46D7nr+EywulbuISmdWA+oZe88h8VJ0rAnslx9WW
-	 AdYUM2JynDrD9z7gaP7eoa+xKljVMuYVkm9CG2wDiJjAbIsYKWK+7EW1rwvSCHWVGE
-	 TtjGRNpU3yFkNqqBrI49gAOr+xVLfJ4MKw+vRgXQKpL0ygy9IknuCcDbj/C5Cmgwcp
-	 AJagY+FjqLrkBIVKper3ykf4N/WuHamh/MxmnRCv26JYJE8XRhg+xaZjD4uhCyOhQD
-	 yi2FR/i9FvvTw==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 7106c589;
-	Tue, 5 Mar 2024 09:05:19 +0000 (UTC)
-Date: Tue, 5 Mar 2024 18:05:04 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 5.10 00/42] 5.10.212-rc1 review
-Message-ID: <ZebgQDAotbvxSg-l@codewreck.org>
-References: <20240304211537.631764077@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ll6MYhkz"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-5d4a1e66750so4061800a12.0
+        for <patches@lists.linux.dev>; Tue, 05 Mar 2024 01:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709629670; x=1710234470; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xECqrC5wW8C4gpURucKnrkHYEZdlXOnIvk1nQsHS7MM=;
+        b=Ll6MYhkzPyJNeQrQ0M0SZc/11HhCPnagWQvEkOpZvzRKPrQ6N4+jULs8YrjwD2jtXl
+         4F/KYMuYKhlJxBi10IPvC/sxLc0vyx7Otb5QGS4uHiPKDQCOYDtvx5zSZWy5ly+lrUPv
+         Ld/3L7kw6liJrtBkoqG/yrUQW2osDffiNrwMuBi/CkZwCSpy/dHndVAWG5h5MlnzlY4X
+         T9KRo76/NKUcCSt/y/QYHU4OQRTgsXTB+MLvCOHOdS3zqlO1YHZLGkC4OoU1echkx7Uw
+         /d0POxlU4r7vBtVRqS7KCpcQ5qzLe+n3IpFfk9dgKjakvKiLdLFuKUNCUHe4RQL/XzND
+         kN9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709629670; x=1710234470;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xECqrC5wW8C4gpURucKnrkHYEZdlXOnIvk1nQsHS7MM=;
+        b=ix1CPIzDryNZkpKTtJ4qLctLqbAaI9Z7m606OHo1qgwyZ6YL8e6x6uHotL0oMZv7gc
+         KJiWryV2KYrwsB5lBgHHqvjtcz+8TuYVXYljeJE+b2B0ahlhNNNVUqtgxPPv9I5HAtcn
+         C+QeoIw7khE8cgCqsj9j+OisC0N/evFGAMQDeFDId/7s4jN2w9Xeva8Y3VYFvtH7SvT/
+         0JSK7dnDu5L28nSnCaTvtYNMOLsfTb83/grl0rUPagLFyNOxudp86YXaQexhECr9iurW
+         Ui4gc+8pjMoM9SkiFEDWOMeC31s+dMRR3xQOi4ekHTpY7gXgbGIzmHJRZjwsGttIrWbZ
+         K2kA==
+X-Forwarded-Encrypted: i=1; AJvYcCV41mij7OaXrDzWrx3PnS8rOPoviaLCm+EMXhXT9qbToBUu07s9TWUVcoshYC1dn1a68C3QsR3Q8cA/hTkFhOydFIzEMhJ9hA==
+X-Gm-Message-State: AOJu0YzJ3H4aB/4Uo6yDcSNY2lDuBucs/MsYKbTVFZAyq3i5MXIOYPM2
+	hU8Bdq3NP8iCMVLmqhepnvur/WH2jvx4Obn7Vm+f1xEewTXzqUiI95fIZqFa9enV50UWpXgfm+4
+	QB+nPwj6rHfzdCSVQoI8TK81s24Y=
+X-Google-Smtp-Source: AGHT+IHQCsAc5k/dqnxRuofGLrxJI5VV9DX8j35EwjwxKG9bP5pOWIbRfkocDE/Kxr11z/qfnCWoxfbMUcq/eJzkogw=
+X-Received: by 2002:a05:6a21:6da4:b0:19e:2d04:d775 with SMTP id
+ wl36-20020a056a216da400b0019e2d04d775mr1121314pzb.50.1709629669859; Tue, 05
+ Mar 2024 01:07:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
+References: <20240305074649.580820283@linuxfoundation.org> <20240305-arson-panhandle-afa453ccb0aa@wendy>
+In-Reply-To: <20240305-arson-panhandle-afa453ccb0aa@wendy>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Tue, 5 Mar 2024 10:07:37 +0100
+Message-ID: <CADo9pHg4teVS7Lt1j+gOt4G9U=dZF9G92AUK=Km6PTdURkc0pg@mail.gmail.com>
+Subject: Re: [PATCH 6.7 000/163] 6.7.9-rc2 review
+To: Conor Dooley <conor.dooley@microchip.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Greg Kroah-Hartman wrote on Mon, Mar 04, 2024 at 09:23:27PM +0000:
-> This is the start of the stable review cycle for the 5.10.212 release.
-> There are 42 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.212-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
+Den tis 5 mars 2024 kl 09:32 skrev Conor Dooley <conor.dooley@microchip.com>:
+>
+> On Tue, Mar 05, 2024 at 07:58:57AM +0000, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.7.9 release.
+> > There are 163 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 07 Mar 2024 07:46:26 +0000.
+> > Anything received after that time might be too late.
+>
+> > Samuel Holland <samuel.holland@sifive.com>
+> >     riscv: Save/restore envcfg CSR during CPU suspend
+> >
+> > Samuel Holland <samuel.holland@sifive.com>
+> >     riscv: Add a custom ISA extension for the [ms]envcfg CSR
+>
+> I left a comment in response to the off-list email about this patch,
+> I don't think it's gonna work as the number this custom extension has
+> been given exceeds the max in 6.7/
+>
+> Cheers,
+> Conor.
+>
+> >
+> > Samuel Holland <samuel.holland@sifive.com>
+> >     riscv: Fix enabling cbo.zero when running in M-mode
 
-Tested 4b0abedc88b0 ("Linux 5.10.212-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Works fine on my Arch Linux desktop with model name    : AMD Ryzen 5
+5600 6-Core Processor
+after the Arch Linux manual intervention for new mkinitcpio settings
+and version in Arch
 
-For some reason the wlan interface didn't come up on the arm32 board
-(brcmfmac brought up through usb, mainline driver), which is something I
-hadn't observed before, but I've just rebooted a dozen of times and it's
-always been up after that *and* I don't see anything in this stable
-release that sounds like it could be related so I'll blame it on a
-glitch to look further into, and not something related...
-(I'll report back again if I find something more convincing, trying to
-get a second occurence at least... if I can reproduce I'll confirm it
-reproduce on 5.10.211 first then keep digging but it looks like that'll
-take a while)
-
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-
-
-Thanks,
--- 
-Dominique
+Tested by: Luna Jernberg <droidbittin@gmail.com>
