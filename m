@@ -1,72 +1,149 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2061.outbound.protection.outlook.com [40.107.237.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE592127B49;
-	Tue,  5 Mar 2024 15:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709653170; cv=none; b=eOL6ZhIGJxuzH1cIbB2nyIvGeRNuq5aiCelRzo6wZff3/rH+zaqO5mP4BBD7FAMyTLV3HopDwDwNPcB2R4bUvN7Kcbt9k8gtt1SiR2eMZvhX8ZJRxcORQ0dMWB6U39fEBg3o23Tr9gGOUawtag3r5woW5hYXgfgdurEDGKvqLKs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709653170; c=relaxed/simple;
-	bh=zu6dawwP6iMIyShTuCagsHimgWcoI8y5k1fedG9PSvs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=g6GqCH1ncuz3GfDR0G7dYFpEdDv2y1cOP5oXk0baRZpi4cPxu8hDjd6voobS6v7HuXoFyd6tqRt9vfOAQKYmv5W4DqfI79voEyCloAmaCWubWRMrC+LzeXXdHM9puLEslL0SY0vsk3X/OuxVzGV3A8o+HzE4J46FqDS+wHmkXig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=fail (0-bit key) header.d=zytor.com header.i=@zytor.com header.b=GP7AAlD7 reason="key not found in DNS"; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B655D128803
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 16:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709655728; cv=fail; b=d7Nrr6LGv+qJUUPeU3sS7y7n7QsPDORJ+/QTi+izTiKKQlaQdS3gbV1degvBVbZnsivFoAr3Qo7QjJkts7ygeJ5JpHEEDLe9PR7TVIIXq9oOtBIWDjjATQpwQ97mPa+Z3M4cYY5tkXvvJ8OyDbzaO+cCgVIMm+RbzePcKwTVB/g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709655728; c=relaxed/simple;
+	bh=/no6WNwyDYwEXi0rN0O+NSAUr/rwwjWWkBDaO6V41JY=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=PBtU57tnvED2p1z4aVslAhjb0rK7vxsxL5GBU+geuGEWgq3ryn8pQY6ylWlePY4djSf2CxJYPViO8z+miYHISADW68VcPsN+EtL0/sLocN/ozz7DIjWIGNj4P5GxW4C9keajkGqyNAWE1C+Q8rGTRganRExnNUiziNYy/qVoqqU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JtbsR1b2; arc=fail smtp.client-ip=40.107.237.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=zytor.com header.i=@zytor.com header.b="GP7AAlD7"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 425Fd9tn1037566
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Tue, 5 Mar 2024 07:39:10 -0800
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 425Fd9tn1037566
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2024021201; t=1709653150;
-	bh=zu6dawwP6iMIyShTuCagsHimgWcoI8y5k1fedG9PSvs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=GP7AAlD7r1+sOFcVNynvK6GMDaH36FcSPgVcETJo454PRNG72O07g2zIAoyCuoInU
-	 g1Xv6QyUTFdy4QpVJihT4lMze89VATuoFwpl8ronih2nB338xn8vMEhdyC8LbKlnnV
-	 aSjwdditNqbwELAEKZzT8JARk9gh2iG5RI9uukEL3LmDpCZ1cQOdOub8JrQYUiB+QO
-	 zpfqQHmc79RxGJH1jO3MRbLKAQEBtpNMM6QFc1xVDYcEyA+6VlQolJxdO03W2tnKcS
-	 gMgRsEiZILufGpiUVa0mgOD+tA5sz2wYqmvtd91pLsUTUNw4DDnfDwsjRXSvsJoukq
-	 QUpL0gNZnNf+A==
-Date: Tue, 05 Mar 2024 07:39:06 -0800
-From: "H. Peter Anvin" <hpa@zytor.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JtbsR1b2"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aucPPA2muGHvPk5qMgRg+lQ40Erhzt3sIY73Ghk7zointR1ThUQRbtMBZlbaPX3AxeiOQtsSrUg8RjWDHnG8ZNJaRLH1/Ol6bFV4l5/j6IYmhnBGdcdqAQ8tsT0y6xJgYWx9FOGosxNIHzuXDNEnUaDSs/jxPC6q5mEV8qjTnFVQJ6wk/ANF81QDNlcIGyAKxcPx22+XQoTO08TNiF4Ze+94pya0nzQgeJ2+CMSz9oF5pdIzZwI3qspoMkqpgbcuqqpCs8jeBeXfaEfqSkswnc+nUn9wp1vyhi0rcF47A1OdVUS454oQH1tHuGzl2qf3X3y+PK/t8YFWdHr0C3BP9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BolYlRzdFhq9ajziCe4mCK2CHgQkUG2OuogVkr0DvqM=;
+ b=BhwEmsjUf2FqsO1DINIxF7fkMvrU4Zfj3x0knT9D1WBNsZYRRvnhqSlPuVhBN0dSZoAws7zwkpG3P/qvmYn8ofTQSGnTH+7rxf0LVbT85aqdVHHBycvtOtWaqRZuOOd5Qv8LXD437MjQ7TmAg14Ki2ej4pIlWKjdvIT9jl0Kg6GwyCYQ2IuUaEtUIzLuPbElXFQqaaxTdj7ZnuLHx0kczQnt9p3OydMZSkTbUEs2jvRzqUhh/Lw4jCIiA7AwPJRNQD7EFzsRwBf15HaO6gNdinKj7yHAvTI/e+ZXCFmyM7u714UT6PjxKUk1/XKODMaDnWwop35GAkC69hPyn4t/pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BolYlRzdFhq9ajziCe4mCK2CHgQkUG2OuogVkr0DvqM=;
+ b=JtbsR1b2w5ENYcV6uiMl5ITfr2UvCx6zNlB3xTk/6E3rMatMXhe4k7ilTLkPsbJa3pIDC1vdRvZLMka7dpS/VVqGKsa/n4uiKzdgZiQ4HJUM+tEbmu0vRkmnzazabPjL/K04YlS5ptrQ/K3pvenBuIhL5IUzaMiKCqdebLhzCOrJvIpfhjgFosSM0SMOohtO9rzB550CrPq6TvHcxdTnkfQdphUthp3wGfsHFbXGLiDcEGWeAFIS0TD2qNj3yv8IodRhxiK1nag64ETT65Bc7AukxiPXpP5RGsOBa1bKXXWwafAIIbOlOmeU68yxsk/dKQ11QpRRm13cPVts6zt75g==
+Received: from SA1PR02CA0020.namprd02.prod.outlook.com (2603:10b6:806:2cf::27)
+ by DS0PR12MB7827.namprd12.prod.outlook.com (2603:10b6:8:146::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.38; Tue, 5 Mar
+ 2024 16:22:00 +0000
+Received: from SN1PEPF0002529F.namprd05.prod.outlook.com
+ (2603:10b6:806:2cf:cafe::f3) by SA1PR02CA0020.outlook.office365.com
+ (2603:10b6:806:2cf::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24 via Frontend
+ Transport; Tue, 5 Mar 2024 16:22:00 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SN1PEPF0002529F.mail.protection.outlook.com (10.167.242.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7362.11 via Frontend Transport; Tue, 5 Mar 2024 16:22:00 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 5 Mar 2024
+ 08:21:41 -0800
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 5 Mar
+ 2024 08:21:41 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12 via Frontend
+ Transport; Tue, 5 Mar 2024 08:21:41 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: stable@vger.kernel.org, patches@lists.linux.dev,
-        Alexander Lobakin <alexandr.lobakin@intel.com>,
-        Ingo Molnar <mingo@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_6=2E1_128/215=5D_x86/boot=3A_Robustify_call?= =?US-ASCII?Q?ing_startup=5F=7B32=2C64=7D=28=29_from_the_decompressor_code?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <2024030523-parted-situated-8749@gregkh>
-References: <20240304211556.993132804@linuxfoundation.org> <20240304211601.130294874@linuxfoundation.org> <E57FF738-3527-45F3-891D-FD54E6E7E217@zytor.com> <2024030523-parted-situated-8749@gregkh>
-Message-ID: <5F305A61-B247-4C0F-B220-633504C72774@zytor.com>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/83] 5.15.151-rc2 review
+In-Reply-To: <20240305113135.403426564@linuxfoundation.org>
+References: <20240305113135.403426564@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <15fc5469-746c-40c6-a646-4e21a871a96b@rnnvmail205.nvidia.com>
+Date: Tue, 5 Mar 2024 08:21:41 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002529F:EE_|DS0PR12MB7827:EE_
+X-MS-Office365-Filtering-Correlation-Id: 034340b5-a0f6-42e7-9521-08dc3d3062c1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	ZAv+HB5fapO/CfxbN5nuARhecH+/umXPs7n4ABb5WzI+5M5crIqo5kg/CNRc2H0ib7gITDXDZAwBO0iCRcPmoVsNNeaesq+8oJHQOdbL/a7EYGa+aDrSW+0vZ4KZoGsREw8JVToT5lTiCAe1jIBIH5RmJ5ylxDSfjnaFjttjaXr8P9cq8Mp1xLaty0rPQ+pgxLK8wmNVlWzFs93qz9kYweBRAKgB+pe52xXpkg5flZhvOEVxscVBGTGfOUit2bkLCTJtkvvBU4Qpe5mb2alXaGBgI2WcWnEv1gdZHRBP5UZfbhR6BUfjfMN2wCDjjLUdgDH87EVXV0YsfV1Dc3OCfkPF7rIrtgtqsogC5uVpVsKrvMBiBfMcqLXPtatKJvoCEOB71Nm86eJGu6HMARBlTtsVJXDffS3U3WqVx4ozzK9KRwiX1WWjNvxhjwjve4H5ihv/w6IuavIUoTMdAs2jcRCQ2IlKcs031SI2UQq/Cd3MNTcSpulzeGb9bH2CC2PNcdNa+yOZUqzABbijVuTCmAzlXdNma9zuYMLc24XVgJz8s0YkKZhfQ/6V7vjAOvw+bPjsoe6gjkOT0WecJboJAni/KwuHDCphAuWY0CwYqGWS6jlisJaOLZMdIVe8DLgdb2djjRV3EWVvxVLedEd5F6g1mlxByJ00um3ghIGvs4JLVKigGAM2ycRiPhYf1SMmTGcOxrnGAUxGxFj57i84U+mTVn8BlgOZHL7QWAuXz2P2ZGwZo01TVjR357Fp1TcP
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(82310400014)(376005)(36860700004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2024 16:22:00.2939
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 034340b5-a0f6-42e7-9521-08dc3d3062c1
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002529F.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7827
 
-On March 4, 2024 11:36:53 PM PST, Greg Kroah-Hartman <gregkh@linuxfoundatio=
-n=2Eorg> wrote:
->On Mon, Mar 04, 2024 at 02:42:35PM -0800, H=2E Peter Anvin wrote:
->> I would be surprised if this *didn't* break some boot loader=2E =2E=2E
->
->As this has been in the tree since 6=2E3 with no reported errors that I
->can find, I think we are ok=2E
->
->thanks,
->
->greg k-h
+On Tue, 05 Mar 2024 11:31:56 +0000, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.151 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 07 Mar 2024 11:31:11 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.151-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Well, boot loader breakage in the past has sometimes been reported a year =
-or more later=2E
+All tests passing for Tegra ...
 
-#Pain
+Test results for stable-v5.15:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    102 tests:	102 pass, 0 fail
+
+Linux version:	5.15.151-rc2-g7466986e020d
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
