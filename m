@@ -1,131 +1,183 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483EFBE4D;
-	Tue,  5 Mar 2024 17:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709660582; cv=none; b=Py5pTH9EZpejl1KvaR8BOjEi2eJ2Uy7N1wgRaI0meY4qEP2HyuBa5C8Oru0RhlquZe9hwkYX66Ysvq5wjW46K8EAaDdbtTeaolR+4lLtH5lH/mojvbN4hPzlAWqCsJGI2NleH4/yu8siaDRIfJ8Y2CjkvIHBYSo8HGFN7stPz0I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709660582; c=relaxed/simple;
-	bh=oVW3xti/oddK+lHR7km/I+gcOqSZgwQguCcVLgi7iQ8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VPYzxGd0rqtPo1Oh0a/oWQYfpfbLQE71HfUbBKJd5K65wy6IlpwTdnqLUhozvV1FBV4Lh4co6u36kH/YyOsBBFzDyTYxjOAsyOuAOZR84V/6suRfqXa6PA/RC+i3bYsMg4hvPfVJSeblrXOKGkvehqcjS1jgQCrS6ajZ7RezNhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kIRW9gzq; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034DD1758D
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 17:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709661120; cv=fail; b=lJiQ1DQIZkwAsN3mprYtbnsKcdqxLkIvD+XqGm7wsrZSOlzM1xkLOV7S8+8m00Ied1qTAfPQhmeEub5zGkGysaFcmlMwPpYKuy5Q/QeRPe1GoFEsXiUH+W+uT4bFHnojmPV9t8EiMEv+gdJd6Z/Xg+K25ALvwXOJfrrLJq46NhM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709661120; c=relaxed/simple;
+	bh=2sK8lScd9DUKmG+6vWUYXNddRNP1DVEBLCw/lcHZlis=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=qG4Oi4mcYfwb/qb5RZMKYpzebiVhWz8+799E5wncvThzzGS6GnvNHJCvCfq42CajEopzef+fWs8pp/709xe2lFcoUkkhGNlq7DxyuzhYYGa9qOh7BrL8nQ3j6GdmP5GzJemirhlA3GfIU89I3NgQo832AeNDb2yjqEU45BHea4s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Sr4DAfj3; arc=fail smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kIRW9gzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1771FC433C7;
-	Tue,  5 Mar 2024 17:43:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709660581;
-	bh=oVW3xti/oddK+lHR7km/I+gcOqSZgwQguCcVLgi7iQ8=;
-	h=From:Date:Subject:To:Cc:From;
-	b=kIRW9gzq4jKNT7Z1GAadTz+GbpnBPW/O80H3suGrswIK7olLKDNd1QNDRBv1ACxfB
-	 Rw3OJlysQLqKOHivUsJvk38AcxhlQTl3TXlcJaAobh5tEUbFM5IT4QW1bYL0rLpMsZ
-	 +jFWB8bAQvcAlseJmAZllZBGADV0QbJ466ywkNs5NIvYugIs8qWK7A7osrt3HwYBex
-	 ZTPRIRML7oNYZjIbXeZpAmc8i9JFjrdzhEb4VSuw/+iXh5/w4UALAQyhgSF49jN8ai
-	 cZZO5mdJDEmSEUtMYGPb4SQM7zU51HdPL5U1TTKGWV3MjjwYoEJ66sNz96StQAb8Di
-	 luGol5SeEfwPA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 05 Mar 2024 10:42:50 -0700
-Subject: [PATCH] kbuild: Disable two Clang specific enumeration warnings
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Sr4DAfj3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1709661119; x=1741197119;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=2sK8lScd9DUKmG+6vWUYXNddRNP1DVEBLCw/lcHZlis=;
+  b=Sr4DAfj3yOCwzg4YiIvJIJfUQwPsQIpwHLh+u/8Mt6kBP6Gk08SlY0YH
+   rmTtWIy/3zPXL045F9AvbsU5XPcEF8yvDMCoNKH6njx7VuxtKFG7KmZlE
+   UD3yEeuHibW8UrehFHLGBoR/REUk0a4iYl8ZCQmUz1ouddaAl91Aqm8X9
+   EdU+5SZdZ/njIjWRt8qiHgQXcq2HxwkJnOuV68YgrKVhoKx/eCZYrvfIV
+   8fjZzR1zbh98cYKeYXDYc7IZqhL1mUGk2s6ht5GhfBmNREShY7aD+nkIx
+   1NNZ6T+Q1sy0rTE3hxFxHl7iV2Qwl9zukl3h56TmaIv02zYktW0Y4usJn
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="7177636"
+X-IronPort-AV: E=Sophos;i="6.06,206,1705392000"; 
+   d="scan'208";a="7177636"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2024 09:51:58 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,206,1705392000"; 
+   d="scan'208";a="9395303"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 05 Mar 2024 09:51:58 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 5 Mar 2024 09:51:57 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 5 Mar 2024 09:51:57 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 5 Mar 2024 09:51:57 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.169)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 5 Mar 2024 09:51:57 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ajU0ng6xV1ovDyBmbrtZHgQcdGIF0Qmw8XomkJznn/Ym+z6G/n9bRc7xmTU4Oft/cfxnhE85wXHvoa27d5MBjOCfQIU4tQihHKQsA2Zkbi8KcXSpzJF7wtURwG2GDVCU5KJnizIJwvkzOreEF5LfEFD2G0GXwAub73HqmDBbNac/0ukcGh0twkU/cyoGsLnkvIQAq4/jSnO2yk2kltacat4BH6EKqCKdKEAYxj2aPzfkJ++HOG0W8ewzZH5UGE8uvRIeVkXkOaDWE9dvJmxsDWVtuT7BZTSL2DDymwNyLOY7UhT9NmYWcfbtv5uik040naafoYHY6I2qmHmSOn+9nQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2sK8lScd9DUKmG+6vWUYXNddRNP1DVEBLCw/lcHZlis=;
+ b=M2MegVsAyoom46XtIRRnNJUQnkX17yRn89cjrk4mI/gF3DwavdSMA1ZkXtqH4eKZVBoxY/wSi/gZILqvu1rH8xB8tII6U6VO+q5w4AkquZSf87HpD4cNtMcwKTcCB8oDUefmdUL0aiT330XkHppNJJt05zBTvPlKuVuY+cL4hkqpTlbpct2GEHbupoBLlcnwOkCwagNuay+eEpBDSAfF98BiqLsiTFRZezbNFnZesTXLQo7xqAq9G+uhrKnFrXuBu63148zkFPkoic1lpREku5uga1WLxHs+nDGJ7ddkLFmCdsytfKbgeLDqYCZRBlWpGJqrR82wjhV7aKE8MO8TFw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by BN9PR11MB5242.namprd11.prod.outlook.com (2603:10b6:408:133::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.22; Tue, 5 Mar
+ 2024 17:51:55 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::d5ce:2b6c:458:3ca9]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::d5ce:2b6c:458:3ca9%7]) with mapi id 15.20.7362.019; Tue, 5 Mar 2024
+ 17:51:55 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>
+CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "Chatre, Reinette"
+	<reinette.chatre@intel.com>, Peter Newman <peternewman@google.com>, "Jonathan
+ Corbet" <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+	"x86@kernel.org" <x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, "Babu
+ Moger" <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>, "Drew
+ Fustini" <dfustini@baylibre.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: Cover-cover letter for two resctrl patch sets
+Thread-Topic: Cover-cover letter for two resctrl patch sets
+Thread-Index: AQHabs6oHkcOOZfsEkWvQoNAq+dXBLEpbAyg
+Date: Tue, 5 Mar 2024 17:51:55 +0000
+Message-ID: <SJ1PR11MB60835E98D52C2A0A90C2BFB1FC222@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20240228112215.8044-tony.luck@intel.com>
+ <zhfckkyc7yr57kdcru3x4d2btuqq5dp3x5qdv26agfq2tlai4d@ice7se7vfctp>
+In-Reply-To: <zhfckkyc7yr57kdcru3x4d2btuqq5dp3x5qdv26agfq2tlai4d@ice7se7vfctp>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|BN9PR11MB5242:EE_
+x-ms-office365-filtering-correlation-id: 9eea195b-8dd4-409d-2b4a-08dc3d3cf23a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 3A7aTYeh5kDVE1rLy5vxwjS6Z44/B3OoLjdcxOpRX7LjuU9DpTTBduoQSDdkB4HVNPFGb5DIwlkuJUkqCwbAAfpPg5kYaTN9QQU/b97/HHLAsk8uhfei19rL97zu3Q0+4nVkFkyxwBw/iy/KvdSPXzWzFM5o63w3SowXxCIz/N990zN7TDrmCRREAwXleSFwnf1oySxRVywH4KMq2cWm+1BazYw8ZmM6qcuZxGvbnthAUC7jVJkU2Bgpi5oAxmtBu4W7glqv+6VYOjCTXezmu2xIV86TfTk1cNNqSCsh46SwmqPxY1KDP1SLeoKHp9LA/K/l315I18vgx7zVO6w95EMyJJh6+VBv/9EesSSfx1Qx4x6h2RNtNH8Z8Uq6OVZP/dCho0wd8s65+CVcRNq3ck0xcvCZBYz7eHnWsotKJJ3/Ckjw3/WcsBdmCD+LdkSYj5bHsSOQw0f/Zg/teOCPIvJhw3H8nJvG9EOJNymjQGtirlBEXGbj/hY/p3grp/iD4OyW9g6wWok/AYPV80glKvBQUYGM8nJsM+JDooRhM2wcez6rmNxSE+aqshb6vXT79Pt5N4+gIxpzc2c3lZjyoLqaR7UGfsaSve0NvBrcJLJrvuq/sEqRsq4fRbpREDn5aT3BizJkGkMfmQGBP5QjF1xzHDMNGeEkWGWKbJ92/n0/iKrhlvIXNbdu34N1l7ql+/iInM685hXlbyJ+ElT6nw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(38070700009);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?OHu9C0obV1WQCvD/0bw1rogfDYLufEKPkHkPcXcpy8jOv/6jK68uVd0dBEpK?=
+ =?us-ascii?Q?xYG/KJS2DXVCgymeBXUaloIDmmxZid5G8afM7jBE/D1wuzb5DmIl23NVio/9?=
+ =?us-ascii?Q?pxspwpPh3EDd68lnU1OJW2+6pDq2HV5zkNuXsbD9Oz63HHsCJwJadgvw4JMF?=
+ =?us-ascii?Q?vZg5DbH08DdRbotl4WKuBiIdaAob9g0FZCfBK4NIRpVBW/85RzZxWBWkz7Ao?=
+ =?us-ascii?Q?4UuSs7K328Tv15Bx5/+vh9xzHarG9XqvOv6Nf9NNfRpSK3QzcvGmYvxDPBrC?=
+ =?us-ascii?Q?Fp7vYuy2m8dw0UvnytgxvkMNeLs/e5L8s+oqmN74U5UjjZYYRplm9J7rPt2O?=
+ =?us-ascii?Q?qGOS9IXVki8vnmoItI/2HmFPLqbESPpx0PMFraXKYUGI0tGg/yViwQsfonEl?=
+ =?us-ascii?Q?4qI60A3Xl5zi9GIeLeJub28TZsihHD6WQ+4F7UJOyPlEAWy5uv4+QJf7TauD?=
+ =?us-ascii?Q?xZBrqaInFWTa0HIb/TvAjeav/oDJ0jmHG94UdXvv4nFK9IG+CKa/Hhcwzx37?=
+ =?us-ascii?Q?q9DiLKgSerOtKP9gDn+ANWAlmw/kb3IoECkWPFZVz5aGu94gRZM3V7SN5N9w?=
+ =?us-ascii?Q?755MIqeOTO9zDMbMrYIza7ac+biPqlRyfkylLG3T1zBSJHz1MlF4yGHHn6Cx?=
+ =?us-ascii?Q?hg/SavsGjtgYR4aALHWJRPUhn4A9NBzaHskHsbIrtSXmzHSD7xFLap5+3+Iv?=
+ =?us-ascii?Q?jtvcqaKCNtsDQfKu3/eKFTmBjwN9C5LjjFC5VGyU8VM3xGnQpRRbX6BWnROz?=
+ =?us-ascii?Q?ob7wJSOUtx4/KnjYDvF3pBTELiTl6jJOS2+q+eeAelJ9rX41TPbI+fx3W2Pd?=
+ =?us-ascii?Q?NOUOKgqwo5CHJXAhm1O7wM3sJby7daxCC4jvbMOI6yXLxbIaBIj9qkgH8Cqj?=
+ =?us-ascii?Q?Qdc0jYRe6P3pR0zrg2HyAD2eANGGxK2rIYOx9HGFJ8gcw/1kVpj3RXGk0Q32?=
+ =?us-ascii?Q?mSVAjMtGj5PdFKqWp+cmB/4R1hCazbiDai+H9akUVyZNimAfQJyXnZMgIdbM?=
+ =?us-ascii?Q?kGATmmh1cCDMWfaV4FzHsD8S5JFDpDtFa4qkzdieDwpCeykxXXWrYhykwOZP?=
+ =?us-ascii?Q?e08bZ/eeRx1V7LIanyxqYcbAaI34UTKIL9LggYOE3UZSMxGifdMv9/Ze9nbw?=
+ =?us-ascii?Q?eYf9rHd5KXUEDuUbrui/r/bQ2mjVR29w8nh0ybBUSLe6tGv5vetmiEPLg3y7?=
+ =?us-ascii?Q?3u+9AImGYLzB4IxeImOetxCY3DDBcRdHt7wPUqOAJ86vAVSpzxxajhfh+fO0?=
+ =?us-ascii?Q?hIN7GLBOPP8qpfF28/kjKXFHqOZsZrgt1KZorhmwOQ2HG+BeZmq0zaBFWf9F?=
+ =?us-ascii?Q?H+Kvi5OJBM5QXQ/FmbB6xEtXTfwfB5BnKBR2Jc61xR2rFtUvoqLtdjRD8iiT?=
+ =?us-ascii?Q?lCqPu3QgBwoj4kTVP0yQYABKiVIIy/KlYRktCdgGjejc3ugy1plQqSzXupkF?=
+ =?us-ascii?Q?K8SMvKXJiRLyJyn2vvpqHUle0Ws0uqYo/u7up+iiU2M9OcR2uHBYPJvVJSXE?=
+ =?us-ascii?Q?ue+jsc6AZwD/iwvsZ5oyFlEKJWH6QVLEoVr0Nbt5OKwgOFii9k1OGCbRbsZT?=
+ =?us-ascii?Q?/3LZl0w409CySdT55YB89qYB44LK6eojZaJwRbjJ?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240305-disable-extra-clang-enum-warnings-v1-1-6a93ef3d35ff@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJlZ52UC/x2NywqDMBAAf0X23IWoKWJ/pfQQk41dsGvZ9QXiv
- zf0ODDMnGCkTAaP6gSljY1nKVDfKojvICMhp8LQuMa71nlMbGGYCOlYNGCcioMk6wf3oMIyGg7
- 53vnYxb7PCUrnq5T5+D+er+v6ARre46NzAAAA
-To: masahiroy@kernel.org
-Cc: nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
- justinstitt@google.com, arnd@arndb.de, yonghong.song@linux.dev, 
- linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3911; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oVW3xti/oddK+lHR7km/I+gcOqSZgwQguCcVLgi7iQ8=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKnPI5c0rNBNXppi3vty7mbjafkHuCbLxD2p/76SV3qn1
- erDy/Yu6ChlYRDjYpAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATcZjAyNAzzUX+dsCjVZuU
- I3+p9nEEHTcv3H9F7O6loH5RlqikybYM/10DD7Il7pXoscg8ymbS0/jaterLYbFyzeQKc8OCIG8
- bFgA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9eea195b-8dd4-409d-2b4a-08dc3d3cf23a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Mar 2024 17:51:55.0531
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: MyegS+ra/NuFlctkEzxqvExVOTnr66VAYihY3yfiZCW9jND1c/yStGhqd+esra1fSW/fuGo6dZPTWskEW9oLTQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5242
+X-OriginatorOrg: intel.com
 
-Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
-under -Wenum-conversion. A recent change in Clang strengthened these
-warnings and they appear frequently in common builds, primarily due to
-several instances in common headers but there are quite a few drivers
-that have individual instances as well.
+> Hi, I wanted to ask a mailing technical question.
+>
+> My mailing setup with b4 is capable of downloading series by their messag=
+e id.
+> With these two series tied together it for some reason doesn't want to do=
+wnload
+> the smaller series (even when I pass the smaller series ID it ignores it =
+and
+> fetches the SNC one).
+>
+> Do you have some trick or method to download a series with this type of
+> formatting easier than manually saving emails?
 
-  include/linux/vmstat.h:508:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-    508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-        |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-    509 |                            item];
-        |                            ~~~~
+The cover-cover letter seemed like a neat idea, but since it is breaking ot=
+her
+tools and workflows I'm not going to do that again.
 
-  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
-    955 |                 flags |= is_new_rate ? IWL_MAC_BEACON_CCK
-        |                                      ^ ~~~~~~~~~~~~~~~~~~
-    956 |                           : IWL_MAC_BEACON_CCK_V1;
-        |                             ~~~~~~~~~~~~~~~~~~~~~
-  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
-   1120 |                                                0) > 10 ?
-        |                                                        ^
-   1121 |                         IWL_MAC_BEACON_FILS :
-        |                         ~~~~~~~~~~~~~~~~~~~
-   1122 |                         IWL_MAC_BEACON_FILS_V1;
-        |                         ~~~~~~~~~~~~~~~~~~~~~~
+I tried asking b4 to specifically pick up version 4:
 
-While doing arithmetic with different types of enums may be potentially
-problematic, inspecting several instances of the warning does not reveal
-any obvious problems. To silence the warnings at the source level, an
-integral cast must be added to each mismatched enum (which is incredibly
-ugly when done frequently) or the value must moved out of the enum to a
-macro, which can remove the type safety offered by enums in other
-places, such as assignments that would trigger -Wenum-conversion.
+$ b4 am -v4 20240228112952.8090-tony.luck@intel.com
 
-As the warnings do not appear to have a high signal to noise ratio and
-the source level silencing options are not sustainable, disable the
-warnings unconditionally, as they will be enabled with -Wenum-conversion
-and are supported in all versions of clang that can build the kernel.
+which worked for me (though it did apply Reinette's conditional
+"Reviewed-by" tag without the suggested change).
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
-Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- scripts/Makefile.extrawarn | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index a9e552a1e910..6053aa22b8f5 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -81,6 +81,14 @@ KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
- 
- # Warn if there is an enum types mismatch
- KBUILD_CFLAGS += $(call cc-option,-Wenum-conversion)
-+ifdef CONFIG_CC_IS_CLANG
-+# Clang enables these extra warnings under -Wenum-conversion but the kernel
-+# performs arithmetic using or has conditionals returning enums of different
-+# types in several different places, which is rarely a bug in the kernel's
-+# case, so disable the warnings.
-+KBUILD_CFLAGS += -Wno-enum-compare-conditional
-+KBUILD_CFLAGS += -Wno-enum-enum-conversion
-+endif
- 
- #
- # W=1 - warnings which may be relevant and do not occur too often
-
----
-base-commit: 90d35da658da8cff0d4ecbb5113f5fac9d00eb72
-change-id: 20240304-disable-extra-clang-enum-warnings-bf574c7c99fd
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+-Tony
