@@ -1,166 +1,154 @@
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F48A4CB58
-	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 09:54:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF1D53E03
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 10:08:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709632476; cv=none; b=CPSA6xq7LgXxOUsWh2vhcLYoGj2xqnPtFXt09+QNSpW5MTC9sJ5eyt4A/D2RJOeUmp+Dsa3kxHlajUfcM76in4ABIl6/IP//OxY+G7kRx8PFJvjxFnmO/XaIDLdO5pOMF7G9+vCysfL5i9YKuEYy3kQGNNm9D6FvLjuXEqYcGGs=
+	t=1709633314; cv=none; b=VptOA6xLknMwg2e6/cxDHODXN3m4nHsGU7eFQ96nD1lK4i64AARrHM2dTZG7TMqOI/PS9hzcPac4dwrDbEnKmLnQTFpfICukEBPf9ekZIftlKLyCC4fHXptMlZwG2CSwzr9bGvGPco2OiDjZdPN6z4/r9RfZ9m1W7g/S9+Q1fE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709632476; c=relaxed/simple;
-	bh=OMXHsWgy5ek5HhPBxwwuFXHndjFeQa1IvTPgUPKbPOA=;
-	h=Subject:From:To:Cc:References:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=ekrlJztlNfn4MI7yWd0EBqYINmy8Z8M+2UaWjPV3g/cX6/jiy9WIKTvk6QB5p4xe4Tdc4AUbIXi+OSKsBCawsHzYZIc8RltkuyRcl80f5rZFQd9cJixuBIEheMFOpMwktivPzX+o7Wgx43E5L9k8ToVX1HSDLpIVE6f2+Hq+otc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=sT+8z2AV; arc=none smtp.client-ip=35.89.44.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1709633314; c=relaxed/simple;
+	bh=AAT2HVEPA3dM1HBiRM7N4VVxTR53mysqKg/WAuUxMG0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S4AFz7pR0A7XQmmrAtwB+wE+8GhNyCBlY4WILGUY6qrEAjSx3FlbR3VWN/F76nJNnDsTzISs2dS06omGiLgiAtEBHfpBhsI4Xm4q34fAcoKcKaZqvnaR6QKu0aijYJVIb7Gu5HE369nV4w7COFv3yhx1MmUc6GdkWw/0Q06yTZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R6rNR3Ac; arc=none smtp.client-ip=209.85.217.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="sT+8z2AV"
-Received: from eig-obgw-5005a.ext.cloudfilter.net ([10.0.29.234])
-	by cmsmtp with ESMTPS
-	id hPQUrJMWMtf2QhRTsrJpzC; Tue, 05 Mar 2024 09:53:04 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id hRTrrvZtmHZXphRTsrQsl8; Tue, 05 Mar 2024 09:53:04 +0000
-X-Authority-Analysis: v=2.4 cv=OppJyT/t c=1 sm=1 tr=0 ts=65e6eb80
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=N659UExz7-8A:10 a=K6JAEmCyrfEA:10 a=-Ou01B_BuAIA:10 a=pFyQfRViAAAA:8
- a=kLO_78tPsFOv1NFa8psA:9 a=3ZKOabzyN94A:10 a=pILNOxqGKmIA:10
- a=Y6Wt1f1SdXxjDN_AVjWB:22 a=oJz5jJLG1JtSoe7EL652:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:
-	Date:Message-ID:References:Cc:To:From:Subject:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=AfeRHuT1v8xdOSui5LMmHFULlvJUzgG0gSrsmLPLnv0=; b=sT+8z2AVxhseVm40maYtiq7wBn
-	9Fwd/WRqXdCoJUxmKC7Gfl9wmZYitqnb/rXRJmg3MkffTuLY9Y5HvhgVC7UYzCHVd+w+arFobq4Vu
-	iRmVv4brkOv1yM4PohiROtsG+qR5SqXxCgc1DhKamiW1IoFTC+kySYFHztRItRIxqrR0wr7OBNh5e
-	SoHDsL+8e/RxpriSkBy1Z8fC/A04V954mfimevq9drhrBGcLe+LGVfpPMvRtbg/6dU883OT0ftqUD
-	iaX2vWj+YZBTyWCq+fBa9iDltLCex26KYyx3ogupPn36a9CpAJmPZJtPk4EzUiw4Ek2kEIU9hJ7TG
-	8dGw/zwg==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:49228 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rhRTp-004B6H-2i;
-	Tue, 05 Mar 2024 02:53:01 -0700
-Subject: Re: [PATCH 6.7 000/163] 6.7.9-rc2 review
-From: Ron Economos <re@w6rz.net>
-To: Conor Dooley <conor.dooley@microchip.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20240305074649.580820283@linuxfoundation.org>
- <20240305-arson-panhandle-afa453ccb0aa@wendy>
- <1a9a5456-ea3f-8a30-d8db-f49269966e71@w6rz.net>
- <fc131a72-6421-ad75-44bd-5ab7761d1cc4@w6rz.net>
-Message-ID: <013ebb78-46df-0db7-d95e-51229273bd2c@w6rz.net>
-Date: Tue, 5 Mar 2024 01:52:59 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R6rNR3Ac"
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-472746606b4so1007447137.3
+        for <patches@lists.linux.dev>; Tue, 05 Mar 2024 02:08:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709633311; x=1710238111; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RcQYPt61ZswmG7Ltk4aqTMqKV2Gt5394DVr+HiHAY7c=;
+        b=R6rNR3Ac7Ko1qnVi35ffDMYaJ9S8VGddNXTLDs4eCjVIQ3MncvZBtI07IHZ/FvRz8I
+         gKmVq74cC0AEITjaZAnTqwtRgvoAaLXVTGikL/kyGXg6Vo1PSz+woJV1YcGUjc/TiixV
+         DhWsyzLW3/LoN8kGopZxA5eX8PvRGX6niOdiiL0JoEkOBOjcnkiNbqxZxAsH+kbMj3qu
+         dLq5365Po7tJ+vDGN1GAEHvgz/2NTMGBtHqvhwRmRlwntC1+Rv/k9RvgyuHCSr9+rsdI
+         Wszw+MfSpOOG2w1va2LOgwoelYglOkLll2x0nMqVKqmdafgVUWWeTO/1iXvlfK1nalyb
+         /Opg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709633311; x=1710238111;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RcQYPt61ZswmG7Ltk4aqTMqKV2Gt5394DVr+HiHAY7c=;
+        b=ebz78g7nKOQOlCyytD52IN6qmIuyR3iopVvkpg+60fZQJn00fa23NFlmGgARxYWrHb
+         7KzjUFVsziYYQsSEASvGg4twDKaVCNhxJzeE5mX+R6XMu9cCivU8O6QqwSzTCQ7G37nb
+         zLBChYOCDiHFcFV8UkSsW45fe0TdicMAQt4zerVwmva+DXr+cIEz/OobVYLl8w0evSiR
+         VH4K9nIA4+CZKIdtSU5wICB1xjUxVY5heZ9A6+qLyOnvY7a7j/8SN8ykuz1eNOOeG2Vu
+         cE8ygdqlL6IvakroDRo6y/2BFXRS5Y3G6PqG+srNtWNP+UWWDKwqj19x5JMQij+j3uhX
+         +rfA==
+X-Forwarded-Encrypted: i=1; AJvYcCWpck1gJ+XRvp4LVhOf4VIcT85GdqhQz4TJ7pMFN1NTZsymM6Pf5CcfFfEj0R7kvsz2qpo5m/At3uxjWxeHBRFAP6bx8t8bvg==
+X-Gm-Message-State: AOJu0YzwBXm4KL3MCv2ZyzQIiDtKITOe1AUi17eAXA4wiNwnUG2uhyRF
+	qWNotP1nRvpZ8r7uvHrrXz/WIAdvL5oPm0LixsFX2WdfvXqjyNo+E4USz7HHo4vvrVxOXPfWWLU
+	t/WFg1w47zyoQWppAHqym24X7EhYmdvcwaO7rjA==
+X-Google-Smtp-Source: AGHT+IFp0tE8IoMcXWbHzzy6DSzTZLssOhqBeRslDbpiAMOBFY2vsJQqIa8loedxuKNtQwny5IBMpPE/nnJCa8ZQ8/Q=
+X-Received: by 2002:a05:6102:49a:b0:472:b056:1264 with SMTP id
+ n26-20020a056102049a00b00472b0561264mr1218311vsa.30.1709633311370; Tue, 05
+ Mar 2024 02:08:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <fc131a72-6421-ad75-44bd-5ab7761d1cc4@w6rz.net>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rhRTp-004B6H-2i
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:49228
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 42
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfAI8poFiylVdI12j2ldIQ0TM6W11ORPg3WomKni9zA19uhvhvri4rhk/IFweMqHULn/gYOk/J6I+j98VDp06En47haZamwCOl36Xm76WEUgjDEtClI6/
- TSG00Os/KRnAo7ChaImMRcJPHfzhOl/9Yh7nMrCt3JPBiwaL1j0SVB4gCIU5F+pWZTcpZ9hed89ayw==
+References: <20240304211542.332206551@linuxfoundation.org>
+In-Reply-To: <20240304211542.332206551@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 5 Mar 2024 15:38:20 +0530
+Message-ID: <CA+G9fYvOpuVjEe_0E5bwsmP39VQwdybDEoKTZGeYC3ULtqmViQ@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/84] 5.15.151-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	Zong Li <zong.li@sifive.com>, Palmer Dabbelt <palmer@rivosinc.com>, 
+	Alexandre Ghiti <alexghiti@rivosinc.com>, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On 3/5/24 1:48 AM, Ron Economos wrote:
-> On 3/5/24 1:27 AM, Ron Economos wrote:
->> On 3/5/24 12:31 AM, Conor Dooley wrote:
->>> On Tue, Mar 05, 2024 at 07:58:57AM +0000, Greg Kroah-Hartman wrote:
->>>> This is the start of the stable review cycle for the 6.7.9 release.
->>>> There are 163 patches in this series, all will be posted as a response
->>>> to this one.  If anyone has any issues with these being applied, 
->>>> please
->>>> let me know.
->>>>
->>>> Responses should be made by Thu, 07 Mar 2024 07:46:26 +0000.
->>>> Anything received after that time might be too late.
->>>> Samuel Holland <samuel.holland@sifive.com>
->>>>      riscv: Save/restore envcfg CSR during CPU suspend
->>>>
->>>> Samuel Holland <samuel.holland@sifive.com>
->>>>      riscv: Add a custom ISA extension for the [ms]envcfg CSR
->>> I left a comment in response to the off-list email about this patch,
->>> I don't think it's gonna work as the number this custom extension has
->>> been given exceeds the max in 6.7/
->>>
->>> Cheers,
->>> Conor.
->>>
->>>> Samuel Holland <samuel.holland@sifive.com>
->>>>      riscv: Fix enabling cbo.zero when running in M-mode
->>
->> Yeah, it doesn't work. Here's the new error:
->>
->> arch/riscv/kernel/cpufeature.c:180:9: error: implicit declaration of 
->> function '__RISCV_ISA_EXT_SUPERSET'; did you mean 
->> 'RISCV_ISA_EXT_SVPBMT'? [-Werror=implicit-function-declaration]
->>   180 |         __RISCV_ISA_EXT_SUPERSET(zicbom, 
->> RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts),
->>       |         ^~~~~~~~~~~~~~~~~~~~~~~~
->>       |         RISCV_ISA_EXT_SVPBMT
->> arch/riscv/kernel/cpufeature.c:180:34: error: 'zicbom' undeclared 
->> here (not in a function)
->>   180 |         __RISCV_ISA_EXT_SUPERSET(zicbom, 
->> RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts),
->>       |                                  ^~~~~~
->> arch/riscv/kernel/cpufeature.c:181:34: error: 'zicboz' undeclared 
->> here (not in a function)
->>   181 |         __RISCV_ISA_EXT_SUPERSET(zicboz, 
->> RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts),
->>       |                                  ^~~~~~
->> cc1: some warnings being treated as errors
->> make[4]: *** [scripts/Makefile.build:243: 
->> arch/riscv/kernel/cpufeature.o] Error 1
->> make[3]: *** [scripts/Makefile.build:480: arch/riscv/kernel] Error 2
->> make[2]: *** [scripts/Makefile.build:480: arch/riscv] Error 2
->>
->>
-> This depends on a much earlier patch, "riscv: add ISA extension 
-> parsing for vector crypto" (upstream commit 
-> aec3353963b8de889c3f1ab7cc8ba11e99626606).
+On Tue, 5 Mar 2024 at 03:23, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> I think the best solution will be to revert all three patches.
+> This is the start of the stable review cycle for the 5.15.151 release.
+> There are 84 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> riscv: Save/restore envcfg CSR during CPU suspend
+> Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
+> Anything received after that time might be too late.
 >
-> riscv: Add a custom ISA extension for the [ms]envcfg CSR
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.151-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 >
-> riscv: Fix enabling cbo.zero when running in M-mode
+> thanks,
 >
->
->
-Sorry, "riscv: Fix enabling cbo.zero when running in M-mode" is okay. 
-Just the first two.
+> greg k-h
 
+
+Following build failures noticed on riscv.
+
+The riscv tinyconfig and allnoconfig builds on 5.15.
+The riscv defconfig, tinyconfig and allnoconfig builds on 5.10.
+
+linux.5.15.y build failures on riscv.
+riscv:
+  build:
+    * gcc-12-tinyconfig
+    * gcc-8-allnoconfig
+    * clang-17-tinyconfig
+    * gcc-8-tinyconfig
+    * gcc-12-allnoconfig
+
+linux.5.10.y build failures on riscv.
+riscv:
+
+  * gcc-8-defconfig
+  * clang-17-allnoconfig
+  * gcc-12-tinyconfig
+  * gcc-8-allnoconfig
+  * gcc-8-allmodconfig
+  * clang-17-defconfig
+  * gcc-12-defconfig
+  * clang-17-tinyconfig
+  * gcc-12-allmodconfig
+  * gcc-8-tinyconfig
+  * gcc-12-allnoconfig
+
+ Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+arch/riscv/kernel/return_address.c:39:9: error: implicit declaration
+of function 'arch_stack_walk' [-Werror=implicit-function-declaration]
+   39 |         arch_stack_walk(save_return_addr, &data, current, NULL);
+      |         ^~~~~~~~~~~~~~~
+cc1: some warnings being treated as errors
+
+Suspecting patch,
+
+riscv: add CALLER_ADDRx support
+commit 680341382da56bd192ebfa4e58eaf4fec2e5bca7 upstream.
+
+steps to reproduce:
+---
+# tuxmake --runtime podman --target-arch riscv --toolchain gcc-12
+--kconfig defconfig
+
+Links:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/v5.15.149-332-ge7cbbec10c6e/testrun/22942335/suite/test/gcc-12-allnoconfig/history/
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2dF68wn0dXbU2xGLRyzsxGdXTyB/
+
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/v5.10.210-166-g4b0abedc88b0/testrun/22941782/suite/test/gcc-12-defconfig/details/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/v5.10.210-166-g4b0abedc88b0/testrun/22941144/suite/test/gcc-12-defconfig/history/
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2dF5ke88GqtfanduGie1JGLUbVa/
+
+--
+Linaro LKFT
+https://lkft.linaro.org
