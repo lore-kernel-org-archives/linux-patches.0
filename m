@@ -1,57 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A824F18E1D;
-	Tue,  5 Mar 2024 07:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF9118E1D;
+	Tue,  5 Mar 2024 07:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709624217; cv=none; b=eLPX1pPBPvVT9CQuNM2b9ciKeCAAO7drtrYPbn4SV3fRV+3JHiTLUQukCLXqn1lOvheUiFCb3CwgHC99+1+MfLqROwZWfmW54k3Qsmr/Otgl4UCCYhjD90ALCHRT3NrAoYITpkTweaze5dg3iORCpDSv+7X5iF/60dXT4vgIPs0=
+	t=1709624473; cv=none; b=V4YReKQTZ8cpacq+ROsE7lLQxIATLlnATwwoQCbQfYD8fUxPsv/BPmntV5r1nrggwjFEh6eL4IZPBFChkYIOcybv7pYWZpkxxAPbm3UVIBWcLZrGJypyFALMJby6ygzoyRaGlTyVvzy40VwiUqBuaxHRXKdnAg+ame4dcxY/YHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709624217; c=relaxed/simple;
-	bh=s+r+n6khb9dc8vcDVSttjByqVJfb7qX3xr8f0lab+9E=;
+	s=arc-20240116; t=1709624473; c=relaxed/simple;
+	bh=wZQHnw7Und1vjbrZfzAviReNO4ZtbXwyaemuTtj+kv0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tec7aB8N/m3oEQp+F3y9tTrNp9cMGXYb8qU1g5NVg7X+Mqtx5063ZkV8OubjwmkNWHpG2AegWrooHj/w45SMxr6URUDIXY1cSoN39GwYJG2L+Csx9B/sugB5Ktx4LjIhECKZpoAluHRnv+YdAEoxcZkp+sTWTn/QaTOV1Pb1F4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbNBaaF9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=bR8/9Ydjr/7ZLZdNhaJCHvTh+R5KMEwmVuOtUPTnRV+zUV5uRPYMJ+StYdJHzTKHqEwES9ptXruEUYh0siYV5WEpuffF6wuBvdOUyO/wBp5qd4HgZ2XbFxmtFpObRTkRUH2TsGO1GdX0Ej4YT283Mq/w4eLdJQh878sRAoSTWOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbBCPIkc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbNBaaF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE2BC433F1;
-	Tue,  5 Mar 2024 07:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbBCPIkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FDCC433F1;
+	Tue,  5 Mar 2024 07:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709624217;
-	bh=s+r+n6khb9dc8vcDVSttjByqVJfb7qX3xr8f0lab+9E=;
+	s=korg; t=1709624472;
+	bh=wZQHnw7Und1vjbrZfzAviReNO4ZtbXwyaemuTtj+kv0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hbNBaaF9a1+Qexv7o+8/oIB61zz2rH5JMDCF8TFT6sCXAQEGLwC6df4ctk/i8Rqat
-	 95kq75vpJPqNJNyXzLhhYn8o/bwZQK/WL9zQeox0w6Ml6jXaVwDu3iF9DllZ1/5/BR
-	 bSPWsBUya1wzTIWnDHCRH+x6P+IoqJXovAIOYL+I=
-Date: Tue, 5 Mar 2024 07:36:53 +0000
+	b=mbBCPIkcRDa1PJgdhdZcSAmowwgkuEcX4RG3mcJd/SRCKilA3OfGzDU2iTklRlq+D
+	 WRhf7Zer5HmRnaviuA6XA/Fy2eRHb23QB/G7PLSHOlpZqdXMEVv66qYZxlE7Cf1Vs3
+	 NiSyY7T/hawDHfMwfqv2V0ctg/Bi9IMUHrGGU0OE=
+Date: Tue, 5 Mar 2024 07:41:09 +0000
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
+To: Ron Economos <re@w6rz.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Ingo Molnar <mingo@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 6.1 128/215] x86/boot: Robustify calling
- startup_{32,64}() from the decompressor code
-Message-ID: <2024030523-parted-situated-8749@gregkh>
-References: <20240304211556.993132804@linuxfoundation.org>
- <20240304211601.130294874@linuxfoundation.org>
- <E57FF738-3527-45F3-891D-FD54E6E7E217@zytor.com>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.7 000/162] 6.7.9-rc1 review
+Message-ID: <2024030538-affair-bristle-25d8@gregkh>
+References: <20240304211551.833500257@linuxfoundation.org>
+ <dcc13107-8e7e-12c9-e9f0-d0fa96ea9c39@w6rz.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <E57FF738-3527-45F3-891D-FD54E6E7E217@zytor.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dcc13107-8e7e-12c9-e9f0-d0fa96ea9c39@w6rz.net>
 
-On Mon, Mar 04, 2024 at 02:42:35PM -0800, H. Peter Anvin wrote:
-> I would be surprised if this *didn't* break some boot loader. ..
+On Mon, Mar 04, 2024 at 03:31:00PM -0800, Ron Economos wrote:
+> On 3/4/24 1:21 PM, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.7.9 release.
+> > There are 162 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.9-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> The build fails on RISC-V RV64 with:
+> 
+> arch/riscv/kernel/suspend.c: In function ‘suspend_save_csrs’:
+> arch/riscv/kernel/suspend.c:14:66: error: ‘RISCV_ISA_EXT_XLINUXENVCFG’
+> undeclared (first use in this function); did you mean
+> ‘RISCV_ISA_EXT_ZIFENCEI’?
+>    14 |         if (riscv_cpu_has_extension_unlikely(smp_processor_id(),
+> RISCV_ISA_EXT_XLINUXENVCFG))
+> | ^~~~~~~~~~~~~~~~~~~~~~~~~~
+> | RISCV_ISA_EXT_ZIFENCEI
+> arch/riscv/kernel/suspend.c:14:66: note: each undeclared identifier is
+> reported only once for each function it appears in
+> arch/riscv/kernel/suspend.c: In function ‘suspend_restore_csrs’:
+> arch/riscv/kernel/suspend.c:37:66: error: ‘RISCV_ISA_EXT_XLINUXENVCFG’
+> undeclared (first use in this function); did you mean
+> ‘RISCV_ISA_EXT_ZIFENCEI’?
+>    37 |         if (riscv_cpu_has_extension_unlikely(smp_processor_id(),
+> RISCV_ISA_EXT_XLINUXENVCFG))
+> | ^~~~~~~~~~~~~~~~~~~~~~~~~~
+> | RISCV_ISA_EXT_ZIFENCEI
+> make[4]: *** [scripts/Makefile.build:243: arch/riscv/kernel/suspend.o] Error
+> 1
+> make[3]: *** [scripts/Makefile.build:480: arch/riscv/kernel] Error 2
+> make[2]: *** [scripts/Makefile.build:480: arch/riscv] Error 2
+> 
+> The patch "riscv: Save/restore envcfg CSR during CPU suspend" (commit
+> 64e54f78d9f2dc30ac399a632922bb1fe036778a) requires patch "riscv: Add a
+> custom ISA extension for the [ms]envcfg CSR" (upstream commit
+> 4774848fef6041716a4883217eb75f6b10eb183b).
 
-As this has been in the tree since 6.3 with no reported errors that I
-can find, I think we are ok.
-
-thanks,
+Ah, that wasn't obvious, I've applied that pre-requsite patch now,
+needed to be done by-hand.  I'll push out a -rc2 in a bit with this fix
+in it, thanks for testing!
 
 greg k-h
