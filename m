@@ -1,114 +1,106 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80136D517
-	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 08:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF1F54F8C
+	for <patches@lists.linux.dev>; Tue,  5 Mar 2024 09:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.71.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709627517; cv=none; b=NpiDgRgwG/4ISHlwc5NqllnTEYi2DE7pOLBcK49CJfGyLOqaSZVAPRVybK3GpxrAW/n/Rp+3x8iTdeQXYVzQUNr8LF3npQKW9KBihO+P6Ktk30HMf96ipir4CLci5aLrTEJHCSBSwHlPqqy9OXCe38h1Z71GLhv1ipdYNB2Zv8g=
+	t=1709629549; cv=none; b=h1LeVpQmNtDzK23j0yRlzChUa/G2btVUND0I8EBD8//lh1Qvni+9lx192laM3zdxJr1fvSey/IP8fEjH5J8LwORkHBNTUCc8BCl4Bte1RXEAg35yRQ17f3HWkElmJtorbN242SeHdGyYFtOrJgyVt+PoM/kv3YjQM1w2A8W33mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709627517; c=relaxed/simple;
-	bh=1ls+uy/JcT9Izmp8DLtQlz60vm6OJVdzHaoUaPD077U=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tau39gHaPjP2nw84ftPTQk4SA0eO4H2xsy+s2d+nv3wh5j9vCAhRLb4WUu8gwjm1A/U4MCcHbLsj+dvmX1fHOHB5raMktCS2U/Ddgne9ttCBosM/ES+28ZI9R5xjG3ROiGdDjo4+mvCzFW7vcWiHxGuuoDji6caJZgm71MNW5bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=ZxRPWhof; arc=none smtp.client-ip=68.232.153.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	s=arc-20240116; t=1709629549; c=relaxed/simple;
+	bh=ohU9B1DK5+V+unoDo0qv6/ju2Tlc2qHsEeZXLDc3RqI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XLhUUzzxahGmo0FL/1DSBD7tdRzZ5wdf/Td1TPfcuIeOJ6VEGIwpCm6RWD/QH5qzuQSNYQi/y+hHg4jvDdlM7v8PT1tXtc5FCyzbCCu/qBa3c1guCFds4CrbZZ9PASRLfrzmvXxnFmA/pBiZK3ogxb8KnQruiLO2s8SbhMFAEy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=aWvKz81Z; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=yKdd4U6n; arc=none smtp.client-ip=91.121.71.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="ZxRPWhof"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1709627516; x=1741163516;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1ls+uy/JcT9Izmp8DLtQlz60vm6OJVdzHaoUaPD077U=;
-  b=ZxRPWhofi459kISVp/6N1dtmaxAx33eANyVoOFq2sn0GE2BITrQz3uCL
-   jAM3H9cDz5v1sa7XGhC8bflV5/h47IerJjwwIiFIM1hvz5j5eo9nwWX/a
-   SzEcV6X1H36IE/DaG9Q2OCqFYrPjS/TSpCyhaDsXA2SRsL2MOsbo3eMje
-   AWM7ZOq/QzOHBqST4P609w6fHPV4Ja0XEguyXGWB1cdRNhxeiD0mCtiB/
-   r9R4ozGnJMMKVuzASsNRVs43UXRKLUXo9m6I64t85A5SdQ96JlG6Qyd2H
-   jOU0G6QBnb3ZwAWkKVTTekQc19AM4uSxoTi8/jlLcCEb2PT5XdGyEf2HO
-   A==;
-X-CSE-ConnectionGUID: 7FKKTPsjR2WAbsvvBivZpA==
-X-CSE-MsgGUID: jVjGN+zkStWvTQpII6UeIA==
-X-IronPort-AV: E=Sophos;i="6.06,205,1705388400"; 
-   d="asc'?scan'208";a="247971682"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa5.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 05 Mar 2024 01:31:55 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
- chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 5 Mar 2024 01:31:48 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 5 Mar 2024 01:31:45 -0700
-Date: Tue, 5 Mar 2024 08:31:00 +0000
-From: Conor Dooley <conor.dooley@microchip.com>
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="aWvKz81Z";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="yKdd4U6n"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id EC534C01A; Tue,  5 Mar 2024 10:05:44 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709629544; bh=TXA46+0MVcnuaVTMDKqrMYonAbd7/DorbREk8+b3k1E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aWvKz81ZfdOJGLgvU2iifSBcZkk9Tv6VWWop1o8OwMaTzbLS+0DLCr1mAGyjsgPqd
+	 41duWht2fOhXTm6RUENLc34yHLSTCPUThq53tVT6YVDDUNtWltLoq0u3tIsf1Cgbvt
+	 qES6X+c1+la7WXiXPX2U5EcyaYywCiQ8G7/d+znivkpOEB7BsClDK7udUmbltkWqUk
+	 BRxCLdMXPQOy2NAfwscjKeZ3TISJDsIIhjeN6SbUvsxVD0FtpH0DF91sL/ujLgVQfS
+	 ZdxYhKNBzgZOchX+zDOH3RLGhmhWzAr5t7iGMzHK5dY4gXMMhTGtyCvM8Kf8mgYmTW
+	 ntakB+aRUdNhA==
+X-Spam-Level: 
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id A6EA8C009;
+	Tue,  5 Mar 2024 10:05:25 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1709629534; bh=TXA46+0MVcnuaVTMDKqrMYonAbd7/DorbREk8+b3k1E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=yKdd4U6nWZRKpzI3kGIhpbCN3vRN8kFwDd5GS0xmzGeeSxyKuEkqtNAtUbOgh+1y+
+	 ZNU2QEpX0dZK+jQEzU7dMDzXVb46D7nr+EywulbuISmdWA+oZe88h8VJ0rAnslx9WW
+	 AdYUM2JynDrD9z7gaP7eoa+xKljVMuYVkm9CG2wDiJjAbIsYKWK+7EW1rwvSCHWVGE
+	 TtjGRNpU3yFkNqqBrI49gAOr+xVLfJ4MKw+vRgXQKpL0ygy9IknuCcDbj/C5Cmgwcp
+	 AJagY+FjqLrkBIVKper3ykf4N/WuHamh/MxmnRCv26JYJE8XRhg+xaZjD4uhCyOhQD
+	 yi2FR/i9FvvTw==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 7106c589;
+	Tue, 5 Mar 2024 09:05:19 +0000 (UTC)
+Date: Tue, 5 Mar 2024 18:05:04 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
-	<allen.lkml@gmail.com>
-Subject: Re: [PATCH 6.7 000/163] 6.7.9-rc2 review
-Message-ID: <20240305-arson-panhandle-afa453ccb0aa@wendy>
-References: <20240305074649.580820283@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 00/42] 5.10.212-rc1 review
+Message-ID: <ZebgQDAotbvxSg-l@codewreck.org>
+References: <20240304211537.631764077@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="9YXNRHoKRDKSr8iO"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240305074649.580820283@linuxfoundation.org>
+In-Reply-To: <20240304211537.631764077@linuxfoundation.org>
 
---9YXNRHoKRDKSr8iO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 05, 2024 at 07:58:57AM +0000, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.9 release.
-> There are 163 patches in this series, all will be posted as a response
+Greg Kroah-Hartman wrote on Mon, Mar 04, 2024 at 09:23:27PM +0000:
+> This is the start of the stable review cycle for the 5.10.212 release.
+> There are 42 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
-> Responses should be made by Thu, 07 Mar 2024 07:46:26 +0000.
+> 
+> Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.212-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-> Samuel Holland <samuel.holland@sifive.com>
->     riscv: Save/restore envcfg CSR during CPU suspend
->=20
-> Samuel Holland <samuel.holland@sifive.com>
->     riscv: Add a custom ISA extension for the [ms]envcfg CSR
+Tested 4b0abedc88b0 ("Linux 5.10.212-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-I left a comment in response to the off-list email about this patch,
-I don't think it's gonna work as the number this custom extension has
-been given exceeds the max in 6.7/
+For some reason the wlan interface didn't come up on the arm32 board
+(brcmfmac brought up through usb, mainline driver), which is something I
+hadn't observed before, but I've just rebooted a dozen of times and it's
+always been up after that *and* I don't see anything in this stable
+release that sounds like it could be related so I'll blame it on a
+glitch to look further into, and not something related...
+(I'll report back again if I find something more convincing, trying to
+get a second occurence at least... if I can reproduce I'll confirm it
+reproduce on 5.10.211 first then keep digging but it looks like that'll
+take a while)
 
-Cheers,
-Conor.
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
->=20
-> Samuel Holland <samuel.holland@sifive.com>
->     riscv: Fix enabling cbo.zero when running in M-mode
 
---9YXNRHoKRDKSr8iO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZebYRAAKCRB4tDGHoIJi
-0mFJAQDtS2vjwLxDjumw0GA73KurLViHOrB/jXXRxjsoGntZ1AEA2Ll5Ka2LMesH
-hywdAGgz1JFjaY9uLkITb3CuQaSoqwE=
-=4eM9
------END PGP SIGNATURE-----
-
---9YXNRHoKRDKSr8iO--
+Thanks,
+-- 
+Dominique
