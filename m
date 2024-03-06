@@ -1,237 +1,147 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout149.security-mail.net (smtpout149.security-mail.net [85.31.212.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DF132C04
-	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 13:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709733130; cv=none; b=ilAqr3G4zoUb2CNvudmEFvANv8nrtemg5xhuxZNQiUi1ZnS8LMifLT3yMIKXQ8SlW1124Y46Tolk50a5VNWraQJ8KBT7e44NckiaXkhP4GYpg740daFdNWUOQBH8ANXQ+Crx1iFgyt50IFoCDlDkbhAejB8UdEyA14cXjwAk3bI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709733130; c=relaxed/simple;
-	bh=DxD2l0TYNyX0nIo8X0aUdafi5RwApWasX/Fm+UM7f2M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kIUq48U7rG0Gi6DqBjSdFhqjh8slVIT83Q5Kwtn4k8FYyHQa0NTodmzX2a7YbiuhfOov3WUmPFPKrtpJ+W1oyOafP4DudvxgtP9LH0AFza2SMDu/0jbWX5K22eovwJB5aLq2NxjibpYO2JtWFntAb67KELTijB26fCaXOrYn1Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=luUuThVQ; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B90132492
+	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 14:30:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.149
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709735406; cv=fail; b=KtCTz4B+VXZeuak2IKlvM/pG/mpKD6GhapBa6iRh7P6tS1oYK5J5rJdvck+BZBqNUuzFVFV+W+plMzv8r/5F3FAAjS1NyUZZdENutxHS3yGMX5oQezOtXS6FS5SiwXUiZWhVyL+Mkrp7+x1amB2qzKGH1WAf1gzlUp2eQmLy3Pc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709735406; c=relaxed/simple;
+	bh=K79x8ZPxBQl5tSdTehGaVHGO0PE/mW6wwteaDZXFzSs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=qsgdmf/ejV1hBtrmxDhF2e3okFdQMqkpSaFfoYl6hroX7oswz+hN3QSS5QfKXoV7Ey429IwmKCHgMp/4vrk2R0eVrgg63qFvylY2sG10jI1EW4ybNScEsx/TONIIrZjt7ViiQ3s72NeCxHS2z7pDUUB0ql65G8zfZTTLTiE9Nsk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=II9I1FM6; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=vExbuuyU reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="luUuThVQ"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7daf957595bso2007107241.1
-        for <patches@lists.linux.dev>; Wed, 06 Mar 2024 05:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709733127; x=1710337927; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GIv5f1kNqPYJFCk7U0R+MAUVSCh7feTHZ/Nse4z4iY4=;
-        b=luUuThVQ8/5DprwWDcjUCBIKuEFiAgMBoiceLr00uN6lubXIh6CXUgLS6yxakRRI+p
-         /KSM5E2rlfpv4bVmgkX1DGgQnKx735lT9UrauO/55nd6yt17swtAwNwOqwN2ppjntsUx
-         5Lpbxy+0d0WnmeF60oNZ3w42S56SnS4U9d279oWncKYvTo0l3gxZeseSn6JLNQwvpa/f
-         arKdhvFGEmY8ZCevrXZk14BAJ2+2HE6di/rK/hl8kOEM54AUMKteN/61RWjJaSphCtb9
-         2/UsNksVTwxIsolWPmN7z+YgWtrBG6sSzd4peXxyPLB8wFX9pzcI/Ey35fR1ezeduk+v
-         qdgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709733127; x=1710337927;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GIv5f1kNqPYJFCk7U0R+MAUVSCh7feTHZ/Nse4z4iY4=;
-        b=MKCTqcNn9UK1yOVb9etono7oxmXSHZ92/Br744I/0A7ECLHPNfprh8razgCszSMfNG
-         5NYKtBQ9xZDz5m7DHJaGpV470AUOflstYFs+jbwHTvyQpF0axXrrTr5bIhGBd78e1yvZ
-         qKk7a0qZiJuZGkBk8zRDbcJQ66tyhrOUYiEOGPwV9MaUpY/vWTma2PVTDGMAK2JY5qlE
-         tjwW1YGhC59fLrh/cJpsXiNWoWHGznXcvzDXB8PAUnACYxidPy8V+KTE3WLJKlbbKxAJ
-         YmffHs1PN7uW5rIogMUH7AL69NuoYLol7uxFqm9V0CPIbfwAN43TOZgIrl4LrSMTVO1F
-         4bOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVCQItLFL9Wl0RSVTbNFJ4X56Styc9PD4eKZVP+QtEZmEXmMNAjiH+H5leOqQVmvUlOzR954mGMJV3DjZFLiYRX49SsEOHThw==
-X-Gm-Message-State: AOJu0Yw02LORnBXRBqBNjIUgopQdA5hAtF8ttTkUXRwxt8afzQno9H8v
-	9FUgx4nHOHIctoUakR+3dd0lxndIJePj7RQhVAZYTcj98isvUWi/ax2K4ivR4kX//ZdruN8gZve
-	vg6E/ofLPOqMw6WybDtZoXYNGxflUa+Mha9b3XYJQqTl0f4i2aDQ=
-X-Google-Smtp-Source: AGHT+IHhkU275prC88a734xDgCRlafAyCScqUTRNlX3nQgmvhtdfhst4HZGyhvX8Gi1Gdr3G7TwSw2pUSMs4KDdr2fU=
-X-Received: by 2002:a67:f408:0:b0:471:b9ab:7bad with SMTP id
- p8-20020a67f408000000b00471b9ab7badmr4148859vsn.29.1709733127093; Wed, 06 Mar
- 2024 05:52:07 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="II9I1FM6";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="vExbuuyU"
+Received: from localhost (fx409.security-mail.net [127.0.0.1])
+	by fx409.security-mail.net (Postfix) with ESMTP id 83AE6349514
+	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 15:27:17 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
+	s=sec-sig-email; t=1709735237;
+	bh=K79x8ZPxBQl5tSdTehGaVHGO0PE/mW6wwteaDZXFzSs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=II9I1FM6zMcbpmnlvEI6GCaMAjDLa/QnQ3/Yo1A6Rw+SDGbLfbqZCG7yVhojLtfuR
+	 t/DOoYE5x3bchLC2QmC3Kc8mJGGwrtpAT4T+N4xq+9fVBW1AR673ow4beNWWNNxYZx
+	 L4L/N60dRY/x4/iVVSTJ55Ohk5r/sIwndrBo55q0=
+Received: from fx409 (fx409.security-mail.net [127.0.0.1]) by
+ fx409.security-mail.net (Postfix) with ESMTP id 3996234933F; Wed,  6 Mar
+ 2024 15:27:17 +0100 (CET)
+Received: from FRA01-MR2-obe.outbound.protection.outlook.com
+ (mail-mr2fra01on0100.outbound.protection.outlook.com [104.47.25.100]) by
+ fx409.security-mail.net (Postfix) with ESMTPS id 6C814349355; Wed,  6 Mar
+ 2024 15:27:16 +0100 (CET)
+Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:14b::6)
+ by MRZP264MB1736.FRAP264.PROD.OUTLOOK.COM (2603:10a6:501:17::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
+ 2024 14:27:14 +0000
+Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::5db1:b5a8:71ec:59eb]) by PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::5db1:b5a8:71ec:59eb%4]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
+ 14:27:14 +0000
+X-Virus-Scanned: E-securemail
+Secumail-id: <154b7.65e87d44.6ac2e.0>
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=I4R7hp2BuoiHVpCEdZKqUoRrV58AmYLdgb0bNmIHSCYUTYrllfZQ43A8CQRp4RQboJoU2uBLLcV6yafJbo8wH8+MjF71Md44FiM0xi9l594HmhHv/2PtJz1Mz5zHUl7HE+1HuMpOrt490uILJ7Z+UCWq62Hk1R+nolLXyhv3qrycs9cAMR1wRV6A9CwibAgQ3E8YPiQ40pgYKrYMUtsPtyLOv+w8fd0wPGdAekDQmAWGS/5Vd3v3U+rkLr4/b4x2h6VI6QqngZAl9kEiDXA8e+syeHYCf0UlSbM6dLB3BOdTZH0+Vsq7eoL2hsaJHrT68P0j28rAU0JCxy06Z7AFyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microsoft.com; s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nwmfbFXjL49noru/mm17MsFiPSZc7SOLPZIuJH1gmao=;
+ b=REqIuNYNzB81tvZZ/N4hX2l2TbxjkulBnukibM0B3U+BnOLiqk+oM1d/jDJuaXrBNegEVDsZKv/9jh9I1NFhn1+TVObKIs5zOFbbcpeEonqhebQBYOt41sLlKV8CPCPsdE1anzd+DKLxugH5SfEvf1Yu1Z5n0Q1KZ1aHb2SjAmv9C56NHcJmrKWZ09AVaO72XB5j1HuPVmtrWhoQyYEQCOd8cBj1qHg1HdDidmDvJBXMmdWfLvRHPLQ0fP60wziQ5oMaA4/5j7Zi8JagwnYTFr8QUUFKRFsyf7ZjTdGvLdAsH7a4Ab0A+6rojw5H0a3LHf5oMBeqGEXeIio4HbyOiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
+ header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nwmfbFXjL49noru/mm17MsFiPSZc7SOLPZIuJH1gmao=;
+ b=vExbuuyUDhwXlBviDK9FLoEdG7kQz0oJADUK27/AR0KfTz6dWPn+NoYYhlIfsSFmHczTlbCC2o+pAiICCpntvxWKxe827FjKL9JyIaAF3jSWy77kGiOGWJo5BGAf5QiKa3gmvUQfhH1o/rMnT7StLBlDiMRTnHY1RIeWXwDMLTD/X8OPZp3pHYDnOCPcImhKizmIHvZliFaYEQRMgAHZetDQWoKm4xzrxLsYtlE4uX/o7OY7Xy/tnoB26KQMtCCATnYnNMtjvirAdlbcX4ow/7bL4uWzZrUc2bIMyFEEgYIpMOfSCH7UbA69p/B6Mf9YhRei909V/w5yOdPUnPnKOQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=kalrayinc.com;
+Message-ID: <70c32bdb-eb3a-43f0-8698-b67d1b791542@kalrayinc.com>
+Date: Wed, 6 Mar 2024 15:27:13 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/215] 6.1.81-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240304211556.993132804@linuxfoundation.org>
+Content-Language: en-us, fr
+From: Yann Sionneau <ysionneau@kalrayinc.com>
+In-Reply-To: <20240304211556.993132804@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PR3P195CA0014.EURP195.PROD.OUTLOOK.COM
+ (2603:10a6:102:b6::19) To PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:14b::6)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240305113119.020328586@linuxfoundation.org>
-In-Reply-To: <20240305113119.020328586@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 6 Mar 2024 19:21:56 +0530
-Message-ID: <CA+G9fYtdu7zVnS0=Z12x_YLUbLaefpFL2F4CnmD0AHyP1p_j4A@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/41] 5.10.212-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PR0P264MB3481:EE_|MRZP264MB1736:EE_
+X-MS-Office365-Filtering-Correlation-Id: e4d97aca-2f3e-4ded-dde6-08dc3de984be
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 99D3bbHS8hk40zRmVM27V5mVzsN9jSF3PMq4dGnunyLolk74Mer/x5xAm8gBQaUHOcRe8cTfhdwheWFZ9zhlenmCKJon4GtWSuQlq5gXfAL3582mIheVEE76BjVJLGF/ZeiMTpsg2b1s/FKVVUI/5GwiG+W35Zb6FeJsFSFu43iujx7D0N5UHFNJ7pmSDZ9xjYb4dKV1ZQ92t74tfMQvsYHeRun7aw3RStvsuKPKYVv1QohooFXoOIuFc4CI/g+NaZv34+ay0LTAikK28rtrOorlBV6To3vF1jNmN9cBAUSLSZ9srqhIoAknzyh8OA6/VkBCDFl/92HmkML3F8hcSioNavBo1kfPU0/lnpD4TKgT3/j/cl37VJ6LKjOOJn2I0SYNcf57np/KOEmxh07ax4teUzwBFaygGOd/eYVbnqBJt/LA2AgVaamrF/gV4pElmXsL7QLNVSdDBYFdQcZfI0iOlG5BqJivsdYMByz3OJPJij7GOODrZFlACPLooUHi2eQLxXpJYXFKyJfi68WxEMe4xg6AvkvrKaniogYJjmEcv3w5preCKl4yF5O5/4uW45NSX0nHjMoJYkZ9+OVJKghro1aWXMQkbRRct2VIvcc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(376005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: qL4KvmvQ03PpGafrXJoSAZhuOdvnq6TFxGXxwztZVgLcf+Xt3+N5p+emQyi+08eZoAD+GbmVbtBDTNUpgWkdIVWchdSna5NVPYwIH3QT1mpu3CKx9i3Z6OeIZ9ukSVK0LMvfu4ofkd8XpOSaynos8paQseAgA2IiZa4CqANY+1WtyY8KSo7QfDxq8zecRMrrl8nc6gAGFHlL+mgDNBFBCyqWrmTnYrKuRNA13AdGziykqhaPdnAr77//WHX+PLka50Lz5UQcDEmer6BUE/PDtj8T1TqTzbO4J4cYCGV6arGqYxcEV0Cwo8LlGmze9KQ7gtAeM8X4+LUTDQsv3CAplAoExiW9XqM/4g2i4R2j4Mzmv8/wgellxiWNNvkYqASAN3OiMJd7JSgG46uUo8xMnhjTHhf+7x3ZAtJ8bSOSWsvQFNR/tipPwbBSXiXW9oBysUhPOcCLCINr0n5rZg0TMNya85znJq/CrM4aJXzwJrbJtFLgg0R1tcrf1/MKSSCHI4MJCmqM06tv6LP+Cx26hmzsQSY2V+JeXc8+huxSnegI9/k+vHu4SbZaQMLCQS41diMygt0vz+s/CW5Je/qBN6XNfFX+d0COHXkVl9OXSZct104lcRc5ZT60tXaG39FHVe016S/BzH8f/JplO5caA83mzZkjuFebySJEMErLm+dPD72iksuLzO9Fl0+jz24rkfh9Pge+bbgxnXgYivGoOaDnznTm4GkfU2VKbgCve6LWzQMUbSwq1G8XgmsxfyukgU9WjSCwhUpwH+bMm9D3NY+jdM5SYo6YmR4ZOX+oP8eDpgMn/eOvXG02Htm3ApSsw6XnKCxy9Ys342ghV/8pv3vzJ5ucgc76s+7ZiWTpW6aqLuNEQsc0tsotPixfiWx0GiowQx/b84ZrKDcEH3XzcricBUcUpFd8tZlVj8JOsQMYmB1SXN6B9/gtdg2Zd0mE
+ ppI4JS83/alxlDlz1wIpTuoWvcBdsaumS6L/dOuM8BA4SNxe8sNWBLVZ7CEt5/3o/mQzXReGjS4duSa36a7EPPyRAywP5DdnRPesczD+yfeeswAP2F4JSl3vI0+hX+erxLAm9pogvmBGzYHJu+IMlpFx5pmpa9c4kUTW7jEW59iWmdy832N4NNGfxmSvOoooKAxoqDRv1RkMgWAwC+lBiPbN0X4SYuChGXmt4UTH8mDYK+gYYHi1VsVnJ2e2NyfpJWxQiMfL7F1I/GluCvkdH8wHkihw8GFr6NSxzQ31+hHs2PkhUqtFuTyYBZ8kyPK+WOBrYXPuC8TjPj4XeW0FjPuLmbymyInuURgGHb2/iq7LB0fNPwLKXqUPug0a2lUQITRnR5TiO9G4CjtVrvCH2++cQ1UKqwWeMjBJ/+l4CxLUPpu/LwdAlPjQBOQADjqx2+nh7pPopzfePWyZ7VKkDFRLOw7UkZc0zRn387IYv11gAopUX1vD7TEk06l3r/H3TTbSDw5yKZkeJaj+mDl5vyqFSM3zHYgTzhqUtrKDdKqAt6Q69ZBs8o0SKk4GNQGOTOm9y6aIR5FW4Y3ylbJpTRTvFsKfkAxPm3fcoACTwoxkC/MvOqaNBwngVHqKHUoiSQA/czPHJY3O/6pmGdbs2KZzIGCTBwOte9xzvD7YEA2Kz/KrvrCrN5sX7I+kEt3da0XjGYWXKWnm2QpYP1L0VA==
+X-OriginatorOrg: kalrayinc.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4d97aca-2f3e-4ded-dde6-08dc3de984be
+X-MS-Exchange-CrossTenant-AuthSource: PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2024 14:27:14.6669
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8A+S9Hwf+P3JRoicStIl7xqhl9fNWi+9QcZ0WDJo5AOVrH+0VJsgEIHf2xHzC8z3K+MijaqR55wKktOtLvAvpg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MRZP264MB1736
+X-ALTERMIMEV2_out: done
 
-On Tue, 5 Mar 2024 at 17:01, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.212 release.
-> There are 41 patches in this series, all will be posted as a response
+Hi Greg,
+
+On 04/03/2024 22:21, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.81 release.
+> There are 215 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Thu, 07 Mar 2024 11:31:02 +0000.
+> Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.212-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.81-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
->
-> greg k-h
+
+I tested 6.1.81-rc1 (cf578ac947cb) on Kalray kvx arch (not upstream yet) and everything looks good!
+
+It ran on real hw (k200, k200lp and k300 boards), on qemu as well as on our internal instruction set simulator (ISS).
+
+Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng testsuites are also run without any regression.
+
+Everything looks fine to us.
+
+Tested-by: Yann Sionneau <ysionneau@kalrayinc.com>
 
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-## Build
-* kernel: 5.10.212-rc2
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 713b6af903ad5057407164571c78c1e307098b8e
-* git describe: v5.10.210-165-g713b6af903ad
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.210-165-g713b6af903ad
 
-## Test Regressions (compared to v5.10.210)
-
-## Metric Regressions (compared to v5.10.210)
-
-## Test Fixes (compared to v5.10.210)
-
-## Metric Fixes (compared to v5.10.210)
-
-## Test result summary
-total: 92769, pass: 72680, fail: 3078, skip: 16948, xfail: 63
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 107 total, 107 passed, 0 failed
-* arm64: 34 total, 34 passed, 0 failed
-* i386: 28 total, 28 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 0 passed, 3 failed
-* powerpc: 25 total, 25 passed, 0 failed
-* riscv: 11 total, 11 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 30 total, 30 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
