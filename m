@@ -1,93 +1,157 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA94213440D;
-	Wed,  6 Mar 2024 14:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927B1133981
+	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 14:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709736905; cv=none; b=ATp5jkirhBUFjowzS8s9gvht/o+vyl/W99RTD3ZKkvVloy7tITNdvpR22/TtJTBhKjtRZmvWvHABCALC9vR53ZC0X+nXdtvnjzI4nJqXuNdYwFXhGy39wbGo0qY4QbPM9oQiu1MLTMHJuDItc1p5P7CQTK41hI9euwt6Em4FbBw=
+	t=1709736922; cv=none; b=Qa9wPA4eIkbb8B+LG3VkZGt27S0KtRRoCGe2ImsnwHvI5jw8o9k5pKUjA2Jxe57+0wFLFhRS10oLnSLoAJsZpfnKzlyOGdCpEatceNwblgUgozez6KM2J2npenjNhVxGFtCvNNRqG/s6CTS3cU0IrYTXgacIIRC8zd8dE2gSX9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709736905; c=relaxed/simple;
-	bh=nNpO6ESIQuWNHV3anMdBB0uTpqzi1/v1tY6k8m6q5S0=;
+	s=arc-20240116; t=1709736922; c=relaxed/simple;
+	bh=XaDAf89/uDA4n7xDi6aw4UHtLzFhOCr6g7gX8vmEAqA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K6rroyOxnsIGBkVJ05Q33522glBVBfBa4+om36zIj4nJOORObgb7xbL+pSiyAZ2F4hvvsq8ly6PRQPq+jnnSqLZrgJCOdRAkebav9sRopOwptl6TzvaRDv3pA1uehGV8mZiISOrOEOAs2b4TSNxlg+0oHdlEyC1EE0FnbEXqC8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ND6ZOgXl; arc=none smtp.client-ip=209.85.216.42
+	 To:Cc:Content-Type; b=b5YXyrNluyOzNI+w7CM3q/J+mfXdenMKOe/4wGsLsIinHiNx3jbN/kjOUeQOL3BKlDA2qIL9F5P9c7gu+EGBeyqFdekeqYpSji2KwjdntRFhcO/TOm9wbT76DtoU1COi3a/wDPoBBDGobxol0vfzZO5Xq3GF9bPDb0Vv+NU1j9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRowLkZ7; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ND6ZOgXl"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-29b7dbe39ccso244153a91.1;
-        Wed, 06 Mar 2024 06:55:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRowLkZ7"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1dd41ed9b74so3337385ad.2
+        for <patches@lists.linux.dev>; Wed, 06 Mar 2024 06:55:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709736903; x=1710341703; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1709736920; x=1710341720; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kNsQrzui79q+RpiAKCUg2sUg0iqLQRE/fhXeQe2h8Ek=;
-        b=ND6ZOgXlpM+mzKyllv1jqwaJtl55XJ1tcO7WHo5/l2nsmVH7i2ldY4a/Qz+pZz6ydH
-         lx7BmzppdofPA/6aIXb67vAWicLyw1BO6IYFrbHYnH1suoxh+x/pdiA93PasxoZHDrM+
-         y+BSbwPp6NWbIgl0biT/C+POSB9qhQ4Mejp+ChsBgb0ishE5oLpgeAEWYzIPrWh0kvdQ
-         UZJ1D/0qRqp+fgQgPoviRVpsBTQM9mERFW5kw/OX6u1k+f+UCZ74KcLsn6tc9Pe/8Swd
-         afzgKYhgEgJvycj+zE2Ylgag6uS06ribPEFLYkdUAxXDkfm3DhH+V7nvk1pCdfiJUgPD
-         liGg==
+        bh=G78MndKWFM+DYsygT2bBdMaWOBPhKkS5vi6PnsSzrjk=;
+        b=BRowLkZ7ldBcTuAhD5OugCjm1zV/dYjb09cXL/PjpTsvfIPpIqcXH1xkmOX/dxNp4M
+         petQ28S58w6gRmTPm2fkruAnL4FiyMsxa+tgxXcLSvKYzykaiEnkRQJ6ICW/q2hi9JyF
+         QPe9XQdaOYFC/knnrvMkAJLBSbbobOPfp/aKY0mFI1pR4miKDvyGXD0Cyfw/EZTAM0Sr
+         8//wDiINQVodc8ev0EQubsOQkDp89R7KsJy/Sw+glottnMnUkPeT7lMBKgF5wFIlabeL
+         m/VJEXshusUAUjrFoo8f6Ghpx8fxtXvPmQ+AW4oaOe7tDP7AeYCkzOWwXLQj0M05n/mW
+         pFAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709736903; x=1710341703;
+        d=1e100.net; s=20230601; t=1709736920; x=1710341720;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kNsQrzui79q+RpiAKCUg2sUg0iqLQRE/fhXeQe2h8Ek=;
-        b=jH2kvBMGSeRGZemZhHV+G2D7k0Cq/idSsnQhz/NoZx/NS2uL6CT8gyOU6wyQDrq/EB
-         0GPsr02OxW5ovMNFkC0qBP5KUTW1NPFQsI/yOgDUfhErI1ejuEjcWlZR4MtzRC4d5rFv
-         KJbOSMl1aQzVIzq3bx3mduxgI2rh8jufDct5cXLAqNj8K/C2Y203pSucKUdw8mBjVGN9
-         3faeW3lg+gL0TXHHTaRSkZ7LF330KNLnoKqeczBId/8msEvfUm8odcZ8qKqhJ20poJ7i
-         reY056lA7EAETmyxrKMWTd8NaGQUjYH6XQbmuOfkRdJIKqDy/Q5i5Cs+OVDSHhhORYd2
-         Hmmg==
-X-Forwarded-Encrypted: i=1; AJvYcCV5SWRzyREt19Q4WrnSxvHwqduj/PJcpH3X649lDDST1wVP1QHPt4x7XTZ5F/GXc45+BqcnFIN1VLXKJbGxMYurXkdM/Pg3SFPvNkbwzCfRV60psrcYHCYUQikxjnCP
-X-Gm-Message-State: AOJu0YxK6TvQUQqpFRwFBPPfxH9ptkQSD7GJyJuyVuHH2qjUhe4eVB30
-	rCFbiYFvBrUHyILILBp/YAZGDJlKOLTIfFzwVKxcnbfM7ZFEHrvZGOyhkTvR3Wbk50HHZiQ5V6N
-	5PGsP4NpQ/rP1BvCUX2Edd5UWvDQ=
-X-Google-Smtp-Source: AGHT+IH+SzGwawUqge120mvgXtvy59eTBMFCd0+4qfzbDoCxlgbUsEiqbq5q/j9OyqS4I31oiXEXizOmvUgy+fJ0Hqw=
-X-Received: by 2002:a17:90a:9f87:b0:29b:7f85:db2c with SMTP id
- o7-20020a17090a9f8700b0029b7f85db2cmr719232pjp.12.1709736902964; Wed, 06 Mar
- 2024 06:55:02 -0800 (PST)
+        bh=G78MndKWFM+DYsygT2bBdMaWOBPhKkS5vi6PnsSzrjk=;
+        b=TGgcR+xqiNHYM9D+UNX4O/x55mbDloxoDUFsbwaXSshh4r082TWE51LvfQe0J2cCxs
+         lgYz4J1pNybjiYVSntzTWE2ZXnnRACMF8AVAAEbk3PkwhHhSOzSGap9F1NHYCtoRYtum
+         vNyKnexGVpmbG3dqlVsJczuU2ZEGZv+Ah/ig+u3S438d6TIzoB/Jd/6GYebhl9rupSf0
+         AN8u2SQqhB8RF97GICyv456HjYfb6BZEkkA0gYUbCKRoG5sUzO5DsWAFI+gJ+0NkOvKF
+         52wqS582rAwWCWUeAxdHuZNRZGedlL7JYFU6N+EiJSkd5H5DYCncgdnYy9swuAP8/RwV
+         qwxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWq0G25ht7Nij6YEA3K6rM5T64spseqRiMmxVGGE5L9IGgHIWZ/Vb+rotaunWKRtJcSFuknfiErrqA9aXf3vGEm7jk3VDJl6g==
+X-Gm-Message-State: AOJu0YwdmXs4A6Gt5cev6qbQ9MFAMgqYjqAJK/4Pksk7m+W5rTTgoosJ
+	EggaU4+00Xf6mZftrdaX7+7tiyLvTuucQBSE4Vyxz5Fhsh7mh2Mnqmnnp4QmsGi04Tyk5Drp8ou
+	oTEERqDC3fEmEibJTPFeq28M13E8=
+X-Google-Smtp-Source: AGHT+IF3wcyAkHvZMzF9WcuiVVSj1V8rCwuDjIsG1zgOIc5nmnGmvau6gumyfzxT/W9FQweluiS847DbJEZzWhG9rZM=
+X-Received: by 2002:a17:90a:fb81:b0:299:879a:7da7 with SMTP id
+ cp1-20020a17090afb8100b00299879a7da7mr14069741pjb.34.1709736919930; Wed, 06
+ Mar 2024 06:55:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240304211551.833500257@linuxfoundation.org> <20240304224813.73380-1-sj@kernel.org>
- <CADo9pHi0az-CL_hktmpCVcuoiDaUJn2U208=TwAvBM6YQhfFqw@mail.gmail.com> <2024030653-reforest-gauze-149e@gregkh>
-In-Reply-To: <2024030653-reforest-gauze-149e@gregkh>
+References: <20240305074649.580820283@linuxfoundation.org> <20240305-arson-panhandle-afa453ccb0aa@wendy>
+ <1a9a5456-ea3f-8a30-d8db-f49269966e71@w6rz.net> <fc131a72-6421-ad75-44bd-5ab7761d1cc4@w6rz.net>
+ <013ebb78-46df-0db7-d95e-51229273bd2c@w6rz.net> <2024030521-uncover-pushchair-e68c@gregkh>
+In-Reply-To: <2024030521-uncover-pushchair-e68c@gregkh>
 From: Luna Jernberg <droidbittin@gmail.com>
-Date: Wed, 6 Mar 2024 15:54:50 +0100
-Message-ID: <CADo9pHi0OqBgMsVCf-QaUea+x1viiXHJp+rGn3Jie5noEHv49A@mail.gmail.com>
-Subject: Re: [PATCH 6.7 000/162] 6.7.9-rc1 review
+Date: Wed, 6 Mar 2024 15:55:06 +0100
+Message-ID: <CADo9pHhF-yaw_EgenkUt5Z6t9_TW9XroWeoeXVRquLQJfuO+FA@mail.gmail.com>
+Subject: Re: [PATCH 6.7 000/163] 6.7.9-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	damon@lists.linux.dev
+Cc: Ron Economos <re@w6rz.net>, Conor Dooley <conor.dooley@microchip.com>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, allen.lkml@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
 Tested-by: Luna Jernberg <droidbittin@gmail.com>
 
-Den ons 6 mars 2024 kl 15:52 skrev Greg Kroah-Hartman
+Den tis 5 mars 2024 kl 12:38 skrev Greg Kroah-Hartman
 <gregkh@linuxfoundation.org>:
 >
-> On Tue, Mar 05, 2024 at 12:05:33AM +0100, Luna Jernberg wrote:
-> > Works fine on my Arch Linux desktop with model name    : AMD Ryzen 5
-> > 5600 6-Core Processor
-> > after the Arch Linux manual intervention for new mkinitcpio settings
-> > and version in Arch
-> >
-> > Tested by: Luna Jernberg <droidbittin@gmail.com>
+> On Tue, Mar 05, 2024 at 01:52:59AM -0800, Ron Economos wrote:
+> > On 3/5/24 1:48 AM, Ron Economos wrote:
+> > > On 3/5/24 1:27 AM, Ron Economos wrote:
+> > > > On 3/5/24 12:31 AM, Conor Dooley wrote:
+> > > > > On Tue, Mar 05, 2024 at 07:58:57AM +0000, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 6.7.9 release.
+> > > > > > There are 163 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being
+> > > > > > applied, please
+> > > > > > let me know.
+> > > > > >
+> > > > > > Responses should be made by Thu, 07 Mar 2024 07:46:26 +0000.
+> > > > > > Anything received after that time might be too late.
+> > > > > > Samuel Holland <samuel.holland@sifive.com>
+> > > > > >      riscv: Save/restore envcfg CSR during CPU suspend
+> > > > > >
+> > > > > > Samuel Holland <samuel.holland@sifive.com>
+> > > > > >      riscv: Add a custom ISA extension for the [ms]envcfg CSR
+> > > > > I left a comment in response to the off-list email about this patch,
+> > > > > I don't think it's gonna work as the number this custom extension has
+> > > > > been given exceeds the max in 6.7/
+> > > > >
+> > > > > Cheers,
+> > > > > Conor.
+> > > > >
+> > > > > > Samuel Holland <samuel.holland@sifive.com>
+> > > > > >      riscv: Fix enabling cbo.zero when running in M-mode
+> > > >
+> > > > Yeah, it doesn't work. Here's the new error:
+> > > >
+> > > > arch/riscv/kernel/cpufeature.c:180:9: error: implicit declaration of
+> > > > function '__RISCV_ISA_EXT_SUPERSET'; did you mean
+> > > > 'RISCV_ISA_EXT_SVPBMT'? [-Werror=implicit-function-declaration]
+> > > >   180 |         __RISCV_ISA_EXT_SUPERSET(zicbom,
+> > > > RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts),
+> > > >       |         ^~~~~~~~~~~~~~~~~~~~~~~~
+> > > >       |         RISCV_ISA_EXT_SVPBMT
+> > > > arch/riscv/kernel/cpufeature.c:180:34: error: 'zicbom' undeclared
+> > > > here (not in a function)
+> > > >   180 |         __RISCV_ISA_EXT_SUPERSET(zicbom,
+> > > > RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts),
+> > > >       |                                  ^~~~~~
+> > > > arch/riscv/kernel/cpufeature.c:181:34: error: 'zicboz' undeclared
+> > > > here (not in a function)
+> > > >   181 |         __RISCV_ISA_EXT_SUPERSET(zicboz,
+> > > > RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts),
+> > > >       |                                  ^~~~~~
+> > > > cc1: some warnings being treated as errors
+> > > > make[4]: *** [scripts/Makefile.build:243:
+> > > > arch/riscv/kernel/cpufeature.o] Error 1
+> > > > make[3]: *** [scripts/Makefile.build:480: arch/riscv/kernel] Error 2
+> > > > make[2]: *** [scripts/Makefile.build:480: arch/riscv] Error 2
+> > > >
+> > > >
+> > > This depends on a much earlier patch, "riscv: add ISA extension parsing
+> > > for vector crypto" (upstream commit
+> > > aec3353963b8de889c3f1ab7cc8ba11e99626606).
+> > >
+> > > I think the best solution will be to revert all three patches.
+> > >
+> > > riscv: Save/restore envcfg CSR during CPU suspend
+> > >
+> > > riscv: Add a custom ISA extension for the [ms]envcfg CSR
+> > >
+> > > riscv: Fix enabling cbo.zero when running in M-mode
+> > >
+> > >
+> > >
+> > Sorry, "riscv: Fix enabling cbo.zero when running in M-mode" is okay. Just
+> > the first two.
 >
-> Nit, this should be "Tested-by:" without the ' ', otherwise our tools
-> will not pick this up.
+> Ok, will go drop both of them now and will push out a -rc3.
 >
 > thanks,
 >
 > greg k-h
+>
