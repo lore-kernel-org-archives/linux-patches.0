@@ -1,109 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CF460250;
-	Wed,  6 Mar 2024 16:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764D98060A
+	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 19:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709743723; cv=none; b=O1fHKzjLr4ewtaWb5ONUi88kYoZCU7toRyRfYCNWUBoNm+rtbzV/0ZxwsDaWyDgHloSRCr8TbsBtjCM1xxNBknLEaOtLka2omHRkzWktMDuaQDI2pT08jaV90hq3fTzSPC5vxmu6N+FRvXqwZwIOf69fZO6WIwa35AA5m98IFPk=
+	t=1709752101; cv=none; b=Xa12FnoO73bz8BUS4jYOscYSB6tdTyXEtqLTC9Bkk1kv3J6Hj0yIX4SrSfN5yWhhYigy/yAYa2eLAiWs9/5clq/QpQLLuhtJuGshLpPVXrWK1GG7pA16VIj8qdJsz89uUyShQvu9WIBGOYhH+LvZ03rFRXeXGMRu62zKCt0oDZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709743723; c=relaxed/simple;
-	bh=0QVMuhO8tv+yD3wGofv4vd1QwlfUDwn6eLrDolYC9js=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cGYqXe9m7Oux1HPRkRWihr3gW6o2611RFI1kM+eXWLhWU4z9u/Mn8pWk+WXqOSY1ZMPr3OeTDSgORFM+vetr8uTWSQrQQj2jO+8+YQm8NqMIeG+TCuSeyns29hknlGNK4zH7JaBXgpUbUt9Vl/6m+LuxauSqKFHepYv7i7FlwGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+XtvBMf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709752101; c=relaxed/simple;
+	bh=RV6mL5v2qERzLuB7fby5/iAWOoXRQGIT6BUiqUllKfg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ji7bIoZavpuzj0/iWZxcZNfotaUDUyH6/QAPC4cxm18rCaFyLQf8vy5s6VRxSuxG1GYZyee15ko+jH6rVs2YGp3rhQUryiGWkxsaO6BjRGcrv9VK3qDv/Tehfti1slKxopDr/B3Md0XpeTnG+Gm1q34f5B7XKK86a3JjHfE7w84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YD/VgNp8; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+XtvBMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D1DC433C7;
-	Wed,  6 Mar 2024 16:48:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709743722;
-	bh=0QVMuhO8tv+yD3wGofv4vd1QwlfUDwn6eLrDolYC9js=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q+XtvBMfqHnTWiAQDZ8gmGdBrn5wJ0nauughUwkeXvnk/yXYoJIVAHxMcc/zanr7f
-	 vg+r3Mgg6Z/cI2QQ44tNs16macvizUbJHML4KZ/Hkj5LnE2sUVZ4TFhN2/GvBYHUic
-	 +SruEao4Ms/6vRSwBrRzsuIpWHPgqKcCbK8a2oPYC7KwLZa+Joagn22T6X2g+tnssU
-	 2Pysjy4xZGG/IZ80vBiyhxntD4brOS+0Z1StfKp9ZXnbZphRrxvUA15xMdfCNvp1hO
-	 NxusReLi/PpMSggNg25a8S8EMLwjkkdH0aC5mXlKQ32kbkH45ovDO/ZYgyRyXOIAio
-	 uJLjHjJEVcAUw==
-Date: Wed, 6 Mar 2024 09:48:40 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Michael Ellerman <mpe@ellerman.id.au>
-Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, aneesh.kumar@kernel.org,
-	naveen.n.rao@linux.ibm.com, morbo@google.com,
-	justinstitt@google.com, linuxppc-dev@lists.ozlabs.org,
-	patches@lists.linux.dev, llvm@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] powerpc: xor_vmx: Add '-mhard-float' to CFLAGS
-Message-ID: <20240306164840.GA3659677@dev-arch.thelio-3990X>
-References: <20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org>
- <20240305224315.GA2361659@dev-arch.thelio-3990X>
- <874jdkp409.fsf@mail.lhotse>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YD/VgNp8"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3c19aaedfdaso4422841b6e.2
+        for <patches@lists.linux.dev>; Wed, 06 Mar 2024 11:08:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709752099; x=1710356899; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=l9ljfn8pzLcyr0pmoDnBqgXrNCS95cr4N6iPjugHZLU=;
+        b=YD/VgNp8rHEVbn9GRopTDRnEvAclpoEFcOLKQU0Oansl/LvLBE7ctuKeMS+2hIQlvY
+         1voWkRVmUSeBGrWgg2WY78b0dMo1sP/X1ofyqw5enBWnkzLxltb8ELnzVAN6IybLmBXQ
+         zzI29B/IK5UtAu3O2guPkm48AntsrRzmqZJ4gvck1M7/YZ8yl5mWuDOaro1KSPAQWkND
+         wC2EeJ7q1g2DUldAeBkfOY4XFf/P1QmgS0jQsG7qMHano32ufoDbZjzKef2wMOvTNYw1
+         x9oLb/bFU9Dhv/HTsrJaG3OY3VCPWu/I7kEgDV0kSWUmrJs4HIOftPOfAVgXuyJKrpGO
+         4UhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709752099; x=1710356899;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l9ljfn8pzLcyr0pmoDnBqgXrNCS95cr4N6iPjugHZLU=;
+        b=NmlEEa3QZLAL4+pI+2ictGH5NDwDzSrJVQdPt0PwdniylMItUm6AQpaP4FcKJybEMB
+         4t+WGkel0GpNebPdM5TtFG34MS0a5zbY+WlvgqZvpLRsHY5CKshg1BKQdjAO3uoBpVnZ
+         s+0e6JBEgsNCEXabTu4urz8s7oQOSEzaGZ/HKO1awEUyF/4aE9mAlqvymuJBxHV0/Qe6
+         YoMguGu4mbIqjlDfxME+DC/UX2tpN/HYAbwpXqKM4Pz6DeWgfRMBlcg1wSXvGxPKTLl4
+         eRUZm901S09SXddyFpLUmEUyYmpYq6m7eR7RdjVXpX2+bOSO/ECc4gfAdo3+/bEF9/R2
+         Z6iA==
+X-Forwarded-Encrypted: i=1; AJvYcCXhgyC6ZGtyikCoJ1kQMh/DJo/5RmVMFojzjkoYYl3IqVp77I6HvuFCXfKqT6bTtEPxswKcNeePaopcxFkE2+oDSoPAz7KC9g==
+X-Gm-Message-State: AOJu0YxPZPTz8qmwqTB7e9LLzTRVoAkh42i3XW59wXh/btVbI1PC0COZ
+	siiVRh9Zlj4+65x1dWl93EbCEtUiGzcei7bv5IVe6n3wumHBEDFyUcbfeuNlldeII+8K88TKbKC
+	ySaSIrxhZ3WaQMNJbbJSVezmPN3M=
+X-Google-Smtp-Source: AGHT+IFGQgNUfYbTsIVGa0MQeXkalL+JAaMYuehv8v54bumXXrGiXEnM64uhAFoqLtkLmDxL77ohByHAhIPdLU4DRS0=
+X-Received: by 2002:a05:6808:13cc:b0:3c2:1805:8cfc with SMTP id
+ d12-20020a05680813cc00b003c218058cfcmr4403457oiw.53.1709752098638; Wed, 06
+ Mar 2024 11:08:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <874jdkp409.fsf@mail.lhotse>
+References: <20240305113135.403426564@linuxfoundation.org>
+In-Reply-To: <20240305113135.403426564@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Wed, 6 Mar 2024 11:08:07 -0800
+Message-ID: <CAOMdWSL6uPRvG-DwOmWRs89WfchXzPUuG0KzkBFu46ibKfv-0A@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/83] 5.15.151-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Mar 06, 2024 at 12:01:42PM +1100, Michael Ellerman wrote:
-> Nathan Chancellor <nathan@kernel.org> writes:
-> > Ping? We have been applying this in our CI since it was sent, it would
-> > be nice to have this upstream soon so it can start filtering through the
-> > stable trees.
-> 
-> Sorry, I was away in January and missed this. Will pick it up.
+> This is the start of the stable review cycle for the 5.15.151 release.
+> There are 83 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 07 Mar 2024 11:31:11 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.151-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-No worries, I've done that more times than I would like to admit. Thanks
-a lot for the quick response and picking it up!
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Cheers,
-Nathan
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-> > On Sat, Jan 27, 2024 at 11:07:43AM -0700, Nathan Chancellor wrote:
-> >> arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
-> >> powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
-> >> error when building with clang after a recent change in main:
-> >> 
-> >>   error: option '-msoft-float' cannot be specified with '-maltivec'
-> >>   make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
-> >> 
-> >> Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
-> >> to override the previous inclusion of '-msoft-float' (as the last option
-> >> wins), which matches how other areas of the kernel use '-maltivec', such
-> >> as AMDGPU.
-> >> 
-> >> Cc: stable@vger.kernel.org
-> >> Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
-> >> Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-> >> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> >> ---
-> >>  arch/powerpc/lib/Makefile | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >> 
-> >> diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-> >> index 6eac63e79a89..0ab65eeb93ee 100644
-> >> --- a/arch/powerpc/lib/Makefile
-> >> +++ b/arch/powerpc/lib/Makefile
-> >> @@ -76,7 +76,7 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
-> >>  obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
-> >>  
-> >>  obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
-> >> -CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
-> >> +CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
-> >>  # Enable <altivec.h>
-> >>  CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
-> >>  
-> >> 
-> >> ---
-> >> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-> >> change-id: 20240127-ppc-xor_vmx-drop-msoft-float-ad68b437f86c
-> >> 
-> >> Best regards,
-> >> -- 
-> >> Nathan Chancellor <nathan@kernel.org>
-> >> 
-> 
+Thanks.
