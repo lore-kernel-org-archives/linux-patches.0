@@ -1,102 +1,176 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC388D52E;
-	Wed,  6 Mar 2024 03:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FB91427E
+	for <patches@lists.linux.dev>; Wed,  6 Mar 2024 03:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709694710; cv=none; b=e7gAA2mp1h44uW4vRBrcxUcGzalY6yL/r5z/1t79wMN1sRcW92RBO7s+gQ+etV4cui8NUhGqMd5cRnqPcV2gYK8AaWc0zJ8X7rStuATvWivWqUMhwODwWc0qG1++E2Mm0dKJaXKZnEAO7oB0m3jvENGxAjan3Um6YUFnGsqsByw=
+	t=1709696752; cv=none; b=Zp/O+LYpXQuwotmd+DIRZlr2hmsPWCN2Q5nO4q53ykd8bxsYq9Ex4zarhNnYQS+rbHV1Nf3uuMifV5eSv8ty3XvmR7/na3YqCCU1eo2s774Oj844wqfiWj02nBF1ZefKvH8AN5z7FvkhdxlF/Ye/VbqBDOSV/Rr/wawwbEWE5hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709694710; c=relaxed/simple;
-	bh=58VcRiQTZSjcLPi8M729ux0GJeTmIkW30qWk/AP4e1c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oBZoAD2l39hXzf+cAhGbCiIQ+KrqlriDlMfFNM0cdmY4K3Tgag4C3Pxh8fe/HNa8eOi/zZmE/2Yfo/LcinTpcN0FI9OBLpIM9ahqHQTHBBL8O2uWMLfjiHjBJxOkeIhnti+tvnPxFtbNf6xcgJqtBdn97IGD0m/FXblCMeItGSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdpvnQAR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709696752; c=relaxed/simple;
+	bh=jBAPuRGdRlyLec/G8hWJrmxIWweZDNQGFQVAySUpzDk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eVtsf2fksQU3gGI84IQ8H2r+sRStuqLIBzn6nCD3xVLw0arAhlHEQx/Wbe93wnyZE0qsGQ2Z1WRLmHeFKOcasZRlxCJVJQ3W4GI4wfuwmJVIPCneO5dnFLyPj1QB0LN3Bcs1f72u4JvVN+B7Z4CkArH4DZ9arHkTARwxOLQp3QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BOsTM/gP; arc=none smtp.client-ip=209.85.222.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdpvnQAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148D5C433C7;
-	Wed,  6 Mar 2024 03:11:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709694709;
-	bh=58VcRiQTZSjcLPi8M729ux0GJeTmIkW30qWk/AP4e1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fdpvnQARNfitU21vgTyfY+H+5wuo7pw40AUwsQtqCaVkc0/Q/0fCjjYkWUvq71rOG
-	 wGV+iJAcygcCygBg6kyO4DsBEfmO8lphOXNk/e6T9ubfV/DdMG4VH603bvwyvIJLVm
-	 q5R4keJKMJyxNz2IzuidYB7ASuikYGGVkTIxBqMk=
-Date: Tue, 5 Mar 2024 22:11:46 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "Chatre, Reinette" <reinette.chatre@intel.com>, 
-	"Yu, Fenghua" <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
-	"x86@kernel.org" <x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>, 
-	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, 
-	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>, 
-	Drew Fustini <dfustini@baylibre.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: Cover-cover letter for two resctrl patch sets
-Message-ID: <20240305-amethyst-trogon-of-flowers-b732cd@lemur>
-References: <20240228112215.8044-tony.luck@intel.com>
- <b11c545a-7bf4-403e-99cb-38db777fd8ab@intel.com>
- <20240305-uppish-rare-beaver-f652ce@lemur>
- <SJ1PR11MB608338D24D58E61B77B423F8FC222@SJ1PR11MB6083.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BOsTM/gP"
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-7db4484672bso1214777241.3
+        for <patches@lists.linux.dev>; Tue, 05 Mar 2024 19:45:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709696750; x=1710301550; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T5tvqqOLlp/L9fDdgXTeavKp6GslrC3c7o5kKTJOuGY=;
+        b=BOsTM/gPevU8BZsE68ml3gRbNWZXZrQpxiAxBzO/H3msiBjZzR0eN3L13sGk51xUTW
+         TPsvdw2G+M5RPNVByqlZrfEc1+6Xq9KbV/aNty6eDtC+mqnEc01iek5XtPjnSthg0elo
+         cUn3krg7hcXoFvsF8jZ7oLh2m94Ewi31PaBdR1QPpD1iHQDV+ddjlf3v6MIhSCcCar2e
+         WC4GDSjPwB1dXrXMkFCR5qQROMn3kgkK82LCvcQnCfT+vFvddjf3bylVd5kzdULe89iB
+         UtFYTyKVi9FRwn5uZovPy3LrbYBIqCtF4FJ8Yjk3290NC+/n9YusFV9/AlAlHCxpaG1M
+         x6DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709696750; x=1710301550;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T5tvqqOLlp/L9fDdgXTeavKp6GslrC3c7o5kKTJOuGY=;
+        b=QukLq/zt9nTo43pda4xE05FhQI9L31ioIPSXMrx/fp0+DZcNIy6kO4HZAKR1y2+cPx
+         MhMttgYbNFXm9ZY/AY6Rkyph3KZ3CQ2VJwLkCwyy9xImxoQW6zDAr6jrtaiVaA+ZPJ4J
+         rb2mp7dIBj+vG2Vaob+YG7BCjVid/7Kuxk8vl7Jk3qsh60DIh/PT+bQhdB4gWV5n/NmT
+         8+0odmX7ZIIZ62r0LwZ43nIOqkIMHv5Wuk0Uknhco5Hf4dUn3T4MzBgh5GFjuncEj/iW
+         cVcyc9ODhhY5/fgdacj5xiEROouO65NGLfGQpkqqdRdJ/7MVDCXf9MD7NykuHPzFzudf
+         9PDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEPa0Gz6f6nU4+h6nqCgezlnM7kSmECN/75bereDqNb96FvlYpLXCUNOWFHK+Xi+pcYiXIjdZHzu/dxba4tzr+Sypxy/kZlg==
+X-Gm-Message-State: AOJu0YxT/o/9M7R8/eg/h90CnhYTGbKPnmVy8iyHDzcSDruNMH+gASgg
+	GcMuhO9iAmcc037cMobAN2J5qOxUkC2lp2Vv08Qputv/qB4Ni9gr2At2Kxvz3tqIn6cQd7cAyTN
+	2WvhuYiZpPaoSkFzKnbfKrJKPXCpp2E4aGiuwdA==
+X-Google-Smtp-Source: AGHT+IGlgYy3++WxEbb9Vbw+tVFeATrL7uP+/E+8ROLUn4LkrKLrXnX8dPjsvyriAp4nhB6XfBccEoT5BRDkmmdMhuc=
+X-Received: by 2002:a05:6122:3214:b0:4d3:4aad:22d4 with SMTP id
+ ci20-20020a056122321400b004d34aad22d4mr4786922vkb.0.1709696749951; Tue, 05
+ Mar 2024 19:45:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <SJ1PR11MB608338D24D58E61B77B423F8FC222@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20240304211534.328737119@linuxfoundation.org>
+In-Reply-To: <20240304211534.328737119@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 6 Mar 2024 09:15:38 +0530
+Message-ID: <CA+G9fYuFg=5Thx50TTt4VSfzjwCoPe5oe-O8+74-T+KBtN0AEw@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/16] 4.19.309-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 05, 2024 at 10:27:47PM +0000, Luck, Tony wrote:
-> 1) Because of significant rebase changes, I dropped all the Reviewed/Tested tags
-> from v15. But b4 seems to have noticed that part 5/8 wasn't changed at all since
-> v14, and picked up some (but not all) of the tags for that patch:
-> 
->   ✓ [PATCH v15 5/8] x86/resctrl: Add node-scope to the options for feature scope
->     + Reviewed-by: Peter Newman <peternewman@google.com> (✗ DKIM/google.com)
->     + Reviewed-by: Reinette Chatre <reinette.chatre@intel.com> (✓ DKIM/intel.com)
->     + Reviewed-by: Babu Moger <babu.moger@amd.com> (✓ DKIM/amd.com)
+On Tue, 5 Mar 2024 at 02:56, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.309 release.
+> There are 16 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 06 Mar 2024 21:15:26 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.19.309-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This is a feature -- any trailers sent to a patch that hasn't changed between
-series will be applied to the new series. We don't apply this logic to any
-trailers sent to the cover letter, which is probably why you aren't seeing all
-the trailers show up.
 
-> 2) My cover-cover letter created some linkage between the two patch series.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-That's not an expected situation, which is why b4 doesn't do the right thing,
-sorry.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> Trying to retrieve the 2-part v4 series with "git am" would pick up the 8-part
-> v15. Using an explicit "-v4" does work to pick up just the 2-part patch.
+## Build
+* kernel: 4.19.309-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.19.y
+* git commit: c854e1c772c4f07a8856c0867118ce064c11fead
+* git describe: v4.19.307-70-gc854e1c772c4
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
+.307-70-gc854e1c772c4
 
-Another option is to use --no-parent to break the thread at the cover letter
-of the series you want:
+## Test Regressions (compared to v4.19.307)
 
-    b4 am --no-parent 20240228112952.8090-tony.luck@intel.com
+## Metric Regressions (compared to v4.19.307)
 
-This option exists for these exact situations when unrelated series show up in
-the same thread.
-> 3) That b4 am picks up Reinette's "if you make these changes" Reviewed by from:
->   https://lore.kernel.org/all/12766261-26b2-4aa4-a735-c2380c4963fd@intel.com/
-> [though I can see why it did and realize that we'll need "b4GPT" to parse
-> surrounding text to figure out that it should skip that].
+## Test Fixes (compared to v4.19.307)
 
-Correct, we can't possibly do the right thing there, which is why the usual
-advise is not to give conditional trailers, or prepend them with a quote, a
-pipe, a dot, etc, e.g.:
+## Metric Fixes (compared to v4.19.307)
 
-    If you fix these, then you can apply:
-    | Reviewed-by: ...
+## Test result summary
+total: 51688, pass: 45911, fail: 287, skip: 5449, xfail: 41
 
-> Should folks that offer a conditional tag mark that in the text somewhere to
-> let b4 know not to auto-pick?
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 106 total, 99 passed, 7 failed
+* arm64: 31 total, 25 passed, 6 failed
+* i386: 18 total, 15 passed, 3 failed
+* mips: 23 total, 22 passed, 1 failed
+* parisc: 4 total, 0 passed, 4 failed
+* powerpc: 27 total, 26 passed, 1 failed
+* s390: 8 total, 8 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 27 total, 21 passed, 6 failed
 
-Using the above strategy effectively achieves the same result.
+## Test suites summary
+* boot
+* kselftest-drivers-dma-buf
+* kselftest-net
+* kselftest-net-mptcp
+* kunit
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* rcutorture
 
-Best regards,
--K
+--
+Linaro LKFT
+https://lkft.linaro.org
