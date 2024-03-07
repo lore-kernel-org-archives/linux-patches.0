@@ -1,136 +1,77 @@
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFFD12DD99
-	for <patches@lists.linux.dev>; Thu,  7 Mar 2024 15:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E803E12DDA2
+	for <patches@lists.linux.dev>; Thu,  7 Mar 2024 18:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709824189; cv=none; b=UWKu6j9IUMk5VfAznU3XRW7YgEl6Yg/KsAx4avXI/MP3lFVtllVeX37GznpZNmvPJalV3aiHgtiNhxks3KHRCxwbnqOS8xiztqud7WAc6LBsSPHOXhSWnJA/Xh2ldh/lI6Rf/69AttoyZZ2PZaRTXznytki+TUy5nMZi7xDLOlU=
+	t=1709836404; cv=none; b=jNv01bFUBy5/acWa0fFdD+mx0ARZbl3pFaX7c9NGYJDtG/y7F2nvY76qrkLDuEvTA7yJ+rzw8ppE9CHOrbOIBq6c9TwpOWQ9ZuEugkjp/AaJwikyKTHMmAo8sS4zFbPj4jVn2VeVRwI3ioPEslyIjv6NZkXsSCvkHRDO2cXB86U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709824189; c=relaxed/simple;
-	bh=TOUq4+BzvbJ03xI0Ru4on6BK0VEShUhAYEA+2ftljxA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JL+qxiTpjmpZ5109m0bG3sOloGnF+wzV0VOrFwj3ptlvtnz7M41BtF4n9zbrCOXPv2VpmLEi9a3O0Iry+t0z3Y4RsnD7WJ3Y4BcMJYrkEO1biM0Ttr9iaXSlU+zex6te/PNhIBfxniWvsmMrGeESEG6v2BJaO9HMNsXPF/rRgCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=cH3cDvDb; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1709836404; c=relaxed/simple;
+	bh=KLLXUGdLronzj3ejPe8s3lsBNaclrlbLXPaIQweRWfc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=r0GcMSxmgnlUyXKlYDPeS4wnG0zShGcUutliPJ8QzP/Yk1Ui+KAOuyM6gCwGITK/VKboRFXhn+nHqaFFRR/v+wyakFdaYnDqVhsqrBKdw2hSixHMlcPRd0XJq246cw9N9cXYFWbQLauxtUuTRAXK6BhfdvaP+z17xN5PmEvkoc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--rnv.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bw8Dxo3H; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--rnv.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="cH3cDvDb"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 517A640006;
-	Thu,  7 Mar 2024 15:09:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1709824184;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=P2YO5EELAYFm2yHbvmttaH3RlP1nT/5fz22vnvi4dvY=;
-	b=cH3cDvDbgBL0NwR+c5yiG07kGF1VG+NjMPxfv/14+x0dhsSeDGuEwKCeaNb6jdZFkyzY+D
-	La574Nc459V7/R01jXDg65BqvQHSmDykxG1XN8qBEbR7CVyi5obOAsTVQOKGfwbfehbPte
-	Mh0Rc0OW1+VPfm1pV4+gARrMcjXqI+AHkuJweh3vf/IXXHCsEAYopHtavTyWsjxj5Ymp3B
-	qjyrtvBI56L6eAKynWEsBr24gr7YfyTIj8DST6C37GKAqfAlQlB+BAjVOshLXP7/h/36ne
-	9dU5FIm9TCbBW0wYH2ekS1iqQOxe1zEUZ5Iak1MgQMMU5guelZJgniKPbafseA==
-Date: Thu, 7 Mar 2024 16:09:40 +0100
-From: Herve Codina <herve.codina@bootlin.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>, Will Deacon <will@kernel.org>,
- Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, linux-um@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
- linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Frank Rowand
- <frowand.list@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, Thomas
- Petazzoni <thomas.petazzoni@bootlin.com>
-Subject: Re: [PATCH v4 5/7] arm64: Unconditionally call
- unflatten_device_tree()
-Message-ID: <20240307160940.6484ef8d@bootlin.com>
-In-Reply-To: <20240228162647.GA4086865-robh@kernel.org>
-References: <20240217010557.2381548-1-sboyd@kernel.org>
- <20240217010557.2381548-6-sboyd@kernel.org>
- <20240223000317.GA3835346-robh@kernel.org>
- <20240223102345.GA10274@willie-the-truck>
- <CAL_JsqJSeSHeWV3YJE9n2NuY+s_iE6f7N5C_oguEJn7jTZ20xA@mail.gmail.com>
- <Zd4dQpHO7em1ji67@FVFF77S0Q05N.cambridge.arm.com>
- <20240228162647.GA4086865-robh@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bw8Dxo3H"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1dc6b99b045so9507075ad.0
+        for <patches@lists.linux.dev>; Thu, 07 Mar 2024 10:33:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709836402; x=1710441202; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KLLXUGdLronzj3ejPe8s3lsBNaclrlbLXPaIQweRWfc=;
+        b=bw8Dxo3H5mqrnD9+AeNQWzXmrWpyrf7ug3ugBLZfCg9nJ8EezOUfngC66/ttAXRH28
+         Db/rZ/PYHj7E4hMFbjDc0lCgdYSW8xQFYv0x7FAWjO+QKLQeY8ZLOgspiz3JFov0XQN4
+         ZJvM5RpJ5pojI/aTUer7kYS5x5P3c3uYsLHO3kM8zJ+X7gg+lLYsuP+rRYlzfEsUI9UZ
+         6BzQFfrTrHlCjPnIT0xNIZDizgde7Q7MCCau6/btMgvylg5gcfOp3hKtZPci8AyWl0t5
+         Fwrf1qjwdTNnqUY20+DlD5xA0Fdk9SwSot7v/jIbl5I2b5tkwNg2J+Zgbi8xVhVMro8c
+         SQhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709836402; x=1710441202;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KLLXUGdLronzj3ejPe8s3lsBNaclrlbLXPaIQweRWfc=;
+        b=H6RESRvHClJOb3H0TiVObf3WrfrSTEGqQvQZhi+4F8aLisXKHfnWL2TAQSWn5vv48L
+         Qh+aHwjBHsTT6zv6WJC5vov1RnLV9WA5VMG3Aif3HolEMXc0k5Y2wt16zLPwQQM1xldJ
+         0MUBEtfmkszOS9W7kAuRkhMH4ofOJpYEnixc3gN0te+lqaVgdh7frqiQ7Im7WDsHQ2Qi
+         HV6Os8Lzu1Bb8jZ5/GCsZ7pdfuv74Rhoe/PH0AWHz/HCSD0WntZHXBArmEVWB0zxYrok
+         GmQO/IcrprjmYB3fPlKALlb0MLUW4qd0iZn4qRS/uhf71oeFiK2QgzwiRc6efHqAFg1s
+         UyTA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9K4roi6jDRjybtLBlhszzZfkZbB7ofs6FpTs5suYNFXJIHBPEfehO5LxPrrVUHOO+icqTxIrom0aZ77NsXxeEzWnqVoFbPg==
+X-Gm-Message-State: AOJu0YzZCr297343SCNmVqeU0kvu/ENgbAroxP0iEaaYGzMnA26pAru+
+	feEjP25vXlw//y/a85UDYUcPwgRyN7h2pZz6G4FGrO+0qeJIldhl8sysnNU7jjTcxg==
+X-Google-Smtp-Source: AGHT+IHi0zsopCbMj/Va6mRCdbqMpzYhdNm/8OUau5xudJeT0+fgAQxWhf40kFU/pU9yCLhbT6ZeUEk=
+X-Received: from cos-rnv.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:81d])
+ (user=rnv job=sendgmr) by 2002:a17:903:2847:b0:1dd:17ee:c423 with SMTP id
+ kq7-20020a170903284700b001dd17eec423mr4597plb.4.1709836401065; Thu, 07 Mar
+ 2024 10:33:21 -0800 (PST)
+Date: Thu,  7 Mar 2024 18:33:19 +0000
+In-Reply-To: <2024030457-aware-trusting-9e48@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: herve.codina@bootlin.com
+Mime-Version: 1.0
+References: <2024030457-aware-trusting-9e48@gregkh>
+X-Mailer: git-send-email 2.44.0.278.ge034bb2e1d-goog
+Message-ID: <20240307183319.3146300-1-rnv@google.com>
+Subject: Re: [PATCH 6.1 214/219] mm, kmsan: fix infinite recursion due to RCU
+ critical section
+From: Arnav Kansal <rnv@google.com>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org, bp@alien8.de, dave.hansen@linux.intel.com, 
+	dvyukov@google.com, elver@google.com, glider@google.com, hpa@zytor.com, 
+	mingo@redhat.com, patches@lists.linux.dev, quic_charante@quicinc.com, 
+	rnv@google.com, stable@vger.kernel.org, 
+	syzbot+93a9e8a3dea8d6085e12@syzkaller.appspotmail.com, tglx@linutronix.de, 
+	ovt@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
-
-On Wed, 28 Feb 2024 10:26:47 -0600
-Rob Herring <robh@kernel.org> wrote:
-
-...
-> > > 
-> > > Yes, that version unflattened the bootloader passed DT. Now within
-> > > unflatten_devicetree(), the bootloader DT is ignored if ACPI is
-> > > enabled and we unflatten an empty tree. That will prevent the kernel
-> > > getting 2 h/w descriptions if/when a platform does such a thing. Also,
-> > > kexec still uses the bootloader provided DT as before.  
-> > 
-> > That avoids the main instance of my concern, and means that this'll boot
-> > without issue, but IIUC this opens the door to dynamically instantiating DT
-> > devices atop an ACPI base system, which I think in general is something that's
-> > liable to cause more problems than it solves.
-> > 
-> > I understand that's desireable for the selftests, though I still don't believe
-> > it's strictly necessary -- there are plenty of other things that only work if
-> > the kernel is booted in a specific configuration.  
-> 
-> Why add to the test matrix if we don't have to?
-> 
-> > Putting the selftests aside, why do we need to do this? Is there any other
-> > reason to enable this?  
-> 
-> See my Plumbers talk...
-> 
-> Or in short, there's 3 main usecases:
-> 
-> - PCI FPGA card with devices instantiated in it 
-> - SoCs which expose their peripherals via a PCI endpoint.
-> - Injecting test devices with QEMU (testing, but not what this series 
->   does. Jonathan Cameron's usecase)
-> 
-> In all cases, drivers already exist for the devices, and they often only 
-> support DT. DT overlays is the natural solution for this, and there's 
-> now kernel support for it (dynamically generating PCI DT nodes when they 
-> don't exist). The intent is to do the same thing on ACPI systems.
-> 
-> I don't see another solution other than 'go away, you're crazy'. There's 
-> ACPI overlays, but that's only a debug feature. Also, that would 
-> encourage more of the DT bindings in ACPI which I find worse than this 
-> mixture. There's swnodes, but that's just board files and platform_data 
-> 2.0.
-> 
-> I share the concerns with mixing, but I don't see a better solution. The 
-> scope of what's possible is contained enough to avoid issues.
-> 
-
-I tested on a x86 system.
-My use case is 'SoCs which expose their peripherals via a PCI endpoint'
-described by Rob.
-Indeed, I have a Microchip Lan9662 board (the one mentioned by Rob in his
-Plumbers talk) and the root DT node creation is obviously needed.
-
-I have previously used Frank Rowan's patches [1] that did this DT root node
-creation. This series perfectly replace them and the root DT node is successfully
-created.
-
-Tested-by: Herve Codina <herve.codina@bootlin.com>
-
-[1]: https://lore.kernel.org/all/20230317053415.2254616-1-frowand.list@gmail.com/
-
-Best regards,
-Hervé Codina
--- 
-Hervé Codina, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+It does not apply cleanly there. It seems to me that the commit (commit
+id: 5ec8e8ea8b77 "mm/sparsemem: fix race in accessing
+memory_section->usage") is not a bug for 5.15 or 5.10 due to the absence
+of relevant KMSAN bits in those branches.
