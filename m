@@ -1,99 +1,159 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB51536132
-	for <patches@lists.linux.dev>; Fri,  8 Mar 2024 13:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.154.123
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FA2A2A8C1
+	for <patches@lists.linux.dev>; Fri,  8 Mar 2024 18:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709904856; cv=none; b=Fi7Hwd3d2WnFRsdXH8v3c3lVBdgbc9sqNOJQbWMt6uSvBeELdZy3TNApSfmiIQz4yp2bPTMzYlc4C/xVGkD3KWXpBw/iv3DD/Wk3PX0o4jxEZav1cZTeeGdJC6FhQcarTSz+juOaZTK9pVncK/q/zcZ+mXxqfy4ZG429aCRBJlM=
+	t=1709922424; cv=none; b=Tn4RAwb3A8StSnsOVL36vHyFKix6pfwY/2omrBXsGgqtZL9v7/WAI0fBYKE0ikst7pbR0tWy3SYkvqQ6WbkvgbGRb+WivV+F/svCSqE9WYsLQO3aedANWqxhLCeewcwRXQ5X5Qhov4DGt8O8Oon4VpIRrA7Shd5O4qmnhWxQf5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709904856; c=relaxed/simple;
-	bh=wtzrEfjCpn2S+S3f35TVkH99zb8AiS5TmWJuuoHXmU4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Koj30o6Bdf6W4xBMLpC2+bVSA3xRk1dqTphfhSct3pg9ooWc8t5boQ2ik1F23/26kPuMn1ZRuBzJ6Jr7j2Dd+XkKSPJhW033GFAW3gPLILUVQhV2lInFaLyKFWP9NxTdCpVxMIWn1EgLhuwWU85tmrDXl1LPQRaw9mgO9YbeJ8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=pUolcqdL; arc=none smtp.client-ip=68.232.154.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="pUolcqdL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1709904854; x=1741440854;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wtzrEfjCpn2S+S3f35TVkH99zb8AiS5TmWJuuoHXmU4=;
-  b=pUolcqdLC4Cj+xKA2seYYw09dvpiEdJyyX+G5WIjdvgv5YfKK7wubiKP
-   X0MVHL77LOWLvstaQRLdnrfedrMg9IMZSH+kOhUns02uUfgmBg/LLdoVl
-   EuAfhTm16Y8cTcIHGJlAa1X9Fe90gdy8tb4jOq61gVbHNC/B+Qyh1Y8qW
-   gOfpIn2HPdS/6G2Y2rqO//IJfgrKSX5GwF5yUx2b/f53gdS6nUjIZ6wth
-   jQIKAgdz5gxjqG9YULWqJcb98Bp+XfQ1YImbVkwQSwsLw3BVD2wPs8/OP
-   IF2Pz0iZ5/HawbQwuqPi23RxznycAtuq4Oa17tNycmd64raxBUBiD9rl3
-   Q==;
-X-CSE-ConnectionGUID: VD82c0PPRy2Nn/u1qslXzg==
-X-CSE-MsgGUID: o6a2Q6TZS8aGv9j+QzMa4Q==
-X-IronPort-AV: E=Sophos;i="6.07,109,1708412400"; 
-   d="asc'?scan'208";a="184672992"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 08 Mar 2024 06:34:12 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
- chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 8 Mar 2024 06:34:06 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Fri, 8 Mar 2024 06:34:03 -0700
-Date: Fri, 8 Mar 2024 13:33:19 +0000
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
-	<allen.lkml@gmail.com>
-Subject: Re: [PATCH 6.1 000/219] 6.1.77-rc1 review
-Message-ID: <20240308-unpaved-greeter-d665418b2e1d@wendy>
-References: <20240203035317.354186483@linuxfoundation.org>
+	s=arc-20240116; t=1709922424; c=relaxed/simple;
+	bh=s5b1azrAudYZ5DSM3rTJNg53hbvc+UesOYbnPqfEu7Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Qg6RSzvbeoK1r/UQYgaecIGamBm4K8htYtR8vrFb/hAvhxV87VWL6pomJyvImjiiTB1WMeV2QPJx5NAuovqdac4FHM4go0U9e8ubuzV/oRBsDLCZwSzOmK0clTn8kmX3U7faaGpNluNk7FQX9ocCTncDg1nX05XxOnD+hv7aZdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3A80CC15;
+	Fri,  8 Mar 2024 10:27:38 -0800 (PST)
+Received: from [10.1.197.60] (eglon.cambridge.arm.com [10.1.197.60])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 59A9A3F738;
+	Fri,  8 Mar 2024 10:26:58 -0800 (PST)
+Message-ID: <26f23ba4-4ca5-41f6-b920-08515f494ae5@arm.com>
+Date: Fri, 8 Mar 2024 18:26:56 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="dzUFsazBGNPyODmn"
-Content-Disposition: inline
-In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] x86/resctrl: Pass domain to target CPU
+Content-Language: en-GB
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+ Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>,
+ Randy Dunlap <rdunlap@infradead.org>, Drew Fustini <dfustini@baylibre.com>,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20240228112215.8044-tony.luck@intel.com>
+ <20240228193717.8170-1-tony.luck@intel.com>
+From: James Morse <james.morse@arm.com>
+In-Reply-To: <20240228193717.8170-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---dzUFsazBGNPyODmn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi Tony,
 
-On Fri, Feb 02, 2024 at 08:02:53PM -0800, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.77 release.
-> There are 219 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 28/02/2024 19:36, Tony Luck wrote:
+> reset_all_ctrls() and resctrl_arch_update_domains() use on_each_cpu_mask()
+> to call rdt_ctrl_update() on potentially one CPU from each domain.
+> 
+> But this means rdt_ctrl_update() needs to figure out which domain to
+> apply changes to. Doing so requires a search of all domains in a resource,
+> which can only be done safely if cpus_lock is held. Both callers do hold
+> this lock, but there isn't a way for a function called on another CPU
+> via IPI to verify this.
+> 
+> Commit c0d848fcb09d ("x86/resctrl: Remove lockdep annotation that triggers
+> false positive") removed the incorrect assertions.
+> 
+> Add the target domain to the msr_param structure and
+> call rdt_ctrl_update() for each domain separately using
+> smp_call_function_single(). This means that rdt_ctrl_update() doesn't
+> need to search for the domain and get_domain_from_cpu() can safely assert
+> that the cpus_lock is held since the remaining callers do not use IPI.
 
-Again, I'm super late here but I did test this the other day..
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> index 83e40341583e..acf52aa185e0 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -362,6 +362,8 @@ struct rdt_domain *get_domain_from_cpu(int cpu, struct rdt_resource *r)
+>  {
+>  	struct rdt_domain *d;
+>  
+> +	lockdep_assert_cpus_held();
 
-Thanks,
-Conor.
 
---dzUFsazBGNPyODmn
-Content-Type: application/pgp-signature; name="signature.asc"
+(Huzzah!)
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZesTnwAKCRB4tDGHoIJi
-0rfEAQCNKqC+fC+rw8+CbZLtht2tc29yoTm26p2VIAy31JFFdQD+Ma9jKC5Q3zB9
-YfeKWtS6nxOGy0+KWn/D8m4HyFLESAA=
-=8rQb
------END PGP SIGNATURE-----
+>  	list_for_each_entry(d, &r->domains, list) {
+>  		/* Find the domain that contains this CPU */
+>  		if (cpumask_test_cpu(cpu, &d->cpu_mask))
 
---dzUFsazBGNPyODmn--
+> diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> index 7997b47743a2..a3a0fd80daa8 100644
+> --- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> +++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> @@ -315,27 +300,27 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
+
+[..]
+
+> -	msr_param.res = NULL;
+>  	list_for_each_entry(d, &r->domains, list) {
+>  		hw_dom = resctrl_to_arch_dom(d);
+> +		msr_param.res = NULL;
+> +		msr_param.dom = d;
+>  		for (t = 0; t < CDP_NUM_TYPES; t++) {
+>  			cfg = &hw_dom->d_resctrl.staged_config[t];
+>  			if (!cfg->have_new_ctrl)
+>  				continue;
+>  
+>  			idx = get_config_index(closid, t);
+> -			if (!apply_config(hw_dom, cfg, idx, cpu_mask))
+> +			if (cfg->new_ctrl == hw_dom->ctrl_val[idx])
+>  				continue;
+> +			hw_dom->ctrl_val[idx] = cfg->new_ctrl;
+> +			cpu = cpumask_any(&d->cpu_mask);
+
+If this CPU is part of the domain, then cpumask_any() could chose a different CPU leading
+to an IPI, where this CPU could have done the work itself.
+smp_call_function_any() has the logic to try and run on this CPU if possible.
+
+As d->cpu_mask is still valid when you call smp_call_function_single(), could we use
+smp_call_function_any() instead?
+
+
+>  			if (!msr_param.res) {
+>  				msr_param.low = idx;
+> @@ -346,17 +331,10 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
+>  				msr_param.high = max(msr_param.high, idx + 1);
+>  			}
+>  		}
+> +		if (msr_param.res)
+> +			smp_call_function_single(cpu, rdt_ctrl_update, &msr_param, 1);
+>  	}
+
+> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> index 011e17efb1a6..da4f13db4161 100644
+> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> @@ -2813,16 +2813,13 @@ static int reset_all_ctrls(struct rdt_resource *r)
+> @@ -2834,17 +2831,14 @@ static int reset_all_ctrls(struct rdt_resource *r)
+>  	 */
+>  	list_for_each_entry(d, &r->domains, list) {
+>  		hw_dom = resctrl_to_arch_dom(d);
+> -		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
+> +		cpu = cpumask_any(&d->cpu_mask);
+
+Same comment about picking an unlucky CPU here, smp_call_function_any() can improve our
+chances.
+
+
+>  		for (i = 0; i < hw_res->num_closid; i++)
+>  			hw_dom->ctrl_val[i] = r->default_ctrl;
+> +		msr_param.dom = d;
+> +		smp_call_function_single(cpu, rdt_ctrl_update, &msr_param, 1);
+>  	}
+
+Still:
+Reviewed-by: James Morse <james.morse@arm.com>
+
+
+Thanks!
+
+James
+
