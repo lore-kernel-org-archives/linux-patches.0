@@ -1,129 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DAB2110F;
-	Sun, 10 Mar 2024 12:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD1039AC7
+	for <patches@lists.linux.dev>; Sun, 10 Mar 2024 17:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.86.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710075273; cv=none; b=MWXYepyqJcRGIK1LhZ+tBr2TKQwh346/udMxYvrCYpkF5mq32U76hvfm6bjIpBSLYbyk3yPpnT7BVxWoLCA1hk9EnjEnIgacGFBQICPXCEu3/nJcCq3gFsJH9aDE2dbt94wSitetmlEctOvYlooGR+e+btmTiEbywbuGN0jg6Fc=
+	t=1710090157; cv=none; b=Iou3P9HNlw8s8jdPsAwWTKSPNNp8WU6YSgloHAPQqZ938U9/4M0gc8uiCgTmnp1QyVmB9YcpiGvzD7ngUM+oathvhjR6HidUrHgT2FjVwypsez0CGXneRr4iMfDT0YtPxiMWJ1p3Q3s3EY/Nf4xWP29AARz1F71w4PBWd5Ye7Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710075273; c=relaxed/simple;
-	bh=VpKLCwYi8ECcz/PjTPwyhblCBIuecHsOQGNCRoTlXCA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Aj1m7bSrzxqlhtdOMYZtecQLRfg+eBdVKSHRPQJilWaibbvEX8QhwLQyIogWnBT94x58U19kIPTjpWu8rZxQr5m2QgWvnlu1x7CM1WWlhRde//LkIKat5tWVl+VGh/jEWQVuyC40vZX7t38PQ5+WfgvJrsOBKfXdya5eopLJJog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVMavDlf; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVMavDlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E16C433C7;
-	Sun, 10 Mar 2024 12:54:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710075272;
-	bh=VpKLCwYi8ECcz/PjTPwyhblCBIuecHsOQGNCRoTlXCA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=IVMavDlf0WLAAB58uHJ7OV0N2RHlSsmzGX61bR6GcAfB8Og7XcviYj8Qg7tKDixNP
-	 8Q1Pwy2xgEEaWnLt3/6IDTTmmDCOCTnobmNj6V8oPgKUhGFFMuRi0AYsnMVTCPgjkE
-	 oLjij/vjCMNkNXKLyImvsRtZIGbjoVbQhXSqyvXyQTvDkNXj6YO92i2ndfiSumUO1O
-	 pZSx17oSekX652GUmdy1JFexjd4ouPEekLOoqPphUz950+1/gugScFRaCFVxnCEChE
-	 QIs0txUwr9mL0egGbuOed9knnNmReH91GBWYKHswhNuWYcc+/eXwpYXKpuoO6cEhzT
-	 4J81o8DGQj0BA==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-51325c38d10so4466262e87.1;
-        Sun, 10 Mar 2024 05:54:32 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVpRE/L9vcOgm7ruPQA9ZPNDNuwpR0FpHnaWrs3tydonRBghouLJw+1JkH30k1yqs/V7BafoT1x+EvKAzmhEOxn5xhH7yWPBHLPZMwwsy35KTDYaEakD29+Wn+7fDQ=
-X-Gm-Message-State: AOJu0Yxouf5h+VDJZb9w49Pamvpms5ATZ1HD23p75GrVHFdzm0dk0Y8O
-	ObYMlBHdJlHz9H0NuXALxm1GSbYFqx9VvD3s5hp4YxukZwnBU0X3ZneeX8ZXxSU4m/lM86Tg/3w
-	Ck1Ymh8eAjRiWkfJkCL1qbjleWtQ=
-X-Google-Smtp-Source: AGHT+IE3mdTMa/DFw9WedI569OsVd//PftXjaGjzyjgzPj5PLZ3CM7RD3glXQ6TAZjzIdzVfPVGYpK+lflnVOXU746U=
-X-Received: by 2002:a05:6512:328c:b0:513:38ad:66bc with SMTP id
- p12-20020a056512328c00b0051338ad66bcmr1767370lfe.23.1710075271266; Sun, 10
- Mar 2024 05:54:31 -0700 (PDT)
+	s=arc-20240116; t=1710090157; c=relaxed/simple;
+	bh=I9x7BdyUUczq88YNuTHstKnsDTlJVDfJv3A8utHm/1w=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 MIME-Version:Content-Type; b=eAPFnyV4Ke8Z6OZEntYu6wPcCIaxkbpo4UjCXykJsudiOHMnDYQyoaNICBeuwSgTzE0q9q4mRyvDYxd6PZjWhZbHvJT2/MsjwgXsXz89lewCjYOTM0lEnpDBPOJM9C5IPkmxDx96afd8VEYpU+nBWkrSStSoPC7prTKrvDMTJ7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.86.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-169-FjRJos4bP-SvaGBz03k0zA-1; Sun, 10 Mar 2024 17:02:25 +0000
+X-MC-Unique: FjRJos4bP-SvaGBz03k0zA-1
+Received: from AcuMS.Aculab.com (10.202.163.4) by AcuMS.aculab.com
+ (10.202.163.4) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Sun, 10 Mar
+ 2024 17:02:35 +0000
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Sun, 10 Mar 2024 17:02:35 +0000
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Nathan Chancellor' <nathan@kernel.org>, "masahiroy@kernel.org"
+	<masahiroy@kernel.org>
+CC: "nicolas@fjasle.eu" <nicolas@fjasle.eu>, "ndesaulniers@google.com"
+	<ndesaulniers@google.com>, "morbo@google.com" <morbo@google.com>,
+	"justinstitt@google.com" <justinstitt@google.com>, "arnd@arndb.de"
+	<arnd@arndb.de>, "yonghong.song@linux.dev" <yonghong.song@linux.dev>,
+	"linux-kbuild@vger.kernel.org" <linux-kbuild@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "stable@vger.kernel.org" <stable@vger.kernel.org>
+Subject: RE: [PATCH v2] kbuild: Move
+ -Wenum-{compare-conditional,enum-conversion} into W=1
+Thread-Topic: [PATCH v2] kbuild: Move
+ -Wenum-{compare-conditional,enum-conversion} into W=1
+Thread-Index: AQHab0pcJ+ohPpECwEa4FIxcfG/R2bExObUA
+Date: Sun, 10 Mar 2024 17:02:34 +0000
+Message-ID: <8a7d0115e41949429e43e06b9479a781@AcuMS.aculab.com>
+References: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
+In-Reply-To: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
-In-Reply-To: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 10 Mar 2024 21:53:53 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATPqxYub0eRXhedTpB-oAn_9Egbe+nXzGa=4RRpxq3bpw@mail.gmail.com>
-Message-ID: <CAK7LNATPqxYub0eRXhedTpB-oAn_9Egbe+nXzGa=4RRpxq3bpw@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: Move -Wenum-{compare-conditional,enum-conversion}
- into W=1
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
-	justinstitt@google.com, arnd@arndb.de, yonghong.song@linux.dev, 
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On Wed, Mar 6, 2024 at 7:12=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
-> under -Wenum-conversion. A recent change in Clang strengthened these
-> warnings and they appear frequently in common builds, primarily due to
-> several instances in common headers but there are quite a few drivers
-> that have individual instances as well.
->
->   include/linux/vmstat.h:508:43: warning: arithmetic between different en=
-umeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-e=
-num-conversion]
->     508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
->         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
->     509 |                            item];
->         |                            ~~~~
->
->   drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: cond=
-itional expression between different enumeration types ('enum iwl_mac_beaco=
-n_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
->     955 |                 flags |=3D is_new_rate ? IWL_MAC_BEACON_CCK
->         |                                      ^ ~~~~~~~~~~~~~~~~~~
->     956 |                           : IWL_MAC_BEACON_CCK_V1;
->         |                             ~~~~~~~~~~~~~~~~~~~~~
->   drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: con=
-ditional expression between different enumeration types ('enum iwl_mac_beac=
-on_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
->    1120 |                                                0) > 10 ?
->         |                                                        ^
->    1121 |                         IWL_MAC_BEACON_FILS :
->         |                         ~~~~~~~~~~~~~~~~~~~
->    1122 |                         IWL_MAC_BEACON_FILS_V1;
->         |                         ~~~~~~~~~~~~~~~~~~~~~~
->
-> Doing arithmetic between or returning two different types of enums could
-> be a bug, so each of the instance of the warning needs to be evaluated.
-> Unfortunately, as mentioned above, there are many instances of this
-> warning in many different configurations, which can break the build when
-> CONFIG_WERROR is enabled.
->
-> To avoid introducing new instances of the warnings while cleaning up the
-> disruption for the majority of users, disable these warnings for the
-> default build while leaving them on for W=3D1 builds.
->
-> Cc: stable@vger.kernel.org
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
-> Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873=
-edcebff7c0b45a37e
-> Acked-by: Yonghong Song <yonghong.song@linux.dev>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Changes in v2:
-> - Only disable the warning for the default build, leave it on for W=3D1 (=
-Arnd)
-> - Add Yonghong's ack, as the warning is still disabled for the default
->   build.
-> - Link to v1: https://lore.kernel.org/r/20240305-disable-extra-clang-enum=
--warnings-v1-1-6a93ef3d35ff@kernel.org
+RnJvbTogTmF0aGFuIENoYW5jZWxsb3INCj4gU2VudDogMDUgTWFyY2ggMjAyNCAyMjoxMw0KLi4u
+DQo+ICAgZHJpdmVycy9uZXQvd2lyZWxlc3MvaW50ZWwvaXdsd2lmaS9tdm0vbWFjLWN0eHQuYzox
+MTIwOjIxOiB3YXJuaW5nOiBjb25kaXRpb25hbA0KPiBleHByZXNzaW9uIGJldHdlZW4gZGlmZmVy
+ZW50IGVudW1lcmF0aW9uIHR5cGVzICgnZW51bSBpd2xfbWFjX2JlYWNvbl9mbGFncycgYW5kDQo+
+ICdlbnVtIGl3bF9tYWNfYmVhY29uX2ZsYWdzX3YxJykgWy1XZW51bS1jb21wYXJlLWNvbmRpdGlv
+bmFsXQ0KPiAgICAxMTIwIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAwKSA+IDEwID8NCj4gICAgICAgICB8ICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBeDQo+ICAgIDExMjEgfCAgICAgICAgICAgICAg
+ICAgICAgICAgICBJV0xfTUFDX0JFQUNPTl9GSUxTIDoNCj4gICAgICAgICB8ICAgICAgICAgICAg
+ICAgICAgICAgICAgIH5+fn5+fn5+fn5+fn5+fn5+fn4NCj4gICAgMTEyMiB8ICAgICAgICAgICAg
+ICAgICAgICAgICAgIElXTF9NQUNfQkVBQ09OX0ZJTFNfVjE7DQo+ICAgICAgICAgfCAgICAgICAg
+ICAgICAgICAgICAgICAgICB+fn5+fn5+fn5+fn5+fn5+fn5+fn5+DQo+IA0KPiBEb2luZyBhcml0
+aG1ldGljIGJldHdlZW4gb3IgcmV0dXJuaW5nIHR3byBkaWZmZXJlbnQgdHlwZXMgb2YgZW51bXMg
+Y291bGQNCj4gYmUgYSBidWcsIHNvIGVhY2ggb2YgdGhlIGluc3RhbmNlIG9mIHRoZSB3YXJuaW5n
+IG5lZWRzIHRvIGJlIGV2YWx1YXRlZC4NCj4gVW5mb3J0dW5hdGVseSwgYXMgbWVudGlvbmVkIGFi
+b3ZlLCB0aGVyZSBhcmUgbWFueSBpbnN0YW5jZXMgb2YgdGhpcw0KPiB3YXJuaW5nIGluIG1hbnkg
+ZGlmZmVyZW50IGNvbmZpZ3VyYXRpb25zLCB3aGljaCBjYW4gYnJlYWsgdGhlIGJ1aWxkIHdoZW4N
+Cj4gQ09ORklHX1dFUlJPUiBpcyBlbmFibGVkLg0KDQpJJ20gbm90IHN1cmUgd2hhdCBpcyBiZWlu
+ZyBkb25lIHRvIGF2b2lkIHRoaXMgd2FybmluZy4NCihBcGFydCBmcm9tIG5vdCB1c2luZyBlbnVt
+IHRvIGRlZmluZSByZWxhdGVkIGludGVnZXIgY29uc3RhbnRzLikNClVudGlsIHRoZSBjb21waWxl
+cnMgZ2V0IGV2ZW4gbW9yZSBjbGV2ZXJeV3N0dXBpZCBwZXJoYXBzIHRoZQ0Kc2ltcGxlc3Qgd2F5
+IGlzIHRvIGp1c3QgYWRkICcrIDAnIHRvIG9uZSBvZiB0aGUgZW51bSB2YWx1ZXMuDQoNCkluIGNv
+ZGUgdGVybXMgaXQgaXMgbXVjaCBzYWZlciB0aGFuIGFueSBjYXN0Lg0KDQoJRGF2aWQNCg0KLQ0K
+UmVnaXN0ZXJlZCBBZGRyZXNzIExha2VzaWRlLCBCcmFtbGV5IFJvYWQsIE1vdW50IEZhcm0sIE1p
+bHRvbiBLZXluZXMsIE1LMSAxUFQsIFVLDQpSZWdpc3RyYXRpb24gTm86IDEzOTczODYgKFdhbGVz
+KQ0K
 
-
-Applied to linux-kbuild.
-Thanks.
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
