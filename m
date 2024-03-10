@@ -1,134 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82641DA20
-	for <patches@lists.linux.dev>; Fri,  8 Mar 2024 22:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DAB2110F;
+	Sun, 10 Mar 2024 12:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709937564; cv=none; b=VaHf3JnQfLeqp5va/NTpZIiBVsy3pO8QmhHBQuMJ8/YOQQsjJcTqyeqAjiL4HamXH6nLY0l7ezBsfzexKrBKNYSqlauNHhlhxFweMf2PHIaVCpFbQJkauQFbBONRu6pN2WoyfQy1OSGA9Pul37GQPaX38uMQy9H5q52Up7zkZM4=
+	t=1710075273; cv=none; b=MWXYepyqJcRGIK1LhZ+tBr2TKQwh346/udMxYvrCYpkF5mq32U76hvfm6bjIpBSLYbyk3yPpnT7BVxWoLCA1hk9EnjEnIgacGFBQICPXCEu3/nJcCq3gFsJH9aDE2dbt94wSitetmlEctOvYlooGR+e+btmTiEbywbuGN0jg6Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709937564; c=relaxed/simple;
-	bh=ONjv0VtUftGGTVaaqppbSyYYxndj4Wvui5PdudKSKsU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:To:Cc:
-	 Content-Type:Subject; b=utAFAhxb4lMHpdt4G9vufK+gfaa08iAFfEPcZARlceUvoxGjPQp8NjCNOfz7yvWMADsIehlqhH9FOlLFI+lugm8cSvmlwK1z4qWpJDTJOpqXK+TYHh/jm+Ye0CjPJN+CeHq25VdWi/Fm6ZyBv1Qi877ByhnQ866hAt0UZvV5TVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hM+N0GIb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1710075273; c=relaxed/simple;
+	bh=VpKLCwYi8ECcz/PjTPwyhblCBIuecHsOQGNCRoTlXCA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Aj1m7bSrzxqlhtdOMYZtecQLRfg+eBdVKSHRPQJilWaibbvEX8QhwLQyIogWnBT94x58U19kIPTjpWu8rZxQr5m2QgWvnlu1x7CM1WWlhRde//LkIKat5tWVl+VGh/jEWQVuyC40vZX7t38PQ5+WfgvJrsOBKfXdya5eopLJJog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVMavDlf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hM+N0GIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24CAC433C7
-	for <patches@lists.linux.dev>; Fri,  8 Mar 2024 22:39:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hM+N0GIb"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Fri, 8 Mar 2024 22:39:19 +0000
-Resent-Message-ID: <ZeuTl62Y7aBRupVm@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Fri, 08 Mar 2024 22:36:00 +0000
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=SFBo=KO=gmail.com=m.cooley.198@kernel.org>)
-	id 1riioo-00CHqw-Az
-	for broonie@sirena.co.uk; Fri, 08 Mar 2024 22:36:00 +0000
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 23A3BCE2662
-	for <broonie@sirena.co.uk>; Fri,  8 Mar 2024 22:35:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 6FD08C43394; Fri,  8 Mar 2024 22:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 97BF5C433C7
-	for <broonie@kernel.org>; Fri,  8 Mar 2024 22:35:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 97BF5C433C7
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d29111272eso35540571fa.0
-        for <broonie@kernel.org>; Fri, 08 Mar 2024 14:35:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709937352; x=1710542152; darn=kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p+osjGBHTR09d/MwYxvJc9Om61QsxQtq+K9ltwKLvAc=;
-        b=hM+N0GIbhkDoTnzAKGvFYodkIAWZsVMNhtXOXjEofjnapLSpEw/Aoa+/e6C1k4yA3h
-         2oe1P38bHFaDk3++Lx9SBij68ZUI5ldLTGxhKVnjnNU25IH7G4zARRsH7NKmc7DAt6/w
-         PvLssL3HUlhjV0SvTC7k+dBSNdDlinvX4SjIZRvmPH4u5bi916tz9ytRFf4ZTjZWt8N6
-         Z49gimOQAORGQDJdiv9jVDGgpjLEF4Wt5qDhu4NLBsk+mbwLrvMl/fQiFr4zUIOenUpu
-         oFbhKrR28R8sXZNqp7zjsG8hodqCz2ApXcOavSk1lVknVHeAkGT8i8Bw3tTiWGq8GXtE
-         tAWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709937352; x=1710542152;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p+osjGBHTR09d/MwYxvJc9Om61QsxQtq+K9ltwKLvAc=;
-        b=MG8BNl+NS6ldh8aOhQz54E8Jbzvueq+txpkDks/8lx/MYwCB04gYK9m1PjdNV3Qf1h
-         eGTbnCeHiTbl5jH6D6dwcV+VzthK9sGheOA9DGw1arV7sZ8s/ZUvFXfRiWjGnUvyWrER
-         3KfYA0tcdp/sXzoE628xdYj9UAnujA+P205jGUbFvzR9iWMjIu7xw6B3wLOpJz/fA2cB
-         68TbhEnzHNgB7/+X7h/Ia5CRqd1EJBdcmuC7g5dJb8vQjNmrbfWwJzRLtNqGYsQGVI82
-         4t/PJOct+8maJD3nceFPafDGsta+64USksaMzAm2UbKOmJRkLNce7RTSPzDLIAbeL/6I
-         QGuQ==
-X-Gm-Message-State: AOJu0YxW/OnyKTTCp+ZACdmCmqFvRc6xAZewQ9Hf+sx658rf8cATNBQH
-	135hKgnNvClyJZETgO4tlDnn+x3W8E8uIuW5B6DKQOTR5HPJZ06BR1S49BrMEnSQHGiI0J2zjwO
-	verlxZIwNyYwas6gdg5pjWnCbUZkVnAbQ+X8=
-X-Google-Smtp-Source: AGHT+IFTCILwfXto0Mg+Fmlxx6jFy/jU9acKGcQjbmCoHCIpBnJ9WoOt3a8qRrKjY6DtagOCjq2lSdp4C5WpYX9i4+c=
-X-Received: by 2002:a05:651c:4c8:b0:2d3:7e8e:de23 with SMTP id
- e8-20020a05651c04c800b002d37e8ede23mr374734lji.23.1709937352038; Fri, 08 Mar
- 2024 14:35:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVMavDlf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E16C433C7;
+	Sun, 10 Mar 2024 12:54:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710075272;
+	bh=VpKLCwYi8ECcz/PjTPwyhblCBIuecHsOQGNCRoTlXCA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=IVMavDlf0WLAAB58uHJ7OV0N2RHlSsmzGX61bR6GcAfB8Og7XcviYj8Qg7tKDixNP
+	 8Q1Pwy2xgEEaWnLt3/6IDTTmmDCOCTnobmNj6V8oPgKUhGFFMuRi0AYsnMVTCPgjkE
+	 oLjij/vjCMNkNXKLyImvsRtZIGbjoVbQhXSqyvXyQTvDkNXj6YO92i2ndfiSumUO1O
+	 pZSx17oSekX652GUmdy1JFexjd4ouPEekLOoqPphUz950+1/gugScFRaCFVxnCEChE
+	 QIs0txUwr9mL0egGbuOed9knnNmReH91GBWYKHswhNuWYcc+/eXwpYXKpuoO6cEhzT
+	 4J81o8DGQj0BA==
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-51325c38d10so4466262e87.1;
+        Sun, 10 Mar 2024 05:54:32 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVpRE/L9vcOgm7ruPQA9ZPNDNuwpR0FpHnaWrs3tydonRBghouLJw+1JkH30k1yqs/V7BafoT1x+EvKAzmhEOxn5xhH7yWPBHLPZMwwsy35KTDYaEakD29+Wn+7fDQ=
+X-Gm-Message-State: AOJu0Yxouf5h+VDJZb9w49Pamvpms5ATZ1HD23p75GrVHFdzm0dk0Y8O
+	ObYMlBHdJlHz9H0NuXALxm1GSbYFqx9VvD3s5hp4YxukZwnBU0X3ZneeX8ZXxSU4m/lM86Tg/3w
+	Ck1Ymh8eAjRiWkfJkCL1qbjleWtQ=
+X-Google-Smtp-Source: AGHT+IE3mdTMa/DFw9WedI569OsVd//PftXjaGjzyjgzPj5PLZ3CM7RD3glXQ6TAZjzIdzVfPVGYpK+lflnVOXU746U=
+X-Received: by 2002:a05:6512:328c:b0:513:38ad:66bc with SMTP id
+ p12-20020a056512328c00b0051338ad66bcmr1767370lfe.23.1710075271266; Sun, 10
+ Mar 2024 05:54:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CALijGzn7GL_tmdGZXy-tTGCgpT4bwLW2+QU1QBseMRQwjPhbtw@mail.gmail.com>
- <5eb9f2b5-62ef-442d-b93f-ea6b0d85eac3@sirena.org.uk>
-In-Reply-To: <5eb9f2b5-62ef-442d-b93f-ea6b0d85eac3@sirena.org.uk>
-From: M Cooley <m.cooley.198@gmail.com>
-Date: Fri, 8 Mar 2024 17:35:40 -0500
-Message-ID: <CALijGznExWW4fujNWwMzmn_K=wo96sGzV_2VkT7NjvEUdkg7Gw@mail.gmail.com>
-To: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, linux-sound@vger.kernel.org, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+References: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
+In-Reply-To: <20240305-disable-extra-clang-enum-warnings-v2-1-ba529ec15f95@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 10 Mar 2024 21:53:53 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATPqxYub0eRXhedTpB-oAn_9Egbe+nXzGa=4RRpxq3bpw@mail.gmail.com>
+Message-ID: <CAK7LNATPqxYub0eRXhedTpB-oAn_9Egbe+nXzGa=4RRpxq3bpw@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: Move -Wenum-{compare-conditional,enum-conversion}
+ into W=1
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
+	justinstitt@google.com, arnd@arndb.de, yonghong.song@linux.dev, 
+	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+	stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-SA-Exim-Connect-IP: 2604:1380:40e1:4800::1
-X-SA-Exim-Mail-From: SRS0=SFBo=KO=gmail.com=m.cooley.198@kernel.org
-Subject: [PATCH v2] ASoC: amd: yc: Fix non-functional mic on ASUS M7600RE
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: KmD2zQeLGFVr
 
-On Fri, Mar 8, 2024 at 4:37=E2=80=AFPM Mark Brown <broonie@kernel.org> wrot=
-e:
+On Wed, Mar 6, 2024 at 7:12=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
+> wrote:
 >
-> It's a patch whatever the reason for it - basically your email looks
-> like it got almost everything right (assuming git am likes it), you just
-> need to delete the process question above from the changelog and add a
-> Signed-off-by as covered in submitting-patches.rst.  As that covers
-> there's legal stuff with the signoff which means I shouldn't take a
-> patch without it.
+> Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
+> under -Wenum-conversion. A recent change in Clang strengthened these
+> warnings and they appear frequently in common builds, primarily due to
+> several instances in common headers but there are quite a few drivers
+> that have individual instances as well.
+>
+>   include/linux/vmstat.h:508:43: warning: arithmetic between different en=
+umeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-e=
+num-conversion]
+>     508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+>         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+>     509 |                            item];
+>         |                            ~~~~
+>
+>   drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: cond=
+itional expression between different enumeration types ('enum iwl_mac_beaco=
+n_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+>     955 |                 flags |=3D is_new_rate ? IWL_MAC_BEACON_CCK
+>         |                                      ^ ~~~~~~~~~~~~~~~~~~
+>     956 |                           : IWL_MAC_BEACON_CCK_V1;
+>         |                             ~~~~~~~~~~~~~~~~~~~~~
+>   drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: con=
+ditional expression between different enumeration types ('enum iwl_mac_beac=
+on_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+>    1120 |                                                0) > 10 ?
+>         |                                                        ^
+>    1121 |                         IWL_MAC_BEACON_FILS :
+>         |                         ~~~~~~~~~~~~~~~~~~~
+>    1122 |                         IWL_MAC_BEACON_FILS_V1;
+>         |                         ~~~~~~~~~~~~~~~~~~~~~~
+>
+> Doing arithmetic between or returning two different types of enums could
+> be a bug, so each of the instance of the warning needs to be evaluated.
+> Unfortunately, as mentioned above, there are many instances of this
+> warning in many different configurations, which can break the build when
+> CONFIG_WERROR is enabled.
+>
+> To avoid introducing new instances of the warnings while cleaning up the
+> disruption for the majority of users, disable these warnings for the
+> default build while leaving them on for W=3D1 builds.
+>
+> Cc: stable@vger.kernel.org
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
+> Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873=
+edcebff7c0b45a37e
+> Acked-by: Yonghong Song <yonghong.song@linux.dev>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Changes in v2:
+> - Only disable the warning for the default build, leave it on for W=3D1 (=
+Arnd)
+> - Add Yonghong's ack, as the warning is still disabled for the default
+>   build.
+> - Link to v1: https://lore.kernel.org/r/20240305-disable-extra-clang-enum=
+-warnings-v1-1-6a93ef3d35ff@kernel.org
 
-The ASUS M7600RE (Vivobook Pro 16X OLED) needs a quirks-table entry for the
-internal microphone to function properly.
 
-Signed-off-by: Mitch Cooley <m.cooley.198@gmail.com>
----
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index abb9589b8477..af90da8646ba 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -311,6 +311,13 @@ static const struct dmi_system_id yc_acp_quirk_table[]=
- =3D {
-                        DMI_MATCH(DMI_PRODUCT_NAME, "M6500RC"),
-                }
-        },
-+ {
-+         .driver_data =3D &acp6x_card,
-+         .matches =3D {
-+                 DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+                 DMI_MATCH(DMI_PRODUCT_NAME, "M7600RE"),
-+         }
-+ },
-        {
-                .driver_data =3D &acp6x_card,
-                .matches =3D {
---
+Applied to linux-kbuild.
+Thanks.
+
+
+
+
+--=20
+Best Regards
+Masahiro Yamada
