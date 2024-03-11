@@ -1,134 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A285D56768;
-	Mon, 11 Mar 2024 20:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DAECC
+	for <patches@lists.linux.dev>; Mon, 11 Mar 2024 20:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710187629; cv=none; b=dnrVjkd+zySwYvVe7Qw9D7FZtPrF2PyrOq9+Ff0kkSDt/6pEdO4qbjjD4AujxyCRFSEDBDka0ZIbqiSfeIpIXKQI5a5r5KAT535GylV3EcJRq3OOdJbB3zvXGhh3E6OXOJkDt4svxPQbdw1bec1WG7PQ6OAlqqaxwhRVs4UsjYc=
+	t=1710189818; cv=none; b=TJ0TsEeZAmjhZ35A4cyeUM1id7s/QpVKF5Z/V7evqY+EcpSp9Apl6HibfUVUS+6oVxNprl8Ufwsc9yujtFzaQNE3Bx2K3B8gOndeVQWMQNEkrILpGq+/KQxcmRWl/wued27DVvMo3AwoBWZhZ3PI2sXdSwzhCgwhYMXcEWQApzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710187629; c=relaxed/simple;
-	bh=DrWeY4URI4asygk4lhluNXO0hGNpWVzUWRGv0/b6Xp8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j4Pci1mGHPd6BQzq3BTNOa/mWWK+35rJd+ezpOcZUbNoQlOL+pVvDXkRvoys+kznCmyUqthNeUdL9eam76p+PejNIEzG4jueCEkppmsnX728xTv4IauGJpthuoW1+qD6L7VLW0EfnW9EZqsCodJcEPvInsIrW/6PtQfNywxoIFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HVBgKaj4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1710189818; c=relaxed/simple;
+	bh=ffFTjWUwjKJk2wn3H8xQs7+Dr4egWeva9itiCSg0Pds=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PcUmFmtrw6rv5pEqTk5JyU9CDfJoI8BJCQxs+aSDYw3rsjD6wcfME0rPZPCEDwcD/iV6H9Od5ERe7YgOzJ5lXJi/yvURYFXzzlnRnFdfUBkpzUIaQgClHvQU5mrOgRd2DFiVIxY+U+gQxiQD60tJRO2IQjcUKKV8JoORywuLyRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=osandov.com; spf=none smtp.mailfrom=osandov.com; dkim=pass (2048-bit key) header.d=osandov-com.20230601.gappssmtp.com header.i=@osandov-com.20230601.gappssmtp.com header.b=b2Zd1xV1; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=osandov.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=osandov.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HVBgKaj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56940C433C7;
-	Mon, 11 Mar 2024 20:07:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710187629;
-	bh=DrWeY4URI4asygk4lhluNXO0hGNpWVzUWRGv0/b6Xp8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=HVBgKaj46DDvlZF7YVALiNNlcZMWlXZCyWPePJUojTwe/IsQjYcpidHteFQXZ90GU
-	 lrfrELPvZpShwB1BeWiQeX6R28l9OP7a7z029bFzBVphkSrnVOMPF4ewuPHOKKfXJN
-	 C6CprsF7WC+czo7KhkYIRmnxeK5ob2m1XUlzYJZT7esJTe1E36C1O7QvGnXp8TqNqe
-	 hR7MmBkoAqkgySmfRBcQ5Xpf82Z8VY3YWD5b5geTMn6z48aBfKJSj8brxsReXo7fXq
-	 IegWjghbF+NWRmLaLMh1YFKwQQSwW74xIHUGHnmDC9ld1+dZMWbkGcBDf/rjyWHLUb
-	 Xcc/jrRjzyGsg==
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a450bedffdfso626927566b.3;
-        Mon, 11 Mar 2024 13:07:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWme0BY9mGRe2ov1W/DbFMRsfScBnFZ43Bk7MAZqNSOJ0tUa6KQWvhv3c2z9hDAGEv0VOx9Ur6zoHrCSwlINxN0unKLwmxTEA==
-X-Gm-Message-State: AOJu0Yxy4lnvavDszcpWzNDQSN42FzkZuy9ncWrd87u4sJnBD5Y8Ye6G
-	K6jjHZVPsCZgFjjU6h8tbYGpeJbnvGDSLY6MMphV8Kjr5kGxurttpoowc7rTesngqhybisGh4BB
-	qIRxG2B/8ZA+HpgFXSLkL98LuqHI=
-X-Google-Smtp-Source: AGHT+IG18EuAA35kdphCrB2tABhQCQA2nnSt3znj87TE2dP669Iykk9AuOQnThtnLt0Pt9+VxTpa3FQyOl2ZdHBH/4o=
-X-Received: by 2002:a17:906:d14b:b0:a46:389b:2351 with SMTP id
- br11-20020a170906d14b00b00a46389b2351mr818583ejb.59.1710187627597; Mon, 11
- Mar 2024 13:07:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=osandov-com.20230601.gappssmtp.com header.i=@osandov-com.20230601.gappssmtp.com header.b="b2Zd1xV1"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5dcc4076c13so3182208a12.0
+        for <patches@lists.linux.dev>; Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=osandov-com.20230601.gappssmtp.com; s=20230601; t=1710189816; x=1710794616; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZSMbt8SBlxm6Ph+X2EK++FswYcdkJc9GASrRfqLnHIA=;
+        b=b2Zd1xV1vJN1OmIy18kJdJC21R13+OLSJN+89uqJAoNzo/SBdvcKMSrXLGt4fIF0Nf
+         8sRU7FjK1fLCJFNboSCer3M02OS+g16ff3WeDHM7jh5jQWRNqtpc08SyDzcHIvYEB2bn
+         WKsnZbC0au2afHvq7e5dO/weR3sl5KunVKpO9bwUZ18yLEwfjgVhrInd9Z/4BUwq82of
+         +G8jNrh4UHJT7Peo1ainu3FEBUsy7JEsqL2UwBS5nxt0qe8oJYORLJofKs3SEaSYI9mp
+         B4RfCRh/8D/yhVTgp7Rf2FTu5DnWlm4cIcmk1IRu2bMtrGTnJPhEvc1eqVp/vI9/i8Rq
+         EQ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710189816; x=1710794616;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZSMbt8SBlxm6Ph+X2EK++FswYcdkJc9GASrRfqLnHIA=;
+        b=S+VoKrX6HTYiWzPn6ynBctK8fLKWkoOv2lRgIlETZVbj6MJ1CvtslNdiHSdlhEkoYj
+         XrJHDm4A4tl+Zf5iMkdKdQOJfbVwXl7YAYknMIbOy0sGoy6llsXgPlEY2MDiNBCuo798
+         daiO0LoqePccuOokN8fX/651gCkMUnT+SQUrvGpupPVjKaVpB+NTu/9GWp/RO5klbxya
+         7rmqlv7JMFNxOGErzPL9YL+REb8xb7c5VvoI7dJzkPlor93MF8V8xAHRBhJecNm7Sj6t
+         6IYNsvshS9lfO9Jpxy3g1HsFvMqhz4h/ZBeIPmh8yh4OE8GFn/CSsaTWjekkCaU+Yq5w
+         8hwg==
+X-Forwarded-Encrypted: i=1; AJvYcCUAEqcPqeQQ7keDN9mOsEvxT2jsTkCxiglWDPiy35oK5muuDp8hh7Hq/PWZonAyc7lgcqRm/SFN6mESJEsdr9Bcmz9CdC6pQw==
+X-Gm-Message-State: AOJu0Ywp9CetILm7algLhzBSZI9Wek0mouT0VLlrymK0id0Yg3Qv+B18
+	b8xQ5jnZaVDwDlEtWCjnRyiLII58LyBgPLPiv9P3wATh03WFX/lcMBlToBbwbXwsFA65hmDtLGE
+	C
+X-Google-Smtp-Source: AGHT+IFI8S0cvDkzKsHH2FpOY4kyymcvH6/OLB/ZeoDIQrcOe7DhSL5TWGwsYWqI/wA3KH+4d8tiyA==
+X-Received: by 2002:a17:90b:124b:b0:29b:a1de:32d9 with SMTP id gx11-20020a17090b124b00b0029ba1de32d9mr10720065pjb.18.1710189816372;
+        Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
+Received: from telecaster ([2620:10d:c090:500::7:5177])
+        by smtp.gmail.com with ESMTPSA id cv8-20020a17090afd0800b0029bcf62e296sm4100584pjb.42.2024.03.11.13.43.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
+Date: Mon, 11 Mar 2024 13:43:34 -0700
+From: Omar Sandoval <osandov@osandov.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH for 5.10-stable] x86/paravirt: Fix build due to
+ __text_gen_insn() backport
+Message-ID: <Ze9s9vIC9S-40kRO@telecaster>
+References: <20240227131558.694096204@linuxfoundation.org>
+ <20240227131601.488092151@linuxfoundation.org>
+ <ZeYXvd1-rVkPGvvW@telecaster>
+ <20240305112711.GAZecBj5TMaQDSz6Ym@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240304211551.833500257@linuxfoundation.org> <20240304211551.880347593@linuxfoundation.org>
- <CAKisOQGCiJUUc62ptxp08LkR88T5t1swcBPYi84y2fLP6Tag7g@mail.gmail.com>
- <da17e97b-1880-415d-8cdb-07e79808e702@leemhuis.info> <20240311184108.GS2604@twin.jikos.cz>
- <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
-In-Reply-To: <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
-From: Filipe Manana <fdmanana@kernel.org>
-Date: Mon, 11 Mar 2024 20:06:30 +0000
-X-Gmail-Original-Message-ID: <CAL3q7H7kZkTMfzb0Xg_m1EbNyjj1eqqs4m=ovHM80MqCCCD7gw@mail.gmail.com>
-Message-ID: <CAL3q7H7kZkTMfzb0Xg_m1EbNyjj1eqqs4m=ovHM80MqCCCD7gw@mail.gmail.com>
-Subject: Re: [PATCH 6.7 001/162] btrfs: fix deadlock with fiemap and extent locking
-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: dsterba@suse.cz, Filipe Manana <fdmanana@suse.com>, David Sterba <dsterba@suse.com>, 
-	stable@vger.kernel.org, patches@lists.linux.dev, 
-	Josef Bacik <josef@toxicpanda.com>, Sasha Levin <sashal@kernel.org>, Chris Mason <clm@fb.com>, 
-	linux-btrfs <linux-btrfs@vger.kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240305112711.GAZecBj5TMaQDSz6Ym@fat_crate.local>
 
-On Mon, Mar 11, 2024 at 7:23=E2=80=AFPM Linux regression tracking (Thorsten
-Leemhuis) <regressions@leemhuis.info> wrote:
->
-> On 11.03.24 19:41, David Sterba wrote:
-> > On Mon, Mar 11, 2024 at 10:15:31AM +0100, Linux regression tracking (Th=
-orsten Leemhuis) wrote:
-> >> On 06.03.24 13:39, Filipe Manana wrote:
-> >>> On Mon, Mar 4, 2024 at 9:26=E2=80=AFPM Greg Kroah-Hartman
-> >>> <gregkh@linuxfoundation.org> wrote:
-> >>>>
-> >>>> 6.7-stable review patch.  If anyone has any objections, please let m=
-e know.
-> >>>
-> >>> It would be better to delay the backport of this patch (and the
-> >>> followup fix) to any stable release, because it introduced another
-> >>> regression for which there is a reviewed fix but it's not yet in
-> >>> Linus' tree:
-> >>>
-> >>> https://lore.kernel.org/linux-btrfs/cover.1709202499.git.fdmanana@sus=
-e.com/
-> >>
-> >> Those two missed 6.8 afaics. Will those be heading to mainline any tim=
-e
-> >> soon?
-> >
-> > Yes, in the 6.9 pull request.
->
-> Great!
->
-> >> And how fast afterwards will it be wise to backport them to 6.8?
-> >> Will anyone ask Greg for that when the time has come?
-> > The commits have stable tags and will be processed in the usual way.
->
-> I'm missing something. The first change from Filipe's series linked
-> above has a fixes tag, but no stable tag afaics:
-> https://git.kernel.org/pub/scm/linux/kernel/git/kdave/linux.git/commit/?h=
-=3Dfor-6.9&id=3D978b63f7464abcfd364a6c95f734282c50f3decf
+On Tue, Mar 05, 2024 at 12:27:11PM +0100, Borislav Petkov wrote:
+> On Mon, Mar 04, 2024 at 10:49:33AM -0800, Omar Sandoval wrote:
+> > v5.10.211 is failing to build with the attached .config with the
+> > following error:
+> 
+> Ok, let's try this:
+> 
+> ---
+> From: "Borislav Petkov (AMD)" <bp@alien8.de>
+> 
+> The Link tag has all the details but basically due to missing upstream
+> commits, the header which contains __text_gen_insn() is not in the
+> includes in paravirt.c, leading to:
+> 
+>   arch/x86/kernel/paravirt.c: In function 'paravirt_patch_call':
+>   arch/x86/kernel/paravirt.c:65:9: error: implicit declaration of function '__text_gen_insn' \
+>   [-Werror=implicit-function-declaration]
+>    65 |         __text_gen_insn(insn_buff, CALL_INSN_OPCODE,
+>       |         ^~~~~~~~~~~~~~~
+> 
+> Add the missing include.
+> 
+> Reported-by: Omar Sandoval <osandov@osandov.com>
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Link: https://lore.kernel.org/r/ZeYXvd1-rVkPGvvW@telecaster
+> ---
+>  arch/x86/kernel/paravirt.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/x86/kernel/paravirt.c b/arch/x86/kernel/paravirt.c
+> index 5bea8d93883a..f0e4ad8595ca 100644
+> --- a/arch/x86/kernel/paravirt.c
+> +++ b/arch/x86/kernel/paravirt.c
+> @@ -31,6 +31,7 @@
+>  #include <asm/special_insns.h>
+>  #include <asm/tlb.h>
+>  #include <asm/io_bitmap.h>
+> +#include <asm/text-patching.h>
+>  
+>  /*
+>   * nop stub, which must not clobber anything *including the stack* to
+> -- 
+> 2.43.0
+> 
+> -- 
+> Regards/Gruss,
+>     Boris.
+> 
+> https://people.kernel.org/tglx/notes-about-netiquette
 
-It has no stable tag because when I sent the patch there was yet no
-kernel release with the buggy commit, which landed in 6.8-rc6.
-Now it would make sense to add the stable tag because 6.8 was released
-yesterday and it's the first release with the buggy commit.
+Tested-by: Omar Sandoval <osandov@osandov.com>
 
->
-> So there is no guarantee that Greg will pick it up; and I assume if he
-> does he only will do so after -rc1 (or later, if the CVE stuff continues
-> to keep him busy).
-
-Don't worry, we are paying attention to that and we'll remind Greg if neces=
-sary.
-
-> As Filipe wrote "can actually have serious
-> consequences" this got me slightly worried. That's why I'm a PITA here,
-> sorry -- but as I said, maybe I'm missing something.
->
-> The second of the patches has none of those tags, but well, from the
-> patch descriptions it seems that is just a optimization, so that is
-> likely not something to worry about:
-> https://git.kernel.org/pub/scm/linux/kernel/git/kdave/linux.git/commit/?h=
-=3Dfor-6.9&id=3D1cab1375ba6d5337a25acb346996106c12bb2dd0
-
-Yes, it's an optimization. If it were a bug fix, I would have added a
-Fixes tag and would have described what the bug was.
-
->
-> Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
-> --
-> Everything you wanna know about Linux kernel regression tracking:
-> https://linux-regtracking.leemhuis.info/about/#tldr
-> If I did something stupid, please tell me, as explained on that page.
->
+Thanks!
