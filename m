@@ -1,217 +1,199 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384D88464
-	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 09:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617031DFD8
+	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 14:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710237339; cv=none; b=LI2Xv2UTkPpSe5E5nmL2+/SvwTYifWpl3fBfMuj0TUMrNkrO2axjoJOJyUOir9NbAXOdCixCOmWT2/oAh9HhYv+Vr2znZFOQbt8lvQ2X8thqR3AKjIIxDMxcUA+grSaB1XsrEJgKHW2DfqwD9j13WCcFe+4Bzhm+bOnTQNm3GRw=
+	t=1710254509; cv=none; b=nobjFrSoaJDNopmZsuJJLlzHSq71MVRFhqQasVKTp/hQQGeGIb4nQVANldtpYNLWHdrtx7gSS4aKh3xHVPiVy3HYZvLGrDznohG8e/5lafFAFcFI9PMhbQgf1AdfwY/YjLe/JaxZXO9iGKe/Mm6MwJxcaDzRijY1CUI/FJMAPaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710237339; c=relaxed/simple;
-	bh=aVU9zpMOIfibE9jR2lbs959lkX8Xhz6OvWV2wcRicpk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=iutTMbx0yUr7/qZLRVY9G0P3wv0qhNAvnq8/e0rZZxcJcslNMTl/ziFIIkDdDVIldlX/+weZxzyRjuUi0nEAFvcKlfQU4F7jK+0kr0RCZP/AG4gA56B+3uysEJPbtKtXLacHrjNEUIAQ1GDEkLCeOwjN/5pxJW2k1CuS7Hq4b8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=H7j5tXUm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=9NsR97zB; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=H7j5tXUm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=9NsR97zB; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="H7j5tXUm";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="9NsR97zB";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="H7j5tXUm";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="9NsR97zB"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 800215D329;
-	Tue, 12 Mar 2024 09:55:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1710237333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
-	b=H7j5tXUmQnatggY+G5G6M2ZVgSSA4vMyTza9w6W82MdBE9u2JLEB9S40FpANNaNolN3i18
-	kgnL5BeC035nF0W7RuVBDaJrScWXmwX2agA5MyCM2jXOLi1/VFT/hf4n5OC0K9GQRjmNsT
-	wm/oCAInQyCVaCa7x1VDLb7jlHNubKU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1710237333;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
-	b=9NsR97zBV+tUKXMO2FP/AvYai5gm6w0ppcRK41rcECNk55kDPsD/RZMwPmLaiZSsw3RaFe
-	Q1jON5EqK1iRD9Dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1710237333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
-	b=H7j5tXUmQnatggY+G5G6M2ZVgSSA4vMyTza9w6W82MdBE9u2JLEB9S40FpANNaNolN3i18
-	kgnL5BeC035nF0W7RuVBDaJrScWXmwX2agA5MyCM2jXOLi1/VFT/hf4n5OC0K9GQRjmNsT
-	wm/oCAInQyCVaCa7x1VDLb7jlHNubKU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1710237333;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
-	b=9NsR97zBV+tUKXMO2FP/AvYai5gm6w0ppcRK41rcECNk55kDPsD/RZMwPmLaiZSsw3RaFe
-	Q1jON5EqK1iRD9Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 620A51364F;
-	Tue, 12 Mar 2024 09:55:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id SoWOF5Um8GX6PwAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Tue, 12 Mar 2024 09:55:33 +0000
-Message-ID: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
-Date: Tue, 12 Mar 2024 10:55:33 +0100
+	s=arc-20240116; t=1710254509; c=relaxed/simple;
+	bh=uOpsSVCbQLH9NXmsb8YDOq8vdcXwSuTFtG7lRr025Hs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gRTL7Fp8kMlo/k2c/4iTZgX9SsiWcp51o3QmXPcwk90fP7i2ONwn19TGpu+0nqqq4ihWbaZrOlt92NxH336RcCTSTEjJ1kzod94XREtdLscbZLIyhl8bLDSeuuCuhg5s0Z3JfvRXZij+cjCyLseM2Qsdj1q8QD/ogZlUL2ytOYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-609f359b7b1so59186477b3.1
+        for <patches@lists.linux.dev>; Tue, 12 Mar 2024 07:41:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710254505; x=1710859305;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FXmOsnx/ac8DtMDdTaI7xWpzg70Sr5+vs/F3ep2Teoo=;
+        b=vIBIWHw06sbYJV1qIOjdynKUV9nYuBJ2SGcOduEuyU35ZRxl7hmOQ6mgmTaotdPn6T
+         BP6ydogHYUTVUb/3WkORYSvtPlXDH7lH5pyk78W4M4M0LP2R86uyTrvEuVEkHHVIYoqj
+         B66HI8tZs4VF1PzGSYdZbS69XtS3G/wogtL8vvVwy0n5O21R0av/cwHolDLX84Vi18nG
+         sRPWnhE3lUo9BCJQ8bTOjgWqhQsZ9KBIMv4EHfbpXaoGdHI4AVX2M/NRPwcleRahPvzt
+         u+qhnOV0BMUtM/La7514zDP/WOmoOyxY0lGKcm3rqoIEOBGlFdS+M9a+tDXfsROeqGr6
+         0V9g==
+X-Forwarded-Encrypted: i=1; AJvYcCUWEoTM8kk8WAUwTfZZ/443j2AgFqnGp6jOMRwiSEBM5keBMmqi+7jCTA3733C8jdiz7YjFg9ZdwpcjgH9qy6YIm4XpUFDdrA==
+X-Gm-Message-State: AOJu0YyDCzAxx+tOkqJPmhqCuZ4Q+ALyTkYjNULMnOICG7jcCMiV/Y8f
+	m3jXQ8nr5fm4LlhXiy781+yUPGztGDJONumiEj8aXRO5Dl+XygrMaBF7VSKIcs8=
+X-Google-Smtp-Source: AGHT+IEzcN2CTMngP4/qME+zFIpK5IO0pqav8bC6o05y9MZ2XRUtkrlWvOAavQ2qJTa8ysJgF1yGaw==
+X-Received: by 2002:a81:6e8a:0:b0:609:fce7:f61c with SMTP id j132-20020a816e8a000000b00609fce7f61cmr9114127ywc.46.1710254505356;
+        Tue, 12 Mar 2024 07:41:45 -0700 (PDT)
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
+        by smtp.gmail.com with ESMTPSA id n129-20020a817287000000b006049de6fa26sm1944660ywc.57.2024.03.12.07.41.44
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Mar 2024 07:41:44 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-db3a09e96daso4788450276.3
+        for <patches@lists.linux.dev>; Tue, 12 Mar 2024 07:41:44 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWsfO0as5I8ofRmwYpCjvUtYCN2CX/fSq+IzAgXyOn8Vqba+Busn/1ZiDRZWr7kjn+JgfNlGv2qFk2Zss8GtM+Zt0WUf/sSMQ==
+X-Received: by 2002:a25:4886:0:b0:dbe:9509:141c with SMTP id
+ v128-20020a254886000000b00dbe9509141cmr6367424yba.30.1710254504263; Tue, 12
+ Mar 2024 07:41:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.9
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Chengming Zhou <chengming.zhou@linux.dev>,
- Xiongwei Song <xiongwei.song@windriver.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: 
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=H7j5tXUm;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=9NsR97zB
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.00 / 50.00];
-	 TO_DN_EQ_ADDR_SOME(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 XM_UA_NO_VERSION(0.01)[];
-	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	 TO_DN_SOME(0.00)[];
-	 RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_TRACE(0.00)[suse.cz:+];
-	 MX_GOOD(-0.01)[];
-	 NEURAL_HAM_SHORT(-0.20)[-0.999];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%];
-	 ARC_NA(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 FROM_HAS_DN(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 RCPT_COUNT_TWELVE(0.00)[13];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FREEMAIL_CC(0.00)[google.com,lge.com,linux.com,kernel.org,linux-foundation.org,kvack.org,vger.kernel.org,lists.linux.dev,linux.dev,gmail.com,windriver.com];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[];
-	 RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-X-Spam-Score: -3.00
-X-Rspamd-Queue-Id: 800215D329
-X-Spam-Flag: NO
+References: <20240217060843.GA16460@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+ <CAL_Jsq+Feu9NnzTNx=XU5vgHhibGAQXvkuTeWbpu8gJ3rVrzcw@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+Feu9NnzTNx=XU5vgHhibGAQXvkuTeWbpu8gJ3rVrzcw@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 12 Mar 2024 15:41:32 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdUKa-KdWfYswEpFvj3RjQPM+ThhU85myfBGVkXxZqbHWw@mail.gmail.com>
+Message-ID: <CAMuHMdUKa-KdWfYswEpFvj3RjQPM+ThhU85myfBGVkXxZqbHWw@mail.gmail.com>
+Subject: Re: [PATCH 2/7] of: Create of_root if no dtb provided by firmware
+To: Rob Herring <robh+dt@kernel.org>
+Cc: Saurabh Singh Sengar <ssengar@linux.microsoft.com>, Frank Rowand <frowand.list@gmail.com>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, 
+	devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
+	"Gabriel L. Somlo" <gsomlo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Linus,
+Hi Rob,
 
-please pull the latest slab updates from:
+CC broonie
+CC somlo
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.9
+On Wed, Feb 21, 2024 at 3:06=E2=80=AFPM Rob Herring <robh+dt@kernel.org> wr=
+ote:
+> On Fri, Feb 16, 2024 at 11:08=E2=80=AFPM Saurabh Singh Sengar
+> <ssengar@linux.microsoft.com> wrote:
+> > On Fri, Feb 16, 2024 at 05:05:51PM -0800, Frank Rowand wrote:
+> > > When enabling CONFIG_OF on a platform where 'of_root' is not populate=
+d
+> > > by firmware, we end up without a root node. In order to apply overlay=
+s
+> > > and create subnodes of the root node, we need one. Create this root n=
+ode
+> > > by unflattening an empty builtin dtb.
+> > >
+> > > If firmware provides a flattened device tree (FDT) then the FDT is
+> > > unflattened via setup_arch(). Otherwise, the call to
+> > > unflatten(_and_copy)?_device_tree() will create an empty root node.
+> > >
+> > > We make of_have_populated_dt() return true only if the DTB was loaded=
+ by
+> > > firmware so that existing callers don't change behavior after this
+> > > patch. The call in the of platform code is removed because it prevent=
+s
+> > > overlays from creating platform devices when the empty root node is
+> > > used.
+> > >
+> > > [sboyd@kernel.org: Update of_have_populated_dt() to treat this empty =
+dtb
+> > > as not populated. Drop setup_of() initcall]
+> > >
+> > > Signed-off-by: Frank Rowand <frowand.list@gmail.com>
+> > > Link: https://lore.kernel.org/r/20230317053415.2254616-2-frowand.list=
+@gmail.com
+> > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 
-I'm not aware of any merge conflicts this time.
+Thanks for your patch, which is now commit 7b937cc243e5b1df ("of:
+Create of_root if no dtb provided by firmware") in dt-rh/for-next
+(next-20240312 and later).
 
-Thanks,
-Vlastimil
+On my OrangeCrab FPGA running Linux on LiteX/VexRiscv-V, the attached
+OLED display now fails to probe:
 
-======================================
+    -ssd130x-i2c 0-003c: supply vcc not found, using dummy regulator
+    -[drm] Initialized ssd130x 1.0.0 20220131 for 0-003c on minor 0
+    +ssd130x-i2c 0-003c: incomplete constraints, dummy supplies not allowed
+    +ssd130x-i2c 0-003c: error -ENODEV: Failed to get VCC regulator
 
-- Freelist loading optimization (Chengming Zhou)
+> > > @@ -1645,6 +1635,21 @@ static inline bool of_device_is_system_power_c=
+ontroller(const struct device_node
+> > >       return of_property_read_bool(np, "system-power-controller");
+> > >  }
+> > >
+> > > +/**
+> > > + * of_have_populated_dt() - Has DT been populated by bootloader
+> > > + *
+> > > + * Return: True if a DTB has been populated by the bootloader and it=
+ isn't the
+> > > + * empty builtin one. False otherwise.
+> > > + */
+> > > +static inline bool of_have_populated_dt(void)
+> > > +{
+> > > +#ifdef CONFIG_OF
+> > > +     return of_property_present(of_root, "compatible");
+> >
+> > This adds the strict check for compatible which makes compatible
+> > to be mandatory for root nodes. So far, DeviceTree without compatible
+> > property in root nodes can work. Do we want to make this documented
+> > somewhere ?
+>
+> It already is in the DT spec and schemas.
 
-  When the per-cpu slab is depleted and a new one loaded from the cpu partial
-  list, optimize the loading to avoid an irq enable/disable cycle. This results
-  in a 3.5% performance improvement on the "perf bench sched messaging" test.
+How many systems in the wild violate this?
 
-- Kernel boot parameters cleanup after SLAB removal (Xiongwei Song)
+Apparently the DTS generated by LiteX does not have a root compatible
+(and model) property, hence of_have_populated_dt() returns false.
+While my gateware and DTS is quite old, a quick look at recent
+litex_json2dts_linux.py history shows this is still true for current LiteX.
 
-  Due to two different main slab implementations we've had boot parameters
-  prefixed either slab_ and slub_ with some later becoming an alias as both
-  implementations gained the same functionality (i.e. slab_nomerge vs
-  slub_nomerge). In order to eventually get rid of the implementation-specific
-  names, the canonical and documented parameters are now all prefixed slab_
-  and the slub_ variants become deprecated but still working aliases.
+Now, how is this related to the failure I am seeing?
 
-- SLAB_ kmem_cache creation flags cleanup (Vlastimil Babka)
+drivers/regulator/core.c has:
 
-  The flags had hardcoded #define values which became tedious and error-prone
-  when adding new ones. Assign the values via an enum that takes care of
-  providing unique bit numbers. Also deprecate SLAB_MEM_SPREAD which was only
-  used by SLAB, so it's a no-op since SLAB removal. Assign it an explicit zero
-  value.  The removals of the flag usage are handled independently in the
-  respective subsystems, with a final removal of any leftover usage planned
-  for the next release.
+    static bool have_full_constraints(void)
+    {
+            return has_full_constraints || of_have_populated_dt();
+    }
 
-- Misc cleanups and fixes (Chengming Zhou, Xiaolei Wang, Zheng Yejian)
+and
 
-  Includes removal of unused code or function parameters and a fix of a
-  memleak.
+    static int __init regulator_init_complete(void)
+    {
+            /*
+             * Since DT doesn't provide an idiomatic mechanism for
+             * enabling full constraints and since it's much more natural
+             * with DT to provide them just assume that a DT enabled
+             * system has full constraints.
+             */
+            if (of_have_populated_dt())
+                    has_full_constraints =3D true;
 
-----------------------------------------------------------------
-Chengming Zhou (7):
-      mm/slub: directly load freelist from cpu partial slab in the likely case
-      mm/slub: remove full list manipulation for non-debug slab
-      mm/slub: remove unused parameter in next_freelist_entry()
-      mm, slab: remove unused object_size parameter in kmem_cache_flags()
-      mm, slab: fix the comment of cpu partial list
-      mm, slab: remove the corner case of inc_slabs_node()
-      slab: remove PARTIAL_NODE slab_state
+            ...
+    }
+    late_initcall_sync(regulator_init_complete);
 
-Vlastimil Babka (6):
-      mm, slab: deprecate SLAB_MEM_SPREAD flag
-      mm, slab: use an enum to define SLAB_ cache creation flags
-      mm, slab, kasan: replace kasan_never_merge() with SLAB_NO_MERGE
-      mm, slab: remove memcg_from_slab_obj()
-      Merge branch 'slab/for-6.9/optimize-get-freelist' into slab/for-linus
-      Merge branch 'slab/for-6.9/slab-flag-cleanups' into slab/for-linus
+(The latter looks a bit futile, as have_full_constraints() already
+ contains a check for of_have_populated_dt()?)
 
-Xiaolei Wang (1):
-      mm/slab: Fix a kmemleak in kmem_cache_destroy()
+When have_full_constraints() returns false, any dummy regulator will
+fail to probe.
 
-Xiongwei Song (4):
-      Documentation: kernel-parameters: remove noaliencache
-      mm/slub: unify all sl[au]b parameters with "slab_$param"
-      mm/slub: replace slub_$params with slab_$params in slub.rst
-      mm/slub: make the description of slab_min_objects helpful in doc
+Gr{oetje,eeting}s,
 
-Zheng Yejian (1):
-      mm/slub: remove parameter 'flags' in create_kmalloc_caches()
+                        Geert
 
- Documentation/admin-guide/kernel-parameters.txt |  75 +++++++--------
- Documentation/mm/slub.rst                       |  60 ++++++------
- drivers/misc/lkdtm/heap.c                       |   2 +-
- include/linux/kasan.h                           |   6 --
- include/linux/slab.h                            |  97 ++++++++++++++------
- mm/Kconfig.debug                                |   6 +-
- mm/kasan/generic.c                              |  22 ++---
- mm/slab.h                                       |  11 +--
- mm/slab_common.c                                |  29 +++---
- mm/slub.c                                       | 116 ++++++++++--------------
- tools/include/linux/slab.h                      |   1 -
- 11 files changed, 210 insertions(+), 215 deletions(-)
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
