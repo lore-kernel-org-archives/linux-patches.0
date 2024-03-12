@@ -1,107 +1,172 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8F37B3DF
-	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 14:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9017E567;
+	Tue, 12 Mar 2024 16:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710255150; cv=none; b=GifowO+fOPGFMiY2Vgay0XRJEOCeIjulwko0ys6G0JEBaQYc7BdmWyQPe9aCJor7Qlmj4qZ0O0IuNywgueDZlCw0m1cFMoyN/jzN6pZ+dquRkj2ErwwMIRv+UHZlsR2c6g9JaGZGmkRim2x48L9O2FqA7okMIKoMXVSQS0Vmz1g=
+	t=1710262118; cv=none; b=JNDVytC+Xeg5tMDhUqfSZ+cRpScj2gfOOBpdFsPVYn8B/CMWR6REeBtJH/rSgJaNr1dmkslgXVJa1NkdXcPxn24pm8Rfr/udWPTZDkRK5m3NAxwrM9BSUx/On499jFWPQYW/44fjHzpKhHjCR2i2XOrKxGXHz3Hmz6wiwZNs+xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710255150; c=relaxed/simple;
-	bh=HqLKdg5D/2l4/chJuAGqtrhx3KH6eTcOmIIabi94HGU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DG/W1BBXI1X5iTpG8MuKkPntahosnlwB/PxnnXRe+dr+ruMeYsXlFnxjoQ+GSBavGWsbIgnL90YAENtHaocLG+Qu7W3w0gqZxEc4QYiQJHuxJN45xyVmQVVKlikbSEy2y6FyQBwhLIwsludH6bnH8n4PvVhFrE+ZZ9x1JOqQZxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-60a068e26d8so46176967b3.3
-        for <patches@lists.linux.dev>; Tue, 12 Mar 2024 07:52:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710255147; x=1710859947;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4YdHy//nTWN9K6sgwTweLyEZnjTzGOH6tr4kEOlMF6A=;
-        b=nWBD6+z0z6e0QguPFczgMCR6AuvVNBd7Xg/suvgzsVo4bJ0U4wnM3XH1d8XgVc6Rou
-         73iNEHaPSpp7noTI9KtnZfgXFYnsF+KR7KPzGW5j4/UquuSSCX57+f0sRyF6zzD7SDtT
-         NlAnQ20gVKiAnmx3e39Meiaih6pIrHezjRfcLB5g0E4HGf3Z8YyMfHW/mfWxz0UILel/
-         QFOoJC8rBZsWmRVCS+476FeDP8nXbtPLuaAWGPgzNyd1iUq/39uZv0Kqz40/UPamDyh9
-         Mp7AdZTW/BFDRumfQZ8Y7Z9SddglDKyQVA4MqPZXgmH3Fhbn3/1i7TPCJgSHJmmnjtnk
-         0nHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXu9DkryfI/JIWKWqwkDUNNAKgVaFysxWfnrHx/WHA6tVb2EvPhTQhn1S5FH4gkBhqvmuyi9vpOc+iHtEAP3k26c4x9Of24dQ==
-X-Gm-Message-State: AOJu0YwPsjeSOnf8pQGFd4j4NwQesCCmAsKFF4HEMnc2mv5poTmkIMOb
-	rL13IRMO7lnL2dnI7uouOnYf46RUrb+Hqs2DlUgGDiwRRj3CVok9FgYW5zpM+T0=
-X-Google-Smtp-Source: AGHT+IG5aj2LfZzzmAQpbJv3n4cuzmNQEhx+VMszy4trgNcX2ocdI11xPIKyK3bNEyiUH1/B5+ndKA==
-X-Received: by 2002:a0d:c204:0:b0:60a:3e37:56a2 with SMTP id e4-20020a0dc204000000b0060a3e3756a2mr5436013ywd.8.1710255147005;
-        Tue, 12 Mar 2024 07:52:27 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id j128-20020a0dc786000000b006049c16b843sm1929329ywd.145.2024.03.12.07.52.26
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Mar 2024 07:52:26 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcbc00f6c04so3888978276.3
-        for <patches@lists.linux.dev>; Tue, 12 Mar 2024 07:52:26 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCX0keFDpxwAw9hQHQPXmZ6pjb2DsiT9VjQjNnEy8nuTw0PhrhbMcEFXxnaa3bVLLKqm9CLFWzg96/fJe7R0rKbNG1KgvMNu1Q==
-X-Received: by 2002:a25:26cd:0:b0:dcd:ef35:91d5 with SMTP id
- m196-20020a2526cd000000b00dcdef3591d5mr6727921ybm.2.1710255146517; Tue, 12
- Mar 2024 07:52:26 -0700 (PDT)
+	s=arc-20240116; t=1710262118; c=relaxed/simple;
+	bh=TPjS8vmpIo22gwCDkXTZjyD2CnPvPYATxjQ4BhXhyVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gK0AusZ9W6ZcEhW+odCHbOA9NdC/6GGuoRXy4PSWTQlEPSL5Q+/v5dRh+Q1owKLaU+EhU9dUsSmChngy0DWl94qKEBwDTZ7rblHYgO5/uR2XkA2AamgTjG1Ox5NYissUcuLr0lDPS8rZJEQ5ptVkkR3SCslyEDGkNHCWfzYhOpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ydLvVPDR; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=FFT5A/MF; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ydLvVPDR; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=FFT5A/MF; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ydLvVPDR";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="FFT5A/MF";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ydLvVPDR";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="FFT5A/MF"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 40E691F443;
+	Tue, 12 Mar 2024 16:48:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710262109;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
+	b=ydLvVPDRXWY90+5duLod0hqkg1rQ/gdSPJn2161BHP1X3hxIxHJhe3ErkOY3V+j5j7C+qx
+	u2SJGkYU6+6syGFUMdvRlKGyv+JHhXbW0QFCvQd6Y5kuV06kEbvkXuMbMGzktEoaxCkodz
+	8+7BnU1lJbQazmjG1ae7sXatSsH+Fsw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710262109;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
+	b=FFT5A/MF812zqHKI/APpHwi0r164IHfso75PnSpBV5hy0MnUHAIInXvgvgvXGVgbGVwGK8
+	6776g6MoM4ou85Bw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710262109;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
+	b=ydLvVPDRXWY90+5duLod0hqkg1rQ/gdSPJn2161BHP1X3hxIxHJhe3ErkOY3V+j5j7C+qx
+	u2SJGkYU6+6syGFUMdvRlKGyv+JHhXbW0QFCvQd6Y5kuV06kEbvkXuMbMGzktEoaxCkodz
+	8+7BnU1lJbQazmjG1ae7sXatSsH+Fsw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710262109;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
+	b=FFT5A/MF812zqHKI/APpHwi0r164IHfso75PnSpBV5hy0MnUHAIInXvgvgvXGVgbGVwGK8
+	6776g6MoM4ou85Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2773B13795;
+	Tue, 12 Mar 2024 16:48:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id xgh0CV2H8GWZUwAAD6G6ig
+	(envelope-from <dsterba@suse.cz>); Tue, 12 Mar 2024 16:48:29 +0000
+Date: Tue, 12 Mar 2024 17:41:19 +0100
+From: David Sterba <dsterba@suse.cz>
+To: Linux regressions mailing list <regressions@lists.linux.dev>
+Cc: dsterba@suse.cz, Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Josef Bacik <josef@toxicpanda.com>,
+	Sasha Levin <sashal@kernel.org>, Chris Mason <clm@fb.com>,
+	linux-btrfs <linux-btrfs@vger.kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 6.7 001/162] btrfs: fix deadlock with fiemap and extent
+ locking
+Message-ID: <20240312164119.GW2604@twin.jikos.cz>
+Reply-To: dsterba@suse.cz
+References: <20240304211551.833500257@linuxfoundation.org>
+ <20240304211551.880347593@linuxfoundation.org>
+ <CAKisOQGCiJUUc62ptxp08LkR88T5t1swcBPYi84y2fLP6Tag7g@mail.gmail.com>
+ <da17e97b-1880-415d-8cdb-07e79808e702@leemhuis.info>
+ <20240311184108.GS2604@twin.jikos.cz>
+ <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240217060843.GA16460@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
- <CAL_Jsq+Feu9NnzTNx=XU5vgHhibGAQXvkuTeWbpu8gJ3rVrzcw@mail.gmail.com> <CAMuHMdUKa-KdWfYswEpFvj3RjQPM+ThhU85myfBGVkXxZqbHWw@mail.gmail.com>
-In-Reply-To: <CAMuHMdUKa-KdWfYswEpFvj3RjQPM+ThhU85myfBGVkXxZqbHWw@mail.gmail.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 12 Mar 2024 15:52:14 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdU83qwmO5swSQq79Zci7SP_xkNsjmQ4dYo-Pjw8d65fmg@mail.gmail.com>
-Message-ID: <CAMuHMdU83qwmO5swSQq79Zci7SP_xkNsjmQ4dYo-Pjw8d65fmg@mail.gmail.com>
-Subject: Re: [PATCH 2/7] of: Create of_root if no dtb provided by firmware
-To: Rob Herring <robh+dt@kernel.org>
-Cc: Saurabh Singh Sengar <ssengar@linux.microsoft.com>, Frank Rowand <frowand.list@gmail.com>, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, 
-	devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
-	"Gabriel L. Somlo" <gsomlo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -4.00
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	 ARC_NA(0.00)[];
+	 HAS_REPLYTO(0.30)[dsterba@suse.cz];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 MIME_GOOD(-0.10)[text/plain];
+	 REPLYTO_ADDR_EQ_FROM(0.00)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-0.20)[-0.977];
+	 RCPT_COUNT_SEVEN(0.00)[11];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-3.00)[100.00%]
+X-Spam-Flag: NO
 
-On Tue, Mar 12, 2024 at 3:41=E2=80=AFPM Geert Uytterhoeven <geert@linux-m68=
-k.org> wrote:
-> On Wed, Feb 21, 2024 at 3:06=E2=80=AFPM Rob Herring <robh+dt@kernel.org> =
-wrote:
-> > On Fri, Feb 16, 2024 at 11:08=E2=80=AFPM Saurabh Singh Sengar
-> > <ssengar@linux.microsoft.com> wrote:
-> > > This adds the strict check for compatible which makes compatible
-> > > to be mandatory for root nodes. So far, DeviceTree without compatible
-> > > property in root nodes can work. Do we want to make this documented
-> > > somewhere ?
-> >
-> > It already is in the DT spec and schemas.
->
-> How many systems in the wild violate this?
->
-> Apparently the DTS generated by LiteX does not have a root compatible
-> (and model) property, hence of_have_populated_dt() returns false.
-> While my gateware and DTS is quite old, a quick look at recent
-> litex_json2dts_linux.py history shows this is still true for current Lite=
-X.
+On Mon, Mar 11, 2024 at 08:23:23PM +0100, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 11.03.24 19:41, David Sterba wrote:
+> > On Mon, Mar 11, 2024 at 10:15:31AM +0100, Linux regression tracking (Thorsten Leemhuis) wrote:
+> >> On 06.03.24 13:39, Filipe Manana wrote:
+> >>> On Mon, Mar 4, 2024 at 9:26 PM Greg Kroah-Hartman
+> >>> <gregkh@linuxfoundation.org> wrote:
+> >>>>
+> >>>> 6.7-stable review patch.  If anyone has any objections, please let me know.
+> >>>
+> >>> It would be better to delay the backport of this patch (and the
+> >>> followup fix) to any stable release, because it introduced another
+> >>> regression for which there is a reviewed fix but it's not yet in
+> >>> Linus' tree:
+> >>>
+> >>> https://lore.kernel.org/linux-btrfs/cover.1709202499.git.fdmanana@suse.com/
+> >>
+> >> Those two missed 6.8 afaics. Will those be heading to mainline any time
+> >> soon?
+> > 
+> > Yes, in the 6.9 pull request.
+> 
+> Great!
+> 
+> >> And how fast afterwards will it be wise to backport them to 6.8?
+> >> Will anyone ask Greg for that when the time has come?
+> > The commits have stable tags and will be processed in the usual way.
+> 
+> I'm missing something. The first change from Filipe's series linked
+> above has a fixes tag, but no stable tag afaics:
+> https://git.kernel.org/pub/scm/linux/kernel/git/kdave/linux.git/commit/?h=for-6.9&id=978b63f7464abcfd364a6c95f734282c50f3decf
+> 
+> So there is no guarantee that Greg will pick it up; and I assume if he
+> does he only will do so after -rc1 (or later, if the CVE stuff continues
+> to keep him busy). As Filipe wrote "can actually have serious
+> consequences" this got me slightly worried. That's why I'm a PITA here,
+> sorry -- but as I said, maybe I'm missing something.
 
-https://github.com/enjoy-digital/litex/issues/1905
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Well it's the timing, last week before a final release the branches
+don't receive any insignificant changes like reviewed-by or stable tags.
+The patch connection is also done by the Fixes tag and a missing
+CC:stable can be substituted by explicit requests for backport if
+needed.
