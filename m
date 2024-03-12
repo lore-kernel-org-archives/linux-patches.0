@@ -1,131 +1,217 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DAECC
-	for <patches@lists.linux.dev>; Mon, 11 Mar 2024 20:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384D88464
+	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 09:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710189818; cv=none; b=TJ0TsEeZAmjhZ35A4cyeUM1id7s/QpVKF5Z/V7evqY+EcpSp9Apl6HibfUVUS+6oVxNprl8Ufwsc9yujtFzaQNE3Bx2K3B8gOndeVQWMQNEkrILpGq+/KQxcmRWl/wued27DVvMo3AwoBWZhZ3PI2sXdSwzhCgwhYMXcEWQApzY=
+	t=1710237339; cv=none; b=LI2Xv2UTkPpSe5E5nmL2+/SvwTYifWpl3fBfMuj0TUMrNkrO2axjoJOJyUOir9NbAXOdCixCOmWT2/oAh9HhYv+Vr2znZFOQbt8lvQ2X8thqR3AKjIIxDMxcUA+grSaB1XsrEJgKHW2DfqwD9j13WCcFe+4Bzhm+bOnTQNm3GRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710189818; c=relaxed/simple;
-	bh=ffFTjWUwjKJk2wn3H8xQs7+Dr4egWeva9itiCSg0Pds=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PcUmFmtrw6rv5pEqTk5JyU9CDfJoI8BJCQxs+aSDYw3rsjD6wcfME0rPZPCEDwcD/iV6H9Od5ERe7YgOzJ5lXJi/yvURYFXzzlnRnFdfUBkpzUIaQgClHvQU5mrOgRd2DFiVIxY+U+gQxiQD60tJRO2IQjcUKKV8JoORywuLyRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=osandov.com; spf=none smtp.mailfrom=osandov.com; dkim=pass (2048-bit key) header.d=osandov-com.20230601.gappssmtp.com header.i=@osandov-com.20230601.gappssmtp.com header.b=b2Zd1xV1; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=osandov.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=osandov.com
+	s=arc-20240116; t=1710237339; c=relaxed/simple;
+	bh=aVU9zpMOIfibE9jR2lbs959lkX8Xhz6OvWV2wcRicpk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=iutTMbx0yUr7/qZLRVY9G0P3wv0qhNAvnq8/e0rZZxcJcslNMTl/ziFIIkDdDVIldlX/+weZxzyRjuUi0nEAFvcKlfQU4F7jK+0kr0RCZP/AG4gA56B+3uysEJPbtKtXLacHrjNEUIAQ1GDEkLCeOwjN/5pxJW2k1CuS7Hq4b8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=H7j5tXUm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=9NsR97zB; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=H7j5tXUm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=9NsR97zB; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=osandov-com.20230601.gappssmtp.com header.i=@osandov-com.20230601.gappssmtp.com header.b="b2Zd1xV1"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5dcc4076c13so3182208a12.0
-        for <patches@lists.linux.dev>; Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=osandov-com.20230601.gappssmtp.com; s=20230601; t=1710189816; x=1710794616; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZSMbt8SBlxm6Ph+X2EK++FswYcdkJc9GASrRfqLnHIA=;
-        b=b2Zd1xV1vJN1OmIy18kJdJC21R13+OLSJN+89uqJAoNzo/SBdvcKMSrXLGt4fIF0Nf
-         8sRU7FjK1fLCJFNboSCer3M02OS+g16ff3WeDHM7jh5jQWRNqtpc08SyDzcHIvYEB2bn
-         WKsnZbC0au2afHvq7e5dO/weR3sl5KunVKpO9bwUZ18yLEwfjgVhrInd9Z/4BUwq82of
-         +G8jNrh4UHJT7Peo1ainu3FEBUsy7JEsqL2UwBS5nxt0qe8oJYORLJofKs3SEaSYI9mp
-         B4RfCRh/8D/yhVTgp7Rf2FTu5DnWlm4cIcmk1IRu2bMtrGTnJPhEvc1eqVp/vI9/i8Rq
-         EQ+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710189816; x=1710794616;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZSMbt8SBlxm6Ph+X2EK++FswYcdkJc9GASrRfqLnHIA=;
-        b=S+VoKrX6HTYiWzPn6ynBctK8fLKWkoOv2lRgIlETZVbj6MJ1CvtslNdiHSdlhEkoYj
-         XrJHDm4A4tl+Zf5iMkdKdQOJfbVwXl7YAYknMIbOy0sGoy6llsXgPlEY2MDiNBCuo798
-         daiO0LoqePccuOokN8fX/651gCkMUnT+SQUrvGpupPVjKaVpB+NTu/9GWp/RO5klbxya
-         7rmqlv7JMFNxOGErzPL9YL+REb8xb7c5VvoI7dJzkPlor93MF8V8xAHRBhJecNm7Sj6t
-         6IYNsvshS9lfO9Jpxy3g1HsFvMqhz4h/ZBeIPmh8yh4OE8GFn/CSsaTWjekkCaU+Yq5w
-         8hwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUAEqcPqeQQ7keDN9mOsEvxT2jsTkCxiglWDPiy35oK5muuDp8hh7Hq/PWZonAyc7lgcqRm/SFN6mESJEsdr9Bcmz9CdC6pQw==
-X-Gm-Message-State: AOJu0Ywp9CetILm7algLhzBSZI9Wek0mouT0VLlrymK0id0Yg3Qv+B18
-	b8xQ5jnZaVDwDlEtWCjnRyiLII58LyBgPLPiv9P3wATh03WFX/lcMBlToBbwbXwsFA65hmDtLGE
-	C
-X-Google-Smtp-Source: AGHT+IFI8S0cvDkzKsHH2FpOY4kyymcvH6/OLB/ZeoDIQrcOe7DhSL5TWGwsYWqI/wA3KH+4d8tiyA==
-X-Received: by 2002:a17:90b:124b:b0:29b:a1de:32d9 with SMTP id gx11-20020a17090b124b00b0029ba1de32d9mr10720065pjb.18.1710189816372;
-        Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
-Received: from telecaster ([2620:10d:c090:500::7:5177])
-        by smtp.gmail.com with ESMTPSA id cv8-20020a17090afd0800b0029bcf62e296sm4100584pjb.42.2024.03.11.13.43.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Mar 2024 13:43:36 -0700 (PDT)
-Date: Mon, 11 Mar 2024 13:43:34 -0700
-From: Omar Sandoval <osandov@osandov.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH for 5.10-stable] x86/paravirt: Fix build due to
- __text_gen_insn() backport
-Message-ID: <Ze9s9vIC9S-40kRO@telecaster>
-References: <20240227131558.694096204@linuxfoundation.org>
- <20240227131601.488092151@linuxfoundation.org>
- <ZeYXvd1-rVkPGvvW@telecaster>
- <20240305112711.GAZecBj5TMaQDSz6Ym@fat_crate.local>
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="H7j5tXUm";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="9NsR97zB";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="H7j5tXUm";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="9NsR97zB"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 800215D329;
+	Tue, 12 Mar 2024 09:55:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710237333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
+	b=H7j5tXUmQnatggY+G5G6M2ZVgSSA4vMyTza9w6W82MdBE9u2JLEB9S40FpANNaNolN3i18
+	kgnL5BeC035nF0W7RuVBDaJrScWXmwX2agA5MyCM2jXOLi1/VFT/hf4n5OC0K9GQRjmNsT
+	wm/oCAInQyCVaCa7x1VDLb7jlHNubKU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710237333;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
+	b=9NsR97zBV+tUKXMO2FP/AvYai5gm6w0ppcRK41rcECNk55kDPsD/RZMwPmLaiZSsw3RaFe
+	Q1jON5EqK1iRD9Dg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710237333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
+	b=H7j5tXUmQnatggY+G5G6M2ZVgSSA4vMyTza9w6W82MdBE9u2JLEB9S40FpANNaNolN3i18
+	kgnL5BeC035nF0W7RuVBDaJrScWXmwX2agA5MyCM2jXOLi1/VFT/hf4n5OC0K9GQRjmNsT
+	wm/oCAInQyCVaCa7x1VDLb7jlHNubKU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710237333;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=YzJACWi54kwPIGZqHOdVD9RXCFTA28hRNteB4QElH0Y=;
+	b=9NsR97zBV+tUKXMO2FP/AvYai5gm6w0ppcRK41rcECNk55kDPsD/RZMwPmLaiZSsw3RaFe
+	Q1jON5EqK1iRD9Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 620A51364F;
+	Tue, 12 Mar 2024 09:55:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id SoWOF5Um8GX6PwAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Tue, 12 Mar 2024 09:55:33 +0000
+Message-ID: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
+Date: Tue, 12 Mar 2024 10:55:33 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240305112711.GAZecBj5TMaQDSz6Ym@fat_crate.local>
+User-Agent: Mozilla Thunderbird
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab updates for 6.9
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Chengming Zhou <chengming.zhou@linux.dev>,
+ Xiongwei Song <xiongwei.song@windriver.com>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=H7j5tXUm;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=9NsR97zB
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.00 / 50.00];
+	 TO_DN_EQ_ADDR_SOME(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 XM_UA_NO_VERSION(0.01)[];
+	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	 TO_DN_SOME(0.00)[];
+	 RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_TRACE(0.00)[suse.cz:+];
+	 MX_GOOD(-0.01)[];
+	 NEURAL_HAM_SHORT(-0.20)[-0.999];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 BAYES_HAM(-3.00)[100.00%];
+	 ARC_NA(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 FROM_HAS_DN(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 RCPT_COUNT_TWELVE(0.00)[13];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FREEMAIL_CC(0.00)[google.com,lge.com,linux.com,kernel.org,linux-foundation.org,kvack.org,vger.kernel.org,lists.linux.dev,linux.dev,gmail.com,windriver.com];
+	 RCVD_TLS_ALL(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[];
+	 RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Spam-Score: -3.00
+X-Rspamd-Queue-Id: 800215D329
+X-Spam-Flag: NO
 
-On Tue, Mar 05, 2024 at 12:27:11PM +0100, Borislav Petkov wrote:
-> On Mon, Mar 04, 2024 at 10:49:33AM -0800, Omar Sandoval wrote:
-> > v5.10.211 is failing to build with the attached .config with the
-> > following error:
-> 
-> Ok, let's try this:
-> 
-> ---
-> From: "Borislav Petkov (AMD)" <bp@alien8.de>
-> 
-> The Link tag has all the details but basically due to missing upstream
-> commits, the header which contains __text_gen_insn() is not in the
-> includes in paravirt.c, leading to:
-> 
->   arch/x86/kernel/paravirt.c: In function 'paravirt_patch_call':
->   arch/x86/kernel/paravirt.c:65:9: error: implicit declaration of function '__text_gen_insn' \
->   [-Werror=implicit-function-declaration]
->    65 |         __text_gen_insn(insn_buff, CALL_INSN_OPCODE,
->       |         ^~~~~~~~~~~~~~~
-> 
-> Add the missing include.
-> 
-> Reported-by: Omar Sandoval <osandov@osandov.com>
-> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-> Link: https://lore.kernel.org/r/ZeYXvd1-rVkPGvvW@telecaster
-> ---
->  arch/x86/kernel/paravirt.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/x86/kernel/paravirt.c b/arch/x86/kernel/paravirt.c
-> index 5bea8d93883a..f0e4ad8595ca 100644
-> --- a/arch/x86/kernel/paravirt.c
-> +++ b/arch/x86/kernel/paravirt.c
-> @@ -31,6 +31,7 @@
->  #include <asm/special_insns.h>
->  #include <asm/tlb.h>
->  #include <asm/io_bitmap.h>
-> +#include <asm/text-patching.h>
->  
->  /*
->   * nop stub, which must not clobber anything *including the stack* to
-> -- 
-> 2.43.0
-> 
-> -- 
-> Regards/Gruss,
->     Boris.
-> 
-> https://people.kernel.org/tglx/notes-about-netiquette
+Hi Linus,
 
-Tested-by: Omar Sandoval <osandov@osandov.com>
+please pull the latest slab updates from:
 
-Thanks!
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.9
+
+I'm not aware of any merge conflicts this time.
+
+Thanks,
+Vlastimil
+
+======================================
+
+- Freelist loading optimization (Chengming Zhou)
+
+  When the per-cpu slab is depleted and a new one loaded from the cpu partial
+  list, optimize the loading to avoid an irq enable/disable cycle. This results
+  in a 3.5% performance improvement on the "perf bench sched messaging" test.
+
+- Kernel boot parameters cleanup after SLAB removal (Xiongwei Song)
+
+  Due to two different main slab implementations we've had boot parameters
+  prefixed either slab_ and slub_ with some later becoming an alias as both
+  implementations gained the same functionality (i.e. slab_nomerge vs
+  slub_nomerge). In order to eventually get rid of the implementation-specific
+  names, the canonical and documented parameters are now all prefixed slab_
+  and the slub_ variants become deprecated but still working aliases.
+
+- SLAB_ kmem_cache creation flags cleanup (Vlastimil Babka)
+
+  The flags had hardcoded #define values which became tedious and error-prone
+  when adding new ones. Assign the values via an enum that takes care of
+  providing unique bit numbers. Also deprecate SLAB_MEM_SPREAD which was only
+  used by SLAB, so it's a no-op since SLAB removal. Assign it an explicit zero
+  value.  The removals of the flag usage are handled independently in the
+  respective subsystems, with a final removal of any leftover usage planned
+  for the next release.
+
+- Misc cleanups and fixes (Chengming Zhou, Xiaolei Wang, Zheng Yejian)
+
+  Includes removal of unused code or function parameters and a fix of a
+  memleak.
+
+----------------------------------------------------------------
+Chengming Zhou (7):
+      mm/slub: directly load freelist from cpu partial slab in the likely case
+      mm/slub: remove full list manipulation for non-debug slab
+      mm/slub: remove unused parameter in next_freelist_entry()
+      mm, slab: remove unused object_size parameter in kmem_cache_flags()
+      mm, slab: fix the comment of cpu partial list
+      mm, slab: remove the corner case of inc_slabs_node()
+      slab: remove PARTIAL_NODE slab_state
+
+Vlastimil Babka (6):
+      mm, slab: deprecate SLAB_MEM_SPREAD flag
+      mm, slab: use an enum to define SLAB_ cache creation flags
+      mm, slab, kasan: replace kasan_never_merge() with SLAB_NO_MERGE
+      mm, slab: remove memcg_from_slab_obj()
+      Merge branch 'slab/for-6.9/optimize-get-freelist' into slab/for-linus
+      Merge branch 'slab/for-6.9/slab-flag-cleanups' into slab/for-linus
+
+Xiaolei Wang (1):
+      mm/slab: Fix a kmemleak in kmem_cache_destroy()
+
+Xiongwei Song (4):
+      Documentation: kernel-parameters: remove noaliencache
+      mm/slub: unify all sl[au]b parameters with "slab_$param"
+      mm/slub: replace slub_$params with slab_$params in slub.rst
+      mm/slub: make the description of slab_min_objects helpful in doc
+
+Zheng Yejian (1):
+      mm/slub: remove parameter 'flags' in create_kmalloc_caches()
+
+ Documentation/admin-guide/kernel-parameters.txt |  75 +++++++--------
+ Documentation/mm/slub.rst                       |  60 ++++++------
+ drivers/misc/lkdtm/heap.c                       |   2 +-
+ include/linux/kasan.h                           |   6 --
+ include/linux/slab.h                            |  97 ++++++++++++++------
+ mm/Kconfig.debug                                |   6 +-
+ mm/kasan/generic.c                              |  22 ++---
+ mm/slab.h                                       |  11 +--
+ mm/slab_common.c                                |  29 +++---
+ mm/slub.c                                       | 116 ++++++++++--------------
+ tools/include/linux/slab.h                      |   1 -
+ 11 files changed, 210 insertions(+), 215 deletions(-)
