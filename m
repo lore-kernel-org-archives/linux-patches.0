@@ -1,172 +1,131 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9017E567;
-	Tue, 12 Mar 2024 16:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340B413B2BF
+	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 21:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710262118; cv=none; b=JNDVytC+Xeg5tMDhUqfSZ+cRpScj2gfOOBpdFsPVYn8B/CMWR6REeBtJH/rSgJaNr1dmkslgXVJa1NkdXcPxn24pm8Rfr/udWPTZDkRK5m3NAxwrM9BSUx/On499jFWPQYW/44fjHzpKhHjCR2i2XOrKxGXHz3Hmz6wiwZNs+xk=
+	t=1710279775; cv=none; b=LCPRwMHoJQxfP1PZnHKjW9R8Gcsr5ay2Q3suBr4ThrF9FTDh2ggPwepPjQvhALqqp9a/m3cN+TCKDzQZPev30q5E4+3UpHcwPNSBw6B+8vUfyi+jZbnIMidnKNIZl96C1yXDIDCErGHhuAcb9cYwYof0UBgz5uN5MCF2nL/lSes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710262118; c=relaxed/simple;
-	bh=TPjS8vmpIo22gwCDkXTZjyD2CnPvPYATxjQ4BhXhyVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gK0AusZ9W6ZcEhW+odCHbOA9NdC/6GGuoRXy4PSWTQlEPSL5Q+/v5dRh+Q1owKLaU+EhU9dUsSmChngy0DWl94qKEBwDTZ7rblHYgO5/uR2XkA2AamgTjG1Ox5NYissUcuLr0lDPS8rZJEQ5ptVkkR3SCslyEDGkNHCWfzYhOpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ydLvVPDR; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=FFT5A/MF; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=ydLvVPDR; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=FFT5A/MF; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	s=arc-20240116; t=1710279775; c=relaxed/simple;
+	bh=rgmxi5u6+E3/+xxSprJzTUYVwc4SV24nXmvybdtGqRU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fnZhnWnEOy4z4ZA6Mxh/UqfwOZ+DEghpf0T4MEsqyMoCHYvUSOvLo7CW3USPelO0S3xcwZMUn2l2yzjchzrL9d0wVjn3CEYP+Jk3B5+HyinFefLQQk5KBW3M7iZu6+ROPsANaZACREaOHZVbI9NpqEYfVhX2lxdKS02PeK1CAww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b4k4VM02; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ydLvVPDR";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="FFT5A/MF";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ydLvVPDR";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="FFT5A/MF"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 40E691F443;
-	Tue, 12 Mar 2024 16:48:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1710262109;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
-	b=ydLvVPDRXWY90+5duLod0hqkg1rQ/gdSPJn2161BHP1X3hxIxHJhe3ErkOY3V+j5j7C+qx
-	u2SJGkYU6+6syGFUMdvRlKGyv+JHhXbW0QFCvQd6Y5kuV06kEbvkXuMbMGzktEoaxCkodz
-	8+7BnU1lJbQazmjG1ae7sXatSsH+Fsw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1710262109;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
-	b=FFT5A/MF812zqHKI/APpHwi0r164IHfso75PnSpBV5hy0MnUHAIInXvgvgvXGVgbGVwGK8
-	6776g6MoM4ou85Bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1710262109;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
-	b=ydLvVPDRXWY90+5duLod0hqkg1rQ/gdSPJn2161BHP1X3hxIxHJhe3ErkOY3V+j5j7C+qx
-	u2SJGkYU6+6syGFUMdvRlKGyv+JHhXbW0QFCvQd6Y5kuV06kEbvkXuMbMGzktEoaxCkodz
-	8+7BnU1lJbQazmjG1ae7sXatSsH+Fsw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1710262109;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cq4hwcOlzXzmjgJTEVyDAeiB7l5KhslbrvkSY+O64fo=;
-	b=FFT5A/MF812zqHKI/APpHwi0r164IHfso75PnSpBV5hy0MnUHAIInXvgvgvXGVgbGVwGK8
-	6776g6MoM4ou85Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2773B13795;
-	Tue, 12 Mar 2024 16:48:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id xgh0CV2H8GWZUwAAD6G6ig
-	(envelope-from <dsterba@suse.cz>); Tue, 12 Mar 2024 16:48:29 +0000
-Date: Tue, 12 Mar 2024 17:41:19 +0100
-From: David Sterba <dsterba@suse.cz>
-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: dsterba@suse.cz, Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Josef Bacik <josef@toxicpanda.com>,
-	Sasha Levin <sashal@kernel.org>, Chris Mason <clm@fb.com>,
-	linux-btrfs <linux-btrfs@vger.kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.7 001/162] btrfs: fix deadlock with fiemap and extent
- locking
-Message-ID: <20240312164119.GW2604@twin.jikos.cz>
-Reply-To: dsterba@suse.cz
-References: <20240304211551.833500257@linuxfoundation.org>
- <20240304211551.880347593@linuxfoundation.org>
- <CAKisOQGCiJUUc62ptxp08LkR88T5t1swcBPYi84y2fLP6Tag7g@mail.gmail.com>
- <da17e97b-1880-415d-8cdb-07e79808e702@leemhuis.info>
- <20240311184108.GS2604@twin.jikos.cz>
- <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b4k4VM02"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710279775; x=1741815775;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=rgmxi5u6+E3/+xxSprJzTUYVwc4SV24nXmvybdtGqRU=;
+  b=b4k4VM0204tRScdypyq2Xw6DR9vB45QICe+nfRLuSUJctgbZ2KFSy/JR
+   nioy2DYxZKZrLs8HrhWEy2zb79kKreCmZQt9SoUJ6mw8Dvo9AUbRcXLZg
+   pSYhhvfHjoJz3Wsw/Zd8dAl7PWRyVAl0txkQ0Te2WuSKc4dtHFypO5FPT
+   p1sEZ+Kq6iH3g5a3qHnlaTlU+/XtL0nQ2eR+NKQU9Jt3TgcwGNlZnAmZ0
+   XObd91p3f3WdZf7YpgrDirAXUMZPyjii3tPARMeiyHK18mpHJN0hrVX9Y
+   9ERLMIyuyMCmCxQMz2DpdhIkwOfZcnKcQcquvW//XcfRygU9LjCk9OdUj
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="4884769"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="4884769"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 14:42:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="12280133"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 14:42:53 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Drew Fustini <dfustini@baylibre.com>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v16 0/9] Add support for Sub-NUMA cluster (SNC) systems
+Date: Tue, 12 Mar 2024 14:42:38 -0700
+Message-ID: <20240312214247.91772-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d9d46e16-ae73-4495-98a4-ab08ac501132@leemhuis.info>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -4.00
-X-Spamd-Result: default: False [-4.00 / 50.00];
-	 ARC_NA(0.00)[];
-	 HAS_REPLYTO(0.30)[dsterba@suse.cz];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 MIME_GOOD(-0.10)[text/plain];
-	 REPLYTO_ADDR_EQ_FROM(0.00)[];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 NEURAL_HAM_SHORT(-0.20)[-0.977];
-	 RCPT_COUNT_SEVEN(0.00)[11];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 RCVD_TLS_ALL(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%]
-X-Spam-Flag: NO
 
-On Mon, Mar 11, 2024 at 08:23:23PM +0100, Linux regression tracking (Thorsten Leemhuis) wrote:
-> On 11.03.24 19:41, David Sterba wrote:
-> > On Mon, Mar 11, 2024 at 10:15:31AM +0100, Linux regression tracking (Thorsten Leemhuis) wrote:
-> >> On 06.03.24 13:39, Filipe Manana wrote:
-> >>> On Mon, Mar 4, 2024 at 9:26 PM Greg Kroah-Hartman
-> >>> <gregkh@linuxfoundation.org> wrote:
-> >>>>
-> >>>> 6.7-stable review patch.  If anyone has any objections, please let me know.
-> >>>
-> >>> It would be better to delay the backport of this patch (and the
-> >>> followup fix) to any stable release, because it introduced another
-> >>> regression for which there is a reviewed fix but it's not yet in
-> >>> Linus' tree:
-> >>>
-> >>> https://lore.kernel.org/linux-btrfs/cover.1709202499.git.fdmanana@suse.com/
-> >>
-> >> Those two missed 6.8 afaics. Will those be heading to mainline any time
-> >> soon?
-> > 
-> > Yes, in the 6.9 pull request.
-> 
-> Great!
-> 
-> >> And how fast afterwards will it be wise to backport them to 6.8?
-> >> Will anyone ask Greg for that when the time has come?
-> > The commits have stable tags and will be processed in the usual way.
-> 
-> I'm missing something. The first change from Filipe's series linked
-> above has a fixes tag, but no stable tag afaics:
-> https://git.kernel.org/pub/scm/linux/kernel/git/kdave/linux.git/commit/?h=for-6.9&id=978b63f7464abcfd364a6c95f734282c50f3decf
-> 
-> So there is no guarantee that Greg will pick it up; and I assume if he
-> does he only will do so after -rc1 (or later, if the CVE stuff continues
-> to keep him busy). As Filipe wrote "can actually have serious
-> consequences" this got me slightly worried. That's why I'm a PITA here,
-> sorry -- but as I said, maybe I'm missing something.
+The Sub-NUMA cluster feature on some Intel processors partitions the CPUs
+that share an L3 cache into two or more sets. This plays havoc with the
+Resource Director Technology (RDT) monitoring features.  Prior to this
+patch Intel has advised that SNC and RDT are incompatible.
 
-Well it's the timing, last week before a final release the branches
-don't receive any insignificant changes like reviewed-by or stable tags.
-The patch connection is also done by the Fixes tag and a missing
-CC:stable can be substituted by explicit requests for backport if
-needed.
+Some of these CPU support an MSR that can partition the RMID counters in
+the same way. This allows monitoring features to be used. With the caveat
+that users must be aware that Linux may migrate tasks more frequently
+between SNC nodes than between "regular" NUMA nodes, so reading counters
+from all SNC nodes may be needed to get a complete picture of activity
+for tasks.
+
+Cache and memory bandwidth allocation features continue to operate at
+the scope of the L3 cache.
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+---
+Changes since v15: Link: https://lore.kernel.org/all/20240228112935.8087-tony.luck@intel.com/
+
+0) Note that v14 Reviewed/Testing tags have been removed because of the
+   extent of refactoring to catch up with upstream. But nothing
+   fundamental changed, so everything should look familiar.
+
+1) Refactor to apply on top of Link: https://lore.kernel.org/all/20240308213846.77075-1-tony.luck@intel.com/
+   [So base commit is either tip x86/cache, or upstream current merge PLUS
+    the two patches in that series]
+
+2) Add patch 9 which adds files showing mappings from domains to CPUs
+   Reinette suggested this, James thinks it duplicates information
+   that can be gathered from /sys/devices/system/
+   Discussion here: Link: https://lore.kernel.org/all/ZetcM9GO2PH6SC0j@agluck-desk3/
+   This part is a nice-to-have. I'm fine if just the first eight patches
+   are applied without this while the discussion continues.
+
+Tony Luck (9):
+  x86/resctrl: Prepare for new domain scope
+  x86/resctrl: Prepare to split rdt_domain structure
+  x86/resctrl: Prepare for different scope for control/monitor
+    operations
+  x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
+  x86/resctrl: Add node-scope to the options for feature scope
+  x86/resctrl: Introduce snc_nodes_per_l3_cache
+  x86/resctrl: Sub NUMA Cluster detection and enable
+  x86/resctrl: Update documentation with Sub-NUMA cluster changes
+  x86/resctrl: Add info files to show mappings from domains to lists of
+    cpus
+
+ Documentation/arch/x86/resctrl.rst        |  44 ++-
+ include/linux/resctrl.h                   |  85 +++--
+ arch/x86/include/asm/msr-index.h          |   1 +
+ arch/x86/kernel/cpu/resctrl/internal.h    |  67 ++--
+ arch/x86/kernel/cpu/resctrl/core.c        | 428 ++++++++++++++++++----
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  56 +--
+ arch/x86/kernel/cpu/resctrl/monitor.c     |  70 ++--
+ arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  26 +-
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 213 +++++++----
+ 9 files changed, 718 insertions(+), 272 deletions(-)
+
+-- 
+2.44.0
+
