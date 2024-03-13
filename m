@@ -1,130 +1,94 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3191448E6
-	for <patches@lists.linux.dev>; Tue, 12 Mar 2024 21:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000942F2B;
+	Wed, 13 Mar 2024 01:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710279784; cv=none; b=IfD8OYTcgsgjhusz82PWWoRn8HGkT+C64ZO+awzbVibc3nrsk2PQ87Y0hBkfkaaR8e+3IE2Q7y4C6Vh2pYHJX68Rat9J74fUi5dKoatZFt2cxCHHHVHdQFXf91DhC+Dp4epvy3nR7EVUJJHXFwILZ/abjKBs1h3Hw+s0z8IOlhY=
+	t=1710293916; cv=none; b=AVkgRKiE3z1JXyh9FtwCH6Jtank2o/jePQ3rC+jp26j5lkByCu2m5fq3Nx2N8rC/K7SuILATVFNKQS7pIG4cLQVPR8N1RgNjFmW3G2CH6GPgHI7dKMI12M1XJqVKGOQM++a8ERNWL5RxTtgGScxnsZIKFXeSA90QOZUnFjQEaRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710279784; c=relaxed/simple;
-	bh=GSbgnTJVBeQv/h9+bAESzpdDd8n73V8fZiggfLH9y9Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3v0M3qtKKDc5Ri1TvP5V45WYwV/HUzGmrCTpvBbRV6lPl4aGJC4tD3EocuRP6Py9GYcps7RSirDd2XWk2WkYUuHHIN4kY/BgWU54Angl9obKt2xJB/u/APxE8RWxCc1fsPyEUqOrfeeCHcDWqyAIfaNUy7FyTFBOihgS3U8L0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YTf8A3i5; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1710293916; c=relaxed/simple;
+	bh=elyAwsBMhBT+fZx4cbo81a/ihT1pgtXSmCdhSQhxU5c=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=NVW1JQdWSMVPlFZm3c6AM7ZghgkNnheUY18UjrYZNz4Vw/GT+lLo6jW1UBmrLmL1C7jWwEbpsWKroPlfLUUOHgej39naN5x8l9CekF2ZLILx/QxN+JwRLrdyRQgb0yd9Ni6n6OOmNzt5jiih3Kq8yP6z0Bf9Pp3jBTvCLF1l9uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=AmhtsckY; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YTf8A3i5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710279783; x=1741815783;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=GSbgnTJVBeQv/h9+bAESzpdDd8n73V8fZiggfLH9y9Y=;
-  b=YTf8A3i589IOru5fQXLpBqICtM2GiyUFzuEXrp7TmA4NfbXzgqWt5oXM
-   rcuIwsssB+clwAgdoUW2aEdfs+C2BQno5InDD7jzycOAHYKWUsQA6UA/H
-   gsmnUFhylPvWiDGXKCgTBUJx1xWODs5CbEiaVQ95Iv/o7OYlidprSC6XT
-   vykePAJKtCWNL8g2wWLBjKL1MAaAkxT6IF2UbZ9c9858aUoWdz7Q+jZfo
-   Eg/Dw1Oqzs6GOc3xofICc21X+wWSWitKz+ycIZZErVoYe/FKuF8C1pl4e
-   Sjxn/ACBzoo/gzZ5HNJQv/EoDhDIYv8ezKQwdRflXXOBENBvRC+C1FOSk
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="4884866"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="4884866"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 14:42:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="12280162"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 14:42:56 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="AmhtsckY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=hq6ZayF5HIGEfSfJFdnv7uS9zlR+5nppIUmOOmY8mBU=; b=AmhtsckYWdqbEX3JDk+Uhn6jSo
+	EDz3UVDpRqqOAb/HPGcogJ823lqtFj+dXCt35FiRIFCCrE26YRijxNLAKovcxGhd6CGEYgjtcYy/8
+	X0PJnH8ogOwXxYNboJF/t6JEcBRooA2rqUWUwZWEmnrgKiwztK8wKRTT+z2LGC4AlOXkYYjVKsjSa
+	z4wNc20F6ICca4+Kgcnm9MYW1R1kf1GME94F0IWQ8ngdk3OHKJqsJS1N+Ix2H5y60q1W9+GBg2Wpc
+	Sr5z3trRCOJKrUplxUhopaz80sYGgIuSEiFYqHyw8NQgGjEMHuCWutRHjdMUtuTgUN8NxiI76GTKd
+	7bnNP2yA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rkDZg-00000008SCx-3iG3;
+	Wed, 13 Mar 2024 01:38:32 +0000
+Date: Tue, 12 Mar 2024 18:38:32 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-modules@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Randy Dunlap <rdunlap@infradead.org>,
-	Drew Fustini <dfustini@baylibre.com>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v16 8/9] x86/resctrl: Update documentation with Sub-NUMA cluster changes
-Date: Tue, 12 Mar 2024 14:42:46 -0700
-Message-ID: <20240312214247.91772-9-tony.luck@intel.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240312214247.91772-1-tony.luck@intel.com>
-References: <20240312214247.91772-1-tony.luck@intel.com>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Kees Cook <keescook@chromium.org>, mcgrof@kernel.org
+Subject: [GIT PULL] Modules changes for v6.9-rc1
+Message-ID: <ZfEDmCMBe2b6Eyky@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
-per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
-their name refer to Sub-NUMA nodes instead of L3 cache ids.
+The following changes since commit 41bccc98fb7931d63d03f326a746ac4d429c1dd3:
 
-Users should be aware that SNC mode also affects the amount of L3 cache
-available for allocation within each SNC node.
+  Linux 6.8-rc2 (2024-01-28 17:01:12 -0800)
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/resctrl.rst | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+are available in the Git repository at:
 
-diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-index a6279df64a9d..15f1cff6ee76 100644
---- a/Documentation/arch/x86/resctrl.rst
-+++ b/Documentation/arch/x86/resctrl.rst
-@@ -366,10 +366,10 @@ When control is enabled all CTRL_MON groups will also contain:
- When monitoring is enabled all MON groups will also contain:
- 
- "mon_data":
--	This contains a set of files organized by L3 domain and by
--	RDT event. E.g. on a system with two L3 domains there will
--	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
--	directories have one file per event (e.g. "llc_occupancy",
-+	This contains a set of files organized by L3 domain or by NUMA
-+	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
-+	or enabled respectively) and by RDT event.  Each of these
-+	directories has one file per event (e.g. "llc_occupancy",
- 	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
- 	files provide a read out of the current value of the event for
- 	all tasks in the group. In CTRL_MON groups these files provide
-@@ -478,6 +478,23 @@ if non-contiguous 1s value is supported. On a system with a 20-bit mask
- each bit represents 5% of the capacity of the cache. You could partition
- the cache into four equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
- 
-+Notes on Sub-NUMA Cluster mode
-+==============================
-+When SNC mode is enabled, Linux may load balance tasks between Sub-NUMA
-+nodes much more readily than between regular NUMA nodes since the CPUs
-+on Sub-NUMA nodes share the same L3 cache and the system may report
-+the NUMA distance between Sub-NUMA nodes with a lower value than used
-+for regular NUMA nodes.  Users who do not bind tasks to the CPUs of a
-+specific Sub-NUMA node must read the "llc_occupancy", "mbm_total_bytes",
-+and "mbm_local_bytes" for all Sub-NUMA nodes where the tasks may execute
-+to get the full view of traffic for which the tasks were the source.
-+
-+The cache allocation feature still provides the same number of
-+bits in a mask to control allocation into the L3 cache, but each
-+of those ways has its capacity reduced because the cache is divided
-+between the SNC nodes. The values reported in the resctrl
-+"size" files are adjusted accordingly.
-+
- Memory bandwidth Allocation and monitoring
- ==========================================
- 
--- 
-2.44.0
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.9-rc1
 
+for you to fetch changes up to d1909c0221739356f31c721de4743e7d219a56cc:
+
+  module: Don't ignore errors from set_memory_XX() (2024-02-16 11:30:43 -0800)
+
+----------------------------------------------------------------
+Modules changes for v6.9-rc1
+
+Christophe Leroy did most of the work on this release, first with a few
+cleanups on CONFIG_STRICT_KERNEL_RWX and ending with error handling for
+when set_memory_XX() can fail. This is part of a larger effort to clean
+up all these callers which can fail, modules is just part of it.
+
+This has been sitting on linux-next for about a month without issues.
+
+----------------------------------------------------------------
+Christophe Leroy (6):
+      module: Use set_memory_rox()
+      module: Change module_enable_{nx/x/ro}() to more explicit names
+      init: Declare rodata_enabled and mark_rodata_ro() at all time
+      modules: Remove #ifdef CONFIG_STRICT_MODULE_RWX around rodata_enabled
+      powerpc: Simplify strict_kernel_rwx_enabled()
+      module: Don't ignore errors from set_memory_XX()
+
+Randy Dunlap (1):
+      lib/test_kmod: fix kernel-doc warnings
+
+ arch/powerpc/include/asm/mmu.h |  9 +-----
+ include/linux/init.h           |  4 ---
+ init/main.c                    | 21 +++++---------
+ kernel/module/internal.h       |  6 ++--
+ kernel/module/main.c           | 20 +++++++++++---
+ kernel/module/strict_rwx.c     | 63 +++++++++++++++++++++++++++---------------
+ lib/test_kmod.c                |  6 +++-
+ 7 files changed, 73 insertions(+), 56 deletions(-)
