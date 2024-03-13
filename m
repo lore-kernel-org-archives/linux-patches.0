@@ -1,114 +1,161 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC191CAA3
-	for <patches@lists.linux.dev>; Wed, 13 Mar 2024 09:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1471CD25
+	for <patches@lists.linux.dev>; Wed, 13 Mar 2024 09:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710321556; cv=none; b=ZeHSVx6yjbTHI6jP0+HIuMR9svZ0x3ecMy/WP1RIVxxOjg6USoqcruvhisH4XzKj53VbPIeetNNsaLKtBQjLLUCZ4wFEI9DycyZ0sphdlS7VRYm15P2HyvCrhDW5mo7ERFwr94/19mCgtIEyO9sFhV+j4N5Zu9oKbHTHN4SBKag=
+	t=1710322078; cv=none; b=CUh5zV7IRVDIDrv6v2dicgq5PLXGGB4HRNUh37LhZS6sBGg0pz9PXjYeo2PISWAOHaYSc/niT0swBLKbcPfr+sIatRBXSxOAWCbpHh4zwICoutbbKOWUoqyZKRaBt7UgUYURbp21rt0mndEMFs0Ar/uzlZMnTqtVmb5dDTLUoa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710321556; c=relaxed/simple;
-	bh=wBB7DVpy1uSNs4MGAm/0ZnuUEDCM2fXMfnXKV13z59c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YN+DYn62DkKjIU4TUee9VeIwTy8BGTsC9lQ3njkoGlKeNFo0HIS64X0xsNJjy0VqsMUTbm/wApZZNDmTt3uWSK+6vBoY5+/AcBs1oFAJw+mIj1ClLRpdtL+LFMjCfhtiIUIw6xzjhnLjjMXJrCMJ60AZ8Xr224LFMiZAx9ldChc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=t2iplvxi; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1710322078; c=relaxed/simple;
+	bh=ChtvqZSV/GDTm2swlFe2KXFB8b6Bn3ktu6XhPTvkP90=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LmnR8HwSyTiJyom+AETrhK/1L6+CHY8cHxYSv9cpCSaEe+PF10ZjG1WHv4Pt2P/ESazplzzWP3BJrdheQlnbgElJgtHOJ8dVcDRJxkS81wUx6iiZnrwO6zk1sU4cwL6WcE8M6hij21uHyH+C0urMUqIEb4MC9nMHZRIoFoGdlbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=IQD8gXkg; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=83aRbC3B; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=QcDcfomP; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=R3f1pvkU; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="t2iplvxi"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-42ef8193ae6so169871cf.1
-        for <patches@lists.linux.dev>; Wed, 13 Mar 2024 02:19:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710321554; x=1710926354; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sb+S6UppVnn4w7hdxgCL/WHS7Fkrh3i9kZy6ZdromFs=;
-        b=t2iplvxi7PPWXrSLASNIYmAVx4oNzQBabQf5ka5Kp4dPGad3g/e6POYkSyYeifo7UE
-         pAaY71tPfM0pz5S5z3c39pY3oeKMIoaro7nmgzijN6t17Ugkd0lwagX0xfpNdVXCLX3O
-         lo8W2vbas9hvbEGA85xCI3WuMeoRwjTb7AqjZVx3UZ9bVwzdcvbfr+x98jzbtcvLCrkz
-         ZaA667RSf2cHWqFx79ZWvonq7Euwdzw8jk9QGrQ3kyU8CzJKOFzEFYlUTOLUlvVWCVgM
-         aSpo5YvPseMm90B+uhRtUyJc2TqrkVda8SlZEKO1dFqV5EXWXYCqUvMi1Gda6Pn7hxJX
-         Vx6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710321554; x=1710926354;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sb+S6UppVnn4w7hdxgCL/WHS7Fkrh3i9kZy6ZdromFs=;
-        b=WISEMnk6xcUAAk7F1k81EGLSOE38y7jR/rwbIAEe7fKYWYVsy5AuYh5fm7b8AQgnnp
-         1cO1Lihnnw7On/mOhn0djsamZyBAMUUa0woa6nXM+2eW5Yuro7UL3yRx2tBpWggDnK+E
-         OVF61UAaMcymSdJj0OSoU/sMwZ8Rsjs8F6YvqsGVni+Qs+rfLSFzFjdXWVDOhlfq62Vo
-         7v/Spyv+zfWbMr5PC96gUzoIQbUrtDxuE1HPspBbSb+GG/lOCI2Ca1N0aFpKm/tJafXn
-         8IWeSUfcW4azJwPJRnZQtj/eWu2h+lVM9xsB7uWyJH6OXLe1ukHMAnA+qTC4Xtl48Amf
-         Kr5w==
-X-Forwarded-Encrypted: i=1; AJvYcCUl6ieNMUmkv1n+pR2YFT9TxAqvhlX2/GZJtzgWwUXp+hxSeVnqPylMQs2T5xzv/AUpJUKk1yvH/Nxvkd48G5Nq4eAM5tuIqw==
-X-Gm-Message-State: AOJu0Yz+OAUx+4LXarWL/SUuH3WXD8cMPJ/rTJZRb0Ek98DXT43zeEhc
-	4vuliLnmJwR4ztgLNrRaqeGb7XhrEDIEElYGutnyOHe/kgTvbfQppDQX4t4Nm8iXkCOrGiniGVf
-	77QUeDb85ubHjyER0b097GS0E7gn8qo/AueAf
-X-Google-Smtp-Source: AGHT+IGmlHoBGdgtDrqZQEOgDrE4YurE3IPrHq5J/dHoluiz27ChdMk4a4wLMRqkhWSwfQjuDuM/WgDh26Eyt97xDHA=
-X-Received: by 2002:a05:622a:108:b0:42e:fce9:a5e4 with SMTP id
- u8-20020a05622a010800b0042efce9a5e4mr286978qtw.4.1710321554028; Wed, 13 Mar
- 2024 02:19:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="IQD8gXkg";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="83aRbC3B";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="QcDcfomP";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="R3f1pvkU"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E15B421C4A;
+	Wed, 13 Mar 2024 09:27:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710322075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rx2Kyk0SeWQkpTeiwcrKDHoVpXu3gJUOIFIE++sH4jM=;
+	b=IQD8gXkghWN3jyp4yhEJh+YkQYcjIQKvF/+cdex+FHUh9NqQQnIt3qJYsoDeLpDdP62hx8
+	8DzizJ7wW/jGDUJRM/F9AmPh73RSKyeoSsYrQ8UZ7zx7Cpt7MtTxOww1FsA4e/I95+IRx4
+	Uut4xkcAw0Glg7FLk+M/Ik8MP/wY4E8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710322075;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rx2Kyk0SeWQkpTeiwcrKDHoVpXu3gJUOIFIE++sH4jM=;
+	b=83aRbC3BTHOul7pZvX+LU/XoH5lNTluY51bLuMUHjPyz3pYtTyASuU7KPenAcD2Qqz7QKH
+	0VW4YhyaRbKHQNDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1710322074; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rx2Kyk0SeWQkpTeiwcrKDHoVpXu3gJUOIFIE++sH4jM=;
+	b=QcDcfomPfFa1MiKGd8h/cW/hJ8Wy4w7qMO2V3PNmca7JXLxsabyVkLEjpVqGUCpnpIfM2q
+	FcqZL0jhFeRpmW9jr/Ip0r5sPOsueCu8tZD3ZOl8X55bvjjRW/wykAmvIPWNhXjpStoJ3V
+	5SmfZ+qt2D5gk0UmMusJDzXwieaIrDA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1710322074;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Rx2Kyk0SeWQkpTeiwcrKDHoVpXu3gJUOIFIE++sH4jM=;
+	b=R3f1pvkUe1JbTlfUpBFhzSpMd8lJ/Cef6DjHnPlccvjdqwlOA0//Irs94EZHl6dw+fXrJn
+	nMmHO//F4w2rTrAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D16AC1397F;
+	Wed, 13 Mar 2024 09:27:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id kEfxMppx8WWEdQAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Wed, 13 Mar 2024 09:27:54 +0000
+Message-ID: <97982cbd-a329-4630-89fb-e96e2e3f855f@suse.cz>
+Date: Wed, 13 Mar 2024 10:28:02 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com> <2-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
-In-Reply-To: <2-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
-From: Michael Shavit <mshavit@google.com>
-Date: Wed, 13 Mar 2024 17:18:36 +0800
-Message-ID: <CAKHBV24+cd5n+W2-hOga7Trujk3PcObTvwTj=dkyRTjUFu_4ZQ@mail.gmail.com>
-Subject: Re: [PATCH v5 02/27] iommu/arm-smmu-v3: Do not ATC invalidate the
- entire domain
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
-	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL] slab updates for 6.9
+Content-Language: en-US
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Chengming Zhou <chengming.zhou@linux.dev>,
+ Xiongwei Song <xiongwei.song@windriver.com>
+References: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
+ <CAHk-=wiFUvms3x7BC1R_4-t80K3O_XTOW3BKp6nPL_FkFSPzzQ@mail.gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <CAHk-=wiFUvms3x7BC1R_4-t80K3O_XTOW3BKp6nPL_FkFSPzzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=QcDcfomP;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=R3f1pvkU
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-1.81 / 50.00];
+	 TO_DN_EQ_ADDR_SOME(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 XM_UA_NO_VERSION(0.01)[];
+	 TO_DN_SOME(0.00)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_TRACE(0.00)[suse.cz:+];
+	 MX_GOOD(-0.01)[];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 BAYES_HAM(-1.81)[93.85%];
+	 ARC_NA(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 FROM_HAS_DN(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 RCPT_COUNT_TWELVE(0.00)[13];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FREEMAIL_CC(0.00)[google.com,lge.com,linux.com,kernel.org,linux-foundation.org,kvack.org,vger.kernel.org,lists.linux.dev,linux.dev,gmail.com,windriver.com];
+	 RCVD_TLS_ALL(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Spam-Score: -1.81
+X-Rspamd-Queue-Id: E15B421C4A
+X-Spam-Flag: NO
 
-Reviewed-by: Michael Shavit <mshavit@google.com>
 
-On Tue, Mar 5, 2024 at 7:44=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wro=
-te:
->
-> At this point we know which master we are going to change the PCI config
-> on, this is the only device we need to invalidate. Switch
-> arm_smmu_atc_inv_domain() for arm_smmu_atc_inv_master().
->
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/=
-arm/arm-smmu-v3/arm-smmu-v3.c
-> index d1bc151a5dff8c..9e9233331c4636 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -2447,7 +2447,10 @@ static void arm_smmu_enable_ats(struct arm_smmu_ma=
-ster *master,
->         pdev =3D to_pci_dev(master->dev);
->
->         atomic_inc(&smmu_domain->nr_ats_masters);
-> -       arm_smmu_atc_inv_domain(smmu_domain, IOMMU_NO_PASID, 0, 0);
-> +       /*
-> +        * ATC invalidation of PASID 0 causes the entire ATC to be flushe=
-d.
-> +        */
-> +       arm_smmu_atc_inv_master(master);
->         if (pci_enable_ats(pdev, stu))
->                 dev_err(master->dev, "Failed to enable ATS (STU %zu)\n", =
-stu);
->  }
-> --
-> 2.43.2
->
->
+
+On 3/13/24 04:54, Linus Torvalds wrote:
+> On Tue, 12 Mar 2024 at 02:55, Vlastimil Babka <vbabka@suse.cz> wrote:
+>>
+>>       Also deprecate SLAB_MEM_SPREAD which was only
+>>   used by SLAB, so it's a no-op since SLAB removal. Assign it an explicit zero
+>>   value.  The removals of the flag usage are handled independently in the
+>>   respective subsystems, with a final removal of any leftover usage planned
+>>   for the next release.
+> 
+> I already had the patch ready to go:
+> 
+>     https://lore.kernel.org/all/CAHk-=wji0u+OOtmAOD-5JV3SXcRJF___k_+8XNKmak0yd5vW1Q@mail.gmail.com/
+
+Aha, missed that thread.
+
+> so I just did a "git stash apply" and got rid of the final stragglers.
+> No need to have various random maintainers have to worry about a flag
+> that hasn't had any meaning since 6.7, and very little before that
+> either.
+
+Noted, thanks a lot.
+
+>               Linus
