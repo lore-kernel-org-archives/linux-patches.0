@@ -1,63 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C6610A11;
-	Wed, 13 Mar 2024 04:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8954D11193
+	for <patches@lists.linux.dev>; Wed, 13 Mar 2024 05:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710303103; cv=none; b=VewNPDZmCmNJOxoX6fN8hE8tR3OXYMC2zMbIrM1PrdLx6s59XM8EAr1lw74cbGA1fun+BIplVadIlBqLDRz5nxTaO3ItZ+SwHow5rcEIr73nBJZNdGbxQ+zp76fDu7dlRrBuDEtJ2z6lTUfFklBAEB67pyzY/NCCbXiHVLYY3UY=
+	t=1710306659; cv=none; b=vEsAYwP314p68834YKx7P8p+fYvQ2Lwl7bAwodjyFiYedguaMkI5uH9xBlwyiHumRjLmx78MNqjXai0NeUUH1S0nv9pbDqvnUsEw+XF3wjNTK0/GDmAmFRLmCFOPjx9LPNcl4Z7dl6Ht3guPbBmAZ5TPGtosO3EyFCqyBncMYtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710303103; c=relaxed/simple;
-	bh=zY1KoiX+P/u5npblXX8FugJaWuLHZzg5yqRZL3d9kts=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=VY1plTKx0yEx30tircskJ2pwFYWdoahx3yFvvE3qnmTQJM1uzhzlO1uinlKjWJYFdOEWjlCzJOa6ImfyJ54s5jaTyEITAyMog2H07Rg7IR5N09xUBe/B7iOKwnfdlVlenjR25bD71AwOkOT3md+8kmlcqF7S6sbICXE46TGR4XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tRpw79mL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1710306659; c=relaxed/simple;
+	bh=wewy7uaRPeiTZxNNUz+7Jc43Bc5c/R4w0IVXzPUj4qY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ASvulLiOztFJ4iRu/BfN4dms7lcyXQyg7Dc93tp/i1uU71XLy2Z7aWFKOjIia7rv8BnX0E0ICPSEMvS1N0VV+BSgEBQBZ0J5LexQzxYRu0w2vyEuJINFtDHktdcg0elW8BvlVtIjvcj2FvjJ/NQD7agqG2MBfGxYOYTs+gzD1GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PyEjcNRn; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tRpw79mL"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 34612C433F1;
-	Wed, 13 Mar 2024 04:11:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710303103;
-	bh=zY1KoiX+P/u5npblXX8FugJaWuLHZzg5yqRZL3d9kts=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=tRpw79mLCpaJVewK5Ea7Ng/6HpTaio/PtG70ou5flFFlYd5uZPeVEwS88qTi6/xJF
-	 IDFIYGSdIXbJJ8i4+cMsZDB7Thk/gkYS7VM7ds80h8o1m58V2whp9MSfjfPmRflb+q
-	 Gk6GNt3/0ePue31+ReFTJl/tkzygOE8D4WRl9HYM5pneccLkOy3GGtp+9zj5pQRgYc
-	 L6ycKFMxSdPdlpHp4rb+qbp7I7tQjCNaXusVZnQSW2qmKMMhDd1ASLzsOY9LFfaHSB
-	 oEAI0TYsbv0Q3P+R3C+RO/+FpE/ctcRndVvSxVmp3Zq1lyc0S+myDQrGataBRDKyZK
-	 /dWc9bQpgg6wg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 20FF3D95057;
-	Wed, 13 Mar 2024 04:11:43 +0000 (UTC)
-Subject: Re: [GIT PULL] slab updates for 6.9
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
-References: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
-X-PR-Tracked-List-Id: <linux-mm.kvack.org>
-X-PR-Tracked-Message-Id: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.9
-X-PR-Tracked-Commit-Id: 1a1c4e4576d439a14b2499de52b9225c69348903
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 0ea680eda6c9f59a9512f8b0dd4abf229bb9f6cf
-Message-Id: <171030310312.24236.16630999580576162174.pr-tracker-bot@kernel.org>
-Date: Wed, 13 Mar 2024 04:11:43 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Chengming Zhou <chengming.zhou@linux.dev>, Xiongwei Song <xiongwei.song@windriver.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PyEjcNRn"
+Message-ID: <15e3cf4e-f8d3-4706-b667-2575659b5552@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1710306655;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/KYgfvIsMcO/TmdlLE/KJZBk82wNlhv38pmZ/YdZGdw=;
+	b=PyEjcNRnemsMncI1JJwbShz3Q5spPyB8OWIoT1y9FU+GGOPB5XldanrEYgQxmHE+griePS
+	7MGZkD5qG2dtZ0GngwEpLdK5bCMqBz+2Hd+6EG9XN5I6OBZFbWAHtr533WS0nqMgp8H/Tn
+	QBi09lD4KzjWzBedjn91lpi9qE1TM2s=
+Date: Wed, 13 Mar 2024 13:10:41 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Subject: Re: [GIT PULL] slab updates for 6.9
+Content-Language: en-US
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+ Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Xiongwei Song <xiongwei.song@windriver.com>
+References: <c021631d-29e5-432f-bfcd-1d75ec28d065@suse.cz>
+ <CAHk-=wiFUvms3x7BC1R_4-t80K3O_XTOW3BKp6nPL_FkFSPzzQ@mail.gmail.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Chengming Zhou <chengming.zhou@linux.dev>
+In-Reply-To: <CAHk-=wiFUvms3x7BC1R_4-t80K3O_XTOW3BKp6nPL_FkFSPzzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-The pull request you sent on Tue, 12 Mar 2024 10:55:33 +0100:
+On 2024/3/13 11:54, Linus Torvalds wrote:
+> On Tue, 12 Mar 2024 at 02:55, Vlastimil Babka <vbabka@suse.cz> wrote:
+>>
+>>       Also deprecate SLAB_MEM_SPREAD which was only
+>>   used by SLAB, so it's a no-op since SLAB removal. Assign it an explicit zero
+>>   value.  The removals of the flag usage are handled independently in the
+>>   respective subsystems, with a final removal of any leftover usage planned
+>>   for the next release.
+> 
+> I already had the patch ready to go:
+> 
+>     https://lore.kernel.org/all/CAHk-=wji0u+OOtmAOD-5JV3SXcRJF___k_+8XNKmak0yd5vW1Q@mail.gmail.com/
+> 
+> so I just did a "git stash apply" and got rid of the final stragglers.
+> No need to have various random maintainers have to worry about a flag
+> that hasn't had any meaning since 6.7, and very little before that
+> either.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.9
+Great! It's better. Thanks for doing this.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/0ea680eda6c9f59a9512f8b0dd4abf229bb9f6cf
-
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
