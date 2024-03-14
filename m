@@ -1,63 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1945644B;
-	Wed, 13 Mar 2024 21:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796EC433A0;
+	Thu, 14 Mar 2024 08:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710366446; cv=none; b=mi9TYtKC/XTkYfO/pk9PDTAKrATjup4+tqB1NXhjjEf1/bJc65oLlFvUqerNLsjWsQ3LwTZ4LSNTFv8CgF/m4HD5YTR0uSozx+dkXeksBOU45h42eFv+OIjRrWek9GjwaOA/3k+Fiuo3/+YYNtEVqTnItEIM0kxCLq+zWZ+KYE0=
+	t=1710403859; cv=none; b=VwAeYIn+CgSs99bLXNy+hHULeUqLAzuw6gqguRByWB24Oew8B99hLfR1Ifz+BaOxkZ2TXlYcbYPURCRSI+6FjcR5ipwrsmUbazrGh+VQTqBDSsqbmIWa8C8HTPKdugKH5cz3njFZIdv7s299pm2r3ElR+j8iXk3BFMT5YH/u838=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710366446; c=relaxed/simple;
-	bh=LTJOMtoe7yScaaguL7Oni8uQ5NWZ/HHFbkhQtx8CreA=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=PbKApMZJWCQLCwjDweX7mbXMniOBjPqpPukvLxbEa786vlVVnDjr/7UPEK+/2uoWJGCqjvo81iNAV32O+Agp5ZD7QqRltpnN6ujw8tFAn7SoDsjmN/9uLdwt6oZeT2PsKsQivcqENw4HanM1VolocHsaFEwk4P4K7DH0Myv4Vm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MwTbOU94; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1710403859; c=relaxed/simple;
+	bh=kAqwbF4WS8v4P/C04yeKspsY1g9wvYlu2ehoJVyB4H8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aa1mPwHL0OzeyhfBS2eU2+d3FibwAxCT9LGNBa9+snrvrHFMSQGRhvFQKGNqTy6zDaUefIRu1te0Iey/nc2l7jfxuX7vCipw20b+l/pvrn49uJ5w1ORSq1petnovxowjXZMAVnVM8IjGnyfEQNlqnTuV1MgXx7gMJZZicdPl2Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J/zIVMLR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MwTbOU94"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 52D6AC433F1;
-	Wed, 13 Mar 2024 21:47:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/zIVMLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008A3C433C7;
+	Thu, 14 Mar 2024 08:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710366446;
-	bh=LTJOMtoe7yScaaguL7Oni8uQ5NWZ/HHFbkhQtx8CreA=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=MwTbOU94zGcMX1JqRx24JbF677Y+yrWzHllURe1326E8lXwvsFjVcEgkLkcXoRr4Y
-	 1H6xWImRnwHGglatlROSCUqbLKOUK1A54gKdX4udAlk3IHe2SoB9bIe3Nr+nzQCogX
-	 orksFUZhEK2XZy0k/dJySNFaBKFTolwKsYGJLROfYGlrs052OkLUFFxTbJd5S1hZ2F
-	 ig8FTgH0fjvu30sEODytVLMjuayAYWJEVfBMjQR6Fx33iG7KImB0k0e90zHXK612pU
-	 6TtIkSPMs+WFj+F41KZcxsNGY7Rel+PGXiUPo1zWYjB1HxBfJwito9ExhAWMBGcsPM
-	 ynVGB3RxHwYTg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 409D4D95054;
-	Wed, 13 Mar 2024 21:47:26 +0000 (UTC)
-Subject: Re: [GIT PULL] Modules changes for v6.9-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <ZfEDmCMBe2b6Eyky@bombadil.infradead.org>
-References: <ZfEDmCMBe2b6Eyky@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-modules.vger.kernel.org>
-X-PR-Tracked-Message-Id: <ZfEDmCMBe2b6Eyky@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.9-rc1
-X-PR-Tracked-Commit-Id: d1909c0221739356f31c721de4743e7d219a56cc
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: ce0c1c92656e3ea3840c4a5c748aa352285cae9c
-Message-Id: <171036644626.31875.5937353448305489267.pr-tracker-bot@kernel.org>
-Date: Wed, 13 Mar 2024 21:47:26 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, linux-modules@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, Christophe Leroy <christophe.leroy@csgroup.eu>, Randy Dunlap <rdunlap@infradead.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Kees Cook <keescook@chromium.org>, mcgrof@kernel.org
+	s=k20201202; t=1710403859;
+	bh=kAqwbF4WS8v4P/C04yeKspsY1g9wvYlu2ehoJVyB4H8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J/zIVMLRtjKGNVB2uvBiQY6TnXoWk+MFP5otAZVS9UtqVKRDk9v1nRbJXBfx9pb/S
+	 cfi7Z+dSDR6foZz19Ot8lQajPjojpG7DnbLnB5Yi3Aoma7ohNzjsPs1fn8gbFUJuTB
+	 L4qW2ybzz8w7L3ilc3dw+Bpohvyj+3atxniFHbcHFRPyfz26wmyulBplkco/L3wMCj
+	 r3XqaYemR9kexKmQlqka7H/xi116cYxNLLTdHPM+Wr1a7k/qmSGqTM+zM2agcn0a9a
+	 uOdUR/5SejXYk3xlnsag66Q1fBqZbEIQJPu0cqUxSDOyqVyb01Uqr645IEHxZtaA3x
+	 MaGC+D3ETDWfQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rkgB7-000000008Eb-3quY;
+	Thu, 14 Mar 2024 09:11:06 +0100
+Date: Thu, 14 Mar 2024 09:11:05 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Yongqin Liu <yongqin.liu@linaro.org>, Sasha Levin <sashal@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>,
+	amit.pundir@linaro.org, sumit.semwal@linaro.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 5.4 015/267] arm64: dts: qcom: sdm845: fix USB wakeup
+ interrupt types
+Message-ID: <ZfKxGUmi_IXjA4wA@hovoldconsulting.com>
+References: <20240221125940.058369148@linuxfoundation.org>
+ <20240221125940.531673812@linuxfoundation.org>
+ <77f1c6a6-7756-4168-a69d-583a35abd8ab@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <77f1c6a6-7756-4168-a69d-583a35abd8ab@linaro.org>
 
-The pull request you sent on Tue, 12 Mar 2024 18:38:32 -0700:
+[ +TO: Sasha ]
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.9-rc1
+On Thu, Mar 14, 2024 at 01:48:36AM +0800, Yongqin Liu wrote:
+> On 2024/2/21 21:05, Greg Kroah-Hartman wrote:
+> > 5.4-stable review patch.  If anyone has any objections, please let me know.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/ce0c1c92656e3ea3840c4a5c748aa352285cae9c
+> > From: Johan Hovold <johan+linaro@kernel.org>
+> >
+> > commit 84ad9ac8d9ca29033d589e79a991866b38e23b85 upstream.
+> >
+> > The DP/DM wakeup interrupts are edge triggered and which edge to trigger
+> > on depends on use-case and whether a Low speed or Full/High speed device
+> > is connected.
+> >
+> > Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
+> > Cc: stable@vger.kernel.org      # 4.20
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > Link: https://lore.kernel.org/r/20231120164331.8116-9-johan+linaro@kernel.org
+> > Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Thank you!
+> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > @@ -2503,8 +2503,8 @@
+> >   
+> >   			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> >   				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> > -				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> > -				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> > +				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
+> > +				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
+> >   			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> >   					  "dm_hs_phy_irq", "dp_hs_phy_irq";
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+> This patch only causes the db845c Android builds to fail to have the adb 
+> connection setup after boot.
+
+Indeed.
+
+> In the serial console, the following lines are printed:
+
+>    [    0.779411][   T79] dwc3-qcom a6f8800.usb: dp_hs_phy_irq failed: -22
+>    [    0.779418][   T79] dwc3-qcom a6f8800.usb: failed to setup IRQs, 
+> err=-22
+
+> After some investigation, it's found it will work again if the following 
+> two patches are applied:
+>    72b67ebf9d24 ("arm64: dts: qcom: add PDC interrupt controller for 
+> SDM845")
+>    204f9ed4bad6 ("arm64: dts: qcom: sdm845: fix USB DP/DM HS PHY 
+> interrupts")
+
+Correct, apparently the PDC controller was not added until 5.10, which I
+should have noticed and indicated in the commit message of the follow up
+fix. Sorry about that.
+
+> Could you please help to have a check and give some suggestions on what 
+> patches should be back ported to the 5.4 kernel, or are the above two
+> patches only good enough?
+
+Based on a quick look at the sdm845 dtsi, the PDC driver and their
+history, I think the two commits above should be enough.
+
+Sasha, could you pick the following two commits for 5.4:
+
+	72b67ebf9d24 ("arm64: dts: qcom: add PDC interrupt controller for SDM845")
+	204f9ed4bad6 ("arm64: dts: qcom: sdm845: fix USB DP/DM HS PHY interrupts")
+
+to fix the regression?
+
+Johan
