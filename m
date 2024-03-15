@@ -1,125 +1,239 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2088.outbound.protection.outlook.com [40.107.92.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1301426F;
-	Fri, 15 Mar 2024 07:53:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.88
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710489182; cv=fail; b=pVH3FsL9T2DPzCtZSFtoiaaT2nAnX7adCJ6lt2YCPUwKIZ/CRtfhu+l9OMDlY/XHO+1ydopcYSDoZCsM5sYhrKqamGnm3JnHQ3FGXiTvkScTjAB8919Redp74iFqdSGYFRrNt3nzX94oXTV9ykeH1oYwXpDfVdHlpThmO/O0ezc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710489182; c=relaxed/simple;
-	bh=8bk3v98nJ7WQTPJYEnlvwBckyp6v5j9Lc55teLyqd1o=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A07N9hjfdTLDrpyQNqSnvg/8tFdUgs4+UcpxnF8EtwC1Dq/Wi12YN/Z2NI07lVBDDboDgIaDHTIsZEj/L+0h3eW2OfIklMJZG1GLU9h1jiSBL8GuLZjirzWyQwpnk6UvTqbBpYVzWONKyy2ZZg22uzakUUaKH2V/PfdnqUEVy5g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QI9EmOmD; arc=fail smtp.client-ip=40.107.92.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58FD18041
+	for <patches@lists.linux.dev>; Fri, 15 Mar 2024 10:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710497101; cv=none; b=qUy0DPtsOFlcLg/wWbT/SjmkbHckO2GhkqckkcUPUdEIJLtLWVb/JHOYAFr308syEPJz9cFio3c6a6iYvIpK9wzkfM/dG3mduIcFhAsmEFAE+mac0lTeFi6pznS0Da7YGzL3oYmWdDLgUweDrjFXEKsnf5cdsA14fg2D4/8JUQY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710497101; c=relaxed/simple;
+	bh=3CyYqvHwfz63mAluOxL8F1IVPiWpVkUAfJKVYtmxnnc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kMcIupBvfRrrXXIVaErmRyYIqeABEL7bfGqOZj4wjDZlqOTBxgr3QT1BIygXROQQyW7lxhMjnJu4EergXAsIgEibIX1ILEYa4bs9w1QTB4oJf0hKoXm09u4kACC+Icbei00VBkZNuhJmq6kAUxw1Y4yRFEmaL7sirVFhhK9JosA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gsEJJYHl; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QI9EmOmD"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Hk6DUppbaI/Qoc2SIfVAgjoa9v4bc+Iu9HgFm8UjWzBvwbl6kuDlOOb+yTsMH2MbFeKGvxyEORnzqqsYfObEgBt9qJcWyUpy/v5NGMeJLvwuhc+EzrkRr4QhU/wTMufGQEzJd5VaNwsLwAvPBiJHTFeor/tAGYoRw7BSRDsbwPoPsqmcnXg9n+1sCYjVAaXpi3zReGpU3/RHw2WbtX2GwGcpxdQfyiolMk+XRHLf2sFyQSaQARrvnNbOiPArxddw8jdvMGO4vna+b0gxWScm/oOuHTbYbU3dWN+96VLl5u6Zvb6M18FD/HjViWaH/zfzToPQiTyiKJmbSSJoTrQPNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8bk3v98nJ7WQTPJYEnlvwBckyp6v5j9Lc55teLyqd1o=;
- b=i64T9L84rfwOWpNOi9IOE30Vy+IAEl9MJkcXdaf3Ewp0VQA6i+W8i+L9GD7tiYJduePMbJoCuo4ifaNs58ronPkc4U74QOEDrT3RKkKwJtpTPJpBu87n99BGEYfuToMEm8esxbKEsAWduEnnfM/v5wUF3CkQJpqemrRZbds0YotIhtydmrusVyCcoWMy7sQjqAG4M1s/piqH+Zo99yy2Zhidh0CItkEi6n1iqFlVhLfoNBF708yRbi1khiNLyFwg3+UqY2aZDMaU4MfPY5MXu14G+Jcnzdmf/RmTarMjje8UPpy6BdGyeqQqo2Rp0+KLy7eBOm5+v3cbuGTrYVBusQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8bk3v98nJ7WQTPJYEnlvwBckyp6v5j9Lc55teLyqd1o=;
- b=QI9EmOmDgqlxihJcVuOzKCLKMo/0MIfxSJS2Yk3gE0FvmHc+W8RD3khQSSeDji4OXClIfJKs1/OiYvR2cHPNJmTxMlVGhEA7a7VqLlnBmJktcaut+52kA3hq6YbYxoH0V7V7nliyNG0LJEdpeaD9sLwlhgxz1WJp8sAKyaUP/LFSVuwjHyBN7iMVkaB9/YYJy2X2zd/5UWUe7gP/kmiacekpJZOguovfjXinNZAIHzlz2z0is9ZIVXsSgc6POVHKimXcjl1Greh1LYXyKbwdsJmMlENGjJSMsMMI4cRniOPPH49N6gfwmdxz3440y0qf4wXeqOlXhjnvDV9gwPZJHg==
-Received: from SJ0PR13CA0130.namprd13.prod.outlook.com (2603:10b6:a03:2c6::15)
- by DS7PR12MB5936.namprd12.prod.outlook.com (2603:10b6:8:7f::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7386.19; Fri, 15 Mar 2024 07:52:57 +0000
-Received: from CO1PEPF000042AC.namprd03.prod.outlook.com
- (2603:10b6:a03:2c6:cafe::da) by SJ0PR13CA0130.outlook.office365.com
- (2603:10b6:a03:2c6::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.8 via Frontend
- Transport; Fri, 15 Mar 2024 07:52:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CO1PEPF000042AC.mail.protection.outlook.com (10.167.243.41) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7386.12 via Frontend Transport; Fri, 15 Mar 2024 07:52:56 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 15 Mar
- 2024 00:52:48 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.12; Fri, 15 Mar 2024 00:52:47 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.126.190.181)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12 via Frontend
- Transport; Fri, 15 Mar 2024 00:52:45 -0700
-Date: Fri, 15 Mar 2024 00:52:43 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
-	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
-	<shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v5 05/27] iommu/arm-smmu-v3: Make CD programming use
- arm_smmu_write_entry()
-Message-ID: <ZfP+S4CfTt2qvD6X@nvidia.com>
-References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
- <5-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gsEJJYHl"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-43095dcbee6so259421cf.0
+        for <patches@lists.linux.dev>; Fri, 15 Mar 2024 03:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1710497098; x=1711101898; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jlf1/pKtOv7hm1HZwIRuhDCij9c7Kk5YDTMOJzk6hGg=;
+        b=gsEJJYHl/0TQVqjf5+T27Aihsvf9MkquCDkJSwDJgBX6gY7Q6goZKtw9wVPwmff2RR
+         xIQ0xJ1aZq4/0e1qnxWKFjf9xYadlQErl9WcNTJigLPeqTZmqqH6xPQEYNG1IiHx6H1S
+         jgep8IY/WVWbjWAeybLn9oOKPu7IerG7a5OXdWsCHY9mDTckyQjxjKcDqx8QR/pS/b0b
+         TBMF1NR60l99jjj3BbkFClFiNKuga8G8tEbFGmtUp175Tmy9+A53KnkknAHe9DMg9PJ5
+         k/ZfnRMrLTyU85RJcM5rpByJ0qXBTZruWiutf4LXQB9wMbyLEdTMBo4raiX8wJ2Ng2JY
+         NMaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710497098; x=1711101898;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jlf1/pKtOv7hm1HZwIRuhDCij9c7Kk5YDTMOJzk6hGg=;
+        b=s1MRz0h1PfKy2feIOQ5SCkYYPHqrI7MuhUWDiIq8T37+t1DW4FwfDX9Jcwwzt8Tj8t
+         uxjQLFR/oeWhahb/ip7ozCP8ZdJdymUIX3PY/RotbM+sp3vXZkxdwYdlLsEUmRuf+JpJ
+         3xkDUSd8bbBB4i2yPHcz7nbHdJ7ApOX3bJ7rmGu0zWmMTfOOct1k/3LsGYT1w8/Vl7Ch
+         pXckll59uATm8fY2wWaBBeQZ4UeZb2GMWat22ytqfI2tFYam3KKT4uZ4hnN5FSt4ZnDd
+         3hNUSkKo7aTw0yFTm+kgqltfWmTqcKyvxSiaMjm9BBWNKWlFrzkMcJhfJ0GyewjKAB7a
+         II3g==
+X-Forwarded-Encrypted: i=1; AJvYcCUp4DdEAheGLLiB/Fz111Xsjpg7nbvokVxS1WdhgoXlBlEGaKtwcXZln8h5InaoXHkUWkYPspKtks7mpxZqS363fz767VPdyg==
+X-Gm-Message-State: AOJu0Yx8u0LOlGy0IkKniUhg0pJa/i1wPaWGPq0pMIJumUcb1wcaTpqc
+	/X/2RZqdpGVWgqfPlqiLsMvbL/CwqWqhrLC2BGtzHJaoC5V4wstTHO8Oq/RQZNaxM1u6oisNyb0
+	RfwEw+3vkrnCFtNKvAKNt4X+0jDSKQX10O0uQ
+X-Google-Smtp-Source: AGHT+IEr1vFgCuOWwo26klb8qScV+6JZDxcaNYhIOTN5JfqoACAoFdiPeC1IbzNeQJHB09f+W8VBtEnv8GP35HjY/QY=
+X-Received: by 2002:a05:622a:8c:b0:430:a6bc:bbc0 with SMTP id
+ o12-20020a05622a008c00b00430a6bcbbc0mr238774qtw.0.1710497098332; Fri, 15 Mar
+ 2024 03:04:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <5-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000042AC:EE_|DS7PR12MB5936:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2b278b22-19c8-4a4f-2334-08dc44c4ed80
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	5lJmj56pC96g7d7SrnDR4OrQRj8CaPjgUNNCr+O4YTdtnkskH5tg46jJ2rWTNir7XQizynj1N7iXRCrZy6MQK/Av9qN3X0mLptGBxAmVcFI7IaivMDCiBx/HqJSyhZZAAZ+MoHOesifoDWRuAgBm/Gbp0GtrOATOEA0alUBTeKatgJNZHfTFcg3EVWg55nUFPL2xxYfk0mciuImHAbbTu27z0Gyf763aWnjPw5WXBgq/IfFD/Z1sZ3QMbjgeuiGlX2v3HpgGP+Ye3RvpgrKVgPTd1w7KiHPB2hqr+IL+bUAqhrtG63ujeHxRX+ES8lXDi6WOqNgvu0dz8q5ef0Tua1jyOlmRL3O0djkudz1fMNlzP9kESgF3oQWbF/f/S7QVDLIgHaRXwEwhKn8AWf73TSIeHlTtQAAbGoK4jYhtxzlNxUsGoMY7/SQwtN+gUoqZU+oYEDoqZX1b23QSxJz+m7FueAlK9YYd1mgE2V2+7X9ffygPhjgxL+RLuqV9gwlgLY349kt7nTJkYLyFXlho2qTUxUt/AaojF5kuhyOTIw3o7byVC6G2SBq+d/aCQ3RSl7ag4aDTVwkI3jSg0CJuRhnkl2ZA+tVB6n+x83u20YcOuAXn9fHQMfU8+Cs+0SXQ9zbEcoGC5P6nwZQFCqPEEWL5shXI3EwFWjjkamz9z2bLAgWtdQF/mg8myo1VbhvOdUahlkvxSg1cOCFoQuZbnvt2P1YsxuoDBDpb/E4qNNmEkhIk+Nwf6hsbkfxaedze
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(36860700004)(82310400014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Mar 2024 07:52:56.7706
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b278b22-19c8-4a4f-2334-08dc44c4ed80
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF000042AC.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5936
+References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com> <11-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+In-Reply-To: <11-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+From: Michael Shavit <mshavit@google.com>
+Date: Fri, 15 Mar 2024 18:04:19 +0800
+Message-ID: <CAKHBV26Rr5T-6swERRUyugXqy-=PUEgo9nEga=L4ZYT9hPc32A@mail.gmail.com>
+Subject: Re: [PATCH v5 11/27] iommu/arm-smmu-v3: Build the whole CD in arm_smmu_make_s1_cd()
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 04, 2024 at 07:43:53PM -0400, Jason Gunthorpe wrote:
-> CD table entries and STE's have the same essential programming sequence,
-> just with different types and sizes.
+On Tue, Mar 5, 2024 at 7:44=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wro=
+te:
+>
+> Half the code was living in arm_smmu_domain_finalise_s1(), just move it
+> here and take the values directly from the pgtbl_ops instead of storing
+> copies.
+>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 47 ++++++++-------------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  3 --
+>  2 files changed, 18 insertions(+), 32 deletions(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/=
+arm/arm-smmu-v3/arm-smmu-v3.c
+> index 50d17e3ce0a956..dfdd48cf217c4e 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -1301,15 +1301,25 @@ void arm_smmu_make_s1_cd(struct arm_smmu_cd *targ=
+et,
+>                          struct arm_smmu_domain *smmu_domain)
+>  {
+>         struct arm_smmu_ctx_desc *cd =3D &smmu_domain->cd;
+> +       const struct io_pgtable_cfg *pgtbl_cfg =3D
+> +               &io_pgtable_ops_to_pgtable(smmu_domain->pgtbl_ops)->cfg;
+> +       typeof(&pgtbl_cfg->arm_lpae_s1_cfg.tcr) tcr =3D
+> +               &pgtbl_cfg->arm_lpae_s1_cfg.tcr;
+>
+>         memset(target, 0, sizeof(*target));
+>
+>         target->data[0] =3D cpu_to_le64(
+> -               cd->tcr |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_T0SZ, tcr->tsz) |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_TG0, tcr->tg) |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_IRGN0, tcr->irgn) |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_ORGN0, tcr->orgn) |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_SH0, tcr->sh) |
+> +               CTXDESC_CD_0_TCR_EPD1 |
+>  #ifdef __BIG_ENDIAN
+>                 CTXDESC_CD_0_ENDI |
+>  #endif
+>                 CTXDESC_CD_0_V |
+> +               FIELD_PREP(CTXDESC_CD_0_TCR_IPS, tcr->ips) |
 
-Hmm.. I somehow remember that one of them was 4 qwords while
-the other was 8? Yet now, in the final driver source code on
-the smmuv3_newapi branch, they are both 8 qwords? Feels like
-some of the statement and the change doesn't match with the
-reality so well -- hopefully I am not missing something...
+I guess you're trying to keep these ordered by bit position, in which
+case EPD1 should go after ENDI.
 
-Thanks
-Nicolin
+>                 CTXDESC_CD_0_AA64 |
+>                 (master->stall_enabled ? CTXDESC_CD_0_S : 0) |
+>                 CTXDESC_CD_0_R |
+> @@ -1317,9 +1327,9 @@ void arm_smmu_make_s1_cd(struct arm_smmu_cd *target=
+,
+>                 CTXDESC_CD_0_ASET |
+>                 FIELD_PREP(CTXDESC_CD_0_ASID, cd->asid)
+>                 );
+> -
+> -       target->data[1] =3D cpu_to_le64(cd->ttbr & CTXDESC_CD_1_TTB0_MASK=
+);
+> -       target->data[3] =3D cpu_to_le64(cd->mair);
+> +       target->data[1] =3D cpu_to_le64(pgtbl_cfg->arm_lpae_s1_cfg.ttbr &
+> +                                     CTXDESC_CD_1_TTB0_MASK);
+> +       target->data[3] =3D cpu_to_le64(pgtbl_cfg->arm_lpae_s1_cfg.mair);
+>  }
+>
+>  void arm_smmu_clear_cd(struct arm_smmu_master *master, ioasid_t ssid)
+> @@ -2305,13 +2315,11 @@ static void arm_smmu_domain_free(struct iommu_dom=
+ain *domain)
+>  }
+>
+>  static int arm_smmu_domain_finalise_s1(struct arm_smmu_device *smmu,
+> -                                      struct arm_smmu_domain *smmu_domai=
+n,
+> -                                      struct io_pgtable_cfg *pgtbl_cfg)
+> +                                      struct arm_smmu_domain *smmu_domai=
+n)
+>  {
+>         int ret;
+>         u32 asid;
+>         struct arm_smmu_ctx_desc *cd =3D &smmu_domain->cd;
+> -       typeof(&pgtbl_cfg->arm_lpae_s1_cfg.tcr) tcr =3D &pgtbl_cfg->arm_l=
+pae_s1_cfg.tcr;
+>
+>         refcount_set(&cd->refs, 1);
+>
+> @@ -2319,31 +2327,13 @@ static int arm_smmu_domain_finalise_s1(struct arm=
+_smmu_device *smmu,
+>         mutex_lock(&arm_smmu_asid_lock);
+>         ret =3D xa_alloc(&arm_smmu_asid_xa, &asid, cd,
+>                        XA_LIMIT(1, (1 << smmu->asid_bits) - 1), GFP_KERNE=
+L);
+> -       if (ret)
+> -               goto out_unlock;
+> -
+>         cd->asid        =3D (u16)asid;
+> -       cd->ttbr        =3D pgtbl_cfg->arm_lpae_s1_cfg.ttbr;
+> -       cd->tcr         =3D FIELD_PREP(CTXDESC_CD_0_TCR_T0SZ, tcr->tsz) |
+> -                         FIELD_PREP(CTXDESC_CD_0_TCR_TG0, tcr->tg) |
+> -                         FIELD_PREP(CTXDESC_CD_0_TCR_IRGN0, tcr->irgn) |
+> -                         FIELD_PREP(CTXDESC_CD_0_TCR_ORGN0, tcr->orgn) |
+> -                         FIELD_PREP(CTXDESC_CD_0_TCR_SH0, tcr->sh) |
+> -                         FIELD_PREP(CTXDESC_CD_0_TCR_IPS, tcr->ips) |
+> -                         CTXDESC_CD_0_TCR_EPD1 | CTXDESC_CD_0_AA64;
+> -       cd->mair        =3D pgtbl_cfg->arm_lpae_s1_cfg.mair;
+> -
+> -       mutex_unlock(&arm_smmu_asid_lock);
+> -       return 0;
+> -
+> -out_unlock:
+>         mutex_unlock(&arm_smmu_asid_lock);
+>         return ret;
+>  }
+>
+>  static int arm_smmu_domain_finalise_s2(struct arm_smmu_device *smmu,
+> -                                      struct arm_smmu_domain *smmu_domai=
+n,
+> -                                      struct io_pgtable_cfg *pgtbl_cfg)
+> +                                      struct arm_smmu_domain *smmu_domai=
+n)
+>  {
+>         int vmid;
+>         struct arm_smmu_s2_cfg *cfg =3D &smmu_domain->s2_cfg;
+> @@ -2367,8 +2357,7 @@ static int arm_smmu_domain_finalise(struct arm_smmu=
+_domain *smmu_domain,
+>         struct io_pgtable_cfg pgtbl_cfg;
+>         struct io_pgtable_ops *pgtbl_ops;
+>         int (*finalise_stage_fn)(struct arm_smmu_device *smmu,
+> -                                struct arm_smmu_domain *smmu_domain,
+> -                                struct io_pgtable_cfg *pgtbl_cfg);
+> +                                struct arm_smmu_domain *smmu_domain);
+>
+>         /* Restrict the stage to what we can actually support */
+>         if (!(smmu->features & ARM_SMMU_FEAT_TRANS_S1))
+> @@ -2411,7 +2400,7 @@ static int arm_smmu_domain_finalise(struct arm_smmu=
+_domain *smmu_domain,
+>         smmu_domain->domain.geometry.aperture_end =3D (1UL << pgtbl_cfg.i=
+as) - 1;
+>         smmu_domain->domain.geometry.force_aperture =3D true;
+>
+> -       ret =3D finalise_stage_fn(smmu, smmu_domain, &pgtbl_cfg);
+> +       ret =3D finalise_stage_fn(smmu, smmu_domain);
+>         if (ret < 0) {
+>                 free_io_pgtable_ops(pgtbl_ops);
+>                 return ret;
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/=
+arm/arm-smmu-v3/arm-smmu-v3.h
+> index 8eabcccb9420ba..468cd33b80ac35 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -587,9 +587,6 @@ struct arm_smmu_strtab_l1_desc {
+>
+>  struct arm_smmu_ctx_desc {
+>         u16                             asid;
+> -       u64                             ttbr;
+> -       u64                             tcr;
+> -       u64                             mair;
+>
+>         refcount_t                      refs;
+>         struct mm_struct                *mm;
+> --
+> 2.43.2
+>
+
+Apart from the nit,
+Reviewed-by: Michael Shavit <mshavit@google.com>
