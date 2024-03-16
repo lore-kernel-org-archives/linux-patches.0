@@ -1,175 +1,282 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3281BF20
-	for <patches@lists.linux.dev>; Sat, 16 Mar 2024 18:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB71BDD5
+	for <patches@lists.linux.dev>; Sat, 16 Mar 2024 18:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710612608; cv=none; b=ljUKrCSYxR4BlSkRk0wQ9IBblDWcK8X0R6W7wrDspG0u2q4cLRbJm1u4aMGXY6z3l/tJX36Cg44knnorlKSqSAzno76JT8jPQdB3mMBMsyhY/TG5XcJUxhdfakEY0dIW87hHP/EvIFCY5S6pkorbJYjw02UnREOflHtqVqbiYxg=
+	t=1710612870; cv=none; b=YQ4OtjZA3axTx2aiIuh+tBQn1yh7kyBZlVdcOLMRqZu8CwmrdjZVEqnt6gIPwV8lz74vx2fJIRW0ufgaJmNhtPGjljahi43EwjzTnyYXVmt1SpqMsoGIOiVGlcESmgnyM9tljL271tU5AKXAbD+kb9zHA7wdaOtU36hQDioveRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710612608; c=relaxed/simple;
-	bh=nKtgcVdQMQHGLc9S3mkky4rbHSa46PPXyCJ5WArhxro=;
+	s=arc-20240116; t=1710612870; c=relaxed/simple;
+	bh=WhHXEGUkaMjiRKtQh/cvFQ05SmZHv6U1Z6egt4JjF70=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=F9sWjkpO25I9aj9yXmy5kISsXFTIBffDd33QXGvZFj+yci10JlyAoXVIApb9dNSj5dvZgWxXvorX60vB24cz8Axhe8EIRE/mvjrESfSqqv3x7D6N7up7qqtM9y5tYV0P2+79RldfRlur5pxLnqpZyfLTLgX/sDe7vAJb3cHY3lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--moritzf.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SWFAGO8b; arc=none smtp.client-ip=209.85.128.201
+	 To:Cc:Content-Type; b=EOAPhTAoc+iGiEqBBuKhitAPOZJliMEuxby75qtvaq5gPPjTWinU2f7XAq/yDQRbDg44XKAgIvdWdtgeNcfz2AUkL926rpOmABmmf2Eikx8RoPHimQrxmt2pRB9ZY8nofjHPGT16HFBjuRKXs96p79ZCPLHwFN59LVBZ+MzGeyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--moritzf.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EHA2917S; arc=none smtp.client-ip=209.85.128.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--moritzf.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SWFAGO8b"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-607838c0800so44245487b3.1
-        for <patches@lists.linux.dev>; Sat, 16 Mar 2024 11:10:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EHA2917S"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-60a20c33f06so48513067b3.2
+        for <patches@lists.linux.dev>; Sat, 16 Mar 2024 11:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710612606; x=1711217406; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nKtgcVdQMQHGLc9S3mkky4rbHSa46PPXyCJ5WArhxro=;
-        b=SWFAGO8bs9dNUCAm9YCiiZtRzTVrPCosAwYcJ5dSicTJ8SOEZLfZIgztAVr/GR8f2k
-         UhV6W4/xK4lSWY74U/lnp1ChOdnN85gyKcL8KC5dKTbqw8HcYkrN56QrxihIAQcMZK/k
-         aFRTgQQFMthyqpAFFwsuSyymvW7SoBTGWnRoDX4h536vGytU0U3yFtHchDykUYrrwLhh
-         AhERopqc3/5Bj23uw0ywagYRdCm/ogT3RrReZmBNSL058jNxxyxRmtXhUbZTPTelH+6Z
-         HOtR3+TJ7y5ITHajSMhbomUzmfWgxeWQzr84dKJtHsbms8QJr11U+ztoaVuDiWQeLG2V
-         zX3w==
+        d=google.com; s=20230601; t=1710612867; x=1711217667; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=d3pAU9RdV7Cu2TdYjNrZ/NSoKiAwpqPwjat/S164y6U=;
+        b=EHA2917SqhAWORtAr2e94w3Jx19lURhN4mY4JRft/q0oBYwoCpDtUltRe9UzpoL75Z
+         eu0btLS5tmtgW0xvBivZg4YUtPjeGvrSU+ZR8t8GeRRsYXbjuuR0h66flZlKSGUJWv5J
+         hPpVXz3EeP7RjqeW29f0N4zlbsM/D8+sTq9a30PDhUG28F/LBgHqEiEX47dJQnBasaCS
+         QKc4zAEkJTeNOXj0lAB2jt5HazE3rZf0lBUvWdeNNqhTJUI6EQ5M5W1Ainmjey2er+Xb
+         h3gvJb7l0y4YND83t2DLEkr1IORZ9WSUgjnwE0LDy0Wrq8HjIZfo/BT2M6GM6lg9HKf5
+         ZM/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710612606; x=1711217406;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nKtgcVdQMQHGLc9S3mkky4rbHSa46PPXyCJ5WArhxro=;
-        b=Fx7Pv6Mb1ySvZXOZsR3Oy8U9aePzn68k7NUOY68jgHfaIuog7wFhUtfwILWB9rbrbN
-         d2KArUhsWD3HUBEWAqLeZPFRS+ks5CuNWUHXu3R3dm3WN0me5HN9CXtiqEFv1QeHjscl
-         Db6vCxxh7X+g4q2AtCJDXI+mXllBO13SDEq7xGt9EH2fiVdOH0jzUa4QMx/ciMYN0Ez4
-         wniNQBjd8+5UdjetM6vS32Lv0OA31HfSbCxypi05PKH1xkQXQSGg8uBqs9r9LMclLuwa
-         7SyJjF3mvH2uEV7Z+eUouFAPN1/YRg7urdmWTwFDjLP4Mcb6hlkUdH9shtbPRJZI/GR/
-         gcTA==
-X-Forwarded-Encrypted: i=1; AJvYcCUafZ4lSkV+o0geWhorhKz5EURU4DxLItep2OPB94UHvIAQd0xmU+UqybEBnd0Whu0YiXzMRtNfPqqBBQaTCfmrhUL39VVmhQ==
-X-Gm-Message-State: AOJu0YxQP2qW5u3EsW1fPVTbIicI3oKZRmLpMdz5XaaPcck7Jy+7d3qJ
-	jMs+Ft5iBWQc0YpHMsmilcL/+0Pj/In8pPJiJqnhtrtF4qJotdsZZ5u3NUT2TDXiSMGUmWewKdE
-	vDEJJuw==
-X-Google-Smtp-Source: AGHT+IFg8/x0xyNTHV99+TjdGS6GoBhPVrH+2Gq3yENQ21f2Up3hESPQMF89nfm92GCm/zOjYBtxNyi9gnzq
+        d=1e100.net; s=20230601; t=1710612867; x=1711217667;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d3pAU9RdV7Cu2TdYjNrZ/NSoKiAwpqPwjat/S164y6U=;
+        b=v9gr+E1aL8nZ+vUWc1n/+IjQvD9JJFIHqTmTkzBvGGwgGk5KXrFoEyI/t1WuQY7c9F
+         7clOrG7QyN4MU83Zn1GndvvfCa17nnQOUnEKNC0xHmKY49CQM24daMFOKDEo2jdNHHuf
+         8O04vj9dcBHUDnoh03kpnnWQuLOK1tNbm+tiVo9RRk6Y9ArRqFMXaSThb7lUpuOTDX+7
+         VdIZDKdixuBvwNwWsSI7d5yNckVIm1prtE9QG86GKhSvG3Dq8lqfFOwTosv2ebp3JeUl
+         KvjtPF9uq18nXRcPMyfSXKVxl68/65npwrlqRhSyHIwrEPXfEiJk8mczME08J8pJftDG
+         55cg==
+X-Forwarded-Encrypted: i=1; AJvYcCU0HgQaa48Ya0t7Gyq0I3wwA20x/5CudRwh/Pz4QMAWXlZ0JLg4cUlF+IkZkrzP2MZMLWAsntfMAV8MHHgAShcYMiLKsic5zw==
+X-Gm-Message-State: AOJu0Yx5PSqYO+wXbPOzKuWZafCX2vhFeQDI4jofDPzBDmf/ETIUZfIH
+	YuY8d5qkZJPxkCePrmR6lBG6OgUcy+Y6kjkhS8Nl4KcXJpvuw+FNuhFIDM5OTJVVIfh5MFzRyFx
+	LfUfL1Q==
+X-Google-Smtp-Source: AGHT+IFKB61aLf4bS/hjmIhFbVH53Gbw/F8QdRnjW7BBmAEcs541XAUDGJOq80pnG90ZWLTJnPBPuYTkI+ZD
 X-Received: from morats.c.googlers.com ([fda3:e722:ac3:cc00:14:4d90:c0a8:d9e])
- (user=moritzf job=sendgmr) by 2002:a81:6dc8:0:b0:60c:1a1a:657b with SMTP id
- i191-20020a816dc8000000b0060c1a1a657bmr1921646ywc.4.1710612606430; Sat, 16
- Mar 2024 11:10:06 -0700 (PDT)
-Date: Sat, 16 Mar 2024 18:10:05 +0000
-In-Reply-To: <CAKHBV26ATewvBtf4tkyEP8CTS5SFj3-FBySwt6jsrLd3tH0VyA@mail.gmail.com>
+ (user=moritzf job=sendgmr) by 2002:a81:a042:0:b0:60a:3487:6f7c with SMTP id
+ x63-20020a81a042000000b0060a34876f7cmr1442778ywg.9.1710612867356; Sat, 16 Mar
+ 2024 11:14:27 -0700 (PDT)
+Date: Sat, 16 Mar 2024 18:14:26 +0000
+In-Reply-To: <5-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
- <3-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com> <CAKHBV26ATewvBtf4tkyEP8CTS5SFj3-FBySwt6jsrLd3tH0VyA@mail.gmail.com>
-Message-ID: <wcu2nzdbujgd6bqqdp3hhnubpwskrihv2btu3xdscf47qrngty@ytgszesm2gfq>
-Subject: Re: [PATCH v5 03/27] iommu/arm-smmu-v3: Add a type for the CD entry
+References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com> <5-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+Message-ID: <pkmfe7esiqbpxopy44ovwslrzwvy63n22qfwcnroykxmmordkc@shdu7w65v264>
+Subject: Re: [PATCH v5 05/27] iommu/arm-smmu-v3: Make CD programming use arm_smmu_write_entry()
 From: Moritz Fischer <moritzf@google.com>
-To: Michael Shavit <mshavit@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
 	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
 	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, 
 	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
+	Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
-Content-Transfer-Encoding: base64
 
-T24gV2VkLCBNYXIgMTMsIDIwMjQgYXQgMDU6NDQ6MzVQTSArMDgwMCwgTWljaGFlbCBTaGF2aXQg
-d3JvdGU6DQo+IE9uIFR1ZSwgTWFyIDUsIDIwMjQgYXQgNzo0NOKAr0FNIEphc29uIEd1bnRob3Jw
-ZSA8amdnQG52aWRpYS5jb20+IHdyb3RlOg0KPiA+DQo+ID4gSW5zdGVhZCBvZiBwYXNzaW5nIGEg
-bmFrZWQgX19sZTE2ICogYXJvdW5kIHRvIHJlcHJlc2VudCBhIENEIHRhYmxlIGVudHJ5DQo+ID4g
-d3JhcCBpdCBpbiBhICJzdHJ1Y3QgYXJtX3NtbXVfY2QiIHdpdGggYW4gYXJyYXkgb2YgdGhlIGNv
-cnJlY3Qgc2l6ZS4gIA0KPiBUaGlzDQo+ID4gbWFrZXMgaXQgbXVjaCBjbGVhcmVyIHdoaWNoIGZ1
-bmN0aW9ucyB3aWxsIGNvbXByaXNlIHRoZSAiQ0QgQVBJIi4NCj4gPg0KPiA+IFRlc3RlZC1ieTog
-Tmljb2xpbiBDaGVuIDxuaWNvbGluY0BudmlkaWEuY29tPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEph
-c29uIEd1bnRob3JwZSA8amdnQG52aWRpYS5jb20+DQo+ID4gLS0tDQo+ID4gIGRyaXZlcnMvaW9t
-bXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmMgfCAyMCArKysrKysrKysrKy0tLS0tLS0t
-LQ0KPiA+ICBkcml2ZXJzL2lvbW11L2FybS9hcm0tc21tdS12My9hcm0tc21tdS12My5oIHwgIDcg
-KysrKysrLQ0KPiA+ICAyIGZpbGVzIGNoYW5nZWQsIDE3IGluc2VydGlvbnMoKyksIDEwIGRlbGV0
-aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11
-LXYzL2FybS1zbW11LXYzLmMgIA0KPiBiL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11LXYzL2Fy
-bS1zbW11LXYzLmMNCj4gPiBpbmRleCA5ZTkyMzMzMzFjNDYzNi4uYzYwYjA2N2MxZjU1M2UgMTAw
-NjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9pb21tdS9hcm0vYXJtLXNtbXUtdjMvYXJtLXNtbXUtdjMu
-Yw0KPiA+ICsrKyBiL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmMN
-Cj4gPiBAQCAtMTIxOSw3ICsxMjE5LDggQEAgc3RhdGljIHZvaWQgYXJtX3NtbXVfd3JpdGVfY2Rf
-bDFfZGVzYyhfX2xlNjQgKmRzdCwNCj4gPiAgICAgICAgIFdSSVRFX09OQ0UoKmRzdCwgY3B1X3Rv
-X2xlNjQodmFsKSk7DQo+ID4gIH0NCj4gPg0KPiA+IC1zdGF0aWMgX19sZTY0ICphcm1fc21tdV9n
-ZXRfY2RfcHRyKHN0cnVjdCBhcm1fc21tdV9tYXN0ZXIgKm1hc3RlciwgdTMyICANCj4gc3NpZCkN
-Cj4gPiArc3RhdGljIHN0cnVjdCBhcm1fc21tdV9jZCAqYXJtX3NtbXVfZ2V0X2NkX3B0cihzdHJ1
-Y3QgYXJtX3NtbXVfbWFzdGVyICANCj4gKm1hc3RlciwNCj4gPiArICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHUzMiBzc2lkKQ0KPiA+ICB7DQo+ID4gICAgICAg
-ICBfX2xlNjQgKmwxcHRyOw0KPiA+ICAgICAgICAgdW5zaWduZWQgaW50IGlkeDsNCj4gPiBAQCAt
-MTIyOCw3ICsxMjI5LDggQEAgc3RhdGljIF9fbGU2NCAqYXJtX3NtbXVfZ2V0X2NkX3B0cihzdHJ1
-Y3QgIA0KPiBhcm1fc21tdV9tYXN0ZXIgKm1hc3RlciwgdTMyIHNzaWQpDQo+ID4gICAgICAgICBz
-dHJ1Y3QgYXJtX3NtbXVfY3R4X2Rlc2NfY2ZnICpjZF90YWJsZSA9ICZtYXN0ZXItPmNkX3RhYmxl
-Ow0KPiA+DQo+ID4gICAgICAgICBpZiAoY2RfdGFibGUtPnMxZm10ID09IFNUUlRBQl9TVEVfMF9T
-MUZNVF9MSU5FQVIpDQo+ID4gLSAgICAgICAgICAgICAgIHJldHVybiBjZF90YWJsZS0+Y2R0YWIg
-KyBzc2lkICogQ1RYREVTQ19DRF9EV09SRFM7DQo+ID4gKyAgICAgICAgICAgICAgIHJldHVybiAo
-c3RydWN0IGFybV9zbW11X2NkICopKGNkX3RhYmxlLT5jZHRhYiArDQo+ID4gKyAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNzaWQgKiBDVFhERVNDX0NEX0RXT1JE
-Uyk7DQoNCj4gQ2FuIHdlIGRlZmluZSBjZF90YWJsZS5jZHRhYiBhcyBhIHVuaW9uIHR5cGUgdG8g
-YXZvaWQgdGhpcyBjYXN0IGFuZA0KPiBtYWtlIHRoZSBzdHJ1Y3QgZGVmaW5pdGlvbiBtb3JlIGV4
-cGxpY2l0Pw0KDQorMSwgSSB0aGluayB0aGF0J2QgbWFrZSBpdCBtb3JlIHJlYWRhYmxlLg0KDQo+
-ID4NCj4gPiAgICAgICAgIGlkeCA9IHNzaWQgPj4gQ1RYREVTQ19TUExJVDsNCj4gPiAgICAgICAg
-IGwxX2Rlc2MgPSAmY2RfdGFibGUtPmwxX2Rlc2NbaWR4XTsNCj4gPiBAQCAtMTI0Miw3ICsxMjQ0
-LDcgQEAgc3RhdGljIF9fbGU2NCAqYXJtX3NtbXVfZ2V0X2NkX3B0cihzdHJ1Y3QgIA0KPiBhcm1f
-c21tdV9tYXN0ZXIgKm1hc3RlciwgdTMyIHNzaWQpDQo+ID4gICAgICAgICAgICAgICAgIGFybV9z
-bW11X3N5bmNfY2QobWFzdGVyLCBzc2lkLCBmYWxzZSk7DQo+ID4gICAgICAgICB9DQo+ID4gICAg
-ICAgICBpZHggPSBzc2lkICYgKENUWERFU0NfTDJfRU5UUklFUyAtIDEpOw0KPiA+IC0gICAgICAg
-cmV0dXJuIGwxX2Rlc2MtPmwycHRyICsgaWR4ICogQ1RYREVTQ19DRF9EV09SRFM7DQo+ID4gKyAg
-ICAgICByZXR1cm4gJmwxX2Rlc2MtPmwycHRyW2lkeF07DQo+ID4gIH0NCj4gPg0KPiA+ICBpbnQg
-YXJtX3NtbXVfd3JpdGVfY3R4X2Rlc2Moc3RydWN0IGFybV9zbW11X21hc3RlciAqbWFzdGVyLCBp
-bnQgc3NpZCwNCj4gPiBAQCAtMTI2MSw3ICsxMjYzLDcgQEAgaW50IGFybV9zbW11X3dyaXRlX2N0
-eF9kZXNjKHN0cnVjdCAgDQo+IGFybV9zbW11X21hc3RlciAqbWFzdGVyLCBpbnQgc3NpZCwNCj4g
-PiAgICAgICAgICAqLw0KPiA+ICAgICAgICAgdTY0IHZhbDsNCj4gPiAgICAgICAgIGJvb2wgY2Rf
-bGl2ZTsNCj4gPiAtICAgICAgIF9fbGU2NCAqY2RwdHI7DQo+ID4gKyAgICAgICBzdHJ1Y3QgYXJt
-X3NtbXVfY2QgKmNkcHRyOw0KPiA+ICAgICAgICAgc3RydWN0IGFybV9zbW11X2N0eF9kZXNjX2Nm
-ZyAqY2RfdGFibGUgPSAmbWFzdGVyLT5jZF90YWJsZTsNCj4gPiAgICAgICAgIHN0cnVjdCBhcm1f
-c21tdV9kZXZpY2UgKnNtbXUgPSBtYXN0ZXItPnNtbXU7DQo+ID4NCj4gPiBAQCAtMTI3Miw3ICsx
-Mjc0LDcgQEAgaW50IGFybV9zbW11X3dyaXRlX2N0eF9kZXNjKHN0cnVjdCAgDQo+IGFybV9zbW11
-X21hc3RlciAqbWFzdGVyLCBpbnQgc3NpZCwNCj4gPiAgICAgICAgIGlmICghY2RwdHIpDQo+ID4g
-ICAgICAgICAgICAgICAgIHJldHVybiAtRU5PTUVNOw0KPiA+DQo+ID4gLSAgICAgICB2YWwgPSBs
-ZTY0X3RvX2NwdShjZHB0clswXSk7DQo+ID4gKyAgICAgICB2YWwgPSBsZTY0X3RvX2NwdShjZHB0
-ci0+ZGF0YVswXSk7DQo+ID4gICAgICAgICBjZF9saXZlID0gISEodmFsICYgQ1RYREVTQ19DRF8w
-X1YpOw0KPiA+DQo+ID4gICAgICAgICBpZiAoIWNkKSB7IC8qICg1KSAqLw0KPiA+IEBAIC0xMjg5
-LDkgKzEyOTEsOSBAQCBpbnQgYXJtX3NtbXVfd3JpdGVfY3R4X2Rlc2Moc3RydWN0ICANCj4gYXJt
-X3NtbXVfbWFzdGVyICptYXN0ZXIsIGludCBzc2lkLA0KPiA+ICAgICAgICAgICAgICAgICAgKiB0
-aGlzIHN1YnN0cmVhbSdzIHRyYWZmaWMNCj4gPiAgICAgICAgICAgICAgICAgICovDQo+ID4gICAg
-ICAgICB9IGVsc2UgeyAvKiAoMSkgYW5kICgyKSAqLw0KPiA+IC0gICAgICAgICAgICAgICBjZHB0
-clsxXSA9IGNwdV90b19sZTY0KGNkLT50dGJyICYgIA0KPiBDVFhERVNDX0NEXzFfVFRCMF9NQVNL
-KTsNCj4gPiAtICAgICAgICAgICAgICAgY2RwdHJbMl0gPSAwOw0KPiA+IC0gICAgICAgICAgICAg
-ICBjZHB0clszXSA9IGNwdV90b19sZTY0KGNkLT5tYWlyKTsNCj4gPiArICAgICAgICAgICAgICAg
-Y2RwdHItPmRhdGFbMV0gPSBjcHVfdG9fbGU2NChjZC0+dHRiciAmICANCj4gQ1RYREVTQ19DRF8x
-X1RUQjBfTUFTSyk7DQo+ID4gKyAgICAgICAgICAgICAgIGNkcHRyLT5kYXRhWzJdID0gMDsNCj4g
-PiArICAgICAgICAgICAgICAgY2RwdHItPmRhdGFbM10gPSBjcHVfdG9fbGU2NChjZC0+bWFpcik7
-DQo+ID4NCj4gPiAgICAgICAgICAgICAgICAgLyoNCj4gPiAgICAgICAgICAgICAgICAgICogU1RF
-IG1heSBiZSBsaXZlLCBhbmQgdGhlIFNNTVUgbWlnaHQgcmVhZCBkd29yZHMgb2YgIA0KPiB0aGlz
-IENEIGluIGFueQ0KPiA+IEBAIC0xMzIzLDcgKzEzMjUsNyBAQCBpbnQgYXJtX3NtbXVfd3JpdGVf
-Y3R4X2Rlc2Moc3RydWN0ICANCj4gYXJtX3NtbXVfbWFzdGVyICptYXN0ZXIsIGludCBzc2lkLA0K
-PiA+ICAgICAgICAgICogICBmaWVsZCB3aXRoaW4gYW4gYWxpZ25lZCA2NC1iaXQgc3BhbiBvZiBh
-IHN0cnVjdHVyZSBjYW4gYmUgIA0KPiBhbHRlcmVkDQo+ID4gICAgICAgICAgKiAgIHdpdGhvdXQg
-Zmlyc3QgbWFraW5nIHRoZSBzdHJ1Y3R1cmUgaW52YWxpZC4NCj4gPiAgICAgICAgICAqLw0KPiA+
-IC0gICAgICAgV1JJVEVfT05DRShjZHB0clswXSwgY3B1X3RvX2xlNjQodmFsKSk7DQo+ID4gKyAg
-ICAgICBXUklURV9PTkNFKGNkcHRyLT5kYXRhWzBdLCBjcHVfdG9fbGU2NCh2YWwpKTsNCj4gPiAg
-ICAgICAgIGFybV9zbW11X3N5bmNfY2QobWFzdGVyLCBzc2lkLCB0cnVlKTsNCj4gPiAgICAgICAg
-IHJldHVybiAwOw0KPiA+ICB9DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaW9tbXUvYXJtL2Fy
-bS1zbW11LXYzL2FybS1zbW11LXYzLmggIA0KPiBiL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11
-LXYzL2FybS1zbW11LXYzLmgNCj4gPiBpbmRleCAyM2JhZjExN2U3ZTRiNS4uNzA3OGVkNTY5ZmQ0
-ZDMgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9pb21tdS9hcm0vYXJtLXNtbXUtdjMvYXJtLXNt
-bXUtdjMuaA0KPiA+ICsrKyBiL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11
-LXYzLmgNCj4gPiBAQCAtMjgyLDYgKzI4MiwxMSBAQCBzdHJ1Y3QgYXJtX3NtbXVfc3RlIHsNCj4g
-PiAgI2RlZmluZSBDVFhERVNDX0wxX0RFU0NfTDJQVFJfTUFTSyAgICAgR0VOTUFTS19VTEwoNTEs
-IDEyKQ0KPiA+DQo+ID4gICNkZWZpbmUgQ1RYREVTQ19DRF9EV09SRFMgICAgICAgICAgICAgIDgN
-Cj4gPiArDQo+ID4gK3N0cnVjdCBhcm1fc21tdV9jZCB7DQo+ID4gKyAgICAgICBfX2xlNjQgZGF0
-YVtDVFhERVNDX0NEX0RXT1JEU107DQo+ID4gK307DQo+ID4gKw0KPiA+ICAjZGVmaW5lIENUWERF
-U0NfQ0RfMF9UQ1JfVDBTWiAgICAgICAgICBHRU5NQVNLX1VMTCg1LCAwKQ0KPiA+ICAjZGVmaW5l
-IENUWERFU0NfQ0RfMF9UQ1JfVEcwICAgICAgICAgICBHRU5NQVNLX1VMTCg3LCA2KQ0KPiA+ICAj
-ZGVmaW5lIENUWERFU0NfQ0RfMF9UQ1JfSVJHTjAgICAgICAgICBHRU5NQVNLX1VMTCg5LCA4KQ0K
-PiA+IEBAIC01OTEsNyArNTk2LDcgQEAgc3RydWN0IGFybV9zbW11X2N0eF9kZXNjIHsNCj4gPiAg
-fTsNCj4gPg0KPiA+ICBzdHJ1Y3QgYXJtX3NtbXVfbDFfY3R4X2Rlc2Mgew0KPiA+IC0gICAgICAg
-X19sZTY0ICAgICAgICAgICAgICAgICAgICAgICAgICAqbDJwdHI7DQo+ID4gKyAgICAgICBzdHJ1
-Y3QgYXJtX3NtbXVfY2QgICAgICAgICAgICAgICpsMnB0cjsNCj4gPiAgICAgICAgIGRtYV9hZGRy
-X3QgICAgICAgICAgICAgICAgICAgICAgbDJwdHJfZG1hOw0KPiA+ICB9Ow0KPiA+DQo+ID4gLS0N
-Cj4gPiAyLjQzLjINCj4gPg0KPiA+DQoNCj4gUmV2aWV3ZWQtYnk6IE1pY2hhZWwgU2hhdml0IDxt
-c2hhdml0QGdvb2dsZS5jb20+DQoNClJldmlld2VkLWJ5OiBNb3JpdHogRmlzY2hlciA8bW9yaXR6
-ZkBnb29nbGUuY29tPg0K
+On Mon, Mar 04, 2024 at 07:43:53PM -0400, Jason Gunthorpe wrote:
+> CD table entries and STE's have the same essential programming sequence,
+> just with different types and sizes.
+
+> Have arm_smmu_write_ctx_desc() generate a target CD and call
+> arm_smmu_write_entry() to do the programming. Due to the way the
+> target CD is generated by modifying the existing CD this alone is not
+> enough for the CD callers to be freed of the ordering requirements.
+
+> The following patches will make the rest of the CD flow mirror the STE
+> flow with precise CD contents generated in all cases.
+
+> Currently the logic can't ensure that the CD always conforms to the used
+> requirements until all the CD generation is moved to the new method. Add a
+> temporary no_used_check to disable the assertions.
+
+> Signed-off-by: Michael Shavit <mshavit@google.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 101 ++++++++++++++------
+>   1 file changed, 74 insertions(+), 27 deletions(-)
+
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c  
+> b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index b7f947e36f596f..237fd6d92c880b 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -57,11 +57,14 @@ struct arm_smmu_entry_writer {
+>   struct arm_smmu_entry_writer_ops {
+>   	unsigned int num_entry_qwords;
+>   	__le64 v_bit;
+> +	bool no_used_check;
+>   	void (*get_used)(const __le64 *entry, __le64 *used);
+>   	void (*sync)(struct arm_smmu_entry_writer *writer);
+>   };
+
+> -#define NUM_ENTRY_QWORDS (sizeof(struct arm_smmu_ste) / sizeof(u64))
+> +#define NUM_ENTRY_QWORDS                                                \
+> +	(max(sizeof(struct arm_smmu_ste), sizeof(struct arm_smmu_cd)) / \
+> +	 sizeof(u64))
+
+>   static phys_addr_t arm_smmu_msi_cfg[ARM_SMMU_MAX_MSIS][3] = {
+>   	[EVTQ_MSI_INDEX] = {
+> @@ -1056,7 +1059,8 @@ static u8 arm_smmu_entry_qword_diff(struct  
+> arm_smmu_entry_writer *writer,
+>   		 * allowed to set a bit to 1 if the used function doesn't say it
+>   		 * is used.
+>   		 */
+> -		WARN_ON_ONCE(target[i] & ~target_used[i]);
+> +		if (!writer->ops->no_used_check)
+> +			WARN_ON_ONCE(target[i] & ~target_used[i]);
+
+>   		/* Bits can change because they are not currently being used */
+>   		unused_update[i] = (entry[i] & cur_used[i]) |
+> @@ -1065,7 +1069,8 @@ static u8 arm_smmu_entry_qword_diff(struct  
+> arm_smmu_entry_writer *writer,
+>   		 * Each bit indicates that a used bit in a qword needs to be
+>   		 * changed after unused_update is applied.
+>   		 */
+> -		if ((unused_update[i] & target_used[i]) != target[i])
+> +		if ((unused_update[i] & target_used[i]) !=
+> +		    (target[i] & target_used[i]))
+>   			used_qword_diff |= 1 << i;
+>   	}
+>   	return used_qword_diff;
+> @@ -1161,8 +1166,11 @@ static void arm_smmu_write_entry(struct  
+> arm_smmu_entry_writer *writer,
+>   		 * in the entry. The target was already sanity checked by
+>   		 * compute_qword_diff().
+>   		 */
+> -		WARN_ON_ONCE(
+> -			entry_set(writer, entry, target, 0, num_entry_qwords));
+> +		if (writer->ops->no_used_check)
+> +			entry_set(writer, entry, target, 0, num_entry_qwords);
+> +		else
+> +			WARN_ON_ONCE(entry_set(writer, entry, target, 0,
+> +					       num_entry_qwords));
+>   	}
+>   }
+
+> @@ -1242,6 +1250,59 @@ static struct arm_smmu_cd  
+> *arm_smmu_get_cd_ptr(struct arm_smmu_master *master,
+>   	return &l1_desc->l2ptr[idx];
+>   }
+
+> +struct arm_smmu_cd_writer {
+> +	struct arm_smmu_entry_writer writer;
+> +	unsigned int ssid;
+> +};
+> +
+> +static void arm_smmu_get_cd_used(const __le64 *ent, __le64 *used_bits)
+> +{
+> +	used_bits[0] = cpu_to_le64(CTXDESC_CD_0_V);
+> +	if (!(ent[0] & cpu_to_le64(CTXDESC_CD_0_V)))
+> +		return;
+> +	memset(used_bits, 0xFF, sizeof(struct arm_smmu_cd));
+> +
+> +	/* EPD0 means T0SZ/TG0/IR0/OR0/SH0/TTB0 are IGNORED */
+> +	if (ent[0] & cpu_to_le64(CTXDESC_CD_0_TCR_EPD0)) {
+> +		used_bits[0] &= ~cpu_to_le64(
+> +			CTXDESC_CD_0_TCR_T0SZ | CTXDESC_CD_0_TCR_TG0 |
+> +			CTXDESC_CD_0_TCR_IRGN0 | CTXDESC_CD_0_TCR_ORGN0 |
+> +			CTXDESC_CD_0_TCR_SH0);
+> +		used_bits[1] &= ~cpu_to_le64(CTXDESC_CD_1_TTB0_MASK);
+> +	}
+> +}
+> +
+> +static void arm_smmu_cd_writer_sync_entry(struct arm_smmu_entry_writer  
+> *writer)
+> +{
+> +	struct arm_smmu_cd_writer *cd_writer =
+> +		container_of(writer, struct arm_smmu_cd_writer, writer);
+> +
+> +	arm_smmu_sync_cd(writer->master, cd_writer->ssid, true);
+> +}
+> +
+> +static const struct arm_smmu_entry_writer_ops arm_smmu_cd_writer_ops = {
+> +	.sync = arm_smmu_cd_writer_sync_entry,
+> +	.get_used = arm_smmu_get_cd_used,
+> +	.v_bit = cpu_to_le64(CTXDESC_CD_0_V),
+> +	.no_used_check = true,
+> +	.num_entry_qwords = sizeof(struct arm_smmu_cd) / sizeof(u64),
+> +};
+> +
+> +static void arm_smmu_write_cd_entry(struct arm_smmu_master *master, int  
+> ssid,
+> +				    struct arm_smmu_cd *cdptr,
+> +				    const struct arm_smmu_cd *target)
+> +{
+> +	struct arm_smmu_cd_writer cd_writer = {
+> +		.writer = {
+> +			.ops = &arm_smmu_cd_writer_ops,
+> +			.master = master,
+> +		},
+> +		.ssid = ssid,
+> +	};
+> +
+> +	arm_smmu_write_entry(&cd_writer.writer, cdptr->data, target->data);
+> +}
+> +
+>   int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
+>   			    struct arm_smmu_ctx_desc *cd)
+>   {
+> @@ -1258,17 +1319,20 @@ int arm_smmu_write_ctx_desc(struct  
+> arm_smmu_master *master, int ssid,
+>   	 */
+>   	u64 val;
+>   	bool cd_live;
+> -	struct arm_smmu_cd *cdptr;
+> +	struct arm_smmu_cd target;
+> +	struct arm_smmu_cd *cdptr = &target;
+> +	struct arm_smmu_cd *cd_table_entry;
+>   	struct arm_smmu_ctx_desc_cfg *cd_table = &master->cd_table;
+>   	struct arm_smmu_device *smmu = master->smmu;
+
+>   	if (WARN_ON(ssid >= (1 << cd_table->s1cdmax)))
+>   		return -E2BIG;
+
+> -	cdptr = arm_smmu_get_cd_ptr(master, ssid);
+> -	if (!cdptr)
+> +	cd_table_entry = arm_smmu_get_cd_ptr(master, ssid);
+> +	if (!cd_table_entry)
+>   		return -ENOMEM;
+
+> +	target = *cd_table_entry;
+>   	val = le64_to_cpu(cdptr->data[0]);
+>   	cd_live = !!(val & CTXDESC_CD_0_V);
+
+> @@ -1290,13 +1354,6 @@ int arm_smmu_write_ctx_desc(struct arm_smmu_master  
+> *master, int ssid,
+>   		cdptr->data[2] = 0;
+>   		cdptr->data[3] = cpu_to_le64(cd->mair);
+
+> -		/*
+> -		 * STE may be live, and the SMMU might read dwords of this CD in any
+> -		 * order. Ensure that it observes valid values before reading
+> -		 * V=1.
+> -		 */
+> -		arm_smmu_sync_cd(master, ssid, true);
+> -
+>   		val = cd->tcr |
+>   #ifdef __BIG_ENDIAN
+>   			CTXDESC_CD_0_ENDI |
+> @@ -1310,18 +1367,8 @@ int arm_smmu_write_ctx_desc(struct arm_smmu_master  
+> *master, int ssid,
+>   		if (cd_table->stall_enabled)
+>   			val |= CTXDESC_CD_0_S;
+>   	}
+> -
+> -	/*
+> -	 * The SMMU accesses 64-bit values atomically. See IHI0070Ca 3.21.3
+> -	 * "Configuration structures and configuration invalidation completion"
+> -	 *
+> -	 *   The size of single-copy atomic reads made by the SMMU is
+> -	 *   IMPLEMENTATION DEFINED but must be at least 64 bits. Any single
+> -	 *   field within an aligned 64-bit span of a structure can be altered
+> -	 *   without first making the structure invalid.
+> -	 */
+> -	WRITE_ONCE(cdptr->data[0], cpu_to_le64(val));
+> -	arm_smmu_sync_cd(master, ssid, true);
+> +	cdptr->data[0] = cpu_to_le64(val);
+> +	arm_smmu_write_cd_entry(master, ssid, cd_table_entry, &target);
+>   	return 0;
+>   }
+
+> --
+> 2.43.2
+
+Reviewed-by: Moritz Fischer <moritzf@google.com>
