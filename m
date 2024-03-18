@@ -1,92 +1,84 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041E72C69E
-	for <patches@lists.linux.dev>; Mon, 18 Mar 2024 14:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E58D4F1E1;
+	Mon, 18 Mar 2024 15:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710771643; cv=none; b=MbW8tsZwllXQ/fgyv5jTYRJWn80Ti7arI9BZRpaiU18DSAVp3siH8D0WtV5oS5V7OUcn1WeIWG1opNNgsjd+V8wYDrKlJAQEJlDu01issuP3VZB2tugHbxnAK2ZfWxWo33DcSYH7Cs2drvu+9RG9UPrqk1w+WuUVBGsW2LpnXGQ=
+	t=1710775096; cv=none; b=b/dJZ962fBcsYaI4ugHmJkGazEjVxSrV2JJesc1iFVKdTjiAuo37wyKyzRVGxFRbDFpXqmPeu/9j+WyBBDD9Gylu8E3V4qocI31NqGaoAdHGcFoTis1FGOywkzuzH3MnVQG63LqDmo0rzfUvPVq6RhnV5NoL4er6gKAWY5lKLMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710771643; c=relaxed/simple;
-	bh=EVOz7HpKxshJQzoKffuIeq0NqaAk2uilDLBhZBSSX88=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AW4+n7lUweVHyMWv0y//UUZHmaKHJKsZWrFlP2AvTPgfr4i9/h4S+K5wQzM029G7xS3GM9pMPjJkns+u7FYPqAuI8MoGGXkAQSiRklbGxonvz+3MxXLQh9Vv/bc0fSYyzMsDj6ltoA9Ba/irjFnRZqVk4P7ZQigIhG/ml+7Wc/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=En8dYKb7; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1710775096; c=relaxed/simple;
+	bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DfYOVcqluAXuwchRfpSf0mcDRiT7Fo+MSlzQtOP/0uvCKCRTWbueR3cQDHx0vMyDJWKqIr5ZQ0ttt1fNYBYkN5JVB9FWh6PkBl++BnOrJtruUHfkImEd9WJIaLcJP2Pr7AHlc1rDg2xiNgS18E0YvXqRw3vaJpFT4Oje+OlFCEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDyoLoWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="En8dYKb7"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 4752240E01A0;
-	Mon, 18 Mar 2024 14:20:32 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id OvM1e62OCdz8; Mon, 18 Mar 2024 14:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1710771628; bh=xbujwM1+KktwbMpDTc9ki7t3eXg24aeWGNwP7mqwkjU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=En8dYKb79vzkZ87N0uILJZMTqEvjFlX3u7IID6Tpgp48PaEFhIZDIl73QpT/r13SV
-	 sVe4RkY33QWPVvxEod0kKB1b2rXXeIu1vaB1/kiNVJ4T4GjDtdw7whAhooR5kS3v2P
-	 uPJIBryDl38dl0Nu6Kut/qP+OhxtJ2Oatgh5FOzjc//B2Y0GBiX5JuiRacnpeTWxK3
-	 TTKgjTMeCeh0n6N0bhEx7h4x/TNwFzFrHV3Iq1I57IXE4h0uAtpH8lRwZyUkU/6HO1
-	 YcDDglzazbkFRoxit2GMql3yWeB5xb6vOegD1Fs4eJsmWv69SB2C9KbZ3jzoikY7Q9
-	 fL6zocuyGvf9K+RVigpbw7/9rkUqyRhcxsbrT125JP/v/t0Q2prC6efsJ8K0m3PGBe
-	 U3lP2HuKmqRJ/At/mw2i+qtDoyIAHEVBM+ANTAf4owRUJ2Ma6GLJ9ZOM9/9/c27B7J
-	 tc1ZGqfx5QtQwxTvg/cOG23jdf5rGBZ2mLjzVuuwStXRZhO1R/6ZjB6njMyCORTsyp
-	 XUOUPZyT+8T7pCzdM+UNDECUHvvpDMYZ5gmbTG5Injdnfpen5p8YkN0iiI/d/aYgqp
-	 ePBCVqIhG+m7CT1G/KTX0CocAqbcZVBRhMjIeLmt4xmcAiuJxEKl6Sfw4y4Op9z0mg
-	 T2yxdh//Tuv7auaLEdKUlewQ=
-Received: from zn.tnic (pd953021b.dip0.t-ipconnect.de [217.83.2.27])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 5B1D940E00B2;
-	Mon, 18 Mar 2024 14:20:20 +0000 (UTC)
-Date: Mon, 18 Mar 2024 15:20:14 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Emeric Brun <ebrun@haproxy.com>, Omar Sandoval <osandov@osandov.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 5.10 085/122] x86/ibt,paravirt: Use text_gen_insn() for
- paravirt_patch()
-Message-ID: <20240318142014.GBZfhNnupMQ4XoDLUm@fat_crate.local>
-References: <20240227131558.694096204@linuxfoundation.org>
- <20240227131601.488092151@linuxfoundation.org>
- <ZeYXvd1-rVkPGvvW@telecaster>
- <4d33ef17-72a0-47e0-8591-20b0bf9bddb9@haproxy.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDyoLoWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DB4C433F1;
+	Mon, 18 Mar 2024 15:18:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710775096;
+	bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=mDyoLoWOWiCMEdXkx9n4YUsSumpF7e0vY4o0+dcywNoZYOFhQJu8b+BBfWUJNmVXW
+	 8qIKWvn/+20UknH5eve3jLM+/c0KsletfNrB0YU5do/uij0otwMNu+Bx9uSFmin/8U
+	 Chp/ydjf2qDxKbOoFiwuvrM5AtFWR9HbYbDkBo0qzwDnnitfjK6IGcTwUtjRMUvpg4
+	 DXKiUuXQ3EToJttPodl88lTjWY4ZazZb2sL+dZS+czu+gBpUA3t0VwRruaaKvgOPeM
+	 nwwHWkJi1hVy+iU1jnbVpL1Z2KMJlfA671AGWoQHVp8w/6oui+X4slGzDxSdv/a6C6
+	 +UxULlQSoRhnw==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] clk: qcom: Fix two driver Kconfig dependencies
+Date: Mon, 18 Mar 2024 08:18:09 -0700
+Message-Id: <20240318-fix-some-qcom-kconfig-deps-v1-0-ea0773e3df5a@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4d33ef17-72a0-47e0-8591-20b0bf9bddb9@haproxy.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADFb+GUC/x3MSwqAMAwA0atI1gb8FFGvIi40pjWIrTYggnh3i
+ 8sHwzygHIUV+uyByJeoBJ9Q5hnQOnnHKEsyVEVlirps0cqNGnbGk8KOGwVvxeHChyJRN3NnbFP
+ PE6TBETnV/3wY3/cDQTKEwWwAAAA=
+To: sboyd@kernel.org, andersson@kernel.org
+Cc: konrad.dybcio@linaro.org, mturquette@baylibre.com, 
+ bryan.odonoghue@linaro.org, neil.armstrong@linaro.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=919; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=oC5+asc/QICklzkaAGgwcBOXlJD1QTbEuepLI6tiLK4=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKk/os3W/5/js5uf9dIj70fWxW9K/h8vOOhSxFT+q3TyL
+ +d13LNDOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEYmQYGWZIrzavPbZ00eln
+ 4nzXusULZRc9r3fbff13z0XNXUpLar4yMjzdeSKaZc7qN4Kcfvkfuz5/e2ufbzl5lewq/jMXN3M
+ /1+EBAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Mon, Mar 18, 2024 at 11:17:10AM +0100, Emeric Brun wrote:
-> Exact same issue here, also since 5.10.211 and still present in 5.10.213.
+This series fixes two Kconfig warnings that I recently saw crop up in my
+build tests because the dependencies for newly added drivers in 6.8 are
+not correct.
 
-Sasha,
+This is now the fourth set of changes to avoid warnings of this nature
+for the exact same reason... is there anything that can be done to
+ensure this does not continue to happen? See
 
-can you pls pick up this one:
+  b6bcd1c0c27e ("clk: qcom: fix some Kconfig corner cases")
+  75d1d3a433f0 ("clk: qcom: Fix SM_GPUCC_8450 dependencies")
+  e8d66d02defd ("clk: qcom: Fix SM_CAMCC_8550 dependencies")
 
-https://lore.kernel.org/r/20240305112711.GAZecBj5TMaQDSz6Ym@fat_crate.local
+---
+Nathan Chancellor (2):
+      clk: qcom: Fix SC_CAMCC_8280XP dependencies
+      clk: qcom: Fix SM_GPUCC_8650 dependencies
 
-?
+ drivers/clk/qcom/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+---
+base-commit: 3066c521be9db14964d78c6c431c97a424468ded
+change-id: 20240318-fix-some-qcom-kconfig-deps-cc9be94f63ba
 
-See upthread for what it fixes.
-
-Thx.
-
+Best regards,
 -- 
-Regards/Gruss,
-    Boris.
+Nathan Chancellor <nathan@kernel.org>
 
-https://people.kernel.org/tglx/notes-about-netiquette
