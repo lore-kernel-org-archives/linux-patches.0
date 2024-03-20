@@ -1,124 +1,95 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738C14C7E
-	for <patches@lists.linux.dev>; Wed, 20 Mar 2024 00:35:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FD1A32;
+	Wed, 20 Mar 2024 00:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710894932; cv=none; b=tLX3giCMprQhRazhGTgpCU6cojHY9kGJIzjFgPjQERuwHkLziZ4bOz11+NJOKuEZaNNvMBMSpn/YtbvYh8gfvhKaWnoC/PJ65CBSJ2jdK0ALEhfAsv2Wq8VaRlrcNs5i2ukNpcLbmACP7XmlYXgUHyPCksfKFI/EfWDykwXUvXU=
+	t=1710895074; cv=none; b=ufXcPva+KerS0QstXdOF26GnybgnswU1maGbkQuz/+srxDjce2xVLfC8G8hSwov/bsYIaHZiYlZBTpC/RtpDUzECKzdCCQdRryKsmRJ/cXv/9V6Gh2hZncq2ysmO/M/MIXqbJmHp5lK4rIJRjjJW81kDLFhyB2XNaJlWUnvXtuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710894932; c=relaxed/simple;
-	bh=1o1U/hYDLGxcTlL8MA5lcT+IV4KO9u5uC4rIDNmOgk8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m7kduxb5pp2LRjvZ88E/ofoApk0epbMsYPq5Ravlm7+/Gf+PyMSq94b1MKVwPiC3yb2V/966czjiM9FDU7axws5IjaLG3s0UIa+n9RhHj9VbrVchiebqxcLTEQDPAUXg2IV7f2RU740prBOico6tZC9Mt+fKfTEK45+F2dJMg5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1/I4lmJG; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1710895074; c=relaxed/simple;
+	bh=H5PLorY6Ln0claIexaNlOnDQb1/MD6u9Cfxdq4YBk4g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sjdj+5Rn680c0DcJPLVOHtI6W0/wGQiihw7MLqredST4RDIqaHUelc8/MLRGcT8PuG0bkAUf8jVPj1AvsL722aTtlDrz8wLNts2L8PQu9JeihRVpMzoH5E0kXsOSJ7ljOhEZi8+c8XMFJKIDVjVAPhsB8cp6Y657NiV+02zVZOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ka1sC+6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1/I4lmJG"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-7cc0e0dba0fso99269239f.3
-        for <patches@lists.linux.dev>; Tue, 19 Mar 2024 17:35:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1710894930; x=1711499730; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iivMpJVqhfyzonHOxre7J+bRKHRX9ehBdH0rm4sUurE=;
-        b=1/I4lmJGdU9IfQDjEY2aozun4ltnyv8+nld7uPQeABRoXjBpKIFBopnOcPwcII9UlW
-         /00X7ezNfMBKBNLpo/BVv+Acges7Zz89HIUmKER1ZQ6UjKJZ8QeXu14N7fvtB1P79tea
-         SjaCcNGZuHPk2frBKWpYLraf/3iH42EdQrFsx2kmVUf/VS+P8pIxwSUA4SEOtm0MxKZn
-         qY6LPM7KiHJZLeFAc83DROA0gj1WAzosWlTGktO2YyokQd3uu+13heRGCqpXCqdY6MXU
-         +eiDUvcwMYvoeJG+Si/3qnuWwJz7s3RBiHHa8lrI8+N/52DasH8wzUO4tynVSI6MW2dJ
-         yD6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710894930; x=1711499730;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iivMpJVqhfyzonHOxre7J+bRKHRX9ehBdH0rm4sUurE=;
-        b=isTVqGNg30sk46DjpE7kmGwj6UXUsvqciSFJDhbcD++0oM6SpmzFyUKJvn7w6Zlh+x
-         OcQ6QqgVmYKD8u/PxfqBH5D2N7kyc61KBRtVO7QHub55wryC+fzm2SKvPLBy+Pz7YCTi
-         eatHhbSw85xVUiGa3O+GxX5rRbnvgIqdL3a+Miq+ZWN5N99dPgQ4T1hxDHiwRDqAybuO
-         k/yJX356GlVernAps3oGwNmBtbCLnezM4oHOiuHJQwT/+OKPLxTekTAhWTHIlPN6enuR
-         i9NzEhs6pc/TIXr9DAnw13t4g/YdZU7YiDJCwNbUmxE1cXtCpuki1lxtLpbtKNMruKTl
-         rMMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXT4GSpQg7dgaenVoz9Wy+OVS6xs6pP66QeiX/jyth5d6EvGqgs+57/7nz0PjKsj5TcvW1TUZ5YgwoVr3TBMLpHdJ1gls5egg==
-X-Gm-Message-State: AOJu0YxxnWV8/Wks6/Aw8+EyYbaulEgmxvbjk9nsecieeLmPd+YRkEis
-	JATZN9gezGHwkV3v9PuvsB10Pk6nBMdtyEb5smMokWbIYz6d5rEfJgexdZmnCA==
-X-Google-Smtp-Source: AGHT+IHL5M1Y99f/4ysXVs8RyF/LnwoomQGXivL3Tqb5JP1fIdQh86qmd50vXgbwJFBJRpBWgsNT+Q==
-X-Received: by 2002:a6b:7119:0:b0:7cc:7d9f:b659 with SMTP id q25-20020a6b7119000000b007cc7d9fb659mr4478105iog.12.1710894930542;
-        Tue, 19 Mar 2024 17:35:30 -0700 (PDT)
-Received: from google.com (26.103.132.34.bc.googleusercontent.com. [34.132.103.26])
-        by smtp.gmail.com with ESMTPSA id w13-20020a6bf00d000000b007cbfbda1bd5sm2588952ioc.53.2024.03.19.17.35.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 17:35:29 -0700 (PDT)
-Date: Wed, 20 Mar 2024 00:35:25 +0000
-From: Justin Stitt <justinstitt@google.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: rostedt@goodmis.org, mhiramat@kernel.org, 
-	mathieu.desnoyers@efficios.com, ndesaulniers@google.com, morbo@google.com, 
-	linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Subject: Re: [PATCH 1/2] compiler_types: Ensure __diag_clang() is always
- available
-Message-ID: <qn6cklc5fvjg4cnvavyncj73qmc6k5eyzrmpqsrkpaihi35per@3k2sodhtlcnt>
-References: <20240319-tracing-fully-silence-wstring-compare-v1-0-81adb44403f5@kernel.org>
- <20240319-tracing-fully-silence-wstring-compare-v1-1-81adb44403f5@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ka1sC+6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAF7C433F1;
+	Wed, 20 Mar 2024 00:37:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710895074;
+	bh=H5PLorY6Ln0claIexaNlOnDQb1/MD6u9Cfxdq4YBk4g=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Ka1sC+6a7uyb7+Ow9StGXtuG0370Lf55eX7kC7fEzCN+KIHfNRe9oTjCK7HXSdPCx
+	 ZH5pcBQszzqBXWCdnM3xuFUIJ52XIFYc+ROhO6he9e+EqT4j3hRf9u/BisgQqPq38J
+	 nq4R5/+UB7UzE2edwxuf3pe9Tgl0/5e+kgkbch/5OzmxvzAlychGgH9hq+gMUwy10b
+	 FkOysl1OywhTpmFeklZDw5iWOXD2TSEFFQzOeMfBMlSyj/HsIzx6M7F7d292dbfgJX
+	 +NY6Ej8ZdD2o05ed+Xsxu24ZxYumUOECxPpBYIUg4If8RV+TGPkMYt0vzD6fy/qhbz
+	 qKxUjiDaSFIaw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 19 Mar 2024 17:37:46 -0700
+Subject: [PATCH] hexagon: vmlinux.lds.S: Handle attributes section
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240319-tracing-fully-silence-wstring-compare-v1-1-81adb44403f5@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240319-hexagon-handle-attributes-section-vmlinux-lds-s-v1-1-59855dab8872@kernel.org>
+X-B4-Tracking: v=1; b=H4sIANkv+mUC/x2NwQrDIBBEfyXsuQtqhGB/pfRgdJMsWFPUBCHk3
+ 7v0+GZ4MxdUKkwVnsMFhU6uvGcB/RggbD6vhByFwShj1agdbtT9umeUMiZC31rh+WhUsVJoYuP
+ 5SZyPjilKhsZrO2s7ORcUyOq30ML9//h63/cPfZ1W8IEAAAA=
+To: akpm@linux-foundation.org, bcain@quicinc.com
+Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+ linux-hexagon@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1276; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=H5PLorY6Ln0claIexaNlOnDQb1/MD6u9Cfxdq4YBk4g=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKm/9B9qsb+p+SRtGH/n8z8rPsHpTIs9dQSYs5QechR1y
+ JxwijzWUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACZi+ZThf46n9RW10IRX21T2
+ v3um8tm76yHLDVWnjs3ffNgFs7tf7GD4KxoWdrBDi1s1r25pW7GwhUTWcm6mlR+5T5/b/OSPwuQ
+ pLAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi,
+After the linked LLVM change, the build fails with
+CONFIG_LD_ORPHAN_WARN_LEVEL="error", which happens with allmodconfig:
 
-On Tue, Mar 19, 2024 at 09:07:52AM -0700, Nathan Chancellor wrote:
-> Attempting to use __diag_clang() and build with GCC results in a build
-> error:
-> 
->   include/linux/compiler_types.h:468:38: error: 'ignore' undeclared (first use in this function); did you mean 'inode'?
->     468 |         __diag_ ## compiler(version, ignore, option)
->         |                                      ^~~~~~
-> 
-> This error occurs because __diag_clang() is only defined in
-> compiler-clang.h, which is only included when using clang as the
-> compiler. This error has not been seen before because __diag_clang() has
-> only been used in __diag_ignore_all(), which is defined in both
-> compiler-clang.h and compiler-gcc.h.
-> 
-> Add an empty stub for __diag_clang() in compiler_types.h, so that it is
-> always defined and just becomes a no-op when using GCC.
-> 
-> Fixes: f014a00bbeb0 ("compiler-clang.h: Add __diag infrastructure for clang")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+  ld.lld: error: vmlinux.a(init/main.o):(.hexagon.attributes) is being placed in '.hexagon.attributes'
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+Handle the attributes section in a similar manner as arm and riscv by
+adding it after the primary ELF_DETAILS grouping in vmlinux.lds.S, which
+fixes the error.
 
-> ---
->  include/linux/compiler_types.h | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-> index 3e64ec0f7ac8..fb0c3ff5497d 100644
-> --- a/include/linux/compiler_types.h
-> +++ b/include/linux/compiler_types.h
-> @@ -461,6 +461,10 @@ struct ftrace_likely_data {
->  #define __diag_GCC(version, severity, string)
->  #endif
->  
-> +#ifndef __diag_clang
-> +#define __diag_clang(version, severity, string)
-> +#endif
-> +
->  #define __diag_push()	__diag(push)
->  #define __diag_pop()	__diag(pop)
->  
-> 
-> -- 
-> 2.44.0
+Cc: stable@vger.kernel.org
+Fixes: 113616ec5b64 ("hexagon: select ARCH_WANT_LD_ORPHAN_WARN")
+Link: https://github.com/llvm/llvm-project/commit/31f4b329c8234fab9afa59494d7f8bdaeaefeaad
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/hexagon/kernel/vmlinux.lds.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks
-Justin
+diff --git a/arch/hexagon/kernel/vmlinux.lds.S b/arch/hexagon/kernel/vmlinux.lds.S
+index 1140051a0c45..1150b77fa281 100644
+--- a/arch/hexagon/kernel/vmlinux.lds.S
++++ b/arch/hexagon/kernel/vmlinux.lds.S
+@@ -63,6 +63,7 @@ SECTIONS
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
+ 	ELF_DETAILS
++	.hexagon.attributes 0 : { *(.hexagon.attributes) }
+ 
+ 	DISCARDS
+ }
+
+---
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
+change-id: 20240319-hexagon-handle-attributes-section-vmlinux-lds-s-2a14b14799c0
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
