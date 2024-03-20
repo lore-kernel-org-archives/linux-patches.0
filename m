@@ -1,100 +1,192 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E7E848E
-	for <patches@lists.linux.dev>; Wed, 20 Mar 2024 14:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710945111; cv=none; b=qR/eEnL6Vr9JICIeWf9HNEIp+vgICwv07IHSKHzg5MQ5VmZ+zLPnXC8SfVlHbP/RAFKeFuurjizlTy0SOTCUU9smtWNqboX2uKKsOPSps6KzXIRI56dwhFvkqx19T+WDE6at+HYVefeRL8HFduYbONFtHgz2VOQbX9tDrCJ28YQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710945111; c=relaxed/simple;
-	bh=qodn0HWT2NxPcmvoeYPkM26Q8diisbuBZbvrENJf1/Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TyUebGSwKO4PtM082VsVK2mo5gxc+hkLu6grcXZKfFhTyuWLkqwVWglcQ3SNnTlKssx4RGvddnHyXYorf0vm2u5HlOCWCWfN0bENPiY95t01/ceiaTKxNyerJyMvwfGHkb71i80xSsdJhWTXtgLI90WY5VSnxtsoFBLaqoEjJ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zvvfthDX; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689DC56751
+	for <patches@lists.linux.dev>; Wed, 20 Mar 2024 15:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710948091; cv=fail; b=SR4LF7t6RGmv2VvDETpUO0NleP65wkqkMn7GcH3XtehutkAuECnO1qTPovt3glKuMXzcFOI+hC5pOq2LogWxKrmJgwlEM4/hxkRhJYhAb4Ohq5g7rz4tdO2IlL59I13Wmpt+td1T5jSOmtNU8D/mCfU2w1J7mg/Yu/SGknCrsBc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710948091; c=relaxed/simple;
+	bh=jeqFqA2tzULbagclxPe9+Zw8c1A0Qz4/XQIN/nYi424=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Ueecq2xZXkCp+bXFiNDiPP1/TNbraH8TsJofA89tEucwf3PPsHN3DjL2OBOt7i8NbUcVOc/BYdaleritCdHZxwQ5QinLmlG0z2AkAW7xwBpuufOeVcgU2EDNTHIfhUxCXAaEmBDIanl5SzaB/9kTNVqUYozfhgMT6twvyQmjupY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jLnQYrEo; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zvvfthDX"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c396fec63aso748002b6e.0
-        for <patches@lists.linux.dev>; Wed, 20 Mar 2024 07:31:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710945108; x=1711549908; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/bYOBDcymvYGp78k9DLmQb5D/9HOUP25d/CXpNGP+TY=;
-        b=zvvfthDX+Qh4kL7HPuvYmWooH158OjObRWkJ28eVriEOQPN57Xa2P0NLw6YFqaVMKH
-         xeH7XTvlu00s9mATizpH5lMZNeo1BC6h7DKyn13+pUiKOTYdIVYFjszfttaKguEJN8uX
-         SzyPSb1HwwjkCMG7jStmOyPmENiqcul0vwPcPX2BLNvWt660abpmguRHd0RMmttTlwBC
-         c5dchiUadYw/x1C9tA3Rmt3KqhztRXfDO4VUGBJIV634Vu+X5sAl0pc2AcMqIKS0Rl/4
-         VW12ZP4AeDt6S/eIVy+NdUWGPhwzCOrwwxvIEvmDLZgarisjor5K+F1M6C7/0WSz/qGb
-         4fGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710945108; x=1711549908;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/bYOBDcymvYGp78k9DLmQb5D/9HOUP25d/CXpNGP+TY=;
-        b=ABaUd2sXkgpeu2Ej9B+Hvmvl5WM5LyeCioC4Gfj2iY2RrD24RdtjbBLM6j7F8gu1rw
-         DkQd0J5SzAd8mzSmtwrSvZtIB5IXEI7QG5g0anXJV6UCcQacXT5SG+kxX8FEPzY+wfBt
-         DnAXMQe5N9IBCin9rYmTQJCQKpL0svE7z5vkBJHR8G6XLy8ZcIBdg+6j3MHj2g/oLhWp
-         bqHlOM0G9gOw6ElxCeG4gK+lH2VE2Ed/E4dhakgvzAtPW88hC27ETdo9LAmE8llYOS8u
-         0h+AbMXRzG9Ek6Rl/FHsWm10tVn5wAaQvFUfz2CQBdHlzT1w4LnGzN6eE0ymnFMlv5lo
-         sKTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUqeJiwq437/LzFtmfsM6hG2M2PteyLHlIsR+vA1zfNcbtbKghuLzrk9pB56cPX8UiNd7EvPF5S7ZaTRc7DtD922WW2SyiK8A==
-X-Gm-Message-State: AOJu0YyQdMtgJlArwTRu6P1Czf48b/FSNgwCR7DDcfIWFsYK1rQ/oU3C
-	0mKH+smjFI/ZokD5P5Y4yaVVwpnYmjiBU2TYGG+M1fu5DscjgYCWmeCuoDgjn4U=
-X-Google-Smtp-Source: AGHT+IG4f+F2qucJVV9FVBes2/YroVqIfuUP0CwK01ziUO7zee4tZhWwEr3MnA5b3XjZeI/FRbG/sg==
-X-Received: by 2002:a05:6808:1523:b0:3c3:87c0:7369 with SMTP id u35-20020a056808152300b003c387c07369mr10478864oiw.7.1710945108603;
-        Wed, 20 Mar 2024 07:31:48 -0700 (PDT)
-Received: from maple.home (bras-base-otwaon1102w-grc-09-184-147-116-200.dsl.bell.ca. [184.147.116.200])
-        by smtp.gmail.com with ESMTPSA id ff16-20020a05622a4d9000b00430cacfe532sm4331700qtb.79.2024.03.20.07.31.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Mar 2024 07:31:48 -0700 (PDT)
-From: Ralph Siemsen <ralph.siemsen@linaro.org>
-To: gregkh@linuxfoundation.org
-Cc: herbert@gondor.apana.org.au,
-	patches@lists.linux.dev,
-	sashal@kernel.org,
-	stable@vger.kernel.org
-Subject: v4.19 backport request for crypto af_alg
-Date: Wed, 20 Mar 2024 10:31:43 -0400
-Message-Id: <20240320143143.1643630-1-ralph.siemsen@linaro.org>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jLnQYrEo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710948090; x=1742484090;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=jeqFqA2tzULbagclxPe9+Zw8c1A0Qz4/XQIN/nYi424=;
+  b=jLnQYrEo1M1xxGbCCdKfoW52ECQna2tJxDlZuus/BtSwQEi+wi3ujTH/
+   W7muf/scWHHoo7mcuzN34n+0Un/IlLGZiSLk3+tSPGHUyZPbCuXCajgud
+   5Mv2UES44+Ii81U5zkPCku1ibDi7X06vK/NvdGdoM8XXXGrtldCTDseqX
+   64VT8qJ1HKLb04Ezdec9oXQ6dNwwG8cwR0pvtLKWiozEv7KJjL5+sSCL7
+   QwkFbUiuTFDEc0//phOTf2N3qLkfOjn2Rj7ft4e9Bfzi6H8nkRdQkN0nx
+   OF8kLO4nmJgAdJqJwGPmERUEzQimLQq79wYt+pi2eWROyNf5AGPO5PCZI
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="5754994"
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
+   d="scan'208";a="5754994"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2024 08:21:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
+   d="scan'208";a="14582546"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Mar 2024 08:21:28 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 20 Mar 2024 08:21:27 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 20 Mar 2024 08:21:27 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Wed, 20 Mar 2024 08:21:27 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Wed, 20 Mar 2024 08:21:27 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Zncf1kCA4Y/7Iq9BD0HkY9EtsbCUXtEy3Duw6H3zrpaiw8HnmdQxhNup0jRkHYuPRSC58gYShgpPvrzYq1OyTWZ9mjf/S+HgcfVf2PtgJa3IuQr25MRiDsuX+tE+rHmJ2xWgAED09Jl62rrj4peCvlRgPxN8Y2T5HQXesnah+OI+5+ItEJUvT4zY1oPP7/197C0sD3tnYydJHIfHQ9fAJGqWA4AKFAiWUVkcybHu7p9xB6A34XHpOASY/lojqXL8Ry/4jyfGE7FLtr8BzTPF8402a5Lyews+sfJ+BhIe2YBF2jlmCzMGfQA+prDtwwJUs40JpfuQ10eRIRcYOXQrTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZCgRmfCXYU0s8qtVAUYHngX/CgkiNVVqAG0KxdQlrZ0=;
+ b=noHN5ocDrkAzOJvMCTZD73ac8f2SEP17v7EAdWjuQks7iIoVv8TCkVJ4bGiXq4lw9dbY8dIzt18TIZ07hQWEr9OH/sgbCwUbcM5FWlcIaBC3aBTKlbMHCKbfZzm6oUZgJRIlkgqaweBFNH8r+YleeP6DifVc6Bkk2ENSF0bisbT/4mW1NQhPyxbphoXhCMpptkzzODn09iLQUhKCrHQ87vY2uaFTinxO/hygiM6KYmAYiGf4qYtXd8Qr7sQHkwdG08okl/DmcViGPNAO9crtEWrZTpzrmxiIAwrv/UdbmtPrUe/WJspPhM5nlZUEIXdOVFukfKIyA20LD4Cvb1G34Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from MN0PR11MB6231.namprd11.prod.outlook.com (2603:10b6:208:3c4::15)
+ by BL3PR11MB6316.namprd11.prod.outlook.com (2603:10b6:208:3b3::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.11; Wed, 20 Mar
+ 2024 15:21:24 +0000
+Received: from MN0PR11MB6231.namprd11.prod.outlook.com
+ ([fe80::6440:4b82:c32c:9eb7]) by MN0PR11MB6231.namprd11.prod.outlook.com
+ ([fe80::6440:4b82:c32c:9eb7%5]) with mapi id 15.20.7409.010; Wed, 20 Mar 2024
+ 15:21:24 +0000
+Date: Wed, 20 Mar 2024 16:21:10 +0100
+From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+CC: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
+ Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, "Shuah
+ Khan" <skhan@linuxfoundation.org>, <x86@kernel.org>, Shaopeng Tan
+	<tan.shaopeng@fujitsu.com>, James Morse <james.morse@arm.com>, Jamie Iles
+	<quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>, Randy Dunlap
+	<rdunlap@infradead.org>, Drew Fustini <dfustini@baylibre.com>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<patches@lists.linux.dev>
+Subject: Re: [PATCH v16 0/9] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <5vnrboxpkrriiqcbwrxtbextu6pduqjfchlvsdn5nwe7lr7vou@dngffvu7a5fh>
+References: <20240312214247.91772-1-tony.luck@intel.com>
+ <8ee6f553-16c0-4097-b5d8-af1598d1b85a@intel.com>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8ee6f553-16c0-4097-b5d8-af1598d1b85a@intel.com>
+X-ClientProxiedBy: WA1P291CA0016.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d0:19::27) To MN0PR11MB6231.namprd11.prod.outlook.com
+ (2603:10b6:208:3c4::15)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN0PR11MB6231:EE_|BL3PR11MB6316:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3c2f1969-98cd-4f0b-8d39-08dc48f167b6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Hy6JKJJgZrSY3HDi4J+iqgVQqctK6+kbNHudd2osvgaI5wznIaPrVQ7WUHb0IZsWi2PR1kNP7sYBk+WqHQfbV15DdJRx0RgE+IRKmuy1Vh5DENob9DzKeDp+FbueZgJkDkHjquzx41FY/1nIy64xfWyfDDys5mj2/Bwy1z/ojZn7hcZUNGP8b6uOtZb6nODBjYYwHayo4c0sPKBOVHYB/8rM9DqhgqGGQIV7iElMOzjD5z9/fWNov3MBS/qWvBG1vzkO9mprP9+Dd+8Gob0tTuOqGQqqEfeIOIIQShZaaTpI9Ke6mTdR9kyJRjX2uJnHCy3gZn/HpRuyvZgwJ3WyptfAXtHUlgsI3E2z012XG8gLrdFTePuZAiwyiOPdg7LE9lHsnfXkYZnSAeNAyVcU3RGA1esPg/c4oDFaJd1t4ZAFYvwKfML/kqABsMAdEBqMOTbu4TBGQAOwAw05bTBsDYiac5u3AOe3OjOoLbmBxkCPbmvvNgyju4QFDA6zdPKkDEwx6EYSRj8x+ZWDCXkH3zM3+59VA70WEfddth5vo3/yd2uCF/sUN7IaPVCwSgi+EbGtmxo6tMVnz9yM1Yc6vvr4hF3PMsYn30dX1e4F+Pa6dpExL36FvXTlhoxjV7/0
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR11MB6231.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(7416005)(1800799015)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?AFhLG2GPMuiFMnrIsmfBrB1Gf1XzFkv8DsY44xg5JGUoJqbC+ML4JdQfyN?=
+ =?iso-8859-1?Q?G76xQRxK4hLZInEUNoT4zo0SPagp+S3bCAOH8cuzkXeMh4kAks2/Q4nt8O?=
+ =?iso-8859-1?Q?vlvmQFmscbInTwsBefQR4GBQJ4Uwp2SPz8zExhevFS2XD04d9LmBHpKyJV?=
+ =?iso-8859-1?Q?rh1LwV9xckVduhV45HivYDhyRuXGUGf7ru6qcyIlO54INAj8dn77Ip3t7P?=
+ =?iso-8859-1?Q?lQk+UD/TQpLmz5MnLsV3mnSsLzPeff4/ID/Q/MqySrBoxE6FpL8qg+F8HI?=
+ =?iso-8859-1?Q?+Uf8S4prRiGoBLFKKbpZjQxff/s7+uCVBvwuoOft9pCd7m9yFfS7hbbPL6?=
+ =?iso-8859-1?Q?3qCH+1Lv5gCTNlfLBM25UPODxF1B9m+le0o8SBfQWuJocTrxLcfotTSvX2?=
+ =?iso-8859-1?Q?y6ah457RL38fsxjZorKteUQU3ihzwqMNpiK4pqCc6kUpDay0baK8sTnm3w?=
+ =?iso-8859-1?Q?AHyzuf4WfqLegLrul/tzWsAKUTCXER5JMpIJ/gknMr7xugtp9KJ2L3N2+A?=
+ =?iso-8859-1?Q?y4D5mkO4bV3iCFERSO1itPivMJUXyiQQ0d8JmMeU1Qiyk0k5igC7YF2Qxw?=
+ =?iso-8859-1?Q?2ryqByaSEu6GlDiyw1rlgHI/K09rn+6oc0AsqEO+BsnSyqDMEKST1TvMsn?=
+ =?iso-8859-1?Q?Ct35HhvJakAyMG+6ZEWPES4uR9abyQV1SOqEoRieOZJ8InR6pT2V4JunZo?=
+ =?iso-8859-1?Q?0+/j8cJTGHCCPkCp43x1bCTKvjzgBO2mcNuI1Q5aOpIAcoQii2ryeJjHtp?=
+ =?iso-8859-1?Q?e0dRJbLb7Nv19yQsNPAWcCVcCCRPWoAvK/v1jJ/1JTIa+YDd30eBmKNwxp?=
+ =?iso-8859-1?Q?QcCGYNb/9OC7CG3Wm+EJdda9ArTFOpfPwh0V8lcCRnt96ETASILO1sC2lP?=
+ =?iso-8859-1?Q?OEMDnNO/pzJsEK+QMYBfHyOhvHdddzqf7S72U7KIEbROPboJ4iQrCTKMUl?=
+ =?iso-8859-1?Q?UErMgi0zunIZv17oTU1izA8XIvDeA7oQ67/cfEY+LCakLkd1YbMnizOlM7?=
+ =?iso-8859-1?Q?stj/yyhkxBBaCO8ist5P0Pn2uDkDeVYorGWN6uGSAtd6aSeev5KBoPJlwR?=
+ =?iso-8859-1?Q?hxxmuVgQgZB2KcoZXr8KOpA90PlCDlBK8jQ9yAtLmcL7z6Y1Bmg+aoP1br?=
+ =?iso-8859-1?Q?OY7H3ZzVTemz86nAebDwNRVItgbDjXCWJtZEsDfB4uMy/nru7Z96TAM11X?=
+ =?iso-8859-1?Q?sSQoC7a76aRTlBIykyGL+kUrJQM48M4ZMLdON3584JDMY1IMJ0niYJocL5?=
+ =?iso-8859-1?Q?cPmMoiDEA/+AHTvFqle3H7X7iDWad+tZ54Y73F5D01cxVkkc9qGVPuT1l2?=
+ =?iso-8859-1?Q?mHy3hVpU0MXXcCCVV2SphTL5XRh+C5IvvJdNFFDg6/JwioUM/9bg3hFhkF?=
+ =?iso-8859-1?Q?NLyka+UB+Wt3c4IYDcVrCdQZm85Ftz/MHS7pSjI/BMoOu/IffAZFqU3A7B?=
+ =?iso-8859-1?Q?C3dCx4G+5t0Wf52kklVhpDrC+qMDsgNIvhnk+ZFPRhZad6/SuR4sxqETG3?=
+ =?iso-8859-1?Q?Vt3o+6smZKXCOUKwQmn+nViDYs3KtUN8xzhses8JSO/iuwgJ5p+axE0q6K?=
+ =?iso-8859-1?Q?GWDOvfRobtz3lc3ergj2RS6wkQRiksnivWBGtBcUDVKvohlJWf91qx0vFX?=
+ =?iso-8859-1?Q?x77fr+aGpIQvCBXIMLRMAiDOcaZEseNdEb1aboKAnkpR51+AWyP2/gofSa?=
+ =?iso-8859-1?Q?pEZ4JBPNrF+DsCAdbrY=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c2f1969-98cd-4f0b-8d39-08dc48f167b6
+X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB6231.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 15:21:24.6781
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TVvYAr8NftYtoO7j63d0hODlPej/uuIzzZNfrIIt1q9M8IoVKnlBWK8QYdzaoMP3xnDyvDRpg0BnBMBsKfn6nUZp0pxOfWHbJxwkZag8k1k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR11MB6316
+X-OriginatorOrg: intel.com
 
-I have found a regression in userspace behaviour after commit 67b164a871a
-got backported into 4.19.306 as commit 19af0310c8767. The regression
-can be fixed by backporting two additional commits, detailed below.
+Hi Reinette,
 
-The regression can be reproduced with the following sequence:
+On 2024-03-19 at 10:51:14 -0700, Reinette Chatre wrote:
+>What remains is the user interface that continues to gather opinions [3]. These new
+>discussions were prompted by user space needing a way to determine if resctrl supports
+>SNC. This started by using the "size" file but thinking about it more user space could
+>also look at whether the number of L3 control domains are different from the number
+>of L3 monitoring domains? I am adding Maciej for his opinion (please also include him
+>in future versions of this series). 
 
-echo some text > plain.txt
-openssl enc -k mysecret -aes-256-cbc -in plain.txt -out cipher.txt -engine afalg
+By this do you mean comparing the contents of main "schemata" file with the
+number of mon_L3_* files?
 
-It fails intermittently with the message "error writing to file", but 
-this error is a bit misleading, the actual problem is that the kernel 
-returns -16 (EBUSY) on the encoding operation.
+>Apart from the user space requirement to know if SNC is supported by resctrl there
+>is also the interface with which user space obtains the monitoring data.
+>James highlighted [1] that the interface used in this series uses existing files to
+>represent different content, and can thus be considered as "broken". It is not obvious
+>to me how to "fix" this. Should we continue to explore interfaces like [2] that
+>attempts to add SNC support into resctrl or should the message continue to be
+>that SNC "plays havoc with the RDT monitoring features" and users wanting to use
+>SNC and RDT at the same time are expected to adapt to the peculiar interface ...
+>or is the preference that after this series "SNC and RDT are compatible" and
+>thus presented with an intuitive interface?
 
-The EBUSY comes from the newly added in-flight check. This check is correct,
-however it fails on 4.19 kernel, because it is missing two earlier commits:
+I kind of liked this idea [1]. Hiding SNC related information behind some not
+obvious text parsing and size comparisons might eliminate any ease of use for
+userspace applications. But I agree with you [2] that it's hard to predict the
+future for this interface and any potential problems with setting up this
+file structure.
 
-f3c802a1f3001 crypto: algif_aead - Only wake up when ctx->more is zero
-21dfbcd1f5cbf crypto: algif_aead - fix uninitialized ctx->init
+[1] https://lore.kernel.org/all/SJ1PR11MB608309F47C00F964E16205D6FC2D2@SJ1PR11MB6083.namprd11.prod.outlook.com/
+[2] https://lore.kernel.org/all/7f15a700-f23a-48f9-b335-13ea1735ad84@intel.com/
 
-I was able to cherry-pick those into 4.19.y, with just a minor conflict 
-in one case. With those applied, the openssl command no longer fails.
-
-Similar fixes are likely needed in 5.4.y, however I did not test this.
-
-No change is needed in 5.10 or newer, as the two commits are present.
-
-Please add the two commits to 4.19.y (and probably also 5.4.y).
-
-Thanks,
--Ralph
+-- 
+Kind regards
+Maciej Wieczór-Retman
