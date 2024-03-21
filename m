@@ -1,153 +1,188 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E3F8565C
-	for <patches@lists.linux.dev>; Thu, 21 Mar 2024 14:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711033089; cv=none; b=EoX/SwiYqdVtDQaXG4MXfJfWhLWn9UmMPU6zH9FH1Bq/3QVwYhjN6ZRl9F4G8xctbw76ZZl/6PqtuzF2sAKIJmtaaWYoZ3/vQWJxHENWoufZAvK+us/fx7ldtzWeV8/x/9DWGTV6IsShRE5iQ6WKTbq1Mcl5tO8T2iZUkkK35O0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711033089; c=relaxed/simple;
-	bh=agLpce2z9FwJwT33c/120zQCMrtP5RPFZ4ebii0kb1o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oxRZeFZwQZFlaXe8DK92vZQ3xOA/VxnQ/oNQMDYbEJhaxqFwuHJczZyWHFs26WliOrR43VgmXOxkOJB3akm73DoW3sO1JvS+u8aaVLBnaQXNAypTYtaF1RH/j8GU8jH/QwRB+nwtsAfYV1M27LrLXbna0weULU8jtHy0iOTU1NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DlmxvGEu; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585C013A255
+	for <patches@lists.linux.dev>; Thu, 21 Mar 2024 16:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711039917; cv=fail; b=ZeqyKM2CbzaZTWhaNdz40hRa6Mw3uX+7N1aoiQuKSEM8xhuYxsKvjzciEX3kADDSgWUEgd2s9vF0SY/fN4Qu9J+t0i4DypDqUana2lhhDzjhUUhAArja/f1Tz6paPZckDm0D1gKi/8VyHQ21t3JcG8nTt0QodG0qq7I2tHkk2zs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711039917; c=relaxed/simple;
+	bh=JkYQkDFyo3+XwZwUUmSSzUVMVbwMXnii5X2RHA8o1KA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=mTUpjc+GTMzg09u6vtIX4blNpZ6f435/hWwtKlM9WpGXL+/Lg+6/jv7+9ceB5FDdWpCBU06xv9V3FtynjZyyQh6gzx057cjnkTZJ7P+gohEx4v6Dou13TWZzZK5B0m2zJrXvAfmcwtgQVoyJIVdm49Uk7ZTkZ4PCKNofR7xqmu4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N7Wx0OWS; arc=fail smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DlmxvGEu"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-428405a0205so326711cf.1
-        for <patches@lists.linux.dev>; Thu, 21 Mar 2024 07:58:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711033086; x=1711637886; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=knuU+bN3mRTrt098EHjBQeurVLZoHLcRuAXjCxz4p7k=;
-        b=DlmxvGEuyeyKfkEh7sx2XwCbbZqwLjs8k647B59RHW+QxGWg/eGqU20s3TWYk2TEno
-         VDqRP2rDCzVGK+vkfXYv07eTooDCBORwtIg3qbNO+oI6QpoyolKriXpP/aMM4f7+3GI5
-         f0HGNNndsriCwZ8gQedbCBSPKkE/oG3T6eTVcGoLdXL6CQ8vrVOloIIjDeZYn/r5cpn3
-         R96JMbkeMc0QQSFQh+jgaIXb1yo63oyLRd52//u0X6LD/b4o9Aovcx7QltaEox/dqfAC
-         boS6uIpIAeV3tvHVYsuAQkU1wZ1V0h6IDYehoI/ScJO21JsgZ5seVrGaFG61B8cRZlK4
-         T+Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711033086; x=1711637886;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=knuU+bN3mRTrt098EHjBQeurVLZoHLcRuAXjCxz4p7k=;
-        b=ugQ8g5CP9vGxeiBAaMXaOU8KUZ/UbVGqTirgv0A8CFp6Ds6o2jTf2NKU0MQbkpjDSf
-         7qOvapTrWEiRHxZreAIbE58r22ZjBl/vI+LF/zvBv4/vtSZE58II4e7R0/nrACgFuBDI
-         F94dbci2UDTcBUhznpCBfMs5RUpFIBhIle48rE323OpHD/ObEl2+HnUeyfg5FYvWnQOb
-         txXNnIrK9qRSdEhn9HxfroTZnCmwbJkBhRdYBv2J6VvCme7tuk9S7UpfDJqyGvcjeaPs
-         iAf4b/lyO0A7BX8w8lAfS0Jf5SnyM2xSVNRoeHgQlqEKkgorKhKOggEsTjP8CRUtgjos
-         jf+g==
-X-Forwarded-Encrypted: i=1; AJvYcCV91rdb4JCY931HUvqTyXtQSFLgjP4zETXTKWAorrhMoXSEmjb/SRonyw/9KBPGp7e1hCo3MEWuzXyISDF+mHR2UQno6PNbMA==
-X-Gm-Message-State: AOJu0Yxr5NTjNBc1sKH1kgWP6lMZsaehOfsRrkKrrXbrDas1ABOpn0sc
-	okhy/H7HS/wKl27cNyHfAthcrQSW/LSnslh/EyjpdiojkpvWRyRMvZ7QI7SeIbFlj1kPooDnpG5
-	4whCUxFsrbHKqQ//d04pxlQrN9CVp4h6NUgvi
-X-Google-Smtp-Source: AGHT+IEuGSQ+56IpfGI3PEGVPMzRSXwvw5hBeQOE2QP/AcKnXjNF3i/P93FyqtxqijSGEOt98HL0gOFIJrwhU56rtFM=
-X-Received: by 2002:a05:622a:28e:b0:431:156f:b91 with SMTP id
- z14-20020a05622a028e00b00431156f0b91mr264496qtw.3.1711033085946; Thu, 21 Mar
- 2024 07:58:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N7Wx0OWS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711039915; x=1742575915;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=JkYQkDFyo3+XwZwUUmSSzUVMVbwMXnii5X2RHA8o1KA=;
+  b=N7Wx0OWSRUXpELaGaxVwN7cEUZ0Vb1kAUmwg/Nh4YIgO85E/fyXuj5MU
+   KskQjWBx1s1ousgdirc7aypZ1lK9qMuxiAaQrEgLfw92IQrT/UQiO0W0c
+   bfKsGn9hftCJcHtDo7I1GcqRLRBZiRz0t6BlPOJ0t8RT0Ga6lX3YOy51G
+   wexXQXSQvFUS86EGjYGxO2hrfixL3w8FlrdrWPJcqNeK9Zc8PTHcPgIh+
+   1RKau3N17yg2yowksY/e95zs9iQbQRbWsCksSXCyGQui/1Raa9BfFu+h4
+   0oT3tUWo7YZAkgzzeFdtPNrm+9aRhAZJ645UPLT/gKEFGO2i4LJOpVDUm
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="6165543"
+X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; 
+   d="scan'208";a="6165543"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2024 09:51:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; 
+   d="scan'208";a="45574059"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 21 Mar 2024 09:51:54 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 21 Mar 2024 09:51:53 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 21 Mar 2024 09:51:53 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 21 Mar 2024 09:51:53 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.168)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 21 Mar 2024 09:51:52 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lKtFsNL3PaHD4yqPqBHn9xWzTfGlKlN1NnU9ihnp8sksI5kbIbfJvUzP5jE1cl94V8l6sGLOc1H7ueZW23HKuNj+pBMCiVEklAR0zEXu+CkMj553dXqZh2g19iR2Q5b/JcLtkQV7JZUrIpdRyIt45iGH9Eb/fUdZx0hS9cFC5FCqQoEFH7nc8SDtx+3t8CiTbNVEtlOZTYDDNvKFFdRLP1VNZX0VBQZ9hJr5e4RfbxJDmu2gvWTxV2QbtV34OOJiMeocwdQD0m2LSJyeFIyd6H/d9y8N1oTT6huhMgUaJU1CT6NepGZL2a82TgHYlBT57Wh9BTpowC4vceqaSfXEOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JkYQkDFyo3+XwZwUUmSSzUVMVbwMXnii5X2RHA8o1KA=;
+ b=jXIjBROC7K/e3C6M5OzujudqCS/CvGU5BViTOFzojDXHCjI6Nd/mCa6NizLsxQoFHYW1kZw6Cgr4HZXBkayM976KKamdU7gvZnfoenxsOd8WM61KJOYDb6JkLjolqm03QcrKtRTbof29WofDW/vAYwWnYo1Eu0hjsbojT1fAoezYqxlxhe2fHW3EDJ/zOarmCOHhuIi0trGx+IRdCKJBSeGWjXmSFsVLVUyhaDtAz8PhHe2mdse1/cErUkdH+65shhQINIfNJBKr5+757PVgWkrkODJi5yOcnq6xl4rNNbVHp5lZ4khYnHeBKnu79sdmQVOrWWGKEf3e01niMq/vaw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by SA2PR11MB4844.namprd11.prod.outlook.com (2603:10b6:806:f9::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.12; Thu, 21 Mar
+ 2024 16:51:51 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::fca9:7c00:b6d0:1d62]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::fca9:7c00:b6d0:1d62%5]) with mapi id 15.20.7409.010; Thu, 21 Mar 2024
+ 16:51:51 +0000
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>
+CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "Chatre, Reinette"
+	<reinette.chatre@intel.com>, Peter Newman <peternewman@google.com>, "Jonathan
+ Corbet" <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+	"x86@kernel.org" <x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, "Babu
+ Moger" <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>, "Drew
+ Fustini" <dfustini@baylibre.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH v16 0/9] Add support for Sub-NUMA cluster (SNC) systems
+Thread-Topic: [PATCH v16 0/9] Add support for Sub-NUMA cluster (SNC) systems
+Thread-Index: AQHadMZAfvOnE4EV7EqwgV4w9PIDb7FB36oAgACVVRA=
+Date: Thu, 21 Mar 2024 16:51:51 +0000
+Message-ID: <SJ1PR11MB6083C9DD405BF4CB986822F5FC322@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20240312214247.91772-1-tony.luck@intel.com>
+ <bn4wtfyec4mfoztcr35rctgcbibypjh5gmxdr3fro72glh2y3n@vmqsuxgjlonw>
+In-Reply-To: <bn4wtfyec4mfoztcr35rctgcbibypjh5gmxdr3fro72glh2y3n@vmqsuxgjlonw>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SA2PR11MB4844:EE_
+x-ms-office365-filtering-correlation-id: ff5878e6-d45b-4757-acfd-08dc49c734d2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 5w8UbaritdIDbBUVex/CV2O1/91LJxE29kD3B9Bv7pBFg6xSfMEb3rfxVYISNnAEJMQ4N9vB5PA9ChhOBTeMq51IilDmcOktiHavOr3tSMpTLMKnCO7Yt7b5zODP7wQv/Td8NLXkEIYdpM3eu+H8bDHU+nyvFVFii51gqiRV6u/Vz6yc4sr3klYVr2x+PzLYCdvzy9eJYnR5YXzHlWsTEFR7fwc6qO7aozUPxo1UK70HRHWZJztXJ8kubnzfWBaFwUvs1MM2BucNI8DbJqEXKkz2ru9saLtfUxQPtmWnDHXfQOkE/2UYIXBjJUcITh+5zKCwUgKLfIUkNVvmFbTEC211svq78uUaZwVOepu52S7zBsVvFyIQS7tYh6YfctP0vkYpP3ud1epxPwxTdhWKOrZN3ts6dwpoP1CUsbTVIVv/hdiA5pWzhj4F7tSgdlbY8DrH1WvpmF4ImzUzqmu5/s+SI29Dg1eLau4zAuBt1mYCt7YUY8eswv2tczdfBBuc7O+TFnAZEvyfIj8E1qpWFtTcZZJvHu7kr8YL90bglZlXOTK4jJ5yivtowQ7n02i+YitEOuDtL2Shger1G2T/4HEK8TW29uLeWCrqkIcRTlKbuzv/5CWIofqRpVqcWV4aMLmVKckzuUyA/hx7V41aH+lDhrRF5wYqHr7skr3ByzJnD+YeTsXiaCJ2POSUEusnfhJNcbr4QwPLjRg8stXgdSqUi8bujb2ky3CQZpb07Po=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(7416005)(376005)(38070700009);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ImQHT0AGYmlFtNDvwqZlLxYZdC+Fgu1A7z07d4nfXGjTwFpBDym/0R75qzHI?=
+ =?us-ascii?Q?fpbJaf4VWqtmucHmt9b6o6mZHCqb5tWUhF/Tvo133UPIxp7KhSuZYviqPP9G?=
+ =?us-ascii?Q?yHv42YpMybVwP/5BzQMtOIJ1bHN2NaKE3EYmIFqNHZpa+yip5oB74gLYsDcL?=
+ =?us-ascii?Q?dm4ZNCVwLAeIZcxM+exL3xg7MVYf7FWP0Tkivo9cu9vYr9EyEIeoyy65r18M?=
+ =?us-ascii?Q?kcC0zvmrIdNoWnfLMbdmQYIbjCO6/tJeNZrET1t81pAqlGif7yyuRTqKMMfo?=
+ =?us-ascii?Q?T3AY5TOQbPvTsR0Wk3Zp/WD1CUHNxoIiehIfLpwSdz3hgiBVxCapG4F06zn9?=
+ =?us-ascii?Q?0QoDY6QvNru2hA00020sonmwtn04QEdLp6AFHfeOx/OblcwqbVMMilqBTNxO?=
+ =?us-ascii?Q?IyPzXlJf37evgzByd3JVhI5yJ6P4ZOiYwHQMU6CViUbNM84zLuyiCAn2a2Ks?=
+ =?us-ascii?Q?hEFuM9VQLjhvEs6sJCu2FuRrb5JOCArWsvoFRLFmGCdTAQxSrCwDx+lT8tF7?=
+ =?us-ascii?Q?DV4+H4W9VlhOJdzJsuIXIqd6kHzP7cpKB8mDGb5/8XUipZNyVT0tBbS6CP3Z?=
+ =?us-ascii?Q?9X0M5eLphgC9y0/1mpU12du5DqDDbG/frWVjHO45+Bi5x9okaG16UHsOSPJK?=
+ =?us-ascii?Q?wq2Y1KDKha1YsdnMP4Wg9SlT0+KHKdU+hujINyXEuNcvFMLLfszFfIRBuS69?=
+ =?us-ascii?Q?QHdpE+qkaVbcmN3ASQINJRMTaTHthHIe+2iMVYzUug07114TvqP7Pw7RHp3B?=
+ =?us-ascii?Q?ygIhqXtLGNwTKyTAZG5l1noHsPIC3M+wbSx1KCxaD16XS6h6k1PXiD9AKBaP?=
+ =?us-ascii?Q?54meGI4QmfCK6tHpeKDqlZKEBHjS0xYs39Xh6mVSt6n0NLBzUY4ezIRyUSzL?=
+ =?us-ascii?Q?1ygZ+uqnUO8WBGPFi+yTyHSFIMpWw1crMODcBi2/G0MJfgGw+Bt02F4JcgSK?=
+ =?us-ascii?Q?WH8oJb/DGgA/8yAzg/RYJyxCCr+pxWilXRAnplMYQAHIhm/SQPJYpPFhPumx?=
+ =?us-ascii?Q?lgguxcaiIb5LPDn8Q3Hrb8XMCEGuDJA8kpP1jprV8ajrfEOBfAsgw/UjBNNe?=
+ =?us-ascii?Q?snscMy8fWeFXSTdwcFhPv8XAuY0NzxtPsx148rnh7UHtOelcbu7LqAxu7STj?=
+ =?us-ascii?Q?/NMHSJYKWq0LKaQHO4OChinLEd5vcJOM2rPQtPx3m7e7Q8f8UU7kfrrJ/g9k?=
+ =?us-ascii?Q?r1xub2z6HMo25JI+WIHsKZlPp+SN9dVEOv6syiuCQEJE56I2uu5zNKonagos?=
+ =?us-ascii?Q?gqGiNteJCBTo6yh9OVX2S1I36gFt2gFP2YTHSjQBHI6YcAZk66Mov75wtJs3?=
+ =?us-ascii?Q?I/nMQudYc33Hg4SOFuXsWlnLWWuXqw2sldc4n2fdeDJPM09QLLfWSCw4xCMG?=
+ =?us-ascii?Q?JVDwtQUj9tKO/dWAtljzWrp2tMNRngewQ4BfB3Lnu/WWZJbj+bkXq6WEoxRH?=
+ =?us-ascii?Q?KsZQj3+iSe8agS3G8lblhRCYXxLMvYu1tX/YXTDKG7X1lRNJj8rHaWUxwg22?=
+ =?us-ascii?Q?5N4Zt/ayh4eBSoQCToVYwCSKTAictgeLsz490uFf5c4VQ1CWSncNP6DQ3EIl?=
+ =?us-ascii?Q?lveEu7nr5uKbydzWtD57G6qnxoW8Drev2RMpZqn4?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
- <14-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com> <CAKHBV25xx51EuDXK91-o9BnFq5TZ66TAPuZ4YEdJ1UPq8sr7ZQ@mail.gmail.com>
- <20240321132839.GK1044235@nvidia.com> <CAKHBV26dSY+Gy-x9HTWVCcNMyAkB1g+Y+dv-Lg+-furpu9bnSw@mail.gmail.com>
-In-Reply-To: <CAKHBV26dSY+Gy-x9HTWVCcNMyAkB1g+Y+dv-Lg+-furpu9bnSw@mail.gmail.com>
-From: Michael Shavit <mshavit@google.com>
-Date: Thu, 21 Mar 2024 22:57:29 +0800
-Message-ID: <CAKHBV24A7rQPg-iSj_sLOisahFj9Ek=84Ru91bU9CnLcdCkqhg@mail.gmail.com>
-Subject: Re: [PATCH v5 14/27] iommu/arm-smmu-v3: Make changing domains be
- hitless for ATS
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
-	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff5878e6-d45b-4757-acfd-08dc49c734d2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2024 16:51:51.3023
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: erxjw712SdqkjMnYVNuJHypd+MEaulmPqYLAUQs0ZC9n3SvabjJE11QYN0TUhzMp+WwuMq2CNHO0/jkuiLBdaw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4844
+X-OriginatorOrg: intel.com
 
-On Thu, Mar 21, 2024 at 10:53=E2=80=AFPM Michael Shavit <mshavit@google.com=
-> wrote:
->
-> On Thu, Mar 21, 2024 at 9:28=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> =
-wrote:
-> >
-> > On Thu, Mar 21, 2024 at 08:26:43PM +0800, Michael Shavit wrote:
-> > > Overall I think the patch works, but it took me a while to really
-> > > digest the big picture. Just to make sure I fully understand:
-> > >
-> > > We're trying to satisfy the following invariants for correctness:
-> > > 1. Devices cannot get translations from a domain that was detached
-> > > after arm_smmu_attach_dev() returns.
-> >
-> > Yes, regardless of ATS this is the API requirement.
-> >
-> > > 2. Devices cannot get cached translations from a domain after
-> > > arm_smmu_atc_inv_domain() returns, regardless of whether the domain i=
-s
-> > > simultaneously being attached/detached from a device.
-> >
-> > There is no simultaneously here since the group lock is held by the
-> > core code.
->
-> I meant a call to arm_smmu_attach_dev concurrent with
-> arm_smmu_atc_inv_domain (through tlb_flush_all).
->
-> >
-> > > Apart from note point 2. above, the behaviour of translations while i=
-n
-> > > the middle of an arm_smmu_attach_dev doesn't have well defined
-> > > requirements:
-> > > 1. Before this patch, devices may get translations belonging to the
-> > > old domain, then aborts or identity translations, and then the new
-> > > domain while arm_smmu_attach_dev() is in progress.
-> >
-> > Yes
-> >
-> > > 2. Ater this patch, devices may get an arbitrary mix of translations
-> > > belonging to the old domain and the new domain while
-> > > arm_smmu_attach_dev() is in progress.
-> >
-> > Yes, but no aborts.
-> >
-> > > While disabling and re-enabling ATS inside arm_smmu_attach_dev() woul=
-d
-> > > meet the same requirements as this patch, it's not optimal since the
-> > > device may still have traffic on other pasids than the one being
-> > > manipulated.
-> >
-> > Yes, we can't just disable ATS due to the PASIDs. A SVA PASID might be
-> > present and disabling ATS to change the RID domain would completely
-> > wreck it. Today this scenario is prevented by sva_enable, which is
-> > removed in following patches.
->
-> What do you mean by wrecking? We might slow it down to a crawl but we
-> wouldn't be corrupting or destroying anything by disabling ATS while
-> SVA is running would we?
-> Oh does disabling ATS abort all transactions rather than making it transp=
-arent?
->
-> >
-> > I added this note for context to the commit message:
-> >
-> >  This is part of the bigger picture to allow changing the RID domain wh=
-ile
-> >  a PASID is in use. If a SVA PASID is relying on ATS to function then
-> >  changing the RID domain cannot just temporarily toggle ATS off without
-> >  also wrecking the SVA PASID. The new infrastructure here is organized =
-so
-> >  that the PASID attach/detach flows will make use of it as well in
-> >  following patches.
+> I wanted to find what causes the conflict so I can give more details but =
+three
+> way merging doesn't seem to work and git am doesn't leave any conflict ma=
+rkers,
+> just fails.
 
-Huh ok yeah, I thought this was just enabling/disabling caching of
-translations in the ATC but looks like it's disabling translation for
-those PCIe devices.
+Maybe there's something else touching resctrl in either TIP or now in upstr=
+eam?
+
+In my local tree I built on upstream after Linus pulled TIP x86/cache (and =
+a bunch
+or other stuff). So my base commit is:
+
+b29f377119f6 Merge tag 'x86-boot-2024-03-12' of git://git.kernel.org/pub/sc=
+m/linux/kernel/git/tip/ti
+
+Then the two patch cleanup:
+
+b0eebe2ee45d x86/resctrl: Simplify call convention for MSR update functions
+edf14f3a6093 x86/resctrl: Pass domain to target CPU
+
+Then this v16 SNC series.
+
+Reinette pointed out a couple of things to fix in v16, I'll handle those an=
+d post
+v17 next week (based on Linus v6.9-rc1). I'll fix up any additional merge i=
+ssues
+while rebasing.
+
+-Tony
