@@ -1,58 +1,58 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C64769968
-	for <patches@lists.linux.dev>; Fri, 22 Mar 2024 18:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74715762FC
+	for <patches@lists.linux.dev>; Fri, 22 Mar 2024 19:07:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711132586; cv=none; b=FwWgK1wY04XZgVGfQpZpJHzDVts70NZ/sUPJsDP0oIv69+7ysm77VKEdSZ9iMCY6XAOFNTkCdy5DNfVoiDxHmSgKrmrgtwvy4YckDpnJWemEvismNpmdXLgFcagE5yymtyKd1rwIbchqX/I/7+WBuZ60Uh1/FyRFsBM3iQctgCY=
+	t=1711134438; cv=none; b=DESTbZ0JqDh15GQc8pKLoxmp2VLoq/QyJsAX0YN0p3Zzl+ZvUz7EC+wFHxqRACDo6Rh1uObUr1d9yrtN+tKkRKy/xAEcc8U2cnT1z7PyjSNSNaZI/mdDEM/FVl/ij2k4UR6IVcytR99HEhmXla+u84Hpp6HOdpepiMLCxQ4qRDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711132586; c=relaxed/simple;
-	bh=JoClKObtEAGJ+tT2fQIpky3Dipfqc32Ut+GvILAfph0=;
+	s=arc-20240116; t=1711134438; c=relaxed/simple;
+	bh=5clcENVPl84v7thAD523MC8hq38AuZBiMpmV/P8IXN8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BF0N9Fty3r8Yevp1t+Zog7FPldS2JRs3I2E20CP5qmkO18jV4Ct4BII+l1+zLmKzGu64ifdAyQmhcdaB0NFMkTR+SUOomQ7cg79IRrIBDkEN6wmep1ke2G6l3UXChuU2Bxndz3d1I+vnYpgFbBudYQxt6txt651R5FiA0VYfpjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iWpukIG5; arc=none smtp.client-ip=209.85.214.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=u0gU5P2eJs3Fid0M7rcSHn7zFp6LB6wqWivqtfnBAy1HTP960zabSxMUSN7uvd1zpTE5GGTwScCRCfhHpZYW+XFmWljMs87DLmwsvRxo9ASDs/VKvLHZeLWfJjAchxMz6fvJSyRN8MeC8mOf5jLLnmbKZGD1AI6kHaoMrcLP5a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GasikVqr; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iWpukIG5"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1deddb82b43so18255ad.0
-        for <patches@lists.linux.dev>; Fri, 22 Mar 2024 11:36:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GasikVqr"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-413f8c8192eso14885e9.0
+        for <patches@lists.linux.dev>; Fri, 22 Mar 2024 12:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711132584; x=1711737384; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1711134435; x=1711739235; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=nVPoc0zBfC9U1ic1aSzwWnoSA6XoyfQtm0d93m0EMpw=;
-        b=iWpukIG5k1tDs7/3wEIPNqyjncJneQUNdaRWGYMJi0J1noDuDwWgHkn0jRaP8l2jjf
-         NroZfe/omjadWVOa36tRvLyY/5dzEtYHNrSp29viz6+msymqKhevQjDlW8ntJPsdjmOM
-         BWklyIVBM6+Byj1g1bROm5DRUIWY5SzBQ2lj/GotFZpBpVA/yaR2LMBIw63z7ye3q+lu
-         tV149Ug8GWDKv1Re76ttEkIWOUO1qhH6BsX53BB1i4YuUZV/P2iFdU4Ov/dwFB3WDDAK
-         NkUTRMo7Lzr5KuWAUROf7l3jvUK+9aMP+LhPEr7xk7YF/+/BQoa56q9+nAuRG7XBsqR9
-         lXZg==
+        bh=LYZVGNnxMtJXmO/rMtm5YPA7SokYhXE01EEUSWS+tyg=;
+        b=GasikVqrJktaOYlx370eaM9zq74Oi//j4eAfMYZfW5fKGW8bYlhrEfJCqe0D7klKke
+         RZZ6pUnH/ZYjnd00+jXuzzlG1NenMBImzkYnO9OrTGsr6dXNLyVTguFsIMfc02SFiR8S
+         8oFFXmD2HPzM4f3MQlomohcIkSbV7lh26Rb8MwsnoZJ7SZbnDxCBqPXCun9U5xsRKeZf
+         iWlQkoMIwsT87zNxzmxUxvDVrD5FjqAr6HOyUjNUT1SOxxcWRnTHR5a3ync85S8hDOsO
+         EQI7zW+BidPh9CU42K4oaX8ILl/7SjMVG4KA/flD4Ow7OXjK8rvsqQryK8OYlsSKbxLR
+         krQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711132584; x=1711737384;
+        d=1e100.net; s=20230601; t=1711134435; x=1711739235;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nVPoc0zBfC9U1ic1aSzwWnoSA6XoyfQtm0d93m0EMpw=;
-        b=v/2W4WnBcfzIFEYij3ywVyc9Z9GHmpMR5N69B5dSqIXGC3G09yuL2uASZwY1P2bEJ0
-         59ngwodm1l5o++Fsy0h9SyYN97D5a3ZzkiRN4xmGRBk/XUke/PXKpFHehkff8SM1Enq5
-         ENRoproXqOx3YWjh6sum+DJ9PD7Das0eAQZs99SbAAM9LaJl5czS4DqJsgsHZoLL9P7/
-         XAaWKUlRLETeuMGgPPqBApU+SyrTCTHVdycZywmBls1Ka12LpdQ7HeRQyZy4MinpWuJl
-         kA+iXUuID7pN6iCVuRD3LXkwBu9G6jnPVetS25EQswASgt2/1C7qq2bVqQqN0JETIn9K
-         y3Vg==
-X-Forwarded-Encrypted: i=1; AJvYcCVNAtfq2/NI3sHNkbaIL2HtVzMrqCDocecIVRKOivODqP3xkt6HUEQ52kKCpPkZrhVLFA0QhWlUB/QaUUhxbZkZ+KzY/HLLQg==
-X-Gm-Message-State: AOJu0YzgSKe+DZh5exawhHMCplNjOG80nYBfCpzTAdZI23qoDW0SrRY0
-	1OnqpRmzIzKMQX+KXXpmLdT2bsugi2fbNVSeOBh4k9MtUctxNXepQaSm1K5BFQ==
-X-Google-Smtp-Source: AGHT+IEqcUEHz846wp32mZoycYvHFc25nLCog9QUGkMqh5QA3Top43vW55sXYxEXlOBafcwvEnZn3A==
-X-Received: by 2002:a17:902:ce81:b0:1e0:9f59:ed0e with SMTP id f1-20020a170902ce8100b001e09f59ed0emr67263plg.25.1711132583667;
-        Fri, 22 Mar 2024 11:36:23 -0700 (PDT)
+        bh=LYZVGNnxMtJXmO/rMtm5YPA7SokYhXE01EEUSWS+tyg=;
+        b=VUOekaaOUvvdvbWHaa+HCM7VfEf2LI3Q2zQ+P095f8zXxVflxN4wVjs/erxSgl/icj
+         7WFSB5awjaq01zydfSvPH//oNIZC3+1ugjjWHTVgCjTMT7H7AO25kU2BMqhw4yUf1eqr
+         QA20sF6UOYXfMnlnzkh14NMCmHRv5t2jqU5eIUvgtakIvCuBQVnSC8jG0hV0cSgdPaTJ
+         AfKZDU+0OzUg541u/vyqd6p0VHzDWChWJyofCxPpHYU+YmZrNtOXS5kVhfMbqJtwUBvO
+         zTHPlkjYpuKbMrJ4OmI6tCNHYGsj7EP6zwQtQj0AtYt9qS5cx/2sxja/wusiJQ4asNWP
+         NgWg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/tc1RTgfGhuNjzx2IPe1dVQG8KLi5MrxhbslTAUGJQ4I0HWCqBoG8ghjc6GG3OLwDmmryF8l067lvtXcsH9d+govFoHuGjg==
+X-Gm-Message-State: AOJu0YxTExoRSi9btLI1EnD/aO2BirqQurrFWoG1uiT7DIZLkP6i3xml
+	4VVbdxxmK4h/dCBfAGhg1ooEt0wwmi+SH/YESBlzObgl6tcpDtyfALfoBplHWg==
+X-Google-Smtp-Source: AGHT+IHNc62m491wU+HcWk/9byQ0VfDf2/ltTaBrjP1Nag9akn0HzUFm/eSmTJ1AFlgyZ9X7wmhRpA==
+X-Received: by 2002:a05:600c:1d22:b0:414:76df:2d42 with SMTP id l34-20020a05600c1d2200b0041476df2d42mr414216wms.4.1711134434744;
+        Fri, 22 Mar 2024 12:07:14 -0700 (PDT)
 Received: from google.com (180.232.140.34.bc.googleusercontent.com. [34.140.232.180])
-        by smtp.gmail.com with ESMTPSA id v7-20020aa799c7000000b006e77dcba6a2sm62198pfi.207.2024.03.22.11.36.21
+        by smtp.gmail.com with ESMTPSA id u12-20020a056000038c00b0033e456f6e7csm2773566wrf.1.2024.03.22.12.07.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 11:36:23 -0700 (PDT)
-Date: Fri, 22 Mar 2024 18:36:17 +0000
+        Fri, 22 Mar 2024 12:07:14 -0700 (PDT)
+Date: Fri, 22 Mar 2024 19:07:10 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -64,11 +64,11 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v5 06/27] iommu/arm-smmu-v3: Consolidate clearing a CD
- table entry
-Message-ID: <Zf3PoRy_q7dC_SA9@google.com>
+Subject: Re: [PATCH v5 08/27] iommu/arm-smmu-v3: Move allocation of the
+ cdtable into arm_smmu_get_cd_ptr()
+Message-ID: <Zf3W3lo8dXZuKbgm@google.com>
 References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
- <6-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+ <8-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -78,104 +78,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+In-Reply-To: <8-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
 
 Hi Jason,
 
-On Mon, Mar 04, 2024 at 07:43:54PM -0400, Jason Gunthorpe wrote:
-> A cleared entry is all 0's. Make arm_smmu_clear_cd() do this sequence.
-> 
-> If we are clearing an entry and for some reason it is not already
-> allocated in the CD table then something has gone wrong.
-> 
+On Mon, Mar 04, 2024 at 07:43:56PM -0400, Jason Gunthorpe wrote:
+> No reason to force callers to do two steps. Make arm_smmu_get_cd_ptr()
+> able to return an entry in all cases except OOM
+
+I believe the current code is more clear, as it is explicit about which path
+is expected to allocate.
+
+As there are many callers for arm_smmu_get_cd_ptr() directly and indirectly,
+and it read-modify-writes the cdtable, it would be a pain to debug not
+knowing which one could allocate, and this patch only abstracts one
+allocating call, so it is not much code less.
+
+For example, (again I don’t know much about SVA) I think there might be a
+race condition as follows:
+arm_smmu_attach_dev
+	arm_smmu_domain_finalise() => set domain stage
+	[....]
+	arm_smmu_get_cd_ptr() => RMW master->cd_table
+
+arm_smmu_sva_set_dev_pasid
+	__arm_smmu_sva_bind
+		Check stage is valid
+		[...]
+		arm_smmu_write_ctx_desc
+			arm_smmu_get_cd_ptr => RMW master->cd_table
+
+If this path is true though, I guess the in current code, we would need some
+barriers in arm_smmu_get_cd_ptr(), arm_smmu_get_cd_ptr()
+
 > Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  2 +-
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 20 ++++++++++++++-----
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  2 ++
->  3 files changed, 18 insertions(+), 6 deletions(-)
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> index 347c2fdd865c1a..bb9bb6fd7914ce 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> @@ -558,7 +558,7 @@ void arm_smmu_sva_remove_dev_pasid(struct iommu_domain *domain,
->  
->  	mutex_lock(&sva_lock);
->  
-> -	arm_smmu_write_ctx_desc(master, id, NULL);
-> +	arm_smmu_clear_cd(master, id);
->  
->  	list_for_each_entry(t, &master->bonds, list) {
->  		if (t->mm == mm) {
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 237fd6d92c880b..3fb4a1523d1d3f 100644
+> index e25dbb982feeee..2dd6cb17112e98 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -1303,6 +1303,19 @@ static void arm_smmu_write_cd_entry(struct arm_smmu_master *master, int ssid,
->  	arm_smmu_write_entry(&cd_writer.writer, cdptr->data, target->data);
->  }
+> @@ -106,6 +106,7 @@ static struct arm_smmu_option_prop arm_smmu_options[] = {
 >  
-> +void arm_smmu_clear_cd(struct arm_smmu_master *master, ioasid_t ssid)
-> +{
-> +	struct arm_smmu_cd target = {};
-> +	struct arm_smmu_cd *cdptr;
-> +
-> +	if (!master->cd_table.cdtab)
-> +		return;
-> +	cdptr = arm_smmu_get_cd_ptr(master, ssid);
-> +	if (WARN_ON(!cdptr))
-> +		return;
-
-I don’t understand the SVA code enough, but AFAICT, arm_smmu_sva_set_dev_pasid
-can allocate the L2 CD table through arm_smmu_write_ctx_desc. And if it failed
-before allocating the CD table, then remove_dev_pasid would be called, which
-warns here, the previous code would tolerate that, but that might regress on
-systems with panic_on_warn, so I am not sure if that is necessary.
-
-Otherwise, Reviewed-by: Mostafa Saleh <smostafa@google.com>
-
-> +	arm_smmu_write_cd_entry(master, ssid, cdptr, &target);
-> +}
-> +
->  int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
->  			    struct arm_smmu_ctx_desc *cd)
+>  static int arm_smmu_domain_finalise(struct arm_smmu_domain *smmu_domain,
+>  				    struct arm_smmu_device *smmu);
+> +static int arm_smmu_alloc_cd_tables(struct arm_smmu_master *master);
+>  
+>  static void parse_driver_options(struct arm_smmu_device *smmu)
 >  {
-> @@ -2702,9 +2715,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  	case ARM_SMMU_DOMAIN_S2:
->  		arm_smmu_make_s2_domain_ste(&target, master, smmu_domain);
->  		arm_smmu_install_ste_for_dev(master, &target);
-> -		if (master->cd_table.cdtab)
-> -			arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID,
-> -						      NULL);
-> +		arm_smmu_clear_cd(master, IOMMU_NO_PASID);
->  		break;
->  	}
+> @@ -1231,6 +1232,11 @@ struct arm_smmu_cd *arm_smmu_get_cd_ptr(struct arm_smmu_master *master,
+>  	struct arm_smmu_device *smmu = master->smmu;
+>  	struct arm_smmu_ctx_desc_cfg *cd_table = &master->cd_table;
 >  
-> @@ -2752,8 +2763,7 @@ static int arm_smmu_attach_dev_ste(struct device *dev,
->  	 * arm_smmu_domain->devices to avoid races updating the same context
->  	 * descriptor from arm_smmu_share_asid().
->  	 */
-> -	if (master->cd_table.cdtab)
-> -		arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID, NULL);
-> +	arm_smmu_clear_cd(master, IOMMU_NO_PASID);
->  	return 0;
->  }
->  
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 7078ed569fd4d3..87a7b57f566fbc 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -749,6 +749,8 @@ extern struct xarray arm_smmu_asid_xa;
->  extern struct mutex arm_smmu_asid_lock;
->  extern struct arm_smmu_ctx_desc quiet_cd;
->  
-> +void arm_smmu_clear_cd(struct arm_smmu_master *master, ioasid_t ssid);
+> +	if (!master->cd_table.cdtab) {
+> +		if (arm_smmu_alloc_cd_tables(master))
+> +			return NULL;
+> +	}
 > +
->  int arm_smmu_write_ctx_desc(struct arm_smmu_master *smmu_master, int ssid,
->  			    struct arm_smmu_ctx_desc *cd);
->  void arm_smmu_tlb_inv_asid(struct arm_smmu_device *smmu, u16 asid);
+>  	if (cd_table->s1fmt == STRTAB_STE_0_S1FMT_LINEAR)
+>  		return (struct arm_smmu_cd *)(cd_table->cdtab +
+>  					      ssid * CTXDESC_CD_DWORDS);
+> @@ -2719,12 +2725,6 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  		struct arm_smmu_cd target_cd;
+>  		struct arm_smmu_cd *cdptr;
+>  
+> -		if (!master->cd_table.cdtab) {
+> -			ret = arm_smmu_alloc_cd_tables(master);
+> -			if (ret)
+> -				goto out_list_del;
+> -		}
+> -
+>  		cdptr = arm_smmu_get_cd_ptr(master, IOMMU_NO_PASID);
+>  		if (!cdptr) {
+>  			ret = -ENOMEM;
 > -- 
 > 2.43.2
 >
