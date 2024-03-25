@@ -1,79 +1,79 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D474D9FE
-	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 16:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAEF12D77B
+	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 16:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711383554; cv=none; b=it+rc+CEfsOrTHRRrxDUMFEsZ4BwB4baufH4QYFU1rhgB/E6pL6nJvwTryy2b1tN7RmQrxc9mZj0XoCkOFtRBViek2GZpvtFZMt8icZZINBR1XaHXmH6+0HlyboKD0EsqtfF+xXfShbnh07bnj0p29vbaXUg2cp1KkzPvIvRX/8=
+	t=1711383562; cv=none; b=NsWqgeKt7vNoHDk6218HR9LaF6OJ5JHm3a8bxYj2zZpT7dDWv83Q27nq1S0sLkZ0g4882z98tBeBQRrQLG0TU+UeXWBoePvVImUrRGop+vNpnr8vnk1QxdqD4MxNyTTp6D5d7FOBjiYnHzkXQaoUkOTR8pmCGmF4C+s9U819BJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711383554; c=relaxed/simple;
-	bh=C0yANzAlSzgND8qqihTlSMXwQ/R0JMuPRLxdKZ8jvZQ=;
+	s=arc-20240116; t=1711383562; c=relaxed/simple;
+	bh=6utOFEwbdwWyQcN7SLxfqSV+M2t5uCbikbD6Z3HiO1Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I6drupEYPbVZqfhnwJJxk2KqozcXDuFOrQlcBWwnytsdZr7VfTCAZueLKHn/s609gWqtE7HfprsHMm5N0KvmdxAJiqIi0ni6qOiBvr4rwlTq7u/lLRVDcAJznUhF8G+zJGTaJVcLVveMGZz6XWd+J1gFAX6j8+baPuJcwR8TyVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=FfnGvUke; arc=none smtp.client-ip=209.85.160.180
+	 To:Cc:Content-Type; b=Wb0EtbcjZKnaJKy4xLckfHnWWvy9wnD17HgTrzy5yc7rJ6lZe4RvNrgjDahpoK2kPxsMaJ79pu2xoIbglbNWESOGDjeGd9+LZinp2CBR1wjndMN5QPO/9QaIriJaDFqsgJbCuV4rY0DlQtP86sHe9E3tJgPv2CC6rWx/X5/5wbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kMZfdPXU; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="FfnGvUke"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-430acf667afso27502731cf.1
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 09:19:11 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kMZfdPXU"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-789e6e1d96eso315631485a.3
+        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 09:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711383550; x=1711988350; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1711383559; x=1711988359; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EKP+i5jnsTv1b1X+grUsnmPFecRRLS4nYrDFL9hNpXg=;
-        b=FfnGvUkeydzUpDdxXTdDkMmWs7EWkJ137vJVPbJnwBkm4hB6leYxjs6vLoeMs0oZL4
-         gtnDKq8fxm3R3rCbglX7ZNhcgwq/lbeCYVtZvHk68tE9ZDBu6Y0uQ1ndldpKL608HzLM
-         vcMuMC3MQT4ELmXbe6bPTNiq5f2N7bjhoFV0E=
+        bh=DsgsfaYuhO9HIMjIvNDS3p/KRrPkbJlG84J7jcdFiPU=;
+        b=kMZfdPXUb6VzSkGhZkqdFPQJb9+KvUTpL/d0347FP72sP8EnB5M65Z9+01GI8b1GMV
+         Qc+lwQ7XXQfHeb4pA/22eklvcJZCBFii/vD296Cd/4lQhhVnQiGxbqYor+6fXKQtZ+nN
+         b8AJBfW7fp6eclaVgwhxYFTGihkhxFtOd6xDc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711383550; x=1711988350;
+        d=1e100.net; s=20230601; t=1711383559; x=1711988359;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EKP+i5jnsTv1b1X+grUsnmPFecRRLS4nYrDFL9hNpXg=;
-        b=pPcdhO9RSG9PuIsie2+nS0f2WAEhlPtk++gk1UVY1meQIug13WferKcywFJVjZX9DV
-         vBkTebOkJWupTKtiNEuBUBIlcmZvY5Q3QlgKZc4/lp5iUhaElNjXINSMWEJhu8+Dl/Hq
-         MkeDUXPoKroPbam7kKuYWZM6WrFirPsEpMNDoGVpbJyApKU2cgHjLgmveDfjw+0gPDFR
-         /l3/ppiI8vxrpxY7RJsnZu22uzjzR6Y2hQc2v0hTnVwCL40PLgK73fzE00pdc3Gz3SPl
-         U/g3dqXYAJFTM0U9sJMHjOq9cGJZbg7jNniPxGX9+kyWGxwarid/r4z1dU7xwvF4xPwk
-         SY3A==
-X-Forwarded-Encrypted: i=1; AJvYcCVuzMsDb9xPm6/eVszl+KWSU72HW2W/QwOP4F9y3NfUl709OaWtgcYp0xaaQO+crLZjOSFQInqtHerzXgTNtrfEOdihtgfsnw==
-X-Gm-Message-State: AOJu0Ywf/bJv0RFpYibkQWV36Xi/Nw3xWVcolCx/GFyCeZMYgKbguTgW
-	aYtDXJqrBxjwMKYIwBgUvdrlvJRcJspOWBNpoUFNkuZPsOiV7T4Iq2FrZloWbXA0lCxDNiw5kM0
+        bh=DsgsfaYuhO9HIMjIvNDS3p/KRrPkbJlG84J7jcdFiPU=;
+        b=MAWL2sakOzUKfYGy9ucdhFK63jGVIQfOwNmD7KXqXy6N4TwFsX98OFIMzZz1mKrMQD
+         QESgxVBOrLXd4MHEvaCHysYdERvlwTGlqA1InLZjyZ5ncTI8HACKdjKjDcA/svFsMstV
+         xvYBd5e6mGlt67vY5ncZpQX9JLht+DTJ1nqSQOcT9DUxmToww+lVNdGITtKBVfi8mae6
+         WFhQ1LczMzHMvNyMy16Qfeo8M+cAnZzyr0UBsssUh+78a5/I5f7tMc1PjMfSWkie/l34
+         pwxdTKPDYAxeOzVXO/LFZvmfAHCh/nULtWInuhGJHP+Lj8q0xeJCXW9uyAmYdjYDdyao
+         IiXA==
+X-Forwarded-Encrypted: i=1; AJvYcCVekbxW4go3FUeX/CbdC1qJ6Y06O4gR4w3Ax1TCDx13I6Z0zRNrWpNhosdwGxfnzsJX+FchyOkbsHMLp3fyJvYpd1X6NrkoHg==
+X-Gm-Message-State: AOJu0Yy+vyGLkkNSUXsISseGksfaHMMSRklK+KGOsfEbKBoMkGy0OFtP
+	c7cpSnW8IgjZzvqLnZWVadkFWPyAluu/ys3ydkmxj5SPCBdoMQGOP/09IIJm7lcNpfPOv0gssZA
 	=
-X-Google-Smtp-Source: AGHT+IEezCYokdokWwN6d0hKiEzCnCUCTXh2enKEH18WSoxF2SIbCIDSfge+D1BcsxQUixKdz96k5g==
-X-Received: by 2002:ac8:59d5:0:b0:430:d4fc:d5a5 with SMTP id f21-20020ac859d5000000b00430d4fcd5a5mr8802986qtf.35.1711383549728;
-        Mon, 25 Mar 2024 09:19:09 -0700 (PDT)
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com. [209.85.160.170])
-        by smtp.gmail.com with ESMTPSA id eh15-20020a05622a578f00b004309cd26bedsm2729745qtb.72.2024.03.25.09.19.08
+X-Google-Smtp-Source: AGHT+IHvL3KWMEhUEu7RiJtZaafTM7ZQdmil4BqF+fN/Vd+9nVzcyJkNvvm1pktyiAXglnCLqy75+w==
+X-Received: by 2002:a05:620a:f0c:b0:78a:5c9e:b606 with SMTP id v12-20020a05620a0f0c00b0078a5c9eb606mr1587343qkl.49.1711383559289;
+        Mon, 25 Mar 2024 09:19:19 -0700 (PDT)
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
+        by smtp.gmail.com with ESMTPSA id cz33-20020a05620a36e100b0078a3afff77asm2250668qkb.8.2024.03.25.09.19.18
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 09:19:08 -0700 (PDT)
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-431347c6c99so487261cf.0
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 09:19:08 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVh/w6wLhVjT9bw+SGGBm9XgxZpXZYHZ+y/KjTPbm2TZVnDGad3GWn8XgdGvGNR9lzG0kzJDpkoLau7CK8RC4Di11Ov2ZULZw==
-X-Received: by 2002:a05:622a:5447:b0:431:4eea:ef20 with SMTP id
- eo7-20020a05622a544700b004314eeaef20mr283279qtb.16.1711383548431; Mon, 25 Mar
- 2024 09:19:08 -0700 (PDT)
+        Mon, 25 Mar 2024 09:19:18 -0700 (PDT)
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-431347c6c99so487481cf.0
+        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 09:19:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW1GTV6vLi0vSxz1Vx/AdUKqxwNUQBBLOcwJvjoNnH/6UVMn5daqOMwc+CYkm6dc4+PuGgM2Jj9HCepdvS1IJeKwkQmtXv7jg==
+X-Received: by 2002:a05:622a:588e:b0:431:56bb:2347 with SMTP id
+ fh14-20020a05622a588e00b0043156bb2347mr265739qtb.21.1711383558167; Mon, 25
+ Mar 2024 09:19:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-2-sboyd@kernel.org>
-In-Reply-To: <20240325054403.592298-2-sboyd@kernel.org>
+References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-3-sboyd@kernel.org>
+In-Reply-To: <20240325054403.592298-3-sboyd@kernel.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Mar 2024 09:18:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vo2vpemyH1ChdHtUdaeKnGckBUeqKfL11xn3WsN5+BUw@mail.gmail.com>
-Message-ID: <CAD=FV=Vo2vpemyH1ChdHtUdaeKnGckBUeqKfL11xn3WsN5+BUw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] clk: Remove prepare_lock hold assertion in __clk_release()
+Date: Mon, 25 Mar 2024 09:19:02 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wu_SuLcHYQ1bLC-zhV1FnoFor84t-=EERT9mnDdm5Q2A@mail.gmail.com>
+Message-ID: <CAD=FV=Wu_SuLcHYQ1bLC-zhV1FnoFor84t-=EERT9mnDdm5Q2A@mail.gmail.com>
+Subject: Re: [PATCH 2/5] clk: Don't hold prepare_lock when calling kref_put()
 To: Stephen Boyd <sboyd@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
 	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+	linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -82,22 +82,18 @@ Hi,
 On Sun, Mar 24, 2024 at 10:44=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
 ote:
 >
-> Removing this assertion lets us move the kref_put() call outside the
-> prepare_lock section. We don't need to hold the prepare_lock here to
-> free memory and destroy the clk_core structure. We've already unlinked
-> the clk from the clk tree and by the time the release function runs
-> nothing holds a reference to the clk_core anymore so anything with the
-> pointer can't access the memory that's being freed anyway. Way back in
-> commit 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of
-> prepare_lock") we didn't need to have this assertion either.
+> We don't need to hold the prepare_lock when dropping a ref on a struct
+> clk_core. The release function is only freeing memory and any code with
+> a pointer reference has already unlinked anything pointing to the
+> clk_core. This reduces the holding area of the prepare_lock a bit.
 >
-> Fixes: 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of pr=
-epare_lock")
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Note that we also don't call free_clk() with the prepare_lock held.
+> There isn't any reason to do that.
+>
 > Cc: Douglas Anderson <dianders@chromium.org>
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
->  drivers/clk/clk.c | 2 --
->  1 file changed, 2 deletions(-)
+>  drivers/clk/clk.c | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
