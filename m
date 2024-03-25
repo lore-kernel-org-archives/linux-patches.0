@@ -1,118 +1,106 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66D03DAC1A
-	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 17:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC8C73167;
+	Mon, 25 Mar 2024 18:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711386970; cv=none; b=nw+r8Hn5ipd9bYlwELFxE01NRODrvVBr8jEwdlTzTAaYauKblVcEEyAgxvhADOHUTBJ/AgNBPnz/Wh8NsNFzfDuMydDgXFzK03NeM/une54cqVLVcwSMX8GoOy0N655tpgDibbWPJyMiAB6kUBAPNQPnas6ljFbV5utdOdcArp4=
+	t=1711392126; cv=none; b=oeC/wjmAEnSZkNBqspm++ZRQEjq2dblNzLTwixy9o0lZNFRoIAea9XvREAxaxarAcax1YTSEq5XsAhXBKZD1HL9FTT/cpllKYw+hfe1PI2kEwAOjxMV4FI7gFcXitBLuu9XEoiNTAs4gc/gu6SLkex4ivh9L4GclX6ESMKnhvdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711386970; c=relaxed/simple;
-	bh=5z7JWgRm+prE8c9r61qKqkGGuVaMbLVUWLsiDunLhpA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HK26E0IwQWti661LXTyTJ0KxGTIiEKfzEod/SfsyhEwH/TI0TNzUiODw/+umyBJJtLTYTlFqZWjTpRoWoeOFzpEBvLhJKVNxEwS456jGsaBM8Pk0/wAUSH5WUKKlSbSn6G7aUtAQW3Xfp71qq2qmnZw3m0dLZzGPeLFuL44wOKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bbgNOlFZ; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1711392126; c=relaxed/simple;
+	bh=KK1BOwhrvf6vsv6qu1VwuPcqqUAsXuisaEG+Fzrn2qg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T1gvHRSLg+GXMSeRlkr1lSFOZXlaUmIW8s8ZtuKGBaKO+pME8DWQEB3/n1Y70EtChijaUjONUJhKXecjobhCrtjKnuhRxAsrFcI1nViv6sOo7fxXY1VFLFPbaXQiwMnlHOMcuUi+DEAmORH1N1iaVhoeOJORj2aCq0PlaJiFcZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2Xzm23o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bbgNOlFZ"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-690be110d0dso30625956d6.3
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 10:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711386967; x=1711991767; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5z7JWgRm+prE8c9r61qKqkGGuVaMbLVUWLsiDunLhpA=;
-        b=bbgNOlFZZBfl+kc5QeRKXbMPQ7Lh9c844CEdiCWchitJhN0IamY4p9/aGF+VyRQT78
-         KpgaBZUs+LBWQi2jQJk5artHGRZGmd6r2WzQHHIk2lHsugB4k3uEsztlbHxYPt0GMGpZ
-         mZExIKjIbazepxAZ0HoqaLXEwkjx8DFTZhkVE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711386967; x=1711991767;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5z7JWgRm+prE8c9r61qKqkGGuVaMbLVUWLsiDunLhpA=;
-        b=jo/hncIQgDEjPRT6QgX9syZ14ZiYu388GxhWYtDeeR9KdrggB5DZmQNFl8gCj3VvoJ
-         uUkdIpVr1CJy+2EaFD5cVpyw9uK8QmM4FSh2jXXtnXIomspajGw5OrD0a7n3cwy+clTo
-         sggfMXcGSW1vtC/J1ubKaL3lnuLKhqEJTBwvrzsJqARDJ/rPE+WrW382ZUtVPiNY8dCY
-         GFyXjXdUl11eXn5Rjqd43+qwfr7ScBA4okznkLnXZVLTRbFI5gLebh+7Dd3m4uNDWh+V
-         6IaRBuOw6GeLssZ4IqU87qbsXxSAOcD0GASlCdf1IU+4/hZWIso2LIZzDPgVnOmdg6cN
-         cHHg==
-X-Forwarded-Encrypted: i=1; AJvYcCXITvtimj1phnfWCB3Jcjw3dW7dg3/lYeB9dfvgfMXZZX5SvMkxuDFTJNQjAxZOxcu16GN9B5FtulGj8qSOR87NrWNj1YfsyQ==
-X-Gm-Message-State: AOJu0YytbnpRdLzEpg5/iD2k9Na9YducJn5eDLNWRqpKvqz1I25mlS1g
-	+CewqwpS0GEw/TnVtI3lV7YsgNJSbF6a+jD13E3lHwL+kNteTn5CL1uWeRI1tUpqMzwZiGDFyY8
-	=
-X-Google-Smtp-Source: AGHT+IHEV/hvcCcN+41HVwRtNXhlU2MgiA+Bd8vSUUW3YnlqlU5e0/kbLaGQ8IJTEczspSaorV7cTg==
-X-Received: by 2002:ad4:5969:0:b0:691:1a11:3122 with SMTP id eq9-20020ad45969000000b006911a113122mr479633qvb.44.1711386967101;
-        Mon, 25 Mar 2024 10:16:07 -0700 (PDT)
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com. [209.85.160.176])
-        by smtp.gmail.com with ESMTPSA id u5-20020ad45aa5000000b00696127dc878sm4308273qvg.12.2024.03.25.10.16.06
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 10:16:06 -0700 (PDT)
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-431347c6c99so14741cf.0
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 10:16:06 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUJJLDKrmQ2h/CBViNELR2eg64gBu2ZBIlsOb0CJVd8HeuPncdnXOxadnt46F/nQhz4l9IIiVLKAa+7J4VV/8C00twTI5yHQA==
-X-Received: by 2002:a05:622a:2a06:b0:431:baa:825 with SMTP id
- hc6-20020a05622a2a0600b004310baa0825mr1246888qtb.25.1711386965873; Mon, 25
- Mar 2024 10:16:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2Xzm23o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3D3C433C7;
+	Mon, 25 Mar 2024 18:42:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711392125;
+	bh=KK1BOwhrvf6vsv6qu1VwuPcqqUAsXuisaEG+Fzrn2qg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=a2Xzm23ob7lHh90BbhizLk/ttOU1oAOWRh0I68/hD7CQ1oPY5heoy1nItym7sOgyl
+	 85Zar8EjOVxAIHUMYWyElYQ5N4kEFszvvPZE/wKfx6JnE+6+Y4twbX3L/LGzlItdwH
+	 6AdKjbxbYr3wneDpKKru5bxw2xjbSjhh4AuyvXXF/4iNmYqaIuAddKLM+qOoopnd1P
+	 c9zcnMhnGC1PKS7saGqHrQnMKbG7+YMp3cojjOADDHCb0U7/eLsvCqHaT3npE8KIq9
+	 eQKN1GLPSBPLIDnxRcUqpdmObW0Kk9DEQQ4mLdlE5y+i8dVw+Gz80bsS3jLWSuumJ7
+	 YUk+g7QCkUI3g==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH v2 0/5] Fix a deadlock with clk_pm_runtime_get()
+Date: Mon, 25 Mar 2024 11:41:54 -0700
+Message-ID: <20240325184204.745706-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240325054403.592298-1-sboyd@kernel.org> <20240325054403.592298-5-sboyd@kernel.org>
- <CAD=FV=Ws-LYcpiitibPBPRhqrbS8rTo_7xtPPw2kA+qBzybOxQ@mail.gmail.com> <42ae624ca2289fb82e00f3ac8938d05e.sboyd@kernel.org>
-In-Reply-To: <42ae624ca2289fb82e00f3ac8938d05e.sboyd@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Mar 2024 10:15:50 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XcHdEiMf8Z228sT=ChvjJs8Ujw6q8Hcf4b588ocwJHiQ@mail.gmail.com>
-Message-ID: <CAD=FV=XcHdEiMf8Z228sT=ChvjJs8Ujw6q8Hcf4b588ocwJHiQ@mail.gmail.com>
-Subject: Re: [PATCH 4/5] clk: Get runtime PM before walking tree during disable_unused
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi,
+This patch series fixes a deadlock reported[1] on ChromeOS devices
+(Qualcomm sc7180 Trogdor). To get there, we allow __clk_release() to run
+without the prepare_lock held. Then we add runtime PM enabled clk_core
+structs to a list that we iterate and enable runtime PM for each entry
+before grabbing the prepare_lock to walk the clk tree. The details are
+in patch #4.
 
-On Mon, Mar 25, 2024 at 10:06=E2=80=AFAM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
->
-> > > +/*
-> > > + * Call clk_pm_runtime_get() on all runtime PM enabled clks in the c=
-lk tree so
-> > > + * that disabling unused clks avoids a deadlock where a device is ru=
-ntime PM
-> > > + * resuming/suspending and the runtime PM callback is trying to grab=
- the
-> > > + * prepare_lock for something like clk_prepare_enable() while
-> > > + * clk_disable_unused_subtree() holds the prepare_lock and is trying=
- to runtime
-> > > + * PM resume/suspend the device as well.
-> > > + */
-> > > +static int clk_pm_runtime_get_all(void)
-> >
-> > nit: It'd be nice if this documented that it acquired / held the lock.
-> > Could be in comments, or, might as well use the syntax like this (I
-> > think):
-> >
-> > __acquires(&clk_rpm_list_lock);
-> >
-> > ...similar with the put function.
->
-> I had that but removed it because on the error path we drop the lock and
-> sparse complains. I don't know how to signal that the lock is held
-> unless an error happens, but I'm a little out of date on sparse now.
+The patch after that is based on the analysis in the disable unused
+patch. We similarly resume devices from runtime suspend when walking the
+clk tree for the debugfs clk_summary.
 
-I'd settle for something in the comments then? Maybe tagged with "Context:"=
- ?
+Unfortunately this doesn't fix all problems with the usage of runtime PM
+in the clk framework. We still have a problem if preparing a clk happens
+in parallel to the device providing that clk runtime resuming or
+suspending. In that case, the task will go to sleep waiting for the
+runtime PM state to change, and we'll deadlock. This is primarily a
+problem with the global prepare_lock. I suspect we'll be able to fix
+this by implementing per-clk locking, because then we will be able to
+split up the big prepare_lock into smaller locks that don't deadlock on
+some device runtime PM transitions.
 
-Thanks!
+I'll start working on that problem in earnest now because I'm worried
+we're going to run into that problem very soon.
 
--Doug
+Changes from v1 (https://lore.kernel.org/r/):
+ * Check return value of clk_pm_runtime_get_all() in last patch
+ * Fix order of args for error print in clk_pm_runtime_get_all()
+ * Pick up review tags
+ * Move clk_pm_runtime_{get,put}_all() to the pm runtime section
+ * Use kernel-doc for function comments
+ * Drop clk_pm_runtime_{get,put}() calls when they're not doing anything
+
+Stephen Boyd (5):
+  clk: Remove prepare_lock hold assertion in __clk_release()
+  clk: Don't hold prepare_lock when calling kref_put()
+  clk: Initialize struct clk_core kref earlier
+  clk: Get runtime PM before walking tree during disable_unused
+  clk: Get runtime PM before walking tree for clk_summary
+
+ drivers/clk/clk.c | 173 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 135 insertions(+), 38 deletions(-)
+
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+
+[1] https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a5348962f004beb3dafee6a12dfbb@changeid/
+
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
