@@ -1,125 +1,141 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B55B1E8
-	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 21:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE13608ED
+	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 21:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711400791; cv=none; b=g6D2ALUYnY9QnedjXdqHzHBKrVLMX4N0QkPA6KkisofnurI/fHzAnKBilJ8Lw9BLzTxav0GSKg/2iRgqF1JSTgD1xhtirEJfbyAIOskg/PchLYvfvW9BDP3/64OYemLMCzj5pGxqE24RjRljMCoeebJTRerFJc5/E/8DkuWvBD8=
+	t=1711400896; cv=none; b=QTCvFuqxiVoVvSU2rKCPZ/vnXy2GgnCKzUI/G2892s7YrhivtdV7Db/6UxlZFo/PIDcACxU5P67hodX95WVYcOmTMGFBouZLluxwVXSqkC9iKOviUwD8RK/jb7gahWCBu+vPim96vXToikFG/EfSkcIEqBRJRkNIGMNylKEVXhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711400791; c=relaxed/simple;
-	bh=sfVyrmgaj5oBn0tCvQYHQZQDZDExeVi6rltukh2TVvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AfFbRKk3FJjldKastYJBXnLWZwUl0t/wPF8K0BQsdwlJjOM+StYmjT/E6LwGiJ7w0iAXqjqF7co+20yjIEGD2aVAYo27pr6SUbuXVK2k/jdn+pGW+zrK+8OS353WBsS8X2BemVFin47q71KZgeIzCEmNr+fb2Whxzh+lyzngTf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WOV/yvg4; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1711400896; c=relaxed/simple;
+	bh=lniH+K6uobF32tHcdj8snosy2n/Wm+ZT7d9jUBOBkIA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I2Oif/TMw6rQDkMZAzqFo0V+ka4WufyoDQS6vNicFndl48uphuA+srkeZH+FsGmeUNa3IjfcauFwa/VmGFRz//MU1WBJT1pdd/mCJF9CDCi6z83C+6/cSA18Cqs/VmqvLprWYx5E7kx1BjcFKFZgVIAbFoRRj1oYDrruTMvbm10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UK2uNxWh; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WOV/yvg4"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4148c09ec6bso6175e9.1
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 14:06:29 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UK2uNxWh"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e74bd85f26so3789011b3a.1
+        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711400788; x=1712005588; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=87kSRxw1Ym98c2cZV0HSeTHtXw3IMZt6YXbhTpf4Gn0=;
-        b=WOV/yvg4XMN7y/GirBkf4V+lac07B7kk3nFjVjBvrpDiTIZJLxLmoeVdSZLxU3cc38
-         Jyql4UptfhxunEe4vc8bV/byIfJoJpXgETFYgn8qqO7Gr4AtMBuZ5EOCJw4rSAehfyy/
-         QyUS+3zoN6qsxrV0fJTU+Zb2685eo+QAoc1iNLZzSTJFcfN/2SsS8si9zPn08tJ1LyuY
-         MjxNHjC89MwpIRm8EtTaa2uYIX5Fp67HORTrYEJyqIkN5cN1zftkonkLr3pepZcX+I/y
-         BlYCZkbklqgnA5xHDyxKK+k4AnG3iLEEtf4OvhmLD8g5nM4awYOlGDOaAuTzdtLj9cnR
-         auwA==
+        d=chromium.org; s=google; t=1711400893; x=1712005693; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
+        b=UK2uNxWhNVczFbjWeYao3qMuDW+FV7LdfZClrzeGgByjZsGgDRuxP4daFkkv9BOl1U
+         qkK/txQJuNL4wOTkGa2DnZFfD7p/QGm6wMBUpyRcjLmDH7AoP54rwtcpG4JpvZ9mHdUv
+         GS328rIxZs36pZ3hS4TxlAER0wzxR2EYw6Z34=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711400788; x=1712005588;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=87kSRxw1Ym98c2cZV0HSeTHtXw3IMZt6YXbhTpf4Gn0=;
-        b=SAeeuv+jhsTUpp36+w/mEk/jDTbPBYVmCxwwcO2f5jMdQBsNr7LJ39I2m2+jQ3XZ33
-         3+DwM2zNC4Ko+Uhc7WPnX1qtTslKVivBORutYlherhF8bsIH5oj0n5EqdynWau2Mdml0
-         Six3XU1/5L29DA57/Fa5gNTY1VtcmXTvuG/btTlTae4/2RsaxI1rsNQZIT04d/z3aLg/
-         VMJwgY98WQfSd5E4FnPN3MMm2sus7OSo1grjAX/HNpPGNVFZEqo0i+i9F4iWnx+nn1HH
-         +dgGT/swf2byyKTS5/wyCjVnZPYA2kaJ278ytLbZYmmEJ3FEY2ssAmWRhq+zpvjS4hv1
-         vkWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV3JrzGf4qSXwP8WhmcrDZz/QtwS6wlrhJ5iSkhrkM2JUWH4AY9RXWycR021i8CvaeMg8NOUDYbLCozlTNqFd3Qigy9yfmtzQ==
-X-Gm-Message-State: AOJu0YwkVeT/czpMbeeviJTqVdeWGOCuVYJ4JRFY08e52fv58wi42jYU
-	kzOtpkoyy5nTm/fYO84v8l40RBOwmrqUwFEv9MexP5QQXVpdGD+sFDrfAnyt9Q==
-X-Google-Smtp-Source: AGHT+IGJhWAECCUdYs4iDPZsz04LuG+syQz1Yw/Xrcg4rgTS20erTsGI+S2EJx10DtBo6OyLMMwq8w==
-X-Received: by 2002:a05:600c:1c27:b0:414:fb8:5105 with SMTP id j39-20020a05600c1c2700b004140fb85105mr17168wms.3.1711400788139;
-        Mon, 25 Mar 2024 14:06:28 -0700 (PDT)
-Received: from google.com (180.232.140.34.bc.googleusercontent.com. [34.140.232.180])
-        by smtp.gmail.com with ESMTPSA id q20-20020a05600c46d400b004147db8a91asm9518815wmo.40.2024.03.25.14.06.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Mar 2024 14:06:27 -0700 (PDT)
-Date: Mon, 25 Mar 2024 21:06:23 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v5 00/27] Update SMMUv3 to the modern iommu API (part 2/3)
-Message-ID: <ZgHnT8ZoOtzUwYwb@google.com>
-References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
- <Zf7bPOtRg9tLSOKT@google.com>
- <20240325143503.GF110546@nvidia.com>
+        d=1e100.net; s=20230601; t=1711400893; x=1712005693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
+        b=m/s8R2ZN05+XEA5uQj8JBuX21lUmmTtcaT/6hwadxbgNnd6JzWL7tM1PyKpRgpRR3N
+         ktq5BVW+jhFJbOlioU9OBQuFv24CQrC55vFhZGmHki5BuOpHxqvuuudFUlYLEfz4QeoW
+         uOkIfihdN6dl0CU5flJXaRfoKbe2WYcLf6hfAoblm2vSo9X/srACWGPHk0zlGA2Kutbv
+         aEg7DzTM37WWn8z43bDrsu49gy3I49TOI6sO5ALnEHv6oS0RCnOUiteELt2N7O3Srpsx
+         G6pAtF9d64BXd1YGU/v0NGKB02pZyMba1SD025sizN7XXmpBjLTPWEcdQjGaOrbE8jI2
+         vDYA==
+X-Forwarded-Encrypted: i=1; AJvYcCUpVnU62f1fvpmwjRclCyU0eS7ca6rVjUCtMRp6les7iUHGPobBv8UnMOg3yv/Hd5PcDNHd5lByyB5CBNMzJ4K9g+lXd+UhOA==
+X-Gm-Message-State: AOJu0YzGAH2I7AB6I0oQaC6/q8PQW4nuTTtYTejRtpXI9AY2G9I6SNy2
+	rCMcskMVdIeFBIAeJKl49+ayJpNoyUaXJum8df6sqhcufzNliyuw+kLov3w5ng==
+X-Google-Smtp-Source: AGHT+IFNMzzlQS+M2WzYTzH5qd5yGumfrSL44l9e2y2KmdW8eGoSNDQ4K0XzusabfDNfOaNLkU2CdA==
+X-Received: by 2002:a05:6a20:12d2:b0:1a3:4671:2285 with SMTP id v18-20020a056a2012d200b001a346712285mr7841746pzg.44.1711400893255;
+        Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
+Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
+        by smtp.gmail.com with UTF8SMTPSA id fn18-20020a056a002fd200b006e4e93f4f17sm4584180pfb.117.2024.03.25.14.08.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Mar 2024 14:08:12 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm: Add newlines to some debug prints
+Date: Mon, 25 Mar 2024 14:08:09 -0700
+Message-ID: <20240325210810.1340820-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240325143503.GF110546@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 25, 2024 at 11:35:03AM -0300, Jason Gunthorpe wrote:
-> On Sat, Mar 23, 2024 at 01:38:04PM +0000, Mostafa Saleh wrote:
-> > Hi Jason,
-> > 
-> > On Mon, Mar 04, 2024 at 07:43:48PM -0400, Jason Gunthorpe wrote:
-> > > Continuing the work of part 1 this focuses on the CD, PASID and SVA
-> > > components:
-> > > 
-> > >  - attach_dev failure does not change the HW configuration.
-> > > 
-> > >  - Full PASID API support including:
-> > >     - S1/SVA domains attached to PASIDs
-> > 
-> > I am still going through the series, but I see at the end the main SMMUv3
-> > driver has set_dev_pasid operation, are there any in-tree drivers that
-> > use that? (and how can I test it).
-> 
-> Not yet, but some will be coming. Currently only Intel driver supports
-> it, but Intel HW has other problems making it unusable..
-> 
-> A big part of the effort here is to enable the platform ecosystem so
-> devices and drivers can use it.  Moritz has access to a device that
-> can exercise this, though we are still working on it.
-> 
+These debug prints are missing newlines, leading to multiple messages
+being printed on one line and hard to read logs. Add newlines to have
+the debug prints on separate lines. The DBG macro used to add a newline,
+but I missed that while migrating to drm_dbg wrappers.
 
-Just out of curiosity, are there plans to upstream that driver?
-> > >     - IDENTITY/BLOCKED/S1 attached to RID
-> > >     - Change of the RID domain while PASIDs are attached
-> > > 
-> > >  - Streamlined SVA support using the core infrastructure
-> > > 
-> > >  - Hitless, whenever possible, change between two domains
-> > 
-> > Can you please clarify what cases are expected to be hitless?
-> > From what I see if ASID and TTB0 changes that would break the CD.
-> 
-> Right. For CD it is only the SVA mm release flow, setting EPD0.
-> 
+Fixes: 7cb017db1896 ("drm/msm: Move FB debug prints to drm_dbg_state()")
+Fixes: 721c6e0c6aed ("drm/msm: Move vblank debug prints to drm_dbg_vbl()")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fb.c  | 6 +++---
+ drivers/gpu/drm/msm/msm_kms.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-I see, thanks for confirming, I am still going through the series, but
-I now wonder if this case is worth the extra complexity, unlike the STE
-where the hitless transition was usefull in many cases.
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index e3f61c39df69..80166f702a0d 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -89,7 +89,7 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
+ 
+ 	for (i = 0; i < n; i++) {
+ 		ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &msm_fb->iova[i]);
+-		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)",
++		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)\n",
+ 			      fb->base.id, i, msm_fb->iova[i], ret);
+ 		if (ret)
+ 			return ret;
+@@ -176,7 +176,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 	const struct msm_format *format;
+ 	int ret, i, n;
+ 
+-	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)",
++	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)\n",
+ 			mode_cmd, mode_cmd->width, mode_cmd->height,
+ 			(char *)&mode_cmd->pixel_format);
+ 
+@@ -232,7 +232,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 
+ 	refcount_set(&msm_fb->dirtyfb, 1);
+ 
+-	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
++	drm_dbg_state(dev, "create: FB ID: %d (%p)\n", fb->base.id, fb);
+ 
+ 	return fb;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index 84c21ec2ceea..af6a6fcb1173 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -149,7 +149,7 @@ int msm_crtc_enable_vblank(struct drm_crtc *crtc)
+ 	struct msm_kms *kms = priv->kms;
+ 	if (!kms)
+ 		return -ENXIO;
+-	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
++	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
+ 	return vblank_ctrl_queue_work(priv, crtc, true);
+ }
+ 
+@@ -160,7 +160,7 @@ void msm_crtc_disable_vblank(struct drm_crtc *crtc)
+ 	struct msm_kms *kms = priv->kms;
+ 	if (!kms)
+ 		return;
+-	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
++	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
+ 	vblank_ctrl_queue_work(priv, crtc, false);
+ }
+ 
 
-Thanks,
-Mostafa.
+base-commit: 4cece764965020c22cff7665b18a012006359095
+-- 
+https://chromeos.dev
+
