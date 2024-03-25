@@ -1,141 +1,91 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE13608ED
-	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 21:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E1C6CDA6
+	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 21:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711400896; cv=none; b=QTCvFuqxiVoVvSU2rKCPZ/vnXy2GgnCKzUI/G2892s7YrhivtdV7Db/6UxlZFo/PIDcACxU5P67hodX95WVYcOmTMGFBouZLluxwVXSqkC9iKOviUwD8RK/jb7gahWCBu+vPim96vXToikFG/EfSkcIEqBRJRkNIGMNylKEVXhg=
+	t=1711401405; cv=none; b=tmq259Fqtguwgr4xYWnfaNw7Wy1mw4+t3w1Ckenezy5EviXGWjGz5NIuh1DVocc3pb0BgakakY7ps/K8cYRqlNpyh0R1TMPfwkTx16IN0MCXYwnONztCRHMbIofM/ftqj0ljMnlR96x1/DFf9lgsKPHp9l7Ok1veJwfOgCFL9nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711400896; c=relaxed/simple;
-	bh=lniH+K6uobF32tHcdj8snosy2n/Wm+ZT7d9jUBOBkIA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I2Oif/TMw6rQDkMZAzqFo0V+ka4WufyoDQS6vNicFndl48uphuA+srkeZH+FsGmeUNa3IjfcauFwa/VmGFRz//MU1WBJT1pdd/mCJF9CDCi6z83C+6/cSA18Cqs/VmqvLprWYx5E7kx1BjcFKFZgVIAbFoRRj1oYDrruTMvbm10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UK2uNxWh; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1711401405; c=relaxed/simple;
+	bh=XnYxg44n9UmMwx+BfT1Lx7/A6qiY0HCS3q4AwEZrM1I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f5FgjI9mxHbFAFUDQLwxBpDN+53yOre62nyLgYN9fAFevJGjmbTskVIWgk/cCSiLcdcjKcMrXWW84jom5OgpPM7iZdavRrdPBlhEsgjqksXb4MaxsW1rCEZoBWOiBPpGPmM+wQErR+jVhAEn4JIJ7gVLgPRjLQAyKsCqZ7804iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NCY4UAt/; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UK2uNxWh"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e74bd85f26so3789011b3a.1
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NCY4UAt/"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dcbcea9c261so4859638276.3
+        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 14:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711400893; x=1712005693; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
-        b=UK2uNxWhNVczFbjWeYao3qMuDW+FV7LdfZClrzeGgByjZsGgDRuxP4daFkkv9BOl1U
-         qkK/txQJuNL4wOTkGa2DnZFfD7p/QGm6wMBUpyRcjLmDH7AoP54rwtcpG4JpvZ9mHdUv
-         GS328rIxZs36pZ3hS4TxlAER0wzxR2EYw6Z34=
+        d=linaro.org; s=google; t=1711401402; x=1712006202; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A8IFRn6aSsHl1VGtupM1OXfTkfRMf//PoRLv8D0xq6c=;
+        b=NCY4UAt/8JmrO7JrmcmWYgCatVk8TiGojPSz0xSdG1W9El92CtN+iWlDsoEMUH7uF3
+         Tt67vUBXE2zYZXQvCsWaezzWbSm5O0t7u4TkmrTipQiyeIrh90fR8kpLyegh7YtZSLzB
+         7SXey5ly0OppGz7a1dwtXQT5RGV2GaTJmTKIR+s0+bFq7L1eUZwYL0aZlY3gBFpNdW+8
+         UpxwtRxkYhiewwJ4IsI32ws3bDwlA2niLiMlWy+vHMz0t2dalxqT6PgRu4UsOMbPNlvU
+         UTMlZlysUaHbnKWGfXLNtC+eng7S0oR+oVub+ivoSv9jGbVFhw3cVaAeJf55eSxnlNb7
+         IuKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711400893; x=1712005693;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1711401402; x=1712006202;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mOw6fcswQwxOvYHww+pfzlL0zz/FCwx/qV0ISLCzS6k=;
-        b=m/s8R2ZN05+XEA5uQj8JBuX21lUmmTtcaT/6hwadxbgNnd6JzWL7tM1PyKpRgpRR3N
-         ktq5BVW+jhFJbOlioU9OBQuFv24CQrC55vFhZGmHki5BuOpHxqvuuudFUlYLEfz4QeoW
-         uOkIfihdN6dl0CU5flJXaRfoKbe2WYcLf6hfAoblm2vSo9X/srACWGPHk0zlGA2Kutbv
-         aEg7DzTM37WWn8z43bDrsu49gy3I49TOI6sO5ALnEHv6oS0RCnOUiteELt2N7O3Srpsx
-         G6pAtF9d64BXd1YGU/v0NGKB02pZyMba1SD025sizN7XXmpBjLTPWEcdQjGaOrbE8jI2
-         vDYA==
-X-Forwarded-Encrypted: i=1; AJvYcCUpVnU62f1fvpmwjRclCyU0eS7ca6rVjUCtMRp6les7iUHGPobBv8UnMOg3yv/Hd5PcDNHd5lByyB5CBNMzJ4K9g+lXd+UhOA==
-X-Gm-Message-State: AOJu0YzGAH2I7AB6I0oQaC6/q8PQW4nuTTtYTejRtpXI9AY2G9I6SNy2
-	rCMcskMVdIeFBIAeJKl49+ayJpNoyUaXJum8df6sqhcufzNliyuw+kLov3w5ng==
-X-Google-Smtp-Source: AGHT+IFNMzzlQS+M2WzYTzH5qd5yGumfrSL44l9e2y2KmdW8eGoSNDQ4K0XzusabfDNfOaNLkU2CdA==
-X-Received: by 2002:a05:6a20:12d2:b0:1a3:4671:2285 with SMTP id v18-20020a056a2012d200b001a346712285mr7841746pzg.44.1711400893255;
-        Mon, 25 Mar 2024 14:08:13 -0700 (PDT)
-Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
-        by smtp.gmail.com with UTF8SMTPSA id fn18-20020a056a002fd200b006e4e93f4f17sm4584180pfb.117.2024.03.25.14.08.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 14:08:12 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm: Add newlines to some debug prints
-Date: Mon, 25 Mar 2024 14:08:09 -0700
-Message-ID: <20240325210810.1340820-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
+        bh=A8IFRn6aSsHl1VGtupM1OXfTkfRMf//PoRLv8D0xq6c=;
+        b=kuQuSvXZ3jknXUoMM8w30eAhrEH7wLv4GRMc/u74qjs76Ty8JE6QnZep2eUugOWRH1
+         c+lu8o4WxXfeoLUbCb3YZ/GXSPEO+vdANieo4EwKpWtt6/6X7xrg+M/ZKhCexPV9vMEI
+         fKSOhrA1UXCulQQZF69G1WoIpVhTEjJp1FpO/yl+q1W1R8asW7fmTkXloj2fGFIGa8p8
+         b2CW/5FHMgG9txNoP+nxAfcPeBRWHTkGXDZ12Q3r985vXiqe8iiP3ICj3vIf4vpIpT6t
+         Q3emdSrjSrx1hSVdDOT9G7pAGHGCU0kpN4ZIoygoCZq3fb8X9Zs6Vh23UNEkWDGfLIPH
+         7zOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX1dMqShOIHFa6ZHQ38N49sD6qJ47PX78WvKPjC0NOGLw4bu2N8os0tb8jtCWK7MOgFdsjQ7G20LvBtfRINntoEn2Yr+wCV7Q==
+X-Gm-Message-State: AOJu0Yw9/KBmGyIyFb4A28nhcKV0VM0yPCvzgRM/SBuk84rgn7Hp2soJ
+	vw9sfai0g+2schnXohfpMrL63NKc3KPp54J+m6RfP3tv37/NRhxIGquQJ7e0qKrJrBRLpRZRuve
+	tYkjCrSaud3CzbIqoa0ongK6vy5vt5GKIQDowBA==
+X-Google-Smtp-Source: AGHT+IGmfJuEEZK0xXYu1atPPd7gdTrXAHTMAqXWgAFibdrfnqzHArI0XM86kbZ4hMgAFB1mDKzR3VsuVkcuM2xu2sk=
+X-Received: by 2002:a25:a1c5:0:b0:dcc:52dc:deb5 with SMTP id
+ a63-20020a25a1c5000000b00dcc52dcdeb5mr5391964ybi.20.1711401402341; Mon, 25
+ Mar 2024 14:16:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240325210810.1340820-1-swboyd@chromium.org>
+In-Reply-To: <20240325210810.1340820-1-swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 25 Mar 2024 23:16:31 +0200
+Message-ID: <CAA8EJppFc7+ca1JA9cbtAEV3+Ln6BoTkzdqyq88_gfN+m9fiPQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Add newlines to some debug prints
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-These debug prints are missing newlines, leading to multiple messages
-being printed on one line and hard to read logs. Add newlines to have
-the debug prints on separate lines. The DBG macro used to add a newline,
-but I missed that while migrating to drm_dbg wrappers.
+On Mon, 25 Mar 2024 at 23:08, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> These debug prints are missing newlines, leading to multiple messages
+> being printed on one line and hard to read logs. Add newlines to have
+> the debug prints on separate lines. The DBG macro used to add a newline,
+> but I missed that while migrating to drm_dbg wrappers.
+>
+> Fixes: 7cb017db1896 ("drm/msm: Move FB debug prints to drm_dbg_state()")
+> Fixes: 721c6e0c6aed ("drm/msm: Move vblank debug prints to drm_dbg_vbl()")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Fixes: 7cb017db1896 ("drm/msm: Move FB debug prints to drm_dbg_state()")
-Fixes: 721c6e0c6aed ("drm/msm: Move vblank debug prints to drm_dbg_vbl()")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/msm_fb.c  | 6 +++---
- drivers/gpu/drm/msm/msm_kms.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-index e3f61c39df69..80166f702a0d 100644
---- a/drivers/gpu/drm/msm/msm_fb.c
-+++ b/drivers/gpu/drm/msm/msm_fb.c
-@@ -89,7 +89,7 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
- 
- 	for (i = 0; i < n; i++) {
- 		ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &msm_fb->iova[i]);
--		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)",
-+		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)\n",
- 			      fb->base.id, i, msm_fb->iova[i], ret);
- 		if (ret)
- 			return ret;
-@@ -176,7 +176,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
- 	const struct msm_format *format;
- 	int ret, i, n;
- 
--	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)",
-+	drm_dbg_state(dev, "create framebuffer: mode_cmd=%p (%dx%d@%4.4s)\n",
- 			mode_cmd, mode_cmd->width, mode_cmd->height,
- 			(char *)&mode_cmd->pixel_format);
- 
-@@ -232,7 +232,7 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
- 
- 	refcount_set(&msm_fb->dirtyfb, 1);
- 
--	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
-+	drm_dbg_state(dev, "create: FB ID: %d (%p)\n", fb->base.id, fb);
- 
- 	return fb;
- 
-diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-index 84c21ec2ceea..af6a6fcb1173 100644
---- a/drivers/gpu/drm/msm/msm_kms.c
-+++ b/drivers/gpu/drm/msm/msm_kms.c
-@@ -149,7 +149,7 @@ int msm_crtc_enable_vblank(struct drm_crtc *crtc)
- 	struct msm_kms *kms = priv->kms;
- 	if (!kms)
- 		return -ENXIO;
--	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-+	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
- 	return vblank_ctrl_queue_work(priv, crtc, true);
- }
- 
-@@ -160,7 +160,7 @@ void msm_crtc_disable_vblank(struct drm_crtc *crtc)
- 	struct msm_kms *kms = priv->kms;
- 	if (!kms)
- 		return;
--	drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-+	drm_dbg_vbl(dev, "crtc=%u\n", crtc->base.id);
- 	vblank_ctrl_queue_work(priv, crtc, false);
- }
- 
+> ---
+>  drivers/gpu/drm/msm/msm_fb.c  | 6 +++---
+>  drivers/gpu/drm/msm/msm_kms.c | 4 ++--
+>  2 files changed, 5 insertions(+), 5 deletions(-)
 
-base-commit: 4cece764965020c22cff7665b18a012006359095
 -- 
-https://chromeos.dev
-
+With best wishes
+Dmitry
