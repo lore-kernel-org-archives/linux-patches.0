@@ -1,214 +1,226 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2AD405FD
-	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 19:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50285D724
+	for <patches@lists.linux.dev>; Mon, 25 Mar 2024 21:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711395620; cv=none; b=K4Y036xlLTtf2tiZrDsHJPRkqEU2a8BOklroip1VVustGVB0T109oI8XXYf1u1qUfmw9ICa+SK5uh/UHOEWX1g5cLiGEE7/LJVthu5UYjh8TlsePCnJZp1nbGgEHcReAwYcvPXB7bZ4Hu5NXvJ0lZy1IDJOKm30jkCQid6BKzz0=
+	t=1711400481; cv=none; b=JyCEOCifDR7FAQ61/T3+tDLinPxCPaDmmmMNm4M/S42PBTvLbnunfzm3CKk/Tj+N0uqP9iLbvksSpo6B50lT/pDQ2eTefiCnu8kRXLOJYzIDWbTh85Tf+P2mOr1cB1yzLETwW7ilhYucxqS1YYVe27Nhq6Xgu2cShg3RSwzPZBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711395620; c=relaxed/simple;
-	bh=/ousucYE9TYn5+7Q7Dy7A/rriEu2QFFESEGREjhOq50=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZJaIBQ4HY8UfJDhUlyoR8ZsgONBhT2isJdCq5WaTfLDzqWY9A43dPottmVT5p2Lk0XApzQsap50gbnbogvfNs5ZcyUHcLnKHBg6DLWYJ7akdVXxDeiFdibrA8mq44RWKbWKVzOzBTum7FR0A8ZOQhipRRQCNf5OYsJY94FXNM+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Eb36vUtO; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1711400481; c=relaxed/simple;
+	bh=ZrvNaSQpio37WJx1/1lHRbAENb/ZzWXOqMOiPrnKiJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HiCMPUZRQtnvlSE8YUCM/mR3O6gBmhBRuOIkhF6TrTlQw8tK6ETXihy6qHlyo+dVDi1VVEm9oLarUArNqwRGtyEsLrpH1GNo6JAOW+H4nzNj//axQZQFUX0vVRL6kQeKNcetLC5MoDAHDCNQaN3dARKVzPypMw6ljcQr6kdPRqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uKAFxkA5; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Eb36vUtO"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-789d0c90cadso320237085a.3
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 12:40:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uKAFxkA5"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4140eed8a4fso7495e9.0
+        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 14:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711395615; x=1712000415; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rlRxmt+WFCSFHFLoUgXhs0MEn4btGaAaA6pMBaTLtKY=;
-        b=Eb36vUtO5y3oBY9z+Pp1zny3JU6Ws6PA6YnqXe1OW7mS6uUFBBWscifzqpxOgn2ou6
-         97/2z9CO/6NPhyLt7Q0YBoXJ/wrSq8VfgSn6Sb0rLRTuA5Qor7wy9h2PPoqAQKNUshey
-         6zADJtIMlgvDrY3XPHDSADg889TLlUQiZZEDA=
+        d=google.com; s=20230601; t=1711400478; x=1712005278; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=hYzMTzG76jpXXtR/0jOj7ycyCch1YdLUEqtA0Q2kJns=;
+        b=uKAFxkA5tb4X825ygkPmzXF9xf5NiaoPY8SrYVaz5Ad7eLPQNTpoOBUCkFC3L2D7Zw
+         MFFEyMen+OOGwH1+dQmSGhSlhDDJuVl/0IJUc18zBDceVaGls+yWcRyFrwCfXsVQKIdr
+         j430sTzXjn03Ms5IkFPCh5qW94gtaKsL+fAbOdV/ezDQpUMFIWzc/XFqJAHoUIUIK93c
+         8LY5NGXp6rsp4KoEjL4KFz/E36s6K9zIDkg/TsVQaI0iSk3kWyJrPXQ6HT3IoUHwmhIY
+         UOHtPesQaHrNqWJ0hLO4aiUiMFl5RqebZz1TbWWJrzWMFldeqMYjmzggwD8S+/7rxObV
+         4LWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711395615; x=1712000415;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rlRxmt+WFCSFHFLoUgXhs0MEn4btGaAaA6pMBaTLtKY=;
-        b=cdbIMlRTcqkxAtX1QJhMKneR2A3YOnuNLAg1PpTloHJIHC7yztdCy+uA96hh1O/M3+
-         mF3iREX8pj2VJBEVeC7vVHfMRIVGrlfO08o6DNXReUZZQ3Hk4QWZUOZUbigGWRJ8We+B
-         e4ZehndpXUW0fKFPihIfYv2LfqjYfK0yUNHqnf7T+sTuOBcs/wO+Yxg+OEPDHQBrj4yi
-         4lb27CSZ+Ir9SQRC4h1H5+SSUbLVGzMOE0wTH734GQsUpCExXJkCjcNtscXnU8GZPgKc
-         q/V45go3jiwspZluJMyzJtbPKrlns/pe5zo2od9USDaF7M2HDdqZz2QNoVYgynXKljKu
-         Bbxg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKmE1TMcDhMHzbO2HL8HOglbftGUwEvXom5xCcLLuJuFaJukbgJ6qraTmd1yg/qPdk15/x3FN1rV1GvK2MF+BuiBY3TegkAg==
-X-Gm-Message-State: AOJu0YybkVGVPEdHqqYn9U8fEtAKEURsG10JSJZnSxKEIwt+59cqe+/D
-	m3dgCmvRN3bZG/B99SVl6Tpjn72QaHl2e5GRhNEG8kTPyj7cDHVZeCVTryCrpaQgYnsHMwoW5uE
-	=
-X-Google-Smtp-Source: AGHT+IEaiIwQ4oVmQtkNckwMKuK0YafyzkcJrs7GnAyqT4W+UWAeFTI2iavQi7jLoETQhXaY5w1WrA==
-X-Received: by 2002:a05:620a:9c7:b0:789:dd47:2ea2 with SMTP id y7-20020a05620a09c700b00789dd472ea2mr8963388qky.66.1711395615142;
-        Mon, 25 Mar 2024 12:40:15 -0700 (PDT)
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com. [209.85.160.181])
-        by smtp.gmail.com with ESMTPSA id k22-20020ae9f116000000b00788481cdf4csm2389417qkg.111.2024.03.25.12.40.13
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Mar 2024 12:40:14 -0700 (PDT)
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-428405a0205so62251cf.1
-        for <patches@lists.linux.dev>; Mon, 25 Mar 2024 12:40:13 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWZb9eT/pf+A5e29VErnVyc00/EwpIwj0JDROusCHFcI05p+v9mVAzu6OIo8mHXK2NQ4LV3uc6lwinZEWm+/1JBla3tVayKQw==
-X-Received: by 2002:a05:622a:38d:b0:430:d653:9def with SMTP id
- j13-20020a05622a038d00b00430d6539defmr1213790qtx.5.1711395613116; Mon, 25 Mar
- 2024 12:40:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1711400478; x=1712005278;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hYzMTzG76jpXXtR/0jOj7ycyCch1YdLUEqtA0Q2kJns=;
+        b=u2lOtYP0NNVxj6oS8746pMnYL5r9TQFYH8OVbI+u4GYpIvJy5ClV2YWnB9QpP50abs
+         H1Ruau7MGYUgtxxEzP93S3BAGpv4hCdzDWbx9KeBWXBu+de0r/SSVeFdxhPULtOWpOmU
+         peLhPL/qPWXuUi/5QgKuqb3B3YTQ9vttvQExL2h76zgr1bWUwy2k2VZ34rKsp3tcb1Md
+         V+wfHRsZ47134bFctuBRIooPQ5IS0eR+P8fiK8o2A+XLW9FkdG4wIuknSlNvtviaCdH7
+         C71OhdePzQVyc9JmG9NkGUVQ8Q/ZatxI2+hJt596kcuJ0ny3XAzR6TTmYPg7/8JkQcgg
+         JMTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVXhBkheXvA/YlOfBEBsqp841J53PAfivq6LDtJRfNHR+KBJJ++oQWxJBzYAV7VsunfZHvsD8eZzHBvyD84hplYOFXDgYKpIQ==
+X-Gm-Message-State: AOJu0Yw0ORw7BPEWp8+cScOde5eIdqQFvHmHZmA8OqkYdAQOrUZ0OoIs
+	+MnQo3JvpwGFbfb0aAzgrNQj4X61MaAfUaAgakOu7xV79QCSojzlQaTpc+ToVg==
+X-Google-Smtp-Source: AGHT+IH0RK7M14lG8X+xGmmxWIzwMNfLP7hfCwPVIxCthT5HX5RV8W05k3kUnWTtVb8NaUxXC32pVA==
+X-Received: by 2002:a05:600c:1ca5:b0:414:381:ad5f with SMTP id k37-20020a05600c1ca500b004140381ad5fmr15682wms.7.1711400478034;
+        Mon, 25 Mar 2024 14:01:18 -0700 (PDT)
+Received: from google.com (180.232.140.34.bc.googleusercontent.com. [34.140.232.180])
+        by smtp.gmail.com with ESMTPSA id o32-20020a05600c512000b004148a5e3188sm3377606wms.25.2024.03.25.14.01.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Mar 2024 14:01:17 -0700 (PDT)
+Date: Mon, 25 Mar 2024 21:01:13 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v5 04/27] iommu/arm-smmu-v3: Add an ops indirection to
+ the STE code
+Message-ID: <ZgHmGbZ4mSrbhUI3@google.com>
+References: <0-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+ <4-v5-9a37e0c884ce+31e3-smmuv3_newapi_p2_jgg@nvidia.com>
+ <Zf3KgGj4Tfc8ytgi@google.com>
+ <20240325141132.GA110546@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-5-sboyd@kernel.org>
-In-Reply-To: <20240325184204.745706-5-sboyd@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 25 Mar 2024 12:39:55 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WBg4cu0rw-yt6-sDaQfeCBNtwqiGKTroB2giM0prHPUQ@mail.gmail.com>
-Message-ID: <CAD=FV=WBg4cu0rw-yt6-sDaQfeCBNtwqiGKTroB2giM0prHPUQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] clk: Get runtime PM before walking tree during disable_unused
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240325141132.GA110546@nvidia.com>
 
-Hi,
+On Mon, Mar 25, 2024 at 11:11:32AM -0300, Jason Gunthorpe wrote:
+> On Fri, Mar 22, 2024 at 06:14:24PM +0000, Mostafa Saleh wrote:
+> > > @@ -1027,57 +1038,55 @@ static void arm_smmu_get_ste_used(const struct arm_smmu_ste *ent,
+> > >   * unused_update is an intermediate value of entry that has unused bits set to
+> > >   * their new values.
+> > >   */
+> > > -static u8 arm_smmu_entry_qword_diff(const struct arm_smmu_ste *entry,
+> > > -				    const struct arm_smmu_ste *target,
+> > > -				    struct arm_smmu_ste *unused_update)
+> > > +static u8 arm_smmu_entry_qword_diff(struct arm_smmu_entry_writer *writer,
+> > > +				    const __le64 *entry, const __le64 *target,
+> > > +				    __le64 *unused_update)
+> > >  {
+> > > -	struct arm_smmu_ste target_used = {};
+> > > -	struct arm_smmu_ste cur_used = {};
+> > > +	__le64 target_used[NUM_ENTRY_QWORDS] = {};
+> > > +	__le64 cur_used[NUM_ENTRY_QWORDS] = {};
+> > This is confusing to me, the function was modified to be generic, so its has
+> > args are __le64 * instead of struct arm_smmu_ste *.
+> 
+> Right
+> 
+> > But NUM_ENTRY_QWORDS is defined as “(sizeof(struct arm_smmu_ste) / sizeof(u64))”
+> > and in the same function writer->ops->num_entry_qwords is used
+> > nterchangeably,
+> 
+> Right
+> 
+> > I understand that this not a constant and the compiler would complain.
+> > But since for any other num_entry_qwords larger than NUM_ENTRY_QWORDS it fails,
+> > and we know STEs and CDs both have the same size, we simplify the code and make
+> > it a constant everywhere.
+> 
+> So you say to get rid of num_entry_qwords and just use the constant?
 
-On Mon, Mar 25, 2024 at 11:42=E2=80=AFAM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
->
-> Doug reported [1] the following hung task:
->
->  INFO: task swapper/0:1 blocked for more than 122 seconds.
->        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
->  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message=
-.
->  task:swapper/0       state:D stack:    0 pid:    1 ppid:     0 flags:0x0=
-0000008
->  Call trace:
->   __switch_to+0xf4/0x1f4
->   __schedule+0x418/0xb80
->   schedule+0x5c/0x10c
->   rpm_resume+0xe0/0x52c
->   rpm_resume+0x178/0x52c
->   __pm_runtime_resume+0x58/0x98
->   clk_pm_runtime_get+0x30/0xb0
->   clk_disable_unused_subtree+0x58/0x208
->   clk_disable_unused_subtree+0x38/0x208
->   clk_disable_unused_subtree+0x38/0x208
->   clk_disable_unused_subtree+0x38/0x208
->   clk_disable_unused_subtree+0x38/0x208
->   clk_disable_unused+0x4c/0xe4
->   do_one_initcall+0xcc/0x2d8
->   do_initcall_level+0xa4/0x148
->   do_initcalls+0x5c/0x9c
->   do_basic_setup+0x24/0x30
->   kernel_init_freeable+0xec/0x164
->   kernel_init+0x28/0x120
->   ret_from_fork+0x10/0x20
->  INFO: task kworker/u16:0:9 blocked for more than 122 seconds.
->        Not tainted 5.15.149-21875-gf795ebc40eb8 #1
->  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message=
-.
->  task:kworker/u16:0   state:D stack:    0 pid:    9 ppid:     2 flags:0x0=
-0000008
->  Workqueue: events_unbound deferred_probe_work_func
->  Call trace:
->   __switch_to+0xf4/0x1f4
->   __schedule+0x418/0xb80
->   schedule+0x5c/0x10c
->   schedule_preempt_disabled+0x2c/0x48
->   __mutex_lock+0x238/0x488
->   __mutex_lock_slowpath+0x1c/0x28
->   mutex_lock+0x50/0x74
->   clk_prepare_lock+0x7c/0x9c
->   clk_core_prepare_lock+0x20/0x44
->   clk_prepare+0x24/0x30
->   clk_bulk_prepare+0x40/0xb0
->   mdss_runtime_resume+0x54/0x1c8
->   pm_generic_runtime_resume+0x30/0x44
->   __genpd_runtime_resume+0x68/0x7c
->   genpd_runtime_resume+0x108/0x1f4
->   __rpm_callback+0x84/0x144
->   rpm_callback+0x30/0x88
->   rpm_resume+0x1f4/0x52c
->   rpm_resume+0x178/0x52c
->   __pm_runtime_resume+0x58/0x98
->   __device_attach+0xe0/0x170
->   device_initial_probe+0x1c/0x28
->   bus_probe_device+0x3c/0x9c
->   device_add+0x644/0x814
->   mipi_dsi_device_register_full+0xe4/0x170
->   devm_mipi_dsi_device_register_full+0x28/0x70
->   ti_sn_bridge_probe+0x1dc/0x2c0
->   auxiliary_bus_probe+0x4c/0x94
->   really_probe+0xcc/0x2c8
->   __driver_probe_device+0xa8/0x130
->   driver_probe_device+0x48/0x110
->   __device_attach_driver+0xa4/0xcc
->   bus_for_each_drv+0x8c/0xd8
->   __device_attach+0xf8/0x170
->   device_initial_probe+0x1c/0x28
->   bus_probe_device+0x3c/0x9c
->   deferred_probe_work_func+0x9c/0xd8
->   process_one_work+0x148/0x518
->   worker_thread+0x138/0x350
->   kthread+0x138/0x1e0
->   ret_from_fork+0x10/0x20
->
-> The first thread is walking the clk tree and calling
-> clk_pm_runtime_get() to power on devices required to read the clk
-> hardware via struct clk_ops::is_enabled(). This thread holds the clk
-> prepare_lock, and is trying to runtime PM resume a device, when it finds
-> that the device is in the process of resuming so the thread schedule()s
-> away waiting for the device to finish resuming before continuing. The
-> second thread is runtime PM resuming the same device, but the runtime
-> resume callback is calling clk_prepare(), trying to grab the
-> prepare_lock waiting on the first thread.
->
-> This is a classic ABBA deadlock. To properly fix the deadlock, we must
-> never runtime PM resume or suspend a device with the clk prepare_lock
-> held. Actually doing that is near impossible today because the global
-> prepare_lock would have to be dropped in the middle of the tree, the
-> device runtime PM resumed/suspended, and then the prepare_lock grabbed
-> again to ensure consistency of the clk tree topology. If anything
-> changes with the clk tree in the meantime, we've lost and will need to
-> start the operation all over again.
->
-> Luckily, most of the time we're simply incrementing or decrementing the
-> runtime PM count on an active device, so we don't have the chance to
-> schedule away with the prepare_lock held. Let's fix this immediate
-> problem that can be triggered more easily by simply booting on Qualcomm
-> sc7180.
->
-> Introduce a list of clk_core structures that have been registered, or
-> are in the process of being registered, that require runtime PM to
-> operate. Iterate this list and call clk_pm_runtime_get() on each of them
-> without holding the prepare_lock during clk_disable_unused(). This way
-> we can be certain that the runtime PM state of the devices will be
-> active and resumed so we can't schedule away while walking the clk tree
-> with the prepare_lock held. Similarly, call clk_pm_runtime_put() without
-> the prepare_lock held to properly drop the runtime PM reference. We
-> remove the calls to clk_pm_runtime_{get,put}() in this path because
-> they're superfluous now that we know the devices are runtime resumed.
->
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Closes: https://lore.kernel.org/all/20220922084322.RFC.2.I375b6b9e0a0a534=
-8962f004beb3dafee6a12dfbb@changeid/ [1]
-> Closes: https://issuetracker.google.com/328070191
-> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Fixes: 9a34b45397e5 ("clk: Add support for runtime PM")
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  drivers/clk/clk.c | 117 +++++++++++++++++++++++++++++++++++++++++-----
->  1 file changed, 105 insertions(+), 12 deletions(-)
+In my opinion, yes, that looks easier to understand, and avoids the MAX
+stuff as there is no reason for the extra generalisation.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> > I see in the next patch, that this is redefined to be the max between STE and
+> > CD, but again, this hardware and it never changes, so my opinion is to simplify
+> > the code, as there is no need to generalize this part.
+> 
+> Yes, we need a constant.
+> 
+> It would look like this, it is a little bit simpler:
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index a54062faccde38..d015f41900d802 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -63,9 +63,9 @@ enum arm_smmu_msi_index {
+>  	ARM_SMMU_MAX_MSIS,
+>  };
+>  
+> -#define NUM_ENTRY_QWORDS                                                \
+> -	(max(sizeof(struct arm_smmu_ste), sizeof(struct arm_smmu_cd)) / \
+> -	 sizeof(u64))
+> +#define NUM_ENTRY_QWORDS 8
+> +static_assert(sizeof(struct arm_smmu_ste) == NUM_ENTRY_QWORDS * sizeof(u64));
+> +static_assert(sizeof(struct arm_smmu_cd) == NUM_ENTRY_QWORDS * sizeof(u64));
+>  
+>  static phys_addr_t arm_smmu_msi_cfg[ARM_SMMU_MAX_MSIS][3] = {
+>  	[EVTQ_MSI_INDEX] = {
+> @@ -1045,7 +1045,7 @@ static u8 arm_smmu_entry_qword_diff(struct arm_smmu_entry_writer *writer,
+>  	writer->ops->get_used(entry, cur_used);
+>  	writer->ops->get_used(target, target_used);
+>  
+> -	for (i = 0; i != writer->ops->num_entry_qwords; i++) {
+> +	for (i = 0; i != NUM_ENTRY_QWORDS; i++) {
+>  		/*
+>  		 * Check that masks are up to date, the make functions are not
+>  		 * allowed to set a bit to 1 if the used function doesn't say it
+> @@ -1114,7 +1114,6 @@ static bool entry_set(struct arm_smmu_entry_writer *writer, __le64 *entry,
+>  void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+>  			  const __le64 *target)
+>  {
+> -	unsigned int num_entry_qwords = writer->ops->num_entry_qwords;
+>  	__le64 unused_update[NUM_ENTRY_QWORDS];
+>  	u8 used_qword_diff;
+>  
+> @@ -1137,9 +1136,9 @@ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+>  		 */
+>  		unused_update[critical_qword_index] =
+>  			entry[critical_qword_index];
+> -		entry_set(writer, entry, unused_update, 0, num_entry_qwords);
+> +		entry_set(writer, entry, unused_update, 0, NUM_ENTRY_QWORDS);
+>  		entry_set(writer, entry, target, critical_qword_index, 1);
+> -		entry_set(writer, entry, target, 0, num_entry_qwords);
+> +		entry_set(writer, entry, target, 0, NUM_ENTRY_QWORDS);
+>  	} else if (used_qword_diff) {
+>  		/*
+>  		 * At least two qwords need their inuse bits to be changed. This
+> @@ -1148,7 +1147,7 @@ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+>  		 */
+>  		unused_update[0] = entry[0] & (~writer->ops->v_bit);
+>  		entry_set(writer, entry, unused_update, 0, 1);
+> -		entry_set(writer, entry, target, 1, num_entry_qwords - 1);
+> +		entry_set(writer, entry, target, 1, NUM_ENTRY_QWORDS - 1);
+>  		entry_set(writer, entry, target, 0, 1);
+>  	} else {
+>  		/*
+> @@ -1157,7 +1156,7 @@ void arm_smmu_write_entry(struct arm_smmu_entry_writer *writer, __le64 *entry,
+>  		 * compute_qword_diff().
+>  		 */
+>  		WARN_ON_ONCE(
+> -			entry_set(writer, entry, target, 0, num_entry_qwords));
+> +			entry_set(writer, entry, target, 0, NUM_ENTRY_QWORDS));
+>  	}
+>  }
+>  
+> @@ -1272,7 +1271,6 @@ static const struct arm_smmu_entry_writer_ops arm_smmu_cd_writer_ops = {
+>  	.sync = arm_smmu_cd_writer_sync_entry,
+>  	.get_used = arm_smmu_get_cd_used,
+>  	.v_bit = cpu_to_le64(CTXDESC_CD_0_V),
+> -	.num_entry_qwords = sizeof(struct arm_smmu_cd) / sizeof(u64),
+>  };
+>  
+>  void arm_smmu_write_cd_entry(struct arm_smmu_master *master, int ssid,
+> @@ -1460,7 +1458,6 @@ static const struct arm_smmu_entry_writer_ops arm_smmu_ste_writer_ops = {
+>  	.sync = arm_smmu_ste_writer_sync_entry,
+>  	.get_used = arm_smmu_get_ste_used,
+>  	.v_bit = cpu_to_le64(STRTAB_STE_0_V),
+> -	.num_entry_qwords = sizeof(struct arm_smmu_ste) / sizeof(u64),
+>  };
+>  
+>  static void arm_smmu_write_ste(struct arm_smmu_master *master, u32 sid,
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> index 8ba07b00bf6056..5936dc5f76786a 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -779,7 +779,6 @@ struct arm_smmu_entry_writer {
+>  };
+>  
+>  struct arm_smmu_entry_writer_ops {
+> -	unsigned int num_entry_qwords;
+>  	__le64 v_bit;
+>  	void (*get_used)(const __le64 *entry, __le64 *used);
+>  	void (*sync)(struct arm_smmu_entry_writer *writer);
+> 
+
+Thanks,
+Mostafa
