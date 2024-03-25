@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7583214BFAD;
-	Mon, 25 Mar 2024 02:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF311C2576;
+	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711332788; cv=none; b=uLxv90YTrSm1WQKHWmnrlkArSAF/5kHlZ2LHD+yzvI5Ldlgti9uE1lLs9in0yMsn6CGlR97EnCmqZlwjqyA73C7TAQldAChcUsLC7BRi2Roc4HTIHETtENoZrWY/48uIiBdme7bfvLNOOQZHTmgnMoC4/yGBmz4u43/+fDaHios=
+	t=1711341755; cv=none; b=GcfYOtFPHZuiEN0TjCQMJWN/8wd+TPUOCtJyGCZPDZoYo/Wt/0KMmSaCrq6JT6KiQYXur+YRcZIlhOpJ/4jIXypKWAEKJnVeT0C6ZBeS4MgzWJhlbBLIkcU7cIcCG67iqXqz6ng30/0wxYZQRXY06588GHzIwgK67MczfdJz8Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711332788; c=relaxed/simple;
-	bh=ZjgqCWsmKkuovh6MisooZl+/2MBUKF7fK+TUoxzUHCY=;
+	s=arc-20240116; t=1711341755; c=relaxed/simple;
+	bh=duVRPOkUwtqb9I+6o5VQiYAgtSlpWGf+X+0yQv8TjAs=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=jfuBFDahOi0A4nCuavFksz9YDWqnSXonY6ZcM6oF9GqT8EGHPNGJGazh+yYqjaEbH/y/7TiyhZcqAUOeFwTFTSIQqClOjQI/SCrM/Xdz3mF4/zMl9Az92I4n64jlb5KVWRh9ScXFHZrLDwHhFrNJ+QoesrPIASTPbsbA9ss/xPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UyQ9GcpQ; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=MWMKsXohZxFE3o8hOmpsPaH6/T+4BT8WFE0HdxtN//tN69grlx1Kwts9UlgyljFJCyAiKvFfWY4c/ho5oS67yhXvaenweWYbeuF80XOX8ELdAvLJrOp+EQfgdfgAzd3otFXyGo+npsE0MoHJWdHOSlm+cRRHLVmsoig5ErdjeMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZ/b0NE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyQ9GcpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 936DDC43143;
-	Mon, 25 Mar 2024 02:13:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZ/b0NE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B5273C43399;
+	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711332787;
-	bh=ZjgqCWsmKkuovh6MisooZl+/2MBUKF7fK+TUoxzUHCY=;
+	s=k20201202; t=1711341754;
+	bh=duVRPOkUwtqb9I+6o5VQiYAgtSlpWGf+X+0yQv8TjAs=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=UyQ9GcpQVXzojXqUM9nOd0DRpLaGTsf7lQnP/2oEM4OV2s7EmzskxKAF3m0kyMsZ/
-	 EoJSLaEw/RsRKxYAFmogtyUY6LbxNri8zfPW6jlz9Z154rcef8YdgG+MuzEY9GGgbv
-	 0jnG8pZFD1YArL/3LfWRH1fn/6NuZbECfm+o+nbwfpRSCgna7epf1KkgzYdNtq/HNv
-	 BaUu05Vd0gN/UZO3xJzFtAdoxG2xDhVcBlZgKBV8o/JKftE79GMlzoG3KQ0MzDYOlR
-	 19+gaNycmmH6Q5THqCgCzN01lhj3UZVJGH4vldwCskiKeaCOtoJsNMQj48BwHeeUlZ
-	 RYraCD/FCaX5w==
+	b=iZ/b0NE+i7+do8pgZkg46x1uBB/MQJfp/c/XhpH71z/wGKatNJQnfFVi4TsSrJUcx
+	 p9B9v3m0m2h+2n352ZneEdcJs25ZuYmCkptcEJJi14CEjUg6fZRWGQjsnzSbTTqpuQ
+	 jBLNyyJKgrClKH6Ar2Sk8/u0rVBaZT96gqSwdlSHBYKiJ8LneSrMklScm8Ww85dTEe
+	 eja5sWn2jN4CV4FDoeaf5TOJPL86Efy9rTKDI0W7hc3GLlwluHdA9GYm7yTBbMYg6F
+	 MrrxjzojsaA/BYbk4OYMb2sE8+b4REldcJ8JhTboSwFB0wiYQTm1AKpQdnuWO2wot9
+	 CNckLCoG3Oykg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 7FFB1D2D0E6;
-	Mon, 25 Mar 2024 02:13:07 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9F5E8D95071;
+	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +37,46 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] gpio: Add ChromeOS EC GPIO driver
-From: patchwork-bot+chrome-platform@kernel.org
+Subject: Re: [PATCH 00/11] Bump the minimum supported version of LLVM to 13.0.1
+From: patchwork-bot+linux-riscv@kernel.org
 Message-Id: 
- <171133278751.9916.9482317589165848392.git-patchwork-notify@kernel.org>
-Date: Mon, 25 Mar 2024 02:13:07 +0000
-References: <20240220045230.2852640-1-swboyd@chromium.org>
-In-Reply-To: <20240220045230.2852640-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linus.walleij@linaro.org, brgl@bgdev.pl, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, devicetree@vger.kernel.org,
- chrome-platform@lists.linux.dev, dianders@chromium.org,
- treapking@chromium.org, linux-gpio@vger.kernel.org, lee@kernel.org,
- bleung@chromium.org, groeck@chromium.org
+ <171134175464.18749.18342004135343709281.git-patchwork-notify@kernel.org>
+Date: Mon, 25 Mar 2024 04:42:34 +0000
+References: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
+In-Reply-To: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: linux-riscv@lists.infradead.org, akpm@linux-foundation.org,
+ masahiroy@kernel.org, nicolas@fjasle.eu, linux-kbuild@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, linux@armlinux.org.uk,
+ ardb@kernel.org, linux-arm-kernel@lists.infradead.org,
+ catalin.marinas@arm.com, will@kernel.org, mark.rutland@arm.com,
+ mpe@ellerman.id.au, npiggin@gmail.com, aneesh.kumar@kernel.org,
+ naveen.n.rao@linux.ibm.com, linuxppc-dev@lists.ozlabs.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ conor@kernel.org, keescook@chromium.org, linux-hardening@vger.kernel.org
 
 Hello:
 
-This patch was applied to chrome-platform/linux.git (for-next)
-by Bartosz Golaszewski <bartosz.golaszewski@linaro.org>:
+This series was applied to riscv/linux.git (fixes)
+by Andrew Morton <akpm@linux-foundation.org>:
 
-On Mon, 19 Feb 2024 20:52:27 -0800 you wrote:
-> The ChromeOS embedded controller (EC) supports setting the state of
-> GPIOs when the system is unlocked, and getting the state of GPIOs in all
-> cases. The GPIOs are on the EC itself, so the EC acts similar to a GPIO
-> expander. Add a driver to get and set the GPIOs on the EC through the
-> host command interface.
+On Thu, 25 Jan 2024 15:55:06 -0700 you wrote:
+> Hi all,
 > 
-> Cc: Lee Jones <lee@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: <linux-gpio@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> This series bumps the minimum supported version of LLVM for building the
+> kernel to 13.0.1. The first patch does the bump and all subsequent
+> patches clean up all the various workarounds and checks for earlier
+> versions.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] gpio: Add ChromeOS EC GPIO driver
-    https://git.kernel.org/chrome-platform/c/f837fe1bffe6
+  - [07/11] riscv: Remove MCOUNT_NAME workaround
+    https://git.kernel.org/riscv/c/de5f3984664e
+  - [08/11] riscv: Kconfig: Remove version dependency from CONFIG_CLANG_SUPPORTS_DYNAMIC_FTRACE
+    https://git.kernel.org/riscv/c/a38d97181271
 
 You are awesome, thank you!
 -- 
