@@ -1,35 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF311C2576;
-	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6D754906;
+	Mon, 25 Mar 2024 05:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711341755; cv=none; b=GcfYOtFPHZuiEN0TjCQMJWN/8wd+TPUOCtJyGCZPDZoYo/Wt/0KMmSaCrq6JT6KiQYXur+YRcZIlhOpJ/4jIXypKWAEKJnVeT0C6ZBeS4MgzWJhlbBLIkcU7cIcCG67iqXqz6ng30/0wxYZQRXY06588GHzIwgK67MczfdJz8Do=
+	t=1711345447; cv=none; b=ME1IL00WPHqWh4HB+ED1CaK2kp9uPo5WJzLU5rlrHH0+lpOscX0YzsJ/7WOEvLxgtub4KEHCV9AvkFB/TEwmdqeT/iRWy9S7DJrS3OoHDE2YWxgybxB8s1ZqEjEWUfcVIiahc3Ucsy2827FxVJ1jH1tB0jms+CK9StLKsSc1KSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711341755; c=relaxed/simple;
-	bh=duVRPOkUwtqb9I+6o5VQiYAgtSlpWGf+X+0yQv8TjAs=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=MWMKsXohZxFE3o8hOmpsPaH6/T+4BT8WFE0HdxtN//tN69grlx1Kwts9UlgyljFJCyAiKvFfWY4c/ho5oS67yhXvaenweWYbeuF80XOX8ELdAvLJrOp+EQfgdfgAzd3otFXyGo+npsE0MoHJWdHOSlm+cRRHLVmsoig5ErdjeMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZ/b0NE+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1711345447; c=relaxed/simple;
+	bh=JQLZlvK/niz9A5rF1vqEGVWJiWXrV5wGTOHqQFT/TfM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TXWRbs0QlVvoJyE/CmK+J9zovhrudhJ3y1wEWcbSxNt7BSWdJNq2HjFqcspJ2ZduoFpBq3tQDZC3WFCqnj1mKiE5mglF8v9s/RMpKKQqfcMjcSTgQvDKk5wvrtxvs/SU4fLSeAcxj7rbpr+7tslJmAn7fUaJzQXsA5wyPISBczQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D9xG6cQ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZ/b0NE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B5273C43399;
-	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D9xG6cQ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A59DC433C7;
+	Mon, 25 Mar 2024 05:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711341754;
-	bh=duVRPOkUwtqb9I+6o5VQiYAgtSlpWGf+X+0yQv8TjAs=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=iZ/b0NE+i7+do8pgZkg46x1uBB/MQJfp/c/XhpH71z/wGKatNJQnfFVi4TsSrJUcx
-	 p9B9v3m0m2h+2n352ZneEdcJs25ZuYmCkptcEJJi14CEjUg6fZRWGQjsnzSbTTqpuQ
-	 jBLNyyJKgrClKH6Ar2Sk8/u0rVBaZT96gqSwdlSHBYKiJ8LneSrMklScm8Ww85dTEe
-	 eja5sWn2jN4CV4FDoeaf5TOJPL86Efy9rTKDI0W7hc3GLlwluHdA9GYm7yTBbMYg6F
-	 MrrxjzojsaA/BYbk4OYMb2sE8+b4REldcJ8JhTboSwFB0wiYQTm1AKpQdnuWO2wot9
-	 CNckLCoG3Oykg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9F5E8D95071;
-	Mon, 25 Mar 2024 04:42:34 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1711345446;
+	bh=JQLZlvK/niz9A5rF1vqEGVWJiWXrV5wGTOHqQFT/TfM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=D9xG6cQ4hSOdAK1TZmWuUNztMjf3ep/9Jh6v0g2OytnLLIIdZFif3aKbqeU2A6flz
+	 WUgiN8Gd4PlYVGOD9Xy8Squz7LO9zUMh0i/agnfFvNLmOdYErXMKnc/kDQ+fXfC+oN
+	 72s8YFoafi9GAI2YJwRYCmKlfu+FghXhWIBDPrpEpdPP+vlqHz9oYyclUMCiXysneA
+	 DBoVHdW5JCMmp92YACqH8rYLgy5E7Rj+9nPCabMdv9CpbbDKH1D1GCOZpOOABrxrDy
+	 aWl0ig3aXfLCi6juHde1uFfeP9aKTkvMRy5FG4J8RiviL9UHMh1+WYHL4RiUjfk0iK
+	 ZRwz/th8YqoTQ==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 3/5] clk: Initialize struct clk_core kref earlier
+Date: Sun, 24 Mar 2024 22:44:00 -0700
+Message-ID: <20240325054403.592298-4-sboyd@kernel.org>
+X-Mailer: git-send-email 2.44.0.396.g6e790dbe36-goog
+In-Reply-To: <20240325054403.592298-1-sboyd@kernel.org>
+References: <20240325054403.592298-1-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,50 +47,91 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 00/11] Bump the minimum supported version of LLVM to 13.0.1
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <171134175464.18749.18342004135343709281.git-patchwork-notify@kernel.org>
-Date: Mon, 25 Mar 2024 04:42:34 +0000
-References: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
-In-Reply-To: <20240125-bump-min-llvm-ver-to-13-0-1-v1-0-f5ff9bda41c5@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-riscv@lists.infradead.org, akpm@linux-foundation.org,
- masahiroy@kernel.org, nicolas@fjasle.eu, linux-kbuild@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, linux@armlinux.org.uk,
- ardb@kernel.org, linux-arm-kernel@lists.infradead.org,
- catalin.marinas@arm.com, will@kernel.org, mark.rutland@arm.com,
- mpe@ellerman.id.au, npiggin@gmail.com, aneesh.kumar@kernel.org,
- naveen.n.rao@linux.ibm.com, linuxppc-dev@lists.ozlabs.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- conor@kernel.org, keescook@chromium.org, linux-hardening@vger.kernel.org
 
-Hello:
+Initialize this kref once we allocate memory for the struct clk_core so
+that we can reuse the release function to free any memory associated
+with the structure. This mostly consolidates code, but also clarifies
+that the kref lifetime exists once the container structure (struct
+clk_core) is allocated instead of leaving it in a half-baked state for
+most of __clk_core_init().
 
-This series was applied to riscv/linux.git (fixes)
-by Andrew Morton <akpm@linux-foundation.org>:
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/clk.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-On Thu, 25 Jan 2024 15:55:06 -0700 you wrote:
-> Hi all,
-> 
-> This series bumps the minimum supported version of LLVM for building the
-> kernel to 13.0.1. The first patch does the bump and all subsequent
-> patches clean up all the various workarounds and checks for earlier
-> versions.
-> 
-> [...]
-
-Here is the summary with links:
-  - [07/11] riscv: Remove MCOUNT_NAME workaround
-    https://git.kernel.org/riscv/c/de5f3984664e
-  - [08/11] riscv: Kconfig: Remove version dependency from CONFIG_CLANG_SUPPORTS_DYNAMIC_FTRACE
-    https://git.kernel.org/riscv/c/a38d97181271
-
-You are awesome, thank you!
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 9fc522c26de8..ee80b21f2824 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -3959,8 +3959,6 @@ static int __clk_core_init(struct clk_core *core)
+ 	}
+ 
+ 	clk_core_reparent_orphans_nolock();
+-
+-	kref_init(&core->ref);
+ out:
+ 	clk_pm_runtime_put(core);
+ unlock:
+@@ -4189,6 +4187,16 @@ static void clk_core_free_parent_map(struct clk_core *core)
+ 	kfree(core->parents);
+ }
+ 
++/* Free memory allocated for a struct clk_core */
++static void __clk_release(struct kref *ref)
++{
++	struct clk_core *core = container_of(ref, struct clk_core, ref);
++
++	clk_core_free_parent_map(core);
++	kfree_const(core->name);
++	kfree(core);
++}
++
+ static struct clk *
+ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ {
+@@ -4209,6 +4217,8 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ 		goto fail_out;
+ 	}
+ 
++	kref_init(&core->ref);
++
+ 	core->name = kstrdup_const(init->name, GFP_KERNEL);
+ 	if (!core->name) {
+ 		ret = -ENOMEM;
+@@ -4263,12 +4273,10 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ 	hw->clk = NULL;
+ 
+ fail_create_clk:
+-	clk_core_free_parent_map(core);
+ fail_parents:
+ fail_ops:
+-	kfree_const(core->name);
+ fail_name:
+-	kfree(core);
++	kref_put(&core->ref, __clk_release);
+ fail_out:
+ 	return ERR_PTR(ret);
+ }
+@@ -4348,16 +4356,6 @@ int of_clk_hw_register(struct device_node *node, struct clk_hw *hw)
+ }
+ EXPORT_SYMBOL_GPL(of_clk_hw_register);
+ 
+-/* Free memory allocated for a clock. */
+-static void __clk_release(struct kref *ref)
+-{
+-	struct clk_core *core = container_of(ref, struct clk_core, ref);
+-
+-	clk_core_free_parent_map(core);
+-	kfree_const(core->name);
+-	kfree(core);
+-}
+-
+ /*
+  * Empty clk_ops for unregistered clocks. These are used temporarily
+  * after clk_unregister() was called on a clock and until last clock
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
