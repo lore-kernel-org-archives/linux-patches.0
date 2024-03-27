@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCE51534EB
-	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221A915350A
+	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711569848; cv=none; b=ouLCQkmxZxXujG843JGXX50fCa9XzMdkQ4adZJhRyF0tcW7oyl73qbHEn4/6rxlh8oYx+aivx0jYJZnHZdQy4Vi7nX7G3PiJ9PivypuDndmbGGmdcwfajC7s2aw1qh/uRpDzLALW6s/31LBYrah5kY//x+gQimqh2HpRicy4KFI=
+	t=1711569848; cv=none; b=tb71K0bG7qMhzUpEUjapguxATb6a80//TbSIRso9+fjY2HcbAJ+e1rYbIFBrK0mF1gvwqfYd+XWfxoRp3hDv7VQJobnreJT05kN/YmB9r2oZza4sOUb2HvAguBpkIkO5sYODBE/2Jf8sWRbdbW+976LJPj2Xh7gvd0DZNk0G4XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711569848; c=relaxed/simple;
-	bh=DQfB7ziQiSVsGqVtUGTeoCLbXrf9m9tIM71X5OZ5E0M=;
+	bh=PviGf2ukuqvClh6Tzg6t+9sRC+0cgDfB2kvycRzoQFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmheun+wuDmOVGP25j0ihEt/WUFpwAMNusQgBDiX8f7wrrfqQLl3kF4Ns81+kS09u5viQ1wpXj3stFtU9/5zJYQDVPu6PWjqA9oNuP0KqXRWAusGc7VAyqt4pfownTC5qAerwPVtb81pe3m98v3z7/Ra99o8YbphTq2/hzqphrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dBOJsikT; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=Sz5MEHq2E50j/VmlReUsdbQsgFw5DFacLEk2UlRiCdRPVsOdyd2Cddc6g54U5FOgh+XvcKGsAe6vpyNAQi4jbs0VwhCrclYIPKttJqXJ71fDfAtZkM9L2scI+LaUwUZYI1v7HuyMjc3qDMZ7oA+O/CWDAbKF2Wetrbgh+heNYoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WaTh3hwz; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dBOJsikT"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WaTh3hwz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1711569847; x=1743105847;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=DQfB7ziQiSVsGqVtUGTeoCLbXrf9m9tIM71X5OZ5E0M=;
-  b=dBOJsikTSJsl0dcUb+Hy9HbuDR2/oX2R5ZGbPyzFEDFzrp78XYf+P0qn
-   cKpSMIKnak+xlom2M3OHSScj/OphWxfoaALfn04ljiuBVshwxDrpK39mb
-   aOHunPHEwRUZk77DdtFGd3Y4beAs6JF0E6Qh5a72EygtLaa/27CJ9AVQc
-   vTQirNKYGdNsWYf2suV4HmAshXyn3v81ZZHuwrAXGJU+HyqI4RAVks0Jl
-   YdZ7Ov/vbqVcTG320S4otrmCsLwYNlPS+3QiAFm5UoInItnyfDzGz9MUV
-   EJBMXQ+Mv5FsQJe+mjV3ZEgndOV9GRbtetLSrQiVEZe3vJ9kzOzN9GJyM
-   Q==;
-X-CSE-ConnectionGUID: ZariXCaiTym/LoTM/JD0mg==
-X-CSE-MsgGUID: esMVUCXgQnGa1SCiaMmabA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="18132992"
+  bh=PviGf2ukuqvClh6Tzg6t+9sRC+0cgDfB2kvycRzoQFo=;
+  b=WaTh3hwzWaE0WVUrIuUPcwwhbOOdEXYhi1eqWCNQTFTZBm3vGWEBaaro
+   sLfvhkiwhQR/PO81MqmMvtkTAxgvV+eEhNMHSj4gkBDd6Yv+1bgrOiLC/
+   UBUWyp1fo3Gjwy+harQfhHYvJ97IBSc709NwZUGr3tTHfrKXBKYVbE5Rm
+   RmH0bEguYS4fnMV+th68i44T1cWN9e4jZvcGdEKyB4rhnl37/28wYwzQt
+   PcbbfVrsrW96dv+MIxAd2oqCVJ/xD3zOe6ooyt9ZoklbGGE718VmJaFDf
+   Ea1G1IVpyihCuVa2hd0fJgCgDXJdvfaQDOMW1PJUlcw8PhRyYPRrBGIz/
+   w==;
+X-CSE-ConnectionGUID: 2yPuMRyURn63kFPt6HxVmQ==
+X-CSE-MsgGUID: Heq3n+7vSoKC/n8PWPLxOA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="18133000"
 X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="18132992"
+   d="scan'208";a="18133000"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
   by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:03 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="16246122"
+   d="scan'208";a="16246128"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:02 -0700
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:03 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -53,9 +53,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 05/10] x86/resctrl: Add parent/child information to rdt_resource and rdt_domain
-Date: Wed, 27 Mar 2024 13:03:47 -0700
-Message-ID: <20240327200352.236835-6-tony.luck@intel.com>
+Subject: [PATCH 06/10] x86/resctrl: Update mkdir_mondata_subdir() for Sub-NUMA domains
+Date: Wed, 27 Mar 2024 13:03:48 -0700
+Message-ID: <20240327200352.236835-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240327200352.236835-1-tony.luck@intel.com>
 References: <20240327200352.236835-1-tony.luck@intel.com>
@@ -67,97 +67,154 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The L3 resource is a "parent" to the SUBL3 resource in that each of the
-domains in L3 is subdivided into two or more SUBL3 domains.
+When Sub-NUMA domain mode is enabled all the monitoring happens
+at the SUBL3 resource level. Changes are required to populate the
+"mon_data" directories in the resctrl file system.
 
-Add parent/child pointers to the rdt_resource structure and a
-parent domain id number to the rdt_domain structure.
+When making the first SUBL3 directory code must first create the
+parent mon_L3_XX directory and fill it with files for each of
+the monitoring functions. Subsequent SUBL3 creation requests will
+simply use the directory that was created by the first request.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h                |  6 ++++++
- arch/x86/kernel/cpu/resctrl/core.c     | 12 ++++++++++++
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |  4 +++-
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/internal.h | 12 +++++
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 74 ++++++++++++++++++--------
+ 2 files changed, 65 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index dea79f6a8122..b7ade7627e08 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -70,6 +70,7 @@ struct resctrl_staged_config {
-  * @cqm_limbo:		worker to periodically read CQM h/w counters
-  * @mbm_work_cpu:	worker CPU for MBM h/w counters
-  * @cqm_work_cpu:	worker CPU for CQM h/w counters
-+ * @parent:		parent domain number in parent resource
-  * @plr:		pseudo-locked region (if any) associated with domain
-  * @staged_config:	parsed configuration to be applied
-  * @mbps_val:		When mba_sc is enabled, this holds the array of user
-@@ -87,6 +88,7 @@ struct rdt_domain {
- 	struct delayed_work		cqm_limbo;
- 	int				mbm_work_cpu;
- 	int				cqm_work_cpu;
-+	int				parent;
- 	struct pseudo_lock_region	*plr;
- 	struct resctrl_staged_config	staged_config[CDP_NUM_TYPES];
- 	u32				*mbps_val;
-@@ -173,6 +175,8 @@ enum resctrl_scope {
-  * @format_str:		Per resource format string to show domain value
-  * @parse_ctrlval:	Per resource function pointer to parse control values
-  * @evt_list:		List of monitoring events
-+ * @parent:		Parent of this resource
-+ * @child:		Child of this resource
-  * @fflags:		flags to choose base and info files
-  * @cdp_capable:	Is the CDP feature available on this resource
-  */
-@@ -194,6 +198,8 @@ struct rdt_resource {
- 						 struct resctrl_schema *s,
- 						 struct rdt_domain *d);
- 	struct list_head	evt_list;
-+	struct rdt_resource	*parent;
-+	struct rdt_resource	*child;
- 	unsigned long		fflags;
- 	bool			cdp_capable;
- };
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 2fa04375da8c..1f5d7ee0096e 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -552,6 +552,18 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 	d->id = id;
- 	cpumask_set_cpu(cpu, &d->cpu_mask);
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 21d81f51838f..7f05502454c5 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -456,6 +456,18 @@ static inline struct rdt_hw_resource *resctrl_to_arch_res(struct rdt_resource *r
+ 	return container_of(r, struct rdt_hw_resource, r_resctrl);
+ }
  
-+	if (r->parent) {
-+		struct rdt_domain *pd;
++static inline struct rdt_domain *get_parent_domain(struct rdt_resource *r,
++						   struct rdt_domain *d)
++{
++	struct  rdt_domain *pd;
 +
-+		list_for_each_entry(pd, &r->parent->domains, list)
-+			if (cpumask_test_cpu(cpu, &pd->cpu_mask))
-+				goto found;
-+		WARN_ON_ONCE(1);
-+		return;
-+found:
-+		d->parent = pd->id;
-+	}
++	list_for_each_entry(pd, &r->parent->domains, list)
++		if (pd->id == d->parent)
++			return pd;
 +
- 	rdt_domain_reconfigure_cdp(r);
- 
- 	if (r->alloc_capable && domain_setup_ctrlval(r, d)) {
++	return NULL;
++}
++
+ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
+ 	      struct rdt_domain *d);
+ int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
 diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index a2ebd7e051bb..f2af58a791a4 100644
+index f2af58a791a4..22effd8dc207 100644
 --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
 +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1107,9 +1107,11 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
- 				 struct seq_file *seq, void *v)
- {
- 	struct rdt_resource *r = of->kn->parent->priv;
-+	struct list_head *evt_list;
- 	struct mon_evt *mevt;
+@@ -3026,31 +3026,16 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+ 	}
+ }
  
--	list_for_each_entry(mevt, &r->evt_list, list) {
-+	evt_list = r->child ? &r->child->evt_list : &r->evt_list;
-+	list_for_each_entry(mevt, evt_list, list) {
- 		seq_printf(seq, "%s\n", mevt->name);
- 		if (mevt->configurable)
- 			seq_printf(seq, "%s_config\n", mevt->name);
+-static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+-				struct rdt_domain *d,
+-				struct rdt_resource *r, struct rdtgroup *prgrp)
++static int mon_add_all_files(struct kernfs_node *kn, struct rdt_domain *d,
++			     struct rdt_resource *r, struct rdtgroup *prgrp)
+ {
+ 	union mon_data_bits priv;
+-	struct kernfs_node *kn;
+ 	struct mon_evt *mevt;
+ 	struct rmid_read rr;
+-	char name[32];
+ 	int ret;
+ 
+-	sprintf(name, "mon_%s_%02d", r->name, d->id);
+-	/* create the directory */
+-	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
+-	if (IS_ERR(kn))
+-		return PTR_ERR(kn);
+-
+-	ret = rdtgroup_kn_set_ugid(kn);
+-	if (ret)
+-		goto out_destroy;
+-
+-	if (WARN_ON(list_empty(&r->evt_list))) {
+-		ret = -EPERM;
+-		goto out_destroy;
+-	}
++	if (WARN_ON(list_empty(&r->evt_list)))
++		return -EPERM;
+ 
+ 	priv.u.rid = r->rid;
+ 	priv.u.domid = d->id;
+@@ -3058,11 +3043,58 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+ 		priv.u.evtid = mevt->evtid;
+ 		ret = mon_addfile(kn, mevt->name, priv.priv);
+ 		if (ret)
+-			goto out_destroy;
++			return ret;
+ 
+ 		if (is_mbm_event(mevt->evtid))
+ 			mon_event_read(&rr, r, d, prgrp, mevt->evtid, true);
+ 	}
++
++	return 0;
++}
++
++static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
++				struct rdt_domain *d,
++				struct rdt_resource *r, struct rdtgroup *prgrp)
++{
++	struct kernfs_node *kn = parent_kn, *ckn;
++	struct rdt_domain *pd;
++	char name[32];
++	int ret;
++
++	if (r->parent) {
++		pd = get_parent_domain(r, d);
++		if (!pd)
++			return 0;
++		sprintf(name, "mon_%s_%02d", r->parent->name, pd->id);
++		kn = kernfs_find_and_get_ns(parent_kn, name, NULL);
++		if (kn) {
++			parent_kn = kn;
++			goto subdir;
++		}
++		kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
++		if (IS_ERR(kn))
++			return PTR_ERR(kn);
++		ret = rdtgroup_kn_set_ugid(kn);
++		if (ret)
++			goto out_destroy;
++		ret = mon_add_all_files(kn, d, r, prgrp);
++		if (ret)
++			goto out_destroy;
++	}
++subdir:
++	sprintf(name, "mon_%s_%02d", r->name, d->id);
++	/* create the directory */
++	ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
++	if (IS_ERR(ckn))
++		goto out_destroy;
++
++	ret = rdtgroup_kn_set_ugid(ckn);
++	if (ret)
++		goto out_destroy;
++
++	ret = mon_add_all_files(ckn, d, r, prgrp);
++	if (ret)
++		goto out_destroy;
+ 	kernfs_activate(kn);
+ 	return 0;
+ 
+@@ -3078,8 +3110,8 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+ static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+ 					   struct rdt_domain *d)
+ {
+-	struct kernfs_node *parent_kn;
+ 	struct rdtgroup *prgrp, *crgrp;
++	struct kernfs_node *parent_kn;
+ 	struct list_head *head;
+ 
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
 -- 
 2.44.0
 
