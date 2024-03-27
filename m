@@ -1,64 +1,68 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66B0153BDB
-	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56023130A7B
+	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711569855; cv=none; b=aeB95ZsX+4w/j1Acuwx8sMTf6jPwaf/yrp4Q7A+IqcfQvXBqrJBIgKfTqdvKYOVFoPpD6QbBMZxKlwxtq2Y0z/zeP/QcfLPrQUwExzCn7UW9xVeSPAV9gK+h57r3b4H1g4upQGOCuQ5LLyXpXijtD+r7uAojYisvmTKJNLpu3nM=
+	t=1711571267; cv=none; b=QW3lXJ6wmUsKqerYStHnoGX6QDjDAyN4VyUmheXDEpX2FuT+Aq0QmDGsZ3h/sgLbIIkLok9tiqmtDxR/HWx8NtFwQ2yFuA7ZVQgh37RdogfphG1r2wXUnnEbuzoCJjSfGDI2QgCp48w5L0+YH/phWFRsygAS5ACaZKGpAYCiNTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711569855; c=relaxed/simple;
-	bh=jnjYRbh/fPxftA3RtGXzv9UpX5enrkyZvcYUhq10uNg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLfPXt6LsV5Ovdbe/a61sqmQRd/89PL27kkStP/Ut7yWpzkudHOAjZu19KAj+XVfApWW9P81am0ex3O3TOYQ9/9fQF332+o95FTsJjCJjEC4oEqS+Imp5/FdUs2yyDce1OmdLOKoI27nVLS/CakR3yDpOosAlvm96SSefdWa/eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A14L/kt3; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1711571267; c=relaxed/simple;
+	bh=UAlyW1XBQGh1I1s4OhUVYVSvSBWjHao81V/7b/ey64s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z3xUGNvc4nQY61TKTdxnu9K36G/Z+34vRRpdIyKGQpdi3lTMlFtNBgtRQ2PMEJh1CixtFWv7m7TpDeKqABru2X45AT85vnZ9dBL+NwwiRuSs3PUep2cDYYQeYn4/4mD8H81nPh4PzJIAXmh+n5TZ5HOFLZs2bo3v+NRQGPnFlFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ocZ+7THe; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A14L/kt3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1711569851; x=1743105851;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=jnjYRbh/fPxftA3RtGXzv9UpX5enrkyZvcYUhq10uNg=;
-  b=A14L/kt3Zt+ymI2PuckH6S1i2vsSJW28dHOw7qPb6/eiladqNWqJKYLu
-   QFfFTfsmaycICEXEp5MJKfMXxxKcPGLspTrDNdO7dxmeGqHZswtaVhj9+
-   egkQRMiu1dpSQhQC5bfzIbwwfcNpq1A/i2JUHNq6O0VwDYMWkVJUWj6S1
-   EcVErLWp5VeGTtfilE4/Xv+Plfsiv/E0HIXnwLIg1XSktQ7uhJMV14/Jc
-   ipMyXBu97yCXAfNCrPYchQ9LWKaXLP5x4PVDPm6qlLwSUU5ARXTnP9WR4
-   qugJDjkvgngUTsTFRFhVBEuezV9zd0dhBv3TRDiSn9Mb+tlYVWEcz4rNH
-   g==;
-X-CSE-ConnectionGUID: qIqz25MDTvWNaB7oBAWrHA==
-X-CSE-MsgGUID: 3AZ0hBjiT5mx3VftBgIMOQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="18133031"
-X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="18133031"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="16246150"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:04 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ocZ+7THe"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e6b5432439so285853b3a.1
+        for <patches@lists.linux.dev>; Wed, 27 Mar 2024 13:27:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1711571264; x=1712176064; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LCVHzKM95nxrye1cfXoHnsCw/TjZEQVmmlga0bm4uZk=;
+        b=ocZ+7THeLHiLWfkAdlSuw+kWMoCC2yQF0x0BI0P8k9nWgPmcnj6ksUHgpoEELHeP9I
+         NfiqNGPihQxwaxRpT+x+9BwOxwQuK/FqAosVNDZy3yBmGalfIErcGGB4ERs4JF2DHUYN
+         1p5gl9uhKB3SzDJ4SSKKlalm7c4PEUhqNSGpM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711571264; x=1712176064;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LCVHzKM95nxrye1cfXoHnsCw/TjZEQVmmlga0bm4uZk=;
+        b=jmsoQwgZoUjG5z7gBgnEC3DbLqHZmI+f48J3Ep5IalFmES2PN1jvkAY1lHwRk94wZJ
+         cCoUkeYvu4HlinHaEyKavMPQ1KwNdsyVfNUqZwqccSLKRjiBG5ZmI+6eTRH4azXGWEOl
+         iSPemWz1T5g75I9JV34Qx0ms6KhTYdx1J9BHcjBg5dIx1yLrsuB4sM7fjhEuMZ3SCUAf
+         hOaEkHLJYZy29YO4tqv2L+5IgoA4eAZjrMBp7irVc8lkP/sPXFL6BTjwbPji883XWQ6o
+         OZ7PgJGsU2aTZvaB8wCbypIim1mcVbQ2Fh5TyQp/hzFlNGzORBLeopZobUNKeRVpLRRp
+         w7uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUL4bI8ljiI1wm3cU5YC1+HAEuNkpNaUuYsL6dH0gNf61mD26QghF0I0KoZFNdMLVNndmFyI0P+joHc5Z+4ECItwwa0CnO1/g==
+X-Gm-Message-State: AOJu0Yyt5MrfyTIE291Wfs0GCksTLNVCGiaXLJOp1oQkCYM6tsqPcUny
+	6bB2iLlJuSaPszdlNnPdDaiKaflaUqL6h+uXjoVAmEvGyI8fOVYt7rtqzNdxgA==
+X-Google-Smtp-Source: AGHT+IHA1C7H1G9I13NxUAKmeyvwBUmBLxBfdkaCF4Xl43hsabFFNBcw1oAA9mmdxMEWX6SsZ2Maiw==
+X-Received: by 2002:a05:6a20:7495:b0:1a3:683a:2cbd with SMTP id p21-20020a056a20749500b001a3683a2cbdmr1160699pzd.17.1711571263614;
+        Wed, 27 Mar 2024 13:27:43 -0700 (PDT)
+Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
+        by smtp.gmail.com with UTF8SMTPSA id e3-20020aa78c43000000b006e56bf07483sm8303143pfd.77.2024.03.27.13.27.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Mar 2024 13:27:42 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 10/10] x86/resctrl: Determine Sub-NUMA configuration
-Date: Wed, 27 Mar 2024 13:03:52 -0700
-Message-ID: <20240327200352.236835-11-tony.luck@intel.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240327200352.236835-1-tony.luck@intel.com>
-References: <20240327200352.236835-1-tony.luck@intel.com>
+	linux-arm-msm@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Laura Nao <laura.nao@collabora.com>
+Subject: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
+Date: Wed, 27 Mar 2024 13:27:36 -0700
+Message-ID: <20240327202740.3075378-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.478.gd926399ef9-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,188 +71,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There isn't an explicit enumeration of Sub-NUMA cluster mode. Use
-the ratio of the number of CPUs that share an L3 cache instance with
-CPU 0 against the number of CPUs that share a node with CPU0.
+This patch series fixes a black screen seen at boot on Trogdor devices.
+The details of that problem are in the second patch, but the TL;DR is
+that shared RCGs report the wrong parent to the clk framework and shared
+RCGs never get turned off if they're left force enabled out of boot,
+wedging the display GDSC causing the display bridge to fail to probe
+because it can't turn on DSI.
 
-When Sub-NUMA cluster mode is enabled, adjust the number of RMIDs,
-the sclaing factor, and setup the parent/child pointers in the
-L3 and SUBL3 rdt_resource structures, etc.
+The first patch is basically a hack. It avoids a problem where the mdss
+driver probes, turns on and off the mdp clk, and hangs the rotator clk
+because the rotator clk is using the same parent. We don't care about
+this case on sc7180, so we simply disable the clk at driver probe so it
+can't get stuck on.
 
-As each Sub-NUMA domain is brought online, update the MSR_RMID_SNC_CONFIG
-to remap RMID counters.
+The second patch fixes the shared RCG implementation so that the parent
+is properly reported and so that the force enable bit is cleared. Fixing
+the parent causes the problem that the first patch is avoiding, which is
+why that patch is first. Just applying this second patch will make it so
+that disabling the mdp clk disables the display pll that the rotator clk
+is also using, causing the rotator clk to be stuck on.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/msr-index.h       |  1 +
- arch/x86/kernel/cpu/resctrl/monitor.c  | 68 ++++++++++++++++++++++++--
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 26 ++++++++++
- 3 files changed, 91 insertions(+), 4 deletions(-)
+This problem comes about because of a combination of issues. The clk
+framework doesn't handle the case where two clks share the same parent
+and are enabled at boot. The first clk to enable and disable will turn
+off the parent. The mdss driver doesn't stay out of runtime suspend
+while populating the child devices. In fact, of_platform_populate()
+triggers runtime resume and suspend of the mdss device multiple times
+while devices are being added. These patches side-step the larger issues
+here with the goal of fixing Trogdor in the short-term. Long-term we
+need to fix the clk framework and display driver so that shared parents
+aren't disabled during boot and so that mdss can't runtime suspend until
+the display pipeline/card is fully formed.
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index 05956bd8bacf..b54c26016c93 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -1158,6 +1158,7 @@
- #define MSR_IA32_QM_CTR			0xc8e
- #define MSR_IA32_PQR_ASSOC		0xc8f
- #define MSR_IA32_L3_CBM_BASE		0xc90
-+#define MSR_RMID_SNC_CONFIG		0xca0
- #define MSR_IA32_L2_CBM_BASE		0xd10
- #define MSR_IA32_MBA_THRTL_BASE		0xd50
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 1ba40d5f5d77..757d475158a3 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -17,6 +17,7 @@
- 
- #include <linux/cpu.h>
- #include <linux/module.h>
-+#include <linux/cacheinfo.h>
- #include <linux/sizes.h>
- #include <linux/slab.h>
- 
-@@ -1051,16 +1052,59 @@ static void l3_mon_evt_init(struct rdt_resource *r)
- 		list_add_tail(&mbm_local_event.list, &r->evt_list);
- }
- 
-+/* CPU models that support MSR_RMID_SNC_CONFIG */
-+static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
-+	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(GRANITERAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(ATOM_CRESTMONT_X, 0),
-+	{}
-+};
-+
-+static __init int snc_get_config(void)
-+{
-+	struct cpu_cacheinfo *ci = get_cpu_cacheinfo(0);
-+	cpumask_t *l3_cpumask = NULL;
-+	const cpumask_t	*node0_cpumask;
-+	int i;
-+
-+	if (!x86_match_cpu(snc_cpu_ids))
-+		return 1;
-+
-+	for (i = 0; i < ci->num_leaves; i++) {
-+		if (ci->info_list[i].level == 3) {
-+			if (ci->info_list[i].attributes & CACHE_ID) {
-+				l3_cpumask = &ci->info_list[i].shared_cpu_map;
-+				break;
-+			}
-+		}
-+	}
-+	if (!l3_cpumask) {
-+		pr_info("can't get CPU0 L3 mask\n");
-+		return 1;
-+	}
-+
-+	node0_cpumask = cpumask_of_node(cpu_to_node(0));
-+
-+	return bitmap_weight(cpumask_bits(l3_cpumask), nr_cpu_ids) /
-+	       bitmap_weight(cpumask_bits(node0_cpumask), nr_cpu_ids);
-+}
-+
- int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- {
- 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
- 	unsigned int threshold;
-+	int snc_ways;
- 	int ret;
- 
-+	snc_ways = snc_get_config();
-+	if (snc_ways > 1)
-+		pr_info("Sub-NUMA cluster detected with %d nodes per L3 cache\n", snc_ways);
- 	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
--	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale;
--	r->num_rmid = boot_cpu_data.x86_cache_max_rmid + 1;
-+	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_ways;
-+	r->num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_ways;
- 	hw_res->mbm_width = MBM_CNTR_WIDTH_BASE;
- 
- 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
-@@ -1084,8 +1128,23 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- 	 */
- 	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(threshold);
- 
--	r->num_siblings = 1;
--	rdt_l3_mon_resource = r;
-+	if (snc_ways > 1) {
-+		struct rdt_hw_resource *shw_res;
-+
-+		rdt_l3_mon_resource = &rdt_resources_all[RDT_RESOURCE_SUBL3].r_resctrl;
-+		rdt_l3_mon_resource->num_rmid = r->num_rmid;
-+		rdt_l3_mon_resource->num_siblings = snc_ways;
-+
-+		shw_res = resctrl_to_arch_res(rdt_l3_mon_resource);
-+		shw_res->mon_scale = hw_res->mon_scale;
-+		shw_res->mbm_width = hw_res->mbm_width;
-+
-+		r->child = rdt_l3_mon_resource;
-+		rdt_l3_mon_resource->parent = r;
-+	} else {
-+		r->num_siblings = 1;
-+		rdt_l3_mon_resource = r;
-+	}
- 
- 	ret = dom_data_init(rdt_l3_mon_resource);
- 	if (ret)
-@@ -1110,6 +1169,7 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- 
- 	l3_mon_evt_init(rdt_l3_mon_resource);
- 
-+	r->mon_capable = true;
- 	rdt_l3_mon_resource->mon_capable = true;
- 	rdt_l3_mon_resource->mon_enabled = true;
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 3e7f2e36b71e..b1f79fafa333 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -4067,6 +4067,29 @@ static int domain_setup_mon_state(struct rdt_resource *r, struct rdt_domain *d)
- 	return 0;
- }
- 
-+/*
-+ * The power-on reset value of MSR_RMID_SNC_CONFIG is 0x1
-+ * which indicates that RMIDs are configured in legacy mode.
-+ * This mode is incompatible with Linux resctrl semantics
-+ * as RMIDs are partitioned between SNC nodes, which requires
-+ * a user to know which RMID is allocated to a task.
-+ * Clearing bit 0 reconfigures the RMID counters for use
-+ * in Sub NUMA Cluster mode. This mode is better for Linux.
-+ * The RMID space is divided between all SNC nodes with the
-+ * RMIDs renumbered to start from zero in each node when
-+ * couning operations from tasks. Code to read the counters
-+ * must adjust RMID counter numbers based on SNC node. See
-+ * __rmid_read() for code that does this.
-+ */
-+static void snc_remap_rmids(void)
-+{
-+	u64 val;
-+
-+	rdmsrl(MSR_RMID_SNC_CONFIG, val);
-+	val &= ~BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, val);
-+}
-+
- int resctrl_online_domain(struct rdt_resource *r, struct rdt_domain *d)
- {
- 	int err = 0;
-@@ -4082,6 +4105,9 @@ int resctrl_online_domain(struct rdt_resource *r, struct rdt_domain *d)
- 	if (!r->mon_enabled)
- 		goto out_unlock;
- 
-+	if (r->num_siblings > 1)
-+		snc_remap_rmids();
-+
- 	err = domain_setup_mon_state(r, d);
- 	if (err)
- 		goto out_unlock;
+Stephen Boyd (2):
+  clk: qcom: dispcc-sc7180: Force off rotator clk at probe
+  clk: qcom: Properly initialize shared RCGs upon registration
+
+ drivers/clk/qcom/clk-rcg2.c      | 19 +++++++++++++++++++
+ drivers/clk/qcom/dispcc-sc7180.c | 14 ++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Laura Nao <laura.nao@collabora.com>
+
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
 -- 
-2.44.0
+https://chromeos.dev
 
