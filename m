@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AA1152DEE
-	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7B81534E3
+	for <patches@lists.linux.dev>; Wed, 27 Mar 2024 20:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711569845; cv=none; b=WryWDLvtnzaV3ZhDD/V4odrypZZyivnWvb62ytEcNqJjm2bMmU5i41zVbTy2OkynwayUzBh/J8o1D4ZsE3uzWi9EGLLrnsb3RbTIaOA8oYeyLPG1XtiOFoSe2GPHdKf5CvpolUXC5Otf5xdFjV9jTBbm2gtzben9OthcvEonaHY=
+	t=1711569846; cv=none; b=LKGYLVD99KmzCplAi87k4CBQj92OZ2a6no+I2JDjmMTWJPAK0XYRMMmY2N6Sv8kZDXxJX6uy4TlaF3nXOq93oQqWlXy1nGrAwcO7bEeRALqhGvOWC0573wTwxRy+KADLs4mpC+2aDBUuOgHc48FyqgHyTkxA2GYorWSJ9HB267A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711569845; c=relaxed/simple;
-	bh=pBizMv20GnHsHVh+QUTcQ98Oq3o4gF4fbolEI/aBnQI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=b1otUuacvWgsYMKTpauoVC7cuC7Sql/Dtuq+T9kLDDgyuQ+8L78Sk0lwQYhjkfoCriFJgS9JWV3VYX6NYj9mvkbsgThZjK/2I3fPSng++SdIIfaEIPqk4vDUuOYV/18kPhqj+YepjWwtDzoUPZJgTPQlVOL8A/x/UVKNcTOWCBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K9FJARrm; arc=none smtp.client-ip=198.175.65.12
+	s=arc-20240116; t=1711569846; c=relaxed/simple;
+	bh=p9PxKFKNPcVQ3UIxnb1saO+ycTTfGlj0Z2RcgpesIvA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=k+6OBWzy3sln7tDUxPjDR1eMBn8V4Gf4MQYEnIN95+PR2ntnIiIAiwvDdEgJEyfuWi8ICwbK68NLrQX+g+LLGI/iNEEaOciwBdhL3yo/oWCRul9Y0hITPzIT9MpS3KIycDhFLNem8gIf0yIJd0VomVRJB1z5N+Yr9h/12ZAoR2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Pl4oGSM4; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K9FJARrm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Pl4oGSM4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1711569842; x=1743105842;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=pBizMv20GnHsHVh+QUTcQ98Oq3o4gF4fbolEI/aBnQI=;
-  b=K9FJARrmrY7V1/UUpgL5sorLgY5MR3jNuo9588AVWJJt9Ihav3SKml6e
-   VbYhD/DAvcuR1nuIYpUCP5eJL5o/Q9QmBt+C8MS6OZFO+bvM5IWRVp9ez
-   LfPVt5526RcxKGmXXJihgeasZagG7vIfsS86PXC5478IKX0A9kMxwUwm9
-   4p0ErKVJc9aUOxT9uw2WCN/1zHuHlL2qtqBdDu99Qi2hy+4JrtRSptZ7v
-   pEiJaG9srZ6quznywjwKD+49LfiDlXbtuoWbM6QfNYwfsaCkoFSJQFfrE
-   912DpdZ4JtSSLyYeHPLGOzr8yqU0xyIwbC8mLoFUYnnrIA07u4L4D5vWq
-   A==;
-X-CSE-ConnectionGUID: MiWlY8RETRGJ0G2USrBBDg==
-X-CSE-MsgGUID: 4E21jSFpRI+hP/411sz/8w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="18132955"
+  t=1711569844; x=1743105844;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=p9PxKFKNPcVQ3UIxnb1saO+ycTTfGlj0Z2RcgpesIvA=;
+  b=Pl4oGSM43duxjbwX16c+/sV0jt09CpNPuNT0nRJFt5ukZgS+MPaH9lk8
+   tAMTEhEO2DLHHFrmrk9Ha90viuFnRNFwGepVh0gB0ufzCvT4MTNlLAiy4
+   3+HLtWQb9L6wxbOMAiXGuOQHfXF79CQuY8N9XadN+O1CC870Gs6khjBxi
+   psVpY9PRIqqCoeIZkcEIu6j86pZKTz+6bd4GsHVxTnhOZHTvObo5XWXmD
+   1+Baar5XpHbBHS4Gr23xwtnDOojhw/feiiIkUNN7KoyXXd38+DzQTXSsW
+   mHliXuNIh4CSU/QqChF2WbuyQlM8M4+T0jHuByGQVYEMfor8iRVVrMpcp
+   Q==;
+X-CSE-ConnectionGUID: EHLw85AKRqGKCgUG5aViDA==
+X-CSE-MsgGUID: 7TshT7e/QfeSJm4wCckWpw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="18132970"
 X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="18132955"
+   d="scan'208";a="18132970"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:01 -0700
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:02 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.07,159,1708416000"; 
-   d="scan'208";a="16246094"
+   d="scan'208";a="16246107"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:01 -0700
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2024 13:04:02 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -52,10 +53,12 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 00/10] Add support for Sub-NUMA cluster (SNC) systems
-Date: Wed, 27 Mar 2024 13:03:42 -0700
-Message-ID: <20240327200352.236835-1-tony.luck@intel.com>
+Subject: [PATCH 02/10] x86/resctrl: Add new rdt_resource for sub-node monitoring
+Date: Wed, 27 Mar 2024 13:03:44 -0700
+Message-ID: <20240327200352.236835-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240327200352.236835-1-tony.luck@intel.com>
+References: <20240327200352.236835-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,84 +67,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series on top of v6.9-rc1 plus these two patches:
+When a system enables Sub-NUMA Cluster (SNC) mode each CPU socket is
+divided into 2 or more NUMA nodes. CPU cores and memory are divided
+between these nodes. L3 cache monitoring functions are independently
+implemented on each SNC node.
 
-Link: https://lore.kernel.org/all/20240308213846.77075-1-tony.luck@intel.com/
+Add a new rdt_resource as a foundation for the structures to track
+monitor resources in each of the L3 sub-nodes.
 
-The Sub-NUMA cluster feature on some Intel processors partitions the CPUs
-that share an L3 cache into two or more sets. This plays havoc with the
-Resource Director Technology (RDT) monitoring features.  Prior to this
-patch Intel has advised that SNC and RDT are incompatible.
-
-Some of these CPU support an MSR that can partition the RMID counters in
-the same way. This allows monitoring features to be used. With the caveat
-that users must be aware that Linux may migrate tasks more frequently
-between SNC nodes than between "regular" NUMA nodes, so reading counters
-from all SNC nodes may be needed to get a complete picture of activity
-for tasks.
-
-Cache and memory bandwidth allocation features continue to operate at
-the scope of the L3 cache.
-
-This is a new approach triggered by the discussions that started with
-"How can users tell that SNC is enabled?" but then drifted into
-whether users of the legacy interface would really get what they
-expected when reading from monitor files in the mon_L3_* directories.
-
-During that discussion I'd mentioned providing monitor values for both
-the L3 level, and also for each SNC node. That would provide full ABI
-compatibility while also giving the finer grained reporting from each
-SNC node.
-
-Implementation sets up a new rdt_resource to track monitor resources
-with domains for each SNC node. This resource is only used when SNC
-mode is detected.
-
-On SNC systems there is a parent-child relationship between the
-old L3 resource and the new SUBL3 resource. Reading from legacy
-files like mon_data/mon_L3_00/llc_occupancy reads and sums the RMID
-counters from all "child" domains in the SUBL3 resource. E.g. on
-an SNC3 system:
-
-$ grep . mon_L3_01/llc_occupancy mon_L3_01/*/llc_occupancy
-mon_L3_01/llc_occupancy:413097984
-mon_L3_01/mon_SUBL3_03/llc_occupancy:141484032
-mon_L3_01/mon_SUBL3_04/llc_occupancy:135659520
-mon_L3_01/mon_SUBL3_05/llc_occupancy:135954432
-
-So the L3 occupancy shows the total L3 occupancy which is
-the sum of the cache occupancy on each of the SNC nodes
-that share that L3 cache instance.
-
-Patch 0001 has been salvaged from the previous postings.
-All the rest are new.
+Add new scope option RESCTRL_NODE to build domains scoped at the
+NUMA node level.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/resctrl.h                |  1 +
+ arch/x86/kernel/cpu/resctrl/internal.h |  1 +
+ arch/x86/kernel/cpu/resctrl/core.c     | 12 ++++++++++++
+ 3 files changed, 14 insertions(+)
 
-Tony Luck (10):
-  x86/resctrl: Prepare for new domain scope
-  x86/resctrl: Add new rdt_resource for sub-node monitoring
-  x86/resctrl: Add new "enabled" state for monitor resources
-  x86/resctrl: Add pointer to enabled monitor resource
-  x86/resctrl: Add parent/child information to rdt_resource and
-    rdt_domain
-  x86/resctrl: Update mkdir_mondata_subdir() for Sub-NUMA domains
-  x86/resctrl: Update rmdir_mondata_subdir_allrdtgrp() for Sub-NUMA
-    domains
-  x86/resctrl: Mark L3 monitor files with summation flag.
-  x86/resctrl: Update __mon_event_count() for Sub-NUMA domains
-  x86/resctrl: Determine Sub-NUMA configuration
-
- include/linux/resctrl.h                   |  20 ++-
- arch/x86/include/asm/msr-index.h          |   1 +
- arch/x86/kernel/cpu/resctrl/internal.h    |  23 ++-
- arch/x86/kernel/cpu/resctrl/core.c        |  76 +++++++---
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   3 +-
- arch/x86/kernel/cpu/resctrl/monitor.c     | 136 +++++++++++++++--
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c |   6 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 170 +++++++++++++++++-----
- 8 files changed, 364 insertions(+), 71 deletions(-)
-
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index ed693bfe474d..f39a07b27a98 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -153,6 +153,7 @@ struct resctrl_schema;
+ enum resctrl_scope {
+ 	RESCTRL_L2_CACHE = 2,
+ 	RESCTRL_L3_CACHE = 3,
++	RESCTRL_NODE,
+ };
+ 
+ /**
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 8f40fb35db78..24fad5ecc158 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -472,6 +472,7 @@ enum resctrl_res_level {
+ 	RDT_RESOURCE_L2,
+ 	RDT_RESOURCE_MBA,
+ 	RDT_RESOURCE_SMBA,
++	RDT_RESOURCE_SUBL3,
+ 
+ 	/* Must be the last */
+ 	RDT_NUM_RESOURCES,
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 4c5e985e1388..395bcb3199f8 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -115,6 +115,16 @@ struct rdt_hw_resource rdt_resources_all[] = {
+ 			.fflags			= RFTYPE_RES_MB,
+ 		},
+ 	},
++	[RDT_RESOURCE_SUBL3] =
++	{
++		.r_resctrl = {
++			.rid			= RDT_RESOURCE_SUBL3,
++			.name			= "SUBL3",
++			.scope			= RESCTRL_NODE,
++			.domains		= domain_init(RDT_RESOURCE_SUBL3),
++			.fflags			= RFTYPE_RES_CACHE,
++		},
++	},
+ };
+ 
+ /*
+@@ -487,6 +497,8 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+ 	case RESCTRL_L2_CACHE:
+ 	case RESCTRL_L3_CACHE:
+ 		return get_cpu_cacheinfo_id(cpu, scope);
++	case RESCTRL_NODE:
++		return cpu_to_node(cpu);
+ 	default:
+ 		break;
+ 	}
 -- 
 2.44.0
 
