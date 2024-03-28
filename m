@@ -1,216 +1,199 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29213776C
-	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 16:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711644019; cv=none; b=bmpRvubosEH4Kv8xSLRU1KsK/QvDaxG6Pv0kSmqPlMpaoRKqwLHEPN5RMKgtop/4mO/RxyD1mMuhyOjPwJ8BvfNVmtSaii7ve4wB7S0zZ+MDpgejurL1b0VRtmv09Vgmt2EcyP63RNP9XBURIQUtLHOoFxNInuZiv+P4PEKJQLE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711644019; c=relaxed/simple;
-	bh=JukYux1lE2QutH9NWRSXKyGW55kBvsXf0kklaYf/Sz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WQNxKI7UCg1NwU9NqUMn8dX2UjD8kv7MZlQPqSQdw45rDAHJxZoUfXtCU3e6bXSq3ZFhQd+vvXH4+blqDvMYMCp56xN8GDCpsCRa+0AjjMje3CdZVaok+2ND21Dy+K8Kr9FGlEQFazB/FIa9kUcp7QyTiaYypnxvisGG7bU0w50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Juk6s1QA; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1FC1384A3
+	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 21:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711660297; cv=fail; b=jo474EuHYOHZSYZr3x0kmE1q1QgbtRmjIP9a73sBO0RlbGtYodfE6DAGgpJLk6NtlnfPKYviEep+ZVoWamb9u/lmRi0uxj0h/Q/x8kbXsdTO/yN0m2nrIaoxvE7z3E84/QncLhm3xQKuLM+ff+2FuWseDiGSk9FZK5+7bPPWkNw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711660297; c=relaxed/simple;
+	bh=KFakO6yERXUHcbJwDgf5Zq/MMLID6nUE4y/vxCMpSYM=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=QnQXcDPwlMc0h3UWGZoz1OY16PNSoWOf2i3Hb5I2P4Fn0QT3o0PeC+XaNt7+6bf1VpFWdFpkay4C1AfDjWeaa4YNSj7piVvej3qTxvDAJOE4/Gdm30EraVX/7dszL0lkehm87DAB4tpiEo2mjno61r6CNlGVHKR44ddvdPPZQR4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WJf4speq; arc=fail smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Juk6s1QA"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-690cf6ecd3cso5806436d6.2
-        for <patches@lists.linux.dev>; Thu, 28 Mar 2024 09:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1711644012; x=1712248812; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JPv1IlNNd25MIWO2snW+UJ+Z3ASjHN9LM0c86t+nKQY=;
-        b=Juk6s1QAyaNdKMnmLfz1VD3NQfj+yVm0wNgud+1MzCFv6CFdmv4Bw+h3o046HHwB8j
-         SRiEJwAXuxx36dF7xXqZdticNljcCkUas6gttECQtd1sXZKdbN7CQZYi8n8LPaaBe4+v
-         aOZ0+9SL9vI2rn+wStjK44P0BOI9qBL3KrQBc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711644012; x=1712248812;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JPv1IlNNd25MIWO2snW+UJ+Z3ASjHN9LM0c86t+nKQY=;
-        b=MYoEA8p2R9zCqvz1hghC/d9AWbMvU4sDqDLW6Sdm2JO50u29B8MEw1hrzHKMwaYh0X
-         /gnntmvA42w2O5ZE9DTTxOHZk+UvlowduYiLTKBYCBShak+SSGDL5zLrSUtdEbVfLwh7
-         lrMlfg7Wslzm24/RkX0yLQ0ZJbyaWpoohw4dELlv/pPaYn4PhA3FTCO24Tbq2eAnuvkx
-         0zbpshfMdtxKNIaz4NtdxahnPPiP+9WggLFqACF6FOxkxOt45IxoLvt1KP1xP6Z5jPLs
-         CHceZ6UYZ5FeIsJO4c2zaMTyT0wMOzMTDyvUL+lIAwf9OTklDpbPOJaT89Az2r5xab/p
-         TGfg==
-X-Forwarded-Encrypted: i=1; AJvYcCWwyBPxQOO/1rY1u1cvAbN/dxKhuh097AyUcngKF89MXpkD6jPDJg+iLj+5wOYxjtNIwP0kepwu+9PblV+jhrzy0ee664ijDA==
-X-Gm-Message-State: AOJu0Yzu/Ed7mSMOji40lrHKxx0QBJsVqUPaZxtv0+XjOZF8OAtFF1yf
-	HqknlNcUguO9CymLH/qN4IrCK2mKyqXJSTxkJTSKuD7cXrLYHg/Py1hJYSXmSjxOjcYx2vP25bM
-	=
-X-Google-Smtp-Source: AGHT+IESHrujJwD2QyqX98+aA2EToUDJSHb6ZG2f8zQsVU3/hN7Eo3SuK7BjFn/E0q/pfVt0bSNxjA==
-X-Received: by 2002:ad4:42c9:0:b0:690:c79a:2d35 with SMTP id f9-20020ad442c9000000b00690c79a2d35mr3081404qvr.9.1711644012034;
-        Thu, 28 Mar 2024 09:40:12 -0700 (PDT)
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com. [209.85.160.177])
-        by smtp.gmail.com with ESMTPSA id gv15-20020a056214262f00b00690dd47a41csm781718qvb.86.2024.03.28.09.40.09
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Mar 2024 09:40:11 -0700 (PDT)
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-431347c6c99so5451cf.0
-        for <patches@lists.linux.dev>; Thu, 28 Mar 2024 09:40:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVAfMHcc/jPVCf9R75RnTnqSqB3wd3rniMT6PDTxXzv9yYlQnBJknDeeD1LiBJb3aA991fGbX3xyw2RTNJx1PIOTuozuUJlnQ==
-X-Received: by 2002:a05:622a:410a:b0:431:8151:e7c1 with SMTP id
- cc10-20020a05622a410a00b004318151e7c1mr379066qtb.4.1711644008766; Thu, 28 Mar
- 2024 09:40:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WJf4speq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711660295; x=1743196295;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=KFakO6yERXUHcbJwDgf5Zq/MMLID6nUE4y/vxCMpSYM=;
+  b=WJf4speqJ86iKhXmdH/K2k61bdC1lVZMK5yeiSTWhNyAeesEh2wMRMW0
+   X4MCGdWgQSSrEOP+wVo9y3LBS8g6mVPe8/eWmvm5jclePPQ+Xhlx39voI
+   h7C5i5K0O/3jAWGDMlLmbjRPm6krhDWx0QSEBwm6peFY7hdsIpJ9/eRHT
+   GLlhRKqXrd8oWqh3CWxcXAQhww7xei3Z1PqiOY2VDSMDcSlfok4WWlJRX
+   zkeuiGdMrsV9SNkgYuViQnCL2b6zIWH+LnUhzTVEXZBqjzqHiMlWuSQnw
+   G5/yb6rv0LxAC3ZOM3Jxepd/p/YzmX3XLfeZb6rXBtHqElkr5qP7P1vub
+   A==;
+X-CSE-ConnectionGUID: hcxAUC+MQF6aS44ybmoXcQ==
+X-CSE-MsgGUID: 7HsOq75TQKqZJpC3QFZDyg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="18225023"
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="18225023"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 14:11:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="17411540"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orviesa008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Mar 2024 14:11:14 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 28 Mar 2024 14:11:13 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 28 Mar 2024 14:11:13 -0700
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 28 Mar 2024 14:11:13 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GiM9xL0w9sONHfVacNGu54Rflch0KUSgnE/23HwP9LpRrUzanVyJ9lp2hnbCD1GJHUHBQVh2lT8yGJUP/UQ7RNKFeAWY88+rSTnfzX+WpWJAiMapn1mD5th87U4MpQAb9hXG2xgeriVokbLymH6r4HkpATK/SCy5xeUeeMmodJXQ57Y/E3NEJ78JjZUjPg+6YrdFogLUewK92uyqcFgOuLjRohOXZJoDM9lONwnDSN+GbYFDG4fkrzWc1LI1lgXsR4hfd4bu8IbHWE6yGj3B1eLqczNnOp13r9k50K/BIe9bhJpG9IQwjC//X1S1vgbEbsFYrBYKpfRWUdZZBxOBNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=u95/UODq2mDl+i6dHuixIc07VnWM6bZ3KtTIS5GyZhg=;
+ b=PALEVdErefMDB4Tst93i0KGhAlG9Tvl8njx9hZjLCOBPw//Uh60T5THf0ZPVIpwsASLUcPngvNN6SIkBi8l9uHRHzlA+e88e0jOY/pqxWqwnkjQRlrn0lROJmoagDBzu7Xg65kTmcV8G4nRZwyv64Qih+YYrIN/1P1sbhwi7WpzInEs6A131jx+35e3sgL8p2NAoec5uCUSqLo//OxoVNBbVXyiZHhf+9S/OV5ALdlP8XdEs+5xPD6aaRtRQTenk1N3ibFQ202dIYS5MgKtb8gEka9Jz2ouFPHOMQRPDE2VaIcI8UjioR6rtRtnmHSzO1jsUsLF2fRhx4p/cH4XP8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by SJ2PR11MB7547.namprd11.prod.outlook.com (2603:10b6:a03:4cd::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.31; Thu, 28 Mar
+ 2024 21:11:06 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::d610:9c43:6085:9e68]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::d610:9c43:6085:9e68%7]) with mapi id 15.20.7409.031; Thu, 28 Mar 2024
+ 21:11:06 +0000
+Message-ID: <e1fe68a5-d088-4e4d-bac4-bbb7793dab6d@intel.com>
+Date: Thu, 28 Mar 2024 14:11:01 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] x86/resctrl: Fix mbm_setup_overflow_handler() when last
+ CPU goes offline
+To: "Luck, Tony" <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
+CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "Wieczor-Retman, Maciej"
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+References: <20240327184619.236057-1-tony.luck@intel.com>
+ <c53d6abd-5dbe-4edf-89c0-abbea0df1f1c@intel.com>
+ <SJ1PR11MB6083F3AB8069CCDC7DB5004BFC342@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <SJ1PR11MB6083F3AB8069CCDC7DB5004BFC342@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0074.namprd03.prod.outlook.com
+ (2603:10b6:303:b6::19) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240327202740.3075378-1-swboyd@chromium.org>
-In-Reply-To: <20240327202740.3075378-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 28 Mar 2024 09:39:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-Message-ID: <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Laura Nao <laura.nao@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SJ2PR11MB7547:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +bh0vMAsRNNBWmmFrmu7ABW+yjnH3I1uQO+Jqf4DHhMAd52F5+gKjdtaijt63b+5ggz/L8t5n68GdAy+uuUKQICTsYiaNzwsSW7QUa1aYqev/VMR4qNxZdgH0N6u7vG9svoaT9SwsgRGdLxoHvqHxYeJr59xtgsBldm8dPZJyYYPl33agm2ukl6Vqt4IAv13rqc1uoUv/LjK5Tn6Clhq2wSer+hU4Y8F6NOeMdJF23FMjBb5FTifCnrK5A94hZx76WiXMMjp5ubBo7mJvA7UAQB4LINNRndaDniznDw2+lAp97s/fzITObRq/NPyoBQCSJR97PrmB89iASrUkUqFY8qwQTLJmRElQirVDC5eErsiRkc6HQQi/PPHAAUGwZ5mTrOcQi0aEqZhjbDrYdFyHMjIXmqCfvHZGrR1ksehEKOO+vpESOpk/U9H/M+v9bmFmHIFrplPdO0JsWrBTFgybfv6GtxqI/miDPk4/phHKHetzMZ7Q8exBQv6dDPQDpxVIJ4gJF5juDVqnqQsaMUvH3kDd7CeB6zMxurzNak4kXGUo2vRrxrQcBvYpYZqW7ZmABxS4AnWbYUDPL7WvAWmnF9Vw8m6YeEy7LM64DRvKa/RnFuK4+x2yLL9unYxKobpkboTa8aSVS652533Uno6yaI9ZESC/DFjP1XkoWLLcmo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MjFoc3Q2em9xWEhRV0Rnck1HcTJyS1BuMUFpQmxGVkVxMllwaVhJYWlqdloy?=
+ =?utf-8?B?c3JEZVRyUVpHL3o5RGNRcllqYWQ1Ti9HdnduUlNjMXF1dEkyRFFmWktEbXd5?=
+ =?utf-8?B?R1hRRkViQkRXNlBQQ3RNL1pYSHphMUVQV3BTMHVxTU9qdmw1R3p2QkhxU0Q1?=
+ =?utf-8?B?VFF1eVhxMWV5WWNqYmhOdU51Njd1cGJmbWZPb21oTnF0QVc1SzE1Nzc4VGli?=
+ =?utf-8?B?WWorKzlsWUY4cHhSS1FoczZJMHYwRklMbnhKbkswN2pCaHBYTjNJZnNad2xi?=
+ =?utf-8?B?WmFXK2Z0ZElsdWQrMHJDemFLZUdJMWdGeXpxemRiV2QyRHlvaGxoTWZENGVx?=
+ =?utf-8?B?cFdDemtoU1JtRis0WFkyYVIrdDdQY1pFQU9kazA1b0Z0dllvdThrVTgxK0N4?=
+ =?utf-8?B?enI2SjR3WExBNXJGTnlGbHJNLzNUZlVLaHpNK0lFRzA4aHBJNDFFejR2WTdE?=
+ =?utf-8?B?MkdLK2g4N0ZmRXo3Y2YvaHBXMUJhQnorZDFtOGpjUW5TZ1RpQXM3TmhpM3FM?=
+ =?utf-8?B?THM0YTZqdEgwdzc0OEw3R2dpaWRrcHcyVGg2UGp5OHU2cm41b0ZnZEFNQ1dM?=
+ =?utf-8?B?RjZUUitqKytGZlF2Nk5PZnZoU3VWNGtmeVBIZ1BvYXlINGc1TVlFMklPdGgz?=
+ =?utf-8?B?eWd2bmV5ZnYrZGloeWdmTFhIVGIxZG45Q0U0a1BLVVpFN3o0ZXFpWmZrNjlJ?=
+ =?utf-8?B?Z2JZck0wT2VObzJ0QllORXpDTkJBSmJ3YjFicGlCdHRheTVXUG1wZXJRZSs4?=
+ =?utf-8?B?MGtYckQwRkUrdDJvb3ZpTXBVT0xHN1NTSlhpNjFPUFdrVzZuMFpHM1g4dUJ4?=
+ =?utf-8?B?Rnh1RUIzWm9lSUlHMllPOVBTdk5VWkJkS3puQUZ3Y3FibUtvdXloTTFSR243?=
+ =?utf-8?B?WmpGbG9BZG9lVkNWbHRKNGN4YXJ5Z0k1YlBkcU5MckNOM1ZrNG1BVDkxcVF0?=
+ =?utf-8?B?QW1KZXRzZ0N4YlhaVzVyMEdFZFZEem93Q0hzM3NsVUdkVGFmOWRLV1htdXVo?=
+ =?utf-8?B?OTBQRkdjM2dHaEpyQUhPS0diV1ViYS9tMUY1Y0EyZzBLdW1ySTJkV2VrZEs4?=
+ =?utf-8?B?Qkp6TlVjakRFNHowckYyL2EzMklUK243bCsvNllBaGJTMmtjRXdhTDZOUEhM?=
+ =?utf-8?B?cVNKK1BmYkl3eE1iV1F1WE9rdTZGMURQUWJrU1lINFdWakM0MG43OU1rR2Y0?=
+ =?utf-8?B?VEEzZFE3R3orYS9yVVc2dHhhRmMxZEp5UnpOYzAzUUREVWxxMG5HZTZUZURl?=
+ =?utf-8?B?Snpla1QzVnVkWi9RQmcxMXErdlN2ME9OSzcyeUhDSEh6QVhHTDVXQUp0Q1ZE?=
+ =?utf-8?B?RW96OXE3Y1VpSldZSXJOVXlsUzZYbjFzdFkwR3FmRjY3dlJxOUQ3YlBhWWJo?=
+ =?utf-8?B?THJVeFNoT2NJK01ZMC9VaG9aajBYNzgzOUFLL2FNTGZjNWpkMytQZFFUVTBO?=
+ =?utf-8?B?QXRYV3hVdlYxRmVwT1NGbDYrY2RFVkcwenBvNnNMUlh2Q3RsN1oweGRYL1pU?=
+ =?utf-8?B?RjJlUGZjQzc0TzVocFFDQ2FxWEN1dis1YnFwR3NEbU5uWThBaHdWTTVPcmRh?=
+ =?utf-8?B?Ump6TmZ4UENLYjZOZXNQcm1kT1NvMnZzMWY5NHRROW96TWhhcHhLR2ppN3R3?=
+ =?utf-8?B?YnJwTGVrOXJPZzZwZGlycFhEL1JJMWdQb1hWK3Q1eGdjeG85NkIzYmxpaC9n?=
+ =?utf-8?B?Zld0bGlCTzFwZmh6RFBZckw4ZEc1ejJrQWFHSFhDY1plamlOK0hYdWYrSkdh?=
+ =?utf-8?B?NlE1M01YUWtLVlNSbGJ6Y1hUenNQVFRSdWh1UVhHUkNOVEZjMWNvcVV1QXJV?=
+ =?utf-8?B?SmM1S2h3aTBGc25JbUhWMHJDcXpJYnl2REJ4UDdOMUZ6UkJZNXhkSmxVeWRM?=
+ =?utf-8?B?cnJ3dCt0eXQ5eCtuK09TTjNlMkJFYW9IUUFLZjVPNHZQNkY0cnI1WTl4ci94?=
+ =?utf-8?B?aVMrTTNNbXRvb1U5SHJyNWxlcVpqMU9aRUU3T2taV0R5SklwQWhzK1dIKzIz?=
+ =?utf-8?B?aVBQUGhjSTI1c1JyRml4RFQ5MDlzbUF4ck43SkpyWDBUZGU3WmRrMHNBbUpn?=
+ =?utf-8?B?NEo3MDZFYWpNV2lWcVJkaFZKajhUVVF0c3d0TmZ4d25FZlRrdGd1NFpHREI2?=
+ =?utf-8?B?WUZUdHJjTEhlRUhKYmo3SldGbU1oeXN1RmV4dEtYOXpxRUozcjJEZjBaZUU0?=
+ =?utf-8?B?YUE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0ace8876-834c-43bf-5974-08dc4f6b9542
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2024 21:11:06.5572
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RiqhX3copYN4N6GMC+m0DdUWOGs4zWfhFYXxCdJ2yZcjUFkJ2ucKFoEjuO2IdmZrlO90MyUhC0SA6bun5Vp6fWGMS9k9J5pY7Kp4IaM0Yuk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7547
+X-OriginatorOrg: intel.com
 
-Hi,
+Hi Tony,
 
-On Wed, Mar 27, 2024 at 1:27=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> =
-wrote:
->
-> This patch series fixes a black screen seen at boot on Trogdor devices.
-> The details of that problem are in the second patch, but the TL;DR is
-> that shared RCGs report the wrong parent to the clk framework and shared
-> RCGs never get turned off if they're left force enabled out of boot,
-> wedging the display GDSC causing the display bridge to fail to probe
-> because it can't turn on DSI.
->
-> The first patch is basically a hack. It avoids a problem where the mdss
-> driver probes, turns on and off the mdp clk, and hangs the rotator clk
-> because the rotator clk is using the same parent. We don't care about
-> this case on sc7180, so we simply disable the clk at driver probe so it
-> can't get stuck on.
->
-> The second patch fixes the shared RCG implementation so that the parent
-> is properly reported and so that the force enable bit is cleared. Fixing
-> the parent causes the problem that the first patch is avoiding, which is
-> why that patch is first. Just applying this second patch will make it so
-> that disabling the mdp clk disables the display pll that the rotator clk
-> is also using, causing the rotator clk to be stuck on.
->
-> This problem comes about because of a combination of issues. The clk
-> framework doesn't handle the case where two clks share the same parent
-> and are enabled at boot. The first clk to enable and disable will turn
-> off the parent. The mdss driver doesn't stay out of runtime suspend
-> while populating the child devices. In fact, of_platform_populate()
-> triggers runtime resume and suspend of the mdss device multiple times
-> while devices are being added. These patches side-step the larger issues
-> here with the goal of fixing Trogdor in the short-term. Long-term we
-> need to fix the clk framework and display driver so that shared parents
-> aren't disabled during boot and so that mdss can't runtime suspend until
-> the display pipeline/card is fully formed.
->
-> Stephen Boyd (2):
->   clk: qcom: dispcc-sc7180: Force off rotator clk at probe
->   clk: qcom: Properly initialize shared RCGs upon registration
->
->  drivers/clk/qcom/clk-rcg2.c      | 19 +++++++++++++++++++
->  drivers/clk/qcom/dispcc-sc7180.c | 14 ++++++++++++++
->  2 files changed, 33 insertions(+)
+On 3/27/2024 4:01 PM, Luck, Tony wrote:
+>> There seems to be two issues here (although I am not familiar with these flows). First,
+>> it seems that tick_nohz_full_mask is not actually allocated unless the user boots
+>> with a "nohz_full=". This means that any attempt to access bits within tick_nohz_full_mask
+>> will cause this OOPS. If that is allocated then the second issue seems that the  
+>> buried __ffs() call requires that it not be called with 0 and this checking is not done.
+>>
+>> To me it seems most appropriate to fix this at the central place to ensure all scenarios
+>> are handled instead of scattering checks.
+> 
+> Good analysis.
+> 
+>> To that end, what do you think of something like below? It uses tick_nohz_full_enabled() check
+>> to ensure that tick_nohz_full_mask is actually allocated while the other changes aim to
+>> avoid __ffs() on 0.
 
-I spent a bunch of time discussing this offline with Stephen and I'll
-try to summarize. Hopefully this isn't too much nonsense...
+I studied the flows some more and I no longer believe that there is a risk of __ffs() being
+called on 0. Looking at the flows starting with cpumask_nth_andnot() the value provided to
+__ffs() is ensured to be non-zero via either an explicit check or hweight_long().
 
-1. We'll likely land the patches downstream in ChromeOS for now while
-we're figuring things out since we're seeing actual breakages. Whether
-to land upstream is a question. The first patch is a bit of a hack but
-unlikely to cause any real problems. The second patch seems correct
-but it also feels like it's going to cause stuck clocks for a pile of
-other SoCs because we're not adding hacks similar to the sc7180 hack
-for all the other SoCs. I guess we could hope we get lucky or play
-whack-a-mole? ...or we try to find a more generic solution... Dunno
-what others think.
+To confirm this I tested a CONFIG_NO_HZ_FULL kernel by booting with "nohz_full=" set to the
+highest numbered CPU in the domain. When all the CPUs are offlined the behavior for the
+"second to last" and "last" CPU are most interesting and worked as expected when using 
+cpumask_nth_andnot(). 
 
-2. One thing we talked about would be adding something like
-`CLK_OPS_PARENT_ENABLE_FOR_DISABLE` for all the RCGs. That should get
-rid of the actual error we're seeing. Essentially what we're seeing
-today is:
+> 
+> Looks good.
+> 
+> Tested-by: Tony Luck <tony.luck@intel.com>
+> Reviewed-by: Tont Luck <tony.luck@intel.com>
 
-* RCG1 is parented on a PLL
-* RCG2 is parented on the same PLL
-* RCG1, RCG2, and the PLL are left enabled by the BIOS
+Considering the motivation above I will submit a change that only adds the 
+tick_nohz_full_enabled() check. Since it is such a big change from the snippet you reviewed
+and tested here I dropped your tags from it and hope you can reconsider the fix after considering
+the information above.
 
-When we enable/disable RCG1 then the PLL turns off (since we propagate
-our disable to our parent and nothing else is keeping the PLL on). At
-this time RCG2 is implicitly off (it's not producing a clock) since
-its parent (the PLL) is off. ...but the hardware "force enable" bit
-for RCG2 is still set to on and the kernel still thinks the child of
-this clock is on.
-
-If, after this, we "disabled" a branch clock child of RCG2 (because
-it's unused and we get to the part of the kernel that disables unused
-clocks) then we were getting the error since you can't change the
-hardware "enable" bit for a branch clock if its parent is not
-clocking.
-
-...so `CLK_OPS_PARENT_ENABLE_FOR_DISABLE` would fix this specific case
-because we'd turn the PLL on for the duration of the "disable" call.
-
-...but there is still the concern here that there will be a period of
-time that the RCG2 child is "stuck" even if we're not paying attention
-to it. This would be the period of time between when we turned the PLL
-off and we got around to disabling the RCG2 child because it was
-unused. Stephen thought that perhaps something else in hardware
-(perhaps a GDSC) might notice that the RCG2 child's hardware "enable"
-bit was set and would assume that it was clocking. Then that other bit
-of hardware would be unhappy because no clock came out. This concern
-made us think that perhaps `CLK_OPS_PARENT_ENABLE_FOR_DISABLE` isn't
-the right way to go.
-
-3. Another idea was essentially to implement the long talked about
-idea of "handoff". Essentially check the state of the clocks at boot
-and if they're enabled then propagate the enable to our parents.
-
-If we implement this then it would solve the problem because RCG1 and
-RCG2 would add an implicit request for the PLL to be on. If we
-enable/disable RCG1 at boot then the PLL will still stay on because
-there's a request from RCG2. If/when we disable children of RCG2 then
-the PLL will lose its request but that's fine. In no cases will we
-have a hardware "enable" bit set without the parent.
-
-This seems solid and probably the right solution.
-
-
-Stephen was a bit concerned, though, because you don't know when all
-your children have been registered. If a child shows up after "disable
-unused" runs then you can get back into the situation again. That
-probably isn't concern for the immediate problem at hand because all
-the clocks involved show up in early boot, but it means that the
-problem is half solved and that's not super satisfying.
-
-To solve this, we need to overall solve the "disable_unused" problem
-to be at the right time, after everything has had a chance to probe.
-To me this feels a bit like the "sync state" problem with all the
-baggage involved there. Specifically (like sync state) I think it
-would have to be heavily based on analysis of the device tree and
-links and that has the standard problem where you never enter sync
-state when DT has a node "enabled" but you didn't happen to enable the
-relevant driver in your kernel config. ...though I guess we've "sorta"
-solved that with the timeout. NOTE: if I understand correctly this
-would only be possible if drivers are using "struct clk_parent_data"
-and not if they're just using global names to match clocks.
-
-I'll also note that in general I believe Stephen isn't a fan of
-"disable_unused", but (my opinion) is that it's important to have
-something in the kernel that disables unused clocks when everything is
-done loading. Without this we add a lot of complexity to the firmware
-to turn off all the clocks that the SoC might have had on by default
-and that's non-ideal.
-
--Doug
+Reinette
