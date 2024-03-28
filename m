@@ -1,107 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D675137C4A;
-	Thu, 28 Mar 2024 16:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6194A1272AC
+	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 16:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711642933; cv=none; b=NtUBgAY+BmHsAF2fpIxoLh3PI8pX3NdeuyWEYEhqr4EJtIhA3DakVfvYjLzb1VyisxXeZMtsuLHyCapKhvkeH7SskmoxOXWu7Ent9yp9rC6kwhs3585cEUc32wD+o4nENL1fdy5MRsZqebSBTb+4pFKgBEZC7+ywX+WUzkDpLlM=
+	t=1711643303; cv=none; b=jy+Lufg18mXjaeNpKoAdQgLkG8s5U+pxCQJaLMkCLqOEPzhILDXeM19qL1vUqqVeLp2tpmzSKfMKl1EU4F+5deG1xIl5Y65cEqC8G3QqxRlUu7fyOVTyu5wntF8pVXzenZDT1gnXZC6/A5lwyne1yGiSPxMJuIFH7WQkcABCfVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711642933; c=relaxed/simple;
-	bh=VKD/aahDATM8UOiVLpFFzn2TIW2RyDzP9wAEO+uc3dY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=AZQMGan3HpjT5FQ6/5zVWVuukumoJ/F3dZAT7P8zsfS0BypmFhatEKmQH2XyVtZD4IkfUZVSV7Oi4xTmJcgG2p4ZMZJLv69WDHfzVpX9GA4N3NhBrgI+CY+g5+GIeaRKPgTvZXHko/SKaZRVbOxAsJZvxhXAp4OxPm6QBVQVEMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUKTdK2n; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1711643303; c=relaxed/simple;
+	bh=KWBh8g5qezvg7G7Awmc1JPz7LX3fEPmblNlcvDU1Zbw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Z8dtqZkWWyb53g6XS0+kMJf1rFxFCOBSjHA5NsZgIY4gGyOghjhUd7en3yiPBAILDsyWlWC9YyQ6sef0y7ShwS8J5fYWE5wpVFVN0vyXFbEcu9f1WPPNByhge/Azfy1rEsFRoLKvdxpmfCf0FHosMbqVuoCxwYlPv5zT9yvNU/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NMh6eIKw; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUKTdK2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C57EC433F1;
-	Thu, 28 Mar 2024 16:22:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711642933;
-	bh=VKD/aahDATM8UOiVLpFFzn2TIW2RyDzP9wAEO+uc3dY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=mUKTdK2np0LbDzpyZOqBzFazGM48bmg/ApUTGAnPKgBUjaX3LAOuDbQwAKrPmPKBh
-	 3ldZNqp9y//oNX7iKvPwUAQq4JklJc9MaynKD5/77+ZfbDs3s5cAaaPX6p3LgxSW0+
-	 08Q8v468ESuPW1EvqJoYmNTWO8S5QN+rgubCSYXh595/cL6uDBO59i1z9j/idNurl9
-	 mUEFFMm4LmdYWe9NW8J/7oBIJykO3k1o8tU6+3A00kDYAdHn4kT8CGbnfdKeezQ0kJ
-	 P/aBurYJ7t5dsa32PrtmfJtOpTKYFO2SfInBResqAQw+VDMSo84ZjslOVztfbs9pHD
-	 lZszgtmohzCOw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 28 Mar 2024 09:22:07 -0700
-Subject: [PATCH] drm/panthor: Fix clang -Wunused-but-set-variable in
- tick_ctx_apply()
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NMh6eIKw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711643299; x=1743179299;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KWBh8g5qezvg7G7Awmc1JPz7LX3fEPmblNlcvDU1Zbw=;
+  b=NMh6eIKwpWfK4yW66iofreXlLXbmKfAQTp2YKRDOnDdgK/lCXhbzDPBH
+   rtVajipXVl0ma+IdZjjgaH7YMbPPdYbtU20YBv78AewsVAKNlgD2usmYx
+   x4iqCjoJWBvPdXykYv0tyoTUubqqoc7PKRx6rYYoe/yMyPcGr6Al6Cwes
+   djmmGbUjkT8mf6KeSFyamLC3Nkxd8iG1onk+YXiEuwE+g5zM+7si3tT3R
+   E1FXcJ0DPIxGVNyxim6aAUoWrLQXeTML2i+Q+fMIt2GYHZ/HYcEb/FRBt
+   pVJ+qUZjjdKgb2dHbXUG6z2cGRZZT1vwD1VKDDhPNp38hpH3PGeZLF7xz
+   Q==;
+X-CSE-ConnectionGUID: xiYX1kh6TSqcWIzciwUBiA==
+X-CSE-MsgGUID: aKWwSKM/RdK+jamGePQKVw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="24294716"
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="24294716"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 09:28:19 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="16725945"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 09:28:21 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: patches@lists.linux.dev
+Cc: Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 01/74] x86/cpu/vfm: Add/initialize x86_vfm field to struct cpuinfo_x86
+Date: Thu, 28 Mar 2024 09:26:55 -0700
+Message-ID: <20240328162820.242778-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240328090459.242500-tony.luck@intel.com>
+References: <20240328090459.242500-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240328-panthor-drop-csg_mod_mask-v1-1-5a80be3df581@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAC6ZBWYC/x3MQQqDMBBA0avIrDsQo6jtVYpIYkYdxCTMlFIQ7
- 97g8i3+P0FJmBRe1QlCX1ZOsaB+VDBvLq6EHIrBGtuaxg6YXfxsSTBIyjjrOh0pTIfTHX3rPTV
- 1H7qngdJnoYV/9/s9XtcfbxexM2sAAAA=
-To: boris.brezillon@collabora.com, steven.price@arm.com, 
- liviu.dudau@arm.com
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, 
- tzimmermann@suse.de, ndesaulniers@google.com, morbo@google.com, 
- justinstitt@google.com, heiko@sntech.de, dri-devel@lists.freedesktop.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1866; i=nathan@kernel.org;
- h=from:subject:message-id; bh=VKD/aahDATM8UOiVLpFFzn2TIW2RyDzP9wAEO+uc3dY=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGmsM00CJydrp+fG353ceXzLRF/uuV8fyT5xXvPi97ctV
- zNfbZpp31HKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmEtXF8M/u3G393XOecv5L
- fz7zdMXsxauMir4nLXycweTDzXVCW34/I8OaqNPyx2t8LTYUSFie+/9w5v2ZZqUJVXO2Nnv+PFa
- +6z8zAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-Clang warns (or errors with CONFIG_WERROR):
+Refactor struct cpuinfo_x86 so that the vendor, family, and model
+fields are overlayed in a union with a 32-bit field that combines
+all three (together with a one byte reserved field in the upper
+byte).
 
-  drivers/gpu/drm/panthor/panthor_sched.c:2048:6: error: variable 'csg_mod_mask' set but not used [-Werror,-Wunused-but-set-variable]
-   2048 |         u32 csg_mod_mask = 0, free_csg_slots = 0;
-        |             ^
-  1 error generated.
+This will make it easy, cheap, and reliable to check all three
+values at once.
 
-The variable is an artifact left over from refactoring that occurred
-during the development of the initial series for this driver. Remove it
-to resolve the warning.
-
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/include/asm/processor.h | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 5f7803b6fc48..e5a710f190d2 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -2045,7 +2045,7 @@ tick_ctx_apply(struct panthor_scheduler *sched, struct panthor_sched_tick_ctx *c
- 	struct panthor_device *ptdev = sched->ptdev;
- 	struct panthor_csg_slot *csg_slot;
- 	int prio, new_csg_prio = MAX_CSG_PRIO, i;
--	u32 csg_mod_mask = 0, free_csg_slots = 0;
-+	u32 free_csg_slots = 0;
- 	struct panthor_csg_slots_upd_ctx upd_ctx;
- 	int ret;
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 811548f131f4..87115e5d884f 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -108,9 +108,15 @@ struct cpuinfo_topology {
+ };
  
-@@ -2139,7 +2139,6 @@ tick_ctx_apply(struct panthor_scheduler *sched, struct panthor_sched_tick_ctx *c
- 
- 			csg_iface = panthor_fw_get_csg_iface(ptdev, csg_id);
- 			csg_slot = &sched->csg_slots[csg_id];
--			csg_mod_mask |= BIT(csg_id);
- 			group_bind_locked(group, csg_id);
- 			csg_slot_prog_locked(ptdev, csg_id, new_csg_prio--);
- 			csgs_upd_ctx_queue_reqs(ptdev, &upd_ctx, csg_id,
-
----
-base-commit: d180649238f04183950d9c8a7d8a2c2f1788a89c
-change-id: 20240328-panthor-drop-csg_mod_mask-b4bbe317d690
-
-Best regards,
+ struct cpuinfo_x86 {
+-	__u8			x86;		/* CPU family */
+-	__u8			x86_vendor;	/* CPU vendor */
+-	__u8			x86_model;
++	union {
++		struct {
++			__u8	x86_vendor;	/* CPU vendor */
++			__u8	x86;		/* CPU family */
++			__u8	x86_model;
++			__u8	x86_reserved;
++		};
++		__u32		x86_vfm;	/* combined vendor, family, model */
++	};
+ 	__u8			x86_stepping;
+ #ifdef CONFIG_X86_64
+ 	/* Number of 4K pages in DTLB/ITLB combined(in pages): */
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.44.0
 
