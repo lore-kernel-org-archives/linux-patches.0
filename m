@@ -1,199 +1,135 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1FC1384A3
-	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 21:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711660297; cv=fail; b=jo474EuHYOHZSYZr3x0kmE1q1QgbtRmjIP9a73sBO0RlbGtYodfE6DAGgpJLk6NtlnfPKYviEep+ZVoWamb9u/lmRi0uxj0h/Q/x8kbXsdTO/yN0m2nrIaoxvE7z3E84/QncLhm3xQKuLM+ff+2FuWseDiGSk9FZK5+7bPPWkNw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711660297; c=relaxed/simple;
-	bh=KFakO6yERXUHcbJwDgf5Zq/MMLID6nUE4y/vxCMpSYM=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QnQXcDPwlMc0h3UWGZoz1OY16PNSoWOf2i3Hb5I2P4Fn0QT3o0PeC+XaNt7+6bf1VpFWdFpkay4C1AfDjWeaa4YNSj7piVvej3qTxvDAJOE4/Gdm30EraVX/7dszL0lkehm87DAB4tpiEo2mjno61r6CNlGVHKR44ddvdPPZQR4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WJf4speq; arc=fail smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F4F1E533
+	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 21:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711663170; cv=none; b=RYteyBiJBWnIjbdjodXwZEALHTcLb38Uybsie4J9JZEwF+PEApjqpXKrlizJYLfNrm1RqdJxhhM6Zd4U2Mq1P/lr3XWcFJonHd5KXulp1XBGaryOrEYCXtJoE1bfScAS4H/lMEcNoF45h7tSoiF2+wHTpGNsDVjAq7Y71Yxno+4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711663170; c=relaxed/simple;
+	bh=xmo39MCdNMPQmHxw1MUgA6OOoECS018DvUqLxEsi7YM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ee+KFSD04Asu8Oic76Hs/0Kp3XxfbvnmkMbm2gwBjLNLSc9ANBNb6bpmAOcDFxN48PeKMmrBqNjncpB5eTVnTlYY8JgasO0YSquH/+3CgRFl7Xc8muY0Agzx/Z3RECSHW08hYJLj8iThsPHZmgaaFLBorbANFQtIj9X3KMGBmaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vWDR4AOi; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WJf4speq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1711660295; x=1743196295;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=KFakO6yERXUHcbJwDgf5Zq/MMLID6nUE4y/vxCMpSYM=;
-  b=WJf4speqJ86iKhXmdH/K2k61bdC1lVZMK5yeiSTWhNyAeesEh2wMRMW0
-   X4MCGdWgQSSrEOP+wVo9y3LBS8g6mVPe8/eWmvm5jclePPQ+Xhlx39voI
-   h7C5i5K0O/3jAWGDMlLmbjRPm6krhDWx0QSEBwm6peFY7hdsIpJ9/eRHT
-   GLlhRKqXrd8oWqh3CWxcXAQhww7xei3Z1PqiOY2VDSMDcSlfok4WWlJRX
-   zkeuiGdMrsV9SNkgYuViQnCL2b6zIWH+LnUhzTVEXZBqjzqHiMlWuSQnw
-   G5/yb6rv0LxAC3ZOM3Jxepd/p/YzmX3XLfeZb6rXBtHqElkr5qP7P1vub
-   A==;
-X-CSE-ConnectionGUID: hcxAUC+MQF6aS44ybmoXcQ==
-X-CSE-MsgGUID: 7HsOq75TQKqZJpC3QFZDyg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="18225023"
-X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
-   d="scan'208";a="18225023"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 14:11:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
-   d="scan'208";a="17411540"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orviesa008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Mar 2024 14:11:14 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 28 Mar 2024 14:11:13 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Thu, 28 Mar 2024 14:11:13 -0700
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 28 Mar 2024 14:11:13 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GiM9xL0w9sONHfVacNGu54Rflch0KUSgnE/23HwP9LpRrUzanVyJ9lp2hnbCD1GJHUHBQVh2lT8yGJUP/UQ7RNKFeAWY88+rSTnfzX+WpWJAiMapn1mD5th87U4MpQAb9hXG2xgeriVokbLymH6r4HkpATK/SCy5xeUeeMmodJXQ57Y/E3NEJ78JjZUjPg+6YrdFogLUewK92uyqcFgOuLjRohOXZJoDM9lONwnDSN+GbYFDG4fkrzWc1LI1lgXsR4hfd4bu8IbHWE6yGj3B1eLqczNnOp13r9k50K/BIe9bhJpG9IQwjC//X1S1vgbEbsFYrBYKpfRWUdZZBxOBNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u95/UODq2mDl+i6dHuixIc07VnWM6bZ3KtTIS5GyZhg=;
- b=PALEVdErefMDB4Tst93i0KGhAlG9Tvl8njx9hZjLCOBPw//Uh60T5THf0ZPVIpwsASLUcPngvNN6SIkBi8l9uHRHzlA+e88e0jOY/pqxWqwnkjQRlrn0lROJmoagDBzu7Xg65kTmcV8G4nRZwyv64Qih+YYrIN/1P1sbhwi7WpzInEs6A131jx+35e3sgL8p2NAoec5uCUSqLo//OxoVNBbVXyiZHhf+9S/OV5ALdlP8XdEs+5xPD6aaRtRQTenk1N3ibFQ202dIYS5MgKtb8gEka9Jz2ouFPHOMQRPDE2VaIcI8UjioR6rtRtnmHSzO1jsUsLF2fRhx4p/cH4XP8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SJ2PR11MB7547.namprd11.prod.outlook.com (2603:10b6:a03:4cd::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.31; Thu, 28 Mar
- 2024 21:11:06 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::d610:9c43:6085:9e68]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::d610:9c43:6085:9e68%7]) with mapi id 15.20.7409.031; Thu, 28 Mar 2024
- 21:11:06 +0000
-Message-ID: <e1fe68a5-d088-4e4d-bac4-bbb7793dab6d@intel.com>
-Date: Thu, 28 Mar 2024 14:11:01 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] x86/resctrl: Fix mbm_setup_overflow_handler() when last
- CPU goes offline
-To: "Luck, Tony" <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
-CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "Wieczor-Retman, Maciej"
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20240327184619.236057-1-tony.luck@intel.com>
- <c53d6abd-5dbe-4edf-89c0-abbea0df1f1c@intel.com>
- <SJ1PR11MB6083F3AB8069CCDC7DB5004BFC342@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <SJ1PR11MB6083F3AB8069CCDC7DB5004BFC342@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0074.namprd03.prod.outlook.com
- (2603:10b6:303:b6::19) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vWDR4AOi"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56c08d1e900so1692061a12.3
+        for <patches@lists.linux.dev>; Thu, 28 Mar 2024 14:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1711663167; x=1712267967; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JkrR3TRsPYSXBmltvKoz6z3FLacSM3QfrKhBArRhwdM=;
+        b=vWDR4AOikZrPkEoNr3Dbo7gARKJc4jWB8vP0gjn8rQeq/BafbmYzkyrV3O3zu1x+lp
+         fK+ob+KXv4w5Ys+H4ROBUoFfWDQL2vVUzNmhaF0Sd2rVspgbGB7/xFVEs1j8mON+8+J2
+         GEa/93ycYqMUmCrW9ehN9Zz/ur53xaNGNI6mD1NZfT40Rfkc+tIa4rBg2DTIMXPhFYpe
+         HatRe8zKek37oKgBtbxW97TyatpPX0zO2LZgOz74GgVafv718bQpYYNTP74raigC45nH
+         Rlk6++ot5DJH+9Zgul1FOP+PgLD1zZfu5/9Aj16FM2mcOG33DWYag/zUIpi3h5GZ0yNI
+         OD2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711663167; x=1712267967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JkrR3TRsPYSXBmltvKoz6z3FLacSM3QfrKhBArRhwdM=;
+        b=vgpccGr6jhZJrw/z30sPKKZKSp4VXokM7/HFw+Bf7bjwp+l0ioLPtXKW3TFMIiucuv
+         fhCIXdv2HkB2uafjh342TGT9i4SgoE49Or4E+LYBjd9iXrGMolcPr2bgkNmLJF0PlFyJ
+         YRsNlAzg4VrHD/5SEY8IL3GWD1WxO/fJ+XJ8BUX+hu3rSKAdquHrvOhFQLI4ynD+ZDvB
+         BXGn//iDq3Iisebj5cORshJ/lYpFz1vFmecoYMeNy9z3+JSwPRxao0Q9hJBftALnbIue
+         ZLzSgVsMLxFjzGcqnkLZ51A7H3CGfHs+D3Pub33F2MsYkl6LV3UsCzJ6Id+ttDptzkb4
+         2nbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVsaE+6lpHeT+lVxWHIH0aOwfU2Fu9wBaWDj0MXTvBFdA7rcuYHu9w1fhpuxvcg/NoPxvVNHGBNFmW6EEg/G5tu9CT1Gat7EQ==
+X-Gm-Message-State: AOJu0YydW9yUwho1Nyf2bQqDJORfsX7tcZiQBV+WCVXcXcHPJEAeYEmI
+	NWg0ePYuMEKFvztHnSMWwRkqZlnjVS6gMfuxKPEVJ2yCCtN5hW6zpCETPP/59Si99GdeZ3sluai
+	vC303pYUILLbmVxn6HX7O3glfENTMqfwAJLFC
+X-Google-Smtp-Source: AGHT+IHxVJPGgWlPUtD38LmquZT+Kw2h6yv1jTsdsBsy+O/RrcoVPzZF9uidn02SdlhCE7x48PGrZPsbAniqVO9n/64=
+X-Received: by 2002:a05:6402:3548:b0:56b:c210:870c with SMTP id
+ f8-20020a056402354800b0056bc210870cmr331295edd.15.1711663167480; Thu, 28 Mar
+ 2024 14:59:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SJ2PR11MB7547:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: +bh0vMAsRNNBWmmFrmu7ABW+yjnH3I1uQO+Jqf4DHhMAd52F5+gKjdtaijt63b+5ggz/L8t5n68GdAy+uuUKQICTsYiaNzwsSW7QUa1aYqev/VMR4qNxZdgH0N6u7vG9svoaT9SwsgRGdLxoHvqHxYeJr59xtgsBldm8dPZJyYYPl33agm2ukl6Vqt4IAv13rqc1uoUv/LjK5Tn6Clhq2wSer+hU4Y8F6NOeMdJF23FMjBb5FTifCnrK5A94hZx76WiXMMjp5ubBo7mJvA7UAQB4LINNRndaDniznDw2+lAp97s/fzITObRq/NPyoBQCSJR97PrmB89iASrUkUqFY8qwQTLJmRElQirVDC5eErsiRkc6HQQi/PPHAAUGwZ5mTrOcQi0aEqZhjbDrYdFyHMjIXmqCfvHZGrR1ksehEKOO+vpESOpk/U9H/M+v9bmFmHIFrplPdO0JsWrBTFgybfv6GtxqI/miDPk4/phHKHetzMZ7Q8exBQv6dDPQDpxVIJ4gJF5juDVqnqQsaMUvH3kDd7CeB6zMxurzNak4kXGUo2vRrxrQcBvYpYZqW7ZmABxS4AnWbYUDPL7WvAWmnF9Vw8m6YeEy7LM64DRvKa/RnFuK4+x2yLL9unYxKobpkboTa8aSVS652533Uno6yaI9ZESC/DFjP1XkoWLLcmo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MjFoc3Q2em9xWEhRV0Rnck1HcTJyS1BuMUFpQmxGVkVxMllwaVhJYWlqdloy?=
- =?utf-8?B?c3JEZVRyUVpHL3o5RGNRcllqYWQ1Ti9HdnduUlNjMXF1dEkyRFFmWktEbXd5?=
- =?utf-8?B?R1hRRkViQkRXNlBQQ3RNL1pYSHphMUVQV3BTMHVxTU9qdmw1R3p2QkhxU0Q1?=
- =?utf-8?B?VFF1eVhxMWV5WWNqYmhOdU51Njd1cGJmbWZPb21oTnF0QVc1SzE1Nzc4VGli?=
- =?utf-8?B?WWorKzlsWUY4cHhSS1FoczZJMHYwRklMbnhKbkswN2pCaHBYTjNJZnNad2xi?=
- =?utf-8?B?WmFXK2Z0ZElsdWQrMHJDemFLZUdJMWdGeXpxemRiV2QyRHlvaGxoTWZENGVx?=
- =?utf-8?B?cFdDemtoU1JtRis0WFkyYVIrdDdQY1pFQU9kazA1b0Z0dllvdThrVTgxK0N4?=
- =?utf-8?B?enI2SjR3WExBNXJGTnlGbHJNLzNUZlVLaHpNK0lFRzA4aHBJNDFFejR2WTdE?=
- =?utf-8?B?MkdLK2g4N0ZmRXo3Y2YvaHBXMUJhQnorZDFtOGpjUW5TZ1RpQXM3TmhpM3FM?=
- =?utf-8?B?THM0YTZqdEgwdzc0OEw3R2dpaWRrcHcyVGg2UGp5OHU2cm41b0ZnZEFNQ1dM?=
- =?utf-8?B?RjZUUitqKytGZlF2Nk5PZnZoU3VWNGtmeVBIZ1BvYXlINGc1TVlFMklPdGgz?=
- =?utf-8?B?eWd2bmV5ZnYrZGloeWdmTFhIVGIxZG45Q0U0a1BLVVpFN3o0ZXFpWmZrNjlJ?=
- =?utf-8?B?Z2JZck0wT2VObzJ0QllORXpDTkJBSmJ3YjFicGlCdHRheTVXUG1wZXJRZSs4?=
- =?utf-8?B?MGtYckQwRkUrdDJvb3ZpTXBVT0xHN1NTSlhpNjFPUFdrVzZuMFpHM1g4dUJ4?=
- =?utf-8?B?Rnh1RUIzWm9lSUlHMllPOVBTdk5VWkJkS3puQUZ3Y3FibUtvdXloTTFSR243?=
- =?utf-8?B?WmpGbG9BZG9lVkNWbHRKNGN4YXJ5Z0k1YlBkcU5MckNOM1ZrNG1BVDkxcVF0?=
- =?utf-8?B?QW1KZXRzZ0N4YlhaVzVyMEdFZFZEem93Q0hzM3NsVUdkVGFmOWRLV1htdXVo?=
- =?utf-8?B?OTBQRkdjM2dHaEpyQUhPS0diV1ViYS9tMUY1Y0EyZzBLdW1ySTJkV2VrZEs4?=
- =?utf-8?B?Qkp6TlVjakRFNHowckYyL2EzMklUK243bCsvNllBaGJTMmtjRXdhTDZOUEhM?=
- =?utf-8?B?cVNKK1BmYkl3eE1iV1F1WE9rdTZGMURQUWJrU1lINFdWakM0MG43OU1rR2Y0?=
- =?utf-8?B?VEEzZFE3R3orYS9yVVc2dHhhRmMxZEp5UnpOYzAzUUREVWxxMG5HZTZUZURl?=
- =?utf-8?B?Snpla1QzVnVkWi9RQmcxMXErdlN2ME9OSzcyeUhDSEh6QVhHTDVXQUp0Q1ZE?=
- =?utf-8?B?RW96OXE3Y1VpSldZSXJOVXlsUzZYbjFzdFkwR3FmRjY3dlJxOUQ3YlBhWWJo?=
- =?utf-8?B?THJVeFNoT2NJK01ZMC9VaG9aajBYNzgzOUFLL2FNTGZjNWpkMytQZFFUVTBO?=
- =?utf-8?B?QXRYV3hVdlYxRmVwT1NGbDYrY2RFVkcwenBvNnNMUlh2Q3RsN1oweGRYL1pU?=
- =?utf-8?B?RjJlUGZjQzc0TzVocFFDQ2FxWEN1dis1YnFwR3NEbU5uWThBaHdWTTVPcmRh?=
- =?utf-8?B?Ump6TmZ4UENLYjZOZXNQcm1kT1NvMnZzMWY5NHRROW96TWhhcHhLR2ppN3R3?=
- =?utf-8?B?YnJwTGVrOXJPZzZwZGlycFhEL1JJMWdQb1hWK3Q1eGdjeG85NkIzYmxpaC9n?=
- =?utf-8?B?Zld0bGlCTzFwZmh6RFBZckw4ZEc1ejJrQWFHSFhDY1plamlOK0hYdWYrSkdh?=
- =?utf-8?B?NlE1M01YUWtLVlNSbGJ6Y1hUenNQVFRSdWh1UVhHUkNOVEZjMWNvcVV1QXJV?=
- =?utf-8?B?SmM1S2h3aTBGc25JbUhWMHJDcXpJYnl2REJ4UDdOMUZ6UkJZNXhkSmxVeWRM?=
- =?utf-8?B?cnJ3dCt0eXQ5eCtuK09TTjNlMkJFYW9IUUFLZjVPNHZQNkY0cnI1WTl4ci94?=
- =?utf-8?B?aVMrTTNNbXRvb1U5SHJyNWxlcVpqMU9aRUU3T2taV0R5SklwQWhzK1dIKzIz?=
- =?utf-8?B?aVBQUGhjSTI1c1JyRml4RFQ5MDlzbUF4ck43SkpyWDBUZGU3WmRrMHNBbUpn?=
- =?utf-8?B?NEo3MDZFYWpNV2lWcVJkaFZKajhUVVF0c3d0TmZ4d25FZlRrdGd1NFpHREI2?=
- =?utf-8?B?WUZUdHJjTEhlRUhKYmo3SldGbU1oeXN1RmV4dEtYOXpxRUozcjJEZjBaZUU0?=
- =?utf-8?B?YUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0ace8876-834c-43bf-5974-08dc4f6b9542
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2024 21:11:06.5572
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RiqhX3copYN4N6GMC+m0DdUWOGs4zWfhFYXxCdJ2yZcjUFkJ2ucKFoEjuO2IdmZrlO90MyUhC0SA6bun5Vp6fWGMS9k9J5pY7Kp4IaM0Yuk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7547
-X-OriginatorOrg: intel.com
+References: <20240328-panthor-drop-csg_mod_mask-v1-1-5a80be3df581@kernel.org>
+In-Reply-To: <20240328-panthor-drop-csg_mod_mask-v1-1-5a80be3df581@kernel.org>
+From: Justin Stitt <justinstitt@google.com>
+Date: Thu, 28 Mar 2024 14:59:15 -0700
+Message-ID: <CAFhGd8qJQw9TFPzM5VqwPAdvFCfYRW6TMFYZcOOPWW74qvNz6Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/panthor: Fix clang -Wunused-but-set-variable in tick_ctx_apply()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: boris.brezillon@collabora.com, steven.price@arm.com, liviu.dudau@arm.com, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
+	ndesaulniers@google.com, morbo@google.com, heiko@sntech.de, 
+	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Tony,
+On Thu, Mar 28, 2024 at 9:22=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> Clang warns (or errors with CONFIG_WERROR):
+>
+>   drivers/gpu/drm/panthor/panthor_sched.c:2048:6: error: variable 'csg_mo=
+d_mask' set but not used [-Werror,-Wunused-but-set-variable]
+>    2048 |         u32 csg_mod_mask =3D 0, free_csg_slots =3D 0;
+>         |             ^
+>   1 error generated.
+>
+> The variable is an artifact left over from refactoring that occurred
+> during the development of the initial series for this driver. Remove it
+> to resolve the warning.
 
-On 3/27/2024 4:01 PM, Luck, Tony wrote:
->> There seems to be two issues here (although I am not familiar with these flows). First,
->> it seems that tick_nohz_full_mask is not actually allocated unless the user boots
->> with a "nohz_full=". This means that any attempt to access bits within tick_nohz_full_mask
->> will cause this OOPS. If that is allocated then the second issue seems that the  
->> buried __ffs() call requires that it not be called with 0 and this checking is not done.
->>
->> To me it seems most appropriate to fix this at the central place to ensure all scenarios
->> are handled instead of scattering checks.
-> 
-> Good analysis.
-> 
->> To that end, what do you think of something like below? It uses tick_nohz_full_enabled() check
->> to ensure that tick_nohz_full_mask is actually allocated while the other changes aim to
->> avoid __ffs() on 0.
+Yep, makes sense.
 
-I studied the flows some more and I no longer believe that there is a risk of __ffs() being
-called on 0. Looking at the flows starting with cpumask_nth_andnot() the value provided to
-__ffs() is ensured to be non-zero via either an explicit check or hweight_long().
+>
+> Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-To confirm this I tested a CONFIG_NO_HZ_FULL kernel by booting with "nohz_full=" set to the
-highest numbered CPU in the domain. When all the CPUs are offlined the behavior for the
-"second to last" and "last" CPU are most interesting and worked as expected when using 
-cpumask_nth_andnot(). 
+Reviewed-by: Justin Stitt <justinstitt@google.com>
 
-> 
-> Looks good.
-> 
-> Tested-by: Tony Luck <tony.luck@intel.com>
-> Reviewed-by: Tont Luck <tony.luck@intel.com>
-
-Considering the motivation above I will submit a change that only adds the 
-tick_nohz_full_enabled() check. Since it is such a big change from the snippet you reviewed
-and tested here I dropped your tags from it and hope you can reconsider the fix after considering
-the information above.
-
-Reinette
+> ---
+>  drivers/gpu/drm/panthor/panthor_sched.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/pa=
+nthor/panthor_sched.c
+> index 5f7803b6fc48..e5a710f190d2 100644
+> --- a/drivers/gpu/drm/panthor/panthor_sched.c
+> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
+> @@ -2045,7 +2045,7 @@ tick_ctx_apply(struct panthor_scheduler *sched, str=
+uct panthor_sched_tick_ctx *c
+>         struct panthor_device *ptdev =3D sched->ptdev;
+>         struct panthor_csg_slot *csg_slot;
+>         int prio, new_csg_prio =3D MAX_CSG_PRIO, i;
+> -       u32 csg_mod_mask =3D 0, free_csg_slots =3D 0;
+> +       u32 free_csg_slots =3D 0;
+>         struct panthor_csg_slots_upd_ctx upd_ctx;
+>         int ret;
+>
+> @@ -2139,7 +2139,6 @@ tick_ctx_apply(struct panthor_scheduler *sched, str=
+uct panthor_sched_tick_ctx *c
+>
+>                         csg_iface =3D panthor_fw_get_csg_iface(ptdev, csg=
+_id);
+>                         csg_slot =3D &sched->csg_slots[csg_id];
+> -                       csg_mod_mask |=3D BIT(csg_id);
+>                         group_bind_locked(group, csg_id);
+>                         csg_slot_prog_locked(ptdev, csg_id, new_csg_prio-=
+-);
+>                         csgs_upd_ctx_queue_reqs(ptdev, &upd_ctx, csg_id,
+>
+> ---
+> base-commit: d180649238f04183950d9c8a7d8a2c2f1788a89c
+> change-id: 20240328-panthor-drop-csg_mod_mask-b4bbe317d690
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
