@@ -1,135 +1,198 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F4F1E533
-	for <patches@lists.linux.dev>; Thu, 28 Mar 2024 21:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711663170; cv=none; b=RYteyBiJBWnIjbdjodXwZEALHTcLb38Uybsie4J9JZEwF+PEApjqpXKrlizJYLfNrm1RqdJxhhM6Zd4U2Mq1P/lr3XWcFJonHd5KXulp1XBGaryOrEYCXtJoE1bfScAS4H/lMEcNoF45h7tSoiF2+wHTpGNsDVjAq7Y71Yxno+4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711663170; c=relaxed/simple;
-	bh=xmo39MCdNMPQmHxw1MUgA6OOoECS018DvUqLxEsi7YM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ee+KFSD04Asu8Oic76Hs/0Kp3XxfbvnmkMbm2gwBjLNLSc9ANBNb6bpmAOcDFxN48PeKMmrBqNjncpB5eTVnTlYY8JgasO0YSquH/+3CgRFl7Xc8muY0Agzx/Z3RECSHW08hYJLj8iThsPHZmgaaFLBorbANFQtIj9X3KMGBmaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vWDR4AOi; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6771A935
+	for <patches@lists.linux.dev>; Fri, 29 Mar 2024 01:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1711674111; cv=fail; b=spZnvjXKVxKQMMbtCuNN7kY3SUHvWR7pbL9DUauGJ/d1Zh/PhtWeHkgafS+WLtjco32ED+2ezIwHt261SOU27qMEewDWWL84I6w+Vk0Vs9DbLmLadMW/o7H4jdnbEa+H+IsE0SWpK0iojNR3yJdrHY+Fs23F+s3rkakP9lmJrsc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1711674111; c=relaxed/simple;
+	bh=JpGSVaxTdfucNAXMncj/SI+ZXI3/NfFtMRIBiqwMbK0=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=hCgz64AxYvN6roIG8yn8wolZtnChjBcmBTX+YVIzjBPlUi5R030WFFw9zMCV3sUYhE+AVqklXfCF9G/zVTBWk9N9adnU2tECM+ney7yfkmsT/wAT4zFQQFlseEOpWwXXrjlrEYmuEQOHPi9WV1nhkHS88dIg4rDrVUFoiYFTQsk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eq9XhPyu; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vWDR4AOi"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56c08d1e900so1692061a12.3
-        for <patches@lists.linux.dev>; Thu, 28 Mar 2024 14:59:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711663167; x=1712267967; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JkrR3TRsPYSXBmltvKoz6z3FLacSM3QfrKhBArRhwdM=;
-        b=vWDR4AOikZrPkEoNr3Dbo7gARKJc4jWB8vP0gjn8rQeq/BafbmYzkyrV3O3zu1x+lp
-         fK+ob+KXv4w5Ys+H4ROBUoFfWDQL2vVUzNmhaF0Sd2rVspgbGB7/xFVEs1j8mON+8+J2
-         GEa/93ycYqMUmCrW9ehN9Zz/ur53xaNGNI6mD1NZfT40Rfkc+tIa4rBg2DTIMXPhFYpe
-         HatRe8zKek37oKgBtbxW97TyatpPX0zO2LZgOz74GgVafv718bQpYYNTP74raigC45nH
-         Rlk6++ot5DJH+9Zgul1FOP+PgLD1zZfu5/9Aj16FM2mcOG33DWYag/zUIpi3h5GZ0yNI
-         OD2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711663167; x=1712267967;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JkrR3TRsPYSXBmltvKoz6z3FLacSM3QfrKhBArRhwdM=;
-        b=vgpccGr6jhZJrw/z30sPKKZKSp4VXokM7/HFw+Bf7bjwp+l0ioLPtXKW3TFMIiucuv
-         fhCIXdv2HkB2uafjh342TGT9i4SgoE49Or4E+LYBjd9iXrGMolcPr2bgkNmLJF0PlFyJ
-         YRsNlAzg4VrHD/5SEY8IL3GWD1WxO/fJ+XJ8BUX+hu3rSKAdquHrvOhFQLI4ynD+ZDvB
-         BXGn//iDq3Iisebj5cORshJ/lYpFz1vFmecoYMeNy9z3+JSwPRxao0Q9hJBftALnbIue
-         ZLzSgVsMLxFjzGcqnkLZ51A7H3CGfHs+D3Pub33F2MsYkl6LV3UsCzJ6Id+ttDptzkb4
-         2nbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVsaE+6lpHeT+lVxWHIH0aOwfU2Fu9wBaWDj0MXTvBFdA7rcuYHu9w1fhpuxvcg/NoPxvVNHGBNFmW6EEg/G5tu9CT1Gat7EQ==
-X-Gm-Message-State: AOJu0YydW9yUwho1Nyf2bQqDJORfsX7tcZiQBV+WCVXcXcHPJEAeYEmI
-	NWg0ePYuMEKFvztHnSMWwRkqZlnjVS6gMfuxKPEVJ2yCCtN5hW6zpCETPP/59Si99GdeZ3sluai
-	vC303pYUILLbmVxn6HX7O3glfENTMqfwAJLFC
-X-Google-Smtp-Source: AGHT+IHxVJPGgWlPUtD38LmquZT+Kw2h6yv1jTsdsBsy+O/RrcoVPzZF9uidn02SdlhCE7x48PGrZPsbAniqVO9n/64=
-X-Received: by 2002:a05:6402:3548:b0:56b:c210:870c with SMTP id
- f8-20020a056402354800b0056bc210870cmr331295edd.15.1711663167480; Thu, 28 Mar
- 2024 14:59:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eq9XhPyu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1711674110; x=1743210110;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=JpGSVaxTdfucNAXMncj/SI+ZXI3/NfFtMRIBiqwMbK0=;
+  b=eq9XhPyuAuiqC+5DX1zrZnh5UFvZy1DC0lyN6sWHPogE6egwBGXToLHX
+   KbE3PzHsZiLp0K3GqD6X+inTnz3Ful0sDUdOqTKtulRao8aDa151UGA5W
+   AF3hhz/DJvIrrjF8VfpvdaGcsyeK05njJnIQwdL4tYbPA7LfW4fjCfclF
+   dVGIvoEMZm6Rjv9diPY1ZI57UEKqa/TQ/w7jSKbEg5bW5ggrAvjBK/Anx
+   1P92XtHlF2ZH7nixv5776dzOG+UfCieqcBCrgDh2psxgtQzp0m3jZN7U1
+   EDRiJqSJ/fW0/6TGZSBjFHwjSUQglkLYZbxj1l7UBT+vmGSDIN1inNlD4
+   g==;
+X-CSE-ConnectionGUID: JIyqeeuxTgKyZrgav8xYUA==
+X-CSE-MsgGUID: /MZs9oOYQTqDbtVzs/wsQw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="6755629"
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="6755629"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2024 18:01:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,162,1708416000"; 
+   d="scan'208";a="39984175"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Mar 2024 18:01:49 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 28 Mar 2024 18:01:48 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 28 Mar 2024 18:01:48 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 28 Mar 2024 18:01:48 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 28 Mar 2024 18:01:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mGkUOf/809C24pFkhBi0XfqrllEEJCY+JTf97RBAE0xYQ6OraI4L44CJfcIneA/FQODy6gKqa+tGSRaxGruk9MAX9B3iVa2yaw+JSi1rERoyTJvGHUy981CYVgG9/Xw+bnv+WAKW9ClhbKwWv7Fks0MVH1/y3cTmU9AptoYUzpK7VJ+QJO4oFJ6tw4VxcSv3m73eIEnTz/cRb2FNLQZtZMeqP/oaf51SF4iFhCV9Ut1kFLxoSWBljW5CH482//t+79oxF8Kavlzy7H8fyDBVeR7Y+7S/eFHOENyl6ZqZa9F/UwPgJr+M76nffL7UNQPxfKgiVy9mWlUfIV6jzmzPIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g0Jlymicad04FIHG7PPbz2MhAsuruWXK1JVT1gqPCTk=;
+ b=oQk0El4t3sHw5Lx25e36U/tu4OpGc8uFOrqegmkEic4Q4ANrUczWgCUNOYCU+5/gHq3/CyU82sVvnYkaDkaB2RUpU9HlBCHOGtNsLUTp+5/dykQLryFRwc9hfHL4AurhZruSsc9EMFFAckXhDo5WXM29M7Ln02/yU5iC/eNWx48HiwiOlDJTpCNjHaYUBC1nKKxWugcvBhH5p/SSaQ9tzHpVDiSKtGDovJtu76VcuNhxa/RcIlPyOj6x53QeT3RKthcUsltLnsyBaydMjBQocM+6AXLlqIZXugXhR+DfO3OEtMXk1BQv6Z39k00wF45n2hbQSBwUVzZtyMUZlZ40aw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by MW4PR11MB5892.namprd11.prod.outlook.com (2603:10b6:303:16a::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.33; Fri, 29 Mar
+ 2024 01:01:36 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::d610:9c43:6085:9e68]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::d610:9c43:6085:9e68%7]) with mapi id 15.20.7409.031; Fri, 29 Mar 2024
+ 01:01:36 +0000
+Message-ID: <56a93ec2-dc01-49be-b917-5134f5794062@intel.com>
+Date: Thu, 28 Mar 2024 18:01:33 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Documentation/x86: Document resctrl bandwidth control
+ units are MiB
+To: Tony Luck <tony.luck@intel.com>, <linux-doc@vger.kernel.org>
+CC: Fenghua Yu <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, <x86@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+References: <20240322182016.196544-1-tony.luck@intel.com>
+Content-Language: en-US
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <20240322182016.196544-1-tony.luck@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR02CA0025.namprd02.prod.outlook.com
+ (2603:10b6:303:16d::11) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240328-panthor-drop-csg_mod_mask-v1-1-5a80be3df581@kernel.org>
-In-Reply-To: <20240328-panthor-drop-csg_mod_mask-v1-1-5a80be3df581@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Thu, 28 Mar 2024 14:59:15 -0700
-Message-ID: <CAFhGd8qJQw9TFPzM5VqwPAdvFCfYRW6TMFYZcOOPWW74qvNz6Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/panthor: Fix clang -Wunused-but-set-variable in tick_ctx_apply()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: boris.brezillon@collabora.com, steven.price@arm.com, liviu.dudau@arm.com, 
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
-	ndesaulniers@google.com, morbo@google.com, heiko@sntech.de, 
-	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MW4PR11MB5892:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: uLifrCgRYwSXwx9KC00Dx4lDvUVscOLMBcGoZHomueY7oukP9IBRsvnR64LhbR6VKOTmdktFCUWi0r/hOYuwZf1SmuOkpnb+eZImZfKjeL2zsinOAApVhpnK6H3lyaNUujKuPtjTYH0D+RmL75IGboEz3tZF8EEjQUBF0yf6kz2N96C12Sy9Bvned+ulEB+i9Q9lXvdC+1ej9gnjmXgM37vhqAiDvLnUI9F7xuKrXUGnb6P3v70JovzXjbyxEIs9eOfmktV7fmG/CEFMpad9dGFlBldfk1RLHAO2xbIb3liiT0tTCK0mk7RZjHPw0f23GIh4H/V1J8dYyZxRJRMAK6m11JROCWw0G96fJGIH/XYDgKeGL0o0HNr9GcKiX8nhENrEzYLnL4RDhUYl4IrYaObkeq/Hu12mDJW9NGY5z5YbJCH5rvin4BzZYOH/z/N8et73prz02wEv1U8lVhFCuouWOG34ByhGkhnawPAAg3hai1jbj0nn/eFEJBijadNVo9msyI9WMJCcRdOqliRDwLR1Te8zr6dA+q3N+9OtlqUWheA1JNKh6hCwHt1JqxRgaZH5T6pjlufMbxIBCGzhh+Z/VZrav5YTgWJsdALtf1c8evU/Wa2/QNGWVLE30FSgjfmQ7TZpC1FU/Ux14WmGcM0mR9A0SHvQWJmZnl3X/Vs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UXVkZUVjdm1BbWp5SHNqcXZWK0FYTUhiOURwSG9WSGpPWk1BRnNWOEx3Yzhw?=
+ =?utf-8?B?a3RoUFVoc0tNcmZtb0FmR1hlY2JPYUZSSHZvNmhiTkE5eEJXRkpNNDZLZ3lo?=
+ =?utf-8?B?akJ1NW5tYXh4d3loWHI1MU9TcFkrN3dXV24zeTc3eWRncUxqWTdydTU1WjBa?=
+ =?utf-8?B?dUJGYUJ5RUN2UGx0N2JqclNyb1FIUXRPdFh5UEZ6M25DWDV5YWtxYW9TQjQz?=
+ =?utf-8?B?aTMrbWVlQk90UmhrWnhGZytkbnZTbVh3bVVtU1RsMFh0ZWN3NitrcGkyUXRC?=
+ =?utf-8?B?aWJyUkVuUGwyYTRmaGdNNzV2aVdCVXc1Y1ViT3VWQ2RRNzNyTDhJbGpRNzZI?=
+ =?utf-8?B?NFdyZDJsTml6Tk1FZHI1WXV3eHBRbWwxMHIwZDVvVE9zdG1JWFpwMnlweGJq?=
+ =?utf-8?B?ZEUvNHFqUWMxWWNPOFhQVWI3UWh5a29sajBnMTZzaUlEY0FBQk04Z0FYVWFU?=
+ =?utf-8?B?Yi9IdU04Rzk4M2RXSmV2bFdNY0Z1eU1VMlB4MklXekNqQkh4ejJUdVc2NWc5?=
+ =?utf-8?B?ZFJzczVqTGNXdE12S3loWUhvRUpGMUg2YmZxR3VoRlN0Q1ZCaEc1Yytyc2Nu?=
+ =?utf-8?B?c1RjWXREUHRLd0lNdytneHFYSmNTYzJDMUJNV0U5bmRDMEpBTGdEVnVoZ2N3?=
+ =?utf-8?B?cWN4SUNYRjI4bVo2b1NGU3JnMkIzME05eHE3MU5IOTZMb1hTQkNCRklnODNN?=
+ =?utf-8?B?YUxSYk9SOVdFYkEvenp0YkZQMWx5MlBYbDNtMDV5MFNxYUZrN2NJT0ZrVjBS?=
+ =?utf-8?B?YWFkdldJeTJ4aHVmMG9KejJjWEJDRnRYcHgwYjNyWnhpV2Y4SVVUZUdqNGZt?=
+ =?utf-8?B?bkVKbGl3RXlQSk5jN0JwbWN4b1ZHM3RScEw1SHZ6S3RSbjNIUVJFN0U1OE1i?=
+ =?utf-8?B?MHdOQkM3djB1MGkra2pEdThINmU3Mi9CWVAvUXo1ejhPRnZ6eUVNNk44akNv?=
+ =?utf-8?B?SzRrajRaNDlwOWhzS25hbGQrUWNXN0E2dnMzT09GRm1OVllQT0M5ODJtRU5k?=
+ =?utf-8?B?T1REbjZ3OHAwYnZZTXZmNFVwUzJxeU9WVVBFeFJoTnpBejVjRWlvNmEyMFVo?=
+ =?utf-8?B?KzhvZzRWR3NVVm1wUmorWld2Sk9SdUpOenE0UlI4cTdDMCtqWGYvVEdxYTNX?=
+ =?utf-8?B?N09mTVBMNUdxWGUxYW1xclYyblBDVG42V1JGaUZYWlY1Uy80WGRTakFwMm9G?=
+ =?utf-8?B?NDNTNzhkS0xtMFVnSFIrb1pWZDBDUlhPOE9TMEdxREU2NExwbDV4bkVTZWNk?=
+ =?utf-8?B?UlgrQXgwV0NEUDY1RFc2T3N2M3Y1MysxMDN5WTRMTGM2SXdzdnl5MFFWc082?=
+ =?utf-8?B?elQrQ1RLc1h5MnRoTUw4RkM0a2NFK1RTaEdhOG5WU3VhRW5lNy9RcXdVQmo5?=
+ =?utf-8?B?MFFRY3hteXZSSnlpTG5RWHFsbkprOWJrR0dRVFRac0NrQkcvc3MyVU55U0xk?=
+ =?utf-8?B?V3hmQXJxbi9NZmdub3B4QzUzSTAvTDAyYjdLZkdFUkNFSzdJaXExcGljZDBV?=
+ =?utf-8?B?dHpiNXpQNUZmQm40T1VBWlJBQzNGLzRWbS9OdVgxZkZwdW1MK1ZIbWpXdm1S?=
+ =?utf-8?B?M0E1M2pRay9Ea2NwQ1I5WGFOMTlzTThvQ0FkUm9VRnpiVC93T1F2TVR6Z3JR?=
+ =?utf-8?B?Q0FxYUdWMHNDWEpoVzIyWEVZMnFxQVBVOWF3czZNN2VOQjJxdDZ0NnpVMWtH?=
+ =?utf-8?B?eGEzQXE3WlNadzFJNXdDdDBrR29aK3ZOZ1FzeDhwTThKUXFTQ2wrWFNmZVlC?=
+ =?utf-8?B?VUk2OGlraU1lQWFIN005bFJTWG5Kc3ZTQTMybHI4NU5BUVJwK1hzQjFpZTB1?=
+ =?utf-8?B?WVFENU93RnV5TXB5L0hCd0xJaTZyZ0VFc2JkbGNMWHVTZ2dtQnJ4MUhGenJF?=
+ =?utf-8?B?V09BZGdxT1hoYWtMY1BLaWpOUG5NYjE2YnBzdUFzOUhRVndWNlEvblBBdWZ4?=
+ =?utf-8?B?SG1vZmhheVZVTVBZMGdtSTVUT3dmdzVEbXpjMWdNTjRKUE95K2VpcVBmSm56?=
+ =?utf-8?B?Wm9mdGI0WkZLSnZ6RVhXUEZQanRRdVJ3R0N1eU9OTHJNKzZFTS9yVkFSeWZh?=
+ =?utf-8?B?MnU3SW5RY1V6OVFFU3VQZUN2enhSVUNkdnJFRVNQZHIrWlJkbEtxdHZNR0tp?=
+ =?utf-8?B?Q3J3ZU52bFhaNi9QWWt1NERSWlRwcnpWNVVUNHpMQmZKS0NhK2xJdU51Q1NL?=
+ =?utf-8?B?M3c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: a78bfada-5f46-412d-e693-08dc4f8bc853
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2024 01:01:36.0772
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WTBfKV5izHaPMaxbxLoFM72ldAegq63kEhK/tSNrgiG8XNNMztuT9nvQQ66JooZWo8YTCoLsjHCrmSCYf6v3GP/33gLUnKoDXuyrDhKA3CI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB5892
+X-OriginatorOrg: intel.com
 
-On Thu, Mar 28, 2024 at 9:22=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> Clang warns (or errors with CONFIG_WERROR):
->
->   drivers/gpu/drm/panthor/panthor_sched.c:2048:6: error: variable 'csg_mo=
-d_mask' set but not used [-Werror,-Wunused-but-set-variable]
->    2048 |         u32 csg_mod_mask =3D 0, free_csg_slots =3D 0;
->         |             ^
->   1 error generated.
->
-> The variable is an artifact left over from refactoring that occurred
-> during the development of the initial series for this driver. Remove it
-> to resolve the warning.
+Hi Tony,
 
-Yep, makes sense.
+On 3/22/2024 11:20 AM, Tony Luck wrote:
+> The memory bandwidth software controller uses 2^20 units rather than
+> 10^6. See mbm_bw_count() which computes bandwidth using the "SZ_1M"
+> Linux define for 0x00100000.
+> 
+> Update the documentation to use MiB when describing this feature.
+> It's too late to fix the mount option "mba_MBps" as that is now an
+> established user interface.
 
->
-> Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+I see that this is merged already but I do not think this is correct.
+Shouldn't the implementation be fixed instead? Looking at the implementation
+the intent appears to be clear that the goal is to have bandwidth be
+MBps .... that is when looking from documentation to the define
+(MBA_MAX_MBPS) to the comments of the function you reference above
+mbm_bw_count(). For example, "...and delta bandwidth in MBps ..."
+and "...maintain values in MBps..."
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+To me this change creates significant confusion since it now contradicts
+with the source code and comments I reference above. Not to mention the
+discrepancy with user documentation.
 
-> ---
->  drivers/gpu/drm/panthor/panthor_sched.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/pa=
-nthor/panthor_sched.c
-> index 5f7803b6fc48..e5a710f190d2 100644
-> --- a/drivers/gpu/drm/panthor/panthor_sched.c
-> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
-> @@ -2045,7 +2045,7 @@ tick_ctx_apply(struct panthor_scheduler *sched, str=
-uct panthor_sched_tick_ctx *c
->         struct panthor_device *ptdev =3D sched->ptdev;
->         struct panthor_csg_slot *csg_slot;
->         int prio, new_csg_prio =3D MAX_CSG_PRIO, i;
-> -       u32 csg_mod_mask =3D 0, free_csg_slots =3D 0;
-> +       u32 free_csg_slots =3D 0;
->         struct panthor_csg_slots_upd_ctx upd_ctx;
->         int ret;
->
-> @@ -2139,7 +2139,6 @@ tick_ctx_apply(struct panthor_scheduler *sched, str=
-uct panthor_sched_tick_ctx *c
->
->                         csg_iface =3D panthor_fw_get_csg_iface(ptdev, csg=
-_id);
->                         csg_slot =3D &sched->csg_slots[csg_id];
-> -                       csg_mod_mask |=3D BIT(csg_id);
->                         group_bind_locked(group, csg_id);
->                         csg_slot_prog_locked(ptdev, csg_id, new_csg_prio-=
--);
->                         csgs_upd_ctx_queue_reqs(ptdev, &upd_ctx, csg_id,
->
-> ---
-> base-commit: d180649238f04183950d9c8a7d8a2c2f1788a89c
-> change-id: 20240328-panthor-drop-csg_mod_mask-b4bbe317d690
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+If you believe that this should be MiB then should the
+source and comments not also be changed to reflect that? Or alternatively,
+why not just fix mbm_bw_count() to support the documentation and what
+it appears to be intended to do. If users have been using the interface
+expecting MBps then this seems more like a needed bugfix than 
+a needed documentation change.
+
+Finally, if you make documentation changes, please do build the
+documentation afterwards. This change introduces a warning:
+
+Memory bandwidth Allocation specified in MiBps
+---------------------------------------------
+.../linux/Documentation/arch/x86/resctrl.rst:583: WARNING: Title underline too short.
+
+Reinette
