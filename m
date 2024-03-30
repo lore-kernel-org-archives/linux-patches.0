@@ -1,92 +1,86 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C935E13B7A0
-	for <patches@lists.linux.dev>; Fri, 29 Mar 2024 19:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB1D433D7;
+	Sat, 30 Mar 2024 23:03:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711741755; cv=none; b=NpFZfbPBWjSFGae7v68MDQ15E2e1/P3tQB/0QahMLyA/F3FonqEJI69SNE0eVxA0PQaj8XX9LnpQo2XQfTCag9k5U7pFYSC9iZdY0oEpcweWTzcFctiI5U5lwwvyAAd6wSLEEz+3mBgf1d/Vwc8KEAxLgQqXf1RONvoQ7di2DcI=
+	t=1711839785; cv=none; b=E+Bp7itBBA98jvv4jw2tjNSjGUhg060qtFxQGAT6pEQQk+u7gV6R+WPytaS/Z0UlG3s9/IDjjBb8zKZJw5lYHtuTEXNVGnC5hfxY1VkjmijYP8hYMYS0S2/QsSz7ND5FBpEXZYLgnR/mwxY5hiRHntdqj81mblrGEv0tFac5UI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711741755; c=relaxed/simple;
-	bh=sJ+UaoCLh7AzLciVOQ3NMwemWc0ufeeQ/hmoF9nh+m8=;
+	s=arc-20240116; t=1711839785; c=relaxed/simple;
+	bh=Uk4iJZwSrM2dCVspPrkJGokzJ84YsOa1I77r4NRPHC0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gA3V0B6YRS1+DwDSBef8YbIS7a8n2k/Y/vmPidkDz/ChepphggY5mPK8vQ13EkzyXKqa6V15h3IMYay/pL5tjEdDgRO6X5fy+QYvg9iPgbtKngMyipGyM6isq2MGprsHMirZIVHZ3ef/Rctxq6XvjHFDUg1GlIwHgHr42B6GmTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvL/cOqh; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=mh1Yg4LoVM0aKqjJcGa8EnsuCvNza+l3cA2Bi1aXlQ77iX3SrTkyygfAPJJtbYujclh51KY7omJVY0+/lxyvlPU9vKKSBaTwF9NjuqoYpboCTvK/+oPtcG6Ob1nVQY1dZmJaw3Ih9s6FvqjF9TVPc61jk0mFHCcpvph2v0QIHFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/FvMNA4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvL/cOqh"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2a04ac98cf7so1605646a91.0
-        for <patches@lists.linux.dev>; Fri, 29 Mar 2024 12:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711741753; x=1712346553; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sJ+UaoCLh7AzLciVOQ3NMwemWc0ufeeQ/hmoF9nh+m8=;
-        b=WvL/cOqhYShrfipmg9CCfGH0WIF+FiwJRq9t1o0M+V0Mj14aMeBVjwR7ZWE3L6ahj4
-         22qpcJGTXnD1TOsyVKKSwjP+Cv1VTMu21UG71TiQaLa9scFaNsBUM8HTTc4b2STmEhIQ
-         Zj7IiKREYsps/GedvYWbXtlBcg3hY8ZR+S6kzmGeQV61R0yr5L+ZYJxOaQf4Ias6Jufx
-         W5uDGXA0zVH35Ol+rHUeTpf/nLgWgd7TJdf0yp5gEW+P16/F0Z60a78PTvB/RblevqZH
-         2Umx9+fNiednMS4MeaY+iR5QSTMRnG4oNtQc8u2rQRqksXLA5fdYovLiZIV7HFf8qzk5
-         vVnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711741753; x=1712346553;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sJ+UaoCLh7AzLciVOQ3NMwemWc0ufeeQ/hmoF9nh+m8=;
-        b=o/nrRMfR16uvycOFQhyVj8VsdQAJOs6sVPI2HMXNpGhFi9t5ZGjfsSRLSKSnZgTZ8n
-         CP6+NKSL/QGttV46aZcEkg06EF6RRJ7q43mUzl/GRE3cGP+gVptwTks+7t/ZEwPjHj+9
-         7FpIsWTT08eGZCnoMw4F+tdbdBYY5tIJhzTn8xRgu41sWmVs1xWvh4U8vcpYS4DoPLzZ
-         syy3cd/oUD/imJ4+DkH9aoUc7Ntk+zfe/Wmpyf7BtLRzHqyFqrFlD+Wkc9TCsgO3BnZ0
-         3Eji3xfMeDt7T8/xNaBb8eWLMweggULDJyfAPi60KUsiyNvMxFn2bSLP1E417w+WLQuc
-         uL/A==
-X-Forwarded-Encrypted: i=1; AJvYcCVxNqWkox/DHOmO56i0Ej+Ra7w3ioz9CN9Yid++aBzFFNV9XOUYETOxEuAsuRK6m9o8L69EIAuG6TPwLFuYnRCNrtr/Xe+dOg==
-X-Gm-Message-State: AOJu0Yxo4Q6lSb0dN6pMuKzyOXi6xOtaHrQL9UXfbqFKx4jbI9rkxBIq
-	tjLDo0yoC5bw1Kbcz2GKqzM1vpse9KuHpgmxXcQxOzXXIp+nninKXeqy8eS/7BZvlqEHNSFEfhu
-	jocrQk/nj2UPARJqum8Quq1gYkEQ=
-X-Google-Smtp-Source: AGHT+IHOS/4TcCdBp8AgH2utv2wzrfe7U/6wBTLC8E1hnxWIey6SVgZ3g1TxwoMe1ZNo2sz/IHrk/09TAhBFWFojriE=
-X-Received: by 2002:a17:90a:c391:b0:29d:fb99:7dcc with SMTP id
- h17-20020a17090ac39100b0029dfb997dccmr8838505pjt.18.1711741753063; Fri, 29
- Mar 2024 12:49:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/FvMNA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79C7C43390;
+	Sat, 30 Mar 2024 23:03:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711839784;
+	bh=Uk4iJZwSrM2dCVspPrkJGokzJ84YsOa1I77r4NRPHC0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=i/FvMNA4ajDWw3JT6GuQSg3gc4xs2GzlA3SCsxisY2qLC3bGo80ykGUjUaTIiocLD
+	 lRGCz3ydTGXWc9MoUWRBMJu/9FbZZJPWV12PoXqxsppdCXrU8hHh+NymV2yepcsJNC
+	 K7BDfrHSAkC5V99trtRQNa/4PtPMQPBgn/CodlK8jj2un6YK+Gh99eL+areqP6zqQ1
+	 QiWea0HfcnrJFuvlEt7hZs0IfqQYPAAQ9l2NHMn0IwN5a3qzpUzLflfgmLAO+6l3JU
+	 uROY0jV31xGtHg33rUZY3YoG62cD0nvV34ZRuIAFZ5W4KdjCjb9KJrTAiQHOpfNyy0
+	 jOpSWwWTNr3bg==
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so41326161fa.0;
+        Sat, 30 Mar 2024 16:03:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWmlHJr+LDXaNb4IBZuvCH/CN7BzYtkaQQC+3uLl9DXemzaf6YWI5ROyUJ/MBGYpktpo5AivIycSQgKLoKOIhJiPAcT2oSAIcXgv4+tEBBJBZ21RoZZbyRzvnucdjg=
+X-Gm-Message-State: AOJu0Yww3guEmrP90okCGjP9yL2yXPYeGXkh5gPbYnlGMl4qKySunhSl
+	FHRuCipjL52oirj+k0A5U+IAeX0vYcufM3rtBf4BVDjKtQrwHeW93HLwZyIy1FJ0xjlo2+2kwUM
+	VWYeCAjWny0luDplwiUVB2KoF3pM=
+X-Google-Smtp-Source: AGHT+IFd/LGv2PBoBuzAtx8igo0NJbXoa4v9MDGe5vtLEj5wDpfnPVtw0+ng93ETtALsKDvhhb4I7KxixPbeWm91ZZg=
+X-Received: by 2002:a05:651c:b0d:b0:2d7:68a0:9b28 with SMTP id
+ b13-20020a05651c0b0d00b002d768a09b28mr1710557ljr.7.1711839783412; Sat, 30 Mar
+ 2024 16:03:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240217002622.57322-1-ojeda@kernel.org>
-In-Reply-To: <20240217002622.57322-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 29 Mar 2024 20:48:39 +0100
-Message-ID: <CANiq72nD4dLDRN09YC+TeFKsjF8Kmh9UyP6Za4g6RRLixjN+Kg@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: rust: use `-Zdebuginfo-compression`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20240327-llvm-docs-s390-llvm-1-v1-1-56ad95d2bc27@kernel.org>
+In-Reply-To: <20240327-llvm-docs-s390-llvm-1-v1-1-56ad95d2bc27@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 31 Mar 2024 08:02:27 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARVoiek2kt7aAK=tL-y6RhbmSOeRyx_4W2vk=usyceu5A@mail.gmail.com>
+Message-ID: <CAK7LNARVoiek2kt7aAK=tL-y6RhbmSOeRyx_4W2vk=usyceu5A@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/llvm: Note s390 LLVM=1 support with LLVM
+ 18.1.0 and newer
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+	nicolas@fjasle.eu, corbet@lwn.net, llvm@lists.linux.dev, 
+	linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 17, 2024 at 1:26=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Thu, Mar 28, 2024 at 2:20=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
 >
-> Rust 1.74.0 introduced (unstable) support for the
-> `-Zdebuginfo-compression` flag, thus use it.
+> As of the first s390 pull request during the 6.9 merge window,
+> commit 691632f0e869 ("Merge tag 's390-6.9-1' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/s390/linux"), s390 can be
+> built with LLVM=3D1 when using LLVM 18.1.0, which is the first version
+> that has SystemZ support implemented in ld.lld and llvm-objcopy.
 >
-> Link: https://github.com/rust-lang/rust/issues/120953
-> Link: https://github.com/rust-lang/rust/pull/115358
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Update the supported architectures table in the Kbuild LLVM
+> documentation to note this explicitly to make it more discoverable by
+> users and other developers. Additionally, this brings s390 in line with
+> the rest of the architectures in the table, which all support LLVM=3D1.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
 
-[ Added note about zstd support in Rust-provided binaries. ]
+Applied to linux-kbuild/fixes.
+Thanks.
 
-Applied to `rust-next` -- please feel free to still send reviews or
-tested-bys for this one!
 
-Cheers,
-Miguel
+
+
+--=20
+Best Regards
+Masahiro Yamada
