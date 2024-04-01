@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFB01DFF4;
-	Mon,  1 Apr 2024 16:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80A01DFF4;
+	Mon,  1 Apr 2024 16:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990375; cv=none; b=q81FtXExMmQIxRygvDpETx1YhrLFBMLWBOFOZ4rGrLiPzPO0JSQlhnBm34l2kIrdnVv5V+6Enjg2LrhyDZYAnizNvCdlNwu8feah9sfh7Bs/UqOzZthKPXbRtLO2MXBi2aeDQMEiAsVEOewBOWX1UoWEwrcfrGuDZQTgEZNf8+8=
+	t=1711990377; cv=none; b=qrfw6BKs7pj/eYOY7PEqZhxk/NR4gdEJTHg5KE7AsiIV2rhL1SEzwhOVATIvlo6O6wdvxxc9gh8roVvq7p6M+7scH4LSJ4ZjVtFN6NKl0HiekBWTBGcBlz/71MI7AmZ8VDxj4hc/CU4/0Cu6PmDZYPWBGb4cw1eEW/q810fTSyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990375; c=relaxed/simple;
-	bh=/rg1WRlV+le6jrfLfO3mf75VkIfz4uIAoOBS468XSIU=;
+	s=arc-20240116; t=1711990377; c=relaxed/simple;
+	bh=mJF2MajvLzGeRXIxs5G58TpOwnqIodoERyG4qR+XnII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyMkVDzmp6dWfnjBkib9JDj6/7YdX1q8oSRcGjkXDEaVhXOq7Oc4tIabhzCiLlgSAY7AeIQzSVESzkV5XX9UBqLLUATdooZz6bzq69zCdLEvPnFHbXbA23IdC1lKAFC54gfzpOH3tckca+nhdXg0sLeYHIIdtygI0WSkXYt9Iu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+E8BNP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkzpE39T7ks3TCrXNBnSXBIuMoxTqDJaeYg4/5e0Ta6g0Jcsin9mOInZwF220tmBzBdWF8Objc9yWRUcG9RYnW0YwHkU6mFY/iLyA6QFroMLCBBS5uNnmNLqycIM2YQVuwfvQaMPc7vnqaf4pXyFCB3z8VI3aYh7n9uz6hySqwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1ySDvPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+E8BNP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC48C433C7;
-	Mon,  1 Apr 2024 16:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1ySDvPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D488C433C7;
+	Mon,  1 Apr 2024 16:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990374;
-	bh=/rg1WRlV+le6jrfLfO3mf75VkIfz4uIAoOBS468XSIU=;
+	s=korg; t=1711990377;
+	bh=mJF2MajvLzGeRXIxs5G58TpOwnqIodoERyG4qR+XnII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+E8BNP6fyUxPChTY2vEoXBHKi2DABFvZvIK7vPrOZK7XXNozaSZYxeWttqVbnXZ0
-	 DNDxSvdQWdiOYY97rljI7rCRWenzs9mqCZFJsUN67HMoPgWtS05idVRTIMehxcyWGv
-	 K2vJxuZz/Zu+N5PJwSl0gVs0lhmhN7g4nr4YhMoY=
+	b=h1ySDvPGftOkj/1PTabthSCj0pOL6IU/+OL7+kGtW+AD84qdiGmDo5WYq31fyyJtx
+	 9sQAGdhbRqhvjcKL4EHcKNSN4g/JuDsqp2cG/C6QrjfonrVkVFNfofOGismgx0Ut2C
+	 +i+R4ntd3YDQ3MmBrywWvwEfaQ0A6GBE9F9XHZNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 305/396] selftests/mm: gup_test: conform test to TAP format output
-Date: Mon,  1 Apr 2024 17:45:54 +0200
-Message-ID: <20240401152557.009037161@linuxfoundation.org>
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 332/396] mmc: core: Initialize mmc_blk_ioc_data
+Date: Mon,  1 Apr 2024 17:46:21 +0200
+Message-ID: <20240401152557.812897079@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,158 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Mikko Rapeli <mikko.rapeli@linaro.org>
 
-[ Upstream commit cb6e7cae18868422a23d62670110c61fd1b15029 ]
+commit 0cdfe5b0bf295c0dee97436a8ed13336933a0211 upstream.
 
-Conform the layout, informational and status messages to TAP.  No
-functional change is intended other than the layout of output messages.
+Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") adds
+flags uint to struct mmc_blk_ioc_data, but it does not get initialized for
+RPMB ioctls which now fails.
 
-Link: https://lkml.kernel.org/r/20240102053807.2114200-1-usama.anjum@collabora.com
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 8b65ef5ad486 ("selftests/mm: Fix build with _FORTIFY_SOURCE")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Let's fix this by always initializing the struct and flags to zero.
+
+Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218587
+Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240313133744.2405325-1-mikko.rapeli@linaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/gup_test.c | 65 ++++++++++++++-------------
- 1 file changed, 33 insertions(+), 32 deletions(-)
+ drivers/mmc/core/block.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/gup_test.c b/tools/testing/selftests/mm/gup_test.c
-index ec22291363844..cbe99594d319b 100644
---- a/tools/testing/selftests/mm/gup_test.c
-+++ b/tools/testing/selftests/mm/gup_test.c
-@@ -50,39 +50,41 @@ static char *cmd_to_str(unsigned long cmd)
- void *gup_thread(void *data)
- {
- 	struct gup_test gup = *(struct gup_test *)data;
--	int i;
-+	int i, status;
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -413,7 +413,7 @@ static struct mmc_blk_ioc_data *mmc_blk_
+ 	struct mmc_blk_ioc_data *idata;
+ 	int err;
  
- 	/* Only report timing information on the *_BENCHMARK commands: */
- 	if ((cmd == PIN_FAST_BENCHMARK) || (cmd == GUP_FAST_BENCHMARK) ||
- 	     (cmd == PIN_LONGTERM_BENCHMARK)) {
- 		for (i = 0; i < repeats; i++) {
- 			gup.size = size;
--			if (ioctl(gup_fd, cmd, &gup))
--				perror("ioctl"), exit(1);
-+			status = ioctl(gup_fd, cmd, &gup);
-+			if (status)
-+				break;
- 
- 			pthread_mutex_lock(&print_mutex);
--			printf("%s: Time: get:%lld put:%lld us",
--			       cmd_to_str(cmd), gup.get_delta_usec,
--			       gup.put_delta_usec);
-+			ksft_print_msg("%s: Time: get:%lld put:%lld us",
-+				       cmd_to_str(cmd), gup.get_delta_usec,
-+				       gup.put_delta_usec);
- 			if (gup.size != size)
--				printf(", truncated (size: %lld)", gup.size);
--			printf("\n");
-+				ksft_print_msg(", truncated (size: %lld)", gup.size);
-+			ksft_print_msg("\n");
- 			pthread_mutex_unlock(&print_mutex);
- 		}
- 	} else {
- 		gup.size = size;
--		if (ioctl(gup_fd, cmd, &gup)) {
--			perror("ioctl");
--			exit(1);
--		}
-+		status = ioctl(gup_fd, cmd, &gup);
-+		if (status)
-+			goto return_;
- 
- 		pthread_mutex_lock(&print_mutex);
--		printf("%s: done\n", cmd_to_str(cmd));
-+		ksft_print_msg("%s: done\n", cmd_to_str(cmd));
- 		if (gup.size != size)
--			printf("Truncated (size: %lld)\n", gup.size);
-+			ksft_print_msg("Truncated (size: %lld)\n", gup.size);
- 		pthread_mutex_unlock(&print_mutex);
- 	}
- 
-+return_:
-+	ksft_test_result(!status, "ioctl status %d\n", status);
- 	return NULL;
- }
- 
-@@ -170,7 +172,7 @@ int main(int argc, char **argv)
- 			touch = 1;
- 			break;
- 		default:
--			return -1;
-+			ksft_exit_fail_msg("Wrong argument\n");
- 		}
- 	}
- 
-@@ -198,11 +200,12 @@ int main(int argc, char **argv)
- 		}
- 	}
- 
-+	ksft_print_header();
-+	ksft_set_plan(nthreads);
-+
- 	filed = open(file, O_RDWR|O_CREAT);
--	if (filed < 0) {
--		perror("open");
--		exit(filed);
--	}
-+	if (filed < 0)
-+		ksft_exit_fail_msg("Unable to open %s: %s\n", file, strerror(errno));
- 
- 	gup.nr_pages_per_call = nr_pages;
- 	if (write)
-@@ -213,27 +216,24 @@ int main(int argc, char **argv)
- 		switch (errno) {
- 		case EACCES:
- 			if (getuid())
--				printf("Please run this test as root\n");
-+				ksft_print_msg("Please run this test as root\n");
- 			break;
- 		case ENOENT:
--			if (opendir("/sys/kernel/debug") == NULL) {
--				printf("mount debugfs at /sys/kernel/debug\n");
--				break;
--			}
--			printf("check if CONFIG_GUP_TEST is enabled in kernel config\n");
-+			if (opendir("/sys/kernel/debug") == NULL)
-+				ksft_print_msg("mount debugfs at /sys/kernel/debug\n");
-+			ksft_print_msg("check if CONFIG_GUP_TEST is enabled in kernel config\n");
- 			break;
- 		default:
--			perror("failed to open " GUP_TEST_FILE);
-+			ksft_print_msg("failed to open %s: %s\n", GUP_TEST_FILE, strerror(errno));
- 			break;
- 		}
--		exit(KSFT_SKIP);
-+		ksft_test_result_skip("Please run this test as root\n");
-+		return ksft_exit_pass();
- 	}
- 
- 	p = mmap(NULL, size, PROT_READ | PROT_WRITE, flags, filed, 0);
--	if (p == MAP_FAILED) {
--		perror("mmap");
--		exit(1);
--	}
-+	if (p == MAP_FAILED)
-+		ksft_exit_fail_msg("mmap: %s\n", strerror(errno));
- 	gup.addr = (unsigned long)p;
- 
- 	if (thp == 1)
-@@ -264,7 +264,8 @@ int main(int argc, char **argv)
- 		ret = pthread_join(tid[i], NULL);
- 		assert(ret == 0);
- 	}
-+
- 	free(tid);
- 
--	return 0;
-+	return ksft_exit_pass();
- }
--- 
-2.43.0
-
+-	idata = kmalloc(sizeof(*idata), GFP_KERNEL);
++	idata = kzalloc(sizeof(*idata), GFP_KERNEL);
+ 	if (!idata) {
+ 		err = -ENOMEM;
+ 		goto out;
 
 
