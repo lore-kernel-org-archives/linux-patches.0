@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9141C0DE7;
-	Mon,  1 Apr 2024 17:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C37BA3F;
+	Mon,  1 Apr 2024 17:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990876; cv=none; b=P/rfUoRSiR3Hndy94VqLQ5W437qn/07feiQmIhRFunTijdvYWU0XM1UE/1iWvvKQ8MY2HpS43NL507heexXvKW/0L5c4EZ+q8Rl0XhxlbildG65SdGtcqLkxLRyN3bqP8f0Na5qaN/46Wu6ahtP+tyAXB2hBj19XkQyHvXYvf70=
+	t=1711990879; cv=none; b=XVMGS3BtVo2vDa/uGLtgSQ9mhL466M++9bGbedrvMBhCiYV+5dos1N3mv+rTPMK5QoKcyDNGcRvHUrSZwcfsnwsi8J815xsornialVC2MkCIS0QmgdrDuDvUrE7o97yaRLw0/G3lk808x3aUXW10mJ/ZEZZ0ptIHRV6XBf8+AZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990876; c=relaxed/simple;
-	bh=c2/PCSaX/U9pHdM03wL5uERYz+6IGDeOa4pkNAdayK0=;
+	s=arc-20240116; t=1711990879; c=relaxed/simple;
+	bh=VD6wCE21J8X3yFBG6hXGfoHaxOa6L2R8wv8l7v0piLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsVNwqZ4BXAfT++c0yttTHar7cX/339zN5lFIUxMBxciXSPs2sFpJ0bDBgLxDFc6sznqm67aBYq9JIINpY/kd/lPzQ+Tz9ihhinfeA3jI91jSgQmyb+/aA+6xl059t4JndAAiXwDmNTNokIAZzO7iU9HtD1OKTdpz4Z+ml3GSGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdHaoRjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNv0UkSv7bn2/y4iV3K+7QSVXX7rswSA0HQtuXtYT/VcjwZcIlWNrKz0zmmPZR/x443MQIS2BkQxeO32Y7J0BvO9n+kaxMs8mSbx2Z73WxrczFmfxBIrYGRKjxUExacO84YhyJ5KgBJ4/l9l5x/t5+f0uyZV7n2uF6Y3ELQJ6kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oif/WuN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdHaoRjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C1DC433C7;
-	Mon,  1 Apr 2024 17:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oif/WuN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEA8C433F1;
+	Mon,  1 Apr 2024 17:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990876;
-	bh=c2/PCSaX/U9pHdM03wL5uERYz+6IGDeOa4pkNAdayK0=;
+	s=korg; t=1711990879;
+	bh=VD6wCE21J8X3yFBG6hXGfoHaxOa6L2R8wv8l7v0piLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdHaoRjVPl3GlFMcXm0OzmhtTt4hBPtAjaDHWwWdxoTYCJ0SETxVV4MnXLe0SmNJA
-	 jeLAzvtPS+TL089NByWLPRoAYEILikOzZR7gjY4GVHTmO9TDU+YutpzBmjSC+UVipr
-	 hwyb507e52UFT4SdMK8WufR+51CM8rnkjO3dJiok=
+	b=oif/WuN5EmM5anKOoDkV98Ex8Mx/6/9gV9KBHv/X3PcnRH8IbS51Fsq3kTUCpuNyW
+	 FSlyZAAJTzzwjNtYQdQWVZR/uY5FEYFMg3CIOv4vvEhW4Sd+Fo5U2DMKydvawVgA6g
+	 deuv1OAaGIfnk8rF4l4q135wUaO7xWQvZKbsb6C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/272] sparc32: Fix parport build with sparc32
-Date: Mon,  1 Apr 2024 17:44:44 +0200
-Message-ID: <20240401152533.569230889@linuxfoundation.org>
+Subject: [PATCH 6.1 095/272] nfs: fix UAF in direct writes
+Date: Mon,  1 Apr 2024 17:44:45 +0200
+Message-ID: <20240401152533.599259417@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,570 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Ravnborg <sam@ravnborg.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 91d3ff922c346d6d8cb8de5ff8d504fe0ca9e17e ]
+[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
 
-include/asm/parport.h is sparc64 specific.
-Rename it to parport_64.h and use the generic version for sparc32.
+In production we have been hitting the following warning consistently
 
-This fixed all{mod,yes}config build errors like:
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
+Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
+RIP: 0010:refcount_warn_saturate+0x9c/0xe0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn+0x9f/0x130
+ ? refcount_warn_saturate+0x9c/0xe0
+ ? report_bug+0xcc/0x150
+ ? handle_bug+0x3d/0x70
+ ? exc_invalid_op+0x16/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? refcount_warn_saturate+0x9c/0xe0
+ nfs_direct_write_schedule_work+0x237/0x250 [nfs]
+ process_one_work+0x12f/0x4a0
+ worker_thread+0x14e/0x3b0
+ ? ZSTD_getCParams_internal+0x220/0x220
+ kthread+0xdc/0x120
+ ? __btf_name_valid+0xa0/0xa0
+ ret_from_fork+0x1f/0x30
 
-parport_pc.c:(.text):undefined-reference-to-ebus_dma_enable
-parport_pc.c:(.text):undefined-reference-to-ebus_dma_irq_enable
-parport_pc.c:(.text):undefined-reference-to-ebus_dma_register
+This is because we're completing the nfs_direct_request twice in a row.
 
-The errors occur as the sparc32 build references sparc64 symbols.
+The source of this is when we have our commit requests to submit, we
+process them and send them off, and then in the completion path for the
+commit requests we have
 
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Maciej W. Rozycki <macro@orcam.me.uk>
-Closes: https://lore.kernel.org/r/20230406160548.25721-1-rdunlap@infradead.org/
-Fixes: 66bcd06099bb ("parport_pc: Also enable driver for PCI systems")
-Cc: stable@vger.kernel.org # v5.18+
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20240224-sam-fix-sparc32-all-builds-v2-6-1f186603c5c4@ravnborg.org
+if (nfs_commit_end(cinfo.mds))
+	nfs_direct_write_complete(dreq);
+
+However since we're submitting asynchronous requests we sometimes have
+one that completes before we submit the next one, so we end up calling
+complete on the nfs_direct_request twice.
+
+The only other place we use nfs_generic_commit_list() is in
+__nfs_commit_inode, which wraps this call in a
+
+nfs_commit_begin();
+nfs_commit_end();
+
+Which is a common pattern for this style of completion handling, one
+that is also repeated in the direct code with get_dreq()/put_dreq()
+calls around where we process events as well as in the completion paths.
+
+Fix this by using the same pattern for the commit requests.
+
+Before with my 200 node rocksdb stress running this warning would pop
+every 10ish minutes.  With my patch the stress test has been running for
+several hours without popping.
+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/include/asm/parport.h    | 259 +---------------------------
- arch/sparc/include/asm/parport_64.h | 256 +++++++++++++++++++++++++++
- 2 files changed, 263 insertions(+), 252 deletions(-)
- create mode 100644 arch/sparc/include/asm/parport_64.h
+ fs/nfs/direct.c        | 11 +++++++++--
+ fs/nfs/write.c         |  2 +-
+ include/linux/nfs_fs.h |  1 +
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/arch/sparc/include/asm/parport.h b/arch/sparc/include/asm/parport.h
-index 0a7ffcfd59cda..e2eed8f97665f 100644
---- a/arch/sparc/include/asm/parport.h
-+++ b/arch/sparc/include/asm/parport.h
-@@ -1,256 +1,11 @@
- /* SPDX-License-Identifier: GPL-2.0 */
--/* parport.h: sparc64 specific parport initialization and dma.
-- *
-- * Copyright (C) 1999  Eddie C. Dost  (ecd@skynet.be)
-- */
-+#ifndef ___ASM_SPARC_PARPORT_H
-+#define ___ASM_SPARC_PARPORT_H
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 8fdb65e1b14a3..b555efca01d20 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -647,10 +647,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
+ 	LIST_HEAD(mds_list);
  
--#ifndef _ASM_SPARC64_PARPORT_H
--#define _ASM_SPARC64_PARPORT_H 1
--
--#include <linux/of.h>
--#include <linux/platform_device.h>
--
--#include <asm/ebus_dma.h>
--#include <asm/ns87303.h>
--#include <asm/prom.h>
--
--#define PARPORT_PC_MAX_PORTS	PARPORT_MAX
--
--/*
-- * While sparc64 doesn't have an ISA DMA API, we provide something that looks
-- * close enough to make parport_pc happy
-- */
--#define HAS_DMA
--
--#ifdef CONFIG_PARPORT_PC_FIFO
--static DEFINE_SPINLOCK(dma_spin_lock);
--
--#define claim_dma_lock() \
--({	unsigned long flags; \
--	spin_lock_irqsave(&dma_spin_lock, flags); \
--	flags; \
--})
--
--#define release_dma_lock(__flags) \
--	spin_unlock_irqrestore(&dma_spin_lock, __flags);
-+#if defined(__sparc__) && defined(__arch64__)
-+#include <asm/parport_64.h>
-+#else
-+#include <asm-generic/parport.h>
-+#endif
- #endif
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
++	nfs_commit_begin(cinfo.mds);
+ 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
+ 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
+-	if (res < 0) /* res == -ENOMEM */
+-		nfs_direct_write_reschedule(dreq);
++	if (res < 0) { /* res == -ENOMEM */
++		spin_lock(&dreq->lock);
++		if (dreq->flags == 0)
++			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
++		spin_unlock(&dreq->lock);
++	}
++	if (nfs_commit_end(cinfo.mds))
++		nfs_direct_write_complete(dreq);
+ }
  
--static struct sparc_ebus_info {
--	struct ebus_dma_info info;
--	unsigned int addr;
--	unsigned int count;
--	int lock;
--
--	struct parport *port;
--} sparc_ebus_dmas[PARPORT_PC_MAX_PORTS];
--
--static DECLARE_BITMAP(dma_slot_map, PARPORT_PC_MAX_PORTS);
--
--static inline int request_dma(unsigned int dmanr, const char *device_id)
--{
--	if (dmanr >= PARPORT_PC_MAX_PORTS)
--		return -EINVAL;
--	if (xchg(&sparc_ebus_dmas[dmanr].lock, 1) != 0)
--		return -EBUSY;
--	return 0;
--}
--
--static inline void free_dma(unsigned int dmanr)
--{
--	if (dmanr >= PARPORT_PC_MAX_PORTS) {
--		printk(KERN_WARNING "Trying to free DMA%d\n", dmanr);
--		return;
--	}
--	if (xchg(&sparc_ebus_dmas[dmanr].lock, 0) == 0) {
--		printk(KERN_WARNING "Trying to free free DMA%d\n", dmanr);
--		return;
--	}
--}
--
--static inline void enable_dma(unsigned int dmanr)
--{
--	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 1);
--
--	if (ebus_dma_request(&sparc_ebus_dmas[dmanr].info,
--			     sparc_ebus_dmas[dmanr].addr,
--			     sparc_ebus_dmas[dmanr].count))
--		BUG();
--}
--
--static inline void disable_dma(unsigned int dmanr)
--{
--	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 0);
--}
--
--static inline void clear_dma_ff(unsigned int dmanr)
--{
--	/* nothing */
--}
--
--static inline void set_dma_mode(unsigned int dmanr, char mode)
--{
--	ebus_dma_prepare(&sparc_ebus_dmas[dmanr].info, (mode != DMA_MODE_WRITE));
--}
--
--static inline void set_dma_addr(unsigned int dmanr, unsigned int addr)
--{
--	sparc_ebus_dmas[dmanr].addr = addr;
--}
--
--static inline void set_dma_count(unsigned int dmanr, unsigned int count)
--{
--	sparc_ebus_dmas[dmanr].count = count;
--}
--
--static inline unsigned int get_dma_residue(unsigned int dmanr)
--{
--	return ebus_dma_residue(&sparc_ebus_dmas[dmanr].info);
--}
--
--static int ecpp_probe(struct platform_device *op)
--{
--	unsigned long base = op->resource[0].start;
--	unsigned long config = op->resource[1].start;
--	unsigned long d_base = op->resource[2].start;
--	unsigned long d_len;
--	struct device_node *parent;
--	struct parport *p;
--	int slot, err;
--
--	parent = op->dev.of_node->parent;
--	if (of_node_name_eq(parent, "dma")) {
--		p = parport_pc_probe_port(base, base + 0x400,
--					  op->archdata.irqs[0], PARPORT_DMA_NOFIFO,
--					  op->dev.parent->parent, 0);
--		if (!p)
--			return -ENOMEM;
--		dev_set_drvdata(&op->dev, p);
--		return 0;
--	}
--
--	for (slot = 0; slot < PARPORT_PC_MAX_PORTS; slot++) {
--		if (!test_and_set_bit(slot, dma_slot_map))
--			break;
--	}
--	err = -ENODEV;
--	if (slot >= PARPORT_PC_MAX_PORTS)
--		goto out_err;
--
--	spin_lock_init(&sparc_ebus_dmas[slot].info.lock);
--
--	d_len = (op->resource[2].end - d_base) + 1UL;
--	sparc_ebus_dmas[slot].info.regs =
--		of_ioremap(&op->resource[2], 0, d_len, "ECPP DMA");
--
--	if (!sparc_ebus_dmas[slot].info.regs)
--		goto out_clear_map;
--
--	sparc_ebus_dmas[slot].info.flags = 0;
--	sparc_ebus_dmas[slot].info.callback = NULL;
--	sparc_ebus_dmas[slot].info.client_cookie = NULL;
--	sparc_ebus_dmas[slot].info.irq = 0xdeadbeef;
--	strcpy(sparc_ebus_dmas[slot].info.name, "parport");
--	if (ebus_dma_register(&sparc_ebus_dmas[slot].info))
--		goto out_unmap_regs;
--
--	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 1);
--
--	/* Configure IRQ to Push Pull, Level Low */
--	/* Enable ECP, set bit 2 of the CTR first */
--	outb(0x04, base + 0x02);
--	ns87303_modify(config, PCR,
--		       PCR_EPP_ENABLE |
--		       PCR_IRQ_ODRAIN,
--		       PCR_ECP_ENABLE |
--		       PCR_ECP_CLK_ENA |
--		       PCR_IRQ_POLAR);
--
--	/* CTR bit 5 controls direction of port */
--	ns87303_modify(config, PTR,
--		       0, PTR_LPT_REG_DIR);
--
--	p = parport_pc_probe_port(base, base + 0x400,
--				  op->archdata.irqs[0],
--				  slot,
--				  op->dev.parent,
--				  0);
--	err = -ENOMEM;
--	if (!p)
--		goto out_disable_irq;
--
--	dev_set_drvdata(&op->dev, p);
--
--	return 0;
--
--out_disable_irq:
--	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
--	ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
--
--out_unmap_regs:
--	of_iounmap(&op->resource[2], sparc_ebus_dmas[slot].info.regs, d_len);
--
--out_clear_map:
--	clear_bit(slot, dma_slot_map);
--
--out_err:
--	return err;
--}
--
--static int ecpp_remove(struct platform_device *op)
--{
--	struct parport *p = dev_get_drvdata(&op->dev);
--	int slot = p->dma;
--
--	parport_pc_unregister_port(p);
--
--	if (slot != PARPORT_DMA_NOFIFO) {
--		unsigned long d_base = op->resource[2].start;
--		unsigned long d_len;
--
--		d_len = (op->resource[2].end - d_base) + 1UL;
--
--		ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
--		ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
--		of_iounmap(&op->resource[2],
--			   sparc_ebus_dmas[slot].info.regs,
--			   d_len);
--		clear_bit(slot, dma_slot_map);
--	}
--
--	return 0;
--}
--
--static const struct of_device_id ecpp_match[] = {
--	{
--		.name = "ecpp",
--	},
--	{
--		.name = "parallel",
--		.compatible = "ecpp",
--	},
--	{
--		.name = "parallel",
--		.compatible = "ns87317-ecpp",
--	},
--	{
--		.name = "parallel",
--		.compatible = "pnpALI,1533,3",
--	},
--	{},
--};
--
--static struct platform_driver ecpp_driver = {
--	.driver = {
--		.name = "ecpp",
--		.of_match_table = ecpp_match,
--	},
--	.probe			= ecpp_probe,
--	.remove			= ecpp_remove,
--};
--
--static int parport_pc_find_nonpci_ports(int autoirq, int autodma)
--{
--	return platform_driver_register(&ecpp_driver);
--}
--
--#endif /* !(_ASM_SPARC64_PARPORT_H */
-diff --git a/arch/sparc/include/asm/parport_64.h b/arch/sparc/include/asm/parport_64.h
-new file mode 100644
-index 0000000000000..0a7ffcfd59cda
---- /dev/null
-+++ b/arch/sparc/include/asm/parport_64.h
-@@ -0,0 +1,256 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/* parport.h: sparc64 specific parport initialization and dma.
-+ *
-+ * Copyright (C) 1999  Eddie C. Dost  (ecd@skynet.be)
-+ */
-+
-+#ifndef _ASM_SPARC64_PARPORT_H
-+#define _ASM_SPARC64_PARPORT_H 1
-+
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+
-+#include <asm/ebus_dma.h>
-+#include <asm/ns87303.h>
-+#include <asm/prom.h>
-+
-+#define PARPORT_PC_MAX_PORTS	PARPORT_MAX
-+
-+/*
-+ * While sparc64 doesn't have an ISA DMA API, we provide something that looks
-+ * close enough to make parport_pc happy
-+ */
-+#define HAS_DMA
-+
-+#ifdef CONFIG_PARPORT_PC_FIFO
-+static DEFINE_SPINLOCK(dma_spin_lock);
-+
-+#define claim_dma_lock() \
-+({	unsigned long flags; \
-+	spin_lock_irqsave(&dma_spin_lock, flags); \
-+	flags; \
-+})
-+
-+#define release_dma_lock(__flags) \
-+	spin_unlock_irqrestore(&dma_spin_lock, __flags);
-+#endif
-+
-+static struct sparc_ebus_info {
-+	struct ebus_dma_info info;
-+	unsigned int addr;
-+	unsigned int count;
-+	int lock;
-+
-+	struct parport *port;
-+} sparc_ebus_dmas[PARPORT_PC_MAX_PORTS];
-+
-+static DECLARE_BITMAP(dma_slot_map, PARPORT_PC_MAX_PORTS);
-+
-+static inline int request_dma(unsigned int dmanr, const char *device_id)
-+{
-+	if (dmanr >= PARPORT_PC_MAX_PORTS)
-+		return -EINVAL;
-+	if (xchg(&sparc_ebus_dmas[dmanr].lock, 1) != 0)
-+		return -EBUSY;
-+	return 0;
-+}
-+
-+static inline void free_dma(unsigned int dmanr)
-+{
-+	if (dmanr >= PARPORT_PC_MAX_PORTS) {
-+		printk(KERN_WARNING "Trying to free DMA%d\n", dmanr);
-+		return;
-+	}
-+	if (xchg(&sparc_ebus_dmas[dmanr].lock, 0) == 0) {
-+		printk(KERN_WARNING "Trying to free free DMA%d\n", dmanr);
-+		return;
-+	}
-+}
-+
-+static inline void enable_dma(unsigned int dmanr)
-+{
-+	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 1);
-+
-+	if (ebus_dma_request(&sparc_ebus_dmas[dmanr].info,
-+			     sparc_ebus_dmas[dmanr].addr,
-+			     sparc_ebus_dmas[dmanr].count))
-+		BUG();
-+}
-+
-+static inline void disable_dma(unsigned int dmanr)
-+{
-+	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 0);
-+}
-+
-+static inline void clear_dma_ff(unsigned int dmanr)
-+{
-+	/* nothing */
-+}
-+
-+static inline void set_dma_mode(unsigned int dmanr, char mode)
-+{
-+	ebus_dma_prepare(&sparc_ebus_dmas[dmanr].info, (mode != DMA_MODE_WRITE));
-+}
-+
-+static inline void set_dma_addr(unsigned int dmanr, unsigned int addr)
-+{
-+	sparc_ebus_dmas[dmanr].addr = addr;
-+}
-+
-+static inline void set_dma_count(unsigned int dmanr, unsigned int count)
-+{
-+	sparc_ebus_dmas[dmanr].count = count;
-+}
-+
-+static inline unsigned int get_dma_residue(unsigned int dmanr)
-+{
-+	return ebus_dma_residue(&sparc_ebus_dmas[dmanr].info);
-+}
-+
-+static int ecpp_probe(struct platform_device *op)
-+{
-+	unsigned long base = op->resource[0].start;
-+	unsigned long config = op->resource[1].start;
-+	unsigned long d_base = op->resource[2].start;
-+	unsigned long d_len;
-+	struct device_node *parent;
-+	struct parport *p;
-+	int slot, err;
-+
-+	parent = op->dev.of_node->parent;
-+	if (of_node_name_eq(parent, "dma")) {
-+		p = parport_pc_probe_port(base, base + 0x400,
-+					  op->archdata.irqs[0], PARPORT_DMA_NOFIFO,
-+					  op->dev.parent->parent, 0);
-+		if (!p)
-+			return -ENOMEM;
-+		dev_set_drvdata(&op->dev, p);
-+		return 0;
-+	}
-+
-+	for (slot = 0; slot < PARPORT_PC_MAX_PORTS; slot++) {
-+		if (!test_and_set_bit(slot, dma_slot_map))
-+			break;
-+	}
-+	err = -ENODEV;
-+	if (slot >= PARPORT_PC_MAX_PORTS)
-+		goto out_err;
-+
-+	spin_lock_init(&sparc_ebus_dmas[slot].info.lock);
-+
-+	d_len = (op->resource[2].end - d_base) + 1UL;
-+	sparc_ebus_dmas[slot].info.regs =
-+		of_ioremap(&op->resource[2], 0, d_len, "ECPP DMA");
-+
-+	if (!sparc_ebus_dmas[slot].info.regs)
-+		goto out_clear_map;
-+
-+	sparc_ebus_dmas[slot].info.flags = 0;
-+	sparc_ebus_dmas[slot].info.callback = NULL;
-+	sparc_ebus_dmas[slot].info.client_cookie = NULL;
-+	sparc_ebus_dmas[slot].info.irq = 0xdeadbeef;
-+	strcpy(sparc_ebus_dmas[slot].info.name, "parport");
-+	if (ebus_dma_register(&sparc_ebus_dmas[slot].info))
-+		goto out_unmap_regs;
-+
-+	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 1);
-+
-+	/* Configure IRQ to Push Pull, Level Low */
-+	/* Enable ECP, set bit 2 of the CTR first */
-+	outb(0x04, base + 0x02);
-+	ns87303_modify(config, PCR,
-+		       PCR_EPP_ENABLE |
-+		       PCR_IRQ_ODRAIN,
-+		       PCR_ECP_ENABLE |
-+		       PCR_ECP_CLK_ENA |
-+		       PCR_IRQ_POLAR);
-+
-+	/* CTR bit 5 controls direction of port */
-+	ns87303_modify(config, PTR,
-+		       0, PTR_LPT_REG_DIR);
-+
-+	p = parport_pc_probe_port(base, base + 0x400,
-+				  op->archdata.irqs[0],
-+				  slot,
-+				  op->dev.parent,
-+				  0);
-+	err = -ENOMEM;
-+	if (!p)
-+		goto out_disable_irq;
-+
-+	dev_set_drvdata(&op->dev, p);
-+
-+	return 0;
-+
-+out_disable_irq:
-+	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
-+	ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
-+
-+out_unmap_regs:
-+	of_iounmap(&op->resource[2], sparc_ebus_dmas[slot].info.regs, d_len);
-+
-+out_clear_map:
-+	clear_bit(slot, dma_slot_map);
-+
-+out_err:
-+	return err;
-+}
-+
-+static int ecpp_remove(struct platform_device *op)
-+{
-+	struct parport *p = dev_get_drvdata(&op->dev);
-+	int slot = p->dma;
-+
-+	parport_pc_unregister_port(p);
-+
-+	if (slot != PARPORT_DMA_NOFIFO) {
-+		unsigned long d_base = op->resource[2].start;
-+		unsigned long d_len;
-+
-+		d_len = (op->resource[2].end - d_base) + 1UL;
-+
-+		ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
-+		ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
-+		of_iounmap(&op->resource[2],
-+			   sparc_ebus_dmas[slot].info.regs,
-+			   d_len);
-+		clear_bit(slot, dma_slot_map);
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id ecpp_match[] = {
-+	{
-+		.name = "ecpp",
-+	},
-+	{
-+		.name = "parallel",
-+		.compatible = "ecpp",
-+	},
-+	{
-+		.name = "parallel",
-+		.compatible = "ns87317-ecpp",
-+	},
-+	{
-+		.name = "parallel",
-+		.compatible = "pnpALI,1533,3",
-+	},
-+	{},
-+};
-+
-+static struct platform_driver ecpp_driver = {
-+	.driver = {
-+		.name = "ecpp",
-+		.of_match_table = ecpp_match,
-+	},
-+	.probe			= ecpp_probe,
-+	.remove			= ecpp_remove,
-+};
-+
-+static int parport_pc_find_nonpci_ports(int autoirq, int autodma)
-+{
-+	return platform_driver_register(&ecpp_driver);
-+}
-+
-+#endif /* !(_ASM_SPARC64_PARPORT_H */
+ static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index 6a06066684172..8e21caae4cae2 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -1656,7 +1656,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
+ 				       !atomic_read(&cinfo->rpcs_out));
+ }
+ 
+-static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
+ {
+ 	atomic_inc(&cinfo->rpcs_out);
+ }
+diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
+index 7931fa4725612..ac7d799d9d387 100644
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -582,6 +582,7 @@ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio);
+ extern int  nfs_commit_inode(struct inode *, int);
+ extern struct nfs_commit_data *nfs_commitdata_alloc(void);
+ extern void nfs_commit_free(struct nfs_commit_data *data);
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
+ bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
+ 
+ static inline bool nfs_have_writebacks(const struct inode *inode)
 -- 
 2.43.0
 
