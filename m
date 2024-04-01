@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEECBA3F;
-	Mon,  1 Apr 2024 16:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC64BA3F;
+	Mon,  1 Apr 2024 16:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990720; cv=none; b=EH0zRTt2a5BDenf4KWPcKNhajqxO4ipzl7Aujz3uZ0R/X2ov8M/8i0SauWlqPcI1oL8MUY3yVwlO+2gsaG4v9uDkHNf5At9uZZ/IFGkR4Oq28Y49Y/9j5sM34NCDYeHMSow0CMZZhRmJcm1k/Z+UpXXSpwdF+lo/BK5DmvP8MS8=
+	t=1711990723; cv=none; b=R8GVs9+h1brqHkgHnQjE1mwJ8XlBdKppUXIipS6f8qun0erBf4QV3GtpEFGyieH801xn4zZ2fLHB2iBw/1UcXZcQ6i+yn+XTCQ2xfENpWF1PBTTgViwgOEU41KljYoX2rDqyCDkbP46RfDJ2JHvOo6TK0DJCqwDBP7w6WnLQoCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990720; c=relaxed/simple;
-	bh=bxYXKjnxz7Yy4IDXk28odB2bi2HeySaAP93qLMw5yX8=;
+	s=arc-20240116; t=1711990723; c=relaxed/simple;
+	bh=RAjX3Yd9+ZrF2fHMLTDTWlimYWfCXL+KA8CZN4Pb0RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLXQqyzcEWFiDJyiBl4P1caBdg5o1orSuwqNjV4Vh6C/i/FgCmORzVGLGs6DVcXzAOpIoDxBRk90RH9ZK8f6Lag1LfAmqX6Iu2sNm1p5DldpFfSGI8aeQxNSsYbFb0ZmSWZz28pn2OsSOAv68+EGFx2PCB9mtGYb9bd3HnqEDbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRgn6qiV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwYQyiZmf/wNEqwAcZgKxOGuwh9c3OCiFJFhmEKlCmBvcXLWnQtW4Tmci6G/QwxmExprPsSFJl4Csfb47YE3HmbCS4OriBqyLQD9poDwbvkN2vDxjca3ugNC3CKSexoZ398WUELI5pefq7+dPnnz5ZM2GhW8OoEOjxIHnnYgOFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms4Bkbvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRgn6qiV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BABC433F1;
-	Mon,  1 Apr 2024 16:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms4Bkbvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08113C433C7;
+	Mon,  1 Apr 2024 16:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990720;
-	bh=bxYXKjnxz7Yy4IDXk28odB2bi2HeySaAP93qLMw5yX8=;
+	s=korg; t=1711990723;
+	bh=RAjX3Yd9+ZrF2fHMLTDTWlimYWfCXL+KA8CZN4Pb0RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRgn6qiVAiizQ/ThoKQXC/KylZGQiQJ7YEjUkR/Y3Ms8vjIQ8oitzr+nv57+byV8K
-	 9UgtIpQEGo8E+0xX5CpTT2uBO27x03HIEQNlsMlAmX1DP/Rls+X17zBLB+ToVjR0Hb
-	 55U+/8RkN1N7mH49OG099L0FAgiSFSPc2Bbql9EA=
+	b=Ms4BkbvrGAxA6vrYppab1HQuwRWTYSdfLIB4D0utEVpZ0fnCH0k44w3WN2agBrVtC
+	 Vcg2AClasjU9/Irws0MyKPvRY57xAFzxQ6lwA2c4Ss4+W6XfaUuqOoc5jAAqy4Caph
+	 EGHoEgcZ4Zfpbb09LPSfdl++yQp/9R86M61KjfNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/272] parisc: Avoid clobbering the C/B bits in the PSW with tophys and tovirt macros
-Date: Mon,  1 Apr 2024 17:43:55 +0200
-Message-ID: <20240401152531.808059480@linuxfoundation.org>
+Subject: [PATCH 6.1 046/272] parisc: Fix ip_fast_csum
+Date: Mon,  1 Apr 2024 17:43:56 +0200
+Message-ID: <20240401152531.838736905@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,61 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 4603fbaa76b5e703b38ac8cc718102834eb6e330 ]
+[ Upstream commit a2abae8f0b638c31bb9799d9dd847306e0d005bd ]
 
-Use add,l to avoid clobbering the C/B bits in the PSW.
+IP checksum unit tests report the following error when run on hppa/hppa64.
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
+    # test_ip_fast_csum: ASSERTION FAILED at lib/checksum_kunit.c:463
+    Expected ( u64)csum_result == ( u64)expected, but
+        ( u64)csum_result == 33754 (0x83da)
+        ( u64)expected == 10946 (0x2ac2)
+    not ok 4 test_ip_fast_csum
+
+0x83da is the expected result if the IP header length is 20 bytes. 0x2ac2
+is the expected result if the IP header length is 24 bytes. The test fails
+with an IP header length of 24 bytes. It appears that ip_fast_csum()
+always returns the checksum for a 20-byte header, no matter how long
+the header actually is.
+
+Code analysis shows a suspicious assembler sequence in ip_fast_csum().
+
+ "      addc            %0, %3, %0\n"
+ "1:    ldws,ma         4(%1), %3\n"
+ "      addib,<         0, %2, 1b\n"	<---
+
+While my understanding of HPPA assembler is limited, it does not seem
+to make much sense to subtract 0 from a register and to expect the result
+to ever be negative. Subtracting 1 from the length parameter makes more
+sense. On top of that, the operation should be repeated if and only if
+the result is still > 0, so change the suspicious instruction to
+ "      addib,>         -1, %2, 1b\n"
+
+The IP checksum unit test passes after this change.
+
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.10+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/assembly.h | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ arch/parisc/include/asm/checksum.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/parisc/include/asm/assembly.h b/arch/parisc/include/asm/assembly.h
-index 5937d5edaba1e..000a28e1c5e8d 100644
---- a/arch/parisc/include/asm/assembly.h
-+++ b/arch/parisc/include/asm/assembly.h
-@@ -97,26 +97,28 @@
- 	 * version takes two arguments: a src and destination register.
- 	 * However, the source and destination registers can not be
- 	 * the same register.
-+	 *
-+	 * We use add,l to avoid clobbering the C/B bits in the PSW.
- 	 */
- 
- 	.macro  tophys  grvirt, grphys
--	ldil    L%(__PAGE_OFFSET), \grphys
--	sub     \grvirt, \grphys, \grphys
-+	ldil    L%(-__PAGE_OFFSET), \grphys
-+	addl    \grvirt, \grphys, \grphys
- 	.endm
--	
-+
- 	.macro  tovirt  grphys, grvirt
- 	ldil    L%(__PAGE_OFFSET), \grvirt
--	add     \grphys, \grvirt, \grvirt
-+	addl    \grphys, \grvirt, \grvirt
- 	.endm
- 
- 	.macro  tophys_r1  gr
--	ldil    L%(__PAGE_OFFSET), %r1
--	sub     \gr, %r1, \gr
-+	ldil    L%(-__PAGE_OFFSET), %r1
-+	addl    \gr, %r1, \gr
- 	.endm
--	
-+
- 	.macro  tovirt_r1  gr
- 	ldil    L%(__PAGE_OFFSET), %r1
--	add     \gr, %r1, \gr
-+	addl    \gr, %r1, \gr
- 	.endm
- 
- 	.macro delay value
+diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
+index 3c43baca7b397..f705e5dd10742 100644
+--- a/arch/parisc/include/asm/checksum.h
++++ b/arch/parisc/include/asm/checksum.h
+@@ -40,7 +40,7 @@ static inline __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
+ "	addc		%0, %5, %0\n"
+ "	addc		%0, %3, %0\n"
+ "1:	ldws,ma		4(%1), %3\n"
+-"	addib,<		0, %2, 1b\n"
++"	addib,>		-1, %2, 1b\n"
+ "	addc		%0, %3, %0\n"
+ "\n"
+ "	extru		%0, 31, 16, %4\n"
 -- 
 2.43.0
 
