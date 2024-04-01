@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C2E3D961;
-	Mon,  1 Apr 2024 16:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6498A3D961;
+	Mon,  1 Apr 2024 16:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988982; cv=none; b=cy3V6LVVwUd28sEfOSLRn+fAwHntqj3+F5ER4Dopi/iFlAEWdVVi8/F4S8mvQI/8G5hLECJJVO6FP2aepF3CmRGYirUqTMPLidZ+BXsaSZu3hlhuF/jF2LkehB9Clz32fq0aR+98JjqELg6mvZEVjzqGrtqzPdZHVSE4YNgwb9M=
+	t=1711988985; cv=none; b=Jn38ggD8ds8oBlPv2oBYUqw+PLaou2E63MBY1+rygMSrkdbEUKDBEA2/8WmnWYQwdqkxssOtY4115dFa3IzxIXRA5+gD3lQCrSGxXuyKpvx2lwphJHpQ4q6GzyaznSEg7f7v1LpLBBSwar8yZsuZBQzOWvmNUJeNUZy0KjlNjwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988982; c=relaxed/simple;
-	bh=FFK8t2moLStvmfHYKr0OEZE7PhTYvADZmNWR+fzaF+A=;
+	s=arc-20240116; t=1711988985; c=relaxed/simple;
+	bh=IYAWSUJ7hI3hPEbrdqA94R74ya7cbXZA7gIg7ezgPRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHYTWboC/pCnP0ON+U8sSUeHFrbvFQohfTicp8dSSjL5KZc/wR03YVPiD1GA4sU7jISMvyJk3pTOK1t7nSUywKkv+KWbng2n0TdepFIvB5JOP2JtyduZxWqqJYQPRTnbpy0RVNRWIkivMogfy7H7LL7oWue/8bq/e1BfHbeBwSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKsKGAkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDecU18t4iGvc66ANMoYJFgLMVWNGyRM4rqrvz3eq7pfgpIH2q3A0FIIeWupJwHaRym/WJwgrZ22sob9+hwh10wlINKqfVzdyGUP8qQe0LyOpcqty/Y5HsnY3RmBnf5nzpzheIJ23nF3txSkeq8+5alwjGz/mtOdaRi9ScqEZdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGqD+ZYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKsKGAkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528DEC43390;
-	Mon,  1 Apr 2024 16:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGqD+ZYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82CDC433C7;
+	Mon,  1 Apr 2024 16:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988981;
-	bh=FFK8t2moLStvmfHYKr0OEZE7PhTYvADZmNWR+fzaF+A=;
+	s=korg; t=1711988985;
+	bh=IYAWSUJ7hI3hPEbrdqA94R74ya7cbXZA7gIg7ezgPRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKsKGAkltXMYrSZfnrpSnTtXcJkWflhd8PCzWA+mE+x3m1mjDo4ivDZY6GrA0NMe4
-	 oOsCL51oiQ7dsUUBtQGlQUvkOs/nArMzm5kV85CBsP+oaRfoR/nKuilvIC3jIydsxa
-	 RytQlN4XgyBnQ8qAoYMvShHCeXvpQrqp+iHB8F5w=
+	b=UGqD+ZYkD+/Bmf2bVJcDnEkLFxnh7gpK1GlXiz29o/MdCLFJQAo331+ihiEfczNim
+	 qy5rjda1nLtFeDB+i/WL+lYv0R/IRnPa8PEdtDcaHyT1XYGE+gzts/cWILPry1bQuy
+	 ipFY2mA1sRHiZE563w6OZyYSKpusf9P8pR0GtL+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.7 346/432] wifi: cfg80211: add a flag to disable wireless extensions
-Date: Mon,  1 Apr 2024 17:45:33 +0200
-Message-ID: <20240401152603.560746409@linuxfoundation.org>
+Subject: [PATCH 6.7 347/432] wifi: iwlwifi: mvm: disable MLO for the time being
+Date: Mon,  1 Apr 2024 17:45:34 +0200
+Message-ID: <20240401152603.589670217@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,77 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-commit be23b2d7c3b7c8bf57b1cf0bf890bd65df9d0186 upstream.
+commit 5f404005055304830bbbee0d66af2964fc48f29e upstream.
 
-Wireless extensions are already disabled if MLO is enabled,
-given that we cannot support MLO there with all the hard-
-coded assumptions about BSSID etc.
-
-However, the WiFi7 ecosystem is still stabilizing, and some
-devices may need MLO disabled while that happens. In that
-case, we might end up with a device that supports wext (but
-not MLO) in one kernel, and then breaks wext in the future
-(by enabling MLO), which is not desirable.
-
-Add a flag to let such drivers/devices disable wext even if
-MLO isn't yet enabled.
+MLO ended up not really fully stable yet, we want to make
+sure it works well with the ecosystem before enabling it.
+Thus, remove the flag, but set WIPHY_FLAG_DISABLE_WEXT so
+we don't get wireless extensions back until we enable MLO
+for this hardware.
 
 Cc: stable@vger.kernel.org
-Link: https://msgid.link/20240314110951.b50f1dc4ec21.I656ddd8178eedb49dc5c6c0e70f8ce5807afb54f@changeid
+Reviewed-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240314110951.d6ad146df98d.I47127e4fdbdef89e4ccf7483641570ee7871d4e6@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/cfg80211.h   |    2 ++
- net/wireless/wext-core.c |    7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -4914,6 +4914,7 @@ struct cfg80211_ops {
-  *	NL80211_REGDOM_SET_BY_DRIVER.
-  * @WIPHY_FLAG_CHANNEL_CHANGE_ON_BEACON: reg_call_notifier() is called if driver
-  *	set this flag to update channels on beacon hints.
-+ * @WIPHY_FLAG_DISABLE_WEXT: disable wireless extensions for this device
-  */
- enum wiphy_flags {
- 	WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK		= BIT(0),
-@@ -4925,6 +4926,7 @@ enum wiphy_flags {
- 	WIPHY_FLAG_4ADDR_STATION		= BIT(6),
- 	WIPHY_FLAG_CONTROL_PORT_PROTOCOL	= BIT(7),
- 	WIPHY_FLAG_IBSS_RSN			= BIT(8),
-+	WIPHY_FLAG_DISABLE_WEXT			= BIT(9),
- 	WIPHY_FLAG_MESH_AUTH			= BIT(10),
- 	WIPHY_FLAG_SUPPORTS_EXT_KCK_32          = BIT(11),
- 	/* use hole at 12 */
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -4,6 +4,7 @@
-  * Authors :	Jean Tourrilhes - HPL - <jt@hpl.hp.com>
-  * Copyright (c) 1997-2007 Jean Tourrilhes, All Rights Reserved.
-  * Copyright	2009 Johannes Berg <johannes@sipsolutions.net>
-+ * Copyright (C) 2024 Intel Corporation
-  *
-  * (As all part of the Linux kernel, this file is GPL)
-  */
-@@ -662,7 +663,8 @@ struct iw_statistics *get_wireless_stats
- 	    dev->ieee80211_ptr->wiphy->wext &&
- 	    dev->ieee80211_ptr->wiphy->wext->get_wireless_stats) {
- 		wireless_warn_cfg80211_wext();
--		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
-+		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
-+							WIPHY_FLAG_DISABLE_WEXT))
- 			return NULL;
- 		return dev->ieee80211_ptr->wiphy->wext->get_wireless_stats(dev);
- 	}
-@@ -704,7 +706,8 @@ static iw_handler get_handler(struct net
- #ifdef CONFIG_CFG80211_WEXT
- 	if (dev->ieee80211_ptr && dev->ieee80211_ptr->wiphy) {
- 		wireless_warn_cfg80211_wext();
--		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
-+		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
-+							WIPHY_FLAG_DISABLE_WEXT))
- 			return NULL;
- 		handlers = dev->ieee80211_ptr->wiphy->wext;
- 	}
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -344,7 +344,7 @@ int iwl_mvm_mac_setup_register(struct iw
+ 	if (mvm->mld_api_is_used && mvm->nvm_data->sku_cap_11be_enable &&
+ 	    !iwlwifi_mod_params.disable_11ax &&
+ 	    !iwlwifi_mod_params.disable_11be)
+-		hw->wiphy->flags |= WIPHY_FLAG_SUPPORTS_MLO;
++		hw->wiphy->flags |= WIPHY_FLAG_DISABLE_WEXT;
+ 
+ 	/* With MLD FW API, it tracks timing by itself,
+ 	 * no need for any timing from the host
 
 
