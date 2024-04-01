@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC823D961;
-	Mon,  1 Apr 2024 16:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C52047A62;
+	Mon,  1 Apr 2024 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988955; cv=none; b=aguYRVXAUmfsfATz5N3rB3K2sP193ucg1G3z4L9TM6YrIKDKuFiPjIG/OZujD9RBdBzDeSUXLVvRh82SBgYgENFzUmZdsFyKFtLUmjgUjXlZiTsTJEyx3wWzr/SO5MQ33W84CPUJUiIDyPwMpiSCZu54E4C4h23KZrE7yexDxmI=
+	t=1711988958; cv=none; b=loakEQfCKeGkDamrngWoniLJlBzsYZazt6X0z1L9wtVmWUbvNaIZ191p2twqPgqQ2ATX2apf4RHmsOMkNLb1bA8qYKMISVRP0SiR7NRzNGdvBW0WOwwICiViU5IwJU1wDpluvCjQlwMdaaFm2KV4Egq9EVB97TPuGJD3O391RyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988955; c=relaxed/simple;
-	bh=M++KOEqTBWB0jxXkts8ta0v/dcapetbAStff7/ggZtM=;
+	s=arc-20240116; t=1711988958; c=relaxed/simple;
+	bh=UGtwlrdnTpmXV3tMBBHVED+gCiTGXLCCTrojZVcXI1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5dmPt9+8FOpEbP8AdoXHHCDNdOpOu+AtZu4tnr8lHM7YsaK5uBek7VTmsFTV6DcoDEzxQPRsE7zq2AeNC67Ri0yrK5qOOQW53IW/L/yTfbR2x8LRGhIF/w93xFAcWiaI+W4afr8GN9JwvbSiYR0Y1taGPO4ZeVI4QGI8Kkx1aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjiLmCvB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f9ngMDpoKmzs7NsY5PuAWNFVVE2+MuGnPL3OloX2SQP0ju1KOCQazH39RDCcqZOm2P+XL8OiKqRATb0LU8v8EgV+eipDD2ZxmNYwlxs6P4ansUVBYXIYXYaV2uKLcc4D5mBorjl1jjjvLXVFpRaJJOTVujBe8H1qj1DvPotPkrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2N+1eEu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjiLmCvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C90CC433F1;
-	Mon,  1 Apr 2024 16:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2N+1eEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89192C433C7;
+	Mon,  1 Apr 2024 16:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988955;
-	bh=M++KOEqTBWB0jxXkts8ta0v/dcapetbAStff7/ggZtM=;
+	s=korg; t=1711988958;
+	bh=UGtwlrdnTpmXV3tMBBHVED+gCiTGXLCCTrojZVcXI1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjiLmCvBXKgMkq/amcPyMQpwx5HH7rpfA/IQULY0pvjYmNtjDhO+JzasKHY7MmWxK
-	 Q3KdYK4osC5P1Q4V0nkIP7FBI2S7v6/g7Bu0MotCUDVJJ4Mp2yucaDGTPqsx1iUeZy
-	 lMQfi/T3anrFg9UFDSF8qokQLtP2kHdz5Dpz7PWI=
+	b=B2N+1eEu2ZrqmYsaOqXApX4VGszE+s+Zt6ehO0cjYHL2p0uEQh2Z7k6OiGttLWwwR
+	 qT4/cyzSU9wL56qtevXutLacq+nL5FR6rCezxO4sPLGo6s6hN+UFikhtq8UBxWRMG8
+	 LuD1VySKX1B0RjgVpVE+Gg1g0zMXRNjPBWgjD6a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,6 +31,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Borislav Petkov <bp@alien8.de>,
 	David Hildenbrand <david@redhat.com>,
 	Florent Revest <revest@chromium.org>,
+	Helge Deller <deller@gmx.de>,
 	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Kees Cook <keescook@chromium.org>,
@@ -44,11 +45,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Roesch <shr@devkernel.io>,
 	Yang Shi <yang@os.amperecomputing.com>,
 	Yin Fengwei <fengwei.yin@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.7 338/432] prctl: generalize PR_SET_MDWE support check to be per-arch
-Date: Mon,  1 Apr 2024 17:45:25 +0200
-Message-ID: <20240401152603.306621407@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 339/432] ARM: prctl: reject PR_SET_MDWE on pre-ARMv6
+Date: Mon,  1 Apr 2024 17:45:26 +0200
+Message-ID: <20240401152603.337565069@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -69,44 +69,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Zev Weiss <zev@bewilderbeest.net>
 
-commit d5aad4c2ca057e760a92a9a7d65bd38d72963f27 upstream.
+commit 166ce846dc5974a266f6c2a2896dbef5425a6f21 upstream.
 
-Patch series "ARM: prctl: Reject PR_SET_MDWE where not supported".
+On v5 and lower CPUs we can't provide MDWE protection, so ensure we fail
+any attempt to enable it via prctl(PR_SET_MDWE).
 
-I noticed after a recent kernel update that my ARM926 system started
-segfaulting on any execve() after calling prctl(PR_SET_MDWE).  After some
-investigation it appears that ARMv5 is incapable of providing the
-appropriate protections for MDWE, since any readable memory is also
-implicitly executable.
+Previously such an attempt would misleadingly succeed, leading to any
+subsequent mmap(PROT_READ|PROT_WRITE) or execve() failing unconditionally
+(the latter somewhat violently via force_fatal_sig(SIGSEGV) due to
+READ_IMPLIES_EXEC).
 
-The prctl_set_mdwe() function already had some special-case logic added
-disabling it on PARISC (commit 793838138c15, "prctl: Disable
-prctl(PR_SET_MDWE) on parisc"); this patch series (1) generalizes that
-check to use an arch_*() function, and (2) adds a corresponding override
-for ARM to disable MDWE on pre-ARMv6 CPUs.
-
-With the series applied, prctl(PR_SET_MDWE) is rejected on ARMv5 and
-subsequent execve() calls (as well as mmap(PROT_READ|PROT_WRITE)) can
-succeed instead of unconditionally failing; on ARMv6 the prctl works as it
-did previously.
-
-[0] https://lore.kernel.org/all/2023112456-linked-nape-bf19@gregkh/
-
-
-This patch (of 2):
-
-There exist systems other than PARISC where MDWE may not be feasible to
-support; rather than cluttering up the generic code with additional
-arch-specific logic let's add a generic function for checking MDWE support
-and allow each arch to override it as needed.
-
-Link: https://lkml.kernel.org/r/20240227013546.15769-4-zev@bewilderbeest.net
-Link: https://lkml.kernel.org/r/20240227013546.15769-5-zev@bewilderbeest.net
+Link: https://lkml.kernel.org/r/20240227013546.15769-6-zev@bewilderbeest.net
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Acked-by: Helge Deller <deller@gmx.de>	[parisc]
+Cc: <stable@vger.kernel.org>	[6.3+]
 Cc: Borislav Petkov <bp@alien8.de>
 Cc: David Hildenbrand <david@redhat.com>
 Cc: Florent Revest <revest@chromium.org>
+Cc: Helge Deller <deller@gmx.de>
 Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
 Cc: Josh Triplett <josh@joshtriplett.org>
 Cc: Kees Cook <keescook@chromium.org>
@@ -120,65 +99,29 @@ Cc: Sam James <sam@gentoo.org>
 Cc: Stefan Roesch <shr@devkernel.io>
 Cc: Yang Shi <yang@os.amperecomputing.com>
 Cc: Yin Fengwei <fengwei.yin@intel.com>
-Cc: <stable@vger.kernel.org>	[6.3+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/mman.h |   14 ++++++++++++++
- include/linux/mman.h           |    8 ++++++++
- kernel/sys.c                   |    7 +++++--
- 3 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100644 arch/parisc/include/asm/mman.h
+ arch/arm/include/asm/mman.h |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+ create mode 100644 arch/arm/include/asm/mman.h
 
 --- /dev/null
-+++ b/arch/parisc/include/asm/mman.h
++++ b/arch/arm/include/asm/mman.h
 @@ -0,0 +1,14 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +#ifndef __ASM_MMAN_H__
 +#define __ASM_MMAN_H__
 +
++#include <asm/system_info.h>
 +#include <uapi/asm/mman.h>
 +
-+/* PARISC cannot allow mdwe as it needs writable stacks */
 +static inline bool arch_memory_deny_write_exec_supported(void)
 +{
-+	return false;
++	return cpu_architecture() >= CPU_ARCH_ARMv6;
 +}
 +#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
 +
 +#endif /* __ASM_MMAN_H__ */
---- a/include/linux/mman.h
-+++ b/include/linux/mman.h
-@@ -162,6 +162,14 @@ calc_vm_flag_bits(unsigned long flags)
- 
- unsigned long vm_commit_limit(void);
- 
-+#ifndef arch_memory_deny_write_exec_supported
-+static inline bool arch_memory_deny_write_exec_supported(void)
-+{
-+	return true;
-+}
-+#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
-+#endif
-+
- /*
-  * Denies creating a writable executable mapping or gaining executable permissions.
-  *
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2408,8 +2408,11 @@ static inline int prctl_set_mdwe(unsigne
- 	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
- 		return -EINVAL;
- 
--	/* PARISC cannot allow mdwe as it needs writable stacks */
--	if (IS_ENABLED(CONFIG_PARISC))
-+	/*
-+	 * EOPNOTSUPP might be more appropriate here in principle, but
-+	 * existing userspace depends on EINVAL specifically.
-+	 */
-+	if (!arch_memory_deny_write_exec_supported())
- 		return -EINVAL;
- 
- 	current_bits = get_current_mdwe();
 
 
