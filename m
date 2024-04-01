@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11940876;
-	Mon,  1 Apr 2024 17:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC58487BC;
+	Mon,  1 Apr 2024 17:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991334; cv=none; b=jU2w5JqcvSH2yzqxY8AYgJdcDCoyxD5JWjJ0te0UYmYY4SKqnM3Q7g/xmlewXMaiCiSByo40YzF1V06fQ5jt4fmnTYzq5XVD15sgiAS6O15TLwKCEcBstNTp7pj7JgdsaltxpY7rBBgyNlbp+7/KrpYP/g02WRnuUpER00DnTJI=
+	t=1711991337; cv=none; b=OXErAw5hNDxbRPX7Pgr4hovqzJx4YZN+3SqaGMB8QA+tIGaz5FPd2j2CizV1prUG4h52In2oEz38kS9TEsNH4Qlkal8YPwsROPvb1+ITqL0LKo7Ht3gREbq055d5k5Om6C1bysds/suIgxq7H03AE/0TcjzW4Qt+aC6Q63QNaVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991334; c=relaxed/simple;
-	bh=2LrvDvGh4BSYQ6QgkGCFiSf0YVSBizbDqRkTJTfaijc=;
+	s=arc-20240116; t=1711991337; c=relaxed/simple;
+	bh=D3P+E4m9ozDs+7py3UYUK9n9TJnJETRgQnSKyI6qTjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXy6NqsqxGmONfBpnvj8FR6+B8kJQi3hLtAFf+6imwJcoHVRAlzsq88VQ4bmGmYzgoBVP48PyuSzzyKld2szyL27madvxhFlj+HZYgrYB0zYW/tXyn3ONWDIncxN4iE5HNIwWbWI9lCK70eF4NPTPs2562YSXtaDLsNatEZBjzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnZsZ/Yk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnsLuZJutqXOMhhUe/etAVDzsiJRmXQdZvZVK7g4v9nklE8XhB0TpQhEg6kj9HNmK/meSH75/k7MIkYOoQPZycZgImW5J0t2YxPJtrh5tXP5CZH9hYw9H1JzIFyLxcz+MQhSkzCT4eRML8BmVO2dJeYqTgJZIcpyqIBef6b1a/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=md7tVgOj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnZsZ/Yk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742FAC433F1;
-	Mon,  1 Apr 2024 17:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="md7tVgOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2563C433C7;
+	Mon,  1 Apr 2024 17:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991334;
-	bh=2LrvDvGh4BSYQ6QgkGCFiSf0YVSBizbDqRkTJTfaijc=;
+	s=korg; t=1711991337;
+	bh=D3P+E4m9ozDs+7py3UYUK9n9TJnJETRgQnSKyI6qTjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnZsZ/Yk4tTHtYQ7k+fwjDg054EznFV5+h9GfBYvhO9RqJomsx+dvF3N4CCpBmtHz
-	 KUGHyf7Sbg8vW1rvwYS7ym0I9yW553xylHxsg6psYOyuWUOrLUgBUO9wjW/JgCyt1e
-	 w+W8fOov4Ath7nPd2rC5/Z0wDRwJo+vkLW8XczSI=
+	b=md7tVgOj7TcJQ1GzHPlGWsi6+rNYi9/PRzckX+zm+coFKkDipMdK7NUHYuBWgfpsa
+	 Ko4khvzW4rNvOJkYrj+gwo/WJnFh8mZ+DOoYV5V9fVPY/HweWJt4/5oPBDajy+L5Bv
+	 N3qIp8oaWaySeDJHZz4hW6bta0PA6t23R7qr9MYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Subject: [PATCH 6.1 233/272] USB: UAS: return ENODEV when submit urbs fail with device not attached
-Date: Mon,  1 Apr 2024 17:47:03 +0200
-Message-ID: <20240401152538.251597927@linuxfoundation.org>
+	Ladislav Michl <ladis@linux-mips.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 234/272] usb: dwc3-am62: Rename private data
+Date: Mon,  1 Apr 2024 17:47:04 +0200
+Message-ID: <20240401152538.282052563@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,147 +50,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+From: Ladislav Michl <ladis@linux-mips.org>
 
-commit cd5432c712351a3d5f82512908f5febfca946ca6 upstream.
+[ Upstream commit 3609699c32aa4f2710a6fe2b21afc6a9a3c66bc5 ]
 
-In the scenario of entering hibernation with udisk in the system, if the
-udisk was gone or resume fail in the thaw phase of hibernation. Its state
-will be set to NOTATTACHED. At this point, usb_hub_wq was already freezed
-and can't not handle disconnect event. Next, in the poweroff phase of
-hibernation, SYNCHRONIZE_CACHE SCSI command will be sent to this udisk
-when poweroff this scsi device, which will cause uas_submit_urbs to be
-called to submit URB for sense/data/cmd pipe. However, these URBs will
-submit fail as device was set to NOTATTACHED state. Then, uas_submit_urbs
-will return a value SCSI_MLQUEUE_DEVICE_BUSY to the caller. That will lead
-the SCSI layer go into an ugly loop and system fail to go into hibernation.
+Rename dwc3_data to dwc3_am62 to make it consistent with other
+glue drivers, it's clearer that this is am62's specific.
+While there, do the same for data variable.
 
-On the other hand, when we specially check for -ENODEV in function
-uas_queuecommand_lck, returning DID_ERROR to SCSI layer will cause device
-poweroff fail and system shutdown instead of entering hibernation.
-
-To fix this issue, let uas_submit_urbs to return original generic error
-when submitting URB failed. At the same time, we need to translate -ENODEV
-to DID_NOT_CONNECT for the SCSI layer.
-
-Suggested-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Link: https://lore.kernel.org/r/20240306180814.4897-1-WeitaoWang-oc@zhaoxin.com
+Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
+Link: https://lore.kernel.org/r/ZLKoHhJvT+Y6aM+C@lenoch
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6661befe4100 ("usb: dwc3-am62: fix module unload/reload behavior")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/uas.c |   28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/usb/dwc3/dwc3-am62.c | 80 ++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -533,7 +533,7 @@ static struct urb *uas_alloc_cmd_urb(str
-  * daft to me.
-  */
+diff --git a/drivers/usb/dwc3/dwc3-am62.c b/drivers/usb/dwc3/dwc3-am62.c
+index 173cf3579c55d..726f96d257c8d 100644
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -89,7 +89,7 @@
  
--static struct urb *uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
-+static int uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
+ #define DWC3_AM62_AUTOSUSPEND_DELAY	100
+ 
+-struct dwc3_data {
++struct dwc3_am62 {
+ 	struct device *dev;
+ 	void __iomem *usbss;
+ 	struct clk *usb2_refclk;
+@@ -115,19 +115,19 @@ static const int dwc3_ti_rate_table[] = {	/* in KHZ */
+ 	52000,
+ };
+ 
+-static inline u32 dwc3_ti_readl(struct dwc3_data *data, u32 offset)
++static inline u32 dwc3_ti_readl(struct dwc3_am62 *am62, u32 offset)
  {
- 	struct uas_dev_info *devinfo = cmnd->device->hostdata;
- 	struct urb *urb;
-@@ -541,30 +541,28 @@ static struct urb *uas_submit_sense_urb(
- 
- 	urb = uas_alloc_sense_urb(devinfo, gfp, cmnd);
- 	if (!urb)
--		return NULL;
-+		return -ENOMEM;
- 	usb_anchor_urb(urb, &devinfo->sense_urbs);
- 	err = usb_submit_urb(urb, gfp);
- 	if (err) {
- 		usb_unanchor_urb(urb);
- 		uas_log_cmd_state(cmnd, "sense submit err", err);
- 		usb_free_urb(urb);
--		return NULL;
- 	}
--	return urb;
-+	return err;
+-	return readl((data->usbss) + offset);
++	return readl((am62->usbss) + offset);
  }
  
- static int uas_submit_urbs(struct scsi_cmnd *cmnd,
- 			   struct uas_dev_info *devinfo)
+-static inline void dwc3_ti_writel(struct dwc3_data *data, u32 offset, u32 value)
++static inline void dwc3_ti_writel(struct dwc3_am62 *am62, u32 offset, u32 value)
  {
- 	struct uas_cmd_info *cmdinfo = scsi_cmd_priv(cmnd);
--	struct urb *urb;
- 	int err;
+-	writel(value, (data->usbss) + offset);
++	writel(value, (am62->usbss) + offset);
+ }
  
- 	lockdep_assert_held(&devinfo->lock);
- 	if (cmdinfo->state & SUBMIT_STATUS_URB) {
--		urb = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
--		if (!urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+		err = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
-+		if (err)
-+			return err;
- 		cmdinfo->state &= ~SUBMIT_STATUS_URB;
+-static int phy_syscon_pll_refclk(struct dwc3_data *data)
++static int phy_syscon_pll_refclk(struct dwc3_am62 *am62)
+ {
+-	struct device *dev = data->dev;
++	struct device *dev = am62->dev;
+ 	struct device_node *node = dev->of_node;
+ 	struct of_phandle_args args;
+ 	struct regmap *syscon;
+@@ -139,16 +139,16 @@ static int phy_syscon_pll_refclk(struct dwc3_data *data)
+ 		return PTR_ERR(syscon);
  	}
  
-@@ -572,7 +570,7 @@ static int uas_submit_urbs(struct scsi_c
- 		cmdinfo->data_in_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
- 							cmnd, DMA_FROM_DEVICE);
- 		if (!cmdinfo->data_in_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_DATA_IN_URB;
+-	data->syscon = syscon;
++	am62->syscon = syscon;
+ 
+ 	ret = of_parse_phandle_with_fixed_args(node, "ti,syscon-phy-pll-refclk", 1,
+ 					       0, &args);
+ 	if (ret)
+ 		return ret;
+ 
+-	data->offset = args.args[0];
++	am62->offset = args.args[0];
+ 
+-	ret = regmap_update_bits(data->syscon, data->offset, PHY_PLL_REFCLK_MASK, data->rate_code);
++	ret = regmap_update_bits(am62->syscon, am62->offset, PHY_PLL_REFCLK_MASK, am62->rate_code);
+ 	if (ret) {
+ 		dev_err(dev, "failed to set phy pll reference clock rate\n");
+ 		return ret;
+@@ -161,32 +161,32 @@ static int dwc3_ti_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = pdev->dev.of_node;
+-	struct dwc3_data *data;
++	struct dwc3_am62 *am62;
+ 	int i, ret;
+ 	unsigned long rate;
+ 	u32 reg;
+ 
+-	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+-	if (!data)
++	am62 = devm_kzalloc(dev, sizeof(*am62), GFP_KERNEL);
++	if (!am62)
+ 		return -ENOMEM;
+ 
+-	data->dev = dev;
+-	platform_set_drvdata(pdev, data);
++	am62->dev = dev;
++	platform_set_drvdata(pdev, am62);
+ 
+-	data->usbss = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(data->usbss)) {
++	am62->usbss = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(am62->usbss)) {
+ 		dev_err(dev, "can't map IOMEM resource\n");
+-		return PTR_ERR(data->usbss);
++		return PTR_ERR(am62->usbss);
  	}
  
-@@ -582,7 +580,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->data_in_urb);
- 			uas_log_cmd_state(cmnd, "data in submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->state &= ~SUBMIT_DATA_IN_URB;
- 		cmdinfo->state |= DATA_IN_URB_INFLIGHT;
-@@ -592,7 +590,7 @@ static int uas_submit_urbs(struct scsi_c
- 		cmdinfo->data_out_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
- 							cmnd, DMA_TO_DEVICE);
- 		if (!cmdinfo->data_out_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_DATA_OUT_URB;
+-	data->usb2_refclk = devm_clk_get(dev, "ref");
+-	if (IS_ERR(data->usb2_refclk)) {
++	am62->usb2_refclk = devm_clk_get(dev, "ref");
++	if (IS_ERR(am62->usb2_refclk)) {
+ 		dev_err(dev, "can't get usb2_refclk\n");
+-		return PTR_ERR(data->usb2_refclk);
++		return PTR_ERR(am62->usb2_refclk);
  	}
  
-@@ -602,7 +600,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->data_out_urb);
- 			uas_log_cmd_state(cmnd, "data out submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->state &= ~SUBMIT_DATA_OUT_URB;
- 		cmdinfo->state |= DATA_OUT_URB_INFLIGHT;
-@@ -611,7 +609,7 @@ static int uas_submit_urbs(struct scsi_c
- 	if (cmdinfo->state & ALLOC_CMD_URB) {
- 		cmdinfo->cmd_urb = uas_alloc_cmd_urb(devinfo, GFP_ATOMIC, cmnd);
- 		if (!cmdinfo->cmd_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_CMD_URB;
+ 	/* Calculate the rate code */
+-	rate = clk_get_rate(data->usb2_refclk);
++	rate = clk_get_rate(am62->usb2_refclk);
+ 	rate /= 1000;	// To KHz
+ 	for (i = 0; i < ARRAY_SIZE(dwc3_ti_rate_table); i++) {
+ 		if (dwc3_ti_rate_table[i] == rate)
+@@ -198,20 +198,20 @@ static int dwc3_ti_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
  
-@@ -621,7 +619,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->cmd_urb);
- 			uas_log_cmd_state(cmnd, "cmd submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->cmd_urb = NULL;
- 		cmdinfo->state &= ~SUBMIT_CMD_URB;
-@@ -698,7 +696,7 @@ static int uas_queuecommand_lck(struct s
- 	 * of queueing, no matter how fatal the error
+-	data->rate_code = i;
++	am62->rate_code = i;
+ 
+ 	/* Read the syscon property and set the rate code */
+-	ret = phy_syscon_pll_refclk(data);
++	ret = phy_syscon_pll_refclk(am62);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* VBUS divider select */
+-	data->vbus_divider = device_property_read_bool(dev, "ti,vbus-divider");
+-	reg = dwc3_ti_readl(data, USBSS_PHY_CONFIG);
+-	if (data->vbus_divider)
++	am62->vbus_divider = device_property_read_bool(dev, "ti,vbus-divider");
++	reg = dwc3_ti_readl(am62, USBSS_PHY_CONFIG);
++	if (am62->vbus_divider)
+ 		reg |= 1 << USBSS_PHY_VBUS_SEL_SHIFT;
+ 
+-	dwc3_ti_writel(data, USBSS_PHY_CONFIG, reg);
++	dwc3_ti_writel(am62, USBSS_PHY_CONFIG, reg);
+ 
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+@@ -219,7 +219,7 @@ static int dwc3_ti_probe(struct platform_device *pdev)
+ 	 * Don't ignore its dependencies with its children
  	 */
- 	if (err == -ENODEV) {
--		set_host_byte(cmnd, DID_ERROR);
-+		set_host_byte(cmnd, DID_NO_CONNECT);
- 		scsi_done(cmnd);
- 		goto zombie;
+ 	pm_suspend_ignore_children(dev, false);
+-	clk_prepare_enable(data->usb2_refclk);
++	clk_prepare_enable(am62->usb2_refclk);
+ 	pm_runtime_get_noresume(dev);
+ 
+ 	ret = of_platform_populate(node, NULL, NULL, dev);
+@@ -229,9 +229,9 @@ static int dwc3_ti_probe(struct platform_device *pdev)
  	}
+ 
+ 	/* Set mode valid bit to indicate role is valid */
+-	reg = dwc3_ti_readl(data, USBSS_MODE_CONTROL);
++	reg = dwc3_ti_readl(am62, USBSS_MODE_CONTROL);
+ 	reg |= USBSS_MODE_VALID;
+-	dwc3_ti_writel(data, USBSS_MODE_CONTROL, reg);
++	dwc3_ti_writel(am62, USBSS_MODE_CONTROL, reg);
+ 
+ 	/* Setting up autosuspend */
+ 	pm_runtime_set_autosuspend_delay(dev, DWC3_AM62_AUTOSUSPEND_DELAY);
+@@ -241,7 +241,7 @@ static int dwc3_ti_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_pm_disable:
+-	clk_disable_unprepare(data->usb2_refclk);
++	clk_disable_unprepare(am62->usb2_refclk);
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_suspended(dev);
+ 	return ret;
+@@ -258,18 +258,18 @@ static int dwc3_ti_remove_core(struct device *dev, void *c)
+ static int dwc3_ti_remove(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct dwc3_data *data = platform_get_drvdata(pdev);
++	struct dwc3_am62 *am62 = platform_get_drvdata(pdev);
+ 	u32 reg;
+ 
+ 	device_for_each_child(dev, NULL, dwc3_ti_remove_core);
+ 
+ 	/* Clear mode valid bit */
+-	reg = dwc3_ti_readl(data, USBSS_MODE_CONTROL);
++	reg = dwc3_ti_readl(am62, USBSS_MODE_CONTROL);
+ 	reg &= ~USBSS_MODE_VALID;
+-	dwc3_ti_writel(data, USBSS_MODE_CONTROL, reg);
++	dwc3_ti_writel(am62, USBSS_MODE_CONTROL, reg);
+ 
+ 	pm_runtime_put_sync(dev);
+-	clk_disable_unprepare(data->usb2_refclk);
++	clk_disable_unprepare(am62->usb2_refclk);
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_suspended(dev);
+ 
+@@ -280,18 +280,18 @@ static int dwc3_ti_remove(struct platform_device *pdev)
+ #ifdef CONFIG_PM
+ static int dwc3_ti_suspend_common(struct device *dev)
+ {
+-	struct dwc3_data *data = dev_get_drvdata(dev);
++	struct dwc3_am62 *am62 = dev_get_drvdata(dev);
+ 
+-	clk_disable_unprepare(data->usb2_refclk);
++	clk_disable_unprepare(am62->usb2_refclk);
+ 
+ 	return 0;
+ }
+ 
+ static int dwc3_ti_resume_common(struct device *dev)
+ {
+-	struct dwc3_data *data = dev_get_drvdata(dev);
++	struct dwc3_am62 *am62 = dev_get_drvdata(dev);
+ 
+-	clk_prepare_enable(data->usb2_refclk);
++	clk_prepare_enable(am62->usb2_refclk);
+ 
+ 	return 0;
+ }
+-- 
+2.43.0
+
 
 
