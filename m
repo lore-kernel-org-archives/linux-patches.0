@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8591147A5D;
-	Mon,  1 Apr 2024 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176F54778E;
+	Mon,  1 Apr 2024 16:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987783; cv=none; b=NCINkqzUIl3aGHMDUH3tLvUcMKkBr/LK16BV+dB1CSaTP+N66w8uJPBNIoUYaavGm0dqUVz44lNmPaLcwfrtoXNL/iT+CMZRUEBgBK6/pmwEULczFX4GPtetW4DmEtLleTq/GzSaj/Un06dLtD4SzTBxQ0uGqwTF3T7o4VDRAaM=
+	t=1711987787; cv=none; b=CswBc1QnYKvYlnG+brIx1rpq0AObaoLKf9LOhTmBINYw2GiC6b9766EKWQ6fkMotG3CNxE5djBFK0OHuKfmtze1jqpm3OJCgq6F3L/ShjUH7SRpi6FQ2jd90b/jxZVGvDR2yHqOlWAnAHVhFXOASisIBHkhzc/GLXn0zIMcjkio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987783; c=relaxed/simple;
-	bh=Bq3zVH7J4kYCiuVj5w1tqvRqmChNmAetl2rs/R/WOKY=;
+	s=arc-20240116; t=1711987787; c=relaxed/simple;
+	bh=JKJnSumkDFDy/aGA8c/iMFzXcKyB/2vy85UGfC+IGUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1htosyGvVY7AvZ4bi6YpQpfmo/AVv6ytA2Hc4Fyv7MsC2UfZOnO/ekmNpgkgauXa8LIfpupuWfQpKXs1DLtqi3xlc5rok5Eo3IXzcHbaS3gNOORa4GnUVQWu+JJ7ySjMWiNAWw6WAdBUEPEU7Ry7BkZXl2YTt6RGffYGWu5NLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+JXhlFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IKwlV2nIjBePg9decb7BtEWIcDqkN4ZhcLB3u4m9FHNuX05Hj3p2fbmpiUpZTbXIDb4DN06m8BEiHqxzVAyLh1EF7KO+fjPAUkmQvGiXn/9rT+C3/cCpmD2q2Zp6kanLmxekZqWEnAlfHYDcWXffMsrzhOR4e7KclpbBxwea+ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS538/PB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+JXhlFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E1DC433C7;
-	Mon,  1 Apr 2024 16:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS538/PB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF4AC43390;
+	Mon,  1 Apr 2024 16:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987783;
-	bh=Bq3zVH7J4kYCiuVj5w1tqvRqmChNmAetl2rs/R/WOKY=;
+	s=korg; t=1711987787;
+	bh=JKJnSumkDFDy/aGA8c/iMFzXcKyB/2vy85UGfC+IGUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+JXhlFKLw6hGbvEsM1B3/NLXWlVnKggMnQ8aL/GVkR2mFByVYQJITar5pMkEgy/4
-	 Jn0cBHeBc27AYINbSGjCQ5QCS6LzKquR0lpTANdwxrG3HzqDWpKv3RPKcYKG0XTvbH
-	 /O2OtoG5Zro5XUbZ7+a7P7BKi+V+Jn463mfPMKHQ=
+	b=iS538/PBPFjhvbFn2fdK3AIwvzxUzAjk0DO/wO+WInYf41MOP8/oAkHqSpOsbLReN
+	 eTFQTnKrbOLhOwDS70rpDYrDY7HIQTT/YZta/cSEo1sWJr2ikzLNJpv7OSHVazv+8Z
+	 8Zyp2GcCWmpHfWQmrAyaSi1Q89wkyIZXmMtOhBso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 6.8 361/399] usb: dwc2: host: Fix remote wakeup from hibernation
-Date: Mon,  1 Apr 2024 17:45:27 +0200
-Message-ID: <20240401152559.943991677@linuxfoundation.org>
+Subject: [PATCH 6.8 362/399] usb: dwc2: host: Fix hibernation flow
+Date: Mon,  1 Apr 2024 17:45:28 +0200
+Message-ID: <20240401152559.973316281@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,64 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit bae2bc73a59c200db53b6c15fb26bb758e2c6108 upstream.
+commit 3c7b9856a82227db01a20171d2e24c7ce305d59b upstream.
 
-Starting from core v4.30a changed order of programming
-GPWRDN_PMUACTV to 0 in case of exit from hibernation on
-remote wakeup signaling from device.
+Added to backup/restore registers HFLBADDR, HCCHARi, HCSPLTi,
+HCTSIZi, HCDMAi and HCDMABi.
 
-Fixes: c5c403dc4336 ("usb: dwc2: Add host/device hibernation functions")
+Fixes: 58e52ff6a6c3 ("usb: dwc2: Move register save and restore functions")
+Fixes: d17ee77b3044 ("usb: dwc2: add controller hibernation support")
 CC: stable@vger.kernel.org
 Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/99385ec55ce73445b6fbd0f471c9bd40eb1c9b9e.1708939799.git.Minas.Harutyunyan@synopsys.com
+Link: https://lore.kernel.org/r/c2d10ee6098b9b009a8e94191e046004747d3bdd.1708945444.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/core.h |    1 +
- drivers/usb/dwc2/hcd.c  |   17 +++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/usb/dwc2/core.h |   12 ++++++++++++
+ drivers/usb/dwc2/hcd.c  |   18 ++++++++++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/dwc2/core.h
 +++ b/drivers/usb/dwc2/core.h
-@@ -1086,6 +1086,7 @@ struct dwc2_hsotg {
- 	bool needs_byte_swap;
- 
- 	/* DWC OTG HW Release versions */
-+#define DWC2_CORE_REV_4_30a	0x4f54430a
- #define DWC2_CORE_REV_2_71a	0x4f54271a
- #define DWC2_CORE_REV_2_72a     0x4f54272a
- #define DWC2_CORE_REV_2_80a	0x4f54280a
+@@ -729,8 +729,14 @@ struct dwc2_dregs_backup {
+  * struct dwc2_hregs_backup - Holds host registers state before
+  * entering partial power down
+  * @hcfg:		Backup of HCFG register
++ * @hflbaddr:		Backup of HFLBADDR register
+  * @haintmsk:		Backup of HAINTMSK register
++ * @hcchar:		Backup of HCCHAR register
++ * @hcsplt:		Backup of HCSPLT register
+  * @hcintmsk:		Backup of HCINTMSK register
++ * @hctsiz:		Backup of HCTSIZ register
++ * @hdma:		Backup of HCDMA register
++ * @hcdmab:		Backup of HCDMAB register
+  * @hprt0:		Backup of HPTR0 register
+  * @hfir:		Backup of HFIR register
+  * @hptxfsiz:		Backup of HPTXFSIZ register
+@@ -738,8 +744,14 @@ struct dwc2_dregs_backup {
+  */
+ struct dwc2_hregs_backup {
+ 	u32 hcfg;
++	u32 hflbaddr;
+ 	u32 haintmsk;
++	u32 hcchar[MAX_EPS_CHANNELS];
++	u32 hcsplt[MAX_EPS_CHANNELS];
+ 	u32 hcintmsk[MAX_EPS_CHANNELS];
++	u32 hctsiz[MAX_EPS_CHANNELS];
++	u32 hcidma[MAX_EPS_CHANNELS];
++	u32 hcidmab[MAX_EPS_CHANNELS];
+ 	u32 hprt0;
+ 	u32 hfir;
+ 	u32 hptxfsiz;
 --- a/drivers/usb/dwc2/hcd.c
 +++ b/drivers/usb/dwc2/hcd.c
-@@ -5610,10 +5610,12 @@ int dwc2_host_exit_hibernation(struct dw
- 	dwc2_writel(hsotg, hr->hcfg, HCFG);
- 
- 	/* De-assert Wakeup Logic */
--	gpwrdn = dwc2_readl(hsotg, GPWRDN);
--	gpwrdn &= ~GPWRDN_PMUACTV;
--	dwc2_writel(hsotg, gpwrdn, GPWRDN);
--	udelay(10);
-+	if (!(rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
-+		gpwrdn = dwc2_readl(hsotg, GPWRDN);
-+		gpwrdn &= ~GPWRDN_PMUACTV;
-+		dwc2_writel(hsotg, gpwrdn, GPWRDN);
-+		udelay(10);
+@@ -5406,9 +5406,16 @@ int dwc2_backup_host_registers(struct dw
+ 	/* Backup Host regs */
+ 	hr = &hsotg->hr_backup;
+ 	hr->hcfg = dwc2_readl(hsotg, HCFG);
++	hr->hflbaddr = dwc2_readl(hsotg, HFLBADDR);
+ 	hr->haintmsk = dwc2_readl(hsotg, HAINTMSK);
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		hr->hcchar[i] = dwc2_readl(hsotg, HCCHAR(i));
++		hr->hcsplt[i] = dwc2_readl(hsotg, HCSPLT(i));
+ 		hr->hcintmsk[i] = dwc2_readl(hsotg, HCINTMSK(i));
++		hr->hctsiz[i] = dwc2_readl(hsotg, HCTSIZ(i));
++		hr->hcidma[i] = dwc2_readl(hsotg, HCDMA(i));
++		hr->hcidmab[i] = dwc2_readl(hsotg, HCDMAB(i));
 +	}
  
- 	hprt0 = hr->hprt0;
- 	hprt0 |= HPRT0_PWR;
-@@ -5638,6 +5640,13 @@ int dwc2_host_exit_hibernation(struct dw
- 		hprt0 |= HPRT0_RES;
- 		dwc2_writel(hsotg, hprt0, HPRT0);
+ 	hr->hprt0 = dwc2_read_hprt0(hsotg);
+ 	hr->hfir = dwc2_readl(hsotg, HFIR);
+@@ -5442,10 +5449,17 @@ int dwc2_restore_host_registers(struct d
+ 	hr->valid = false;
  
-+		/* De-assert Wakeup Logic */
-+		if ((rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
-+			gpwrdn = dwc2_readl(hsotg, GPWRDN);
-+			gpwrdn &= ~GPWRDN_PMUACTV;
-+			dwc2_writel(hsotg, gpwrdn, GPWRDN);
-+			udelay(10);
-+		}
- 		/* Wait for Resume time and then program HPRT again */
- 		mdelay(100);
- 		hprt0 &= ~HPRT0_RES;
+ 	dwc2_writel(hsotg, hr->hcfg, HCFG);
++	dwc2_writel(hsotg, hr->hflbaddr, HFLBADDR);
+ 	dwc2_writel(hsotg, hr->haintmsk, HAINTMSK);
+ 
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		dwc2_writel(hsotg, hr->hcchar[i], HCCHAR(i));
++		dwc2_writel(hsotg, hr->hcsplt[i], HCSPLT(i));
+ 		dwc2_writel(hsotg, hr->hcintmsk[i], HCINTMSK(i));
++		dwc2_writel(hsotg, hr->hctsiz[i], HCTSIZ(i));
++		dwc2_writel(hsotg, hr->hcidma[i], HCDMA(i));
++		dwc2_writel(hsotg, hr->hcidmab[i], HCDMAB(i));
++	}
+ 
+ 	dwc2_writel(hsotg, hr->hprt0, HPRT0);
+ 	dwc2_writel(hsotg, hr->hfir, HFIR);
 
 
