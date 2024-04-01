@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF43433DA;
-	Mon,  1 Apr 2024 16:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D51E86C;
+	Mon,  1 Apr 2024 16:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989521; cv=none; b=oxjoEdep7FiqUPsmIPYYHwnBUZDb2AQaH6FhQgvSI+8Vzh1blnZN72G8WE1UIhTS8iUpC1uDGohnYvSVdabdwH2qXKkymjExAgu+bf65AqeG9W6+0qBnIQDGptNn9pEkU5U8TvnqLo8BXAyBjTjVaKpjmt8lPkNpUQ21BrgF/rc=
+	t=1711989524; cv=none; b=NgetxxbyYu7qel84M3o41Q2QnrOrKnpRX4pupsHD8TsIsU4QNl2NWc1OPAqHoApQSNf1q+VqfvBtOO6aWqj1d1iC5iQo8FhS7yfPGXF310RQi2x3iIqzVpHjjKYNgncbfMSE30ftLdO9xQprEkjGyYQdBUOpsOAuyys6UdCNoKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989521; c=relaxed/simple;
-	bh=isOZUiUUrEW11MqzKECGuTYKCmZM6XcvDm+b+AdQavo=;
+	s=arc-20240116; t=1711989524; c=relaxed/simple;
+	bh=aGHvWIrIsEe4L0/HZAjsW1D70VvCTRGjP1bm8FtwXM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgXY9iyQ4MIkOByrtNnwb7C3ctwoMZ0okgvDkmd/WMCvyplk2V9ElDdpkZnS2djOJ2gTD6M8bC3vBlIuSon6qySkzM7RaukKEKc6iWl1RLcK2rXbbeA+HfeSge/y0VQEJ/xXoufwrjYghlkFzDfPI1NyQrG55t0/lhBpHdl4hhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCzhiWCs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zqo/WtHVJ7qioRepTzg+OOvFE9ht8Hk0JBYZLBHn+BQnhJXAN644yRCNMOvt5wUXKUUjvfIRLL9DYT1Y3cOHuqnVM1hicRnRcK+45CFf81nC/FHz7AFp9PKeC4bsRovNEILNFBpewHVGK4OSdBy5YSE0qZvv/DDi8oUhpVd82DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMJm3CAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCzhiWCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD8CC433C7;
-	Mon,  1 Apr 2024 16:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMJm3CAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A9CC43390;
+	Mon,  1 Apr 2024 16:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989520;
-	bh=isOZUiUUrEW11MqzKECGuTYKCmZM6XcvDm+b+AdQavo=;
+	s=korg; t=1711989524;
+	bh=aGHvWIrIsEe4L0/HZAjsW1D70VvCTRGjP1bm8FtwXM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCzhiWCsVDPQUK/SjsLTqOnio88kBq6WHkWRVbcDlQVC81InDW05bZnv018TCnMB+
-	 ECTF3IMUX4BKvCCB9xQKAuQIZVAyoIeuEOBbxDXG3q1kiyDURt6h+/YjL/c2f63ofz
-	 Ux/9RodcE1Fy7I/u4GY3CPa7AgZOwNq7sLw2h9vg=
+	b=lMJm3CAqAhkuGrxv7rAMggvBiOve2ckayK2e9JzNXet5IcqTKw01g+hR6AETWQ5/L
+	 UNY4H6K6PkejwFfk/nzMZluHtjNKQQaX/hOC6vOz9kj+/4MA4FfYkZa01ZY25D9DpW
+	 RHy0KpU/xNoUOoaFCBWJxb7Gw0wBhhE0Ijtz/AMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Helge Deller <deller@gmx.de>,
+	Daniel Vogelbacher <daniel@chaospixel.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/396] parisc: Fix csum_ipv6_magic on 32-bit systems
-Date: Mon,  1 Apr 2024 17:41:45 +0200
-Message-ID: <20240401152549.596091098@linuxfoundation.org>
+Subject: [PATCH 6.6 074/396] USB: serial: ftdi_sio: add support for GMC Z216C Adapter IR-USB
+Date: Mon,  1 Apr 2024 17:42:03 +0200
+Message-ID: <20240401152550.126297280@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Daniel Vogelbacher <daniel@chaospixel.com>
 
-[ Upstream commit 4408ba75e4ba80c91fde7e10bccccf388f5c09be ]
+[ Upstream commit 3fb7bc4f3a98c48981318b87cf553c5f115fd5ca ]
 
-Calculating the IPv6 checksum on 32-bit systems missed overflows when
-adding the proto+len fields into the checksum. This results in the
-following unit test failure.
+The GMC IR-USB adapter cable utilizes a FTDI FT232R chip.
 
-    # test_csum_ipv6_magic: ASSERTION FAILED at lib/checksum_kunit.c:506
-    Expected ( u64)csum_result == ( u64)expected, but
-        ( u64)csum_result == 46722 (0xb682)
-        ( u64)expected == 46721 (0xb681)
-    not ok 5 test_csum_ipv6_magic
+Add VID/PID for this adapter so it can be used as serial device via
+ftdi_sio.
 
-This is probably rarely seen in the real world because proto+len are
-usually small values which will rarely result in overflows when calculating
-the checksum. However, the unit test code uses large values for the length
-field, causing the test to fail.
-
-Fix the problem by adding the missing carry into the final checksum.
-
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Charlie Jenkins <charlie@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/checksum.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/ftdi_sio.c     | 2 ++
+ drivers/usb/serial/ftdi_sio_ids.h | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
-index f705e5dd10742..e619e67440db9 100644
---- a/arch/parisc/include/asm/checksum.h
-+++ b/arch/parisc/include/asm/checksum.h
-@@ -163,7 +163,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- "	ldw,ma		4(%2), %7\n"	/* 4th daddr */
- "	addc		%6, %0, %0\n"
- "	addc		%7, %0, %0\n"
--"	addc		%3, %0, %0\n"	/* fold in proto+len, catch carry */
-+"	addc		%3, %0, %0\n"	/* fold in proto+len */
-+"	addc		0, %0, %0\n"	/* add carry */
+diff --git a/drivers/usb/serial/ftdi_sio.c b/drivers/usb/serial/ftdi_sio.c
+index 13a56783830df..22d01a0f10fbc 100644
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1077,6 +1077,8 @@ static const struct usb_device_id id_table_combined[] = {
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_UNBUF_PID),
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
++	/* GMC devices */
++	{ USB_DEVICE(GMC_VID, GMC_Z216C_PID) },
+ 	{ }					/* Terminating entry */
+ };
  
- #endif
- 	: "=r" (sum), "=r" (saddr), "=r" (daddr), "=r" (len),
+diff --git a/drivers/usb/serial/ftdi_sio_ids.h b/drivers/usb/serial/ftdi_sio_ids.h
+index 21a2b5a25fc09..5ee60ba2a73cd 100644
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1606,3 +1606,9 @@
+ #define UBLOX_VID			0x1546
+ #define UBLOX_C099F9P_ZED_PID		0x0502
+ #define UBLOX_C099F9P_ODIN_PID		0x0503
++
++/*
++ * GMC devices
++ */
++#define GMC_VID				0x1cd7
++#define GMC_Z216C_PID			0x0217 /* GMC Z216C Adapter IR-USB */
 -- 
 2.43.0
 
