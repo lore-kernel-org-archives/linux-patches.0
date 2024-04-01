@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028C73D961;
-	Mon,  1 Apr 2024 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128C73D961;
+	Mon,  1 Apr 2024 16:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988892; cv=none; b=WkJM5AV84MyRW1/Fz1aRIoGMY2zizoCztn3wEwhQkjtpNu6R6ALHkrhTfzISJxzygyGF661ZU0JY2JDveJtv426IErfkJh6aPt/Az+ZWE4FL38c3l3p3a5qD1oSFLItfbAQJauNaMJ+i5eAfYEsuQQMlhE+tS92Rq9ucQIolCwc=
+	t=1711988895; cv=none; b=i+KUAeSgCx3G3rXTlZgn6Dtz2sFMDIWHQ2WQUQW+JITbRRQcMNUzZ2lHNDcWPc6XKtyt5Kor9UaEI0V74SqV6+QQaWppwayOt8MKlMNWrizhf9JJclvqh2Je9uN/31LaXPDZ0upT8qT8Ht39YRuKoIWayopWPaHDJHUyVGDYdoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988892; c=relaxed/simple;
-	bh=ft1bF1l3jtgME2lC4EPIF0ZZGGG+1NRer9X76W+ABIE=;
+	s=arc-20240116; t=1711988895; c=relaxed/simple;
+	bh=IwzX0J7jilj0a5kjVbUKqP8AmbWR4JoBWU+zgBZfrSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAMtktWg2AmPgU51LAEtdveQ8W/KdwcIXTVpcaYt0yc+Z+SsonVrtWkz338zPYycZwsgNy7Z1rhESHgTPi6YYaP8LBsa1NLQHZ45CVpZpqvi7tl612BrupR7G9A80uVzdCHWc0PzhpW7HQoW3ac6pVz15kFcPd9RW3VGryk/dpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM2GcHjX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ryrC86HzgV74dWIK27DcjoTvUNemAuR7dn2X0grZU0XrrM0VnEXS7RQbzaREg0Zahlb0pGRr9sS1yNoPrLYJ4Dm2fScmawE5fTiWiqbDGdEtA0lDYU3f3Jhc39YQ+r5rCnuXHGdwjmkCN3qwk0VCBdfg1Rzz6SH3GNtx6cWarzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INEjMFC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM2GcHjX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682A3C433C7;
-	Mon,  1 Apr 2024 16:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INEjMFC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC52C433C7;
+	Mon,  1 Apr 2024 16:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988891;
-	bh=ft1bF1l3jtgME2lC4EPIF0ZZGGG+1NRer9X76W+ABIE=;
+	s=korg; t=1711988894;
+	bh=IwzX0J7jilj0a5kjVbUKqP8AmbWR4JoBWU+zgBZfrSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FM2GcHjXrKmZxUoeUOW8ahSHxQxhP9nCL9+FeCKswZnrCsVNFggq/ynmiK3STdwb6
-	 5vlG+psyZFG7MI/AY7hOhb8OkSdIGPm1w8uX4OdiGKv1GQWoQ1mhC7yl6fi9Z8KYgm
-	 fQcW8+Og0QbiSMjIjhsHl4FQwoVH6RjTydBok520=
+	b=INEjMFC7LFnU5+Wh2l12p0mT2bOuqFvPTGhgqor5VWM1tKaq6+taKRt1ZG8ONBsii
+	 ItnfuNdvaFgDSG4suH3gCedpbZGklR+aV+V9W+uMALa4V6DVGlLMdbhU0K52SNoqAZ
+	 HiSkT+LepNL8QWJ1ZG/xWD9CWe6b96AWI0GVUIts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.7 291/432] x86/efistub: Call mixed mode boot services on the firmwares stack
-Date: Mon,  1 Apr 2024 17:44:38 +0200
-Message-ID: <20240401152601.848978354@linuxfoundation.org>
+	Jiawei Wang <me@jwang.link>,
+	Mark Brown <broonie@kernel.org>,
+	Luca Stefani <luca.stefani.ge1@gmail.com>
+Subject: [PATCH 6.7 292/432] ASoC: amd: yc: Revert "Fix non-functional mic on Lenovo 21J2"
+Date: Mon,  1 Apr 2024 17:44:39 +0200
+Message-ID: <20240401152601.878861404@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,77 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jiawei Wang <me@jwang.link>
 
-commit cefcd4fe2e3aaf792c14c9e56dab89e3d7a65d02 upstream.
+commit 861b3415e4dee06cc00cd1754808a7827b9105bf upstream.
 
-Normally, the EFI stub calls into the EFI boot services using the stack
-that was live when the stub was entered. According to the UEFI spec,
-this stack needs to be at least 128k in size - this might seem large but
-all asynchronous processing and event handling in EFI runs from the same
-stack and so quite a lot of space may be used in practice.
+This reverts commit ed00a6945dc32462c2d3744a3518d2316da66fcc,
+which added a quirk entry to enable the Yellow Carp (YC)
+driver for the Lenovo 21J2 laptop.
 
-In mixed mode, the situation is a bit different: the bootloader calls
-the 32-bit EFI stub entry point, which calls the decompressor's 32-bit
-entry point, where the boot stack is set up, using a fixed allocation
-of 16k. This stack is still in use when the EFI stub is started in
-64-bit mode, and so all calls back into the EFI firmware will be using
-the decompressor's limited boot stack.
+Although the microphone functioned with the YC driver, it
+resulted in incorrect driver usage. The Lenovo 21J2 is not a
+Yellow Carp platform, but a Pink Sardine platform, which
+already has an upstreamed driver.
 
-Due to the placement of the boot stack right after the boot heap, any
-stack overruns have gone unnoticed. However, commit
+The microphone on the Lenovo 21J2 operates correctly with the
+CONFIG_SND_SOC_AMD_PS flag enabled and does not require the
+quirk entry. So this patch removes the quirk entry.
 
-  5c4feadb0011983b ("x86/decompressor: Move global symbol references to C code")
+Thanks to Mukunda Vijendar [1] for pointing this out.
 
-moved the definition of the boot heap into C code, and now the boot
-stack is placed right at the base of BSS, where any overruns will
-corrupt the end of the .data section.
+Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
 
-While it would be possible to work around this by increasing the size of
-the boot stack, doing so would affect all x86 systems, and mixed mode
-systems are a tiny (and shrinking) fraction of the x86 installed base.
-
-So instead, record the firmware stack pointer value when entering from
-the 32-bit firmware, and switch to this stack every time a EFI boot
-service call is made.
-
-Cc: <stable@kernel.org> # v6.1+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Jiawei Wang <me@jwang.link>
+Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
+Link: https://msgid.link/r/20240313015853.3573242-2-me@jwang.link
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Luca Stefani <luca.stefani.ge1@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/efi_mixed.S |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/arch/x86/boot/compressed/efi_mixed.S
-+++ b/arch/x86/boot/compressed/efi_mixed.S
-@@ -49,6 +49,11 @@ SYM_FUNC_START(startup_64_mixed_mode)
- 	lea	efi32_boot_args(%rip), %rdx
- 	mov	0(%rdx), %edi
- 	mov	4(%rdx), %esi
-+
-+	/* Switch to the firmware's stack */
-+	movl	efi32_boot_sp(%rip), %esp
-+	andl	$~7, %esp
-+
- #ifdef CONFIG_EFI_HANDOVER_PROTOCOL
- 	mov	8(%rdx), %edx		// saved bootparams pointer
- 	test	%edx, %edx
-@@ -254,6 +259,9 @@ SYM_FUNC_START_LOCAL(efi32_entry)
- 	/* Store firmware IDT descriptor */
- 	sidtl	(efi32_boot_idt - 1b)(%ebx)
- 
-+	/* Store firmware stack pointer */
-+	movl	%esp, (efi32_boot_sp - 1b)(%ebx)
-+
- 	/* Store boot arguments */
- 	leal	(efi32_boot_args - 1b)(%ebx), %ebx
- 	movl	%ecx, 0(%ebx)
-@@ -318,5 +326,6 @@ SYM_DATA_END(efi32_boot_idt)
- 
- SYM_DATA_LOCAL(efi32_boot_cs, .word 0)
- SYM_DATA_LOCAL(efi32_boot_ds, .word 0)
-+SYM_DATA_LOCAL(efi32_boot_sp, .long 0)
- SYM_DATA_LOCAL(efi32_boot_args, .long 0, 0, 0)
- SYM_DATA(efi_is64, .byte 1)
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -203,13 +203,6 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "21J2"),
+-		}
+-	},
+-	{
+-		.driver_data = &acp6x_card,
+-		.matches = {
+-			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21J0"),
+ 		}
+ 	},
 
 
