@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6CD1C0DE7;
-	Mon,  1 Apr 2024 16:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0251C0DE7;
+	Mon,  1 Apr 2024 16:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989985; cv=none; b=BUhAwCC/8wdEz1b18qHHLBCQf/68mCE33GOeZR6EKErcvzJQ+JTAl13Egn6+6XmoJuHeNgP8IqxxZX8p+Jy+y2A5W7wdNbjmD/+pu9wp3AKRFmy2rcYFLgw/L4LBNedIL5XuxBx08O80R6P4oGCc5kE56Pv3/aJ4zPkb6dPNAMw=
+	t=1711989987; cv=none; b=l4eGdiTlH+Z63y7TzM5W8kr9LYSFUMnDZoI2/cMaoL2WIRlGQ+gQ9EM+55+uozv8U10tEpnngYOp+6OlL/vlTBuRKKhQmBJoQW20/X/Enbc6NXyRynB9kdYhkiytSmAYMlS8zMnCcuRXuzs1EJxAZZb6gywVKZdeQVeSzgivc44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989985; c=relaxed/simple;
-	bh=MJdglve4hwGQyr1VxCyBs/x3hcN7ZMBcpby+vnUSCEs=;
+	s=arc-20240116; t=1711989987; c=relaxed/simple;
+	bh=8bPielUPj091FCau8e63UmZh/qWE0FXC+4JoN0WwcB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiYDWwybyE+pypI3XpQe0AZL8Hw5SzXyqEFt/vA7kMfsS3jk4O3D6YMwvuv5UW2/9WHbuFzUVR/bYMQzXFzXYqz7qRw6zMuDmfZ86hgNu7iNc51nkBNTnbHzMf3DgIXDCB6aTP2ko8k3rawwnOQcCkMAWQ1Dz5yLtD51KkvbPAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zp3++Xcl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=El9iJPVDscc46i/Oo0kCtOsDqsOcf+AgSecPldHCA9QZ4dTKSdql2MqxyOk4X1ZPdNa5b9Ds8HuMxfZta1o+YxDHA50gSsUqu7dKkrhzbXPXJkaZ+yKnQYOdWWRIvQ5IdhYKjhi7PSsvYUkfuShgJpdp6tim4fclwXJqE8iC+p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJ2sr+E8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zp3++Xcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3850DC433F1;
-	Mon,  1 Apr 2024 16:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJ2sr+E8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD69CC433F1;
+	Mon,  1 Apr 2024 16:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989983;
-	bh=MJdglve4hwGQyr1VxCyBs/x3hcN7ZMBcpby+vnUSCEs=;
+	s=korg; t=1711989987;
+	bh=8bPielUPj091FCau8e63UmZh/qWE0FXC+4JoN0WwcB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zp3++XclRHstJRkEkh8r9h03N6VVNQXkGXj3HWLKBcbBDhrvcvDekJ2IvLcTsGA4q
-	 hcYtuJdzPOfg2iHoR82/+qcRtuMJxP016uAj+tahSl7UNlE+D1OGnZ5FudHOKngIU4
-	 /o1Shlbbx1kucTt21n8si1FjJlJdLXMRGsW8BGTU=
+	b=oJ2sr+E8yQ4CAKCPfoeGU8zC2jYV6aqagDUcjc6pC9wGZeW6ueIL6bbkIeL99mUdV
+	 0usA/ac0kG8GTTSiU3oO6PBRAzwqdoFQNcDsQ7Ap8PP0UdULOQQsmo41TPcT2ZIi9h
+	 DND/m2IdWaAzLCvOUGXpI4ouPOqCKVe+BdBOhnLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Leo Ma <hanghong.ma@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	John Pittman <jpittman@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/396] drm/amd/display: Fix noise issue on HDMI AV mute
-Date: Mon,  1 Apr 2024 17:43:52 +0200
-Message-ID: <20240401152553.396710837@linuxfoundation.org>
+Subject: [PATCH 6.6 184/396] dm snapshot: fix lockup in dm_exception_table_exit
+Date: Mon,  1 Apr 2024 17:43:53 +0200
+Message-ID: <20240401152553.426683007@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -55,57 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Ma <hanghong.ma@amd.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 69e3be6893a7e668660b05a966bead82bbddb01d ]
+[ Upstream commit 6e7132ed3c07bd8a6ce3db4bb307ef2852b322dc ]
 
-[Why]
-When mode switching is triggered there is momentary noise visible on
-some HDMI TV or displays.
+There was reported lockup when we exit a snapshot with many exceptions.
+Fix this by adding "cond_resched" to the loop that frees the exceptions.
 
-[How]
-Wait for 2 frames to make sure we have enough time to send out AV mute
-and sink receives a full frame.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: John Pittman <jpittman@redhat.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Leo Ma <hanghong.ma@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/md/dm-snap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-index 255713ec29bb0..ba47a1c8eec10 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -619,10 +619,20 @@ void dcn30_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
- 	if (pipe_ctx == NULL)
- 		return;
+diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
+index bf7a574499a34..0ace06d1bee38 100644
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -684,8 +684,10 @@ static void dm_exception_table_exit(struct dm_exception_table *et,
+ 	for (i = 0; i < size; i++) {
+ 		slot = et->table + i;
  
--	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL)
-+	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL) {
- 		pipe_ctx->stream_res.stream_enc->funcs->set_avmute(
- 				pipe_ctx->stream_res.stream_enc,
- 				enable);
-+
-+		/* Wait for two frame to make sure AV mute is sent out */
-+		if (enable) {
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
-+			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
+-		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list)
++		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
+ 			kmem_cache_free(mem, ex);
++			cond_resched();
 +		}
-+	}
- }
+ 	}
  
- void dcn30_update_info_frame(struct pipe_ctx *pipe_ctx)
+ 	kvfree(et->table);
 -- 
 2.43.0
 
