@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338211DFF4;
-	Mon,  1 Apr 2024 17:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C481DFF4;
+	Mon,  1 Apr 2024 17:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991109; cv=none; b=jqIi3Qn5+Yh6+nobC44sI+MI5JzNjzkUF/RxXFM1fGNQVq3/WfFDpSdmzobWLjdmLz02rBnaYfDgZ7KnX26k+SqF7JlGAPF8TPTvwNzWOT2y+moRoit+TjZ0VAQt10+SYcpGLXJkuUePQ8+kQnY0XmqCYbV+E1JvuDGHyDZ5wwo=
+	t=1711991112; cv=none; b=TpyNwfPSkWyFbwuInt5sJLInV9Gg23JxM74fC1ue0eIklJ2Id32ofH3lN3NUysP+XTwhRwbC1ebqopLKyZIM5K4Waj4LBBprDR+YGRyV3kmg1lz8nMbXapNa65q7o3e8OpaPtpYx8l+djtmdIQ+/IV7zBLALmMeHNxDh3QEKadE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991109; c=relaxed/simple;
-	bh=QLLERlwt5n2Fp/z0QEvxeRdWcnV+COrl9L1N09kPXhg=;
+	s=arc-20240116; t=1711991112; c=relaxed/simple;
+	bh=+NcE4/bcD3YuZsJ4GOexhfSP0OYEc5F2juJxTHFN37w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/TRAPHU3oQ7TZ+gUdrtKLaQoNbrdHMSoKdVR3FixX9mkAOsVw3jSMCwodLUwNCBEl9VWYh/OLCvixwt5nVsuLjvAZ5ZvVwxv5MPBO/YmSyGv+BcXRP7Hd9/uYRbGJsTrf1rDslQlN6IF/VEyNvBQQOTW/8GLc3usuCnlpZNang=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsovwoB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRqGQ3unEULpv2+IUPHwcEc/0QWu4MuwLHyW6K9nMvCBjJvyQBq9ADWnrkOvu7f1AU99y2y90kWReNHytnNLTIJh6/gAMFtXLur+/nEymrrolT9GDhuWiNnNPlWA6oTqtQ0cZ5t/WkDinJepzsVmwtH1UX++7cF5irkN4/GuKec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXl1A1nb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsovwoB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9815EC433C7;
-	Mon,  1 Apr 2024 17:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXl1A1nb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1613FC433C7;
+	Mon,  1 Apr 2024 17:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991109;
-	bh=QLLERlwt5n2Fp/z0QEvxeRdWcnV+COrl9L1N09kPXhg=;
+	s=korg; t=1711991112;
+	bh=+NcE4/bcD3YuZsJ4GOexhfSP0OYEc5F2juJxTHFN37w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsovwoB2IH9LS5RqZozvacb0MK8v1mLDbAvFqjSrZ6Zxfv8MZiMu62yZsNHG14IQ4
-	 PMX0yjh168s6wes0UvLNNcpGeeGU1dYqw83VxRdUFmzeJ/mmFSB6h1flvzXPiXXv8R
-	 oJZ8kDT/7lCaccYIRKRiV183jl5+l/xZ3WqnaAfs=
+	b=IXl1A1nbR+RQxckF4JHGQf3iApAglBIBm7xje71RbNbXLx+lXyPWnoxZIvZaHyEUr
+	 fwm9THk+x9Dw8n+xFkyHFGMi+cMpY0dTldYN0mbcXTbXyLiiO4QTqVMt2ocoeglQPb
+	 hu32mBDvOEsVzVaz4GyNwticQElX9Fw/vm8gqc8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.1 148/272] Drivers: hv: vmbus: Calculate ring buffer size for more efficient use of memory
-Date: Mon,  1 Apr 2024 17:45:38 +0200
-Message-ID: <20240401152535.326240635@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Benjamin LaHaise <ben@communityfibre.ca>,
+	Eric Biggers <ebiggers@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Avi Kivity <avi@scylladb.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 166/272] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
+Date: Mon,  1 Apr 2024 17:45:56 +0200
+Message-ID: <20240401152535.930316718@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,89 +58,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit b8209544296edbd1af186e2ea9c648642c37b18c upstream.
+commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
 
-The VMBUS_RING_SIZE macro adds space for a ring buffer header to the
-requested ring buffer size.  The header size is always 1 page, and so
-its size varies based on the PAGE_SIZE for which the kernel is built.
-If the requested ring buffer size is a large power-of-2 size and the header
-size is small, the resulting size is inefficient in its use of memory.
-For example, a 512 Kbyte ring buffer with a 4 Kbyte page size results in
-a 516 Kbyte allocation, which is rounded to up 1 Mbyte by the memory
-allocator, and wastes 508 Kbytes of memory.
+The first kiocb_set_cancel_fn() argument may point at a struct kiocb
+that is not embedded inside struct aio_kiocb. With the current code,
+depending on the compiler, the req->ki_ctx read happens either before
+the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
+that it is guaranteed that the IOCB_AIO_RW test happens first.
 
-In such situations, the exact size of the ring buffer isn't that important,
-and it's OK to allocate the 4 Kbyte header at the beginning of the 512
-Kbytes, leaving the ring buffer itself with just 508 Kbytes. The memory
-allocation can be 512 Kbytes instead of 1 Mbyte and nothing is wasted.
-
-Update VMBUS_RING_SIZE to implement this approach for "large" ring buffer
-sizes.  "Large" is somewhat arbitrarily defined as 8 times the size of
-the ring buffer header (which is of size PAGE_SIZE).  For example, for
-4 Kbyte PAGE_SIZE, ring buffers of 32 Kbytes and larger use the first
-4 Kbytes as the ring buffer header.  For 64 Kbyte PAGE_SIZE, ring buffers
-of 512 Kbytes and larger use the first 64 Kbytes as the ring buffer
-header.  In both cases, smaller sizes add space for the header so
-the ring size isn't reduced too much by using part of the space for
-the header.  For example, with a 64 Kbyte page size, we don't want
-a 128 Kbyte ring buffer to be reduced to 64 Kbytes by allocating half
-of the space for the header.  In such a case, the memory allocation
-is less efficient, but it's the best that can be done.
-
-While the new algorithm slightly changes the amount of space allocated
-for ring buffers by drivers that use VMBUS_RING_SIZE, the devices aren't
-known to be sensitive to small changes in ring buffer size, so there
-shouldn't be any effect.
-
-Fixes: c1135c7fd0e9 ("Drivers: hv: vmbus: Introduce types of GPADL")
-Fixes: 6941f67ad37d ("hv_netvsc: Calculate correct ring size when PAGE_SIZE is not 4 Kbytes")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218502
+Reported-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Benjamin LaHaise <ben@communityfibre.ca>
+Cc: Eric Biggers <ebiggers@google.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Avi Kivity <avi@scylladb.com>
+Cc: Sandeep Dhavale <dhavale@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Tested-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240229004533.313662-1-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240229004533.313662-1-mhklinux@outlook.com>
+Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hyperv.h |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ fs/aio.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -164,8 +164,28 @@ struct hv_ring_buffer {
- 	u8 buffer[];
- } __packed;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -591,8 +591,8 @@ static int aio_setup_ring(struct kioctx
  
-+
-+/*
-+ * If the requested ring buffer size is at least 8 times the size of the
-+ * header, steal space from the ring buffer for the header. Otherwise, add
-+ * space for the header so that is doesn't take too much of the ring buffer
-+ * space.
-+ *
-+ * The factor of 8 is somewhat arbitrary. The goal is to prevent adding a
-+ * relatively small header (4 Kbytes on x86) to a large-ish power-of-2 ring
-+ * buffer size (such as 128 Kbytes) and so end up making a nearly twice as
-+ * large allocation that will be almost half wasted. As a contrasting example,
-+ * on ARM64 with 64 Kbyte page size, we don't want to take 64 Kbytes for the
-+ * header from a 128 Kbyte allocation, leaving only 64 Kbytes for the ring.
-+ * In this latter case, we must add 64 Kbytes for the header and not worry
-+ * about what's wasted.
-+ */
-+#define VMBUS_HEADER_ADJ(payload_sz) \
-+	((payload_sz) >=  8 * sizeof(struct hv_ring_buffer) ? \
-+	0 : sizeof(struct hv_ring_buffer))
-+
- /* Calculate the proper size of a ringbuffer, it must be page-aligned */
--#define VMBUS_RING_SIZE(payload_sz) PAGE_ALIGN(sizeof(struct hv_ring_buffer) + \
-+#define VMBUS_RING_SIZE(payload_sz) PAGE_ALIGN(VMBUS_HEADER_ADJ(payload_sz) + \
- 					       (payload_sz))
+ void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
+ {
+-	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
+-	struct kioctx *ctx = req->ki_ctx;
++	struct aio_kiocb *req;
++	struct kioctx *ctx;
+ 	unsigned long flags;
  
- struct hv_ring_buffer_info {
+ 	/*
+@@ -602,9 +602,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
+ 	if (!(iocb->ki_flags & IOCB_AIO_RW))
+ 		return;
+ 
++	req = container_of(iocb, struct aio_kiocb, rw);
++
+ 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
+ 		return;
+ 
++	ctx = req->ki_ctx;
++
+ 	spin_lock_irqsave(&ctx->ctx_lock, flags);
+ 	list_add_tail(&req->ki_list, &ctx->active_reqs);
+ 	req->ki_cancel = cancel;
 
 
