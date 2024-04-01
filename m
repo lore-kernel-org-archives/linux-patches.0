@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1DF1C0DE7;
-	Mon,  1 Apr 2024 16:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A351C0DE7;
+	Mon,  1 Apr 2024 16:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989350; cv=none; b=PDetb0w/7SgPTOZNAzC3VZki6eXojqSLZvFGh/VlM6nsmfyTVaEFETxwTU86LrmE1lacXpQaLPi/e4RiGcwuKBLpXSUwGGqRoDDS+IeLG+7HhWAWpW2Yfl4gmaiEDrzWmJcUXGw/o990rXSG9RV9scoolJs8jgH0a0+owdwVFmk=
+	t=1711989353; cv=none; b=OGtdbmImjF9TuccT+TrWzJfqdrHPIlBSOeUx7+Cf4q+a+Q1VkGEtMsrTuTupC/arkDy4nV5MVfMQLdkzYA9vZKhP3jCUVB4joQUlQnyHeOIJH9VXo2H7lUSrf39XuBM7DiL9AwTJ/FCCzoa0/XRRyiJdM1a6avYUAN58/FS4tOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989350; c=relaxed/simple;
-	bh=KJFtnc7kwrmeO1tAKCTWyhfRWEhlWFgNDWVz9eVbom4=;
+	s=arc-20240116; t=1711989353; c=relaxed/simple;
+	bh=5cmLqPFqSCc6hQCRS12QoBL3mWAAzwePMo7mt5aBvxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAu8E18czvzHHDDa51bZUrpXA8yzK280yhZCbi1NhoAQsKLlSbJpHaT7wSE7iyYVkWLL2vPOSi3svaVyh10YtN6Fsu2lEAZwM9VoncRKDBEXuBXdD3iB/2FTIfhlAzRft181xmTxK2gLdX3A0BOxrkmVq/vIafY/B+g4fD/90l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zcso1FUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNy7iDdqR+PqMVDy2Uwpi82WgVeNuddNO0+d6fNuRQDnUYJS2kuHlhtd2Fcr/B8vriMi6RtUqUVkqGzOu+OD9WUhkPfBxxOqPeexitKTOp/jWYziI1GL1ZF6aE8FiLMA05aV5v0MNYlnorBJc7DSi5BQd8kYOOqVi4oPOFL20yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7pgJqag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zcso1FUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0D0C433C7;
-	Mon,  1 Apr 2024 16:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7pgJqag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0E5C433F1;
+	Mon,  1 Apr 2024 16:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989350;
-	bh=KJFtnc7kwrmeO1tAKCTWyhfRWEhlWFgNDWVz9eVbom4=;
+	s=korg; t=1711989353;
+	bh=5cmLqPFqSCc6hQCRS12QoBL3mWAAzwePMo7mt5aBvxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zcso1FUoxBbHmHFgtgjIlzfJM7ZsUp7CeK5+XDcTOSLAMw7lAEyrwo4yJvV0vir0s
-	 M6vphdVWfjV6tGZL+Inz4ZDIbI5BiwBYjCHzG6lidzXm571V19c1+M659MuBWU1y9h
-	 gZcAfYE95jq4emrD3RjEnhIAc5zR/eEGxzMQA508=
+	b=M7pgJqagfVq5VPbKqQuseCt+KCp52RGhvl8RgTrclGlHrC9igC7cAhM8+dfiupBfS
+	 sQxJW1a7pjwT2ar80MGpQM2kqUKIYbPztYkuLuCU4Qy3MduW2MpdgX/LdnfTBTSohR
+	 IqrdI2Ewg0b1ovNgImctzIMb7tU6/Asg1zt245i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Stefan Hoffmeister <stefan.hoffmeister@econos.de>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/396] media: mc: Rename pad variable to clarify intent
-Date: Mon,  1 Apr 2024 17:41:11 +0200
-Message-ID: <20240401152548.561723730@linuxfoundation.org>
+Subject: [PATCH 6.6 003/396] drm/vmwgfx: Unmap the surface before resetting it on a plane state
+Date: Mon,  1 Apr 2024 17:40:52 +0200
+Message-ID: <20240401152547.978750789@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,66 +57,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 9ec9109cf9f611e3ec9ed0355afcc7aae5e73176 ]
+[ Upstream commit 27571c64f1855881753e6f33c3186573afbab7ba ]
 
-The pad local variable in the media_pipeline_explore_next_link()
-function is used to store the pad through which the entity has been
-reached. Rename it to origin to reflect that and make the code easier to
-read. This will be even more important in subsequent commits when
-expanding the function with additional logic.
+Switch to a new plane state requires unreferencing of all held surfaces.
+In the work required for mob cursors the mapped surfaces started being
+cached but the variable indicating whether the surface is currently
+mapped was not being reset. This leads to crashes as the duplicated
+state, incorrectly, indicates the that surface is mapped even when
+no surface is present. That's because after unreferencing the surface
+it's perfectly possible for the plane to be backed by a bo instead of a
+surface.
 
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reset the surface mapped flag when unreferencing the plane state surface
+to fix null derefs in cleanup. Fixes crashes in KDE KWin 6.0 on Wayland:
+
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 4 PID: 2533 Comm: kwin_wayland Not tainted 6.7.0-rc3-vmwgfx #2
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+Code: 00 00 00 75 3a 48 83 c4 10 5b 5d c3 cc cc cc cc 48 8b b3 a8 00 00 00 48 c7 c7 99 90 43 c0 e8 93 c5 db ca 48 8b 83 a8 00 00 00 <48> 8b 78 28 e8 e3 f>
+RSP: 0018:ffffb6b98216fa80 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff969d84cdcb00 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff969e75f21600
+RBP: ffff969d4143dc50 R08: 0000000000000000 R09: ffffb6b98216f920
+R10: 0000000000000003 R11: ffff969e7feb3b10 R12: 0000000000000000
+R13: 0000000000000000 R14: 000000000000027b R15: ffff969d49c9fc00
+FS:  00007f1e8f1b4180(0000) GS:ffff969e75f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000028 CR3: 0000000104006004 CR4: 00000000003706f0
+Call Trace:
+ <TASK>
+ ? __die+0x23/0x70
+ ? page_fault_oops+0x171/0x4e0
+ ? exc_page_fault+0x7f/0x180
+ ? asm_exc_page_fault+0x26/0x30
+ ? vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+ drm_atomic_helper_cleanup_planes+0x9b/0xc0
+ commit_tail+0xd1/0x130
+ drm_atomic_helper_commit+0x11a/0x140
+ drm_atomic_commit+0x97/0xd0
+ ? __pfx___drm_printfn_info+0x10/0x10
+ drm_atomic_helper_update_plane+0xf5/0x160
+ drm_mode_cursor_universal+0x10e/0x270
+ drm_mode_cursor_common+0x102/0x230
+ ? __pfx_drm_mode_cursor2_ioctl+0x10/0x10
+ drm_ioctl_kernel+0xb2/0x110
+ drm_ioctl+0x26d/0x4b0
+ ? __pfx_drm_mode_cursor2_ioctl+0x10/0x10
+ ? __pfx_drm_ioctl+0x10/0x10
+ vmw_generic_ioctl+0xa4/0x110 [vmwgfx]
+ __x64_sys_ioctl+0x94/0xd0
+ do_syscall_64+0x61/0xe0
+ ? __x64_sys_ioctl+0xaf/0xd0
+ ? syscall_exit_to_user_mode+0x2b/0x40
+ ? do_syscall_64+0x70/0xe0
+ ? __x64_sys_ioctl+0xaf/0xd0
+ ? syscall_exit_to_user_mode+0x2b/0x40
+ ? do_syscall_64+0x70/0xe0
+ ? exc_page_fault+0x7f/0x180
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+RIP: 0033:0x7f1e93f279ed
+Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff f>
+RSP: 002b:00007ffca0faf600 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000055db876ed2c0 RCX: 00007f1e93f279ed
+RDX: 00007ffca0faf6c0 RSI: 00000000c02464bb RDI: 0000000000000015
+RBP: 00007ffca0faf650 R08: 000055db87184010 R09: 0000000000000007
+R10: 000055db886471a0 R11: 0000000000000246 R12: 00007ffca0faf6c0
+R13: 00000000c02464bb R14: 0000000000000015 R15: 00007ffca0faf790
+ </TASK>
+Modules linked in: snd_seq_dummy snd_hrtimer nf_conntrack_netbios_ns nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_ine>
+CR2: 0000000000000028
+---[ end trace 0000000000000000 ]---
+RIP: 0010:vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+Code: 00 00 00 75 3a 48 83 c4 10 5b 5d c3 cc cc cc cc 48 8b b3 a8 00 00 00 48 c7 c7 99 90 43 c0 e8 93 c5 db ca 48 8b 83 a8 00 00 00 <48> 8b 78 28 e8 e3 f>
+RSP: 0018:ffffb6b98216fa80 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff969d84cdcb00 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff969e75f21600
+RBP: ffff969d4143dc50 R08: 0000000000000000 R09: ffffb6b98216f920
+R10: 0000000000000003 R11: ffff969e7feb3b10 R12: 0000000000000000
+R13: 0000000000000000 R14: 000000000000027b R15: ffff969d49c9fc00
+FS:  00007f1e8f1b4180(0000) GS:ffff969e75f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000028 CR3: 0000000104006004 CR4: 00000000003706f0
+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: 485d98d472d5 ("drm/vmwgfx: Add support for CursorMob and CursorBypass 4")
+Reported-by: Stefan Hoffmeister <stefan.hoffmeister@econos.de>
+Closes: https://gitlab.freedesktop.org/drm/misc/-/issues/34
+Cc: Martin Krastev <martin.krastev@broadcom.com>
+Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Cc: Ian Forbes <ian.forbes@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231224052540.605040-1-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/mc/mc-entity.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
-index c5f44cbf9f877..7da899bc9d08f 100644
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -592,13 +592,13 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 					    struct media_pipeline_walk *walk)
- {
- 	struct media_pipeline_walk_entry *entry = media_pipeline_walk_top(walk);
--	struct media_pad *pad;
-+	struct media_pad *origin;
- 	struct media_link *link;
- 	struct media_pad *local;
- 	struct media_pad *remote;
- 	int ret;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+index b51578918cf8d..496ff2a6144c1 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -703,6 +703,10 @@ vmw_du_cursor_plane_prepare_fb(struct drm_plane *plane,
+ 	int ret = 0;
  
--	pad = entry->pad;
-+	origin = entry->pad;
- 	link = list_entry(entry->links, typeof(*link), list);
- 	media_pipeline_walk_pop(walk);
- 
-@@ -608,7 +608,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 		link->sink->entity->name, link->sink->index);
- 
- 	/* Get the local pad and remote pad. */
--	if (link->source->entity == pad->entity) {
-+	if (link->source->entity == origin->entity) {
- 		local = link->source;
- 		remote = link->sink;
- 	} else {
-@@ -620,8 +620,9 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 	 * Skip links that originate from a different pad than the incoming pad
- 	 * that is not connected internally in the entity to the incoming pad.
- 	 */
--	if (pad != local &&
--	    !media_entity_has_pad_interdep(pad->entity, pad->index, local->index)) {
-+	if (origin != local &&
-+	    !media_entity_has_pad_interdep(origin->entity, origin->index,
-+					   local->index)) {
- 		dev_dbg(walk->mdev->dev,
- 			"media pipeline: skipping link (no route)\n");
- 		return 0;
+ 	if (vps->surf) {
++		if (vps->surf_mapped) {
++			vmw_bo_unmap(vps->surf->res.guest_memory_bo);
++			vps->surf_mapped = false;
++		}
+ 		vmw_surface_unreference(&vps->surf);
+ 		vps->surf = NULL;
+ 	}
 -- 
 2.43.0
 
