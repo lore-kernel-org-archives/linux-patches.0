@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1510F4AED1;
-	Mon,  1 Apr 2024 16:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CD663E;
+	Mon,  1 Apr 2024 16:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990446; cv=none; b=guYWtLmhWZFY3jQrlp1y89FetV7L7oo5Swxo3HObeAftiSYY0GrhIub6xwL4oWxLLAMrN/CK4Cbfo9ovzoVJyj2u5hd8y2DYitYbjJ8j5XhaZ3H+iVlRXAcTGuAGwFluJyVTvJihUJphVfyHRuGV1muzFW0kRSTdbCsNY2hlLPs=
+	t=1711990450; cv=none; b=MsPfyxUEKX1c8lBWl81Kw4nL1DBSXviQ6uXwLNemXdhK4M22nLvycKb8/i8ViYGaMe/nOr0kwyZF+3PtRxLbIkFNfoM3fO9wPUj6um15IeTbhZN29UVs66Sth5GoW8y/Km9xO3WtKlI62aU1tvndgA95MlSydkTYX/6IUVkTcMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990446; c=relaxed/simple;
-	bh=zZLLpoh3Mp5DBSP21QAuhsu3xvCTL9DifPlXi3omk/8=;
+	s=arc-20240116; t=1711990450; c=relaxed/simple;
+	bh=f4kCUzD30rgoDpA/jb1ABdgZbiX3relPRK1EJi5lTaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxPrRGX9br5zCA6f2ET5pjyHdYwtBuqMKm6To615kOKW+FCyTx4H7TfJbfIvoxP2PKVU//6D4idjAywDTmj3f35nHiLNwNnMlQoGHWgocZtjESLOYyWmozkS5MTzXEB0SKJBBLzG3EEoUwqbnC2Fn7lpbJ39hb0g2Taqur5DuVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXWej3qP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQovWImarYNWBBBbbkSDJR3a1ia2npeHXme4MpVGZOw2y5i5pEdN22b3p0s0EVeTXLAkiH9f2toKhXUJ03NZnIOyyKIhal4X1RtX0aIW9/MMOl3e2GyrbRGNZdPdA5UZGZFV0bSCsrj+zzo8JT0VWoHodeLiCA5e5AKSCUBrFcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGR4/5q4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXWej3qP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAE3C433C7;
-	Mon,  1 Apr 2024 16:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGR4/5q4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF588C433C7;
+	Mon,  1 Apr 2024 16:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990446;
-	bh=zZLLpoh3Mp5DBSP21QAuhsu3xvCTL9DifPlXi3omk/8=;
+	s=korg; t=1711990449;
+	bh=f4kCUzD30rgoDpA/jb1ABdgZbiX3relPRK1EJi5lTaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXWej3qPNKWVqZHXJdEMjsGYVmLoKc6IK9oV4/oKX7HOJrTNQFTOYIJ99FIFvEiwe
-	 aErBi+w+ZC02GnA+jprwLuQCJki522qh6u6TDeZEyCukyDE4nDouAV4lG3rP4BeR7M
-	 ORzbCOfokISxNMYajCHtmuuzHGJf0lVNLBs+TE2s=
+	b=YGR4/5q4G4hepwW5UOVKsz6aSrHCFVLpb7BoiyqL2K77+EiCPHmK0Q7IuAToNATEB
+	 vPNtAqwKGmqwgq/V5dp706VRqlrvvYYrD1TZyL4xRyPE7IWqYMEh+swvD+mffzz4Kf
+	 92KGMC2zlmxhzlSn78hTvWj3W64x4namaHsdva9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 355/396] vfio/pds: Make sure migration file isnt accessed after reset
-Date: Mon,  1 Apr 2024 17:46:44 +0200
-Message-ID: <20240401152558.507154528@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 6.6 356/396] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
+Date: Mon,  1 Apr 2024 17:46:45 +0200
+Message-ID: <20240401152558.536985929@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,110 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 457f7308254756b6e4b8fc3876cb770dcf0e7cc7 ]
+commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
 
-It's possible the migration file is accessed after reset when it has
-been cleaned up, especially when it's initiated by the device. This is
-because the driver doesn't rip out the filep when cleaning up it only
-frees the related page structures and sets its local struct
-pds_vfio_lm_file pointer to NULL. This can cause a NULL pointer
-dereference, which is shown in the example below during a restore after
-a device initiated reset:
+The dreamcastcard->timer could schedule the spu_dma_work and the
+spu_dma_work could also arm the dreamcastcard->timer.
 
-BUG: kernel NULL pointer dereference, address: 000000000000000c
-PF: supervisor read access in kernel mode
-PF: error_code(0x0000) - not-present page
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:pds_vfio_get_file_page+0x5d/0xf0 [pds_vfio_pci]
-[...]
-Call Trace:
- <TASK>
- pds_vfio_restore_write+0xf6/0x160 [pds_vfio_pci]
- vfs_write+0xc9/0x3f0
- ? __fget_light+0xc9/0x110
- ksys_write+0xb5/0xf0
- __x64_sys_write+0x1a/0x20
- do_syscall_64+0x38/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[...]
+When the snd_pcm_substream is closing, the aica_channel will be
+deallocated. But it could still be dereferenced in the worker
+thread. The reason is that del_timer() will return directly
+regardless of whether the timer handler is running or not and
+the worker could be rescheduled in the timer handler. As a result,
+the UAF bug will happen. The racy situation is shown below:
 
-Add a disabled flag to the driver's struct pds_vfio_lm_file that gets
-set during cleanup. Then make sure to check the flag when the migration
-file is accessed via its file_operations. By default this flag will be
-false as the memory for struct pds_vfio_lm_file is kzalloc'd, which means
-the struct pds_vfio_lm_file is enabled and accessible. Also, since the
-file_operations and driver's migration file cleanup happen under the
-protection of the same pds_vfio_lm_file.lock, using this flag is thread
-safe.
+      (Thread 1)                 |      (Thread 2)
+snd_aicapcm_pcm_close()          |
+ ...                             |  run_spu_dma() //worker
+                                 |    mod_timer()
+  flush_work()                   |
+  del_timer()                    |  aica_period_elapsed() //timer
+  kfree(dreamcastcard->channel)  |    schedule_work()
+                                 |  run_spu_dma() //worker
+  ...                            |    dreamcastcard->channel-> //USE
 
-Fixes: 8512ed256334 ("vfio/pds: Always clear the save/restore FDs on reset")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://lore.kernel.org/r/20240308182149.22036-2-brett.creeley@amd.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In order to mitigate this bug and other possible corner cases,
+call mod_timer() conditionally in run_spu_dma(), then implement
+PCM sync_stop op to cancel both the timer and worker. The sync_stop
+op will be called from PCM core appropriately when needed.
+
+Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/pds/lm.c | 13 +++++++++++++
- drivers/vfio/pci/pds/lm.h |  1 +
- 2 files changed, 14 insertions(+)
+ sound/sh/aica.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vfio/pci/pds/lm.c b/drivers/vfio/pci/pds/lm.c
-index 79fe2e66bb498..6b94cc0bf45b4 100644
---- a/drivers/vfio/pci/pds/lm.c
-+++ b/drivers/vfio/pci/pds/lm.c
-@@ -92,8 +92,10 @@ static void pds_vfio_put_lm_file(struct pds_vfio_lm_file *lm_file)
+--- a/sound/sh/aica.c
++++ b/sound/sh/aica.c
+@@ -278,7 +278,8 @@ static void run_spu_dma(struct work_stru
+ 		dreamcastcard->clicks++;
+ 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
+ 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
+-		mod_timer(&dreamcastcard->timer, jiffies + 1);
++		if (snd_pcm_running(dreamcastcard->substream))
++			mod_timer(&dreamcastcard->timer, jiffies + 1);
+ 	}
+ }
+ 
+@@ -290,6 +291,8 @@ static void aica_period_elapsed(struct t
+ 	/*timer function - so cannot sleep */
+ 	int play_period;
+ 	struct snd_pcm_runtime *runtime;
++	if (!snd_pcm_running(substream))
++		return;
+ 	runtime = substream->runtime;
+ 	dreamcastcard = substream->pcm->private_data;
+ 	/* Have we played out an additional period? */
+@@ -350,12 +353,19 @@ static int snd_aicapcm_pcm_open(struct s
+ 	return 0;
+ }
+ 
++static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
++
++	del_timer_sync(&dreamcastcard->timer);
++	cancel_work_sync(&dreamcastcard->spu_dma_work);
++	return 0;
++}
++
+ static int snd_aicapcm_pcm_close(struct snd_pcm_substream
+ 				 *substream)
  {
- 	mutex_lock(&lm_file->lock);
- 
-+	lm_file->disabled = true;
- 	lm_file->size = 0;
- 	lm_file->alloc_size = 0;
-+	lm_file->filep->f_pos = 0;
- 
- 	/* Free scatter list of file pages */
- 	sg_free_table(&lm_file->sg_table);
-@@ -183,6 +185,12 @@ static ssize_t pds_vfio_save_read(struct file *filp, char __user *buf,
- 	pos = &filp->f_pos;
- 
- 	mutex_lock(&lm_file->lock);
-+
-+	if (lm_file->disabled) {
-+		done = -ENODEV;
-+		goto out_unlock;
-+	}
-+
- 	if (*pos > lm_file->size) {
- 		done = -EINVAL;
- 		goto out_unlock;
-@@ -283,6 +291,11 @@ static ssize_t pds_vfio_restore_write(struct file *filp, const char __user *buf,
- 
- 	mutex_lock(&lm_file->lock);
- 
-+	if (lm_file->disabled) {
-+		done = -ENODEV;
-+		goto out_unlock;
-+	}
-+
- 	while (len) {
- 		size_t page_offset;
- 		struct page *page;
-diff --git a/drivers/vfio/pci/pds/lm.h b/drivers/vfio/pci/pds/lm.h
-index 13be893198b74..9511b1afc6a11 100644
---- a/drivers/vfio/pci/pds/lm.h
-+++ b/drivers/vfio/pci/pds/lm.h
-@@ -27,6 +27,7 @@ struct pds_vfio_lm_file {
- 	struct scatterlist *last_offset_sg;	/* Iterator */
- 	unsigned int sg_last_entry;
- 	unsigned long last_offset;
-+	bool disabled;
+ 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
+-	flush_work(&(dreamcastcard->spu_dma_work));
+-	del_timer(&dreamcastcard->timer);
+ 	dreamcastcard->substream = NULL;
+ 	kfree(dreamcastcard->channel);
+ 	spu_disable();
+@@ -401,6 +411,7 @@ static const struct snd_pcm_ops snd_aica
+ 	.prepare = snd_aicapcm_pcm_prepare,
+ 	.trigger = snd_aicapcm_pcm_trigger,
+ 	.pointer = snd_aicapcm_pcm_pointer,
++	.sync_stop = snd_aicapcm_pcm_sync_stop,
  };
  
- struct pds_vfio_pci_device;
--- 
-2.43.0
-
+ /* TO DO: set up to handle more than one pcm instance */
 
 
