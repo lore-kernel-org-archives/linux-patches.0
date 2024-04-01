@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AB843AD6;
-	Mon,  1 Apr 2024 16:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC8143AD6;
+	Mon,  1 Apr 2024 16:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987942; cv=none; b=qPAxf5GQxWGU5PMgpSajm3MNMLhO3yhcEVMZ/+mLIBN/pv+u6vfOigUStTnc4OzSBFN5CoYh2JgvUsgZyuWe5JEDjVFQSdUdVgvkHQs8D5NTMdWbxHynl0xXx/+j7kuTnaRGL9lLGo5dGvGdc1fFguMuSuH80jZyIU7CE3Z4tF8=
+	t=1711987947; cv=none; b=U4/NXA9gjwUXkXSKdRPDoeplF6WDd/UZC79KxYWZK6C2b75EbHhhoh6Dh26gbkSSITaHj5u15tJKV1plHXCZwh0SOGgfp7bAJmXbuYHXn1y1QNzxB+S1uRxmdyJj85wSCvoLNQefO+O01dCdtzCoMVCS5Rfd0lYajFRidZkxnw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987942; c=relaxed/simple;
-	bh=Uc3sh1WCEPvJW4m5EaGRzZBDftt3ADpNpRZjE1eDgis=;
+	s=arc-20240116; t=1711987947; c=relaxed/simple;
+	bh=0PjHsngTRhL05k3nikCA/iX3Pp8TwBLyqUwshew/woA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUlfX+LjlKiKDwpcjaPnAJ+sqWwjVh7zasx7mHS1cxogX4vG3QijlCm0WWmwUg4+xhZFbfcAzzWmqdrgmu1EcB0Ou3zwp/PhbW1oFjUG+3e2ZRDTo4tCh2T3bD1UuZxohhdD7eMYbjKj8OWLCwmUl/sGfFtClLUBArZ71HeNoqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbdMQpA2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXcTulqe9myw8isCoG4ryZQ3JpAjiRiRfpAwwRLNQ47G3guTzpiGYephrqNPvuQbCPI+EF4zYXAop8/7NEpU1vURUG0+1r0R59skDKIUQAB4ol2IgsmFJyzvbWa1vLSgKhSepaE3XHzfcnFDgsKjMsQzIdx4G/l1EN8aOczuxOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnJri6Q9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbdMQpA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7EBC43390;
-	Mon,  1 Apr 2024 16:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnJri6Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410BAC433C7;
+	Mon,  1 Apr 2024 16:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987942;
-	bh=Uc3sh1WCEPvJW4m5EaGRzZBDftt3ADpNpRZjE1eDgis=;
+	s=korg; t=1711987946;
+	bh=0PjHsngTRhL05k3nikCA/iX3Pp8TwBLyqUwshew/woA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbdMQpA2sIRO9qAX8LTiht+eEG5t9R8IEhwc+DleerCKsTi+l8i2Xw8Z6JthxvudS
-	 nnFry6xkqSOA/XsFq0FDkACZ4I6wAA7mXtCO/WCPOohokwd29/rnK3neGHAqddfPLp
-	 Ix8lGwrH5S43LhrA2NMw0RrZMhN91PfuAOUY+d/4=
+	b=fnJri6Q9uqCfMTOMfJ8+lCptq5pj9VVhVObhnnBjtCzvr4AhZZK8ILBoMoCNBlMQQ
+	 tqlsZVMGhZsbI2Bfjdby4jt7TTmPXCNjFK9l5RdFsia3/zG3IK1PnSFu0vhakORO+/
+	 1eDKuQ1i3bIk186yb1kisJMW7o5Bf5/t8BLR5LuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 010/432] smack: Set SMACK64TRANSMUTE only for dirs in smack_inode_setxattr()
-Date: Mon,  1 Apr 2024 17:39:57 +0200
-Message-ID: <20240401152553.437646830@linuxfoundation.org>
+Subject: [PATCH 6.7 037/432] powerpc/smp: Increase nr_cpu_ids to include the boot CPU
+Date: Mon,  1 Apr 2024 17:40:24 +0200
+Message-ID: <20240401152554.238549979@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,36 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 9c82169208dde516510aaba6bbd8b13976690c5d ]
+[ Upstream commit 777f81f0a9c780a6443bcf2c7785f0cc2e87c1ef ]
 
-Since the SMACK64TRANSMUTE xattr makes sense only for directories, enforce
-this restriction in smack_inode_setxattr().
+If nr_cpu_ids is too low to include the boot CPU adjust nr_cpu_ids
+upward. Otherwise the kernel will BUG when trying to allocate a paca
+for the boot CPU and fail to boot.
 
 Cc: stable@vger.kernel.org
-Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231229120107.2281153-2-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/prom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 1f1ea8529421f..0fe3ccec62a52 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -1312,7 +1312,8 @@ static int smack_inode_setxattr(struct mnt_idmap *idmap,
- 		check_star = 1;
- 	} else if (strcmp(name, XATTR_NAME_SMACKTRANSMUTE) == 0) {
- 		check_priv = 1;
--		if (size != TRANS_TRUE_SIZE ||
-+		if (!S_ISDIR(d_backing_inode(dentry)->i_mode) ||
-+		    size != TRANS_TRUE_SIZE ||
- 		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
- 			rc = -EINVAL;
- 	} else
+diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
+index 58e80076bed5c..77364729a1b61 100644
+--- a/arch/powerpc/kernel/prom.c
++++ b/arch/powerpc/kernel/prom.c
+@@ -381,6 +381,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 			nr_cpu_ids);
+ 	}
+ 
++	if (boot_cpuid >= nr_cpu_ids) {
++		set_nr_cpu_ids(min(CONFIG_NR_CPUS, ALIGN(boot_cpuid + 1, nthreads)));
++		pr_warn("Boot CPU %d >= nr_cpu_ids, adjusted nr_cpu_ids to %d\n",
++			boot_cpuid, nr_cpu_ids);
++	}
++
+ 	/*
+ 	 * PAPR defines "logical" PVR values for cpus that
+ 	 * meet various levels of the architecture:
 -- 
 2.43.0
 
