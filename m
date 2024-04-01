@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D79E482E4;
-	Mon,  1 Apr 2024 17:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A9640876;
+	Mon,  1 Apr 2024 17:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991284; cv=none; b=cwflQLzJrfa24nLJUPZA9BOgsvDd7CPtFiSiSNDezqcJyhw8j0+xwCnXENmLuWZ1v4HZ0joOkouoa5j8Pw0seO1deuNkHXpjzoH5DKuPUcqEMhrSGpyqIKENjJyDoWTciyxn9AJEc9u5k63caY+vXMvCyK3f6hARsArlJYG9eXU=
+	t=1711991287; cv=none; b=eBA0+irwbZCsJ7AZPc+MdEi7v7kWMKamWM7G3aMFZaPYo6MWf8aYSdl4gXpa4KdhsPWIIcKQ9jHJZIOMKEE+hTTAx0FeB5hRf6zPHv/kwzAn4FWUOx9koKBOt+NFtT/uJGV3wfMW1wf37M69N8czOk8eegSinCEgAfjuaVCpX3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991284; c=relaxed/simple;
-	bh=fv5C0MmlGQt6YNd50Yc9Vsec7WGjJBt2clK8qsKPjgU=;
+	s=arc-20240116; t=1711991287; c=relaxed/simple;
+	bh=UB74BJ6nRr/gAsG1JT9UbTRZEHdZg8uHcKQPSFDxDVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYTTYFuiRCafujyZEmlnhws9omo3Q/RkFNgBacLBf7bZy0Womki6PgayXF/lCBj5abYTnp9GXNJ7lI8j57fhOZwppoB8NkWYPRKBaVOA2J+h3/8znua98GHlFmv+gyHs9vT+R4YQRPsjCeMMLIug1Q9BXJDSqxmIuDZN1l9i7OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H67jJtr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XrrRSBB1vQQgB/UstdBRcwjPWbgbK0EaWU7GHtmbAYJEyW6Y5Fnt+Jur4JauVk+w979s1akTDmWjASZl2DHN3rRbivsS5mRZIjGJgwsksL4LMejND9wn+6l10znpvmRNtzLRkeA7Usf882C36U3IbntTw8Wx92zMsAq6ssnoar4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dx6rvbQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H67jJtr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E370C433C7;
-	Mon,  1 Apr 2024 17:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dx6rvbQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7548C433F1;
+	Mon,  1 Apr 2024 17:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991283;
-	bh=fv5C0MmlGQt6YNd50Yc9Vsec7WGjJBt2clK8qsKPjgU=;
+	s=korg; t=1711991287;
+	bh=UB74BJ6nRr/gAsG1JT9UbTRZEHdZg8uHcKQPSFDxDVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H67jJtr4TYFdeyev4fBzP4yu6pB3crQ0Nz0IUdpkTFtG5igUGf4b+CPS63cZPGt6s
-	 qFB2J+X7vuqLf0gNeYxMNJPUkaMsur0KVh6CWg1dhrkF0FCccqAQNjWrzMBYI8TWR0
-	 8XfepYtV3EaGSIo6TwXNCdoZxMph6cFLs229W2u8=
+	b=dx6rvbQhQEm2G3dQcDaftzUeVnTh0JTSctC/ilxkr3d+gWi6BghIpsPdqdzpH8Zzo
+	 eDBs5KrYKC2iGizra59VW6x20niW4ZQimH5xa+ZwnZv8NiVYJXC2Osb3KcGRbGalpL
+	 j75HtYWp/dpUJmB33BaK2T+vLnrifRPPnAWxV4LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Romain Naour <romain.naour@skf.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Avri Altman <avri.altman@wdc.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 219/272] mmc: sdhci-omap: re-tuning is needed after a pm transition to support emmc HS200 mode
-Date: Mon,  1 Apr 2024 17:46:49 +0200
-Message-ID: <20240401152537.773740448@linuxfoundation.org>
+Subject: [PATCH 6.1 220/272] mmc: core: Initialize mmc_blk_ioc_data
+Date: Mon,  1 Apr 2024 17:46:50 +0200
+Message-ID: <20240401152537.812361526@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,65 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Romain Naour <romain.naour@skf.com>
+From: Mikko Rapeli <mikko.rapeli@linaro.org>
 
-commit f9e2a5b00a35f2c064dc679808bc8db5cc779ed6 upstream.
+commit 0cdfe5b0bf295c0dee97436a8ed13336933a0211 upstream.
 
-"PM runtime functions" was been added in sdhci-omap driver in commit
-f433e8aac6b9 ("mmc: sdhci-omap: Implement PM runtime functions") along
-with "card power off and enable aggressive PM" in commit 3edf588e7fe0
-("mmc: sdhci-omap: Allow SDIO card power off and enable aggressive PM").
+Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") adds
+flags uint to struct mmc_blk_ioc_data, but it does not get initialized for
+RPMB ioctls which now fails.
 
-Since then, the sdhci-omap driver doesn't work using mmc-hs200 mode
-due to the tuning values being lost during a pm transition.
+Let's fix this by always initializing the struct and flags to zero.
 
-As for the sdhci_am654 driver, request a new tuning sequence before
-suspend (sdhci_omap_runtime_suspend()), otherwise the device will
-trigger cache flush error:
-
-  mmc1: cache flush error -110 (ETIMEDOUT)
-  mmc1: error -110 doing aggressive suspend
-
-followed by I/O errors produced by fdisk -l /dev/mmcblk1boot1:
-
-  I/O error, dev mmcblk1boot0, sector 64384 op 0x0:(READ) flags 0x80700 phys_seg 1
-  prio class 2
-  I/O error, dev mmcblk1boot1, sector 64384 op 0x0:(READ) flags 0x80700 phys_seg 1
-  prio class 2
-  I/O error, dev mmcblk1boot1, sector 64384 op 0x0:(READ) flags 0x0 phys_seg 1
-  prio class 2
-  Buffer I/O error on dev mmcblk1boot1, logical block 8048, async page read
-  I/O error, dev mmcblk1boot0, sector 64384 op 0x0:(READ) flags 0x0 phys_seg 1
-  prio class 2
-  Buffer I/O error on dev mmcblk1boot0, logical block 8048, async page read
-
-Don't re-tune if auto retuning is supported in HW (when SDHCI_TUNING_MODE_3
-is available).
-
-Link: https://lore.kernel.org/all/2e5f1997-564c-44e4-b357-6343e0dae7ab@smile.fr
-Fixes: f433e8aac6b9 ("mmc: sdhci-omap: Implement PM runtime functions")
-Signed-off-by: Romain Naour <romain.naour@skf.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218587
+Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240315234444.816978-1-romain.naour@smile.fr
+Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240313133744.2405325-1-mikko.rapeli@linaro.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-omap.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/core/block.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-omap.c
-+++ b/drivers/mmc/host/sdhci-omap.c
-@@ -1442,6 +1442,9 @@ static int __maybe_unused sdhci_omap_run
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_omap_host *omap_host = sdhci_pltfm_priv(pltfm_host);
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -415,7 +415,7 @@ static struct mmc_blk_ioc_data *mmc_blk_
+ 	struct mmc_blk_ioc_data *idata;
+ 	int err;
  
-+	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
-+		mmc_retune_needed(host->mmc);
-+
- 	if (omap_host->con != -EINVAL)
- 		sdhci_runtime_suspend_host(host);
- 
+-	idata = kmalloc(sizeof(*idata), GFP_KERNEL);
++	idata = kzalloc(sizeof(*idata), GFP_KERNEL);
+ 	if (!idata) {
+ 		err = -ENOMEM;
+ 		goto out;
 
 
