@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6464446B6;
-	Mon,  1 Apr 2024 17:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAF5482E4;
+	Mon,  1 Apr 2024 17:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991030; cv=none; b=ILqzTHWbPxPWyT8a6GQzoSlJhFb4vocq6b+k6zdaXOh9p6dJD1ttYV0kWzpTDjr47zM60sKa4sKf+Z7s5Wy5nFN8gjsjpgZbz536ni0MuPoLotqqUBijeIbQTYIStWyBGE8QO/8Om3efzjrXHkMZU7D7mEJplIGWqjQzDnIYK6Q=
+	t=1711991034; cv=none; b=a7AlU009GVmDWVhOxbu+9MbpLI13xIad/a1Jlem0LpMj43uKQR0+88bL3uzEMIeyXgB69WamTANI+p2ULj/l8LfnRPkwlNjc47QZnTxydK6iWiLEHQ2zOq6ATk/UjtN85ijqOLgQtu7UPUvE2VWuaWAL0apJJLbyNLvEnzpeAvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991030; c=relaxed/simple;
-	bh=TpMHaEso2mYRwTkYIKKUJpAkjr9byp0g7HAOGruS1hw=;
+	s=arc-20240116; t=1711991034; c=relaxed/simple;
+	bh=ZUR8aDHrIDATJaFT5mwjTPMGSpPHNvBGt9IkHKOfnLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXwaDxRbzAQhUXINYc/0z5QHj1gfYwW+tZG8gzLPfFqoyQx8Y0mYIHQ797jAHBMXd3VMAGlL8dJ1Mt8Gh1B/Bq7PDUBSJD6CWp9qJZK/XK5EOwiWinf7Y0cwyjsJGtRlQggzcvk5AuhYUS0tZYRU0r8fKERRr6oT/OxrITi5m84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaRZ6WAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p51U8YuR0cvDVtQDZ000EZW8YoI+sp1sbYIDpgCROXb5+dEV0ljfKtihSqM7wG8GmW1Zv1QifToNinEhX7r8QO48KdmdwyY5DoS6q0iJngl6NlfFOVlZVEGSBVVSePpz61gGKb2mLSwYP+iFHSoqMthNEgDeKTJlv5x7FlY7lPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe0zP7ra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaRZ6WAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97F7C433F1;
-	Mon,  1 Apr 2024 17:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe0zP7ra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56285C433A6;
+	Mon,  1 Apr 2024 17:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991030;
-	bh=TpMHaEso2mYRwTkYIKKUJpAkjr9byp0g7HAOGruS1hw=;
+	s=korg; t=1711991033;
+	bh=ZUR8aDHrIDATJaFT5mwjTPMGSpPHNvBGt9IkHKOfnLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaRZ6WAalRDDTfXLnBPExScRMpuuB/P+J4xHuJiwk+zeI5sYHER09cuyS0oYKTbk1
-	 ZbOpJKHmUhY6+i3/ZLLbVhnZijXsl8yKgPGYeRO/G+wu1dY4nXMreApgrXQRxykX73
-	 FF4lluQa9AK2uKDGL17xFiS8o3fWH//t2ChW/1zM=
+	b=Qe0zP7raetxd+mMVUhzJ+71m+SPDCESpFOlS5BsFM22ALyprwjsl1/WYe9vugDe9V
+	 U1YYp7N3pkHt/BOPZqwVWXNsynIHS1p9om26skD7b7kRPwrx+eMBHU92pLzv4UeJ05
+	 WMPdcOgQq4+m4A7qZ7Dzs+uiq6guZ48oKn5Bx0gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Altaparmakov <anton@tuxera.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/272] x86/pm: Work around false positive kmemleak report in msr_build_context()
-Date: Mon,  1 Apr 2024 17:45:31 +0200
-Message-ID: <20240401152535.091304346@linuxfoundation.org>
+Subject: [PATCH 6.1 142/272] cpufreq: brcmstb-avs-cpufreq: fix up "add check for cpufreq_cpu_gets return value"
+Date: Mon,  1 Apr 2024 17:45:32 +0200
+Message-ID: <20240401152535.120468142@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,101 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Altaparmakov <anton@tuxera.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e3f269ed0accbb22aa8f25d2daffa23c3fccd407 ]
+In commit e72160cb6e23 ("cpufreq: brcmstb-avs-cpufreq: add check for
+cpufreq_cpu_get's return value"), build warnings occur because a
+variable is created after some logic, resulting in:
 
-Since:
+drivers/cpufreq/brcmstb-avs-cpufreq.c: In function 'brcm_avs_cpufreq_get':
+drivers/cpufreq/brcmstb-avs-cpufreq.c:486:9: error: ISO C90 forbids mixed
+declarations and code [-Werror=declaration-after-statement]
+  486 |         struct private_data *priv = policy->driver_data;
+      |         ^~~~~~
+cc1: all warnings being treated as errors
+make[2]: *** [scripts/Makefile.build:289:
+drivers/cpufreq/brcmstb-avs-cpufreq.o] Error 1
+make[1]: *** [scripts/Makefile.build:552: drivers/cpufreq] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1907: drivers] Error 2
 
-  7ee18d677989 ("x86/power: Make restore_processor_context() sane")
+Fix this up.
 
-kmemleak reports this issue:
-
-  unreferenced object 0xf68241e0 (size 32):
-    comm "swapper/0", pid 1, jiffies 4294668610 (age 68.432s)
-    hex dump (first 32 bytes):
-      00 cc cc cc 29 10 01 c0 00 00 00 00 00 00 00 00  ....)...........
-      00 42 82 f6 cc cc cc cc cc cc cc cc cc cc cc cc  .B..............
-    backtrace:
-      [<461c1d50>] __kmem_cache_alloc_node+0x106/0x260
-      [<ea65e13b>] __kmalloc+0x54/0x160
-      [<c3858cd2>] msr_build_context.constprop.0+0x35/0x100
-      [<46635aff>] pm_check_save_msr+0x63/0x80
-      [<6b6bb938>] do_one_initcall+0x41/0x1f0
-      [<3f3add60>] kernel_init_freeable+0x199/0x1e8
-      [<3b538fde>] kernel_init+0x1a/0x110
-      [<938ae2b2>] ret_from_fork+0x1c/0x28
-
-Which is a false positive.
-
-Reproducer:
-
-  - Run rsync of whole kernel tree (multiple times if needed).
-  - start a kmemleak scan
-  - Note this is just an example: a lot of our internal tests hit these.
-
-The root cause is similar to the fix in:
-
-  b0b592cf0836 x86/pm: Fix false positive kmemleak report in msr_build_context()
-
-ie. the alignment within the packed struct saved_context
-which has everything unaligned as there is only "u16 gs;" at start of
-struct where in the past there were four u16 there thus aligning
-everything afterwards.  The issue is with the fact that Kmemleak only
-searches for pointers that are aligned (see how pointers are scanned in
-kmemleak.c) so when the struct members are not aligned it doesn't see
-them.
-
-Testing:
-
-We run a lot of tests with our CI, and after applying this fix we do not
-see any kmemleak issues any more whilst without it we see hundreds of
-the above report. From a single, simple test run consisting of 416 individual test
-cases on kernel 5.10 x86 with kmemleak enabled we got 20 failures due to this,
-which is quite a lot. With this fix applied we get zero kmemleak related failures.
-
-Fixes: 7ee18d677989 ("x86/power: Make restore_processor_context() sane")
-Signed-off-by: Anton Altaparmakov <anton@tuxera.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240314142656.17699-1-anton@tuxera.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/e114d9e5-26af-42be-9baa-72c3a6ec8fe5@oracle.com
+Link: https://lore.kernel.org/stable/20240327015023.GC7502@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net/T/#m15bff0fe96986ef780e848b4fff362bf8ea03f08
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Fixes: e72160cb6e23 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
+Cc: Anastasia Belova <abelova@astralinux.ru>
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/suspend_32.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/cpufreq/brcmstb-avs-cpufreq.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/suspend_32.h b/arch/x86/include/asm/suspend_32.h
-index a800abb1a9925..d8416b3bf832e 100644
---- a/arch/x86/include/asm/suspend_32.h
-+++ b/arch/x86/include/asm/suspend_32.h
-@@ -12,11 +12,6 @@
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -481,10 +481,11 @@ static bool brcm_avs_is_firmware_loaded(
+ static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct private_data *priv;
++
+ 	if (!policy)
+ 		return 0;
+-	struct private_data *priv = policy->driver_data;
+-
++	priv = policy->driver_data;
+ 	cpufreq_cpu_put(policy);
  
- /* image of the saved processor state */
- struct saved_context {
--	/*
--	 * On x86_32, all segment registers except gs are saved at kernel
--	 * entry in pt_regs.
--	 */
--	u16 gs;
- 	unsigned long cr0, cr2, cr3, cr4;
- 	u64 misc_enable;
- 	struct saved_msrs saved_msrs;
-@@ -27,6 +22,11 @@ struct saved_context {
- 	unsigned long tr;
- 	unsigned long safety;
- 	unsigned long return_address;
-+	/*
-+	 * On x86_32, all segment registers except gs are saved at kernel
-+	 * entry in pt_regs.
-+	 */
-+	u16 gs;
- 	bool misc_enable_saved;
- } __attribute__((packed));
- 
--- 
-2.43.0
-
+ 	return brcm_avs_get_frequency(priv->base);
 
 
