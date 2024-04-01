@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF641CA8F;
-	Mon,  1 Apr 2024 16:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F5D1CA8F;
+	Mon,  1 Apr 2024 16:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987502; cv=none; b=Hiu9a4y/gsajGiCm4Z4D3aB32xNjARTx1PpImej8iicTfzWj1m+wFvB3In/KlM35WX0sbyylD1KXvr5o0ctTN0Kwkqxkrb+j9hQoTlSa98IjCuSdhJhuzZm3AZH67KXbdBTsh16R8/rIL2qm4D4RcB9DlaITaww3zGXMsCBT0kI=
+	t=1711987505; cv=none; b=k7vFucozxcerBdIwvYJWtQLwKQgcpMad9cA7oAESiA++S72QOBts/JfRAcVH/aRNqSfoFZQYYoTbNVZ5e0tYrxsnP/Jruw3VjR/ccypLBK2Z7HCBKkz7/b0d5ohKDP0hv2g5vnRGnzB74J+99FyUKGFvQu3oD3kdCM8CjO7pm40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987502; c=relaxed/simple;
-	bh=3HxbZZKIzyYoMB40aEX0KQ1nv/XQ5oM9XkwxGqAKbnQ=;
+	s=arc-20240116; t=1711987505; c=relaxed/simple;
+	bh=NVT7NE2bQzqMOrIKkivoaTR0uMDikq+g1WQXctmy4Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgMfmsz9O48MnH6Tm9CHI8UxpWBOJMvv9GLXqDg89qsSS0CLbjlUEXQJv6zph0NLeLexXnUypwvEwHGQDRqWyhcqLugFnTPH4fjGVIFS+ExoqpPtyWL/sRXMsJLzu2Rj9AIPbp6izmxkD+MxBGKTvxyuOj+WOdk44Luid5Fl/mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejNBpFh7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJYJ2V1ApgzT6OYouTbAjHUrltLOCsztLLXVPsMl8ZkwS/pL4mToeI/nlCOdxtk24w6pMKN4o9LThuXOpFwqVsVdDjjfsqIgecduBg+DNR1+cJr7CXzPe3zcTfaa++zueHVQ/RakEJRSXn3jODwnhAqCa4DSgfFQhJvpH+2VUFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHn0BtBs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejNBpFh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB74BC433F1;
-	Mon,  1 Apr 2024 16:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHn0BtBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F29AC433C7;
+	Mon,  1 Apr 2024 16:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987502;
-	bh=3HxbZZKIzyYoMB40aEX0KQ1nv/XQ5oM9XkwxGqAKbnQ=;
+	s=korg; t=1711987505;
+	bh=NVT7NE2bQzqMOrIKkivoaTR0uMDikq+g1WQXctmy4Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejNBpFh7fFwLNT+7+AzLsWqq3Kcoe7fMtfwpDLo52oZA7iz4DZorPuwdQ0/8QaANK
-	 ywe5Eki2x9wi9xOrPx+lLL0mlB+PXcUHmI6PijkJeBHI8RUpm+QRtX3U3KDho8cBkW
-	 IKBfAb3Lsd1z5+NvYbsLNw5QYekMIhMaEH53PtsA=
+	b=ZHn0BtBserTG7qi1euZn8BO1ya3sVaUReiOyoB0ysI/V1tGdUIArsedIhr57S+hpv
+	 oRKF8cvzJXr6NqMl7jPeQZTTlOtK8nQCmQVEC9ojRduV8pq3vA62xO5IUbE3t0ks2E
+	 4c1e3lL+oetxc4xNLD9RTovEh74POKU/1krxuA5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.8 307/399] exec: Fix NOMMU linux_binprm::exec in transfer_args_to_stack()
-Date: Mon,  1 Apr 2024 17:44:33 +0200
-Message-ID: <20240401152558.353389530@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Brian Cain <bcain@quicinc.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 308/399] hexagon: vmlinux.lds.S: handle attributes section
+Date: Mon,  1 Apr 2024 17:44:34 +0200
+Message-ID: <20240401152558.382209597@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,42 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 2aea94ac14d1e0a8ae9e34febebe208213ba72f7 upstream.
+commit 549aa9678a0b3981d4821bf244579d9937650562 upstream.
 
-In NOMMU kernel the value of linux_binprm::p is the offset inside the
-temporary program arguments array maintained in separate pages in the
-linux_binprm::page. linux_binprm::exec being a copy of linux_binprm::p
-thus must be adjusted when that array is copied to the user stack.
-Without that adjustment the value passed by the NOMMU kernel to the ELF
-program in the AT_EXECFN entry of the aux array doesn't make any sense
-and it may break programs that try to access memory pointed to by that
-entry.
+After the linked LLVM change, the build fails with
+CONFIG_LD_ORPHAN_WARN_LEVEL="error", which happens with allmodconfig:
 
-Adjust linux_binprm::exec before the successful return from the
-transfer_args_to_stack().
+  ld.lld: error: vmlinux.a(init/main.o):(.hexagon.attributes) is being placed in '.hexagon.attributes'
 
+Handle the attributes section in a similar manner as arm and riscv by
+adding it after the primary ELF_DETAILS grouping in vmlinux.lds.S, which
+fixes the error.
+
+Link: https://lkml.kernel.org/r/20240319-hexagon-handle-attributes-section-vmlinux-lds-s-v1-1-59855dab8872@kernel.org
+Fixes: 113616ec5b64 ("hexagon: select ARCH_WANT_LD_ORPHAN_WARN")
+Link: https://github.com/llvm/llvm-project/commit/31f4b329c8234fab9afa59494d7f8bdaeaefeaad
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
 Cc: <stable@vger.kernel.org>
-Fixes: b6a2fea39318 ("mm: variable length argument support")
-Fixes: 5edc2a5123a7 ("binfmt_elf_fdpic: wire up AT_EXECFD, AT_EXECFN, AT_SECURE")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Link: https://lore.kernel.org/r/20240320182607.1472887-1-jcmvbkbc@gmail.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    1 +
+ arch/hexagon/kernel/vmlinux.lds.S |    1 +
  1 file changed, 1 insertion(+)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -895,6 +895,7 @@ int transfer_args_to_stack(struct linux_
- 			goto out;
- 	}
+--- a/arch/hexagon/kernel/vmlinux.lds.S
++++ b/arch/hexagon/kernel/vmlinux.lds.S
+@@ -63,6 +63,7 @@ SECTIONS
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
+ 	ELF_DETAILS
++	.hexagon.attributes 0 : { *(.hexagon.attributes) }
  
-+	bprm->exec += *sp_location - MAX_ARG_PAGES * PAGE_SIZE;
- 	*sp_location = sp;
- 
- out:
+ 	DISCARDS
+ }
 
 
