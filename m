@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600A21CA8F;
-	Mon,  1 Apr 2024 16:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCEA1CA8F;
+	Mon,  1 Apr 2024 16:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987304; cv=none; b=i4bZrJjZtZ2jEEV1vrE3LWgGm53CdmeCcqADwwzynZUbfEeUBzieR9cwXCz4qBHeE6mFgJ+zyxWEoPOZAdi1GpJoo+oSV0EfWBJScPlJIusjUvqg36Jc24zfg3Tv1sgihniqdd7JpPaS/awVBtXFE+mNvASLjxGWN2Z1wRoROOo=
+	t=1711987307; cv=none; b=B1Q8KpvldJMO4CuZn7ciWgf9BYYEkoYS2BCtQDfgHOl1j/VGs98CV5HLk1ggT2zo/i7yESr+HkHTSnFE6kMaratZZxhfdwar51m9cB+Rahb3HEuDChj/F86SJyvg1gHrx6a/Y7voGyg6F1lV3jfoLm1AdG9r9/th9r7P2O+JEwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987304; c=relaxed/simple;
-	bh=U3/gVHTySuJgd529OXymTKEhnhI8buRA9ukNrozqHVU=;
+	s=arc-20240116; t=1711987307; c=relaxed/simple;
+	bh=NgQf+vX7oDoswOEIyYunN5pbbhri7vyw/bwPeicWmP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBC4XWVjhso5FYYbzhgRroKMKZY863Wr3nftX/2GnNoK5MenIepMaPnTQnGUDCaI09erktCRy4IQsUEIAbFTBgvc4SQKWr8pV23OFLa8Fk/eJjlbUbhxx8xbjYAkTFzlAeyCpBCNzLszbhOUmjrWoTHpHHC316ZPUKOI7pknq3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlVRWSyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BK1Zw1FWitIoyw2uSw3/iQykb1DLTnizyPb6eQDEQT8N3edAIjxKxGsAK6WbnmKZ+hxmxzi7Rf4nhoWfxSpgPNtxQK8lMFnrrzCx2L60dW+YTPoO0nGuapjBFsTaCWM24kWRw79YMV4V1U1Gs5u2NmhvlF/4pUzj8oXnWvzdDmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rf9r6g6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlVRWSyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2755C433F1;
-	Mon,  1 Apr 2024 16:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rf9r6g6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DEAC433C7;
+	Mon,  1 Apr 2024 16:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987304;
-	bh=U3/gVHTySuJgd529OXymTKEhnhI8buRA9ukNrozqHVU=;
+	s=korg; t=1711987307;
+	bh=NgQf+vX7oDoswOEIyYunN5pbbhri7vyw/bwPeicWmP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlVRWSyutQfLEn2ZGHcAajS0D0vNscq8+f8qAaPfqFITDE/tzQgaP/2PRiwolJh36
-	 EPUsl8Ooxn1w/radfJIHNiy8atQ75dkk1/GBzoeHr83E3ew79nZvUceFrRPbRgf9Sz
-	 KinU4hHg/2eP+5pe+ziKUljTbzh/RP3RL9lYohyU=
+	b=Rf9r6g6Z6xw4JvF8rdwzE6K8Ocu1ixoN7PsjT33XAxpj9p/NJ8xHKEwt9gPdLfSjo
+	 AzBGc5YAX1ZMhFMojfWhthxUxqN5h3A1KRPYxj2c+DrnnOVPxhLLVC3xYUVo36rgPL
+	 YP2pEpCbB6ySIh4Z9gPjqurD+97aex6vj2MF21hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Wang <me@jwang.link>,
-	Mark Brown <broonie@kernel.org>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>
-Subject: [PATCH 6.8 247/399] ASoC: amd: yc: Revert "Fix non-functional mic on Lenovo 21J2"
-Date: Mon,  1 Apr 2024 17:43:33 +0200
-Message-ID: <20240401152556.545836448@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 230/399] btrfs: add helpers to get inode from page/folio pointers
+Date: Mon,  1 Apr 2024 17:43:16 +0200
+Message-ID: <20240401152556.046828126@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,52 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Wang <me@jwang.link>
+From: David Sterba <dsterba@suse.com>
 
-commit 861b3415e4dee06cc00cd1754808a7827b9105bf upstream.
+[ Upstream commit c8293894afa718653688b2fa98ab68317c875a00 ]
 
-This reverts commit ed00a6945dc32462c2d3744a3518d2316da66fcc,
-which added a quirk entry to enable the Yellow Carp (YC)
-driver for the Lenovo 21J2 laptop.
+Add convenience helpers to get a struct btrfs_inode from a page or folio
+pointer instead of open coding the chain or intermediate BTRFS_I. This
+is implemented as a macro (still with type checking) so we don't need
+full definitions of struct page or address_space.
 
-Although the microphone functioned with the YC driver, it
-resulted in incorrect driver usage. The Lenovo 21J2 is not a
-Yellow Carp platform, but a Pink Sardine platform, which
-already has an upstreamed driver.
-
-The microphone on the Lenovo 21J2 operates correctly with the
-CONFIG_SND_SOC_AMD_PS flag enabled and does not require the
-quirk entry. So this patch removes the quirk entry.
-
-Thanks to Mukunda Vijendar [1] for pointing this out.
-
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-
-Signed-off-by: Jiawei Wang <me@jwang.link>
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-Link: https://msgid.link/r/20240313015853.3573242-2-me@jwang.link
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Luca Stefani <luca.stefani.ge1@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 86211eea8ae1 ("btrfs: qgroup: validate btrfs_qgroup_inherit parameter")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 -------
- 1 file changed, 7 deletions(-)
+ fs/btrfs/disk-io.c   | 3 ++-
+ fs/btrfs/extent_io.c | 8 ++++----
+ fs/btrfs/fs.h        | 5 +++++
+ fs/btrfs/inode.c     | 2 +-
+ 4 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -203,13 +203,6 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "21J2"),
--		}
--	},
--	{
--		.driver_data = &acp6x_card,
--		.matches = {
--			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21J0"),
- 		}
- 	},
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 091104a327326..e9eb3f0f245b2 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -529,7 +529,8 @@ static void btree_invalidate_folio(struct folio *folio, size_t offset,
+ 				 size_t length)
+ {
+ 	struct extent_io_tree *tree;
+-	tree = &BTRFS_I(folio->mapping->host)->io_tree;
++
++	tree = &folio_to_inode(folio)->io_tree;
+ 	extent_invalidate_folio(tree, folio, offset);
+ 	btree_release_folio(folio, GFP_NOFS);
+ 	if (folio_get_private(folio)) {
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 3b47654ed3e8f..cf94e88bf8d05 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -827,7 +827,7 @@ static void submit_extent_page(struct btrfs_bio_ctrl *bio_ctrl,
+ 			       u64 disk_bytenr, struct page *page,
+ 			       size_t size, unsigned long pg_offset)
+ {
+-	struct btrfs_inode *inode = BTRFS_I(page->mapping->host);
++	struct btrfs_inode *inode = page_to_inode(page);
+ 
+ 	ASSERT(pg_offset + size <= PAGE_SIZE);
+ 	ASSERT(bio_ctrl->end_io_func);
+@@ -1161,7 +1161,7 @@ static int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
+ int btrfs_read_folio(struct file *file, struct folio *folio)
+ {
+ 	struct page *page = &folio->page;
+-	struct btrfs_inode *inode = BTRFS_I(page->mapping->host);
++	struct btrfs_inode *inode = page_to_inode(page);
+ 	u64 start = page_offset(page);
+ 	u64 end = start + PAGE_SIZE - 1;
+ 	struct btrfs_bio_ctrl bio_ctrl = { .opf = REQ_OP_READ };
+@@ -1184,7 +1184,7 @@ static inline void contiguous_readpages(struct page *pages[], int nr_pages,
+ 					struct btrfs_bio_ctrl *bio_ctrl,
+ 					u64 *prev_em_start)
+ {
+-	struct btrfs_inode *inode = BTRFS_I(pages[0]->mapping->host);
++	struct btrfs_inode *inode = page_to_inode(pages[0]);
+ 	int index;
+ 
+ 	btrfs_lock_and_flush_ordered_range(inode, start, end, NULL);
+@@ -2382,7 +2382,7 @@ int try_release_extent_mapping(struct page *page, gfp_t mask)
+ 	struct extent_map *em;
+ 	u64 start = page_offset(page);
+ 	u64 end = start + PAGE_SIZE - 1;
+-	struct btrfs_inode *btrfs_inode = BTRFS_I(page->mapping->host);
++	struct btrfs_inode *btrfs_inode = page_to_inode(page);
+ 	struct extent_io_tree *tree = &btrfs_inode->io_tree;
+ 	struct extent_map_tree *map = &btrfs_inode->extent_tree;
+ 
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index f8bb73d6ab68c..1cfd16f956e77 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -829,6 +829,11 @@ struct btrfs_fs_info {
+ #endif
+ };
+ 
++#define page_to_inode(_page)	(BTRFS_I(_Generic((_page),			\
++					  struct page *: (_page))->mapping->host))
++#define folio_to_inode(_folio)	(BTRFS_I(_Generic((_folio),			\
++					  struct folio *: (_folio))->mapping->host))
++
+ static inline u64 btrfs_get_fs_generation(const struct btrfs_fs_info *fs_info)
+ {
+ 	return READ_ONCE(fs_info->generation);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index bd3f348d503dc..6948440286e55 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7970,7 +7970,7 @@ static int btrfs_migrate_folio(struct address_space *mapping,
+ static void btrfs_invalidate_folio(struct folio *folio, size_t offset,
+ 				 size_t length)
+ {
+-	struct btrfs_inode *inode = BTRFS_I(folio->mapping->host);
++	struct btrfs_inode *inode = folio_to_inode(folio);
+ 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	struct extent_io_tree *tree = &inode->io_tree;
+ 	struct extent_state *cached_state = NULL;
+-- 
+2.43.0
+
 
 
