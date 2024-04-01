@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8BE1CA8F;
-	Mon,  1 Apr 2024 16:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0D91CA8F;
+	Mon,  1 Apr 2024 16:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988799; cv=none; b=ma2TOyN9RrS2tyCpoCsC5QDxRX/ql6OtlrbG7Nar7PigdTwmDGql+LNKDSA0vZ9ed5bkTQjk3lgqCxop0ACDiSNfYL1wDd6l4S0BF0nuQCEs905u4I786xFHPzjrqCqjN1ki28ktYhy25wqKQoAWhdYxwSQcpfy1QHbX3PQnvUw=
+	t=1711988802; cv=none; b=oMaKaRB/9p8n/TCxuf5iGctAroYpedIhtnzwQMTFSSOkVZhdWF950ApT4+gulEdWPIumBOP0uOnR4pAdPCve4GBdCaycYl83H1TQ/kBkvLk+RYS8JFDpk5PYQ5RAwsXEQyXFhwBQ4gtTSwIzB5OrmnF3X30EngwJjZWCdbL50mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988799; c=relaxed/simple;
-	bh=vboLf7Z/7UueYYP30tYYonJBoISuHxE+FTsQbzJbnLI=;
+	s=arc-20240116; t=1711988802; c=relaxed/simple;
+	bh=BqvUUmDS1h9ks/M29z5D4KY/hx1YpjQRjjCE6EHkk1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KX7ye30Mr6M5m/fc4OXyJ6wIWSFTS1qs2HycmRkhfkk23zD5AMDS4jUTki4wrVp2Qqmbur/A+8K8WQ+dLp9bbTxXt35SOfwY+UeGRIap0G5Nma7j4Krckq975fphYfjP9Zqp4BY5CMUMsaY8SdbWBHh6kfFLE6EocH/HuDkqDXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm1q+1NB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYGU8d92LyJoZ5IunCyM8mmXNu2KUPhoAdPqzpq8meNUO4FyjcAHh7qnSqgw7I10js5Jti8Pua3VKfNYr8/vZv3OEa/RhDAhu4Np5C2jt4MbBNFRs73hR4GgL85W86oh5eaQ9nSpm6xNrfQzojtD56bfL3juCjo6QvAiSsJKrQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9QMDfFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm1q+1NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD05C433C7;
-	Mon,  1 Apr 2024 16:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9QMDfFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A42DC433C7;
+	Mon,  1 Apr 2024 16:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988799;
-	bh=vboLf7Z/7UueYYP30tYYonJBoISuHxE+FTsQbzJbnLI=;
+	s=korg; t=1711988802;
+	bh=BqvUUmDS1h9ks/M29z5D4KY/hx1YpjQRjjCE6EHkk1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fm1q+1NBVurJAAAoiRhum9R6Bf3zl+cLZASyJB+9HLfeAzSxl9+8IHtPO96B2U5Mt
-	 rT7/UGz4+HlFNGO511qRQaROvP+CdveIVH6sFaZMRnwCjj7h/t5ckSRqFw7aPSJKQw
-	 M7p1lnvIE+yod1hMeRShs6HwU4igct+nSz1thM7Y=
+	b=y9QMDfFpvsveWUIKqyhzi/I9D9mvkg/4SMr+PwWAi1rXZt9ZJQpW4eL0iJqrA3Uls
+	 hSm5uPxnMHS1h77qake2mEu/123741v3aGRU7jg85SRVzDO/NES0OurzKI70fNrSq2
+	 8zN7yiUIreud9TjzFCUXGKH1UAU7MM3TA9P/hzfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>
-Subject: [PATCH 6.7 263/432] usb: gadget: ncm: Fix handling of zero block length packets
-Date: Mon,  1 Apr 2024 17:44:10 +0200
-Message-ID: <20240401152600.995977071@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.7 264/432] usb: port: Dont try to peer unused USB ports based on location
+Date: Mon,  1 Apr 2024 17:44:11 +0200
+Message-ID: <20240401152601.024472351@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -44,67 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit f90ce1e04cbcc76639d6cba0fdbd820cd80b3c70 upstream.
+commit 69c63350e573367f9c8594162288cffa8a26d0d1 upstream.
 
-While connecting to a Linux host with CDC_NCM_NTB_DEF_SIZE_TX
-set to 65536, it has been observed that we receive short packets,
-which come at interval of 5-10 seconds sometimes and have block
-length zero but still contain 1-2 valid datagrams present.
+Unused USB ports may have bogus location data in ACPI PLD tables.
+This causes port peering failures as these unused USB2 and USB3 ports
+location may match.
 
-According to the NCM spec:
+Due to these failures the driver prints a
+"usb: port power management may be unreliable" warning, and
+unnecessarily blocks port power off during runtime suspend.
 
-"If wBlockLength = 0x0000, the block is terminated by a
-short packet. In this case, the USB transfer must still
-be shorter than dwNtbInMaxSize or dwNtbOutMaxSize. If
-exactly dwNtbInMaxSize or dwNtbOutMaxSize bytes are sent,
-and the size is a multiple of wMaxPacketSize for the
-given pipe, then no ZLP shall be sent.
+This was debugged on a couple DELL systems where the unused ports
+all returned zeroes in their location data.
+Similar bugreports exist for other systems.
 
-wBlockLength= 0x0000 must be used with extreme care, because
-of the possibility that the host and device may get out of
-sync, and because of test issues.
+Don't try to peer or match ports that have connect type set to
+USB_PORT_NOT_USED.
 
-wBlockLength = 0x0000 allows the sender to reduce latency by
-starting to send a very large NTB, and then shortening it when
-the sender discovers that there’s not sufficient data to justify
-sending a large NTB"
-
-However, there is a potential issue with the current implementation,
-as it checks for the occurrence of multiple NTBs in a single
-giveback by verifying if the leftover bytes to be processed is zero
-or not. If the block length reads zero, we would process the same
-NTB infintely because the leftover bytes is never zero and it leads
-to a crash. Fix this by bailing out if block length reads zero.
-
-Cc: stable@vger.kernel.org
-Fixes: 427694cfaafa ("usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20240228115441.2105585-1-quic_kriskura@quicinc.com
+Fixes: 3bfd659baec8 ("usb: find internal hub tier mismatch via acpi")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218465
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218486
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/linux-usb/5406d361-f5b7-4309-b0e6-8c94408f7d75@molgen.mpg.de
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218490
+Link: https://lore.kernel.org/r/20240222233343.71856-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/port.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1333,7 +1333,7 @@ parse_ntb:
- 	if (to_process == 1 &&
- 	    (*(unsigned char *)(ntb_ptr + block_len) == 0x00)) {
- 		to_process--;
--	} else if (to_process > 0) {
-+	} else if ((to_process > 0) && (block_len != 0)) {
- 		ntb_ptr = (unsigned char *)(ntb_ptr + block_len);
- 		goto parse_ntb;
- 	}
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -573,7 +573,7 @@ static int match_location(struct usb_dev
+ 	struct usb_hub *peer_hub = usb_hub_to_struct_hub(peer_hdev);
+ 	struct usb_device *hdev = to_usb_device(port_dev->dev.parent->parent);
+ 
+-	if (!peer_hub)
++	if (!peer_hub || port_dev->connect_type == USB_PORT_NOT_USED)
+ 		return 0;
+ 
+ 	hcd = bus_to_hcd(hdev->bus);
+@@ -584,7 +584,8 @@ static int match_location(struct usb_dev
+ 
+ 	for (port1 = 1; port1 <= peer_hdev->maxchild; port1++) {
+ 		peer = peer_hub->ports[port1 - 1];
+-		if (peer && peer->location == port_dev->location) {
++		if (peer && peer->connect_type != USB_PORT_NOT_USED &&
++		    peer->location == port_dev->location) {
+ 			link_peers_report(port_dev, peer);
+ 			return 1; /* done */
+ 		}
 
 
