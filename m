@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5805647A53;
-	Mon,  1 Apr 2024 15:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5611647772;
+	Mon,  1 Apr 2024 15:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986647; cv=none; b=jpL6Z1bPVnazYU/lIQFxrcVgHtCDB8VPxLlsmZAuC6uJVOFVpL9z/d3ANyw/4VTmt9ZghBEUi6pgHr4yfkvamnhzEbpbAWibJb6pzGVXjapmUZI+lxcW9FPcI0hCx1OH9rPBY5tQSmYZNit7UyMqBZJRLiB6cm3lPv6/Idl4MCM=
+	t=1711986650; cv=none; b=DPS9/KxhvjpJY++demNWreTtph24gFvMAjGxoH0VJPoajhbLuhC/BGpWDpROMAQJPMYqZicGdJXg/uQlakv8j5H+0NgOb1vcYgd3q9iYqbD29ib6DDPhc29eImLp/gcG/NwT3W0G0BDIHYjNeqwCELGIW3vN2YZOlFcOrrLzwPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986647; c=relaxed/simple;
-	bh=t6IQDJw8NjqZUIceXoKvI31PuxrhhbqTSzbAPwg9a0A=;
+	s=arc-20240116; t=1711986650; c=relaxed/simple;
+	bh=vPSRLMjIKAj3/bqmyCFWYDygWqqASkTeQr7ZpC33AFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWjXTlrcyumr/Phw5/bDws/b8H3A2nbObiuxRn2NdTxfD4Ly7Ba5g9pSXlbQsl83v8j6UptRHR/x0LQfygCzVFzOfzg0QfgAL+Q46tzvZ/QTQTZcQCXe3orgE6ZsSnqzgEdMzU9FBpbCMNcB1qRKSpphXY0saBBoS694BTurM1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVuTIlXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SozVjw2Nomma5j2is3wXFhNsZh9fm3GuuW9NA1QZ2PnGp0JoRrfjCxOcgFkhbpwgUo5tr5ofxpAjlcNQK8wyMPxqZE2hUmYbkenPWPj+wisX0H7pkVOUdINnfB5W09JwBIPRcEHdGMbC6iCANmZsVP5Ir+cCVwSkcJw5l/c4k/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nd1POIKz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVuTIlXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5635C43390;
-	Mon,  1 Apr 2024 15:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nd1POIKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C480CC433F1;
+	Mon,  1 Apr 2024 15:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986647;
-	bh=t6IQDJw8NjqZUIceXoKvI31PuxrhhbqTSzbAPwg9a0A=;
+	s=korg; t=1711986650;
+	bh=vPSRLMjIKAj3/bqmyCFWYDygWqqASkTeQr7ZpC33AFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVuTIlXXsqaaV1cPiFLQnzH0TDbNOHEikv4WyNONKucuGb5UsJv8juPz98d3yHkZU
-	 QvwpqJFZUogBcCg4ayshNQ2PbQeTZFuRgQjFiWFZXTxZTGp28g1l4VwTF7Aztrb5KX
-	 hZ0W9i574wD1QbVFOp41RGF1O/4wf+9FB5JyvtSo=
+	b=nd1POIKz+AkB5D5FOcp//26bZicK2MxfZI3a0TixszqZO3jE91Bj3rxQtoKaQnEA7
+	 GHweQY3CLf5cHirA+ALyJSyXXfJJG2mTkVUKYekPjMLqnBQUgVjr25gkb5S2QU35xo
+	 Yzgy/nJEs00YEcOfxiXkUMbUr/gRynB/VM06VcUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	stable@kernel.org,
+	yangerkun <yangerkun@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 033/399] powercap: intel_rapl_tpmi: Fix System Domain probing
-Date: Mon,  1 Apr 2024 17:39:59 +0200
-Message-ID: <20240401152550.154325593@linuxfoundation.org>
+Subject: [PATCH 6.8 042/399] ext4: correct best extent lstart adjustment logic
+Date: Mon,  1 Apr 2024 17:40:08 +0200
+Message-ID: <20240401152550.432218719@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,65 +55,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 903eb9fb85e32810f376a2858aad77c9298f9488 ]
+[ Upstream commit 4fbf8bc733d14bceb16dda46a3f5e19c6a9621c5 ]
 
-Only domain root packages can enumerate System (Psys) domain.
-Whether a package is domain root or not is described in the Bit 0 of the
-Domain Info register.
+When yangerkun review commit 93cdf49f6eca ("ext4: Fix best extent lstart
+adjustment logic in ext4_mb_new_inode_pa()"), it was found that the best
+extent did not completely cover the original request after adjusting the
+best extent lstart in ext4_mb_new_inode_pa() as follows:
 
-Add support for Domain Info register and fix the System domain probing
-accordingly.
+  original request: 2/10(8)
+  normalized request: 0/64(64)
+  best extent: 0/9(9)
 
-Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+When we check if best ex can be kept at start of goal, ac_o_ex.fe_logical
+is 2 less than the adjusted best extent logical end 9, so we think the
+adjustment is done. But obviously 0/9(9) doesn't cover 2/10(8), so we
+should determine here if the original request logical end is less than or
+equal to the adjusted best extent logical end.
+
+In addition, add a comment stating when adjusted best_ex will not cover
+the original request, and remove the duplicate assertion because adjusting
+lstart makes no change to b_ex.fe_len.
+
+Link: https://lore.kernel.org/r/3630fa7f-b432-7afd-5f79-781bc3b2c5ea@huawei.com
+Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
+Cc:  <stable@kernel.org>
+Signed-off-by: yangerkun <yangerkun@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240201141845.1879253-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_tpmi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ext4/mballoc.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
-index f1c734ac3c349..f6b7f085977ce 100644
---- a/drivers/powercap/intel_rapl_tpmi.c
-+++ b/drivers/powercap/intel_rapl_tpmi.c
-@@ -131,6 +131,12 @@ static void trp_release(struct tpmi_rapl_package *trp)
- 	mutex_unlock(&tpmi_rapl_lock);
- }
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index e4f7cf9d89c45..70836e25418ab 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5169,10 +5169,16 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 			.fe_len = ac->ac_orig_goal_len,
+ 		};
+ 		loff_t orig_goal_end = extent_logical_end(sbi, &ex);
++		loff_t o_ex_end = extent_logical_end(sbi, &ac->ac_o_ex);
  
-+/*
-+ * Bit 0 of TPMI_RAPL_REG_DOMAIN_INFO indicates if the current package is a domain
-+ * root or not. Only domain root packages can enumerate System (Psys) Domain.
-+ */
-+#define TPMI_RAPL_DOMAIN_ROOT	BIT(0)
-+
- static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
- {
- 	u8 tpmi_domain_version;
-@@ -140,6 +146,7 @@ static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
- 	enum rapl_domain_reg_id reg_id;
- 	int tpmi_domain_size, tpmi_domain_flags;
- 	u64 tpmi_domain_header = readq(trp->base + offset);
-+	u64 tpmi_domain_info;
+-		/* we can't allocate as much as normalizer wants.
+-		 * so, found space must get proper lstart
+-		 * to cover original request */
++		/*
++		 * We can't allocate as much as normalizer wants, so we try
++		 * to get proper lstart to cover the original request, except
++		 * when the goal doesn't cover the original request as below:
++		 *
++		 * orig_ex:2045/2055(10), isize:8417280 -> normalized:0/2048
++		 * best_ex:0/200(200) -> adjusted: 1848/2048(200)
++		 */
+ 		BUG_ON(ac->ac_g_ex.fe_logical > ac->ac_o_ex.fe_logical);
+ 		BUG_ON(ac->ac_g_ex.fe_len < ac->ac_o_ex.fe_len);
  
- 	/* Domain Parent bits are ignored for now */
- 	tpmi_domain_version = tpmi_domain_header & 0xff;
-@@ -170,6 +177,13 @@ static int parse_one_domain(struct tpmi_rapl_package *trp, u32 offset)
- 		domain_type = RAPL_DOMAIN_PACKAGE;
- 		break;
- 	case TPMI_RAPL_DOMAIN_SYSTEM:
-+		if (!(tpmi_domain_flags & BIT(TPMI_RAPL_REG_DOMAIN_INFO))) {
-+			pr_warn(FW_BUG "System domain must support Domain Info register\n");
-+			return -ENODEV;
-+		}
-+		tpmi_domain_info = readq(trp->base + offset + TPMI_RAPL_REG_DOMAIN_INFO);
-+		if (!(tpmi_domain_info & TPMI_RAPL_DOMAIN_ROOT))
-+			return 0;
- 		domain_type = RAPL_DOMAIN_PLATFORM;
- 		break;
- 	case TPMI_RAPL_DOMAIN_MEMORY:
+@@ -5184,7 +5190,7 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 		 * 1. Check if best ex can be kept at end of goal (before
+ 		 *    cr_best_avail trimmed it) and still cover original start
+ 		 * 2. Else, check if best ex can be kept at start of goal and
+-		 *    still cover original start
++		 *    still cover original end
+ 		 * 3. Else, keep the best ex at start of original request.
+ 		 */
+ 		ex.fe_len = ac->ac_b_ex.fe_len;
+@@ -5194,7 +5200,7 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 			goto adjust_bex;
+ 
+ 		ex.fe_logical = ac->ac_g_ex.fe_logical;
+-		if (ac->ac_o_ex.fe_logical < extent_logical_end(sbi, &ex))
++		if (o_ex_end <= extent_logical_end(sbi, &ex))
+ 			goto adjust_bex;
+ 
+ 		ex.fe_logical = ac->ac_o_ex.fe_logical;
+@@ -5202,7 +5208,6 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 		ac->ac_b_ex.fe_logical = ex.fe_logical;
+ 
+ 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
+-		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
+ 		BUG_ON(extent_logical_end(sbi, &ex) > orig_goal_end);
+ 	}
+ 
 -- 
 2.43.0
 
