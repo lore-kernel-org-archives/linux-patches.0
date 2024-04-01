@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AEC4778B;
-	Mon,  1 Apr 2024 15:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726947A79;
+	Mon,  1 Apr 2024 15:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986961; cv=none; b=GyXmYQXo/qxK+WxFGgtohvZTXalPvh1bpyxYpXPNybpp6zN8vqcKIjg/EaioRRHMZY/RH9CIbBatLsiphMFl07vz+wVMoMtRETVhdOOl9XaYP/FgWdxUfuZvMyPi/A5psVs/zwk0b/INZ9Q7u5uHW4B2EvwUGMYRzNuERO/YYl8=
+	t=1711986964; cv=none; b=bJk0SpZXvhHPHMxevO3MfJLQEEj/WOQgZP6PqOA/EdZR3FM6PfdL54og1wJ4AfOUT85F3Ua0McBKeSWTmap74CH2cfumYjVinGQVzTwqGoMQnIEj7i/lxSZFhz2Yqn8KyJDcLD+RMih+fYlZvbXLKQuYD4DDpk0sq4R4E6nzOqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986961; c=relaxed/simple;
-	bh=xpDrgOFVPmzqoiunuNerFViOTwGD5gMysYsTpvAxTSs=;
+	s=arc-20240116; t=1711986964; c=relaxed/simple;
+	bh=ZjaWDZZExyc/tHyor21ZiRbb/SFI17nPRgMZ5VUvU2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CqnRqHO9CXnyvYE/fA5UJ/ExYRq8oibhwOb9HswhhYLtqz2DExlfk8Bsnwi8K4uFNQxEJNuWQOi92O5c4M2uDheuGSgLRn73T2+4DtZoaG4RyI+qRuLBV4GLkOcRs2KvUNAbLVCYwR8A/eI7NcVbevzy/jDMX2ZkjUdixMe7em8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhoYi2Wr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a0iBTXG4HKmqCUG+mmQAWXtp3leC1ZwSyZW7NVEfSaqKCYFPAmlFur9uN5gplaE4CH8gg4C14J93qPqm5bsKyVli+GJFKY/GpSL/K7rZnqWxB5+HWb6tT268ztR0qmsa8Nu4KVul9rNDaNvIqXI40oktiULDgdtJv/i3q1yGgLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIvcC0pS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhoYi2Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0825BC433C7;
-	Mon,  1 Apr 2024 15:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIvcC0pS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA6CC43390;
+	Mon,  1 Apr 2024 15:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986961;
-	bh=xpDrgOFVPmzqoiunuNerFViOTwGD5gMysYsTpvAxTSs=;
+	s=korg; t=1711986964;
+	bh=ZjaWDZZExyc/tHyor21ZiRbb/SFI17nPRgMZ5VUvU2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhoYi2WrNUSt9l9mDB39SkiJ6vrFxmr+RrJKWZmsIkY0J50azaosyVSJ13IQucRpS
-	 WslFhGPNm77ri51/CniRk5I40OrT3oaJuCqjgPE46An5iihk2Wzji3rrzKqgd7FyIB
-	 eR4LKhYokL266rYmhogogVCj8Q9cnMUAXlJLMUjU=
+	b=iIvcC0pSMqQL/yekrX4OKgEIg3rN+m0ZSHV/n/6Gtrpx8RlAhb2pcVQMUKxVAD30G
+	 VFaQXQY3qZXXHGdpuN8DzfUF3w1OMemjzzIkj4P8HB3gLw+E+6XhPq9LnBAtBeZYc4
+	 TbGFFe9MqlO2AhW3KzdpTgAvaCgOm6rh4lONUbko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+	Long Li <longli@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 141/399] PCI: dwc: endpoint: Fix advertised resizable BAR size
-Date: Mon,  1 Apr 2024 17:41:47 +0200
-Message-ID: <20240401152553.399756246@linuxfoundation.org>
+Subject: [PATCH 6.8 142/399] PCI: hv: Fix ring buffer size calculation
+Date: Mon,  1 Apr 2024 17:41:48 +0200
+Message-ID: <20240401152553.429852255@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,70 +55,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 72e34b8593e08a0ee759b7a038e0b178418ea6f8 ]
+[ Upstream commit b5ff74c1ef50fe08e384026875fec660fadfaedd ]
 
-The commit message in commit fc9a77040b04 ("PCI: designware-ep: Configure
-Resizable BAR cap to advertise the smallest size") claims that it modifies
-the Resizable BAR capability to only advertise support for 1 MB size BARs.
+For a physical PCI device that is passed through to a Hyper-V guest VM,
+current code specifies the VMBus ring buffer size as 4 pages.  But this
+is an inappropriate dependency, since the amount of ring buffer space
+needed is unrelated to PAGE_SIZE. For example, on x86 the ring buffer
+size ends up as 16 Kbytes, while on ARM64 with 64 Kbyte pages, the ring
+size bloats to 256 Kbytes. The ring buffer for PCI pass-thru devices
+is used for only a few messages during device setup and removal, so any
+space above a few Kbytes is wasted.
 
-However, the commit writes all zeroes to PCI_REBAR_CAP (the register which
-contains the possible BAR sizes that a BAR be resized to).
+Fix this by declaring the ring buffer size to be a fixed 16 Kbytes.
+Furthermore, use the VMBUS_RING_SIZE() macro so that the ring buffer
+header is properly accounted for, and so the size is rounded up to a
+page boundary, using the page size for which the kernel is built. While
+w/64 Kbyte pages this results in a 64 Kbyte ring buffer header plus a
+64 Kbyte ring buffer, that's the smallest possible with that page size.
+It's still 128 Kbytes better than the current code.
 
-According to the spec, it is illegal to not have a bit set in
-PCI_REBAR_CAP, and 1 MB is the smallest size allowed.
-
-Set bit 4 in PCI_REBAR_CAP, so that we actually advertise support for a
-1 MB BAR size.
-
-Before:
-        Capabilities: [2e8 v1] Physical Resizable BAR
-                BAR 0: current size: 1MB
-                BAR 1: current size: 1MB
-                BAR 2: current size: 1MB
-                BAR 3: current size: 1MB
-                BAR 4: current size: 1MB
-                BAR 5: current size: 1MB
-After:
-        Capabilities: [2e8 v1] Physical Resizable BAR
-                BAR 0: current size: 1MB, supported: 1MB
-                BAR 1: current size: 1MB, supported: 1MB
-                BAR 2: current size: 1MB, supported: 1MB
-                BAR 3: current size: 1MB, supported: 1MB
-                BAR 4: current size: 1MB, supported: 1MB
-                BAR 5: current size: 1MB, supported: 1MB
-
-Fixes: fc9a77040b04 ("PCI: designware-ep: Configure Resizable BAR cap to advertise the smallest size")
-Link: https://lore.kernel.org/linux-pci/20240307111520.3303774-1-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/linux-pci/20240216202240.251818-1-mhklinux@outlook.com
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: <stable@vger.kernel.org> # 5.2
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Cc: <stable@vger.kernel.org> # 5.15.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pci-hyperv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 9a437cfce073c..746a11dcb67f1 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -629,8 +629,13 @@ int dw_pcie_ep_init_complete(struct dw_pcie_ep *ep)
- 		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
- 			PCI_REBAR_CTRL_NBAR_SHIFT;
+diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
+index 1eaffff40b8d4..5992280e8110b 100644
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -49,6 +49,7 @@
+ #include <linux/refcount.h>
+ #include <linux/irqdomain.h>
+ #include <linux/acpi.h>
++#include <linux/sizes.h>
+ #include <asm/mshyperv.h>
  
-+		/*
-+		 * PCIe r6.0, sec 7.8.6.2 require us to support at least one
-+		 * size in the range from 1 MB to 512 GB. Advertise support
-+		 * for 1 MB BAR size only.
-+		 */
- 		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
--			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
-+			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, BIT(4));
- 	}
+ /*
+@@ -465,7 +466,7 @@ struct pci_eject_response {
+ 	u32 status;
+ } __packed;
  
- 	/*
+-static int pci_ring_size = (4 * PAGE_SIZE);
++static int pci_ring_size = VMBUS_RING_SIZE(SZ_16K);
+ 
+ /*
+  * Driver specific state.
 -- 
 2.43.0
 
