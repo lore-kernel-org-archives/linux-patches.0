@@ -1,198 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC0F56B87;
-	Mon,  1 Apr 2024 21:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E2D535B7
+	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 21:52:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712006633; cv=none; b=r9SFjT8BVQhF+PDIlVEJwRtSGQxiCqJ3v4aYpuxmfC5eudAwM5/WSC3DDnCVEBcBvpef88ChEAuLTX/klppIz/21PNxsG4CVcPTDUbpqomVCVdk0ymSY9cx41/Mlw5O7+uaaMQyMl3iTMPUORxX+VwRCbq9rEPSOnxdqald8u6s=
+	t=1712008369; cv=none; b=ISv8oelqNCXFbaDHSdlFAaymL6UOxdROaeQnOoJuE1Rpjgy41GgfGGuLlIUVmWWTHgj67+k/moHR0ftIBNiR72a6sW4Li2FVQ1V/t4qQdF4YBPtblgtHpKPq8JXxqrBmzttStF1YX7wVSLARwyLG44Kptr2qf/AqFIr+A5b6p1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712006633; c=relaxed/simple;
-	bh=t1ZeJrMETPQfNrlMHp4pMGLFYeT5RoqomHGFXhf2vQM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faBMwRKZ8pz2cC9XMQuDDIbYSXBJp0arfByHX0H/s4f1uSBdMgrP0CZBwFheqprwe+5CSagnK6wOsmn0sOyer4AoHbz3yI0Cj8R2diXhY6r4Wk2QrCO3YnG8qJrZajUEoJyHcKn0AJtuPtflAWXimjgWLSbl9jIbHgfDKVLr+7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YST/10ZF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712008369; c=relaxed/simple;
+	bh=+mUgi1Gjenu9kWJsbSxl2FyKXeH8k9dLSGa1afErYxo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BW1kzW8DPYtFhbrC655tLvuE+oCu8743oBTTycOIpNZQ2DqaOr/y3Pv8znQWHqgEv5zbhP7rmE18pN2fXwnbYOs0RnLeLP8/VBHLaloCNSydeWWkxNPWqtbZzOPgAROlupb0NxV9CgAT6HhdzIPXs83SYT98gaiu/wPBc7aET9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oq3SolA8; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YST/10ZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA65C43390;
-	Mon,  1 Apr 2024 21:23:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712006632;
-	bh=t1ZeJrMETPQfNrlMHp4pMGLFYeT5RoqomHGFXhf2vQM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YST/10ZFa0qLdfZ4VroGx47csOwBXaHD5UdVQkUYR5VwTq2uBOX8pwAK6MFVbaPhs
-	 8cCdlkjqvzMmkAWskrJvBVp1c315YdF0c4FvFm2Gebvzje949yYdOgr1SRdMqDQf6x
-	 BinsXShsX31liDDuN4zvWw8hn7RGc0fCvkWvXLjiddkAS1WgZOAHLKmf7xswQEzzdJ
-	 xCLaE+lHpDVHtfk3P4Zmun7TLb5ZK7EmNC2eSUvpgKa0UJ78vyXPHwPCEcM091Wvql
-	 glqyS/YAYzQAtjEauwKdhPSxETICugeC66Q4WjcbDgisKeePPom4fvf4K/LNkv9t9r
-	 uar+FhQD0ZJ0g==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 3/3] rust: upgrade to Rust 1.78.0
-Date: Mon,  1 Apr 2024 23:23:03 +0200
-Message-ID: <20240401212303.537355-4-ojeda@kernel.org>
-In-Reply-To: <20240401212303.537355-1-ojeda@kernel.org>
-References: <20240401212303.537355-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oq3SolA8"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-5d4d15ec7c5so3388553a12.1
+        for <patches@lists.linux.dev>; Mon, 01 Apr 2024 14:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712008367; x=1712613167; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+mUgi1Gjenu9kWJsbSxl2FyKXeH8k9dLSGa1afErYxo=;
+        b=Oq3SolA8LBPtV2rFIhUxuT9T9Y6mYmpQdBBCE0peulOL/ZAO4HNWDuFOD/QHu5VBZZ
+         hXKDU9Am6Wz89p5CMndq9kcGJ2JGTOsza2XsGTFPrdF1x948E6FTTRCvgBIyRN6dgGpQ
+         nSu7kshkjfMG8rqGApLRx/1/+4FdI2/xMSwnnT0qBbxrvicwq3MyIvRKOhCU7eJofUUO
+         XVAIzoSPeTaZi0OYxtb48LVW6BXSFwSdkLsz/K4pJUYuXzO+AhQtVnDy8gSGni//+O0l
+         kP0sAhT1pbji6CUiZlJBFdo5jmbIehKuz3FX2CUyO8CbDDktslfBXzQWqbpKcBfASGwc
+         dgcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712008367; x=1712613167;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+mUgi1Gjenu9kWJsbSxl2FyKXeH8k9dLSGa1afErYxo=;
+        b=U76aFqarHEgRAFfLFAdcmxJMtH32CgjJ2sqJBtbTSC80DBvTzWrPsS8wFljFkPgkIQ
+         B3FElngekfnTuVeF5qhzy5BspcKUMUQthy7FZtaxA5XU5x0/Cysp9LCsgqQgYZJKPWvi
+         ctNk7eKDEyhvKKjYPP/ObtsA1zXRGTR1hyxtAi9N6BRU5UOXidiUk+5Iex8kTqliItjc
+         Mx+Qq6xyc46M4yJaMkxmMCwVm0NxrpssqpnFb98yQ8DUnDvCUhfl1Fq4hIp6Ppl0vLBg
+         0ZLgSoXt7njDTDbXrohyIQf1Fobbc5Lrjr3W68w7Qqd9QceVHmGrv1gE2qknXx0Jmzrp
+         HP2w==
+X-Forwarded-Encrypted: i=1; AJvYcCXDoNqiRe2LAu2Jdis5CahY465ALo96h0kG0vmaxIITHFLtvEw0grhW5y81zO/wzE6YxE/t8oWzEFqGr6Mqigf4cvTOd08E7A==
+X-Gm-Message-State: AOJu0YwpVfLeFQCltMr/029SBctOPyc0OQZzjmSq0g2K2sMVrlg0v8Nf
+	m73bTYI3goTvSWvCL+FipwKDHwdP7qOdf90AFSOzwheYcRdOVPQrFlAFVC4KLqdb2XrILQzV2J9
+	Fo/eBYvm9a/fU8Tp1F6hYVmvrdxU=
+X-Google-Smtp-Source: AGHT+IHOVFFEVYukvj+UTvjExqrrX2EQj/VredfPX+lNRU5rsGxijk8SP8Fgw/EP+hDBGh6McIwYX9ZAn7gfBXG04q0=
+X-Received: by 2002:a17:90a:62c4:b0:2a0:6649:7582 with SMTP id
+ k4-20020a17090a62c400b002a066497582mr9131491pjs.46.1712008366778; Mon, 01 Apr
+ 2024 14:52:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240401212303.537355-1-ojeda@kernel.org> <20240401212303.537355-4-ojeda@kernel.org>
+In-Reply-To: <20240401212303.537355-4-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 1 Apr 2024 23:52:11 +0200
+Message-ID: <CANiq72=FM2+VWs1sJTc3i2u4Y4P-DBR8o_h4Gd7MYXfxULjR-A@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.78.0
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the next upgrade to the Rust toolchain, from 1.77.1 to 1.78.0
-(i.e. the latest) [1].
+On Mon, Apr 1, 2024 at 11:23=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> It also means that, ignoring non-language/library features, we are
+> currently left with just the few language features needed to implement th=
+e
+> kernel `Arc`, the `new_uninit` library feature, the `compiler_builtins`
+> marker and the few `no_*` `cfg`s we pass when compiling `core`/`alloc`.
 
-See the upgrade policy [2] and the comments on the first upgrade in
-commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+To be clear, by "currently" I meant in mainline, i.e. it does not mean
+that we will not need/add a few more language/library features in the
+future.
 
-# Unstable features
+> Rust 1.78.0 introduced support for mutable pointers to Rust statics,
+> including a test case for the Linux kernel's `VTABLE` use case [13].
 
-There have been no changes to the set of unstable features used in
-our own code. Therefore, the only unstable features allowed to be used
-outside the `kernel` crate is still `new_uninit`.
+I should have mentioned constants so that it makes sense. I will link
+to `const_refs_to_static`, i.e.
+https://github.com/rust-lang/rust/issues/119618.
 
-However, since we are finally dropping our `alloc` fork [3], all the
-unstable features used by `alloc` (~30 language ones, ~60 library ones)
-are not a concern anymore. This reduces the maintenance burden, increases
-the chances of new compiler versions working without changes and gets
-us closer to the goal of supporting several compiler versions.
+> Rust 1.78.0 with debug assertions enabled (i.e. `-Cdebug-assertions=3Dy`,
+> kernel's `CONFIG_RUST_DEBUG_ASSERTIONS=3Dy`) now always checks all unsafe
+> preconditions, without a way to opt-out for particular cases [14].
 
-It also means that, ignoring non-language/library features, we are
-currently left with just the few language features needed to implement the
-kernel `Arc`, the `new_uninit` library feature, the `compiler_builtins`
-marker and the few `no_*` `cfg`s we pass when compiling `core`/`alloc`.
+It would be ideal to have a way to selectively disable certain checks
+per-call site for this one (i.e. not just per check but for particular
+instances of a check), even if the vast majority of the checks remain
+in place. I discuss the details a bit more at
+https://github.com/Rust-for-Linux/linux/issues/354.
 
-Please see [4] for details.
+> Please note that Rust 1.78.0 will be released in a month (2024-05-02).
 
-# Required changes
+By the way, I tested these with arm64, loongarch64 and x86_64.
 
-## LLVM's data layout
-
-Rust 1.77.0 (i.e. the previous upgrade) introduced a check for matching
-LLVM data layouts [5]. Then, Rust 1.78.0 upgraded LLVM's bundled major
-version from 17 to 18 [6], which changed the data layout in x86 [7]. Thus
-update the data layout in our custom target specification for x86 so
-that the compiler does not complain about the mismatch:
-
-    error: data-layout for target `target-5559158138856098584`,
-    `e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128`,
-    differs from LLVM target's `x86_64-linux-gnu` default layout,
-    `e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128`
-
-In the future, the goal is to drop the custom target specifications.
-Meanwhile, if we want to support other LLVM versions used in `rustc`
-(e.g. for LTO), we will need to add some extra logic (e.g. conditional on
-LLVM's version, or extracting the data layout from an existing built-in
-target specification).
-
-## `unused_imports`
-
-Rust's `unused_imports` lint covers both unused and redundant imports.
-Now, in 1.78.0, the lint detects more cases of redundant imports [8].
-Thus one of the previous patches cleaned them up.
-
-## Clippy's `new_without_default`
-
-Clippy now suggests to implement `Default` even when `new()` is `const`,
-since `Default::default()` may call `const` functions even if it is not
-`const` itself [9]. Thus one of the previous patches implemented it.
-
-# Other changes in Rust
-
-Rust 1.78.0 introduced `feature(asm_goto)` [10] [11]. This feature was
-discussed in the past [12].
-
-Rust 1.78.0 introduced support for mutable pointers to Rust statics,
-including a test case for the Linux kernel's `VTABLE` use case [13].
-
-Rust 1.78.0 with debug assertions enabled (i.e. `-Cdebug-assertions=y`,
-kernel's `CONFIG_RUST_DEBUG_ASSERTIONS=y`) now always checks all unsafe
-preconditions, without a way to opt-out for particular cases [14].
-
-Rust 1.78.0 also improved a couple issues we reported when giving feedback
-for the new `--check-cfg` feature [15] [16].
-
-# `alloc` upgrade and reviewing
-
-As mentioned above, compiler upgrades will not update `alloc` anymore,
-since we are dropping our `alloc` fork [3].
-
-Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1780-2024-05-02 [1]
-Link: https://rust-for-linux.com/rust-version-policy [2]
-Link: https://lore.kernel.org/rust-for-linux/20240328013603.206764-1-wedsonaf@gmail.com/ [3]
-Link: https://github.com/Rust-for-Linux/linux/issues/2 [4]
-Link: https://github.com/rust-lang/rust/pull/120062 [5]
-Link: https://github.com/rust-lang/rust/pull/120055 [6]
-Link: https://reviews.llvm.org/D86310 [7]
-Link: https://github.com/rust-lang/rust/pull/117772 [8]
-Link: https://github.com/rust-lang/rust-clippy/pull/10903 [9]
-Link: https://github.com/rust-lang/rust/pull/119365 [10]
-Link: https://github.com/rust-lang/rust/issues/119364 [11]
-Link: https://lore.kernel.org/rust-for-linux/ZWipTZysC2YL7qsq@Boquns-Mac-mini.home/ [12]
-Link: https://github.com/rust-lang/rust/pull/120932 [13]
-Link: https://github.com/rust-lang/rust/issues/120969 [14]
-Link: https://github.com/rust-lang/rust/pull/121202 [15]
-Link: https://github.com/rust-lang/rust/pull/121237 [16]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-Please note that Rust 1.78.0 will be released in a month (2024-05-02).
-
- Documentation/process/changes.rst | 2 +-
- scripts/generate_rust_target.rs   | 2 +-
- scripts/min-tool-version.sh       | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/process/changes.rst b/Documentation/process/changes.rst
-index b5d3107c6734..5d83958888e0 100644
---- a/Documentation/process/changes.rst
-+++ b/Documentation/process/changes.rst
-@@ -31,7 +31,7 @@ you probably needn't concern yourself with pcmciautils.
- ====================== ===============  ========================================
- GNU C                  5.1              gcc --version
- Clang/LLVM (optional)  13.0.1           clang --version
--Rust (optional)        1.77.1           rustc --version
-+Rust (optional)        1.78.0           rustc --version
- bindgen (optional)     0.65.1           bindgen --version
- GNU make               3.82             make --version
- bash                   4.2              bash --version
-diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
-index 54919cf48621..3fcbc3737b2e 100644
---- a/scripts/generate_rust_target.rs
-+++ b/scripts/generate_rust_target.rs
-@@ -154,7 +154,7 @@ fn main() {
-         ts.push("arch", "x86_64");
-         ts.push(
-             "data-layout",
--            "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128",
-+            "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
-         );
-         let mut features = "-3dnow,-3dnowa,-mmx,+soft-float".to_string();
-         if cfg.has("MITIGATION_RETPOLINE") {
-diff --git a/scripts/min-tool-version.sh b/scripts/min-tool-version.sh
-index 6086e00e640e..91c91201212c 100755
---- a/scripts/min-tool-version.sh
-+++ b/scripts/min-tool-version.sh
-@@ -33,7 +33,7 @@ llvm)
- 	fi
- 	;;
- rustc)
--	echo 1.77.1
-+	echo 1.78.0
- 	;;
- bindgen)
- 	echo 0.65.1
---
-2.44.0
+Cheers,
+Miguel
