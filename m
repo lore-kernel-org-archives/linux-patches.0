@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CB64DA14;
-	Mon,  1 Apr 2024 16:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B95F4DA13;
+	Mon,  1 Apr 2024 16:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990288; cv=none; b=T4Qh4gR+t2LJuDKCVEXiTNIVRn0PfuooMs9kGjFVXUndFBiQmDK5ia4dRlYfS2oQXBVmMEJ8j7ktD1b9uJ01NaP4hqgbE8+aepxJuCDngmR+i1QYdmqpkyyy5n9XHBbgDBIwFA71esIEr+uFecn7JdgmnPWblsp2QdbRKXKGAOs=
+	t=1711990293; cv=none; b=gFFxOfnnEQa+VudtRlXGiPV/8zfztFoVrQz3r7EOSm5dRClBtp5iyKrq6ZoURR39YeLvZUIAqtOxgzaneegR+gmsKZQdmqe4Gf6wnvxdRt4td8g8Fc51kBNStjWUAX2rE/FvxL2HKhm8OYTmqkFW/tvXMQbNDb1b8iB3q6boR2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990288; c=relaxed/simple;
-	bh=6FSI7px96UAhVXt+OVFG8HUJt6C4qhq5alxO+uAP9m4=;
+	s=arc-20240116; t=1711990293; c=relaxed/simple;
+	bh=ZKT4VCCvZla/6GILQO8sS9LzRslmV3XvSWVNWmfPy68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWK8ZyCYeVDN/IiAwQOiB1ayoApqulyHXe+qpUFqNAhg5e+A97thGLJw87925nijbNQrH/P7yZF86H8MqeHcsKeWY0M/2po9EVMf047Bs1VZNBn1kqTviluzA2c5nd6tJF0w4KNCXLmqaqgg03wNWA/u8A3XNYxeEtYJRzhc+aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFGMH6e8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KsKFktl0mH0siyOITweMRPA399lIupmU0Sxrz9wGEznYv5aiHQLzreBe9AkUVoH6F1FfA67crBrCWOUF+HACFTL5ujvDbhxSSvkpT+mjOWWBRaJ9yhmhGEGtkce7sAQTC+Y2ws55nCQGcOh487qXZMJlygSfwFTxNTQHagXbIos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaipJTAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFGMH6e8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E44FC433F1;
-	Mon,  1 Apr 2024 16:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaipJTAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988E7C433C7;
+	Mon,  1 Apr 2024 16:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990288;
-	bh=6FSI7px96UAhVXt+OVFG8HUJt6C4qhq5alxO+uAP9m4=;
+	s=korg; t=1711990291;
+	bh=ZKT4VCCvZla/6GILQO8sS9LzRslmV3XvSWVNWmfPy68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFGMH6e8suDbrqnhBPkwzpPcAGkrlshVx+xBq789gD5UNutdAdLTzbWs4jPSQ0toz
-	 AzJTj19yYKkkqS9YmPsiX208WOvaVywVvKcexJGFhjliJQKh2aAxNceuspBWzAlWH9
-	 l2xaCcan7i8FKql+jteETuzT6ToDBa1oiUQ5tHiY=
+	b=zaipJTALZPr0ZbIOK76GJwakMvg6y/i0eG3cCQdszEWGW79a2NqRVS4HP3sZAXCDt
+	 mg/9h33KLPM0ZrUAXQbQGDcM5sFJW4KByeIZMscWTYWpw7pNfG0R1Ugr9oszbZ4jZk
+	 f1u+wN83eIkgxq62DcSrItIBxCkdBj6x0wXiCFJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>
-Subject: [PATCH 6.6 276/396] xfs: remove conditional building of rt geometry validator functions
-Date: Mon,  1 Apr 2024 17:45:25 +0200
-Message-ID: <20240401152556.138702541@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 277/396] btrfs: fix deadlock with fiemap and extent locking
+Date: Mon,  1 Apr 2024 17:45:26 +0200
+Message-ID: <20240401152556.168325411@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,173 +51,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 881f78f472556ed05588172d5b5676b48dc48240 upstream.
+commit b0ad381fa7690244802aed119b478b4bdafc31dd upstream.
 
-[backport: resolve merge conflicts due to refactoring rtbitmap/summary
-macros and accessors]
+While working on the patchset to remove extent locking I got a lockdep
+splat with fiemap and pagefaulting with my new extent lock replacement
+lock.
 
-I mistakenly turned off CONFIG_XFS_RT in the Kconfig file for arm64
-variant of the djwong-wtf git branch.  Unfortunately, it took me a good
-hour to figure out that RT wasn't built because this is what got printed
-to dmesg:
+This deadlock exists with our normal code, we just don't have lockdep
+annotations with the extent locking so we've never noticed it.
 
-XFS (sda2): realtime geometry sanity check failed
-XFS (sda2): Metadata corruption detected at xfs_sb_read_verify+0x170/0x190 [xfs], xfs_sb block 0x0
+Since we're copying the fiemap extent to user space on every iteration
+we have the chance of pagefaulting.  Because we hold the extent lock for
+the entire range we could mkwrite into a range in the file that we have
+mmap'ed.  This would deadlock with the following stack trace
 
-Whereas I would have expected:
+[<0>] lock_extent+0x28d/0x2f0
+[<0>] btrfs_page_mkwrite+0x273/0x8a0
+[<0>] do_page_mkwrite+0x50/0xb0
+[<0>] do_fault+0xc1/0x7b0
+[<0>] __handle_mm_fault+0x2fa/0x460
+[<0>] handle_mm_fault+0xa4/0x330
+[<0>] do_user_addr_fault+0x1f4/0x800
+[<0>] exc_page_fault+0x7c/0x1e0
+[<0>] asm_exc_page_fault+0x26/0x30
+[<0>] rep_movs_alternative+0x33/0x70
+[<0>] _copy_to_user+0x49/0x70
+[<0>] fiemap_fill_next_extent+0xc8/0x120
+[<0>] emit_fiemap_extent+0x4d/0xa0
+[<0>] extent_fiemap+0x7f8/0xad0
+[<0>] btrfs_fiemap+0x49/0x80
+[<0>] __x64_sys_ioctl+0x3e1/0xb50
+[<0>] do_syscall_64+0x94/0x1a0
+[<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-XFS (sda2): Not built with CONFIG_XFS_RT
-XFS (sda2): RT mount failed
+I wrote an fstest to reproduce this deadlock without my replacement lock
+and verified that the deadlock exists with our existing locking.
 
-The root cause of these problems is the conditional compilation of the
-new functions xfs_validate_rtextents and xfs_compute_rextslog that I
-introduced in the two commits listed below.  The !RT versions of these
-functions return false and 0, respectively, which causes primary
-superblock validation to fail, which explains the first message.
+To fix this simply don't take the extent lock for the entire duration of
+the fiemap.  This is safe in general because we keep track of where we
+are when we're searching the tree, so if an ordered extent updates in
+the middle of our fiemap call we'll still emit the correct extents
+because we know what offset we were on before.
 
-Move the two functions to other parts of libxfs that are not
-conditionally defined by CONFIG_XFS_RT and remove the broken stubs so
-that validation works again.
+The only place we maintain the lock is searching delalloc.  Since the
+delalloc stuff can change during writeback we want to lock the extent
+range so we have a consistent view of delalloc at the time we're
+checking to see if we need to set the delalloc flag.
 
-Fixes: e14293803f4e ("xfs: don't allow overly small or large realtime volumes")
-Fixes: a6a38f309afc ("xfs: make rextslog computation consistent with mkfs")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
+With this patch applied we no longer deadlock with my testcase.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_rtbitmap.c |   14 --------------
- fs/xfs/libxfs/xfs_rtbitmap.h |   16 ----------------
- fs/xfs/libxfs/xfs_sb.c       |   14 ++++++++++++++
- fs/xfs/libxfs/xfs_sb.h       |    2 ++
- fs/xfs/libxfs/xfs_types.h    |   12 ++++++++++++
- fs/xfs/scrub/rtbitmap.c      |    1 +
- fs/xfs/scrub/rtsummary.c     |    1 +
- 7 files changed, 30 insertions(+), 30 deletions(-)
+ fs/btrfs/extent_io.c |   62 +++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 17 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_rtbitmap.c
-+++ b/fs/xfs/libxfs/xfs_rtbitmap.c
-@@ -1131,17 +1131,3 @@ xfs_rtalloc_extent_is_free(
- 	return 0;
- }
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -2735,16 +2735,34 @@ static int fiemap_process_hole(struct bt
+ 	 * it beyond i_size.
+ 	 */
+ 	while (cur_offset < end && cur_offset < i_size) {
++		struct extent_state *cached_state = NULL;
+ 		u64 delalloc_start;
+ 		u64 delalloc_end;
+ 		u64 prealloc_start;
++		u64 lockstart;
++		u64 lockend;
+ 		u64 prealloc_len = 0;
+ 		bool delalloc;
  
--/*
-- * Compute the maximum level number of the realtime summary file, as defined by
-- * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
-- * use of rt volumes with more than 2^32 extents.
-- */
--uint8_t
--xfs_compute_rextslog(
--	xfs_rtbxlen_t		rtextents)
--{
--	if (!rtextents)
--		return 0;
--	return xfs_highbit64(rtextents);
--}
--
---- a/fs/xfs/libxfs/xfs_rtbitmap.h
-+++ b/fs/xfs/libxfs/xfs_rtbitmap.h
-@@ -71,20 +71,6 @@ xfs_rtfree_extent(
- int xfs_rtfree_blocks(struct xfs_trans *tp, xfs_fsblock_t rtbno,
- 		xfs_filblks_t rtlen);
++		lockstart = round_down(cur_offset, inode->root->fs_info->sectorsize);
++		lockend = round_up(end, inode->root->fs_info->sectorsize);
++
++		/*
++		 * We are only locking for the delalloc range because that's the
++		 * only thing that can change here.  With fiemap we have a lock
++		 * on the inode, so no buffered or direct writes can happen.
++		 *
++		 * However mmaps and normal page writeback will cause this to
++		 * change arbitrarily.  We have to lock the extent lock here to
++		 * make sure that nobody messes with the tree while we're doing
++		 * btrfs_find_delalloc_in_range.
++		 */
++		lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 		delalloc = btrfs_find_delalloc_in_range(inode, cur_offset, end,
+ 							delalloc_cached_state,
+ 							&delalloc_start,
+ 							&delalloc_end);
++		unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 		if (!delalloc)
+ 			break;
  
--uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
--
--/* Do we support an rt volume having this number of rtextents? */
--static inline bool
--xfs_validate_rtextents(
--	xfs_rtbxlen_t		rtextents)
--{
--	/* No runt rt volumes */
--	if (rtextents == 0)
--		return false;
--
--	return true;
--}
--
- #else /* CONFIG_XFS_RT */
- # define xfs_rtfree_extent(t,b,l)			(-ENOSYS)
- # define xfs_rtfree_blocks(t,rb,rl)			(-ENOSYS)
-@@ -92,8 +78,6 @@ xfs_validate_rtextents(
- # define xfs_rtalloc_query_all(m,t,f,p)			(-ENOSYS)
- # define xfs_rtbuf_get(m,t,b,i,p)			(-ENOSYS)
- # define xfs_rtalloc_extent_is_free(m,t,s,l,i)		(-ENOSYS)
--# define xfs_compute_rextslog(rtx)			(0)
--# define xfs_validate_rtextents(rtx)			(false)
- #endif /* CONFIG_XFS_RT */
+@@ -2912,15 +2930,15 @@ int extent_fiemap(struct btrfs_inode *in
+ 		  u64 start, u64 len)
+ {
+ 	const u64 ino = btrfs_ino(inode);
+-	struct extent_state *cached_state = NULL;
+ 	struct extent_state *delalloc_cached_state = NULL;
+ 	struct btrfs_path *path;
+ 	struct fiemap_cache cache = { 0 };
+ 	struct btrfs_backref_share_check_ctx *backref_ctx;
+ 	u64 last_extent_end;
+ 	u64 prev_extent_end;
+-	u64 lockstart;
+-	u64 lockend;
++	u64 range_start;
++	u64 range_end;
++	const u64 sectorsize = inode->root->fs_info->sectorsize;
+ 	bool stopped = false;
+ 	int ret;
  
- #endif /* __XFS_RTBITMAP_H__ */
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -1375,3 +1375,17 @@ xfs_validate_stripe_geometry(
+@@ -2931,12 +2949,11 @@ int extent_fiemap(struct btrfs_inode *in
+ 		goto out;
  	}
- 	return true;
- }
-+
-+/*
-+ * Compute the maximum level number of the realtime summary file, as defined by
-+ * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
-+ * use of rt volumes with more than 2^32 extents.
-+ */
-+uint8_t
-+xfs_compute_rextslog(
-+	xfs_rtbxlen_t		rtextents)
-+{
-+	if (!rtextents)
-+		return 0;
-+	return xfs_highbit64(rtextents);
-+}
---- a/fs/xfs/libxfs/xfs_sb.h
-+++ b/fs/xfs/libxfs/xfs_sb.h
-@@ -38,4 +38,6 @@ extern int	xfs_sb_get_secondary(struct x
- extern bool	xfs_validate_stripe_geometry(struct xfs_mount *mp,
- 		__s64 sunit, __s64 swidth, int sectorsize, bool silent);
  
-+uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
-+
- #endif	/* __XFS_SB_H__ */
---- a/fs/xfs/libxfs/xfs_types.h
-+++ b/fs/xfs/libxfs/xfs_types.h
-@@ -240,4 +240,16 @@ bool xfs_verify_fileoff(struct xfs_mount
- bool xfs_verify_fileext(struct xfs_mount *mp, xfs_fileoff_t off,
- 		xfs_fileoff_t len);
+-	lockstart = round_down(start, inode->root->fs_info->sectorsize);
+-	lockend = round_up(start + len, inode->root->fs_info->sectorsize);
+-	prev_extent_end = lockstart;
++	range_start = round_down(start, sectorsize);
++	range_end = round_up(start + len, sectorsize);
++	prev_extent_end = range_start;
  
-+/* Do we support an rt volume having this number of rtextents? */
-+static inline bool
-+xfs_validate_rtextents(
-+	xfs_rtbxlen_t		rtextents)
-+{
-+	/* No runt rt volumes */
-+	if (rtextents == 0)
-+		return false;
-+
-+	return true;
-+}
-+
- #endif	/* __XFS_TYPES_H__ */
---- a/fs/xfs/scrub/rtbitmap.c
-+++ b/fs/xfs/scrub/rtbitmap.c
-@@ -14,6 +14,7 @@
- #include "xfs_rtbitmap.h"
- #include "xfs_inode.h"
- #include "xfs_bmap.h"
-+#include "xfs_sb.h"
- #include "scrub/scrub.h"
- #include "scrub/common.h"
+ 	btrfs_inode_lock(inode, BTRFS_ILOCK_SHARED);
+-	lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
  
---- a/fs/xfs/scrub/rtsummary.c
-+++ b/fs/xfs/scrub/rtsummary.c
-@@ -16,6 +16,7 @@
- #include "xfs_rtbitmap.h"
- #include "xfs_bit.h"
- #include "xfs_bmap.h"
-+#include "xfs_sb.h"
- #include "scrub/scrub.h"
- #include "scrub/common.h"
- #include "scrub/trace.h"
+ 	ret = fiemap_find_last_extent_offset(inode, path, &last_extent_end);
+ 	if (ret < 0)
+@@ -2944,7 +2961,7 @@ int extent_fiemap(struct btrfs_inode *in
+ 	btrfs_release_path(path);
+ 
+ 	path->reada = READA_FORWARD;
+-	ret = fiemap_search_slot(inode, path, lockstart);
++	ret = fiemap_search_slot(inode, path, range_start);
+ 	if (ret < 0) {
+ 		goto out_unlock;
+ 	} else if (ret > 0) {
+@@ -2956,7 +2973,7 @@ int extent_fiemap(struct btrfs_inode *in
+ 		goto check_eof_delalloc;
+ 	}
+ 
+-	while (prev_extent_end < lockend) {
++	while (prev_extent_end < range_end) {
+ 		struct extent_buffer *leaf = path->nodes[0];
+ 		struct btrfs_file_extent_item *ei;
+ 		struct btrfs_key key;
+@@ -2979,19 +2996,19 @@ int extent_fiemap(struct btrfs_inode *in
+ 		 * The first iteration can leave us at an extent item that ends
+ 		 * before our range's start. Move to the next item.
+ 		 */
+-		if (extent_end <= lockstart)
++		if (extent_end <= range_start)
+ 			goto next_item;
+ 
+ 		backref_ctx->curr_leaf_bytenr = leaf->start;
+ 
+ 		/* We have in implicit hole (NO_HOLES feature enabled). */
+ 		if (prev_extent_end < key.offset) {
+-			const u64 range_end = min(key.offset, lockend) - 1;
++			const u64 hole_end = min(key.offset, range_end) - 1;
+ 
+ 			ret = fiemap_process_hole(inode, fieinfo, &cache,
+ 						  &delalloc_cached_state,
+ 						  backref_ctx, 0, 0, 0,
+-						  prev_extent_end, range_end);
++						  prev_extent_end, hole_end);
+ 			if (ret < 0) {
+ 				goto out_unlock;
+ 			} else if (ret > 0) {
+@@ -3001,7 +3018,7 @@ int extent_fiemap(struct btrfs_inode *in
+ 			}
+ 
+ 			/* We've reached the end of the fiemap range, stop. */
+-			if (key.offset >= lockend) {
++			if (key.offset >= range_end) {
+ 				stopped = true;
+ 				break;
+ 			}
+@@ -3095,29 +3112,41 @@ check_eof_delalloc:
+ 	btrfs_free_path(path);
+ 	path = NULL;
+ 
+-	if (!stopped && prev_extent_end < lockend) {
++	if (!stopped && prev_extent_end < range_end) {
+ 		ret = fiemap_process_hole(inode, fieinfo, &cache,
+ 					  &delalloc_cached_state, backref_ctx,
+-					  0, 0, 0, prev_extent_end, lockend - 1);
++					  0, 0, 0, prev_extent_end, range_end - 1);
+ 		if (ret < 0)
+ 			goto out_unlock;
+-		prev_extent_end = lockend;
++		prev_extent_end = range_end;
+ 	}
+ 
+ 	if (cache.cached && cache.offset + cache.len >= last_extent_end) {
+ 		const u64 i_size = i_size_read(&inode->vfs_inode);
+ 
+ 		if (prev_extent_end < i_size) {
++			struct extent_state *cached_state = NULL;
+ 			u64 delalloc_start;
+ 			u64 delalloc_end;
++			u64 lockstart;
++			u64 lockend;
+ 			bool delalloc;
+ 
++			lockstart = round_down(prev_extent_end, sectorsize);
++			lockend = round_up(i_size, sectorsize);
++
++			/*
++			 * See the comment in fiemap_process_hole as to why
++			 * we're doing the locking here.
++			 */
++			lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 			delalloc = btrfs_find_delalloc_in_range(inode,
+ 								prev_extent_end,
+ 								i_size - 1,
+ 								&delalloc_cached_state,
+ 								&delalloc_start,
+ 								&delalloc_end);
++			unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 			if (!delalloc)
+ 				cache.flags |= FIEMAP_EXTENT_LAST;
+ 		} else {
+@@ -3128,7 +3157,6 @@ check_eof_delalloc:
+ 	ret = emit_last_fiemap_cache(fieinfo, &cache);
+ 
+ out_unlock:
+-	unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
+ 	btrfs_inode_unlock(inode, BTRFS_ILOCK_SHARED);
+ out:
+ 	free_extent_state(delalloc_cached_state);
 
 
