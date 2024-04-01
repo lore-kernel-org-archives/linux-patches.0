@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900D38F5C;
-	Mon,  1 Apr 2024 16:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3F4481B8;
+	Mon,  1 Apr 2024 16:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989990; cv=none; b=iTKD58ngiF8OM+clh8VEk43QtWDVZau2alzocANVnu+tHaSpC3j6xLf3T3Z7PO248651F1G6EWpYdDBYLjum54ggvydpPa6QyDXM0bytLkhz5V1BPwcLm6VeN7Q8Piluci92CS+WKYbhmkMX7KZ88v5iLXh9kPr+HBQbTSPKGEo=
+	t=1711989994; cv=none; b=gACFnGkQFrYFbeB8sLN3QYlxwSQuU/jJQB0YYXZhk5RfDYR3zVqIh+CqvwdCeBmPNmRD4Z0G1dezyxNndd7wEsmWYIT2V5dImLpnOTDTsieherymRFYp7OuNdIX/7vydUZYqd41bflpT2IVBmrotrd6OzYf+ewYiOCrh3p60sgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989990; c=relaxed/simple;
-	bh=bNhCKAnfslwAC/kndvz5W+1eXohHP3ISDj4/6ZnLDco=;
+	s=arc-20240116; t=1711989994; c=relaxed/simple;
+	bh=PKbekVFCSHgM9KiNVF5DqKm+Vid4MBjt48tJYu7GCl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz04N6LETfdGY4PsSfB7wwaeOnpN8vlsvjMj1IOBB2RwrZhq+Mq+Fnj4gMzYzYaaSyTkg1D0pHvmfNLh1uwNR+yCpU6CSjT7Lvs/+IXFVQjjrIpJ9bT/nhRGtiO/TEkdUCtWdGnnUzHAcjtJocOGSmuHIHmIjof/oW8luWEMv4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXJUxpBM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDliu9cFbujaBKzGoHGwIOEPG/gkEUy37to8eYReN6krQJP3lguZ4+eK6gP6bwGqqR2ySsqmAQ5+DYgXEHXDDJr83IG1G4wzJqhi8/YlQ8H7aCx7BOmnmRZXctUhUio9+oDPjZKUhbzIYil85LRPA4xX+OvMejduKKxuUtadGOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxs/nxPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXJUxpBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1650BC433F1;
-	Mon,  1 Apr 2024 16:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxs/nxPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FC6C43390;
+	Mon,  1 Apr 2024 16:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989990;
-	bh=bNhCKAnfslwAC/kndvz5W+1eXohHP3ISDj4/6ZnLDco=;
+	s=korg; t=1711989993;
+	bh=PKbekVFCSHgM9KiNVF5DqKm+Vid4MBjt48tJYu7GCl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXJUxpBMrVlZqAgx1K13uQoIZtrffeVxfTeBZyngAA8J05v5TkrmmQhU+g1uGe74e
-	 BNQVtLGoFpRIpEZqQzQTgYqZaFJy/fCDwptX0EqPgI9dPbaJ3G7TyIXhQe0fl4UO6r
-	 TocYzVKeN8Iv3/oTiM3/vtgQsF1/+qs4b2nBS0pk=
+	b=bxs/nxPHTPnokDcVjB4HFvEiZ4rCS+yL1HgBp/M8OLmZpPNPI9JbDDhen7RBWEfRS
+	 JW6gjwalRaOGDsVBC65MaZ+mZFflmRh/wFUnsRHw8AfveWMMiF9ot5lgaD3dCTwQLo
+	 QZX2yXJR5RPEV6uH+qA7wi0Y/vZX8YwEjiAPTah0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Altaparmakov <anton@tuxera.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/396] x86/pm: Work around false positive kmemleak report in msr_build_context()
-Date: Mon,  1 Apr 2024 17:43:54 +0200
-Message-ID: <20240401152553.456292979@linuxfoundation.org>
+Subject: [PATCH 6.6 186/396] wifi: brcmfmac: add per-vendor feature detection callback
+Date: Mon,  1 Apr 2024 17:43:55 +0200
+Message-ID: <20240401152553.485632253@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,99 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Altaparmakov <anton@tuxera.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit e3f269ed0accbb22aa8f25d2daffa23c3fccd407 ]
+[ Upstream commit 14e1391b71027948cdbacdbea4bf8858c2068eb7 ]
 
-Since:
+Adding a .feat_attach() callback allowing per-vendor overrides
+of the driver feature flags. In this patch the callback is only
+provided by BCA vendor to disable SAE feature as it has not been
+confirmed yet. BCA chips generally do not have the in-driver
+supplicant (idsup) feature so they rely on NL80211_CMD_EXTERNAL_AUTH
+to trigger user-space authentication.
 
-  7ee18d677989 ("x86/power: Make restore_processor_context() sane")
-
-kmemleak reports this issue:
-
-  unreferenced object 0xf68241e0 (size 32):
-    comm "swapper/0", pid 1, jiffies 4294668610 (age 68.432s)
-    hex dump (first 32 bytes):
-      00 cc cc cc 29 10 01 c0 00 00 00 00 00 00 00 00  ....)...........
-      00 42 82 f6 cc cc cc cc cc cc cc cc cc cc cc cc  .B..............
-    backtrace:
-      [<461c1d50>] __kmem_cache_alloc_node+0x106/0x260
-      [<ea65e13b>] __kmalloc+0x54/0x160
-      [<c3858cd2>] msr_build_context.constprop.0+0x35/0x100
-      [<46635aff>] pm_check_save_msr+0x63/0x80
-      [<6b6bb938>] do_one_initcall+0x41/0x1f0
-      [<3f3add60>] kernel_init_freeable+0x199/0x1e8
-      [<3b538fde>] kernel_init+0x1a/0x110
-      [<938ae2b2>] ret_from_fork+0x1c/0x28
-
-Which is a false positive.
-
-Reproducer:
-
-  - Run rsync of whole kernel tree (multiple times if needed).
-  - start a kmemleak scan
-  - Note this is just an example: a lot of our internal tests hit these.
-
-The root cause is similar to the fix in:
-
-  b0b592cf0836 x86/pm: Fix false positive kmemleak report in msr_build_context()
-
-ie. the alignment within the packed struct saved_context
-which has everything unaligned as there is only "u16 gs;" at start of
-struct where in the past there were four u16 there thus aligning
-everything afterwards.  The issue is with the fact that Kmemleak only
-searches for pointers that are aligned (see how pointers are scanned in
-kmemleak.c) so when the struct members are not aligned it doesn't see
-them.
-
-Testing:
-
-We run a lot of tests with our CI, and after applying this fix we do not
-see any kmemleak issues any more whilst without it we see hundreds of
-the above report. From a single, simple test run consisting of 416 individual test
-cases on kernel 5.10 x86 with kmemleak enabled we got 20 failures due to this,
-which is quite a lot. With this fix applied we get zero kmemleak related failures.
-
-Fixes: 7ee18d677989 ("x86/power: Make restore_processor_context() sane")
-Signed-off-by: Anton Altaparmakov <anton@tuxera.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240314142656.17699-1-anton@tuxera.com
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240103095704.135651-3-arend.vanspriel@broadcom.com
+Stable-dep-of: 85da8f71aaa7 ("wifi: brcmfmac: Demote vendor-specific attach/detach messages to info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/suspend_32.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .../wireless/broadcom/brcm80211/brcmfmac/bca/core.c  |  8 ++++++++
+ .../wireless/broadcom/brcm80211/brcmfmac/feature.c   |  3 +++
+ .../net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h | 12 ++++++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/arch/x86/include/asm/suspend_32.h b/arch/x86/include/asm/suspend_32.h
-index a800abb1a9925..d8416b3bf832e 100644
---- a/arch/x86/include/asm/suspend_32.h
-+++ b/arch/x86/include/asm/suspend_32.h
-@@ -12,11 +12,6 @@
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
+index ac3a36fa3640c..a5d9ac5e67638 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
+@@ -7,6 +7,7 @@
+ #include <core.h>
+ #include <bus.h>
+ #include <fwvid.h>
++#include <feature.h>
  
- /* image of the saved processor state */
- struct saved_context {
--	/*
--	 * On x86_32, all segment registers except gs are saved at kernel
--	 * entry in pt_regs.
--	 */
--	u16 gs;
- 	unsigned long cr0, cr2, cr3, cr4;
- 	u64 misc_enable;
- 	struct saved_msrs saved_msrs;
-@@ -27,6 +22,11 @@ struct saved_context {
- 	unsigned long tr;
- 	unsigned long safety;
- 	unsigned long return_address;
-+	/*
-+	 * On x86_32, all segment registers except gs are saved at kernel
-+	 * entry in pt_regs.
-+	 */
-+	u16 gs;
- 	bool misc_enable_saved;
- } __attribute__((packed));
+ #include "vops.h"
  
+@@ -21,7 +22,14 @@ static void brcmf_bca_detach(struct brcmf_pub *drvr)
+ 	pr_err("%s: executing\n", __func__);
+ }
+ 
++static void brcmf_bca_feat_attach(struct brcmf_if *ifp)
++{
++	/* SAE support not confirmed so disabling for now */
++	ifp->drvr->feat_flags &= ~BIT(BRCMF_FEAT_SAE);
++}
++
+ const struct brcmf_fwvid_ops brcmf_bca_ops = {
+ 	.attach = brcmf_bca_attach,
+ 	.detach = brcmf_bca_detach,
++	.feat_attach = brcmf_bca_feat_attach,
+ };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+index 6d10c9efbe93d..909a34a1ab503 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+@@ -13,6 +13,7 @@
+ #include "debug.h"
+ #include "fwil.h"
+ #include "fwil_types.h"
++#include "fwvid.h"
+ #include "feature.h"
+ #include "common.h"
+ 
+@@ -339,6 +340,8 @@ void brcmf_feat_attach(struct brcmf_pub *drvr)
+ 	brcmf_feat_iovar_int_get(ifp, BRCMF_FEAT_FWSUP, "sup_wpa");
+ 	brcmf_feat_iovar_int_get(ifp, BRCMF_FEAT_SCAN_V2, "scan_ver");
+ 
++	brcmf_fwvid_feat_attach(ifp);
++
+ 	if (drvr->settings->feature_disable) {
+ 		brcmf_dbg(INFO, "Features: 0x%02x, disable: 0x%02x\n",
+ 			  ifp->drvr->feat_flags,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+index 43df58bb70ad3..17fbdbb76f51b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+@@ -8,10 +8,12 @@
+ #include "firmware.h"
+ 
+ struct brcmf_pub;
++struct brcmf_if;
+ 
+ struct brcmf_fwvid_ops {
+ 	int (*attach)(struct brcmf_pub *drvr);
+ 	void (*detach)(struct brcmf_pub *drvr);
++	void (*feat_attach)(struct brcmf_if *ifp);
+ };
+ 
+ /* exported functions */
+@@ -44,4 +46,14 @@ static inline void brcmf_fwvid_detach(struct brcmf_pub *drvr)
+ 	brcmf_fwvid_detach_ops(drvr);
+ }
+ 
++static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
++{
++	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
++
++	if (!vops->feat_attach)
++		return;
++
++	vops->feat_attach(ifp);
++}
++
+ #endif /* FWVID_H_ */
 -- 
 2.43.0
 
