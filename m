@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118B947A62;
-	Mon,  1 Apr 2024 16:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8064778B;
+	Mon,  1 Apr 2024 16:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987636; cv=none; b=GQdgY2ypa7qO16VBIk5Vu3odE9GrNdAPhBVzFpepUtYfOSLvVFBU1ZKDyJ/OZcAJ8xilKg376eP5xvOm6fbqdaZ4j3jt0z6wcUA5pdFpMje6KySfzDkZqryGiy5PGW9/SOCpONsCQ4F74XrTMHPiRkxzpTIVTyu7VcQ1Mlw4mvo=
+	t=1711987640; cv=none; b=hUlEgtfxHpq/AWVx/lreCwGblPfc3VOJLyxOAPP6AsMxhEA+6Wzk/wFTPcwAVPYuFzJOGI9k2FjFDWec5dPJ7CcytnjSkancIII1LidXbsjsjxO2uiOymkNzSUq/JZk4FXFTeB2cbSW9Mrkm5i4ny6Qunu3Yps5qOpcrRgIiwg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987636; c=relaxed/simple;
-	bh=ShA83Z8tzw4f+tggV+ntrol+OhPWdEEZOFPAs42BdcM=;
+	s=arc-20240116; t=1711987640; c=relaxed/simple;
+	bh=0DXvH/HPpEIuMnwZgThDWSByXK2FVuvTjj162ZvNzXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fqo0Ur6GQPCPd1r6A6YPDWs2vMTrcqIHnFtfXjYXIUoGUZTjGH4fDEFPvCI8w771tyn/yZyH30wEZDLn8jKGagHRTVCQst2/6m9HmvbMjcioxirCQW7GBgd6VLFuXwZsDaFSGjwwuyJxI7Qpwtj7B3vIz46t8TBZpaJMuQ2s0/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12/J6uRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hHiCosIaQmyfPKEldsSGAskFMv9OeQJ/4m2T/b83YVAyTPv+lkjoNMdu0DE1YpZK3wSe9Ueb4pCgpKhOF/nk1Ilfs8bl09Bf4vo/ZhuhmSmZMt+LVnppfUe+U1JmgTA5T0eYYGpHzZ/5b+71KAiDkBGlpXUx23ueXYAT1JvqAwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipQWUXcM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12/J6uRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF8DC433F1;
-	Mon,  1 Apr 2024 16:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipQWUXcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F2EC433C7;
+	Mon,  1 Apr 2024 16:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987635;
-	bh=ShA83Z8tzw4f+tggV+ntrol+OhPWdEEZOFPAs42BdcM=;
+	s=korg; t=1711987639;
+	bh=0DXvH/HPpEIuMnwZgThDWSByXK2FVuvTjj162ZvNzXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12/J6uRcswhpgpvn7BIzDSO3WpJeUIRX1TRGf2Nn4lUgc057GS0CBbnR2FXKK9sY+
-	 0BVupzpMxiM6nF2rZrU0SK99N/FER3btebz0isZmCqesLNqB1RJVsIzmbtJQHzJ/ZJ
-	 ZKGUb8SmqCVbnmxCKLkLUNpeQ5yzb5hcH8KHj4/U=
+	b=ipQWUXcMA9x4zdgb386qWktTavg+G+Mpvm1vKb7bX1JPzqcJpcc1W7utKw/cdtXGw
+	 RJ5L0kJD9iB3AtJSTnX1WjfPjY17/gLaTifaGj2jPUCf9SQKGfbHUlo6/P8o2Myfou
+	 BqvJVE9flivzvW0Omnrylkq6KBFSMIeiypm7KzSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 346/399] vfio/pds: Make sure migration file isnt accessed after reset
-Date: Mon,  1 Apr 2024 17:45:12 +0200
-Message-ID: <20240401152559.499681221@linuxfoundation.org>
+Subject: [PATCH 6.8 347/399] ring-buffer: Make wake once of ring_buffer_wait() more robust
+Date: Mon,  1 Apr 2024 17:45:13 +0200
+Message-ID: <20240401152559.534144018@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,108 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 457f7308254756b6e4b8fc3876cb770dcf0e7cc7 ]
+[ Upstream commit b70f2938242a028f8e9473781ede175486a59dc8 ]
 
-It's possible the migration file is accessed after reset when it has
-been cleaned up, especially when it's initiated by the device. This is
-because the driver doesn't rip out the filep when cleaning up it only
-frees the related page structures and sets its local struct
-pds_vfio_lm_file pointer to NULL. This can cause a NULL pointer
-dereference, which is shown in the example below during a restore after
-a device initiated reset:
+The default behavior of ring_buffer_wait() when passed a NULL "cond"
+parameter is to exit the function the first time it is woken up. The
+current implementation uses a counter that starts at zero and when it is
+greater than one it exits the wait_event_interruptible().
 
-BUG: kernel NULL pointer dereference, address: 000000000000000c
-PF: supervisor read access in kernel mode
-PF: error_code(0x0000) - not-present page
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:pds_vfio_get_file_page+0x5d/0xf0 [pds_vfio_pci]
-[...]
-Call Trace:
- <TASK>
- pds_vfio_restore_write+0xf6/0x160 [pds_vfio_pci]
- vfs_write+0xc9/0x3f0
- ? __fget_light+0xc9/0x110
- ksys_write+0xb5/0xf0
- __x64_sys_write+0x1a/0x20
- do_syscall_64+0x38/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[...]
+But this relies on the internal working of wait_event_interruptible() as
+that code basically has:
 
-Add a disabled flag to the driver's struct pds_vfio_lm_file that gets
-set during cleanup. Then make sure to check the flag when the migration
-file is accessed via its file_operations. By default this flag will be
-false as the memory for struct pds_vfio_lm_file is kzalloc'd, which means
-the struct pds_vfio_lm_file is enabled and accessible. Also, since the
-file_operations and driver's migration file cleanup happen under the
-protection of the same pds_vfio_lm_file.lock, using this flag is thread
-safe.
+  if (cond)
+    return;
+  prepare_to_wait();
+  if (!cond)
+    schedule();
+  finish_wait();
 
-Fixes: 8512ed256334 ("vfio/pds: Always clear the save/restore FDs on reset")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://lore.kernel.org/r/20240308182149.22036-2-brett.creeley@amd.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+That is, cond is called twice before it sleeps. The default cond of
+ring_buffer_wait() needs to account for that and wait for its counter to
+increment twice before exiting.
+
+Instead, use the seq/atomic_inc logic that is used by the tracing code
+that calls this function. Add an atomic_t seq to rb_irq_work and when cond
+is NULL, have the default callback take a descriptor as its data that
+holds the rbwork and the value of the seq when it started.
+
+The wakeups will now increment the rbwork->seq and the cond callback will
+simply check if that number is different, and no longer have to rely on
+the implementation of wait_event_interruptible().
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240315063115.6cb5d205@gandalf.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 7af9ded0c2ca ("ring-buffer: Use wait_event_interruptible() in ring_buffer_wait()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/pds/lm.c | 13 +++++++++++++
- drivers/vfio/pci/pds/lm.h |  1 +
- 2 files changed, 14 insertions(+)
+ kernel/trace/ring_buffer.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/vfio/pci/pds/lm.c b/drivers/vfio/pci/pds/lm.c
-index 79fe2e66bb498..6b94cc0bf45b4 100644
---- a/drivers/vfio/pci/pds/lm.c
-+++ b/drivers/vfio/pci/pds/lm.c
-@@ -92,8 +92,10 @@ static void pds_vfio_put_lm_file(struct pds_vfio_lm_file *lm_file)
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index ad0d475d1f570..43060a7ae15e7 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -384,6 +384,7 @@ struct rb_irq_work {
+ 	struct irq_work			work;
+ 	wait_queue_head_t		waiters;
+ 	wait_queue_head_t		full_waiters;
++	atomic_t			seq;
+ 	bool				waiters_pending;
+ 	bool				full_waiters_pending;
+ 	bool				wakeup_full;
+@@ -753,6 +754,9 @@ static void rb_wake_up_waiters(struct irq_work *work)
  {
- 	mutex_lock(&lm_file->lock);
+ 	struct rb_irq_work *rbwork = container_of(work, struct rb_irq_work, work);
  
-+	lm_file->disabled = true;
- 	lm_file->size = 0;
- 	lm_file->alloc_size = 0;
-+	lm_file->filep->f_pos = 0;
- 
- 	/* Free scatter list of file pages */
- 	sg_free_table(&lm_file->sg_table);
-@@ -183,6 +185,12 @@ static ssize_t pds_vfio_save_read(struct file *filp, char __user *buf,
- 	pos = &filp->f_pos;
- 
- 	mutex_lock(&lm_file->lock);
++	/* For waiters waiting for the first wake up */
++	(void)atomic_fetch_inc_release(&rbwork->seq);
 +
-+	if (lm_file->disabled) {
-+		done = -ENODEV;
-+		goto out_unlock;
+ 	wake_up_all(&rbwork->waiters);
+ 	if (rbwork->full_waiters_pending || rbwork->wakeup_full) {
+ 		/* Only cpu_buffer sets the above flags */
+@@ -881,20 +885,21 @@ rb_wait_cond(struct rb_irq_work *rbwork, struct trace_buffer *buffer,
+ 	return false;
+ }
+ 
++struct rb_wait_data {
++	struct rb_irq_work		*irq_work;
++	int				seq;
++};
++
+ /*
+  * The default wait condition for ring_buffer_wait() is to just to exit the
+  * wait loop the first time it is woken up.
+  */
+ static bool rb_wait_once(void *data)
+ {
+-	long *once = data;
++	struct rb_wait_data *rdata = data;
++	struct rb_irq_work *rbwork = rdata->irq_work;
+ 
+-	/* wait_event() actually calls this twice before scheduling*/
+-	if (*once > 1)
+-		return true;
+-
+-	(*once)++;
+-	return false;
++	return atomic_read_acquire(&rbwork->seq) != rdata->seq;
+ }
+ 
+ /**
+@@ -915,14 +920,9 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full,
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	struct wait_queue_head *waitq;
+ 	struct rb_irq_work *rbwork;
+-	long once = 0;
++	struct rb_wait_data rdata;
+ 	int ret = 0;
+ 
+-	if (!cond) {
+-		cond = rb_wait_once;
+-		data = &once;
+-	}
+-
+ 	/*
+ 	 * Depending on what the caller is waiting for, either any
+ 	 * data in any cpu buffer, or a specific buffer, put the
+@@ -944,6 +944,14 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full,
+ 	else
+ 		waitq = &rbwork->waiters;
+ 
++	/* Set up to exit loop as soon as it is woken */
++	if (!cond) {
++		cond = rb_wait_once;
++		rdata.irq_work = rbwork;
++		rdata.seq = atomic_read_acquire(&rbwork->seq);
++		data = &rdata;
 +	}
 +
- 	if (*pos > lm_file->size) {
- 		done = -EINVAL;
- 		goto out_unlock;
-@@ -283,6 +291,11 @@ static ssize_t pds_vfio_restore_write(struct file *filp, const char __user *buf,
+ 	ret = wait_event_interruptible((*waitq),
+ 				rb_wait_cond(rbwork, buffer, cpu, full, cond, data));
  
- 	mutex_lock(&lm_file->lock);
- 
-+	if (lm_file->disabled) {
-+		done = -ENODEV;
-+		goto out_unlock;
-+	}
-+
- 	while (len) {
- 		size_t page_offset;
- 		struct page *page;
-diff --git a/drivers/vfio/pci/pds/lm.h b/drivers/vfio/pci/pds/lm.h
-index 13be893198b74..9511b1afc6a11 100644
---- a/drivers/vfio/pci/pds/lm.h
-+++ b/drivers/vfio/pci/pds/lm.h
-@@ -27,6 +27,7 @@ struct pds_vfio_lm_file {
- 	struct scatterlist *last_offset_sg;	/* Iterator */
- 	unsigned int sg_last_entry;
- 	unsigned long last_offset;
-+	bool disabled;
- };
- 
- struct pds_vfio_pci_device;
 -- 
 2.43.0
 
