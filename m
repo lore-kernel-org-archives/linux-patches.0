@@ -1,151 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416B93D9E
-	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 20:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EF75A7AB
+	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 20:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712002679; cv=none; b=FWfyFTgEdjFNkVbgE2RgDIai+Oy+/pGR0gK89kmChg2JgnvcN5bzBaFbnNym4lsot1Z5b7ZNlUh5U4/zt239q3fQM+w69Tqby8oMnYcgmBRaRqjJ/6h8ETdweVp5U9cxC8e9Zy2tKTwdcgbQWD8VM44jGwm64kU8EiFJ8zdmY60=
+	t=1712003663; cv=none; b=VDJhZto3DnI04D+M7zSPikxnNnPHZKETBERMIcd6TJMHgwNmX4MNCcwu2wN/IN9aHnMcNk4KM28TYQaNAmrdX2udWgxPY2pA6r3TTagd4rqXmcvScIWevHqstzvV9H10zl1jO88uRua66jyarRBT69f9ZwNk4dStan+gz8ajDYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712002679; c=relaxed/simple;
-	bh=ZY9811+zu+uQ7d0Cuk1AcJNSqLqOAsff3pvUj9TS+C0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X4NGM5x/V0JoQ/+3k0uND5jwtwDrluB1yRG4He93F+pCMp9gREmn6sfOYri3BBMnYerVOUUjdwhcrSJLXP9peXWUXWWx83KpRi0i7y290N//HTDJoBoWx/9z9cj6rXJTOgty/0RsrJjQcejPV7QE45XomhlQZQnL6qwwcowFOiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTLskXyD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712003663; c=relaxed/simple;
+	bh=IXvnhxI2pXQ52Hg1YEyiDW9h4z8TaCL/BxY7wfJZcS0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JIvePDtif0gkgWcQA+epRsXTVI2RJHL2sqfqGOvZ5kxmLTpmeHxhVJxyWnQTcbOJCdWD7MD2uUUGVmvnpuFhPcHrhVhAdIBPK6f4YUwf+r/gXMLOFyqcUMLXgfia/Ff8FSN1dAjY2gRf4KnXM4H+7SnmjQit8jHw6xnMceNQc6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JolSK/WS; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTLskXyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CF7C43399
-	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 20:17:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712002678;
-	bh=ZY9811+zu+uQ7d0Cuk1AcJNSqLqOAsff3pvUj9TS+C0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=bTLskXyDXOEEJriKWcQ1QY5oc06Mw7AUsGE0KVxVyrfHn1RUR7LmNPrA78ifjatP+
-	 MqpObFkTAEt8iIp4oti+TFLfIvlmGHCxYpRPJ/lo1knBuI5FY1ur2gZxj7tE5JQSvm
-	 Smc9us6yduCPyJP/ylJs/X4/a5Sp3Ne6D17mPDOL7sNskbWPg6hJaDqBKiqMT+OGGz
-	 CTJ7i1k86je4Ay90n/pRdygA677qNqNhzsiFp9sk3EGX0UqRsHKAw5zIUAKk9JdmH4
-	 TFx916kFLad/xFcQZ5Hwm7s7htTtwat9zJZytcIickUjE95aDU5qf8rl0X0GWinO9d
-	 mw0Sws1U8fS8Q==
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-513d212f818so4792502e87.2
-        for <patches@lists.linux.dev>; Mon, 01 Apr 2024 13:17:58 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUAJDom6j/GzcwYG48Wcy8rVTMhJl33OtIalW5DvLXURJ3wv4mLIgDgc6XMKgCLkt0Z7l5Bwzp7QgC//63psWhRwMx6BusbRg==
-X-Gm-Message-State: AOJu0Yxj4kFZCTaitXMVPs44B29XQFhcssNKrl+Zt+x2g+Xn8r+JFyW6
-	vGaFdtC2t/h9No6aU4Nwl2GpsBm/BpbT/G0mdTNhF533s5SXIziBWcK6M2bBHIsYapkh+Xytd7m
-	ALgauc+7zHuNjG2ZIs+Z1SfDKwA==
-X-Google-Smtp-Source: AGHT+IH/WCDpfF40/4k2Thcy+kvgYXzXW006C+tEnefpOqLa6560teCSXDzOxxEQ2kLNL7b9UyTa+Tblg9J5jZB/WEM=
-X-Received: by 2002:a05:6512:5cd:b0:515:a6dd:9657 with SMTP id
- o13-20020a05651205cd00b00515a6dd9657mr5841843lfo.16.1712002677570; Mon, 01
- Apr 2024 13:17:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JolSK/WS"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2a07b092c4fso3345754a91.0
+        for <patches@lists.linux.dev>; Mon, 01 Apr 2024 13:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1712003661; x=1712608461; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6FwFD4JYxhcIwnfKCG0w6eqnbQcVPaedMXbOYVzksxk=;
+        b=JolSK/WSr4m5PEUrsXhFBhHEVFAOwu51IB29lrLQ3iD4wbwi1+aLQHVTKUz46w+cef
+         rlAGWBMtPdg0/3Rok3ERrGZqTGNWQ5mMxrwjy+6DHR8C3UGDVudMZKVqX95bGFWTuDDe
+         2STuvjwcC+uWf//vbeyV78CwbNfEGcscymXe965NbQz8VG8U7jTFEtx35lPYFoN1o4n2
+         WL0GriAacCaXbho7tgJ9ziKa+6B2Udf/00eupHaypXz2htEyGTyZZWHCkM6x1W4pmog4
+         kmw2uLy4ANrZRed3Pno5h7OE77ecFAPMb0gJstA9Fj7YVAzfWHIG+Nk2e/sxiaEF7W4b
+         y+6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712003661; x=1712608461;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6FwFD4JYxhcIwnfKCG0w6eqnbQcVPaedMXbOYVzksxk=;
+        b=sFtOC9bjAYpPJdtUXSSIqo0r2sRwCz97a1qcZp4xUr/jAZHYNFPsFOjZrvqWLfrCpB
+         cPRfECSKFiBugtwrqoSKYsgaz/iSCPXf4OmFvLiin+6uTDlifzR5lGI8n5r2nk8RlHjn
+         4AHxIzn9eI2lEDoSyKfyyRIb3FAttCd6NGZtiNeeVpLDZAhWN6cH29uYyuIw/zBA3lzA
+         fEkX8m6F10wdFihPykVAwEkXbgOsFCv+HvN826xuY5RiSkVjxTSVfLuwx9EMOm85WQNr
+         9Q3dp+aNbDXp6q4jjjkQ4/FMYp4P/xd0aCtln5TnDSDCupYyauVNjblp5Hfq6dQGEwDt
+         gPlw==
+X-Gm-Message-State: AOJu0YzWlcoVYJFGlLVavSdgwZo5Xb9VqtzXtwzCfMn1+5XY+ESKGlCW
+	35rWw63qJoYHbWtVRWjYT0sj4WL9+D8/2ytkJeTkWLmO+hRfremK
+X-Google-Smtp-Source: AGHT+IFTxaQptQJCitxa2lQjF/XzI2d/woGr+xEoVq2OhhXdQPW+leNIfgcvPM0k+RuUFB8jtLnLHw==
+X-Received: by 2002:a17:90a:5c86:b0:29f:67ad:7db0 with SMTP id r6-20020a17090a5c8600b0029f67ad7db0mr9768772pji.11.1712003660956;
+        Mon, 01 Apr 2024 13:34:20 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id u1-20020a17090aae8100b0029b9954a02asm9598386pjq.0.2024.04.01.13.34.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Apr 2024 13:34:20 -0700 (PDT)
+Message-ID: <4bea0061-09e7-42ef-84b1-735682c5f65d@gmail.com>
+Date: Mon, 1 Apr 2024 13:34:15 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401152530.237785232@linuxfoundation.org> <20240401152533.057644896@linuxfoundation.org>
-In-Reply-To: <20240401152533.057644896@linuxfoundation.org>
-From: Chris Li <chrisl@kernel.org>
-Date: Mon, 1 Apr 2024 13:17:45 -0700
-X-Gmail-Original-Message-ID: <CANeU7Qm5dU_G6Y2omjeAmLNSsZ1G5ynH6+VMQvzC-RmV2Quu=A@mail.gmail.com>
-Message-ID: <CANeU7Qm5dU_G6Y2omjeAmLNSsZ1G5ynH6+VMQvzC-RmV2Quu=A@mail.gmail.com>
-Subject: Re: [PATCH 6.1 079/272] swap: comments get_swap_device() with usage rule
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	"Huang, Ying" <ying.huang@intel.com>, David Hildenbrand <david@redhat.com>, 
-	Yosry Ahmed <yosryahmed@google.com>, Hugh Dickins <hughd@google.com>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Matthew Wilcox <willy@infradead.org>, Michal Hocko <mhocko@suse.com>, 
-	Minchan Kim <minchan@kernel.org>, Tim Chen <tim.c.chen@linux.intel.com>, 
-	Yang Shi <shy828301@gmail.com>, Yu Zhao <yuzhao@google.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240401152547.867452742@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Looks good to me.
+On 4/1/24 08:40, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.24 release.
+> There are 396 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.24-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Acked-by: Chris Li <chrisl@kernel.org>
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Chris
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-
-On Mon, Apr 1, 2024 at 10:00=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
-> ------------------
->
-> From: Huang Ying <ying.huang@intel.com>
->
-> [ Upstream commit a95722a047724ef75567381976a36f0e44230bd9 ]
->
-> The general rule to use a swap entry is as follows.
->
-> When we get a swap entry, if there aren't some other ways to prevent
-> swapoff, such as the folio in swap cache is locked, page table lock is
-> held, etc., the swap entry may become invalid because of swapoff.
-> Then, we need to enclose all swap related functions with
-> get_swap_device() and put_swap_device(), unless the swap functions
-> call get/put_swap_device() by themselves.
->
-> Add the rule as comments of get_swap_device().
->
-> Link: https://lkml.kernel.org/r/20230529061355.125791-6-ying.huang@intel.=
-com
-> Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-> Reviewed-by: Chris Li (Google) <chrisl@kernel.org>
-> Cc: Hugh Dickins <hughd@google.com>
-> Cc: Johannes Weiner <hannes@cmpxchg.org>
-> Cc: Matthew Wilcox <willy@infradead.org>
-> Cc: Michal Hocko <mhocko@suse.com>
-> Cc: Minchan Kim <minchan@kernel.org>
-> Cc: Tim Chen <tim.c.chen@linux.intel.com>
-> Cc: Yang Shi <shy828301@gmail.com>
-> Cc: Yu Zhao <yuzhao@google.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Stable-dep-of: 82b1c07a0af6 ("mm: swap: fix race between free_swap_and_ca=
-che() and swapoff()")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  mm/swapfile.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/mm/swapfile.c b/mm/swapfile.c
-> index cca9fda9d036f..324844f98d67c 100644
-> --- a/mm/swapfile.c
-> +++ b/mm/swapfile.c
-> @@ -1222,6 +1222,13 @@ static unsigned char __swap_entry_free_locked(stru=
-ct swap_info_struct *p,
->  }
->
->  /*
-> + * When we get a swap entry, if there aren't some other ways to
-> + * prevent swapoff, such as the folio in swap cache is locked, page
-> + * table lock is held, etc., the swap entry may become invalid because
-> + * of swapoff.  Then, we need to enclose all swap related functions
-> + * with get_swap_device() and put_swap_device(), unless the swap
-> + * functions call get/put_swap_device() by themselves.
-> + *
->   * Check whether swap entry is valid in the swap device.  If so,
->   * return pointer to swap_info_struct, and keep the swap entry valid
->   * via preventing the swap device from being swapoff, until
-> @@ -1230,9 +1237,8 @@ static unsigned char __swap_entry_free_locked(struc=
-t swap_info_struct *p,
->   * Notice that swapoff or swapoff+swapon can still happen before the
->   * percpu_ref_tryget_live() in get_swap_device() or after the
->   * percpu_ref_put() in put_swap_device() if there isn't any other way
-> - * to prevent swapoff, such as page lock, page table lock, etc.  The
-> - * caller must be prepared for that.  For example, the following
-> - * situation is possible.
-> + * to prevent swapoff.  The caller must be prepared for that.  For
-> + * example, the following situation is possible.
->   *
->   *   CPU1                              CPU2
->   *   do_swap_page()
-> --
-> 2.43.0
->
->
->
