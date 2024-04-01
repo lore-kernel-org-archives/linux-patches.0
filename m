@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61243C129;
-	Mon,  1 Apr 2024 16:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAA0C129;
+	Mon,  1 Apr 2024 16:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988865; cv=none; b=c+Hzvtr18J5LEkY/zNE8aP5s1Jd5zFkbUhvmScJIvva4zu4nZFqDOeE4LhFCPuRLidV27XOkDGSCU0UvX3+Si+mnuKIt3qyweG/8Rs2qkTZ7LHqdjsZYkE3s0UOV1jFqo+gAoLdzAle7gNzxPvu5G9frGl/C9T1jjQlUhtmQdoQ=
+	t=1711988868; cv=none; b=fynX1JyVkIVKmEnSN5xaB8EVQeK61eDlMsXD5YXUgSazU0jNZt61WWLkg3jL0U9B4CftuIq73lcqTLqjihLR92BIlCFfXX0b8Mrqo6PWfS2IMH+W62FqbV8/LjzE/UfzH+jc6Jen3WlJwQdmScBSWyj8esieocqNCU1ByfyFfkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988865; c=relaxed/simple;
-	bh=VVul250uIBatrnVnoIiIheoRiD2M0oBKXBSjYlRJ/rY=;
+	s=arc-20240116; t=1711988868; c=relaxed/simple;
+	bh=w5qyJyfOaw+zns+reLew8y0CPbHWusGWk2knOKVZnvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcvghZz4bmIi3Rg3npG1U7jF8LWDs5txU6DAcPnqtz+sxfDnVRu6vwzVh/SKitGqUFL3ioxHnymZ56a1/kusO6au04E0rmZS9B88XjIhyF971Y5WuQcIGaoZ83L9+C4fL39TNRx8adiy4NAwB6pO58quRLW3IdxCHieQYg+upGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmLryoda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjQw1mOQnS/2trd0zudt9HiYPHm8RcKSW8Lqucll79R+Mm9gdqU4g1mszxTStWQ4zfTuZ9ivzTVmAfeiVKb2ooqUmbaCEZ2VXquSKeKYflHT2vaaXTo0fdqgccLzMzWTMsfM431V+UFabb65kouikw6hNeVCmcriO2DVth2C/QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+K6UXrT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmLryoda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43B4C433F1;
-	Mon,  1 Apr 2024 16:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+K6UXrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40238C433C7;
+	Mon,  1 Apr 2024 16:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988865;
-	bh=VVul250uIBatrnVnoIiIheoRiD2M0oBKXBSjYlRJ/rY=;
+	s=korg; t=1711988868;
+	bh=w5qyJyfOaw+zns+reLew8y0CPbHWusGWk2knOKVZnvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmLryodaXAuF0bPxySywnIRXR4Izy7qJEs2RBrWOv7oIIhOHvz0Q3zfFucHUi+4fQ
-	 L0RP1B3nl1f1JLmI7GUMLGpxtaeT/fkP7H2ime1RihxfB4bLeRvONodCKQbArh7fcA
-	 8/u2sFDsDLAmeKGMnhr4oVxWPgFJnUY7ldz/V3FI=
+	b=E+K6UXrTbYYWNC4FUZEj4csAMxm1CS4+UNIa/SjYpzfPcwJcx9yjwWmZ1VqRaydQU
+	 60hjWsw8MFcK2gM3z/TZs3FjbO7wSEcYU1glx+2WF2MJmSUNpvAJfFBIWO9zzrY5T7
+	 3FoQsnk+qkQrC3PRRc7vhWymh8Tzjh9xWSCF+Jwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Biju Das <biju.das.jz@bp.renesas.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 311/432] irqchip/renesas-rzg2l: Rename rzg2l_irq_eoi()
-Date: Mon,  1 Apr 2024 17:44:58 +0200
-Message-ID: <20240401152602.462446841@linuxfoundation.org>
+Subject: [PATCH 6.7 312/432] irqchip/renesas-rzg2l: Prevent spurious interrupts when setting trigger type
+Date: Mon,  1 Apr 2024 17:44:59 +0200
+Message-ID: <20240401152602.492876857@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,46 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit b4b5cd61a6fdd92ede0dc39f0850a182affd1323 ]
+[ Upstream commit 853a6030303f8a8fa54929b68e5665d9b21aa405 ]
 
-Rename rzg2l_irq_eoi()->rzg2l_clear_irq_int() and simplify the code by
-removing redundant priv local variable.
+RZ/G2L interrupt chips require that the interrupt is masked before changing
+the NMI, IRQ, TINT interrupt settings. Aside of that, after setting an edge
+trigger type it is required to clear the interrupt status register in order
+to avoid spurious interrupts.
 
-Suggested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The current implementation fails to do either of that and therefore is
+prone to generate spurious interrupts when setting the trigger type.
+
+Address this by:
+
+  - Ensuring that the interrupt is masked at the chip level across the
+    update for the TINT chip
+
+  - Clearing the interrupt status register after updating the trigger mode
+    for edge type interrupts
+
+[ tglx: Massaged changelog and reverted the spin_lock_irqsave() change as
+  	the set_type() callback is always called with interrupts disabled. ]
+
+Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Stable-dep-of: 853a6030303f ("irqchip/renesas-rzg2l: Prevent spurious interrupts when setting trigger type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 36 +++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index 51dda1745ffaa..762bb90b74e61 100644
+index 762bb90b74e61..dc822111fc5d5 100644
 --- a/drivers/irqchip/irq-renesas-rzg2l.c
 +++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -66,10 +66,9 @@ static struct rzg2l_irqc_priv *irq_data_to_priv(struct irq_data *data)
- 	return data->domain->host_data;
- }
+@@ -162,8 +162,10 @@ static void rzg2l_irqc_irq_enable(struct irq_data *d)
  
--static void rzg2l_irq_eoi(struct irq_data *d)
-+static void rzg2l_clear_irq_int(struct rzg2l_irqc_priv *priv, unsigned int hwirq)
+ static int rzg2l_irq_set_type(struct irq_data *d, unsigned int type)
  {
 -	unsigned int hw_irq = irqd_to_hwirq(d) - IRQC_IRQ_START;
--	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
-+	unsigned int hw_irq = hwirq - IRQC_IRQ_START;
- 	u32 bit = BIT(hw_irq);
- 	u32 iitsr, iscr;
+ 	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
++	unsigned int hwirq = irqd_to_hwirq(d);
++	u32 iitseln = hwirq - IRQC_IRQ_START;
++	bool clear_irq_int = false;
+ 	u16 sense, tmp;
  
-@@ -113,7 +112,7 @@ static void rzg2l_irqc_eoi(struct irq_data *d)
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+@@ -173,14 +175,17 @@ static int rzg2l_irq_set_type(struct irq_data *d, unsigned int type)
+ 
+ 	case IRQ_TYPE_EDGE_FALLING:
+ 		sense = IITSR_IITSEL_EDGE_FALLING;
++		clear_irq_int = true;
+ 		break;
+ 
+ 	case IRQ_TYPE_EDGE_RISING:
+ 		sense = IITSR_IITSEL_EDGE_RISING;
++		clear_irq_int = true;
+ 		break;
+ 
+ 	case IRQ_TYPE_EDGE_BOTH:
+ 		sense = IITSR_IITSEL_EDGE_BOTH;
++		clear_irq_int = true;
+ 		break;
+ 
+ 	default:
+@@ -189,21 +194,40 @@ static int rzg2l_irq_set_type(struct irq_data *d, unsigned int type)
  
  	raw_spin_lock(&priv->lock);
- 	if (hw_irq >= IRQC_IRQ_START && hw_irq <= IRQC_IRQ_COUNT)
--		rzg2l_irq_eoi(d);
-+		rzg2l_clear_irq_int(priv, hw_irq);
- 	else if (hw_irq >= IRQC_TINT_START && hw_irq < IRQC_NUM_IRQ)
- 		rzg2l_clear_tint_int(priv, hw_irq);
+ 	tmp = readl_relaxed(priv->base + IITSR);
+-	tmp &= ~IITSR_IITSEL_MASK(hw_irq);
+-	tmp |= IITSR_IITSEL(hw_irq, sense);
++	tmp &= ~IITSR_IITSEL_MASK(iitseln);
++	tmp |= IITSR_IITSEL(iitseln, sense);
++	if (clear_irq_int)
++		rzg2l_clear_irq_int(priv, hwirq);
+ 	writel_relaxed(tmp, priv->base + IITSR);
  	raw_spin_unlock(&priv->lock);
+ 
+ 	return 0;
+ }
+ 
++static u32 rzg2l_disable_tint_and_set_tint_source(struct irq_data *d, struct rzg2l_irqc_priv *priv,
++						  u32 reg, u32 tssr_offset, u8 tssr_index)
++{
++	u32 tint = (u32)(uintptr_t)irq_data_get_irq_chip_data(d);
++	u32 tien = reg & (TIEN << TSSEL_SHIFT(tssr_offset));
++
++	/* Clear the relevant byte in reg */
++	reg &= ~(TSSEL_MASK << TSSEL_SHIFT(tssr_offset));
++	/* Set TINT and leave TIEN clear */
++	reg |= tint << TSSEL_SHIFT(tssr_offset);
++	writel_relaxed(reg, priv->base + TSSR(tssr_index));
++
++	return reg | tien;
++}
++
+ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ {
+ 	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
+ 	unsigned int hwirq = irqd_to_hwirq(d);
+ 	u32 titseln = hwirq - IRQC_TINT_START;
++	u32 tssr_offset = TSSR_OFFSET(titseln);
++	u8 tssr_index = TSSR_INDEX(titseln);
+ 	u8 index, sense;
+-	u32 reg;
++	u32 reg, tssr;
+ 
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -225,10 +249,14 @@ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ 	}
+ 
+ 	raw_spin_lock(&priv->lock);
++	tssr = readl_relaxed(priv->base + TSSR(tssr_index));
++	tssr = rzg2l_disable_tint_and_set_tint_source(d, priv, tssr, tssr_offset, tssr_index);
+ 	reg = readl_relaxed(priv->base + TITSR(index));
+ 	reg &= ~(IRQ_MASK << (titseln * TITSEL_WIDTH));
+ 	reg |= sense << (titseln * TITSEL_WIDTH);
+ 	writel_relaxed(reg, priv->base + TITSR(index));
++	rzg2l_clear_tint_int(priv, hwirq);
++	writel_relaxed(tssr, priv->base + TSSR(tssr_index));
+ 	raw_spin_unlock(&priv->lock);
+ 
+ 	return 0;
 -- 
 2.43.0
 
