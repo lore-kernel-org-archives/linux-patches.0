@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F292EB0B;
-	Mon,  1 Apr 2024 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E96CBA3F;
+	Mon,  1 Apr 2024 16:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990611; cv=none; b=TPV0ZkfhFN4ARKoCwpq4VmA7gdmMkC05uoQUJcHvuXvDjLubqv6C3NyCO9S6IgHGyOgFGJ7TaNiK48QUz1Srp+4YInDTMFXhmBZIE26T3Wi7Iyst4RCVDkKPVxoz8mrUAMLnA+aPOHTyeXl/AkAfFZzT++a1dbhg6/MB4KINutM=
+	t=1711990615; cv=none; b=moFjt/QSW1UWztWXrrRlQErvKExHrvkC/U6wKc1ZEWeT6lNyi1vrHNrNXdRTiupSKqe+v3QQtodg2baYDD3pOud8pTEInUQ32DRxueB6ck0sG2n7xqC+BS3A8xeENtgA0KKebVWXUPycniVvQAwP1UU7qjhBbWa1VfwjKzrMw5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990611; c=relaxed/simple;
-	bh=xTIjC541EgTtDHOGNGOTDEuMJ/rQuZaYHE6LsQKy4lk=;
+	s=arc-20240116; t=1711990615; c=relaxed/simple;
+	bh=mFiUKKuzTgirS1twEx1T5Li7uA1DVqAYf/1KAmklCgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvi6oJlZWrixvXNOKMh0cuWbAMrrTNrcPnR9SIA7oSr1BdkEQt14zpS9jbwvuQCAYP7QuZeCqVhU5hCAxZ42ify1y5r3wYctQXjCnsx00vJSoUW5/aVHQwjpv/dxZdPQw7HQcVhGym3nvuV83Ql9BPnToR4y5B590tIlcbEzJiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXqJekMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=onlblgE61aYUkH+bMDkG1qdqXSA3FcrPl3hs/mcPSBAZBWcqbTAfbdpWu9XsrL1Q2E/98IQR5U5yWbjUXcrUIlHVqOse9jUG2wa62qytjTa0G0QMMgrxGYV7ksJezVRRk/tOUtB1POKonLgq9xlcYMSeTp5PgTCnD8+7H0Bsyng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ij0MUsbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXqJekMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D22C433C7;
-	Mon,  1 Apr 2024 16:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ij0MUsbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653D4C433F1;
+	Mon,  1 Apr 2024 16:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990611;
-	bh=xTIjC541EgTtDHOGNGOTDEuMJ/rQuZaYHE6LsQKy4lk=;
+	s=korg; t=1711990614;
+	bh=mFiUKKuzTgirS1twEx1T5Li7uA1DVqAYf/1KAmklCgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXqJekMwa5ViIMSxN49dT0mEQobtvRQwru/qadm1YUzOYDejPgb8gaRGidYhHglvm
-	 QXkXNO8is4DxjibxULbMzY/Zo447xFQatWuZ9s4bM32JVXT8JshQrYuXV6S+zZPgtd
-	 OU+Ebke7em41IOYmqliDFPwSgV8UvptfWDeluRpM=
+	b=ij0MUsbx+eYhUXSo/l1snIeNfPqZ3AGmCb4WN2S9m5FTDArFK/nGRoD8d9q8rwpzD
+	 uqbFvgVi8dxACT8kRqC7DYoHz1/ceVrSub8soh+ifI7B4HNkAAONCGaVuqMVu//NA8
+	 8tF8G17SJuOvWLrKZOizDu0ubQdkMYKFlmn0kAMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/272] remoteproc: virtio: Fix wdg cannot recovery remote processor
-Date: Mon,  1 Apr 2024 17:43:22 +0200
-Message-ID: <20240401152530.678005556@linuxfoundation.org>
+Subject: [PATCH 6.1 013/272] clk: qcom: gcc-sdm845: Add soft dependency on rpmhpd
+Date: Mon,  1 Apr 2024 17:43:23 +0200
+Message-ID: <20240401152530.708616041@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,61 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joakim Zhang <joakim.zhang@cixtech.com>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-[ Upstream commit b327c72753d6a78de37aed6c35756f2ef62897ee ]
+[ Upstream commit 1d9054e3a4fd36e2949e616f7360bdb81bcc1921 ]
 
-Recovery remote processor failed when wdg irq received:
-[    0.842574] remoteproc remoteproc0: crash detected in cix-dsp-rproc: type watchdog
-[    0.842750] remoteproc remoteproc0: handling crash #1 in cix-dsp-rproc
-[    0.842824] remoteproc remoteproc0: recovering cix-dsp-rproc
-[    0.843342] remoteproc remoteproc0: stopped remote processor cix-dsp-rproc
-[    0.847901] rproc-virtio rproc-virtio.0.auto: Failed to associate buffer
-[    0.847979] remoteproc remoteproc0: failed to probe subdevices for cix-dsp-rproc: -16
+With the addition of RPMh power domain to the GCC node in
+device tree, we noticed a significant delay in getting the
+UFS driver probed on AOSP which futher led to mount failures
+because Android do not support rootwait. So adding a soft
+dependency on RPMh power domain which informs modprobe to
+load rpmhpd module before gcc-sdm845.
 
-The reason is that dma coherent mem would not be released when
-recovering the remote processor, due to rproc_virtio_remove()
-would not be called, where the mem released. It will fail when
-it try to allocate and associate buffer again.
-
-Releasing reserved memory from rproc_virtio_dev_release(), instead of
-rproc_virtio_remove().
-
-Fixes: 1d7b61c06dc3 ("remoteproc: virtio: Create platform device for the remoteproc_virtio")
-Signed-off-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231217053659.3245745-1-joakim.zhang@cixtech.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: stable@vger.kernel.org # v5.4+
+Fixes: 4b6ea15c0a11 ("arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC")
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240123062814.2555649-1-amit.pundir@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_virtio.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-sdm845.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/remoteproc_virtio.c b/drivers/remoteproc/remoteproc_virtio.c
-index 0e95525c11581..ab5e4f02ab225 100644
---- a/drivers/remoteproc/remoteproc_virtio.c
-+++ b/drivers/remoteproc/remoteproc_virtio.c
-@@ -351,6 +351,9 @@ static void rproc_virtio_dev_release(struct device *dev)
- 
- 	kfree(vdev);
- 
-+	of_reserved_mem_device_release(&rvdev->pdev->dev);
-+	dma_release_coherent_memory(&rvdev->pdev->dev);
-+
- 	put_device(&rvdev->pdev->dev);
- }
- 
-@@ -584,9 +587,6 @@ static int rproc_virtio_remove(struct platform_device *pdev)
- 	rproc_remove_subdev(rproc, &rvdev->subdev);
- 	rproc_remove_rvdev(rvdev);
- 
--	of_reserved_mem_device_release(&pdev->dev);
--	dma_release_coherent_memory(&pdev->dev);
--
- 	put_device(&rproc->dev);
- 
- 	return 0;
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index 6af08e0ca8475..ef15e8f114027 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -4038,3 +4038,4 @@ module_exit(gcc_sdm845_exit);
+ MODULE_DESCRIPTION("QTI GCC SDM845 Driver");
+ MODULE_LICENSE("GPL v2");
+ MODULE_ALIAS("platform:gcc-sdm845");
++MODULE_SOFTDEP("pre: rpmhpd");
 -- 
 2.43.0
 
