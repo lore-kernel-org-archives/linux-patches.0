@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3530D1CA8F;
-	Mon,  1 Apr 2024 16:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AF41CA8F;
+	Mon,  1 Apr 2024 16:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987395; cv=none; b=svHI5AwejaXhNVOuLDUncoG4wmu2j3zBR3ImgcH6hJ5rlJYw2HnwBERtIRs7HY6C1kKZRdLojfXsUBlV71fESKS78P8lqSrqtJiJIYQfqeKjCn5YRz5LlLXPq7rK2HCMgFwtxx9XqEhGVV1g5TC1XGxQBW9K4g0A6q7fRSZUy2o=
+	t=1711987398; cv=none; b=cY49n6wVdxdqHNOBw8+9zjeOtzGxdD5x/rn+mbnBLKWSLO1yMuHp9UuK5dhyUS9+i7wvxYMOcQ1D0v50u/fKjjOKQOg5OBJVk0UN+6ho3+OSBNEDTGb0ZyM30EAkwsQ52AVvFyLRmbLcT/ZrlWMpM9ol78ByjwCs8CYxqVL4OlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987395; c=relaxed/simple;
-	bh=oTIf2ytu3bjdvdd7CnZsgrAGoRI4AQXqUv39AzRFcGs=;
+	s=arc-20240116; t=1711987398; c=relaxed/simple;
+	bh=iJW56NPQ8q598SlaNuMkMnTGezL1bFSl5Ln0ZAUunJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLnisux6y2AjBZ8bCwiSpTprwIEpWEYCXeD+0j5GYjlA1iTF1BvCM+7pSHOBc3kdEmSyzCLsJqNQ37VZrmWb1HSKrKPVQgQHMDfSuuWlQr113QJyb+jVgSyTRDfdpIHkILk80pWwDCf/VQdlRjTd+DhtD4GfjgAAmCJPzcMOnik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YbdnQUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bt+9LHQsD5yh4V4kstWduuQs/cIDk/hIDkpqpfWEaySymvb1sNHSB+uEKoVY3DRWeKeH4Gq4s7Vj9PYzk1GTVIlXjZyYDUwvkzh2mQZo/LmsThdbo0D9JE+FVljx1vLAnRUUT3i3/eDJWMNJ8xhOjZtd9Oy3Wo4CjKKNNLG5/SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8WuP0XP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YbdnQUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B72C433C7;
-	Mon,  1 Apr 2024 16:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8WuP0XP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026E8C433C7;
+	Mon,  1 Apr 2024 16:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987395;
-	bh=oTIf2ytu3bjdvdd7CnZsgrAGoRI4AQXqUv39AzRFcGs=;
+	s=korg; t=1711987398;
+	bh=iJW56NPQ8q598SlaNuMkMnTGezL1bFSl5Ln0ZAUunJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2YbdnQUU39VIyaSF0HA+vgHuCwQtPbJgh3zGrz8hJo6MjlsvzAV4FxjTgRoGH3sx2
-	 f0gJuSC5iGB6Au4jk8u5+d6Y5P5udI1M5tm2L6movFhItA8bqtNYIrB2SBmMu7N0p0
-	 9r165B2Gq9RdUILoZ1ggXovABwsr6thWA2SAwS3E=
+	b=S8WuP0XP3FRShEgx8CPu1/k4nWF1Yg1LytQjLMirFjyCjOQe2X9MxOchxGIjuCqhX
+	 TGBJJh+ItpMSfMm3ZPhZaoZoCAJTTwf4/sncqJp74nmCeRCLYbaLYnz+SeNKt5BxCC
+	 kr9t9jsadKob+nq6BJQstR5p7iBbboO2325GZLfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Romosan <aromosan@gmail.com>,
-	CHECK_1234543212345@protonmail.com,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.8 275/399] btrfs: do not skip re-registration for the mounted device
-Date: Mon,  1 Apr 2024 17:44:01 +0200
-Message-ID: <20240401152557.390879286@linuxfoundation.org>
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.8 276/399] mfd: intel-lpss: Switch to generalized quirk table
+Date: Mon,  1 Apr 2024 17:44:02 +0200
+Message-ID: <20240401152557.420222060@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,160 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-commit d565fffa68560ac540bf3d62cc79719da50d5e7a upstream.
+commit ac9538f6007e1c80f1b8a62db7ecc391b4d78ae5 upstream.
 
-There are reports that since version 6.7 update-grub fails to find the
-device of the root on systems without initrd and on a single device.
+Introduce generic quirk table, and port existing walkaround for select
+Microsoft devices to it. This is a preparation for
+QUIRK_CLOCK_DIVIDER_UNITY.
 
-This looks like the device name changed in the output of
-/proc/self/mountinfo:
-
-6.5-rc5 working
-
-  18 1 0:16 / / rw,noatime - btrfs /dev/sda8 ...
-
-6.7 not working:
-
-  17 1 0:15 / / rw,noatime - btrfs /dev/root ...
-
-and "update-grub" shows this error:
-
-  /usr/sbin/grub-probe: error: cannot find a device for / (is /dev mounted?)
-
-This looks like it's related to the device name, but grub-probe
-recognizes the "/dev/root" path and tries to find the underlying device.
-However there's a special case for some filesystems, for btrfs in
-particular.
-
-The generic root device detection heuristic is not done and it all
-relies on reading the device infos by a btrfs specific ioctl. This ioctl
-returns the device name as it was saved at the time of device scan (in
-this case it's /dev/root).
-
-The change in 6.7 for temp_fsid to allow several single device
-filesystem to exist with the same fsid (and transparently generate a new
-UUID at mount time) was to skip caching/registering such devices.
-
-This also skipped mounted device. One step of scanning is to check if
-the device name hasn't changed, and if yes then update the cached value.
-
-This broke the grub-probe as it always read the device /dev/root and
-couldn't find it in the system. A temporary workaround is to create a
-symlink but this does not survive reboot.
-
-The right fix is to allow updating the device path of a mounted
-filesystem even if this is a single device one.
-
-In the fix, check if the device's major:minor number matches with the
-cached device. If they do, then we can allow the scan to happen so that
-device_list_add() can take care of updating the device path. The file
-descriptor remains unchanged.
-
-This does not affect the temp_fsid feature, the UUID of the mounted
-filesystem remains the same and the matching is based on device major:minor
-which is unique per mounted filesystem.
-
-This covers the path when the device (that exists for all mounted
-devices) name changes, updating /dev/root to /dev/sdx. Any other single
-device with filesystem and is not mounted is still skipped.
-
-Note that if a system is booted and initial mount is done on the
-/dev/root device, this will be the cached name of the device. Only after
-the command "btrfs device scan" it will change as it triggers the
-rename.
-
-The fix was verified by users whose systems were affected.
-
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=218353
-Link: https://lore.kernel.org/lkml/CAKLYgeJ1tUuqLcsquwuFqjDXPSJpEiokrWK2gisPKDZLs8Y2TQ@mail.gmail.com/
-Fixes: bc27d6f0aa0e ("btrfs: scan but don't register device on single device filesystem")
-CC: stable@vger.kernel.org # 6.7+
-Tested-by: Alex Romosan <aromosan@gmail.com>
-Tested-by: CHECK_1234543212345@protonmail.com
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231221185142.9224-2-alex.vinarskis@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   57 +++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 10 deletions(-)
+ drivers/mfd/intel-lpss-pci.c |   23 +++++++++++++++--------
+ drivers/mfd/intel-lpss.c     |    2 +-
+ drivers/mfd/intel-lpss.h     |    9 ++++++++-
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1301,6 +1301,47 @@ int btrfs_forget_devices(dev_t devt)
- 	return ret;
- }
+--- a/drivers/mfd/intel-lpss-pci.c
++++ b/drivers/mfd/intel-lpss-pci.c
+@@ -23,12 +23,17 @@
  
-+static bool btrfs_skip_registration(struct btrfs_super_block *disk_super,
-+				    const char *path, dev_t devt,
-+				    bool mount_arg_dev)
-+{
-+	struct btrfs_fs_devices *fs_devices;
-+
-+	/*
-+	 * Do not skip device registration for mounted devices with matching
-+	 * maj:min but different paths. Booting without initrd relies on
-+	 * /dev/root initially, later replaced with the actual root device.
-+	 * A successful scan ensures grub2-probe selects the correct device.
-+	 */
-+	list_for_each_entry(fs_devices, &fs_uuids, fs_list) {
-+		struct btrfs_device *device;
-+
-+		mutex_lock(&fs_devices->device_list_mutex);
-+
-+		if (!fs_devices->opened) {
-+			mutex_unlock(&fs_devices->device_list_mutex);
-+			continue;
-+		}
-+
-+		list_for_each_entry(device, &fs_devices->devices, dev_list) {
-+			if (device->bdev && (device->bdev->bd_dev == devt) &&
-+			    strcmp(device->name->str, path) != 0) {
-+				mutex_unlock(&fs_devices->device_list_mutex);
-+
-+				/* Do not skip registration. */
-+				return false;
-+			}
-+		}
-+		mutex_unlock(&fs_devices->device_list_mutex);
-+	}
-+
-+	if (!mount_arg_dev && btrfs_super_num_devices(disk_super) == 1 &&
-+	    !(btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_SEEDING))
-+		return true;
-+
-+	return false;
-+}
-+
- /*
-  * Look for a btrfs signature on a device. This may be called out of the mount path
-  * and we are not allowed to call set_blocksize during the scan. The superblock
-@@ -1357,18 +1398,14 @@ struct btrfs_device *btrfs_scan_one_devi
- 		goto error_bdev_put;
- 	}
+ #include "intel-lpss.h"
  
--	if (!mount_arg_dev && btrfs_super_num_devices(disk_super) == 1 &&
--	    !(btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_SEEDING)) {
--		dev_t devt;
-+	if (btrfs_skip_registration(disk_super, path, bdev_handle->bdev->bd_dev,
-+				    mount_arg_dev)) {
-+		pr_debug("BTRFS: skip registering single non-seed device %s (%d:%d)\n",
-+			  path, MAJOR(bdev_handle->bdev->bd_dev),
-+			  MINOR(bdev_handle->bdev->bd_dev));
+-/* Some DSDTs have an unused GEXP ACPI device conflicting with I2C4 resources */
+-static const struct pci_device_id ignore_resource_conflicts_ids[] = {
+-	/* Microsoft Surface Go (version 1) I2C4 */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1182), },
+-	/* Microsoft Surface Go 2 I2C4 */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237), },
++static const struct pci_device_id quirk_ids[] = {
++	{
++		/* Microsoft Surface Go (version 1) I2C4 */
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1182),
++		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
++	},
++	{
++		/* Microsoft Surface Go 2 I2C4 */
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237),
++		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
++	},
+ 	{ }
+ };
  
--		ret = lookup_bdev(path, &devt);
--		if (ret)
--			btrfs_warn(NULL, "lookup bdev failed for path %s: %d",
--				   path, ret);
--		else
--			btrfs_free_stale_devices(devt, NULL);
-+		btrfs_free_stale_devices(bdev_handle->bdev->bd_dev, NULL);
+@@ -36,6 +41,7 @@ static int intel_lpss_pci_probe(struct p
+ 				const struct pci_device_id *id)
+ {
+ 	const struct intel_lpss_platform_info *data = (void *)id->driver_data;
++	const struct pci_device_id *quirk_pci_info;
+ 	struct intel_lpss_platform_info *info;
+ 	int ret;
  
--		pr_debug("BTRFS: skip registering single non-seed device %s\n", path);
- 		device = NULL;
- 		goto free_disk_super;
- 	}
+@@ -55,8 +61,9 @@ static int intel_lpss_pci_probe(struct p
+ 	info->mem = pci_resource_n(pdev, 0);
+ 	info->irq = pci_irq_vector(pdev, 0);
+ 
+-	if (pci_match_id(ignore_resource_conflicts_ids, pdev))
+-		info->ignore_resource_conflicts = true;
++	quirk_pci_info = pci_match_id(quirk_ids, pdev);
++	if (quirk_pci_info)
++		info->quirks = quirk_pci_info->driver_data;
+ 
+ 	pdev->d3cold_delay = 0;
+ 
+--- a/drivers/mfd/intel-lpss.c
++++ b/drivers/mfd/intel-lpss.c
+@@ -412,7 +412,7 @@ int intel_lpss_probe(struct device *dev,
+ 		return ret;
+ 
+ 	lpss->cell->swnode = info->swnode;
+-	lpss->cell->ignore_resource_conflicts = info->ignore_resource_conflicts;
++	lpss->cell->ignore_resource_conflicts = info->quirks & QUIRK_IGNORE_RESOURCE_CONFLICTS;
+ 
+ 	intel_lpss_init_dev(lpss);
+ 
+--- a/drivers/mfd/intel-lpss.h
++++ b/drivers/mfd/intel-lpss.h
+@@ -11,16 +11,23 @@
+ #ifndef __MFD_INTEL_LPSS_H
+ #define __MFD_INTEL_LPSS_H
+ 
++#include <linux/bits.h>
+ #include <linux/pm.h>
+ 
++/*
++ * Some DSDTs have an unused GEXP ACPI device conflicting with I2C4 resources.
++ * Set to ignore resource conflicts with ACPI declared SystemMemory regions.
++ */
++#define QUIRK_IGNORE_RESOURCE_CONFLICTS BIT(0)
++
+ struct device;
+ struct resource;
+ struct software_node;
+ 
+ struct intel_lpss_platform_info {
+ 	struct resource *mem;
+-	bool ignore_resource_conflicts;
+ 	int irq;
++	unsigned int quirks;
+ 	unsigned long clk_rate;
+ 	const char *clk_con_id;
+ 	const struct software_node *swnode;
 
 
