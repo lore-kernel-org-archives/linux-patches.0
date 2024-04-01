@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48133C129;
-	Mon,  1 Apr 2024 16:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D75C129;
+	Mon,  1 Apr 2024 16:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988673; cv=none; b=P7sGcIzVcewPDNUfKdArve/uSiV1MlWso6oCsDYmDDpMgnyXQN4XfooJ9a+AberocUi6YKTmJajloxGACu5AnwNkgr+iHnrXbh5+q6HvpzdMFPNG+4TQiFi8uBV6sPYq+r+tbhtjP9S/aqaPWcEu7iqhniT6iCQV3feJCQA9u4E=
+	t=1711988675; cv=none; b=af06JETD0Io4oTIXOLGxJT5+W6rWcIait1aPugdrOfBoyr40foeVf1YnANTSKxO2xIlira5tlDt4/8lH1elI1W1yip+jPeWbVuYKmVNHG20FfNFAqE+OMqxAhSoQGsvkbkq7ayzcl2yR79NU+WPWwkgOYmwI0GO1R20h0yTbOz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988673; c=relaxed/simple;
-	bh=VeAoUSFmxgKa4zjwRj5Gs+UNV8pPaPZQaBNBzbpiPjE=;
+	s=arc-20240116; t=1711988675; c=relaxed/simple;
+	bh=VSZ8MgFI5jBAvTzeZJwwrOVVOwObhj/E2Nsy3CdDOi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSdKvMp8UWOybFFpKlQX7RpLDYvpUAbsZnhwp1BDxQzYJtfcITsutxuBiHNzLplyLP2hFVV8BrBV19xEUt5xzJvb3PsEFRu2fM2Kgm2YDJownMXWpjOtu7DpVr2g/rjVdU/WHbPZ4LIAvncaIJ4Cx4GiPW6Nnqn2SrHrLX6j69o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhoC4InV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BuThmWQ7BWynd3kpUtxjUTSY4697/yh+RFmULjvPLsb3zWtHpiQzVODZTTY++5yUC+JQf/GONIAp74Lu+XdWc19a8uhp4cuK4b42VRBqK9PwSowF0EsBCC9I9Ah5Mos7RdAjiyvLDsfN8ckPUQvTwgk90KLlyJOJur3Wc9Iy3Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vj13XQ7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhoC4InV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405B7C433F1;
-	Mon,  1 Apr 2024 16:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vj13XQ7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EB5C433C7;
+	Mon,  1 Apr 2024 16:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988671;
-	bh=VeAoUSFmxgKa4zjwRj5Gs+UNV8pPaPZQaBNBzbpiPjE=;
+	s=korg; t=1711988675;
+	bh=VSZ8MgFI5jBAvTzeZJwwrOVVOwObhj/E2Nsy3CdDOi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhoC4InVrjZdgKd7G0ldTxMFiiG2PJgyF8YBF5MWOELhQCY+FAMCY7yEHB1hhxFnM
-	 K6GvjiD3g/S5dItiWVfK8/IMuq4TTI2Tz2TGiPFF6seQpbwAve3WhhmZ1IW3bd8TB7
-	 zRZR/SGh8ZHSBBD00orFTekakoic876niHn8l0P4=
+	b=vj13XQ7YmEDb3ctVl8KPV57VGxGP1CstcsovuEEAmMYUZ7ZnCFKM5sWzkOU76k2DD
+	 MrVtgTJF1NPsmTk8p88poRoeU4omTctry/X+QjlprtEunPnMkcEjc4jrJ3buWh8rMG
+	 OyWp+/gxTr+85mpwurYq+W8JsuYxR1sz9UeWzSR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabe Kirkpatrick <gkirkpatrick@google.com>,
-	Josh Eads <josheads@google.com>,
-	Peter Gonda <pgonda@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.7 254/432] KVM: SVM: Flush pages under kvm->lock to fix UAF in svm_register_enc_region()
-Date: Mon,  1 Apr 2024 17:44:01 +0200
-Message-ID: <20240401152600.713691966@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 228/432] drm/bridge: add ->edid_read hook and drm_bridge_edid_read()
+Date: Mon,  1 Apr 2024 17:43:35 +0200
+Message-ID: <20240401152559.935916864@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,67 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 5ef1d8c1ddbf696e47b226e11888eaf8d9e8e807 upstream.
+[ Upstream commit d807ad80d811ba0c22adfd871e2a46491f80d6e2 ]
 
-Do the cache flush of converted pages in svm_register_enc_region() before
-dropping kvm->lock to fix use-after-free issues where region and/or its
-array of pages could be freed by a different task, e.g. if userspace has
-__unregister_enc_region_locked() already queued up for the region.
+Add new struct drm_edid based ->edid_read hook and
+drm_bridge_edid_read() function to call the hook.
 
-Note, the "obvious" alternative of using local variables doesn't fully
-resolve the bug, as region->pages is also dynamically allocated.  I.e. the
-region structure itself would be fine, but region->pages could be freed.
+v2: Include drm/drm_edid.h
 
-Flushing multiple pages under kvm->lock is unfortunate, but the entire
-flow is a rare slow path, and the manual flush is only needed on CPUs that
-lack coherency for encrypted memory.
-
-Fixes: 19a23da53932 ("Fix unsynchronized access to sev members through svm_register_enc_region")
-Reported-by: Gabe Kirkpatrick <gkirkpatrick@google.com>
-Cc: Josh Eads <josheads@google.com>
-Cc: Peter Gonda <pgonda@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20240217013430.2079561-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/9d08d22eaffcb9c59a2b677e45d7e61fc689bc2f.1706038510.git.jani.nikula@intel.com
+Stable-dep-of: 171b711b26cc ("drm/bridge: lt8912b: do not return negative values from .get_modes()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_bridge.c | 46 +++++++++++++++++++++++++++++++++++-
+ include/drm/drm_bridge.h     | 33 ++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1975,20 +1975,22 @@ int sev_mem_enc_register_region(struct k
- 		goto e_free;
- 	}
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index 30d66bee0ec6a..e1cfba2ff583b 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -27,8 +27,9 @@
+ #include <linux/mutex.h>
  
--	region->uaddr = range->addr;
--	region->size = range->size;
--
--	list_add_tail(&region->list, &sev->regions_list);
--	mutex_unlock(&kvm->lock);
--
- 	/*
- 	 * The guest may change the memory encryption attribute from C=0 -> C=1
- 	 * or vice versa for this memory range. Lets make sure caches are
- 	 * flushed to ensure that guest data gets written into memory with
--	 * correct C-bit.
-+	 * correct C-bit.  Note, this must be done before dropping kvm->lock,
-+	 * as region and its array of pages can be freed by a different task
-+	 * once kvm->lock is released.
- 	 */
- 	sev_clflush_pages(region->pages, region->npages);
+ #include <drm/drm_atomic_state_helper.h>
+-#include <drm/drm_debugfs.h>
+ #include <drm/drm_bridge.h>
++#include <drm/drm_debugfs.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_encoder.h>
+ #include <drm/drm_file.h>
+ #include <drm/drm_of.h>
+@@ -1206,6 +1207,47 @@ int drm_bridge_get_modes(struct drm_bridge *bridge,
+ }
+ EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
  
-+	region->uaddr = range->addr;
-+	region->size = range->size;
++/**
++ * drm_bridge_edid_read - read the EDID data of the connected display
++ * @bridge: bridge control structure
++ * @connector: the connector to read EDID for
++ *
++ * If the bridge supports output EDID retrieval, as reported by the
++ * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.edid_read to get
++ * the EDID and return it. Otherwise return NULL.
++ *
++ * If &drm_bridge_funcs.edid_read is not set, fall back to using
++ * drm_bridge_get_edid() and wrapping it in struct drm_edid.
++ *
++ * RETURNS:
++ * The retrieved EDID on success, or NULL otherwise.
++ */
++const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
++					    struct drm_connector *connector)
++{
++	if (!(bridge->ops & DRM_BRIDGE_OP_EDID))
++		return NULL;
 +
-+	list_add_tail(&region->list, &sev->regions_list);
-+	mutex_unlock(&kvm->lock);
++	/* Transitional: Fall back to ->get_edid. */
++	if (!bridge->funcs->edid_read) {
++		const struct drm_edid *drm_edid;
++		struct edid *edid;
 +
- 	return ret;
++		edid = drm_bridge_get_edid(bridge, connector);
++		if (!edid)
++			return NULL;
++
++		drm_edid = drm_edid_alloc(edid, (edid->extensions + 1) * EDID_LENGTH);
++
++		kfree(edid);
++
++		return drm_edid;
++	}
++
++	return bridge->funcs->edid_read(bridge, connector);
++}
++EXPORT_SYMBOL_GPL(drm_bridge_edid_read);
++
+ /**
+  * drm_bridge_get_edid - get the EDID data of the connected display
+  * @bridge: bridge control structure
+@@ -1215,6 +1257,8 @@ EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
+  * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.get_edid to
+  * get the EDID and return it. Otherwise return NULL.
+  *
++ * Deprecated. Prefer using drm_bridge_edid_read().
++ *
+  * RETURNS:
+  * The retrieved EDID on success, or NULL otherwise.
+  */
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 9ef461aa9b9e2..99aea536013ef 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -557,6 +557,37 @@ struct drm_bridge_funcs {
+ 	int (*get_modes)(struct drm_bridge *bridge,
+ 			 struct drm_connector *connector);
  
- e_free:
++	/**
++	 * @edid_read:
++	 *
++	 * Read the EDID data of the connected display.
++	 *
++	 * The @edid_read callback is the preferred way of reporting mode
++	 * information for a display connected to the bridge output. Bridges
++	 * that support reading EDID shall implement this callback and leave
++	 * the @get_modes callback unimplemented.
++	 *
++	 * The caller of this operation shall first verify the output
++	 * connection status and refrain from reading EDID from a disconnected
++	 * output.
++	 *
++	 * This callback is optional. Bridges that implement it shall set the
++	 * DRM_BRIDGE_OP_EDID flag in their &drm_bridge->ops.
++	 *
++	 * The connector parameter shall be used for the sole purpose of EDID
++	 * retrieval, and shall not be stored internally by bridge drivers for
++	 * future usage.
++	 *
++	 * RETURNS:
++	 *
++	 * An edid structure newly allocated with drm_edid_alloc() or returned
++	 * from drm_edid_read() family of functions on success, or NULL
++	 * otherwise. The caller is responsible for freeing the returned edid
++	 * structure with drm_edid_free().
++	 */
++	const struct drm_edid *(*edid_read)(struct drm_bridge *bridge,
++					    struct drm_connector *connector);
++
+ 	/**
+ 	 * @get_edid:
+ 	 *
+@@ -888,6 +919,8 @@ drm_atomic_helper_bridge_propagate_bus_fmt(struct drm_bridge *bridge,
+ enum drm_connector_status drm_bridge_detect(struct drm_bridge *bridge);
+ int drm_bridge_get_modes(struct drm_bridge *bridge,
+ 			 struct drm_connector *connector);
++const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
++					    struct drm_connector *connector);
+ struct edid *drm_bridge_get_edid(struct drm_bridge *bridge,
+ 				 struct drm_connector *connector);
+ void drm_bridge_hpd_enable(struct drm_bridge *bridge,
+-- 
+2.43.0
+
 
 
