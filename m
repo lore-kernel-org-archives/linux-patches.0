@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C5E47A5D;
-	Mon,  1 Apr 2024 17:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346DE47A5D;
+	Mon,  1 Apr 2024 17:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991357; cv=none; b=DmqQutC+I6cdDCJYRwMsKDUn2pLWVcuJPt9hXR9hFKlS/DEIBK3zovzftc+rd9qxCmmbrflylxLOLn/nkEqDEowdTJ2rjIxUuA+QIeSLqF6yWgJwB9uKw/Ry+Vt95K5reUwj0gECV/17XRMiSQ0HIfIUNOfDP62EfGpjqNW0zJ0=
+	t=1711991361; cv=none; b=tP5RZDW++E6kCJYCLhDZVcYtz+hw6quf0iltvw1PHFFye/5PO4oZ06Ju1Vxdbolxkjg2ni1rYaeQGIDSWunYpRggxovfh+ePIF1GLIHNKDnCxknXLSfDUwNHeooIHhHF/MQqOsQQ8cOVSv0+Ek5pzSALbdf+gORsBDtEOeRExiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991357; c=relaxed/simple;
-	bh=i5MmY1RFVlJGzkQKws3lsGWCU4zyRU91WaS3iJiW+fE=;
+	s=arc-20240116; t=1711991361; c=relaxed/simple;
+	bh=Y+uvM5u5r1eEdseRFlgmjFyNibB2OCh+BhOWaA/hUkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMgebeSA8FmMFXAqiDgd/Ba2J4iGAouDoW/E5i2koz5gRmGpK/N8kvxUqGk6UqZ+G6g/PiJdOz2qNvdpctb7Hnivn7w3YGGixlE28V5SLiXvTY1rDHkyThFGazwjGgE/CXb+xpHaRqOCd3Tl31/hS5secaP0VYsBvCvi5xXheQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqUhMWFY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6Isv0YCuO+JRXHwR2z285i/1IHhY3WsPA5IkOBF2VaH24PrAWTmLPdVNy0A+4f6PPaAQVNEknPno/M0OBEvj2pgUHOYs996Oo/S7pTiUXXPPq/69XUD1PPpVlS6fbebCsQ/LkWGxrCnW1N/uEaqzMC9OkZqlEcw448Wh2k+554=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+hoRiUk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqUhMWFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E466C433F1;
-	Mon,  1 Apr 2024 17:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+hoRiUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9643C433C7;
+	Mon,  1 Apr 2024 17:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991357;
-	bh=i5MmY1RFVlJGzkQKws3lsGWCU4zyRU91WaS3iJiW+fE=;
+	s=korg; t=1711991361;
+	bh=Y+uvM5u5r1eEdseRFlgmjFyNibB2OCh+BhOWaA/hUkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqUhMWFYqkZk7fHaxodpRg+3dO3JvjvviX7frYnDOQR8QeJzxz5FrYll9enTf99F9
-	 gehITAe6RYJq0350DWktSqlOJw1lNLp1Up2AfVFQ3dMT9g4XIpAGBD5uXhtNkgPuqp
-	 +VLrCTbHZ5tW2lvrcweW9dNyxIM7k5oG6eThPuF0=
+	b=K+hoRiUkeo7J9tjhm9mrk/p4bHVdKglg1rW48cWQfMDwxqtMtzkRaVXFfhJlDRBnI
+	 iLPdjkEn/XeV2+sxsU65bJImbTwB31ZAYbJ1KB1xZaIeNhujxBKSSs0MpzR6UVWuli
+	 skvDANhmiYGmg8jG3HPlH8ZUNxZ5dn2uZzIySZwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.1 239/272] staging: vc04_services: fix information leak in create_component()
-Date: Mon,  1 Apr 2024 17:47:09 +0200
-Message-ID: <20240401152538.433162991@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 213/272] btrfs: zoned: dont skip block groups with 100% zone unusable
+Date: Mon,  1 Apr 2024 17:46:43 +0200
+Message-ID: <20240401152537.583148927@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,33 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit f37e76abd614b68987abc8e5c22d986013349771 upstream.
+commit a8b70c7f8600bc77d03c0b032c0662259b9e615e upstream.
 
-The m.u.component_create.pid field is for debugging and in the mainline
-kernel it's not used anything.  However, it still needs to be set to
-something to prevent disclosing uninitialized stack data.  Set it to
-zero.
+Commit f4a9f219411f ("btrfs: do not delete unused block group if it may be
+used soon") changed the behaviour of deleting unused block-groups on zoned
+filesystems. Starting with this commit, we're using
+btrfs_space_info_used() to calculate the number of used bytes in a
+space_info. But btrfs_space_info_used() also accounts
+btrfs_space_info::bytes_zone_unusable as used bytes.
 
-Fixes: 7b3ad5abf027 ("staging: Import the BCM2835 MMAL-based V4L2 camera driver.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/2d972847-9ebd-481b-b6f9-af390f5aabd3@moroto.mountain
+So if a block group is 100% zone_unusable it is skipped from the deletion
+step.
+
+In order not to skip fully zone_unusable block-groups, also check if the
+block-group has bytes left that can be used on a zoned filesystem.
+
+Fixes: f4a9f219411f ("btrfs: do not delete unused block group if it may be used soon")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/block-group.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
-+++ b/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
-@@ -940,6 +940,7 @@ static int create_component(struct vchiq
- 	m.u.component_create.client_component = component->client_component;
- 	strscpy_pad(m.u.component_create.name, name,
- 		    sizeof(m.u.component_create.name));
-+	m.u.component_create.pid = 0;
- 
- 	ret = send_synchronous_mmal_msg(instance, &m,
- 					sizeof(m.u.component_create),
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1413,7 +1413,8 @@ void btrfs_delete_unused_bgs(struct btrf
+ 		 * needing to allocate extents from the block group.
+ 		 */
+ 		used = btrfs_space_info_used(space_info, true);
+-		if (space_info->total_bytes - block_group->length < used) {
++		if (space_info->total_bytes - block_group->length < used &&
++		    block_group->zone_unusable < block_group->length) {
+ 			/*
+ 			 * Add a reference for the list, compensate for the ref
+ 			 * drop under the "next" label for the
 
 
