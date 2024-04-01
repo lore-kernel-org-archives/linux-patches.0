@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCAFDF6B;
-	Mon,  1 Apr 2024 16:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE81DF6B;
+	Mon,  1 Apr 2024 16:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989364; cv=none; b=ssaVmiMGv71TN1ts+VqphuLakQCK62+YhyvUC3Sfoar6x9UAMGq0TaT5l17/Y3vLIBbdWzbwX8jorhs9GaTfeH4rekeznGfqc6WhRbreJvMnU325KvMBaPA8/pjnZrfcj4FDyWuH6Xx2I5tQoeGKFBqg7jHU4WKWVet40dsUoDY=
+	t=1711989367; cv=none; b=IQpkMjSIX2GRcf4CNFX/+zSpj8jyNuD+LHpKshQS5Iea4tBYq3wbBe2PYVjL0k0FXbP8EfYYkAKlwwcFJZSITskRSz7fnFpGJrn2l7dMO2C4qwZraEVs9gT3v394krjqD7c7bDxPuuHZ2XFry4hpAYN04XkKdjFF2pW3SFYGJYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989364; c=relaxed/simple;
-	bh=aVvyyJtp2+YCXv0DCFVVfkCJwZXZ1ySuID6w5T3WISA=;
+	s=arc-20240116; t=1711989367; c=relaxed/simple;
+	bh=uwk/EGGJ6ttcICvGrVBkH8YEmafEYZZZoZOLu135YtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgLVVRiNw7m4uovfzJABEulzmpLXcv49EjpFYwxIgdSWQpPnTubj0etQQakBzqe+kYs3qvlsNkvuV4+fDTFs3csaWxZabHqTBwNVXec+NvjLNztbJ7DQE++WRsABz0Nr4QxAiDtR9cFRXwtZWdZbw+k0rrUabl3XFHr79cBtVH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6Iv+Dlh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAhVHgmB4IvaH6q5BBdwZY7TT9tQ1qYIllST5JWPBf4viU7DAL8TaAmKmO+6eWnZK2PeaCtVlfs/09fpkbP6FOk+V9YhVmECkz8H9sLA3nyKDbMFNYyh4BHHk7z/JqWxLACCeqxPshrStDoMA88dzrsljajFNOeGiB5v7yMri8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChNvUTY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6Iv+Dlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C86AC433C7;
-	Mon,  1 Apr 2024 16:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChNvUTY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA9EC433F1;
+	Mon,  1 Apr 2024 16:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989364;
-	bh=aVvyyJtp2+YCXv0DCFVVfkCJwZXZ1ySuID6w5T3WISA=;
+	s=korg; t=1711989367;
+	bh=uwk/EGGJ6ttcICvGrVBkH8YEmafEYZZZoZOLu135YtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6Iv+DlhtYXp1GceoIjk7CftO8yRg7tm0fNBnPnhlyruUxQIs4w348f5CC/gva4gv
-	 xXE7hVTeS1K/gKLymkAFkguhhEt33tJ9SMcxyJIIiN24IZZWLHK5Xb4aJ+HfmMaq00
-	 kZrIWyPEfoUfDlhh/hqyYIIwmL2RhmGmAcrwaCMY=
+	b=ChNvUTY4f4iZyRgSksjEED5NLnr1TYyswXlLXjWSpdqZ5+zvXjnDAigKnHZ0dlCKj
+	 3tnH7Gbr4KXY1cp5lIFEtRaC3qkj8W9lA09O7E5Lv25C2kAZEFs9njBpmypcq2NbeH
+	 30T3h3aIZRFRfQYitLMOkq8GiuWvwcOvmW/+4l6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hidenori Kobayashi <hidenorik@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/396] media: staging: ipu3-imgu: Set fields before media_entity_pads_init()
-Date: Mon,  1 Apr 2024 17:40:55 +0200
-Message-ID: <20240401152548.069865008@linuxfoundation.org>
+Subject: [PATCH 6.6 007/396] arm64: dts: qcom: sc7280: Add additional MSI interrupts
+Date: Mon,  1 Apr 2024 17:40:56 +0200
+Message-ID: <20240401152548.100861241@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,79 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidenori Kobayashi <hidenorik@chromium.org>
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-[ Upstream commit 87318b7092670d4086bfec115a0280a60c51c2dd ]
+[ Upstream commit b8ba66b40da3230a8675cb5dd5c2dea5bce24d62 ]
 
-The imgu driver fails to probe with the following message because it
-does not set the pad's flags before calling media_entity_pads_init().
+Current MSI's mapping doesn't have all the vectors. This platform
+supports 8 vectors each vector supports 32 MSI's, so total MSI's
+supported is 256.
 
-[   14.596315] ipu3-imgu 0000:00:05.0: failed initialize subdev media entity (-22)
-[   14.596322] ipu3-imgu 0000:00:05.0: failed to register subdev0 ret (-22)
-[   14.596327] ipu3-imgu 0000:00:05.0: failed to register pipes (-22)
-[   14.596331] ipu3-imgu 0000:00:05.0: failed to create V4L2 devices (-22)
+Add all the MSI groups supported for this PCIe instance in this platform.
 
-Fix the initialization order so that the driver probe succeeds. The ops
-initialization is also moved together for readability.
-
-Fixes: a0ca1627b450 ("media: staging/intel-ipu3: Add v4l2 driver based on media framework")
-Cc: <stable@vger.kernel.org> # 6.7
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes")
+cc: stable@vger.kernel.org
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Link: https://lore.kernel.org/r/20231218-additional_msi-v1-1-de6917392684@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/ipu3/ipu3-v4l2.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
-index e530767e80a5d..55cc44a401bc4 100644
---- a/drivers/staging/media/ipu3/ipu3-v4l2.c
-+++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
-@@ -1069,6 +1069,11 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
- 	struct imgu_media_pipe *imgu_pipe = &imgu->imgu_pipe[pipe];
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 8e330d2e2e224..b75de7caaa7e5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2098,8 +2098,16 @@ pcie1: pci@1c08000 {
+ 			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+ 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
  
- 	/* Initialize subdev media entity */
-+	imgu_sd->subdev.entity.ops = &imgu_media_ops;
-+	for (i = 0; i < IMGU_NODE_NUM; i++) {
-+		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
-+			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
-+	}
- 	r = media_entity_pads_init(&imgu_sd->subdev.entity, IMGU_NODE_NUM,
- 				   imgu_sd->subdev_pads);
- 	if (r) {
-@@ -1076,11 +1081,6 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
- 			"failed initialize subdev media entity (%d)\n", r);
- 		return r;
- 	}
--	imgu_sd->subdev.entity.ops = &imgu_media_ops;
--	for (i = 0; i < IMGU_NODE_NUM; i++) {
--		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
--			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
--	}
- 
- 	/* Initialize subdev */
- 	v4l2_subdev_init(&imgu_sd->subdev, &imgu_subdev_ops);
-@@ -1177,15 +1177,15 @@ static int imgu_v4l2_node_setup(struct imgu_device *imgu, unsigned int pipe,
- 	}
- 
- 	/* Initialize media entities */
-+	node->vdev_pad.flags = node->output ?
-+		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
-+	vdev->entity.ops = NULL;
- 	r = media_entity_pads_init(&vdev->entity, 1, &node->vdev_pad);
- 	if (r) {
- 		dev_err(dev, "failed initialize media entity (%d)\n", r);
- 		mutex_destroy(&node->lock);
- 		return r;
- 	}
--	node->vdev_pad.flags = node->output ?
--		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
--	vdev->entity.ops = NULL;
- 
- 	/* Initialize vbq */
- 	vbq->type = node->vdev_fmt.type;
+-			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "msi";
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0", "msi1", "msi2", "msi3",
++					  "msi4", "msi5", "msi6", "msi7";
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+ 			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
