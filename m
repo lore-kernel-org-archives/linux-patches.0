@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546C1433DA;
-	Mon,  1 Apr 2024 16:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891DE1E525;
+	Mon,  1 Apr 2024 16:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990014; cv=none; b=S1LHtbt6iAyK8EIJ2aqqZqq8N5CTBKZzIN31pLbz+5qvZeZ+uMF35xVsKyjBru1OOclYd8wNJtlLRx3d2GhTLeXD483uMHG+Y5qKhb9R23CVC6LMtzVBqAhHAP4NyHUa3nE4ypA1A2dgbLjnCWcVxusu/FTfIqKF42ipHPN3lE4=
+	t=1711990017; cv=none; b=Yjg0uuJ8/Bj3cd08nBzgKEaBwYv+lKK/eeoNHaFIKZu38utsQrYpqNHBPVSqoVqQamyVzdcayxUOKoHv+shEaw9LzV72cMB5DKsv5FNZZdDYHrFVL0MNk6ale5KfY6CclK436Xxe1B3r35ZbiItqCWKwKYRauQONTM6i6KIAJZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990014; c=relaxed/simple;
-	bh=A4FwoNyQ/s47WJxn2rr/fzp/G7MtCaStPJ+Ri85C7Kg=;
+	s=arc-20240116; t=1711990017; c=relaxed/simple;
+	bh=1vn0N1X5qWsarjz7RCZ/2vjtghSGCkz5HSwRyUzLP8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDV9M0BAt4KPP2tYFpcEH2wvZYZlmP9/3PkKLpMxunM8WxTNPg7EcwhR3JXOnkC/Kah4tVCv8zVzZUUZe04Occlv/OkoIZXM8PAwYxFm/W8HDXkiFeco5I3t8jhVaSwTdDjxDD6JJfpHGdcOyQhRjXqesP1TfFamAYbQTc3qvLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhMxT6JD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E7uJ11d5wwO3fQ5pyXX60yxDo0TfJoIrIKsR4jpDAeFF2tyd/lT6wAU3QoJH890OLDasJEWQLx0f/Ru7tnUgjPhfgm14VXAPHIDNrpZHrvLBRwuHQTLN6uKhG+UbFYdilg5xwA0V42OcaasHI3rckX8MzKTcBSdY44VxFjajMJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BuFJXMW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhMxT6JD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D4FC433F1;
-	Mon,  1 Apr 2024 16:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BuFJXMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0484FC433F1;
+	Mon,  1 Apr 2024 16:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990014;
-	bh=A4FwoNyQ/s47WJxn2rr/fzp/G7MtCaStPJ+Ri85C7Kg=;
+	s=korg; t=1711990017;
+	bh=1vn0N1X5qWsarjz7RCZ/2vjtghSGCkz5HSwRyUzLP8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhMxT6JDyEZH8XUFTZdYQBDYcxXG3qFK3/G0m7GIbchyWJfWIaf8VV22H0Lj2VfBV
-	 +zvpfIHu1HR+QF5MFa7XCzJ3yAzSHg1CtFMvIjcxrk6jzI0S/N1iIwlvH20eQHphOf
-	 4JjrnQouQJb5u1CySgcGz8AMRPFB2frpFOjhW2Iw=
+	b=1BuFJXMWy2MGgBlVz1NNZh5KziBM4pFEinv7hhE/VBlzXlnjLUWnMXTYskp8MaP2K
+	 Z/X36XYkuVYbKgGRrbf0q3Lm5A2x3ddRRwRTevumdrAhG51mWUKcDrkvs7LyuHbVhm
+	 nhsyb0ULD/R+GJGK76QN8VyAWm+dcF/0LlPi19sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 221/396] USB: usb-storage: Prevent divide-by-0 error in isd200_ata_command
-Date: Mon,  1 Apr 2024 17:44:30 +0200
-Message-ID: <20240401152554.509481914@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>
+Subject: [PATCH 6.6 222/396] usb: typec: altmodes/displayport: create sysfs nodes as drivers default device attribute group
+Date: Mon,  1 Apr 2024 17:44:31 +0200
+Message-ID: <20240401152554.539166566@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,101 +49,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: RD Babiera <rdbabiera@google.com>
 
-commit 014bcf41d946b36a8f0b8e9b5d9529efbb822f49 upstream.
+commit 165376f6b23e9a779850e750fb2eb06622e5a531 upstream.
 
-The isd200 sub-driver in usb-storage uses the HEADS and SECTORS values
-in the ATA ID information to calculate cylinder and head values when
-creating a CDB for READ or WRITE commands.  The calculation involves
-division and modulus operations, which will cause a crash if either of
-these values is 0.  While this never happens with a genuine device, it
-could happen with a flawed or subversive emulation, as reported by the
-syzbot fuzzer.
+The DisplayPort driver's sysfs nodes may be present to the userspace before
+typec_altmode_set_drvdata() completes in dp_altmode_probe. This means that
+a sysfs read can trigger a NULL pointer error by deferencing dp->hpd in
+hpd_show or dp->lock in pin_assignment_show, as dev_get_drvdata() returns
+NULL in those cases.
 
-Protect against this possibility by refusing to bind to the device if
-either the ATA_ID_HEADS or ATA_ID_SECTORS value in the device's ID
-information is 0.  This requires isd200_Initialization() to return a
-negative error code when initialization fails; currently it always
-returns 0 (even when there is an error).
+Remove manual sysfs node creation in favor of adding attribute group as
+default for devices bound to the driver. The ATTRIBUTE_GROUPS() macro is
+not used here otherwise the path to the sysfs nodes is no longer compliant
+with the ABI.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-and-tested-by: syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-usb/0000000000003eb868061245ba7f@google.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
 Cc: stable@vger.kernel.org
-Reviewed-by: PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/b1e605ea-333f-4ac0-9511-da04f411763e@rowland.harvard.edu
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Link: https://lore.kernel.org/r/20240229001101.3889432-2-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/isd200.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/storage/isd200.c
-+++ b/drivers/usb/storage/isd200.c
-@@ -1105,7 +1105,7 @@ static void isd200_dump_driveid(struct u
- static int isd200_get_inquiry_data( struct us_data *us )
- {
- 	struct isd200_info *info = (struct isd200_info *)us->extra;
--	int retStatus = ISD200_GOOD;
-+	int retStatus;
- 	u16 *id = info->id;
- 
- 	usb_stor_dbg(us, "Entering isd200_get_inquiry_data\n");
-@@ -1137,6 +1137,13 @@ static int isd200_get_inquiry_data( stru
- 				isd200_fix_driveid(id);
- 				isd200_dump_driveid(us, id);
- 
-+				/* Prevent division by 0 in isd200_scsi_to_ata() */
-+				if (id[ATA_ID_HEADS] == 0 || id[ATA_ID_SECTORS] == 0) {
-+					usb_stor_dbg(us, "   Invalid ATA Identify data\n");
-+					retStatus = ISD200_ERROR;
-+					goto Done;
-+				}
-+
- 				memset(&info->InquiryData, 0, sizeof(info->InquiryData));
- 
- 				/* Standard IDE interface only supports disks */
-@@ -1202,6 +1209,7 @@ static int isd200_get_inquiry_data( stru
- 		}
- 	}
- 
-+ Done:
- 	usb_stor_dbg(us, "Leaving isd200_get_inquiry_data %08X\n", retStatus);
- 
- 	return(retStatus);
-@@ -1481,22 +1489,27 @@ static int isd200_init_info(struct us_da
- 
- static int isd200_Initialization(struct us_data *us)
- {
-+	int rc = 0;
-+
- 	usb_stor_dbg(us, "ISD200 Initialization...\n");
- 
- 	/* Initialize ISD200 info struct */
- 
--	if (isd200_init_info(us) == ISD200_ERROR) {
-+	if (isd200_init_info(us) < 0) {
- 		usb_stor_dbg(us, "ERROR Initializing ISD200 Info struct\n");
-+		rc = -ENOMEM;
- 	} else {
- 		/* Get device specific data */
- 
--		if (isd200_get_inquiry_data(us) != ISD200_GOOD)
-+		if (isd200_get_inquiry_data(us) != ISD200_GOOD) {
- 			usb_stor_dbg(us, "ISD200 Initialization Failure\n");
--		else
-+			rc = -EINVAL;
-+		} else {
- 			usb_stor_dbg(us, "ISD200 Initialization complete\n");
-+		}
- 	}
- 
--	return 0;
-+	return rc;
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -554,16 +554,21 @@ static ssize_t hpd_show(struct device *d
  }
+ static DEVICE_ATTR_RO(hpd);
  
+-static struct attribute *dp_altmode_attrs[] = {
++static struct attribute *displayport_attrs[] = {
+ 	&dev_attr_configuration.attr,
+ 	&dev_attr_pin_assignment.attr,
+ 	&dev_attr_hpd.attr,
+ 	NULL
+ };
  
+-static const struct attribute_group dp_altmode_group = {
++static const struct attribute_group displayport_group = {
+ 	.name = "displayport",
+-	.attrs = dp_altmode_attrs,
++	.attrs = displayport_attrs,
++};
++
++static const struct attribute_group *displayport_groups[] = {
++	&displayport_group,
++	NULL,
+ };
+ 
+ int dp_altmode_probe(struct typec_altmode *alt)
+@@ -571,7 +576,6 @@ int dp_altmode_probe(struct typec_altmod
+ 	const struct typec_altmode *port = typec_altmode_get_partner(alt);
+ 	struct fwnode_handle *fwnode;
+ 	struct dp_altmode *dp;
+-	int ret;
+ 
+ 	/* FIXME: Port can only be DFP_U. */
+ 
+@@ -582,10 +586,6 @@ int dp_altmode_probe(struct typec_altmod
+ 	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
+ 		return -ENODEV;
+ 
+-	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
+-	if (ret)
+-		return ret;
+-
+ 	dp = devm_kzalloc(&alt->dev, sizeof(*dp), GFP_KERNEL);
+ 	if (!dp)
+ 		return -ENOMEM;
+@@ -619,7 +619,6 @@ void dp_altmode_remove(struct typec_altm
+ {
+ 	struct dp_altmode *dp = typec_altmode_get_drvdata(alt);
+ 
+-	sysfs_remove_group(&alt->dev.kobj, &dp_altmode_group);
+ 	cancel_work_sync(&dp->work);
+ 
+ 	if (dp->connector_fwnode) {
+@@ -644,6 +643,7 @@ static struct typec_altmode_driver dp_al
+ 	.driver = {
+ 		.name = "typec_displayport",
+ 		.owner = THIS_MODULE,
++		.dev_groups = displayport_groups,
+ 	},
+ };
+ module_typec_altmode_driver(dp_altmode_driver);
 
 
