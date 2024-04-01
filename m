@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467B722301;
-	Mon,  1 Apr 2024 16:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABC41CA8F;
+	Mon,  1 Apr 2024 16:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987492; cv=none; b=YdZy+KFSBK+iq9Cgzqbx8v2X+Y++hWRM+uijpJDZBsODkx/S+86noBg4xPmX9JGPR7F9XcOqOzbFLK6ptS6b3RvKmF3ybdotAkKg8wHBSxSB7tD9zsbvb2hKB3+FBtmAhFxBfhsZFV24pt02O4pWZNG9WQ6ulL77TfNFU/1VbDM=
+	t=1711987496; cv=none; b=EtUDaroWyUN0XkHChdXiIBQ4eN/Omw5Z51FU9NQfJDCy8VU/LH/dJpmLRXFYKuX/rP+pa02dHXHYL/gdNIzNQcbrp/oMpjXG8i7v/UMkWOd3RnPevDYrW81mmfvdSgsr69wmLzFDWHBCnHgq7+ntP6Xo9FhP/9nJ2iTYavkBYaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987492; c=relaxed/simple;
-	bh=n7ziQw/F2Fi/w9A/pE/vZ+GCX1wXYKhxjvXBEHmrbiM=;
+	s=arc-20240116; t=1711987496; c=relaxed/simple;
+	bh=Zvsw6dADyqFGrYlbQ3JW3x7d0pfOMrhSyBFcnDN0iCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEajAVDt63IhaJnJm8w8PfePqKM4jOnWysFVKtZG7w2YzVbcz49ydosrPHZGTESl0U7Y6oUoGOwPHPJzPTY/XL0rJ5Qn1hoND5l6DuQdRc5PsakOI69/H0qW4UfprsYrrzb8T5/9g9JvQFqISkXcOYgZsqHj5KCc8S1Jg290yzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcIRyh0M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQ4GpN0udIyuB8GMY3SRlIkFSC4P+uFBYe/hmkG74gJg2EhOZ9MCMkmloCqM5+NLRSWtCqbhX5rG55ZOnwuI3etcKn1lLP4x8z9fAX0CbkVZDDxPkumyXQguW1AjQwC/P4klhG/AzSYfAC2Zo3bav57pawvV9HXtAKhdx1yF1wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hA/bIkN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcIRyh0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD532C433C7;
-	Mon,  1 Apr 2024 16:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hA/bIkN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E042C433F1;
+	Mon,  1 Apr 2024 16:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987492;
-	bh=n7ziQw/F2Fi/w9A/pE/vZ+GCX1wXYKhxjvXBEHmrbiM=;
+	s=korg; t=1711987495;
+	bh=Zvsw6dADyqFGrYlbQ3JW3x7d0pfOMrhSyBFcnDN0iCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcIRyh0MDeM2R/u49To5b3/X7EnY8mq2GxK2VEJjnsikNg1/t1/8f5elqBEeMtEVM
-	 yksS9Zx/Kb6DScazG42ENYd868szKD6DpBvLT/0kpLt5teKIjk45brf7iLg1Li4W1k
-	 d0XwRKIZGMY98xOzoC1v4tcGmQQ88zvQTxaC69hQ=
+	b=hA/bIkN51G2JXtJn9KJ2e32a8Pu6+fzm+hV9Lgu7/u3nxcL0CLIbbxsynBVivBhYL
+	 Cum/d8zYQjMTkpD88So2kgLuhAAnqebf/qoMn2Q6E5bJNnRSzeAoLafghkLqzvFBkV
+	 dMQX1/RbBslGBlircTOnjDbNl3962lsiIFGca2TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.8 304/399] Revert "drm/amd/display: Fix sending VSC (+ colorimetry) packets for DP/eDP displays without PSR"
-Date: Mon,  1 Apr 2024 17:44:30 +0200
-Message-ID: <20240401152558.264730742@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>
+Subject: [PATCH 6.8 305/399] gpio: cdev: sanitize the label before requesting the interrupt
+Date: Mon,  1 Apr 2024 17:44:31 +0200
+Message-ID: <20240401152558.293782569@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,78 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 78aca9ee5e012e130dbfbd7191bc2302b0cf3b37 upstream.
+commit b34490879baa847d16fc529c8ea6e6d34f004b38 upstream.
 
-This causes flicker on a bunch of eDP panels. The info_packet code
-also caused regressions on other OSes that we haven't' seen on Linux
-yet, but that is likely due to the fact that we haven't had a chance
-to test those environments on Linux.
+When an interrupt is requested, a procfs directory is created under
+"/proc/irq/<irqnum>/<label>" where <label> is the string passed to one of
+the request_irq() variants.
 
-We'll need to revisit this.
+What follows is that the string must not contain the "/" character or
+the procfs mkdir operation will fail. We don't have such constraints for
+GPIO consumer labels which are used verbatim as interrupt labels for
+GPIO irqs. We must therefore sanitize the consumer string before
+requesting the interrupt.
 
-This reverts commit 202260f64519e591b5cd99626e441b6559f571a3.
+Let's replace all "/" with ":".
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3207
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3151
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Closes: https://lore.kernel.org/linux-gpio/39fe95cb-aa83-4b8b-8cab-63947a726754@gmx.net/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c             |    8 ++----
- drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c |   13 +++-------
- 2 files changed, 8 insertions(+), 13 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |   38 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6256,9 +6256,8 @@ create_stream_for_sink(struct drm_connec
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1089,10 +1089,20 @@ static u32 gpio_v2_line_config_debounce_
+ 	return 0;
+ }
  
- 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
- 		mod_build_hf_vsif_infopacket(stream, &stream->vsp_infopacket);
--	else if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT ||
--			 stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST ||
--			 stream->signal == SIGNAL_TYPE_EDP) {
++static inline char *make_irq_label(const char *orig)
++{
++	return kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
++}
 +
-+	if (stream->link->psr_settings.psr_feature_enabled || stream->link->replay_settings.replay_feature_enabled) {
- 		//
- 		// should decide stream support vsc sdp colorimetry capability
- 		// before building vsc info packet
-@@ -6274,9 +6273,8 @@ create_stream_for_sink(struct drm_connec
- 		if (stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22)
- 			tf = TRANSFER_FUNC_GAMMA_22;
- 		mod_build_vsc_infopacket(stream, &stream->vsc_infopacket, stream->output_color_space, tf);
-+		aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
- 
--		if (stream->link->psr_settings.psr_feature_enabled)
--			aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
- 	}
- finish:
- 	dc_sink_release(sink);
---- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-+++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-@@ -147,15 +147,12 @@ void mod_build_vsc_infopacket(const stru
++static inline void free_irq_label(const char *label)
++{
++	kfree(label);
++}
++
+ static void edge_detector_stop(struct line *line)
+ {
+ 	if (line->irq) {
+-		free_irq(line->irq, line);
++		free_irq_label(free_irq(line->irq, line));
+ 		line->irq = 0;
  	}
  
- 	/* VSC packet set to 4 for PSR-SU, or 2 for PSR1 */
--	if (stream->link->psr_settings.psr_feature_enabled) {
--		if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
--			vsc_packet_revision = vsc_packet_rev4;
--		else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
--			vsc_packet_revision = vsc_packet_rev2;
--	}
--
--	if (stream->link->replay_settings.config.replay_supported)
-+	if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
-+		vsc_packet_revision = vsc_packet_rev4;
-+	else if (stream->link->replay_settings.config.replay_supported)
- 		vsc_packet_revision = vsc_packet_rev4;
-+	else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
-+		vsc_packet_revision = vsc_packet_rev2;
+@@ -1116,6 +1126,7 @@ static int edge_detector_setup(struct li
+ 	unsigned long irqflags = 0;
+ 	u64 eflags;
+ 	int irq, ret;
++	char *label;
  
- 	/* Update to revision 5 for extended colorimetry support */
- 	if (stream->use_vsc_sdp_for_colorimetry)
+ 	eflags = edflags & GPIO_V2_LINE_EDGE_FLAGS;
+ 	if (eflags && !kfifo_initialized(&line->req->events)) {
+@@ -1152,11 +1163,17 @@ static int edge_detector_setup(struct li
+ 			IRQF_TRIGGER_RISING : IRQF_TRIGGER_FALLING;
+ 	irqflags |= IRQF_ONESHOT;
+ 
++	label = make_irq_label(line->req->label);
++	if (!label)
++		return -ENOMEM;
++
+ 	/* Request a thread to read the events */
+ 	ret = request_threaded_irq(irq, edge_irq_handler, edge_irq_thread,
+-				   irqflags, line->req->label, line);
+-	if (ret)
++				   irqflags, label, line);
++	if (ret) {
++		free_irq_label(label);
+ 		return ret;
++	}
+ 
+ 	line->irq = irq;
+ 	return 0;
+@@ -1979,7 +1996,7 @@ static void lineevent_free(struct lineev
+ 		blocking_notifier_chain_unregister(&le->gdev->device_notifier,
+ 						   &le->device_unregistered_nb);
+ 	if (le->irq)
+-		free_irq(le->irq, le);
++		free_irq_label(free_irq(le->irq, le));
+ 	if (le->desc)
+ 		gpiod_free(le->desc);
+ 	kfree(le->label);
+@@ -2120,6 +2137,7 @@ static int lineevent_create(struct gpio_
+ 	int fd;
+ 	int ret;
+ 	int irq, irqflags = 0;
++	char *label;
+ 
+ 	if (copy_from_user(&eventreq, ip, sizeof(eventreq)))
+ 		return -EFAULT;
+@@ -2204,15 +2222,23 @@ static int lineevent_create(struct gpio_
+ 	if (ret)
+ 		goto out_free_le;
+ 
++	label = make_irq_label(le->label);
++	if (!label) {
++		ret = -ENOMEM;
++		goto out_free_le;
++	}
++
+ 	/* Request a thread to read the events */
+ 	ret = request_threaded_irq(irq,
+ 				   lineevent_irq_handler,
+ 				   lineevent_irq_thread,
+ 				   irqflags,
+-				   le->label,
++				   label,
+ 				   le);
+-	if (ret)
++	if (ret) {
++		free_irq_label(label);
+ 		goto out_free_le;
++	}
+ 
+ 	le->irq = irq;
+ 
 
 
