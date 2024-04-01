@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D511CA8F;
-	Mon,  1 Apr 2024 16:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929B3C129;
+	Mon,  1 Apr 2024 16:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988809; cv=none; b=s96GnloMZcGtqgTwdFqSuu/APF6v5x+GhdPHvmmnDfwxo9/SJfXpMqJaob2PiPtz966NKJ+hHcD+ZZB3iReEVZGCaqqlJPP6erxx0qIYSQYZQlXhb0q73lX0res9Ezj8U7ohKUVlNunnF8P0T9Rkx8xdSEViFGgrQ0eoyil8ZJw=
+	t=1711988813; cv=none; b=DEzrk2OkWKZ3AGGBr4AEZdWduCWdv1VsBLdveYLKikiOW7Lgd7EQpGPt3fFXh8y7DhctfIwiK5cMFIJucjJdNbzqUzLbsQgaxoU4p+n2HGOeyWMIlicU8AMcyV4+EhTnyfzhUhCSXaDCOF2Vy7MVOU2zTj8jLBsIEZ984c3rE/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988809; c=relaxed/simple;
-	bh=cLAowEEi9oWf+P/LpieyxnexaZDZoQKCSYuG05cFJwY=;
+	s=arc-20240116; t=1711988813; c=relaxed/simple;
+	bh=5gQb07C8Gic71zxHRfoLxICXKLlRTu8PEz/skEIee+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IydpjoJ7ls6gIdxDs0R5EjMvWTVDq1g+oc6OiilKEpiGh7lyklEWqSHVu/h9uPp9DUiXH8GZNn+wZJ9VLx4DMqXtr4/Cgeg3zbKGUEgHoFLBJ8WHVxP91DddDbWcbqA1esW6fci8FC69gqMUy010QnFdXCmee5/8vbkTvy98Ock=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ncAIs0D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nm5VUS8G06zi2ayDYjsvn70MDygZHrAEqyw8DtZYbv0FqUNs3rUWQ0SXNVB/XZC9DnujWWkAru8t2ezscjTH4hM5OwGMQMgNHIb7DWixd1rgcu83Iz+afuGOP8aLH0hDJGKPSenuybMP0DpZfKIPCTtCHprldje/zJ1tnHJk2uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLxwrXTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ncAIs0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A64AC433C7;
-	Mon,  1 Apr 2024 16:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLxwrXTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18BEC433F1;
+	Mon,  1 Apr 2024 16:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988809;
-	bh=cLAowEEi9oWf+P/LpieyxnexaZDZoQKCSYuG05cFJwY=;
+	s=korg; t=1711988813;
+	bh=5gQb07C8Gic71zxHRfoLxICXKLlRTu8PEz/skEIee+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ncAIs0DWhtnFIJ1uDzm8Rn8NsHGi1fuQv29axMSoAtkzKQ5NDcqdL621EQQlOgAv
-	 7MFY6J4gBRvRJ4IZEthzvc8XQIKX1SzcQRGNG3oPGhwn2qbDEOyAHmr2CYlxOWuujI
-	 AyHM0g4ZrfVoCEmMlyKqqdHZSwv+nJzLPnKtmefY=
+	b=OLxwrXTYoSbZq2U3DQhK7N/OS6lYaVN/UjEewzkBRlccRB5UtfKkj80KIsCsHDnTp
+	 thnQmj8m9VBlgJ0kbJ8RhrKGmc6tUNsNGVeBRq3MfeYeBgOp4OaPHztfUnQIo+CXcj
+	 DxwV7DyDx44m5CxLZLOsVQRiFjqBMYAvXr/eHZ4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linke li <lilinke99@qq.com>,
-	Rabin Vincent <rabin@rab.in>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 256/432] tracing: Use .flush() call to wake up readers
-Date: Mon,  1 Apr 2024 17:44:03 +0200
-Message-ID: <20240401152600.776960881@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.7 288/432] drm/i915: Dont explode when the dig port we dont have an AUX CH
+Date: Mon,  1 Apr 2024 17:44:35 +0200
+Message-ID: <20240401152601.760598696@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,95 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit e5d7c1916562f0e856eb3d6f569629fcd535fed2 upstream.
+commit 0b385be4c3ccd5636441923d7cad5eda6b4651cb upstream.
 
-The .release() function does not get called until all readers of a file
-descriptor are finished.
+The icl+ power well code currently assumes that every AUX power
+well maps to an encoder which is using said power well. That is
+by no menas guaranteed as we:
+- only register encoders for ports declared in the VBT
+- combo PHY HDMI-only encoder no longer get an AUX CH since
+  commit 9856308c94ca ("drm/i915: Only populate aux_ch if really needed")
 
-If a thread is blocked on reading a file descriptor in ring_buffer_wait(),
-and another thread closes the file descriptor, it will not wake up the
-other thread as ring_buffer_wake_waiters() is called by .release(), and
-that will not get called until the .read() is finished.
+However we have places such as intel_power_domains_sanitize_state()
+that blindly traverse all the possible power wells. So these bits
+of code may very well encounbter an aux power well with no associated
+encoder.
 
-The issue originally showed up in trace-cmd, but the readers are actually
-other processes with their own file descriptors. So calling close() would wake
-up the other tasks because they are blocked on another descriptor then the
-one that was closed(). But there's other wake ups that solve that issue.
+In this particular case the BIOS seems to have left one AUX power
+well enabled even though we're dealing with a HDMI only encoder
+on a combo PHY. We then proceed to turn off said power well and
+explode when we can't find a matching encoder. As a short term fix
+we should be able to just skip the PHY related parts of the power
+well programming since we know this situation can only happen with
+combo PHYs.
 
-When a thread is blocked on a read, it can still hang even when another
-thread closed its descriptor.
+Another option might be to go back to always picking an AUX CH for
+all encoders. However I'm a bit wary about that since we might in
+theory end up conflicting with the VBT AUX CH assignment. Also
+that wouldn't help with encoders not declared in the VBT, should
+we ever need to poke the corresponding power wells.
 
-This is what the .flush() callback is for. Have the .flush() wake up the
-readers.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240308202432.107909457@goodmis.org
+Longer term we need to figure out what the actual relationship
+is between the PHY vs. AUX CH vs. AUX power well. Currently this
+is entirely unclear.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linke li <lilinke99@qq.com>
-Cc: Rabin Vincent <rabin@rab.in>
-Fixes: f3ddb74ad0790 ("tracing: Wake up ring buffer waiters on closing of the file")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 9856308c94ca ("drm/i915: Only populate aux_ch if really needed")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10184
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240223203216.15210-1-ville.syrjala@linux.intel.com
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+(cherry picked from commit 6a8c66bf0e565c34ad0a18f820e0bb17951f7f91)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_power_well.c |   17 +++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8352,6 +8352,20 @@ tracing_buffers_read(struct file *filp,
- 	return size;
+--- a/drivers/gpu/drm/i915/display/intel_display_power_well.c
++++ b/drivers/gpu/drm/i915/display/intel_display_power_well.c
+@@ -246,7 +246,14 @@ static enum phy icl_aux_pw_to_phy(struct
+ 	enum aux_ch aux_ch = icl_aux_pw_to_ch(power_well);
+ 	struct intel_digital_port *dig_port = aux_ch_to_digital_port(i915, aux_ch);
+ 
+-	return intel_port_to_phy(i915, dig_port->base.port);
++	/*
++	 * FIXME should we care about the (VBT defined) dig_port->aux_ch
++	 * relationship or should this be purely defined by the hardware layout?
++	 * Currently if the port doesn't appear in the VBT, or if it's declared
++	 * as HDMI-only and routed to a combo PHY, the encoder either won't be
++	 * present at all or it will not have an aux_ch assigned.
++	 */
++	return dig_port ? intel_port_to_phy(i915, dig_port->base.port) : PHY_NONE;
  }
  
-+static int tracing_buffers_flush(struct file *file, fl_owner_t id)
-+{
-+	struct ftrace_buffer_info *info = file->private_data;
-+	struct trace_iterator *iter = &info->iter;
-+
-+	iter->wait_index++;
-+	/* Make sure the waiters see the new wait_index */
-+	smp_wmb();
-+
-+	ring_buffer_wake_waiters(iter->array_buffer->buffer, iter->cpu_file);
-+
-+	return 0;
-+}
-+
- static int tracing_buffers_release(struct inode *inode, struct file *file)
- {
- 	struct ftrace_buffer_info *info = file->private_data;
-@@ -8363,12 +8377,6 @@ static int tracing_buffers_release(struc
+ static void hsw_wait_for_power_well_enable(struct drm_i915_private *dev_priv,
+@@ -414,7 +421,8 @@ icl_combo_phy_aux_power_well_enable(stru
  
- 	__trace_array_put(iter->tr);
+ 	intel_de_rmw(dev_priv, regs->driver, 0, HSW_PWR_WELL_CTL_REQ(pw_idx));
  
--	iter->wait_index++;
--	/* Make sure the waiters see the new wait_index */
--	smp_wmb();
--
--	ring_buffer_wake_waiters(iter->array_buffer->buffer, iter->cpu_file);
--
- 	if (info->spare)
- 		ring_buffer_free_read_page(iter->array_buffer->buffer,
- 					   info->spare_cpu, info->spare);
-@@ -8582,6 +8590,7 @@ static const struct file_operations trac
- 	.read		= tracing_buffers_read,
- 	.poll		= tracing_buffers_poll,
- 	.release	= tracing_buffers_release,
-+	.flush		= tracing_buffers_flush,
- 	.splice_read	= tracing_buffers_splice_read,
- 	.unlocked_ioctl = tracing_buffers_ioctl,
- 	.llseek		= no_llseek,
+-	if (DISPLAY_VER(dev_priv) < 12)
++	/* FIXME this is a mess */
++	if (phy != PHY_NONE)
+ 		intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy),
+ 			     0, ICL_LANE_ENABLE_AUX);
+ 
+@@ -437,7 +445,10 @@ icl_combo_phy_aux_power_well_disable(str
+ 
+ 	drm_WARN_ON(&dev_priv->drm, !IS_ICELAKE(dev_priv));
+ 
+-	intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy), ICL_LANE_ENABLE_AUX, 0);
++	/* FIXME this is a mess */
++	if (phy != PHY_NONE)
++		intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy),
++			     ICL_LANE_ENABLE_AUX, 0);
+ 
+ 	intel_de_rmw(dev_priv, regs->driver, HSW_PWR_WELL_CTL_REQ(pw_idx), 0);
+ 
 
 
