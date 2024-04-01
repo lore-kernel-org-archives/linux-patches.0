@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68B38F5C;
-	Mon,  1 Apr 2024 16:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1573F8F4;
+	Mon,  1 Apr 2024 16:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987830; cv=none; b=VBEYyiWFFuxgO8q1zKAOc55tTLDCICPFvWf60Kk5+6XDp0mObVSwhILOh1hQ21x077J6U5+e0Y3JpguJWeDA3ZS0VncjhBnhITu5DhzOf/0JNIBFStZ3lI4hPB/vcVsOKIipdRXzCsbb1YgvOdmOFkxmJpQMhKQt2WwZl1oopU0=
+	t=1711987834; cv=none; b=p76a3qknWa3c0q4Knwyar24HKO8pEtTbK+VUC2u6JD7TvvJefUdeKKvJ10uhOQZueHriOT0/pwdVnY8YBfxS4TbXTNYU0o6oHJECsQZ7hEBtQ0rptv399uw3KqxkopddmrDif5rsQ23MbUcrsq312kvYGEBnfnX/1TjInGxRQJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987830; c=relaxed/simple;
-	bh=aMGSdHBxSBmAH63roOmWNt8i0qjdufzq5yWUk4nrBbk=;
+	s=arc-20240116; t=1711987834; c=relaxed/simple;
+	bh=NuqnME6StwSRFQqITQc8EG4jhZ7+8RelgvT1ZPvxK4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrGEXRfmnlsf75+O15TPiHrmdxdwxftABQ8ZrAcloOo6+fDHRbF+RF4Gxq4VEu3K869NS/6nzmvJ/ZKkYwPcPk6CO+VEL9AzNffFOuuZoHARa6qlYYlAF9FXJ6A3jS7w7hTqMsWoJsqlc+axOB6WZY+Y3tImwHHfFg9QJmWWoQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSZD/txc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6K0oiZcRGDztVkG5FQxKO4CVDAKwyXNX1TEGUQLplExBAU2immXvMFwYT1VOPpLfhPO8SNHv/2eW+SUwEdNorXzeoNW94Sj5u2HRrSYX+x5FncieDkZt9YBlBp22BtztDJgSdQNhc7sY2nwwAv4Mv3HxHHY3y3JVtfYaKykuNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX38S8Cr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSZD/txc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25579C433C7;
-	Mon,  1 Apr 2024 16:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX38S8Cr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2B6C433F1;
+	Mon,  1 Apr 2024 16:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987830;
-	bh=aMGSdHBxSBmAH63roOmWNt8i0qjdufzq5yWUk4nrBbk=;
+	s=korg; t=1711987834;
+	bh=NuqnME6StwSRFQqITQc8EG4jhZ7+8RelgvT1ZPvxK4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSZD/txcIkaYaA+Zv9Qon1vShs0ZWdee3RYm/BaSm7KdZ62Uu6Xg0PgL1/q2C3E+w
-	 eDr6AmhL9Ey9XgoKv1ajAg+YIt2WXmJeowXClHvD7yGysIz3nAKGXqoYxCNUILK6C5
-	 raF41OnrMAix/fQGf/iIcjxaip6VP2bWXO6JvdN8=
+	b=qX38S8CrXeKV5rCv7gCxJcjCu/qfWxckgRFuedv+Yug4fv3RrcqZ329tWSvaD2BS2
+	 1WdWvLQ3os1OOQqqgYR8ojqLMa2NhpuIa3tjBxFZik23iBr6kxfB68J5BlL7Ll3lj+
+	 RPGbd8dzOChqmElyZ9QtEZz+TdDiTqttqfBdcER8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Justin Tee <justin.tee@broadcom.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Justin Tee <justintee8345@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.8 393/399] scsi: lpfc: Correct size for cmdwqe/rspwqe for memset()
-Date: Mon,  1 Apr 2024 17:45:59 +0200
-Message-ID: <20240401152600.898958073@linuxfoundation.org>
+Subject: [PATCH 6.8 394/399] scsi: lpfc: Correct size for wqe for memset()
+Date: Mon,  1 Apr 2024 17:46:00 +0200
+Message-ID: <20240401152600.934642683@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,35 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 16cc2ba71b9f6440805aef7f92ba0f031f79b765 upstream.
+commit 28d41991182c210ec1654f8af2e140ef4cc73f20 upstream.
 
-The cmdwqe and rspwqe are of type lpfc_wqe128. They should be memset() with
-the same type.
+The wqe is of type lpfc_wqe128. It should be memset with the same type.
 
-Fixes: 61910d6a5243 ("scsi: lpfc: SLI path split: Refactor CT paths")
+Fixes: 6c621a2229b0 ("scsi: lpfc: Separate NVMET RQ buffer posting from IO resources SGL/iocbq/context")
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20240304091119.847060-1-usama.anjum@collabora.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240304090649.833953-1-usama.anjum@collabora.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Justin Tee <justintee8345@gmail.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_bsg.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_nvmet.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/lpfc/lpfc_bsg.c
-+++ b/drivers/scsi/lpfc/lpfc_bsg.c
-@@ -3169,10 +3169,10 @@ lpfc_bsg_diag_loopback_run(struct bsg_jo
- 	}
+--- a/drivers/scsi/lpfc/lpfc_nvmet.c
++++ b/drivers/scsi/lpfc/lpfc_nvmet.c
+@@ -1586,7 +1586,7 @@ lpfc_nvmet_setup_io_context(struct lpfc_
+ 		wqe = &nvmewqe->wqe;
  
- 	cmdwqe = &cmdiocbq->wqe;
--	memset(cmdwqe, 0, sizeof(union lpfc_wqe));
-+	memset(cmdwqe, 0, sizeof(*cmdwqe));
- 	if (phba->sli_rev < LPFC_SLI_REV4) {
- 		rspwqe = &rspiocbq->wqe;
--		memset(rspwqe, 0, sizeof(union lpfc_wqe));
-+		memset(rspwqe, 0, sizeof(*rspwqe));
- 	}
+ 		/* Initialize WQE */
+-		memset(wqe, 0, sizeof(union lpfc_wqe));
++		memset(wqe, 0, sizeof(*wqe));
  
- 	INIT_LIST_HEAD(&head);
+ 		ctx_buf->iocbq->cmd_dmabuf = NULL;
+ 		spin_lock(&phba->sli4_hba.sgl_list_lock);
 
 
