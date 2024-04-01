@@ -1,72 +1,84 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D721748781
-	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 17:16:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2978A4AEC3
+	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 17:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991808; cv=none; b=a/eiTnHTJ8Gmg2zQJ7H0HLy6FaJkd4pZw6usf1VZXuW1LXg5a61dxs2y3XEFyGB6CDAs+5vN/NQsGvs0gumcJGPgY23jhhniui5qXq8g5jJrsXyt7kUs8JKgBvGX+OVGxfkO85KkQ3p3Fp9h1nOLlJSZ5DCf2qj20/30eKX6UTE=
+	t=1711991808; cv=none; b=Vw8/1mCUNpT2nsG2J1bmyWdRl4z5MY/IOJJfd9Nbjv8vSNnIZPKjgrC3XA+OIDDjId7uSW1vnFZQlui8lSjyYWK8iuiJka0J/Q4ZtMoCkbsaqNRsrQt1WVvbUwqhFnqluG28kSn0ad02wTPsqusLoD4JR2bwUHUwRCau4PJJmSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711991808; c=relaxed/simple;
-	bh=oA/XnSGPM/zTFEG1vP9MCwsA88QcnXZe9haFS+aiefA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YI6C5GfCpsNXFDAJgssPdojGrf/FFjAT3+kwSUAv1XNOB5T+GHAaLleA3fEI6q6Zy9pXtQkO3JV0wHIWCjNGaBzS9J/MRdYFelLlPJOtlvFB76Bzids6ZW4JrOhcghJVVFLAQJ3L5FOXHuyZYn+xJgyXyw+OxeOqnY7A4Q4lwQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ifF7LEh2; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	bh=nyE92QsmSijPAgW5fCXN9A/NNpgraYl0b7qLIoQqZGs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sE0+M92vm39JeKbvSZfitjLpKugixvJ201yKscjGv1n6wFB60pm4TBgaz4jkFNqij5NUC0mydOPYmJpAYHp0NEXJJyZRcQYGmmr3VC41vacY5ZsmrBkdQy75unFptGr/D9zWptOcqDSFgGR0nitbsI988QzbMzgO28xIziLkJTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=USfuLNb3; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ifF7LEh2"
-Received: from [100.64.193.111] (unknown [20.29.225.195])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 2FD642085CE4;
-	Mon,  1 Apr 2024 10:16:46 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2FD642085CE4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1711991806;
-	bh=3m23lwO20r+YWkieSxiB8VHUDLf75Iije7ummqYP6Ks=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ifF7LEh2rhbn7jR1pdBzEHJowXzCz7CGjLdoJ5+Zc4spOxcjIyH7EmJQIzPOFLMLp
-	 mhn50HyY7UB/NOKWg/LdoD7NPYcjBDeU38eC89QIxTu6pzm49SKY8un9xInTWC12s5
-	 8bRJ5LTOeJcq0/HuMRgUEmeozu2lqXTPKuTIZyAs=
-Message-ID: <4fabd250-bfa8-4482-b2f2-b787844aeb0b@linux.microsoft.com>
-Date: Mon, 1 Apr 2024 10:16:46 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="USfuLNb3"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1e25da9c4c4so98445ad.1
+        for <patches@lists.linux.dev>; Mon, 01 Apr 2024 10:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1711991805; x=1712596605; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8fa5EnP8W2aS/t4kiCQUSns+zPxCGVmzWOLF7r3sV1I=;
+        b=USfuLNb3ysn6+6Mqbkj7DQvrckxNdTyD19nVouYv21Ss2jLnLJu4c9XSKXEL8CpL07
+         DDh39hn2u84fLhHFdbed5795rYRYL++2ZdnXPkp6BljKrgmsVTopZFAqLm0ZT7Ig66vF
+         sV2s1eOk09CZhv9iT/51L3dlYM7jktpE07WNMJ8NS8Z6NqX5YPPaT6FxiII7umMLwwVl
+         F1nbVeeA7XD3ZEdoqxcFcxRBBkv+szNTOYGGJA4npfIsHZJcUjIz3dPSwBlY5y6d8qyQ
+         A3cPA8KRUymtmDG7r4qk3PS/fIl0TskmsLiCaNeZffyoi9glbehmGkPmKL/LRG+V8eVM
+         4q2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711991805; x=1712596605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8fa5EnP8W2aS/t4kiCQUSns+zPxCGVmzWOLF7r3sV1I=;
+        b=fiD6pSRUcr+OQ4Lxtir0BjbSN5C5MlToAH1BRpGfSI+McrZUMy3mhbMg1nX0ZVrdkD
+         P26aqv3IHzB2jafAbRGrEcs2BHbzESup/O8CQSx3ClouXpqWNSOREqnjs0Ox6IOfXt+C
+         pYDW3UWSVESDYLPooJ8iObFqrjpvgNm82DoJGmPAGxnjeSQr3sGF0mLD7VrPloz1kGIh
+         Un14vwv22XSobQlATS1B72AP/bI6XkaHgcAvxK+NHC7WfAE78t4n2mCn8SaehbwCLrIp
+         Una5HBBmCP4QNseRZ5hBK9LJUvkzo8qQgKVJVZJt3LpsxP9y3SMqKZ/2DP+pRxQNFYDW
+         eqrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWJsG+IeDFyYIM0dpN0h1zHxf/tVfqAivht48XHNf0ARhZTG5Q20udNzAtYxCGSfE0LElWdB0uzqAsFzNOqd/PB6SYvTY1Tug==
+X-Gm-Message-State: AOJu0Ywd9v/tFrTiDabrCISIQ0gp5xb0Rh5mYht/VAVaIGdJ+U2OiSbn
+	1a9e7VcluFLYCCHEkjP7IX+ktZ3cnxn3XPtMVRdAlzyKMMU4ewj7ppC+oLpp+pE+dmrzrD5GbhZ
+	rFgAAxBEpehK88JoAhH1EqbxquU+VUGfe5YAT
+X-Google-Smtp-Source: AGHT+IE3REtGqUHfJ4mA1gZLLDUMjjmkJZI7+58PEHx6u5kucIfNx6BoHW88vb4OIl85YrjTFIpJvVtYZ4TCoio83eg=
+X-Received: by 2002:a17:902:b193:b0:1e2:1955:1b1c with SMTP id
+ s19-20020a170902b19300b001e219551b1cmr544750plr.27.1711991804957; Mon, 01 Apr
+ 2024 10:16:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.8 102/399] ACPI: CPPC: Use access_width over bit_width
- for system memory accesses
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Jarred White <jarredwhite@linux.microsoft.com>,
- "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
- Sasha Levin <sashal@kernel.org>
-References: <20240401152549.131030308@linuxfoundation.org>
- <20240401152552.230440447@linuxfoundation.org>
-Content-Language: en-CA
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
-In-Reply-To: <20240401152552.230440447@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240401152553.125349965@linuxfoundation.org> <20240401152601.112837269@linuxfoundation.org>
+In-Reply-To: <20240401152601.112837269@linuxfoundation.org>
+From: Peter Collingbourne <pcc@google.com>
+Date: Mon, 1 Apr 2024 10:16:30 -0700
+Message-ID: <CAMn1gO6XMjbn7o63JiHyLrf_z0AFW69LZ_RcxG=1DWw9KttWGg@mail.gmail.com>
+Subject: Re: [PATCH 6.7 267/432] serial: 8250_dw: Do not reclock if already at
+ correct rate
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Hans de Goede <hdegoede@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/1/2024 8:41 AM, Greg Kroah-Hartman wrote:
-> 6.8-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Jarred White <jarredwhite@linux.microsoft.com>
-> 
-> [ Upstream commit 2f4a4d63a193be6fd530d180bb13c3592052904c ]
-> 
-> To align with ACPI 6.3+, since bit_width can be any 8-bit value, it
-> cannot be depended on to be always on a clean 8b boundary. This was
-> uncovered on the Cobalt 100 platform.
-> 
+On Mon, Apr 1, 2024 at 9:25=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.7-stable review patch.  If anyone has any objections, please let me kno=
+w.
 
 Hi Greg,
 
-Please drop this patch from all stable kernels as we seem to have a regression reported
-on AmpereOne systems: https://lore.kernel.org/all/20240329220054.1205596-1-vanshikonda@os.amperecomputing.com/
+This patch is being reverted for now, so it shouldn't go into any
+stable branches (I see that you sent similar messages for 6.6 and
+6.1).
 
-Thanks,
-Easwar
-
+Peter
