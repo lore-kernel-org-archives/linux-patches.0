@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3388E3FE2D;
-	Mon,  1 Apr 2024 15:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE3B3FE2D;
+	Mon,  1 Apr 2024 15:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986634; cv=none; b=l4TxsS9rTJksKfxFXjZ1XHWgXQ1tK+aDjzFIxVR7weK9/a/Imbnae7B0LfSUzr7rpc1R1U6RTNMbYbyZExceCNMfpdmRApctlJe/w+598gAP6y7+dfaTL5j5+qHFGJ5fSMBFJGXuc/ZDXD88Os0AxEW7tE6GpNzb6upGAUM2G+k=
+	t=1711986637; cv=none; b=MsSF5Ea08879eDZKEx3fNm4PSbjefY6y0BkIggNNTfMcXAbIqLQpL8OEaxNAMDkd2qTk+i9qLNbv0mL6E+xowe6lDkvGqEK9gkI12+aVQyDeVjEewc69BFO4mZPq8ox8Hoynm2U+HK3nfsMftcm3V4sSnX+s4I5sGDwT44cVZyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986634; c=relaxed/simple;
-	bh=90mzQLLJUOafwL4Owvp9kZDncLP15coSCvGahuf0PNs=;
+	s=arc-20240116; t=1711986637; c=relaxed/simple;
+	bh=BLFzNPm6VxfLolqC6pNDaaQYS1fejh7irLY5dA6E/Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OF0AYzcqjQiIv4dK6OxiC6TaDxiaKLPJBt6Bo45ElPvup293VVM07W9DjjLhUi0RqgpKiFKa19msYNkgWbB5sO8OHkOaqWgsk9TdY5I4wQ4s4N/OtKNhHp1CTKr2o+XEFq7b87RttHsOZRwkr7OJiLLmBK1nR002DSlyvxh49kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScyjCsz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2UtcII/QXWHMl8RH6v8vHKQ7CqOXfOEddzTgBfei5QuzEr3ATSUkYRi8W52xu27RJkUmDjOqeXkvppIblxqqc+s2oxctrL9YxjrC0jjP0eWe4wNaVM5IB9uzsPwA7PGWGftqDHNXCGRhfwX+//wJ1Xd/cq8AA4Rg+DPXUS5bqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSWgyqXo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScyjCsz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4EFC433F1;
-	Mon,  1 Apr 2024 15:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSWgyqXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84503C433F1;
+	Mon,  1 Apr 2024 15:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986633;
-	bh=90mzQLLJUOafwL4Owvp9kZDncLP15coSCvGahuf0PNs=;
+	s=korg; t=1711986636;
+	bh=BLFzNPm6VxfLolqC6pNDaaQYS1fejh7irLY5dA6E/Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScyjCsz57gBi379RKD7P3KurIiSQdneM2ibKYQ4LTJXJ/LUWHI4fKGnld2jytzbyS
-	 ScYs7Fs36PxormisoQN3YF3KwmmJMLTi+ryCmQcp6CMITFH7BdcBs7LnLdmbTqsxac
-	 ur5LEnn99cJVTFvzY2QLziKz+q5Ca8W9dcLlkJXc=
+	b=sSWgyqXooRbxvC3VK1jcjYHwhLTbj40L4+771RkSh95GQFWG5s6hCLnHCh45+j8Lg
+	 JBThdG8Gm3FogOlruP4t/fdPWq76gnxqWUQ5VxHGhHdenJuz/WNmY0EShJdyjBfw/d
+	 dIVlIAGUScGM5KfF39vmWkRi5M5ed4gtTrl8IOvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 007/399] clk: qcom: gcc-sdm845: Add soft dependency on rpmhpd
-Date: Mon,  1 Apr 2024 17:39:33 +0200
-Message-ID: <20240401152549.367327707@linuxfoundation.org>
+Subject: [PATCH 6.8 008/399] smack: Set SMACK64TRANSMUTE only for dirs in smack_inode_setxattr()
+Date: Mon,  1 Apr 2024 17:39:34 +0200
+Message-ID: <20240401152549.397230666@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Pundir <amit.pundir@linaro.org>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 1d9054e3a4fd36e2949e616f7360bdb81bcc1921 ]
+[ Upstream commit 9c82169208dde516510aaba6bbd8b13976690c5d ]
 
-With the addition of RPMh power domain to the GCC node in
-device tree, we noticed a significant delay in getting the
-UFS driver probed on AOSP which futher led to mount failures
-because Android do not support rootwait. So adding a soft
-dependency on RPMh power domain which informs modprobe to
-load rpmhpd module before gcc-sdm845.
+Since the SMACK64TRANSMUTE xattr makes sense only for directories, enforce
+this restriction in smack_inode_setxattr().
 
-Cc: stable@vger.kernel.org # v5.4+
-Fixes: 4b6ea15c0a11 ("arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC")
-Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240123062814.2555649-1-amit.pundir@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sdm845.c | 1 +
- 1 file changed, 1 insertion(+)
+ security/smack/smack_lsm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index 725cd52d2398e..ea4c3bf4fb9bf 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -4037,3 +4037,4 @@ module_exit(gcc_sdm845_exit);
- MODULE_DESCRIPTION("QTI GCC SDM845 Driver");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("platform:gcc-sdm845");
-+MODULE_SOFTDEP("pre: rpmhpd");
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 0fdbf04cc2583..72b371812a001 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1314,7 +1314,8 @@ static int smack_inode_setxattr(struct mnt_idmap *idmap,
+ 		check_star = 1;
+ 	} else if (strcmp(name, XATTR_NAME_SMACKTRANSMUTE) == 0) {
+ 		check_priv = 1;
+-		if (size != TRANS_TRUE_SIZE ||
++		if (!S_ISDIR(d_backing_inode(dentry)->i_mode) ||
++		    size != TRANS_TRUE_SIZE ||
+ 		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
+ 			rc = -EINVAL;
+ 	} else
 -- 
 2.43.0
 
