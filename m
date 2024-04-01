@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC53E4776F;
-	Mon,  1 Apr 2024 16:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD84446AC;
+	Mon,  1 Apr 2024 16:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987820; cv=none; b=G3W7GW6vPgbsUwvBDFV+qdcPgre2IJMYAgzLoWE07xjODUAVIi03qSF8+ocK51WSt8aX+O3FLsx0wTxuBWPKe9pGhU+VNqVh2hRJ7FyFMaImj04M55Vn+d3D9dvqyBdA1m2cD950D+XKMe5qGYmiNfYIvNiKnTsYYGEDRmylNqQ=
+	t=1711987824; cv=none; b=PDKi3rvbJIxt0WcqUQuGifG6QTCFcAa3oBuIesTdGcbJimsYPdXXmI9oo3LerQ0cgr7AxhGfSxRM9qAHUvWSuL+6u8PYJp4hESAAMZo85w2BBHJEOvMbok6NOMazfuuED9qon5HDTyQk7HdkkVj8dT9ZwpAZRvKO8UleODhbSqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987820; c=relaxed/simple;
-	bh=tU5UjjQjdF4HWRUMp/Wkp3INbrURdKd0sjulyajjZe4=;
+	s=arc-20240116; t=1711987824; c=relaxed/simple;
+	bh=wGpKSRzMuNDVyjz9say515/9xey5lKkwU92WWPCh/KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4w7jKifSjLNdYRXe76MYedczrWlWA9/aQbozw0E0OWRPMgULZXOXMcpuBu/726nLCFDD8V9/5bZuSWMpCM4xMT7QM5kF9GD6PI4IopvbMzHIfVzbv8AKb3vmMVlmeAOO2hpf4pzR8+h+p7n+PIcx2SXG51N2pYrXTNvop/fR5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHUrCI+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BuHZCfPX/zFeYGoa0RBISF2ICQ/v5UalKcA76nsPo6HbIHx1y8qSqcKHu5uGn2LrxjlqwBWtE2MvQy+EFV39TUJNMsMJ/bBizG3QPir2W4oDCQIO0+J+wxFV8UXvJ2zfI7Z+v567SBmh/nwhvnB2stG0NNhvLKn+q8aalazvLsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=po3uPh99; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHUrCI+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A16AC433F1;
-	Mon,  1 Apr 2024 16:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="po3uPh99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771CFC433C7;
+	Mon,  1 Apr 2024 16:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987820;
-	bh=tU5UjjQjdF4HWRUMp/Wkp3INbrURdKd0sjulyajjZe4=;
+	s=korg; t=1711987824;
+	bh=wGpKSRzMuNDVyjz9say515/9xey5lKkwU92WWPCh/KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHUrCI+vntwgBUPnPIZQJ8+5ROAv5o1rMmO7mN0kwFd6qvbgOASVvZJpWDLcos3bI
-	 JiXh2GQkgiemHPitfPl7NkxOdLJ+8H9+3xxd1MifzgquCTJQM4PeB0Vu82FtJvtrRZ
-	 caH9Zr3ZP0tZ93TansvSA7FF20J87FMYJ5ABFnnk=
+	b=po3uPh990jGdW41WInrT1+fnmU19lQYehl/qmXECsDpLxzIiZtitxdF7B//5m6rEw
+	 zrNChk13S0YI4SYDfMJ8e7D8VuCjKlyDcGUMK7aNeASOoIaGsohZCpKP66HnYMDeTF
+	 4DERdOslh+TYtaeehI0o8/j5k3X6jl+Ba6aJrLDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.8 390/399] x86/bugs: Use fixed addressing for VERW operand
-Date: Mon,  1 Apr 2024 17:45:56 +0200
-Message-ID: <20240401152600.811703716@linuxfoundation.org>
+Subject: [PATCH 6.8 391/399] Revert "x86/bugs: Use fixed addressing for VERW operand"
+Date: Mon,  1 Apr 2024 17:45:57 +0200
+Message-ID: <20240401152600.840562454@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,28 +49,21 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit 8009479ee919b9a91674f48050ccbff64eafedaa upstream.
+commit 532a0c57d7ff75e8f07d4e25cba4184989e2a241 upstream.
 
-The macro used for MDS mitigation executes VERW with relative
-addressing for the operand. This was necessary in earlier versions of
-the series. Now it is unnecessary and creates a problem for backports
-on older kernels that don't support relocations in alternatives.
-Relocation support was added by commit 270a69c4485d ("x86/alternative:
-Support relocations in alternatives").  Also asm for fixed addressing
-is much cleaner than relative RIP addressing.
+This was reverts commit 8009479ee919b9a91674f48050ccbff64eafedaa.
 
-Simplify the asm by using fixed addressing for VERW operand.
+It was originally in x86/urgent, but was deemed wrong so got zapped.
+But in the meantime, x86/urgent had been merged into x86/apic to
+resolve a conflict.  I didn't notice the merge so didn't zap it
+from x86/apic and it managed to make it up with the x86/apic
+material.
 
-[ dhansen: tweak changelog ]
+The reverted commit is known to cause some KASAN problems.
 
-Closes: https://lore.kernel.org/lkml/20558f89-299b-472e-9a96-171403a83bd6@suse.com/
-Fixes: baf8361e5455 ("x86/bugs: Add asm helpers for executing VERW")
-Reported-by: Nikolay Borisov <nik.borisov@suse.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240226-verw-arg-fix-v1-1-7b37ee6fd57d%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  arch/x86/include/asm/nospec-branch.h |    2 +-
@@ -84,8 +75,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
   * Note: Only the memory operand variant of VERW clears the CPU buffers.
   */
  .macro CLEAR_CPU_BUFFERS
--	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
-+	ALTERNATIVE "", __stringify(verw mds_verw_sel), X86_FEATURE_CLEAR_CPU_BUF
+-	ALTERNATIVE "", __stringify(verw mds_verw_sel), X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
  .endm
  
  #else /* __ASSEMBLY__ */
