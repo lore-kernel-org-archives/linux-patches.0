@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1054810A3B;
-	Mon,  1 Apr 2024 16:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5CF3F8F4;
+	Mon,  1 Apr 2024 16:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989299; cv=none; b=KEUPjCo+UH80Rqj2EiYr4SvsL7xTYq/mrNWd8eQbQgy88B7v62hj21W5/rA46hKvfkPZBNHxfJ+A87GOOfAT/gav49b0+mcXdW25vBXpcd50VvBa8vyyY1EPhO89fjn485ZyzePTvQQvfn39bQuD36ZLCAHyyYS0xU5sxwRYogk=
+	t=1711989302; cv=none; b=t+gI55DtNeRcsYLdQ1vw/9CJECCu4iyZxw/9INW4DylqK3P0UjaXBM6l6cwa3nv8veBR3e2Jbdg7FZLpMzzsupsjWVmSTDc1gyWnPrLRSuBXgc+Vh/X+CypQS6lkRt41tiNW0KC6hbgflw/YcS5I2aWzvNtVlyN6T8cT3AYopdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989299; c=relaxed/simple;
-	bh=/2jcX25S4L1Vd2/5LiaoO0jm+lJJhr6KmfrxSIVCS3g=;
+	s=arc-20240116; t=1711989302; c=relaxed/simple;
+	bh=oBgSFXq9F/sA66W4jN1bIPqSRcZ4Yb2sGO+k0QESssg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjdjxRLoT1U8LoPzW9/DshNIEOob6in+//tLrLZ4ri54oXMCVtu3Mgm1oVRFMtJek80LKgg6uh4uJVolsMnmhyIeVlPKfFvB/P7dXtssybmj/h72gmzApmT2rZqqE5RRPflJS0uZapsjzK+2Li3wd4LzTeEshHxBYcGORoWKSWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miOYa8KF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obZBWblNRJ5YKRFWijN5B/ZDIMlA2psGYtU7+1uZAkh/R/W8lriuyjkeFKOeOlIc/LqqrZE62085m5pzrTWBAC90nZjFIgto7mOM1sIBJ6DuhHR0l06spYGTqKm8Z7EpEjqkl+01zH8pjgbFcywaWCLV/IBCuls15SyxT/ZGmUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb4ie0Ql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miOYa8KF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C41CC433C7;
-	Mon,  1 Apr 2024 16:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb4ie0Ql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4041C433F1;
+	Mon,  1 Apr 2024 16:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989298;
-	bh=/2jcX25S4L1Vd2/5LiaoO0jm+lJJhr6KmfrxSIVCS3g=;
+	s=korg; t=1711989302;
+	bh=oBgSFXq9F/sA66W4jN1bIPqSRcZ4Yb2sGO+k0QESssg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miOYa8KFL0BQ0YN0WT9bbpfTTxQSyk+Vo9P+aOb52InK3dKHvqQDbLBjkOuVEC6Ku
-	 /8ZFxbYAtp/Xm+ryzGpLplzLOazc49ObQUKk19Uocd/ctY6WEUqTGOwV/ivOJpkOuv
-	 kWqOHGzC0dgiQtZl6YpnAy6a/kpdJa4U5j2wWyrQ=
+	b=Vb4ie0QlbpYqXvfcJ40eIwpR/OPitdn9pHuAvOo9YnqmL0m/dksqCXCR+OlPXiwVr
+	 ZYAlUanC/bx1flgb4ekgXDIVGpirLdG8OTBh4eZoD97G+iQ1QuNV7Iv6nDNhNBOZLs
+	 BWUZJVeyIzZI4gwzlzt6RmXqNbbECr8OM0a4ZmZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.7 411/432] usb: typec: ucsi: Clear UCSI_CCI_RESET_COMPLETE before reset
-Date: Mon,  1 Apr 2024 17:46:38 +0200
-Message-ID: <20240401152605.646022609@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 001/396] KVM: x86: Advertise CPUID.(EAX=7,ECX=2):EDX[5:0] to userspace
+Date: Mon,  1 Apr 2024 17:40:50 +0200
+Message-ID: <20240401152547.916910554@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
-References: <20240401152553.125349965@linuxfoundation.org>
+In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
+References: <20240401152547.867452742@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +47,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Jim Mattson <jmattson@google.com>
 
-commit 3de4f996a0b5412aa451729008130a488f71563e upstream.
+commit eefe5e6682099445f77f2d97d4c525f9ac9d9b07 upstream.
 
-Check the UCSI_CCI_RESET_COMPLETE complete flag before starting
-another reset. Use a UCSI_SET_NOTIFICATION_ENABLE command to clear
-the flag if it is set.
+The low five bits {INTEL_PSFD, IPRED_CTRL, RRSBA_CTRL, DDPD_U, BHI_CTRL}
+advertise the availability of specific bits in IA32_SPEC_CTRL. Since KVM
+dynamically determines the legal IA32_SPEC_CTRL bits for the underlying
+hardware, the hard work has already been done. Just let userspace know
+that a guest can use these IA32_SPEC_CTRL bits.
 
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-6-lk@c--e.de
+The sixth bit (MCDT_NO) states that the processor does not exhibit MXCSR
+Configuration Dependent Timing (MCDT) behavior. This is an inherent
+property of the physical processor that is inherited by the virtual
+CPU. Pass that information on to userspace.
+
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20231024001636.890236-1-jmattson@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ arch/x86/kvm/cpuid.c         |   21 ++++++++++++++++++---
+ arch/x86/kvm/reverse_cpuid.h |   12 ++++++++++++
+ 2 files changed, 30 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -982,13 +982,47 @@ static int ucsi_reset_connector(struct u
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -677,6 +677,11 @@ void kvm_set_cpu_caps(void)
+ 		F(AMX_COMPLEX)
+ 	);
  
- static int ucsi_reset_ppm(struct ucsi *ucsi)
- {
--	u64 command = UCSI_PPM_RESET;
-+	u64 command;
- 	unsigned long tmo;
- 	u32 cci;
- 	int ret;
- 
- 	mutex_lock(&ucsi->ppm_lock);
- 
-+	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	if (ret < 0)
-+		goto out;
++	kvm_cpu_cap_init_kvm_defined(CPUID_7_2_EDX,
++		F(INTEL_PSFD) | F(IPRED_CTRL) | F(RRSBA_CTRL) | F(DDPD_U) |
++		F(BHI_CTRL) | F(MCDT_NO)
++	);
 +
-+	/*
-+	 * If UCSI_CCI_RESET_COMPLETE is already set we must clear
-+	 * the flag before we start another reset. Send a
-+	 * UCSI_SET_NOTIFICATION_ENABLE command to achieve this.
-+	 * Ignore a timeout and try the reset anyway if this fails.
-+	 */
-+	if (cci & UCSI_CCI_RESET_COMPLETE) {
-+		command = UCSI_SET_NOTIFICATION_ENABLE;
-+		ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
-+					     sizeof(command));
-+		if (ret < 0)
-+			goto out;
-+
-+		tmo = jiffies + msecs_to_jiffies(UCSI_TIMEOUT_MS);
-+		do {
-+			ret = ucsi->ops->read(ucsi, UCSI_CCI,
-+					      &cci, sizeof(cci));
-+			if (ret < 0)
+ 	kvm_cpu_cap_mask(CPUID_D_1_EAX,
+ 		F(XSAVEOPT) | F(XSAVEC) | F(XGETBV1) | F(XSAVES) | f_xfd
+ 	);
+@@ -956,13 +961,13 @@ static inline int __do_cpuid_func(struct
+ 		break;
+ 	/* function 7 has additional index. */
+ 	case 7:
+-		entry->eax = min(entry->eax, 1u);
++		max_idx = entry->eax = min(entry->eax, 2u);
+ 		cpuid_entry_override(entry, CPUID_7_0_EBX);
+ 		cpuid_entry_override(entry, CPUID_7_ECX);
+ 		cpuid_entry_override(entry, CPUID_7_EDX);
+ 
+-		/* KVM only supports 0x7.0 and 0x7.1, capped above via min(). */
+-		if (entry->eax == 1) {
++		/* KVM only supports up to 0x7.2, capped above via min(). */
++		if (max_idx >= 1) {
+ 			entry = do_host_cpuid(array, function, 1);
+ 			if (!entry)
+ 				goto out;
+@@ -972,6 +977,16 @@ static inline int __do_cpuid_func(struct
+ 			entry->ebx = 0;
+ 			entry->ecx = 0;
+ 		}
++		if (max_idx >= 2) {
++			entry = do_host_cpuid(array, function, 2);
++			if (!entry)
 +				goto out;
-+			if (cci & UCSI_CCI_COMMAND_COMPLETE)
-+				break;
-+			if (time_is_before_jiffies(tmo))
-+				break;
-+			msleep(20);
-+		} while (1);
 +
-+		WARN_ON(cci & UCSI_CCI_RESET_COMPLETE);
-+	}
++			cpuid_entry_override(entry, CPUID_7_2_EDX);
++			entry->ecx = 0;
++			entry->ebx = 0;
++			entry->eax = 0;
++		}
+ 		break;
+ 	case 0xa: { /* Architectural Performance Monitoring */
+ 		union cpuid10_eax eax;
+--- a/arch/x86/kvm/reverse_cpuid.h
++++ b/arch/x86/kvm/reverse_cpuid.h
+@@ -16,6 +16,7 @@ enum kvm_only_cpuid_leafs {
+ 	CPUID_7_1_EDX,
+ 	CPUID_8000_0007_EDX,
+ 	CPUID_8000_0022_EAX,
++	CPUID_7_2_EDX,
+ 	NR_KVM_CPU_CAPS,
+ 
+ 	NKVMCAPINTS = NR_KVM_CPU_CAPS - NCAPINTS,
+@@ -46,6 +47,14 @@ enum kvm_only_cpuid_leafs {
+ #define X86_FEATURE_AMX_COMPLEX         KVM_X86_FEATURE(CPUID_7_1_EDX, 8)
+ #define X86_FEATURE_PREFETCHITI         KVM_X86_FEATURE(CPUID_7_1_EDX, 14)
+ 
++/* Intel-defined sub-features, CPUID level 0x00000007:2 (EDX) */
++#define X86_FEATURE_INTEL_PSFD		KVM_X86_FEATURE(CPUID_7_2_EDX, 0)
++#define X86_FEATURE_IPRED_CTRL		KVM_X86_FEATURE(CPUID_7_2_EDX, 1)
++#define KVM_X86_FEATURE_RRSBA_CTRL	KVM_X86_FEATURE(CPUID_7_2_EDX, 2)
++#define X86_FEATURE_DDPD_U		KVM_X86_FEATURE(CPUID_7_2_EDX, 3)
++#define X86_FEATURE_BHI_CTRL		KVM_X86_FEATURE(CPUID_7_2_EDX, 4)
++#define X86_FEATURE_MCDT_NO		KVM_X86_FEATURE(CPUID_7_2_EDX, 5)
 +
-+	command = UCSI_PPM_RESET;
- 	ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
- 				     sizeof(command));
- 	if (ret < 0)
+ /* CPUID level 0x80000007 (EDX). */
+ #define KVM_X86_FEATURE_CONSTANT_TSC	KVM_X86_FEATURE(CPUID_8000_0007_EDX, 8)
+ 
+@@ -80,6 +89,7 @@ static const struct cpuid_reg reverse_cp
+ 	[CPUID_8000_0007_EDX] = {0x80000007, 0, CPUID_EDX},
+ 	[CPUID_8000_0021_EAX] = {0x80000021, 0, CPUID_EAX},
+ 	[CPUID_8000_0022_EAX] = {0x80000022, 0, CPUID_EAX},
++	[CPUID_7_2_EDX]       = {         7, 2, CPUID_EDX},
+ };
+ 
+ /*
+@@ -116,6 +126,8 @@ static __always_inline u32 __feature_tra
+ 		return KVM_X86_FEATURE_CONSTANT_TSC;
+ 	else if (x86_feature == X86_FEATURE_PERFMON_V2)
+ 		return KVM_X86_FEATURE_PERFMON_V2;
++	else if (x86_feature == X86_FEATURE_RRSBA_CTRL)
++		return KVM_X86_FEATURE_RRSBA_CTRL;
+ 
+ 	return x86_feature;
+ }
 
 
