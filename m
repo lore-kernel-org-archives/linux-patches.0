@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0785847A5D;
-	Mon,  1 Apr 2024 16:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66990C129;
+	Mon,  1 Apr 2024 16:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988628; cv=none; b=rM5Cz76imZSpa7TqqU+OEDHegkqm30AhEVj7xuvKUZSoMYGxXmFEObLWt23DAwylsDFNfzZVq67u6iwtZgpH10e1NXdxa7838rn97HMdZh/fm1bLZWCjzhYHcpWQU14il8KVWhBzdYljUIUbr/WUUORdcIk0TMsxoodfNPIeA/8=
+	t=1711988631; cv=none; b=JvyHG1gCWwXIk1yN2ulbgs4kFSvYg2YU9xc0XLWpQrDMT0l0apxVS2DLv2bK/eT46x2tRJyWqCOjHu3vW/n1GfHWm9n6rqZZV1SWYYIJnpEtTSc4e5LvcmhdK3nfKo7a3jwafNt4MGkejYcublVcjk3kz/490VPpKqvkVEo1s/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988628; c=relaxed/simple;
-	bh=AuYeX9t53eDzwyxKysJsoYI7dPmYLVCjEcO3WCTihak=;
+	s=arc-20240116; t=1711988631; c=relaxed/simple;
+	bh=xhgo8PQnkMkQc7FnSLsmwRiNF5zs8tC7tGk6OvIYdP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTo/sCP5vlgPqBzBGv52wGzdeoIjmJ04Lv2YsVpnZFMETo49OL9E4Vqomnc7A+IQjv7a0tGbc6ccd6xZyZ8XanqomyHYZBZTcLf0+Iq1gaaDxrYTqLPyPJ3d+1FpA8CVeaNFzsKvki0pFflpi+52lsgiQ1/hEnKoEfCnQm36V90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXRlDhkT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqDfYsQUttW924hxu7AsLfnTFIu4V4ah4R53T5K+f25hEoTCMx7Jv081vfh7WdiYk7MCGCOtslt9RDfDc9F9pgmm6g88Nwn36HvgxJ3SbSniP7i7GjxVkyiK3pJ5EEprhJJ8XUGyXkwzOMZIYHkvTLJw1UkFwWXjv21cTTViSuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFd0BP0d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXRlDhkT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B60FC433C7;
-	Mon,  1 Apr 2024 16:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFd0BP0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83A3C433F1;
+	Mon,  1 Apr 2024 16:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988627;
-	bh=AuYeX9t53eDzwyxKysJsoYI7dPmYLVCjEcO3WCTihak=;
+	s=korg; t=1711988631;
+	bh=xhgo8PQnkMkQc7FnSLsmwRiNF5zs8tC7tGk6OvIYdP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXRlDhkTxvyw/B6GvUuYSASzWP4R4lncx5W1P1Kng6IsCtka9Wr/T0vMSpdKu35UG
-	 VQVaJpIRfRLm/9L3zSC13x1+Q6h5mi6TtvJgB+sR1kIMUn8t1+3y73eYAKHc/fpT0P
-	 HAYuU7X473hlgS/sEMM2jJndOtQ7P6D9y446BuC8=
+	b=CFd0BP0diTTDFG5yL6TW6YgeQoZR4MMqR++a9P/zOIZjMsskzdttCts0fLlpTf24z
+	 g5tBNbhMmgn00ryxLven1pjh3xH8BuAJZU0uynA+6qLBz91v+nIFhqSGM5Z9+46aQJ
+	 06cF6XPq28NGdAw67hDB1WTxtXhqA61ZiPi2Y5O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karel Balej <balejk@matfyz.cz>,
-	Dimitri John Ledkov <dimitri.ledkov@canonical.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.7 242/432] Revert "crypto: pkcs7 - remove sha1 support"
-Date: Mon,  1 Apr 2024 17:43:49 +0200
-Message-ID: <20240401152600.354588651@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.7 243/432] xfrm: Avoid clang fortify warning in copy_to_user_tmpl()
+Date: Mon,  1 Apr 2024 17:43:50 +0200
+Message-ID: <20240401152600.383950345@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,273 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 203a6763ab699da0568fd2b76303d03bb121abd4 upstream.
+commit 1a807e46aa93ebad1dfbed4f82dc3bf779423a6e upstream.
 
-This reverts commit 16ab7cb5825fc3425c16ad2c6e53d827f382d7c6 because it
-broke iwd.  iwd uses the KEYCTL_PKEY_* UAPIs via its dependency libell,
-and apparently it is relying on SHA-1 signature support.  These UAPIs
-are fairly obscure, and their documentation does not mention which
-algorithms they support.  iwd really should be using a properly
-supported userspace crypto library instead.  Regardless, since something
-broke we have to revert the change.
+After a couple recent changes in LLVM, there is a warning (or error with
+CONFIG_WERROR=y or W=e) from the compile time fortify source routines,
+specifically the memset() in copy_to_user_tmpl().
 
-It may be possible that some parts of this commit can be reinstated
-without breaking iwd (e.g. probably the removal of MODULE_SIG_SHA1), but
-for now this just does a full revert to get things working again.
+  In file included from net/xfrm/xfrm_user.c:14:
+  ...
+  include/linux/fortify-string.h:438:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+    438 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 error generated.
 
-Reported-by: Karel Balej <balejk@matfyz.cz>
-Closes: https://lore.kernel.org/r/CZSHRUIJ4RKL.34T4EASV5DNJM@matfyz.cz
-Cc: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Karel Balej <balejk@matfyz.cz>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+While ->xfrm_nr has been validated against XFRM_MAX_DEPTH when its value
+is first assigned in copy_templates() by calling validate_tmpl() first
+(so there should not be any issue in practice), LLVM/clang cannot really
+deduce that across the boundaries of these functions. Without that
+knowledge, it cannot assume that the loop stops before i is greater than
+XFRM_MAX_DEPTH, which would indeed result a stack buffer overflow in the
+memset().
+
+To make the bounds of ->xfrm_nr clear to the compiler and add additional
+defense in case copy_to_user_tmpl() is ever used in a path where
+->xfrm_nr has not been properly validated against XFRM_MAX_DEPTH first,
+add an explicit bound check and early return, which clears up the
+warning.
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1985
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/mscode_parser.c    |    3 +
- crypto/asymmetric_keys/pkcs7_parser.c     |    4 +
- crypto/asymmetric_keys/public_key.c       |    3 -
- crypto/asymmetric_keys/signature.c        |    2 
- crypto/asymmetric_keys/x509_cert_parser.c |    8 +++
- crypto/testmgr.h                          |   80 ++++++++++++++++++++++++++++++
- include/linux/oid_registry.h              |    4 +
- kernel/module/Kconfig                     |    5 +
- 8 files changed, 107 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_user.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/crypto/asymmetric_keys/mscode_parser.c
-+++ b/crypto/asymmetric_keys/mscode_parser.c
-@@ -75,6 +75,9 @@ int mscode_note_digest_algo(void *contex
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2017,6 +2017,9 @@ static int copy_to_user_tmpl(struct xfrm
+ 	if (xp->xfrm_nr == 0)
+ 		return 0;
  
- 	oid = look_up_OID(value, vlen);
- 	switch (oid) {
-+	case OID_sha1:
-+		ctx->digest_algo = "sha1";
-+		break;
- 	case OID_sha256:
- 		ctx->digest_algo = "sha256";
- 		break;
---- a/crypto/asymmetric_keys/pkcs7_parser.c
-+++ b/crypto/asymmetric_keys/pkcs7_parser.c
-@@ -227,6 +227,9 @@ int pkcs7_sig_note_digest_algo(void *con
- 	struct pkcs7_parse_context *ctx = context;
- 
- 	switch (ctx->last_oid) {
-+	case OID_sha1:
-+		ctx->sinfo->sig->hash_algo = "sha1";
-+		break;
- 	case OID_sha256:
- 		ctx->sinfo->sig->hash_algo = "sha256";
- 		break;
-@@ -278,6 +281,7 @@ int pkcs7_sig_note_pkey_algo(void *conte
- 		ctx->sinfo->sig->pkey_algo = "rsa";
- 		ctx->sinfo->sig->encoding = "pkcs1";
- 		break;
-+	case OID_id_ecdsa_with_sha1:
- 	case OID_id_ecdsa_with_sha224:
- 	case OID_id_ecdsa_with_sha256:
- 	case OID_id_ecdsa_with_sha384:
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -115,7 +115,8 @@ software_key_determine_akcipher(const st
- 		 */
- 		if (!hash_algo)
- 			return -EINVAL;
--		if (strcmp(hash_algo, "sha224") != 0 &&
-+		if (strcmp(hash_algo, "sha1") != 0 &&
-+		    strcmp(hash_algo, "sha224") != 0 &&
- 		    strcmp(hash_algo, "sha256") != 0 &&
- 		    strcmp(hash_algo, "sha384") != 0 &&
- 		    strcmp(hash_algo, "sha512") != 0 &&
---- a/crypto/asymmetric_keys/signature.c
-+++ b/crypto/asymmetric_keys/signature.c
-@@ -115,7 +115,7 @@ EXPORT_SYMBOL_GPL(decrypt_blob);
-  * Sign the specified data blob using the private key specified by params->key.
-  * The signature is wrapped in an encoding if params->encoding is specified
-  * (eg. "pkcs1").  If the encoding needs to know the digest type, this can be
-- * passed through params->hash_algo (eg. "sha512").
-+ * passed through params->hash_algo (eg. "sha1").
-  *
-  * Returns the length of the data placed in the signature buffer or an error.
-  */
---- a/crypto/asymmetric_keys/x509_cert_parser.c
-+++ b/crypto/asymmetric_keys/x509_cert_parser.c
-@@ -198,6 +198,10 @@ int x509_note_sig_algo(void *context, si
- 	default:
- 		return -ENOPKG; /* Unsupported combination */
- 
-+	case OID_sha1WithRSAEncryption:
-+		ctx->cert->sig->hash_algo = "sha1";
-+		goto rsa_pkcs1;
++	if (xp->xfrm_nr > XFRM_MAX_DEPTH)
++		return -ENOBUFS;
 +
- 	case OID_sha256WithRSAEncryption:
- 		ctx->cert->sig->hash_algo = "sha256";
- 		goto rsa_pkcs1;
-@@ -214,6 +218,10 @@ int x509_note_sig_algo(void *context, si
- 		ctx->cert->sig->hash_algo = "sha224";
- 		goto rsa_pkcs1;
- 
-+	case OID_id_ecdsa_with_sha1:
-+		ctx->cert->sig->hash_algo = "sha1";
-+		goto ecdsa;
-+
- 	case OID_id_rsassa_pkcs1_v1_5_with_sha3_256:
- 		ctx->cert->sig->hash_algo = "sha3-256";
- 		goto rsa_pkcs1;
---- a/crypto/testmgr.h
-+++ b/crypto/testmgr.h
-@@ -653,6 +653,30 @@ static const struct akcipher_testvec rsa
- static const struct akcipher_testvec ecdsa_nist_p192_tv_template[] = {
- 	{
- 	.key =
-+	"\x04\xf7\x46\xf8\x2f\x15\xf6\x22\x8e\xd7\x57\x4f\xcc\xe7\xbb\xc1"
-+	"\xd4\x09\x73\xcf\xea\xd0\x15\x07\x3d\xa5\x8a\x8a\x95\x43\xe4\x68"
-+	"\xea\xc6\x25\xc1\xc1\x01\x25\x4c\x7e\xc3\x3c\xa6\x04\x0a\xe7\x08"
-+	"\x98",
-+	.key_len = 49,
-+	.params =
-+	"\x30\x13\x06\x07\x2a\x86\x48\xce\x3d\x02\x01\x06\x08\x2a\x86\x48"
-+	"\xce\x3d\x03\x01\x01",
-+	.param_len = 21,
-+	.m =
-+	"\xcd\xb9\xd2\x1c\xb7\x6f\xcd\x44\xb3\xfd\x63\xea\xa3\x66\x7f\xae"
-+	"\x63\x85\xe7\x82",
-+	.m_size = 20,
-+	.algo = OID_id_ecdsa_with_sha1,
-+	.c =
-+	"\x30\x35\x02\x19\x00\xba\xe5\x93\x83\x6e\xb6\x3b\x63\xa0\x27\x91"
-+	"\xc6\xf6\x7f\xc3\x09\xad\x59\xad\x88\x27\xd6\x92\x6b\x02\x18\x10"
-+	"\x68\x01\x9d\xba\xce\x83\x08\xef\x95\x52\x7b\xa0\x0f\xe4\x18\x86"
-+	"\x80\x6f\xa5\x79\x77\xda\xd0",
-+	.c_size = 55,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	}, {
-+	.key =
- 	"\x04\xb6\x4b\xb1\xd1\xac\xba\x24\x8f\x65\xb2\x60\x00\x90\xbf\xbd"
- 	"\x78\x05\x73\xe9\x79\x1d\x6f\x7c\x0b\xd2\xc3\x93\xa7\x28\xe1\x75"
- 	"\xf7\xd5\x95\x1d\x28\x10\xc0\x75\x50\x5c\x1a\x4f\x3f\x8f\xa5\xee"
-@@ -756,6 +780,32 @@ static const struct akcipher_testvec ecd
- static const struct akcipher_testvec ecdsa_nist_p256_tv_template[] = {
- 	{
- 	.key =
-+	"\x04\xb9\x7b\xbb\xd7\x17\x64\xd2\x7e\xfc\x81\x5d\x87\x06\x83\x41"
-+	"\x22\xd6\x9a\xaa\x87\x17\xec\x4f\x63\x55\x2f\x94\xba\xdd\x83\xe9"
-+	"\x34\x4b\xf3\xe9\x91\x13\x50\xb6\xcb\xca\x62\x08\xe7\x3b\x09\xdc"
-+	"\xc3\x63\x4b\x2d\xb9\x73\x53\xe4\x45\xe6\x7c\xad\xe7\x6b\xb0\xe8"
-+	"\xaf",
-+	.key_len = 65,
-+	.params =
-+	"\x30\x13\x06\x07\x2a\x86\x48\xce\x3d\x02\x01\x06\x08\x2a\x86\x48"
-+	"\xce\x3d\x03\x01\x07",
-+	.param_len = 21,
-+	.m =
-+	"\xc2\x2b\x5f\x91\x78\x34\x26\x09\x42\x8d\x6f\x51\xb2\xc5\xaf\x4c"
-+	"\x0b\xde\x6a\x42",
-+	.m_size = 20,
-+	.algo = OID_id_ecdsa_with_sha1,
-+	.c =
-+	"\x30\x46\x02\x21\x00\xf9\x25\xce\x9f\x3a\xa6\x35\x81\xcf\xd4\xe7"
-+	"\xb7\xf0\x82\x56\x41\xf7\xd4\xad\x8d\x94\x5a\x69\x89\xee\xca\x6a"
-+	"\x52\x0e\x48\x4d\xcc\x02\x21\x00\xd7\xe4\xef\x52\x66\xd3\x5b\x9d"
-+	"\x8a\xfa\x54\x93\x29\xa7\x70\x86\xf1\x03\x03\xf3\x3b\xe2\x73\xf7"
-+	"\xfb\x9d\x8b\xde\xd4\x8d\x6f\xad",
-+	.c_size = 72,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	}, {
-+	.key =
- 	"\x04\x8b\x6d\xc0\x33\x8e\x2d\x8b\x67\xf5\xeb\xc4\x7f\xa0\xf5\xd9"
- 	"\x7b\x03\xa5\x78\x9a\xb5\xea\x14\xe4\x23\xd0\xaf\xd7\x0e\x2e\xa0"
- 	"\xc9\x8b\xdb\x95\xf8\xb3\xaf\xac\x00\x2c\x2c\x1f\x7a\xfd\x95\x88"
-@@ -866,6 +916,36 @@ static const struct akcipher_testvec ecd
- 
- static const struct akcipher_testvec ecdsa_nist_p384_tv_template[] = {
- 	{
-+	.key = /* secp384r1(sha1) */
-+	"\x04\x89\x25\xf3\x97\x88\xcb\xb0\x78\xc5\x72\x9a\x14\x6e\x7a\xb1"
-+	"\x5a\xa5\x24\xf1\x95\x06\x9e\x28\xfb\xc4\xb9\xbe\x5a\x0d\xd9\x9f"
-+	"\xf3\xd1\x4d\x2d\x07\x99\xbd\xda\xa7\x66\xec\xbb\xea\xba\x79\x42"
-+	"\xc9\x34\x89\x6a\xe7\x0b\xc3\xf2\xfe\x32\x30\xbe\xba\xf9\xdf\x7e"
-+	"\x4b\x6a\x07\x8e\x26\x66\x3f\x1d\xec\xa2\x57\x91\x51\xdd\x17\x0e"
-+	"\x0b\x25\xd6\x80\x5c\x3b\xe6\x1a\x98\x48\x91\x45\x7a\x73\xb0\xc3"
-+	"\xf1",
-+	.key_len = 97,
-+	.params =
-+	"\x30\x10\x06\x07\x2a\x86\x48\xce\x3d\x02\x01\x06\x05\x2b\x81\x04"
-+	"\x00\x22",
-+	.param_len = 18,
-+	.m =
-+	"\x12\x55\x28\xf0\x77\xd5\xb6\x21\x71\x32\x48\xcd\x28\xa8\x25\x22"
-+	"\x3a\x69\xc1\x93",
-+	.m_size = 20,
-+	.algo = OID_id_ecdsa_with_sha1,
-+	.c =
-+	"\x30\x66\x02\x31\x00\xf5\x0f\x24\x4c\x07\x93\x6f\x21\x57\x55\x07"
-+	"\x20\x43\x30\xde\xa0\x8d\x26\x8e\xae\x63\x3f\xbc\x20\x3a\xc6\xf1"
-+	"\x32\x3c\xce\x70\x2b\x78\xf1\x4c\x26\xe6\x5b\x86\xcf\xec\x7c\x7e"
-+	"\xd0\x87\xd7\xd7\x6e\x02\x31\x00\xcd\xbb\x7e\x81\x5d\x8f\x63\xc0"
-+	"\x5f\x63\xb1\xbe\x5e\x4c\x0e\xa1\xdf\x28\x8c\x1b\xfa\xf9\x95\x88"
-+	"\x74\xa0\x0f\xbf\xaf\xc3\x36\x76\x4a\xa1\x59\xf1\x1c\xa4\x58\x26"
-+	"\x79\x12\x2a\xb7\xc5\x15\x92\xc5",
-+	.c_size = 104,
-+	.public_key_vec = true,
-+	.siggen_sigver_test = true,
-+	}, {
- 	.key = /* secp384r1(sha224) */
- 	"\x04\x69\x6c\xcf\x62\xee\xd0\x0d\xe5\xb5\x2f\x70\x54\xcf\x26\xa0"
- 	"\xd9\x98\x8d\x92\x2a\xab\x9b\x11\xcb\x48\x18\xa1\xa9\x0d\xd5\x18"
---- a/include/linux/oid_registry.h
-+++ b/include/linux/oid_registry.h
-@@ -17,10 +17,12 @@
-  *	  build_OID_registry.pl to generate the data for look_up_OID().
-  */
- enum OID {
-+	OID_id_dsa_with_sha1,		/* 1.2.840.10030.4.3 */
- 	OID_id_dsa,			/* 1.2.840.10040.4.1 */
- 	OID_id_ecPublicKey,		/* 1.2.840.10045.2.1 */
- 	OID_id_prime192v1,		/* 1.2.840.10045.3.1.1 */
- 	OID_id_prime256v1,		/* 1.2.840.10045.3.1.7 */
-+	OID_id_ecdsa_with_sha1,		/* 1.2.840.10045.4.1 */
- 	OID_id_ecdsa_with_sha224,	/* 1.2.840.10045.4.3.1 */
- 	OID_id_ecdsa_with_sha256,	/* 1.2.840.10045.4.3.2 */
- 	OID_id_ecdsa_with_sha384,	/* 1.2.840.10045.4.3.3 */
-@@ -28,6 +30,7 @@ enum OID {
- 
- 	/* PKCS#1 {iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-1(1)} */
- 	OID_rsaEncryption,		/* 1.2.840.113549.1.1.1 */
-+	OID_sha1WithRSAEncryption,	/* 1.2.840.113549.1.1.5 */
- 	OID_sha256WithRSAEncryption,	/* 1.2.840.113549.1.1.11 */
- 	OID_sha384WithRSAEncryption,	/* 1.2.840.113549.1.1.12 */
- 	OID_sha512WithRSAEncryption,	/* 1.2.840.113549.1.1.13 */
-@@ -64,6 +67,7 @@ enum OID {
- 	OID_PKU2U,			/* 1.3.5.1.5.2.7 */
- 	OID_Scram,			/* 1.3.6.1.5.5.14 */
- 	OID_certAuthInfoAccess,		/* 1.3.6.1.5.5.7.1.1 */
-+	OID_sha1,			/* 1.3.14.3.2.26 */
- 	OID_id_ansip384r1,		/* 1.3.132.0.34 */
- 	OID_sha256,			/* 2.16.840.1.101.3.4.2.1 */
- 	OID_sha384,			/* 2.16.840.1.101.3.4.2.2 */
---- a/kernel/module/Kconfig
-+++ b/kernel/module/Kconfig
-@@ -236,6 +236,10 @@ choice
- 	  possible to load a signed module containing the algorithm to check
- 	  the signature on that module.
- 
-+config MODULE_SIG_SHA1
-+	bool "Sign modules with SHA-1"
-+	select CRYPTO_SHA1
-+
- config MODULE_SIG_SHA256
- 	bool "Sign modules with SHA-256"
- 	select CRYPTO_SHA256
-@@ -265,6 +269,7 @@ endchoice
- config MODULE_SIG_HASH
- 	string
- 	depends on MODULE_SIG || IMA_APPRAISE_MODSIG
-+	default "sha1" if MODULE_SIG_SHA1
- 	default "sha256" if MODULE_SIG_SHA256
- 	default "sha384" if MODULE_SIG_SHA384
- 	default "sha512" if MODULE_SIG_SHA512
+ 	for (i = 0; i < xp->xfrm_nr; i++) {
+ 		struct xfrm_user_tmpl *up = &vec[i];
+ 		struct xfrm_tmpl *kp = &xp->xfrm_vec[i];
 
 
