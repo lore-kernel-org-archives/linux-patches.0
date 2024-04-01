@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC73522301;
-	Mon,  1 Apr 2024 16:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467B722301;
+	Mon,  1 Apr 2024 16:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987489; cv=none; b=F56OerBaqgEGXs2aHJYvBibnFoPBGSKXhm4zHb2/bQmRjAVlsdInGC9gsWKRGyrv5UJEH0oaA0drw4iX5KdZNx5oTgvULlckT5xyh9vj4EaRc+j+3L7oFkzBvzWfB6HJaVTEoFMxsrnrin42ULRRLdxGLChh+odPzCJGKp1ROlg=
+	t=1711987492; cv=none; b=YdZy+KFSBK+iq9Cgzqbx8v2X+Y++hWRM+uijpJDZBsODkx/S+86noBg4xPmX9JGPR7F9XcOqOzbFLK6ptS6b3RvKmF3ybdotAkKg8wHBSxSB7tD9zsbvb2hKB3+FBtmAhFxBfhsZFV24pt02O4pWZNG9WQ6ulL77TfNFU/1VbDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987489; c=relaxed/simple;
-	bh=n6A//aT+b9KLWY/i36AtEO7EZ1cPWX188uuyMz8dOl0=;
+	s=arc-20240116; t=1711987492; c=relaxed/simple;
+	bh=n7ziQw/F2Fi/w9A/pE/vZ+GCX1wXYKhxjvXBEHmrbiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQBM+1DYXsfvSVppKhLtvRtkSqYShcOnmwnTXV6preD1duhKi1mRVVP10UShciz506Fi4ThLGvIfBkXgZg046ck5swZT5kRhudSxj7aPgnrdTO635w7mJP3GXlbAfprcfFg3vktF8/N0toDczQVAdq/T4+bAxeM3CKn/wbdeqtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKgynikH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEajAVDt63IhaJnJm8w8PfePqKM4jOnWysFVKtZG7w2YzVbcz49ydosrPHZGTESl0U7Y6oUoGOwPHPJzPTY/XL0rJ5Qn1hoND5l6DuQdRc5PsakOI69/H0qW4UfprsYrrzb8T5/9g9JvQFqISkXcOYgZsqHj5KCc8S1Jg290yzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcIRyh0M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKgynikH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51325C43394;
-	Mon,  1 Apr 2024 16:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcIRyh0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD532C433C7;
+	Mon,  1 Apr 2024 16:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987488;
-	bh=n6A//aT+b9KLWY/i36AtEO7EZ1cPWX188uuyMz8dOl0=;
+	s=korg; t=1711987492;
+	bh=n7ziQw/F2Fi/w9A/pE/vZ+GCX1wXYKhxjvXBEHmrbiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKgynikHC0oh7lqy5atc+KIodD1gIN+/k1f5CzgnWbJMAuh+ioSib7AiFk74QGUfR
-	 FWYv2S7U4MsgmTjfv8DY3M8Tc/zqxrDTG9Pyy6AkG2iknVmOSHZbs6uNyHM3OhgmOx
-	 U+bWjWofQdUTcwEvi+gGYmlX39j++++7meE3qtZY=
+	b=OcIRyh0MDeM2R/u49To5b3/X7EnY8mq2GxK2VEJjnsikNg1/t1/8f5elqBEeMtEVM
+	 yksS9Zx/Kb6DScazG42ENYd868szKD6DpBvLT/0kpLt5teKIjk45brf7iLg1Li4W1k
+	 d0XwRKIZGMY98xOzoC1v4tcGmQQ88zvQTxaC69hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.8 303/399] wifi: iwlwifi: mvm: handle debugfs names more carefully
-Date: Mon,  1 Apr 2024 17:44:29 +0200
-Message-ID: <20240401152558.235381860@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 304/399] Revert "drm/amd/display: Fix sending VSC (+ colorimetry) packets for DP/eDP displays without PSR"
+Date: Mon,  1 Apr 2024 17:44:30 +0200
+Message-ID: <20240401152558.264730742@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,58 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 19d82bdedaf2db0bfb3762dda714ea803065eed5 upstream.
+commit 78aca9ee5e012e130dbfbd7191bc2302b0cf3b37 upstream.
 
-With debugfs=off, we can get here with the dbgfs_dir being
-an ERR_PTR(). Instead of checking for all this, which is
-often flagged as a mistake, simply handle the names here
-more carefully by printing them, then we don't need extra
-checks.
+This causes flicker on a bunch of eDP panels. The info_packet code
+also caused regressions on other OSes that we haven't' seen on Linux
+yet, but that is likely due to the fact that we haven't had a chance
+to test those environments on Linux.
 
-Also, while checking, I noticed theoretically 'buf' is too
-small, so fix that size as well.
+We'll need to revisit this.
 
+This reverts commit 202260f64519e591b5cd99626e441b6559f571a3.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3207
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3151
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218422
-Fixes: c36235acb34f ("wifi: iwlwifi: mvm: rework debugfs handling")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.4dc1eb3dd015.I32f308b0356ef5bcf8d188dd98ce9b210e3ab9fd@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/debugfs-vif.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c             |    8 ++----
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c |   13 +++-------
+ 2 files changed, 8 insertions(+), 13 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs-vif.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs-vif.c
-@@ -735,7 +735,9 @@ void iwl_mvm_vif_dbgfs_add_link(struct i
- {
- 	struct dentry *dbgfs_dir = vif->debugfs_dir;
- 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
--	char buf[100];
-+	char buf[3 * 3 + 11 + (NL80211_WIPHY_NAME_MAXLEN + 1) +
-+		 (7 + IFNAMSIZ + 1) + 6 + 1];
-+	char name[7 + IFNAMSIZ + 1];
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6256,9 +6256,8 @@ create_stream_for_sink(struct drm_connec
  
- 	/* this will happen in monitor mode */
- 	if (!dbgfs_dir)
-@@ -748,10 +750,11 @@ void iwl_mvm_vif_dbgfs_add_link(struct i
- 	 * find
- 	 * netdev:wlan0 -> ../../../ieee80211/phy0/netdev:wlan0/iwlmvm/
- 	 */
--	snprintf(buf, 100, "../../../%pd3/iwlmvm", dbgfs_dir);
-+	snprintf(name, sizeof(name), "%pd", dbgfs_dir);
-+	snprintf(buf, sizeof(buf), "../../../%pd3/iwlmvm", dbgfs_dir);
+ 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+ 		mod_build_hf_vsif_infopacket(stream, &stream->vsp_infopacket);
+-	else if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT ||
+-			 stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST ||
+-			 stream->signal == SIGNAL_TYPE_EDP) {
++
++	if (stream->link->psr_settings.psr_feature_enabled || stream->link->replay_settings.replay_feature_enabled) {
+ 		//
+ 		// should decide stream support vsc sdp colorimetry capability
+ 		// before building vsc info packet
+@@ -6274,9 +6273,8 @@ create_stream_for_sink(struct drm_connec
+ 		if (stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22)
+ 			tf = TRANSFER_FUNC_GAMMA_22;
+ 		mod_build_vsc_infopacket(stream, &stream->vsc_infopacket, stream->output_color_space, tf);
++		aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
  
--	mvmvif->dbgfs_slink = debugfs_create_symlink(dbgfs_dir->d_name.name,
--						     mvm->debugfs_dir, buf);
-+	mvmvif->dbgfs_slink =
-+		debugfs_create_symlink(name, mvm->debugfs_dir, buf);
- }
+-		if (stream->link->psr_settings.psr_feature_enabled)
+-			aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
+ 	}
+ finish:
+ 	dc_sink_release(sink);
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -147,15 +147,12 @@ void mod_build_vsc_infopacket(const stru
+ 	}
  
- void iwl_mvm_vif_dbgfs_rm_link(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ 	/* VSC packet set to 4 for PSR-SU, or 2 for PSR1 */
+-	if (stream->link->psr_settings.psr_feature_enabled) {
+-		if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
+-			vsc_packet_revision = vsc_packet_rev4;
+-		else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
+-			vsc_packet_revision = vsc_packet_rev2;
+-	}
+-
+-	if (stream->link->replay_settings.config.replay_supported)
++	if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
++		vsc_packet_revision = vsc_packet_rev4;
++	else if (stream->link->replay_settings.config.replay_supported)
+ 		vsc_packet_revision = vsc_packet_rev4;
++	else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
++		vsc_packet_revision = vsc_packet_rev2;
+ 
+ 	/* Update to revision 5 for extended colorimetry support */
+ 	if (stream->use_vsc_sdp_for_colorimetry)
 
 
