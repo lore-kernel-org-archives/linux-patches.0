@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C908487BC;
-	Mon,  1 Apr 2024 17:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13E47A64;
+	Mon,  1 Apr 2024 17:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991378; cv=none; b=hJX8w4xWZhM/9JHkFm338kfkedTgmeTY+60wjjuSRmJbPZ043QjLqKx1JHjBPQvkK0JNIAw0WgXcpaMubnWlzeKR0LX4pHSfX76IRGfLiABAc/BOwAdCOUC06HcM6papY4hOA2qxsjfUBoxJDW/0furkNPwy9mC1dSTTXhSLObg=
+	t=1711991382; cv=none; b=ThF4KWf4NBmtoW+IztpjrBkIt0OlskkXl7XAZF5cMGDHLJrahyMVE+sDKJiRJYPxSFGhaXe5LvcUWrwzkZlOxsRqCpBP7wdIQuLe+ckGrDOrzym+78QWZrDOxKRl4xrFZxYIzAboHnRH9ValhhcM4RtlESfJ1pwgzooDkPN40LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991378; c=relaxed/simple;
-	bh=zi55t759RjtOrxcjoYPvTIHoyA4oB0zjYj0pKxfHGQQ=;
+	s=arc-20240116; t=1711991382; c=relaxed/simple;
+	bh=0j5Z+kgeCqVXjIC3i/npApGI00sfYF6JgyIgXnbc0nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMJqreMmFRtatizDBnCy94h1ydsEC5V9DMcRG6bk81skKwWGMPJsIOnH1RmM7TSaMrMBFbojIysP2nSXgf+k53ULzX6QH+lo02GDt2KXKM8v1wKXoAFdwlXC9r4/T6AQ15MgGIcpdOT5UeWXpqmhlLGFkXs2EOYLURg/C+cgSpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQetKWd7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VcrCbJifF2xXVjRnXt4mQrjsZxNccProAgxW/VM3yYUXLGXpXGAwZ1OYr2j+tdCyFcUhSLnCl5P11cRr+OYdUHN/8ixL1nJbOCDkKzcStBQnufn7WLjbEUTUQhq1Yw/TbLT752G1F3HBe7uSlFjWiUc7/HVSvzrycXk0bV0Y7tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o887GtsL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQetKWd7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC66C433F1;
-	Mon,  1 Apr 2024 17:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o887GtsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65719C433C7;
+	Mon,  1 Apr 2024 17:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991378;
-	bh=zi55t759RjtOrxcjoYPvTIHoyA4oB0zjYj0pKxfHGQQ=;
+	s=korg; t=1711991381;
+	bh=0j5Z+kgeCqVXjIC3i/npApGI00sfYF6JgyIgXnbc0nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQetKWd7M9jFqMdUhZ5YLekXcoFR/nMNFAQziuqaZyHQ6BRU7rPXLj2TotCYN7IQd
-	 7tCK+auFHncr9FyBzyJzwKWm3H/4Aes9V+SJEWgubqCxqxux4HQu5JrpHQ4fW6cd7f
-	 Cmk4Zv3egI5L5uRKGYfIE4+6/LFBefcDaIbem5o8=
+	b=o887GtsLH02QhcI3nCXSv9r3TjHBEri97kUnYuDFs9O0uSGVt+DHQXldtZiKOI0n1
+	 GWSMKAVW2ZnOndPjmxhdS/hR1YUWHDGvYK9OQwA1A3nccmQ0/fluMYMsZSFkVAQVPc
+	 C5jNBxqe3AJRTJ6JYDKOG/TWvvLLDiR3U/D0AU7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Brian Cain <bcain@quicinc.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 218/272] hexagon: vmlinux.lds.S: handle attributes section
-Date: Mon,  1 Apr 2024 17:46:48 +0200
-Message-ID: <20240401152537.742577256@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Charan Teja Kalla <quic_charante@quicinc.com>
+Subject: [PATCH 6.1 209/272] mm/migrate: set swap entry values of THP tail pages properly.
+Date: Mon,  1 Apr 2024 17:46:39 +0200
+Message-ID: <20240401152537.445741433@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 549aa9678a0b3981d4821bf244579d9937650562 upstream.
+The tail pages in a THP can have swap entry information stored in their
+private field. When migrating to a new page, all tail pages of the new
+page need to update ->private to avoid future data corruption.
 
-After the linked LLVM change, the build fails with
-CONFIG_LD_ORPHAN_WARN_LEVEL="error", which happens with allmodconfig:
+This fix is stable-only, since after commit 07e09c483cbe ("mm/huge_memory:
+work on folio->swap instead of page->private when splitting folio"),
+subpages of a swapcached THP no longer requires the maintenance.
 
-  ld.lld: error: vmlinux.a(init/main.o):(.hexagon.attributes) is being placed in '.hexagon.attributes'
+Adding THPs to the swapcache was introduced in commit
+38d8b4e6bdc87 ("mm, THP, swap: delay splitting THP during swap out"),
+where each subpage of a THP added to the swapcache had its own swapcache
+entry and required the ->private field to point to the correct swapcache
+entry. Later, when THP migration functionality was implemented in commit
+616b8371539a6 ("mm: thp: enable thp migration in generic path"),
+it initially did not handle the subpages of swapcached THPs, failing to
+update their ->private fields or replace the subpage pointers in the
+swapcache. Subsequently, commit e71769ae5260 ("mm: enable thp migration
+for shmem thp") addressed the swapcache update aspect. This patch fixes
+the update of subpage ->private fields.
 
-Handle the attributes section in a similar manner as arm and riscv by
-adding it after the primary ELF_DETAILS grouping in vmlinux.lds.S, which
-fixes the error.
-
-Link: https://lkml.kernel.org/r/20240319-hexagon-handle-attributes-section-vmlinux-lds-s-v1-1-59855dab8872@kernel.org
-Fixes: 113616ec5b64 ("hexagon: select ARCH_WANT_LD_ORPHAN_WARN")
-Link: https://github.com/llvm/llvm-project/commit/31f4b329c8234fab9afa59494d7f8bdaeaefeaad
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://lore.kernel.org/linux-mm/1707814102-22682-1-git-send-email-quic_charante@quicinc.com/
+Fixes: 616b8371539a ("mm: thp: enable thp migration in generic path")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reported-and-tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/kernel/vmlinux.lds.S |    1 +
- 1 file changed, 1 insertion(+)
+ mm/migrate.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/hexagon/kernel/vmlinux.lds.S
-+++ b/arch/hexagon/kernel/vmlinux.lds.S
-@@ -64,6 +64,7 @@ SECTIONS
- 	STABS_DEBUG
- 	DWARF_DEBUG
- 	ELF_DETAILS
-+	.hexagon.attributes 0 : { *(.hexagon.attributes) }
- 
- 	DISCARDS
- }
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -423,8 +423,12 @@ int folio_migrate_mapping(struct address
+ 	if (folio_test_swapbacked(folio)) {
+ 		__folio_set_swapbacked(newfolio);
+ 		if (folio_test_swapcache(folio)) {
++			int i;
++
+ 			folio_set_swapcache(newfolio);
+-			newfolio->private = folio_get_private(folio);
++			for (i = 0; i < nr; i++)
++				set_page_private(folio_page(newfolio, i),
++					page_private(folio_page(folio, i)));
+ 		}
+ 		entries = nr;
+ 	} else {
 
 
