@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20CAC129;
-	Mon,  1 Apr 2024 16:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2936947A5D;
+	Mon,  1 Apr 2024 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988557; cv=none; b=plG5QlrfeTLhcmktszkeMyGJXoQ7TykJqBixmv9OXiKRgjCVxoi5FgCjzET96ovwalLKrf2BUEOi3OnIE+hldC4waXsbDH9akY37J+TB4ZLQi9N4OQm+Naq2MAyUpTpukEiAoXQMguwzhP2iso+iN0NsKFLMATBEJFaUtJYXj6A=
+	t=1711988561; cv=none; b=exI3WkDzRU5YCL5+dKh0BiOAaUtZt3qX5ypQsSOM1lkK6O98tQu10sK6xYZhM2J+KqLTHyK/Dgt2k5rlD6cnazGH05Ar7h2K1xjvjLh+Gv7ssTHOF087Bvta+Vrlte6lUPLt9cgpBuUVXkLF647oqQXHRt3wFD9JEquT8a9CH4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988557; c=relaxed/simple;
-	bh=FYT0OzPU2QWCQq88JgRE3mWfL2W5ZNr0V14B5mmo2wM=;
+	s=arc-20240116; t=1711988561; c=relaxed/simple;
+	bh=b/mJey1o3qIfXtNfD3Axse5ucfDHdSbVhItT9e3Ge0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDHk/+2jvjGuLNkkY9ikbmv9rXdoFw+Bt+bdH6xOVTAoE9gBuaYZUevQVUaxCriUM3Z/OhMQOgS6xGuGPIXWlEkKQ77y8m80qYyHekYP4mvgH0z/ukvej5tbhYsYuc5k0uOUIhoKAF2iAXb4Ld7sWgpY8tVx+A9tXavUYCb/ylI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDnYiOv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6xDO6RigFiqxq8qBHlHg0Uo/lqGWcDV2hM99HGKhMjFhTrGIfto/xO3G1ZYa2Mc5w3U8V3b8ZsAZ3bRVUd9RwgzhNAFsZ5a0uDePP7hmRvnxOTcSptsIlLOyFsZjE2hs7vKfw3sPUu4PkShxuonbGKsketAgPjYcdGYv9C7sOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRlBM8Bs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDnYiOv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A46DC433F1;
-	Mon,  1 Apr 2024 16:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRlBM8Bs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A054FC433C7;
+	Mon,  1 Apr 2024 16:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988557;
-	bh=FYT0OzPU2QWCQq88JgRE3mWfL2W5ZNr0V14B5mmo2wM=;
+	s=korg; t=1711988561;
+	bh=b/mJey1o3qIfXtNfD3Axse5ucfDHdSbVhItT9e3Ge0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDnYiOv5UkmnxJc/Pu/nBT4Ler0dV6b14IfB2lHJakmIx2U7OTV25XB8LPHaBqrPC
-	 0Af5omvHYsHfMvOtsPgv5xcdF1gDLyq6Y8V5ODKg+dDTOICglpiJFGWj6Euex8M1Nf
-	 fuySBuw0vb7yI7xfm9G63HCjQmEl0fqx/bjR49FI=
+	b=DRlBM8BsYBWLF+TXNOLZNuYIx3TuxdVzvIBzwhmvnkOjSZJeGxTq6fptwiP1pCEBj
+	 etjFZzH+ikzc3cyvSh7lEzunxeak6TSZ2Vhy6omOv0zMgthDgXptA7gXCPMauvtZo0
+	 egBHpEI3er9MGAjfWNRmcnNgzjmhMtrFEUXQsPHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Pittman <jpittman@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Anton Altaparmakov <anton@tuxera.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 220/432] dm snapshot: fix lockup in dm_exception_table_exit
-Date: Mon,  1 Apr 2024 17:43:27 +0200
-Message-ID: <20240401152559.700107372@linuxfoundation.org>
+Subject: [PATCH 6.7 221/432] x86/pm: Work around false positive kmemleak report in msr_build_context()
+Date: Mon,  1 Apr 2024 17:43:28 +0200
+Message-ID: <20240401152559.729209057@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,38 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Anton Altaparmakov <anton@tuxera.com>
 
-[ Upstream commit 6e7132ed3c07bd8a6ce3db4bb307ef2852b322dc ]
+[ Upstream commit e3f269ed0accbb22aa8f25d2daffa23c3fccd407 ]
 
-There was reported lockup when we exit a snapshot with many exceptions.
-Fix this by adding "cond_resched" to the loop that frees the exceptions.
+Since:
 
-Reported-by: John Pittman <jpittman@redhat.com>
+  7ee18d677989 ("x86/power: Make restore_processor_context() sane")
+
+kmemleak reports this issue:
+
+  unreferenced object 0xf68241e0 (size 32):
+    comm "swapper/0", pid 1, jiffies 4294668610 (age 68.432s)
+    hex dump (first 32 bytes):
+      00 cc cc cc 29 10 01 c0 00 00 00 00 00 00 00 00  ....)...........
+      00 42 82 f6 cc cc cc cc cc cc cc cc cc cc cc cc  .B..............
+    backtrace:
+      [<461c1d50>] __kmem_cache_alloc_node+0x106/0x260
+      [<ea65e13b>] __kmalloc+0x54/0x160
+      [<c3858cd2>] msr_build_context.constprop.0+0x35/0x100
+      [<46635aff>] pm_check_save_msr+0x63/0x80
+      [<6b6bb938>] do_one_initcall+0x41/0x1f0
+      [<3f3add60>] kernel_init_freeable+0x199/0x1e8
+      [<3b538fde>] kernel_init+0x1a/0x110
+      [<938ae2b2>] ret_from_fork+0x1c/0x28
+
+Which is a false positive.
+
+Reproducer:
+
+  - Run rsync of whole kernel tree (multiple times if needed).
+  - start a kmemleak scan
+  - Note this is just an example: a lot of our internal tests hit these.
+
+The root cause is similar to the fix in:
+
+  b0b592cf0836 x86/pm: Fix false positive kmemleak report in msr_build_context()
+
+ie. the alignment within the packed struct saved_context
+which has everything unaligned as there is only "u16 gs;" at start of
+struct where in the past there were four u16 there thus aligning
+everything afterwards.  The issue is with the fact that Kmemleak only
+searches for pointers that are aligned (see how pointers are scanned in
+kmemleak.c) so when the struct members are not aligned it doesn't see
+them.
+
+Testing:
+
+We run a lot of tests with our CI, and after applying this fix we do not
+see any kmemleak issues any more whilst without it we see hundreds of
+the above report. From a single, simple test run consisting of 416 individual test
+cases on kernel 5.10 x86 with kmemleak enabled we got 20 failures due to this,
+which is quite a lot. With this fix applied we get zero kmemleak related failures.
+
+Fixes: 7ee18d677989 ("x86/power: Make restore_processor_context() sane")
+Signed-off-by: Anton Altaparmakov <anton@tuxera.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240314142656.17699-1-anton@tuxera.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-snap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/suspend_32.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
-index bf7a574499a34..0ace06d1bee38 100644
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -684,8 +684,10 @@ static void dm_exception_table_exit(struct dm_exception_table *et,
- 	for (i = 0; i < size; i++) {
- 		slot = et->table + i;
+diff --git a/arch/x86/include/asm/suspend_32.h b/arch/x86/include/asm/suspend_32.h
+index a800abb1a9925..d8416b3bf832e 100644
+--- a/arch/x86/include/asm/suspend_32.h
++++ b/arch/x86/include/asm/suspend_32.h
+@@ -12,11 +12,6 @@
  
--		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list)
-+		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
- 			kmem_cache_free(mem, ex);
-+			cond_resched();
-+		}
- 	}
+ /* image of the saved processor state */
+ struct saved_context {
+-	/*
+-	 * On x86_32, all segment registers except gs are saved at kernel
+-	 * entry in pt_regs.
+-	 */
+-	u16 gs;
+ 	unsigned long cr0, cr2, cr3, cr4;
+ 	u64 misc_enable;
+ 	struct saved_msrs saved_msrs;
+@@ -27,6 +22,11 @@ struct saved_context {
+ 	unsigned long tr;
+ 	unsigned long safety;
+ 	unsigned long return_address;
++	/*
++	 * On x86_32, all segment registers except gs are saved at kernel
++	 * entry in pt_regs.
++	 */
++	u16 gs;
+ 	bool misc_enable_saved;
+ } __attribute__((packed));
  
- 	kvfree(et->table);
 -- 
 2.43.0
 
