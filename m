@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523551E525;
-	Mon,  1 Apr 2024 16:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5440876;
+	Mon,  1 Apr 2024 16:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990027; cv=none; b=D9+C5UQsY4EQBj9xNr2cKGxHa6DAFkaEmHy9FMlF5bj3kheoAXcdS3p7+Mo1vG3EamuQkvLk5rdqy52FTIpHbS0lr5bIWzZ5M1GtN4nJ1yTunN6otwLaKeyTpZGNvtRWHIbRQcbYqH+5dumvPn/5Lq+gOTnmrxhh2AMUXpA6Rew=
+	t=1711990030; cv=none; b=O1vVVp3zAcRp+JRwGK7rfQ25XQOSCZ5CSsU0+qqq4cujt8c8Oh9d/hSgyYPnAPKtTDR+OFU+z6sQGlZo0bQxTUJQG3GZjL38obCchHaG10vCJ4cFIM75+GeLR5NWd37OIqP5kQiN0WjjIsPKJLcE1Vj5yqrqrKe9Y4uz8MoQI34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990027; c=relaxed/simple;
-	bh=UyOa5fUHIJxJ2bcIIFYPMijcib1TBuuIGrjF2NAEFLc=;
+	s=arc-20240116; t=1711990030; c=relaxed/simple;
+	bh=ApU9Y2W4M0hdbw7TIMcl4OHlD6Dq5DOo5Uu/O0C9A1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3IzKjGt88c9vwJOsDztLo34jrPNBg+5dRcxWrtQ2TCy49GqZjJnscECX4j14ZGBGWmurberadZzOLnOXX9T1/0lEL3MPxemPAfdduNUbnOjbXkkWiVc9bExUURAkOrcmAlbObqJhTD15iTwS/7beLl/PxdEDa64+gc42IMrgEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0wbV7Pu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QXPNc+6GloCrd5KKWH0m6Xh6sqa1uUoD35jOn6LXkNOtBbzLWMbXxUemYgG48I7G9N8PS4qkJEjsay2AIdWgAOzbuCwfivHj5nb3etLjulMkmdZ3P5FTfwepvpRqE0CT7vkJlqW/5Xtn6NxQhvWFgVea3Ron592xFqMDyuUGyok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+VuTsKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0wbV7Pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7527C433C7;
-	Mon,  1 Apr 2024 16:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+VuTsKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D25C433C7;
+	Mon,  1 Apr 2024 16:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990027;
-	bh=UyOa5fUHIJxJ2bcIIFYPMijcib1TBuuIGrjF2NAEFLc=;
+	s=korg; t=1711990030;
+	bh=ApU9Y2W4M0hdbw7TIMcl4OHlD6Dq5DOo5Uu/O0C9A1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0wbV7PuZFAAET9w7Vu6WUlVWHONxy6B1+xVWA4fvFRK05Gl4t3iZkryn0wYHOUOR
-	 tQREuPJyHXfZyvSTY6C6fKlEWhnDcYKiTsgNlztGZ/jdogUH0SC8ZwfYjKimRBFPpo
-	 OQWOM/FH+hclhwG/lwEZNbXLrlPZbu9wANdaeeBU=
+	b=a+VuTsKXFHPAberhaKNmXIAWNVzp7v6PNhuFxJKNf/Yi06QW4Q1F68yPt0hDqANPC
+	 VjUouaSCidD46UHuEuhhr4qrHNFNOoO0FUoeKjEN6ozM9ydpCPfwlLOfzCV2mBfzP6
+	 K3o8vPf+k9gc5ox0E+ZPGtv7ISwx7Kl2qw/2U14M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Yokum <linux-usb@mail.totalphase.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 225/396] xhci: Fix failure to detect ring expansion need.
-Date: Mon,  1 Apr 2024 17:44:34 +0200
-Message-ID: <20240401152554.628720026@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Subject: [PATCH 6.6 226/396] tty: serial: fsl_lpuart: avoid idle preamble pending if CTS is enabled
+Date: Mon,  1 Apr 2024 17:44:35 +0200
+Message-ID: <20240401152554.658289799@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -44,66 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit b234c70fefa7532d34ebee104de64cc16f1b21e4 upstream.
+commit 74cb7e0355fae9641f825afa389d3fba3b617714 upstream.
 
-Ring expansion checker may incorrectly assume a completely full ring
-is empty, missing the need for expansion.
+If the remote uart device is not connected or not enabled after booting
+up, the CTS line is high by default. At this time, if we enable the flow
+control when opening the device(for example, using “stty -F /dev/ttyLP4
+crtscts” command), there will be a pending idle preamble(first writing 0
+and then writing 1 to UARTCTRL_TE will queue an idle preamble) that
+cannot be sent out, resulting in the uart port fail to close(waiting for
+TX empty), so the user space stty will have to wait for a long time or
+forever.
 
-This is due to a special empty ring case where the dequeue ends up
-ahead of the enqueue pointer. This is seen when enqueued TRBs fill up
-exactly a segment, with enqueue then pointing to the end link TRB.
-Once those TRBs are handled the dequeue pointer will follow the link
-TRB and end up pointing to the first entry on the next segment, past
-the enqueue.
+This is an LPUART IP bug(idle preamble has higher priority than CTS),
+here add a workaround patch to enable TX CTS after enabling UARTCTRL_TE,
+so that the idle preamble does not get stuck due to CTS is deasserted.
 
-This same enqueue - dequeue condition can be true if a ring is full,
-with enqueue ending on that last link TRB before the dequeue pointer
-on the next segment.
-
-This can be seen when queuing several ~510 small URBs via usbfs in
-one go before a single one is handled (i.e. dequeue not moved from first
-entry in segment).
-
-Expand the ring already when enqueue reaches the link TRB before the
-dequeue segment, instead of expanding it when enqueue moves into the
-dequeue segment.
-
-Reported-by: Chris Yokum <linux-usb@mail.totalphase.com>
-Closes: https://lore.kernel.org/all/949223224.833962.1709339266739.JavaMail.zimbra@totalphase.com
-Tested-by: Chris Yokum <linux-usb@mail.totalphase.com>
-Fixes: f5af638f0609 ("xhci: Fix transfer ring expansion size calculation")
-Cc: stable@vger.kernel.org # v6.5+
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240305132312.955171-2-mathias.nyman@linux.intel.com
+Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20240305015706.1050769-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/tty/serial/fsl_lpuart.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -326,7 +326,13 @@ static unsigned int xhci_ring_expansion_
- 	/* how many trbs will be queued past the enqueue segment? */
- 	trbs_past_seg = enq_used + num_trbs - (TRBS_PER_SEGMENT - 1);
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2345,9 +2345,12 @@ lpuart32_set_termios(struct uart_port *p
  
--	if (trbs_past_seg <= 0)
-+	/*
-+	 * Consider expanding the ring already if num_trbs fills the current
-+	 * segment (i.e. trbs_past_seg == 0), not only when num_trbs goes into
-+	 * the next segment. Avoids confusing full ring with special empty ring
-+	 * case below
-+	 */
-+	if (trbs_past_seg < 0)
- 		return 0;
+ 	lpuart32_write(&sport->port, bd, UARTBAUD);
+ 	lpuart32_serial_setbrg(sport, baud);
+-	lpuart32_write(&sport->port, modem, UARTMODIR);
+-	lpuart32_write(&sport->port, ctrl, UARTCTRL);
++	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
++	lpuart32_write(&sport->port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
+ 	/* restore control register */
++	lpuart32_write(&sport->port, ctrl, UARTCTRL);
++	/* re-enable the CTS if needed */
++	lpuart32_write(&sport->port, modem, UARTMODIR);
  
- 	/* Empty ring special case, enqueue stuck on link trb while dequeue advanced */
+ 	if ((ctrl & (UARTCTRL_PE | UARTCTRL_M)) == UARTCTRL_PE)
+ 		sport->is_cs7 = true;
 
 
