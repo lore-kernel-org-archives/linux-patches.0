@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C144446AC;
-	Mon,  1 Apr 2024 16:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284171DFFC;
+	Mon,  1 Apr 2024 16:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988273; cv=none; b=SQrmPjStwoRZJHUfHJNlt3lZVtUCv4RlHpwdKuREgzLilgc/1/ynMPh4BuY1wI5Rr4Q2RitfuKRUm0LIsvsxL+ASuEctgrSOk3BS965gYyJenYKPF0em7/uU6qWLkpE5fk/Pc+rDZ59CzDyoPnP6zRuqZtCFR8weg8aBM1x4VUs=
+	t=1711988276; cv=none; b=SU8avRe2TOPrX61bC3KQ4AVW+TeekPJnfdfvTILUSQ5ZnjOHPN1vwoflso5tIopxgWT04Y83kHt8vG5QSR974XSAes4iogRSY8yP2PNO7SvdQcDCYry9TEwIa0dLfYNwmL1OqT7DwWiKAyz5jdutaG0R108GOZOJznyJ9SjiunQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988273; c=relaxed/simple;
-	bh=qupdtTu4kx2mnO3jZQZkYsypJZIAM+3FLY1DQ9rUv8A=;
+	s=arc-20240116; t=1711988276; c=relaxed/simple;
+	bh=Xhf1/kEvgGY3wZLFgePGdyvDhntbAjMlOjt46iZZrEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9e/YVijpojukfFPN+N/LjCGPTz0Pk7JAe67jp3+76bPzXYW4lZ25SGsLoTFBBRPjvx6T0aQlXhsJzUpMnUF+wrvR9ZMLBhTy8fFQhX1Oo4YR+PARggR2EWeVg0JinHomlpxLM2ryIMicMC1mn58h0JIU5zE3M2HL/aXzt2LyrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIVzj6pM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwy2G3Kw2rpgaKIGfXVx/tf5SMBtkWH8GbCbe5lm9ydCCQZBa19WrcOQJJjX7m1K9FKyO8v4m1emt8AhBpRLmmrKj9JUyix+qyfnP0hzzbxoskvW17mpCdJy5xknIWUdJcXG+c0RAzYK1y62Djh50/TWXPg4xAsJNF4sVSB6ldc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5ncGGO0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIVzj6pM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42587C433F1;
-	Mon,  1 Apr 2024 16:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5ncGGO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9090BC433C7;
+	Mon,  1 Apr 2024 16:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988272;
-	bh=qupdtTu4kx2mnO3jZQZkYsypJZIAM+3FLY1DQ9rUv8A=;
+	s=korg; t=1711988276;
+	bh=Xhf1/kEvgGY3wZLFgePGdyvDhntbAjMlOjt46iZZrEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIVzj6pMvbUOzXwk6oIuzCAM9kNzW5gNRJoNwFl6xDYVZq99T9F/THt2qCuvVm8ls
-	 ORtOrDFZLhyeEHTjroPKrkkEKzKw5wO+qrPDpCfFMimk3HDNCu5+FgL0pGZwigq9OH
-	 IUMFZa8IOCFlEsTOYmSz81pu+b/6lMOEqQXgyE9E=
+	b=n5ncGGO0DCBEqHvaKI1uoVpxFJ+XfW3ZR7mufMjyCRvMFqhrPJoYEX33xvw0ya6oy
+	 61g7oCfxBxmx/cUG6HIavV26x+im1KoaPSomIe/1a4LfCDOFxXiH+h7nOBLdIA4Xwi
+	 apb6HYctnMyBLNl7npnv5Iw4zXjzWDxIFSqE6PlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mike Snitzer <snitzer@kernel.org>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 107/432] dm-raid456, md/raid456: fix a deadlock for dm-raid456 while io concurrent with reshape
-Date: Mon,  1 Apr 2024 17:41:34 +0200
-Message-ID: <20240401152556.319836157@linuxfoundation.org>
+Subject: [PATCH 6.7 108/432] dm-raid: fix lockdep waring in "pers->hot_add_disk"
+Date: Mon,  1 Apr 2024 17:41:35 +0200
+Message-ID: <20240401152556.350220543@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,333 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 41425f96d7aa59bc865f60f5dda3d7697b555677 ]
+[ Upstream commit 95009ae904b1e9dca8db6f649f2d7c18a6e42c75 ]
 
-For raid456, if reshape is still in progress, then IO across reshape
-position will wait for reshape to make progress. However, for dm-raid,
-in following cases reshape will never make progress hence IO will hang:
+The lockdep assert is added by commit a448af25becf ("md/raid10: remove
+rcu protection to access rdev from conf") in print_conf(). And I didn't
+notice that dm-raid is calling "pers->hot_add_disk" without holding
+'reconfig_mutex'.
 
-1) the array is read-only;
-2) MD_RECOVERY_WAIT is set;
-3) MD_RECOVERY_FROZEN is set;
+"pers->hot_add_disk" read and write many fields that is protected by
+'reconfig_mutex', and raid_resume() already grab the lock in other
+contex. Hence fix this problem by protecting "pers->host_add_disk"
+with the lock.
 
-After commit c467e97f079f ("md/raid6: use valid sector values to determine
-if an I/O should wait on the reshape") fix the problem that IO across
-reshape position doesn't wait for reshape, the dm-raid test
-shell/lvconvert-raid-reshape.sh start to hang:
-
-[root@fedora ~]# cat /proc/979/stack
-[<0>] wait_woken+0x7d/0x90
-[<0>] raid5_make_request+0x929/0x1d70 [raid456]
-[<0>] md_handle_request+0xc2/0x3b0 [md_mod]
-[<0>] raid_map+0x2c/0x50 [dm_raid]
-[<0>] __map_bio+0x251/0x380 [dm_mod]
-[<0>] dm_submit_bio+0x1f0/0x760 [dm_mod]
-[<0>] __submit_bio+0xc2/0x1c0
-[<0>] submit_bio_noacct_nocheck+0x17f/0x450
-[<0>] submit_bio_noacct+0x2bc/0x780
-[<0>] submit_bio+0x70/0xc0
-[<0>] mpage_readahead+0x169/0x1f0
-[<0>] blkdev_readahead+0x18/0x30
-[<0>] read_pages+0x7c/0x3b0
-[<0>] page_cache_ra_unbounded+0x1ab/0x280
-[<0>] force_page_cache_ra+0x9e/0x130
-[<0>] page_cache_sync_ra+0x3b/0x110
-[<0>] filemap_get_pages+0x143/0xa30
-[<0>] filemap_read+0xdc/0x4b0
-[<0>] blkdev_read_iter+0x75/0x200
-[<0>] vfs_read+0x272/0x460
-[<0>] ksys_read+0x7a/0x170
-[<0>] __x64_sys_read+0x1c/0x30
-[<0>] do_syscall_64+0xc6/0x230
-[<0>] entry_SYSCALL_64_after_hwframe+0x6c/0x74
-
-This is because reshape can't make progress.
-
-For md/raid, the problem doesn't exist because register new sync_thread
-doesn't rely on the IO to be done any more:
-
-1) If array is read-only, it can switch to read-write by ioctl/sysfs;
-2) md/raid never set MD_RECOVERY_WAIT;
-3) If MD_RECOVERY_FROZEN is set, mddev_suspend() doesn't hold
-   'reconfig_mutex', hence it can be cleared and reshape can continue by
-   sysfs api 'sync_action'.
-
-However, I'm not sure yet how to avoid the problem in dm-raid yet. This
-patch on the one hand make sure raid_message() can't change
-sync_thread() through raid_message() after presuspend(), on the other
-hand detect the above 3 cases before wait for IO do be done in
-dm_suspend(), and let dm-raid requeue those IO.
-
+Fixes: 9092c02d9435 ("DM RAID: Add ability to restore transiently failed devices on resume")
+Fixes: a448af25becf ("md/raid10: remove rcu protection to access rdev from conf")
 Cc: stable@vger.kernel.org # v6.7+
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Xiao Ni <xni@redhat.com>
 Acked-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240305072306.2562024-9-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20240305072306.2562024-10-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 22 ++++++++++++++++++++--
- drivers/md/md.c      | 24 ++++++++++++++++++++++--
- drivers/md/md.h      |  3 ++-
- drivers/md/raid5.c   | 32 ++++++++++++++++++++++++++++++--
- 4 files changed, 74 insertions(+), 7 deletions(-)
+ drivers/md/dm-raid.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index b8f5304ca00d1..063f1266ec462 100644
+index 063f1266ec462..d97355e9b9a6e 100644
 --- a/drivers/md/dm-raid.c
 +++ b/drivers/md/dm-raid.c
-@@ -213,6 +213,7 @@ struct raid_dev {
- #define RT_FLAG_RS_IN_SYNC		6
- #define RT_FLAG_RS_RESYNCING		7
- #define RT_FLAG_RS_GROW			8
-+#define RT_FLAG_RS_FROZEN		9
- 
- /* Array elements of 64 bit needed for rebuild/failed disk bits */
- #define DISKS_ARRAY_ELEMS ((MAX_RAID_DEVICES + (sizeof(uint64_t) * 8 - 1)) / sizeof(uint64_t) / 8)
-@@ -3340,7 +3341,8 @@ static int raid_map(struct dm_target *ti, struct bio *bio)
- 	if (unlikely(bio_has_data(bio) && bio_end_sector(bio) > mddev->array_sectors))
- 		return DM_MAPIO_REQUEUE;
- 
--	md_handle_request(mddev, bio);
-+	if (unlikely(!md_handle_request(mddev, bio)))
-+		return DM_MAPIO_REQUEUE;
- 
- 	return DM_MAPIO_SUBMITTED;
- }
-@@ -3724,7 +3726,8 @@ static int raid_message(struct dm_target *ti, unsigned int argc, char **argv,
- 	if (!mddev->pers || !mddev->pers->sync_request)
- 		return -EINVAL;
- 
--	if (test_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags))
-+	if (test_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags) ||
-+	    test_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags))
- 		return -EBUSY;
- 
- 	if (!strcasecmp(argv[0], "frozen")) {
-@@ -3808,6 +3811,12 @@ static void raid_presuspend(struct dm_target *ti)
- 	struct raid_set *rs = ti->private;
- 	struct mddev *mddev = &rs->md;
- 
-+	/*
-+	 * From now on, disallow raid_message() to change sync_thread until
-+	 * resume, raid_postsuspend() is too late.
-+	 */
-+	set_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
-+
- 	if (!reshape_interrupted(mddev))
- 		return;
- 
-@@ -3820,6 +3829,13 @@ static void raid_presuspend(struct dm_target *ti)
- 		mddev->pers->prepare_suspend(mddev);
- }
- 
-+static void raid_presuspend_undo(struct dm_target *ti)
-+{
-+	struct raid_set *rs = ti->private;
-+
-+	clear_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
-+}
-+
- static void raid_postsuspend(struct dm_target *ti)
- {
- 	struct raid_set *rs = ti->private;
-@@ -4085,6 +4101,7 @@ static void raid_resume(struct dm_target *ti)
- 
- 		WARN_ON_ONCE(!test_bit(MD_RECOVERY_FROZEN, &mddev->recovery));
- 		WARN_ON_ONCE(test_bit(MD_RECOVERY_RUNNING, &mddev->recovery));
-+		clear_bit(RT_FLAG_RS_FROZEN, &rs->runtime_flags);
- 		mddev_lock_nointr(mddev);
- 		mddev->ro = 0;
- 		mddev->in_sync = 0;
-@@ -4105,6 +4122,7 @@ static struct target_type raid_target = {
- 	.iterate_devices = raid_iterate_devices,
- 	.io_hints = raid_io_hints,
- 	.presuspend = raid_presuspend,
-+	.presuspend_undo = raid_presuspend_undo,
- 	.postsuspend = raid_postsuspend,
- 	.preresume = raid_preresume,
- 	.resume = raid_resume,
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index c052edeb21606..67befb598cdd0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -366,7 +366,7 @@ static bool is_suspended(struct mddev *mddev, struct bio *bio)
- 	return true;
- }
- 
--void md_handle_request(struct mddev *mddev, struct bio *bio)
-+bool md_handle_request(struct mddev *mddev, struct bio *bio)
- {
- check_suspended:
- 	if (is_suspended(mddev, bio)) {
-@@ -374,7 +374,7 @@ void md_handle_request(struct mddev *mddev, struct bio *bio)
- 		/* Bail out if REQ_NOWAIT is set for the bio */
- 		if (bio->bi_opf & REQ_NOWAIT) {
- 			bio_wouldblock_error(bio);
--			return;
-+			return true;
- 		}
- 		for (;;) {
- 			prepare_to_wait(&mddev->sb_wait, &__wait,
-@@ -390,10 +390,13 @@ void md_handle_request(struct mddev *mddev, struct bio *bio)
- 
- 	if (!mddev->pers->make_request(mddev, bio)) {
- 		percpu_ref_put(&mddev->active_io);
-+		if (!mddev->gendisk && mddev->pers->prepare_suspend)
-+			return false;
- 		goto check_suspended;
+@@ -4091,7 +4091,9 @@ static void raid_resume(struct dm_target *ti)
+ 		 * Take this opportunity to check whether any failed
+ 		 * devices are reachable again.
+ 		 */
++		mddev_lock_nointr(mddev);
+ 		attempt_restore_of_faulty_devices(rs);
++		mddev_unlock(mddev);
  	}
  
- 	percpu_ref_put(&mddev->active_io);
-+	return true;
- }
- EXPORT_SYMBOL(md_handle_request);
- 
-@@ -8790,6 +8793,23 @@ void md_account_bio(struct mddev *mddev, struct bio **bio)
- }
- EXPORT_SYMBOL_GPL(md_account_bio);
- 
-+void md_free_cloned_bio(struct bio *bio)
-+{
-+	struct md_io_clone *md_io_clone = bio->bi_private;
-+	struct bio *orig_bio = md_io_clone->orig_bio;
-+	struct mddev *mddev = md_io_clone->mddev;
-+
-+	if (bio->bi_status && !orig_bio->bi_status)
-+		orig_bio->bi_status = bio->bi_status;
-+
-+	if (md_io_clone->start_time)
-+		bio_end_io_acct(orig_bio, md_io_clone->start_time);
-+
-+	bio_put(bio);
-+	percpu_ref_put(&mddev->active_io);
-+}
-+EXPORT_SYMBOL_GPL(md_free_cloned_bio);
-+
- /* md_allow_write(mddev)
-  * Calling this ensures that the array is marked 'active' so that writes
-  * may proceed without blocking.  It is important to call this before
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index 24261f9b676d5..375ad4a2df71d 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -783,6 +783,7 @@ extern void md_finish_reshape(struct mddev *mddev);
- void md_submit_discard_bio(struct mddev *mddev, struct md_rdev *rdev,
- 			struct bio *bio, sector_t start, sector_t size);
- void md_account_bio(struct mddev *mddev, struct bio **bio);
-+void md_free_cloned_bio(struct bio *bio);
- 
- extern bool __must_check md_flush_request(struct mddev *mddev, struct bio *bio);
- extern void md_super_write(struct mddev *mddev, struct md_rdev *rdev,
-@@ -811,7 +812,7 @@ extern void md_stop_writes(struct mddev *mddev);
- extern int md_rdev_init(struct md_rdev *rdev);
- extern void md_rdev_clear(struct md_rdev *rdev);
- 
--extern void md_handle_request(struct mddev *mddev, struct bio *bio);
-+extern bool md_handle_request(struct mddev *mddev, struct bio *bio);
- extern int mddev_suspend(struct mddev *mddev, bool interruptible);
- extern void mddev_resume(struct mddev *mddev);
- extern void md_idle_sync_thread(struct mddev *mddev);
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 8cdf759a5d272..e1d8b5199f81e 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -763,6 +763,7 @@ enum stripe_result {
- 	STRIPE_RETRY,
- 	STRIPE_SCHEDULE_AND_RETRY,
- 	STRIPE_FAIL,
-+	STRIPE_WAIT_RESHAPE,
- };
- 
- struct stripe_request_ctx {
-@@ -5991,7 +5992,8 @@ static enum stripe_result make_stripe_request(struct mddev *mddev,
- 			if (ahead_of_reshape(mddev, logical_sector,
- 					     conf->reshape_safe)) {
- 				spin_unlock_irq(&conf->device_lock);
--				return STRIPE_SCHEDULE_AND_RETRY;
-+				ret = STRIPE_SCHEDULE_AND_RETRY;
-+				goto out;
- 			}
- 		}
- 		spin_unlock_irq(&conf->device_lock);
-@@ -6070,6 +6072,12 @@ static enum stripe_result make_stripe_request(struct mddev *mddev,
- 
- out_release:
- 	raid5_release_stripe(sh);
-+out:
-+	if (ret == STRIPE_SCHEDULE_AND_RETRY && reshape_interrupted(mddev)) {
-+		bi->bi_status = BLK_STS_RESOURCE;
-+		ret = STRIPE_WAIT_RESHAPE;
-+		pr_err_ratelimited("dm-raid456: io across reshape position while reshape can't make progress");
-+	}
- 	return ret;
- }
- 
-@@ -6191,7 +6199,7 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
- 	while (1) {
- 		res = make_stripe_request(mddev, conf, &ctx, logical_sector,
- 					  bi);
--		if (res == STRIPE_FAIL)
-+		if (res == STRIPE_FAIL || res == STRIPE_WAIT_RESHAPE)
- 			break;
- 
- 		if (res == STRIPE_RETRY)
-@@ -6229,6 +6237,11 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
- 
- 	if (rw == WRITE)
- 		md_write_end(mddev);
-+	if (res == STRIPE_WAIT_RESHAPE) {
-+		md_free_cloned_bio(bi);
-+		return false;
-+	}
-+
- 	bio_endio(bi);
- 	return true;
- }
-@@ -8983,6 +8996,18 @@ static int raid5_start(struct mddev *mddev)
- 	return r5l_start(conf->log);
- }
- 
-+/*
-+ * This is only used for dm-raid456, caller already frozen sync_thread, hence
-+ * if rehsape is still in progress, io that is waiting for reshape can never be
-+ * done now, hence wake up and handle those IO.
-+ */
-+static void raid5_prepare_suspend(struct mddev *mddev)
-+{
-+	struct r5conf *conf = mddev->private;
-+
-+	wake_up(&conf->wait_for_overlap);
-+}
-+
- static struct md_personality raid6_personality =
- {
- 	.name		= "raid6",
-@@ -9006,6 +9031,7 @@ static struct md_personality raid6_personality =
- 	.quiesce	= raid5_quiesce,
- 	.takeover	= raid6_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
-+	.prepare_suspend = raid5_prepare_suspend,
- };
- static struct md_personality raid5_personality =
- {
-@@ -9030,6 +9056,7 @@ static struct md_personality raid5_personality =
- 	.quiesce	= raid5_quiesce,
- 	.takeover	= raid5_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
-+	.prepare_suspend = raid5_prepare_suspend,
- };
- 
- static struct md_personality raid4_personality =
-@@ -9055,6 +9082,7 @@ static struct md_personality raid4_personality =
- 	.quiesce	= raid5_quiesce,
- 	.takeover	= raid4_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
-+	.prepare_suspend = raid5_prepare_suspend,
- };
- 
- static int __init raid5_init(void)
+ 	if (test_and_clear_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
 -- 
 2.43.0
 
