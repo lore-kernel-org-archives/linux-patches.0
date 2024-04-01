@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C3E4AEE0;
-	Mon,  1 Apr 2024 17:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AEC47A64;
+	Mon,  1 Apr 2024 17:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991385; cv=none; b=f8ajdsp6VqAE1Bod01hFK1jPRNskSF8zcLrYe4ncQn22ZCneR6IvqGHBzHD+a3ngupjMcD3htHEj4VPncsNrtYIaMLIJeLdIX46I6DhN1Keg/V0y716rQFBN3IgqMaBOP1dwf05oRgbhxV6NTjda6orND8SF3ovuo+1QA0PK7X8=
+	t=1711991389; cv=none; b=QHZ51Ag80vEq7eYQs0YPEfBLPWscTeQsotrXn0QyiwwXhvWfTZ/d6+8J+vHaw+2A2ptMraREd2O5pyq27+fBrzV0wJJY6LFKgxbUpTZRlvDx7JIydbdEUpwqWW6+wmgzuXlirE4cE7Mes0Up02jiNgNaStGoSqrb8b9iKAiT2n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991385; c=relaxed/simple;
-	bh=dXkOCjV19EPkKh2ihqfVdtwPWBgJKXUzCmK/2bGsEsw=;
+	s=arc-20240116; t=1711991389; c=relaxed/simple;
+	bh=1gBeHkQi8aDLTIqWe1/h9O8NbhKTRqthnIIWjN4lMl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZY9jNvUA5zTLoOGQhy1PCJtXXGocOn66d4rzS3efmoMpY/vsyKChgAJFhuqeMU4d6061eXNDitgRG+4Zo7kkjGAPXY2jhCefvPyTu6p1LmTsVcqLBv7VRunD2zNFdMT9TVfWCzwYJm2CjXdT7AizFiGl4V4Y/vTxWOwUkKSybQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJhvBtlN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eb2bpMiszTw2fL8GwCXEz7mBa+6hekEwg7Ia5t4PB/0CeERdNb5SfNwN2aSJRUIm8wAE3Gk8PduVGy10pp8mcYnzAoyfezcUGaDg063C8lrW3KnJT/5A8xxpyPHzbxynDUNxe7u/AJmlt7yKRbKW+yRQVMQ/zbnqG/wqNJnoBk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OyNZ6701; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJhvBtlN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8827DC433C7;
-	Mon,  1 Apr 2024 17:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyNZ6701"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F357C433C7;
+	Mon,  1 Apr 2024 17:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991384;
-	bh=dXkOCjV19EPkKh2ihqfVdtwPWBgJKXUzCmK/2bGsEsw=;
+	s=korg; t=1711991389;
+	bh=1gBeHkQi8aDLTIqWe1/h9O8NbhKTRqthnIIWjN4lMl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJhvBtlNx1GUrAD6tC5WV/+ggy2w/r0oDIsf6FYwh+L3u9fK+UM/+k1xtzrXp2j3T
-	 99cZE0Uv6WIG3j5qbFIuc4EBovJS08w9hWiaNn57Pcnhgvris8Y4fkbrz/CtcMwn+W
-	 wExlOQ+llFIZLYOIJsp28zFy4tZUrLmXQm8/3nSM=
+	b=OyNZ6701lm5CdYHrhao2b8ROxHSJegtcmDcDl7eQllk8wYnAuaF5QE/bIzucJ1p9d
+	 l5XL/RuGLPltIycnIItyJabrbEahwpcQV/pFMPmBBNEB5DZoL0hr8QucG9dH7CIlJL
+	 6cQgbk+5YORFMG83lJugkShmG3e2qJZWIhXxTzAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 241/272] USB: core: Fix deadlock in port "disable" sysfs attribute
-Date: Mon,  1 Apr 2024 17:47:11 +0200
-Message-ID: <20240401152538.500427258@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.1 250/272] usb: typec: ucsi: Clear EVENT_PENDING under PPM lock
+Date: Mon,  1 Apr 2024 17:47:20 +0200
+Message-ID: <20240401152538.826205758@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,123 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit f4d1960764d8a70318b02f15203a1be2b2554ca1 upstream.
+commit 15b2e71b4653b3e13df34695a29ebeee237c5af2 upstream.
 
-The show and store callback routines for the "disable" sysfs attribute
-file in port.c acquire the device lock for the port's parent hub
-device.  This can cause problems if another process has locked the hub
-to remove it or change its configuration:
+Suppose we sleep on the PPM lock after clearing the EVENT_PENDING
+bit because the thread for another connector is executing a command.
+In this case the command completion of the other command will still
+report the connector change for our connector.
 
-	Removing the hub or changing its configuration requires the
-	hub interface to be removed, which requires the port device
-	to be removed, and device_del() waits until all outstanding
-	sysfs attribute callbacks for the ports have returned.  The
-	lock can't be released until then.
+Clear the EVENT_PENDING bit under the PPM lock to avoid another
+useless call to ucsi_handle_connector_change() in this case.
 
-	But the disable_show() or disable_store() routine can't return
-	until after it has acquired the lock.
-
-The resulting deadlock can be avoided by calling
-sysfs_break_active_protection().  This will cause the sysfs core not
-to wait for the attribute's callback routine to return, allowing the
-removal to proceed.  The disadvantage is that after making this call,
-there is no guarantee that the hub structure won't be deallocated at
-any moment.  To prevent this, we have to acquire a reference to it
-first by calling hub_get().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: c9aed03a0a68 ("usb: ucsi: Add missing ppm_lock")
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/f7a8c135-a495-4ce6-bd49-405a45e7ea9a@rowland.harvard.edu
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Link: https://lore.kernel.org/r/20240320073927.1641788-2-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |   38 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -28,11 +28,22 @@ static ssize_t disable_show(struct devic
- 	u16 portstatus, unused;
- 	bool disabled;
- 	int rc;
-+	struct kernfs_node *kn;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -829,11 +829,11 @@ static void ucsi_handle_connector_change
+ 	if (con->status.change & UCSI_CONSTAT_CAM_CHANGE)
+ 		ucsi_partner_task(con, ucsi_check_altmodes, 1, 0);
  
-+	hub_get(hub);
- 	rc = usb_autopm_get_interface(intf);
- 	if (rc < 0)
--		return rc;
-+		goto out_hub_get;
+-	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+-
+ 	mutex_lock(&ucsi->ppm_lock);
++	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+ 	ret = ucsi_acknowledge_connector_change(ucsi);
+ 	mutex_unlock(&ucsi->ppm_lock);
++
+ 	if (ret)
+ 		dev_err(ucsi->dev, "%s: ACK failed (%d)", __func__, ret);
  
-+	/*
-+	 * Prevent deadlock if another process is concurrently
-+	 * trying to unregister hdev.
-+	 */
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn) {
-+		rc = -ENODEV;
-+		goto out_autopm;
-+	}
- 	usb_lock_device(hdev);
- 	if (hub->disconnected) {
- 		rc = -ENODEV;
-@@ -42,9 +53,13 @@ static ssize_t disable_show(struct devic
- 	usb_hub_port_status(hub, port1, &portstatus, &unused);
- 	disabled = !usb_port_is_power_on(hub, portstatus);
- 
--out_hdev_lock:
-+ out_hdev_lock:
- 	usb_unlock_device(hdev);
-+	sysfs_unbreak_active_protection(kn);
-+ out_autopm:
- 	usb_autopm_put_interface(intf);
-+ out_hub_get:
-+	hub_put(hub);
- 
- 	if (rc)
- 		return rc;
-@@ -62,15 +77,26 @@ static ssize_t disable_store(struct devi
- 	int port1 = port_dev->portnum;
- 	bool disabled;
- 	int rc;
-+	struct kernfs_node *kn;
- 
- 	rc = strtobool(buf, &disabled);
- 	if (rc)
- 		return rc;
- 
-+	hub_get(hub);
- 	rc = usb_autopm_get_interface(intf);
- 	if (rc < 0)
--		return rc;
-+		goto out_hub_get;
- 
-+	/*
-+	 * Prevent deadlock if another process is concurrently
-+	 * trying to unregister hdev.
-+	 */
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn) {
-+		rc = -ENODEV;
-+		goto out_autopm;
-+	}
- 	usb_lock_device(hdev);
- 	if (hub->disconnected) {
- 		rc = -ENODEV;
-@@ -91,9 +117,13 @@ static ssize_t disable_store(struct devi
- 	if (!rc)
- 		rc = count;
- 
--out_hdev_lock:
-+ out_hdev_lock:
- 	usb_unlock_device(hdev);
-+	sysfs_unbreak_active_protection(kn);
-+ out_autopm:
- 	usb_autopm_put_interface(intf);
-+ out_hub_get:
-+	hub_put(hub);
- 
- 	return rc;
- }
 
 
