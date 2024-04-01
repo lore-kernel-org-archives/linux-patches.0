@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F43C1E86C;
-	Mon,  1 Apr 2024 16:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6452D1E525;
+	Mon,  1 Apr 2024 16:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989200; cv=none; b=R4Rf0KWCSz0ZYxeLdQmgsA4fdGpJPjpN1se3DEamRkEpo0u2pUga3frcdsA+yTqzG8hH61CF5q1yKtLCicNqIbEQaW0k1iMO0mqkX2u9QyiIrFltxlWdhW1sv5610/CHxzVSwWY+zj1Uy0/PNvgfN4feGwS39oQWhbs3tjZZ7y0=
+	t=1711989204; cv=none; b=MI2Ifw7bP8MpS3HdTRTSV3rW9UitxxtCip1Tk9Rv1rlSasXPxIvb+QTvGXiBTlcy6XVyTi7L0NPlRnksoJlm4HhYmzlHf1aF/IIT0IwM+GzDw2Hv0s024eDg2hZbp2ovnOtw3VotNLXcNDI4VOCMEG6JOkWKqJmURfZc3rXMdBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989200; c=relaxed/simple;
-	bh=z3KSeOSYiq+WY+JgAItntzKi67GgFvOc7hIdK84VINc=;
+	s=arc-20240116; t=1711989204; c=relaxed/simple;
+	bh=Q056fO9672aFXqMqpO/d8vlmPiWAUf0+VE/UlFRJoME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2/jv6Z83Tr61qyvLZU/H7ziAghE9uHZMRP9LC3hOCr6QYNv/YLwutiYjgBTGWSy0Cea79/GaPRV4gG8tm/mSJNem5LXynFoz/LLszbem/gmOe25YUh8bz+pc1FmVtUrupY4lXARpFRUGID30T4mN4ccQYWa2+3vEti+JW7K2XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scrE6HUV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqeUUpgnRHJsfKXVh2VlATBdG/AMstvkXnan+0fMVN/BVX1P1O/EqH2U0eOu8rGhjKkY8PaA6NaVPxHrz1pxf1497x1bc52CGq/SLhbV2HUr2PvLem+eLBoMVd8W65wqn0YecSbjWhW0xt+j0m1Q0azm2zdIwLZb/an3WPyMigc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBJ9iJVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scrE6HUV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9DDC433C7;
-	Mon,  1 Apr 2024 16:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBJ9iJVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBA4C43390;
+	Mon,  1 Apr 2024 16:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989200;
-	bh=z3KSeOSYiq+WY+JgAItntzKi67GgFvOc7hIdK84VINc=;
+	s=korg; t=1711989204;
+	bh=Q056fO9672aFXqMqpO/d8vlmPiWAUf0+VE/UlFRJoME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scrE6HUV065F5nW5m78QDAxDbsrpyt5xVf2CV3yJej/EVkbjSkV5Za+B5vNnCShQ0
-	 4MnbWIpqLLdS92zu0Mf1oX3LtwrJRZxpQeJdDly6KHt3gsSxPqwzGbiWO2wNHfPPHu
-	 u1NTgjroPYRbF+V7PJ+GqKxik5t1iz+0y6U09beA=
+	b=QBJ9iJVAxfOLN9cSX9RvuEqChWzqvyU6aJExWgG3AFDQFCVEY1bEFD97+7wSF0lqh
+	 aL+CaA1f5HY+tBKkA0bfM1EsEo9qHcBBDV3NiDwo83gUbywyEKlMjJaNo4QoE+vU7f
+	 UzEZe2Al98xoNQ+OkI1oVixi9fi0HlkUtiombfpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.7 410/432] usb: typec: ucsi_acpi: Refactor and fix DELL quirk
-Date: Mon,  1 Apr 2024 17:46:37 +0200
-Message-ID: <20240401152605.616248539@linuxfoundation.org>
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 384/432] drm/amd/display: set odm_combine_policy based on context in dcn32 resource
+Date: Mon,  1 Apr 2024 17:46:11 +0200
+Message-ID: <20240401152604.755658919@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,163 +54,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-commit 6aaceb7d9cd00f3e065dc4b054ecfe52c5253b03 upstream.
+[ Upstream commit 0a5fd7811a17af708cefdaab93af86838353002d ]
 
-Some DELL systems don't like UCSI_ACK_CC_CI commands with the
-UCSI_ACK_CONNECTOR_CHANGE but not the UCSI_ACK_COMMAND_COMPLETE
-bit set. The current quirk still leaves room for races because
-it requires two consecutive ACK commands to be sent.
+[why]
+When populating dml pipes, odm combine policy should be assigned based
+on the pipe topology of the context passed in. DML pipes could be
+repopulated multiple times during single validate bandwidth attempt. We
+need to make sure that whenever we repopulate the dml pipes it is always
+aligned with the updated context. There is a case where DML pipes get
+repopulated during FPO optimization after ODM combine policy is changed.
+Since in the current code we reinitlaize ODM combine policy, even though
+the current context has ODM combine enabled, we overwrite it despite the
+pipes are already split. This causes DML to think that MPC combine is
+used so we mistakenly enable MPC combine because we apply pipe split
+with ODM combine policy reset. This issue doesn't impact non windowed
+MPO with ODM case because the legacy policy has restricted use cases. We
+don't encounter the case where both ODM and FPO optimizations are
+enabled together. So we decide to leave it as is because it is about to
+be replaced anyway.
 
-Refactor and significantly simplify the quirk to fix this:
-Send a dummy command and bundle the connector change ack with the
-command completion ack in a single UCSI_ACK_CC_CI command.
-This removes the need to probe for the quirk.
-
-While there define flag bits for struct ucsi_acpi->flags in ucsi_acpi.c
-and don't re-use definitions from ucsi.h for struct ucsi->flags.
-
-Fixes: f3be347ea42d ("usb: ucsi_acpi: Quirk to ack a connector change ack cmd")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-5-lk@c--e.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org # 6.6+
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c |   71 ++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 40 deletions(-)
+ .../drm/amd/display/dc/dcn32/dcn32_resource.c | 16 ++++++++++++++-
+ .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c  | 15 ++++++++++----
+ drivers/gpu/drm/amd/display/dc/inc/resource.h | 20 ++++++++-----------
+ 3 files changed, 34 insertions(+), 17 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -23,10 +23,11 @@ struct ucsi_acpi {
- 	void *base;
- 	struct completion complete;
- 	unsigned long flags;
-+#define UCSI_ACPI_SUPPRESS_EVENT	0
-+#define UCSI_ACPI_COMMAND_PENDING	1
-+#define UCSI_ACPI_ACK_PENDING		2
- 	guid_t guid;
- 	u64 cmd;
--	bool dell_quirk_probed;
--	bool dell_quirk_active;
- };
- 
- static int ucsi_acpi_dsm(struct ucsi_acpi *ua, int func)
-@@ -79,9 +80,9 @@ static int ucsi_acpi_sync_write(struct u
- 	int ret;
- 
- 	if (ack)
--		set_bit(ACK_PENDING, &ua->flags);
-+		set_bit(UCSI_ACPI_ACK_PENDING, &ua->flags);
- 	else
--		set_bit(COMMAND_PENDING, &ua->flags);
-+		set_bit(UCSI_ACPI_COMMAND_PENDING, &ua->flags);
- 
- 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
- 	if (ret)
-@@ -92,9 +93,9 @@ static int ucsi_acpi_sync_write(struct u
- 
- out_clear_bit:
- 	if (ack)
--		clear_bit(ACK_PENDING, &ua->flags);
-+		clear_bit(UCSI_ACPI_ACK_PENDING, &ua->flags);
- 	else
--		clear_bit(COMMAND_PENDING, &ua->flags);
-+		clear_bit(UCSI_ACPI_COMMAND_PENDING, &ua->flags);
- 
- 	return ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index cc468bdcb3de2..f663de1cdcdca 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1925,7 +1925,21 @@ int dcn32_populate_dml_pipes_from_context(
+ 		dcn32_zero_pipe_dcc_fraction(pipes, pipe_cnt);
+ 		DC_FP_END();
+ 		pipes[pipe_cnt].pipe.dest.vfront_porch = timing->v_front_porch;
+-		pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
++		if (dc->config.enable_windowed_mpo_odm &&
++				dc->debug.enable_single_display_2to1_odm_policy) {
++			switch (resource_get_odm_slice_count(pipe)) {
++			case 2:
++				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
++				break;
++			case 4:
++				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_4to1;
++				break;
++			default:
++				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
++			}
++		} else {
++			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
++		}
+ 		pipes[pipe_cnt].pipe.src.gpuvm_min_page_size_kbytes = 256; // according to spreadsheet
+ 		pipes[pipe_cnt].pipe.src.unbounded_req_mode = false;
+ 		pipes[pipe_cnt].pipe.scale_ratio_depth.lb_depth = dm_lb_19;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index 5b6d9643b02dc..b315ca6f1cee8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1265,7 +1265,7 @@ static bool update_pipes_with_split_flags(struct dc *dc, struct dc_state *contex
+ 	return updated;
  }
-@@ -129,51 +130,40 @@ static const struct ucsi_operations ucsi
- };
  
- /*
-- * Some Dell laptops expect that an ACK command with the
-- * UCSI_ACK_CONNECTOR_CHANGE bit set is followed by a (separate)
-- * ACK command that only has the UCSI_ACK_COMMAND_COMPLETE bit set.
-- * If this is not done events are not delivered to OSPM and
-- * subsequent commands will timeout.
-+ * Some Dell laptops don't like ACK commands with the
-+ * UCSI_ACK_CONNECTOR_CHANGE but not the UCSI_ACK_COMMAND_COMPLETE
-+ * bit set. To work around this send a dummy command and bundle the
-+ * UCSI_ACK_CONNECTOR_CHANGE with the UCSI_ACK_COMMAND_COMPLETE
-+ * for the dummy command.
-  */
- static int
- ucsi_dell_sync_write(struct ucsi *ucsi, unsigned int offset,
- 		     const void *val, size_t val_len)
+-static bool should_allow_odm_power_optimization(struct dc *dc,
++static bool should_apply_odm_power_optimization(struct dc *dc,
+ 		struct dc_state *context, struct vba_vars_st *v, int *split,
+ 		bool *merge)
  {
- 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
--	u64 cmd = *(u64 *)val, ack = 0;
-+	u64 cmd = *(u64 *)val;
-+	u64 dummycmd = UCSI_GET_CAPABILITY;
- 	int ret;
+@@ -1369,9 +1369,12 @@ static void try_odm_power_optimization_and_revalidate(
+ {
+ 	int i;
+ 	unsigned int new_vlevel;
++	unsigned int cur_policy[MAX_PIPES];
  
--	if (UCSI_COMMAND(cmd) == UCSI_ACK_CC_CI &&
--	    cmd & UCSI_ACK_CONNECTOR_CHANGE)
--		ack = UCSI_ACK_CC_CI | UCSI_ACK_COMMAND_COMPLETE;
-+	if (cmd == (UCSI_ACK_CC_CI | UCSI_ACK_CONNECTOR_CHANGE)) {
-+		cmd |= UCSI_ACK_COMMAND_COMPLETE;
+-	for (i = 0; i < pipe_cnt; i++)
++	for (i = 0; i < pipe_cnt; i++) {
++		cur_policy[i] = pipes[i].pipe.dest.odm_combine_policy;
+ 		pipes[i].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
++	}
  
--	ret = ucsi_acpi_sync_write(ucsi, offset, val, val_len);
--	if (ret != 0)
--		return ret;
--	if (ack == 0)
--		return ret;
--
--	if (!ua->dell_quirk_probed) {
--		ua->dell_quirk_probed = true;
-+		/*
-+		 * The UCSI core thinks it is sending a connector change ack
-+		 * and will accept new connector change events. We don't want
-+		 * this to happen for the dummy command as its response will
-+		 * still report the very event that the core is trying to clear.
-+		 */
-+		set_bit(UCSI_ACPI_SUPPRESS_EVENT, &ua->flags);
-+		ret = ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &dummycmd,
-+					   sizeof(dummycmd));
-+		clear_bit(UCSI_ACPI_SUPPRESS_EVENT, &ua->flags);
+ 	new_vlevel = dml_get_voltage_level(&context->bw_ctx.dml, pipes, pipe_cnt);
  
--		cmd = UCSI_GET_CAPABILITY;
--		ret = ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &cmd,
--					   sizeof(cmd));
--		if (ret == 0)
--			return ucsi_acpi_sync_write(ucsi, UCSI_CONTROL,
--						    &ack, sizeof(ack));
--		if (ret != -ETIMEDOUT)
-+		if (ret < 0)
- 			return ret;
--
--		ua->dell_quirk_active = true;
--		dev_err(ua->dev, "Firmware bug: Additional ACK required after ACKing a connector change.\n");
--		dev_err(ua->dev, "Firmware bug: Enabling workaround\n");
+@@ -1380,6 +1383,9 @@ static void try_odm_power_optimization_and_revalidate(
+ 		memset(merge, 0, MAX_PIPES * sizeof(bool));
+ 		*vlevel = dcn20_validate_apply_pipe_split_flags(dc, context, new_vlevel, split, merge);
+ 		context->bw_ctx.dml.vba.VoltageLevel = *vlevel;
++	} else {
++		for (i = 0; i < pipe_cnt; i++)
++			pipes[i].pipe.dest.odm_combine_policy = cur_policy[i];
+ 	}
+ }
+ 
+@@ -1550,7 +1556,7 @@ static void dcn32_full_validate_bw_helper(struct dc *dc,
+ 		}
  	}
  
--	if (!ua->dell_quirk_active)
--		return ret;
--
--	return ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &ack, sizeof(ack));
-+	return ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &cmd, sizeof(cmd));
- }
+-	if (should_allow_odm_power_optimization(dc, context, vba, split, merge))
++	if (should_apply_odm_power_optimization(dc, context, vba, split, merge))
+ 		try_odm_power_optimization_and_revalidate(
+ 				dc, context, pipes, split, merge, vlevel, *pipe_cnt);
  
- static const struct ucsi_operations ucsi_dell_ops = {
-@@ -209,13 +199,14 @@ static void ucsi_acpi_notify(acpi_handle
- 	if (ret)
- 		return;
+@@ -2178,7 +2184,8 @@ bool dcn32_internal_validate_bw(struct dc *dc,
+ 		int i;
  
--	if (UCSI_CCI_CONNECTOR(cci))
-+	if (UCSI_CCI_CONNECTOR(cci) &&
-+	    !test_bit(UCSI_ACPI_SUPPRESS_EVENT, &ua->flags))
- 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 		pipe_cnt = dc->res_pool->funcs->populate_dml_pipes(dc, context, pipes, fast_validate);
+-		dcn32_update_dml_pipes_odm_policy_based_on_context(dc, context, pipes);
++		if (!dc->config.enable_windowed_mpo_odm)
++			dcn32_update_dml_pipes_odm_policy_based_on_context(dc, context, pipes);
  
- 	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
- 		complete(&ua->complete);
- 	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
--	    test_bit(COMMAND_PENDING, &ua->flags))
-+	    test_bit(UCSI_ACPI_COMMAND_PENDING, &ua->flags))
- 		complete(&ua->complete);
- }
+ 		/* repopulate_pipes = 1 means the pipes were either split or merged. In this case
+ 		 * we have to re-calculate the DET allocation and run through DML once more to
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/resource.h b/drivers/gpu/drm/amd/display/dc/inc/resource.h
+index 06ca8bfb91e7d..3d7244393807a 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/resource.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/resource.h
+@@ -427,22 +427,18 @@ struct pipe_ctx *resource_get_primary_dpp_pipe(const struct pipe_ctx *dpp_pipe);
+ int resource_get_mpc_slice_index(const struct pipe_ctx *dpp_pipe);
  
+ /*
+- * Get number of MPC "cuts" of the plane associated with the pipe. MPC slice
+- * count is equal to MPC splits + 1. For example if a plane is cut 3 times, it
+- * will have 4 pieces of slice.
+- * return - 0 if pipe is not used for a plane with MPCC combine. otherwise
+- * the number of MPC "cuts" for the plane.
++ * Get the number of MPC slices associated with the pipe.
++ * The function returns 0 if the pipe is not associated with an MPC combine
++ * pipe topology.
+  */
+-int resource_get_mpc_slice_count(const struct pipe_ctx *opp_head);
++int resource_get_mpc_slice_count(const struct pipe_ctx *pipe);
+ 
+ /*
+- * Get number of ODM "cuts" of the timing associated with the pipe. ODM slice
+- * count is equal to ODM splits + 1. For example if a timing is cut 3 times, it
+- * will have 4 pieces of slice.
+- * return - 0 if pipe is not used for ODM combine. otherwise
+- * the number of ODM "cuts" for the timing.
++ * Get the number of ODM slices associated with the pipe.
++ * The function returns 0 if the pipe is not associated with an ODM combine
++ * pipe topology.
+  */
+-int resource_get_odm_slice_count(const struct pipe_ctx *otg_master);
++int resource_get_odm_slice_count(const struct pipe_ctx *pipe);
+ 
+ /* Get the ODM slice index counting from 0 from left most slice */
+ int resource_get_odm_slice_index(const struct pipe_ctx *opp_head);
+-- 
+2.43.0
+
 
 
