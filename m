@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E981DFF4;
-	Mon,  1 Apr 2024 17:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823171DFF4;
+	Mon,  1 Apr 2024 17:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991069; cv=none; b=Vji3tledr9jA8sHaqGl/8+v0R7+HdqVpHGUieQT/wZL1CtrxHe4WjyjbKIOtwbardTwlQ1L2GJXTlc5LSekTgY2jlsQXpP6VkSbtDIwu27wTGQUG0UhvQk4wYKxw/n3jbK7JewZbwSDzKbqz2jxYuhaQ+HEPs+I4KP/3g0Mci04=
+	t=1711991072; cv=none; b=NlttyYmTg6tVyuk1tvNTfX/YPF1aFCaqPoJX/AFYNNJdnX1k8kihJmCcsOQYofQ/YUNgXBD9Lreg/IVfslXgsDiQ4HwJRacICF/OVTfK7gNHsra5t5Wcz/8a5bam4oyZWSeRODBWB4DwjIylhA2SUnZBQFmEBInowt+pJ1v7vFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991069; c=relaxed/simple;
-	bh=0r16cOtfPXzlLnTDyI+yegOZcmePCAnKiea44tOxCBQ=;
+	s=arc-20240116; t=1711991072; c=relaxed/simple;
+	bh=tQG+erPG1tfdWOZF618qcPwT+IvfeamiRGpflMBWDnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sj1/BsYC5MiWefs42zcKMUyHrp3XX1FPrm69QmsGlTLOfiAmaYoFESOTXNCCvMflKPaCpCoLQUM7vLEPZU/QKn5A8JOxCQtU8bbxSe8c33OCQhhf96l3DvnnPGEPK/RF2OztoIaaA/OFcP1UHjAssRO1I/gYNU/LjyWYe+6sul8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkUrS9Ux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j38FO2mNOTUco449aBkA/1JP9EugsgJL7v1KRFCn/8kdpq2d4mkt6MgGXKqJFHRVWFA4TgpGEOI1a0UNhN4P9bwWD5SCUuN9b8e5qPLTJ79mgnuLwQh0/7gkFkJVsBZXUXFTqGu0hbvU8MgylFaByDGAnONYtMvsHncGkZpKkzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulRFuwV+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkUrS9Ux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FECFC433F1;
-	Mon,  1 Apr 2024 17:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulRFuwV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3EFC433F1;
+	Mon,  1 Apr 2024 17:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991069;
-	bh=0r16cOtfPXzlLnTDyI+yegOZcmePCAnKiea44tOxCBQ=;
+	s=korg; t=1711991072;
+	bh=tQG+erPG1tfdWOZF618qcPwT+IvfeamiRGpflMBWDnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkUrS9UxnK7L+zvWwWOaFzJub2PZvMQjk87bFeq7raZ9d7RgrYKdXc8RiznyR67lb
-	 NOq/yIgfY5D0IaX7QI7rkqmXekgcGbIH9gbqeKUAnLZ1NsRLuxILl+BQhOW+5zhCUF
-	 HQ1VfyOyZNlstiGcp4MQyeeXThtlDqXgU+oQTrP4=
+	b=ulRFuwV+WgkVHTy4W+FwizU16c17fIlmAQqacKEr3inkTMOWDZChqJLjUim/u4ymC
+	 zJt1kmI/zg1noJaTY+Gk+zxaVz6j0I6p05GUw6Iz7/lc2Sfd2U/j+/1xSX5TYza6pV
+	 X8Vd02Cw8dR3eNRxx05Vv+VWxbjfOwJ8ix14Of+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/272] s390/zcrypt: fix reference counting on zcrypt card objects
-Date: Mon,  1 Apr 2024 17:45:04 +0200
-Message-ID: <20240401152534.218954811@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 147/272] netfilter: nf_tables: reject constant set with timeout
+Date: Mon,  1 Apr 2024 17:45:37 +0200
+Message-ID: <20240401152535.295732040@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,124 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 50ed48c80fecbe17218afed4f8bed005c802976c ]
+commit 5f4fc4bd5cddb4770ab120ce44f02695c4505562 upstream.
 
-Tests with hot-plugging crytpo cards on KVM guests with debug
-kernel build revealed an use after free for the load field of
-the struct zcrypt_card. The reason was an incorrect reference
-handling of the zcrypt card object which could lead to a free
-of the zcrypt card object while it was still in use.
+This set combination is weird: it allows for elements to be
+added/deleted, but once bound to the rule it cannot be updated anymore.
+Eventually, all elements expire, leading to an empty set which cannot
+be updated anymore. Reject this flags combination.
 
-This is an example of the slab message:
-
-    kernel: 0x00000000885a7512-0x00000000885a7513 @offset=1298. First byte 0x68 instead of 0x6b
-    kernel: Allocated in zcrypt_card_alloc+0x36/0x70 [zcrypt] age=18046 cpu=3 pid=43
-    kernel:  kmalloc_trace+0x3f2/0x470
-    kernel:  zcrypt_card_alloc+0x36/0x70 [zcrypt]
-    kernel:  zcrypt_cex4_card_probe+0x26/0x380 [zcrypt_cex4]
-    kernel:  ap_device_probe+0x15c/0x290
-    kernel:  really_probe+0xd2/0x468
-    kernel:  driver_probe_device+0x40/0xf0
-    kernel:  __device_attach_driver+0xc0/0x140
-    kernel:  bus_for_each_drv+0x8c/0xd0
-    kernel:  __device_attach+0x114/0x198
-    kernel:  bus_probe_device+0xb4/0xc8
-    kernel:  device_add+0x4d2/0x6e0
-    kernel:  ap_scan_adapter+0x3d0/0x7c0
-    kernel:  ap_scan_bus+0x5a/0x3b0
-    kernel:  ap_scan_bus_wq_callback+0x40/0x60
-    kernel:  process_one_work+0x26e/0x620
-    kernel:  worker_thread+0x21c/0x440
-    kernel: Freed in zcrypt_card_put+0x54/0x80 [zcrypt] age=9024 cpu=3 pid=43
-    kernel:  kfree+0x37e/0x418
-    kernel:  zcrypt_card_put+0x54/0x80 [zcrypt]
-    kernel:  ap_device_remove+0x4c/0xe0
-    kernel:  device_release_driver_internal+0x1c4/0x270
-    kernel:  bus_remove_device+0x100/0x188
-    kernel:  device_del+0x164/0x3c0
-    kernel:  device_unregister+0x30/0x90
-    kernel:  ap_scan_adapter+0xc8/0x7c0
-    kernel:  ap_scan_bus+0x5a/0x3b0
-    kernel:  ap_scan_bus_wq_callback+0x40/0x60
-    kernel:  process_one_work+0x26e/0x620
-    kernel:  worker_thread+0x21c/0x440
-    kernel:  kthread+0x150/0x168
-    kernel:  __ret_from_fork+0x3c/0x58
-    kernel:  ret_from_fork+0xa/0x30
-    kernel: Slab 0x00000372022169c0 objects=20 used=18 fp=0x00000000885a7c88 flags=0x3ffff00000000a00(workingset|slab|node=0|zone=1|lastcpupid=0x1ffff)
-    kernel: Object 0x00000000885a74b8 @offset=1208 fp=0x00000000885a7c88
-    kernel: Redzone  00000000885a74b0: bb bb bb bb bb bb bb bb                          ........
-    kernel: Object   00000000885a74b8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74c8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74d8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74e8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a74f8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-    kernel: Object   00000000885a7508: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 68 4b 6b 6b 6b a5  kkkkkkkkkkhKkkk.
-    kernel: Redzone  00000000885a7518: bb bb bb bb bb bb bb bb                          ........
-    kernel: Padding  00000000885a756c: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-    kernel: CPU: 0 PID: 387 Comm: systemd-udevd Not tainted 6.8.0-HF #2
-    kernel: Hardware name: IBM 3931 A01 704 (KVM/Linux)
-    kernel: Call Trace:
-    kernel:  [<00000000ca5ab5b8>] dump_stack_lvl+0x90/0x120
-    kernel:  [<00000000c99d78bc>] check_bytes_and_report+0x114/0x140
-    kernel:  [<00000000c99d53cc>] check_object+0x334/0x3f8
-    kernel:  [<00000000c99d820c>] alloc_debug_processing+0xc4/0x1f8
-    kernel:  [<00000000c99d852e>] get_partial_node.part.0+0x1ee/0x3e0
-    kernel:  [<00000000c99d94ec>] ___slab_alloc+0xaf4/0x13c8
-    kernel:  [<00000000c99d9e38>] __slab_alloc.constprop.0+0x78/0xb8
-    kernel:  [<00000000c99dc8dc>] __kmalloc+0x434/0x590
-    kernel:  [<00000000c9b4c0ce>] ext4_htree_store_dirent+0x4e/0x1c0
-    kernel:  [<00000000c9b908a2>] htree_dirblock_to_tree+0x17a/0x3f0
-    kernel:  [<00000000c9b919dc>] ext4_htree_fill_tree+0x134/0x400
-    kernel:  [<00000000c9b4b3d0>] ext4_dx_readdir+0x160/0x2f0
-    kernel:  [<00000000c9b4bedc>] ext4_readdir+0x5f4/0x760
-    kernel:  [<00000000c9a7efc4>] iterate_dir+0xb4/0x280
-    kernel:  [<00000000c9a7f1ea>] __do_sys_getdents64+0x5a/0x120
-    kernel:  [<00000000ca5d6946>] __do_syscall+0x256/0x310
-    kernel:  [<00000000ca5eea10>] system_call+0x70/0x98
-    kernel: INFO: lockdep is turned off.
-    kernel: FIX kmalloc-96: Restoring Poison 0x00000000885a7512-0x00000000885a7513=0x6b
-    kernel: FIX kmalloc-96: Marking all objects used
-
-The fix is simple: Before use of the queue not only the queue object
-but also the card object needs to increase it's reference count
-with a call to zcrypt_card_get(). Similar after use of the queue
-not only the queue but also the card object's reference count is
-decreased with zcrypt_card_put().
-
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_api.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
-index 28e34d155334b..6f44963d34bbf 100644
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -617,6 +617,7 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
- {
- 	if (!zq || !try_module_get(zq->queue->ap_dev.device.driver->owner))
- 		return NULL;
-+	zcrypt_card_get(zc);
- 	zcrypt_queue_get(zq);
- 	get_device(&zq->queue->ap_dev.device);
- 	atomic_add(weight, &zc->load);
-@@ -636,6 +637,7 @@ static inline void zcrypt_drop_queue(struct zcrypt_card *zc,
- 	atomic_sub(weight, &zq->load);
- 	put_device(&zq->queue->ap_dev.device);
- 	zcrypt_queue_put(zq);
-+	zcrypt_card_put(zc);
- 	module_put(mod);
- }
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4714,6 +4714,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
+ 			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
+ 			return -EOPNOTSUPP;
++		if ((flags & (NFT_SET_CONSTANT | NFT_SET_TIMEOUT)) ==
++			     (NFT_SET_CONSTANT | NFT_SET_TIMEOUT))
++			return -EOPNOTSUPP;
+ 	}
  
--- 
-2.43.0
-
+ 	desc.dtype = 0;
 
 
