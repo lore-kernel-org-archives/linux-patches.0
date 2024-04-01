@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847004087B;
-	Mon,  1 Apr 2024 16:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5977C129;
+	Mon,  1 Apr 2024 16:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988845; cv=none; b=T0nNON1+7/67m6JKASZKmi1r+tBIl3xdYWKQ4QQxdNRRCmQzj/X0cwutOa7gZP3Y3ZAfMYsce7lCmzBBCITKNSv++sBjmrBLhKeJS6LQsiDEc1H9Narr/mnNdcuOdlV104yXCKt/gI3ySUskep/RVrf31/3oN9hW9abjlZxu4s0=
+	t=1711988848; cv=none; b=Hd4OxaXdwCBsuj5NMIZ/EC6Yxyh+2FveKHaZn4XH5CucT3W79pjzFBaOLv5VKifT1oADD67IIGQCbRGzPJbduUkC4F5K5n9+2PIv8kf42cXH6Z8omfFjJnlVIurYHxY2FD3rrZFFcFqS3fDhGR1w0pBtfBHcxhOqL7R+XP4qo78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988845; c=relaxed/simple;
-	bh=ww4ZOq0fv2eHz4sFA49nkSmqLSnTbmN2ZXGNMYnqU80=;
+	s=arc-20240116; t=1711988848; c=relaxed/simple;
+	bh=iLyXEqxIlNDD4ZTopjhmiZgrTESjyHwGfGhdJSa3RVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLEVv3QcuS37bSavsjquVFR9XqFXq6DDbKw83aFCdZf5G1WRjaLY85PsCl7DGeQm21zWjprLSX9o9zuHqe+wo5fmoomf4X2MsHp5IBAg5craW9Xws8r0l21ei2xdH5dKAGTYBZr1S0m8D8c6EmcIYoTG5I96BrgTIbw/Yqsyfl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu4C6edd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dPvtBvgVazVOnRfRGVIOFfKwpTnLSmUJoeEdDIVtEmBxADHtTGwv9aLEkJoaqHIzUu/OThNlZxdFVOyyeDDE/i/Oju5mB1IHxiPJDJ8H+4TeeqyvlDINKHBHCJ+W8uphRccm+uHRo9fEQI5FGI1akGTTVrjUgbeXzWQFfnW4xak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTX2rsCE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu4C6edd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BE9C433C7;
-	Mon,  1 Apr 2024 16:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTX2rsCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D1EC433C7;
+	Mon,  1 Apr 2024 16:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988845;
-	bh=ww4ZOq0fv2eHz4sFA49nkSmqLSnTbmN2ZXGNMYnqU80=;
+	s=korg; t=1711988848;
+	bh=iLyXEqxIlNDD4ZTopjhmiZgrTESjyHwGfGhdJSa3RVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gu4C6eddKehgR6UjTdu7XfJ9b3WJKu94KlNzklvyt14YNd8QdZujfyt9+lfJHbYlZ
-	 i6/qqCXtOrboe7qweBVgz1AVkvt/+zyWBIXZjHg1YtNDlzrprV6RwJGxtBs4w2dlNv
-	 fCxc4nvX55oEGNuLwzYPcIotKDjGIgkhWVwdrcBA=
+	b=xTX2rsCEVNQR1xxOgdJaIKocEdvMi9HhtZJfmAKBa0JgZbo27I4m8A4tS91RZNi5g
+	 g1xKgcEXFSp0NkuIsRPqik07vnLqGTa3xE0u4C7BamMFUom0mTSxMtuxUxgi24OwMe
+	 fpTAl25Ns4q7EUTCeFLtnebKJJljrxTCL/+0DS/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 306/432] printk: Update @console_may_schedule in console_trylock_spinning()
-Date: Mon,  1 Apr 2024 17:44:53 +0200
-Message-ID: <20240401152602.317267672@linuxfoundation.org>
+	=?UTF-8?q?Mano=20S=C3=A9gransan?= <mano.segransan@protonmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 289/432] drm/amd/display: handle range offsets in VRR ranges
+Date: Mon,  1 Apr 2024 17:44:36 +0200
+Message-ID: <20240401152601.790021858@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -46,52 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8076972468584d4a21dab9aa50e388b3ea9ad8c7 ]
+commit 937844d661354bf142dc1c621396fdab10ecbacc upstream.
 
-console_trylock_spinning() may takeover the console lock from a
-schedulable context. Update @console_may_schedule to make sure it
-reflects a trylock acquire.
+Need to check the offset bits for values greater than 255.
 
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Closes: https://lore.kernel.org/lkml/20240222090538.23017-1-quic_mojha@quicinc.com
-Fixes: dbdda842fe96 ("printk: Add console owner and waiter logic to load balance console writes")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/875xybmo2z.fsf@jogness.linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+v2: also update amdgpu_dm_connector values.
+
+Suggested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Tested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3203
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/printk/printk.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index a11e1b6f29c04..7a835b277e98d 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -2026,6 +2026,12 @@ static int console_trylock_spinning(void)
- 	 */
- 	mutex_acquire(&console_lock_dep_map, 0, 1, _THIS_IP_);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10876,14 +10876,23 @@ void amdgpu_dm_update_freesync_caps(stru
+ 				if (range->flags != 1)
+ 					continue;
  
-+	/*
-+	 * Update @console_may_schedule for trylock because the previous
-+	 * owner may have been schedulable.
-+	 */
-+	console_may_schedule = 0;
+-				amdgpu_dm_connector->min_vfreq = range->min_vfreq;
+-				amdgpu_dm_connector->max_vfreq = range->max_vfreq;
+-				amdgpu_dm_connector->pixel_clock_mhz =
+-					range->pixel_clock_mhz * 10;
+-
+ 				connector->display_info.monitor_range.min_vfreq = range->min_vfreq;
+ 				connector->display_info.monitor_range.max_vfreq = range->max_vfreq;
+ 
++				if (edid->revision >= 4) {
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MIN_VFREQ)
++						connector->display_info.monitor_range.min_vfreq += 255;
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MAX_VFREQ)
++						connector->display_info.monitor_range.max_vfreq += 255;
++				}
 +
- 	return 1;
- }
++				amdgpu_dm_connector->min_vfreq =
++					connector->display_info.monitor_range.min_vfreq;
++				amdgpu_dm_connector->max_vfreq =
++					connector->display_info.monitor_range.max_vfreq;
++				amdgpu_dm_connector->pixel_clock_mhz =
++					range->pixel_clock_mhz * 10;
++
+ 				break;
+ 			}
  
--- 
-2.43.0
-
 
 
