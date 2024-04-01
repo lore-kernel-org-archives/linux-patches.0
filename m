@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025E747A6B;
-	Mon,  1 Apr 2024 16:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F911C0DE7;
+	Mon,  1 Apr 2024 16:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989911; cv=none; b=AAC/ljdyHeGwQSIFaoQf8E+u9pshi9qO7AZ735bJPNJBg0TksPF+lX+Xt8hc+yPuOnooun47tk6UMR9d/jEdG4as5C5VWO8vo4oXaIJjICMXsKLJPl9sdSjEu29+Dn/gsZU4BBmVqOcssPxUu9KFxzFJVlKrUrnvfWXps/UfIbI=
+	t=1711989914; cv=none; b=e3RUEyiaRnDzaxaJAfrqZzJWMqwJNe696DrpJg/dFiTbgNSGHS7eTndd2njzy9QhO8NtEnPzG7ialzPwsJlI4a3oCdNeNnNAAcenzHmvqKIkt2PmlRB0iBV5LDZ8R+l48jc/aLI9J5EZBbkhKEjK3huBjM/VYn7wReTcAEkFRSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989911; c=relaxed/simple;
-	bh=wtqAlBKhRXWu1e2u31spVINzUITsP5wn0nTKqz3Th8c=;
+	s=arc-20240116; t=1711989914; c=relaxed/simple;
+	bh=woKUBIu/Ze0YesBg0jByXDZzVitnkCZTBUZC6sAjakA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Idv5LusjaUjQPpymywP69F9XyGgf+t2RGrVe3ycy71KGP178E96q7njN+AWUQcGj1bxbiDtalcC6iRNWPhHIbX603uANNDX9DlNqBEFcu1mD8gUJ4KNaaYh9lW70iVwEV4L+HlGQU9b4c2oMf6iCSpHdHlUr5xq2PP8ly7AHbfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQcj3XLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7I2WC3qOgogN7zae3noT++5gnFov0yqLHpqklcU4JSOjFxXveTUY3qeTDS33egTfndI0SrrNUsqdW9BQQKrwe6MuMm91Z/hZ9inYf+IgjyX7thUiWy3isyikaqU1kbK4z8gL1uStbWfsepleRjs3eb6EPGrmnY4X059oOHx5so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6G1KE/m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQcj3XLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C2AC43390;
-	Mon,  1 Apr 2024 16:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6G1KE/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DF8C433F1;
+	Mon,  1 Apr 2024 16:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989910;
-	bh=wtqAlBKhRXWu1e2u31spVINzUITsP5wn0nTKqz3Th8c=;
+	s=korg; t=1711989914;
+	bh=woKUBIu/Ze0YesBg0jByXDZzVitnkCZTBUZC6sAjakA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQcj3XLHkTpW8i+CG/gdDRl+Ydiui+rhh+rA5GgCwtaduUXZ3iTk+YG7VKofTxWpO
-	 FgWAAXhyeJyYm9PNcP8WmNW9/nAPsp32hDNvJdoB7u5ZAb+e6JbuYYncxcVup3mVG7
-	 7Oru5GArnSBr12f3NiQaRKb5/rvLDWr6iyJxHuN4=
+	b=J6G1KE/m3KLqvD7pdpTAshcNIZ9x/3Q5doNiLNVhqDj0Wl0dmj/wXVb+FGNmJg8sq
+	 nbV6p+s928l3geYVagqnuCUmpYZfW0kACxxTU/vnhws4T/RX0tPMSkvOvwt98Ht/43
+	 N3+bXCCiGQ25nHpQFlQA/RNe1Q7HSj1nguWIWEjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
+	Adrien Grassein <adrien.grassein@gmail.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/396] drm/bridge: add ->edid_read hook and drm_bridge_edid_read()
-Date: Mon,  1 Apr 2024 17:43:59 +0200
-Message-ID: <20240401152553.603973480@linuxfoundation.org>
+Subject: [PATCH 6.6 191/396] drm/bridge: lt8912b: use drm_bridge_edid_read()
+Date: Mon,  1 Apr 2024 17:44:00 +0200
+Message-ID: <20240401152553.633004956@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,146 +59,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit d807ad80d811ba0c22adfd871e2a46491f80d6e2 ]
+[ Upstream commit 60d1fe1a7f302cc1151b155ac2d134db59bb1420 ]
 
-Add new struct drm_edid based ->edid_read hook and
-drm_bridge_edid_read() function to call the hook.
+Prefer using the struct drm_edid based functions.
 
-v2: Include drm/drm_edid.h
-
+cc: Adrien Grassein <adrien.grassein@gmail.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/9d08d22eaffcb9c59a2b677e45d7e61fc689bc2f.1706038510.git.jani.nikula@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/32c9b52fe6fa7cbad6bfd0ff00041876977e02ea.1706038510.git.jani.nikula@intel.com
 Stable-dep-of: 171b711b26cc ("drm/bridge: lt8912b: do not return negative values from .get_modes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 46 +++++++++++++++++++++++++++++++++++-
- include/drm/drm_bridge.h     | 33 ++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 39e68e45bb124..67354afbd7168 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -27,8 +27,9 @@
- #include <linux/mutex.h>
+diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+index 03532efb893bb..491c08306f81a 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -429,16 +429,16 @@ lt8912_connector_mode_valid(struct drm_connector *connector,
  
- #include <drm/drm_atomic_state_helper.h>
--#include <drm/drm_debugfs.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_debugfs.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_encoder.h>
- #include <drm/drm_file.h>
- #include <drm/drm_of.h>
-@@ -1206,6 +1207,47 @@ int drm_bridge_get_modes(struct drm_bridge *bridge,
+ static int lt8912_connector_get_modes(struct drm_connector *connector)
+ {
+-	struct edid *edid;
++	const struct drm_edid *drm_edid;
+ 	int ret = -1;
+ 	int num = 0;
+ 	struct lt8912 *lt = connector_to_lt8912(connector);
+ 	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
+ 
+-	edid = drm_bridge_get_edid(lt->hdmi_port, connector);
+-	if (edid) {
+-		drm_connector_update_edid_property(connector, edid);
+-		num = drm_add_edid_modes(connector, edid);
++	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
++	if (drm_edid) {
++		drm_edid_connector_update(connector, drm_edid);
++		num = drm_edid_connector_add_modes(connector);
+ 	} else {
+ 		return ret;
+ 	}
+@@ -448,7 +448,7 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
+ 	if (ret)
+ 		num = ret;
+ 
+-	kfree(edid);
++	drm_edid_free(drm_edid);
+ 	return num;
  }
- EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
  
-+/**
-+ * drm_bridge_edid_read - read the EDID data of the connected display
-+ * @bridge: bridge control structure
-+ * @connector: the connector to read EDID for
-+ *
-+ * If the bridge supports output EDID retrieval, as reported by the
-+ * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.edid_read to get
-+ * the EDID and return it. Otherwise return NULL.
-+ *
-+ * If &drm_bridge_funcs.edid_read is not set, fall back to using
-+ * drm_bridge_get_edid() and wrapping it in struct drm_edid.
-+ *
-+ * RETURNS:
-+ * The retrieved EDID on success, or NULL otherwise.
-+ */
-+const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
-+					    struct drm_connector *connector)
-+{
-+	if (!(bridge->ops & DRM_BRIDGE_OP_EDID))
-+		return NULL;
-+
-+	/* Transitional: Fall back to ->get_edid. */
-+	if (!bridge->funcs->edid_read) {
-+		const struct drm_edid *drm_edid;
-+		struct edid *edid;
-+
-+		edid = drm_bridge_get_edid(bridge, connector);
-+		if (!edid)
-+			return NULL;
-+
-+		drm_edid = drm_edid_alloc(edid, (edid->extensions + 1) * EDID_LENGTH);
-+
-+		kfree(edid);
-+
-+		return drm_edid;
-+	}
-+
-+	return bridge->funcs->edid_read(bridge, connector);
-+}
-+EXPORT_SYMBOL_GPL(drm_bridge_edid_read);
-+
- /**
-  * drm_bridge_get_edid - get the EDID data of the connected display
-  * @bridge: bridge control structure
-@@ -1215,6 +1257,8 @@ EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
-  * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.get_edid to
-  * get the EDID and return it. Otherwise return NULL.
-  *
-+ * Deprecated. Prefer using drm_bridge_edid_read().
-+ *
-  * RETURNS:
-  * The retrieved EDID on success, or NULL otherwise.
-  */
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 103ff57fc83cf..b20cfe5bf30b3 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -555,6 +555,37 @@ struct drm_bridge_funcs {
- 	int (*get_modes)(struct drm_bridge *bridge,
- 			 struct drm_connector *connector);
- 
-+	/**
-+	 * @edid_read:
-+	 *
-+	 * Read the EDID data of the connected display.
-+	 *
-+	 * The @edid_read callback is the preferred way of reporting mode
-+	 * information for a display connected to the bridge output. Bridges
-+	 * that support reading EDID shall implement this callback and leave
-+	 * the @get_modes callback unimplemented.
-+	 *
-+	 * The caller of this operation shall first verify the output
-+	 * connection status and refrain from reading EDID from a disconnected
-+	 * output.
-+	 *
-+	 * This callback is optional. Bridges that implement it shall set the
-+	 * DRM_BRIDGE_OP_EDID flag in their &drm_bridge->ops.
-+	 *
-+	 * The connector parameter shall be used for the sole purpose of EDID
-+	 * retrieval, and shall not be stored internally by bridge drivers for
-+	 * future usage.
-+	 *
-+	 * RETURNS:
-+	 *
-+	 * An edid structure newly allocated with drm_edid_alloc() or returned
-+	 * from drm_edid_read() family of functions on success, or NULL
-+	 * otherwise. The caller is responsible for freeing the returned edid
-+	 * structure with drm_edid_free().
-+	 */
-+	const struct drm_edid *(*edid_read)(struct drm_bridge *bridge,
-+					    struct drm_connector *connector);
-+
- 	/**
- 	 * @get_edid:
- 	 *
-@@ -888,6 +919,8 @@ drm_atomic_helper_bridge_propagate_bus_fmt(struct drm_bridge *bridge,
- enum drm_connector_status drm_bridge_detect(struct drm_bridge *bridge);
- int drm_bridge_get_modes(struct drm_bridge *bridge,
- 			 struct drm_connector *connector);
-+const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
-+					    struct drm_connector *connector);
- struct edid *drm_bridge_get_edid(struct drm_bridge *bridge,
- 				 struct drm_connector *connector);
- void drm_bridge_hpd_enable(struct drm_bridge *bridge,
 -- 
 2.43.0
 
