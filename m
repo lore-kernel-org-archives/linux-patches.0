@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709D38F5C;
-	Mon,  1 Apr 2024 16:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003998F5C;
+	Mon,  1 Apr 2024 16:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987810; cv=none; b=gjoWXFE734//GcKftdU+5pah4BJtb/P2TJOOeilY4ccmJcC8Z2TPH4cDSOraq39wLJ2VsZtATizENXLPk1OwvhbNbXf/FI5qHiq0Qe1kYzN/mxr8tb+foZzlnBV4kdLWL6Q33VtEMXUAcfp47VU2f72q71IzTwnSgO6g5Hcl9tg=
+	t=1711987814; cv=none; b=UHEzpQ0MAfYvlLma37KFqBhZ9Tq0uocF0OUAA8ll05AMefQ2k+fEgL+pfEeJPXAkP8/EGsjsxRuoIiGTfLLABzTcLsyqLlz7cXyhv4eUwaWzId8qnadFj5h3bl/+Nipsl47Iq84vXOuk96Br24UgBK4D9ukTo1NK4pA7E1zUGgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987810; c=relaxed/simple;
-	bh=vo6k2yRjfxD3kh0U0wourcvciHcBnEaDzQtAbFisA9U=;
+	s=arc-20240116; t=1711987814; c=relaxed/simple;
+	bh=yWA/zfsZX2qZL8yAXZcyx/EcMIJujJSn3vFnrxUeJow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZFc90cuz69NPirMcK5CBa2uRqIK9tDUnlSlFeR41sb175xIz5i3yl5to/SagGrx+BUX1qHb5Wa/JznyEKQShByygf81pwlX8j8bVirP18LP0EzefjoS+Ir3VW3bm+5A0+nlbzZIMiOMHiLpVabJKj/GviROYNledlRp0DmGKd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnIR9BK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orE02TMoVn0HPcfiB5KjmXoPi/EwGCGoTaX1bKQ9InGtgt0pByAVHQphLeBHmaZaeYudDqyMX+DYQS6F5kwG7Ry7dUsQOB5vovEgWKUTwfL14cxFeOJxGgdG53ckdd3RAA2o4sG0IJ1OiCMIjEwL7blVzuHIvYKZqv4b0FYs+iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b16EqzvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnIR9BK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E54C433F1;
-	Mon,  1 Apr 2024 16:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b16EqzvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E389C433F1;
+	Mon,  1 Apr 2024 16:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987810;
-	bh=vo6k2yRjfxD3kh0U0wourcvciHcBnEaDzQtAbFisA9U=;
+	s=korg; t=1711987813;
+	bh=yWA/zfsZX2qZL8yAXZcyx/EcMIJujJSn3vFnrxUeJow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CnIR9BK5h1d0wyxSvvPVNZIrMjnHw254FbgALRtu/F5rlwRhHLHJc+ehage288PAd
-	 iP4RoxkZOcfR0w8kh8v3qcv6hpuQt68Xzj5ExK0JG3/VFtgSdPh6an1wPMg3FEc8Mo
-	 uuBWIAgPLyz2YHjVOc4NSeUVXwl9fPg0WKJ3ykO8=
+	b=b16EqzvWn8zjh4G3k8pP1oH73YM6jyMnJwoitgWvCMHh0+9W/4XdTZBU5mTqx/Puk
+	 Zd6lMYK8fltbckiYNeVD8YmMH9AEyDM4Uar8iO4scwF0Hz7LJueR109zpCnBKaEamu
+	 GTNTwgb5xngABo8lAMKpqp2oplIZMWwHt2hLLUc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natanael Copa <ncopa@alpinelinux.org>,
-	Greg Thelen <gthelen@google.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.8 399/399] tools/resolve_btfids: fix build with musl libc
-Date: Mon,  1 Apr 2024 17:46:05 +0200
-Message-ID: <20240401152601.090674615@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Bohac <jbohac@suse.cz>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 388/399] crash: use macro to add crashk_res into iomem early for specific arch
+Date: Mon,  1 Apr 2024 17:45:54 +0200
+Message-ID: <20240401152600.753471426@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,36 +55,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Natanael Copa <ncopa@alpinelinux.org>
+From: Baoquan He <bhe@redhat.com>
 
-commit 62248b22d01e96a4d669cde0d7005bd51ebf9e76 upstream.
+commit 32fbe5246582af4f611ccccee33fd6e559087252 upstream.
 
-Include the header that defines u32.
-This fixes build of 6.6.23 and 6.1.83 kernels for Alpine Linux, which
-uses musl libc. I assume that GNU libc indirecly pulls in linux/types.h.
+There are regression reports[1][2] that crashkernel region on x86_64 can't
+be added into iomem tree sometime.  This causes the later failure of kdump
+loading.
 
-Fixes: 9707ac4fe2f5 ("tools/resolve_btfids: Refactor set sorting with types from btf_ids.h")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218647
-Cc: stable@vger.kernel.org
-Signed-off-by: Natanael Copa <ncopa@alpinelinux.org>
-Tested-by: Greg Thelen <gthelen@google.com>
-Link: https://lore.kernel.org/r/20240328110103.28734-1-ncopa@alpinelinux.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This happened after commit 4a693ce65b18 ("kdump: defer the insertion of
+crashkernel resources") was merged.
+
+Even though, these reported issues are proved to be related to other
+component, they are just exposed after above commmit applied, I still
+would like to keep crashk_res and crashk_low_res being added into iomem
+early as before because the early adding has been always there on x86_64
+and working very well.  For safety of kdump, Let's change it back.
+
+Here, add a macro HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY to limit that
+only ARCH defining the macro can have the early adding
+crashk_res/_low_res into iomem. Then define
+HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY on x86 to enable it.
+
+Note: In reserve_crashkernel_low(), there's a remnant of crashk_low_res
+handling which was mistakenly added back in commit 85fcde402db1 ("kexec:
+split crashkernel reservation code out from crash_core.c").
+
+[1]
+[PATCH V2] x86/kexec: do not update E820 kexec table for setup_data
+https://lore.kernel.org/all/Zfv8iCL6CT2JqLIC@darkstar.users.ipa.redhat.com/T/#u
+
+[2]
+Question about Address Range Validation in Crash Kernel Allocation
+https://lore.kernel.org/all/4eeac1f733584855965a2ea62fa4da58@huawei.com/T/#u
+
+Link: https://lkml.kernel.org/r/ZgDYemRQ2jxjLkq+@MiWiFi-R3L-srv
+Fixes: 4a693ce65b18 ("kdump: defer the insertion of crashkernel resources")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Bohac <jbohac@suse.cz>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Baoquan He <bhe@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/btf_ids.h |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/include/asm/crash_core.h |    2 ++
+ kernel/crash_core.c               |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/tools/include/linux/btf_ids.h
-+++ b/tools/include/linux/btf_ids.h
-@@ -3,6 +3,8 @@
- #ifndef _LINUX_BTF_IDS_H
- #define _LINUX_BTF_IDS_H
+--- a/arch/x86/include/asm/crash_core.h
++++ b/arch/x86/include/asm/crash_core.h
+@@ -39,4 +39,6 @@ static inline unsigned long crash_low_si
+ #endif
+ }
  
-+#include <linux/types.h> /* for u32 */
++#define HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
 +
- struct btf_id_set {
- 	u32 cnt;
- 	u32 ids[];
+ #endif /* _X86_CRASH_CORE_H */
+--- a/kernel/crash_core.c
++++ b/kernel/crash_core.c
+@@ -376,6 +376,9 @@ static int __init reserve_crashkernel_lo
+ 
+ 	crashk_low_res.start = low_base;
+ 	crashk_low_res.end   = low_base + low_size - 1;
++#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
++	insert_resource(&iomem_resource, &crashk_low_res);
++#endif
+ #endif
+ 	return 0;
+ }
+@@ -457,8 +460,12 @@ retry:
+ 
+ 	crashk_res.start = crash_base;
+ 	crashk_res.end = crash_base + crash_size - 1;
++#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
++	insert_resource(&iomem_resource, &crashk_res);
++#endif
+ }
+ 
++#ifndef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
+ static __init int insert_crashkernel_resources(void)
+ {
+ 	if (crashk_res.start < crashk_res.end)
+@@ -471,6 +478,7 @@ static __init int insert_crashkernel_res
+ }
+ early_initcall(insert_crashkernel_resources);
+ #endif
++#endif
+ 
+ int crash_prepare_elf64_headers(struct crash_mem *mem, int need_kernel_map,
+ 			  void **addr, unsigned long *sz)
 
 
