@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551A51DFF4;
-	Mon,  1 Apr 2024 17:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F53D1DFF4;
+	Mon,  1 Apr 2024 17:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991099; cv=none; b=sRi8L5SDqnpjmnKkOLNkAFFN7OSNcXusEYvhqUEraRSSCVB1XxfB383wXSG29VvigpPI4zq1wTmKLHDRh8LVvdn7A2VOe4C926n8jfGu7Rv/io4xyXZWnFPxmfLxaqGaahRIPx/OpTxOBJqemvA59Zb++x19uTpv4/Se4+0ReSM=
+	t=1711991102; cv=none; b=kXc8XKP4esMUtc3TXUXcY3LH2g/my+3VXtXdn3P9MHfPvpNuEZQBhbGj/f0XQRvfuyFJeuYpadzR+0GD7bJDVi3RfUpB3QE3ML1wsQulsupzkGIrqYkyFtfdyR2E/66+5Mywu90w6ve5W1j7gcYoZ/0HBLZaza4oBapFeK0tepY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991099; c=relaxed/simple;
-	bh=evBYGhR0AhtBGx+leHY3lkf5awXl2UDfbWmdOhqEfOY=;
+	s=arc-20240116; t=1711991102; c=relaxed/simple;
+	bh=12GgLQ0jm5EVWHyLvalqr3jS75+c5/EWXxFm2SOvAA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0laHr9BaxFUpz4v2qIdoKux8P6bHWEE4XAgZ0Br+m95F7ahM6TzEzYeHR53XNpJxBB8JgqZfbyHtjiY9dELjvHD1PUJeHxIuW0iCGr3I3pZLWSZGI2LR8/vyJg8/rQN7vLGXm9EZXCE54KAz+yB9GUjOBHz8s2NxBQ9IKHo2ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Um5vyvsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfmIEpDu30KN6/CO4Jowr+CtJlljKVNIEmiY0mxQdtA626JmyYtv3XFjeRDSM2feuEccMnEj9wk9xL4ZamV/PIfC58yMVvvB+JrQO1hilU53RQ0/4nhAomNme9XKoJ2mH4JSEqr3MUN3AQvxMzcZ7gNfXrnTbfwMYe+dfjjlvAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7SeZeIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Um5vyvsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF607C433C7;
-	Mon,  1 Apr 2024 17:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7SeZeIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD1BC433F1;
+	Mon,  1 Apr 2024 17:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991099;
-	bh=evBYGhR0AhtBGx+leHY3lkf5awXl2UDfbWmdOhqEfOY=;
+	s=korg; t=1711991102;
+	bh=12GgLQ0jm5EVWHyLvalqr3jS75+c5/EWXxFm2SOvAA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Um5vyvscgaQDC199e291QyhfuzXhs9ZKpadMw0J4SWFA8U0W2zOSwTX6V97uLrzlY
-	 awWsMrLeb4l9o2y92AZAE0VdoRlXVtRVFT+2aHQNJklS94/U25z44bhPv6h/d7YpXY
-	 AVsX02sZcsf2OruEpd14pNPLmqEqJrii55+ubR5E=
+	b=w7SeZeIRBbEEj7Ad3iVjDFnTTSq89fSc3OhS0dN37rkpIZzdj6n2Ejb7Walw9Lz47
+	 7pFpFFyC3xvoGKa2jQQCS7zz8i3R68d+Pgt5nOan+plUuim0KHLODnVRV9WY4hCC2b
+	 hcGfeU1FLVSV6flb4FICnwT/fTYX4MSCU/Zjjjd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Usyskin <alexander.usyskin@intel.com>,
 	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 6.1 163/272] mei: me: add arrow lake point S DID
-Date: Mon,  1 Apr 2024 17:45:53 +0200
-Message-ID: <20240401152535.831587852@linuxfoundation.org>
+Subject: [PATCH 6.1 164/272] mei: me: add arrow lake point H DID
+Date: Mon,  1 Apr 2024 17:45:54 +0200
+Message-ID: <20240401152535.863773036@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,14 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 7a9b9012043e126f6d6f4683e67409312d1b707b upstream.
+commit 8436f25802ec028ac7254990893f3e01926d9b79 upstream.
 
-Add Arrow Lake S device id.
+Add Arrow Lake H device id.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
 Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240211103912.117105-1-tomas.winkler@intel.com
+Link: https://lore.kernel.org/r/20240211103912.117105-2-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/misc/mei/hw-me-regs.h |    1 +
@@ -68,21 +68,21 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/misc/mei/hw-me-regs.h
 +++ b/drivers/misc/mei/hw-me-regs.h
-@@ -112,6 +112,7 @@
- #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
+@@ -113,6 +113,7 @@
  
  #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
-+#define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
+ #define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
++#define MEI_DEV_ID_ARL_H      0x7770  /* Arrow Lake Point H */
  
  /*
   * MEI HW Section
 --- a/drivers/misc/mei/pci-me.c
 +++ b/drivers/misc/mei/pci-me.c
-@@ -119,6 +119,7 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
+@@ -120,6 +120,7 @@ static const struct pci_device_id mei_me
  
  	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
++	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_H, MEI_ME_PCH15_CFG)},
  
  	/* required last entry */
  	{0, }
