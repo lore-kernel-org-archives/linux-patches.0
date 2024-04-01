@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615331CA8F;
-	Mon,  1 Apr 2024 16:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745BB1CA8F;
+	Mon,  1 Apr 2024 16:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987556; cv=none; b=RQQXmJqr1iDyVQs2SDeFIFFQyRzWi9c/jNhT75x8l+LIwh/l78+v43n3tEdceX/KNbIeKhxB8qTWZYfeh5vDY2QjPai6LZiF7PCB0xTnVFarugY5NWUfGuSyVpTnYnJ4Et0E7IMW9GFJCHHvVcHX98DzVIQBtp0ExVKY/7nUNHw=
+	t=1711987559; cv=none; b=q0MLK+E4a1Fuwfkl2SFo7o8uXLm/RDyWjo2aJCiOO23cXq+pMuEO4GzCpafjveAQYavRBrLlx5LY3IkVJBIAaNd0g0MzdsIBKIvlzT3mD9RLj6x9EsF9Ms2vWnMztLurBnvd1b7my2c20gcum7hA2sq60hnhwIP7HWeRSzsnFlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987556; c=relaxed/simple;
-	bh=3uSLwXPE+ie4Erd1ycRWXi/yq80cHJvgNRSAuHoHhtU=;
+	s=arc-20240116; t=1711987559; c=relaxed/simple;
+	bh=/gOt41U+14Rf6ZT3R/JPtviCLQ2fHoxzHYEyDgQRZI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CijgqlvnVkTT2Ofz7mYEKugaIPx5TV8ednIWr0xq/GYCMGbxR7pxgv/dLH3XD+ETnRAcygACRR7kbyQWm862KONiZjICbyMvR1HMZ1H/TSfMRI41V9i5D1w79zcT+XrO7GyQgwlfv8XgwhdFTHaKdGvzggqHIa41i433E7Og8Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNj0FjOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ER6HYVtJEbJaD7PTGvRv4zC0E/xqBdlueN08xAidnfdEpjFRvIbjnwok8tXxmnSJ/70FsWDRrGJAkkDzOMEXlAWyiCDSPM6/VXrmDAmaWKD9jR75X07EasysoaKBjFpNG8BbnT/Ztk0Qtxz2VlXjBQnh0DAV0ygFYkE2INxr5DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0e/MEls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNj0FjOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C814AC433F1;
-	Mon,  1 Apr 2024 16:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0e/MEls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42B5C433F1;
+	Mon,  1 Apr 2024 16:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987556;
-	bh=3uSLwXPE+ie4Erd1ycRWXi/yq80cHJvgNRSAuHoHhtU=;
+	s=korg; t=1711987559;
+	bh=/gOt41U+14Rf6ZT3R/JPtviCLQ2fHoxzHYEyDgQRZI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNj0FjObO1Vl0DCeI0hpR1+Ykuj2BsncSVK44BgJGi+hagZhtaUSW4KEhWTaN9d48
-	 QXjlWpTVggXPInqyMI6cKCSX+ewJH2mWZ3yIedhJqXpyll/tC3al+iMktg21o2LEJS
-	 9dMQydsYim5URpwokk583+VLjmvBEMyZfylSBaGA=
+	b=v0e/MElsX8K4nXheK0Ko/17NA16zBD2YGeN8kPcjPv59b2goLZPPDdTNCuL7lLKeN
+	 oYDlCEz5zxI5pQJlkNinD2QF99ek3JVUB1iP3DuV+zwCvZ4QS1bbzmlKotiirW5AQk
+	 dc/ZOONfq6Z5SpUshV6GNV8dzytgTwbqVAvrYhKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.8 321/399] net: wan: framer: Add missing static inline qualifiers
-Date: Mon,  1 Apr 2024 17:44:47 +0200
-Message-ID: <20240401152558.763852494@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.8 294/399] btrfs: validate device maj:min during open
+Date: Mon,  1 Apr 2024 17:44:20 +0200
+Message-ID: <20240401152557.963456801@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,51 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Anand Jain <anand.jain@oracle.com>
 
-commit ea2c09283b44d1a3732a195a9b257d56779c8863 upstream.
+commit 9f7eb8405dcbc79c5434821e9e3e92abe187ee8e upstream.
 
-Compilation with CONFIG_GENERIC_FRAMER disabled lead to the following
-warnings:
-  framer.h:184:16: warning: no previous prototype for function 'framer_get' [-Wmissing-prototypes]
-  184 | struct framer *framer_get(struct device *dev, const char *con_id)
-  framer.h:184:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-  184 | struct framer *framer_get(struct device *dev, const char *con_id)
-  framer.h:189:6: warning: no previous prototype for function 'framer_put' [-Wmissing-prototypes]
-  189 | void framer_put(struct device *dev, struct framer *framer)
-  framer.h:189:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-  189 | void framer_put(struct device *dev, struct framer *framer)
+Boris managed to create a device capable of changing its maj:min without
+altering its device path.
 
-Add missing 'static inline' qualifiers for these functions.
+Only multi-devices can be scanned. A device that gets scanned and remains
+in the btrfs kernel cache might end up with an incorrect maj:min.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202403241110.hfJqeJRu-lkp@intel.com/
-Fixes: 82c944d05b1a ("net: wan: Add framer framework support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Despite the temp-fsid feature patch did not introduce this bug, it could
+lead to issues if the above multi-device is converted to a single device
+with a stale maj:min. Subsequently, attempting to mount the same device
+with the correct maj:min might mistake it for another device with the same
+fsid, potentially resulting in wrongly auto-enabling the temp-fsid feature.
+
+To address this, this patch validates the device's maj:min at the time of
+device open and updates it if it has changed since the last scan.
+
+CC: stable@vger.kernel.org # 6.7+
+Fixes: a5b8a5f9f835 ("btrfs: support cloned-device mount capability")
+Reported-by: Boris Burkov <boris@bur.io>
+Co-developed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Boris Burkov <boris@bur.io>#
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/framer/framer.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/volumes.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/linux/framer/framer.h
-+++ b/include/linux/framer/framer.h
-@@ -181,12 +181,12 @@ static inline int framer_notifier_unregi
- 	return -ENOSYS;
- }
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -694,6 +694,16 @@ static int btrfs_open_one_device(struct
+ 	device->bdev = bdev_handle->bdev;
+ 	clear_bit(BTRFS_DEV_STATE_IN_FS_METADATA, &device->dev_state);
  
--struct framer *framer_get(struct device *dev, const char *con_id)
-+static inline struct framer *framer_get(struct device *dev, const char *con_id)
- {
- 	return ERR_PTR(-ENOSYS);
- }
- 
--void framer_put(struct device *dev, struct framer *framer)
-+static inline void framer_put(struct device *dev, struct framer *framer)
- {
- }
- 
++	if (device->devt != device->bdev->bd_dev) {
++		btrfs_warn(NULL,
++			   "device %s maj:min changed from %d:%d to %d:%d",
++			   device->name->str, MAJOR(device->devt),
++			   MINOR(device->devt), MAJOR(device->bdev->bd_dev),
++			   MINOR(device->bdev->bd_dev));
++
++		device->devt = device->bdev->bd_dev;
++	}
++
+ 	fs_devices->open_devices++;
+ 	if (test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state) &&
+ 	    device->devid != BTRFS_DEV_REPLACE_DEVID) {
 
 
