@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE2446551;
-	Mon,  1 Apr 2024 15:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760F946B8B;
+	Mon,  1 Apr 2024 15:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986621; cv=none; b=sYT0XCkI8XBJheUsuZBuYsT19rVQsXYnrGbywFg88LSPoWO28NtBRGPhBEgWX+CxPYVT2CAlhCzbYjm0lN4IbDXY+QabzRL3tzqGWDa4pCCNiO3BL8bBTiJFpOQqkFtEeSAIlrKZDDTbciuc7t5ONCOl2xbJBefSKBnBocjRpDk=
+	t=1711986624; cv=none; b=UK8mpbCePcFi61lA3puaPGEHXOwoW8PlG3eZq3YHtRScCinHCGPfpCxY55lVJC2g89fEf4nXkp5xSS1Oe4ZfXilIIpPvmlgjBJj5mbEUXvJ+1GrUjs3+/GMf40b2WVE8Zk4htVRbQiY0EqUKf4k1AlRK29s8oMS7AW7n9eOZEHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986621; c=relaxed/simple;
-	bh=k/5TK9GFzNGDe0YAIGaN1JHWBSsMMmLsstBrdfKAD0s=;
+	s=arc-20240116; t=1711986624; c=relaxed/simple;
+	bh=uc3sV23KGAaRp1FqoWSQOme2pnneiA0xVj9dtIQNExc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbfwuZT0zUVYniKN034CN0LofEu48SIhJoy5WJek30nD3NWIJI/6xzlq2r5bP9wyQgqByBOPbRHnUqMZ4nqJJQ/TzxGU9QxRI7ZaRGvHdlGK7CWXGLCoVEIfDkA6Uej08G80KQEXq4ZDVtBtMefsRXtfq5iitJP3+MSaYCrRbog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsMwlZXn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CvomrvtaL7WKIdKJbFdSimazSPDnvZOw8ZoG4syZetSXrKujwk5TrebdEr2e/NVkWsI0vMbLSsKtwcGe9SVnMjKoKIZGQYz0UCe5K5Ey4L1FxngTNPpWA/VSNJuGPvptevVbsFkDWqQyqpfK7BwaepVNJGnu4sGf74fH6g51vn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltv2zdKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsMwlZXn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D411C433C7;
-	Mon,  1 Apr 2024 15:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltv2zdKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A9AC433F1;
+	Mon,  1 Apr 2024 15:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986621;
-	bh=k/5TK9GFzNGDe0YAIGaN1JHWBSsMMmLsstBrdfKAD0s=;
+	s=korg; t=1711986624;
+	bh=uc3sV23KGAaRp1FqoWSQOme2pnneiA0xVj9dtIQNExc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsMwlZXnREEqxnjBKbjuyCin3OqfFP0XQa34ic7EFi9AyA7JKSpzmQENWQsnV/4F6
-	 OnkFa6W+x/lGnRUtaNZ6H/+k4Zshu3JzXflGoNezfOUuFJN+8z9+UmDEG1hv6RGs4z
-	 p3lhKvp/E/ozEI25woupSy8Pcu30ln5jtDni3p5Q=
+	b=ltv2zdKMK3Ik4zzhqarqNneM/Zxhn+MIcLRUAWzkYxfSyKB+vw0V/IHzbKvuulmbO
+	 NaOGNKwebQsbUk4hHl22FAmqpWiUpvDRSlwxobuTd68jvPdT9aTlGWBnnEXuVuWh7w
+	 /a4KHyHP9EIS/7zTHKSBLZ27hzeGo/oDFO7ywjdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hidenori Kobayashi <hidenorik@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 031/399] powercap: intel_rapl: Fix locking in TPMI RAPL
-Date: Mon,  1 Apr 2024 17:39:57 +0200
-Message-ID: <20240401152550.094094537@linuxfoundation.org>
+Subject: [PATCH 6.8 004/399] media: staging: ipu3-imgu: Set fields before media_entity_pads_init()
+Date: Mon,  1 Apr 2024 17:39:30 +0200
+Message-ID: <20240401152549.270365768@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,194 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Hidenori Kobayashi <hidenorik@chromium.org>
 
-[ Upstream commit 1aa09b9379a7a644cd2f75ae0bac82b8783df600 ]
+[ Upstream commit 87318b7092670d4086bfec115a0280a60c51c2dd ]
 
-The RAPL framework uses CPU hotplug locking to protect the rapl_packages
-list and rp->lead_cpu to guarantee that
+The imgu driver fails to probe with the following message because it
+does not set the pad's flags before calling media_entity_pads_init().
 
- 1. the RAPL package device is not unprobed and freed
- 2. the cached rp->lead_cpu is always valid
+[   14.596315] ipu3-imgu 0000:00:05.0: failed initialize subdev media entity (-22)
+[   14.596322] ipu3-imgu 0000:00:05.0: failed to register subdev0 ret (-22)
+[   14.596327] ipu3-imgu 0000:00:05.0: failed to register pipes (-22)
+[   14.596331] ipu3-imgu 0000:00:05.0: failed to create V4L2 devices (-22)
 
-for operations like powercap sysfs accesses.
+Fix the initialization order so that the driver probe succeeds. The ops
+initialization is also moved together for readability.
 
-Current RAPL APIs assume being called from CPU hotplug callbacks which
-hold the CPU hotplug lock, but TPMI RAPL driver invokes the APIs in the
-driver's .probe() function without acquiring the CPU hotplug lock.
-
-Fix the problem by providing both locked and lockless versions of RAPL
-APIs.
-
-Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a0ca1627b450 ("media: staging/intel-ipu3: Add v4l2 driver based on media framework")
+Cc: <stable@vger.kernel.org> # 6.7
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c          | 29 +++++++++++++++++--
- drivers/powercap/intel_rapl_msr.c             |  8 ++---
- .../int340x_thermal/processor_thermal_rapl.c  |  8 ++---
- include/linux/intel_rapl.h                    |  6 ++++
- 4 files changed, 40 insertions(+), 11 deletions(-)
+ drivers/staging/media/ipu3/ipu3-v4l2.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 1a739afd47d96..9d3e102f1a76b 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -5,6 +5,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
+index a66f034380c05..3df58eb3e8822 100644
+--- a/drivers/staging/media/ipu3/ipu3-v4l2.c
++++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+@@ -1069,6 +1069,11 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 	struct imgu_media_pipe *imgu_pipe = &imgu->imgu_pipe[pipe];
  
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/list.h>
-@@ -1504,7 +1505,7 @@ static int rapl_detect_domains(struct rapl_package *rp)
- }
- 
- /* called from CPU hotplug notifier, hotplug lock held */
--void rapl_remove_package(struct rapl_package *rp)
-+void rapl_remove_package_cpuslocked(struct rapl_package *rp)
- {
- 	struct rapl_domain *rd, *rd_package = NULL;
- 
-@@ -1533,10 +1534,18 @@ void rapl_remove_package(struct rapl_package *rp)
- 	list_del(&rp->plist);
- 	kfree(rp);
- }
-+EXPORT_SYMBOL_GPL(rapl_remove_package_cpuslocked);
-+
-+void rapl_remove_package(struct rapl_package *rp)
-+{
-+	guard(cpus_read_lock)();
-+	rapl_remove_package_cpuslocked(rp);
-+}
- EXPORT_SYMBOL_GPL(rapl_remove_package);
- 
- /* caller to ensure CPU hotplug lock is held */
--struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
-+							 bool id_is_cpu)
- {
- 	struct rapl_package *rp;
- 	int uid;
-@@ -1554,10 +1563,17 @@ struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv,
- 
- 	return NULL;
- }
-+EXPORT_SYMBOL_GPL(rapl_find_package_domain_cpuslocked);
-+
-+struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+{
-+	guard(cpus_read_lock)();
-+	return rapl_find_package_domain_cpuslocked(id, priv, id_is_cpu);
-+}
- EXPORT_SYMBOL_GPL(rapl_find_package_domain);
- 
- /* called from CPU hotplug notifier, hotplug lock held */
--struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *priv, bool id_is_cpu)
- {
- 	struct rapl_package *rp;
- 	int ret;
-@@ -1603,6 +1619,13 @@ struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id
- 	kfree(rp);
- 	return ERR_PTR(ret);
- }
-+EXPORT_SYMBOL_GPL(rapl_add_package_cpuslocked);
-+
-+struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+{
-+	guard(cpus_read_lock)();
-+	return rapl_add_package_cpuslocked(id, priv, id_is_cpu);
-+}
- EXPORT_SYMBOL_GPL(rapl_add_package);
- 
- static void power_limit_state_save(void)
-diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
-index 250bd41a588c7..b4b6930cacb0b 100644
---- a/drivers/powercap/intel_rapl_msr.c
-+++ b/drivers/powercap/intel_rapl_msr.c
-@@ -73,9 +73,9 @@ static int rapl_cpu_online(unsigned int cpu)
- {
- 	struct rapl_package *rp;
- 
--	rp = rapl_find_package_domain(cpu, rapl_msr_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, rapl_msr_priv, true);
- 	if (!rp) {
--		rp = rapl_add_package(cpu, rapl_msr_priv, true);
-+		rp = rapl_add_package_cpuslocked(cpu, rapl_msr_priv, true);
- 		if (IS_ERR(rp))
- 			return PTR_ERR(rp);
+ 	/* Initialize subdev media entity */
++	imgu_sd->subdev.entity.ops = &imgu_media_ops;
++	for (i = 0; i < IMGU_NODE_NUM; i++) {
++		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
++			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
++	}
+ 	r = media_entity_pads_init(&imgu_sd->subdev.entity, IMGU_NODE_NUM,
+ 				   imgu_sd->subdev_pads);
+ 	if (r) {
+@@ -1076,11 +1081,6 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 			"failed initialize subdev media entity (%d)\n", r);
+ 		return r;
  	}
-@@ -88,14 +88,14 @@ static int rapl_cpu_down_prep(unsigned int cpu)
- 	struct rapl_package *rp;
- 	int lead_cpu;
+-	imgu_sd->subdev.entity.ops = &imgu_media_ops;
+-	for (i = 0; i < IMGU_NODE_NUM; i++) {
+-		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
+-			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
+-	}
  
--	rp = rapl_find_package_domain(cpu, rapl_msr_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, rapl_msr_priv, true);
- 	if (!rp)
- 		return 0;
- 
- 	cpumask_clear_cpu(cpu, &rp->cpumask);
- 	lead_cpu = cpumask_first(&rp->cpumask);
- 	if (lead_cpu >= nr_cpu_ids)
--		rapl_remove_package(rp);
-+		rapl_remove_package_cpuslocked(rp);
- 	else if (rp->lead_cpu == cpu)
- 		rp->lead_cpu = lead_cpu;
- 	return 0;
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-index 2f00fc3bf274a..e964a9375722a 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-@@ -27,9 +27,9 @@ static int rapl_mmio_cpu_online(unsigned int cpu)
- 	if (topology_physical_package_id(cpu))
- 		return 0;
- 
--	rp = rapl_find_package_domain(cpu, &rapl_mmio_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, &rapl_mmio_priv, true);
- 	if (!rp) {
--		rp = rapl_add_package(cpu, &rapl_mmio_priv, true);
-+		rp = rapl_add_package_cpuslocked(cpu, &rapl_mmio_priv, true);
- 		if (IS_ERR(rp))
- 			return PTR_ERR(rp);
+ 	/* Initialize subdev */
+ 	v4l2_subdev_init(&imgu_sd->subdev, &imgu_subdev_ops);
+@@ -1177,15 +1177,15 @@ static int imgu_v4l2_node_setup(struct imgu_device *imgu, unsigned int pipe,
  	}
-@@ -42,14 +42,14 @@ static int rapl_mmio_cpu_down_prep(unsigned int cpu)
- 	struct rapl_package *rp;
- 	int lead_cpu;
  
--	rp = rapl_find_package_domain(cpu, &rapl_mmio_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, &rapl_mmio_priv, true);
- 	if (!rp)
- 		return 0;
+ 	/* Initialize media entities */
++	node->vdev_pad.flags = node->output ?
++		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
++	vdev->entity.ops = NULL;
+ 	r = media_entity_pads_init(&vdev->entity, 1, &node->vdev_pad);
+ 	if (r) {
+ 		dev_err(dev, "failed initialize media entity (%d)\n", r);
+ 		mutex_destroy(&node->lock);
+ 		return r;
+ 	}
+-	node->vdev_pad.flags = node->output ?
+-		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
+-	vdev->entity.ops = NULL;
  
- 	cpumask_clear_cpu(cpu, &rp->cpumask);
- 	lead_cpu = cpumask_first(&rp->cpumask);
- 	if (lead_cpu >= nr_cpu_ids)
--		rapl_remove_package(rp);
-+		rapl_remove_package_cpuslocked(rp);
- 	else if (rp->lead_cpu == cpu)
- 		rp->lead_cpu = lead_cpu;
- 	return 0;
-diff --git a/include/linux/intel_rapl.h b/include/linux/intel_rapl.h
-index 33f21bd85dbf2..f3196f82fd8a1 100644
---- a/include/linux/intel_rapl.h
-+++ b/include/linux/intel_rapl.h
-@@ -178,6 +178,12 @@ struct rapl_package {
- 	struct rapl_if_priv *priv;
- };
- 
-+struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
-+						       bool id_is_cpu);
-+struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *priv,
-+						 bool id_is_cpu);
-+void rapl_remove_package_cpuslocked(struct rapl_package *rp);
-+
- struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu);
- struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu);
- void rapl_remove_package(struct rapl_package *rp);
+ 	/* Initialize vbq */
+ 	vbq->type = node->vdev_fmt.type;
 -- 
 2.43.0
 
