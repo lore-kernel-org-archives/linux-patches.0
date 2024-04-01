@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091F6481B7;
-	Mon,  1 Apr 2024 16:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461274B5AE;
+	Mon,  1 Apr 2024 16:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989830; cv=none; b=Zz84iF2X42U2CKdlBZw4JBScVUjBRJDH/njXPR6F7mbttLe8IiQpsSQQWoJLzcQ5LuYHbXev6r6E07hAKyeYp5s6vbrh4qjmMHIbMm9AdLhYuumfvMG3KZ2jFKWEXgujPEijhEDRkO/nVfMpCd2TRpvCYBGNACEiCJYnrKfkZpU=
+	t=1711989833; cv=none; b=jwGYMVpeSMVIVl105WdH+eBenBNi2kPkOrA2ug4cSWjuuY0bfBBrhw1059gC83AailplJcPEw+OQ7qA7fJEYfg3TqZ+l22yI4eA0YtMPBsg34Hp0mF8f53s6RJuJO55kuOtyU9ofTgWJGygGul/B4HaNU8Q+5/d4DBANuE3Xodc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989830; c=relaxed/simple;
-	bh=CoZfXVrhd/kPcoP35+g/xFWEeSLBhfU4CZ6w48bFwOk=;
+	s=arc-20240116; t=1711989833; c=relaxed/simple;
+	bh=aOOuPy9LnVKmP6YgnfekEX55eQpehYmh5nrdm7MHBxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=algvFz2bjnY80eTUkmBIVRi3qozwp22Yhjw8qkb+VbN7+klbfovaMiWlTkQ2cdThzfC8v0W1tJmZanlQoCUJ4567Hx2iGRvbnjUTG9Yw0B23jUofjniP9m1oUnqS87DLH0HoGTL3IStTiPcj63vALwoRQDkeNvYoHD4/Jvk63GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTyy0+xA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEdw+k6TvFQJIrt/jp4hp66fldmnFglNsBfd3SzatfONlfzo3aINbU+vwrPq8h5VP15Kga3V/kbUX+QwQo5LmmInNzJxfqjip5n6mtW+o05zLVMCCoEHc3mkjdtDARmtPfL4kf+/A1c95fVbCOPqGkx+pBe5Wk2HpDsDusXn2kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7SAYNWy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTyy0+xA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68184C433C7;
-	Mon,  1 Apr 2024 16:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7SAYNWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD514C433F1;
+	Mon,  1 Apr 2024 16:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989829;
-	bh=CoZfXVrhd/kPcoP35+g/xFWEeSLBhfU4CZ6w48bFwOk=;
+	s=korg; t=1711989833;
+	bh=aOOuPy9LnVKmP6YgnfekEX55eQpehYmh5nrdm7MHBxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTyy0+xAM0hdrnmZfzOfsFkkz1d6Qdapm35mFP3gcc0nDACUtODmhOmoD2QthmGce
-	 QEDZvI+72zlYu0n0RnvjV7XD/U3zAZK2jIBjg+1/nyP+VhHmZrv61c7p4wdDn12sEA
-	 tboGug8ckRj6V1JdraAf1nP7rcCwSAN1jt09pzmU=
+	b=U7SAYNWy7Nm/LQ3LuBsZFFu8i/I9tqHvAMxw9uWfYelXMA3Y2k2RkUUgAOkKN/zh3
+	 NPeM4DX5bgolVThCuAgSAF9kqWyCwlnyN6jz6+27bmzAUqBw0Ayu6xaB1MSAGydcua
+	 PNP8Scz0fzKz9I1rPO1YMpqbsAwRCaBdtCQBRsdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/396] x86/CPU/AMD: Update the Zenbleed microcode revisions
-Date: Mon,  1 Apr 2024 17:43:35 +0200
-Message-ID: <20240401152552.890058529@linuxfoundation.org>
+Subject: [PATCH 6.6 149/396] drm/vc4: hdmi: do not return negative values from .get_modes()
+Date: Mon,  1 Apr 2024 17:43:18 +0200
+Message-ID: <20240401152552.387635662@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
+[ Upstream commit abf493988e380f25242c1023275c68bd3579c9ce ]
 
-Update them to the correct revision numbers.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: stable@vger.kernel.org
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/dcda6d4003e2c6192987916b35c7304732800e08.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index bb3efc825bf4f..031bca974fbf3 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1006,11 +1006,11 @@ static bool cpu_has_zenbleed_microcode(void)
- 	u32 good_rev = 0;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 25c9c71256d35..4626fe9aac563 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -508,7 +508,7 @@ static int vc4_hdmi_connector_get_modes(struct drm_connector *connector)
+ 	edid = drm_get_edid(connector, vc4_hdmi->ddc);
+ 	cec_s_phys_addr_from_edid(vc4_hdmi->cec_adap, edid);
+ 	if (!edid)
+-		return -ENODEV;
++		return 0;
  
- 	switch (boot_cpu_data.x86_model) {
--	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
--	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
--	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
--	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
--	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
-+	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
-+	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
-+	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
-+	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
-+	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
- 
- 	default:
- 		return false;
+ 	drm_connector_update_edid_property(connector, edid);
+ 	ret = drm_add_edid_modes(connector, edid);
 -- 
 2.43.0
 
