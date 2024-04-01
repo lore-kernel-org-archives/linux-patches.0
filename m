@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF644D9FB;
-	Mon,  1 Apr 2024 15:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C5B4D583;
+	Mon,  1 Apr 2024 15:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986745; cv=none; b=poxtlleZaMdvIHV8RBxI86lIakoWRqsb1kDO+BafT+73mpuADg0R+vW7SbJULTSEQ4Prw+8CtLHT6+vlS7twPVUlUxU3Tss76jX5IOYq9jouWpW9MMjpuKaPNCqqMyUfRm73OG6cKv8y+VhpRTy69ExOWdDDUc75VayIzTe4BZo=
+	t=1711986748; cv=none; b=VtTQb16PZ8pWbysQwmujvwaYfMmeJsdkib7+fBGdgkxQnkrg0D60qYqr4g6ayySRYLSkc9i/HJFpe6bZ7hq1mxK/rFxun0NEaCvZiEbYsGYpDXTLmmjUnNA/3xGc9OAwJpn/wMS3UtruApu+oR6TTWeRs4dISMCT3nuFTdqRcCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986745; c=relaxed/simple;
-	bh=8LJd2eFqzxrqWUi0g3SJ5TygJ0vR3Zc7bylNf2lRekc=;
+	s=arc-20240116; t=1711986748; c=relaxed/simple;
+	bh=QqvJaQc1Ne3l/KWNKTPMdWMg6sqsdM9I6ycy4/dA7R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVkWKULlqOtQ/5sWZwenTalqKyPaw0N2PAYjrPmAEqKKkxJJKwhGpOkYjbqjlvr8bAF1Gw2di9uaMMV+cozD1p0JK5lB5kz+U2GUmVgOPi6YcO9E1aHviBnZ+U1mAemG3IYUETGPPLiVUYHUgKXo7o10Aa6FpjvVkjdUqicfYrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pwhEL7g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nipo+Me4QsEgR5YlpoUtsCsw/LwExHQR3nVniohW0c5lf5xhEQumnOdVUFeoATgfeg99Fb/r9scXWNg63YeSIOX/GqKM+2B6rgv/b2mAC+aVP1rWkXGiJRIrtPd3ZLq2XdWSJbLqIGpcp9wTpQNvxXWwkAsWtpBB5D+iqfu3rYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDxczOJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pwhEL7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BC9C433C7;
-	Mon,  1 Apr 2024 15:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDxczOJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA9AC433C7;
+	Mon,  1 Apr 2024 15:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986744;
-	bh=8LJd2eFqzxrqWUi0g3SJ5TygJ0vR3Zc7bylNf2lRekc=;
+	s=korg; t=1711986748;
+	bh=QqvJaQc1Ne3l/KWNKTPMdWMg6sqsdM9I6ycy4/dA7R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pwhEL7go/CNEG2i4QsS8BxnYPLwY136Kw1QELg7uu5FwFMI3bV2QHcORxik8x8In
-	 CztrE0nB8jHMcVTgjZyblkOlYglVv+8cs7x1jbAGzZsR5R5E9DrG6FE5+NuW9t3jFC
-	 65cDre2zQcmMpXf1UL/0oj2ky3lzVxeCzzSgAVeI=
+	b=XDxczOJQta/hti0EPrkhCAiSENEI3fzod+Kb/Q853L7q5EJZdq6msIAVF46ZSRIhc
+	 Kx4FUyveuJuZUAPL5Iwd2ZtFlL30I0ErRnapI2ZbLKedMOhgPWYfjA7oDXliNM4+NP
+	 0qMrglTbswUYSZ0/tn043Hrdoxuv1DBLaZVoVvFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 041/399] pinctrl: qcom: sm8650-lpass-lpi: correct Kconfig name
-Date: Mon,  1 Apr 2024 17:40:07 +0200
-Message-ID: <20240401152550.402900046@linuxfoundation.org>
+Subject: [PATCH 6.8 032/399] powercap: intel_rapl_tpmi: Fix a register bug
+Date: Mon,  1 Apr 2024 17:39:58 +0200
+Message-ID: <20240401152550.123683768@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 47847b9bcdb13c2da1829323a66651ef63047b77 ]
+[ Upstream commit faa9130ce716b286d786d59032bacfd9052c2094 ]
 
-Use proper model name in SM8650 LPASS pin controller Kconfig entry.
+Add the missing Domain Info register. This also fixes the bogus
+definition of the Interrupt register.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: c4e47673853f ("pinctrl: qcom: sm8650-lpass-lpi: add SM8650 LPASS")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240216102435.89867-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Neither of these two registers was used previously.
+
+Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/powercap/intel_rapl_tpmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index e0f2829c15d6a..24619e80b2cce 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -125,7 +125,7 @@ config PINCTRL_SM8550_LPASS_LPI
- 	  platform.
- 
- config PINCTRL_SM8650_LPASS_LPI
--	tristate "Qualcomm Technologies Inc SM8550 LPASS LPI pin controller driver"
-+	tristate "Qualcomm Technologies Inc SM8650 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
- 	depends on PINCTRL_LPASS_LPI
- 	help
+diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
+index 891c90fefd8b7..f1c734ac3c349 100644
+--- a/drivers/powercap/intel_rapl_tpmi.c
++++ b/drivers/powercap/intel_rapl_tpmi.c
+@@ -40,6 +40,7 @@ enum tpmi_rapl_register {
+ 	TPMI_RAPL_REG_ENERGY_STATUS,
+ 	TPMI_RAPL_REG_PERF_STATUS,
+ 	TPMI_RAPL_REG_POWER_INFO,
++	TPMI_RAPL_REG_DOMAIN_INFO,
+ 	TPMI_RAPL_REG_INTERRUPT,
+ 	TPMI_RAPL_REG_MAX = 15,
+ };
 -- 
 2.43.0
 
