@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F5DBA3F;
-	Mon,  1 Apr 2024 16:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6B7BA3F;
+	Mon,  1 Apr 2024 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990789; cv=none; b=j6BpEmE6k1EzyfS3qV8QQkmLBoDqLX0oYaFp/sCyeBAIwJFy59oDQJ6CxHIWkKOs/rZ9x+3EJ0ndvw2542vTPirUpv8cJbJ0Lu2C4G1JHS+e+gKdSD0YXyXV8HDbT8/Qqui3Ww3uraCyo+aJHqm+HiSd4zuYKljh/m7YqpI3nYI=
+	t=1711990792; cv=none; b=QlqF8qcaLnoPbk4oY2LWPoEyTqgT4zraX0C6aLsvOpzzey6K10wr8nHis66SmTH9zmSMJsc1MzqyxKfHiQE5EZw9ns5LWqPZQKItjrAYl2/MGI/eY7bEL1oBNoMBeHlLVpNT9epGgwnfMkf7+THDl2RokPmSJchec8Cned2U70Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990789; c=relaxed/simple;
-	bh=YZDZhhIF07EP+Wx1/vlvEl/lK0mCE27DiiEPjo1gOQk=;
+	s=arc-20240116; t=1711990792; c=relaxed/simple;
+	bh=cTCoFfwk3PwJ5fhDBB7LTYpp/sXGfZUy/ULUbIfCX98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFekB+REdQfKgXCK+gt85RYm8QvIXySrdCwWv/HDb5gOPtgpTZcdH50c1hWxqjHuRFRXrCZrtBamz3ZNh7vgacN+oMxHsHTqUk8NVpCNszrSnLFGx6yo3YKtgUf45fM8GEqaFtrizz3laSbJbIPbZaY09SXq8VCxkYZEv5gHhDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPTjtw71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0AsY9Fla2bAZfY1IKEg4uPvd/Jqn070RCPqcIYV9FQ/9QxFtWSVPO05L7e8tPzTD7qpE7uKW+yR7Q97kNrUXwh7je4XfMhSbEUpQQeIgoc1LFbkqHuCJb27hdWIC/nTEdVZvOXX1Qe0s3jTJaF01cdwwrT/p3F+5+R77Xqofhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFTtWmgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPTjtw71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6488BC433A6;
-	Mon,  1 Apr 2024 16:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFTtWmgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A20C433C7;
+	Mon,  1 Apr 2024 16:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990788;
-	bh=YZDZhhIF07EP+Wx1/vlvEl/lK0mCE27DiiEPjo1gOQk=;
+	s=korg; t=1711990792;
+	bh=cTCoFfwk3PwJ5fhDBB7LTYpp/sXGfZUy/ULUbIfCX98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cPTjtw71uba9JU3SbKK7B95fLM0IJ7hwUQtNfHsZ/JtVzdGVJ7Ry0RvuE+vOQKnLu
-	 ck1TqeA0ncXVy2vTYxcaHk3IO/dYGCw7BiXqW9BELoXAwhZtfkhCL0rRTbnW+EcceG
-	 6SOrTmIcw/32pPU/+fb5v9+xu3RLmdiB+i2lPsdE=
+	b=oFTtWmgZ6Iz7bWRkVWRl0H3RSQlq31wbdGZiNODzAMbxOCaXZMIJ0aZWDzCU1UEGr
+	 2T+8waHTu66EohVB4jVamTQmObXmQjbkfUMTMRh9g7E/9iyYvcsZHtNoyhvetgNu8X
+	 aFCGVPog+L0B5KzXUvEzWWLFj0+voGw81zYvZAVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio SJ Musumeci <trapexit@spawn.link>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/272] fuse: fix root lookup with nonzero generation
-Date: Mon,  1 Apr 2024 17:44:17 +0200
-Message-ID: <20240401152532.647589578@linuxfoundation.org>
+Subject: [PATCH 6.1 068/272] fuse: dont unhash root
+Date: Mon,  1 Apr 2024 17:44:18 +0200
+Message-ID: <20240401152532.687669777@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 68ca1b49e430f6534d0774a94147a823e3b8b26e ]
+[ Upstream commit b1fe686a765e6c0d71811d825b5a1585a202b777 ]
 
-The root inode has a fixed nodeid and generation (1, 0).
+The root inode is assumed to be always hashed.  Do not unhash the root
+inode even if it is marked BAD.
 
-Prior to the commit 15db16837a35 ("fuse: fix illegal access to inode with
-reused nodeid") generation number on lookup was ignored.  After this commit
-lookup with the wrong generation number resulted in the inode being
-unhashed.  This is correct for non-root inodes, but replacing the root
-inode is wrong and results in weird behavior.
-
-Fix by reverting to the old behavior if ignoring the generation for the
-root inode, but issuing a warning in dmesg.
-
-Reported-by: Antonio SJ Musumeci <trapexit@spawn.link>
-Closes: https://lore.kernel.org/all/CAOQ4uxhek5ytdN8Yz2tNEOg5ea4NkBb4nk0FGPjPk_9nz-VG3g@mail.gmail.com/
-Fixes: 15db16837a35 ("fuse: fix illegal access to inode with reused nodeid")
-Cc: <stable@vger.kernel.org> # v5.14
+Fixes: 5d069dbe8aaf ("fuse: fix bad inode")
+Cc: <stable@vger.kernel.org> # v5.11
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/fuse/fuse_i.h | 1 -
+ fs/fuse/inode.c  | 7 +++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 5e408e7ec4c6b..936a24b646cef 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -399,6 +399,10 @@ int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name
- 		goto out_put_forget;
- 	if (fuse_invalid_attr(&outarg->attr))
- 		goto out_put_forget;
-+	if (outarg->nodeid == FUSE_ROOT_ID && outarg->generation != 0) {
-+		pr_warn_once("root generation should be zero\n");
-+		outarg->generation = 0;
-+	}
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index a9681fecbd91f..253b9b78d6f13 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -923,7 +923,6 @@ static inline bool fuse_stale_inode(const struct inode *inode, int generation,
  
- 	*inode = fuse_iget(sb, outarg->nodeid, outarg->generation,
- 			   &outarg->attr, entry_attr_timeout(outarg),
+ static inline void fuse_make_bad(struct inode *inode)
+ {
+-	remove_inode_hash(inode);
+ 	set_bit(FUSE_I_BAD, &get_fuse_inode(inode)->state);
+ }
+ 
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index f81000d968875..367e3b276092f 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -445,8 +445,11 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
+ 	} else if (fuse_stale_inode(inode, generation, attr)) {
+ 		/* nodeid was reused, any I/O on the old inode should fail */
+ 		fuse_make_bad(inode);
+-		iput(inode);
+-		goto retry;
++		if (inode != d_inode(sb->s_root)) {
++			remove_inode_hash(inode);
++			iput(inode);
++			goto retry;
++		}
+ 	}
+ 	fi = get_fuse_inode(inode);
+ 	spin_lock(&fi->lock);
 -- 
 2.43.0
 
