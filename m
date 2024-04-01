@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238C240876;
-	Mon,  1 Apr 2024 17:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60A840876;
+	Mon,  1 Apr 2024 17:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991307; cv=none; b=Mu808tp4m2x/9rJoTUslSfS+wnkrCG1m47hcFnniZXrSPz09GBOHbQM/Zh1oJ1VcOU9nDQFb+6n0A07K6cYPljymY6OBfmFvnQJpm2a08NfbZXkYZwy2HGjZn732LZr+CpXm8z5ViLpzWl/nowQvAr4+3zwr243JmKW72vcA8gg=
+	t=1711991311; cv=none; b=Q0TWvQWJXOhSDgNSqlMzwHYxHB6B+6j+suS2OfubHvCI5/eKuVYyqUpYxia1geVa+qWrmhBZS8WTZ6nQ5muY99R7+11bHs8fxsrjhLqGMZYB60hz18BIaKAVnygkV6HVj7s8EhDYwjJpH9XgFZdo/ncxVhuJi0auIzLBQdbjDoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991307; c=relaxed/simple;
-	bh=FxXcv+fZOt87XJT/XxtRCyIFDpdey7QJ66zdqvb2B4M=;
+	s=arc-20240116; t=1711991311; c=relaxed/simple;
+	bh=luENMCKU+tFVsy6p6pIql2iH5LAKGprW3TZ1M0Ow3DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMiNOWX8oQ06YHKiFTJYEZuAQ4Dv3Xcl0gIo1d+t9zHPWFoh/j7306RGbfZBQAQq7dxytd6Ie0gPo3BOceEg3DyRMUDq/tCd2Ip/HFgzcYgL6tfoiQNHZUk4BZT+bWsB9VIN+4Ilha/TJMaxul5umYd+XRvTx16Fc7IdRhfJtxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1Kx5Ni9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KH/Vt33QhgYt4oEeDSS/yuf6Afuh2G7Jc1D++YueE/dO3CjXTZlJy6WRJ1A9XP0cuaPZf7DubSTy8m76eYqmwoC35T7OZVygFrNQAwpHcGM+7/ulbFq3FZtfZntHCsZuuEl2TwlSmvythJPCUf0bAE9s/oiNJVDI7SK3cU+7XAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXdpVco2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1Kx5Ni9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F05C433F1;
-	Mon,  1 Apr 2024 17:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXdpVco2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561A2C433F1;
+	Mon,  1 Apr 2024 17:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991307;
-	bh=FxXcv+fZOt87XJT/XxtRCyIFDpdey7QJ66zdqvb2B4M=;
+	s=korg; t=1711991310;
+	bh=luENMCKU+tFVsy6p6pIql2iH5LAKGprW3TZ1M0Ow3DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1Kx5Ni9PwwK4wpUb0HxeJ74Z8FUkvtUmW9tb8yCVv1Dl8gk3yUnomcf59DD9F/Vg
-	 em3FoBiVs0ZhpZZgsTGLIYcFeJTqVbA8MMMaHzdNwLFYv4l7KtXZ+UX0e1fJd6Yw96
-	 cjRr039AlJs8sGGsPowQ3Eko+IBHm7giV+dnI430=
+	b=LXdpVco2dVb3A0Fz7vp9qgsphu6ROy/gIdCFjTHjFPAnEkLbn2KW6oy4TlORjDuCt
+	 OES8TU/EK3YxMK1UVcw+0eh4523mvKHgg6lojv+LhzYoF01gtvk+reiTknn/xVidJy
+	 2uUOFHOv8obAyoe6j13CGf2TuQlhFdP7/NN+2U6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Zack Rusin <zack.rusin@broadcom.com>
-Subject: [PATCH 6.1 226/272] drm/vmwgfx: Create debugfs ttm_resource_manager entry only if needed
-Date: Mon,  1 Apr 2024 17:46:56 +0200
-Message-ID: <20240401152538.019998826@linuxfoundation.org>
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 227/272] drm/amdkfd: fix TLB flush after unmap for GFX9.4.2
+Date: Mon,  1 Apr 2024 17:46:57 +0200
+Message-ID: <20240401152538.049003572@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,78 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-commit 4be9075fec0a639384ed19975634b662bfab938f upstream.
+commit 1210e2f1033dc56b666c9f6dfb761a2d3f9f5d6c upstream.
 
-The driver creates /sys/kernel/debug/dri/0/mob_ttm even when the
-corresponding ttm_resource_manager is not allocated.
-This leads to a crash when trying to read from this file.
+TLB flush after unmap accidentially was removed on
+gfx9.4.2. It is to add it back.
 
-Add a check to create mob_ttm, system_mob_ttm, and gmr_ttm debug file
-only when the corresponding ttm_resource_manager is allocated.
-
-crash> bt
-PID: 3133409  TASK: ffff8fe4834a5000  CPU: 3    COMMAND: "grep"
- #0 [ffffb954506b3b20] machine_kexec at ffffffffb2a6bec3
- #1 [ffffb954506b3b78] __crash_kexec at ffffffffb2bb598a
- #2 [ffffb954506b3c38] crash_kexec at ffffffffb2bb68c1
- #3 [ffffb954506b3c50] oops_end at ffffffffb2a2a9b1
- #4 [ffffb954506b3c70] no_context at ffffffffb2a7e913
- #5 [ffffb954506b3cc8] __bad_area_nosemaphore at ffffffffb2a7ec8c
- #6 [ffffb954506b3d10] do_page_fault at ffffffffb2a7f887
- #7 [ffffb954506b3d40] page_fault at ffffffffb360116e
-    [exception RIP: ttm_resource_manager_debug+0x11]
-    RIP: ffffffffc04afd11  RSP: ffffb954506b3df0  RFLAGS: 00010246
-    RAX: ffff8fe41a6d1200  RBX: 0000000000000000  RCX: 0000000000000940
-    RDX: 0000000000000000  RSI: ffffffffc04b4338  RDI: 0000000000000000
-    RBP: ffffb954506b3e08   R8: ffff8fee3ffad000   R9: 0000000000000000
-    R10: ffff8fe41a76a000  R11: 0000000000000001  R12: 00000000ffffffff
-    R13: 0000000000000001  R14: ffff8fe5bb6f3900  R15: ffff8fe41a6d1200
-    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
- #8 [ffffb954506b3e00] ttm_resource_manager_show at ffffffffc04afde7 [ttm]
- #9 [ffffb954506b3e30] seq_read at ffffffffb2d8f9f3
-    RIP: 00007f4c4eda8985  RSP: 00007ffdbba9e9f8  RFLAGS: 00000246
-    RAX: ffffffffffffffda  RBX: 000000000037e000  RCX: 00007f4c4eda8985
-    RDX: 000000000037e000  RSI: 00007f4c41573000  RDI: 0000000000000003
-    RBP: 000000000037e000   R8: 0000000000000000   R9: 000000000037fe30
-    R10: 0000000000000000  R11: 0000000000000246  R12: 00007f4c41573000
-    R13: 0000000000000003  R14: 00007f4c41572010  R15: 0000000000000003
-    ORIG_RAX: 0000000000000000  CS: 0033  SS: 002b
-
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Fixes: af4a25bbe5e7 ("drm/vmwgfx: Add debugfs entries for various ttm resource managers")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240312093551.196609-1-jfalempe@redhat.com
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -1429,12 +1429,15 @@ static void vmw_debugfs_resource_manager
- 					    root, "system_ttm");
- 	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, TTM_PL_VRAM),
- 					    root, "vram_ttm");
--	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_GMR),
--					    root, "gmr_ttm");
--	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_MOB),
--					    root, "mob_ttm");
--	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_SYSTEM),
--					    root, "system_mob_ttm");
-+	if (vmw->has_gmr)
-+		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_GMR),
-+						    root, "gmr_ttm");
-+	if (vmw->has_mob) {
-+		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_MOB),
-+						    root, "mob_ttm");
-+		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_SYSTEM),
-+						    root, "system_mob_ttm");
-+	}
- }
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -1349,7 +1349,7 @@ void kfd_flush_tlb(struct kfd_process_de
  
- static int vmwgfx_pm_notifier(struct notifier_block *nb, unsigned long val,
+ static inline bool kfd_flush_tlb_after_unmap(struct kfd_dev *dev)
+ {
+-	return KFD_GC_VERSION(dev) > IP_VERSION(9, 4, 2) ||
++	return KFD_GC_VERSION(dev) >= IP_VERSION(9, 4, 2) ||
+ 	       (KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 1) && dev->sdma_fw_version >= 18) ||
+ 	       KFD_GC_VERSION(dev) == IP_VERSION(9, 4, 0);
+ }
 
 
