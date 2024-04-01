@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2460B3D961;
-	Mon,  1 Apr 2024 16:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677393D961;
+	Mon,  1 Apr 2024 16:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988462; cv=none; b=LHLpH9z4fH0Uvtddc7nUO5nrx2UH10etTZ0doTpwz4lQvLUL7TlUCci2nOWNE3DuuGAVHJqwJZ4Tvmu2LxPbHHuFLf3EuUC7CELDCxafcBsSlCR6T35lAvwElVRYyUct2hs1rdbbx+229YH8o3MaDgTnUdIlNpUzIH+cY+OH1vM=
+	t=1711988465; cv=none; b=ZwVtynTirtDR5PGvYetnzGp2bnOr2I2XdyQ5fGPr2v/LcpvaBN6nlcM/bma8ZFMB5SwRwTGYY8vcZ9zQtsSwrcJFTZfgSth+/pIlX36wx4AUBAiKWBPrJJwVWwxiP3IgFqAj6DLYjTuh7t/K/gOsBdRlgyfVyws592/f7IFmh50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988462; c=relaxed/simple;
-	bh=uvYc7RfkXLQQB9RcxrZQSBj6G+ame2ey9/SptllU+xY=;
+	s=arc-20240116; t=1711988465; c=relaxed/simple;
+	bh=B6qJSNwHpmuxHCLXsSh7G0+5ZetvlEmeDrNaxMVnaI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcLoWkKOepJtoKC+l+Pz+XFvPlFimpQ+6th+d9fnSnbejVw17Eor7he8ECCf+DyHkgEom3DJb6y3FVaQEHKTRiIZnX4z2OHNUxxK6pOkqh49Q1dTzj2E7H9CgmdQQfhZdtbPhAeXzfAcCNeF2wB15u5mD+MceGyo7hpjoEMBTSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yex9BxWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hz57o8eWkrnnO6a6DaBlV8PTsUkte19ff24h+LhYUKuh7YPZ+tcmRCXnMdwzoZ/00ful4SWWyEeN7wU9EWRc9Gd3PS9eNm2SfvZAKDmhKck76mWc/zdmnAAL+zCUci29lMKbrqQXk9ZrF9aX6Ah4ZGiiJiDC2ZZAszvMnTVdz+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWjf3Wm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yex9BxWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AB8C43390;
-	Mon,  1 Apr 2024 16:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWjf3Wm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA59EC433F1;
+	Mon,  1 Apr 2024 16:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988462;
-	bh=uvYc7RfkXLQQB9RcxrZQSBj6G+ame2ey9/SptllU+xY=;
+	s=korg; t=1711988465;
+	bh=B6qJSNwHpmuxHCLXsSh7G0+5ZetvlEmeDrNaxMVnaI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yex9BxWJmortdKpHBK+KYIp3Z7o7GXsuFHbthLQiyrnhq5/CqIDW7d+Zd6VD2EI2e
-	 +rTF2xHWG971omI7g0BbEHEEooYasSb6qJ+e0NmBV4KPwgX0dK7ZTBrDhcKBZO4Rl0
-	 8RzRclZY7D0x/bZFP2SraVu6xpABcBdcrZQWPD/o=
+	b=lWjf3Wm4wMPV6Ebl3jkzGgKJsXH+6zP1oe496a/tLB2EjvYlUfgT2AQiDrlmr8l5Z
+	 gr2fjlwocQ9Jo83YpSVpx9lPIt7AmehF8igNJhEH+3PZMeDKjvz7z8QtzMR2KmjI8M
+	 tOUwHwJfC7cKyo28ZmFrDJxuBKGX2IIQp0W7uwW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Kumlien <ian.kumlien@gmail.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>,
-	"Anatoli N . Chechelnickiy" <Anatoli.Chechelnickiy@m.interpipe.biz>
-Subject: [PATCH 6.7 191/432] net: esp: fix bad handling of pages from page_pool
-Date: Mon,  1 Apr 2024 17:42:58 +0200
-Message-ID: <20240401152558.836033996@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 165/432] drm/probe-helper: warn about negative .get_modes()
+Date: Mon,  1 Apr 2024 17:42:32 +0200
+Message-ID: <20240401152558.062404725@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -56,194 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit c3198822c6cb9fb588e446540485669cc81c5d34 ]
+[ Upstream commit 7af03e688792293ba33149fb8df619a8dff90e80 ]
 
-When the skb is reorganized during esp_output (!esp->inline), the pages
-coming from the original skb fragments are supposed to be released back
-to the system through put_page. But if the skb fragment pages are
-originating from a page_pool, calling put_page on them will trigger a
-page_pool leak which will eventually result in a crash.
+The .get_modes() callback is supposed to return the number of modes,
+never a negative error code. If a negative value is returned, it'll just
+be interpreted as a negative count, and added to previous calculations.
 
-This leak can be easily observed when using CONFIG_DEBUG_VM and doing
-ipsec + gre (non offloaded) forwarding:
-
-  BUG: Bad page state in process ksoftirqd/16  pfn:1451b6
-  page:00000000de2b8d32 refcount:0 mapcount:0 mapping:0000000000000000 index:0x1451b6000 pfn:0x1451b6
-  flags: 0x200000000000000(node=0|zone=2)
-  page_type: 0xffffffff()
-  raw: 0200000000000000 dead000000000040 ffff88810d23c000 0000000000000000
-  raw: 00000001451b6000 0000000000000001 00000000ffffffff 0000000000000000
-  page dumped because: page_pool leak
-  Modules linked in: ip_gre gre mlx5_ib mlx5_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core overlay zram zsmalloc fuse [last unloaded: mlx5_core]
-  CPU: 16 PID: 96 Comm: ksoftirqd/16 Not tainted 6.8.0-rc4+ #22
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x36/0x50
-   bad_page+0x70/0xf0
-   free_unref_page_prepare+0x27a/0x460
-   free_unref_page+0x38/0x120
-   esp_ssg_unref.isra.0+0x15f/0x200
-   esp_output_tail+0x66d/0x780
-   esp_xmit+0x2c5/0x360
-   validate_xmit_xfrm+0x313/0x370
-   ? validate_xmit_skb+0x1d/0x330
-   validate_xmit_skb_list+0x4c/0x70
-   sch_direct_xmit+0x23e/0x350
-   __dev_queue_xmit+0x337/0xba0
-   ? nf_hook_slow+0x3f/0xd0
-   ip_finish_output2+0x25e/0x580
-   iptunnel_xmit+0x19b/0x240
-   ip_tunnel_xmit+0x5fb/0xb60
-   ipgre_xmit+0x14d/0x280 [ip_gre]
-   dev_hard_start_xmit+0xc3/0x1c0
-   __dev_queue_xmit+0x208/0xba0
-   ? nf_hook_slow+0x3f/0xd0
-   ip_finish_output2+0x1ca/0x580
-   ip_sublist_rcv_finish+0x32/0x40
-   ip_sublist_rcv+0x1b2/0x1f0
-   ? ip_rcv_finish_core.constprop.0+0x460/0x460
-   ip_list_rcv+0x103/0x130
-   __netif_receive_skb_list_core+0x181/0x1e0
-   netif_receive_skb_list_internal+0x1b3/0x2c0
-   napi_gro_receive+0xc8/0x200
-   gro_cell_poll+0x52/0x90
-   __napi_poll+0x25/0x1a0
-   net_rx_action+0x28e/0x300
-   __do_softirq+0xc3/0x276
-   ? sort_range+0x20/0x20
-   run_ksoftirqd+0x1e/0x30
-   smpboot_thread_fn+0xa6/0x130
-   kthread+0xcd/0x100
-   ? kthread_complete_and_exit+0x20/0x20
-   ret_from_fork+0x31/0x50
-   ? kthread_complete_and_exit+0x20/0x20
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-
-The suggested fix is to introduce a new wrapper (skb_page_unref) that
-covers page refcounting for page_pool pages as well.
+Document the rules, but handle the negative values gracefully with an
+error message.
 
 Cc: stable@vger.kernel.org
-Fixes: 6a5bcd84e886 ("page_pool: Allow drivers to hint on SKB recycling")
-Reported-and-tested-by: Anatoli N.Chechelnickiy <Anatoli.Chechelnickiy@m.interpipe.biz>
-Reported-by: Ian Kumlien <ian.kumlien@gmail.com>
-Link: https://lore.kernel.org/netdev/CAA85sZvvHtrpTQRqdaOx6gd55zPAVsqMYk_Lwh4Md5knTq7AyA@mail.gmail.com
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/50208c866facc33226a3c77b82bb96aeef8ef310.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 10 ++++++++++
- net/ipv4/esp4.c        |  8 ++++----
- net/ipv6/esp6.c        |  8 ++++----
- 3 files changed, 18 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c       | 7 +++++++
+ include/drm/drm_modeset_helper_vtables.h | 3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 763e9264402f0..bd06942757f5f 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3438,6 +3438,16 @@ static inline void skb_frag_ref(struct sk_buff *skb, int f)
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 3f479483d7d80..15ed974bcb988 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -419,6 +419,13 @@ static int drm_helper_probe_get_modes(struct drm_connector *connector)
  
- bool napi_pp_put_page(struct page *page, bool napi_safe);
+ 	count = connector_funcs->get_modes(connector);
  
-+static inline void
-+skb_page_unref(const struct sk_buff *skb, struct page *page, bool napi_safe)
-+{
-+#ifdef CONFIG_PAGE_POOL
-+	if (skb->pp_recycle && napi_pp_put_page(page, napi_safe))
-+		return;
-+#endif
-+	put_page(page);
-+}
++	/* The .get_modes() callback should not return negative values. */
++	if (count < 0) {
++		drm_err(connector->dev, ".get_modes() returned %pe\n",
++			ERR_PTR(count));
++		count = 0;
++	}
 +
- static inline void
- napi_frag_unref(skb_frag_t *frag, bool recycle, bool napi_safe)
- {
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 4ccfc104f13a5..fe501d2186bcf 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -95,7 +95,7 @@ static inline struct scatterlist *esp_req_sg(struct crypto_aead *aead,
- 			     __alignof__(struct scatterlist));
- }
- 
--static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
-+static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- {
- 	struct crypto_aead *aead = x->data;
- 	int extralen = 0;
-@@ -114,7 +114,7 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
+ 	/*
+ 	 * Fallback for when DDC probe failed in drm_get_edid() and thus skipped
+ 	 * override/firmware EDID.
+diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+index e3c3ac6159094..159213786e6e1 100644
+--- a/include/drm/drm_modeset_helper_vtables.h
++++ b/include/drm/drm_modeset_helper_vtables.h
+@@ -898,7 +898,8 @@ struct drm_connector_helper_funcs {
+ 	 *
+ 	 * RETURNS:
+ 	 *
+-	 * The number of modes added by calling drm_mode_probed_add().
++	 * The number of modes added by calling drm_mode_probed_add(). Return 0
++	 * on failures (no modes) instead of negative error codes.
  	 */
- 	if (req->src != req->dst)
- 		for (sg = sg_next(req->src); sg; sg = sg_next(sg))
--			put_page(sg_page(sg));
-+			skb_page_unref(skb, sg_page(sg), false);
- }
+ 	int (*get_modes)(struct drm_connector *connector);
  
- #ifdef CONFIG_INET_ESPINTCP
-@@ -260,7 +260,7 @@ static void esp_output_done(void *data, int err)
- 	}
- 
- 	tmp = ESP_SKB_CB(skb)->tmp;
--	esp_ssg_unref(x, tmp);
-+	esp_ssg_unref(x, tmp, skb);
- 	kfree(tmp);
- 
- 	if (xo && (xo->flags & XFRM_DEV_RESUME)) {
-@@ -639,7 +639,7 @@ int esp_output_tail(struct xfrm_state *x, struct sk_buff *skb, struct esp_info *
- 	}
- 
- 	if (sg != dsg)
--		esp_ssg_unref(x, tmp);
-+		esp_ssg_unref(x, tmp, skb);
- 
- 	if (!err && x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
- 		err = esp_output_tail_tcp(x, skb);
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 2cc1a45742d82..a3fa3eda388a4 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -112,7 +112,7 @@ static inline struct scatterlist *esp_req_sg(struct crypto_aead *aead,
- 			     __alignof__(struct scatterlist));
- }
- 
--static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
-+static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb)
- {
- 	struct crypto_aead *aead = x->data;
- 	int extralen = 0;
-@@ -131,7 +131,7 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
- 	 */
- 	if (req->src != req->dst)
- 		for (sg = sg_next(req->src); sg; sg = sg_next(sg))
--			put_page(sg_page(sg));
-+			skb_page_unref(skb, sg_page(sg), false);
- }
- 
- #ifdef CONFIG_INET6_ESPINTCP
-@@ -294,7 +294,7 @@ static void esp_output_done(void *data, int err)
- 	}
- 
- 	tmp = ESP_SKB_CB(skb)->tmp;
--	esp_ssg_unref(x, tmp);
-+	esp_ssg_unref(x, tmp, skb);
- 	kfree(tmp);
- 
- 	esp_output_encap_csum(skb);
-@@ -677,7 +677,7 @@ int esp6_output_tail(struct xfrm_state *x, struct sk_buff *skb, struct esp_info
- 	}
- 
- 	if (sg != dsg)
--		esp_ssg_unref(x, tmp);
-+		esp_ssg_unref(x, tmp, skb);
- 
- 	if (!err && x->encap && x->encap->encap_type == TCP_ENCAP_ESPINTCP)
- 		err = esp_output_tail_tcp(x, skb);
 -- 
 2.43.0
 
