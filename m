@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1D11CA8F;
-	Mon,  1 Apr 2024 16:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF14087B;
+	Mon,  1 Apr 2024 16:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988685; cv=none; b=eaaszP/LZkFn5dWwioM433W5uFNrvjV1QA0CyhfiT/R2R62DrRYRpHLMFHIWxgnHTpaYo4e+wJNFIVQ01DQ1osfcSM2Z1YHgJcotBgrHQeKLHZDkjCpcVWdgSnGPb6gVwVjWIGoam3DaHksDA9ZUIZXjY92bkpRhbYL3ggFGAGo=
+	t=1711988689; cv=none; b=pBRiYdFal6lV0GDncsxwSFfyskDPMcSBwcL+rR7nPH77m2+NAzLe1VukdMR1UUPDsi1y3nt2V87dTPxxjs6lnVWirwR5HCEUGn4+7+tfUBPpzmKQiAxP9g/advMjgrsWklHpJVZAIMehbw09mVyblPZSKxn+PaaKuMEY0sjHh54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988685; c=relaxed/simple;
-	bh=Du3hqM+EPDlLuB3dCdxEjQhCwFdFbOqsqumz+/BP3+I=;
+	s=arc-20240116; t=1711988689; c=relaxed/simple;
+	bh=Slaswz8P6KfsoXBCSULndJARxSqgy1Fp2IcXu+mvKX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYWF10YYHqJ/7eWoLIjwf1L7djvaplJGmcPYSuwoWt+jIbMCC8SSvGDUcje2t2EOlNK8ZjigteeqHKWmPfDcwcTBwOZEgwShMbSxjhoclC1xbd0MUsqNH8+lJKvIF0UvcX9aNNttGmJaMl3A827SY90tNXtw5aW3Vkp5SUR8008=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJK4N88R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJwJuNejupKFXsOvqvvdq56HlUUFDLHDi1AoyiYD6QawdxwAQcMDs9UJEq5O3KNC1JTbekLc3XYCYV1wMZXSAz7ILStU5eLJpOOpZAY+LyyosikLsEWF4gfd42EbSCy/vIS/eGdAN5P3aFuraJBKoPKf0rla9Ayes+QCO1T8H8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaF3xT5s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJK4N88R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C1FC433C7;
-	Mon,  1 Apr 2024 16:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaF3xT5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73203C433F1;
+	Mon,  1 Apr 2024 16:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988685;
-	bh=Du3hqM+EPDlLuB3dCdxEjQhCwFdFbOqsqumz+/BP3+I=;
+	s=korg; t=1711988688;
+	bh=Slaswz8P6KfsoXBCSULndJARxSqgy1Fp2IcXu+mvKX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJK4N88RWAPr1CXK6kRyjfyCqNwLnJZ+cg4ZPOnC525lBcUnKuMfzItH4ZtC64dw5
-	 RcWjg0hpmSpjXhf0aL23eIyxLEOfmT4WFYEBQiOmb71eBQsJkhZQSw2sGGIdz+O7nj
-	 JESOBIEVIhWznnNgTt02U5P5GXGAVoknkMExA/YQ=
+	b=xaF3xT5so2vr/67N3QgRh5FnZkUeG+rGNBHoJTGFXhNu3+gAdkLnj+pSPXqfylfOz
+	 YPYH+eX/vQPU5U0Zx/UkcmBFo6+f5tQb7MoBmm10oiYIF+XOtaqQobi3HJ0b20+Yzq
+	 A1Jx0n2HRbU1po9IC1rezI3bAaO71x4mJcwt4IAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Adrien Grassein <adrien.grassein@gmail.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 230/432] drm/bridge: lt8912b: clear the EDID property on failures
-Date: Mon,  1 Apr 2024 17:43:37 +0200
-Message-ID: <20240401152559.993650238@linuxfoundation.org>
+Subject: [PATCH 6.7 231/432] drm/bridge: lt8912b: do not return negative values from .get_modes()
+Date: Mon,  1 Apr 2024 17:43:38 +0200
+Message-ID: <20240401152600.023028892@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -59,40 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 29e032296da5d6294378ffa8bad8e976c5aadbf5 ]
+[ Upstream commit 171b711b26cce208bb628526b1b368aeec7b6fa4 ]
 
-If EDID read fails, clear the EDID property.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
 Cc: Adrien Grassein <adrien.grassein@gmail.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>
-Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc: Jonas Karlman <jonas@kwiboo.se>
-Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: stable@vger.kernel.org
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/dcdddcbcb64b6f6cdc55022ee50c10dee8ddbc3d.1709913674.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/2080adaadf4bba3d85f58c42c065caf9aad9a4ef.1706038510.git.jani.nikula@intel.com
-Stable-dep-of: 171b711b26cc ("drm/bridge: lt8912b: do not return negative values from .get_modes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 491c08306f81a..f0ebd56b4736a 100644
+index f0ebd56b4736a..e5839c89a355a 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -436,8 +436,8 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
+@@ -430,23 +430,21 @@ lt8912_connector_mode_valid(struct drm_connector *connector,
+ static int lt8912_connector_get_modes(struct drm_connector *connector)
+ {
+ 	const struct drm_edid *drm_edid;
+-	int ret = -1;
+-	int num = 0;
+ 	struct lt8912 *lt = connector_to_lt8912(connector);
  	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
++	int ret, num;
  
  	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
-+	drm_edid_connector_update(connector, drm_edid);
- 	if (drm_edid) {
--		drm_edid_connector_update(connector, drm_edid);
- 		num = drm_edid_connector_add_modes(connector);
- 	} else {
- 		return ret;
+ 	drm_edid_connector_update(connector, drm_edid);
+-	if (drm_edid) {
+-		num = drm_edid_connector_add_modes(connector);
+-	} else {
+-		return ret;
+-	}
++	if (!drm_edid)
++		return 0;
++
++	num = drm_edid_connector_add_modes(connector);
+ 
+ 	ret = drm_display_info_set_bus_formats(&connector->display_info,
+ 					       &bus_format, 1);
+-	if (ret)
+-		num = ret;
++	if (ret < 0)
++		num = 0;
+ 
+ 	drm_edid_free(drm_edid);
+ 	return num;
 -- 
 2.43.0
 
