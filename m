@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B871E895;
-	Mon,  1 Apr 2024 16:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501301E525;
+	Mon,  1 Apr 2024 16:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989244; cv=none; b=RTdnxlX0bQ7CG1ivfmsSf21+/vIW6+H3yPPA06CLbrKBFn5EqOZKei/eVKSTPpdsln3hfG+ThvXgieb5RXWBUUyqWhgPkr2hd2rAlG6hsNaU0klzvz9DzDAyhpbmSsNgH/gExPRGHTx06zCg4r5a/R57XZrhDwIN5jt4E9Zvl7w=
+	t=1711989248; cv=none; b=OocxyWdtNfoTUa+Gp/LpQvm8UskuWsRpzfYaVM3gnwzSXS8CcYS0iL85Hi5V177dQcuXUl5hB22xa3tpSmBsQSGvcrttzxu+38Qp9+6zHMVVY5zz2FnO8PMfrHad6RxAXWKNZE0I9fG3ZOac7KbRRNowaxYLMOAQ0xy1KskPuoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989244; c=relaxed/simple;
-	bh=EEcM5N8D68YrnppjX/t3gfopCFs/vqHYhEOWeLcIHt8=;
+	s=arc-20240116; t=1711989248; c=relaxed/simple;
+	bh=REUxNDCh87Uts8aKdsYPqHvn+T+Zm6WpJG+LD8rghrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzmg918oejfY9CJIWxBcucfr9g4F0BRBCBSapfV4Y+ObxlVxajfrOD/XLl+f+AIm3IHzquOTuszQHzvurBzCGQ0iz1HtAAMPAtYJFGPfsDaNIsgaf2sg6eXu2ZJfC3G8bff5hijVFq8FEFK3/dWWQQPsnqEHdpaOg8InSfSv3uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4WlDZgB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akE8BtKuIi+cJJSoQtBZlMmggUxG/mZF8BQOuqaUy4swguZttROs6Jr2qtLqBeJBng/Z8sIjEEZYlmIjOJotJsp4iHMZBdUghaLWzVsxTM1+I8nPohbBCnM4ErAv2gmaGtGJC8mY6Diwh/vXsQW5ff9TiqJZU55gWGZL9KNbzI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwSkXCA4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4WlDZgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E1DC43390;
-	Mon,  1 Apr 2024 16:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwSkXCA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4A8C43390;
+	Mon,  1 Apr 2024 16:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989244;
-	bh=EEcM5N8D68YrnppjX/t3gfopCFs/vqHYhEOWeLcIHt8=;
+	s=korg; t=1711989247;
+	bh=REUxNDCh87Uts8aKdsYPqHvn+T+Zm6WpJG+LD8rghrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4WlDZgB+22plTSfC5ttxp3GlPvFrqPS6LuzKi1C1owcsXjT2OPYwBEuujOag4jqk
-	 0Z/y8qeGLpoJXVv722E5vD7A6mXhFEh2klsVbBdMAK2DSHkAeoPBlwt6wDms8M/dd0
-	 rMDLe1uvfJgy/1Itv0reNVy838Kg6PXpKk2rWD+8=
+	b=LwSkXCA4L4QULGCmDPLCs1sqBHu+mq/CKj0BQ2wUPv7t5/x2vyImMLpqFDx452yPh
+	 0ABDBwJuPUp24sEQxznDnRaG/VYV4FP3stPfbWmJ3MCLXXaLy5w/HNRFEYO6W/6kmU
+	 QpWqiSygN4Pf7xJJdXG0px2Hfd4UaDcHiVIyY/Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.7 425/432] Revert "x86/bugs: Use fixed addressing for VERW operand"
-Date: Mon,  1 Apr 2024 17:46:52 +0200
-Message-ID: <20240401152606.103305985@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.7 426/432] usb: dwc3: pci: Drop duplicate ID
+Date: Mon,  1 Apr 2024 17:46:53 +0200
+Message-ID: <20240401152606.134575195@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -49,36 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 532a0c57d7ff75e8f07d4e25cba4184989e2a241 upstream.
+commit f121531703ae442edc1dde4b56803680628bc5b7 upstream.
 
-This was reverts commit 8009479ee919b9a91674f48050ccbff64eafedaa.
+Intel Arrow Lake CPU uses the Meteor Lake ID with this
+controller (the controller that's part of the Intel Arrow
+Lake chipset (PCH) does still have unique PCI ID).
 
-It was originally in x86/urgent, but was deemed wrong so got zapped.
-But in the meantime, x86/urgent had been merged into x86/apic to
-resolve a conflict.  I didn't notice the merge so didn't zap it
-from x86/apic and it managed to make it up with the x86/apic
-material.
-
-The reverted commit is known to cause some KASAN problems.
-
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Fixes: de4b5b28c87c ("usb: dwc3: pci: add support for the Intel Arrow Lake-H")
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240312115008.1748637-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-pci.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -332,7 +332,7 @@
-  * Note: Only the memory operand variant of VERW clears the CPU buffers.
-  */
- .macro CLEAR_CPU_BUFFERS
--	ALTERNATIVE "", __stringify(verw mds_verw_sel), X86_FEATURE_CLEAR_CPU_BUF
-+	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
- .endm
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -51,7 +51,6 @@
+ #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
+ #define PCI_DEVICE_ID_INTEL_MTLS		0x7f6f
+ #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
+-#define PCI_DEVICE_ID_INTEL_ARLH		0x7ec1
+ #define PCI_DEVICE_ID_INTEL_ARLH_PCH		0x777e
+ #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
+ #define PCI_DEVICE_ID_AMD_MR			0x163a
+@@ -423,7 +422,6 @@ static const struct pci_device_id dwc3_p
+ 	{ PCI_DEVICE_DATA(INTEL, MTLP, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTL, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTLS, &dwc3_pci_intel_swnode) },
+-	{ PCI_DEVICE_DATA(INTEL, ARLH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, ARLH_PCH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, TGL, &dwc3_pci_intel_swnode) },
  
- #else /* __ASSEMBLY__ */
 
 
