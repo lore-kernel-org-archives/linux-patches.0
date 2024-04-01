@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C780217552;
-	Mon,  1 Apr 2024 15:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAB817552;
+	Mon,  1 Apr 2024 15:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987095; cv=none; b=TwryW9WJmdadMzi4c2ZlCWzcApjTrGM9PRa50YaP746qlSwevJ1DnUoEo0jVpat1W9at3iqGY6CFJ3YMXF2DL0d0Pw/w7KKVS0LEi8h/EHxkuuMgudJ88TUHYO/xIEsMwbmU8T1rXgDz7oE6s9nx/D0fsGlJTHDs452tCYS8JlQ=
+	t=1711987098; cv=none; b=kKtwuYh/SzOiJ4ycCX0GKwPflY+ddIMTDJLb/sZ4Kv61ZEM7KnKV3EaEJxUjBOOJBMPMXJtsAS/3o9DQRJ5cOT3mcJtRG7AqjOaDikaQGNGAetmnkaOiBmee444MSJNDFVnGKnFCMU9tQAyG7vxx8SfogqlJ65KUO1dMqNRxjcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987095; c=relaxed/simple;
-	bh=BqCKsJzgJSi9cBWSJQuj4X1bANb6AU7RZxRocVYKv0E=;
+	s=arc-20240116; t=1711987098; c=relaxed/simple;
+	bh=VMXdYOl0RJ4IjAjyJMAgUT3dA4a2SOCPYxivh8cc1Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oA4QeXvykV3ecyaeSo/N5bcZJVkWZeR+nX7oaztNwuGpFZNil8DqHSVhMy96my0+bgYFPFQ4Y9Q7hWpX5zRMvbQNDNNggKohoJNIkztIk9P+DS4pot8bm7CfFWM6wP1YwJ0piCraenQDnnMpqYY5VA0i89PbosmvuE0B02LED10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koy6zi2U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLQlVdaPVD7J5/p933Q0t2AFCehbwxRBggYdqqyS2lDvPK5i8QBvDci/MHp+XTmO1MRzfyMCMlx+LrF7WDp7v/Yepf4ofJJwEyuXm2zf1omqtodEE6C8p6kipyB6hXB75vXteD/qkEoRIjO+MFrSN/mi9DU2VL4YoMxLdJMl2bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJGppWzS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koy6zi2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4557FC433C7;
-	Mon,  1 Apr 2024 15:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJGppWzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AD9C433C7;
+	Mon,  1 Apr 2024 15:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987095;
-	bh=BqCKsJzgJSi9cBWSJQuj4X1bANb6AU7RZxRocVYKv0E=;
+	s=korg; t=1711987098;
+	bh=VMXdYOl0RJ4IjAjyJMAgUT3dA4a2SOCPYxivh8cc1Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koy6zi2UTUaGxb/1ihrXx+EA8ssxW1cP7zUPG5r7valGNb9pp+3nkDF30z8fd/MxO
-	 dhM+3Eeaj5zlcsN/wpUYww9U2VuA9hJNcqgR2rQu7h5GrW3pgY2VrfzB5lRx+Tf3Ei
-	 IFD30BbErkPZ0VJKzUC38HkmO/fvPL0xNnfyPYsY=
+	b=aJGppWzSMTUO7VDVd8UAdCyHUbp+dqZNF0TNeK0IOyCoMqp57nuhTdqGp/W2UEEYi
+	 5B0hSH5ACe8BaFxQ3ElJR1IAO9Tkk6RfMvMYxB+N7C6/MKF7eVwUaPxb6ktrqpcdeP
+	 6Y6wUYGET3vHUBOCvhYlrRZJXpfbLWcitPWBvvKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 183/399] mtd: rawnand: Add a helper for calculating a page index
-Date: Mon,  1 Apr 2024 17:42:29 +0200
-Message-ID: <20240401152554.637971611@linuxfoundation.org>
+Subject: [PATCH 6.8 166/399] drm/panel: do not return negative error codes from drm_panel_get_modes()
+Date: Mon,  1 Apr 2024 17:42:12 +0200
+Message-ID: <20240401152554.135176506@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,58 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit df9803bf5a91e3599f12b53c94722f2c4e144a86 ]
+[ Upstream commit fc4e97726530241d96dd7db72eb65979217422c9 ]
 
-For LUN crossing boundaries, it is handy to know what is the index of
-the last page in a LUN. This helper will soon be reused. At the same
-time I rename page_per_lun to ppl in the calling function to clarify the
-lines.
+None of the callers of drm_panel_get_modes() expect it to return
+negative error codes. Either they propagate the return value in their
+struct drm_connector_helper_funcs .get_modes() hook (which is also not
+supposed to return negative codes), or add it to other counts leading to
+bogus values.
 
-Cc: stable@vger.kernel.org # v6.7
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240223115545.354541-3-miquel.raynal@bootlin.com
+On the other hand, many of the struct drm_panel_funcs .get_modes() hooks
+do return negative error codes, so handle them gracefully instead of
+propagating further.
+
+Return 0 for no modes, whatever the reason.
+
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/79f559b72d8c493940417304e222a4b04dfa19c4.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_panel.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index bcfd99a1699fd..d6a27e08b1127 100644
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -1211,19 +1211,25 @@ static int nand_lp_exec_read_page_op(struct nand_chip *chip, unsigned int page,
- 	return nand_exec_op(chip, &op);
- }
- 
-+static unsigned int rawnand_last_page_of_lun(unsigned int pages_per_lun, unsigned int lun)
-+{
-+	/* lun is expected to be very small */
-+	return (lun * pages_per_lun) + pages_per_lun - 1;
-+}
-+
- static void rawnand_cap_cont_reads(struct nand_chip *chip)
+diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
+index e814020bbcd3b..cfbe020de54e0 100644
+--- a/drivers/gpu/drm/drm_panel.c
++++ b/drivers/gpu/drm/drm_panel.c
+@@ -274,19 +274,24 @@ EXPORT_SYMBOL(drm_panel_disable);
+  * The modes probed from the panel are automatically added to the connector
+  * that the panel is attached to.
+  *
+- * Return: The number of modes available from the panel on success or a
+- * negative error code on failure.
++ * Return: The number of modes available from the panel on success, or 0 on
++ * failure (no modes).
+  */
+ int drm_panel_get_modes(struct drm_panel *panel,
+ 			struct drm_connector *connector)
  {
- 	struct nand_memory_organization *memorg;
--	unsigned int pages_per_lun, first_lun, last_lun;
-+	unsigned int ppl, first_lun, last_lun;
+ 	if (!panel)
+-		return -EINVAL;
++		return 0;
  
- 	memorg = nanddev_get_memorg(&chip->base);
--	pages_per_lun = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
--	first_lun = chip->cont_read.first_page / pages_per_lun;
--	last_lun = chip->cont_read.last_page / pages_per_lun;
-+	ppl = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
-+	first_lun = chip->cont_read.first_page / ppl;
-+	last_lun = chip->cont_read.last_page / ppl;
+-	if (panel->funcs && panel->funcs->get_modes)
+-		return panel->funcs->get_modes(panel, connector);
++	if (panel->funcs && panel->funcs->get_modes) {
++		int num;
  
- 	/* Prevent sequential cache reads across LUN boundaries */
- 	if (first_lun != last_lun)
--		chip->cont_read.pause_page = first_lun * pages_per_lun + pages_per_lun - 1;
-+		chip->cont_read.pause_page = rawnand_last_page_of_lun(ppl, first_lun);
- 	else
- 		chip->cont_read.pause_page = chip->cont_read.last_page;
+-	return -EOPNOTSUPP;
++		num = panel->funcs->get_modes(panel, connector);
++		if (num > 0)
++			return num;
++	}
++
++	return 0;
  }
+ EXPORT_SYMBOL(drm_panel_get_modes);
+ 
 -- 
 2.43.0
 
