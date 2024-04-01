@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AC243AD6;
-	Mon,  1 Apr 2024 16:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400838F5C;
+	Mon,  1 Apr 2024 16:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987910; cv=none; b=DnsGKQlsT95g6Ovcp1Hq8+J3wChfBXDXkf6Y8R3TqNDrgDT5wz/tLTMVLP/RtP0ztXs0pWuAARgRxjMzL9JekYMNIgcBF+lSuKUZ78FODkRrvEIOR9IvFBajMulOKZaLi+J8wIHbNiUfbmLMcnYYO0wYKy2iK3KmeowVUuN1hGM=
+	t=1711987914; cv=none; b=Axgs2lG0khilq4IpltQlDD26k+26jwZVJ3u1E7V34WEBGvTfa+2D5o85/J5AFSvgxAJ7lva4ljtLxCSyCD5IESeGA9IlB407drDeR2fRIh6LjmjewfyjLIeO0zDG6iQzfozbgy9kol97OVcBJBKA4sLRsmB03DtHISykIOfQ+Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987910; c=relaxed/simple;
-	bh=cFw/D8M2ZP5BeKzvYVEkeHepxYphvrpCHdQqI9Y+kHo=;
+	s=arc-20240116; t=1711987914; c=relaxed/simple;
+	bh=m09h1PYrvEyq19sckOwoEjGx9c/luudM6wS4Zs9LafY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCNt9233nIaHTwsmhCk7ALuxdztRqZxxhwRVPdCrmptccy5ctt9FLGA9XyiCNNbWYksmLM5I7+s5DQoDcDyAlNTDpn7uCS6Dk4iBkjavIl5BWLoZE66w9Sso/tbAU0776+LPjWWGvhVhDXhrghKAkOwwyszgxAev3YsRWC+wXQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV8mxa/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOI1Lzvz82WXskEQfadEVubLXHyqG/4RQo1awZz5jvLUXBwIeNPz2njBcCoIPCc/sfb7adI9MbiXIxPLkGzK3q1ZNklL5YyW86a1qxXEp5oRU6hUGCrbO44uXSHlUFz7gh7lAskPxSwwEmCL3n8EUFyXGUm9ZsNliRW8fazzKLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICojvsW7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV8mxa/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94736C433C7;
-	Mon,  1 Apr 2024 16:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICojvsW7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A88C433F1;
+	Mon,  1 Apr 2024 16:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987910;
-	bh=cFw/D8M2ZP5BeKzvYVEkeHepxYphvrpCHdQqI9Y+kHo=;
+	s=korg; t=1711987913;
+	bh=m09h1PYrvEyq19sckOwoEjGx9c/luudM6wS4Zs9LafY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cV8mxa/YhG9czFKjQ+fm51ZWX/jdneBXsQfk8n3uAsYsHv7EA/UZGQw1OT6gcX/RH
-	 QGYvKeUZo22R/I4pV2rxe5XhkVnwko3mHg3oPw6r03J1e8NFljZg7uu4G7xO4jYQye
-	 +1/Zc0CbC7KO/tUGKExODlljr6oNlIKmf0ggOJuY=
+	b=ICojvsW7Xl7w4eKTK+v6YqqX1Es2Y2hcSkrX6rWdwk0J8Kee41dw1hOThoRwOq3Dn
+	 TYsJiGPYCv4mukfR1Cgy3Wb0Sq9ZyLof1S44nf7blKd0hfufyR8YPKUsVfXsWD6gOS
+	 vc/8Wl1K2H8seaWkByeqXLpq0CvryXItBW+SowJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 027/432] KVM: Always flush async #PF workqueue when vCPU is being destroyed
-Date: Mon,  1 Apr 2024 17:40:14 +0200
-Message-ID: <20240401152553.943065656@linuxfoundation.org>
+Subject: [PATCH 6.7 028/432] arm64: dts: qcom: sm8550-qrd: correct WCD9385 TX port mapping
+Date: Mon,  1 Apr 2024 17:40:15 +0200
+Message-ID: <20240401152553.972349651@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,180 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 3d75b8aa5c29058a512db29da7cbee8052724157 ]
+[ Upstream commit 8ca7fbd92c1b28edb5d5df7aeb8bb4886ddb9829 ]
 
-Always flush the per-vCPU async #PF workqueue when a vCPU is clearing its
-completion queue, e.g. when a VM and all its vCPUs is being destroyed.
-KVM must ensure that none of its workqueue callbacks is running when the
-last reference to the KVM _module_ is put.  Gifting a reference to the
-associated VM prevents the workqueue callback from dereferencing freed
-vCPU/VM memory, but does not prevent the KVM module from being unloaded
-before the callback completes.
+WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
+it is offset by one.  Correct it to fix recording via analogue
+microphones.
 
-Drop the misguided VM refcount gifting, as calling kvm_put_kvm() from
-async_pf_execute() if kvm_put_kvm() flushes the async #PF workqueue will
-result in deadlock.  async_pf_execute() can't return until kvm_put_kvm()
-finishes, and kvm_put_kvm() can't return until async_pf_execute() finishes:
-
- WARNING: CPU: 8 PID: 251 at virt/kvm/kvm_main.c:1435 kvm_put_kvm+0x2d/0x320 [kvm]
- Modules linked in: vhost_net vhost vhost_iotlb tap kvm_intel kvm irqbypass
- CPU: 8 PID: 251 Comm: kworker/8:1 Tainted: G        W          6.6.0-rc1-e7af8d17224a-x86/gmem-vm #119
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
- Workqueue: events async_pf_execute [kvm]
- RIP: 0010:kvm_put_kvm+0x2d/0x320 [kvm]
- Call Trace:
-  <TASK>
-  async_pf_execute+0x198/0x260 [kvm]
-  process_one_work+0x145/0x2d0
-  worker_thread+0x27e/0x3a0
-  kthread+0xba/0xe0
-  ret_from_fork+0x2d/0x50
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
- ---[ end trace 0000000000000000 ]---
- INFO: task kworker/8:1:251 blocked for more than 120 seconds.
-       Tainted: G        W          6.6.0-rc1-e7af8d17224a-x86/gmem-vm #119
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:kworker/8:1     state:D stack:0     pid:251   ppid:2      flags:0x00004000
- Workqueue: events async_pf_execute [kvm]
- Call Trace:
-  <TASK>
-  __schedule+0x33f/0xa40
-  schedule+0x53/0xc0
-  schedule_timeout+0x12a/0x140
-  __wait_for_common+0x8d/0x1d0
-  __flush_work.isra.0+0x19f/0x2c0
-  kvm_clear_async_pf_completion_queue+0x129/0x190 [kvm]
-  kvm_arch_destroy_vm+0x78/0x1b0 [kvm]
-  kvm_put_kvm+0x1c1/0x320 [kvm]
-  async_pf_execute+0x198/0x260 [kvm]
-  process_one_work+0x145/0x2d0
-  worker_thread+0x27e/0x3a0
-  kthread+0xba/0xe0
-  ret_from_fork+0x2d/0x50
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-If kvm_clear_async_pf_completion_queue() actually flushes the workqueue,
-then there's no need to gift async_pf_execute() a reference because all
-invocations of async_pf_execute() will be forced to complete before the
-vCPU and its VM are destroyed/freed.  And that in turn fixes the module
-unloading bug as __fput() won't do module_put() on the last vCPU reference
-until the vCPU has been freed, e.g. if closing the vCPU file also puts the
-last reference to the KVM module.
-
-Note that kvm_check_async_pf_completion() may also take the work item off
-the completion queue and so also needs to flush the work queue, as the
-work will not be seen by kvm_clear_async_pf_completion_queue().  Waiting
-on the workqueue could theoretically delay a vCPU due to waiting for the
-work to complete, but that's a very, very small chance, and likely a very
-small delay.  kvm_arch_async_page_present_queued() unconditionally makes a
-new request, i.e. will effectively delay entering the guest, so the
-remaining work is really just:
-
-        trace_kvm_async_pf_completed(addr, cr2_or_gpa);
-
-        __kvm_vcpu_wake_up(vcpu);
-
-        mmput(mm);
-
-and mmput() can't drop the last reference to the page tables if the vCPU is
-still alive, i.e. the vCPU won't get stuck tearing down page tables.
-
-Add a helper to do the flushing, specifically to deal with "wakeup all"
-work items, as they aren't actually work items, i.e. are never placed in a
-workqueue.  Trying to flush a bogus workqueue entry rightly makes
-__flush_work() complain (kudos to whoever added that sanity check).
-
-Note, commit 5f6de5cbebee ("KVM: Prevent module exit until all VMs are
-freed") *tried* to fix the module refcounting issue by having VMs grab a
-reference to the module, but that only made the bug slightly harder to hit
-as it gave async_pf_execute() a bit more time to complete before the KVM
-module could be unloaded.
-
-Fixes: af585b921e5d ("KVM: Halt vcpu if page it tries to access is swapped out")
 Cc: stable@vger.kernel.org
-Cc: David Matlack <dmatlack@google.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/20240110011533.503302-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 83fae950c992 ("arm64: dts: qcom: sm8550-qrd: add WCD9385 audio-codec")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240124164505.293202-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/async_pf.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/virt/kvm/async_pf.c b/virt/kvm/async_pf.c
-index e033c79d528e0..28658b9e0d968 100644
---- a/virt/kvm/async_pf.c
-+++ b/virt/kvm/async_pf.c
-@@ -87,7 +87,27 @@ static void async_pf_execute(struct work_struct *work)
- 	__kvm_vcpu_wake_up(vcpu);
- 
- 	mmput(mm);
--	kvm_put_kvm(vcpu->kvm);
-+}
-+
-+static void kvm_flush_and_free_async_pf_work(struct kvm_async_pf *work)
-+{
-+	/*
-+	 * The async #PF is "done", but KVM must wait for the work item itself,
-+	 * i.e. async_pf_execute(), to run to completion.  If KVM is a module,
-+	 * KVM must ensure *no* code owned by the KVM (the module) can be run
-+	 * after the last call to module_put().  Note, flushing the work item
-+	 * is always required when the item is taken off the completion queue.
-+	 * E.g. even if the vCPU handles the item in the "normal" path, the VM
-+	 * could be terminated before async_pf_execute() completes.
-+	 *
-+	 * Wake all events skip the queue and go straight done, i.e. don't
-+	 * need to be flushed (but sanity check that the work wasn't queued).
-+	 */
-+	if (work->wakeup_all)
-+		WARN_ON_ONCE(work->work.func);
-+	else
-+		flush_work(&work->work);
-+	kmem_cache_free(async_pf_cache, work);
- }
- 
- void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
-@@ -114,7 +134,6 @@ void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
- #else
- 		if (cancel_work_sync(&work->work)) {
- 			mmput(work->mm);
--			kvm_put_kvm(vcpu->kvm); /* == work->vcpu->kvm */
- 			kmem_cache_free(async_pf_cache, work);
- 		}
- #endif
-@@ -126,7 +145,10 @@ void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
- 			list_first_entry(&vcpu->async_pf.done,
- 					 typeof(*work), link);
- 		list_del(&work->link);
--		kmem_cache_free(async_pf_cache, work);
-+
-+		spin_unlock(&vcpu->async_pf.lock);
-+		kvm_flush_and_free_async_pf_work(work);
-+		spin_lock(&vcpu->async_pf.lock);
- 	}
- 	spin_unlock(&vcpu->async_pf.lock);
- 
-@@ -151,7 +173,7 @@ void kvm_check_async_pf_completion(struct kvm_vcpu *vcpu)
- 
- 		list_del(&work->queue);
- 		vcpu->async_pf.queued--;
--		kmem_cache_free(async_pf_cache, work);
-+		kvm_flush_and_free_async_pf_work(work);
- 	}
- }
- 
-@@ -186,7 +208,6 @@ bool kvm_setup_async_pf(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	work->arch = *arch;
- 	work->mm = current->mm;
- 	mmget(work->mm);
--	kvm_get_kvm(work->vcpu->kvm);
- 
- 	INIT_WORK(&work->work, async_pf_execute);
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index eef811def39bc..ad3d7ac29c6dc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -842,7 +842,7 @@ &swr2 {
+ 	wcd_tx: codec@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+-		qcom,tx-port-mapping = <1 1 2 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
+ 	};
+ };
  
 -- 
 2.43.0
