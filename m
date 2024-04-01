@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F49D4596E;
-	Mon,  1 Apr 2024 16:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D304B1CA8F;
+	Mon,  1 Apr 2024 16:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987545; cv=none; b=P/cj+ZvxPkhIvQHPJV+eul8LRbGcquULI/tnuESkGyQiwqpIVSB++3fayHcu+pc6MFFHAaX7Z0YSELIz+ViUR9EzGmILzchNJzlJx2EQbEpEAjurGEqRurC1MJnxSPdRbQ0rSuSd+BfZ7VOW3MpsOKu18x7L/cCfxiEnnQdnHsk=
+	t=1711987549; cv=none; b=qZmf2urgOQ2FpF3cKK/5OyxdQBujyHMRxpLiDr7ZoSUsA1pCRJoO5LByGO38TuMAVG4KG5WkWLbm3LBRJ+ucb1b2qChPdMGhocbaBtx2+M6QW+4mhjyHcIIjeaN4BqAnbzyOwWuAP+DNLCs7qrSxUs9W7mLui+JM5XX7jJ4uIyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987545; c=relaxed/simple;
-	bh=2s2Y0iStsN5SR7qNSB8Yg2gdT34EvzBp7JoRR81pTUw=;
+	s=arc-20240116; t=1711987549; c=relaxed/simple;
+	bh=XTTOxpTy+qr8Ncai0XKpRGBslqtYHtC1okXrojl+58g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFbTOqX0oluJTe9fXUnZz5tV3WiNF2lMeGVHCZRL5J6QxxzJeV0Cd5B79JME+KBNIA0IURhIFZ7oXRoxB8N8xHl94VjQp1OdkudVkGDqV6QpX7Z97UJ7Bg2p50BvDs5eSRBCNFbdrauWLkqMr3WgYhjM4tKhjq7Vth5P7THm1Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYkqj4hN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aG1N57h07wcZ39i3Zj0bBL18R2ghP0sKm7ny2oqQ9a/7LGnlh0PwKWmUTuwqextTOn3W4esI9PacMBuIa/Lf0LfngnjmKjHPPc9CTvjuMAdSd6HenTx0xzuZB+n1bEJXcbfXOnhSU5X8RzAGmP3sAejcd45BKdJHGlm49sd94+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8sSrQFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYkqj4hN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1093AC433C7;
-	Mon,  1 Apr 2024 16:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8sSrQFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1279EC433C7;
+	Mon,  1 Apr 2024 16:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987545;
-	bh=2s2Y0iStsN5SR7qNSB8Yg2gdT34EvzBp7JoRR81pTUw=;
+	s=korg; t=1711987549;
+	bh=XTTOxpTy+qr8Ncai0XKpRGBslqtYHtC1okXrojl+58g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYkqj4hNXJHxS7Xwhf21rw85HpUc04BIban5Jn0XAVpo4QU/BluvdMNjcmh94bwhy
-	 qtpw1AdSnG8aw1Sty+YfHtXuQiMiYacUVy/A9dGyXY8su37FgyJFlX3DcPQFS5WgwI
-	 Xxe6e+2h2AtjRb2ZQJvKieVh4S5N77dvMt0XsKdM=
+	b=R8sSrQFtcZnf+GX+eDbQcqZKmLmdCCdQu05IE5L6EhX+PwhCLniJx9KRoJHA6z4PH
+	 RxAfCliNHuPMaWtja5QxTdlrq4jL4MJnyBn+G5QY2trM4Do4UywG9kK8AMiuK9/4DY
+	 z4RVFYatuyItT7jaaq0u7sTrxsLrR6Z3TcjD+GcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@redhat.com>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 6.8 319/399] nouveau/dmem: handle kcalloc() allocation failure
-Date: Mon,  1 Apr 2024 17:44:45 +0200
-Message-ID: <20240401152558.704853759@linuxfoundation.org>
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Ubisectech Sirius <bugreport@ubisectech.com>,
+	Jan Kara <jack@suse.cz>,
+	Hugh Dickins <hughd@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 293/399] tmpfs: fix race on handling dquot rbtree
+Date: Mon,  1 Apr 2024 17:44:19 +0200
+Message-ID: <20240401152557.932698807@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,63 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Carlos Maiolino <cem@kernel.org>
 
-commit 16e87fe23d4af6df920406494ced5c0f4354567b upstream.
+commit 0a69b6b3a026543bc215ccc866d0aea5579e6ce2 upstream.
 
-The kcalloc() in nouveau_dmem_evict_chunk() will return null if
-the physical memory has run out. As a result, if we dereference
-src_pfns, dst_pfns or dma_addrs, the null pointer dereference bugs
-will happen.
+A syzkaller reproducer found a race while attempting to remove dquot
+information from the rb tree.
 
-Moreover, the GPU is going away. If the kcalloc() fails, we could not
-evict all pages mapping a chunk. So this patch adds a __GFP_NOFAIL
-flag in kcalloc().
+Fetching the rb_tree root node must also be protected by the
+dqopt->dqio_sem, otherwise, giving the right timing, shmem_release_dquot()
+will trigger a warning because it couldn't find a node in the tree, when
+the real reason was the root node changing before the search starts:
 
-Finally, as there is no need to have physically contiguous memory,
-this patch switches kcalloc() to kvcalloc() in order to avoid
-failing allocations.
+Thread 1				Thread 2
+- shmem_release_dquot()			- shmem_{acquire,release}_dquot()
 
-CC: <stable@vger.kernel.org> # v6.1
-Fixes: 249881232e14 ("nouveau/dmem: evict device private memory during release")
-Suggested-by: Danilo Krummrich <dakr@redhat.com>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240306050104.11259-1-duoming@zju.edu.cn
+- fetch ROOT				- Fetch ROOT
+
+					- acquire dqio_sem
+- wait dqio_sem
+
+					- do something, triger a tree rebalance
+					- release dqio_sem
+
+- acquire dqio_sem
+- start searching for the node, but
+  from the wrong location, missing
+  the node, and triggering a warning.
+
+Link: https://lkml.kernel.org/r/20240320124011.398847-1-cem@kernel.org
+Fixes: eafc474e2029 ("shmem: prepare shmem quota infrastructure")
+Signed-off-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dmem.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/shmem_quota.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
-@@ -378,9 +378,9 @@ nouveau_dmem_evict_chunk(struct nouveau_
- 	dma_addr_t *dma_addrs;
- 	struct nouveau_fence *fence;
+--- a/mm/shmem_quota.c
++++ b/mm/shmem_quota.c
+@@ -116,7 +116,7 @@ static int shmem_free_file_info(struct s
+ static int shmem_get_next_id(struct super_block *sb, struct kqid *qid)
+ {
+ 	struct mem_dqinfo *info = sb_dqinfo(sb, qid->type);
+-	struct rb_node *node = ((struct rb_root *)info->dqi_priv)->rb_node;
++	struct rb_node *node;
+ 	qid_t id = from_kqid(&init_user_ns, *qid);
+ 	struct quota_info *dqopt = sb_dqopt(sb);
+ 	struct quota_id *entry = NULL;
+@@ -126,6 +126,7 @@ static int shmem_get_next_id(struct supe
+ 		return -ESRCH;
  
--	src_pfns = kcalloc(npages, sizeof(*src_pfns), GFP_KERNEL);
--	dst_pfns = kcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL);
--	dma_addrs = kcalloc(npages, sizeof(*dma_addrs), GFP_KERNEL);
-+	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
-+	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
-+	dma_addrs = kvcalloc(npages, sizeof(*dma_addrs), GFP_KERNEL | __GFP_NOFAIL);
+ 	down_read(&dqopt->dqio_sem);
++	node = ((struct rb_root *)info->dqi_priv)->rb_node;
+ 	while (node) {
+ 		entry = rb_entry(node, struct quota_id, node);
  
- 	migrate_device_range(src_pfns, chunk->pagemap.range.start >> PAGE_SHIFT,
- 			npages);
-@@ -406,11 +406,11 @@ nouveau_dmem_evict_chunk(struct nouveau_
- 	migrate_device_pages(src_pfns, dst_pfns, npages);
- 	nouveau_dmem_fence_done(&fence);
- 	migrate_device_finalize(src_pfns, dst_pfns, npages);
--	kfree(src_pfns);
--	kfree(dst_pfns);
-+	kvfree(src_pfns);
-+	kvfree(dst_pfns);
- 	for (i = 0; i < npages; i++)
- 		dma_unmap_page(chunk->drm->dev->dev, dma_addrs[i], PAGE_SIZE, DMA_BIDIRECTIONAL);
--	kfree(dma_addrs);
-+	kvfree(dma_addrs);
- }
+@@ -165,7 +166,7 @@ out_unlock:
+ static int shmem_acquire_dquot(struct dquot *dquot)
+ {
+ 	struct mem_dqinfo *info = sb_dqinfo(dquot->dq_sb, dquot->dq_id.type);
+-	struct rb_node **n = &((struct rb_root *)info->dqi_priv)->rb_node;
++	struct rb_node **n;
+ 	struct shmem_sb_info *sbinfo = dquot->dq_sb->s_fs_info;
+ 	struct rb_node *parent = NULL, *new_node = NULL;
+ 	struct quota_id *new_entry, *entry;
+@@ -176,6 +177,8 @@ static int shmem_acquire_dquot(struct dq
+ 	mutex_lock(&dquot->dq_lock);
  
- void
+ 	down_write(&dqopt->dqio_sem);
++	n = &((struct rb_root *)info->dqi_priv)->rb_node;
++
+ 	while (*n) {
+ 		parent = *n;
+ 		entry = rb_entry(parent, struct quota_id, node);
+@@ -264,7 +267,7 @@ static bool shmem_is_empty_dquot(struct
+ static int shmem_release_dquot(struct dquot *dquot)
+ {
+ 	struct mem_dqinfo *info = sb_dqinfo(dquot->dq_sb, dquot->dq_id.type);
+-	struct rb_node *node = ((struct rb_root *)info->dqi_priv)->rb_node;
++	struct rb_node *node;
+ 	qid_t id = from_kqid(&init_user_ns, dquot->dq_id);
+ 	struct quota_info *dqopt = sb_dqopt(dquot->dq_sb);
+ 	struct quota_id *entry = NULL;
+@@ -275,6 +278,7 @@ static int shmem_release_dquot(struct dq
+ 		goto out_dqlock;
+ 
+ 	down_write(&dqopt->dqio_sem);
++	node = ((struct rb_root *)info->dqi_priv)->rb_node;
+ 	while (node) {
+ 		entry = rb_entry(node, struct quota_id, node);
+ 
 
 
