@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80A01DFF4;
-	Mon,  1 Apr 2024 16:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C366863E;
+	Mon,  1 Apr 2024 16:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990377; cv=none; b=qrfw6BKs7pj/eYOY7PEqZhxk/NR4gdEJTHg5KE7AsiIV2rhL1SEzwhOVATIvlo6O6wdvxxc9gh8roVvq7p6M+7scH4LSJ4ZjVtFN6NKl0HiekBWTBGcBlz/71MI7AmZ8VDxj4hc/CU4/0Cu6PmDZYPWBGb4cw1eEW/q810fTSyc=
+	t=1711990380; cv=none; b=ktlTNbyldw34SEz4ngiu8tJ5Aa+AxfO/OJQESv3s7yXDNrchkUFQmMApcRhju24roY5jE+z9cqLyRdWhsWABJOTz6ZB3KwhXe9zDx0c8hSRBxR+lkx0on1UI8h/1pIxLF2AtCMuBwkQPQV2EuH0wRx5zZ9WwttSjtBk4WAewt0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990377; c=relaxed/simple;
-	bh=mJF2MajvLzGeRXIxs5G58TpOwnqIodoERyG4qR+XnII=;
+	s=arc-20240116; t=1711990380; c=relaxed/simple;
+	bh=3F+klxm6IHghZwYHtxoHJxgUwMzFeBAY/pjfusVvntM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkzpE39T7ks3TCrXNBnSXBIuMoxTqDJaeYg4/5e0Ta6g0Jcsin9mOInZwF220tmBzBdWF8Objc9yWRUcG9RYnW0YwHkU6mFY/iLyA6QFroMLCBBS5uNnmNLqycIM2YQVuwfvQaMPc7vnqaf4pXyFCB3z8VI3aYh7n9uz6hySqwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1ySDvPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2Yi3fQi3ZvTQHthFkkLgrPuq1sQGXtJ56Ox9aP8G084TE2ny+x/w+XgrfmaOAUAiOEMsFed3EwTchEYi0r1gYLx/lFr8QJ59XZbhakyYV7nP+s5LEfzMLaZ+wa/z9zWz/6RW4fwEMdwpWtiu0xU0/5Nf2pGzRxUdQRtErF2++k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkxSvI0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1ySDvPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D488C433C7;
-	Mon,  1 Apr 2024 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkxSvI0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B64DC433C7;
+	Mon,  1 Apr 2024 16:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990377;
-	bh=mJF2MajvLzGeRXIxs5G58TpOwnqIodoERyG4qR+XnII=;
+	s=korg; t=1711990380;
+	bh=3F+klxm6IHghZwYHtxoHJxgUwMzFeBAY/pjfusVvntM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1ySDvPGftOkj/1PTabthSCj0pOL6IU/+OL7+kGtW+AD84qdiGmDo5WYq31fyyJtx
-	 9sQAGdhbRqhvjcKL4EHcKNSN4g/JuDsqp2cG/C6QrjfonrVkVFNfofOGismgx0Ut2C
-	 +i+R4ntd3YDQ3MmBrywWvwEfaQ0A6GBE9F9XHZNk=
+	b=HkxSvI0r5DnKgyav4F5AMlNg/tfEvtjpprKQldug1nYAKWR+8uvbjxplBqbVqRxBF
+	 cq8f/cZZekxl7xLdahE6TXzfc5cW6a63HCx+wxnHxa4oDvz/N5pL/DCmRA5frm6JJp
+	 1zYlprQLQs96nfhiFkd6ltO+r2mI0Vbrznf5ZuvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Avri Altman <avri.altman@wdc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 332/396] mmc: core: Initialize mmc_blk_ioc_data
-Date: Mon,  1 Apr 2024 17:46:21 +0200
-Message-ID: <20240401152557.812897079@linuxfoundation.org>
+	Vitaly Chikunov <vt@altlinux.org>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 306/396] selftests/mm: Fix build with _FORTIFY_SOURCE
+Date: Mon,  1 Apr 2024 17:45:55 +0200
+Message-ID: <20240401152557.038730673@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,41 +58,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Rapeli <mikko.rapeli@linaro.org>
+From: Vitaly Chikunov <vt@altlinux.org>
 
-commit 0cdfe5b0bf295c0dee97436a8ed13336933a0211 upstream.
+[ Upstream commit 8b65ef5ad4862904e476a8f3d4e4418c950ddb90 ]
 
-Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") adds
-flags uint to struct mmc_blk_ioc_data, but it does not get initialized for
-RPMB ioctls which now fails.
+Add missing flags argument to open(2) call with O_CREAT.
 
-Let's fix this by always initializing the struct and flags to zero.
+Some tests fail to compile if _FORTIFY_SOURCE is defined (to any valid
+value) (together with -O), resulting in similar error messages such as:
 
-Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218587
-Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240313133744.2405325-1-mikko.rapeli@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  In file included from /usr/include/fcntl.h:342,
+                   from gup_test.c:1:
+  In function 'open',
+      inlined from 'main' at gup_test.c:206:10:
+  /usr/include/bits/fcntl2.h:50:11: error: call to '__open_missing_mode' declared with attribute error: open with O_CREAT or O_TMPFILE in second argument needs 3 arguments
+     50 |           __open_missing_mode ();
+        |           ^~~~~~~~~~~~~~~~~~~~~~
+
+_FORTIFY_SOURCE is enabled by default in some distributions, so the
+tests are not built by default and are skipped.
+
+open(2) man-page warns about missing flags argument: "if it is not
+supplied, some arbitrary bytes from the stack will be applied as the
+file mode."
+
+Link: https://lkml.kernel.org/r/20240318023445.3192922-1-vt@altlinux.org
+Fixes: aeb85ed4f41a ("tools/testing/selftests/vm/gup_benchmark.c: allow user specified file")
+Fixes: fbe37501b252 ("mm: huge_memory: debugfs for file-backed THP split")
+Fixes: c942f5bd17b3 ("selftests: soft-dirty: add test for mprotect")
+Signed-off-by: Vitaly Chikunov <vt@altlinux.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/gup_test.c             | 2 +-
+ tools/testing/selftests/mm/soft-dirty.c           | 2 +-
+ tools/testing/selftests/mm/split_huge_page_test.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -413,7 +413,7 @@ static struct mmc_blk_ioc_data *mmc_blk_
- 	struct mmc_blk_ioc_data *idata;
- 	int err;
+diff --git a/tools/testing/selftests/mm/gup_test.c b/tools/testing/selftests/mm/gup_test.c
+index cbe99594d319b..18a49c70d4c63 100644
+--- a/tools/testing/selftests/mm/gup_test.c
++++ b/tools/testing/selftests/mm/gup_test.c
+@@ -203,7 +203,7 @@ int main(int argc, char **argv)
+ 	ksft_print_header();
+ 	ksft_set_plan(nthreads);
  
--	idata = kmalloc(sizeof(*idata), GFP_KERNEL);
-+	idata = kzalloc(sizeof(*idata), GFP_KERNEL);
- 	if (!idata) {
- 		err = -ENOMEM;
- 		goto out;
+-	filed = open(file, O_RDWR|O_CREAT);
++	filed = open(file, O_RDWR|O_CREAT, 0664);
+ 	if (filed < 0)
+ 		ksft_exit_fail_msg("Unable to open %s: %s\n", file, strerror(errno));
+ 
+diff --git a/tools/testing/selftests/mm/soft-dirty.c b/tools/testing/selftests/mm/soft-dirty.c
+index cc5f144430d4d..7dbfa53d93a05 100644
+--- a/tools/testing/selftests/mm/soft-dirty.c
++++ b/tools/testing/selftests/mm/soft-dirty.c
+@@ -137,7 +137,7 @@ static void test_mprotect(int pagemap_fd, int pagesize, bool anon)
+ 		if (!map)
+ 			ksft_exit_fail_msg("anon mmap failed\n");
+ 	} else {
+-		test_fd = open(fname, O_RDWR | O_CREAT);
++		test_fd = open(fname, O_RDWR | O_CREAT, 0664);
+ 		if (test_fd < 0) {
+ 			ksft_test_result_skip("Test %s open() file failed\n", __func__);
+ 			return;
+diff --git a/tools/testing/selftests/mm/split_huge_page_test.c b/tools/testing/selftests/mm/split_huge_page_test.c
+index 0e74635c8c3d9..dff3be23488b4 100644
+--- a/tools/testing/selftests/mm/split_huge_page_test.c
++++ b/tools/testing/selftests/mm/split_huge_page_test.c
+@@ -253,7 +253,7 @@ void split_file_backed_thp(void)
+ 		goto cleanup;
+ 	}
+ 
+-	fd = open(testfile, O_CREAT|O_WRONLY);
++	fd = open(testfile, O_CREAT|O_WRONLY, 0664);
+ 	if (fd == -1) {
+ 		perror("Cannot open testing file\n");
+ 		goto cleanup;
+-- 
+2.43.0
+
 
 
