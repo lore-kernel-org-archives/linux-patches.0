@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2EEC129;
-	Mon,  1 Apr 2024 16:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CFAC129;
+	Mon,  1 Apr 2024 16:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988911; cv=none; b=PSM2kUgFM/IzmaTQDNjhzNOKKKSMmm6AcPxYNfrrtSGG6lPyeTzhky87mwHmDfzDApQCr+ZD6j8xDmbF3eaaL76Ss7ij0HGws7NZlOj7eHlSEWIX1mgIAMrh+fLU58Dp60YNFEa0oqiFyzntlvz7Re5r/m64Ntsa5l1PJBZhW8M=
+	t=1711988914; cv=none; b=thtqEjW37/jm/PD04zPIAhDn1MdyFIdcqERhFChptzMxjkJmlOrzAe4UQqe+njxSRvacNvlULNh8BvYgCzEWvp42ngNG3plRRhH+eVfenrn/NJ4HbWyPAYeQGjxT9s+921tzijHfxK0UblHk1zt61BEvS53upmxQY59qzC7iqkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988911; c=relaxed/simple;
-	bh=E/GtYUNN3Vj1FFMul7R37PvXEC5P811f0OgPHzxfb2o=;
+	s=arc-20240116; t=1711988914; c=relaxed/simple;
+	bh=CVspGQLSDxGg1fW0kInT+gueqqdExUZuNesuM5KAW20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+0DZxEmSJcb/Juco9UbkULDqu9ogpJ/UEC43DzlSZ37/Lz7SL435j/u/qX+Q6oqsr1obLg+t4WasEfEER1AsfpiMzCDRDIRGFl46SAsPOlycoIZlh5IYHZ1Kyk96zvAkcO4R8cON/8HmLqrUs5ywpWy9NJrRj6FejhOwC2aNds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVShhMrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WHeL9i6+3wZya9KFaI8gGOLOn3jhiuIgXX1F56lU5uPe9n/y1rKa3OTHTpXYZUgGa8bQRJBorYHpLOwTON8/oDXTwCYc1GygZ6raxigCv89T1JwX/Hcn+heHO3psgvAvKm9u+HB/SjufQtpu29OPUQ1VktAXnvDkm90I2blVy1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8yq9S8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVShhMrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE979C433F1;
-	Mon,  1 Apr 2024 16:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8yq9S8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9AEC433C7;
+	Mon,  1 Apr 2024 16:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988911;
-	bh=E/GtYUNN3Vj1FFMul7R37PvXEC5P811f0OgPHzxfb2o=;
+	s=korg; t=1711988914;
+	bh=CVspGQLSDxGg1fW0kInT+gueqqdExUZuNesuM5KAW20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVShhMrAhor5VGvCtl0UvNRR4QYjAp4QzoRC3Qse1Nf/l/Rjcnp8IZ7n+dbwBfp9i
-	 lguwc8PwqdYTxRXjEdg27OdMxH1x8/HJ/A6kxhpPXQsn/uCh1URxe5uBLuaD8UNNPo
-	 GCa76lrpp5/ic51EqFdpYHvuqdpRUDMM8GjM7vfM=
+	b=d8yq9S8qmtG8R70fK5tD3+NFJLJ+kahlDyE3Xn/+f5Gtv0ec1TSbdCC35zrkMlKUt
+	 qTa8XoLKvGf/FeQXMkStiwZKWoaW0yKieWxXRTLjMBMu9RMh2NIr/X6cNTR2roc9vl
+	 9ls7cNZXRJhK4ruQ9/0GPGC6+V42ayCh77mWBiE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.7 287/432] iio: imu: inv_mpu6050: fix FIFO parsing when empty
-Date: Mon,  1 Apr 2024 17:44:34 +0200
-Message-ID: <20240401152601.731738278@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 319/432] selftests/mm: gup_test: conform test to TAP format output
+Date: Mon,  1 Apr 2024 17:45:06 +0200
+Message-ID: <20240401152602.716165478@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,35 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 60caa8b33bd682a9ed99d1fc3f91d74e1acc9922 upstream.
+[ Upstream commit cb6e7cae18868422a23d62670110c61fd1b15029 ]
 
-Now that we are reading the full FIFO in the interrupt handler,
-it is possible to have an emply FIFO since we are still receiving
-1 interrupt per data. Handle correctly this case instead of having
-an error causing a reset of the FIFO.
+Conform the layout, informational and status messages to TAP.  No
+functional change is intended other than the layout of output messages.
 
-Fixes: 0829edc43e0a ("iio: imu: inv_mpu6050: read the full fifo when processing data")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://lore.kernel.org/r/20240219154825.90656-1-inv.git-commit@tdk.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20240102053807.2114200-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 8b65ef5ad486 ("selftests/mm: Fix build with _FORTIFY_SOURCE")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/mm/gup_test.c | 65 ++++++++++++++-------------
+ 1 file changed, 33 insertions(+), 32 deletions(-)
 
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
-@@ -109,6 +109,8 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
- 	/* compute and process only all complete datum */
- 	nb = fifo_count / bytes_per_datum;
- 	fifo_count = nb * bytes_per_datum;
-+	if (nb == 0)
-+		goto end_session;
- 	/* Each FIFO data contains all sensors, so same number for FIFO and sensor data */
- 	fifo_period = NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
- 	inv_sensors_timestamp_interrupt(&st->timestamp, fifo_period, nb, nb, pf->timestamp);
+diff --git a/tools/testing/selftests/mm/gup_test.c b/tools/testing/selftests/mm/gup_test.c
+index ec22291363844..cbe99594d319b 100644
+--- a/tools/testing/selftests/mm/gup_test.c
++++ b/tools/testing/selftests/mm/gup_test.c
+@@ -50,39 +50,41 @@ static char *cmd_to_str(unsigned long cmd)
+ void *gup_thread(void *data)
+ {
+ 	struct gup_test gup = *(struct gup_test *)data;
+-	int i;
++	int i, status;
+ 
+ 	/* Only report timing information on the *_BENCHMARK commands: */
+ 	if ((cmd == PIN_FAST_BENCHMARK) || (cmd == GUP_FAST_BENCHMARK) ||
+ 	     (cmd == PIN_LONGTERM_BENCHMARK)) {
+ 		for (i = 0; i < repeats; i++) {
+ 			gup.size = size;
+-			if (ioctl(gup_fd, cmd, &gup))
+-				perror("ioctl"), exit(1);
++			status = ioctl(gup_fd, cmd, &gup);
++			if (status)
++				break;
+ 
+ 			pthread_mutex_lock(&print_mutex);
+-			printf("%s: Time: get:%lld put:%lld us",
+-			       cmd_to_str(cmd), gup.get_delta_usec,
+-			       gup.put_delta_usec);
++			ksft_print_msg("%s: Time: get:%lld put:%lld us",
++				       cmd_to_str(cmd), gup.get_delta_usec,
++				       gup.put_delta_usec);
+ 			if (gup.size != size)
+-				printf(", truncated (size: %lld)", gup.size);
+-			printf("\n");
++				ksft_print_msg(", truncated (size: %lld)", gup.size);
++			ksft_print_msg("\n");
+ 			pthread_mutex_unlock(&print_mutex);
+ 		}
+ 	} else {
+ 		gup.size = size;
+-		if (ioctl(gup_fd, cmd, &gup)) {
+-			perror("ioctl");
+-			exit(1);
+-		}
++		status = ioctl(gup_fd, cmd, &gup);
++		if (status)
++			goto return_;
+ 
+ 		pthread_mutex_lock(&print_mutex);
+-		printf("%s: done\n", cmd_to_str(cmd));
++		ksft_print_msg("%s: done\n", cmd_to_str(cmd));
+ 		if (gup.size != size)
+-			printf("Truncated (size: %lld)\n", gup.size);
++			ksft_print_msg("Truncated (size: %lld)\n", gup.size);
+ 		pthread_mutex_unlock(&print_mutex);
+ 	}
+ 
++return_:
++	ksft_test_result(!status, "ioctl status %d\n", status);
+ 	return NULL;
+ }
+ 
+@@ -170,7 +172,7 @@ int main(int argc, char **argv)
+ 			touch = 1;
+ 			break;
+ 		default:
+-			return -1;
++			ksft_exit_fail_msg("Wrong argument\n");
+ 		}
+ 	}
+ 
+@@ -198,11 +200,12 @@ int main(int argc, char **argv)
+ 		}
+ 	}
+ 
++	ksft_print_header();
++	ksft_set_plan(nthreads);
++
+ 	filed = open(file, O_RDWR|O_CREAT);
+-	if (filed < 0) {
+-		perror("open");
+-		exit(filed);
+-	}
++	if (filed < 0)
++		ksft_exit_fail_msg("Unable to open %s: %s\n", file, strerror(errno));
+ 
+ 	gup.nr_pages_per_call = nr_pages;
+ 	if (write)
+@@ -213,27 +216,24 @@ int main(int argc, char **argv)
+ 		switch (errno) {
+ 		case EACCES:
+ 			if (getuid())
+-				printf("Please run this test as root\n");
++				ksft_print_msg("Please run this test as root\n");
+ 			break;
+ 		case ENOENT:
+-			if (opendir("/sys/kernel/debug") == NULL) {
+-				printf("mount debugfs at /sys/kernel/debug\n");
+-				break;
+-			}
+-			printf("check if CONFIG_GUP_TEST is enabled in kernel config\n");
++			if (opendir("/sys/kernel/debug") == NULL)
++				ksft_print_msg("mount debugfs at /sys/kernel/debug\n");
++			ksft_print_msg("check if CONFIG_GUP_TEST is enabled in kernel config\n");
+ 			break;
+ 		default:
+-			perror("failed to open " GUP_TEST_FILE);
++			ksft_print_msg("failed to open %s: %s\n", GUP_TEST_FILE, strerror(errno));
+ 			break;
+ 		}
+-		exit(KSFT_SKIP);
++		ksft_test_result_skip("Please run this test as root\n");
++		return ksft_exit_pass();
+ 	}
+ 
+ 	p = mmap(NULL, size, PROT_READ | PROT_WRITE, flags, filed, 0);
+-	if (p == MAP_FAILED) {
+-		perror("mmap");
+-		exit(1);
+-	}
++	if (p == MAP_FAILED)
++		ksft_exit_fail_msg("mmap: %s\n", strerror(errno));
+ 	gup.addr = (unsigned long)p;
+ 
+ 	if (thp == 1)
+@@ -264,7 +264,8 @@ int main(int argc, char **argv)
+ 		ret = pthread_join(tid[i], NULL);
+ 		assert(ret == 0);
+ 	}
++
+ 	free(tid);
+ 
+-	return 0;
++	return ksft_exit_pass();
+ }
+-- 
+2.43.0
+
 
 
