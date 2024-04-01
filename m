@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CFB47A66;
-	Mon,  1 Apr 2024 16:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F8547A6B;
+	Mon,  1 Apr 2024 16:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987875; cv=none; b=CbHaZFeL2r+Km9fZQ4IS8kSzHSDLyN8NTXu4xsmwdaUZVCd7XO+zXuy7Pnk3mFSPnFw4cW1xI3ViL28xtuoaTM5uSrFIiZdAv9UCN00irystwTFlh4+lBwWY5skJA/pFeHyoIDbbG1mNe74e96YUQngndUzU2JO3rMsdxGNLSBw=
+	t=1711987879; cv=none; b=aU2FYCZh0hLo/U7d1OfHiu7d/audu4TzURMiHSA+LlDWplOJ6/2L2OEhpDUJdLfzveyBcVCj/PmNjKNwuNnOcKWQrhsCStINBHzxOwIw8T6lkYcoqAOMTiF4asQ4who5qwUSnjTaAUSRjFuJYLD8MIEe9LKsFqMrV3yBv5dvHWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987875; c=relaxed/simple;
-	bh=wRtp+/zCF+aaQ+cY95l79foa4vCTZGXvwsCDi7gLaYc=;
+	s=arc-20240116; t=1711987879; c=relaxed/simple;
+	bh=bHc4N2e3my83ykRWwAuAnq6AFt8Bog8VeCLbtCy7hR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BShgZ7TA9iLGPHPFFLlL8juNVKnvAqOtz6/k6O2YvWPEZujCMe85q0Uk99IwE18HbrWE1kp1GKogR7Vs1oi5BooZ0Fo00ITU1vLSu65yCT1HSjhljIVMnJvchdu3tZnBEdk6035L7avPIi19zDX8LkDL5fxhMAGNQUP/3lntpBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WU995BBQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rp1ATt+ZqKogL13mYRlqEgTUNDn6K1hIUKDQrGMLejUhEI2vbalVmZLYa2I0R6oIch+kYY9SMyDIN4K/nl9RQzQjjm7MbH0SFeTPG73J377VEvVvoooL2Rqhnz4VqKfilUz+/m7idTzMUNsYFsumRvzYcvrkQN5vm6+aKhQ09y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZAiMSM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WU995BBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3011FC43394;
-	Mon,  1 Apr 2024 16:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZAiMSM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A728EC433C7;
+	Mon,  1 Apr 2024 16:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987875;
-	bh=wRtp+/zCF+aaQ+cY95l79foa4vCTZGXvwsCDi7gLaYc=;
+	s=korg; t=1711987879;
+	bh=bHc4N2e3my83ykRWwAuAnq6AFt8Bog8VeCLbtCy7hR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WU995BBQnWKP0BK9En9avJYdYnOLaclfUATSMuzf9Z+W6iWEAziP8j4NjN9crnV24
-	 AKrn9nHanIG1A+Rj38PWSXPOfBlXoM71+zLKrBWPSjyeXZbK3+ipe7q6O+ZXU6UjsV
-	 cMSO0scXEtBkXk4nW6tdkgfXDkPOjqSri6nVnjNE=
+	b=vZAiMSM7DxezOTUiRx9Gw8p7CXYddrQi/8szjUVQOwcnXHHHdQYMKlVYSeMlEwLX5
+	 Yql2C7szLC7dWSDf0IHEWA1r+IHbtqh5/NQhO7UHUTz5qptxqoONRdnnRGI6mRa9A7
+	 zKg4xAGr4ObrIS/AXp2ODyQkutupRZ98UT6Iv6gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Gui-Dong Han <2045gemini@gmail.com>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 018/432] media: xc4000: Fix atomicity violation in xc4000_get_frequency
-Date: Mon,  1 Apr 2024 17:40:05 +0200
-Message-ID: <20240401152553.671791194@linuxfoundation.org>
+Subject: [PATCH 6.7 019/432] media: mc: Add local pad to pipeline regardless of the link state
+Date: Mon,  1 Apr 2024 17:40:06 +0200
+Message-ID: <20240401152553.701652013@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,77 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 36d503ad547d1c75758a6fcdbec2806f1b6aeb41 ]
+[ Upstream commit 78f0daa026d4c5e192d31801d1be6caf88250220 ]
 
-In xc4000_get_frequency():
-	*freq = priv->freq_hz + priv->freq_offset;
-The code accesses priv->freq_hz and priv->freq_offset without holding any
-lock.
+When building pipelines by following links, the
+media_pipeline_explore_next_link() function only traverses enabled
+links. The remote pad of a disabled link is not added to the pipeline,
+and neither is the local pad. While the former is correct as disabled
+links should not be followed, not adding the local pad breaks processing
+of the MEDIA_PAD_FL_MUST_CONNECT flag.
 
-In xc4000_set_params():
-	// Code that updates priv->freq_hz and priv->freq_offset
-	...
+The MEDIA_PAD_FL_MUST_CONNECT flag is checked in the
+__media_pipeline_start() function that iterates over all pads after
+populating the pipeline. If the pad is not present, the check gets
+skipped, rendering it useless.
 
-xc4000_get_frequency() and xc4000_set_params() may execute concurrently,
-risking inconsistent reads of priv->freq_hz and priv->freq_offset. Since
-these related data may update during reading, it can result in incorrect
-frequency calculation, leading to atomicity violations.
+Fix this by adding the local pad of all links regardless of their state,
+only skipping the remote pad for disabled links.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 6.2.
-
-To address this issue, it is proposed to add a mutex lock pair in
-xc4000_get_frequency() to ensure atomicity. With this patch applied, our
-tool no longer reports the possible bug, with the kernel configuration
-allyesconfig for x86_64. Due to the lack of associated hardware, we cannot
-test the patch in runtime testing, and just verify it according to the
-code logic.
-
-[1] https://sites.google.com/view/basscheck/
-
-Fixes: 4c07e32884ab ("[media] xc4000: Fix get_frequency()")
-Cc: stable@vger.kernel.org
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Cc: stable@vger.kernel.org # 6.1
+Fixes: ae219872834a ("media: mc: entity: Rewrite media_pipeline_start()")
+Reported-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Closes: https://lore.kernel.org/linux-media/7658a15a-80c5-219f-2477-2a94ba6c6ba1@kontron.de
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/tuners/xc4000.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/mc/mc-entity.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/tuners/xc4000.c b/drivers/media/tuners/xc4000.c
-index 57ded9ff3f043..29bc63021c5aa 100644
---- a/drivers/media/tuners/xc4000.c
-+++ b/drivers/media/tuners/xc4000.c
-@@ -1515,10 +1515,10 @@ static int xc4000_get_frequency(struct dvb_frontend *fe, u32 *freq)
- {
- 	struct xc4000_priv *priv = fe->tuner_priv;
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index 543a392f86357..a6f28366106fb 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -620,13 +620,6 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 		link->source->entity->name, link->source->index,
+ 		link->sink->entity->name, link->sink->index);
  
-+	mutex_lock(&priv->lock);
- 	*freq = priv->freq_hz + priv->freq_offset;
- 
- 	if (debug) {
--		mutex_lock(&priv->lock);
- 		if ((priv->cur_fw.type
- 		     & (BASE | FM | DTV6 | DTV7 | DTV78 | DTV8)) == BASE) {
- 			u16	snr = 0;
-@@ -1529,8 +1529,8 @@ static int xc4000_get_frequency(struct dvb_frontend *fe, u32 *freq)
- 				return 0;
- 			}
- 		}
--		mutex_unlock(&priv->lock);
+-	/* Skip links that are not enabled. */
+-	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
+-		dev_dbg(walk->mdev->dev,
+-			"media pipeline: skipping link (disabled)\n");
+-		return 0;
+-	}
+-
+ 	/* Get the local pad and remote pad. */
+ 	if (link->source->entity == pad->entity) {
+ 		local = link->source;
+@@ -648,13 +641,20 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
  	}
-+	mutex_unlock(&priv->lock);
  
- 	dprintk(1, "%s()\n", __func__);
+ 	/*
+-	 * Add the local and remote pads of the link to the pipeline and push
+-	 * them to the stack, if they're not already present.
++	 * Add the local pad of the link to the pipeline and push it to the
++	 * stack, if not already present.
+ 	 */
+ 	ret = media_pipeline_add_pad(pipe, walk, local);
+ 	if (ret)
+ 		return ret;
  
++	/* Similarly, add the remote pad, but only if the link is enabled. */
++	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
++		dev_dbg(walk->mdev->dev,
++			"media pipeline: skipping link (disabled)\n");
++		return 0;
++	}
++
+ 	ret = media_pipeline_add_pad(pipe, walk, remote);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
