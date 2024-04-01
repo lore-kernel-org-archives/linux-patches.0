@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2153F8F4;
-	Mon,  1 Apr 2024 16:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155CA1CA8F;
+	Mon,  1 Apr 2024 16:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987408; cv=none; b=l1Ellt1a4h18ExE0qvOVh4dvgRdHENvUb9SxC1uXRIbysY0+Inm/kSiaY/4wDOdHJqf38MoG2SX7LSvtYFde+Kgnny8hWs3VqHw2NG/RmmdviAPCccDBpoKJSyspfXtsFAgyzBDTkFbW3zQV55cQA3+7V3dqVg2LSnCZOXG82Yc=
+	t=1711987412; cv=none; b=iNOatJF2lF+poeNyVMQHFWwyeChmlDqR6QoPyJkYPKPcc7doSEHn/cfbuiS+VpKS/hywg6W1G6qssXNHkV4t9jSeuibUJ1RvY9LDE5wRhjPo8AwdNdXV9txgNUXD2M7zZ7gSAgPRiw3aB5yBX2+fB4NhVaD3oeFJ7kQafgEhdgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987408; c=relaxed/simple;
-	bh=Fdg/oeLhxK54LGAPca40j5UR4YuBp/CSBNU/fePmL4c=;
+	s=arc-20240116; t=1711987412; c=relaxed/simple;
+	bh=itjfIgvTBbGg+lARgLDIyu2P1IfbF+1JILjFPT5m7Ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nl2vIirkhEY4uHQzf9Ah0xZTUoyOt60JAF606a7w7dpJ/m0jUOz1hf90t067/qMErFTkNOQeUMnpOqjLVIGcp8ogDWOs/8mmj/v9duLLzWu4ZIjYyq1mHwNYXqQFFL5yWMxTDsvXKNQYUuXPTBIBXerORwp4CdROnoRTJyGdrNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hI6AZd02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=srnk+d+IsXrkjkb9Mqa10J4U8tD42DqNtRDmMJfy4aYLqdvYYCOqMXlptEUti53HjHBjj5M0B0jQ0hlf/rqjE44XGx9m/iauXIskXGuxVT6lET6IvCIqhw7I+a1F5h80bLWV1sdXmD766fx1MeiP96zVj4GvNSe7zYQxSMvVzPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEnT29oL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hI6AZd02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2F2C433C7;
-	Mon,  1 Apr 2024 16:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEnT29oL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C33C433F1;
+	Mon,  1 Apr 2024 16:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987408;
-	bh=Fdg/oeLhxK54LGAPca40j5UR4YuBp/CSBNU/fePmL4c=;
+	s=korg; t=1711987412;
+	bh=itjfIgvTBbGg+lARgLDIyu2P1IfbF+1JILjFPT5m7Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hI6AZd02yDZygK3GO6r+UudiQ4wonIcjI87k5+LMjhNJ6Oegfhrz0IXafvpZMVBAg
-	 L1SOTuvXTiK4qjPAxUwPPcQiBAPgIwXqIlnjWxzHvBShKj3mhpiqqnvj6MUNtikkU5
-	 hz84SBaZnCQVehzLXGHhQLNVN6KCu8JJAjun0p2c=
+	b=bEnT29oLgK6YJbvK+bHAeWWn0p8BXiDK4jdjxsVncJ4a89ZsmQ4IvNPNPRfBm2l5S
+	 z006XRg6JBN2gwbLuclfidLivmE7bDZd8mKTCb/SlxzMFBkoWhCuRJ9iJ/M5C6idvS
+	 pekn04fh53nbWF0+8z3f23X3KM8/Ee+eVi9ubtks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 261/399] printk: Update @console_may_schedule in console_trylock_spinning()
-Date: Mon,  1 Apr 2024 17:43:47 +0200
-Message-ID: <20240401152556.979480689@linuxfoundation.org>
+	Imre Deak <imre.deak@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
+Subject: [PATCH 6.8 279/399] drm/i915: Try to preserve the current shared_dpll for fastset on type-c ports
+Date: Mon,  1 Apr 2024 17:44:05 +0200
+Message-ID: <20240401152557.512521351@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -46,52 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 8076972468584d4a21dab9aa50e388b3ea9ad8c7 ]
+commit ba407525f8247ee4c270369f3371b9994c27bfda upstream.
 
-console_trylock_spinning() may takeover the console lock from a
-schedulable context. Update @console_may_schedule to make sure it
-reflects a trylock acquire.
+Currently icl_compute_tc_phy_dplls() assumes that the active
+PLL will be the TC PLL (as opposed to the TBT PLL). The actual
+PLL will be selected during the modeset enable sequence, but
+we need to put *something* into the crtc_state->shared_dpll
+already during compute_config().
 
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Closes: https://lore.kernel.org/lkml/20240222090538.23017-1-quic_mojha@quicinc.com
-Fixes: dbdda842fe96 ("printk: Add console owner and waiter logic to load balance console writes")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/875xybmo2z.fsf@jogness.linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The downside of assuming one PLL or the other is that we'll
+fail to fastset if the assumption doesn't match what was in
+use previously. So let's instead keep the same PLL that was
+in use previously (assuming there was one). This should allow
+fastset to work again when using TBT PLL, at least in the
+steady state.
+
+Now, assuming we want keep the same PLL may not be entirely
+correct either. But we should be covered by the type-c link
+reset handling which will force a full modeset by flagging
+connectors_changed=true which means the resulting modeset
+can't be converted into a fastset even if the full crtc state
+looks identical.
+
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240118142436.25928-1-ville.syrjala@linux.intel.com
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/printk/printk.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dpll_mgr.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index a11e1b6f29c04..7a835b277e98d 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -2026,6 +2026,12 @@ static int console_trylock_spinning(void)
- 	 */
- 	mutex_acquire(&console_lock_dep_map, 0, 1, _THIS_IP_);
+--- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
++++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
+@@ -3308,6 +3308,8 @@ static int icl_compute_tc_phy_dplls(stru
+ 	struct drm_i915_private *i915 = to_i915(state->base.dev);
+ 	struct intel_crtc_state *crtc_state =
+ 		intel_atomic_get_new_crtc_state(state, crtc);
++	const struct intel_crtc_state *old_crtc_state =
++		intel_atomic_get_old_crtc_state(state, crtc);
+ 	struct icl_port_dpll *port_dpll =
+ 		&crtc_state->icl_port_dplls[ICL_PORT_DPLL_DEFAULT];
+ 	struct skl_wrpll_params pll_params = {};
+@@ -3326,7 +3328,11 @@ static int icl_compute_tc_phy_dplls(stru
+ 		return ret;
  
-+	/*
-+	 * Update @console_may_schedule for trylock because the previous
-+	 * owner may have been schedulable.
-+	 */
-+	console_may_schedule = 0;
-+
- 	return 1;
- }
+ 	/* this is mainly for the fastset check */
+-	icl_set_active_port_dpll(crtc_state, ICL_PORT_DPLL_MG_PHY);
++	if (old_crtc_state->shared_dpll &&
++	    old_crtc_state->shared_dpll->info->id == DPLL_ID_ICL_TBTPLL)
++		icl_set_active_port_dpll(crtc_state, ICL_PORT_DPLL_DEFAULT);
++	else
++		icl_set_active_port_dpll(crtc_state, ICL_PORT_DPLL_MG_PHY);
  
--- 
-2.43.0
-
+ 	crtc_state->port_clock = icl_ddi_mg_pll_get_freq(i915, NULL,
+ 							 &port_dpll->hw_state);
 
 
