@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B513D961;
-	Mon,  1 Apr 2024 16:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DAA3D961;
+	Mon,  1 Apr 2024 16:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988455; cv=none; b=pxwgGzlCT4h1eMz23+Lu+fSSLF0SLafGCHN8qsUGMfjZ/7lFq0Vv0RH4QAIOUMaW54B0i/nAI6LUUS3OIQ0sXAC24QWz4u6eTRFC1z9up5xz8bvDZeC/n53gtOmESPzxeBPx/U8u9jTRdc3B46kcfB8TEVkUraOwdAqYIYUMYTc=
+	t=1711988458; cv=none; b=UJ2GUWqrfXD1qIjMFHYvZgowbI1AcNLYJxe60W5H2pOTZgeLVwi/XDbXDdof7dlHVTQShKNc7ZYPuXxUGglzjH2l0USLdnopZLCv32QNU5buyoet6zfwaUoVGR80WpfzBS8Vl6FINLUlKH9gy+C6QmscVe2R+ZPe+6HON1KtwoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988455; c=relaxed/simple;
-	bh=2FrtjAPrx6mXuDqirk09Lv6KfLGs2kw3koIefDtxg4Y=;
+	s=arc-20240116; t=1711988458; c=relaxed/simple;
+	bh=Ta3BCZSupIVWYMUSAgNRMZAAtJ4EF2nuDMxT7XUDYME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYIBqxVJC+KevhK8tRzwSGWiTeLEiVh/FxfdG7M29U48AZeftgwjyjFQyGq3os2aR67v2FztARonsDyLt73lN0a1HDHmNrvJn+/w9DXs/72awWBuxYECZJWlWbE8IkSZ8yeWDaqHyDgeIhiWGKisnKcAQXCzy5xtk7ZtA4FULIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYiHHpWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xkq+sQyi9/VvHUL9Tzs5on/DGEzcG6WURFUmo1BCCXpF43tlP+y53ZPcwwO8ncZiPYUTn25FphHaxxnttXYfukBTVe38l8Pa2unc0IWdxK4TWJlqTY3T32mu9XYEeoc9tvvn6xu9jelz6QoL4QkQG5I+XJvCvRB7EX0RkuttKJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPJOTc2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYiHHpWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB88BC433F1;
-	Mon,  1 Apr 2024 16:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPJOTc2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D21C433C7;
+	Mon,  1 Apr 2024 16:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988455;
-	bh=2FrtjAPrx6mXuDqirk09Lv6KfLGs2kw3koIefDtxg4Y=;
+	s=korg; t=1711988458;
+	bh=Ta3BCZSupIVWYMUSAgNRMZAAtJ4EF2nuDMxT7XUDYME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYiHHpWOKUkZCB87e3/0alI+4qk7K3kQd/TLvIS+nxaZIDTzHhYZU41KSDeb1KVgH
-	 5M8/aPPmAd+4SZvYtp7Omw+6d2iCxLZUd1JznlhXLxXeqHRw3Yc6MNbOKu8/Mha5TS
-	 XawkqEgdPFOzyGpqHm+Uh9A4uiVHHOg/7RPZB7Hw=
+	b=sPJOTc2QPSZmmCix1z5WE1HWy4EgBXl+h+eqlMWucq+EESWoTVvW4CvIKjVXvNmqk
+	 Lvn1cSQ60XtmzX34cWG4FWGS40HXfEAW+UUmvm3H2Q4CEcB1luchlKHfFUvJ2cD32h
+	 vUXtUz9KSO4MK6iWmsZvyU5MvfJLBvg6yYkjPQpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Xuanzhe Yu <yuxuanzhe@outlook.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 189/432] x86/CPU/AMD: Update the Zenbleed microcode revisions
-Date: Mon,  1 Apr 2024 17:42:56 +0200
-Message-ID: <20240401152558.777730397@linuxfoundation.org>
+Subject: [PATCH 6.7 190/432] ksmbd: fix slab-out-of-bounds in smb_strndup_from_utf16()
+Date: Mon,  1 Apr 2024 17:42:57 +0200
+Message-ID: <20240401152558.806942211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
+[ Upstream commit a80a486d72e20bd12c335bcd38b6e6f19356b0aa ]
 
-Update them to the correct revision numbers.
+If ->NameOffset of smb2_create_req is smaller than Buffer offset of
+smb2_create_req, slab-out-of-bounds read can happen from smb2_open.
+This patch set the minimum value of the name offset to the buffer offset
+to validate name length of smb2_create_req().
 
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Xuanzhe Yu <yuxuanzhe@outlook.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/server/smb2misc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 2055fb308f5b9..77a1ceb717d06 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1002,11 +1002,11 @@ static bool cpu_has_zenbleed_microcode(void)
- 	u32 good_rev = 0;
+diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
+index 03dded29a9804..7c872ffb4b0a9 100644
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -107,7 +107,10 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
+ 	case SMB2_CREATE:
+ 	{
+ 		unsigned short int name_off =
+-			le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset);
++			max_t(unsigned short int,
++			      le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset),
++			      offsetof(struct smb2_create_req, Buffer));
++
+ 		unsigned short int name_len =
+ 			le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
  
- 	switch (boot_cpu_data.x86_model) {
--	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
--	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
--	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
--	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
--	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
-+	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
-+	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
-+	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
-+	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
-+	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
- 
- 	default:
- 		return false;
 -- 
 2.43.0
 
