@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29B547A74;
-	Mon,  1 Apr 2024 16:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2244B1CA8F;
+	Mon,  1 Apr 2024 16:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987712; cv=none; b=gEfc0yMJm3UbFDAsMH5qnqAMAl8PE3rEi91u3LKAG1AELirmaKoP9E+os8SzZD5NgkbRDqN8Xxxh492S4+DjzVoFY6ZTmAfAOPlprU8z45GdRyPqNiPLhefjZMDRmW7mUA4X5xYPXoeE1XRJNH+f3l3ohxzzrZztf96IQjOKihs=
+	t=1711987716; cv=none; b=p2P/0tmnF0LFOvdsuuUZK7J3DXdTe9mKnFwg8JJEPtGUoFHxQpAg9dH1oGqcUwRPpdIzIs6XQ7hTv/SpPx59FrEL6wf937Q4XHqp5HEGOvW5MbyMDu1BAgWCoZfqYg5GKjG3LBImjROvq7VIMmW2sUbZl+xKVghT5QxZqLmJNfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987712; c=relaxed/simple;
-	bh=QtuZXvPGSlsS6Io3HhR6YrkrTvR1KxRqI71LMuCD+kw=;
+	s=arc-20240116; t=1711987716; c=relaxed/simple;
+	bh=4xO2AZ8bgV5yn3u3DKYKDS1e5VrcTyGjKo+V7fhxV/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tji82s1g3qITIRE/davZ4HB2GmfqR0TXOpyu0H6JDT7zi4iAdilXgTQtN3WIxsOa5ly3YZMOTJSo9vqwX2GNg6h5Ydf8Vz3zsgenkr+2aYTn5oGrrfjtgVsQ/a9rdB23ocVFhPL8GuelXf5pzOz1QrK+iAjURc/HE891dT3weLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7XB7K8z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQHI4H9UFc8Oiz+RbIqfUjPHs1oPwTRqMfJ2dMnn++LpgmfKIjAtA+noXRi2ceheinpsSonqDh7BQKLmjDF27FpYdYJ/wMXtPzQIoB2XA35dRU0aGBOtRtKv7TBBZ/cTBW245slN/rzsIeN28aZmo/xIuD1y+5+jQaKpxL5IyGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2JMf0K0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7XB7K8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252AFC433C7;
-	Mon,  1 Apr 2024 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2JMf0K0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2A6C433C7;
+	Mon,  1 Apr 2024 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987712;
-	bh=QtuZXvPGSlsS6Io3HhR6YrkrTvR1KxRqI71LMuCD+kw=;
+	s=korg; t=1711987716;
+	bh=4xO2AZ8bgV5yn3u3DKYKDS1e5VrcTyGjKo+V7fhxV/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7XB7K8zN1RuDJ9Lje5xSuVEAjJ5nAjSQ3xPLYpC5gSIntRjLcL4b0bwZEnymJ2MX
-	 AWSErTax8CO3gVEO1DNbRbeFiDx3kM4q38c05DVQ02QZp2zDHh4mY8/wRjJqKcEi9Z
-	 AK5Oz/b93/Boq/AuUH/5WigZ5hPBrxC1wTtdCH84=
+	b=r2JMf0K07zvBbsSpxLvQMtAV+HOIEWO61AFnJTBNPKwMmzQyHAVv1r1VFo6KGb7ef
+	 qSSQFSxgFOVRor5RIFEuG9f0EDtv9acVyYVq39r5ptEFG69bswb92paGjsLgnGCJHC
+	 Ty3RdQMthsYJ0EYyHXvbfdCqBZ+r8upWL6UQrxHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kyle Tso <kyletso@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.8 370/399] usb: typec: tcpm: Update PD of Type-C port upon pd_set
-Date: Mon,  1 Apr 2024 17:45:36 +0200
-Message-ID: <20240401152600.221018259@linuxfoundation.org>
+Subject: [PATCH 6.8 371/399] usb: typec: Return size of buffer if pd_set operation succeeds
+Date: Mon,  1 Apr 2024 17:45:37 +0200
+Message-ID: <20240401152600.250435533@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,32 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Tso <kyletso@google.com>
 
-commit 17af5050dead6cbcca12c1fcd17e0bb8bb284eae upstream.
+commit 53f5094fdf5deacd99b8655df692e9278506724d upstream.
 
-The PD of Type-C port needs to be updated in pd_set. Unlink the Type-C
-port device to the old PD before linking it to a new one.
+The attribute writing should return the number of bytes used from the
+buffer on success.
 
-Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
+Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
 Cc: stable@vger.kernel.org
 Signed-off-by: Kyle Tso <kyletso@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240311172306.3911309-1-kyletso@google.com
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240319074309.3306579-1-kyletso@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/class.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -6166,7 +6166,9 @@ static int tcpm_pd_set(struct typec_port
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -1310,6 +1310,7 @@ static ssize_t select_usb_power_delivery
+ {
+ 	struct typec_port *port = to_typec_port(dev);
+ 	struct usb_power_delivery *pd;
++	int ret;
  
- 	port->port_source_caps = data->source_cap;
- 	port->port_sink_caps = data->sink_cap;
-+	typec_port_set_usb_power_delivery(p, NULL);
- 	port->selected_pd = pd;
-+	typec_port_set_usb_power_delivery(p, port->selected_pd);
- unlock:
- 	mutex_unlock(&port->lock);
- 	return ret;
+ 	if (!port->ops || !port->ops->pd_set)
+ 		return -EOPNOTSUPP;
+@@ -1318,7 +1319,11 @@ static ssize_t select_usb_power_delivery
+ 	if (!pd)
+ 		return -EINVAL;
+ 
+-	return port->ops->pd_set(port, pd);
++	ret = port->ops->pd_set(port, pd);
++	if (ret)
++		return ret;
++
++	return size;
+ }
+ 
+ static ssize_t select_usb_power_delivery_show(struct device *dev,
 
 
