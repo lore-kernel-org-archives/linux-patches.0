@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BBD495F0;
-	Mon,  1 Apr 2024 17:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FECB47A5D;
+	Mon,  1 Apr 2024 17:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991367; cv=none; b=O2sI0LxgbxOE0u5utoxNS6sNBiIfKMQv6W0w4NP0W0ygv8BQZWqYgvOhu7icj+JbwEYf1qDOggoPCoKAsBZn8K2L2npb3TIx0UZUYNaZbkQoGdN3EWpg2R8xYIguewRmum5la57lcLUpnPOFL1yIk1VRyDK2aDyzor8w2aVI0Ks=
+	t=1711991371; cv=none; b=U/gLddDn4Cy92Kb22XfqvT1Kvv6kMCOhb00psy81px/LVpMeK/0nI4cXOgPTimKTNjEVcmh0lUDROhEzzQDKtIJ0rLzAf7LmJ1RqpCsvfhhBdnBtzUPiClIwEYYA0ugDMtYo43gkaC29AoP1urlg8TWj7PKlKUeDcnvgcJIxty4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991367; c=relaxed/simple;
-	bh=2VVGgtAegL5qrdrobAE93z3/bnXJulR6uM7ND425zcs=;
+	s=arc-20240116; t=1711991371; c=relaxed/simple;
+	bh=GP7XDrKSyr5Izx19IqL7eN4MCGZXjSGj5vsSPGZnNeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Quc4RJn354hpiAZYgP03lCVGCdVwKD6hk59WEzTVYHfbZTDIUiqVhEopBZQtqaUsiSICcWlzKGAk3GDInFn8iY1KI+2X2IXDPz3mAxrigj8puyg4w5PNKcJbocjYiW5u+wDxoLx2Wku+bwhB+8WpN5vKHKS/D0J8h3LA1EWosGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHKQvEQ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GpjPEL1/sfxFlEXCXXZogmNWc5Z5/RhBJ4k9Jp5amXp01uDGNxEdaOQcMd6ezw/OWmuKUou8wlydZ6l9CMpSEecp85Ymlw5CZHn5Bvc7aoFqjkpwYS4lPZMPqgHd8xDquzlos2YSRo1QKorh9RR16V4xboTEVgPvIh5oRVOEXE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhaLvOTA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHKQvEQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17658C433F1;
-	Mon,  1 Apr 2024 17:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhaLvOTA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66B2C433F1;
+	Mon,  1 Apr 2024 17:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991367;
-	bh=2VVGgtAegL5qrdrobAE93z3/bnXJulR6uM7ND425zcs=;
+	s=korg; t=1711991371;
+	bh=GP7XDrKSyr5Izx19IqL7eN4MCGZXjSGj5vsSPGZnNeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHKQvEQ3O6fAktT9v1Z4duikc16DhDA+8F47hyYwsI+hCTeCB1YpfoY59DwLmUw6o
-	 e8OBMU83MWVw3fwa1uWHDGwGMRcleyb07UF+3xQffxK8ym77dKT+bPtuagEEd+VIv/
-	 VMAfr/2oKq45txXpoB9QaSpivjCcg0oZITbcxlw8=
+	b=EhaLvOTATdS/VRWIdFxM/GWne3bB8fzToyWmkW+wm550K6YaSyXhV/o49Cs8tq5yR
+	 Xyg/ejzAPCOJSP653p7z0YXF5enTm/YQNYKdnps3+fFYaEw2MqUyHv711H9Z8+boEq
+	 AN+xI5vpNvXq9AQX91dGTljt5/hMj6FKIY108miI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ranygh@riseup.net,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 215/272] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
-Date: Mon,  1 Apr 2024 17:46:45 +0200
-Message-ID: <20240401152537.644698985@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.1 216/272] wifi: iwlwifi: fw: dont always use FW dump trig
+Date: Mon,  1 Apr 2024 17:46:46 +0200
+Message-ID: <20240401152537.673747130@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,44 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
+commit 045a5b645dd59929b0e05375f493cde3a0318271 upstream.
 
-When moving a station out of a VLAN and deleting the VLAN afterwards, the
-fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
-use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
-after the VLAN change.
+Since the dump_data (struct iwl_fwrt_dump_data) is a union,
+it's not safe to unconditionally access and use the 'trig'
+member, it might be 'desc' instead. Access it only if it's
+known to be 'trig' rather than 'desc', i.e. if ini-debug
+is present.
 
 Cc: stable@vger.kernel.org
-Reported-by: ranygh@riseup.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
+Fixes: 0eb50c674a1e ("iwlwifi: yoyo: send hcmd to fw after dump collection completes.")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240319100755.e2976bc58b29.I72fbd6135b3623227de53d8a2bb82776066cb72b@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2075,15 +2075,14 @@ static int ieee80211_change_station(stru
- 		}
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -2903,8 +2903,6 @@ static void iwl_fw_dbg_collect_sync(stru
+ 	struct iwl_fw_dbg_params params = {0};
+ 	struct iwl_fwrt_dump_data *dump_data =
+ 		&fwrt->dump.wks[wk_idx].dump_data;
+-	u32 policy;
+-	u32 time_point;
+ 	if (!test_bit(wk_idx, &fwrt->dump.active_wks))
+ 		return;
  
- 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
--		    sta->sdata->u.vlan.sta) {
--			ieee80211_clear_fast_rx(sta);
-+		    sta->sdata->u.vlan.sta)
- 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
--		}
+@@ -2935,13 +2933,16 @@ static void iwl_fw_dbg_collect_sync(stru
  
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
- 			ieee80211_vif_dec_num_mcast(sta->sdata);
+ 	iwl_fw_dbg_stop_restart_recording(fwrt, &params, false);
  
- 		sta->sdata = vlansdata;
-+		ieee80211_check_fast_rx(sta);
- 		ieee80211_check_fast_xmit(sta);
+-	policy = le32_to_cpu(dump_data->trig->apply_policy);
+-	time_point = le32_to_cpu(dump_data->trig->time_point);
+-
+-	if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
+-		IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
+-		iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
++	if (iwl_trans_dbg_ini_valid(fwrt->trans)) {
++		u32 policy = le32_to_cpu(dump_data->trig->apply_policy);
++		u32 time_point = le32_to_cpu(dump_data->trig->time_point);
++
++		if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
++			IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
++			iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
++		}
+ 	}
++
+ 	if (fwrt->trans->dbg.last_tp_resetfw == IWL_FW_INI_RESET_FW_MODE_STOP_FW_ONLY)
+ 		iwl_force_nmi(fwrt->trans);
  
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
 
 
