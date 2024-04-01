@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967E247A57;
-	Mon,  1 Apr 2024 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E5AC129;
+	Mon,  1 Apr 2024 16:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988567; cv=none; b=UlOlld4HZy05Da5V46pNJDq/BGq1qC3EvHfYN5+RQsNJrZhy46EHOoia+Ag06ZUp1VI/xXKdjZOgWm2dU8xjtCesTJZapCMpR7IjsRK/4+Z1kalX4XkWbJM+xXO+BbQhh6hNbm5gciHeF49WA75ff3if0ZGfNL39iAKX15LPrso=
+	t=1711988570; cv=none; b=ICHyaKJtdXICFSUfrFQyG1TK5t5zl155e7GKwevkQPy2LV+RM3vGV8U/olU2+ecd5//UKLbYJZp/ZgHllTvjQOJvCh9hyp0J+BSPjNefUfGDbzBanglbdG7DGPJzqzoOHhfR+wajcDs64LJzNA/WgxYr8+L+vH6hpO+hpPeb3AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988567; c=relaxed/simple;
-	bh=Hu7Uud5pZNTCtHDuLEcnw8KYtqvAQKzRHdsJi8Asiqg=;
+	s=arc-20240116; t=1711988570; c=relaxed/simple;
+	bh=KQPvm4HPE3/yK8ufoR9tzmX1IUZ8j1+nJwytNwq2u4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh48IfqZoIHZHiSq29/bpLeYzh+uTP2G9dwrY+qNCirHaZXlis4ZJDMt2j///nNmnOck4Ma6SYYThd3RMCP0amF+lBn9jCYrWKC4vu5V46BfUCnSqO4hxagEzSCXR0bMKXz8YpeeNQ5x916hM7k8YJhTp695RpCbXS9+yVQGYAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES1eGTB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vBCNfDzsV9m3qiP6n/XGJlVwIqJ7NzV4e6WfDafoETJgBacLHXYUwgVx0lZ2C5kgZBtP3hWf9JZ5bDqQmP5CHTMi16GszxbA05yZvsY+CmOU5nuta/WA2PSrOu1tYRySc27QAPpMegAb3JY8hiexeHzYuGZ3Q2or0T8tiLQIp7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s2OgEBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES1eGTB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AE4C433C7;
-	Mon,  1 Apr 2024 16:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s2OgEBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE8AC433F1;
+	Mon,  1 Apr 2024 16:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988567;
-	bh=Hu7Uud5pZNTCtHDuLEcnw8KYtqvAQKzRHdsJi8Asiqg=;
+	s=korg; t=1711988570;
+	bh=KQPvm4HPE3/yK8ufoR9tzmX1IUZ8j1+nJwytNwq2u4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES1eGTB9xO8S7UHVqAz+qivqIg/sd8CIeg1M7GbigC8NH8Z7PTPSkJqyX+bBaten7
-	 Ha4SNYa/eOe4Zxoy7GhU7xYnGuvfZ9F8cWp8H3E2APTPmQ8iXY7rhVF1W/pSs3QP75
-	 n9n1cNugpJAQiSxNcIcba+I3sgTDqQZnE1uZO9Ss=
+	b=2s2OgEBxFcvhZhUlu5/cWWisNJ/UJ8bF04d7HaKSD+KSaO2v00zqnu7MJa6P95E32
+	 0ULc85GEdFTk/c09r0shGUwYDnHIpS0dv1mWWRYTNHCG7nt4GU/xoRpyMfz0epu6OX
+	 pDawGe5yfON9U09WFvbz16pwtZtfS0yQsJyzekeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Hector Martin <marcan@marcan.st>,
+	Neal Gompa <neal@gompa.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 196/432] ksmbd: fix potencial out-of-bounds when buffer offset is invalid
-Date: Mon,  1 Apr 2024 17:43:03 +0200
-Message-ID: <20240401152558.985999292@linuxfoundation.org>
+Subject: [PATCH 6.7 223/432] wifi: brcmfmac: cfg80211: Use WSEC to set SAE password
+Date: Mon,  1 Apr 2024 17:43:30 +0200
+Message-ID: <20240401152559.787450498@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,314 +53,304 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit c6cd2e8d2d9aa7ee35b1fa6a668e32a22a9753da ]
+[ Upstream commit 9f7861c56b51b84d30114e7fea9d744a9d5ba9b7 ]
 
-I found potencial out-of-bounds when buffer offset fields of a few requests
-is invalid. This patch set the minimum value of buffer offset field to
-->Buffer offset to validate buffer length.
+Using the WSEC command instead of sae_password seems to be the supported
+mechanism on newer firmware, and also how the brcmdhd driver does it.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The existing firmware mechanism intended for (some) Cypress chips has
+been separated from the new firmware mechanism using the multi-vendor
+framework. Depending on the device it will select the appropriate
+firmware mechanism.
+
+This makes WPA3 work with iwd, or with wpa_supplicant pending a support
+patchset [2].
+
+[1] https://rachelbythebay.com/w/2023/11/06/wpa3/
+[2] http://lists.infradead.org/pipermail/hostap/2023-July/041653.html
+
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+[arend.vanspriel@broadcom.com: use multi-vendor framework]
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240103095704.135651-5-arend.vanspriel@broadcom.com
+Stable-dep-of: 85da8f71aaa7 ("wifi: brcmfmac: Demote vendor-specific attach/detach messages to info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 23 +++++++++++++------
- fs/smb/server/smb2pdu.c  | 48 ++++++++++++++++++++++------------------
- 2 files changed, 42 insertions(+), 29 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 56 ++++++++-----------
+ .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  2 +
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 28 ++++++++++
+ .../broadcom/brcm80211/brcmfmac/fwil.c        |  1 +
+ .../broadcom/brcm80211/brcmfmac/fwil_types.h  |  2 +-
+ .../broadcom/brcm80211/brcmfmac/fwvid.h       | 13 +++++
+ .../broadcom/brcm80211/brcmfmac/wcc/core.c    |  9 +++
+ 7 files changed, 76 insertions(+), 35 deletions(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index 7c872ffb4b0a9..727cb49926ee5 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -101,7 +101,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		*len = le16_to_cpu(((struct smb2_sess_setup_req *)hdr)->SecurityBufferLength);
- 		break;
- 	case SMB2_TREE_CONNECT:
--		*off = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset);
-+		*off = max_t(unsigned short int,
-+			     le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset),
-+			     offsetof(struct smb2_tree_connect_req, Buffer));
- 		*len = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathLength);
- 		break;
- 	case SMB2_CREATE:
-@@ -110,7 +112,6 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 			max_t(unsigned short int,
- 			      le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset),
- 			      offsetof(struct smb2_create_req, Buffer));
--
- 		unsigned short int name_len =
- 			le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index fdc0852bdcddb..0ff15d4083e1d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -32,6 +32,7 @@
+ #include "vendor.h"
+ #include "bus.h"
+ #include "common.h"
++#include "fwvid.h"
  
-@@ -131,11 +132,15 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		break;
- 	}
- 	case SMB2_QUERY_INFO:
--		*off = le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset);
-+		*off = max_t(unsigned int,
-+			     le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset),
-+			     offsetof(struct smb2_query_info_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferLength);
- 		break;
- 	case SMB2_SET_INFO:
--		*off = le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset);
-+		*off = max_t(unsigned int,
-+			     le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset),
-+			     offsetof(struct smb2_set_info_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_set_info_req *)hdr)->BufferLength);
- 		break;
- 	case SMB2_READ:
-@@ -145,7 +150,7 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 	case SMB2_WRITE:
- 		if (((struct smb2_write_req *)hdr)->DataOffset ||
- 		    ((struct smb2_write_req *)hdr)->Length) {
--			*off = max_t(unsigned int,
-+			*off = max_t(unsigned short int,
- 				     le16_to_cpu(((struct smb2_write_req *)hdr)->DataOffset),
- 				     offsetof(struct smb2_write_req, Buffer));
- 			*len = le32_to_cpu(((struct smb2_write_req *)hdr)->Length);
-@@ -156,7 +161,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		*len = le16_to_cpu(((struct smb2_write_req *)hdr)->WriteChannelInfoLength);
- 		break;
- 	case SMB2_QUERY_DIRECTORY:
--		*off = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset);
-+		*off = max_t(unsigned short int,
-+			     le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset),
-+			     offsetof(struct smb2_query_directory_req, Buffer));
- 		*len = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameLength);
- 		break;
- 	case SMB2_LOCK:
-@@ -171,7 +178,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		break;
- 	}
- 	case SMB2_IOCTL:
--		*off = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset);
-+		*off = max_t(unsigned int,
-+			     le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset),
-+			     offsetof(struct smb2_ioctl_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputCount);
- 		break;
- 	default:
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 199c31c275e5b..88db6e207e0ee 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1951,7 +1951,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ #define BRCMF_SCAN_IE_LEN_MAX		2048
  
- 	WORK_BUFFERS(work, req, rsp);
+@@ -1686,52 +1687,39 @@ static u16 brcmf_map_fw_linkdown_reason(const struct brcmf_event_msg *e)
+ 	return reason;
+ }
  
--	treename = smb_strndup_from_utf16(req->Buffer,
-+	treename = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->PathOffset),
- 					  le16_to_cpu(req->PathLength), true,
- 					  conn->local_nls);
- 	if (IS_ERR(treename)) {
-@@ -2704,7 +2704,7 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out2;
- 		}
- 
--		name = smb2_get_name(req->Buffer,
-+		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
- 				     le16_to_cpu(req->NameLength),
- 				     work->conn->local_nls);
- 		if (IS_ERR(name)) {
-@@ -4080,7 +4080,7 @@ int smb2_query_dir(struct ksmbd_work *work)
- 	}
- 
- 	srch_flag = req->Flags;
--	srch_ptr = smb_strndup_from_utf16(req->Buffer,
-+	srch_ptr = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->FileNameOffset),
- 					  le16_to_cpu(req->FileNameLength), 1,
- 					  conn->local_nls);
- 	if (IS_ERR(srch_ptr)) {
-@@ -4340,7 +4340,8 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		    sizeof(struct smb2_ea_info_req))
- 			return -EINVAL;
- 
--		ea_req = (struct smb2_ea_info_req *)req->Buffer;
-+		ea_req = (struct smb2_ea_info_req *)((char *)req +
-+						     le16_to_cpu(req->InputBufferOffset));
- 	} else {
- 		/* need to send all EAs, if no specific EA is requested*/
- 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
-@@ -5986,6 +5987,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			      struct ksmbd_share_config *share)
+-static int brcmf_set_pmk(struct brcmf_if *ifp, const u8 *pmk_data, u16 pmk_len)
++int brcmf_set_wsec(struct brcmf_if *ifp, const u8 *key, u16 key_len, u16 flags)
  {
- 	unsigned int buf_len = le32_to_cpu(req->BufferLength);
-+	char *buffer = (char *)req + le16_to_cpu(req->BufferOffset);
+ 	struct brcmf_pub *drvr = ifp->drvr;
+ 	struct brcmf_wsec_pmk_le pmk;
+ 	int err;
  
- 	switch (req->FileInfoClass) {
- 	case FILE_BASIC_INFORMATION:
-@@ -5993,7 +5995,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_basic_info))
- 			return -EINVAL;
- 
--		return set_file_basic_info(fp, (struct smb2_file_basic_info *)req->Buffer, share);
-+		return set_file_basic_info(fp, (struct smb2_file_basic_info *)buffer, share);
- 	}
- 	case FILE_ALLOCATION_INFORMATION:
- 	{
-@@ -6001,7 +6003,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_file_allocation_info(work, fp,
--						(struct smb2_file_alloc_info *)req->Buffer);
-+						(struct smb2_file_alloc_info *)buffer);
- 	}
- 	case FILE_END_OF_FILE_INFORMATION:
- 	{
-@@ -6009,7 +6011,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_end_of_file_info(work, fp,
--					    (struct smb2_file_eof_info *)req->Buffer);
-+					    (struct smb2_file_eof_info *)buffer);
- 	}
- 	case FILE_RENAME_INFORMATION:
- 	{
-@@ -6017,7 +6019,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_rename_info(work, fp,
--				       (struct smb2_file_rename_info *)req->Buffer,
-+				       (struct smb2_file_rename_info *)buffer,
- 				       buf_len);
- 	}
- 	case FILE_LINK_INFORMATION:
-@@ -6026,7 +6028,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return smb2_create_link(work, work->tcon->share_conf,
--					(struct smb2_file_link_info *)req->Buffer,
-+					(struct smb2_file_link_info *)buffer,
- 					buf_len, fp->filp,
- 					work->conn->local_nls);
- 	}
-@@ -6036,7 +6038,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_file_disposition_info(fp,
--						 (struct smb2_file_disposition_info *)req->Buffer);
-+						 (struct smb2_file_disposition_info *)buffer);
- 	}
- 	case FILE_FULL_EA_INFORMATION:
- 	{
-@@ -6049,7 +6051,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_ea_info))
- 			return -EINVAL;
- 
--		return smb2_set_ea((struct smb2_ea_info *)req->Buffer,
-+		return smb2_set_ea((struct smb2_ea_info *)buffer,
- 				   buf_len, &fp->filp->f_path, true);
- 	}
- 	case FILE_POSITION_INFORMATION:
-@@ -6057,14 +6059,14 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_pos_info))
- 			return -EINVAL;
- 
--		return set_file_position_info(fp, (struct smb2_file_pos_info *)req->Buffer);
-+		return set_file_position_info(fp, (struct smb2_file_pos_info *)buffer);
- 	}
- 	case FILE_MODE_INFORMATION:
- 	{
- 		if (buf_len < sizeof(struct smb2_file_mode_info))
- 			return -EINVAL;
- 
--		return set_file_mode_info(fp, (struct smb2_file_mode_info *)req->Buffer);
-+		return set_file_mode_info(fp, (struct smb2_file_mode_info *)buffer);
- 	}
- 	}
- 
-@@ -6145,7 +6147,7 @@ int smb2_set_info(struct ksmbd_work *work)
- 		}
- 		rc = smb2_set_info_sec(fp,
- 				       le32_to_cpu(req->AdditionalInformation),
--				       req->Buffer,
-+				       (char *)req + le16_to_cpu(req->BufferOffset),
- 				       le32_to_cpu(req->BufferLength));
- 		ksmbd_revert_fsids(work);
- 		break;
-@@ -7591,7 +7593,7 @@ static int fsctl_pipe_transceive(struct ksmbd_work *work, u64 id,
- 				 struct smb2_ioctl_rsp *rsp)
- {
- 	struct ksmbd_rpc_command *rpc_resp;
--	char *data_buf = (char *)&req->Buffer[0];
-+	char *data_buf = (char *)req + le32_to_cpu(req->InputOffset);
- 	int nbytes = 0;
- 
- 	rpc_resp = ksmbd_rpc_ioctl(work->sess, id, data_buf,
-@@ -7704,6 +7706,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 	u64 id = KSMBD_NO_FID;
- 	struct ksmbd_conn *conn = work->conn;
- 	int ret = 0;
-+	char *buffer;
- 
- 	if (work->next_smb2_rcv_hdr_off) {
- 		req = ksmbd_req_buf_next(work);
-@@ -7726,6 +7729,8 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		goto out;
- 	}
- 
-+	buffer = (char *)req + le32_to_cpu(req->InputOffset);
++	if (key_len > sizeof(pmk.key)) {
++		bphy_err(drvr, "key must be less than %zu bytes\n",
++			 sizeof(pmk.key));
++		return -EINVAL;
++	}
 +
- 	cnt_code = le32_to_cpu(req->CtlCode);
- 	ret = smb2_calc_max_out_buf_len(work, 48,
- 					le32_to_cpu(req->MaxOutputResponse));
-@@ -7783,7 +7788,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	memset(&pmk, 0, sizeof(pmk));
+ 
+-	/* pass pmk directly */
+-	pmk.key_len = cpu_to_le16(pmk_len);
+-	pmk.flags = cpu_to_le16(0);
+-	memcpy(pmk.key, pmk_data, pmk_len);
++	/* pass key material directly */
++	pmk.key_len = cpu_to_le16(key_len);
++	pmk.flags = cpu_to_le16(flags);
++	memcpy(pmk.key, key, key_len);
+ 
+-	/* store psk in firmware */
++	/* store key material in firmware */
+ 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_WSEC_PMK,
+ 				     &pmk, sizeof(pmk));
+ 	if (err < 0)
+ 		bphy_err(drvr, "failed to change PSK in firmware (len=%u)\n",
+-			 pmk_len);
++			 key_len);
+ 
+ 	return err;
+ }
++BRCMF_EXPORT_SYMBOL_GPL(brcmf_set_wsec);
+ 
+-static int brcmf_set_sae_password(struct brcmf_if *ifp, const u8 *pwd_data,
+-				  u16 pwd_len)
++static int brcmf_set_pmk(struct brcmf_if *ifp, const u8 *pmk_data, u16 pmk_len)
+ {
+-	struct brcmf_pub *drvr = ifp->drvr;
+-	struct brcmf_wsec_sae_pwd_le sae_pwd;
+-	int err;
+-
+-	if (pwd_len > BRCMF_WSEC_MAX_SAE_PASSWORD_LEN) {
+-		bphy_err(drvr, "sae_password must be less than %d\n",
+-			 BRCMF_WSEC_MAX_SAE_PASSWORD_LEN);
+-		return -EINVAL;
+-	}
+-
+-	sae_pwd.key_len = cpu_to_le16(pwd_len);
+-	memcpy(sae_pwd.key, pwd_data, pwd_len);
+-
+-	err = brcmf_fil_iovar_data_set(ifp, "sae_password", &sae_pwd,
+-				       sizeof(sae_pwd));
+-	if (err < 0)
+-		bphy_err(drvr, "failed to set SAE password in firmware (len=%u)\n",
+-			 pwd_len);
+-
+-	return err;
++	return brcmf_set_wsec(ifp, pmk_data, pmk_len, 0);
+ }
+ 
+ static void brcmf_link_down(struct brcmf_cfg80211_vif *vif, u16 reason,
+@@ -2502,8 +2490,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
+ 			bphy_err(drvr, "failed to clean up user-space RSNE\n");
+ 			goto done;
+ 		}
+-		err = brcmf_set_sae_password(ifp, sme->crypto.sae_pwd,
+-					     sme->crypto.sae_pwd_len);
++		err = brcmf_fwvid_set_sae_password(ifp, &sme->crypto);
+ 		if (!err && sme->crypto.psk)
+ 			err = brcmf_set_pmk(ifp, sme->crypto.psk,
+ 					    BRCMF_WSEC_MAX_PSK_LEN);
+@@ -5256,8 +5243,7 @@ brcmf_cfg80211_start_ap(struct wiphy *wiphy, struct net_device *ndev,
+ 		if (crypto->sae_pwd) {
+ 			brcmf_dbg(INFO, "using SAE offload\n");
+ 			profile->use_fwauth |= BIT(BRCMF_PROFILE_FWAUTH_SAE);
+-			err = brcmf_set_sae_password(ifp, crypto->sae_pwd,
+-						     crypto->sae_pwd_len);
++			err = brcmf_fwvid_set_sae_password(ifp, crypto);
+ 			if (err < 0)
+ 				goto exit;
+ 		}
+@@ -5364,10 +5350,12 @@ static int brcmf_cfg80211_stop_ap(struct wiphy *wiphy, struct net_device *ndev,
+ 		msleep(400);
+ 
+ 		if (profile->use_fwauth != BIT(BRCMF_PROFILE_FWAUTH_NONE)) {
++			struct cfg80211_crypto_settings crypto = {};
++
+ 			if (profile->use_fwauth & BIT(BRCMF_PROFILE_FWAUTH_PSK))
+ 				brcmf_set_pmk(ifp, NULL, 0);
+ 			if (profile->use_fwauth & BIT(BRCMF_PROFILE_FWAUTH_SAE))
+-				brcmf_set_sae_password(ifp, NULL, 0);
++				brcmf_fwvid_set_sae_password(ifp, &crypto);
+ 			profile->use_fwauth = BIT(BRCMF_PROFILE_FWAUTH_NONE);
  		}
  
- 		ret = fsctl_validate_negotiate_info(conn,
--			(struct validate_negotiate_info_req *)&req->Buffer[0],
-+			(struct validate_negotiate_info_req *)buffer,
- 			(struct validate_negotiate_info_rsp *)&rsp->Buffer[0],
- 			in_buf_len);
- 		if (ret < 0)
-@@ -7836,7 +7841,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		rsp->VolatileFileId = req->VolatileFileId;
- 		rsp->PersistentFileId = req->PersistentFileId;
- 		fsctl_copychunk(work,
--				(struct copychunk_ioctl_req *)&req->Buffer[0],
-+				(struct copychunk_ioctl_req *)buffer,
- 				le32_to_cpu(req->CtlCode),
- 				le32_to_cpu(req->InputCount),
- 				req->VolatileFileId,
-@@ -7849,8 +7854,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
+index 0e1fa3f0dea2c..dc3a6a537507d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
+@@ -468,4 +468,6 @@ void brcmf_set_mpc(struct brcmf_if *ndev, int mpc);
+ void brcmf_abort_scanning(struct brcmf_cfg80211_info *cfg);
+ void brcmf_cfg80211_free_netdev(struct net_device *ndev);
  
--		ret = fsctl_set_sparse(work, id,
--				       (struct file_sparse *)&req->Buffer[0]);
-+		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
- 		if (ret < 0)
- 			goto out;
- 		break;
-@@ -7873,7 +7877,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		}
++int brcmf_set_wsec(struct brcmf_if *ifp, const u8 *key, u16 key_len, u16 flags);
++
+ #endif /* BRCMFMAC_CFG80211_H */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index b75652ba9359f..24670497f1a40 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -7,6 +7,7 @@
+ #include <core.h>
+ #include <bus.h>
+ #include <fwvid.h>
++#include <fwil.h>
  
- 		zero_data =
--			(struct file_zero_data_information *)&req->Buffer[0];
-+			(struct file_zero_data_information *)buffer;
+ #include "vops.h"
  
- 		off = le64_to_cpu(zero_data->FileOffset);
- 		bfz = le64_to_cpu(zero_data->BeyondFinalZero);
-@@ -7904,7 +7908,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		}
+@@ -21,7 +22,34 @@ static void brcmf_cyw_detach(struct brcmf_pub *drvr)
+ 	pr_err("%s: executing\n", __func__);
+ }
  
- 		ret = fsctl_query_allocated_ranges(work, id,
--			(struct file_allocated_range_buffer *)&req->Buffer[0],
-+			(struct file_allocated_range_buffer *)buffer,
- 			(struct file_allocated_range_buffer *)&rsp->Buffer[0],
- 			out_buf_len /
- 			sizeof(struct file_allocated_range_buffer), &nbytes);
-@@ -7948,7 +7952,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
++static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
++				 struct cfg80211_crypto_settings *crypto)
++{
++	struct brcmf_pub *drvr = ifp->drvr;
++	struct brcmf_wsec_sae_pwd_le sae_pwd;
++	u16 pwd_len = crypto->sae_pwd_len;
++	int err;
++
++	if (pwd_len > BRCMF_WSEC_MAX_SAE_PASSWORD_LEN) {
++		bphy_err(drvr, "sae_password must be less than %d\n",
++			 BRCMF_WSEC_MAX_SAE_PASSWORD_LEN);
++		return -EINVAL;
++	}
++
++	sae_pwd.key_len = cpu_to_le16(pwd_len);
++	memcpy(sae_pwd.key, crypto->sae_pwd, pwd_len);
++
++	err = brcmf_fil_iovar_data_set(ifp, "sae_password", &sae_pwd,
++				       sizeof(sae_pwd));
++	if (err < 0)
++		bphy_err(drvr, "failed to set SAE password in firmware (len=%u)\n",
++			 pwd_len);
++
++	return err;
++}
++
+ const struct brcmf_fwvid_ops brcmf_cyw_ops = {
+ 	.attach = brcmf_cyw_attach,
+ 	.detach = brcmf_cyw_detach,
++	.set_sae_password = brcmf_cyw_set_sae_pwd,
+ };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.c
+index 72fe8bce6eaf5..a9514d72f770b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.c
+@@ -239,6 +239,7 @@ brcmf_fil_iovar_data_set(struct brcmf_if *ifp, const char *name, const void *dat
+ 	mutex_unlock(&drvr->proto_block);
+ 	return err;
+ }
++BRCMF_EXPORT_SYMBOL_GPL(brcmf_fil_iovar_data_set);
  
--		dup_ext = (struct duplicate_extents_to_file *)&req->Buffer[0];
-+		dup_ext = (struct duplicate_extents_to_file *)buffer;
+ s32
+ brcmf_fil_iovar_data_get(struct brcmf_if *ifp, const char *name, void *data,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
+index 9d248ba1c0b2b..e74a23e11830c 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
+@@ -584,7 +584,7 @@ struct brcmf_wsec_key_le {
+ struct brcmf_wsec_pmk_le {
+ 	__le16  key_len;
+ 	__le16  flags;
+-	u8 key[2 * BRCMF_WSEC_MAX_PSK_LEN + 1];
++	u8 key[BRCMF_WSEC_MAX_SAE_PASSWORD_LEN];
+ };
  
- 		fp_in = ksmbd_lookup_fd_slow(work, dup_ext->VolatileFileHandle,
- 					     dup_ext->PersistentFileHandle);
+ /**
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+index 17fbdbb76f51b..d9fc76b46db96 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+@@ -6,6 +6,7 @@
+ #define FWVID_H_
+ 
+ #include "firmware.h"
++#include "cfg80211.h"
+ 
+ struct brcmf_pub;
+ struct brcmf_if;
+@@ -14,6 +15,7 @@ struct brcmf_fwvid_ops {
+ 	int (*attach)(struct brcmf_pub *drvr);
+ 	void (*detach)(struct brcmf_pub *drvr);
+ 	void (*feat_attach)(struct brcmf_if *ifp);
++	int (*set_sae_password)(struct brcmf_if *ifp, struct cfg80211_crypto_settings *crypto);
+ };
+ 
+ /* exported functions */
+@@ -56,4 +58,15 @@ static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
+ 	vops->feat_attach(ifp);
+ }
+ 
++static inline int brcmf_fwvid_set_sae_password(struct brcmf_if *ifp,
++					       struct cfg80211_crypto_settings *crypto)
++{
++	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
++
++	if (!vops || !vops->set_sae_password)
++		return -EOPNOTSUPP;
++
++	return vops->set_sae_password(ifp, crypto);
++}
++
+ #endif /* FWVID_H_ */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
+index 5573a47766ad5..2d8f80bd73829 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
+@@ -7,6 +7,7 @@
+ #include <core.h>
+ #include <bus.h>
+ #include <fwvid.h>
++#include <fwil.h>
+ 
+ #include "vops.h"
+ 
+@@ -21,7 +22,15 @@ static void brcmf_wcc_detach(struct brcmf_pub *drvr)
+ 	pr_debug("%s: executing\n", __func__);
+ }
+ 
++static int brcmf_wcc_set_sae_pwd(struct brcmf_if *ifp,
++				 struct cfg80211_crypto_settings *crypto)
++{
++	return brcmf_set_wsec(ifp, crypto->sae_pwd, crypto->sae_pwd_len,
++			      BRCMF_WSEC_PASSPHRASE);
++}
++
+ const struct brcmf_fwvid_ops brcmf_wcc_ops = {
+ 	.attach = brcmf_wcc_attach,
+ 	.detach = brcmf_wcc_detach,
++	.set_sae_password = brcmf_wcc_set_sae_pwd,
+ };
 -- 
 2.43.0
 
