@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8687217552;
-	Mon,  1 Apr 2024 15:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2D46551;
+	Mon,  1 Apr 2024 15:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987115; cv=none; b=VugdtCNhpWD1r9KH9hMmz/97wK0YaME78nLeSlkKHx68EMOu8IrSs+ivArTz+v6v5SWA1oK1pMpr6EWr9CIHtO59yJ5nL8mFaOc6jRjCVIhG/jJeph4hYqPslQQlB43xboUN5naI+6kR3tpQeAJMFEJQgx7Fgm6CCJTdDYzqJTk=
+	t=1711987118; cv=none; b=pRd9YHXQFiDdhnlJADtpiPcYaKfgHIkeaJ9VZDsPKiBgG2b0nb15ehouG68iwTx7vvkp6WXeZumujeENCkVUUj6prjtellLDbIatNlRjqUxcfnMbQu7kNpiiBtIBz4tO0x2QtoyiQlhDLXS+yK1QPsg/RViKao3Y2gBcHzv7fCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987115; c=relaxed/simple;
-	bh=aM1JnHftYVKHzYovPRU7YJF9oUtzrCYbEL7SOQwmCjk=;
+	s=arc-20240116; t=1711987118; c=relaxed/simple;
+	bh=m/LMRvmsrzZN7dszsquYjaZUJgsF4wHfA9kJ1AtsWxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bahIF+lygyGRlp/cd40tBjDT5ZODnHjxzQyaHTV09vKJNyF0tCC6uC0Ck7ysN3bf8/nv56efDNfLkJ+ty7RDXK+WKHY8PPyZrtDqPGJZt4O135Au+UkO1zWlBCvVCzdFAeCcQXGkVXT91zK88+LK8cPUSzvlwmvPLoHcV7K1XsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10NB0+sV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A0s8MkACk7VMuOSzt7AKd5M8RYxJbvj3V8zzcRX28lKH1BDPMk82/VLUpUDsOmKPraL6ZExSoXp5WlghCAOcqCs6Z6ap09wgSaMlaPllA74V+j0X3ZKt+i1XGvwdrk5VMX8i4qTGlrev15kZHLJZ19jzpy5CWaA8hINN8Q2mQOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd9U+VO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10NB0+sV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B60CC433F1;
-	Mon,  1 Apr 2024 15:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd9U+VO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5C8C433C7;
+	Mon,  1 Apr 2024 15:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987115;
-	bh=aM1JnHftYVKHzYovPRU7YJF9oUtzrCYbEL7SOQwmCjk=;
+	s=korg; t=1711987118;
+	bh=m/LMRvmsrzZN7dszsquYjaZUJgsF4wHfA9kJ1AtsWxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10NB0+sV5U2mLUH9/iJQ87mgloxrtaIoSCp8+fz4PVl+0reDcKEQyvKEWCNuGobhd
-	 W8Vni8pIdlYEx1BiWBPCnVC9UCA+fH7CSE2weML6tzjof2adv+gkdioLZowApiFtjB
-	 jyQNP/D/zFOmWnnNKt9c464VTpQm4gHYyntjjARo=
+	b=zd9U+VO2jfGzwNr2Rdqyk3tGAOc/U3uAiLCjV+88dzhk9f/MnZlzVGj51Mp6bZmYu
+	 VdAKGagXffg3WBTK0ngcKNnHrPxXQeXfeD5bEO7PUs77AxDpV+ArV3ENUWxKefWb4Y
+	 2B/KXT9trVlrNqmR59oYl+yQbTDTE+rlHYb5QlKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 188/399] io_uring/waitid: always remove waitid entry for cancel all
-Date: Mon,  1 Apr 2024 17:42:34 +0200
-Message-ID: <20240401152554.787497010@linuxfoundation.org>
+Subject: [PATCH 6.8 189/399] x86/CPU/AMD: Update the Zenbleed microcode revisions
+Date: Mon,  1 Apr 2024 17:42:35 +0200
+Message-ID: <20240401152554.816597265@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,52 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit 2b35b8b43e07b1a6f06fdd84cf4b9eb24785896d ]
+[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
 
-We know the request is either being removed, or already in the process of
-being removed through task_work, so we can delete it from our waitid list
-upfront. This is important for remove all conditions, as we otherwise
-will find it multiple times and prevent cancelation progress.
+Update them to the correct revision numbers.
 
-Remove the dead check in cancelation as well for the hash_node being
-empty or not. We already have a waitid reference check for ownership,
-so we don't need to check the list too.
-
-Cc: stable@vger.kernel.org
-Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/waitid.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ arch/x86/kernel/cpu/amd.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/waitid.c b/io_uring/waitid.c
-index 6f851978606d9..77d340666cb95 100644
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -125,12 +125,6 @@ static void io_waitid_complete(struct io_kiocb *req, int ret)
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index f3abca334199d..dfa8d0cf5e185 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -989,11 +989,11 @@ static bool cpu_has_zenbleed_microcode(void)
+ 	u32 good_rev = 0;
  
- 	lockdep_assert_held(&req->ctx->uring_lock);
+ 	switch (boot_cpu_data.x86_model) {
+-	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
+-	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
+-	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
+-	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
+-	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
++	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
++	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
++	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
++	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
++	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
  
--	/*
--	 * Did cancel find it meanwhile?
--	 */
--	if (hlist_unhashed(&req->hash_node))
--		return;
--
- 	hlist_del_init(&req->hash_node);
- 
- 	ret = io_waitid_finish(req, ret);
-@@ -202,6 +196,7 @@ bool io_waitid_remove_all(struct io_ring_ctx *ctx, struct task_struct *task,
- 	hlist_for_each_entry_safe(req, tmp, &ctx->waitid_list, hash_node) {
- 		if (!io_match_task_safe(req, task, cancel_all))
- 			continue;
-+		hlist_del_init(&req->hash_node);
- 		__io_waitid_cancel(ctx, req);
- 		found = true;
- 	}
+ 	default:
+ 		return false;
 -- 
 2.43.0
 
