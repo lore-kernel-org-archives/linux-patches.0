@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5573FE2D;
-	Mon,  1 Apr 2024 16:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77856487BC;
+	Mon,  1 Apr 2024 16:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987770; cv=none; b=NiZhdgT6Vi0u3Kb+fktzb1etVV3kzlITrnRK06xrvvJpYgMumOvvNkJ0Wb+YXYlibiu9yRx6YWELIo5BxOi4j/870Bs/kBG2TJChGpnidplUaQqTM1cwU18/oNlmnJ2iOStlfmiv4gzlpwtJTXMz/m55oH96lU2CJ9eOvxky+ew=
+	t=1711987773; cv=none; b=SPd237lThatSk22GBjNcVBGSQhbPISc4NYW6O5pNQdx9/8a8hKzrKpY9/xoAXfxHZ+W1jw3cXWGcqKCfFRmaE3Bax0HR3QbrclUT+uMZRFE88rQdtwx7YbnjQOlsEyTxRs+SrZuG8wqMHKzUVK0teWdBxzT+IzperwwJAn3JzLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987770; c=relaxed/simple;
-	bh=zU/kVcYKRiRoEqCQMrtrDegs0NTkmTLleuJrHeP1xWQ=;
+	s=arc-20240116; t=1711987773; c=relaxed/simple;
+	bh=KZfD5IkmslF7YEBU5z+HYG048FwkgAtmvZaLsJsHVOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvC5zMfLTRSBoqWFxmwJElXofXT6KZY0qkEOUCiTnjWPIK83NWwqeRI88BCoEEUgqFmXkEWSdEVfxj+T4/bUWx0CWhh5u8Tntzm9xWoj8nnFw19EafK8WR1nTQeSFTY5VdQkI4q5TD83idf7IQ9JB1bMBhemjV6d9buJMOdUcJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhzfgjLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0ErkKGzNSzN5Mq7PGrT1O2i8YCYfYlOepEKlCDOkoWzBSweBBKZdZfH5rXCM4a5LkdB0I6StWmqCxq/hkEoFk4YpY0ln4efLheg4d07x6DNUEv9VHlKDbQenhD3LcRc/l4aNH7xUUKhAENlcOVYIc9fyLcKSlYTQAi9XpM55QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2Kve6C2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhzfgjLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801F2C433F1;
-	Mon,  1 Apr 2024 16:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2Kve6C2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD013C43390;
+	Mon,  1 Apr 2024 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987770;
-	bh=zU/kVcYKRiRoEqCQMrtrDegs0NTkmTLleuJrHeP1xWQ=;
+	s=korg; t=1711987773;
+	bh=KZfD5IkmslF7YEBU5z+HYG048FwkgAtmvZaLsJsHVOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhzfgjLPBRXh4FDmMU63l6JWiJtfq4M4ITvWZIBG83HjtymIoHXbKc5eQgcdcf2tX
-	 Phvx1JtEaW7qkcJRFgbcLlXnsJQyIaghLO2Tzq3jVHehr+OULMXcHpw9trNbBn+zyV
-	 CyqddmLKNzLmOXb2SVfUoaLX4bhIB85jvUuFagEs=
+	b=M2Kve6C2odXQ1rWH6cmYjm1IvxgOdA2PQPiudmvudnyEys/qOx0JJGxsDKIkGORo0
+	 OhQsf5UjqZbnGbPTg1A3mthGerT2lBV1SiGL/+OBTIcFgtxZQwnhfjb4CKBgmAfldg
+	 FlW9RlmpWnUllHPywfjOspboCO5p8YyIvdPGHIYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.8 385/399] scsi: qla2xxx: Change debug message during driver unload
-Date: Mon,  1 Apr 2024 17:45:51 +0200
-Message-ID: <20240401152600.666326589@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.8 358/399] USB: core: Fix deadlock in usb_deauthorize_interface()
+Date: Mon,  1 Apr 2024 17:45:24 +0200
+Message-ID: <20240401152559.857379216@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,36 +49,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit b5a30840727a3e41d12a336d19f6c0716b299161 upstream.
+commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
 
-Upon driver unload, purge_mbox flag is set and the heartbeat monitor thread
-detects this flag and does not send the mailbox command down to FW with a
-debug message "Error detected: purge[1] eeh[0] cmd=0x0, Exiting".  This
-being not a real error, change the debug message.
+Among the attribute file callback routines in
+drivers/usb/core/sysfs.c, the interface_authorized_store() function is
+the only one which acquires a device lock on an ancestor device: It
+calls usb_deauthorize_interface(), which locks the interface's parent
+USB device.
 
+The will lead to deadlock if another process already owns that lock
+and tries to remove the interface, whether through a configuration
+change or because the device has been disconnected.  As part of the
+removal procedure, device_del() waits for all ongoing sysfs attribute
+callbacks to complete.  But usb_deauthorize_interface() can't complete
+until the device lock has been released, and the lock won't be
+released until the removal has finished.
+
+The mechanism provided by sysfs to prevent this kind of deadlock is
+to use the sysfs_break_active_protection() function, which tells sysfs
+not to wait for the attribute callback.
+
+Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
+Reported by: xingwei lee <xrivendell7@gmail.com>
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
+Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240227164127.36465-10-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/sysfs.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -194,7 +194,7 @@ qla2x00_mailbox_command(scsi_qla_host_t
- 	if (ha->flags.purge_mbox || chip_reset != ha->chip_reset ||
- 	    ha->flags.eeh_busy) {
- 		ql_log(ql_log_warn, vha, 0xd035,
--		       "Error detected: purge[%d] eeh[%d] cmd=0x%x, Exiting.\n",
-+		       "Purge mbox: purge[%d] eeh[%d] cmd=0x%x, Exiting.\n",
- 		       ha->flags.purge_mbox, ha->flags.eeh_busy, mcp->mb[0]);
- 		rval = QLA_ABORTED;
- 		goto premature_exit;
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -1168,14 +1168,24 @@ static ssize_t interface_authorized_stor
+ {
+ 	struct usb_interface *intf = to_usb_interface(dev);
+ 	bool val;
++	struct kernfs_node *kn;
+ 
+ 	if (kstrtobool(buf, &val) != 0)
+ 		return -EINVAL;
+ 
+-	if (val)
++	if (val) {
+ 		usb_authorize_interface(intf);
+-	else
+-		usb_deauthorize_interface(intf);
++	} else {
++		/*
++		 * Prevent deadlock if another process is concurrently
++		 * trying to unregister intf.
++		 */
++		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++		if (kn) {
++			usb_deauthorize_interface(intf);
++			sysfs_unbreak_active_protection(kn);
++		}
++	}
+ 
+ 	return count;
+ }
 
 
