@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B95F4DA13;
-	Mon,  1 Apr 2024 16:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAD6481B8;
+	Mon,  1 Apr 2024 16:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990293; cv=none; b=gFFxOfnnEQa+VudtRlXGiPV/8zfztFoVrQz3r7EOSm5dRClBtp5iyKrq6ZoURR39YeLvZUIAqtOxgzaneegR+gmsKZQdmqe4Gf6wnvxdRt4td8g8Fc51kBNStjWUAX2rE/FvxL2HKhm8OYTmqkFW/tvXMQbNDb1b8iB3q6boR2c=
+	t=1711990294; cv=none; b=hQlBv74v0NOMgPWXvmpFW8PJFL6CzU6q+11nK42Px9Fjcc+92CAMwPgbnSdadyKlzr5A9GRr4+3lF2WM1/8GlHY8ANJ1SJlWVcuUfVFF0aaCFysZHVKbHL6jMaZcSFgYVX078ePFiIpTHNWLBHa/Jd/LJoimpgB0BFiGVGPsGAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990293; c=relaxed/simple;
-	bh=ZKT4VCCvZla/6GILQO8sS9LzRslmV3XvSWVNWmfPy68=;
+	s=arc-20240116; t=1711990294; c=relaxed/simple;
+	bh=7kbQZF7CloFxtL6igh7Zwp10KXejJW8nCOJ+6cvfvJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsKFktl0mH0siyOITweMRPA399lIupmU0Sxrz9wGEznYv5aiHQLzreBe9AkUVoH6F1FfA67crBrCWOUF+HACFTL5ujvDbhxSSvkpT+mjOWWBRaJ9yhmhGEGtkce7sAQTC+Y2ws55nCQGcOh487qXZMJlygSfwFTxNTQHagXbIos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaipJTAL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eIY2QOdiiKZxLRp04DrH0Lon31z/gRDRQef/gDs7wtvcMSKG7N1f4ydikzv/NAt2vDSi9HXAyy4NJHpFrLFlD8Ens+A5JWrIGsAua1wGWPHryeki0p2rYkdxSZ9Wk0VW0e3U4Avqb0SV9Y/zgYpi53IYoZGfd76ju7JnCxjKch4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYeP56QX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaipJTAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988E7C433C7;
-	Mon,  1 Apr 2024 16:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYeP56QX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD06CC433C7;
+	Mon,  1 Apr 2024 16:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990291;
-	bh=ZKT4VCCvZla/6GILQO8sS9LzRslmV3XvSWVNWmfPy68=;
+	s=korg; t=1711990294;
+	bh=7kbQZF7CloFxtL6igh7Zwp10KXejJW8nCOJ+6cvfvJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaipJTALZPr0ZbIOK76GJwakMvg6y/i0eG3cCQdszEWGW79a2NqRVS4HP3sZAXCDt
-	 mg/9h33KLPM0ZrUAXQbQGDcM5sFJW4KByeIZMscWTYWpw7pNfG0R1Ugr9oszbZ4jZk
-	 f1u+wN83eIkgxq62DcSrItIBxCkdBj6x0wXiCFJc=
+	b=cYeP56QXYoKigIpdfG6e5MezQVzfaZyNYE1x0Ivc61eKVgv3ZzadVxbw1ubeEGA/G
+	 NjrKrLpl70dLQ2xiez5a5Y5QdHyo9/lHA4hiR6WV2sCci5warJdvU3uxVJGhwM7EMM
+	 vDLP0lQYG5JhYIk+0P9hMPa1pzz/B1lqUhCjPLmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 277/396] btrfs: fix deadlock with fiemap and extent locking
-Date: Mon,  1 Apr 2024 17:45:26 +0200
-Message-ID: <20240401152556.168325411@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>
+Subject: [PATCH 6.6 278/396] vfio: Introduce interface to flush virqfd inject workqueue
+Date: Mon,  1 Apr 2024 17:45:27 +0200
+Message-ID: <20240401152556.199245164@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,241 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-commit b0ad381fa7690244802aed119b478b4bdafc31dd upstream.
+commit b620ecbd17a03cacd06f014a5d3f3a11285ce053 upstream.
 
-While working on the patchset to remove extent locking I got a lockdep
-splat with fiemap and pagefaulting with my new extent lock replacement
-lock.
+In order to synchronize changes that can affect the thread callback,
+introduce an interface to force a flush of the inject workqueue.  The
+irqfd pointer is only valid under spinlock, but the workqueue cannot
+be flushed under spinlock.  Therefore the flush work for the irqfd is
+queued under spinlock.  The vfio_irqfd_cleanup_wq workqueue is re-used
+for queuing this work such that flushing the workqueue is also ordered
+relative to shutdown.
 
-This deadlock exists with our normal code, we just don't have lockdep
-annotations with the extent locking so we've never noticed it.
-
-Since we're copying the fiemap extent to user space on every iteration
-we have the chance of pagefaulting.  Because we hold the extent lock for
-the entire range we could mkwrite into a range in the file that we have
-mmap'ed.  This would deadlock with the following stack trace
-
-[<0>] lock_extent+0x28d/0x2f0
-[<0>] btrfs_page_mkwrite+0x273/0x8a0
-[<0>] do_page_mkwrite+0x50/0xb0
-[<0>] do_fault+0xc1/0x7b0
-[<0>] __handle_mm_fault+0x2fa/0x460
-[<0>] handle_mm_fault+0xa4/0x330
-[<0>] do_user_addr_fault+0x1f4/0x800
-[<0>] exc_page_fault+0x7c/0x1e0
-[<0>] asm_exc_page_fault+0x26/0x30
-[<0>] rep_movs_alternative+0x33/0x70
-[<0>] _copy_to_user+0x49/0x70
-[<0>] fiemap_fill_next_extent+0xc8/0x120
-[<0>] emit_fiemap_extent+0x4d/0xa0
-[<0>] extent_fiemap+0x7f8/0xad0
-[<0>] btrfs_fiemap+0x49/0x80
-[<0>] __x64_sys_ioctl+0x3e1/0xb50
-[<0>] do_syscall_64+0x94/0x1a0
-[<0>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
-
-I wrote an fstest to reproduce this deadlock without my replacement lock
-and verified that the deadlock exists with our existing locking.
-
-To fix this simply don't take the extent lock for the entire duration of
-the fiemap.  This is safe in general because we keep track of where we
-are when we're searching the tree, so if an ordered extent updates in
-the middle of our fiemap call we'll still emit the correct extents
-because we know what offset we were on before.
-
-The only place we maintain the lock is searching delalloc.  Since the
-delalloc stuff can change during writeback we want to lock the extent
-range so we have a consistent view of delalloc at the time we're
-checking to see if we need to set the delalloc flag.
-
-With this patch applied we no longer deadlock with my testcase.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20240308230557.805580-4-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: 18c198c96a81 ("vfio/pci: Create persistent INTx handler")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   62 +++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 17 deletions(-)
+ drivers/vfio/virqfd.c |   21 +++++++++++++++++++++
+ include/linux/vfio.h  |    2 ++
+ 2 files changed, 23 insertions(+)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2735,16 +2735,34 @@ static int fiemap_process_hole(struct bt
- 	 * it beyond i_size.
- 	 */
- 	while (cur_offset < end && cur_offset < i_size) {
-+		struct extent_state *cached_state = NULL;
- 		u64 delalloc_start;
- 		u64 delalloc_end;
- 		u64 prealloc_start;
-+		u64 lockstart;
-+		u64 lockend;
- 		u64 prealloc_len = 0;
- 		bool delalloc;
+--- a/drivers/vfio/virqfd.c
++++ b/drivers/vfio/virqfd.c
+@@ -101,6 +101,13 @@ static void virqfd_inject(struct work_st
+ 		virqfd->thread(virqfd->opaque, virqfd->data);
+ }
  
-+		lockstart = round_down(cur_offset, inode->root->fs_info->sectorsize);
-+		lockend = round_up(end, inode->root->fs_info->sectorsize);
++static void virqfd_flush_inject(struct work_struct *work)
++{
++	struct virqfd *virqfd = container_of(work, struct virqfd, flush_inject);
 +
-+		/*
-+		 * We are only locking for the delalloc range because that's the
-+		 * only thing that can change here.  With fiemap we have a lock
-+		 * on the inode, so no buffered or direct writes can happen.
-+		 *
-+		 * However mmaps and normal page writeback will cause this to
-+		 * change arbitrarily.  We have to lock the extent lock here to
-+		 * make sure that nobody messes with the tree while we're doing
-+		 * btrfs_find_delalloc_in_range.
-+		 */
-+		lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 		delalloc = btrfs_find_delalloc_in_range(inode, cur_offset, end,
- 							delalloc_cached_state,
- 							&delalloc_start,
- 							&delalloc_end);
-+		unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 		if (!delalloc)
- 			break;
- 
-@@ -2912,15 +2930,15 @@ int extent_fiemap(struct btrfs_inode *in
- 		  u64 start, u64 len)
- {
- 	const u64 ino = btrfs_ino(inode);
--	struct extent_state *cached_state = NULL;
- 	struct extent_state *delalloc_cached_state = NULL;
- 	struct btrfs_path *path;
- 	struct fiemap_cache cache = { 0 };
- 	struct btrfs_backref_share_check_ctx *backref_ctx;
- 	u64 last_extent_end;
- 	u64 prev_extent_end;
--	u64 lockstart;
--	u64 lockend;
-+	u64 range_start;
-+	u64 range_end;
-+	const u64 sectorsize = inode->root->fs_info->sectorsize;
- 	bool stopped = false;
- 	int ret;
- 
-@@ -2931,12 +2949,11 @@ int extent_fiemap(struct btrfs_inode *in
- 		goto out;
- 	}
- 
--	lockstart = round_down(start, inode->root->fs_info->sectorsize);
--	lockend = round_up(start + len, inode->root->fs_info->sectorsize);
--	prev_extent_end = lockstart;
-+	range_start = round_down(start, sectorsize);
-+	range_end = round_up(start + len, sectorsize);
-+	prev_extent_end = range_start;
- 
- 	btrfs_inode_lock(inode, BTRFS_ILOCK_SHARED);
--	lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 
- 	ret = fiemap_find_last_extent_offset(inode, path, &last_extent_end);
- 	if (ret < 0)
-@@ -2944,7 +2961,7 @@ int extent_fiemap(struct btrfs_inode *in
- 	btrfs_release_path(path);
- 
- 	path->reada = READA_FORWARD;
--	ret = fiemap_search_slot(inode, path, lockstart);
-+	ret = fiemap_search_slot(inode, path, range_start);
- 	if (ret < 0) {
- 		goto out_unlock;
- 	} else if (ret > 0) {
-@@ -2956,7 +2973,7 @@ int extent_fiemap(struct btrfs_inode *in
- 		goto check_eof_delalloc;
- 	}
- 
--	while (prev_extent_end < lockend) {
-+	while (prev_extent_end < range_end) {
- 		struct extent_buffer *leaf = path->nodes[0];
- 		struct btrfs_file_extent_item *ei;
- 		struct btrfs_key key;
-@@ -2979,19 +2996,19 @@ int extent_fiemap(struct btrfs_inode *in
- 		 * The first iteration can leave us at an extent item that ends
- 		 * before our range's start. Move to the next item.
- 		 */
--		if (extent_end <= lockstart)
-+		if (extent_end <= range_start)
- 			goto next_item;
- 
- 		backref_ctx->curr_leaf_bytenr = leaf->start;
- 
- 		/* We have in implicit hole (NO_HOLES feature enabled). */
- 		if (prev_extent_end < key.offset) {
--			const u64 range_end = min(key.offset, lockend) - 1;
-+			const u64 hole_end = min(key.offset, range_end) - 1;
- 
- 			ret = fiemap_process_hole(inode, fieinfo, &cache,
- 						  &delalloc_cached_state,
- 						  backref_ctx, 0, 0, 0,
--						  prev_extent_end, range_end);
-+						  prev_extent_end, hole_end);
- 			if (ret < 0) {
- 				goto out_unlock;
- 			} else if (ret > 0) {
-@@ -3001,7 +3018,7 @@ int extent_fiemap(struct btrfs_inode *in
- 			}
- 
- 			/* We've reached the end of the fiemap range, stop. */
--			if (key.offset >= lockend) {
-+			if (key.offset >= range_end) {
- 				stopped = true;
- 				break;
- 			}
-@@ -3095,29 +3112,41 @@ check_eof_delalloc:
- 	btrfs_free_path(path);
- 	path = NULL;
- 
--	if (!stopped && prev_extent_end < lockend) {
-+	if (!stopped && prev_extent_end < range_end) {
- 		ret = fiemap_process_hole(inode, fieinfo, &cache,
- 					  &delalloc_cached_state, backref_ctx,
--					  0, 0, 0, prev_extent_end, lockend - 1);
-+					  0, 0, 0, prev_extent_end, range_end - 1);
- 		if (ret < 0)
- 			goto out_unlock;
--		prev_extent_end = lockend;
-+		prev_extent_end = range_end;
- 	}
- 
- 	if (cache.cached && cache.offset + cache.len >= last_extent_end) {
- 		const u64 i_size = i_size_read(&inode->vfs_inode);
- 
- 		if (prev_extent_end < i_size) {
-+			struct extent_state *cached_state = NULL;
- 			u64 delalloc_start;
- 			u64 delalloc_end;
-+			u64 lockstart;
-+			u64 lockend;
- 			bool delalloc;
- 
-+			lockstart = round_down(prev_extent_end, sectorsize);
-+			lockend = round_up(i_size, sectorsize);
++	flush_work(&virqfd->inject);
++}
 +
-+			/*
-+			 * See the comment in fiemap_process_hole as to why
-+			 * we're doing the locking here.
-+			 */
-+			lock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 			delalloc = btrfs_find_delalloc_in_range(inode,
- 								prev_extent_end,
- 								i_size - 1,
- 								&delalloc_cached_state,
- 								&delalloc_start,
- 								&delalloc_end);
-+			unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 			if (!delalloc)
- 				cache.flags |= FIEMAP_EXTENT_LAST;
- 		} else {
-@@ -3128,7 +3157,6 @@ check_eof_delalloc:
- 	ret = emit_last_fiemap_cache(fieinfo, &cache);
+ int vfio_virqfd_enable(void *opaque,
+ 		       int (*handler)(void *, void *),
+ 		       void (*thread)(void *, void *),
+@@ -124,6 +131,7 @@ int vfio_virqfd_enable(void *opaque,
  
- out_unlock:
--	unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 	btrfs_inode_unlock(inode, BTRFS_ILOCK_SHARED);
- out:
- 	free_extent_state(delalloc_cached_state);
+ 	INIT_WORK(&virqfd->shutdown, virqfd_shutdown);
+ 	INIT_WORK(&virqfd->inject, virqfd_inject);
++	INIT_WORK(&virqfd->flush_inject, virqfd_flush_inject);
+ 
+ 	irqfd = fdget(fd);
+ 	if (!irqfd.file) {
+@@ -213,3 +221,16 @@ void vfio_virqfd_disable(struct virqfd *
+ 	flush_workqueue(vfio_irqfd_cleanup_wq);
+ }
+ EXPORT_SYMBOL_GPL(vfio_virqfd_disable);
++
++void vfio_virqfd_flush_thread(struct virqfd **pvirqfd)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&virqfd_lock, flags);
++	if (*pvirqfd && (*pvirqfd)->thread)
++		queue_work(vfio_irqfd_cleanup_wq, &(*pvirqfd)->flush_inject);
++	spin_unlock_irqrestore(&virqfd_lock, flags);
++
++	flush_workqueue(vfio_irqfd_cleanup_wq);
++}
++EXPORT_SYMBOL_GPL(vfio_virqfd_flush_thread);
+--- a/include/linux/vfio.h
++++ b/include/linux/vfio.h
+@@ -349,6 +349,7 @@ struct virqfd {
+ 	wait_queue_entry_t		wait;
+ 	poll_table		pt;
+ 	struct work_struct	shutdown;
++	struct work_struct	flush_inject;
+ 	struct virqfd		**pvirqfd;
+ };
+ 
+@@ -356,5 +357,6 @@ int vfio_virqfd_enable(void *opaque, int
+ 		       void (*thread)(void *, void *), void *data,
+ 		       struct virqfd **pvirqfd, int fd);
+ void vfio_virqfd_disable(struct virqfd **pvirqfd);
++void vfio_virqfd_flush_thread(struct virqfd **pvirqfd);
+ 
+ #endif /* VFIO_H */
 
 
