@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1BA446AC;
-	Mon,  1 Apr 2024 16:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3550247A57;
+	Mon,  1 Apr 2024 16:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988074; cv=none; b=s/7en5RR+TQwEHxTUv1ZEUYcdnA9AdEtlmc+pTtj8t77bH+V56HARjXVwOYt3Um35QSpZqY9owBt51oguMOX49uTrEzi0zB8p8vqy5QUCpi39RieBmJ6yfZJFSG2Nij4k6Cb3AUkRnbGLJJvXjOyR9275VahqX/2YoE9LGpRlVs=
+	t=1711988078; cv=none; b=fFiKyLPJC5Zyegmf+TivHSGX4j08pOi4/SG3cdwIUrSMOY0q2aV9VdTEkcaArNU9X30gUx0azApYTzR6UhenrlfUW4/9qUl8JlWTIgWJJ10oPyUrseyzw4ATizMb0sYey46qwlkf95SoqgezlyiKyeWZ40xbhS5QrSRhvLXDgoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988074; c=relaxed/simple;
-	bh=sRUa31LXYiOeqAYJvLuWxXno07390/mWKnwO3wm4aaA=;
+	s=arc-20240116; t=1711988078; c=relaxed/simple;
+	bh=WmOuV2YebVzEen/cdbFbXnva5lIspQ6pE8INtBFDe60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELK7wxSYhFwcPxBW3pTLEtgWttu7iECjZ9B0QmvgkljYXWHcynBzRC2Qqo8CRs3ecDuzLglDMlXKuUXPrKddLTGZ0CLFA9zxaCDCwS74RLCidgskfJKeVO86qA8gDIKRB1albPeW59ZxvBhA+f+Bo+62VP8Xvl5MQYziz123hKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LB7C6nj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gnd2aEWaOHXhb0dKH94qwFEd4nlEUFiXlx0MCrTrVR70tlUSvrdRRL1bVNhVYQEznCHned0pNHmpcekatrYkS6MTPO7sc37dYnK6f5QgTzPlGVq8+8VNqtW9V0vgSH/D0j2LGUK0L+2TKXtw4squVt5AOpJ8VOz3E9ejZBLNFCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZHcCb+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LB7C6nj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B78C43390;
-	Mon,  1 Apr 2024 16:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZHcCb+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86909C433F1;
+	Mon,  1 Apr 2024 16:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988074;
-	bh=sRUa31LXYiOeqAYJvLuWxXno07390/mWKnwO3wm4aaA=;
+	s=korg; t=1711988078;
+	bh=WmOuV2YebVzEen/cdbFbXnva5lIspQ6pE8INtBFDe60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LB7C6nj3vvzhrZSIy51JvYTOvz3xgLqlEyA6xl5RqVxsu0sAIkbsh4jptoiaVXDC0
-	 gMetubgVxeQZwtwV/xQJpERtTnCxNgyd2DrzF05nT7w7Vn6irfkwm/AcZ5OlGJ9Aju
-	 +7v7TEyS8PutKsaArcToQevIV9jjUEBiIo/ze1mY=
+	b=lZHcCb+O86ce4zoGe8nLF/YFMRKOuZXkLNBYBwMr2Xqx0+Q4MTm9n/Y0wnoC314pY
+	 MnzokBcgrMY0jlZo/QkgUIS62qDbBWVoEADmY2yJAu+HcTVVRwgDdvFkVinNtRbHDS
+	 z5Vkm+YftMsFV3C6zEaU8aXQ+weUwB+8u5fIX6+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <izh1979@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	sparclinux@vger.kernel.org,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 047/432] fat: fix uninitialized field in nostale filehandles
-Date: Mon,  1 Apr 2024 17:40:34 +0200
-Message-ID: <20240401152554.533124328@linuxfoundation.org>
+Subject: [PATCH 6.7 038/432] sparc64: NMI watchdog: fix return value of __setup handler
+Date: Mon,  1 Apr 2024 17:40:25 +0200
+Message-ID: <20240401152554.267774013@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,47 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit fde2497d2bc3a063d8af88b258dbadc86bd7b57c ]
+[ Upstream commit 3ed7c61e49d65dacb96db798c0ab6fcd55a1f20f ]
 
-When fat_encode_fh_nostale() encodes file handle without a parent it
-stores only first 10 bytes of the file handle. However the length of the
-file handle must be a multiple of 4 so the file handle is actually 12
-bytes long and the last two bytes remain uninitialized. This is not
-great at we potentially leak uninitialized information with the handle
-to userspace. Properly initialize the full handle length.
+__setup() handlers should return 1 to obsolete_checksetup() in
+init/main.c to indicate that the boot option has been handled.
+A return of 0 causes the boot option/value to be listed as an Unknown
+kernel parameter and added to init's (limited) argument or environment
+strings. Also, error return codes don't mean anything to
+obsolete_checksetup() -- only non-zero (usually 1) or zero.
+So return 1 from setup_nmi_watchdog().
 
-Link: https://lkml.kernel.org/r/20240205122626.13701-1-jack@suse.cz
-Reported-by: syzbot+3ce5dea5b1539ff36769@syzkaller.appspotmail.com
-Fixes: ea3983ace6b7 ("fat: restructure export_operations")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e5553a6d0442 ("sparc64: Implement NMI watchdog on capable cpus.")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <izh1979@gmail.com>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: sparclinux@vger.kernel.org
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20240211052802.22612-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/nfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/sparc/kernel/nmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
-index c52e63e10d35c..509eea96a457d 100644
---- a/fs/fat/nfs.c
-+++ b/fs/fat/nfs.c
-@@ -130,6 +130,12 @@ fat_encode_fh_nostale(struct inode *inode, __u32 *fh, int *lenp,
- 		fid->parent_i_gen = parent->i_generation;
- 		type = FILEID_FAT_WITH_PARENT;
- 		*lenp = FAT_FID_SIZE_WITH_PARENT;
-+	} else {
-+		/*
-+		 * We need to initialize this field because the fh is actually
-+		 * 12 bytes long
-+		 */
-+		fid->parent_i_pos_hi = 0;
- 	}
+diff --git a/arch/sparc/kernel/nmi.c b/arch/sparc/kernel/nmi.c
+index 17cdfdbf1f3b7..149adc0947530 100644
+--- a/arch/sparc/kernel/nmi.c
++++ b/arch/sparc/kernel/nmi.c
+@@ -279,7 +279,7 @@ static int __init setup_nmi_watchdog(char *str)
+ 	if (!strncmp(str, "panic", 5))
+ 		panic_on_timeout = 1;
  
- 	return type;
+-	return 0;
++	return 1;
+ }
+ __setup("nmi_watchdog=", setup_nmi_watchdog);
+ 
 -- 
 2.43.0
 
