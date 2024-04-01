@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F68F1C0DE7;
-	Mon,  1 Apr 2024 16:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D95E1C0DE7;
+	Mon,  1 Apr 2024 16:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989149; cv=none; b=RZKFNm1/Vrk1gFw5EGDhd88ki0cmsE+52Zxuqedc9UTXml5VprRMl8kh/Um5oSZprMZtzdAgIJpuXKMhcJiEyxMhfOtgybbG6yyVVEuWkZUNumziuUSj5geYPPEovZT2V+fURogS25Nse+ap+yuWUC5BWyWsOuTJPOYbFvIaP/Y=
+	t=1711989152; cv=none; b=sKyA0+/np5Jb2vv3g/EZ+spVe7+kDJxKQRrodr7Cohc4IlzwRTPo+NRwgHOplGI+iw37em8y2RkWJ84JHqeUTGYGFSeDhS0IOVw9ha1iXRbYeG6ZcQx089JE3eW2XniITjftidwXfcf4DQkWX1Mtdqi9VSK4AOAi4gWg9vGYQEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989149; c=relaxed/simple;
-	bh=dzeaFgERnWIJUN7ZqPYDm66U239LSbxor8iNQ6SCRWA=;
+	s=arc-20240116; t=1711989152; c=relaxed/simple;
+	bh=5RTsowl5SY/bI11Gbq9VLQvoEyXwHBk9G3vCgM5ioEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWgBWBvlhEO8XRMt6Yiuymu0AR6P2IAGS9lBzV7OTUB2UZY/y1UMajZyo75Ash8HtivbtTJ43KzwnlWuFl1ro09VPTq5aki1m6cMgQyAb923c3p1f42ksN1vZYH6ZNNcyKy3uRszg2vizi3ZhNhDLJ4E22wQSpuIGgbZtQLFvOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/KSwbEk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIplm71YTZ+Dprn+WDkvt/Y39VefzmYCd3+jmIgesqRBfbK43Wm/ALKsNvzHSPL8T/f7s+Ua4v0IRz+OWxGIlPXbV0jz00PDed+s9Dhuk5pEHSIB6sTA1+7vl+lUAFKrWXJCGu3nYe3BoyXIAZHvRvDYHQ0X0Qwz8ATizUK62nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mydrLK3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/KSwbEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D93C433F1;
-	Mon,  1 Apr 2024 16:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mydrLK3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F1CC433F1;
+	Mon,  1 Apr 2024 16:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989149;
-	bh=dzeaFgERnWIJUN7ZqPYDm66U239LSbxor8iNQ6SCRWA=;
+	s=korg; t=1711989152;
+	bh=5RTsowl5SY/bI11Gbq9VLQvoEyXwHBk9G3vCgM5ioEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/KSwbEk2WhIJP6ZGdYlZY+fl5AHxpvC/gTO82kELwPOeYq1hLGYovN/g2Fsp4VPP
-	 p1wYt8AS/JVrxCXpY7aK07FnQ47e1GYNBAgXFUJgN2L4iGoFF384vk9Y4Ecw2ECC2K
-	 SvMUCFHFYuS71cEOVvs6j4VYBdDr75OOv/eze4KM=
+	b=mydrLK3KOWvgEIx+Dk9opTk1RL3+Yws7yDg7tghGc3pqHHnZJEsQm/qb4VOS5WhaE
+	 HsnPYykGRUhj0JAZdGxiRA1dkP7ASMQwNdE9SxBQXE/q/c1yBaHN2DykP0Bz4jJ4O1
+	 eluYXipTR3azra+hZ2fxxikYZGLrMwWnJmG8YPJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.7 396/432] USB: core: Fix deadlock in usb_deauthorize_interface()
-Date: Mon,  1 Apr 2024 17:46:23 +0200
-Message-ID: <20240401152605.163256614@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.7 397/432] USB: core: Add hub_get() and hub_put() routines
+Date: Mon,  1 Apr 2024 17:46:24 +0200
+Message-ID: <20240401152605.193902668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,68 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
+commit ee113b860aa169e9a4d2c167c95d0f1961c6e1b8 upstream.
 
-Among the attribute file callback routines in
-drivers/usb/core/sysfs.c, the interface_authorized_store() function is
-the only one which acquires a device lock on an ancestor device: It
-calls usb_deauthorize_interface(), which locks the interface's parent
-USB device.
-
-The will lead to deadlock if another process already owns that lock
-and tries to remove the interface, whether through a configuration
-change or because the device has been disconnected.  As part of the
-removal procedure, device_del() waits for all ongoing sysfs attribute
-callbacks to complete.  But usb_deauthorize_interface() can't complete
-until the device lock has been released, and the lock won't be
-released until the removal has finished.
-
-The mechanism provided by sysfs to prevent this kind of deadlock is
-to use the sysfs_break_active_protection() function, which tells sysfs
-not to wait for the attribute callback.
-
-Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
-Reported by: xingwei lee <xrivendell7@gmail.com>
+Create hub_get() and hub_put() routines to encapsulate the kref_get()
+and kref_put() calls in hub.c.  The new routines will be used by the
+next patch in this series.
 
 Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
-Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
+Link: https://lore.kernel.org/r/604da420-ae8a-4a9e-91a4-2d511ff404fb@rowland.harvard.edu
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/sysfs.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/usb/core/hub.c |   23 ++++++++++++++++-------
+ drivers/usb/core/hub.h |    2 ++
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -1168,14 +1168,24 @@ static ssize_t interface_authorized_stor
- {
- 	struct usb_interface *intf = to_usb_interface(dev);
- 	bool val;
-+	struct kernfs_node *kn;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -123,7 +123,6 @@ EXPORT_SYMBOL_GPL(ehci_cf_port_reset_rws
+ #define HUB_DEBOUNCE_STEP	  25
+ #define HUB_DEBOUNCE_STABLE	 100
  
- 	if (kstrtobool(buf, &val) != 0)
- 		return -EINVAL;
+-static void hub_release(struct kref *kref);
+ static int usb_reset_and_verify_device(struct usb_device *udev);
+ static int hub_port_disable(struct usb_hub *hub, int port1, int set_state);
+ static bool hub_port_warm_reset_required(struct usb_hub *hub, int port1,
+@@ -685,14 +684,14 @@ static void kick_hub_wq(struct usb_hub *
+ 	 */
+ 	intf = to_usb_interface(hub->intfdev);
+ 	usb_autopm_get_interface_no_resume(intf);
+-	kref_get(&hub->kref);
++	hub_get(hub);
  
--	if (val)
-+	if (val) {
- 		usb_authorize_interface(intf);
--	else
--		usb_deauthorize_interface(intf);
-+	} else {
-+		/*
-+		 * Prevent deadlock if another process is concurrently
-+		 * trying to unregister intf.
-+		 */
-+		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+		if (kn) {
-+			usb_deauthorize_interface(intf);
-+			sysfs_unbreak_active_protection(kn);
-+		}
-+	}
+ 	if (queue_work(hub_wq, &hub->events))
+ 		return;
  
- 	return count;
+ 	/* the work has already been scheduled */
+ 	usb_autopm_put_interface_async(intf);
+-	kref_put(&hub->kref, hub_release);
++	hub_put(hub);
  }
+ 
+ void usb_kick_hub_wq(struct usb_device *hdev)
+@@ -1060,7 +1059,7 @@ static void hub_activate(struct usb_hub
+ 			goto init2;
+ 		goto init3;
+ 	}
+-	kref_get(&hub->kref);
++	hub_get(hub);
+ 
+ 	/* The superspeed hub except for root hub has to use Hub Depth
+ 	 * value as an offset into the route string to locate the bits
+@@ -1308,7 +1307,7 @@ static void hub_activate(struct usb_hub
+ 		device_unlock(&hdev->dev);
+ 	}
+ 
+-	kref_put(&hub->kref, hub_release);
++	hub_put(hub);
+ }
+ 
+ /* Implement the continuations for the delays above */
+@@ -1724,6 +1723,16 @@ static void hub_release(struct kref *kre
+ 	kfree(hub);
+ }
+ 
++void hub_get(struct usb_hub *hub)
++{
++	kref_get(&hub->kref);
++}
++
++void hub_put(struct usb_hub *hub)
++{
++	kref_put(&hub->kref, hub_release);
++}
++
+ static unsigned highspeed_hubs;
+ 
+ static void hub_disconnect(struct usb_interface *intf)
+@@ -1772,7 +1781,7 @@ static void hub_disconnect(struct usb_in
+ 
+ 	onboard_hub_destroy_pdevs(&hub->onboard_hub_devs);
+ 
+-	kref_put(&hub->kref, hub_release);
++	hub_put(hub);
+ }
+ 
+ static bool hub_descriptor_is_sane(struct usb_host_interface *desc)
+@@ -5894,7 +5903,7 @@ out_hdev_lock:
+ 
+ 	/* Balance the stuff in kick_hub_wq() and allow autosuspend */
+ 	usb_autopm_put_interface(intf);
+-	kref_put(&hub->kref, hub_release);
++	hub_put(hub);
+ 
+ 	kcov_remote_stop();
+ }
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -129,6 +129,8 @@ extern void usb_hub_remove_port_device(s
+ extern int usb_hub_set_port_power(struct usb_device *hdev, struct usb_hub *hub,
+ 		int port1, bool set);
+ extern struct usb_hub *usb_hub_to_struct_hub(struct usb_device *hdev);
++extern void hub_get(struct usb_hub *hub);
++extern void hub_put(struct usb_hub *hub);
+ extern int hub_port_debounce(struct usb_hub *hub, int port1,
+ 		bool must_be_connected);
+ extern int usb_clear_port_feature(struct usb_device *hdev,
 
 
