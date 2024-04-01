@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AA940876;
-	Mon,  1 Apr 2024 16:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2286447A6B;
+	Mon,  1 Apr 2024 16:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990078; cv=none; b=i9s+J9s24oXGOfkJdYjqSwnJ86vQVZHStBTwcBwqBloRnnPQ1/zbMAvBzlotzpAaWvmI2UTa7R7n5ozovZpLt5ZUOGnPZe2sSzsQpN5rTTu5N4Olg7quYz76MuRZLwimk3wLYp58Oe51WRvch2YvLNYsZbebXpLgGqn69MkEy0E=
+	t=1711990081; cv=none; b=Uan6i7T+JfXJz3w0OPIk5/jIOONelssby1WJyM9TF0b6k30T6A7zwlq2yy45u1R+GGZZ+ggAz4Kb+/puNXaRWh7O6ZMoflBXbcsYgK8Lbb5jtcH0CZ27+/0BX+oXh3YqyvTzAQVDv6Enyil8xuepy/1pUTEHhPOCsjpCal63a1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990078; c=relaxed/simple;
-	bh=A2kqNJBgZftFhnfKiHQiUNajmG3duAa0ukg9Kw0gd1M=;
+	s=arc-20240116; t=1711990081; c=relaxed/simple;
+	bh=X4dG82xYU0mvuI9WtvvDGpIPHVHsuTem51br0XSyugQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGdsb4T7FDiPYIpH4vW2qHFZZOEyp/BdzencOZiZaLHKLUGcepnAEdZd4+MbCM5FkTyZSD5OJsEW5MpS4v+Be7fG+fDITFqyMAWy4L1PLmftZ5APcgHj6qDx8uAEAtV1EJ+Ghazg6q+A7E8C63NvYnUt2hK89AMGZcQWyXWIesY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xV0x1u/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDfx1FI2dUBgyxWXhr4fkWAukG+Q0itjybrLQxaTEJa8TUOXozxPN2kzxW/v5XIjZijKAOyeF1UlTjbKiBSQ+jnYtN5KQwi+copatyuComg4QitgEZWQMFi0wf6xng1dR6U9mrfbuT/ih5QYwJGzWcj7wDyUD52Nh+TQ3L13kAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAxfscLZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xV0x1u/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6470EC433F1;
-	Mon,  1 Apr 2024 16:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAxfscLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99020C433F1;
+	Mon,  1 Apr 2024 16:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990077;
-	bh=A2kqNJBgZftFhnfKiHQiUNajmG3duAa0ukg9Kw0gd1M=;
+	s=korg; t=1711990081;
+	bh=X4dG82xYU0mvuI9WtvvDGpIPHVHsuTem51br0XSyugQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xV0x1u/16/62ziY74C4TNDkghxscZvsLAUS/Wot3tDLyI5rTM0R10RvClyJ1jZDlf
-	 /Eo3zF5VKJQq8W5PqZX1lSreS+SPhAMbP6rhUlvrdAR0k77tl/k5UGFONekdpnAGbt
-	 bS1lKGD2BmbcfW6bES+HwZ1QFRsGjra2a1J8X8K8=
+	b=ZAxfscLZD711X08Na23pJUi2mmoUIixYmgpKr5djyICP/hGYHwJqxG1nFbO8FjwEL
+	 SPCOSG5OEu/iLl2QBM1jEyS+beVUlD5FjTSWt528Lfj4mIJW7/U/6RVOFWUReLO1eM
+	 ClqC6zKKzKVQnjBj+d82WvRxWuiwD+JpRW3YtF0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edmund Raile <edmund.raile@proton.me>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.6 212/396] firewire: ohci: prevent leak of left-over IRQ on unbind
-Date: Mon,  1 Apr 2024 17:44:21 +0200
-Message-ID: <20240401152554.246577183@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.6 239/396] ARM: imx_v6_v7_defconfig: Restore CONFIG_BACKLIGHT_CLASS_DEVICE
+Date: Mon,  1 Apr 2024 17:44:48 +0200
+Message-ID: <20240401152555.039451629@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -50,72 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edmund Raile <edmund.raile@proton.me>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 575801663c7dc38f826212b39e3b91a4a8661c33 upstream.
+commit 2b0a5a8a397c0ae8f8cd25e7d3857c749239ceb8 upstream.
 
-Commit 5a95f1ded28691e6 ("firewire: ohci: use devres for requested IRQ")
-also removed the call to free_irq() in pci_remove(), leading to a
-leftover irq of devm_request_irq() at pci_disable_msi() in pci_remove()
-when unbinding the driver from the device
+Since commit bfac19e239a7 ("fbdev: mx3fb: Remove the driver") backlight
+is no longer functional.
 
-remove_proc_entry: removing non-empty directory 'irq/136', leaking at
-least 'firewire_ohci'
-Call Trace:
- ? remove_proc_entry+0x19c/0x1c0
- ? __warn+0x81/0x130
- ? remove_proc_entry+0x19c/0x1c0
- ? report_bug+0x171/0x1a0
- ? console_unlock+0x78/0x120
- ? handle_bug+0x3c/0x80
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? remove_proc_entry+0x19c/0x1c0
- unregister_irq_proc+0xf4/0x120
- free_desc+0x3d/0xe0
- ? kfree+0x29f/0x2f0
- irq_free_descs+0x47/0x70
- msi_domain_free_locked.part.0+0x19d/0x1d0
- msi_domain_free_irqs_all_locked+0x81/0xc0
- pci_free_msi_irqs+0x12/0x40
- pci_disable_msi+0x4c/0x60
- pci_remove+0x9d/0xc0 [firewire_ohci
-     01b483699bebf9cb07a3d69df0aa2bee71db1b26]
- pci_device_remove+0x37/0xa0
- device_release_driver_internal+0x19f/0x200
- unbind_store+0xa1/0xb0
+The fbdev mx3fb driver used to automatically select
+CONFIG_BACKLIGHT_CLASS_DEVICE.
 
-remove irq with devm_free_irq() before pci_disable_msi()
-also remove it in fail_msi: of pci_probe() as this would lead to
-an identical leak
+Now that the mx3fb driver has been removed, enable the
+CONFIG_BACKLIGHT_CLASS_DEVICE option so that backlight can still work
+by default.
+
+Tested on a imx6dl-sabresd board.
 
 Cc: stable@vger.kernel.org
-Fixes: 5a95f1ded28691e6 ("firewire: ohci: use devres for requested IRQ")
-Signed-off-by: Edmund Raile <edmund.raile@proton.me>
-Link: https://lore.kernel.org/r/20240229144723.13047-2-edmund.raile@proton.me
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: bfac19e239a7 ("fbdev: mx3fb: Remove the driver")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Colibri iMX7
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/ohci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/configs/imx_v6_v7_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -3773,6 +3773,7 @@ static int pci_probe(struct pci_dev *dev
- 	return 0;
- 
-  fail_msi:
-+	devm_free_irq(&dev->dev, dev->irq, ohci);
- 	pci_disable_msi(dev);
- 
- 	return err;
-@@ -3800,6 +3801,7 @@ static void pci_remove(struct pci_dev *d
- 
- 	software_reset(ohci);
- 
-+	devm_free_irq(&dev->dev, dev->irq, ohci);
- 	pci_disable_msi(dev);
- 
- 	dev_notice(&dev->dev, "removing fw-ohci device\n");
+diff --git a/arch/arm/configs/imx_v6_v7_defconfig b/arch/arm/configs/imx_v6_v7_defconfig
+index 0a90583f9f01..8f9dbe8d9029 100644
+--- a/arch/arm/configs/imx_v6_v7_defconfig
++++ b/arch/arm/configs/imx_v6_v7_defconfig
+@@ -297,6 +297,7 @@ CONFIG_FB_MODE_HELPERS=y
+ CONFIG_LCD_CLASS_DEVICE=y
+ CONFIG_LCD_L4F00242T03=y
+ CONFIG_LCD_PLATFORM=y
++CONFIG_BACKLIGHT_CLASS_DEVICE=y
+ CONFIG_BACKLIGHT_PWM=y
+ CONFIG_BACKLIGHT_GPIO=y
+ CONFIG_FRAMEBUFFER_CONSOLE=y
+-- 
+2.44.0
+
 
 
