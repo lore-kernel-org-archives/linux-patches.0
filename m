@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2231C0DE7;
-	Mon,  1 Apr 2024 17:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B6C1C0DE7;
+	Mon,  1 Apr 2024 17:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990908; cv=none; b=ipb5tIKgQ8ZH8KenYTqjSdqlAaONDGye136eqCizYQtNXklYAnD397C8BEAYKRXjnKWHfoEHWp7OofxE19yd6ovj1Kj78jmxbAY6fQjJ4c8VwMVzOioGK+KTRVWkdbkOTTXkcWXYy60WsXAGAEr3xy+yAdeUQRvOrHpTCv7qpmA=
+	t=1711990911; cv=none; b=eeTm+ZqZoIMiWkZZ0hqqu95g96mp5xrkWOx1PPyEKkHYUKXvQqaU2HKPlUeql806DE9/FErVXgvoU8luR5KQcy339sDaIq+u/1tYCSWeEHUInoN5bgcLADQ31TergmAY7nP41nS4zWSR76rFoz/or2Prdv3BamDieEPf7gIJl7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990908; c=relaxed/simple;
-	bh=kmNIvFGsWInwoshYbbaP/j7BPpzDKalnXzA4aBHiZh4=;
+	s=arc-20240116; t=1711990911; c=relaxed/simple;
+	bh=2NvEycjIQIv8mDAKuLbBdJeXB7NpvKlV7yxO+WW3GI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vkj2n3lwF4qwTMQoxbpA3kubjKV1XZ+DwPmhTIOEsEhFVBmlqt3X/hpy35FBgjIda51998ixbHIQEyRLkGLri7BIqnwwU43vqGi+ZSCZWE0iFbrCXNEgtAWF6Klsja6w5oqcQ+WtjjevfU3frk09yWNd7jksru0IJvGHcRaDecQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7ElrpkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDp1geFnIsbBxAFb5GTabNGHpb9J5djyhXH7UPBdMNlv5tF8y25ohWqIFlS2WUPMmeWcAh6gWOF3pfqSINZqngXRYlunfAhowt4CIP46czVVGOuQlpstQ/iVEuTcAwtgYxdj9F7SWeyZo1sribmyQHVd2tUIegVbs0k2z8vEzFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5AWl2rn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7ElrpkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D311C433C7;
-	Mon,  1 Apr 2024 17:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5AWl2rn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED84C433F1;
+	Mon,  1 Apr 2024 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990908;
-	bh=kmNIvFGsWInwoshYbbaP/j7BPpzDKalnXzA4aBHiZh4=;
+	s=korg; t=1711990911;
+	bh=2NvEycjIQIv8mDAKuLbBdJeXB7NpvKlV7yxO+WW3GI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7ElrpkX2y/vE5tvow3gxdDze2eKraVciCoEtme7s9qON9vwee0X8+pn2LHJB3YNn
-	 SRHuYxwEP8nlS3xVHOIDpwIqYjYiaoL57qJWaGt/g6gKauyKE0sRdS3/meZAXc2vnp
-	 BTTDl4SVa9rXs9i10vSsDhZOmpD5o/0SPGM3zZRA=
+	b=n5AWl2rnJvTYo3ycVVDJMg0Q9av1eTUXiGd0oUaYP7NqpA7GOtDTzkTHycb8J7EKN
+	 v2ZQoyBr5bFxKgqE/sYjcFGsb1u7dtqRNNJRxeLzhE4p1CTur/RWXzQMsEhuI4bCbp
+	 hyyWT1Kck0PReeWyRw3pLztTWzjUQ3JppYYkA7Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Eric Auger <eric.auger@redhat.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/272] vfio/pci: Remove negative check on unsigned vector
-Date: Mon,  1 Apr 2024 17:44:53 +0200
-Message-ID: <20240401152533.857237213@linuxfoundation.org>
+Subject: [PATCH 6.1 104/272] vfio/pci: Lock external INTx masking ops
+Date: Mon,  1 Apr 2024 17:44:54 +0200
+Message-ID: <20240401152533.887479931@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,92 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 6578ed85c7d63693669bfede01e0237d0e24211a ]
+[ Upstream commit 810cd4bb53456d0503cc4e7934e063835152c1b7 ]
 
-User space provides the vector as an unsigned int that is checked
-early for validity (vfio_set_irqs_validate_and_prepare()).
+Mask operations through config space changes to DisINTx may race INTx
+configuration changes via ioctl.  Create wrappers that add locking for
+paths outside of the core interrupt code.
 
-A later negative check of the provided vector is not necessary.
+In particular, irq_type is updated holding igate, therefore testing
+is_intx() requires holding igate.  For example clearing DisINTx from
+config space can otherwise race changes of the interrupt configuration.
 
-Remove the negative check and ensure the type used
-for the vector is consistent as an unsigned int.
+This aligns interfaces which may trigger the INTx eventfd into two
+camps, one side serialized by igate and the other only enabled while
+INTx is configured.  A subsequent patch introduces synchronization for
+the latter flows.
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc:  <stable@vger.kernel.org>
+Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
+Reported-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Acked-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/28521e1b0b091849952b0ecb8c118729fc8cdc4f.1683740667.git.reinette.chatre@intel.com
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20240308230557.805580-3-alex.williamson@redhat.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Stable-dep-of: fe9a7082684e ("vfio/pci: Disable auto-enable of exclusive INTx IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_intrs.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c |   34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 6a9c6a143cc3a..258de57ef9564 100644
 --- a/drivers/vfio/pci/vfio_pci_intrs.c
 +++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -317,14 +317,14 @@ static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msi
+@@ -60,12 +60,14 @@ static void vfio_send_intx_eventfd(void
  }
  
- static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
--				      int vector, int fd, bool msix)
-+				      unsigned int vector, int fd, bool msix)
+ /* Returns true if the INTx vfio_pci_irq_ctx.masked value is changed. */
+-bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
++static bool __vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
  {
  	struct pci_dev *pdev = vdev->pdev;
- 	struct eventfd_ctx *trigger;
- 	int irq, ret;
- 	u16 cmd;
+ 	unsigned long flags;
+ 	bool masked_changed = false;
  
--	if (vector < 0 || vector >= vdev->num_ctx)
-+	if (vector >= vdev->num_ctx)
- 		return -EINVAL;
++	lockdep_assert_held(&vdev->igate);
++
+ 	spin_lock_irqsave(&vdev->irqlock, flags);
  
- 	irq = pci_irq_vector(pdev, vector);
-@@ -399,7 +399,8 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
- static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
- 			      unsigned count, int32_t *fds, bool msix)
- {
--	int i, j, ret = 0;
-+	unsigned int i, j;
-+	int ret = 0;
+ 	/*
+@@ -95,6 +97,17 @@ bool vfio_pci_intx_mask(struct vfio_pci_
+ 	return masked_changed;
+ }
  
- 	if (start >= vdev->num_ctx || start + count > vdev->num_ctx)
- 		return -EINVAL;
-@@ -410,8 +411,8 @@ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
- 	}
- 
- 	if (ret) {
--		for (--j; j >= (int)start; j--)
--			vfio_msi_set_vector_signal(vdev, j, -1, msix);
-+		for (i = start; i < j; i++)
-+			vfio_msi_set_vector_signal(vdev, i, -1, msix);
- 	}
- 
++bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
++{
++	bool mask_changed;
++
++	mutex_lock(&vdev->igate);
++	mask_changed = __vfio_pci_intx_mask(vdev);
++	mutex_unlock(&vdev->igate);
++
++	return mask_changed;
++}
++
+ /*
+  * If this is triggered by an eventfd, we can't call eventfd_signal
+  * or else we'll deadlock on the eventfd wait queue.  Return >0 when
+@@ -137,12 +150,21 @@ static int vfio_pci_intx_unmask_handler(
  	return ret;
-@@ -420,7 +421,7 @@ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
- static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
- {
- 	struct pci_dev *pdev = vdev->pdev;
--	int i;
-+	unsigned int i;
- 	u16 cmd;
+ }
  
- 	for (i = 0; i < vdev->num_ctx; i++) {
-@@ -542,7 +543,7 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
- 				    unsigned index, unsigned start,
- 				    unsigned count, uint32_t flags, void *data)
+-void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
++static void __vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
  {
--	int i;
-+	unsigned int i;
- 	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
++	lockdep_assert_held(&vdev->igate);
++
+ 	if (vfio_pci_intx_unmask_handler(vdev, NULL) > 0)
+ 		vfio_send_intx_eventfd(vdev, NULL);
+ }
  
- 	if (irq_is(vdev, index) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
--- 
-2.43.0
-
++void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
++{
++	mutex_lock(&vdev->igate);
++	__vfio_pci_intx_unmask(vdev);
++	mutex_unlock(&vdev->igate);
++}
++
+ static irqreturn_t vfio_intx_handler(int irq, void *dev_id)
+ {
+ 	struct vfio_pci_core_device *vdev = dev_id;
+@@ -457,11 +479,11 @@ static int vfio_pci_set_intx_unmask(stru
+ 		return -EINVAL;
+ 
+ 	if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-		vfio_pci_intx_unmask(vdev);
++		__vfio_pci_intx_unmask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
+ 		uint8_t unmask = *(uint8_t *)data;
+ 		if (unmask)
+-			vfio_pci_intx_unmask(vdev);
++			__vfio_pci_intx_unmask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+ 		int32_t fd = *(int32_t *)data;
+ 		if (fd >= 0)
+@@ -484,11 +506,11 @@ static int vfio_pci_set_intx_mask(struct
+ 		return -EINVAL;
+ 
+ 	if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-		vfio_pci_intx_mask(vdev);
++		__vfio_pci_intx_mask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
+ 		uint8_t mask = *(uint8_t *)data;
+ 		if (mask)
+-			vfio_pci_intx_mask(vdev);
++			__vfio_pci_intx_mask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+ 		return -ENOTTY; /* XXX implement me */
+ 	}
 
 
