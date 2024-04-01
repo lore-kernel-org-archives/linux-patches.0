@@ -1,54 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D571CA8F;
-	Mon,  1 Apr 2024 16:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1E21CA8F;
+	Mon,  1 Apr 2024 16:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987475; cv=none; b=An55ADZ6FyKHEKhY8GFesuaFm4Khhon7VhfoAgveMwAb6hONjAb1/EQE9Hx3mOr9+GtWyODDFuHeujth+uZ9b9opm9kZQFLz8KaK0P6IL1JLNhXZNeZCWvC1aiIWFSKXCBmT7IoeQppU2XXAvShhA6y8j346QC1FGWu7Zb4EW/8=
+	t=1711987479; cv=none; b=UAmAT4GpXV8A2YTtOwREbs2JlVMMFRffaOjWAtHD+lANDAdiShSWXnz1l+P9phBH/LZ/IIjo6t8uJSX7jy5WEJhxIk2Oia3eMEQFRiUEST41ElL4/hTbg4/mtsU77WiXk0CCBvZeUFeICaszFmSUPK3CGMnukv1zzvHWdouA5kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987475; c=relaxed/simple;
-	bh=U+s2uphFi0kJemW4CeNf8ydFofk6mZeDThHiC1hBPys=;
+	s=arc-20240116; t=1711987479; c=relaxed/simple;
+	bh=JndSk0oxylZAFcxJNJneAwssiOxiFehISgih/ef5ESQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZiMOLczOuC5O2DvsmA2+focBcEStLx9u2NE7ZDvrczrlgIbwPaNRNsPjjIDLAfRNmqZs8TylQYCRXYbEyF/vrbziaRM1T34veEhBwpsBiHJOCv5Zfe+kojz4iLuolRHtBBo9p8QlREj97tMcsjAjuBPbB2uE3dvSL1ZXvIWSS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQVPoDOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpIJFGz/Nggh8LlUz/a2A7dCMn1pHghKR6UkqpgBksfRbgI/lR2da/d2kGzt+gK0GUYbFa2rJY9u9/trQuwzzTqsL0BJOqoeAK0iaYHOMW+i5JUyp+6YC2PamlBoFBXiV16ohel69Llx7RmdIrb6yQ8Qvz5Tvvz85R2/QmODePg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrzNCWyk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQVPoDOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE933C433C7;
-	Mon,  1 Apr 2024 16:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrzNCWyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47164C433F1;
+	Mon,  1 Apr 2024 16:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987475;
-	bh=U+s2uphFi0kJemW4CeNf8ydFofk6mZeDThHiC1hBPys=;
+	s=korg; t=1711987478;
+	bh=JndSk0oxylZAFcxJNJneAwssiOxiFehISgih/ef5ESQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQVPoDOUQxD7Kak/2a6Ix0t4bFjbk0xh+CxX54AUrERTptKA1uSUrELOJNsePCaU2
-	 7PyGkXNOW6rEP3im6PUj8SjwhCzDxhmq/LxWWOgq2KmMo29TXRqsqKs676cVnqekOZ
-	 cU8zlSNCJ4h7WUTyETMdbBxefQJtMrJoBB5GVkuY=
+	b=LrzNCWykwj8jUud6/oCoWMLdviwZh2fL7Kcunw9Brm7FkwOedq3kYRZ3/CeUce5XQ
+	 L4PlqHHvEBx634Atug2CrH81Od/c7yqYEJUM4eRmvNuXjl7XCM/r4i0SzmPOtFutD5
+	 epAwKaQQ2inKF6gCcO0CUq++KUKNZ7cHRft5/xnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Borislav Petkov <bp@alien8.de>,
-	David Hildenbrand <david@redhat.com>,
-	Florent Revest <revest@chromium.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Kees Cook <keescook@chromium.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Sam James <sam@gentoo.org>,
-	Stefan Roesch <shr@devkernel.io>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Yin Fengwei <fengwei.yin@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.8 291/399] prctl: generalize PR_SET_MDWE support check to be per-arch
-Date: Mon,  1 Apr 2024 17:44:17 +0200
-Message-ID: <20240401152557.871502028@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.8 300/399] wifi: cfg80211: add a flag to disable wireless extensions
+Date: Mon,  1 Apr 2024 17:44:26 +0200
+Message-ID: <20240401152558.148969177@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -67,118 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit d5aad4c2ca057e760a92a9a7d65bd38d72963f27 upstream.
+commit be23b2d7c3b7c8bf57b1cf0bf890bd65df9d0186 upstream.
 
-Patch series "ARM: prctl: Reject PR_SET_MDWE where not supported".
+Wireless extensions are already disabled if MLO is enabled,
+given that we cannot support MLO there with all the hard-
+coded assumptions about BSSID etc.
 
-I noticed after a recent kernel update that my ARM926 system started
-segfaulting on any execve() after calling prctl(PR_SET_MDWE).  After some
-investigation it appears that ARMv5 is incapable of providing the
-appropriate protections for MDWE, since any readable memory is also
-implicitly executable.
+However, the WiFi7 ecosystem is still stabilizing, and some
+devices may need MLO disabled while that happens. In that
+case, we might end up with a device that supports wext (but
+not MLO) in one kernel, and then breaks wext in the future
+(by enabling MLO), which is not desirable.
 
-The prctl_set_mdwe() function already had some special-case logic added
-disabling it on PARISC (commit 793838138c15, "prctl: Disable
-prctl(PR_SET_MDWE) on parisc"); this patch series (1) generalizes that
-check to use an arch_*() function, and (2) adds a corresponding override
-for ARM to disable MDWE on pre-ARMv6 CPUs.
+Add a flag to let such drivers/devices disable wext even if
+MLO isn't yet enabled.
 
-With the series applied, prctl(PR_SET_MDWE) is rejected on ARMv5 and
-subsequent execve() calls (as well as mmap(PROT_READ|PROT_WRITE)) can
-succeed instead of unconditionally failing; on ARMv6 the prctl works as it
-did previously.
-
-[0] https://lore.kernel.org/all/2023112456-linked-nape-bf19@gregkh/
-
-
-This patch (of 2):
-
-There exist systems other than PARISC where MDWE may not be feasible to
-support; rather than cluttering up the generic code with additional
-arch-specific logic let's add a generic function for checking MDWE support
-and allow each arch to override it as needed.
-
-Link: https://lkml.kernel.org/r/20240227013546.15769-4-zev@bewilderbeest.net
-Link: https://lkml.kernel.org/r/20240227013546.15769-5-zev@bewilderbeest.net
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Acked-by: Helge Deller <deller@gmx.de>	[parisc]
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Florent Revest <revest@chromium.org>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: Russell King (Oracle) <linux@armlinux.org.uk>
-Cc: Sam James <sam@gentoo.org>
-Cc: Stefan Roesch <shr@devkernel.io>
-Cc: Yang Shi <yang@os.amperecomputing.com>
-Cc: Yin Fengwei <fengwei.yin@intel.com>
-Cc: <stable@vger.kernel.org>	[6.3+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://msgid.link/20240314110951.b50f1dc4ec21.I656ddd8178eedb49dc5c6c0e70f8ce5807afb54f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/mman.h |   14 ++++++++++++++
- include/linux/mman.h           |    8 ++++++++
- kernel/sys.c                   |    7 +++++--
- 3 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100644 arch/parisc/include/asm/mman.h
+ include/net/cfg80211.h   |    2 ++
+ net/wireless/wext-core.c |    7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- /dev/null
-+++ b/arch/parisc/include/asm/mman.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __ASM_MMAN_H__
-+#define __ASM_MMAN_H__
-+
-+#include <uapi/asm/mman.h>
-+
-+/* PARISC cannot allow mdwe as it needs writable stacks */
-+static inline bool arch_memory_deny_write_exec_supported(void)
-+{
-+	return false;
-+}
-+#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
-+
-+#endif /* __ASM_MMAN_H__ */
---- a/include/linux/mman.h
-+++ b/include/linux/mman.h
-@@ -162,6 +162,14 @@ calc_vm_flag_bits(unsigned long flags)
- 
- unsigned long vm_commit_limit(void);
- 
-+#ifndef arch_memory_deny_write_exec_supported
-+static inline bool arch_memory_deny_write_exec_supported(void)
-+{
-+	return true;
-+}
-+#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
-+#endif
-+
- /*
-  * Denies creating a writable executable mapping or gaining executable permissions.
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -4972,6 +4972,7 @@ struct cfg80211_ops {
+  *	set this flag to update channels on beacon hints.
+  * @WIPHY_FLAG_SUPPORTS_NSTR_NONPRIMARY: support connection to non-primary link
+  *	of an NSTR mobile AP MLD.
++ * @WIPHY_FLAG_DISABLE_WEXT: disable wireless extensions for this device
+  */
+ enum wiphy_flags {
+ 	WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK		= BIT(0),
+@@ -4983,6 +4984,7 @@ enum wiphy_flags {
+ 	WIPHY_FLAG_4ADDR_STATION		= BIT(6),
+ 	WIPHY_FLAG_CONTROL_PORT_PROTOCOL	= BIT(7),
+ 	WIPHY_FLAG_IBSS_RSN			= BIT(8),
++	WIPHY_FLAG_DISABLE_WEXT			= BIT(9),
+ 	WIPHY_FLAG_MESH_AUTH			= BIT(10),
+ 	WIPHY_FLAG_SUPPORTS_EXT_KCK_32          = BIT(11),
+ 	WIPHY_FLAG_SUPPORTS_NSTR_NONPRIMARY	= BIT(12),
+--- a/net/wireless/wext-core.c
++++ b/net/wireless/wext-core.c
+@@ -4,6 +4,7 @@
+  * Authors :	Jean Tourrilhes - HPL - <jt@hpl.hp.com>
+  * Copyright (c) 1997-2007 Jean Tourrilhes, All Rights Reserved.
+  * Copyright	2009 Johannes Berg <johannes@sipsolutions.net>
++ * Copyright (C) 2024 Intel Corporation
   *
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2408,8 +2408,11 @@ static inline int prctl_set_mdwe(unsigne
- 	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
- 		return -EINVAL;
- 
--	/* PARISC cannot allow mdwe as it needs writable stacks */
--	if (IS_ENABLED(CONFIG_PARISC))
-+	/*
-+	 * EOPNOTSUPP might be more appropriate here in principle, but
-+	 * existing userspace depends on EINVAL specifically.
-+	 */
-+	if (!arch_memory_deny_write_exec_supported())
- 		return -EINVAL;
- 
- 	current_bits = get_current_mdwe();
+  * (As all part of the Linux kernel, this file is GPL)
+  */
+@@ -662,7 +663,8 @@ struct iw_statistics *get_wireless_stats
+ 	    dev->ieee80211_ptr->wiphy->wext &&
+ 	    dev->ieee80211_ptr->wiphy->wext->get_wireless_stats) {
+ 		wireless_warn_cfg80211_wext();
+-		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
++		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
++							WIPHY_FLAG_DISABLE_WEXT))
+ 			return NULL;
+ 		return dev->ieee80211_ptr->wiphy->wext->get_wireless_stats(dev);
+ 	}
+@@ -704,7 +706,8 @@ static iw_handler get_handler(struct net
+ #ifdef CONFIG_CFG80211_WEXT
+ 	if (dev->ieee80211_ptr && dev->ieee80211_ptr->wiphy) {
+ 		wireless_warn_cfg80211_wext();
+-		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
++		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
++							WIPHY_FLAG_DISABLE_WEXT))
+ 			return NULL;
+ 		handlers = dev->ieee80211_ptr->wiphy->wext;
+ 	}
 
 
