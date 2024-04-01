@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4E81C0DE7;
-	Mon,  1 Apr 2024 16:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025E747A6B;
+	Mon,  1 Apr 2024 16:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989907; cv=none; b=c80DtxHe4d7etVmaeqQ0w1XzkJa/j1OXLJW7ht+9T0xDpTlxhQ7KML1/TY4VKS9RzOqFG1RoOhmHpXeJx+kzZp4Gz7jM2nSk6I/cOYjdgrPuuA9WdDLTOSP5TdNNELsPHOhUURsnPqAHML+sm2fMLsw/u8e+c0GxWi6mKGXslxU=
+	t=1711989911; cv=none; b=AAC/ljdyHeGwQSIFaoQf8E+u9pshi9qO7AZ735bJPNJBg0TksPF+lX+Xt8hc+yPuOnooun47tk6UMR9d/jEdG4as5C5VWO8vo4oXaIJjICMXsKLJPl9sdSjEu29+Dn/gsZU4BBmVqOcssPxUu9KFxzFJVlKrUrnvfWXps/UfIbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989907; c=relaxed/simple;
-	bh=ndOluXhy5iCnHo+fsgKaqDdkmKdF37DsDI6Xatxaba0=;
+	s=arc-20240116; t=1711989911; c=relaxed/simple;
+	bh=wtqAlBKhRXWu1e2u31spVINzUITsP5wn0nTKqz3Th8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SKmTZNp+kS2nzQbsi6Ac+8lgcu8V/sCU/SU5uxnQM3YHftqhmbxltaEzvTOaxLUUKj11UBFLn+dwuhS0yzsqSKn3IvTIAUrN7IhC5IR0Omc2n3wExsgPJ0E16hgdVyVxK4AfZ22xfEdU9c/PdnomGBmHua89BHgmk6k2omXHcZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K31v8ej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Idv5LusjaUjQPpymywP69F9XyGgf+t2RGrVe3ycy71KGP178E96q7njN+AWUQcGj1bxbiDtalcC6iRNWPhHIbX603uANNDX9DlNqBEFcu1mD8gUJ4KNaaYh9lW70iVwEV4L+HlGQU9b4c2oMf6iCSpHdHlUr5xq2PP8ly7AHbfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQcj3XLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K31v8ej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F75C433C7;
-	Mon,  1 Apr 2024 16:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQcj3XLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C2AC43390;
+	Mon,  1 Apr 2024 16:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989907;
-	bh=ndOluXhy5iCnHo+fsgKaqDdkmKdF37DsDI6Xatxaba0=;
+	s=korg; t=1711989910;
+	bh=wtqAlBKhRXWu1e2u31spVINzUITsP5wn0nTKqz3Th8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K31v8ejsp2P7dJ1rFMTyVfGVvLXD6jGCistNDg2KiURf3rDckOXO7nqhVTejvmcD
-	 Kgngw+ylDowjWjD/9KLGpTLuHc+6CDsmqHMJeEIlk/LKTdZfKpPg0BM1q28uQZi4cg
-	 cA1fDPrC429PWgrgQz78xHzrMlxTh5ggvmlYJLTI=
+	b=VQcj3XLHkTpW8i+CG/gdDRl+Ydiui+rhh+rA5GgCwtaduUXZ3iTk+YG7VKofTxWpO
+	 FgWAAXhyeJyYm9PNcP8WmNW9/nAPsp32hDNvJdoB7u5ZAb+e6JbuYYncxcVup3mVG7
+	 7Oru5GArnSBr12f3NiQaRKb5/rvLDWr6iyJxHuN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
+	Jani Nikula <jani.nikula@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/396] drm/ttm: Make sure the mapped tt pages are decrypted when needed
-Date: Mon,  1 Apr 2024 17:43:58 +0200
-Message-ID: <20240401152553.574022311@linuxfoundation.org>
+Subject: [PATCH 6.6 190/396] drm/bridge: add ->edid_read hook and drm_bridge_edid_read()
+Date: Mon,  1 Apr 2024 17:43:59 +0200
+Message-ID: <20240401152553.603973480@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -49,165 +45,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 71ce046327cfd3aef3f93d1c44e091395eb03f8f ]
+[ Upstream commit d807ad80d811ba0c22adfd871e2a46491f80d6e2 ]
 
-Some drivers require the mapped tt pages to be decrypted. In an ideal
-world this would have been handled by the dma layer, but the TTM page
-fault handling would have to be rewritten to able to do that.
+Add new struct drm_edid based ->edid_read hook and
+drm_bridge_edid_read() function to call the hook.
 
-A side-effect of the TTM page fault handling is using a dma allocation
-per order (via ttm_pool_alloc_page) which makes it impossible to just
-trivially use dma_mmap_attrs. As a result ttm has to be very careful
-about trying to make its pgprot for the mapped tt pages match what
-the dma layer thinks it is. At the ttm layer it's possible to
-deduce the requirement to have tt pages decrypted by checking
-whether coherent dma allocations have been requested and the system
-is running with confidential computing technologies.
+v2: Include drm/drm_edid.h
 
-This approach isn't ideal but keeping TTM matching DMAs expectations
-for the page properties is in general fragile, unfortunately proper
-fix would require a rewrite of TTM's page fault handling.
-
-Fixes vmwgfx with SEV enabled.
-
-v2: Explicitly include cc_platform.h
-v3: Use CC_ATTR_GUEST_MEM_ENCRYPT instead of CC_ATTR_MEM_ENCRYPT to
-limit the scope to guests and log when memory decryption is enabled.
-
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 3bf3710e3718 ("drm/ttm: Add a generic TTM memcpy move for page-based iomem")
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v5.14+
-Link: https://patchwork.freedesktop.org/patch/msgid/20230926040359.3040017-1-zack@kde.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/9d08d22eaffcb9c59a2b677e45d7e61fc689bc2f.1706038510.git.jani.nikula@intel.com
+Stable-dep-of: 171b711b26cc ("drm/bridge: lt8912b: do not return negative values from .get_modes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo_util.c | 13 +++++++++++--
- drivers/gpu/drm/ttm/ttm_tt.c      | 13 +++++++++++++
- include/drm/ttm/ttm_tt.h          |  9 ++++++++-
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_bridge.c | 46 +++++++++++++++++++++++++++++++++++-
+ include/drm/drm_bridge.h     | 33 ++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
-index fd9fd3d15101c..0b3f4267130c4 100644
---- a/drivers/gpu/drm/ttm/ttm_bo_util.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
-@@ -294,7 +294,13 @@ pgprot_t ttm_io_prot(struct ttm_buffer_object *bo, struct ttm_resource *res,
- 	enum ttm_caching caching;
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index 39e68e45bb124..67354afbd7168 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -27,8 +27,9 @@
+ #include <linux/mutex.h>
  
- 	man = ttm_manager_type(bo->bdev, res->mem_type);
--	caching = man->use_tt ? bo->ttm->caching : res->bus.caching;
-+	if (man->use_tt) {
-+		caching = bo->ttm->caching;
-+		if (bo->ttm->page_flags & TTM_TT_FLAG_DECRYPTED)
-+			tmp = pgprot_decrypted(tmp);
-+	} else  {
-+		caching = res->bus.caching;
-+	}
- 
- 	return ttm_prot_from_caching(caching, tmp);
+ #include <drm/drm_atomic_state_helper.h>
+-#include <drm/drm_debugfs.h>
+ #include <drm/drm_bridge.h>
++#include <drm/drm_debugfs.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_encoder.h>
+ #include <drm/drm_file.h>
+ #include <drm/drm_of.h>
+@@ -1206,6 +1207,47 @@ int drm_bridge_get_modes(struct drm_bridge *bridge,
  }
-@@ -337,6 +343,8 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
- 		.no_wait_gpu = false
- 	};
- 	struct ttm_tt *ttm = bo->ttm;
-+	struct ttm_resource_manager *man =
-+			ttm_manager_type(bo->bdev, bo->resource->mem_type);
- 	pgprot_t prot;
- 	int ret;
+ EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
  
-@@ -346,7 +354,8 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
- 	if (ret)
- 		return ret;
- 
--	if (num_pages == 1 && ttm->caching == ttm_cached) {
-+	if (num_pages == 1 && ttm->caching == ttm_cached &&
-+	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
- 		/*
- 		 * We're mapping a single page, and the desired
- 		 * page protection is consistent with the bo.
-diff --git a/drivers/gpu/drm/ttm/ttm_tt.c b/drivers/gpu/drm/ttm/ttm_tt.c
-index e0a77671edd6c..43eaffa7faae3 100644
---- a/drivers/gpu/drm/ttm/ttm_tt.c
-+++ b/drivers/gpu/drm/ttm/ttm_tt.c
-@@ -31,11 +31,14 @@
- 
- #define pr_fmt(fmt) "[TTM] " fmt
- 
-+#include <linux/cc_platform.h>
- #include <linux/sched.h>
- #include <linux/shmem_fs.h>
- #include <linux/file.h>
- #include <linux/module.h>
- #include <drm/drm_cache.h>
-+#include <drm/drm_device.h>
-+#include <drm/drm_util.h>
- #include <drm/ttm/ttm_bo.h>
- #include <drm/ttm/ttm_tt.h>
- 
-@@ -60,6 +63,7 @@ static atomic_long_t ttm_dma32_pages_allocated;
- int ttm_tt_create(struct ttm_buffer_object *bo, bool zero_alloc)
- {
- 	struct ttm_device *bdev = bo->bdev;
-+	struct drm_device *ddev = bo->base.dev;
- 	uint32_t page_flags = 0;
- 
- 	dma_resv_assert_held(bo->base.resv);
-@@ -81,6 +85,15 @@ int ttm_tt_create(struct ttm_buffer_object *bo, bool zero_alloc)
- 		pr_err("Illegal buffer object type\n");
- 		return -EINVAL;
- 	}
-+	/*
-+	 * When using dma_alloc_coherent with memory encryption the
-+	 * mapped TT pages need to be decrypted or otherwise the drivers
-+	 * will end up sending encrypted mem to the gpu.
-+	 */
-+	if (bdev->pool.use_dma_alloc && cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
-+		page_flags |= TTM_TT_FLAG_DECRYPTED;
-+		drm_info(ddev, "TT memory decryption enabled.");
++/**
++ * drm_bridge_edid_read - read the EDID data of the connected display
++ * @bridge: bridge control structure
++ * @connector: the connector to read EDID for
++ *
++ * If the bridge supports output EDID retrieval, as reported by the
++ * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.edid_read to get
++ * the EDID and return it. Otherwise return NULL.
++ *
++ * If &drm_bridge_funcs.edid_read is not set, fall back to using
++ * drm_bridge_get_edid() and wrapping it in struct drm_edid.
++ *
++ * RETURNS:
++ * The retrieved EDID on success, or NULL otherwise.
++ */
++const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
++					    struct drm_connector *connector)
++{
++	if (!(bridge->ops & DRM_BRIDGE_OP_EDID))
++		return NULL;
++
++	/* Transitional: Fall back to ->get_edid. */
++	if (!bridge->funcs->edid_read) {
++		const struct drm_edid *drm_edid;
++		struct edid *edid;
++
++		edid = drm_bridge_get_edid(bridge, connector);
++		if (!edid)
++			return NULL;
++
++		drm_edid = drm_edid_alloc(edid, (edid->extensions + 1) * EDID_LENGTH);
++
++		kfree(edid);
++
++		return drm_edid;
 +	}
++
++	return bridge->funcs->edid_read(bridge, connector);
++}
++EXPORT_SYMBOL_GPL(drm_bridge_edid_read);
++
+ /**
+  * drm_bridge_get_edid - get the EDID data of the connected display
+  * @bridge: bridge control structure
+@@ -1215,6 +1257,8 @@ EXPORT_SYMBOL_GPL(drm_bridge_get_modes);
+  * DRM_BRIDGE_OP_EDID bridge ops flag, call &drm_bridge_funcs.get_edid to
+  * get the EDID and return it. Otherwise return NULL.
+  *
++ * Deprecated. Prefer using drm_bridge_edid_read().
++ *
+  * RETURNS:
+  * The retrieved EDID on success, or NULL otherwise.
+  */
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index 103ff57fc83cf..b20cfe5bf30b3 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -555,6 +555,37 @@ struct drm_bridge_funcs {
+ 	int (*get_modes)(struct drm_bridge *bridge,
+ 			 struct drm_connector *connector);
  
- 	bo->ttm = bdev->funcs->ttm_tt_create(bo, page_flags);
- 	if (unlikely(bo->ttm == NULL))
-diff --git a/include/drm/ttm/ttm_tt.h b/include/drm/ttm/ttm_tt.h
-index a4eff85b1f449..2b9d856ff388d 100644
---- a/include/drm/ttm/ttm_tt.h
-+++ b/include/drm/ttm/ttm_tt.h
-@@ -79,6 +79,12 @@ struct ttm_tt {
- 	 *   page_flags = TTM_TT_FLAG_EXTERNAL |
- 	 *		  TTM_TT_FLAG_EXTERNAL_MAPPABLE;
- 	 *
-+	 * TTM_TT_FLAG_DECRYPTED: The mapped ttm pages should be marked as
-+	 * not encrypted. The framework will try to match what the dma layer
-+	 * is doing, but note that it is a little fragile because ttm page
-+	 * fault handling abuses the DMA api a bit and dma_map_attrs can't be
-+	 * used to assure pgprot always matches.
++	/**
++	 * @edid_read:
 +	 *
- 	 * TTM_TT_FLAG_PRIV_POPULATED: TTM internal only. DO NOT USE. This is
- 	 * set by TTM after ttm_tt_populate() has successfully returned, and is
- 	 * then unset when TTM calls ttm_tt_unpopulate().
-@@ -87,8 +93,9 @@ struct ttm_tt {
- #define TTM_TT_FLAG_ZERO_ALLOC		BIT(1)
- #define TTM_TT_FLAG_EXTERNAL		BIT(2)
- #define TTM_TT_FLAG_EXTERNAL_MAPPABLE	BIT(3)
-+#define TTM_TT_FLAG_DECRYPTED		BIT(4)
- 
--#define TTM_TT_FLAG_PRIV_POPULATED	BIT(4)
-+#define TTM_TT_FLAG_PRIV_POPULATED	BIT(5)
- 	uint32_t page_flags;
- 	/** @num_pages: Number of pages in the page array. */
- 	uint32_t num_pages;
++	 * Read the EDID data of the connected display.
++	 *
++	 * The @edid_read callback is the preferred way of reporting mode
++	 * information for a display connected to the bridge output. Bridges
++	 * that support reading EDID shall implement this callback and leave
++	 * the @get_modes callback unimplemented.
++	 *
++	 * The caller of this operation shall first verify the output
++	 * connection status and refrain from reading EDID from a disconnected
++	 * output.
++	 *
++	 * This callback is optional. Bridges that implement it shall set the
++	 * DRM_BRIDGE_OP_EDID flag in their &drm_bridge->ops.
++	 *
++	 * The connector parameter shall be used for the sole purpose of EDID
++	 * retrieval, and shall not be stored internally by bridge drivers for
++	 * future usage.
++	 *
++	 * RETURNS:
++	 *
++	 * An edid structure newly allocated with drm_edid_alloc() or returned
++	 * from drm_edid_read() family of functions on success, or NULL
++	 * otherwise. The caller is responsible for freeing the returned edid
++	 * structure with drm_edid_free().
++	 */
++	const struct drm_edid *(*edid_read)(struct drm_bridge *bridge,
++					    struct drm_connector *connector);
++
+ 	/**
+ 	 * @get_edid:
+ 	 *
+@@ -888,6 +919,8 @@ drm_atomic_helper_bridge_propagate_bus_fmt(struct drm_bridge *bridge,
+ enum drm_connector_status drm_bridge_detect(struct drm_bridge *bridge);
+ int drm_bridge_get_modes(struct drm_bridge *bridge,
+ 			 struct drm_connector *connector);
++const struct drm_edid *drm_bridge_edid_read(struct drm_bridge *bridge,
++					    struct drm_connector *connector);
+ struct edid *drm_bridge_get_edid(struct drm_bridge *bridge,
+ 				 struct drm_connector *connector);
+ void drm_bridge_hpd_enable(struct drm_bridge *bridge,
 -- 
 2.43.0
 
