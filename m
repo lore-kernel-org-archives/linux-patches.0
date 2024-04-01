@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADA855E53;
-	Mon,  1 Apr 2024 21:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E4855C3A;
+	Mon,  1 Apr 2024 21:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712006623; cv=none; b=Jb8B9gdvOr85aTZVNLCmMUetFFtCoDL3IQ82OpcDUvBDQUs+PpYvXG+U0Xgoopfh39EJvNKfxBZl8CZXRbPA/pdZvwqfeOZJadc2/gYcl6GkswOi03q7MnyeQ4zyjwgfEQZ0TUm7ZEMCsY9txNm4jfR9df0OkOSajaMyED1kbmo=
+	t=1712006627; cv=none; b=G+bE1lX8LaC11XC8GHoF9KLd/FSafcUq7D/iTLNz7MCnebZ/vtdnS0IfA1xy9apJujCEulH8QtAjzx5E7aD/UCYzB4ldp1Ql7J14K4WjpTRuJrGGU39Emb1MrO15nSNSgkiAXPSM4tjattDWjS1QT5di2NE1fNc6s3uxF36yJbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712006623; c=relaxed/simple;
-	bh=EgrDOpn9PZzkLVfGjgBd1Asx2yeFKC8w6ZZ/S4hov40=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P61k8E2hXkbJ86dqMDlbh87XwuW4OmhdoW80XDXWWP7j5prIxqnMf7B3aLWD0dcDkbiFdgvQwK2MCJODqWln+YPxLWJstkZudD46gjNb7VtXf9WdnISAW5yybJToOQ8t7hRt1qJH8a5GyTmrtZPXnOeBhPL6N1/0zDwMBW9RT0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RO4Xyl0r; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712006627; c=relaxed/simple;
+	bh=pX8hn3dEww20q6jn4z8U7uw/ABDnl1aI7u+5mB15y6U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=M0f6+bQpySagQABWaeSJOHudlUnw6DZuygM9CIo1aWZAdTuQ3lsozaoXO6KffLoCpZ4qeyFdtIteN3dC15fGwddftVSX+brf/B7h7FL3L2jSZVtLPyPP7qqDcX15i0USbv6fMjFKk4uhpcf4bskVRtqDICz6eA8vk6XQZ2YJjCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IKK4W1A4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RO4Xyl0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6A0C433C7;
-	Mon,  1 Apr 2024 21:23:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IKK4W1A4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A300C43390;
+	Mon,  1 Apr 2024 21:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712006623;
-	bh=EgrDOpn9PZzkLVfGjgBd1Asx2yeFKC8w6ZZ/S4hov40=;
-	h=From:To:Cc:Subject:Date:From;
-	b=RO4Xyl0r2rQbWZ0sZIsm05CSkeyrrqxYqOHcCCTxvbnHzEjOWqsKNQ5ZrVajAvVlD
-	 R0XnCmuqBRknYQIOSSk03Cx5mj+wE+IpEbbuLnwcDetRXDT1b2Vod+MoYMpjq/JPjc
-	 3FIFHeSdmG09We05sY59Z9dzDIWtCU5OnLgf2k4ia9/XfR9gMiyaRDt4OlNh352Xwy
-	 5NsUs0shwsTwbvfSAF3vCV6I7FQxtBOYsdky5PSLUJhPjrQgI1JEVXMYJyoFsgd40J
-	 S34qf3OgHDNXI+COnExSsOHCkPkxIaNyxAGauyvacNhchGo3Uj+6CE+4LEEUpSi8ow
-	 16J6AXfH2w4jQ==
+	s=k20201202; t=1712006626;
+	bh=pX8hn3dEww20q6jn4z8U7uw/ABDnl1aI7u+5mB15y6U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IKK4W1A4YUOC9I3vRv4jgoJLDBtP2hQZ0uGjbzqU0vEuia9h4TPnu1AiM1aPfv08M
+	 1OeYhlAtNufh6zlJu/o/5p5b2KjhAzJs2ftwKMh+ZiCBT+E5Zj0BFEmiRBhPkwXPfk
+	 FWR0Y/kjbUdrqm9fsrfa8hDR2N9FxYJNBbn+dEXttsqvYhKWi3xEvrD+lLCKQEr6xn
+	 II8Kpeo6rVa/XgF1OtQVo1DOC7mGHGkwvAyZ7yUNklSYTAVjvDpjYhhQsUrPIm7eYz
+	 Yr+aQxZeOJ1LpebD7FQMw4Mi1UQRaNrsZfq2BqaQT8rvZc+cn67rSiojBDhJv6Yf4j
+	 3ms++Rl4kVYKQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -38,9 +39,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 0/3] Rust 1.78.0 upgrade
-Date: Mon,  1 Apr 2024 23:23:00 +0200
-Message-ID: <20240401212303.537355-1-ojeda@kernel.org>
+Subject: [PATCH 1/3] rust: sync: implement `Default` for `LockClassKey`
+Date: Mon,  1 Apr 2024 23:23:01 +0200
+Message-ID: <20240401212303.537355-2-ojeda@kernel.org>
+In-Reply-To: <20240401212303.537355-1-ojeda@kernel.org>
+References: <20240401212303.537355-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,41 +52,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is the first upgrade without the `alloc` fork.
+In the upcoming Rust 1.78.0, Clippy suggests to implement `Default` even
+when `new()` is `const`, since `Default::default()` may call `const`
+functions even if it is not `const` itself [1]:
 
-In other words, it is based on top of Wedson's "Allocation APIs" series
-[1], applied on top of the current `rust-next`, i.e. commit 9ffe2a730313
-("rust: str: add {make,to}_{upper,lower}case() to CString").
+    error: you should consider adding a `Default` implementation for `LockClassKey`
+      --> rust/kernel/sync.rs:31:5
+       |
+    31 | /     pub const fn new() -> Self {
+    32 | |         Self(Opaque::uninit())
+    33 | |     }
+       | |_____^
 
-Please note that Rust 1.78.0 will be released in a month (2024-05-02).
+Thus implement it.
 
-Link: https://lore.kernel.org/rust-for-linux/20240328013603.206764-1-wedsonaf@gmail.com/ [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/10903 [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/sync.rs | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Miguel Ojeda (3):
-  rust: sync: implement `Default` for `LockClassKey`
-  rust: kernel: remove redundant imports
-  rust: upgrade to Rust 1.78.0
-
- Documentation/process/changes.rst | 2 +-
- rust/kernel/alloc.rs              | 1 -
- rust/kernel/alloc/allocator.rs    | 2 --
- rust/kernel/alloc/box_ext.rs      | 1 -
- rust/kernel/alloc/vec_ext.rs      | 1 -
- rust/kernel/error.rs              | 1 -
- rust/kernel/net/phy.rs            | 2 +-
- rust/kernel/print.rs              | 5 -----
- rust/kernel/str.rs                | 5 +----
- rust/kernel/sync.rs               | 6 ++++++
- rust/kernel/sync/arc.rs           | 1 -
- rust/kernel/sync/condvar.rs       | 1 -
- rust/kernel/sync/lock.rs          | 2 +-
- rust/kernel/sync/lock/mutex.rs    | 2 --
- rust/kernel/sync/lock/spinlock.rs | 2 --
- rust/kernel/task.rs               | 2 +-
- rust/kernel/workqueue.rs          | 4 +---
- scripts/generate_rust_target.rs   | 2 +-
- scripts/min-tool-version.sh       | 2 +-
- 19 files changed, 14 insertions(+), 30 deletions(-)
-
---
+diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
+index c983f63fd56e..0ab20975a3b5 100644
+--- a/rust/kernel/sync.rs
++++ b/rust/kernel/sync.rs
+@@ -37,6 +37,12 @@ pub(crate) fn as_ptr(&self) -> *mut bindings::lock_class_key {
+     }
+ }
+ 
++impl Default for LockClassKey {
++    fn default() -> Self {
++        Self::new()
++    }
++}
++
+ /// Defines a new static lock class and returns a pointer to it.
+ #[doc(hidden)]
+ #[macro_export]
+-- 
 2.44.0
+
