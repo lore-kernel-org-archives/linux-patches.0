@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134AB1C0DE7;
-	Mon,  1 Apr 2024 16:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9B61C0DE7;
+	Mon,  1 Apr 2024 16:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989168; cv=none; b=H5UWUkb1WyvqN0hx+6M0CEizO8Wy3o5MnXl4EKciBKhKJ7lasm1pUzr0/GK0G1LZLVwsZXnmcw4Idt16L8yAiRT1z6Y7uNU7hFn6bK8oJvjKCJdlfhwxKyqm4Y/f3bsQHkR5ghLal1P9QCnHDwqHzH5AZ7r1iUgTW/Igxr7ySZU=
+	t=1711989171; cv=none; b=fn4P/NUw0h/adHoq+H76a5BynufxmTk2fImWM3xhVR4FB5FeeRVtnvXRAot48K1hTZnP393/yuMXHbrZkvLWwV+ps9WvDx6jIFo8RldAWo/hz8hK8PXw1IgSzRbhORJxVwyZCxz/lw7nIl2ijvFGc5jzVNEzSMTaOdZ9O9YWqSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989168; c=relaxed/simple;
-	bh=28/zcOqTZ9/aghvy+F8ft/AuHED3z8pcepYrubaA0To=;
+	s=arc-20240116; t=1711989171; c=relaxed/simple;
+	bh=NiAsFGE9OycGx69r8S/K2dGuFgnu3R+roKIHlaTOzwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+XcavRD/ok6vcdGc4a6GFBupoTzwkRMb/TOEv0//xfKPlOcQnU8W8y4z61uttYl79zg4G19ZoNqoYntR7boVRQKP6p+4X0tKSXnbEGMSmGyXo92kOyAHbhU9Vb57BmPkOXpmA/I2Yav2LTASbbtd/qCIx5xP6WcIHq7z+Kuv0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHfzEelJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjH5/8AqEjxoquLKgJwl7sBm8oa23SUZVNPM1D+poJnNwN56gL9wzXLPdA/44HFsFI8M8J3xxtHnKhyVhyo8QwJT1j07JXvggocLI/ga4nvJinScPIHNzdfahkO3X331cVg44n3F3nL3hAe4R0Ar7Dtn8yJLlIqyhEJpcfEgm8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MngRQQKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHfzEelJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E55FC433C7;
-	Mon,  1 Apr 2024 16:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MngRQQKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B899CC433C7;
+	Mon,  1 Apr 2024 16:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989168;
-	bh=28/zcOqTZ9/aghvy+F8ft/AuHED3z8pcepYrubaA0To=;
+	s=korg; t=1711989171;
+	bh=NiAsFGE9OycGx69r8S/K2dGuFgnu3R+roKIHlaTOzwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHfzEelJl9oqgFfTE7qEiqZ0DWElEy1wx8t0eKdryQwsCtQAu10WE7gvmBLeml4U0
-	 xnC14YeV++D4G9PFf7IGZv0b/DXlaHdr3Xd/x5CRtjiX5AgEr5bdbAT7Xa83PYIo4G
-	 iejc/5PiUpx/OycqfXbOdpgVtWaeRWomDg/H28pU=
+	b=MngRQQKQ/yCsTHrw/hQY3hpoATEg2fjpbxWBNfBcn9ca+l+umOt+XULiVfMOjDiKy
+	 ICVGkHn+c1SgCE1ehqaXlCe4e705thWvgUZDu2vCkMQBUxoM9ulOvbVqjC789B2ayH
+	 Ghk3dd31gTSGemVVISw2B7MQzhq4T3GwQ06x2FVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 6.7 401/432] usb: dwc2: host: Fix ISOC flow in DDMA mode
-Date: Mon,  1 Apr 2024 17:46:28 +0200
-Message-ID: <20240401152605.333146229@linuxfoundation.org>
+Subject: [PATCH 6.7 402/432] usb: dwc2: gadget: Fix exiting from clock gating
+Date: Mon,  1 Apr 2024 17:46:29 +0200
+Message-ID: <20240401152605.373181458@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,132 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit b258e42688501cadb1a6dd658d6f015df9f32d8f upstream.
+commit 31f42da31417bec88158f3cf62d19db836217f1e upstream.
 
-Fixed ISOC completion flow in DDMA mode. Added isoc
-descriptor actual length value and update urb's start_frame
-value.
-Fixed initialization of ISOC DMA descriptors flow.
+Added exiting from the clock gating mode on USB Reset Detect interrupt
+if core in the clock gating mode.
+Added new condition to check core in clock gating mode or no.
 
-Fixes: 56f5b1cff22a ("staging: Core files for the DWC2 driver")
-Fixes: 20f2eb9c4cf8 ("staging: dwc2: add microframe scheduler from downstream Pi kernel")
-Fixes: c17b337c1ea4 ("usb: dwc2: host: program descriptor for next frame")
-Fixes: dc4c76e7b22c ("staging: HCD descriptor DMA support for the DWC2 driver")
-Fixes: 762d3a1a9cd7 ("usb: dwc2: host: process all completed urbs")
+Fixes: 9b4965d77e11 ("usb: dwc2: Add exit clock gating from session request interrupt")
+Fixes: 5d240efddc7f ("usb: dwc2: Add exit clock gating from wakeup interrupt")
+Fixes: 16c729f90bdf ("usb: dwc2: Allow exit clock gating in urb enqueue")
+Fixes: 401411bbc4e6 ("usb: dwc2: Add exit clock gating before removing driver")
 CC: stable@vger.kernel.org
 Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/a8b1e1711cc6cabfb45d92ede12e35445c66f06c.1708944698.git.Minas.Harutyunyan@synopsys.com
+Link: https://lore.kernel.org/r/cbcc2ccd37e89e339130797ed68ae4597db773ac.1708938774.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd.c      |   12 ++++++++++--
- drivers/usb/dwc2/hcd_ddma.c |   17 +++++++++++------
- drivers/usb/dwc2/hw.h       |    2 +-
- 3 files changed, 22 insertions(+), 9 deletions(-)
+ drivers/usb/dwc2/core_intr.c |    9 ++++++---
+ drivers/usb/dwc2/gadget.c    |    6 ++++++
+ drivers/usb/dwc2/hcd.c       |    2 +-
+ drivers/usb/dwc2/platform.c  |    2 +-
+ 4 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -2701,8 +2701,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
- 			hsotg->available_host_channels--;
- 		}
- 		qh = list_entry(qh_ptr, struct dwc2_qh, qh_list_entry);
--		if (dwc2_assign_and_init_hc(hsotg, qh))
-+		if (dwc2_assign_and_init_hc(hsotg, qh)) {
-+			if (hsotg->params.uframe_sched)
-+				hsotg->available_host_channels++;
- 			break;
-+		}
+--- a/drivers/usb/dwc2/core_intr.c
++++ b/drivers/usb/dwc2/core_intr.c
+@@ -297,7 +297,8 @@ static void dwc2_handle_session_req_intr
  
- 		/*
- 		 * Move the QH from the periodic ready schedule to the
-@@ -2735,8 +2738,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
- 			hsotg->available_host_channels--;
+ 			/* Exit gadget mode clock gating. */
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_gadget_exit_clock_gating(hsotg, 0);
  		}
  
--		if (dwc2_assign_and_init_hc(hsotg, qh))
-+		if (dwc2_assign_and_init_hc(hsotg, qh)) {
-+			if (hsotg->params.uframe_sched)
-+				hsotg->available_host_channels++;
- 			break;
-+		}
+@@ -408,7 +409,8 @@ static void dwc2_handle_wakeup_detected_
  
- 		/*
- 		 * Move the QH from the non-periodic inactive schedule to the
-@@ -4143,6 +4149,8 @@ void dwc2_host_complete(struct dwc2_hsot
- 			 urb->actual_length);
+ 			/* Exit gadget mode clock gating. */
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		} else {
+ 			/* Change to L0 state */
+@@ -425,7 +427,8 @@ static void dwc2_handle_wakeup_detected_
+ 			}
  
- 	if (usb_pipetype(urb->pipe) == PIPE_ISOCHRONOUS) {
-+		if (!hsotg->params.dma_desc_enable)
-+			urb->start_frame = qtd->qh->start_active_frame;
- 		urb->error_count = dwc2_hcd_urb_get_error_count(qtd->urb);
- 		for (i = 0; i < urb->number_of_packets; ++i) {
- 			urb->iso_frame_desc[i].actual_length =
---- a/drivers/usb/dwc2/hcd_ddma.c
-+++ b/drivers/usb/dwc2/hcd_ddma.c
-@@ -559,7 +559,7 @@ static void dwc2_init_isoc_dma_desc(stru
- 	idx = qh->td_last;
- 	inc = qh->host_interval;
- 	hsotg->frame_number = dwc2_hcd_get_frame_number(hsotg);
--	cur_idx = dwc2_frame_list_idx(hsotg->frame_number);
-+	cur_idx = idx;
- 	next_idx = dwc2_desclist_idx_inc(qh->td_last, inc, qh->dev_speed);
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_host_exit_clock_gating(hsotg, 1);
  
- 	/*
-@@ -866,6 +866,8 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- {
- 	struct dwc2_dma_desc *dma_desc;
- 	struct dwc2_hcd_iso_packet_desc *frame_desc;
-+	u16 frame_desc_idx;
-+	struct urb *usb_urb = qtd->urb->priv;
- 	u16 remain = 0;
- 	int rc = 0;
+ 			/*
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -3727,6 +3727,12 @@ irq_retry:
+ 		if (hsotg->in_ppd && hsotg->lx_state == DWC2_L2)
+ 			dwc2_exit_partial_power_down(hsotg, 0, true);
  
-@@ -878,8 +880,11 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- 				DMA_FROM_DEVICE);
- 
- 	dma_desc = &qh->desc_list[idx];
-+	frame_desc_idx = (idx - qtd->isoc_td_first) & (usb_urb->number_of_packets - 1);
- 
--	frame_desc = &qtd->urb->iso_descs[qtd->isoc_frame_index_last];
-+	frame_desc = &qtd->urb->iso_descs[frame_desc_idx];
-+	if (idx == qtd->isoc_td_first)
-+		usb_urb->start_frame = dwc2_hcd_get_frame_number(hsotg);
- 	dma_desc->buf = (u32)(qtd->urb->dma + frame_desc->offset);
- 	if (chan->ep_is_in)
- 		remain = (dma_desc->status & HOST_DMA_ISOC_NBYTES_MASK) >>
-@@ -900,7 +905,7 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- 		frame_desc->status = 0;
++		/* Exit gadget mode clock gating. */
++		if (hsotg->params.power_down ==
++		    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++		    !hsotg->params.no_clock_gating)
++			dwc2_gadget_exit_clock_gating(hsotg, 0);
++
+ 		hsotg->lx_state = DWC2_L0;
  	}
  
--	if (++qtd->isoc_frame_index == qtd->urb->packet_count) {
-+	if (++qtd->isoc_frame_index == usb_urb->number_of_packets) {
- 		/*
- 		 * urb->status is not used for isoc transfers here. The
- 		 * individual frame_desc status are used instead.
-@@ -1005,11 +1010,11 @@ static void dwc2_complete_isoc_xfer_ddma
- 				return;
- 			idx = dwc2_desclist_idx_inc(idx, qh->host_interval,
- 						    chan->speed);
--			if (!rc)
-+			if (rc == 0)
- 				continue;
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4657,7 +4657,7 @@ static int _dwc2_hcd_urb_enqueue(struct
+ 	}
  
--			if (rc == DWC2_CMPL_DONE)
--				break;
-+			if (rc == DWC2_CMPL_DONE || rc == DWC2_CMPL_STOP)
-+				goto stop_scan;
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+-	    hsotg->bus_suspended) {
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
+ 		if (dwc2_is_device_mode(hsotg))
+ 			dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		else
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -331,7 +331,7 @@ static void dwc2_driver_remove(struct pl
  
- 			/* rc == DWC2_CMPL_STOP */
- 
---- a/drivers/usb/dwc2/hw.h
-+++ b/drivers/usb/dwc2/hw.h
-@@ -698,7 +698,7 @@
- #define TXSTS_QTOP_TOKEN_MASK		(0x3 << 25)
- #define TXSTS_QTOP_TOKEN_SHIFT		25
- #define TXSTS_QTOP_TERMINATE		BIT(24)
--#define TXSTS_QSPCAVAIL_MASK		(0xff << 16)
-+#define TXSTS_QSPCAVAIL_MASK		(0x7f << 16)
- #define TXSTS_QSPCAVAIL_SHIFT		16
- #define TXSTS_FSPCAVAIL_MASK		(0xffff << 0)
- #define TXSTS_FSPCAVAIL_SHIFT		0
+ 	/* Exit clock gating when driver is removed. */
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+-	    hsotg->bus_suspended) {
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
+ 		if (dwc2_is_device_mode(hsotg))
+ 			dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		else
 
 
