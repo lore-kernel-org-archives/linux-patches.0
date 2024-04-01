@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DC1446AC;
-	Mon,  1 Apr 2024 16:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAD14087B;
+	Mon,  1 Apr 2024 16:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988945; cv=none; b=c2rX/QTjD7fF+9MZs94+DiVIqsv35hWm022/5SDxbin67S6rZnndrzmSp9wOYyGFILHtqaccpCLTQ1M7XpUz5HxLZ73mQI2PcVB2j060K7cqZETQ1YEGKbGkb76p7pesdlbhIgWGV8MqeFJg9X6+dknEcECYhHVGKMJrWOD0t88=
+	t=1711988948; cv=none; b=fKKFn/EmXGtcv0KUqkYTCH93stV2SgtIbnEppGeJwiA18Hzux/vGpM1laB4yHciFZ5JR1gXqhXOeQZ0r5Vr7XRqNB0dKo2Vi998zwTg543K+qisnuaMEByk0m1+hcqGlcufOEWJoCAgQeVhA3MXTD1Qe5HPZgzasqYMpiIN+cZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988945; c=relaxed/simple;
-	bh=UwKLU2F9T+efHfGuBifNda3dWu8DKVRMXPPqVfoHS40=;
+	s=arc-20240116; t=1711988948; c=relaxed/simple;
+	bh=+gyTwv+iQzN/oKQVVGYnt/Qbb7tnPqyU4rky8B0Fw3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNkErXRGIr8qY5y9SIfXiBe3qfVuxTDg59RHSD8U5lFnj4IsO1Y7kisgYtXn4UWKJRRFwGzB4ohC+R5Xn1HRHKOcLoEwmfD/2jEO/ohTj73ZCT7oNdnwWYYPXhmr9vHlt3YaMxIT53P4DchPd6ZuvoQU75HVMdJ+yZ2FCG/q8lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pv0O+U6s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNGC1udxC1J3eyd1NAEK4Gx4SoVWEK/QGJtZRhA1rUJZwzE982Eufkf0A0iCFotRU5liE8kWfdnDZlg4aQxHrQWNdU6Mjw/LlBKDTmW+vOCeTMxjq4QUX2+EnPARztKnroXzNDJQ723NeH8hkOkDNMparUL3Ky8QuirH52X+iiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njy8Id3d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pv0O+U6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A79BC433C7;
-	Mon,  1 Apr 2024 16:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njy8Id3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE517C43399;
+	Mon,  1 Apr 2024 16:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988944;
-	bh=UwKLU2F9T+efHfGuBifNda3dWu8DKVRMXPPqVfoHS40=;
+	s=korg; t=1711988948;
+	bh=+gyTwv+iQzN/oKQVVGYnt/Qbb7tnPqyU4rky8B0Fw3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pv0O+U6sBjegXx4gsbNCpLAOdqbIc2/V4dHtw+kzbH1lYKHfGMiT2KhKYk85VESr/
-	 L5leYk15RxWt90IgL1MsaUXoHppxoZlPqVGLF0dHitwpJBygL1cn3SuUgHySQA0214
-	 PvFCNVHcc/OHvxwUj5wjCUk3AT99RBmlJLGNYnss=
+	b=njy8Id3daP241FzcYWN01HIlKDVMvzOrxRiEMBQJZmlTxHHR9jGtk7qmkCWw//djC
+	 Q/CNimlea1+dbGUWBCDOU+HIAZj0CL3SMbW6ZMuNIWVI/fpevUW4DIJpq1jhB2gfh6
+	 IvwIZ6IdkCRevJpi29glBbsQqGTXt9qmrjkwF1gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Radek Podgorny <radek@podgorny.cz>,
 	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.7 336/432] efi/libstub: Cast away type warning in use of max()
-Date: Mon,  1 Apr 2024 17:45:23 +0200
-Message-ID: <20240401152603.246495659@linuxfoundation.org>
+Subject: [PATCH 6.7 337/432] x86/efistub: Reinstate soft limit for initrd loading
+Date: Mon,  1 Apr 2024 17:45:24 +0200
+Message-ID: <20240401152603.276340979@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,28 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 61d130f261a3c15ae2c4b6f3ac3517d5d5b78855 upstream.
+commit decd347c2a75d32984beb8807d470b763a53b542 upstream.
 
-Avoid a type mismatch warning in max() by switching to max_t() and
-providing the type explicitly.
+Commit
 
-Fixes: 3cb4a4827596abc82e ("efi/libstub: fix efi_random_alloc() ...")
+  8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
+
+dropped the memcopy of the image's setup header into the boot_params
+struct provided to the core kernel, on the basis that EFI boot does not
+need it and should rely only on a single protocol to interface with the
+boot chain. It is also a prerequisite for being able to increase the
+section alignment to 4k, which is needed to enable memory protections
+when running in the boot services.
+
+So only the setup_header fields that matter to the core kernel are
+populated explicitly, and everything else is ignored. One thing was
+overlooked, though: the initrd_addr_max field in the setup_header is not
+used by the core kernel, but it is used by the EFI stub itself when it
+loads the initrd, where its default value of INT_MAX is used as the soft
+limit for memory allocation.
+
+This means that, in the old situation, the initrd was virtually always
+loaded in the lower 2G of memory, but now, due to initrd_addr_max being
+0x0, the initrd may end up anywhere in memory. This should not be an
+issue principle, as most systems can deal with this fine. However, it
+does appear to tickle some problems in older UEFI implementations, where
+the memory ends up being corrupted, resulting in errors when unpacking
+the initramfs.
+
+So set the initrd_addr_max field to INT_MAX like it was before.
+
+Fixes: 8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
+Reported-by: Radek Podgorny <radek@podgorny.cz>
+Closes: https://lore.kernel.org/all/a99a831a-8ad5-4cb0-bff9-be637311f771@podgorny.cz
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/randomalloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/x86-stub.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -120,7 +120,7 @@ efi_status_t efi_random_alloc(unsigned l
- 			continue;
- 		}
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -487,6 +487,7 @@ efi_status_t __efiapi efi_pe_entry(efi_h
+ 	hdr->vid_mode	= 0xffff;
  
--		target = round_up(max(md->phys_addr, alloc_min), align) + target_slot * align;
-+		target = round_up(max_t(u64, md->phys_addr, alloc_min), align) + target_slot * align;
- 		pages = size / EFI_PAGE_SIZE;
+ 	hdr->type_of_loader = 0x21;
++	hdr->initrd_addr_max = INT_MAX;
  
- 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
+ 	/* Convert unicode cmdline to ascii */
+ 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
 
 
