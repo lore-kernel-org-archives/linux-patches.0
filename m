@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB36946B9F;
-	Mon,  1 Apr 2024 16:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421171CA8F;
+	Mon,  1 Apr 2024 16:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988988; cv=none; b=RKvlB93wYG1HT4601GwiS3oQpMyv+/AssHGfiYOhxufA4xaghCF/f3ScR7JpfoKGNspyB53EIkBHAXNEXz3Hz0OyBwLuOBDQmjZzosvsKlDmoPLZFbhmiqkBq9EWopYg6t2rm1P91DBFYweN60A7pguTLQa2Jw+/yQA2Q07H2R0=
+	t=1711988992; cv=none; b=hTjge5kSCX78/jynUJYMhIU6thjaTkaFTcGhiD5Rx8OAlC8AioxwmuuqrsaRCt66f/zZ/iEPAmuNJyzL0Lsvg7rY9ewQp5df+N4VkrPOXOMEH9JdnJ2KirNwpYIKutDY/r1uPNvFaZl42BYGc320Xg/MnmPaK+zKKjbKJ3Pw2pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988988; c=relaxed/simple;
-	bh=JJsSTbA8BwIDHAV5d9xRws0cmzplecbCOHRG6+Rx0NE=;
+	s=arc-20240116; t=1711988992; c=relaxed/simple;
+	bh=0th2WRnHvdVGS6Cym6j2QR7fIeSIi/1nhkHYRk9U8Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C33t9fnN+YpgE2W1hSNGV6dXlmSXlZk+QmERffBW/iud5/A0nfmvfgg7TEk5TQxKJ1jKj1mbI6EsuKPOX2H5ShFgdRR7xsIjakdhYYGkeY82vRGd/A5cyWAUblz0gx0YpoYVqBm5vwdUP49CGgb87iiKwfEfcX0rGovrHOYQDS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcKpjOSK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VN5mQyWVtSRM0b+DmRlmjttVIRaAZp52Dy5NMyjXyATgSPoVG4G8wVuLyTJg8U4Gt2P9yVnynTPvkzlMQ1B0oNndOj+VTfzwL+VWonJUBby9tZAsU8A/PCKY52479DEH/kbNCwTj9tSROxIcc29HyubczdmsEOrNFGQBkMzTMbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeGeKnr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcKpjOSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CB7C433C7;
-	Mon,  1 Apr 2024 16:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeGeKnr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2123C433F1;
+	Mon,  1 Apr 2024 16:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988988;
-	bh=JJsSTbA8BwIDHAV5d9xRws0cmzplecbCOHRG6+Rx0NE=;
+	s=korg; t=1711988992;
+	bh=0th2WRnHvdVGS6Cym6j2QR7fIeSIi/1nhkHYRk9U8Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LcKpjOSKJNfwufxCE5OdYnx7uqfYdKFdwE07EhCn0LesEvR97dN2FZPmDSKO+1Mcg
-	 X/s5MhPdRdAYSOZOr9kQEKiGhLCBl9UD95hahe7nIbZgVuEN7nQXc6bQ76shopymQm
-	 fhA73UW0gNUJT9WxAwIZCmF9Nh5WVKCv331YNCBY=
+	b=XeGeKnr9MwHPr4QaIT67dvyQ/Q5Mryb9BjQke+5/Sgs3e3+niPEFeXuVashi7FLwp
+	 y8pPXaQU+OR7qb0Q8CFiFikPPtgJbMGNDTNtM0YVeyidscKSASW6qZhYaLY5Itv6EF
+	 QDbiZAUCEUvCW9D4ikWt/z6Eq4d73B6RAoZLTZPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Romosan <aromosan@gmail.com>,
-	CHECK_1234543212345@protonmail.com,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 321/432] btrfs: do not skip re-registration for the mounted device
-Date: Mon,  1 Apr 2024 17:45:08 +0200
-Message-ID: <20240401152602.773716163@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.7 348/432] wifi: iwlwifi: fw: dont always use FW dump trig
+Date: Mon,  1 Apr 2024 17:45:35 +0200
+Message-ID: <20240401152603.625588574@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,160 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit d565fffa68560ac540bf3d62cc79719da50d5e7a upstream.
+commit 045a5b645dd59929b0e05375f493cde3a0318271 upstream.
 
-There are reports that since version 6.7 update-grub fails to find the
-device of the root on systems without initrd and on a single device.
+Since the dump_data (struct iwl_fwrt_dump_data) is a union,
+it's not safe to unconditionally access and use the 'trig'
+member, it might be 'desc' instead. Access it only if it's
+known to be 'trig' rather than 'desc', i.e. if ini-debug
+is present.
 
-This looks like the device name changed in the output of
-/proc/self/mountinfo:
-
-6.5-rc5 working
-
-  18 1 0:16 / / rw,noatime - btrfs /dev/sda8 ...
-
-6.7 not working:
-
-  17 1 0:15 / / rw,noatime - btrfs /dev/root ...
-
-and "update-grub" shows this error:
-
-  /usr/sbin/grub-probe: error: cannot find a device for / (is /dev mounted?)
-
-This looks like it's related to the device name, but grub-probe
-recognizes the "/dev/root" path and tries to find the underlying device.
-However there's a special case for some filesystems, for btrfs in
-particular.
-
-The generic root device detection heuristic is not done and it all
-relies on reading the device infos by a btrfs specific ioctl. This ioctl
-returns the device name as it was saved at the time of device scan (in
-this case it's /dev/root).
-
-The change in 6.7 for temp_fsid to allow several single device
-filesystem to exist with the same fsid (and transparently generate a new
-UUID at mount time) was to skip caching/registering such devices.
-
-This also skipped mounted device. One step of scanning is to check if
-the device name hasn't changed, and if yes then update the cached value.
-
-This broke the grub-probe as it always read the device /dev/root and
-couldn't find it in the system. A temporary workaround is to create a
-symlink but this does not survive reboot.
-
-The right fix is to allow updating the device path of a mounted
-filesystem even if this is a single device one.
-
-In the fix, check if the device's major:minor number matches with the
-cached device. If they do, then we can allow the scan to happen so that
-device_list_add() can take care of updating the device path. The file
-descriptor remains unchanged.
-
-This does not affect the temp_fsid feature, the UUID of the mounted
-filesystem remains the same and the matching is based on device major:minor
-which is unique per mounted filesystem.
-
-This covers the path when the device (that exists for all mounted
-devices) name changes, updating /dev/root to /dev/sdx. Any other single
-device with filesystem and is not mounted is still skipped.
-
-Note that if a system is booted and initial mount is done on the
-/dev/root device, this will be the cached name of the device. Only after
-the command "btrfs device scan" it will change as it triggers the
-rename.
-
-The fix was verified by users whose systems were affected.
-
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=218353
-Link: https://lore.kernel.org/lkml/CAKLYgeJ1tUuqLcsquwuFqjDXPSJpEiokrWK2gisPKDZLs8Y2TQ@mail.gmail.com/
-Fixes: bc27d6f0aa0e ("btrfs: scan but don't register device on single device filesystem")
-CC: stable@vger.kernel.org # 6.7+
-Tested-by: Alex Romosan <aromosan@gmail.com>
-Tested-by: CHECK_1234543212345@protonmail.com
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 0eb50c674a1e ("iwlwifi: yoyo: send hcmd to fw after dump collection completes.")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240319100755.e2976bc58b29.I72fbd6135b3623227de53d8a2bb82776066cb72b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   57 +++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1290,6 +1290,47 @@ int btrfs_forget_devices(dev_t devt)
- 	return ret;
- }
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -3075,8 +3075,6 @@ static void iwl_fw_dbg_collect_sync(stru
+ 	struct iwl_fw_dbg_params params = {0};
+ 	struct iwl_fwrt_dump_data *dump_data =
+ 		&fwrt->dump.wks[wk_idx].dump_data;
+-	u32 policy;
+-	u32 time_point;
+ 	if (!test_bit(wk_idx, &fwrt->dump.active_wks))
+ 		return;
  
-+static bool btrfs_skip_registration(struct btrfs_super_block *disk_super,
-+				    const char *path, dev_t devt,
-+				    bool mount_arg_dev)
-+{
-+	struct btrfs_fs_devices *fs_devices;
+@@ -3107,13 +3105,16 @@ static void iwl_fw_dbg_collect_sync(stru
+ 
+ 	iwl_fw_dbg_stop_restart_recording(fwrt, &params, false);
+ 
+-	policy = le32_to_cpu(dump_data->trig->apply_policy);
+-	time_point = le32_to_cpu(dump_data->trig->time_point);
+-
+-	if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
+-		IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
+-		iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
++	if (iwl_trans_dbg_ini_valid(fwrt->trans)) {
++		u32 policy = le32_to_cpu(dump_data->trig->apply_policy);
++		u32 time_point = le32_to_cpu(dump_data->trig->time_point);
 +
-+	/*
-+	 * Do not skip device registration for mounted devices with matching
-+	 * maj:min but different paths. Booting without initrd relies on
-+	 * /dev/root initially, later replaced with the actual root device.
-+	 * A successful scan ensures grub2-probe selects the correct device.
-+	 */
-+	list_for_each_entry(fs_devices, &fs_uuids, fs_list) {
-+		struct btrfs_device *device;
-+
-+		mutex_lock(&fs_devices->device_list_mutex);
-+
-+		if (!fs_devices->opened) {
-+			mutex_unlock(&fs_devices->device_list_mutex);
-+			continue;
++		if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
++			IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
++			iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
 +		}
-+
-+		list_for_each_entry(device, &fs_devices->devices, dev_list) {
-+			if (device->bdev && (device->bdev->bd_dev == devt) &&
-+			    strcmp(device->name->str, path) != 0) {
-+				mutex_unlock(&fs_devices->device_list_mutex);
-+
-+				/* Do not skip registration. */
-+				return false;
-+			}
-+		}
-+		mutex_unlock(&fs_devices->device_list_mutex);
-+	}
-+
-+	if (!mount_arg_dev && btrfs_super_num_devices(disk_super) == 1 &&
-+	    !(btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_SEEDING))
-+		return true;
-+
-+	return false;
-+}
-+
- /*
-  * Look for a btrfs signature on a device. This may be called out of the mount path
-  * and we are not allowed to call set_blocksize during the scan. The superblock
-@@ -1346,18 +1387,14 @@ struct btrfs_device *btrfs_scan_one_devi
- 		goto error_bdev_put;
  	}
++
+ 	if (fwrt->trans->dbg.last_tp_resetfw == IWL_FW_INI_RESET_FW_MODE_STOP_FW_ONLY)
+ 		iwl_force_nmi(fwrt->trans);
  
--	if (!mount_arg_dev && btrfs_super_num_devices(disk_super) == 1 &&
--	    !(btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_SEEDING)) {
--		dev_t devt;
-+	if (btrfs_skip_registration(disk_super, path, bdev_handle->bdev->bd_dev,
-+				    mount_arg_dev)) {
-+		pr_debug("BTRFS: skip registering single non-seed device %s (%d:%d)\n",
-+			  path, MAJOR(bdev_handle->bdev->bd_dev),
-+			  MINOR(bdev_handle->bdev->bd_dev));
- 
--		ret = lookup_bdev(path, &devt);
--		if (ret)
--			btrfs_warn(NULL, "lookup bdev failed for path %s: %d",
--				   path, ret);
--		else
--			btrfs_free_stale_devices(devt, NULL);
-+		btrfs_free_stale_devices(bdev_handle->bdev->bd_dev, NULL);
- 
--		pr_debug("BTRFS: skip registering single non-seed device %s\n", path);
- 		device = NULL;
- 		goto free_disk_super;
- 	}
 
 
