@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13E47A64;
-	Mon,  1 Apr 2024 17:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C3E4AEE0;
+	Mon,  1 Apr 2024 17:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991382; cv=none; b=ThF4KWf4NBmtoW+IztpjrBkIt0OlskkXl7XAZF5cMGDHLJrahyMVE+sDKJiRJYPxSFGhaXe5LvcUWrwzkZlOxsRqCpBP7wdIQuLe+ckGrDOrzym+78QWZrDOxKRl4xrFZxYIzAboHnRH9ValhhcM4RtlESfJ1pwgzooDkPN40LA=
+	t=1711991385; cv=none; b=f8ajdsp6VqAE1Bod01hFK1jPRNskSF8zcLrYe4ncQn22ZCneR6IvqGHBzHD+a3ngupjMcD3htHEj4VPncsNrtYIaMLIJeLdIX46I6DhN1Keg/V0y716rQFBN3IgqMaBOP1dwf05oRgbhxV6NTjda6orND8SF3ovuo+1QA0PK7X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991382; c=relaxed/simple;
-	bh=0j5Z+kgeCqVXjIC3i/npApGI00sfYF6JgyIgXnbc0nc=;
+	s=arc-20240116; t=1711991385; c=relaxed/simple;
+	bh=dXkOCjV19EPkKh2ihqfVdtwPWBgJKXUzCmK/2bGsEsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcrCbJifF2xXVjRnXt4mQrjsZxNccProAgxW/VM3yYUXLGXpXGAwZ1OYr2j+tdCyFcUhSLnCl5P11cRr+OYdUHN/8ixL1nJbOCDkKzcStBQnufn7WLjbEUTUQhq1Yw/TbLT752G1F3HBe7uSlFjWiUc7/HVSvzrycXk0bV0Y7tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o887GtsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZY9jNvUA5zTLoOGQhy1PCJtXXGocOn66d4rzS3efmoMpY/vsyKChgAJFhuqeMU4d6061eXNDitgRG+4Zo7kkjGAPXY2jhCefvPyTu6p1LmTsVcqLBv7VRunD2zNFdMT9TVfWCzwYJm2CjXdT7AizFiGl4V4Y/vTxWOwUkKSybQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJhvBtlN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o887GtsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65719C433C7;
-	Mon,  1 Apr 2024 17:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJhvBtlN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8827DC433C7;
+	Mon,  1 Apr 2024 17:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991381;
-	bh=0j5Z+kgeCqVXjIC3i/npApGI00sfYF6JgyIgXnbc0nc=;
+	s=korg; t=1711991384;
+	bh=dXkOCjV19EPkKh2ihqfVdtwPWBgJKXUzCmK/2bGsEsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o887GtsLH02QhcI3nCXSv9r3TjHBEri97kUnYuDFs9O0uSGVt+DHQXldtZiKOI0n1
-	 GWSMKAVW2ZnOndPjmxhdS/hR1YUWHDGvYK9OQwA1A3nccmQ0/fluMYMsZSFkVAQVPc
-	 C5jNBxqe3AJRTJ6JYDKOG/TWvvLLDiR3U/D0AU7E=
+	b=RJhvBtlNx1GUrAD6tC5WV/+ggy2w/r0oDIsf6FYwh+L3u9fK+UM/+k1xtzrXp2j3T
+	 99cZE0Uv6WIG3j5qbFIuc4EBovJS08w9hWiaNn57Pcnhgvris8Y4fkbrz/CtcMwn+W
+	 wExlOQ+llFIZLYOIJsp28zFy4tZUrLmXQm8/3nSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>
-Subject: [PATCH 6.1 209/272] mm/migrate: set swap entry values of THP tail pages properly.
-Date: Mon,  1 Apr 2024 17:46:39 +0200
-Message-ID: <20240401152537.445741433@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 241/272] USB: core: Fix deadlock in port "disable" sysfs attribute
+Date: Mon,  1 Apr 2024 17:47:11 +0200
+Message-ID: <20240401152538.500427258@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,53 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-The tail pages in a THP can have swap entry information stored in their
-private field. When migrating to a new page, all tail pages of the new
-page need to update ->private to avoid future data corruption.
+commit f4d1960764d8a70318b02f15203a1be2b2554ca1 upstream.
 
-This fix is stable-only, since after commit 07e09c483cbe ("mm/huge_memory:
-work on folio->swap instead of page->private when splitting folio"),
-subpages of a swapcached THP no longer requires the maintenance.
+The show and store callback routines for the "disable" sysfs attribute
+file in port.c acquire the device lock for the port's parent hub
+device.  This can cause problems if another process has locked the hub
+to remove it or change its configuration:
 
-Adding THPs to the swapcache was introduced in commit
-38d8b4e6bdc87 ("mm, THP, swap: delay splitting THP during swap out"),
-where each subpage of a THP added to the swapcache had its own swapcache
-entry and required the ->private field to point to the correct swapcache
-entry. Later, when THP migration functionality was implemented in commit
-616b8371539a6 ("mm: thp: enable thp migration in generic path"),
-it initially did not handle the subpages of swapcached THPs, failing to
-update their ->private fields or replace the subpage pointers in the
-swapcache. Subsequently, commit e71769ae5260 ("mm: enable thp migration
-for shmem thp") addressed the swapcache update aspect. This patch fixes
-the update of subpage ->private fields.
+	Removing the hub or changing its configuration requires the
+	hub interface to be removed, which requires the port device
+	to be removed, and device_del() waits until all outstanding
+	sysfs attribute callbacks for the ports have returned.  The
+	lock can't be released until then.
 
-Closes: https://lore.kernel.org/linux-mm/1707814102-22682-1-git-send-email-quic_charante@quicinc.com/
-Fixes: 616b8371539a ("mm: thp: enable thp migration in generic path")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reported-and-tested-by: Charan Teja Kalla <quic_charante@quicinc.com>
+	But the disable_show() or disable_store() routine can't return
+	until after it has acquired the lock.
+
+The resulting deadlock can be avoided by calling
+sysfs_break_active_protection().  This will cause the sysfs core not
+to wait for the attribute's callback routine to return, allowing the
+removal to proceed.  The disadvantage is that after making this call,
+there is no guarantee that the hub structure won't be deallocated at
+any moment.  To prevent this, we have to acquire a reference to it
+first by calling hub_get().
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/f7a8c135-a495-4ce6-bd49-405a45e7ea9a@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/core/port.c |   38 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -423,8 +423,12 @@ int folio_migrate_mapping(struct address
- 	if (folio_test_swapbacked(folio)) {
- 		__folio_set_swapbacked(newfolio);
- 		if (folio_test_swapcache(folio)) {
-+			int i;
-+
- 			folio_set_swapcache(newfolio);
--			newfolio->private = folio_get_private(folio);
-+			for (i = 0; i < nr; i++)
-+				set_page_private(folio_page(newfolio, i),
-+					page_private(folio_page(folio, i)));
- 		}
- 		entries = nr;
- 	} else {
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -28,11 +28,22 @@ static ssize_t disable_show(struct devic
+ 	u16 portstatus, unused;
+ 	bool disabled;
+ 	int rc;
++	struct kernfs_node *kn;
+ 
++	hub_get(hub);
+ 	rc = usb_autopm_get_interface(intf);
+ 	if (rc < 0)
+-		return rc;
++		goto out_hub_get;
+ 
++	/*
++	 * Prevent deadlock if another process is concurrently
++	 * trying to unregister hdev.
++	 */
++	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++	if (!kn) {
++		rc = -ENODEV;
++		goto out_autopm;
++	}
+ 	usb_lock_device(hdev);
+ 	if (hub->disconnected) {
+ 		rc = -ENODEV;
+@@ -42,9 +53,13 @@ static ssize_t disable_show(struct devic
+ 	usb_hub_port_status(hub, port1, &portstatus, &unused);
+ 	disabled = !usb_port_is_power_on(hub, portstatus);
+ 
+-out_hdev_lock:
++ out_hdev_lock:
+ 	usb_unlock_device(hdev);
++	sysfs_unbreak_active_protection(kn);
++ out_autopm:
+ 	usb_autopm_put_interface(intf);
++ out_hub_get:
++	hub_put(hub);
+ 
+ 	if (rc)
+ 		return rc;
+@@ -62,15 +77,26 @@ static ssize_t disable_store(struct devi
+ 	int port1 = port_dev->portnum;
+ 	bool disabled;
+ 	int rc;
++	struct kernfs_node *kn;
+ 
+ 	rc = strtobool(buf, &disabled);
+ 	if (rc)
+ 		return rc;
+ 
++	hub_get(hub);
+ 	rc = usb_autopm_get_interface(intf);
+ 	if (rc < 0)
+-		return rc;
++		goto out_hub_get;
+ 
++	/*
++	 * Prevent deadlock if another process is concurrently
++	 * trying to unregister hdev.
++	 */
++	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++	if (!kn) {
++		rc = -ENODEV;
++		goto out_autopm;
++	}
+ 	usb_lock_device(hdev);
+ 	if (hub->disconnected) {
+ 		rc = -ENODEV;
+@@ -91,9 +117,13 @@ static ssize_t disable_store(struct devi
+ 	if (!rc)
+ 		rc = count;
+ 
+-out_hdev_lock:
++ out_hdev_lock:
+ 	usb_unlock_device(hdev);
++	sysfs_unbreak_active_protection(kn);
++ out_autopm:
+ 	usb_autopm_put_interface(intf);
++ out_hub_get:
++	hub_put(hub);
+ 
+ 	return rc;
+ }
 
 
