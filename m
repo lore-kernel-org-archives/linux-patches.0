@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3011DFF4;
-	Mon,  1 Apr 2024 17:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A78B38DE5;
+	Mon,  1 Apr 2024 17:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991116; cv=none; b=MA17B26mWGltQfRciWCiHIvRSTD2dp4WpgEkfrzSK6UbQKZKE66ybckNZNW4MI9jZgDpU7YcSBDWAYzRBwh4kJZwi4SG8mdNikLjIj6pvaGgk6oXd0S493LipgV+Gut9ttCR//YqdmK8RqwW1AnAyFN8qL6LT2jnAVeZwiwfkOg=
+	t=1711991119; cv=none; b=mi38hTjJoqVrbgRBNLiYm6GC2g/F6EA5xt2CzZRkcadqgTuaDNoNwjx4lk/iAmDTT7Wz3p66Ic98cIUHnXhjXIUmrMB3AAKsX+yX68pNwpwdroMfHEh1/IHdTlfSa3G04CIUL0x8XePfooee8CQjM5HM9h0YUwIkAm2ljGttilE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991116; c=relaxed/simple;
-	bh=+G9di90xkZzHopMTHpEMtKM/o25gdd6+l5D5FjxloVw=;
+	s=arc-20240116; t=1711991119; c=relaxed/simple;
+	bh=LopfdHBE8JF68M/+zYsYj2TZPfGPF4bpj/cPtwOa8ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q63WFN9+OCU06fvECZqHJTCtEAtedyvyvG0sxVVqgR3uhELaTgKAiqS7cgPyhTQu69cFxWTw3h+RBal6anzLpanthiO8lSFdpxvXxAs8Bni8C1AaG5cC3iIRc7gUf3ORvFvNsscbtlpz6zxf0unJ17h0fpGz7+Cj9Nx9wItthy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/jpoRaA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V7pCgWauGb6mfN8HPAxXcu/G92PoCXRNqdeUCgsbaHJTF0JkG+pJAA4NMTu4NSpDu3cJwaCHcTZEEmYXCCUT08ftp1kfNwuDJ4fV69yQfW5ZbmFi5Q4Or+6Q2B7PGADEBjBDDD54fQy1iHhlm3/MN7X7/FufZvITW97hJLi4lws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X35icdBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/jpoRaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7BFC433F1;
-	Mon,  1 Apr 2024 17:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X35icdBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C14C433C7;
+	Mon,  1 Apr 2024 17:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991115;
-	bh=+G9di90xkZzHopMTHpEMtKM/o25gdd6+l5D5FjxloVw=;
+	s=korg; t=1711991119;
+	bh=LopfdHBE8JF68M/+zYsYj2TZPfGPF4bpj/cPtwOa8ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/jpoRaAWUW5OPmt3zh3alN4884TrMB6Jd4bQfZnL7rTu7cTCkhrsDn0fXDdUfi8p
-	 RYUPTp3Ztzr0diKw0tn0qgJoUhJANhQUoysYzP2zrYzEN3p3xfireN56yZKyDfMAib
-	 vzYAyI/UEhRVBHUD/bhVudpsVK1woFuEgltcQqDM=
+	b=X35icdBNPAtx0D1GLb06Z4ErOQDHwI4jjPwHclZXCdk5ux6OYUHc6xWXQZjJNbtcK
+	 Kzv+FX48L75yH47fjk94cbWKj2oPlK6VLAPZCFnD+3qYp6Q8QpCFVbmwfY7G6pzH6R
+	 smtq9sb4N5T2nVLdXO9GGWyLokKLiktIRfy31ZwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
+	Andy Chi <andy.chi@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 167/272] ALSA: hda/realtek - Add Headset Mic supported Acer NB platform
-Date: Mon,  1 Apr 2024 17:45:57 +0200
-Message-ID: <20240401152535.968719738@linuxfoundation.org>
+Subject: [PATCH 6.1 168/272] ALSA: hda/realtek: fix mute/micmute LEDs for HP EliteBook
+Date: Mon,  1 Apr 2024 17:45:58 +0200
+Message-ID: <20240401152535.997685784@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,31 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Andy Chi <andy.chi@canonical.com>
 
-commit 34ab5bbc6e82214d7f7393eba26d164b303ebb4e upstream.
+commit a17bd44c0146b00fcaa692915789c16bd1fb2a81 upstream.
 
-It will be enable headset Mic for Acer NB platform.
+The HP EliteBook using ALC236 codec which using 0x02 to
+control mute LED and 0x01 to control micmute LED.
+Therefore, add a quirk to make it works.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/fe0eb6661ca240f3b7762b5b3257710d@realtek.com
+Link: https://lore.kernel.org/r/20240304134033.773348-1-andy.chi@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10750,6 +10750,8 @@ static const struct snd_hda_pin_quirk al
-  *   at most one tbl is allowed to define for the same vendor and same codec
-  */
- static const struct snd_hda_pin_quirk alc269_fallback_pin_fixup_tbl[] = {
-+	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1025, "Acer", ALC2XX_FIXUP_HEADSET_MIC,
-+		{0x19, 0x40000000}),
- 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
- 		{0x19, 0x40000000},
- 		{0x1b, 0x40000000}),
+@@ -9792,6 +9792,10 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8c70, "HP EliteBook 835 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c71, "HP EliteBook 845 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8c8a, "HP EliteBook 630", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8c8c, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8c90, "HP EliteBook 640", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8c91, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca1, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
 
 
