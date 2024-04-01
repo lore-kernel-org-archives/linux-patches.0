@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FE74653C;
-	Mon,  1 Apr 2024 15:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7086A481C0;
+	Mon,  1 Apr 2024 15:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986779; cv=none; b=GFDmLU0yHYci6xL8KfqpI+vSRqFCC9nNTbUA5TK4Drcu4EpxPYMQXhvdwn5tIouTJAUuBRTw40Fn05aLmAFHwP8WaSloYb89haKAoE119ffcDWL6C/zkkmykxP+n1TdbPC8mRceWaC87UZYBI+TO1Sd9ETYbPHZEVx7D1PrM6rA=
+	t=1711986782; cv=none; b=rjVaNyAKNQYkHOU+tdrCftBqLgGe/lyD+cK1ZvAty2/usPK36at8+gq0uzkYTclJZkj3UIYpHowI5WAs/6EX6UO7+7E8+anMSqZomRvHJtGlVjSyki4CkNO9lqKB8K93bA/ZpBDv7WWtYtJ+ADyvFHFb9lshKTyBL3g1yS5H3P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986779; c=relaxed/simple;
-	bh=T7PbwJMvV1lY/HzbnpA/BsRL8pOM1zpX06spvCRILmc=;
+	s=arc-20240116; t=1711986782; c=relaxed/simple;
+	bh=w0YDojS72hNfebJGkABhkdlWF/hI/zm6xPmwtowfzAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r2TPd7NDgZh/9DxvyT3QEDtuTgtT/CKoK03yeX9oy0v9c+jJl25t7GKoMr8pz40lu6qKXA5Ucdt4/IBBkPguN7lAcCDwm3cHqK4FhfvaWMRnjq4MVaSR7NdGLqi9iG0BYgc0nm+OgTcEbYkBdmdRRUlL8A97goPuKlETSm/DmSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2osvVrOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ELWSip1AuNW2MMnDyMHAh1WqM09CS9KkaMC2fCsHrgP+E1H1iM6JE1m/VH01kMfQRX+LdvMMIWTjBCqUpj2mN44UGWdQFZC4Pi/MqrO6ntQ8EGsS1GwwswkTGCZ+Dzn9X1Xl4/JvmlMg8cX2DzyMZgqyRzDdhGzuKdwXpCM4Neg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=priCEIOh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2osvVrOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0695C433F1;
-	Mon,  1 Apr 2024 15:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="priCEIOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE90FC433F1;
+	Mon,  1 Apr 2024 15:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986779;
-	bh=T7PbwJMvV1lY/HzbnpA/BsRL8pOM1zpX06spvCRILmc=;
+	s=korg; t=1711986782;
+	bh=w0YDojS72hNfebJGkABhkdlWF/hI/zm6xPmwtowfzAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2osvVrOMUrPc8Ev3bilSw445dl0Nnh261EuxxPz9kX3ezFrSGxIEgjTke5KV3h9g+
-	 +AJSanbt6bjprjkjw7gl/RdQrfi/B6ExrJC7wNQy/8IBBlJRNotofYFw01RrWbhAH7
-	 RROQCRw2qRpThhc5TFWdYYoZIK9mYgf39qQIaEso=
+	b=priCEIOhXmQaaK4VxHkAeA+J9ZPijj58jDeQafGZmNLBxBsqGohKk62aOzRfUGDVH
+	 /+y3g6bINIurYfad/tPhTTcPfwc+zwctNI9kza+sIwAONSoV/2b98sy/8NrCvukOdc
+	 fSjM3nz6HEc7ZaAZlv5aoAC/r1HJqGAoAnsbLoIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Jacobs?= <aurel@gnuage.org>,
-	Johan Hovold <johan@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Paul Durrant <paul@xen.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 083/399] USB: serial: option: add MeiG Smart SLM320 product
-Date: Mon,  1 Apr 2024 17:40:49 +0200
-Message-ID: <20240401152551.657225007@linuxfoundation.org>
+Subject: [PATCH 6.8 084/399] KVM: x86/xen: inject vCPU upcall vector when local APIC is enabled
+Date: Mon,  1 Apr 2024 17:40:50 +0200
+Message-ID: <20240401152551.686933219@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -45,87 +46,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurélien Jacobs <aurel@gnuage.org>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 46809c51565b83881aede6cdf3b0d25254966a41 ]
+[ Upstream commit 8e62bf2bfa46367e14d0ffdcde5aada08759497c ]
 
-Update the USB serial option driver to support MeiG Smart SLM320.
+Linux guests since commit b1c3497e604d ("x86/xen: Add support for
+HVMOP_set_evtchn_upcall_vector") in v6.0 onwards will use the per-vCPU
+upcall vector when it's advertised in the Xen CPUID leaves.
 
-ID 2dee:4d41 UNISOC UNISOC-8910
+This upcall is injected through the guest's local APIC as an MSI, unlike
+the older system vector which was merely injected by the hypervisor any
+time the CPU was able to receive an interrupt and the upcall_pending
+flags is set in its vcpu_info.
 
-T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
-P: Vendor=2dee ProdID=4d41 Rev=00.00
-S: Manufacturer=UNISOC
-S: Product=UNISOC-8910
-C: #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=400mA
-I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Effectively, that makes the per-CPU upcall edge triggered instead of
+level triggered, which results in the upcall being lost if the MSI is
+delivered when the local APIC is *disabled*.
 
-Tested successfully a PPP LTE connection using If#= 0.
-Not sure of the purpose of every other serial interfaces.
+Xen checks the vcpu_info->evtchn_upcall_pending flag when the local APIC
+for a vCPU is software enabled (in fact, on any write to the SPIV
+register which doesn't disable the APIC). Do the same in KVM since KVM
+doesn't provide a way for userspace to intervene and trap accesses to
+the SPIV register of a local APIC emulated by KVM.
 
-Signed-off-by: Aurélien Jacobs <aurel@gnuage.org>
+Fixes: fde0451be8fb3 ("KVM: x86/xen: Support per-vCPU event channel upcall via local APIC")
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20240227115648.3104-3-dwmw2@infradead.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/lapic.c |  5 ++++-
+ arch/x86/kvm/xen.c   |  2 +-
+ arch/x86/kvm/xen.h   | 18 ++++++++++++++++++
+ 3 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 2ae124c49d448..55a65d941ccbf 100644
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -613,6 +613,11 @@ static void option_instat_callback(struct urb *urb);
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 3242f3da24576..75bc7d3f0022d 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -41,6 +41,7 @@
+ #include "ioapic.h"
+ #include "trace.h"
+ #include "x86.h"
++#include "xen.h"
+ #include "cpuid.h"
+ #include "hyperv.h"
+ #include "smm.h"
+@@ -499,8 +500,10 @@ static inline void apic_set_spiv(struct kvm_lapic *apic, u32 val)
+ 	}
  
-+/* MeiG Smart Technology products */
-+#define MEIGSMART_VENDOR_ID			0x2dee
-+/* MeiG Smart SLM320 based on UNISOC UIS8910 */
-+#define MEIGSMART_PRODUCT_SLM320		0x4d41
+ 	/* Check if there are APF page ready requests pending */
+-	if (enabled)
++	if (enabled) {
+ 		kvm_make_request(KVM_REQ_APF_READY, apic->vcpu);
++		kvm_xen_sw_enable_lapic(apic->vcpu);
++	}
+ }
+ 
+ static inline void kvm_apic_set_xapic_id(struct kvm_lapic *apic, u8 id)
+diff --git a/arch/x86/kvm/xen.c b/arch/x86/kvm/xen.c
+index 4b4e738c6f1b7..b0212ba2d87a6 100644
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -493,7 +493,7 @@ void kvm_xen_update_runstate(struct kvm_vcpu *v, int state)
+ 		kvm_xen_update_runstate_guest(v, state == RUNSTATE_runnable);
+ }
+ 
+-static void kvm_xen_inject_vcpu_vector(struct kvm_vcpu *v)
++void kvm_xen_inject_vcpu_vector(struct kvm_vcpu *v)
+ {
+ 	struct kvm_lapic_irq irq = { };
+ 	int r;
+diff --git a/arch/x86/kvm/xen.h b/arch/x86/kvm/xen.h
+index f8f1fe22d0906..f5841d9000aeb 100644
+--- a/arch/x86/kvm/xen.h
++++ b/arch/x86/kvm/xen.h
+@@ -18,6 +18,7 @@ extern struct static_key_false_deferred kvm_xen_enabled;
+ 
+ int __kvm_xen_has_interrupt(struct kvm_vcpu *vcpu);
+ void kvm_xen_inject_pending_events(struct kvm_vcpu *vcpu);
++void kvm_xen_inject_vcpu_vector(struct kvm_vcpu *vcpu);
+ int kvm_xen_vcpu_set_attr(struct kvm_vcpu *vcpu, struct kvm_xen_vcpu_attr *data);
+ int kvm_xen_vcpu_get_attr(struct kvm_vcpu *vcpu, struct kvm_xen_vcpu_attr *data);
+ int kvm_xen_hvm_set_attr(struct kvm *kvm, struct kvm_xen_hvm_attr *data);
+@@ -36,6 +37,19 @@ int kvm_xen_setup_evtchn(struct kvm *kvm,
+ 			 const struct kvm_irq_routing_entry *ue);
+ void kvm_xen_update_tsc_info(struct kvm_vcpu *vcpu);
+ 
++static inline void kvm_xen_sw_enable_lapic(struct kvm_vcpu *vcpu)
++{
++	/*
++	 * The local APIC is being enabled. If the per-vCPU upcall vector is
++	 * set and the vCPU's evtchn_upcall_pending flag is set, inject the
++	 * interrupt.
++	 */
++	if (static_branch_unlikely(&kvm_xen_enabled.key) &&
++	    vcpu->arch.xen.vcpu_info_cache.active &&
++	    vcpu->arch.xen.upcall_vector && __kvm_xen_has_interrupt(vcpu))
++		kvm_xen_inject_vcpu_vector(vcpu);
++}
 +
- /* Device flags */
+ static inline bool kvm_xen_msr_enabled(struct kvm *kvm)
+ {
+ 	return static_branch_unlikely(&kvm_xen_enabled.key) &&
+@@ -101,6 +115,10 @@ static inline void kvm_xen_destroy_vcpu(struct kvm_vcpu *vcpu)
+ {
+ }
  
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2282,6 +2287,7 @@ static const struct usb_device_id option_ids[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
++static inline void kvm_xen_sw_enable_lapic(struct kvm_vcpu *vcpu)
++{
++}
++
+ static inline bool kvm_xen_msr_enabled(struct kvm *kvm)
+ {
+ 	return false;
 -- 
 2.43.0
 
