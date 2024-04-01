@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7163F8F4;
-	Mon,  1 Apr 2024 16:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7657543AD6;
+	Mon,  1 Apr 2024 16:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988323; cv=none; b=a79Dh0x384ss+iFmQ+6kdJlLQlwnW06raJguWx3R2y3nYWoW1tvL4YyyyYkj77ym7zJ6mhgSQRLAPYLfIGOCLJhHOgEl1lceqQVUCR27JQdufaRl22su2SPE10jR0gvBeEjGxAq71Sfu9gduHliYjdwOBSq/7Bc7/Rch1Xb557o=
+	t=1711988326; cv=none; b=q0UceARieRaeQMLMZGdI0Xqkx9Id9EMpgXH8+qb60mGSeme+Rwmfj3AcjDuP329vLy39fURaKad11zmgec/vbgMH05UOwChIdM60bw6BoZAxl7bNg4g7/OXhbmsF0bqKzOKr48YIJjKZJ5/V1Ahn5OovDFD282KNJjKqCMPhmSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988323; c=relaxed/simple;
-	bh=y/+7k7CO+Eo67xksewU1XcbjK8IeSBjuAdyugU8N79E=;
+	s=arc-20240116; t=1711988326; c=relaxed/simple;
+	bh=jIq2OwVvo1xKyPHURkrVgZWxOWmySqE1wWhgMG9J4Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q7ZVbkeG332ZBDDE3z9tXrVutaIm7D07wTaesK7wjNvtsUdk/hbnAcwkw3Cc85ToXSTpXztbBvUZMQWQHF2Zo0LK3j/Q0okHJlD/OL3gbaS3Ci3s9g7XAxpugVrWHkMI/9HWofFT2u28j86Q6KQfE9Qj1/PDFSla3H30jGD8ZlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnbTFmEr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dwop2qi8uwWN/WArLBdSq/w1zIBRIavQhoD5udEL/m22+0oAJFqfqBcKG3EgQGW8/gyzEEjDD1Cax9/8TlA++tsBHkhUhiEBTulJKuYBApavDhPFoXxcb+B6gdGfPqCWz1IRJ0QQKK/ggnC4rvbjDozveKHCRoz0hAAr96sJQoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDazmggi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnbTFmEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A1DC43390;
-	Mon,  1 Apr 2024 16:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDazmggi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB001C433C7;
+	Mon,  1 Apr 2024 16:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988322;
-	bh=y/+7k7CO+Eo67xksewU1XcbjK8IeSBjuAdyugU8N79E=;
+	s=korg; t=1711988326;
+	bh=jIq2OwVvo1xKyPHURkrVgZWxOWmySqE1wWhgMG9J4Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnbTFmErbbboJAY+Yz2UXwBs3vxHeJpjmT6OLh5hlqCDZKzwJBCbBax2VPF7qGIQf
-	 09U6Dfq4yMYGxTzKgqi//1QNEQILkOXotEmGDt9lrPxVjp7TwoQGVAlRdDh/NnrBov
-	 wI5NENHBCKFFc/KeyZGJ8OIf2eZhxoycxNBVvG/0=
+	b=XDazmggiHeTrEgtAD17RVoUV9TQhEMdxspRCxdAnyT7AXngDo8V7t+yRtSqwIAtQX
+	 CSpOCSahYjk8Ff0SVZmGyD5qPiw+4/PfB2i36UT9bFNCkW2caBKzi2bNG59D4/sXkh
+	 6CNJf9kMzz2citYPU+w4ktfdlDX4Bzlb/HLhkQx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Marios Makassikis <mmakassikis@freebox.fr>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 133/432] nfs: fix UAF in direct writes
-Date: Mon,  1 Apr 2024 17:42:00 +0200
-Message-ID: <20240401152557.100152451@linuxfoundation.org>
+Subject: [PATCH 6.7 151/432] ksmbd: replace generic_fillattr with vfs_getattr
+Date: Mon,  1 Apr 2024 17:42:18 +0200
+Message-ID: <20240401152557.640779109@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,123 +52,477 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
+[ Upstream commit 5614c8c487f6af627614dd2efca038e4afe0c6d7 ]
 
-In production we have been hitting the following warning consistently
+generic_fillattr should not be used outside of ->getattr
+implementations.
 
-------------[ cut here ]------------
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
-Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
-RIP: 0010:refcount_warn_saturate+0x9c/0xe0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __warn+0x9f/0x130
- ? refcount_warn_saturate+0x9c/0xe0
- ? report_bug+0xcc/0x150
- ? handle_bug+0x3d/0x70
- ? exc_invalid_op+0x16/0x40
- ? asm_exc_invalid_op+0x16/0x20
- ? refcount_warn_saturate+0x9c/0xe0
- nfs_direct_write_schedule_work+0x237/0x250 [nfs]
- process_one_work+0x12f/0x4a0
- worker_thread+0x14e/0x3b0
- ? ZSTD_getCParams_internal+0x220/0x220
- kthread+0xdc/0x120
- ? __btf_name_valid+0xa0/0xa0
- ret_from_fork+0x1f/0x30
+Use vfs_getattr instead, and adapt functions to return an
+error code to the caller.
 
-This is because we're completing the nfs_direct_request twice in a row.
-
-The source of this is when we have our commit requests to submit, we
-process them and send them off, and then in the completion path for the
-commit requests we have
-
-if (nfs_commit_end(cinfo.mds))
-	nfs_direct_write_complete(dreq);
-
-However since we're submitting asynchronous requests we sometimes have
-one that completes before we submit the next one, so we end up calling
-complete on the nfs_direct_request twice.
-
-The only other place we use nfs_generic_commit_list() is in
-__nfs_commit_inode, which wraps this call in a
-
-nfs_commit_begin();
-nfs_commit_end();
-
-Which is a common pattern for this style of completion handling, one
-that is also repeated in the direct code with get_dreq()/put_dreq()
-calls around where we process events as well as in the completion paths.
-
-Fix this by using the same pattern for the commit requests.
-
-Before with my 200 node rocksdb stress running this warning would pop
-every 10ish minutes.  With my patch the stress test has been running for
-several hours without popping.
-
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c        | 11 +++++++++--
- fs/nfs/write.c         |  2 +-
- include/linux/nfs_fs.h |  1 +
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c    | 170 ++++++++++++++++++++++++-------------
+ fs/smb/server/smb_common.c |  11 ++-
+ fs/smb/server/vfs.c        |  12 ++-
+ 3 files changed, 127 insertions(+), 66 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index 5918c67dae0da..b6f801e73bfdc 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -668,10 +668,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
- 	LIST_HEAD(mds_list);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 0c97d3c860726..f6cc5d2730ffb 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3828,11 +3828,16 @@ static int process_query_dir_entries(struct smb2_query_dir_private *priv)
+ 		}
  
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
-+	nfs_commit_begin(cinfo.mds);
- 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
- 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
--	if (res < 0) /* res == -ENOMEM */
--		nfs_direct_write_reschedule(dreq);
-+	if (res < 0) { /* res == -ENOMEM */
-+		spin_lock(&dreq->lock);
-+		if (dreq->flags == 0)
-+			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
-+		spin_unlock(&dreq->lock);
-+	}
-+	if (nfs_commit_end(cinfo.mds))
-+		nfs_direct_write_complete(dreq);
+ 		ksmbd_kstat.kstat = &kstat;
+-		if (priv->info_level != FILE_NAMES_INFORMATION)
+-			ksmbd_vfs_fill_dentry_attrs(priv->work,
+-						    idmap,
+-						    dent,
+-						    &ksmbd_kstat);
++		if (priv->info_level != FILE_NAMES_INFORMATION) {
++			rc = ksmbd_vfs_fill_dentry_attrs(priv->work,
++							 idmap,
++							 dent,
++							 &ksmbd_kstat);
++			if (rc) {
++				dput(dent);
++				continue;
++			}
++		}
+ 
+ 		rc = smb2_populate_readdir_entry(priv->work->conn,
+ 						 priv->info_level,
+@@ -4480,6 +4485,7 @@ static int get_file_basic_info(struct smb2_query_info_rsp *rsp,
+ 	struct smb2_file_basic_info *basic_info;
+ 	struct kstat stat;
+ 	u64 time;
++	int ret;
+ 
+ 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
+ 		pr_err("no right to read the attributes : 0x%x\n",
+@@ -4487,9 +4493,12 @@ static int get_file_basic_info(struct smb2_query_info_rsp *rsp,
+ 		return -EACCES;
+ 	}
+ 
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
++
+ 	basic_info = (struct smb2_file_basic_info *)rsp->Buffer;
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS,
+-			 file_inode(fp->filp), &stat);
+ 	basic_info->CreationTime = cpu_to_le64(fp->create_time);
+ 	time = ksmbd_UnixTimeToNT(stat.atime);
+ 	basic_info->LastAccessTime = cpu_to_le64(time);
+@@ -4504,27 +4513,31 @@ static int get_file_basic_info(struct smb2_query_info_rsp *rsp,
+ 	return 0;
  }
  
- static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 9e345d3c305a6..5c2ff4a31a340 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -1663,7 +1663,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
- 				       !atomic_read(&cinfo->rpcs_out));
- }
- 
--static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
+-static void get_file_standard_info(struct smb2_query_info_rsp *rsp,
+-				   struct ksmbd_file *fp, void *rsp_org)
++static int get_file_standard_info(struct smb2_query_info_rsp *rsp,
++				  struct ksmbd_file *fp, void *rsp_org)
  {
- 	atomic_inc(&cinfo->rpcs_out);
- }
-diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
-index 279262057a925..832b7e354b4e3 100644
---- a/include/linux/nfs_fs.h
-+++ b/include/linux/nfs_fs.h
-@@ -612,6 +612,7 @@ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio);
- extern int  nfs_commit_inode(struct inode *, int);
- extern struct nfs_commit_data *nfs_commitdata_alloc(void);
- extern void nfs_commit_free(struct nfs_commit_data *data);
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
- bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
+ 	struct smb2_file_standard_info *sinfo;
+ 	unsigned int delete_pending;
+-	struct inode *inode;
+ 	struct kstat stat;
++	int ret;
  
- static inline bool nfs_have_writebacks(const struct inode *inode)
+-	inode = file_inode(fp->filp);
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS, inode, &stat);
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+ 	sinfo = (struct smb2_file_standard_info *)rsp->Buffer;
+ 	delete_pending = ksmbd_inode_pending_delete(fp);
+ 
+-	sinfo->AllocationSize = cpu_to_le64(inode->i_blocks << 9);
++	sinfo->AllocationSize = cpu_to_le64(stat.blocks << 9);
+ 	sinfo->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	sinfo->NumberOfLinks = cpu_to_le32(get_nlink(&stat) - delete_pending);
+ 	sinfo->DeletePending = delete_pending;
+ 	sinfo->Directory = S_ISDIR(stat.mode) ? 1 : 0;
+ 	rsp->OutputBufferLength =
+ 		cpu_to_le32(sizeof(struct smb2_file_standard_info));
++
++	return 0;
+ }
+ 
+ static void get_file_alignment_info(struct smb2_query_info_rsp *rsp,
+@@ -4546,11 +4559,11 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct smb2_file_all_info *file_info;
+ 	unsigned int delete_pending;
+-	struct inode *inode;
+ 	struct kstat stat;
+ 	int conv_len;
+ 	char *filename;
+ 	u64 time;
++	int ret;
+ 
+ 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
+ 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
+@@ -4562,8 +4575,10 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 	if (IS_ERR(filename))
+ 		return PTR_ERR(filename);
+ 
+-	inode = file_inode(fp->filp);
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS, inode, &stat);
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+ 	ksmbd_debug(SMB, "filename = %s\n", filename);
+ 	delete_pending = ksmbd_inode_pending_delete(fp);
+@@ -4579,7 +4594,7 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 	file_info->Attributes = fp->f_ci->m_fattr;
+ 	file_info->Pad1 = 0;
+ 	file_info->AllocationSize =
+-		cpu_to_le64(inode->i_blocks << 9);
++		cpu_to_le64(stat.blocks << 9);
+ 	file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	file_info->NumberOfLinks =
+ 			cpu_to_le32(get_nlink(&stat) - delete_pending);
+@@ -4623,10 +4638,10 @@ static void get_file_alternate_info(struct ksmbd_work *work,
+ 		cpu_to_le32(sizeof(struct smb2_file_alt_name_info) + conv_len);
+ }
+ 
+-static void get_file_stream_info(struct ksmbd_work *work,
+-				 struct smb2_query_info_rsp *rsp,
+-				 struct ksmbd_file *fp,
+-				 void *rsp_org)
++static int get_file_stream_info(struct ksmbd_work *work,
++				struct smb2_query_info_rsp *rsp,
++				struct ksmbd_file *fp,
++				void *rsp_org)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct smb2_file_stream_info *file_info;
+@@ -4637,9 +4652,13 @@ static void get_file_stream_info(struct ksmbd_work *work,
+ 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
+ 	int buf_free_len;
+ 	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
++	int ret;
++
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS,
+-			 file_inode(fp->filp), &stat);
+ 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
+ 
+ 	buf_free_len =
+@@ -4720,29 +4739,37 @@ static void get_file_stream_info(struct ksmbd_work *work,
+ 	kvfree(xattr_list);
+ 
+ 	rsp->OutputBufferLength = cpu_to_le32(nbytes);
++
++	return 0;
+ }
+ 
+-static void get_file_internal_info(struct smb2_query_info_rsp *rsp,
+-				   struct ksmbd_file *fp, void *rsp_org)
++static int get_file_internal_info(struct smb2_query_info_rsp *rsp,
++				  struct ksmbd_file *fp, void *rsp_org)
+ {
+ 	struct smb2_file_internal_info *file_info;
+ 	struct kstat stat;
++	int ret;
++
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS,
+-			 file_inode(fp->filp), &stat);
+ 	file_info = (struct smb2_file_internal_info *)rsp->Buffer;
+ 	file_info->IndexNumber = cpu_to_le64(stat.ino);
+ 	rsp->OutputBufferLength =
+ 		cpu_to_le32(sizeof(struct smb2_file_internal_info));
++
++	return 0;
+ }
+ 
+ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
+ 				      struct ksmbd_file *fp, void *rsp_org)
+ {
+ 	struct smb2_file_ntwrk_info *file_info;
+-	struct inode *inode;
+ 	struct kstat stat;
+ 	u64 time;
++	int ret;
+ 
+ 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
+ 		pr_err("no right to read the attributes : 0x%x\n",
+@@ -4750,10 +4777,12 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
+ 		return -EACCES;
+ 	}
+ 
+-	file_info = (struct smb2_file_ntwrk_info *)rsp->Buffer;
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+-	inode = file_inode(fp->filp);
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS, inode, &stat);
++	file_info = (struct smb2_file_ntwrk_info *)rsp->Buffer;
+ 
+ 	file_info->CreationTime = cpu_to_le64(fp->create_time);
+ 	time = ksmbd_UnixTimeToNT(stat.atime);
+@@ -4763,8 +4792,7 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
+ 	time = ksmbd_UnixTimeToNT(stat.ctime);
+ 	file_info->ChangeTime = cpu_to_le64(time);
+ 	file_info->Attributes = fp->f_ci->m_fattr;
+-	file_info->AllocationSize =
+-		cpu_to_le64(inode->i_blocks << 9);
++	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
+ 	file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	file_info->Reserved = cpu_to_le32(0);
+ 	rsp->OutputBufferLength =
+@@ -4804,14 +4832,17 @@ static void get_file_mode_info(struct smb2_query_info_rsp *rsp,
+ 		cpu_to_le32(sizeof(struct smb2_file_mode_info));
+ }
+ 
+-static void get_file_compression_info(struct smb2_query_info_rsp *rsp,
+-				      struct ksmbd_file *fp, void *rsp_org)
++static int get_file_compression_info(struct smb2_query_info_rsp *rsp,
++				     struct ksmbd_file *fp, void *rsp_org)
+ {
+ 	struct smb2_file_comp_info *file_info;
+ 	struct kstat stat;
++	int ret;
+ 
+-	generic_fillattr(file_mnt_idmap(fp->filp), STATX_BASIC_STATS,
+-			 file_inode(fp->filp), &stat);
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+ 	file_info = (struct smb2_file_comp_info *)rsp->Buffer;
+ 	file_info->CompressedFileSize = cpu_to_le64(stat.blocks << 9);
+@@ -4823,6 +4854,8 @@ static void get_file_compression_info(struct smb2_query_info_rsp *rsp,
+ 
+ 	rsp->OutputBufferLength =
+ 		cpu_to_le32(sizeof(struct smb2_file_comp_info));
++
++	return 0;
+ }
+ 
+ static int get_file_attribute_tag_info(struct smb2_query_info_rsp *rsp,
+@@ -4844,7 +4877,7 @@ static int get_file_attribute_tag_info(struct smb2_query_info_rsp *rsp,
+ 	return 0;
+ }
+ 
+-static void find_file_posix_info(struct smb2_query_info_rsp *rsp,
++static int find_file_posix_info(struct smb2_query_info_rsp *rsp,
+ 				struct ksmbd_file *fp, void *rsp_org)
+ {
+ 	struct smb311_posix_qinfo *file_info;
+@@ -4852,24 +4885,31 @@ static void find_file_posix_info(struct smb2_query_info_rsp *rsp,
+ 	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
+ 	vfsuid_t vfsuid = i_uid_into_vfsuid(idmap, inode);
+ 	vfsgid_t vfsgid = i_gid_into_vfsgid(idmap, inode);
++	struct kstat stat;
+ 	u64 time;
+ 	int out_buf_len = sizeof(struct smb311_posix_qinfo) + 32;
++	int ret;
++
++	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++			  AT_STATX_SYNC_AS_STAT);
++	if (ret)
++		return ret;
+ 
+ 	file_info = (struct smb311_posix_qinfo *)rsp->Buffer;
+ 	file_info->CreationTime = cpu_to_le64(fp->create_time);
+-	time = ksmbd_UnixTimeToNT(inode_get_atime(inode));
++	time = ksmbd_UnixTimeToNT(stat.atime);
+ 	file_info->LastAccessTime = cpu_to_le64(time);
+-	time = ksmbd_UnixTimeToNT(inode_get_mtime(inode));
++	time = ksmbd_UnixTimeToNT(stat.mtime);
+ 	file_info->LastWriteTime = cpu_to_le64(time);
+-	time = ksmbd_UnixTimeToNT(inode_get_ctime(inode));
++	time = ksmbd_UnixTimeToNT(stat.ctime);
+ 	file_info->ChangeTime = cpu_to_le64(time);
+ 	file_info->DosAttributes = fp->f_ci->m_fattr;
+-	file_info->Inode = cpu_to_le64(inode->i_ino);
+-	file_info->EndOfFile = cpu_to_le64(inode->i_size);
+-	file_info->AllocationSize = cpu_to_le64(inode->i_blocks << 9);
+-	file_info->HardLinks = cpu_to_le32(inode->i_nlink);
+-	file_info->Mode = cpu_to_le32(inode->i_mode & 0777);
+-	file_info->DeviceId = cpu_to_le32(inode->i_rdev);
++	file_info->Inode = cpu_to_le64(stat.ino);
++	file_info->EndOfFile = cpu_to_le64(stat.size);
++	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
++	file_info->HardLinks = cpu_to_le32(stat.nlink);
++	file_info->Mode = cpu_to_le32(stat.mode & 0777);
++	file_info->DeviceId = cpu_to_le32(stat.rdev);
+ 
+ 	/*
+ 	 * Sids(32) contain two sids(Domain sid(16), UNIX group sid(16)).
+@@ -4882,6 +4922,8 @@ static void find_file_posix_info(struct smb2_query_info_rsp *rsp,
+ 		  SIDUNIX_GROUP, (struct smb_sid *)&file_info->Sids[16]);
+ 
+ 	rsp->OutputBufferLength = cpu_to_le32(out_buf_len);
++
++	return 0;
+ }
+ 
+ static int smb2_get_info_file(struct ksmbd_work *work,
+@@ -4930,7 +4972,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 		break;
+ 
+ 	case FILE_STANDARD_INFORMATION:
+-		get_file_standard_info(rsp, fp, work->response_buf);
++		rc = get_file_standard_info(rsp, fp, work->response_buf);
+ 		break;
+ 
+ 	case FILE_ALIGNMENT_INFORMATION:
+@@ -4946,11 +4988,11 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 		break;
+ 
+ 	case FILE_STREAM_INFORMATION:
+-		get_file_stream_info(work, rsp, fp, work->response_buf);
++		rc = get_file_stream_info(work, rsp, fp, work->response_buf);
+ 		break;
+ 
+ 	case FILE_INTERNAL_INFORMATION:
+-		get_file_internal_info(rsp, fp, work->response_buf);
++		rc = get_file_internal_info(rsp, fp, work->response_buf);
+ 		break;
+ 
+ 	case FILE_NETWORK_OPEN_INFORMATION:
+@@ -4974,7 +5016,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 		break;
+ 
+ 	case FILE_COMPRESSION_INFORMATION:
+-		get_file_compression_info(rsp, fp, work->response_buf);
++		rc = get_file_compression_info(rsp, fp, work->response_buf);
+ 		break;
+ 
+ 	case FILE_ATTRIBUTE_TAG_INFORMATION:
+@@ -4985,7 +5027,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
+ 			rc = -EOPNOTSUPP;
+ 		} else {
+-			find_file_posix_info(rsp, fp, work->response_buf);
++			rc = find_file_posix_info(rsp, fp, work->response_buf);
+ 		}
+ 		break;
+ 	default:
+@@ -5398,7 +5440,6 @@ int smb2_close(struct ksmbd_work *work)
+ 	struct smb2_close_rsp *rsp;
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_file *fp;
+-	struct inode *inode;
+ 	u64 time;
+ 	int err = 0;
+ 
+@@ -5453,24 +5494,33 @@ int smb2_close(struct ksmbd_work *work)
+ 	rsp->Reserved = 0;
+ 
+ 	if (req->Flags == SMB2_CLOSE_FLAG_POSTQUERY_ATTRIB) {
++		struct kstat stat;
++		int ret;
++
+ 		fp = ksmbd_lookup_fd_fast(work, volatile_id);
+ 		if (!fp) {
+ 			err = -ENOENT;
+ 			goto out;
+ 		}
+ 
+-		inode = file_inode(fp->filp);
++		ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
++				  AT_STATX_SYNC_AS_STAT);
++		if (ret) {
++			ksmbd_fd_put(work, fp);
++			goto out;
++		}
++
+ 		rsp->Flags = SMB2_CLOSE_FLAG_POSTQUERY_ATTRIB;
+-		rsp->AllocationSize = S_ISDIR(inode->i_mode) ? 0 :
+-			cpu_to_le64(inode->i_blocks << 9);
+-		rsp->EndOfFile = cpu_to_le64(inode->i_size);
++		rsp->AllocationSize = S_ISDIR(stat.mode) ? 0 :
++			cpu_to_le64(stat.blocks << 9);
++		rsp->EndOfFile = cpu_to_le64(stat.size);
+ 		rsp->Attributes = fp->f_ci->m_fattr;
+ 		rsp->CreationTime = cpu_to_le64(fp->create_time);
+-		time = ksmbd_UnixTimeToNT(inode_get_atime(inode));
++		time = ksmbd_UnixTimeToNT(stat.atime);
+ 		rsp->LastAccessTime = cpu_to_le64(time);
+-		time = ksmbd_UnixTimeToNT(inode_get_mtime(inode));
++		time = ksmbd_UnixTimeToNT(stat.mtime);
+ 		rsp->LastWriteTime = cpu_to_le64(time);
+-		time = ksmbd_UnixTimeToNT(inode_get_ctime(inode));
++		time = ksmbd_UnixTimeToNT(stat.ctime);
+ 		rsp->ChangeTime = cpu_to_le64(time);
+ 		ksmbd_fd_put(work, fp);
+ 	} else {
+diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
+index 7c98bf699772f..fcaf373cc0080 100644
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -457,10 +457,13 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+ 			}
+ 
+ 			ksmbd_kstat.kstat = &kstat;
+-			ksmbd_vfs_fill_dentry_attrs(work,
+-						    idmap,
+-						    dentry,
+-						    &ksmbd_kstat);
++			rc = ksmbd_vfs_fill_dentry_attrs(work,
++							 idmap,
++							 dentry,
++							 &ksmbd_kstat);
++			if (rc)
++				break;
++
+ 			rc = fn(conn, info_level, d_info, &ksmbd_kstat);
+ 			if (rc)
+ 				break;
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 4277750a6da1b..a8936aba7710e 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1669,11 +1669,19 @@ int ksmbd_vfs_fill_dentry_attrs(struct ksmbd_work *work,
+ 				struct dentry *dentry,
+ 				struct ksmbd_kstat *ksmbd_kstat)
+ {
++	struct ksmbd_share_config *share_conf = work->tcon->share_conf;
+ 	u64 time;
+ 	int rc;
++	struct path path = {
++		.mnt = share_conf->vfs_path.mnt,
++		.dentry = dentry,
++	};
+ 
+-	generic_fillattr(idmap, STATX_BASIC_STATS, d_inode(dentry),
+-			 ksmbd_kstat->kstat);
++	rc = vfs_getattr(&path, ksmbd_kstat->kstat,
++			 STATX_BASIC_STATS | STATX_BTIME,
++			 AT_STATX_SYNC_AS_STAT);
++	if (rc)
++		return rc;
+ 
+ 	time = ksmbd_UnixTimeToNT(ksmbd_kstat->kstat->ctime);
+ 	ksmbd_kstat->create_time = time;
 -- 
 2.43.0
 
