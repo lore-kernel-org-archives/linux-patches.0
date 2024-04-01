@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7052DC129;
-	Mon,  1 Apr 2024 16:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77AA4596E;
+	Mon,  1 Apr 2024 16:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988885; cv=none; b=gCgd4s/8oHwZP44mxi0hPSjbhnBohLbW8/j6iSDT8w29braWObkBfQdgccCD2JBSVUqQUkHAa6Z6O7rJHvOXeZ1uXN5JjhT6ZQ4wgIDFtpQGlf61FzUrjtZrsLs6MRwbu1UN07ZCx+um9O36EUm8ShnN33/TNhaZOomAyoQ1GCs=
+	t=1711988888; cv=none; b=cgM8UHcwRIfjer3UgasdQZ6vpmyAo/kz/p28hvogA30XpbqLqcba5F6tV6E82w3v8vk+istfL0uK3JYNgt1ZdyqqB1Qw1AkS3oOQt7D2xp9sPHPshnBPS6kCrmMJEB2/sGWaM4dGVVUrefPLBTbm15wfYbmGbwkMcxPOiz+Kjik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988885; c=relaxed/simple;
-	bh=wdFGNrBfZW1E3ISOJhfHktdoAltlc96DRsBHp1Nd6ME=;
+	s=arc-20240116; t=1711988888; c=relaxed/simple;
+	bh=yA+vNWWKs2lzl+7YLAR3ZUXLBP6PARkD3EP7maoMk4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fObYx75Bpg2QWab7B8qcPunTWAfrjpznlJOOnbWGgPlReCDN/1ivyAUtS+g4P6VU9LqSGsnOm7ZEeIPftnXzYLfzaaTTN3Q0dkrz33i2kAG7V3g/rrenDG0YIxANFp7vJqKk9A2lQ20LgFPBA3dLKu94sIsQW6AK+O8hKs++EqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0w3XJsn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RVcJcEgfuvcFEnbQyuCW2ZrTCStFJutb0JvlSfvc2zWr0tdpo5YFu83PZtHPCjpDhx4OQy25d83Z10pgCYr5+J33pBhld0i+CpHUSd31QuJv+T5YFoZqgiUX/Orh9ds/E+PnYtPmKZwKo71NksD8tQhmUuC8n32HEYOKcj1NdqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aieXda2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0w3XJsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D3FC433F1;
-	Mon,  1 Apr 2024 16:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aieXda2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3D8C433C7;
+	Mon,  1 Apr 2024 16:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988885;
-	bh=wdFGNrBfZW1E3ISOJhfHktdoAltlc96DRsBHp1Nd6ME=;
+	s=korg; t=1711988888;
+	bh=yA+vNWWKs2lzl+7YLAR3ZUXLBP6PARkD3EP7maoMk4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0w3XJsnFKcqBmPO3WEa/yx+RmIr4mWgpPm2e2J5+SmmEHxEp4jUmfqeHJ1KGmNLy
-	 68ggXHFqUN3liVjdP2WFBwKSz/gwDd78qfDkDSF14+NmCU2gXMg1MMUftdineXaUbD
-	 WYoeEldNnmbqdZWZt3f2DFZTAeVw2QEe1gvjfkQg=
+	b=aieXda2DdlBcs18zBslu/Y4Te1w+wj2xyXnUc+dVdQfAux69PluRcBlW04OIT+Y2W
+	 TBit0kkBnCLm1sWtI11FkOsrEpgrQbP3Q074VaM8jldufgq1Z9fvw+BIhdYdXzZM4j
+	 x+mVDOC1Z+fZm2zEI7oOR2jey6kx6Aac3xI6RhHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ma <li.ma@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 290/432] drm/amd/swsmu: modify the gfx activity scaling
-Date: Mon,  1 Apr 2024 17:44:37 +0200
-Message-ID: <20240401152601.819004215@linuxfoundation.org>
+	Oleksandr Tymoshenko <ovt@google.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 317/432] efi: fix panic in kdump kernel
+Date: Mon,  1 Apr 2024 17:45:04 +0200
+Message-ID: <20240401152602.647606029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ma <li.ma@amd.com>
+From: Oleksandr Tymoshenko <ovt@google.com>
 
-commit 6601c15c8a0680edb0d23a13151adb8023959149 upstream.
+[ Upstream commit 62b71cd73d41ddac6b1760402bbe8c4932e23531 ]
 
-Add an if condition for gfx activity because the scaling has been changed after smu fw version 5d4600.
-And remove a warning log.
+Check if get_next_variable() is actually valid pointer before
+calling it. In kdump kernel this method is set to NULL that causes
+panic during the kexec-ed kernel boot.
 
-Signed-off-by: Li Ma <li.ma@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.7.x
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested with QEMU and OVMF firmware.
+
+Fixes: bad267f9e18f ("efi: verify that variable services are supported")
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c       |    2 --
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c |    5 ++++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/firmware/efi/efi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-@@ -229,8 +229,6 @@ int smu_v14_0_check_fw_version(struct sm
- 		smu->smc_driver_if_version = SMU14_DRIVER_IF_VERSION_SMU_V14_0_2;
- 		break;
- 	case IP_VERSION(14, 0, 0):
--		if ((smu->smc_fw_version < 0x5d3a00))
--			dev_warn(smu->adev->dev, "The PMFW version(%x) is behind in this BIOS!\n", smu->smc_fw_version);
- 		smu->smc_driver_if_version = SMU14_DRIVER_IF_VERSION_SMU_V14_0_0;
- 		break;
- 	default:
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-@@ -261,7 +261,10 @@ static int smu_v14_0_0_get_smu_metrics_d
- 		*value = metrics->MpipuclkFrequency;
- 		break;
- 	case METRICS_AVERAGE_GFXACTIVITY:
--		*value = metrics->GfxActivity / 100;
-+		if ((smu->smc_fw_version > 0x5d4600))
-+			*value = metrics->GfxActivity;
-+		else
-+			*value = metrics->GfxActivity / 100;
- 		break;
- 	case METRICS_AVERAGE_VCNACTIVITY:
- 		*value = metrics->VcnActivity / 100;
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index 9d3910d1abe19..abdfcb5aa470c 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -199,6 +199,8 @@ static bool generic_ops_supported(void)
+ 
+ 	name_size = sizeof(name);
+ 
++	if (!efi.get_next_variable)
++		return false;
+ 	status = efi.get_next_variable(&name_size, &name, &guid);
+ 	if (status == EFI_UNSUPPORTED)
+ 		return false;
+-- 
+2.43.0
+
 
 
