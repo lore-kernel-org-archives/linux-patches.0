@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08742446AC;
-	Mon,  1 Apr 2024 16:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA64E43AD6;
+	Mon,  1 Apr 2024 16:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987953; cv=none; b=bQnRbPVPYzlFk6m9OB0DAkBGMAyDD3JTXb8SvtKPp4nrrr05tNA4XWaRM8z8YyB9rqkJrlAD4DBeRzvbd11XXAz/jOmJlrlpmzyVqU2YAujbHJowH/6F9g5Ld3Kle5rty1REUqGWFCbmM2j2w2wk6Skbs6MdPd4+Vq2kPHdcVjw=
+	t=1711987956; cv=none; b=i6AlMgPgyrp5Pi8OZ77rnWZ0fzDhWmRhC71GDxhi5ZsC2f6ylGNfF8LrX7Dj+bYE3uwT1pHrVOvUxsG0vQrkuiyPydEYcPYkqL+ic7kZPYg7x957H7/Ljvou5uu/kukgwMCcxlCM53mWKNPamh2GeBIheohVIv27d0RcEeQkFd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987953; c=relaxed/simple;
-	bh=sgxFuLlwx2+7L9o+n2oy/Xx7bFn14WDMcNjx6kUMSlQ=;
+	s=arc-20240116; t=1711987956; c=relaxed/simple;
+	bh=sPJWptY32kuDf2hmqpD+uAYmrWDcuP9OpCFFQlaH+V4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jy+GUkPzCTcJaH2j9m8Fr5zepr7NoG3hxTykP2cjTj27ocsvXAWBEKZd2Jup39KyHkpDH/szhaQTLiXQroscOTVtvWkGsjbJwPyvH8dD2t8lX06ASIhYRa/2UJM7ULNkPG23QdWraraDBDK4B/7xg+5DM2FmA8rR7cv/NUxnMyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tP8Dgim1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYkVzimJ+5mPuAvOWHxzl9EzHnOzkFx1Fr6wfXfvMl8ubZenDl2TQTFuYYim72WYVR012gLeJFB0Yh4uzDFrNVeQJxuiia7fOuSGQ12EAx/fAwXbqWCshDFfTuAOzSowQ+7WmRKUi7VxnbumMn+mHcsx4mroHXl8ExpJoDi5MRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+en/EFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tP8Dgim1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7514BC433F1;
-	Mon,  1 Apr 2024 16:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+en/EFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2B2C433C7;
+	Mon,  1 Apr 2024 16:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987952;
-	bh=sgxFuLlwx2+7L9o+n2oy/Xx7bFn14WDMcNjx6kUMSlQ=;
+	s=korg; t=1711987956;
+	bh=sPJWptY32kuDf2hmqpD+uAYmrWDcuP9OpCFFQlaH+V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tP8Dgim1Ma/1wd/AYR5Qpv+FzVhlmaxLOE3LnNI42McD/foD/OtAVcoBexbVO0FIG
-	 zysetVTEvNm7rHsMi9tgMmqf03IEGl3uX9QmtkssIAN1vKbiSA7YGlRRBFJpIPkxAH
-	 dY5aAnvruHEVWNqA6JwWZIqfrmECL5UzthiOgC2o=
+	b=I+en/EFWDor8K6mrVL6cx6ZIp6HBvog0WBRPYoUnB4V/IsKc/dJY0XBb88nOAKnHo
+	 kOwHn0LAn5xuGFa9m3CbEaQHUNh3QUARNJnV9kXTkTbZ5W/0ir6zuzUfMvzkz5+BQi
+	 QXkJsolXxRZia31phc6EayA6AyQgAeDYfVmV5vvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Niels De Graef <ndegraef@redhat.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 012/432] arm: dts: marvell: Fix maxium->maxim typo in brownstone dts
-Date: Mon,  1 Apr 2024 17:39:59 +0200
-Message-ID: <20240401152553.494467800@linuxfoundation.org>
+Subject: [PATCH 6.7 013/432] drm/vmwgfx: Fix possible null pointer derefence with invalid contexts
+Date: Mon,  1 Apr 2024 17:40:00 +0200
+Message-ID: <20240401152553.524082033@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -46,48 +50,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duje Mihanović <duje.mihanovic@skole.hr>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 831e0cd4f9ee15a4f02ae10b67e7fdc10eb2b4fc ]
+[ Upstream commit 517621b7060096e48e42f545fa6646fc00252eac ]
 
-Fix an obvious spelling error in the PMIC compatible in the MMP2
-Brownstone DTS file.
+vmw_context_cotable can return either an error or a null pointer and its
+usage sometimes went unchecked. Subsequent code would then try to access
+either a null pointer or an error value.
 
-Fixes: 58f1193e6210 ("mfd: max8925: Add dts")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Duje Mihanović <duje.mihanovic@skole.hr>
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Closes: https://lore.kernel.org/linux-devicetree/1410884282-18041-1-git-send-email-k.kozlowski@samsung.com/
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240125-brownstone-typo-fix-v2-1-45bc48a0c81c@skole.hr
-[krzysztof: Just 10 years to take a patch, not bad! Rephrased commit
- msg]
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The invalid dereferences were only possible with malformed userspace
+apps which never properly initialized the rendering contexts.
+
+Check the results of vmw_context_cotable to fix the invalid derefs.
+
+Thanks:
+ziming zhang(@ezrak1e) from Ant Group Light-Year Security Lab
+who was the first person to discover it.
+Niels De Graef who reported it and helped to track down the poc.
+
+Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
+Cc: <stable@vger.kernel.org> # v4.20+
+Reported-by: Niels De Graef  <ndegraef@redhat.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Cc: Martin Krastev <martin.krastev@broadcom.com>
+Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Cc: Ian Forbes <ian.forbes@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240110200305.94086-1-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/marvell/mmp2-brownstone.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/marvell/mmp2-brownstone.dts b/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
-index 04f1ae1382e7a..bc64348b82185 100644
---- a/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
-+++ b/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
-@@ -28,7 +28,7 @@ &uart3 {
- &twsi1 {
- 	status = "okay";
- 	pmic: max8925@3c {
--		compatible = "maxium,max8925";
-+		compatible = "maxim,max8925";
- 		reg = <0x3c>;
- 		interrupts = <1>;
- 		interrupt-parent = <&intcmux4>;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 36987ef3fc300..5fef0b31c1179 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -447,7 +447,7 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
+ 	    vmw_res_type(ctx) == vmw_res_dx_context) {
+ 		for (i = 0; i < cotable_max; ++i) {
+ 			res = vmw_context_cotable(ctx, i);
+-			if (IS_ERR(res))
++			if (IS_ERR_OR_NULL(res))
+ 				continue;
+ 
+ 			ret = vmw_execbuf_res_val_add(sw_context, res,
+@@ -1266,6 +1266,8 @@ static int vmw_cmd_dx_define_query(struct vmw_private *dev_priv,
+ 		return -EINVAL;
+ 
+ 	cotable_res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXQUERY);
++	if (IS_ERR_OR_NULL(cotable_res))
++		return cotable_res ? PTR_ERR(cotable_res) : -EINVAL;
+ 	ret = vmw_cotable_notify(cotable_res, cmd->body.queryId);
+ 
+ 	return ret;
+@@ -2484,6 +2486,8 @@ static int vmw_cmd_dx_view_define(struct vmw_private *dev_priv,
+ 		return ret;
+ 
+ 	res = vmw_context_cotable(ctx_node->ctx, vmw_view_cotables[view_type]);
++	if (IS_ERR_OR_NULL(res))
++		return res ? PTR_ERR(res) : -EINVAL;
+ 	ret = vmw_cotable_notify(res, cmd->defined_id);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+@@ -2569,8 +2573,8 @@ static int vmw_cmd_dx_so_define(struct vmw_private *dev_priv,
+ 
+ 	so_type = vmw_so_cmd_to_type(header->id);
+ 	res = vmw_context_cotable(ctx_node->ctx, vmw_so_cotables[so_type]);
+-	if (IS_ERR(res))
+-		return PTR_ERR(res);
++	if (IS_ERR_OR_NULL(res))
++		return res ? PTR_ERR(res) : -EINVAL;
+ 	cmd = container_of(header, typeof(*cmd), header);
+ 	ret = vmw_cotable_notify(res, cmd->defined_id);
+ 
+@@ -2689,6 +2693,8 @@ static int vmw_cmd_dx_define_shader(struct vmw_private *dev_priv,
+ 		return -EINVAL;
+ 
+ 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXSHADER);
++	if (IS_ERR_OR_NULL(res))
++		return res ? PTR_ERR(res) : -EINVAL;
+ 	ret = vmw_cotable_notify(res, cmd->body.shaderId);
+ 	if (ret)
+ 		return ret;
+@@ -3010,6 +3016,8 @@ static int vmw_cmd_dx_define_streamoutput(struct vmw_private *dev_priv,
+ 	}
+ 
+ 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_STREAMOUTPUT);
++	if (IS_ERR_OR_NULL(res))
++		return res ? PTR_ERR(res) : -EINVAL;
+ 	ret = vmw_cotable_notify(res, cmd->body.soid);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
