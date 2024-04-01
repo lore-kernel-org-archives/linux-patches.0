@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811C4087B;
-	Mon,  1 Apr 2024 16:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F871C129;
+	Mon,  1 Apr 2024 16:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988658; cv=none; b=ZqkixwkDtrWy9f4dVe/ZOW5qH39ItwEv1tC4Z30aq3bbSBii+7X+XxLSneDqur/A3PcaFWUoIm668UzU47ICNvK52eZbhRN8mSpyFv31n8q0Pet24Z9yz+dOfKSWx3nkPr8eySuZAb6YiFIWfpDgxIx+GibBH/NqGofcjI3iu+g=
+	t=1711988661; cv=none; b=RW/J0SwmnNoqWwacuTMS1V5p2G7TQD/i3kTRDpgbXnRDFfZedWvmDQHS/YS7YRPbEjK9w1DOigHqdF/TZb/0iJWlAoVN8e6K8aeTNHGvSZ/vcamdMs4Ak7O12M2fGSIdp0zNi/egcUE5bwZ2Rx+SIkOL9uY5EyudHvaP92Y6QZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988658; c=relaxed/simple;
-	bh=nkL7qpIQxkdKexYKKamR9mHhd2EZ8QjuPgDb8OR3RT4=;
+	s=arc-20240116; t=1711988661; c=relaxed/simple;
+	bh=Jsyg7L1OAhp9889u4D6evZoZWoNpMt6+M/qnaMaw1Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kkom6D7eWev+op/y2CivjWpfBVAKYtyNdyNsVAsJ4/L/D/0iSIL28gJtiZblDstedlLQ8C4aC1km+5XdwETP/x97nbTweJNkzkIXqHHmRAu5snYW3kalAhom/ShgMJq4N8QmjJwmuG61eCvh9EMlMnI4hmZ4vxJYx2jrIGANVUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=musemjHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lQIU2pW+g93JC89z2nhJlQWBRAE+wJB4Zde4Ph7MPAnwsPEtdHXlEgpWqE9yWsJIdeefKQvNb12oM7AaEL2cZlKkhy83vUNQFK+W8mdz2xvcj+u0CIzwqzBtTqI2wqcN0e5xqW6Djmw+jNXFLW1W5UoOLyMulwX2wUIq55NHWs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqA/qI93; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="musemjHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B53C433F1;
-	Mon,  1 Apr 2024 16:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqA/qI93"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06C3C433F1;
+	Mon,  1 Apr 2024 16:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988658;
-	bh=nkL7qpIQxkdKexYKKamR9mHhd2EZ8QjuPgDb8OR3RT4=;
+	s=korg; t=1711988661;
+	bh=Jsyg7L1OAhp9889u4D6evZoZWoNpMt6+M/qnaMaw1Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=musemjHK7mK55GXO5MTZiLArYEY4ao92gBsQ8E+zVNjV57lQFnSSCKQmEvJDnMhDI
-	 JlA7wcgYg43f87k0fWLkiEaQanAys6drJm2WfhNyDT//DFkjIC/u+vCoTVBLeo8mI/
-	 Kbfc3nFr+InwMXs1Mkz9tmw/HrCaCtmNEK8jwPvI=
+	b=YqA/qI93VjcvhNiI5fg5uIw2lPpndi8pWif7ipKSs4mo/8OwjEyFnnvdRUJpkQnFu
+	 eflYS4/BW58RI/Vo3Uu5sCDuSZNYL/YY6ZqzWigBFtOiOFhMwkj7IO3A3VTjg9UcV6
+	 qRy4L5Zul3SvlY8ytXMH3MNtXhzlciDPQTRQn40I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Toledanes <chris.toledanes@hp.com>,
-	Carl Ng <carl.ng@hp.com>,
-	Max Nguyen <maxwell.nguyen@hp.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.7 250/432] Input: xpad - add additional HyperX Controller Identifiers
-Date: Mon,  1 Apr 2024 17:43:57 +0200
-Message-ID: <20240401152600.596359600@linuxfoundation.org>
+	Lu Yao <yaolu@kylinos.cn>,
+	Kees Cook <keescook@chromium.org>,
+	Paul Moore <paul@paul-moore.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	=?UTF-8?q?Marc=20Aur=C3=A8le=20La=20France?= <tsi@tuyoix.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 251/432] init/Kconfig: lower GCC version check for -Warray-bounds
+Date: Mon,  1 Apr 2024 17:43:58 +0200
+Message-ID: <20240401152600.625651725@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -46,51 +57,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Nguyen <maxwell.nguyen@hp.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit dd50f771af20fb02b1aecde04fbd085c872a9139 upstream.
+commit 3e00f5802fabf2f504070a591b14b648523ede13 upstream.
 
-Add additional HyperX device identifiers to xpad_device and xpad_table.
+We continue to see false positives from -Warray-bounds even in GCC 10,
+which is getting reported in a few places[1] still:
 
-Suggested-by: Chris Toledanes<chris.toledanes@hp.com>
-Reviewed-by: Carl Ng <carl.ng@hp.com>
-Signed-off-by: Max Nguyen <maxwell.nguyen@hp.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/44ad5ffa-76d8-4046-94ee-2ef171930ed2@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+security/security.c:811:2: warning: `memcpy' offset 32 is out of the bounds [0, 0] [-Warray-bounds]
+
+Lower the GCC version check from 11 to 10.
+
+Link: https://lkml.kernel.org/r/20240223170824.work.768-kees@kernel.org
+Reported-by: Lu Yao <yaolu@kylinos.cn>
+Closes: https://lore.kernel.org/lkml/20240117014541.8887-1-yaolu@kylinos.cn/
+Link: https://lore.kernel.org/linux-next/65d84438.620a0220.7d171.81a7@mx.google.com [1]
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Marc Aurèle La France <tsi@tuyoix.net>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ init/Kconfig |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -130,7 +130,12 @@ static const struct xpad_device {
- 	{ 0x0079, 0x18d4, "GPD Win 2 X-Box Controller", 0, XTYPE_XBOX360 },
- 	{ 0x03eb, 0xff01, "Wooting One (Legacy)", 0, XTYPE_XBOX360 },
- 	{ 0x03eb, 0xff02, "Wooting Two (Legacy)", 0, XTYPE_XBOX360 },
-+	{ 0x03f0, 0x038D, "HyperX Clutch", 0, XTYPE_XBOX360 },			/* wired */
-+	{ 0x03f0, 0x048D, "HyperX Clutch", 0, XTYPE_XBOX360 },			/* wireless */
- 	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
-+	{ 0x03f0, 0x07A0, "HyperX Clutch Gladiate RGB", 0, XTYPE_XBOXONE },
-+	{ 0x03f0, 0x08B6, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },		/* v2 */
-+	{ 0x03f0, 0x09B4, "HyperX Clutch Tanto", 0, XTYPE_XBOXONE },
- 	{ 0x044f, 0x0f00, "Thrustmaster Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0x0f03, "Thrustmaster Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
-@@ -463,6 +468,7 @@ static const struct usb_device_id xpad_t
- 	{ USB_INTERFACE_INFO('X', 'B', 0) },	/* Xbox USB-IF not-approved class */
- 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 controller */
- 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
-+	XPAD_XBOX360_VENDOR(0x03f0),		/* HP HyperX Xbox 360 controllers */
- 	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One controllers */
- 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft Xbox 360 controllers */
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -876,14 +876,14 @@ config CC_IMPLICIT_FALLTHROUGH
+ 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+ 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
+ 
+-# Currently, disable gcc-11+ array-bounds globally.
++# Currently, disable gcc-10+ array-bounds globally.
+ # It's still broken in gcc-13, so no upper bound yet.
+-config GCC11_NO_ARRAY_BOUNDS
++config GCC10_NO_ARRAY_BOUNDS
+ 	def_bool y
+ 
+ config CC_NO_ARRAY_BOUNDS
+ 	bool
+-	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC11_NO_ARRAY_BOUNDS
++	default y if CC_IS_GCC && GCC_VERSION >= 100000 && GCC10_NO_ARRAY_BOUNDS
+ 
+ #
+ # For architectures that know their GCC __int128 support is sound
 
 
