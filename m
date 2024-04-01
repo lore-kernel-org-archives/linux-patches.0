@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED5447A57;
-	Mon,  1 Apr 2024 15:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA5753E15;
+	Mon,  1 Apr 2024 15:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986879; cv=none; b=lWexUSdqKU3K0SHE2h8BAhKsQwf9QquNthQragMlKv3WavBxSa0EWTFmHxvRyXeRYLcFpdEnt7U1sDWCwnaShELxAcv0/YcB2tzX/rhWkrL+kuWwszFfF64UtQh/OHifCGSwIjxqjyxo+AImBCm20EtjDidpLub5BQ6mmD+pdf0=
+	t=1711986882; cv=none; b=mMfzn6NROfjdqC6/bs4vG9mOnUIJ/BwWeA4t7ytxtXhy3f5+TAp6cvJ5DY4TlXcQT4Xe6OAr7clxhS/CV/TIo0a8hboMmEg8x3bWFmvxzDg2Ov9t5S7M8kHNWKUslytG6X+c2f57VbWfnhp1Nx39r3xnsfsw0ErtLLo9fJjwtdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986879; c=relaxed/simple;
-	bh=bBzRvllH2PLbqDe5zlqRYoNs4jJgL+ilJ/XFsTAiDpI=;
+	s=arc-20240116; t=1711986882; c=relaxed/simple;
+	bh=j92lLH/g3LjFyMa6wxEl5nCeTg9NTC6oj4/H54fdigI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=depMR7NKuSIwJ18obZPEyneCWptixqsBQuY90Z5YU8XX4CfRBvDne7IObZNWoetIJDYPGk7nWu35yrAWur+tX9a/KdvDFOn4k2xtddFv2/sS+FbzgAqnV+N9n8wxthsQx5s+nQACtPIV3Vz9czMS8SmyAMTZmsEZ5L5ywxy6Epk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTyaBLD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBMLU8yjCQHYxXlf5CoygS8XKwF1sW657SAsjYvkGUEfsAFMENfpwZyvLaAZPyogYXPn8Ho1U6OJbrF8Zq62V3i6oY8lHIg6lQDigm7Zj9uw14c7wCsXI7p/5d4LEtBhJ//Mesg1WJcTF/9t60mj7PhMTXLbIZCJxsKBNv915R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPa7DSyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTyaBLD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200DFC43394;
-	Mon,  1 Apr 2024 15:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPa7DSyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364BBC433F1;
+	Mon,  1 Apr 2024 15:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986879;
-	bh=bBzRvllH2PLbqDe5zlqRYoNs4jJgL+ilJ/XFsTAiDpI=;
+	s=korg; t=1711986882;
+	bh=j92lLH/g3LjFyMa6wxEl5nCeTg9NTC6oj4/H54fdigI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTyaBLD3wjRu8EFzNA+mj3obfLrYhNiWTu86QNSDFZ3FIkcWryV1+pH0fqLsZrg7G
-	 n7jZfa0GWPbzqi0/D0DqM7YG76liJhuniTCZa5VxovRzkbrqv9jKdeTwnuRbvyIWHl
-	 o5rpGzcscdtEM2Q/4NgL9kC7eUVK1QliaZpLtG4o=
+	b=wPa7DSyUHhn6jSEhK6lm8BOf2UP/OQqRddRnFk7ZvWBNuuhjzjIbwYg66u4XRIIt4
+	 s6MrnWfCIQkJRw4nKQ4yCnJZ+gFEYtleS55zRyDOjT06R1e37O3DBI9FDmlUrd6e2p
+	 mi5hLP2PB656vwXW4bNWG52VyJpsVujAvMXbTcjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexander Aring <aahringo@redhat.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 115/399] mac802154: fix llsec key resources release in mac802154_llsec_key_del
-Date: Mon,  1 Apr 2024 17:41:21 +0200
-Message-ID: <20240401152552.623305855@linuxfoundation.org>
+Subject: [PATCH 6.8 116/399] mm: swap: fix race between free_swap_and_cache() and swapoff()
+Date: Mon,  1 Apr 2024 17:41:22 +0200
+Message-ID: <20240401152552.653009386@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,132 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit e8a1e58345cf40b7b272e08ac7b32328b2543e40 ]
+[ Upstream commit 82b1c07a0af603e3c47b906c8e991dc96f01688e ]
 
-mac802154_llsec_key_del() can free resources of a key directly without
-following the RCU rules for waiting before the end of a grace period. This
-may lead to use-after-free in case llsec_lookup_key() is traversing the
-list of keys in parallel with a key deletion:
+There was previously a theoretical window where swapoff() could run and
+teardown a swap_info_struct while a call to free_swap_and_cache() was
+running in another thread.  This could cause, amongst other bad
+possibilities, swap_page_trans_huge_swapped() (called by
+free_swap_and_cache()) to access the freed memory for swap_map.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 4 PID: 16000 at lib/refcount.c:25 refcount_warn_saturate+0x162/0x2a0
-Modules linked in:
-CPU: 4 PID: 16000 Comm: wpan-ping Not tainted 6.7.0 #19
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x162/0x2a0
-Call Trace:
- <TASK>
- llsec_lookup_key.isra.0+0x890/0x9e0
- mac802154_llsec_encrypt+0x30c/0x9c0
- ieee802154_subif_start_xmit+0x24/0x1e0
- dev_hard_start_xmit+0x13e/0x690
- sch_direct_xmit+0x2ae/0xbc0
- __dev_queue_xmit+0x11dd/0x3c20
- dgram_sendmsg+0x90b/0xd60
- __sys_sendto+0x466/0x4c0
- __x64_sys_sendto+0xe0/0x1c0
- do_syscall_64+0x45/0xf0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
+This is a theoretical problem and I haven't been able to provoke it from a
+test case.  But there has been agreement based on code review that this is
+possible (see link below).
 
-Also, ieee802154_llsec_key_entry structures are not freed by
-mac802154_llsec_key_del():
+Fix it by using get_swap_device()/put_swap_device(), which will stall
+swapoff().  There was an extra check in _swap_info_get() to confirm that
+the swap entry was not free.  This isn't present in get_swap_device()
+because it doesn't make sense in general due to the race between getting
+the reference and swapoff.  So I've added an equivalent check directly in
+free_swap_and_cache().
 
-unreferenced object 0xffff8880613b6980 (size 64):
-  comm "iwpan", pid 2176, jiffies 4294761134 (age 60.475s)
-  hex dump (first 32 bytes):
-    78 0d 8f 18 80 88 ff ff 22 01 00 00 00 00 ad de  x.......".......
-    00 00 00 00 00 00 00 00 03 00 cd ab 00 00 00 00  ................
-  backtrace:
-    [<ffffffff81dcfa62>] __kmem_cache_alloc_node+0x1e2/0x2d0
-    [<ffffffff81c43865>] kmalloc_trace+0x25/0xc0
-    [<ffffffff88968b09>] mac802154_llsec_key_add+0xac9/0xcf0
-    [<ffffffff8896e41a>] ieee802154_add_llsec_key+0x5a/0x80
-    [<ffffffff8892adc6>] nl802154_add_llsec_key+0x426/0x5b0
-    [<ffffffff86ff293e>] genl_family_rcv_msg_doit+0x1fe/0x2f0
-    [<ffffffff86ff46d1>] genl_rcv_msg+0x531/0x7d0
-    [<ffffffff86fee7a9>] netlink_rcv_skb+0x169/0x440
-    [<ffffffff86ff1d88>] genl_rcv+0x28/0x40
-    [<ffffffff86fec15c>] netlink_unicast+0x53c/0x820
-    [<ffffffff86fecd8b>] netlink_sendmsg+0x93b/0xe60
-    [<ffffffff86b91b35>] ____sys_sendmsg+0xac5/0xca0
-    [<ffffffff86b9c3dd>] ___sys_sendmsg+0x11d/0x1c0
-    [<ffffffff86b9c65a>] __sys_sendmsg+0xfa/0x1d0
-    [<ffffffff88eadbf5>] do_syscall_64+0x45/0xf0
-    [<ffffffff890000ea>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
+Details of how to provoke one possible issue (thanks to David Hildenbrand
+for deriving this):
 
-Handle the proper resource release in the RCU callback function
-mac802154_llsec_key_del_rcu().
+--8<-----
 
-Note that if llsec_lookup_key() finds a key, it gets a refcount via
-llsec_key_get() and locally copies key id from key_entry (which is a
-list element). So it's safe to call llsec_key_put() and free the list
-entry after the RCU grace period elapses.
+__swap_entry_free() might be the last user and result in
+"count == SWAP_HAS_CACHE".
 
-Found by Linux Verification Center (linuxtesting.org).
+swapoff->try_to_unuse() will stop as soon as soon as si->inuse_pages==0.
 
-Fixes: 5d637d5aabd8 ("mac802154: add llsec structures and mutators")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Message-ID: <20240228163840.6667-1-pchelkin@ispras.ru>
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+So the question is: could someone reclaim the folio and turn
+si->inuse_pages==0, before we completed swap_page_trans_huge_swapped().
+
+Imagine the following: 2 MiB folio in the swapcache. Only 2 subpages are
+still references by swap entries.
+
+Process 1 still references subpage 0 via swap entry.
+Process 2 still references subpage 1 via swap entry.
+
+Process 1 quits. Calls free_swap_and_cache().
+-> count == SWAP_HAS_CACHE
+[then, preempted in the hypervisor etc.]
+
+Process 2 quits. Calls free_swap_and_cache().
+-> count == SWAP_HAS_CACHE
+
+Process 2 goes ahead, passes swap_page_trans_huge_swapped(), and calls
+__try_to_reclaim_swap().
+
+__try_to_reclaim_swap()->folio_free_swap()->delete_from_swap_cache()->
+put_swap_folio()->free_swap_slot()->swapcache_free_entries()->
+swap_entry_free()->swap_range_free()->
+...
+WRITE_ONCE(si->inuse_pages, si->inuse_pages - nr_entries);
+
+What stops swapoff to succeed after process 2 reclaimed the swap cache
+but before process1 finished its call to swap_page_trans_huge_swapped()?
+
+--8<-----
+
+Link: https://lkml.kernel.org/r/20240306140356.3974886-1-ryan.roberts@arm.com
+Fixes: 7c00bafee87c ("mm/swap: free swap slots in batch")
+Closes: https://lore.kernel.org/linux-mm/65a66eb9-41f8-4790-8db2-0c70ea15979f@redhat.com/
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg802154.h |  1 +
- net/mac802154/llsec.c   | 18 +++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ mm/swapfile.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/cfg802154.h b/include/net/cfg802154.h
-index cd95711b12b8e..76d2cd2e2b309 100644
---- a/include/net/cfg802154.h
-+++ b/include/net/cfg802154.h
-@@ -401,6 +401,7 @@ struct ieee802154_llsec_key {
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 746aa9da53025..6fe0cc25535f5 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1227,6 +1227,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
+  * with get_swap_device() and put_swap_device(), unless the swap
+  * functions call get/put_swap_device() by themselves.
+  *
++ * Note that when only holding the PTL, swapoff might succeed immediately
++ * after freeing a swap entry. Therefore, immediately after
++ * __swap_entry_free(), the swap info might become stale and should not
++ * be touched without a prior get_swap_device().
++ *
+  * Check whether swap entry is valid in the swap device.  If so,
+  * return pointer to swap_info_struct, and keep the swap entry valid
+  * via preventing the swap device from being swapoff, until
+@@ -1604,13 +1609,19 @@ int free_swap_and_cache(swp_entry_t entry)
+ 	if (non_swap_entry(entry))
+ 		return 1;
  
- struct ieee802154_llsec_key_entry {
- 	struct list_head list;
-+	struct rcu_head rcu;
- 
- 	struct ieee802154_llsec_key_id id;
- 	struct ieee802154_llsec_key *key;
-diff --git a/net/mac802154/llsec.c b/net/mac802154/llsec.c
-index 8d2eabc71bbeb..f13b07ebfb98a 100644
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -265,19 +265,27 @@ int mac802154_llsec_key_add(struct mac802154_llsec *sec,
- 	return -ENOMEM;
- }
- 
-+static void mac802154_llsec_key_del_rcu(struct rcu_head *rcu)
-+{
-+	struct ieee802154_llsec_key_entry *pos;
-+	struct mac802154_llsec_key *mkey;
+-	p = _swap_info_get(entry);
++	p = get_swap_device(entry);
+ 	if (p) {
++		if (WARN_ON(data_race(!p->swap_map[swp_offset(entry)]))) {
++			put_swap_device(p);
++			return 0;
++		}
 +
-+	pos = container_of(rcu, struct ieee802154_llsec_key_entry, rcu);
-+	mkey = container_of(pos->key, struct mac802154_llsec_key, key);
-+
-+	llsec_key_put(mkey);
-+	kfree_sensitive(pos);
-+}
-+
- int mac802154_llsec_key_del(struct mac802154_llsec *sec,
- 			    const struct ieee802154_llsec_key_id *key)
- {
- 	struct ieee802154_llsec_key_entry *pos;
- 
- 	list_for_each_entry(pos, &sec->table.keys, list) {
--		struct mac802154_llsec_key *mkey;
--
--		mkey = container_of(pos->key, struct mac802154_llsec_key, key);
--
- 		if (llsec_key_id_equal(&pos->id, key)) {
- 			list_del_rcu(&pos->list);
--			llsec_key_put(mkey);
-+			call_rcu(&pos->rcu, mac802154_llsec_key_del_rcu);
- 			return 0;
- 		}
+ 		count = __swap_entry_free(p, entry);
+ 		if (count == SWAP_HAS_CACHE &&
+ 		    !swap_page_trans_huge_swapped(p, entry))
+ 			__try_to_reclaim_swap(p, swp_offset(entry),
+ 					      TTRS_UNMAPPED | TTRS_FULL);
++		put_swap_device(p);
  	}
+ 	return p != NULL;
+ }
 -- 
 2.43.0
 
