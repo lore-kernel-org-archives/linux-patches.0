@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A581CA8F;
-	Mon,  1 Apr 2024 16:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4EB1CA8F;
+	Mon,  1 Apr 2024 16:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987310; cv=none; b=YeZDS2+JomzISNHdw4fGOYByh2akmb6g+2C/y88JMRoHzwDPwKCsnSiUWsYFM/FlHnRTvbr6xOFebX80PU8CND9N8hl+6AF/7q+DECoGNR6SqzGgrXNx1l8ZhbXJWH/7GnwRj0g/UP/x5+598iZsafQreHUNlIA+Q+RHeWsM6H4=
+	t=1711987313; cv=none; b=CXgYvV2dY7ed8xApoWN9euj7EQsNkM2hbMei7t//nVWFyX3nnklIy7aFidy+Q2/hyYcWExZNo98G9NbNYdsfgvW83EtnNQF5HxHpWZFuAgeU+lFSZtq44hQ1HyZrhET4HzWnbwuDHOJFs33I7d1icDiICLQKhpy+iKT0UVWpUbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987310; c=relaxed/simple;
-	bh=ULQD9+D/G35WUrDgyhK+EULijTsmCmR1xfss97MnWn8=;
+	s=arc-20240116; t=1711987313; c=relaxed/simple;
+	bh=vwdMGU5u7oAp1EnTLn7cmsbe0wE/DGM4ZoIqbikCL1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNLXbFUDzR7HV+fOTaEXtaYF+IwARyMRQlqsDB/FWZuO2BMlLrKw4EXPYCrBxShfXd9VAvYeMWx0BXbMaDcb7CeAz45yaKHYxIQLC+3Be2v8DUyr3zyXPDLAlneUhSscBR1o3JvuW3bhhsO08blkmdvnWX6gYwWroPNwpok39XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vYUQOOU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lb8rvrErjaTBCuc4UqWFhskXg8RTilBC/7X4xtdm7GY4LfGZOz60jOmEgXf6BZBJ0/ovQnd1XF0F3ytaHoAObxqeCodTCNMxQ+EaYg2K85C0bi+aQkKcOgg2/1zVkCsNf0RELMYYk7nr9ipPPVEJFcVDKx8DDVrlnn+HznvARrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tT8l5YwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vYUQOOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA4AC433F1;
-	Mon,  1 Apr 2024 16:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tT8l5YwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D88DC433F1;
+	Mon,  1 Apr 2024 16:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987310;
-	bh=ULQD9+D/G35WUrDgyhK+EULijTsmCmR1xfss97MnWn8=;
+	s=korg; t=1711987313;
+	bh=vwdMGU5u7oAp1EnTLn7cmsbe0wE/DGM4ZoIqbikCL1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vYUQOOUeWeToTBR8j4jVtf4vRC+bclv6J4AoQr6ytd4R+9/o5ehcXvog/syldFZN
-	 eSMEV7qEoWGPsAQhQbgg8yqaiCW+WDn2t9RF5beprEkDbjLKUt9ejFHY7xyOFyTkWo
-	 q0FM/VOhT+DlcH9HgULejXo7TuhVERgXjv6G9FwM=
+	b=tT8l5YwU4t0G/G1JXdoLrg9QekfmbH5nXzR+rXtK22PticGLbe5q94YoTX75mx0hV
+	 uGyIt9cqqUG7tCSv/bqQVBiSa8RpVNmBmK0HlFnBeaM7YLr7qX+ICCzhahoKrdYYUj
+	 Nfo9w2biyAataPIlTRYlNPSbzIYJoenhstLuIh90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Wang <me@jwang.link>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.8 248/399] ASoC: amd: yc: Revert "add new YC platform variant (0x63) support"
-Date: Mon,  1 Apr 2024 17:43:34 +0200
-Message-ID: <20240401152556.573976129@linuxfoundation.org>
+	Rohit Keshri <rkeshri@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linuxfoundation.org>
+Subject: [PATCH 6.8 249/399] Fix memory leak in posix_clock_open()
+Date: Mon,  1 Apr 2024 17:43:35 +0200
+Message-ID: <20240401152556.603032606@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,37 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Wang <me@jwang.link>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 37bee1855d0e3b6dbeb8de71895f6f68cad137be upstream.
+commit 5b4cdd9c5676559b8a7c944ac5269b914b8c0bb8 upstream.
 
-This reverts commit 316a784839b21b122e1761cdca54677bb19a47fa,
-that enabled Yellow Carp (YC) driver for PCI revision id 0x63.
+If the clk ops.open() function returns an error, we don't release the
+pccontext we allocated for this clock.
 
-Mukunda Vijendar [1] points out that revision 0x63 is Pink
-Sardine platform, not Yellow Carp. The YC driver should not
-be enabled for this platform. This patch prevents the YC
-driver from being incorrectly enabled.
+Re-organize the code slightly to make it all more obvious.
 
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-
-Signed-off-by: Jiawei Wang <me@jwang.link>
-Link: https://msgid.link/r/20240313015853.3573242-3-me@jwang.link
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Rohit Keshri <rkeshri@redhat.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: 60c6946675fc ("posix-clock: introduce posix_clock_context concept")
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/pci-acp6x.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/time/posix-clock.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/sound/soc/amd/yc/pci-acp6x.c
-+++ b/sound/soc/amd/yc/pci-acp6x.c
-@@ -162,7 +162,6 @@ static int snd_acp6x_probe(struct pci_de
- 	/* Yellow Carp device check */
- 	switch (pci->revision) {
- 	case 0x60:
--	case 0x63:
- 	case 0x6f:
- 		break;
- 	default:
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -129,15 +129,17 @@ static int posix_clock_open(struct inode
+ 		goto out;
+ 	}
+ 	pccontext->clk = clk;
+-	fp->private_data = pccontext;
+-	if (clk->ops.open)
++	if (clk->ops.open) {
+ 		err = clk->ops.open(pccontext, fp->f_mode);
+-	else
+-		err = 0;
+-
+-	if (!err) {
+-		get_device(clk->dev);
++		if (err) {
++			kfree(pccontext);
++			goto out;
++		}
+ 	}
++
++	fp->private_data = pccontext;
++	get_device(clk->dev);
++	err = 0;
+ out:
+ 	up_read(&clk->rwsem);
+ 	return err;
 
 
