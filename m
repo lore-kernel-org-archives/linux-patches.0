@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AED44AEC1;
-	Mon,  1 Apr 2024 16:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841894653C;
+	Mon,  1 Apr 2024 16:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990113; cv=none; b=h3DP+bhhUd7NzW3asTO4MZhpLO6Iq9EgEXhHHhKHJohajAYbElrix2vobIAZg2oYECqaB6z+aINVae2fHsGd81EmLWO+9VYhWaIE9ZRWHhIIpqAY2vWfHepa0lY3FkOTe9qdFszHEmlw3IemyTBGkq57FGutvVwc1/EYA0ZS1nE=
+	t=1711990116; cv=none; b=ctEonyGmAeizoQHz1UQssbkOtOjKXCX4U8QeUscOTIo8pAjzYE/nQTMyVsw9L3toEOeODUhjEzzdpc5C6Z+6u/ey830w0OTrDFNHHYC3VMXWAMbauj8jO/8o7NLV4lm+b1nPGUbFMrMRF/f2hWaw6IG5gpGUrMTgF6c9qzCIy9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990113; c=relaxed/simple;
-	bh=k+6ugTb+FT+HBGB3FBdd9i1YWqSRoYCzyBtpzvp73hY=;
+	s=arc-20240116; t=1711990116; c=relaxed/simple;
+	bh=g7NbGwDHdm77VQE7+H+cg5muI5rk2QsyDENGCnxXpWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7O5/jWOO+6wsBhM+A9o7MildDcpZfjeiCk17lb/pZG6O1+3mfUb+1h9pkkh64S2KdyyFmZL8oVKGs3JlA5L4odz2fTtHH8XlZdBZqpYMCqq5APdWDfenrNg5KUSAClaGKLC8AO8CIE4U2LfMVF21HuFE+RAB6w6cqHBShL9WyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvTr2ujT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l8llDQ6uNLnVTk90qj6CYTxl9v8B7HhM0sjFMuPfZduOsPF2RWA8XP/Qnk2Bz+R5UpwrxwOvAI87oRfAtXH8sneeEKLj4NQoMlZc/tZGWH5Q5slGPTROjwHwpViFaaMq8KUiTBd9OKqrCbIX4bYD25HxasRzstI8jF/6qthbB0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNqtdsB5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvTr2ujT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAF8C433F1;
-	Mon,  1 Apr 2024 16:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNqtdsB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B15AC433C7;
+	Mon,  1 Apr 2024 16:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990113;
-	bh=k+6ugTb+FT+HBGB3FBdd9i1YWqSRoYCzyBtpzvp73hY=;
+	s=korg; t=1711990116;
+	bh=g7NbGwDHdm77VQE7+H+cg5muI5rk2QsyDENGCnxXpWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvTr2ujTZf5qFV5joehQvnj09IDJh6LKBCe7qG1c+vKx1OuQLKPh1w50K+4SEbaCL
-	 RdlH4ffai9O1pz6xGNaR7zG8ZaV72K2eYqlmflcFcIIUjNxfAYSelEGcztL/6O5Jrl
-	 HyDwJYtyXm7BGnoc8lM+2z04oTCAK4sD+FH+HLzs=
+	b=QNqtdsB5BfFqrcqwHGUfdSxRsuRdsZhrzO3+Rf2OxG7c1Z6u2Cpc/i9Z2kY8zz3zK
+	 fLV/XIqdfTo7eTFKvz9K1Q4mx8j+xX+7joj8jumEjYGvhREw/MBfqo/Dx4CDSi7HBF
+	 HGJvJO4DDDNfGrsiwoupZGq9l6ZnqJUzhnW6FJ9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>
-Subject: [PATCH 6.6 251/396] wifi: iwlwifi: pcie: fix RB status reading
-Date: Mon,  1 Apr 2024 17:45:00 +0200
-Message-ID: <20240401152555.394018746@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.6 252/396] wifi: rtw88: 8821cu: Fix connection failure
+Date: Mon,  1 Apr 2024 17:45:01 +0200
+Message-ID: <20240401152555.422557555@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,100 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 9f9797c7de18d2ec6be4ef6e0abbaea585040b39 upstream.
+commit 605d7c0b05eecb985273b1647070497142c470d3 upstream.
 
-On newer hardware, a queue's RB status / write pointer
-can be bigger than 4095 (0xFFF), so we cannot mask the
-value by 0xFFF unconditionally. Since anyway that's
-only necessary on older hardware, move the masking to
-the helper function and apply it only for older HW.
-This also moves the endian conversion in to handle it
-more easily.
+Clear bit 8 of REG_SYS_STATUS1 after MAC power on.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230830112059.7be2a3fff6f4.I94f11dee314a4f7c1941d2d223936b1fa8aa9ee4@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Without this, some RTL8821CU and RTL8811CU cannot connect to any
+network:
+
+Feb 19 13:33:11 ideapad2 kernel: wlp3s0f3u2: send auth to
+	90:55:de:__:__:__ (try 1/3)
+Feb 19 13:33:13 ideapad2 kernel: wlp3s0f3u2: send auth to
+	90:55:de:__:__:__ (try 2/3)
+Feb 19 13:33:14 ideapad2 kernel: wlp3s0f3u2: send auth to
+	90:55:de:__:__:__ (try 3/3)
+Feb 19 13:33:15 ideapad2 kernel: wlp3s0f3u2: authentication with
+	90:55:de:__:__:__ timed out
+
+The RTL8822CU and RTL8822BU out-of-tree drivers do this as well, so do
+it for all three types of chips.
+
+Tested with RTL8811CU (Tenda U9 V2.0).
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/aeeefad9-27c8-4506-a510-ef9a9a8731a4@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/internal.h |    8 ++++----
- drivers/net/wireless/intel/iwlwifi/pcie/rx.c       |    2 +-
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c    |   12 ++++--------
- 3 files changed, 9 insertions(+), 13 deletions(-)
+ drivers/net/wireless/realtek/rtw88/mac.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
-@@ -190,17 +190,17 @@ struct iwl_rb_allocator {
-  * iwl_get_closed_rb_stts - get closed rb stts from different structs
-  * @rxq - the rxq to get the rb stts from
-  */
--static inline __le16 iwl_get_closed_rb_stts(struct iwl_trans *trans,
--					    struct iwl_rxq *rxq)
-+static inline u16 iwl_get_closed_rb_stts(struct iwl_trans *trans,
-+					 struct iwl_rxq *rxq)
- {
- 	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_AX210) {
- 		__le16 *rb_stts = rxq->rb_stts;
+--- a/drivers/net/wireless/realtek/rtw88/mac.c
++++ b/drivers/net/wireless/realtek/rtw88/mac.c
+@@ -309,6 +309,13 @@ static int rtw_mac_power_switch(struct r
+ 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
+ 	ret = rtw_pwr_seq_parser(rtwdev, pwr_seq);
  
--		return READ_ONCE(*rb_stts);
-+		return le16_to_cpu(READ_ONCE(*rb_stts));
- 	} else {
- 		struct iwl_rb_status *rb_stts = rxq->rb_stts;
++	if (pwr_on && rtw_hci_type(rtwdev) == RTW_HCI_TYPE_USB) {
++		if (chip->id == RTW_CHIP_TYPE_8822C ||
++		    chip->id == RTW_CHIP_TYPE_8822B ||
++		    chip->id == RTW_CHIP_TYPE_8821C)
++			rtw_write8_clr(rtwdev, REG_SYS_STATUS1 + 1, BIT(0));
++	}
++
+ 	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_SDIO)
+ 		rtw_write32(rtwdev, REG_SDIO_HIMR, imr);
  
--		return READ_ONCE(rb_stts->closed_rb_num);
-+		return le16_to_cpu(READ_ONCE(rb_stts->closed_rb_num)) & 0xFFF;
- 	}
- }
- 
---- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-@@ -1510,7 +1510,7 @@ restart:
- 	spin_lock(&rxq->lock);
- 	/* uCode's read index (stored in shared DRAM) indicates the last Rx
- 	 * buffer that the driver may process (last buffer filled by ucode). */
--	r = le16_to_cpu(iwl_get_closed_rb_stts(trans, rxq)) & 0x0FFF;
-+	r = iwl_get_closed_rb_stts(trans, rxq);
- 	i = rxq->read;
- 
- 	/* W/A 9000 device step A0 wrap-around bug */
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -2714,11 +2714,9 @@ static ssize_t iwl_dbgfs_rx_queue_read(s
- 		pos += scnprintf(buf + pos, bufsz - pos, "\tfree_count: %u\n",
- 				 rxq->free_count);
- 		if (rxq->rb_stts) {
--			u32 r =	__le16_to_cpu(iwl_get_closed_rb_stts(trans,
--								     rxq));
-+			u32 r =	iwl_get_closed_rb_stts(trans, rxq);
- 			pos += scnprintf(buf + pos, bufsz - pos,
--					 "\tclosed_rb_num: %u\n",
--					 r & 0x0FFF);
-+					 "\tclosed_rb_num: %u\n", r);
- 		} else {
- 			pos += scnprintf(buf + pos, bufsz - pos,
- 					 "\tclosed_rb_num: Not Allocated\n");
-@@ -3091,7 +3089,7 @@ static u32 iwl_trans_pcie_dump_rbs(struc
- 
- 	spin_lock_bh(&rxq->lock);
- 
--	r = le16_to_cpu(iwl_get_closed_rb_stts(trans, rxq)) & 0x0FFF;
-+	r = iwl_get_closed_rb_stts(trans, rxq);
- 
- 	for (i = rxq->read, j = 0;
- 	     i != r && j < allocated_rb_nums;
-@@ -3387,9 +3385,7 @@ iwl_trans_pcie_dump_data(struct iwl_tran
- 		/* Dump RBs is supported only for pre-9000 devices (1 queue) */
- 		struct iwl_rxq *rxq = &trans_pcie->rxq[0];
- 		/* RBs */
--		num_rbs =
--			le16_to_cpu(iwl_get_closed_rb_stts(trans, rxq))
--			& 0x0FFF;
-+		num_rbs = iwl_get_closed_rb_stts(trans, rxq);
- 		num_rbs = (num_rbs - rxq->read) & RX_QUEUE_MASK;
- 		len += num_rbs * (sizeof(*data) +
- 				  sizeof(struct iwl_fw_error_dump_rb) +
 
 
