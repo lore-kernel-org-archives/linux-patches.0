@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2BD1CA8F;
-	Mon,  1 Apr 2024 16:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07621CA8F;
+	Mon,  1 Apr 2024 16:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987583; cv=none; b=ipS/E5h17tjQhUqwN2hYP6/N6JCKdMAvPU5ez2jZIZPo7vnM9WojVzsKeCtcQ/tlFe0hSmO7IBgnMg0cegcSa1CMiZtAIH86yiZwIJ2UzM8x+kadTOA1oK5bjW8nZM9U1B2GFT/RJ4qrbwxF9MMUUw/tpNtH8S9rRt7TBX7tk4M=
+	t=1711987586; cv=none; b=ePon7EaRKCWtJLwAj/H6cMU30E7fW0Ghds3DgZKsf/ac22KGDSUXqmOCBWjpEG2l4B6ke6Sx+OMA6MLCZe2Ngr/4k+s77gcIUn9lddC3mWvXX73C9gkUc7PCI8ahdEH2QKbWg5tMvFc9jTka9USiPX7HFjR9FnRLOof5nv315fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987583; c=relaxed/simple;
-	bh=p1pw49vTsizSbVyH8NJk+2H99YQdWrKDwJyG3/3/56Q=;
+	s=arc-20240116; t=1711987586; c=relaxed/simple;
+	bh=rHhE3d1+Ftz8Scrylh0ADebtcs6el7WJTQigHPjw9Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VAF07p1t6a5JeY51UhIfj1RGkMpRQ3Kvat8vwXSGIkJrIsDldPw8XcmUyPTs+QdH6ElGLkLD2odzx0rHbmwQk5oPeJvdRf8FHfejmE8lxHN8UdxtdZCSRrspIc8YWbQlQylFJpFq5JABK7xnRY3qN5mZtRuHwPD9xJ5JC3Drt5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjZkmliB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hjuXrCbuC9FLbpAbmqoWe8Qfmi7hjk+h32kKpxuIwUaGAwiJA9nFXOZFm0/CJyGTUO04szkdj3Xughc47C6B8DhIhasu88JToPUA9oXvPJUFlBZ0cTcR62QqVB1JvhNVFwaWNxjIl2ghEtjpu67GDrNpUs+rLQJaiiiOzswF2a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNLf3PMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjZkmliB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9372C433F1;
-	Mon,  1 Apr 2024 16:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNLf3PMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5DBC433C7;
+	Mon,  1 Apr 2024 16:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987583;
-	bh=p1pw49vTsizSbVyH8NJk+2H99YQdWrKDwJyG3/3/56Q=;
+	s=korg; t=1711987586;
+	bh=rHhE3d1+Ftz8Scrylh0ADebtcs6el7WJTQigHPjw9Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjZkmliBbKfXQKq87vHPV+6VZ8KPcSQDxKv2lYeaFKnMz6lpg7iTXwGsn63/Atupu
-	 vxehLeop/BeDKauBkbbTHOxYYPu6i5p5VhkdlmGVctaKUVMeESuIvqwRzwzgUZ7pzB
-	 AMCjNFWncNR71pG9K0Yd2HjiE5bRBBfz8PbW2p90=
+	b=oNLf3PMn7vgif7YyOXgTzmVLKMIJ6jZY9iVriRFRJkYZcerhBR2Sg/iwa0FqSRnIG
+	 ptq9nF6sLx/wmf/qt//jw3CdX8hsqwyPx0Hz2Ds06uHnaDH9esYlfbGj166qt0Svae
+	 r4UwyFCRk4mToXPx2SIBrkSnwO4AAc1Ro0b3KXw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.8 323/399] drm/xe/query: fix gt_id bounds check
-Date: Mon,  1 Apr 2024 17:44:49 +0200
-Message-ID: <20240401152558.821707367@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 332/399] drm/i915/bios: Tolerate devdata==NULL in intel_bios_encoder_supports_dp_dual_mode()
+Date: Mon,  1 Apr 2024 17:44:58 +0200
+Message-ID: <20240401152559.088450492@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -46,48 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 45c30b2923e5c53e0ef057a8a525b0456adde18e upstream.
+commit 32e39bab59934bfd3f37097d4dd85ac5eb0fd549 upstream.
 
-The user provided gt_id should always be less than the
-XE_MAX_GT_PER_TILE.
+If we have no VBT, or the VBT didn't declare the encoder
+in question, we won't have the 'devdata' for the encoder.
+Instead of oopsing just bail early.
 
-Fixes: 7793d00d1bf5 ("drm/xe: Correlate engine and cpu timestamps with better accuracy")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Acked-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240321110629.334701-2-matthew.auld@intel.com
-(cherry picked from commit 4b275f502a0d3668195762fb55fa00e659ad1b0b)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+We won't be able to tell whether the port is DP++ or not,
+but so be it.
+
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10464
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240319092443.15769-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 26410896206342c8a80d2b027923e9ee7d33b733)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_query.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_bios.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_query.c b/drivers/gpu/drm/xe/xe_query.c
-index 92bb06c0586e..075f9eaef031 100644
---- a/drivers/gpu/drm/xe/xe_query.c
-+++ b/drivers/gpu/drm/xe/xe_query.c
-@@ -132,7 +132,7 @@ query_engine_cycles(struct xe_device *xe,
- 		return -EINVAL;
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -3344,6 +3344,9 @@ bool intel_bios_encoder_supports_dp_dual
+ {
+ 	const struct child_device_config *child = &devdata->child;
  
- 	eci = &resp.eci;
--	if (eci->gt_id > XE_MAX_GT_PER_TILE)
-+	if (eci->gt_id >= XE_MAX_GT_PER_TILE)
- 		return -EINVAL;
- 
- 	gt = xe_device_get_gt(xe, eci->gt_id);
--- 
-2.44.0
-
++	if (!devdata)
++		return false;
++
+ 	if (!intel_bios_encoder_supports_dp(devdata) ||
+ 	    !intel_bios_encoder_supports_hdmi(devdata))
+ 		return false;
 
 
