@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D297FBA3F;
-	Mon,  1 Apr 2024 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E783E63E;
+	Mon,  1 Apr 2024 16:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990492; cv=none; b=gjf7cBbzhoZ5ufXFWzYAI7glA6ncOktp8t67+1PT7lOFbDtQxLsz7L4v/aYYsQ8ILMAaILZDOBGDvljUqkwfNNimdLt+lfgLu4LAe2T6uCxrB9+1t0dDzqkjhZxMWf00OrnJuRgUPxB0rJg+pNvlScZ8Ind6EIWS0K0ZWF7DYI4=
+	t=1711990496; cv=none; b=DPvzmZCtnQCmDB+BBaSMLd+RFG0S1t7050l9dHmHEJdeFKDo8iURWEBT9jf4T1gmqQUaxeGvwJIhMoZUe8vTpAy/jtL0ML6jlob9PNOwtt0c8ZC2p9teEOEs8CLgl4oCOBg9AA+xa+3bMI25ATcJSwCJAkI+vX5hmHn7o6lzMVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990492; c=relaxed/simple;
-	bh=vyt+Blv6JyHtLr4sn5hIanCNuK6QtGuY34waF+KYFXM=;
+	s=arc-20240116; t=1711990496; c=relaxed/simple;
+	bh=2IJzJtLggH1Uuyeca0ClhW9Dyk2zfbhJGkZy73DzY5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bp2L0n/q123w/idt+7+Ds30jwIAAbCu7F+tR6stDQuWzAhMGW+RLTUVQ7uNDS1g+CtO3zLsUvtwHZDmKUJFVdO5J7wfWMnKCF2NSyGnL1CFsE5UkP+uKRvQjzv5S/QagcHV+Kzi9aLoU42fcQDlvNiFST3N7hEGZYnWeN1qk070=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8kgNs+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TZK+qZOnqV9uiOr5tgqiy8V99C1jiV3VciPrDHuN68rcCdkbUs46GE3dEVNu5h5Tae0XSDRCqZGkPm2kJUvXr8ON+LA5C+ajy8o0joHIQSfpGVKh7eJ/584XH2Gw174CnKnXPoyvLZ+5f6WfhW+pjrLsgaaa9GcuBj9BYjkpMtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXaGNFTO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8kgNs+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4C9C433C7;
-	Mon,  1 Apr 2024 16:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXaGNFTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1D1C433F1;
+	Mon,  1 Apr 2024 16:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990492;
-	bh=vyt+Blv6JyHtLr4sn5hIanCNuK6QtGuY34waF+KYFXM=;
+	s=korg; t=1711990495;
+	bh=2IJzJtLggH1Uuyeca0ClhW9Dyk2zfbhJGkZy73DzY5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8kgNs+M4lyGcDsmPs4vsX5cK++cf9nMI0okaFWXztIWxhKKsZwK3099UfekzaAuh
-	 dZOCcpeXjonsyCIAxoYIlGRWhL7YW9y+WFLjm5ZB8cBXFJomqpbM8kSOse0/IGg3+s
-	 Vi8V5GhAr37xWAryoUtoVBkhEgrGK0P8PoMrtPMQ=
+	b=SXaGNFTO7ZERmWI4Z97HDvXM1le9D5P658ILwn9foNjmn1ztiYF7DGIB1LS/7Fd3u
+	 /oTM2CRblagUyLfGqakBpu7ceNYE0ot8wavm4/r6lMcUghOYzmmcckr9UV+J6UdXrc
+	 /nudiwzE51k42ME/svWWruJm/PWKlx08/5K5F82k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Sharma <shashank.sharma@amd.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 341/396] drm/amdgpu: fix deadlock while reading mqd from debugfs
-Date: Mon,  1 Apr 2024 17:46:30 +0200
-Message-ID: <20240401152558.079891483@linuxfoundation.org>
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>
+Subject: [PATCH 6.6 342/396] drm/i915/hwmon: Fix locking inversion in sysfs getter
+Date: Mon,  1 Apr 2024 17:46:31 +0200
+Message-ID: <20240401152558.109624123@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,207 +53,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit 8678b1060ae2b75feb60b87e5b75e17374e3c1c5 upstream.
+commit b212b79768ccde74429f872c37618c543fa11333 upstream.
 
-An errant disk backup on my desktop got into debugfs and triggered the
-following deadlock scenario in the amdgpu debugfs files. The machine
-also hard-resets immediately after those lines are printed (although I
-wasn't able to reproduce that part when reading by hand):
+In i915 hwmon sysfs getter path we now take a hwmon_lock, then acquire an
+rpm wakeref.  That results in lock inversion:
 
-[ 1318.016074][ T1082] ======================================================
-[ 1318.016607][ T1082] WARNING: possible circular locking dependency detected
-[ 1318.017107][ T1082] 6.8.0-rc7-00015-ge0c8221b72c0 #17 Not tainted
-[ 1318.017598][ T1082] ------------------------------------------------------
-[ 1318.018096][ T1082] tar/1082 is trying to acquire lock:
-[ 1318.018585][ T1082] ffff98c44175d6a0 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x40/0x80
-[ 1318.019084][ T1082]
-[ 1318.019084][ T1082] but task is already holding lock:
-[ 1318.020052][ T1082] ffff98c4c13f55f8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: amdgpu_debugfs_mqd_read+0x6a/0x250 [amdgpu]
-[ 1318.020607][ T1082]
-[ 1318.020607][ T1082] which lock already depends on the new lock.
-[ 1318.020607][ T1082]
-[ 1318.022081][ T1082]
-[ 1318.022081][ T1082] the existing dependency chain (in reverse order) is:
-[ 1318.023083][ T1082]
-[ 1318.023083][ T1082] -> #2 (reservation_ww_class_mutex){+.+.}-{3:3}:
-[ 1318.024114][ T1082]        __ww_mutex_lock.constprop.0+0xe0/0x12f0
-[ 1318.024639][ T1082]        ww_mutex_lock+0x32/0x90
-[ 1318.025161][ T1082]        dma_resv_lockdep+0x18a/0x330
-[ 1318.025683][ T1082]        do_one_initcall+0x6a/0x350
-[ 1318.026210][ T1082]        kernel_init_freeable+0x1a3/0x310
-[ 1318.026728][ T1082]        kernel_init+0x15/0x1a0
-[ 1318.027242][ T1082]        ret_from_fork+0x2c/0x40
-[ 1318.027759][ T1082]        ret_from_fork_asm+0x11/0x20
-[ 1318.028281][ T1082]
-[ 1318.028281][ T1082] -> #1 (reservation_ww_class_acquire){+.+.}-{0:0}:
-[ 1318.029297][ T1082]        dma_resv_lockdep+0x16c/0x330
-[ 1318.029790][ T1082]        do_one_initcall+0x6a/0x350
-[ 1318.030263][ T1082]        kernel_init_freeable+0x1a3/0x310
-[ 1318.030722][ T1082]        kernel_init+0x15/0x1a0
-[ 1318.031168][ T1082]        ret_from_fork+0x2c/0x40
-[ 1318.031598][ T1082]        ret_from_fork_asm+0x11/0x20
-[ 1318.032011][ T1082]
-[ 1318.032011][ T1082] -> #0 (&mm->mmap_lock){++++}-{3:3}:
-[ 1318.032778][ T1082]        __lock_acquire+0x14bf/0x2680
-[ 1318.033141][ T1082]        lock_acquire+0xcd/0x2c0
-[ 1318.033487][ T1082]        __might_fault+0x58/0x80
-[ 1318.033814][ T1082]        amdgpu_debugfs_mqd_read+0x103/0x250 [amdgpu]
-[ 1318.034181][ T1082]        full_proxy_read+0x55/0x80
-[ 1318.034487][ T1082]        vfs_read+0xa7/0x360
-[ 1318.034788][ T1082]        ksys_read+0x70/0xf0
-[ 1318.035085][ T1082]        do_syscall_64+0x94/0x180
-[ 1318.035375][ T1082]        entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[ 1318.035664][ T1082]
-[ 1318.035664][ T1082] other info that might help us debug this:
-[ 1318.035664][ T1082]
-[ 1318.036487][ T1082] Chain exists of:
-[ 1318.036487][ T1082]   &mm->mmap_lock --> reservation_ww_class_acquire --> reservation_ww_class_mutex
-[ 1318.036487][ T1082]
-[ 1318.037310][ T1082]  Possible unsafe locking scenario:
-[ 1318.037310][ T1082]
-[ 1318.037838][ T1082]        CPU0                    CPU1
-[ 1318.038101][ T1082]        ----                    ----
-[ 1318.038350][ T1082]   lock(reservation_ww_class_mutex);
-[ 1318.038590][ T1082]                                lock(reservation_ww_class_acquire);
-[ 1318.038839][ T1082]                                lock(reservation_ww_class_mutex);
-[ 1318.039083][ T1082]   rlock(&mm->mmap_lock);
-[ 1318.039328][ T1082]
-[ 1318.039328][ T1082]  *** DEADLOCK ***
-[ 1318.039328][ T1082]
-[ 1318.040029][ T1082] 1 lock held by tar/1082:
-[ 1318.040259][ T1082]  #0: ffff98c4c13f55f8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: amdgpu_debugfs_mqd_read+0x6a/0x250 [amdgpu]
-[ 1318.040560][ T1082]
-[ 1318.040560][ T1082] stack backtrace:
-[ 1318.041053][ T1082] CPU: 22 PID: 1082 Comm: tar Not tainted 6.8.0-rc7-00015-ge0c8221b72c0 #17 3316c85d50e282c5643b075d1f01a4f6365e39c2
-[ 1318.041329][ T1082] Hardware name: Gigabyte Technology Co., Ltd. B650 AORUS PRO AX/B650 AORUS PRO AX, BIOS F20 12/14/2023
-[ 1318.041614][ T1082] Call Trace:
-[ 1318.041895][ T1082]  <TASK>
-[ 1318.042175][ T1082]  dump_stack_lvl+0x4a/0x80
-[ 1318.042460][ T1082]  check_noncircular+0x145/0x160
-[ 1318.042743][ T1082]  __lock_acquire+0x14bf/0x2680
-[ 1318.043022][ T1082]  lock_acquire+0xcd/0x2c0
-[ 1318.043301][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.043580][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.043856][ T1082]  __might_fault+0x58/0x80
-[ 1318.044131][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.044408][ T1082]  amdgpu_debugfs_mqd_read+0x103/0x250 [amdgpu 8fe2afaa910cbd7654c8cab23563a94d6caebaab]
-[ 1318.044749][ T1082]  full_proxy_read+0x55/0x80
-[ 1318.045042][ T1082]  vfs_read+0xa7/0x360
-[ 1318.045333][ T1082]  ksys_read+0x70/0xf0
-[ 1318.045623][ T1082]  do_syscall_64+0x94/0x180
-[ 1318.045913][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.046201][ T1082]  ? lockdep_hardirqs_on+0x7d/0x100
-[ 1318.046487][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.046773][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047057][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047337][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047611][ T1082]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[ 1318.047887][ T1082] RIP: 0033:0x7f480b70a39d
-[ 1318.048162][ T1082] Code: 91 ba 0d 00 f7 d8 64 89 02 b8 ff ff ff ff eb b2 e8 18 a3 01 00 0f 1f 84 00 00 00 00 00 80 3d a9 3c 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 53 48 83
-[ 1318.048769][ T1082] RSP: 002b:00007ffde77f5c68 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[ 1318.049083][ T1082] RAX: ffffffffffffffda RBX: 0000000000000800 RCX: 00007f480b70a39d
-[ 1318.049392][ T1082] RDX: 0000000000000800 RSI: 000055c9f2120c00 RDI: 0000000000000008
-[ 1318.049703][ T1082] RBP: 0000000000000800 R08: 000055c9f2120a94 R09: 0000000000000007
-[ 1318.050011][ T1082] R10: 0000000000000000 R11: 0000000000000246 R12: 000055c9f2120c00
-[ 1318.050324][ T1082] R13: 0000000000000008 R14: 0000000000000008 R15: 0000000000000800
-[ 1318.050638][ T1082]  </TASK>
+<4> [197.079335] ======================================================
+<4> [197.085473] WARNING: possible circular locking dependency detected
+<4> [197.091611] 6.8.0-rc7-Patchwork_129026v7-gc4dc92fb1152+ #1 Not tainted
+<4> [197.098096] ------------------------------------------------------
+<4> [197.104231] prometheus-node/839 is trying to acquire lock:
+<4> [197.109680] ffffffff82764d80 (fs_reclaim){+.+.}-{0:0}, at: __kmalloc+0x9a/0x350
+<4> [197.116939]
+but task is already holding lock:
+<4> [197.122730] ffff88811b772a40 (&hwmon->hwmon_lock){+.+.}-{3:3}, at: hwm_energy+0x4b/0x100 [i915]
+<4> [197.131543]
+which lock already depends on the new lock.
+...
+<4> [197.507922] Chain exists of:
+  fs_reclaim --> &gt->reset.mutex --> &hwmon->hwmon_lock
+<4> [197.518528]  Possible unsafe locking scenario:
+<4> [197.524411]        CPU0                    CPU1
+<4> [197.528916]        ----                    ----
+<4> [197.533418]   lock(&hwmon->hwmon_lock);
+<4> [197.537237]                                lock(&gt->reset.mutex);
+<4> [197.543376]                                lock(&hwmon->hwmon_lock);
+<4> [197.549682]   lock(fs_reclaim);
+...
+<4> [197.632548] Call Trace:
+<4> [197.634990]  <TASK>
+<4> [197.637088]  dump_stack_lvl+0x64/0xb0
+<4> [197.640738]  check_noncircular+0x15e/0x180
+<4> [197.652968]  check_prev_add+0xe9/0xce0
+<4> [197.656705]  __lock_acquire+0x179f/0x2300
+<4> [197.660694]  lock_acquire+0xd8/0x2d0
+<4> [197.673009]  fs_reclaim_acquire+0xa1/0xd0
+<4> [197.680478]  __kmalloc+0x9a/0x350
+<4> [197.689063]  acpi_ns_internalize_name.part.0+0x4a/0xb0
+<4> [197.694170]  acpi_ns_get_node_unlocked+0x60/0xf0
+<4> [197.720608]  acpi_ns_get_node+0x3b/0x60
+<4> [197.724428]  acpi_get_handle+0x57/0xb0
+<4> [197.728164]  acpi_has_method+0x20/0x50
+<4> [197.731896]  acpi_pci_set_power_state+0x43/0x120
+<4> [197.736485]  pci_power_up+0x24/0x1c0
+<4> [197.740047]  pci_pm_default_resume_early+0x9/0x30
+<4> [197.744725]  pci_pm_runtime_resume+0x2d/0x90
+<4> [197.753911]  __rpm_callback+0x3c/0x110
+<4> [197.762586]  rpm_callback+0x58/0x70
+<4> [197.766064]  rpm_resume+0x51e/0x730
+<4> [197.769542]  rpm_resume+0x267/0x730
+<4> [197.773020]  rpm_resume+0x267/0x730
+<4> [197.776498]  rpm_resume+0x267/0x730
+<4> [197.779974]  __pm_runtime_resume+0x49/0x90
+<4> [197.784055]  __intel_runtime_pm_get+0x19/0xa0 [i915]
+<4> [197.789070]  hwm_energy+0x55/0x100 [i915]
+<4> [197.793183]  hwm_read+0x9a/0x310 [i915]
+<4> [197.797124]  hwmon_attr_show+0x36/0x120
+<4> [197.800946]  dev_attr_show+0x15/0x60
+<4> [197.804509]  sysfs_kf_seq_show+0xb5/0x100
 
-amdgpu_debugfs_mqd_read() holds a reservation when it calls
-put_user(), which may fault and acquire the mmap_sem. This violates
-the established locking order.
+Acquire the wakeref before the lock and hold it as long as the lock is
+also held.  Follow that pattern across the whole source file where similar
+lock inversion can happen.
 
-Bounce the mqd data through a kernel buffer to get put_user() out of
-the illegal section.
+v2: Keep hardware read under the lock so the whole operation of updating
+    energy from hardware is still atomic (Guenter),
+  - instead, acquire the rpm wakeref before the lock and hold it as long
+    as the lock is held,
+  - use the same aproach for other similar places across the i915_hwmon.c
+    source file (Rodrigo).
 
-Fixes: 445d85e3c1df ("drm/amdgpu: add debugfs interface for reading MQDs")
-Cc: stable@vger.kernel.org # v6.5+
-Reviewed-by: Shashank Sharma <shashank.sharma@amd.com>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 1b44019a93e2 ("drm/i915/guc: Disable PL1 power limit when loading GuC firmware")
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: <stable@vger.kernel.org> # v6.5+
+Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240311203500.518675-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 71b218771426ea84c0e0148a2b7ac52c1f76e792)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |   46 +++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/i915/i915_hwmon.c | 37 ++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -520,46 +520,58 @@ static ssize_t amdgpu_debugfs_mqd_read(s
- {
- 	struct amdgpu_ring *ring = file_inode(f)->i_private;
- 	volatile u32 *mqd;
--	int r;
-+	u32 *kbuf;
-+	int r, i;
- 	uint32_t value, result;
+diff --git a/drivers/gpu/drm/i915/i915_hwmon.c b/drivers/gpu/drm/i915/i915_hwmon.c
+index 8c3f443c8347..b758fd110c20 100644
+--- a/drivers/gpu/drm/i915/i915_hwmon.c
++++ b/drivers/gpu/drm/i915/i915_hwmon.c
+@@ -72,12 +72,13 @@ hwm_locked_with_pm_intel_uncore_rmw(struct hwm_drvdata *ddat,
+ 	struct intel_uncore *uncore = ddat->uncore;
+ 	intel_wakeref_t wakeref;
  
- 	if (*pos & 3 || size & 3)
- 		return -EINVAL;
+-	mutex_lock(&hwmon->hwmon_lock);
++	with_intel_runtime_pm(uncore->rpm, wakeref) {
++		mutex_lock(&hwmon->hwmon_lock);
  
--	result = 0;
-+	kbuf = kmalloc(ring->mqd_size, GFP_KERNEL);
-+	if (!kbuf)
-+		return -ENOMEM;
+-	with_intel_runtime_pm(uncore->rpm, wakeref)
+ 		intel_uncore_rmw(uncore, reg, clear, set);
  
- 	r = amdgpu_bo_reserve(ring->mqd_obj, false);
- 	if (unlikely(r != 0))
--		return r;
-+		goto err_free;
- 
- 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&mqd);
--	if (r) {
--		amdgpu_bo_unreserve(ring->mqd_obj);
--		return r;
--	}
-+	if (r)
-+		goto err_unreserve;
-+
-+	/*
-+	 * Copy to local buffer to avoid put_user(), which might fault
-+	 * and acquire mmap_sem, under reservation_ww_class_mutex.
-+	 */
-+	for (i = 0; i < ring->mqd_size/sizeof(u32); i++)
-+		kbuf[i] = mqd[i];
-+
-+	amdgpu_bo_kunmap(ring->mqd_obj);
-+	amdgpu_bo_unreserve(ring->mqd_obj);
- 
-+	result = 0;
- 	while (size) {
- 		if (*pos >= ring->mqd_size)
--			goto done;
-+			break;
- 
--		value = mqd[*pos/4];
-+		value = kbuf[*pos/4];
- 		r = put_user(value, (uint32_t *)buf);
- 		if (r)
--			goto done;
-+			goto err_free;
- 		buf += 4;
- 		result += 4;
- 		size -= 4;
- 		*pos += 4;
- 	}
- 
--done:
--	amdgpu_bo_kunmap(ring->mqd_obj);
--	mqd = NULL;
--	amdgpu_bo_unreserve(ring->mqd_obj);
--	if (r)
--		return r;
--
-+	kfree(kbuf);
- 	return result;
-+
-+err_unreserve:
-+	amdgpu_bo_unreserve(ring->mqd_obj);
-+err_free:
-+	kfree(kbuf);
-+	return r;
+-	mutex_unlock(&hwmon->hwmon_lock);
++		mutex_unlock(&hwmon->hwmon_lock);
++	}
  }
  
- static const struct file_operations amdgpu_debugfs_mqd_fops = {
+ /*
+@@ -136,20 +137,21 @@ hwm_energy(struct hwm_drvdata *ddat, long *energy)
+ 	else
+ 		rgaddr = hwmon->rg.energy_status_all;
+ 
+-	mutex_lock(&hwmon->hwmon_lock);
++	with_intel_runtime_pm(uncore->rpm, wakeref) {
++		mutex_lock(&hwmon->hwmon_lock);
+ 
+-	with_intel_runtime_pm(uncore->rpm, wakeref)
+ 		reg_val = intel_uncore_read(uncore, rgaddr);
+ 
+-	if (reg_val >= ei->reg_val_prev)
+-		ei->accum_energy += reg_val - ei->reg_val_prev;
+-	else
+-		ei->accum_energy += UINT_MAX - ei->reg_val_prev + reg_val;
+-	ei->reg_val_prev = reg_val;
++		if (reg_val >= ei->reg_val_prev)
++			ei->accum_energy += reg_val - ei->reg_val_prev;
++		else
++			ei->accum_energy += UINT_MAX - ei->reg_val_prev + reg_val;
++		ei->reg_val_prev = reg_val;
+ 
+-	*energy = mul_u64_u32_shr(ei->accum_energy, SF_ENERGY,
+-				  hwmon->scl_shift_energy);
+-	mutex_unlock(&hwmon->hwmon_lock);
++		*energy = mul_u64_u32_shr(ei->accum_energy, SF_ENERGY,
++					  hwmon->scl_shift_energy);
++		mutex_unlock(&hwmon->hwmon_lock);
++	}
+ }
+ 
+ static ssize_t
+@@ -404,6 +406,7 @@ hwm_power_max_write(struct hwm_drvdata *ddat, long val)
+ 
+ 	/* Block waiting for GuC reset to complete when needed */
+ 	for (;;) {
++		wakeref = intel_runtime_pm_get(ddat->uncore->rpm);
+ 		mutex_lock(&hwmon->hwmon_lock);
+ 
+ 		prepare_to_wait(&ddat->waitq, &wait, TASK_INTERRUPTIBLE);
+@@ -417,14 +420,13 @@ hwm_power_max_write(struct hwm_drvdata *ddat, long val)
+ 		}
+ 
+ 		mutex_unlock(&hwmon->hwmon_lock);
++		intel_runtime_pm_put(ddat->uncore->rpm, wakeref);
+ 
+ 		schedule();
+ 	}
+ 	finish_wait(&ddat->waitq, &wait);
+ 	if (ret)
+-		goto unlock;
+-
+-	wakeref = intel_runtime_pm_get(ddat->uncore->rpm);
++		goto exit;
+ 
+ 	/* Disable PL1 limit and verify, because the limit cannot be disabled on all platforms */
+ 	if (val == PL1_DISABLE) {
+@@ -444,9 +446,8 @@ hwm_power_max_write(struct hwm_drvdata *ddat, long val)
+ 	intel_uncore_rmw(ddat->uncore, hwmon->rg.pkg_rapl_limit,
+ 			 PKG_PWR_LIM_1_EN | PKG_PWR_LIM_1, nval);
+ exit:
+-	intel_runtime_pm_put(ddat->uncore->rpm, wakeref);
+-unlock:
+ 	mutex_unlock(&hwmon->hwmon_lock);
++	intel_runtime_pm_put(ddat->uncore->rpm, wakeref);
+ 	return ret;
+ }
+ 
+-- 
+2.44.0
+
 
 
