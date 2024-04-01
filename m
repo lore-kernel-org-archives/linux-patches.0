@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FECB47A5D;
-	Mon,  1 Apr 2024 17:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC00247A5D;
+	Mon,  1 Apr 2024 17:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991371; cv=none; b=U/gLddDn4Cy92Kb22XfqvT1Kvv6kMCOhb00psy81px/LVpMeK/0nI4cXOgPTimKTNjEVcmh0lUDROhEzzQDKtIJ0rLzAf7LmJ1RqpCsvfhhBdnBtzUPiClIwEYYA0ugDMtYo43gkaC29AoP1urlg8TWj7PKlKUeDcnvgcJIxty4=
+	t=1711991375; cv=none; b=PUjfEAQ3V7n/2LSXtxT4b7OWfYDw+/FlOqoYlTBj/tdQtdUABOJ2dzsvq+HyEQ06o6M5Nta20KzAI+76IDKqTxq2gO2kY77VDIjVRTCqfIBtgrfLoqDcfXrAhpibWkgyTZJbymcOaI0LyZdQjzmb2qD0nZ7pVmjIkA4ULIuL+is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991371; c=relaxed/simple;
-	bh=GP7XDrKSyr5Izx19IqL7eN4MCGZXjSGj5vsSPGZnNeE=;
+	s=arc-20240116; t=1711991375; c=relaxed/simple;
+	bh=+dnSN89l29Ep6dbpYjviMootxCFXW4R88AKnKPSQnso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GpjPEL1/sfxFlEXCXXZogmNWc5Z5/RhBJ4k9Jp5amXp01uDGNxEdaOQcMd6ezw/OWmuKUou8wlydZ6l9CMpSEecp85Ymlw5CZHn5Bvc7aoFqjkpwYS4lPZMPqgHd8xDquzlos2YSRo1QKorh9RR16V4xboTEVgPvIh5oRVOEXE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhaLvOTA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZv8L64iWm/T3UfxYeK/WsqNCKa9YI7SKCttPM4jYZfQSqpyDbzuwOT6vTw3euJ0KyajB5D+xfJyHWrQt/IEfG3LeAt8Jduh0jIjAEeK/61rRdNqf4wmnnhpDkrPDOZAq3A4wSVF34HKwasdDYA23i+dS7VvZfm7aGgP99z72Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x82Qt3jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhaLvOTA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66B2C433F1;
-	Mon,  1 Apr 2024 17:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x82Qt3jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B26C433F1;
+	Mon,  1 Apr 2024 17:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991371;
-	bh=GP7XDrKSyr5Izx19IqL7eN4MCGZXjSGj5vsSPGZnNeE=;
+	s=korg; t=1711991374;
+	bh=+dnSN89l29Ep6dbpYjviMootxCFXW4R88AKnKPSQnso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhaLvOTATdS/VRWIdFxM/GWne3bB8fzToyWmkW+wm550K6YaSyXhV/o49Cs8tq5yR
-	 Xyg/ejzAPCOJSP653p7z0YXF5enTm/YQNYKdnps3+fFYaEw2MqUyHv711H9Z8+boEq
-	 AN+xI5vpNvXq9AQX91dGTljt5/hMj6FKIY108miI=
+	b=x82Qt3jd/yNYemf4juyVpyrsRH1f/nzxvhGIf2dhpXNOftybnVT0CYwJ80h3KVI5x
+	 u/oCV+vrkKznKlghDmxRtzDwT9rgm+6ING5wBe3gIlvMODGFQ/3FO6QuqoDPWCE0/j
+	 oeTjpj4IpIUCjD8Hj4bvrfjWDGnhZ5EKaptKUXdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.1 216/272] wifi: iwlwifi: fw: dont always use FW dump trig
-Date: Mon,  1 Apr 2024 17:46:46 +0200
-Message-ID: <20240401152537.673747130@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 217/272] exec: Fix NOMMU linux_binprm::exec in transfer_args_to_stack()
+Date: Mon,  1 Apr 2024 17:46:47 +0200
+Message-ID: <20240401152537.712049211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,60 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit 045a5b645dd59929b0e05375f493cde3a0318271 upstream.
+commit 2aea94ac14d1e0a8ae9e34febebe208213ba72f7 upstream.
 
-Since the dump_data (struct iwl_fwrt_dump_data) is a union,
-it's not safe to unconditionally access and use the 'trig'
-member, it might be 'desc' instead. Access it only if it's
-known to be 'trig' rather than 'desc', i.e. if ini-debug
-is present.
+In NOMMU kernel the value of linux_binprm::p is the offset inside the
+temporary program arguments array maintained in separate pages in the
+linux_binprm::page. linux_binprm::exec being a copy of linux_binprm::p
+thus must be adjusted when that array is copied to the user stack.
+Without that adjustment the value passed by the NOMMU kernel to the ELF
+program in the AT_EXECFN entry of the aux array doesn't make any sense
+and it may break programs that try to access memory pointed to by that
+entry.
 
-Cc: stable@vger.kernel.org
-Fixes: 0eb50c674a1e ("iwlwifi: yoyo: send hcmd to fw after dump collection completes.")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.e2976bc58b29.I72fbd6135b3623227de53d8a2bb82776066cb72b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Adjust linux_binprm::exec before the successful return from the
+transfer_args_to_stack().
+
+Cc: <stable@vger.kernel.org>
+Fixes: b6a2fea39318 ("mm: variable length argument support")
+Fixes: 5edc2a5123a7 ("binfmt_elf_fdpic: wire up AT_EXECFD, AT_EXECFN, AT_SECURE")
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Link: https://lore.kernel.org/r/20240320182607.1472887-1-jcmvbkbc@gmail.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/exec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -2903,8 +2903,6 @@ static void iwl_fw_dbg_collect_sync(stru
- 	struct iwl_fw_dbg_params params = {0};
- 	struct iwl_fwrt_dump_data *dump_data =
- 		&fwrt->dump.wks[wk_idx].dump_data;
--	u32 policy;
--	u32 time_point;
- 	if (!test_bit(wk_idx, &fwrt->dump.active_wks))
- 		return;
- 
-@@ -2935,13 +2933,16 @@ static void iwl_fw_dbg_collect_sync(stru
- 
- 	iwl_fw_dbg_stop_restart_recording(fwrt, &params, false);
- 
--	policy = le32_to_cpu(dump_data->trig->apply_policy);
--	time_point = le32_to_cpu(dump_data->trig->time_point);
--
--	if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
--		IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
--		iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
-+	if (iwl_trans_dbg_ini_valid(fwrt->trans)) {
-+		u32 policy = le32_to_cpu(dump_data->trig->apply_policy);
-+		u32 time_point = le32_to_cpu(dump_data->trig->time_point);
-+
-+		if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
-+			IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
-+			iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
-+		}
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -896,6 +896,7 @@ int transfer_args_to_stack(struct linux_
+ 			goto out;
  	}
-+
- 	if (fwrt->trans->dbg.last_tp_resetfw == IWL_FW_INI_RESET_FW_MODE_STOP_FW_ONLY)
- 		iwl_force_nmi(fwrt->trans);
  
++	bprm->exec += *sp_location - MAX_ARG_PAGES * PAGE_SIZE;
+ 	*sp_location = sp;
+ 
+ out:
 
 
