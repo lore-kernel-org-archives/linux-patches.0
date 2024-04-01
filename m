@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37150C129;
-	Mon,  1 Apr 2024 16:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D0AC129;
+	Mon,  1 Apr 2024 16:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988431; cv=none; b=PIhmbIaPpzij0k/GvycpNdrtHkkNkNLHndwf+RvSJpDBwZ7WJhunmq8hMgG+pcy9KDqJ4VGpVmIjEnueZah5IRInqKjVrADETrztY+ScHxz0S1/4dF28TDcwgbD6/u2PR3JEDSnJrpITgjeoQSbUdRASsX2aGLyGis+y4a7ytug=
+	t=1711988434; cv=none; b=CdQa/SeCSQHHJwr6uSnBtTdUJwUgwtDNuonmSVZ98CoUgCdManaoNnfIblKYnnoZ+QkUEkzyyub2KAmXr3NBlwDsyaOrSh0x0YR1fyNsQZIG35Qu9YEh5PDaoRda7OcthmULWEbx2J1oo4Udqe6uwUm/ciV4t46jl9+iOJ9OqWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988431; c=relaxed/simple;
-	bh=dwr216ZhRIJlxzDfow9x2z/Fhxcnq/btN7kx//yaSeU=;
+	s=arc-20240116; t=1711988434; c=relaxed/simple;
+	bh=DwvhY9yxkrlOSEzIASrCg+t2rIif5MoRsF8Ew7h00oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzxKegg0Aap8zjgj8jXztiUGXYZlka4RgHKmo16Ia7/axx0HEa+nhzKTipL1w8bnprkEJSXu2G6efCkBmu+mwx11yn83Sj/TI3LvJSus7yIyKEM2T5pF6oG4+C1aHA6Rxko7ohlX50q474yJMCGaSjqlhr8YB+U/n748f/Y/66c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHmXtO6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n5dgXneK44d3RMkuHGuU57epunpbuu285QDXXklmlmXAUeYpW1cGSr60ceqLOrlfBhYyi+C2VLGynSBj+ksk0pbUIA3jmQWTkin3w/VqhQEBBpsCzhTD6OXS4UDotEzyHz3tTpFBvycXkPzaMMK5NrtRsqBxjT/ltTUJ04mQO3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tjv9QUvM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHmXtO6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CE8C433C7;
-	Mon,  1 Apr 2024 16:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tjv9QUvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0167AC433F1;
+	Mon,  1 Apr 2024 16:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988431;
-	bh=dwr216ZhRIJlxzDfow9x2z/Fhxcnq/btN7kx//yaSeU=;
+	s=korg; t=1711988434;
+	bh=DwvhY9yxkrlOSEzIASrCg+t2rIif5MoRsF8Ew7h00oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHmXtO6whC0DYubnHKBwmYSyq3SI5rANGCg8xMD8yM4GT0uHSJdhoo41Xz7xxM/ks
-	 8w2+KzuxFxXMtJuJnEORdQ9++Dl35noFBXYeypL2VQaZIqSbDEMb9v+Np+rFMoR/OL
-	 3Z0AdiVyIXqB2aU+CMH9/UMO2lqpDVVxeA8OVPGQ=
+	b=Tjv9QUvMVwbNz50bmbDOdrBf1I4Mo9A18pUN2PMHLjbFGti64AHxCVT1dF90cs3bL
+	 nyDrjrG0rt5IP4aCzMLP6gwBaCiT/8yq0siQhAf+0F9ynF/dafy+hYAG8xwRljhAXb
+	 YwaeC/45OE14Ptmc/ZJFxhnrgceCvQMttMVpuozI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 182/432] mtd: rawnand: Fix and simplify again the continuous read derivations
-Date: Mon,  1 Apr 2024 17:42:49 +0200
-Message-ID: <20240401152558.571869903@linuxfoundation.org>
+Subject: [PATCH 6.7 183/432] mtd: rawnand: Add a helper for calculating a page index
+Date: Mon,  1 Apr 2024 17:42:50 +0200
+Message-ID: <20240401152558.601170678@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,82 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit c7ee7c8d4b60fe46d4861b1200bc1c7ab657960a ]
+[ Upstream commit df9803bf5a91e3599f12b53c94722f2c4e144a86 ]
 
-We need to avoid the first page if we don't read it entirely.
-We need to avoid the last page if we don't read it entirely.
-While rather simple, this logic has been failed in the previous
-fix. This time I wrote about 30 unit tests locally to check each
-possible condition, hopefully I covered them all.
+For LUN crossing boundaries, it is handy to know what is the index of
+the last page in a LUN. This helper will soon be reused. At the same
+time I rename page_per_lun to ppl in the calling function to clarify the
+lines.
 
-Reported-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Closes: https://lore.kernel.org/linux-mtd/20240221175327.42f7076d@xps-13/T/#m399bacb10db8f58f6b1f0149a1df867ec086bb0a
-Suggested-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Fixes: 828f6df1bcba ("mtd: rawnand: Clarify conditions to enable continuous reads")
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v6.7
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Link: https://lore.kernel.org/linux-mtd/20240223115545.354541-2-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20240223115545.354541-3-miquel.raynal@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 34 +++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ drivers/mtd/nand/raw/nand_base.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index bbdcfbe643f3f..7fca8b2c41cbe 100644
+index 7fca8b2c41cbe..af37c2dea76b6 100644
 --- a/drivers/mtd/nand/raw/nand_base.c
 +++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -3460,30 +3460,36 @@ static void rawnand_enable_cont_reads(struct nand_chip *chip, unsigned int page,
- 				      u32 readlen, int col)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
--	unsigned int end_page, end_col;
-+	unsigned int first_page, last_page;
- 
- 	chip->cont_read.ongoing = false;
- 
- 	if (!chip->controller->supported_op.cont_read)
- 		return;
- 
--	end_page = DIV_ROUND_UP(col + readlen, mtd->writesize);
--	end_col = (col + readlen) % mtd->writesize;
-+	/*
-+	 * Don't bother making any calculations if the length is too small.
-+	 * Side effect: avoids possible integer underflows below.
-+	 */
-+	if (readlen < (2 * mtd->writesize))
-+		return;
- 
-+	/* Derive the page where continuous read should start (the first full page read) */
-+	first_page = page;
- 	if (col)
--		page++;
--
--	if (end_col && end_page)
--		end_page--;
-+		first_page++;
- 
--	if (page + 1 > end_page)
--		return;
--
--	chip->cont_read.first_page = page;
--	chip->cont_read.last_page = end_page;
--	chip->cont_read.ongoing = true;
-+	/* Derive the page where continuous read should stop (the last full page read) */
-+	last_page = page + ((col + readlen) / mtd->writesize) - 1;
- 
--	rawnand_cap_cont_reads(chip);
-+	/* Configure and enable continuous read when suitable */
-+	if (first_page < last_page) {
-+		chip->cont_read.first_page = first_page;
-+		chip->cont_read.last_page = last_page;
-+		chip->cont_read.ongoing = true;
-+		/* May reset the ongoing flag */
-+		rawnand_cap_cont_reads(chip);
-+	}
+@@ -1207,19 +1207,25 @@ static int nand_lp_exec_read_page_op(struct nand_chip *chip, unsigned int page,
+ 	return nand_exec_op(chip, &op);
  }
  
- static void rawnand_cont_read_skip_first_page(struct nand_chip *chip, unsigned int page)
++static unsigned int rawnand_last_page_of_lun(unsigned int pages_per_lun, unsigned int lun)
++{
++	/* lun is expected to be very small */
++	return (lun * pages_per_lun) + pages_per_lun - 1;
++}
++
+ static void rawnand_cap_cont_reads(struct nand_chip *chip)
+ {
+ 	struct nand_memory_organization *memorg;
+-	unsigned int pages_per_lun, first_lun, last_lun;
++	unsigned int ppl, first_lun, last_lun;
+ 
+ 	memorg = nanddev_get_memorg(&chip->base);
+-	pages_per_lun = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
+-	first_lun = chip->cont_read.first_page / pages_per_lun;
+-	last_lun = chip->cont_read.last_page / pages_per_lun;
++	ppl = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
++	first_lun = chip->cont_read.first_page / ppl;
++	last_lun = chip->cont_read.last_page / ppl;
+ 
+ 	/* Prevent sequential cache reads across LUN boundaries */
+ 	if (first_lun != last_lun)
+-		chip->cont_read.pause_page = first_lun * pages_per_lun + pages_per_lun - 1;
++		chip->cont_read.pause_page = rawnand_last_page_of_lun(ppl, first_lun);
+ 	else
+ 		chip->cont_read.pause_page = chip->cont_read.last_page;
+ }
 -- 
 2.43.0
 
