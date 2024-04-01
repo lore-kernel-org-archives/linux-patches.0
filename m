@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5018F5C;
-	Mon,  1 Apr 2024 16:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0BE8F5C;
+	Mon,  1 Apr 2024 16:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990196; cv=none; b=ptPCZi7lRe0RWe68Aj5tH7BuGG+CqY0aCGdbRzCJO1CewTOiv38u1nE8s5DqXuooZKTiqpEirF2gAnkuDwYUBiodxo1oTa6JyLxUOBtmp32H73WrrTd1cdNOQcapkRza3zJnwfx8zzOYFEGt7irqMd4p2K7MJhL5RPPzG+rmG04=
+	t=1711990199; cv=none; b=Xw4tDj+jreCsJ4wyjkzw12jIfh8T+APA35luWmGjm6sObMLoX9miMFcDdEIbfMXuDRfRaDUN4JeDmnPCnQopAKtf15/iP1KIH0wAzmpPH8WF941YJqbwIs20uSbT/5HZ1ToeS3uAnhGMD/lgxqIJM1RQ9KCZLV8DIcUCa53bCPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990196; c=relaxed/simple;
-	bh=k4c28xBGYfeisFJ1sE/DVYVio82JrapwXdqUnHs8L9E=;
+	s=arc-20240116; t=1711990199; c=relaxed/simple;
+	bh=GbWOvFu8n35qZchcdnGWlr91SuB7PIDMGOsxudtCyWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qcYo0H3VzbaDu9KhC9W6ucX1XIMsL5YZJynwMNZxa2TbZfdSpfZgxCKwebPvF5htyXRF0HT2zI+zlFjZmR7B650b6yGON0bCZsJaGzLpsrsHK8KQQJceC4BgQ/TgP552YeOK04XcU8/cEyvZr7u4FRO3PJ5VruK9dB6fEzBOMJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCUdUY+b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiCwSl+VDxf9x38YwMHE1Z6H5acvPojEg7h463UBItgAvgovahMRyte1FEiM2q65TuqX3Y3tTrClMt03kDnveJizBOhtkJ6+p/NY99LabZR/O4sQVQj3x2g32fn+YgrvpdlK3RaedaA8TDaOtR98Jg4DYQFZ6xLQUagbEDGvwRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoHSqHxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCUdUY+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1595EC433C7;
-	Mon,  1 Apr 2024 16:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoHSqHxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47045C433F1;
+	Mon,  1 Apr 2024 16:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990196;
-	bh=k4c28xBGYfeisFJ1sE/DVYVio82JrapwXdqUnHs8L9E=;
+	s=korg; t=1711990199;
+	bh=GbWOvFu8n35qZchcdnGWlr91SuB7PIDMGOsxudtCyWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCUdUY+b62XSXPYB9oJm6DFTYodg9GQtt7KmtBXY6BuNMpjhZBfZGKr9BLuStmykX
-	 03zD02y98MIp10XxfD0BefTM10wEDnqA8MLZnIldkQkCe11QHR2T3IzvVNBJbdYeD8
-	 vo0qk1WZWLsutw26I9wTLnzww82WZQ1/UfWtiICc=
+	b=UoHSqHxG/ZPypTjkGAfWRuXP/MNd488HHZoR+5//AebnFnrCItSKyz4QK0WLTLt0G
+	 iQPYncv7HsssG2m8gNSlqep9PlDPFlDn44Tguz/gxSfcVXrVCI55ZEmUasne4vwCRB
+	 1h44JTK82vwJXh+mrxw9daVf4paVRUmj6UxogmKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mano=20S=C3=A9gransan?= <mano.segransan@protonmail.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 248/396] drm/amd/display: handle range offsets in VRR ranges
-Date: Mon,  1 Apr 2024 17:44:57 +0200
-Message-ID: <20240401152555.306337982@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.6 249/396] x86/efistub: Call mixed mode boot services on the firmwares stack
+Date: Mon,  1 Apr 2024 17:44:58 +0200
+Message-ID: <20240401152555.335288588@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,62 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 937844d661354bf142dc1c621396fdab10ecbacc upstream.
+commit cefcd4fe2e3aaf792c14c9e56dab89e3d7a65d02 upstream.
 
-Need to check the offset bits for values greater than 255.
+Normally, the EFI stub calls into the EFI boot services using the stack
+that was live when the stub was entered. According to the UEFI spec,
+this stack needs to be at least 128k in size - this might seem large but
+all asynchronous processing and event handling in EFI runs from the same
+stack and so quite a lot of space may be used in practice.
 
-v2: also update amdgpu_dm_connector values.
+In mixed mode, the situation is a bit different: the bootloader calls
+the 32-bit EFI stub entry point, which calls the decompressor's 32-bit
+entry point, where the boot stack is set up, using a fixed allocation
+of 16k. This stack is still in use when the EFI stub is started in
+64-bit mode, and so all calls back into the EFI firmware will be using
+the decompressor's limited boot stack.
 
-Suggested-by: Mano Ségransan <mano.segransan@protonmail.com>
-Tested-by: Mano Ségransan <mano.segransan@protonmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3203
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Due to the placement of the boot stack right after the boot heap, any
+stack overruns have gone unnoticed. However, commit
+
+  5c4feadb0011983b ("x86/decompressor: Move global symbol references to C code")
+
+moved the definition of the boot heap into C code, and now the boot
+stack is placed right at the base of BSS, where any overruns will
+corrupt the end of the .data section.
+
+While it would be possible to work around this by increasing the size of
+the boot stack, doing so would affect all x86 systems, and mixed mode
+systems are a tiny (and shrinking) fraction of the x86 installed base.
+
+So instead, record the firmware stack pointer value when entering from
+the 32-bit firmware, and switch to this stack every time a EFI boot
+service call is made.
+
+Cc: <stable@kernel.org> # v6.1+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/x86/boot/compressed/efi_mixed.S |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10783,14 +10783,23 @@ void amdgpu_dm_update_freesync_caps(stru
- 				if (range->flags != 1)
- 					continue;
- 
--				amdgpu_dm_connector->min_vfreq = range->min_vfreq;
--				amdgpu_dm_connector->max_vfreq = range->max_vfreq;
--				amdgpu_dm_connector->pixel_clock_mhz =
--					range->pixel_clock_mhz * 10;
--
- 				connector->display_info.monitor_range.min_vfreq = range->min_vfreq;
- 				connector->display_info.monitor_range.max_vfreq = range->max_vfreq;
- 
-+				if (edid->revision >= 4) {
-+					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MIN_VFREQ)
-+						connector->display_info.monitor_range.min_vfreq += 255;
-+					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MAX_VFREQ)
-+						connector->display_info.monitor_range.max_vfreq += 255;
-+				}
+--- a/arch/x86/boot/compressed/efi_mixed.S
++++ b/arch/x86/boot/compressed/efi_mixed.S
+@@ -49,6 +49,11 @@ SYM_FUNC_START(startup_64_mixed_mode)
+ 	lea	efi32_boot_args(%rip), %rdx
+ 	mov	0(%rdx), %edi
+ 	mov	4(%rdx), %esi
 +
-+				amdgpu_dm_connector->min_vfreq =
-+					connector->display_info.monitor_range.min_vfreq;
-+				amdgpu_dm_connector->max_vfreq =
-+					connector->display_info.monitor_range.max_vfreq;
-+				amdgpu_dm_connector->pixel_clock_mhz =
-+					range->pixel_clock_mhz * 10;
++	/* Switch to the firmware's stack */
++	movl	efi32_boot_sp(%rip), %esp
++	andl	$~7, %esp
 +
- 				break;
- 			}
+ #ifdef CONFIG_EFI_HANDOVER_PROTOCOL
+ 	mov	8(%rdx), %edx		// saved bootparams pointer
+ 	test	%edx, %edx
+@@ -254,6 +259,9 @@ SYM_FUNC_START_LOCAL(efi32_entry)
+ 	/* Store firmware IDT descriptor */
+ 	sidtl	(efi32_boot_idt - 1b)(%ebx)
  
++	/* Store firmware stack pointer */
++	movl	%esp, (efi32_boot_sp - 1b)(%ebx)
++
+ 	/* Store boot arguments */
+ 	leal	(efi32_boot_args - 1b)(%ebx), %ebx
+ 	movl	%ecx, 0(%ebx)
+@@ -318,5 +326,6 @@ SYM_DATA_END(efi32_boot_idt)
+ 
+ SYM_DATA_LOCAL(efi32_boot_cs, .word 0)
+ SYM_DATA_LOCAL(efi32_boot_ds, .word 0)
++SYM_DATA_LOCAL(efi32_boot_sp, .long 0)
+ SYM_DATA_LOCAL(efi32_boot_args, .long 0, 0, 0)
+ SYM_DATA(efi_is64, .byte 1)
 
 
