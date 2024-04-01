@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34BB1CA8F;
-	Mon,  1 Apr 2024 16:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592781CA8F;
+	Mon,  1 Apr 2024 16:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988741; cv=none; b=Vr5XX/8qFmkCRW+uFqsvNBp2ah0xRTXXcm7c1/lCf7JCYbKq+8TZMd5WxTmeLxxJHgv+X9eb3J759XQUbwB7yOyaVEtzG7jMhSfJ3Eclep3i8E0h6WOxaA6Te7em4vIT18yeMllST4245S7Fn7/44So+GHOb+0tfOiZfmCUdxdU=
+	t=1711988744; cv=none; b=eH5uOIiBKt5f0bkROMc6Tc1HB16++G80QB5V6+kTYzMA5986+XsY6ZwvCJb3x9RJEcmMuffE01SeZ+G+o48PN+KYyPvpMFtvsj35jP1fR40NR6EmhmgVLjzuy0MKgvxd0uQpx+d2/6lH0TPcf/f4mUb1HtvcQCs454SRW0bABjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988741; c=relaxed/simple;
-	bh=YBrUas1maVJ0rtH7K5zii4TuPwC+Gx9h4EnNP1dHNBA=;
+	s=arc-20240116; t=1711988744; c=relaxed/simple;
+	bh=8pA7y3cwkYtzn0vKjST+SR/FIIVYNqppU2b37K2Rsqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrRutNpUlHMJCQbZiuugaBE+MHOewqv/BSDimBAGyNUpPvwMrsMpiNRzPfO9AglfwsTyZbknK7leXj5swvj/A+HIFrfW+V6DtQB2g6gSwgaYjQEdXVft2gvs7ixhDH4kkuKVCY9cpUWPHr4fcQfxj3DM+elKZ/YqQ5KrmmlYZbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY94Ahm2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwfaH5xAJEVXVPAzi6tuIGG8W5BezTR6R+8BZeRE5M2xRQU+N7gqy/1EdpMP9KNqZOVhmsWprd+0ZWJYdY3bPk8WssfGJPXg+7gdMKPc3qZvfG67RM3vd5RushTvGE64LcvQYOdkhbfOq5AIUqridJg90+/5dnOEYRZZr9vFqHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRYseQOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY94Ahm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF492C433F1;
-	Mon,  1 Apr 2024 16:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRYseQOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84A9C433F1;
+	Mon,  1 Apr 2024 16:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988740;
-	bh=YBrUas1maVJ0rtH7K5zii4TuPwC+Gx9h4EnNP1dHNBA=;
+	s=korg; t=1711988744;
+	bh=8pA7y3cwkYtzn0vKjST+SR/FIIVYNqppU2b37K2Rsqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY94Ahm2zjUojYVgpabpjqVvfq3nFpbRcwmZB0Ivi4jFUu5PXVpUZEA95cI7qFze0
-	 lcZBO6qunKjF72daMDlr/DrqJIse1qsIZIEUqeGACsXYyKo9xtnfXm9F6RijQ0CsiO
-	 rqP9ckzmjGWaxgN4jGrp0KzSAhPz98/iQkWZlFFw=
+	b=eRYseQOyupJHoZVpmGPoU+x9JhmpqL/GQv8sN1xvmP9zQ1jd+s2ND4w4ALYxqugo/
+	 VH7r3YY6nbeAnwiJoae3fgyGPa7UcQSNPcfEa97G3rM/uWoA8jWalDSyFmc6xgoW4g
+	 TboUoam+S/hF/hEiL7STb5oxY6zqiPulg0AA5Zuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Benjamin LaHaise <ben@communityfibre.ca>,
-	Eric Biggers <ebiggers@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Avi Kivity <avi@scylladb.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.7 275/432] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
-Date: Mon,  1 Apr 2024 17:44:22 +0200
-Message-ID: <20240401152601.376334277@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Rickard x Andersson <rickaran@axis.com>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Subject: [PATCH 6.7 258/432] tty: serial: imx: Fix broken RS485
+Date: Mon,  1 Apr 2024 17:44:05 +0200
+Message-ID: <20240401152600.835126792@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -58,63 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Rickard x Andersson <rickaran@axis.com>
 
-commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
+commit 672448ccf9b6a676f96f9352cbf91f4d35f4084a upstream.
 
-The first kiocb_set_cancel_fn() argument may point at a struct kiocb
-that is not embedded inside struct aio_kiocb. With the current code,
-depending on the compiler, the req->ki_ctx read happens either before
-the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
-that it is guaranteed that the IOCB_AIO_RW test happens first.
+When about to transmit the function imx_uart_start_tx is called and in
+some RS485 configurations this function will call imx_uart_stop_rx. The
+problem is that imx_uart_stop_rx will enable loopback in order to
+release the RS485 bus, but when loopback is enabled transmitted data
+will just be looped to RX.
 
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Benjamin LaHaise <ben@communityfibre.ca>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Avi Kivity <avi@scylladb.com>
-Cc: Sandeep Dhavale <dhavale@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: stable@vger.kernel.org
-Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This patch fixes the above problem by not enabling loopback when about
+to transmit.
+
+This driver now works well when used for RS485 half duplex master
+configurations.
+
+Fixes: 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal active high")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Rickard x Andersson <rickaran@axis.com>
+Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Link: https://lore.kernel.org/r/20240221115304.509811-1-rickaran@axis.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/tty/serial/imx.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -590,8 +590,8 @@ static int aio_setup_ring(struct kioctx
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -462,8 +462,7 @@ static void imx_uart_stop_tx(struct uart
+ 	}
+ }
  
- void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
+-/* called with port.lock taken and irqs off */
+-static void imx_uart_stop_rx(struct uart_port *port)
++static void imx_uart_stop_rx_with_loopback_ctrl(struct uart_port *port, bool loopback)
  {
--	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
--	struct kioctx *ctx = req->ki_ctx;
-+	struct aio_kiocb *req;
-+	struct kioctx *ctx;
- 	unsigned long flags;
+ 	struct imx_port *sport = (struct imx_port *)port;
+ 	u32 ucr1, ucr2, ucr4, uts;
+@@ -485,7 +484,7 @@ static void imx_uart_stop_rx(struct uart
+ 	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
+ 	if (port->rs485.flags & SER_RS485_ENABLED &&
+ 	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
+-	    sport->have_rtscts && !sport->have_rtsgpio) {
++	    sport->have_rtscts && !sport->have_rtsgpio && loopback) {
+ 		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
+ 		uts |= UTS_LOOP;
+ 		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
+@@ -498,6 +497,16 @@ static void imx_uart_stop_rx(struct uart
+ }
  
- 	/*
-@@ -601,9 +601,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
- 	if (!(iocb->ki_flags & IOCB_AIO_RW))
- 		return;
- 
-+	req = container_of(iocb, struct aio_kiocb, rw);
+ /* called with port.lock taken and irqs off */
++static void imx_uart_stop_rx(struct uart_port *port)
++{
++	/*
++	 * Stop RX and enable loopback in order to make sure RS485 bus
++	 * is not blocked. Se comment in imx_uart_probe().
++	 */
++	imx_uart_stop_rx_with_loopback_ctrl(port, true);
++}
 +
- 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
- 		return;
++/* called with port.lock taken and irqs off */
+ static void imx_uart_enable_ms(struct uart_port *port)
+ {
+ 	struct imx_port *sport = (struct imx_port *)port;
+@@ -682,9 +691,14 @@ static void imx_uart_start_tx(struct uar
+ 				imx_uart_rts_inactive(sport, &ucr2);
+ 			imx_uart_writel(sport, ucr2, UCR2);
  
-+	ctx = req->ki_ctx;
-+
- 	spin_lock_irqsave(&ctx->ctx_lock, flags);
- 	list_add_tail(&req->ki_list, &ctx->active_reqs);
- 	req->ki_cancel = cancel;
++			/*
++			 * Since we are about to transmit we can not stop RX
++			 * with loopback enabled because that will make our
++			 * transmitted data being just looped to RX.
++			 */
+ 			if (!(port->rs485.flags & SER_RS485_RX_DURING_TX) &&
+ 			    !port->rs485_rx_during_tx_gpio)
+-				imx_uart_stop_rx(port);
++				imx_uart_stop_rx_with_loopback_ctrl(port, false);
+ 
+ 			sport->tx_state = WAIT_AFTER_RTS;
+ 
 
 
