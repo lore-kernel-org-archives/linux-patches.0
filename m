@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D9345BE4;
-	Mon,  1 Apr 2024 16:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7052DC129;
+	Mon,  1 Apr 2024 16:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988882; cv=none; b=MlAL/K9dwW9blFclyx7kgmgeAgmFgdBp1DydK9oB5q21dRnpDUg5QnEuj2fDzyipkV7dJMVKCrzZNQgIRFsK90xZrtgjujQlMaacjNlqPPGCtUpTkTrsyTefBo2Yi7s3GFjumooexXB8AMq+eadGvqCXyCIx/bZ+PyD9zcddo6I=
+	t=1711988885; cv=none; b=gCgd4s/8oHwZP44mxi0hPSjbhnBohLbW8/j6iSDT8w29braWObkBfQdgccCD2JBSVUqQUkHAa6Z6O7rJHvOXeZ1uXN5JjhT6ZQ4wgIDFtpQGlf61FzUrjtZrsLs6MRwbu1UN07ZCx+um9O36EUm8ShnN33/TNhaZOomAyoQ1GCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988882; c=relaxed/simple;
-	bh=Py09tB+BCHZS9pgQSpZd8bb2chompbvAihx42/eAF9g=;
+	s=arc-20240116; t=1711988885; c=relaxed/simple;
+	bh=wdFGNrBfZW1E3ISOJhfHktdoAltlc96DRsBHp1Nd6ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtQp+wGru4mAHswYpEyrQUziI9ffDJ/wJPG6ZRa7Mcc1WdIPC6HwaAmb8kZyiJb7YTZIxY1oZKLL2ZcTwuMdbh0EbVudawDEWRQpU29kE4BbsUCUqZghQq52OS1vUlWRoIHWqfnGDTZcuYNDW0jIVW2MRusO/WzvHMWfqiWRJFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIyGNOLU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fObYx75Bpg2QWab7B8qcPunTWAfrjpznlJOOnbWGgPlReCDN/1ivyAUtS+g4P6VU9LqSGsnOm7ZEeIPftnXzYLfzaaTTN3Q0dkrz33i2kAG7V3g/rrenDG0YIxANFp7vJqKk9A2lQ20LgFPBA3dLKu94sIsQW6AK+O8hKs++EqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0w3XJsn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIyGNOLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB328C43390;
-	Mon,  1 Apr 2024 16:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0w3XJsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D3FC433F1;
+	Mon,  1 Apr 2024 16:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988882;
-	bh=Py09tB+BCHZS9pgQSpZd8bb2chompbvAihx42/eAF9g=;
+	s=korg; t=1711988885;
+	bh=wdFGNrBfZW1E3ISOJhfHktdoAltlc96DRsBHp1Nd6ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIyGNOLUqDx9dHJnGLiaac33a4EiNTWbNYqkaspBIHfCtp3WhgkyFK6r0tOOtpUVP
-	 zFnaqgPTSCh9RaL5mBGo0xXHdbpHNNAvkeBjlzYMXcrTmQU+0FI/IauX7UVfV+fpzT
-	 D2tyFa9KzirP9kY+XPrXIhy2NcFUI/sdxX8P0Yws=
+	b=a0w3XJsnFKcqBmPO3WEa/yx+RmIr4mWgpPm2e2J5+SmmEHxEp4jUmfqeHJ1KGmNLy
+	 68ggXHFqUN3liVjdP2WFBwKSz/gwDd78qfDkDSF14+NmCU2gXMg1MMUftdineXaUbD
+	 WYoeEldNnmbqdZWZt3f2DFZTAeVw2QEe1gvjfkQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adamos Ttofari <attofari@amazon.de>,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 316/432] x86/fpu: Keep xfd_state in sync with MSR_IA32_XFD
-Date: Mon,  1 Apr 2024 17:45:03 +0200
-Message-ID: <20240401152602.618653654@linuxfoundation.org>
+	Li Ma <li.ma@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 290/432] drm/amd/swsmu: modify the gfx activity scaling
+Date: Mon,  1 Apr 2024 17:44:37 +0200
+Message-ID: <20240401152601.819004215@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,95 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adamos Ttofari <attofari@amazon.de>
+From: Li Ma <li.ma@amd.com>
 
-[ Upstream commit 10e4b5166df9ff7a2d5316138ca668b42d004422 ]
+commit 6601c15c8a0680edb0d23a13151adb8023959149 upstream.
 
-Commit 672365477ae8 ("x86/fpu: Update XFD state where required") and
-commit 8bf26758ca96 ("x86/fpu: Add XFD state to fpstate") introduced a
-per CPU variable xfd_state to keep the MSR_IA32_XFD value cached, in
-order to avoid unnecessary writes to the MSR.
+Add an if condition for gfx activity because the scaling has been changed after smu fw version 5d4600.
+And remove a warning log.
 
-On CPU hotplug MSR_IA32_XFD is reset to the init_fpstate.xfd, which
-wipes out any stale state. But the per CPU cached xfd value is not
-reset, which brings them out of sync.
-
-As a consequence a subsequent xfd_update_state() might fail to update
-the MSR which in turn can result in XRSTOR raising a #NM in kernel
-space, which crashes the kernel.
-
-To fix this, introduce xfd_set_state() to write xfd_state together
-with MSR_IA32_XFD, and use it in all places that set MSR_IA32_XFD.
-
-Fixes: 672365477ae8 ("x86/fpu: Update XFD state where required")
-Signed-off-by: Adamos Ttofari <attofari@amazon.de>
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240322230439.456571-1-chang.seok.bae@intel.com
-
-Closes: https://lore.kernel.org/lkml/20230511152818.13839-1-attofari@amazon.de
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Li Ma <li.ma@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.7.x
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.c |  5 +++--
- arch/x86/kernel/fpu/xstate.h | 14 ++++++++++----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c       |    2 --
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c |    5 ++++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
-index 117e74c44e756..33a214b1a4cec 100644
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -178,10 +178,11 @@ void fpu__init_cpu_xstate(void)
- 	 * Must happen after CR4 setup and before xsetbv() to allow KVM
- 	 * lazy passthrough.  Write independent of the dynamic state static
- 	 * key as that does not work on the boot CPU. This also ensures
--	 * that any stale state is wiped out from XFD.
-+	 * that any stale state is wiped out from XFD. Reset the per CPU
-+	 * xfd cache too.
- 	 */
- 	if (cpu_feature_enabled(X86_FEATURE_XFD))
--		wrmsrl(MSR_IA32_XFD, init_fpstate.xfd);
-+		xfd_set_state(init_fpstate.xfd);
- 
- 	/*
- 	 * XCR_XFEATURE_ENABLED_MASK (aka. XCR0) sets user features
-diff --git a/arch/x86/kernel/fpu/xstate.h b/arch/x86/kernel/fpu/xstate.h
-index 3518fb26d06b0..19ca623ffa2ac 100644
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -148,20 +148,26 @@ static inline void xfd_validate_state(struct fpstate *fpstate, u64 mask, bool rs
- #endif
- 
- #ifdef CONFIG_X86_64
-+static inline void xfd_set_state(u64 xfd)
-+{
-+	wrmsrl(MSR_IA32_XFD, xfd);
-+	__this_cpu_write(xfd_state, xfd);
-+}
-+
- static inline void xfd_update_state(struct fpstate *fpstate)
- {
- 	if (fpu_state_size_dynamic()) {
- 		u64 xfd = fpstate->xfd;
- 
--		if (__this_cpu_read(xfd_state) != xfd) {
--			wrmsrl(MSR_IA32_XFD, xfd);
--			__this_cpu_write(xfd_state, xfd);
--		}
-+		if (__this_cpu_read(xfd_state) != xfd)
-+			xfd_set_state(xfd);
- 	}
- }
- 
- extern int __xfd_enable_feature(u64 which, struct fpu_guest *guest_fpu);
- #else
-+static inline void xfd_set_state(u64 xfd) { }
-+
- static inline void xfd_update_state(struct fpstate *fpstate) { }
- 
- static inline int __xfd_enable_feature(u64 which, struct fpu_guest *guest_fpu) {
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
+@@ -229,8 +229,6 @@ int smu_v14_0_check_fw_version(struct sm
+ 		smu->smc_driver_if_version = SMU14_DRIVER_IF_VERSION_SMU_V14_0_2;
+ 		break;
+ 	case IP_VERSION(14, 0, 0):
+-		if ((smu->smc_fw_version < 0x5d3a00))
+-			dev_warn(smu->adev->dev, "The PMFW version(%x) is behind in this BIOS!\n", smu->smc_fw_version);
+ 		smu->smc_driver_if_version = SMU14_DRIVER_IF_VERSION_SMU_V14_0_0;
+ 		break;
+ 	default:
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
+@@ -261,7 +261,10 @@ static int smu_v14_0_0_get_smu_metrics_d
+ 		*value = metrics->MpipuclkFrequency;
+ 		break;
+ 	case METRICS_AVERAGE_GFXACTIVITY:
+-		*value = metrics->GfxActivity / 100;
++		if ((smu->smc_fw_version > 0x5d4600))
++			*value = metrics->GfxActivity;
++		else
++			*value = metrics->GfxActivity / 100;
+ 		break;
+ 	case METRICS_AVERAGE_VCNACTIVITY:
+ 		*value = metrics->VcnActivity / 100;
 
 
