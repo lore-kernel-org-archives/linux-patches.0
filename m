@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA0F45BE4;
-	Mon,  1 Apr 2024 16:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A02745BE4;
+	Mon,  1 Apr 2024 16:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987262; cv=none; b=eM/cJnjdoK+jGNzzZvwPJVmmsICYwcY+QOw/vcoCffpNa7ExabLH2AWo+t8cDM/lomfqqrD7RkqnJhgn8y3T5a4V9Kh4er+3SUiaAJFNNs2rmMIxqo2XX6nvEO/oc3vFxBwbY1zrmHUeQhb8HQjFWvz0jYeHj/cQr139cPjmQ9o=
+	t=1711987265; cv=none; b=dp4zkVGusMVYesDu/B3D4JFRAEamXdeWC/HWkOseBTgdDJDheZvOuouLnqLJiO/Kiz2lb9J+Xwrmc0ihixnFSbpXSd0hWG1yGT4QZqdWB8v83Zd+vUUhGdFx3oStK2CB/TtRujpfdjnZLBdxJpl60KRTiq3feOBKoulQGQutPU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987262; c=relaxed/simple;
-	bh=j2qw8bnEg+4rkaH3MjEfU/QCW0VMLm/BJWzdGv9xG74=;
+	s=arc-20240116; t=1711987265; c=relaxed/simple;
+	bh=01ZhgTsuPlqs56DiBeGpZuFINt5Vq97xbIz9f35kiXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjNGO47OVHBHZjO7PSzVJjLg3bX6I4WalWKiXTZsT2UfFLD0ei8bBcmfk+7TyUzmNZuPLbvG4QpfPkDuXFX0E6kMlUw2Y8OSy4Gqtwq/kxb/P36wuvgQKyFkBm4CcMipSyVsJ+qsCaoVDQzoUlG08nQLY2RL4nhFJ7FM/3Bxts0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oakbGVbs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ee5Hp9+CyduXCD4B8t+TMQ2hGIH9u+HsYE3jgcyBzrmnJxegLOKEZ5lOLfNvRMgngq6B3Mag22a7ibYN24cAaQ/VJSBDKUVYMxPI1Oo+aehv0WdTgZUdfb4nwLWIe8YeUgnRFxhqruGg+fgdhVbXcaUIqJB7U62yu0IFtLUggtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZOIuJ+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oakbGVbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A7FC433F1;
-	Mon,  1 Apr 2024 16:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZOIuJ+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF000C433C7;
+	Mon,  1 Apr 2024 16:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987262;
-	bh=j2qw8bnEg+4rkaH3MjEfU/QCW0VMLm/BJWzdGv9xG74=;
+	s=korg; t=1711987265;
+	bh=01ZhgTsuPlqs56DiBeGpZuFINt5Vq97xbIz9f35kiXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oakbGVbsFcQRpz0udRhetxzlKhfN0PbgGqhFbv2VYV/bYvEyU0nbOENATGeGNkuHh
-	 Geq8E1y+833CwUdpFtyrwBHZWrsgA0gSG6qn34P6FfVY8GcnpntISM2Nz6ZzImrdPA
-	 kOE2lvIOAhcU4UAjcvQLx1+JB9nTBS7NfBhvKzSk=
+	b=jZOIuJ+NoU5b7LuLobGknwWIlyoPDqcd0OCfc1gQRywO0yZuV5ThyXzTnxLXoFoTd
+	 /3AT1JioNv81Fo6CEGzd/IXB8W/3HfX2OPRUQmDP9oRUijiewUjl5yym6B/mNSUG0R
+	 cdcPV4EM8GtL4vM8L0c7+i6W7hdbd8stacoeyqAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt <cryptearth@googlemail.com>,
-	Conrad Kostecki <conikost@gentoo.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Swapnil Patel <swapnil.patel@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 204/399] ahci: asm1064: asm1166: dont limit reported ports
-Date: Mon,  1 Apr 2024 17:42:50 +0200
-Message-ID: <20240401152555.272949326@linuxfoundation.org>
+Subject: [PATCH 6.8 205/399] drm/amd/display: Change default size for dummy plane in DML2
+Date: Mon,  1 Apr 2024 17:42:51 +0200
+Message-ID: <20240401152555.303113845@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,87 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conrad Kostecki <conikost@gentoo.org>
+From: Swapnil Patel <swapnil.patel@amd.com>
 
-[ Upstream commit 6cd8adc3e18960f6e59d797285ed34ef473cc896 ]
+[ Upstream commit 75eb8f7df65c5e6eb22a5aff8deb60ce0b65de1a ]
 
-Previously, patches have been added to limit the reported count of SATA
-ports for asm1064 and asm1166 SATA controllers, as those controllers do
-report more ports than physically having.
+[WHY & HOW]
+Currently, to map dc states into dml_display_cfg,
+We create a dummy plane if the stream doesn't have any planes
+attached to it. This dummy plane uses max addersable width height.
+This results in certain mode validations failing when they shouldn't.
 
-While it is allowed to report more ports than physically having in CAP.NP,
-it is not allowed to report more ports than physically having in the PI
-(Ports Implemented) register, which is what these HBAs do.
-(This is a AHCI spec violation.)
-
-Unfortunately, it seems that the PMP implementation in these ASMedia HBAs
-is also violating the AHCI and SATA-IO PMP specification.
-
-What these HBAs do is that they do not report that they support PMP
-(CAP.SPM (Supports Port Multiplier) is not set).
-
-Instead, they have decided to add extra "virtual" ports in the PI register
-that is used if a port multiplier is connected to any of the physical
-ports of the HBA.
-
-Enumerating the devices behind the PMP as specified in the AHCI and
-SATA-IO specifications, by using PMP READ and PMP WRITE commands to the
-physical ports of the HBA is not possible, you have to use the "virtual"
-ports.
-
-This is of course bad, because this gives us no way to detect the device
-and vendor ID of the PMP actually connected to the HBA, which means that
-we can not apply the proper PMP quirks for the PMP that is connected to
-the HBA.
-
-Limiting the port map will thus stop these controllers from working with
-SATA Port Multipliers.
-
-This patch reverts both patches for asm1064 and asm1166, so old behavior
-is restored and SATA PMP will work again, but it will also reintroduce the
-(minutes long) extra boot time for the ASMedia controllers that do not
-have a PMP connected (either on the PCIe card itself, or an external PMP).
-
-However, a longer boot time for some, is the lesser evil compared to some
-other users not being able to detect their drives at all.
-
-Fixes: 0077a504e1a4 ("ahci: asm1166: correct count of reported ports")
-Fixes: 9815e3961754 ("ahci: asm1064: correct count of reported ports")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reported-by: Matt <cryptearth@googlemail.com>
-Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-[cassel: rewrote commit message]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Swapnil Patel <swapnil.patel@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ .../display/dc/dml2/dml2_translation_helper.c  | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 682ff550ccfb9..df3fd6474bf21 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -671,19 +671,6 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
- static void ahci_pci_save_initial_config(struct pci_dev *pdev,
- 					 struct ahci_host_priv *hpriv)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+index 1ba6933d2b361..17a58f41fc6a8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
+@@ -824,13 +824,25 @@ static struct scaler_data get_scaler_data_for_plane(const struct dc_plane_state
+ 
+ static void populate_dummy_dml_plane_cfg(struct dml_plane_cfg_st *out, unsigned int location, const struct dc_stream_state *in)
  {
--	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
--		switch (pdev->device) {
--		case 0x1166:
--			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
--			hpriv->saved_port_map = 0x3f;
--			break;
--		case 0x1064:
--			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
--			hpriv->saved_port_map = 0xf;
--			break;
--		}
--	}
--
- 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
- 		dev_info(&pdev->dev, "JMB361 has only one port\n");
- 		hpriv->saved_port_map = 1;
++	dml_uint_t width, height;
++
++	if (in->timing.h_addressable > 3840)
++		width = 3840;
++	else
++		width = in->timing.h_addressable;	// 4K max
++
++	if (in->timing.v_addressable > 2160)
++		height = 2160;
++	else
++		height = in->timing.v_addressable;	// 4K max
++
+ 	out->CursorBPP[location] = dml_cur_32bit;
+ 	out->CursorWidth[location] = 256;
+ 
+ 	out->GPUVMMinPageSizeKBytes[location] = 256;
+ 
+-	out->ViewportWidth[location] = in->timing.h_addressable;
+-	out->ViewportHeight[location] = in->timing.v_addressable;
++	out->ViewportWidth[location] = width;
++	out->ViewportHeight[location] = height;
+ 	out->ViewportStationary[location] = false;
+ 	out->ViewportWidthChroma[location] = 0;
+ 	out->ViewportHeightChroma[location] = 0;
+@@ -849,7 +861,7 @@ static void populate_dummy_dml_plane_cfg(struct dml_plane_cfg_st *out, unsigned
+ 	out->HTapsChroma[location] = 0;
+ 	out->VTapsChroma[location] = 0;
+ 	out->SourceScan[location] = dml_rotation_0;
+-	out->ScalerRecoutWidth[location] = in->timing.h_addressable;
++	out->ScalerRecoutWidth[location] = width;
+ 
+ 	out->LBBitPerPixel[location] = 57;
+ 
 -- 
 2.43.0
 
