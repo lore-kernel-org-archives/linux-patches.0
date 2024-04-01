@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B5B4A99C;
-	Mon,  1 Apr 2024 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9FB1DFF4;
+	Mon,  1 Apr 2024 16:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990589; cv=none; b=SLaKYac6aL3qopFZ/u05L8QUOxr44mITSbK30NKEpspX1PPHam3PwLnhJPPOZxqeLPE8DUuFpWXWwKwbvdjQ5/0iKNsK5VNYY4MeNEGuzGh2wbwc18BJ5Ru+4KaR5iuV2278Dhh+BDqfWvtbMdC67uoABTRuS7bQcCJlRF43XZ4=
+	t=1711990593; cv=none; b=poUIVwB0mvmSnTyRmcHzRpjco9+aBZEWknzwCySSL2jHWwcqTAH6XGLJBgItygLU6HeGnyeFdNK+ID9hJ9zeeGL58i2nqe8g1i2HPSdGclrendo/stb+j4+o/BDmXLbocQ/pY6YY6vsGZwY3hgwmO8ZyW7lvWLwVmKzkdphX1SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990589; c=relaxed/simple;
-	bh=7nMfq+98GN3Va2kqR5DAP9BtD+OQ9Eu8ctX6F4v0c90=;
+	s=arc-20240116; t=1711990593; c=relaxed/simple;
+	bh=FfJBaHTIDSbK+9RGCQ7DzBqZuHCnBmFFlyNTaoDRlcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtgkXgLRI0q1WIh4VkSbwciXkgUeEfLNQeJQ1w/bi5lx2jHyeppXETlPSpR6oRsezsobnBqOhttWBa1cYU49d+jTcl4xNMaoyjH5sh3jSMB2zLa6ZH+1yyswtQ7RHxwrJJJwpZkjPj3ISyIDxd2lXg7aRsLbuLpevj7FWdqzDsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ks8f27hb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hnw6Ye/VQKMFDmPZVZdyj25K+G/3z0unGMMINtxqsDKrIjpLXMgENe3iYYkd9SLkGH0YORyPAoSxF8nJODWw/ORPlvoz/UxuPoUDmeV9U1Mn5yP6fPPOvVEVISC0XgYXYyx4ONradP46f9bRUFs8JkfloYf3DhoUx6p0knXyG0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffFsFb5t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ks8f27hb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2289BC433F1;
-	Mon,  1 Apr 2024 16:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffFsFb5t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4E6C433F1;
+	Mon,  1 Apr 2024 16:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990589;
-	bh=7nMfq+98GN3Va2kqR5DAP9BtD+OQ9Eu8ctX6F4v0c90=;
+	s=korg; t=1711990592;
+	bh=FfJBaHTIDSbK+9RGCQ7DzBqZuHCnBmFFlyNTaoDRlcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ks8f27hbFmJGQLWGwmcW9FG0DDKLHiuLuuWcoCpLc1nJ+ZVL6VXJkc7FTubzLmndu
-	 7XNGoEjPLWoFAvgKy5vGVnBgwWIuMgHjB8oHUq0QHiXCR+bI1GH5tudDoUP1Fd8FMB
-	 qF/0WggYlYnT1eObhF3Rrvp7eLEv2WNLyUdYUTg8=
+	b=ffFsFb5t+RVp1DRBhYq+B/yBlwuoUYfokOpo+GmUvk+RfTyuMOR32ZUdTqpHgQ0N4
+	 f7qIUx32gD7HUCLWqE81qLHscVVPXsAh2Tz5SE6WyGSkB1Y9O+xkF1DFr7tBM8Wcln
+	 ap0CSSuFJhj5ka5HkrYV4YCBFmQrpp4foAgJP/to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 372/396] usb: typec: Return size of buffer if pd_set operation succeeds
-Date: Mon,  1 Apr 2024 17:47:01 +0200
-Message-ID: <20240401152559.004142205@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 373/396] usb: typec: ucsi: Clear EVENT_PENDING under PPM lock
+Date: Mon,  1 Apr 2024 17:47:02 +0200
+Message-ID: <20240401152559.033504858@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 53f5094fdf5deacd99b8655df692e9278506724d upstream.
+commit 15b2e71b4653b3e13df34695a29ebeee237c5af2 upstream.
 
-The attribute writing should return the number of bytes used from the
-buffer on success.
+Suppose we sleep on the PPM lock after clearing the EVENT_PENDING
+bit because the thread for another connector is executing a command.
+In this case the command completion of the other command will still
+report the connector change for our connector.
 
-Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Clear the EVENT_PENDING bit under the PPM lock to avoid another
+useless call to ucsi_handle_connector_change() in this case.
+
+Fixes: c9aed03a0a68 ("usb: ucsi: Add missing ppm_lock")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240319074309.3306579-1-kyletso@google.com
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Link: https://lore.kernel.org/r/20240320073927.1641788-2-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -1264,6 +1264,7 @@ static ssize_t select_usb_power_delivery
- {
- 	struct typec_port *port = to_typec_port(dev);
- 	struct usb_power_delivery *pd;
-+	int ret;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -933,11 +933,11 @@ static void ucsi_handle_connector_change
+ 	if (con->status.change & UCSI_CONSTAT_CAM_CHANGE)
+ 		ucsi_partner_task(con, ucsi_check_altmodes, 1, 0);
  
- 	if (!port->ops || !port->ops->pd_set)
- 		return -EOPNOTSUPP;
-@@ -1272,7 +1273,11 @@ static ssize_t select_usb_power_delivery
- 	if (!pd)
- 		return -EINVAL;
- 
--	return port->ops->pd_set(port, pd);
-+	ret = port->ops->pd_set(port, pd);
-+	if (ret)
-+		return ret;
+-	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+-
+ 	mutex_lock(&ucsi->ppm_lock);
++	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+ 	ret = ucsi_acknowledge_connector_change(ucsi);
+ 	mutex_unlock(&ucsi->ppm_lock);
 +
-+	return size;
- }
+ 	if (ret)
+ 		dev_err(ucsi->dev, "%s: ACK failed (%d)", __func__, ret);
  
- static ssize_t select_usb_power_delivery_show(struct device *dev,
 
 
