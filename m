@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9204EB38;
-	Mon,  1 Apr 2024 16:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4724E1D6;
+	Mon,  1 Apr 2024 16:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990340; cv=none; b=g0DCXxD5C+iVNFMKpvRA+eDBLd/1Gzd5hLsEedrAFKCXP8sfJsjdHyw2zxncflDVx9FfGGSmjrCdQrqH02RnZU2oUxcAimd/hyUOLCulDQmEX14I4Lrw2dCWT4Oyf9NFoYf9rjp48WFq1ff3/VVNhHdpNojfmahLt322X+W1+KQ=
+	t=1711990343; cv=none; b=d9DLl5R2/DZQTIMLdAKpfvipcfXFQjn6GW7Y2mHsRbY41xI929kAFWxfv259bclwa7nN6zz7SUWiwqfeUdIuJy6st8abeE3h20qlPOTqI2ScXvGEeiZLDWc9IIFabSMFk513/EZhNZKkEiZzs9M3EyXDb3ac3ZkfdhkpluF4G3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990340; c=relaxed/simple;
-	bh=xllGLTVNE+r9wYGRJVcF7Jug70InlXnI/j0pQAuQ/jg=;
+	s=arc-20240116; t=1711990343; c=relaxed/simple;
+	bh=o0a3fu1UgUvmYE+JWRv7ok1x6UEihRcM5NAaSW76cZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sxz6rC+RfmplCZECmTwtR6+qr7uJY5ltj1gFH3XGyMgNqW9sD+lfB4ZdlYyUfZE6sDCLBTveJ01Ge71+K1GZuB34y66k+KTfR9RPAB59eIebzoVQ4lLbjyoObSMYwuRocI0U3ASWWWQ1hcie5mZX0lLU9YuxyPrVh1GI8DNHnV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/Bo9v4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qyTUx3JNUsGLE7NbY7VEdzYULGvUYklmOoWCPJklAibvyZcHNgId4hZ/p4CO2mjtclS3IjctqTI8hZXMychJd2/7T3TCVql8f5m/k+O+sM6xdJSnoUWjrqaVH5R+SIvinZyQUzGRiOFRbbPPCHcGo8mHFvJ99IVs6N0whq0ZN7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRg5czjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/Bo9v4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E364C433C7;
-	Mon,  1 Apr 2024 16:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRg5czjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A7EC433F1;
+	Mon,  1 Apr 2024 16:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990340;
-	bh=xllGLTVNE+r9wYGRJVcF7Jug70InlXnI/j0pQAuQ/jg=;
+	s=korg; t=1711990343;
+	bh=o0a3fu1UgUvmYE+JWRv7ok1x6UEihRcM5NAaSW76cZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/Bo9v4diXW4AAcmINvoYA+Hek3tLglH2hSZoTYNudsH7jHOeq+Nk1XCgCVrsOUkR
-	 DkYB51yNwxN3PHCWEhsqjknTtjNoNMtomF36x3IZcW0nRYRPjPldZkeM7J6sSDUQ6i
-	 B9f24Cqr1fjyBzI1WQcWHsj3UfR750WpAHflQwYE=
+	b=YRg5czjj1yUYuWxWFNSOClqkA2aC0zI2cFJgJjCmWJhI+QNbrzKux+0hytHdUT3cf
+	 tig6ei7fOMuWdT33lTuK7Dsu5FNCa7cQUAtQr1RGKjtyfOQkKTQsFnwpVYlg6e9oJT
+	 /9XKfxa7kTre052xOVJJJXbMwFOD2RCKogke2bQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoltan HERPAI <wigyori@uid0.hu>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/396] pwm: img: fix pwm clock lookup
-Date: Mon,  1 Apr 2024 17:45:53 +0200
-Message-ID: <20240401152556.979725447@linuxfoundation.org>
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 322/396] wifi: iwlwifi: mvm: disable MLO for the time being
+Date: Mon,  1 Apr 2024 17:46:11 +0200
+Message-ID: <20240401152557.515524071@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,53 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zoltan HERPAI <wigyori@uid0.hu>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9eb05877dbee03064d3d3483cd6702f610d5a358 ]
+commit 5f404005055304830bbbee0d66af2964fc48f29e upstream.
 
-22e8e19 has introduced a regression in the imgchip->pwm_clk lookup, whereas
-the clock name has also been renamed to "imgchip". This causes the driver
-failing to load:
+MLO ended up not really fully stable yet, we want to make
+sure it works well with the ecosystem before enabling it.
+Thus, remove the flag, but set WIPHY_FLAG_DISABLE_WEXT so
+we don't get wireless extensions back until we enable MLO
+for this hardware.
 
-[    0.546905] img-pwm 18101300.pwm: failed to get imgchip clock
-[    0.553418] img-pwm: probe of 18101300.pwm failed with error -2
-
-Fix this lookup by reverting the clock name back to "pwm".
-
-Signed-off-by: Zoltan HERPAI <wigyori@uid0.hu>
-Link: https://lore.kernel.org/r/20240320083602.81592-1-wigyori@uid0.hu
-Fixes: 22e8e19a46f7 ("pwm: img: Rename variable pointing to driver private data")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240314110951.d6ad146df98d.I47127e4fdbdef89e4ccf7483641570ee7871d4e6@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-img.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-img.c b/drivers/pwm/pwm-img.c
-index 326af85888e7b..fd1535c47b6db 100644
---- a/drivers/pwm/pwm-img.c
-+++ b/drivers/pwm/pwm-img.c
-@@ -289,9 +289,9 @@ static int img_pwm_probe(struct platform_device *pdev)
- 		return PTR_ERR(imgchip->sys_clk);
- 	}
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -318,7 +318,7 @@ int iwl_mvm_mac_setup_register(struct iw
+ 	if (mvm->mld_api_is_used && mvm->nvm_data->sku_cap_11be_enable &&
+ 	    !iwlwifi_mod_params.disable_11ax &&
+ 	    !iwlwifi_mod_params.disable_11be)
+-		hw->wiphy->flags |= WIPHY_FLAG_SUPPORTS_MLO;
++		hw->wiphy->flags |= WIPHY_FLAG_DISABLE_WEXT;
  
--	imgchip->pwm_clk = devm_clk_get(&pdev->dev, "imgchip");
-+	imgchip->pwm_clk = devm_clk_get(&pdev->dev, "pwm");
- 	if (IS_ERR(imgchip->pwm_clk)) {
--		dev_err(&pdev->dev, "failed to get imgchip clock\n");
-+		dev_err(&pdev->dev, "failed to get pwm clock\n");
- 		return PTR_ERR(imgchip->pwm_clk);
- 	}
- 
--- 
-2.43.0
-
+ 	/* With MLD FW API, it tracks timing by itself,
+ 	 * no need for any timing from the host
 
 
