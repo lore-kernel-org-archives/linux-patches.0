@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE861E525;
-	Mon,  1 Apr 2024 16:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285411C0DE7;
+	Mon,  1 Apr 2024 16:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989194; cv=none; b=TDtx5L5CnyY1RjP4MWMT352NPsPt3XlCQYK3NtI4hd3xUVbAnXmxVDFEE+LzT8/K9Z3gFep+hkLEJtuhzXhrC8MA9pyGHiVixMXA5zrEMxp/w9odyarmEyGF4Z7q5H3tkSLsRIEkaKkLI+ExTYGM7ClLLRUWRysvSMlGDvo1Qo0=
+	t=1711989197; cv=none; b=WHovVikMn49aMw++xNiq349/Z5TkWdbLV7Lj6bxKnd7qZtkXpWeNN3AvXJrGDX7kkSgPv2zJsGBuK7r1jvRrfkXvHxpMbZkrWTXoKQGQpheLgMY5FcfjZxPBPgpGuB2Q2qNyowU4V3QU5iOhiW4PrLVr5KyCqcgomDp+0JRKNN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989194; c=relaxed/simple;
-	bh=aYOT7aaKDngBiO3B34/RNDjIb7+hsh3jbFpKs/m3f94=;
+	s=arc-20240116; t=1711989197; c=relaxed/simple;
+	bh=K38CXqQlGDo8NmJJ3LPvXkhpHBunnn3mJsoSwNsXLeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XB7Yuo7coO5kfMbct0NUTAwpuu6+At5+EsLDiaBvIkqFGw+0s3f6xuY7JYGQEbwK2rdJy9QOcpw1vYabn+v2otuCO7znluC7rEoxOOzx0pqb4GiT50OpxFsu5FIePEP900mX+RDCpNBn6ZbP93XS6ajJVpIUjHlBH5DjA4+BXHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy2u0KUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKWipMSdYWCwvRtD26PxGlmqiQd32Z7omPJ2qzRpJ2CyL/ZU4NDj6XOW3BZPdhU1BrzzcYBFFdW8LWKCjJCs15ORMOxf78aZrhAjkZBuqy4KZ7kpmH5jg3+9FZfMosBjs9ag0SPt7RAAXSb3RHUNr7RSCo2MNpRbIAj62R5/sQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a23LSm6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy2u0KUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5D6C433C7;
-	Mon,  1 Apr 2024 16:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a23LSm6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFBCC433F1;
+	Mon,  1 Apr 2024 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989193;
-	bh=aYOT7aaKDngBiO3B34/RNDjIb7+hsh3jbFpKs/m3f94=;
+	s=korg; t=1711989197;
+	bh=K38CXqQlGDo8NmJJ3LPvXkhpHBunnn3mJsoSwNsXLeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy2u0KUp0HZkOkluzepdHKbtSjmSm7z6HZhWfK9Fdpo0706Y4UrZX96l1UXenhMMb
-	 o8RmiquorqsnLLdoP2nu2NhLmY8pirrYyIWT2PDsMDIbicZNYZxj0WrwenWQsr15Wz
-	 iaRoq9XP3eaQ9IbaaJ6PtYsC8P/V2AX+kFeviD10=
+	b=a23LSm6wnzqpCxf7TrSNcY/1k6xNk9MMs//SeSD3BNXa8Ej7tys70AY+nScjoa34b
+	 Aj4lIayPszoZTjqC0n0YphDSoVXFyv06j093YwoZo4KrmdLPRyPcJCDGwqHV5J11oL
+	 2CUNXyd7p5ogHkKAhsyjFUaLf0mG18Rab6J46CYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.7 409/432] usb: typec: ucsi: Ack unsupported commands
-Date: Mon,  1 Apr 2024 17:46:36 +0200
-Message-ID: <20240401152605.585538835@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Subject: [PATCH 6.7 383/432] USB: UAS: return ENODEV when submit urbs fail with device not attached
+Date: Mon,  1 Apr 2024 17:46:10 +0200
+Message-ID: <20240401152604.722165025@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,40 +50,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
 
-commit 6b5c85ddeea77d18c4b69e3bda60e9374a20c304 upstream.
+commit cd5432c712351a3d5f82512908f5febfca946ca6 upstream.
 
-If a command completes the OPM must send an ack. This applies
-to unsupported commands, too.
+In the scenario of entering hibernation with udisk in the system, if the
+udisk was gone or resume fail in the thaw phase of hibernation. Its state
+will be set to NOTATTACHED. At this point, usb_hub_wq was already freezed
+and can't not handle disconnect event. Next, in the poweroff phase of
+hibernation, SYNCHRONIZE_CACHE SCSI command will be sent to this udisk
+when poweroff this scsi device, which will cause uas_submit_urbs to be
+called to submit URB for sense/data/cmd pipe. However, these URBs will
+submit fail as device was set to NOTATTACHED state. Then, uas_submit_urbs
+will return a value SCSI_MLQUEUE_DEVICE_BUSY to the caller. That will lead
+the SCSI layer go into an ugly loop and system fail to go into hibernation.
 
-Send the required ACK for unsupported commands.
+On the other hand, when we specially check for -ENODEV in function
+uas_queuecommand_lck, returning DID_ERROR to SCSI layer will cause device
+poweroff fail and system shutdown instead of entering hibernation.
 
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-4-lk@c--e.de
+To fix this issue, let uas_submit_urbs to return original generic error
+when submitting URB failed. At the same time, we need to translate -ENODEV
+to DID_NOT_CONNECT for the SCSI layer.
+
+Suggested-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Link: https://lore.kernel.org/r/20240306180814.4897-1-WeitaoWang-oc@zhaoxin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/storage/uas.c |   28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -138,8 +138,12 @@ static int ucsi_exec_command(struct ucsi
- 	if (!(cci & UCSI_CCI_COMMAND_COMPLETE))
- 		return -EIO;
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -533,7 +533,7 @@ static struct urb *uas_alloc_cmd_urb(str
+  * daft to me.
+  */
  
--	if (cci & UCSI_CCI_NOT_SUPPORTED)
-+	if (cci & UCSI_CCI_NOT_SUPPORTED) {
-+		if (ucsi_acknowledge_command(ucsi) < 0)
-+			dev_err(ucsi->dev,
-+				"ACK of unsupported command failed\n");
- 		return -EOPNOTSUPP;
-+	}
+-static struct urb *uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
++static int uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
+ {
+ 	struct uas_dev_info *devinfo = cmnd->device->hostdata;
+ 	struct urb *urb;
+@@ -541,30 +541,28 @@ static struct urb *uas_submit_sense_urb(
  
- 	if (cci & UCSI_CCI_ERROR) {
- 		if (cmd == UCSI_GET_ERROR_STATUS)
+ 	urb = uas_alloc_sense_urb(devinfo, gfp, cmnd);
+ 	if (!urb)
+-		return NULL;
++		return -ENOMEM;
+ 	usb_anchor_urb(urb, &devinfo->sense_urbs);
+ 	err = usb_submit_urb(urb, gfp);
+ 	if (err) {
+ 		usb_unanchor_urb(urb);
+ 		uas_log_cmd_state(cmnd, "sense submit err", err);
+ 		usb_free_urb(urb);
+-		return NULL;
+ 	}
+-	return urb;
++	return err;
+ }
+ 
+ static int uas_submit_urbs(struct scsi_cmnd *cmnd,
+ 			   struct uas_dev_info *devinfo)
+ {
+ 	struct uas_cmd_info *cmdinfo = scsi_cmd_priv(cmnd);
+-	struct urb *urb;
+ 	int err;
+ 
+ 	lockdep_assert_held(&devinfo->lock);
+ 	if (cmdinfo->state & SUBMIT_STATUS_URB) {
+-		urb = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
+-		if (!urb)
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++		err = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
++		if (err)
++			return err;
+ 		cmdinfo->state &= ~SUBMIT_STATUS_URB;
+ 	}
+ 
+@@ -572,7 +570,7 @@ static int uas_submit_urbs(struct scsi_c
+ 		cmdinfo->data_in_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
+ 							cmnd, DMA_FROM_DEVICE);
+ 		if (!cmdinfo->data_in_urb)
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return -ENOMEM;
+ 		cmdinfo->state &= ~ALLOC_DATA_IN_URB;
+ 	}
+ 
+@@ -582,7 +580,7 @@ static int uas_submit_urbs(struct scsi_c
+ 		if (err) {
+ 			usb_unanchor_urb(cmdinfo->data_in_urb);
+ 			uas_log_cmd_state(cmnd, "data in submit err", err);
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return err;
+ 		}
+ 		cmdinfo->state &= ~SUBMIT_DATA_IN_URB;
+ 		cmdinfo->state |= DATA_IN_URB_INFLIGHT;
+@@ -592,7 +590,7 @@ static int uas_submit_urbs(struct scsi_c
+ 		cmdinfo->data_out_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
+ 							cmnd, DMA_TO_DEVICE);
+ 		if (!cmdinfo->data_out_urb)
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return -ENOMEM;
+ 		cmdinfo->state &= ~ALLOC_DATA_OUT_URB;
+ 	}
+ 
+@@ -602,7 +600,7 @@ static int uas_submit_urbs(struct scsi_c
+ 		if (err) {
+ 			usb_unanchor_urb(cmdinfo->data_out_urb);
+ 			uas_log_cmd_state(cmnd, "data out submit err", err);
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return err;
+ 		}
+ 		cmdinfo->state &= ~SUBMIT_DATA_OUT_URB;
+ 		cmdinfo->state |= DATA_OUT_URB_INFLIGHT;
+@@ -611,7 +609,7 @@ static int uas_submit_urbs(struct scsi_c
+ 	if (cmdinfo->state & ALLOC_CMD_URB) {
+ 		cmdinfo->cmd_urb = uas_alloc_cmd_urb(devinfo, GFP_ATOMIC, cmnd);
+ 		if (!cmdinfo->cmd_urb)
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return -ENOMEM;
+ 		cmdinfo->state &= ~ALLOC_CMD_URB;
+ 	}
+ 
+@@ -621,7 +619,7 @@ static int uas_submit_urbs(struct scsi_c
+ 		if (err) {
+ 			usb_unanchor_urb(cmdinfo->cmd_urb);
+ 			uas_log_cmd_state(cmnd, "cmd submit err", err);
+-			return SCSI_MLQUEUE_DEVICE_BUSY;
++			return err;
+ 		}
+ 		cmdinfo->cmd_urb = NULL;
+ 		cmdinfo->state &= ~SUBMIT_CMD_URB;
+@@ -698,7 +696,7 @@ static int uas_queuecommand_lck(struct s
+ 	 * of queueing, no matter how fatal the error
+ 	 */
+ 	if (err == -ENODEV) {
+-		set_host_byte(cmnd, DID_ERROR);
++		set_host_byte(cmnd, DID_NO_CONNECT);
+ 		scsi_done(cmnd);
+ 		goto zombie;
+ 	}
 
 
