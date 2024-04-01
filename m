@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC38481D1;
-	Mon,  1 Apr 2024 16:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A402481D1;
+	Mon,  1 Apr 2024 16:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990275; cv=none; b=TRJxRWIyMaS9SBNGpW8tlBqaOytGOSxW3dzBwfXt4zi4124akb7Zl6PSpDxRdT4jkC4SN9Nd2U9tW9PK3cD05tzKuRCjJWgUYKKZBm80qYzhdZ162doizc4KZf2DVVMYz24xsCEbqOlLntf3sblGYQVs8hdm7iU132wys17ewHE=
+	t=1711990279; cv=none; b=P5a2N46QjaVjZZ5O+RACCwHak2m6Os1Hfq9sTDI4T7ldHIusqAZhyQT3VOTpNax4DAbxkRizSFZ1y6fKALqX6jgHuzSxiQzw2kqtIRqfrHAnz1pNj035qinTRP21rvUfRcHkEf5ojeCAHGnr9RO31Uv07BQXiCc0ysygcrilVFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990275; c=relaxed/simple;
-	bh=JaHB1WCfSl+JRh0Aed6/FLQFQXdNaijhbRYev4Inkc4=;
+	s=arc-20240116; t=1711990279; c=relaxed/simple;
+	bh=HS/JVhM1COEUTYhyaGHvp22rW+4QUy6+c62E+T+IcSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X+ASVjeurnPWNfBDfAZH2CJMHBt/ePtrxqnqFStDe75a/IqsonL5jxgXdkUSPpm0okxkaoHy5Rpfu8hSe9vMkgUVDk0JVF3szuhzLjT9WuQdOV50Av6oKSq2rdW9VEQyMLdsurRZFoVJX4695LFc+gDEp1tfdSNTNN/dPVTBHsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsec50z5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZH6lLYsdMCC5hQ0vbF7CCeAMM/yZsbrvU1FFxgjRINjhPywa7hIhNDMyX/Bl2Ba7xw/pSfjR7bDLWQ8N9sPM988706tWH+5qs10DNQTZ16mXZsTFerB+MDstc6WDIpkzhzi3lZUE6MLxtJsKQgWxdMFYZ3zjsG8nBWCgfUHlRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMLFPFnk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsec50z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACE9C433C7;
-	Mon,  1 Apr 2024 16:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMLFPFnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC93C43390;
+	Mon,  1 Apr 2024 16:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990275;
-	bh=JaHB1WCfSl+JRh0Aed6/FLQFQXdNaijhbRYev4Inkc4=;
+	s=korg; t=1711990278;
+	bh=HS/JVhM1COEUTYhyaGHvp22rW+4QUy6+c62E+T+IcSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsec50z5VueWVLhL2ryaxr11Fmp6IY9Ms0EUF3pYg/nyj0UruxdPA15ivpiqDQxMi
-	 VD/L9LAQh5VmRxXG895mc3sC1OF2XzechtGWeWmi2kr8NRLR+BQAdU6tM9lYW7ishB
-	 DNQ5z9p5kucOWipfA32zWUiWf58cqBRhxdER4Hvk=
+	b=FMLFPFnkfRoeF0Vtw9tHL595K2iRnj//FG1+PWRYlf8ylBzr/dXTXSoJDdoipwQRn
+	 IuZ+TeVE+vXy+12ul2WpxKMVZjifZwzRUt/6cxjnxKK7zkDNoBSx3hfR9yzX4o1pM1
+	 li7SMIew3krYHuO3H9fyI72cQUB9rtnk3RnXQxAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-efi@vger.kernel.org,
-	Tom Englund <tomenglund26@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	Kazuma Kondo <kazuma-kondo@nec.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 300/396] efi/libstub: fix efi_random_alloc() to allocate memory at alloc_min or higher address
-Date: Mon,  1 Apr 2024 17:45:49 +0200
-Message-ID: <20240401152556.846021617@linuxfoundation.org>
+	linux-xfs@vger.kernel.org,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Dave Chinner <david@fromorbit.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>
+Subject: [PATCH 6.6 274/396] xfs: update dir3 leaf block metadata after swap
+Date: Mon,  1 Apr 2024 17:45:23 +0200
+Message-ID: <20240401152556.080265421@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -48,78 +48,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: KONDO KAZUMA(近藤　和真) <kazuma-kondo@nec.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit 3cb4a4827596abc82e55b80364f509d0fefc3051 ]
+commit 5759aa4f956034b289b0ae2c99daddfc775442e1 upstream.
 
-Following warning is sometimes observed while booting my servers:
-  [    3.594838] DMA: preallocated 4096 KiB GFP_KERNEL pool for atomic allocations
-  [    3.602918] swapper/0: page allocation failure: order:10, mode:0xcc1(GFP_KERNEL|GFP_DMA), nodemask=(null),cpuset=/,mems_allowed=0-1
-  ...
-  [    3.851862] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocation
+xfs_da3_swap_lastblock() copy the last block content to the dead block,
+but do not update the metadata in it. We need update some metadata
+for some kinds of type block, such as dir3 leafn block records its
+blkno, we shall update it to the dead block blkno. Otherwise,
+before write the xfs_buf to disk, the verify_write() will fail in
+blk_hdr->blkno != xfs_buf->b_bn, then xfs will be shutdown.
 
-If 'nokaslr' boot option is set, the warning always happens.
+We will get this warning:
 
-On x86, ZONE_DMA is small zone at the first 16MB of physical address
-space. When this problem happens, most of that space seems to be used by
-decompressed kernel. Thereby, there is not enough space at DMA_ZONE to
-meet the request of DMA pool allocation.
+  XFS (dm-0): Metadata corruption detected at xfs_dir3_leaf_verify+0xa8/0xe0 [xfs], xfs_dir3_leafn block 0x178
+  XFS (dm-0): Unmount and run xfs_repair
+  XFS (dm-0): First 128 bytes of corrupted metadata buffer:
+  00000000e80f1917: 00 80 00 0b 00 80 00 07 3d ff 00 00 00 00 00 00  ........=.......
+  000000009604c005: 00 00 00 00 00 00 01 a0 00 00 00 00 00 00 00 00  ................
+  000000006b6fb2bf: e4 44 e3 97 b5 64 44 41 8b 84 60 0e 50 43 d9 bf  .D...dDA..`.PC..
+  00000000678978a2: 00 00 00 00 00 00 00 83 01 73 00 93 00 00 00 00  .........s......
+  00000000b28b247c: 99 29 1d 38 00 00 00 00 99 29 1d 40 00 00 00 00  .).8.....).@....
+  000000002b2a662c: 99 29 1d 48 00 00 00 00 99 49 11 00 00 00 00 00  .).H.....I......
+  00000000ea2ffbb8: 99 49 11 08 00 00 45 25 99 49 11 10 00 00 48 fe  .I....E%.I....H.
+  0000000069e86440: 99 49 11 18 00 00 4c 6b 99 49 11 20 00 00 4d 97  .I....Lk.I. ..M.
+  XFS (dm-0): xfs_do_force_shutdown(0x8) called from line 1423 of file fs/xfs/xfs_buf.c.  Return address = 00000000c0ff63c1
+  XFS (dm-0): Corruption of in-memory data detected.  Shutting down filesystem
+  XFS (dm-0): Please umount the filesystem and rectify the problem(s)
 
-The commit 2f77465b05b1 ("x86/efistub: Avoid placing the kernel below
-LOAD_PHYSICAL_ADDR") tried to fix this problem by introducing lower
-bound of allocation.
+>>From the log above, we know xfs_buf->b_no is 0x178, but the block's hdr record
+its blkno is 0x1a0.
 
-But the fix is not complete.
-
-efi_random_alloc() allocates pages by following steps.
-1. Count total available slots ('total_slots')
-2. Select a slot ('target_slot') to allocate randomly
-3. Calculate a starting address ('target') to be included target_slot
-4. Allocate pages, which starting address is 'target'
-
-In step 1, 'alloc_min' is used to offset the starting address of memory
-chunk. But in step 3 'alloc_min' is not considered at all.  As the
-result, 'target' can be miscalculated and become lower than 'alloc_min'.
-
-When KASLR is disabled, 'target_slot' is always 0 and the problem
-happens everytime if the EFI memory map of the system meets the
-condition.
-
-Fix this problem by calculating 'target' considering 'alloc_min'.
-
-Cc: linux-efi@vger.kernel.org
-Cc: Tom Englund <tomenglund26@gmail.com>
-Cc: linux-kernel@vger.kernel.org
-Fixes: 2f77465b05b1 ("x86/efistub: Avoid placing the kernel below LOAD_PHYSICAL_ADDR")
-Signed-off-by: Kazuma Kondo <kazuma-kondo@nec.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 24df33b45ecf ("xfs: add CRC checking to dir2 leaf blocks")
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Suggested-by: Dave Chinner <david@fromorbit.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/randomalloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_da_btree.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/firmware/efi/libstub/randomalloc.c b/drivers/firmware/efi/libstub/randomalloc.c
-index 4e96a855fdf47..7e18528595502 100644
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -120,7 +120,7 @@ efi_status_t efi_random_alloc(unsigned long size,
- 			continue;
- 		}
- 
--		target = round_up(md->phys_addr, align) + target_slot * align;
-+		target = round_up(max(md->phys_addr, alloc_min), align) + target_slot * align;
- 		pages = size / EFI_PAGE_SIZE;
- 
- 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
--- 
-2.43.0
-
+--- a/fs/xfs/libxfs/xfs_da_btree.c
++++ b/fs/xfs/libxfs/xfs_da_btree.c
+@@ -2316,10 +2316,17 @@ xfs_da3_swap_lastblock(
+ 		return error;
+ 	/*
+ 	 * Copy the last block into the dead buffer and log it.
++	 * On CRC-enabled file systems, also update the stamped in blkno.
+ 	 */
+ 	memcpy(dead_buf->b_addr, last_buf->b_addr, args->geo->blksize);
++	if (xfs_has_crc(mp)) {
++		struct xfs_da3_blkinfo *da3 = dead_buf->b_addr;
++
++		da3->blkno = cpu_to_be64(xfs_buf_daddr(dead_buf));
++	}
+ 	xfs_trans_log_buf(tp, dead_buf, 0, args->geo->blksize - 1);
+ 	dead_info = dead_buf->b_addr;
++
+ 	/*
+ 	 * Get values from the moved block.
+ 	 */
 
 
