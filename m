@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF493F8F4;
-	Mon,  1 Apr 2024 16:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD891383BA;
+	Mon,  1 Apr 2024 16:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987279; cv=none; b=fPM5bTcL8XKTfwSClet8+X4tr61CLdnmZMc9Ig8GcSXcAaNErtGSezweIxTj3oKhnQi4kd12oJkN/LaKATqP3Pmt7cugS4OfYt1bC5CzVsXFAw9XwMVgaJ2fmkqeuCOSkeYP/OHoPL3Cd0ih/nsR73gzJb5IWfLEfFzaB6VVwK0=
+	t=1711987282; cv=none; b=aIFgOH7lRgnG9TIYba3P0rAgXi5WUevIKxOJ1Ga+VkId+WSYBuldDGxBM54xkeyOct1miBXujuQdvJmKNEjY/CGZp68hyMAukl2E2fXSCVw8CzFMKyMlaSdfM8/5zZMSIfjlOIbu08P1SPmbhohV6V52Gx8KpY4xGnf094/dXVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987279; c=relaxed/simple;
-	bh=X0MLQIVvTKiNEYjpRONVugPFtfxMb/e9SRmRWCfFWLc=;
+	s=arc-20240116; t=1711987282; c=relaxed/simple;
+	bh=uQZGwpWzddVksrWGpRn+UuqKuWVJobdir5eM/zRpGpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvhsP2W07Zxa9CLtqxKoWI7m1LqlH+OwXsh6C2tWr33AoQ96xkdUG6NGO1I6nGFcFtDoxZPpfjxxhEz8I/y4l4JvaKf+X69tlMpHw9olTJg9IjVqywkx3iuwM6rGgx9JyteyZ8Eu4t3pFs5ByfVp7czrlMyqjTWjlGe2VB1GuRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo64/1Rv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnWg7vSJ6dcGwRvxuwYTvupGbZK0Fx9VxmyKHIWVpowg/i2wZ4ovdAIo8xIeJEfRC1oAdafM0tFIzJswMpeqQ63TcgW9UkxgpaLtrT2wwuppbnu6BP/Vj231fawDSirYAJZeNDSnTpAPs/7n5iZO4CljUgndQd00TCSjxaXjMGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw0Q4NnH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo64/1Rv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BD6C433F1;
-	Mon,  1 Apr 2024 16:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw0Q4NnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8BBC433C7;
+	Mon,  1 Apr 2024 16:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987278;
-	bh=X0MLQIVvTKiNEYjpRONVugPFtfxMb/e9SRmRWCfFWLc=;
+	s=korg; t=1711987281;
+	bh=uQZGwpWzddVksrWGpRn+UuqKuWVJobdir5eM/zRpGpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bo64/1RvaIIGB7ydZ5YYA0vTPEzanIVsBa6uRzTMg+vIRLWzKyThJJxNw+V527aj4
-	 2Tp/obKoabowEXUyhd9ig2d0zSkdSAyf5c78j8P0bHsLes8djpkVv5FlsV4yvP4Pe/
-	 SwD6X/tEhz3wTKk/LoC0yF18FBjs80XAAW5i9ZIg=
+	b=iw0Q4NnHH589V+BoOlLQWJssxaAEHf/vQOM4iq6sm2J3TZZEDcZwrol1Fk4cOBu0H
+	 ELA0DbfJYO4FACrgZZS0sKgGbK2OYbTQO8opKZXMnurmwWsY/TJMbCfkB2wuJ/77C2
+	 q1X4Orlqx7uIR0AjS7XjkUUQnD4zW3CdB+5qfBVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Grassein <adrien.grassein@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Nevenko Stupar <nevenko.stupar@amd.com>,
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 239/399] drm/bridge: lt8912b: do not return negative values from .get_modes()
-Date: Mon,  1 Apr 2024 17:43:25 +0200
-Message-ID: <20240401152556.311802333@linuxfoundation.org>
+Subject: [PATCH 6.8 240/399] drm/amd/display: Remove pixle rate limit for subvp
+Date: Mon,  1 Apr 2024 17:43:26 +0200
+Message-ID: <20240401152556.341054638@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,58 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Alvin Lee <alvin.lee2@amd.com>
 
-[ Upstream commit 171b711b26cce208bb628526b1b368aeec7b6fa4 ]
+[ Upstream commit 340383c734f8a4e1663d26356b35fd8050851168 ]
 
-The .get_modes() hooks aren't supposed to return negative error
-codes. Return 0 for no modes, whatever the reason.
+Subvp bugs related to 8K60 have been fixed, so remove the limit that
+blocks 8K60 timings from enabling SubVP.
 
-Cc: Adrien Grassein <adrien.grassein@gmail.com>
-Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/dcdddcbcb64b6f6cdc55022ee50c10dee8ddbc3d.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: cf8c498694a4 ("drm/amd/display: Revert Remove pixle rate limit for subvp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 9c0ffc1c6fac4..97d4af3d13653 100644
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -441,23 +441,21 @@ lt8912_connector_mode_valid(struct drm_connector *connector,
- static int lt8912_connector_get_modes(struct drm_connector *connector)
- {
- 	const struct drm_edid *drm_edid;
--	int ret = -1;
--	int num = 0;
- 	struct lt8912 *lt = connector_to_lt8912(connector);
- 	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
-+	int ret, num;
- 
- 	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
- 	drm_edid_connector_update(connector, drm_edid);
--	if (drm_edid) {
--		num = drm_edid_connector_add_modes(connector);
--	} else {
--		return ret;
--	}
-+	if (!drm_edid)
-+		return 0;
-+
-+	num = drm_edid_connector_add_modes(connector);
- 
- 	ret = drm_display_info_set_bus_formats(&connector->display_info,
- 					       &bus_format, 1);
--	if (ret)
--		num = ret;
-+	if (ret < 0)
-+		num = 0;
- 
- 	drm_edid_free(drm_edid);
- 	return num;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index a0a65e0991041..b49e1dc9d8ba5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -623,7 +623,6 @@ static bool dcn32_assign_subvp_pipe(struct dc *dc,
+ 		 * - Not TMZ surface
+ 		 */
+ 		if (pipe->plane_state && !pipe->top_pipe && !dcn32_is_center_timing(pipe) &&
+-				!(pipe->stream->timing.pix_clk_100hz / 10000 > DCN3_2_MAX_SUBVP_PIXEL_RATE_MHZ) &&
+ 				(!dcn32_is_psr_capable(pipe) || (context->stream_count == 1 && dc->caps.dmub_caps.subvp_psr)) &&
+ 				dc_state_get_pipe_subvp_type(context, pipe) == SUBVP_NONE &&
+ 				(refresh_rate < 120 || dcn32_allow_subvp_high_refresh_rate(dc, context, pipe)) &&
 -- 
 2.43.0
 
