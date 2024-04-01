@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FF11C0DE7;
-	Mon,  1 Apr 2024 16:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCAFDF6B;
+	Mon,  1 Apr 2024 16:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989360; cv=none; b=KjNEpyMZGtxxZMdm9/9LISXt6x3sdyb9wfCLGqETtnsqv5aAWvbkwM5PPrWfl1rBy+XViYYBautUaxnSqmuZ67d5tkF08Gx2V5z+yO6GqjYRzpwC6mQFHLh/MJZAIde23T6btIufwbHewImIf6+4w93/u8N3kc2xls3jXm3DeZg=
+	t=1711989364; cv=none; b=ssaVmiMGv71TN1ts+VqphuLakQCK62+YhyvUC3Sfoar6x9UAMGq0TaT5l17/Y3vLIBbdWzbwX8jorhs9GaTfeH4rekeznGfqc6WhRbreJvMnU325KvMBaPA8/pjnZrfcj4FDyWuH6Xx2I5tQoeGKFBqg7jHU4WKWVet40dsUoDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989360; c=relaxed/simple;
-	bh=ZF6E5sK5aVMf0mi44BMzh3G0lql/PyzuyPm3wasT6AQ=;
+	s=arc-20240116; t=1711989364; c=relaxed/simple;
+	bh=aVvyyJtp2+YCXv0DCFVVfkCJwZXZ1ySuID6w5T3WISA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OW7GGTGhhEPInBV5VFIzdxfGOoWts4zIUhI8DoCX/83hvMHmkdJYGpw8I3DnfgSrsCrYsbGgmWUIDJPGzevp1XnjpaDnYGJ9VPYL448lXH/sUdif/+7mGV/NZueArUfjJR4oJpEN5AE1whX45InGE9HdegFUv7tZX8a5jCtwkUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iarxjUbx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VgLVVRiNw7m4uovfzJABEulzmpLXcv49EjpFYwxIgdSWQpPnTubj0etQQakBzqe+kYs3qvlsNkvuV4+fDTFs3csaWxZabHqTBwNVXec+NvjLNztbJ7DQE++WRsABz0Nr4QxAiDtR9cFRXwtZWdZbw+k0rrUabl3XFHr79cBtVH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6Iv+Dlh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iarxjUbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04091C433F1;
-	Mon,  1 Apr 2024 16:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6Iv+Dlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C86AC433C7;
+	Mon,  1 Apr 2024 16:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989360;
-	bh=ZF6E5sK5aVMf0mi44BMzh3G0lql/PyzuyPm3wasT6AQ=;
+	s=korg; t=1711989364;
+	bh=aVvyyJtp2+YCXv0DCFVVfkCJwZXZ1ySuID6w5T3WISA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iarxjUbxu/JXvP6fUGJpEQaMJXeT9fyaCNuBWZ10qBsQldCac3odrH/1aD2v+8khl
-	 w1kUBbDj+2o5jDmOfDOv+zbiWOuGYOA8sEY5DxIjtf6BfrqNhVnQE/9u0bTBRWuzcA
-	 hQEC1pVgTXQ/RxYvn3/bv1Muvx9sX5zGxeO37H2I=
+	b=b6Iv+DlhtYXp1GceoIjk7CftO8yRg7tm0fNBnPnhlyruUxQIs4w348f5CC/gva4gv
+	 xXE7hVTeS1K/gKLymkAFkguhhEt33tJ9SMcxyJIIiN24IZZWLHK5Xb4aJ+HfmMaq00
+	 kZrIWyPEfoUfDlhh/hqyYIIwmL2RhmGmAcrwaCMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hidenori Kobayashi <hidenorik@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/396] wifi: brcmfmac: avoid invalid list operation when vendor attach fails
-Date: Mon,  1 Apr 2024 17:40:54 +0200
-Message-ID: <20240401152548.039196414@linuxfoundation.org>
+Subject: [PATCH 6.6 006/396] media: staging: ipu3-imgu: Set fields before media_entity_pads_init()
+Date: Mon,  1 Apr 2024 17:40:55 +0200
+Message-ID: <20240401152548.069865008@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,42 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Hidenori Kobayashi <hidenorik@chromium.org>
 
-[ Upstream commit b822015a1f57268f5b2ff656736dc4004e7097da ]
+[ Upstream commit 87318b7092670d4086bfec115a0280a60c51c2dd ]
 
-When the brcmf_fwvid_attach() fails the driver instance is not added
-to the vendor list. Hence we should not try to delete it from that
-list when the brcmf_fwvid_detach() function is called in cleanup path.
+The imgu driver fails to probe with the following message because it
+does not set the pad's flags before calling media_entity_pads_init().
 
-Cc: stable@vger.kernel.org # 6.2.x
-Fixes: d6a5c562214f ("wifi: brcmfmac: add support for vendor-specific firmware api")
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240106103835.269149-3-arend.vanspriel@broadcom.com
+[   14.596315] ipu3-imgu 0000:00:05.0: failed initialize subdev media entity (-22)
+[   14.596322] ipu3-imgu 0000:00:05.0: failed to register subdev0 ret (-22)
+[   14.596327] ipu3-imgu 0000:00:05.0: failed to register pipes (-22)
+[   14.596331] ipu3-imgu 0000:00:05.0: failed to create V4L2 devices (-22)
+
+Fix the initialization order so that the driver probe succeeds. The ops
+initialization is also moved together for readability.
+
+Fixes: a0ca1627b450 ("media: staging/intel-ipu3: Add v4l2 driver based on media framework")
+Cc: <stable@vger.kernel.org> # 6.7
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hidenori Kobayashi <hidenorik@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/staging/media/ipu3/ipu3-v4l2.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-index 86eafdb405419..f610818c2b059 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-@@ -187,9 +187,10 @@ void brcmf_fwvid_detach_ops(struct brcmf_pub *drvr)
+diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
+index e530767e80a5d..55cc44a401bc4 100644
+--- a/drivers/staging/media/ipu3/ipu3-v4l2.c
++++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+@@ -1069,6 +1069,11 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 	struct imgu_media_pipe *imgu_pipe = &imgu->imgu_pipe[pipe];
  
- 	mutex_lock(&fwvid_list_lock);
- 
--	drvr->vops = NULL;
--	list_del(&drvr->bus_if->list);
--
-+	if (drvr->vops) {
-+		drvr->vops = NULL;
-+		list_del(&drvr->bus_if->list);
+ 	/* Initialize subdev media entity */
++	imgu_sd->subdev.entity.ops = &imgu_media_ops;
++	for (i = 0; i < IMGU_NODE_NUM; i++) {
++		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
++			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
 +	}
- 	mutex_unlock(&fwvid_list_lock);
- }
+ 	r = media_entity_pads_init(&imgu_sd->subdev.entity, IMGU_NODE_NUM,
+ 				   imgu_sd->subdev_pads);
+ 	if (r) {
+@@ -1076,11 +1081,6 @@ static int imgu_v4l2_subdev_register(struct imgu_device *imgu,
+ 			"failed initialize subdev media entity (%d)\n", r);
+ 		return r;
+ 	}
+-	imgu_sd->subdev.entity.ops = &imgu_media_ops;
+-	for (i = 0; i < IMGU_NODE_NUM; i++) {
+-		imgu_sd->subdev_pads[i].flags = imgu_pipe->nodes[i].output ?
+-			MEDIA_PAD_FL_SINK : MEDIA_PAD_FL_SOURCE;
+-	}
  
+ 	/* Initialize subdev */
+ 	v4l2_subdev_init(&imgu_sd->subdev, &imgu_subdev_ops);
+@@ -1177,15 +1177,15 @@ static int imgu_v4l2_node_setup(struct imgu_device *imgu, unsigned int pipe,
+ 	}
+ 
+ 	/* Initialize media entities */
++	node->vdev_pad.flags = node->output ?
++		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
++	vdev->entity.ops = NULL;
+ 	r = media_entity_pads_init(&vdev->entity, 1, &node->vdev_pad);
+ 	if (r) {
+ 		dev_err(dev, "failed initialize media entity (%d)\n", r);
+ 		mutex_destroy(&node->lock);
+ 		return r;
+ 	}
+-	node->vdev_pad.flags = node->output ?
+-		MEDIA_PAD_FL_SOURCE : MEDIA_PAD_FL_SINK;
+-	vdev->entity.ops = NULL;
+ 
+ 	/* Initialize vbq */
+ 	vbq->type = node->vdev_fmt.type;
 -- 
 2.43.0
 
