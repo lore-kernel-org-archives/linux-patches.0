@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643D340876;
-	Mon,  1 Apr 2024 16:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BAB1E525;
+	Mon,  1 Apr 2024 16:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990071; cv=none; b=k6wRBbPUFnPo9tQ7Rdr8UYJpSaQakAKH3euLxfLrz6nYtuqF8K7eDO9Peue+A/yc8jWtqTwo07oHl/iO/ls3lrc2z0TJAqf+FUWLtqGT8FNUp4IrWiqZUXE4Tpq+WOObloLPzVBjni0LR45XTUdZzT//+lXHQO6S0ZUWlE+HX9E=
+	t=1711990074; cv=none; b=QW72b5fHrFcODumpQrApFAALsGapfIk7St4s+gDIWJ8Yynv6QKGmX8rYzIC6Ffv9VmejmD8OKp8FTyWd5TuauhUtH3u3Sw8vZm6xI3qWylzJ1AAZ0+7XipRPudkp0qpn7efZgSMz8o+x1PmdcpAxdRFnecTawysfg3Tm2qjtkC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990071; c=relaxed/simple;
-	bh=Sz0o9Wac7H6vAKYxC9Vdx4qr3fQleXlyO8eK3Zridtk=;
+	s=arc-20240116; t=1711990074; c=relaxed/simple;
+	bh=u0o7zJt6HPCbYtN3xtIH5qeFw1KQ/wm8LgXIGbZcdK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FjWkLB6RdDxG3SvIvHM5ManBU7Ew7V7VC30mziP/1gc2qnrxTj7wd4lHvRZZs5RpGEPIc/487Ijr1V1MZREyo+QOnFKu2jFEavz3NDlwQh8ZkYMRtxDR1bHcS2/AO8QhioKLnerGcgoUtdaBeW2sNvl82/3O9QTN6+uboMCHWHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc7k7xyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqC9ElpDauAEt7r/r0vezKeIsFlUsLsguQy3VaHK3S0xNm7BY31DuJrk+uTyzeRfCOfHsY/Xbidk6a7ZwgvoxWxhyKQi4fRo/+KSYnCWyZ1yrnwVwRmfsFpTkn8Z9jkkVvi/laGcO3Udmh3kIqMsahnaMv766Hio0BcWeIfpCIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTIJ/JZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc7k7xyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7FBC433F1;
-	Mon,  1 Apr 2024 16:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTIJ/JZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B90C433C7;
+	Mon,  1 Apr 2024 16:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990071;
-	bh=Sz0o9Wac7H6vAKYxC9Vdx4qr3fQleXlyO8eK3Zridtk=;
+	s=korg; t=1711990074;
+	bh=u0o7zJt6HPCbYtN3xtIH5qeFw1KQ/wm8LgXIGbZcdK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vc7k7xyufWXU8672rC2UKpOpRr8c6vyfzzRcWails1k0581AOtoZY6pEIt4pIrI7v
-	 kgMlRpChT9Zyr3rxYZRBhzC3sVZt9xlAX9wTOazkvOiTG5o8gZvgvA2jTNAHGsAhfc
-	 gqO1xMSTEXPaLj7543KHQUiDnDOuqvdVcmNlW0LY=
+	b=RTIJ/JZKPACu0V2XXZYJjtcvmKeUhQc2YP36MUC5zV9+WCo/0/sQSy5TDn/eYrxz8
+	 GY0D8BJ0DxOTwwVBvUS1fuQ5f/6PMeO00Bv0Muplj7HjCnnx23OoCI6yM0qmtqgrP2
+	 eAhkikam+a95/FqjJlmdAwdKhvs88P9yG3o8kwMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chi <andy.chi@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 237/396] ALSA: hda/realtek: fix mute/micmute LEDs for HP EliteBook
-Date: Mon,  1 Apr 2024 17:44:46 +0200
-Message-ID: <20240401152554.980954860@linuxfoundation.org>
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.6 238/396] tee: optee: Fix kernel panic caused by incorrect error handling
+Date: Mon,  1 Apr 2024 17:44:47 +0200
+Message-ID: <20240401152555.009998005@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -50,35 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Chi <andy.chi@canonical.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit a17bd44c0146b00fcaa692915789c16bd1fb2a81 upstream.
+commit 95915ba4b987cf2b222b0f251280228a1ff977ac upstream.
 
-The HP EliteBook using ALC236 codec which using 0x02 to
-control mute LED and 0x01 to control micmute LED.
-Therefore, add a quirk to make it works.
+The error path while failing to register devices on the TEE bus has a
+bug leading to kernel panic as follows:
 
-Signed-off-by: Andy Chi <andy.chi@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240304134033.773348-1-andy.chi@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[   15.398930] Unable to handle kernel paging request at virtual address ffff07ed00626d7c
+[   15.406913] Mem abort info:
+[   15.409722]   ESR = 0x0000000096000005
+[   15.413490]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   15.418814]   SET = 0, FnV = 0
+[   15.421878]   EA = 0, S1PTW = 0
+[   15.425031]   FSC = 0x05: level 1 translation fault
+[   15.429922] Data abort info:
+[   15.432813]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[   15.438310]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   15.443372]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   15.448697] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000d9e3e000
+[   15.455413] [ffff07ed00626d7c] pgd=1800000bffdf9003, p4d=1800000bffdf9003, pud=0000000000000000
+[   15.464146] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+
+Commit 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+lead to the introduction of this bug. So fix it appropriately.
+
+Reported-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218542
+Fixes: 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tee/optee/device.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9950,6 +9950,10 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8c70, "HP EliteBook 835 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c71, "HP EliteBook 845 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c8a, "HP EliteBook 630", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c8c, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c90, "HP EliteBook 640", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c91, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8ca1, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -90,13 +90,14 @@ static int optee_register_device(const u
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+ 		put_device(&optee_device->dev);
++		return rc;
+ 	}
+ 
+ 	if (func == PTA_CMD_GET_DEVICES_SUPP)
+ 		device_create_file(&optee_device->dev,
+ 				   &dev_attr_need_supplicant);
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int __optee_enumerate_devices(u32 func)
 
 
