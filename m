@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B39495F0;
-	Mon,  1 Apr 2024 17:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBF1DFF4;
+	Mon,  1 Apr 2024 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991040; cv=none; b=Vv2MWg1F2bdsEw8v/KHLF9GDj8iTsQI5B/pIFPduSGIZuPDzoblUtvtQcbzCRKklgD7RIshBMy1JrEhqzmOYuTjThTxsFMpMT89fWAuyZcZHjoTsyBz43rfas4gak8ZxQvxITHcvhP9OoOZOXRC3OFQyNSizkOt+fOYJTxXYOrY=
+	t=1711991043; cv=none; b=AtxUK7xkAAs9SLySfBL36+33rth+3fhMCkoYVTWox7c76o9r/ji5SO8av/h5EXyo1jfNl9qdnnvzKAuLkmdjIKCTr4eaFr4ykWXKh9GfGAAXlGGpsaEhoqKanG58WLFC7KJNgkZOinRgAOOuKB9JlhD1WLUqpHh9YKC0WrzY0H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991040; c=relaxed/simple;
-	bh=2AwupsJSS9I8k5kdnmOt6K3AfYkjwFd8gcDG5mT6/gA=;
+	s=arc-20240116; t=1711991043; c=relaxed/simple;
+	bh=HA3zKyGplIXILVAs3tL+JiCM/AcTfRJyAEC9XNE5mxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvCUl4Xx5O0Dqz02gUPSejJ1QOXBtkYv5c4TjQ0p7aMz2OvF9nyPh7uTCbV5YhkIDLHTWBoErZTz10YCSmJVbDCB0T53UIYOWZ8fbzVBaiJMySCQKDJ+pQUbx0oE2mZKnRIumMoAiCznGxvk4nUS8XdQ1UeUykbrMktIWppZ+lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu+X0oOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emMDWF9x0fa2iDSELnzsFL2TR6gAx7khqGg+wSEM0+/R13Mc9gtOp413ClssaJdrxY5wZWP54eZNv475KlnfeEpEl92640sBVZyRZruVouIxD2LyCWv7Vcv6hQtk2DN5WcY7CHnJRQ9tIxZGVxU43BLkK+ZxfcwRXJVJDNC/97w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Faz8H6Ty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu+X0oOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AA4C433F1;
-	Mon,  1 Apr 2024 17:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Faz8H6Ty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA240C433C7;
+	Mon,  1 Apr 2024 17:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991039;
-	bh=2AwupsJSS9I8k5kdnmOt6K3AfYkjwFd8gcDG5mT6/gA=;
+	s=korg; t=1711991043;
+	bh=HA3zKyGplIXILVAs3tL+JiCM/AcTfRJyAEC9XNE5mxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hu+X0oOBoi291GFsoAzpVYSutOeEnnsl0upK1fxiTuo1kSK/lW7bImtbOjVG7sOC+
-	 BqmSH6se8tDNvQBbBwLlhFYcy//d5Ipn8IoYhV6Cs10kQryPBPfjZgJf4HseK4m5IP
-	 CK0ewhNt5cz69kxm4sDsAvtw/4ZQyNc/d94hBgZ0=
+	b=Faz8H6TyO9gl3R3E20Nt0PQ7CXGvQmhmDmA3hn5pZZi+c+bjXvxbHZhjcPCvbaQCB
+	 1ss8eFV3HsCp6ILBYtM1F58gVNRVdLdgzhTrAlA34a19q2z8Hg7hprbpl+DHzd5RwM
+	 Q4AWAmsmt4WdOJdGzWgaJsm6JW1UdPb8SftxbV64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
-	Seung-Woo Kim <sw0312.kim@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/272] drm/exynos: do not return negative values from .get_modes()
-Date: Mon,  1 Apr 2024 17:45:07 +0200
-Message-ID: <20240401152534.317745506@linuxfoundation.org>
+	valis <sec@valis.email>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 144/272] tls: fix race between tx work scheduling and socket close
+Date: Mon,  1 Apr 2024 17:45:34 +0200
+Message-ID: <20240401152535.180080613@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,67 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
+commit e01e3934a1b2d122919f73bc6ddbe1cdafc4bbdb upstream.
 
-The .get_modes() hooks aren't supposed to return negative error
-codes. Return 0 for no modes, whatever the reason.
+Similarly to previous commit, the submitting thread (recvmsg/sendmsg)
+may exit as soon as the async crypto handler calls complete().
+Reorder scheduling the work before calling complete().
+This seems more logical in the first place, as it's
+the inverse order of what the submitting thread will do.
 
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: valis <sec@valis.email>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Lee: Fixed merge-conflict in Stable branches linux-6.1.y and older]
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
- drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/tls/tls_sw.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index f5e1adfcaa514..fb941a8c99f0f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -316,14 +316,14 @@ static int vidi_get_modes(struct drm_connector *connector)
- 	 */
- 	if (!ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
--		return -EFAULT;
-+		return 0;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -449,7 +449,6 @@ static void tls_encrypt_done(crypto_comp
+ 	struct scatterlist *sge;
+ 	struct sk_msg *msg_en;
+ 	struct tls_rec *rec;
+-	bool ready = false;
+ 	struct sock *sk;
+ 
+ 	rec = container_of(aead_req, struct tls_rec, aead_req);
+@@ -486,19 +485,16 @@ static void tls_encrypt_done(crypto_comp
+ 		/* If received record is at head of tx_list, schedule tx */
+ 		first_rec = list_first_entry(&ctx->tx_list,
+ 					     struct tls_rec, list);
+-		if (rec == first_rec)
+-			ready = true;
++		if (rec == first_rec) {
++			/* Schedule the transmission */
++			if (!test_and_set_bit(BIT_TX_SCHEDULED,
++					      &ctx->tx_bitmask))
++				schedule_delayed_work(&ctx->tx_work.work, 1);
++		}
  	}
  
- 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
- 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
- 	if (!edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
--		return -ENOMEM;
-+		return 0;
- 	}
+ 	if (atomic_dec_and_test(&ctx->encrypt_pending))
+ 		complete(&ctx->async_wait.completion);
+-
+-	if (!ready)
+-		return;
+-
+-	/* Schedule the transmission */
+-	if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
+-		schedule_delayed_work(&ctx->tx_work.work, 1);
+ }
  
- 	drm_connector_update_edid_property(connector, edid);
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index 1a7194a653ae5..be2d9cbaaef2e 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -887,11 +887,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	int ret;
- 
- 	if (!hdata->ddc_adpt)
--		return -ENODEV;
-+		return 0;
- 
- 	edid = drm_get_edid(connector, hdata->ddc_adpt);
- 	if (!edid)
--		return -ENODEV;
-+		return 0;
- 
- 	hdata->dvi_mode = !connector->display_info.is_hdmi;
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
--- 
-2.43.0
-
+ static int tls_encrypt_async_wait(struct tls_sw_context_tx *ctx)
 
 
