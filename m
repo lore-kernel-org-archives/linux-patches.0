@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8495517FD;
-	Mon,  1 Apr 2024 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61D617FD;
+	Mon,  1 Apr 2024 16:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989033; cv=none; b=rEHwL0ExQQMOwxlL2GAGj/n63enwU5kgX1IJ68ytUibPjHe3jpB4nXyl311vFr5RmN+HWVyOgMTydxsIOTrxzX9tdWTIwqbGgi2aMhYomojr2+HJnLoWHv3UfQKpwob7/XaMgOzdbFgl/XRK3iynqzWQT7Au75hF2Ut9vbzhoD8=
+	t=1711989036; cv=none; b=KP8t+095f00ydz1SfBtHYbH0ohlG0dcXDWwrn9HxouWrUPe1WDhhFwvjA+prSjM5bDVCl2bgH3dMXMAEAXJ/sQ/6rbKLsQv7dy6C/749wTFRm1IBj0ZYagOS1ZK0WaGKArdqHoetRfgmwyn4H2rEHJxKSpPA0V8hB5AKSshpT+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989033; c=relaxed/simple;
-	bh=K1jmXECCxmOEYgdds8+KZN21t3yvo/lhFckl2r6/dfI=;
+	s=arc-20240116; t=1711989036; c=relaxed/simple;
+	bh=n2qds4O40oHzcUalaZX9l0XpWIprhE0jPZtx5Rlp3MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qhvfbpHKNlE508932gpalY3EMTNFkGEGJnlf3xKwLi9tM317P8UcJ173rjbMofCsgckfI7Gm7SMQtEQF7Ogi9qdIVwlF8isDAt6746NDDIhXY9NXrOuKdVL7r+8yKwcgBbTyIk7SPk10pKkpPvRwxDdg+rFWmYGTTWytjQFZW+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPWVTEcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FNonqt9FaKL/l8u8zfZjucJ1LZJccxfGYnrzDAvxV571bNdbF61IVx2Gzn5AFy0khvvsoDYBcC6ZkOXn0ABBDSo8N2belpmumEn/5KGPbBthcklwTu51Hxlph/FBkAOF7q/6fG0+WORYX0KRdE2tIu6YWbFNBnSbs7aQk/aQVwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sjr7q6a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPWVTEcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7970C433F1;
-	Mon,  1 Apr 2024 16:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjr7q6a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370F5C433F1;
+	Mon,  1 Apr 2024 16:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989033;
-	bh=K1jmXECCxmOEYgdds8+KZN21t3yvo/lhFckl2r6/dfI=;
+	s=korg; t=1711989036;
+	bh=n2qds4O40oHzcUalaZX9l0XpWIprhE0jPZtx5Rlp3MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPWVTEcSHsZUU0uVtF+NLavwZY5RKEXE233gl2+CmUfkJOtj+QGiez4KGfneBOpQc
-	 zWt7LoAUtDDplZmdUc6P7SfAwUgaNAGg6Mmr7OSBSVHjmoHpBz74MnzdW3a9YgkiwA
-	 5Odu9EXxuHEzqpO/jO9nlazY46Q2m6PI0DhzGvhg=
+	b=Sjr7q6a/cgG0zXozMkoZqTr/2/4Y6cxWcgv+gsCTC14j+HQJkBwnF8HOaMmJR6XJy
+	 bq1EpH4s6fkWEKymyhP9z8ys4nI2q3G7ON415kSQvuBymf7kSZCQjD8E3SXa3Ya9S4
+	 IEau5gh3qerlE9g//+uPArGf/eh4BbcJ9SMK8qsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Zhang <ye.zhang@rock-chips.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.7 362/432] thermal: devfreq_cooling: Fix perf state when calculate dfc res_util
-Date: Mon,  1 Apr 2024 17:45:49 +0200
-Message-ID: <20240401152604.063828503@linuxfoundation.org>
+	Danilo Krummrich <dakr@redhat.com>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 6.7 363/432] nouveau/dmem: handle kcalloc() allocation failure
+Date: Mon,  1 Apr 2024 17:45:50 +0200
+Message-ID: <20240401152604.094147780@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -46,45 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ye Zhang <ye.zhang@rock-chips.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit a26de34b3c77ae3a969654d94be49e433c947e3b upstream.
+commit 16e87fe23d4af6df920406494ced5c0f4354567b upstream.
 
-The issue occurs when the devfreq cooling device uses the EM power model
-and the get_real_power() callback is provided by the driver.
+The kcalloc() in nouveau_dmem_evict_chunk() will return null if
+the physical memory has run out. As a result, if we dereference
+src_pfns, dst_pfns or dma_addrs, the null pointer dereference bugs
+will happen.
 
-The EM power table is sorted ascending，can't index the table by cooling
-device state，so convert cooling state to performance state by
-dfc->max_state - dfc->capped_state.
+Moreover, the GPU is going away. If the kcalloc() fails, we could not
+evict all pages mapping a chunk. So this patch adds a __GFP_NOFAIL
+flag in kcalloc().
 
-Fixes: 615510fe13bd ("thermal: devfreq_cooling: remove old power model and use EM")
-Cc: 5.11+ <stable@vger.kernel.org> # 5.11+
-Signed-off-by: Ye Zhang <ye.zhang@rock-chips.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Finally, as there is no need to have physically contiguous memory,
+this patch switches kcalloc() to kvcalloc() in order to avoid
+failing allocations.
+
+CC: <stable@vger.kernel.org> # v6.1
+Fixes: 249881232e14 ("nouveau/dmem: evict device private memory during release")
+Suggested-by: Danilo Krummrich <dakr@redhat.com>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240306050104.11259-1-duoming@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/devfreq_cooling.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_dmem.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/thermal/devfreq_cooling.c
-+++ b/drivers/thermal/devfreq_cooling.c
-@@ -201,7 +201,7 @@ static int devfreq_cooling_get_requested
+--- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
+@@ -378,9 +378,9 @@ nouveau_dmem_evict_chunk(struct nouveau_
+ 	dma_addr_t *dma_addrs;
+ 	struct nouveau_fence *fence;
  
- 		res = dfc->power_ops->get_real_power(df, power, freq, voltage);
- 		if (!res) {
--			state = dfc->capped_state;
-+			state = dfc->max_state - dfc->capped_state;
+-	src_pfns = kcalloc(npages, sizeof(*src_pfns), GFP_KERNEL);
+-	dst_pfns = kcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL);
+-	dma_addrs = kcalloc(npages, sizeof(*dma_addrs), GFP_KERNEL);
++	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dma_addrs = kvcalloc(npages, sizeof(*dma_addrs), GFP_KERNEL | __GFP_NOFAIL);
  
- 			/* Convert EM power into milli-Watts first */
- 			dfc->res_util = dfc->em_pd->table[state].power;
+ 	migrate_device_range(src_pfns, chunk->pagemap.range.start >> PAGE_SHIFT,
+ 			npages);
+@@ -406,11 +406,11 @@ nouveau_dmem_evict_chunk(struct nouveau_
+ 	migrate_device_pages(src_pfns, dst_pfns, npages);
+ 	nouveau_dmem_fence_done(&fence);
+ 	migrate_device_finalize(src_pfns, dst_pfns, npages);
+-	kfree(src_pfns);
+-	kfree(dst_pfns);
++	kvfree(src_pfns);
++	kvfree(dst_pfns);
+ 	for (i = 0; i < npages; i++)
+ 		dma_unmap_page(chunk->drm->dev->dev, dma_addrs[i], PAGE_SIZE, DMA_BIDIRECTIONAL);
+-	kfree(dma_addrs);
++	kvfree(dma_addrs);
+ }
+ 
+ void
 
 
