@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592781CA8F;
-	Mon,  1 Apr 2024 16:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AF71CA8F;
+	Mon,  1 Apr 2024 16:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988744; cv=none; b=eH5uOIiBKt5f0bkROMc6Tc1HB16++G80QB5V6+kTYzMA5986+XsY6ZwvCJb3x9RJEcmMuffE01SeZ+G+o48PN+KYyPvpMFtvsj35jP1fR40NR6EmhmgVLjzuy0MKgvxd0uQpx+d2/6lH0TPcf/f4mUb1HtvcQCs454SRW0bABjY=
+	t=1711988747; cv=none; b=OEngwAeuuBvhnwS71nZdSZpLsmqAiZHj6TvTUB58PHFSHAIxZ1j1Fpj9EfFQWuCwc0ZUndfXh0TmzSV8Z/y7II1iOXlxHg1HeZaaUYgI10Bad8R54zSDyoiK3LJEdAN4Jg0Mw9Io9QPZb+mhRGRNUZQfLyrWuHtnh7AgSu+JDvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988744; c=relaxed/simple;
-	bh=8pA7y3cwkYtzn0vKjST+SR/FIIVYNqppU2b37K2Rsqw=;
+	s=arc-20240116; t=1711988747; c=relaxed/simple;
+	bh=MVEy7z/2lN9URB+hZMvTX1fFQT4LLfpRNvfpmZGCSs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwfaH5xAJEVXVPAzi6tuIGG8W5BezTR6R+8BZeRE5M2xRQU+N7gqy/1EdpMP9KNqZOVhmsWprd+0ZWJYdY3bPk8WssfGJPXg+7gdMKPc3qZvfG67RM3vd5RushTvGE64LcvQYOdkhbfOq5AIUqridJg90+/5dnOEYRZZr9vFqHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRYseQOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQz7pqC62XrN3yD0ZJQER8M099pqRmQOL7zWe+1Qmt4RhFkt68mGymIaKUcqVFbmrVzvQZCZ1c+dZ3rg5JIQEZzNgaLvbe6PyHcWgWjBQ7s51mObYK30zydLx5KccQFU4tg5EqOARkMu0ZCs/cmn4qRycrjeB0jVDCsTSZwOWP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QEl7F8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRYseQOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84A9C433F1;
-	Mon,  1 Apr 2024 16:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QEl7F8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072F8C43394;
+	Mon,  1 Apr 2024 16:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988744;
-	bh=8pA7y3cwkYtzn0vKjST+SR/FIIVYNqppU2b37K2Rsqw=;
+	s=korg; t=1711988747;
+	bh=MVEy7z/2lN9URB+hZMvTX1fFQT4LLfpRNvfpmZGCSs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRYseQOyupJHoZVpmGPoU+x9JhmpqL/GQv8sN1xvmP9zQ1jd+s2ND4w4ALYxqugo/
-	 VH7r3YY6nbeAnwiJoae3fgyGPa7UcQSNPcfEa97G3rM/uWoA8jWalDSyFmc6xgoW4g
-	 TboUoam+S/hF/hEiL7STb5oxY6zqiPulg0AA5Zuc=
+	b=0QEl7F8PW2lJncn1o6cM63uxjWRLc08VH/TL9+9+7gLNnf5a32shEW41zM2HRI1o6
+	 sSAC0jjCCN/fVY8F6+S/LKpSovbdGkZ5KoXQ8BbS5A2g3yqyjt02jH36cffSNsvmNI
+	 YNs1FNutT9n9LRgsst3q1JdQp4OuwPpGFth12zOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rickard x Andersson <rickaran@axis.com>,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Subject: [PATCH 6.7 258/432] tty: serial: imx: Fix broken RS485
-Date: Mon,  1 Apr 2024 17:44:05 +0200
-Message-ID: <20240401152600.835126792@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.7 276/432] ALSA: hda/realtek - Add Headset Mic supported Acer NB platform
+Date: Mon,  1 Apr 2024 17:44:23 +0200
+Message-ID: <20240401152601.405527892@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,85 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 672448ccf9b6a676f96f9352cbf91f4d35f4084a upstream.
+commit 34ab5bbc6e82214d7f7393eba26d164b303ebb4e upstream.
 
-When about to transmit the function imx_uart_start_tx is called and in
-some RS485 configurations this function will call imx_uart_stop_rx. The
-problem is that imx_uart_stop_rx will enable loopback in order to
-release the RS485 bus, but when loopback is enabled transmitted data
-will just be looped to RX.
+It will be enable headset Mic for Acer NB platform.
 
-This patch fixes the above problem by not enabling loopback when about
-to transmit.
-
-This driver now works well when used for RS485 half duplex master
-configurations.
-
-Fixes: 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal active high")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Link: https://lore.kernel.org/r/20240221115304.509811-1-rickaran@axis.com
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/fe0eb6661ca240f3b7762b5b3257710d@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -462,8 +462,7 @@ static void imx_uart_stop_tx(struct uart
- 	}
- }
- 
--/* called with port.lock taken and irqs off */
--static void imx_uart_stop_rx(struct uart_port *port)
-+static void imx_uart_stop_rx_with_loopback_ctrl(struct uart_port *port, bool loopback)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
- 	u32 ucr1, ucr2, ucr4, uts;
-@@ -485,7 +484,7 @@ static void imx_uart_stop_rx(struct uart
- 	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
- 	if (port->rs485.flags & SER_RS485_ENABLED &&
- 	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
--	    sport->have_rtscts && !sport->have_rtsgpio) {
-+	    sport->have_rtscts && !sport->have_rtsgpio && loopback) {
- 		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
- 		uts |= UTS_LOOP;
- 		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-@@ -498,6 +497,16 @@ static void imx_uart_stop_rx(struct uart
- }
- 
- /* called with port.lock taken and irqs off */
-+static void imx_uart_stop_rx(struct uart_port *port)
-+{
-+	/*
-+	 * Stop RX and enable loopback in order to make sure RS485 bus
-+	 * is not blocked. Se comment in imx_uart_probe().
-+	 */
-+	imx_uart_stop_rx_with_loopback_ctrl(port, true);
-+}
-+
-+/* called with port.lock taken and irqs off */
- static void imx_uart_enable_ms(struct uart_port *port)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
-@@ -682,9 +691,14 @@ static void imx_uart_start_tx(struct uar
- 				imx_uart_rts_inactive(sport, &ucr2);
- 			imx_uart_writel(sport, ucr2, UCR2);
- 
-+			/*
-+			 * Since we are about to transmit we can not stop RX
-+			 * with loopback enabled because that will make our
-+			 * transmitted data being just looped to RX.
-+			 */
- 			if (!(port->rs485.flags & SER_RS485_RX_DURING_TX) &&
- 			    !port->rs485_rx_during_tx_gpio)
--				imx_uart_stop_rx(port);
-+				imx_uart_stop_rx_with_loopback_ctrl(port, false);
- 
- 			sport->tx_state = WAIT_AFTER_RTS;
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11046,6 +11046,8 @@ static const struct snd_hda_pin_quirk al
+  *   at most one tbl is allowed to define for the same vendor and same codec
+  */
+ static const struct snd_hda_pin_quirk alc269_fallback_pin_fixup_tbl[] = {
++	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1025, "Acer", ALC2XX_FIXUP_HEADSET_MIC,
++		{0x19, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1b, 0x40000000}),
 
 
