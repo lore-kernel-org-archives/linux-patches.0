@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B971CA8F;
-	Mon,  1 Apr 2024 16:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3501CA8F;
+	Mon,  1 Apr 2024 16:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987388; cv=none; b=FM7tUAeST1CEbsppD6wVbx3x9YMGFAW4KNLzxPhf6j297vD7BL5XkJwrZjPXGc0apqzHV6+l/wFW32UvgrkYntSTTWunbEyFnR+Tu4SYPpLpP+L5OrE6cZ4Al99DRvmCeFAnsgO6o/bFSGpCXKgSQap8EgoZpTezwFhQXH/KRa0=
+	t=1711987391; cv=none; b=bckNtGVN8n0Aaj5rRGT+a06JScpygz5F4/SyvamUD/iy8dwLmGwJB+gaW0wUS+7VFOzrvF0xjvSLxRayb11EE1VnpDYWBTtYUykMBhwqKMqz9adKwoWFU+TYNh3POnoLioyjvQ9oPdIXI10YI+k3xWR5b7QnDNigR5axcdeG+1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987388; c=relaxed/simple;
-	bh=K+hl92fBnA8CX9tPr3f9mPVnL+D6voGo2qhoEwv4nqw=;
+	s=arc-20240116; t=1711987391; c=relaxed/simple;
+	bh=HtV05bO/H/qfHo9/kMK2DvAQneQKUcIVrlN76IrJAws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMYDGbgczKr26ZyyzzflQUVlgU8MzB+xlqtTFZzkm3Vc+BMvZLu/qLNEm6hpuVyCtTcyg3bzXZkohjBuqeGpIKv2SuDzdDm+jr5PyHIEnMGVd9jlIhLZgDG2x+Zp+8e8MwgMmNlsRxIQ298ICJlN17bAtA0sWz1+6qXbvitLG5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNx1Z3+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7qtTaxGq4YD8yUHYgqWNFJRw8mSQlTiyZ0xXpskikDPjHiD0L+t0/RtT/m0L7mv7YaOT5dK+ZK5zH22fufW1wNJMMqxUCKRBqg56egdBh0NjVUb7B8UBw/qHgTaDO780rHzAHzMN3qZ33t/XjxtvEm9423KPikOxe+VdgAmbn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBb3j57y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNx1Z3+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14731C433F1;
-	Mon,  1 Apr 2024 16:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBb3j57y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D61EC433C7;
+	Mon,  1 Apr 2024 16:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987388;
-	bh=K+hl92fBnA8CX9tPr3f9mPVnL+D6voGo2qhoEwv4nqw=;
+	s=korg; t=1711987391;
+	bh=HtV05bO/H/qfHo9/kMK2DvAQneQKUcIVrlN76IrJAws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kNx1Z3+jesXnRVqD/FyiHWRxXM606ntJlNl0hkQDOW69spwG0CamZNtf/nTqAz5So
-	 T8RGqBTaIJAf17e67GBJpwueJaJ4KNBfK4SjRC2ALTyIKGrK4riUiMn+9GiQv29/Mc
-	 oMi11LST1G6EdEqjWHHisOje/VqXzMmETDOWbJi8=
+	b=yBb3j57yOSw2vJZDzEBkGgN69hDttDVykY0UXxp5gBcTjZHRPHSPzAZXPye1NuLfb
+	 h0SD/kjo2qTOddaKETIYOduq73H5Oa9xIVlt1j6O5Ji+RPk+Bz93YqvIH1BcE27OpV
+	 QAsMO5X5cuhRY0SpMpZel8V4sJtNzvpHUUz0Lykg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 273/399] btrfs: handle errors returned from unpin_extent_cache()
-Date: Mon,  1 Apr 2024 17:43:59 +0200
-Message-ID: <20240401152557.332461167@linuxfoundation.org>
+Subject: [PATCH 6.8 274/399] btrfs: fix warning messages not printing interval at unpin_extent_range()
+Date: Mon,  1 Apr 2024 17:44:00 +0200
+Message-ID: <20240401152557.361359425@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,79 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit c03c89f821e51325d0e592cf625cf5e0a26fa3a7 ]
+[ Upstream commit 4dc1d69c2b101eee0bf071187794ffed2f9c2596 ]
 
-We've had numerous attempts to let function unpin_extent_cache() return
-void as it only returns 0. There are still error cases to handle so do
-that, in addition to the verbose messages. The only caller
-btrfs_finish_one_ordered() will now abort the transaction, previously it
-let it continue which could lead to further problems.
+At unpin_extent_range() we print warning messages that are supposed to
+print an interval in the form "[X, Y)", with the first element being an
+inclusive start offset and the second element being the exclusive end
+offset of a range. However we end up printing the range's length instead
+of the range's exclusive end offset, so fix that to avoid having confusing
+and non-sense messages in case we hit one of these unexpected scenarios.
 
+Fixes: 00deaf04df35 ("btrfs: log messages at unpin_extent_range() during unexpected cases")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 4dc1d69c2b10 ("btrfs: fix warning messages not printing interval at unpin_extent_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_map.c | 10 +++++++++-
- fs/btrfs/inode.c      |  9 +++++++--
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ fs/btrfs/extent_map.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index b61099bf97a82..f170e7122e747 100644
+index f170e7122e747..c02039db5d247 100644
 --- a/fs/btrfs/extent_map.c
 +++ b/fs/btrfs/extent_map.c
-@@ -291,6 +291,10 @@ static void try_merge_map(struct extent_map_tree *tree, struct extent_map *em)
-  * Called after an extent has been written to disk properly.  Set the generation
-  * to the generation that actually added the file item to the inode so we know
-  * we need to sync this extent when we call fsync().
-+ *
-+ * Returns: 0	     on success
-+ * 	    -ENOENT  when the extent is not found in the tree
-+ * 	    -EUCLEAN if the found extent does not match the expected start
-  */
- int unpin_extent_cache(struct btrfs_inode *inode, u64 start, u64 len, u64 gen)
- {
-@@ -308,14 +312,18 @@ int unpin_extent_cache(struct btrfs_inode *inode, u64 start, u64 len, u64 gen)
+@@ -311,7 +311,7 @@ int unpin_extent_cache(struct btrfs_inode *inode, u64 start, u64 len, u64 gen)
+ 		btrfs_warn(fs_info,
  "no extent map found for inode %llu (root %lld) when unpinning extent range [%llu, %llu), generation %llu",
  			   btrfs_ino(inode), btrfs_root_id(inode->root),
- 			   start, len, gen);
-+		ret = -ENOENT;
+-			   start, len, gen);
++			   start, start + len, gen);
+ 		ret = -ENOENT;
  		goto out;
  	}
- 
--	if (WARN_ON(em->start != start))
-+	if (WARN_ON(em->start != start)) {
+@@ -320,7 +320,7 @@ int unpin_extent_cache(struct btrfs_inode *inode, u64 start, u64 len, u64 gen)
  		btrfs_warn(fs_info,
  "found extent map for inode %llu (root %lld) with unexpected start offset %llu when unpinning extent range [%llu, %llu), generation %llu",
  			   btrfs_ino(inode), btrfs_root_id(inode->root),
- 			   em->start, start, len, gen);
-+		ret = -EUCLEAN;
-+		goto out;
-+	}
- 
- 	em->generation = gen;
- 	em->flags &= ~EXTENT_FLAG_PINNED;
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 8151ad5f4650b..5ceb995709b56 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3127,8 +3127,13 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
- 						ordered_extent->disk_num_bytes);
- 		}
- 	}
--	unpin_extent_cache(inode, ordered_extent->file_offset,
--			   ordered_extent->num_bytes, trans->transid);
-+	if (ret < 0) {
-+		btrfs_abort_transaction(trans, ret);
-+		goto out;
-+	}
-+
-+	ret = unpin_extent_cache(inode, ordered_extent->file_offset,
-+				 ordered_extent->num_bytes, trans->transid);
- 	if (ret < 0) {
- 		btrfs_abort_transaction(trans, ret);
+-			   em->start, start, len, gen);
++			   em->start, start, start + len, gen);
+ 		ret = -EUCLEAN;
  		goto out;
+ 	}
 -- 
 2.43.0
 
