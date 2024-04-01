@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C481DFF4;
-	Mon,  1 Apr 2024 17:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3011DFF4;
+	Mon,  1 Apr 2024 17:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991112; cv=none; b=TpyNwfPSkWyFbwuInt5sJLInV9Gg23JxM74fC1ue0eIklJ2Id32ofH3lN3NUysP+XTwhRwbC1ebqopLKyZIM5K4Waj4LBBprDR+YGRyV3kmg1lz8nMbXapNa65q7o3e8OpaPtpYx8l+djtmdIQ+/IV7zBLALmMeHNxDh3QEKadE=
+	t=1711991116; cv=none; b=MA17B26mWGltQfRciWCiHIvRSTD2dp4WpgEkfrzSK6UbQKZKE66ybckNZNW4MI9jZgDpU7YcSBDWAYzRBwh4kJZwi4SG8mdNikLjIj6pvaGgk6oXd0S493LipgV+Gut9ttCR//YqdmK8RqwW1AnAyFN8qL6LT2jnAVeZwiwfkOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991112; c=relaxed/simple;
-	bh=+NcE4/bcD3YuZsJ4GOexhfSP0OYEc5F2juJxTHFN37w=;
+	s=arc-20240116; t=1711991116; c=relaxed/simple;
+	bh=+G9di90xkZzHopMTHpEMtKM/o25gdd6+l5D5FjxloVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRqGQ3unEULpv2+IUPHwcEc/0QWu4MuwLHyW6K9nMvCBjJvyQBq9ADWnrkOvu7f1AU99y2y90kWReNHytnNLTIJh6/gAMFtXLur+/nEymrrolT9GDhuWiNnNPlWA6oTqtQ0cZ5t/WkDinJepzsVmwtH1UX++7cF5irkN4/GuKec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXl1A1nb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q63WFN9+OCU06fvECZqHJTCtEAtedyvyvG0sxVVqgR3uhELaTgKAiqS7cgPyhTQu69cFxWTw3h+RBal6anzLpanthiO8lSFdpxvXxAs8Bni8C1AaG5cC3iIRc7gUf3ORvFvNsscbtlpz6zxf0unJ17h0fpGz7+Cj9Nx9wItthy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/jpoRaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXl1A1nb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1613FC433C7;
-	Mon,  1 Apr 2024 17:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/jpoRaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7BFC433F1;
+	Mon,  1 Apr 2024 17:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991112;
-	bh=+NcE4/bcD3YuZsJ4GOexhfSP0OYEc5F2juJxTHFN37w=;
+	s=korg; t=1711991115;
+	bh=+G9di90xkZzHopMTHpEMtKM/o25gdd6+l5D5FjxloVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXl1A1nbR+RQxckF4JHGQf3iApAglBIBm7xje71RbNbXLx+lXyPWnoxZIvZaHyEUr
-	 fwm9THk+x9Dw8n+xFkyHFGMi+cMpY0dTldYN0mbcXTbXyLiiO4QTqVMt2ocoeglQPb
-	 hu32mBDvOEsVzVaz4GyNwticQElX9Fw/vm8gqc8Y=
+	b=X/jpoRaAWUW5OPmt3zh3alN4884TrMB6Jd4bQfZnL7rTu7cTCkhrsDn0fXDdUfi8p
+	 RYUPTp3Ztzr0diKw0tn0qgJoUhJANhQUoysYzP2zrYzEN3p3xfireN56yZKyDfMAib
+	 vzYAyI/UEhRVBHUD/bhVudpsVK1woFuEgltcQqDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Benjamin LaHaise <ben@communityfibre.ca>,
-	Eric Biggers <ebiggers@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Avi Kivity <avi@scylladb.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 166/272] fs/aio: Check IOCB_AIO_RW before the struct aio_kiocb conversion
-Date: Mon,  1 Apr 2024 17:45:56 +0200
-Message-ID: <20240401152535.930316718@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 167/272] ALSA: hda/realtek - Add Headset Mic supported Acer NB platform
+Date: Mon,  1 Apr 2024 17:45:57 +0200
+Message-ID: <20240401152535.968719738@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -58,63 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 961ebd120565cb60cebe21cb634fbc456022db4a upstream.
+commit 34ab5bbc6e82214d7f7393eba26d164b303ebb4e upstream.
 
-The first kiocb_set_cancel_fn() argument may point at a struct kiocb
-that is not embedded inside struct aio_kiocb. With the current code,
-depending on the compiler, the req->ki_ctx read happens either before
-the IOCB_AIO_RW test or after that test. Move the req->ki_ctx read such
-that it is guaranteed that the IOCB_AIO_RW test happens first.
+It will be enable headset Mic for Acer NB platform.
 
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Benjamin LaHaise <ben@communityfibre.ca>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Avi Kivity <avi@scylladb.com>
-Cc: Sandeep Dhavale <dhavale@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: stable@vger.kernel.org
-Fixes: b820de741ae4 ("fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240304235715.3790858-1-bvanassche@acm.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/fe0eb6661ca240f3b7762b5b3257710d@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -591,8 +591,8 @@ static int aio_setup_ring(struct kioctx
- 
- void kiocb_set_cancel_fn(struct kiocb *iocb, kiocb_cancel_fn *cancel)
- {
--	struct aio_kiocb *req = container_of(iocb, struct aio_kiocb, rw);
--	struct kioctx *ctx = req->ki_ctx;
-+	struct aio_kiocb *req;
-+	struct kioctx *ctx;
- 	unsigned long flags;
- 
- 	/*
-@@ -602,9 +602,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
- 	if (!(iocb->ki_flags & IOCB_AIO_RW))
- 		return;
- 
-+	req = container_of(iocb, struct aio_kiocb, rw);
-+
- 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
- 		return;
- 
-+	ctx = req->ki_ctx;
-+
- 	spin_lock_irqsave(&ctx->ctx_lock, flags);
- 	list_add_tail(&req->ki_list, &ctx->active_reqs);
- 	req->ki_cancel = cancel;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10750,6 +10750,8 @@ static const struct snd_hda_pin_quirk al
+  *   at most one tbl is allowed to define for the same vendor and same codec
+  */
+ static const struct snd_hda_pin_quirk alc269_fallback_pin_fixup_tbl[] = {
++	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1025, "Acer", ALC2XX_FIXUP_HEADSET_MIC,
++		{0x19, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1b, 0x40000000}),
 
 
