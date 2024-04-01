@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BD31DFF4;
-	Mon,  1 Apr 2024 17:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DE81DFF4;
+	Mon,  1 Apr 2024 17:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991021; cv=none; b=aXJucW5Ws/SKgiKBsuXEF+PoZDGYJkIZAMJmCipPXm/pfqT/74ftm1jSHjcUycwQ9pO8Qu1wCO1djlW2T7IuXUkBdewcI0Eitk1fu4yOn8qLD+ufladgsjFSe+uVfR5wqWokQHkfQFd9/2rgRPFterzGHKfiymXCAGWuapRYHxU=
+	t=1711991024; cv=none; b=Z9kfdu4ycqnhJqtmY0ndvSdtqUepNXH3X/sMd78vJRr1LcaIqdFjgQMMxPmNpzRU4mlGHOzSoJ7cYYDZFM4nDx01BGTXosbD116RP898sH0HJB2wSy9yFORQr127c8ilY2YcpbfXsjkavuTEiu+HJ55+cOlBR0ssTpCsUuASl/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991021; c=relaxed/simple;
-	bh=T13wgKCTpD9Xvh6E/Sp79hIoDUlgw+PcDSx+LfL+OMg=;
+	s=arc-20240116; t=1711991024; c=relaxed/simple;
+	bh=UepWmsvNeZHRHIoVm9ctPE5qXVt1VfonMAbwut4MCIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OS/m05WHxQ9mjtHrjL0golnj6ATcmxz07pMQ3kUZ+0h65HuUCPum6lu/Rkw4N0g0tV5ylJOe3srbEyAVrUYHmofCPAbaw91X5SnttQR/pedkLNaWqNfp+YZPsrXkUdvNFi0EOMM4HOzxBxtPl5xV2AqywfRR7d/1D7X2uhddktY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QanTiGm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHxQa4PtaLvllv35/GkcHsIL4Fq4B6IuJ6pngaAwyZce5Zp0vy5Cmehxxojj7qPUWa4GVt6KnCgmwCLRZgZmCxKg/+F0yCOMOg069NfypSwgifLpsxoO/im5K0gGVdaWNTe3R8LUfiPFtLY6WRsHuNMUJaW7h9ydpKoTuFRTuxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvPlB0Ql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QanTiGm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05319C433C7;
-	Mon,  1 Apr 2024 17:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvPlB0Ql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330B5C433F1;
+	Mon,  1 Apr 2024 17:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991020;
-	bh=T13wgKCTpD9Xvh6E/Sp79hIoDUlgw+PcDSx+LfL+OMg=;
+	s=korg; t=1711991023;
+	bh=UepWmsvNeZHRHIoVm9ctPE5qXVt1VfonMAbwut4MCIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QanTiGm4xBVIT2kDJdhxD2WxwO5I5kiAJEqVEwIANK1wuEOqZIaHqA6kf0sfAJgbJ
-	 jQljcF7+bAcWXzAPeWlUzf1+UaHY9AVkK0ZsZ44ypJxrhwhJE8T/r1jy9EMKiHY0BT
-	 wQeRNA5LK81j05u9nyJWo7EtYyQlONcX3u4JMVDs=
+	b=ZvPlB0QlAbG1JSjGqCtA7SA1pOB0I38vc2uBzNuLU5t9MxfnxpX0lpyBdzIPs6F/0
+	 bGpZSvoowp6Lb+3zluQYzuk4UsYYgXKHoozO3cm/2YxIh7824WTyMvUUR2YouRqHrM
+	 OPUZs0I2Brc2HOFbmqFBXVS7gFV+d3sbDPDE15+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Leo Ma <hanghong.ma@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/272] drm/amd/display: Return the correct HDCP error code
-Date: Mon,  1 Apr 2024 17:45:28 +0200
-Message-ID: <20240401152534.993575794@linuxfoundation.org>
+Subject: [PATCH 6.1 139/272] drm/amd/display: Fix noise issue on HDMI AV mute
+Date: Mon,  1 Apr 2024 17:45:29 +0200
+Message-ID: <20240401152535.023093266@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,40 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Leo Ma <hanghong.ma@amd.com>
 
-[ Upstream commit e64b3f55e458ce7e2087a0051f47edabf74545e7 ]
+[ Upstream commit 69e3be6893a7e668660b05a966bead82bbddb01d ]
 
-[WHY & HOW]
-If the display is null when creating an HDCP session, return a proper
-error code.
+[Why]
+When mode switching is triggered there is momentary noise visible on
+some HDMI TV or displays.
+
+[How]
+Wait for 2 frames to make sure we have enough time to send out AV mute
+and sink receives a full frame.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Leo Ma <hanghong.ma@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-index ee67a35c2a8ed..ff930a71e496a 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-@@ -513,6 +513,9 @@ enum mod_hdcp_status mod_hdcp_hdcp2_create_session(struct mod_hdcp *hdcp)
- 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
- 	memset(hdcp_cmd, 0, sizeof(struct ta_hdcp_shared_memory));
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+index 72bec33e371f3..0225b2c96041d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -651,10 +651,20 @@ void dcn30_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
+ 	if (pipe_ctx == NULL)
+ 		return;
  
-+	if (!display)
-+		return MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
+-	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL)
++	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL) {
+ 		pipe_ctx->stream_res.stream_enc->funcs->set_avmute(
+ 				pipe_ctx->stream_res.stream_enc,
+ 				enable);
 +
- 	hdcp_cmd->in_msg.hdcp2_create_session_v2.display_handle = display->index;
++		/* Wait for two frame to make sure AV mute is sent out */
++		if (enable) {
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++		}
++	}
+ }
  
- 	if (hdcp->connection.link.adjust.hdcp2.force_type == MOD_HDCP_FORCE_TYPE_0)
+ void dcn30_update_info_frame(struct pipe_ctx *pipe_ctx)
 -- 
 2.43.0
 
