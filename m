@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6A347A6B;
-	Mon,  1 Apr 2024 16:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9178447A6B;
+	Mon,  1 Apr 2024 16:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989747; cv=none; b=SGul8bmVoi7ZXhK2vuHRHfyQpWNBiCZqbqPypPaYNCjp4Wm7NdFoVHQ3xdjTn2gohDrB0Eze9Q2LlBakoS21WkrxNKIBUZISMrw16VLfEOd/zPCHRl7/hBtSOCNippGRqcN7unCeK9LcR/BFkh86NXoROcWOgRVTt+HwAvLQ/4g=
+	t=1711989750; cv=none; b=Ejz2SUHgbPQHr3MWqAQ4FCsHcg10sIYeMLhhnW6K1tnqc/f1PII2Bjtbz8mbYIqp3VEjtsLKs4L6NFkf2K0HeJKcyUwPAczhgzibGHqZ+B+hq7NrG94KdYUqhFdEMpeEBnjebHbZX10SC7YziVERgf+ac5c3vxzbXuCTG0FQL5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989747; c=relaxed/simple;
-	bh=beXoZC9z7zbVUWhQd9Mzt2qU7ju0qo/Lm1x89OQuipU=;
+	s=arc-20240116; t=1711989750; c=relaxed/simple;
+	bh=A4Jr9IxONjoDv82G+ay2AmyrN/DMrYqZ8Pp4csmyWVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDqFZFsH0vtpqvKxG34RXaTI/2v26PkOD6vF90clvju4Ivg5/JkzruNfza7MVvGlj8XJyCNUUmCSXCRIhKbrZ6LElSK580zO5rAZkuQJrCq0UQFgZk9cQqzdYcuLDU3nEGrFtT9Hx8x8UVCxov5Evb/M8EffOtwSG/lJiqiXess=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXysLVwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fv8MyPmYh285Ck+FhHFgHVMKsIDpG8T1Z/2Tea1FpZ6kfKUjRhXpYuxEnFYJTDQEytlWEWuH30wvGnd/Arf7Sx2KIiCgAWekwwf6tlh5sDEuvIlxk8WuQWwAE/kRguBQhgryIxmWFtB6C/mVLdB1GuedRSfckwOMTaI9d8J1O8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w17hQhmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXysLVwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AECDC433F1;
-	Mon,  1 Apr 2024 16:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w17hQhmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA26FC433F1;
+	Mon,  1 Apr 2024 16:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989746;
-	bh=beXoZC9z7zbVUWhQd9Mzt2qU7ju0qo/Lm1x89OQuipU=;
+	s=korg; t=1711989750;
+	bh=A4Jr9IxONjoDv82G+ay2AmyrN/DMrYqZ8Pp4csmyWVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXysLVwuyT40+Py81jU3R0yOT69Vx+vZmtiQ9MYLPgIQjpqYVBWD1yWGTsnSwaaZo
-	 yLA1lQ1Pueb2RF5hM9tlGKX5LU6iu3aEywn6rSZ5iri9gr2JyrGpKhSVwdfhpByx5G
-	 0VTo1PfyRjfMmR9fsSCdZfF4yc62CB1BhLazFcyY=
+	b=w17hQhmNrQfQxmSGMnjI6oEVLJzbrLGQPo0nuk6DjrticnG7Iklu9cCgJa03O/j/D
+	 NYS7jeI2E/1Sy4HwAzkeSmcKyUIpqs7NCzmhKMfD/pkPDgQNLAH5sgXMrQEz1uTigb
+	 yCyYzhVhGrRBk3y2+Cl1YmXp4mP4U4O5P5iyly5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linke li <lilinke99@qq.com>,
-	Rabin Vincent <rabin@rab.in>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Valentin=20Vidi=C4=87?= <vvidic@valentin-vidic.from.hr>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/396] ring-buffer: Use wait_event_interruptible() in ring_buffer_wait()
-Date: Mon,  1 Apr 2024 17:43:09 +0200
-Message-ID: <20240401152552.088636244@linuxfoundation.org>
+Subject: [PATCH 6.6 141/396] dlm: fix user space lkb refcounting
+Date: Mon,  1 Apr 2024 17:43:10 +0200
+Message-ID: <20240401152552.123077702@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,207 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 7af9ded0c2caac0a95f33df5cb04706b0f502588 ]
+[ Upstream commit 2ab3d705ca5d4f7ea345a21c3da41a447a549649 ]
 
-Convert ring_buffer_wait() over to wait_event_interruptible(). The default
-condition is to execute the wait loop inside __wait_event() just once.
-
-This does not change the ring_buffer_wait() prototype yet, but
-restructures the code so that it can take a "cond" and "data" parameter
-and will call wait_event_interruptible() with a helper function as the
-condition.
-
-The helper function (rb_wait_cond) takes the cond function and data
-parameters. It will first check if the buffer hit the watermark defined by
-the "full" parameter and then call the passed in condition parameter. If
-either are true, it returns true.
-
-If rb_wait_cond() does not return true, it will set the appropriate
-"waiters_pending" flag and returns false.
-
-Link: https://lore.kernel.org/linux-trace-kernel/CAHk-=wgsNgewHFxZAJiAQznwPMqEtQmi1waeS2O1v6L4c_Um5A@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20240312121703.399598519@goodmis.org
+This patch fixes to check on the right return value if it was the last
+callback. The rv variable got overwritten by the return of
+copy_result_to_user(). Fixing it by introducing a second variable for
+the return value and don't let rv being overwritten.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linke li <lilinke99@qq.com>
-Cc: Rabin Vincent <rabin@rab.in>
-Fixes: f3ddb74ad0790 ("tracing: Wake up ring buffer waiters on closing of the file")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 61bed0baa4db ("fs: dlm: use a non-static queue for callbacks")
+Reported-by: Valentin Vidić <vvidic@valentin-vidic.from.hr>
+Closes: https://lore.kernel.org/gfs2/Ze4qSvzGJDt5yxC3@valentin-vidic.from.hr
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |   1 +
- kernel/trace/ring_buffer.c  | 116 +++++++++++++++++++++---------------
- 2 files changed, 69 insertions(+), 48 deletions(-)
+ fs/dlm/user.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-index 782e14f62201f..ded528d23f855 100644
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -98,6 +98,7 @@ __ring_buffer_alloc(unsigned long size, unsigned flags, struct lock_class_key *k
- 	__ring_buffer_alloc((size), (flags), &__key);	\
- })
+diff --git a/fs/dlm/user.c b/fs/dlm/user.c
+index 695e691b38b31..9f9b68448830e 100644
+--- a/fs/dlm/user.c
++++ b/fs/dlm/user.c
+@@ -806,7 +806,7 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
+ 	struct dlm_lkb *lkb;
+ 	DECLARE_WAITQUEUE(wait, current);
+ 	struct dlm_callback *cb;
+-	int rv, copy_lvb = 0;
++	int rv, ret, copy_lvb = 0;
+ 	int old_mode, new_mode;
  
-+typedef bool (*ring_buffer_cond_fn)(void *data);
- int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full);
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
- 			  struct file *filp, poll_table *poll_table, int full);
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index b4979f6a449d7..3fedd051f12c0 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -990,43 +990,15 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
- 	return ret;
- }
- 
--/**
-- * ring_buffer_wait - wait for input to the ring buffer
-- * @buffer: buffer to wait on
-- * @cpu: the cpu buffer to wait on
-- * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-- *
-- * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-- * as data is added to any of the @buffer's cpu buffers. Otherwise
-- * it will wait for data to be added to a specific cpu buffer.
-- */
--int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
-+static inline bool
-+rb_wait_cond(struct rb_irq_work *rbwork, struct trace_buffer *buffer,
-+	     int cpu, int full, ring_buffer_cond_fn cond, void *data)
- {
--	struct ring_buffer_per_cpu *cpu_buffer;
--	DEFINE_WAIT(wait);
--	struct rb_irq_work *work;
--	int ret = 0;
--
--	/*
--	 * Depending on what the caller is waiting for, either any
--	 * data in any cpu buffer, or a specific buffer, put the
--	 * caller on the appropriate wait queue.
--	 */
--	if (cpu == RING_BUFFER_ALL_CPUS) {
--		work = &buffer->irq_work;
--		/* Full only makes sense on per cpu reads */
--		full = 0;
--	} else {
--		if (!cpumask_test_cpu(cpu, buffer->cpumask))
--			return -ENODEV;
--		cpu_buffer = buffer->buffers[cpu];
--		work = &cpu_buffer->irq_work;
--	}
-+	if (rb_watermark_hit(buffer, cpu, full))
-+		return true;
- 
--	if (full)
--		prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
--	else
--		prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
-+	if (cond(data))
-+		return true;
- 
- 	/*
- 	 * The events can happen in critical sections where
-@@ -1049,27 +1021,75 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
- 	 * a task has been queued. It's OK for spurious wake ups.
- 	 */
- 	if (full)
--		work->full_waiters_pending = true;
-+		rbwork->full_waiters_pending = true;
- 	else
--		work->waiters_pending = true;
-+		rbwork->waiters_pending = true;
- 
--	if (rb_watermark_hit(buffer, cpu, full))
--		goto out;
-+	return false;
-+}
- 
--	if (signal_pending(current)) {
--		ret = -EINTR;
--		goto out;
-+/*
-+ * The default wait condition for ring_buffer_wait() is to just to exit the
-+ * wait loop the first time it is woken up.
-+ */
-+static bool rb_wait_once(void *data)
-+{
-+	long *once = data;
-+
-+	/* wait_event() actually calls this twice before scheduling*/
-+	if (*once > 1)
-+		return true;
-+
-+	(*once)++;
-+	return false;
-+}
-+
-+/**
-+ * ring_buffer_wait - wait for input to the ring buffer
-+ * @buffer: buffer to wait on
-+ * @cpu: the cpu buffer to wait on
-+ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-+ *
-+ * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-+ * as data is added to any of the @buffer's cpu buffers. Otherwise
-+ * it will wait for data to be added to a specific cpu buffer.
-+ */
-+int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
-+{
-+	struct ring_buffer_per_cpu *cpu_buffer;
-+	struct wait_queue_head *waitq;
-+	ring_buffer_cond_fn cond;
-+	struct rb_irq_work *rbwork;
-+	void *data;
-+	long once = 0;
-+	int ret = 0;
-+
-+	cond = rb_wait_once;
-+	data = &once;
-+
-+	/*
-+	 * Depending on what the caller is waiting for, either any
-+	 * data in any cpu buffer, or a specific buffer, put the
-+	 * caller on the appropriate wait queue.
-+	 */
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
-+		rbwork = &buffer->irq_work;
-+		/* Full only makes sense on per cpu reads */
-+		full = 0;
-+	} else {
-+		if (!cpumask_test_cpu(cpu, buffer->cpumask))
-+			return -ENODEV;
-+		cpu_buffer = buffer->buffers[cpu];
-+		rbwork = &cpu_buffer->irq_work;
+ 	if (count == sizeof(struct dlm_device_version)) {
+@@ -906,9 +906,9 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
+ 		trace_dlm_ast(lkb->lkb_resource->res_ls, lkb);
  	}
  
--	schedule();
-- out:
- 	if (full)
--		finish_wait(&work->full_waiters, &wait);
-+		waitq = &rbwork->full_waiters;
- 	else
--		finish_wait(&work->waiters, &wait);
-+		waitq = &rbwork->waiters;
+-	rv = copy_result_to_user(lkb->lkb_ua,
+-				 test_bit(DLM_PROC_FLAGS_COMPAT, &proc->flags),
+-				 cb->flags, cb->mode, copy_lvb, buf, count);
++	ret = copy_result_to_user(lkb->lkb_ua,
++				  test_bit(DLM_PROC_FLAGS_COMPAT, &proc->flags),
++				  cb->flags, cb->mode, copy_lvb, buf, count);
  
--	if (!ret && !rb_watermark_hit(buffer, cpu, full) && signal_pending(current))
--		ret = -EINTR;
-+	ret = wait_event_interruptible((*waitq),
-+				rb_wait_cond(rbwork, buffer, cpu, full, cond, data));
+ 	kref_put(&cb->ref, dlm_release_callback);
  
- 	return ret;
+@@ -916,7 +916,7 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
+ 	if (rv == DLM_DEQUEUE_CALLBACK_LAST)
+ 		dlm_put_lkb(lkb);
+ 
+-	return rv;
++	return ret;
  }
+ 
+ static __poll_t device_poll(struct file *file, poll_table *wait)
 -- 
 2.43.0
 
