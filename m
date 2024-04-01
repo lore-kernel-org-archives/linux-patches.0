@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10022EB0B;
-	Mon,  1 Apr 2024 16:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1325BBA3F;
+	Mon,  1 Apr 2024 16:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990576; cv=none; b=SX7hqQgdL/onXtYra/6CKFtIAfNgIXVb4cX1f2nSXYxaW4y3tE0zCQGvkTXmlIKlqIvpQ2gR9RXuVE/tO+d+enuM6+tOyxXrYVOHPIrcpdRs4Ljv+fJJuIl4roOzINxKT2N6cmwSkhay9/1EL0qs0hGwtaWPWgKTbS+Fq9Ev0uM=
+	t=1711990580; cv=none; b=AebjTbWsFjDC/llEOHVSjCuLj2dG00n8YlXNgsn08EaJnASCPAx/gU2F1CyAJ8KCNXOKePiCiSwnUt3OkVvuoK2wSD1ssr/zRk3F3hTg1g39cnWmdKReZ4Yh3xe+qIfdrPfcFnSFAPoMLnFBtkEYyXAkN4RODmCwavVAjPSET7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990576; c=relaxed/simple;
-	bh=LrmVH51FR6QhZxMhX0jtqLDLx+e0ljejZi+3yh6/Sh4=;
+	s=arc-20240116; t=1711990580; c=relaxed/simple;
+	bh=Ky1NRhY+E9cWuw+3wGHqRCs4LAjCz97df+7zp8gOqR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyCS7ZB0SUBgk/zYQRGI1jBA6OS5NYtfsz1tF/Ym6z/U65tiH7Y02D8m++a4YT9BB5ePIky5IwiaMyFmcylhesm0/ohJ8pDWIXxPNQpq1gQpJermuNSIxN+opioC6HQCWQWajzwC7r51YsdaTDfKyItKYL2jyDkAeTBZehVqgBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHcg0aaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdwUzMlUyOZK37balzDhUVLlFP0ix2fOGFnu7RICBeVybw1a52jJrJ5afm5lcB2V9Msu3k1tREUImkHDyAJQdkvK/tYyaaGzA4rA+b9YIOcXe2/UmrFRYbZpNZdudd7e0JnqqcG7ARymLCp7P0jsRJrIJcd2JsmV6PPX5mhqtcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znqFaWgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHcg0aaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07844C433C7;
-	Mon,  1 Apr 2024 16:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znqFaWgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807EAC433C7;
+	Mon,  1 Apr 2024 16:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990576;
-	bh=LrmVH51FR6QhZxMhX0jtqLDLx+e0ljejZi+3yh6/Sh4=;
+	s=korg; t=1711990579;
+	bh=Ky1NRhY+E9cWuw+3wGHqRCs4LAjCz97df+7zp8gOqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHcg0aaUT+m9oYrj7oI9vy2uqNeOjztYtZeyyk3gRBQCKSxkTDEVRHzxCCydwCG/2
-	 YRNq9YG6Eqg21NilHBZ2wrTKF5ovYg7U227rQRihKmZzEkhvLyNyLj/eAKGhPlYjkS
-	 1gBudwvaHZCt6pL+lDYX+1EX2hOByyL3MNB8B+ZY=
+	b=znqFaWgZlTa3d9/+Zy9zA5kLLaddO3JnktNbqsv626spAbxmPgRICuUad68LSTZus
+	 SLg+L6Vo8Je47sk/3fbrH5fY0H3PNqOFGBO1BfuGigWldx+tVgLNqSVzu5Q4KOHSYy
+	 VMQdTk8uvNY+OSMBQjv3+mTgg8H14zQihYIQlEUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natanael Copa <ncopa@alpinelinux.org>,
-	Greg Thelen <gthelen@google.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 396/396] tools/resolve_btfids: fix build with musl libc
-Date: Mon,  1 Apr 2024 17:47:25 +0200
-Message-ID: <20240401152559.713284729@linuxfoundation.org>
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.6 369/396] usb: dwc2: gadget: Fix exiting from clock gating
+Date: Mon,  1 Apr 2024 17:46:58 +0200
+Message-ID: <20240401152558.916368922@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,36 +49,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Natanael Copa <ncopa@alpinelinux.org>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit 62248b22d01e96a4d669cde0d7005bd51ebf9e76 upstream.
+commit 31f42da31417bec88158f3cf62d19db836217f1e upstream.
 
-Include the header that defines u32.
-This fixes build of 6.6.23 and 6.1.83 kernels for Alpine Linux, which
-uses musl libc. I assume that GNU libc indirecly pulls in linux/types.h.
+Added exiting from the clock gating mode on USB Reset Detect interrupt
+if core in the clock gating mode.
+Added new condition to check core in clock gating mode or no.
 
-Fixes: 9707ac4fe2f5 ("tools/resolve_btfids: Refactor set sorting with types from btf_ids.h")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218647
-Cc: stable@vger.kernel.org
-Signed-off-by: Natanael Copa <ncopa@alpinelinux.org>
-Tested-by: Greg Thelen <gthelen@google.com>
-Link: https://lore.kernel.org/r/20240328110103.28734-1-ncopa@alpinelinux.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9b4965d77e11 ("usb: dwc2: Add exit clock gating from session request interrupt")
+Fixes: 5d240efddc7f ("usb: dwc2: Add exit clock gating from wakeup interrupt")
+Fixes: 16c729f90bdf ("usb: dwc2: Allow exit clock gating in urb enqueue")
+Fixes: 401411bbc4e6 ("usb: dwc2: Add exit clock gating before removing driver")
+CC: stable@vger.kernel.org
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/cbcc2ccd37e89e339130797ed68ae4597db773ac.1708938774.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/btf_ids.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc2/core_intr.c |    9 ++++++---
+ drivers/usb/dwc2/gadget.c    |    6 ++++++
+ drivers/usb/dwc2/hcd.c       |    2 +-
+ drivers/usb/dwc2/platform.c  |    2 +-
+ 4 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/tools/include/linux/btf_ids.h
-+++ b/tools/include/linux/btf_ids.h
-@@ -3,6 +3,8 @@
- #ifndef _LINUX_BTF_IDS_H
- #define _LINUX_BTF_IDS_H
+--- a/drivers/usb/dwc2/core_intr.c
++++ b/drivers/usb/dwc2/core_intr.c
+@@ -297,7 +297,8 @@ static void dwc2_handle_session_req_intr
  
-+#include <linux/types.h> /* for u32 */
+ 			/* Exit gadget mode clock gating. */
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		}
+ 
+@@ -408,7 +409,8 @@ static void dwc2_handle_wakeup_detected_
+ 
+ 			/* Exit gadget mode clock gating. */
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		} else {
+ 			/* Change to L0 state */
+@@ -425,7 +427,8 @@ static void dwc2_handle_wakeup_detected_
+ 			}
+ 
+ 			if (hsotg->params.power_down ==
+-			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended)
++			    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++			    !hsotg->params.no_clock_gating)
+ 				dwc2_host_exit_clock_gating(hsotg, 1);
+ 
+ 			/*
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -3727,6 +3727,12 @@ irq_retry:
+ 		if (hsotg->in_ppd && hsotg->lx_state == DWC2_L2)
+ 			dwc2_exit_partial_power_down(hsotg, 0, true);
+ 
++		/* Exit gadget mode clock gating. */
++		if (hsotg->params.power_down ==
++		    DWC2_POWER_DOWN_PARAM_NONE && hsotg->bus_suspended &&
++		    !hsotg->params.no_clock_gating)
++			dwc2_gadget_exit_clock_gating(hsotg, 0);
 +
- struct btf_id_set {
- 	u32 cnt;
- 	u32 ids[];
+ 		hsotg->lx_state = DWC2_L0;
+ 	}
+ 
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4657,7 +4657,7 @@ static int _dwc2_hcd_urb_enqueue(struct
+ 	}
+ 
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+-	    hsotg->bus_suspended) {
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
+ 		if (dwc2_is_device_mode(hsotg))
+ 			dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		else
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -331,7 +331,7 @@ static void dwc2_driver_remove(struct pl
+ 
+ 	/* Exit clock gating when driver is removed. */
+ 	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
+-	    hsotg->bus_suspended) {
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
+ 		if (dwc2_is_device_mode(hsotg))
+ 			dwc2_gadget_exit_clock_gating(hsotg, 0);
+ 		else
 
 
