@@ -1,118 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0CC482F6;
-	Mon,  1 Apr 2024 17:11:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D721748781
+	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 17:16:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991493; cv=none; b=mtosW6yp2ryPqvm+Dss4N9fPDFEWvdJlO3yaJDw/L22Owh0B8XtYEx99N7A7gqCOCtSo3Q1KCL5ruxkTF9nHuEaa6X7WCLJzmoUKBu75H09gZowVVvNqz2WVTEO4BzCf8miq+G6jCkhG0apvHFROn6uaD2O6vMtah2GuWVp8ncs=
+	t=1711991808; cv=none; b=a/eiTnHTJ8Gmg2zQJ7H0HLy6FaJkd4pZw6usf1VZXuW1LXg5a61dxs2y3XEFyGB6CDAs+5vN/NQsGvs0gumcJGPgY23jhhniui5qXq8g5jJrsXyt7kUs8JKgBvGX+OVGxfkO85KkQ3p3Fp9h1nOLlJSZ5DCf2qj20/30eKX6UTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991493; c=relaxed/simple;
-	bh=qxTlbVmVb+Qr7BrLPMqJo+Lo22hzLvfbksP6iLIanVU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSN7bLSLdosgwK9Fwea0tNR1ZbRTZO4kNRf0VRrcK7Xqypurb4b7f0dA9CthWFqgTidSkU2M7+KvvCxM6sB6zzqvTu22W9KkEzlaeC2jYKjZeZOBUdJu4Q8pzOSVBYtsDZ6Z8jLnmfT477Aj9Ia7Jn/8sER03Gl3//DhXRBSgms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaTV6I4t; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1711991808; c=relaxed/simple;
+	bh=oA/XnSGPM/zTFEG1vP9MCwsA88QcnXZe9haFS+aiefA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YI6C5GfCpsNXFDAJgssPdojGrf/FFjAT3+kwSUAv1XNOB5T+GHAaLleA3fEI6q6Zy9pXtQkO3JV0wHIWCjNGaBzS9J/MRdYFelLlPJOtlvFB76Bzids6ZW4JrOhcghJVVFLAQJ3L5FOXHuyZYn+xJgyXyw+OxeOqnY7A4Q4lwQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ifF7LEh2; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaTV6I4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFF1C433F1;
-	Mon,  1 Apr 2024 17:11:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991492;
-	bh=qxTlbVmVb+Qr7BrLPMqJo+Lo22hzLvfbksP6iLIanVU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaTV6I4t5Lf5ZVUhlN30z/w3q2ReuOw/D2N9BFQ4sU7NiORRCwNU96t4yTqVB/inU
-	 g4ERGf7upnyjNqtPVOOSKc6AlX+40vCs1f2QuGKe47pIVHby41mU8IE0DW9QzR6N2t
-	 rspX9bELp4Tf8I1TILlGgqaT2mh+9pkzhWJTSOGM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 271/272] USB: core: Fix deadlock in usb_deauthorize_interface()
-Date: Mon,  1 Apr 2024 17:47:41 +0200
-Message-ID: <20240401152539.541749157@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
-References: <20240401152530.237785232@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ifF7LEh2"
+Received: from [100.64.193.111] (unknown [20.29.225.195])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 2FD642085CE4;
+	Mon,  1 Apr 2024 10:16:46 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2FD642085CE4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1711991806;
+	bh=3m23lwO20r+YWkieSxiB8VHUDLf75Iije7ummqYP6Ks=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ifF7LEh2rhbn7jR1pdBzEHJowXzCz7CGjLdoJ5+Zc4spOxcjIyH7EmJQIzPOFLMLp
+	 mhn50HyY7UB/NOKWg/LdoD7NPYcjBDeU38eC89QIxTu6pzm49SKY8un9xInTWC12s5
+	 8bRJ5LTOeJcq0/HuMRgUEmeozu2lqXTPKuTIZyAs=
+Message-ID: <4fabd250-bfa8-4482-b2f2-b787844aeb0b@linux.microsoft.com>
+Date: Mon, 1 Apr 2024 10:16:46 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 102/399] ACPI: CPPC: Use access_width over bit_width
+ for system memory accesses
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Jarred White <jarredwhite@linux.microsoft.com>,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20240401152549.131030308@linuxfoundation.org>
+ <20240401152552.230440447@linuxfoundation.org>
+Content-Language: en-CA
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
+In-Reply-To: <20240401152552.230440447@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On 4/1/2024 8:41 AM, Greg Kroah-Hartman wrote:
+> 6.8-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jarred White <jarredwhite@linux.microsoft.com>
+> 
+> [ Upstream commit 2f4a4d63a193be6fd530d180bb13c3592052904c ]
+> 
+> To align with ACPI 6.3+, since bit_width can be any 8-bit value, it
+> cannot be depended on to be always on a clean 8b boundary. This was
+> uncovered on the Cobalt 100 platform.
+> 
 
-------------------
+Hi Greg,
 
-From: Alan Stern <stern@rowland.harvard.edu>
+Please drop this patch from all stable kernels as we seem to have a regression reported
+on AmpereOne systems: https://lore.kernel.org/all/20240329220054.1205596-1-vanshikonda@os.amperecomputing.com/
 
-commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
-
-Among the attribute file callback routines in
-drivers/usb/core/sysfs.c, the interface_authorized_store() function is
-the only one which acquires a device lock on an ancestor device: It
-calls usb_deauthorize_interface(), which locks the interface's parent
-USB device.
-
-The will lead to deadlock if another process already owns that lock
-and tries to remove the interface, whether through a configuration
-change or because the device has been disconnected.  As part of the
-removal procedure, device_del() waits for all ongoing sysfs attribute
-callbacks to complete.  But usb_deauthorize_interface() can't complete
-until the device lock has been released, and the lock won't be
-released until the removal has finished.
-
-The mechanism provided by sysfs to prevent this kind of deadlock is
-to use the sysfs_break_active_protection() function, which tells sysfs
-not to wait for the attribute callback.
-
-Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
-Reported by: xingwei lee <xrivendell7@gmail.com>
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
-Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/core/sysfs.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
-
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -1170,14 +1170,24 @@ static ssize_t interface_authorized_stor
- {
- 	struct usb_interface *intf = to_usb_interface(dev);
- 	bool val;
-+	struct kernfs_node *kn;
- 
- 	if (strtobool(buf, &val) != 0)
- 		return -EINVAL;
- 
--	if (val)
-+	if (val) {
- 		usb_authorize_interface(intf);
--	else
--		usb_deauthorize_interface(intf);
-+	} else {
-+		/*
-+		 * Prevent deadlock if another process is concurrently
-+		 * trying to unregister intf.
-+		 */
-+		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+		if (kn) {
-+			usb_deauthorize_interface(intf);
-+			sysfs_unbreak_active_protection(kn);
-+		}
-+	}
- 
- 	return count;
- }
-
+Thanks,
+Easwar
 
