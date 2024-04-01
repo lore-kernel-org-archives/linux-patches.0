@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C3C4C624;
-	Mon,  1 Apr 2024 15:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF4E47F51;
+	Mon,  1 Apr 2024 15:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986659; cv=none; b=Lpg1goryg/XOlX8vB6abwIghostITzUUDVHONpDrCnEFmaohOCbBxkhD0umKOfiuPHTaAsMck9r61Kpb/B9/qnaqIqZzmuQWlNFMPxa/jkyM6Eat/glvyaHACGHbvIn88cwa4oNuGwo/MKQwJ+6E8xD9KBULSulmLoJlfYdEzyk=
+	t=1711986663; cv=none; b=eEmjCQi+QujB29eN3NYybhL0V8LFdMAViPBaq/TDuiSJR3VUaYFykR5AqfBa9M9Tv/Kfjm85TmmV8pBxHA5GWSO0CsSNbTb2lnMSAL/4izAFzIKPKLGWjF72UX6+J6K0mVgUXEzP0680a24rwxzryPpBsWU4K/NEP+wybw0NM4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986659; c=relaxed/simple;
-	bh=YSIb0m9Y78h5TmAshpwyvnJwgG2Q++2qrhN+kFA2WaM=;
+	s=arc-20240116; t=1711986663; c=relaxed/simple;
+	bh=NHqNq4fIZS2A22xOoPmT4wPnWLxXpYiTjL42cy3PQe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z88QEKRgIeS9op+MLC/69IELGRNo2lmR9mTKSwK83u2IcMwna4Br17uFvwT4MwB53NbUklVY/LI8q0AnaOpMxtWsQc0vq8ZzFd16PbV5ymuW6V2fSi+4M0l5pxdWXIzIRWwqUzuRL4tCMQmSDOt6ROiYsWI4JQfCkan9CjMZrmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUYFFUGX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYOwtyXx5y3+LSn8FgSlorpBTDMhNO1+39z5WpOsxe1T+hMOqg7+UVxpKrzPbi2Nj0hVrYs4tQIjmz0PoFvpWg91pxinGgrcRBElxHTvz0dQHPOtU05XNzhb+VcQcGCiPGcYf15x5Wfdf+pzbRU1+Mn3Gq0TFsYATXxzie1k6FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/eTtZ5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUYFFUGX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3971CC433F1;
-	Mon,  1 Apr 2024 15:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/eTtZ5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89AC8C433B1;
+	Mon,  1 Apr 2024 15:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986659;
-	bh=YSIb0m9Y78h5TmAshpwyvnJwgG2Q++2qrhN+kFA2WaM=;
+	s=korg; t=1711986662;
+	bh=NHqNq4fIZS2A22xOoPmT4wPnWLxXpYiTjL42cy3PQe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUYFFUGXeA7fledxyl5uyfxegzaPXT0oPYQ0ky1ZIV8WC5aysn+Syz7+UkW0rCx6U
-	 5QEwjHCSs/0UfHq0UjloBxkTZnWK61ovRa8ReJG3hFZhm+14Q0xlU6odBW1N7InahJ
-	 cI/xqDAm4BF41djhVZRE9ESkZz/EKrhXs0VqRf4E=
+	b=H/eTtZ5ljxHb/ZgDtqO1s3Tywh5ewtscKqFy7D8Fv2HYM0mVKbl4E+DNqCcseD/Fe
+	 MvHN7DytmvnJDw42AHxvarUihAmG7SRemNj5vNQhHvfoI6lFJXuMR7b5uzVriR97vl
+	 M2BDU8LxJZfRSjMJBsskbwmNgotiWkYYvZ8wFtx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 045/399] kasan/test: avoid gcc warning for intentional overflow
-Date: Mon,  1 Apr 2024 17:40:11 +0200
-Message-ID: <20240401152550.520783876@linuxfoundation.org>
+Subject: [PATCH 6.8 046/399] bounds: support non-power-of-two CONFIG_NR_CPUS
+Date: Mon,  1 Apr 2024 17:40:12 +0200
+Message-ID: <20240401152550.550452258@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -57,54 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit e10aea105e9ed14b62a11844fec6aaa87c6935a3 ]
+[ Upstream commit f2d5dcb48f7ba9e3ff249d58fc1fa963d374e66a ]
 
-The out-of-bounds test allocates an object that is three bytes too short
-in order to validate the bounds checking.  Starting with gcc-14, this
-causes a compile-time warning as gcc has grown smart enough to understand
-the sizeof() logic:
+ilog2() rounds down, so for example when PowerPC 85xx sets CONFIG_NR_CPUS
+to 24, we will only allocate 4 bits to store the number of CPUs instead of
+5.  Use bits_per() instead, which rounds up.  Found by code inspection.
+The effect of this would probably be a misaccounting when doing NUMA
+balancing, so to a user, it would only be a performance penalty.  The
+effects may be more wide-spread; it's hard to tell.
 
-mm/kasan/kasan_test.c: In function 'kmalloc_oob_16':
-mm/kasan/kasan_test.c:443:14: error: allocation of insufficient size '13' for type 'struct <anonymous>' with size '16' [-Werror=alloc-size]
-  443 |         ptr1 = kmalloc(sizeof(*ptr1) - 3, GFP_KERNEL);
-      |              ^
-
-Hide the actual computation behind a RELOC_HIDE() that ensures
-the compiler misses the intentional bug.
-
-Link: https://lkml.kernel.org/r/20240212111609.869266-1-arnd@kernel.org
-Fixes: 3f15801cdc23 ("lib: add kasan test module")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Link: https://lkml.kernel.org/r/20231010145549.1244748-1-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 90572890d202 ("mm: numa: Change page last {nid,pid} into {cpu,pid}")
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/kasan_test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bounds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/kasan/kasan_test.c b/mm/kasan/kasan_test.c
-index 971cfff4ca0b7..e26a2583a6643 100644
---- a/mm/kasan/kasan_test.c
-+++ b/mm/kasan/kasan_test.c
-@@ -440,7 +440,8 @@ static void kmalloc_oob_16(struct kunit *test)
- 	/* This test is specifically crafted for the generic mode. */
- 	KASAN_TEST_NEEDS_CONFIG_ON(test, CONFIG_KASAN_GENERIC);
- 
--	ptr1 = kmalloc(sizeof(*ptr1) - 3, GFP_KERNEL);
-+	/* RELOC_HIDE to prevent gcc from warning about short alloc */
-+	ptr1 = RELOC_HIDE(kmalloc(sizeof(*ptr1) - 3, GFP_KERNEL), 0);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ptr1);
- 
- 	ptr2 = kmalloc(sizeof(*ptr2), GFP_KERNEL);
+diff --git a/kernel/bounds.c b/kernel/bounds.c
+index b529182e8b04f..c5a9fcd2d6228 100644
+--- a/kernel/bounds.c
++++ b/kernel/bounds.c
+@@ -19,7 +19,7 @@ int main(void)
+ 	DEFINE(NR_PAGEFLAGS, __NR_PAGEFLAGS);
+ 	DEFINE(MAX_NR_ZONES, __MAX_NR_ZONES);
+ #ifdef CONFIG_SMP
+-	DEFINE(NR_CPUS_BITS, ilog2(CONFIG_NR_CPUS));
++	DEFINE(NR_CPUS_BITS, bits_per(CONFIG_NR_CPUS));
+ #endif
+ 	DEFINE(SPINLOCK_SIZE, sizeof(spinlock_t));
+ #ifdef CONFIG_LRU_GEN
 -- 
 2.43.0
 
