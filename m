@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE54E10A3B;
-	Mon,  1 Apr 2024 16:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076F3481B3;
+	Mon,  1 Apr 2024 16:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989491; cv=none; b=YrxSI+OQC9HA2+jMssS2UoyRWWMwCyHHxfYGR+idD0vGr/dgjFcOfItR+Rv72SjGam7Ww8PXOx8lBf2fSmW4Qnx447FUUZXG3g+GAjonXnRgXs7NcmsoaYOwHLQaUbLRYDFuomev/1mPjoEsIES8EJFNi4+vYS9F0wa+xE6GO64=
+	t=1711989494; cv=none; b=rOXYEVbCiWlMY/aGQsBx1C7FuVV+OMxYpKLohCE7PjHVcW08EyBJZeNCZ7DjwBCrF9hzfozdSRx6qjg559WszapvRh808q2DBCHl/2KBwLDVWgm+1iUaXdj7idO79XwuHYTuMhB3j7FKbNeMqT2YUkDm/X0et94yNFE2dlrBLQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989491; c=relaxed/simple;
-	bh=3vxF5gPh9b8t6oPFEw9hfgO2l2eFi4Im6/+yFznBM1E=;
+	s=arc-20240116; t=1711989494; c=relaxed/simple;
+	bh=0O+6KWEmbo9g1Fe3j1+aV86ByxohDXwN2m3/1yKi1jQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgZ0uTyR0ac6uTYPelXgZ5GLE+6814la0/aHbFO5ODttYxwOmI3jDDQLxa2BGK/E/gSk5ybMjzRceXW7i83vEX4XCLceSCXAo/XSCtlryvJOwA7U0pi4pxL/JnknAtg/F6dAS4Jfm4LVAMdkKkpR8sO/n33cONCNav93cG9HSn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKF+8I2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iyK4lwcSJz5EQqurj9Re9XmQjwkxeEWO8dkfXW4mCs1Tg0NEOgqwaHv0S3cH5L+Z+7kP2eDDqpzQshwmPO99PfpoPiRuz/y3IK9NlwANvdoqW5QlfS+rHhqbyRV2OqZwfmnp512g/Qtg3vfxQfxzdkSymcCqREiO8B/SWliD5vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elDVaHfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKF+8I2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69694C433F1;
-	Mon,  1 Apr 2024 16:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elDVaHfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AE9C433F1;
+	Mon,  1 Apr 2024 16:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989490;
-	bh=3vxF5gPh9b8t6oPFEw9hfgO2l2eFi4Im6/+yFznBM1E=;
+	s=korg; t=1711989493;
+	bh=0O+6KWEmbo9g1Fe3j1+aV86ByxohDXwN2m3/1yKi1jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKF+8I2lPTqPQG9rGEoqQImz/hr8HeZhYjAmHvMbYchHzsgv7x6Jj0OsHC3pS6Kwn
-	 2M8DgP39kVGkN6xd2uW99L5mo1D51zVlljNSLGbhTiqepZ6w82WQgTTx3u0QNfu3fK
-	 tWL0ah6a/bL4d5lkn8OkaAI8+ByYR/xe20sF4f+s=
+	b=elDVaHfXAIAsnlMwvYRsJ27lUcpOYIPxcG1xYSkZUYps8K1AfeoKUSBRmoSvSaqWL
+	 yM6bjT8BB0mMofeUYmtQXdXi0HOQr/zJc6xX729GF3e0Qo86QngPS0eZqswvl/cg+V
+	 Y4RH0mS+NngSVSsTICZyHOEDMLSpRoAwIlEu19as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/396] vfio/pds: Always clear the save/restore FDs on reset
-Date: Mon,  1 Apr 2024 17:41:54 +0200
-Message-ID: <20240401152549.861971709@linuxfoundation.org>
+Subject: [PATCH 6.6 066/396] clk: qcom: gcc-ipq5018: fix terminating of frequency table arrays
+Date: Mon,  1 Apr 2024 17:41:55 +0200
+Message-ID: <20240401152549.891306173@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,46 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 8512ed256334f6637fc0699ce794792c357544ec ]
+[ Upstream commit 90ad946fff70f312b8d23226afc38c13ddd88c4b ]
 
-After reset the VFIO device state will always be put in
-VFIO_DEVICE_STATE_RUNNING, but the save/restore files will only be
-cleared if the previous state was VFIO_DEVICE_STATE_ERROR. This
-can/will cause the restore/save files to be leaked if/when the
-migration state machine transitions through the states that
-re-allocates these files. Fix this by always clearing the
-restore/save files for resets.
+The frequency table arrays are supposed to be terminated with an
+empty element. Add such entry to the end of the arrays where it
+is missing in order to avoid possible out-of-bound access when
+the table is traversed by functions like qcom_find_freq() or
+qcom_find_freq_floor().
 
-Fixes: 7dabb1bcd177 ("vfio/pds: Add support for firmware recovery")
+Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240228003205.47311-2-brett.creeley@amd.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-1-074334f0905c@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/pds/vfio_dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-ipq5018.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_dev.c
-index 4c351c59d05a9..a286ebcc71126 100644
---- a/drivers/vfio/pci/pds/vfio_dev.c
-+++ b/drivers/vfio/pci/pds/vfio_dev.c
-@@ -32,9 +32,9 @@ void pds_vfio_state_mutex_unlock(struct pds_vfio_pci_device *pds_vfio)
- 	mutex_lock(&pds_vfio->reset_mutex);
- 	if (pds_vfio->deferred_reset) {
- 		pds_vfio->deferred_reset = false;
-+		pds_vfio_put_restore_file(pds_vfio);
-+		pds_vfio_put_save_file(pds_vfio);
- 		if (pds_vfio->state == VFIO_DEVICE_STATE_ERROR) {
--			pds_vfio_put_restore_file(pds_vfio);
--			pds_vfio_put_save_file(pds_vfio);
- 			pds_vfio_dirty_disable(pds_vfio, false);
- 		}
- 		pds_vfio->state = pds_vfio->deferred_reset_state;
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index cc2331d729fb6..3136ba1c2a59c 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -856,6 +856,7 @@ static struct clk_rcg2 lpass_sway_clk_src = {
+ 
+ static const struct freq_tbl ftbl_pcie0_aux_clk_src[] = {
+ 	F(2000000, P_XO, 12, 0, 0),
++	{ }
+ };
+ 
+ static struct clk_rcg2 pcie0_aux_clk_src = {
+@@ -1098,6 +1099,7 @@ static const struct freq_tbl ftbl_qpic_io_macro_clk_src[] = {
+ 	F(100000000, P_GPLL0, 8, 0, 0),
+ 	F(200000000, P_GPLL0, 4, 0, 0),
+ 	F(320000000, P_GPLL0, 2.5, 0, 0),
++	{ }
+ };
+ 
+ static struct clk_rcg2 qpic_io_macro_clk_src = {
+@@ -1193,6 +1195,7 @@ static struct clk_rcg2 ubi0_axi_clk_src = {
+ static const struct freq_tbl ftbl_ubi0_core_clk_src[] = {
+ 	F(850000000, P_UBI32_PLL, 1, 0, 0),
+ 	F(1000000000, P_UBI32_PLL, 1, 0, 0),
++	{ }
+ };
+ 
+ static struct clk_rcg2 ubi0_core_clk_src = {
 -- 
 2.43.0
 
