@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6444C61B;
-	Mon,  1 Apr 2024 17:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438B24A99C;
+	Mon,  1 Apr 2024 17:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991273; cv=none; b=lmdrHjpKvlt8x8BvSUx1jKX3P2HcJwDqcL31NUqi9HWI3OGxY6U7cwqz2Te4LrI7A8GbB1+6+K2rxJDuT1VCA2dTjfUGiEbY5ntNYA5k6YNpnHVz0ycLL3Kvbbb3E5nJrG/W8HOIbjjd9bPKGUlNZxPQ+fggJ1sk2Loh5H963gY=
+	t=1711991277; cv=none; b=LrD1WG01UDv+E5wFkPJXn+zAyS5ulvCFNzrOUQo8fv6FX5MeMFhBTBdoU6LAydE2lj1RGjoGN54kDoHdSIHcKROfONSz8s+b6os9iURCZ08dpAnhpUJurjXWYERrlNKLR5ZQOk/jqCK4sLeW1Bc7SwelxmDa9NlulYFmYLPqSvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991273; c=relaxed/simple;
-	bh=nkGwBsZv7UpaQPw8g8skcz33jYZnoXaZ0CIlJ5Y4MTc=;
+	s=arc-20240116; t=1711991277; c=relaxed/simple;
+	bh=683WQLh0Osyrxt0Oq86tpQ3VQ3aXEC6FSDT01apF+hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5BeKwZlcFG8Y/xggvgulNc/Voi89TiNqddGSL//7LbCJf89wdhS6L4fPYzoTnERJAR+NkswucmpRN9awJd+osrW8lxKOMivlkCQHfED+Pb7nFTUZYhbjtQwqanUpNY63+fSRdtY9dGSrLm4x4SFcQeNdQQAVAa0vVe4TqWljCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq8kZtrI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ccug9dE3JFz1a+TG2waDWLIb1gzqGxg11FAGuupbzne7LoqykNUGg1hAYKjDA4vRw1pZafq8UzbpUaFI1+ISCOW1USLqyXxNztkfBoW7e0/vttX895wHRDUqccV+qF12YSgy9h/oQONiD6PTyb63EgzS9omx1WkkNjYv6PcWbpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+dLQbH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq8kZtrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF76C433C7;
-	Mon,  1 Apr 2024 17:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+dLQbH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA106C433C7;
+	Mon,  1 Apr 2024 17:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991273;
-	bh=nkGwBsZv7UpaQPw8g8skcz33jYZnoXaZ0CIlJ5Y4MTc=;
+	s=korg; t=1711991277;
+	bh=683WQLh0Osyrxt0Oq86tpQ3VQ3aXEC6FSDT01apF+hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qq8kZtrI7op/rVQDnSIJxRVpVZ3nCoWO+iNfLf8lXtoCwrMJEoDcG2n97ssjWudud
-	 c2DzFXxGsLD/DoBeO+F73gKHiqx0q5xTDjLHDsEBTudxDvlcTocb9B2leKaoLvGWSm
-	 5DkTZ17i8ZtrOAWsO9HFVUGGgTVna0m8trTKOqMQ=
+	b=x+dLQbH6ZMgcgR2I00xO1R8QJtC77ORuwbSb0ay9Ykk84+41JqjAp99g2uoOHpj3a
+	 uOj9a9mcBXX/UWFqA2F7kln5K7QuZywG7Wrbzg0gf/lpiSCTwNzP9wL6iv0HhD2Os4
+	 c1+/Ljpo2iOpi6x2vGCsXKMAkHQIzT0edODcoZTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/272] irqchip/renesas-rzg2l: Flush posted write in irq_eoi()
-Date: Mon,  1 Apr 2024 17:46:16 +0200
-Message-ID: <20240401152536.647775574@linuxfoundation.org>
+	Jiawei Wang <me@jwang.link>,
+	Mark Brown <broonie@kernel.org>,
+	Luca Stefani <luca.stefani.ge1@gmail.com>
+Subject: [PATCH 6.1 177/272] ASoC: amd: yc: Revert "Fix non-functional mic on Lenovo 21J2"
+Date: Mon,  1 Apr 2024 17:46:07 +0200
+Message-ID: <20240401152536.305139712@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Jiawei Wang <me@jwang.link>
 
-[ Upstream commit 9eec61df55c51415409c7cc47e9a1c8de94a0522 ]
+commit 861b3415e4dee06cc00cd1754808a7827b9105bf upstream.
 
-The irq_eoi() callback of the RZ/G2L interrupt chip clears the relevant
-interrupt cause bit in the TSCR register by writing to it.
+This reverts commit ed00a6945dc32462c2d3744a3518d2316da66fcc,
+which added a quirk entry to enable the Yellow Carp (YC)
+driver for the Lenovo 21J2 laptop.
 
-This write is not sufficient because the write is posted and therefore not
-guaranteed to immediately clear the bit. Due to that delay the CPU can
-raise the just handled interrupt again.
+Although the microphone functioned with the YC driver, it
+resulted in incorrect driver usage. The Lenovo 21J2 is not a
+Yellow Carp platform, but a Pink Sardine platform, which
+already has an upstreamed driver.
 
-Prevent this by reading the register back which causes the posted write to
-be flushed to the hardware before the read completes.
+The microphone on the Lenovo 21J2 operates correctly with the
+CONFIG_SND_SOC_AMD_PS flag enabled and does not require the
+quirk entry. So this patch removes the quirk entry.
 
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thanks to Mukunda Vijendar [1] for pointing this out.
+
+Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
+
+Signed-off-by: Jiawei Wang <me@jwang.link>
+Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
+Link: https://msgid.link/r/20240313015853.3573242-2-me@jwang.link
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Luca Stefani <luca.stefani.ge1@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index fbd1766f6aaa5..454af6faf42bc 100644
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -81,8 +81,14 @@ static void rzg2l_irq_eoi(struct irq_data *d)
- 	 * ISCR can only be cleared if the type is falling-edge, rising-edge or
- 	 * falling/rising-edge.
- 	 */
--	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq)))
-+	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq))) {
- 		writel_relaxed(iscr & ~bit, priv->base + ISCR);
-+		/*
-+		 * Enforce that the posted write is flushed to prevent that the
-+		 * just handled interrupt is raised again.
-+		 */
-+		readl_relaxed(priv->base + ISCR);
-+	}
- }
- 
- static void rzg2l_tint_eoi(struct irq_data *d)
-@@ -93,8 +99,14 @@ static void rzg2l_tint_eoi(struct irq_data *d)
- 	u32 reg;
- 
- 	reg = readl_relaxed(priv->base + TSCR);
--	if (reg & bit)
-+	if (reg & bit) {
- 		writel_relaxed(reg & ~bit, priv->base + TSCR);
-+		/*
-+		 * Enforce that the posted write is flushed to prevent that the
-+		 * just handled interrupt is raised again.
-+		 */
-+		readl_relaxed(priv->base + TSCR);
-+	}
- }
- 
- static void rzg2l_irqc_eoi(struct irq_data *d)
--- 
-2.43.0
-
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -203,13 +203,6 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "21J2"),
+-		}
+-	},
+-	{
+-		.driver_data = &acp6x_card,
+-		.matches = {
+-			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21J0"),
+ 		}
+ 	},
 
 
