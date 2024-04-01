@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1A040876;
-	Mon,  1 Apr 2024 17:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB154495F0;
+	Mon,  1 Apr 2024 17:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991290; cv=none; b=i01dTpxpNTc5YPffPwRM4Le2q0ST64hL5+I+s2Wa94QUkL111Pusvgq7SGpZoJIsmSTss4xnNFW/GLiH+l57voeiqcVVjkbYVK6KOc7bpZwKyx96uTsWWTM8Fxka/+4IV7Q4OQXXZr5gQoEiwYgIXrTR7eSoHRnEYb24/dlU5Qo=
+	t=1711991294; cv=none; b=MzjxpOjHg/OHH4IFkITBQE+KIIWU3KiXkfMyPaZY7MxFOD2+w6HeNpohbUvNJAhDotfwR+YYLQ2k3ol3yqE0x0mSyMgLToOSBTWOqG3npjQKsEavdwqH0+1cPULL/VA6BztTZDqwhtiO5pEG1yDfGPH+zFYRGgCj1pRJg3mFq18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991290; c=relaxed/simple;
-	bh=O9HVh1jQ18FizAQDWFdg060R/5Q2SrDzE/8J4r3y8EU=;
+	s=arc-20240116; t=1711991294; c=relaxed/simple;
+	bh=aUDt8qKoGnimdIe6NCssqfaDmpCvfqlhXZOLUv4ZMoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBUUonh36TUeEUCpyTvh7wpxx9PMe9HKMWaf3ceIKWIqDHNUgl1ueQbFs6lsVmdHpSBl+Azjq1woyN3XDXeMo+ZwBQn0zfcJbYC05FtkBNct9oNLjUiOJDp9u7sxqyuukOaSv8dGLzw/q66Q41JhGvZsIqbLAbqpBl0IHQsVXkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyibPZxg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/cFu+14KEhYh8xYop/YSVlaBADBngT4AUzkuh/1C6WWgMkFMOM5QS17GUT/7m4rFHpTCbbmp1Yi3LWMQqJ3fBq5hgmXcwZQl3pRDdDrHx3Cj9aY8AehnDytxzgaxTh3XX7FY0lx7y04QD4oIxeBIvAuAoVtwjqfLl+VaOmuOjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1L25Nlx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyibPZxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DE2C433C7;
-	Mon,  1 Apr 2024 17:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1L25Nlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B13C433C7;
+	Mon,  1 Apr 2024 17:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991290;
-	bh=O9HVh1jQ18FizAQDWFdg060R/5Q2SrDzE/8J4r3y8EU=;
+	s=korg; t=1711991293;
+	bh=aUDt8qKoGnimdIe6NCssqfaDmpCvfqlhXZOLUv4ZMoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyibPZxgn2v/PfjM1xTGKK74KLgxJDlG3Fwp8xdq7U4QeF5YXzufu2r7BjaherOO+
-	 xmSajZNlUTsESmJ3l/PHSUK1Mo9ARhrth5kkPUxjbogHkpMP0E+cWyiY36roKYPps4
-	 o1IjkBsa4VgkAua4sTlokn6YEIYCzAvRIx5bTTtM=
+	b=U1L25Nlxj3k3xWEeDa9HIkYUnbf9DRc45ySa1UA+V1DbveFAeXvGI3mQOdRu034Bt
+	 +t5YmpUQFQJWCRj+rIj2EOt7Zb8+g4ljGLNqnFO5GzQu8q2v4rqjK6iDm1uXjOMiZ7
+	 rfd3oVmAjkKzXBJNrN42mkNxj09xWNMMlSOv5PXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Avri Altman <avri.altman@wdc.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 221/272] mmc: core: Avoid negative index with array access
-Date: Mon,  1 Apr 2024 17:46:51 +0200
-Message-ID: <20240401152537.841796919@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 222/272] block: Do not force full zone append completion in req_bio_endio()
+Date: Mon,  1 Apr 2024 17:46:52 +0200
+Message-ID: <20240401152537.876410125@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Rapeli <mikko.rapeli@linaro.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit cf55a7acd1ed38afe43bba1c8a0935b51d1dc014 upstream.
+commit 55251fbdf0146c252ceff146a1bb145546f3e034 upstream.
 
-Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") assigns
-prev_idata = idatas[i - 1], but doesn't check that the iterator i is
-greater than zero. Let's fix this by adding a check.
+This reverts commit 748dc0b65ec2b4b7b3dbd7befcc4a54fdcac7988.
 
-Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
-Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
+Partial zone append completions cannot be supported as there is no
+guarantees that the fragmented data will be written sequentially in the
+same manner as with a full command. Commit 748dc0b65ec2 ("block: fix
+partial zone append completion handling in req_bio_endio()") changed
+req_bio_endio() to always advance a partially failed BIO by its full
+length, but this can lead to incorrect accounting. So revert this
+change and let low level device drivers handle this case by always
+failing completely zone append operations. With this revert, users will
+still see an IO error for a partially completed zone append BIO.
+
+Fixes: 748dc0b65ec2 ("block: fix partial zone append completion handling in req_bio_endio()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240313133744.2405325-2-mikko.rapeli@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240328004409.594888-2-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -490,7 +490,7 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 	if (idata->flags & MMC_BLK_IOC_DROP)
- 		return 0;
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -761,16 +761,11 @@ static void req_bio_endio(struct request
+ 		/*
+ 		 * Partial zone append completions cannot be supported as the
+ 		 * BIO fragments may end up not being written sequentially.
+-		 * For such case, force the completed nbytes to be equal to
+-		 * the BIO size so that bio_advance() sets the BIO remaining
+-		 * size to 0 and we end up calling bio_endio() before returning.
+ 		 */
+-		if (bio->bi_iter.bi_size != nbytes) {
++		if (bio->bi_iter.bi_size != nbytes)
+ 			bio->bi_status = BLK_STS_IOERR;
+-			nbytes = bio->bi_iter.bi_size;
+-		} else {
++		else
+ 			bio->bi_iter.bi_sector = rq->__sector;
+-		}
+ 	}
  
--	if (idata->flags & MMC_BLK_IOC_SBC)
-+	if (idata->flags & MMC_BLK_IOC_SBC && i > 0)
- 		prev_idata = idatas[i - 1];
- 
- 	/*
+ 	bio_advance(bio, nbytes);
 
 
