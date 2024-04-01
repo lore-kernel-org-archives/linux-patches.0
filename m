@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855671CA8F;
-	Mon,  1 Apr 2024 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213FA1CA8F;
+	Mon,  1 Apr 2024 16:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988995; cv=none; b=No8yk6dWJ5h/wzRRlLoAb4+sYEOfcY7onqvj/dbh5HU58n5pJnnjaINjxXasEy2GcDnVBY5Or0LN6WJJHc6PV5xKhNAU/wGfm4SqUQJN7elQ4kjIr06505hvJkJAC/r/h/k118PrEQuDciXcVrCd4HpNIbkwZaHVF743VcfKMsk=
+	t=1711988999; cv=none; b=GDk3CDAKyv7UyNi4503YvNazNOROrgrk0GY7/pdQzCRqMNETxUosajRR8DMg3lF42NAOJLdvBBO1ZjkeJI1DFE79INIf39kkH8U9beAsV9Ou0KankRTi5/gm9R/Xf7HVtPV5R6rfa3E8pOVVTO+sTbMVSoerED1CxWd1xc80//w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988995; c=relaxed/simple;
-	bh=pc+NPIS8ByHTlPuNBpsh5IthWBYUFug3v5JeuE4+1zg=;
+	s=arc-20240116; t=1711988999; c=relaxed/simple;
+	bh=ZKS4Jzkz4HKQEFM4jDkSSt47Hrz2y9OTtHZRxVp4jqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmKE09r4Jt1zhBv6JHwTjPJ+xiikUWul3GHR8Ox7kgAh8kKAWMD8geisSMltouvzhRSVdlxWJMO7QPTkkmxcLVhn/i7WNOA4SsSj8L8vYtwD3C0iCXGYhb+JS89YZpF1BS1CkLB7eOsscrO6XdoeUlM7sh7vqy9XLeigs9Nq7Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF3QeyPH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BN51/OxOI2rvpl+EwnRpd9YZbJoaa1dmyo7E2RCSuviVt6BOnfro4JJBrT7ddLR2ZJuYAV8REz8WcIeoBjgqru5tigiijDW1J5/eEYjHMwdiQLtBVkd7NQsWg1rkJVlJ4UYE5ZoNNDGw8BYTUtTY4+ogUozHhitL4oS3fYyUx1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBHwCjU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF3QeyPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DFCC433C7;
-	Mon,  1 Apr 2024 16:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBHwCjU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5308DC43390;
+	Mon,  1 Apr 2024 16:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988995;
-	bh=pc+NPIS8ByHTlPuNBpsh5IthWBYUFug3v5JeuE4+1zg=;
+	s=korg; t=1711988999;
+	bh=ZKS4Jzkz4HKQEFM4jDkSSt47Hrz2y9OTtHZRxVp4jqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF3QeyPHggBafFBKbEX2+//ZhGhARWoiFccnaUhLn146b7OBlUaJQtiQYhX0UYoA+
-	 JprrqU+Ug9yh526pHNhkZbCn5TD3bmSVi7wGkyitchnmmEkyZz9mKxRQTsK2cTPz/5
-	 QjhRMg/rbGqPA2JNH/wBofGDUjKenXUUluvaKmhg=
+	b=iBHwCjU1pvn1VrpL5KXOOeD4HslsqkqM5g7xO5dV7Yfb2EEAhUC8bPHoJ8mY78BN4
+	 3Zwf/objVISJMlvraafYB3kVDNWLhqO13d+4VILmq71NOUJQ3Dy70gTCEaJCqRACgG
+	 EC1G/Udw9NbROCtrvLXYhAjASInAXX3h82uwAm5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.7 322/432] mfd: intel-lpss: Switch to generalized quirk table
-Date: Mon,  1 Apr 2024 17:45:09 +0200
-Message-ID: <20240401152602.803864741@linuxfoundation.org>
+Subject: [PATCH 6.7 323/432] mfd: intel-lpss: Introduce QUIRK_CLOCK_DIVIDER_UNITY for XPS 9530
+Date: Mon,  1 Apr 2024 17:45:10 +0200
+Message-ID: <20240401152602.832783067@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,105 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 
-commit ac9538f6007e1c80f1b8a62db7ecc391b4d78ae5 upstream.
+commit 1d8c51ed2ddcc4161e6496cf14fcd83921c50ec8 upstream.
 
-Introduce generic quirk table, and port existing walkaround for select
-Microsoft devices to it. This is a preparation for
-QUIRK_CLOCK_DIVIDER_UNITY.
+Some devices (eg. Dell XPS 9530, 2023) due to a firmware bug have a
+misconfigured clock divider, which should've been 1:1. This introduces
+quirk which conditionally re-configures the clock divider to 1:1.
 
 Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231221185142.9224-2-alex.vinarskis@gmail.com
+Link: https://lore.kernel.org/r/20231221185142.9224-3-alex.vinarskis@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/intel-lpss-pci.c |   23 +++++++++++++++--------
- drivers/mfd/intel-lpss.c     |    2 +-
- drivers/mfd/intel-lpss.h     |    9 ++++++++-
- 3 files changed, 24 insertions(+), 10 deletions(-)
+ drivers/mfd/intel-lpss-pci.c |    5 +++++
+ drivers/mfd/intel-lpss.c     |    7 +++++++
+ drivers/mfd/intel-lpss.h     |    5 +++++
+ 3 files changed, 17 insertions(+)
 
 --- a/drivers/mfd/intel-lpss-pci.c
 +++ b/drivers/mfd/intel-lpss-pci.c
-@@ -18,18 +18,24 @@
- 
- #include "intel-lpss.h"
- 
--/* Some DSDTs have an unused GEXP ACPI device conflicting with I2C4 resources */
--static const struct pci_device_id ignore_resource_conflicts_ids[] = {
--	/* Microsoft Surface Go (version 1) I2C4 */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1182), },
--	/* Microsoft Surface Go 2 I2C4 */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237), },
-+static const struct pci_device_id quirk_ids[] = {
+@@ -29,6 +29,11 @@ static const struct pci_device_id quirk_
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237),
+ 		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
+ 	},
 +	{
-+		/* Microsoft Surface Go (version 1) I2C4 */
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1182),
-+		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
-+	},
-+	{
-+		/* Microsoft Surface Go 2 I2C4 */
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237),
-+		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
++		/* Dell XPS 9530 (2023) */
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x51fb, 0x1028, 0x0beb),
++		.driver_data = QUIRK_CLOCK_DIVIDER_UNITY,
 +	},
  	{ }
  };
  
- static int intel_lpss_pci_probe(struct pci_dev *pdev,
- 				const struct pci_device_id *id)
- {
-+	const struct pci_device_id *quirk_pci_info;
- 	struct intel_lpss_platform_info *info;
- 	int ret;
- 
-@@ -45,8 +51,9 @@ static int intel_lpss_pci_probe(struct p
- 	info->mem = &pdev->resource[0];
- 	info->irq = pdev->irq;
- 
--	if (pci_match_id(ignore_resource_conflicts_ids, pdev))
--		info->ignore_resource_conflicts = true;
-+	quirk_pci_info = pci_match_id(quirk_ids, pdev);
-+	if (quirk_pci_info)
-+		info->quirks = quirk_pci_info->driver_data;
- 
- 	pdev->d3cold_delay = 0;
- 
 --- a/drivers/mfd/intel-lpss.c
 +++ b/drivers/mfd/intel-lpss.c
-@@ -401,7 +401,7 @@ int intel_lpss_probe(struct device *dev,
- 		return ret;
+@@ -292,6 +292,7 @@ static int intel_lpss_register_clock_div
+ {
+ 	char name[32];
+ 	struct clk *tmp = *clk;
++	int ret;
  
- 	lpss->cell->swnode = info->swnode;
--	lpss->cell->ignore_resource_conflicts = info->ignore_resource_conflicts;
-+	lpss->cell->ignore_resource_conflicts = info->quirks & QUIRK_IGNORE_RESOURCE_CONFLICTS;
+ 	snprintf(name, sizeof(name), "%s-enable", devname);
+ 	tmp = clk_register_gate(NULL, name, __clk_get_name(tmp), 0,
+@@ -308,6 +309,12 @@ static int intel_lpss_register_clock_div
+ 		return PTR_ERR(tmp);
+ 	*clk = tmp;
  
- 	intel_lpss_init_dev(lpss);
- 
++	if (lpss->info->quirks & QUIRK_CLOCK_DIVIDER_UNITY) {
++		ret = clk_set_rate(tmp, lpss->info->clk_rate);
++		if (ret)
++			return ret;
++	}
++
+ 	snprintf(name, sizeof(name), "%s-update", devname);
+ 	tmp = clk_register_gate(NULL, name, __clk_get_name(tmp),
+ 				CLK_SET_RATE_PARENT, lpss->priv, 31, 0, NULL);
 --- a/drivers/mfd/intel-lpss.h
 +++ b/drivers/mfd/intel-lpss.h
-@@ -11,16 +11,23 @@
- #ifndef __MFD_INTEL_LPSS_H
- #define __MFD_INTEL_LPSS_H
- 
-+#include <linux/bits.h>
- #include <linux/pm.h>
- 
+@@ -19,6 +19,11 @@
+  * Set to ignore resource conflicts with ACPI declared SystemMemory regions.
+  */
+ #define QUIRK_IGNORE_RESOURCE_CONFLICTS BIT(0)
 +/*
-+ * Some DSDTs have an unused GEXP ACPI device conflicting with I2C4 resources.
-+ * Set to ignore resource conflicts with ACPI declared SystemMemory regions.
++ * Some devices have misconfigured clock divider due to a firmware bug.
++ * Set this to force the clock divider to 1:1 ratio.
 + */
-+#define QUIRK_IGNORE_RESOURCE_CONFLICTS BIT(0)
-+
++#define QUIRK_CLOCK_DIVIDER_UNITY		BIT(1)
+ 
  struct device;
  struct resource;
- struct software_node;
- 
- struct intel_lpss_platform_info {
- 	struct resource *mem;
--	bool ignore_resource_conflicts;
- 	int irq;
-+	unsigned int quirks;
- 	unsigned long clk_rate;
- 	const char *clk_con_id;
- 	const struct software_node *swnode;
 
 
