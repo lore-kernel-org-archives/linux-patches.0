@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE1540876;
-	Mon,  1 Apr 2024 16:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D8F481B8;
+	Mon,  1 Apr 2024 16:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990455; cv=none; b=UbG7qTj920L50ffWUC1+aANEL7+YPXGPPf2r6lmhUCPWK7XqCKrSamcqGP/PR/Qx33KD8psgDliUf82eV18uGQ0ONmxfx/yN+3tP2S6az0uFji2LhgU/CY5wLrGPI78EPZLoA/w+K6c+rPC6fEiLzXGynu1a2NbazXT/LMN6AQ4=
+	t=1711990459; cv=none; b=YU1kjzHVF0KgSx/OhSQAeAy09dnM7qGmLccFAMMsEAXpN81RDtHNYzIwL7dncMvAT76mM3dVk98UVK5NcVJPdLy4th1scQdbHDznQC3mK+M04F2b0u+A5YIgx2uhYNaA9fbcuXfNBN0+svBp6mEuj9QZvQg67c6GLLUaPKabSos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990455; c=relaxed/simple;
-	bh=Sod/+TmoCvGok3nwSYxxrJ2duYj3BhJamXfJU8OmIJY=;
+	s=arc-20240116; t=1711990459; c=relaxed/simple;
+	bh=W2r2a7/QxpxQ+Qk3ZQjB3uRnIzurblK8K/OqHxm9Tw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ho8EbFFfu3s66u8td5EMLGZRxlAVkaDl2uxR0kGj2iyqj0hjcR6Cm5VHe1c7NrCryoM7kWCt2tXzsCTDeVEpUAHgFI47h/+czpE29uedj5TjzECzW0HyxkyBwPbotJCnNyBAL+/9s2+pFawH/9KZd+LzNv+FEdUbqQBHEgnDg30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=The9BMcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6l0RuQKDjY/u99Pliw+bHzx43SzRPTRbv7JHfqROBrHTvq49heAWPLeFSBlcoSffXRbghepiNHDo5HL/Es0ESOgfEKyGASLN+leFk0Xr/evL/185HYlAYAhhhjyWP391jl12BvLHRLf5lMjSafSr4XKu5AfuWJboYA7uw2IhKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+ufyJF8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="The9BMcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BA3C433C7;
-	Mon,  1 Apr 2024 16:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+ufyJF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C6FC433F1;
+	Mon,  1 Apr 2024 16:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990455;
-	bh=Sod/+TmoCvGok3nwSYxxrJ2duYj3BhJamXfJU8OmIJY=;
+	s=korg; t=1711990458;
+	bh=W2r2a7/QxpxQ+Qk3ZQjB3uRnIzurblK8K/OqHxm9Tw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=The9BMcSqatXBi4BfXxMktPLNVxX26145dTJmc6TGQTuF5svizmdknBMfpMy/dAa2
-	 qtpSTkSVhCXtXBuTYdnc+lboKMea/Nhhyvwdsk4l9ZJlGswPaslY+boVCP1blBUxAx
-	 zaS1co3e25WYt6rw9j3AELMLrOjNTQrQKYgsYFKY=
+	b=h+ufyJF8SghOVUbUrdm5HZ0Jcg8I93rjtwn2AxTEgyQigtYJ2TnPeflH0ymiAeRdD
+	 Hppv3HNeG/r4GbB1WzHLNdSM7L5TahjWtsCL5XTdnardC4umg2q7FO5kc7EuIxdisD
+	 jfQa2X3lDhtr4cJiIlDJi3cQBEMX6p0em3KusiM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <Alexander@wetzel-home.de>,
+	syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com,
 	Bart Van Assche <bvanassche@acm.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 358/396] scsi: sg: Avoid sg device teardown race
-Date: Mon,  1 Apr 2024 17:46:47 +0200
-Message-ID: <20240401152558.595568937@linuxfoundation.org>
+Subject: [PATCH 6.6 359/396] scsi: core: Fix unremoved procfs host directory regression
+Date: Mon,  1 Apr 2024 17:46:48 +0200
+Message-ID: <20240401152558.625381588@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,51 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Wetzel <Alexander@wetzel-home.de>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 27f58c04a8f438078583041468ec60597841284d upstream.
+commit f23a4d6e07570826fe95023ca1aa96a011fa9f84 upstream.
 
-sg_remove_sfp_usercontext() must not use sg_device_destroy() after calling
-scsi_device_put().
+Commit fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name}
+directory earlier") fixed a bug related to modules loading/unloading, by
+adding a call to scsi_proc_hostdir_rm() on scsi_remove_host(). But that led
+to a potential duplicate call to the hostdir_rm() routine, since it's also
+called from scsi_host_dev_release(). That triggered a regression report,
+which was then fixed by commit be03df3d4bfe ("scsi: core: Fix a procfs host
+directory removal regression"). The fix just dropped the hostdir_rm() call
+from dev_release().
 
-sg_device_destroy() is accessing the parent scsi_device request_queue which
-will already be set to NULL when the preceding call to scsi_device_put()
-removed the last reference to the parent scsi_device.
+But it happens that this proc directory is created on scsi_host_alloc(),
+and that function "pairs" with scsi_host_dev_release(), while
+scsi_remove_host() pairs with scsi_add_host(). In other words, it seems the
+reason for removing the proc directory on dev_release() was meant to cover
+cases in which a SCSI host structure was allocated, but the call to
+scsi_add_host() didn't happen. And that pattern happens to exist in some
+error paths, for example.
 
-The resulting NULL pointer exception will then crash the kernel.
+Syzkaller causes that by using USB raw gadget device, error'ing on
+usb-storage driver, at usb_stor_probe2(). By checking that path, we can see
+that the BadDevice label leads to a scsi_host_put() after a SCSI host
+allocation, but there's no call to scsi_add_host() in such path. That leads
+to messages like this in dmesg (and a leak of the SCSI host proc
+structure):
 
-Link: https://lore.kernel.org/r/20240305150509.23896-1-Alexander@wetzel-home.de
-Fixes: db59133e9279 ("scsi: sg: fix blktrace debugfs entries leakage")
+usb-storage 4-1:87.51: USB Mass Storage device detected
+proc_dir_entry 'scsi/usb-storage' already registered
+WARNING: CPU: 1 PID: 3519 at fs/proc/generic.c:377 proc_register+0x347/0x4e0 fs/proc/generic.c:376
+
+The proper fix seems to still call scsi_proc_hostdir_rm() on dev_release(),
+but guard that with the state check for SHOST_CREATED; there is even a
+comment in scsi_host_dev_release() detailing that: such conditional is
+meant for cases where the SCSI host was allocated but there was no calls to
+{add,remove}_host(), like the usb-storage case.
+
+This is what we propose here and with that, the error path of usb-storage
+does not trigger the warning anymore.
+
+Reported-by: syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com
+Fixes: be03df3d4bfe ("scsi: core: Fix a procfs host directory removal regression")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Link: https://lore.kernel.org/r/20240320213032.18221-1-Alexander@wetzel-home.de
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Link: https://lore.kernel.org/r/20240313113006.2834799-1-gpiccoli@igalia.com
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/hosts.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -2208,6 +2208,7 @@ sg_remove_sfp_usercontext(struct work_st
- {
- 	struct sg_fd *sfp = container_of(work, struct sg_fd, ew.work);
- 	struct sg_device *sdp = sfp->parentdp;
-+	struct scsi_device *device = sdp->device;
- 	Sg_request *srp;
- 	unsigned long iflags;
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -353,12 +353,13 @@ static void scsi_host_dev_release(struct
  
-@@ -2233,8 +2234,9 @@ sg_remove_sfp_usercontext(struct work_st
- 			"sg_remove_sfp: sfp=0x%p\n", sfp));
- 	kfree(sfp);
- 
--	scsi_device_put(sdp->device);
-+	WARN_ON_ONCE(kref_read(&sdp->d_ref) != 1);
- 	kref_put(&sdp->d_ref, sg_device_destroy);
-+	scsi_device_put(device);
- 	module_put(THIS_MODULE);
- }
+ 	if (shost->shost_state == SHOST_CREATED) {
+ 		/*
+-		 * Free the shost_dev device name here if scsi_host_alloc()
+-		 * and scsi_host_put() have been called but neither
++		 * Free the shost_dev device name and remove the proc host dir
++		 * here if scsi_host_{alloc,put}() have been called but neither
+ 		 * scsi_host_add() nor scsi_remove_host() has been called.
+ 		 * This avoids that the memory allocated for the shost_dev
+-		 * name is leaked.
++		 * name as well as the proc dir structure are leaked.
+ 		 */
++		scsi_proc_hostdir_rm(shost->hostt);
+ 		kfree(dev_name(&shost->shost_dev));
+ 	}
  
 
 
