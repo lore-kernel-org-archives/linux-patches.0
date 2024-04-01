@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576FB481DB;
-	Mon,  1 Apr 2024 16:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C662E4C61B;
+	Mon,  1 Apr 2024 16:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989937; cv=none; b=o268gNORq68NadrWwuV0v6yC5l0oQLU5qXsCRtSsQmydL/s/Uq8ZvwgVF/rRTULoKThyZlFZfsQ18J5Bx97P+oZRvjG8S0qxrQUurRBOn0cwFsRRc7UxAXsh493qk388D1fSQCKl+ki6r1CAZ2fs2BeaH+PCW8jnspghi+UPuGU=
+	t=1711989940; cv=none; b=ACiFW7hpfVTRcnyO3jknopgZIhSpzYuLBC0jEycAk0yYu/iUJ8NuTedCz6GbzfzvC9lDE+cWp+PIDCDjN6BdOx32VZ9xhkiyPUFy3I2gVKiAFB6UmpHU20E94AKQ/Ax4uwiC5UzSgL5IVf7yxUCNIn4lG5qC+VikBCDKT1RvTYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989937; c=relaxed/simple;
-	bh=1HllURXyd6ZRfFl7uLyK7TaZ9WQeDwwMpUWlhCH9mc8=;
+	s=arc-20240116; t=1711989940; c=relaxed/simple;
+	bh=FmXZqL+U0Rz5ukCQ8auYWcWRT/QtctcdL6pJ8j7CSaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3kFF/k1iirSlia9erNbgVSRxiRjgYRVtStpAgv3jUeCRclORZkwfgZWwbjJDht0fc82GSzzGhFu3fwj7Xga5WN7ohJEp15OGAb2pD7nSZ3EeboUXzDUdmiJ+RlcBv3pX4Kndt86rk6vQpKxQG3s/qVLqdn51wEBfE1mcc61FWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGnWTybC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BggYMicP9dHjB6NcutWi37s07lZz7FpIycls3Egssa3MFcokW49GKBjyLTSijjaU8builDTJQivN7rMZhg8fIBIvWuEQqzN8jG4Mr5I6N3ass3syHHFjduyYdM/3wkD8cDaxdytLs4EFAkKOrZlFl/IHV9JAvHjasvFt+1zmxWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSE2ZttR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGnWTybC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AFBC43390;
-	Mon,  1 Apr 2024 16:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSE2ZttR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30598C43399;
+	Mon,  1 Apr 2024 16:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989937;
-	bh=1HllURXyd6ZRfFl7uLyK7TaZ9WQeDwwMpUWlhCH9mc8=;
+	s=korg; t=1711989940;
+	bh=FmXZqL+U0Rz5ukCQ8auYWcWRT/QtctcdL6pJ8j7CSaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGnWTybCFvOGVqQ2X6OPEfjbVJgt0Qz7ZkTJb1lefqsQDg8pXj9bFfJh2KrNuJm5S
-	 AyFRmnMVNQ83vMVxqixja+1iqN3QWYQYSDPP9SdwbeJJPLomEkou4NE+Jv83ZOula8
-	 4qObMrxLR3HWU5A9+tBGus2p/shj+8kYLXSqBPok=
+	b=xSE2ZttRwWdZoG3Nxx8nV0DjPwmWxrfrsghH26gjkcgH7kcutNXf1g13ey8efaGtY
+	 LJoklpXdsSyeLuyUHX6d8p9QOzLAccn+d/gBQ/a92ZSu7lloA9rZ5guOc6BwPgoOrc
+	 GeI6/6EfuwjHcD5XT6gXLaESC08rO4+aZUvZOcsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt <cryptearth@googlemail.com>,
-	Conrad Kostecki <conikost@gentoo.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/396] ahci: asm1064: asm1166: dont limit reported ports
-Date: Mon,  1 Apr 2024 17:43:49 +0200
-Message-ID: <20240401152553.309186483@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 198/396] netfilter: nf_tables: disallow anonymous set with timeout flag
+Date: Mon,  1 Apr 2024 17:44:07 +0200
+Message-ID: <20240401152553.837726407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,89 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conrad Kostecki <conikost@gentoo.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6cd8adc3e18960f6e59d797285ed34ef473cc896 ]
+commit 16603605b667b70da974bea8216c93e7db043bf1 upstream.
 
-Previously, patches have been added to limit the reported count of SATA
-ports for asm1064 and asm1166 SATA controllers, as those controllers do
-report more ports than physically having.
+Anonymous sets are never used with timeout from userspace, reject this.
+Exception to this rule is NFT_SET_EVAL to ensure legacy meters still work.
 
-While it is allowed to report more ports than physically having in CAP.NP,
-it is not allowed to report more ports than physically having in the PI
-(Ports Implemented) register, which is what these HBAs do.
-(This is a AHCI spec violation.)
-
-Unfortunately, it seems that the PMP implementation in these ASMedia HBAs
-is also violating the AHCI and SATA-IO PMP specification.
-
-What these HBAs do is that they do not report that they support PMP
-(CAP.SPM (Supports Port Multiplier) is not set).
-
-Instead, they have decided to add extra "virtual" ports in the PI register
-that is used if a port multiplier is connected to any of the physical
-ports of the HBA.
-
-Enumerating the devices behind the PMP as specified in the AHCI and
-SATA-IO specifications, by using PMP READ and PMP WRITE commands to the
-physical ports of the HBA is not possible, you have to use the "virtual"
-ports.
-
-This is of course bad, because this gives us no way to detect the device
-and vendor ID of the PMP actually connected to the HBA, which means that
-we can not apply the proper PMP quirks for the PMP that is connected to
-the HBA.
-
-Limiting the port map will thus stop these controllers from working with
-SATA Port Multipliers.
-
-This patch reverts both patches for asm1064 and asm1166, so old behavior
-is restored and SATA PMP will work again, but it will also reintroduce the
-(minutes long) extra boot time for the ASMedia controllers that do not
-have a PMP connected (either on the PCIe card itself, or an external PMP).
-
-However, a longer boot time for some, is the lesser evil compared to some
-other users not being able to detect their drives at all.
-
-Fixes: 0077a504e1a4 ("ahci: asm1166: correct count of reported ports")
-Fixes: 9815e3961754 ("ahci: asm1064: correct count of reported ports")
 Cc: stable@vger.kernel.org
-Reported-by: Matt <cryptearth@googlemail.com>
-Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-[cassel: rewrote commit message]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ net/netfilter/nf_tables_api.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 9933ad9737bb2..535de3ed60f23 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -670,19 +670,6 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
- static void ahci_pci_save_initial_config(struct pci_dev *pdev,
- 					 struct ahci_host_priv *hpriv)
- {
--	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
--		switch (pdev->device) {
--		case 0x1166:
--			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
--			hpriv->saved_port_map = 0x3f;
--			break;
--		case 0x1064:
--			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
--			hpriv->saved_port_map = 0xf;
--			break;
--		}
--	}
--
- 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
- 		dev_info(&pdev->dev, "JMB361 has only one port\n");
- 		hpriv->saved_port_map = 1;
--- 
-2.43.0
-
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4942,6 +4942,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if ((flags & (NFT_SET_EVAL | NFT_SET_OBJECT)) ==
+ 			     (NFT_SET_EVAL | NFT_SET_OBJECT))
+ 			return -EOPNOTSUPP;
++		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
++			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
++			return -EOPNOTSUPP;
+ 	}
+ 
+ 	desc.dtype = 0;
 
 
