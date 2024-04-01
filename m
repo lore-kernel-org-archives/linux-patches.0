@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442EEC129;
-	Mon,  1 Apr 2024 16:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AD0C129;
+	Mon,  1 Apr 2024 16:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988544; cv=none; b=rVigSm3AZC2EP+wFFIzupIko7FZrS+J2q9lxYdqZZkJuhKxcDYC/jt1xTN0JZpkqDRXioZCxrqGa0KPxvjTyMrWaJpAAggWYd2dlfnLFKQDL5gwbQXJvMVq9kKqMVccbX9Vr/yfY6S7k19QfYm67So9Y4yZWB42JbPaQW+uvTF4=
+	t=1711988547; cv=none; b=bvFRjURgfOtCQAIKEYcrJ9KJT/KffHKuyhUcuo4adWtreOEqEmUAmdP13AwpAAb+ghfUQnnp3t8Ff1c+3ttIsV0dRnfWR46F4ITPmyzOs216TcjNJAfjpeMdPFn66s0T8YwjExuVYCmVelL2h2eWddmT7nUmNceHuvMAbeqv84I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988544; c=relaxed/simple;
-	bh=WwvfW1i9NxtdBGncU8buli8Za5ZXr/C25YJbnysvs+U=;
+	s=arc-20240116; t=1711988547; c=relaxed/simple;
+	bh=FydO007xpH0Fkl+pBP+ruGYeybMnAH4xzcbI9d7B1SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QspseNtTWU0ksxKxWhj7Gg8kzmw51kA2dx50Sy4SDbMqpUxatSqz12A6UkhksuXTArvwkeDrjUtFlTC1hjSsMHc11XOS7kJF0fiMv3Hm8cifoq4uFjn2bGxrHQNh7aYghbZuPKMbtxZNrQOQS4zAcCOohxl/Zw5mi5czSZc+WEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLt7J3/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPFPhLR9SHovyEIe6be72JM1OaDDIa22aXHP7upel0Zc7YRi51d4KoaqA1AC8InIWGYv5XPL9kFsbuMCQeKyL0GvEPEAjgx89suDNrNjt6YzclAKcDJ0rllzi1Fz2d5BP8/DkQWz4BNSX/6sXxyZUCMQV8Ggos1ayTsf0iW5PLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4LXqIU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLt7J3/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93CC433F1;
-	Mon,  1 Apr 2024 16:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4LXqIU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A0EC433F1;
+	Mon,  1 Apr 2024 16:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988544;
-	bh=WwvfW1i9NxtdBGncU8buli8Za5ZXr/C25YJbnysvs+U=;
+	s=korg; t=1711988547;
+	bh=FydO007xpH0Fkl+pBP+ruGYeybMnAH4xzcbI9d7B1SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLt7J3/m8gV/+DxSdY6G/o86vzBUFYF1At6sZqPXH88P+7vp9Osi9xKjsHrhrsMW7
-	 V0Mm17F9WbP7OGrnYRL4tdQeGQPzFJg7s94bjUUVBApuWkh2svM3dFCuiaLAApxBw+
-	 t4I8tUhb1p3tvipZbf6Eu5uxHGA+81lLNdE9mzJc=
+	b=D4LXqIU5tymoVe5kDX+4LmOpb6VpjPLmX1hP1CNvfsH4hI/p74dmGQqmNjMZm9xqh
+	 gG9y/2agr0QhIl95cVLcX5yzyfo0kExfUpZSsRHedAtVwErKVUiCBFkFZ4bKcc4LPJ
+	 Fg/9qVRZ0nqRatBQgNKzd15m/7A9j3NNicqpGIDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
+	Duncan Ma <duncan.ma@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 216/432] drm/amd/display: Update odm when ODM combine is changed on an otg master pipe with no plane
-Date: Mon,  1 Apr 2024 17:43:23 +0200
-Message-ID: <20240401152559.582881386@linuxfoundation.org>
+Subject: [PATCH 6.7 217/432] drm/amd/display: Fix idle check for shared firmware state
+Date: Mon,  1 Apr 2024 17:43:24 +0200
+Message-ID: <20240401152559.611841062@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,151 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 86e9523fb0efce27095d3086473c739cce720d01 ]
+[ Upstream commit 3d066f9547dd58329b526db44f42c487a7974703 ]
 
 [WHY]
-When committing an update with ODM combine change when the plane is
-removing or already removed, we fail to detect odm change in pipe
-update flags. This has caused mismatch between new dc state and the
-actual hardware state, because we missed odm programming.
+We still had an instance of get_idle_state checking the PMFW scratch
+register instead of the actual idle allow signal.
 
 [HOW]
-- Detect odm change even for otg master pipe without a plane.
-- Update odm config before calling program pipes for pipe with planes.
-
-The commit also updates blank pattern programming when odm is changed
-without plane. This is because number of OPP is changed when ODM
-combine is changed. Blank pattern is per OPP so we will need to
-reprogram OPP based on the new pipe topology.
+Replace it with the SW state check for whether we had allowed idle
+through notify_idle.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Reviewed-by: Duncan Ma <duncan.ma@amd.com>
 Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hwss/dcn20/dcn20_hwseq.c   | 41 ++++++++++---------
- .../amd/display/dc/hwss/dcn32/dcn32_hwseq.c   |  7 ++++
- 2 files changed, 28 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index c966f38583cb9..e3f547e0613c9 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -1385,6 +1385,11 @@ static void dcn20_detect_pipe_changes(struct pipe_ctx *old_pipe, struct pipe_ctx
- 		return;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index dab26d7e4d52a..b51208f44c240 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -4925,22 +4925,16 @@ void dc_allow_idle_optimizations(struct dc *dc, bool allow)
  
-+	if (resource_is_pipe_type(new_pipe, OTG_MASTER) &&
-+			resource_is_odm_topology_changed(new_pipe, old_pipe))
-+		/* Detect odm changes */
-+		new_pipe->update_flags.bits.odm = 1;
-+
- 	/* Exit on unchanged, unused pipe */
- 	if (!old_pipe->plane_state && !new_pipe->plane_state)
- 		return;
-@@ -1434,10 +1439,6 @@ static void dcn20_detect_pipe_changes(struct pipe_ctx *old_pipe, struct pipe_ctx
- 
- 	/* Detect top pipe only changes */
- 	if (resource_is_pipe_type(new_pipe, OTG_MASTER)) {
--		/* Detect odm changes */
--		if (resource_is_odm_topology_changed(new_pipe, old_pipe))
--			new_pipe->update_flags.bits.odm = 1;
+ bool dc_dmub_is_ips_idle_state(struct dc *dc)
+ {
+-	uint32_t idle_state = 0;
 -
- 		/* Detect global sync changes */
- 		if (old_pipe->pipe_dlg_param.vready_offset != new_pipe->pipe_dlg_param.vready_offset
- 				|| old_pipe->pipe_dlg_param.vstartup_start != new_pipe->pipe_dlg_param.vstartup_start
-@@ -1879,19 +1880,20 @@ void dcn20_program_front_end_for_ctx(
- 	DC_LOGGER_INIT(dc->ctx->logger);
- 	unsigned int prev_hubp_count = 0;
- 	unsigned int hubp_count = 0;
-+	struct pipe_ctx *pipe;
+ 	if (dc->debug.disable_idle_power_optimizations)
+ 		return false;
  
- 	if (resource_is_pipe_topology_changed(dc->current_state, context))
- 		resource_log_pipe_topology_update(dc, context);
+ 	if (!dc->caps.ips_support || (dc->config.disable_ips == DMUB_IPS_DISABLE_ALL))
+ 		return false;
  
- 	if (dc->hwss.program_triplebuffer != NULL && dc->debug.enable_tri_buf) {
- 		for (i = 0; i < dc->res_pool->pipe_count; i++) {
--			struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
-+			pipe = &context->res_ctx.pipe_ctx[i];
- 
--			if (!pipe_ctx->top_pipe && !pipe_ctx->prev_odm_pipe && pipe_ctx->plane_state) {
--				ASSERT(!pipe_ctx->plane_state->triplebuffer_flips);
-+			if (!pipe->top_pipe && !pipe->prev_odm_pipe && pipe->plane_state) {
-+				ASSERT(!pipe->plane_state->triplebuffer_flips);
- 				/*turn off triple buffer for full update*/
- 				dc->hwss.program_triplebuffer(
--						dc, pipe_ctx, pipe_ctx->plane_state->triplebuffer_flips);
-+						dc, pipe, pipe->plane_state->triplebuffer_flips);
- 			}
- 		}
- 	}
-@@ -1965,12 +1967,22 @@ void dcn20_program_front_end_for_ctx(
- 			DC_LOG_DC("Reset mpcc for pipe %d\n", dc->current_state->res_ctx.pipe_ctx[i].pipe_idx);
- 		}
- 
-+	/* update ODM for blanked OTG master pipes */
-+	for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+		pipe = &context->res_ctx.pipe_ctx[i];
-+		if (resource_is_pipe_type(pipe, OTG_MASTER) &&
-+				!resource_is_pipe_type(pipe, DPP_PIPE) &&
-+				pipe->update_flags.bits.odm &&
-+				hws->funcs.update_odm)
-+			hws->funcs.update_odm(dc, context, pipe);
-+	}
-+
- 	/*
- 	 * Program all updated pipes, order matters for mpcc setup. Start with
- 	 * top pipe and program all pipes that follow in order
- 	 */
- 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
--		struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
-+		pipe = &context->res_ctx.pipe_ctx[i];
- 
- 		if (pipe->plane_state && !pipe->top_pipe) {
- 			while (pipe) {
-@@ -2009,17 +2021,6 @@ void dcn20_program_front_end_for_ctx(
- 			context->stream_status[0].plane_count > 1) {
- 			pipe->plane_res.hubp->funcs->hubp_wait_pipe_read_start(pipe->plane_res.hubp);
- 		}
+-	if (dc->hwss.get_idle_state)
+-		idle_state = dc->hwss.get_idle_state(dc);
 -
--		/* when dynamic ODM is active, pipes must be reconfigured when all planes are
--		 * disabled, as some transitions will leave software and hardware state
--		 * mismatched.
--		 */
--		if (dc->debug.enable_single_display_2to1_odm_policy &&
--			pipe->stream &&
--			pipe->update_flags.bits.disable &&
--			!pipe->prev_odm_pipe &&
--			hws->funcs.update_odm)
--			hws->funcs.update_odm(dc, context, pipe);
- 	}
+-	if (!(idle_state & DMUB_IPS1_ALLOW_MASK) ||
+-		!(idle_state & DMUB_IPS2_ALLOW_MASK))
+-		return true;
++	if (!dc->ctx->dmub_srv)
++		return false;
+ 
+-	return false;
++	return dc->ctx->dmub_srv->idle_allowed;
  }
  
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-index cb9d8389329ff..59b32fe96b643 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
-@@ -1159,6 +1159,13 @@ void dcn32_update_odm(struct dc *dc, struct dc_state *context, struct pipe_ctx *
- 			dsc->funcs->dsc_disconnect(dsc);
- 		}
- 	}
-+
-+	if (!resource_is_pipe_type(pipe_ctx, DPP_PIPE))
-+		/*
-+		 * blank pattern is generated by OPP, reprogram blank pattern
-+		 * due to OPP count change
-+		 */
-+		dc->hwseq->funcs.blank_pixel_data(dc, pipe_ctx, true);
- }
- 
- unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsigned int *k1_div, unsigned int *k2_div)
+ /* set min and max memory clock to lowest and highest DPM level, respectively */
 -- 
 2.43.0
 
