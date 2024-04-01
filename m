@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E664CBA3F;
-	Mon,  1 Apr 2024 16:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8959BA3F;
+	Mon,  1 Apr 2024 16:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990307; cv=none; b=eaieUvO+zwDXC1PVzUa1OX56FzNxZH1Lb0oM4jt2rIh3bAdVjkR2yMD1wOmLgDeEqF1FrYvGszgV3ajvyiVKS1JJaGxAuF/QEbEDBADStP0yB/FzntRpcb23wUT25XXv3J79oLKKHwi12k3d2QwMR5Q3EdZO6xLyeq/iymHBOx0=
+	t=1711990309; cv=none; b=nyyd11lyEmbH0eX7/s+KAmY3s0FyBc+EUz7Go/C4rC3FMA3zN2OYyUXCYoQOu3qQXrn0XhocJkTnEdk7fNRrFYhejjK0BI5PoS4RhcUvKHzXCq7nJ9mtwLDB6kPBu4ZNif7SK1w3PT8n2I9IpRBSlA3IC+v6Wk/jmviXtqunsGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990307; c=relaxed/simple;
-	bh=z+XzkpEqU2gEPyI6YRCD4Oh7D2Fzenj0pBBD4kfxgP0=;
+	s=arc-20240116; t=1711990309; c=relaxed/simple;
+	bh=z3qp5Ewi9OAf8pNitvySjqDOX5zFokcOyQg3j0F9Uic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWhURGrajJ9jpQtk/UoKpQS/mrUNVqKfQfZyfb5y9Vd4hj+LVyAd9tAYqHDdqkE4p85ysGYvG39C4SISfx2kJhQApEGxpos9iCFiNBy4j5/IYpis5HjUNTO+pbPipbLfxHGE//3tg8sbDu7WEdB1XE/SVXBXAwBFTMwQ2mmwFPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRMOkoZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKu4t92udIOqE4FC+IoIm4JMMMrZPdMsQ6OHTGzaT6Mr7nziWz1hIbgFSCpSI6wq5y7S75qTHfin+QgwfG/T0MSSQCgTYAjp0xYOcvWlFDad2IszSnJTEJn+eYscoO4CBPXJjoo1Ic/V5U7qrTEpj8k2rNAcR4ENDCXcgN0LjgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HktDGKpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRMOkoZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E15C433C7;
-	Mon,  1 Apr 2024 16:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HktDGKpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A77C433C7;
+	Mon,  1 Apr 2024 16:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990306;
-	bh=z+XzkpEqU2gEPyI6YRCD4Oh7D2Fzenj0pBBD4kfxgP0=;
+	s=korg; t=1711990309;
+	bh=z3qp5Ewi9OAf8pNitvySjqDOX5zFokcOyQg3j0F9Uic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRMOkoZDb2aZyVgt1l3IuDNEMCUEp5lM5hJLeqiS3O1qKlNesjKPeP9Jk/vNNQ6/1
-	 b1/U++DVHU9Osy4XkPfJV5d0V9oAIuTAomkQRMYSF9sABE/milOzbgxQusMtAwNTfH
-	 V+vwaYujqe11EixxWD8hS6Ys4FzU3A4gsaOBY4kM=
+	b=HktDGKpWcgZXRWNfIMgoMpVa8S9YeW6/LD68haJOXFEQ3G/0GIeoS/X/0egJzfhLO
+	 IupPWnRDNmMQxqTdnZN+RvQQto22ZrUGc0FtCemKZ863qJh/2G2GtXbFkDF7yADtxQ
+	 GScBPrDEQyFFZQHfIVx31i0Emzd60ORg8VySGlVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Tymoshenko <ovt@google.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 303/396] efi: fix panic in kdump kernel
-Date: Mon,  1 Apr 2024 17:45:52 +0200
-Message-ID: <20240401152556.933817660@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 312/396] efi/libstub: Cast away type warning in use of max()
+Date: Mon,  1 Apr 2024 17:46:01 +0200
+Message-ID: <20240401152557.215765538@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,39 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Tymoshenko <ovt@google.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 62b71cd73d41ddac6b1760402bbe8c4932e23531 ]
+commit 61d130f261a3c15ae2c4b6f3ac3517d5d5b78855 upstream.
 
-Check if get_next_variable() is actually valid pointer before
-calling it. In kdump kernel this method is set to NULL that causes
-panic during the kexec-ed kernel boot.
+Avoid a type mismatch warning in max() by switching to max_t() and
+providing the type explicitly.
 
-Tested with QEMU and OVMF firmware.
-
-Fixes: bad267f9e18f ("efi: verify that variable services are supported")
-Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Fixes: 3cb4a4827596abc82e ("efi/libstub: fix efi_random_alloc() ...")
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/efi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/efi/libstub/randomalloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index 1974f0ad32bad..2c1095dcc2f2f 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -199,6 +199,8 @@ static bool generic_ops_supported(void)
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -120,7 +120,7 @@ efi_status_t efi_random_alloc(unsigned l
+ 			continue;
+ 		}
  
- 	name_size = sizeof(name);
+-		target = round_up(max(md->phys_addr, alloc_min), align) + target_slot * align;
++		target = round_up(max_t(u64, md->phys_addr, alloc_min), align) + target_slot * align;
+ 		pages = size / EFI_PAGE_SIZE;
  
-+	if (!efi.get_next_variable)
-+		return false;
- 	status = efi.get_next_variable(&name_size, &name, &guid);
- 	if (status == EFI_UNSUPPORTED)
- 		return false;
--- 
-2.43.0
-
+ 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
 
 
