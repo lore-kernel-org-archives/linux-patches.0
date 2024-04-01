@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7C617552;
-	Mon,  1 Apr 2024 15:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5544917552;
+	Mon,  1 Apr 2024 15:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987086; cv=none; b=tJHS2ethS5v5Ot4PRHz9ciKbx0alAfRxmZ3cvDPKKi7oxT9dzE86le2gAnjJAXgefvclvDqtlNtfilsoVaBBS2NGYztfdAXHOXib5JNClpy2SfGDIlqNArVtTYj/vJc0H0crUb7wNOlzNJq0BYmPM0CFUG749dxXqTMHkoA9J+I=
+	t=1711987089; cv=none; b=XVvPSieOZO2LyzT/M3Mf2BXPqQz8DyDjFJ3n8fXXo6+1h6WcmZzRR/a+wra+mwcszlcRmGAiDdjZGLSLkyiVZjc7J/xvVlQnumYh23LloL20wLnEdJAYs4e+ZDsccCxzOQyDhuSpw5kb1pX/0XxfZBJNGv2Sm+Yuf3/nXVaVV4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987086; c=relaxed/simple;
-	bh=HkriKWjRsANeakES95UtjIvSroR9EMe6sniv7mjQ+rQ=;
+	s=arc-20240116; t=1711987089; c=relaxed/simple;
+	bh=T5xnnFzgMmSBg91T4rP3cUOJq9xvHC5ospe1mzSe9co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bYB4uTkub6DM5+P85G2clbLSSu/cNIhoa+aZN020COu7FlhyAFjLwbhRUV205ilfrKIRxRcfP1MaWEUQ596e9IfKDTpCzflZ+/XB7G7l0nhDSzEpUMe8QRt+o+iuTKe5cGc775GDp2ms64syL51U2v1vLZMZc+FJWNHTWw8zJmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uwh8RVDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A8373TgVhudLl9pewE9ONVPq+4dUDfTbud2hIuwir2egR2obCGNscqFOjrpTHtycO+tKPOLCXywZ7xfWKGGgYSnkEdnIWMRcy/U+cD7sUU1PCWMbSEd4CVdymKPfyZGf7gnNSSeNtlRgT3WrxwKkbDDyBnNrFLWP5yhkbvfSrK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leWdBg94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uwh8RVDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB11C433F1;
-	Mon,  1 Apr 2024 15:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leWdBg94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D59C433C7;
+	Mon,  1 Apr 2024 15:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987085;
-	bh=HkriKWjRsANeakES95UtjIvSroR9EMe6sniv7mjQ+rQ=;
+	s=korg; t=1711987089;
+	bh=T5xnnFzgMmSBg91T4rP3cUOJq9xvHC5ospe1mzSe9co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uwh8RVDYQjr+LxTRQpM5KFUi1OF6QDJOvu+RKAdhXxV6BWlKMdZBmuGna1q03eZHQ
-	 pT8POhws+l89zlNMmKZmXJWw4yRM3tFC+11/32hkWCH8tnOsPA3m52xzbRx1zoUG3o
-	 ZpIDKGF6ydQhWL4BKh8u8gkeqqFo4QDiV8dq3emc=
+	b=leWdBg94/8xPOs0ouPB89K1A+fd0k0Zo5CZ7mvHxfccp6LZ5ibptlZWOmUDaLCyXa
+	 q3pHVvSROq3nYjku0XVjqCKh1Y7VbFu/qAylIixjLhu+b81G6w+PyzuEg3DWGUbxgN
+	 3RmPF1wwZXpJjTEGXufpprNkG2l18eTzISLlzyC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20=C4=8Cerm=C3=A1k?= <sairon@sairon.cz>,
-	Shyam Prasad N <sprasad@microsoft.com>,
+	Eugene Korenevsky <ekorenevsky@astralinux.ru>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 180/399] cifs: reduce warning log level for server not advertising interfaces
-Date: Mon,  1 Apr 2024 17:42:26 +0200
-Message-ID: <20240401152554.549332914@linuxfoundation.org>
+Subject: [PATCH 6.8 181/399] cifs: open_cached_dir(): add FILE_READ_EA to desired access
+Date: Mon,  1 Apr 2024 17:42:27 +0200
+Message-ID: <20240401152554.578225811@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -46,57 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Eugene Korenevsky <ekorenevsky@astralinux.ru>
 
-[ Upstream commit 16a57d7681110b25708c7042688412238e6f73a9 ]
+[ Upstream commit f1b8224b4e6ed59e7e6f5c548673c67410098d8d ]
 
-Several users have reported this log getting dumped too regularly to
-kernel log. The likely root cause has been identified, and it suggests
-that this situation is expected for some configurations
-(for example SMB2.1).
+Since smb2_query_eas() reads EA and uses cached directory,
+open_cached_dir() should request FILE_READ_EA access.
 
-Since the function returns appropriately even for such cases, it is
-fairly harmless to make this a debug log. When needed, the verbosity
-can be increased to capture this log.
+Otherwise listxattr() and getxattr() will fail with EACCES
+(0xc0000022 STATUS_ACCESS_DENIED SMB status).
 
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218543
 Cc: stable@vger.kernel.org
-Reported-by: Jan Čermák <sairon@sairon.cz>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Eugene Korenevsky <ekorenevsky@astralinux.ru>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cached_dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index 8f37373fd3334..3216f786908fb 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -230,7 +230,7 @@ int cifs_try_adding_channels(struct cifs_ses *ses)
- 		spin_lock(&ses->iface_lock);
- 		if (!ses->iface_count) {
- 			spin_unlock(&ses->iface_lock);
--			cifs_dbg(VFS, "server %s does not advertise interfaces\n",
-+			cifs_dbg(ONCE, "server %s does not advertise interfaces\n",
- 				      ses->server->hostname);
- 			break;
- 		}
-@@ -396,7 +396,7 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
- 	spin_lock(&ses->iface_lock);
- 	if (!ses->iface_count) {
- 		spin_unlock(&ses->iface_lock);
--		cifs_dbg(VFS, "server %s does not advertise interfaces\n", ses->server->hostname);
-+		cifs_dbg(ONCE, "server %s does not advertise interfaces\n", ses->server->hostname);
- 		return;
- 	}
- 
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index 3de5047a7ff98..a0017724d5239 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -239,7 +239,8 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 		.tcon = tcon,
+ 		.path = path,
+ 		.create_options = cifs_create_options(cifs_sb, CREATE_NOT_FILE),
+-		.desired_access =  FILE_READ_DATA | FILE_READ_ATTRIBUTES,
++		.desired_access =  FILE_READ_DATA | FILE_READ_ATTRIBUTES |
++				   FILE_READ_EA,
+ 		.disposition = FILE_OPEN,
+ 		.fid = pfid,
+ 		.replay = !!(retries),
 -- 
 2.43.0
 
