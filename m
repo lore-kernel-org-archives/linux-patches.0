@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B141CBA3F;
-	Mon,  1 Apr 2024 17:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB2B47A6B;
+	Mon,  1 Apr 2024 17:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990827; cv=none; b=aMrYANlPSShOgl4YjEItn4bgwB9p5WwxhLglDm/aJjppbGutFMmXSzjCpg5wdy+3xTzhCnT1jCfETsllFRQAyavbf8qI3nGuWDtkulvQgBIMZDTYUJnwQ4ZEIzzEtoV4/Eqn8zJbx0mDTOSWsAU0OYP0H8Fnrir+wbKJZJwuZpY=
+	t=1711990831; cv=none; b=tYFKpwoe/ipp2WjDoh4OI29c+FDg1F15ca//AIk7WqDlCPXwdbqZC4FoMsvRkAs1hsmHnXLL4WWSHtyaSqjMqA+fIQ5RodiV6FhqZxPukrYdUqLG4n6ZSk0c6Fu3tduWgd0jdLPfO5CokqdQxNHa+w9I1fIJ3uxc9kpEJzSj/3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990827; c=relaxed/simple;
-	bh=rv/CK5m7etcW/iBilcW5ItSEge0wvE3H1EXqHWfe2xM=;
+	s=arc-20240116; t=1711990831; c=relaxed/simple;
+	bh=uSdgOFWn+ecV603exf60U++SXgIoFd4uPd9EjD/pfUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jA/q5ki1DOPDvF4aEknLkVmcFLOUXWbtLD8suKzD4bOXiH+XGd0uaBApip0HWUGFjU3EN8+sueNdm1mQPrWPvXe3NNseSJMOFI3FDvz59BfYoBGNHV3rZtmBdAUAUhZW2g0stLL17y/TzF00VX8xj8xPQIdVRc8qxikuVj5NGgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N02QvZOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9RSN1EGZRHI0+TCDkp9eosZ8pPa4VGn2Dzyw8Bkip3kRf061rIM3TgocqBadwT+l+28oa2xQqGjxGwwHdbt9EfhSFF6otWvFNKeGC22x86P4RztEPGaer+uXbsQpQx95/1jtCp9amU26faZmq80hAt5//7m44nH4W9xP9bsPyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMegNtUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N02QvZOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C4DC433C7;
-	Mon,  1 Apr 2024 17:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMegNtUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C3EC433F1;
+	Mon,  1 Apr 2024 17:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990827;
-	bh=rv/CK5m7etcW/iBilcW5ItSEge0wvE3H1EXqHWfe2xM=;
+	s=korg; t=1711990831;
+	bh=uSdgOFWn+ecV603exf60U++SXgIoFd4uPd9EjD/pfUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N02QvZOz8AKzrUMooxPH/xKUb+wqr+meW1EtGYknsX3nEREH0FJQrTI4zKt4YB6za
-	 PPPMV1j7q02XrEEyySBmqgmkhqfpTiWvRH5xLPCBC6+7Z+1ynQshO+4aYYFYb5jBog
-	 RmU4YHB0jz/Ypyzv8xEMXAuFfAd53inxa02rVtE4=
+	b=tMegNtUsH3gbn8Zj7q6wG5URL9drbjgczvjMdRwGNJqgV/534dU5qvw5cMKiYn7lf
+	 ffejACon8ZngS7u0V4JuZwCjLqw1Nqh6aov1ZHlrLwjHlaqaJvu9/wTAD8H/oOr3OK
+	 0mcrlOIQnhErkl/pjvKuiO2W+fn/Yv+cJ8H+TZXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexander Aring <aahringo@redhat.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	"Chris Li (Google)" <chrisl@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/272] mac802154: fix llsec key resources release in mac802154_llsec_key_del
-Date: Mon,  1 Apr 2024 17:44:28 +0200
-Message-ID: <20240401152533.019193356@linuxfoundation.org>
+Subject: [PATCH 6.1 079/272] swap: comments get_swap_device() with usage rule
+Date: Mon,  1 Apr 2024 17:44:29 +0200
+Message-ID: <20240401152533.057644896@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,132 +62,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Huang Ying <ying.huang@intel.com>
 
-[ Upstream commit e8a1e58345cf40b7b272e08ac7b32328b2543e40 ]
+[ Upstream commit a95722a047724ef75567381976a36f0e44230bd9 ]
 
-mac802154_llsec_key_del() can free resources of a key directly without
-following the RCU rules for waiting before the end of a grace period. This
-may lead to use-after-free in case llsec_lookup_key() is traversing the
-list of keys in parallel with a key deletion:
+The general rule to use a swap entry is as follows.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 4 PID: 16000 at lib/refcount.c:25 refcount_warn_saturate+0x162/0x2a0
-Modules linked in:
-CPU: 4 PID: 16000 Comm: wpan-ping Not tainted 6.7.0 #19
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x162/0x2a0
-Call Trace:
- <TASK>
- llsec_lookup_key.isra.0+0x890/0x9e0
- mac802154_llsec_encrypt+0x30c/0x9c0
- ieee802154_subif_start_xmit+0x24/0x1e0
- dev_hard_start_xmit+0x13e/0x690
- sch_direct_xmit+0x2ae/0xbc0
- __dev_queue_xmit+0x11dd/0x3c20
- dgram_sendmsg+0x90b/0xd60
- __sys_sendto+0x466/0x4c0
- __x64_sys_sendto+0xe0/0x1c0
- do_syscall_64+0x45/0xf0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
+When we get a swap entry, if there aren't some other ways to prevent
+swapoff, such as the folio in swap cache is locked, page table lock is
+held, etc., the swap entry may become invalid because of swapoff.
+Then, we need to enclose all swap related functions with
+get_swap_device() and put_swap_device(), unless the swap functions
+call get/put_swap_device() by themselves.
 
-Also, ieee802154_llsec_key_entry structures are not freed by
-mac802154_llsec_key_del():
+Add the rule as comments of get_swap_device().
 
-unreferenced object 0xffff8880613b6980 (size 64):
-  comm "iwpan", pid 2176, jiffies 4294761134 (age 60.475s)
-  hex dump (first 32 bytes):
-    78 0d 8f 18 80 88 ff ff 22 01 00 00 00 00 ad de  x.......".......
-    00 00 00 00 00 00 00 00 03 00 cd ab 00 00 00 00  ................
-  backtrace:
-    [<ffffffff81dcfa62>] __kmem_cache_alloc_node+0x1e2/0x2d0
-    [<ffffffff81c43865>] kmalloc_trace+0x25/0xc0
-    [<ffffffff88968b09>] mac802154_llsec_key_add+0xac9/0xcf0
-    [<ffffffff8896e41a>] ieee802154_add_llsec_key+0x5a/0x80
-    [<ffffffff8892adc6>] nl802154_add_llsec_key+0x426/0x5b0
-    [<ffffffff86ff293e>] genl_family_rcv_msg_doit+0x1fe/0x2f0
-    [<ffffffff86ff46d1>] genl_rcv_msg+0x531/0x7d0
-    [<ffffffff86fee7a9>] netlink_rcv_skb+0x169/0x440
-    [<ffffffff86ff1d88>] genl_rcv+0x28/0x40
-    [<ffffffff86fec15c>] netlink_unicast+0x53c/0x820
-    [<ffffffff86fecd8b>] netlink_sendmsg+0x93b/0xe60
-    [<ffffffff86b91b35>] ____sys_sendmsg+0xac5/0xca0
-    [<ffffffff86b9c3dd>] ___sys_sendmsg+0x11d/0x1c0
-    [<ffffffff86b9c65a>] __sys_sendmsg+0xfa/0x1d0
-    [<ffffffff88eadbf5>] do_syscall_64+0x45/0xf0
-    [<ffffffff890000ea>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
-
-Handle the proper resource release in the RCU callback function
-mac802154_llsec_key_del_rcu().
-
-Note that if llsec_lookup_key() finds a key, it gets a refcount via
-llsec_key_get() and locally copies key id from key_entry (which is a
-list element). So it's safe to call llsec_key_put() and free the list
-entry after the RCU grace period elapses.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 5d637d5aabd8 ("mac802154: add llsec structures and mutators")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Message-ID: <20240228163840.6667-1-pchelkin@ispras.ru>
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Link: https://lkml.kernel.org/r/20230529061355.125791-6-ying.huang@intel.com
+Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+Reviewed-by: Chris Li (Google) <chrisl@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 82b1c07a0af6 ("mm: swap: fix race between free_swap_and_cache() and swapoff()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg802154.h |  1 +
- net/mac802154/llsec.c   | 18 +++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ mm/swapfile.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/cfg802154.h b/include/net/cfg802154.h
-index d8d8719315fd8..5f7f28c9edcb6 100644
---- a/include/net/cfg802154.h
-+++ b/include/net/cfg802154.h
-@@ -267,6 +267,7 @@ struct ieee802154_llsec_key {
- 
- struct ieee802154_llsec_key_entry {
- 	struct list_head list;
-+	struct rcu_head rcu;
- 
- 	struct ieee802154_llsec_key_id id;
- 	struct ieee802154_llsec_key *key;
-diff --git a/net/mac802154/llsec.c b/net/mac802154/llsec.c
-index 55550ead2ced8..a4cc9d077c59c 100644
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -265,19 +265,27 @@ int mac802154_llsec_key_add(struct mac802154_llsec *sec,
- 	return -ENOMEM;
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index cca9fda9d036f..324844f98d67c 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1222,6 +1222,13 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
  }
  
-+static void mac802154_llsec_key_del_rcu(struct rcu_head *rcu)
-+{
-+	struct ieee802154_llsec_key_entry *pos;
-+	struct mac802154_llsec_key *mkey;
-+
-+	pos = container_of(rcu, struct ieee802154_llsec_key_entry, rcu);
-+	mkey = container_of(pos->key, struct mac802154_llsec_key, key);
-+
-+	llsec_key_put(mkey);
-+	kfree_sensitive(pos);
-+}
-+
- int mac802154_llsec_key_del(struct mac802154_llsec *sec,
- 			    const struct ieee802154_llsec_key_id *key)
- {
- 	struct ieee802154_llsec_key_entry *pos;
- 
- 	list_for_each_entry(pos, &sec->table.keys, list) {
--		struct mac802154_llsec_key *mkey;
--
--		mkey = container_of(pos->key, struct mac802154_llsec_key, key);
--
- 		if (llsec_key_id_equal(&pos->id, key)) {
- 			list_del_rcu(&pos->list);
--			llsec_key_put(mkey);
-+			call_rcu(&pos->rcu, mac802154_llsec_key_del_rcu);
- 			return 0;
- 		}
- 	}
+ /*
++ * When we get a swap entry, if there aren't some other ways to
++ * prevent swapoff, such as the folio in swap cache is locked, page
++ * table lock is held, etc., the swap entry may become invalid because
++ * of swapoff.  Then, we need to enclose all swap related functions
++ * with get_swap_device() and put_swap_device(), unless the swap
++ * functions call get/put_swap_device() by themselves.
++ *
+  * Check whether swap entry is valid in the swap device.  If so,
+  * return pointer to swap_info_struct, and keep the swap entry valid
+  * via preventing the swap device from being swapoff, until
+@@ -1230,9 +1237,8 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
+  * Notice that swapoff or swapoff+swapon can still happen before the
+  * percpu_ref_tryget_live() in get_swap_device() or after the
+  * percpu_ref_put() in put_swap_device() if there isn't any other way
+- * to prevent swapoff, such as page lock, page table lock, etc.  The
+- * caller must be prepared for that.  For example, the following
+- * situation is possible.
++ * to prevent swapoff.  The caller must be prepared for that.  For
++ * example, the following situation is possible.
+  *
+  *   CPU1				CPU2
+  *   do_swap_page()
 -- 
 2.43.0
 
