@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B44438DE5;
-	Mon,  1 Apr 2024 17:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E793438DE5;
+	Mon,  1 Apr 2024 17:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991175; cv=none; b=XojNw+Ej95lnu5npbwfXs7Gnf4QE7Tihjw5C2jLiw5waNO9n9S5oYwjLwPNhSiSV8OIqoK4P3sRI9Oc9yZvH8q253tgYOr/zkdjHi5Gdr6oBNHcqRkma228A0cSyUm6/dr6aVuzhfAWsPdR/Vq73IPUJlLo0tt9PCBdXvPxum2E=
+	t=1711991179; cv=none; b=BEC9u5TLaHUQvZ0TsNF8+FKnJGdjDi9vRZs5mFLG8tzO0LZ58zFFABeuVK208BAaTPZMbhriaJsoPiwk5PQBS+OMM4lXHoyII2K3bhMgTfxoK0hB1IAGFp5Ql0FBFeEWZPGNqhDptfaPhiKvo7PAuYak/6cc8gsMPU0aEBwvhaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991175; c=relaxed/simple;
-	bh=WYFNX9S9Dc5FKKG1whSuqGrQ/0Z3g6THAiRZEoIDZKM=;
+	s=arc-20240116; t=1711991179; c=relaxed/simple;
+	bh=jrcATL5q+VXGE06sjnBNf7AmJKEiZctN0VCBmhavxdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGY8Y11ffg1tDv7Xl4iI6ysTiQO4HacPgsZfo0bOeoJRqFXwyiDuH/Unb57iEAu3hkj04Q2zljST1YAdXkf8vOSVxeWPO2tHrauhCzCcCTidlCoNLUwcA5p0ePew8zeCORE+QOPA/PiL83fDUdfCr1OD5p+tqqxd1pJwan/erU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBO89rZ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suwn/7/2Cf07FOkSOoGFKOPbtfVkOhz04rJ17C+2NGkDFZNt9+fyhogZZKaZIrXdqMtok8BeslZhuhojHm2DBnC4/TQZjHmdfZkMJfOoMfRnu2n7np1ERbGv4GUlGL1KBeHb1slZBvxdMiaCfA6hIl0i2BwGcgT4TU7K+rfsKpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXn2WwLu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBO89rZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D459AC433C7;
-	Mon,  1 Apr 2024 17:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXn2WwLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BE2C433C7;
+	Mon,  1 Apr 2024 17:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991175;
-	bh=WYFNX9S9Dc5FKKG1whSuqGrQ/0Z3g6THAiRZEoIDZKM=;
+	s=korg; t=1711991178;
+	bh=jrcATL5q+VXGE06sjnBNf7AmJKEiZctN0VCBmhavxdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBO89rZ/mHtMteMF3g7CA9PqMFMWGQX9YRslPTJEWYuy+YOai+6GHxTjK2TawYXHN
-	 l6O5f9kBvPrIGGGlvB2tSiA5q+z91erVKAe60rxQIy1CBhBIftEvcyJhn3KpuU7jcj
-	 TMy90ZYowsceCE0pPtHpENBKjufwvxcXOJ4Bg/7I=
+	b=nXn2WwLuN/YN7MqfKk1UDJ1nepXO2Jht++4K3cii3SLH/wT2kEY9N83ve0ARBNunW
+	 7eL9EBtOPllF860RUx2/K86I8wp1ptPsOPPtatiDVafspFbNVty6xVspwZceP3Ce1t
+	 sW13LsJN6kaVw7UOB3sUjrfwGu7GSjgkiQ+tMpHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Nikhil V <quic_nprakash@quicinc.com>
-Subject: [PATCH 6.1 178/272] iommu: Avoid races around default domain allocations
-Date: Mon,  1 Apr 2024 17:46:08 +0200
-Message-ID: <20240401152536.344429916@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 187/272] irqchip/renesas-rzg2l: Add macro to retrieve TITSR register offset based on registers index
+Date: Mon,  1 Apr 2024 17:46:17 +0200
+Message-ID: <20240401152536.695840646@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,75 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-This fix is applicable for LTS kernel, 6.1.y. In latest kernels, this race
-issue is fixed by the patch series [1] and [2]. The right thing to do here
-would have been propagating these changes from latest kernel to the stable
-branch, 6.1.y. However, these changes seems too intrusive to be picked for
-stable branches. Hence, the fix proposed can be taken as an alternative
-instead of backporting the patch series.
-[1] https://lore.kernel.org/all/0-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com/
-[2] https://lore.kernel.org/all/0-v5-1b99ae392328+44574-iommu_err_unwind_jgg@nvidia.com/
+[ Upstream commit 2eca4731cc66563b3919d8753dbd74d18c39f662 ]
 
-Issue:
-A race condition is observed when arm_smmu_device_probe and
-modprobe of client devices happens in parallel. This results
-in the allocation of a new default domain for the iommu group
-even though it was previously allocated and the respective iova
-domain(iovad) was initialized. However, for this newly allocated
-default domain, iovad will not be initialized. As a result, for
-devices requesting dma allocations, this uninitialized iovad will
-be used, thereby causing NULL pointer dereference issue.
+There are 2 TITSR registers available on the IA55 interrupt controller.
 
-Flow:
-- During arm_smmu_device_probe, bus_iommu_probe() will be called
-as part of iommu_device_register(). This results in the device probe,
-__iommu_probe_device().
+Add a macro that retrieves the TITSR register offset based on it's
+index. This macro is useful in when adding suspend/resume support so both
+TITSR registers can be accessed in a for loop.
 
-- When the modprobe of the client device happens in parallel, it
-sets up the DMA configuration for the device using of_dma_configure_id(),
-which inturn calls iommu_probe_device(). Later, default domain is
-allocated and attached using iommu_alloc_default_domain() and
-__iommu_attach_device() respectively. It then ends up initializing a
-mapping domain(IOVA domain) and rcaches for the device via
-arch_setup_dma_ops()->iommu_setup_dma_ops().
-
-- Now, in the bus_iommu_probe() path, it again tries to allocate
-a default domain via probe_alloc_default_domain(). This results in
-allocating a new default domain(along with IOVA domain) via
-__iommu_domain_alloc(). However, this newly allocated IOVA domain
-will not be initialized.
-
-- Now, when the same client device tries dma allocations via
-iommu_dma_alloc(), it ends up accessing the rcaches of the newly
-allocated IOVA domain, which is not initialized. This results
-into NULL pointer dereferencing.
-
-Fix this issue by adding a check in probe_alloc_default_domain()
-to see if the iommu_group already has a default domain allocated
-and initialized.
-
-Cc: <stable@vger.kernel.org> # see patch description, fix applicable only for 6.1.y
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Co-developed-by: Nikhil V <quic_nprakash@quicinc.com>
-Signed-off-by: Nikhil V <quic_nprakash@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231120111820.87398-7-claudiu.beznea.uj@bp.renesas.com
+Stable-dep-of: 853a6030303f ("irqchip/renesas-rzg2l: Prevent spurious interrupts when setting trigger type")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/irqchip/irq-renesas-rzg2l.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1741,6 +1741,9 @@ static void probe_alloc_default_domain(s
- {
- 	struct __group_domain_type gtype;
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index 454af6faf42bc..a74391615ab38 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -28,8 +28,7 @@
+ #define ISCR				0x10
+ #define IITSR				0x14
+ #define TSCR				0x20
+-#define TITSR0				0x24
+-#define TITSR1				0x28
++#define TITSR(n)			(0x24 + (n) * 4)
+ #define TITSR0_MAX_INT			16
+ #define TITSEL_WIDTH			0x2
+ #define TSSR(n)				(0x30 + ((n) * 4))
+@@ -206,8 +205,7 @@ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ 	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
+ 	unsigned int hwirq = irqd_to_hwirq(d);
+ 	u32 titseln = hwirq - IRQC_TINT_START;
+-	u32 offset;
+-	u8 sense;
++	u8 index, sense;
+ 	u32 reg;
  
-+	if (group->default_domain)
-+		return;
-+
- 	memset(&gtype, 0, sizeof(gtype));
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+@@ -223,17 +221,17 @@ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ 		return -EINVAL;
+ 	}
  
- 	/* Ask for default domain requirements of all devices in the group */
+-	offset = TITSR0;
++	index = 0;
+ 	if (titseln >= TITSR0_MAX_INT) {
+ 		titseln -= TITSR0_MAX_INT;
+-		offset = TITSR1;
++		index = 1;
+ 	}
+ 
+ 	raw_spin_lock(&priv->lock);
+-	reg = readl_relaxed(priv->base + offset);
++	reg = readl_relaxed(priv->base + TITSR(index));
+ 	reg &= ~(IRQ_MASK << (titseln * TITSEL_WIDTH));
+ 	reg |= sense << (titseln * TITSEL_WIDTH);
+-	writel_relaxed(reg, priv->base + offset);
++	writel_relaxed(reg, priv->base + TITSR(index));
+ 	raw_spin_unlock(&priv->lock);
+ 
+ 	return 0;
+-- 
+2.43.0
+
 
 
