@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F83482E4;
-	Mon,  1 Apr 2024 17:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD726481B8;
+	Mon,  1 Apr 2024 17:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991238; cv=none; b=shFAO7SAWelKk/0kw/uGKx25Qf2Bx36/OS+8i9moO94W5/41obBcF6ClfGpGb78ygzBusg5mjnl+LwSxyJ2RHzTo3cKc5I69uk/SVJFPeyGFWQ90ISYlWnMRyfcWWETHyMdcdoBIqBejgdfliB4p0ChRSp+tFiL39X4ngQONlEc=
+	t=1711991241; cv=none; b=SLm4p/XsIfMMDh66EGmJG7mgghvBP2rAuPd5rPyPsN+1BC2V4uWtyu90qfBAHctkI5ST/LLdEMOhPAMx/zyuagYzOoYULkg+VDYI4JHdCrfEzQDa2MWZIDkcVVfwjnrflaftF1siAiqB11pLHd8iAzVpz3tay9Y3RCq3NDORYVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991238; c=relaxed/simple;
-	bh=jvbtkEDvCPcnpIoICV7DuTeKStlnsjVcyeGduY/PgF0=;
+	s=arc-20240116; t=1711991241; c=relaxed/simple;
+	bh=ijvwvVPozOxAF87l694yubBP7RzZQBLzXicUQAr0UDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFxb5iFXkn5k/SjAIX/e75zdD1GjsNJN6vXqGriMZ6Hr3QttvlthF55n2R6DkO9k4Rsf/xQVegqU12IedNk7R9lPE0h2J8TKb/wd/g7gOi+SUvieh8EZro2ximSarkbZUQ/Mo34EbIDvlPpgh00Qbe8mZPh2pyW87IvVw+e64L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKLoM/8R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kl6W/LDpZVMWLo4xh61Q1WwRQMWWKKeWhx3QINx3FXkYADR5g6llmaB8K95SDoNMxQO/+yMvJ8l7FSbmVLQfCMCOy8hUktjEDCd091WowGgbe/PLsdLAMe2GewgJNv2jJrIVVV8RiLJ4E12AcWdkcXyWUZKMu9JHiWlab8kbMRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neJZBwtF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKLoM/8R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34ABC433C7;
-	Mon,  1 Apr 2024 17:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neJZBwtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323BAC433C7;
+	Mon,  1 Apr 2024 17:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991238;
-	bh=jvbtkEDvCPcnpIoICV7DuTeKStlnsjVcyeGduY/PgF0=;
+	s=korg; t=1711991241;
+	bh=ijvwvVPozOxAF87l694yubBP7RzZQBLzXicUQAr0UDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKLoM/8R6QQcP3karEGaYJRFAtYUD01ezL9/c5lrK36iCp4XR96UhC8N/EFTQmi5K
-	 Fa3RYem4Wr0G14XTkb+6AYwpOHUdi/Jx2JSkdMkgQOMlnObNDF1O9adsqL+49rk44A
-	 3zf0eDOVuZ0dfGX/o8ZtOcQKauXTsGxh9jP12VyA=
+	b=neJZBwtF8aOsPXlPnGmcz8yz02wSmokYOOeYVp2iDvAtCa1VYfJIc48ujhsZZL+El
+	 zO9FHRIp6oJIACPTdGLn0PLX1DHxgy8ZQl6zJGBZR2yVo7C4atInXyE3Ask/jMIu1+
+	 BeNEvCCBA7rcfj16ohE+/cg1aUw5hYA7QbLkv/Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diana Craciun <diana.craciun@oss.nxp.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH 6.1 204/272] vfio/fsl-mc: Block calling interrupt handler without trigger
-Date: Mon,  1 Apr 2024 17:46:34 +0200
-Message-ID: <20240401152537.277653215@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 205/272] x86/coco: Export cc_vendor
+Date: Mon,  1 Apr 2024 17:46:35 +0200
+Message-ID: <20240401152537.307637014@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,53 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit 7447d911af699a15f8d050dfcb7c680a86f87012 ]
+commit 3d91c537296794d5d0773f61abbe7b63f2f132d8 upstream.
 
-The eventfd_ctx trigger pointer of the vfio_fsl_mc_irq object is
-initially NULL and may become NULL if the user sets the trigger
-eventfd to -1.  The interrupt handler itself is guaranteed that
-trigger is always valid between request_irq() and free_irq(), but
-the loopback testing mechanisms to invoke the handler function
-need to test the trigger.  The triggering and setting ioctl paths
-both make use of igate and are therefore mutually exclusive.
+It will be used in different checks in future changes. Export it directly
+and provide accessor functions and stubs so this can be used in general
+code when CONFIG_ARCH_HAS_CC_PLATFORM is not set.
 
-The vfio-fsl-mc driver does not make use of irqfds, nor does it
-support any sort of masking operations, therefore unlike vfio-pci
-and vfio-platform, the flow can remain essentially unchanged.
+No functional changes.
 
-Cc: Diana Craciun <diana.craciun@oss.nxp.com>
-Cc:  <stable@vger.kernel.org>
-Fixes: cc0ee20bd969 ("vfio/fsl-mc: trigger an interrupt via eventfd")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20240308230557.805580-8-alex.williamson@redhat.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+[ tglx: Add accessor functions ]
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230318115634.9392-2-bp@alien8.de
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/fsl-mc/vfio_fsl_mc_intr.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/coco/core.c        |   13 ++++---------
+ arch/x86/include/asm/coco.h |   23 ++++++++++++++++++++---
+ 2 files changed, 24 insertions(+), 12 deletions(-)
 
---- a/drivers/vfio/fsl-mc/vfio_fsl_mc_intr.c
-+++ b/drivers/vfio/fsl-mc/vfio_fsl_mc_intr.c
-@@ -142,13 +142,14 @@ static int vfio_fsl_mc_set_irq_trigger(s
- 	irq = &vdev->mc_irqs[index];
+--- a/arch/x86/coco/core.c
++++ b/arch/x86/coco/core.c
+@@ -13,7 +13,7 @@
+ #include <asm/coco.h>
+ #include <asm/processor.h>
  
- 	if (flags & VFIO_IRQ_SET_DATA_NONE) {
--		vfio_fsl_mc_irq_handler(hwirq, irq);
-+		if (irq->trigger)
-+			eventfd_signal(irq->trigger, 1);
+-static enum cc_vendor vendor __ro_after_init;
++enum cc_vendor cc_vendor __ro_after_init;
+ static u64 cc_mask __ro_after_init;
  
- 	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
- 		u8 trigger = *(u8 *)data;
+ static bool intel_cc_platform_has(enum cc_attr attr)
+@@ -83,7 +83,7 @@ static bool hyperv_cc_platform_has(enum
  
--		if (trigger)
--			vfio_fsl_mc_irq_handler(hwirq, irq);
-+		if (trigger && irq->trigger)
-+			eventfd_signal(irq->trigger, 1);
- 	}
+ bool cc_platform_has(enum cc_attr attr)
+ {
+-	switch (vendor) {
++	switch (cc_vendor) {
+ 	case CC_VENDOR_AMD:
+ 		return amd_cc_platform_has(attr);
+ 	case CC_VENDOR_INTEL:
+@@ -105,7 +105,7 @@ u64 cc_mkenc(u64 val)
+ 	 * - for AMD, bit *set* means the page is encrypted
+ 	 * - for Intel *clear* means encrypted.
+ 	 */
+-	switch (vendor) {
++	switch (cc_vendor) {
+ 	case CC_VENDOR_AMD:
+ 		return val | cc_mask;
+ 	case CC_VENDOR_INTEL:
+@@ -118,7 +118,7 @@ u64 cc_mkenc(u64 val)
+ u64 cc_mkdec(u64 val)
+ {
+ 	/* See comment in cc_mkenc() */
+-	switch (vendor) {
++	switch (cc_vendor) {
+ 	case CC_VENDOR_AMD:
+ 		return val & ~cc_mask;
+ 	case CC_VENDOR_INTEL:
+@@ -129,11 +129,6 @@ u64 cc_mkdec(u64 val)
+ }
+ EXPORT_SYMBOL_GPL(cc_mkdec);
  
- 	return 0;
+-__init void cc_set_vendor(enum cc_vendor v)
+-{
+-	vendor = v;
+-}
+-
+ __init void cc_set_mask(u64 mask)
+ {
+ 	cc_mask = mask;
+--- a/arch/x86/include/asm/coco.h
++++ b/arch/x86/include/asm/coco.h
+@@ -11,13 +11,30 @@ enum cc_vendor {
+ 	CC_VENDOR_INTEL,
+ };
+ 
+-void cc_set_vendor(enum cc_vendor v);
+-void cc_set_mask(u64 mask);
+-
+ #ifdef CONFIG_ARCH_HAS_CC_PLATFORM
++extern enum cc_vendor cc_vendor;
++
++static inline enum cc_vendor cc_get_vendor(void)
++{
++	return cc_vendor;
++}
++
++static inline void cc_set_vendor(enum cc_vendor vendor)
++{
++	cc_vendor = vendor;
++}
++
++void cc_set_mask(u64 mask);
+ u64 cc_mkenc(u64 val);
+ u64 cc_mkdec(u64 val);
+ #else
++static inline enum cc_vendor cc_get_vendor(void)
++{
++	return CC_VENDOR_NONE;
++}
++
++static inline void cc_set_vendor(enum cc_vendor vendor) { }
++
+ static inline u64 cc_mkenc(u64 val)
+ {
+ 	return val;
 
 
