@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9560A38DE5;
-	Mon,  1 Apr 2024 17:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7DF38DE5;
+	Mon,  1 Apr 2024 17:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991168; cv=none; b=quKqs4imrdySFXKMwweIsefBTQDAjQWBfOqh655S3uBQECYHFmYrdCtPdcF4rwgOzKY7CbbECg6gDHWrEhTEGL6/V378hVjht6yLTlAWfohCAd6cAus7NQzICYpAzw09ddK9X8HpGIrmGASaWTZq4bxeBoGv6pwLupzqabcrUZM=
+	t=1711991172; cv=none; b=LwsfkITRNIT9j3nrjh9vWpEZ9SckxsEbU1WKTo824JhAUkmnHA1eSnxv29vyv9NpT4tJuIxdVzTBFgxkprvDUKqAlkrN1P+IawEdVQxaUtCWNRyU3tPgIjX0wfzueTM8LrPPNr77TAL1giiTZZUU4+EI6agZqAQAr9rxTSQtSjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991168; c=relaxed/simple;
-	bh=Mnwek2ccX+5EtknIU0vdJFjyCVDv+3cD3tY9AO/ltbQ=;
+	s=arc-20240116; t=1711991172; c=relaxed/simple;
+	bh=QwFlYzAdXAaUOmTtR1BI0EG2fmzJdmGbpaA/8kW7b9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QohQ8cX8UTTgbE6+GHgK72E7V8zL9TCLDmZymaMvBDZT/g451t0wEoStczrDpry1I8eZ2eulzQ2KgbiZJpU7JN7SXMuFA9qAn76riQ+cStkzP3FBMS+EyZkUw03BEfRYEHGl2HcS1ZGXMBciayL5PPqA9Kss0YpePpe1mXgzsM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OesLGJpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JVOAcutUHp3TYt6jhLf84AFpSUGmoJPK70MYGd7yAnXWFrHtZcSSCXVeCai/n5wZx+yV2YSVn+hg/jyiG0lhLCqAk+axJ/pCMrLFVymMTQ98rEUQvORM/y2SgfDm2ZC2JC6Wz1ehDwel8w0oVVAUADaKis+tMQrRf48ONUZe9FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRrKvkMh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OesLGJpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032FFC433C7;
-	Mon,  1 Apr 2024 17:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRrKvkMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6ABC433F1;
+	Mon,  1 Apr 2024 17:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991168;
-	bh=Mnwek2ccX+5EtknIU0vdJFjyCVDv+3cD3tY9AO/ltbQ=;
+	s=korg; t=1711991171;
+	bh=QwFlYzAdXAaUOmTtR1BI0EG2fmzJdmGbpaA/8kW7b9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OesLGJpLuowiHEbDk9YdmJ0T+TgMVy585X0uqtuQeEsTgwuY4kNjyX2hWNKsM1D8m
-	 IvG/SwN3Cu4apMMJxBsXHW4n/aTR+gd99d2Gd+p1q1ja905uCaP4GKhYCokGuhUuD+
-	 2wiGJct0d24AsBNs6pLCoIGHUGawZAJjNXhwi3Ws=
+	b=TRrKvkMhtDSvlu/7TlE8N/Ogi3Uz55SGSTCC715ecawWRybugaCFdmX3HwRmPnJCE
+	 OxRAYBiV3KK0NQ08jcdsnzH5QdiCwtCpA6op6utaXYn9gdy64xobGIE5MAy1ACfOrA
+	 rRp+B8mveqeI9yXVaHqjUM8X/HmASkwFX2l+whls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Shawn Lee <shawn.c.lee@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.1 155/272] drm/i915: Check before removing mm notifier
-Date: Mon,  1 Apr 2024 17:45:45 +0200
-Message-ID: <20240401152535.546798734@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 146/272] netfilter: nf_tables: disallow anonymous set with timeout flag
+Date: Mon,  1 Apr 2024 17:45:36 +0200
+Message-ID: <20240401152535.256656155@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,40 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 01bb1ae35006e473138c90711bad1a6b614a1823 upstream.
+commit 16603605b667b70da974bea8216c93e7db043bf1 upstream.
 
-Error in mmu_interval_notifier_insert() can leave a NULL
-notifier.mm pointer. Catch that and return early.
+Anonymous sets are never used with timeout from userspace, reject this.
+Exception to this rule is NFT_SET_EVAL to ensure legacy meters still work.
 
-Fixes: ed29c2691188 ("drm/i915: Fix userptr so we do not have to worry about obj->mm.lock, v7.")
-Cc: <stable@vger.kernel.org> # v5.13+
-[tursulin: Added Fixes and cc stable.]
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Shawn Lee <shawn.c.lee@intel.com>
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240219125047.28906-1-nirmoy.das@intel.com
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-(cherry picked from commit db7bbd13f08774cde0332c705f042e327fe21e73)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_userptr.c |    3 +++
+ net/netfilter/nf_tables_api.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_userptr.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_userptr.c
-@@ -378,6 +378,9 @@ i915_gem_userptr_release(struct drm_i915
- {
- 	GEM_WARN_ON(obj->userptr.page_ref);
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4711,6 +4711,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if ((flags & (NFT_SET_EVAL | NFT_SET_OBJECT)) ==
+ 			     (NFT_SET_EVAL | NFT_SET_OBJECT))
+ 			return -EOPNOTSUPP;
++		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
++			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
++			return -EOPNOTSUPP;
+ 	}
  
-+	if (!obj->userptr.notifier.mm)
-+		return;
-+
- 	mmu_interval_notifier_remove(&obj->userptr.notifier);
- 	obj->userptr.notifier.mm = NULL;
- }
+ 	desc.dtype = 0;
 
 
