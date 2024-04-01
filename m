@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA555BA3F;
-	Mon,  1 Apr 2024 16:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3D8BA3F;
+	Mon,  1 Apr 2024 16:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990741; cv=none; b=k4rIpJarOA22AoHrmVQJ1PTKlM3RGJROtfvi4vxWMzEbu2eNLxF9udhXj3q4Bh1/emGllkPFt1FJCz7XaKCFahgT3NJcVtIubupQOjHXsFi2XfXrUwQKZzeNRbDL0jR12JnmxSHQ4HBf/gbSXjNrWRqIU3Njhn2rnYzluT0godY=
+	t=1711990744; cv=none; b=ayhuAyfTrYCI58KJi82LCQR2B04/Y1LjS6PixDabEHbUCoW4sAQ4qOvhoyQmTv0J2/WHTpkdsepkK78GQIMTaNXeAZTwuOVFV8LpzppcfGGrBb4YAbBgu4V9EjdKUK0rtIpDaHhqgJ1iTL8GZaMytBVEhkGVkd7mJiqApX2GxMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990741; c=relaxed/simple;
-	bh=C3RmaAHeVCjZiIaFgzOxtTqLiUHooWMmtYxAZamd6oM=;
+	s=arc-20240116; t=1711990744; c=relaxed/simple;
+	bh=Ln3/0S259vEIHfHnLsoBQs7u6ADZimFiI2YVQfFn5MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhGfBatmfGeICKXIJL4N9OYngIp4RTA1I6+t0YZUyck4y3f1GGNrUp00PZOODYMEETU446SJBTrST3xg8xBnZQdXbjag9V58XMFZagYZOqKXadU32Ik925dPXplrghm9TRr0kNSymcLTCYU+yNNuZzp8nn5r+JD5Vy5OxYJJCvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzyUm8UC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOoNQP3VV1aaVwrHznq6M/k2g1Gu24/pgscrZq0zMR5GcGuCGzEg+bM3ZWB/IBJL+AdL1K+L8+w/VDFFpn3JTo3iM/aOd8QqC4IOurKPCQU5zq/O/EWvGqgTUZID2yVnW4yKZFMelQdPw7bECX7E0KqdaKy1vvyukkRq1tI+db0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv0eeyFF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzyUm8UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17166C433F1;
-	Mon,  1 Apr 2024 16:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv0eeyFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230F0C433C7;
+	Mon,  1 Apr 2024 16:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990741;
-	bh=C3RmaAHeVCjZiIaFgzOxtTqLiUHooWMmtYxAZamd6oM=;
+	s=korg; t=1711990744;
+	bh=Ln3/0S259vEIHfHnLsoBQs7u6ADZimFiI2YVQfFn5MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzyUm8UCvzTmBZ41xKMy2wA6PNXvUVwxfvM2xDWqp2yNYs8RMPFv+G0LPUmW14Yrf
-	 fBwchX0tVVwlC6EKAHq74vd68InSwU2hreYJESnsjR8DFfCzu8PuHSWED4I4sWlDyz
-	 Hraw6yAgFTVZlK0b0ZC5H/Ikc2RHp2xdBv9RU2f8=
+	b=fv0eeyFFNKoJ/Q0P9wbWUHUxco7PW1mIkf3OuJP5V4ZeSL/ERyiehq8pRP+VYOwhp
+	 6mrDuUxiu8UG00lQSLz6abnr0gNyIHWxRuZhrw/0cf0vT0RwOdBlASALhsVtnS8hE2
+	 hNjQ9dfh6OVL8F1/+KgAFHq4C5qRtYzST/gJz4QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/272] media: mc: Add num_links flag to media_pad
-Date: Mon,  1 Apr 2024 17:43:33 +0200
-Message-ID: <20240401152531.077127040@linuxfoundation.org>
+Subject: [PATCH 6.1 024/272] media: mc: Rename pad variable to clarify intent
+Date: Mon,  1 Apr 2024 17:43:34 +0200
+Message-ID: <20240401152531.108424070@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,11 +54,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit baeddf94aa61879b118f2faa37ed126d772670cc ]
+[ Upstream commit 9ec9109cf9f611e3ec9ed0355afcc7aae5e73176 ]
 
-Maintain a counter of the links connected to a pad in the media_pad
-structure. This helps checking if a pad is connected to anything, which
-will be used in the pipeline building code.
+The pad local variable in the media_pipeline_explore_next_link()
+function is used to store the pad through which the entity has been
+reached. Rename it to origin to reflect that and make the code easier to
+read. This will be even more important in subsequent commits when
+expanding the function with additional logic.
 
 Cc: stable@vger.kernel.org # 6.1
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
@@ -66,54 +68,50 @@ Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/mc/mc-entity.c | 6 ++++++
- include/media/media-entity.h | 2 ++
- 2 files changed, 8 insertions(+)
+ drivers/media/mc/mc-entity.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
-index 688780c8734d4..c7cb49205b017 100644
+index c7cb49205b017..50b68b4dde5d0 100644
 --- a/drivers/media/mc/mc-entity.c
 +++ b/drivers/media/mc/mc-entity.c
-@@ -957,6 +957,9 @@ static void __media_entity_remove_link(struct media_entity *entity,
+@@ -579,13 +579,13 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 					    struct media_pipeline_walk *walk)
+ {
+ 	struct media_pipeline_walk_entry *entry = media_pipeline_walk_top(walk);
+-	struct media_pad *pad;
++	struct media_pad *origin;
+ 	struct media_link *link;
+ 	struct media_pad *local;
+ 	struct media_pad *remote;
+ 	int ret;
  
- 	/* Remove the reverse links for a data link. */
- 	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) == MEDIA_LNK_FL_DATA_LINK) {
-+		link->source->num_links--;
-+		link->sink->num_links--;
-+
- 		if (link->source->entity == entity)
- 			remote = link->sink->entity;
- 		else
-@@ -1068,6 +1071,9 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
- 	sink->num_links++;
- 	source->num_links++;
+-	pad = entry->pad;
++	origin = entry->pad;
+ 	link = list_entry(entry->links, typeof(*link), list);
+ 	media_pipeline_walk_pop(walk);
  
-+	link->source->num_links++;
-+	link->sink->num_links++;
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(media_create_pad_link);
-diff --git a/include/media/media-entity.h b/include/media/media-entity.h
-index 28c9de8a1f348..03bb0963942bd 100644
---- a/include/media/media-entity.h
-+++ b/include/media/media-entity.h
-@@ -205,6 +205,7 @@ enum media_pad_signal_type {
-  * @graph_obj:	Embedded structure containing the media object common data
-  * @entity:	Entity this pad belongs to
-  * @index:	Pad index in the entity pads array, numbered from 0 to n
-+ * @num_links:	Number of links connected to this pad
-  * @sig_type:	Type of the signal inside a media pad
-  * @flags:	Pad flags, as defined in
-  *		:ref:`include/uapi/linux/media.h <media_header>`
-@@ -216,6 +217,7 @@ struct media_pad {
- 	struct media_gobj graph_obj;	/* must be first field in struct */
- 	struct media_entity *entity;
- 	u16 index;
-+	u16 num_links;
- 	enum media_pad_signal_type sig_type;
- 	unsigned long flags;
+@@ -595,7 +595,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 		link->sink->entity->name, link->sink->index);
  
+ 	/* Get the local pad and remote pad. */
+-	if (link->source->entity == pad->entity) {
++	if (link->source->entity == origin->entity) {
+ 		local = link->source;
+ 		remote = link->sink;
+ 	} else {
+@@ -607,8 +607,9 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 	 * Skip links that originate from a different pad than the incoming pad
+ 	 * that is not connected internally in the entity to the incoming pad.
+ 	 */
+-	if (pad != local &&
+-	    !media_entity_has_pad_interdep(pad->entity, pad->index, local->index)) {
++	if (origin != local &&
++	    !media_entity_has_pad_interdep(origin->entity, origin->index,
++					   local->index)) {
+ 		dev_dbg(walk->mdev->dev,
+ 			"media pipeline: skipping link (no route)\n");
+ 		return 0;
 -- 
 2.43.0
 
