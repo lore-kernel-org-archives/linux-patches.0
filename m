@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756F2C129;
-	Mon,  1 Apr 2024 16:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8172C129;
+	Mon,  1 Apr 2024 16:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988651; cv=none; b=Xp07+5DPm7in0a6UwBuq9Yo7UIwiEX31f0JjyUAuQIe79iMfVSoJfL30KGjyJJUc2yU4w4I9TxJnfi2HY1Xffl6cuWZCaqVuLf1jDE2KvVo6SKsjQ7N3CIJ/ojgtNpV1a/kQp1EwTZVtVQNeef48NiPwDYsrnIDT1eoduPhLHQU=
+	t=1711988654; cv=none; b=UbeNQe9/VydMneUEU820bZQp3jmh2OH2EDkInuQn8g2OxYfFuZrQV/nTt9d9D/BLnHdZb0vwDAYP9+r34s6pF+/SwmCQvQ4n96nI0KelpV60W7lMq/RvFxxKB0AvLXtZ8VgcUv+HrvpE1A7wb+KQGWtniZ7Za+XxHxt9LgKXbs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988651; c=relaxed/simple;
-	bh=DAXdInYhAGpdm9L1MmQy5g3xuO6aPyMUYi4cbjaSxzs=;
+	s=arc-20240116; t=1711988654; c=relaxed/simple;
+	bh=8rRk3vsbYO1RffRK6coEA0kfZKzIGifE+4nJc5CCO9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTjWbwzbSruq8zvxglQomB4Ru9mhrGErSC1kZhAc5uLPtRlPzR61QCpV8JN++649SgS/i6r1Ljx7uiXNEyUXeq3BnGCrWrK3K3Uyz3f5170cuR3T3jrW9EbXUlEuhZzv0KrpJjkX1HBfJrpo5zmBsBnEgkuWDzBmNjlq4Y0uhEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ldhfmuqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnsLlB35ytmTncHoBDRH2zYFXpU7Zvaaj2wUgq00LzR+DvlMaDL6sGPO5s0lOPBAw/udAtHL+rlZsPONq3WLs8mmdqZw2+44KtSIF4gpMa0m+DYSBCUdousjrzSOiTz7TROgUA/qiGp0QVb0AYK1taSojyQ0aDaao+v9J3bwjSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZ8h2EXK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ldhfmuqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82CAC43390;
-	Mon,  1 Apr 2024 16:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZ8h2EXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2538EC433F1;
+	Mon,  1 Apr 2024 16:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988651;
-	bh=DAXdInYhAGpdm9L1MmQy5g3xuO6aPyMUYi4cbjaSxzs=;
+	s=korg; t=1711988654;
+	bh=8rRk3vsbYO1RffRK6coEA0kfZKzIGifE+4nJc5CCO9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdhfmuquTOKVCjLweDfqa+DN0Mh4kAny3UVrdQzKMbhC8t3JfNlq6ISFLhE6kfOTT
-	 XipwQbwEB8Pt1ACg4VpHqTvfJHNB20v85FyJ58ukn+vM2hIBvuZ9xmYbyFJUWBBGiN
-	 Ca4FnETiIlLnpaER4uGi928x72PAfW2MWQ8zxYN8=
+	b=rZ8h2EXKNqZdcQ2afaJ6mNkCSz83+UVyjTIrp4dGECUuexugpwkz4FvyzL+aQk0y+
+	 jq0vISuEmypo0iaE//y9198iXW3wbxWv05OL9rvHVufdCQBFGBJsAmuvHw90cLwxUN
+	 i1ZBiFUUjANeD99/Rh0T9xOyKIvWVAUlHyTOlgh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
 	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.7 248/432] cgroup/cpuset: Fix retval in update_cpumask()
-Date: Mon,  1 Apr 2024 17:43:55 +0200
-Message-ID: <20240401152600.536315722@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Mirsad Todorovac <mirsad.todorovac@alu.hr>
+Subject: [PATCH 6.7 249/432] cgroup/cpuset: Fix a memory leak in update_exclusive_cpumask()
+Date: Mon,  1 Apr 2024 17:43:56 +0200
+Message-ID: <20240401152600.566378911@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+From: Waiman Long <longman@redhat.com>
 
-commit 25125a4762835d62ba1e540c1351d447fc1f6c7c upstream.
+commit 66f40b926dd249f74334a22162c09e7ec1ec5b07 upstream.
 
-The update_cpumask(), checks for newly requested cpumask by calling
-validate_change(), which returns an error on passing an invalid set
-of cpu(s). Independent of the error returned, update_cpumask() always
-returns zero, suppressing the error and returning success to the user
-on writing an invalid cpu range for a cpuset. Fix it by returning
-retval instead, which is returned by validate_change().
+Fix a possible memory leak in update_exclusive_cpumask() by moving the
+alloc_cpumasks() down after the validate_change() check which can fail
+and still before the temporary cpumasks are needed.
 
-Fixes: 99fe36ba6fc1 ("cgroup/cpuset: Improve temporary cpumasks handling")
-Signed-off-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org # v6.6+
+Fixes: e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2")
+Reported-and-tested-by: Mirsad Todorovac <mirsad.todorovac@alu.hr>
+Closes: https://lore.kernel.org/lkml/14915689-27a3-4cd8-80d2-9c30d0c768b6@alu.unizg.hr
+Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org # v6.7+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/kernel/cgroup/cpuset.c
 +++ b/kernel/cgroup/cpuset.c
-@@ -2466,7 +2466,7 @@ static int update_cpumask(struct cpuset
- 		update_partition_sd_lb(cs, old_prs);
- out_free:
- 	free_cpumasks(NULL, &tmp);
--	return 0;
-+	return retval;
- }
+@@ -2502,9 +2502,6 @@ static int update_exclusive_cpumask(stru
+ 	if (cpumask_equal(cs->exclusive_cpus, trialcs->exclusive_cpus))
+ 		return 0;
  
- /**
+-	if (alloc_cpumasks(NULL, &tmp))
+-		return -ENOMEM;
+-
+ 	if (*buf)
+ 		compute_effective_exclusive_cpumask(trialcs, NULL);
+ 
+@@ -2519,6 +2516,9 @@ static int update_exclusive_cpumask(stru
+ 	if (retval)
+ 		return retval;
+ 
++	if (alloc_cpumasks(NULL, &tmp))
++		return -ENOMEM;
++
+ 	if (old_prs) {
+ 		if (cpumask_empty(trialcs->effective_xcpus)) {
+ 			invalidate = true;
 
 
