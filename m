@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C46F38F84;
-	Mon,  1 Apr 2024 16:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9237B10A3B;
+	Mon,  1 Apr 2024 16:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989262; cv=none; b=BFcg38TZqWtR9IBqYX0vIhv0Pky8nqm3xnpzzVG0hebSgytVB4FFgwOHLEUsRA75UcmCgjDnCwXCBuw50pw4A9lZS5w0t+fOr8hwu0aQTEWUQFejZfB0sz3X6kOhKGhVppgpfwBTm5hL/8cIUJ2qN3w+xc6p63AwBS9vn2YxtPI=
+	t=1711989266; cv=none; b=u/7qwfgL4GZWcphjykyvvmsRkXSxEjkfvWC+dIsWP0isHS8M1Rg0+S0Zkun21mmEUr69jnfW7rNkCJc6NkpHSkS2bPlcBhokVm6giaqy89onlQqEHmzwAk38FdsfBfKpB48cCkpIK2M5X0mN9HaY3sPtfcf4zqCPj0I0AW1TNH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989262; c=relaxed/simple;
-	bh=ty4Tp7LIiZQiSmqFmqLYb8gzMoNjJ5/Ew4SlCZ7gMz0=;
+	s=arc-20240116; t=1711989266; c=relaxed/simple;
+	bh=yx4moEIob2ngIVyRwA7oyXh+03YdXWPj8G5dEal3Ess=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/L9h6OMIYpNmf8WWy3liUtMHTJAPhQxRvbdzZdALU+hfuJ3tlEarsHTEA7ZNAttpWs9Mpxm8mYYZMBQqVq4FdMs2l6/xkrvZecFyERZshYfg0QUsaVJxhVSggHWFfYJpAxD/2AxoVgUgYwdD3vLdfbGba8/eX3/Rj94Fgf1A7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOMs9/oY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CS/8U/NCkyq4pU+49MajTS6HP1r7OTT6P28ID5jXa0DZ1IuWOWpAfmZ/ZQ13Pu4+YhjpY4jFxON6sAdu0hq7JHLiGhvKqpll0U2/pdtcPljTotrZFI9vWoOXH/XnU/24klsNA7XDKFf/5ZZ6PVa9GA2pmDVYas7hU/3HlFaW6UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T10Pco4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOMs9/oY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C32C433F1;
-	Mon,  1 Apr 2024 16:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T10Pco4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A22C43394;
+	Mon,  1 Apr 2024 16:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989262;
-	bh=ty4Tp7LIiZQiSmqFmqLYb8gzMoNjJ5/Ew4SlCZ7gMz0=;
+	s=korg; t=1711989265;
+	bh=yx4moEIob2ngIVyRwA7oyXh+03YdXWPj8G5dEal3Ess=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOMs9/oYmHSChJK65kwfUkJj5oGJgzFa/OT68nHYs2ibLDbMFszFh6JBIc0IOCVRS
-	 2x7qG99mRjV62O+8EIaAmS/Rq5Y5bdwCdlFrr1Tse2E0oGkEdO3yWNzHbpiB0k2tB1
-	 9fbfipob/fdOHIolzMX6RqTrC1ZcuwEnyTpLVng8=
+	b=T10Pco4tJFURhCCSKQAFYF0DATgGmB6UPlOnMHDm7wn7EcmX+xpQO91BXuTVPud2P
+	 aEzjMBryGtlA7Od1HoPmwYYJQGpX1+Cc4dPrTRZHvDMd61AXOu10UpYStofqPvUcPK
+	 Utdc2nqXGqPy6G7WyKLJQnmQSwPVQz9bAcM0DytI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.7 430/432] scsi: libsas: Fix disk not being scanned in after being removed
-Date: Mon,  1 Apr 2024 17:46:57 +0200
-Message-ID: <20240401152606.272272417@linuxfoundation.org>
+Subject: [PATCH 6.7 413/432] scsi: qla2xxx: Fix N2N stuck connection
+Date: Mon,  1 Apr 2024 17:46:40 +0200
+Message-ID: <20240401152605.709859531@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,111 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 8e68a458bcf5b5cb9c3624598bae28f08251601f upstream.
+commit 881eb861ca3877300570db10abbf11494e48548d upstream.
 
-As of commit d8649fc1c5e4 ("scsi: libsas: Do discovery on empty PHY to
-update PHY info"), do discovery will send a new SMP_DISCOVER and update
-phy->phy_change_count. We found that if the disk is reconnected and phy
-change_count changes at this time, the disk scanning process will not be
-triggered.
+Disk failed to rediscover after chip reset error injection. The chip reset
+happens at the time when a PLOGI is being sent. This causes a flag to be
+left on which blocks the retry. Clear the blocking flag.
 
-Therefore, call sas_set_ex_phy() to update the PHY info with the results of
-the last query. And because the previous phy info will be used when calling
-sas_unregister_devs_sas_addr(), sas_unregister_devs_sas_addr() should be
-called before sas_set_ex_phy().
-
-Fixes: d8649fc1c5e4 ("scsi: libsas: Do discovery on empty PHY to update PHY info")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://lore.kernel.org/r/20240307141413.48049-3-yangxingui@huawei.com
-Reviewed-by: John Garry <john.g.garry@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240227164127.36465-3-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libsas/sas_expander.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/scsi/qla2xxx/qla_gbl.h  |    2 +-
+ drivers/scsi/qla2xxx/qla_iocb.c |   32 +++++++++++---------------------
+ drivers/scsi/qla2xxx/qla_os.c   |    2 +-
+ 3 files changed, 13 insertions(+), 23 deletions(-)
 
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -1945,6 +1945,7 @@ static int sas_rediscover_dev(struct dom
- 	struct expander_device *ex = &dev->ex_dev;
- 	struct ex_phy *phy = &ex->ex_phy[phy_id];
- 	enum sas_device_type type = SAS_PHY_UNUSED;
-+	struct smp_disc_resp *disc_resp;
- 	u8 sas_addr[SAS_ADDR_SIZE];
- 	char msg[80] = "";
- 	int res;
-@@ -1956,33 +1957,41 @@ static int sas_rediscover_dev(struct dom
- 		 SAS_ADDR(dev->sas_addr), phy_id, msg);
+--- a/drivers/scsi/qla2xxx/qla_gbl.h
++++ b/drivers/scsi/qla2xxx/qla_gbl.h
+@@ -44,7 +44,7 @@ extern int qla2x00_fabric_login(scsi_qla
+ extern int qla2x00_local_device_login(scsi_qla_host_t *, fc_port_t *);
  
- 	memset(sas_addr, 0, SAS_ADDR_SIZE);
--	res = sas_get_phy_attached_dev(dev, phy_id, sas_addr, &type);
-+	disc_resp = alloc_smp_resp(DISCOVER_RESP_SIZE);
-+	if (!disc_resp)
-+		return -ENOMEM;
-+
-+	res = sas_get_phy_discover(dev, phy_id, disc_resp);
- 	switch (res) {
- 	case SMP_RESP_NO_PHY:
- 		phy->phy_state = PHY_NOT_PRESENT;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
--		return res;
-+		goto out_free_resp;
- 	case SMP_RESP_PHY_VACANT:
- 		phy->phy_state = PHY_VACANT;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
--		return res;
-+		goto out_free_resp;
- 	case SMP_RESP_FUNC_ACC:
- 		break;
- 	case -ECOMM:
- 		break;
- 	default:
--		return res;
-+		goto out_free_resp;
+ extern int qla24xx_els_dcmd_iocb(scsi_qla_host_t *, int, port_id_t);
+-extern int qla24xx_els_dcmd2_iocb(scsi_qla_host_t *, int, fc_port_t *, bool);
++extern int qla24xx_els_dcmd2_iocb(scsi_qla_host_t *, int, fc_port_t *);
+ extern void qla2x00_els_dcmd2_free(scsi_qla_host_t *vha,
+ 				   struct els_plogi *els_plogi);
+ 
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3041,7 +3041,7 @@ static void qla2x00_els_dcmd2_sp_done(sr
+ 
+ int
+ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *vha, int els_opcode,
+-    fc_port_t *fcport, bool wait)
++			fc_port_t *fcport)
+ {
+ 	srb_t *sp;
+ 	struct srb_iocb *elsio = NULL;
+@@ -3056,8 +3056,7 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 	if (!sp) {
+ 		ql_log(ql_log_info, vha, 0x70e6,
+ 		 "SRB allocation failed\n");
+-		fcport->flags &= ~FCF_ASYNC_ACTIVE;
+-		return -ENOMEM;
++		goto done;
  	}
  
-+	if (res == 0)
-+		sas_get_sas_addr_and_dev_type(disc_resp, sas_addr, &type);
-+
- 	if ((SAS_ADDR(sas_addr) == 0) || (res == -ECOMM)) {
- 		phy->phy_state = PHY_EMPTY;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
- 		/*
--		 * Even though the PHY is empty, for convenience we discover
--		 * the PHY to update the PHY info, like negotiated linkrate.
-+		 * Even though the PHY is empty, for convenience we update
-+		 * the PHY info, like negotiated linkrate.
- 		 */
--		sas_ex_phy_discover(dev, phy_id);
--		return res;
-+		if (res == 0)
-+			sas_set_ex_phy(dev, phy_id, disc_resp);
-+		goto out_free_resp;
- 	} else if (SAS_ADDR(sas_addr) == SAS_ADDR(phy->attached_sas_addr) &&
- 		   dev_type_flutter(type, phy->attached_dev_type)) {
- 		struct domain_device *ata_dev = sas_ex_to_ata(dev, phy_id);
-@@ -1994,7 +2003,7 @@ static int sas_rediscover_dev(struct dom
- 			action = ", needs recovery";
- 		pr_debug("ex %016llx phy%02d broadcast flutter%s\n",
- 			 SAS_ADDR(dev->sas_addr), phy_id, action);
--		return res;
-+		goto out_free_resp;
+ 	fcport->flags |= FCF_ASYNC_SENT;
+@@ -3066,9 +3065,6 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 	ql_dbg(ql_dbg_io, vha, 0x3073,
+ 	       "%s Enter: PLOGI portid=%06x\n", __func__, fcport->d_id.b24);
+ 
+-	if (wait)
+-		sp->flags = SRB_WAKEUP_ON_COMP;
+-
+ 	sp->type = SRB_ELS_DCMD;
+ 	sp->name = "ELS_DCMD";
+ 	sp->fcport = fcport;
+@@ -3084,7 +3080,7 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 
+ 	if (!elsio->u.els_plogi.els_plogi_pyld) {
+ 		rval = QLA_FUNCTION_FAILED;
+-		goto out;
++		goto done_free_sp;
  	}
  
- 	/* we always have to delete the old device when we went here */
-@@ -2003,7 +2012,10 @@ static int sas_rediscover_dev(struct dom
- 		SAS_ADDR(phy->attached_sas_addr));
- 	sas_unregister_devs_sas_addr(dev, phy_id, last);
+ 	resp_ptr = elsio->u.els_plogi.els_resp_pyld =
+@@ -3093,7 +3089,7 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
  
--	return sas_discover_new(dev, phy_id);
-+	res = sas_discover_new(dev, phy_id);
-+out_free_resp:
-+	kfree(disc_resp);
-+	return res;
+ 	if (!elsio->u.els_plogi.els_resp_pyld) {
+ 		rval = QLA_FUNCTION_FAILED;
+-		goto out;
++		goto done_free_sp;
+ 	}
+ 
+ 	ql_dbg(ql_dbg_io, vha, 0x3073, "PLOGI %p %p\n", ptr, resp_ptr);
+@@ -3109,7 +3105,6 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 
+ 	if (els_opcode == ELS_DCMD_PLOGI && DBELL_ACTIVE(vha)) {
+ 		struct fc_els_flogi *p = ptr;
+-
+ 		p->fl_csp.sp_features |= cpu_to_be16(FC_SP_FT_SEC);
+ 	}
+ 
+@@ -3118,10 +3113,11 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 	    (uint8_t *)elsio->u.els_plogi.els_plogi_pyld,
+ 	    sizeof(*elsio->u.els_plogi.els_plogi_pyld));
+ 
+-	init_completion(&elsio->u.els_plogi.comp);
+ 	rval = qla2x00_start_sp(sp);
+ 	if (rval != QLA_SUCCESS) {
+-		rval = QLA_FUNCTION_FAILED;
++		fcport->flags |= FCF_LOGIN_NEEDED;
++		set_bit(RELOGIN_NEEDED, &vha->dpc_flags);
++		goto done_free_sp;
+ 	} else {
+ 		ql_dbg(ql_dbg_disc, vha, 0x3074,
+ 		    "%s PLOGI sent, hdl=%x, loopid=%x, to port_id %06x from port_id %06x\n",
+@@ -3129,21 +3125,15 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *
+ 		    fcport->d_id.b24, vha->d_id.b24);
+ 	}
+ 
+-	if (wait) {
+-		wait_for_completion(&elsio->u.els_plogi.comp);
+-
+-		if (elsio->u.els_plogi.comp_status != CS_COMPLETE)
+-			rval = QLA_FUNCTION_FAILED;
+-	} else {
+-		goto done;
+-	}
++	return rval;
+ 
+-out:
+-	fcport->flags &= ~(FCF_ASYNC_SENT | FCF_ASYNC_ACTIVE);
++done_free_sp:
+ 	qla2x00_els_dcmd2_free(vha, &elsio->u.els_plogi);
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
+ done:
++	fcport->flags &= ~(FCF_ASYNC_SENT | FCF_ASYNC_ACTIVE);
++	qla2x00_set_fcport_disc_state(fcport, DSC_DELETED);
+ 	return rval;
  }
  
- /**
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -5583,7 +5583,7 @@ qla2x00_do_work(struct scsi_qla_host *vh
+ 			break;
+ 		case QLA_EVT_ELS_PLOGI:
+ 			qla24xx_els_dcmd2_iocb(vha, ELS_DCMD_PLOGI,
+-			    e->u.fcport.fcport, false);
++			    e->u.fcport.fcport);
+ 			break;
+ 		case QLA_EVT_SA_REPLACE:
+ 			rc = qla24xx_issue_sa_replace_iocb(vha, e);
 
 
