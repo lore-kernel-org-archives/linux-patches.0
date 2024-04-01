@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311A72EB0B;
-	Mon,  1 Apr 2024 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2652EB0B;
+	Mon,  1 Apr 2024 16:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990567; cv=none; b=ObDfdZLy1TD++h3EMoGhWnnmas3yV53p9fu4oFogz4RtzgCvc66H6l+XTr3ppbs738R7r/twAVvlQ9NHm8BdFUbxCkIZfscTH1nCpjoEootxeLyES466gzmJpzcx8T0Rw2HVGaICmglmYKfC8GJcnC9ZMwyeTTtZWTsaJhdyX/Q=
+	t=1711990570; cv=none; b=LJbt9VQL2Q/9F5RM6glJ9liTqwgKl3tXN+X9wBTXfbGoDfVN1sOb/PJtEZ7TCvSRtELJKI9fE+KA9REBSlfq6V5O5EFdhzletUr5zUVwEsqM7sBkD8e2BcnUp5iNv0rx8FO58jugOpgtOfKh9ywcME1zdUah20+DdbKLMq9jSeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990567; c=relaxed/simple;
-	bh=s58ct+hF5ud/BVRZ9ZsKLbq//S2/mH9wjITzR/v28Js=;
+	s=arc-20240116; t=1711990570; c=relaxed/simple;
+	bh=URmSVkNlXATnJTnlA2RkkDPM/KxN0yfTIXz8mYm3N4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyI0BtLC3DeoctBNKp4uqf/ZQrRUGIV1YCM27u4LtytjiYr+tTKZcV7R0Gs2OZOsnAL+X81RKTma5zHzJyIFWlatED/KQHH52uxZ1oFz5Y5fADvbXlCMIsgfwWSio1RXhdoVlbPLjNyWgbtN1m9S9QyCupk21/aG62NwmZO/0+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNtffWgP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STIBX8ehcSB32iIbd2XSg4473ddMWP1wxOfkOsHBozAbKqhYg+lrMKu6DEICYFlDrPiThETPEm8YWrANTWpyFPm8y2QRfm+DR6ATXYr+PGWEaBPcBpNH6EXkQy3Jhj2q0EO93Msr9MZLPqVx89Ognw3KnbRCI70BJEDNqigbDZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKH0C1J8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNtffWgP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA2DC433C7;
-	Mon,  1 Apr 2024 16:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKH0C1J8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13DEC433C7;
+	Mon,  1 Apr 2024 16:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990567;
-	bh=s58ct+hF5ud/BVRZ9ZsKLbq//S2/mH9wjITzR/v28Js=;
+	s=korg; t=1711990570;
+	bh=URmSVkNlXATnJTnlA2RkkDPM/KxN0yfTIXz8mYm3N4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNtffWgP09SOzjQa3m5CW5rsh+DOojsOqApaiTpkq46f6+X/50hu59nRbKeOqsFuE
-	 TCpwgr+yYOhuA3pbJ4UIRYoqCsx8C2nLJRZRRk1/6l7wPNZsoLuinyCxZhp1D0OGzC
-	 VSXRJ9wsR4e5ofDDDx5rgR1AgjQEwJUt04lux1Y0=
+	b=OKH0C1J8CzICIyDvkhGCIztg2WggpsmahEkS+4tAmsXMwybZ44vECh71spIfnok8T
+	 EeR7lvZmd5XdnVpHO2kC3HoC1XHvi6K4m2A/D3hmlVpTHzdAuPzlKKXNHGoXLkZnfd
+	 aJxr1l1LLTybf/b/DmRS8UsCbRxgeZlM4EHtoBY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 394/396] scsi: libsas: Fix disk not being scanned in after being removed
-Date: Mon,  1 Apr 2024 17:47:23 +0200
-Message-ID: <20240401152559.655820243@linuxfoundation.org>
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.6 368/396] usb: dwc2: host: Fix ISOC flow in DDMA mode
+Date: Mon,  1 Apr 2024 17:46:57 +0200
+Message-ID: <20240401152558.887181706@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,111 +49,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit 8e68a458bcf5b5cb9c3624598bae28f08251601f upstream.
+commit b258e42688501cadb1a6dd658d6f015df9f32d8f upstream.
 
-As of commit d8649fc1c5e4 ("scsi: libsas: Do discovery on empty PHY to
-update PHY info"), do discovery will send a new SMP_DISCOVER and update
-phy->phy_change_count. We found that if the disk is reconnected and phy
-change_count changes at this time, the disk scanning process will not be
-triggered.
+Fixed ISOC completion flow in DDMA mode. Added isoc
+descriptor actual length value and update urb's start_frame
+value.
+Fixed initialization of ISOC DMA descriptors flow.
 
-Therefore, call sas_set_ex_phy() to update the PHY info with the results of
-the last query. And because the previous phy info will be used when calling
-sas_unregister_devs_sas_addr(), sas_unregister_devs_sas_addr() should be
-called before sas_set_ex_phy().
-
-Fixes: d8649fc1c5e4 ("scsi: libsas: Do discovery on empty PHY to update PHY info")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://lore.kernel.org/r/20240307141413.48049-3-yangxingui@huawei.com
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 56f5b1cff22a ("staging: Core files for the DWC2 driver")
+Fixes: 20f2eb9c4cf8 ("staging: dwc2: add microframe scheduler from downstream Pi kernel")
+Fixes: c17b337c1ea4 ("usb: dwc2: host: program descriptor for next frame")
+Fixes: dc4c76e7b22c ("staging: HCD descriptor DMA support for the DWC2 driver")
+Fixes: 762d3a1a9cd7 ("usb: dwc2: host: process all completed urbs")
+CC: stable@vger.kernel.org
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/a8b1e1711cc6cabfb45d92ede12e35445c66f06c.1708944698.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libsas/sas_expander.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/usb/dwc2/hcd.c      |   12 ++++++++++--
+ drivers/usb/dwc2/hcd_ddma.c |   17 +++++++++++------
+ drivers/usb/dwc2/hw.h       |    2 +-
+ 3 files changed, 22 insertions(+), 9 deletions(-)
 
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -1945,6 +1945,7 @@ static int sas_rediscover_dev(struct dom
- 	struct expander_device *ex = &dev->ex_dev;
- 	struct ex_phy *phy = &ex->ex_phy[phy_id];
- 	enum sas_device_type type = SAS_PHY_UNUSED;
-+	struct smp_disc_resp *disc_resp;
- 	u8 sas_addr[SAS_ADDR_SIZE];
- 	char msg[80] = "";
- 	int res;
-@@ -1956,33 +1957,41 @@ static int sas_rediscover_dev(struct dom
- 		 SAS_ADDR(dev->sas_addr), phy_id, msg);
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -2701,8 +2701,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
+ 			hsotg->available_host_channels--;
+ 		}
+ 		qh = list_entry(qh_ptr, struct dwc2_qh, qh_list_entry);
+-		if (dwc2_assign_and_init_hc(hsotg, qh))
++		if (dwc2_assign_and_init_hc(hsotg, qh)) {
++			if (hsotg->params.uframe_sched)
++				hsotg->available_host_channels++;
+ 			break;
++		}
  
- 	memset(sas_addr, 0, SAS_ADDR_SIZE);
--	res = sas_get_phy_attached_dev(dev, phy_id, sas_addr, &type);
-+	disc_resp = alloc_smp_resp(DISCOVER_RESP_SIZE);
-+	if (!disc_resp)
-+		return -ENOMEM;
-+
-+	res = sas_get_phy_discover(dev, phy_id, disc_resp);
- 	switch (res) {
- 	case SMP_RESP_NO_PHY:
- 		phy->phy_state = PHY_NOT_PRESENT;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
--		return res;
-+		goto out_free_resp;
- 	case SMP_RESP_PHY_VACANT:
- 		phy->phy_state = PHY_VACANT;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
--		return res;
-+		goto out_free_resp;
- 	case SMP_RESP_FUNC_ACC:
- 		break;
- 	case -ECOMM:
- 		break;
- 	default:
--		return res;
-+		goto out_free_resp;
- 	}
- 
-+	if (res == 0)
-+		sas_get_sas_addr_and_dev_type(disc_resp, sas_addr, &type);
-+
- 	if ((SAS_ADDR(sas_addr) == 0) || (res == -ECOMM)) {
- 		phy->phy_state = PHY_EMPTY;
- 		sas_unregister_devs_sas_addr(dev, phy_id, last);
  		/*
--		 * Even though the PHY is empty, for convenience we discover
--		 * the PHY to update the PHY info, like negotiated linkrate.
-+		 * Even though the PHY is empty, for convenience we update
-+		 * the PHY info, like negotiated linkrate.
- 		 */
--		sas_ex_phy_discover(dev, phy_id);
--		return res;
-+		if (res == 0)
-+			sas_set_ex_phy(dev, phy_id, disc_resp);
-+		goto out_free_resp;
- 	} else if (SAS_ADDR(sas_addr) == SAS_ADDR(phy->attached_sas_addr) &&
- 		   dev_type_flutter(type, phy->attached_dev_type)) {
- 		struct domain_device *ata_dev = sas_ex_to_ata(dev, phy_id);
-@@ -1994,7 +2003,7 @@ static int sas_rediscover_dev(struct dom
- 			action = ", needs recovery";
- 		pr_debug("ex %016llx phy%02d broadcast flutter%s\n",
- 			 SAS_ADDR(dev->sas_addr), phy_id, action);
--		return res;
-+		goto out_free_resp;
+ 		 * Move the QH from the periodic ready schedule to the
+@@ -2735,8 +2738,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
+ 			hsotg->available_host_channels--;
+ 		}
+ 
+-		if (dwc2_assign_and_init_hc(hsotg, qh))
++		if (dwc2_assign_and_init_hc(hsotg, qh)) {
++			if (hsotg->params.uframe_sched)
++				hsotg->available_host_channels++;
+ 			break;
++		}
+ 
+ 		/*
+ 		 * Move the QH from the non-periodic inactive schedule to the
+@@ -4143,6 +4149,8 @@ void dwc2_host_complete(struct dwc2_hsot
+ 			 urb->actual_length);
+ 
+ 	if (usb_pipetype(urb->pipe) == PIPE_ISOCHRONOUS) {
++		if (!hsotg->params.dma_desc_enable)
++			urb->start_frame = qtd->qh->start_active_frame;
+ 		urb->error_count = dwc2_hcd_urb_get_error_count(qtd->urb);
+ 		for (i = 0; i < urb->number_of_packets; ++i) {
+ 			urb->iso_frame_desc[i].actual_length =
+--- a/drivers/usb/dwc2/hcd_ddma.c
++++ b/drivers/usb/dwc2/hcd_ddma.c
+@@ -559,7 +559,7 @@ static void dwc2_init_isoc_dma_desc(stru
+ 	idx = qh->td_last;
+ 	inc = qh->host_interval;
+ 	hsotg->frame_number = dwc2_hcd_get_frame_number(hsotg);
+-	cur_idx = dwc2_frame_list_idx(hsotg->frame_number);
++	cur_idx = idx;
+ 	next_idx = dwc2_desclist_idx_inc(qh->td_last, inc, qh->dev_speed);
+ 
+ 	/*
+@@ -866,6 +866,8 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ {
+ 	struct dwc2_dma_desc *dma_desc;
+ 	struct dwc2_hcd_iso_packet_desc *frame_desc;
++	u16 frame_desc_idx;
++	struct urb *usb_urb = qtd->urb->priv;
+ 	u16 remain = 0;
+ 	int rc = 0;
+ 
+@@ -878,8 +880,11 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 				DMA_FROM_DEVICE);
+ 
+ 	dma_desc = &qh->desc_list[idx];
++	frame_desc_idx = (idx - qtd->isoc_td_first) & (usb_urb->number_of_packets - 1);
+ 
+-	frame_desc = &qtd->urb->iso_descs[qtd->isoc_frame_index_last];
++	frame_desc = &qtd->urb->iso_descs[frame_desc_idx];
++	if (idx == qtd->isoc_td_first)
++		usb_urb->start_frame = dwc2_hcd_get_frame_number(hsotg);
+ 	dma_desc->buf = (u32)(qtd->urb->dma + frame_desc->offset);
+ 	if (chan->ep_is_in)
+ 		remain = (dma_desc->status & HOST_DMA_ISOC_NBYTES_MASK) >>
+@@ -900,7 +905,7 @@ static int dwc2_cmpl_host_isoc_dma_desc(
+ 		frame_desc->status = 0;
  	}
  
- 	/* we always have to delete the old device when we went here */
-@@ -2003,7 +2012,10 @@ static int sas_rediscover_dev(struct dom
- 		SAS_ADDR(phy->attached_sas_addr));
- 	sas_unregister_devs_sas_addr(dev, phy_id, last);
+-	if (++qtd->isoc_frame_index == qtd->urb->packet_count) {
++	if (++qtd->isoc_frame_index == usb_urb->number_of_packets) {
+ 		/*
+ 		 * urb->status is not used for isoc transfers here. The
+ 		 * individual frame_desc status are used instead.
+@@ -1005,11 +1010,11 @@ static void dwc2_complete_isoc_xfer_ddma
+ 				return;
+ 			idx = dwc2_desclist_idx_inc(idx, qh->host_interval,
+ 						    chan->speed);
+-			if (!rc)
++			if (rc == 0)
+ 				continue;
  
--	return sas_discover_new(dev, phy_id);
-+	res = sas_discover_new(dev, phy_id);
-+out_free_resp:
-+	kfree(disc_resp);
-+	return res;
- }
+-			if (rc == DWC2_CMPL_DONE)
+-				break;
++			if (rc == DWC2_CMPL_DONE || rc == DWC2_CMPL_STOP)
++				goto stop_scan;
  
- /**
+ 			/* rc == DWC2_CMPL_STOP */
+ 
+--- a/drivers/usb/dwc2/hw.h
++++ b/drivers/usb/dwc2/hw.h
+@@ -698,7 +698,7 @@
+ #define TXSTS_QTOP_TOKEN_MASK		(0x3 << 25)
+ #define TXSTS_QTOP_TOKEN_SHIFT		25
+ #define TXSTS_QTOP_TERMINATE		BIT(24)
+-#define TXSTS_QSPCAVAIL_MASK		(0xff << 16)
++#define TXSTS_QSPCAVAIL_MASK		(0x7f << 16)
+ #define TXSTS_QSPCAVAIL_SHIFT		16
+ #define TXSTS_FSPCAVAIL_MASK		(0xffff << 0)
+ #define TXSTS_FSPCAVAIL_SHIFT		0
 
 
