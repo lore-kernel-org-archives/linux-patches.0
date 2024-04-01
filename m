@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A602383BA;
-	Mon,  1 Apr 2024 15:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7842B47A7A;
+	Mon,  1 Apr 2024 15:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987139; cv=none; b=pRXDVu63xX8PNenxEV8sW700Og1Y4v0Shdxq26WXwb9eDLCFjyMLCwJJ92wD1vjqDU0wvTKNVeHioT0FhEluVc6z8XcO5au/PTt9V+k1gRiITZJLRr9nZduEwKIrzW8v0dSnX9M31hFyJAfaFnN6jLyZskqSY5/zyQfZpVMOsuo=
+	t=1711987142; cv=none; b=AfcTyHBr6NHNoXeozkp+aM95UUkmj+ZMyoxGV/AKu8h+JmymLbAPnZ6ypyBtjhxCBigEDOi8W9VN5hL8yW5BiR87dTh9xEPXMZTrf4K1cufYmUjqMENScklUk4aaVyQqHLzmE7OhWnSbgay9I5jzy1IDiAJAJ5TEsZElmwO5YQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987139; c=relaxed/simple;
-	bh=y3qhDm74PSoTVAd2p8xXaa5BoWwrQh6XHTzVZuzqltI=;
+	s=arc-20240116; t=1711987142; c=relaxed/simple;
+	bh=WVVKLWqJmzMofhXUB6Xk/VeUey/NQ4f4tCbTv9+h9uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jXzah0kFmvOUJ5TYU4Ss48+/4DPlQkBFLmPUBN8axzQsohQZ4tqWGsTDz5L5VV75RjyHy6pTuT0xh5TGmf+hrwvWCcsO1n/v1UW6e/D0Pqh9fQEUPoMnAa0TThJ4X6aF22pgLppGVrv5NTA6Yf9d6YmiR9dNF6IZ0z5ZclXZCUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHVH8YHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZF5mRjy5SJ6Q8LHlum0gEhAGjpNMtHbMRmuuIxQ/MDSXz682sgwspZGITkWPdAmRfmXEaWagqFor0U7j2XLk9UapHsfhus/ZSkkbXNww2sCyHUCLrMW8Bdh50S9AkJi4MrAmpvw26H5mOBUeiO9BYuxTybOfKBLqYSZyosXXUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTcYetQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHVH8YHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB34C433F1;
-	Mon,  1 Apr 2024 15:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTcYetQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7309C433F1;
+	Mon,  1 Apr 2024 15:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987139;
-	bh=y3qhDm74PSoTVAd2p8xXaa5BoWwrQh6XHTzVZuzqltI=;
+	s=korg; t=1711987142;
+	bh=WVVKLWqJmzMofhXUB6Xk/VeUey/NQ4f4tCbTv9+h9uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHVH8YHWMFZ2yLWn/7X3NbiZDaHNCYFYbAwI4Sy8TNdz1zNVWSEWCOErDpwWBzHD2
-	 W5kYHeYAB72nrF6sqqn6g3rGGA9ieg1wVYWps4is0TA/XLJV7dLi3AtLzEsnfVgB0A
-	 QbpMWw2q6J23oNNJGQxSgMT5P5RMoo9XxvDDJ+GY=
+	b=tTcYetQmRJpMA1YPJVW775QtXS7FBTkF7IdfKylgK/UOLOt8w6YRS5qEkXnOUUjn4
+	 vjeufgnkjf8P7f88iYiUJX9QuKt5SOa7lmqPOEKwyGtsX1/0orMPHv48K+4r4CV7bv
+	 l4xiyaSNi57Xgdqqt4J9Ph7BUpoRZ3eaC47kHDxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	netdev <netdev@vger.kernel.org>,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Salil Mehta <salil.mehta@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yufeng Mo <moyufeng@huawei.com>,
-	Huazhong Tan <tanhuazhong@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 194/399] net: hns3: tracing: fix hclgevf trace event strings
-Date: Mon,  1 Apr 2024 17:42:40 +0200
-Message-ID: <20240401152554.972397559@linuxfoundation.org>
+Subject: [PATCH 6.8 195/399] cxl/trace: Properly initialize cxl_poison region name
+Date: Mon,  1 Apr 2024 17:42:41 +0200
+Message-ID: <20240401152555.002193240@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -54,155 +51,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 3f9952e8d80cca2da3b47ecd5ad9ec16cfd1a649 ]
+[ Upstream commit 6c871260965255a1c142fb77ccee58b172d1690b ]
 
-The __string() and __assign_str() helper macros of the TRACE_EVENT() macro
-are going through some optimizations where only the source string of
-__string() will be used and the __assign_str() source will be ignored and
-later removed.
+The TP_STRUCT__entry that gets assigned the region name, or an
+empty string if no region is present, is erroneously initialized
+to the cxl_region pointer. It needs to be properly initialized
+otherwise it's length is wrong and garbage chars can appear in
+the kernel trace output: /sys/kernel/tracing/trace
 
-To make sure that there's no issues, a new check is added between the
-__string() src argument and the __assign_str() src argument that does a
-strcmp() to make sure they are the same string.
+The bad initialization was due in part to a naming conflict with
+the parameter: struct cxl_region *region. The field 'region' is
+already exposed externally as the region name, so changing that
+to something logical, like 'region_name' is not an option. Instead
+rename the internal only struct cxl_region to the commonly used
+'cxlr'.
 
-The hclgevf trace events have:
+Impact is that tooling depending on that trace data can miss
+picking up a valid event when searching by region name. The
+TP_printk() output, if enabled, does emit the correct region
+names in the dmesg log.
 
-  __assign_str(devname, &hdev->nic.kinfo.netdev->name);
+This was found during testing of the cxl-list option to report
+media-errors for a region.
 
-Which triggers the warning:
-
-hclgevf_trace.h:34:39: error: passing argument 1 of ‘strcmp’ from incompatible pointer type [-Werror=incompatible-pointer-types]
-   34 |                 __assign_str(devname, &hdev->nic.kinfo.netdev->name);
- [..]
-arch/x86/include/asm/string_64.h:75:24: note: expected ‘const char *’ but argument is of type ‘char (*)[16]’
-   75 | int strcmp(const char *cs, const char *ct);
-      |            ~~~~~~~~~~~~^~
-
-Because __assign_str() now has:
-
-	WARN_ON_ONCE(__builtin_constant_p(src) ?		\
-		     strcmp((src), __data_offsets.dst##_ptr_) :	\
-		     (src) != __data_offsets.dst##_ptr_);	\
-
-The problem is the '&' on hdev->nic.kinfo.netdev->name. That's because
-that name is:
-
-	char			name[IFNAMSIZ]
-
-Where passing an address '&' of a char array is not compatible with strcmp().
-
-The '&' is not necessary, remove it.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240313093454.3909afe7@gandalf.local.home
-
-Cc: netdev <netdev@vger.kernel.org>
-Cc: Yisen Zhuang <yisen.zhuang@huawei.com>
-Cc: Salil Mehta <salil.mehta@huawei.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Yufeng Mo <moyufeng@huawei.com>
-Cc: Huazhong Tan <tanhuazhong@huawei.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
 Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Fixes: d8355240cf8fb ("net: hns3: add trace event support for PF/VF mailbox")
+Fixes: ddf49d57b841 ("cxl/trace: Add TRACE support for CXL media-error records")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Acked-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h  | 8 ++++----
- .../net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h    | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/cxl/core/trace.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
-index 8510b88d49820..f3cd5a376eca9 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_trace.h
-@@ -24,7 +24,7 @@ TRACE_EVENT(hclge_pf_mbx_get,
- 		__field(u8, code)
- 		__field(u8, subcode)
- 		__string(pciname, pci_name(hdev->pdev))
--		__string(devname, &hdev->vport[0].nic.kinfo.netdev->name)
-+		__string(devname, hdev->vport[0].nic.kinfo.netdev->name)
- 		__array(u32, mbx_data, PF_GET_MBX_LEN)
- 	),
+diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
+index bdf117a33744b..e5f13260fc524 100644
+--- a/drivers/cxl/core/trace.h
++++ b/drivers/cxl/core/trace.h
+@@ -646,18 +646,18 @@ u64 cxl_trace_hpa(struct cxl_region *cxlr, struct cxl_memdev *memdev, u64 dpa);
  
-@@ -33,7 +33,7 @@ TRACE_EVENT(hclge_pf_mbx_get,
- 		__entry->code = req->msg.code;
- 		__entry->subcode = req->msg.subcode;
- 		__assign_str(pciname, pci_name(hdev->pdev));
--		__assign_str(devname, &hdev->vport[0].nic.kinfo.netdev->name);
-+		__assign_str(devname, hdev->vport[0].nic.kinfo.netdev->name);
- 		memcpy(__entry->mbx_data, req,
- 		       sizeof(struct hclge_mbx_vf_to_pf_cmd));
- 	),
-@@ -56,7 +56,7 @@ TRACE_EVENT(hclge_pf_mbx_send,
- 		__field(u8, vfid)
- 		__field(u16, code)
- 		__string(pciname, pci_name(hdev->pdev))
--		__string(devname, &hdev->vport[0].nic.kinfo.netdev->name)
-+		__string(devname, hdev->vport[0].nic.kinfo.netdev->name)
- 		__array(u32, mbx_data, PF_SEND_MBX_LEN)
- 	),
+ TRACE_EVENT(cxl_poison,
  
-@@ -64,7 +64,7 @@ TRACE_EVENT(hclge_pf_mbx_send,
- 		__entry->vfid = req->dest_vfid;
- 		__entry->code = le16_to_cpu(req->msg.code);
- 		__assign_str(pciname, pci_name(hdev->pdev));
--		__assign_str(devname, &hdev->vport[0].nic.kinfo.netdev->name);
-+		__assign_str(devname, hdev->vport[0].nic.kinfo.netdev->name);
- 		memcpy(__entry->mbx_data, req,
- 		       sizeof(struct hclge_mbx_pf_to_vf_cmd));
- 	),
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
-index 5d4895bb57a17..b259e95dd53c2 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_trace.h
-@@ -23,7 +23,7 @@ TRACE_EVENT(hclge_vf_mbx_get,
- 		__field(u8, vfid)
- 		__field(u16, code)
- 		__string(pciname, pci_name(hdev->pdev))
--		__string(devname, &hdev->nic.kinfo.netdev->name)
-+		__string(devname, hdev->nic.kinfo.netdev->name)
- 		__array(u32, mbx_data, VF_GET_MBX_LEN)
- 	),
+-	TP_PROTO(struct cxl_memdev *cxlmd, struct cxl_region *region,
++	TP_PROTO(struct cxl_memdev *cxlmd, struct cxl_region *cxlr,
+ 		 const struct cxl_poison_record *record, u8 flags,
+ 		 __le64 overflow_ts, enum cxl_poison_trace_type trace_type),
  
-@@ -31,7 +31,7 @@ TRACE_EVENT(hclge_vf_mbx_get,
- 		__entry->vfid = req->dest_vfid;
- 		__entry->code = le16_to_cpu(req->msg.code);
- 		__assign_str(pciname, pci_name(hdev->pdev));
--		__assign_str(devname, &hdev->nic.kinfo.netdev->name);
-+		__assign_str(devname, hdev->nic.kinfo.netdev->name);
- 		memcpy(__entry->mbx_data, req,
- 		       sizeof(struct hclge_mbx_pf_to_vf_cmd));
- 	),
-@@ -55,7 +55,7 @@ TRACE_EVENT(hclge_vf_mbx_send,
- 		__field(u8, code)
- 		__field(u8, subcode)
- 		__string(pciname, pci_name(hdev->pdev))
--		__string(devname, &hdev->nic.kinfo.netdev->name)
-+		__string(devname, hdev->nic.kinfo.netdev->name)
- 		__array(u32, mbx_data, VF_SEND_MBX_LEN)
- 	),
+-	TP_ARGS(cxlmd, region, record, flags, overflow_ts, trace_type),
++	TP_ARGS(cxlmd, cxlr, record, flags, overflow_ts, trace_type),
  
-@@ -64,7 +64,7 @@ TRACE_EVENT(hclge_vf_mbx_send,
- 		__entry->code = req->msg.code;
- 		__entry->subcode = req->msg.subcode;
- 		__assign_str(pciname, pci_name(hdev->pdev));
--		__assign_str(devname, &hdev->nic.kinfo.netdev->name);
-+		__assign_str(devname, hdev->nic.kinfo.netdev->name);
- 		memcpy(__entry->mbx_data, req,
- 		       sizeof(struct hclge_mbx_vf_to_pf_cmd));
- 	),
+ 	TP_STRUCT__entry(
+ 		__string(memdev, dev_name(&cxlmd->dev))
+ 		__string(host, dev_name(cxlmd->dev.parent))
+ 		__field(u64, serial)
+ 		__field(u8, trace_type)
+-		__string(region, region)
++		__string(region, cxlr ? dev_name(&cxlr->dev) : "")
+ 		__field(u64, overflow_ts)
+ 		__field(u64, hpa)
+ 		__field(u64, dpa)
+@@ -677,10 +677,10 @@ TRACE_EVENT(cxl_poison,
+ 		__entry->source = cxl_poison_record_source(record);
+ 		__entry->trace_type = trace_type;
+ 		__entry->flags = flags;
+-		if (region) {
+-			__assign_str(region, dev_name(&region->dev));
+-			memcpy(__entry->uuid, &region->params.uuid, 16);
+-			__entry->hpa = cxl_trace_hpa(region, cxlmd,
++		if (cxlr) {
++			__assign_str(region, dev_name(&cxlr->dev));
++			memcpy(__entry->uuid, &cxlr->params.uuid, 16);
++			__entry->hpa = cxl_trace_hpa(cxlr, cxlmd,
+ 						     __entry->dpa);
+ 		} else {
+ 			__assign_str(region, "");
 -- 
 2.43.0
 
