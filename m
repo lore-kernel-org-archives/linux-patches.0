@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7E88F5C;
-	Mon,  1 Apr 2024 16:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5018F5C;
+	Mon,  1 Apr 2024 16:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990193; cv=none; b=Py8Afit2fIujVWNqaF3NO/iQoczwQdItGNovzWnGxJV/lQTCQ2J8zdnHJZzPDUl1N7B6il4OKnFCTM/laci2R8STXXTSdLN/6TMT8q+YuqXEVHbTdNPI4c73CNSYpnEY4kf+6LfYCTGsa00k9ztkaOcF5ECaasUmXXyo6garJkg=
+	t=1711990196; cv=none; b=ptPCZi7lRe0RWe68Aj5tH7BuGG+CqY0aCGdbRzCJO1CewTOiv38u1nE8s5DqXuooZKTiqpEirF2gAnkuDwYUBiodxo1oTa6JyLxUOBtmp32H73WrrTd1cdNOQcapkRza3zJnwfx8zzOYFEGt7irqMd4p2K7MJhL5RPPzG+rmG04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990193; c=relaxed/simple;
-	bh=cqNUJb6iJHZQxBbdTOp2eR4ZtxurUoZRKC09Y1RPpTM=;
+	s=arc-20240116; t=1711990196; c=relaxed/simple;
+	bh=k4c28xBGYfeisFJ1sE/DVYVio82JrapwXdqUnHs8L9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aoT4uc27s4jVLZqdFsXUTr9+yuhhug/OhENjbXxaNHdL1R7PospxzRHvMsRk93DKKNEIyyBCA7+2a2QKCqdXU0t3ewnlgT/5APSVG2imW9ix8AGYb68ssLWhu46YjgJXDv83RxQbCiz0OzR4tylRuKU7DRQvWVvxsksigil2qd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omwWhnvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qcYo0H3VzbaDu9KhC9W6ucX1XIMsL5YZJynwMNZxa2TbZfdSpfZgxCKwebPvF5htyXRF0HT2zI+zlFjZmR7B650b6yGON0bCZsJaGzLpsrsHK8KQQJceC4BgQ/TgP552YeOK04XcU8/cEyvZr7u4FRO3PJ5VruK9dB6fEzBOMJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCUdUY+b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omwWhnvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3ECAC433C7;
-	Mon,  1 Apr 2024 16:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCUdUY+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1595EC433C7;
+	Mon,  1 Apr 2024 16:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990193;
-	bh=cqNUJb6iJHZQxBbdTOp2eR4ZtxurUoZRKC09Y1RPpTM=;
+	s=korg; t=1711990196;
+	bh=k4c28xBGYfeisFJ1sE/DVYVio82JrapwXdqUnHs8L9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omwWhnvD0i6PjomJLQTTLJub8eaOhsAkhKSTj1LIRUjTPKWhsPIdtNC/XM9TZhYSv
-	 7qUWkMGvZdypgQfFVsbCqK/+vj/goUDjx5OGT46pF9OHF5KZIECzSWrQWol0A95G7k
-	 JOnfpEJufIOQuW0JbNVU4uHG9WHuE87CzvpDdp5o=
+	b=aCUdUY+b62XSXPYB9oJm6DFTYodg9GQtt7KmtBXY6BuNMpjhZBfZGKr9BLuStmykX
+	 03zD02y98MIp10XxfD0BefTM10wEDnqA8MLZnIldkQkCe11QHR2T3IzvVNBJbdYeD8
+	 vo0qk1WZWLsutw26I9wTLnzww82WZQ1/UfWtiICc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.6 247/396] drm/i915: Dont explode when the dig port we dont have an AUX CH
-Date: Mon,  1 Apr 2024 17:44:56 +0200
-Message-ID: <20240401152555.277114977@linuxfoundation.org>
+	=?UTF-8?q?Mano=20S=C3=A9gransan?= <mano.segransan@protonmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 248/396] drm/amd/display: handle range offsets in VRR ranges
+Date: Mon,  1 Apr 2024 17:44:57 +0200
+Message-ID: <20240401152555.306337982@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,97 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0b385be4c3ccd5636441923d7cad5eda6b4651cb upstream.
+commit 937844d661354bf142dc1c621396fdab10ecbacc upstream.
 
-The icl+ power well code currently assumes that every AUX power
-well maps to an encoder which is using said power well. That is
-by no menas guaranteed as we:
-- only register encoders for ports declared in the VBT
-- combo PHY HDMI-only encoder no longer get an AUX CH since
-  commit 9856308c94ca ("drm/i915: Only populate aux_ch if really needed")
+Need to check the offset bits for values greater than 255.
 
-However we have places such as intel_power_domains_sanitize_state()
-that blindly traverse all the possible power wells. So these bits
-of code may very well encounbter an aux power well with no associated
-encoder.
+v2: also update amdgpu_dm_connector values.
 
-In this particular case the BIOS seems to have left one AUX power
-well enabled even though we're dealing with a HDMI only encoder
-on a combo PHY. We then proceed to turn off said power well and
-explode when we can't find a matching encoder. As a short term fix
-we should be able to just skip the PHY related parts of the power
-well programming since we know this situation can only happen with
-combo PHYs.
-
-Another option might be to go back to always picking an AUX CH for
-all encoders. However I'm a bit wary about that since we might in
-theory end up conflicting with the VBT AUX CH assignment. Also
-that wouldn't help with encoders not declared in the VBT, should
-we ever need to poke the corresponding power wells.
-
-Longer term we need to figure out what the actual relationship
-is between the PHY vs. AUX CH vs. AUX power well. Currently this
-is entirely unclear.
-
+Suggested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Tested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3203
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 9856308c94ca ("drm/i915: Only populate aux_ch if really needed")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10184
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240223203216.15210-1-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit 6a8c66bf0e565c34ad0a18f820e0bb17951f7f91)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../drm/i915/display/intel_display_power_well.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_power_well.c b/drivers/gpu/drm/i915/display/intel_display_power_well.c
-index 47cd6bb04366..06900ff307b2 100644
---- a/drivers/gpu/drm/i915/display/intel_display_power_well.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_power_well.c
-@@ -246,7 +246,14 @@ static enum phy icl_aux_pw_to_phy(struct drm_i915_private *i915,
- 	enum aux_ch aux_ch = icl_aux_pw_to_ch(power_well);
- 	struct intel_digital_port *dig_port = aux_ch_to_digital_port(i915, aux_ch);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10783,14 +10783,23 @@ void amdgpu_dm_update_freesync_caps(stru
+ 				if (range->flags != 1)
+ 					continue;
  
--	return intel_port_to_phy(i915, dig_port->base.port);
-+	/*
-+	 * FIXME should we care about the (VBT defined) dig_port->aux_ch
-+	 * relationship or should this be purely defined by the hardware layout?
-+	 * Currently if the port doesn't appear in the VBT, or if it's declared
-+	 * as HDMI-only and routed to a combo PHY, the encoder either won't be
-+	 * present at all or it will not have an aux_ch assigned.
-+	 */
-+	return dig_port ? intel_port_to_phy(i915, dig_port->base.port) : PHY_NONE;
- }
+-				amdgpu_dm_connector->min_vfreq = range->min_vfreq;
+-				amdgpu_dm_connector->max_vfreq = range->max_vfreq;
+-				amdgpu_dm_connector->pixel_clock_mhz =
+-					range->pixel_clock_mhz * 10;
+-
+ 				connector->display_info.monitor_range.min_vfreq = range->min_vfreq;
+ 				connector->display_info.monitor_range.max_vfreq = range->max_vfreq;
  
- static void hsw_wait_for_power_well_enable(struct drm_i915_private *dev_priv,
-@@ -414,7 +421,8 @@ icl_combo_phy_aux_power_well_enable(struct drm_i915_private *dev_priv,
++				if (edid->revision >= 4) {
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MIN_VFREQ)
++						connector->display_info.monitor_range.min_vfreq += 255;
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MAX_VFREQ)
++						connector->display_info.monitor_range.max_vfreq += 255;
++				}
++
++				amdgpu_dm_connector->min_vfreq =
++					connector->display_info.monitor_range.min_vfreq;
++				amdgpu_dm_connector->max_vfreq =
++					connector->display_info.monitor_range.max_vfreq;
++				amdgpu_dm_connector->pixel_clock_mhz =
++					range->pixel_clock_mhz * 10;
++
+ 				break;
+ 			}
  
- 	intel_de_rmw(dev_priv, regs->driver, 0, HSW_PWR_WELL_CTL_REQ(pw_idx));
- 
--	if (DISPLAY_VER(dev_priv) < 12)
-+	/* FIXME this is a mess */
-+	if (phy != PHY_NONE)
- 		intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy),
- 			     0, ICL_LANE_ENABLE_AUX);
- 
-@@ -437,7 +445,10 @@ icl_combo_phy_aux_power_well_disable(struct drm_i915_private *dev_priv,
- 
- 	drm_WARN_ON(&dev_priv->drm, !IS_ICELAKE(dev_priv));
- 
--	intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy), ICL_LANE_ENABLE_AUX, 0);
-+	/* FIXME this is a mess */
-+	if (phy != PHY_NONE)
-+		intel_de_rmw(dev_priv, ICL_PORT_CL_DW12(phy),
-+			     ICL_LANE_ENABLE_AUX, 0);
- 
- 	intel_de_rmw(dev_priv, regs->driver, HSW_PWR_WELL_CTL_REQ(pw_idx), 0);
- 
--- 
-2.44.0
-
 
 
