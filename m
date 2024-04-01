@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE818481CE;
-	Mon,  1 Apr 2024 16:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3179847A74;
+	Mon,  1 Apr 2024 16:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988170; cv=none; b=NOkM0CnOGg3jPfBZIHAKvqqxjnh74BhfSP95r5MlN/We4JJH1PUXyvQ/bk7lo0xs3UKqrsN7p9tnVWZ3R/ESl4Vz5rj4HQmJOciiPjNTjCxxCfgL3qxp0Fn+WXNIrGGYujxW7eu9KCBfWhiF3Jb2YC1C8KxGyDE2o56r0vyPesk=
+	t=1711988173; cv=none; b=sDh+cy37qRnWrSsqY3IEMmxg2n4Or4PHDkO2436ROFFVbPYjOL8+cofbWtGGAH9bYzYo5ZNOqyBrqEmrCmiNXM4giQOPPIaVGwlgnYZFr/wCfD4Yh8icDasmPrNXaPzWppIN1tINkFWvEyA/dYAVSkcAyzaVopfgAidZYFIio9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988170; c=relaxed/simple;
-	bh=bRO6Tzsf7I05K7uy+RjU1cbbbnBxV/L3U5X9eTTaqVg=;
+	s=arc-20240116; t=1711988173; c=relaxed/simple;
+	bh=92JpPuWei1FGg1fkJ1QErFz0p6qCegAZUjzrT08zYy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSZYQ9XAAI/DPz5efuVFjds/RH7RQ3VZ1HrUYAX6AFig4PCGL1jxOK/ptKODQenwukSEGEj2Y3GKkhtKozUuaQ5m40pTOvJ7fdToZcAPsPvKwvb4A6WL6gM5FSld+szohKLm8y1dq2eMoRNYp9TwJneP7nIbiWA5rcQH3RF3ow8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pnk4b/7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xr6SAOhpvrHgwqV/Mxa7wEvu4wCoXLviNNiY4DJN9dT+HySeYzFS85msfDczRGH6paeKBQTOuyk7Ld/tt07V1JRLplQbYtSJmJ/W9toOZZt8ya8x2iXKxl1R1Ie0X014kqWlX9Azu8Bt9owGBzXhSuLokbv0rfiSJpa0eBovcv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfCRh99P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pnk4b/7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3055C433C7;
-	Mon,  1 Apr 2024 16:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfCRh99P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7338EC433C7;
+	Mon,  1 Apr 2024 16:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988169;
-	bh=bRO6Tzsf7I05K7uy+RjU1cbbbnBxV/L3U5X9eTTaqVg=;
+	s=korg; t=1711988172;
+	bh=92JpPuWei1FGg1fkJ1QErFz0p6qCegAZUjzrT08zYy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pnk4b/7XwpIHKb8dEzgLN9m5rdNN2IrRb0cTWkhHg2aOPXZ+GJBbXkRFwRywk+7ZG
-	 3fNZ9XIk/zWeW9g0x/HFLU9gzVqh/JAA7EhNjXFsgC5HtaQdMEVc9hbXyS4NLRc51D
-	 0DQtkhrFdxl2joTIcNW7gffJIwA/U2L82vcrujmY=
+	b=TfCRh99PwGEhpnElMOzLi1UbiyuwO4oszJdEcQjspgFOgEOLweyEzNiwU4S+49abT
+	 hKmuxM6VzJV8EC6/P7JBo1+rihiCfb8hCHAO1AM/Zm0Y0W8eO1DKv54jbeI9h60E/C
+	 o2CAcbwX6sNqdxM8jLGFY7UQAuzfWFje0bwSclco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vogelbacher <daniel@chaospixel.com>,
+	Cameron Williams <cang1@live.co.uk>,
 	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 077/432] USB: serial: ftdi_sio: add support for GMC Z216C Adapter IR-USB
-Date: Mon,  1 Apr 2024 17:41:04 +0200
-Message-ID: <20240401152555.419756405@linuxfoundation.org>
+Subject: [PATCH 6.7 078/432] USB: serial: add device ID for VeriFone adapter
+Date: Mon,  1 Apr 2024 17:41:05 +0200
+Message-ID: <20240401152555.449861683@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,51 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vogelbacher <daniel@chaospixel.com>
+From: Cameron Williams <cang1@live.co.uk>
 
-[ Upstream commit 3fb7bc4f3a98c48981318b87cf553c5f115fd5ca ]
+[ Upstream commit cda704809797a8a86284f9df3eef5e62ec8a3175 ]
 
-The GMC IR-USB adapter cable utilizes a FTDI FT232R chip.
+Add device ID for a (probably fake) CP2102 UART device.
 
-Add VID/PID for this adapter so it can be used as serial device via
-ftdi_sio.
+lsusb -v output:
 
-Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x11ca VeriFone Inc
+  idProduct          0x0212 Verifone USB to Printer
+  bcdDevice            1.00
+  iManufacturer           1 Silicon Labs
+  iProduct                2 Verifone USB to Printer
+  iSerial                 3 0001
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0020
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass       255 Vendor Specific Class
+      bInterfaceSubClass      0 [unknown]
+      bInterfaceProtocol      0
+      iInterface              2 Verifone USB to Printer
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
+Device Status:     0x0000
+  (Bus Powered)
+
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/ftdi_sio.c     | 2 ++
- drivers/usb/serial/ftdi_sio_ids.h | 6 ++++++
- 2 files changed, 8 insertions(+)
+ drivers/usb/serial/cp210x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/serial/ftdi_sio.c b/drivers/usb/serial/ftdi_sio.c
-index 13a56783830df..22d01a0f10fbc 100644
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -1077,6 +1077,8 @@ static const struct usb_device_id id_table_combined[] = {
- 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
- 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_UNBUF_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-+	/* GMC devices */
-+	{ USB_DEVICE(GMC_VID, GMC_Z216C_PID) },
- 	{ }					/* Terminating entry */
- };
- 
-diff --git a/drivers/usb/serial/ftdi_sio_ids.h b/drivers/usb/serial/ftdi_sio_ids.h
-index 21a2b5a25fc09..5ee60ba2a73cd 100644
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -1606,3 +1606,9 @@
- #define UBLOX_VID			0x1546
- #define UBLOX_C099F9P_ZED_PID		0x0502
- #define UBLOX_C099F9P_ODIN_PID		0x0503
-+
-+/*
-+ * GMC devices
-+ */
-+#define GMC_VID				0x1cd7
-+#define GMC_Z216C_PID			0x0217 /* GMC Z216C Adapter IR-USB */
+diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
+index 923e0ed85444b..d339d81f6e8cf 100644
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -177,6 +177,7 @@ static const struct usb_device_id id_table[] = {
+ 	{ USB_DEVICE(0x10C4, 0xF004) }, /* Elan Digital Systems USBcount50 */
+ 	{ USB_DEVICE(0x10C5, 0xEA61) }, /* Silicon Labs MobiData GPRS USB Modem */
+ 	{ USB_DEVICE(0x10CE, 0xEA6A) }, /* Silicon Labs MobiData GPRS USB Modem 100EU */
++	{ USB_DEVICE(0x11CA, 0x0212) }, /* Verifone USB to Printer (UART, CP2102) */
+ 	{ USB_DEVICE(0x12B8, 0xEC60) }, /* Link G4 ECU */
+ 	{ USB_DEVICE(0x12B8, 0xEC62) }, /* Link G4+ ECU */
+ 	{ USB_DEVICE(0x13AD, 0x9999) }, /* Baltech card reader */
 -- 
 2.43.0
 
