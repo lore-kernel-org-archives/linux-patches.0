@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501301E525;
-	Mon,  1 Apr 2024 16:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2AB3613C;
+	Mon,  1 Apr 2024 16:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989248; cv=none; b=OocxyWdtNfoTUa+Gp/LpQvm8UskuWsRpzfYaVM3gnwzSXS8CcYS0iL85Hi5V177dQcuXUl5hB22xa3tpSmBsQSGvcrttzxu+38Qp9+6zHMVVY5zz2FnO8PMfrHad6RxAXWKNZE0I9fG3ZOac7KbRRNowaxYLMOAQ0xy1KskPuoY=
+	t=1711989251; cv=none; b=Jc5zRK+sDv0Jweym/N4Anui6G6XV7Ymj3DUdifdsXvensCA8sxFurmjW328h/vB5KGPit6RZi8NxAFt51H+sC54w9WAIFAl6XJZnbl3y2Pv5rKdrNTX6Ap7yUzcWFS05qJDldgcxOZ4D63SxE6lTYPHQoknDPlPLXXGgC5fdQjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989248; c=relaxed/simple;
-	bh=REUxNDCh87Uts8aKdsYPqHvn+T+Zm6WpJG+LD8rghrw=;
+	s=arc-20240116; t=1711989251; c=relaxed/simple;
+	bh=EsYi+bLJNIVo2k9CrfafN58dmAFY6CdRItgniV72Nrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akE8BtKuIi+cJJSoQtBZlMmggUxG/mZF8BQOuqaUy4swguZttROs6Jr2qtLqBeJBng/Z8sIjEEZYlmIjOJotJsp4iHMZBdUghaLWzVsxTM1+I8nPohbBCnM4ErAv2gmaGtGJC8mY6Diwh/vXsQW5ff9TiqJZU55gWGZL9KNbzI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwSkXCA4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+44UWcpYNE7OdbQJRLQEnol06SN2JIihPfmSwOiIsICzjerv6/aI3cVZWXOvGNePSeQtWKL0Xe/HyC3ZfAiJfct6LVrw14S1jmUpaFJEvXzrPNC/eOTH5NQbe3GEYZxtbAGJGcpH7wt5SrQOaAJnPXPgXkPZoUg3fLHN+in/uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtS/IoeW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwSkXCA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4A8C43390;
-	Mon,  1 Apr 2024 16:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtS/IoeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87A6C433C7;
+	Mon,  1 Apr 2024 16:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989247;
-	bh=REUxNDCh87Uts8aKdsYPqHvn+T+Zm6WpJG+LD8rghrw=;
+	s=korg; t=1711989251;
+	bh=EsYi+bLJNIVo2k9CrfafN58dmAFY6CdRItgniV72Nrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwSkXCA4L4QULGCmDPLCs1sqBHu+mq/CKj0BQ2wUPv7t5/x2vyImMLpqFDx452yPh
-	 0ABDBwJuPUp24sEQxznDnRaG/VYV4FP3stPfbWmJ3MCLXXaLy5w/HNRFEYO6W/6kmU
-	 QpWqiSygN4Pf7xJJdXG0px2Hfd4UaDcHiVIyY/Pg=
+	b=WtS/IoeWQqvk/rg8B66QFxbqpuc+U39zoAq3XkWbb79lpZLMZSbVHmPjIW+5gakXJ
+	 AP4B79n0ab96AdBLqmRKb/qsOSry5UL+oDAZ8xiBHFwlV6YTInP9NaG78ZLD5Gg+sa
+	 2w5legKJPwgyptT7OIMeYAV4MoREyAaIqHPNB+dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.7 426/432] usb: dwc3: pci: Drop duplicate ID
-Date: Mon,  1 Apr 2024 17:46:53 +0200
-Message-ID: <20240401152606.134575195@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.7 427/432] scsi: lpfc: Correct size for cmdwqe/rspwqe for memset()
+Date: Mon,  1 Apr 2024 17:46:54 +0200
+Message-ID: <20240401152606.168895094@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit f121531703ae442edc1dde4b56803680628bc5b7 upstream.
+commit 16cc2ba71b9f6440805aef7f92ba0f031f79b765 upstream.
 
-Intel Arrow Lake CPU uses the Meteor Lake ID with this
-controller (the controller that's part of the Intel Arrow
-Lake chipset (PCH) does still have unique PCI ID).
+The cmdwqe and rspwqe are of type lpfc_wqe128. They should be memset() with
+the same type.
 
-Fixes: de4b5b28c87c ("usb: dwc3: pci: add support for the Intel Arrow Lake-H")
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240312115008.1748637-1-heikki.krogerus@linux.intel.com
+Fixes: 61910d6a5243 ("scsi: lpfc: SLI path split: Refactor CT paths")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20240304091119.847060-1-usama.anjum@collabora.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_bsg.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -51,7 +51,6 @@
- #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
- #define PCI_DEVICE_ID_INTEL_MTLS		0x7f6f
- #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
--#define PCI_DEVICE_ID_INTEL_ARLH		0x7ec1
- #define PCI_DEVICE_ID_INTEL_ARLH_PCH		0x777e
- #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
- #define PCI_DEVICE_ID_AMD_MR			0x163a
-@@ -423,7 +422,6 @@ static const struct pci_device_id dwc3_p
- 	{ PCI_DEVICE_DATA(INTEL, MTLP, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, MTL, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, MTLS, &dwc3_pci_intel_swnode) },
--	{ PCI_DEVICE_DATA(INTEL, ARLH, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, ARLH_PCH, &dwc3_pci_intel_swnode) },
- 	{ PCI_DEVICE_DATA(INTEL, TGL, &dwc3_pci_intel_swnode) },
+--- a/drivers/scsi/lpfc/lpfc_bsg.c
++++ b/drivers/scsi/lpfc/lpfc_bsg.c
+@@ -3169,10 +3169,10 @@ lpfc_bsg_diag_loopback_run(struct bsg_jo
+ 	}
  
+ 	cmdwqe = &cmdiocbq->wqe;
+-	memset(cmdwqe, 0, sizeof(union lpfc_wqe));
++	memset(cmdwqe, 0, sizeof(*cmdwqe));
+ 	if (phba->sli_rev < LPFC_SLI_REV4) {
+ 		rspwqe = &rspiocbq->wqe;
+-		memset(rspwqe, 0, sizeof(union lpfc_wqe));
++		memset(rspwqe, 0, sizeof(*rspwqe));
+ 	}
+ 
+ 	INIT_LIST_HEAD(&head);
 
 
