@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3F81DFF4;
-	Mon,  1 Apr 2024 17:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3B11C0DE7;
+	Mon,  1 Apr 2024 17:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990917; cv=none; b=KCDZbshM7taocSkPFc4042bM1XMUvCfIkyN9RA0bqQjDgLhFcMB3MNo0kvGM7OqHUpD8PKYtclefZ6YFtsYKJKcX2vjP7Wdk5JwFd+9Y1FWIk6n3VNmKmCfK5d5Fmp6wIuKmdAAS/v04fSgg8jXSW7v+UhmnOQy6xjkjDokkip0=
+	t=1711990921; cv=none; b=StvZtKawpPh1ZH3a2EyHzcunGPkGNupSHbgAEL10FNFUVFQ3DnS7PCdZEBq76tKQ11fvo4t2Aff1J8N+7brCOy25ikVWs1Qyfxuuq6onjGyao04WqpMcm75WXoqukhmiKinCPidoQVtzPLf6RtUOILAYOxeHWzK3yKsWt0vaqD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990917; c=relaxed/simple;
-	bh=65PT+ATWuciVg9fUCrawcu4dQbw0IBX1trOpu8HYRG4=;
+	s=arc-20240116; t=1711990921; c=relaxed/simple;
+	bh=NAog42N5l761bP+SgYHN/uZGRwn15Tw74th1fkOSf9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srK8/UoVo77OK3mVN7QO1iOs061QHK4PgC/QhYC4i5FNV0B1CwzqcFq5lnaxZY3fgVLJwy/voco8b5kEAzPIZEfmj4f/kNOjm5C7SvENmC81+pwC3qWh47fbbSu1Nr0d/CZPywKjxmxhvCfq4LCceKTx9ccHc123oKyw1eJ0Ggc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhZgBWqw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXstPyMnHniW9am+sfHhWqxHH0RsCGtcdoJ6qLYVMeXR7zffjssMbdO0jlCba6xTEPXQuSbHULaspEhthA5/xe9DRsmulcXUcsFaISOF2kR+CkdLmoWa2z12lEdMsa6yUodPydx4iInYnMgu7BRLTBM2md/4GRMrAr7FTUXEL3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qA2Um9re; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhZgBWqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C099C433F1;
-	Mon,  1 Apr 2024 17:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qA2Um9re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644D1C433F1;
+	Mon,  1 Apr 2024 17:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990917;
-	bh=65PT+ATWuciVg9fUCrawcu4dQbw0IBX1trOpu8HYRG4=;
+	s=korg; t=1711990920;
+	bh=NAog42N5l761bP+SgYHN/uZGRwn15Tw74th1fkOSf9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhZgBWqwn8lkt6PwvYQzE90LleY1c4AlD9RA/aaa2tNDIUNkwamGZCPqRsrEAOpP0
-	 BPPKArnXzkMjuJ1NzfMF4U9gQhR2x2LEcGdDJZjJToT3ShzzkPvNMXxHIejOT8ThV+
-	 hbMiUA48lShgupDx1NCLSbvncZgyyt2QLIa63Mzk=
+	b=qA2Um9rer280GaqD36s+2h9bXKEse67GjW+9ZY9M4UTqcyrmYr2SJyEXTRJ+OJYlg
+	 V4fqWAmg7BHIN4eORU4TwuyYyjFNUKeda+W+X/cbzh5LR+Hmqt1ppjzKX66OuR7rF7
+	 2/TrhytzxCgK7luJxi1iisnHh5NEko7QQQk/KmM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linke li <lilinke99@qq.com>,
+	Rabin Vincent <rabin@rab.in>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/272] ksmbd: retrieve number of blocks using vfs_getattr in set_file_allocation_info
-Date: Mon,  1 Apr 2024 17:44:56 +0200
-Message-ID: <20240401152533.948270923@linuxfoundation.org>
+Subject: [PATCH 6.1 107/272] ring-buffer: Fix waking up ring buffer readers
+Date: Mon,  1 Apr 2024 17:44:57 +0200
+Message-ID: <20240401152533.989944090@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,58 +57,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 34cd86b6632718b7df3999d96f51e63de41c5e4f ]
+[ Upstream commit b3594573681b53316ec0365332681a30463edfd6 ]
 
-Use vfs_getattr() to retrieve stat information, rather than make
-assumptions about how a filesystem fills inode structs.
+A task can wait on a ring buffer for when it fills up to a specific
+watermark. The writer will check the minimum watermark that waiters are
+waiting for and if the ring buffer is past that, it will wake up all the
+waiters.
+
+The waiters are in a wait loop, and will first check if a signal is
+pending and then check if the ring buffer is at the desired level where it
+should break out of the loop.
+
+If a file that uses a ring buffer closes, and there's threads waiting on
+the ring buffer, it needs to wake up those threads. To do this, a
+"wait_index" was used.
+
+Before entering the wait loop, the waiter will read the wait_index. On
+wakeup, it will check if the wait_index is different than when it entered
+the loop, and will exit the loop if it is. The waker will only need to
+update the wait_index before waking up the waiters.
+
+This had a couple of bugs. One trivial one and one broken by design.
+
+The trivial bug was that the waiter checked the wait_index after the
+schedule() call. It had to be checked between the prepare_to_wait() and
+the schedule() which it was not.
+
+The main bug is that the first check to set the default wait_index will
+always be outside the prepare_to_wait() and the schedule(). That's because
+the ring_buffer_wait() doesn't have enough context to know if it should
+break out of the loop.
+
+The loop itself is not needed, because all the callers to the
+ring_buffer_wait() also has their own loop, as the callers have a better
+sense of what the context is to decide whether to break out of the loop
+or not.
+
+Just have the ring_buffer_wait() block once, and if it gets woken up, exit
+the function and let the callers decide what to do next.
+
+Link: https://lore.kernel.org/all/CAHk-=whs5MdtNjzFkTyaUy=vHi=qwWgPi0JgTe6OYUYMNSRZfg@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240308202431.792933613@goodmis.org
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linke li <lilinke99@qq.com>
+Cc: Rabin Vincent <rabin@rab.in>
+Fixes: e30f53aad2202 ("tracing: Do not busy wait in buffer splice")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 761d9473e27f ("ring-buffer: Do not set shortest_full when full target is hit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 139 ++++++++++++++++++-------------------
+ 1 file changed, 68 insertions(+), 71 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 66d25d0e34d8b..39fc078284c8e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5757,15 +5757,21 @@ static int set_file_allocation_info(struct ksmbd_work *work,
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index e019a9278794f..3c4d62f499505 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -414,7 +414,6 @@ struct rb_irq_work {
+ 	struct irq_work			work;
+ 	wait_queue_head_t		waiters;
+ 	wait_queue_head_t		full_waiters;
+-	long				wait_index;
+ 	bool				waiters_pending;
+ 	bool				full_waiters_pending;
+ 	bool				wakeup_full;
+@@ -949,14 +948,40 @@ void ring_buffer_wake_waiters(struct trace_buffer *buffer, int cpu)
+ 		rbwork = &cpu_buffer->irq_work;
+ 	}
  
- 	loff_t alloc_blks;
- 	struct inode *inode;
-+	struct kstat stat;
- 	int rc;
+-	rbwork->wait_index++;
+-	/* make sure the waiters see the new index */
+-	smp_wmb();
+-
+ 	/* This can be called in any context */
+ 	irq_work_queue(&rbwork->work);
+ }
  
- 	if (!(fp->daccess & FILE_WRITE_DATA_LE))
- 		return -EACCES;
- 
-+	rc = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
-+			 AT_STATX_SYNC_AS_STAT);
-+	if (rc)
-+		return rc;
++static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
++{
++	struct ring_buffer_per_cpu *cpu_buffer;
++	bool ret = false;
 +
- 	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
- 	inode = file_inode(fp->filp);
++	/* Reads of all CPUs always waits for any data */
++	if (cpu == RING_BUFFER_ALL_CPUS)
++		return !ring_buffer_empty(buffer);
++
++	cpu_buffer = buffer->buffers[cpu];
++
++	if (!ring_buffer_empty_cpu(buffer, cpu)) {
++		unsigned long flags;
++		bool pagebusy;
++
++		if (!full)
++			return true;
++
++		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
++		pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
++		ret = !pagebusy && full_hit(buffer, cpu, full);
++
++		if (!cpu_buffer->shortest_full ||
++		    cpu_buffer->shortest_full > full)
++			cpu_buffer->shortest_full = full;
++		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
++	}
++	return ret;
++}
++
+ /**
+  * ring_buffer_wait - wait for input to the ring buffer
+  * @buffer: buffer to wait on
+@@ -972,7 +997,6 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	DEFINE_WAIT(wait);
+ 	struct rb_irq_work *work;
+-	long wait_index;
+ 	int ret = 0;
  
--	if (alloc_blks > inode->i_blocks) {
-+	if (alloc_blks > stat.blocks) {
- 		smb_break_all_levII_oplock(work, fp, 1);
- 		rc = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
- 				   alloc_blks * 512);
-@@ -5773,7 +5779,7 @@ static int set_file_allocation_info(struct ksmbd_work *work,
- 			pr_err("vfs_fallocate is failed : %d\n", rc);
- 			return rc;
- 		}
--	} else if (alloc_blks < inode->i_blocks) {
-+	} else if (alloc_blks < stat.blocks) {
- 		loff_t size;
+ 	/*
+@@ -991,81 +1015,54 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
+ 		work = &cpu_buffer->irq_work;
+ 	}
  
- 		/*
+-	wait_index = READ_ONCE(work->wait_index);
+-
+-	while (true) {
+-		if (full)
+-			prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
+-		else
+-			prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
+-
+-		/*
+-		 * The events can happen in critical sections where
+-		 * checking a work queue can cause deadlocks.
+-		 * After adding a task to the queue, this flag is set
+-		 * only to notify events to try to wake up the queue
+-		 * using irq_work.
+-		 *
+-		 * We don't clear it even if the buffer is no longer
+-		 * empty. The flag only causes the next event to run
+-		 * irq_work to do the work queue wake up. The worse
+-		 * that can happen if we race with !trace_empty() is that
+-		 * an event will cause an irq_work to try to wake up
+-		 * an empty queue.
+-		 *
+-		 * There's no reason to protect this flag either, as
+-		 * the work queue and irq_work logic will do the necessary
+-		 * synchronization for the wake ups. The only thing
+-		 * that is necessary is that the wake up happens after
+-		 * a task has been queued. It's OK for spurious wake ups.
+-		 */
+-		if (full)
+-			work->full_waiters_pending = true;
+-		else
+-			work->waiters_pending = true;
+-
+-		if (signal_pending(current)) {
+-			ret = -EINTR;
+-			break;
+-		}
+-
+-		if (cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer))
+-			break;
+-
+-		if (cpu != RING_BUFFER_ALL_CPUS &&
+-		    !ring_buffer_empty_cpu(buffer, cpu)) {
+-			unsigned long flags;
+-			bool pagebusy;
+-			bool done;
+-
+-			if (!full)
+-				break;
+-
+-			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
+-			done = !pagebusy && full_hit(buffer, cpu, full);
++	if (full)
++		prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
++	else
++		prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
+ 
+-			if (!cpu_buffer->shortest_full ||
+-			    cpu_buffer->shortest_full > full)
+-				cpu_buffer->shortest_full = full;
+-			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+-			if (done)
+-				break;
+-		}
++	/*
++	 * The events can happen in critical sections where
++	 * checking a work queue can cause deadlocks.
++	 * After adding a task to the queue, this flag is set
++	 * only to notify events to try to wake up the queue
++	 * using irq_work.
++	 *
++	 * We don't clear it even if the buffer is no longer
++	 * empty. The flag only causes the next event to run
++	 * irq_work to do the work queue wake up. The worse
++	 * that can happen if we race with !trace_empty() is that
++	 * an event will cause an irq_work to try to wake up
++	 * an empty queue.
++	 *
++	 * There's no reason to protect this flag either, as
++	 * the work queue and irq_work logic will do the necessary
++	 * synchronization for the wake ups. The only thing
++	 * that is necessary is that the wake up happens after
++	 * a task has been queued. It's OK for spurious wake ups.
++	 */
++	if (full)
++		work->full_waiters_pending = true;
++	else
++		work->waiters_pending = true;
+ 
+-		schedule();
++	if (rb_watermark_hit(buffer, cpu, full))
++		goto out;
+ 
+-		/* Make sure to see the new wait index */
+-		smp_rmb();
+-		if (wait_index != work->wait_index)
+-			break;
++	if (signal_pending(current)) {
++		ret = -EINTR;
++		goto out;
+ 	}
+ 
++	schedule();
++ out:
+ 	if (full)
+ 		finish_wait(&work->full_waiters, &wait);
+ 	else
+ 		finish_wait(&work->waiters, &wait);
+ 
++	if (!ret && !rb_watermark_hit(buffer, cpu, full) && signal_pending(current))
++		ret = -EINTR;
++
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
