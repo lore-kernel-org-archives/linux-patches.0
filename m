@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D431CA8F;
-	Mon,  1 Apr 2024 16:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2153F8F4;
+	Mon,  1 Apr 2024 16:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987405; cv=none; b=XRVviE95IxXJWjw/XxY38C/6roN4VYAfultvdf+Mn/OARcy5WJTMbOlBxDnPsLgSXI8Bf/xghup9o2hPvytQ9sOPLK86g9XB5b7Yr2/HiEpNyaMk0pqcZ8BNDfigmHkDCSQ4CqEt/TZ1lxLt61S8JxBEVBWB6IrJf+Anrky4JmI=
+	t=1711987408; cv=none; b=l1Ellt1a4h18ExE0qvOVh4dvgRdHENvUb9SxC1uXRIbysY0+Inm/kSiaY/4wDOdHJqf38MoG2SX7LSvtYFde+Kgnny8hWs3VqHw2NG/RmmdviAPCccDBpoKJSyspfXtsFAgyzBDTkFbW3zQV55cQA3+7V3dqVg2LSnCZOXG82Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987405; c=relaxed/simple;
-	bh=uWeTXXrkWnUbW/m3ugbm6/k3BtT908I373fBrx2TM1M=;
+	s=arc-20240116; t=1711987408; c=relaxed/simple;
+	bh=Fdg/oeLhxK54LGAPca40j5UR4YuBp/CSBNU/fePmL4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fe8gGsxN59uG7L+X1sOmB4ZC5+yPPuImv2AjRiioIABijXYStS79vl5viprp9z+bpMkQSHmrzwauRvxncF1c4is2Gos1jmQ6uN6LvgRgdeoufBzChRiH41xzRgQV6q+ZFk5T+hhJSx+Bq5aGx47A0rxwid3oBX9kF5A4sLpzc8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtlKR/qn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nl2vIirkhEY4uHQzf9Ah0xZTUoyOt60JAF606a7w7dpJ/m0jUOz1hf90t067/qMErFTkNOQeUMnpOqjLVIGcp8ogDWOs/8mmj/v9duLLzWu4ZIjYyq1mHwNYXqQFFL5yWMxTDsvXKNQYUuXPTBIBXerORwp4CdROnoRTJyGdrNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hI6AZd02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtlKR/qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA12C433F1;
-	Mon,  1 Apr 2024 16:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hI6AZd02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2F2C433C7;
+	Mon,  1 Apr 2024 16:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987405;
-	bh=uWeTXXrkWnUbW/m3ugbm6/k3BtT908I373fBrx2TM1M=;
+	s=korg; t=1711987408;
+	bh=Fdg/oeLhxK54LGAPca40j5UR4YuBp/CSBNU/fePmL4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtlKR/qnM4UKCUjOhgJRMEYt2xtgNSFDKSLcH5yE59UejSZTrqIyW1mfvA+86zBGO
-	 OPj50DabIWJdenvrVuLTUWC60urMcJ3lEJ7S86OOc0tLgWqTJf70lESRc59ZilSd1G
-	 ymuV4xdfakRGmhED9VEMG4l6LxIB1QLTl8CB6ZS8=
+	b=hI6AZd02yDZygK3GO6r+UudiQ4wonIcjI87k5+LMjhNJ6Oegfhrz0IXafvpZMVBAg
+	 L1SOTuvXTiK4qjPAxUwPPcQiBAPgIwXqIlnjWxzHvBShKj3mhpiqqnvj6MUNtikkU5
+	 hz84SBaZnCQVehzLXGHhQLNVN6KCu8JJAjun0p2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Mika Kahola <mika.kahola@intel.com>
-Subject: [PATCH 6.8 278/399] drm/i915: Replace a memset() with zero initialization
-Date: Mon,  1 Apr 2024 17:44:04 +0200
-Message-ID: <20240401152557.478989607@linuxfoundation.org>
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 261/399] printk: Update @console_may_schedule in console_trylock_spinning()
+Date: Mon,  1 Apr 2024 17:43:47 +0200
+Message-ID: <20240401152556.979480689@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -44,44 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-commit 92b47c3b8b242a1f1b73d5c1181d5b678ac1382b upstream.
+[ Upstream commit 8076972468584d4a21dab9aa50e388b3ea9ad8c7 ]
 
-Declaring a struct and immediately zeroing it with memset()
-seems a bit silly to me. Just zero initialize the struct
-when declaring it.
+console_trylock_spinning() may takeover the console lock from a
+schedulable context. Update @console_may_schedule to make sure it
+reflects a trylock acquire.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231124082735.25470-2-ville.syrjala@linux.intel.com
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Closes: https://lore.kernel.org/lkml/20240222090538.23017-1-quic_mojha@quicinc.com
+Fixes: dbdda842fe96 ("printk: Add console owner and waiter logic to load balance console writes")
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/875xybmo2z.fsf@jogness.linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpll_mgr.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/printk/printk.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-+++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-@@ -4465,12 +4465,10 @@ verify_single_dpll_state(struct drm_i915
- 			 struct intel_crtc *crtc,
- 			 const struct intel_crtc_state *new_crtc_state)
- {
--	struct intel_dpll_hw_state dpll_hw_state;
-+	struct intel_dpll_hw_state dpll_hw_state = {};
- 	u8 pipe_mask;
- 	bool active;
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index a11e1b6f29c04..7a835b277e98d 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -2026,6 +2026,12 @@ static int console_trylock_spinning(void)
+ 	 */
+ 	mutex_acquire(&console_lock_dep_map, 0, 1, _THIS_IP_);
  
--	memset(&dpll_hw_state, 0, sizeof(dpll_hw_state));
--
- 	drm_dbg_kms(&i915->drm, "%s\n", pll->info->name);
++	/*
++	 * Update @console_may_schedule for trylock because the previous
++	 * owner may have been schedulable.
++	 */
++	console_may_schedule = 0;
++
+ 	return 1;
+ }
  
- 	active = intel_dpll_get_hw_state(i915, pll, &dpll_hw_state);
+-- 
+2.43.0
+
 
 
