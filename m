@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11761BA3F;
-	Mon,  1 Apr 2024 17:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AF5BA3F;
+	Mon,  1 Apr 2024 17:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990821; cv=none; b=jVaFyGCH9Ar9F6N/VTSIWQiwOvIuOkbZ4W8ckKDkHqpdm24FwpD6yO3er8cBDNaoTt+9DyWDCQxY1leAboMQneOpvpHwtNG6EZRR/ZN4DoULrI5dakTIr0+T1PhLKSN0nAkM60woAzyW0xAZScFRPzhiPYBege3gFiFPyXy4D5k=
+	t=1711990824; cv=none; b=QJVwNIm6ck2aMUXX1QLfG8sFhjqr4fGDX+/d4DPykJPRu7KY79EwMDTRFgTvhnBn5IpDUpOsuTcQyg6sa0fM6v1Z8OpU843tpMl9UashsqSxWNy7er0KYurtqjU2g8UaICEFMy9g667XwDwZoOeS0hw5e+XRxu3tpW5OuQTfOHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990821; c=relaxed/simple;
-	bh=xx5PC5+O/22ycLdeQ1ONRmB0LKlR0ytPCwsFE3vxsN8=;
+	s=arc-20240116; t=1711990824; c=relaxed/simple;
+	bh=oqFhlOgVMLvs63t4Wx5k2wO2+EVz/2iCDTmppQwBjbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MDAta3stP3gUJ+qNYPOlr3voN55wvDQxoZ74Kqnoc3if/fNPaASB+INLfJd/BrbSzljtA6e+w2Y2saukjeNlYj63DRX0XJsjnVWEqvfyUr8w2IY7YRz7g4iy2/s6dRDsPOBqmxtNNjCkBTjfhzvo6tjxrfQnD+yuIW1h+Z4S4fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2mpGCjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJYS4Zl1yAS9aBJReRs2d2lEu2HyoUE9RG6ze6EM7huIbPVUxIcalGeBDsJjoC9q8d8rK+MdrE3b5Mnf4fgr+HOagL0vLlvr2sV+xvAhMERT4RZD4zXLNparjRzLlFtd7MD81q2pqvkq7QwjfDZZlEG3QM/SgFpNG8Q+H9XZkpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg4twcpw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2mpGCjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBF5C433F1;
-	Mon,  1 Apr 2024 17:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg4twcpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA23C433C7;
+	Mon,  1 Apr 2024 17:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990820;
-	bh=xx5PC5+O/22ycLdeQ1ONRmB0LKlR0ytPCwsFE3vxsN8=;
+	s=korg; t=1711990824;
+	bh=oqFhlOgVMLvs63t4Wx5k2wO2+EVz/2iCDTmppQwBjbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2mpGCjVPzj03PeApZ1xT77fIYgHNPPSA284xm0I6cipKS/puEIQj42Np30HVoJIM
-	 FA50IjMNG2jM/7ok8YkdN8aN7UeHCD2tOaRsn3xgpJsTGhxwImSqpc4ATxHI4PLifl
-	 il+ZFSfpg8LSP0SbrbNQYcEsfRK2xn0X7URCo8Q4=
+	b=sg4twcpwtuZX3GQDSYeIEn0kX9MYSpgEH0BvW7ug/9ClpfeXrKGEhnciKDZsOQuId
+	 bXe9Kvbrc9g7c6pmaBm69DmAQ3KNUE1VqtHgjs3Iw9/tpriZoUwJ+YEt5bL0hMXwmF
+	 i9vkKYqQtIVKEPAir/7JQjfdCb1DRbZL66hNylMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Song Liu <song@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/272] dm-raid: fix lockdep waring in "pers->hot_add_disk"
-Date: Mon,  1 Apr 2024 17:44:26 +0200
-Message-ID: <20240401152532.939683615@linuxfoundation.org>
+Subject: [PATCH 6.1 077/272] powerpc: xor_vmx: Add -mhard-float to CFLAGS
+Date: Mon,  1 Apr 2024 17:44:27 +0200
+Message-ID: <20240401152532.987893096@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,47 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 95009ae904b1e9dca8db6f649f2d7c18a6e42c75 ]
+[ Upstream commit 35f20786c481d5ced9283ff42de5c69b65e5ed13 ]
 
-The lockdep assert is added by commit a448af25becf ("md/raid10: remove
-rcu protection to access rdev from conf") in print_conf(). And I didn't
-notice that dm-raid is calling "pers->hot_add_disk" without holding
-'reconfig_mutex'.
+arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
+powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
+error when building with clang after a recent change in main:
 
-"pers->hot_add_disk" read and write many fields that is protected by
-'reconfig_mutex', and raid_resume() already grab the lock in other
-contex. Hence fix this problem by protecting "pers->host_add_disk"
-with the lock.
+  error: option '-msoft-float' cannot be specified with '-maltivec'
+  make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
 
-Fixes: 9092c02d9435 ("DM RAID: Add ability to restore transiently failed devices on resume")
-Fixes: a448af25becf ("md/raid10: remove rcu protection to access rdev from conf")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Acked-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240305072306.2562024-10-yukuai1@huaweicloud.com
+Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
+to override the previous inclusion of '-msoft-float' (as the last option
+wins), which matches how other areas of the kernel use '-maltivec', such
+as AMDGPU.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
+Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/lib/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index bf833ca880bc1..99b4738e867a8 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -4046,7 +4046,9 @@ static void raid_resume(struct dm_target *ti)
- 		 * Take this opportunity to check whether any failed
- 		 * devices are reachable again.
- 		 */
-+		mddev_lock_nointr(mddev);
- 		attempt_restore_of_faulty_devices(rs);
-+		mddev_unlock(mddev);
- 	}
+diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
+index 9b394bab17eba..374b82cf13d9d 100644
+--- a/arch/powerpc/lib/Makefile
++++ b/arch/powerpc/lib/Makefile
+@@ -72,7 +72,7 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
+ obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
  
- 	if (test_and_clear_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
+ obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
+-CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
++CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
+ # Enable <altivec.h>
+ CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
+ 
 -- 
 2.43.0
 
