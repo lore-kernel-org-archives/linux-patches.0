@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CC04D9F6;
-	Mon,  1 Apr 2024 16:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7B14653C;
+	Mon,  1 Apr 2024 16:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990411; cv=none; b=RN9MXfQO0m+o60MJp6cXgrvOIZDKEfeOmmDHUW5I6HZWXaF004AZESQDo2d4nA2zIbThoR9HlADFSiwQfdQ7odcGFf1zATSWfqC3uU/2CgWYSBd/tfjk4EGbp+dB5dobJ4fhRyJBcUGQhZj3ywsWKQLX6sTt7fed6GNpkUh+tEA=
+	t=1711990415; cv=none; b=beJcy33hQGyxSXk4LCVokfmuxBYXbp7eQp0BrnszkB5108YYewg/N+vpA1xHEVEjkEr+I0l9Q8IA1sffE5+druXmNyeGWOln7GqPXETEm9bF5GKjXoZR6bJ1XKYVMbAu6asQMjudVro6RTtrfvnvfd0dQBE3ygQq+SulOT0a54M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990411; c=relaxed/simple;
-	bh=3Z6iiYY9lX3Q+6lKbfcehWlMXpiAYuTJclcAmjr3Heo=;
+	s=arc-20240116; t=1711990415; c=relaxed/simple;
+	bh=3+EjXtEc9iHXCaA737u/RgSZqbBaN3nFCmAer5HDcTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W33eFDxMaQxL3sUOzw1RB79bFZ+0Zuk8Yc7mjr/9tR+F09sx6XyFfxY+4zMmwYfun/Kz2E2jvr3TxwZe+pHZEIsypFhgtQOtqYLQk1+bU3iFagc+VIPk/THL4xCXtuvoutN9LlR3WC6bQi4QRVKXsxr5MFG/F0EzUYwwDUbmoIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7kDJzEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDZ04bnF73pECuAQeUd+39m2+fcIO1EYMimbKgxdOsugY3qya3VVkn7Gr04i5YBqmE/H+WmFEm072kFYQI2HluhBuKUuE6nGacvDNuOvY3YACTrxOWu7N2VtMtpROeLq3N8QMOzoMrsE70OCIUWrg8oNOY/o8GfNHc4up7qmz9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zELyIyFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7kDJzEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB333C433F1;
-	Mon,  1 Apr 2024 16:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zELyIyFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52510C433F1;
+	Mon,  1 Apr 2024 16:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990411;
-	bh=3Z6iiYY9lX3Q+6lKbfcehWlMXpiAYuTJclcAmjr3Heo=;
+	s=korg; t=1711990414;
+	bh=3+EjXtEc9iHXCaA737u/RgSZqbBaN3nFCmAer5HDcTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7kDJzEiof02+hChZphUzhhzeg0KrFAnYhY3F5uJkVYzj2OM6nVHVVNcdzYRNHyBN
-	 4ZjH5hTXnL5A4L9pd2qwFgab0XSFipdAmBdqEx9/5a6iI9EOcbzBWW9whN27/QNE3K
-	 pDMRDkuh4mn+QUG2l5Ldg759wQA5BdEAyYjwuwQY=
+	b=zELyIyFSIzIRvR5EQSOEaCnTxGGLxbI6CN2fLit+eZ1lhI59s+jAsu9YI6N5uaW/o
+	 LaR91yjnlB6yf5CiNH1FyfiPYxwHREhR0rd+UOOQvQgIWOTq/ylW5riRuPd60SvNi/
+	 fTGh83+T1M2k4JKBBExT0lVdBBkvcNwIljY0Fcmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathon Hall <jonathon.hall@puri.sm>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 345/396] drm/i915: Do not match JSL in ehl_combo_pll_div_frac_wa_needed()
-Date: Mon,  1 Apr 2024 17:46:34 +0200
-Message-ID: <20240401152558.203188486@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>
+Subject: [PATCH 6.6 346/396] drm/i915/gt: Reset queue_priority_hint on parking
+Date: Mon,  1 Apr 2024 17:46:35 +0200
+Message-ID: <20240401152558.231891474@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,52 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathon Hall <jonathon.hall@puri.sm>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-commit e41d769f1a7a1dc533c35ef7b366be3dbf432a1c upstream.
+commit 4a3859ea5240365d21f6053ee219bb240d520895 upstream.
 
-Since commit 0c65dc062611 ("drm/i915/jsl: s/JSL/JASPERLAKE for
-platform/subplatform defines"), boot freezes on a Jasper Lake tablet
-(Librem 11), usually with graphical corruption on the eDP display,
-but sometimes just a black screen.  This commit was included in 6.6 and
-later.
+Originally, with strict in order execution, we could complete execution
+only when the queue was empty. Preempt-to-busy allows replacement of an
+active request that may complete before the preemption is processed by
+HW. If that happens, the request is retired from the queue, but the
+queue_priority_hint remains set, preventing direct submission until
+after the next CS interrupt is processed.
 
-That commit was intended to refactor EHL and JSL macros, but the change
-to ehl_combo_pll_div_frac_wa_needed() started matching JSL incorrectly
-when it was only intended to match EHL.
+This preempt-to-busy race can be triggered by the heartbeat, which will
+also act as the power-management barrier and upon completion allow us to
+idle the HW. We may process the completion of the heartbeat, and begin
+parking the engine before the CS event that restores the
+queue_priority_hint, causing us to fail the assertion that it is MIN.
 
-It replaced:
-	return ((IS_PLATFORM(i915, INTEL_ELKHARTLAKE) &&
-		 IS_JSL_EHL_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
-with:
-	return (((IS_ELKHARTLAKE(i915) || IS_JASPERLAKE(i915)) &&
-		 IS_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
+<3>[  166.210729] __engine_park:283 GEM_BUG_ON(engine->sched_engine->queue_priority_hint != (-((int)(~0U >> 1)) - 1))
+<0>[  166.210781] Dumping ftrace buffer:
+<0>[  166.210795] ---------------------------------
+...
+<0>[  167.302811] drm_fdin-1097      2..s1. 165741070us : trace_ports: 0000:00:02.0 rcs0: promote { ccid:20 1217:2 prio 0 }
+<0>[  167.302861] drm_fdin-1097      2d.s2. 165741072us : execlists_submission_tasklet: 0000:00:02.0 rcs0: preempting last=1217:2, prio=0, hint=2147483646
+<0>[  167.302928] drm_fdin-1097      2d.s2. 165741072us : __i915_request_unsubmit: 0000:00:02.0 rcs0: fence 1217:2, current 0
+<0>[  167.302992] drm_fdin-1097      2d.s2. 165741073us : __i915_request_submit: 0000:00:02.0 rcs0: fence 3:4660, current 4659
+<0>[  167.303044] drm_fdin-1097      2d.s1. 165741076us : execlists_submission_tasklet: 0000:00:02.0 rcs0: context:3 schedule-in, ccid:40
+<0>[  167.303095] drm_fdin-1097      2d.s1. 165741077us : trace_ports: 0000:00:02.0 rcs0: submit { ccid:40 3:4660* prio 2147483646 }
+<0>[  167.303159] kworker/-89       11..... 165741139us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence c90:2, current 2
+<0>[  167.303208] kworker/-89       11..... 165741148us : __intel_context_do_unpin: 0000:00:02.0 rcs0: context:c90 unpin
+<0>[  167.303272] kworker/-89       11..... 165741159us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence 1217:2, current 2
+<0>[  167.303321] kworker/-89       11..... 165741166us : __intel_context_do_unpin: 0000:00:02.0 rcs0: context:1217 unpin
+<0>[  167.303384] kworker/-89       11..... 165741170us : i915_request_retire.part.0: 0000:00:02.0 rcs0: fence 3:4660, current 4660
+<0>[  167.303434] kworker/-89       11d..1. 165741172us : __intel_context_retire: 0000:00:02.0 rcs0: context:1216 retire runtime: { total:56028ns, avg:56028ns }
+<0>[  167.303484] kworker/-89       11..... 165741198us : __engine_park: 0000:00:02.0 rcs0: parked
+<0>[  167.303534]   <idle>-0         5d.H3. 165741207us : execlists_irq_handler: 0000:00:02.0 rcs0: semaphore yield: 00000040
+<0>[  167.303583] kworker/-89       11..... 165741397us : __intel_context_retire: 0000:00:02.0 rcs0: context:1217 retire runtime: { total:325575ns, avg:0ns }
+<0>[  167.303756] kworker/-89       11..... 165741777us : __intel_context_retire: 0000:00:02.0 rcs0: context:c90 retire runtime: { total:0ns, avg:0ns }
+<0>[  167.303806] kworker/-89       11..... 165742017us : __engine_park: __engine_park:283 GEM_BUG_ON(engine->sched_engine->queue_priority_hint != (-((int)(~0U >> 1)) - 1))
+<0>[  167.303811] ---------------------------------
+<4>[  167.304722] ------------[ cut here ]------------
+<2>[  167.304725] kernel BUG at drivers/gpu/drm/i915/gt/intel_engine_pm.c:283!
+<4>[  167.304731] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+<4>[  167.304734] CPU: 11 PID: 89 Comm: kworker/11:1 Tainted: G        W          6.8.0-rc2-CI_DRM_14193-gc655e0fd2804+ #1
+<4>[  167.304736] Hardware name: Intel Corporation Rocket Lake Client Platform/RocketLake S UDIMM 6L RVP, BIOS RKLSFWI1.R00.3173.A03.2204210138 04/21/2022
+<4>[  167.304738] Workqueue: i915-unordered retire_work_handler [i915]
+<4>[  167.304839] RIP: 0010:__engine_park+0x3fd/0x680 [i915]
+<4>[  167.304937] Code: 00 48 c7 c2 b0 e5 86 a0 48 8d 3d 00 00 00 00 e8 79 48 d4 e0 bf 01 00 00 00 e8 ef 0a d4 e0 31 f6 bf 09 00 00 00 e8 03 49 c0 e0 <0f> 0b 0f 0b be 01 00 00 00 e8 f5 61 fd ff 31 c0 e9 34 fd ff ff 48
+<4>[  167.304940] RSP: 0018:ffffc9000059fce0 EFLAGS: 00010246
+<4>[  167.304942] RAX: 0000000000000200 RBX: 0000000000000000 RCX: 0000000000000006
+<4>[  167.304944] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000009
+<4>[  167.304946] RBP: ffff8881330ca1b0 R08: 0000000000000001 R09: 0000000000000001
+<4>[  167.304947] R10: 0000000000000001 R11: 0000000000000001 R12: ffff8881330ca000
+<4>[  167.304948] R13: ffff888110f02aa0 R14: ffff88812d1d0205 R15: ffff88811277d4f0
+<4>[  167.304950] FS:  0000000000000000(0000) GS:ffff88844f780000(0000) knlGS:0000000000000000
+<4>[  167.304952] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+<4>[  167.304953] CR2: 00007fc362200c40 CR3: 000000013306e003 CR4: 0000000000770ef0
+<4>[  167.304955] PKRU: 55555554
+<4>[  167.304957] Call Trace:
+<4>[  167.304958]  <TASK>
+<4>[  167.305573]  ____intel_wakeref_put_last+0x1d/0x80 [i915]
+<4>[  167.305685]  i915_request_retire.part.0+0x34f/0x600 [i915]
+<4>[  167.305800]  retire_requests+0x51/0x80 [i915]
+<4>[  167.305892]  intel_gt_retire_requests_timeout+0x27f/0x700 [i915]
+<4>[  167.305985]  process_scheduled_works+0x2db/0x530
+<4>[  167.305990]  worker_thread+0x18c/0x350
+<4>[  167.305993]  kthread+0xfe/0x130
+<4>[  167.305997]  ret_from_fork+0x2c/0x50
+<4>[  167.306001]  ret_from_fork_asm+0x1b/0x30
+<4>[  167.306004]  </TASK>
 
-Remove IS_JASPERLAKE() to fix the regression.
+It is necessary for the queue_priority_hint to be lower than the next
+request submission upon waking up, as we rely on the hint to decide when
+to kick the tasklet to submit that first request.
 
-Signed-off-by: Jonathon Hall <jonathon.hall@puri.sm>
-Cc: stable@vger.kernel.org
-Fixes: 0c65dc062611 ("drm/i915/jsl: s/JSL/JASPERLAKE for platform/subplatform defines")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240313135424.3731410-1-jonathon.hall@puri.sm
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 1ef48859317b2a77672dea8682df133abf9c44ed)
+Fixes: 22b7a426bbe1 ("drm/i915/execlists: Preempt-to-busy")
+Closes: https://gitlab.freedesktop.org/drm/intel/issues/10154
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.4+
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240318135906.716055-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 98850e96cf811dc2d0a7d0af491caff9f5d49c1e)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpll_mgr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_engine_pm.c            |    3 ---
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c |    3 +++
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-+++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
-@@ -2462,7 +2462,7 @@ static void icl_wrpll_params_populate(st
- static bool
- ehl_combo_pll_div_frac_wa_needed(struct drm_i915_private *i915)
+--- a/drivers/gpu/drm/i915/gt/intel_engine_pm.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
+@@ -278,9 +278,6 @@ static int __engine_park(struct intel_wa
+ 	intel_engine_park_heartbeat(engine);
+ 	intel_breadcrumbs_park(engine->breadcrumbs);
+ 
+-	/* Must be reset upon idling, or we may miss the busy wakeup. */
+-	GEM_BUG_ON(engine->sched_engine->queue_priority_hint != INT_MIN);
+-
+ 	if (engine->park)
+ 		engine->park(engine);
+ 
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3274,6 +3274,9 @@ static void execlists_park(struct intel_
  {
--	return (((IS_ELKHARTLAKE(i915) || IS_JASPERLAKE(i915)) &&
-+	return ((IS_ELKHARTLAKE(i915) &&
- 		 IS_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
- 		 IS_TIGERLAKE(i915) || IS_ALDERLAKE_S(i915) || IS_ALDERLAKE_P(i915)) &&
- 		 i915->display.dpll.ref_clks.nssc == 38400;
+ 	cancel_timer(&engine->execlists.timer);
+ 	cancel_timer(&engine->execlists.preempt);
++
++	/* Reset upon idling, or we may delay the busy wakeup. */
++	WRITE_ONCE(engine->sched_engine->queue_priority_hint, INT_MIN);
+ }
+ 
+ static void add_to_engine(struct i915_request *rq)
 
 
