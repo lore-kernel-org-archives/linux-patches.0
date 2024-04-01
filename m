@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D980838DD8;
-	Mon,  1 Apr 2024 16:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627B010A3B;
+	Mon,  1 Apr 2024 16:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989461; cv=none; b=exWz2P1aO0IBPHtt8ulnJF16nPOJ/ir0VpZIyk/JuaNs88rCmIfgr3QARqrtj7C7XJDAFrBsBVMIcMVjsjfHADs4p5RXAhicSneWit+cJNItTh+yGJCq+HtHPbdWl+R8GRjE0ZiXwMznS1IMiA0AXtd5jR9QTQ+Pm+DqmRResEY=
+	t=1711989465; cv=none; b=SUrt0gkuDVsHEUbF+88jUvdMdZyJ7gmZEHZ7AtSG74GMzEM1ALkDmpBCW6MI9JVTttIRBSKzdKhsUvPz21sNB9qJaKn8EVkR8QEodCPnNldFc5coAOc2riEhhREPpSUeh4AdZmO/VyNnVIjF70mS7nndgcRz0GoNLh5wtJcZQFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989461; c=relaxed/simple;
-	bh=PUog2+80WmatoqEymRT2IawYChZLpqWDPK4s+H0lg+E=;
+	s=arc-20240116; t=1711989465; c=relaxed/simple;
+	bh=BtuyZbF6wcEIc6pRwqotNKXSRW44lrjKZc4Nu8CHsZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkPFklmDKwrYNFLeQgSU4EMX+fBFnZSxlXesZSHB5zdEEHOGrmAa86kbrjnB/kJtiRUBJ5BN1hhhfLJMpuN6Kppeo8VDtPsmCXmAk+l6UaWcuZNy6Q0dn8cISCl+x6flkWgU+UfCxqpt+TEfW6iTPAPXutIcn8fMOjROhAmZEF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQgnVLze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCc5fMgBvIv+5WWRPuTJQgjzcK4G2GH1wDh5Gw4k4rEqXJDvUH7diIaOqPbiJD9hqzV9jA/wFdhwhcfPxHPVpPz8Q13nHCAXqgse34yE42nDJEox0oVjrpgEf0zRbI9UCm2kNySGfDAWFwwmqTRcZY0E7mMXiIDTjfyzOVIhBsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hW5X76gY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQgnVLze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A7DC433F1;
-	Mon,  1 Apr 2024 16:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hW5X76gY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CD4C433F1;
+	Mon,  1 Apr 2024 16:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989461;
-	bh=PUog2+80WmatoqEymRT2IawYChZLpqWDPK4s+H0lg+E=;
+	s=korg; t=1711989464;
+	bh=BtuyZbF6wcEIc6pRwqotNKXSRW44lrjKZc4Nu8CHsZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQgnVLzesnavUizBizFtXr49XqDJhvP3uMDM5TuIchfd8yYO+KBkDuYmACBVMQ8SE
-	 JmAb6uzIjAttanJU8p/YKBNDveotM4U3t1Q6esCRvYgRQQpqUQzSdAtn7/gBfQ7JFK
-	 ZInknm8KmMP/GduoGigvZOWOLt3dkUuieHBX+uvM=
+	b=hW5X76gY4Ou/hHtrKcVyHx11vRmZl/e2/WtiWL72oQe0TGCyOsoOL0C7v9nMU67GS
+	 9YUrlRIqeoG7O0WMSx2FyjYMZF9cQfsEh6odK+YW6Xqj4H0P+l0ZzYUc0VirAXiHUt
+	 FiG4zVthnohEBkrqmpniKNccNKZbc86ioDPGrkrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Perry Yuan <Perry.Yuan@amd.com>,
+	Tor Vic <torvic9@mailbox.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/396] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port mapping
-Date: Mon,  1 Apr 2024 17:41:16 +0200
-Message-ID: <20240401152548.713380234@linuxfoundation.org>
+Subject: [PATCH 6.6 028/396] cpufreq: amd-pstate: Fix min_perf assignment in amd_pstate_adjust_perf()
+Date: Mon,  1 Apr 2024 17:41:17 +0200
+Message-ID: <20240401152548.743050476@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,41 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tor Vic <torvic9@mailbox.org>
 
-[ Upstream commit b66966b1bbc0aa58f7af83cbd56d5a206892857c ]
+[ Upstream commit b26ffbf800ae3c8d01bdf90d9cd8a37e1606ff06 ]
 
-WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
-it is offset by one.  Correct it to fix recording via analogue
-microphones.
+In the function amd_pstate_adjust_perf(), the 'min_perf' variable is set
+to 'highest_perf' instead of 'lowest_perf'.
 
-The change is based on QRD8550 and should be correct here as well, but
-was not tested on MTP8550.
-
-Cc: stable@vger.kernel.org
-Fixes: a541667c86a9 ("arm64: dts: qcom: sm8550-mtp: add WCD9385 audio-codec")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240124164505.293202-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1d215f0319c2 ("cpufreq: amd-pstate: Add fast switch function for AMD P-State")
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reviewed-by: Perry Yuan <Perry.Yuan@amd.com>
+Signed-off-by: Tor Vic <torvic9@mailbox.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 2 +-
+ drivers/cpufreq/amd-pstate.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index f29cce5186acd..c4bfe43471f7c 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -743,7 +743,7 @@ &swr2 {
- 	wcd_tx: codec@0,3 {
- 		compatible = "sdw20217010d00";
- 		reg = <0 3>;
--		qcom,tx-port-mapping = <1 1 2 3>;
-+		qcom,tx-port-mapping = <2 2 3 4>;
- 	};
- };
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 1791d37fbc53c..07f3419954396 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -570,7 +570,7 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
+ 	if (target_perf < capacity)
+ 		des_perf = DIV_ROUND_UP(cap_perf * target_perf, capacity);
+ 
+-	min_perf = READ_ONCE(cpudata->highest_perf);
++	min_perf = READ_ONCE(cpudata->lowest_perf);
+ 	if (_min_perf < capacity)
+ 		min_perf = DIV_ROUND_UP(cap_perf * _min_perf, capacity);
  
 -- 
 2.43.0
