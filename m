@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215EC4AEDF;
-	Mon,  1 Apr 2024 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADEA5677C;
+	Mon,  1 Apr 2024 15:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986695; cv=none; b=p8vKkatfKybs8S2Dkr6gup/oG5n5HCbgqpU+KPi4EESn1h3kmNn9a3CAsNRgsY3gpWLu1Uj5r71jehdGjAi39oLtBLpMmllbnRRK/Wr8DAJVYOpIROmd81ey+lM6UIyLefWyjcuqusiA/XNFKpPrwEYOfMWP3GeHMbIWdFq9WK8=
+	t=1711986698; cv=none; b=gEQqmmx3BMCCl4SDJz4KhxiR0+I2wEMskRDE0Aj26OgjfRI/VEhN58QO6Dw8yxR72Jxaf2YYy1WjHITpGtdynDJ5mb1ncvCkhKCTpvaaCAs0QvQMROZ2Gf9n3jiFbbErVuLTxzARarWM3IHNgS7W6or/Ni7DxOfxZhdgBi1xB7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986695; c=relaxed/simple;
-	bh=GLbB4M3BlyP194jYoKCngNVrW+tIENRmsPz9blbsjdk=;
+	s=arc-20240116; t=1711986698; c=relaxed/simple;
+	bh=OsOVTX558ryEndPDrlbVX/1IcXZH7GhiOlPLZ1AvQd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csSe7TDdkAfieR3N1vs83cC8Vog2TZNdajFUcjyEAt2PtPIfTCMSzsNqdDH1kGvfrAbvBbOLNWrYSyjSlHnxHxDkOeLxRcnTGYwoFcMhTLhkDL7GsTeZo8hz5pX6W6Bd0bapEE6wKGMEoKzpEMLUhcCkX2La+kcY8bKTA5tLL4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kl7oEP3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeGMRtakt5nVyYae3BQb7oZDs++83Bk/Oqspg4EZcwmvTcrNu6n0D9xwI+SusHmrp7k+D267BCbQx97PRUaPwqowAvOOj5NvOkqt+Mk2iQpTIAACl5GFxP0U6ghIiNdS+cvdUz955Q4tgdbo+nqJbUu1T90CbuN6MEfCWvhGkP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwiiMCmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl7oEP3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4988BC43390;
-	Mon,  1 Apr 2024 15:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwiiMCmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F92C433C7;
+	Mon,  1 Apr 2024 15:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986694;
-	bh=GLbB4M3BlyP194jYoKCngNVrW+tIENRmsPz9blbsjdk=;
+	s=korg; t=1711986697;
+	bh=OsOVTX558ryEndPDrlbVX/1IcXZH7GhiOlPLZ1AvQd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kl7oEP3BDSyMI5bpQdG934Zk/83FSt1qku4oO3/6dxQJQorcV6WHTyABVoJPfs2K1
-	 uOhnuTDgc+UlNqD60SBBZSOEUtXgkakF/PCKRkCzym4DeU90uMiJk9Nj2JsAJWLOnh
-	 6kSYBVyJBSp+R8+W9jcp816pzt1zn6NpjLDvTUpk=
+	b=iwiiMCmOWCQjLLtjta3o0YlJ3WEXQ0ON2n7zW9boj7rm0Q3RQ0Y667oJKS8OLsRN8
+	 hYZ93dW1nSXXnWqWAlopIJ95Uh9qKauXkf9B7vI31QoV0n+OKYHGEuC0fMLH0W/UiC
+	 leLTvkPc02qdvkwAI6xOcFiYC0Mj1R6/Xcz/OCmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 055/399] md/md-bitmap: fix incorrect usage for sb_index
-Date: Mon,  1 Apr 2024 17:40:21 +0200
-Message-ID: <20240401152550.827028884@linuxfoundation.org>
+Subject: [PATCH 6.8 056/399] x86/nmi: Fix the inverse "in NMI handler" check
+Date: Mon,  1 Apr 2024 17:40:22 +0200
+Message-ID: <20240401152550.856961504@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,80 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit ecbd8ebb51bf7e4939d83b9e6022a55cac44ef06 ]
+[ Upstream commit d54e56f31a34fa38fcb5e91df609f9633419a79a ]
 
-Commit d7038f951828 ("md-bitmap: don't use ->index for pages backing the
-bitmap file") removed page->index from bitmap code, but left wrong code
-logic for clustered-md. current code never set slot offset for cluster
-nodes, will sometimes cause crash in clustered env.
+Commit 344da544f177 ("x86/nmi: Print reasons why backtrace NMIs are
+ignored") creates a super nice framework to diagnose NMIs.
 
-Call trace (partly):
- md_bitmap_file_set_bit+0x110/0x1d8 [md_mod]
- md_bitmap_startwrite+0x13c/0x240 [md_mod]
- raid1_make_request+0x6b0/0x1c08 [raid1]
- md_handle_request+0x1dc/0x368 [md_mod]
- md_submit_bio+0x80/0xf8 [md_mod]
- __submit_bio+0x178/0x300
- submit_bio_noacct_nocheck+0x11c/0x338
- submit_bio_noacct+0x134/0x614
- submit_bio+0x28/0xdc
- submit_bh_wbc+0x130/0x1cc
- submit_bh+0x1c/0x28
+Every time nmi_exc() is called, it increments a per_cpu counter
+(nsp->idt_nmi_seq). At its exit, it also increments the same counter.  By
+reading this counter it can be seen how many times that function was called
+(dividing by 2), and, if the function is still being executed, by checking
+the idt_nmi_seq's least significant bit.
 
-Fixes: d7038f951828 ("md-bitmap: don't use ->index for pages backing the bitmap file")
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240223121128.28985-1-heming.zhao@suse.com
+On the check side (nmi_backtrace_stall_check()), that variable is queried
+to check if the NMI is still being executed, but, there is a mistake in the
+bitwise operation. That code wants to check if the least significant bit of
+the idt_nmi_seq is set or not, but does the opposite, and checks for all
+the other bits, which will always be true after the first exc_nmi()
+executed successfully.
+
+This appends the misleading string to the dump "(CPU currently in NMI
+handler function)"
+
+Fix it by checking the least significant bit, and if it is set, append the
+string.
+
+Fixes: 344da544f177 ("x86/nmi: Print reasons why backtrace NMIs are ignored")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240207165237.1048837-1-leitao@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/kernel/nmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 9672f75c30503..a4976ceae8688 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -234,7 +234,8 @@ static int __write_sb_page(struct md_rdev *rdev, struct bitmap *bitmap,
- 	sector_t doff;
- 
- 	bdev = (rdev->meta_bdev) ? rdev->meta_bdev : rdev->bdev;
--	if (pg_index == store->file_pages - 1) {
-+	/* we compare length (page numbers), not page offset. */
-+	if ((pg_index - store->sb_index) == store->file_pages - 1) {
- 		unsigned int last_page_size = store->bytes & (PAGE_SIZE - 1);
- 
- 		if (last_page_size == 0)
-@@ -438,8 +439,8 @@ static void filemap_write_page(struct bitmap *bitmap, unsigned long pg_index,
- 	struct page *page = store->filemap[pg_index];
- 
- 	if (mddev_is_clustered(bitmap->mddev)) {
--		pg_index += bitmap->cluster_slot *
--			DIV_ROUND_UP(store->bytes, PAGE_SIZE);
-+		/* go to node bitmap area starting point */
-+		pg_index += store->sb_index;
- 	}
- 
- 	if (store->file)
-@@ -952,6 +953,7 @@ static void md_bitmap_file_set_bit(struct bitmap *bitmap, sector_t block)
- 	unsigned long index = file_page_index(store, chunk);
- 	unsigned long node_offset = 0;
- 
-+	index += store->sb_index;
- 	if (mddev_is_clustered(bitmap->mddev))
- 		node_offset = bitmap->cluster_slot * store->file_pages;
- 
-@@ -982,6 +984,7 @@ static void md_bitmap_file_clear_bit(struct bitmap *bitmap, sector_t block)
- 	unsigned long index = file_page_index(store, chunk);
- 	unsigned long node_offset = 0;
- 
-+	index += store->sb_index;
- 	if (mddev_is_clustered(bitmap->mddev))
- 		node_offset = bitmap->cluster_slot * store->file_pages;
- 
+diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
+index 3082cf24b69e3..6da2cfa23c293 100644
+--- a/arch/x86/kernel/nmi.c
++++ b/arch/x86/kernel/nmi.c
+@@ -636,7 +636,7 @@ void nmi_backtrace_stall_check(const struct cpumask *btp)
+ 			msgp = nmi_check_stall_msg[idx];
+ 			if (nsp->idt_ignored_snap != READ_ONCE(nsp->idt_ignored) && (idx & 0x1))
+ 				modp = ", but OK because ignore_nmis was set";
+-			if (nmi_seq & ~0x1)
++			if (nmi_seq & 0x1)
+ 				msghp = " (CPU currently in NMI handler function)";
+ 			else if (nsp->idt_nmi_seq_snap + 1 == nmi_seq)
+ 				msghp = " (CPU exited one NMI handler function)";
 -- 
 2.43.0
 
