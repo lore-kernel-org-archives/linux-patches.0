@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE4A1E86C;
-	Mon,  1 Apr 2024 16:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D05FBA3F;
+	Mon,  1 Apr 2024 16:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990748; cv=none; b=qriLzfMYCSEoqiUilUnIxzFPAHHExK6Wu+Eq0j/9ulzYhlrVGsDNKmb1iM8PGvVTnr/ZzU8hWE99JMnvca6VKbcv5EYs6+/o8FpEMGqjNN9AXv0zm7qbZdrn+9XoAT/ldyzrwLC+T4LwKRXhw49zpk5VDx55n38jvGnAZRHiBLc=
+	t=1711990753; cv=none; b=X+PkY0QcqRa8Z+ou1CtPytKUYruYjbGSE4NXQbwr7Fd5q2nVzIvEpkvOPkbSAK7BCFdHE3GeLnPFe2uAskRsasHXuQUnSB698kO3BviOTvJ5RAQQEcTOQwqgZ1Z8J8d8dqQHIHAqChVAordyW6uPYmN5fmJiKlWJa6DY5yOJU8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990748; c=relaxed/simple;
-	bh=VXo3lRpDELA2XyjxSJn7CNUQSa8oYi1uvYz0ePDe2jk=;
+	s=arc-20240116; t=1711990753; c=relaxed/simple;
+	bh=DKJ3YCFdQsOXboa1Olu4nzaZHjA8DZWbBRaP7gFYUGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B889gUBqeBBQYR9IrYsA+T19WWU8W8lfPORfv9VxVs0jsiQB4fSQThMWETnfXgFDlxnx7j7movpa05ma/P9qd0gK6/ZAeLJYvivTR8ibAmYb0C7DCyLam47QSOvDUfmpz7OxdBSEpo+FxmdJdt8z11rqTyO334b/yZFY6MfNlgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/bDDePK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KFhOnLjPtiA5sdV3juILhWjqhxwPbZ3S++vAOFOw2RX4+upXLWdmtKn4JXrq83GSqn6FnOV6agAzusfu3IGZ63wEvVOtNKAY4hMk01ROw4DHcIcZFso61l4xDX3bDarwlrFAHhClb07Jnu6Kd6qqtpPTmrjI0C883S2U2aN8h2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYlOUV8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/bDDePK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF9DC433F1;
-	Mon,  1 Apr 2024 16:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYlOUV8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145A4C433C7;
+	Mon,  1 Apr 2024 16:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990748;
-	bh=VXo3lRpDELA2XyjxSJn7CNUQSa8oYi1uvYz0ePDe2jk=;
+	s=korg; t=1711990753;
+	bh=DKJ3YCFdQsOXboa1Olu4nzaZHjA8DZWbBRaP7gFYUGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/bDDePKFJJq8LQsY7JnJ/TbNn3Cp4f4zOn54DTO30HrS1pqUFS9puphe47yVO3Lq
-	 OrTqFt0x9aNIgGgnHReoqwWf/clXBgPIMjtvaZlesGbL/rQpUWEgsSvoVBmcv5uNqE
-	 3kk15sGCB34WbNhBf3/0Rnr+2nZqb0z93YR0HK9Y=
+	b=CYlOUV8rlA1T6zj4YKbwtuP7nlTglAwsbRJ5cOSrlm5dHIMSii3ptRRg2DkOy1ya1
+	 lPCSupjzJ9QH5xwWdNgDRT51UB5dDT6qS7mZIQzD6RZ6yt7qjfiuLlOJ/iI0bNB1c9
+	 PDGQ7EdUUWxS2jL/JFFpQKN1+Gw+boJNvIUpe2xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	David Matlack <dmatlack@google.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/272] media: mc: Expand MUST_CONNECT flag to always require an enabled link
-Date: Mon,  1 Apr 2024 17:43:35 +0200
-Message-ID: <20240401152531.138812106@linuxfoundation.org>
+Subject: [PATCH 6.1 026/272] KVM: Always flush async #PF workqueue when vCPU is being destroyed
+Date: Mon,  1 Apr 2024 17:43:36 +0200
+Message-ID: <20240401152531.177668703@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,188 +53,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit b3decc5ce7d778224d266423b542326ad469cb5f ]
+[ Upstream commit 3d75b8aa5c29058a512db29da7cbee8052724157 ]
 
-The MEDIA_PAD_FL_MUST_CONNECT flag indicates that the pad requires an
-enabled link to stream, but only if it has any link at all. This makes
-little sense, as if a pad is part of a pipeline, there are very few use
-cases for an active link to be mandatory only if links exist at all. A
-review of in-tree drivers confirms they all need an enabled link for
-pads marked with the MEDIA_PAD_FL_MUST_CONNECT flag.
+Always flush the per-vCPU async #PF workqueue when a vCPU is clearing its
+completion queue, e.g. when a VM and all its vCPUs is being destroyed.
+KVM must ensure that none of its workqueue callbacks is running when the
+last reference to the KVM _module_ is put.  Gifting a reference to the
+associated VM prevents the workqueue callback from dereferencing freed
+vCPU/VM memory, but does not prevent the KVM module from being unloaded
+before the callback completes.
 
-Expand the scope of the flag by rejecting pads that have no links at
-all. This requires modifying the pipeline build code to add those pads
-to the pipeline.
+Drop the misguided VM refcount gifting, as calling kvm_put_kvm() from
+async_pf_execute() if kvm_put_kvm() flushes the async #PF workqueue will
+result in deadlock.  async_pf_execute() can't return until kvm_put_kvm()
+finishes, and kvm_put_kvm() can't return until async_pf_execute() finishes:
 
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+ WARNING: CPU: 8 PID: 251 at virt/kvm/kvm_main.c:1435 kvm_put_kvm+0x2d/0x320 [kvm]
+ Modules linked in: vhost_net vhost vhost_iotlb tap kvm_intel kvm irqbypass
+ CPU: 8 PID: 251 Comm: kworker/8:1 Tainted: G        W          6.6.0-rc1-e7af8d17224a-x86/gmem-vm #119
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+ Workqueue: events async_pf_execute [kvm]
+ RIP: 0010:kvm_put_kvm+0x2d/0x320 [kvm]
+ Call Trace:
+  <TASK>
+  async_pf_execute+0x198/0x260 [kvm]
+  process_one_work+0x145/0x2d0
+  worker_thread+0x27e/0x3a0
+  kthread+0xba/0xe0
+  ret_from_fork+0x2d/0x50
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
+ INFO: task kworker/8:1:251 blocked for more than 120 seconds.
+       Tainted: G        W          6.6.0-rc1-e7af8d17224a-x86/gmem-vm #119
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:kworker/8:1     state:D stack:0     pid:251   ppid:2      flags:0x00004000
+ Workqueue: events async_pf_execute [kvm]
+ Call Trace:
+  <TASK>
+  __schedule+0x33f/0xa40
+  schedule+0x53/0xc0
+  schedule_timeout+0x12a/0x140
+  __wait_for_common+0x8d/0x1d0
+  __flush_work.isra.0+0x19f/0x2c0
+  kvm_clear_async_pf_completion_queue+0x129/0x190 [kvm]
+  kvm_arch_destroy_vm+0x78/0x1b0 [kvm]
+  kvm_put_kvm+0x1c1/0x320 [kvm]
+  async_pf_execute+0x198/0x260 [kvm]
+  process_one_work+0x145/0x2d0
+  worker_thread+0x27e/0x3a0
+  kthread+0xba/0xe0
+  ret_from_fork+0x2d/0x50
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+If kvm_clear_async_pf_completion_queue() actually flushes the workqueue,
+then there's no need to gift async_pf_execute() a reference because all
+invocations of async_pf_execute() will be forced to complete before the
+vCPU and its VM are destroyed/freed.  And that in turn fixes the module
+unloading bug as __fput() won't do module_put() on the last vCPU reference
+until the vCPU has been freed, e.g. if closing the vCPU file also puts the
+last reference to the KVM module.
+
+Note that kvm_check_async_pf_completion() may also take the work item off
+the completion queue and so also needs to flush the work queue, as the
+work will not be seen by kvm_clear_async_pf_completion_queue().  Waiting
+on the workqueue could theoretically delay a vCPU due to waiting for the
+work to complete, but that's a very, very small chance, and likely a very
+small delay.  kvm_arch_async_page_present_queued() unconditionally makes a
+new request, i.e. will effectively delay entering the guest, so the
+remaining work is really just:
+
+        trace_kvm_async_pf_completed(addr, cr2_or_gpa);
+
+        __kvm_vcpu_wake_up(vcpu);
+
+        mmput(mm);
+
+and mmput() can't drop the last reference to the page tables if the vCPU is
+still alive, i.e. the vCPU won't get stuck tearing down page tables.
+
+Add a helper to do the flushing, specifically to deal with "wakeup all"
+work items, as they aren't actually work items, i.e. are never placed in a
+workqueue.  Trying to flush a bogus workqueue entry rightly makes
+__flush_work() complain (kudos to whoever added that sanity check).
+
+Note, commit 5f6de5cbebee ("KVM: Prevent module exit until all VMs are
+freed") *tried* to fix the module refcounting issue by having VMs grab a
+reference to the module, but that only made the bug slightly harder to hit
+as it gave async_pf_execute() a bit more time to complete before the KVM
+module could be unloaded.
+
+Fixes: af585b921e5d ("KVM: Halt vcpu if page it tries to access is swapped out")
+Cc: stable@vger.kernel.org
+Cc: David Matlack <dmatlack@google.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20240110011533.503302-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/mediactl/media-types.rst            | 11 ++--
- drivers/media/mc/mc-entity.c                  | 53 +++++++++++++++----
- 2 files changed, 48 insertions(+), 16 deletions(-)
+ virt/kvm/async_pf.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/userspace-api/media/mediactl/media-types.rst b/Documentation/userspace-api/media/mediactl/media-types.rst
-index 0ffeece1e0c8e..6332e8395263b 100644
---- a/Documentation/userspace-api/media/mediactl/media-types.rst
-+++ b/Documentation/userspace-api/media/mediactl/media-types.rst
-@@ -375,12 +375,11 @@ Types and flags used to represent the media graph elements
- 	  are origins of links.
+diff --git a/virt/kvm/async_pf.c b/virt/kvm/async_pf.c
+index 9bfe1d6f6529a..adaf6f141804f 100644
+--- a/virt/kvm/async_pf.c
++++ b/virt/kvm/async_pf.c
+@@ -88,7 +88,27 @@ static void async_pf_execute(struct work_struct *work)
+ 	__kvm_vcpu_wake_up(vcpu);
  
-     *  -  ``MEDIA_PAD_FL_MUST_CONNECT``
--       -  If this flag is set and the pad is linked to any other pad, then
--	  at least one of those links must be enabled for the entity to be
--	  able to stream. There could be temporary reasons (e.g. device
--	  configuration dependent) for the pad to need enabled links even
--	  when this flag isn't set; the absence of the flag doesn't imply
--	  there is none.
-+       -  If this flag is set, then for this pad to be able to stream, it must
-+	  be connected by at least one enabled link. There could be temporary
-+	  reasons (e.g. device configuration dependent) for the pad to need
-+	  enabled links even when this flag isn't set; the absence of the flag
-+	  doesn't imply there is none.
- 
- 
- One and only one of ``MEDIA_PAD_FL_SINK`` and ``MEDIA_PAD_FL_SOURCE``
-diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
-index 50b68b4dde5d0..8919df09e3e8d 100644
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -509,14 +509,15 @@ static int media_pipeline_walk_push(struct media_pipeline_walk *walk,
- 
- /*
-  * Move the top entry link cursor to the next link. If all links of the entry
-- * have been visited, pop the entry itself.
-+ * have been visited, pop the entry itself. Return true if the entry has been
-+ * popped.
-  */
--static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
-+static bool media_pipeline_walk_pop(struct media_pipeline_walk *walk)
- {
- 	struct media_pipeline_walk_entry *entry;
- 
- 	if (WARN_ON(walk->stack.top < 0))
--		return;
-+		return false;
- 
- 	entry = media_pipeline_walk_top(walk);
- 
-@@ -526,7 +527,7 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
- 			walk->stack.top);
- 
- 		walk->stack.top--;
--		return;
-+		return true;
- 	}
- 
- 	entry->links = entry->links->next;
-@@ -534,6 +535,8 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
- 	dev_dbg(walk->mdev->dev,
- 		"media pipeline: moved entry %u to next link\n",
- 		walk->stack.top);
+ 	mmput(mm);
+-	kvm_put_kvm(vcpu->kvm);
++}
 +
-+	return false;
- }
- 
- /* Free all memory allocated while walking the pipeline. */
-@@ -583,11 +586,12 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 	struct media_link *link;
- 	struct media_pad *local;
- 	struct media_pad *remote;
-+	bool last_link;
- 	int ret;
- 
- 	origin = entry->pad;
- 	link = list_entry(entry->links, typeof(*link), list);
--	media_pipeline_walk_pop(walk);
-+	last_link = media_pipeline_walk_pop(walk);
- 
- 	dev_dbg(walk->mdev->dev,
- 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
-@@ -612,7 +616,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 					   local->index)) {
- 		dev_dbg(walk->mdev->dev,
- 			"media pipeline: skipping link (no route)\n");
--		return 0;
-+		goto done;
- 	}
- 
- 	/*
-@@ -627,13 +631,44 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
- 		dev_dbg(walk->mdev->dev,
- 			"media pipeline: skipping link (disabled)\n");
--		return 0;
-+		goto done;
- 	}
- 
- 	ret = media_pipeline_add_pad(pipe, walk, remote);
- 	if (ret)
- 		return ret;
- 
-+done:
++static void kvm_flush_and_free_async_pf_work(struct kvm_async_pf *work)
++{
 +	/*
-+	 * If we're done iterating over links, iterate over pads of the entity.
-+	 * This is necessary to discover pads that are not connected with any
-+	 * link. Those are dead ends from a pipeline exploration point of view,
-+	 * but are still part of the pipeline and need to be added to enable
-+	 * proper validation.
++	 * The async #PF is "done", but KVM must wait for the work item itself,
++	 * i.e. async_pf_execute(), to run to completion.  If KVM is a module,
++	 * KVM must ensure *no* code owned by the KVM (the module) can be run
++	 * after the last call to module_put().  Note, flushing the work item
++	 * is always required when the item is taken off the completion queue.
++	 * E.g. even if the vCPU handles the item in the "normal" path, the VM
++	 * could be terminated before async_pf_execute() completes.
++	 *
++	 * Wake all events skip the queue and go straight done, i.e. don't
++	 * need to be flushed (but sanity check that the work wasn't queued).
 +	 */
-+	if (!last_link)
-+		return 0;
-+
-+	dev_dbg(walk->mdev->dev,
-+		"media pipeline: adding unconnected pads of '%s'\n",
-+		local->entity->name);
-+
-+	media_entity_for_each_pad(origin->entity, local) {
-+		/*
-+		 * Skip the origin pad (already handled), pad that have links
-+		 * (already discovered through iterating over links) and pads
-+		 * not internally connected.
-+		 */
-+		if (origin == local || !local->num_links ||
-+		    !media_entity_has_pad_interdep(origin->entity, origin->index,
-+						   local->index))
-+			continue;
-+
-+		ret = media_pipeline_add_pad(pipe, walk, local);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return 0;
++	if (work->wakeup_all)
++		WARN_ON_ONCE(work->work.func);
++	else
++		flush_work(&work->work);
++	kmem_cache_free(async_pf_cache, work);
  }
  
-@@ -745,7 +780,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
- 		struct media_pad *pad = ppad->pad;
- 		struct media_entity *entity = pad->entity;
- 		bool has_enabled_link = false;
--		bool has_link = false;
- 		struct media_link *link;
+ void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
+@@ -115,7 +135,6 @@ void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
+ #else
+ 		if (cancel_work_sync(&work->work)) {
+ 			mmput(work->mm);
+-			kvm_put_kvm(vcpu->kvm); /* == work->vcpu->kvm */
+ 			kmem_cache_free(async_pf_cache, work);
+ 		}
+ #endif
+@@ -127,7 +146,10 @@ void kvm_clear_async_pf_completion_queue(struct kvm_vcpu *vcpu)
+ 			list_first_entry(&vcpu->async_pf.done,
+ 					 typeof(*work), link);
+ 		list_del(&work->link);
+-		kmem_cache_free(async_pf_cache, work);
++
++		spin_unlock(&vcpu->async_pf.lock);
++		kvm_flush_and_free_async_pf_work(work);
++		spin_lock(&vcpu->async_pf.lock);
+ 	}
+ 	spin_unlock(&vcpu->async_pf.lock);
  
- 		dev_dbg(mdev->dev, "Validating pad '%s':%u\n", pad->entity->name,
-@@ -775,7 +809,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
- 			/* Record if the pad has links and enabled links. */
- 			if (link->flags & MEDIA_LNK_FL_ENABLED)
- 				has_enabled_link = true;
--			has_link = true;
+@@ -152,7 +174,7 @@ void kvm_check_async_pf_completion(struct kvm_vcpu *vcpu)
  
- 			/*
- 			 * Validate the link if it's enabled and has the
-@@ -813,7 +846,7 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
- 		 * 3. If the pad has the MEDIA_PAD_FL_MUST_CONNECT flag set,
- 		 * ensure that it has either no link or an enabled link.
- 		 */
--		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) && has_link &&
-+		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) &&
- 		    !has_enabled_link) {
- 			dev_dbg(mdev->dev,
- 				"Pad '%s':%u must be connected by an enabled link\n",
+ 		list_del(&work->queue);
+ 		vcpu->async_pf.queued--;
+-		kmem_cache_free(async_pf_cache, work);
++		kvm_flush_and_free_async_pf_work(work);
+ 	}
+ }
+ 
+@@ -187,7 +209,6 @@ bool kvm_setup_async_pf(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 	work->arch = *arch;
+ 	work->mm = current->mm;
+ 	mmget(work->mm);
+-	kvm_get_kvm(work->vcpu->kvm);
+ 
+ 	INIT_WORK(&work->work, async_pf_execute);
+ 
 -- 
 2.43.0
 
