@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B12481C6;
-	Mon,  1 Apr 2024 15:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA74C481C6;
+	Mon,  1 Apr 2024 15:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986785; cv=none; b=KTza+YZGOVq8/PFJyXckuVdrRALJkWqUiaisi4W+TpgMuQePaxMAM6rj9VK/dYxEcjuvJIch6YUde/VuP0/+/cG+6H02OJwb9ftR+qAJcH1wMj73Z6HSZXHPJd7g2NSzA6LBrCwnMXKIAcgkrhMm6odGGA7puOUhC8kqrap1aKk=
+	t=1711986788; cv=none; b=HaemhamZV9cH75gHvl1TP24prMe3pKpPyM38Frx52Vc/alx9OUOWHeHWD51Z7pqVcHFkR8kgTIkPV7R+DkxC3JQVnybPnIQJJtCYKXtX5UOlf6618XI9IwZI51P05EsZUdctWFxSNC5tJZT/HJZNyXJuZUSxj4i0if0TdCZ7/Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986785; c=relaxed/simple;
-	bh=hRug/QPMx+aqn3HedK8WQ90rozSa7LGLvHTJu/jlIkY=;
+	s=arc-20240116; t=1711986788; c=relaxed/simple;
+	bh=NVZKhMhBpLsaJiOx2t08oCgzk0/pmxaOTDFs/4v036A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ueeQTwO8AlTkiD76DoVq502lrdeGZFtZpvoYzJhjJ1gxrSsoXBKXg5gyvKnjRIkXSwPFc9gkL7I9jufZ2t+q81pUdJcWlN5iOSMvkVYQdKbl2VzhkmVUsZ/Zq9LaDbZAOgqkyKpMt4TU08YQp454pBIumR9Xb+E3WZAnIPkwB0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElDgd4OQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pz7e6vWH2Bm0Gn+W0kXUNY4hkLXbN8c+9DIy9z6+DsweWUjzdfCZAzrCxG2SQQ9zfOq1rqPIvy/WGMPLjePH7CWB0emI++j/jiA3AW78gSNXuzig5UYADsV+z9mXB8pRGG4skJ3hfGBlndNp3cVXSoSfidADIsDYEmMQWRl/AW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYHkXCXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElDgd4OQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B575C433F1;
-	Mon,  1 Apr 2024 15:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYHkXCXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AB6C433C7;
+	Mon,  1 Apr 2024 15:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986785;
-	bh=hRug/QPMx+aqn3HedK8WQ90rozSa7LGLvHTJu/jlIkY=;
+	s=korg; t=1711986788;
+	bh=NVZKhMhBpLsaJiOx2t08oCgzk0/pmxaOTDFs/4v036A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElDgd4OQmioq486Sl60KsQhOg7tkZvTzXHz7ZuuwDUH4HLQSao6AnxbFQnST8JhPI
-	 puw1UCt8mjLIK+ngR6ugWAu3+MVhsHPiVHe1zBDzZd9Fovr8neDOKikC/odPFduqZl
-	 ifOh3CtWGMk+alyFDqs3Jzc5MM3i7ACbyydtqhcY=
+	b=uYHkXCXA79wRhj87sJsF7QfXltBjwMmLnw7rcXLmeC8A0M6gCn1bmhlnkpv/iPCJT
+	 0PJSTch1FWIhbh77qWeuySo+At1uS6KXh6LW8bvtQbUbxBfzeX4EEtibZlMkBx3XE5
+	 +t/+ZKhqYEsrVsqkSOxljdi1Fe5UggMB5LaPlC4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivnandan Kumar <quic_kshivnan@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Toru Katagiri <Toru.Katagiri@tdk.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 067/399] cpufreq: Limit resolving a frequency to policy min/max
-Date: Mon,  1 Apr 2024 17:40:33 +0200
-Message-ID: <20240401152551.186820594@linuxfoundation.org>
+Subject: [PATCH 6.8 085/399] USB: serial: cp210x: add pid/vid for TDK NC0110013M and MM0110113M
+Date: Mon,  1 Apr 2024 17:40:51 +0200
+Message-ID: <20240401152551.716430271@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,62 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+From: Toru Katagiri <Toru.Katagiri@tdk.com>
 
-[ Upstream commit d394abcb12bb1a6f309c1221fdb8e73594ecf1b4 ]
+[ Upstream commit b1a8da9ff1395c4879b4bd41e55733d944f3d613 ]
 
-Resolving a frequency to an efficient one should not transgress
-policy->max (which can be set for thermal reason) and policy->min.
+TDK NC0110013M and MM0110113M have custom USB IDs for CP210x,
+so we need to add them to the driver.
 
-Currently, there is possibility where scaling_cur_freq can exceed
-scaling_max_freq when scaling_max_freq is an inefficient frequency.
-
-Add a check to ensure that resolving a frequency will respect
-policy->min/max.
-
-Cc: All applicable <stable@vger.kernel.org>
-Fixes: 1f39fa0dccff ("cpufreq: Introducing CPUFREQ_RELATION_E")
-Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-[ rjw: Whitespace adjustment, changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Toru Katagiri <Toru.Katagiri@tdk.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cpufreq.h | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/usb/serial/cp210x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index afda5f24d3ddc..320fab7d2e940 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -1021,6 +1021,18 @@ static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
- 						   efficiencies);
- }
- 
-+static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
-+{
-+	unsigned int freq;
-+
-+	if (idx < 0)
-+		return false;
-+
-+	freq = policy->freq_table[idx].frequency;
-+
-+	return freq == clamp_val(freq, policy->min, policy->max);
-+}
-+
- static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 						 unsigned int target_freq,
- 						 unsigned int relation)
-@@ -1054,7 +1066,8 @@ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 		return 0;
- 	}
- 
--	if (idx < 0 && efficiencies) {
-+	/* Limit frequency index to honor policy->min/max */
-+	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
- 		efficiencies = false;
- 		goto retry;
- 	}
+diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
+index 2169b6549a260..21fd26609252b 100644
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -56,6 +56,8 @@ static const struct usb_device_id id_table[] = {
+ 	{ USB_DEVICE(0x0471, 0x066A) }, /* AKTAKOM ACE-1001 cable */
+ 	{ USB_DEVICE(0x0489, 0xE000) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
+ 	{ USB_DEVICE(0x0489, 0xE003) }, /* Pirelli Broadband S.p.A, DP-L10 SIP/GSM Mobile */
++	{ USB_DEVICE(0x04BF, 0x1301) }, /* TDK Corporation NC0110013M - Network Controller */
++	{ USB_DEVICE(0x04BF, 0x1303) }, /* TDK Corporation MM0110113M - i3 Micro Module */
+ 	{ USB_DEVICE(0x0745, 0x1000) }, /* CipherLab USB CCD Barcode Scanner 1000 */
+ 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
+ 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
 -- 
 2.43.0
 
