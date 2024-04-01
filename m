@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1092743AD6;
-	Mon,  1 Apr 2024 16:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FAF383BA;
+	Mon,  1 Apr 2024 16:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987333; cv=none; b=iMvDztRngZp4hdgxW4vJMjPlTt30+MHmeiHizNYjBHu+/zNjeAncRcdIFAgWa+DMep/7LnYMfXYxQxHgglDrMOrv0Wop1ty6xYPkgkYLZId3SpVKJTiS0bXYSCAEoE0RxgIYMZ9OWaqgDFEJFMLWkucj9pdFQCeQtPXfjzQjhss=
+	t=1711987336; cv=none; b=JRWDZKiPk4ktFH3ZxMt0Yxce6oJiVulws1ptEyvC38XErJd3vQsyccs3W1/bijHwx7v5GdK2waDi05ptcCB5aL58yRiuaCS1o3/9XAdDdwELu/zk8JnwJu+EbdlypkP6Cpy9vtLx84VEsxaGxpby0aUUgYdZ/P3DhPARi8E9Ik0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987333; c=relaxed/simple;
-	bh=FHRErNPf2CwkP4Qo9YGe4VTE9ZDXGan1MZjyzFgi2kw=;
+	s=arc-20240116; t=1711987336; c=relaxed/simple;
+	bh=7/nGsSS5swHOlSY6nVhDCaKR94uqa43pq0wHQCHpNOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b5ZrtPjkAbiWAfcPJCZ+Xup1D5GpHkKaSZ3Rq2jPoS5sie8oIZPzv287zRmzOr0ovp75Oeb1j7I83r1f5+xTamxbTym7HZQD02Q56dCGcDk40ilwpvt7KSSVtrr2ZDIHx/u79C7RRQ0yp4zkLY+F8DpiLx2HkoF0DQWuGEU75HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1fTbFXu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hrda1rI6kqJaf5ts4YMyOzYA9uzRVYgbGCvF4ZvmPbuTGUMDE0nIFstPeNV0VsjEmTXLhLnmH+X9WmT4s4UFswTxUzhajs1nKIbngzhHpx8RgXU62WsjtvprWmQ8KyszrA+0uS7osm4Y2Gkd45HOqbpfpzA22VrCbbDDb63lJl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q68bHsgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1fTbFXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8660DC433F1;
-	Mon,  1 Apr 2024 16:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q68bHsgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2F2C433F1;
+	Mon,  1 Apr 2024 16:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987332;
-	bh=FHRErNPf2CwkP4Qo9YGe4VTE9ZDXGan1MZjyzFgi2kw=;
+	s=korg; t=1711987336;
+	bh=7/nGsSS5swHOlSY6nVhDCaKR94uqa43pq0wHQCHpNOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1fTbFXuL/6ehSVgfdl3x5FB831OIoB59QVKQGztcwHq7xrtuEUamXWxxTuTfvF/M
-	 DjltvPVxv9vVzFlQRCnUnwL8/T0MXp5n0YY0q+mSx5im5FABGATxFpy+vMqSPRO+yx
-	 6PLlQ7HenM4z+USlsGA+7q9doMdsyqRiBnkl+gj8=
+	b=q68bHsgrus9W3GGIpeOfFLo/4m3yr1vX5/2D09Uogh+LXKAINc29nWA+dlKEIv6Ag
+	 zMtACXumePg+GMHksY0D/eOpGm5Oo2+Ga9RU85cwPQVe0Ej5oTRXX81gX2+Jm3/+Eg
+	 XxIqlZBuoqT3sqXQ/ygMROHa2aJ5o5ZigqO3UDGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rapoport <rppt@linux.ibm.com>,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	=?UTF-8?q?Andr=C3=A9=20R=C3=B6sti?= <an.roesti@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 255/399] ARM: 9359/1: flush: check if the folio is reserved for no-mapping addresses
-Date: Mon,  1 Apr 2024 17:43:41 +0200
-Message-ID: <20240401152556.786253567@linuxfoundation.org>
+Subject: [PATCH 6.8 256/399] entry: Respect changes to system call number by trace_sys_enter()
+Date: Mon,  1 Apr 2024 17:43:42 +0200
+Message-ID: <20240401152556.816393446@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,70 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+From: André Rösti <an.roesti@gmail.com>
 
-[ Upstream commit 0c66c6f4e21cb22220cbd8821c5c73fc157d20dc ]
+[ Upstream commit fb13b11d53875e28e7fbf0c26b288e4ea676aa9f ]
 
-Since commit a4d5613c4dc6 ("arm: extend pfn_valid to take into account
-freed memory map alignment") changes the semantics of pfn_valid() to check
-presence of the memory map for a PFN. A valid page for an address which
-is reserved but not mapped by the kernel[1], the system crashed during
-some uio test with the following memory layout:
+When a probe is registered at the trace_sys_enter() tracepoint, and that
+probe changes the system call number, the old system call still gets
+executed.  This worked correctly until commit b6ec41346103 ("core/entry:
+Report syscall correctly for trace and audit"), which removed the
+re-evaluation of the syscall number after the trace point.
 
- node   0: [mem 0x00000000c0a00000-0x00000000cc8fffff]
- node   0: [mem 0x00000000d0000000-0x00000000da1fffff]
- the uio layout is：0xc0900000, 0x100000
+Restore the original semantics by re-evaluating the system call number
+after trace_sys_enter().
 
-the crash backtrace like:
+The performance impact of this re-evaluation is minimal because it only
+takes place when a trace point is active, and compared to the actual trace
+point overhead the read from a cache hot variable is negligible.
 
-  Unable to handle kernel paging request at virtual address bff00000
-  [...]
-  CPU: 1 PID: 465 Comm: startapp.bin Tainted: G           O      5.10.0 #1
-  Hardware name: Generic DT based system
-  PC is at b15_flush_kern_dcache_area+0x24/0x3c
-  LR is at __sync_icache_dcache+0x6c/0x98
-  [...]
-   (b15_flush_kern_dcache_area) from (__sync_icache_dcache+0x6c/0x98)
-   (__sync_icache_dcache) from (set_pte_at+0x28/0x54)
-   (set_pte_at) from (remap_pfn_range+0x1a0/0x274)
-   (remap_pfn_range) from (uio_mmap+0x184/0x1b8 [uio])
-   (uio_mmap [uio]) from (__mmap_region+0x264/0x5f4)
-   (__mmap_region) from (__do_mmap_mm+0x3ec/0x440)
-   (__do_mmap_mm) from (do_mmap+0x50/0x58)
-   (do_mmap) from (vm_mmap_pgoff+0xfc/0x188)
-   (vm_mmap_pgoff) from (ksys_mmap_pgoff+0xac/0xc4)
-   (ksys_mmap_pgoff) from (ret_fast_syscall+0x0/0x5c)
-  Code: e0801001 e2423001 e1c00003 f57ff04f (ee070f3e)
-  ---[ end trace 09cf0734c3805d52 ]---
-  Kernel panic - not syncing: Fatal exception
-
-So check if PG_reserved was set to solve this issue.
-
-[1]: https://lore.kernel.org/lkml/Zbtdue57RO0QScJM@linux.ibm.com/
-
-Fixes: a4d5613c4dc6 ("arm: extend pfn_valid to take into account freed memory map alignment")
-Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: b6ec41346103 ("core/entry: Report syscall correctly for trace and audit")
+Signed-off-by: André Rösti <an.roesti@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240311211704.7262-1-an.roesti@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/flush.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/entry/common.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/flush.c b/arch/arm/mm/flush.c
-index d19d140a10c7d..0749cf8a66371 100644
---- a/arch/arm/mm/flush.c
-+++ b/arch/arm/mm/flush.c
-@@ -296,6 +296,9 @@ void __sync_icache_dcache(pte_t pteval)
- 		return;
+diff --git a/kernel/entry/common.c b/kernel/entry/common.c
+index 88cb3c88aaa5c..90843cc385880 100644
+--- a/kernel/entry/common.c
++++ b/kernel/entry/common.c
+@@ -57,8 +57,14 @@ long syscall_trace_enter(struct pt_regs *regs, long syscall,
+ 	/* Either of the above might have changed the syscall number */
+ 	syscall = syscall_get_nr(current, regs);
  
- 	folio = page_folio(pfn_to_page(pfn));
-+	if (folio_test_reserved(folio))
-+		return;
-+
- 	if (cache_is_vipt_aliasing())
- 		mapping = folio_flush_mapping(folio);
- 	else
+-	if (unlikely(work & SYSCALL_WORK_SYSCALL_TRACEPOINT))
++	if (unlikely(work & SYSCALL_WORK_SYSCALL_TRACEPOINT)) {
+ 		trace_sys_enter(regs, syscall);
++		/*
++		 * Probes or BPF hooks in the tracepoint may have changed the
++		 * system call number as well.
++		 */
++		syscall = syscall_get_nr(current, regs);
++	}
+ 
+ 	syscall_enter_audit(regs, syscall);
+ 
 -- 
 2.43.0
 
