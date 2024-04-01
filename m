@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0B340876;
-	Mon,  1 Apr 2024 17:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A927240876;
+	Mon,  1 Apr 2024 17:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991314; cv=none; b=ikHdBxHGvoVUFhJAvIs8V7Ote2N6Ub9bDMkLeaSsVIwLudV2kkgvNg7qXqQMiNYYAhlQD45nEHnfCjHXtCrmebfFvMRnNj37r8hTyuPYr2vKCbc7mSO0QIE1jw2+xpao2aTUIq3y0eMezi1jgFGCKIVdKuCn0/Gn7kI0dgbVyXw=
+	t=1711991317; cv=none; b=NywYX7F7pH/XIJcRfIcBzR9hzX9vgI74HxMfLeJ5aoH+Rreh0vk5/UX/rtZxb6ebssGww1tu/2MQEvEGEUJc/fyOCGxIrmWpHWdH9FFwVwokX81aCqSU2PVDqyFQ/LCO1IQi5V8YxTXhrpblFp+XENYmeYrNUJw2WG16/upjNus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991314; c=relaxed/simple;
-	bh=uDeA9SrJ+y+fHoqP4nfcTOlYYh1chtURrx2BGObXRBo=;
+	s=arc-20240116; t=1711991317; c=relaxed/simple;
+	bh=0YkjusKbRsZuj00K7qIwHmyzJy+/usZCn/S6KBhAyY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NapzL/a0P6aZTooJlfUFJek9dkU0JSuM40PFHZnZ1N2os6VH/elPd5YVxSawJ37oDnhbn7osNBFku31VRVC9qz8YLdr4SL+ps1EUssR0fnVowXNtGnBgVM6guOtdZgZ6anX46GsBhdezMKt4xbJ1tnc//Tnj2bfKTCsuZEJ4SCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQ2nmL8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZLggtL1bnbzRusGQ38Hi4/k88hKPv49fDKrivKn1b0vkCComH0tp/cjRR9y6GZXbEVvBPVHfEMPcxvNRGj7Ax2tB50bUeF6i/RxDRA1K6e5OvLjXHNcARrtoiFb56z4se3kJV4nfSQp0z69H784cWU1kEKASZatK6q/V/c0abk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVzTTZgA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQ2nmL8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06D9C433F1;
-	Mon,  1 Apr 2024 17:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVzTTZgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19820C433C7;
+	Mon,  1 Apr 2024 17:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991314;
-	bh=uDeA9SrJ+y+fHoqP4nfcTOlYYh1chtURrx2BGObXRBo=;
+	s=korg; t=1711991317;
+	bh=0YkjusKbRsZuj00K7qIwHmyzJy+/usZCn/S6KBhAyY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQ2nmL8qRzD1e7BToUkvDncj5YpJg8veqEBRbWp+YO5SwS5fT4ozbrH5sQvcYIZ1g
-	 E/G+EKHXyeGKwWNciyHF3PX01ndgqZcuFylF7wQ7/ig6ni4dKqOvfYFwc61CwVMrbl
-	 L2rtVp43IBzNYSJlkhpp1XFQ3a+Tf2u7Ql9wBdso=
+	b=PVzTTZgANZnysYtzuP6DJ8oePZYFbYgxWhds1U/+yDpT8hGnasOkn1eJG+1eLbiBL
+	 h4vDUn/cmYC/sAWoTklpf1tUIwHAJTMy2IhvugVUPHWEoEaqGUNu3RYUbzKaPtPDQQ
+	 5uGQUt5U2Akst0iBS/RCmXPWMJaM3jDdCebLRoGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 228/272] drm/i915/bios: Tolerate devdata==NULL in intel_bios_encoder_supports_dp_dual_mode()
-Date: Mon,  1 Apr 2024 17:46:58 +0200
-Message-ID: <20240401152538.078352736@linuxfoundation.org>
+	Clayton Craft <clayton@craftyguy.net>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 211/272] x86/efistub: Add missing boot_params for mixed mode compat entry
+Date: Mon,  1 Apr 2024 17:46:41 +0200
+Message-ID: <20240401152537.519783973@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -45,47 +46,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 32e39bab59934bfd3f37097d4dd85ac5eb0fd549 upstream.
+commit d21f5a59ea773826cc489acb287811d690b703cc upstream.
 
-If we have no VBT, or the VBT didn't declare the encoder
-in question, we won't have the 'devdata' for the encoder.
-Instead of oopsing just bail early.
+The pure EFI stub entry point does not take a struct boot_params from
+the boot loader, but creates it from scratch, and populates only the
+fields that still have meaning in this context (command line, initrd
+base and size, etc)
 
-We won't be able to tell whether the port is DP++ or not,
-but so be it.
+The original mixed mode implementation used the EFI handover protocol
+instead, where the boot loader (i.e., GRUB) populates a boot_params
+struct and passes it to a special Linux specific EFI entry point that
+takes the boot_params pointer as its third argument.
 
-Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10464
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240319092443.15769-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 26410896206342c8a80d2b027923e9ee7d33b733)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+When the new mixed mode implementation was introduced, using a special
+32-bit PE entrypoint in the 64-bit kernel, it adopted the pure approach,
+and relied on the EFI stub to create the struct boot_params.  This is
+preferred because it makes the bootloader side much easier to implement,
+as it does not need any x86-specific knowledge on how struct boot_params
+and struct setup_header are put together. This mixed mode implementation
+was adopted by systemd-boot version 252 and later.
+
+When commit
+
+  e2ab9eab324c ("x86/boot/compressed: Move 32-bit entrypoint code into .text section")
+
+refactored this code and moved it out of head_64.S, the fact that ESI
+was populated with the address of the base of the image was overlooked,
+and to simplify the code flow, ESI is now zeroed and stored to memory
+unconditionally in shared code, so that the NULL-ness of that variable
+can still be used later to determine which mixed mode boot protocol is
+in use.
+
+With ESI pointing to the base of the image, it can serve as a struct
+boot_params pointer for startup_32(), which only accesses the init_data
+and kernel_alignment fields (and the scratch field as a temporary
+stack). Zeroing ESI means that those accesses produce garbage now, even
+though things appear to work if the first page of memory happens to be
+zeroed, and the region right before LOAD_PHYSICAL_ADDR (== 16 MiB)
+happens to be free.
+
+The solution is to pass a special, temporary struct boot_params to
+startup_32() via ESI, one that is sufficient for getting it to create
+the page tables correctly and is discarded right after. This involves
+setting a minimal alignment of 4k, only to get the statically allocated
+page tables line up correctly, and setting init_size to the executable
+image size (_end - startup_32). This ensures that the page tables are
+covered by the static footprint of the PE image.
+
+Given that EFI boot no longer calls the decompressor and no longer pads
+the image to permit the decompressor to execute in place, the same
+temporary struct boot_params should be used in the EFI handover protocol
+based mixed mode implementation as well, to prevent the page tables from
+being placed outside of allocated memory.
+
+Fixes: e2ab9eab324c ("x86/boot/compressed: Move 32-bit entrypoint code into .text section")
+Cc: <stable@kernel.org> # v6.1+
+Closes: https://lore.kernel.org/all/20240321150510.GI8211@craftyguy.net/
+Reported-by: Clayton Craft <clayton@craftyguy.net>
+Tested-by: Clayton Craft <clayton@craftyguy.net>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/boot/compressed/efi_mixed.S |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -3413,6 +3413,9 @@ static bool intel_bios_encoder_supports_
- {
- 	const struct child_device_config *child = &devdata->child;
+--- a/arch/x86/boot/compressed/efi_mixed.S
++++ b/arch/x86/boot/compressed/efi_mixed.S
+@@ -15,10 +15,12 @@
+  */
  
-+	if (!devdata)
-+		return false;
+ #include <linux/linkage.h>
++#include <asm/asm-offsets.h>
+ #include <asm/msr.h>
+ #include <asm/page_types.h>
+ #include <asm/processor-flags.h>
+ #include <asm/segment.h>
++#include <asm/setup.h>
+ 
+ 	.code64
+ 	.text
+@@ -155,6 +157,7 @@ SYM_FUNC_END(__efi64_thunk)
+ SYM_FUNC_START(efi32_stub_entry)
+ 	call	1f
+ 1:	popl	%ecx
++	leal	(efi32_boot_args - 1b)(%ecx), %ebx
+ 
+ 	/* Clear BSS */
+ 	xorl	%eax, %eax
+@@ -169,6 +172,7 @@ SYM_FUNC_START(efi32_stub_entry)
+ 	popl	%ecx
+ 	popl	%edx
+ 	popl	%esi
++	movl	%esi, 8(%ebx)
+ 	jmp	efi32_entry
+ SYM_FUNC_END(efi32_stub_entry)
+ #endif
+@@ -245,8 +249,6 @@ SYM_FUNC_END(efi_enter32)
+  *
+  * Arguments:	%ecx	image handle
+  * 		%edx	EFI system table pointer
+- *		%esi	struct bootparams pointer (or NULL when not using
+- *			the EFI handover protocol)
+  *
+  * Since this is the point of no return for ordinary execution, no registers
+  * are considered live except for the function parameters. [Note that the EFI
+@@ -272,9 +274,18 @@ SYM_FUNC_START_LOCAL(efi32_entry)
+ 	leal	(efi32_boot_args - 1b)(%ebx), %ebx
+ 	movl	%ecx, 0(%ebx)
+ 	movl	%edx, 4(%ebx)
+-	movl	%esi, 8(%ebx)
+ 	movb	$0x0, 12(%ebx)          // efi_is64
+ 
++	/*
++	 * Allocate some memory for a temporary struct boot_params, which only
++	 * needs the minimal pieces that startup_32() relies on.
++	 */
++	subl	$PARAM_SIZE, %esp
++	movl	%esp, %esi
++	movl	$PAGE_SIZE, BP_kernel_alignment(%esi)
++	movl	$_end - 1b, BP_init_size(%esi)
++	subl	$startup_32 - 1b, BP_init_size(%esi)
 +
- 	if (!intel_bios_encoder_supports_dp(devdata) ||
- 	    !intel_bios_encoder_supports_hdmi(devdata))
- 		return false;
+ 	/* Disable paging */
+ 	movl	%cr0, %eax
+ 	btrl	$X86_CR0_PG_BIT, %eax
+@@ -300,8 +311,7 @@ SYM_FUNC_START(efi32_pe_entry)
+ 
+ 	movl	8(%ebp), %ecx			// image_handle
+ 	movl	12(%ebp), %edx			// sys_table
+-	xorl	%esi, %esi
+-	jmp	efi32_entry			// pass %ecx, %edx, %esi
++	jmp	efi32_entry			// pass %ecx, %edx
+ 						// no other registers remain live
+ 
+ 2:	popl	%edi				// restore callee-save registers
 
 
