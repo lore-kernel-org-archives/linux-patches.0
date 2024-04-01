@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA5753E15;
-	Mon,  1 Apr 2024 15:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8873FE2D;
+	Mon,  1 Apr 2024 15:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986882; cv=none; b=mMfzn6NROfjdqC6/bs4vG9mOnUIJ/BwWeA4t7ytxtXhy3f5+TAp6cvJ5DY4TlXcQT4Xe6OAr7clxhS/CV/TIo0a8hboMmEg8x3bWFmvxzDg2Ov9t5S7M8kHNWKUslytG6X+c2f57VbWfnhp1Nx39r3xnsfsw0ErtLLo9fJjwtdo=
+	t=1711986887; cv=none; b=rALx7wYWPNpQvU5rXSVFAoqOtEFYjeVmo8wDZOIbVrsg0oCtZaMhSazKOy4Lf1SFcDY6Zh56GVCifv0Sx63pftCC8oS3dYw181hiDMIVrEX5qvVhtJPuhCbJ5LcVssknUD5YWLPtxBfGc530KocHJnCeHE9hn+uYozFjr+cD8Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986882; c=relaxed/simple;
-	bh=j92lLH/g3LjFyMa6wxEl5nCeTg9NTC6oj4/H54fdigI=;
+	s=arc-20240116; t=1711986887; c=relaxed/simple;
+	bh=2VMu6tDIfbYyEXc5vVp7PP1v8ltqWIZtnjNSaJP98uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBMLU8yjCQHYxXlf5CoygS8XKwF1sW657SAsjYvkGUEfsAFMENfpwZyvLaAZPyogYXPn8Ho1U6OJbrF8Zq62V3i6oY8lHIg6lQDigm7Zj9uw14c7wCsXI7p/5d4LEtBhJ//Mesg1WJcTF/9t60mj7PhMTXLbIZCJxsKBNv915R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPa7DSyU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPNtFEczgJ+YCz3gMYtMEHvVyRt0i4Z/vlMBCqaq3xL/MGpEMmcM7G2jP1Bj9b9YK10Ym0oyBBwKq1Oyg/rjXQwG2MLukBloA+ovjoDzNN8gNiYY/fDTr9H26UqDhOxiSV6EEvMtb9FJjRiSOI2EdmOfDG3Dyav8hohNtXtWfng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0zriyS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPa7DSyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364BBC433F1;
-	Mon,  1 Apr 2024 15:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0zriyS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77401C433C7;
+	Mon,  1 Apr 2024 15:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986882;
-	bh=j92lLH/g3LjFyMa6wxEl5nCeTg9NTC6oj4/H54fdigI=;
+	s=korg; t=1711986885;
+	bh=2VMu6tDIfbYyEXc5vVp7PP1v8ltqWIZtnjNSaJP98uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPa7DSyUHhn6jSEhK6lm8BOf2UP/OQqRddRnFk7ZvWBNuuhjzjIbwYg66u4XRIIt4
-	 s6MrnWfCIQkJRw4nKQ4yCnJZ+gFEYtleS55zRyDOjT06R1e37O3DBI9FDmlUrd6e2p
-	 mi5hLP2PB656vwXW4bNWG52VyJpsVujAvMXbTcjo=
+	b=Y0zriyS/50+CSlNOKYl3efDBz9Q/NQHOIGzcwIY8JieZMlpry7EYadfFMes6HnkQ7
+	 jPvb7O1xStv+3797lPqU7++aZUImVII9H3z5PinoCyy427mLU/yiTpFc+HgDy0/SQ5
+	 gyo5KBQdf/g0cMbOv0z21ofRiOcJj5o5hIHnx1gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 116/399] mm: swap: fix race between free_swap_and_cache() and swapoff()
-Date: Mon,  1 Apr 2024 17:41:22 +0200
-Message-ID: <20240401152552.653009386@linuxfoundation.org>
+Subject: [PATCH 6.8 117/399] mmc: core: Fix switch on gp3 partition
+Date: Mon,  1 Apr 2024 17:41:23 +0200
+Message-ID: <20240401152552.682298190@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,117 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit 82b1c07a0af603e3c47b906c8e991dc96f01688e ]
+[ Upstream commit 4af59a8df5ea930038cd3355e822f5eedf4accc1 ]
 
-There was previously a theoretical window where swapoff() could run and
-teardown a swap_info_struct while a call to free_swap_and_cache() was
-running in another thread.  This could cause, amongst other bad
-possibilities, swap_page_trans_huge_swapped() (called by
-free_swap_and_cache()) to access the freed memory for swap_map.
+Commit e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB
+partitions.") added a mask check for 'part_type', but the mask used was
+wrong leading to the code intended for rpmb also being executed for GP3.
 
-This is a theoretical problem and I haven't been able to provoke it from a
-test case.  But there has been agreement based on code review that this is
-possible (see link below).
+On some MMCs (but not all) this would make gp3 partition inaccessible:
+armadillo:~# head -c 1 < /dev/mmcblk2gp3
+head: standard input: I/O error
+armadillo:~# dmesg -c
+[  422.976583] mmc2: running CQE recovery
+[  423.058182] mmc2: running CQE recovery
+[  423.137607] mmc2: running CQE recovery
+[  423.137802] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 4 prio class 0
+[  423.237125] mmc2: running CQE recovery
+[  423.318206] mmc2: running CQE recovery
+[  423.397680] mmc2: running CQE recovery
+[  423.397837] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[  423.408287] Buffer I/O error on dev mmcblk2gp3, logical block 0, async page read
 
-Fix it by using get_swap_device()/put_swap_device(), which will stall
-swapoff().  There was an extra check in _swap_info_get() to confirm that
-the swap entry was not free.  This isn't present in get_swap_device()
-because it doesn't make sense in general due to the race between getting
-the reference and swapoff.  So I've added an equivalent check directly in
-free_swap_and_cache().
+the part_type values of interest here are defined as follow:
+main  0
+boot0 1
+boot1 2
+rpmb  3
+gp0   4
+gp1   5
+gp2   6
+gp3   7
 
-Details of how to provoke one possible issue (thanks to David Hildenbrand
-for deriving this):
+so mask with EXT_CSD_PART_CONFIG_ACC_MASK (7) to correctly identify rpmb
 
---8<-----
-
-__swap_entry_free() might be the last user and result in
-"count == SWAP_HAS_CACHE".
-
-swapoff->try_to_unuse() will stop as soon as soon as si->inuse_pages==0.
-
-So the question is: could someone reclaim the folio and turn
-si->inuse_pages==0, before we completed swap_page_trans_huge_swapped().
-
-Imagine the following: 2 MiB folio in the swapcache. Only 2 subpages are
-still references by swap entries.
-
-Process 1 still references subpage 0 via swap entry.
-Process 2 still references subpage 1 via swap entry.
-
-Process 1 quits. Calls free_swap_and_cache().
--> count == SWAP_HAS_CACHE
-[then, preempted in the hypervisor etc.]
-
-Process 2 quits. Calls free_swap_and_cache().
--> count == SWAP_HAS_CACHE
-
-Process 2 goes ahead, passes swap_page_trans_huge_swapped(), and calls
-__try_to_reclaim_swap().
-
-__try_to_reclaim_swap()->folio_free_swap()->delete_from_swap_cache()->
-put_swap_folio()->free_swap_slot()->swapcache_free_entries()->
-swap_entry_free()->swap_range_free()->
-...
-WRITE_ONCE(si->inuse_pages, si->inuse_pages - nr_entries);
-
-What stops swapoff to succeed after process 2 reclaimed the swap cache
-but before process1 finished its call to swap_page_trans_huge_swapped()?
-
---8<-----
-
-Link: https://lkml.kernel.org/r/20240306140356.3974886-1-ryan.roberts@arm.com
-Fixes: 7c00bafee87c ("mm/swap: free swap slots in batch")
-Closes: https://lore.kernel.org/linux-mm/65a66eb9-41f8-4790-8db2-0c70ea15979f@redhat.com/
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB partitions.")
+Cc: stable@vger.kernel.org
+Cc: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240306-mmc-partswitch-v1-1-bf116985d950@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/swapfile.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/mmc/core/block.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/mm/swapfile.c b/mm/swapfile.c
-index 746aa9da53025..6fe0cc25535f5 100644
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -1227,6 +1227,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
-  * with get_swap_device() and put_swap_device(), unless the swap
-  * functions call get/put_swap_device() by themselves.
-  *
-+ * Note that when only holding the PTL, swapoff might succeed immediately
-+ * after freeing a swap entry. Therefore, immediately after
-+ * __swap_entry_free(), the swap info might become stale and should not
-+ * be touched without a prior get_swap_device().
-+ *
-  * Check whether swap entry is valid in the swap device.  If so,
-  * return pointer to swap_info_struct, and keep the swap entry valid
-  * via preventing the swap device from being swapoff, until
-@@ -1604,13 +1609,19 @@ int free_swap_and_cache(swp_entry_t entry)
- 	if (non_swap_entry(entry))
- 		return 1;
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index 32d49100dff51..86efa6084696e 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -874,10 +874,11 @@ static const struct block_device_operations mmc_bdops = {
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
--	p = _swap_info_get(entry);
-+	p = get_swap_device(entry);
- 	if (p) {
-+		if (WARN_ON(data_race(!p->swap_map[swp_offset(entry)]))) {
-+			put_swap_device(p);
-+			return 0;
-+		}
-+
- 		count = __swap_entry_free(p, entry);
- 		if (count == SWAP_HAS_CACHE &&
- 		    !swap_page_trans_huge_swapped(p, entry))
- 			__try_to_reclaim_swap(p, swp_offset(entry),
- 					      TTRS_UNMAPPED | TTRS_FULL);
-+		put_swap_device(p);
- 	}
- 	return p != NULL;
- }
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -892,10 +893,11 @@ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
+ 
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
 -- 
 2.43.0
 
