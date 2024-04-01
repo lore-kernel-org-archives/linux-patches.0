@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9F81C0DE7;
-	Mon,  1 Apr 2024 16:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D502328DC0;
+	Mon,  1 Apr 2024 16:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989040; cv=none; b=eCFWaHNEoE0ds46OvRw7ZA1v8H9RQ8O+O5BL9Z8pQ9dGya4BgZqV7pDh9COraDb0117wMlA0mKVY8pvuw8Gbuny7CRbIpYG+b0E2e0rW7cpkd8zc7ZcRMH53NEtwo1+Re29zWAWrbNSWjdgxJGAjQrl7sOCEwGkpdtGDRgmBbJk=
+	t=1711989043; cv=none; b=DxX0C0KE4JMdBR2l0wusXmqIY48s2UvFB9p8CPjnnLI4bdz5ZlmphFcqdUadIE9vn4ui7PbgmuiUGOEkhdJv5dacpVTG9CLQJ1EEhE4wEtkYs5z8azF3SxLibTkgBBu0P5ThTLAsft71eyQ8lXlgWhtP+9b0KbTv8szk3nF2HSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989040; c=relaxed/simple;
-	bh=TU4SvnrM6qQUJbWweRYDdX9y7R5GbISQ+DYLEPYOzfw=;
+	s=arc-20240116; t=1711989043; c=relaxed/simple;
+	bh=2s+KBx3Mo4PfMuoXYgEg0ULU8EfAZgNGWBfAUYWSd+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZ5pAS0sqFbWU0HCbDE26yQ8mqEruz39lgPWFPW/Sd5NvRpmx1YTy/Xy7g9SsMmD0YxsmRRaFeZ8g+vmgO337VwPZj+9danvsbHIqOU5VQYV6rOf9F5vIgBi/bYUtAnsy/vrn2CBEd+ugr1q2FfFPOHXldF/k+MHBQzaMq8eqds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u07FIcc6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TtfL9eew/YHFSpTs9y7bYssKSkaZHM+bIDzshQrhfCoxGCJK8LUM80g3k8SNCvomP3a2lv50VrSTgeci2EW+IFRImMGCbeyRifgSqQTT4n8hUgFSyelq17NWYeTbwNLh5q06hMg13O6l0qBqFbdTOk1P5/0uVdhlgbly8s+ZIww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxAGiwzO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u07FIcc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF66C433C7;
-	Mon,  1 Apr 2024 16:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxAGiwzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D41C433F1;
+	Mon,  1 Apr 2024 16:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989040;
-	bh=TU4SvnrM6qQUJbWweRYDdX9y7R5GbISQ+DYLEPYOzfw=;
+	s=korg; t=1711989043;
+	bh=2s+KBx3Mo4PfMuoXYgEg0ULU8EfAZgNGWBfAUYWSd+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u07FIcc6B8MInpgOUv/XVNHfPLIb/ZKOZ2NGYK60rarmEkUFlHpNOaNuCkYg5c52n
-	 /zEOdXoVf2kqYQySXs6I2fY4OxcrwQJRS3jfuCHPaSQiB/lbhfuWiacKXp3bOZJBva
-	 MV1ikfYlPrGzKXylY5OY6IVs1SfcEgMeUm4+NrI0=
+	b=fxAGiwzOF3+5GbQAxIQPPKmC5qf00pjOzSUAz+MsSHHA+3UPUp8/kk8DsXldbMjNH
+	 BByVqr6DNqxWx3GQKqqoCEsaQ0WtBAn6DcOoOesNra9LX/hD7kk6FAbV8bVc3nI+N1
+	 b5TSKGpoU9MXn+X7yZvqORSrJSBwib+pfckp1LmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claus Hansen Ries <chr@terma.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.7 364/432] net: ll_temac: platform_get_resource replaced by wrong function
-Date: Mon,  1 Apr 2024 17:45:51 +0200
-Message-ID: <20240401152604.128095891@linuxfoundation.org>
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Zack Rusin <zack.rusin@broadcom.com>
+Subject: [PATCH 6.7 365/432] drm/vmwgfx: Create debugfs ttm_resource_manager entry only if needed
+Date: Mon,  1 Apr 2024 17:45:52 +0200
+Message-ID: <20240401152604.156921339@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,41 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claus Hansen Ries <chr@terma.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit 3a38a829c8bc27d78552c28e582eb1d885d07d11 upstream.
+commit 4be9075fec0a639384ed19975634b662bfab938f upstream.
 
-The function platform_get_resource was replaced with
-devm_platform_ioremap_resource_byname and is called using 0 as name.
+The driver creates /sys/kernel/debug/dri/0/mob_ttm even when the
+corresponding ttm_resource_manager is not allocated.
+This leads to a crash when trying to read from this file.
 
-This eventually ends up in platform_get_resource_byname in the call
-stack, where it causes a null pointer in strcmp.
+Add a check to create mob_ttm, system_mob_ttm, and gmr_ttm debug file
+only when the corresponding ttm_resource_manager is allocated.
 
-	if (type == resource_type(r) && !strcmp(r->name, name))
+crash> bt
+PID: 3133409  TASK: ffff8fe4834a5000  CPU: 3    COMMAND: "grep"
+ #0 [ffffb954506b3b20] machine_kexec at ffffffffb2a6bec3
+ #1 [ffffb954506b3b78] __crash_kexec at ffffffffb2bb598a
+ #2 [ffffb954506b3c38] crash_kexec at ffffffffb2bb68c1
+ #3 [ffffb954506b3c50] oops_end at ffffffffb2a2a9b1
+ #4 [ffffb954506b3c70] no_context at ffffffffb2a7e913
+ #5 [ffffb954506b3cc8] __bad_area_nosemaphore at ffffffffb2a7ec8c
+ #6 [ffffb954506b3d10] do_page_fault at ffffffffb2a7f887
+ #7 [ffffb954506b3d40] page_fault at ffffffffb360116e
+    [exception RIP: ttm_resource_manager_debug+0x11]
+    RIP: ffffffffc04afd11  RSP: ffffb954506b3df0  RFLAGS: 00010246
+    RAX: ffff8fe41a6d1200  RBX: 0000000000000000  RCX: 0000000000000940
+    RDX: 0000000000000000  RSI: ffffffffc04b4338  RDI: 0000000000000000
+    RBP: ffffb954506b3e08   R8: ffff8fee3ffad000   R9: 0000000000000000
+    R10: ffff8fe41a76a000  R11: 0000000000000001  R12: 00000000ffffffff
+    R13: 0000000000000001  R14: ffff8fe5bb6f3900  R15: ffff8fe41a6d1200
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #8 [ffffb954506b3e00] ttm_resource_manager_show at ffffffffc04afde7 [ttm]
+ #9 [ffffb954506b3e30] seq_read at ffffffffb2d8f9f3
+    RIP: 00007f4c4eda8985  RSP: 00007ffdbba9e9f8  RFLAGS: 00000246
+    RAX: ffffffffffffffda  RBX: 000000000037e000  RCX: 00007f4c4eda8985
+    RDX: 000000000037e000  RSI: 00007f4c41573000  RDI: 0000000000000003
+    RBP: 000000000037e000   R8: 0000000000000000   R9: 000000000037fe30
+    R10: 0000000000000000  R11: 0000000000000246  R12: 00007f4c41573000
+    R13: 0000000000000003  R14: 00007f4c41572010  R15: 0000000000000003
+    ORIG_RAX: 0000000000000000  CS: 0033  SS: 002b
 
-It should have been replaced with devm_platform_ioremap_resource.
-
-Fixes: bd69058f50d5 ("net: ll_temac: Use devm_platform_ioremap_resource_byname()")
-Signed-off-by: Claus Hansen Ries <chr@terma.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/cca18f9c630a41c18487729770b492bb@terma.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: af4a25bbe5e7 ("drm/vmwgfx: Add debugfs entries for various ttm resource managers")
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240312093551.196609-1-jfalempe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/xilinx/ll_temac_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/xilinx/ll_temac_main.c
-+++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
-@@ -1443,7 +1443,7 @@ static int temac_probe(struct platform_d
- 	}
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+@@ -1444,12 +1444,15 @@ static void vmw_debugfs_resource_manager
+ 					    root, "system_ttm");
+ 	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, TTM_PL_VRAM),
+ 					    root, "vram_ttm");
+-	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_GMR),
+-					    root, "gmr_ttm");
+-	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_MOB),
+-					    root, "mob_ttm");
+-	ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_SYSTEM),
+-					    root, "system_mob_ttm");
++	if (vmw->has_gmr)
++		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_GMR),
++						    root, "gmr_ttm");
++	if (vmw->has_mob) {
++		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_MOB),
++						    root, "mob_ttm");
++		ttm_resource_manager_create_debugfs(ttm_manager_type(&vmw->bdev, VMW_PL_SYSTEM),
++						    root, "system_mob_ttm");
++	}
+ }
  
- 	/* map device registers */
--	lp->regs = devm_platform_ioremap_resource_byname(pdev, 0);
-+	lp->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(lp->regs)) {
- 		dev_err(&pdev->dev, "could not map TEMAC registers\n");
- 		return -ENOMEM;
+ static int vmwgfx_pm_notifier(struct notifier_block *nb, unsigned long val,
 
 
