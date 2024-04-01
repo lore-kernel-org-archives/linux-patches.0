@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B23F1C0DE7;
-	Mon,  1 Apr 2024 17:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2DB481B8;
+	Mon,  1 Apr 2024 17:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990962; cv=none; b=HZm4jZFnsyodYJhZJ7trnBV3whPzESvkjxPdV7LIpgCm4eITdqkF7glbXa18NvkphATLLZ9+DHFeTQGGpAbEQV8zgZga7/Ej0+zaYNopWi15aRcRByZSNs8sBiiCbQewUBy9ThJebohLiPibx8m5SVkBMKeJa29QSIFnko4Hcac=
+	t=1711990965; cv=none; b=KA30aYCHC7fXaG/h1vmoTjhUKNeiRYLagXmQ9nz1v3GJ65zVTg/5vO6GJFs63YFRbbwPRqIsOvLq39oGm2hjurMJ6e4Ewf/0nRfjMwAv/E0D0lqJtP3FKX7R3BFSLZpxCTeiyKG1fz46n1se6JU4V6DBnePO+KORN66DEJ7Jxbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990962; c=relaxed/simple;
-	bh=q8iHN/HzVjHL0CPSLRYlrke3elk0GE3T85ZhUfSWWb0=;
+	s=arc-20240116; t=1711990965; c=relaxed/simple;
+	bh=GV9GsQf7EzW86kyoHci1xJXb9NGi0y6iB5rpnk8MYAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ft+yL6kkbANlNBQzEaNfuVxRxMbgGvT9FmSVST/3CLmGaZiFnk5E0gtcOUzWmSga24rQKGWYYug4YU5uriJUY5qJLqoyLyi83Qf+3glbzw9M3kzndPDN4cLnEgdbd4u34duXWfD/aqVOLF4Gbu5GHbGF33n95TTA13MrYiLdKg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LikL4vlC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P9UwY/3sWuRKxUJiPs/OhwVUPBppjV6/sJ+dbeikGItRHp0w8zSM7A1VgJJTQhTh8hGANjxfdwjq/lcrAtytVVBiGWv6Cg+KjT6f10baU8lNYHveUYHsHlwuabb/kJ7p2KBpfjOC1X4HidPdyZe5HnJkN5Jpp1pJpBTAwBECITc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uf3OhVKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LikL4vlC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD135C433C7;
-	Mon,  1 Apr 2024 17:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uf3OhVKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08304C433C7;
+	Mon,  1 Apr 2024 17:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990962;
-	bh=q8iHN/HzVjHL0CPSLRYlrke3elk0GE3T85ZhUfSWWb0=;
+	s=korg; t=1711990965;
+	bh=GV9GsQf7EzW86kyoHci1xJXb9NGi0y6iB5rpnk8MYAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LikL4vlCsp5pe6rBsqkqwpH2Fd7N+cTchG26/FFSgVvh7UBGdiqg5cW9ty+V3xAeR
-	 qv/9qnKQWsIoSWAoX5xbvvR/EkFpIkwY0xQuAhSWVU7BC1rGdR5Z3nNaq6tb28ujJ2
-	 TcOVxZvbpL9YHcDPNZXrgV9kluxWi3RmdA2GYtRo=
+	b=Uf3OhVKLTdi2ZYmnGjJQEq7jzJDsGY8i47CL8jALQVY3KV6nf7wpu4YHurgf6/V59
+	 DvTKsxnLmyyPt1AQfaeatBOXbxb6su32md3lAUnM1mU8h3FHig9zxM56A0jdHvEEX8
+	 K/O3UM9O7FvBEVyzCQTpj7d3GN8KC6yaPA+78bKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Kees Cook <keescook@chromium.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/272] io_uring/net: correctly handle multishot recvmsg retry setup
-Date: Mon,  1 Apr 2024 17:44:42 +0200
-Message-ID: <20240401152533.509468759@linuxfoundation.org>
+Subject: [PATCH 6.1 083/272] landlock: Warn once if a Landlock action is requested while disabled
+Date: Mon,  1 Apr 2024 17:44:33 +0200
+Message-ID: <20240401152533.201590993@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -44,44 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit deaef31bc1ec7966698a427da8c161930830e1cf ]
+[ Upstream commit 782191c74875cc33b50263e21d76080b1411884d ]
 
-If we loop for multishot receive on the initial attempt, and then abort
-later on to wait for more, we miss a case where we should be copying the
-io_async_msghdr from the stack to stable storage. This leads to the next
-retry potentially failing, if the application had the msghdr on the
-stack.
+Because sandboxing can be used as an opportunistic security measure,
+user space may not log unsupported features.  Let the system
+administrator know if an application tries to use Landlock but failed
+because it isn't enabled at boot time.  This may be caused by boot
+loader configurations with outdated "lsm" kernel's command-line
+parameter.
 
 Cc: stable@vger.kernel.org
-Fixes: 9bb66906f23e ("io_uring: support multishot in recvmsg")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 265885daf3e5 ("landlock: Add syscall implementations")
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20240227110550.3702236-2-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/landlock/syscalls.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index 0d4ee3d738fbf..b1b564c04d1e7 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -876,7 +876,8 @@ int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 			kfree(kmsg->free_iov);
- 		io_netmsg_recycle(req, issue_flags);
- 		req->flags &= ~REQ_F_NEED_CLEANUP;
--	}
-+	} else if (ret == -EAGAIN)
-+		return io_setup_async_msg(req, kmsg, issue_flags);
+diff --git a/security/landlock/syscalls.c b/security/landlock/syscalls.c
+index 2ca0ccbd905ae..d0cb3d0cbf985 100644
+--- a/security/landlock/syscalls.c
++++ b/security/landlock/syscalls.c
+@@ -32,6 +32,18 @@
+ #include "ruleset.h"
+ #include "setup.h"
  
- 	return ret;
- }
++static bool is_initialized(void)
++{
++	if (likely(landlock_initialized))
++		return true;
++
++	pr_warn_once(
++		"Disabled but requested by user space. "
++		"You should enable Landlock at boot time: "
++		"https://docs.kernel.org/userspace-api/landlock.html#boot-time-configuration\n");
++	return false;
++}
++
+ /**
+  * copy_min_struct_from_user - Safe future-proof argument copying
+  *
+@@ -165,7 +177,7 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
+ 	/* Build-time checks. */
+ 	build_check_abi();
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	if (flags) {
+@@ -311,7 +323,7 @@ SYSCALL_DEFINE4(landlock_add_rule, const int, ruleset_fd,
+ 	struct landlock_ruleset *ruleset;
+ 	int res, err;
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	/* No flag for now. */
+@@ -402,7 +414,7 @@ SYSCALL_DEFINE2(landlock_restrict_self, const int, ruleset_fd, const __u32,
+ 	struct landlock_cred_security *new_llcred;
+ 	int err;
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	/*
 -- 
 2.43.0
 
