@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3929F46B9F;
-	Mon,  1 Apr 2024 15:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEC846551;
+	Mon,  1 Apr 2024 15:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987063; cv=none; b=RTPizuk4JnEIImH3QbPAwTvMefCsyknymFZpviBC9ecUpkmo30c1/0yKebIr+Eq7HltVGskEZ8XS1sSgQg8bfwsWMFt04OK8ESQLyiBjzCDjip7h/8HMYHejvy0TGdVwg7oIxV/1bpNYqI57kx10G/ChRMCuH1RYXWoEsdRC18I=
+	t=1711987066; cv=none; b=aMRjrkWbW+H+T+1bHVAmaRqwT1+ApwTa/fr86mQpfERiHR6aCeaDS7bsfB0OuhED95zAwCNj9NQKsJtkgDWJADgbA2oMo9Tok30qfAmTWf4kFLJfaqAjqYqlIPmVESUu30FMEh/XQXxYQW7apLjmzkyduhW4LY138w07HL86egs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987063; c=relaxed/simple;
-	bh=vBF/J+RgoH7CmLGMfeFSy+elH0JIdItHVDkhbxw9efk=;
+	s=arc-20240116; t=1711987066; c=relaxed/simple;
+	bh=1m+tSdA7Iy8ZbA3paClrbRKvf2NtcPI32kvrb+qsC38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2XIud3fcDKRjpQ/EbqYGJOXjMYBP3Ls3yrhFIMVDLz1UTOxQ7EPQHi/boXq6GS8GFgjbuQdvTUvy16rqJAREj3HscfWnjw1tewXSrD8Clfi8+LnqcoFAQ/NycbQKoC0/wOQBh+aGuG4ivqrzdNEIPywsfvz/S9E91YTsfLoD4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OarPpwqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkkZYUORf+7u0CTaEh24/wcOPxGKxyXCLuVBmLzkXtRj/XGJkauBGrXO4Go9oP6Yqz052Vj9tvVX1rQDs8Tafuw7o8jd3AKYdPGxvu0KLd3s7QRCG8yxDnc81pUj2ubIioV8TShkGmd1ODHPqxjn5nqhvjuPzA+s2BKBREWnOfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSer6tGS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OarPpwqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAC2C433C7;
-	Mon,  1 Apr 2024 15:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSer6tGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FE5C433C7;
+	Mon,  1 Apr 2024 15:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987063;
-	bh=vBF/J+RgoH7CmLGMfeFSy+elH0JIdItHVDkhbxw9efk=;
+	s=korg; t=1711987066;
+	bh=1m+tSdA7Iy8ZbA3paClrbRKvf2NtcPI32kvrb+qsC38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OarPpwqp21Mvv8EAfUW51k/p9WNY8wZmtZQPIlbbvaTi+kJyHqaNmLdEH36MKcYrc
-	 P3TTYQTpNwXnm8NwmIoBzft9TgHQ+Szct8YCtMdgrx1lUW5lMWcC4Adn9phsCG39+d
-	 DHxHl+mc59xnipqVjAoBplVzQymVIDB+A/cyWrCA=
+	b=mSer6tGSR0sshlhCvU/O/e7sdcNU2Ua0ozs+hWsbmleuCC/jv4lcwbHE+BOUiZICn
+	 uaStaWbr2DV3gIaTArecvvBvJ9EHH7y7OMB83/N/fRnfx/unhW5SzL6ifSSkSBDWAc
+	 iGhJhROq+ZcpdGcM53upCvUHvK/Ui2+VFMCSUMro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 165/399] drm/probe-helper: warn about negative .get_modes()
-Date: Mon,  1 Apr 2024 17:42:11 +0200
-Message-ID: <20240401152554.105933281@linuxfoundation.org>
+Subject: [PATCH 6.8 174/399] lsm: handle the NULL buffer case in lsm_fill_user_ctx()
+Date: Mon,  1 Apr 2024 17:42:20 +0200
+Message-ID: <20240401152554.371322475@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,59 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Paul Moore <paul@paul-moore.com>
 
-[ Upstream commit 7af03e688792293ba33149fb8df619a8dff90e80 ]
+[ Upstream commit eaf0e7a3d2711018789e9fdb89191d19aa139c47 ]
 
-The .get_modes() callback is supposed to return the number of modes,
-never a negative error code. If a negative value is returned, it'll just
-be interpreted as a negative count, and added to previous calculations.
-
-Document the rules, but handle the negative values gracefully with an
-error message.
+Passing a NULL buffer into the lsm_get_self_attr() syscall is a valid
+way to quickly determine the minimum size of the buffer needed to for
+the syscall to return all of the LSM attributes to the caller.
+Unfortunately we/I broke that behavior in commit d7cf3412a9f6
+("lsm: consolidate buffer size handling into lsm_fill_user_ctx()")
+such that it returned an error to the caller; this patch restores the
+original desired behavior of using the NULL buffer as a quick way to
+correctly size the attribute buffer.
 
 Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/50208c866facc33226a3c77b82bb96aeef8ef310.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: d7cf3412a9f6 ("lsm: consolidate buffer size handling into lsm_fill_user_ctx()")
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_probe_helper.c       | 7 +++++++
- include/drm/drm_modeset_helper_vtables.h | 3 ++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ security/security.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
-index 23b4e9a3361d8..744cde9db246b 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -419,6 +419,13 @@ static int drm_helper_probe_get_modes(struct drm_connector *connector)
+diff --git a/security/security.c b/security/security.c
+index fb7505c734853..a344b8fa5530d 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -780,7 +780,9 @@ static int lsm_superblock_alloc(struct super_block *sb)
+  * @id: LSM id
+  * @flags: LSM defined flags
+  *
+- * Fill all of the fields in a userspace lsm_ctx structure.
++ * Fill all of the fields in a userspace lsm_ctx structure.  If @uctx is NULL
++ * simply calculate the required size to output via @utc_len and return
++ * success.
+  *
+  * Returns 0 on success, -E2BIG if userspace buffer is not large enough,
+  * -EFAULT on a copyout error, -ENOMEM if memory can't be allocated.
+@@ -799,6 +801,10 @@ int lsm_fill_user_ctx(struct lsm_ctx __user *uctx, u32 *uctx_len,
+ 		goto out;
+ 	}
  
- 	count = connector_funcs->get_modes(connector);
- 
-+	/* The .get_modes() callback should not return negative values. */
-+	if (count < 0) {
-+		drm_err(connector->dev, ".get_modes() returned %pe\n",
-+			ERR_PTR(count));
-+		count = 0;
-+	}
++	/* no buffer - return success/0 and set @uctx_len to the req size */
++	if (!uctx)
++		goto out;
 +
- 	/*
- 	 * Fallback for when DDC probe failed in drm_get_edid() and thus skipped
- 	 * override/firmware EDID.
-diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-index 881b03e4dc288..9ed42469540eb 100644
---- a/include/drm/drm_modeset_helper_vtables.h
-+++ b/include/drm/drm_modeset_helper_vtables.h
-@@ -898,7 +898,8 @@ struct drm_connector_helper_funcs {
- 	 *
- 	 * RETURNS:
- 	 *
--	 * The number of modes added by calling drm_mode_probed_add().
-+	 * The number of modes added by calling drm_mode_probed_add(). Return 0
-+	 * on failures (no modes) instead of negative error codes.
- 	 */
- 	int (*get_modes)(struct drm_connector *connector);
- 
+ 	nctx = kzalloc(nctx_len, GFP_KERNEL);
+ 	if (nctx == NULL) {
+ 		rc = -ENOMEM;
 -- 
 2.43.0
 
