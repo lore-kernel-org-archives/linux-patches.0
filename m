@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822E947A5D;
-	Mon,  1 Apr 2024 17:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C5E47A5D;
+	Mon,  1 Apr 2024 17:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991353; cv=none; b=cGU88u/6m7symdTyqygACYm75dmqRMLivb1eYQVLR5DDzk6C0HDSKYcitFvggLvgTplImfs16tQmYr79sNMauFRziDWA+fKKgHHl8SlhOYpBvCFY326m8pkiKPOD04SmApWHYcRrYQwzWaavm4MCldH15U+TTv/tODkFZfbQt2g=
+	t=1711991357; cv=none; b=DmqQutC+I6cdDCJYRwMsKDUn2pLWVcuJPt9hXR9hFKlS/DEIBK3zovzftc+rd9qxCmmbrflylxLOLn/nkEqDEowdTJ2rjIxUuA+QIeSLqF6yWgJwB9uKw/Ry+Vt95K5reUwj0gECV/17XRMiSQ0HIfIUNOfDP62EfGpjqNW0zJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991353; c=relaxed/simple;
-	bh=eSo3IKlA+zREdDvBaG1kr1cJjQkhuHSfc/9EH5YaHOo=;
+	s=arc-20240116; t=1711991357; c=relaxed/simple;
+	bh=i5MmY1RFVlJGzkQKws3lsGWCU4zyRU91WaS3iJiW+fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQPdqbJov+M7KSXZPbflnt2gqsMpHO3SAZGeJHHbh6Diet1aXeA80/BbFMcs3RnXU8ke+euz1nbfbJsM2oqRnJE4B1E4OJi797o1eyD4yXCEI4LvpOKOZCHUQ6S9pl6qP4L8K+YWgdoS1Ux/VdeUnHkWfuk9rMaTZEyHetDUZjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eE5KCnaf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMgebeSA8FmMFXAqiDgd/Ba2J4iGAouDoW/E5i2koz5gRmGpK/N8kvxUqGk6UqZ+G6g/PiJdOz2qNvdpctb7Hnivn7w3YGGixlE28V5SLiXvTY1rDHkyThFGazwjGgE/CXb+xpHaRqOCd3Tl31/hS5secaP0VYsBvCvi5xXheQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqUhMWFY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eE5KCnaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02116C433F1;
-	Mon,  1 Apr 2024 17:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqUhMWFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E466C433F1;
+	Mon,  1 Apr 2024 17:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991353;
-	bh=eSo3IKlA+zREdDvBaG1kr1cJjQkhuHSfc/9EH5YaHOo=;
+	s=korg; t=1711991357;
+	bh=i5MmY1RFVlJGzkQKws3lsGWCU4zyRU91WaS3iJiW+fE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eE5KCnafdgVZi8ZT7TsPrJSb20w60Z+cRsHds+SatlC9po7TfP03QYNEa6QafThZg
-	 7fqrj+PHmI1q6Pq9BDMbd4yaaz07670UzFCZRwSrw/eBjbd/mHuf6JBZ1z/qSt2PU+
-	 d2p7W1peBfKvOZIxx/OSyhF5k34iOwHtz5eXjr70=
+	b=vqUhMWFYqkZk7fHaxodpRg+3dO3JvjvviX7frYnDOQR8QeJzxz5FrYll9enTf99F9
+	 gehITAe6RYJq0350DWktSqlOJw1lNLp1Up2AfVFQ3dMT9g4XIpAGBD5uXhtNkgPuqp
+	 +VLrCTbHZ5tW2lvrcweW9dNyxIM7k5oG6eThPuF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 212/272] efi/libstub: Cast away type warning in use of max()
-Date: Mon,  1 Apr 2024 17:46:42 +0200
-Message-ID: <20240401152537.550993533@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.1 239/272] staging: vc04_services: fix information leak in create_component()
+Date: Mon,  1 Apr 2024 17:47:09 +0200
+Message-ID: <20240401152538.433162991@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -49,30 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 61d130f261a3c15ae2c4b6f3ac3517d5d5b78855 upstream.
+commit f37e76abd614b68987abc8e5c22d986013349771 upstream.
 
-Avoid a type mismatch warning in max() by switching to max_t() and
-providing the type explicitly.
+The m.u.component_create.pid field is for debugging and in the mainline
+kernel it's not used anything.  However, it still needs to be set to
+something to prevent disclosing uninitialized stack data.  Set it to
+zero.
 
-Fixes: 3cb4a4827596abc82e ("efi/libstub: fix efi_random_alloc() ...")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 7b3ad5abf027 ("staging: Import the BCM2835 MMAL-based V4L2 camera driver.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/2d972847-9ebd-481b-b6f9-af390f5aabd3@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/randomalloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -119,7 +119,7 @@ efi_status_t efi_random_alloc(unsigned l
- 			continue;
- 		}
+--- a/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
++++ b/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
+@@ -940,6 +940,7 @@ static int create_component(struct vchiq
+ 	m.u.component_create.client_component = component->client_component;
+ 	strscpy_pad(m.u.component_create.name, name,
+ 		    sizeof(m.u.component_create.name));
++	m.u.component_create.pid = 0;
  
--		target = round_up(max(md->phys_addr, alloc_min), align) + target_slot * align;
-+		target = round_up(max_t(u64, md->phys_addr, alloc_min), align) + target_slot * align;
- 		pages = size / EFI_PAGE_SIZE;
- 
- 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
+ 	ret = send_synchronous_mmal_msg(instance, &m,
+ 					sizeof(m.u.component_create),
 
 
