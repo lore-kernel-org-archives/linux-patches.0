@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEFD481B8;
-	Mon,  1 Apr 2024 16:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F35947A76;
+	Mon,  1 Apr 2024 16:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989947; cv=none; b=Bngn7Hts8Us9LxlttgiyPkVdDnvlDEX7ZtcAHUW1JeiZt0lJu5lmd92R7FX6rgfg30tXKRdk2owLT1trv70MNFXxqJm3VIj5vbAvd2N1+lfexpQtYJXDtIq1LJsPLxcyCo4MDWjZq2nLpmmVIB7R5+wMlGU9VLpf4dzxbyq1lAM=
+	t=1711989950; cv=none; b=KTC5ep9RQ26IeGjd+xNJay/TRn0J/F+4rZ4gch9tuIbamyJEWh0vJxLUVoAeRMAnyK48wV2AgC6d+CdlXBfYmtCHk6MbTRWG0dlQJLJciVIygpOfWP0LYvbsAPerd+/AbdiQBdkhrGVxlvzz3rY48i6Ibm12VEqvHRJUsl9uFrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989947; c=relaxed/simple;
-	bh=bykUW7s2LJN1t+IW+fklpOuYD6CPTwzZsYoLCc4dut8=;
+	s=arc-20240116; t=1711989950; c=relaxed/simple;
+	bh=gJ0/73h8H1C/IZxLI0TTSquDGNY+kPew/ArfBMvrVl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZT8tfgqC3eQCl4o8j6Sv8pAQbzD8yzziQTXSSKrmUf/va2Aw1f2ZMrLLyk2XbZCgqZtYSCv1SmIFcRa7sfDqvVbQB0AoGJKBFWsPKKrDvnqU9UomQzvAxEya4fjL88/QqMakuOu/ptRoGmHDRjOKgf2T2CoSR1Edy8dDqMOkQ48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU2G2deB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gz6LT1ntYmAC6PW9DTgn0XO+tA+a2hiO4YfFyP6uWfRapdS1Fyno760dviQvAn9wCtJPCbUM1QNvTxv94LNZPLizfnhTR84XNlSBerkYNEmXGbOK8n+L4nTyVOWI1Je09rtUmmoZ3qNm7YJ3eoygTPcKurIwz+yqmmU9CMXViVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NufphIyj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU2G2deB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6816C433C7;
-	Mon,  1 Apr 2024 16:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NufphIyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBD0C433F1;
+	Mon,  1 Apr 2024 16:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989947;
-	bh=bykUW7s2LJN1t+IW+fklpOuYD6CPTwzZsYoLCc4dut8=;
+	s=korg; t=1711989950;
+	bh=gJ0/73h8H1C/IZxLI0TTSquDGNY+kPew/ArfBMvrVl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nU2G2deBD0q8BAaivp9zfL6Yt0siVGcCvLCw888F0QkcEtnyEux0drMH5pHh5loJZ
-	 ZCWXyAfJ+tGkU4Qk4RT9BVVh+Vn5BNGh07As01532teuZiDhHRdLHUwq4K7hvzvyCk
-	 ntROj5Hfz437MeYME3iKWNuuh0/up5KN4nFPQYW0=
+	b=NufphIyj1Jv8X+EaDINaFU97nxWvw8cE7X7EgLcLux0bswQImVdlfQXSAARa5SDKl
+	 RENpO9PXu5+LNDmD9tLzvQZp47BufqU0pDElzNnQsCs8bN17zdbCmh9SjErj7vBVGO
+	 Fk2ucCcxqrE68FtyTBCNbfspzWR8su32S5I3KMLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.6 200/396] Drivers: hv: vmbus: Calculate ring buffer size for more efficient use of memory
-Date: Mon,  1 Apr 2024 17:44:09 +0200
-Message-ID: <20240401152553.894855175@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.6 201/396] nouveau: lock the client object tree.
+Date: Mon,  1 Apr 2024 17:44:10 +0200
+Message-ID: <20240401152553.924028250@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -47,95 +43,207 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Dave Airlie <airlied@redhat.com>
 
-commit b8209544296edbd1af186e2ea9c648642c37b18c upstream.
+commit b7cc4ff787a572edf2c55caeffaa88cd801eb135 upstream.
 
-The VMBUS_RING_SIZE macro adds space for a ring buffer header to the
-requested ring buffer size.  The header size is always 1 page, and so
-its size varies based on the PAGE_SIZE for which the kernel is built.
-If the requested ring buffer size is a large power-of-2 size and the header
-size is small, the resulting size is inefficient in its use of memory.
-For example, a 512 Kbyte ring buffer with a 4 Kbyte page size results in
-a 516 Kbyte allocation, which is rounded to up 1 Mbyte by the memory
-allocator, and wastes 508 Kbytes of memory.
+It appears the client object tree has no locking unless I've missed
+something else. Fix races around adding/removing client objects,
+mostly vram bar mappings.
 
-In such situations, the exact size of the ring buffer isn't that important,
-and it's OK to allocate the 4 Kbyte header at the beginning of the 512
-Kbytes, leaving the ring buffer itself with just 508 Kbytes. The memory
-allocation can be 512 Kbytes instead of 1 Mbyte and nothing is wasted.
+ 4562.099306] general protection fault, probably for non-canonical address =
+0x6677ed422bceb80c: 0000 [#1] PREEMPT SMP PTI
+[ 4562.099314] CPU: 2 PID: 23171 Comm: deqp-vk Not tainted 6.8.0-rc6+ #27
+[ 4562.099324] Hardware name: Gigabyte Technology Co., Ltd. Z390 I AORUS PR=
+O WIFI/Z390 I AORUS PRO WIFI-CF, BIOS F8 11/05/2021
+[ 4562.099330] RIP: 0010:nvkm_object_search+0x1d/0x70 [nouveau]
+[ 4562.099503] Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 66 0f 1f 00 0f =
+1f 44 00 00 48 89 f8 48 85 f6 74 39 48 8b 87 a0 00 00 00 48 85 c0 74 12 <48=
+> 8b 48 f8 48 39 ce 73 15 48 8b 40 10 48 85 c0 75 ee 48 c7 c0 fe
+[ 4562.099506] RSP: 0000:ffffa94cc420bbf8 EFLAGS: 00010206
+[ 4562.099512] RAX: 6677ed422bceb814 RBX: ffff98108791f400 RCX: ffff9810f26=
+b8f58
+[ 4562.099517] RDX: 0000000000000000 RSI: ffff9810f26b9158 RDI: ffff9810879=
+1f400
+[ 4562.099519] RBP: ffff9810f26b9158 R08: 0000000000000000 R09: 00000000000=
+00000
+[ 4562.099521] R10: ffffa94cc420bc48 R11: 0000000000000001 R12: ffff9810f02=
+a7cc0
+[ 4562.099526] R13: 0000000000000000 R14: 00000000000000ff R15: 00000000000=
+00007
+[ 4562.099528] FS:  00007f629c5017c0(0000) GS:ffff98142c700000(0000) knlGS:=
+0000000000000000
+[ 4562.099534] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 4562.099536] CR2: 00007f629a882000 CR3: 000000017019e004 CR4: 00000000003=
+706f0
+[ 4562.099541] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 00000000000=
+00000
+[ 4562.099542] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 00000000000=
+00400
+[ 4562.099544] Call Trace:
+[ 4562.099555]  <TASK>
+[ 4562.099573]  ? die_addr+0x36/0x90
+[ 4562.099583]  ? exc_general_protection+0x246/0x4a0
+[ 4562.099593]  ? asm_exc_general_protection+0x26/0x30
+[ 4562.099600]  ? nvkm_object_search+0x1d/0x70 [nouveau]
+[ 4562.099730]  nvkm_ioctl+0xa1/0x250 [nouveau]
+[ 4562.099861]  nvif_object_map_handle+0xc8/0x180 [nouveau]
+[ 4562.099986]  nouveau_ttm_io_mem_reserve+0x122/0x270 [nouveau]
+[ 4562.100156]  ? dma_resv_test_signaled+0x26/0xb0
+[ 4562.100163]  ttm_bo_vm_fault_reserved+0x97/0x3c0 [ttm]
+[ 4562.100182]  ? __mutex_unlock_slowpath+0x2a/0x270
+[ 4562.100189]  nouveau_ttm_fault+0x69/0xb0 [nouveau]
+[ 4562.100356]  __do_fault+0x32/0x150
+[ 4562.100362]  do_fault+0x7c/0x560
+[ 4562.100369]  __handle_mm_fault+0x800/0xc10
+[ 4562.100382]  handle_mm_fault+0x17c/0x3e0
+[ 4562.100388]  do_user_addr_fault+0x208/0x860
+[ 4562.100395]  exc_page_fault+0x7f/0x200
+[ 4562.100402]  asm_exc_page_fault+0x26/0x30
+[ 4562.100412] RIP: 0033:0x9b9870
+[ 4562.100419] Code: 85 a8 f7 ff ff 8b 8d 80 f7 ff ff 89 08 e9 18 f2 ff ff =
+0f 1f 84 00 00 00 00 00 44 89 32 e9 90 fa ff ff 0f 1f 84 00 00 00 00 00 <44=
+> 89 32 e9 f8 f1 ff ff 0f 1f 84 00 00 00 00 00 66 44 89 32 e9 e7
+[ 4562.100422] RSP: 002b:00007fff9ba2dc70 EFLAGS: 00010246
+[ 4562.100426] RAX: 0000000000000004 RBX: 000000000dd65e10 RCX: 000000fff00=
+00000
+[ 4562.100428] RDX: 00007f629a882000 RSI: 00007f629a882000 RDI: 00000000000=
+00066
+[ 4562.100432] RBP: 00007fff9ba2e570 R08: 0000000000000000 R09: 0000000123d=
+df000
+[ 4562.100434] R10: 0000000000000001 R11: 0000000000000246 R12: 000000007ff=
+fffff
+[ 4562.100436] R13: 0000000000000000 R14: 0000000000000000 R15: 00000000000=
+00000
+[ 4562.100446]  </TASK>
+[ 4562.100448] Modules linked in: nf_conntrack_netbios_ns nf_conntrack_broa=
+dcast nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_rej=
+ect_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack=
+ nf_defrag_ipv6 nf_defrag_ipv4 ip_set nf_tables libcrc32c nfnetlink cmac bn=
+ep sunrpc iwlmvm intel_rapl_msr intel_rapl_common snd_sof_pci_intel_cnl x86=
+_pkg_temp_thermal intel_powerclamp snd_sof_intel_hda_common mac80211 corete=
+mp snd_soc_acpi_intel_match kvm_intel snd_soc_acpi snd_soc_hdac_hda snd_sof=
+_pci snd_sof_xtensa_dsp snd_sof_intel_hda_mlink snd_sof_intel_hda snd_sof k=
+vm snd_sof_utils snd_soc_core snd_hda_codec_realtek libarc4 snd_hda_codec_g=
+eneric snd_compress snd_hda_ext_core vfat fat snd_hda_intel snd_intel_dspcf=
+g irqbypass iwlwifi snd_hda_codec snd_hwdep snd_hda_core btusb btrtl mei_hd=
+cp iTCO_wdt rapl mei_pxp btintel snd_seq iTCO_vendor_support btbcm snd_seq_=
+device intel_cstate bluetooth snd_pcm cfg80211 intel_wmi_thunderbolt wmi_bm=
+of intel_uncore snd_timer mei_me snd ecdh_generic i2c_i801
+[ 4562.100541]  ecc mei i2c_smbus soundcore rfkill intel_pch_thermal acpi_p=
+ad zram nouveau drm_ttm_helper ttm gpu_sched i2c_algo_bit drm_gpuvm drm_exe=
+c mxm_wmi drm_display_helper drm_kms_helper drm crct10dif_pclmul crc32_pclm=
+ul nvme e1000e crc32c_intel nvme_core ghash_clmulni_intel video wmi pinctrl=
+_cannonlake ip6_tables ip_tables fuse
+[ 4562.100616] ---[ end trace 0000000000000000 ]---
 
-Update VMBUS_RING_SIZE to implement this approach for "large" ring buffer
-sizes.  "Large" is somewhat arbitrarily defined as 8 times the size of
-the ring buffer header (which is of size PAGE_SIZE).  For example, for
-4 Kbyte PAGE_SIZE, ring buffers of 32 Kbytes and larger use the first
-4 Kbytes as the ring buffer header.  For 64 Kbyte PAGE_SIZE, ring buffers
-of 512 Kbytes and larger use the first 64 Kbytes as the ring buffer
-header.  In both cases, smaller sizes add space for the header so
-the ring size isn't reduced too much by using part of the space for
-the header.  For example, with a 64 Kbyte page size, we don't want
-a 128 Kbyte ring buffer to be reduced to 64 Kbytes by allocating half
-of the space for the header.  In such a case, the memory allocation
-is less efficient, but it's the best that can be done.
-
-While the new algorithm slightly changes the amount of space allocated
-for ring buffers by drivers that use VMBUS_RING_SIZE, the devices aren't
-known to be sensitive to small changes in ring buffer size, so there
-shouldn't be any effect.
-
-Fixes: c1135c7fd0e9 ("Drivers: hv: vmbus: Introduce types of GPADL")
-Fixes: 6941f67ad37d ("hv_netvsc: Calculate correct ring size when PAGE_SIZE is not 4 Kbytes")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218502
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Tested-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240229004533.313662-1-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240229004533.313662-1-mhklinux@outlook.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hyperv.h |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/include/nvkm/core/client.h |    1=20
+ drivers/gpu/drm/nouveau/nvkm/core/client.c         |    1=20
+ drivers/gpu/drm/nouveau/nvkm/core/object.c         |   26 ++++++++++++++++=
+-----
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -164,8 +164,28 @@ struct hv_ring_buffer {
- 	u8 buffer[];
- } __packed;
- 
+--- a/drivers/gpu/drm/nouveau/include/nvkm/core/client.h
++++ b/drivers/gpu/drm/nouveau/include/nvkm/core/client.h
+@@ -11,6 +11,7 @@ struct nvkm_client {
+ 	u32 debug;
+=20
+ 	struct rb_root objroot;
++	spinlock_t obj_lock;
+=20
+ 	void *data;
+ 	int (*event)(u64 token, void *argv, u32 argc);
+--- a/drivers/gpu/drm/nouveau/nvkm/core/client.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/client.c
+@@ -180,6 +180,7 @@ nvkm_client_new(const char *name, u64 de
+ 	client->device =3D device;
+ 	client->debug =3D nvkm_dbgopt(dbg, "CLIENT");
+ 	client->objroot =3D RB_ROOT;
++	spin_lock_init(&client->obj_lock);
+ 	client->event =3D event;
+ 	INIT_LIST_HEAD(&client->umem);
+ 	spin_lock_init(&client->lock);
+--- a/drivers/gpu/drm/nouveau/nvkm/core/object.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/object.c
+@@ -30,8 +30,10 @@ nvkm_object_search(struct nvkm_client *c
+ 		   const struct nvkm_object_func *func)
+ {
+ 	struct nvkm_object *object;
++	unsigned long flags;
+=20
+ 	if (handle) {
++		spin_lock_irqsave(&client->obj_lock, flags);
+ 		struct rb_node *node =3D client->objroot.rb_node;
+ 		while (node) {
+ 			object =3D rb_entry(node, typeof(*object), node);
+@@ -40,9 +42,12 @@ nvkm_object_search(struct nvkm_client *c
+ 			else
+ 			if (handle > object->object)
+ 				node =3D node->rb_right;
+-			else
++			else {
++				spin_unlock_irqrestore(&client->obj_lock, flags);
+ 				goto done;
++			}
+ 		}
++		spin_unlock_irqrestore(&client->obj_lock, flags);
+ 		return ERR_PTR(-ENOENT);
+ 	} else {
+ 		object =3D &client->object;
+@@ -57,30 +62,39 @@ done:
+ void
+ nvkm_object_remove(struct nvkm_object *object)
+ {
++	unsigned long flags;
 +
-+/*
-+ * If the requested ring buffer size is at least 8 times the size of the
-+ * header, steal space from the ring buffer for the header. Otherwise, add
-+ * space for the header so that is doesn't take too much of the ring buffer
-+ * space.
-+ *
-+ * The factor of 8 is somewhat arbitrary. The goal is to prevent adding a
-+ * relatively small header (4 Kbytes on x86) to a large-ish power-of-2 ring
-+ * buffer size (such as 128 Kbytes) and so end up making a nearly twice as
-+ * large allocation that will be almost half wasted. As a contrasting example,
-+ * on ARM64 with 64 Kbyte page size, we don't want to take 64 Kbytes for the
-+ * header from a 128 Kbyte allocation, leaving only 64 Kbytes for the ring.
-+ * In this latter case, we must add 64 Kbytes for the header and not worry
-+ * about what's wasted.
-+ */
-+#define VMBUS_HEADER_ADJ(payload_sz) \
-+	((payload_sz) >=  8 * sizeof(struct hv_ring_buffer) ? \
-+	0 : sizeof(struct hv_ring_buffer))
-+
- /* Calculate the proper size of a ringbuffer, it must be page-aligned */
--#define VMBUS_RING_SIZE(payload_sz) PAGE_ALIGN(sizeof(struct hv_ring_buffer) + \
-+#define VMBUS_RING_SIZE(payload_sz) PAGE_ALIGN(VMBUS_HEADER_ADJ(payload_sz) + \
- 					       (payload_sz))
- 
- struct hv_ring_buffer_info {
++	spin_lock_irqsave(&object->client->obj_lock, flags);
+ 	if (!RB_EMPTY_NODE(&object->node))
+ 		rb_erase(&object->node, &object->client->objroot);
++	spin_unlock_irqrestore(&object->client->obj_lock, flags);
+ }
+=20
+ bool
+ nvkm_object_insert(struct nvkm_object *object)
+ {
+-	struct rb_node **ptr =3D &object->client->objroot.rb_node;
++	struct rb_node **ptr;
+ 	struct rb_node *parent =3D NULL;
++	unsigned long flags;
+=20
++	spin_lock_irqsave(&object->client->obj_lock, flags);
++	ptr =3D &object->client->objroot.rb_node;
+ 	while (*ptr) {
+ 		struct nvkm_object *this =3D rb_entry(*ptr, typeof(*this), node);
+ 		parent =3D *ptr;
+-		if (object->object < this->object)
++		if (object->object < this->object) {
+ 			ptr =3D &parent->rb_left;
+-		else
+-		if (object->object > this->object)
++		} else if (object->object > this->object) {
+ 			ptr =3D &parent->rb_right;
+-		else
++		} else {
++			spin_unlock_irqrestore(&object->client->obj_lock, flags);
+ 			return false;
++		}
+ 	}
+=20
+ 	rb_link_node(&object->node, parent, ptr);
+ 	rb_insert_color(&object->node, &object->client->objroot);
++	spin_unlock_irqrestore(&object->client->obj_lock, flags);
+ 	return true;
+ }
+=20
 
 
