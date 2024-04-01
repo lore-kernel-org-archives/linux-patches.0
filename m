@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CED47A5D;
-	Mon,  1 Apr 2024 17:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7368D47A5D;
+	Mon,  1 Apr 2024 17:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991340; cv=none; b=MkMc+Yp/gUQLlM6fB31EmT8ld9lgDVDlSSxE7hiPDAZkccFVg7cO3C6eVk3bgacmLZvc69vlBEF7LiPUy1JIibaUgPQY/bCKL/RgJs5fXelE6UoyzDbTylkQwLNzoLl7sEAQ5VbKXFtBrUx29rvLyEHBWLHZ7zq+1lxzj+rmbhU=
+	t=1711991344; cv=none; b=PIh/h8g8TFFv/IxpMDeVHvv0bsKZfDkGnqsym1SSM5v/Qaea5C0AiNH3EA5fMvJpHPtpn2/Uh7ZZFW/N3E04uS3W5/7vLg4A6CeI9I0YxIyXsM0CjGhXBY8pI2bKFwsytk/JAYPShNLoXK0+1q9i7qeZapCNXA7LAHFBIXZfT98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991340; c=relaxed/simple;
-	bh=bLeuoSWn1MeeuKaskzzw6UdZ52YuXYGfcbu6S9E0e+w=;
+	s=arc-20240116; t=1711991344; c=relaxed/simple;
+	bh=6AMjOB5BwPyeXc3q0yTIdA0kNjf7PBNs9ZqYnDqML2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N80Y1GXIWQDhVQY2Kr5FFjvyGv1C2rKDbp0U7MxSrKTVhENjB3UZO1mJX98pE8XRz3vHloaW+nZ8Nkked9KuG09Ynsp52qb7maa8KEjb9rp24goW73sVA1mRq8i7b+0eOj5ir5R5l0QfCf46vmAL0ZD/xYUzeoAd9mIZ4OtTYtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnFD6UBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USqEW+vELaxcpdW9x1WwKBHltBmF6DW159R94LADPJVE7HKuD4707JIfS4sKdv69cH6jeva1DxeJgQsvvkM0W7+3+nVg9p+Ij2o8NRNWktCbZMD4i8mE7LH6c5wVo8QmniMLAXy2GBXX9p/pFMN34xuttrBbheBfifYsuTDaZpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEurqE/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnFD6UBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C26C433C7;
-	Mon,  1 Apr 2024 17:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEurqE/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FA2C433C7;
+	Mon,  1 Apr 2024 17:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991340;
-	bh=bLeuoSWn1MeeuKaskzzw6UdZ52YuXYGfcbu6S9E0e+w=;
+	s=korg; t=1711991344;
+	bh=6AMjOB5BwPyeXc3q0yTIdA0kNjf7PBNs9ZqYnDqML2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnFD6UBGGtCj2lkyDu9KV+aiY977hXPVc/B9oo/mGBTci50KOgceH/qKba0r5t9O6
-	 SFfosXec0/kxI1919I8Gzu32fDkqs+kDuqWC4OgcJAKRbhktyeWq1oNa1+6o6lGYwH
-	 hLDJVQmhxDAuHMtkiloy+CUe+VF/LfFacD7YsByk=
+	b=LEurqE/EXXpWGdAgreqf0JOojbGwBiqPF7Gs0Lgd47TmqEn+UxAAx7Uy6T+v75+Xp
+	 b64eDgcuU4Ybcjtv39v2cyYw6Gp5JhcX5GW9X68FlSUJfJ36k6zheyJLwQdj0c6dkO
+	 XqC3TbYlA9NBWuKdyhbAmtLJS5Idp5eAiVF101qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 235/272] usb: dwc3-am62: fix module unload/reload behavior
-Date: Mon,  1 Apr 2024 17:47:05 +0200
-Message-ID: <20240401152538.311309898@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 6.1 236/272] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
+Date: Mon,  1 Apr 2024 17:47:06 +0200
+Message-ID: <20240401152538.342706487@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,78 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 6661befe41009c210efa2c1bcd16a5cc4cff8a06 ]
+commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
 
-As runtime PM is enabled, the module can be runtime
-suspended when .remove() is called.
+The dreamcastcard->timer could schedule the spu_dma_work and the
+spu_dma_work could also arm the dreamcastcard->timer.
 
-Do a pm_runtime_get_sync() to make sure module is active
-before doing any register operations.
+When the snd_pcm_substream is closing, the aica_channel will be
+deallocated. But it could still be dereferenced in the worker
+thread. The reason is that del_timer() will return directly
+regardless of whether the timer handler is running or not and
+the worker could be rescheduled in the timer handler. As a result,
+the UAF bug will happen. The racy situation is shown below:
 
-Doing a pm_runtime_put_sync() should disable the refclk
-so no need to disable it again.
+      (Thread 1)                 |      (Thread 2)
+snd_aicapcm_pcm_close()          |
+ ...                             |  run_spu_dma() //worker
+                                 |    mod_timer()
+  flush_work()                   |
+  del_timer()                    |  aica_period_elapsed() //timer
+  kfree(dreamcastcard->channel)  |    schedule_work()
+                                 |  run_spu_dma() //worker
+  ...                            |    dreamcastcard->channel-> //USE
 
-Fixes the below warning at module removel.
+In order to mitigate this bug and other possible corner cases,
+call mod_timer() conditionally in run_spu_dma(), then implement
+PCM sync_stop op to cancel both the timer and worker. The sync_stop
+op will be called from PCM core appropriately when needed.
 
-[   39.705310] ------------[ cut here ]------------
-[   39.710004] clk:162:3 already disabled
-[   39.713941] WARNING: CPU: 0 PID: 921 at drivers/clk/clk.c:1090 clk_core_disable+0xb0/0xb8
-
-We called of_platform_populate() in .probe() so call the
-cleanup function of_platform_depopulate() in .remove().
-Get rid of the now unnnecessary dwc3_ti_remove_core().
-Without this, module re-load doesn't work properly.
-
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20240227-for-v6-9-am62-usb-errata-3-0-v4-1-0ada8ddb0767@kernel.org
+Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ sound/sh/aica.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-am62.c b/drivers/usb/dwc3/dwc3-am62.c
-index 726f96d257c8d..ad8a2eadb472b 100644
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -247,21 +247,14 @@ static int dwc3_ti_probe(struct platform_device *pdev)
- 	return ret;
+--- a/sound/sh/aica.c
++++ b/sound/sh/aica.c
+@@ -278,7 +278,8 @@ static void run_spu_dma(struct work_stru
+ 		dreamcastcard->clicks++;
+ 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
+ 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
+-		mod_timer(&dreamcastcard->timer, jiffies + 1);
++		if (snd_pcm_running(dreamcastcard->substream))
++			mod_timer(&dreamcastcard->timer, jiffies + 1);
+ 	}
  }
  
--static int dwc3_ti_remove_core(struct device *dev, void *c)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--
--	platform_device_unregister(pdev);
--	return 0;
--}
--
- static int dwc3_ti_remove(struct platform_device *pdev)
+@@ -290,6 +291,8 @@ static void aica_period_elapsed(struct t
+ 	/*timer function - so cannot sleep */
+ 	int play_period;
+ 	struct snd_pcm_runtime *runtime;
++	if (!snd_pcm_running(substream))
++		return;
+ 	runtime = substream->runtime;
+ 	dreamcastcard = substream->pcm->private_data;
+ 	/* Have we played out an additional period? */
+@@ -350,12 +353,19 @@ static int snd_aicapcm_pcm_open(struct s
+ 	return 0;
+ }
+ 
++static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
++
++	del_timer_sync(&dreamcastcard->timer);
++	cancel_work_sync(&dreamcastcard->spu_dma_work);
++	return 0;
++}
++
+ static int snd_aicapcm_pcm_close(struct snd_pcm_substream
+ 				 *substream)
  {
- 	struct device *dev = &pdev->dev;
- 	struct dwc3_am62 *am62 = platform_get_drvdata(pdev);
- 	u32 reg;
+ 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
+-	flush_work(&(dreamcastcard->spu_dma_work));
+-	del_timer(&dreamcastcard->timer);
+ 	dreamcastcard->substream = NULL;
+ 	kfree(dreamcastcard->channel);
+ 	spu_disable();
+@@ -401,6 +411,7 @@ static const struct snd_pcm_ops snd_aica
+ 	.prepare = snd_aicapcm_pcm_prepare,
+ 	.trigger = snd_aicapcm_pcm_trigger,
+ 	.pointer = snd_aicapcm_pcm_pointer,
++	.sync_stop = snd_aicapcm_pcm_sync_stop,
+ };
  
--	device_for_each_child(dev, NULL, dwc3_ti_remove_core);
-+	pm_runtime_get_sync(dev);
-+	of_platform_depopulate(dev);
- 
- 	/* Clear mode valid bit */
- 	reg = dwc3_ti_readl(am62, USBSS_MODE_CONTROL);
-@@ -269,7 +262,6 @@ static int dwc3_ti_remove(struct platform_device *pdev)
- 	dwc3_ti_writel(am62, USBSS_MODE_CONTROL, reg);
- 
- 	pm_runtime_put_sync(dev);
--	clk_disable_unprepare(am62->usb2_refclk);
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_suspended(dev);
- 
--- 
-2.43.0
-
+ /* TO DO: set up to handle more than one pcm instance */
 
 
