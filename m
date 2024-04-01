@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79784778E;
-	Mon,  1 Apr 2024 15:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194B44AEC1;
+	Mon,  1 Apr 2024 15:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986853; cv=none; b=RjBx8KDQ5wm9wrX3xqd7mQpePLArM7UYaQDnL09EEvKBnyObML6BK1TMySod1dvYbqHF+5X9wjFn2tizw9RlqUURIv3bFGkLQ76hsMjHIL5ks/e2TzK7EOhDmSmEIQXXL8caf5bQdsTlSGmzCkdaMzNuKMsuKQ9+xgfXxGrdkR0=
+	t=1711986857; cv=none; b=S17NLdmJLqLc3dNnklJHWyhdyksn84ne2lqpRm4O3W0wBO/QmaAnzDlFBpyAd0WtR7SysDmNq0gsxWCA5tT9i36GPAk4JYPVGIyIXRqk8s/tbj7lVXEbu3+UU8J37ITi2J33jf2Z9fv631SPL5ncwxpahoyvt+MHArFW6hR8GEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986853; c=relaxed/simple;
-	bh=fN7MsE6SdYUY3OhJ8dlc71bX6GldCeADOfdYCTxq0YE=;
+	s=arc-20240116; t=1711986857; c=relaxed/simple;
+	bh=PpQe2d7QcAI/TB8FWAjsDbeHAWTs/8G1fqDaXsKVnEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYC+E9buTLG10HVwHLBY7q7H8QnDXFil9VPRcuV3xTHPjU6UBgxD04WzqV8obL581sgsqDZj0PfM796TlgBYduifS7OIf2ez/7B7WslytxvAh1a9aSQiB9c3wc30xmF+0Q8O0m5wMx7/Dc7WwWZnPackcfzjqYnP9+hK0e1VWgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srndzm/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlRadjdF1rK6uPQRdZJxHlnpgfYZ1S0+pVpF8vSjdSIYgSP/HaCwv8UYkCWkrpQnsCrEQ7HSZq20nVJvg0S4R1KOq0CDsykkYz7DzNp5guJKnnmyb+AOqq6D6SI84P5cpcu5jW7H4+eErQSkV4dxVNcDK/oNIX2coPJiVJEgEhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpG0KubT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srndzm/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320D1C433F1;
-	Mon,  1 Apr 2024 15:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpG0KubT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDF4C433C7;
+	Mon,  1 Apr 2024 15:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986853;
-	bh=fN7MsE6SdYUY3OhJ8dlc71bX6GldCeADOfdYCTxq0YE=;
+	s=korg; t=1711986857;
+	bh=PpQe2d7QcAI/TB8FWAjsDbeHAWTs/8G1fqDaXsKVnEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srndzm/6upNiMQYoLeV6O+CXNCDWfJdovla+3CJUGHY7M/dueO9CxhX4OVcaPfsI1
-	 mm7SMojwksKkqKwGQGSZGcN++hiRd1zo/aYYyX+LXGuU3Ghjs80HmEvaX0haY2PtMR
-	 R5Tcy75R941ewwIIkn00ill9fIeKBV0Spf78CeqY=
+	b=DpG0KubTtfip8QHEMMl0bEEmwrsjhJJT+AQGU5SwjvCV+cIK3IAFk2SyZnqqeXXsF
+	 KwRHBmENOwEU2Ovogec0f8jvl4UKTiGPSFjvJFe71Vu8kAgOD0a0ZT4MVKkmJfonE5
+	 fcapCRFLNP3aODubXfqgzPJZB3HeW2lTodh3dROE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 099/399] docs: Makefile: Add dependency to $(YNL_INDEX) for targets other than htmldocs
-Date: Mon,  1 Apr 2024 17:41:05 +0200
-Message-ID: <20240401152552.139094229@linuxfoundation.org>
+Subject: [PATCH 6.8 108/399] dm-raid: really frozen sync_thread during suspend
+Date: Mon,  1 Apr 2024 17:41:14 +0200
+Message-ID: <20240401152552.412184859@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -55,59 +54,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akira Yokosawa <akiyks@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit a304fa1d10fcb974c117d391e5b4d34c2baa9a62 ]
+[ Upstream commit 16c4770c75b1223998adbeb7286f9a15c65fba73 ]
 
-Commit f061c9f7d058 ("Documentation: Document each netlink family")
-added recipes for YAML -> RST conversion.
-Then commit 7da8bdbf8f5d ("docs: Makefile: Fix make cleandocs by
-deleting generated .rst files") made sure those converted .rst files
-are cleaned by "make cleandocs".
+1) commit f52f5c71f3d4 ("md: fix stopping sync thread") remove
+   MD_RECOVERY_FROZEN from __md_stop_writes() and doesn't realize that
+   dm-raid relies on __md_stop_writes() to frozen sync_thread
+   indirectly. Fix this problem by adding MD_RECOVERY_FROZEN in
+   md_stop_writes(), and since stop_sync_thread() is only used for
+   dm-raid in this case, also move stop_sync_thread() to
+   md_stop_writes().
+2) The flag MD_RECOVERY_FROZEN doesn't mean that sync thread is frozen,
+   it only prevent new sync_thread to start, and it can't stop the
+   running sync thread; In order to frozen sync_thread, after seting the
+   flag, stop_sync_thread() should be used.
+3) The flag MD_RECOVERY_FROZEN doesn't mean that writes are stopped, use
+   it as condition for md_stop_writes() in raid_postsuspend() doesn't
+   look correct. Consider that reentrant stop_sync_thread() do nothing,
+   always call md_stop_writes() in raid_postsuspend().
+4) raid_message can set/clear the flag MD_RECOVERY_FROZEN at anytime,
+   and if MD_RECOVERY_FROZEN is cleared while the array is suspended,
+   new sync_thread can start unexpected. Fix this by disallow
+   raid_message() to change sync_thread status during suspend.
 
-However, they took care of htmldocs build only.
+Note that after commit f52f5c71f3d4 ("md: fix stopping sync thread"), the
+test shell/lvconvert-raid-reshape.sh start to hang in stop_sync_thread(),
+and with previous fixes, the test won't hang there anymore, however, the
+test will still fail and complain that ext4 is corrupted. And with this
+patch, the test won't hang due to stop_sync_thread() or fail due to ext4
+is corrupted anymore. However, there is still a deadlock related to
+dm-raid456 that will be fixed in following patches.
 
-If one of other targets such as latexdocs or epubdocs is built
-without building htmldocs, missing .rst files can cause additional
-WARNINGs from sphinx-build as follow:
-
-    ./Documentation/userspace-api/netlink/specs.rst:18: WARNING: undefined label: 'specs'
-    ./Documentation/userspace-api/netlink/netlink-raw.rst:64: WARNING: unknown document: '../../networking/netlink_spec/rt_link'
-    ./Documentation/userspace-api/netlink/netlink-raw.rst:64: WARNING: unknown document: '../../networking/netlink_spec/tc'
-    ./Documentation/userspace-api/netlink/index.rst:21: WARNING: undefined label: 'specs'
-
-Add dependency to $(YNL_INDEX) for other targets and allow any targets
-to be built cleanly right after "make cleandocs".
-
-Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
-Cc: stable@vger.kernel.org  # v6.7
-Cc: Thorsten Blum <thorsten.blum@toblux.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Reviwed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <e876e3c8-109d-4bc8-9916-05a4bc4ee9ac@gmail.com>
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Closes: https://lore.kernel.org/all/e5e8afe2-e9a8-49a2-5ab0-958d4065c55e@redhat.com/
+Fixes: 1af2048a3e87 ("dm raid: fix deadlock caused by premature md_stop_writes()")
+Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
+Fixes: f52f5c71f3d4 ("md: fix stopping sync thread")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Acked-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240305072306.2562024-6-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid.c | 25 +++++++++++++++----------
+ drivers/md/md.c      |  3 ++-
+ 2 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3885bbe260eb2..99cb6cbccb135 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -111,7 +111,9 @@ $(YNL_INDEX): $(YNL_RST_FILES)
- $(YNL_RST_DIR)/%.rst: $(YNL_YAML_DIR)/%.yaml $(YNL_TOOL)
- 	$(Q)$(YNL_TOOL) -i $< -o $@
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index 13eb47b997f94..fff9336fee767 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3240,11 +3240,12 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	rs->md.ro = 1;
+ 	rs->md.in_sync = 1;
  
--htmldocs: $(YNL_INDEX)
-+htmldocs texinfodocs latexdocs epubdocs xmldocs: $(YNL_INDEX)
+-	/* Keep array frozen until resume. */
+-	set_bit(MD_RECOVERY_FROZEN, &rs->md.recovery);
+-
+ 	/* Has to be held on running the array */
+ 	mddev_suspend_and_lock_nointr(&rs->md);
 +
-+htmldocs:
- 	@$(srctree)/scripts/sphinx-pre-install --version-check
- 	@+$(foreach var,$(SPHINXDIRS),$(call loop_cmd,sphinx,html,$(var),,$(var)))
++	/* Keep array frozen until resume. */
++	md_frozen_sync_thread(&rs->md);
++
+ 	r = md_run(&rs->md);
+ 	rs->md.in_sync = 0; /* Assume already marked dirty */
+ 	if (r) {
+@@ -3722,6 +3723,9 @@ static int raid_message(struct dm_target *ti, unsigned int argc, char **argv,
+ 	if (!mddev->pers || !mddev->pers->sync_request)
+ 		return -EINVAL;
  
++	if (test_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags))
++		return -EBUSY;
++
+ 	if (!strcasecmp(argv[0], "frozen"))
+ 		set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
+ 	else
+@@ -3796,10 +3800,11 @@ static void raid_postsuspend(struct dm_target *ti)
+ 	struct raid_set *rs = ti->private;
+ 
+ 	if (!test_and_set_bit(RT_FLAG_RS_SUSPENDED, &rs->runtime_flags)) {
+-		/* Writes have to be stopped before suspending to avoid deadlocks. */
+-		if (!test_bit(MD_RECOVERY_FROZEN, &rs->md.recovery))
+-			md_stop_writes(&rs->md);
+-
++		/*
++		 * sync_thread must be stopped during suspend, and writes have
++		 * to be stopped before suspending to avoid deadlocks.
++		 */
++		md_stop_writes(&rs->md);
+ 		mddev_suspend(&rs->md, false);
+ 	}
+ }
+@@ -4012,8 +4017,6 @@ static int raid_preresume(struct dm_target *ti)
+ 	}
+ 
+ 	/* Check for any resize/reshape on @rs and adjust/initiate */
+-	/* Be prepared for mddev_resume() in raid_resume() */
+-	set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
+ 	if (mddev->recovery_cp && mddev->recovery_cp < MaxSector) {
+ 		set_bit(MD_RECOVERY_REQUESTED, &mddev->recovery);
+ 		mddev->resync_min = mddev->recovery_cp;
+@@ -4055,10 +4058,12 @@ static void raid_resume(struct dm_target *ti)
+ 		if (mddev->delta_disks < 0)
+ 			rs_set_capacity(rs);
+ 
++		WARN_ON_ONCE(!test_bit(MD_RECOVERY_FROZEN, &mddev->recovery));
++		WARN_ON_ONCE(test_bit(MD_RECOVERY_RUNNING, &mddev->recovery));
+ 		mddev_lock_nointr(mddev);
+-		clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
+ 		mddev->ro = 0;
+ 		mddev->in_sync = 0;
++		md_unfrozen_sync_thread(mddev);
+ 		mddev_unlock_and_resume(mddev);
+ 	}
+ }
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 245ef8af8640a..ea68a6f8103bb 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6344,7 +6344,6 @@ static void md_clean(struct mddev *mddev)
+ 
+ static void __md_stop_writes(struct mddev *mddev)
+ {
+-	stop_sync_thread(mddev, true, false);
+ 	del_timer_sync(&mddev->safemode_timer);
+ 
+ 	if (mddev->pers && mddev->pers->quiesce) {
+@@ -6369,6 +6368,8 @@ static void __md_stop_writes(struct mddev *mddev)
+ void md_stop_writes(struct mddev *mddev)
+ {
+ 	mddev_lock_nointr(mddev);
++	set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
++	stop_sync_thread(mddev, true, false);
+ 	__md_stop_writes(mddev);
+ 	mddev_unlock(mddev);
+ }
 -- 
 2.43.0
 
