@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F115481B7;
-	Mon,  1 Apr 2024 16:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804F71E525;
+	Mon,  1 Apr 2024 16:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989439; cv=none; b=BQTGxIp5nrFkuUWit4wROVoxcv0y4HqEuVHUzL0+94jtNGZp4CqVXzy+BaWpT+8EoGXoz8ehvOeilGNTKRELZeEQY7dLEN1DrPmCsC3F4t2anAoImyJD/K+IrMpMZWPCUWWn7NEmR1fN4RqkeWrSL4JkVMvjkmCsUkMFyM9lZsU=
+	t=1711989442; cv=none; b=dae7kBDuO6ppLvpYeHciK0NeKrxAX1kX+5TWNo3isxqCdJ8Q/hKxQgdVc/lVyBxbd1oHUOsuhGzuuxaWOpdv6r1f/MeDhilcVx8qig5o/YqqiN4BDwN3QnC03icq0RzojNy4zpmt8+hwmWRKqJZOolcut7V6NzJWxt68qGtBULQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989439; c=relaxed/simple;
-	bh=2eUrHditrQ3SPJaKleTv6F2pNe7fHyi3tM7aQ+dw6qs=;
+	s=arc-20240116; t=1711989442; c=relaxed/simple;
+	bh=Sbg1oHH3FpQrg1dWo2CsM4sb772rruk5NxyoMAtN07Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwuGC+XORmJH+7Mn/he0Zrey2QeYkrrLej9vC2cNrIxFmFOXM4LGLaSyXsUEYrof+eW+mylZqNTYQmxADb1QhNujN6c/Rh5/Ko6qQV1YgjllettZNWWBbRtdi1Ao+eyOdcr/0ESzaZEJ7OtEWSZOxr4WmvCk6p45pdsm3EJ+a6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEHu4OQa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seqiSrJYN9v6PyvCNspKsea77qtjpcwgq/ZPU6bSb5LYa5IRa3NvcG6oJI9qHdlZK1XdQkZu1dRjiQsc4v7bPZCd774n6+x5/aQI6MyMFQvExakC0P296jwAohu7zAfx2jvaKT7pEKvKKlBQOkeAv5zWkmtJqh72LDY40rpjJvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpfDxWM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEHu4OQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FF1C43390;
-	Mon,  1 Apr 2024 16:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpfDxWM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EFBC433C7;
+	Mon,  1 Apr 2024 16:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989439;
-	bh=2eUrHditrQ3SPJaKleTv6F2pNe7fHyi3tM7aQ+dw6qs=;
+	s=korg; t=1711989442;
+	bh=Sbg1oHH3FpQrg1dWo2CsM4sb772rruk5NxyoMAtN07Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEHu4OQau0UPMWk5X8tnWopUZumRUo7KuYOWU5yfWk/7AWxgqaMfMY3VDVAKTl8N6
-	 KDh7Q3OKu6YHBWTeUetdN7CyTYtnyBWQ7YyF2Z9RRz8vUfLpn4TpigiyMTFxG2QgZZ
-	 jOK0+2iT45ex6HLiVlmemsy2e7h7MVQEfq9u2+P0=
+	b=qpfDxWM5WsnqcRm0NyxKg3wCB3LG6C4fhwFJ7gi4LERdj/tyQlDTHVSx8RNCH2wuk
+	 zoc7vqXDdq33xnoALPuNYhTf+x/bJebDG2kStqz209Cw8hJSrfh88etj3IoJk6Afxy
+	 UT7sQPqsfCmjG/XHUOU2wWgvPMNEM2+My22kZumc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <cy54@illinois.edu>,
-	Richard Weinberger <richard@nod.at>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/396] ubi: Check for too small LEB size in VTBL code
-Date: Mon,  1 Apr 2024 17:41:37 +0200
-Message-ID: <20240401152549.359562491@linuxfoundation.org>
+Subject: [PATCH 6.6 049/396] ubi: correct the calculation of fastmap size
+Date: Mon,  1 Apr 2024 17:41:38 +0200
+Message-ID: <20240401152549.388509197@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Weinberger <richard@nod.at>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 68a24aba7c593eafa8fd00f2f76407b9b32b47a9 ]
+[ Upstream commit 7f174ae4f39e8475adcc09d26c5a43394689ad6c ]
 
-If the LEB size is smaller than a volume table record we cannot
-have volumes.
-In this case abort attaching.
+Now that the calculation of fastmap size in ubi_calc_fm_size() is
+incorrect since it miss each user volume's ubi_fm_eba structure and the
+Internal UBI volume info. Let's correct the calculation.
 
-Cc: Chenyuan Yang <cy54@illinois.edu>
 Cc: stable@vger.kernel.org
-Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
-Reported-by: Chenyuan Yang <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-mtd/1433EB7A-FC89-47D6-8F47-23BE41B263B3@illinois.edu/
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/vtbl.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mtd/ubi/fastmap.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/ubi/vtbl.c b/drivers/mtd/ubi/vtbl.c
-index f700f0e4f2ec4..6e5489e233dd2 100644
---- a/drivers/mtd/ubi/vtbl.c
-+++ b/drivers/mtd/ubi/vtbl.c
-@@ -791,6 +791,12 @@ int ubi_read_volume_table(struct ubi_device *ubi, struct ubi_attach_info *ai)
- 	 * The number of supported volumes is limited by the eraseblock size
- 	 * and by the UBI_MAX_VOLUMES constant.
- 	 */
-+
-+	if (ubi->leb_size < UBI_VTBL_RECORD_SIZE) {
-+		ubi_err(ubi, "LEB size too small for a volume record");
-+		return -EINVAL;
-+	}
-+
- 	ubi->vtbl_slots = ubi->leb_size / UBI_VTBL_RECORD_SIZE;
- 	if (ubi->vtbl_slots > UBI_MAX_VOLUMES)
- 		ubi->vtbl_slots = UBI_MAX_VOLUMES;
+diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
+index 28c8151a0725d..2cdc29483aee0 100644
+--- a/drivers/mtd/ubi/fastmap.c
++++ b/drivers/mtd/ubi/fastmap.c
+@@ -85,9 +85,10 @@ size_t ubi_calc_fm_size(struct ubi_device *ubi)
+ 		sizeof(struct ubi_fm_scan_pool) +
+ 		sizeof(struct ubi_fm_scan_pool) +
+ 		(ubi->peb_count * sizeof(struct ubi_fm_ec)) +
+-		(sizeof(struct ubi_fm_eba) +
+-		(ubi->peb_count * sizeof(__be32))) +
+-		sizeof(struct ubi_fm_volhdr) * UBI_MAX_VOLUMES;
++		((sizeof(struct ubi_fm_eba) +
++		  sizeof(struct ubi_fm_volhdr)) *
++		 (UBI_MAX_VOLUMES + UBI_INT_VOL_COUNT)) +
++		(ubi->peb_count * sizeof(__be32));
+ 	return roundup(size, ubi->leb_size);
+ }
+ 
 -- 
 2.43.0
 
