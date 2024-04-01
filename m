@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D21C1CA8F;
-	Mon,  1 Apr 2024 16:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE05B47A7C;
+	Mon,  1 Apr 2024 16:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987702; cv=none; b=BSSU6jjY9pIIGyXHoweX9+K8b2FrFilJdP31tEGdTDmgtWaFd4LrJ/Hc8Bs5FKgIy717PVna0Xi4sCgHQIpWf0HTzBl2mWyGsAbz4ieTVIUE3IaDogHxNBN+5bWPnZd3F7L0kJi7HuySe0w+QcUuKH8GTGLQafhJGdMfNBzz+kg=
+	t=1711987705; cv=none; b=nMvzJiWCYQ8wUckRXv2izsmN2vYdiKxLpxjysDNRmEW1rGkfisg71aCOTxFN9UUG/EDr8KkDreHTMRUEcjn7X3uN1T0FSm+S5FMfleeVq5Gj6V7vVYvR4y1z4W4g9hBYQmWuZtC3dvlEhnohv4iHHzC+mvo282L0gK0k6OHFYBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987702; c=relaxed/simple;
-	bh=ut6EIM+bBrJLCCYLnE0ymxFFZQdEuzTySy6BFYGiZ0s=;
+	s=arc-20240116; t=1711987705; c=relaxed/simple;
+	bh=n9pCXxGvGQF8hM4Mc0k1YSoO6ALXLMGATB15bD5wSd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJkGq47TblwYXNVnQeGWgAOoDDeloPtdWDeHuqcbWsaJA4XsDiEDJUeob3wt61g7IaHkev8/RJK7ogMqkCl8Ks1NtEGi/B3uxD/02mDx9yHJdYIr9Yea47hB5EMCYargdrWH1e5J7W1U+C+EE+J8lJfHWfs1yuWaLRNKhMBJuic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6+8Kou5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jq+WmQf1xj37chTGAY5idF7cBwLUXHaGWtkSuAGg3NTvfnzqqL6G3tfs9tNiLTUu66inf8TQ7wrI1X7lt4HVJhqoAhg/hjckn9mCw59RXdEcUJcIPFQwVbhZnpS0WvdYzbmCmqPXKWFBv/0g5R3o4iWWQTVSbXUnSBop5p1vuto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2k0VVBk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6+8Kou5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46BEC433C7;
-	Mon,  1 Apr 2024 16:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2k0VVBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352D2C433B1;
+	Mon,  1 Apr 2024 16:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987702;
-	bh=ut6EIM+bBrJLCCYLnE0ymxFFZQdEuzTySy6BFYGiZ0s=;
+	s=korg; t=1711987705;
+	bh=n9pCXxGvGQF8hM4Mc0k1YSoO6ALXLMGATB15bD5wSd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6+8Kou56NfPsMocvIQ1IOTCROm89Zmtn0QCdhZAyKibhR6z/8CMVXUJcpPfYeFFz
-	 5WEliCzLxB9pbwMBYxmaYQpRFd6htVPw+5sQJMdBylxyY+ustbQaEZrJ6O3uTnh5i+
-	 mawelwAFy8rIvZ5I74xPbGLrKijQucI3U+WYNN6k=
+	b=X2k0VVBkG0MQoMBksXwGhcuTQpyqloe3AK+gbVYux8eX+s5f0asFhy2SUrxsbQfr+
+	 Fauo/XnosNYbUrVhwZoME4azSDORsKxR01gfzpGX+MfVcakb/ZV3W/RF33kO9TOkLt
+	 FCUx1kAZZumnGa+Rw7FlSGcyLDhiVhubhc6fW6Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Aisheng Dong <aisheng.dong@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.8 367/399] usb: typec: ucsi: Fix race between typec_switch and role_switch
-Date: Mon,  1 Apr 2024 17:45:33 +0200
-Message-ID: <20240401152600.132705410@linuxfoundation.org>
+Subject: [PATCH 6.8 368/399] usb: typec: tcpm: fix double-free issue in tcpm_port_unregister_pd()
+Date: Mon,  1 Apr 2024 17:45:34 +0200
+Message-ID: <20240401152600.162582140@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,93 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit f5e9bda03aa50ffad36eccafe893d004ef213c43 upstream.
+commit b63f90487bdf93a4223ce7853d14717e9d452856 upstream.
 
-When orientation switch is enabled in ucsi glink, there is a xhci
-probe failure seen when booting up in host mode in reverse
-orientation.
+When unregister pd capabilitie in tcpm, KASAN will capture below double
+-free issue. The root cause is the same capabilitiy will be kfreed twice,
+the first time is kfreed by pd_capabilities_release() and the second time
+is explicitly kfreed by tcpm_port_unregister_pd().
 
-During bootup the following things happen in multiple drivers:
+[    3.988059] BUG: KASAN: double-free in tcpm_port_unregister_pd+0x1a4/0x3dc
+[    3.995001] Free of addr ffff0008164d3000 by task kworker/u16:0/10
+[    4.001206]
+[    4.002712] CPU: 2 PID: 10 Comm: kworker/u16:0 Not tainted 6.8.0-rc5-next-20240220-05616-g52728c567a55 #53
+[    4.012402] Hardware name: Freescale i.MX8QXP MEK (DT)
+[    4.017569] Workqueue: events_unbound deferred_probe_work_func
+[    4.023456] Call trace:
+[    4.025920]  dump_backtrace+0x94/0xec
+[    4.029629]  show_stack+0x18/0x24
+[    4.032974]  dump_stack_lvl+0x78/0x90
+[    4.036675]  print_report+0xfc/0x5c0
+[    4.040289]  kasan_report_invalid_free+0xa0/0xc0
+[    4.044937]  __kasan_slab_free+0x124/0x154
+[    4.049072]  kfree+0xb4/0x1e8
+[    4.052069]  tcpm_port_unregister_pd+0x1a4/0x3dc
+[    4.056725]  tcpm_register_port+0x1dd0/0x2558
+[    4.061121]  tcpci_register_port+0x420/0x71c
+[    4.065430]  tcpci_probe+0x118/0x2e0
 
-a) DWC3 controller driver initializes the core in device mode when the
-dr_mode is set to DRD. It relies on role_switch call to change role to
-host.
+To fix the issue, this will remove kree() from tcpm_port_unregister_pd().
 
-b) QMP driver initializes the lanes to TYPEC_ORIENTATION_NORMAL as a
-normal routine. It relies on the typec_switch_set call to get notified
-of orientation changes.
-
-c) UCSI core reads the UCSI_GET_CONNECTOR_STATUS via the glink and
-provides initial role switch to dwc3 controller.
-
-When booting up in host mode with orientation TYPEC_ORIENTATION_REVERSE,
-then we see the following things happening in order:
-
-a) UCSI gives initial role as host to dwc3 controller ucsi_register_port.
-Upon receiving this notification, the dwc3 core needs to program GCTL from
-PRTCAP_DEVICE to PRTCAP_HOST and as part of this change, it asserts GCTL
-Core soft reset and waits for it to be  completed before shifting it to
-host. Only after the reset is done will the dwc3_host_init be invoked and
-xhci is probed. DWC3 controller expects that the usb phy's are stable
-during this process i.e., the phy init is already done.
-
-b) During the 100ms wait for GCTL core soft reset, the actual notification
-from PPM is received by ucsi_glink via pmic glink for changing role to
-host. The pmic_glink_ucsi_notify routine first sends the orientation
-change to QMP and then sends role to dwc3 via ucsi framework. This is
-happening exactly at the time GCTL core soft reset is being processed.
-
-c) When QMP driver receives typec switch to TYPEC_ORIENTATION_REVERSE, it
-then re-programs the phy at the instant GCTL core soft reset has been
-asserted by dwc3 controller due to which the QMP PLL lock fails in
-qmp_combo_usb_power_on.
-
-d) After the 100ms of GCTL core soft reset is completed, the dwc3 core
-goes for initializing the host mode and invokes xhci probe. But at this
-point the QMP is non-responsive and as a result, the xhci plat probe fails
-during xhci_reset.
-
-Fix this by passing orientation switch to available ucsi instances if
-their gpio configuration is available before ucsi_register is invoked so
-that by the time, the pmic_glink_ucsi_notify provides typec_switch to QMP,
-the lane is already configured and the call would be a NOP thus not racing
-with role switch.
-
-Cc: stable@vger.kernel.org
-Fixes: c6165ed2f425 ("usb: ucsi: glink: use the connector orientation GPIO to provide switch events")
-Suggested-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
+cc: stable@vger.kernel.org
+Suggested-by: Aisheng Dong <aisheng.dong@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240301040914.458492-1-quic_kriskura@quicinc.com
+Link: https://lore.kernel.org/r/20240311065219.777037-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/typec/tcpm/tcpm.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -255,6 +255,20 @@ static void pmic_glink_ucsi_notify(struc
- static void pmic_glink_ucsi_register(struct work_struct *work)
- {
- 	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
-+	int orientation;
-+	int i;
-+
-+	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
-+		if (!ucsi->port_orientation[i])
-+			continue;
-+		orientation = gpiod_get_value(ucsi->port_orientation[i]);
-+
-+		if (orientation >= 0) {
-+			typec_switch_set(ucsi->port_switch[i],
-+					 orientation ? TYPEC_ORIENTATION_REVERSE
-+					     : TYPEC_ORIENTATION_NORMAL);
-+		}
-+	}
- 
- 	ucsi_register(ucsi->ucsi);
- }
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -6199,9 +6199,7 @@ static void tcpm_port_unregister_pd(stru
+ 	port->port_source_caps = NULL;
+ 	for (i = 0; i < port->pd_count; i++) {
+ 		usb_power_delivery_unregister_capabilities(port->pd_list[i]->sink_cap);
+-		kfree(port->pd_list[i]->sink_cap);
+ 		usb_power_delivery_unregister_capabilities(port->pd_list[i]->source_cap);
+-		kfree(port->pd_list[i]->source_cap);
+ 		devm_kfree(port->dev, port->pd_list[i]);
+ 		port->pd_list[i] = NULL;
+ 		usb_power_delivery_unregister(port->pds[i]);
 
 
