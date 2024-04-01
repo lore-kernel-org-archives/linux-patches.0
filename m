@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BB7481B8;
-	Mon,  1 Apr 2024 16:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199914778C;
+	Mon,  1 Apr 2024 16:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989763; cv=none; b=RcKzbMWhDIvDchKd9u1D9K/xsR6yjVjryTmy1IrpwrPaSMWqOR6NnHF0M1W5Xc3QGVH1A8oRh41Zzuv1W+LrBQACNPABLU5ftFr9hYfTgA27F06S+cJkqKai3LlQ3g0puL9NNBUaqtXUW53fE2HMgYoZDpvH5R2+OUmgvmZcJKQ=
+	t=1711989767; cv=none; b=lx420FTOu8QrOGpsSLRRuNE1MV+5+zKAE3R60UCD1L6nz2kNgY+HAwkRvrgTsEsIup20mD5ODorJ2DW586k38A3i2pYosMIxXEfJxqw35SLIGr7ba2XBpfKtKqTx55Z2QRrr2PUwEg4ABsG04XxqrP9IymKa3JgWTv21Hm96rVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989763; c=relaxed/simple;
-	bh=voUdliA5hMHKoTLZ3sa0BBg/eHwkdpBfIH5DrrxODMw=;
+	s=arc-20240116; t=1711989767; c=relaxed/simple;
+	bh=Reeh3kXSSA8I9FUIpQPfaQUTbwgSGKWJ1v5h5KfalNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fN07zUjcMMQGjx+zkJH3kM7ECJI7Lg/jSpyyCJVlfpL8Uo+NiogVZWcAwokHoYTVX0kB/Xo8yn4+F9Am9YhMz44xUmwqfpGhlEG6EDSHfk3sr5BzhYUzckKVMlTB7W93XtFqjwGM3q4Z+lfATl3p1SrKpIT1lo85HzLQ1gPQ/H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuYrc6ZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktlOVrBKFrqriNlaG9dbnuVveHjOSMdrporFIw3T28moWyMs1+3WtM+QXoHfmaHSqZkE8VQTpf4hrP4P4sET2KlO98u+61XzBONXl9uPs2ubHCghW5Cev5SXwdMvDp92sPxD0ciQxIVu1M+x6U1ulkICtzcegmfSKWy5FJDjdJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDbcQ9h2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuYrc6ZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA6AC433F1;
-	Mon,  1 Apr 2024 16:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDbcQ9h2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B8CC433C7;
+	Mon,  1 Apr 2024 16:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989763;
-	bh=voUdliA5hMHKoTLZ3sa0BBg/eHwkdpBfIH5DrrxODMw=;
+	s=korg; t=1711989766;
+	bh=Reeh3kXSSA8I9FUIpQPfaQUTbwgSGKWJ1v5h5KfalNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuYrc6ZHlMbIPjFM2QwdW1efkfLCGlUFCyBr7wKrn9oLWFGI3dwCk/5GxMugGD1xC
-	 Ulj9fro3C0iKVLidO/gIZU/9Q+t4UQ5dO62LrA37jYjA3JhsxpfodYqNkg/jRNs8hA
-	 87odc7/ByIuQSU8FSORluePgLrlxfDK5QQAAMcLc=
+	b=WDbcQ9h2hLCmRsdJz1Bd+weQv5NRZI7064RxH5QvsraSYtRh+a36dq0jUAie1HifQ
+	 eFgCobkz2CgALjrcR5q4yGnqmhrqCo8xurEwHxykKEyFdFYteX4GsdYRhla7pIlKde
+	 lPmZ8RMdg0owKZG/G/Jtl6lOfxmLBiaSG+9ox8jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/396] drm/probe-helper: warn about negative .get_modes()
-Date: Mon,  1 Apr 2024 17:43:14 +0200
-Message-ID: <20240401152552.269450433@linuxfoundation.org>
+Subject: [PATCH 6.6 119/396] kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1
+Date: Mon,  1 Apr 2024 17:42:48 +0200
+Message-ID: <20240401152551.466892035@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,59 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 7af03e688792293ba33149fb8df619a8dff90e80 ]
+[ Upstream commit 75b5ab134bb5f657ef7979a59106dce0657e8d87 ]
 
-The .get_modes() callback is supposed to return the number of modes,
-never a negative error code. If a negative value is returned, it'll just
-be interpreted as a negative count, and added to previous calculations.
+Clang enables -Wenum-enum-conversion and -Wenum-compare-conditional
+under -Wenum-conversion. A recent change in Clang strengthened these
+warnings and they appear frequently in common builds, primarily due to
+several instances in common headers but there are quite a few drivers
+that have individual instances as well.
 
-Document the rules, but handle the negative values gracefully with an
-error message.
+  include/linux/vmstat.h:508:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
+    508 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
+        |                            ~~~~~~~~~~~~~~~~~~~~~ ^
+    509 |                            item];
+        |                            ~~~~
+
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:955:24: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+    955 |                 flags |= is_new_rate ? IWL_MAC_BEACON_CCK
+        |                                      ^ ~~~~~~~~~~~~~~~~~~
+    956 |                           : IWL_MAC_BEACON_CCK_V1;
+        |                             ~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c:1120:21: warning: conditional expression between different enumeration types ('enum iwl_mac_beacon_flags' and 'enum iwl_mac_beacon_flags_v1') [-Wenum-compare-conditional]
+   1120 |                                                0) > 10 ?
+        |                                                        ^
+   1121 |                         IWL_MAC_BEACON_FILS :
+        |                         ~~~~~~~~~~~~~~~~~~~
+   1122 |                         IWL_MAC_BEACON_FILS_V1;
+        |                         ~~~~~~~~~~~~~~~~~~~~~~
+
+Doing arithmetic between or returning two different types of enums could
+be a bug, so each of the instance of the warning needs to be evaluated.
+Unfortunately, as mentioned above, there are many instances of this
+warning in many different configurations, which can break the build when
+CONFIG_WERROR is enabled.
+
+To avoid introducing new instances of the warnings while cleaning up the
+disruption for the majority of users, disable these warnings for the
+default build while leaving them on for W=1 builds.
 
 Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/50208c866facc33226a3c77b82bb96aeef8ef310.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2002
+Link: https://github.com/llvm/llvm-project/commit/8c2ae42b3e1c6aa7c18f873edcebff7c0b45a37e
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_probe_helper.c       | 7 +++++++
- include/drm/drm_modeset_helper_vtables.h | 3 ++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ scripts/Makefile.extrawarn | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
-index 3f479483d7d80..15ed974bcb988 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -419,6 +419,13 @@ static int drm_helper_probe_get_modes(struct drm_connector *connector)
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 2fe6f2828d376..16c750bb95faf 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -143,6 +143,8 @@ KBUILD_CFLAGS += $(call cc-disable-warning, pointer-to-enum-cast)
+ KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
++KBUILD_CFLAGS += -Wno-enum-compare-conditional
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
  
- 	count = connector_funcs->get_modes(connector);
- 
-+	/* The .get_modes() callback should not return negative values. */
-+	if (count < 0) {
-+		drm_err(connector->dev, ".get_modes() returned %pe\n",
-+			ERR_PTR(count));
-+		count = 0;
-+	}
-+
- 	/*
- 	 * Fallback for when DDC probe failed in drm_get_edid() and thus skipped
- 	 * override/firmware EDID.
-diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-index e3c3ac6159094..159213786e6e1 100644
---- a/include/drm/drm_modeset_helper_vtables.h
-+++ b/include/drm/drm_modeset_helper_vtables.h
-@@ -898,7 +898,8 @@ struct drm_connector_helper_funcs {
- 	 *
- 	 * RETURNS:
- 	 *
--	 * The number of modes added by calling drm_mode_probed_add().
-+	 * The number of modes added by calling drm_mode_probed_add(). Return 0
-+	 * on failures (no modes) instead of negative error codes.
- 	 */
- 	int (*get_modes)(struct drm_connector *connector);
- 
+ endif
 -- 
 2.43.0
 
