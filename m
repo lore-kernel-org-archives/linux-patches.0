@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C83C129;
-	Mon,  1 Apr 2024 16:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876D7C129;
+	Mon,  1 Apr 2024 16:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988855; cv=none; b=ffeeTQQAmAfweD27IdZ+Hc2/VxvtXB9hxhlQAYyiUJXWlEIFnHSRhwK7ICU3yApmBXAl6wVGTRLWOIbM8bRH4T5+VhRXNTqFj+NRUtc2d/qcOsRJc0sk7i66nJgMBxXfykor2utpripz9KzwkBiYjib722b5tn8YWiKI9UdID6E=
+	t=1711988858; cv=none; b=Yw2C8HT1KCtdcFvRHRcK/fjdeD8pWFdRd95fHiNdH24dzwN8gvmcNaWveAzbDQAF0bYSR7KKbI/5DpKa7YTHst0oBXaRj0W2ne9RWGzwf7AkPnmMzWpL56ssTGamChxoM7iswIC5uBmVaNcSjqXrv9oNfE6w12UU6XnWLtjeeCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988855; c=relaxed/simple;
-	bh=p0lTGP+0U63X4sHeXwOjFFGCvX5NYqBu8nrttRFxCA4=;
+	s=arc-20240116; t=1711988858; c=relaxed/simple;
+	bh=1C/mkq0sQWPksnO6NNeFKYZ8z3Fz6NA/UJJaQMmu9Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ual+8fS+hjpVJBJEzI4HcodPLDkj7r828G37Klw0Lffn0gstT/dlNxuvarnosd93qQMR80mhM4FD9xN7SPbUOpHLnMcfXBg4Yo3Sp/1Lv+zZFqGZJ9UnHdViwEcEDGlPNMqiibXrnQUWBTq4k6LR7Lzl2VFDevlO6MKpcVo1Nmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvjkfK7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4AejG40TfOi5CGK1MH7k6tJ/4S26TbckwxtOZ4YoW0YJayB5xU83Bd/75BdnFFURzR+D5Q9YMuOURUNSbhUGEP1O/qOY5dnEEKTKi+f37Kt6y/Deqhop+iwGOjGLDwATbPkt9o69XAcqXy0iUgqi6OsBjXHDPu4gxx49pCWx0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R49LIvHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvjkfK7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCF6C433C7;
-	Mon,  1 Apr 2024 16:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R49LIvHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02116C433C7;
+	Mon,  1 Apr 2024 16:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988855;
-	bh=p0lTGP+0U63X4sHeXwOjFFGCvX5NYqBu8nrttRFxCA4=;
+	s=korg; t=1711988858;
+	bh=1C/mkq0sQWPksnO6NNeFKYZ8z3Fz6NA/UJJaQMmu9Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvjkfK7qLIKzsHrLg5m+eEL4VRv2gccpaEqOkDLKCSiV0QddKlyTQglR7rehyg4n2
-	 IV30uxWj3prOoimlPaE0XMxpk2DRyfnkGGHlHIdFO49r0fJzV+yaAMYrX+fmFJhGSM
-	 kHekhF8nXMsyoDloVhUZcgPGWd3EQlGRhZvj6mi8=
+	b=R49LIvHH2dBypmKhZm2Kc2R8GgBvUXUUkF7fGfQFM/DV2ahv1d4dC608uB9+Q5Don
+	 vJYXdTX5XRtZcEHK9Hc49MhjCo1H104YE6IHwju3YxQls6Oxp1nGZgFYTGZa6aI59E
+	 9197yK5JD915g+D5tTX5u5Yz2uTfm5+un199+pxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 308/432] irqchip/renesas-rzg2l: Flush posted write in irq_eoi()
-Date: Mon,  1 Apr 2024 17:44:55 +0200
-Message-ID: <20240401152602.375896010@linuxfoundation.org>
+Subject: [PATCH 6.7 309/432] irqchip/renesas-rzg2l: Add macro to retrieve TITSR register offset based on registers index
+Date: Mon,  1 Apr 2024 17:44:56 +0200
+Message-ID: <20240401152602.404578328@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,64 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 9eec61df55c51415409c7cc47e9a1c8de94a0522 ]
+[ Upstream commit 2eca4731cc66563b3919d8753dbd74d18c39f662 ]
 
-The irq_eoi() callback of the RZ/G2L interrupt chip clears the relevant
-interrupt cause bit in the TSCR register by writing to it.
+There are 2 TITSR registers available on the IA55 interrupt controller.
 
-This write is not sufficient because the write is posted and therefore not
-guaranteed to immediately clear the bit. Due to that delay the CPU can
-raise the just handled interrupt again.
+Add a macro that retrieves the TITSR register offset based on it's
+index. This macro is useful in when adding suspend/resume support so both
+TITSR registers can be accessed in a for loop.
 
-Prevent this by reading the register back which causes the posted write to
-be flushed to the hardware before the read completes.
-
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231120111820.87398-7-claudiu.beznea.uj@bp.renesas.com
+Stable-dep-of: 853a6030303f ("irqchip/renesas-rzg2l: Prevent spurious interrupts when setting trigger type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index 3dc2b3867f219..d6514f2d51aff 100644
+index d6514f2d51aff..3f2f4ebfe4da6 100644
 --- a/drivers/irqchip/irq-renesas-rzg2l.c
 +++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -81,8 +81,14 @@ static void rzg2l_irq_eoi(struct irq_data *d)
- 	 * ISCR can only be cleared if the type is falling-edge, rising-edge or
- 	 * falling/rising-edge.
- 	 */
--	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq)))
-+	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq))) {
- 		writel_relaxed(iscr & ~bit, priv->base + ISCR);
-+		/*
-+		 * Enforce that the posted write is flushed to prevent that the
-+		 * just handled interrupt is raised again.
-+		 */
-+		readl_relaxed(priv->base + ISCR);
-+	}
- }
- 
- static void rzg2l_tint_eoi(struct irq_data *d)
-@@ -93,8 +99,14 @@ static void rzg2l_tint_eoi(struct irq_data *d)
+@@ -28,8 +28,7 @@
+ #define ISCR				0x10
+ #define IITSR				0x14
+ #define TSCR				0x20
+-#define TITSR0				0x24
+-#define TITSR1				0x28
++#define TITSR(n)			(0x24 + (n) * 4)
+ #define TITSR0_MAX_INT			16
+ #define TITSEL_WIDTH			0x2
+ #define TSSR(n)				(0x30 + ((n) * 4))
+@@ -206,8 +205,7 @@ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ 	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
+ 	unsigned int hwirq = irqd_to_hwirq(d);
+ 	u32 titseln = hwirq - IRQC_TINT_START;
+-	u32 offset;
+-	u8 sense;
++	u8 index, sense;
  	u32 reg;
  
- 	reg = readl_relaxed(priv->base + TSCR);
--	if (reg & bit)
-+	if (reg & bit) {
- 		writel_relaxed(reg & ~bit, priv->base + TSCR);
-+		/*
-+		 * Enforce that the posted write is flushed to prevent that the
-+		 * just handled interrupt is raised again.
-+		 */
-+		readl_relaxed(priv->base + TSCR);
-+	}
- }
+ 	switch (type & IRQ_TYPE_SENSE_MASK) {
+@@ -223,17 +221,17 @@ static int rzg2l_tint_set_edge(struct irq_data *d, unsigned int type)
+ 		return -EINVAL;
+ 	}
  
- static void rzg2l_irqc_eoi(struct irq_data *d)
+-	offset = TITSR0;
++	index = 0;
+ 	if (titseln >= TITSR0_MAX_INT) {
+ 		titseln -= TITSR0_MAX_INT;
+-		offset = TITSR1;
++		index = 1;
+ 	}
+ 
+ 	raw_spin_lock(&priv->lock);
+-	reg = readl_relaxed(priv->base + offset);
++	reg = readl_relaxed(priv->base + TITSR(index));
+ 	reg &= ~(IRQ_MASK << (titseln * TITSEL_WIDTH));
+ 	reg |= sense << (titseln * TITSEL_WIDTH);
+-	writel_relaxed(reg, priv->base + offset);
++	writel_relaxed(reg, priv->base + TITSR(index));
+ 	raw_spin_unlock(&priv->lock);
+ 
+ 	return 0;
 -- 
 2.43.0
 
