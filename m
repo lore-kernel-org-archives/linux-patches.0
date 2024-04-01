@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58025481C4;
-	Mon,  1 Apr 2024 16:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC26B1EB37;
+	Mon,  1 Apr 2024 16:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989621; cv=none; b=ZM3lmXnMR4PXKtoAXIg2YqXs5b8qn9lScbqypH2jPddjDtDxpa8dAmUgAFmyi07bGAQlNYFDjCdP0W+nd//cYxxM2AU/TK/4wIR34aDPNbE6C1e19Mnw/PAkxcdp69zR0CwC9ZgACOwDc6n0zOm3HJQjNHxCsS07IieTAPhBJOQ=
+	t=1711989624; cv=none; b=qVAaOeVwGq9HgTlJbOXR9G2uaxJAkE/ny6VVD9UovTKI0evkjAXJO/Z0W7ZIAM66koa+BIaM98uj01RnrIRZhmyZqkhNgaAT+WEtghXAwXBZ4tbFxRgDFapVys8dOyPNHxqdDwlucGqcfuSLdubPAUUMcsXhVasCMcGFy5IA1XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989621; c=relaxed/simple;
-	bh=tWsEPmiR7KGjcn1uJl9p9eFK1Cc2jEK9kBc63rWahFE=;
+	s=arc-20240116; t=1711989624; c=relaxed/simple;
+	bh=/vm5C/MUbywBX2Pc0X943rJ/OpDarOW7SkO6nn6y08E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdxC19TTifxOKWXoR7tvelxQn5IcBWZoe6a4+tKAHbLvPYXfdX6080urI8K2okNWljR5uVqgaQRfeV7FzE4Fh7m9ycIwiNN5tEsfEqr4yRHZVKRGHwVpAga/65w9bsHvfjfJlv3yalcSna+bcx66JRYUkoWgfGeoePGHM0ZW6oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAqrD3t3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdmFeyEyKtp8aqyrAwjaia0xwxU6lKJfrIP1gUSNUy/eT5nPoSaQ9FpjxzPD2Zc1Bj3qnqTy5WFcoi5uBztoP6GwCg8ClAycthgIojN03qe2Lr2Gvw99Ny5ihsxQiKLwvo7XilUx4dg42udYxCD3xZlsBJecUHyfvCx1f0MKhLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyoFSJjh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAqrD3t3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB579C43399;
-	Mon,  1 Apr 2024 16:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyoFSJjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E08C433F1;
+	Mon,  1 Apr 2024 16:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989621;
-	bh=tWsEPmiR7KGjcn1uJl9p9eFK1Cc2jEK9kBc63rWahFE=;
+	s=korg; t=1711989624;
+	bh=/vm5C/MUbywBX2Pc0X943rJ/OpDarOW7SkO6nn6y08E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAqrD3t32aLxTi209taxqA2iZhu9/mVoRY/hHoh/NZzupJzY4/OyEqH+81JguvLMm
-	 rW1ngxM5dDSVparG2cMOprH2sw+/nN5BB9qFjURZP9jdjhOlwGQ99FAhPeI7cJtPPP
-	 ICURyq5PISw4LhxJVQ3w1ptCuE/wLFUBHDkRPQs4=
+	b=hyoFSJjhjuPXrN2jd/r7+0YiLoUxk9ek4VFPvEXOrxNivWk0NykKA0LIHrTeFXLH1
+	 ryaQuCSWBHX8/QPCOXXJKmaLqHAxOnQ5f/+86k7dI8fL0oInFRPk0j/FqP1iGxrQ57
+	 KB0fb2uWe5GY+HxqYnPA4ciEYbEod17PyOIkbKmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Roger Quadros <rogerq@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/396] drm/etnaviv: Restore some id values
-Date: Mon,  1 Apr 2024 17:42:33 +0200
-Message-ID: <20240401152551.022129732@linuxfoundation.org>
+Subject: [PATCH 6.6 087/396] usb: dwc3-am62: Disable wakeup at remove
+Date: Mon,  1 Apr 2024 17:42:16 +0200
+Message-ID: <20240401152550.511515072@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,73 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit b735ee173f84d5d0d0733c53946a83c12d770d05 ]
+[ Upstream commit 4ead695e6b3cac06543d7bc7241ab75aee4ea6a6 ]
 
-The hwdb selection logic as a feature that allows it to mark some fields
-as 'don't care'. If we match with such a field we memcpy(..)
-the current etnaviv_chip_identity into ident.
+Disable wakeup at remove.
+Fixes the below warnings on module unload and reload.
 
-This step can overwrite some id values read from the GPU with the
-'don't care' value.
+> dwc3-am62 f900000.dwc3-usb: couldn't enable device as a wakeup source: -17
+> dwc3-am62 f910000.dwc3-usb: couldn't enable device as a wakeup source: -17
 
-Fix this issue by restoring the affected values after the memcpy(..).
-
-As this is crucial for user space to know when this feature works as
-expected increment the minor version too.
-
-Fixes: 4078a1186dd3 ("drm/etnaviv: update hwdb selection logic")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
-Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Fixes: 4e3972b589da ("usb: dwc3-am62: Enable as a wakeup source by default")
+Cc: stable@vger.kernel.org # v6.4+
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240227-for-v6-9-am62-usb-errata-3-0-v4-2-0ada8ddb0767@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_drv.c  | 2 +-
- drivers/gpu/drm/etnaviv/etnaviv_hwdb.c | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-am62.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-index a8d3fa81e4ec5..f9bc837e22bdd 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
-@@ -494,7 +494,7 @@ static const struct drm_driver etnaviv_drm_driver = {
- 	.desc               = "etnaviv DRM",
- 	.date               = "20151214",
- 	.major              = 1,
--	.minor              = 3,
-+	.minor              = 4,
- };
+diff --git a/drivers/usb/dwc3/dwc3-am62.c b/drivers/usb/dwc3/dwc3-am62.c
+index f85603b7f7c5e..ea6e29091c0c9 100644
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -274,6 +274,7 @@ static void dwc3_ti_remove(struct platform_device *pdev)
+ 	u32 reg;
  
- /*
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c b/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-index 67201242438be..8665f2658d51b 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_hwdb.c
-@@ -265,6 +265,9 @@ static const struct etnaviv_chip_identity etnaviv_chip_identities[] = {
- bool etnaviv_fill_identity_from_hwdb(struct etnaviv_gpu *gpu)
- {
- 	struct etnaviv_chip_identity *ident = &gpu->identity;
-+	const u32 product_id = ident->product_id;
-+	const u32 customer_id = ident->customer_id;
-+	const u32 eco_id = ident->eco_id;
- 	int i;
+ 	pm_runtime_get_sync(dev);
++	device_init_wakeup(dev, false);
+ 	of_platform_depopulate(dev);
  
- 	for (i = 0; i < ARRAY_SIZE(etnaviv_chip_identities); i++) {
-@@ -278,6 +281,12 @@ bool etnaviv_fill_identity_from_hwdb(struct etnaviv_gpu *gpu)
- 			 etnaviv_chip_identities[i].eco_id == ~0U)) {
- 			memcpy(ident, &etnaviv_chip_identities[i],
- 			       sizeof(*ident));
-+
-+			/* Restore some id values as ~0U aka 'don't care' might been used. */
-+			ident->product_id = product_id;
-+			ident->customer_id = customer_id;
-+			ident->eco_id = eco_id;
-+
- 			return true;
- 		}
- 	}
+ 	/* Clear mode valid bit */
 -- 
 2.43.0
 
