@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AC81CA8F;
-	Mon,  1 Apr 2024 16:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224B5481B8;
+	Mon,  1 Apr 2024 16:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988390; cv=none; b=av+8lDRZfHjJXgSCkmnm2ltM1vfSm0TBYnpoNPsrdp8UUxSeY1RjGsVA2BBZ4P+KUG2oKaCA4FD1JoKSJEsAzmziD74bs8kUYOyf6/C/P1c+VSSBU8Ns62I3UM9F80jN9jZXo2VKZbBmU4uNrf0JKAJbYRihc8ai3b/KDzC9feI=
+	t=1711988394; cv=none; b=EIoMVtBeY04wb3nc+tRzBIqPMmOAF2GwgfL0pGxH3ntGFXVquVQLN0BLbub9hD0SNuvi6X/dL7o9cd/XQt+CP6sMtW7yVSlwfmT0zqBOfKuEW1m8yfMnkcWEgYriLPgQufJQMyuGhZLWxQ8A2YI8PrNLAPaskU3kRjcq0ITF3gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988390; c=relaxed/simple;
-	bh=v3g3DMHRvOc9544tCSa25gjBGbeMuqa/xIVOEQhb6YE=;
+	s=arc-20240116; t=1711988394; c=relaxed/simple;
+	bh=syDIcOGuQ5x3XaMRqb5VMy4beB0e7UlmOq95i7sZ0Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukHRSdUXduSMo6OdyOxLN0R28/Jppqe+C+VIoQJyS+9kVWidg2WqZQwmbJ3yp4LdAKdm6ZIJqbh5ncRIwYIUjWJ2Y9ZMzpCSqFfdPn3h9bfnzs/FV2XKGZ7Wmbh/d74Csz9Mrh0sZFivUh+NhVR0JOfAnn/CBxxHv40BuUq9Qdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pESyej6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aoNZ0Tsq4+UotnScrA8YsqYHQIkW4zvGV/GeiHKXRi+38qoF8cb/l6jIv9ykLglyOGtsBjPG/nVSn2ZxzEmSV3DGeKGBiMGSHLPeCHl5Rzs9DQ8biQrgRJb3oVwSakN1kKXNKfcEB4t626GOnwZsX47+Ne8oNJFGSyqMnnd07J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPH1/Lub; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pESyej6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB617C433F1;
-	Mon,  1 Apr 2024 16:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPH1/Lub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC2BC43141;
+	Mon,  1 Apr 2024 16:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988390;
-	bh=v3g3DMHRvOc9544tCSa25gjBGbeMuqa/xIVOEQhb6YE=;
+	s=korg; t=1711988393;
+	bh=syDIcOGuQ5x3XaMRqb5VMy4beB0e7UlmOq95i7sZ0Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pESyej6nu06FvhEBH6/5VMYP30EM/NS7U3LXdWz4UVEp6yno3YEoExMzUgaGHG57j
-	 nOh6KowDsE3sBhPbq0T+MRhPJa1nUp+bXdXSRIUb1NzoViVuJ5U3zN4Eb8+ZR8DMdG
-	 92rQ2DJqfmeEN9aAWAho1T4NAMWoApd14dF3KsYM=
+	b=MPH1/LubmYNl6w2W8cwgLcz007xD5/ODYn0X+qe4jG1eO9OBIyjDq7vAZMCussgLe
+	 xrq028/rRlkx1r+CFmvVOAsM+0bptigrp+Q9pJRtybfqYFxDLieEw0JoUmZR0X7Q8d
+	 yWxM+IdkPOdSQVrQHYCUs08upA1xNk1v27htGgNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Steffen Trumtrar <s.trumtrar@pengutronix.de>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Camelia Groza <camelia.groza@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Zhiguo Niu <Zhiguo.Niu@unisoc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 163/432] soc: fsl: qbman: Use raw spinlock for cgr_lock
-Date: Mon,  1 Apr 2024 17:42:30 +0200
-Message-ID: <20240401152557.999685916@linuxfoundation.org>
+Subject: [PATCH 6.7 172/432] Revert "block/mq-deadline: use correct way to throttling write requests"
+Date: Mon,  1 Apr 2024 17:42:39 +0200
+Message-ID: <20240401152558.278060829@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,129 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit fbec4e7fed89b579f2483041fabf9650fb0dd6bc ]
+[ Upstream commit 256aab46e31683d76d45ccbedc287b4d3f3e322b ]
 
-smp_call_function always runs its callback in hard IRQ context, even on
-PREEMPT_RT, where spinlocks can sleep. So we need to use a raw spinlock
-for cgr_lock to ensure we aren't waiting on a sleeping task.
+The code "max(1U, 3 * (1U << shift)  / 4)" comes from the Kyber I/O
+scheduler. The Kyber I/O scheduler maintains one internal queue per hwq
+and hence derives its async_depth from the number of hwq tags. Using
+this approach for the mq-deadline scheduler is wrong since the
+mq-deadline scheduler maintains one internal queue for all hwqs
+combined. Hence this revert.
 
-Although this bug has existed for a while, it was not apparent until
-commit ef2a8d5478b9 ("net: dpaa: Adjust queue depth on rate change")
-which invokes smp_call_function_single via qman_update_cgr_safe every
-time a link goes up or down.
-
-Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
-CC: stable@vger.kernel.org
-Reported-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Closes: https://lore.kernel.org/all/20230323153935.nofnjucqjqnz34ej@skbuf/
-Reported-by: Steffen Trumtrar <s.trumtrar@pengutronix.de>
-Closes: https://lore.kernel.org/linux-arm-kernel/87wmsyvclu.fsf@pengutronix.de/
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: stable@vger.kernel.org
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Zhiguo Niu <Zhiguo.Niu@unisoc.com>
+Fixes: d47f9717e5cf ("block/mq-deadline: use correct way to throttling write requests")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240313214218.1736147-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ block/mq-deadline.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index 1bf1f1ea67f00..7e9074519ad22 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -991,7 +991,7 @@ struct qman_portal {
- 	/* linked-list of CSCN handlers. */
- 	struct list_head cgr_cbs;
- 	/* list lock */
--	spinlock_t cgr_lock;
-+	raw_spinlock_t cgr_lock;
- 	struct work_struct congestion_work;
- 	struct work_struct mr_work;
- 	char irqname[MAX_IRQNAME];
-@@ -1281,7 +1281,7 @@ static int qman_create_portal(struct qman_portal *portal,
- 		/* if the given mask is NULL, assume all CGRs can be seen */
- 		qman_cgrs_fill(&portal->cgrs[0]);
- 	INIT_LIST_HEAD(&portal->cgr_cbs);
--	spin_lock_init(&portal->cgr_lock);
-+	raw_spin_lock_init(&portal->cgr_lock);
- 	INIT_WORK(&portal->congestion_work, qm_congestion_task);
- 	INIT_WORK(&portal->mr_work, qm_mr_process_task);
- 	portal->bits = 0;
-@@ -1456,11 +1456,14 @@ static void qm_congestion_task(struct work_struct *work)
- 	union qm_mc_result *mcr;
- 	struct qman_cgr *cgr;
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index f958e79277b8b..02a916ba62ee7 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -646,9 +646,8 @@ static void dd_depth_updated(struct blk_mq_hw_ctx *hctx)
+ 	struct request_queue *q = hctx->queue;
+ 	struct deadline_data *dd = q->elevator->elevator_data;
+ 	struct blk_mq_tags *tags = hctx->sched_tags;
+-	unsigned int shift = tags->bitmap_tags.sb.shift;
  
--	spin_lock_irq(&p->cgr_lock);
-+	/*
-+	 * FIXME: QM_MCR_TIMEOUT is 10ms, which is too long for a raw spinlock!
-+	 */
-+	raw_spin_lock_irq(&p->cgr_lock);
- 	qm_mc_start(&p->p);
- 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
- 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
--		spin_unlock_irq(&p->cgr_lock);
-+		raw_spin_unlock_irq(&p->cgr_lock);
- 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
- 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
- 		return;
-@@ -1476,7 +1479,7 @@ static void qm_congestion_task(struct work_struct *work)
- 	list_for_each_entry(cgr, &p->cgr_cbs, node)
- 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
- 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
--	spin_unlock_irq(&p->cgr_lock);
-+	raw_spin_unlock_irq(&p->cgr_lock);
- 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
- }
+-	dd->async_depth = max(1U, 3 * (1U << shift)  / 4);
++	dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
  
-@@ -2440,7 +2443,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	preempt_enable();
- 
- 	cgr->chan = p->config->channel;
--	spin_lock_irq(&p->cgr_lock);
-+	raw_spin_lock_irq(&p->cgr_lock);
- 
- 	if (opts) {
- 		struct qm_mcc_initcgr local_opts = *opts;
-@@ -2477,7 +2480,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
- 		cgr->cb(p, cgr, 1);
- out:
--	spin_unlock_irq(&p->cgr_lock);
-+	raw_spin_unlock_irq(&p->cgr_lock);
- 	put_affine_portal();
- 	return ret;
- }
-@@ -2512,7 +2515,7 @@ int qman_delete_cgr(struct qman_cgr *cgr)
- 		return -EINVAL;
- 
- 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
--	spin_lock_irqsave(&p->cgr_lock, irqflags);
-+	raw_spin_lock_irqsave(&p->cgr_lock, irqflags);
- 	list_del(&cgr->node);
- 	/*
- 	 * If there are no other CGR objects for this CGRID in the list,
-@@ -2537,7 +2540,7 @@ int qman_delete_cgr(struct qman_cgr *cgr)
- 		/* add back to the list */
- 		list_add(&cgr->node, &p->cgr_cbs);
- release_lock:
--	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
-+	raw_spin_unlock_irqrestore(&p->cgr_lock, irqflags);
- 	put_affine_portal();
- 	return ret;
- }
-@@ -2577,9 +2580,9 @@ static int qman_update_cgr(struct qman_cgr *cgr, struct qm_mcc_initcgr *opts)
- 	if (!p)
- 		return -EINVAL;
- 
--	spin_lock_irqsave(&p->cgr_lock, irqflags);
-+	raw_spin_lock_irqsave(&p->cgr_lock, irqflags);
- 	ret = qm_modify_cgr(cgr, 0, opts);
--	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
-+	raw_spin_unlock_irqrestore(&p->cgr_lock, irqflags);
- 	put_affine_portal();
- 	return ret;
+ 	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, dd->async_depth);
  }
 -- 
 2.43.0
