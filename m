@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DAB22301;
-	Mon,  1 Apr 2024 16:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14337446AC;
+	Mon,  1 Apr 2024 16:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987343; cv=none; b=A15th7CZmr7YYAeKN0Nuz0C56menea6eWIqyYzlqJspYzVkC1DryZqQbIBlE63YdaHo0Y9AjvU4gambzL55C2GcBclZp+gUo+WUQnt6qhpKvDGmrIV3NPahOrDuELqMQZUV4jej/5RquTtT9UAQ0nbJgKbEH7nt0ClSdfKPp/Sc=
+	t=1711987346; cv=none; b=Fk44apQOD7uV0Wsrq/yBgomZ09fNV3y2UrCJY/kRHjd/MpSxHH0lThmm1iPnk9cTXEwgz20SbaUa/4ULqOORG3MjOWxZ97aMPwXKmBXQOuVZXp+SQWIKTeloLXXR70a1o6h2oVHhajAnppvAuoWbCplf78gEhiAS68IxLFkQgrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987343; c=relaxed/simple;
-	bh=lMexzwI+XmKL0iEzAHtDf3F2iarKY/aQDU7IeFjh4xs=;
+	s=arc-20240116; t=1711987346; c=relaxed/simple;
+	bh=vLVn6p/Xyc8KHgsWK1c7sfNnLTVGFcpg3yzPIr+ZG5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVBio3N7Uxmd7aWUAWTtITntvrZgEnmsvgA/VxlhLlXFfKDz7lIksJym/kKhp6sUze3dEHceBj3QO+afHsA00K0RkXHvm4BUNMwQfwjB25878E5yP3KQMrqnX+8hkuPlJdQ+hejAi8/KBHu+VxVyaRjnW1N7ZbicixO2gaOY59g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNFKELhj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHy2Y4OTJbI7vAHjW6zHhuY7mJ0Gj4mXje9SLSWEZJYiwdNdQE8ecWBH3OXnaXZrdAeKzZpjYtIsivf7rHO11XUerQYQpmLe5e/Hmp0NEFy/KqdfCVfjwwRkgFg/1KCHRyOR3WdcMUDobry2EWNR40nQ403o40tuvIMunzOcer4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSRnmdyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNFKELhj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CF6C433F1;
-	Mon,  1 Apr 2024 16:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSRnmdyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC07C433C7;
+	Mon,  1 Apr 2024 16:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987342;
-	bh=lMexzwI+XmKL0iEzAHtDf3F2iarKY/aQDU7IeFjh4xs=;
+	s=korg; t=1711987345;
+	bh=vLVn6p/Xyc8KHgsWK1c7sfNnLTVGFcpg3yzPIr+ZG5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNFKELhjT633FDJuWY3M0Uq1S4zIx0Fg95Nf0B9It0Oh4PtrVP14QTjZTEjijlYZ5
-	 aNT1ikjvG+eP+ZDiNfuY7zqHSgX8SaFfpTndmELniPO3RH04I5AoHWFYiYIBwlfQEa
-	 PmI8Hoa2q5q9aUXqcs1+4OY3ff+RbR1fSKkvK90Q=
+	b=sSRnmdywt/dO2ckOKbKKmcFo+GGjHEGOFP4NvzOtmcINuTj0XSA+7q6nyZ2Xplh3a
+	 FCDAxRC3D1LoJKKrqg2VwlsmADxn4ikJSubqvyXQlFzZj7fq9XBH/fCtu/pB+Qwq5r
+	 r6w5G/6K4qPZ6Iym4QdKswXD8///L0jDKfE5jftU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>,
+	Will Deacon <will@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Petr Tesarik <petr.tesarik1@huawei-partners.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 231/399] btrfs: add helpers to get fs_info from page/folio pointers
-Date: Mon,  1 Apr 2024 17:43:17 +0200
-Message-ID: <20240401152556.076007491@linuxfoundation.org>
+Subject: [PATCH 6.8 258/399] swiotlb: Honour dma_alloc_coherent() alignment in swiotlb_alloc()
+Date: Mon,  1 Apr 2024 17:43:44 +0200
+Message-ID: <20240401152556.874784606@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,174 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit b33d2e535f9b2a1c4210cfc4843ac0dbacbeebcc ]
+[ Upstream commit cbf53074a528191df82b4dba1e3d21191102255e ]
 
-Add convenience helpers to get a fs_info from a page or folio pointer
-instead of open coding the chain or using btrfs_sb() that in some cases
-does one more pointer hop.  This is implemented as a macro (still with
-type checking) so we don't need full definitions of struct page, folio,
-btrfs_root and btrfs_fs_info. The latter can't be static inlines as this
-would create loop between ctree.h <-> fs.h, or the headers would have to
-be restructured.
+core-api/dma-api-howto.rst states the following properties of
+dma_alloc_coherent():
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 86211eea8ae1 ("btrfs: qgroup: validate btrfs_qgroup_inherit parameter")
+  | The CPU virtual address and the DMA address are both guaranteed to
+  | be aligned to the smallest PAGE_SIZE order which is greater than or
+  | equal to the requested size.
+
+However, swiotlb_alloc() passes zero for the 'alloc_align_mask'
+parameter of swiotlb_find_slots() and so this property is not upheld.
+Instead, allocations larger than a page are aligned to PAGE_SIZE,
+
+Calculate the mask corresponding to the page order suitable for holding
+the allocation and pass that to swiotlb_find_slots().
+
+Fixes: e81e99bacc9f ("swiotlb: Support aligned swiotlb buffers")
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Petr Tesarik <petr.tesarik1@huawei-partners.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/compression.c |  2 +-
- fs/btrfs/disk-io.c     |  2 +-
- fs/btrfs/extent_io.c   | 16 ++++++++--------
- fs/btrfs/fs.h          |  3 +++
- fs/btrfs/inode.c       |  2 +-
- fs/btrfs/lzo.c         |  2 +-
- 6 files changed, 15 insertions(+), 12 deletions(-)
+ kernel/dma/swiotlb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
-index 68345f73d429a..aeb3b2aa73310 100644
---- a/fs/btrfs/compression.c
-+++ b/fs/btrfs/compression.c
-@@ -1039,7 +1039,7 @@ static int btrfs_decompress_bio(struct compressed_bio *cb)
- int btrfs_decompress(int type, const u8 *data_in, struct page *dest_page,
- 		     unsigned long dest_pgoff, size_t srclen, size_t destlen)
- {
--	struct btrfs_fs_info *fs_info = btrfs_sb(dest_page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(dest_page);
- 	struct list_head *workspace;
- 	const u32 sectorsize = fs_info->sectorsize;
- 	int ret;
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index e9eb3f0f245b2..6096628fdb21f 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -534,7 +534,7 @@ static void btree_invalidate_folio(struct folio *folio, size_t offset,
- 	extent_invalidate_folio(tree, folio, offset);
- 	btree_release_folio(folio, GFP_NOFS);
- 	if (folio_get_private(folio)) {
--		btrfs_warn(BTRFS_I(folio->mapping->host)->root->fs_info,
-+		btrfs_warn(folio_to_fs_info(folio),
- 			   "folio private not zero on folio %llu",
- 			   (unsigned long long)folio_pos(folio));
- 		folio_detach_private(folio);
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index cf94e88bf8d05..a6c712429fd2d 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -433,7 +433,7 @@ static bool btrfs_verify_page(struct page *page, u64 start)
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 2ec2cc81f1a27..a619e22fecbf7 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -1633,12 +1633,14 @@ struct page *swiotlb_alloc(struct device *dev, size_t size)
+ 	struct io_tlb_mem *mem = dev->dma_io_tlb_mem;
+ 	struct io_tlb_pool *pool;
+ 	phys_addr_t tlb_addr;
++	unsigned int align;
+ 	int index;
  
- static void end_page_read(struct page *page, bool uptodate, u64 start, u32 len)
- {
--	struct btrfs_fs_info *fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(page);
- 	struct folio *folio = page_folio(page);
+ 	if (!mem)
+ 		return NULL;
  
- 	ASSERT(page_offset(page) <= start &&
-@@ -948,7 +948,7 @@ int set_folio_extent_mapped(struct folio *folio)
- 	if (folio_test_private(folio))
- 		return 0;
+-	index = swiotlb_find_slots(dev, 0, size, 0, &pool);
++	align = (1 << (get_order(size) + PAGE_SHIFT)) - 1;
++	index = swiotlb_find_slots(dev, 0, size, align, &pool);
+ 	if (index == -1)
+ 		return NULL;
  
--	fs_info = btrfs_sb(folio->mapping->host->i_sb);
-+	fs_info = folio_to_fs_info(folio);
- 
- 	if (btrfs_is_subpage(fs_info, folio->mapping))
- 		return btrfs_attach_subpage(fs_info, folio, BTRFS_SUBPAGE_DATA);
-@@ -967,7 +967,7 @@ void clear_page_extent_mapped(struct page *page)
- 	if (!folio_test_private(folio))
- 		return;
- 
--	fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	fs_info = page_to_fs_info(page);
- 	if (btrfs_is_subpage(fs_info, page->mapping))
- 		return btrfs_detach_subpage(fs_info, folio);
- 
-@@ -1770,7 +1770,7 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
-  */
- static int submit_eb_subpage(struct page *page, struct writeback_control *wbc)
- {
--	struct btrfs_fs_info *fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(page);
- 	struct folio *folio = page_folio(page);
- 	int submitted = 0;
- 	u64 page_start = page_offset(page);
-@@ -1861,7 +1861,7 @@ static int submit_eb_page(struct page *page, struct btrfs_eb_write_context *ctx)
- 	if (!folio_test_private(folio))
- 		return 0;
- 
--	if (btrfs_sb(page->mapping->host->i_sb)->nodesize < PAGE_SIZE)
-+	if (page_to_fs_info(page)->nodesize < PAGE_SIZE)
- 		return submit_eb_subpage(page, wbc);
- 
- 	spin_lock(&mapping->i_private_lock);
-@@ -2313,7 +2313,7 @@ int extent_invalidate_folio(struct extent_io_tree *tree,
- 	struct extent_state *cached_state = NULL;
- 	u64 start = folio_pos(folio);
- 	u64 end = start + folio_size(folio) - 1;
--	size_t blocksize = btrfs_sb(folio->mapping->host->i_sb)->sectorsize;
-+	size_t blocksize = folio_to_fs_info(folio)->sectorsize;
- 
- 	/* This function is only called for the btree inode */
- 	ASSERT(tree->owner == IO_TREE_BTREE_INODE_IO);
-@@ -4940,7 +4940,7 @@ static struct extent_buffer *get_next_extent_buffer(
- 
- static int try_release_subpage_extent_buffer(struct page *page)
- {
--	struct btrfs_fs_info *fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(page);
- 	u64 cur = page_offset(page);
- 	const u64 end = page_offset(page) + PAGE_SIZE;
- 	int ret;
-@@ -5013,7 +5013,7 @@ int try_release_extent_buffer(struct page *page)
- 	struct folio *folio = page_folio(page);
- 	struct extent_buffer *eb;
- 
--	if (btrfs_sb(page->mapping->host->i_sb)->nodesize < PAGE_SIZE)
-+	if (page_to_fs_info(page)->nodesize < PAGE_SIZE)
- 		return try_release_subpage_extent_buffer(page);
- 
- 	/*
-diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
-index 1cfd16f956e77..0e15b2a791bf1 100644
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -834,6 +834,9 @@ struct btrfs_fs_info {
- #define folio_to_inode(_folio)	(BTRFS_I(_Generic((_folio),			\
- 					  struct folio *: (_folio))->mapping->host))
- 
-+#define page_to_fs_info(_page)	 (page_to_inode(_page)->root->fs_info)
-+#define folio_to_fs_info(_folio) (folio_to_inode(_folio)->root->fs_info)
-+
- static inline u64 btrfs_get_fs_generation(const struct btrfs_fs_info *fs_info)
- {
- 	return READ_ONCE(fs_info->generation);
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 6948440286e55..1e800c8bb4d9f 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -7903,7 +7903,7 @@ static void btrfs_readahead(struct readahead_control *rac)
-  */
- static void wait_subpage_spinlock(struct page *page)
- {
--	struct btrfs_fs_info *fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(page);
- 	struct folio *folio = page_folio(page);
- 	struct btrfs_subpage *subpage;
- 
-diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
-index e43bc0fdc74ec..110a2c304bdc7 100644
---- a/fs/btrfs/lzo.c
-+++ b/fs/btrfs/lzo.c
-@@ -429,7 +429,7 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
- 		size_t destlen)
- {
- 	struct workspace *workspace = list_entry(ws, struct workspace, list);
--	struct btrfs_fs_info *fs_info = btrfs_sb(dest_page->mapping->host->i_sb);
-+	struct btrfs_fs_info *fs_info = page_to_fs_info(dest_page);
- 	const u32 sectorsize = fs_info->sectorsize;
- 	size_t in_len;
- 	size_t out_len;
 -- 
 2.43.0
 
