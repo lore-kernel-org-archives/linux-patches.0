@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350664D9FC;
-	Mon,  1 Apr 2024 16:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27918481B8;
+	Mon,  1 Apr 2024 16:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990244; cv=none; b=qXl0eduSdzI8oLAcr97/hvBaJD+JndCusn1sCG29gNF2e1PqvXmZYxzRf34v4uUUo/NyLF/YSwvIPS9SQajYFr9PTHX2RP538spOcwzkZ8RlK4/DvxPpCt1Bo/LSjHkxIuKbddxu43qdxG0GYq93yyS6UJnaa4xZPfDaw2xApuw=
+	t=1711990247; cv=none; b=A2+9x4zIepNjiY+GSZew3DezFLbUlbn10mq08y4AWnFp04OCwbYwtM481w7X1I02hl0qPpdsQu0Lo1DeuW/mkS6cW9xDtPchYJpCMYAMdFpN9v0NdDaly2iUXoWpukzTZS0i0ypsyFqWOzYza21vMFMtn2zz0R/XFgx8jtsDsaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990244; c=relaxed/simple;
-	bh=uid9c6OYZp1AGbTsp0zOUD1OjF2Rf0/4s4TadzXxi6E=;
+	s=arc-20240116; t=1711990247; c=relaxed/simple;
+	bh=pkFuaD9qGm7ty1TP56SpecGC0JIk+ivpxe1gPg+uI5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/LFGfKbeIioYsUQS3eMGvRue0zEmpiBJ7qAgxpp+Sfdjwu0sPdEao95oYwEtfSVaZL317Z2NqUANsSR1Bn4iXFBVr9vNQJz4MFSJpOhSLdOei0CkvUlPPsweSH+PMfjR438gDXVCDm3Ky0cYjdlUKgju1Lako3sSXLc009jqzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9SFxADF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hj28BDP1wfOglPX/HDnDXUj32GriEMQoSqWlu7PwHZLszCj8itGGGhxDnVk2jOC7q6W1CtK00x2Cmnt7Y7YVK7aRDMrGKkp7mFohISfLvFPnw5rNM1M3DzG4wDJmEL0SQxopx5rEovunrLu7yITU82wHOJRPXbyOyAo87iLV7mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JymegGuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9SFxADF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD4DC433C7;
-	Mon,  1 Apr 2024 16:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JymegGuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A192EC433F1;
+	Mon,  1 Apr 2024 16:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990244;
-	bh=uid9c6OYZp1AGbTsp0zOUD1OjF2Rf0/4s4TadzXxi6E=;
+	s=korg; t=1711990247;
+	bh=pkFuaD9qGm7ty1TP56SpecGC0JIk+ivpxe1gPg+uI5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9SFxADF404dl5Ofy2O6xq1W9jp73+x/X26ZPKr0wCpmH20wZcCzI6RDxgi+DayCq
-	 2Ht/VotvzQscO9jpnOhf5sOtxBGb5cpoCnBnE2MtJkD0Xlrv/JY17dMk41LejEUMP+
-	 mDPtaU2VTqwjHZz6uFS3+mEQR4UCpdczB22VEYFg=
+	b=JymegGuCqwmfscBiqaPG/xM+KBRkrbaCKS2Zr7cpdrcoSkxjiccok1BnwfNZfq71E
+	 GPCkFzW3oYx/IajF6MztL2qEPgaZzhI1N4/TJLGDRO3XKKk5HlK2qho07cmfJSmfCY
+	 7rNG8BGD6dSYfMbVctaspWa8/90qikj/tBxF349M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org,
-	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>
-Subject: [PATCH 6.6 273/396] xfs: ensure logflagsp is initialized in xfs_bmap_del_extent_real
-Date: Mon,  1 Apr 2024 17:45:22 +0200
-Message-ID: <20240401152556.051182296@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 291/396] iommu/dma: Force swiotlb_max_mapping_size on an untrusted device
+Date: Mon,  1 Apr 2024 17:45:40 +0200
+Message-ID: <20240401152556.580912721@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -54,226 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit e6af9c98cbf0164a619d95572136bfb54d482dd6 upstream.
+[ Upstream commit afc5aa46ed560f01ceda897c053c6a40c77ce5c4 ]
 
-In the case of returning -ENOSPC, ensure logflagsp is initialized by 0.
-Otherwise the caller __xfs_bunmapi will set uninitialized illegal
-tmp_logflags value into xfs log, which might cause unpredictable error
-in the log recovery procedure.
+The swiotlb does not support a mapping size > swiotlb_max_mapping_size().
+On the other hand, with a 64KB PAGE_SIZE configuration, it's observed that
+an NVME device can map a size between 300KB~512KB, which certainly failed
+the swiotlb mappings, though the default pool of swiotlb has many slots:
+    systemd[1]: Started Journal Service.
+ => nvme 0000:00:01.0: swiotlb buffer is full (sz: 327680 bytes), total 32768 (slots), used 32 (slots)
+    note: journal-offline[392] exited with irqs disabled
+    note: journal-offline[392] exited with preempt_count 1
 
-Also, remove the flags variable and set the *logflagsp directly, so that
-the code should be more robust in the long run.
+Call trace:
+[    3.099918]  swiotlb_tbl_map_single+0x214/0x240
+[    3.099921]  iommu_dma_map_page+0x218/0x328
+[    3.099928]  dma_map_page_attrs+0x2e8/0x3a0
+[    3.101985]  nvme_prep_rq.part.0+0x408/0x878 [nvme]
+[    3.102308]  nvme_queue_rqs+0xc0/0x300 [nvme]
+[    3.102313]  blk_mq_flush_plug_list.part.0+0x57c/0x600
+[    3.102321]  blk_add_rq_to_plug+0x180/0x2a0
+[    3.102323]  blk_mq_submit_bio+0x4c8/0x6b8
+[    3.103463]  __submit_bio+0x44/0x220
+[    3.103468]  submit_bio_noacct_nocheck+0x2b8/0x360
+[    3.103470]  submit_bio_noacct+0x180/0x6c8
+[    3.103471]  submit_bio+0x34/0x130
+[    3.103473]  ext4_bio_write_folio+0x5a4/0x8c8
+[    3.104766]  mpage_submit_folio+0xa0/0x100
+[    3.104769]  mpage_map_and_submit_buffers+0x1a4/0x400
+[    3.104771]  ext4_do_writepages+0x6a0/0xd78
+[    3.105615]  ext4_writepages+0x80/0x118
+[    3.105616]  do_writepages+0x90/0x1e8
+[    3.105619]  filemap_fdatawrite_wbc+0x94/0xe0
+[    3.105622]  __filemap_fdatawrite_range+0x68/0xb8
+[    3.106656]  file_write_and_wait_range+0x84/0x120
+[    3.106658]  ext4_sync_file+0x7c/0x4c0
+[    3.106660]  vfs_fsync_range+0x3c/0xa8
+[    3.106663]  do_fsync+0x44/0xc0
 
-Fixes: 1b24b633aafe ("xfs: move some more code into xfs_bmap_del_extent_real")
-Signed-off-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since untrusted devices might go down the swiotlb pathway with dma-iommu,
+these devices should not map a size larger than swiotlb_max_mapping_size.
+
+To fix this bug, add iommu_dma_max_mapping_size() for untrusted devices to
+take into account swiotlb_max_mapping_size() v.s. iova_rcache_range() from
+the iommu_dma_opt_mapping_size().
+
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Link: https://lore.kernel.org/r/ee51a3a5c32cf885b18f6416171802669f4a718a.1707851466.git.nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+[will: Drop redundant is_swiotlb_active(dev) check]
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c |   73 +++++++++++++++++++----------------------------
- 1 file changed, 31 insertions(+), 42 deletions(-)
+ drivers/iommu/dma-iommu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -5014,7 +5014,6 @@ xfs_bmap_del_extent_real(
- 	xfs_fileoff_t		del_endoff;	/* first offset past del */
- 	int			do_fx;	/* free extent at end of routine */
- 	int			error;	/* error return value */
--	int			flags = 0;/* inode logging flags */
- 	struct xfs_bmbt_irec	got;	/* current extent entry */
- 	xfs_fileoff_t		got_endoff;	/* first offset past got */
- 	int			i;	/* temp state */
-@@ -5027,6 +5026,8 @@ xfs_bmap_del_extent_real(
- 	uint32_t		state = xfs_bmap_fork_to_state(whichfork);
- 	struct xfs_bmbt_irec	old;
- 
-+	*logflagsp = 0;
-+
- 	mp = ip->i_mount;
- 	XFS_STATS_INC(mp, xs_del_exlist);
- 
-@@ -5039,7 +5040,6 @@ xfs_bmap_del_extent_real(
- 	ASSERT(got_endoff >= del_endoff);
- 	ASSERT(!isnullstartblock(got.br_startblock));
- 	qfield = 0;
--	error = 0;
- 
- 	/*
- 	 * If it's the case where the directory code is running with no block
-@@ -5055,13 +5055,13 @@ xfs_bmap_del_extent_real(
- 	    del->br_startoff > got.br_startoff && del_endoff < got_endoff)
- 		return -ENOSPC;
- 
--	flags = XFS_ILOG_CORE;
-+	*logflagsp = XFS_ILOG_CORE;
- 	if (whichfork == XFS_DATA_FORK && XFS_IS_REALTIME_INODE(ip)) {
- 		if (!(bflags & XFS_BMAPI_REMAP)) {
- 			error = xfs_rtfree_blocks(tp, del->br_startblock,
- 					del->br_blockcount);
- 			if (error)
--				goto done;
-+				return error;
- 		}
- 
- 		do_fx = 0;
-@@ -5076,11 +5076,9 @@ xfs_bmap_del_extent_real(
- 	if (cur) {
- 		error = xfs_bmbt_lookup_eq(cur, &got, &i);
- 		if (error)
--			goto done;
--		if (XFS_IS_CORRUPT(mp, i != 1)) {
--			error = -EFSCORRUPTED;
--			goto done;
--		}
-+			return error;
-+		if (XFS_IS_CORRUPT(mp, i != 1))
-+			return -EFSCORRUPTED;
- 	}
- 
- 	if (got.br_startoff == del->br_startoff)
-@@ -5097,17 +5095,15 @@ xfs_bmap_del_extent_real(
- 		xfs_iext_prev(ifp, icur);
- 		ifp->if_nextents--;
- 
--		flags |= XFS_ILOG_CORE;
-+		*logflagsp |= XFS_ILOG_CORE;
- 		if (!cur) {
--			flags |= xfs_ilog_fext(whichfork);
-+			*logflagsp |= xfs_ilog_fext(whichfork);
- 			break;
- 		}
- 		if ((error = xfs_btree_delete(cur, &i)))
--			goto done;
--		if (XFS_IS_CORRUPT(mp, i != 1)) {
--			error = -EFSCORRUPTED;
--			goto done;
--		}
-+			return error;
-+		if (XFS_IS_CORRUPT(mp, i != 1))
-+			return -EFSCORRUPTED;
- 		break;
- 	case BMAP_LEFT_FILLING:
- 		/*
-@@ -5118,12 +5114,12 @@ xfs_bmap_del_extent_real(
- 		got.br_blockcount -= del->br_blockcount;
- 		xfs_iext_update_extent(ip, state, icur, &got);
- 		if (!cur) {
--			flags |= xfs_ilog_fext(whichfork);
-+			*logflagsp |= xfs_ilog_fext(whichfork);
- 			break;
- 		}
- 		error = xfs_bmbt_update(cur, &got);
- 		if (error)
--			goto done;
-+			return error;
- 		break;
- 	case BMAP_RIGHT_FILLING:
- 		/*
-@@ -5132,12 +5128,12 @@ xfs_bmap_del_extent_real(
- 		got.br_blockcount -= del->br_blockcount;
- 		xfs_iext_update_extent(ip, state, icur, &got);
- 		if (!cur) {
--			flags |= xfs_ilog_fext(whichfork);
-+			*logflagsp |= xfs_ilog_fext(whichfork);
- 			break;
- 		}
- 		error = xfs_bmbt_update(cur, &got);
- 		if (error)
--			goto done;
-+			return error;
- 		break;
- 	case 0:
- 		/*
-@@ -5154,18 +5150,18 @@ xfs_bmap_del_extent_real(
- 		new.br_state = got.br_state;
- 		new.br_startblock = del_endblock;
- 
--		flags |= XFS_ILOG_CORE;
-+		*logflagsp |= XFS_ILOG_CORE;
- 		if (cur) {
- 			error = xfs_bmbt_update(cur, &got);
- 			if (error)
--				goto done;
-+				return error;
- 			error = xfs_btree_increment(cur, 0, &i);
- 			if (error)
--				goto done;
-+				return error;
- 			cur->bc_rec.b = new;
- 			error = xfs_btree_insert(cur, &i);
- 			if (error && error != -ENOSPC)
--				goto done;
-+				return error;
- 			/*
- 			 * If get no-space back from btree insert, it tried a
- 			 * split, and we have a zero block reservation.  Fix up
-@@ -5178,33 +5174,28 @@ xfs_bmap_del_extent_real(
- 				 */
- 				error = xfs_bmbt_lookup_eq(cur, &got, &i);
- 				if (error)
--					goto done;
--				if (XFS_IS_CORRUPT(mp, i != 1)) {
--					error = -EFSCORRUPTED;
--					goto done;
--				}
-+					return error;
-+				if (XFS_IS_CORRUPT(mp, i != 1))
-+					return -EFSCORRUPTED;
- 				/*
- 				 * Update the btree record back
- 				 * to the original value.
- 				 */
- 				error = xfs_bmbt_update(cur, &old);
- 				if (error)
--					goto done;
-+					return error;
- 				/*
- 				 * Reset the extent record back
- 				 * to the original value.
- 				 */
- 				xfs_iext_update_extent(ip, state, icur, &old);
--				flags = 0;
--				error = -ENOSPC;
--				goto done;
--			}
--			if (XFS_IS_CORRUPT(mp, i != 1)) {
--				error = -EFSCORRUPTED;
--				goto done;
-+				*logflagsp = 0;
-+				return -ENOSPC;
- 			}
-+			if (XFS_IS_CORRUPT(mp, i != 1))
-+				return -EFSCORRUPTED;
- 		} else
--			flags |= xfs_ilog_fext(whichfork);
-+			*logflagsp |= xfs_ilog_fext(whichfork);
- 
- 		ifp->if_nextents++;
- 		xfs_iext_next(ifp, icur);
-@@ -5228,7 +5219,7 @@ xfs_bmap_del_extent_real(
- 					((bflags & XFS_BMAPI_NODISCARD) ||
- 					del->br_state == XFS_EXT_UNWRITTEN));
- 			if (error)
--				goto done;
-+				return error;
- 		}
- 	}
- 
-@@ -5243,9 +5234,7 @@ xfs_bmap_del_extent_real(
- 	if (qfield && !(bflags & XFS_BMAPI_REMAP))
- 		xfs_trans_mod_dquot_byino(tp, ip, qfield, (long)-nblks);
- 
--done:
--	*logflagsp = flags;
--	return error;
-+	return 0;
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index e5d087bd6da15..2da969fc89900 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1602,6 +1602,14 @@ static size_t iommu_dma_opt_mapping_size(void)
+ 	return iova_rcache_range();
  }
  
++static size_t iommu_dma_max_mapping_size(struct device *dev)
++{
++	if (dev_is_untrusted(dev))
++		return swiotlb_max_mapping_size(dev);
++
++	return SIZE_MAX;
++}
++
+ static const struct dma_map_ops iommu_dma_ops = {
+ 	.flags			= DMA_F_PCI_P2PDMA_SUPPORTED,
+ 	.alloc			= iommu_dma_alloc,
+@@ -1624,6 +1632,7 @@ static const struct dma_map_ops iommu_dma_ops = {
+ 	.unmap_resource		= iommu_dma_unmap_resource,
+ 	.get_merge_boundary	= iommu_dma_get_merge_boundary,
+ 	.opt_mapping_size	= iommu_dma_opt_mapping_size,
++	.max_mapping_size       = iommu_dma_max_mapping_size,
+ };
+ 
  /*
+-- 
+2.43.0
+
 
 
