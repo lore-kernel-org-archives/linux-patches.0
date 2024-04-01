@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A2F4F897;
-	Mon,  1 Apr 2024 16:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5884D5A0;
+	Mon,  1 Apr 2024 16:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990353; cv=none; b=R+IlBrUiHeKUROr2n1zJBhDy83FvHLvimxB6X2yixqPpCmMET3ieZDwEBGkAtK8a8AkH6cLjVm9Je/7Q4W/HWHY8NrvfBxAMWajVg7ISwe9s32Olf2KgZKk+Pi7v69dij3acJqLTsOdW+WUFnlwBbXQ4FP4ReLZcvKgcmQp4Rds=
+	t=1711990356; cv=none; b=RPhaSyftHdnvBsy4xZKDGg7kD01GyqFAKQNul+FbnEgTPm3GVB5bd8uQE6eVQTAPV7VtaU1vlk1MPstUEDTCs7+UuATZ50lFl6tdkGh+idj+SVoGDQFk7BKW/ze74j6zZdrHn9UM+2/UyOj5k1hKVe5//IogqFGQUcdactD0U1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990353; c=relaxed/simple;
-	bh=saR6ED4fDaM1istcXEmH99JGv/3Zpp17j5CMcblAQIk=;
+	s=arc-20240116; t=1711990356; c=relaxed/simple;
+	bh=L3QXZ4ONzMJCMJegrEtPaIi+2gqrWhNVVIePsrxnlbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNCCApLDevLtwv7yCVJENta+MXUqm1JD2rDubmDCLqASrix5UUfybK3BVHUADnSGrhwjBf9W5iGvRFp2VbUlSR7STCzeM4ok/DMx63ErAj76Cw8nxTuY37yo9AB0D/gXMUMTWMODiV7TkalYS7Z2/EBPAu2QE3zixdog/jljI5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kixsbh+3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RtVRi+uledJGV8X7aWv+SKtHGe+A7KuzQQqnFQysBX/LURHEgdvVACnDFecuMDVvzwNByF/DaumpNCKdW0lcnA0je0Dr5tycrmxwDPLEIN52jFTPCadr0sdokZjZE4MvCSoozM2HCisjdltjK98hx1HFk6/Mhwqeaqz0DIWlTsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKCn6bpU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kixsbh+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02D7C433F1;
-	Mon,  1 Apr 2024 16:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKCn6bpU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBEDC433F1;
+	Mon,  1 Apr 2024 16:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990353;
-	bh=saR6ED4fDaM1istcXEmH99JGv/3Zpp17j5CMcblAQIk=;
+	s=korg; t=1711990356;
+	bh=L3QXZ4ONzMJCMJegrEtPaIi+2gqrWhNVVIePsrxnlbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kixsbh+3n1+Qxna2oxMg8/M628FISWdx08EWyXVtezzhIDQ2NW1NMNHyyiWEBF0jn
-	 lKMM90b2x2p6dOXJBYDYtW04ZKVOgRGIpC6kTVVMIh3jfhXalcpv4rAe5Y+GfMuNhy
-	 BaWhWUhXbtDQnIeUBAbt7q5tiZgYH9oBw/Z2VjEI=
+	b=SKCn6bpU78szovGLh/VeOJGWtssdJMtRIlgcHynXXqzSBtQeyugqVSl6oJtdhyKwP
+	 CTR3C7Fshu8gzZ9Ot3dUNbHhL+4ej1dYpOoGDuTaBNdznWDBy5Rs1taiyO3RgT5PL1
+	 qwE3lRehfgUs+z8nULInd5H1Zzmi9cbJkztsZYuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Kent Gibson <warthog618@gmail.com>
-Subject: [PATCH 6.6 325/396] gpio: cdev: sanitize the label before requesting the interrupt
-Date: Mon,  1 Apr 2024 17:46:14 +0200
-Message-ID: <20240401152557.602821716@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.6 326/396] exec: Fix NOMMU linux_binprm::exec in transfer_args_to_stack()
+Date: Mon,  1 Apr 2024 17:46:15 +0200
+Message-ID: <20240401152557.631554734@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,126 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit b34490879baa847d16fc529c8ea6e6d34f004b38 upstream.
+commit 2aea94ac14d1e0a8ae9e34febebe208213ba72f7 upstream.
 
-When an interrupt is requested, a procfs directory is created under
-"/proc/irq/<irqnum>/<label>" where <label> is the string passed to one of
-the request_irq() variants.
+In NOMMU kernel the value of linux_binprm::p is the offset inside the
+temporary program arguments array maintained in separate pages in the
+linux_binprm::page. linux_binprm::exec being a copy of linux_binprm::p
+thus must be adjusted when that array is copied to the user stack.
+Without that adjustment the value passed by the NOMMU kernel to the ELF
+program in the AT_EXECFN entry of the aux array doesn't make any sense
+and it may break programs that try to access memory pointed to by that
+entry.
 
-What follows is that the string must not contain the "/" character or
-the procfs mkdir operation will fail. We don't have such constraints for
-GPIO consumer labels which are used verbatim as interrupt labels for
-GPIO irqs. We must therefore sanitize the consumer string before
-requesting the interrupt.
+Adjust linux_binprm::exec before the successful return from the
+transfer_args_to_stack().
 
-Let's replace all "/" with ":".
-
-Cc: stable@vger.kernel.org
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Closes: https://lore.kernel.org/linux-gpio/39fe95cb-aa83-4b8b-8cab-63947a726754@gmx.net/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Cc: <stable@vger.kernel.org>
+Fixes: b6a2fea39318 ("mm: variable length argument support")
+Fixes: 5edc2a5123a7 ("binfmt_elf_fdpic: wire up AT_EXECFD, AT_EXECFN, AT_SECURE")
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Link: https://lore.kernel.org/r/20240320182607.1472887-1-jcmvbkbc@gmail.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |   38 ++++++++++++++++++++++++++++++++------
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ fs/exec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1010,10 +1010,20 @@ static u32 gpio_v2_line_config_debounce_
- 	return 0;
- }
- 
-+static inline char *make_irq_label(const char *orig)
-+{
-+	return kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
-+}
-+
-+static inline void free_irq_label(const char *label)
-+{
-+	kfree(label);
-+}
-+
- static void edge_detector_stop(struct line *line)
- {
- 	if (line->irq) {
--		free_irq(line->irq, line);
-+		free_irq_label(free_irq(line->irq, line));
- 		line->irq = 0;
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -894,6 +894,7 @@ int transfer_args_to_stack(struct linux_
+ 			goto out;
  	}
  
-@@ -1038,6 +1048,7 @@ static int edge_detector_setup(struct li
- 	unsigned long irqflags = 0;
- 	u64 eflags;
- 	int irq, ret;
-+	char *label;
++	bprm->exec += *sp_location - MAX_ARG_PAGES * PAGE_SIZE;
+ 	*sp_location = sp;
  
- 	eflags = edflags & GPIO_V2_LINE_EDGE_FLAGS;
- 	if (eflags && !kfifo_initialized(&line->req->events)) {
-@@ -1074,11 +1085,17 @@ static int edge_detector_setup(struct li
- 			IRQF_TRIGGER_RISING : IRQF_TRIGGER_FALLING;
- 	irqflags |= IRQF_ONESHOT;
- 
-+	label = make_irq_label(line->req->label);
-+	if (!label)
-+		return -ENOMEM;
-+
- 	/* Request a thread to read the events */
- 	ret = request_threaded_irq(irq, edge_irq_handler, edge_irq_thread,
--				   irqflags, line->req->label, line);
--	if (ret)
-+				   irqflags, label, line);
-+	if (ret) {
-+		free_irq_label(label);
- 		return ret;
-+	}
- 
- 	line->irq = irq;
- 	return 0;
-@@ -1943,7 +1960,7 @@ static void lineevent_free(struct lineev
- 		blocking_notifier_chain_unregister(&le->gdev->device_notifier,
- 						   &le->device_unregistered_nb);
- 	if (le->irq)
--		free_irq(le->irq, le);
-+		free_irq_label(free_irq(le->irq, le));
- 	if (le->desc)
- 		gpiod_free(le->desc);
- 	kfree(le->label);
-@@ -2091,6 +2108,7 @@ static int lineevent_create(struct gpio_
- 	int fd;
- 	int ret;
- 	int irq, irqflags = 0;
-+	char *label;
- 
- 	if (copy_from_user(&eventreq, ip, sizeof(eventreq)))
- 		return -EFAULT;
-@@ -2175,15 +2193,23 @@ static int lineevent_create(struct gpio_
- 	if (ret)
- 		goto out_free_le;
- 
-+	label = make_irq_label(le->label);
-+	if (!label) {
-+		ret = -ENOMEM;
-+		goto out_free_le;
-+	}
-+
- 	/* Request a thread to read the events */
- 	ret = request_threaded_irq(irq,
- 				   lineevent_irq_handler,
- 				   lineevent_irq_thread,
- 				   irqflags,
--				   le->label,
-+				   label,
- 				   le);
--	if (ret)
-+	if (ret) {
-+		free_irq_label(label);
- 		goto out_free_le;
-+	}
- 
- 	le->irq = irq;
- 
+ out:
 
 
