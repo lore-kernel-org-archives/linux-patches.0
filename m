@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1599A1C0DE7;
-	Mon,  1 Apr 2024 16:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2F23BBC3;
+	Mon,  1 Apr 2024 16:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990203; cv=none; b=I52cUEI3aTD/mXd9bFBpX1qRn7pmpxVzgpH7U6PiEIO0cbQYfHyy3PR3Vvb0ROeMCkQ3VUSZgexqSv35s50eGoW+DtpBaw9md/4E+5WQL6lEoX/z4zZwd9NBwCQKx3tMs52+EKs7gu2JrKmeZ9RrRzp0fiddLgmPVD5BZKSBmiY=
+	t=1711990206; cv=none; b=Z2ph4AloR7c9CNj0ZVlto2b2PJ9XYV6IxE0U4vUDzEcn7eing8+WEAXOX4p10TkZdLz2dCHA1FFiakFlaUARiDI5HDO+o2nYyMV4yKbZAcd6WQaulLEXvrsIoJpYWAjAaG1ZrBWx2wKq2cRREsAy8qkJj7CeMna4eUbNo0BqVQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990203; c=relaxed/simple;
-	bh=lTR3VigZjn2/CLMQ2hUlhTjKLTIGZqrHEATBCuOOsOA=;
+	s=arc-20240116; t=1711990206; c=relaxed/simple;
+	bh=vp+K3nraCnwleMkYyy2YWU0P/17pcdgxr23KaFQsKmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2SU45jnjQJb3u1zFUe/A8L4L8JMeTGaMCnQquJR0PrAkZfc1bc6sSrOPG7l67K1CSXubV4ngicy08PrDMkB+m9Fo1+G75TEK/dX5/4vYHBVLlNnp+viFaqXwYRrOjAq94u/Nw9f5ZUBUOi9GYGST8Qh+Tgzbn0MyJAZlf49+kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfVj5bxH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cDW5PcuxMT2ru7A3TLdxiELR8esyKlJk8a34akfoPRDjVD1H6pwWZy8AwNWRoSEYwsR3oHljQzMMuu5vdu4WPUG2wXtudpKpScXQVGgazEgZce4z/eKj66XgKQEfOA1W4JoFuwMkvCvYVtru7AJ8MyJ4vfcr1GwVfLv1HChAzwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzn8Q+LI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfVj5bxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7466AC433C7;
-	Mon,  1 Apr 2024 16:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzn8Q+LI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E4CC433C7;
+	Mon,  1 Apr 2024 16:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990202;
-	bh=lTR3VigZjn2/CLMQ2hUlhTjKLTIGZqrHEATBCuOOsOA=;
+	s=korg; t=1711990205;
+	bh=vp+K3nraCnwleMkYyy2YWU0P/17pcdgxr23KaFQsKmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfVj5bxHh56cmT+NtH3JlPyMhYQCZw901GJ8Y7XXbHRsa4IETGxJeOum0U/ol6Di+
-	 8Z10lgnHb+adJQvocG3tVSbnSQj1egEpxHe1ld3UfUqYu8+4S4+pM2vIjpTsLiYkWo
-	 JxadpX4/II8B1QFtE8Yvi7ZZrfAZ3f/esxcem2JU=
+	b=tzn8Q+LIvrN+9aSAhfIHOfGr/e7ZAEWUwutvuAUhyto11S1tvtrsGA1WapIpaYE6v
+	 r9YaiywIaCZxsDcX3y5olU2UcTGaasJfplqHSmZhcV38kgRbGrlBPMVCzeAJ9MJ1DZ
+	 AJvDjXsGKcu6/CedjROsutf5g0a/7HHpj020CT6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Wang <me@jwang.link>,
-	Mark Brown <broonie@kernel.org>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>
-Subject: [PATCH 6.6 250/396] ASoC: amd: yc: Revert "Fix non-functional mic on Lenovo 21J2"
-Date: Mon,  1 Apr 2024 17:44:59 +0200
-Message-ID: <20240401152555.365204178@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 241/396] arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
+Date: Mon,  1 Apr 2024 17:44:50 +0200
+Message-ID: <20240401152555.098793391@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,52 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Wang <me@jwang.link>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 861b3415e4dee06cc00cd1754808a7827b9105bf upstream.
+commit 7a1c6a8bf47b0b290c79b9cc3ba6ee68be5522e8 upstream.
 
-This reverts commit ed00a6945dc32462c2d3744a3518d2316da66fcc,
-which added a quirk entry to enable the Yellow Carp (YC)
-driver for the Lenovo 21J2 laptop.
+Limit the WiFi PCIe link speed to Gen2 speed (500 MB/s), which is the
+speed that the boot firmware has brought up the link at (and that
+Windows uses).
 
-Although the microphone functioned with the YC driver, it
-resulted in incorrect driver usage. The Lenovo 21J2 is not a
-Yellow Carp platform, but a Pink Sardine platform, which
-already has an upstreamed driver.
+This is specifically needed to avoid a large amount of link errors when
+restarting the link during boot (but which are currently not reported).
 
-The microphone on the Lenovo 21J2 operates correctly with the
-CONFIG_SND_SOC_AMD_PS flag enabled and does not require the
-quirk entry. So this patch removes the quirk entry.
+This also appears to fix intermittent failures to download the ath11k
+firmware during boot which can be seen when there is a longer delay
+between restarting the link and loading the WiFi driver (e.g. when using
+full disk encryption).
 
-Thanks to Mukunda Vijendar [1] for pointing this out.
-
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-
-Signed-off-by: Jiawei Wang <me@jwang.link>
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-Link: https://msgid.link/r/20240313015853.3573242-2-me@jwang.link
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Luca Stefani <luca.stefani.ge1@gmail.com>
+Fixes: 123b30a75623 ("arm64: dts: qcom: sc8280xp-x13s: enable WiFi controller")
+Cc: stable@vger.kernel.org      # 6.2
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240223152124.20042-8-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 -------
- 1 file changed, 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -203,13 +203,6 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "21J2"),
--		}
--	},
--	{
--		.driver_data = &acp6x_card,
--		.matches = {
--			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21J0"),
- 		}
- 	},
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -721,6 +721,8 @@
+ };
+ 
+ &pcie4 {
++	max-link-speed = <2>;
++
+ 	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
+ 	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
+ 
 
 
