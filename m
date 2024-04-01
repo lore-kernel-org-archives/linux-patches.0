@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76884AED4;
-	Mon,  1 Apr 2024 16:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091F6481B7;
+	Mon,  1 Apr 2024 16:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989826; cv=none; b=ZfZf6vqOSkWON2TSmzhzayCOYqK+UYj0VGYN+C1w0pzlWy80upjJKgUNjgNk5JWDV4zTdJXb1/ditKF7JZfgD8K8EBochNg0w6e+oHHEBVlbwPJn4Ko0k7qfbSMixrZfS/XoAc4DOSdjNgNsCAwVly+G2310cIxQfP9BrBgO0Jw=
+	t=1711989830; cv=none; b=Zz84iF2X42U2CKdlBZw4JBScVUjBRJDH/njXPR6F7mbttLe8IiQpsSQQWoJLzcQ5LuYHbXev6r6E07hAKyeYp5s6vbrh4qjmMHIbMm9AdLhYuumfvMG3KZ2jFKWEXgujPEijhEDRkO/nVfMpCd2TRpvCYBGNACEiCJYnrKfkZpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989826; c=relaxed/simple;
-	bh=1bKizJToSKSQEZsa/8DxrytX+CV6hA1q/VKlIqtNUCg=;
+	s=arc-20240116; t=1711989830; c=relaxed/simple;
+	bh=CoZfXVrhd/kPcoP35+g/xFWEeSLBhfU4CZ6w48bFwOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyAe/+sStdf5avzrbVPoVjgxOUppxQf7NO+OpBkcsyGt8JZU+rnrL92xMz900e1QkQkCpo9DajSHjVm4e7AtMg27CJ1LGMXCKpdMY3CBFuBv4pjFL189i725RsgxgFtfP6a/6A3ZfSNArXwO5ab8mC/jReiR+gaERCQjDEaAJ24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs0c+/zA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=algvFz2bjnY80eTUkmBIVRi3qozwp22Yhjw8qkb+VbN7+klbfovaMiWlTkQ2cdThzfC8v0W1tJmZanlQoCUJ4567Hx2iGRvbnjUTG9Yw0B23jUofjniP9m1oUnqS87DLH0HoGTL3IStTiPcj63vALwoRQDkeNvYoHD4/Jvk63GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTyy0+xA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs0c+/zA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D14C433C7;
-	Mon,  1 Apr 2024 16:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTyy0+xA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68184C433C7;
+	Mon,  1 Apr 2024 16:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989826;
-	bh=1bKizJToSKSQEZsa/8DxrytX+CV6hA1q/VKlIqtNUCg=;
+	s=korg; t=1711989829;
+	bh=CoZfXVrhd/kPcoP35+g/xFWEeSLBhfU4CZ6w48bFwOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gs0c+/zAlFMbQq9AH8b+oJjhUS8760+hwaEpd7gOolv6PLAr2CGD0r4rd40EInb18
-	 ZkLTIojiG1ecR3JDsr/sUm22b4W0XVNYmX3mxT3B3n5GgY07KXDvK097DpxQCGfshc
-	 SKehn296VOFOP1ZmbwflHu2e8JXutWPs4zEmWN6Q=
+	b=PTyy0+xAM0hdrnmZfzOfsFkkz1d6Qdapm35mFP3gcc0nDACUtODmhOmoD2QthmGce
+	 QEDZvI+72zlYu0n0RnvjV7XD/U3zAZK2jIBjg+1/nyP+VhHmZrv61c7p4wdDn12sEA
+	 tboGug8ckRj6V1JdraAf1nP7rcCwSAN1jt09pzmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	"Christoph Lameter (Ampere)" <cl@linux.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/396] cpufreq: dt: always allocate zeroed cpumask
-Date: Mon,  1 Apr 2024 17:43:34 +0200
-Message-ID: <20240401152552.859851712@linuxfoundation.org>
+Subject: [PATCH 6.6 166/396] x86/CPU/AMD: Update the Zenbleed microcode revisions
+Date: Mon,  1 Apr 2024 17:43:35 +0200
+Message-ID: <20240401152552.890058529@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,44 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit d2399501c2c081eac703ca9597ceb83c7875a537 ]
+[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
 
-Commit 0499a78369ad ("ARM64: Dynamically allocate cpumasks and increase
-supported CPUs to 512") changed the handling of cpumasks on ARM 64bit,
-what resulted in the strange issues and warnings during cpufreq-dt
-initialization on some big.LITTLE platforms.
+Update them to the correct revision numbers.
 
-This was caused by mixing OPPs between big and LITTLE cores, because
-OPP-sharing information between big and LITTLE cores is computed on
-cpumask, which in turn was not zeroed on allocation. Fix this by
-switching to zalloc_cpumask_var() call.
-
-Fixes: dc279ac6e5b4 ("cpufreq: dt: Refactor initialization to handle probe deferral properly")
-CC: stable@vger.kernel.org # v5.10+
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Christoph Lameter (Ampere) <cl@linux.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq-dt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/amd.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
-index 8bd6e5e8f121c..2d83bbc65dd0b 100644
---- a/drivers/cpufreq/cpufreq-dt.c
-+++ b/drivers/cpufreq/cpufreq-dt.c
-@@ -208,7 +208,7 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
- 	if (!priv)
- 		return -ENOMEM;
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index bb3efc825bf4f..031bca974fbf3 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1006,11 +1006,11 @@ static bool cpu_has_zenbleed_microcode(void)
+ 	u32 good_rev = 0;
  
--	if (!alloc_cpumask_var(&priv->cpus, GFP_KERNEL))
-+	if (!zalloc_cpumask_var(&priv->cpus, GFP_KERNEL))
- 		return -ENOMEM;
+ 	switch (boot_cpu_data.x86_model) {
+-	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
+-	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
+-	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
+-	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
+-	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
++	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
++	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
++	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
++	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
++	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
  
- 	cpumask_set_cpu(cpu, priv->cpus);
+ 	default:
+ 		return false;
 -- 
 2.43.0
 
