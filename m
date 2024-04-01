@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82A04AEC3;
-	Mon,  1 Apr 2024 16:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAB863E;
+	Mon,  1 Apr 2024 16:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990436; cv=none; b=oUMXG52BPii4FZVd+qxJ60zcysNXYt8OhsvgjZocL7oYLcrCb2TvAoR2mAWKg7FsLK+X+GlQtHoslPl1wxk3U4yDTMTssZSPf4aNiRFrp7xtEwRoUgU/tKcKR7wUKcAirnxz6NOLa1fpwR0WvVuVFShZPVQ7ET3j7Radqjrff6g=
+	t=1711990440; cv=none; b=PiRF+RwSHfFjhmhrR3uCdcxl3nNbvojc9h8RB0aEO6Q4kebWWSfbWC4g9YvD2xsscLtM9Jc3dqzHZAL8NQEij/FTEd139PxXVt++IpYVAdsLKnARenzvUI92+ejNsMO0TfqfiAd+LaeUDBaPqAdozu9szM08oT4vu6kzcccjmSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990436; c=relaxed/simple;
-	bh=F4JyFqBc2/SOQS3hDdIU3jLwbdqyFENdI0MYJyyJ4ZI=;
+	s=arc-20240116; t=1711990440; c=relaxed/simple;
+	bh=jwhJiLk6twmUVf/L02gB/A+o6ITLxPsWZN70+59VzIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTrHa3BUxLpDBApWqFUkPhEBw6nynzIyhlXDBFWhtj5ZCGVyhHlCMc/a5ZupRyDZjdaQqXHj8KPaXmGHDU4WOCPFeHYhpP8Fq3PmJDXo+QNxQFZvFZTzRjv0TyHN1uI2SBT2KSxoblBMhlMOO6C+413WA/0PrH4ebcF9gr+7a88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUSsfjq6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baJMKY7STS0uCtmQnig4RZcT2K8IWeD5fwi4EbWpshrvhBNvoWAmcmXXkNlMF70qyM8gxJ8asdUkvNXkKbkg6vo01uCTKb2v4bwVDJEYFDjXV2MN3lobmEOb+i2580CY1WrnJlktV/m/f81zOwRKB9YpTdXudubOrnmBggNO4iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpegzF1E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUSsfjq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11676C433F1;
-	Mon,  1 Apr 2024 16:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpegzF1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F3CC433C7;
+	Mon,  1 Apr 2024 16:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990436;
-	bh=F4JyFqBc2/SOQS3hDdIU3jLwbdqyFENdI0MYJyyJ4ZI=;
+	s=korg; t=1711990439;
+	bh=jwhJiLk6twmUVf/L02gB/A+o6ITLxPsWZN70+59VzIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUSsfjq6Qll1kIkEqv21bOnJ88db2XFRFSjVizKGUTv/+8pWSsDqkRxkHZ8oJpL8Q
-	 3achH9MdLvEDr2E3SnRnGOHEvgPB7BLa967LRj08RmGhdxXbWnIGv6vyJDSt1w6D3v
-	 frUmIFtm/pEQdGjBL5NTlUg1p06WkDtzfjDqjNnM=
+	b=VpegzF1EbfSZOIj70JT1+UPpTb6eoP71PaVRLnWkeIwSMnFq5DxFK6vUimJaSX/Uc
+	 l5jptS9Q62mhHFmj2reIPIL59FaNCKutngEBc7R1X12+sM/LodZfLlacAhqEVhsfz/
+	 mcCrwJkwfli1gBa/U8QLID5NxmbUKcCT+ayC1hkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 335/396] block: Do not force full zone append completion in req_bio_endio()
-Date: Mon,  1 Apr 2024 17:46:24 +0200
-Message-ID: <20240401152557.900967350@linuxfoundation.org>
+	Dillon Varone <dillon.varone@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 353/396] drm/amd/display: Disconnect phantom pipe OPP from OPTC being disabled
+Date: Mon,  1 Apr 2024 17:46:42 +0200
+Message-ID: <20240401152558.446091398@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,53 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: George Shen <george.shen@amd.com>
 
-commit 55251fbdf0146c252ceff146a1bb145546f3e034 upstream.
+[ Upstream commit 7bdbfb4e36e34eb788e44f27666bf0a2b3b90803 ]
 
-This reverts commit 748dc0b65ec2b4b7b3dbd7befcc4a54fdcac7988.
+[Why]
+If an OPP is used for a different OPTC without first being disconnected
+from the previous OPTC, unexpected behaviour can occur. This also
+applies to phantom pipes, which is what the current logic missed.
 
-Partial zone append completions cannot be supported as there is no
-guarantees that the fragmented data will be written sequentially in the
-same manner as with a full command. Commit 748dc0b65ec2 ("block: fix
-partial zone append completion handling in req_bio_endio()") changed
-req_bio_endio() to always advance a partially failed BIO by its full
-length, but this can lead to incorrect accounting. So revert this
-change and let low level device drivers handle this case by always
-failing completely zone append operations. With this revert, users will
-still see an IO error for a partially completed zone append BIO.
+[How]
+Disconnect OPPs from OPTC for phantom pipes before disabling OTG master.
 
-Fixes: 748dc0b65ec2 ("block: fix partial zone append completion handling in req_bio_endio()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240328004409.594888-2-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also move the disconnection to before the OTG master disable, since the
+register is double buffered.
+
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: b4e05bb1dec5 ("drm/amd/display: Clear OPTC mem select on disable")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ .../gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -767,16 +767,11 @@ static void req_bio_endio(struct request
- 		/*
- 		 * Partial zone append completions cannot be supported as the
- 		 * BIO fragments may end up not being written sequentially.
--		 * For such case, force the completed nbytes to be equal to
--		 * the BIO size so that bio_advance() sets the BIO remaining
--		 * size to 0 and we end up calling bio_endio() before returning.
- 		 */
--		if (bio->bi_iter.bi_size != nbytes) {
-+		if (bio->bi_iter.bi_size != nbytes)
- 			bio->bi_status = BLK_STS_IOERR;
--			nbytes = bio->bi_iter.bi_size;
--		} else {
-+		else
- 			bio->bi_iter.bi_sector = rq->__sector;
--		}
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+index b1fcc91b65a32..93592e8051fb7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
+@@ -142,12 +142,6 @@ static bool optc32_disable_crtc(struct timing_generator *optc)
+ {
+ 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
  
- 	bio_advance(bio, nbytes);
+-	/* disable otg request until end of the first line
+-	 * in the vertical blank region
+-	 */
+-	REG_UPDATE(OTG_CONTROL,
+-			OTG_MASTER_EN, 0);
+-
+ 	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
+ 			OPTC_SEG0_SRC_SEL, 0xf,
+ 			OPTC_SEG1_SRC_SEL, 0xf,
+@@ -155,6 +149,12 @@ static bool optc32_disable_crtc(struct timing_generator *optc)
+ 			OPTC_SEG3_SRC_SEL, 0xf,
+ 			OPTC_NUM_OF_INPUT_SEGMENT, 0);
+ 
++	/* disable otg request until end of the first line
++	 * in the vertical blank region
++	 */
++	REG_UPDATE(OTG_CONTROL,
++			OTG_MASTER_EN, 0);
++
+ 	REG_UPDATE(CONTROL,
+ 			VTG0_ENABLE, 0);
+ 
+@@ -181,6 +181,13 @@ static void optc32_disable_phantom_otg(struct timing_generator *optc)
+ {
+ 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
+ 
++	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
++			OPTC_SEG0_SRC_SEL, 0xf,
++			OPTC_SEG1_SRC_SEL, 0xf,
++			OPTC_SEG2_SRC_SEL, 0xf,
++			OPTC_SEG3_SRC_SEL, 0xf,
++			OPTC_NUM_OF_INPUT_SEGMENT, 0);
++
+ 	REG_UPDATE(OTG_CONTROL, OTG_MASTER_EN, 0);
+ }
+ 
+-- 
+2.43.0
+
 
 
