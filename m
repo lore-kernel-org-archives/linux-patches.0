@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E4A383BA;
-	Mon,  1 Apr 2024 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCC6383BA;
+	Mon,  1 Apr 2024 16:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987197; cv=none; b=spwGGb5Qt0W0PnaEEHGBNV4SxCNZveaaV9HVLQ99Y/pqxGnyna2pMAKUxf7L4fGE1A2kv7BJk1cZVMyGiCoN2pvV8bx5j7yUwOjH0p/IQyyKtt7LImLujVHv8SAp4XdMOBPtg+BeXxSKWENXJjmn1BM7x0bbceSs/OUdPibD53s=
+	t=1711987200; cv=none; b=n6u57HfzNH2hDbuCtd8iXF3Ah/R9ZhKKw8PeiHXwM/RI5eiqVqdiKVsvPqInLn0eiulP0xVnfiEclX2VjSCaUc4iGUR2Y6KCogRi3gDauKHb4DSCZnaN9xE5tahZgHSS9VD6vwYUTPPezyxjAIDbzBqMKoEyylLzofCwmExl6AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987197; c=relaxed/simple;
-	bh=RchJ8GhHfeZGRpNkzEtkQVcaVemrHd8VCdEPSQibp54=;
+	s=arc-20240116; t=1711987200; c=relaxed/simple;
+	bh=Eho51Zd/Vg2Y1dOskEvW3f7kqm/y26WGNswow1iagHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twW5z5n3tW0zfze8PYOxvcIN9rsBFb8He5lH19YuURILDcAETXGbrrT/hBPy9KbUh/ujaiJTAYe+QCnxL4ZxloQPWjlbwPsrK+cUDlmwpl6rDIx4MJ6DcaOjI5r5kLprhl4oaQJSCLwJNvfp2w8VHbgLANN1/oQBm8OlJeby87I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuXhDCaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCU0DJtwAIeEFbmCxBM1S8mGFTrY3jmW2CurX+8PJgvxCc1dRGN6kpah9ZmISKrdroNK5z0zzHcc0rSHrCo2kbODmCNlkrhW8vu37EFKb+A9TyJpFlsDm2Q4bawgcScUvfcNCw3uRq5l/gYQfNdiEnM/PkJMpp/kn2QRLaaCNcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLtCisQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuXhDCaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C15C433C7;
-	Mon,  1 Apr 2024 15:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLtCisQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A7CC433F1;
+	Mon,  1 Apr 2024 15:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987197;
-	bh=RchJ8GhHfeZGRpNkzEtkQVcaVemrHd8VCdEPSQibp54=;
+	s=korg; t=1711987200;
+	bh=Eho51Zd/Vg2Y1dOskEvW3f7kqm/y26WGNswow1iagHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FuXhDCaL9Q+pMUEBiNeWipGusJ77g3l0e3FGDcd3Rt2GqQ0w140e2N7DRIPrl1C7m
-	 KI41M5Sj8zOyLebilx2o80ZqwDUiAtgnQue+wIxz7YCfDcEKcuw5h8a9W+8+2o1Naw
-	 xnGppnrvg7DXceYGxQT9bvNCTzf0TpwPpolCpdvE=
+	b=DLtCisQz5cYvy3P0gZmQaFz2Q214hZzjZv/ByM6xSU7Hg8OQlmVmw2chDpfJT/bxb
+	 91As1V3qw2TxkJptl+kjMOVVJCY0wUVPd0niixDvPOQ5HGXFRT3ns6eK404fyN7aDy
+	 I7C67ShKFkmgtDieKfOoVnMiXQmHBRUAq/R5EqQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Alvin Lee <alvin.lee2@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
-	ChunTao Tso <chuntao.tso@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 214/399] drm/amd/display: Amend coasting vtotal for replay low hz
-Date: Mon,  1 Apr 2024 17:43:00 +0200
-Message-ID: <20240401152555.571253209@linuxfoundation.org>
+Subject: [PATCH 6.8 215/399] drm/amd/display: Lock all enabled otg pipes even with no planes
+Date: Mon,  1 Apr 2024 17:43:01 +0200
+Message-ID: <20240401152555.600829551@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -55,157 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChunTao Tso <chuntao.tso@amd.com>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-[ Upstream commit 8e054b0f1e71531762b8ded7f66c1b4af734671b ]
+[ Upstream commit 94040c2cbb1a872ff779da06bf034ccfee0f9cba ]
 
 [WHY]
-The original coasting vtotal is 2 bytes, and it need to
-be amended to 4 bytes because low hz case.
+On DCN32 we support dynamic ODM even when OTG is blanked. When ODM
+configuration is dynamically changed and the OTG is on blank pattern,
+we will need to reprogram OPP's test pattern based on new ODM
+configuration. Therefore we need to lock the OTG pipe to avoid temporary
+corruption when we are reprogramming OPP blank patterns.
 
 [HOW]
-Amend coasting vtotal from 2 bytes to 4 bytes.
+Add a new interdependent update lock implementation to lock all enabled
+OTG pipes even when there is no plane on the OTG for DCN32.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
 Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: ChunTao Tso <chuntao.tso@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_types.h                 | 4 ++--
- drivers/gpu/drm/amd/display/dc/inc/link.h                 | 4 ++--
- .../display/dc/link/protocols/link_edp_panel_control.c    | 4 ++--
- .../display/dc/link/protocols/link_edp_panel_control.h    | 4 ++--
- drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h           | 8 ++++++++
- drivers/gpu/drm/amd/display/modules/power/power_helpers.c | 2 +-
- drivers/gpu/drm/amd/display/modules/power/power_helpers.h | 2 +-
- 7 files changed, 18 insertions(+), 10 deletions(-)
+ .../amd/display/dc/hwss/dcn32/dcn32_hwseq.c   | 23 +++++++++++++++++++
+ .../amd/display/dc/hwss/dcn32/dcn32_hwseq.h   |  2 ++
+ .../amd/display/dc/hwss/dcn32/dcn32_init.c    |  2 +-
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index 9900dda2eef5c..be2ac5c442a48 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -1085,9 +1085,9 @@ struct replay_settings {
- 	/* SMU optimization is enabled */
- 	bool replay_smu_opt_enable;
- 	/* Current Coasting vtotal */
--	uint16_t coasting_vtotal;
-+	uint32_t coasting_vtotal;
- 	/* Coasting vtotal table */
--	uint16_t coasting_vtotal_table[PR_COASTING_TYPE_NUM];
-+	uint32_t coasting_vtotal_table[PR_COASTING_TYPE_NUM];
- 	/* Maximum link off frame count */
- 	enum replay_link_off_frame_count_level link_off_frame_count_level;
- 	/* Replay pseudo vtotal for abm + ips on full screen video which can improve ips residency */
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/link.h b/drivers/gpu/drm/amd/display/dc/inc/link.h
-index 26fe81f213da5..bf29fc58ea6a6 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/link.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/link.h
-@@ -285,12 +285,12 @@ struct link_service {
- 			enum replay_FW_Message_type msg,
- 			union dmub_replay_cmd_set *cmd_data);
- 	bool (*edp_set_coasting_vtotal)(
--			struct dc_link *link, uint16_t coasting_vtotal);
-+			struct dc_link *link, uint32_t coasting_vtotal);
- 	bool (*edp_replay_residency)(const struct dc_link *link,
- 			unsigned int *residency, const bool is_start,
- 			const bool is_alpm);
- 	bool (*edp_set_replay_power_opt_and_coasting_vtotal)(struct dc_link *link,
--			const unsigned int *power_opts, uint16_t coasting_vtotal);
-+			const unsigned int *power_opts, uint32_t coasting_vtotal);
- 
- 	bool (*edp_wait_for_t12)(struct dc_link *link);
- 	bool (*edp_is_ilr_optimization_required)(struct dc_link *link,
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
-index f1489f4a40c12..d01b77fb9811a 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
-@@ -1034,7 +1034,7 @@ bool edp_send_replay_cmd(struct dc_link *link,
- 	return true;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+index b890db0bfc46b..c0b526cf17865 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -1785,3 +1785,26 @@ void dcn32_prepare_bandwidth(struct dc *dc,
+ 		context->bw_ctx.bw.dcn.clk.p_state_change_support = p_state_change_support;
+ 	}
  }
++
++void dcn32_interdependent_update_lock(struct dc *dc,
++		struct dc_state *context, bool lock)
++{
++	unsigned int i;
++	struct pipe_ctx *pipe;
++	struct timing_generator *tg;
++
++	for (i = 0; i < dc->res_pool->pipe_count; i++) {
++		pipe = &context->res_ctx.pipe_ctx[i];
++		tg = pipe->stream_res.tg;
++
++		if (!resource_is_pipe_type(pipe, OTG_MASTER) ||
++				!tg->funcs->is_tg_enabled(tg) ||
++				dc_state_get_pipe_subvp_type(context, pipe) == SUBVP_PHANTOM)
++			continue;
++
++		if (lock)
++			dc->hwss.pipe_control_lock(dc, pipe, true);
++		else
++			dc->hwss.pipe_control_lock(dc, pipe, false);
++	}
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.h
+index 069e20bc87c0a..f55c11fc56ec7 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.h
+@@ -129,4 +129,6 @@ bool dcn32_is_pipe_topology_transition_seamless(struct dc *dc,
+ void dcn32_prepare_bandwidth(struct dc *dc,
+ 	struct dc_state *context);
  
--bool edp_set_coasting_vtotal(struct dc_link *link, uint16_t coasting_vtotal)
-+bool edp_set_coasting_vtotal(struct dc_link *link, uint32_t coasting_vtotal)
- {
- 	struct dc *dc = link->ctx->dc;
- 	struct dmub_replay *replay = dc->res_pool->replay;
-@@ -1073,7 +1073,7 @@ bool edp_replay_residency(const struct dc_link *link,
- }
- 
- bool edp_set_replay_power_opt_and_coasting_vtotal(struct dc_link *link,
--	const unsigned int *power_opts, uint16_t coasting_vtotal)
-+	const unsigned int *power_opts, uint32_t coasting_vtotal)
- {
- 	struct dc  *dc = link->ctx->dc;
- 	struct dmub_replay *replay = dc->res_pool->replay;
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
-index 34e521af7bb48..a158c6234d422 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
-@@ -59,12 +59,12 @@ bool edp_setup_replay(struct dc_link *link,
- bool edp_send_replay_cmd(struct dc_link *link,
- 			enum replay_FW_Message_type msg,
- 			union dmub_replay_cmd_set *cmd_data);
--bool edp_set_coasting_vtotal(struct dc_link *link, uint16_t coasting_vtotal);
-+bool edp_set_coasting_vtotal(struct dc_link *link, uint32_t coasting_vtotal);
- bool edp_replay_residency(const struct dc_link *link,
- 	unsigned int *residency, const bool is_start, const bool is_alpm);
- bool edp_get_replay_state(const struct dc_link *link, uint64_t *state);
- bool edp_set_replay_power_opt_and_coasting_vtotal(struct dc_link *link,
--	const unsigned int *power_opts, uint16_t coasting_vtotal);
-+	const unsigned int *power_opts, uint32_t coasting_vtotal);
- bool edp_wait_for_t12(struct dc_link *link);
- bool edp_is_ilr_optimization_required(struct dc_link *link,
-        struct dc_crtc_timing *crtc_timing);
-diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-index e699731ee68e9..bb1f69a54c148 100644
---- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-@@ -3133,6 +3133,14 @@ struct dmub_cmd_replay_set_coasting_vtotal_data {
- 	 * Currently the support is only for 0 or 1
- 	 */
- 	uint8_t panel_inst;
-+	/**
-+	 * 16-bit value dicated by driver that indicates the coasting vtotal high byte part.
-+	 */
-+	uint16_t coasting_vtotal_high;
-+	/**
-+	 * Explicit padding to 4 byte boundary.
-+	 */
-+	uint8_t pad[2];
- };
- 
- /**
-diff --git a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-index e304e8435fb8f..2a3698fd2dc24 100644
---- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-+++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-@@ -975,7 +975,7 @@ bool psr_su_set_dsc_slice_height(struct dc *dc, struct dc_link *link,
- 
- void set_replay_coasting_vtotal(struct dc_link *link,
- 	enum replay_coasting_vtotal_type type,
--	uint16_t vtotal)
-+	uint32_t vtotal)
- {
- 	link->replay_settings.coasting_vtotal_table[type] = vtotal;
- }
-diff --git a/drivers/gpu/drm/amd/display/modules/power/power_helpers.h b/drivers/gpu/drm/amd/display/modules/power/power_helpers.h
-index bef4815e1703d..ff7e6f3cd6be2 100644
---- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.h
-+++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.h
-@@ -56,7 +56,7 @@ bool dmub_init_abm_config(struct resource_pool *res_pool,
- void init_replay_config(struct dc_link *link, struct replay_config *pr_config);
- void set_replay_coasting_vtotal(struct dc_link *link,
- 	enum replay_coasting_vtotal_type type,
--	uint16_t vtotal);
-+	uint32_t vtotal);
- void set_replay_ips_full_screen_video_src_vtotal(struct dc_link *link, uint16_t vtotal);
- void calculate_replay_link_off_frame_count(struct dc_link *link,
- 	uint16_t vtotal, uint16_t htotal);
++void dcn32_interdependent_update_lock(struct dc *dc,
++		struct dc_state *context, bool lock);
+ #endif /* __DC_HWSS_DCN32_H__ */
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_init.c
+index e8ac94a005b83..03253faeaeac6 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_init.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_init.c
+@@ -58,7 +58,7 @@ static const struct hw_sequencer_funcs dcn32_funcs = {
+ 	.disable_plane = dcn20_disable_plane,
+ 	.disable_pixel_data = dcn20_disable_pixel_data,
+ 	.pipe_control_lock = dcn20_pipe_control_lock,
+-	.interdependent_update_lock = dcn10_lock_all_pipes,
++	.interdependent_update_lock = dcn32_interdependent_update_lock,
+ 	.cursor_lock = dcn10_cursor_lock,
+ 	.prepare_bandwidth = dcn32_prepare_bandwidth,
+ 	.optimize_bandwidth = dcn20_optimize_bandwidth,
 -- 
 2.43.0
 
