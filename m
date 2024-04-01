@@ -1,86 +1,183 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB1D433D7;
-	Sat, 30 Mar 2024 23:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2823FE2D;
+	Mon,  1 Apr 2024 15:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711839785; cv=none; b=E+Bp7itBBA98jvv4jw2tjNSjGUhg060qtFxQGAT6pEQQk+u7gV6R+WPytaS/Z0UlG3s9/IDjjBb8zKZJw5lYHtuTEXNVGnC5hfxY1VkjmijYP8hYMYS0S2/QsSz7ND5FBpEXZYLgnR/mwxY5hiRHntdqj81mblrGEv0tFac5UI0=
+	t=1711986543; cv=none; b=Gue+ohlmJnlRxCrl8kH6T7Ljh5693uygsIV8rlo1jmKiQZpBepaRcZS5EJLe4IpoPeX6OQvIRmeJ09Q/M4UHgSVkqAEDki0rUMOje+BGbFdw7xd1O0WAgEylqwtrqoFsSHq5fwlwteERMHGeVT/46Do8n+tmWMKa+c/qDTLg39k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711839785; c=relaxed/simple;
-	bh=Uk4iJZwSrM2dCVspPrkJGokzJ84YsOa1I77r4NRPHC0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mh1Yg4LoVM0aKqjJcGa8EnsuCvNza+l3cA2Bi1aXlQ77iX3SrTkyygfAPJJtbYujclh51KY7omJVY0+/lxyvlPU9vKKSBaTwF9NjuqoYpboCTvK/+oPtcG6Ob1nVQY1dZmJaw3Ih9s6FvqjF9TVPc61jk0mFHCcpvph2v0QIHFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/FvMNA4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1711986543; c=relaxed/simple;
+	bh=vGxYIxjgTmmJinfRtPPgyHBI1QQ9c701wS5/tAZ6ot4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=c4n0at9E6SrzZErXUTfSqhRdJktc0g8jFpF5RJ8Ok/izVqsHgf7TR9vXNfePbKgSo+kO0ZBj4HJyCsgNDS1sffqhBx2yghwG54u6gmeL7/AAKUg9VjcNdxB2rsP8I8TrjUlEXfxhIuSbi6NhBC1Rfz6tDgeGHUERu4KFTcii0us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIpV1Lnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/FvMNA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79C7C43390;
-	Sat, 30 Mar 2024 23:03:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711839784;
-	bh=Uk4iJZwSrM2dCVspPrkJGokzJ84YsOa1I77r4NRPHC0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=i/FvMNA4ajDWw3JT6GuQSg3gc4xs2GzlA3SCsxisY2qLC3bGo80ykGUjUaTIiocLD
-	 lRGCz3ydTGXWc9MoUWRBMJu/9FbZZJPWV12PoXqxsppdCXrU8hHh+NymV2yepcsJNC
-	 K7BDfrHSAkC5V99trtRQNa/4PtPMQPBgn/CodlK8jj2un6YK+Gh99eL+areqP6zqQ1
-	 QiWea0HfcnrJFuvlEt7hZs0IfqQYPAAQ9l2NHMn0IwN5a3qzpUzLflfgmLAO+6l3JU
-	 uROY0jV31xGtHg33rUZY3YoG62cD0nvV34ZRuIAFZ5W4KdjCjb9KJrTAiQHOpfNyy0
-	 jOpSWwWTNr3bg==
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d52e65d4a8so41326161fa.0;
-        Sat, 30 Mar 2024 16:03:04 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWmlHJr+LDXaNb4IBZuvCH/CN7BzYtkaQQC+3uLl9DXemzaf6YWI5ROyUJ/MBGYpktpo5AivIycSQgKLoKOIhJiPAcT2oSAIcXgv4+tEBBJBZ21RoZZbyRzvnucdjg=
-X-Gm-Message-State: AOJu0Yww3guEmrP90okCGjP9yL2yXPYeGXkh5gPbYnlGMl4qKySunhSl
-	FHRuCipjL52oirj+k0A5U+IAeX0vYcufM3rtBf4BVDjKtQrwHeW93HLwZyIy1FJ0xjlo2+2kwUM
-	VWYeCAjWny0luDplwiUVB2KoF3pM=
-X-Google-Smtp-Source: AGHT+IFd/LGv2PBoBuzAtx8igo0NJbXoa4v9MDGe5vtLEj5wDpfnPVtw0+ng93ETtALsKDvhhb4I7KxixPbeWm91ZZg=
-X-Received: by 2002:a05:651c:b0d:b0:2d7:68a0:9b28 with SMTP id
- b13-20020a05651c0b0d00b002d768a09b28mr1710557ljr.7.1711839783412; Sat, 30 Mar
- 2024 16:03:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIpV1Lnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D0EC433F1;
+	Mon,  1 Apr 2024 15:49:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1711986542;
+	bh=vGxYIxjgTmmJinfRtPPgyHBI1QQ9c701wS5/tAZ6ot4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rIpV1LnlhZF7kql2H1JjQC04uz//LnEHxCai9x1NiLZ0W+7BqOvMUtdxhsC6O1Tsm
+	 CnVaYNkTOsNhsq3OUAWxyccgs2WptA6r1uckcDPNrf4z6PAbOSLnXVP+dNyJxdcjQt
+	 8Gk67J120O6ZLndzzrx4ZCJ1K05FJNr3n5QSzL7k=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Stefan Hoffmeister <stefan.hoffmeister@econos.de>,
+	Martin Krastev <martin.krastev@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 001/399] drm/vmwgfx: Unmap the surface before resetting it on a plane state
+Date: Mon,  1 Apr 2024 17:39:27 +0200
+Message-ID: <20240401152549.179661355@linuxfoundation.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
+References: <20240401152549.131030308@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240327-llvm-docs-s390-llvm-1-v1-1-56ad95d2bc27@kernel.org>
-In-Reply-To: <20240327-llvm-docs-s390-llvm-1-v1-1-56ad95d2bc27@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 31 Mar 2024 08:02:27 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARVoiek2kt7aAK=tL-y6RhbmSOeRyx_4W2vk=usyceu5A@mail.gmail.com>
-Message-ID: <CAK7LNARVoiek2kt7aAK=tL-y6RhbmSOeRyx_4W2vk=usyceu5A@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/llvm: Note s390 LLVM=1 support with LLVM
- 18.1.0 and newer
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
-	nicolas@fjasle.eu, corbet@lwn.net, llvm@lists.linux.dev, 
-	linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 28, 2024 at 2:20=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> As of the first s390 pull request during the 6.9 merge window,
-> commit 691632f0e869 ("Merge tag 's390-6.9-1' of
-> git://git.kernel.org/pub/scm/linux/kernel/git/s390/linux"), s390 can be
-> built with LLVM=3D1 when using LLVM 18.1.0, which is the first version
-> that has SystemZ support implemented in ld.lld and llvm-objcopy.
->
-> Update the supported architectures table in the Kbuild LLVM
-> documentation to note this explicitly to make it more discoverable by
-> users and other developers. Additionally, this brings s390 in line with
-> the rest of the architectures in the table, which all support LLVM=3D1.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
-Applied to linux-kbuild/fixes.
-Thanks.
+------------------
+
+From: Zack Rusin <zack.rusin@broadcom.com>
+
+[ Upstream commit 27571c64f1855881753e6f33c3186573afbab7ba ]
+
+Switch to a new plane state requires unreferencing of all held surfaces.
+In the work required for mob cursors the mapped surfaces started being
+cached but the variable indicating whether the surface is currently
+mapped was not being reset. This leads to crashes as the duplicated
+state, incorrectly, indicates the that surface is mapped even when
+no surface is present. That's because after unreferencing the surface
+it's perfectly possible for the plane to be backed by a bo instead of a
+surface.
+
+Reset the surface mapped flag when unreferencing the plane state surface
+to fix null derefs in cleanup. Fixes crashes in KDE KWin 6.0 on Wayland:
+
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 4 PID: 2533 Comm: kwin_wayland Not tainted 6.7.0-rc3-vmwgfx #2
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+Code: 00 00 00 75 3a 48 83 c4 10 5b 5d c3 cc cc cc cc 48 8b b3 a8 00 00 00 48 c7 c7 99 90 43 c0 e8 93 c5 db ca 48 8b 83 a8 00 00 00 <48> 8b 78 28 e8 e3 f>
+RSP: 0018:ffffb6b98216fa80 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff969d84cdcb00 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff969e75f21600
+RBP: ffff969d4143dc50 R08: 0000000000000000 R09: ffffb6b98216f920
+R10: 0000000000000003 R11: ffff969e7feb3b10 R12: 0000000000000000
+R13: 0000000000000000 R14: 000000000000027b R15: ffff969d49c9fc00
+FS:  00007f1e8f1b4180(0000) GS:ffff969e75f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000028 CR3: 0000000104006004 CR4: 00000000003706f0
+Call Trace:
+ <TASK>
+ ? __die+0x23/0x70
+ ? page_fault_oops+0x171/0x4e0
+ ? exc_page_fault+0x7f/0x180
+ ? asm_exc_page_fault+0x26/0x30
+ ? vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+ drm_atomic_helper_cleanup_planes+0x9b/0xc0
+ commit_tail+0xd1/0x130
+ drm_atomic_helper_commit+0x11a/0x140
+ drm_atomic_commit+0x97/0xd0
+ ? __pfx___drm_printfn_info+0x10/0x10
+ drm_atomic_helper_update_plane+0xf5/0x160
+ drm_mode_cursor_universal+0x10e/0x270
+ drm_mode_cursor_common+0x102/0x230
+ ? __pfx_drm_mode_cursor2_ioctl+0x10/0x10
+ drm_ioctl_kernel+0xb2/0x110
+ drm_ioctl+0x26d/0x4b0
+ ? __pfx_drm_mode_cursor2_ioctl+0x10/0x10
+ ? __pfx_drm_ioctl+0x10/0x10
+ vmw_generic_ioctl+0xa4/0x110 [vmwgfx]
+ __x64_sys_ioctl+0x94/0xd0
+ do_syscall_64+0x61/0xe0
+ ? __x64_sys_ioctl+0xaf/0xd0
+ ? syscall_exit_to_user_mode+0x2b/0x40
+ ? do_syscall_64+0x70/0xe0
+ ? __x64_sys_ioctl+0xaf/0xd0
+ ? syscall_exit_to_user_mode+0x2b/0x40
+ ? do_syscall_64+0x70/0xe0
+ ? exc_page_fault+0x7f/0x180
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+RIP: 0033:0x7f1e93f279ed
+Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff f>
+RSP: 002b:00007ffca0faf600 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000055db876ed2c0 RCX: 00007f1e93f279ed
+RDX: 00007ffca0faf6c0 RSI: 00000000c02464bb RDI: 0000000000000015
+RBP: 00007ffca0faf650 R08: 000055db87184010 R09: 0000000000000007
+R10: 000055db886471a0 R11: 0000000000000246 R12: 00007ffca0faf6c0
+R13: 00000000c02464bb R14: 0000000000000015 R15: 00007ffca0faf790
+ </TASK>
+Modules linked in: snd_seq_dummy snd_hrtimer nf_conntrack_netbios_ns nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_ine>
+CR2: 0000000000000028
+---[ end trace 0000000000000000 ]---
+RIP: 0010:vmw_du_cursor_plane_cleanup_fb+0x124/0x140 [vmwgfx]
+Code: 00 00 00 75 3a 48 83 c4 10 5b 5d c3 cc cc cc cc 48 8b b3 a8 00 00 00 48 c7 c7 99 90 43 c0 e8 93 c5 db ca 48 8b 83 a8 00 00 00 <48> 8b 78 28 e8 e3 f>
+RSP: 0018:ffffb6b98216fa80 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff969d84cdcb00 RCX: 0000000000000027
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff969e75f21600
+RBP: ffff969d4143dc50 R08: 0000000000000000 R09: ffffb6b98216f920
+R10: 0000000000000003 R11: ffff969e7feb3b10 R12: 0000000000000000
+R13: 0000000000000000 R14: 000000000000027b R15: ffff969d49c9fc00
+FS:  00007f1e8f1b4180(0000) GS:ffff969e75f00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000028 CR3: 0000000104006004 CR4: 00000000003706f0
+
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: 485d98d472d5 ("drm/vmwgfx: Add support for CursorMob and CursorBypass 4")
+Reported-by: Stefan Hoffmeister <stefan.hoffmeister@econos.de>
+Closes: https://gitlab.freedesktop.org/drm/misc/-/issues/34
+Cc: Martin Krastev <martin.krastev@broadcom.com>
+Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Cc: Ian Forbes <ian.forbes@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.19+
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231224052540.605040-1-zack.rusin@broadcom.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+index b6f40781b907a..c6f7946889d00 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -703,6 +703,10 @@ vmw_du_cursor_plane_prepare_fb(struct drm_plane *plane,
+ 	int ret = 0;
+ 
+ 	if (vps->surf) {
++		if (vps->surf_mapped) {
++			vmw_bo_unmap(vps->surf->res.guest_memory_bo);
++			vps->surf_mapped = false;
++		}
+ 		vmw_surface_unreference(&vps->surf);
+ 		vps->surf = NULL;
+ 	}
+-- 
+2.43.0
 
 
 
-
---=20
-Best Regards
-Masahiro Yamada
