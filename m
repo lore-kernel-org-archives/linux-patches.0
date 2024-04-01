@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94013D961;
-	Mon,  1 Apr 2024 16:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F31D3D961;
+	Mon,  1 Apr 2024 16:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988975; cv=none; b=ri0risATu7IOkp79AZK95Y2yUwaRrCsUf/wH7PJMRR4RMUkt/oZiKGje8do5bmJNMiu6lSsQ/etUr1ltFAZoiBrQ0WZSFw+v5KmpDrMp/vK2KvbABzoxmMuFQyx+3OGNduQRbleyszxfHMo481g8wdtzi7IEsgeYocgOoCIwxKg=
+	t=1711988978; cv=none; b=qyr31XkzpJCHglIt19dlV1izgRCUoJuLUTwVRXsdzjUshuptnbsC6hg/a32zXjjZH7xCxKgfzW4tSPpOyyb2u0E5Xue2eU0IIXqNSsMf5pM9Z0hJOqLgxQ0le7xW+P2ZIO94WBZm//qJZahGiGwcOJKEZzaOH19nVWVOetGM86k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988975; c=relaxed/simple;
-	bh=VLb04Zz37v9hyv/Gjutm5l3s6B6TQMuhoT+Fc4F/o/E=;
+	s=arc-20240116; t=1711988978; c=relaxed/simple;
+	bh=Ps+lxVMn5n+895Ra2M/y8actCQ/Fv7vZ17VUho0kHlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IN5MZTnz73iFLL9RWtJCWOzZdPCeCtbcjudMR+MJqSw5J+wc3z5W68IVheTHdEHaMiymiO6HYShQAHZo0et7H4M8i6nURmMlVUHov/o/hwo8voA4+QW63FgbUvZaedhKSyq4jI0KMW2ck8IDuczOhOXX96CKmsflPEPPw6viJ78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxeeUxyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GI6JbBe4WFIeK6bObKZG1EEiDiQlh7Ufg2T40ADIDg54X8ZM8b7ZPylGzFKU9QocKaj+d6HZfTp/9QtF14hJFNvmzScmL+xitwdiV4Fd77vTgxRj4hvN6L/0d9Oh1zfQVV/htae49zk4JDa0WKA6tABC5Qh4PUoR4HIaMhojflE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZj4Us6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxeeUxyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA6EC433C7;
-	Mon,  1 Apr 2024 16:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZj4Us6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28E4C433F1;
+	Mon,  1 Apr 2024 16:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988974;
-	bh=VLb04Zz37v9hyv/Gjutm5l3s6B6TQMuhoT+Fc4F/o/E=;
+	s=korg; t=1711988978;
+	bh=Ps+lxVMn5n+895Ra2M/y8actCQ/Fv7vZ17VUho0kHlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxeeUxydSti3Jhhm8uB6MeV+lXgIRAj2lGBqWjcy+71/DIOB7rdr6NJLkOtqJN8km
-	 g5ZF8NH8eAYvx/stC5ZEirrEq5kLrPYDwx0sLXcELErceDrHCXeDi0fWJCxqKl7WkS
-	 kowInWlDBlO1VRKw263uPaw32mTShPGvqyaBDYUs=
+	b=kZj4Us6kNgEhmRqKQS0c3wmm0OB/ewQfNiZ95jyFf4VExZRePrdW/MfFi2cDaNjpv
+	 1sGefKLY7szzRNHpNrmH5uzFW8g0eqbRW58Mp3j76rb+Dnz1PMsebsuNxqZF5b6+/g
+	 +yjH6TomZZQBUyGzZ/8OkhTDSadQa319CJHaB7SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WA AM <waautomata@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 344/432] btrfs: zoned: use zone aware sb location for scrub
-Date: Mon,  1 Apr 2024 17:45:31 +0200
-Message-ID: <20240401152603.500752392@linuxfoundation.org>
+	ranygh@riseup.net,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.7 345/432] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
+Date: Mon,  1 Apr 2024 17:45:32 +0200
+Message-ID: <20240401152603.531412117@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 74098a989b9c3370f768140b7783a7aaec2759b3 upstream.
+commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
 
-At the moment scrub_supers() doesn't grab the super block's location via
-the zoned device aware btrfs_sb_log_location() but via btrfs_sb_offset().
+When moving a station out of a VLAN and deleting the VLAN afterwards, the
+fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
+use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
+after the VLAN change.
 
-This leads to checksum errors on 'scrub' as we're not accessing the
-correct location of the super block.
-
-So use btrfs_sb_log_location() for getting the super blocks location on
-scrub.
-
-Reported-by: WA AM <waautomata@gmail.com>
-Link: http://lore.kernel.org/linux-btrfs/CANU2Z0EvUzfYxczLgGUiREoMndE9WdQnbaawV5Fv5gNXptPUKw@mail.gmail.com
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Reported-by: ranygh@riseup.net
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/scrub.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/mac80211/cfg.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -2809,7 +2809,17 @@ static noinline_for_stack int scrub_supe
- 		gen = btrfs_get_last_trans_committed(fs_info);
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2164,15 +2164,14 @@ static int ieee80211_change_station(stru
+ 		}
  
- 	for (i = 0; i < BTRFS_SUPER_MIRROR_MAX; i++) {
--		bytenr = btrfs_sb_offset(i);
-+		ret = btrfs_sb_log_location(scrub_dev, i, 0, &bytenr);
-+		if (ret == -ENOENT)
-+			break;
-+
-+		if (ret) {
-+			spin_lock(&sctx->stat_lock);
-+			sctx->stat.super_errors++;
-+			spin_unlock(&sctx->stat_lock);
-+			continue;
-+		}
-+
- 		if (bytenr + BTRFS_SUPER_INFO_SIZE >
- 		    scrub_dev->commit_total_bytes)
- 			break;
+ 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
+-		    sta->sdata->u.vlan.sta) {
+-			ieee80211_clear_fast_rx(sta);
++		    sta->sdata->u.vlan.sta)
+ 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
+-		}
+ 
+ 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
+ 			ieee80211_vif_dec_num_mcast(sta->sdata);
+ 
+ 		sta->sdata = vlansdata;
++		ieee80211_check_fast_rx(sta);
+ 		ieee80211_check_fast_xmit(sta);
+ 
+ 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
 
 
