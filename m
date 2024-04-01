@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25EA3BBC3;
-	Mon,  1 Apr 2024 16:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772EA3F8F4;
+	Mon,  1 Apr 2024 16:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989676; cv=none; b=QjxII0RyeXqnWV1n6qF+CnRIzDFjkmsoVSilC+thD8KnMOm99T88TUTdD24dcxyQl1AodgW/nrSLv/P8LhfRvP3Vo0mm7HNb2dQwCnrUFkpLlc8PQN9uLByx0L7JX90rvqqWIkkmo6Nzy9PRb5N++oraZ76SjG9+8RaNwx6dQtU=
+	t=1711989679; cv=none; b=ZxyW3GeUtdQU7WEJqFjZj4MlA4ZwaXl2c53T30O/hdAoRGVZQdeSveVvrUq5LyolPabpGdYLSqhErrwAmZjqL5gw/4yh4WD1JFye/14cnr03B2wFemPk5/uQ0fBsrigwPqaYv8DGTIHmryLOujPyoTPk+szMci8OnzylaYVT0ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989676; c=relaxed/simple;
-	bh=9Ppm4C/RgEx2h1uGAuAmFSAdHo2MOKg0ZSmqlEmDu1E=;
+	s=arc-20240116; t=1711989679; c=relaxed/simple;
+	bh=9/DWBg3vvvlWQM/faI4gPp6GHqOuQZoucxFPyJXG5bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3HOsdYYh0bYYQP6umfOVZLDThICF+kBrYYU7ADbcNjBoZZOPmDYvyG8PE6RbhsWYWCgg7WOJ0vJUVfYEJDn/ETnQATo68T/m7ULPP29kQDDy7lWnT5matWAPR/lEdt/3uBnUAm6030EMhil/JCRX5AGKDpjHU3cPbfVqSerhE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbWuEmxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EkBjZ3FALP5h/58l0xiFREZxPqlKQv53363pY6MLaodWM0FQsNAHb7m+pGLIBtah2LChvouGi8WX24tze/+y3TIGk078YH36w12bdUCQVtyb+Y6JB9jLhDraGuKAbeCuaKT7gyO6mTjQqy3Sccqda06QvUX9QBjD3UiEX269JTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl+TqkyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbWuEmxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FBBC433C7;
-	Mon,  1 Apr 2024 16:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl+TqkyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA48BC433C7;
+	Mon,  1 Apr 2024 16:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989675;
-	bh=9Ppm4C/RgEx2h1uGAuAmFSAdHo2MOKg0ZSmqlEmDu1E=;
+	s=korg; t=1711989679;
+	bh=9/DWBg3vvvlWQM/faI4gPp6GHqOuQZoucxFPyJXG5bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WbWuEmxcjoFkfMo6Q1jbIqx3y5naAblZ1jW1FuufHinCLIG4gqcWECNKqUJ7vk9K1
-	 N6inX1Nj03fg5RDKLY5WendAHWkel5+Ywg6PZnXwVO0A0hvsBB4thLTt08SLQbI5uY
-	 Uk+t36lKMV4rE84avoQeORkgYuGisWRPtl0lMRa8=
+	b=Hl+TqkyCHlrztt3VFKCbhO0wr9td3u1IPIDFy9BnkNya4AtHZcF80oSd7L39KD8Se
+	 WpZoBoeASOXDVB6A4m4jdGMiOX6kcdV+S5KX0Sy9JPM0pdc1nbyvuwvlomCkb6utEx
+	 MBG4eXuBkWUvIUFrxFGPep+SlRvG6cES/vPD/NwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lyakas <alex.lyakas@zadara.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Nick Morrow <morrownr@gmail.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/396] btrfs: fix off-by-one chunk length calculation at contains_pending_extent()
-Date: Mon,  1 Apr 2024 17:42:20 +0200
-Message-ID: <20240401152550.630194848@linuxfoundation.org>
+Subject: [PATCH 6.6 092/396] wifi: rtw88: Add missing VID/PIDs for 8811CU and 8821CU
+Date: Mon,  1 Apr 2024 17:42:21 +0200
+Message-ID: <20240401152550.665608679@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -54,45 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Nick Morrow <morrownr@gmail.com>
 
-[ Upstream commit ae6bd7f9b46a29af52ebfac25d395757e2031d0d ]
+[ Upstream commit b8a62478f3b143592d1241de1a7f5f8629ad0f49 ]
 
-At contains_pending_extent() the value of the end offset of a chunk we
-found in the device's allocation state io tree is inclusive, so when
-we calculate the length we pass to the in_range() macro, we must sum
-1 to the expression "physical_end - physical_offset".
+Add VID/PIDs that are known to be missing for this driver.
 
-In practice the wrong calculation should be harmless as chunks sizes
-are never 1 byte and we should never have 1 byte ranges of unallocated
-space. Nevertheless fix the wrong calculation.
+Removed /* 8811CU */ and /* 8821CU */ as they are redundant
+since the file is specific to those chips.
 
-Reported-by: Alex Lyakas <alex.lyakas@zadara.com>
-Link: https://lore.kernel.org/linux-btrfs/CAOcd+r30e-f4R-5x-S7sV22RJPe7+pgwherA6xqN2_qe7o4XTg@mail.gmail.com/
-Fixes: 1c11b63eff2a ("btrfs: replace pending/pinned chunks lists with io tree")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Removed /* TOTOLINK A650UA v3 */ as the manufacturer. It has a REALTEK
+VID so it may not be specific to this adapter.
+
+Verified and tested.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nick Morrow <morrownr@gmail.com>
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/4ume7mjw63u7.XlMUvUuacW2ErhOCdqlLkw2@1EHFQ.trk.elasticemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/realtek/rtw88/rtw8821cu.c    | 40 ++++++++++++-------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 722a1dde75636..36adbb3d096a9 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1432,7 +1432,7 @@ static bool contains_pending_extent(struct btrfs_device *device, u64 *start,
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
+index 7a5cbdc31ef79..e2c7d9f876836 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
+@@ -9,24 +9,36 @@
+ #include "usb.h"
  
- 		if (in_range(physical_start, *start, len) ||
- 		    in_range(*start, physical_start,
--			     physical_end - physical_start)) {
-+			     physical_end + 1 - physical_start)) {
- 			*start = physical_end + 1;
- 			return true;
- 		}
+ static const struct usb_device_id rtw_8821cu_id_table[] = {
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb82b, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x2006, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8731, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8811, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb820, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc821, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb82b, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc80c, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc811, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc820, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc821, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82a, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82b, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc811, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8811CU */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8811, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8811CU */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x2006, 0xff, 0xff, 0xff),
+-	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* TOTOLINK A650UA v3 */
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82c, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331d, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* D-Link */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xc811, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xd811, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8821cu_id_table);
 -- 
 2.43.0
 
