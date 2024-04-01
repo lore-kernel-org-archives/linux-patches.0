@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE66F47A62;
-	Mon,  1 Apr 2024 16:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118B947A62;
+	Mon,  1 Apr 2024 16:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987632; cv=none; b=RdQ60yzaxg6SfaNiGfZppxIEynV1N+wco//HOy49OG8ck+ciUNbOGmruH/YLBKsYd7h5dnuR3TpyO0S+cGXJDlIR20ybeA1Y1K6xuuSc7U1TbMGMT8xFeAzHGCkcomiiX/BRwMCmY6T9FmOiQGbFKd+085OjwJaQQwSqNrDyu14=
+	t=1711987636; cv=none; b=GQdgY2ypa7qO16VBIk5Vu3odE9GrNdAPhBVzFpepUtYfOSLvVFBU1ZKDyJ/OZcAJ8xilKg376eP5xvOm6fbqdaZ4j3jt0z6wcUA5pdFpMje6KySfzDkZqryGiy5PGW9/SOCpONsCQ4F74XrTMHPiRkxzpTIVTyu7VcQ1Mlw4mvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987632; c=relaxed/simple;
-	bh=hgpgmGrutW8ylft8a9lwZ0auaXVoZCd64z00j+dckHQ=;
+	s=arc-20240116; t=1711987636; c=relaxed/simple;
+	bh=ShA83Z8tzw4f+tggV+ntrol+OhPWdEEZOFPAs42BdcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gmr6i1uCN0ZgiqvsG1EL6F5fkRVEcb533P95Fpqcr6ipFcYfYHkzKLZmngZPEJsAEEnAvJthX0qE24Py3+JPqLyWRqDqUh92Hju61CYOUkUfd7zjQr0k13Qm3r4UfYGiNXuyN8nKSoEYKOdP0cIh3QJ4/iKHzXv64/yn8rMLKYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDfGyAoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fqo0Ur6GQPCPd1r6A6YPDWs2vMTrcqIHnFtfXjYXIUoGUZTjGH4fDEFPvCI8w771tyn/yZyH30wEZDLn8jKGagHRTVCQst2/6m9HmvbMjcioxirCQW7GBgd6VLFuXwZsDaFSGjwwuyJxI7Qpwtj7B3vIz46t8TBZpaJMuQ2s0/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12/J6uRc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDfGyAoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F1C433F1;
-	Mon,  1 Apr 2024 16:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12/J6uRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF8DC433F1;
+	Mon,  1 Apr 2024 16:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987632;
-	bh=hgpgmGrutW8ylft8a9lwZ0auaXVoZCd64z00j+dckHQ=;
+	s=korg; t=1711987635;
+	bh=ShA83Z8tzw4f+tggV+ntrol+OhPWdEEZOFPAs42BdcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDfGyAoIfd0tsKvXFz0PVU/ieswLSybIX2M+eysidIXqGorNKo1ASA/USde865KHe
-	 R94/GOGG6FiwviK/+k0867MXcgAaO2dxvJ3FbEW3rRBrjnhOvhzFYa/p5SCmr7yIIy
-	 80IlU3e+w7iXZ+s7Vumw1CUhug6gQv+1XL+IWlYg=
+	b=12/J6uRcswhpgpvn7BIzDSO3WpJeUIRX1TRGf2Nn4lUgc057GS0CBbnR2FXKK9sY+
+	 0BVupzpMxiM6nF2rZrU0SK99N/FER3btebz0isZmCqesLNqB1RJVsIzmbtJQHzJ/ZJ
+	 ZKGUb8SmqCVbnmxCKLkLUNpeQ5yzb5hcH8KHj4/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Subject: [PATCH 6.8 345/399] USB: UAS: return ENODEV when submit urbs fail with device not attached
-Date: Mon,  1 Apr 2024 17:45:11 +0200
-Message-ID: <20240401152559.470124779@linuxfoundation.org>
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 346/399] vfio/pds: Make sure migration file isnt accessed after reset
+Date: Mon,  1 Apr 2024 17:45:12 +0200
+Message-ID: <20240401152559.499681221@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,147 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-commit cd5432c712351a3d5f82512908f5febfca946ca6 upstream.
+[ Upstream commit 457f7308254756b6e4b8fc3876cb770dcf0e7cc7 ]
 
-In the scenario of entering hibernation with udisk in the system, if the
-udisk was gone or resume fail in the thaw phase of hibernation. Its state
-will be set to NOTATTACHED. At this point, usb_hub_wq was already freezed
-and can't not handle disconnect event. Next, in the poweroff phase of
-hibernation, SYNCHRONIZE_CACHE SCSI command will be sent to this udisk
-when poweroff this scsi device, which will cause uas_submit_urbs to be
-called to submit URB for sense/data/cmd pipe. However, these URBs will
-submit fail as device was set to NOTATTACHED state. Then, uas_submit_urbs
-will return a value SCSI_MLQUEUE_DEVICE_BUSY to the caller. That will lead
-the SCSI layer go into an ugly loop and system fail to go into hibernation.
+It's possible the migration file is accessed after reset when it has
+been cleaned up, especially when it's initiated by the device. This is
+because the driver doesn't rip out the filep when cleaning up it only
+frees the related page structures and sets its local struct
+pds_vfio_lm_file pointer to NULL. This can cause a NULL pointer
+dereference, which is shown in the example below during a restore after
+a device initiated reset:
 
-On the other hand, when we specially check for -ENODEV in function
-uas_queuecommand_lck, returning DID_ERROR to SCSI layer will cause device
-poweroff fail and system shutdown instead of entering hibernation.
+BUG: kernel NULL pointer dereference, address: 000000000000000c
+PF: supervisor read access in kernel mode
+PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+RIP: 0010:pds_vfio_get_file_page+0x5d/0xf0 [pds_vfio_pci]
+[...]
+Call Trace:
+ <TASK>
+ pds_vfio_restore_write+0xf6/0x160 [pds_vfio_pci]
+ vfs_write+0xc9/0x3f0
+ ? __fget_light+0xc9/0x110
+ ksys_write+0xb5/0xf0
+ __x64_sys_write+0x1a/0x20
+ do_syscall_64+0x38/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[...]
 
-To fix this issue, let uas_submit_urbs to return original generic error
-when submitting URB failed. At the same time, we need to translate -ENODEV
-to DID_NOT_CONNECT for the SCSI layer.
+Add a disabled flag to the driver's struct pds_vfio_lm_file that gets
+set during cleanup. Then make sure to check the flag when the migration
+file is accessed via its file_operations. By default this flag will be
+false as the memory for struct pds_vfio_lm_file is kzalloc'd, which means
+the struct pds_vfio_lm_file is enabled and accessible. Also, since the
+file_operations and driver's migration file cleanup happen under the
+protection of the same pds_vfio_lm_file.lock, using this flag is thread
+safe.
 
-Suggested-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Link: https://lore.kernel.org/r/20240306180814.4897-1-WeitaoWang-oc@zhaoxin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8512ed256334 ("vfio/pds: Always clear the save/restore FDs on reset")
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://lore.kernel.org/r/20240308182149.22036-2-brett.creeley@amd.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/uas.c |   28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ drivers/vfio/pci/pds/lm.c | 13 +++++++++++++
+ drivers/vfio/pci/pds/lm.h |  1 +
+ 2 files changed, 14 insertions(+)
 
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -533,7 +533,7 @@ static struct urb *uas_alloc_cmd_urb(str
-  * daft to me.
-  */
- 
--static struct urb *uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
-+static int uas_submit_sense_urb(struct scsi_cmnd *cmnd, gfp_t gfp)
+diff --git a/drivers/vfio/pci/pds/lm.c b/drivers/vfio/pci/pds/lm.c
+index 79fe2e66bb498..6b94cc0bf45b4 100644
+--- a/drivers/vfio/pci/pds/lm.c
++++ b/drivers/vfio/pci/pds/lm.c
+@@ -92,8 +92,10 @@ static void pds_vfio_put_lm_file(struct pds_vfio_lm_file *lm_file)
  {
- 	struct uas_dev_info *devinfo = cmnd->device->hostdata;
- 	struct urb *urb;
-@@ -541,30 +541,28 @@ static struct urb *uas_submit_sense_urb(
+ 	mutex_lock(&lm_file->lock);
  
- 	urb = uas_alloc_sense_urb(devinfo, gfp, cmnd);
- 	if (!urb)
--		return NULL;
-+		return -ENOMEM;
- 	usb_anchor_urb(urb, &devinfo->sense_urbs);
- 	err = usb_submit_urb(urb, gfp);
- 	if (err) {
- 		usb_unanchor_urb(urb);
- 		uas_log_cmd_state(cmnd, "sense submit err", err);
- 		usb_free_urb(urb);
--		return NULL;
- 	}
--	return urb;
-+	return err;
- }
++	lm_file->disabled = true;
+ 	lm_file->size = 0;
+ 	lm_file->alloc_size = 0;
++	lm_file->filep->f_pos = 0;
  
- static int uas_submit_urbs(struct scsi_cmnd *cmnd,
- 			   struct uas_dev_info *devinfo)
- {
- 	struct uas_cmd_info *cmdinfo = scsi_cmd_priv(cmnd);
--	struct urb *urb;
- 	int err;
+ 	/* Free scatter list of file pages */
+ 	sg_free_table(&lm_file->sg_table);
+@@ -183,6 +185,12 @@ static ssize_t pds_vfio_save_read(struct file *filp, char __user *buf,
+ 	pos = &filp->f_pos;
  
- 	lockdep_assert_held(&devinfo->lock);
- 	if (cmdinfo->state & SUBMIT_STATUS_URB) {
--		urb = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
--		if (!urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+		err = uas_submit_sense_urb(cmnd, GFP_ATOMIC);
-+		if (err)
-+			return err;
- 		cmdinfo->state &= ~SUBMIT_STATUS_URB;
- 	}
+ 	mutex_lock(&lm_file->lock);
++
++	if (lm_file->disabled) {
++		done = -ENODEV;
++		goto out_unlock;
++	}
++
+ 	if (*pos > lm_file->size) {
+ 		done = -EINVAL;
+ 		goto out_unlock;
+@@ -283,6 +291,11 @@ static ssize_t pds_vfio_restore_write(struct file *filp, const char __user *buf,
  
-@@ -572,7 +570,7 @@ static int uas_submit_urbs(struct scsi_c
- 		cmdinfo->data_in_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
- 							cmnd, DMA_FROM_DEVICE);
- 		if (!cmdinfo->data_in_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_DATA_IN_URB;
- 	}
+ 	mutex_lock(&lm_file->lock);
  
-@@ -582,7 +580,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->data_in_urb);
- 			uas_log_cmd_state(cmnd, "data in submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->state &= ~SUBMIT_DATA_IN_URB;
- 		cmdinfo->state |= DATA_IN_URB_INFLIGHT;
-@@ -592,7 +590,7 @@ static int uas_submit_urbs(struct scsi_c
- 		cmdinfo->data_out_urb = uas_alloc_data_urb(devinfo, GFP_ATOMIC,
- 							cmnd, DMA_TO_DEVICE);
- 		if (!cmdinfo->data_out_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_DATA_OUT_URB;
- 	}
++	if (lm_file->disabled) {
++		done = -ENODEV;
++		goto out_unlock;
++	}
++
+ 	while (len) {
+ 		size_t page_offset;
+ 		struct page *page;
+diff --git a/drivers/vfio/pci/pds/lm.h b/drivers/vfio/pci/pds/lm.h
+index 13be893198b74..9511b1afc6a11 100644
+--- a/drivers/vfio/pci/pds/lm.h
++++ b/drivers/vfio/pci/pds/lm.h
+@@ -27,6 +27,7 @@ struct pds_vfio_lm_file {
+ 	struct scatterlist *last_offset_sg;	/* Iterator */
+ 	unsigned int sg_last_entry;
+ 	unsigned long last_offset;
++	bool disabled;
+ };
  
-@@ -602,7 +600,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->data_out_urb);
- 			uas_log_cmd_state(cmnd, "data out submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->state &= ~SUBMIT_DATA_OUT_URB;
- 		cmdinfo->state |= DATA_OUT_URB_INFLIGHT;
-@@ -611,7 +609,7 @@ static int uas_submit_urbs(struct scsi_c
- 	if (cmdinfo->state & ALLOC_CMD_URB) {
- 		cmdinfo->cmd_urb = uas_alloc_cmd_urb(devinfo, GFP_ATOMIC, cmnd);
- 		if (!cmdinfo->cmd_urb)
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return -ENOMEM;
- 		cmdinfo->state &= ~ALLOC_CMD_URB;
- 	}
- 
-@@ -621,7 +619,7 @@ static int uas_submit_urbs(struct scsi_c
- 		if (err) {
- 			usb_unanchor_urb(cmdinfo->cmd_urb);
- 			uas_log_cmd_state(cmnd, "cmd submit err", err);
--			return SCSI_MLQUEUE_DEVICE_BUSY;
-+			return err;
- 		}
- 		cmdinfo->cmd_urb = NULL;
- 		cmdinfo->state &= ~SUBMIT_CMD_URB;
-@@ -698,7 +696,7 @@ static int uas_queuecommand_lck(struct s
- 	 * of queueing, no matter how fatal the error
- 	 */
- 	if (err == -ENODEV) {
--		set_host_byte(cmnd, DID_ERROR);
-+		set_host_byte(cmnd, DID_NO_CONNECT);
- 		scsi_done(cmnd);
- 		goto zombie;
- 	}
+ struct pds_vfio_pci_device;
+-- 
+2.43.0
+
 
 
