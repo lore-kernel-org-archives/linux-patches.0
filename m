@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5977C129;
-	Mon,  1 Apr 2024 16:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16025C129;
+	Mon,  1 Apr 2024 16:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988848; cv=none; b=Hd4OxaXdwCBsuj5NMIZ/EC6Yxyh+2FveKHaZn4XH5CucT3W79pjzFBaOLv5VKifT1oADD67IIGQCbRGzPJbduUkC4F5K5n9+2PIv8kf42cXH6Z8omfFjJnlVIurYHxY2FD3rrZFFcFqS3fDhGR1w0pBtfBHcxhOqL7R+XP4qo78=
+	t=1711988852; cv=none; b=qfFv09thKuyBoGltSfTStJpZyIheS5W0KV2675s5m95xwkvk2iWWuhmCxquAn3gkGdbG2BjTS2TKW3MCN85JzNJ+POwa0Se+89hlSZYQ39IAVaFrjMTAG4+7BVg4yPQ7uUI8mw+JPL2JRzsSXNZBMwubGpIlHySoIb4hNCn7lIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988848; c=relaxed/simple;
-	bh=iLyXEqxIlNDD4ZTopjhmiZgrTESjyHwGfGhdJSa3RVc=;
+	s=arc-20240116; t=1711988852; c=relaxed/simple;
+	bh=2eDDBvULM18W2uvLSlZOXdc/OH8YWcYEX6155EOzTaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dPvtBvgVazVOnRfRGVIOFfKwpTnLSmUJoeEdDIVtEmBxADHtTGwv9aLEkJoaqHIzUu/OThNlZxdFVOyyeDDE/i/Oju5mB1IHxiPJDJ8H+4TeeqyvlDINKHBHCJ+W8uphRccm+uHRo9fEQI5FGI1akGTTVrjUgbeXzWQFfnW4xak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTX2rsCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqyuOdr1blYej85LKbYvNfv/FPbogyJFqtx0bBg4yVQX6DA7F62Z+8+yj0Vpcgs5KukQr+H7Hl8SZqF/gU4ZHSdvCg4XFsD4SdXyI4rDVZptRJwaHXd9VHkijUww8cLT9SGgzU+8JFyYD+/4zR6N7DUKUy7qvNXoVHX4aEHDDZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2nwBhLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTX2rsCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D1EC433C7;
-	Mon,  1 Apr 2024 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2nwBhLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8215BC433F1;
+	Mon,  1 Apr 2024 16:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988848;
-	bh=iLyXEqxIlNDD4ZTopjhmiZgrTESjyHwGfGhdJSa3RVc=;
+	s=korg; t=1711988852;
+	bh=2eDDBvULM18W2uvLSlZOXdc/OH8YWcYEX6155EOzTaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTX2rsCEVNQR1xxOgdJaIKocEdvMi9HhtZJfmAKBa0JgZbo27I4m8A4tS91RZNi5g
-	 g1xKgcEXFSp0NkuIsRPqik07vnLqGTa3xE0u4C7BamMFUom0mTSxMtuxUxgi24OwMe
-	 fpTAl25Ns4q7EUTCeFLtnebKJJljrxTCL/+0DS/o=
+	b=G2nwBhLTKZFdkuc/7Uxs+tllc3Gnitj0yZO8DCN65G4bQCPKwkfy2b0pjDl5+5959
+	 rimwVg8y0wj0irIdPL2fi8wcN/Iv0dH/ggNi78dzMz5YHyGQxXScK03fHoWWyUV2NX
+	 fh7oMc1SZF+DFw+rnZBbuRCqfYocBvm4k42y8ZSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mano=20S=C3=A9gransan?= <mano.segransan@protonmail.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 289/432] drm/amd/display: handle range offsets in VRR ranges
-Date: Mon,  1 Apr 2024 17:44:36 +0200
-Message-ID: <20240401152601.790021858@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 307/432] irqchip/renesas-rzg2l: Implement restriction when writing ISCR register
+Date: Mon,  1 Apr 2024 17:44:54 +0200
+Message-ID: <20240401152602.346321938@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -45,62 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 937844d661354bf142dc1c621396fdab10ecbacc upstream.
+[ Upstream commit ef88eefb1a81a8701eabb7d5ced761a66a465a49 ]
 
-Need to check the offset bits for values greater than 255.
+The RZ/G2L manual (chapter "IRQ Status Control Register (ISCR)") describes
+the operation to clear interrupts through the ISCR register as follows:
 
-v2: also update amdgpu_dm_connector values.
+[Write operation]
 
-Suggested-by: Mano Ségransan <mano.segransan@protonmail.com>
-Tested-by: Mano Ségransan <mano.segransan@protonmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3203
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  When "Falling-edge detection", "Rising-edge detection" or
+  "Falling/Rising-edge detection" is set in IITSR:
+
+    - In case ISTAT is 1
+	0: IRQn interrupt detection status is cleared.
+	1: Invalid to write.
+    - In case ISTAT is 0
+	Invalid to write.
+
+  When "Low-level detection" is set in IITSR.:
+        Invalid to write.
+
+Take the interrupt type into account when clearing interrupts through the
+ISCR register to avoid writing the ISCR when the interrupt type is level.
+
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231120111820.87398-6-claudiu.beznea.uj@bp.renesas.com
+Stable-dep-of: 9eec61df55c5 ("irqchip/renesas-rzg2l: Flush posted write in irq_eoi()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10876,14 +10876,23 @@ void amdgpu_dm_update_freesync_caps(stru
- 				if (range->flags != 1)
- 					continue;
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index fe8d516f36149..3dc2b3867f219 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -72,11 +72,17 @@ static void rzg2l_irq_eoi(struct irq_data *d)
+ 	unsigned int hw_irq = irqd_to_hwirq(d) - IRQC_IRQ_START;
+ 	struct rzg2l_irqc_priv *priv = irq_data_to_priv(d);
+ 	u32 bit = BIT(hw_irq);
+-	u32 reg;
++	u32 iitsr, iscr;
  
--				amdgpu_dm_connector->min_vfreq = range->min_vfreq;
--				amdgpu_dm_connector->max_vfreq = range->max_vfreq;
--				amdgpu_dm_connector->pixel_clock_mhz =
--					range->pixel_clock_mhz * 10;
--
- 				connector->display_info.monitor_range.min_vfreq = range->min_vfreq;
- 				connector->display_info.monitor_range.max_vfreq = range->max_vfreq;
- 
-+				if (edid->revision >= 4) {
-+					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MIN_VFREQ)
-+						connector->display_info.monitor_range.min_vfreq += 255;
-+					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MAX_VFREQ)
-+						connector->display_info.monitor_range.max_vfreq += 255;
-+				}
+-	reg = readl_relaxed(priv->base + ISCR);
+-	if (reg & bit)
+-		writel_relaxed(reg & ~bit, priv->base + ISCR);
++	iscr = readl_relaxed(priv->base + ISCR);
++	iitsr = readl_relaxed(priv->base + IITSR);
 +
-+				amdgpu_dm_connector->min_vfreq =
-+					connector->display_info.monitor_range.min_vfreq;
-+				amdgpu_dm_connector->max_vfreq =
-+					connector->display_info.monitor_range.max_vfreq;
-+				amdgpu_dm_connector->pixel_clock_mhz =
-+					range->pixel_clock_mhz * 10;
-+
- 				break;
- 			}
++	/*
++	 * ISCR can only be cleared if the type is falling-edge, rising-edge or
++	 * falling/rising-edge.
++	 */
++	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq)))
++		writel_relaxed(iscr & ~bit, priv->base + ISCR);
+ }
  
+ static void rzg2l_tint_eoi(struct irq_data *d)
+-- 
+2.43.0
+
 
 
