@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274F51CA8F;
-	Mon,  1 Apr 2024 16:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2BD1CA8F;
+	Mon,  1 Apr 2024 16:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987580; cv=none; b=adoa8SbubrsidaN0E1K/tkzGoODbCdbvHmq3/u6AU66YehYcph3q1ovIHzdIwrm+ODt8pbz0hOOp5i4b69KCZbZFzdom7XI8Uq+KE68MoEaGBY7JJgA9qoWgNP3pSb4wTftf1MQvN53p1p/Cc0gZihS4SSNa8JRZpVC3LHCKkps=
+	t=1711987583; cv=none; b=ipS/E5h17tjQhUqwN2hYP6/N6JCKdMAvPU5ez2jZIZPo7vnM9WojVzsKeCtcQ/tlFe0hSmO7IBgnMg0cegcSa1CMiZtAIH86yiZwIJ2UzM8x+kadTOA1oK5bjW8nZM9U1B2GFT/RJ4qrbwxF9MMUUw/tpNtH8S9rRt7TBX7tk4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987580; c=relaxed/simple;
-	bh=OU+r4reZe1UkLKVbwLihC4fOftRkkCljSSkEgTH3/qE=;
+	s=arc-20240116; t=1711987583; c=relaxed/simple;
+	bh=p1pw49vTsizSbVyH8NJk+2H99YQdWrKDwJyG3/3/56Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntkBOhjWjznN17BrtMkGYCfGLun/zWFhRx6lxbhG0pmwawBzM6sGI6usvTRMD9Pq62b/zdbe++vOXOprcTuvUX1h8hRvsIf6VTFsUcvcPYi+Zv+NuoWS44T/Nf1z+KOCoYEgTwsNq0Sc101H34B4OIGVcwT45MRsuP+h5JHVE4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ1VOGIb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VAF07p1t6a5JeY51UhIfj1RGkMpRQ3Kvat8vwXSGIkJrIsDldPw8XcmUyPTs+QdH6ElGLkLD2odzx0rHbmwQk5oPeJvdRf8FHfejmE8lxHN8UdxtdZCSRrspIc8YWbQlQylFJpFq5JABK7xnRY3qN5mZtRuHwPD9xJ5JC3Drt5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjZkmliB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ1VOGIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A455C433C7;
-	Mon,  1 Apr 2024 16:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjZkmliB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9372C433F1;
+	Mon,  1 Apr 2024 16:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987580;
-	bh=OU+r4reZe1UkLKVbwLihC4fOftRkkCljSSkEgTH3/qE=;
+	s=korg; t=1711987583;
+	bh=p1pw49vTsizSbVyH8NJk+2H99YQdWrKDwJyG3/3/56Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ1VOGIblnP36mJl/6IbJg5dyqL92whorNngtdRAhrGXABph/YmvKc74/LBsn3BMS
-	 I/u3BXfjZlYPZJwbAPr7PfIjwNEvYD2qwAAyJE0WTml2tU7kbATJfLJUcx20gDUZdE
-	 gAQFyER7IAkgnmz1LH7prZ9gf8NEP7yIZXnGIDpc=
+	b=YjZkmliBbKfXQKq87vHPV+6VZ8KPcSQDxKv2lYeaFKnMz6lpg7iTXwGsn63/Atupu
+	 vxehLeop/BeDKauBkbbTHOxYYPu6i5p5VhkdlmGVctaKUVMeESuIvqwRzwzgUZ7pzB
+	 AMCjNFWncNR71pG9K0Yd2HjiE5bRBBfz8PbW2p90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radek Podgorny <radek@podgorny.cz>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.8 290/399] x86/efistub: Reinstate soft limit for initrd loading
-Date: Mon,  1 Apr 2024 17:44:16 +0200
-Message-ID: <20240401152557.842127804@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.8 323/399] drm/xe/query: fix gt_id bounds check
+Date: Mon,  1 Apr 2024 17:44:49 +0200
+Message-ID: <20240401152558.821707367@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,56 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit decd347c2a75d32984beb8807d470b763a53b542 upstream.
+commit 45c30b2923e5c53e0ef057a8a525b0456adde18e upstream.
 
-Commit
+The user provided gt_id should always be less than the
+XE_MAX_GT_PER_TILE.
 
-  8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
-
-dropped the memcopy of the image's setup header into the boot_params
-struct provided to the core kernel, on the basis that EFI boot does not
-need it and should rely only on a single protocol to interface with the
-boot chain. It is also a prerequisite for being able to increase the
-section alignment to 4k, which is needed to enable memory protections
-when running in the boot services.
-
-So only the setup_header fields that matter to the core kernel are
-populated explicitly, and everything else is ignored. One thing was
-overlooked, though: the initrd_addr_max field in the setup_header is not
-used by the core kernel, but it is used by the EFI stub itself when it
-loads the initrd, where its default value of INT_MAX is used as the soft
-limit for memory allocation.
-
-This means that, in the old situation, the initrd was virtually always
-loaded in the lower 2G of memory, but now, due to initrd_addr_max being
-0x0, the initrd may end up anywhere in memory. This should not be an
-issue principle, as most systems can deal with this fine. However, it
-does appear to tickle some problems in older UEFI implementations, where
-the memory ends up being corrupted, resulting in errors when unpacking
-the initramfs.
-
-So set the initrd_addr_max field to INT_MAX like it was before.
-
-Fixes: 8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
-Reported-by: Radek Podgorny <radek@podgorny.cz>
-Closes: https://lore.kernel.org/all/a99a831a-8ad5-4cb0-bff9-be637311f771@podgorny.cz
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 7793d00d1bf5 ("drm/xe: Correlate engine and cpu timestamps with better accuracy")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Acked-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240321110629.334701-2-matthew.auld@intel.com
+(cherry picked from commit 4b275f502a0d3668195762fb55fa00e659ad1b0b)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/x86-stub.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_query.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -487,6 +487,7 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 	hdr->vid_mode	= 0xffff;
+diff --git a/drivers/gpu/drm/xe/xe_query.c b/drivers/gpu/drm/xe/xe_query.c
+index 92bb06c0586e..075f9eaef031 100644
+--- a/drivers/gpu/drm/xe/xe_query.c
++++ b/drivers/gpu/drm/xe/xe_query.c
+@@ -132,7 +132,7 @@ query_engine_cycles(struct xe_device *xe,
+ 		return -EINVAL;
  
- 	hdr->type_of_loader = 0x21;
-+	hdr->initrd_addr_max = INT_MAX;
+ 	eci = &resp.eci;
+-	if (eci->gt_id > XE_MAX_GT_PER_TILE)
++	if (eci->gt_id >= XE_MAX_GT_PER_TILE)
+ 		return -EINVAL;
  
- 	/* Convert unicode cmdline to ascii */
- 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
+ 	gt = xe_device_get_gt(xe, eci->gt_id);
+-- 
+2.44.0
+
 
 
