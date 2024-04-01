@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60409C129;
-	Mon,  1 Apr 2024 16:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04C9C129;
+	Mon,  1 Apr 2024 16:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988522; cv=none; b=KgKi1q1oSEB5y538WrGhPbk6SEBp+po0tgInQMPB9jbkVWe598oSXgzFxjCHgkOnacjzXRR4beDx1o17eI1A2KO0lyzZKXO4Dtfb4jrN9Eb27CyvIPi02RRNWn14Vr6MdI+xTekEtcwGEVpGRJtOQvRq3b+s6Yoi10bOAcee8NI=
+	t=1711988525; cv=none; b=Hr4/s5hFpnW672wzO6nKi2PxqRt8Tb/Bbdf/C0lezuZzIVRCaJyYJ7mKqlv26l+KoAPqxXQXzd3iv5NN4eIVEtX+BNOioyATaklmMA64Cu251jky/5uMS/aSEgAESnbkXhcPSd8xe8lnAnQessWZZd3cmQD21i+DWYQa1e6WkvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988522; c=relaxed/simple;
-	bh=a3qKAe2JmsKH+LAzcf4TV8R2dSKHGVbgMh/JOYZUKcY=;
+	s=arc-20240116; t=1711988525; c=relaxed/simple;
+	bh=TpDU4tJSLCpjo6iMCGnLS29hwSIzIgBEVGZgVRpEbrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2Vjpd2zYEnoAxmf0bdq4Yo9HqHi8BsP3r3n/oz2/5/u88egKfP/UNcoRj7mdX8XKapWTaTXXM0tt0WJc97wO2e4h018U92tnYZUkujMcGRVhe6qVCPv6KWM9DNkStssnL41C2Id40lQYexWvonPSVM4aJQ7e3D0/IGdrz4BQFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJBM6DVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tV6TlbBQXZK+aOD5F2LdoXeWLUJtQ9zt7Vl585RuJXXNkFeZHCbDJ7KmjV9PYkX2+VHU2CJ+Pfoa/V9DKknG2tXGY8U/02MyZhjqPrL+D+ZDLTgqQNFHv+YQbxCDIsaSzckHiToWIqeFDHPR1w6nAJLSje7/azAZ+f5rH8c0bzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfPloYA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJBM6DVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0595C433C7;
-	Mon,  1 Apr 2024 16:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfPloYA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C19C433F1;
+	Mon,  1 Apr 2024 16:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988522;
-	bh=a3qKAe2JmsKH+LAzcf4TV8R2dSKHGVbgMh/JOYZUKcY=;
+	s=korg; t=1711988525;
+	bh=TpDU4tJSLCpjo6iMCGnLS29hwSIzIgBEVGZgVRpEbrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJBM6DVlopmT9dSBqYLaSC9lxxFBQG3/nQOk74K5g7CgJRdI/eBhztb9JpPzCcToi
-	 75M6HgJdnMu5lssUDK9qAx4S2tY9CgMKqSTogwVyCwnny+HYYbnaMQx7VwNC0i/XLo
-	 JGDaNvjqTXF/zYRQLLnos8XOJy5mKLPRWLk0f8/g=
+	b=mfPloYA+AOg8qwx9NqbphhqtMBSM4VyFYqXucI7i+226E5skU7Lr3YbJoQ2xXj4hK
+	 8T5Zbnvdmtv7ooG9lPryhlEmVe3QeDJA9iBZI3JMFZ/g+gyAol0QydyBmTgv7qVBRI
+	 o9q6yztmEcXJquDygtTluf6Yo3DbcVcyc5RTlMaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Lazar Lijo <lijo.lazar@amd.com>,
-	Alex Deucher <Alexander.Deucher@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Relja Vojvodic <relja.vojvodic@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 210/432] drm/amdgpu/pm: Check the validity of overdiver power limit
-Date: Mon,  1 Apr 2024 17:43:17 +0200
-Message-ID: <20240401152559.407514599@linuxfoundation.org>
+Subject: [PATCH 6.7 211/432] drm/amd/display: Add ODM check during pipe split/merge validation
+Date: Mon,  1 Apr 2024 17:43:18 +0200
+Message-ID: <20240401152559.436601744@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,184 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Relja Vojvodic <relja.vojvodic@amd.com>
 
-[ Upstream commit e17718251addb31e1771fd28735ec410e6ca650a ]
+[ Upstream commit dd2c5fac91d46df9dc1bf025ef23eff4704bd85f ]
 
-Check the validity of overdriver power limit before using it.
+[why]
+When querying DML for a vlevel after pipes have been split or merged the
+ODM policy would revert to a default policy, which could cause the query
+to use the incorrect ODM status. In this case ODM 2to1 was validated,
+but the last DML query would assume no ODM and return the incorrect
+vlevel.
 
-Fixes: 7968e9748fbb ("drm/amdgpu/pm: Fix the power1_min_cap value")
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Suggested-by: Lazar Lijo <lijo.lazar@amd.com>
-Suggested-by: Alex Deucher <Alexander.Deucher@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+[how]
+Added ODM check to apply the correct ODM policy before querying DML.
+
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Relja Vojvodic <relja.vojvodic@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Stable-dep-of: 26fbcb3da77e ("drm/amd/display: Override min required DCFCLK in dml1_validate")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 11 +++++----
- .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   |  9 ++++----
- .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   | 23 +++++++++++--------
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  | 10 ++++----
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 10 ++++----
- 5 files changed, 37 insertions(+), 26 deletions(-)
+ .../drm/amd/display/dc/dcn32/dcn32_resource.h |  2 ++
+ .../display/dc/dcn32/dcn32_resource_helpers.c | 26 +++++++++++++++++++
+ .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c  |  3 +++
+ 3 files changed, 31 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-index df4e02d0d1264..ac04ed1e49f35 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -1285,6 +1285,7 @@ static int arcturus_get_power_limit(struct smu_context *smu,
- {
- 	struct smu_11_0_powerplay_table *powerplay_table =
- 		(struct smu_11_0_powerplay_table *)smu->smu_table.power_play_table;
-+	struct smu_11_0_overdrive_table *od_settings = smu->od_settings;
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
- 	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
+index b931008114c91..58943835fb638 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.h
+@@ -183,6 +183,8 @@ bool dcn32_subvp_drr_admissable(struct dc *dc, struct dc_state *context);
  
-@@ -1304,12 +1305,14 @@ static int arcturus_get_power_limit(struct smu_context *smu,
- 		*default_power_limit = power_limit;
+ bool dcn32_subvp_vblank_admissable(struct dc *dc, struct dc_state *context, int vlevel);
  
- 	if (powerplay_table) {
--		if (smu->od_enabled)
-+		if (smu->od_enabled &&
-+				od_settings->cap[SMU_11_0_ODCAP_POWER_LIMIT]) {
- 			od_percent_upper = le32_to_cpu(powerplay_table->overdrive_table.max[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
--		else
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+		} else if (od_settings->cap[SMU_11_0_ODCAP_POWER_LIMIT]) {
- 			od_percent_upper = 0;
--
--		od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+		}
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-index d36ad0e4e18e2..082101845968c 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -2358,12 +2358,13 @@ static int navi10_get_power_limit(struct smu_context *smu,
- 
- 	if (powerplay_table) {
- 		if (smu->od_enabled &&
--			    navi10_od_feature_is_supported(od_settings, SMU_11_0_ODCAP_POWER_LIMIT))
-+			    navi10_od_feature_is_supported(od_settings, SMU_11_0_ODCAP_POWER_LIMIT)) {
- 			od_percent_upper = le32_to_cpu(powerplay_table->overdrive_table.max[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
--		else
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+		} else if (navi10_od_feature_is_supported(od_settings, SMU_11_0_ODCAP_POWER_LIMIT)) {
- 			od_percent_upper = 0;
--
--		od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_ODSETTING_POWERPERCENTAGE]);
-+		}
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-index 3bb5856655181..6f37ca7a06184 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -617,6 +617,12 @@ static uint32_t sienna_cichlid_get_throttler_status_locked(struct smu_context *s
- 	return throttler_status;
- }
- 
-+static bool sienna_cichlid_is_od_feature_supported(struct smu_11_0_7_overdrive_table *od_table,
-+						   enum SMU_11_0_7_ODFEATURE_CAP cap)
-+{
-+	return od_table->cap[cap];
-+}
++void dcn32_update_dml_pipes_odm_policy_based_on_context(struct dc *dc, struct dc_state *context, display_e2e_pipe_params_st *pipes);
 +
- static int sienna_cichlid_get_power_limit(struct smu_context *smu,
- 					  uint32_t *current_power_limit,
- 					  uint32_t *default_power_limit,
-@@ -625,6 +631,7 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
- {
- 	struct smu_11_0_7_powerplay_table *powerplay_table =
- 		(struct smu_11_0_7_powerplay_table *)smu->smu_table.power_play_table;
-+	struct smu_11_0_7_overdrive_table *od_settings = smu->od_settings;
- 	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
- 	uint16_t *table_member;
+ /* definitions for run time init of reg offsets */
  
-@@ -641,12 +648,14 @@ static int sienna_cichlid_get_power_limit(struct smu_context *smu,
- 		*default_power_limit = power_limit;
+ /* CLK SRC */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
+index bc5f0db23d0c3..c80d6485f6ffa 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
+@@ -778,3 +778,29 @@ bool dcn32_subvp_vblank_admissable(struct dc *dc, struct dc_state *context, int
  
- 	if (powerplay_table) {
--		if (smu->od_enabled)
-+		if (smu->od_enabled &&
-+				sienna_cichlid_is_od_feature_supported(od_settings, SMU_11_0_7_ODCAP_POWER_LIMIT)) {
- 			od_percent_upper = le32_to_cpu(powerplay_table->overdrive_table.max[SMU_11_0_7_ODSETTING_POWERPERCENTAGE]);
--		else
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_7_ODSETTING_POWERPERCENTAGE]);
-+		} else if ((sienna_cichlid_is_od_feature_supported(od_settings, SMU_11_0_7_ODCAP_POWER_LIMIT))) {
- 			od_percent_upper = 0;
--
--		od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_7_ODSETTING_POWERPERCENTAGE]);
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_11_0_7_ODSETTING_POWERPERCENTAGE]);
-+		}
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
-@@ -1252,12 +1261,6 @@ static bool sienna_cichlid_is_support_fine_grained_dpm(struct smu_context *smu,
- 	return dpm_desc->SnapToDiscrete == 0;
+ 	return result;
  }
++
++void dcn32_update_dml_pipes_odm_policy_based_on_context(struct dc *dc, struct dc_state *context,
++		display_e2e_pipe_params_st *pipes)
++{
++	int i, pipe_cnt;
++	struct resource_context *res_ctx = &context->res_ctx;
++	struct pipe_ctx *pipe = NULL;
++
++	for (i = 0, pipe_cnt = 0; i < dc->res_pool->pipe_count; i++) {
++		int odm_slice_count = 0;
++
++		if (!res_ctx->pipe_ctx[i].stream)
++			continue;
++		pipe = &res_ctx->pipe_ctx[i];
++		odm_slice_count = resource_get_odm_slice_count(pipe);
++
++		if (odm_slice_count == 1)
++			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
++		else if (odm_slice_count == 2)
++			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
++		else if (odm_slice_count == 4)
++			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_4to1;
++
++		pipe_cnt++;
++	}
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index fe2b67d745f0d..5b6d9643b02dc 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2178,6 +2178,7 @@ bool dcn32_internal_validate_bw(struct dc *dc,
+ 		int i;
  
--static bool sienna_cichlid_is_od_feature_supported(struct smu_11_0_7_overdrive_table *od_table,
--						   enum SMU_11_0_7_ODFEATURE_CAP cap)
--{
--	return od_table->cap[cap];
--}
--
- static void sienna_cichlid_get_od_setting_range(struct smu_11_0_7_overdrive_table *od_table,
- 						enum SMU_11_0_7_ODSETTING_ID setting,
- 						uint32_t *min, uint32_t *max)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index e5cae0919d474..9ac6c408d2b68 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2365,12 +2365,14 @@ static int smu_v13_0_0_get_power_limit(struct smu_context *smu,
- 		*default_power_limit = power_limit;
+ 		pipe_cnt = dc->res_pool->funcs->populate_dml_pipes(dc, context, pipes, fast_validate);
++		dcn32_update_dml_pipes_odm_policy_based_on_context(dc, context, pipes);
  
- 	if (powerplay_table) {
--		if (smu->od_enabled)
-+		if (smu->od_enabled &&
-+				smu_v13_0_0_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
- 			od_percent_upper = le32_to_cpu(powerplay_table->overdrive_table.max[SMU_13_0_0_ODSETTING_POWERPERCENTAGE]);
--		else
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_0_ODSETTING_POWERPERCENTAGE]);
-+		} else if (smu_v13_0_0_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
- 			od_percent_upper = 0;
--
--		od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_0_ODSETTING_POWERPERCENTAGE]);
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_0_ODSETTING_POWERPERCENTAGE]);
-+		}
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-index 374a4a954b944..402e0d184e147 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2329,12 +2329,14 @@ static int smu_v13_0_7_get_power_limit(struct smu_context *smu,
- 		*default_power_limit = power_limit;
- 
- 	if (powerplay_table) {
--		if (smu->od_enabled)
-+		if (smu->od_enabled &&
-+				(smu_v13_0_7_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT))) {
- 			od_percent_upper = le32_to_cpu(powerplay_table->overdrive_table.max[SMU_13_0_7_ODSETTING_POWERPERCENTAGE]);
--		else
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_7_ODSETTING_POWERPERCENTAGE]);
-+		} else if (smu_v13_0_7_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
- 			od_percent_upper = 0;
--
--		od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_7_ODSETTING_POWERPERCENTAGE]);
-+			od_percent_lower = le32_to_cpu(powerplay_table->overdrive_table.min[SMU_13_0_7_ODSETTING_POWERPERCENTAGE]);
-+		}
- 	}
- 
- 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
+ 		/* repopulate_pipes = 1 means the pipes were either split or merged. In this case
+ 		 * we have to re-calculate the DET allocation and run through DML once more to
+@@ -2186,7 +2187,9 @@ bool dcn32_internal_validate_bw(struct dc *dc,
+ 		 * */
+ 		context->bw_ctx.dml.soc.allow_for_pstate_or_stutter_in_vblank_final =
+ 					dm_prefetch_support_uclk_fclk_and_stutter_if_possible;
++
+ 		vlevel = dml_get_voltage_level(&context->bw_ctx.dml, pipes, pipe_cnt);
++
+ 		if (vlevel == context->bw_ctx.dml.soc.num_states) {
+ 			/* failed after DET size changes */
+ 			goto validate_fail;
 -- 
 2.43.0
 
