@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF16482E4;
-	Mon,  1 Apr 2024 17:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B39495F0;
+	Mon,  1 Apr 2024 17:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991037; cv=none; b=cUvmOR02heH5lRN1OVZLl4OLUhnszNxVkLc5UYSYt+nt4Kmtf5/Xg9PtwAyshsTRIaHhRDuDbqjweZLay3paeF0mtCPPsbmQArgMkh5nLPf5l3DYY459rOt97WGAO+g3mcdTzpLBvAgRP1231+FHeU0fxMO05cGW8O1S5Dc2I9g=
+	t=1711991040; cv=none; b=Vv2MWg1F2bdsEw8v/KHLF9GDj8iTsQI5B/pIFPduSGIZuPDzoblUtvtQcbzCRKklgD7RIshBMy1JrEhqzmOYuTjThTxsFMpMT89fWAuyZcZHjoTsyBz43rfas4gak8ZxQvxITHcvhP9OoOZOXRC3OFQyNSizkOt+fOYJTxXYOrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991037; c=relaxed/simple;
-	bh=fJ7JgUoLnHBb/rri0IeL5dvX91GqL5w5gABE13Wol64=;
+	s=arc-20240116; t=1711991040; c=relaxed/simple;
+	bh=2AwupsJSS9I8k5kdnmOt6K3AfYkjwFd8gcDG5mT6/gA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4BMowkYbihpDzy469Ln7tm3wnBbkc4bavreFAIbDVAe2OF1ne4PcagSQP3DBeZFTqdrm2qIBa15M3ZuTAjFxxxqoTP+at7cQduGJkQTmS6pu3/AyIhZOO4xcqKz761dVJ1natXpD8TXI9sINidvnFzk4OdyFfBjUi+iTgwpT1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f76e7OCZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvCUl4Xx5O0Dqz02gUPSejJ1QOXBtkYv5c4TjQ0p7aMz2OvF9nyPh7uTCbV5YhkIDLHTWBoErZTz10YCSmJVbDCB0T53UIYOWZ8fbzVBaiJMySCQKDJ+pQUbx0oE2mZKnRIumMoAiCznGxvk4nUS8XdQ1UeUykbrMktIWppZ+lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu+X0oOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f76e7OCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBD2C43394;
-	Mon,  1 Apr 2024 17:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu+X0oOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AA4C433F1;
+	Mon,  1 Apr 2024 17:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991036;
-	bh=fJ7JgUoLnHBb/rri0IeL5dvX91GqL5w5gABE13Wol64=;
+	s=korg; t=1711991039;
+	bh=2AwupsJSS9I8k5kdnmOt6K3AfYkjwFd8gcDG5mT6/gA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f76e7OCZGdv+pAOeduR1dSgGUFSoPI3cUPEAIJR20ZCfXbNYSjlmJclLIez298n/8
-	 KvvOX/IdGwxkhnsYs2LfKscUt7Aq+B5wglsBY1epLbm6VzktUSU9qYtQC4xOOY63r3
-	 An6TKoQ2Zy9IqZRNLpsdOyjTnTLJsfa7ZeCO95J8=
+	b=Hu+X0oOBoi291GFsoAzpVYSutOeEnnsl0upK1fxiTuo1kSK/lW7bImtbOjVG7sOC+
+	 BqmSH6se8tDNvQBbBwLlhFYcy//d5Ipn8IoYhV6Cs10kQryPBPfjZgJf4HseK4m5IP
+	 CK0ewhNt5cz69kxm4sDsAvtw/4ZQyNc/d94hBgZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danil Rybakov <danilrybakov249@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 143/272] platform/x86: p2sb: On Goldmont only cache P2SB and SPI devfn BAR
-Date: Mon,  1 Apr 2024 17:45:33 +0200
-Message-ID: <20240401152535.150457171@linuxfoundation.org>
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 117/272] drm/exynos: do not return negative values from .get_modes()
+Date: Mon,  1 Apr 2024 17:45:07 +0200
+Message-ID: <20240401152534.317745506@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,75 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit aec7d25b497ce4a8d044e9496de0aa433f7f8f06 upstream.
+[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
 
-On Goldmont p2sb_bar() only ever gets called for 2 devices, the actual P2SB
-devfn 13,0 and the SPI controller which is part of the P2SB, devfn 13,2.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
-But the current p2sb code tries to cache BAR0 info for all of
-devfn 13,0 to 13,7 . This involves calling pci_scan_single_device()
-for device 13 functions 0-7 and the hw does not seem to like
-pci_scan_single_device() getting called for some of the other hidden
-devices. E.g. on an ASUS VivoBook D540NV-GQ065T this leads to continuous
-ACPI errors leading to high CPU usage.
-
-Fix this by only caching BAR0 info and thus only calling
-pci_scan_single_device() for the P2SB and the SPI controller.
-
-Fixes: 5913320eb0b3 ("platform/x86: p2sb: Allow p2sb_bar() calls during PCI device probe")
-Reported-by: Danil Rybakov <danilrybakov249@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218531
-Tested-by: Danil Rybakov <danilrybakov249@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240304134356.305375-2-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: stable@vger.kernel.org
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/p2sb.c |   23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
+ drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/p2sb.c
-+++ b/drivers/platform/x86/p2sb.c
-@@ -20,9 +20,11 @@
- #define P2SBC_HIDE		BIT(8)
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index f5e1adfcaa514..fb941a8c99f0f 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -316,14 +316,14 @@ static int vidi_get_modes(struct drm_connector *connector)
+ 	 */
+ 	if (!ctx->raw_edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
+-		return -EFAULT;
++		return 0;
+ 	}
  
- #define P2SB_DEVFN_DEFAULT	PCI_DEVFN(31, 1)
-+#define P2SB_DEVFN_GOLDMONT	PCI_DEVFN(13, 0)
-+#define SPI_DEVFN_GOLDMONT	PCI_DEVFN(13, 2)
+ 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
+ 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
+ 	if (!edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
+-		return -ENOMEM;
++		return 0;
+ 	}
  
- static const struct x86_cpu_id p2sb_cpu_ids[] = {
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT,	PCI_DEVFN(13, 0)),
-+	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GOLDMONT, P2SB_DEVFN_GOLDMONT),
- 	{}
- };
+ 	drm_connector_update_edid_property(connector, edid);
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index 1a7194a653ae5..be2d9cbaaef2e 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -887,11 +887,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
+ 	int ret;
  
-@@ -98,21 +100,12 @@ static void p2sb_scan_and_cache_devfn(st
+ 	if (!hdata->ddc_adpt)
+-		return -ENODEV;
++		return 0;
  
- static int p2sb_scan_and_cache(struct pci_bus *bus, unsigned int devfn)
- {
--	unsigned int slot, fn;
-+	/* Scan the P2SB device and cache its BAR0 */
-+	p2sb_scan_and_cache_devfn(bus, devfn);
+ 	edid = drm_get_edid(connector, hdata->ddc_adpt);
+ 	if (!edid)
+-		return -ENODEV;
++		return 0;
  
--	if (PCI_FUNC(devfn) == 0) {
--		/*
--		 * When function number of the P2SB device is zero, scan it and
--		 * other function numbers, and if devices are available, cache
--		 * their BAR0s.
--		 */
--		slot = PCI_SLOT(devfn);
--		for (fn = 0; fn < NR_P2SB_RES_CACHE; fn++)
--			p2sb_scan_and_cache_devfn(bus, PCI_DEVFN(slot, fn));
--	} else {
--		/* Scan the P2SB device and cache its BAR0 */
--		p2sb_scan_and_cache_devfn(bus, devfn);
--	}
-+	/* On Goldmont p2sb_bar() also gets called for the SPI controller */
-+	if (devfn == P2SB_DEVFN_GOLDMONT)
-+		p2sb_scan_and_cache_devfn(bus, SPI_DEVFN_GOLDMONT);
- 
- 	if (!p2sb_valid_resource(&p2sb_resources[PCI_FUNC(devfn)].res))
- 		return -ENOENT;
+ 	hdata->dvi_mode = !connector->display_info.is_hdmi;
+ 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+-- 
+2.43.0
+
 
 
