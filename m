@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE17433DA;
-	Mon,  1 Apr 2024 16:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC8F1E525;
+	Mon,  1 Apr 2024 16:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990104; cv=none; b=GLStNVWmIiR9tyJibM2TYOlzT4D+XPJF/nyyaIgOf5JRXZiB3Z0zNgghOcJ8aAyvZgPPy7A4qIaDh4p9i8yene0uG4/ptMVAnE6YPySOY74m0KAV9hiCW7hlywns9qEagWQpemCSuMjcS5kvXV4aXz2g9DGLtoYTjxYgLvkpKVA=
+	t=1711990107; cv=none; b=Zm+vsiWM1XfbtmqFNSw8aVnWP3wamZEYAUuoZmhks93+ia7p5sICm9Gow9j3LVsG8fyydP42bWySsjEsLkNB8BgJkj8UavEiZmaKqIXIrg3TkAdE1bzcBGkIa1gPcJ3bqoNXCl70A7MjeDlQ8TcsDC4xBnh3pYh0hfTLH+zKQZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990104; c=relaxed/simple;
-	bh=lO/H2E/tyzehi22GrI423JoHey0zk+cWaTh4aIYdrPE=;
+	s=arc-20240116; t=1711990107; c=relaxed/simple;
+	bh=Vq6A99tFXabI7Q04SOTkDIz9tPtW4yo2wP6AorNqq3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8eRx4ZRYn8p9dbXZzA81hB7QY6Y8Kxxt+O/+Fv7AYlVwcfaDjQXltxvrajjGW+Gs74X1Uf5J2IveUnOQJmal6KD6pZVBH6Vsh5Xo1XVMGbF5WlL+Oe4Yb+Vrd078cfmu2WgqGu+S+gJfHoymJiyqrIPAxL0v99OfG+84cWJUUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA1v78bV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ByBvsZDq1dbt5+fjEVgoctQxe6C0dWG+5T7klsY6Kjvg0tpTdrxLvB6voPXU7uI96ZW0RR9GWd5K2JkzajFhFwd6CywghY/y5X8wwUGaeGIEsrnka5Cq0WP9FklJbTJhdh/32+ehBw5Fi45u0xxniheHY8YMkzlj6xfX9I4MU4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuXzYo1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA1v78bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D91EC433C7;
-	Mon,  1 Apr 2024 16:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuXzYo1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA589C433F1;
+	Mon,  1 Apr 2024 16:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990103;
-	bh=lO/H2E/tyzehi22GrI423JoHey0zk+cWaTh4aIYdrPE=;
+	s=korg; t=1711990107;
+	bh=Vq6A99tFXabI7Q04SOTkDIz9tPtW4yo2wP6AorNqq3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BA1v78bVkvSL6NuTtr994NLw3xmssdYIzVelE1ggZxZARRUKLAsSvRjhpYlj5j895
-	 TwHDBVFqNNM4wsdqzF0B3+Lp2zGHVdg6+dZatNo72UuCz28NujSXEz6Wxu43fZcGJG
-	 gM5LnoKsSavreMlyrWnNWboMmTr8jrfRe5JkctS0=
+	b=WuXzYo1v0zihTt3xnnhwRibWC59Lay1xzzaX+A3Tvh3cEIlGdxxmg7TUVbjmJQosD
+	 Mnp1j4EUybi2ZqrkAAlfuExBbgyyy2QU15S2swNhUtey4ey+tFKjMK2C7w8yg7SycR
+	 s60dLI4UyI5x4z2f33TLsa+wv3AsA4t7EPuMaL8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rickard x Andersson <rickaran@axis.com>,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Subject: [PATCH 6.6 218/396] tty: serial: imx: Fix broken RS485
-Date: Mon,  1 Apr 2024 17:44:27 +0200
-Message-ID: <20240401152554.420737808@linuxfoundation.org>
+	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.6 209/396] cgroup/cpuset: Fix retval in update_cpumask()
+Date: Mon,  1 Apr 2024 17:44:18 +0200
+Message-ID: <20240401152554.159062178@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,85 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Kamalesh Babulal <kamalesh.babulal@oracle.com>
 
-commit 672448ccf9b6a676f96f9352cbf91f4d35f4084a upstream.
+commit 25125a4762835d62ba1e540c1351d447fc1f6c7c upstream.
 
-When about to transmit the function imx_uart_start_tx is called and in
-some RS485 configurations this function will call imx_uart_stop_rx. The
-problem is that imx_uart_stop_rx will enable loopback in order to
-release the RS485 bus, but when loopback is enabled transmitted data
-will just be looped to RX.
+The update_cpumask(), checks for newly requested cpumask by calling
+validate_change(), which returns an error on passing an invalid set
+of cpu(s). Independent of the error returned, update_cpumask() always
+returns zero, suppressing the error and returning success to the user
+on writing an invalid cpu range for a cpuset. Fix it by returning
+retval instead, which is returned by validate_change().
 
-This patch fixes the above problem by not enabling loopback when about
-to transmit.
-
-This driver now works well when used for RS485 half duplex master
-configurations.
-
-Fixes: 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal active high")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Link: https://lore.kernel.org/r/20240221115304.509811-1-rickaran@axis.com
+Fixes: 99fe36ba6fc1 ("cgroup/cpuset: Improve temporary cpumasks handling")
+Signed-off-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Cc: stable@vger.kernel.org # v6.6+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ kernel/cgroup/cpuset.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -468,8 +468,7 @@ static void imx_uart_stop_tx(struct uart
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1948,7 +1948,7 @@ static int update_cpumask(struct cpuset
  	}
+ out_free:
+ 	free_cpumasks(NULL, &tmp);
+-	return 0;
++	return retval;
  }
  
--/* called with port.lock taken and irqs off */
--static void imx_uart_stop_rx(struct uart_port *port)
-+static void imx_uart_stop_rx_with_loopback_ctrl(struct uart_port *port, bool loopback)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
- 	u32 ucr1, ucr2, ucr4, uts;
-@@ -491,7 +490,7 @@ static void imx_uart_stop_rx(struct uart
- 	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
- 	if (port->rs485.flags & SER_RS485_ENABLED &&
- 	    port->rs485.flags & SER_RS485_RTS_ON_SEND &&
--	    sport->have_rtscts && !sport->have_rtsgpio) {
-+	    sport->have_rtscts && !sport->have_rtsgpio && loopback) {
- 		uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
- 		uts |= UTS_LOOP;
- 		imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-@@ -504,6 +503,16 @@ static void imx_uart_stop_rx(struct uart
- }
- 
- /* called with port.lock taken and irqs off */
-+static void imx_uart_stop_rx(struct uart_port *port)
-+{
-+	/*
-+	 * Stop RX and enable loopback in order to make sure RS485 bus
-+	 * is not blocked. Se comment in imx_uart_probe().
-+	 */
-+	imx_uart_stop_rx_with_loopback_ctrl(port, true);
-+}
-+
-+/* called with port.lock taken and irqs off */
- static void imx_uart_enable_ms(struct uart_port *port)
- {
- 	struct imx_port *sport = (struct imx_port *)port;
-@@ -688,9 +697,14 @@ static void imx_uart_start_tx(struct uar
- 				imx_uart_rts_inactive(sport, &ucr2);
- 			imx_uart_writel(sport, ucr2, UCR2);
- 
-+			/*
-+			 * Since we are about to transmit we can not stop RX
-+			 * with loopback enabled because that will make our
-+			 * transmitted data being just looped to RX.
-+			 */
- 			if (!(port->rs485.flags & SER_RS485_RX_DURING_TX) &&
- 			    !port->rs485_rx_during_tx_gpio)
--				imx_uart_stop_rx(port);
-+				imx_uart_stop_rx_with_loopback_ctrl(port, false);
- 
- 			sport->tx_state = WAIT_AFTER_RTS;
- 
+ /*
 
 
