@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5159F446AC;
-	Mon,  1 Apr 2024 16:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60539383BA;
+	Mon,  1 Apr 2024 16:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987643; cv=none; b=scJwe3ocxv4zufNYmecTBlMJulhkZEQc4CbMwkHZ+1+8DA+2+O0484H9eAKnwoxTpvjtQ8nUXQFggqqvSKX/bxcexva9vyPxNsM9aaQWaauer1PDdO8MQtv9NeCqoOtRzcMDQ8M3+m14mJoIb32J6kCLmop24pBKPjzt9sD8134=
+	t=1711987647; cv=none; b=rIU3QufEaXU+jwQjL+G5Elu6/ayQQXJlqXDjMurL0pTzb0O9FPU5s0ke78lKxjtj40vR1wluI87HzRPPzfyNhfbXvj3ey52IX651BT0tyox96ULZbJH5yFC+r96fH7mbHEH4VhHP0PZjitQNQ6tpILrprmBvpA1TUugkhckSvcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987643; c=relaxed/simple;
-	bh=U9Vum0xksbSlshPAywr7+ZymbU3g0g2Y/vw4s2m+8mg=;
+	s=arc-20240116; t=1711987647; c=relaxed/simple;
+	bh=hZJX9EOFi5QHxuethHeWnkeyC2xRud4piLE6tcHiM1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dzyc5RXKW6RRB5wuqhKYMiGXG5rU+vsKXpi7ytQU6Fgbz/DfQvc3Ul5N3is/KkHCvwp2JO2ROmGPtm/JRTzl2VdUxPQqY8GIzIRsPSCRXsasc7vNMdsuNlx4XNjyMOvUKfxeJQ6ncbdvb/Favn8v85BGNfBoOskQwf9ujWsLDJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kPejNH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jaISLsB+5tPNOSl2yXJ/QlrS5k4kkuy6kqhBD3qpiLecFrLbEUTjNQCXj12Uf5A9vcn4l7OojxF9qgD/be8P9DdBbyc64h9KLVmarGD9LiHEGC7fZKMZuZI0+v7StqTWJHXF8ILgDH9NGzSZsPLHe8sY5fKckTlqG8utW/X1S7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZbZIVNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kPejNH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846AAC433C7;
-	Mon,  1 Apr 2024 16:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZbZIVNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062FAC433C7;
+	Mon,  1 Apr 2024 16:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987643;
-	bh=U9Vum0xksbSlshPAywr7+ZymbU3g0g2Y/vw4s2m+8mg=;
+	s=korg; t=1711987647;
+	bh=hZJX9EOFi5QHxuethHeWnkeyC2xRud4piLE6tcHiM1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kPejNH4LBbvZDH6lukcaL1PWB3xtL30vOyPzBn1tiCUiNY2G3igrnO2cLWkkHytd
-	 BHlyMEPoW7spz7Ld2yoTKLp7NUO9Bt0ByYyC2gkko5TtnxZD5gxNim2o5dYVgsOHH3
-	 XAk4pC405b8bIpt7c5/YuX7idMQbXdR6X+YeC5B4=
+	b=XZbZIVNuA3N8opjkQsNfDBlfLkpO5xRWTzGq9dfb8UKZJbJPkGO+qr66Ai+PiTTXd
+	 lKuMmIySRZSgPwecvZfLqWWMjX2YZY6Pg5dDbQlt/OqKAWUvJGVIwDhb9x67jeX2Qn
+	 7R0HQGul/hFHtfH2g/KCUF63Op6+LQFH0ElBFIIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 348/399] btrfs: fix extent map leak in unexpected scenario at unpin_extent_cache()
-Date: Mon,  1 Apr 2024 17:45:14 +0200
-Message-ID: <20240401152559.563360203@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH 6.8 349/399] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
+Date: Mon,  1 Apr 2024 17:45:15 +0200
+Message-ID: <20240401152559.592870415@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,44 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 8a565ec04d6c43f330e7401e5af3458431b29bc6 ]
+commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
 
-At unpin_extent_cache() if we happen to find an extent map with an
-unexpected start offset, we jump to the 'out' label and never release the
-reference we added to the extent map through the call to
-lookup_extent_mapping(), therefore resulting in a leak. So fix this by
-moving the free_extent_map() under the 'out' label.
+The dreamcastcard->timer could schedule the spu_dma_work and the
+spu_dma_work could also arm the dreamcastcard->timer.
 
-Fixes: c03c89f821e5 ("btrfs: handle errors returned from unpin_extent_cache()")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the snd_pcm_substream is closing, the aica_channel will be
+deallocated. But it could still be dereferenced in the worker
+thread. The reason is that del_timer() will return directly
+regardless of whether the timer handler is running or not and
+the worker could be rescheduled in the timer handler. As a result,
+the UAF bug will happen. The racy situation is shown below:
+
+      (Thread 1)                 |      (Thread 2)
+snd_aicapcm_pcm_close()          |
+ ...                             |  run_spu_dma() //worker
+                                 |    mod_timer()
+  flush_work()                   |
+  del_timer()                    |  aica_period_elapsed() //timer
+  kfree(dreamcastcard->channel)  |    schedule_work()
+                                 |  run_spu_dma() //worker
+  ...                            |    dreamcastcard->channel-> //USE
+
+In order to mitigate this bug and other possible corner cases,
+call mod_timer() conditionally in run_spu_dma(), then implement
+PCM sync_stop op to cancel both the timer and worker. The sync_stop
+op will be called from PCM core appropriately when needed.
+
+Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_map.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/sh/aica.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index c02039db5d247..76378382dd8c4 100644
---- a/fs/btrfs/extent_map.c
-+++ b/fs/btrfs/extent_map.c
-@@ -342,9 +342,9 @@ int unpin_extent_cache(struct btrfs_inode *inode, u64 start, u64 len, u64 gen)
- 		em->mod_len = em->len;
+--- a/sound/sh/aica.c
++++ b/sound/sh/aica.c
+@@ -278,7 +278,8 @@ static void run_spu_dma(struct work_stru
+ 		dreamcastcard->clicks++;
+ 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
+ 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
+-		mod_timer(&dreamcastcard->timer, jiffies + 1);
++		if (snd_pcm_running(dreamcastcard->substream))
++			mod_timer(&dreamcastcard->timer, jiffies + 1);
  	}
- 
--	free_extent_map(em);
- out:
- 	write_unlock(&tree->lock);
-+	free_extent_map(em);
- 	return ret;
- 
  }
--- 
-2.43.0
-
+ 
+@@ -290,6 +291,8 @@ static void aica_period_elapsed(struct t
+ 	/*timer function - so cannot sleep */
+ 	int play_period;
+ 	struct snd_pcm_runtime *runtime;
++	if (!snd_pcm_running(substream))
++		return;
+ 	runtime = substream->runtime;
+ 	dreamcastcard = substream->pcm->private_data;
+ 	/* Have we played out an additional period? */
+@@ -350,12 +353,19 @@ static int snd_aicapcm_pcm_open(struct s
+ 	return 0;
+ }
+ 
++static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
++
++	del_timer_sync(&dreamcastcard->timer);
++	cancel_work_sync(&dreamcastcard->spu_dma_work);
++	return 0;
++}
++
+ static int snd_aicapcm_pcm_close(struct snd_pcm_substream
+ 				 *substream)
+ {
+ 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
+-	flush_work(&(dreamcastcard->spu_dma_work));
+-	del_timer(&dreamcastcard->timer);
+ 	dreamcastcard->substream = NULL;
+ 	kfree(dreamcastcard->channel);
+ 	spu_disable();
+@@ -401,6 +411,7 @@ static const struct snd_pcm_ops snd_aica
+ 	.prepare = snd_aicapcm_pcm_prepare,
+ 	.trigger = snd_aicapcm_pcm_trigger,
+ 	.pointer = snd_aicapcm_pcm_pointer,
++	.sync_stop = snd_aicapcm_pcm_sync_stop,
+ };
+ 
+ /* TO DO: set up to handle more than one pcm instance */
 
 
