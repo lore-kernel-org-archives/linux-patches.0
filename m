@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A8A2EB0B;
-	Mon,  1 Apr 2024 16:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF261DFF4;
+	Mon,  1 Apr 2024 16:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990631; cv=none; b=PPb6grpMmWv82VDdopFyTB9irW7ICF1GxCx3UtKfI9GkvukxwqGm7WLeaTtlF1ouXaZTnDqA82he+9ifp0mhWQ4Ms/SdqicslfDVhF8Ry1T1emYYnEE7GI9XUL+gSEbaQKjuspaocRnyFBzpliW3U6i4wmt+IW2w2rNQML4UlnA=
+	t=1711990634; cv=none; b=ImM7gkk2Deo+4U9vLs8HPP4HfCsyaFNrUjsJkzH+ET/4ot4/vJBtJdG6DOvjntK9sjAw+YH0ScI+OOpHITukbJ6oa/P+KwoSMG9G77evozk0v+CHjAIqaWC3tSMWRY4gACtKq2gPj4UoIZlS3edjjJFYGEcjCPzb5OYAayjSLnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990631; c=relaxed/simple;
-	bh=AWR5Kp1QmDzMqKlxsqvdAYV776EXloY2MU2mLnP6A5g=;
+	s=arc-20240116; t=1711990634; c=relaxed/simple;
+	bh=D0akAiyQdWKMMraBlgtT5vT+KVtAym5MpMgsbk7ION4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Urrpjqe8jVKcv07MbQp518sgeztoDlSN67OflSjg3cV5+c3UzHPo4zlt5ZyxxkbKu6V+88HF4Yo0DIdftbUxKrHg8EhufXwTNLPVaX7hrMRH8WGu5rTfC/0Otnii1XXgwvqJxBs+SW+aD0a161+VVNlg7Buak2uYOFxAhhMFJa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wn0Vjn9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRwfysteQZV7rusL0m8KIZvI0wSOL/SKxoCMvEWnFczq9IqPGGjpqgoeETSQUbeAwPtpX/go1XbCRTivKe7nyO4CPrqIHEjndMMdE1MIl21kDU25cpY4Wz4eTk+Irmd5j2W1rlR5Klyl9XI0rT/OoNs3w+b82jUjh3guis173ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MlKBul/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wn0Vjn9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9011DC433F1;
-	Mon,  1 Apr 2024 16:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MlKBul/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0803C433C7;
+	Mon,  1 Apr 2024 16:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990631;
-	bh=AWR5Kp1QmDzMqKlxsqvdAYV776EXloY2MU2mLnP6A5g=;
+	s=korg; t=1711990634;
+	bh=D0akAiyQdWKMMraBlgtT5vT+KVtAym5MpMgsbk7ION4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wn0Vjn9hdforFnvSgfCvKdAJdRzXG3SnUBY8ZC6qLdJlXUgIBI0yIeA1kcVA250Ti
-	 igLqNyopMQSnhwUoLs0VkIxj/4Es/dnTYG/sEcwpcSCDINv9TceQ9nTdVfdjp7jL7Q
-	 lmB+G0RuOC4ltkv3TMWioAZX2tFcUHI/Jl0oFg0M=
+	b=1MlKBul/S2UncZfOFO4Uw+YR3V7XEQrcGN6Mx2+pFEk7nbgSDllOxFj2VVhvYuAjM
+	 n2Uo1/A5USTHG80a0jhR5uHOslthe+m83/D7ZMC4xQBoez5Cqmm1mHqqBgAeshcs1F
+	 PNRD8uYBx3K9VIRW2dKasvkYvKkoZiil8eaDb2Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/272] serial: max310x: fix NULL pointer dereference in I2C instantiation
-Date: Mon,  1 Apr 2024 17:43:28 +0200
-Message-ID: <20240401152530.890393603@linuxfoundation.org>
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.1 002/272] x86/bugs: Use sysfs_emit()
+Date: Mon,  1 Apr 2024 17:43:12 +0200
+Message-ID: <20240401152530.326500668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,62 +49,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit 0d27056c24efd3d63a03f3edfbcfc4827086b110 ]
+commit 1d30800c0c0ae1d086ffad2bdf0ba4403370f132 upstream.
 
-When trying to instantiate a max14830 device from userspace:
+Those mitigations are very talkative; use the printing helper which pays
+attention to the buffer size.
 
-    echo max14830 0x60 > /sys/bus/i2c/devices/i2c-2/new_device
-
-we get the following error:
-
-    Unable to handle kernel NULL pointer dereference at virtual address...
-    ...
-    Call trace:
-        max310x_i2c_probe+0x48/0x170 [max310x]
-        i2c_device_probe+0x150/0x2a0
-    ...
-
-Add check for validity of devtype to prevent the error, and abort probe
-with a meaningful error message.
-
-Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-2-hugo@hugovil.com
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20220809153419.10182-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |  105 ++++++++++++++++++++++-----------------------
+ 1 file changed, 52 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 444f89eb2d4b7..d409ef3887212 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1633,13 +1633,16 @@ static unsigned short max310x_i2c_slave_addr(unsigned short addr,
- 
- static int max310x_i2c_probe(struct i2c_client *client)
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2572,74 +2572,74 @@ static const char * const l1tf_vmx_state
+ static ssize_t l1tf_show_state(char *buf)
  {
--	const struct max310x_devtype *devtype =
--			device_get_match_data(&client->dev);
-+	const struct max310x_devtype *devtype;
- 	struct i2c_client *port_client;
- 	struct regmap *regmaps[4];
- 	unsigned int i;
- 	u8 port_addr;
+ 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_AUTO)
+-		return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
++		return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
  
-+	devtype = device_get_match_data(&client->dev);
-+	if (!devtype)
-+		return dev_err_probe(&client->dev, -ENODEV, "Failed to match device\n");
+ 	if (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_EPT_DISABLED ||
+ 	    (l1tf_vmx_mitigation == VMENTER_L1D_FLUSH_NEVER &&
+ 	     sched_smt_active())) {
+-		return sprintf(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
+-			       l1tf_vmx_states[l1tf_vmx_mitigation]);
++		return sysfs_emit(buf, "%s; VMX: %s\n", L1TF_DEFAULT_MSG,
++				  l1tf_vmx_states[l1tf_vmx_mitigation]);
+ 	}
+ 
+-	return sprintf(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
+-		       l1tf_vmx_states[l1tf_vmx_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; VMX: %s, SMT %s\n", L1TF_DEFAULT_MSG,
++			  l1tf_vmx_states[l1tf_vmx_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t itlb_multihit_show_state(char *buf)
+ {
+ 	if (!boot_cpu_has(X86_FEATURE_MSR_IA32_FEAT_CTL) ||
+ 	    !boot_cpu_has(X86_FEATURE_VMX))
+-		return sprintf(buf, "KVM: Mitigation: VMX unsupported\n");
++		return sysfs_emit(buf, "KVM: Mitigation: VMX unsupported\n");
+ 	else if (!(cr4_read_shadow() & X86_CR4_VMXE))
+-		return sprintf(buf, "KVM: Mitigation: VMX disabled\n");
++		return sysfs_emit(buf, "KVM: Mitigation: VMX disabled\n");
+ 	else if (itlb_multihit_kvm_mitigation)
+-		return sprintf(buf, "KVM: Mitigation: Split huge pages\n");
++		return sysfs_emit(buf, "KVM: Mitigation: Split huge pages\n");
+ 	else
+-		return sprintf(buf, "KVM: Vulnerable\n");
++		return sysfs_emit(buf, "KVM: Vulnerable\n");
+ }
+ #else
+ static ssize_t l1tf_show_state(char *buf)
+ {
+-	return sprintf(buf, "%s\n", L1TF_DEFAULT_MSG);
++	return sysfs_emit(buf, "%s\n", L1TF_DEFAULT_MSG);
+ }
+ 
+ static ssize_t itlb_multihit_show_state(char *buf)
+ {
+-	return sprintf(buf, "Processor vulnerable\n");
++	return sysfs_emit(buf, "Processor vulnerable\n");
+ }
+ #endif
+ 
+ static ssize_t mds_show_state(char *buf)
+ {
+ 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
+-		return sprintf(buf, "%s; SMT Host state unknown\n",
+-			       mds_strings[mds_mitigation]);
++		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
++				  mds_strings[mds_mitigation]);
+ 	}
+ 
+ 	if (boot_cpu_has(X86_BUG_MSBDS_ONLY)) {
+-		return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
+-			       (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
+-			        sched_smt_active() ? "mitigated" : "disabled"));
++		return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
++				  (mds_mitigation == MDS_MITIGATION_OFF ? "vulnerable" :
++				   sched_smt_active() ? "mitigated" : "disabled"));
+ 	}
+ 
+-	return sprintf(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; SMT %s\n", mds_strings[mds_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t tsx_async_abort_show_state(char *buf)
+ {
+ 	if ((taa_mitigation == TAA_MITIGATION_TSX_DISABLED) ||
+ 	    (taa_mitigation == TAA_MITIGATION_OFF))
+-		return sprintf(buf, "%s\n", taa_strings[taa_mitigation]);
++		return sysfs_emit(buf, "%s\n", taa_strings[taa_mitigation]);
+ 
+ 	if (boot_cpu_has(X86_FEATURE_HYPERVISOR)) {
+-		return sprintf(buf, "%s; SMT Host state unknown\n",
+-			       taa_strings[taa_mitigation]);
++		return sysfs_emit(buf, "%s; SMT Host state unknown\n",
++				  taa_strings[taa_mitigation]);
+ 	}
+ 
+-	return sprintf(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
+-		       sched_smt_active() ? "vulnerable" : "disabled");
++	return sysfs_emit(buf, "%s; SMT %s\n", taa_strings[taa_mitigation],
++			  sched_smt_active() ? "vulnerable" : "disabled");
+ }
+ 
+ static ssize_t mmio_stale_data_show_state(char *buf)
+@@ -2712,47 +2712,46 @@ static char *pbrsb_eibrs_state(void)
+ static ssize_t spectre_v2_show_state(char *buf)
+ {
+ 	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
+-		return sprintf(buf, "Vulnerable: LFENCE\n");
++		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+ 
+ 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
+-		return sprintf(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
++		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
+ 
+ 	if (sched_smt_active() && unprivileged_ebpf_enabled() &&
+ 	    spectre_v2_enabled == SPECTRE_V2_EIBRS_LFENCE)
+-		return sprintf(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
++		return sysfs_emit(buf, "Vulnerable: eIBRS+LFENCE with unprivileged eBPF and SMT\n");
+ 
+-	return sprintf(buf, "%s%s%s%s%s%s%s\n",
+-		       spectre_v2_strings[spectre_v2_enabled],
+-		       ibpb_state(),
+-		       boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
+-		       stibp_state(),
+-		       boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
+-		       pbrsb_eibrs_state(),
+-		       spectre_v2_module_string());
++	return sysfs_emit(buf, "%s%s%s%s%s%s%s\n",
++			  spectre_v2_strings[spectre_v2_enabled],
++			  ibpb_state(),
++			  boot_cpu_has(X86_FEATURE_USE_IBRS_FW) ? ", IBRS_FW" : "",
++			  stibp_state(),
++			  boot_cpu_has(X86_FEATURE_RSB_CTXSW) ? ", RSB filling" : "",
++			  pbrsb_eibrs_state(),
++			  spectre_v2_module_string());
+ }
+ 
+ static ssize_t srbds_show_state(char *buf)
+ {
+-	return sprintf(buf, "%s\n", srbds_strings[srbds_mitigation]);
++	return sysfs_emit(buf, "%s\n", srbds_strings[srbds_mitigation]);
+ }
+ 
+ static ssize_t retbleed_show_state(char *buf)
+ {
+ 	if (retbleed_mitigation == RETBLEED_MITIGATION_UNRET ||
+ 	    retbleed_mitigation == RETBLEED_MITIGATION_IBPB) {
+-	    if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
+-		boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
+-		    return sprintf(buf, "Vulnerable: untrained return thunk / IBPB on non-AMD based uarch\n");
+-
+-	    return sprintf(buf, "%s; SMT %s\n",
+-			   retbleed_strings[retbleed_mitigation],
+-			   !sched_smt_active() ? "disabled" :
+-			   spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT ||
+-			   spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT_PREFERRED ?
+-			   "enabled with STIBP protection" : "vulnerable");
++		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
++		    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
++			return sysfs_emit(buf, "Vulnerable: untrained return thunk / IBPB on non-AMD based uarch\n");
 +
- 	if (client->addr < devtype->slave_addr.min ||
- 		client->addr > devtype->slave_addr.max)
- 		return dev_err_probe(&client->dev, -EINVAL,
--- 
-2.43.0
-
++		return sysfs_emit(buf, "%s; SMT %s\n", retbleed_strings[retbleed_mitigation],
++				  !sched_smt_active() ? "disabled" :
++				  spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT ||
++				  spectre_v2_user_stibp == SPECTRE_V2_USER_STRICT_PREFERRED ?
++				  "enabled with STIBP protection" : "vulnerable");
+ 	}
+ 
+-	return sprintf(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
++	return sysfs_emit(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
+ }
+ 
+ static ssize_t gds_show_state(char *buf)
+@@ -2774,26 +2773,26 @@ static ssize_t cpu_show_common(struct de
+ 			       char *buf, unsigned int bug)
+ {
+ 	if (!boot_cpu_has_bug(bug))
+-		return sprintf(buf, "Not affected\n");
++		return sysfs_emit(buf, "Not affected\n");
+ 
+ 	switch (bug) {
+ 	case X86_BUG_CPU_MELTDOWN:
+ 		if (boot_cpu_has(X86_FEATURE_PTI))
+-			return sprintf(buf, "Mitigation: PTI\n");
++			return sysfs_emit(buf, "Mitigation: PTI\n");
+ 
+ 		if (hypervisor_is_type(X86_HYPER_XEN_PV))
+-			return sprintf(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
++			return sysfs_emit(buf, "Unknown (XEN PV detected, hypervisor mitigation required)\n");
+ 
+ 		break;
+ 
+ 	case X86_BUG_SPECTRE_V1:
+-		return sprintf(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
++		return sysfs_emit(buf, "%s\n", spectre_v1_strings[spectre_v1_mitigation]);
+ 
+ 	case X86_BUG_SPECTRE_V2:
+ 		return spectre_v2_show_state(buf);
+ 
+ 	case X86_BUG_SPEC_STORE_BYPASS:
+-		return sprintf(buf, "%s\n", ssb_strings[ssb_mode]);
++		return sysfs_emit(buf, "%s\n", ssb_strings[ssb_mode]);
+ 
+ 	case X86_BUG_L1TF:
+ 		if (boot_cpu_has(X86_FEATURE_L1TF_PTEINV))
+@@ -2832,7 +2831,7 @@ static ssize_t cpu_show_common(struct de
+ 		break;
+ 	}
+ 
+-	return sprintf(buf, "Vulnerable\n");
++	return sysfs_emit(buf, "Vulnerable\n");
+ }
+ 
+ ssize_t cpu_show_meltdown(struct device *dev, struct device_attribute *attr, char *buf)
 
 
