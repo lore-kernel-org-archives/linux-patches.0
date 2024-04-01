@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2A63FE2D;
-	Mon,  1 Apr 2024 15:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2047768;
+	Mon,  1 Apr 2024 15:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986726; cv=none; b=Td7CTbXv8xE1TkXBRntxZVHIrzpOU7pbQHmH0efeL94Ut9AaLpy7G9uxdDbxc06aT7wuISIeyxSbByhTE5ikUaZ+yG6ciu8dd2AicpU65Qipxtn93o0DK//HsebIy5IRvTWuMazYBSH6pMzF0ymSrjJWLeyHhYOzjy6SIEHawDo=
+	t=1711986730; cv=none; b=U/PsKiT3AMfpecyU3JcFaaSkX089DhP0rVwlnARFFryJzgYLd9YXb5sGAHGReOzIcADehl27xn7TQwmX8dxglt6A4i4g2mmb8LL48QOGucEFD+f9bTDKhSbp5jldq3vLszVcUysG1UHLrLFjQmTmXNj62liU87eoAxs4WcdrQWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986726; c=relaxed/simple;
-	bh=5jIMsmwHqJlAzVs188bkpoPzvdDPqD2O11o1TFRwLF0=;
+	s=arc-20240116; t=1711986730; c=relaxed/simple;
+	bh=kcYpRHBkrw31yKDWEgNbPfZ32JYvHWwjx3vpz1/bb54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riL8anmrEtKKXpnOMsZbFF0j2YfsicziAnnJ+u0qDDivJ8ipgW9Q6ywH2IjB8JhDN2KC096vwxLhy+blYBxnapVaRqUU2bqe7MwgrE/9wHkOh9nkV8cy9imHKQY/qw4QlKrFRHpn3/hERZ115+2zksMb6V+O3CoRlH+7l0AE+U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqLISEHQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCg/c7KtgxUSnQ4+6rWRuGg1LJMcQfI4zELzpCYbaz2UbohRdDqjr03Bf09uEo0ge38nyFSdZUp59u+Fx6fOLyAHAGeKBQvPkfkltej1RwHMuA1btkYvLevHV5ZQadjt9d6rJ24hyUO9L2l4B/XbTPf7/oXuFBk9+Fcv57kweLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTHTSXmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqLISEHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC9EC43390;
-	Mon,  1 Apr 2024 15:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTHTSXmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013DBC433F1;
+	Mon,  1 Apr 2024 15:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986726;
-	bh=5jIMsmwHqJlAzVs188bkpoPzvdDPqD2O11o1TFRwLF0=;
+	s=korg; t=1711986729;
+	bh=kcYpRHBkrw31yKDWEgNbPfZ32JYvHWwjx3vpz1/bb54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OqLISEHQ7tm79xcBWclNXa7nQ00VFlraK2lfjTrPtcbZSWmm/1o3nqN1BFkOC2e3V
-	 3OtBk1AxGR5hcTNsMIVknlpEUjmR0dQPsk17ecMkpSb5jfTDNFPTxJl1n9MpfIUoJ6
-	 OlGnC2/gZhnYIvOeTv9AbptI/PKV+zaAv4wW0Soo=
+	b=UTHTSXmYFaGiTZnoLDh2oKtnTnU/4CV/dFmHEZCLg1o4MF2ujtHFjTj5GBZvHITt6
+	 V/naKy0IxZ7ldnfq6xE4xuo/ahpYeOasq/wFPfijySqN4XlpL9e42tnWI2IlNl4Hwi
+	 QqzuDT6ZxNbimyx0O9dle9Ki6lJKlWjGo46TsFRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <izh1979@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	sparclinux@vger.kernel.org,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 064/399] iio: adc: rockchip_saradc: fix bitmask for channels on SARADCv2
-Date: Mon,  1 Apr 2024 17:40:30 +0200
-Message-ID: <20240401152551.096775728@linuxfoundation.org>
+Subject: [PATCH 6.8 036/399] sparc64: NMI watchdog: fix return value of __setup handler
+Date: Mon,  1 Apr 2024 17:40:02 +0200
+Message-ID: <20240401152550.242999480@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -54,39 +57,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit b0a4546df24a4f8c59b2d05ae141bd70ceccc386 ]
+[ Upstream commit 3ed7c61e49d65dacb96db798c0ab6fcd55a1f20f ]
 
-The SARADCv2 on RK3588 (the only SoC currently supported that has an
-SARADCv2) selects the channel through the channel_sel bitfield which is
-the 4 lowest bits, therefore the mask should be GENMASK(3, 0) and not
-GENMASK(15, 0).
+__setup() handlers should return 1 to obsolete_checksetup() in
+init/main.c to indicate that the boot option has been handled.
+A return of 0 causes the boot option/value to be listed as an Unknown
+kernel parameter and added to init's (limited) argument or environment
+strings. Also, error return codes don't mean anything to
+obsolete_checksetup() -- only non-zero (usually 1) or zero.
+So return 1 from setup_nmi_watchdog().
 
-Fixes: 757953f8ec69 ("iio: adc: rockchip_saradc: Add support for RK3588")
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20240223-saradcv2-chan-mask-v1-1-84b06a0f623a@theobroma-systems.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: e5553a6d0442 ("sparc64: Implement NMI watchdog on capable cpus.")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <izh1979@gmail.com>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: sparclinux@vger.kernel.org
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20240211052802.22612-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/rockchip_saradc.c | 2 +-
+ arch/sparc/kernel/nmi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/rockchip_saradc.c b/drivers/iio/adc/rockchip_saradc.c
-index dd94667a623bd..2da8d6f3241a1 100644
---- a/drivers/iio/adc/rockchip_saradc.c
-+++ b/drivers/iio/adc/rockchip_saradc.c
-@@ -52,7 +52,7 @@
- #define SARADC2_START			BIT(4)
- #define SARADC2_SINGLE_MODE		BIT(5)
+diff --git a/arch/sparc/kernel/nmi.c b/arch/sparc/kernel/nmi.c
+index 17cdfdbf1f3b7..149adc0947530 100644
+--- a/arch/sparc/kernel/nmi.c
++++ b/arch/sparc/kernel/nmi.c
+@@ -279,7 +279,7 @@ static int __init setup_nmi_watchdog(char *str)
+ 	if (!strncmp(str, "panic", 5))
+ 		panic_on_timeout = 1;
  
--#define SARADC2_CONV_CHANNELS GENMASK(15, 0)
-+#define SARADC2_CONV_CHANNELS GENMASK(3, 0)
- 
- struct rockchip_saradc;
+-	return 0;
++	return 1;
+ }
+ __setup("nmi_watchdog=", setup_nmi_watchdog);
  
 -- 
 2.43.0
