@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D64A1CA8F;
-	Mon,  1 Apr 2024 16:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1D11CA8F;
+	Mon,  1 Apr 2024 16:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988682; cv=none; b=NNMDCvLCxY0Pcp7JQ+YmyKtek8DlKzgiWYwkd0QnELY4d2ZQv5wT+32oOOmBqJp1y6LsjE0ZZqk+QyNlbCZpt3KhGTeWEDSNMzZjp7XIFpCrt9mtDs8rPfxgQH0tWKNiS0XaXNX7XlV9EbGmbv7mJUYgHAuIolYdWad/YgMM++8=
+	t=1711988685; cv=none; b=eaaszP/LZkFn5dWwioM433W5uFNrvjV1QA0CyhfiT/R2R62DrRYRpHLMFHIWxgnHTpaYo4e+wJNFIVQ01DQ1osfcSM2Z1YHgJcotBgrHQeKLHZDkjCpcVWdgSnGPb6gVwVjWIGoam3DaHksDA9ZUIZXjY92bkpRhbYL3ggFGAGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988682; c=relaxed/simple;
-	bh=yFqR0c0fq9LVLHl3TpUrzK/IRiSnVHFQ0CF9NvifqrE=;
+	s=arc-20240116; t=1711988685; c=relaxed/simple;
+	bh=Du3hqM+EPDlLuB3dCdxEjQhCwFdFbOqsqumz+/BP3+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SaZj8Ui2Jm8/DF+Welh/QSF57yBdUyImtz8G7U0KPw1WMge4eqhECCh0q5aIWo1+SKY/gfrSy9rF64eIR/dhWEJOEHQuhNswGZ5DKzgrf2NZifFVmIM2vEXbeUkPtfJy+wI+mGgghaPmLIdvLujASkIbw4JOB7e3ZMrW38TEW4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xs02YMt7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HYWF10YYHqJ/7eWoLIjwf1L7djvaplJGmcPYSuwoWt+jIbMCC8SSvGDUcje2t2EOlNK8ZjigteeqHKWmPfDcwcTBwOZEgwShMbSxjhoclC1xbd0MUsqNH8+lJKvIF0UvcX9aNNttGmJaMl3A827SY90tNXtw5aW3Vkp5SUR8008=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJK4N88R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xs02YMt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF21DC433C7;
-	Mon,  1 Apr 2024 16:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJK4N88R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C1FC433C7;
+	Mon,  1 Apr 2024 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988682;
-	bh=yFqR0c0fq9LVLHl3TpUrzK/IRiSnVHFQ0CF9NvifqrE=;
+	s=korg; t=1711988685;
+	bh=Du3hqM+EPDlLuB3dCdxEjQhCwFdFbOqsqumz+/BP3+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xs02YMt7Zlb/EDuyFoVr6O7I+PEesB01egT139exRB6ka+VcV1ZKK87FKjMWNeBsv
-	 gIwzJggfmP+tmY1B6Fxmr0NAdhrMNlScWoUe934KjCVsGcp5L35NeBCblx9Z8OJeh1
-	 Sbt7rzjGlroP0/uqJdgfZRi1a28+oyoGwpSNkuso=
+	b=eJK4N88RWAPr1CXK6kRyjfyCqNwLnJZ+cg4ZPOnC525lBcUnKuMfzItH4ZtC64dw5
+	 RcWjg0hpmSpjXhf0aL23eIyxLEOfmT4WFYEBQiOmb71eBQsJkhZQSw2sGGIdz+O7nj
+	 JESOBIEVIhWznnNgTt02U5P5GXGAVoknkMExA/YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 229/432] drm/bridge: lt8912b: use drm_bridge_edid_read()
-Date: Mon,  1 Apr 2024 17:43:36 +0200
-Message-ID: <20240401152559.964561093@linuxfoundation.org>
+Subject: [PATCH 6.7 230/432] drm/bridge: lt8912b: clear the EDID property on failures
+Date: Mon,  1 Apr 2024 17:43:37 +0200
+Message-ID: <20240401152559.993650238@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -59,11 +59,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 60d1fe1a7f302cc1151b155ac2d134db59bb1420 ]
+[ Upstream commit 29e032296da5d6294378ffa8bad8e976c5aadbf5 ]
 
-Prefer using the struct drm_edid based functions.
+If EDID read fails, clear the EDID property.
 
-cc: Adrien Grassein <adrien.grassein@gmail.com>
+Cc: Adrien Grassein <adrien.grassein@gmail.com>
 Cc: Andrzej Hajda <andrzej.hajda@intel.com>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>
 Cc: Robert Foss <rfoss@kernel.org>
@@ -72,48 +72,27 @@ Cc: Jonas Karlman <jonas@kwiboo.se>
 Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/32c9b52fe6fa7cbad6bfd0ff00041876977e02ea.1706038510.git.jani.nikula@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/2080adaadf4bba3d85f58c42c065caf9aad9a4ef.1706038510.git.jani.nikula@intel.com
 Stable-dep-of: 171b711b26cc ("drm/bridge: lt8912b: do not return negative values from .get_modes()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 03532efb893bb..491c08306f81a 100644
+index 491c08306f81a..f0ebd56b4736a 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -429,16 +429,16 @@ lt8912_connector_mode_valid(struct drm_connector *connector,
- 
- static int lt8912_connector_get_modes(struct drm_connector *connector)
- {
--	struct edid *edid;
-+	const struct drm_edid *drm_edid;
- 	int ret = -1;
- 	int num = 0;
- 	struct lt8912 *lt = connector_to_lt8912(connector);
+@@ -436,8 +436,8 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
  	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
  
--	edid = drm_bridge_get_edid(lt->hdmi_port, connector);
--	if (edid) {
--		drm_connector_update_edid_property(connector, edid);
--		num = drm_add_edid_modes(connector, edid);
-+	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
-+	if (drm_edid) {
-+		drm_edid_connector_update(connector, drm_edid);
-+		num = drm_edid_connector_add_modes(connector);
+ 	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
++	drm_edid_connector_update(connector, drm_edid);
+ 	if (drm_edid) {
+-		drm_edid_connector_update(connector, drm_edid);
+ 		num = drm_edid_connector_add_modes(connector);
  	} else {
  		return ret;
- 	}
-@@ -448,7 +448,7 @@ static int lt8912_connector_get_modes(struct drm_connector *connector)
- 	if (ret)
- 		num = ret;
- 
--	kfree(edid);
-+	drm_edid_free(drm_edid);
- 	return num;
- }
- 
 -- 
 2.43.0
 
