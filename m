@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50881E525;
-	Mon,  1 Apr 2024 16:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA0941C89;
+	Mon,  1 Apr 2024 16:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989238; cv=none; b=jUyc4984YnBiS6GADZNi2RTNRcE5OJNAdLaF/7QF+TMoGX6ZHwjOySJTNpnQjKcUf1HdZOR8vyaHIebqCtdli80TSffRS0lm3tOsUkdmhrjDCEpvWkZ/k3dDljyWsOfRQOA02MdWouWwwc0e+dCFPXMWjxslIqIjw5loO2B/vxI=
+	t=1711989241; cv=none; b=sqUwzFHcNkJzw4DxmFe/pmT9kz+1JKG8vNtKCb57R5whyRzLdW6hYWCn7P0ZqFBxkwt5yZDyLvyDErh6r/NqhHUdVyDw6/PEmu7o2gvIq1FM9SGRmWeK/tZsIqB0qIZpcgXY0zQLW3Xxewt66lPWaTqVlZO9gPtp3HQFAjv7md0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989238; c=relaxed/simple;
-	bh=rmnYDa5Fx3gvX0SOO8yrN56iETvGYONWjerSq0kTaQM=;
+	s=arc-20240116; t=1711989241; c=relaxed/simple;
+	bh=987qMbZ6r2R0yPjXgjWoTvG0ld2tFw3cI3n2eJ7scQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtOQifr7ODbq4Me7AH3tYIRw3/QhpYPcqmSaGb7UnCSMAa95nQOileGHEssGfYkA3Rd66ZU3mSRWgMz8eqmTIHMRVODM03gHuhX4N+fNwIUWTqnTaoorVKOFm5vSmBiNcX+iBIY2TUHCJCAwbpwt9DgL5s+xjQZd3YMXyYegbaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LumfQqbj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGNmWxtcwbr/e38K67qU9WItakIv2mlEDNzNpz6tcwZMoQYI0mkqav9vXQ3EOPlETsiM0QI/+haTCd6BwjT1oDHQJHW2lVtq9PoDiRbUP6xRVjvM/x7erlYGpp9EH+4cR71MYowwNUmxiCOPWQOBUNKsGh4AvTaLUd5L/3bYIdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSfbqbKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LumfQqbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B37C433F1;
-	Mon,  1 Apr 2024 16:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSfbqbKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10E3C433C7;
+	Mon,  1 Apr 2024 16:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989237;
-	bh=rmnYDa5Fx3gvX0SOO8yrN56iETvGYONWjerSq0kTaQM=;
+	s=korg; t=1711989241;
+	bh=987qMbZ6r2R0yPjXgjWoTvG0ld2tFw3cI3n2eJ7scQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LumfQqbjjDzCCKQ8nuI0TGu6pK9071Hq6wXoF7mBM2Sgu1J+72ayGgnQkR1Qinf0z
-	 YOPKYn3sl61mI0zM1qTC8YwPWqm4R9Jns85TUL1GOHyPPCuHnrUGlyn/JeBI6F6jCk
-	 SHk+WycvVEkOY2PulC39gWVEKKJnT4Wp/9O0vyFw=
+	b=CSfbqbKjTwyeJJWf1QAXoyE0uwhHmv2lEBdO4/YmAfejA27dm1PCWhng9z9SzRnqO
+	 sHj0OSUlxmyKMjMCKu/tGbTjnfuUnGoBrDkSlQknG6fudsjGgqLjlXG3GXe9m3i0R/
+	 +cawund48aPp0z9VMBPVvloUaI2Ay8QukGXmrr+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Bohac <jbohac@suse.cz>,
-	Li Huafei <lihuafei1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 423/432] crash: use macro to add crashk_res into iomem early for specific arch
-Date: Mon,  1 Apr 2024 17:46:50 +0200
-Message-ID: <20240401152606.041706178@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.7 424/432] x86/bugs: Use fixed addressing for VERW operand
+Date: Mon,  1 Apr 2024 17:46:51 +0200
+Message-ID: <20240401152606.074272629@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,98 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 32fbe5246582af4f611ccccee33fd6e559087252 upstream.
+commit 8009479ee919b9a91674f48050ccbff64eafedaa upstream.
 
-There are regression reports[1][2] that crashkernel region on x86_64 can't
-be added into iomem tree sometime.  This causes the later failure of kdump
-loading.
+The macro used for MDS mitigation executes VERW with relative
+addressing for the operand. This was necessary in earlier versions of
+the series. Now it is unnecessary and creates a problem for backports
+on older kernels that don't support relocations in alternatives.
+Relocation support was added by commit 270a69c4485d ("x86/alternative:
+Support relocations in alternatives").  Also asm for fixed addressing
+is much cleaner than relative RIP addressing.
 
-This happened after commit 4a693ce65b18 ("kdump: defer the insertion of
-crashkernel resources") was merged.
+Simplify the asm by using fixed addressing for VERW operand.
 
-Even though, these reported issues are proved to be related to other
-component, they are just exposed after above commmit applied, I still
-would like to keep crashk_res and crashk_low_res being added into iomem
-early as before because the early adding has been always there on x86_64
-and working very well.  For safety of kdump, Let's change it back.
+[ dhansen: tweak changelog ]
 
-Here, add a macro HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY to limit that
-only ARCH defining the macro can have the early adding
-crashk_res/_low_res into iomem. Then define
-HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY on x86 to enable it.
-
-Note: In reserve_crashkernel_low(), there's a remnant of crashk_low_res
-handling which was mistakenly added back in commit 85fcde402db1 ("kexec:
-split crashkernel reservation code out from crash_core.c").
-
-[1]
-[PATCH V2] x86/kexec: do not update E820 kexec table for setup_data
-https://lore.kernel.org/all/Zfv8iCL6CT2JqLIC@darkstar.users.ipa.redhat.com/T/#u
-
-[2]
-Question about Address Range Validation in Crash Kernel Allocation
-https://lore.kernel.org/all/4eeac1f733584855965a2ea62fa4da58@huawei.com/T/#u
-
-Link: https://lkml.kernel.org/r/ZgDYemRQ2jxjLkq+@MiWiFi-R3L-srv
-Fixes: 4a693ce65b18 ("kdump: defer the insertion of crashkernel resources")
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Huacai Chen <chenhuacai@loongson.cn>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Bohac <jbohac@suse.cz>
-Cc: Li Huafei <lihuafei1@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Baoquan He <bhe@redhat.com>
+Closes: https://lore.kernel.org/lkml/20558f89-299b-472e-9a96-171403a83bd6@suse.com/
+Fixes: baf8361e5455 ("x86/bugs: Add asm helpers for executing VERW")
+Reported-by: Nikolay Borisov <nik.borisov@suse.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20240226-verw-arg-fix-v1-1-7b37ee6fd57d%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/crash_core.h |    2 ++
- kernel/crash_core.c               |    8 ++++++++
- 2 files changed, 10 insertions(+)
+ arch/x86/include/asm/nospec-branch.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/crash_core.h
-+++ b/arch/x86/include/asm/crash_core.h
-@@ -39,4 +39,6 @@ static inline unsigned long crash_low_si
- #endif
- }
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -332,7 +332,7 @@
+  * Note: Only the memory operand variant of VERW clears the CPU buffers.
+  */
+ .macro CLEAR_CPU_BUFFERS
+-	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", __stringify(verw mds_verw_sel), X86_FEATURE_CLEAR_CPU_BUF
+ .endm
  
-+#define HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
-+
- #endif /* _X86_CRASH_CORE_H */
---- a/kernel/crash_core.c
-+++ b/kernel/crash_core.c
-@@ -377,6 +377,9 @@ static int __init reserve_crashkernel_lo
- 
- 	crashk_low_res.start = low_base;
- 	crashk_low_res.end   = low_base + low_size - 1;
-+#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
-+	insert_resource(&iomem_resource, &crashk_low_res);
-+#endif
- #endif
- 	return 0;
- }
-@@ -458,8 +461,12 @@ retry:
- 
- 	crashk_res.start = crash_base;
- 	crashk_res.end = crash_base + crash_size - 1;
-+#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
-+	insert_resource(&iomem_resource, &crashk_res);
-+#endif
- }
- 
-+#ifndef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
- static __init int insert_crashkernel_resources(void)
- {
- 	if (crashk_res.start < crashk_res.end)
-@@ -472,6 +479,7 @@ static __init int insert_crashkernel_res
- }
- early_initcall(insert_crashkernel_resources);
- #endif
-+#endif
- 
- int crash_prepare_elf64_headers(struct crash_mem *mem, int need_kernel_map,
- 			  void **addr, unsigned long *sz)
+ #else /* __ASSEMBLY__ */
 
 
