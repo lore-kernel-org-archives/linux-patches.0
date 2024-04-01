@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EF445BE4;
-	Mon,  1 Apr 2024 16:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AB645BE4;
+	Mon,  1 Apr 2024 16:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987256; cv=none; b=SduJx3lLgGdhsFA7YTCqmp2zPRWfg8jG7D6iqHwXLY7yz/UsEp4ShfTmzaAer3VKfZfJz2jX2/fO5FSljrN5yKa2AZUccrqt5uEIcsHIXNwoNnZXHF72ciTey2/ukKUgqFMZov5Ou7Yras2jXWlxoDVn5mvYWcaLxVSq8P2noyE=
+	t=1711987259; cv=none; b=KH+kTwu3K7gep+DfKvtA86QFpmlfbIQg9ueH99t9uUQSteni3Cc5llp+nJI/orzcRy5rW5loRKltbj+mL5DC8YO9eZ9A8t+87BwazAubCzukQqC8DOEc87KVd3wVY0+vHG6JT8e4dJay9gJqRBjS6lvlfb64bW1OeCdDdaeWbVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987256; c=relaxed/simple;
-	bh=/XFIfuuZMOTJOsoJqcMa4VWApLr+t7504GtiLBi5Xug=;
+	s=arc-20240116; t=1711987259; c=relaxed/simple;
+	bh=f1BYO/xKYvMegQPmWuA5imjoQGwBA06AO4HWP/joQ5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvK8yPDrFagdU8Ep7yJgAp2+3jij9+yQPrJ7nqUJLqwHo+ZXamMo7mE+500qNpdIq+O0naxlRgCB1vfm3NAgbz6kuXRAKEbtEWCB+JoExzu5XAhCX2gH3yFqJgV1SjrlGeGEfcA6vYAFOyEmJy4UqHpvpFi0tWJjmNQlVUb8IQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16uB3Aj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BqCRFHHCVPgqAOLx/N81Mg7T+tBRy9hWzsdIL7fxwIOoDpfgyOFXu4MLYFBYlNnRDgQmcevVdpnqBnn0D0309B3ggjT52KBkCtDDbkNfMZinXyuZ5ObEeKyPxowESpjg5bksV8/IS6BVgxRXxtHy9/FpjWbeV3O5WajVRrzkLSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqrnBZpr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16uB3Aj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2CFC433C7;
-	Mon,  1 Apr 2024 16:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqrnBZpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F44DC433C7;
+	Mon,  1 Apr 2024 16:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987255;
-	bh=/XFIfuuZMOTJOsoJqcMa4VWApLr+t7504GtiLBi5Xug=;
+	s=korg; t=1711987258;
+	bh=f1BYO/xKYvMegQPmWuA5imjoQGwBA06AO4HWP/joQ5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16uB3Aj9/Nt/A9SqZrAf1u+nL/XAq1ZQe4JjnjpszayqhdngZrMCP8aWigu2Icwui
-	 60saor7Pwsc7/ZYurh9gkvXEd4Tu0k1jryUmbZfV3AFCADmosm1pfJeqhqtomaWyXe
-	 UQaLYRe2NgrZqxlLiKRQXzNbySR50KVRh4NhJtl0=
+	b=pqrnBZproYrreWg5mkDBtEXyH3yfb96WgalwxDVJX6R7yXHqBd23qNx5X22JeZDol
+	 kEp3VCkadBT7B/6J4/E32NmD+vxBzoHM8TZ6QdX2TTOo1Tgx1QS/UUVxqjuvEFH4NF
+	 tXYws0XSIp1TwCYMZreupSoIskGd1Dt3hQG1RbWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Pirko <jiri@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 202/399] wireguard: netlink: access device through ctx instead of peer
-Date: Mon,  1 Apr 2024 17:42:48 +0200
-Message-ID: <20240401152555.213635013@linuxfoundation.org>
+Subject: [PATCH 6.8 203/399] wireguard: selftests: set RISCV_ISA_FALLBACK on riscv{32,64}
+Date: Mon,  1 Apr 2024 17:42:49 +0200
+Message-ID: <20240401152555.243048107@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -54,40 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit 71cbd32e3db82ea4a74e3ef9aeeaa6971969c86f ]
+[ Upstream commit e995f5dd9a9cef818af32ec60fc38d68614afd12 ]
 
-The previous commit fixed a bug that led to a NULL peer->device being
-dereferenced. It's actually easier and faster performance-wise to
-instead get the device from ctx->wg. This semantically makes more sense
-too, since ctx->wg->peer_allowedips.seq is compared with
-ctx->allowedips_seq, basing them both in ctx. This also acts as a
-defence in depth provision against freed peers.
+This option is needed to continue booting with QEMU. Recent changes that
+made this optional meant that it gets unset in the test harness, and so
+WireGuard CI has been broken. Fix this by simply setting this option.
 
 Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Fixes: 496ea826d1e1 ("RISC-V: provide Kconfig & commandline options to control parsing "riscv,isa"")
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireguard/netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/wireguard/qemu/arch/riscv32.config | 1 +
+ tools/testing/selftests/wireguard/qemu/arch/riscv64.config | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index c17aee454fa3b..f7055180ba4aa 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -164,8 +164,8 @@ get_peer(struct wg_peer *peer, struct sk_buff *skb, struct dump_ctx *ctx)
- 	if (!allowedips_node)
- 		goto no_allowedips;
- 	if (!ctx->allowedips_seq)
--		ctx->allowedips_seq = peer->device->peer_allowedips.seq;
--	else if (ctx->allowedips_seq != peer->device->peer_allowedips.seq)
-+		ctx->allowedips_seq = ctx->wg->peer_allowedips.seq;
-+	else if (ctx->allowedips_seq != ctx->wg->peer_allowedips.seq)
- 		goto no_allowedips;
- 
- 	allowedips_nest = nla_nest_start(skb, WGPEER_A_ALLOWEDIPS);
+diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
+index 2fc36efb166dc..a7f8e8a956259 100644
+--- a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
++++ b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
+@@ -3,6 +3,7 @@ CONFIG_ARCH_RV32I=y
+ CONFIG_MMU=y
+ CONFIG_FPU=y
+ CONFIG_SOC_VIRT=y
++CONFIG_RISCV_ISA_FALLBACK=y
+ CONFIG_SERIAL_8250=y
+ CONFIG_SERIAL_8250_CONSOLE=y
+ CONFIG_SERIAL_OF_PLATFORM=y
+diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
+index dc266f3b19155..daeb3e5e09658 100644
+--- a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
++++ b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
+@@ -2,6 +2,7 @@ CONFIG_ARCH_RV64I=y
+ CONFIG_MMU=y
+ CONFIG_FPU=y
+ CONFIG_SOC_VIRT=y
++CONFIG_RISCV_ISA_FALLBACK=y
+ CONFIG_SERIAL_8250=y
+ CONFIG_SERIAL_8250_CONSOLE=y
+ CONFIG_SERIAL_OF_PLATFORM=y
 -- 
 2.43.0
 
