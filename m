@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B5B54777;
-	Mon,  1 Apr 2024 15:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2720054F86;
+	Mon,  1 Apr 2024 15:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986685; cv=none; b=O2djyT4gCEtqdIo7oDuiOBXVVoJFJ/c05DMneNrPTdaO9xBx3v1uYPNvSRYC6ihxTDUbDXbxvZjIV5uJMMe3p51G2bLKtPe+q8pWizgi3FikEdxcHFHXfZcXLZh+ItXvmbKgFnq1CirE8IIOavjt76c2OvVOYovNNKBjEhL/nZc=
+	t=1711986689; cv=none; b=mgd4YITkoLbiTNDSNEscnknWhw3qj6ZcMHiBr2OfWU0VZE+vj/aEW/Zm+RrcjGdYS2cfI7FJSmMrj9DcHbQHGavZMTfceCO6Lvn8cN9WmL7s/5vQTxcqKnosCtfbkR6FIywvcRhci2GPEeLob7MfuNwvC1tvSRC9REvLPTNHb2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986685; c=relaxed/simple;
-	bh=tCGCAmDSRfIIXwe/t7nBEySZjSJ8C0YGZLCoDMyU0qc=;
+	s=arc-20240116; t=1711986689; c=relaxed/simple;
+	bh=kJtQcoBlJ8eQBE5FniSQQJwGzpB+vzcNZT8noRVcSbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TqyMfaSnY6ggpAeELvcHuWT9v3sAuiybkyFVERW2yH6/LKGUBs3ogMCXl6djOkjR3c/ID6yt3no6b4AORdzEWpbSE2I7vCqQs1Q226ou9AAAsEtSpDEWHiz7lMNbwvnWfL19EIgGYl4pUBWon833PjunfYLs5RCGfzs+QQHp38s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z60NdQGf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ylotr9+l6Y4I14zx3c8S3/R33tXhvO1QiIRvCYVWtm1NaKLQT9GQooFkWoInqvqkNEI+Sn2iP+YDQbMtvSnyDSs6+h+bBC/KvU8XcNtsoC/ajcRMs6F+yvV2yiDXchEkr9TmVthppkaI22owz5C/e847fswMqoD2m8U2Aqeqv+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fdrjxlu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z60NdQGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FD4C43399;
-	Mon,  1 Apr 2024 15:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fdrjxlu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5787BC433C7;
+	Mon,  1 Apr 2024 15:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986685;
-	bh=tCGCAmDSRfIIXwe/t7nBEySZjSJ8C0YGZLCoDMyU0qc=;
+	s=korg; t=1711986688;
+	bh=kJtQcoBlJ8eQBE5FniSQQJwGzpB+vzcNZT8noRVcSbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z60NdQGfRgKW322hPiZNt41F9mi0eYrOBQJBQZFdW/X5eSI3iJD8CaJhZQ5uHnq1w
-	 3TT1t6fD/Qa6uqIN5evLrEI/GbKK7Vw1chNzseaisrDGTdl1VKvMHx4KjnlKgH1gt6
-	 HAiNDHF66u5QQoO1pbFvLErX/D12nG+xS4ROjF2o=
+	b=Fdrjxlu3XxYB3mcm+wApSAsFngKOfryB3tJqpUMq1KkMszMYtZ9+/MMNmQQfWi6Ih
+	 aPlzBfr+l6BS3WT4NH5q/hWTDmskGJUz2sSTiZ1pKSNH4g2LPSxh9I5bwFxZPTN9y6
+	 T2xLVdvxSsKulRWHGIuTR+AgTNYW4njDKlvK2nmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 052/399] ubi: correct the calculation of fastmap size
-Date: Mon,  1 Apr 2024 17:40:18 +0200
-Message-ID: <20240401152550.737759011@linuxfoundation.org>
+Subject: [PATCH 6.8 053/399] ubifs: ubifs_symlink: Fix memleak of inode->i_link in error path
+Date: Mon,  1 Apr 2024 17:40:19 +0200
+Message-ID: <20240401152550.767746241@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,41 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 7f174ae4f39e8475adcc09d26c5a43394689ad6c ]
+[ Upstream commit 6379b44cdcd67f5f5d986b73953e99700591edfa ]
 
-Now that the calculation of fastmap size in ubi_calc_fm_size() is
-incorrect since it miss each user volume's ubi_fm_eba structure and the
-Internal UBI volume info. Let's correct the calculation.
+For error handling path in ubifs_symlink(), inode will be marked as
+bad first, then iput() is invoked. If inode->i_link is initialized by
+fscrypt_encrypt_symlink() in encryption scenario, inode->i_link won't
+be freed by callchain ubifs_free_inode -> fscrypt_free_inode in error
+handling path, because make_bad_inode() has changed 'inode->i_mode' as
+'S_IFREG'.
+Following kmemleak is easy to be reproduced by injecting error in
+ubifs_jnl_update() when doing symlink in encryption scenario:
+ unreferenced object 0xffff888103da3d98 (size 8):
+  comm "ln", pid 1692, jiffies 4294914701 (age 12.045s)
+  backtrace:
+   kmemdup+0x32/0x70
+   __fscrypt_encrypt_symlink+0xed/0x1c0
+   ubifs_symlink+0x210/0x300 [ubifs]
+   vfs_symlink+0x216/0x360
+   do_symlinkat+0x11a/0x190
+   do_syscall_64+0x3b/0xe0
+There are two ways fixing it:
+ 1. Remove make_bad_inode() in error handling path. We can do that
+    because ubifs_evict_inode() will do same processes for good
+    symlink inode and bad symlink inode, for inode->i_nlink checking
+    is before is_bad_inode().
+ 2. Free inode->i_link before marking inode bad.
+Method 2 is picked, it has less influence, personally, I think.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: 2c58d548f570 ("fscrypt: cache decrypted symlink target in ->i_link")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ubifs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 2a728c31e6b85..9a4940874be5b 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -85,9 +85,10 @@ size_t ubi_calc_fm_size(struct ubi_device *ubi)
- 		sizeof(struct ubi_fm_scan_pool) +
- 		sizeof(struct ubi_fm_scan_pool) +
- 		(ubi->peb_count * sizeof(struct ubi_fm_ec)) +
--		(sizeof(struct ubi_fm_eba) +
--		(ubi->peb_count * sizeof(__be32))) +
--		sizeof(struct ubi_fm_volhdr) * UBI_MAX_VOLUMES;
-+		((sizeof(struct ubi_fm_eba) +
-+		  sizeof(struct ubi_fm_volhdr)) *
-+		 (UBI_MAX_VOLUMES + UBI_INT_VOL_COUNT)) +
-+		(ubi->peb_count * sizeof(__be32));
- 	return roundup(size, ubi->leb_size);
- }
- 
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index e413a9cf8ee38..6b3db00d9b121 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1134,6 +1134,8 @@ static int ubifs_mknod(struct mnt_idmap *idmap, struct inode *dir,
+ 	dir_ui->ui_size = dir->i_size;
+ 	mutex_unlock(&dir_ui->ui_mutex);
+ out_inode:
++	/* Free inode->i_link before inode is marked as bad. */
++	fscrypt_free_inode(inode);
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_fname:
 -- 
 2.43.0
 
