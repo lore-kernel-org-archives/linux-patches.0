@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9740C47A7C;
-	Mon,  1 Apr 2024 16:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9A0446D5;
+	Mon,  1 Apr 2024 16:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987893; cv=none; b=Epe1l9yVc1PSf1k7SqTYmSrMxK52shlz9zMh6y8vPOtcJCDV0bdHMCZAVCEFOPPFqnyQhfI6axR1ykUJejSnJ/TcTxWo64R1Q+22MAab7meogHBS6PKOUVhQGSqiNgcKYky+qYyGUYhWINp1fPLLrdMWAWDXNyX59rF7aEVMLec=
+	t=1711987896; cv=none; b=umDs4INJVBSLn+j72MUYRBGJ6tTwNXH+fIek8YXgZJn02RgHTjmt5wgi1B0CjQI+9jETXIWoztZjeoFZKhVy+tI4BZRk+bROTGVwGxaHq7+KczqME+fyYNZB1ydTyAZqGWOrgxKFe3uNS4QYRnW/5SZLAoo0QBwkQmX5ctWj9BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987893; c=relaxed/simple;
-	bh=nLBpAJI/mJcOv7QfpYkXteSl+YO7fOhydfcOo0xIk1k=;
+	s=arc-20240116; t=1711987896; c=relaxed/simple;
+	bh=0NnRbG0TQUdWbST2n+Emg89MLb3xkipXSy2vBjJSCb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa+ys713xd+uSdQbSJl1CVeoOZauVgyL927ukpRGV9kGq5DnR0b0+Cc4GZU0rkj0GaRC6QwKpZNJdI1ztGs6+kjR1NJFPzjDC+PcW0K+SW5L7lvIAnmIGmV5DfJZQZBwJJuHVm3lFM44JYqknz40k+KglENVACs8DhbOJ1DlZ0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/I0NX7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltrmq/3874XaBTfUICY2tbluKFn4cHb0L3pm8aocpeMJYM9w2z0xKI818OWaRbBhqwJ6JjbXWpm9d1UtC+BFS5FOOtoHS+NzQYtlRFb/BUraMTka98NeVYCGOX1DCMd4+3qwGoCpCQMF4FfS3kZVWu7CzbG0cONOeytGWFS/RiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQPNOfEe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/I0NX7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79112C433F1;
-	Mon,  1 Apr 2024 16:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQPNOfEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF841C433F1;
+	Mon,  1 Apr 2024 16:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987893;
-	bh=nLBpAJI/mJcOv7QfpYkXteSl+YO7fOhydfcOo0xIk1k=;
+	s=korg; t=1711987896;
+	bh=0NnRbG0TQUdWbST2n+Emg89MLb3xkipXSy2vBjJSCb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/I0NX7CZgGdbptJkcpOndgteKU5lBPEoJajdKtECbwKRDrMJt6zgaSYrvQ7LeSf1
-	 3S9swAl993jCi/via/bQL49pnVJgRuZ+bhno/ElIbNatrSintpEdkmWiIbuyG77n/M
-	 Fu8tnjnDRgu3VIkX+dK+P9yrZ7mWfsWXevCL+/1o=
+	b=uQPNOfEe5Ikq0KcOttpLmzveDp5h0Sy7nOrcYm/Uq63uFi68ep/8Uq05rzPAuKHAr
+	 B87ftoUK82rOYmU+gqQiNK81PhhqwIEPIuadj/valeGjOqLwZUoHstCcF3ja4GYmSf
+	 4e6b/NpQObI3Wa2lQlc3pMxnHApycP5O3c2Ioy+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 023/432] media: mc: Rename pad variable to clarify intent
-Date: Mon,  1 Apr 2024 17:40:10 +0200
-Message-ID: <20240401152553.822940551@linuxfoundation.org>
+Subject: [PATCH 6.7 024/432] media: mc: Expand MUST_CONNECT flag to always require an enabled link
+Date: Mon,  1 Apr 2024 17:40:11 +0200
+Message-ID: <20240401152553.853242948@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,13 +54,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 9ec9109cf9f611e3ec9ed0355afcc7aae5e73176 ]
+[ Upstream commit b3decc5ce7d778224d266423b542326ad469cb5f ]
 
-The pad local variable in the media_pipeline_explore_next_link()
-function is used to store the pad through which the entity has been
-reached. Rename it to origin to reflect that and make the code easier to
-read. This will be even more important in subsequent commits when
-expanding the function with additional logic.
+The MEDIA_PAD_FL_MUST_CONNECT flag indicates that the pad requires an
+enabled link to stream, but only if it has any link at all. This makes
+little sense, as if a pad is part of a pipeline, there are very few use
+cases for an active link to be mandatory only if links exist at all. A
+review of in-tree drivers confirms they all need an enabled link for
+pads marked with the MEDIA_PAD_FL_MUST_CONNECT flag.
+
+Expand the scope of the flag by rejecting pads that have no links at
+all. This requires modifying the pipeline build code to add those pads
+to the pipeline.
 
 Cc: stable@vger.kernel.org # 6.1
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
@@ -68,50 +73,167 @@ Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/mc/mc-entity.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ .../media/mediactl/media-types.rst            | 11 ++--
+ drivers/media/mc/mc-entity.c                  | 53 +++++++++++++++----
+ 2 files changed, 48 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/userspace-api/media/mediactl/media-types.rst b/Documentation/userspace-api/media/mediactl/media-types.rst
+index 0ffeece1e0c8e..6332e8395263b 100644
+--- a/Documentation/userspace-api/media/mediactl/media-types.rst
++++ b/Documentation/userspace-api/media/mediactl/media-types.rst
+@@ -375,12 +375,11 @@ Types and flags used to represent the media graph elements
+ 	  are origins of links.
+ 
+     *  -  ``MEDIA_PAD_FL_MUST_CONNECT``
+-       -  If this flag is set and the pad is linked to any other pad, then
+-	  at least one of those links must be enabled for the entity to be
+-	  able to stream. There could be temporary reasons (e.g. device
+-	  configuration dependent) for the pad to need enabled links even
+-	  when this flag isn't set; the absence of the flag doesn't imply
+-	  there is none.
++       -  If this flag is set, then for this pad to be able to stream, it must
++	  be connected by at least one enabled link. There could be temporary
++	  reasons (e.g. device configuration dependent) for the pad to need
++	  enabled links even when this flag isn't set; the absence of the flag
++	  doesn't imply there is none.
+ 
+ 
+ One and only one of ``MEDIA_PAD_FL_SINK`` and ``MEDIA_PAD_FL_SOURCE``
 diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
-index c2d8f59b62c12..5907925ffd891 100644
+index 5907925ffd891..0e28b9a7936ef 100644
 --- a/drivers/media/mc/mc-entity.c
 +++ b/drivers/media/mc/mc-entity.c
-@@ -605,13 +605,13 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 					    struct media_pipeline_walk *walk)
+@@ -535,14 +535,15 @@ static int media_pipeline_walk_push(struct media_pipeline_walk *walk,
+ 
+ /*
+  * Move the top entry link cursor to the next link. If all links of the entry
+- * have been visited, pop the entry itself.
++ * have been visited, pop the entry itself. Return true if the entry has been
++ * popped.
+  */
+-static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
++static bool media_pipeline_walk_pop(struct media_pipeline_walk *walk)
  {
- 	struct media_pipeline_walk_entry *entry = media_pipeline_walk_top(walk);
--	struct media_pad *pad;
-+	struct media_pad *origin;
+ 	struct media_pipeline_walk_entry *entry;
+ 
+ 	if (WARN_ON(walk->stack.top < 0))
+-		return;
++		return false;
+ 
+ 	entry = media_pipeline_walk_top(walk);
+ 
+@@ -552,7 +553,7 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
+ 			walk->stack.top);
+ 
+ 		walk->stack.top--;
+-		return;
++		return true;
+ 	}
+ 
+ 	entry->links = entry->links->next;
+@@ -560,6 +561,8 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
+ 	dev_dbg(walk->mdev->dev,
+ 		"media pipeline: moved entry %u to next link\n",
+ 		walk->stack.top);
++
++	return false;
+ }
+ 
+ /* Free all memory allocated while walking the pipeline. */
+@@ -609,11 +612,12 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
  	struct media_link *link;
  	struct media_pad *local;
  	struct media_pad *remote;
++	bool last_link;
  	int ret;
  
--	pad = entry->pad;
-+	origin = entry->pad;
+ 	origin = entry->pad;
  	link = list_entry(entry->links, typeof(*link), list);
- 	media_pipeline_walk_pop(walk);
+-	media_pipeline_walk_pop(walk);
++	last_link = media_pipeline_walk_pop(walk);
  
-@@ -621,7 +621,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 		link->sink->entity->name, link->sink->index);
- 
- 	/* Get the local pad and remote pad. */
--	if (link->source->entity == pad->entity) {
-+	if (link->source->entity == origin->entity) {
- 		local = link->source;
- 		remote = link->sink;
- 	} else {
-@@ -633,8 +633,9 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
- 	 * Skip links that originate from a different pad than the incoming pad
- 	 * that is not connected internally in the entity to the incoming pad.
- 	 */
--	if (pad != local &&
--	    !media_entity_has_pad_interdep(pad->entity, pad->index, local->index)) {
-+	if (origin != local &&
-+	    !media_entity_has_pad_interdep(origin->entity, origin->index,
-+					   local->index)) {
+ 	dev_dbg(walk->mdev->dev,
+ 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
+@@ -638,7 +642,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 					   local->index)) {
  		dev_dbg(walk->mdev->dev,
  			"media pipeline: skipping link (no route)\n");
- 		return 0;
+-		return 0;
++		goto done;
+ 	}
+ 
+ 	/*
+@@ -653,13 +657,44 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
+ 		dev_dbg(walk->mdev->dev,
+ 			"media pipeline: skipping link (disabled)\n");
+-		return 0;
++		goto done;
+ 	}
+ 
+ 	ret = media_pipeline_add_pad(pipe, walk, remote);
+ 	if (ret)
+ 		return ret;
+ 
++done:
++	/*
++	 * If we're done iterating over links, iterate over pads of the entity.
++	 * This is necessary to discover pads that are not connected with any
++	 * link. Those are dead ends from a pipeline exploration point of view,
++	 * but are still part of the pipeline and need to be added to enable
++	 * proper validation.
++	 */
++	if (!last_link)
++		return 0;
++
++	dev_dbg(walk->mdev->dev,
++		"media pipeline: adding unconnected pads of '%s'\n",
++		local->entity->name);
++
++	media_entity_for_each_pad(origin->entity, local) {
++		/*
++		 * Skip the origin pad (already handled), pad that have links
++		 * (already discovered through iterating over links) and pads
++		 * not internally connected.
++		 */
++		if (origin == local || !local->num_links ||
++		    !media_entity_has_pad_interdep(origin->entity, origin->index,
++						   local->index))
++			continue;
++
++		ret = media_pipeline_add_pad(pipe, walk, local);
++		if (ret)
++			return ret;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -771,7 +806,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 		struct media_pad *pad = ppad->pad;
+ 		struct media_entity *entity = pad->entity;
+ 		bool has_enabled_link = false;
+-		bool has_link = false;
+ 		struct media_link *link;
+ 
+ 		dev_dbg(mdev->dev, "Validating pad '%s':%u\n", pad->entity->name,
+@@ -801,7 +835,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 			/* Record if the pad has links and enabled links. */
+ 			if (link->flags & MEDIA_LNK_FL_ENABLED)
+ 				has_enabled_link = true;
+-			has_link = true;
+ 
+ 			/*
+ 			 * Validate the link if it's enabled and has the
+@@ -839,7 +872,7 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 		 * 3. If the pad has the MEDIA_PAD_FL_MUST_CONNECT flag set,
+ 		 * ensure that it has either no link or an enabled link.
+ 		 */
+-		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) && has_link &&
++		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) &&
+ 		    !has_enabled_link) {
+ 			dev_dbg(mdev->dev,
+ 				"Pad '%s':%u must be connected by an enabled link\n",
 -- 
 2.43.0
 
