@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B13A3E47B;
-	Mon,  1 Apr 2024 16:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0C73E47B;
+	Mon,  1 Apr 2024 16:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988210; cv=none; b=eX/oYGCNCqi5FqomWeK14nbXTOhqNv4jl6uegqGVBJePY+j0gC2Gop5yjRnt3dkXe3xI/YYsXwayhuwXN0gJvygTWezEEvnn9/atvu29uEAkHIO0qxsch/3+WtxzkMnLorhCGkLpvz5RGFinip44eYiACMu6fN/rsW7K/33Sjas=
+	t=1711988213; cv=none; b=lfPD4WFV6EDRouCmkExZWQqIdQR+h9dqXAl3s2pwWkWTMNeu03gAl0RDYyzfAPpvTU3zVr8fHf5fK3yAWM1FeYHD19aZSNZb6ilcA1MYAy9tFyphSq7P4j1bxyfUheEQ02ca9UPrKGQEsL7uEWVrDp78HdtNyp/rtFBMWFU4tAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988210; c=relaxed/simple;
-	bh=3QwW1pWqyyvMGTUhY94zD48xnQAdTzsgFx3RyH/UH1g=;
+	s=arc-20240116; t=1711988213; c=relaxed/simple;
+	bh=H++4EQouU0Q6sMCymrlvYk+vV731X1YdrpbxCOB/qco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Smt0NH1Y+nSmfSWEf1xlhgT1u1qNk6RO+v8bReIiIrRCiWO0wZOPKagOCd2ini8sZvFxGDVgYrt3qEEUesiEK3FcqauU6tGxpVHzrFY5HZcaJwaCA8nZf4/kC2LHazNQDjcv4TukyHvait62W8HPQKFa5UVTaHNZLF1Eq5K2/kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aS7poltx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAlYN7Fr+tNi7sZ9HDhEFCl0I+HS6C0bQY+wq4ic5Z3IhoWZisTIh6sdZI7WIrP/RSgh4DE06Y8z+/5YmbXC9G5vUq88KjLOk8DmUAdf1NY7f5BsN1trklpWcW4MUJ54VKB77yykN2dzgm/AyyeRhZ9QI6ECsSzJzsbwmpy5NgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqdNpz0g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aS7poltx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC77C433F1;
-	Mon,  1 Apr 2024 16:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqdNpz0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572CC433C7;
+	Mon,  1 Apr 2024 16:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988209;
-	bh=3QwW1pWqyyvMGTUhY94zD48xnQAdTzsgFx3RyH/UH1g=;
+	s=korg; t=1711988213;
+	bh=H++4EQouU0Q6sMCymrlvYk+vV731X1YdrpbxCOB/qco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aS7poltxERsalPYC1fPmsYHKP1Lp4C6YsGBgDJ/xz4i+UT5ZmhYoO/RC6vwB1kqQj
-	 SyaoCGTdgov+xPZgHs9TyrJXIMeagQ8ATVJBSFV+IrempgLgb716KlivSgjS6dv0tJ
-	 5VALItVrdBzPplBl/R3jWohrxeBDsgHwjMeoYFpE=
+	b=hqdNpz0gkmZi1x+/EQ3vHa54/g3xG/XQk0HkoeBMNwA4yWaXP4P5+5EevrbOXlKL9
+	 M3jNqzbRcYqeq8P77YwU2b261NqI98Sj1hAOsLIxiP8NBQUV6v6d4MfQhQ7CAyjNTt
+	 Q1XQjyZwZg6OLcxf9L5Y80h+AGEU9179dXkJGSYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 117/432] landlock: Warn once if a Landlock action is requested while disabled
-Date: Mon,  1 Apr 2024 17:41:44 +0200
-Message-ID: <20240401152556.615244779@linuxfoundation.org>
+Subject: [PATCH 6.7 118/432] io_uring: fix mshot read defer taskrun cqe posting
+Date: Mon,  1 Apr 2024 17:41:45 +0200
+Message-ID: <20240401152556.644667053@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -46,85 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 782191c74875cc33b50263e21d76080b1411884d ]
+[ Upstream commit 70581dcd0601a09f134f23268e3374e15d736824 ]
 
-Because sandboxing can be used as an opportunistic security measure,
-user space may not log unsupported features.  Let the system
-administrator know if an application tries to use Landlock but failed
-because it isn't enabled at boot time.  This may be caused by boot
-loader configurations with outdated "lsm" kernel's command-line
-parameter.
+We can't post CQEs from io-wq with DEFER_TASKRUN set, normal completions
+are handled but aux should be explicitly disallowed by opcode handlers.
 
 Cc: stable@vger.kernel.org
-Fixes: 265885daf3e5 ("landlock: Add syscall implementations")
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20240227110550.3702236-2-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: fc68fcda04910 ("io_uring/rw: add support for IORING_OP_READ_MULTISHOT")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/6fb7cba6f5366da25f4d3eb95273f062309d97fa.1709740837.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/syscalls.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ io_uring/rw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/landlock/syscalls.c b/security/landlock/syscalls.c
-index 898358f57fa08..6788e73b6681b 100644
---- a/security/landlock/syscalls.c
-+++ b/security/landlock/syscalls.c
-@@ -33,6 +33,18 @@
- #include "ruleset.h"
- #include "setup.h"
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index 9394bf83e8358..f66ace04403f7 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -926,6 +926,8 @@ int io_read_mshot(struct io_kiocb *req, unsigned int issue_flags)
+ 	 */
+ 	if (!file_can_poll(req->file))
+ 		return -EBADFD;
++	if (issue_flags & IO_URING_F_IOWQ)
++		return -EAGAIN;
  
-+static bool is_initialized(void)
-+{
-+	if (likely(landlock_initialized))
-+		return true;
-+
-+	pr_warn_once(
-+		"Disabled but requested by user space. "
-+		"You should enable Landlock at boot time: "
-+		"https://docs.kernel.org/userspace-api/landlock.html#boot-time-configuration\n");
-+	return false;
-+}
-+
- /**
-  * copy_min_struct_from_user - Safe future-proof argument copying
-  *
-@@ -173,7 +185,7 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
- 	/* Build-time checks. */
- 	build_check_abi();
+ 	ret = __io_read(req, issue_flags);
  
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
- 	if (flags) {
-@@ -398,7 +410,7 @@ SYSCALL_DEFINE4(landlock_add_rule, const int, ruleset_fd,
- 	struct landlock_ruleset *ruleset;
- 	int err;
- 
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
- 	/* No flag for now. */
-@@ -458,7 +470,7 @@ SYSCALL_DEFINE2(landlock_restrict_self, const int, ruleset_fd, const __u32,
- 	struct landlock_cred_security *new_llcred;
- 	int err;
- 
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
- 	/*
 -- 
 2.43.0
 
