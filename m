@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8AB1C0DE7;
-	Mon,  1 Apr 2024 16:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F3D1E525;
+	Mon,  1 Apr 2024 16:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989089; cv=none; b=Qp1utf28hl9NS5gGpWLjLp/7uFOGeMHnMCXSkfW9qk2ypnthHOzpv8u9MLUyga8CmjvjNSpvaZZNTZMnbF4aBbzCf4XOEhWOHAReA0BJYRC6PrnA9pm9nb+pHb1c2uB8ULGAFFb5DHm26XhuvMRdBhLKi43Q0tMKTLzBr10X06s=
+	t=1711989093; cv=none; b=N6I2tnmsy0XO9Y2sUGsX17fSuIHb7ijeStOS/PpX7T6YW4AUZt1errwOTIh39jJcJp3DFTieCxE8vrrrUsRhSIgHN8kVfM8bqJd2T1Ho/LxoZ2mDzuXRO5CAgQmal5AJZFj1cK67KB3z5aNzS292QbfyNeippOwHUchh0pvQgSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989089; c=relaxed/simple;
-	bh=h5VmkAyVKJD3IGjmmAxEC9TOfSIbDxN4OuBeKOtk4Yk=;
+	s=arc-20240116; t=1711989093; c=relaxed/simple;
+	bh=qo60FkVbUFHLVpHxERd/lwDptdEzBuVn46ojPplNs+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnbCS6O4+hHi/5aEAtgcxgKhl5hEIoD3BBVAtDUC9LXp6o7C3W6IWd7VNtWyI5C4y13yleaIpGAV+4e0TIb73UFLSkpdPhXFNlBmwjDLq0mg/EzJGBoiZ3hORR5tyfPM6l/wVRZdu08YyZVDu7d0HpjsD56f0TxKA+1mjBPL9I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1h+q9dx+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=di/i82qcodLBetHXRo8+OSW5kByezsECBIH0X23EM+v+F2oPeAdcGHTMuQlA0FqayjnDvVk9IqDhEQXgfyEnWrkV33mpxlIA1Td1fY6+2KLW0paHwsjWc2Pc85V7QIdupkX2W6pOXS+V6OAXJ+dbPmku5axpm0eZ04Pzk0XwlH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLHHdw7C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1h+q9dx+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28395C433F1;
-	Mon,  1 Apr 2024 16:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLHHdw7C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8565CC433F1;
+	Mon,  1 Apr 2024 16:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989089;
-	bh=h5VmkAyVKJD3IGjmmAxEC9TOfSIbDxN4OuBeKOtk4Yk=;
+	s=korg; t=1711989093;
+	bh=qo60FkVbUFHLVpHxERd/lwDptdEzBuVn46ojPplNs+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1h+q9dx+fRDxl1rwdaLSMVeExngQdejlPq/qwyGdLRU6eOGqLG/o2/NwISKc+btP5
-	 e8y9Mgar1GJHs4vn2sQqiYGhD6PxDU6WVtnJPC5CsmQ49mmwSmmDSKV+e4+MPzNdt2
-	 woGDxl/9Q6xpxcuqNbuzwHIaBnTtU9T5RpSBbD1k=
+	b=HLHHdw7CUmgCSC911ZOgmaLW672aV0ROfaM5+aPXS3To98DdRgxvwkWibfF7/LIFE
+	 DEHbywAuq/eKA9f1/kdV78RJSuut7KXDKQaD3m2bJvPaTRTO2oayF3nbJ32Qp5Mx6G
+	 npjnT5yYvyHs2iQJhiNYpCv5UMs8rErq33dKSfZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.7 377/432] drm/amd/display: Fix bounds check for dcn35 DcfClocks
-Date: Mon,  1 Apr 2024 17:46:04 +0200
-Message-ID: <20240401152604.532840946@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thorsten Leemhuis <linux@leemhuis.info>
+Subject: [PATCH 6.7 378/432] Bluetooth: hci_sync: Fix not checking error on hci_cmd_sync_cancel_sync
+Date: Mon,  1 Apr 2024 17:46:05 +0200
+Message-ID: <20240401152604.565498206@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,42 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <roman.li@amd.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 2f10d4a51bbcd938f1f02f16c304ad1d54717b96 upstream.
+commit 1c3366abdbe884be62e5a7502b4db758aa3974c6 upstream.
 
-[Why]
-NumFclkLevelsEnabled is used for DcfClocks bounds check
-instead of designated NumDcfClkLevelsEnabled.
-That can cause array index out-of-bounds access.
+hci_cmd_sync_cancel_sync shall check the error passed to it since it
+will be propagated using req_result which is __u32 it needs to be
+properly set to a positive value if it was passed as negative othertise
+IS_ERR will not trigger as -(errno) would be converted to a positive
+value.
 
-[How]
-Use designated variable for dcn35 DcfClocks bounds check.
-
-Fixes: a8edc9cc0b14 ("drm/amd/display: Fix array-index-out-of-bounds in dcn35_clkmgr")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 63298d6e752f ("Bluetooth: hci_core: Cancel request on command timeout")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-and-tested-by: Thorsten Leemhuis <linux@leemhuis.info>
+Closes: https://lore.kernel.org/all/08275279-7462-4f4a-a0ee-8aa015f829bc@leemhuis.info/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c |    6 +++---
+ net/bluetooth/hci_sync.c |    5 ++++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-@@ -705,7 +705,7 @@ static void dcn35_clk_mgr_helper_populat
- 		clock_table->NumFclkLevelsEnabled;
- 	max_fclk = find_max_clk_value(clock_table->FclkClocks_Freq, num_fclk);
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2842,7 +2842,7 @@ static void hci_cancel_cmd_sync(struct h
+ 	cancel_delayed_work_sync(&hdev->ncmd_timer);
+ 	atomic_set(&hdev->cmd_cnt, 1);
  
--	num_dcfclk = (clock_table->NumFclkLevelsEnabled > NUM_DCFCLK_DPM_LEVELS) ? NUM_DCFCLK_DPM_LEVELS :
-+	num_dcfclk = (clock_table->NumDcfClkLevelsEnabled > NUM_DCFCLK_DPM_LEVELS) ? NUM_DCFCLK_DPM_LEVELS :
- 		clock_table->NumDcfClkLevelsEnabled;
- 	for (i = 0; i < num_dcfclk; i++) {
- 		int j;
+-	hci_cmd_sync_cancel_sync(hdev, -err);
++	hci_cmd_sync_cancel_sync(hdev, err);
+ }
+ 
+ /* Suspend HCI device */
+@@ -2862,7 +2862,7 @@ int hci_suspend_dev(struct hci_dev *hdev
+ 		return 0;
+ 
+ 	/* Cancel potentially blocking sync operation before suspend */
+-	hci_cancel_cmd_sync(hdev, -EHOSTDOWN);
++	hci_cancel_cmd_sync(hdev, EHOSTDOWN);
+ 
+ 	hci_req_sync_lock(hdev);
+ 	ret = hci_suspend_sync(hdev);
+@@ -4178,7 +4178,7 @@ static void hci_send_cmd_sync(struct hci
+ 
+ 	err = hci_send_frame(hdev, skb);
+ 	if (err < 0) {
+-		hci_cmd_sync_cancel_sync(hdev, err);
++		hci_cmd_sync_cancel_sync(hdev, -err);
+ 		return;
+ 	}
+ 
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -679,7 +679,10 @@ void hci_cmd_sync_cancel_sync(struct hci
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+ 	if (hdev->req_status == HCI_REQ_PEND) {
+-		hdev->req_result = err;
++		/* req_result is __u32 so error must be positive to be properly
++		 * propagated.
++		 */
++		hdev->req_result = err < 0 ? -err : err;
+ 		hdev->req_status = HCI_REQ_CANCELED;
+ 
+ 		wake_up_interruptible(&hdev->req_wait_q);
 
 
