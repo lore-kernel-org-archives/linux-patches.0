@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF4A21105;
-	Mon,  1 Apr 2024 17:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEA4481B8;
+	Mon,  1 Apr 2024 17:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991475; cv=none; b=Ju+mz+nHYUGu+uBUGKhIQBrtaD6CF7esQWD4NW0Rg6s+uPRFznO9v6/ctIblefWyMKxog8BcFJCXDm3ptUQNRFYZn3D1A2BHfsBA9nD/jxYKEQixIIR11fRy2wTWgeOfxM7rFFYDbp8oZqFUC/8uK15i+Rg8oIIfbkbw0iDC7RQ=
+	t=1711991479; cv=none; b=inpScIN8b3xTbpIZ9kuUVvtuqkBTEs6wUdSFxUC8A2KmLofr9Oaex3jjtkkhrJycUqvIxXZttvc7HchKrNbwmCqnQKAUt/e+aa5y1J1zK8p1sGWA1PtJ3VoEqsGwNt/msdS1hpW3kRJ3nh4AFTgy0B73PhIekY8nf05MtkLALUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991475; c=relaxed/simple;
-	bh=YIIELOcOGdbVeFm+3Ue2E4H1AbZgnA0XjiD6CGHwAxM=;
+	s=arc-20240116; t=1711991479; c=relaxed/simple;
+	bh=/oSkE1EVP0ycfDQCl4pkwfYmjyS7GZ3bkLmw5vOBWaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5MDqefdSNHdaHLXv9IpcOKVp91LO6ewnuKuMz9omo+2aLKBAGsrmk9zmAdkTIg5qy8Z94M2HPt60v5+q4E3SHt2tLt1KJRrJQb5Cd3dJ8uClPCxCX+8y+1EG47PV8bb6lxVq/jdansgVLdjQ6a1CknV+YD81PdJkxKzr5Vtbr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3jW9nrq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o8AKbfSoU3zmyEJaUrAuGVuqqLAXVsq4UEE3EAWa1jp344bOik5nrYba8jELau0tAGLMKPF1xAkG1iaOe/HDNumyESZUN2VtiavIAzFainP/gLWm00DvfEwFUrOgx2FJ9C3cWMCx8rTrjcalgM3eKqNJYN7GKivYmtxyJPBQ9z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+Fjgozg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3jW9nrq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41487C433F1;
-	Mon,  1 Apr 2024 17:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+Fjgozg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA5BC433C7;
+	Mon,  1 Apr 2024 17:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991475;
-	bh=YIIELOcOGdbVeFm+3Ue2E4H1AbZgnA0XjiD6CGHwAxM=;
+	s=korg; t=1711991479;
+	bh=/oSkE1EVP0ycfDQCl4pkwfYmjyS7GZ3bkLmw5vOBWaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3jW9nrq4Ro1TdYhvef2eKMSTkm17XfOt/e1UjkMcc1fZOzH+Ensf7RxdcXPqcDWU
-	 SokrsmJtN2Hri5dnBfcTv6hMm/pM3DEKZNMQV9Z6coaM6J67qov9TlobXXOPt5FeJi
-	 6YHjhJkaIhhaOdTXwDRHpESDUWKYWilxoSAhwpcc=
+	b=x+FjgozggNP6Ay3mCBJcEz+fu4h4/apE4Js4sTZ5m4Z8KEfKglFU3xS06yVQDq9dA
+	 0NDx+TgJyMircLB99dlMUuVKwjQ8rkZ/UwY140nTMu9QvoERrnlyBhgAbWTYgonQvr
+	 qv/rJkQZ41kjPMEU4KTT7HZY0svK+49JkTOVtiBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	yuan linyu <yuanlinyu@hihonor.com>
-Subject: [PATCH 6.1 248/272] usb: udc: remove warning when queue disabled ep
-Date: Mon,  1 Apr 2024 17:47:18 +0200
-Message-ID: <20240401152538.748184057@linuxfoundation.org>
+	Kyle Tso <kyletso@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 249/272] usb: typec: Return size of buffer if pd_set operation succeeds
+Date: Mon,  1 Apr 2024 17:47:19 +0200
+Message-ID: <20240401152538.793292559@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yuan linyu <yuanlinyu@hihonor.com>
+From: Kyle Tso <kyletso@google.com>
 
-commit 2a587a035214fa1b5ef598aea0b81848c5b72e5e upstream.
+commit 53f5094fdf5deacd99b8655df692e9278506724d upstream.
 
-It is possible trigger below warning message from mass storage function,
+The attribute writing should return the number of bytes used from the
+buffer on success.
 
-WARNING: CPU: 6 PID: 3839 at drivers/usb/gadget/udc/core.c:294 usb_ep_queue+0x7c/0x104
-pc : usb_ep_queue+0x7c/0x104
-lr : fsg_main_thread+0x494/0x1b3c
-
-Root cause is mass storage function try to queue request from main thread,
-but other thread may already disable ep when function disable.
-
-As there is no function failure in the driver, in order to avoid effort
-to fix warning, change WARN_ON_ONCE() in usb_ep_queue() to pr_debug().
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
 Cc: stable@vger.kernel.org
-Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20240315020144.2715575-1-yuanlinyu@hihonor.com
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240319074309.3306579-1-kyletso@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/typec/class.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -292,7 +292,9 @@ int usb_ep_queue(struct usb_ep *ep,
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -1245,6 +1245,7 @@ static ssize_t select_usb_power_delivery
  {
- 	int ret = 0;
+ 	struct typec_port *port = to_typec_port(dev);
+ 	struct usb_power_delivery *pd;
++	int ret;
  
--	if (WARN_ON_ONCE(!ep->enabled && ep->address)) {
-+	if (!ep->enabled && ep->address) {
-+		pr_debug("USB gadget: queue request to disabled ep 0x%x (%s)\n",
-+				 ep->address, ep->name);
- 		ret = -ESHUTDOWN;
- 		goto out;
- 	}
+ 	if (!port->ops || !port->ops->pd_set)
+ 		return -EOPNOTSUPP;
+@@ -1253,7 +1254,11 @@ static ssize_t select_usb_power_delivery
+ 	if (!pd)
+ 		return -EINVAL;
+ 
+-	return port->ops->pd_set(port, pd);
++	ret = port->ops->pd_set(port, pd);
++	if (ret)
++		return ret;
++
++	return size;
+ }
+ 
+ static ssize_t select_usb_power_delivery_show(struct device *dev,
 
 
