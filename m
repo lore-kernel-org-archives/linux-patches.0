@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C474778E;
-	Mon,  1 Apr 2024 16:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FABFC129;
+	Mon,  1 Apr 2024 16:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988472; cv=none; b=Nh/XPLNWySpv4UeYyfsgsxAyGSd81FwThXEgMk/SIHRsxOEXrgEeMXzHwVcDBjXDFAm0NzIg92YUYh90iV6sxE9sh2jubYbe3DwTkBMR+YWPE4OKMb35Lxq8Pi80HcPu17+YfuvGCEtgbQMWEnUoILb1GOqXQni3T/GjmifOQrk=
+	t=1711988476; cv=none; b=V5NXBIqUrTMXwzXC0VZtUss2ICsu2G/ccLEJ/9YpxowZdg0fde65SSApfrWzRA7ExiNlO5fwMDRh0m7RVAdk+xJyvaW3WGhYgZmdKEWlFLGaAfxXLklXudYdd25a2B8mPSytOF17flP+mnWVyMakDyevRCcN+Z/c8B1I4Rv8GRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988472; c=relaxed/simple;
-	bh=1JHVTAdRzwZofbaFwWrvH1LJ/ovwq7fq/NQTfaWzE2w=;
+	s=arc-20240116; t=1711988476; c=relaxed/simple;
+	bh=0/E7utxPg3R1d8OKdoo0aeuUtAvNYwUz5GHPUqmfbks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AshJEBWwP6eIINg9GgZjKQe/xfXx8pvN8kBpacerMUZYuvFe8vh9DKpXOam8Zs8HhI/HOHNIb0P+kUbxLclX8lcu8lHw2guc1hOOHXrUZEqMsBm16+J/lUfszlqtrcZrLp4xVN49bBkyDNLXt6cDKCyrfb5s6AD1tslUQbISha4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ot9aTt6d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qcdatUaxQZVeT2iRzfYSDb+7W+afF3l2b3plKpMdrfYbshuUM9BcgNg6q93wBAAqGAe0AUDxp04ageBGJprbIrOUuX2AfBbHqxd2Qid6NV1MpcXUqE54JCYXvlLikoQQ4vUKFNEdvGGjkUTqS1PUuk/fT3gkKyyIq3T/hWejqF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhOl1SPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ot9aTt6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162BAC433C7;
-	Mon,  1 Apr 2024 16:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhOl1SPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC6FC433C7;
+	Mon,  1 Apr 2024 16:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988472;
-	bh=1JHVTAdRzwZofbaFwWrvH1LJ/ovwq7fq/NQTfaWzE2w=;
+	s=korg; t=1711988476;
+	bh=0/E7utxPg3R1d8OKdoo0aeuUtAvNYwUz5GHPUqmfbks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ot9aTt6d1zrMXLyDw0NdC7uIc817wppOflWjoWb0wFdizZ4Yh9YJdQLNAKSCxg3P/
-	 UCdGIv98t6D8OY42JYRHmXjlJRfxe3GkzJQu3+PAeN8QNWrLDofJ69OphpnHTu7lVN
-	 Cj0rVSHrF4fbNRftJShCJe6GV+ICyEeI+12Wno5I=
+	b=PhOl1SPTnz8vVEDrM9FXh68CdHELn61QnXQqwTnmSqlxSwnIB3CCND2CX1DImF18c
+	 +R9WFiKW7/p+LYrLqD0T05/KefmGdetigsjk8gewA2DklTOfPIxZY0aL/OejuojQ7l
+	 u/6XhWujoKtrl0nuBTBlv/VVpJ0SFdyUcOYWie90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 166/432] drm/panel: do not return negative error codes from drm_panel_get_modes()
-Date: Mon,  1 Apr 2024 17:42:33 +0200
-Message-ID: <20240401152558.096511516@linuxfoundation.org>
+Subject: [PATCH 6.7 167/432] drm/exynos: do not return negative values from .get_modes()
+Date: Mon,  1 Apr 2024 17:42:34 +0200
+Message-ID: <20240401152558.131324011@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -56,69 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit fc4e97726530241d96dd7db72eb65979217422c9 ]
+[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
 
-None of the callers of drm_panel_get_modes() expect it to return
-negative error codes. Either they propagate the return value in their
-struct drm_connector_helper_funcs .get_modes() hook (which is also not
-supposed to return negative codes), or add it to other counts leading to
-bogus values.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
-On the other hand, many of the struct drm_panel_funcs .get_modes() hooks
-do return negative error codes, so handle them gracefully instead of
-propagating further.
-
-Return 0 for no modes, whatever the reason.
-
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/79f559b72d8c493940417304e222a4b04dfa19c4.1709913674.git.jani.nikula@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
+ drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index e814020bbcd3b..cfbe020de54e0 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -274,19 +274,24 @@ EXPORT_SYMBOL(drm_panel_disable);
-  * The modes probed from the panel are automatically added to the connector
-  * that the panel is attached to.
-  *
-- * Return: The number of modes available from the panel on success or a
-- * negative error code on failure.
-+ * Return: The number of modes available from the panel on success, or 0 on
-+ * failure (no modes).
-  */
- int drm_panel_get_modes(struct drm_panel *panel,
- 			struct drm_connector *connector)
- {
- 	if (!panel)
--		return -EINVAL;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index f5e1adfcaa514..fb941a8c99f0f 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -316,14 +316,14 @@ static int vidi_get_modes(struct drm_connector *connector)
+ 	 */
+ 	if (!ctx->raw_edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
+-		return -EFAULT;
++		return 0;
+ 	}
+ 
+ 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
+ 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
+ 	if (!edid) {
+ 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
+-		return -ENOMEM;
++		return 0;
+ 	}
+ 
+ 	drm_connector_update_edid_property(connector, edid);
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index dd9903eab563e..eff51bfc46440 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -887,11 +887,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
+ 	int ret;
+ 
+ 	if (!hdata->ddc_adpt)
+-		return -ENODEV;
 +		return 0;
  
--	if (panel->funcs && panel->funcs->get_modes)
--		return panel->funcs->get_modes(panel, connector);
-+	if (panel->funcs && panel->funcs->get_modes) {
-+		int num;
+ 	edid = drm_get_edid(connector, hdata->ddc_adpt);
+ 	if (!edid)
+-		return -ENODEV;
++		return 0;
  
--	return -EOPNOTSUPP;
-+		num = panel->funcs->get_modes(panel, connector);
-+		if (num > 0)
-+			return num;
-+	}
-+
-+	return 0;
- }
- EXPORT_SYMBOL(drm_panel_get_modes);
- 
+ 	hdata->dvi_mode = !connector->display_info.is_hdmi;
+ 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
 -- 
 2.43.0
 
