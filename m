@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B392F47A5D;
-	Mon,  1 Apr 2024 17:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AC640876;
+	Mon,  1 Apr 2024 17:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991327; cv=none; b=exinqvKa6FyyZuQMfjPb+AJmYc66DEw5WJsfKtTIvWipmOt6j3o12aTuOW8FBXC1rJMeWJUmndIJPm10Ph5GCt+D2Uh860QwAX+OdFdt97UkyB25VT3QpTYa1aq4jsgwxGv/f5cCzWjjUe78ehpDIMJ0VWoge6dN4gvkl80g1+I=
+	t=1711991331; cv=none; b=SUjG8XXa+gqt3euVK0EZVr24kCPSf8AvDEksWFVVaARm4mdh5n2V/PdkDMjWFUNHghxOBHBd80WzHEXYODEDPlPlkGLLN+lFOUMQAW2PYWcoon4WdkZQ9RkXJrwyklaXfcs1pT7UH76mvnwp/JImvXo+8usip9GgTjB1V/6N78U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991327; c=relaxed/simple;
-	bh=eUlDwWK9LnyyrLFcDVmbmbg7UaNnfmn3hf7YufRa5jI=;
+	s=arc-20240116; t=1711991331; c=relaxed/simple;
+	bh=ytJoCylIuPVA49GusGH28Rywy/QotDeC1g/4GE5GE/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtLZo4zkWUYOndDHX5mlMBAK4DxFb8JXGNYF0/sFwLU+i5VzQJkPTdzVsUg0VCXsJty2hTha9/9PQfA2hTm24fYNxmOTQ4QweDJKhOczYE6uKhkOwDUMEfMlQzVpQIe94omngFWBIbZDQDkz2Nai37KAgA+UCy5u9L+N/L2Gi5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOIIqA+S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6S0beOHzp5dJEHxenwz9GKxrF9wsSblu2tBezVJy5nZRuFcSp+goZ6i2Hl0gnwljfSOk8xppkwK0QxbcCYHwpKojlMG6pVJRZWrd4w6R8cl+AIClpBFu8QXZbB4vw/t+wq8ZZo2Hj1z7vkkeQMimmdvKbHgPzsmZ89E3Q8xZiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dm71+O9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOIIqA+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EA5C433F1;
-	Mon,  1 Apr 2024 17:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dm71+O9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35235C433C7;
+	Mon,  1 Apr 2024 17:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991327;
-	bh=eUlDwWK9LnyyrLFcDVmbmbg7UaNnfmn3hf7YufRa5jI=;
+	s=korg; t=1711991330;
+	bh=ytJoCylIuPVA49GusGH28Rywy/QotDeC1g/4GE5GE/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOIIqA+ScyXQC/7SwrftDjAymaMu7zbSRbuXjgTAYMRaCYROetZScTuyFqpfiDdU/
-	 AU6vwP6vjGYA6AnuinxeI6sL8Ymz9JdDCWmpNiFt290j07xa7ayGLuEKvFoREcTAOW
-	 4n3fQGsfG+yowRFwit4Xv10M4WMV3rxvJZfog3mI=
+	b=Dm71+O9oqDy1l9uqpXIBggQLSTCcM1PoDLYyBd0tkPC1E4E+0l7lvSYdB+l0rjHha
+	 RdGlktB6OzMyUZ7HiGiFVIdZSGZfzRyUUWb5fuXfFIiu1hvysDHe5XALxe7+72ZEqy
+	 9I+docp4+oCcZkzQzPOM6MbTZ78dA5D/3M6yeAbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	stable <stable@kernel.org>,
-	Sean Anderson <sean.anderson@seco.com>
-Subject: [PATCH 6.1 231/272] Revert "usb: phy: generic: Get the vbus supply"
-Date: Mon,  1 Apr 2024 17:47:01 +0200
-Message-ID: <20240401152538.192346384@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.1 232/272] usb: cdc-wdm: close race between read and workqueue
+Date: Mon,  1 Apr 2024 17:47:02 +0200
+Message-ID: <20240401152538.222118075@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,39 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit fdada0db0b2ae2addef4ccafe50937874dbeeebe upstream.
+commit 339f83612f3a569b194680768b22bf113c26a29d upstream.
 
-This reverts commit 75fd6485cccef269ac9eb3b71cf56753341195ef.
-This patch was applied twice by accident, causing probe failures.
-Revert the accident.
+wdm_read() cannot race with itself. However, in
+service_outstanding_interrupt() it can race with the
+workqueue, which can be triggered by error handling.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Fixes: 75fd6485ccce ("usb: phy: generic: Get the vbus supply")
+Hence we need to make sure that the WDM_RESPONDING
+flag is not just only set but tested.
+
+Fixes: afba937e540c9 ("USB: CDC WDM driver")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20240314092628.1869414-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20240314115132.3907-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy-generic.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/usb/class/cdc-wdm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/phy/phy-generic.c
-+++ b/drivers/usb/phy/phy-generic.c
-@@ -272,13 +272,6 @@ int usb_phy_gen_create_phy(struct device
- 		return dev_err_probe(dev, PTR_ERR(nop->vbus_draw),
- 				     "could not get vbus regulator\n");
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -485,6 +485,7 @@ out_free_mem:
+ static int service_outstanding_interrupt(struct wdm_device *desc)
+ {
+ 	int rv = 0;
++	int used;
  
--	nop->vbus_draw = devm_regulator_get_exclusive(dev, "vbus");
--	if (PTR_ERR(nop->vbus_draw) == -ENODEV)
--		nop->vbus_draw = NULL;
--	if (IS_ERR(nop->vbus_draw))
--		return dev_err_probe(dev, PTR_ERR(nop->vbus_draw),
--				     "could not get vbus regulator\n");
--
- 	nop->dev		= dev;
- 	nop->phy.dev		= nop->dev;
- 	nop->phy.label		= "nop-xceiv";
+ 	/* submit read urb only if the device is waiting for it */
+ 	if (!desc->resp_count || !--desc->resp_count)
+@@ -499,7 +500,10 @@ static int service_outstanding_interrupt
+ 		goto out;
+ 	}
+ 
+-	set_bit(WDM_RESPONDING, &desc->flags);
++	used = test_and_set_bit(WDM_RESPONDING, &desc->flags);
++	if (used)
++		goto out;
++
+ 	spin_unlock_irq(&desc->iuspin);
+ 	rv = usb_submit_urb(desc->response, GFP_KERNEL);
+ 	spin_lock_irq(&desc->iuspin);
 
 
