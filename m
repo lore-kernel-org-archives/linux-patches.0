@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7945E3F8F4;
-	Mon,  1 Apr 2024 16:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7163F8F4;
+	Mon,  1 Apr 2024 16:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988319; cv=none; b=ac3BzZfUE4YdcnSv6MweshD/qhlJCa9CW1LfhgV9+/dtGwp1Yl6a3EDBtQ0U03z6ZoFXMdvGlZI+QFYsGgiLC4pZagbx3XdWGiz9+HqJO4v9aLMpQzXWAQCdSOltY9eNrfftuclSZYhHTTI5xHYXtSp8CCss35PytWjwiASs9t0=
+	t=1711988323; cv=none; b=a79Dh0x384ss+iFmQ+6kdJlLQlwnW06raJguWx3R2y3nYWoW1tvL4YyyyYkj77ym7zJ6mhgSQRLAPYLfIGOCLJhHOgEl1lceqQVUCR27JQdufaRl22su2SPE10jR0gvBeEjGxAq71Sfu9gduHliYjdwOBSq/7Bc7/Rch1Xb557o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988319; c=relaxed/simple;
-	bh=mVI9l0/ROdhIn1rVr+CvLkXqMdbqfH51Kw19qKakmgA=;
+	s=arc-20240116; t=1711988323; c=relaxed/simple;
+	bh=y/+7k7CO+Eo67xksewU1XcbjK8IeSBjuAdyugU8N79E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yb6oa+5+hFlw3n7WVgIB3l0fn4McYAA3InbnpJeiOaIaStbDKu7FvdZPpEc+gYtwM/cSwMMX43RA9YdLpc98IQ/LwZlQUMvpahBPRffUgoRBmkmP52tzaScjqWrmOZrvvgC/B936K0e2C7wZJWa8cgP5WAFSmek+kee4rU5TmZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fut8EG+U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q7ZVbkeG332ZBDDE3z9tXrVutaIm7D07wTaesK7wjNvtsUdk/hbnAcwkw3Cc85ToXSTpXztbBvUZMQWQHF2Zo0LK3j/Q0okHJlD/OL3gbaS3Ci3s9g7XAxpugVrWHkMI/9HWofFT2u28j86Q6KQfE9Qj1/PDFSla3H30jGD8ZlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnbTFmEr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fut8EG+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD57C433C7;
-	Mon,  1 Apr 2024 16:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnbTFmEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A1DC43390;
+	Mon,  1 Apr 2024 16:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988319;
-	bh=mVI9l0/ROdhIn1rVr+CvLkXqMdbqfH51Kw19qKakmgA=;
+	s=korg; t=1711988322;
+	bh=y/+7k7CO+Eo67xksewU1XcbjK8IeSBjuAdyugU8N79E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fut8EG+UkOzzs9CqT43cwFgyZPauyAcBDd5kJSoD6AXa0F7MWnpNLiO3b8sh2mq8t
-	 9kWyexu7Spw7enyIQnCWXwN4mA18QBzMDZE6JWxxXamK7tnWVmPGEpyLigZxLUd9iA
-	 ZZTKBbPdqrfFe7Zy8+0QAPZOqnqGDExr/pv0uUMI=
+	b=XnbTFmErbbboJAY+Yz2UXwBs3vxHeJpjmT6OLh5hlqCDZKzwJBCbBax2VPF7qGIQf
+	 09U6Dfq4yMYGxTzKgqi//1QNEQILkOXotEmGDt9lrPxVjp7TwoQGVAlRdDh/NnrBov
+	 wI5NENHBCKFFc/KeyZGJ8OIf2eZhxoycxNBVvG/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 150/432] tpm,tpm_tis: Avoid warning splat at shutdown
-Date: Mon,  1 Apr 2024 17:42:17 +0200
-Message-ID: <20240401152557.611528336@linuxfoundation.org>
+Subject: [PATCH 6.7 133/432] nfs: fix UAF in direct writes
+Date: Mon,  1 Apr 2024 17:42:00 +0200
+Message-ID: <20240401152557.100152451@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,48 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit b7ab4bbd0188f3985b821fa09456b11105a8dedf ]
+[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
 
-If interrupts are not activated the work struct 'free_irq_work' is not
-initialized. This results in a warning splat at module shutdown.
+In production we have been hitting the following warning consistently
 
-Fix this by always initializing the work regardless of whether interrupts
-are activated or not.
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
+Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
+RIP: 0010:refcount_warn_saturate+0x9c/0xe0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn+0x9f/0x130
+ ? refcount_warn_saturate+0x9c/0xe0
+ ? report_bug+0xcc/0x150
+ ? handle_bug+0x3d/0x70
+ ? exc_invalid_op+0x16/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? refcount_warn_saturate+0x9c/0xe0
+ nfs_direct_write_schedule_work+0x237/0x250 [nfs]
+ process_one_work+0x12f/0x4a0
+ worker_thread+0x14e/0x3b0
+ ? ZSTD_getCParams_internal+0x220/0x220
+ kthread+0xdc/0x120
+ ? __btf_name_valid+0xa0/0xa0
+ ret_from_fork+0x1f/0x30
 
-cc: stable@vger.kernel.org
-Fixes: 481c2d14627d ("tpm,tpm_tis: Disable interrupts after 1000 unhandled IRQs")
-Reported-by: Jarkko Sakkinen <jarkko@kernel.org>
-Closes: https://lore.kernel.org/all/CX32RFOMJUQ0.3R4YCL9MDCB96@kernel.org/
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+This is because we're completing the nfs_direct_request twice in a row.
+
+The source of this is when we have our commit requests to submit, we
+process them and send them off, and then in the completion path for the
+commit requests we have
+
+if (nfs_commit_end(cinfo.mds))
+	nfs_direct_write_complete(dreq);
+
+However since we're submitting asynchronous requests we sometimes have
+one that completes before we submit the next one, so we end up calling
+complete on the nfs_direct_request twice.
+
+The only other place we use nfs_generic_commit_list() is in
+__nfs_commit_inode, which wraps this call in a
+
+nfs_commit_begin();
+nfs_commit_end();
+
+Which is a common pattern for this style of completion handling, one
+that is also repeated in the direct code with get_dreq()/put_dreq()
+calls around where we process events as well as in the completion paths.
+
+Fix this by using the same pattern for the commit requests.
+
+Before with my 200 node rocksdb stress running this warning would pop
+every 10ish minutes.  With my patch the stress test has been running for
+several hours without popping.
+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nfs/direct.c        | 11 +++++++++--
+ fs/nfs/write.c         |  2 +-
+ include/linux/nfs_fs.h |  1 +
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 1b350412d8a6b..64c875657687d 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -919,8 +919,6 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 	int rc;
- 	u32 int_status;
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index 5918c67dae0da..b6f801e73bfdc 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -668,10 +668,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
+ 	LIST_HEAD(mds_list);
  
--	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
--
- 	rc = devm_request_threaded_irq(chip->dev.parent, irq, NULL,
- 				       tis_int_handler, IRQF_ONESHOT | flags,
- 				       dev_name(&chip->dev), chip);
-@@ -1132,6 +1130,7 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 	priv->phy_ops = phy_ops;
- 	priv->locality_count = 0;
- 	mutex_init(&priv->locality_count_mutex);
-+	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
+ 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
++	nfs_commit_begin(cinfo.mds);
+ 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
+ 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
+-	if (res < 0) /* res == -ENOMEM */
+-		nfs_direct_write_reschedule(dreq);
++	if (res < 0) { /* res == -ENOMEM */
++		spin_lock(&dreq->lock);
++		if (dreq->flags == 0)
++			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
++		spin_unlock(&dreq->lock);
++	}
++	if (nfs_commit_end(cinfo.mds))
++		nfs_direct_write_complete(dreq);
+ }
  
- 	dev_set_drvdata(&chip->dev, priv);
+ static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index 9e345d3c305a6..5c2ff4a31a340 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -1663,7 +1663,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
+ 				       !atomic_read(&cinfo->rpcs_out));
+ }
  
+-static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
+ {
+ 	atomic_inc(&cinfo->rpcs_out);
+ }
+diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
+index 279262057a925..832b7e354b4e3 100644
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -612,6 +612,7 @@ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio);
+ extern int  nfs_commit_inode(struct inode *, int);
+ extern struct nfs_commit_data *nfs_commitdata_alloc(void);
+ extern void nfs_commit_free(struct nfs_commit_data *data);
++void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
+ bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
+ 
+ static inline bool nfs_have_writebacks(const struct inode *inode)
 -- 
 2.43.0
 
