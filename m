@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E293F8F4;
-	Mon,  1 Apr 2024 16:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB471E525;
+	Mon,  1 Apr 2024 16:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989897; cv=none; b=UnioMnJppqctHHsLvqfz19GWA+AmR6/BQCbX2oOZ+XkBrqrjc7bROl+XUoW4iuVm4Oh2WiZZssE6wKGmiy4x1HTNQ9CHhZfv3aLYtb5CHKzCjYcQJQmAea4cqZt728xyeoJPZicyB8CafSNUiFuPlYDSAc92EHBlq1GgfqRQ+6o=
+	t=1711989900; cv=none; b=CkYM3jK2KP5ij4LinNJqEYI9N3bjEmH5ketMWsg+hU7oEbMw5KPUzSZ7nzYXIlHHybFuIxX2vTJUCGsUb2UtUtpmTc6sVOkf8Pcafg8urU4cR/1rU1l2VFV0/sfEWXLAMtyD18xM60FfHNTf7YvsN/l5a+EpdHqg30fEpI5TZPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989897; c=relaxed/simple;
-	bh=wu1Sl0/oQTZHjW640+iTH1RLDYdPbadaIjF2ptrBNHg=;
+	s=arc-20240116; t=1711989900; c=relaxed/simple;
+	bh=VjmP1DQSwWEkhgEsfzQrhIsjznf3Pibimw0pLVQ9JoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jb4s+S92ObkH0WgwAr0aLGKgX3QMQqyhIVUUvRzatlrremqDnEa+MZ37ZMSjPP4BLD3V8bi4GGWqVjpd9U1nVEdikJKqkU46bENdLEqhJMwl2QiQa64c40mRbA9Nammpd6yTBUJc+cUC41w3eSVXDKEtWCJj1DSBPyiHyiO0phM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeMT40nC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8aSD9Dck10XVxLPWGjA/pMfce3fT5wK+n8Mtjo8FCotkfpCD2s8nkSyswBqpVdig4A0Ynx6iTfoe7iQc7oZDSmGnegzosAwzgGAMDOhgs02bVgH21ivmXf9rWyVt1GPZGz8YQjHOgMsAwSNITxcZK7V0bnrxlA9c2L72Mk6iSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BpkGwkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeMT40nC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADDCC433F1;
-	Mon,  1 Apr 2024 16:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BpkGwkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB8FC433F1;
+	Mon,  1 Apr 2024 16:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989897;
-	bh=wu1Sl0/oQTZHjW640+iTH1RLDYdPbadaIjF2ptrBNHg=;
+	s=korg; t=1711989900;
+	bh=VjmP1DQSwWEkhgEsfzQrhIsjznf3Pibimw0pLVQ9JoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DeMT40nCpIquICAbxiNGnZ+GZ6CYRmQaZ+dVFWUe5lqp4zn3RQAiurr9QectSx4Cn
-	 61X3mJdgDRbnL/EnvnH7iLoDgaA7Xkvxtzl9fBbLqvJzEg+83vIXvb7czvotUgwA9k
-	 dzLzXvFcFTv7Y2G2ua72Y64nj3Sa+ONX3zVcyowc=
+	b=1BpkGwkrLqlIAiBi4fFYV5wC8eZEToNT4oQnKtWAjydgt8CQ2qA3I+nFCuWiRMGj8
+	 QrMQi1OMhyy7C/4sEZypVvQXBw+Zn0CiP38fEjoyoHDpdlOzfspxMSVAbMmC5ok10F
+	 YIKNLuoqvc0+DJe/jmxprDbWktHqro6rlKoYz8E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
-	Seung-Woo Kim <sw0312.kim@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	"Andrey Jr. Melnikov" <temnota.am@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/396] drm/exynos: do not return negative values from .get_modes()
-Date: Mon,  1 Apr 2024 17:43:16 +0200
-Message-ID: <20240401152552.328868035@linuxfoundation.org>
+Subject: [PATCH 6.6 179/396] ahci: asm1064: correct count of reported ports
+Date: Mon,  1 Apr 2024 17:43:48 +0200
+Message-ID: <20240401152553.280060657@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -54,65 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Andrey Jr. Melnikov <temnota.am@gmail.com>
 
-[ Upstream commit 13d5b040363c7ec0ac29c2de9cf661a24a8aa531 ]
+[ Upstream commit 9815e39617541ef52d0dfac4be274ad378c6dc09 ]
 
-The .get_modes() hooks aren't supposed to return negative error
-codes. Return 0 for no modes, whatever the reason.
+The ASM1064 SATA host controller always reports wrongly,
+that it has 24 ports. But in reality, it only has four ports.
 
-Cc: Inki Dae <inki.dae@samsung.com>
-Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-Cc: Kyungmin Park <kyungmin.park@samsung.com>
-Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/d8665f620d9c252aa7d5a4811ff6b16e773903a2.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+before:
+ahci 0000:04:00.0: SSS flag set, parallel bus scan disabled
+ahci 0000:04:00.0: AHCI 0001.0301 32 slots 24 ports 6 Gbps 0xffff0f impl SATA mode
+ahci 0000:04:00.0: flags: 64bit ncq sntf stag pm led only pio sxs deso sadm sds apst
+
+after:
+ahci 0000:04:00.0: ASM1064 has only four ports
+ahci 0000:04:00.0: forcing port_map 0xffff0f -> 0xf
+ahci 0000:04:00.0: SSS flag set, parallel bus scan disabled
+ahci 0000:04:00.0: AHCI 0001.0301 32 slots 24 ports 6 Gbps 0xf impl SATA mode
+ahci 0000:04:00.0: flags: 64bit ncq sntf stag pm led only pio sxs deso sadm sds apst
+
+Signed-off-by: "Andrey Jr. Melnikov" <temnota.am@gmail.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 6cd8adc3e189 ("ahci: asm1064: asm1166: don't limit reported ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 4 ++--
- drivers/gpu/drm/exynos/exynos_hdmi.c     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/ata/ahci.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index f5e1adfcaa514..fb941a8c99f0f 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -316,14 +316,14 @@ static int vidi_get_modes(struct drm_connector *connector)
- 	 */
- 	if (!ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
--		return -EFAULT;
-+		return 0;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 90d33c519f4c6..9933ad9737bb2 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -670,9 +670,17 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
+ {
+-	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA && pdev->device == 0x1166) {
+-		dev_info(&pdev->dev, "ASM1166 has only six ports\n");
+-		hpriv->saved_port_map = 0x3f;
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
++		switch (pdev->device) {
++		case 0x1166:
++			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
++			hpriv->saved_port_map = 0x3f;
++			break;
++		case 0x1064:
++			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
++			hpriv->saved_port_map = 0xf;
++			break;
++		}
  	}
  
- 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
- 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
- 	if (!edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
--		return -ENOMEM;
-+		return 0;
- 	}
- 
- 	drm_connector_update_edid_property(connector, edid);
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index dd9903eab563e..eff51bfc46440 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -887,11 +887,11 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	int ret;
- 
- 	if (!hdata->ddc_adpt)
--		return -ENODEV;
-+		return 0;
- 
- 	edid = drm_get_edid(connector, hdata->ddc_adpt);
- 	if (!edid)
--		return -ENODEV;
-+		return 0;
- 
- 	hdata->dvi_mode = !connector->display_info.is_hdmi;
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
 -- 
 2.43.0
 
