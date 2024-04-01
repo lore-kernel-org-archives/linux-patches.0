@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AA44596E;
-	Mon,  1 Apr 2024 16:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8591147A5D;
+	Mon,  1 Apr 2024 16:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987780; cv=none; b=bRIZ4yInkzxTPmMXDuMme5gSUVneCb8KspmZkRU/JDAFOb09xLV9GgKuNeu9dfDpapnu+xjmcJdhHCznb6FkfJpSxDdnVQzU4n1OGiQwAMR/0hBgfvPaj8dgXWQhKsvu7+ECnSKSi87uEY6kcn9f/GIsrxfmu+kq7m5zZHefUoU=
+	t=1711987783; cv=none; b=NCINkqzUIl3aGHMDUH3tLvUcMKkBr/LK16BV+dB1CSaTP+N66w8uJPBNIoUYaavGm0dqUVz44lNmPaLcwfrtoXNL/iT+CMZRUEBgBK6/pmwEULczFX4GPtetW4DmEtLleTq/GzSaj/Un06dLtD4SzTBxQ0uGqwTF3T7o4VDRAaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987780; c=relaxed/simple;
-	bh=wnMNecNPMys/GdR5tWBXaQrBM9gLQqeu5DAvf/JtMuQ=;
+	s=arc-20240116; t=1711987783; c=relaxed/simple;
+	bh=Bq3zVH7J4kYCiuVj5w1tqvRqmChNmAetl2rs/R/WOKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNs1pcJLCBXsVWygcgM4tRxpdxU0CZjuTVzSLg6wFhgQbqkA3ngzJPJQH6E91z2oJ5+Lv8b4/LbD+ouMca+INYLEx+YDmAV5JylX4NlfGe+GNqwQqrRGha2Y+nhtXDQT3HSl5+MXYBsRIRtIjRfdCcxwZ5c9zPTTXWpMPckzV2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwVsfz+S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1htosyGvVY7AvZ4bi6YpQpfmo/AVv6ytA2Hc4Fyv7MsC2UfZOnO/ekmNpgkgauXa8LIfpupuWfQpKXs1DLtqi3xlc5rok5Eo3IXzcHbaS3gNOORa4GnUVQWu+JJ7ySjMWiNAWw6WAdBUEPEU7Ry7BkZXl2YTt6RGffYGWu5NLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+JXhlFK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwVsfz+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D185C43390;
-	Mon,  1 Apr 2024 16:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+JXhlFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E1DC433C7;
+	Mon,  1 Apr 2024 16:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987780;
-	bh=wnMNecNPMys/GdR5tWBXaQrBM9gLQqeu5DAvf/JtMuQ=;
+	s=korg; t=1711987783;
+	bh=Bq3zVH7J4kYCiuVj5w1tqvRqmChNmAetl2rs/R/WOKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwVsfz+SQ6akYGVX36HEqSvvyPc/HqJySE23XIMiBroxMPLNgFJIdd6uSxK2vx9XY
-	 MuciBzdFkEXoRTUyjSr36Ay3jSVLD4flIs1jPeokC8MPLyD0Dv/t7U1rLz/CcqN9h3
-	 3AjepCeNl+nXVAcyMrie5FQSbuQY7lXz4v384b2k=
+	b=S+JXhlFKLw6hGbvEsM1B3/NLXWlVnKggMnQ8aL/GVkR2mFByVYQJITar5pMkEgy/4
+	 Jn0cBHeBc27AYINbSGjCQ5QCS6LzKquR0lpTANdwxrG3HzqDWpKv3RPKcYKG0XTvbH
+	 /O2OtoG5Zro5XUbZ7+a7P7BKi+V+Jn463mfPMKHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.8 360/399] USB: core: Fix deadlock in port "disable" sysfs attribute
-Date: Mon,  1 Apr 2024 17:45:26 +0200
-Message-ID: <20240401152559.914862191@linuxfoundation.org>
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.8 361/399] usb: dwc2: host: Fix remote wakeup from hibernation
+Date: Mon,  1 Apr 2024 17:45:27 +0200
+Message-ID: <20240401152559.943991677@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,123 +49,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit f4d1960764d8a70318b02f15203a1be2b2554ca1 upstream.
+commit bae2bc73a59c200db53b6c15fb26bb758e2c6108 upstream.
 
-The show and store callback routines for the "disable" sysfs attribute
-file in port.c acquire the device lock for the port's parent hub
-device.  This can cause problems if another process has locked the hub
-to remove it or change its configuration:
+Starting from core v4.30a changed order of programming
+GPWRDN_PMUACTV to 0 in case of exit from hibernation on
+remote wakeup signaling from device.
 
-	Removing the hub or changing its configuration requires the
-	hub interface to be removed, which requires the port device
-	to be removed, and device_del() waits until all outstanding
-	sysfs attribute callbacks for the ports have returned.  The
-	lock can't be released until then.
-
-	But the disable_show() or disable_store() routine can't return
-	until after it has acquired the lock.
-
-The resulting deadlock can be avoided by calling
-sysfs_break_active_protection().  This will cause the sysfs core not
-to wait for the attribute's callback routine to return, allowing the
-removal to proceed.  The disadvantage is that after making this call,
-there is no guarantee that the hub structure won't be deallocated at
-any moment.  To prevent this, we have to acquire a reference to it
-first by calling hub_get().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/f7a8c135-a495-4ce6-bd49-405a45e7ea9a@rowland.harvard.edu
+Fixes: c5c403dc4336 ("usb: dwc2: Add host/device hibernation functions")
+CC: stable@vger.kernel.org
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/99385ec55ce73445b6fbd0f471c9bd40eb1c9b9e.1708939799.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |   38 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ drivers/usb/dwc2/core.h |    1 +
+ drivers/usb/dwc2/hcd.c  |   17 +++++++++++++----
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -55,11 +55,22 @@ static ssize_t disable_show(struct devic
- 	u16 portstatus, unused;
- 	bool disabled;
- 	int rc;
-+	struct kernfs_node *kn;
+--- a/drivers/usb/dwc2/core.h
++++ b/drivers/usb/dwc2/core.h
+@@ -1086,6 +1086,7 @@ struct dwc2_hsotg {
+ 	bool needs_byte_swap;
  
-+	hub_get(hub);
- 	rc = usb_autopm_get_interface(intf);
- 	if (rc < 0)
--		return rc;
-+		goto out_hub_get;
+ 	/* DWC OTG HW Release versions */
++#define DWC2_CORE_REV_4_30a	0x4f54430a
+ #define DWC2_CORE_REV_2_71a	0x4f54271a
+ #define DWC2_CORE_REV_2_72a     0x4f54272a
+ #define DWC2_CORE_REV_2_80a	0x4f54280a
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -5610,10 +5610,12 @@ int dwc2_host_exit_hibernation(struct dw
+ 	dwc2_writel(hsotg, hr->hcfg, HCFG);
  
-+	/*
-+	 * Prevent deadlock if another process is concurrently
-+	 * trying to unregister hdev.
-+	 */
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn) {
-+		rc = -ENODEV;
-+		goto out_autopm;
+ 	/* De-assert Wakeup Logic */
+-	gpwrdn = dwc2_readl(hsotg, GPWRDN);
+-	gpwrdn &= ~GPWRDN_PMUACTV;
+-	dwc2_writel(hsotg, gpwrdn, GPWRDN);
+-	udelay(10);
++	if (!(rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
++		gpwrdn = dwc2_readl(hsotg, GPWRDN);
++		gpwrdn &= ~GPWRDN_PMUACTV;
++		dwc2_writel(hsotg, gpwrdn, GPWRDN);
++		udelay(10);
 +	}
- 	usb_lock_device(hdev);
- 	if (hub->disconnected) {
- 		rc = -ENODEV;
-@@ -69,9 +80,13 @@ static ssize_t disable_show(struct devic
- 	usb_hub_port_status(hub, port1, &portstatus, &unused);
- 	disabled = !usb_port_is_power_on(hub, portstatus);
  
--out_hdev_lock:
-+ out_hdev_lock:
- 	usb_unlock_device(hdev);
-+	sysfs_unbreak_active_protection(kn);
-+ out_autopm:
- 	usb_autopm_put_interface(intf);
-+ out_hub_get:
-+	hub_put(hub);
+ 	hprt0 = hr->hprt0;
+ 	hprt0 |= HPRT0_PWR;
+@@ -5638,6 +5640,13 @@ int dwc2_host_exit_hibernation(struct dw
+ 		hprt0 |= HPRT0_RES;
+ 		dwc2_writel(hsotg, hprt0, HPRT0);
  
- 	if (rc)
- 		return rc;
-@@ -89,15 +104,26 @@ static ssize_t disable_store(struct devi
- 	int port1 = port_dev->portnum;
- 	bool disabled;
- 	int rc;
-+	struct kernfs_node *kn;
- 
- 	rc = kstrtobool(buf, &disabled);
- 	if (rc)
- 		return rc;
- 
-+	hub_get(hub);
- 	rc = usb_autopm_get_interface(intf);
- 	if (rc < 0)
--		return rc;
-+		goto out_hub_get;
- 
-+	/*
-+	 * Prevent deadlock if another process is concurrently
-+	 * trying to unregister hdev.
-+	 */
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn) {
-+		rc = -ENODEV;
-+		goto out_autopm;
-+	}
- 	usb_lock_device(hdev);
- 	if (hub->disconnected) {
- 		rc = -ENODEV;
-@@ -118,9 +144,13 @@ static ssize_t disable_store(struct devi
- 	if (!rc)
- 		rc = count;
- 
--out_hdev_lock:
-+ out_hdev_lock:
- 	usb_unlock_device(hdev);
-+	sysfs_unbreak_active_protection(kn);
-+ out_autopm:
- 	usb_autopm_put_interface(intf);
-+ out_hub_get:
-+	hub_put(hub);
- 
- 	return rc;
- }
++		/* De-assert Wakeup Logic */
++		if ((rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
++			gpwrdn = dwc2_readl(hsotg, GPWRDN);
++			gpwrdn &= ~GPWRDN_PMUACTV;
++			dwc2_writel(hsotg, gpwrdn, GPWRDN);
++			udelay(10);
++		}
+ 		/* Wait for Resume time and then program HPRT again */
+ 		mdelay(100);
+ 		hprt0 &= ~HPRT0_RES;
 
 
