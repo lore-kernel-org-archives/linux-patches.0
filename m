@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC8143AD6;
-	Mon,  1 Apr 2024 16:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE9E43AD6;
+	Mon,  1 Apr 2024 16:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987947; cv=none; b=U4/NXA9gjwUXkXSKdRPDoeplF6WDd/UZC79KxYWZK6C2b75EbHhhoh6Dh26gbkSSITaHj5u15tJKV1plHXCZwh0SOGgfp7bAJmXbuYHXn1y1QNzxB+S1uRxmdyJj85wSCvoLNQefO+O01dCdtzCoMVCS5Rfd0lYajFRidZkxnw0=
+	t=1711987950; cv=none; b=Wt+cVL/OFGEH78V9cKd+fCadc8h23Ykc0xTOIE3elc0XOxBecPMijC8IdEKV9o5MVFFhv4W3HV5BG/eHt4B8QeHofLYzRmOHptBk49dIDAIYK8E1TVPK5Zi1fTm/tfaUhti7FhqKMk84nqjkHWI1MWbbNS1825YH/4jE/bZub7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987947; c=relaxed/simple;
-	bh=0PjHsngTRhL05k3nikCA/iX3Pp8TwBLyqUwshew/woA=;
+	s=arc-20240116; t=1711987950; c=relaxed/simple;
+	bh=879sPgWfEQrnyN9tgjdEZzI6RmNoKazVltba8sIUNaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXcTulqe9myw8isCoG4ryZQ3JpAjiRiRfpAwwRLNQ47G3guTzpiGYephrqNPvuQbCPI+EF4zYXAop8/7NEpU1vURUG0+1r0R59skDKIUQAB4ol2IgsmFJyzvbWa1vLSgKhSepaE3XHzfcnFDgsKjMsQzIdx4G/l1EN8aOczuxOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnJri6Q9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWa3zu3YdiNEjKh7EVnkP66WtB+bObV791kWNL8nmAVFB7u8SWd9rn6IZCaZv0AfAlev8DChSjjvSOii58C5hgHNU7rYSfbxQIJlPVQDK77t/UHfEvVEZ2hK7wr/OKBgudzKKREJ+Hef9qy/KskFlC60W6qEG4klOv8V9qzTuW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7RK4G+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnJri6Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410BAC433C7;
-	Mon,  1 Apr 2024 16:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7RK4G+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C421C433C7;
+	Mon,  1 Apr 2024 16:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987946;
-	bh=0PjHsngTRhL05k3nikCA/iX3Pp8TwBLyqUwshew/woA=;
+	s=korg; t=1711987949;
+	bh=879sPgWfEQrnyN9tgjdEZzI6RmNoKazVltba8sIUNaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnJri6Q9uqCfMTOMfJ8+lCptq5pj9VVhVObhnnBjtCzvr4AhZZK8ILBoMoCNBlMQQ
-	 tqlsZVMGhZsbI2Bfjdby4jt7TTmPXCNjFK9l5RdFsia3/zG3IK1PnSFu0vhakORO+/
-	 1eDKuQ1i3bIk186yb1kisJMW7o5Bf5/t8BLR5LuI=
+	b=F7RK4G+YGKLyh4gCD8jrvA6ZiWra4uPS6aWt8cI2y/meEUtzTnJ4X9zYkiOw+HWYr
+	 gVHiPQmDwn9J/CTlfi0nmK8OJBgC2NVlAvWjpsLFdvFyLzcZlLW7ihnaTNf+8Jso0e
+	 a0IVt2rJ7q7RpWYxxkN6DcRTJxKX7i9SqeID78RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 037/432] powerpc/smp: Increase nr_cpu_ids to include the boot CPU
-Date: Mon,  1 Apr 2024 17:40:24 +0200
-Message-ID: <20240401152554.238549979@linuxfoundation.org>
+Subject: [PATCH 6.7 011/432] smack: Handle SMACK64TRANSMUTE in smack_inode_setsecurity()
+Date: Mon,  1 Apr 2024 17:39:58 +0200
+Message-ID: <20240401152553.465775992@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 777f81f0a9c780a6443bcf2c7785f0cc2e87c1ef ]
+[ Upstream commit ac02f007d64eb2769d0bde742aac4d7a5fc6e8a5 ]
 
-If nr_cpu_ids is too low to include the boot CPU adjust nr_cpu_ids
-upward. Otherwise the kernel will BUG when trying to allocate a paca
-for the boot CPU and fail to boot.
+If the SMACK64TRANSMUTE xattr is provided, and the inode is a directory,
+update the in-memory inode flags by setting SMK_INODE_TRANSMUTE.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231229120107.2281153-2-mpe@ellerman.id.au
+Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/prom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ security/smack/smack_lsm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
-index 58e80076bed5c..77364729a1b61 100644
---- a/arch/powerpc/kernel/prom.c
-+++ b/arch/powerpc/kernel/prom.c
-@@ -381,6 +381,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 			nr_cpu_ids);
- 	}
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 0fe3ccec62a52..e1e297deb02e6 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -2854,6 +2854,15 @@ static int smack_inode_setsecurity(struct inode *inode, const char *name,
+ 	if (value == NULL || size > SMK_LONGLABEL || size == 0)
+ 		return -EINVAL;
  
-+	if (boot_cpuid >= nr_cpu_ids) {
-+		set_nr_cpu_ids(min(CONFIG_NR_CPUS, ALIGN(boot_cpuid + 1, nthreads)));
-+		pr_warn("Boot CPU %d >= nr_cpu_ids, adjusted nr_cpu_ids to %d\n",
-+			boot_cpuid, nr_cpu_ids);
++	if (strcmp(name, XATTR_SMACK_TRANSMUTE) == 0) {
++		if (!S_ISDIR(inode->i_mode) || size != TRANS_TRUE_SIZE ||
++		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
++			return -EINVAL;
++
++		nsp->smk_flags |= SMK_INODE_TRANSMUTE;
++		return 0;
 +	}
 +
- 	/*
- 	 * PAPR defines "logical" PVR values for cpus that
- 	 * meet various levels of the architecture:
+ 	skp = smk_import_entry(value, size);
+ 	if (IS_ERR(skp))
+ 		return PTR_ERR(skp);
 -- 
 2.43.0
 
