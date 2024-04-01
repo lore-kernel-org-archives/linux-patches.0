@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025A1C0DE7;
-	Mon,  1 Apr 2024 17:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2231C0DE7;
+	Mon,  1 Apr 2024 17:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990905; cv=none; b=CtfQmCyxRMEMYjI17RaNpdbcSDe6fugp78244oYsBPDbkoVermtAgkUvrFc4u6nDVQ7QsxozpSnV74AWsHi8O7VIV31ORCXPe5EB5Z8hcI5/v/wr3gobpauCeLXVeqYE6cF/96aGSCBgDFj6MWGE2XltJFpgwRfNaee+EMEvEm4=
+	t=1711990908; cv=none; b=ipb5tIKgQ8ZH8KenYTqjSdqlAaONDGye136eqCizYQtNXklYAnD397C8BEAYKRXjnKWHfoEHWp7OofxE19yd6ovj1Kj78jmxbAY6fQjJ4c8VwMVzOioGK+KTRVWkdbkOTTXkcWXYy60WsXAGAEr3xy+yAdeUQRvOrHpTCv7qpmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990905; c=relaxed/simple;
-	bh=rAh6y8H9+St8MiaR2XC3WExF54EtYBuSWGGJa1efpJA=;
+	s=arc-20240116; t=1711990908; c=relaxed/simple;
+	bh=kmNIvFGsWInwoshYbbaP/j7BPpzDKalnXzA4aBHiZh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YX3qtKn1U8HXeP5MXOPWmjrQB6C2vbLXm1KJpCe0fCjpIL48+1GojH0DUB3GwwhOOgsrXguK3kE4Anb6AFD2baEdzuOIGopU8wQlKRFp3KykySh9saiXcc8P8Ol1smAG/daMBRrw0F1dKJkMrbZ3JOlzdWS6j2vCP1P/WEB8IfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I169wHHY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vkj2n3lwF4qwTMQoxbpA3kubjKV1XZ+DwPmhTIOEsEhFVBmlqt3X/hpy35FBgjIda51998ixbHIQEyRLkGLri7BIqnwwU43vqGi+ZSCZWE0iFbrCXNEgtAWF6Klsja6w5oqcQ+WtjjevfU3frk09yWNd7jksru0IJvGHcRaDecQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7ElrpkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I169wHHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CE5C433C7;
-	Mon,  1 Apr 2024 17:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7ElrpkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D311C433C7;
+	Mon,  1 Apr 2024 17:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990905;
-	bh=rAh6y8H9+St8MiaR2XC3WExF54EtYBuSWGGJa1efpJA=;
+	s=korg; t=1711990908;
+	bh=kmNIvFGsWInwoshYbbaP/j7BPpzDKalnXzA4aBHiZh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I169wHHYl7C/ATYspy4FYscRB9xvwE+zbgf/Rx2aE94rfAb5/pXTyyzLYorkisbZ/
-	 n3d30ZgzQQ5AKhIJJJTmEm7vKAdUZ5DSbE2UC9vkBRd9Ht4BRecdH2CGqQevI/n1+C
-	 VBv8tpGYU83wsmUW/3NZekUtkr81u1N7Ieib6f0U=
+	b=X7ElrpkX2y/vE5tvow3gxdDze2eKraVciCoEtme7s9qON9vwee0X8+pn2LHJB3YNn
+	 SRHuYxwEP8nlS3xVHOIDpwIqYjYiaoL57qJWaGt/g6gKauyKE0sRdS3/meZAXc2vnp
+	 BTTDl4SVa9rXs9i10vSsDhZOmpD5o/0SPGM3zZRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Srivathsa Dara <srivathsa.d.dara@oracle.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/272] ext4: fix corruption during on-line resize
-Date: Mon,  1 Apr 2024 17:44:35 +0200
-Message-ID: <20240401152533.280435819@linuxfoundation.org>
+Subject: [PATCH 6.1 103/272] vfio/pci: Remove negative check on unsigned vector
+Date: Mon,  1 Apr 2024 17:44:53 +0200
+Message-ID: <20240401152533.857237213@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,77 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit a6b3bfe176e8a5b05ec4447404e412c2a3fc92cc ]
+[ Upstream commit 6578ed85c7d63693669bfede01e0237d0e24211a ]
 
-We observed a corruption during on-line resize of a file system that is
-larger than 16 TiB with 4k block size. With having more then 2^32 blocks
-resize_inode is turned off by default by mke2fs. The issue can be
-reproduced on a smaller file system for convenience by explicitly
-turning off resize_inode. An on-line resize across an 8 GiB boundary (the
-size of a meta block group in this setup) then leads to a corruption:
+User space provides the vector as an unsigned int that is checked
+early for validity (vfio_set_irqs_validate_and_prepare()).
 
-  dev=/dev/<some_dev> # should be >= 16 GiB
-  mkdir -p /corruption
-  /sbin/mke2fs -t ext4 -b 4096 -O ^resize_inode $dev $((2 * 2**21 - 2**15))
-  mount -t ext4 $dev /corruption
+A later negative check of the provided vector is not necessary.
 
-  dd if=/dev/zero bs=4096 of=/corruption/test count=$((2*2**21 - 4*2**15))
-  sha1sum /corruption/test
-  # 79d2658b39dcfd77274e435b0934028adafaab11  /corruption/test
+Remove the negative check and ensure the type used
+for the vector is consistent as an unsigned int.
 
-  /sbin/resize2fs $dev $((2*2**21))
-  # drop page cache to force reload the block from disk
-  echo 1 > /proc/sys/vm/drop_caches
-
-  sha1sum /corruption/test
-  # 3c2abc63cbf1a94c9e6977e0fbd72cd832c4d5c3  /corruption/test
-
-2^21 = 2^15*2^6 equals 8 GiB whereof 2^15 is the number of blocks per
-block group and 2^6 are the number of block groups that make a meta
-block group.
-
-The last checksum might be different depending on how the file is laid
-out across the physical blocks. The actual corruption occurs at physical
-block 63*2^15 = 2064384 which would be the location of the backup of the
-meta block group's block descriptor. During the on-line resize the file
-system will be converted to meta_bg starting at s_first_meta_bg which is
-2 in the example - meaning all block groups after 16 GiB. However, in
-ext4_flex_group_add we might add block groups that are not part of the
-first meta block group yet. In the reproducer we achieved this by
-substracting the size of a whole block group from the point where the
-meta block group would start. This must be considered when updating the
-backup block group descriptors to follow the non-meta_bg layout. The fix
-is to add a test whether the group to add is already part of the meta
-block group or not.
-
-Fixes: 01f795f9e0d67 ("ext4: add online resizing support for meta_bg and 64-bit file systems")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Tested-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
-Reviewed-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
-Link: https://lore.kernel.org/r/20240215155009.94493-1-mheyne@amazon.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/28521e1b0b091849952b0ecb8c118729fc8cdc4f.1683740667.git.reinette.chatre@intel.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: fe9a7082684e ("vfio/pci: Disable auto-enable of exclusive INTx IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index f2ed15af703a8..38ce42396758d 100644
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1606,7 +1606,8 @@ static int ext4_flex_group_add(struct super_block *sb,
- 		int gdb_num = group / EXT4_DESC_PER_BLOCK(sb);
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
--		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		int meta_bg = ext4_has_feature_meta_bg(sb) &&
-+			      gdb_num >= le32_to_cpu(es->s_first_meta_bg);
- 		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
- 					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 6a9c6a143cc3a..258de57ef9564 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -317,14 +317,14 @@ static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msi
+ }
+ 
+ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+-				      int vector, int fd, bool msix)
++				      unsigned int vector, int fd, bool msix)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+ 	struct eventfd_ctx *trigger;
+ 	int irq, ret;
+ 	u16 cmd;
+ 
+-	if (vector < 0 || vector >= vdev->num_ctx)
++	if (vector >= vdev->num_ctx)
+ 		return -EINVAL;
+ 
+ 	irq = pci_irq_vector(pdev, vector);
+@@ -399,7 +399,8 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
+ 			      unsigned count, int32_t *fds, bool msix)
+ {
+-	int i, j, ret = 0;
++	unsigned int i, j;
++	int ret = 0;
+ 
+ 	if (start >= vdev->num_ctx || start + count > vdev->num_ctx)
+ 		return -EINVAL;
+@@ -410,8 +411,8 @@ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
+ 	}
+ 
+ 	if (ret) {
+-		for (--j; j >= (int)start; j--)
+-			vfio_msi_set_vector_signal(vdev, j, -1, msix);
++		for (i = start; i < j; i++)
++			vfio_msi_set_vector_signal(vdev, i, -1, msix);
+ 	}
+ 
+ 	return ret;
+@@ -420,7 +421,7 @@ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
+ static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+-	int i;
++	unsigned int i;
+ 	u16 cmd;
+ 
+ 	for (i = 0; i < vdev->num_ctx; i++) {
+@@ -542,7 +543,7 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+ 				    unsigned index, unsigned start,
+ 				    unsigned count, uint32_t flags, void *data)
+ {
+-	int i;
++	unsigned int i;
+ 	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
+ 
+ 	if (irq_is(vdev, index) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
 -- 
 2.43.0
 
