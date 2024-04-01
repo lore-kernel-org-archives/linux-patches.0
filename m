@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D2F17552;
-	Mon,  1 Apr 2024 15:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFC617552;
+	Mon,  1 Apr 2024 15:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987012; cv=none; b=RiJwmcgIj5Cvgw9Lq1a9zwjbqyYtkEE/YF3sbHQ4GVUBFxyJSwwhPPNJvoCzdJPd+VMXrMs1NiMJSgUWQCro91tDXzBBZq6K9MC7ow7TC/qjSbbO1d801RpYK/KJZK2H9tZKtvWVmPbbx0OFXtV9POMsv4CtlbE1MPyvhGr9Ek4=
+	t=1711987016; cv=none; b=BHUF1wd0CFzRlDRy9mzGrNHFIFfI909e3REOxnQHA4M5gQ2VjWODFCJDBI9JWQhLQ5ckII++G99X+GUKehGAlIXowMRJDOiLfC3i5LKV7wjR22RArdhlRcusGAcHK6S60I7hI9m680r8nKUgApqieg5rcwOH3dmtwAKV6MnzEiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987012; c=relaxed/simple;
-	bh=w5J/NFQcuQLMUIpIuOJtSgy+Yl5pXM3HkBHcV1fYF10=;
+	s=arc-20240116; t=1711987016; c=relaxed/simple;
+	bh=jWODcl5IEcZChD1wW6e21DaoAjGftV+T7xcL1IHSWCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rlaylv3A6qlqifvI+6ZCWsduSTwMtfvYky529Co+QD6LKqOafe9wsepTRMPYHEuaPXUjfg4TGs6nAqiEBB2jr+YXyLIrn7M1Xet2mcBtvk4ohNc5qon/3zWyJXB3l3tZ6djsxzMODV1mEfhqVC5zQ11CabAYa9YTJwP4SjdQYuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q51kR0x2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErrruZSgG0H4MKY+Qat9ruVmOfUj0iC5wl0wo5vYUdqqIFpJuLqqXpfOjJSGwwfhjqOEeazoBtj9sq4Oj339jg8T9tSy7DxgwAzF/LJD28t++AjZpKC9JL3asrBxDKbm6e6O9Q7JmdyIbiAK2fZF7SFYeA+i38UTcuuUlVLOYpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2TsA/uE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q51kR0x2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B36FC43390;
-	Mon,  1 Apr 2024 15:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2TsA/uE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53262C433F1;
+	Mon,  1 Apr 2024 15:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987012;
-	bh=w5J/NFQcuQLMUIpIuOJtSgy+Yl5pXM3HkBHcV1fYF10=;
+	s=korg; t=1711987015;
+	bh=jWODcl5IEcZChD1wW6e21DaoAjGftV+T7xcL1IHSWCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q51kR0x2ZLxvSkyyNaU++wb4+RK+RJMh4c1ELwDd1Xfw5IVqRGbBBVnR2VziMpZzJ
-	 J2h4HcDsfH2pYY4UBy61H9PwyCtnFTbrLWPCoPsSR8rMHkvpy0cdC7zo2ku7+xW/uE
-	 P13Y0NCCJ/ft9GXJb31nbPwWMwSIv2KGrsAU0paU=
+	b=T2TsA/uE8nyxwYMQmTvW1r3bAlgYbzgsZ8Ugu3WCvuirGmEiHruABFKdTeI4KO/8+
+	 mkN23qyvpZBZ6I126v/ZWr9aI+D2/Zc2RxUE9F5Jh4H/jV4GaKFiRKpMY7Zbq/S4zd
+	 FBwe+a/aJ1Tp1vViVD/7psvoxy1ZpRlPk7NfZgi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 156/399] io_uring: clean rings on NO_MMAP alloc fail
-Date: Mon,  1 Apr 2024 17:42:02 +0200
-Message-ID: <20240401152553.843265938@linuxfoundation.org>
+Subject: [PATCH 6.8 157/399] ring-buffer: Do not set shortest_full when full target is hit
+Date: Mon,  1 Apr 2024 17:42:03 +0200
+Message-ID: <20240401152553.872614172@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,47 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit cef59d1ea7170ec753182302645a0191c8aa3382 ]
+[ Upstream commit 761d9473e27f0c8782895013a3e7b52a37c8bcfc ]
 
-We make a few cancellation judgements based on ctx->rings, so let's
-zero it afer deallocation for IORING_SETUP_NO_MMAP just like it's
-done with the mmap case. Likely, it's not a real problem, but zeroing
-is safer and better tested.
+The rb_watermark_hit() checks if the amount of data in the ring buffer is
+above the percentage level passed in by the "full" variable. If it is, it
+returns true.
+
+But it also sets the "shortest_full" field of the cpu_buffer that informs
+writers that it needs to call the irq_work if the amount of data on the
+ring buffer is above the requested amount.
+
+The rb_watermark_hit() always sets the shortest_full even if the amount in
+the ring buffer is what it wants. As it is not going to wait, because it
+has what it wants, there's no reason to set shortest_full.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240312115641.6aa8ba08@gandalf.local.home
 
 Cc: stable@vger.kernel.org
-Fixes: 03d89a2de25bbc ("io_uring: support for user allocated memory for rings/sqes")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/9ff6cdf91429b8a51699c210e1f6af6ea3f8bdcf.1710255382.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 9f938874c5e13..adf944bb5a2fe 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2776,14 +2776,15 @@ static void io_rings_free(struct io_ring_ctx *ctx)
- 	if (!(ctx->flags & IORING_SETUP_NO_MMAP)) {
- 		io_mem_free(ctx->rings);
- 		io_mem_free(ctx->sq_sqes);
--		ctx->rings = NULL;
--		ctx->sq_sqes = NULL;
- 	} else {
- 		io_pages_free(&ctx->ring_pages, ctx->n_ring_pages);
- 		ctx->n_ring_pages = 0;
- 		io_pages_free(&ctx->sqe_pages, ctx->n_sqe_pages);
- 		ctx->n_sqe_pages = 0;
- 	}
-+
-+	ctx->rings = NULL;
-+	ctx->sq_sqes = NULL;
- }
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index aa332ace108b1..6ffbccb9bcf00 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -834,9 +834,10 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
+ 		pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
+ 		ret = !pagebusy && full_hit(buffer, cpu, full);
  
- void *io_mem_alloc(size_t size)
+-		if (!cpu_buffer->shortest_full ||
+-		    cpu_buffer->shortest_full > full)
+-			cpu_buffer->shortest_full = full;
++		if (!ret && (!cpu_buffer->shortest_full ||
++			     cpu_buffer->shortest_full > full)) {
++		    cpu_buffer->shortest_full = full;
++		}
+ 		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+ 	}
+ 	return ret;
 -- 
 2.43.0
 
