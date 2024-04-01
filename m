@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C108C1E86C;
-	Mon,  1 Apr 2024 16:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F2B1E86C;
+	Mon,  1 Apr 2024 16:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989581; cv=none; b=dv4IStNDV8o/ihyV0RhGT9JfBG1OfyP+HUw74MGMdlW0++gMJwIxN2Kv2gVBKazjow22T3zSrrSu94X2lfVMxot4EfStQJ4Typ+hiOCWsCjI1Ixgvt7wwP3R0250c4CVn1OFOLbavanWqszC6N3Dj+BadcW8aG3ccmFWAgGbRvI=
+	t=1711989585; cv=none; b=KEDoIwCMz4OswdJCS4D34qHsVNIXgc+P47qeYqK1E99z4N3oJji/VNgDSOgXwUQAqJIMDNKPrTjPoW+At1bHaYju2W8GQNDaJMdw95/Lvlvh2H92ABx64y/N5GAgQIuDxc8sfLG6Ha5ATCRNM2mFict3oDToGTY8fYiLEq+1OSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989581; c=relaxed/simple;
-	bh=yQo07kxyelPTYQkQTF1ebvU/j7XkjCr9vwtpfycP1Zc=;
+	s=arc-20240116; t=1711989585; c=relaxed/simple;
+	bh=gZ4e5xHhCRCmM+5Zs+ug6p3R62j/5YMUgXzEBy/rijg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnP9CRLFD0iqJCPmsFq6wOPiMW4yiVZa/nZVgJ2x+ULiSAQVOmTmXH8oUZclqCfTKOwplIqJPmvKlv0k7C9j3+HAcV/Rpv9gpyuVErZ8bGg2NlZcOag1fmdafBy61yeE/zlDn8vsbJj4C1fkUcqGih9ge75G40HI2xGQOE/igAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCnzTOdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCuXn8WA3BXwxBmKj8lEDUn8jmRDIXOLom6643RbA1cUnCWokJrpnn23jfhX9qgJVJw90NqVWngFjt3IC3cu/JZYv0vkdvrl7eTntDHBP9BDIaHku/JqfOGdGfiE1BJ3xTlc3KaQ6l1ZXo5gBLf4z3ojnnyERbPJmmSOOVtLadQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn/RGMjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCnzTOdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DECC433C7;
-	Mon,  1 Apr 2024 16:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn/RGMjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E7CC433C7;
+	Mon,  1 Apr 2024 16:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989581;
-	bh=yQo07kxyelPTYQkQTF1ebvU/j7XkjCr9vwtpfycP1Zc=;
+	s=korg; t=1711989584;
+	bh=gZ4e5xHhCRCmM+5Zs+ug6p3R62j/5YMUgXzEBy/rijg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCnzTOdA0vAbF/gX3/cODjGnRAjenquw8UjQw4xixskxsnIQwS9RVhYQKbKBk/sMP
-	 B6Vff2ohTDLyBgkxlGMTvIRy6s9BWAQMXLMiN1MRqJ2z7yNG5KaeavfBuyZcZM/eaA
-	 4jLKdllyIWsVUpUYEDoOw6tfAB63qSyYj0J5EGeo=
+	b=Wn/RGMjkrNk2+fmKjs7OsK/BBgc13qgNkNeJTAjU7a32HVVjvwN4zdgQVwAeK/ocY
+	 SReXsGP8hcpOYgxr6583MQU+zgvVeR1lh5KkknKxLK0X3eb/UIz39LN59gyJL9Ajns
+	 0akKUPfjidrSnL5QhezJNeXzb6p8TwOFl2Ei3u14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivnandan Kumar <quic_kshivnan@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/396] cpufreq: Limit resolving a frequency to policy min/max
-Date: Mon,  1 Apr 2024 17:41:52 +0200
-Message-ID: <20240401152549.802478287@linuxfoundation.org>
+Subject: [PATCH 6.6 054/396] parisc: Avoid clobbering the C/B bits in the PSW with tophys and tovirt macros
+Date: Mon,  1 Apr 2024 17:41:43 +0200
+Message-ID: <20240401152549.536148810@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,62 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+From: John David Anglin <dave.anglin@bell.net>
 
-[ Upstream commit d394abcb12bb1a6f309c1221fdb8e73594ecf1b4 ]
+[ Upstream commit 4603fbaa76b5e703b38ac8cc718102834eb6e330 ]
 
-Resolving a frequency to an efficient one should not transgress
-policy->max (which can be set for thermal reason) and policy->min.
+Use add,l to avoid clobbering the C/B bits in the PSW.
 
-Currently, there is possibility where scaling_cur_freq can exceed
-scaling_max_freq when scaling_max_freq is an inefficient frequency.
-
-Add a check to ensure that resolving a frequency will respect
-policy->min/max.
-
-Cc: All applicable <stable@vger.kernel.org>
-Fixes: 1f39fa0dccff ("cpufreq: Introducing CPUFREQ_RELATION_E")
-Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-[ rjw: Whitespace adjustment, changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v5.10+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cpufreq.h | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ arch/parisc/include/asm/assembly.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index 71d186d6933a5..3a4cefb25ba61 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -1021,6 +1021,18 @@ static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
- 						   efficiencies);
- }
+diff --git a/arch/parisc/include/asm/assembly.h b/arch/parisc/include/asm/assembly.h
+index 5937d5edaba1e..000a28e1c5e8d 100644
+--- a/arch/parisc/include/asm/assembly.h
++++ b/arch/parisc/include/asm/assembly.h
+@@ -97,26 +97,28 @@
+ 	 * version takes two arguments: a src and destination register.
+ 	 * However, the source and destination registers can not be
+ 	 * the same register.
++	 *
++	 * We use add,l to avoid clobbering the C/B bits in the PSW.
+ 	 */
  
-+static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
-+{
-+	unsigned int freq;
+ 	.macro  tophys  grvirt, grphys
+-	ldil    L%(__PAGE_OFFSET), \grphys
+-	sub     \grvirt, \grphys, \grphys
++	ldil    L%(-__PAGE_OFFSET), \grphys
++	addl    \grvirt, \grphys, \grphys
+ 	.endm
+-	
 +
-+	if (idx < 0)
-+		return false;
-+
-+	freq = policy->freq_table[idx].frequency;
-+
-+	return freq == clamp_val(freq, policy->min, policy->max);
-+}
-+
- static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 						 unsigned int target_freq,
- 						 unsigned int relation)
-@@ -1054,7 +1066,8 @@ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 		return 0;
- 	}
+ 	.macro  tovirt  grphys, grvirt
+ 	ldil    L%(__PAGE_OFFSET), \grvirt
+-	add     \grphys, \grvirt, \grvirt
++	addl    \grphys, \grvirt, \grvirt
+ 	.endm
  
--	if (idx < 0 && efficiencies) {
-+	/* Limit frequency index to honor policy->min/max */
-+	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
- 		efficiencies = false;
- 		goto retry;
- 	}
+ 	.macro  tophys_r1  gr
+-	ldil    L%(__PAGE_OFFSET), %r1
+-	sub     \gr, %r1, \gr
++	ldil    L%(-__PAGE_OFFSET), %r1
++	addl    \gr, %r1, \gr
+ 	.endm
+-	
++
+ 	.macro  tovirt_r1  gr
+ 	ldil    L%(__PAGE_OFFSET), %r1
+-	add     \gr, %r1, \gr
++	addl    \gr, %r1, \gr
+ 	.endm
+ 
+ 	.macro delay value
 -- 
 2.43.0
 
