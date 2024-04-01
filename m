@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7B11DFF4;
-	Mon,  1 Apr 2024 17:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A341DFF4;
+	Mon,  1 Apr 2024 17:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991126; cv=none; b=IA4PDRXSV3+0TtdmKNmKCATI7hyCtdJUIxRAa3HxzutGUrRigbY3u6IZBPaNOmoCOulDYuBkoXnJKwi2r2C627vtSGIKSAdu16H3555CkDc8p4+0YAKvvjMdwzSzBlYPKrVS/8l4+Ty7cMc3+WmkOfXqQaFwUfPFYz9t2Q+wLlY=
+	t=1711991129; cv=none; b=SdAj6HgAdiAFVQ3Pgj6iwUJXdr/3eomnTreB3xrwBJC0fxvj/yUvra/M+Zzwrow7plHl2oB/OTZ6ISmkvx9x2caJRXNDXVC2eERjunelBkYfGZso2P3zvJUfYuJOEV3WQ1FrTI/X/1y7qVyhFtatrfiCakGfH6y2/Qsxdds3g+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991126; c=relaxed/simple;
-	bh=cbiJl+oJLMDTFdKBjOwF4x2v4T8XCXwturD6sI1+7do=;
+	s=arc-20240116; t=1711991129; c=relaxed/simple;
+	bh=sSjj58zK0Koh4XShh8WsbKn0Jdz9kTOLEXhUZ9Vj7rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/gfwpL3Jpp3ANF6s+gtvfqdgVzBUvME4+FEccrd16COgeP32c3gxQD9F63pvrLZgrRXn+ItNdX624ddaaYIZjtj6ggeGEoUuIlwnWAnSiuzWUkeDg4aH8sChD0dqvoXSgQS/M9LPTzOMvo61BSrVehxKMwYtML8byqUOdxdxkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrrkCCc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QDYVSrU6Y26UyRApTK00SyfwxK5VP4zWJkTESv2FgBXzIDGj0DPAFx8xDijdSuza6Lo8L9UA2gU9XEKccrDKnV4FHMULC8yQSgAClaxyn/yEqwdkzdn6jh0gEimBVq24wQAlwF4SXfe2Fo9t3dJB4H6RPlx/6OXDnkB1t8oSWH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RR01aodm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrrkCCc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2C9C433C7;
-	Mon,  1 Apr 2024 17:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RR01aodm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD61C433F1;
+	Mon,  1 Apr 2024 17:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991125;
-	bh=cbiJl+oJLMDTFdKBjOwF4x2v4T8XCXwturD6sI1+7do=;
+	s=korg; t=1711991129;
+	bh=sSjj58zK0Koh4XShh8WsbKn0Jdz9kTOLEXhUZ9Vj7rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrrkCCc5iTKwXKYyEQqr5LTK2Lb+781dNCh/BCdGCzT7HGVfnqbMmzrlojKQ3rPgj
-	 Y7zX9BaeUNwEP6grXBWiZOpS/Wmu5QQRSFnLA51WAXhxQvGpEPgvdLe9TIIgers4M6
-	 5e6UuwMaFhOBTp7hJxPo77a/arnQ/xXRyM5ds4mo=
+	b=RR01aodmfmEhumxOIM3JHrrGDJKT3BR8M+c5xAKFyAGhY0SH4XpaJXlqjlHB3FAFe
+	 M9GnaRdJkKpJaYaE0vmBavY/J+zDmGpwpdFNVzYrV4fi/xoNKXPxdHSbO5NPs4hlj2
+	 H2CbNllKy0RfRc4zDgwY+bg/QzBdeXbhAueyOM40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Sven van Ashbrook <svenva@chromium.org>,
-	Karthikeyan Ramasubramanian <kramasub@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 170/272] mm, vmscan: prevent infinite loop for costly GFP_NOIO | __GFP_RETRY_MAYFAIL allocations
-Date: Mon,  1 Apr 2024 17:46:00 +0200
-Message-ID: <20240401152536.061057149@linuxfoundation.org>
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 171/272] iio: accel: adxl367: fix DEVID read after reset
+Date: Mon,  1 Apr 2024 17:46:01 +0200
+Message-ID: <20240401152536.100188534@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -58,187 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-commit 803de9000f334b771afacb6ff3e78622916668b0 upstream.
+commit 1b926914bbe4e30cb32f268893ef7d82a85275b8 upstream.
 
-Sven reports an infinite loop in __alloc_pages_slowpath() for costly order
-__GFP_RETRY_MAYFAIL allocations that are also GFP_NOIO.  Such combination
-can happen in a suspend/resume context where a GFP_KERNEL allocation can
-have __GFP_IO masked out via gfp_allowed_mask.
+regmap_read_poll_timeout() will not sleep before reading,
+causing the first read to return -ENXIO on I2C, since the
+chip does not respond to it while it is being reset.
 
-Quoting Sven:
+The datasheet specifies that a soft reset operation has a
+latency of 7.5ms.
 
-1. try to do a "costly" allocation (order > PAGE_ALLOC_COSTLY_ORDER)
-   with __GFP_RETRY_MAYFAIL set.
+Add a 15ms sleep between reset and reading the DEVID register,
+and switch to a simple regmap_read() call.
 
-2. page alloc's __alloc_pages_slowpath tries to get a page from the
-   freelist. This fails because there is nothing free of that costly
-   order.
-
-3. page alloc tries to reclaim by calling __alloc_pages_direct_reclaim,
-   which bails out because a zone is ready to be compacted; it pretends
-   to have made a single page of progress.
-
-4. page alloc tries to compact, but this always bails out early because
-   __GFP_IO is not set (it's not passed by the snd allocator, and even
-   if it were, we are suspending so the __GFP_IO flag would be cleared
-   anyway).
-
-5. page alloc believes reclaim progress was made (because of the
-   pretense in item 3) and so it checks whether it should retry
-   compaction. The compaction retry logic thinks it should try again,
-   because:
-    a) reclaim is needed because of the early bail-out in item 4
-    b) a zonelist is suitable for compaction
-
-6. goto 2. indefinite stall.
-
-(end quote)
-
-The immediate root cause is confusing the COMPACT_SKIPPED returned from
-__alloc_pages_direct_compact() (step 4) due to lack of __GFP_IO to be
-indicating a lack of order-0 pages, and in step 5 evaluating that in
-should_compact_retry() as a reason to retry, before incrementing and
-limiting the number of retries.  There are however other places that
-wrongly assume that compaction can happen while we lack __GFP_IO.
-
-To fix this, introduce gfp_compaction_allowed() to abstract the __GFP_IO
-evaluation and switch the open-coded test in try_to_compact_pages() to use
-it.
-
-Also use the new helper in:
-- compaction_ready(), which will make reclaim not bail out in step 3, so
-  there's at least one attempt to actually reclaim, even if chances are
-  small for a costly order
-- in_reclaim_compaction() which will make should_continue_reclaim()
-  return false and we don't over-reclaim unnecessarily
-- in __alloc_pages_slowpath() to set a local variable can_compact,
-  which is then used to avoid retrying reclaim/compaction for costly
-  allocations (step 5) if we can't compact and also to skip the early
-  compaction attempt that we do in some cases
-
-Link: https://lkml.kernel.org/r/20240221114357.13655-2-vbabka@suse.cz
-Fixes: 3250845d0526 ("Revert "mm, oom: prevent premature OOM killer invocation for high order request"")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: Sven van Ashbrook <svenva@chromium.org>
-Closes: https://lore.kernel.org/all/CAG-rBihs_xMKb3wrMO1%2B-%2Bp4fowP9oy1pa_OTkfxBzPUVOZF%2Bg@mail.gmail.com/
-Tested-by: Karthikeyan Ramasubramanian <kramasub@chromium.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Curtis Malainey <cujomalainey@chromium.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
+Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240207033657.206171-1-demonsingur@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/gfp.h |    9 +++++++++
- mm/compaction.c     |    7 +------
- mm/page_alloc.c     |   10 ++++++----
- mm/vmscan.c         |    5 ++++-
- 4 files changed, 20 insertions(+), 11 deletions(-)
+ drivers/iio/accel/adxl367.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/include/linux/gfp.h
-+++ b/include/linux/gfp.h
-@@ -341,6 +341,15 @@ bool gfp_pfmemalloc_allowed(gfp_t gfp_ma
- extern void pm_restrict_gfp_mask(void);
- extern void pm_restore_gfp_mask(void);
+--- a/drivers/iio/accel/adxl367.c
++++ b/drivers/iio/accel/adxl367.c
+@@ -1444,9 +1444,11 @@ static int adxl367_verify_devid(struct a
+ 	unsigned int val;
+ 	int ret;
  
-+/*
-+ * Check if the gfp flags allow compaction - GFP_NOIO is a really
-+ * tricky context because the migration might require IO.
-+ */
-+static inline bool gfp_compaction_allowed(gfp_t gfp_mask)
-+{
-+	return IS_ENABLED(CONFIG_COMPACTION) && (gfp_mask & __GFP_IO);
-+}
+-	ret = regmap_read_poll_timeout(st->regmap, ADXL367_REG_DEVID, val,
+-				       val == ADXL367_DEVID_AD, 1000, 10000);
++	ret = regmap_read(st->regmap, ADXL367_REG_DEVID, &val);
+ 	if (ret)
++		return dev_err_probe(st->dev, ret, "Failed to read dev id\n");
 +
- extern gfp_t vma_thp_gfp_mask(struct vm_area_struct *vma);
++	if (val != ADXL367_DEVID_AD)
+ 		return dev_err_probe(st->dev, -ENODEV,
+ 				     "Invalid dev id 0x%02X, expected 0x%02X\n",
+ 				     val, ADXL367_DEVID_AD);
+@@ -1543,6 +1545,8 @@ int adxl367_probe(struct device *dev, co
+ 	if (ret)
+ 		return ret;
  
- #ifdef CONFIG_PM_SLEEP
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -2570,16 +2570,11 @@ enum compact_result try_to_compact_pages
- 		unsigned int alloc_flags, const struct alloc_context *ac,
- 		enum compact_priority prio, struct page **capture)
- {
--	int may_perform_io = (__force int)(gfp_mask & __GFP_IO);
- 	struct zoneref *z;
- 	struct zone *zone;
- 	enum compact_result rc = COMPACT_SKIPPED;
- 
--	/*
--	 * Check if the GFP flags allow compaction - GFP_NOIO is really
--	 * tricky context because the migration might require IO
--	 */
--	if (!may_perform_io)
-+	if (!gfp_compaction_allowed(gfp_mask))
- 		return COMPACT_SKIPPED;
- 
- 	trace_mm_compaction_try_to_compact_pages(order, gfp_mask, prio);
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -5012,6 +5012,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, u
- 						struct alloc_context *ac)
- {
- 	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
-+	bool can_compact = gfp_compaction_allowed(gfp_mask);
- 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
- 	struct page *page = NULL;
- 	unsigned int alloc_flags;
-@@ -5090,7 +5091,7 @@ restart:
- 	 * Don't try this for allocations that are allowed to ignore
- 	 * watermarks, as the ALLOC_NO_WATERMARKS attempt didn't yet happen.
- 	 */
--	if (can_direct_reclaim &&
-+	if (can_direct_reclaim && can_compact &&
- 			(costly_order ||
- 			   (order > 0 && ac->migratetype != MIGRATE_MOVABLE))
- 			&& !gfp_pfmemalloc_allowed(gfp_mask)) {
-@@ -5188,9 +5189,10 @@ retry:
- 
- 	/*
- 	 * Do not retry costly high order allocations unless they are
--	 * __GFP_RETRY_MAYFAIL
-+	 * __GFP_RETRY_MAYFAIL and we can compact
- 	 */
--	if (costly_order && !(gfp_mask & __GFP_RETRY_MAYFAIL))
-+	if (costly_order && (!can_compact ||
-+			     !(gfp_mask & __GFP_RETRY_MAYFAIL)))
- 		goto nopage;
- 
- 	if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-@@ -5203,7 +5205,7 @@ retry:
- 	 * implementation of the compaction depends on the sufficient amount
- 	 * of free memory (see __compaction_suitable)
- 	 */
--	if (did_some_progress > 0 &&
-+	if (did_some_progress > 0 && can_compact &&
- 			should_compact_retry(ac, order, alloc_flags,
- 				compact_result, &compact_priority,
- 				&compaction_retries))
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -6024,7 +6024,7 @@ static void shrink_lruvec(struct lruvec
- /* Use reclaim/compaction for costly allocs or under memory pressure */
- static bool in_reclaim_compaction(struct scan_control *sc)
- {
--	if (IS_ENABLED(CONFIG_COMPACTION) && sc->order &&
-+	if (gfp_compaction_allowed(sc->gfp_mask) && sc->order &&
- 			(sc->order > PAGE_ALLOC_COSTLY_ORDER ||
- 			 sc->priority < DEF_PRIORITY - 2))
- 		return true;
-@@ -6266,6 +6266,9 @@ static inline bool compaction_ready(stru
- 	unsigned long watermark;
- 	enum compact_result suitable;
- 
-+	if (!gfp_compaction_allowed(sc->gfp_mask))
-+		return false;
++	fsleep(15000);
 +
- 	suitable = compaction_suitable(zone, sc->order, 0, sc->reclaim_idx);
- 	if (suitable == COMPACT_SUCCESS)
- 		/* Allocation should succeed already. Don't reclaim. */
+ 	ret = adxl367_verify_devid(st);
+ 	if (ret)
+ 		return ret;
 
 
