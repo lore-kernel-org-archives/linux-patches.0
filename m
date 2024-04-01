@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695941DFFC;
-	Mon,  1 Apr 2024 16:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A282481B3;
+	Mon,  1 Apr 2024 16:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988143; cv=none; b=KpXqGOtBxSCgtGysc6JqCwWGgMXTifcl9nWKcV/YqrQtk0HtmTOjyq1huPiLf8obHI/L+FJ4UqhF9phe/PD0hQwsdwuO6ukCk7RkdBXyVK+lquP/falU2SA1iK6VwegTDJ2eV2BxRl2p3BsXMzybvuJ3AyC8T3BA+CE2KQV2GZE=
+	t=1711988147; cv=none; b=FIzOTBTjJgszFNNVm1z8w1An0qFX7FaWwbBrvkfJSV4W3glzfVn54+jzzvMhnTySU9tStBkX6teStpk4s2Gi1aob4XP62UHfUPAJSj78wlglXfX6ooTw6HVKu1ESA1ZDp4wwHgCyfpOOoyZ5VnTtvs1qVvH0O43+/PmlTTY/QBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988143; c=relaxed/simple;
-	bh=TSOX9ADalozQS6wJZ0hnrTwO5F7rtKrBNXwyg8PmJi4=;
+	s=arc-20240116; t=1711988147; c=relaxed/simple;
+	bh=3+jjBhX5FnMpAcbKxE3A+H++hzg0MEynl/7FFetCCGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jACWKFYHr0zlt/rLdswFdCZREESK5XZ3mREXXsw2r1c31bhgBKgUBjBJjIHDsd6CuCHU6U+MZPbYiJ4AsxKj6+HLQcykv9SB2MjeBP8fLjGZ2J+sILF6jzeUc5ktibGsYwSOHE84sLC+mY5vnBbTA/8mB2mwV9gcbw4EkokeF3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouELi1cg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q6nir18BcYYhRw48ftPhbtVI76qbQ1t5V3gy9bgjV+fIUGdGztejT30qG/LUq9EaGQvKwiy7FPF5Y0ziuaUKVrkii0cSgatN1zP3hHxtWBChTGiwUsZcN6f8d4mFCi1iEKVgD4M33EuTYclA1DdQPVVBg52zKCYe35GJ8g+73U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvQiM+oe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouELi1cg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B871AC433C7;
-	Mon,  1 Apr 2024 16:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvQiM+oe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394DEC433C7;
+	Mon,  1 Apr 2024 16:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988142;
-	bh=TSOX9ADalozQS6wJZ0hnrTwO5F7rtKrBNXwyg8PmJi4=;
+	s=korg; t=1711988145;
+	bh=3+jjBhX5FnMpAcbKxE3A+H++hzg0MEynl/7FFetCCGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouELi1cgWc+dm5gYEq2LvALkdOa/LPae83cpQlrhCKyBI0Hou5YQq1/eOvaSyxaWK
-	 kxIN0lX2bX3RhkoyMGCcnoyOyDWYDQcn3arX3y8HjMwhFfCpyqsrdpy6IOKaBdYWHT
-	 oZm1c1EghASdWz8YcPpKom/lHNfv52UpUm5FmvLc=
+	b=bvQiM+oez4lFwjhSoY2IunTJqMgfhau7/VQa3a5AHnquYHm8fwXM6j6LKysFUY+Pn
+	 /eRuC0NFmFLp/ZNGP9WMRUDnOHzMdMZPeLC4tqFHWQ+DDjWgRiA4/4Fdmq36gHzeGH
+	 3/uS/pW2afSIHnYvmRxGRNLyVT/4HS1Mt6tlSquI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <morrownr@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ricky Wu <ricky_wu@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 096/432] wifi: rtw88: Add missing VID/PIDs for 8811CU and 8821CU
-Date: Mon,  1 Apr 2024 17:41:23 +0200
-Message-ID: <20240401152555.988010789@linuxfoundation.org>
+Subject: [PATCH 6.7 097/432] PCI/PM: Drain runtime-idle callbacks before driver removal
+Date: Mon,  1 Apr 2024 17:41:24 +0200
+Message-ID: <20240401152556.017034796@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,86 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Morrow <morrownr@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b8a62478f3b143592d1241de1a7f5f8629ad0f49 ]
+[ Upstream commit 9d5286d4e7f68beab450deddbb6a32edd5ecf4bf ]
 
-Add VID/PIDs that are known to be missing for this driver.
+A race condition between the .runtime_idle() callback and the .remove()
+callback in the rtsx_pcr PCI driver leads to a kernel crash due to an
+unhandled page fault [1].
 
-Removed /* 8811CU */ and /* 8821CU */ as they are redundant
-since the file is specific to those chips.
+The problem is that rtsx_pci_runtime_idle() is not expected to be running
+after pm_runtime_get_sync() has been called, but the latter doesn't really
+guarantee that.  It only guarantees that the suspend and resume callbacks
+will not be running when it returns.
 
-Removed /* TOTOLINK A650UA v3 */ as the manufacturer. It has a REALTEK
-VID so it may not be specific to this adapter.
+However, if a .runtime_idle() callback is already running when
+pm_runtime_get_sync() is called, the latter will notice that the runtime PM
+status of the device is RPM_ACTIVE and it will return right away without
+waiting for the former to complete.  In fact, it cannot wait for
+.runtime_idle() to complete because it may be called from that callback (it
+arguably does not make much sense to do that, but it is not strictly
+prohibited).
 
-Verified and tested.
+Thus in general, whoever is providing a .runtime_idle() callback needs
+to protect it from running in parallel with whatever code runs after
+pm_runtime_get_sync().  [Note that .runtime_idle() will not start after
+pm_runtime_get_sync() has returned, but it may continue running then if it
+has started earlier.]
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Nick Morrow <morrownr@gmail.com>
-Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/4ume7mjw63u7.XlMUvUuacW2ErhOCdqlLkw2@1EHFQ.trk.elasticemail.com
+One way to address that race condition is to call pm_runtime_barrier()
+after pm_runtime_get_sync() (not before it, because a nonzero value of the
+runtime PM usage counter is necessary to prevent runtime PM callbacks from
+being invoked) to wait for the .runtime_idle() callback to complete should
+it be running at that point.  A suitable place for doing that is in
+pci_device_remove() which calls pm_runtime_get_sync() before removing the
+driver, so it may as well call pm_runtime_barrier() subsequently, which
+will prevent the race in question from occurring, not just in the rtsx_pcr
+driver, but in any PCI drivers providing .runtime_idle() callbacks.
+
+Link: https://lore.kernel.org/lkml/20240229062201.49500-1-kai.heng.feng@canonical.com/ # [1]
+Link: https://lore.kernel.org/r/5761426.DvuYhMxLoT@kreacher
+Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Ricky Wu <ricky_wu@realtek.com>
+Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtw88/rtw8821cu.c    | 40 ++++++++++++-------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/pci/pci-driver.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-index 7a5cbdc31ef79..e2c7d9f876836 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821cu.c
-@@ -9,24 +9,36 @@
- #include "usb.h"
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 51ec9e7e784f0..9c59bf03d6579 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -473,6 +473,13 @@ static void pci_device_remove(struct device *dev)
  
- static const struct usb_device_id rtw_8821cu_id_table[] = {
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb82b, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x2006, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8731, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8811, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb820, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc821, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xb82b, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc80c, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc811, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc820, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc821, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82a, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82b, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8821CU */
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc811, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8811CU */
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x8811, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* 8811CU */
--	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0x2006, 0xff, 0xff, 0xff),
--	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* TOTOLINK A650UA v3 */
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(RTW_USB_VENDOR_ID_REALTEK, 0xc82c, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331d, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* D-Link */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xc811, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xd811, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8821c_hw_spec) }, /* Edimax */
- 	{},
- };
- MODULE_DEVICE_TABLE(usb, rtw_8821cu_id_table);
+ 	if (drv->remove) {
+ 		pm_runtime_get_sync(dev);
++		/*
++		 * If the driver provides a .runtime_idle() callback and it has
++		 * started to run already, it may continue to run in parallel
++		 * with the code below, so wait until all of the runtime PM
++		 * activity has completed.
++		 */
++		pm_runtime_barrier(dev);
+ 		drv->remove(pci_dev);
+ 		pm_runtime_put_noidle(dev);
+ 	}
 -- 
 2.43.0
 
