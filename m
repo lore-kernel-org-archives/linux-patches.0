@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0481C0DE7;
-	Mon,  1 Apr 2024 16:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6F1C0DE7;
+	Mon,  1 Apr 2024 16:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989221; cv=none; b=UHwQfGZ0VTRtsDHIPb6H0GgG+XiCjdfaJ0OVMszKczSb7giKiIhPjkKbQAmSCsAPZr/UmlzQBSiy1f9D1USvAhwVed2Tsb0/liPXouWlZoAiPyopdRgtFxeCrwMSasfNT9VVRxlIJn/cX/T9lu2zQ9OYzJjdkqHAYSoLkDH2aDA=
+	t=1711989224; cv=none; b=Sff7f2Bd1Opszjk+oGwvzb15oS0LanC6agCJr1cwp1vx1fRj/yFnEQuCG2mji0Z1z/h6Jr9EUoPmtBKwfd5kuhGR71k7+53+PQQO7nxcBk2IoMS35+DNU6ez44mHtx4yHpgjaNAtr6h1z+IK3C+tXDgbC6UcSCPljVXZmLkMsBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989221; c=relaxed/simple;
-	bh=sHKIn+dzk7gxoZUar1BwuJSRhTULBVt1fHBC4t1RQLc=;
+	s=arc-20240116; t=1711989224; c=relaxed/simple;
+	bh=tGuvb5kTU50aHl6DEuFtHvl+J6AFpvu+sXb2hTvoDRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwwbN6I2EwniC9gDGNMNZ2YoGLTx/V6i6YEDcSWTdDO0/fL9cpp3pM3+40yuIOm6kaQB6RNuyXKbDGZ+GTcjZlugLP1Szn9KhYfpmDas03t34lRFV0ZyFW7+M30h3HfYdeDRr16kuXOOXVMS2njsYAqIWjKKu9zY9Co/mqMG0EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9/1D2T2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ie74aJOgnXJrNp/G5vxwPpaSgFJn/2ZCUBmTK0OzAPutQS6wcWXarF/8rghMkKkd72jZiHYBVOP3ywkQ+QPY6aT/MOGMidp3Z3UGNRBD2q9hdZvmXzwF3y7NgnOYcC1P4svdxs3o820lBb34/ilgjw4vZM//zqii2M5ZU9vkgww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BNJipi3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9/1D2T2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5998C433C7;
-	Mon,  1 Apr 2024 16:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BNJipi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F6DC433F1;
+	Mon,  1 Apr 2024 16:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989221;
-	bh=sHKIn+dzk7gxoZUar1BwuJSRhTULBVt1fHBC4t1RQLc=;
+	s=korg; t=1711989224;
+	bh=tGuvb5kTU50aHl6DEuFtHvl+J6AFpvu+sXb2hTvoDRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9/1D2T24LxGqRbEZC/YdZVRF3B+YT+oo3EWNblSGgYTZ284I8aMiIyssga1Gvm3B
-	 Xt8+Fn2MacgNGlY0veXyRCPmOsIV+I/LQWiQb1y02ICLl4vy77HIIBcTOQybpjYdmq
-	 Lf5DcBz9LJSkaKPvPELaMAU+WUMkpIcKzvTFaCd8=
+	b=0BNJipi3eIZqN3sJkhqy7fyz+ooKq0/FD9jxrf44Gqu4j7mWVXyHhncTyum/7KjYC
+	 tsQJ1+dezLO6AJZk0Hsd5Rzall2DistPpAbC0AnkV9XQjW2ggxl+R9+nD36uo8rCtl
+	 xRHLCchBdqP4NfYygCb/E6zyctwhvig0KhowlB2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.7 389/432] scsi: ufs: qcom: Provide default cycles_in_1us value
-Date: Mon,  1 Apr 2024 17:46:16 +0200
-Message-ID: <20240401152604.922088100@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	stable <stable@kernel.org>,
+	Sean Anderson <sean.anderson@seco.com>
+Subject: [PATCH 6.7 380/432] Revert "usb: phy: generic: Get the vbus supply"
+Date: Mon,  1 Apr 2024 17:46:07 +0200
+Message-ID: <20240401152604.628624402@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,41 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 81e2c1a0f8d3f62f4c9e80b20270aa3481c40524 upstream.
+commit fdada0db0b2ae2addef4ccafe50937874dbeeebe upstream.
 
-The MSM8996 DT doesn't provide frequency limits for the core_clk_unipro
-clock, which results in miscalculation of the cycles_in_1us value.  Provide
-the backwards-compatible default to support existing MSM8996 DT files.
+This reverts commit 75fd6485cccef269ac9eb3b71cf56753341195ef.
+This patch was applied twice by accident, causing probe failures.
+Revert the accident.
 
-Fixes: b4e13e1ae95e ("scsi: ufs: qcom: Add multiple frequency support for MAX_CORE_CLK_1US_CYCLES")
-Cc: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: stable@vger.kernel.org # 6.7.x
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240218-msm8996-fix-ufs-v3-1-40aab49899a3@linaro.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: 75fd6485ccce ("usb: phy: generic: Get the vbus supply")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Sean Anderson <sean.anderson@seco.com>
+Link: https://lore.kernel.org/r/20240314092628.1869414-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-qcom.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/phy/phy-generic.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1397,8 +1397,10 @@ static int ufs_qcom_set_core_clk_ctrl(st
+--- a/drivers/usb/phy/phy-generic.c
++++ b/drivers/usb/phy/phy-generic.c
+@@ -268,13 +268,6 @@ int usb_phy_gen_create_phy(struct device
+ 		return dev_err_probe(dev, PTR_ERR(nop->vbus_draw),
+ 				     "could not get vbus regulator\n");
  
- 	list_for_each_entry(clki, head, list) {
- 		if (!IS_ERR_OR_NULL(clki->clk) &&
--			!strcmp(clki->name, "core_clk_unipro")) {
--			if (is_scale_up)
-+		    !strcmp(clki->name, "core_clk_unipro")) {
-+			if (!clki->max_freq)
-+				cycles_in_1us = 150; /* default for backwards compatibility */
-+			else if (is_scale_up)
- 				cycles_in_1us = ceil(clki->max_freq, (1000 * 1000));
- 			else
- 				cycles_in_1us = ceil(clk_get_rate(clki->clk), (1000 * 1000));
+-	nop->vbus_draw = devm_regulator_get_exclusive(dev, "vbus");
+-	if (PTR_ERR(nop->vbus_draw) == -ENODEV)
+-		nop->vbus_draw = NULL;
+-	if (IS_ERR(nop->vbus_draw))
+-		return dev_err_probe(dev, PTR_ERR(nop->vbus_draw),
+-				     "could not get vbus regulator\n");
+-
+ 	nop->dev		= dev;
+ 	nop->phy.dev		= nop->dev;
+ 	nop->phy.label		= "nop-xceiv";
 
 
