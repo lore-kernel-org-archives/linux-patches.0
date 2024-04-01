@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873DE482C1;
-	Mon,  1 Apr 2024 15:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B261B47A7A;
+	Mon,  1 Apr 2024 15:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986847; cv=none; b=FkcuI6DoYXPUMs4LfBptPDDU0+HCfvVhgyWu073vtUc6xx+8VPkO9TK5MHynupFpfo7eD0G0SLSxE7r2x7Zkuz0+e2VHHCpTPW0yPjQoOU+dUQHPk3IJHQwa6gqW/X/FoxCha9c5Ra1bAsvqjPet+CbJJ8t/mRQYGlidS0LJp2s=
+	t=1711986850; cv=none; b=FmmUckksUvzr3FWEs8h/TtPPyydH4ZBevy6U3D/dSp/EYOQQBWK0fDzxAy98COnR7udqHf3i8d0tA5trnLCTDbtk9xOO/xrr7MrUpLBWPZxVEcQgL5gNMKCCkHgvL5bJfF1eDto7CZrBMeog4R7sXehHShXl1WoIHHps42L3Zsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986847; c=relaxed/simple;
-	bh=+CQomKA1LDT/GoYEEIvQQJJWEAIizIEmBc9ptjgeJuo=;
+	s=arc-20240116; t=1711986850; c=relaxed/simple;
+	bh=S6fJM3Kz4JOL994prCV8jwmQpf1w3CaIsANhSjwCwbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oy4gt7GJqevuAJjhBOHPL9v9PEYPgESKgy6kZ8FcTJzi5MC8+IrXuNqa3Rxp6HYgwivw67ANL1FkVm7gkfuWfcMEPDv2zhkYk0p8i5nI/CX/KC8d3DzIvmyxwvgddNuNcneO7qlis9Nwt8grg8cf2scqgNXlSI9sJshX3i6KxMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpaajK+/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iCWNeVIwNcGalcJGiU+iDDuInRbF1mUozouxlZHiNr4sU8pZSbfUEq9B5AijwY4h5I9YN1IZ1Fw7ENKwgWy59vAO9iskYmHa/TBGK3KfE3chCEFiz22o8l7ePH/grDB7HGYfa6Oorx8EDKmUz+xfaU7sbG66shNQRRn+xwz6dFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AThZfYsB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpaajK+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE577C433C7;
-	Mon,  1 Apr 2024 15:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AThZfYsB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375FDC433C7;
+	Mon,  1 Apr 2024 15:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986847;
-	bh=+CQomKA1LDT/GoYEEIvQQJJWEAIizIEmBc9ptjgeJuo=;
+	s=korg; t=1711986850;
+	bh=S6fJM3Kz4JOL994prCV8jwmQpf1w3CaIsANhSjwCwbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpaajK+/lk6kbs7u3sY7W6Hw4zoCEXF88q1Y0M8ckPNz/OgTnJNRfqsg9AcDj8x1S
-	 gU79hHLSjsQ2Iv2a1oES5N5ekK27qrwer7TtCAoqD1jnFccJIrUTZ4oEAGgIwVNAnm
-	 yzce+soijDtHBcjdqghEWaX03brOAy6h7QMBa74o=
+	b=AThZfYsBzn47uE+VKAL+8Ua7xt1G6ErtZ3BREUmOxKyON8/SKG3+gbRnjGOjUxxT6
+	 RK0791BNugRB15vJ3DOQpqzYzjkJJMfLEd87cHQbl7QIA/epg1Q2b8YR35I2+c+hF3
+	 ER2WYvqLB2ChY3al7xKyNTy90037Hzw2ccsPGkXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 074/399] clk: qcom: camcc-sc8280xp: fix terminating of frequency table arrays
-Date: Mon,  1 Apr 2024 17:40:40 +0200
-Message-ID: <20240401152551.392507598@linuxfoundation.org>
+Subject: [PATCH 6.8 065/399] iio: adc: rockchip_saradc: use mask for write_enable bitfield
+Date: Mon,  1 Apr 2024 17:40:31 +0200
+Message-ID: <20240401152551.126611547@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,201 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
 
-[ Upstream commit 6a3d70f7802a98e6c28a74f997a264118b9f50cd ]
+[ Upstream commit 5b4e4b72034f85f7a0cdd147d3d729c5a22c8764 ]
 
-The frequency table arrays are supposed to be terminated with an
-empty element. Add such entry to the end of the arrays where it
-is missing in order to avoid possible out-of-bound access when
-the table is traversed by functions like qcom_find_freq() or
-qcom_find_freq_floor().
+Some of the registers on the SARADCv2 have bits write protected except
+if another bit is set. This is usually done by having the lowest 16 bits
+store the data to write and the highest 16 bits specify which of the 16
+lowest bits should have their value written to the hardware block.
 
-Only compile tested.
+The write_enable mask for the channel selection was incorrect because it
+was just the value shifted by 16 bits, which means it would only ever
+write bits and never clear them. So e.g. if someone starts a conversion
+on channel 5, the lowest 4 bits would be 0x5, then starts a conversion
+on channel 0, it would still be 5.
 
-Fixes: ff93872a9c61 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-5-074334f0905c@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Instead of shifting the value by 16 as the mask, let's use the OR'ing of
+the appropriate masks shifted by 16.
+
+Note that this is not an issue currently because the only SARADCv2
+currently supported has a reset defined in its Device Tree, that reset
+resets the SARADC controller before starting a conversion on a channel.
+However, this reset is handled as optional by the probe function and
+thus proper masking should be used in the event an SARADCv2 without a
+reset ever makes it upstream.
+
+Fixes: 757953f8ec69 ("iio: adc: rockchip_saradc: Add support for RK3588")
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20240223-saradcv2-chan-mask-v1-2-84b06a0f623a@theobroma-systems.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc8280xp.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/iio/adc/rockchip_saradc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-index 3dcd79b015151..7f0ae9a5f28b2 100644
---- a/drivers/clk/qcom/camcc-sc8280xp.c
-+++ b/drivers/clk/qcom/camcc-sc8280xp.c
-@@ -630,6 +630,7 @@ static const struct freq_tbl ftbl_camcc_bps_clk_src[] = {
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
- 	F(760000000, P_CAMCC_PLL3_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
+diff --git a/drivers/iio/adc/rockchip_saradc.c b/drivers/iio/adc/rockchip_saradc.c
+index 2da8d6f3241a1..1c0042fbbb548 100644
+--- a/drivers/iio/adc/rockchip_saradc.c
++++ b/drivers/iio/adc/rockchip_saradc.c
+@@ -102,12 +102,12 @@ static void rockchip_saradc_start_v2(struct rockchip_saradc *info, int chn)
+ 	writel_relaxed(0xc, info->regs + SARADC_T_DAS_SOC);
+ 	writel_relaxed(0x20, info->regs + SARADC_T_PD_SOC);
+ 	val = FIELD_PREP(SARADC2_EN_END_INT, 1);
+-	val |= val << 16;
++	val |= SARADC2_EN_END_INT << 16;
+ 	writel_relaxed(val, info->regs + SARADC2_END_INT_EN);
+ 	val = FIELD_PREP(SARADC2_START, 1) |
+ 	      FIELD_PREP(SARADC2_SINGLE_MODE, 1) |
+ 	      FIELD_PREP(SARADC2_CONV_CHANNELS, chn);
+-	val |= val << 16;
++	val |= (SARADC2_START | SARADC2_SINGLE_MODE | SARADC2_CONV_CHANNELS) << 16;
+ 	writel(val, info->regs + SARADC2_CONV_CON);
+ }
  
- static struct clk_rcg2 camcc_bps_clk_src = {
-@@ -654,6 +655,7 @@ static const struct freq_tbl ftbl_camcc_camnoc_axi_clk_src[] = {
- 	F(320000000, P_CAMCC_PLL7_OUT_ODD, 1, 0, 0),
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_camnoc_axi_clk_src = {
-@@ -673,6 +675,7 @@ static struct clk_rcg2 camcc_camnoc_axi_clk_src = {
- static const struct freq_tbl ftbl_camcc_cci_0_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(37500000, P_CAMCC_PLL0_OUT_EVEN, 16, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_cci_0_clk_src = {
-@@ -735,6 +738,7 @@ static const struct freq_tbl ftbl_camcc_cphy_rx_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(240000000, P_CAMCC_PLL0_OUT_EVEN, 2.5, 0, 0),
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_cphy_rx_clk_src = {
-@@ -754,6 +758,7 @@ static struct clk_rcg2 camcc_cphy_rx_clk_src = {
- static const struct freq_tbl ftbl_camcc_csi0phytimer_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(300000000, P_CAMCC_PLL0_OUT_EVEN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_csi0phytimer_clk_src = {
-@@ -818,6 +823,7 @@ static const struct freq_tbl ftbl_camcc_fast_ahb_clk_src[] = {
- 	F(200000000, P_CAMCC_PLL0_OUT_EVEN, 3, 0, 0),
- 	F(300000000, P_CAMCC_PLL0_OUT_MAIN, 4, 0, 0),
- 	F(400000000, P_CAMCC_PLL0_OUT_MAIN, 3, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_fast_ahb_clk_src = {
-@@ -838,6 +844,7 @@ static const struct freq_tbl ftbl_camcc_icp_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_icp_clk_src = {
-@@ -860,6 +867,7 @@ static const struct freq_tbl ftbl_camcc_ife_0_clk_src[] = {
- 	F(558000000, P_CAMCC_PLL3_OUT_EVEN, 1, 0, 0),
- 	F(637000000, P_CAMCC_PLL3_OUT_EVEN, 1, 0, 0),
- 	F(760000000, P_CAMCC_PLL3_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_0_clk_src = {
-@@ -883,6 +891,7 @@ static const struct freq_tbl ftbl_camcc_ife_0_csid_clk_src[] = {
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_0_csid_clk_src = {
-@@ -905,6 +914,7 @@ static const struct freq_tbl ftbl_camcc_ife_1_clk_src[] = {
- 	F(558000000, P_CAMCC_PLL4_OUT_EVEN, 1, 0, 0),
- 	F(637000000, P_CAMCC_PLL4_OUT_EVEN, 1, 0, 0),
- 	F(760000000, P_CAMCC_PLL4_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_1_clk_src = {
-@@ -941,6 +951,7 @@ static const struct freq_tbl ftbl_camcc_ife_2_clk_src[] = {
- 	F(558000000, P_CAMCC_PLL5_OUT_EVEN, 1, 0, 0),
- 	F(637000000, P_CAMCC_PLL5_OUT_EVEN, 1, 0, 0),
- 	F(760000000, P_CAMCC_PLL5_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_2_clk_src = {
-@@ -962,6 +973,7 @@ static const struct freq_tbl ftbl_camcc_ife_2_csid_clk_src[] = {
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_2_csid_clk_src = {
-@@ -984,6 +996,7 @@ static const struct freq_tbl ftbl_camcc_ife_3_clk_src[] = {
- 	F(558000000, P_CAMCC_PLL6_OUT_EVEN, 1, 0, 0),
- 	F(637000000, P_CAMCC_PLL6_OUT_EVEN, 1, 0, 0),
- 	F(760000000, P_CAMCC_PLL6_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_3_clk_src = {
-@@ -1020,6 +1033,7 @@ static const struct freq_tbl ftbl_camcc_ife_lite_0_clk_src[] = {
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ife_lite_0_clk_src = {
-@@ -1140,6 +1154,7 @@ static const struct freq_tbl ftbl_camcc_ipe_0_clk_src[] = {
- 	F(475000000, P_CAMCC_PLL1_OUT_EVEN, 1, 0, 0),
- 	F(520000000, P_CAMCC_PLL1_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL1_OUT_EVEN, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_ipe_0_clk_src = {
-@@ -1163,6 +1178,7 @@ static const struct freq_tbl ftbl_camcc_jpeg_clk_src[] = {
- 	F(400000000, P_CAMCC_PLL0_OUT_ODD, 1, 0, 0),
- 	F(480000000, P_CAMCC_PLL7_OUT_EVEN, 1, 0, 0),
- 	F(600000000, P_CAMCC_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_jpeg_clk_src = {
-@@ -1184,6 +1200,7 @@ static const struct freq_tbl ftbl_camcc_lrme_clk_src[] = {
- 	F(300000000, P_CAMCC_PLL0_OUT_EVEN, 2, 0, 0),
- 	F(320000000, P_CAMCC_PLL7_OUT_ODD, 1, 0, 0),
- 	F(400000000, P_CAMCC_PLL0_OUT_MAIN, 3, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_lrme_clk_src = {
-@@ -1204,6 +1221,7 @@ static const struct freq_tbl ftbl_camcc_mclk0_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(24000000, P_CAMCC_PLL2_OUT_EARLY, 10, 1, 4),
- 	F(64000000, P_CAMCC_PLL2_OUT_EARLY, 15, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_mclk0_clk_src = {
-@@ -1320,6 +1338,7 @@ static struct clk_rcg2 camcc_mclk7_clk_src = {
- 
- static const struct freq_tbl ftbl_camcc_sleep_clk_src[] = {
- 	F(32000, P_SLEEP_CLK, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_sleep_clk_src = {
-@@ -1339,6 +1358,7 @@ static struct clk_rcg2 camcc_sleep_clk_src = {
- static const struct freq_tbl ftbl_camcc_slow_ahb_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(80000000, P_CAMCC_PLL7_OUT_EVEN, 6, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_slow_ahb_clk_src = {
-@@ -1357,6 +1377,7 @@ static struct clk_rcg2 camcc_slow_ahb_clk_src = {
- 
- static const struct freq_tbl ftbl_camcc_xo_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	{ }
- };
- 
- static struct clk_rcg2 camcc_xo_clk_src = {
 -- 
 2.43.0
 
