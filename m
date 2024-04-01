@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4724E1D6;
-	Mon,  1 Apr 2024 16:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143284F207;
+	Mon,  1 Apr 2024 16:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990343; cv=none; b=d9DLl5R2/DZQTIMLdAKpfvipcfXFQjn6GW7Y2mHsRbY41xI929kAFWxfv259bclwa7nN6zz7SUWiwqfeUdIuJy6st8abeE3h20qlPOTqI2ScXvGEeiZLDWc9IIFabSMFk513/EZhNZKkEiZzs9M3EyXDb3ac3ZkfdhkpluF4G3U=
+	t=1711990347; cv=none; b=bw7eTpOqY0jJWHJm+U/L6Kqr7W5lgHISX6vQtVlrosEp9sFUbEQikkoZMk0iV7bXYRtTsoRuNcRR5AZsSAp3+X5NHJYlDiIaN8NJR+4+HWPb/y+UVqJCnFNs9mN9M8k3h0aQZXOPQv7pG7SvP1Clkgijz8pFkafllUCobwBYRro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990343; c=relaxed/simple;
-	bh=o0a3fu1UgUvmYE+JWRv7ok1x6UEihRcM5NAaSW76cZM=;
+	s=arc-20240116; t=1711990347; c=relaxed/simple;
+	bh=xiqTiyEGZowxrRQ07+h+fkxMRd8DvneZEcW2g8RlNo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyTUx3JNUsGLE7NbY7VEdzYULGvUYklmOoWCPJklAibvyZcHNgId4hZ/p4CO2mjtclS3IjctqTI8hZXMychJd2/7T3TCVql8f5m/k+O+sM6xdJSnoUWjrqaVH5R+SIvinZyQUzGRiOFRbbPPCHcGo8mHFvJ99IVs6N0whq0ZN7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRg5czjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAcubtYwaPXmBgFqQ7dMXVSGrcigL596EPERlJCbHjRm7TN9uk5n7CNS0+ifIK3Hmm5J35RHuKQ5zHYeQmHVerSEMtvbuqAzRpOtf1bjK6f3eMzy/CDssAES2tSuLS7no2Zoyf4g8gr3muCFRT1kxw3r1EgKFzzsFlMUQiAJeA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvZAH8GL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRg5czjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A7EC433F1;
-	Mon,  1 Apr 2024 16:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvZAH8GL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A7C433C7;
+	Mon,  1 Apr 2024 16:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990343;
-	bh=o0a3fu1UgUvmYE+JWRv7ok1x6UEihRcM5NAaSW76cZM=;
+	s=korg; t=1711990346;
+	bh=xiqTiyEGZowxrRQ07+h+fkxMRd8DvneZEcW2g8RlNo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRg5czjj1yUYuWxWFNSOClqkA2aC0zI2cFJgJjCmWJhI+QNbrzKux+0hytHdUT3cf
-	 tig6ei7fOMuWdT33lTuK7Dsu5FNCa7cQUAtQr1RGKjtyfOQkKTQsFnwpVYlg6e9oJT
-	 /9XKfxa7kTre052xOVJJJXbMwFOD2RCKogke2bQk=
+	b=DvZAH8GLOG9uGzI2vgJZic7CIRkoIXOEDWa1uqEKOQpTxCNq+eHH2u8xKjjPyqNi/
+	 BGRRUqBmMAPqfOF8vfE3uOGnw4BIYVRYVan+QODyM3jzkDE58INdPHuyhc0JeZhZxY
+	 Kqis6JkrKF6IFGfgiSOiiomyIZmQt+9CqZis3veA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 322/396] wifi: iwlwifi: mvm: disable MLO for the time being
-Date: Mon,  1 Apr 2024 17:46:11 +0200
-Message-ID: <20240401152557.515524071@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.6 323/396] wifi: iwlwifi: fw: dont always use FW dump trig
+Date: Mon,  1 Apr 2024 17:46:12 +0200
+Message-ID: <20240401152557.544507786@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,33 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-commit 5f404005055304830bbbee0d66af2964fc48f29e upstream.
+commit 045a5b645dd59929b0e05375f493cde3a0318271 upstream.
 
-MLO ended up not really fully stable yet, we want to make
-sure it works well with the ecosystem before enabling it.
-Thus, remove the flag, but set WIPHY_FLAG_DISABLE_WEXT so
-we don't get wireless extensions back until we enable MLO
-for this hardware.
+Since the dump_data (struct iwl_fwrt_dump_data) is a union,
+it's not safe to unconditionally access and use the 'trig'
+member, it might be 'desc' instead. Access it only if it's
+known to be 'trig' rather than 'desc', i.e. if ini-debug
+is present.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240314110951.d6ad146df98d.I47127e4fdbdef89e4ccf7483641570ee7871d4e6@changeid
+Fixes: 0eb50c674a1e ("iwlwifi: yoyo: send hcmd to fw after dump collection completes.")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240319100755.e2976bc58b29.I72fbd6135b3623227de53d8a2bb82776066cb72b@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -318,7 +318,7 @@ int iwl_mvm_mac_setup_register(struct iw
- 	if (mvm->mld_api_is_used && mvm->nvm_data->sku_cap_11be_enable &&
- 	    !iwlwifi_mod_params.disable_11ax &&
- 	    !iwlwifi_mod_params.disable_11be)
--		hw->wiphy->flags |= WIPHY_FLAG_SUPPORTS_MLO;
-+		hw->wiphy->flags |= WIPHY_FLAG_DISABLE_WEXT;
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -2933,8 +2933,6 @@ static void iwl_fw_dbg_collect_sync(stru
+ 	struct iwl_fw_dbg_params params = {0};
+ 	struct iwl_fwrt_dump_data *dump_data =
+ 		&fwrt->dump.wks[wk_idx].dump_data;
+-	u32 policy;
+-	u32 time_point;
+ 	if (!test_bit(wk_idx, &fwrt->dump.active_wks))
+ 		return;
  
- 	/* With MLD FW API, it tracks timing by itself,
- 	 * no need for any timing from the host
+@@ -2965,13 +2963,16 @@ static void iwl_fw_dbg_collect_sync(stru
+ 
+ 	iwl_fw_dbg_stop_restart_recording(fwrt, &params, false);
+ 
+-	policy = le32_to_cpu(dump_data->trig->apply_policy);
+-	time_point = le32_to_cpu(dump_data->trig->time_point);
+-
+-	if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
+-		IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
+-		iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
++	if (iwl_trans_dbg_ini_valid(fwrt->trans)) {
++		u32 policy = le32_to_cpu(dump_data->trig->apply_policy);
++		u32 time_point = le32_to_cpu(dump_data->trig->time_point);
++
++		if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
++			IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
++			iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
++		}
+ 	}
++
+ 	if (fwrt->trans->dbg.last_tp_resetfw == IWL_FW_INI_RESET_FW_MODE_STOP_FW_ONLY)
+ 		iwl_force_nmi(fwrt->trans);
+ 
 
 
