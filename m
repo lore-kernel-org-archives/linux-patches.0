@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061261CA8F;
-	Mon,  1 Apr 2024 16:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6C8446AC;
+	Mon,  1 Apr 2024 16:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987539; cv=none; b=LwLFZiHWWUXXjwv3xauOFLs6lMCm7UFTkOM94Jo2P8C9MNpG9SrxB+kysJ+j8kjseEoSFmE3G1wNZZDf+2ymcBmZznpmxW/OCMO0g5eE1/+LzEPLvBtxn9gVRhYDKBWAIxwZP7/lsPwpBMuQCYKgl1czIjw8ohzNRZNIUJ9gwKU=
+	t=1711987542; cv=none; b=JakVNbv2be4OlJUpir8CovV6kPwyH9x3A/NglCPwUMFx7rfUJ9JwMRtwy8vZR4YVOPJSn7npVq+2OZv2C5uXe3zhiIoNjJqBg4BZwENGLZF6fQob7BeeJN9bkf8xU8Q2I2dUrrLna2HdSo1OAx0HQTDpZ5zI6jOnbWv1AbU0dBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987539; c=relaxed/simple;
-	bh=yMvSsFSwst0w1inWkxeP4YUzIIu/LuPXpLE11eikMk8=;
+	s=arc-20240116; t=1711987542; c=relaxed/simple;
+	bh=+U89dGBWdFfd88jIQNbvQ1uJBHBV6Ikz53JrhE8ATjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PRQrotmCq6U53qGLk2fIvJADtwbPeUFVrEMtSbQ+8JjLUJCAX/27szqvtt+Jjj6CxhVAhxiZVHYxwepK7CLchj3mWXWxW4dwVV29Fkc2uoeLzOj/eYMXNfykMD2cUhfmbkdpLR93AKNRj3hMNMDgDd68Kt6/aHy2NxkrFDs9oyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDUhIFVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IaX+FeYwnf1ZY47bGGkcPrets8siL4SEyN903mLsQveXySStCzrQn1veWmzkpBZMOxYvySdZaZyh7uK9e2vqJ7EMItlukq60mdKbesF+5O8RU4cO1f1V4rqnQVYgY+tb+koIDoTBG2YxBI7hBy9Id4Rg94J5k8UJAlbOhCTdgBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1akve0aB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDUhIFVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62766C433F1;
-	Mon,  1 Apr 2024 16:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1akve0aB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2654C433C7;
+	Mon,  1 Apr 2024 16:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987538;
-	bh=yMvSsFSwst0w1inWkxeP4YUzIIu/LuPXpLE11eikMk8=;
+	s=korg; t=1711987542;
+	bh=+U89dGBWdFfd88jIQNbvQ1uJBHBV6Ikz53JrhE8ATjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDUhIFVP/C+22W/Ztiw9/e+hSmMH/x4r1Qxp20HF4GjNzuRa7HD7zqafbXiK1NF3L
-	 P82eJARxT9JgTbzPNF1g9HCBpxv6becRAbXFtNChsEBEqIkD9/PuXhZHyC4MwxF0uV
-	 GTODcp8nBKu8ehUz+ssZugFa4lUShFu67N8fJsIU=
+	b=1akve0aB7vMRDVik0Db8EMc9bxCJ1nYEjENNFoNEJgJngWmSgU6+yga2b1EHHqxpt
+	 5g7+pKcwT69ZGPGsos9u8+PAlrmwUBAqJUylhzU7MO5L3q6d3bCxa7URjCDsxiw2Wm
+	 7xtBgKiDzNajcQAke+NS8Y+PgjqzHVo/DSvvkkjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Zhang <ye.zhang@rock-chips.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.8 317/399] thermal: devfreq_cooling: Fix perf state when calculate dfc res_util
-Date: Mon,  1 Apr 2024 17:44:43 +0200
-Message-ID: <20240401152558.645532715@linuxfoundation.org>
+Subject: [PATCH 6.8 318/399] Revert "thermal: core: Dont update trip points inside the hysteresis range"
+Date: Mon,  1 Apr 2024 17:44:44 +0200
+Message-ID: <20240401152558.675311146@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,38 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Zhang <ye.zhang@rock-chips.com>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-commit a26de34b3c77ae3a969654d94be49e433c947e3b upstream.
+commit f67cf45deedb118af302534643627ce59074e8eb upstream.
 
-The issue occurs when the devfreq cooling device uses the EM power model
-and the get_real_power() callback is provided by the driver.
+It has been reported the commit cf3986f8c01d3 introduced a regression
+when the temperature is wavering in the hysteresis region. The
+mitigation stops leading to an uncontrolled temperature increase until
+reaching the critical trip point.
 
-The EM power table is sorted ascending，can't index the table by cooling
-device state，so convert cooling state to performance state by
-dfc->max_state - dfc->capped_state.
+Here what happens:
 
-Fixes: 615510fe13bd ("thermal: devfreq_cooling: remove old power model and use EM")
-Cc: 5.11+ <stable@vger.kernel.org> # 5.11+
-Signed-off-by: Ye Zhang <ye.zhang@rock-chips.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+ * 'throttle' is when the current temperature is greater than the trip
+   point temperature
+ * 'target' is the mitigation level
+ * 'passive' is positive when there is a mitigation, zero otherwise
+ * these values are computed in the step_wise governor
+
+Configuration:
+
+ trip point 1: temp=95°C, hyst=5°C (passive)
+ trip point 2: temp=115°C, hyst=0°C (critical)
+ governor: step_wise
+
+ 1. The temperature crosses the way up the trip point 1 at 95°C
+
+   - trend=raising
+   - throttle=1, target=1
+   - passive=1
+   - set_trips: low=90°C, high=115°C
+
+ 2. The temperature decreases but stays in the hysteresis region at
+    93°C
+
+   - trend=dropping
+   - throttle=0, target=0
+   - passive=1
+
+   Before cf3986f8c01d3
+   - set_trips: low=90°C, high=95°C
+
+   After cf3986f8c01d3
+   - set_trips: low=90°C, high=115°C
+
+ 3. The temperature increases a bit but stays in the hysteresis region
+    at 94°C (so below the trip point 1 temp 95°C)
+
+   - trend=raising
+   - throttle=0, target=0
+   - passive=1
+
+   Before cf3986f8c01d3
+   - set_trips: low=90°C, high=95°C
+
+   After cf3986f8c01d3
+   - set_trips: low=90°C, high=115°C
+
+ 4. The temperature decreases but stays in the hysteresis region at
+    93°C
+
+   - trend=dropping
+   - throttle=0, target=THERMAL_NO_TARGET
+   - passive=0
+
+   Before cf3986f8c01d3
+   - set_trips: low=90°C, high=95°C
+
+   After cf3986f8c01d3
+   - set_trips: low=90°C, high=115°C
+
+At this point, the 'passive' value is zero, there is no mitigation,
+the temperature is in the hysteresis region, the next trip point is
+115°C. As 'passive' is zero, the timer to monitor the thermal zone is
+disabled. Consequently if the temperature continues to increase, no
+mitigation will happen and it will reach the 115°C trip point and
+reboot.
+
+Before the optimization, the high boundary would have been 95°C, thus
+triggering the mitigation again and rearming the polling timer.
+
+The optimization make sense but given the current implementation of
+the step_wise governor collaborating via this 'passive' flag with the
+core framework it can not work.
+
+>From a higher perspective it seems like there is a problem between the
+governor which sets a variable to be used by the core framework. That
+sounds akward and it would make much more sense if the core framework
+controls the governor and not the opposite. But as the devil hides in
+the details, there are some subtilities to be addressed before.
+
+Elaborating those would be out of the scope this changelog. So let's
+stay simple and revert the change first to fixup all broken mobile
+platforms.
+
+This reverts commit cf3986f8c01d3 ("thermal: core: Don't update trip
+points inside the hysteresis range") and takes a conflict with commit
+0c0c4740c9d26 ("0c0c4740c9d2 thermal: trip: Use for_each_trip() in
+__thermal_zone_set_trips()") in drivers/thermal/thermal_trip.c into
+account.
+
+Fixes: cf3986f8c01d3 ("thermal: core: Don't update trip points inside the hysteresis range")
+Reported-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Acked-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Cc: 6.7+ <stable@vger.kernel.org> # 6.7+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/devfreq_cooling.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/thermal_trip.c |   19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
---- a/drivers/thermal/devfreq_cooling.c
-+++ b/drivers/thermal/devfreq_cooling.c
-@@ -201,7 +201,7 @@ static int devfreq_cooling_get_requested
+--- a/drivers/thermal/thermal_trip.c
++++ b/drivers/thermal/thermal_trip.c
+@@ -65,7 +65,6 @@ void __thermal_zone_set_trips(struct the
+ {
+ 	const struct thermal_trip *trip;
+ 	int low = -INT_MAX, high = INT_MAX;
+-	bool same_trip = false;
+ 	int ret;
  
- 		res = dfc->power_ops->get_real_power(df, power, freq, voltage);
- 		if (!res) {
--			state = dfc->capped_state;
-+			state = dfc->max_state - dfc->capped_state;
+ 	lockdep_assert_held(&tz->lock);
+@@ -74,36 +73,22 @@ void __thermal_zone_set_trips(struct the
+ 		return;
  
- 			/* Convert EM power into milli-Watts first */
- 			dfc->res_util = dfc->em_pd->table[state].power;
+ 	for_each_trip(tz, trip) {
+-		bool low_set = false;
+ 		int trip_low;
+ 
+ 		trip_low = trip->temperature - trip->hysteresis;
+ 
+-		if (trip_low < tz->temperature && trip_low > low) {
++		if (trip_low < tz->temperature && trip_low > low)
+ 			low = trip_low;
+-			low_set = true;
+-			same_trip = false;
+-		}
+ 
+ 		if (trip->temperature > tz->temperature &&
+-		    trip->temperature < high) {
++		    trip->temperature < high)
+ 			high = trip->temperature;
+-			same_trip = low_set;
+-		}
+ 	}
+ 
+ 	/* No need to change trip points */
+ 	if (tz->prev_low_trip == low && tz->prev_high_trip == high)
+ 		return;
+ 
+-	/*
+-	 * If "high" and "low" are the same, skip the change unless this is the
+-	 * first time.
+-	 */
+-	if (same_trip && (tz->prev_low_trip != -INT_MAX ||
+-	    tz->prev_high_trip != INT_MAX))
+-		return;
+-
+ 	tz->prev_low_trip = low;
+ 	tz->prev_high_trip = high;
+ 
 
 
