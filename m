@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A402481D1;
-	Mon,  1 Apr 2024 16:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16251E525;
+	Mon,  1 Apr 2024 16:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990279; cv=none; b=P5a2N46QjaVjZZ5O+RACCwHak2m6Os1Hfq9sTDI4T7ldHIusqAZhyQT3VOTpNax4DAbxkRizSFZ1y6fKALqX6jgHuzSxiQzw2kqtIRqfrHAnz1pNj035qinTRP21rvUfRcHkEf5ojeCAHGnr9RO31Uv07BQXiCc0ysygcrilVFE=
+	t=1711990281; cv=none; b=hASwW4MqzD67YjOacHRjSttilljU2SGk1AFM4Ch9knxwY61UCmtiZBh9Rm98h/otZ7s17MI3DGMUhc2rdfbARw5IXjBFJBwpKudPs9Vb1Wb/9Eli2MJ/2+YE5dsZhsGTkENBF5tJkyc8qKd9s3qnO/I8AZz5Wt8/jRaTh5q+2b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990279; c=relaxed/simple;
-	bh=HS/JVhM1COEUTYhyaGHvp22rW+4QUy6+c62E+T+IcSg=;
+	s=arc-20240116; t=1711990281; c=relaxed/simple;
+	bh=5+nTIL7w0OtY1dz2J6kr94BjTtcvJxB28z9arG7W6So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZH6lLYsdMCC5hQ0vbF7CCeAMM/yZsbrvU1FFxgjRINjhPywa7hIhNDMyX/Bl2Ba7xw/pSfjR7bDLWQ8N9sPM988706tWH+5qs10DNQTZ16mXZsTFerB+MDstc6WDIpkzhzi3lZUE6MLxtJsKQgWxdMFYZ3zjsG8nBWCgfUHlRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMLFPFnk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxLkIlHlkI2oCkgACL4Z2acYzP8eGt2cu/MRMe4uRCh+heeJ4Or7+wKvsi8kL+zcKddLkzIrnVKgtUlNpzYO16p0piaOsrtDva/obHkdU8oZz89Eh2zxW4HRPtVv7FNXDTbR8ch6Q9u5MzbtOfixfmcYhXUmDmkIpWom1/Mqku4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXngDd7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMLFPFnk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC93C43390;
-	Mon,  1 Apr 2024 16:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXngDd7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E05C433A6;
+	Mon,  1 Apr 2024 16:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990278;
-	bh=HS/JVhM1COEUTYhyaGHvp22rW+4QUy6+c62E+T+IcSg=;
+	s=korg; t=1711990281;
+	bh=5+nTIL7w0OtY1dz2J6kr94BjTtcvJxB28z9arG7W6So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMLFPFnkfRoeF0Vtw9tHL595K2iRnj//FG1+PWRYlf8ylBzr/dXTXSoJDdoipwQRn
-	 IuZ+TeVE+vXy+12ul2WpxKMVZjifZwzRUt/6cxjnxKK7zkDNoBSx3hfR9yzX4o1pM1
-	 li7SMIew3krYHuO3H9fyI72cQUB9rtnk3RnXQxAE=
+	b=jXngDd7HprONyjUk011/jvqOrXXadmEjO8t6jVJ2eCHmRWKBT2q58PhjZgMfxdTne
+	 /c07xQNlWRDzhzVJ2rO28McAFDbGdKD6G0/STwWrr9VfU0SVN38dhuOZGAu/I3vEF6
+	 NPViBTPAYUPFmmGO/Y0gprF/P3MvUHXeuetsMbrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Dave Chinner <david@fromorbit.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>
-Subject: [PATCH 6.6 274/396] xfs: update dir3 leaf block metadata after swap
-Date: Mon,  1 Apr 2024 17:45:23 +0200
-Message-ID: <20240401152556.080265421@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 301/396] x86/mpparse: Register APIC address only once
+Date: Mon,  1 Apr 2024 17:45:50 +0200
+Message-ID: <20240401152556.874691756@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -54,68 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 5759aa4f956034b289b0ae2c99daddfc775442e1 upstream.
+[ Upstream commit f2208aa12c27bfada3c15c550c03ca81d42dcac2 ]
 
-xfs_da3_swap_lastblock() copy the last block content to the dead block,
-but do not update the metadata in it. We need update some metadata
-for some kinds of type block, such as dir3 leafn block records its
-blkno, we shall update it to the dead block blkno. Otherwise,
-before write the xfs_buf to disk, the verify_write() will fail in
-blk_hdr->blkno != xfs_buf->b_bn, then xfs will be shutdown.
+The APIC address is registered twice. First during the early detection and
+afterwards when actually scanning the table for APIC IDs. The APIC and
+topology core warn about the second attempt.
 
-We will get this warning:
+Restrict it to the early detection call.
 
-  XFS (dm-0): Metadata corruption detected at xfs_dir3_leaf_verify+0xa8/0xe0 [xfs], xfs_dir3_leafn block 0x178
-  XFS (dm-0): Unmount and run xfs_repair
-  XFS (dm-0): First 128 bytes of corrupted metadata buffer:
-  00000000e80f1917: 00 80 00 0b 00 80 00 07 3d ff 00 00 00 00 00 00  ........=.......
-  000000009604c005: 00 00 00 00 00 00 01 a0 00 00 00 00 00 00 00 00  ................
-  000000006b6fb2bf: e4 44 e3 97 b5 64 44 41 8b 84 60 0e 50 43 d9 bf  .D...dDA..`.PC..
-  00000000678978a2: 00 00 00 00 00 00 00 83 01 73 00 93 00 00 00 00  .........s......
-  00000000b28b247c: 99 29 1d 38 00 00 00 00 99 29 1d 40 00 00 00 00  .).8.....).@....
-  000000002b2a662c: 99 29 1d 48 00 00 00 00 99 49 11 00 00 00 00 00  .).H.....I......
-  00000000ea2ffbb8: 99 49 11 08 00 00 45 25 99 49 11 10 00 00 48 fe  .I....E%.I....H.
-  0000000069e86440: 99 49 11 18 00 00 4c 6b 99 49 11 20 00 00 4d 97  .I....Lk.I. ..M.
-  XFS (dm-0): xfs_do_force_shutdown(0x8) called from line 1423 of file fs/xfs/xfs_buf.c.  Return address = 00000000c0ff63c1
-  XFS (dm-0): Corruption of in-memory data detected.  Shutting down filesystem
-  XFS (dm-0): Please umount the filesystem and rectify the problem(s)
-
->>From the log above, we know xfs_buf->b_no is 0x178, but the block's hdr record
-its blkno is 0x1a0.
-
-Fixes: 24df33b45ecf ("xfs: add CRC checking to dir2 leaf blocks")
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Suggested-by: Dave Chinner <david@fromorbit.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 81287ad65da5 ("x86/apic: Sanitize APIC address setup")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240322185305.297774848@linutronix.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_da_btree.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/mpparse.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_da_btree.c
-+++ b/fs/xfs/libxfs/xfs_da_btree.c
-@@ -2316,10 +2316,17 @@ xfs_da3_swap_lastblock(
- 		return error;
- 	/*
- 	 * Copy the last block into the dead buffer and log it.
-+	 * On CRC-enabled file systems, also update the stamped in blkno.
- 	 */
- 	memcpy(dead_buf->b_addr, last_buf->b_addr, args->geo->blksize);
-+	if (xfs_has_crc(mp)) {
-+		struct xfs_da3_blkinfo *da3 = dead_buf->b_addr;
-+
-+		da3->blkno = cpu_to_be64(xfs_buf_daddr(dead_buf));
+diff --git a/arch/x86/kernel/mpparse.c b/arch/x86/kernel/mpparse.c
+index b223922248e9f..15c700d358700 100644
+--- a/arch/x86/kernel/mpparse.c
++++ b/arch/x86/kernel/mpparse.c
+@@ -196,12 +196,12 @@ static int __init smp_read_mpc(struct mpc_table *mpc, unsigned early)
+ 	if (!smp_check_mpc(mpc, oem, str))
+ 		return 0;
+ 
+-	/* Initialize the lapic mapping */
+-	if (!acpi_lapic)
+-		register_lapic_address(mpc->lapic);
+-
+-	if (early)
++	if (early) {
++		/* Initialize the lapic mapping */
++		if (!acpi_lapic)
++			register_lapic_address(mpc->lapic);
+ 		return 1;
 +	}
- 	xfs_trans_log_buf(tp, dead_buf, 0, args->geo->blksize - 1);
- 	dead_info = dead_buf->b_addr;
-+
- 	/*
- 	 * Get values from the moved block.
- 	 */
+ 
+ 	/* Now process the configuration blocks. */
+ 	while (count < mpc->length) {
+-- 
+2.43.0
+
 
 
