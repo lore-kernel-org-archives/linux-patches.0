@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC64247A64;
-	Mon,  1 Apr 2024 17:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52AF40876;
+	Mon,  1 Apr 2024 17:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991254; cv=none; b=R0T5zOd6ObWtNK+hNzwsLtc8Bb+pIxHULuWOoOFoKJBwqIxzjpzCxpJWxs8+rbomSbKWyrKFtg6YrSzem2apSdl33PLcZ/49LfF214hhVj14XoGYA5U9E1wccNrJuGr5httjg8V9le9fWBdWpihgaIy2dXZC/7mXKAlh115NLmw=
+	t=1711991257; cv=none; b=CRjEBIbLiUckNSgn1ldJFJmUuHw/Amp/HxMfECbuGk16GnFeaONqqhQ4ULLq7xPQh1m9LHF+4X0zNJPjcmlVqRd3UR2joKOifr14ysmAE1BnrwUntrre+4DCmZzKIYu1GWs4sJmJO1Ie3M+YFbycAGHAFAw/xXRV+IICYhKe2cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991254; c=relaxed/simple;
-	bh=qrD1bxIptSI8MOLpF0yaa0hs7IR5nOuFST0trEE4ihA=;
+	s=arc-20240116; t=1711991257; c=relaxed/simple;
+	bh=c5A7lwduq/faPvjQuT1r8VlmtRsrKAj4Yzpv1O4quuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bel88N9EuT4GN/dMg2wIoHZYS2mZvaLUTv4P1uF4olqGP8bZi5hI+evDBBna56aahIWJDva5cZ+n3ldytXXU0qSMMTxbPm37TEcGD79WNKtdgqcNHeydwfohdRPEPyl44InDISifiWGDX37Bk87YqZscP0q6s8JHfzY8Tni/q10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk5yEaev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEafQKRbyTPhmGD7Un18mALYT76PMV8jpiG+w6n5IR8PVhfSo/s9uFuID+9UQygcNLoSaX68kRvoQoKgGFMv2qX+ngwLJJLHbXDvsA42XlwcK8WXbhrKZYHTnABTLUMcaVDdiq4uFYicdmLqsbGW1Dm5vipv5uAKrwAtq163opE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2acRtBPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk5yEaev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95EAC433F1;
-	Mon,  1 Apr 2024 17:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2acRtBPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C34C433F1;
+	Mon,  1 Apr 2024 17:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991254;
-	bh=qrD1bxIptSI8MOLpF0yaa0hs7IR5nOuFST0trEE4ihA=;
+	s=korg; t=1711991257;
+	bh=c5A7lwduq/faPvjQuT1r8VlmtRsrKAj4Yzpv1O4quuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk5yEaevV+RlaJYXViutm9GshSsnY3qX54rPFFDWRJHQbT9Eqnc0u2MtmJPE+rCNg
-	 OmligDUAD4wp2QZ6eVQYv3s42oR02KIPSpvbbssgkyRfY7lIoBryfYgd8KWoZRYZL/
-	 uOpyJRoDC6X+vMAupzzUI9vLlvje0pABvLnKZWgw=
+	b=2acRtBPpwPug9o4Es/VbEqltDeX+b+l8etSsc11b81OmJFUBJByRQfHX3rCXR2uUK
+	 q9AeiIrDG5p/t2dPuOGUtYKw1Pxh7/8IE8shv4oyqAvx1FxC3vm3DDZ2/tzBQ4ACDo
+	 /QN7ddtK1eWr6Dl2SZ3JBol4KlW4eY8vJzj/TZ/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Loughlin <kevinloughlin@google.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.1 208/272] x86/sev: Fix position dependent variable references in startup code
-Date: Mon,  1 Apr 2024 17:46:38 +0200
-Message-ID: <20240401152537.406421520@linuxfoundation.org>
+	David Laight <david.laight@aculab.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 181/272] minmax: add umin(a, b) and umax(a, b)
+Date: Mon,  1 Apr 2024 17:46:11 +0200
+Message-ID: <20240401152536.468117836@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,279 +56,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: David Laight <David.Laight@ACULAB.COM>
 
-commit 1c811d403afd73f04bde82b83b24c754011bd0e8 upstream.
+[ Upstream commit 80fcac55385ccb710d33a20dc1caaef29bd5a921 ]
 
-The early startup code executes from a 1:1 mapping of memory, which
-differs from the mapping that the code was linked and/or relocated to
-run at. The latter mapping is not active yet at this point, and so
-symbol references that rely on it will fault.
+Patch series "minmax: Relax type checks in min() and max()", v4.
 
-Given that the core kernel is built without -fPIC, symbol references are
-typically emitted as absolute, and so any such references occuring in
-the early startup code will therefore crash the kernel.
+The min() (etc) functions in minmax.h require that the arguments have
+exactly the same types.
 
-While an attempt was made to work around this for the early SEV/SME
-startup code, by forcing RIP-relative addressing for certain global
-SEV/SME variables via inline assembly (see snp_cpuid_get_table() for
-example), RIP-relative addressing must be pervasively enforced for
-SEV/SME global variables when accessed prior to page table fixups.
+However when the type check fails, rather than look at the types and fix
+the type of a variable/constant, everyone seems to jump on min_t().  In
+reality min_t() ought to be rare - when something unusual is being done,
+not normality.
 
-__startup_64() already handles this issue for select non-SEV/SME global
-variables using fixup_pointer(), which adjusts the pointer relative to a
-`physaddr` argument. To avoid having to pass around this `physaddr`
-argument across all functions needing to apply pointer fixups, introduce
-a macro RIP_RELATIVE_REF() which generates a RIP-relative reference to
-a given global variable. It is used where necessary to force
-RIP-relative accesses to global variables.
+The orginal min() (added in 2.4.9) replaced several inline functions and
+included the type - so matched the implicit casting of the function call.
+This was renamed min_t() in 2.4.10 and the current min() added.  There is
+no actual indication that the conversion of negatve values to large
+unsigned values has ever been an actual problem.
 
-For backporting purposes, this patch makes no attempt at cleaning up
-other occurrences of this pattern, involving either inline asm or
-fixup_pointer(). Those will be addressed later.
+A quick grep shows 5734 min() and 4597 min_t().  Having the casts on
+almost half of the calls shows that something is clearly wrong.
 
-  [ bp: Call it "rip_rel_ref" everywhere like other code shortens
-    "rIP-relative reference" and make the asm wrapper __always_inline. ]
+If the wrong type is picked (and it is far too easy to pick the type of
+the result instead of the larger input) then significant bits can get
+discarded.
 
-Co-developed-by: Kevin Loughlin <kevinloughlin@google.com>
-Signed-off-by: Kevin Loughlin <kevinloughlin@google.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/all/20240130220845.1978329-1-kevinloughlin@google.com
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Pretty much the worst example is in the derived clamp_val(), consider:
+        unsigned char x = 200u;
+        y = clamp_val(x, 10u, 300u);
+
+I also suspect that many of the min_t(u16, ...) are actually wrong.  For
+example copy_data() in printk_ringbuffer.c contains:
+
+        data_size = min_t(u16, buf_size, len);
+
+Here buf_size is 'unsigned int' and len 'u16', pass a 64k buffer (can you
+prove that doesn't happen?) and no data is returned.  Apparantly it did -
+and has since been fixed.
+
+The only reason that most of the min_t() are 'fine' is that pretty much
+all the values in the kernel are between 0 and INT_MAX.
+
+Patch 1 adds umin(), this uses integer promotions to convert both
+arguments to 'unsigned long long'.  It can be used to compare a signed
+type that is known to contain a non-negative value with an unsigned type.
+The compiler typically optimises it all away.  Added first so that it can
+be referred to in patch 2.
+
+Patch 2 replaces the 'same type' check with a 'same signedness' one.  This
+makes min(unsigned_int_var, sizeof()) be ok.  The error message is also
+improved and will contain the expanded form of both arguments (useful for
+seeing how constants are defined).
+
+Patch 3 just fixes some whitespace.
+
+Patch 4 allows comparisons of 'unsigned char' and 'unsigned short' to
+signed types.  The integer promotion rules convert them both to 'signed
+int' prior to the comparison so they can never cause a negative value be
+converted to a large positive one.
+
+Patch 5 (rewritted for v4) allows comparisons of unsigned values against
+non-negative constant integer expressions.  This makes
+min(unsigned_int_var, 4) be ok.
+
+The only common case that is still errored is the comparison of signed
+values against unsigned constant integer expressions below __INT_MAX__.
+Typcally min(int_val, sizeof (foo)), the real fix for this is casting the
+constant: min(int_var, (int)sizeof (foo)).
+
+With all the patches applied pretty much all the min_t() could be replaced
+by min(), and most of the rest by umin().  However they all need careful
+inspection due to code like:
+
+        sz = min_t(unsigned char, sz - 1, LIM - 1) + 1;
+
+which converts 0 to LIM.
+
+This patch (of 6):
+
+umin() and umax() can be used when min()/max() errors a signed v unsigned
+compare when the signed value is known to be non-negative.
+
+Unlike min_t(some_unsigned_type, a, b) umin() will never mask off high
+bits if an inappropriate type is selected.
+
+The '+ 0u + 0ul + 0ull' may look strange.
+The '+ 0u' is needed for 'signed int' on 64bit systems.
+The '+ 0ul' is needed for 'signed long' on 32bit systems.
+The '+ 0ull' is needed for 'signed long long'.
+
+Link: https://lkml.kernel.org/r/b97faef60ad24922b530241c5d7c933c@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/41d93ca827a248698ec64bf57e0c05a5@AcuMS.aculab.com
+Signed-off-by: David Laight <david.laight@aculab.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 51b30ecb73b4 ("swiotlb: Fix alignment checks when both allocation and DMA masks are present")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/coco/core.c               |    7 +------
- arch/x86/include/asm/asm.h         |   14 ++++++++++++++
- arch/x86/include/asm/coco.h        |    8 +++++++-
- arch/x86/include/asm/mem_encrypt.h |   15 +++++++++------
- arch/x86/kernel/sev-shared.c       |   12 ++++++------
- arch/x86/kernel/sev.c              |    4 ++--
- arch/x86/mm/mem_encrypt_identity.c |   27 ++++++++++++---------------
- 7 files changed, 51 insertions(+), 36 deletions(-)
+ include/linux/minmax.h | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/arch/x86/coco/core.c
-+++ b/arch/x86/coco/core.c
-@@ -14,7 +14,7 @@
- #include <asm/processor.h>
+diff --git a/include/linux/minmax.h b/include/linux/minmax.h
+index 5433c08fcc685..1aea34b8f19bf 100644
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -51,6 +51,23 @@
+  */
+ #define max(x, y)	__careful_cmp(x, y, >)
  
- enum cc_vendor cc_vendor __ro_after_init = CC_VENDOR_NONE;
--static u64 cc_mask __ro_after_init;
-+u64 cc_mask __ro_after_init;
- 
- static bool intel_cc_platform_has(enum cc_attr attr)
- {
-@@ -128,8 +128,3 @@ u64 cc_mkdec(u64 val)
- 	}
- }
- EXPORT_SYMBOL_GPL(cc_mkdec);
--
--__init void cc_set_mask(u64 mask)
--{
--	cc_mask = mask;
--}
---- a/arch/x86/include/asm/asm.h
-+++ b/arch/x86/include/asm/asm.h
-@@ -113,6 +113,20 @@
- 
- #endif
- 
-+#ifndef __ASSEMBLY__
-+#ifndef __pic__
-+static __always_inline __pure void *rip_rel_ptr(void *p)
-+{
-+	asm("leaq %c1(%%rip), %0" : "=r"(p) : "i"(p));
++/**
++ * umin - return minimum of two non-negative values
++ *   Signed types are zero extended to match a larger unsigned type.
++ * @x: first value
++ * @y: second value
++ */
++#define umin(x, y)	\
++	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, <)
 +
-+	return p;
-+}
-+#define RIP_REL_REF(var)	(*(typeof(&(var)))rip_rel_ptr(&(var)))
-+#else
-+#define RIP_REL_REF(var)	(var)
-+#endif
-+#endif
++/**
++ * umax - return maximum of two non-negative values
++ * @x: first value
++ * @y: second value
++ */
++#define umax(x, y)	\
++	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, >)
 +
- /*
-  * Macros to generate condition code outputs from inline assembly,
-  * The output operand must be type "bool".
---- a/arch/x86/include/asm/coco.h
-+++ b/arch/x86/include/asm/coco.h
-@@ -2,6 +2,7 @@
- #ifndef _ASM_X86_COCO_H
- #define _ASM_X86_COCO_H
- 
-+#include <asm/asm.h>
- #include <asm/types.h>
- 
- enum cc_vendor {
-@@ -12,9 +13,14 @@ enum cc_vendor {
- };
- 
- extern enum cc_vendor cc_vendor;
-+extern u64 cc_mask;
- 
- #ifdef CONFIG_ARCH_HAS_CC_PLATFORM
--void cc_set_mask(u64 mask);
-+static inline void cc_set_mask(u64 mask)
-+{
-+	RIP_REL_REF(cc_mask) = mask;
-+}
-+
- u64 cc_mkenc(u64 val);
- u64 cc_mkdec(u64 val);
- #else
---- a/arch/x86/include/asm/mem_encrypt.h
-+++ b/arch/x86/include/asm/mem_encrypt.h
-@@ -15,7 +15,8 @@
- #include <linux/init.h>
- #include <linux/cc_platform.h>
- 
--#include <asm/bootparam.h>
-+#include <asm/asm.h>
-+struct boot_params;
- 
- #ifdef CONFIG_X86_MEM_ENCRYPT
- void __init mem_encrypt_init(void);
-@@ -57,6 +58,11 @@ void __init mem_encrypt_free_decrypted_m
- 
- void __init sev_es_init_vc_handling(void);
- 
-+static inline u64 sme_get_me_mask(void)
-+{
-+	return RIP_REL_REF(sme_me_mask);
-+}
-+
- #define __bss_decrypted __section(".bss..decrypted")
- 
- #else	/* !CONFIG_AMD_MEM_ENCRYPT */
-@@ -88,6 +94,8 @@ early_set_mem_enc_dec_hypercall(unsigned
- 
- static inline void mem_encrypt_free_decrypted_mem(void) { }
- 
-+static inline u64 sme_get_me_mask(void) { return 0; }
-+
- #define __bss_decrypted
- 
- #endif	/* CONFIG_AMD_MEM_ENCRYPT */
-@@ -105,11 +113,6 @@ void add_encrypt_protection_map(void);
- 
- extern char __start_bss_decrypted[], __end_bss_decrypted[], __start_bss_decrypted_unused[];
- 
--static inline u64 sme_get_me_mask(void)
--{
--	return sme_me_mask;
--}
--
- #endif	/* __ASSEMBLY__ */
- 
- #endif	/* __X86_MEM_ENCRYPT_H__ */
---- a/arch/x86/kernel/sev-shared.c
-+++ b/arch/x86/kernel/sev-shared.c
-@@ -553,9 +553,9 @@ static int snp_cpuid(struct ghcb *ghcb,
- 		leaf->eax = leaf->ebx = leaf->ecx = leaf->edx = 0;
- 
- 		/* Skip post-processing for out-of-range zero leafs. */
--		if (!(leaf->fn <= cpuid_std_range_max ||
--		      (leaf->fn >= 0x40000000 && leaf->fn <= cpuid_hyp_range_max) ||
--		      (leaf->fn >= 0x80000000 && leaf->fn <= cpuid_ext_range_max)))
-+		if (!(leaf->fn <= RIP_REL_REF(cpuid_std_range_max) ||
-+		      (leaf->fn >= 0x40000000 && leaf->fn <= RIP_REL_REF(cpuid_hyp_range_max)) ||
-+		      (leaf->fn >= 0x80000000 && leaf->fn <= RIP_REL_REF(cpuid_ext_range_max))))
- 			return 0;
- 	}
- 
-@@ -1060,10 +1060,10 @@ static void __init setup_cpuid_table(con
- 		const struct snp_cpuid_fn *fn = &cpuid_table->fn[i];
- 
- 		if (fn->eax_in == 0x0)
--			cpuid_std_range_max = fn->eax;
-+			RIP_REL_REF(cpuid_std_range_max) = fn->eax;
- 		else if (fn->eax_in == 0x40000000)
--			cpuid_hyp_range_max = fn->eax;
-+			RIP_REL_REF(cpuid_hyp_range_max) = fn->eax;
- 		else if (fn->eax_in == 0x80000000)
--			cpuid_ext_range_max = fn->eax;
-+			RIP_REL_REF(cpuid_ext_range_max) = fn->eax;
- 	}
- }
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -736,7 +736,7 @@ void __init early_snp_set_memory_private
- 	 * This eliminates worries about jump tables or checking boot_cpu_data
- 	 * in the cc_platform_has() function.
- 	 */
--	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
-+	if (!(RIP_REL_REF(sev_status) & MSR_AMD64_SEV_SNP_ENABLED))
- 		return;
- 
- 	 /*
-@@ -758,7 +758,7 @@ void __init early_snp_set_memory_shared(
- 	 * This eliminates worries about jump tables or checking boot_cpu_data
- 	 * in the cc_platform_has() function.
- 	 */
--	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
-+	if (!(RIP_REL_REF(sev_status) & MSR_AMD64_SEV_SNP_ENABLED))
- 		return;
- 
- 	/* Invalidate the memory pages before they are marked shared in the RMP table. */
---- a/arch/x86/mm/mem_encrypt_identity.c
-+++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -304,7 +304,8 @@ void __init sme_encrypt_kernel(struct bo
- 	 * instrumentation or checking boot_cpu_data in the cc_platform_has()
- 	 * function.
- 	 */
--	if (!sme_get_me_mask() || sev_status & MSR_AMD64_SEV_ENABLED)
-+	if (!sme_get_me_mask() ||
-+	    RIP_REL_REF(sev_status) & MSR_AMD64_SEV_ENABLED)
- 		return;
- 
- 	/*
-@@ -541,11 +542,11 @@ void __init sme_enable(struct boot_param
- 	me_mask = 1UL << (ebx & 0x3f);
- 
- 	/* Check the SEV MSR whether SEV or SME is enabled */
--	sev_status   = __rdmsr(MSR_AMD64_SEV);
--	feature_mask = (sev_status & MSR_AMD64_SEV_ENABLED) ? AMD_SEV_BIT : AMD_SME_BIT;
-+	RIP_REL_REF(sev_status) = msr = __rdmsr(MSR_AMD64_SEV);
-+	feature_mask = (msr & MSR_AMD64_SEV_ENABLED) ? AMD_SEV_BIT : AMD_SME_BIT;
- 
- 	/* The SEV-SNP CC blob should never be present unless SEV-SNP is enabled. */
--	if (snp && !(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
-+	if (snp && !(msr & MSR_AMD64_SEV_SNP_ENABLED))
- 		snp_abort();
- 
- 	/* Check if memory encryption is enabled */
-@@ -571,7 +572,6 @@ void __init sme_enable(struct boot_param
- 			return;
- 	} else {
- 		/* SEV state cannot be controlled by a command line option */
--		sme_me_mask = me_mask;
- 		goto out;
- 	}
- 
-@@ -590,16 +590,13 @@ void __init sme_enable(struct boot_param
- 	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
- 				     ((u64)bp->ext_cmd_line_ptr << 32));
- 
--	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
--		goto out;
--
--	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
--		sme_me_mask = me_mask;
-+	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0 ||
-+	    strncmp(buffer, cmdline_on, sizeof(buffer)))
-+		return;
- 
- out:
--	if (sme_me_mask) {
--		physical_mask &= ~sme_me_mask;
--		cc_vendor = CC_VENDOR_AMD;
--		cc_set_mask(sme_me_mask);
--	}
-+	RIP_REL_REF(sme_me_mask) = me_mask;
-+	physical_mask &= ~me_mask;
-+	cc_vendor = CC_VENDOR_AMD;
-+	cc_set_mask(me_mask);
- }
+ /**
+  * min3 - return minimum of three values
+  * @x: first value
+-- 
+2.43.0
+
 
 
