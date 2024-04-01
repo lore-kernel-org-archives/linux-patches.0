@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B101BA3F;
-	Mon,  1 Apr 2024 16:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84847BA3F;
+	Mon,  1 Apr 2024 16:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990729; cv=none; b=mFucl2csgebadPmw+l1Qp3SF1jsPB4yRoT4RiIP9nNnzNkVernOVjMw/s5h2m8FHeHIQZ1DyqlDE7LRpLSVUT/NHj/vhydEd88CKCqHLbIkR++PpLO85tbWba/r3nYpT/2QL9V6CKxijz8czPZkoJB/FfkovAQap2KDCpRFm21s=
+	t=1711990732; cv=none; b=TiV1p03PBM2QTsnaGj0Q7/o76AS3miw9sz1cRX/QSvLLKlNbEOdEJzbBO754fjHZJk2q5+cCA5hurTLAl6xp6mTD3DGPbmXWe3A+Csd96KF1WDOPmZmDzQCKAfA7ufaBpSNzSG6VFJj//2ILonTiWCbiZ5bqChF7l6cLUvg8Nkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990729; c=relaxed/simple;
-	bh=b9y8DvWUhCGWyd7xnJPEh/IvY6DBHD/o6U26W453WnE=;
+	s=arc-20240116; t=1711990732; c=relaxed/simple;
+	bh=pHrHZ+s8m5DnyM6Vy2KzLfNQo7q/xCX63pjKi2Sbl6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxRWMoA7B9HIpJRhvvvzILcQwjWBi/703VhOaVb0HRo5N6ASx3s4NRDZVDClGwiusWmJe4/BRi8HR26NuV98uDolfozy4OCC3BXKY5e1GKXAoZ7MwP0eaRzW3mMw3vHy8GYRs0gVJiuvoqsfJMURYSOEa0zQSPo2NlrEcdWsY9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcBF6/5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOKLJWnxOK0XcGGKuDOMxe05UTvY69XqmdJIKXkOk1fpYwXIKH++8hzEKBFMI5kbv9hKgRoYCu2OZyaK4sU5T8EBqaj/TQCpEMi20xaWWgwgtS+9/S9nNxnoV3iTq0tU8amzVSuWHdPb+iSteVLKHxKuePDYuOa2QU1L15lKTIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYUGuWJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcBF6/5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FF9C433F1;
-	Mon,  1 Apr 2024 16:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYUGuWJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103B8C433C7;
+	Mon,  1 Apr 2024 16:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990729;
-	bh=b9y8DvWUhCGWyd7xnJPEh/IvY6DBHD/o6U26W453WnE=;
+	s=korg; t=1711990732;
+	bh=pHrHZ+s8m5DnyM6Vy2KzLfNQo7q/xCX63pjKi2Sbl6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcBF6/5lHWaPHg632/3ZNvm3LmjxJ6Q/c6jWEwlS6KZN4ry+TFUFiBLIvptCMCdLr
-	 8UJk6fgoiyoVpPAQ5ew94DqQ7nCBS0QSTS1l6akHo76Z9dtrmdyVBrb65UtbgyCXiQ
-	 JtYi8kaaG2Is+u15NmyuuJGCpOsuPoKq4HcdrlIA=
+	b=UYUGuWJganJwOdC8wA1IlEfmq1L+O+e5VBDcSxQUvwuf7Dbkq0R+WZS8S3yVVk8cK
+	 eWril5xBRHmirpRi3uvJhk9EnluBI50uQW0+gswGfD+FJHI80yX83IH0x4QgxOGQ8o
+	 cfGTNpWhYjpOyUDRXW/Wxd1TeU0Kis+Gz2RHqcFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Helge Deller <deller@gmx.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/272] parisc: Fix csum_ipv6_magic on 64-bit systems
-Date: Mon,  1 Apr 2024 17:43:58 +0200
-Message-ID: <20240401152531.902220129@linuxfoundation.org>
+Subject: [PATCH 6.1 022/272] media: mc: Fix flags handling when creating pad links
+Date: Mon,  1 Apr 2024 17:43:32 +0200
+Message-ID: <20240401152531.036179888@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,53 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 4b75b12d70506e31fc02356bbca60f8d5ca012d0 ]
+[ Upstream commit 422f7af75d03d50895938d38bc9cb8be759c440f ]
 
-hppa 64-bit systems calculates the IPv6 checksum using 64-bit add
-operations. The last add folds protocol and length fields into the 64-bit
-result. While unlikely, this operation can overflow. The overflow can be
-triggered with a code sequence such as the following.
+The media_create_pad_link() function doesn't correctly clear reject link
+type flags, nor does it set the DATA_LINK flag. It only works because
+the MEDIA_LNK_FL_DATA_LINK flag's value is 0.
 
-	/* try to trigger massive overflows */
-	memset(tmp_buf, 0xff, sizeof(struct in6_addr));
-	csum_result = csum_ipv6_magic((struct in6_addr *)tmp_buf,
-				      (struct in6_addr *)tmp_buf,
-				      0xffff, 0xff, 0xffffffff);
+Fix it by returning an error if any link type flag is set. This doesn't
+introduce any regression, as nobody calls the media_create_pad_link()
+function with link type flags (easily checked by grepping for the flag
+in the source code, there are very few hits).
 
-Fix the problem by adding any overflows from the final add operation into
-the calculated checksum. Fortunately, we can do this without additional
-cost by replacing the add operation used to fold the checksum into 32 bit
-with "add,dc" to add in the missing carry.
+Set the MEDIA_LNK_FL_DATA_LINK explicitly, which is a no-op that the
+compiler will optimize out, but is still useful to make the code more
+explicit and easier to understand.
 
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/checksum.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/mc/mc-entity.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
-index e619e67440db9..c949aa20fa162 100644
---- a/arch/parisc/include/asm/checksum.h
-+++ b/arch/parisc/include/asm/checksum.h
-@@ -137,8 +137,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- "	add,dc		%3, %0, %0\n"  /* fold in proto+len | carry bit */
- "	extrd,u		%0, 31, 32, %4\n"/* copy upper half down */
- "	depdi		0, 31, 32, %0\n"/* clear upper half */
--"	add		%4, %0, %0\n"	/* fold into 32-bits */
--"	addc		0, %0, %0\n"	/* add carry */
-+"	add,dc		%4, %0, %0\n"	/* fold into 32-bits, plus carry */
-+"	addc		0, %0, %0\n"	/* add final carry */
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index 20a2630455f2c..688780c8734d4 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -1017,6 +1017,11 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
+ 	struct media_link *link;
+ 	struct media_link *backlink;
  
- #else
++	if (flags & MEDIA_LNK_FL_LINK_TYPE)
++		return -EINVAL;
++
++	flags |= MEDIA_LNK_FL_DATA_LINK;
++
+ 	if (WARN_ON(!source || !sink) ||
+ 	    WARN_ON(source_pad >= source->num_pads) ||
+ 	    WARN_ON(sink_pad >= sink->num_pads))
+@@ -1032,7 +1037,7 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
  
+ 	link->source = &source->pads[source_pad];
+ 	link->sink = &sink->pads[sink_pad];
+-	link->flags = flags & ~MEDIA_LNK_FL_INTERFACE_LINK;
++	link->flags = flags;
+ 
+ 	/* Initialize graph object embedded at the new link */
+ 	media_gobj_create(source->graph_obj.mdev, MEDIA_GRAPH_LINK,
 -- 
 2.43.0
 
