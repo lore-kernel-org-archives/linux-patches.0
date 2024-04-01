@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2701DFFC;
-	Mon,  1 Apr 2024 16:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0FB1DFFC;
+	Mon,  1 Apr 2024 16:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988292; cv=none; b=FqJqI/pCC3Cm9KdL0bfgkP24MZzqEFGiX1bDVt6TtxderJUiEgQkLl53pHt1qVkRXcKXoOs/4ZUKjd6DR3WwrdZE636d92TumxSytqvb2S/uYHZqeQjF6Rq1S3mC1dv8UpRYobZnyWc/PxobeGvtK+wkCs9RVXwOkqGOHmOrAKU=
+	t=1711988295; cv=none; b=Q3fh4WzMbBZ/BicnCVZPlyZnUnNkP/tqa6ffNIxZaUqKghIPsMmUbqcqMKFXTc1mWi1aged3PIRD7Su5I38HHyEvHIsd3FP7tyVYx9LIQ1VaOqA05OlNhR0TVEd48iyzji6kHyNRM/mbt5qBaNA8D4h3p+TQzqxso1AlwpfOw/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988292; c=relaxed/simple;
-	bh=cZBNzeamjy4gsZLV5NSya0H5wW+yt7FD5/L5kBbLgT0=;
+	s=arc-20240116; t=1711988295; c=relaxed/simple;
+	bh=LEXQbaO9JDsbJbHd850/+RjmI4FfkRQPAgJhdETczys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlNCJRJ03NxJBjgrmz1zOLB7m7JYkRaeboyt1o5et3TlbqIQBb8PaIRvDgErjzp9vm7qT95vvV751505eiNOKnzMz/TwlXxL9RDgTVEMHJPNRBUxjK/cS5qhkgHPRgowPnm1tsmAJ98Vkck9uUPALzPYybwm2Drj4yuXNxc4q6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuUTLGbl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ojd+u7OurP03SyjRIyK/1X4d8d3IDcm5FBOEA1AUBnioOJmuj1tZT+/HOlfW6pWW0TDXkAZQ/ALc+lJQd5jtvRi4wQlRyzAp8Vw1ICccpon/9RuNAnFjxWHf+Pa6xfYPzYBYimHJnzLKfAq0pbgehAf+am8Mqs4nNEnqJZgiZvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/VRjPb8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuUTLGbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6748AC433F1;
-	Mon,  1 Apr 2024 16:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/VRjPb8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A76C433F1;
+	Mon,  1 Apr 2024 16:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988291;
-	bh=cZBNzeamjy4gsZLV5NSya0H5wW+yt7FD5/L5kBbLgT0=;
+	s=korg; t=1711988295;
+	bh=LEXQbaO9JDsbJbHd850/+RjmI4FfkRQPAgJhdETczys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuUTLGblNQf//mVxv31SSMfRNEhSorrMJKM49S6k9qnOeOyQEX6y8WJDNEBlVy2cm
-	 eUbagbagNX/sfamyz1foc+18pP9mNSJpVNhFmKtlA2ShL7ODG1lgIngTzQUraA35BJ
-	 qjJW6FZE3/scWzNDl8gbP0n33axQZKZ4D+1b1kEA=
+	b=N/VRjPb8JL/TB5sAYxBnF9WhSMspaG7RoJ1zn0O88OSB142FhV9GAQO8RDeIMd9Os
+	 gLom32YCcLivu9Sg2rFJS0QybCKVE1dv+FOXTOyqrLrILKR7dCCba0LDtZ+Nea5PUI
+	 Hjdj8Eu/1XZAyDc0nxQClSmtsl/mvtSWo3eky4ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 142/432] thermal/drivers/mediatek: Fix control buffer enablement on MT7896
-Date: Mon,  1 Apr 2024 17:42:09 +0200
-Message-ID: <20240401152557.371755571@linuxfoundation.org>
+Subject: [PATCH 6.7 143/432] vfio/pci: Disable auto-enable of exclusive INTx IRQ
+Date: Mon,  1 Apr 2024 17:42:10 +0200
+Message-ID: <20240401152557.400804067@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,46 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Wunderlich <frank-w@public-files.de>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 371ed6263e2403068b359f0c07188548c2d70827 ]
+[ Upstream commit fe9a7082684eb059b925c535682e68c34d487d43 ]
 
-Reading thermal sensor on mt7986 devices returns invalid temperature:
+Currently for devices requiring masking at the irqchip for INTx, ie.
+devices without DisINTx support, the IRQ is enabled in request_irq()
+and subsequently disabled as necessary to align with the masked status
+flag.  This presents a window where the interrupt could fire between
+these events, resulting in the IRQ incrementing the disable depth twice.
+This would be unrecoverable for a user since the masked flag prevents
+nested enables through vfio.
 
-bpi-r3 ~ # cat /sys/class/thermal/thermal_zone0/temp
- -274000
+Instead, invert the logic using IRQF_NO_AUTOEN such that exclusive INTx
+is never auto-enabled, then unmask as required.
 
-Fix this by adding missing members in mtk_thermal_data struct which were
-used in mtk_thermal_turn_on_buffer after commit 33140e668b10.
-
-Cc: stable@vger.kernel.org
-Fixes: 33140e668b10 ("thermal/drivers/mediatek: Control buffer enablement tweaks")
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: Daniel Golle <daniel@makrotopia.org>
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230907112018.52811-1-linux@fw-web.de
+Cc:  <stable@vger.kernel.org>
+Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20240308230557.805580-2-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/auxadc_thermal.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vfio/pci/vfio_pci_intrs.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/auxadc_thermal.c b/drivers/thermal/mediatek/auxadc_thermal.c
-index 8b0edb2048443..9ee2e7283435a 100644
---- a/drivers/thermal/mediatek/auxadc_thermal.c
-+++ b/drivers/thermal/mediatek/auxadc_thermal.c
-@@ -690,6 +690,9 @@ static const struct mtk_thermal_data mt7986_thermal_data = {
- 	.adcpnp = mt7986_adcpnp,
- 	.sensor_mux_values = mt7986_mux_values,
- 	.version = MTK_THERMAL_V3,
-+	.apmixed_buffer_ctl_reg = APMIXED_SYS_TS_CON1,
-+	.apmixed_buffer_ctl_mask = GENMASK(31, 6) | BIT(3),
-+	.apmixed_buffer_ctl_set = BIT(0),
- };
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index cbb4bcbfbf83d..3dbeeb5bfadce 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -296,8 +296,15 @@ static int vfio_intx_set_signal(struct vfio_pci_core_device *vdev, int fd)
  
- static bool mtk_thermal_temp_is_valid(int temp)
+ 	ctx->trigger = trigger;
+ 
++	/*
++	 * Devices without DisINTx support require an exclusive interrupt,
++	 * IRQ masking is performed at the IRQ chip.  The masked status is
++	 * protected by vdev->irqlock. Setup the IRQ without auto-enable and
++	 * unmask as necessary below under lock.  DisINTx is unmodified by
++	 * the IRQ configuration and may therefore use auto-enable.
++	 */
+ 	if (!vdev->pci_2_3)
+-		irqflags = 0;
++		irqflags = IRQF_NO_AUTOEN;
+ 
+ 	ret = request_irq(pdev->irq, vfio_intx_handler,
+ 			  irqflags, ctx->name, vdev);
+@@ -308,13 +315,9 @@ static int vfio_intx_set_signal(struct vfio_pci_core_device *vdev, int fd)
+ 		return ret;
+ 	}
+ 
+-	/*
+-	 * INTx disable will stick across the new irq setup,
+-	 * disable_irq won't.
+-	 */
+ 	spin_lock_irqsave(&vdev->irqlock, flags);
+-	if (!vdev->pci_2_3 && ctx->masked)
+-		disable_irq_nosync(pdev->irq);
++	if (!vdev->pci_2_3 && !ctx->masked)
++		enable_irq(pdev->irq);
+ 	spin_unlock_irqrestore(&vdev->irqlock, flags);
+ 
+ 	return 0;
 -- 
 2.43.0
 
