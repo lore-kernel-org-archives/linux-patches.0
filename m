@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD83446B6;
-	Mon,  1 Apr 2024 17:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E981DFF4;
+	Mon,  1 Apr 2024 17:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991065; cv=none; b=VUs4U0e4r1PRZOb+QcK32dtyJB/5RGkfCyjBg7dNw4tD5sZgWLiOi+gvYMcKVzDRL2p6ug7rEsd8DwxWKHxuAhsnb4DQdK7/vGGjRpoItaM/rqnsgI0EAWl1L84r+CwN1I0aTFpVqwknJNUPffKAJQuiwsJnlusJ2gWTJsY6ghY=
+	t=1711991069; cv=none; b=Vji3tledr9jA8sHaqGl/8+v0R7+HdqVpHGUieQT/wZL1CtrxHe4WjyjbKIOtwbardTwlQ1L2GJXTlc5LSekTgY2jlsQXpP6VkSbtDIwu27wTGQUG0UhvQk4wYKxw/n3jbK7JewZbwSDzKbqz2jxYuhaQ+HEPs+I4KP/3g0Mci04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991065; c=relaxed/simple;
-	bh=ESBXsMnupEXgsb0lgvd9FNlnB6lu437LvyUcEeJm3E4=;
+	s=arc-20240116; t=1711991069; c=relaxed/simple;
+	bh=0r16cOtfPXzlLnTDyI+yegOZcmePCAnKiea44tOxCBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoMTuTePjfQXVn8q0cPOlXhUw2SLXQ4/yS8CLAY1LnHiT7LpZzHUhZFbMPhsX8NObYOn1YgAfzpv8f9BzprxjXUfqTEQNaXc5ywJBONj5qILEu3nXv1Fc4K+7cS2YScJD6ZZe2+zcoWrs8QoE0pVei8aIEEEQ+gUVSARMmH3B/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFfWyuG6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sj1/BsYC5MiWefs42zcKMUyHrp3XX1FPrm69QmsGlTLOfiAmaYoFESOTXNCCvMflKPaCpCoLQUM7vLEPZU/QKn5A8JOxCQtU8bbxSe8c33OCQhhf96l3DvnnPGEPK/RF2OztoIaaA/OFcP1UHjAssRO1I/gYNU/LjyWYe+6sul8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkUrS9Ux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFfWyuG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CAFC433F1;
-	Mon,  1 Apr 2024 17:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkUrS9Ux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FECFC433F1;
+	Mon,  1 Apr 2024 17:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991065;
-	bh=ESBXsMnupEXgsb0lgvd9FNlnB6lu437LvyUcEeJm3E4=;
+	s=korg; t=1711991069;
+	bh=0r16cOtfPXzlLnTDyI+yegOZcmePCAnKiea44tOxCBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFfWyuG6fqsEqCLb6kWZ1ylCOTnetKTn2i4HyOjubLCb8Xu3DEGOTOW+d9qo2GZtE
-	 acJrEZJoZCHzFV863zbZGf8vHvfDmHYO/2ga748wDQQfxBsP+znxFYkntNcAVE1g2K
-	 s8ZP00keWqi51A9SI6ga7OB53diN+d9kL6eIhlos=
+	b=pkUrS9UxnK7L+zvWwWOaFzJub2PZvMQjk87bFeq7raZ9d7RgrYKdXc8RiznyR67lb
+	 NOq/yIgfY5D0IaX7QI7rkqmXekgcGbIH9gbqeKUAnLZ1NsRLuxILl+BQhOW+5zhCUF
+	 HQ1VfyOyZNlstiGcp4MQyeeXThtlDqXgU+oQTrP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/272] f2fs: truncate page cache before clearing flags when aborting atomic write
-Date: Mon,  1 Apr 2024 17:45:13 +0200
-Message-ID: <20240401152534.507799410@linuxfoundation.org>
+Subject: [PATCH 6.1 114/272] s390/zcrypt: fix reference counting on zcrypt card objects
+Date: Mon,  1 Apr 2024 17:45:04 +0200
+Message-ID: <20240401152534.218954811@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -55,61 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunmin Jeong <s_min.jeong@samsung.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 74b0ebcbdde4c7fe23c979e4cfc2fdbf349c39a3 ]
+[ Upstream commit 50ed48c80fecbe17218afed4f8bed005c802976c ]
 
-In f2fs_do_write_data_page, FI_ATOMIC_FILE flag selects the target inode
-between the original inode and COW inode. When aborting atomic write and
-writeback occur simultaneously, invalid data can be written to original
-inode if the FI_ATOMIC_FILE flag is cleared meanwhile.
+Tests with hot-plugging crytpo cards on KVM guests with debug
+kernel build revealed an use after free for the load field of
+the struct zcrypt_card. The reason was an incorrect reference
+handling of the zcrypt card object which could lead to a free
+of the zcrypt card object while it was still in use.
 
-To prevent the problem, let's truncate all pages before clearing the flag
+This is an example of the slab message:
 
-Atomic write thread              Writeback thread
-  f2fs_abort_atomic_write
-    clear_inode_flag(inode, FI_ATOMIC_FILE)
-                                  __writeback_single_inode
-                                    do_writepages
-                                      f2fs_do_write_data_page
-                                        - use dn of original inode
-    truncate_inode_pages_final
+    kernel: 0x00000000885a7512-0x00000000885a7513 @offset=1298. First byte 0x68 instead of 0x6b
+    kernel: Allocated in zcrypt_card_alloc+0x36/0x70 [zcrypt] age=18046 cpu=3 pid=43
+    kernel:  kmalloc_trace+0x3f2/0x470
+    kernel:  zcrypt_card_alloc+0x36/0x70 [zcrypt]
+    kernel:  zcrypt_cex4_card_probe+0x26/0x380 [zcrypt_cex4]
+    kernel:  ap_device_probe+0x15c/0x290
+    kernel:  really_probe+0xd2/0x468
+    kernel:  driver_probe_device+0x40/0xf0
+    kernel:  __device_attach_driver+0xc0/0x140
+    kernel:  bus_for_each_drv+0x8c/0xd0
+    kernel:  __device_attach+0x114/0x198
+    kernel:  bus_probe_device+0xb4/0xc8
+    kernel:  device_add+0x4d2/0x6e0
+    kernel:  ap_scan_adapter+0x3d0/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel: Freed in zcrypt_card_put+0x54/0x80 [zcrypt] age=9024 cpu=3 pid=43
+    kernel:  kfree+0x37e/0x418
+    kernel:  zcrypt_card_put+0x54/0x80 [zcrypt]
+    kernel:  ap_device_remove+0x4c/0xe0
+    kernel:  device_release_driver_internal+0x1c4/0x270
+    kernel:  bus_remove_device+0x100/0x188
+    kernel:  device_del+0x164/0x3c0
+    kernel:  device_unregister+0x30/0x90
+    kernel:  ap_scan_adapter+0xc8/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel:  kthread+0x150/0x168
+    kernel:  __ret_from_fork+0x3c/0x58
+    kernel:  ret_from_fork+0xa/0x30
+    kernel: Slab 0x00000372022169c0 objects=20 used=18 fp=0x00000000885a7c88 flags=0x3ffff00000000a00(workingset|slab|node=0|zone=1|lastcpupid=0x1ffff)
+    kernel: Object 0x00000000885a74b8 @offset=1208 fp=0x00000000885a7c88
+    kernel: Redzone  00000000885a74b0: bb bb bb bb bb bb bb bb                          ........
+    kernel: Object   00000000885a74b8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74c8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74d8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74e8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74f8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a7508: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 68 4b 6b 6b 6b a5  kkkkkkkkkkhKkkk.
+    kernel: Redzone  00000000885a7518: bb bb bb bb bb bb bb bb                          ........
+    kernel: Padding  00000000885a756c: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
+    kernel: CPU: 0 PID: 387 Comm: systemd-udevd Not tainted 6.8.0-HF #2
+    kernel: Hardware name: IBM 3931 A01 704 (KVM/Linux)
+    kernel: Call Trace:
+    kernel:  [<00000000ca5ab5b8>] dump_stack_lvl+0x90/0x120
+    kernel:  [<00000000c99d78bc>] check_bytes_and_report+0x114/0x140
+    kernel:  [<00000000c99d53cc>] check_object+0x334/0x3f8
+    kernel:  [<00000000c99d820c>] alloc_debug_processing+0xc4/0x1f8
+    kernel:  [<00000000c99d852e>] get_partial_node.part.0+0x1ee/0x3e0
+    kernel:  [<00000000c99d94ec>] ___slab_alloc+0xaf4/0x13c8
+    kernel:  [<00000000c99d9e38>] __slab_alloc.constprop.0+0x78/0xb8
+    kernel:  [<00000000c99dc8dc>] __kmalloc+0x434/0x590
+    kernel:  [<00000000c9b4c0ce>] ext4_htree_store_dirent+0x4e/0x1c0
+    kernel:  [<00000000c9b908a2>] htree_dirblock_to_tree+0x17a/0x3f0
+    kernel:  [<00000000c9b919dc>] ext4_htree_fill_tree+0x134/0x400
+    kernel:  [<00000000c9b4b3d0>] ext4_dx_readdir+0x160/0x2f0
+    kernel:  [<00000000c9b4bedc>] ext4_readdir+0x5f4/0x760
+    kernel:  [<00000000c9a7efc4>] iterate_dir+0xb4/0x280
+    kernel:  [<00000000c9a7f1ea>] __do_sys_getdents64+0x5a/0x120
+    kernel:  [<00000000ca5d6946>] __do_syscall+0x256/0x310
+    kernel:  [<00000000ca5eea10>] system_call+0x70/0x98
+    kernel: INFO: lockdep is turned off.
+    kernel: FIX kmalloc-96: Restoring Poison 0x00000000885a7512-0x00000000885a7513=0x6b
+    kernel: FIX kmalloc-96: Marking all objects used
 
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Cc: stable@vger.kernel.org #v5.19+
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+The fix is simple: Before use of the queue not only the queue object
+but also the card object needs to increase it's reference count
+with a call to zcrypt_card_get(). Similar after use of the queue
+not only the queue but also the card object's reference count is
+decreased with zcrypt_card_put().
+
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/zcrypt_api.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index aa1ba2fdfe00d..205216c1db91f 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -192,6 +192,9 @@ void f2fs_abort_atomic_write(struct inode *inode, bool clean)
- 	if (!f2fs_is_atomic_file(inode))
- 		return;
+diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
+index 28e34d155334b..6f44963d34bbf 100644
+--- a/drivers/s390/crypto/zcrypt_api.c
++++ b/drivers/s390/crypto/zcrypt_api.c
+@@ -617,6 +617,7 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
+ {
+ 	if (!zq || !try_module_get(zq->queue->ap_dev.device.driver->owner))
+ 		return NULL;
++	zcrypt_card_get(zc);
+ 	zcrypt_queue_get(zq);
+ 	get_device(&zq->queue->ap_dev.device);
+ 	atomic_add(weight, &zc->load);
+@@ -636,6 +637,7 @@ static inline void zcrypt_drop_queue(struct zcrypt_card *zc,
+ 	atomic_sub(weight, &zq->load);
+ 	put_device(&zq->queue->ap_dev.device);
+ 	zcrypt_queue_put(zq);
++	zcrypt_card_put(zc);
+ 	module_put(mod);
+ }
  
-+	if (clean)
-+		truncate_inode_pages_final(inode->i_mapping);
-+
- 	release_atomic_write_cnt(inode);
- 	clear_inode_flag(inode, FI_ATOMIC_COMMITTED);
- 	clear_inode_flag(inode, FI_ATOMIC_FILE);
-@@ -200,7 +203,6 @@ void f2fs_abort_atomic_write(struct inode *inode, bool clean)
- 	F2FS_I(inode)->atomic_write_task = NULL;
- 
- 	if (clean) {
--		truncate_inode_pages_final(inode->i_mapping);
- 		f2fs_i_size_write(inode, fi->original_i_size);
- 		fi->original_i_size = 0;
- 	}
 -- 
 2.43.0
 
