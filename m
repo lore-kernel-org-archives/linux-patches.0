@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2F24AEE4;
-	Mon,  1 Apr 2024 16:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192A640876;
+	Mon,  1 Apr 2024 16:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990704; cv=none; b=jQmJLkfkZVfgnLtniR8NO9zdckhP90SAYZPrMeLEMw2xZQhzo7Mi+HK339fbEac6hMeDIEZdyNyM6G0MAIGmra4jfsYkM3uhdzeXccBVVZayx+rFIeuxoWb9dHq6emfJZM+hcRuM9o2hqHXlHKEqck3c1HrCHfsrUf2Qtd19Gyw=
+	t=1711990708; cv=none; b=M5kujE8Bvlai6xIaccHn5ecqSlTbm7myWMv2GUL10dtrTandEK68PUD3aJw4E7xANjVOVyEoe9ubFWZ5xT3AavWQKf5/fjUFWMrfjZ241SnKzDr/OhZ7r+ANpS5WFJyBEMzA2xw+PRWakxRPNhQZA/+1tGfcXx+teC1DJ7ZAp4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990704; c=relaxed/simple;
-	bh=xlVmjqReFt4bOAHGuDsILbEFJHOl6aCBB/c5V77KnSw=;
+	s=arc-20240116; t=1711990708; c=relaxed/simple;
+	bh=lgZJ+gcUCulxek1XeFJ0cUF5ESd2B46j8RjAQ9+IStc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RikluoPMF988f7lmk5QIsI2t4cS1SLXrmuaTXHgvOj/ZvKjDRdBO4vauOOIKbolqZvwmfw3OACnvLZ4wXvh0rv91A5HoOHcBaR/bA9IPGY/3VpgZvCW9yTE9oijhbQ1pbCGV/SD/0AYT61N/AJCbUyRQDI8gvt5Yo0ia/QrOnMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1VYPjpw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwzUc+h4frZofV0SNsdtecWJfsj9kKWKTMD8N7lqIpHTHG/bKiWEELQgEkAcMFXFY9TaOmTe8z5xgsmnHUL/bPrY8BJXXAGtXVO9lvnNcauGpsZR0vgkXFtQDx2K9wsfgnFyqD6mXcjmhwoS7JcEldr5WOZ4PD9bMakMbRKImOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5rC7pM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1VYPjpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC61C433C7;
-	Mon,  1 Apr 2024 16:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5rC7pM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81904C433F1;
+	Mon,  1 Apr 2024 16:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990704;
-	bh=xlVmjqReFt4bOAHGuDsILbEFJHOl6aCBB/c5V77KnSw=;
+	s=korg; t=1711990708;
+	bh=lgZJ+gcUCulxek1XeFJ0cUF5ESd2B46j8RjAQ9+IStc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1VYPjpwh7im2tb81itAZbBCzL9gCl57Ka7iaSm/goyAAA/pcfh5ZRqqVjZ68bhyv
-	 JQTTN+r8JBokrGO5xfeKjNw98OCs9DB//F8PILW6CFCi7YfQB/WtFIYx2EYVeKhRYi
-	 LLhmii/Fr/2oZN+2QkyWejA7L27dVyZG4M1pWdBc=
+	b=y5rC7pM9FfkwWw/UuaB4YeCw40sJEaou4G4c5S5YJ3uY99WSzysrxpEq4m7xaNBza
+	 IUXKOXzXER4DWMhWb6FZlH0fhgIdCDdcfySnoGYlnmSYPZ4WcwFB9KcjBOeqivJ9SO
+	 sERGz7jPREdFRenY7Rkib+QnC5pqE7ehzVgEI5Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Chenyuan Yang <cy54@illinois.edu>,
 	Richard Weinberger <richard@nod.at>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/272] ubifs: Set page uptodate in the correct place
-Date: Mon,  1 Apr 2024 17:43:50 +0200
-Message-ID: <20240401152531.631330284@linuxfoundation.org>
+Subject: [PATCH 6.1 041/272] ubi: Check for too small LEB size in VTBL code
+Date: Mon,  1 Apr 2024 17:43:51 +0200
+Message-ID: <20240401152531.680267649@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,72 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit 723012cab779eee8228376754e22c6594229bf8f ]
+[ Upstream commit 68a24aba7c593eafa8fd00f2f76407b9b32b47a9 ]
 
-Page cache reads are lockless, so setting the freshly allocated page
-uptodate before we've overwritten it with the data it's supposed to have
-in it will allow a simultaneous reader to see old data.  Move the call
-to SetPageUptodate into ubifs_write_end(), which is after we copied the
-new data into the page.
+If the LEB size is smaller than a volume table record we cannot
+have volumes.
+In this case abort attaching.
 
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Cc: Chenyuan Yang <cy54@illinois.edu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: 801c135ce73d ("UBI: Unsorted Block Images")
+Reported-by: Chenyuan Yang <cy54@illinois.edu>
+Closes: https://lore.kernel.org/linux-mtd/1433EB7A-FC89-47D6-8F47-23BE41B263B3@illinois.edu/
 Signed-off-by: Richard Weinberger <richard@nod.at>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/file.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/mtd/ubi/vtbl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-index 10c1779af9c51..f7b1f9ece1364 100644
---- a/fs/ubifs/file.c
-+++ b/fs/ubifs/file.c
-@@ -261,9 +261,6 @@ static int write_begin_slow(struct address_space *mapping,
- 				return err;
- 			}
- 		}
--
--		SetPageUptodate(page);
--		ClearPageError(page);
- 	}
- 
- 	if (PagePrivate(page))
-@@ -462,9 +459,6 @@ static int ubifs_write_begin(struct file *file, struct address_space *mapping,
- 				return err;
- 			}
- 		}
--
--		SetPageUptodate(page);
--		ClearPageError(page);
- 	}
- 
- 	err = allocate_budget(c, page, ui, appending);
-@@ -474,10 +468,8 @@ static int ubifs_write_begin(struct file *file, struct address_space *mapping,
- 		 * If we skipped reading the page because we were going to
- 		 * write all of it, then it is not up to date.
- 		 */
--		if (skipped_read) {
-+		if (skipped_read)
- 			ClearPageChecked(page);
--			ClearPageUptodate(page);
--		}
- 		/*
- 		 * Budgeting failed which means it would have to force
- 		 * write-back but didn't, because we set the @fast flag in the
-@@ -568,6 +560,9 @@ static int ubifs_write_end(struct file *file, struct address_space *mapping,
- 		goto out;
- 	}
- 
-+	if (len == PAGE_SIZE)
-+		SetPageUptodate(page);
+diff --git a/drivers/mtd/ubi/vtbl.c b/drivers/mtd/ubi/vtbl.c
+index f700f0e4f2ec4..6e5489e233dd2 100644
+--- a/drivers/mtd/ubi/vtbl.c
++++ b/drivers/mtd/ubi/vtbl.c
+@@ -791,6 +791,12 @@ int ubi_read_volume_table(struct ubi_device *ubi, struct ubi_attach_info *ai)
+ 	 * The number of supported volumes is limited by the eraseblock size
+ 	 * and by the UBI_MAX_VOLUMES constant.
+ 	 */
 +
- 	if (!PagePrivate(page)) {
- 		attach_page_private(page, (void *)1);
- 		atomic_long_inc(&c->dirty_pg_cnt);
++	if (ubi->leb_size < UBI_VTBL_RECORD_SIZE) {
++		ubi_err(ubi, "LEB size too small for a volume record");
++		return -EINVAL;
++	}
++
+ 	ubi->vtbl_slots = ubi->leb_size / UBI_VTBL_RECORD_SIZE;
+ 	if (ubi->vtbl_slots > UBI_MAX_VOLUMES)
+ 		ubi->vtbl_slots = UBI_MAX_VOLUMES;
 -- 
 2.43.0
 
