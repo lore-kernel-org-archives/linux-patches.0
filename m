@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4761ABA3F;
-	Mon,  1 Apr 2024 16:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674B9BA3F;
+	Mon,  1 Apr 2024 16:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990471; cv=none; b=LJe7jvFfzoDmEZGX/czE6z0p/T7jJDWXmqYFHk3eG9JG0yjwXTSBYaQvQYSSStkWrFQEsmsvdZitrBMRV/MUAsIZwzhY5GMOj+MndgTVk/sjlTKB70pi+w3MYNIEmRJPN1FZZHbOfqNpwrleTCMkLRUIFnjGVfgKwHQb3z08qPw=
+	t=1711990474; cv=none; b=akBMu/Lz5BkEJjYOGrwY8hg8DZw2v6JffeZkA4+s5ABX2jYhMeEeZdp9Ujc0GiWh1mZFXwszgA7JbOxIf0Z3y9WlfVl71ifEDMDt2hbITdvkQGkMkje1b257InmfjQYlOaRB8Y3hrh1Mp1bM2W0YeqZYZij8W5u4YIrRCZiiB24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990471; c=relaxed/simple;
-	bh=Nu6jhG8HXYHZQxDZ37wS9AGvnKVAonawCM9v1/U5luw=;
+	s=arc-20240116; t=1711990474; c=relaxed/simple;
+	bh=8rxyuGXHgirr3C7+0Q+CWa8jWy13srgXLvTWlimorvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A4nKjA2iU3JmLKPFgSwjqFygxcRa0HjpU5Y93n6ZEvwPd61vRJic6FpwPtE8/YM33LlULiKiCsrVBtkvOVw1uqejOpmV6iqUHG9oV2F5XE127Zx8Da2KMtY9QVvpB1lkLF8mzCx78apqcZgllanA9qFsC4DKyFscp2rwGKwRS3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvPfdtc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuP1DF3tUm7UpNx4PlrzMlE3LK/JkWDkxYCUJXqL5By6VkkIbZmRBfelX1Kbpt/nGC/H8Vs5hsgBAj81CRc0zGqIH8/dBqmmchrD8Z+3jbbrljhAHY3k29HrdKIjPcawL3lVgrHPsvnI76V8eHm/LyhdLrkXZRt4XBUChOtK61o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHiWeNP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvPfdtc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28C8C433F1;
-	Mon,  1 Apr 2024 16:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHiWeNP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85DFC433F1;
+	Mon,  1 Apr 2024 16:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990471;
-	bh=Nu6jhG8HXYHZQxDZ37wS9AGvnKVAonawCM9v1/U5luw=;
+	s=korg; t=1711990474;
+	bh=8rxyuGXHgirr3C7+0Q+CWa8jWy13srgXLvTWlimorvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvPfdtc8G0u8PdHj6iQMdOs/MZAVjV14sLPsyx5yk5nO36ig7ePq0R0abUunq3AE9
-	 UsuDgzamcXgJ3sycbe5b49gVHKkfo0tOEcyDvLrm/8LEv/w9dh5JwFJRFvnwZGXl0+
-	 FG4ioqtF8A6LEDa8LRsNcuZujpiLa0xbf3Lc1pkU=
+	b=wHiWeNP+LwTqk1//5bC2RP9oB2bChz+LC7ZV5s//hgeXFZWOH27ple/Uw2TDQ9Dvk
+	 FWfO+VWjrjYzD5UQDWkVuhmX+l4JbHPdkavpRltOXbx2NrAu6NJldSxNvkw8M/tvX+
+	 F6zjGJIeanLJpWh/J+TsOXS+ZIHeK6UwNfU3NmuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Zhang <ye.zhang@rock-chips.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 336/396] thermal: devfreq_cooling: Fix perf state when calculate dfc res_util
-Date: Mon,  1 Apr 2024 17:46:25 +0200
-Message-ID: <20240401152557.929783788@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 363/396] USB: core: Fix deadlock in usb_deauthorize_interface()
+Date: Mon,  1 Apr 2024 17:46:52 +0200
+Message-ID: <20240401152558.742975641@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -46,45 +43,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ye Zhang <ye.zhang@rock-chips.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit a26de34b3c77ae3a969654d94be49e433c947e3b upstream.
+commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
 
-The issue occurs when the devfreq cooling device uses the EM power model
-and the get_real_power() callback is provided by the driver.
+Among the attribute file callback routines in
+drivers/usb/core/sysfs.c, the interface_authorized_store() function is
+the only one which acquires a device lock on an ancestor device: It
+calls usb_deauthorize_interface(), which locks the interface's parent
+USB device.
 
-The EM power table is sorted ascending，can't index the table by cooling
-device state，so convert cooling state to performance state by
-dfc->max_state - dfc->capped_state.
+The will lead to deadlock if another process already owns that lock
+and tries to remove the interface, whether through a configuration
+change or because the device has been disconnected.  As part of the
+removal procedure, device_del() waits for all ongoing sysfs attribute
+callbacks to complete.  But usb_deauthorize_interface() can't complete
+until the device lock has been released, and the lock won't be
+released until the removal has finished.
 
-Fixes: 615510fe13bd ("thermal: devfreq_cooling: remove old power model and use EM")
-Cc: 5.11+ <stable@vger.kernel.org> # 5.11+
-Signed-off-by: Ye Zhang <ye.zhang@rock-chips.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The mechanism provided by sysfs to prevent this kind of deadlock is
+to use the sysfs_break_active_protection() function, which tells sysfs
+not to wait for the attribute callback.
+
+Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
+Reported by: xingwei lee <xrivendell7@gmail.com>
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
+Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/devfreq_cooling.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/sysfs.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/thermal/devfreq_cooling.c
-+++ b/drivers/thermal/devfreq_cooling.c
-@@ -201,7 +201,7 @@ static int devfreq_cooling_get_requested
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -1168,14 +1168,24 @@ static ssize_t interface_authorized_stor
+ {
+ 	struct usb_interface *intf = to_usb_interface(dev);
+ 	bool val;
++	struct kernfs_node *kn;
  
- 		res = dfc->power_ops->get_real_power(df, power, freq, voltage);
- 		if (!res) {
--			state = dfc->capped_state;
-+			state = dfc->max_state - dfc->capped_state;
+ 	if (kstrtobool(buf, &val) != 0)
+ 		return -EINVAL;
  
- 			/* Convert EM power into milli-Watts first */
- 			dfc->res_util = dfc->em_pd->table[state].power;
+-	if (val)
++	if (val) {
+ 		usb_authorize_interface(intf);
+-	else
+-		usb_deauthorize_interface(intf);
++	} else {
++		/*
++		 * Prevent deadlock if another process is concurrently
++		 * trying to unregister intf.
++		 */
++		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++		if (kn) {
++			usb_deauthorize_interface(intf);
++			sysfs_unbreak_active_protection(kn);
++		}
++	}
+ 
+ 	return count;
+ }
 
 
