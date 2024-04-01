@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCD747A6B;
-	Mon,  1 Apr 2024 16:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FD0481D7;
+	Mon,  1 Apr 2024 16:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989709; cv=none; b=aV2daIIxHDrQZXneUiTJQnCGemdAodvAuprZl41PetcS8pzteid4A4U9WRZMhO6j6s0yRF0kNB620SBpP1ufkmQ3NNL84kAtRImUkTSx2opDKD59dkDYsLnYH41a8BNba60muRWp1fL5nERCjlwOutr+7BL2wZWRWhyNilvpFZ0=
+	t=1711989712; cv=none; b=PRzsG9UzgmbMXLv1nekDr/31CwW37EXuOkdU+/Qt2ub5XCnkwqP/N59rPDOugQS4IPXvHJyOLwAlFAcz1r1MAZ21Pl3Jzk/Ho2nyd4AJKV+7S4OXjhmvQBj7+p+rtmb48n+NOlB+aK4cS0UbUiFlnnY6n9EysSkb8ogEPCUKOYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989709; c=relaxed/simple;
-	bh=7Dk+a5JHMW8zgo/n5uVBAZvIYD28SN/PCoImZgRDKvY=;
+	s=arc-20240116; t=1711989712; c=relaxed/simple;
+	bh=6qv8rJVL7P7ZD+ePADtHXTfa0FHa3Jq2SpxDQlHM43Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcouGK8PjJ9RTWA9B/qTPci2Fs45CKNREi2fOGT1Z7xIoZCaW3yuacfdBPhBQHtnv0Y38pd8MF5rivlRc4bJGpeldS9wdsiMXkKJ9Lmz6SBCJGdWal795zAmBmgrYMbovDlLYGt2EkTJbr4eHHScf8cJqjTL+pkf7cKSAzjht2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/ozkISZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxYOiNV8g2hhH7JN7IftrDrxmRLfJ5nChV+UB4ZED8WXGFdtGwcvWG809ccVDQES9rsK1tRS2AK5PFoviOR2OWsfxHhjQPUXF6J/gakN/p2TwHRGE17RRbQXoytd1nBtqg8C0i9bFlaDJZqf90kAUJ1OWjKi/MfAbFZ/v0S7kZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f/kP8Ul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/ozkISZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02A9C43390;
-	Mon,  1 Apr 2024 16:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f/kP8Ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43074C43390;
+	Mon,  1 Apr 2024 16:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989709;
-	bh=7Dk+a5JHMW8zgo/n5uVBAZvIYD28SN/PCoImZgRDKvY=;
+	s=korg; t=1711989712;
+	bh=6qv8rJVL7P7ZD+ePADtHXTfa0FHa3Jq2SpxDQlHM43Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/ozkISZXh6yJzO2zzulShSgzwmk7Gfmz4JIE4zPEdVQ8TkbFDGkKXU7jx35wmMF+
-	 nz1+FMHc1lT2lQQnYWcO1ZEuKnFH1444BFPcn/08dJNyKDiEPUaWzcPN6n8LUpkB9r
-	 2OHW7r0IXrnQDDCGOXl3q0O3Fz2aWD8VLrST7e70=
+	b=1f/kP8UlI/Io7zxX4c+1v0PaHu94qI/n5ufii6gZiDlShq+njskMY4RgccGLq2YIv
+	 Q5HJ2MoMLxAPqYGs87lRF5S/GKM9kgugD6o0TpWxl9/3M9SiPb+nsUmdzYwBqsrlKF
+	 CgK1JO6yLsJI9Js6Zg+8oB1+bRGuGNOxULIyEOL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/396] tpm,tpm_tis: Avoid warning splat at shutdown
-Date: Mon,  1 Apr 2024 17:42:59 +0200
-Message-ID: <20240401152551.793422290@linuxfoundation.org>
+Subject: [PATCH 6.6 131/396] server: convert to new timestamp accessors
+Date: Mon,  1 Apr 2024 17:43:00 +0200
+Message-ID: <20240401152551.822342886@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit b7ab4bbd0188f3985b821fa09456b11105a8dedf ]
+[ Upstream commit 769cfc919e35c70a5110b0843fb330746363acb8 ]
 
-If interrupts are not activated the work struct 'free_irq_work' is not
-initialized. This results in a warning splat at module shutdown.
+Convert to using the new inode timestamp accessor functions.
 
-Fix this by always initializing the work regardless of whether interrupts
-are activated or not.
-
-cc: stable@vger.kernel.org
-Fixes: 481c2d14627d ("tpm,tpm_tis: Disable interrupts after 1000 unhandled IRQs")
-Reported-by: Jarkko Sakkinen <jarkko@kernel.org>
-Closes: https://lore.kernel.org/all/CX32RFOMJUQ0.3R4YCL9MDCB96@kernel.org/
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20231004185347.80880-67-jlayton@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 5614c8c487f6 ("ksmbd: replace generic_fillattr with vfs_getattr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 1b350412d8a6b..64c875657687d 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -919,8 +919,6 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 	int rc;
- 	u32 int_status;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e8c03445271d0..0c97d3c860726 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4857,9 +4857,9 @@ static void find_file_posix_info(struct smb2_query_info_rsp *rsp,
  
--	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
--
- 	rc = devm_request_threaded_irq(chip->dev.parent, irq, NULL,
- 				       tis_int_handler, IRQF_ONESHOT | flags,
- 				       dev_name(&chip->dev), chip);
-@@ -1132,6 +1130,7 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 	priv->phy_ops = phy_ops;
- 	priv->locality_count = 0;
- 	mutex_init(&priv->locality_count_mutex);
-+	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
- 
- 	dev_set_drvdata(&chip->dev, priv);
- 
+ 	file_info = (struct smb311_posix_qinfo *)rsp->Buffer;
+ 	file_info->CreationTime = cpu_to_le64(fp->create_time);
+-	time = ksmbd_UnixTimeToNT(inode->i_atime);
++	time = ksmbd_UnixTimeToNT(inode_get_atime(inode));
+ 	file_info->LastAccessTime = cpu_to_le64(time);
+-	time = ksmbd_UnixTimeToNT(inode->i_mtime);
++	time = ksmbd_UnixTimeToNT(inode_get_mtime(inode));
+ 	file_info->LastWriteTime = cpu_to_le64(time);
+ 	time = ksmbd_UnixTimeToNT(inode_get_ctime(inode));
+ 	file_info->ChangeTime = cpu_to_le64(time);
+@@ -5466,9 +5466,9 @@ int smb2_close(struct ksmbd_work *work)
+ 		rsp->EndOfFile = cpu_to_le64(inode->i_size);
+ 		rsp->Attributes = fp->f_ci->m_fattr;
+ 		rsp->CreationTime = cpu_to_le64(fp->create_time);
+-		time = ksmbd_UnixTimeToNT(inode->i_atime);
++		time = ksmbd_UnixTimeToNT(inode_get_atime(inode));
+ 		rsp->LastAccessTime = cpu_to_le64(time);
+-		time = ksmbd_UnixTimeToNT(inode->i_mtime);
++		time = ksmbd_UnixTimeToNT(inode_get_mtime(inode));
+ 		rsp->LastWriteTime = cpu_to_le64(time);
+ 		time = ksmbd_UnixTimeToNT(inode_get_ctime(inode));
+ 		rsp->ChangeTime = cpu_to_le64(time);
 -- 
 2.43.0
 
