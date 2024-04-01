@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9178447A6B;
-	Mon,  1 Apr 2024 16:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4A8481C4;
+	Mon,  1 Apr 2024 16:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989750; cv=none; b=Ejz2SUHgbPQHr3MWqAQ4FCsHcg10sIYeMLhhnW6K1tnqc/f1PII2Bjtbz8mbYIqp3VEjtsLKs4L6NFkf2K0HeJKcyUwPAczhgzibGHqZ+B+hq7NrG94KdYUqhFdEMpeEBnjebHbZX10SC7YziVERgf+ac5c3vxzbXuCTG0FQL5U=
+	t=1711989754; cv=none; b=DVW3irDXztWH5ek2KgPzkfRp5dbRzLyJe7BvEYkOsRTox55jV9MwNMSWmptRgQVrvItKSc8wU+74VoWfPuBtf4RPEHh3ebZPAWqkIPd1wfIfBBOnYPwUZ01ZnDUHRTd4Ma3pxtYVP0NDOLHpbvjyNKNTkvgH/toFW2VCMh3GXNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989750; c=relaxed/simple;
-	bh=A4Jr9IxONjoDv82G+ay2AmyrN/DMrYqZ8Pp4csmyWVM=;
+	s=arc-20240116; t=1711989754; c=relaxed/simple;
+	bh=OcQrV9erZjWIsJF5s5N9YxvA+ry2lXoca3SRvX+haWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fv8MyPmYh285Ck+FhHFgHVMKsIDpG8T1Z/2Tea1FpZ6kfKUjRhXpYuxEnFYJTDQEytlWEWuH30wvGnd/Arf7Sx2KIiCgAWekwwf6tlh5sDEuvIlxk8WuQWwAE/kRguBQhgryIxmWFtB6C/mVLdB1GuedRSfckwOMTaI9d8J1O8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w17hQhmN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V97+xYp+44g6yOGcrLY7jIOhFvYpNvidcukqg5pxKtWDJ5pZahZy0zo/m2+sFjMeGQ03/eVp57Pf3xExdqJBthnK1oeKaO1iU27XKqg3kSBYUQmtPf1ZaWCKhnjUqQ/MU6ZXGo1Sy5F3FAAb0VkID6dHVtrQMS1MU7g2aL+VH28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdnJpIK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w17hQhmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA26FC433F1;
-	Mon,  1 Apr 2024 16:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdnJpIK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30834C433F1;
+	Mon,  1 Apr 2024 16:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989750;
-	bh=A4Jr9IxONjoDv82G+ay2AmyrN/DMrYqZ8Pp4csmyWVM=;
+	s=korg; t=1711989753;
+	bh=OcQrV9erZjWIsJF5s5N9YxvA+ry2lXoca3SRvX+haWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w17hQhmNrQfQxmSGMnjI6oEVLJzbrLGQPo0nuk6DjrticnG7Iklu9cCgJa03O/j/D
-	 NYS7jeI2E/1Sy4HwAzkeSmcKyUIpqs7NCzmhKMfD/pkPDgQNLAH5sgXMrQEz1uTigb
-	 yCyYzhVhGrRBk3y2+Cl1YmXp4mP4U4O5P5iyly5w=
+	b=GdnJpIK87Tbzlw8jbz/C827xnMGHB3qYUEvLxdjihseMdAk7vo6Rnf2SLlvKN0laj
+	 M7pl+dBZk+NCSndpA+iJkQ3tjL+J81fwrXXXnuJ5f2eWTUFaRJ75lThkSjW2FzYp01
+	 FNVHo+raQUeP1xCYrp9gegnLNUVn1BpMm0cGouFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Valentin=20Vidi=C4=87?= <vvidic@valentin-vidic.from.hr>,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 141/396] dlm: fix user space lkb refcounting
-Date: Mon,  1 Apr 2024 17:43:10 +0200
-Message-ID: <20240401152552.123077702@linuxfoundation.org>
+Subject: [PATCH 6.6 142/396] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
+Date: Mon,  1 Apr 2024 17:43:11 +0200
+Message-ID: <20240401152552.162816822@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -46,68 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 2ab3d705ca5d4f7ea345a21c3da41a447a549649 ]
+[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
 
-This patch fixes to check on the right return value if it was the last
-callback. The rv variable got overwritten by the return of
-copy_result_to_user(). Fixing it by introducing a second variable for
-the return value and don't let rv being overwritten.
+smp_call_function_single disables IRQs when executing the callback. To
+prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
+This is already done by qman_update_cgr and qman_delete_cgr; fix the
+other lockers.
 
-Cc: stable@vger.kernel.org
-Fixes: 61bed0baa4db ("fs: dlm: use a non-static queue for callbacks")
-Reported-by: Valentin Vidić <vvidic@valentin-vidic.from.hr>
-Closes: https://lore.kernel.org/gfs2/Ze4qSvzGJDt5yxC3@valentin-vidic.from.hr
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
+CC: stable@vger.kernel.org
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/user.c | 10 +++++-----
+ drivers/soc/fsl/qbman/qman.c | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/dlm/user.c b/fs/dlm/user.c
-index 695e691b38b31..9f9b68448830e 100644
---- a/fs/dlm/user.c
-+++ b/fs/dlm/user.c
-@@ -806,7 +806,7 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
- 	struct dlm_lkb *lkb;
- 	DECLARE_WAITQUEUE(wait, current);
- 	struct dlm_callback *cb;
--	int rv, copy_lvb = 0;
-+	int rv, ret, copy_lvb = 0;
- 	int old_mode, new_mode;
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 739e4eee6b75c..1bf1f1ea67f00 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1456,11 +1456,11 @@ static void qm_congestion_task(struct work_struct *work)
+ 	union qm_mc_result *mcr;
+ 	struct qman_cgr *cgr;
  
- 	if (count == sizeof(struct dlm_device_version)) {
-@@ -906,9 +906,9 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
- 		trace_dlm_ast(lkb->lkb_resource->res_ls, lkb);
- 	}
- 
--	rv = copy_result_to_user(lkb->lkb_ua,
--				 test_bit(DLM_PROC_FLAGS_COMPAT, &proc->flags),
--				 cb->flags, cb->mode, copy_lvb, buf, count);
-+	ret = copy_result_to_user(lkb->lkb_ua,
-+				  test_bit(DLM_PROC_FLAGS_COMPAT, &proc->flags),
-+				  cb->flags, cb->mode, copy_lvb, buf, count);
- 
- 	kref_put(&cb->ref, dlm_release_callback);
- 
-@@ -916,7 +916,7 @@ static ssize_t device_read(struct file *file, char __user *buf, size_t count,
- 	if (rv == DLM_DEQUEUE_CALLBACK_LAST)
- 		dlm_put_lkb(lkb);
- 
--	return rv;
-+	return ret;
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 	qm_mc_start(&p->p);
+ 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
+ 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
+-		spin_unlock(&p->cgr_lock);
++		spin_unlock_irq(&p->cgr_lock);
+ 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
+ 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ 		return;
+@@ -1476,7 +1476,7 @@ static void qm_congestion_task(struct work_struct *work)
+ 	list_for_each_entry(cgr, &p->cgr_cbs, node)
+ 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
+ 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
  }
  
- static __poll_t device_poll(struct file *file, poll_table *wait)
+@@ -2440,7 +2440,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	preempt_enable();
+ 
+ 	cgr->chan = p->config->channel;
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 
+ 	if (opts) {
+ 		struct qm_mcc_initcgr local_opts = *opts;
+@@ -2477,7 +2477,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
+ 		cgr->cb(p, cgr, 1);
+ out:
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	put_affine_portal();
+ 	return ret;
+ }
 -- 
 2.43.0
 
