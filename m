@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115DEC129;
-	Mon,  1 Apr 2024 16:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5743CC129;
+	Mon,  1 Apr 2024 16:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988574; cv=none; b=rkOEHkKI/xOMQQgxxQ8ReFq3sSrFHRxBCqK34DsRwMhyeJRX2xBmlkyPrIyj2LmYsARe5+p/o4MJkQ7Lic1jMrmtObr0rXq1X+nJmct6nrr+W7StXAsJaD1Kb82CSQm24EjrQdzDsHbBCJrcWqcuGDuZq7r4aiHOxgt56g7DuZU=
+	t=1711988577; cv=none; b=NQL32+kptPHhSyGj0MBvLjrbIIYCvWoKQerrFJWzs6LRz3W3yLUdFayIcTI/rYkPWUEVxrR0yj+bnCTSyHut1AXpq45/05Adfu1g4ISRo6944M5LSnuIUhvV2Ila7qrTkVnxGtg29mSDMLQAVKoH/A9qTIos3gejKwCvEEORMzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988574; c=relaxed/simple;
-	bh=u10mZjQN9aWcEEZ2oUZwpuJeUrJWqFhpZKWbaX+76oA=;
+	s=arc-20240116; t=1711988577; c=relaxed/simple;
+	bh=FhOnGyT98rcZDtyE3lrLtAfyAEyr0LBCruSE49QjwIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggEXPBT6g6/2tcElU23qRH/QaEW5J/gr3x7GSey1ei3yHCIpuEtdqCwYwbGCbyXRG5nlndm7Ze72HOZiknbRqQS680PgsXAY00V8vPWjr+f4PqZ2k0sHzIt/woL0y+QPbGcecTVljueXF74y0S7CnMXUzM4SZMgQHSPnflivFCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfrHMxbh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ir4EseVtRhi7pjAiuLOAuXeaptHpgQEbZaj7nT2lTRnXwf/5RtErcklRKxEiir/xVhT65QqYyOYUlgsinJJdp9tXf13GZxWxnynMUG5DCZsJwTJw4poy7/ksoe+3Z3ahvGBn/yU2k97d7N9XRmRL+PbvhApMxYEuq1rOYdZDVU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1vLMZIh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfrHMxbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75755C433C7;
-	Mon,  1 Apr 2024 16:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1vLMZIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0053C433F1;
+	Mon,  1 Apr 2024 16:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988573;
-	bh=u10mZjQN9aWcEEZ2oUZwpuJeUrJWqFhpZKWbaX+76oA=;
+	s=korg; t=1711988577;
+	bh=FhOnGyT98rcZDtyE3lrLtAfyAEyr0LBCruSE49QjwIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfrHMxbhjYWgSyRo8Ih0Drd277X/REN1SVjBccMrh6udnCG1//KgyHMnLRbejIUSt
-	 Meawaavt+7yS/vu9KNYkjICvGTn5eHBzooIW0Y4ZpNASk0X04XldPG+VIzykMbQdrx
-	 qnQOC0XE1ll1vRjDV8iBA+eYurkrU3eO3HFVg/Mc=
+	b=d1vLMZIhe0bvtO8xSWSej7AdFFk4jbmEz8nka8+zFHJMS85SUPMvZX3e1TOhGsvv8
+	 awGCP57cIBEQooL8Y+Wfr4Do3XYKFaDWILSWVNJdlmPks4c50Wof6l12/sdXXNaHur
+	 8IfF+9eAGdJUIClnDtWiViaM3itVXKN7WiTcPNaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Feng Liu <feliu@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 224/432] wifi: brcmfmac: Demote vendor-specific attach/detach messages to info
-Date: Mon,  1 Apr 2024 17:43:31 +0200
-Message-ID: <20240401152559.816217175@linuxfoundation.org>
+Subject: [PATCH 6.7 197/432] virtio: Define feature bit for administration virtqueue
+Date: Mon,  1 Apr 2024 17:43:04 +0200
+Message-ID: <20240401152559.015194527@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,202 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 85da8f71aaa7b83ea7ef0e89182e0cd47e16d465 ]
+[ Upstream commit 838bebb4c926a573839ff1bfe1b654a6ed0f9779 ]
 
-People are getting spooked by brcmfmac errors on their boot console.
-There's no reason for these messages to be errors.
+Introduce VIRTIO_F_ADMIN_VQ which is used for administration virtqueue
+support.
 
-Cc: stable@vger.kernel.org # 6.2.x
-Fixes: d6a5c562214f ("wifi: brcmfmac: add support for vendor-specific firmware api")
-Signed-off-by: Hector Martin <marcan@marcan.st>
-[arend.vanspriel@broadcom.com: remove attach/detach vendor callbacks]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240106103835.269149-2-arend.vanspriel@broadcom.com
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/20231219093247.170936-2-yishaih@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: 310227f42882 ("virtio: reenable config if freezing device failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/bca/core.c    | 13 ----------
- .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 13 ----------
- .../broadcom/brcm80211/brcmfmac/fwvid.c       |  7 +++--
- .../broadcom/brcm80211/brcmfmac/fwvid.h       | 26 ++-----------------
- .../broadcom/brcm80211/brcmfmac/wcc/core.c    | 15 +----------
- 5 files changed, 6 insertions(+), 68 deletions(-)
+ include/uapi/linux/virtio_config.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
-index a5d9ac5e67638..a963c242975ac 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bca/core.c
-@@ -11,17 +11,6 @@
+diff --git a/include/uapi/linux/virtio_config.h b/include/uapi/linux/virtio_config.h
+index 8881aea60f6f1..2445f365bce74 100644
+--- a/include/uapi/linux/virtio_config.h
++++ b/include/uapi/linux/virtio_config.h
+@@ -52,7 +52,7 @@
+  * rest are per-device feature bits.
+  */
+ #define VIRTIO_TRANSPORT_F_START	28
+-#define VIRTIO_TRANSPORT_F_END		41
++#define VIRTIO_TRANSPORT_F_END		42
  
- #include "vops.h"
- 
--static int brcmf_bca_attach(struct brcmf_pub *drvr)
--{
--	pr_err("%s: executing\n", __func__);
--	return 0;
--}
--
--static void brcmf_bca_detach(struct brcmf_pub *drvr)
--{
--	pr_err("%s: executing\n", __func__);
--}
--
- static void brcmf_bca_feat_attach(struct brcmf_if *ifp)
- {
- 	/* SAE support not confirmed so disabling for now */
-@@ -29,7 +18,5 @@ static void brcmf_bca_feat_attach(struct brcmf_if *ifp)
- }
- 
- const struct brcmf_fwvid_ops brcmf_bca_ops = {
--	.attach = brcmf_bca_attach,
--	.detach = brcmf_bca_detach,
- 	.feat_attach = brcmf_bca_feat_attach,
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-index 24670497f1a40..bec5748310b9c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -11,17 +11,6 @@
- 
- #include "vops.h"
- 
--static int brcmf_cyw_attach(struct brcmf_pub *drvr)
--{
--	pr_err("%s: executing\n", __func__);
--	return 0;
--}
--
--static void brcmf_cyw_detach(struct brcmf_pub *drvr)
--{
--	pr_err("%s: executing\n", __func__);
--}
--
- static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
- 				 struct cfg80211_crypto_settings *crypto)
- {
-@@ -49,7 +38,5 @@ static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
- }
- 
- const struct brcmf_fwvid_ops brcmf_cyw_ops = {
--	.attach = brcmf_cyw_attach,
--	.detach = brcmf_cyw_detach,
- 	.set_sae_password = brcmf_cyw_set_sae_pwd,
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-index f610818c2b059..b427782554b59 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-@@ -89,8 +89,7 @@ int brcmf_fwvid_register_vendor(enum brcmf_fwvendor fwvid, struct module *vmod,
- 	if (fwvid >= BRCMF_FWVENDOR_NUM)
- 		return -ERANGE;
- 
--	if (WARN_ON(!vmod) || WARN_ON(!vops) ||
--	    WARN_ON(!vops->attach) || WARN_ON(!vops->detach))
-+	if (WARN_ON(!vmod) || WARN_ON(!vops))
- 		return -EINVAL;
- 
- 	if (WARN_ON(fwvid_list[fwvid].vmod))
-@@ -150,7 +149,7 @@ static inline int brcmf_fwvid_request_module(enum brcmf_fwvendor fwvid)
- }
- #endif
- 
--int brcmf_fwvid_attach_ops(struct brcmf_pub *drvr)
-+int brcmf_fwvid_attach(struct brcmf_pub *drvr)
- {
- 	enum brcmf_fwvendor fwvid = drvr->bus_if->fwvid;
- 	int ret;
-@@ -175,7 +174,7 @@ int brcmf_fwvid_attach_ops(struct brcmf_pub *drvr)
- 	return ret;
- }
- 
--void brcmf_fwvid_detach_ops(struct brcmf_pub *drvr)
-+void brcmf_fwvid_detach(struct brcmf_pub *drvr)
- {
- 	enum brcmf_fwvendor fwvid = drvr->bus_if->fwvid;
- 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-index d9fc76b46db96..dac22534d0334 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-@@ -12,8 +12,6 @@ struct brcmf_pub;
- struct brcmf_if;
- 
- struct brcmf_fwvid_ops {
--	int (*attach)(struct brcmf_pub *drvr);
--	void (*detach)(struct brcmf_pub *drvr);
- 	void (*feat_attach)(struct brcmf_if *ifp);
- 	int (*set_sae_password)(struct brcmf_if *ifp, struct cfg80211_crypto_settings *crypto);
- };
-@@ -24,30 +22,10 @@ int brcmf_fwvid_register_vendor(enum brcmf_fwvendor fwvid, struct module *mod,
- int brcmf_fwvid_unregister_vendor(enum brcmf_fwvendor fwvid, struct module *mod);
- 
- /* core driver functions */
--int brcmf_fwvid_attach_ops(struct brcmf_pub *drvr);
--void brcmf_fwvid_detach_ops(struct brcmf_pub *drvr);
-+int brcmf_fwvid_attach(struct brcmf_pub *drvr);
-+void brcmf_fwvid_detach(struct brcmf_pub *drvr);
- const char *brcmf_fwvid_vendor_name(struct brcmf_pub *drvr);
- 
--static inline int brcmf_fwvid_attach(struct brcmf_pub *drvr)
--{
--	int ret;
--
--	ret = brcmf_fwvid_attach_ops(drvr);
--	if (ret)
--		return ret;
--
--	return drvr->vops->attach(drvr);
--}
--
--static inline void brcmf_fwvid_detach(struct brcmf_pub *drvr)
--{
--	if (!drvr->vops)
--		return;
--
--	drvr->vops->detach(drvr);
--	brcmf_fwvid_detach_ops(drvr);
--}
--
- static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
- {
- 	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
-index 2d8f80bd73829..fd593b93ad404 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/core.c
-@@ -7,21 +7,10 @@
- #include <core.h>
- #include <bus.h>
- #include <fwvid.h>
--#include <fwil.h>
-+#include <cfg80211.h>
- 
- #include "vops.h"
- 
--static int brcmf_wcc_attach(struct brcmf_pub *drvr)
--{
--	pr_debug("%s: executing\n", __func__);
--	return 0;
--}
--
--static void brcmf_wcc_detach(struct brcmf_pub *drvr)
--{
--	pr_debug("%s: executing\n", __func__);
--}
--
- static int brcmf_wcc_set_sae_pwd(struct brcmf_if *ifp,
- 				 struct cfg80211_crypto_settings *crypto)
- {
-@@ -30,7 +19,5 @@ static int brcmf_wcc_set_sae_pwd(struct brcmf_if *ifp,
- }
- 
- const struct brcmf_fwvid_ops brcmf_wcc_ops = {
--	.attach = brcmf_wcc_attach,
--	.detach = brcmf_wcc_detach,
- 	.set_sae_password = brcmf_wcc_set_sae_pwd,
- };
+ #ifndef VIRTIO_CONFIG_NO_LEGACY
+ /* Do we get callbacks when the ring is completely used, even if we've
+@@ -114,4 +114,10 @@
+  * This feature indicates that the driver can reset a queue individually.
+  */
+ #define VIRTIO_F_RING_RESET		40
++
++/*
++ * This feature indicates that the device support administration virtqueues.
++ */
++#define VIRTIO_F_ADMIN_VQ		41
++
+ #endif /* _UAPI_LINUX_VIRTIO_CONFIG_H */
 -- 
 2.43.0
 
