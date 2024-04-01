@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0B51CA8F;
-	Mon,  1 Apr 2024 16:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D511CA8F;
+	Mon,  1 Apr 2024 16:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988806; cv=none; b=TdictRpM9tT2NvR/XS+jwLJIwV/u+GUMgdppSejmJvdmbDDgRIOoDBHLE7m/FLo+4Hyrnygpgw58NC70/ibFZ6p7JoPm/QFyaEvgTvW6w6kMqsqhBJ77uCAeVHFS9GtgOSRdoSx+YUFVJ0LjtTnEFgR+6bzZAe1NUPGhO5QvNRM=
+	t=1711988809; cv=none; b=s96GnloMZcGtqgTwdFqSuu/APF6v5x+GhdPHvmmnDfwxo9/SJfXpMqJaob2PiPtz966NKJ+hHcD+ZZB3iReEVZGCaqqlJPP6erxx0qIYSQYZQlXhb0q73lX0res9Ezj8U7ohKUVlNunnF8P0T9Rkx8xdSEViFGgrQ0eoyil8ZJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988806; c=relaxed/simple;
-	bh=MVdARjtk2gmKylNWPsvcnW/wtJu+Z+dGr0271r0zkvI=;
+	s=arc-20240116; t=1711988809; c=relaxed/simple;
+	bh=cLAowEEi9oWf+P/LpieyxnexaZDZoQKCSYuG05cFJwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HV32gRusKhcWNvWN81Tvg5fTMw3KZIFsBjTjwO1d2J8QIyqLo8aL9ShTWST/UYAhxZxCXJ7M2DCtXGMwtskCCVglRJEFZZB3covL4wkH5Gn8Yvw1Ws2crPqM6AALW1zKMv/l8HGli6M6SHxSRDmiZYwLRmJh8FVaMQgLtkuvFAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+mhWMr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IydpjoJ7ls6gIdxDs0R5EjMvWTVDq1g+oc6OiilKEpiGh7lyklEWqSHVu/h9uPp9DUiXH8GZNn+wZJ9VLx4DMqXtr4/Cgeg3zbKGUEgHoFLBJ8WHVxP91DddDbWcbqA1esW6fci8FC69gqMUy010QnFdXCmee5/8vbkTvy98Ock=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ncAIs0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+mhWMr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208C9C433F1;
-	Mon,  1 Apr 2024 16:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ncAIs0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A64AC433C7;
+	Mon,  1 Apr 2024 16:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988806;
-	bh=MVdARjtk2gmKylNWPsvcnW/wtJu+Z+dGr0271r0zkvI=;
+	s=korg; t=1711988809;
+	bh=cLAowEEi9oWf+P/LpieyxnexaZDZoQKCSYuG05cFJwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+mhWMr/sl2ah0Oeexz/sdkapsJFfAHJIM99ozNloa7ULqUMmJm0HfBMtF45VhEqH
-	 +J7xWPhx4wSeDSoL9Kt61W4vozF9DToZOi6SsMfvQok8Qh5WnKXkWUCjH8qo6jEvUl
-	 jNZ60LgOps3Swh61H+Gxn0Y11axODUStTP8lCw/w=
+	b=1ncAIs0DWhtnFIJ1uDzm8Rn8NsHGi1fuQv29axMSoAtkzKQ5NDcqdL621EQQlOgAv
+	 7MFY6J4gBRvRJ4IZEthzvc8XQIKX1SzcQRGNG3oPGhwn2qbDEOyAHmr2CYlxOWuujI
+	 AyHM0g4ZrfVoCEmMlyKqqdHZSwv+nJzLPnKtmefY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Yokum <linux-usb@mail.totalphase.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.7 265/432] xhci: Fix failure to detect ring expansion need.
-Date: Mon,  1 Apr 2024 17:44:12 +0200
-Message-ID: <20240401152601.054502749@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linke li <lilinke99@qq.com>,
+	Rabin Vincent <rabin@rab.in>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.7 256/432] tracing: Use .flush() call to wake up readers
+Date: Mon,  1 Apr 2024 17:44:03 +0200
+Message-ID: <20240401152600.776960881@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,60 +56,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit b234c70fefa7532d34ebee104de64cc16f1b21e4 upstream.
+commit e5d7c1916562f0e856eb3d6f569629fcd535fed2 upstream.
 
-Ring expansion checker may incorrectly assume a completely full ring
-is empty, missing the need for expansion.
+The .release() function does not get called until all readers of a file
+descriptor are finished.
 
-This is due to a special empty ring case where the dequeue ends up
-ahead of the enqueue pointer. This is seen when enqueued TRBs fill up
-exactly a segment, with enqueue then pointing to the end link TRB.
-Once those TRBs are handled the dequeue pointer will follow the link
-TRB and end up pointing to the first entry on the next segment, past
-the enqueue.
+If a thread is blocked on reading a file descriptor in ring_buffer_wait(),
+and another thread closes the file descriptor, it will not wake up the
+other thread as ring_buffer_wake_waiters() is called by .release(), and
+that will not get called until the .read() is finished.
 
-This same enqueue - dequeue condition can be true if a ring is full,
-with enqueue ending on that last link TRB before the dequeue pointer
-on the next segment.
+The issue originally showed up in trace-cmd, but the readers are actually
+other processes with their own file descriptors. So calling close() would wake
+up the other tasks because they are blocked on another descriptor then the
+one that was closed(). But there's other wake ups that solve that issue.
 
-This can be seen when queuing several ~510 small URBs via usbfs in
-one go before a single one is handled (i.e. dequeue not moved from first
-entry in segment).
+When a thread is blocked on a read, it can still hang even when another
+thread closed its descriptor.
 
-Expand the ring already when enqueue reaches the link TRB before the
-dequeue segment, instead of expanding it when enqueue moves into the
-dequeue segment.
+This is what the .flush() callback is for. Have the .flush() wake up the
+readers.
 
-Reported-by: Chris Yokum <linux-usb@mail.totalphase.com>
-Closes: https://lore.kernel.org/all/949223224.833962.1709339266739.JavaMail.zimbra@totalphase.com
-Tested-by: Chris Yokum <linux-usb@mail.totalphase.com>
-Fixes: f5af638f0609 ("xhci: Fix transfer ring expansion size calculation")
-Cc: stable@vger.kernel.org # v6.5+
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240305132312.955171-2-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/linux-trace-kernel/20240308202432.107909457@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linke li <lilinke99@qq.com>
+Cc: Rabin Vincent <rabin@rab.in>
+Fixes: f3ddb74ad0790 ("tracing: Wake up ring buffer waiters on closing of the file")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -326,7 +326,13 @@ static unsigned int xhci_ring_expansion_
- 	/* how many trbs will be queued past the enqueue segment? */
- 	trbs_past_seg = enq_used + num_trbs - (TRBS_PER_SEGMENT - 1);
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8352,6 +8352,20 @@ tracing_buffers_read(struct file *filp,
+ 	return size;
+ }
  
--	if (trbs_past_seg <= 0)
-+	/*
-+	 * Consider expanding the ring already if num_trbs fills the current
-+	 * segment (i.e. trbs_past_seg == 0), not only when num_trbs goes into
-+	 * the next segment. Avoids confusing full ring with special empty ring
-+	 * case below
-+	 */
-+	if (trbs_past_seg < 0)
- 		return 0;
++static int tracing_buffers_flush(struct file *file, fl_owner_t id)
++{
++	struct ftrace_buffer_info *info = file->private_data;
++	struct trace_iterator *iter = &info->iter;
++
++	iter->wait_index++;
++	/* Make sure the waiters see the new wait_index */
++	smp_wmb();
++
++	ring_buffer_wake_waiters(iter->array_buffer->buffer, iter->cpu_file);
++
++	return 0;
++}
++
+ static int tracing_buffers_release(struct inode *inode, struct file *file)
+ {
+ 	struct ftrace_buffer_info *info = file->private_data;
+@@ -8363,12 +8377,6 @@ static int tracing_buffers_release(struc
  
- 	/* Empty ring special case, enqueue stuck on link trb while dequeue advanced */
+ 	__trace_array_put(iter->tr);
+ 
+-	iter->wait_index++;
+-	/* Make sure the waiters see the new wait_index */
+-	smp_wmb();
+-
+-	ring_buffer_wake_waiters(iter->array_buffer->buffer, iter->cpu_file);
+-
+ 	if (info->spare)
+ 		ring_buffer_free_read_page(iter->array_buffer->buffer,
+ 					   info->spare_cpu, info->spare);
+@@ -8582,6 +8590,7 @@ static const struct file_operations trac
+ 	.read		= tracing_buffers_read,
+ 	.poll		= tracing_buffers_poll,
+ 	.release	= tracing_buffers_release,
++	.flush		= tracing_buffers_flush,
+ 	.splice_read	= tracing_buffers_splice_read,
+ 	.unlocked_ioctl = tracing_buffers_ioctl,
+ 	.llseek		= no_llseek,
 
 
