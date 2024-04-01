@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9394943AD6;
-	Mon,  1 Apr 2024 16:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D980838DD8;
+	Mon,  1 Apr 2024 16:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989458; cv=none; b=tCZHZVVf5/7PlIDkIaFi/j9SuK4T36rv8DDPe1szSvVGxE/KLj/CJLf0HOwDTGJ4iwGWSRNjrICvoxgZgmYy/cjJyPkiXkk5TsjoCbO8AiOkQCf/ngBZq3mQWWuMTB2zKonTfIKKvF72jHCFRJbpxQ+wgEIqqtV3E9DDxW7SEUw=
+	t=1711989461; cv=none; b=exWz2P1aO0IBPHtt8ulnJF16nPOJ/ir0VpZIyk/JuaNs88rCmIfgr3QARqrtj7C7XJDAFrBsBVMIcMVjsjfHADs4p5RXAhicSneWit+cJNItTh+yGJCq+HtHPbdWl+R8GRjE0ZiXwMznS1IMiA0AXtd5jR9QTQ+Pm+DqmRResEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989458; c=relaxed/simple;
-	bh=Kh29KrHML0LdQUP8lNfKfFxo+fH9BWh38JWujvvKLzg=;
+	s=arc-20240116; t=1711989461; c=relaxed/simple;
+	bh=PUog2+80WmatoqEymRT2IawYChZLpqWDPK4s+H0lg+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJC3bpXfJaZjRDQB3SEFHZM9zurbiKUXtdaSv7BR2Y0Pq4nHiMOukr+XQLYfIAq3N2hrgFt99fPYjyP3JkOuT62AFPoBJXZLFYdjI7/XSAwF+kbTUOBVF9e2KkcookJegvWJp2aKltMK7/AojU2SMv4UMU+cuZVQgJujcbMEU7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzeUMzoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QkPFklmDKwrYNFLeQgSU4EMX+fBFnZSxlXesZSHB5zdEEHOGrmAa86kbrjnB/kJtiRUBJ5BN1hhhfLJMpuN6Kppeo8VDtPsmCXmAk+l6UaWcuZNy6Q0dn8cISCl+x6flkWgU+UfCxqpt+TEfW6iTPAPXutIcn8fMOjROhAmZEF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQgnVLze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzeUMzoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03463C433C7;
-	Mon,  1 Apr 2024 16:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQgnVLze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A7DC433F1;
+	Mon,  1 Apr 2024 16:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989458;
-	bh=Kh29KrHML0LdQUP8lNfKfFxo+fH9BWh38JWujvvKLzg=;
+	s=korg; t=1711989461;
+	bh=PUog2+80WmatoqEymRT2IawYChZLpqWDPK4s+H0lg+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzeUMzoFRwqfDkyLxISp8yYKPq4D39p6sH8irQfOGs33CQJmTqnpKkZmTQ3GlAf+Q
-	 1Tlyx0V8QATNEAAPd3NMl9QxmwfmPXG+COrx3blN2q/ITgP2kFJtxODaNVzoCMMLw1
-	 Y2yNtH9fQfNtvkwlNDF0ot+XxV/OWYMWF6dza2Vc=
+	b=AQgnVLzesnavUizBizFtXr49XqDJhvP3uMDM5TuIchfd8yYO+KBkDuYmACBVMQ8SE
+	 JmAb6uzIjAttanJU8p/YKBNDveotM4U3t1Q6esCRvYgRQQpqUQzSdAtn7/gBfQ7JFK
+	 ZInknm8KmMP/GduoGigvZOWOLt3dkUuieHBX+uvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Helge Deller <deller@gmx.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/396] parisc/unaligned: Rewrite 64-bit inline assembly of emulate_ldd()
-Date: Mon,  1 Apr 2024 17:41:42 +0200
-Message-ID: <20240401152549.506316039@linuxfoundation.org>
+Subject: [PATCH 6.6 027/396] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port mapping
+Date: Mon,  1 Apr 2024 17:41:16 +0200
+Message-ID: <20240401152548.713380234@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,86 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e5db6a74571a8baf87a116ea39aab946283362ff ]
+[ Upstream commit b66966b1bbc0aa58f7af83cbd56d5a206892857c ]
 
-Convert to use real temp variables instead of clobbering processor
-registers. This aligns the 64-bit inline assembly code with the 32-bit
-assembly code which was rewritten with commit 427c1073a2a1
-("parisc/unaligned: Rewrite 32-bit inline assembly of emulate_ldd()").
+WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
+it is offset by one.  Correct it to fix recording via analogue
+microphones.
 
-While at it, fix comment in 32-bit rewrite code. Temporary variables are
-now used for both 32-bit and 64-bit code, so move their declarations
-to the function header.
+The change is based on QRD8550 and should be correct here as well, but
+was not tested on MTP8550.
 
-No functional change intended.
-
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Fixes: a541667c86a9 ("arm64: dts: qcom: sm8550-mtp: add WCD9385 audio-codec")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240124164505.293202-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/unaligned.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/parisc/kernel/unaligned.c b/arch/parisc/kernel/unaligned.c
-index c520e551a1652..a8e75e5b884a7 100644
---- a/arch/parisc/kernel/unaligned.c
-+++ b/arch/parisc/kernel/unaligned.c
-@@ -169,6 +169,7 @@ static int emulate_ldw(struct pt_regs *regs, int toreg, int flop)
- static int emulate_ldd(struct pt_regs *regs, int toreg, int flop)
- {
- 	unsigned long saddr = regs->ior;
-+	unsigned long shift, temp1;
- 	__u64 val = 0;
- 	ASM_EXCEPTIONTABLE_VAR(ret);
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+index f29cce5186acd..c4bfe43471f7c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+@@ -743,7 +743,7 @@ &swr2 {
+ 	wcd_tx: codec@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+-		qcom,tx-port-mapping = <1 1 2 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
+ 	};
+ };
  
-@@ -180,25 +181,22 @@ static int emulate_ldd(struct pt_regs *regs, int toreg, int flop)
- 
- #ifdef CONFIG_64BIT
- 	__asm__ __volatile__  (
--"	depd,z	%3,60,3,%%r19\n"		/* r19=(ofs&7)*8 */
--"	mtsp	%4, %%sr1\n"
--"	depd	%%r0,63,3,%3\n"
--"1:	ldd	0(%%sr1,%3),%0\n"
--"2:	ldd	8(%%sr1,%3),%%r20\n"
--"	subi	64,%%r19,%%r19\n"
--"	mtsar	%%r19\n"
--"	shrpd	%0,%%r20,%%sar,%0\n"
-+"	depd,z	%2,60,3,%3\n"		/* shift=(ofs&7)*8 */
-+"	mtsp	%5, %%sr1\n"
-+"	depd	%%r0,63,3,%2\n"
-+"1:	ldd	0(%%sr1,%2),%0\n"
-+"2:	ldd	8(%%sr1,%2),%4\n"
-+"	subi	64,%3,%3\n"
-+"	mtsar	%3\n"
-+"	shrpd	%0,%4,%%sar,%0\n"
- "3:	\n"
- 	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%1")
- 	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%1")
--	: "=r" (val), "+r" (ret)
--	: "0" (val), "r" (saddr), "r" (regs->isr)
--	: "r19", "r20" );
-+	: "+r" (val), "+r" (ret), "+r" (saddr), "=&r" (shift), "=&r" (temp1)
-+	: "r" (regs->isr) );
- #else
--    {
--	unsigned long shift, temp1;
- 	__asm__ __volatile__  (
--"	zdep	%2,29,2,%3\n"		/* r19=(ofs&3)*8 */
-+"	zdep	%2,29,2,%3\n"		/* shift=(ofs&3)*8 */
- "	mtsp	%5, %%sr1\n"
- "	dep	%%r0,31,2,%2\n"
- "1:	ldw	0(%%sr1,%2),%0\n"
-@@ -214,7 +212,6 @@ static int emulate_ldd(struct pt_regs *regs, int toreg, int flop)
- 	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 4b, "%1")
- 	: "+r" (val), "+r" (ret), "+r" (saddr), "=&r" (shift), "=&r" (temp1)
- 	: "r" (regs->isr) );
--    }
- #endif
- 
- 	DPRINTF("val = 0x%llx\n", val);
 -- 
 2.43.0
 
