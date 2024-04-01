@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0244D9EF;
-	Mon,  1 Apr 2024 16:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9204EB38;
+	Mon,  1 Apr 2024 16:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990337; cv=none; b=FYyXDclfxysbFaLCJBMZU/RKyvvradLzgH9b8ztKHpSz6e0JEEgkPPjgpUhFb2T4XeETPRbh3as6V7jVPSPUNFkSaUi1JUYat8s7qeNaWvdG1BsjFU5eEPFcBlKs4/fTc2BkzynWWJsw8QQc62xhYPoE/mRNqJN5znEPnp0vmfg=
+	t=1711990340; cv=none; b=g0DCXxD5C+iVNFMKpvRA+eDBLd/1Gzd5hLsEedrAFKCXP8sfJsjdHyw2zxncflDVx9FfGGSmjrCdQrqH02RnZU2oUxcAimd/hyUOLCulDQmEX14I4Lrw2dCWT4Oyf9NFoYf9rjp48WFq1ff3/VVNhHdpNojfmahLt322X+W1+KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990337; c=relaxed/simple;
-	bh=ZTkaVG/QUTpCDvarCwbkRUA0mlInjxWu0Q5y/cN20wM=;
+	s=arc-20240116; t=1711990340; c=relaxed/simple;
+	bh=xllGLTVNE+r9wYGRJVcF7Jug70InlXnI/j0pQAuQ/jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKBWZk5ZGAJxJSgSb4JcBkZhk/DHpJhOpQvWSVne1DTkSRMiNBDKjMTspPRCbOpkGa+cQ2VyIYXXeMd5Nk0WvHTKDWHbHJT4BCiXZqPd3Mxi0nDcqFR2M6/JfxLrxEDo27eo+rq1aq09A/kNlmTvqzGvr6T/3F+fKP6Mb7AEWg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWyr7FWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Sxz6rC+RfmplCZECmTwtR6+qr7uJY5ltj1gFH3XGyMgNqW9sD+lfB4ZdlYyUfZE6sDCLBTveJ01Ge71+K1GZuB34y66k+KTfR9RPAB59eIebzoVQ4lLbjyoObSMYwuRocI0U3ASWWWQ1hcie5mZX0lLU9YuxyPrVh1GI8DNHnV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/Bo9v4d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWyr7FWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A4EC433F1;
-	Mon,  1 Apr 2024 16:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/Bo9v4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E364C433C7;
+	Mon,  1 Apr 2024 16:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990337;
-	bh=ZTkaVG/QUTpCDvarCwbkRUA0mlInjxWu0Q5y/cN20wM=;
+	s=korg; t=1711990340;
+	bh=xllGLTVNE+r9wYGRJVcF7Jug70InlXnI/j0pQAuQ/jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWyr7FWJxC4Kt99a4b3hGDyoWvbI2udp3o2i1MaZekSReSVHQZ0eSyAdEJWsrdZ6c
-	 c6TKdBcSKHRcLQ9wgkcOOapdiSQ5pUdQsbcd2ZiL/uYeoCX9NmL/+Mhe9sXRHU7LbE
-	 uUoADH1eWpEq4ZaQ+8T6IOkpccfcqdsEH2TaL+fA=
+	b=s/Bo9v4diXW4AAcmINvoYA+Hek3tLglH2hSZoTYNudsH7jHOeq+Nk1XCgCVrsOUkR
+	 DkYB51yNwxN3PHCWEhsqjknTtjNoNMtomF36x3IZcW0nRYRPjPldZkeM7J6sSDUQ6i
+	 B9f24Cqr1fjyBzI1WQcWHsj3UfR750WpAHflQwYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 321/396] wifi: cfg80211: add a flag to disable wireless extensions
-Date: Mon,  1 Apr 2024 17:46:10 +0200
-Message-ID: <20240401152557.483743114@linuxfoundation.org>
+	Zoltan HERPAI <wigyori@uid0.hu>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 304/396] pwm: img: fix pwm clock lookup
+Date: Mon,  1 Apr 2024 17:45:53 +0200
+Message-ID: <20240401152556.979725447@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -43,85 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zoltan HERPAI <wigyori@uid0.hu>
 
-commit be23b2d7c3b7c8bf57b1cf0bf890bd65df9d0186 upstream.
+[ Upstream commit 9eb05877dbee03064d3d3483cd6702f610d5a358 ]
 
-Wireless extensions are already disabled if MLO is enabled,
-given that we cannot support MLO there with all the hard-
-coded assumptions about BSSID etc.
+22e8e19 has introduced a regression in the imgchip->pwm_clk lookup, whereas
+the clock name has also been renamed to "imgchip". This causes the driver
+failing to load:
 
-However, the WiFi7 ecosystem is still stabilizing, and some
-devices may need MLO disabled while that happens. In that
-case, we might end up with a device that supports wext (but
-not MLO) in one kernel, and then breaks wext in the future
-(by enabling MLO), which is not desirable.
+[    0.546905] img-pwm 18101300.pwm: failed to get imgchip clock
+[    0.553418] img-pwm: probe of 18101300.pwm failed with error -2
 
-Add a flag to let such drivers/devices disable wext even if
-MLO isn't yet enabled.
+Fix this lookup by reverting the clock name back to "pwm".
 
-Cc: stable@vger.kernel.org
-Link: https://msgid.link/20240314110951.b50f1dc4ec21.I656ddd8178eedb49dc5c6c0e70f8ce5807afb54f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zoltan HERPAI <wigyori@uid0.hu>
+Link: https://lore.kernel.org/r/20240320083602.81592-1-wigyori@uid0.hu
+Fixes: 22e8e19a46f7 ("pwm: img: Rename variable pointing to driver private data")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h   |    2 ++
- net/wireless/wext-core.c |    7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-img.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -4816,6 +4816,7 @@ struct cfg80211_ops {
-  * @WIPHY_FLAG_SUPPORTS_EXT_KCK_32: The device supports 32-byte KCK keys.
-  * @WIPHY_FLAG_NOTIFY_REGDOM_BY_DRIVER: The device could handle reg notify for
-  *	NL80211_REGDOM_SET_BY_DRIVER.
-+ * @WIPHY_FLAG_DISABLE_WEXT: disable wireless extensions for this device
-  */
- enum wiphy_flags {
- 	WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK		= BIT(0),
-@@ -4827,6 +4828,7 @@ enum wiphy_flags {
- 	WIPHY_FLAG_4ADDR_STATION		= BIT(6),
- 	WIPHY_FLAG_CONTROL_PORT_PROTOCOL	= BIT(7),
- 	WIPHY_FLAG_IBSS_RSN			= BIT(8),
-+	WIPHY_FLAG_DISABLE_WEXT			= BIT(9),
- 	WIPHY_FLAG_MESH_AUTH			= BIT(10),
- 	WIPHY_FLAG_SUPPORTS_EXT_KCK_32          = BIT(11),
- 	/* use hole at 12 */
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -4,6 +4,7 @@
-  * Authors :	Jean Tourrilhes - HPL - <jt@hpl.hp.com>
-  * Copyright (c) 1997-2007 Jean Tourrilhes, All Rights Reserved.
-  * Copyright	2009 Johannes Berg <johannes@sipsolutions.net>
-+ * Copyright (C) 2024 Intel Corporation
-  *
-  * (As all part of the Linux kernel, this file is GPL)
-  */
-@@ -662,7 +663,8 @@ struct iw_statistics *get_wireless_stats
- 	    dev->ieee80211_ptr->wiphy->wext &&
- 	    dev->ieee80211_ptr->wiphy->wext->get_wireless_stats) {
- 		wireless_warn_cfg80211_wext();
--		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
-+		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
-+							WIPHY_FLAG_DISABLE_WEXT))
- 			return NULL;
- 		return dev->ieee80211_ptr->wiphy->wext->get_wireless_stats(dev);
+diff --git a/drivers/pwm/pwm-img.c b/drivers/pwm/pwm-img.c
+index 326af85888e7b..fd1535c47b6db 100644
+--- a/drivers/pwm/pwm-img.c
++++ b/drivers/pwm/pwm-img.c
+@@ -289,9 +289,9 @@ static int img_pwm_probe(struct platform_device *pdev)
+ 		return PTR_ERR(imgchip->sys_clk);
  	}
-@@ -704,7 +706,8 @@ static iw_handler get_handler(struct net
- #ifdef CONFIG_CFG80211_WEXT
- 	if (dev->ieee80211_ptr && dev->ieee80211_ptr->wiphy) {
- 		wireless_warn_cfg80211_wext();
--		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
-+		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
-+							WIPHY_FLAG_DISABLE_WEXT))
- 			return NULL;
- 		handlers = dev->ieee80211_ptr->wiphy->wext;
+ 
+-	imgchip->pwm_clk = devm_clk_get(&pdev->dev, "imgchip");
++	imgchip->pwm_clk = devm_clk_get(&pdev->dev, "pwm");
+ 	if (IS_ERR(imgchip->pwm_clk)) {
+-		dev_err(&pdev->dev, "failed to get imgchip clock\n");
++		dev_err(&pdev->dev, "failed to get pwm clock\n");
+ 		return PTR_ERR(imgchip->pwm_clk);
  	}
+ 
+-- 
+2.43.0
+
 
 
