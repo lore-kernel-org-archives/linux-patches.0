@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB8B47A62;
-	Mon,  1 Apr 2024 15:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3929F46B9F;
+	Mon,  1 Apr 2024 15:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987060; cv=none; b=dwXteXqTFoB3jd7C4pjUPt0xoKo5xwzIIrr+JIjPaNIN3sX5kRYP7sYHsrZzoY1Gwd8dtcGdXl26uImNa6Z67FlNggN0kx78nFrs/iIEHbXjE5jnxrtapaASBoN9QI8nyUMLAzNFBC9AvIOBJaCkw9hldr+uxwlZw+swD7iqKFw=
+	t=1711987063; cv=none; b=RTPizuk4JnEIImH3QbPAwTvMefCsyknymFZpviBC9ecUpkmo30c1/0yKebIr+Eq7HltVGskEZ8XS1sSgQg8bfwsWMFt04OK8ESQLyiBjzCDjip7h/8HMYHejvy0TGdVwg7oIxV/1bpNYqI57kx10G/ChRMCuH1RYXWoEsdRC18I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987060; c=relaxed/simple;
-	bh=XYzzfruTys38wfYcRn+0Y641PUbhg1o4gpxVcUxZQes=;
+	s=arc-20240116; t=1711987063; c=relaxed/simple;
+	bh=vBF/J+RgoH7CmLGMfeFSy+elH0JIdItHVDkhbxw9efk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWLvPgWzwI+kjBZch8Ruo495sDn9JAoPSKWegTZfPFjUsv05qhWfjEr6cgaovy3RES3nC4lZXyS8hkdPPWLhGGbDVijfMIwtBIuvjBJcPwR7o+hD5b4bkrw/ujS3t6Zg7pABjI2iXbyi8AajVRj+i6Ol8FNA2VmXETfy1+prm0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whiqKJkw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2XIud3fcDKRjpQ/EbqYGJOXjMYBP3Ls3yrhFIMVDLz1UTOxQ7EPQHi/boXq6GS8GFgjbuQdvTUvy16rqJAREj3HscfWnjw1tewXSrD8Clfi8+LnqcoFAQ/NycbQKoC0/wOQBh+aGuG4ivqrzdNEIPywsfvz/S9E91YTsfLoD4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OarPpwqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whiqKJkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FAEC433C7;
-	Mon,  1 Apr 2024 15:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OarPpwqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAC2C433C7;
+	Mon,  1 Apr 2024 15:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987060;
-	bh=XYzzfruTys38wfYcRn+0Y641PUbhg1o4gpxVcUxZQes=;
+	s=korg; t=1711987063;
+	bh=vBF/J+RgoH7CmLGMfeFSy+elH0JIdItHVDkhbxw9efk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whiqKJkw+5HOtUfXv/5S7MOWaOhXd2vGpK/4CWKqddzyOjvExJRf10ctelAsWA9qr
-	 l9BN+3xHqT/A+CKjd/lW1ICGOcHsS41QAVv1Qm6pXJrkNZ1Ggrpku3yn8LW9h2FHJX
-	 nLykTui1lHmRaKAOSBDk5tEgoH+UwNwytzgR63Ks=
+	b=OarPpwqp21Mvv8EAfUW51k/p9WNY8wZmtZQPIlbbvaTi+kJyHqaNmLdEH36MKcYrc
+	 P3TTYQTpNwXnm8NwmIoBzft9TgHQ+Szct8YCtMdgrx1lUW5lMWcC4Adn9phsCG39+d
+	 DHxHl+mc59xnipqVjAoBplVzQymVIDB+A/cyWrCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
-	Madhan Sai <madhan.singaraju@candelatech.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 131/399] debugfs: fix wait/cancellation handling during remove
-Date: Mon,  1 Apr 2024 17:41:37 +0200
-Message-ID: <20240401152553.102311657@linuxfoundation.org>
+Subject: [PATCH 6.8 165/399] drm/probe-helper: warn about negative .get_modes()
+Date: Mon,  1 Apr 2024 17:42:11 +0200
+Message-ID: <20240401152554.105933281@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,70 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 952c3fce297f12c7ff59380adb66b564e2bc9b64 ]
+[ Upstream commit 7af03e688792293ba33149fb8df619a8dff90e80 ]
 
-Ben Greear further reports deadlocks during concurrent debugfs
-remove while files are being accessed, even though the code in
-question now uses debugfs cancellations. Turns out that despite
-all the review on the locking, we missed completely that the
-logic is wrong: if the refcount hits zero we can finish (and
-need not wait for the completion), but if it doesn't we have
-to trigger all the cancellations. As written, we can _never_
-get into the loop triggering the cancellations. Fix this, and
-explain it better while at it.
+The .get_modes() callback is supposed to return the number of modes,
+never a negative error code. If a negative value is returned, it'll just
+be interpreted as a negative count, and added to previous calculations.
+
+Document the rules, but handle the negative values gracefully with an
+error message.
 
 Cc: stable@vger.kernel.org
-Fixes: 8c88a474357e ("debugfs: add API to allow debugfs operations cancellation")
-Reported-by: Ben Greear <greearb@candelatech.com>
-Closes: https://lore.kernel.org/r/1c9fa9e5-09f1-0522-fdbc-dbcef4d255ca@candelatech.com
-Tested-by: Madhan Sai <madhan.singaraju@candelatech.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20240229153635.6bfab7eb34d3.I6c7aeff8c9d6628a8bc1ddcf332205a49d801f17@changeid
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/50208c866facc33226a3c77b82bb96aeef8ef310.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/inode.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c       | 7 +++++++
+ include/drm/drm_modeset_helper_vtables.h | 3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/debugfs/inode.c b/fs/debugfs/inode.c
-index 034a617cb1a5e..a40da00654336 100644
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -751,13 +751,28 @@ static void __debugfs_file_removed(struct dentry *dentry)
- 	if ((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)
- 		return;
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 23b4e9a3361d8..744cde9db246b 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -419,6 +419,13 @@ static int drm_helper_probe_get_modes(struct drm_connector *connector)
  
--	/* if we hit zero, just wait for all to finish */
--	if (!refcount_dec_and_test(&fsd->active_users)) {
--		wait_for_completion(&fsd->active_users_drained);
-+	/* if this was the last reference, we're done */
-+	if (refcount_dec_and_test(&fsd->active_users))
- 		return;
--	}
+ 	count = connector_funcs->get_modes(connector);
  
--	/* if we didn't hit zero, try to cancel any we can */
-+	/*
-+	 * If there's still a reference, the code that obtained it can
-+	 * be in different states:
-+	 *  - The common case of not using cancellations, or already
-+	 *    after debugfs_leave_cancellation(), where we just need
-+	 *    to wait for debugfs_file_put() which signals the completion;
-+	 *  - inside a cancellation section, i.e. between
-+	 *    debugfs_enter_cancellation() and debugfs_leave_cancellation(),
-+	 *    in which case we need to trigger the ->cancel() function,
-+	 *    and then wait for debugfs_file_put() just like in the
-+	 *    previous case;
-+	 *  - before debugfs_enter_cancellation() (but obviously after
-+	 *    debugfs_file_get()), in which case we may not see the
-+	 *    cancellation in the list on the first round of the loop,
-+	 *    but debugfs_enter_cancellation() signals the completion
-+	 *    after adding it, so this code gets woken up to call the
-+	 *    ->cancel() function.
-+	 */
- 	while (refcount_read(&fsd->active_users)) {
- 		struct debugfs_cancellation *c;
++	/* The .get_modes() callback should not return negative values. */
++	if (count < 0) {
++		drm_err(connector->dev, ".get_modes() returned %pe\n",
++			ERR_PTR(count));
++		count = 0;
++	}
++
+ 	/*
+ 	 * Fallback for when DDC probe failed in drm_get_edid() and thus skipped
+ 	 * override/firmware EDID.
+diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+index 881b03e4dc288..9ed42469540eb 100644
+--- a/include/drm/drm_modeset_helper_vtables.h
++++ b/include/drm/drm_modeset_helper_vtables.h
+@@ -898,7 +898,8 @@ struct drm_connector_helper_funcs {
+ 	 *
+ 	 * RETURNS:
+ 	 *
+-	 * The number of modes added by calling drm_mode_probed_add().
++	 * The number of modes added by calling drm_mode_probed_add(). Return 0
++	 * on failures (no modes) instead of negative error codes.
+ 	 */
+ 	int (*get_modes)(struct drm_connector *connector);
  
 -- 
 2.43.0
