@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D555E383BA;
-	Mon,  1 Apr 2024 16:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F00383BA;
+	Mon,  1 Apr 2024 16:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987213; cv=none; b=VtxlfJGiv4m7oRc7aykKHcsDen9PONiVI1yR5BTl+CI5cGcVHqvQ3XuVNZJh5SiKUYX8jo5hojf1MaW2B18RqSG4yPXjTT0mRZg00MgpluFzbVbE6BBD7hg1yKvfuw3J94gKNOMUnbf4zNsOlbBT3T5EQfNPBh4teKZw51jWFaw=
+	t=1711987217; cv=none; b=p/B8fqCO9m/r/Fihi9mGpH2kkLl05hqwyOPqOQmpslV8gbblKnT6sR6DhehdnoyJtpRnAkENbInkKij49rhOmIaSbK6ZE1Sv9Po9pW+4iXTr2Wlq8RVnc/bND5yE8IoDulbJN96fTGn+TvR6/M0pjqlQh+umuyv2omoMKzA7vZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987213; c=relaxed/simple;
-	bh=eekFva2wKXS7yzevAD4aTEtWjOQ6Km1y047lvrv+szI=;
+	s=arc-20240116; t=1711987217; c=relaxed/simple;
+	bh=EADmyLsaPIEv402S73g52E1WlMVAuExo4TSXFLY/M8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAGM0A8L4O+BGgx5wCNoNlf/4+IzwiNDuwvugxtwncO6Ugg0xsx6UMsFsnu9OXAssN/74ocgAkwDPOlQXFe63LUzu4VQayvBIA/QhPS47SQFon1uX6ewD1h2g0oDaaCNS3A9yViaRs9a4vmiMRZh0DxsyXjhS9mCgwY0+kucEPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhSOTKdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHYqQzOMlnH58hK2BS7F2zKTkwy8vGIwcWZiEa9kyC0u0XvL62kaw4qfneYZ4W+q5rxhksnHlehuH/XahnWF1SsCrIKJNOgHb1SI5AM24Jp9tygYxB1vofSCUFSg9QzoxHJf7cjUZPCzO5a3sHXveMrp8210zyIXxFyI56wVBtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBuJAERo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhSOTKdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5ECC433C7;
-	Mon,  1 Apr 2024 16:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBuJAERo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CCDC433F1;
+	Mon,  1 Apr 2024 16:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987213;
-	bh=eekFva2wKXS7yzevAD4aTEtWjOQ6Km1y047lvrv+szI=;
+	s=korg; t=1711987217;
+	bh=EADmyLsaPIEv402S73g52E1WlMVAuExo4TSXFLY/M8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhSOTKdbwVDD6aFdZOdp3iEaH8zM+9ddH4qH1m8sXIWeHsF5NzMdpNd38awl61wvJ
-	 Xhut00Yug0KJ+2f6XD3X5DDsoutkAsX8TjK4ubTbM1pjcG24z0MLM9eCMeREVlJsqT
-	 bkHghXurxF8w+b0gVeeHP9JCNNYE3d1ykBtC5u5A=
+	b=tBuJAERoEYnjabkiWh2yoiir00DqXjkJdkDBhoVXsMaZkTM3MSBlsSaw6Y35aeof4
+	 x/jYuXyhrkkyu9qh9rBQvKBRI1fNSvVDs6PWe8d+097AMytblZ/BcpxGtimWeTDgWF
+	 Qe0YjaTemUmyR0nwfkBofENmyTjvuB1tr0XMSU3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Allen Pan <allen.pan@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Leo Ma <hanghong.ma@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 218/399] drm/amd/display: Add a dc_state NULL check in dc_state_release
-Date: Mon,  1 Apr 2024 17:43:04 +0200
-Message-ID: <20240401152555.689253910@linuxfoundation.org>
+Subject: [PATCH 6.8 219/399] drm/amd/display: Fix noise issue on HDMI AV mute
+Date: Mon,  1 Apr 2024 17:43:05 +0200
+Message-ID: <20240401152555.719910575@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -55,40 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allen Pan <allen.pan@amd.com>
+From: Leo Ma <hanghong.ma@amd.com>
 
-[ Upstream commit 334b56cea5d9df5989be6cf1a5898114fa70ad98 ]
+[ Upstream commit 69e3be6893a7e668660b05a966bead82bbddb01d ]
+
+[Why]
+When mode switching is triggered there is momentary noise visible on
+some HDMI TV or displays.
 
 [How]
-Check wheather state is NULL before releasing it.
+Wait for 2 frames to make sure we have enough time to send out AV mute
+and sink receives a full frame.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Allen Pan <allen.pan@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Leo Ma <hanghong.ma@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_state.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c  | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_state.c b/drivers/gpu/drm/amd/display/dc/core/dc_state.c
-index 180ac47868c22..5cc7f8da209c5 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_state.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_state.c
-@@ -334,7 +334,8 @@ static void dc_state_free(struct kref *kref)
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+index c34c13e1e0a4e..55cf4c9e6aedf 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+@@ -663,10 +663,20 @@ void dcn30_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
+ 	if (pipe_ctx == NULL)
+ 		return;
  
- void dc_state_release(struct dc_state *state)
- {
--	kref_put(&state->refcount, dc_state_free);
-+	if (state != NULL)
-+		kref_put(&state->refcount, dc_state_free);
+-	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL)
++	if (dc_is_hdmi_signal(pipe_ctx->stream->signal) && pipe_ctx->stream_res.stream_enc != NULL) {
+ 		pipe_ctx->stream_res.stream_enc->funcs->set_avmute(
+ 				pipe_ctx->stream_res.stream_enc,
+ 				enable);
++
++		/* Wait for two frame to make sure AV mute is sent out */
++		if (enable) {
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++		}
++	}
  }
- /*
-  * dc_state_add_stream() - Add a new dc_stream_state to a dc_state.
+ 
+ void dcn30_update_info_frame(struct pipe_ctx *pipe_ctx)
 -- 
 2.43.0
 
