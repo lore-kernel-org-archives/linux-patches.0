@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F86043AD6;
-	Mon,  1 Apr 2024 16:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36D443AD6;
+	Mon,  1 Apr 2024 16:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987963; cv=none; b=t1fo1gi7Fwpp+U1bFESt/5QF4wLXmka40yloXCDfTbIOfDEsqnM5QWey8lIBbehn9YLrbduO28ycykZTUSIrmrB6+kQCFUfn4yGL/X52x6UOCx5AVE20ShJsKKAStX174t4xC/AUSEN36OKZxklSCc4158C/IOjqT2YSH56GQVk=
+	t=1711987967; cv=none; b=mbQvWx70/woJUN7nma33xtRn42+YUQLAgSIAcrzLtCwCd10OUvuSwlWJB6GLudLHtVXWaAA5626Z4D0VVxM8jEt5B7G4q41Em4SO9CdUIVaXU36u6Jy+i2H8a5fUb7nDxsYGd45UKk2gJA9UNnPCV3eEAPcT6UfpgKOapWgp5Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987963; c=relaxed/simple;
-	bh=HEe0Vsu0JcGek7mxpPeug0O5epmx7CSs5ZsnC5V+shk=;
+	s=arc-20240116; t=1711987967; c=relaxed/simple;
+	bh=1wih+29Ej8RdF2yM5BSn/zc2GlGKrh82486hNqJs8Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=legsqG+YlFPKPbwbdBILfE7x7/3u6braZx1KY8V/WB/aRHmUsuk/a1wWj8T4+xEDZTj+NT8gC8xLLvtBmPJr7IhX0eVV6QN8ngZGgh0fvV21z8vC3wA7NRjyXw6EdpJ1UUa5jpfJ5lxhdd3cQ32aKwmAjEP8qyVlba6f6/qyQ+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVrdwNh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dv+aBjVpuVr5ovpnc58JotrwHAz2M/LepFfY44GIGyruOgCvIFkHs6f1YhUEkbHADLyHv5J8Ev8Nddo1AB95x9gSmB9zQ0uj5/dGrM7YHZaiM7E+/1VzEe/bq5kZ+LoEuFWgHG2b8zY6PcwQDZEjnFE1qb+9iWdZ4QCgbGzSn2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGQO7oQp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVrdwNh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA366C433F1;
-	Mon,  1 Apr 2024 16:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGQO7oQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51DA7C433C7;
+	Mon,  1 Apr 2024 16:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987963;
-	bh=HEe0Vsu0JcGek7mxpPeug0O5epmx7CSs5ZsnC5V+shk=;
+	s=korg; t=1711987966;
+	bh=1wih+29Ej8RdF2yM5BSn/zc2GlGKrh82486hNqJs8Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVrdwNh2gIAsvDogQkkh9MPv4QsU+zlBDfVXbEONEvr0xJc8OIKAam+Q96G1GO/1m
-	 2otJiqwf4U1MIXMhCkrRC89YAjxNmCZnvxHkJzmRI8/RAF3FRIDuENVowfm//X/ViG
-	 2NFxvkZEdzlP9IhFUuWP4GOJg2BmHLnW99b/eEJE=
+	b=vGQO7oQpeXlPDt4d5AOc+VNW97cVftTd5QesA1HPZlfCCystY0Et8lPEzZ673hI81
+	 SGK8rGESWQwufadkjMTeLu0wtRDc5KgdiaZZYgdb33lMfhZGhy2JLQoOZd8j3ymKfi
+	 yMHjwuUdqmw7RMH/qMjS+r5UBKCFTGekYwxlZCNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 015/432] serial: max310x: fix NULL pointer dereference in I2C instantiation
-Date: Mon,  1 Apr 2024 17:40:02 +0200
-Message-ID: <20240401152553.582817440@linuxfoundation.org>
+Subject: [PATCH 6.7 016/432] drm/vmwgfx: Fix the lifetime of the bo cursor memory
+Date: Mon,  1 Apr 2024 17:40:03 +0200
+Message-ID: <20240401152553.611128430@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,60 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 0d27056c24efd3d63a03f3edfbcfc4827086b110 ]
+[ Upstream commit 9a9e8a7159ca09af9b1a300a6c8e8b6ff7501c76 ]
 
-When trying to instantiate a max14830 device from userspace:
+The cleanup can be dispatched while the atomic update is still active,
+which means that the memory acquired in the atomic update needs to
+not be invalidated by the cleanup. The buffer objects in vmw_plane_state
+instead of using the builtin map_and_cache were trying to handle
+the lifetime of the mapped memory themselves, leading to crashes.
 
-    echo max14830 0x60 > /sys/bus/i2c/devices/i2c-2/new_device
+Use the map_and_cache instead of trying to manage the lifetime of the
+buffer objects held by the vmw_plane_state.
 
-we get the following error:
+Fixes kernel oops'es in IGT's kms_cursor_legacy forked-bo.
 
-    Unable to handle kernel NULL pointer dereference at virtual address...
-    ...
-    Call trace:
-        max310x_i2c_probe+0x48/0x170 [max310x]
-        i2c_device_probe+0x150/0x2a0
-    ...
-
-Add check for validity of devtype to prevent the error, and abort probe
-with a meaningful error message.
-
-Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-2-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: bb6780aa5a1d ("drm/vmwgfx: Diff cursors when using cmds")
+Cc: <stable@vger.kernel.org> # v6.2+
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240126200804.732454-6-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 5aff179bf2978..1a4bb55652afa 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1635,13 +1635,16 @@ static unsigned short max310x_i2c_slave_addr(unsigned short addr,
- 
- static int max310x_i2c_probe(struct i2c_client *client)
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+index 496ff2a6144c1..5681a1b42aa24 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -184,13 +184,12 @@ static u32 vmw_du_cursor_mob_size(u32 w, u32 h)
+  */
+ static u32 *vmw_du_cursor_plane_acquire_image(struct vmw_plane_state *vps)
  {
--	const struct max310x_devtype *devtype =
--			device_get_match_data(&client->dev);
-+	const struct max310x_devtype *devtype;
- 	struct i2c_client *port_client;
- 	struct regmap *regmaps[4];
- 	unsigned int i;
- 	u8 port_addr;
+-	bool is_iomem;
+ 	if (vps->surf) {
+ 		if (vps->surf_mapped)
+ 			return vmw_bo_map_and_cache(vps->surf->res.guest_memory_bo);
+ 		return vps->surf->snooper.image;
+ 	} else if (vps->bo)
+-		return ttm_kmap_obj_virtual(&vps->bo->map, &is_iomem);
++		return vmw_bo_map_and_cache(vps->bo);
+ 	return NULL;
+ }
  
-+	devtype = device_get_match_data(&client->dev);
-+	if (!devtype)
-+		return dev_err_probe(&client->dev, -ENODEV, "Failed to match device\n");
-+
- 	if (client->addr < devtype->slave_addr.min ||
- 		client->addr > devtype->slave_addr.max)
- 		return dev_err_probe(&client->dev, -EINVAL,
+@@ -652,22 +651,12 @@ vmw_du_cursor_plane_cleanup_fb(struct drm_plane *plane,
+ {
+ 	struct vmw_cursor_plane *vcp = vmw_plane_to_vcp(plane);
+ 	struct vmw_plane_state *vps = vmw_plane_state_to_vps(old_state);
+-	bool is_iomem;
+ 
+ 	if (vps->surf_mapped) {
+ 		vmw_bo_unmap(vps->surf->res.guest_memory_bo);
+ 		vps->surf_mapped = false;
+ 	}
+ 
+-	if (vps->bo && ttm_kmap_obj_virtual(&vps->bo->map, &is_iomem)) {
+-		const int ret = ttm_bo_reserve(&vps->bo->tbo, true, false, NULL);
+-
+-		if (likely(ret == 0)) {
+-			ttm_bo_kunmap(&vps->bo->map);
+-			ttm_bo_unreserve(&vps->bo->tbo);
+-		}
+-	}
+-
+ 	vmw_du_cursor_plane_unmap_cm(vps);
+ 	vmw_du_put_cursor_mob(vcp, vps);
+ 
 -- 
 2.43.0
 
