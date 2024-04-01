@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213FA1CA8F;
-	Mon,  1 Apr 2024 16:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F047A62;
+	Mon,  1 Apr 2024 16:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988999; cv=none; b=GDk3CDAKyv7UyNi4503YvNazNOROrgrk0GY7/pdQzCRqMNETxUosajRR8DMg3lF42NAOJLdvBBO1ZjkeJI1DFE79INIf39kkH8U9beAsV9Ou0KankRTi5/gm9R/Xf7HVtPV5R6rfa3E8pOVVTO+sTbMVSoerED1CxWd1xc80//w=
+	t=1711989002; cv=none; b=fpwhFJu3qAwiOcZBPu3XKMany96CUU5I8iyzx2SnYVM6eIyGYCvBDBmDh2DCTXvpoKbMae0PAqS2gIEEJZ4TS6aDVr8jn5j8MT5H+fOYD82EfGaWkpE/RCHVpbNh1T/mw2SrtvjxpLdUTAtC7W5FcMgVcmXlncSVLA43vJV+ot4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988999; c=relaxed/simple;
-	bh=ZKS4Jzkz4HKQEFM4jDkSSt47Hrz2y9OTtHZRxVp4jqg=;
+	s=arc-20240116; t=1711989002; c=relaxed/simple;
+	bh=Q/9cKqpcE7RM9dNPmNNo3RMkWivwAnQuIIwbshVXlMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BN51/OxOI2rvpl+EwnRpd9YZbJoaa1dmyo7E2RCSuviVt6BOnfro4JJBrT7ddLR2ZJuYAV8REz8WcIeoBjgqru5tigiijDW1J5/eEYjHMwdiQLtBVkd7NQsWg1rkJVlJ4UYE5ZoNNDGw8BYTUtTY4+ogUozHhitL4oS3fYyUx1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBHwCjU1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jKocUJmcuh4j+pPnR61gNu2b87iIqWkMls3Qm8nwoJU0aAQ27O7WBiqfDI2OhILU7Kv+vycIJwjUT44TmQWF/ZvpMqk+OYX1+0BtIzM+Ptj34aaseMc2N5Fe/UdaK7SopLgjBKTo6NFovC+vtxmYBLg+vrqtOPNOQCqbgHyoY3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzhbfihS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBHwCjU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5308DC43390;
-	Mon,  1 Apr 2024 16:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzhbfihS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04595C433F1;
+	Mon,  1 Apr 2024 16:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988999;
-	bh=ZKS4Jzkz4HKQEFM4jDkSSt47Hrz2y9OTtHZRxVp4jqg=;
+	s=korg; t=1711989002;
+	bh=Q/9cKqpcE7RM9dNPmNNo3RMkWivwAnQuIIwbshVXlMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBHwCjU1pvn1VrpL5KXOOeD4HslsqkqM5g7xO5dV7Yfb2EEAhUC8bPHoJ8mY78BN4
-	 3Zwf/objVISJMlvraafYB3kVDNWLhqO13d+4VILmq71NOUJQ3Dy70gTCEaJCqRACgG
-	 EC1G/Udw9NbROCtrvLXYhAjASInAXX3h82uwAm5Q=
+	b=UzhbfihSZ9cgulgwm53G6XBexmPxBsODcbpMVn6jQVfzQCINTtGT/Zr28pRhuZztE
+	 XneeDzfZq87mj2KBSx5wymBq2TVoXbi/fMa4jq3E6F19Buhsx7mMkh2lqyx+7M7oh/
+	 Lrho16eRmCw+ru7eMQ6IL8IkD4bmY7fRfqRwaVtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.7 323/432] mfd: intel-lpss: Introduce QUIRK_CLOCK_DIVIDER_UNITY for XPS 9530
-Date: Mon,  1 Apr 2024 17:45:10 +0200
-Message-ID: <20240401152602.832783067@linuxfoundation.org>
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hector Martin <marcan@marcan.st>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.7 324/432] perf top: Use evsels cpus to replace user_requested_cpus
+Date: Mon,  1 Apr 2024 17:45:11 +0200
+Message-ID: <20240401152602.862295840@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,75 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 1d8c51ed2ddcc4161e6496cf14fcd83921c50ec8 upstream.
+commit 5fa695e7da4975e8d21ce49f3718d6cf00ecb75e upstream.
 
-Some devices (eg. Dell XPS 9530, 2023) due to a firmware bug have a
-misconfigured clock divider, which should've been 1:1. This introduces
-quirk which conditionally re-configures the clock divider to 1:1.
+perf top errors out on a hybrid machine
+ $perf top
 
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231221185142.9224-3-alex.vinarskis@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+ Error:
+ The cycles:P event is not supported.
+
+The perf top expects that the "cycles" is collected on all CPUs in the
+system. But for hybrid there is no single "cycles" event which can cover
+all CPUs. Perf has to split it into two cycles events, e.g.,
+cpu_core/cycles/ and cpu_atom/cycles/. Each event has its own CPU mask.
+If a event is opened on the unsupported CPU. The open fails. That's the
+reason of the above error out.
+
+Perf should only open the cycles event on the corresponding CPU. The
+commit ef91871c960e ("perf evlist: Propagate user CPU maps intersecting
+core PMU maps") intersect the requested CPU map with the CPU map of the
+PMU. Use the evsel's cpus to replace user_requested_cpus.
+
+The evlist's threads are also propagated to the evsel's threads in
+__perf_evlist__propagate_maps(). For a system-wide event, perf appends
+a dummy event and assign it to the evsel's threads. For a per-thread
+event, the evlist's thread_map is assigned to the evsel's threads. The
+same as the other tools, e.g., perf record, using the evsel's threads
+when opening an event.
+
+Reported-by: Arnaldo Carvalho de Melo <acme@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Hector Martin <marcan@marcan.st>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/ZXNnDrGKXbEELMXV@kernel.org/
+Link: https://lore.kernel.org/r/20231214144612.1092028-1-kan.liang@linux.intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/intel-lpss-pci.c |    5 +++++
- drivers/mfd/intel-lpss.c     |    7 +++++++
- drivers/mfd/intel-lpss.h     |    5 +++++
- 3 files changed, 17 insertions(+)
+ tools/perf/builtin-top.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mfd/intel-lpss-pci.c
-+++ b/drivers/mfd/intel-lpss-pci.c
-@@ -29,6 +29,11 @@ static const struct pci_device_id quirk_
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x9d64, 0x152d, 0x1237),
- 		.driver_data = QUIRK_IGNORE_RESOURCE_CONFLICTS,
- 	},
-+	{
-+		/* Dell XPS 9530 (2023) */
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_INTEL, 0x51fb, 0x1028, 0x0beb),
-+		.driver_data = QUIRK_CLOCK_DIVIDER_UNITY,
-+	},
- 	{ }
- };
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -1027,8 +1027,8 @@ static int perf_top__start_counters(stru
  
---- a/drivers/mfd/intel-lpss.c
-+++ b/drivers/mfd/intel-lpss.c
-@@ -292,6 +292,7 @@ static int intel_lpss_register_clock_div
- {
- 	char name[32];
- 	struct clk *tmp = *clk;
-+	int ret;
+ 	evlist__for_each_entry(evlist, counter) {
+ try_again:
+-		if (evsel__open(counter, top->evlist->core.user_requested_cpus,
+-				     top->evlist->core.threads) < 0) {
++		if (evsel__open(counter, counter->core.cpus,
++				counter->core.threads) < 0) {
  
- 	snprintf(name, sizeof(name), "%s-enable", devname);
- 	tmp = clk_register_gate(NULL, name, __clk_get_name(tmp), 0,
-@@ -308,6 +309,12 @@ static int intel_lpss_register_clock_div
- 		return PTR_ERR(tmp);
- 	*clk = tmp;
- 
-+	if (lpss->info->quirks & QUIRK_CLOCK_DIVIDER_UNITY) {
-+		ret = clk_set_rate(tmp, lpss->info->clk_rate);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	snprintf(name, sizeof(name), "%s-update", devname);
- 	tmp = clk_register_gate(NULL, name, __clk_get_name(tmp),
- 				CLK_SET_RATE_PARENT, lpss->priv, 31, 0, NULL);
---- a/drivers/mfd/intel-lpss.h
-+++ b/drivers/mfd/intel-lpss.h
-@@ -19,6 +19,11 @@
-  * Set to ignore resource conflicts with ACPI declared SystemMemory regions.
-  */
- #define QUIRK_IGNORE_RESOURCE_CONFLICTS BIT(0)
-+/*
-+ * Some devices have misconfigured clock divider due to a firmware bug.
-+ * Set this to force the clock divider to 1:1 ratio.
-+ */
-+#define QUIRK_CLOCK_DIVIDER_UNITY		BIT(1)
- 
- struct device;
- struct resource;
+ 			/*
+ 			 * Specially handle overwrite fall back.
 
 
