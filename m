@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3608383BA;
-	Mon,  1 Apr 2024 16:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185B14778B;
+	Mon,  1 Apr 2024 16:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987288; cv=none; b=S1b8DqKRLuEbkIY4rjCjU6Sc0/NrM6P4r5XLo0HwiuB3Ib13oDd0sKURW1bgwJe4QkyjrsFYTm8b2kdneUZMSI3z8TJiqq5HGr3/6KpmqJ9PfWC8KYMxvgk7inYgbZJknIWfFq/N4FV/UUIPIf+GCH2fb2KKykwXmCF+5+tMlcU=
+	t=1711987292; cv=none; b=nMFbAliOG3OF1njYa9jGOYIWvuULhKv0f17ppcLpOjPIyV3ovulX3Ebh+Dzrf3S8gH1R7H7G/fR8cn7bteF0D+V7B9phw3a2e86crEb1TxUkttUbRwrBqWf/dH1oO3EZZc2aROCveND+28UkvYoWji9Qse1HKNwVnb8YctXIttU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987288; c=relaxed/simple;
-	bh=ErLHhZxKMV/9d1Plp/I+UplyTuOGYdpViS+j7immT4Q=;
+	s=arc-20240116; t=1711987292; c=relaxed/simple;
+	bh=5u+mIuCz6RuLHK4KjhyRilZsnlFvVkndlkcgAMb9Ah8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rven6t9tXTlF6o43ItJ3PbbVxwoIOEBz2fN7gi4Y5INnkVnU9RX81Ug7XuMfbMzoZ6XC870r5iltVi83ekiXktpcYWEZTNcxqhajEa3q+vB0ywegKKRSmgsZdpW1M+HuNo8jnGzalJl8FtkLzrvH0ifUzOWSWrpxwzzJDg4x24k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdnxJvJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDP49YNpSoyROUE7IDhONPXuYrwhNMFa2sZ3SrvjOgfrCi9Mg/q0eh3Y9Mn1cX+Rdt/uGg8tS0eCbkW3QVo/c3v+rXZ0/wJfgLJsGrgh7QJZJsIoTp57IC7I2GmR282uK8MDNixNlRPeeHKDGLy4NRlBhz25NelPsX6CsJVGLLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye961VMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdnxJvJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5BAC433F1;
-	Mon,  1 Apr 2024 16:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye961VMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFDBC433F1;
+	Mon,  1 Apr 2024 16:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987288;
-	bh=ErLHhZxKMV/9d1Plp/I+UplyTuOGYdpViS+j7immT4Q=;
+	s=korg; t=1711987292;
+	bh=5u+mIuCz6RuLHK4KjhyRilZsnlFvVkndlkcgAMb9Ah8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdnxJvJKmJrHZ45n4zGX9H1vFL/qjabzK1Ga7ZYTIugQ8V15E1bxAf74fqM/DkRXr
-	 ALWBtkYIylsE0Mj1GjfPBzB2uQA8CxKSc+SxCfnDTocgayeQZ84y+s4oZEyy6lopQk
-	 8WHeVesd/+HlvF/ODaFbkBfn9Hu61i4fBY4Rq4F0=
+	b=Ye961VMovuET196tNwutKpNBKF2c/Zk7nJFxRmfR3jRjA6FGk6zeTcMwVPGo9YLh1
+	 nYUjS1iuc0XMl+bN7APk3fbexbvvB7wD2ERv6qazxhXpgmMax11zG/aG8ws+X0RtIc
+	 0lmwTwgWuK2Ds4w2Ny00tdzzsnZStEkB64txVrLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Audra Mitchell <audra@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.8 242/399] workqueue: Shorten events_freezable_power_efficient name
-Date: Mon,  1 Apr 2024 17:43:28 +0200
-Message-ID: <20240401152556.399906474@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.8 243/399] drm/amd/display: Use freesync when `DRM_EDID_FEATURE_CONTINUOUS_FREQ` found
+Date: Mon,  1 Apr 2024 17:43:29 +0200
+Message-ID: <20240401152556.428504502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,31 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Audra Mitchell <audra@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 8318d6a6362f5903edb4c904a8dd447e59be4ad1 upstream.
+commit 2f14c0c8cae8e9e3b603a3f91909baba66540027 upstream.
 
-Since we have set the WQ_NAME_LEN to 32, decrease the name of
-events_freezable_power_efficient so that it does not trip the name length
-warning when the workqueue is created.
+The monitor shipped with the Framework 16 supports VRR [1], but it's not
+being advertised.
 
-Signed-off-by: Audra Mitchell <audra@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+This is because the detailed timing block doesn't contain
+`EDID_DETAIL_MONITOR_RANGE` which amdgpu looks for to find min and max
+frequencies.  This check however is superfluous for this case because
+update_display_info() calls drm_get_monitor_range() to get these ranges
+already.
+
+So if the `DRM_EDID_FEATURE_CONTINUOUS_FREQ` EDID feature is found then
+turn on freesync without extra checks.
+
+v2: squash in fix from Harry
+
+Closes: https://www.reddit.com/r/framework/comments/1b4y2i5/no_variable_refresh_rate_on_the_framework_16_on/
+Closes: https://www.reddit.com/r/framework/comments/1b6vzcy/framework_16_variable_refresh_rate/
+Closes: https://community.frame.work/t/resolved-no-vrr-freesync-with-amd-version/42338
+Link: https://gist.github.com/superm1/e8fbacfa4d0f53150231d3a3e0a13faf
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -7186,7 +7186,7 @@ void __init workqueue_init_early(void)
- 					      WQ_FREEZABLE, 0);
- 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
- 					      WQ_POWER_EFFICIENT, 0);
--	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_power_efficient",
-+	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_pwr_efficient",
- 					      WQ_FREEZABLE | WQ_POWER_EFFICIENT,
- 					      0);
- 	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11140,18 +11140,24 @@ void amdgpu_dm_update_freesync_caps(stru
+ 	if (!adev->dm.freesync_module)
+ 		goto update;
+ 
+-	if (sink->sink_signal == SIGNAL_TYPE_DISPLAY_PORT
+-		|| sink->sink_signal == SIGNAL_TYPE_EDP) {
++	if (edid && (sink->sink_signal == SIGNAL_TYPE_DISPLAY_PORT ||
++		     sink->sink_signal == SIGNAL_TYPE_EDP)) {
+ 		bool edid_check_required = false;
+ 
+-		if (edid) {
+-			edid_check_required = is_dp_capable_without_timing_msa(
+-						adev->dm.dc,
+-						amdgpu_dm_connector);
++		if (is_dp_capable_without_timing_msa(adev->dm.dc,
++						     amdgpu_dm_connector)) {
++			if (edid->features & DRM_EDID_FEATURE_CONTINUOUS_FREQ) {
++				freesync_capable = true;
++				amdgpu_dm_connector->min_vfreq = connector->display_info.monitor_range.min_vfreq;
++				amdgpu_dm_connector->max_vfreq = connector->display_info.monitor_range.max_vfreq;
++			} else {
++				edid_check_required = edid->version > 1 ||
++						      (edid->version == 1 &&
++						       edid->revision > 1);
++			}
+ 		}
+ 
+-		if (edid_check_required == true && (edid->version > 1 ||
+-		   (edid->version == 1 && edid->revision > 1))) {
++		if (edid_check_required) {
+ 			for (i = 0; i < 4; i++) {
+ 
+ 				timing	= &edid->detailed_timings[i];
 
 
