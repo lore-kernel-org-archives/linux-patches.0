@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453FEC129;
-	Mon,  1 Apr 2024 16:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88A4446AC;
+	Mon,  1 Apr 2024 16:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988587; cv=none; b=bsiMBaCZmLCvSQjfUpeC6sjXUQrez2LnkqWw1tXPbufP5ZGE+6x75d84wBBjzd4XJqeIweudP38zHQpz/WWFb3LaxGLpXu9JIgFtKEmlfS6+ABI/IKYE4m2RwIgeoFT6F2xtoaFCW5HJN3yhSSO57SOp6wlAdNj495s/ZfRu+s0=
+	t=1711988590; cv=none; b=jmAFW6lqDgQ92RY50+QNtjt1CSGaIQnxNRH0BP8yr3CJYZrqEGrbBCfFli2mzXeqhYm94gcTMsT1gF86ti39tr9zYI0ahVzkvk40ywe6aRMY9isJOgoAP1Ti64XBYKtW1Tw6Ff1HXIgyYQybG7jZDaeR8v++BxVxiWygCWDHLTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988587; c=relaxed/simple;
-	bh=Nhi1V4FAhUoEMOyXDGo3IWyK0OQUHZRmk8rFjPzYExU=;
+	s=arc-20240116; t=1711988590; c=relaxed/simple;
+	bh=A9xIVSFBhr23aunG4SRv9hhPgr28IO5lZQMkayS6KQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKZGjA/dUAJZzwWIvUfvj3t35gEBdBybIvb0alXXG8sZvGd7q77Q2U+MPr9rgO6uGfDeU3WldvKJlNWBfQPZRIBa88nXUFordgMHQ74SbmLx+/4hsphE7c1joGWK/dwumkFWLmnr3JCZ37muu1mfP+GCFYUk0sUQ1hCENGKqV60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+myX1R/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxzMFeY5ObqA6y8bwNJP98algRCOs6/YugTcmZfjMcXflsUlr4HdV/PQwSBrBgtnkFU1GNJ5mc2r1v4pfNlRwr1Vudq3lbWhc08CAWoqQyTCynKAA7tvAKPGYnXr7yLVoaLQCDaposrC4sdG6d/xsmtBsXFkBBjL64R6O/FK+d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18OC1vTS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+myX1R/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F70C433C7;
-	Mon,  1 Apr 2024 16:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18OC1vTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29717C433C7;
+	Mon,  1 Apr 2024 16:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988587;
-	bh=Nhi1V4FAhUoEMOyXDGo3IWyK0OQUHZRmk8rFjPzYExU=;
+	s=korg; t=1711988590;
+	bh=A9xIVSFBhr23aunG4SRv9hhPgr28IO5lZQMkayS6KQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+myX1R/zQXPsW217isX2wGCPAAlwzR4fmNXjBo/vH9hGz2MkZClDo2Vv0qiYDX41
-	 X4jK7G6K0c3VmG7Qfg3MKQIsReBcQWa7YJshSqz7SYuDk3sVEExCguv/qGUakB2ynS
-	 j2nNYDWf+41eEKPZ4bdKnt1g4975F2EvuA/RNs98=
+	b=18OC1vTSbczeSBimFuAgWEegKwBH8gN1KSBZfE6gvnNgOCJLCtHjI4fOfpj3LU6+n
+	 sTHhd9C+3y0l/mmvHreDw7ED/eE2gF+pBlo2F3QhuQQb4JwAk66vbynZQu0AMsTxhe
+	 zz7495Ajj5mu9B4wPVM9ujhyK43qZ0uoB5sxvs5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	WANG Xuerui <git@xen0n.name>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Yuli Wang <wangyuli@uniontech.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 200/432] LoongArch: Define the __io_aw() hook as mmiowb()
-Date: Mon,  1 Apr 2024 17:43:07 +0200
-Message-ID: <20240401152559.103213918@linuxfoundation.org>
+Subject: [PATCH 6.7 201/432] LoongArch/crypto: Clean up useless assignment operations
+Date: Mon,  1 Apr 2024 17:43:08 +0200
+Message-ID: <20240401152559.132515053@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,115 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Yuli Wang <wangyuli@uniontech.com>
 
-[ Upstream commit 9c68ece8b2a5c5ff9b2fcaea923dd73efeb174cd ]
+[ Upstream commit fea1c949f6ca5059e12de00d0483645debc5b206 ]
 
-Commit fb24ea52f78e0d595852e ("drivers: Remove explicit invocations of
-mmiowb()") remove all mmiowb() in drivers, but it says:
+The LoongArch CRC32 hw acceleration is based on arch/mips/crypto/
+crc32-mips.c. While the MIPS code supports both MIPS32 and MIPS64,
+but LoongArch32 lacks the CRC instruction. As a result, the line
+"len -= sizeof(u32)" is unnecessary.
 
-"NOTE: mmiowb() has only ever guaranteed ordering in conjunction with
-spin_unlock(). However, pairing each mmiowb() removal in this patch with
-the corresponding call to spin_unlock() is not at all trivial, so there
-is a small chance that this change may regress any drivers incorrectly
-relying on mmiowb() to order MMIO writes between CPUs using lock-free
-synchronisation."
+Removing it can make context code style more unified and improve
+code readability.
 
-The mmio in radeon_ring_commit() is protected by a mutex rather than a
-spinlock, but in the mutex fastpath it behaves similar to spinlock. We
-can add mmiowb() calls in the radeon driver but the maintainer says he
-doesn't like such a workaround, and radeon is not the only example of
-mutex protected mmio.
-
-So we should extend the mmiowb tracking system from spinlock to mutex,
-and maybe other locking primitives. This is not easy and error prone, so
-we solve it in the architectural code, by simply defining the __io_aw()
-hook as mmiowb(). And we no longer need to override queued_spin_unlock()
-so use the generic definition.
-
-Without this, we get such an error when run 'glxgears' on weak ordering
-architectures such as LoongArch:
-
-radeon 0000:04:00.0: ring 0 stalled for more than 10324msec
-radeon 0000:04:00.0: ring 3 stalled for more than 10240msec
-radeon 0000:04:00.0: GPU lockup (current fence id 0x000000000001f412 last fence id 0x000000000001f414 on ring 3)
-radeon 0000:04:00.0: GPU lockup (current fence id 0x000000000000f940 last fence id 0x000000000000f941 on ring 0)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-radeon 0000:04:00.0: scheduling IB failed (-35).
-[drm:radeon_gem_va_ioctl [radeon]] *ERROR* Couldn't update BO_VA (-35)
-
-Link: https://lore.kernel.org/dri-devel/29df7e26-d7a8-4f67-b988-44353c4270ac@amd.com/T/#t
-Link: https://lore.kernel.org/linux-arch/20240301130532.3953167-1-chenhuacai@loongson.cn/T/#t
 Cc: stable@vger.kernel.org
+Reviewed-by: WANG Xuerui <git@xen0n.name>
+Suggested-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/Kbuild      |  1 +
- arch/loongarch/include/asm/io.h        |  2 ++
- arch/loongarch/include/asm/qspinlock.h | 18 ------------------
- 3 files changed, 3 insertions(+), 18 deletions(-)
- delete mode 100644 arch/loongarch/include/asm/qspinlock.h
+ arch/loongarch/crypto/crc32-loongarch.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/Kbuild b/arch/loongarch/include/asm/Kbuild
-index 93783fa24f6e9..dede0b422cfb9 100644
---- a/arch/loongarch/include/asm/Kbuild
-+++ b/arch/loongarch/include/asm/Kbuild
-@@ -4,6 +4,7 @@ generic-y += mcs_spinlock.h
- generic-y += parport.h
- generic-y += early_ioremap.h
- generic-y += qrwlock.h
-+generic-y += qspinlock.h
- generic-y += rwsem.h
- generic-y += segment.h
- generic-y += user.h
-diff --git a/arch/loongarch/include/asm/io.h b/arch/loongarch/include/asm/io.h
-index c486c2341b662..4a8adcca329b8 100644
---- a/arch/loongarch/include/asm/io.h
-+++ b/arch/loongarch/include/asm/io.h
-@@ -71,6 +71,8 @@ extern void __memcpy_fromio(void *to, const volatile void __iomem *from, size_t
- #define memcpy_fromio(a, c, l) __memcpy_fromio((a), (c), (l))
- #define memcpy_toio(c, a, l)   __memcpy_toio((c), (a), (l))
+diff --git a/arch/loongarch/crypto/crc32-loongarch.c b/arch/loongarch/crypto/crc32-loongarch.c
+index a49e507af38c0..3eebea3a7b478 100644
+--- a/arch/loongarch/crypto/crc32-loongarch.c
++++ b/arch/loongarch/crypto/crc32-loongarch.c
+@@ -44,7 +44,6 @@ static u32 crc32_loongarch_hw(u32 crc_, const u8 *p, unsigned int len)
  
-+#define __io_aw() mmiowb()
-+
- #include <asm-generic/io.h>
+ 		CRC32(crc, value, w);
+ 		p += sizeof(u32);
+-		len -= sizeof(u32);
+ 	}
  
- #define ARCH_HAS_VALID_PHYS_ADDR_RANGE
-diff --git a/arch/loongarch/include/asm/qspinlock.h b/arch/loongarch/include/asm/qspinlock.h
-deleted file mode 100644
-index 34f43f8ad5912..0000000000000
---- a/arch/loongarch/include/asm/qspinlock.h
-+++ /dev/null
-@@ -1,18 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--#ifndef _ASM_QSPINLOCK_H
--#define _ASM_QSPINLOCK_H
--
--#include <asm-generic/qspinlock_types.h>
--
--#define queued_spin_unlock queued_spin_unlock
--
--static inline void queued_spin_unlock(struct qspinlock *lock)
--{
--	compiletime_assert_atomic_type(lock->locked);
--	c_sync();
--	WRITE_ONCE(lock->locked, 0);
--}
--
--#include <asm-generic/qspinlock.h>
--
--#endif /* _ASM_QSPINLOCK_H */
+ 	if (len & sizeof(u16)) {
+@@ -80,7 +79,6 @@ static u32 crc32c_loongarch_hw(u32 crc_, const u8 *p, unsigned int len)
+ 
+ 		CRC32C(crc, value, w);
+ 		p += sizeof(u32);
+-		len -= sizeof(u32);
+ 	}
+ 
+ 	if (len & sizeof(u16)) {
 -- 
 2.43.0
 
