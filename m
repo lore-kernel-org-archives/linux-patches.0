@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B99E1C0DE7;
-	Mon,  1 Apr 2024 16:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F91340876;
+	Mon,  1 Apr 2024 16:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990695; cv=none; b=ASpNsoNfKIQHpMcorimNsKLiIrpwxQY+KXTHLEEVt3fsSsiGEEuMqRiHCVMxxZATdzAro5pExfsGX7UyPLabu3AzNVBzUoUImV7sFFDKf9PeqfGtSL1L+b84BbLn1rIkrij0Evpb5144lQcfY5/7oeKDNQb9tMHYWvM605e9SHs=
+	t=1711990698; cv=none; b=Q95wkhy84jXX5YW66hZgnPrs6liApyopS7IEjzEbh+qnOsRUsmojJFrXF2qTfBo1CE0O4sFebC7sWcDByp9bpS5fw+unwyRVaCg92TaX4qXCrYns7a6PiTVZJTQlkS+a/hhPd/2XuS+uQVnVDz5gG6cfkq81oFOaHYLDhE//reg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990695; c=relaxed/simple;
-	bh=2AchwH8ufP2dzTurIrsWRv69D5VKKSOJnlT7qrP7h8U=;
+	s=arc-20240116; t=1711990698; c=relaxed/simple;
+	bh=qqZrsEoQf1zC4F2MmEBf6NgFD/4sIDlkBEYSljopo0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlcEdqrXp77nS3Ga7Kv3RIAxRq0PbFcoDiXgzomTQaq+e6EVXdHkSPvE4O6eyB5dzX7NtlWxEoUBeZP53zwZU9wxPZHa7ahz6WV//Ndtd1fZnytSMMYOxvZEFu+wJAa1tXenzkjHQyUelavXNHmfQDIVJ1p0FYIkmXDLTo39Wc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bzn2z1gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eafue7S+Xn5WLYpUz0E/mPJH+V6Q5AfItnUSccHaqp86bq0VoatAD9cCBWANPsz1NTKVaZzcUpUcw18iapLJ+oDq0ilDL4eJ1ATfDtlSJI/hMauMThSvmr0kxmuqC8gPJU6Dp+cBfA1YvnTh0HNO5thgHYKpWf3KNhsjuvhG1lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaILNUi4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bzn2z1gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973E9C433F1;
-	Mon,  1 Apr 2024 16:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaILNUi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAE2C433F1;
+	Mon,  1 Apr 2024 16:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990695;
-	bh=2AchwH8ufP2dzTurIrsWRv69D5VKKSOJnlT7qrP7h8U=;
+	s=korg; t=1711990698;
+	bh=qqZrsEoQf1zC4F2MmEBf6NgFD/4sIDlkBEYSljopo0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bzn2z1gvAuWt4XLw6FizqaEVI+Z+Zq6ghidTurv6yl6IoHIzDJ9GLJi7JQuEkmUbn
-	 Le+MyxLgHgPnca7fFo7pIrdzc8X8ifgE5GL1dXc6vZ5VORC+XAmJQ5NaJ2757cxYKr
-	 d3bNSL/wdVTBI40Us2QLOhfTOTU8OxtYvm+O4sNM=
+	b=BaILNUi41iMHfRATAy5+u3zd1wAJQPsiBGxg/+ApyBLaJL/vt/X/1B5BFnbdxPT+P
+	 vtiCdJm+IWaLnO36Nf5hPHYE/HQ3nCCqjqpNz0TJkysD70KSaDOb00U4hxSATpWIkh
+	 odqlmN6DUH2aRlnB06Ackyo57efDjzQfR/TTHUDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/272] bounds: support non-power-of-two CONFIG_NR_CPUS
-Date: Mon,  1 Apr 2024 17:43:48 +0200
-Message-ID: <20240401152531.567952049@linuxfoundation.org>
+Subject: [PATCH 6.1 021/272] media: mc: Add local pad to pipeline regardless of the link state
+Date: Mon,  1 Apr 2024 17:43:31 +0200
+Message-ID: <20240401152530.988294264@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -55,44 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit f2d5dcb48f7ba9e3ff249d58fc1fa963d374e66a ]
+[ Upstream commit 78f0daa026d4c5e192d31801d1be6caf88250220 ]
 
-ilog2() rounds down, so for example when PowerPC 85xx sets CONFIG_NR_CPUS
-to 24, we will only allocate 4 bits to store the number of CPUs instead of
-5.  Use bits_per() instead, which rounds up.  Found by code inspection.
-The effect of this would probably be a misaccounting when doing NUMA
-balancing, so to a user, it would only be a performance penalty.  The
-effects may be more wide-spread; it's hard to tell.
+When building pipelines by following links, the
+media_pipeline_explore_next_link() function only traverses enabled
+links. The remote pad of a disabled link is not added to the pipeline,
+and neither is the local pad. While the former is correct as disabled
+links should not be followed, not adding the local pad breaks processing
+of the MEDIA_PAD_FL_MUST_CONNECT flag.
 
-Link: https://lkml.kernel.org/r/20231010145549.1244748-1-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 90572890d202 ("mm: numa: Change page last {nid,pid} into {cpu,pid}")
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The MEDIA_PAD_FL_MUST_CONNECT flag is checked in the
+__media_pipeline_start() function that iterates over all pads after
+populating the pipeline. If the pad is not present, the check gets
+skipped, rendering it useless.
+
+Fix this by adding the local pad of all links regardless of their state,
+only skipping the remote pad for disabled links.
+
+Cc: stable@vger.kernel.org # 6.1
+Fixes: ae219872834a ("media: mc: entity: Rewrite media_pipeline_start()")
+Reported-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Closes: https://lore.kernel.org/linux-media/7658a15a-80c5-219f-2477-2a94ba6c6ba1@kontron.de
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bounds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/mc/mc-entity.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bounds.c b/kernel/bounds.c
-index b529182e8b04f..c5a9fcd2d6228 100644
---- a/kernel/bounds.c
-+++ b/kernel/bounds.c
-@@ -19,7 +19,7 @@ int main(void)
- 	DEFINE(NR_PAGEFLAGS, __NR_PAGEFLAGS);
- 	DEFINE(MAX_NR_ZONES, __MAX_NR_ZONES);
- #ifdef CONFIG_SMP
--	DEFINE(NR_CPUS_BITS, ilog2(CONFIG_NR_CPUS));
-+	DEFINE(NR_CPUS_BITS, bits_per(CONFIG_NR_CPUS));
- #endif
- 	DEFINE(SPINLOCK_SIZE, sizeof(spinlock_t));
- #ifdef CONFIG_LRU_GEN
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index f268cf66053e1..20a2630455f2c 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -594,13 +594,6 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 		link->source->entity->name, link->source->index,
+ 		link->sink->entity->name, link->sink->index);
+ 
+-	/* Skip links that are not enabled. */
+-	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
+-		dev_dbg(walk->mdev->dev,
+-			"media pipeline: skipping link (disabled)\n");
+-		return 0;
+-	}
+-
+ 	/* Get the local pad and remote pad. */
+ 	if (link->source->entity == pad->entity) {
+ 		local = link->source;
+@@ -622,13 +615,20 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 	}
+ 
+ 	/*
+-	 * Add the local and remote pads of the link to the pipeline and push
+-	 * them to the stack, if they're not already present.
++	 * Add the local pad of the link to the pipeline and push it to the
++	 * stack, if not already present.
+ 	 */
+ 	ret = media_pipeline_add_pad(pipe, walk, local);
+ 	if (ret)
+ 		return ret;
+ 
++	/* Similarly, add the remote pad, but only if the link is enabled. */
++	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
++		dev_dbg(walk->mdev->dev,
++			"media pipeline: skipping link (disabled)\n");
++		return 0;
++	}
++
+ 	ret = media_pipeline_add_pad(pipe, walk, remote);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
