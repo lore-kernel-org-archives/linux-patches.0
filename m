@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F9838DE5;
-	Mon,  1 Apr 2024 16:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72CB1E525;
+	Mon,  1 Apr 2024 16:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989890; cv=none; b=jl0U2SvE1TgRDJz9s5Y+Pc/j/SIhq33Kk/NAtMKZTN/Kfxl2m/tKdsh96MYOBINHJl0fgQ/g//c/OZOgAQPLeGciaIrOUsWopRIF7Pukp6KhHPktpiq2FQ9IXd7UVCqH/xNXQhg6BeakL+2jjqnRq34dwfxj+6X9tSYRP9Wsr0o=
+	t=1711989893; cv=none; b=cmvHP+arlIGGg+RWo9iUrjn8NOzSMMzqZ5drVOu5/LFVSLsfU8W899IbNWycGg+/kOzXo8QNL4dJd7qXHBM5R08s7PFnsVahsPBftjdAZlKUP8g5gB1Es/NVetWbkVQpOrBERpzS+l42/blSprBpT92yRdbFDG+O4kV/70SzRfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989890; c=relaxed/simple;
-	bh=eVJSs0Hx9i1EGQ4oU7Hdw/G3OFmF2vRmeLjcqvmyp+8=;
+	s=arc-20240116; t=1711989893; c=relaxed/simple;
+	bh=luflWCn8FsuUII6wE7bFuw4Tn4aldvRHhfg8zLir2nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nn2H6kVTnA1gK0Z+GpGVBFPzwZQT5YP20+bTyKONQte7OVe49NAHnspR2uLDgyZdrN5OwDVMNbmI8hAj546S+wuXVPOWqNzMjU+kvj7yAHVCilewAZJkyQXHKr/PdX0Msc/S1hfX6qEzvk7xrs1MZ9lMGtu5s60NANjzmFyvWtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRmjfzmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nmDy9X22QKyCmmedM/iqV1BPuDNQ4y2qejPQxpYfu/em5CIajznZWsgRpuhYJ5TBDGUNEmAABDSeRDVX9a6uP2KNzIcpIM7kgju+LtYph7lbO0KxBZV8LAUnlhREdXWMJM9xpanrVZEdz0H420iReMyjBwhop8L/UreXnS49ntg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUFDkbJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRmjfzmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D1DC433F1;
-	Mon,  1 Apr 2024 16:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUFDkbJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35995C433C7;
+	Mon,  1 Apr 2024 16:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989890;
-	bh=eVJSs0Hx9i1EGQ4oU7Hdw/G3OFmF2vRmeLjcqvmyp+8=;
+	s=korg; t=1711989893;
+	bh=luflWCn8FsuUII6wE7bFuw4Tn4aldvRHhfg8zLir2nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRmjfzmrtIXIDXSLzo7RQZs3n/ekAQb8HRm0Ivlsova4RkMdaAsVeOQasX78LC1gG
-	 w3oGpnCZzxa9gFBSMOejCZuw4qC6H8k2Mu+XoCw83eS5uBWQ5ZFhS0iqOuynl7fIRn
-	 gouEc0ja2sLLmCXm8rqgAEfts57FQJXr7SJV7r0o=
+	b=fUFDkbJTeCJOsqA5qD5Dfh6J/iHs6SC7urZxkGv0wQzpzw8r+5yxada92QjaFdkbl
+	 H/NWWf2Yq29MYU7cLvLorsDUba4NmpRsWnzFc5cY3KYCTkpAnpGHRaVaWxnDyMZqZg
+	 Atl8AwvC49Yjcow3OMDuu5YWdTocUfxrWPlUVVfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/396] nilfs2: prevent kernel bug at submit_bh_wbc()
-Date: Mon,  1 Apr 2024 17:43:24 +0200
-Message-ID: <20240401152552.566325275@linuxfoundation.org>
+Subject: [PATCH 6.6 156/396] cifs: add xid to query server interface call
+Date: Mon,  1 Apr 2024 17:43:25 +0200
+Message-ID: <20240401152552.595986877@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,42 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 269cdf353b5bdd15f1a079671b0f889113865f20 ]
+[ Upstream commit 4cf6e1101a25ca5e63d48adf49b0a8a64bae790f ]
 
-Fix a bug where nilfs_get_block() returns a successful status when
-searching and inserting the specified block both fail inconsistently.  If
-this inconsistent behavior is not due to a previously fixed bug, then an
-unexpected race is occurring, so return a temporary error -EAGAIN instead.
+We were passing 0 as the xid for the call to query
+server interfaces. This is not great for debugging.
+This change adds a real xid.
 
-This prevents callers such as __block_write_begin_int() from requesting a
-read into a buffer that is not mapped, which would cause the BUG_ON check
-for the BH_Mapped flag in submit_bh_wbc() to fail.
-
-Link: https://lkml.kernel.org/r/20240313105827.5296-3-konishi.ryusuke@gmail.com
-Fixes: 1f5abe7e7dbc ("nilfs2: replace BUG_ON and BUG calls triggerable from ioctl")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 13c0a74747cb ("cifs: make sure server interfaces are requested only for SMB3+")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/connect.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index 1a8bd59934761..8e1afa39a62e1 100644
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -112,7 +112,7 @@ int nilfs_get_block(struct inode *inode, sector_t blkoff,
- 					   "%s (ino=%lu): a race condition while inserting a data block at offset=%llu",
- 					   __func__, inode->i_ino,
- 					   (unsigned long long)blkoff);
--				err = 0;
-+				err = -EAGAIN;
- 			}
- 			nilfs_transaction_abort(inode->i_sb);
- 			goto out;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index a4147e999736a..2a564f19dbb39 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -119,6 +119,7 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
+ static void smb2_query_server_interfaces(struct work_struct *work)
+ {
+ 	int rc;
++	int xid;
+ 	struct cifs_tcon *tcon = container_of(work,
+ 					struct cifs_tcon,
+ 					query_interfaces.work);
+@@ -126,7 +127,10 @@ static void smb2_query_server_interfaces(struct work_struct *work)
+ 	/*
+ 	 * query server network interfaces, in case they change
+ 	 */
+-	rc = SMB3_request_interfaces(0, tcon, false);
++	xid = get_xid();
++	rc = SMB3_request_interfaces(xid, tcon, false);
++	free_xid(xid);
++
+ 	if (rc) {
+ 		if (rc == -EOPNOTSUPP)
+ 			return;
 -- 
 2.43.0
 
