@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D4F481D5;
-	Mon,  1 Apr 2024 16:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76884AED4;
+	Mon,  1 Apr 2024 16:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989823; cv=none; b=BXUqocZuQPMQiamqP9H2kUVgmoRKsPnLPJh4r81r6XfKbwqe+4sM+e4jeX6CYSt9rzSazLVtPGgKqp9FKRtD0r2zuYGumzPuYpscudeFUzmSqJriPZ+DZZWtw949QXPhoITR4ZAgOY9Mmjm1YZ5DIIrezLsT/3Mu9WYn/4YPC1A=
+	t=1711989826; cv=none; b=ZfZf6vqOSkWON2TSmzhzayCOYqK+UYj0VGYN+C1w0pzlWy80upjJKgUNjgNk5JWDV4zTdJXb1/ditKF7JZfgD8K8EBochNg0w6e+oHHEBVlbwPJn4Ko0k7qfbSMixrZfS/XoAc4DOSdjNgNsCAwVly+G2310cIxQfP9BrBgO0Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989823; c=relaxed/simple;
-	bh=tNKCUkBTmNgZwIsR9hk+qI4QjW5m/CloCQqBWQTpvAg=;
+	s=arc-20240116; t=1711989826; c=relaxed/simple;
+	bh=1bKizJToSKSQEZsa/8DxrytX+CV6hA1q/VKlIqtNUCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qriaffNWIgF8oCIsENYeDJJ9vU+iAhtl4kMKJ3tCjxSyv0zVtOrWTS3C9HaCW4LN+FdgB1NHKnowyLAsBjRAs28vZvqI/mwRttgxhTQpzvwIS6sL1p3xcsWg0Q6UxfzSTRJ6g8PaH4z4rggMsLqr0OyWWe33iiXFk3UXX4Jjr4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2UniMoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyAe/+sStdf5avzrbVPoVjgxOUppxQf7NO+OpBkcsyGt8JZU+rnrL92xMz900e1QkQkCpo9DajSHjVm4e7AtMg27CJ1LGMXCKpdMY3CBFuBv4pjFL189i725RsgxgFtfP6a/6A3ZfSNArXwO5ab8mC/jReiR+gaERCQjDEaAJ24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs0c+/zA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2UniMoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23AAC43394;
-	Mon,  1 Apr 2024 16:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs0c+/zA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D14C433C7;
+	Mon,  1 Apr 2024 16:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989823;
-	bh=tNKCUkBTmNgZwIsR9hk+qI4QjW5m/CloCQqBWQTpvAg=;
+	s=korg; t=1711989826;
+	bh=1bKizJToSKSQEZsa/8DxrytX+CV6hA1q/VKlIqtNUCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2UniMoXzOWGcwsbHNbz4pE2qQXi5aR8UHsL/w0yEOEonBSSEem+n+dK2mY6G+bf9
-	 KwjYgIJwL4jPctQQJ5Uy/v+vB3uzGMjBN7ir/KrKl3Nl8c1+i0x4t3yXxE6vcctfxy
-	 dTNW4MKjCnRxNkWlHLdjgcdSOs4tRz0zA7h+DE48=
+	b=Gs0c+/zAlFMbQq9AH8b+oJjhUS8760+hwaEpd7gOolv6PLAr2CGD0r4rd40EInb18
+	 ZkLTIojiG1ecR3JDsr/sUm22b4W0XVNYmX3mxT3B3n5GgY07KXDvK097DpxQCGfshc
+	 SKehn296VOFOP1ZmbwflHu2e8JXutWPs4zEmWN6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	"Christoph Lameter (Ampere)" <cl@linux.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/396] mtd: rawnand: Constrain even more when continuous reads are enabled
-Date: Mon,  1 Apr 2024 17:43:33 +0200
-Message-ID: <20240401152552.829681324@linuxfoundation.org>
+Subject: [PATCH 6.6 165/396] cpufreq: dt: always allocate zeroed cpumask
+Date: Mon,  1 Apr 2024 17:43:34 +0200
+Message-ID: <20240401152552.859851712@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,68 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 78ffbefba8d7822b232585570b293de5bc397da6 ]
+[ Upstream commit d2399501c2c081eac703ca9597ceb83c7875a537 ]
 
-As a matter of fact, continuous reads require additional handling at the
-operation level in order for them to work properly. The core helpers do
-have this additional logic now, but any time a controller implements its
-own page helper, this extra logic is "lost". This means we need another
-level of per-controller driver checks to ensure they can leverage
-continuous reads. This is for now unsupported, so in order to ensure
-continuous reads are enabled only when fully using the core page
-helpers, we need to add more initial checks.
+Commit 0499a78369ad ("ARM64: Dynamically allocate cpumasks and increase
+supported CPUs to 512") changed the handling of cpumasks on ARM 64bit,
+what resulted in the strange issues and warnings during cpufreq-dt
+initialization on some big.LITTLE platforms.
 
-Also, as performance is not relevant during raw accesses, we also
-prevent these from enabling the feature.
+This was caused by mixing OPPs between big and LITTLE cores, because
+OPP-sharing information between big and LITTLE cores is computed on
+cpumask, which in turn was not zeroed on allocation. Fix this by
+switching to zalloc_cpumask_var() call.
 
-This should solve the issue seen with controllers such as the STM32 FMC2
-when in sequencer mode. In this case, the continuous read feature would
-be enabled but not leveraged, and most importantly not disabled, leading
-to further operations to fail.
-
-Reported-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Link: https://lore.kernel.org/linux-mtd/20240307115315.1942678-1-miquel.raynal@bootlin.com
+Fixes: dc279ac6e5b4 ("cpufreq: dt: Refactor initialization to handle probe deferral properly")
+CC: stable@vger.kernel.org # v5.10+
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Christoph Lameter (Ampere) <cl@linux.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq-dt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index 9118b5753c553..c059ac4c19f11 100644
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -3578,7 +3578,8 @@ static int nand_do_read_ops(struct nand_chip *chip, loff_t from,
- 	oob = ops->oobbuf;
- 	oob_required = oob ? 1 : 0;
+diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
+index 8bd6e5e8f121c..2d83bbc65dd0b 100644
+--- a/drivers/cpufreq/cpufreq-dt.c
++++ b/drivers/cpufreq/cpufreq-dt.c
+@@ -208,7 +208,7 @@ static int dt_cpufreq_early_init(struct device *dev, int cpu)
+ 	if (!priv)
+ 		return -ENOMEM;
  
--	rawnand_enable_cont_reads(chip, page, readlen, col);
-+	if (likely(ops->mode != MTD_OPS_RAW))
-+		rawnand_enable_cont_reads(chip, page, readlen, col);
+-	if (!alloc_cpumask_var(&priv->cpus, GFP_KERNEL))
++	if (!zalloc_cpumask_var(&priv->cpus, GFP_KERNEL))
+ 		return -ENOMEM;
  
- 	while (1) {
- 		struct mtd_ecc_stats ecc_stats = mtd->ecc_stats;
-@@ -5196,6 +5197,15 @@ static void rawnand_late_check_supported_ops(struct nand_chip *chip)
- 	if (!nand_has_exec_op(chip))
- 		return;
- 
-+	/*
-+	 * For now, continuous reads can only be used with the core page helpers.
-+	 * This can be extended later.
-+	 */
-+	if (!(chip->ecc.read_page == nand_read_page_hwecc ||
-+	      chip->ecc.read_page == nand_read_page_syndrome ||
-+	      chip->ecc.read_page == nand_read_page_swecc))
-+		return;
-+
- 	rawnand_check_cont_read_support(chip);
- }
- 
+ 	cpumask_set_cpu(cpu, priv->cpus);
 -- 
 2.43.0
 
