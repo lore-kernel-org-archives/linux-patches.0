@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05B91C0DE7;
-	Mon,  1 Apr 2024 16:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7969210A3B;
+	Mon,  1 Apr 2024 16:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989477; cv=none; b=orgWtOsiO25SBwXQ+4z62nus0z3A2wbpPCrSyw9gdNdnkzRCV2K7DLioZFM/i7a2dEGepyhwZb78tfF9g5qgAOvMDKuknUgmVjurtyjX2ksdWvg6DYpcXPBtSsLaHkj+pRo1C/tfc1fKifD6Ne0iVwf+aTsXg5iXCTNyPyYAXGY=
+	t=1711989481; cv=none; b=Zn7RtXUMW8ayW6wo3Rk/6+F47ZnY38fpifwpNH8BOKQwsDtwuZ/DYj+C5kr6d/sx08ia2RgfNzopUJ8gLFb7ExZk96Iq7fMJ4TsmUALtIDqIekhzd7m+xi1OS+6hX4dfTmLIxnXuAUnaBCz0vSdws2k5J6S9pfMLqAI4jMyJxG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989477; c=relaxed/simple;
-	bh=cTtFE2VeyUs+zDXBmJ3nos83J8b1QQJR9Xnz4cxZ+fs=;
+	s=arc-20240116; t=1711989481; c=relaxed/simple;
+	bh=MEJOChwxO+Lnv0VXkD7Njr+tJiaumLtxG3mtcBAQvvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Egd/0wviggTTMDyqdvSqqBp1petca73fQlgSCsIPRIAScTXoeoJa2F/zSeHOxAM496y6hxTg9jpiFmRik1mNKl4iC+6jdQcZXdaNkkY6CDw6sq2mNIVUSszxUJ/eNi4eGhdEXlq+nV9p98R16QQ0EqfZJmVCATkDN0ZoTr9GpKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtvH7pMQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHMEuutgbMZu4fedD1LsQbweNtWXxxizCd7q/EYOHU+k8TXJRTciOPUawYxVtO9albL96ehR5MZaPEjek1hESxKxsh6fBzMMpEuOW0pY/eeUqtFICsfKi0ILfkgB+j7BnNtttUZ7XAvJm1UtKTLUctJ/5nCF9avWpvTDU6cL7YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdsOQ6H2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtvH7pMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4629BC433F1;
-	Mon,  1 Apr 2024 16:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdsOQ6H2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F575C433C7;
+	Mon,  1 Apr 2024 16:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989477;
-	bh=cTtFE2VeyUs+zDXBmJ3nos83J8b1QQJR9Xnz4cxZ+fs=;
+	s=korg; t=1711989481;
+	bh=MEJOChwxO+Lnv0VXkD7Njr+tJiaumLtxG3mtcBAQvvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtvH7pMQM52CKvN68e/yGMwbAneHn4ZXx7LeBtOc2sZOvrPPV1GDs4CIhcpV7YF30
-	 CKPMo1ZltNBjLBT6xAGvnNJXd5XswyjS9X9A8lt2INXENWkNd83emNknnECUNMH07i
-	 omQy/e+3CDdqALgXrpwiDwZjgZq2U215Lc/W/vWw=
+	b=CdsOQ6H2mq6mIjcsY7CiXYKXV9UGMD+1jYyFhuBOiWN2JfWvElYXfn36W2DUVxl4K
+	 OkzHMIX6zoSIZ7o/zEQT/0UvUVwaBS4sW+3untqdMSWvdqFeVdGtwKfoNhMs+PVcvp
+	 P1H4NKy5bAeAZE3O5tywP4iLb6n0XzK7/bUEFsfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/396] powercap: intel_rapl: Fix locking in TPMI RAPL
-Date: Mon,  1 Apr 2024 17:41:21 +0200
-Message-ID: <20240401152548.883185500@linuxfoundation.org>
+Subject: [PATCH 6.6 023/396] media: mc: Expand MUST_CONNECT flag to always require an enabled link
+Date: Mon,  1 Apr 2024 17:41:12 +0200
+Message-ID: <20240401152548.591991447@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,194 +52,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 1aa09b9379a7a644cd2f75ae0bac82b8783df600 ]
+[ Upstream commit b3decc5ce7d778224d266423b542326ad469cb5f ]
 
-The RAPL framework uses CPU hotplug locking to protect the rapl_packages
-list and rp->lead_cpu to guarantee that
+The MEDIA_PAD_FL_MUST_CONNECT flag indicates that the pad requires an
+enabled link to stream, but only if it has any link at all. This makes
+little sense, as if a pad is part of a pipeline, there are very few use
+cases for an active link to be mandatory only if links exist at all. A
+review of in-tree drivers confirms they all need an enabled link for
+pads marked with the MEDIA_PAD_FL_MUST_CONNECT flag.
 
- 1. the RAPL package device is not unprobed and freed
- 2. the cached rp->lead_cpu is always valid
+Expand the scope of the flag by rejecting pads that have no links at
+all. This requires modifying the pipeline build code to add those pads
+to the pipeline.
 
-for operations like powercap sysfs accesses.
-
-Current RAPL APIs assume being called from CPU hotplug callbacks which
-hold the CPU hotplug lock, but TPMI RAPL driver invokes the APIs in the
-driver's .probe() function without acquiring the CPU hotplug lock.
-
-Fix the problem by providing both locked and lockless versions of RAPL
-APIs.
-
-Fixes: 9eef7f9da928 ("powercap: intel_rapl: Introduce RAPL TPMI interface driver")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c          | 29 +++++++++++++++++--
- drivers/powercap/intel_rapl_msr.c             |  8 ++---
- .../int340x_thermal/processor_thermal_rapl.c  |  8 ++---
- include/linux/intel_rapl.h                    |  6 ++++
- 4 files changed, 40 insertions(+), 11 deletions(-)
+ .../media/mediactl/media-types.rst            | 11 ++--
+ drivers/media/mc/mc-entity.c                  | 53 +++++++++++++++----
+ 2 files changed, 48 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 1a739afd47d96..9d3e102f1a76b 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -5,6 +5,7 @@
+diff --git a/Documentation/userspace-api/media/mediactl/media-types.rst b/Documentation/userspace-api/media/mediactl/media-types.rst
+index 0ffeece1e0c8e..6332e8395263b 100644
+--- a/Documentation/userspace-api/media/mediactl/media-types.rst
++++ b/Documentation/userspace-api/media/mediactl/media-types.rst
+@@ -375,12 +375,11 @@ Types and flags used to represent the media graph elements
+ 	  are origins of links.
+ 
+     *  -  ``MEDIA_PAD_FL_MUST_CONNECT``
+-       -  If this flag is set and the pad is linked to any other pad, then
+-	  at least one of those links must be enabled for the entity to be
+-	  able to stream. There could be temporary reasons (e.g. device
+-	  configuration dependent) for the pad to need enabled links even
+-	  when this flag isn't set; the absence of the flag doesn't imply
+-	  there is none.
++       -  If this flag is set, then for this pad to be able to stream, it must
++	  be connected by at least one enabled link. There could be temporary
++	  reasons (e.g. device configuration dependent) for the pad to need
++	  enabled links even when this flag isn't set; the absence of the flag
++	  doesn't imply there is none.
+ 
+ 
+ One and only one of ``MEDIA_PAD_FL_SINK`` and ``MEDIA_PAD_FL_SOURCE``
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index 7da899bc9d08f..21c354067f44a 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -522,14 +522,15 @@ static int media_pipeline_walk_push(struct media_pipeline_walk *walk,
+ 
+ /*
+  * Move the top entry link cursor to the next link. If all links of the entry
+- * have been visited, pop the entry itself.
++ * have been visited, pop the entry itself. Return true if the entry has been
++ * popped.
   */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/list.h>
-@@ -1504,7 +1505,7 @@ static int rapl_detect_domains(struct rapl_package *rp)
- }
- 
- /* called from CPU hotplug notifier, hotplug lock held */
--void rapl_remove_package(struct rapl_package *rp)
-+void rapl_remove_package_cpuslocked(struct rapl_package *rp)
+-static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
++static bool media_pipeline_walk_pop(struct media_pipeline_walk *walk)
  {
- 	struct rapl_domain *rd, *rd_package = NULL;
+ 	struct media_pipeline_walk_entry *entry;
  
-@@ -1533,10 +1534,18 @@ void rapl_remove_package(struct rapl_package *rp)
- 	list_del(&rp->plist);
- 	kfree(rp);
- }
-+EXPORT_SYMBOL_GPL(rapl_remove_package_cpuslocked);
+ 	if (WARN_ON(walk->stack.top < 0))
+-		return;
++		return false;
+ 
+ 	entry = media_pipeline_walk_top(walk);
+ 
+@@ -539,7 +540,7 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
+ 			walk->stack.top);
+ 
+ 		walk->stack.top--;
+-		return;
++		return true;
+ 	}
+ 
+ 	entry->links = entry->links->next;
+@@ -547,6 +548,8 @@ static void media_pipeline_walk_pop(struct media_pipeline_walk *walk)
+ 	dev_dbg(walk->mdev->dev,
+ 		"media pipeline: moved entry %u to next link\n",
+ 		walk->stack.top);
 +
-+void rapl_remove_package(struct rapl_package *rp)
-+{
-+	guard(cpus_read_lock)();
-+	rapl_remove_package_cpuslocked(rp);
-+}
- EXPORT_SYMBOL_GPL(rapl_remove_package);
- 
- /* caller to ensure CPU hotplug lock is held */
--struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
-+							 bool id_is_cpu)
- {
- 	struct rapl_package *rp;
- 	int uid;
-@@ -1554,10 +1563,17 @@ struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv,
- 
- 	return NULL;
++	return false;
  }
-+EXPORT_SYMBOL_GPL(rapl_find_package_domain_cpuslocked);
-+
-+struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+{
-+	guard(cpus_read_lock)();
-+	return rapl_find_package_domain_cpuslocked(id, priv, id_is_cpu);
-+}
- EXPORT_SYMBOL_GPL(rapl_find_package_domain);
  
- /* called from CPU hotplug notifier, hotplug lock held */
--struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *priv, bool id_is_cpu)
- {
- 	struct rapl_package *rp;
+ /* Free all memory allocated while walking the pipeline. */
+@@ -596,11 +599,12 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 	struct media_link *link;
+ 	struct media_pad *local;
+ 	struct media_pad *remote;
++	bool last_link;
  	int ret;
-@@ -1603,6 +1619,13 @@ struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id
- 	kfree(rp);
- 	return ERR_PTR(ret);
+ 
+ 	origin = entry->pad;
+ 	link = list_entry(entry->links, typeof(*link), list);
+-	media_pipeline_walk_pop(walk);
++	last_link = media_pipeline_walk_pop(walk);
+ 
+ 	dev_dbg(walk->mdev->dev,
+ 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
+@@ -625,7 +629,7 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 					   local->index)) {
+ 		dev_dbg(walk->mdev->dev,
+ 			"media pipeline: skipping link (no route)\n");
+-		return 0;
++		goto done;
+ 	}
+ 
+ 	/*
+@@ -640,13 +644,44 @@ static int media_pipeline_explore_next_link(struct media_pipeline *pipe,
+ 	if (!(link->flags & MEDIA_LNK_FL_ENABLED)) {
+ 		dev_dbg(walk->mdev->dev,
+ 			"media pipeline: skipping link (disabled)\n");
+-		return 0;
++		goto done;
+ 	}
+ 
+ 	ret = media_pipeline_add_pad(pipe, walk, remote);
+ 	if (ret)
+ 		return ret;
+ 
++done:
++	/*
++	 * If we're done iterating over links, iterate over pads of the entity.
++	 * This is necessary to discover pads that are not connected with any
++	 * link. Those are dead ends from a pipeline exploration point of view,
++	 * but are still part of the pipeline and need to be added to enable
++	 * proper validation.
++	 */
++	if (!last_link)
++		return 0;
++
++	dev_dbg(walk->mdev->dev,
++		"media pipeline: adding unconnected pads of '%s'\n",
++		local->entity->name);
++
++	media_entity_for_each_pad(origin->entity, local) {
++		/*
++		 * Skip the origin pad (already handled), pad that have links
++		 * (already discovered through iterating over links) and pads
++		 * not internally connected.
++		 */
++		if (origin == local || !local->num_links ||
++		    !media_entity_has_pad_interdep(origin->entity, origin->index,
++						   local->index))
++			continue;
++
++		ret = media_pipeline_add_pad(pipe, walk, local);
++		if (ret)
++			return ret;
++	}
++
+ 	return 0;
  }
-+EXPORT_SYMBOL_GPL(rapl_add_package_cpuslocked);
-+
-+struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu)
-+{
-+	guard(cpus_read_lock)();
-+	return rapl_add_package_cpuslocked(id, priv, id_is_cpu);
-+}
- EXPORT_SYMBOL_GPL(rapl_add_package);
  
- static void power_limit_state_save(void)
-diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
-index 250bd41a588c7..b4b6930cacb0b 100644
---- a/drivers/powercap/intel_rapl_msr.c
-+++ b/drivers/powercap/intel_rapl_msr.c
-@@ -73,9 +73,9 @@ static int rapl_cpu_online(unsigned int cpu)
- {
- 	struct rapl_package *rp;
+@@ -758,7 +793,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 		struct media_pad *pad = ppad->pad;
+ 		struct media_entity *entity = pad->entity;
+ 		bool has_enabled_link = false;
+-		bool has_link = false;
+ 		struct media_link *link;
  
--	rp = rapl_find_package_domain(cpu, rapl_msr_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, rapl_msr_priv, true);
- 	if (!rp) {
--		rp = rapl_add_package(cpu, rapl_msr_priv, true);
-+		rp = rapl_add_package_cpuslocked(cpu, rapl_msr_priv, true);
- 		if (IS_ERR(rp))
- 			return PTR_ERR(rp);
- 	}
-@@ -88,14 +88,14 @@ static int rapl_cpu_down_prep(unsigned int cpu)
- 	struct rapl_package *rp;
- 	int lead_cpu;
+ 		dev_dbg(mdev->dev, "Validating pad '%s':%u\n", pad->entity->name,
+@@ -788,7 +822,6 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 			/* Record if the pad has links and enabled links. */
+ 			if (link->flags & MEDIA_LNK_FL_ENABLED)
+ 				has_enabled_link = true;
+-			has_link = true;
  
--	rp = rapl_find_package_domain(cpu, rapl_msr_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, rapl_msr_priv, true);
- 	if (!rp)
- 		return 0;
- 
- 	cpumask_clear_cpu(cpu, &rp->cpumask);
- 	lead_cpu = cpumask_first(&rp->cpumask);
- 	if (lead_cpu >= nr_cpu_ids)
--		rapl_remove_package(rp);
-+		rapl_remove_package_cpuslocked(rp);
- 	else if (rp->lead_cpu == cpu)
- 		rp->lead_cpu = lead_cpu;
- 	return 0;
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-index 2f00fc3bf274a..e964a9375722a 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-@@ -27,9 +27,9 @@ static int rapl_mmio_cpu_online(unsigned int cpu)
- 	if (topology_physical_package_id(cpu))
- 		return 0;
- 
--	rp = rapl_find_package_domain(cpu, &rapl_mmio_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, &rapl_mmio_priv, true);
- 	if (!rp) {
--		rp = rapl_add_package(cpu, &rapl_mmio_priv, true);
-+		rp = rapl_add_package_cpuslocked(cpu, &rapl_mmio_priv, true);
- 		if (IS_ERR(rp))
- 			return PTR_ERR(rp);
- 	}
-@@ -42,14 +42,14 @@ static int rapl_mmio_cpu_down_prep(unsigned int cpu)
- 	struct rapl_package *rp;
- 	int lead_cpu;
- 
--	rp = rapl_find_package_domain(cpu, &rapl_mmio_priv, true);
-+	rp = rapl_find_package_domain_cpuslocked(cpu, &rapl_mmio_priv, true);
- 	if (!rp)
- 		return 0;
- 
- 	cpumask_clear_cpu(cpu, &rp->cpumask);
- 	lead_cpu = cpumask_first(&rp->cpumask);
- 	if (lead_cpu >= nr_cpu_ids)
--		rapl_remove_package(rp);
-+		rapl_remove_package_cpuslocked(rp);
- 	else if (rp->lead_cpu == cpu)
- 		rp->lead_cpu = lead_cpu;
- 	return 0;
-diff --git a/include/linux/intel_rapl.h b/include/linux/intel_rapl.h
-index 33f21bd85dbf2..f3196f82fd8a1 100644
---- a/include/linux/intel_rapl.h
-+++ b/include/linux/intel_rapl.h
-@@ -178,6 +178,12 @@ struct rapl_package {
- 	struct rapl_if_priv *priv;
- };
- 
-+struct rapl_package *rapl_find_package_domain_cpuslocked(int id, struct rapl_if_priv *priv,
-+						       bool id_is_cpu);
-+struct rapl_package *rapl_add_package_cpuslocked(int id, struct rapl_if_priv *priv,
-+						 bool id_is_cpu);
-+void rapl_remove_package_cpuslocked(struct rapl_package *rp);
-+
- struct rapl_package *rapl_find_package_domain(int id, struct rapl_if_priv *priv, bool id_is_cpu);
- struct rapl_package *rapl_add_package(int id, struct rapl_if_priv *priv, bool id_is_cpu);
- void rapl_remove_package(struct rapl_package *rp);
+ 			/*
+ 			 * Validate the link if it's enabled and has the
+@@ -826,7 +859,7 @@ __must_check int __media_pipeline_start(struct media_pad *pad,
+ 		 * 3. If the pad has the MEDIA_PAD_FL_MUST_CONNECT flag set,
+ 		 * ensure that it has either no link or an enabled link.
+ 		 */
+-		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) && has_link &&
++		if ((pad->flags & MEDIA_PAD_FL_MUST_CONNECT) &&
+ 		    !has_enabled_link) {
+ 			dev_dbg(mdev->dev,
+ 				"Pad '%s':%u must be connected by an enabled link\n",
 -- 
 2.43.0
 
