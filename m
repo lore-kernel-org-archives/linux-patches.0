@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5BE47A64;
-	Mon,  1 Apr 2024 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67465BA3F;
+	Mon,  1 Apr 2024 16:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990795; cv=none; b=s/8HzRb5Ww1DnUV5YA92Pxhane2vrPbsSS7IrdKLfxbnGmvYv4WlDfN9Nad1XV/5zrn/Oe95RAAV7pUY7geOF8wVCyWkgX5FX9kxz9WWSbquDJuGYg5ILlHjRwHWlcFr7s/MfqnUEmY1HSa6Xm62TdCFtxjag07Iu7u6pE/sNMk=
+	t=1711990798; cv=none; b=PBiXnZb3Ioo1bmj5x1cF7cE3wSROA3AkfDqth7qbuhl6Ro+kYChKCsDLgEw86PbMv4cxliyicWvRRE9anKqhonkafMGtBq+T0TdpDppt2Dbz9ElYnr06+gX6UuWO43t0pN5zPmTlyszB6FQSpApYXKPkb+pIQDoWtCwDFxLSgLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990795; c=relaxed/simple;
-	bh=g4J3MF2eyo3skaNXFxvcSGNKCXPjP+cKEQYIUaELzmM=;
+	s=arc-20240116; t=1711990798; c=relaxed/simple;
+	bh=RWkk9WiFIbIpX7NV7Eamws8gXtOOE9vQpkov7HrJLSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mr47HP2VFKy5ICyxboijFrBDvjlgykPupip7JFcvnt6zh6wJuvRJgcvt/t/1NMUVD1Gpyeitn5ZDUsMFDHi1qlUnKdHhsEdEBVZi2wY/9k//TBCDDgbAm2IoNxigld+x9jvX05CdmuxzLaHhRtWkqL31fRLU15krG1mrOi6to8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVwB7VdZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EI7+PggETadQEU8nsSZ/74NfFwP99cYtkEAV5i1+7clKv9Li0R6T2Wd0UwmUFN/+odbJ308wO0IuvC8lSH1SB0vR6RoKrmD1+0Hrb5xLC13wqwYyaW2hsHhteVOt2dz8jqkiuwpyjRWxJ1OcuZCqfqRx1T8AkwNHqd9xe9WC+nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/kMcmY+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVwB7VdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D140DC433C7;
-	Mon,  1 Apr 2024 16:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/kMcmY+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB16BC433F1;
+	Mon,  1 Apr 2024 16:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990795;
-	bh=g4J3MF2eyo3skaNXFxvcSGNKCXPjP+cKEQYIUaELzmM=;
+	s=korg; t=1711990798;
+	bh=RWkk9WiFIbIpX7NV7Eamws8gXtOOE9vQpkov7HrJLSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVwB7VdZjcB7EhbE3STPUF3D5EHdP4h6g5Zgnut5IcmDmE7cs6ch28ntGi38XJyrj
-	 1N5yWmII1nd9U02Ed8VOA0nbUfc/PQdnnfcVisgi0ZvlIlpBO8XfFaJxjolxJV+4mV
-	 DtZerYgYm+EO+lcEIAl3KyzmST4XGeWpFbz0I3r0=
+	b=v/kMcmY+XQBzR2r6/V+tbN/zaLCtcyS/t8vk1e1MjgPBOFQbqpylT1GTZ7JwBZIN2
+	 WzHuV6GMzeGJ2e9PDFGOD2TUsdEAu/VmSs14aBMOM7WL1z8sj3N9WMGNbm5IxctYBV
+	 xtodrFTqE0imhpYSNxsRGmCmEGAcAkrOlN5f8STo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jameson Thies <jthies@google.com>,
+	Peter Collingbourne <pcc@google.com>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/272] usb: typec: ucsi: Clean up UCSI_CABLE_PROP macros
-Date: Mon,  1 Apr 2024 17:44:19 +0200
-Message-ID: <20240401152532.718038833@linuxfoundation.org>
+Subject: [PATCH 6.1 070/272] serial: Lock console when calling into driver before registration
+Date: Mon,  1 Apr 2024 17:44:20 +0200
+Message-ID: <20240401152532.747633314@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,45 +51,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Peter Collingbourne <pcc@google.com>
 
-[ Upstream commit 4d0a5a9915793377c0fe1a8d78de6bcd92cea963 ]
+[ Upstream commit 801410b26a0e8b8a16f7915b2b55c9528b69ca87 ]
 
-Clean up UCSI_CABLE_PROP macros by fixing a bitmask shifting error for
-plug type and updating the modal support macro for consistent naming.
+During the handoff from earlycon to the real console driver, we have
+two separate drivers operating on the same device concurrently. In the
+case of the 8250 driver these concurrent accesses cause problems due
+to the driver's use of banked registers, controlled by LCR.DLAB. It is
+possible for the setup(), config_port(), pm() and set_mctrl() callbacks
+to set DLAB, which can cause the earlycon code that intends to access
+TX to instead access DLL, leading to missed output and corruption on
+the serial line due to unintended modifications to the baud rate.
 
-Fixes: 3cf657f07918 ("usb: typec: ucsi: Remove all bit-fields")
+In particular, for setup() we have:
+
+univ8250_console_setup()
+-> serial8250_console_setup()
+-> uart_set_options()
+-> serial8250_set_termios()
+-> serial8250_do_set_termios()
+-> serial8250_do_set_divisor()
+
+For config_port() we have:
+
+serial8250_config_port()
+-> autoconfig()
+
+For pm() we have:
+
+serial8250_pm()
+-> serial8250_do_pm()
+-> serial8250_set_sleep()
+
+For set_mctrl() we have (for some devices):
+
+serial8250_set_mctrl()
+-> omap8250_set_mctrl()
+-> __omap8250_set_mctrl()
+
+To avoid such problems, let's make it so that the console is locked
+during pre-registration calls to these callbacks, which will prevent
+the earlycon driver from running concurrently.
+
+Remove the partial solution to this problem in the 8250 driver
+that locked the console only during autoconfig_irq(), as this would
+result in a deadlock with the new approach. The console continues
+to be locked during autoconfig_irq() because it can only be called
+through uart_configure_port().
+
+Although this patch introduces more locking than strictly necessary
+(and in particular it also locks during the call to rs485_config()
+which is not affected by this issue as far as I can tell), it follows
+the principle that it is the responsibility of the generic console
+code to manage the earlycon handoff by ensuring that earlycon and real
+console driver code cannot run concurrently, and not the individual
+drivers.
+
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Link: https://linux-review.googlesource.com/id/I7cf8124dcebf8618e6b2ee543fa5b25532de55d8
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jameson Thies <jthies@google.com>
-Link: https://lore.kernel.org/r/20240305025804.1290919-2-jthies@google.com
+Link: https://lore.kernel.org/r/20240304214350.501253-1-pcc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |  6 ------
+ drivers/tty/serial/serial_core.c    | 12 ++++++++++++
+ kernel/printk/printk.c              | 21 ++++++++++++++++++---
+ 3 files changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 60ce9fb6e7450..dbb10cb310d4c 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -220,12 +220,12 @@ struct ucsi_cable_property {
- #define UCSI_CABLE_PROP_FLAG_VBUS_IN_CABLE	BIT(0)
- #define UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE	BIT(1)
- #define UCSI_CABLE_PROP_FLAG_DIRECTIONALITY	BIT(2)
--#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	((_f_) & GENMASK(3, 0))
-+#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	(((_f_) & GENMASK(4, 3)) >> 3)
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_A	0
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_B	1
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_C	2
- #define   UCSI_CABLE_PROPERTY_PLUG_OTHER	3
--#define UCSI_CABLE_PROP_MODE_SUPPORT		BIT(5)
-+#define UCSI_CABLE_PROP_FLAG_MODE_SUPPORT	BIT(5)
- 	u8 latency;
- } __packed;
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index 8efe31448df3c..c744feabd7cdd 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1377,9 +1377,6 @@ static void autoconfig_irq(struct uart_8250_port *up)
+ 		inb_p(ICP);
+ 	}
  
+-	if (uart_console(port))
+-		console_lock();
+-
+ 	/* forget possible initially masked and pending IRQ */
+ 	probe_irq_off(probe_irq_on());
+ 	save_mcr = serial8250_in_MCR(up);
+@@ -1410,9 +1407,6 @@ static void autoconfig_irq(struct uart_8250_port *up)
+ 	if (port->flags & UPF_FOURPORT)
+ 		outb_p(save_ICP, ICP);
+ 
+-	if (uart_console(port))
+-		console_unlock();
+-
+ 	port->irq = (irq > 0) ? irq : 0;
+ }
+ 
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index f0ed30d0a697c..fe3f1d655dfe2 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -2561,7 +2561,12 @@ uart_configure_port(struct uart_driver *drv, struct uart_state *state,
+ 			port->type = PORT_UNKNOWN;
+ 			flags |= UART_CONFIG_TYPE;
+ 		}
++		/* Synchronize with possible boot console. */
++		if (uart_console(port))
++			console_lock();
+ 		port->ops->config_port(port, flags);
++		if (uart_console(port))
++			console_unlock();
+ 	}
+ 
+ 	if (port->type != PORT_UNKNOWN) {
+@@ -2569,6 +2574,10 @@ uart_configure_port(struct uart_driver *drv, struct uart_state *state,
+ 
+ 		uart_report_port(drv, port);
+ 
++		/* Synchronize with possible boot console. */
++		if (uart_console(port))
++			console_lock();
++
+ 		/* Power up port for set_mctrl() */
+ 		uart_change_pm(state, UART_PM_STATE_ON);
+ 
+@@ -2585,6 +2594,9 @@ uart_configure_port(struct uart_driver *drv, struct uart_state *state,
+ 
+ 		uart_rs485_config(port);
+ 
++		if (uart_console(port))
++			console_unlock();
++
+ 		/*
+ 		 * If this driver supports console, and it hasn't been
+ 		 * successfully registered yet, try to re-register it.
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 981cdb00b8722..c55ee859dbd08 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -3045,6 +3045,21 @@ static int __init keep_bootcon_setup(char *str)
+ 
+ early_param("keep_bootcon", keep_bootcon_setup);
+ 
++static int console_call_setup(struct console *newcon, char *options)
++{
++	int err;
++
++	if (!newcon->setup)
++		return 0;
++
++	/* Synchronize with possible boot console. */
++	console_lock();
++	err = newcon->setup(newcon, options);
++	console_unlock();
++
++	return err;
++}
++
+ /*
+  * This is called by register_console() to try to match
+  * the newly registered console with any of the ones selected
+@@ -3080,8 +3095,8 @@ static int try_enable_preferred_console(struct console *newcon,
+ 			if (_braille_register_console(newcon, c))
+ 				return 0;
+ 
+-			if (newcon->setup &&
+-			    (err = newcon->setup(newcon, c->options)) != 0)
++			err = console_call_setup(newcon, c->options);
++			if (err)
+ 				return err;
+ 		}
+ 		newcon->flags |= CON_ENABLED;
+@@ -3107,7 +3122,7 @@ static void try_enable_default_console(struct console *newcon)
+ 	if (newcon->index < 0)
+ 		newcon->index = 0;
+ 
+-	if (newcon->setup && newcon->setup(newcon, NULL) != 0)
++	if (console_call_setup(newcon, NULL) != 0)
+ 		return;
+ 
+ 	newcon->flags |= CON_ENABLED;
 -- 
 2.43.0
 
