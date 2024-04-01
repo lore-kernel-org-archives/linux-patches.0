@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2DB481B8;
-	Mon,  1 Apr 2024 17:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54F24AEDF;
+	Mon,  1 Apr 2024 17:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990965; cv=none; b=KA30aYCHC7fXaG/h1vmoTjhUKNeiRYLagXmQ9nz1v3GJ65zVTg/5vO6GJFs63YFRbbwPRqIsOvLq39oGm2hjurMJ6e4Ewf/0nRfjMwAv/E0D0lqJtP3FKX7R3BFSLZpxCTeiyKG1fz46n1se6JU4V6DBnePO+KORN66DEJ7Jxbc=
+	t=1711990968; cv=none; b=Hs8qPjduWCXenpf30rdGCNQO0U7SmHUwLJdpERQ6TG1gggqbA5VFEPYr5jE7ZwFMVVctKd+j47/QPf8WSw0WEkauV/8bSTxyTDiSfkCk7lAZ9mdO+CTCVeU/5jPeL4OFKXPoNe3PLQqRPruS67XO3aOtkaI/jo6ECUZvtrRv4M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990965; c=relaxed/simple;
-	bh=GV9GsQf7EzW86kyoHci1xJXb9NGi0y6iB5rpnk8MYAc=;
+	s=arc-20240116; t=1711990968; c=relaxed/simple;
+	bh=mswpXEYQptGqWC+z1pZsMbd3OwNXywb1wFCBD+A0N14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P9UwY/3sWuRKxUJiPs/OhwVUPBppjV6/sJ+dbeikGItRHp0w8zSM7A1VgJJTQhTh8hGANjxfdwjq/lcrAtytVVBiGWv6Cg+KjT6f10baU8lNYHveUYHsHlwuabb/kJ7p2KBpfjOC1X4HidPdyZe5HnJkN5Jpp1pJpBTAwBECITc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uf3OhVKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YY6CXrpTRLqjw5aOJ9AqYBS7/2uKOruFKbohFeiO4ncZ+V0P1/3ev7E0dTdnXlt49gql2WyYuo0bLtB67H+1i/O2oMl8+PHmoW403mTYqsGYyC6oZCqOlyZkMbqi6BEne4GZE6/pvYNvcEsdGE02qdZNmjxxlGhm2ixzBNdDfqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9eu2f9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uf3OhVKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08304C433C7;
-	Mon,  1 Apr 2024 17:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9eu2f9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A53C433C7;
+	Mon,  1 Apr 2024 17:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990965;
-	bh=GV9GsQf7EzW86kyoHci1xJXb9NGi0y6iB5rpnk8MYAc=;
+	s=korg; t=1711990968;
+	bh=mswpXEYQptGqWC+z1pZsMbd3OwNXywb1wFCBD+A0N14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uf3OhVKLTdi2ZYmnGjJQEq7jzJDsGY8i47CL8jALQVY3KV6nf7wpu4YHurgf6/V59
-	 DvTKsxnLmyyPt1AQfaeatBOXbxb6su32md3lAUnM1mU8h3FHig9zxM56A0jdHvEEX8
-	 K/O3UM9O7FvBEVyzCQTpj7d3GN8KC6yaPA+78bKs=
+	b=I9eu2f9SD+/j+Xf9nzBHTgx6zoGjBjGWS9niUpj5A1VVYLo1o6aZtDYbEQ/TrFgGy
+	 2gjCvpslR2DfSzhKeXVvjTdsUNUPRB5bmMTUC2NXigiD+i981YUN8kRhmKHx6De0qC
+	 AtHp2p1vvbgymWS6jEADYCrCeV3FForRe6B0DVCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/272] landlock: Warn once if a Landlock action is requested while disabled
-Date: Mon,  1 Apr 2024 17:44:33 +0200
-Message-ID: <20240401152533.201590993@linuxfoundation.org>
+Subject: [PATCH 6.1 115/272] drm/probe-helper: warn about negative .get_modes()
+Date: Mon,  1 Apr 2024 17:45:05 +0200
+Message-ID: <20240401152534.249981702@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -46,85 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 782191c74875cc33b50263e21d76080b1411884d ]
+[ Upstream commit 7af03e688792293ba33149fb8df619a8dff90e80 ]
 
-Because sandboxing can be used as an opportunistic security measure,
-user space may not log unsupported features.  Let the system
-administrator know if an application tries to use Landlock but failed
-because it isn't enabled at boot time.  This may be caused by boot
-loader configurations with outdated "lsm" kernel's command-line
-parameter.
+The .get_modes() callback is supposed to return the number of modes,
+never a negative error code. If a negative value is returned, it'll just
+be interpreted as a negative count, and added to previous calculations.
+
+Document the rules, but handle the negative values gracefully with an
+error message.
 
 Cc: stable@vger.kernel.org
-Fixes: 265885daf3e5 ("landlock: Add syscall implementations")
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20240227110550.3702236-2-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/50208c866facc33226a3c77b82bb96aeef8ef310.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/syscalls.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c       | 7 +++++++
+ include/drm/drm_modeset_helper_vtables.h | 3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/security/landlock/syscalls.c b/security/landlock/syscalls.c
-index 2ca0ccbd905ae..d0cb3d0cbf985 100644
---- a/security/landlock/syscalls.c
-+++ b/security/landlock/syscalls.c
-@@ -32,6 +32,18 @@
- #include "ruleset.h"
- #include "setup.h"
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index 3b968ad187cf3..52dbaf74fe164 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -362,6 +362,13 @@ static int drm_helper_probe_get_modes(struct drm_connector *connector)
  
-+static bool is_initialized(void)
-+{
-+	if (likely(landlock_initialized))
-+		return true;
+ 	count = connector_funcs->get_modes(connector);
+ 
++	/* The .get_modes() callback should not return negative values. */
++	if (count < 0) {
++		drm_err(connector->dev, ".get_modes() returned %pe\n",
++			ERR_PTR(count));
++		count = 0;
++	}
 +
-+	pr_warn_once(
-+		"Disabled but requested by user space. "
-+		"You should enable Landlock at boot time: "
-+		"https://docs.kernel.org/userspace-api/landlock.html#boot-time-configuration\n");
-+	return false;
-+}
-+
- /**
-  * copy_min_struct_from_user - Safe future-proof argument copying
-  *
-@@ -165,7 +177,7 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
- 	/* Build-time checks. */
- 	build_check_abi();
- 
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
- 	if (flags) {
-@@ -311,7 +323,7 @@ SYSCALL_DEFINE4(landlock_add_rule, const int, ruleset_fd,
- 	struct landlock_ruleset *ruleset;
- 	int res, err;
- 
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
- 	/* No flag for now. */
-@@ -402,7 +414,7 @@ SYSCALL_DEFINE2(landlock_restrict_self, const int, ruleset_fd, const __u32,
- 	struct landlock_cred_security *new_llcred;
- 	int err;
- 
--	if (!landlock_initialized)
-+	if (!is_initialized())
- 		return -EOPNOTSUPP;
- 
  	/*
+ 	 * Fallback for when DDC probe failed in drm_get_edid() and thus skipped
+ 	 * override/firmware EDID.
+diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+index fafa70ac1337f..6f19cf5c210e5 100644
+--- a/include/drm/drm_modeset_helper_vtables.h
++++ b/include/drm/drm_modeset_helper_vtables.h
+@@ -896,7 +896,8 @@ struct drm_connector_helper_funcs {
+ 	 *
+ 	 * RETURNS:
+ 	 *
+-	 * The number of modes added by calling drm_mode_probed_add().
++	 * The number of modes added by calling drm_mode_probed_add(). Return 0
++	 * on failures (no modes) instead of negative error codes.
+ 	 */
+ 	int (*get_modes)(struct drm_connector *connector);
+ 
 -- 
 2.43.0
 
