@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474A11CA8F;
-	Mon,  1 Apr 2024 16:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2BE1CA8F;
+	Mon,  1 Apr 2024 16:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988754; cv=none; b=A9uu0qM+R3BACEn+7i7J+dNgUv37p2Xakfde6/8DAiya8ScI92FqGoRHH/Kd/w3tqQDnukUh0tMCdGRHwCzPIfKdXpIs8keWqO3CA2WQlxAsNTSkq7RJNDCKZ0iFkPo99LiwD8W1IMX3ZBpSLaKer9E0aBEgp1ElVMTdLxgVRzo=
+	t=1711988757; cv=none; b=Er70XnVeHW64di4bvW9yOwEtk6qBd3Qnf0QtD2ecs6BUBl9aCv2dr2aVA3/kCYqIi/mwLtd8dtwCGY43tj2bLWJGayMYEYFP5947fyxlhA8zjv7bE/LVu+ELM1Ui4arn+ldcpjmtzLoZO05N08xO6BxOKMaFRYv0gY9j8F0zmqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988754; c=relaxed/simple;
-	bh=qZpv9iiaGL+vXCVSA+jkXHZH9ful6HN7TFrcWUg31v8=;
+	s=arc-20240116; t=1711988757; c=relaxed/simple;
+	bh=Mu+wTT7mZu6JU+R2Lyp0TxyE9VZGN3/zzalje0P5DgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VegsgePanJpgxJBRTJHOH3AEZyWKpj9ntdk5xQtFjJSu945xB0GyPYRDO2fwdr8S6h4wGT4Mp5vl/y9rYl0jvDeOGIZGZM0VrTbkweSpXWX7gdCXSNzGP7tgZ2hov+V80v+EHLobbJhKb5mrkMrgeWcVRGKycruEJLpl2kpP8fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlmtV1uW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8xOVF0jZhM+4aW6UvsEoqWOeDXGP5e9s5cUMOVWImi6CqlhDyobg6AwsjqrzD7Kv9Dv4J2DshBUWhhB8KU9ujJFvH0JYPMnFznkRLPvMxSAQXiAOLXLw6k3oieD+E4kx5TDEXjAxylGpdnhnCczNG7Qr3gD6RDsUoF7bDABaSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u05kKsAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlmtV1uW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE02C433F1;
-	Mon,  1 Apr 2024 16:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u05kKsAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08674C43390;
+	Mon,  1 Apr 2024 16:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988754;
-	bh=qZpv9iiaGL+vXCVSA+jkXHZH9ful6HN7TFrcWUg31v8=;
+	s=korg; t=1711988757;
+	bh=Mu+wTT7mZu6JU+R2Lyp0TxyE9VZGN3/zzalje0P5DgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlmtV1uWrbg9je1nH6PUA8pES+Y1CCS2nC47ufbFl5spXMjHHg2Do31ARTiLFQAu+
-	 Xexk81eBydrL+zQD9UDTDJUNars69FTOdC83myrpV0t7ctDU8iSsAtAn6EPs6r8ITm
-	 ZZpBqeiqn35jCHdBjhVTxFn7l7rYbqyxcWeQtOhc=
+	b=u05kKsAwy/NqgcUBRaWngcH4mkLCx+DlH7BtqCGmUVw4cQVEYWK3NKUaZD5wQslog
+	 INpvhnJmTzKyOK1+IoCz/a1YpjoVWmSsmlaB4kEzebD7LUqX5x8ZdgbzxiLQlIrcbW
+	 PeS+huiRkVw0EHSyqF5O3DwrAMZUjNa7BCn+fvdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 6.7 278/432] tee: optee: Fix kernel panic caused by incorrect error handling
-Date: Mon,  1 Apr 2024 17:44:25 +0200
-Message-ID: <20240401152601.464055420@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.7 279/432] ARM: imx_v6_v7_defconfig: Restore CONFIG_BACKLIGHT_CLASS_DEVICE
+Date: Mon,  1 Apr 2024 17:44:26 +0200
+Message-ID: <20240401152601.493489664@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,59 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 95915ba4b987cf2b222b0f251280228a1ff977ac upstream.
+commit 2b0a5a8a397c0ae8f8cd25e7d3857c749239ceb8 upstream.
 
-The error path while failing to register devices on the TEE bus has a
-bug leading to kernel panic as follows:
+Since commit bfac19e239a7 ("fbdev: mx3fb: Remove the driver") backlight
+is no longer functional.
 
-[   15.398930] Unable to handle kernel paging request at virtual address ffff07ed00626d7c
-[   15.406913] Mem abort info:
-[   15.409722]   ESR = 0x0000000096000005
-[   15.413490]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   15.418814]   SET = 0, FnV = 0
-[   15.421878]   EA = 0, S1PTW = 0
-[   15.425031]   FSC = 0x05: level 1 translation fault
-[   15.429922] Data abort info:
-[   15.432813]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[   15.438310]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   15.443372]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[   15.448697] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000d9e3e000
-[   15.455413] [ffff07ed00626d7c] pgd=1800000bffdf9003, p4d=1800000bffdf9003, pud=0000000000000000
-[   15.464146] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+The fbdev mx3fb driver used to automatically select
+CONFIG_BACKLIGHT_CLASS_DEVICE.
 
-Commit 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
-lead to the introduction of this bug. So fix it appropriately.
+Now that the mx3fb driver has been removed, enable the
+CONFIG_BACKLIGHT_CLASS_DEVICE option so that backlight can still work
+by default.
 
-Reported-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218542
-Fixes: 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+Tested on a imx6dl-sabresd board.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Fixes: bfac19e239a7 ("fbdev: mx3fb: Remove the driver")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Colibri iMX7
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/optee/device.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/configs/imx_v6_v7_defconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tee/optee/device.c
-+++ b/drivers/tee/optee/device.c
-@@ -90,13 +90,14 @@ static int optee_register_device(const u
- 	if (rc) {
- 		pr_err("device registration failed, err: %d\n", rc);
- 		put_device(&optee_device->dev);
-+		return rc;
- 	}
- 
- 	if (func == PTA_CMD_GET_DEVICES_SUPP)
- 		device_create_file(&optee_device->dev,
- 				   &dev_attr_need_supplicant);
- 
--	return rc;
-+	return 0;
- }
- 
- static int __optee_enumerate_devices(u32 func)
+--- a/arch/arm/configs/imx_v6_v7_defconfig
++++ b/arch/arm/configs/imx_v6_v7_defconfig
+@@ -297,6 +297,7 @@ CONFIG_FB_MODE_HELPERS=y
+ CONFIG_LCD_CLASS_DEVICE=y
+ CONFIG_LCD_L4F00242T03=y
+ CONFIG_LCD_PLATFORM=y
++CONFIG_BACKLIGHT_CLASS_DEVICE=y
+ CONFIG_BACKLIGHT_PWM=y
+ CONFIG_BACKLIGHT_GPIO=y
+ CONFIG_FRAMEBUFFER_CONSOLE=y
 
 
