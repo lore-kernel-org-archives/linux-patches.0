@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397824CE0F;
-	Mon,  1 Apr 2024 16:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474D54D137;
+	Mon,  1 Apr 2024 16:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990396; cv=none; b=jqBF8Ai9neyRtZN5tNVwI3WJeqjiaWCqqAc6I1Kc6mF00r76P6Ifmn1woz0RiM7+PUyGwilIEGDKCHO8bRBksYvhFXIhIxGOHdqNo1J7oUM2SCPEs5BoUf1Roq2m7g8Q7fqUHCEXHQyqnDB6uK9pXjrUkpVRooTjWLXkNwLONzw=
+	t=1711990399; cv=none; b=cV3pxDaG4L1NhEpSjNAJABlGIobd7gSpnJlJQD8Y5tcM1ABVR9HJQa3j9pKr0qcw0iDdX6+1ShNrc4x2q4S7mQTZt4EBWII6kj7mmFzNDcj/c0IgHWPJl6T8zrAxuqsH0mhS1CV8aS0+wkoZy4leboPbzosbMt67bd5CanXBK1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990396; c=relaxed/simple;
-	bh=VT72vu7I8ZUr50r3HsGaECCmozOj2VCY7flfNi9OTX4=;
+	s=arc-20240116; t=1711990399; c=relaxed/simple;
+	bh=5iKdgqtd2yxApdW3qo97plm4KNZ6KRLKa0UZv8mZtzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJ6gU8qHpysY9pt7eu/8vDXzQA4pmLIvEPV6ix4tl0EnyABre0E4Fxoirf+ghpHz6W1d/CcQg935t3PsVRlBVHUhwK1vIKfO0zZYI9PeQET11EQmUnXd67fu0ylOo1kIymOIIBVr2X5w8tllXfMzaBznqixlpUwVcabkdICQbPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8HkTQBQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+9GdUtyID0ANN+q3yIYqMyG42g/N50h+rFAbo9pQUmbD9IgO8tyAC3p4ZbpDl2shfg/QGO/oDhlJ7HL/DoyPWe20yQRHNQaY0UAJ88i3iPFCjR7r7YGMFzODQEGYZMNh0TsYGnv16wOvTqOC/BNDRCB3lzcy9HwSVSTaIAa0Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Odjqq4S+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8HkTQBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD091C43330;
-	Mon,  1 Apr 2024 16:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Odjqq4S+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCED9C43399;
+	Mon,  1 Apr 2024 16:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990396;
-	bh=VT72vu7I8ZUr50r3HsGaECCmozOj2VCY7flfNi9OTX4=;
+	s=korg; t=1711990399;
+	bh=5iKdgqtd2yxApdW3qo97plm4KNZ6KRLKa0UZv8mZtzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8HkTQBQcKLXCiEj6HgUm47NLyxlMEqn5OnD+5pnAWcbv+A1z8wkH+DNXxELsUlhR
-	 7c9w+kjMJrRt6zsxDF8YCs6PbOxbC4wlqs5cob029b/rTaR69TkE/nuKfqzxB5JyoA
-	 NUxcqq+4eERldrzbZYyEPKVMIq+z3HQgC/kbUyO4=
+	b=Odjqq4S+HSm3YHln2b7hCeY/D4PbK8Gdlh8TgCeSn19CDODcOQEwJeIrdDq3hmrF4
+	 zqsdVdvfYYcVbIUF8aLjozKAjxnjDGeqodsZGxNgnjgkOspJLA/fHbDt1eDwoN0dby
+	 t9dvJSOxPnIhSxR7O9q2GB9dsOieeFaslKpj0MtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clayton Craft <clayton@craftyguy.net>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.6 311/396] x86/efistub: Add missing boot_params for mixed mode compat entry
-Date: Mon,  1 Apr 2024 17:46:00 +0200
-Message-ID: <20240401152557.186416324@linuxfoundation.org>
+	Adamos Ttofari <attofari@amazon.de>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 302/396] x86/fpu: Keep xfd_state in sync with MSR_IA32_XFD
+Date: Mon,  1 Apr 2024 17:45:51 +0200
+Message-ID: <20240401152556.904628725@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,142 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Adamos Ttofari <attofari@amazon.de>
 
-commit d21f5a59ea773826cc489acb287811d690b703cc upstream.
+[ Upstream commit 10e4b5166df9ff7a2d5316138ca668b42d004422 ]
 
-The pure EFI stub entry point does not take a struct boot_params from
-the boot loader, but creates it from scratch, and populates only the
-fields that still have meaning in this context (command line, initrd
-base and size, etc)
+Commit 672365477ae8 ("x86/fpu: Update XFD state where required") and
+commit 8bf26758ca96 ("x86/fpu: Add XFD state to fpstate") introduced a
+per CPU variable xfd_state to keep the MSR_IA32_XFD value cached, in
+order to avoid unnecessary writes to the MSR.
 
-The original mixed mode implementation used the EFI handover protocol
-instead, where the boot loader (i.e., GRUB) populates a boot_params
-struct and passes it to a special Linux specific EFI entry point that
-takes the boot_params pointer as its third argument.
+On CPU hotplug MSR_IA32_XFD is reset to the init_fpstate.xfd, which
+wipes out any stale state. But the per CPU cached xfd value is not
+reset, which brings them out of sync.
 
-When the new mixed mode implementation was introduced, using a special
-32-bit PE entrypoint in the 64-bit kernel, it adopted the pure approach,
-and relied on the EFI stub to create the struct boot_params.  This is
-preferred because it makes the bootloader side much easier to implement,
-as it does not need any x86-specific knowledge on how struct boot_params
-and struct setup_header are put together. This mixed mode implementation
-was adopted by systemd-boot version 252 and later.
+As a consequence a subsequent xfd_update_state() might fail to update
+the MSR which in turn can result in XRSTOR raising a #NM in kernel
+space, which crashes the kernel.
 
-When commit
+To fix this, introduce xfd_set_state() to write xfd_state together
+with MSR_IA32_XFD, and use it in all places that set MSR_IA32_XFD.
 
-  e2ab9eab324c ("x86/boot/compressed: Move 32-bit entrypoint code into .text section")
+Fixes: 672365477ae8 ("x86/fpu: Update XFD state where required")
+Signed-off-by: Adamos Ttofari <attofari@amazon.de>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240322230439.456571-1-chang.seok.bae@intel.com
 
-refactored this code and moved it out of head_64.S, the fact that ESI
-was populated with the address of the base of the image was overlooked,
-and to simplify the code flow, ESI is now zeroed and stored to memory
-unconditionally in shared code, so that the NULL-ness of that variable
-can still be used later to determine which mixed mode boot protocol is
-in use.
-
-With ESI pointing to the base of the image, it can serve as a struct
-boot_params pointer for startup_32(), which only accesses the init_data
-and kernel_alignment fields (and the scratch field as a temporary
-stack). Zeroing ESI means that those accesses produce garbage now, even
-though things appear to work if the first page of memory happens to be
-zeroed, and the region right before LOAD_PHYSICAL_ADDR (== 16 MiB)
-happens to be free.
-
-The solution is to pass a special, temporary struct boot_params to
-startup_32() via ESI, one that is sufficient for getting it to create
-the page tables correctly and is discarded right after. This involves
-setting a minimal alignment of 4k, only to get the statically allocated
-page tables line up correctly, and setting init_size to the executable
-image size (_end - startup_32). This ensures that the page tables are
-covered by the static footprint of the PE image.
-
-Given that EFI boot no longer calls the decompressor and no longer pads
-the image to permit the decompressor to execute in place, the same
-temporary struct boot_params should be used in the EFI handover protocol
-based mixed mode implementation as well, to prevent the page tables from
-being placed outside of allocated memory.
-
-Fixes: e2ab9eab324c ("x86/boot/compressed: Move 32-bit entrypoint code into .text section")
-Cc: <stable@kernel.org> # v6.1+
-Closes: https://lore.kernel.org/all/20240321150510.GI8211@craftyguy.net/
-Reported-by: Clayton Craft <clayton@craftyguy.net>
-Tested-by: Clayton Craft <clayton@craftyguy.net>
-Tested-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://lore.kernel.org/lkml/20230511152818.13839-1-attofari@amazon.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/efi_mixed.S |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ arch/x86/kernel/fpu/xstate.c |  5 +++--
+ arch/x86/kernel/fpu/xstate.h | 14 ++++++++++----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
---- a/arch/x86/boot/compressed/efi_mixed.S
-+++ b/arch/x86/boot/compressed/efi_mixed.S
-@@ -15,10 +15,12 @@
-  */
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index ef6906107c541..571a43b3105df 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -178,10 +178,11 @@ void fpu__init_cpu_xstate(void)
+ 	 * Must happen after CR4 setup and before xsetbv() to allow KVM
+ 	 * lazy passthrough.  Write independent of the dynamic state static
+ 	 * key as that does not work on the boot CPU. This also ensures
+-	 * that any stale state is wiped out from XFD.
++	 * that any stale state is wiped out from XFD. Reset the per CPU
++	 * xfd cache too.
+ 	 */
+ 	if (cpu_feature_enabled(X86_FEATURE_XFD))
+-		wrmsrl(MSR_IA32_XFD, init_fpstate.xfd);
++		xfd_set_state(init_fpstate.xfd);
  
- #include <linux/linkage.h>
-+#include <asm/asm-offsets.h>
- #include <asm/msr.h>
- #include <asm/page_types.h>
- #include <asm/processor-flags.h>
- #include <asm/segment.h>
-+#include <asm/setup.h>
- 
- 	.code64
- 	.text
-@@ -149,6 +151,7 @@ SYM_FUNC_END(__efi64_thunk)
- SYM_FUNC_START(efi32_stub_entry)
- 	call	1f
- 1:	popl	%ecx
-+	leal	(efi32_boot_args - 1b)(%ecx), %ebx
- 
- 	/* Clear BSS */
- 	xorl	%eax, %eax
-@@ -163,6 +166,7 @@ SYM_FUNC_START(efi32_stub_entry)
- 	popl	%ecx
- 	popl	%edx
- 	popl	%esi
-+	movl	%esi, 8(%ebx)
- 	jmp	efi32_entry
- SYM_FUNC_END(efi32_stub_entry)
+ 	/*
+ 	 * XCR_XFEATURE_ENABLED_MASK (aka. XCR0) sets user features
+diff --git a/arch/x86/kernel/fpu/xstate.h b/arch/x86/kernel/fpu/xstate.h
+index 3518fb26d06b0..19ca623ffa2ac 100644
+--- a/arch/x86/kernel/fpu/xstate.h
++++ b/arch/x86/kernel/fpu/xstate.h
+@@ -148,20 +148,26 @@ static inline void xfd_validate_state(struct fpstate *fpstate, u64 mask, bool rs
  #endif
-@@ -239,8 +243,6 @@ SYM_FUNC_END(efi_enter32)
-  *
-  * Arguments:	%ecx	image handle
-  * 		%edx	EFI system table pointer
-- *		%esi	struct bootparams pointer (or NULL when not using
-- *			the EFI handover protocol)
-  *
-  * Since this is the point of no return for ordinary execution, no registers
-  * are considered live except for the function parameters. [Note that the EFI
-@@ -266,9 +268,18 @@ SYM_FUNC_START_LOCAL(efi32_entry)
- 	leal	(efi32_boot_args - 1b)(%ebx), %ebx
- 	movl	%ecx, 0(%ebx)
- 	movl	%edx, 4(%ebx)
--	movl	%esi, 8(%ebx)
- 	movb	$0x0, 12(%ebx)          // efi_is64
  
-+	/*
-+	 * Allocate some memory for a temporary struct boot_params, which only
-+	 * needs the minimal pieces that startup_32() relies on.
-+	 */
-+	subl	$PARAM_SIZE, %esp
-+	movl	%esp, %esi
-+	movl	$PAGE_SIZE, BP_kernel_alignment(%esi)
-+	movl	$_end - 1b, BP_init_size(%esi)
-+	subl	$startup_32 - 1b, BP_init_size(%esi)
+ #ifdef CONFIG_X86_64
++static inline void xfd_set_state(u64 xfd)
++{
++	wrmsrl(MSR_IA32_XFD, xfd);
++	__this_cpu_write(xfd_state, xfd);
++}
 +
- 	/* Disable paging */
- 	movl	%cr0, %eax
- 	btrl	$X86_CR0_PG_BIT, %eax
-@@ -294,8 +305,7 @@ SYM_FUNC_START(efi32_pe_entry)
+ static inline void xfd_update_state(struct fpstate *fpstate)
+ {
+ 	if (fpu_state_size_dynamic()) {
+ 		u64 xfd = fpstate->xfd;
  
- 	movl	8(%ebp), %ecx			// image_handle
- 	movl	12(%ebp), %edx			// sys_table
--	xorl	%esi, %esi
--	jmp	efi32_entry			// pass %ecx, %edx, %esi
-+	jmp	efi32_entry			// pass %ecx, %edx
- 						// no other registers remain live
+-		if (__this_cpu_read(xfd_state) != xfd) {
+-			wrmsrl(MSR_IA32_XFD, xfd);
+-			__this_cpu_write(xfd_state, xfd);
+-		}
++		if (__this_cpu_read(xfd_state) != xfd)
++			xfd_set_state(xfd);
+ 	}
+ }
  
- 2:	popl	%edi				// restore callee-save registers
+ extern int __xfd_enable_feature(u64 which, struct fpu_guest *guest_fpu);
+ #else
++static inline void xfd_set_state(u64 xfd) { }
++
+ static inline void xfd_update_state(struct fpstate *fpstate) { }
+ 
+ static inline int __xfd_enable_feature(u64 which, struct fpu_guest *guest_fpu) {
+-- 
+2.43.0
+
 
 
