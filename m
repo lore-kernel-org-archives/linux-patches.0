@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDDF47F60;
-	Mon,  1 Apr 2024 16:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612903F8F4;
+	Mon,  1 Apr 2024 16:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987320; cv=none; b=AycU871qQskFlZjK6oc2yKtXzXEIO1bbPWBYQ/C8Ziz6/M4/OUTVLd4W+4BqsiPpESMzSCu12uRa8bFW7ya2RD71jFhAzt4IUwRfi5ONstBhpnFXs1wrO/0nVXliIyPi6LPUXMYoFkQJ10nzDhlWMsj1iNeEMbpd/lEpKk4iT8U=
+	t=1711987323; cv=none; b=HZinZQpjLGtRZNcJQ200uzzZ+1UWG8KyZjvG5rKf6Yppb/C86vE2oRA7Zl3icNZC81JG3q7IVXOyfDik7qMy43riBZjhjyxAGOK2DzUGl0Yvazdv9Dgcd84SiFL5J4wiOxw0PlmserddDm3azHAvlSeoFXYux6v+XbwqO6JwqPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987320; c=relaxed/simple;
-	bh=zTaXnkBpCRvWEQrW1NFpHVRy7Odf+OI4/NvzJdD9cxk=;
+	s=arc-20240116; t=1711987323; c=relaxed/simple;
+	bh=h6zzYUXgbPC98gDrVCIjJpQzXcZWYt5uu9CFceU/aTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftbrfrLgFGujT/v0rrYMI8nlXtG2CSdg0h3ZdH07BbILHyhShK9WY/jDtxcR5qd4zEdbWLjAUA2fYvS4Y5M7KagRbeQCfeJCKgU3TLyshH2n3cyRQfxJODyiHDX9j58XCVz0oGcI3jdGLSZuyKfFiAPce3brn8c/MsLSaFTMr1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWfD6wjv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clthxQ0eKV5T48xqGpvBAkbjm32pV2B0Uq+F0WdKIIRy62mfUBKd5MNTlKIVl/kLh6xfVMsBm/T3a6cued54kycYGW/DXbhhkE66WmkvGe+XbHqJ39JLH1VA47EVOMi5UOsonZiGrh1P3BsMJfNgqCw52Z3OaHD5/7Dz+/X6hGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4BcMtv1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWfD6wjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4D7C43394;
-	Mon,  1 Apr 2024 16:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4BcMtv1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8242C433C7;
+	Mon,  1 Apr 2024 16:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987319;
-	bh=zTaXnkBpCRvWEQrW1NFpHVRy7Odf+OI4/NvzJdD9cxk=;
+	s=korg; t=1711987323;
+	bh=h6zzYUXgbPC98gDrVCIjJpQzXcZWYt5uu9CFceU/aTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWfD6wjvTnCUtpVmnOjWMDCFnzt72Ns89bpqOIwKFDcqI0bN3Jbz265q7wP+sJQkx
-	 PFFMHpgUpSxiFjoBV7G4cGLEOSTDilswaoGVPsSyDfRvvylZmtsA+Segs4HtlWhCVd
-	 Gcpkc+7Ue0JM0DG/JV4Ycm1zAhhJhNW5WV2c9Jr0=
+	b=f4BcMtv1zvh40lrqvT5g0leh/6jwpZdu+iopiCjdcgj4gw5CJ678tMRF28mVHS9y0
+	 jFsKzR20y/NIHCLa0gJBJSrHPc1hTFWacJfU79cVGYPdyrS3g43jvhDFVNms8jOppx
+	 tGyhZDC+ycObT9VLvOx4CyipriihSbQ39zCZi7dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kevin Loughlin <kevinloughlin@google.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.8 251/399] x86/Kconfig: Remove CONFIG_AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT
-Date: Mon,  1 Apr 2024 17:43:37 +0200
-Message-ID: <20240401152556.661902171@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 6.8 252/399] x86/sev: Fix position dependent variable references in startup code
+Date: Mon,  1 Apr 2024 17:43:38 +0200
+Message-ID: <20240401152556.690946417@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,123 +52,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 29956748339aa8757a7e2f927a8679dd08f24bb6 upstream.
+commit 1c811d403afd73f04bde82b83b24c754011bd0e8 upstream.
 
-It was meant well at the time but nothing's using it so get rid of it.
+The early startup code executes from a 1:1 mapping of memory, which
+differs from the mapping that the code was linked and/or relocated to
+run at. The latter mapping is not active yet at this point, and so
+symbol references that rely on it will fault.
 
+Given that the core kernel is built without -fPIC, symbol references are
+typically emitted as absolute, and so any such references occuring in
+the early startup code will therefore crash the kernel.
+
+While an attempt was made to work around this for the early SEV/SME
+startup code, by forcing RIP-relative addressing for certain global
+SEV/SME variables via inline assembly (see snp_cpuid_get_table() for
+example), RIP-relative addressing must be pervasively enforced for
+SEV/SME global variables when accessed prior to page table fixups.
+
+__startup_64() already handles this issue for select non-SEV/SME global
+variables using fixup_pointer(), which adjusts the pointer relative to a
+`physaddr` argument. To avoid having to pass around this `physaddr`
+argument across all functions needing to apply pointer fixups, introduce
+a macro RIP_RELATIVE_REF() which generates a RIP-relative reference to
+a given global variable. It is used where necessary to force
+RIP-relative accesses to global variables.
+
+For backporting purposes, this patch makes no attempt at cleaning up
+other occurrences of this pattern, involving either inline asm or
+fixup_pointer(). Those will be addressed later.
+
+  [ bp: Call it "rip_rel_ref" everywhere like other code shortens
+    "rIP-relative reference" and make the asm wrapper __always_inline. ]
+
+Co-developed-by: Kevin Loughlin <kevinloughlin@google.com>
+Signed-off-by: Kevin Loughlin <kevinloughlin@google.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20240202163510.GDZb0Zvj8qOndvFOiZ@fat_crate.local
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/all/20240130220845.1978329-1-kevinloughlin@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt  |    4 +---
- Documentation/arch/x86/amd-memory-encryption.rst |   16 ++++++++--------
- arch/x86/Kconfig                                 |   13 -------------
- arch/x86/mm/mem_encrypt_identity.c               |   11 +----------
- 4 files changed, 10 insertions(+), 34 deletions(-)
+ arch/x86/coco/core.c               |    7 +------
+ arch/x86/include/asm/asm.h         |   14 ++++++++++++++
+ arch/x86/include/asm/coco.h        |    8 +++++++-
+ arch/x86/include/asm/mem_encrypt.h |   15 +++++++++------
+ arch/x86/kernel/sev-shared.c       |   12 ++++++------
+ arch/x86/kernel/sev.c              |    4 ++--
+ arch/x86/mm/mem_encrypt_identity.c |   27 ++++++++++++---------------
+ 7 files changed, 51 insertions(+), 36 deletions(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3340,9 +3340,7 @@
+--- a/arch/x86/coco/core.c
++++ b/arch/x86/coco/core.c
+@@ -14,7 +14,7 @@
+ #include <asm/processor.h>
  
- 	mem_encrypt=	[X86-64] AMD Secure Memory Encryption (SME) control
- 			Valid arguments: on, off
--			Default (depends on kernel configuration option):
--			  on  (CONFIG_AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT=y)
--			  off (CONFIG_AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT=n)
-+			Default: off
- 			mem_encrypt=on:		Activate SME
- 			mem_encrypt=off:	Do not activate SME
+ enum cc_vendor cc_vendor __ro_after_init = CC_VENDOR_NONE;
+-static u64 cc_mask __ro_after_init;
++u64 cc_mask __ro_after_init;
  
---- a/Documentation/arch/x86/amd-memory-encryption.rst
-+++ b/Documentation/arch/x86/amd-memory-encryption.rst
-@@ -87,14 +87,14 @@ The state of SME in the Linux kernel can
- 	  kernel is non-zero).
+ static bool noinstr intel_cc_platform_has(enum cc_attr attr)
+ {
+@@ -148,8 +148,3 @@ u64 cc_mkdec(u64 val)
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(cc_mkdec);
+-
+-__init void cc_set_mask(u64 mask)
+-{
+-	cc_mask = mask;
+-}
+--- a/arch/x86/include/asm/asm.h
++++ b/arch/x86/include/asm/asm.h
+@@ -113,6 +113,20 @@
  
- SME can also be enabled and activated in the BIOS. If SME is enabled and
--activated in the BIOS, then all memory accesses will be encrypted and it will
--not be necessary to activate the Linux memory encryption support.  If the BIOS
--merely enables SME (sets bit 23 of the MSR_AMD64_SYSCFG), then Linux can activate
--memory encryption by default (CONFIG_AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT=y) or
--by supplying mem_encrypt=on on the kernel command line.  However, if BIOS does
--not enable SME, then Linux will not be able to activate memory encryption, even
--if configured to do so by default or the mem_encrypt=on command line parameter
--is specified.
-+activated in the BIOS, then all memory accesses will be encrypted and it
-+will not be necessary to activate the Linux memory encryption support.
+ #endif
+ 
++#ifndef __ASSEMBLY__
++#ifndef __pic__
++static __always_inline __pure void *rip_rel_ptr(void *p)
++{
++	asm("leaq %c1(%%rip), %0" : "=r"(p) : "i"(p));
 +
-+If the BIOS merely enables SME (sets bit 23 of the MSR_AMD64_SYSCFG),
-+then memory encryption can be enabled by supplying mem_encrypt=on on the
-+kernel command line.  However, if BIOS does not enable SME, then Linux
-+will not be able to activate memory encryption, even if configured to do
-+so by default or the mem_encrypt=on command line parameter is specified.
++	return p;
++}
++#define RIP_REL_REF(var)	(*(typeof(&(var)))rip_rel_ptr(&(var)))
++#else
++#define RIP_REL_REF(var)	(var)
++#endif
++#endif
++
+ /*
+  * Macros to generate condition code outputs from inline assembly,
+  * The output operand must be type "bool".
+--- a/arch/x86/include/asm/coco.h
++++ b/arch/x86/include/asm/coco.h
+@@ -2,6 +2,7 @@
+ #ifndef _ASM_X86_COCO_H
+ #define _ASM_X86_COCO_H
  
- Secure Nested Paging (SNP)
- ==========================
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -1539,19 +1539,6 @@ config AMD_MEM_ENCRYPT
- 	  This requires an AMD processor that supports Secure Memory
- 	  Encryption (SME).
++#include <asm/asm.h>
+ #include <asm/types.h>
  
--config AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT
--	bool "Activate AMD Secure Memory Encryption (SME) by default"
--	depends on AMD_MEM_ENCRYPT
--	help
--	  Say yes to have system memory encrypted by default if running on
--	  an AMD processor that supports Secure Memory Encryption (SME).
+ enum cc_vendor {
+@@ -12,7 +13,12 @@ enum cc_vendor {
+ 
+ #ifdef CONFIG_ARCH_HAS_CC_PLATFORM
+ extern enum cc_vendor cc_vendor;
+-void cc_set_mask(u64 mask);
++extern u64 cc_mask;
++static inline void cc_set_mask(u64 mask)
++{
++	RIP_REL_REF(cc_mask) = mask;
++}
++
+ u64 cc_mkenc(u64 val);
+ u64 cc_mkdec(u64 val);
+ #else
+--- a/arch/x86/include/asm/mem_encrypt.h
++++ b/arch/x86/include/asm/mem_encrypt.h
+@@ -15,7 +15,8 @@
+ #include <linux/init.h>
+ #include <linux/cc_platform.h>
+ 
+-#include <asm/bootparam.h>
++#include <asm/asm.h>
++struct boot_params;
+ 
+ #ifdef CONFIG_X86_MEM_ENCRYPT
+ void __init mem_encrypt_init(void);
+@@ -58,6 +59,11 @@ void __init mem_encrypt_free_decrypted_m
+ 
+ void __init sev_es_init_vc_handling(void);
+ 
++static inline u64 sme_get_me_mask(void)
++{
++	return RIP_REL_REF(sme_me_mask);
++}
++
+ #define __bss_decrypted __section(".bss..decrypted")
+ 
+ #else	/* !CONFIG_AMD_MEM_ENCRYPT */
+@@ -89,6 +95,8 @@ early_set_mem_enc_dec_hypercall(unsigned
+ 
+ static inline void mem_encrypt_free_decrypted_mem(void) { }
+ 
++static inline u64 sme_get_me_mask(void) { return 0; }
++
+ #define __bss_decrypted
+ 
+ #endif	/* CONFIG_AMD_MEM_ENCRYPT */
+@@ -106,11 +114,6 @@ void add_encrypt_protection_map(void);
+ 
+ extern char __start_bss_decrypted[], __end_bss_decrypted[], __start_bss_decrypted_unused[];
+ 
+-static inline u64 sme_get_me_mask(void)
+-{
+-	return sme_me_mask;
+-}
 -
--	  If set to Y, then the encryption of system memory can be
--	  deactivated with the mem_encrypt=off command line option.
--
--	  If set to N, then the encryption of system memory can be
--	  activated with the mem_encrypt=on command line option.
--
- # Common NUMA Features
- config NUMA
- 	bool "NUMA Memory Allocation and Scheduler Support"
+ #endif	/* __ASSEMBLY__ */
+ 
+ #endif	/* __X86_MEM_ENCRYPT_H__ */
+--- a/arch/x86/kernel/sev-shared.c
++++ b/arch/x86/kernel/sev-shared.c
+@@ -556,9 +556,9 @@ static int snp_cpuid(struct ghcb *ghcb,
+ 		leaf->eax = leaf->ebx = leaf->ecx = leaf->edx = 0;
+ 
+ 		/* Skip post-processing for out-of-range zero leafs. */
+-		if (!(leaf->fn <= cpuid_std_range_max ||
+-		      (leaf->fn >= 0x40000000 && leaf->fn <= cpuid_hyp_range_max) ||
+-		      (leaf->fn >= 0x80000000 && leaf->fn <= cpuid_ext_range_max)))
++		if (!(leaf->fn <= RIP_REL_REF(cpuid_std_range_max) ||
++		      (leaf->fn >= 0x40000000 && leaf->fn <= RIP_REL_REF(cpuid_hyp_range_max)) ||
++		      (leaf->fn >= 0x80000000 && leaf->fn <= RIP_REL_REF(cpuid_ext_range_max))))
+ 			return 0;
+ 	}
+ 
+@@ -1063,11 +1063,11 @@ static void __init setup_cpuid_table(con
+ 		const struct snp_cpuid_fn *fn = &cpuid_table->fn[i];
+ 
+ 		if (fn->eax_in == 0x0)
+-			cpuid_std_range_max = fn->eax;
++			RIP_REL_REF(cpuid_std_range_max) = fn->eax;
+ 		else if (fn->eax_in == 0x40000000)
+-			cpuid_hyp_range_max = fn->eax;
++			RIP_REL_REF(cpuid_hyp_range_max) = fn->eax;
+ 		else if (fn->eax_in == 0x80000000)
+-			cpuid_ext_range_max = fn->eax;
++			RIP_REL_REF(cpuid_ext_range_max) = fn->eax;
+ 	}
+ }
+ 
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -748,7 +748,7 @@ void __init early_snp_set_memory_private
+ 	 * This eliminates worries about jump tables or checking boot_cpu_data
+ 	 * in the cc_platform_has() function.
+ 	 */
+-	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
++	if (!(RIP_REL_REF(sev_status) & MSR_AMD64_SEV_SNP_ENABLED))
+ 		return;
+ 
+ 	 /*
+@@ -767,7 +767,7 @@ void __init early_snp_set_memory_shared(
+ 	 * This eliminates worries about jump tables or checking boot_cpu_data
+ 	 * in the cc_platform_has() function.
+ 	 */
+-	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
++	if (!(RIP_REL_REF(sev_status) & MSR_AMD64_SEV_SNP_ENABLED))
+ 		return;
+ 
+ 	 /* Ask hypervisor to mark the memory pages shared in the RMP table. */
 --- a/arch/x86/mm/mem_encrypt_identity.c
 +++ b/arch/x86/mm/mem_encrypt_identity.c
-@@ -97,7 +97,6 @@ static char sme_workarea[2 * PMD_SIZE] _
+@@ -304,7 +304,8 @@ void __init sme_encrypt_kernel(struct bo
+ 	 * instrumentation or checking boot_cpu_data in the cc_platform_has()
+ 	 * function.
+ 	 */
+-	if (!sme_get_me_mask() || sev_status & MSR_AMD64_SEV_ENABLED)
++	if (!sme_get_me_mask() ||
++	    RIP_REL_REF(sev_status) & MSR_AMD64_SEV_ENABLED)
+ 		return;
  
- static char sme_cmdline_arg[] __initdata = "mem_encrypt";
- static char sme_cmdline_on[]  __initdata = "on";
--static char sme_cmdline_off[] __initdata = "off";
+ 	/*
+@@ -541,11 +542,11 @@ void __init sme_enable(struct boot_param
+ 	me_mask = 1UL << (ebx & 0x3f);
  
- static void __init sme_clear_pgd(struct sme_populate_pgd_data *ppd)
- {
-@@ -504,7 +503,7 @@ void __init sme_encrypt_kernel(struct bo
+ 	/* Check the SEV MSR whether SEV or SME is enabled */
+-	sev_status   = __rdmsr(MSR_AMD64_SEV);
+-	feature_mask = (sev_status & MSR_AMD64_SEV_ENABLED) ? AMD_SEV_BIT : AMD_SME_BIT;
++	RIP_REL_REF(sev_status) = msr = __rdmsr(MSR_AMD64_SEV);
++	feature_mask = (msr & MSR_AMD64_SEV_ENABLED) ? AMD_SEV_BIT : AMD_SME_BIT;
  
- void __init sme_enable(struct boot_params *bp)
- {
--	const char *cmdline_ptr, *cmdline_arg, *cmdline_on, *cmdline_off;
-+	const char *cmdline_ptr, *cmdline_arg, *cmdline_on;
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned long feature_mask;
- 	unsigned long me_mask;
-@@ -587,12 +586,6 @@ void __init sme_enable(struct boot_param
- 	asm ("lea sme_cmdline_on(%%rip), %0"
- 	     : "=r" (cmdline_on)
- 	     : "p" (sme_cmdline_on));
--	asm ("lea sme_cmdline_off(%%rip), %0"
--	     : "=r" (cmdline_off)
--	     : "p" (sme_cmdline_off));
--
--	if (IS_ENABLED(CONFIG_AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT))
+ 	/* The SEV-SNP CC blob should never be present unless SEV-SNP is enabled. */
+-	if (snp && !(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
++	if (snp && !(msr & MSR_AMD64_SEV_SNP_ENABLED))
+ 		snp_abort();
+ 
+ 	/* Check if memory encryption is enabled */
+@@ -571,7 +572,6 @@ void __init sme_enable(struct boot_param
+ 			return;
+ 	} else {
+ 		/* SEV state cannot be controlled by a command line option */
 -		sme_me_mask = me_mask;
+ 		goto out;
+ 	}
  
+@@ -590,16 +590,13 @@ void __init sme_enable(struct boot_param
  	cmdline_ptr = (const char *)((u64)bp->hdr.cmd_line_ptr |
  				     ((u64)bp->ext_cmd_line_ptr << 32));
-@@ -602,8 +595,6 @@ void __init sme_enable(struct boot_param
  
- 	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
- 		sme_me_mask = me_mask;
--	else if (!strncmp(buffer, cmdline_off, sizeof(buffer)))
--		sme_me_mask = 0;
+-	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0)
+-		goto out;
+-
+-	if (!strncmp(buffer, cmdline_on, sizeof(buffer)))
+-		sme_me_mask = me_mask;
++	if (cmdline_find_option(cmdline_ptr, cmdline_arg, buffer, sizeof(buffer)) < 0 ||
++	    strncmp(buffer, cmdline_on, sizeof(buffer)))
++		return;
  
  out:
- 	if (sme_me_mask) {
+-	if (sme_me_mask) {
+-		physical_mask &= ~sme_me_mask;
+-		cc_vendor = CC_VENDOR_AMD;
+-		cc_set_mask(sme_me_mask);
+-	}
++	RIP_REL_REF(sme_me_mask) = me_mask;
++	physical_mask &= ~me_mask;
++	cc_vendor = CC_VENDOR_AMD;
++	cc_set_mask(me_mask);
+ }
 
 
