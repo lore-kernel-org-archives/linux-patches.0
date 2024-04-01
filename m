@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A5DBA3F;
-	Mon,  1 Apr 2024 16:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A8A2EB0B;
+	Mon,  1 Apr 2024 16:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990628; cv=none; b=Sz/I3auKO4fiR/1qwC3hXXiaow3dDX0dSKYquRVYWUTl2HHAhwePVArBN1rhEqTQxzQlrA/ialQvLXk/L3ifQOrGXxftzPGLzA1dk9c0wiaJAOefk7RNqr1C8cvu39Z3P+8c4jWQUNXIOG1GWzp0boWy6XDn2IidcpfWurlwOUU=
+	t=1711990631; cv=none; b=PPb6grpMmWv82VDdopFyTB9irW7ICF1GxCx3UtKfI9GkvukxwqGm7WLeaTtlF1ouXaZTnDqA82he+9ifp0mhWQ4Ms/SdqicslfDVhF8Ry1T1emYYnEE7GI9XUL+gSEbaQKjuspaocRnyFBzpliW3U6i4wmt+IW2w2rNQML4UlnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990628; c=relaxed/simple;
-	bh=8QorQFZ/K3ZHGKJXGg97Qs011wV3tTJojBXiLTchW8I=;
+	s=arc-20240116; t=1711990631; c=relaxed/simple;
+	bh=AWR5Kp1QmDzMqKlxsqvdAYV776EXloY2MU2mLnP6A5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8nBxxvMZ74r85l7+qbYxYz0XIEXU0n99h90GHn4CNkZiLDNf0C/X34dXAkgL+rijnxwpfext3+eWFFx3yW2ytNb/t7Zl36w94XCgk2DDJhOWh6Wpnqtnf7cspvdJ5FOBTpH1RHbjH72FZNIcKHxUD5JWxdoi8SO6SSVmE+xsZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1YjHyeo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Urrpjqe8jVKcv07MbQp518sgeztoDlSN67OflSjg3cV5+c3UzHPo4zlt5ZyxxkbKu6V+88HF4Yo0DIdftbUxKrHg8EhufXwTNLPVaX7hrMRH8WGu5rTfC/0Otnii1XXgwvqJxBs+SW+aD0a161+VVNlg7Buak2uYOFxAhhMFJa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wn0Vjn9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1YjHyeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A654C433C7;
-	Mon,  1 Apr 2024 16:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wn0Vjn9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9011DC433F1;
+	Mon,  1 Apr 2024 16:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990627;
-	bh=8QorQFZ/K3ZHGKJXGg97Qs011wV3tTJojBXiLTchW8I=;
+	s=korg; t=1711990631;
+	bh=AWR5Kp1QmDzMqKlxsqvdAYV776EXloY2MU2mLnP6A5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1YjHyeoZocgNUl10r4vGLI13dReMPPFM/dg814ZZgvIPNyvRotQgeIV+Fs0wV4Zr
-	 Swa7CqJzZ4ppcjNuYQ565RQgRA0ZNgWk5Lj6r3PwJDOrRJEGLlon53lm9H05GIokfl
-	 yrq1dxZnnNcnul73wQ/3xOkgnYGnt4KmfwGN82tY=
+	b=wn0Vjn9hdforFnvSgfCvKdAJdRzXG3SnUBY8ZC6qLdJlXUgIBI0yIeA1kcVA250Ti
+	 igLqNyopMQSnhwUoLs0VkIxj/4Es/dnTYG/sEcwpcSCDINv9TceQ9nTdVfdjp7jL7Q
+	 lmB+G0RuOC4ltkv3TMWioAZX2tFcUHI/Jl0oFg0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niels De Graef <ndegraef@redhat.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/272] drm/vmwgfx: Fix possible null pointer derefence with invalid contexts
-Date: Mon,  1 Apr 2024 17:43:27 +0200
-Message-ID: <20240401152530.849312011@linuxfoundation.org>
+Subject: [PATCH 6.1 018/272] serial: max310x: fix NULL pointer dereference in I2C instantiation
+Date: Mon,  1 Apr 2024 17:43:28 +0200
+Message-ID: <20240401152530.890393603@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -56,101 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 517621b7060096e48e42f545fa6646fc00252eac ]
+[ Upstream commit 0d27056c24efd3d63a03f3edfbcfc4827086b110 ]
 
-vmw_context_cotable can return either an error or a null pointer and its
-usage sometimes went unchecked. Subsequent code would then try to access
-either a null pointer or an error value.
+When trying to instantiate a max14830 device from userspace:
 
-The invalid dereferences were only possible with malformed userspace
-apps which never properly initialized the rendering contexts.
+    echo max14830 0x60 > /sys/bus/i2c/devices/i2c-2/new_device
 
-Check the results of vmw_context_cotable to fix the invalid derefs.
+we get the following error:
 
-Thanks:
-ziming zhang(@ezrak1e) from Ant Group Light-Year Security Lab
-who was the first person to discover it.
-Niels De Graef who reported it and helped to track down the poc.
+    Unable to handle kernel NULL pointer dereference at virtual address...
+    ...
+    Call trace:
+        max310x_i2c_probe+0x48/0x170 [max310x]
+        i2c_device_probe+0x150/0x2a0
+    ...
 
-Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
-Cc: <stable@vger.kernel.org> # v4.20+
-Reported-by: Niels De Graef  <ndegraef@redhat.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Martin Krastev <martin.krastev@broadcom.com>
-Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Cc: Ian Forbes <ian.forbes@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240110200305.94086-1-zack.rusin@broadcom.com
+Add check for validity of devtype to prevent the error, and abort probe
+with a meaningful error message.
+
+Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240118152213.2644269-2-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/tty/serial/max310x.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index bc7f02e4ecebb..2f7ac91149fc0 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -447,7 +447,7 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
- 	    vmw_res_type(ctx) == vmw_res_dx_context) {
- 		for (i = 0; i < cotable_max; ++i) {
- 			res = vmw_context_cotable(ctx, i);
--			if (IS_ERR(res))
-+			if (IS_ERR_OR_NULL(res))
- 				continue;
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index 444f89eb2d4b7..d409ef3887212 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -1633,13 +1633,16 @@ static unsigned short max310x_i2c_slave_addr(unsigned short addr,
  
- 			ret = vmw_execbuf_res_val_add(sw_context, res,
-@@ -1259,6 +1259,8 @@ static int vmw_cmd_dx_define_query(struct vmw_private *dev_priv,
- 		return -EINVAL;
+ static int max310x_i2c_probe(struct i2c_client *client)
+ {
+-	const struct max310x_devtype *devtype =
+-			device_get_match_data(&client->dev);
++	const struct max310x_devtype *devtype;
+ 	struct i2c_client *port_client;
+ 	struct regmap *regmaps[4];
+ 	unsigned int i;
+ 	u8 port_addr;
  
- 	cotable_res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXQUERY);
-+	if (IS_ERR_OR_NULL(cotable_res))
-+		return cotable_res ? PTR_ERR(cotable_res) : -EINVAL;
- 	ret = vmw_cotable_notify(cotable_res, cmd->body.queryId);
- 
- 	return ret;
-@@ -2477,6 +2479,8 @@ static int vmw_cmd_dx_view_define(struct vmw_private *dev_priv,
- 		return ret;
- 
- 	res = vmw_context_cotable(ctx_node->ctx, vmw_view_cotables[view_type]);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->defined_id);
- 	if (unlikely(ret != 0))
- 		return ret;
-@@ -2562,8 +2566,8 @@ static int vmw_cmd_dx_so_define(struct vmw_private *dev_priv,
- 
- 	so_type = vmw_so_cmd_to_type(header->id);
- 	res = vmw_context_cotable(ctx_node->ctx, vmw_so_cotables[so_type]);
--	if (IS_ERR(res))
--		return PTR_ERR(res);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	cmd = container_of(header, typeof(*cmd), header);
- 	ret = vmw_cotable_notify(res, cmd->defined_id);
- 
-@@ -2682,6 +2686,8 @@ static int vmw_cmd_dx_define_shader(struct vmw_private *dev_priv,
- 		return -EINVAL;
- 
- 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXSHADER);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->body.shaderId);
- 	if (ret)
- 		return ret;
-@@ -3003,6 +3009,8 @@ static int vmw_cmd_dx_define_streamoutput(struct vmw_private *dev_priv,
- 	}
- 
- 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_STREAMOUTPUT);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->body.soid);
- 	if (ret)
- 		return ret;
++	devtype = device_get_match_data(&client->dev);
++	if (!devtype)
++		return dev_err_probe(&client->dev, -ENODEV, "Failed to match device\n");
++
+ 	if (client->addr < devtype->slave_addr.min ||
+ 		client->addr > devtype->slave_addr.max)
+ 		return dev_err_probe(&client->dev, -EINVAL,
 -- 
 2.43.0
 
