@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8415B46551;
-	Mon,  1 Apr 2024 15:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA6846551;
+	Mon,  1 Apr 2024 15:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986993; cv=none; b=YhdvZYbWfvaR14g+/yFKv3ZYH/PC2OnnlpU0VbRcMEm/YpX9gRKMpU8TgnGjHRAGbTby0nPzzo1hoA3SKE0gS953Lk8diOyRiJFAOuSBIbz844fOFffHL8vQl861Yndn5ukYliLUbnTmzdzZzNPomKzWrMhyqKPgHKOUSKUa/34=
+	t=1711986996; cv=none; b=lYM24KwXVgTBjN3G9fd0sGdHFZG7Bnfkvujtz6ygFz3dKigzrCN1J1mZTOdOBhx5Z+PuAhGvDL3uYbtjwM8TbJzZwIgBALnSWck+Vv7vr8jMTzRTqADllPWOY1Y5G5tiFgJZMPlvlEMOiXxxjLW2I214LL9ffh0Y6LgAUJckkqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986993; c=relaxed/simple;
-	bh=Z6lbGVK6yNqqnkIuHAm5W1APvIVSEU8ei0VyTUQxuU8=;
+	s=arc-20240116; t=1711986996; c=relaxed/simple;
+	bh=b1Al778IJ0tRtRJdncbOUYYmqJZG1qMa+yiKvqLFW88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJ8SkPCClygJdNlyubjIOgXJiKu/T4YVdLgex002WdAxF7wkBBwAuzkcGF7M4LiMQrZUIaHbcf5aQIbaW6pdE3cLFa2Zf2La2I2V9cohyA9PyWc+h8TLXvRMn2SnFWxZZ4YsE18PPgJgcQifUCXTMPGVl1OrtBELesTPNNfV3Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUKolLvA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzCCx2kv5xdeLziw0QTVqdV7cP7WJP4FN2fRX3k2JkGtOSddVzg0bYhzxRs/e2WEQs4PLdEHaP0EN8YOPlSaJZQVma3TAnVi4XW+j5s+LAtTcPNZc9WMUG0A3wkXdER64wtGCoaRFxd3G+mx63agKTs3ubnRLdrt/07+W7vCzRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF3mXxNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUKolLvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00990C433C7;
-	Mon,  1 Apr 2024 15:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF3mXxNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1140EC433C7;
+	Mon,  1 Apr 2024 15:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986993;
-	bh=Z6lbGVK6yNqqnkIuHAm5W1APvIVSEU8ei0VyTUQxuU8=;
+	s=korg; t=1711986996;
+	bh=b1Al778IJ0tRtRJdncbOUYYmqJZG1qMa+yiKvqLFW88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUKolLvAT9w1SULR3jrSCzz+gh2QTFEvFDP834Te+zaIOuPARa81bD6aLLBopcsJT
-	 BBTLKpx7iGRuDvKFGjD7A0AKBwm0R+EzADRBIsjzucclwwmohETp2oHMhVX0PGR1/i
-	 BfWnvBuhq/e2NLxGb2XfE3IFpy+TAFeKsGVsrCMY=
+	b=KF3mXxNGgXLZPd+ddfuU3mMP04gT6FDYrByIIeYTgGnu2JDLqKqLPgJCC3e3TAyIO
+	 1HT+gE+22BSWE9l9dW7lMDO9gf6CuoZ7BuSpjnpSj64AiX/SFsS5cU7NCdNbpQ5yoL
+	 ob2hYMQjuiRc+5YG7igQPZvcSnHSyE/SBcdZ9o/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 133/399] io_uring/net: correctly handle multishot recvmsg retry setup
-Date: Mon,  1 Apr 2024 17:41:39 +0200
-Message-ID: <20240401152553.161413162@linuxfoundation.org>
+Subject: [PATCH 6.8 151/399] tpm,tpm_tis: Avoid warning splat at shutdown
+Date: Mon,  1 Apr 2024 17:41:57 +0200
+Message-ID: <20240401152553.695952374@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -50,38 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit deaef31bc1ec7966698a427da8c161930830e1cf ]
+[ Upstream commit b7ab4bbd0188f3985b821fa09456b11105a8dedf ]
 
-If we loop for multishot receive on the initial attempt, and then abort
-later on to wait for more, we miss a case where we should be copying the
-io_async_msghdr from the stack to stable storage. This leads to the next
-retry potentially failing, if the application had the msghdr on the
-stack.
+If interrupts are not activated the work struct 'free_irq_work' is not
+initialized. This results in a warning splat at module shutdown.
 
-Cc: stable@vger.kernel.org
-Fixes: 9bb66906f23e ("io_uring: support multishot in recvmsg")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix this by always initializing the work regardless of whether interrupts
+are activated or not.
+
+cc: stable@vger.kernel.org
+Fixes: 481c2d14627d ("tpm,tpm_tis: Disable interrupts after 1000 unhandled IRQs")
+Reported-by: Jarkko Sakkinen <jarkko@kernel.org>
+Closes: https://lore.kernel.org/all/CX32RFOMJUQ0.3R4YCL9MDCB96@kernel.org/
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/tpm/tpm_tis_core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index 4aaeada03f1e7..386a6745ae32f 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -915,7 +915,8 @@ int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 			kfree(kmsg->free_iov);
- 		io_netmsg_recycle(req, issue_flags);
- 		req->flags &= ~REQ_F_NEED_CLEANUP;
--	}
-+	} else if (ret == -EAGAIN)
-+		return io_setup_async_msg(req, kmsg, issue_flags);
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 1b350412d8a6b..64c875657687d 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -919,8 +919,6 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	int rc;
+ 	u32 int_status;
  
- 	return ret;
- }
+-	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
+-
+ 	rc = devm_request_threaded_irq(chip->dev.parent, irq, NULL,
+ 				       tis_int_handler, IRQF_ONESHOT | flags,
+ 				       dev_name(&chip->dev), chip);
+@@ -1132,6 +1130,7 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 	priv->phy_ops = phy_ops;
+ 	priv->locality_count = 0;
+ 	mutex_init(&priv->locality_count_mutex);
++	INIT_WORK(&priv->free_irq_work, tpm_tis_free_irq_func);
+ 
+ 	dev_set_drvdata(&chip->dev, priv);
+ 
 -- 
 2.43.0
 
