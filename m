@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7BD1C0DE7;
-	Mon,  1 Apr 2024 16:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A871C0DE7;
+	Mon,  1 Apr 2024 16:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989158; cv=none; b=JxZIB8eYm2tDc+A2HUNtcS0f5idlHs1cSZxadMfarcAyroPBjeTuavwPgXNjUajxFQLEk9HfjXKfm2HyaurlufMGiqB69Mfnn6suEleOrM4uNybGO/qKtwPdKLAqgFwR9XRuB5IYX6bkvjp78dqwhNQcIRZQugeI50my21cHRl0=
+	t=1711989162; cv=none; b=VbIf94MVmdV+NqZUDbFpwUnWXxA9bNdvrDLK2gAjpcqsAqvjNS7mDI2//wxlDU92bolhLICsgjZqJ6qTAWlGN7zRXlmVM7gDwvnxEsQ1aXuYqPYkpM3y2trHS9N0mUBghaOOmsAYrd07HAyXeeAuOGomfuUs4fCbJT4qRaRugO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989158; c=relaxed/simple;
-	bh=gvkVaundUxO7kvqINgp43annPjcaUIOz4tKulh7amGg=;
+	s=arc-20240116; t=1711989162; c=relaxed/simple;
+	bh=Y5IWac73Ru1akYpVu+Ls7wIx7GVHilQFWgY43zcSOKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CS6FJtLR7b40qbPQZK68PXdshKXE7Zr+Vb24tYxuKlZHgFFcmsHWFeGV3oxK6bq4bXb8c+SOCq76i2y10bUSM31ORR5KaY8FtfV/S64ZDG1wKGKqQP9/0HGBorwjJa1Is+/hI3xf+hInGmif+0yYsKlT7vLBYJ10LL1onpAqDUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CosMqmdT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrfcIDEZqYHvfULDgD9KRxYhtnTcfoB8gIePc7RiOXW4DOwUn+DvUGsEEfM0yXUqxxbFnwMO1I6MBEdbyo8/IjNWlDV8WVKHSsdzVRCTxHGqQNJWVPX8rTXmWPqLxP01d5SmivFA+mqxQBJFcokxwSlO/F5ufNqeTQkdaFKe18I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVdhLc/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CosMqmdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE7CC433C7;
-	Mon,  1 Apr 2024 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVdhLc/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58447C433C7;
+	Mon,  1 Apr 2024 16:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989158;
-	bh=gvkVaundUxO7kvqINgp43annPjcaUIOz4tKulh7amGg=;
+	s=korg; t=1711989161;
+	bh=Y5IWac73Ru1akYpVu+Ls7wIx7GVHilQFWgY43zcSOKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CosMqmdTXV/fazuS2UEQOr6BpIxJpl+xDiEX+TBmAy9cxB/Cbq9PgBlh1MzpRMp+q
-	 yOhGsNk4F2isAJi7i++z3vFzLtJxytwLiAkXTKFt5rhsS6LYe0uuIygGWlZyQhVvCz
-	 DJNFIphPRIOU9+epsLN5+Lf6H9SepVWuM5nfS4v4=
+	b=WVdhLc/yZxqACzDjQ9faMMKSErex0KXrimemcYHoXPI2AYVVa/tx8LdaGUUrlXljc
+	 Dah8Bd4ndKdN/+klaRmyqmB3+FnRyaRcqB73+fKmJI9owSVKeStGhV0t/leREIbWaN
+	 Z6dNxN/nm4RokdEwQ8RGJQX3e/uzq4yKZDIeTYl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 6.7 399/432] usb: dwc2: host: Fix remote wakeup from hibernation
-Date: Mon,  1 Apr 2024 17:46:26 +0200
-Message-ID: <20240401152605.264305523@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yongzhi Liu <hyperlyzcs@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.7 382/432] usb: misc: ljca: Fix double free in error handling path
+Date: Mon,  1 Apr 2024 17:46:09 +0200
+Message-ID: <20240401152604.692690072@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -49,66 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+From: Yongzhi Liu <hyperlyzcs@gmail.com>
 
-commit bae2bc73a59c200db53b6c15fb26bb758e2c6108 upstream.
+commit 7c9631969287a5366bc8e39cd5abff154b35fb80 upstream.
 
-Starting from core v4.30a changed order of programming
-GPWRDN_PMUACTV to 0 in case of exit from hibernation on
-remote wakeup signaling from device.
+When auxiliary_device_add() returns error and then calls
+auxiliary_device_uninit(), callback function ljca_auxdev_release
+calls kfree(auxdev->dev.platform_data) to free the parameter data
+of the function ljca_new_client_device. The callers of
+ljca_new_client_device shouldn't call kfree() again
+in the error handling path to free the platform data.
 
-Fixes: c5c403dc4336 ("usb: dwc2: Add host/device hibernation functions")
-CC: stable@vger.kernel.org
-Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/99385ec55ce73445b6fbd0f471c9bd40eb1c9b9e.1708939799.git.Minas.Harutyunyan@synopsys.com
+Fix this by cleaning up the redundant kfree() in all callers and
+adding kfree() the passed in platform_data on errors which happen
+before auxiliary_device_init() succeeds .
+
+Fixes: acd6199f195d ("usb: Add support for Intel LJCA device")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Yongzhi Liu <hyperlyzcs@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240311125748.28198-1-hyperlyzcs@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/core.h |    1 +
- drivers/usb/dwc2/hcd.c  |   17 +++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/usb/misc/usb-ljca.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/dwc2/core.h
-+++ b/drivers/usb/dwc2/core.h
-@@ -1086,6 +1086,7 @@ struct dwc2_hsotg {
- 	bool needs_byte_swap;
+diff --git a/drivers/usb/misc/usb-ljca.c b/drivers/usb/misc/usb-ljca.c
+index 35770e608c64..2d30fc1be306 100644
+--- a/drivers/usb/misc/usb-ljca.c
++++ b/drivers/usb/misc/usb-ljca.c
+@@ -518,8 +518,10 @@ static int ljca_new_client_device(struct ljca_adapter *adap, u8 type, u8 id,
+ 	int ret;
  
- 	/* DWC OTG HW Release versions */
-+#define DWC2_CORE_REV_4_30a	0x4f54430a
- #define DWC2_CORE_REV_2_71a	0x4f54271a
- #define DWC2_CORE_REV_2_72a     0x4f54272a
- #define DWC2_CORE_REV_2_80a	0x4f54280a
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -5610,10 +5610,12 @@ int dwc2_host_exit_hibernation(struct dw
- 	dwc2_writel(hsotg, hr->hcfg, HCFG);
- 
- 	/* De-assert Wakeup Logic */
--	gpwrdn = dwc2_readl(hsotg, GPWRDN);
--	gpwrdn &= ~GPWRDN_PMUACTV;
--	dwc2_writel(hsotg, gpwrdn, GPWRDN);
--	udelay(10);
-+	if (!(rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
-+		gpwrdn = dwc2_readl(hsotg, GPWRDN);
-+		gpwrdn &= ~GPWRDN_PMUACTV;
-+		dwc2_writel(hsotg, gpwrdn, GPWRDN);
-+		udelay(10);
+ 	client = kzalloc(sizeof *client, GFP_KERNEL);
+-	if (!client)
++	if (!client) {
++		kfree(data);
+ 		return -ENOMEM;
 +	}
  
- 	hprt0 = hr->hprt0;
- 	hprt0 |= HPRT0_PWR;
-@@ -5638,6 +5640,13 @@ int dwc2_host_exit_hibernation(struct dw
- 		hprt0 |= HPRT0_RES;
- 		dwc2_writel(hsotg, hprt0, HPRT0);
+ 	client->type = type;
+ 	client->id = id;
+@@ -535,8 +537,10 @@ static int ljca_new_client_device(struct ljca_adapter *adap, u8 type, u8 id,
+ 	auxdev->dev.release = ljca_auxdev_release;
  
-+		/* De-assert Wakeup Logic */
-+		if ((rem_wakeup && hsotg->hw_params.snpsid >= DWC2_CORE_REV_4_30a)) {
-+			gpwrdn = dwc2_readl(hsotg, GPWRDN);
-+			gpwrdn &= ~GPWRDN_PMUACTV;
-+			dwc2_writel(hsotg, gpwrdn, GPWRDN);
-+			udelay(10);
-+		}
- 		/* Wait for Resume time and then program HPRT again */
- 		mdelay(100);
- 		hprt0 &= ~HPRT0_RES;
+ 	ret = auxiliary_device_init(auxdev);
+-	if (ret)
++	if (ret) {
++		kfree(data);
+ 		goto err_free;
++	}
+ 
+ 	ljca_auxdev_acpi_bind(adap, auxdev, adr, id);
+ 
+@@ -590,12 +594,8 @@ static int ljca_enumerate_gpio(struct ljca_adapter *adap)
+ 		valid_pin[i] = get_unaligned_le32(&desc->bank_desc[i].valid_pins);
+ 	bitmap_from_arr32(gpio_info->valid_pin_map, valid_pin, gpio_num);
+ 
+-	ret = ljca_new_client_device(adap, LJCA_CLIENT_GPIO, 0, "ljca-gpio",
++	return ljca_new_client_device(adap, LJCA_CLIENT_GPIO, 0, "ljca-gpio",
+ 				     gpio_info, LJCA_GPIO_ACPI_ADR);
+-	if (ret)
+-		kfree(gpio_info);
+-
+-	return ret;
+ }
+ 
+ static int ljca_enumerate_i2c(struct ljca_adapter *adap)
+@@ -629,10 +629,8 @@ static int ljca_enumerate_i2c(struct ljca_adapter *adap)
+ 		ret = ljca_new_client_device(adap, LJCA_CLIENT_I2C, i,
+ 					     "ljca-i2c", i2c_info,
+ 					     LJCA_I2C1_ACPI_ADR + i);
+-		if (ret) {
+-			kfree(i2c_info);
++		if (ret)
+ 			return ret;
+-		}
+ 	}
+ 
+ 	return 0;
+@@ -669,10 +667,8 @@ static int ljca_enumerate_spi(struct ljca_adapter *adap)
+ 		ret = ljca_new_client_device(adap, LJCA_CLIENT_SPI, i,
+ 					     "ljca-spi", spi_info,
+ 					     LJCA_SPI1_ACPI_ADR + i);
+-		if (ret) {
+-			kfree(spi_info);
++		if (ret)
+ 			return ret;
+-		}
+ 	}
+ 
+ 	return 0;
+-- 
+2.44.0
+
 
 
