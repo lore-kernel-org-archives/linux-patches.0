@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52141C0DE7;
-	Mon,  1 Apr 2024 16:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451338F5C;
+	Mon,  1 Apr 2024 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990001; cv=none; b=J1UdyacAJdA1DAFrKrnjez1/R9FMWPwUZZ6vk93wgk/sm8kqyWD0h819JEA6n2N1sHPXzledsWwAIUffQsnIkBhuO484zGtEk4/elUS9fnlFL9Sq7RjHo9/h8DYEBowWJi38ISnPcRHh3NFifizJH9RoPsThGwwtshHpX869qgs=
+	t=1711990004; cv=none; b=LkoCiQEDsZBVCB19S4/sPAOuYYGrTd8bQ+tNTMOLK9LcM+C3utn7Zl0BhpMxdTt6xdgmTGk0aF9Zi+FFbJ/lMC/FZ7CQRrpHld1KgKAqejwjQ3ppesKong/j17r32dnBQkL83DYOakdbG6SQDRZHadfoXPdtuLaUAPP/SjE8V0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990001; c=relaxed/simple;
-	bh=Scozw4gdAvSn5fh4kAsB9LsG7FUCELy4U459+GQbKis=;
+	s=arc-20240116; t=1711990004; c=relaxed/simple;
+	bh=bIzdrpNYkf5xtLCFdEdySceg04t/x8qOgj/MGt8dH34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=morf15tyW3k7uXS/5XuC9dqE6r4VD6K7F7+T00BNmZ0G81YTS1j47yVDYWgXYY41PmVBvZKoO4QOV2oNe++n2HnybTw4owquy9b7zPahsiEKvJo2bDfEkviI73sQQsSO456Kmp/efwtQCy1b8y+DAT+M1Tpp+XvtlI9V1fGIJ6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzE3DfJm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwwPsxE3Z8V5rOHRDxAj2/CO046omCmhn8Rht6Y6Pm+90l8NTRzRLPSgulmMcsFXez1UFVvepBR7ajvc9DYQhx/Yz3KWeyvyUWoVKNHOHewFVsEWB0H+G+ji7cvwKxBXayQJy/WJqguXnU79sEsxNy59ca34c06r254W5NMoy9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F63SBR9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzE3DfJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A95C433F1;
-	Mon,  1 Apr 2024 16:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F63SBR9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD96C433F1;
+	Mon,  1 Apr 2024 16:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990000;
-	bh=Scozw4gdAvSn5fh4kAsB9LsG7FUCELy4U459+GQbKis=;
+	s=korg; t=1711990003;
+	bh=bIzdrpNYkf5xtLCFdEdySceg04t/x8qOgj/MGt8dH34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzE3DfJm3B1rhfAXc7GtmATgEA+CcXIpgI4htxdRSHc46K2sDC9lMpyDzDJ6jI70T
-	 TDivaFiWp4Z1FDTuWChETx++Oo3ayECMsGqMrygZ8DunZU/3jzAGZLs8SOnxADpWri
-	 ZQ9W0R8LtznqJHd2qQN0ApnLwuVHFVXHHus0+ReU=
+	b=F63SBR9iySFXni45usQ8sMsEWAAMC02ovTB/6Yts3/bgbftryPjXJ9l5DorKoL04A
+	 /hqgAhd8II1ZtujM3zEfNcsVj1T1UZl40XWqCZKlIvmn//ejdHJRdgyEL8L8p4wxGI
+	 61cGEr2A4PfJl9NHBUs1nIkI4SQj+K/1ZQTnvGsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/396] wireguard: selftests: set RISCV_ISA_FALLBACK on riscv{32,64}
-Date: Mon,  1 Apr 2024 17:43:47 +0200
-Message-ID: <20240401152553.250570955@linuxfoundation.org>
+	Chris Toledanes <chris.toledanes@hp.com>,
+	Carl Ng <carl.ng@hp.com>,
+	Max Nguyen <maxwell.nguyen@hp.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 210/396] Input: xpad - add additional HyperX Controller Identifiers
+Date: Mon,  1 Apr 2024 17:44:19 +0200
+Message-ID: <20240401152554.189429695@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,51 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Max Nguyen <maxwell.nguyen@hp.com>
 
-[ Upstream commit e995f5dd9a9cef818af32ec60fc38d68614afd12 ]
+commit dd50f771af20fb02b1aecde04fbd085c872a9139 upstream.
 
-This option is needed to continue booting with QEMU. Recent changes that
-made this optional meant that it gets unset in the test harness, and so
-WireGuard CI has been broken. Fix this by simply setting this option.
+Add additional HyperX device identifiers to xpad_device and xpad_table.
 
+Suggested-by: Chris Toledanes<chris.toledanes@hp.com>
+Reviewed-by: Carl Ng <carl.ng@hp.com>
+Signed-off-by: Max Nguyen <maxwell.nguyen@hp.com>
 Cc: stable@vger.kernel.org
-Fixes: 496ea826d1e1 ("RISC-V: provide Kconfig & commandline options to control parsing "riscv,isa"")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/44ad5ffa-76d8-4046-94ee-2ef171930ed2@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/wireguard/qemu/arch/riscv32.config | 1 +
- tools/testing/selftests/wireguard/qemu/arch/riscv64.config | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/input/joystick/xpad.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-index 2fc36efb166dc..a7f8e8a956259 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-@@ -3,6 +3,7 @@ CONFIG_ARCH_RV32I=y
- CONFIG_MMU=y
- CONFIG_FPU=y
- CONFIG_SOC_VIRT=y
-+CONFIG_RISCV_ISA_FALLBACK=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
- CONFIG_SERIAL_OF_PLATFORM=y
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-index dc266f3b19155..daeb3e5e09658 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-@@ -2,6 +2,7 @@ CONFIG_ARCH_RV64I=y
- CONFIG_MMU=y
- CONFIG_FPU=y
- CONFIG_SOC_VIRT=y
-+CONFIG_RISCV_ISA_FALLBACK=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
- CONFIG_SERIAL_OF_PLATFORM=y
--- 
-2.43.0
-
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -130,7 +130,12 @@ static const struct xpad_device {
+ 	{ 0x0079, 0x18d4, "GPD Win 2 X-Box Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff01, "Wooting One (Legacy)", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff02, "Wooting Two (Legacy)", 0, XTYPE_XBOX360 },
++	{ 0x03f0, 0x038D, "HyperX Clutch", 0, XTYPE_XBOX360 },			/* wired */
++	{ 0x03f0, 0x048D, "HyperX Clutch", 0, XTYPE_XBOX360 },			/* wireless */
+ 	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
++	{ 0x03f0, 0x07A0, "HyperX Clutch Gladiate RGB", 0, XTYPE_XBOXONE },
++	{ 0x03f0, 0x08B6, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },		/* v2 */
++	{ 0x03f0, 0x09B4, "HyperX Clutch Tanto", 0, XTYPE_XBOXONE },
+ 	{ 0x044f, 0x0f00, "Thrustmaster Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f03, "Thrustmaster Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
+@@ -463,6 +468,7 @@ static const struct usb_device_id xpad_t
+ 	{ USB_INTERFACE_INFO('X', 'B', 0) },	/* Xbox USB-IF not-approved class */
+ 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 controller */
+ 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
++	XPAD_XBOX360_VENDOR(0x03f0),		/* HP HyperX Xbox 360 controllers */
+ 	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One controllers */
+ 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft Xbox 360 controllers */
 
 
