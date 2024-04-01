@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A755163E;
-	Mon,  1 Apr 2024 16:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6434654F;
+	Mon,  1 Apr 2024 16:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989726; cv=none; b=N8QpY4j5MZFbkghO0GxfOouD7LHkBET8rn3mMQzxdoNeII3L423aQmsYmiQ/kiFLWY7bt7wnIO6dnTQ0v8DCQa6ndozunfWWqf5clEdZWyK3UNG28Ou9flwk1VJaDnXEwoozI+bUuxaCySnaDZ+ZI3KeImbvvZ5gJ6HiK4SrZ1o=
+	t=1711989730; cv=none; b=jhP805nc69Yb4VroVxrPJR0Le45+yR56Eu99qKwJKgHSYEWAwVfrtBwXpwziEYm1LaOvmsGHR0sXSvKDsvHXMQcRYaxuOHQQ3qD1vVlUHZ6OdpGY/1uk8HKn49iDpz5Kk1NZ22BxBt7px7V/sg6Un8LgJm7g0cm6NVpBaduYbkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989726; c=relaxed/simple;
-	bh=Svbv/JCjgzU+2qvJyMLiYOoZ2yfB/XB8+7QCp4IH99M=;
+	s=arc-20240116; t=1711989730; c=relaxed/simple;
+	bh=79nKVjqieIpUIclvKGLwyT/z1xpqajHgk7TEB6OSxrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2H5n0/R7lWTjDTJw3zmXZnB1ukVwlFXXVlBdbOvUcDye7cTbOJFpzF7yp+RVeK7VtwIdnk5O63b2FFba1fSVBiv71KIl+KJpuPq8Wi9uH4WFqqiw6pNIpjAaJ9HprMZN8TVYPRy9jxZJfongK6YxsiQSXhvHLY9b/vLHhe1Iuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6D+dzaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqZSactPbm3sAiderGd4ISfA0dakJcJIKQCxzN4m4iQ9/EBhoNrVmvfjGDQg4R88OhLbmaRwIcnIAtNMGxsDPzcFvBZkWBJEqo//s3aRqeV7V5hUaV97cPgUOmw4CKrJjq56Bj8VsnD06BmbEtkLIvsJqhuJcRYK9/aUuTbMBwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4pVahBG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6D+dzaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E61BC433C7;
-	Mon,  1 Apr 2024 16:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4pVahBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D539C433C7;
+	Mon,  1 Apr 2024 16:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989726;
-	bh=Svbv/JCjgzU+2qvJyMLiYOoZ2yfB/XB8+7QCp4IH99M=;
+	s=korg; t=1711989729;
+	bh=79nKVjqieIpUIclvKGLwyT/z1xpqajHgk7TEB6OSxrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6D+dzaM2d30IrK08FpNX0L9/uiEFoUTZRN7pCqTfyps/nt8qCbSCtJhoeZiYv+JC
-	 OwXkSb1tu2IxymJ6Yf/tAxtCB1hkyTdtJftZhSC7St9a2ERCPE9HcLxsh3ohnMhJ2v
-	 qAgzmRMHJBdTv2pN4k8EtLPTJ1UUX60QtKzmtC0k=
+	b=K4pVahBGD7Q45esFpS4VZI0dZI8x4Cq7cEylkgkhCoaflI1p0iTIGweADW9ZFCy2N
+	 J49bdrVPqgxdh5Tw3wheMbCIIT7n5/nkqH3P5doPyIgMU4w7Re57uNgLE/sgxTdsD3
+	 spGIGRivBqN+JzTfAjm/4euEZyyMiYkkQl7bqCqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Jeffery <djeffery@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dave Wysochanski <dwysocha@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/396] io_uring: clean rings on NO_MMAP alloc fail
-Date: Mon,  1 Apr 2024 17:43:04 +0200
-Message-ID: <20240401152551.940979532@linuxfoundation.org>
+Subject: [PATCH 6.6 118/396] NFS: Read unlock folio on nfs_page_create_from_folio() error
+Date: Mon,  1 Apr 2024 17:42:47 +0200
+Message-ID: <20240401152551.436202821@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,47 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit cef59d1ea7170ec753182302645a0191c8aa3382 ]
+[ Upstream commit 11974eec839c167362af685aae5f5e1baaf979eb ]
 
-We make a few cancellation judgements based on ctx->rings, so let's
-zero it afer deallocation for IORING_SETUP_NO_MMAP just like it's
-done with the mmap case. Likely, it's not a real problem, but zeroing
-is safer and better tested.
+The netfs conversion lost a folio_unlock() for the case where
+nfs_page_create_from_folio() returns an error (usually -ENOMEM).  Restore
+it.
 
-Cc: stable@vger.kernel.org
-Fixes: 03d89a2de25bbc ("io_uring: support for user allocated memory for rings/sqes")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/9ff6cdf91429b8a51699c210e1f6af6ea3f8bdcf.1710255382.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: David Jeffery <djeffery@redhat.com>
+Cc: <stable@vger.kernel.org> # 6.4+
+Fixes: 000dbe0bec05 ("NFS: Convert buffered read paths to use netfs when fscache is enabled")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Acked-by: Dave Wysochanski <dwysocha@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfs/read.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index aabb367b24bc0..aed10bae50acb 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2750,14 +2750,15 @@ static void io_rings_free(struct io_ring_ctx *ctx)
- 	if (!(ctx->flags & IORING_SETUP_NO_MMAP)) {
- 		io_mem_free(ctx->rings);
- 		io_mem_free(ctx->sq_sqes);
--		ctx->rings = NULL;
--		ctx->sq_sqes = NULL;
- 	} else {
- 		io_pages_free(&ctx->ring_pages, ctx->n_ring_pages);
- 		ctx->n_ring_pages = 0;
- 		io_pages_free(&ctx->sqe_pages, ctx->n_sqe_pages);
- 		ctx->n_sqe_pages = 0;
+diff --git a/fs/nfs/read.c b/fs/nfs/read.c
+index 7dc21a48e3e7b..a142287d86f68 100644
+--- a/fs/nfs/read.c
++++ b/fs/nfs/read.c
+@@ -305,6 +305,8 @@ int nfs_read_add_folio(struct nfs_pageio_descriptor *pgio,
+ 	new = nfs_page_create_from_folio(ctx, folio, 0, aligned_len);
+ 	if (IS_ERR(new)) {
+ 		error = PTR_ERR(new);
++		if (nfs_netfs_folio_unlock(folio))
++			folio_unlock(folio);
+ 		goto out;
  	}
-+
-+	ctx->rings = NULL;
-+	ctx->sq_sqes = NULL;
- }
  
- void *io_mem_alloc(size_t size)
 -- 
 2.43.0
 
