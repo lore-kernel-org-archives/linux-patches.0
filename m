@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4A7C129;
-	Mon,  1 Apr 2024 16:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA1DC129;
+	Mon,  1 Apr 2024 16:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988621; cv=none; b=bIhgQPIaQsuzi9fxueM4iRnv3p5bsQ3+Y42Ujo5qXhnR8iHiAdmBrg+skiakyrneCoWm4LfM8JKDYBBWmj6KBIpyjRbG3JSljZ6PCLDjnKzL5442xNwtyMrB/dmTcJE+s7w/8AHaMyeb76AAIT3JtWDIndz6qPQ7xvf4ZuTw6Pw=
+	t=1711988624; cv=none; b=FiLF6IfBMdPDAel/EAOUlSI1jl9Pvi4M2mB2RPf8wQtOfBfR+AtaH146ZH4zkTajaJejbF+ZWCG+Cq62kfTxBOrgwWcy6mB721jTl0tiAEN3elKytA3lVraUYyMw1BKX6norJPw6VrsOie8/Z3FcXoYqQLp0Ncy1av7sFcYXyGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988621; c=relaxed/simple;
-	bh=QiWjT8XiyoM+onmgaGnGI7YLoD3jh09QPBF1h7jl8sY=;
+	s=arc-20240116; t=1711988624; c=relaxed/simple;
+	bh=QBqNoRl9kLZQqYekQFtJwHs4KAEClON7u0t/rD4DRIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwtDeAddpbljPwhRjkjASz0l1nTWrmZwgiIKrqWjeRUTrHMgB200wYmSb2NBTOILMZu5b/Mpe2i3fUuq/2sC6ZiW0XLSb4z/Bipv2Hz2FVvNZr+ucVfn/HbKNPDHh3np/9iK4/ZHck2ric88tp/v4ZKa+OwotZqQtd2Li5G9o+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKrMoqj2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CB1omzfMpEqqlV+Q0mmreSR5PNVNeQSg1Tz+HuRJsjrfJ9bxqHjpEjkXezwbDArCJK/yyaaM3cqNpHtgPya6XdA+8BcE39+hdYFCLZeaavrVXUD1EFV4LkxdQWs/iE8oNCdxq1q5sWlnrI66V3SSWf6DqYuHWjUDT5Cc6u7Jck0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFye6jo3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKrMoqj2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF24CC433C7;
-	Mon,  1 Apr 2024 16:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFye6jo3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA63C433C7;
+	Mon,  1 Apr 2024 16:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988621;
-	bh=QiWjT8XiyoM+onmgaGnGI7YLoD3jh09QPBF1h7jl8sY=;
+	s=korg; t=1711988624;
+	bh=QBqNoRl9kLZQqYekQFtJwHs4KAEClON7u0t/rD4DRIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKrMoqj2/+mG0aZRlzSsvLdMPrGtvi3wc/YkjbpBBmKEegCrOGHm0ZeIBB+EiCt2Y
-	 rpC3131O3YTVHMFYHgCmpy6rSaDmz5P2wX+1kCgjcvemHlJvypL+VTpkRUHr3wasvP
-	 igsWirmvBriqtg0oYfWN9qpE0lHsWfiR/PMe+fJc=
+	b=YFye6jo3c271Z37q36djqlVRbHGYNXcIZ0VVRJE+oVQD7mhAmVkar3n9sxWXIQRWJ
+	 dE4iQkb2NuLQJz4jwAvI5slBz2Lwa1IrmUhTfgV6j+30e8Y/9wGYhKcpMPmZE3l9xd
+	 MzJgViEIjQd21oJigT60mbolCAFWZ29J0CCbW4hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.7 240/432] crypto: rk3288 - Fix use after free in unprepare
-Date: Mon,  1 Apr 2024 17:43:47 +0200
-Message-ID: <20240401152600.296074022@linuxfoundation.org>
+Subject: [PATCH 6.7 241/432] crypto: sun8i-ce - Fix use after free in unprepare
+Date: Mon,  1 Apr 2024 17:43:48 +0200
+Message-ID: <20240401152600.325143277@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,38 +50,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
 
-commit c0afb6b88fbbc177fa322a835f874be217bffe45 upstream.
+commit 183420038444547c149a0fc5f58e792c2752860c upstream.
 
-The unprepare call must be carried out before the finalize call
-as the latter can free the request.
+sun8i_ce_cipher_unprepare should be called before
+crypto_finalize_skcipher_request, because client callbacks may
+immediately free memory, that isn't needed anymore. But it will be
+used by unprepare after free. Before removing prepare/unprepare
+callbacks it was handled by crypto engine in crypto_finalize_request.
 
-Fixes: c66c17a0f69b ("crypto: rk3288 - Remove prepare/unprepare request")
-Reported-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Usually that results in a pointer dereference problem during a in
+crypto selftest.
+ Unable to handle kernel NULL pointer dereference at
+                                      virtual address 0000000000000030
+ Mem abort info:
+   ESR = 0x0000000096000004
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x04: level 0 translation fault
+ Data abort info:
+   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+ user pgtable: 4k pages, 48-bit VAs, pgdp=000000004716d000
+ [0000000000000030] pgd=0000000000000000, p4d=0000000000000000
+ Internal error: Oops: 0000000096000004 [#1] SMP
+
+This problem is detected by KASAN as well.
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in sun8i_ce_cipher_do_one+0x6e8/0xf80 [sun8i_ce]
+ Read of size 8 at addr ffff00000dcdc040 by task 1c15000.crypto-/373
+
+ Hardware name: Pine64 PinePhone (1.2) (DT)
+ Call trace:
+  dump_backtrace+0x9c/0x128
+  show_stack+0x20/0x38
+  dump_stack_lvl+0x48/0x60
+  print_report+0xf8/0x5d8
+  kasan_report+0x90/0xd0
+  __asan_load8+0x9c/0xc0
+  sun8i_ce_cipher_do_one+0x6e8/0xf80 [sun8i_ce]
+  crypto_pump_work+0x354/0x620 [crypto_engine]
+  kthread_worker_fn+0x244/0x498
+  kthread+0x168/0x178
+  ret_from_fork+0x10/0x20
+
+ Allocated by task 379:
+  kasan_save_stack+0x3c/0x68
+  kasan_set_track+0x2c/0x40
+  kasan_save_alloc_info+0x24/0x38
+  __kasan_kmalloc+0xd4/0xd8
+  __kmalloc+0x74/0x1d0
+  alg_test_skcipher+0x90/0x1f0
+  alg_test+0x24c/0x830
+  cryptomgr_test+0x38/0x60
+  kthread+0x168/0x178
+  ret_from_fork+0x10/0x20
+
+ Freed by task 379:
+  kasan_save_stack+0x3c/0x68
+  kasan_set_track+0x2c/0x40
+  kasan_save_free_info+0x38/0x60
+  __kasan_slab_free+0x100/0x170
+  slab_free_freelist_hook+0xd4/0x1e8
+  __kmem_cache_free+0x15c/0x290
+  kfree+0x74/0x100
+  kfree_sensitive+0x80/0xb0
+  alg_test_skcipher+0x12c/0x1f0
+  alg_test+0x24c/0x830
+  cryptomgr_test+0x38/0x60
+  kthread+0x168/0x178
+  ret_from_fork+0x10/0x20
+
+ The buggy address belongs to the object at ffff00000dcdc000
+  which belongs to the cache kmalloc-256 of size 256
+ The buggy address is located 64 bytes inside of
+  freed 256-byte region [ffff00000dcdc000, ffff00000dcdc100)
+
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Fixes: 4136212ab18e ("crypto: sun8i-ce - Remove prepare/unprepare request")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto_ahash.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c |   34 ++++++++++----------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-@@ -332,12 +332,12 @@ static int rk_hash_run(struct crypto_eng
- theend:
- 	pm_runtime_put_autosuspend(rkc->dev);
+--- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+@@ -299,22 +299,6 @@ theend:
+ 	return err;
+ }
  
-+	rk_hash_unprepare(engine, breq);
-+
- 	local_bh_disable();
- 	crypto_finalize_hash_request(engine, breq, err);
- 	local_bh_enable();
- 
--	rk_hash_unprepare(engine, breq);
+-static void sun8i_ce_cipher_run(struct crypto_engine *engine, void *areq)
+-{
+-	struct skcipher_request *breq = container_of(areq, struct skcipher_request, base);
+-	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(breq);
+-	struct sun8i_cipher_tfm_ctx *op = crypto_skcipher_ctx(tfm);
+-	struct sun8i_ce_dev *ce = op->ce;
+-	struct sun8i_cipher_req_ctx *rctx = skcipher_request_ctx(breq);
+-	int flow, err;
 -
+-	flow = rctx->flow;
+-	err = sun8i_ce_run_task(ce, flow, crypto_tfm_alg_name(breq->base.tfm));
+-	local_bh_disable();
+-	crypto_finalize_skcipher_request(engine, breq, err);
+-	local_bh_enable();
+-}
+-
+ static void sun8i_ce_cipher_unprepare(struct crypto_engine *engine,
+ 				      void *async_req)
+ {
+@@ -360,6 +344,23 @@ static void sun8i_ce_cipher_unprepare(st
+ 	dma_unmap_single(ce->dev, rctx->addr_key, op->keylen, DMA_TO_DEVICE);
+ }
+ 
++static void sun8i_ce_cipher_run(struct crypto_engine *engine, void *areq)
++{
++	struct skcipher_request *breq = container_of(areq, struct skcipher_request, base);
++	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(breq);
++	struct sun8i_cipher_tfm_ctx *op = crypto_skcipher_ctx(tfm);
++	struct sun8i_ce_dev *ce = op->ce;
++	struct sun8i_cipher_req_ctx *rctx = skcipher_request_ctx(breq);
++	int flow, err;
++
++	flow = rctx->flow;
++	err = sun8i_ce_run_task(ce, flow, crypto_tfm_alg_name(breq->base.tfm));
++	sun8i_ce_cipher_unprepare(engine, areq);
++	local_bh_disable();
++	crypto_finalize_skcipher_request(engine, breq, err);
++	local_bh_enable();
++}
++
+ int sun8i_ce_cipher_do_one(struct crypto_engine *engine, void *areq)
+ {
+ 	int err = sun8i_ce_cipher_prepare(engine, areq);
+@@ -368,7 +369,6 @@ int sun8i_ce_cipher_do_one(struct crypto
+ 		return err;
+ 
+ 	sun8i_ce_cipher_run(engine, areq);
+-	sun8i_ce_cipher_unprepare(engine, areq);
  	return 0;
  }
  
