@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50FC47A6B;
-	Mon,  1 Apr 2024 16:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADFA1E86C;
+	Mon,  1 Apr 2024 16:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990756; cv=none; b=Ota9hWHDcG10HUBqdz6dYOkn3pEcyrXFNCQ+7raa8Lcsse0Y8tFDAwFVIxRPlbr6vGTMX9T9j7a53t0Qkby9UofHYa9ZjxmDgVtNMD1W0agGBZEmhyzOOE7MDQF5nt8bWo2uO+qKDA11gyVNHPoAUq3PMvWuUXg7jf7/quf9SnY=
+	t=1711990759; cv=none; b=qSU4bu4B61ZmKrXAZazLW0BN7DvMzXYiMpkX5Fr79rkRPI0iK/C7LsofMc5kn8M771rZfgXtxQtBJyBhJhRUIKq/L8h6VnCLBLkoHe2cvcBF/embPBIw3BXXKbj1WgkW/HollKlyIyrYjKM3znG/PAsbu3VhzuNd1dJ7Zb6ioYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990756; c=relaxed/simple;
-	bh=gAFaFjfMGd5pWNCz9lckxiUge+IDmbJHjKA3QbsiQ9g=;
+	s=arc-20240116; t=1711990759; c=relaxed/simple;
+	bh=RztuwVQE0VbnDXPq3tIIIYnI+WiaBzhbZXBPDv7COnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oykZ4umGSf5OrgS3mTiGqFyaFMupWv/0I88bms1lmOt71Gm8V1QlX627qxBtS6Ox2DSpW4fSBqS0LikpVUWDVf5mJE5thyNko36wSe9Wjca9Z1qRihfb7VvlGdXIk/8MPFUH3D+xLjsz0vXMQgVKme/AcXdgcQdzJFtusKvbfp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoXT5r0d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=br/aBaabB77t/rH8pgeaSkGeVwRhKPcrqaU55zMEZgd+FlY6QjDd9Yo2j6rvLqjd0uDrKFAeMYF4DjWf+p6/pyZGGD9QUH5jAxZlxh1ZVdjOqmMZM+NXDMThIALotZoia776MBNVRvmrppwgVpXGlHiH5xN2LKK0PWFsRWk+5DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPYpDaN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoXT5r0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4D8C433C7;
-	Mon,  1 Apr 2024 16:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPYpDaN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C05C433C7;
+	Mon,  1 Apr 2024 16:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990756;
-	bh=gAFaFjfMGd5pWNCz9lckxiUge+IDmbJHjKA3QbsiQ9g=;
+	s=korg; t=1711990759;
+	bh=RztuwVQE0VbnDXPq3tIIIYnI+WiaBzhbZXBPDv7COnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoXT5r0dT3F7qR0DprAokfXTbXpMk6dVqY1GFVgFXt6hRWhiAjg83YCPz3Fj/UbDW
-	 QKFhNpaDrtLxXtm5UCJ2HxQs/8BGQ8+QJQxy7rBIksjCWnFJ1W2Cseg3MiIGzqEFXg
-	 ggerGF0mN9DLC8Kh7XCylq82/F/dOguUPYutplQk=
+	b=YPYpDaN591OBiXk7hTGGAmJMZEUEr5djtPzBWgWDcW+FbmWwaupQAQ1tRZdMBQ+cM
+	 UaCdiWvhnUVLE8PESPvuk19cQr795ti1q+ryq+a8cIUj76XbiwExXbqePM6EGy5cb/
+	 AHWb1TkQ6erSw/jIdoFUZ9hop+wGsUjBxGJT7tvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Perry Yuan <Perry.Yuan@amd.com>,
-	Tor Vic <torvic9@mailbox.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/272] cpufreq: amd-pstate: Fix min_perf assignment in amd_pstate_adjust_perf()
-Date: Mon,  1 Apr 2024 17:43:37 +0200
-Message-ID: <20240401152531.208234458@linuxfoundation.org>
+Subject: [PATCH 6.1 028/272] powerpc/smp: Adjust nr_cpu_ids to cover all threads of a core
+Date: Mon,  1 Apr 2024 17:43:38 +0200
+Message-ID: <20240401152531.238600545@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,38 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tor Vic <torvic9@mailbox.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit b26ffbf800ae3c8d01bdf90d9cd8a37e1606ff06 ]
+[ Upstream commit 5580e96dad5a439d561d9648ffcbccb739c2a120 ]
 
-In the function amd_pstate_adjust_perf(), the 'min_perf' variable is set
-to 'highest_perf' instead of 'lowest_perf'.
+If nr_cpu_ids is too low to include at least all the threads of a single
+core adjust nr_cpu_ids upwards. This avoids triggering odd bugs in code
+that assumes all threads of a core are available.
 
-Fixes: 1d215f0319c2 ("cpufreq: amd-pstate: Add fast switch function for AMD P-State")
-Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reviewed-by: Perry Yuan <Perry.Yuan@amd.com>
-Signed-off-by: Tor Vic <torvic9@mailbox.org>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231229120107.2281153-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/prom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index edc294ee5a5bc..90dcf26f09731 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -320,7 +320,7 @@ static void amd_pstate_adjust_perf(unsigned int cpu,
- 	if (target_perf < capacity)
- 		des_perf = DIV_ROUND_UP(cap_perf * target_perf, capacity);
+diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
+index 8537c354c560b..a64f4fb332893 100644
+--- a/arch/powerpc/kernel/prom.c
++++ b/arch/powerpc/kernel/prom.c
+@@ -369,6 +369,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 	if (IS_ENABLED(CONFIG_PPC64))
+ 		boot_cpu_hwid = be32_to_cpu(intserv[found_thread]);
  
--	min_perf = READ_ONCE(cpudata->highest_perf);
-+	min_perf = READ_ONCE(cpudata->lowest_perf);
- 	if (_min_perf < capacity)
- 		min_perf = DIV_ROUND_UP(cap_perf * _min_perf, capacity);
- 
++	if (nr_cpu_ids % nthreads != 0) {
++		set_nr_cpu_ids(ALIGN(nr_cpu_ids, nthreads));
++		pr_warn("nr_cpu_ids was not a multiple of threads_per_core, adjusted to %d\n",
++			nr_cpu_ids);
++	}
++
+ 	/*
+ 	 * PAPR defines "logical" PVR values for cpus that
+ 	 * meet various levels of the architecture:
 -- 
 2.43.0
 
