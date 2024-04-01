@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60483446AC;
-	Mon,  1 Apr 2024 16:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFE33F8F4;
+	Mon,  1 Apr 2024 16:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987886; cv=none; b=Urn4yBOQWgBm/AzdJQMJzSZlXwDTQOLvjXPM7lfZO0dYIlvwE3BDk21h5hKiURGhMX/6R4XxY4gxTJ6d2QhOJBDSAFPVrmmMZzCm1Jx1tltvcMugLW/6JDLelNM9TRZxywNkzozkXGQ1HGfhioxGuJ3kYzjXunwNtB0pdzxeVss=
+	t=1711987889; cv=none; b=Yvg27JVXWulW56UW/FDRu4AJb3kUa97KxfATBtpLgmSp3idfrojBI1L6My1y9rRd5MHXsDeuaVz3nJlodKDTstcIJOUHmcE20bqZOdmb3R0muGGbs14G+jO5rQzf5UFNRD/+qvaZ9P9qAp+rZ4XPu9bszspou5Dqapy1m6Tj6xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987886; c=relaxed/simple;
-	bh=1Ex73Aa90E793YcheNSEeI8zPETxYDaZIhDxibfaz/E=;
+	s=arc-20240116; t=1711987889; c=relaxed/simple;
+	bh=9tQti5KBhMCshsMzNIkRTthP6tufIabRFvjGiU6XHCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lz3EkoiLqsyQVYnDh7zAYXEPTQtqu9GlbV1PPbFxVPr/Vmx01vgYg4iMPtWEGrOrI/Voq6FThxpkLSvm2zT6ckc4SzW6ZKXU4jKxEnoltjl7B9gZambES4aT3moCW6ZhQgbdnT45sLSOzn7et2JBB3hxaHjvbzXCZkxQzf1WsdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ2HgJ1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAiSUD57CoFMfWiCXwKtB+7jHbm0rFIsDz4MtmtDjSuwwvf8QYgcyhY7QxtjUIAjIIMnvHPjMoSpU0wXmjOU3TG5u+P+2+yfxYM96/zSZjV2nZbVWXns4zQXauSCR6YsfeisFQyf6kRpr/vaOLi2xEINU8Bz75YOEEmBleqWHMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOIwqytA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ2HgJ1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C7BC433F1;
-	Mon,  1 Apr 2024 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOIwqytA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B97C433F1;
+	Mon,  1 Apr 2024 16:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987886;
-	bh=1Ex73Aa90E793YcheNSEeI8zPETxYDaZIhDxibfaz/E=;
+	s=korg; t=1711987889;
+	bh=9tQti5KBhMCshsMzNIkRTthP6tufIabRFvjGiU6XHCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQ2HgJ1bN9HDxQxUO4YhljxZ8/Qg48Z2Uv9EPlFD2eOhdi0aFTmLUFS+sLBegleZk
-	 lHsMIWnSAjb8VaaOkZsmCu25dtYrzNjNSJfpnmuOjPaNFcUP/eY28DayzA/tfm2HtW
-	 nGVwnBa9gxUMGCl2NMEvTPCEWZj4GpXfCft1PQJk=
+	b=BOIwqytAuwINic311vSki6QGp0KIiwBHU49IXpFvECIh1VSLYwyN8fHKfPzVnqm6a
+	 o6CKMIed+vHHkt20l5oQdJnWhAfL41CSceisoCr5Scw8tY9awjIcCn0Zv1bP241G0B
+	 3MiUTL6NvdGVdpiFK3xUMPI6mAHmSZnbyCbuyzeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Fabio Estevam <festevam@gmail.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 021/432] media: nxp: imx8-isi: Check whether crossbar pad is non-NULL before access
-Date: Mon,  1 Apr 2024 17:40:08 +0200
-Message-ID: <20240401152553.761778601@linuxfoundation.org>
+Subject: [PATCH 6.7 022/432] media: mc: Add num_links flag to media_pad
+Date: Mon,  1 Apr 2024 17:40:09 +0200
+Message-ID: <20240401152553.792426215@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,54 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit eb2f932100288dbb881eadfed02e1459c6b9504c ]
+[ Upstream commit baeddf94aa61879b118f2faa37ed126d772670cc ]
 
-When translating source to sink streams in the crossbar subdev, the
-driver tries to locate the remote subdev connected to the sink pad. The
-remote pad may be NULL, if userspace tries to enable a stream that ends
-at an unconnected crossbar sink. When that occurs, the driver
-dereferences the NULL pad, leading to a crash.
-
-Prevent the crash by checking if the pad is NULL before using it, and
-return an error if it is.
+Maintain a counter of the links connected to a pad in the media_pad
+structure. This helps checking if a pad is connected to anything, which
+will be used in the pipeline building code.
 
 Cc: stable@vger.kernel.org # 6.1
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20231201150614.63300-1-marex@denx.de
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/mc/mc-entity.c | 6 ++++++
+ include/media/media-entity.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-index 792f031e032ae..44354931cf8a1 100644
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-@@ -160,8 +160,14 @@ mxc_isi_crossbar_xlate_streams(struct mxc_isi_crossbar *xbar,
- 	}
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index 7839e3f68efa4..c2d8f59b62c12 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -1038,6 +1038,9 @@ static void __media_entity_remove_link(struct media_entity *entity,
  
- 	pad = media_pad_remote_pad_first(&xbar->pads[sink_pad]);
--	sd = media_entity_to_v4l2_subdev(pad->entity);
-+	if (!pad) {
-+		dev_dbg(xbar->isi->dev,
-+			"no pad connected to crossbar input %u\n",
-+			sink_pad);
-+		return ERR_PTR(-EPIPE);
-+	}
+ 	/* Remove the reverse links for a data link. */
+ 	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) == MEDIA_LNK_FL_DATA_LINK) {
++		link->source->num_links--;
++		link->sink->num_links--;
++
+ 		if (link->source->entity == entity)
+ 			remote = link->sink->entity;
+ 		else
+@@ -1143,6 +1146,9 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
+ 	sink->num_links++;
+ 	source->num_links++;
  
-+	sd = media_entity_to_v4l2_subdev(pad->entity);
- 	if (!sd) {
- 		dev_dbg(xbar->isi->dev,
- 			"no entity connected to crossbar input %u\n",
++	link->source->num_links++;
++	link->sink->num_links++;
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(media_create_pad_link);
+diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+index 2b6cd343ee9e0..4d95893c89846 100644
+--- a/include/media/media-entity.h
++++ b/include/media/media-entity.h
+@@ -225,6 +225,7 @@ enum media_pad_signal_type {
+  * @graph_obj:	Embedded structure containing the media object common data
+  * @entity:	Entity this pad belongs to
+  * @index:	Pad index in the entity pads array, numbered from 0 to n
++ * @num_links:	Number of links connected to this pad
+  * @sig_type:	Type of the signal inside a media pad
+  * @flags:	Pad flags, as defined in
+  *		:ref:`include/uapi/linux/media.h <media_header>`
+@@ -236,6 +237,7 @@ struct media_pad {
+ 	struct media_gobj graph_obj;	/* must be first field in struct */
+ 	struct media_entity *entity;
+ 	u16 index;
++	u16 num_links;
+ 	enum media_pad_signal_type sig_type;
+ 	unsigned long flags;
+ 
 -- 
 2.43.0
 
