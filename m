@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462981CA8F;
-	Mon,  1 Apr 2024 16:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F481CA8F;
+	Mon,  1 Apr 2024 16:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987432; cv=none; b=rRCatMey3zN+RysX+5EPXigPZF6TY/xH4Z8xq6fIjTk+p7IBI+8oYXe58gWn7zabFZUYkv/lnG6hkmeZZIHXl7NUjf6z/84fcFii5gW3ArEu9bLKxfKJHibacKfLgYdEyP2Ta5sAqLSjsfVkc4/cB2QNkPJZ8SevNACel/Ybe9U=
+	t=1711987435; cv=none; b=a7KDWdn+FMtgzEjDj/lTLTsjZBKgEG5cqblTH8KxtylPL+fHW9FI/YHyiYGJ/Saw/u4Vh2FrrxFngupnXP1p8i9MHvQ2JDNCpvCpdV0EuT0s0FINiTHJ2WlC5VhvIBOiDsAVRDWacJnuQzw29T44B7jWJFWn5aba9Bl+k3Q1qrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987432; c=relaxed/simple;
-	bh=YYkYkZchLcd3+4I1sjHPo9mVNhss5d9Tsn7Nz/Zoijc=;
+	s=arc-20240116; t=1711987435; c=relaxed/simple;
+	bh=XR1UShcNlkTQP+HX1VqaAmEKooNdDTm0cr4Kl3+1CAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNi7VJQeqT9aVMT28onjztembZ6MXmK5XpqavY9NDv/QyakfyH8bSMl0EGjvwI37RDrFmDkTxSwa8TVYC7LhaowEa/zxCQq7aesZuB1M72XJp5WyqSvFgSpLv4oswYtZPHK3QTCuNG5lv1ODr8BwnKltk+QQOHFtYPaYKy3+vAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJ82TVuK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OHYHPeFiOQx/DApvH4LxV2uKEKzOC958Hc9k3W39QWRW1rokdwd31QvapsS1aWyXK0Uyehyn7ITET7sDE9CxilMBDMRilurPGBZQlFu/y3KsrysZs1KMSYqqg6hQ6Bdokp54sXqjuKYZGyV9sQJViQFB14lal3E9gsUYNJpXOKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQJYb+8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJ82TVuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E9CC433C7;
-	Mon,  1 Apr 2024 16:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQJYb+8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF970C433C7;
+	Mon,  1 Apr 2024 16:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987432;
-	bh=YYkYkZchLcd3+4I1sjHPo9mVNhss5d9Tsn7Nz/Zoijc=;
+	s=korg; t=1711987435;
+	bh=XR1UShcNlkTQP+HX1VqaAmEKooNdDTm0cr4Kl3+1CAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJ82TVuK7HLjf5C50jaJR+4iQFNg8lictO/Xbb1oC45PTgNkR0VNZDNDMcShxHiPp
-	 Eud3tL/cWVE+4n+ooYovhX1sshybxh4YqOSnT3vKE/OnHJ6U1GUbBZ7TxjTcyiWdP/
-	 tDsMSGBqrKRboOIPS/MSzJi7fHqFEIgTjp/yKYYo=
+	b=oQJYb+8A3czPc19bCNfj+ULnCdRQLykGFYJQiIezCiX908ZfkQUqbKkawFYjQKxWH
+	 oUIPlmEJJmkT4kcdkvVllu2NqVttOcDyNKbZkmXTDk7I5fbm4fI0N4aAMa6Y4LyPrx
+	 YD/SWgU5X/VkM0fnLhce0pD+yiy+bInrBKDYvOm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 285/399] ALSA: hda/tas2781: add locks to kcontrols
-Date: Mon,  1 Apr 2024 17:44:11 +0200
-Message-ID: <20240401152557.688435655@linuxfoundation.org>
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Poulin?= <jeromepoulin@gmail.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.8 286/399] mm: zswap: fix writeback shinker GFP_NOIO/GFP_NOFS recursion
+Date: Mon,  1 Apr 2024 17:44:12 +0200
+Message-ID: <20240401152557.717859948@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -44,186 +49,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 15bc3066d2378eef1b45254be9df23b0dd7f1667 upstream.
+commit 30fb6a8d9e3378919f378f9bf561142b4a6d2637 upstream.
 
-The rcabin.profile_cfg_id, cur_prog, cur_conf, force_fwload_status
-variables are acccessible from multiple threads and therefore require
-locking.
+Kent forwards this bug report of zswap re-entering the block layer
+from an IO request allocation and locking up:
 
-Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-CC: stable@vger.kernel.org
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Message-ID: <e35b867f6fe5fa1f869dd658a0a1f2118b737f57.1711469583.git.soyer@irl.hu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[10264.128242] sysrq: Show Blocked State
+[10264.128268] task:kworker/20:0H   state:D stack:0     pid:143   tgid:143   ppid:2      flags:0x00004000
+[10264.128271] Workqueue: bcachefs_io btree_write_submit [bcachefs]
+[10264.128295] Call Trace:
+[10264.128295]  <TASK>
+[10264.128297]  __schedule+0x3e6/0x1520
+[10264.128303]  schedule+0x32/0xd0
+[10264.128304]  schedule_timeout+0x98/0x160
+[10264.128308]  io_schedule_timeout+0x50/0x80
+[10264.128309]  wait_for_completion_io_timeout+0x7f/0x180
+[10264.128310]  submit_bio_wait+0x78/0xb0
+[10264.128313]  swap_writepage_bdev_sync+0xf6/0x150
+[10264.128317]  zswap_writeback_entry+0xf2/0x180
+[10264.128319]  shrink_memcg_cb+0xe7/0x2f0
+[10264.128322]  __list_lru_walk_one+0xb9/0x1d0
+[10264.128325]  list_lru_walk_one+0x5d/0x90
+[10264.128326]  zswap_shrinker_scan+0xc4/0x130
+[10264.128327]  do_shrink_slab+0x13f/0x360
+[10264.128328]  shrink_slab+0x28e/0x3c0
+[10264.128329]  shrink_one+0x123/0x1b0
+[10264.128331]  shrink_node+0x97e/0xbc0
+[10264.128332]  do_try_to_free_pages+0xe7/0x5b0
+[10264.128333]  try_to_free_pages+0xe1/0x200
+[10264.128334]  __alloc_pages_slowpath.constprop.0+0x343/0xde0
+[10264.128337]  __alloc_pages+0x32d/0x350
+[10264.128338]  allocate_slab+0x400/0x460
+[10264.128339]  ___slab_alloc+0x40d/0xa40
+[10264.128345]  kmem_cache_alloc+0x2e7/0x330
+[10264.128348]  mempool_alloc+0x86/0x1b0
+[10264.128349]  bio_alloc_bioset+0x200/0x4f0
+[10264.128352]  bio_alloc_clone+0x23/0x60
+[10264.128354]  alloc_io+0x26/0xf0 [dm_mod 7e9e6b44df4927f93fb3e4b5c782767396f58382]
+[10264.128361]  dm_submit_bio+0xb8/0x580 [dm_mod 7e9e6b44df4927f93fb3e4b5c782767396f58382]
+[10264.128366]  __submit_bio+0xb0/0x170
+[10264.128367]  submit_bio_noacct_nocheck+0x159/0x370
+[10264.128368]  bch2_submit_wbio_replicas+0x21c/0x3a0 [bcachefs 85f1b9a7a824f272eff794653a06dde1a94439f2]
+[10264.128391]  btree_write_submit+0x1cf/0x220 [bcachefs 85f1b9a7a824f272eff794653a06dde1a94439f2]
+[10264.128406]  process_one_work+0x178/0x350
+[10264.128408]  worker_thread+0x30f/0x450
+[10264.128409]  kthread+0xe5/0x120
+
+The zswap shrinker resumes the swap_writepage()s that were intercepted
+by the zswap store. This will enter the block layer, and may even
+enter the filesystem depending on the swap backing file.
+
+Make it respect GFP_NOIO and GFP_NOFS.
+
+Link: https://lore.kernel.org/linux-mm/rc4pk2r42oyvjo4dc62z6sovquyllq56i5cdgcaqbd7wy3hfzr@n4nbxido3fme/
+Link: https://lkml.kernel.org/r/20240321182532.60000-1-hannes@cmpxchg.org
+Fixes: b5ba474f3f51 ("zswap: shrink zswap pool based on memory pressure")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
+Acked-by: Yosry Ahmed <yosryahmed@google.com>
+Reported-by: Jérôme Poulin <jeromepoulin@gmail.com>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: stable@vger.kernel.org	[v6.8]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c |   50 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 48 insertions(+), 2 deletions(-)
+ mm/zswap.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -197,8 +197,12 @@ static int tasdevice_get_profile_id(stru
- {
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -645,6 +645,14 @@ static unsigned long zswap_shrinker_coun
+ 	if (!zswap_shrinker_enabled || !mem_cgroup_zswap_writeback_enabled(memcg))
+ 		return 0;
  
-+	mutex_lock(&tas_priv->codec_lock);
++	/*
++	 * The shrinker resumes swap writeback, which will enter block
++	 * and may enter fs. XXX: Harmonize with vmscan.c __GFP_FS
++	 * rules (may_enter_fs()), which apply on a per-folio basis.
++	 */
++	if (!gfp_has_io_fs(sc->gfp_mask))
++		return 0;
 +
- 	ucontrol->value.integer.value[0] = tas_priv->rcabin.profile_cfg_id;
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return 0;
- }
- 
-@@ -212,11 +216,15 @@ static int tasdevice_set_profile_id(stru
- 
- 	val = clamp(nr_profile, 0, max);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	if (tas_priv->rcabin.profile_cfg_id != val) {
- 		tas_priv->rcabin.profile_cfg_id = val;
- 		ret = 1;
- 	}
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return ret;
- }
- 
-@@ -253,8 +261,12 @@ static int tasdevice_program_get(struct
- {
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	ucontrol->value.integer.value[0] = tas_priv->cur_prog;
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return 0;
- }
- 
-@@ -269,11 +281,15 @@ static int tasdevice_program_put(struct
- 
- 	val = clamp(nr_program, 0, max);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	if (tas_priv->cur_prog != val) {
- 		tas_priv->cur_prog = val;
- 		ret = 1;
- 	}
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return ret;
- }
- 
-@@ -282,8 +298,12 @@ static int tasdevice_config_get(struct s
- {
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	ucontrol->value.integer.value[0] = tas_priv->cur_conf;
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return 0;
- }
- 
-@@ -298,11 +318,15 @@ static int tasdevice_config_put(struct s
- 
- 	val = clamp(nr_config, 0, max);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	if (tas_priv->cur_conf != val) {
- 		tas_priv->cur_conf = val;
- 		ret = 1;
- 	}
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return ret;
- }
- 
-@@ -312,8 +336,15 @@ static int tas2781_amp_getvol(struct snd
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 	struct soc_mixer_control *mc =
- 		(struct soc_mixer_control *)kcontrol->private_value;
-+	int ret;
- 
--	return tasdevice_amp_getvol(tas_priv, ucontrol, mc);
-+	mutex_lock(&tas_priv->codec_lock);
-+
-+	ret = tasdevice_amp_getvol(tas_priv, ucontrol, mc);
-+
-+	mutex_unlock(&tas_priv->codec_lock);
-+
-+	return ret;
- }
- 
- static int tas2781_amp_putvol(struct snd_kcontrol *kcontrol,
-@@ -322,9 +353,16 @@ static int tas2781_amp_putvol(struct snd
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 	struct soc_mixer_control *mc =
- 		(struct soc_mixer_control *)kcontrol->private_value;
-+	int ret;
-+
-+	mutex_lock(&tas_priv->codec_lock);
- 
- 	/* The check of the given value is in tasdevice_amp_putvol. */
--	return tasdevice_amp_putvol(tas_priv, ucontrol, mc);
-+	ret = tasdevice_amp_putvol(tas_priv, ucontrol, mc);
-+
-+	mutex_unlock(&tas_priv->codec_lock);
-+
-+	return ret;
- }
- 
- static int tas2781_force_fwload_get(struct snd_kcontrol *kcontrol,
-@@ -332,10 +370,14 @@ static int tas2781_force_fwload_get(stru
- {
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	ucontrol->value.integer.value[0] = (int)tas_priv->force_fwload_status;
- 	dev_dbg(tas_priv->dev, "%s : Force FWload %s\n", __func__,
- 			tas_priv->force_fwload_status ? "ON" : "OFF");
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return 0;
- }
- 
-@@ -345,6 +387,8 @@ static int tas2781_force_fwload_put(stru
- 	struct tasdevice_priv *tas_priv = snd_kcontrol_chip(kcontrol);
- 	bool change, val = (bool)ucontrol->value.integer.value[0];
- 
-+	mutex_lock(&tas_priv->codec_lock);
-+
- 	if (tas_priv->force_fwload_status == val)
- 		change = false;
- 	else {
-@@ -354,6 +398,8 @@ static int tas2781_force_fwload_put(stru
- 	dev_dbg(tas_priv->dev, "%s : Force FWload %s\n", __func__,
- 		tas_priv->force_fwload_status ? "ON" : "OFF");
- 
-+	mutex_unlock(&tas_priv->codec_lock);
-+
- 	return change;
- }
- 
+ #ifdef CONFIG_MEMCG_KMEM
+ 	mem_cgroup_flush_stats(memcg);
+ 	nr_backing = memcg_page_state(memcg, MEMCG_ZSWAP_B) >> PAGE_SHIFT;
 
 
