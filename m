@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5279383BA;
-	Mon,  1 Apr 2024 16:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2417A45BE4;
+	Mon,  1 Apr 2024 16:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987268; cv=none; b=Mqnt0H4WqG0YjdW5TSJE+O4eQ8KAJaQvBA1WJpVhh04y+9s6eDyjEqgP4fP3nCZ6vELkGreUaSfj7E8MraNP5+7v3XPAOX46EMOENmuiLj1QysWEWcZs+j3N7n7X2hLWXt0REmFz0Yaxw9oRCNgNQnBYrC8vfuPPp9uYVxcMI3A=
+	t=1711987272; cv=none; b=SQHYzXR2hlCXam10ZJF0rA/PGqyNc1R95xKF5eegh5Lz0rhQv1w9Ae+Id52lz9yvBHzm9okcrNESnerhKLkg8JiY5QVSHBIptzFYLFQ/OPyl6IJQQwA47xAXSOnxdW01o43c2jJjMq0lEYfV9dem7sCXREnYeEfhwvbycgRefVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987268; c=relaxed/simple;
-	bh=RNyDZQlAMSdF1IveKi3J+JlAmkB4h/moXuQbEoVfDtg=;
+	s=arc-20240116; t=1711987272; c=relaxed/simple;
+	bh=xExlgPqhEwSZcEstmLDzzXDsuaWgNxkBoRctLuLr1EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yankzw6YRoPi/RkVSyrwQYVTOCSLpd5Lfu3y4WvI7GniwokEq8JPKACWB92IuCyKZZLyjEdHCLunDwERyFZEDG2S2p+XxRgP0zDICxL7cH7KIQkUX/Mu+PP9lew1ttH4yBuOThHkoxZuvxK0GR7Q7UEgkJGDt+ax2GYBORgDZRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oHFMMbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goW0O5LT/NUnhuIgXY2Yo8NCPnhhhubNzoXLb+YciuQHMbefsjqzRPlMBzp7c++Y1ttMeuF0BZhTiFsx3tOnFTOd56hpzZu5vkHC1858CPJ3ETcpSYZ1a5lzI0WZOtwfa/zJbDtgtFJpwf6wBdtEvUr4gNhqQLwXxjQh/MLnhNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDmZ6Qwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oHFMMbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FD2C433C7;
-	Mon,  1 Apr 2024 16:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDmZ6Qwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1ADC433F1;
+	Mon,  1 Apr 2024 16:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987268;
-	bh=RNyDZQlAMSdF1IveKi3J+JlAmkB4h/moXuQbEoVfDtg=;
+	s=korg; t=1711987272;
+	bh=xExlgPqhEwSZcEstmLDzzXDsuaWgNxkBoRctLuLr1EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oHFMMbivd7IFIUw/dtkqzUFTiEozgGRiqr4ND06NEKgI9ID82Wd+kw0MvYVXF7Pd
-	 hdrSkGT35/rL2hpdEyoRBu60lFkXFdRt/OeXKa3+t/eXPvmrK4adYn34x8MXp87Nfq
-	 Fzy5bSF5fwif4lNhOFFtg6jwLH0Ld4yEkDhiTkXU=
+	b=hDmZ6Qwbh8LagNJBorLkQjIjEy0KkW3ihG5o8JQ30v7URH0qHM62NjRHoEkVsDtyZ
+	 61LuUXOthpN1pLYwNAWxDoMzhwBcaO6MbooPv+XLWKC0UdwYcedD9+aaJoqbFXK2qk
+	 UCczUxjn66amkz1SzY62sYRj4V2vxnPCdUDMecpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 196/399] ksmbd: fix potencial out-of-bounds when buffer offset is invalid
-Date: Mon,  1 Apr 2024 17:42:42 +0200
-Message-ID: <20240401152555.032447748@linuxfoundation.org>
+Subject: [PATCH 6.8 229/399] btrfs: replace sb::s_blocksize by fs_info::sectorsize
+Date: Mon,  1 Apr 2024 17:43:15 +0200
+Message-ID: <20240401152556.017225974@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,314 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit c6cd2e8d2d9aa7ee35b1fa6a668e32a22a9753da ]
+[ Upstream commit 4e00422ee62663e31e611d7de4d2c4aa3f8555f2 ]
 
-I found potencial out-of-bounds when buffer offset fields of a few requests
-is invalid. This patch set the minimum value of buffer offset field to
-->Buffer offset to validate buffer length.
+The block size stored in the super block is used by subsystems outside
+of btrfs and it's a copy of fs_info::sectorsize. Unify that to always
+use our sectorsize, with the exception of mount where we first need to
+use fixed values (4K) until we read the super block and can set the
+sectorsize.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Replace all uses, in most cases it's fewer pointer indirections.
+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 86211eea8ae1 ("btrfs: qgroup: validate btrfs_qgroup_inherit parameter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 23 +++++++++++++------
- fs/smb/server/smb2pdu.c  | 48 ++++++++++++++++++++++------------------
- 2 files changed, 42 insertions(+), 29 deletions(-)
+ fs/btrfs/disk-io.c   | 2 ++
+ fs/btrfs/extent_io.c | 4 ++--
+ fs/btrfs/inode.c     | 2 +-
+ fs/btrfs/ioctl.c     | 2 +-
+ fs/btrfs/reflink.c   | 6 +++---
+ fs/btrfs/send.c      | 2 +-
+ fs/btrfs/super.c     | 2 +-
+ 7 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index 7c872ffb4b0a9..727cb49926ee5 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -101,7 +101,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		*len = le16_to_cpu(((struct smb2_sess_setup_req *)hdr)->SecurityBufferLength);
- 		break;
- 	case SMB2_TREE_CONNECT:
--		*off = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset);
-+		*off = max_t(unsigned short int,
-+			     le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathOffset),
-+			     offsetof(struct smb2_tree_connect_req, Buffer));
- 		*len = le16_to_cpu(((struct smb2_tree_connect_req *)hdr)->PathLength);
- 		break;
- 	case SMB2_CREATE:
-@@ -110,7 +112,6 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 			max_t(unsigned short int,
- 			      le16_to_cpu(((struct smb2_create_req *)hdr)->NameOffset),
- 			      offsetof(struct smb2_create_req, Buffer));
--
- 		unsigned short int name_len =
- 			le16_to_cpu(((struct smb2_create_req *)hdr)->NameLength);
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index c843563914cad..091104a327326 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2839,6 +2839,7 @@ static int init_mount_fs_info(struct btrfs_fs_info *fs_info, struct super_block
+ 	int ret;
  
-@@ -131,11 +132,15 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		break;
- 	}
- 	case SMB2_QUERY_INFO:
--		*off = le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset);
-+		*off = max_t(unsigned int,
-+			     le16_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferOffset),
-+			     offsetof(struct smb2_query_info_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_query_info_req *)hdr)->InputBufferLength);
- 		break;
- 	case SMB2_SET_INFO:
--		*off = le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset);
-+		*off = max_t(unsigned int,
-+			     le16_to_cpu(((struct smb2_set_info_req *)hdr)->BufferOffset),
-+			     offsetof(struct smb2_set_info_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_set_info_req *)hdr)->BufferLength);
- 		break;
- 	case SMB2_READ:
-@@ -145,7 +150,7 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 	case SMB2_WRITE:
- 		if (((struct smb2_write_req *)hdr)->DataOffset ||
- 		    ((struct smb2_write_req *)hdr)->Length) {
--			*off = max_t(unsigned int,
-+			*off = max_t(unsigned short int,
- 				     le16_to_cpu(((struct smb2_write_req *)hdr)->DataOffset),
- 				     offsetof(struct smb2_write_req, Buffer));
- 			*len = le32_to_cpu(((struct smb2_write_req *)hdr)->Length);
-@@ -156,7 +161,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		*len = le16_to_cpu(((struct smb2_write_req *)hdr)->WriteChannelInfoLength);
- 		break;
- 	case SMB2_QUERY_DIRECTORY:
--		*off = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset);
-+		*off = max_t(unsigned short int,
-+			     le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameOffset),
-+			     offsetof(struct smb2_query_directory_req, Buffer));
- 		*len = le16_to_cpu(((struct smb2_query_directory_req *)hdr)->FileNameLength);
- 		break;
- 	case SMB2_LOCK:
-@@ -171,7 +178,9 @@ static int smb2_get_data_area_len(unsigned int *off, unsigned int *len,
- 		break;
- 	}
- 	case SMB2_IOCTL:
--		*off = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset);
-+		*off = max_t(unsigned int,
-+			     le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputOffset),
-+			     offsetof(struct smb2_ioctl_req, Buffer));
- 		*len = le32_to_cpu(((struct smb2_ioctl_req *)hdr)->InputCount);
- 		break;
- 	default:
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 199c31c275e5b..88db6e207e0ee 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1951,7 +1951,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	fs_info->sb = sb;
++	/* Temporary fixed values for block size until we read the superblock. */
+ 	sb->s_blocksize = BTRFS_BDEV_BLOCKSIZE;
+ 	sb->s_blocksize_bits = blksize_bits(BTRFS_BDEV_BLOCKSIZE);
  
- 	WORK_BUFFERS(work, req, rsp);
+@@ -3356,6 +3357,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	sb->s_bdi->ra_pages *= btrfs_super_num_devices(disk_super);
+ 	sb->s_bdi->ra_pages = max(sb->s_bdi->ra_pages, SZ_4M / PAGE_SIZE);
  
--	treename = smb_strndup_from_utf16(req->Buffer,
-+	treename = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->PathOffset),
- 					  le16_to_cpu(req->PathLength), true,
- 					  conn->local_nls);
- 	if (IS_ERR(treename)) {
-@@ -2704,7 +2704,7 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out2;
- 		}
- 
--		name = smb2_get_name(req->Buffer,
-+		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
- 				     le16_to_cpu(req->NameLength),
- 				     work->conn->local_nls);
- 		if (IS_ERR(name)) {
-@@ -4080,7 +4080,7 @@ int smb2_query_dir(struct ksmbd_work *work)
- 	}
- 
- 	srch_flag = req->Flags;
--	srch_ptr = smb_strndup_from_utf16(req->Buffer,
-+	srch_ptr = smb_strndup_from_utf16((char *)req + le16_to_cpu(req->FileNameOffset),
- 					  le16_to_cpu(req->FileNameLength), 1,
- 					  conn->local_nls);
- 	if (IS_ERR(srch_ptr)) {
-@@ -4340,7 +4340,8 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		    sizeof(struct smb2_ea_info_req))
- 			return -EINVAL;
- 
--		ea_req = (struct smb2_ea_info_req *)req->Buffer;
-+		ea_req = (struct smb2_ea_info_req *)((char *)req +
-+						     le16_to_cpu(req->InputBufferOffset));
- 	} else {
- 		/* need to send all EAs, if no specific EA is requested*/
- 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
-@@ -5986,6 +5987,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			      struct ksmbd_share_config *share)
- {
- 	unsigned int buf_len = le32_to_cpu(req->BufferLength);
-+	char *buffer = (char *)req + le16_to_cpu(req->BufferOffset);
- 
- 	switch (req->FileInfoClass) {
- 	case FILE_BASIC_INFORMATION:
-@@ -5993,7 +5995,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_basic_info))
- 			return -EINVAL;
- 
--		return set_file_basic_info(fp, (struct smb2_file_basic_info *)req->Buffer, share);
-+		return set_file_basic_info(fp, (struct smb2_file_basic_info *)buffer, share);
- 	}
- 	case FILE_ALLOCATION_INFORMATION:
- 	{
-@@ -6001,7 +6003,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_file_allocation_info(work, fp,
--						(struct smb2_file_alloc_info *)req->Buffer);
-+						(struct smb2_file_alloc_info *)buffer);
- 	}
- 	case FILE_END_OF_FILE_INFORMATION:
- 	{
-@@ -6009,7 +6011,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_end_of_file_info(work, fp,
--					    (struct smb2_file_eof_info *)req->Buffer);
-+					    (struct smb2_file_eof_info *)buffer);
- 	}
- 	case FILE_RENAME_INFORMATION:
- 	{
-@@ -6017,7 +6019,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_rename_info(work, fp,
--				       (struct smb2_file_rename_info *)req->Buffer,
-+				       (struct smb2_file_rename_info *)buffer,
- 				       buf_len);
- 	}
- 	case FILE_LINK_INFORMATION:
-@@ -6026,7 +6028,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return smb2_create_link(work, work->tcon->share_conf,
--					(struct smb2_file_link_info *)req->Buffer,
-+					(struct smb2_file_link_info *)buffer,
- 					buf_len, fp->filp,
- 					work->conn->local_nls);
- 	}
-@@ -6036,7 +6038,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			return -EINVAL;
- 
- 		return set_file_disposition_info(fp,
--						 (struct smb2_file_disposition_info *)req->Buffer);
-+						 (struct smb2_file_disposition_info *)buffer);
- 	}
- 	case FILE_FULL_EA_INFORMATION:
- 	{
-@@ -6049,7 +6051,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_ea_info))
- 			return -EINVAL;
- 
--		return smb2_set_ea((struct smb2_ea_info *)req->Buffer,
-+		return smb2_set_ea((struct smb2_ea_info *)buffer,
- 				   buf_len, &fp->filp->f_path, true);
- 	}
- 	case FILE_POSITION_INFORMATION:
-@@ -6057,14 +6059,14 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_pos_info))
- 			return -EINVAL;
- 
--		return set_file_position_info(fp, (struct smb2_file_pos_info *)req->Buffer);
-+		return set_file_position_info(fp, (struct smb2_file_pos_info *)buffer);
- 	}
- 	case FILE_MODE_INFORMATION:
- 	{
- 		if (buf_len < sizeof(struct smb2_file_mode_info))
- 			return -EINVAL;
- 
--		return set_file_mode_info(fp, (struct smb2_file_mode_info *)req->Buffer);
-+		return set_file_mode_info(fp, (struct smb2_file_mode_info *)buffer);
- 	}
- 	}
- 
-@@ -6145,7 +6147,7 @@ int smb2_set_info(struct ksmbd_work *work)
- 		}
- 		rc = smb2_set_info_sec(fp,
- 				       le32_to_cpu(req->AdditionalInformation),
--				       req->Buffer,
-+				       (char *)req + le16_to_cpu(req->BufferOffset),
- 				       le32_to_cpu(req->BufferLength));
- 		ksmbd_revert_fsids(work);
- 		break;
-@@ -7591,7 +7593,7 @@ static int fsctl_pipe_transceive(struct ksmbd_work *work, u64 id,
- 				 struct smb2_ioctl_rsp *rsp)
- {
- 	struct ksmbd_rpc_command *rpc_resp;
--	char *data_buf = (char *)&req->Buffer[0];
-+	char *data_buf = (char *)req + le32_to_cpu(req->InputOffset);
- 	int nbytes = 0;
- 
- 	rpc_resp = ksmbd_rpc_ioctl(work->sess, id, data_buf,
-@@ -7704,6 +7706,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 	u64 id = KSMBD_NO_FID;
- 	struct ksmbd_conn *conn = work->conn;
++	/* Update the values for the current filesystem. */
+ 	sb->s_blocksize = sectorsize;
+ 	sb->s_blocksize_bits = blksize_bits(sectorsize);
+ 	memcpy(&sb->s_uuid, fs_info->fs_devices->fsid, BTRFS_FSID_SIZE);
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 8b88cd08ab053..3b47654ed3e8f 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1022,7 +1022,7 @@ static int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
  	int ret = 0;
-+	char *buffer;
+ 	size_t pg_offset = 0;
+ 	size_t iosize;
+-	size_t blocksize = inode->i_sb->s_blocksize;
++	size_t blocksize = fs_info->sectorsize;
+ 	struct extent_io_tree *tree = &BTRFS_I(inode)->io_tree;
  
- 	if (work->next_smb2_rcv_hdr_off) {
- 		req = ksmbd_req_buf_next(work);
-@@ -7726,6 +7729,8 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		goto out;
- 	}
+ 	ret = set_page_extent_mapped(page);
+@@ -2313,7 +2313,7 @@ int extent_invalidate_folio(struct extent_io_tree *tree,
+ 	struct extent_state *cached_state = NULL;
+ 	u64 start = folio_pos(folio);
+ 	u64 end = start + folio_size(folio) - 1;
+-	size_t blocksize = folio->mapping->host->i_sb->s_blocksize;
++	size_t blocksize = btrfs_sb(folio->mapping->host->i_sb)->sectorsize;
  
-+	buffer = (char *)req + le32_to_cpu(req->InputOffset);
-+
- 	cnt_code = le32_to_cpu(req->CtlCode);
- 	ret = smb2_calc_max_out_buf_len(work, 48,
- 					le32_to_cpu(req->MaxOutputResponse));
-@@ -7783,7 +7788,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		}
+ 	/* This function is only called for the btree inode */
+ 	ASSERT(tree->owner == IO_TREE_BTREE_INODE_IO);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 4795738d5785b..bd3f348d503dc 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8723,7 +8723,7 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 	u64 delalloc_bytes;
+ 	u64 inode_bytes;
+ 	struct inode *inode = d_inode(path->dentry);
+-	u32 blocksize = inode->i_sb->s_blocksize;
++	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
+ 	u32 bi_flags = BTRFS_I(inode)->flags;
+ 	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
  
- 		ret = fsctl_validate_negotiate_info(conn,
--			(struct validate_negotiate_info_req *)&req->Buffer[0],
-+			(struct validate_negotiate_info_req *)buffer,
- 			(struct validate_negotiate_info_rsp *)&rsp->Buffer[0],
- 			in_buf_len);
- 		if (ret < 0)
-@@ -7836,7 +7841,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		rsp->VolatileFileId = req->VolatileFileId;
- 		rsp->PersistentFileId = req->PersistentFileId;
- 		fsctl_copychunk(work,
--				(struct copychunk_ioctl_req *)&req->Buffer[0],
-+				(struct copychunk_ioctl_req *)buffer,
- 				le32_to_cpu(req->CtlCode),
- 				le32_to_cpu(req->InputCount),
- 				req->VolatileFileId,
-@@ -7849,8 +7854,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 9d1eac15e09e1..8d80903e9bff6 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -528,7 +528,7 @@ static noinline int btrfs_ioctl_fitrim(struct btrfs_fs_info *fs_info,
+ 	 * block group is in the logical address space, which can be any
+ 	 * sectorsize aligned bytenr in  the range [0, U64_MAX].
+ 	 */
+-	if (range.len < fs_info->sb->s_blocksize)
++	if (range.len < fs_info->sectorsize)
+ 		return -EINVAL;
  
--		ret = fsctl_set_sparse(work, id,
--				       (struct file_sparse *)&req->Buffer[0]);
-+		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
- 		if (ret < 0)
- 			goto out;
- 		break;
-@@ -7873,7 +7877,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		}
+ 	range.minlen = max(range.minlen, minlen);
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index ae90894dc7dc7..e38cb40e150c9 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -663,7 +663,7 @@ static int btrfs_extent_same_range(struct inode *src, u64 loff, u64 len,
+ 				   struct inode *dst, u64 dst_loff)
+ {
+ 	struct btrfs_fs_info *fs_info = BTRFS_I(src)->root->fs_info;
+-	const u64 bs = fs_info->sb->s_blocksize;
++	const u64 bs = fs_info->sectorsize;
+ 	int ret;
  
- 		zero_data =
--			(struct file_zero_data_information *)&req->Buffer[0];
-+			(struct file_zero_data_information *)buffer;
+ 	/*
+@@ -730,7 +730,7 @@ static noinline int btrfs_clone_files(struct file *file, struct file *file_src,
+ 	int ret;
+ 	int wb_ret;
+ 	u64 len = olen;
+-	u64 bs = fs_info->sb->s_blocksize;
++	u64 bs = fs_info->sectorsize;
  
- 		off = le64_to_cpu(zero_data->FileOffset);
- 		bfz = le64_to_cpu(zero_data->BeyondFinalZero);
-@@ -7904,7 +7908,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		}
+ 	/*
+ 	 * VFS's generic_remap_file_range_prep() protects us from cloning the
+@@ -796,7 +796,7 @@ static int btrfs_remap_file_range_prep(struct file *file_in, loff_t pos_in,
+ {
+ 	struct inode *inode_in = file_inode(file_in);
+ 	struct inode *inode_out = file_inode(file_out);
+-	u64 bs = BTRFS_I(inode_out)->root->fs_info->sb->s_blocksize;
++	u64 bs = BTRFS_I(inode_out)->root->fs_info->sectorsize;
+ 	u64 wb_len;
+ 	int ret;
  
- 		ret = fsctl_query_allocated_ranges(work, id,
--			(struct file_allocated_range_buffer *)&req->Buffer[0],
-+			(struct file_allocated_range_buffer *)buffer,
- 			(struct file_allocated_range_buffer *)&rsp->Buffer[0],
- 			out_buf_len /
- 			sizeof(struct file_allocated_range_buffer), &nbytes);
-@@ -7948,7 +7952,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index e48a063ef0851..e9516509b2761 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -6140,7 +6140,7 @@ static int send_write_or_clone(struct send_ctx *sctx,
+ 	int ret = 0;
+ 	u64 offset = key->offset;
+ 	u64 end;
+-	u64 bs = sctx->send_root->fs_info->sb->s_blocksize;
++	u64 bs = sctx->send_root->fs_info->sectorsize;
  
--		dup_ext = (struct duplicate_extents_to_file *)&req->Buffer[0];
-+		dup_ext = (struct duplicate_extents_to_file *)buffer;
+ 	end = min_t(u64, btrfs_file_extent_end(path), sctx->cur_inode_size);
+ 	if (offset >= end)
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 101f786963d4d..c45fdaf24cd1c 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1767,7 +1767,7 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 		buf->f_bavail = 0;
  
- 		fp_in = ksmbd_lookup_fd_slow(work, dup_ext->VolatileFileHandle,
- 					     dup_ext->PersistentFileHandle);
+ 	buf->f_type = BTRFS_SUPER_MAGIC;
+-	buf->f_bsize = dentry->d_sb->s_blocksize;
++	buf->f_bsize = fs_info->sectorsize;
+ 	buf->f_namelen = BTRFS_NAME_LEN;
+ 
+ 	/* We treat it as constant endianness (it doesn't matter _which_)
 -- 
 2.43.0
 
