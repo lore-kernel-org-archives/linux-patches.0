@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D8343AD6;
-	Mon,  1 Apr 2024 16:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8CA43AD6;
+	Mon,  1 Apr 2024 16:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987990; cv=none; b=fMUCNOZmMZagu0j7cispST/wkJKPdSPrgyRMNALcrgp71yBUq+adA5HutZiH7lLfn51nYAiRAEfOhT9E9V2dga41JLIqFpROS8IeCqc/XykqG/AgPvfumoSLm6Y8KW4wbjF2aRz3z7LnFleKrsK+eJ9AofnZAYgoIi0J222NE0E=
+	t=1711987993; cv=none; b=deK7FhdHKHcbDMR+bpESM3VD0G91R0qKZ4X9VFGcfJWEilpai5ijZUGcWfQ1Zuuf0CdA8TCaMHOWALVs28kdQKzdkDScAZyG4Hn4/1ZUoU1OCVXx/nws4MMmrf3NUqDXbxXUT8qGvTMPuaOVVC6STQOoYaGim+DwOO13+spl+Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987990; c=relaxed/simple;
-	bh=AN3LzELXKC78DZnftTgrqr2C9LmFigbs9vD+UcGqhww=;
+	s=arc-20240116; t=1711987993; c=relaxed/simple;
+	bh=YKM8kXrqF772kg0Naqydx0W9nTIFE6POdtLwJh4sns8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UgSmzV8pon9bm0BZ8ihC8TL/HA58K+pMujZJJhkt1igpJmwgBu9ruR0xwK6qdsBhI92YYFiHPbsItADLVx2+Mv2LMa7dX5YQxolxN1a42VYdLHL3k1p6kPmYrUUQoLkkqpPL5Vn/NkZh7KvejdS/9CNnC/OlQgv3dm9sprXwob8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZ9T+lsq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXl0w9u3+YWL4b7hU+7bBnvSgOMA6dWoXAGwMNR+HEjfoDijx9O2yA676HNV20av5BDy6Uk4SSt3K9gj0F+I1zGAEZw4DNiQI+Sj/LYCgGFdkFy5nDjRRbvao89U34it7niYGkEANPw6geJNi3ZkYvuDOsfu3u0qA0Uw3pTe5kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhMIxBZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZ9T+lsq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443C3C433C7;
-	Mon,  1 Apr 2024 16:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhMIxBZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC36C433F1;
+	Mon,  1 Apr 2024 16:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987989;
-	bh=AN3LzELXKC78DZnftTgrqr2C9LmFigbs9vD+UcGqhww=;
+	s=korg; t=1711987992;
+	bh=YKM8kXrqF772kg0Naqydx0W9nTIFE6POdtLwJh4sns8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZ9T+lsqiBL0NTllvs5Jq3qB6tA7Kn4KVzGJIBRfMIEDUfhrpXQ5hMkh8YfjoH0P4
-	 C2GjNnWZTbVZzWzVJejrd7eGkpSCBj3SS7ITfDxlPLX0nZpiR6drbENqkOogSc7j+m
-	 L/KcTpZK6r745QFIKtWBt3Yzu/5YoI5Ef4kKOePI=
+	b=MhMIxBZrX7eAiH4dkWVW0LLyW5mkb6yRvuK2qSWHsR0cL14e3V+iQfo1woqVusV9o
+	 n7c/tM2G5xRMdfWMTKe7bH7s3wXKO2TipCrxKXDemkKoMnMcNNO4RHTZnfYC/0WoAo
+	 Heqnk0RXeMbTnpqacUthY0AM87NpdxH+nXXE1X+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Stable@vger.kernel.org,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 052/432] ubi: correct the calculation of fastmap size
-Date: Mon,  1 Apr 2024 17:40:39 +0200
-Message-ID: <20240401152554.679128421@linuxfoundation.org>
+Subject: [PATCH 6.7 053/432] mtd: rawnand: meson: fix scrambling mode value in command macro
+Date: Mon,  1 Apr 2024 17:40:40 +0200
+Message-ID: <20240401152554.707595502@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,41 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 7f174ae4f39e8475adcc09d26c5a43394689ad6c ]
+[ Upstream commit ef6f463599e16924cdd02ce5056ab52879dc008c ]
 
-Now that the calculation of fastmap size in ubi_calc_fm_size() is
-incorrect since it miss each user volume's ubi_fm_eba structure and the
-Internal UBI volume info. Let's correct the calculation.
+Scrambling mode is enabled by value (1 << 19). NFC_CMD_SCRAMBLER_ENABLE
+is already (1 << 19), so there is no need to shift it again in CMDRWGEN
+macro.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Cc: <Stable@vger.kernel.org>
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240210214551.441610-1-avkrasnov@salutedevices.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/meson_nand.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 2a728c31e6b85..9a4940874be5b 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -85,9 +85,10 @@ size_t ubi_calc_fm_size(struct ubi_device *ubi)
- 		sizeof(struct ubi_fm_scan_pool) +
- 		sizeof(struct ubi_fm_scan_pool) +
- 		(ubi->peb_count * sizeof(struct ubi_fm_ec)) +
--		(sizeof(struct ubi_fm_eba) +
--		(ubi->peb_count * sizeof(__be32))) +
--		sizeof(struct ubi_fm_volhdr) * UBI_MAX_VOLUMES;
-+		((sizeof(struct ubi_fm_eba) +
-+		  sizeof(struct ubi_fm_volhdr)) *
-+		 (UBI_MAX_VOLUMES + UBI_INT_VOL_COUNT)) +
-+		(ubi->peb_count * sizeof(__be32));
- 	return roundup(size, ubi->leb_size);
- }
- 
+diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
+index 71ec4052e52a6..b3a881cbcd23b 100644
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -63,7 +63,7 @@
+ #define CMDRWGEN(cmd_dir, ran, bch, short_mode, page_size, pages)	\
+ 	(								\
+ 		(cmd_dir)			|			\
+-		((ran) << 19)			|			\
++		(ran)				|			\
+ 		((bch) << 14)			|			\
+ 		((short_mode) << 13)		|			\
+ 		(((page_size) & 0x7f) << 6)	|			\
 -- 
 2.43.0
 
