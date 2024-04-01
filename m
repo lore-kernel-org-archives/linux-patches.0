@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C283D961;
-	Mon,  1 Apr 2024 16:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94013D961;
+	Mon,  1 Apr 2024 16:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988971; cv=none; b=sjdakiXGRpXExhTYwd4kFyFP1ppCfwyB9GLCijDNBUNijHWEforgBysKCv8ZVt+jyQFmPPqS+icgG41so6iTeOOs8bdVF/KFCl5Q7mTRbklbzBTIWaGtbKHv8zw5VIIiLGjYCyX+vBfA5ZHGAOWwMMrfDWL9+Co9PasB+h7y0Ws=
+	t=1711988975; cv=none; b=ri0risATu7IOkp79AZK95Y2yUwaRrCsUf/wH7PJMRR4RMUkt/oZiKGje8do5bmJNMiu6lSsQ/etUr1ltFAZoiBrQ0WZSFw+v5KmpDrMp/vK2KvbABzoxmMuFQyx+3OGNduQRbleyszxfHMo481g8wdtzi7IEsgeYocgOoCIwxKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988971; c=relaxed/simple;
-	bh=VO2KuiNXjCA5cEjosMOQjcwxpMElwArDdfIwKlwH3DA=;
+	s=arc-20240116; t=1711988975; c=relaxed/simple;
+	bh=VLb04Zz37v9hyv/Gjutm5l3s6B6TQMuhoT+Fc4F/o/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYETrXd3s/evMK/GA973VnTiTfiwetB7mmsS5wcECQEMYec7L9AOz667N+9AuhFNgMuP9r7w9MADNhfALeu5pKeDDOaM/RXdOmQLKtvbSJR8DwATtaqzJ6xpHDPonNvSFahXReXF7JLPH/igQbiU5Snt7oWevxuKCsZ1XL080Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6jFNs+R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IN5MZTnz73iFLL9RWtJCWOzZdPCeCtbcjudMR+MJqSw5J+wc3z5W68IVheTHdEHaMiymiO6HYShQAHZo0et7H4M8i6nURmMlVUHov/o/hwo8voA4+QW63FgbUvZaedhKSyq4jI0KMW2ck8IDuczOhOXX96CKmsflPEPPw6viJ78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxeeUxyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6jFNs+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17462C433F1;
-	Mon,  1 Apr 2024 16:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxeeUxyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA6EC433C7;
+	Mon,  1 Apr 2024 16:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988971;
-	bh=VO2KuiNXjCA5cEjosMOQjcwxpMElwArDdfIwKlwH3DA=;
+	s=korg; t=1711988974;
+	bh=VLb04Zz37v9hyv/Gjutm5l3s6B6TQMuhoT+Fc4F/o/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6jFNs+RQamY5gKm45nIl5mFb8bAA/8eSuxulw0EiB5CDj2L3E2mIhZC9DYALWSnD
-	 ApYWI0ey6CbYL7Hqro+okAIh36g/JAyKOMgzEmIh0Y75fi1YjmHvhTVxFLd5SYB/Rd
-	 VmRU7by3ApGGXffk0cugVdY1I++QjeaFOoLymjhk=
+	b=qxeeUxydSti3Jhhm8uB6MeV+lXgIRAj2lGBqWjcy+71/DIOB7rdr6NJLkOtqJN8km
+	 g5ZF8NH8eAYvx/stC5ZEirrEq5kLrPYDwx0sLXcELErceDrHCXeDi0fWJCxqKl7WkS
+	 kowInWlDBlO1VRKw263uPaw32mTShPGvqyaBDYUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
+	WA AM <waautomata@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 343/432] btrfs: zoned: dont skip block groups with 100% zone unusable
-Date: Mon,  1 Apr 2024 17:45:30 +0200
-Message-ID: <20240401152603.469203274@linuxfoundation.org>
+Subject: [PATCH 6.7 344/432] btrfs: zoned: use zone aware sb location for scrub
+Date: Mon,  1 Apr 2024 17:45:31 +0200
+Message-ID: <20240401152603.500752392@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,43 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-commit a8b70c7f8600bc77d03c0b032c0662259b9e615e upstream.
+commit 74098a989b9c3370f768140b7783a7aaec2759b3 upstream.
 
-Commit f4a9f219411f ("btrfs: do not delete unused block group if it may be
-used soon") changed the behaviour of deleting unused block-groups on zoned
-filesystems. Starting with this commit, we're using
-btrfs_space_info_used() to calculate the number of used bytes in a
-space_info. But btrfs_space_info_used() also accounts
-btrfs_space_info::bytes_zone_unusable as used bytes.
+At the moment scrub_supers() doesn't grab the super block's location via
+the zoned device aware btrfs_sb_log_location() but via btrfs_sb_offset().
 
-So if a block group is 100% zone_unusable it is skipped from the deletion
-step.
+This leads to checksum errors on 'scrub' as we're not accessing the
+correct location of the super block.
 
-In order not to skip fully zone_unusable block-groups, also check if the
-block-group has bytes left that can be used on a zoned filesystem.
+So use btrfs_sb_log_location() for getting the super blocks location on
+scrub.
 
-Fixes: f4a9f219411f ("btrfs: do not delete unused block group if it may be used soon")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Reported-by: WA AM <waautomata@gmail.com>
+Link: http://lore.kernel.org/linux-btrfs/CANU2Z0EvUzfYxczLgGUiREoMndE9WdQnbaawV5Fv5gNXptPUKw@mail.gmail.com
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/scrub.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1562,7 +1562,8 @@ void btrfs_delete_unused_bgs(struct btrf
- 		 * needing to allocate extents from the block group.
- 		 */
- 		used = btrfs_space_info_used(space_info, true);
--		if (space_info->total_bytes - block_group->length < used) {
-+		if (space_info->total_bytes - block_group->length < used &&
-+		    block_group->zone_unusable < block_group->length) {
- 			/*
- 			 * Add a reference for the list, compensate for the ref
- 			 * drop under the "next" label for the
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -2809,7 +2809,17 @@ static noinline_for_stack int scrub_supe
+ 		gen = btrfs_get_last_trans_committed(fs_info);
+ 
+ 	for (i = 0; i < BTRFS_SUPER_MIRROR_MAX; i++) {
+-		bytenr = btrfs_sb_offset(i);
++		ret = btrfs_sb_log_location(scrub_dev, i, 0, &bytenr);
++		if (ret == -ENOENT)
++			break;
++
++		if (ret) {
++			spin_lock(&sctx->stat_lock);
++			sctx->stat.super_errors++;
++			spin_unlock(&sctx->stat_lock);
++			continue;
++		}
++
+ 		if (bytenr + BTRFS_SUPER_INFO_SIZE >
+ 		    scrub_dev->commit_total_bytes)
+ 			break;
 
 
