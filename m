@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBF1DFF4;
-	Mon,  1 Apr 2024 17:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85056487BE;
+	Mon,  1 Apr 2024 17:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991043; cv=none; b=AtxUK7xkAAs9SLySfBL36+33rth+3fhMCkoYVTWox7c76o9r/ji5SO8av/h5EXyo1jfNl9qdnnvzKAuLkmdjIKCTr4eaFr4ykWXKh9GfGAAXlGGpsaEhoqKanG58WLFC7KJNgkZOinRgAOOuKB9JlhD1WLUqpHh9YKC0WrzY0H0=
+	t=1711991046; cv=none; b=njrvbcaMUQCDuls0z9GHTBKvs6Caz/8s8uwOZ811SgfY+mPZyfDChKQlJFvNj+Dv3Qr4qzb6gIl6SCRB2GH7dHBy2Ktl4PLkunCG/h0Qc+L9DmzxWWy05P+wtN0b1pe7fgnl7J2W5DCF9hCi8Dy+eVhObxBZmX7PlKRVHn93Abc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991043; c=relaxed/simple;
-	bh=HA3zKyGplIXILVAs3tL+JiCM/AcTfRJyAEC9XNE5mxk=;
+	s=arc-20240116; t=1711991046; c=relaxed/simple;
+	bh=RE/EdN/mqQ2Cme8u0LE8eZ/4IdtHarU+vyRZLO4KNVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emMDWF9x0fa2iDSELnzsFL2TR6gAx7khqGg+wSEM0+/R13Mc9gtOp413ClssaJdrxY5wZWP54eZNv475KlnfeEpEl92640sBVZyRZruVouIxD2LyCWv7Vcv6hQtk2DN5WcY7CHnJRQ9tIxZGVxU43BLkK+ZxfcwRXJVJDNC/97w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Faz8H6Ty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLtVOMx4ksvyTkCKTXIV//lqt6S6dy3dMrfvbfSkV0CP78EsShbdxZZSP9ucYwqvVCLr77ru3xHaBg0FHXj/+KqmB5xtfzrMyX03g2GSGN4Q0E9DXbVvq2Imt/mimppNUHfV47ar0XOJAi0Ivhu+6OTFynzhsIkBm3UmECv21JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMNG1wBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Faz8H6Ty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA240C433C7;
-	Mon,  1 Apr 2024 17:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMNG1wBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8188C433F1;
+	Mon,  1 Apr 2024 17:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991043;
-	bh=HA3zKyGplIXILVAs3tL+JiCM/AcTfRJyAEC9XNE5mxk=;
+	s=korg; t=1711991046;
+	bh=RE/EdN/mqQ2Cme8u0LE8eZ/4IdtHarU+vyRZLO4KNVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Faz8H6TyO9gl3R3E20Nt0PQ7CXGvQmhmDmA3hn5pZZi+c+bjXvxbHZhjcPCvbaQCB
-	 1ss8eFV3HsCp6ILBYtM1F58gVNRVdLdgzhTrAlA34a19q2z8Hg7hprbpl+DHzd5RwM
-	 Q4AWAmsmt4WdOJdGzWgaJsm6JW1UdPb8SftxbV64=
+	b=rMNG1wBorL3cTm+Qj3Sf/EXHN4GSuPWNU7fd++lK7AlB65Bo/qyOBj5CyLH8uohF4
+	 tok1sxctgvxVVSoOKe1Yq34txaAIr25OojBUdBEJo6ixFlI6/UDL8CtZmfqCPWbzq8
+	 s6iNitqIsQbKRxkpuDBoQbcFm3JZCQhQRXNtK6fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	valis <sec@valis.email>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 144/272] tls: fix race between tx work scheduling and socket close
-Date: Mon,  1 Apr 2024 17:45:34 +0200
-Message-ID: <20240401152535.180080613@linuxfoundation.org>
+	Mingi Cho <mgcho.minic@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 145/272] netfilter: nf_tables: mark set as dead when unbinding anonymous set with timeout
+Date: Mon,  1 Apr 2024 17:45:35 +0200
+Message-ID: <20240401152535.219616375@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,64 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit e01e3934a1b2d122919f73bc6ddbe1cdafc4bbdb upstream.
+commit 552705a3650bbf46a22b1adedc1b04181490fc36 upstream.
 
-Similarly to previous commit, the submitting thread (recvmsg/sendmsg)
-may exit as soon as the async crypto handler calls complete().
-Reorder scheduling the work before calling complete().
-This seems more logical in the first place, as it's
-the inverse order of what the submitting thread will do.
+While the rhashtable set gc runs asynchronously, a race allows it to
+collect elements from anonymous sets with timeouts while it is being
+released from the commit path.
 
-Reported-by: valis <sec@valis.email>
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[Lee: Fixed merge-conflict in Stable branches linux-6.1.y and older]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Mingi Cho originally reported this issue in a different path in 6.1.x
+with a pipapo set with low timeouts which is not possible upstream since
+7395dfacfff6 ("netfilter: nf_tables: use timestamp to check for set
+element timeout").
+
+Fix this by setting on the dead flag for anonymous sets to skip async gc
+in this case.
+
+According to 08e4c8c5919f ("netfilter: nf_tables: mark newset as dead on
+transaction abort"), Florian plans to accelerate abort path by releasing
+objects via workqueue, therefore, this sets on the dead flag for abort
+path too.
+
+Cc: stable@vger.kernel.org
+Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
+Reported-by: Mingi Cho <mgcho.minic@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ net/netfilter/nf_tables_api.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -449,7 +449,6 @@ static void tls_encrypt_done(crypto_comp
- 	struct scatterlist *sge;
- 	struct sk_msg *msg_en;
- 	struct tls_rec *rec;
--	bool ready = false;
- 	struct sock *sk;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5132,6 +5132,7 @@ static void nf_tables_unbind_set(const s
  
- 	rec = container_of(aead_req, struct tls_rec, aead_req);
-@@ -486,19 +485,16 @@ static void tls_encrypt_done(crypto_comp
- 		/* If received record is at head of tx_list, schedule tx */
- 		first_rec = list_first_entry(&ctx->tx_list,
- 					     struct tls_rec, list);
--		if (rec == first_rec)
--			ready = true;
-+		if (rec == first_rec) {
-+			/* Schedule the transmission */
-+			if (!test_and_set_bit(BIT_TX_SCHEDULED,
-+					      &ctx->tx_bitmask))
-+				schedule_delayed_work(&ctx->tx_work.work, 1);
-+		}
- 	}
- 
- 	if (atomic_dec_and_test(&ctx->encrypt_pending))
- 		complete(&ctx->async_wait.completion);
--
--	if (!ready)
--		return;
--
--	/* Schedule the transmission */
--	if (!test_and_set_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask))
--		schedule_delayed_work(&ctx->tx_work.work, 1);
- }
- 
- static int tls_encrypt_async_wait(struct tls_sw_context_tx *ctx)
+ 	if (list_empty(&set->bindings) && nft_set_is_anonymous(set)) {
+ 		list_del_rcu(&set->list);
++		set->dead = 1;
+ 		if (event)
+ 			nf_tables_set_notify(ctx, set, NFT_MSG_DELSET,
+ 					     GFP_KERNEL);
 
 
