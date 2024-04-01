@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075B5C129;
-	Mon,  1 Apr 2024 16:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442EEC129;
+	Mon,  1 Apr 2024 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988541; cv=none; b=mpU+qJV/JE8BvXaLiGOSQhoil6vCa2I6JUYcHl7dMYd6l/5ZZSk6543//GWfeoTRruuCdEtDXb89J7M1SELgtRN0NmdCZOzBm/tAW27GR+R0fCEFkfuuQRkesKSt0MjRagyWJpdYeVODYHxaVVsZ9X/YHWqzYiflAYzDiJq5ELE=
+	t=1711988544; cv=none; b=rVigSm3AZC2EP+wFFIzupIko7FZrS+J2q9lxYdqZZkJuhKxcDYC/jt1xTN0JZpkqDRXioZCxrqGa0KPxvjTyMrWaJpAAggWYd2dlfnLFKQDL5gwbQXJvMVq9kKqMVccbX9Vr/yfY6S7k19QfYm67So9Y4yZWB42JbPaQW+uvTF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988541; c=relaxed/simple;
-	bh=BEWcx+/LbCxc/rCc4uGO2L3mePOzUmSfMutrErc4FJo=;
+	s=arc-20240116; t=1711988544; c=relaxed/simple;
+	bh=WwvfW1i9NxtdBGncU8buli8Za5ZXr/C25YJbnysvs+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGJg+OIgb4CnWCy/k72FoSFWjhGCqmjW/0PjGGSchQokLXsVYKIxtwEyPKL9CJmX108pUIjC+xBzQ3kXmpf9cGJZKKNPEr50dt6pJb8h5kn1BdziS0H2kS86DRXG+bvhMvIM/rASknEHgoTbFs+0TMWY4k4XjuMvN60gILpzWuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUg8HWj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QspseNtTWU0ksxKxWhj7Gg8kzmw51kA2dx50Sy4SDbMqpUxatSqz12A6UkhksuXTArvwkeDrjUtFlTC1hjSsMHc11XOS7kJF0fiMv3Hm8cifoq4uFjn2bGxrHQNh7aYghbZuPKMbtxZNrQOQS4zAcCOohxl/Zw5mi5czSZc+WEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLt7J3/m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUg8HWj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85ADBC433C7;
-	Mon,  1 Apr 2024 16:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLt7J3/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93CC433F1;
+	Mon,  1 Apr 2024 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988540;
-	bh=BEWcx+/LbCxc/rCc4uGO2L3mePOzUmSfMutrErc4FJo=;
+	s=korg; t=1711988544;
+	bh=WwvfW1i9NxtdBGncU8buli8Za5ZXr/C25YJbnysvs+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUg8HWj/ZRCNwfczGJrzHEZ5Cqg/v8IVOKGx8rCux0eegW6Oh9fxwxxOyv7dac5kJ
-	 ht7jTvm85FLtM2RSSP1VSlTv54TN5lwdso0XZxkDDTgKa90NrTcmTRpPXtsmgLJHVV
-	 PhfWxmkMD8eQsYLNBy3sf3FSSx4TMhhobJxm/0ek=
+	b=PLt7J3/m8gV/+DxSdY6G/o86vzBUFYF1At6sZqPXH88P+7vp9Osi9xKjsHrhrsMW7
+	 V0Mm17F9WbP7OGrnYRL4tdQeGQPzFJg7s94bjUUVBApuWkh2svM3dFCuiaLAApxBw+
+	 t4I8tUhb1p3tvipZbf6Eu5uxHGA+81lLNdE9mzJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Chaitanya Dhere <chaitanya.dhere@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
 	Dillon Varone <dillon.varone@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 215/432] drm/amd/display: Init DPPCLK from SMU on dcn32
-Date: Mon,  1 Apr 2024 17:43:22 +0200
-Message-ID: <20240401152559.553357953@linuxfoundation.org>
+Subject: [PATCH 6.7 216/432] drm/amd/display: Update odm when ODM combine is changed on an otg master pipe with no plane
+Date: Mon,  1 Apr 2024 17:43:23 +0200
+Message-ID: <20240401152559.582881386@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,154 +55,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-[ Upstream commit 4f5b8d78ca43fcc695ba16c83ebfabbfe09506d6 ]
+[ Upstream commit 86e9523fb0efce27095d3086473c739cce720d01 ]
 
-[WHY & HOW]
-DPPCLK ranges should be obtained from the SMU when available.
+[WHY]
+When committing an update with ODM combine change when the plane is
+removing or already removed, we fail to detect odm change in pipe
+update flags. This has caused mismatch between new dc state and the
+actual hardware state, because we missed odm programming.
+
+[HOW]
+- Detect odm change even for otg master pipe without a plane.
+- Update odm config before calling program pipes for pipe with planes.
+
+The commit also updates blank pattern programming when odm is changed
+without plane. This is because number of OPP is changed when ODM
+combine is changed. Blank pattern is per OPP so we will need to
+reprogram OPP based on the new pipe topology.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
 Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c  | 14 ++++++++++
- .../drm/amd/display/dc/dcn32/dcn32_resource.c |  2 ++
- .../amd/display/dc/dcn321/dcn321_resource.c   |  2 ++
- .../drm/amd/display/dc/dml2/dml2_wrapper.c    | 28 +++++++++++++------
- .../drm/amd/display/dc/dml2/dml2_wrapper.h    |  3 ++
- 5 files changed, 41 insertions(+), 8 deletions(-)
+ .../amd/display/dc/hwss/dcn20/dcn20_hwseq.c   | 41 ++++++++++---------
+ .../amd/display/dc/hwss/dcn32/dcn32_hwseq.c   |  7 ++++
+ 2 files changed, 28 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-index a496930b1f9c0..289918ea7298d 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-@@ -217,6 +217,16 @@ void dcn32_init_clocks(struct clk_mgr *clk_mgr_base)
- 	if (clk_mgr_base->bw_params->dc_mode_limit.dispclk_mhz > 1950)
- 		clk_mgr_base->bw_params->dc_mode_limit.dispclk_mhz = 1950;
- 
-+	/* DPPCLK */
-+	dcn32_init_single_clock(clk_mgr, PPCLK_DPPCLK,
-+			&clk_mgr_base->bw_params->clk_table.entries[0].dppclk_mhz,
-+			&num_entries_per_clk->num_dppclk_levels);
-+	num_levels = num_entries_per_clk->num_dppclk_levels;
-+	clk_mgr_base->bw_params->dc_mode_limit.dppclk_mhz = dcn30_smu_get_dc_mode_max_dpm_freq(clk_mgr, PPCLK_DPPCLK);
-+	//HW recommends limit of 1950 MHz in display clock for all DCN3.2.x
-+	if (clk_mgr_base->bw_params->dc_mode_limit.dppclk_mhz > 1950)
-+		clk_mgr_base->bw_params->dc_mode_limit.dppclk_mhz = 1950;
-+
- 	if (num_entries_per_clk->num_dcfclk_levels &&
- 			num_entries_per_clk->num_dtbclk_levels &&
- 			num_entries_per_clk->num_dispclk_levels)
-@@ -241,6 +251,10 @@ void dcn32_init_clocks(struct clk_mgr *clk_mgr_base)
- 					= khz_to_mhz_ceil(clk_mgr_base->ctx->dc->debug.min_dpp_clk_khz);
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index c966f38583cb9..e3f547e0613c9 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -1385,6 +1385,11 @@ static void dcn20_detect_pipe_changes(struct pipe_ctx *old_pipe, struct pipe_ctx
+ 		return;
  	}
  
-+	for (i = 0; i < num_levels; i++)
-+		if (clk_mgr_base->bw_params->clk_table.entries[i].dppclk_mhz > 1950)
-+			clk_mgr_base->bw_params->clk_table.entries[i].dppclk_mhz = 1950;
++	if (resource_is_pipe_type(new_pipe, OTG_MASTER) &&
++			resource_is_odm_topology_changed(new_pipe, old_pipe))
++		/* Detect odm changes */
++		new_pipe->update_flags.bits.odm = 1;
 +
- 	/* Get UCLK, update bounding box */
- 	clk_mgr_base->funcs->get_memclk_states_from_smu(clk_mgr_base);
+ 	/* Exit on unchanged, unused pipe */
+ 	if (!old_pipe->plane_state && !new_pipe->plane_state)
+ 		return;
+@@ -1434,10 +1439,6 @@ static void dcn20_detect_pipe_changes(struct pipe_ctx *old_pipe, struct pipe_ctx
  
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index 3d335b1ca1089..cc468bdcb3de2 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -2012,6 +2012,8 @@ static void dcn32_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw
- {
- 	DC_FP_START();
- 	dcn32_update_bw_bounding_box_fpu(dc, bw_params);
-+	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2)
-+		dml2_reinit(dc, &dc->dml2_options, &dc->current_state->bw_ctx.dml2);
- 	DC_FP_END();
- }
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-index 4156a8cc2bc7e..3b7505b5f0a41 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-@@ -1579,6 +1579,8 @@ static void dcn321_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *b
- {
- 	DC_FP_START();
- 	dcn321_update_bw_bounding_box_fpu(dc, bw_params);
-+	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2)
-+		dml2_reinit(dc, &dc->dml2_options, &dc->current_state->bw_ctx.dml2);
- 	DC_FP_END();
- }
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-index 8f34df00055c3..269bfb14c2399 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
-@@ -701,13 +701,8 @@ static inline struct dml2_context *dml2_allocate_memory(void)
- 	return (struct dml2_context *) kzalloc(sizeof(struct dml2_context), GFP_KERNEL);
- }
- 
--bool dml2_create(const struct dc *in_dc, const struct dml2_configuration_options *config, struct dml2_context **dml2)
-+static void dml2_init(const struct dc *in_dc, const struct dml2_configuration_options *config, struct dml2_context **dml2)
- {
--	// Allocate Mode Lib Ctx
--	*dml2 = dml2_allocate_memory();
+ 	/* Detect top pipe only changes */
+ 	if (resource_is_pipe_type(new_pipe, OTG_MASTER)) {
+-		/* Detect odm changes */
+-		if (resource_is_odm_topology_changed(new_pipe, old_pipe))
+-			new_pipe->update_flags.bits.odm = 1;
 -
--	if (!(*dml2))
--		return false;
+ 		/* Detect global sync changes */
+ 		if (old_pipe->pipe_dlg_param.vready_offset != new_pipe->pipe_dlg_param.vready_offset
+ 				|| old_pipe->pipe_dlg_param.vstartup_start != new_pipe->pipe_dlg_param.vstartup_start
+@@ -1879,19 +1880,20 @@ void dcn20_program_front_end_for_ctx(
+ 	DC_LOGGER_INIT(dc->ctx->logger);
+ 	unsigned int prev_hubp_count = 0;
+ 	unsigned int hubp_count = 0;
++	struct pipe_ctx *pipe;
  
- 	// Store config options
- 	(*dml2)->config = *config;
-@@ -735,9 +730,18 @@ bool dml2_create(const struct dc *in_dc, const struct dml2_configuration_options
- 	initialize_dml2_soc_bbox(*dml2, in_dc, &(*dml2)->v20.dml_core_ctx.soc);
+ 	if (resource_is_pipe_topology_changed(dc->current_state, context))
+ 		resource_log_pipe_topology_update(dc, context);
  
- 	initialize_dml2_soc_states(*dml2, in_dc, &(*dml2)->v20.dml_core_ctx.soc, &(*dml2)->v20.dml_core_ctx.states);
-+}
-+
-+bool dml2_create(const struct dc *in_dc, const struct dml2_configuration_options *config, struct dml2_context **dml2)
-+{
-+	// Allocate Mode Lib Ctx
-+	*dml2 = dml2_allocate_memory();
-+
-+	if (!(*dml2))
-+		return false;
-+
-+	dml2_init(in_dc, config, dml2);
+ 	if (dc->hwss.program_triplebuffer != NULL && dc->debug.enable_tri_buf) {
+ 		for (i = 0; i < dc->res_pool->pipe_count; i++) {
+-			struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
++			pipe = &context->res_ctx.pipe_ctx[i];
  
--	/*Initialize DML20 instance which calls dml2_core_create, and core_dcn3_populate_informative*/
--	//dml2_initialize_instance(&(*dml_ctx)->v20.dml_init);
- 	return true;
+-			if (!pipe_ctx->top_pipe && !pipe_ctx->prev_odm_pipe && pipe_ctx->plane_state) {
+-				ASSERT(!pipe_ctx->plane_state->triplebuffer_flips);
++			if (!pipe->top_pipe && !pipe->prev_odm_pipe && pipe->plane_state) {
++				ASSERT(!pipe->plane_state->triplebuffer_flips);
+ 				/*turn off triple buffer for full update*/
+ 				dc->hwss.program_triplebuffer(
+-						dc, pipe_ctx, pipe_ctx->plane_state->triplebuffer_flips);
++						dc, pipe, pipe->plane_state->triplebuffer_flips);
+ 			}
+ 		}
+ 	}
+@@ -1965,12 +1967,22 @@ void dcn20_program_front_end_for_ctx(
+ 			DC_LOG_DC("Reset mpcc for pipe %d\n", dc->current_state->res_ctx.pipe_ctx[i].pipe_idx);
+ 		}
+ 
++	/* update ODM for blanked OTG master pipes */
++	for (i = 0; i < dc->res_pool->pipe_count; i++) {
++		pipe = &context->res_ctx.pipe_ctx[i];
++		if (resource_is_pipe_type(pipe, OTG_MASTER) &&
++				!resource_is_pipe_type(pipe, DPP_PIPE) &&
++				pipe->update_flags.bits.odm &&
++				hws->funcs.update_odm)
++			hws->funcs.update_odm(dc, context, pipe);
++	}
++
+ 	/*
+ 	 * Program all updated pipes, order matters for mpcc setup. Start with
+ 	 * top pipe and program all pipes that follow in order
+ 	 */
+ 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
+-		struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
++		pipe = &context->res_ctx.pipe_ctx[i];
+ 
+ 		if (pipe->plane_state && !pipe->top_pipe) {
+ 			while (pipe) {
+@@ -2009,17 +2021,6 @@ void dcn20_program_front_end_for_ctx(
+ 			context->stream_status[0].plane_count > 1) {
+ 			pipe->plane_res.hubp->funcs->hubp_wait_pipe_read_start(pipe->plane_res.hubp);
+ 		}
+-
+-		/* when dynamic ODM is active, pipes must be reconfigured when all planes are
+-		 * disabled, as some transitions will leave software and hardware state
+-		 * mismatched.
+-		 */
+-		if (dc->debug.enable_single_display_2to1_odm_policy &&
+-			pipe->stream &&
+-			pipe->update_flags.bits.disable &&
+-			!pipe->prev_odm_pipe &&
+-			hws->funcs.update_odm)
+-			hws->funcs.update_odm(dc, context, pipe);
+ 	}
  }
  
-@@ -777,3 +781,11 @@ bool dml2_create_copy(struct dml2_context **dst_dml2,
- 
- 	return true;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+index cb9d8389329ff..59b32fe96b643 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -1159,6 +1159,13 @@ void dcn32_update_odm(struct dc *dc, struct dc_state *context, struct pipe_ctx *
+ 			dsc->funcs->dsc_disconnect(dsc);
+ 		}
+ 	}
++
++	if (!resource_is_pipe_type(pipe_ctx, DPP_PIPE))
++		/*
++		 * blank pattern is generated by OPP, reprogram blank pattern
++		 * due to OPP count change
++		 */
++		dc->hwseq->funcs.blank_pixel_data(dc, pipe_ctx, true);
  }
-+
-+void dml2_reinit(const struct dc *in_dc,
-+				 const struct dml2_configuration_options *config,
-+				 struct dml2_context **dml2)
-+{
-+
-+	dml2_init(in_dc, config, dml2);
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.h b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.h
-index 0de6886969c69..548504d7de1e9 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.h
-@@ -195,6 +195,9 @@ void dml2_copy(struct dml2_context *dst_dml2,
- 	struct dml2_context *src_dml2);
- bool dml2_create_copy(struct dml2_context **dst_dml2,
- 	struct dml2_context *src_dml2);
-+void dml2_reinit(const struct dc *in_dc,
-+				 const struct dml2_configuration_options *config,
-+				 struct dml2_context **dml2);
  
- /*
-  * dml2_validate - Determines if a display configuration is supported or not.
+ unsigned int dcn32_calculate_dccg_k1_k2_values(struct pipe_ctx *pipe_ctx, unsigned int *k1_div, unsigned int *k2_div)
 -- 
 2.43.0
 
