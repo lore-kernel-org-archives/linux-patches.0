@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EF0481D1;
-	Mon,  1 Apr 2024 16:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35683BA3F;
+	Mon,  1 Apr 2024 16:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990533; cv=none; b=KSr3z8r8FJyK+8MNeEVpwFKw79U4DWmn6/g0gfZJ0Z0foQGKxDryPPMPWY8g3No/M7Glaz/GcuSYP+Xkni2uu2qUjD3Eax6NrIinrLPkpH4Yg2ROxis0K+XSdmHBBcQrI8AGuldAWF4gH7H7hxIWSbzEz+v2ZJbN3DtwMMQZyBY=
+	t=1711990536; cv=none; b=cuJ8UQbw/zjsnmOuOPLqBKK+kFGwQqRBIEm/lwEE3Y6cPfHqmMbeuC7s6FUghK31ucQP9r86srnVSMPDt4Y5lhog0D9T1CDotP/SQNdTEsutWwT2HHvZftuG+C6t0hO04qbnN/OdhR4VHBfc6boFvYiRVsOuVKg5sRxpewAQ5MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990533; c=relaxed/simple;
-	bh=ie9IvmnSvCYd54UBesnNctHhlICAx3sEeSMX9UMZprY=;
+	s=arc-20240116; t=1711990536; c=relaxed/simple;
+	bh=dTW4S+DpqGOivEuWoh1hmimYiyNf/tDBmiNhiPa5YLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbYS0oQEw07+6PdXM2z03wl9UWkNxxg2GbNmNV2rMNSwsl109bPne3EXTkoeR+bSpdZMRzMbAG83c0m0y2w4lXbeypi44qE+byzXyXSQZmYYHsA0QpxW0PE2jUC4gXRNJgW1kYstSUtb8VARQUSjRLP50905Wumd3DDjN03xVC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTeEf5tF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fN79LCQEngbDoHn8vDRi7Putdii8rnS5torWlMJVYlaQ3AYq3CCZkhI8b9iyt7ngQ9k+NZEIXDZpacq9wKuQylGI7G+uyRqlzCR0jMtPU8uU+oi1DrmvA6WpZ3cGMOyaM1jVZBp9oP2Mcj06yuorKRHeG8jynnwoPp52f2jBaa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxgo4JO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTeEf5tF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C99C433F1;
-	Mon,  1 Apr 2024 16:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxgo4JO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55E6C433F1;
+	Mon,  1 Apr 2024 16:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990533;
-	bh=ie9IvmnSvCYd54UBesnNctHhlICAx3sEeSMX9UMZprY=;
+	s=korg; t=1711990536;
+	bh=dTW4S+DpqGOivEuWoh1hmimYiyNf/tDBmiNhiPa5YLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTeEf5tF9s9JqsPN/9pGqmNAppXDGpCwDUcOD9wL+zpSkQqE1x3baeNYcFnsq3+OV
-	 2gyxwZtlTUHHpO5HOtioa397bZ32+l5k+zdbly+kFM203Upx+fS8KnNp0hw4eMLuXe
-	 MJ7kpsResi0iPHD8e5ab3W9lnxx2sX97sPzKS0vg=
+	b=wxgo4JO5SI1xO16T8bF8kvq+gfnrT3n2gUCViSN+jYeEKz/bCouqYiapCPOQET+uB
+	 1m1G1aiumNczvrqLB+FtE98SMpueRVbbhQBvViWdCwJRfjoXWR28V12s4Wm1U0xJYN
+	 naB5zkPKwRT7vCmu0QFUzj2yXfTRaBdvBkpvJqy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 384/396] scsi: qla2xxx: Fix double free of the ha->vp_map pointer
-Date: Mon,  1 Apr 2024 17:47:13 +0200
-Message-ID: <20240401152559.364937128@linuxfoundation.org>
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.6 367/396] usb: dwc2: host: Fix hibernation flow
+Date: Mon,  1 Apr 2024 17:46:56 +0200
+Message-ID: <20240401152558.858422499@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,36 +49,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit e288285d47784fdcf7c81be56df7d65c6f10c58b upstream.
+commit 3c7b9856a82227db01a20171d2e24c7ce305d59b upstream.
 
-Coverity scan reported potential risk of double free of the pointer
-ha->vp_map.  ha->vp_map was freed in qla2x00_mem_alloc(), and again freed
-in function qla2x00_mem_free(ha).
+Added to backup/restore registers HFLBADDR, HCCHARi, HCSPLTi,
+HCTSIZi, HCDMAi and HCDMABi.
 
-Assign NULL to vp_map and kfree take care of NULL.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240227164127.36465-8-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 58e52ff6a6c3 ("usb: dwc2: Move register save and restore functions")
+Fixes: d17ee77b3044 ("usb: dwc2: add controller hibernation support")
+CC: stable@vger.kernel.org
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/c2d10ee6098b9b009a8e94191e046004747d3bdd.1708945444.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc2/core.h |   12 ++++++++++++
+ drivers/usb/dwc2/hcd.c  |   18 ++++++++++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -4601,6 +4601,7 @@ fail_free_init_cb:
- 	ha->init_cb_dma = 0;
- fail_free_vp_map:
- 	kfree(ha->vp_map);
-+	ha->vp_map = NULL;
- fail:
- 	ql_log(ql_log_fatal, NULL, 0x0030,
- 	    "Memory allocation failure.\n");
+--- a/drivers/usb/dwc2/core.h
++++ b/drivers/usb/dwc2/core.h
+@@ -729,8 +729,14 @@ struct dwc2_dregs_backup {
+  * struct dwc2_hregs_backup - Holds host registers state before
+  * entering partial power down
+  * @hcfg:		Backup of HCFG register
++ * @hflbaddr:		Backup of HFLBADDR register
+  * @haintmsk:		Backup of HAINTMSK register
++ * @hcchar:		Backup of HCCHAR register
++ * @hcsplt:		Backup of HCSPLT register
+  * @hcintmsk:		Backup of HCINTMSK register
++ * @hctsiz:		Backup of HCTSIZ register
++ * @hdma:		Backup of HCDMA register
++ * @hcdmab:		Backup of HCDMAB register
+  * @hprt0:		Backup of HPTR0 register
+  * @hfir:		Backup of HFIR register
+  * @hptxfsiz:		Backup of HPTXFSIZ register
+@@ -738,8 +744,14 @@ struct dwc2_dregs_backup {
+  */
+ struct dwc2_hregs_backup {
+ 	u32 hcfg;
++	u32 hflbaddr;
+ 	u32 haintmsk;
++	u32 hcchar[MAX_EPS_CHANNELS];
++	u32 hcsplt[MAX_EPS_CHANNELS];
+ 	u32 hcintmsk[MAX_EPS_CHANNELS];
++	u32 hctsiz[MAX_EPS_CHANNELS];
++	u32 hcidma[MAX_EPS_CHANNELS];
++	u32 hcidmab[MAX_EPS_CHANNELS];
+ 	u32 hprt0;
+ 	u32 hfir;
+ 	u32 hptxfsiz;
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -5406,9 +5406,16 @@ int dwc2_backup_host_registers(struct dw
+ 	/* Backup Host regs */
+ 	hr = &hsotg->hr_backup;
+ 	hr->hcfg = dwc2_readl(hsotg, HCFG);
++	hr->hflbaddr = dwc2_readl(hsotg, HFLBADDR);
+ 	hr->haintmsk = dwc2_readl(hsotg, HAINTMSK);
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		hr->hcchar[i] = dwc2_readl(hsotg, HCCHAR(i));
++		hr->hcsplt[i] = dwc2_readl(hsotg, HCSPLT(i));
+ 		hr->hcintmsk[i] = dwc2_readl(hsotg, HCINTMSK(i));
++		hr->hctsiz[i] = dwc2_readl(hsotg, HCTSIZ(i));
++		hr->hcidma[i] = dwc2_readl(hsotg, HCDMA(i));
++		hr->hcidmab[i] = dwc2_readl(hsotg, HCDMAB(i));
++	}
+ 
+ 	hr->hprt0 = dwc2_read_hprt0(hsotg);
+ 	hr->hfir = dwc2_readl(hsotg, HFIR);
+@@ -5442,10 +5449,17 @@ int dwc2_restore_host_registers(struct d
+ 	hr->valid = false;
+ 
+ 	dwc2_writel(hsotg, hr->hcfg, HCFG);
++	dwc2_writel(hsotg, hr->hflbaddr, HFLBADDR);
+ 	dwc2_writel(hsotg, hr->haintmsk, HAINTMSK);
+ 
+-	for (i = 0; i < hsotg->params.host_channels; ++i)
++	for (i = 0; i < hsotg->params.host_channels; ++i) {
++		dwc2_writel(hsotg, hr->hcchar[i], HCCHAR(i));
++		dwc2_writel(hsotg, hr->hcsplt[i], HCSPLT(i));
+ 		dwc2_writel(hsotg, hr->hcintmsk[i], HCINTMSK(i));
++		dwc2_writel(hsotg, hr->hctsiz[i], HCTSIZ(i));
++		dwc2_writel(hsotg, hr->hcidma[i], HCDMA(i));
++		dwc2_writel(hsotg, hr->hcidmab[i], HCDMAB(i));
++	}
+ 
+ 	dwc2_writel(hsotg, hr->hprt0, HPRT0);
+ 	dwc2_writel(hsotg, hr->hfir, HFIR);
 
 
