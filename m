@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6491CA8F;
-	Mon,  1 Apr 2024 16:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71D11CA8F;
+	Mon,  1 Apr 2024 16:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987368; cv=none; b=a7RdLVNIL9QFZ+plwRGn0Qhm3JCe9GyJI7JE9/3vUPFxXmNvTVOCyrV5CnsK5vhajncr+5m9E7OsYytSeIbiLZ2T5OPmn7mFAssa6ufeqRJm4IgeLqTIm0nqve5CmKSUfCOAEE3buSzHFsgtTAqzUIIa3WMaVm1zvdkbuPYKV10=
+	t=1711987371; cv=none; b=XVp/T84ONW1qAWHG/efyeXFx3r8jE+PSOuJ+j/4HKFPerwjLMeL8AGT+iu49AQo9YGQu2IS4Y+SlPDpq94rNzTUbTzw02hE6l12Xduvq4otohOmjJaVxQvWrqlWw2c48xYCdpjVNzz6GL04UZ3IGeQUYGvInOljrTt90eL6vDdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987368; c=relaxed/simple;
-	bh=sqk4Z0rXxVvyPzoxrpngK526vqzStNTiB8GTYu9Q62Q=;
+	s=arc-20240116; t=1711987371; c=relaxed/simple;
+	bh=CqrryT1Dk96EdkwzrYaMDegKRHuD1SDAzMJSOT9OY9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r24DFj9PlrVxWBMs1JBIr8N1YsvrvhYtWOrlnM1sIOWS2UKJ+/PC93msepVFxGdL7JtH088LP8BELDXFSHi1p1UmiVPnyihedgl40PnhOuMzCEXzxYc7eZKUB6bjIO9VIRSGV/uRD0mNMBKSdaf8N4ag7vSNtVK6PFLqUpawXik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEwvQ6wk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbXI+/RhaRFBmt8/dftw1nnLB5E7Y9EQI7XzPS9Od9p3pEyazB7YvfA4PEykHrHXi5RqouJ9S8TftGZ2JCne42++o3KJQQ42w8rUguPeP2cir7oBEkeeSzy6Si3SSQmHMlCG+zOMYhFByLPxadxXeh16Rx1IrN2VaBuuJBokmQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl0fMDzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEwvQ6wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01821C433F1;
-	Mon,  1 Apr 2024 16:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl0fMDzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D35DC433F1;
+	Mon,  1 Apr 2024 16:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987368;
-	bh=sqk4Z0rXxVvyPzoxrpngK526vqzStNTiB8GTYu9Q62Q=;
+	s=korg; t=1711987371;
+	bh=CqrryT1Dk96EdkwzrYaMDegKRHuD1SDAzMJSOT9OY9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEwvQ6wkbc9/y1xhpWeZbmonbkPWvbLpO+IWrBh6m3NPLlwTyvhgDZCSu/5Uf8bqH
-	 7ox3C0Svjz2Gl6JU3HRq/LwDMic36lEQEJdAPFckybRsCW8TYsMpS9EqwkTX3rXBKG
-	 tkmCUrGHsotrQ7kTPN7VSOvp6msGVaUTknByeC6I=
+	b=yl0fMDzjjyyzwnfLgTk6sZkaZgivqBbRVWdMN5ojzO0IMaT4mOD/+lJYQR1CQNGpi
+	 MbEBD3a/h8ZL+q0K4+oIXvHh0wV9Dp2bf7NrY2FebYwcKAnSe7tgsrtAiVZ0fl5Wlb
+	 HaBTxitgr7ObXjUJaKoezZ4QI581slq3Tteqi9Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Sterba <dsterba@suse.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 228/399] btrfs: add set_folio_extent_mapped() helper
-Date: Mon,  1 Apr 2024 17:43:14 +0200
-Message-ID: <20240401152555.987091416@linuxfoundation.org>
+Subject: [PATCH 6.8 260/399] iommu/dma: Force swiotlb_max_mapping_size on an untrusted device
+Date: Mon,  1 Apr 2024 17:43:46 +0200
+Message-ID: <20240401152556.934606694@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,67 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit dfba9f47730604a46c284f6099a11c5686b6289d ]
+[ Upstream commit afc5aa46ed560f01ceda897c053c6a40c77ce5c4 ]
 
-Turn set_page_extent_mapped() into a wrapper around this version.
-Saves a call to compound_head() for callers who already have a folio
-and removes a couple of users of page->mapping.
+The swiotlb does not support a mapping size > swiotlb_max_mapping_size().
+On the other hand, with a 64KB PAGE_SIZE configuration, it's observed that
+an NVME device can map a size between 300KB~512KB, which certainly failed
+the swiotlb mappings, though the default pool of swiotlb has many slots:
+    systemd[1]: Started Journal Service.
+ => nvme 0000:00:01.0: swiotlb buffer is full (sz: 327680 bytes), total 32768 (slots), used 32 (slots)
+    note: journal-offline[392] exited with irqs disabled
+    note: journal-offline[392] exited with preempt_count 1
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 86211eea8ae1 ("btrfs: qgroup: validate btrfs_qgroup_inherit parameter")
+Call trace:
+[    3.099918]  swiotlb_tbl_map_single+0x214/0x240
+[    3.099921]  iommu_dma_map_page+0x218/0x328
+[    3.099928]  dma_map_page_attrs+0x2e8/0x3a0
+[    3.101985]  nvme_prep_rq.part.0+0x408/0x878 [nvme]
+[    3.102308]  nvme_queue_rqs+0xc0/0x300 [nvme]
+[    3.102313]  blk_mq_flush_plug_list.part.0+0x57c/0x600
+[    3.102321]  blk_add_rq_to_plug+0x180/0x2a0
+[    3.102323]  blk_mq_submit_bio+0x4c8/0x6b8
+[    3.103463]  __submit_bio+0x44/0x220
+[    3.103468]  submit_bio_noacct_nocheck+0x2b8/0x360
+[    3.103470]  submit_bio_noacct+0x180/0x6c8
+[    3.103471]  submit_bio+0x34/0x130
+[    3.103473]  ext4_bio_write_folio+0x5a4/0x8c8
+[    3.104766]  mpage_submit_folio+0xa0/0x100
+[    3.104769]  mpage_map_and_submit_buffers+0x1a4/0x400
+[    3.104771]  ext4_do_writepages+0x6a0/0xd78
+[    3.105615]  ext4_writepages+0x80/0x118
+[    3.105616]  do_writepages+0x90/0x1e8
+[    3.105619]  filemap_fdatawrite_wbc+0x94/0xe0
+[    3.105622]  __filemap_fdatawrite_range+0x68/0xb8
+[    3.106656]  file_write_and_wait_range+0x84/0x120
+[    3.106658]  ext4_sync_file+0x7c/0x4c0
+[    3.106660]  vfs_fsync_range+0x3c/0xa8
+[    3.106663]  do_fsync+0x44/0xc0
+
+Since untrusted devices might go down the swiotlb pathway with dma-iommu,
+these devices should not map a size larger than swiotlb_max_mapping_size.
+
+To fix this bug, add iommu_dma_max_mapping_size() for untrusted devices to
+take into account swiotlb_max_mapping_size() v.s. iova_rcache_range() from
+the iommu_dma_opt_mapping_size().
+
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Link: https://lore.kernel.org/r/ee51a3a5c32cf885b18f6416171802669f4a718a.1707851466.git.nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+[will: Drop redundant is_swiotlb_active(dev) check]
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 12 ++++++++----
- fs/btrfs/extent_io.h |  1 +
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/iommu/dma-iommu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 7761d7d93ba98..8b88cd08ab053 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -936,17 +936,21 @@ static int attach_extent_buffer_folio(struct extent_buffer *eb,
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 50ccc4f1ef81c..639efa0c40721 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1706,6 +1706,14 @@ static size_t iommu_dma_opt_mapping_size(void)
+ 	return iova_rcache_range();
+ }
  
- int set_page_extent_mapped(struct page *page)
- {
--	struct folio *folio = page_folio(page);
-+	return set_folio_extent_mapped(page_folio(page));
++static size_t iommu_dma_max_mapping_size(struct device *dev)
++{
++	if (dev_is_untrusted(dev))
++		return swiotlb_max_mapping_size(dev);
++
++	return SIZE_MAX;
 +}
 +
-+int set_folio_extent_mapped(struct folio *folio)
-+{
- 	struct btrfs_fs_info *fs_info;
+ static const struct dma_map_ops iommu_dma_ops = {
+ 	.flags			= DMA_F_PCI_P2PDMA_SUPPORTED,
+ 	.alloc			= iommu_dma_alloc,
+@@ -1728,6 +1736,7 @@ static const struct dma_map_ops iommu_dma_ops = {
+ 	.unmap_resource		= iommu_dma_unmap_resource,
+ 	.get_merge_boundary	= iommu_dma_get_merge_boundary,
+ 	.opt_mapping_size	= iommu_dma_opt_mapping_size,
++	.max_mapping_size       = iommu_dma_max_mapping_size,
+ };
  
--	ASSERT(page->mapping);
-+	ASSERT(folio->mapping);
- 
- 	if (folio_test_private(folio))
- 		return 0;
- 
--	fs_info = btrfs_sb(page->mapping->host->i_sb);
-+	fs_info = btrfs_sb(folio->mapping->host->i_sb);
- 
--	if (btrfs_is_subpage(fs_info, page->mapping))
-+	if (btrfs_is_subpage(fs_info, folio->mapping))
- 		return btrfs_attach_subpage(fs_info, folio, BTRFS_SUBPAGE_DATA);
- 
- 	folio_attach_private(folio, (void *)EXTENT_FOLIO_PRIVATE);
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 46050500529bf..2c9d6570b0a38 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -221,6 +221,7 @@ int btree_write_cache_pages(struct address_space *mapping,
- void extent_readahead(struct readahead_control *rac);
- int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		  u64 start, u64 len);
-+int set_folio_extent_mapped(struct folio *folio);
- int set_page_extent_mapped(struct page *page);
- void clear_page_extent_mapped(struct page *page);
- 
+ /*
 -- 
 2.43.0
 
