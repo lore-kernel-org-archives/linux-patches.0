@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5C0446D5;
-	Mon,  1 Apr 2024 16:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6E81CA8F;
+	Mon,  1 Apr 2024 16:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988730; cv=none; b=DVz3MpRzEq33VIYh+A0ujUmp6cy49d+vT2kvm7XI1UP6yfBcL0jig9UsNOJRHMyD5j4mi6Mahr988cz4dkePa5VIsU63xPEdgRhNqi00T0hrXKswrwwvTbEbD90E5aEigUv8MJGAHlD7VJzKyRnByFiFJ0TB9NU32PTLm6YIbPQ=
+	t=1711988733; cv=none; b=WxOA8lTKZDJAbBnG+FoTJMCDtHBsJnkOPdSfENcBDC0um0EV4bVEzYMGv8/UNf6IN1MSW1byrqc7lK71L5aIe5dCBNFhU3TjwyrGcmJHxROXBQv6Xb/RIdQuz2FpGMXCJVPS/tSgO2fqsorUjgF7OkujeDglyzFKcVlMuvCq19Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988730; c=relaxed/simple;
-	bh=A8dlAxkbytLO6vjY6asrlH5zHT9fufMxjDnlSdm9sqM=;
+	s=arc-20240116; t=1711988733; c=relaxed/simple;
+	bh=CnsYTna+yJ6BP3jbnWue+F7cwYPMI0IMcS4AtmDZLSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNuV+B0+5a5qODZ4RFK654DgdkINEvFQeJSyYNWHbsuMPv7O5g/ZJEgfXB5LC46ICubm3mz1mAzN5a4k8VWGo/Xp/hwP31ZZaUFy5JUXRJNMlzxQCnfOn2ousG6y1vlZuLvz+jcl9GwLK/r4GSOEx1cvu45ipHXb5JPyhOYcK0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFX8toVh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxCqWVN5x8FnW6g3LfvSV5SCGFFEI29wxZyicoSw3ADU2E+DGtZwceS42JKItAQQ6r5EPG1Nbdb2gXHcNhdRPotKZmTRNW2R1wLWlCYoLaEO32r7yC/bdL/4vf+TWDgYQo6sTv6w9Z24f4Tw8knZTy45d3OpvcVPKgWeuC5meyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9ytDhJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFX8toVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD292C433F1;
-	Mon,  1 Apr 2024 16:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9ytDhJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E586C433C7;
+	Mon,  1 Apr 2024 16:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988730;
-	bh=A8dlAxkbytLO6vjY6asrlH5zHT9fufMxjDnlSdm9sqM=;
+	s=korg; t=1711988733;
+	bh=CnsYTna+yJ6BP3jbnWue+F7cwYPMI0IMcS4AtmDZLSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFX8toVhcvlGi2RqoOYx1LWPfVk+4k9GjZVeFfOYTHD4KEY6Q3tFIFxxMl9fzetcV
-	 GvmO0jLxp+WNFVxJRaxReoggjre5iu9c8+sLgZwvlWjJ3VH6yFXtFV2GiqskRRh+XF
-	 pqMghbZIPIcONz8EuRQtLePbJ7uMPvYQizd6dQdA=
+	b=k9ytDhJgZxNmUQW37U16yn/TCIwST5pzlCtaX3pX0iFiUKAflBMYMeYslkGLEIwn3
+	 r1yxiVL+qIdqpLDfPCBEhXIi1eNf1U25Trrtsn33W9UvnGkR9AJViYUTuDC7H51dLz
+	 5r96mQbKV18fpROyob7OVkPemaVD8h/Da49HMIoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 6.7 272/432] mei: me: add arrow lake point H DID
-Date: Mon,  1 Apr 2024 17:44:19 +0200
-Message-ID: <20240401152601.288907822@linuxfoundation.org>
+	Nicolas Pitre <nico@fluxnic.net>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.7 273/432] vt: fix unicode buffer corruption when deleting characters
+Date: Mon,  1 Apr 2024 17:44:20 +0200
+Message-ID: <20240401152601.317738949@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,41 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Nicolas Pitre <nico@fluxnic.net>
 
-commit 8436f25802ec028ac7254990893f3e01926d9b79 upstream.
+commit 1581dafaf0d34bc9c428a794a22110d7046d186d upstream.
 
-Add Arrow Lake H device id.
+This is the same issue that was fixed for the VGA text buffer in commit
+39cdb68c64d8 ("vt: fix memory overlapping when deleting chars in the
+buffer"). The cure is also the same i.e. replace memcpy() with memmove()
+due to the overlaping buffers.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240211103912.117105-2-tomas.winkler@intel.com
+Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+Fixes: 81732c3b2fed ("tty vt: Fix line garbage in virtual console on command line edition")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/sn184on2-3p0q-0qrq-0218-895349s4753o@syhkavp.arg
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/tty/vt/vt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -113,6 +113,7 @@
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -381,7 +381,7 @@ static void vc_uniscr_delete(struct vc_d
+ 		u32 *ln = vc->vc_uni_lines[vc->state.y];
+ 		unsigned int x = vc->state.x, cols = vc->vc_cols;
  
- #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
- #define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
-+#define MEI_DEV_ID_ARL_H      0x7770  /* Arrow Lake Point H */
- 
- /*
-  * MEI HW Section
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -120,6 +120,7 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_H, MEI_ME_PCH15_CFG)},
- 
- 	/* required last entry */
- 	{0, }
+-		memcpy(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
++		memmove(&ln[x], &ln[x + nr], (cols - x - nr) * sizeof(*ln));
+ 		memset32(&ln[cols - nr], ' ', nr);
+ 	}
+ }
 
 
