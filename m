@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979F8446AC;
-	Mon,  1 Apr 2024 16:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183BF446AC;
+	Mon,  1 Apr 2024 16:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988043; cv=none; b=oGqIwduJK33YXj/UXi+can8sG8s7NGzURbw4lQAlqOtZ7laAh7dp39vk7jAkeE14uMFR0kCEQzL5GzxAT4wTCemHmqd1vESzU0/iLGiGYusut7eTOBIRQG977nSS+O0l73Cesph58m0iKhPNkGd1DnqHTCq8Gj3+G/niYboZO6g=
+	t=1711988047; cv=none; b=D4ds3yaU4wBOVhCwM78ciyFzf8kQP+mjiDv1UVTyQTu6cd2W9qKMHNkOQfmai6VsYUcXaBcSs+MXqr4k6sR2nCXGyHol9T+7Ttf26Ims6oEI4ZYi69ZjC0thl+QnvrdMHH1mPUHD0DKjQWOqpwfgaTINcdyNETxH1AxLGE0TBHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988043; c=relaxed/simple;
-	bh=dKmTSCg2JSztD6gWFejpymu0Q9uxXk44i+AXG1TBm10=;
+	s=arc-20240116; t=1711988047; c=relaxed/simple;
+	bh=36SuOskb+khIQjH8wOZ/IGO93607X0G3iDof5ySfMQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBMiTDpLiqYuRNirNYFM/BAV9JhLGwR5IS6aNxc/IN+XaonDbMYrtjD2C4SvtMctqxlKWZ+9ZBvkJOm2Rx8dJPfRYM69FEQHrKmS+T1pE36u5dLgknepUVzu8FJz0R2r24WZb/TbsJhDrlx4ipEMqY2b7Jo1PZiz45CrM+aJEvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpYOy7Nt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ujisjC+qNg7tgMRo8BWh2nK/Jczmg3ptP6ZWDzKKXGXLCNzE3FuuhY9Azr5uj+jrg2R7jQJCUnOBavkMaSaG/JO4p4H2HkqChjz0tQNqQ6HOqA+eJaEt1i1UVJFhCsb2OG0oFVg5npiusSGs7oJbdg20cD8oxL+KkmjNv+sexq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpX0eBFD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpYOy7Nt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C18AC433F1;
-	Mon,  1 Apr 2024 16:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpX0eBFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD6AC433F1;
+	Mon,  1 Apr 2024 16:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988043;
-	bh=dKmTSCg2JSztD6gWFejpymu0Q9uxXk44i+AXG1TBm10=;
+	s=korg; t=1711988047;
+	bh=36SuOskb+khIQjH8wOZ/IGO93607X0G3iDof5ySfMQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpYOy7NteO+47jUczsn+s92SBkxjzBRsHudVh8FhFw4sfZNuZNW6hK/rRWfGpCJaa
-	 MNhi3tf+cp7J1QBDxP39dAeco/OvWG/QMm7K/tFeOvYgqtfdlmByYhkrNoKxIfSGh8
-	 eOGkh62iyPl334K1XH/Xpl0lHhGkFdi+ESYt1w7M=
+	b=SpX0eBFD14YVlbgP8rSUHfKODan1/x7af51/VChdnF/YfmtcKECrkZewVBd4iATYG
+	 hQB6Ze9SoTKuagVoV8X9a9tpBcG48FTxmRYzIAW/qsrEwp+wRKrdl8qsKBwJVa4HXk
+	 7w5BC/TEi+yrBD0kTOgIawKpzP4MaBYMAXTLxri8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maulik Shah <quic_mkshah@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 067/432] PM: suspend: Set mem_sleep_current during kernel command line setup
-Date: Mon,  1 Apr 2024 17:40:54 +0200
-Message-ID: <20240401152555.123127230@linuxfoundation.org>
+Subject: [PATCH 6.7 041/432] crypto: qat - resolve race condition during AER recovery
+Date: Mon,  1 Apr 2024 17:40:28 +0200
+Message-ID: <20240401152554.355683946@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,40 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maulik Shah <quic_mkshah@quicinc.com>
+From: Damian Muszynski <damian.muszynski@intel.com>
 
-[ Upstream commit 9bc4ffd32ef8943f5c5a42c9637cfd04771d021b ]
+[ Upstream commit 7d42e097607c4d246d99225bf2b195b6167a210c ]
 
-psci_init_system_suspend() invokes suspend_set_ops() very early during
-bootup even before kernel command line for mem_sleep_default is setup.
-This leads to kernel command line mem_sleep_default=s2idle not working
-as mem_sleep_current gets changed to deep via suspend_set_ops() and never
-changes back to s2idle.
+During the PCI AER system's error recovery process, the kernel driver
+may encounter a race condition with freeing the reset_data structure's
+memory. If the device restart will take more than 10 seconds the function
+scheduling that restart will exit due to a timeout, and the reset_data
+structure will be freed. However, this data structure is used for
+completion notification after the restart is completed, which leads
+to a UAF bug.
 
-Set mem_sleep_current along with mem_sleep_default during kernel command
-line setup as default suspend mode.
+This results in a KFENCE bug notice.
 
-Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support")
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+  BUG: KFENCE: use-after-free read in adf_device_reset_worker+0x38/0xa0 [intel_qat]
+  Use-after-free read at 0x00000000bc56fddf (in kfence-#142):
+  adf_device_reset_worker+0x38/0xa0 [intel_qat]
+  process_one_work+0x173/0x340
+
+To resolve this race condition, the memory associated to the container
+of the work_struct is freed on the worker if the timeout expired,
+otherwise on the function that schedules the worker.
+The timeout detection can be done by checking if the caller is
+still waiting for completion or not by using completion_done() function.
+
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/suspend.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/intel/qat/qat_common/adf_aer.c | 22 ++++++++++++++-----
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
-index fa3bf161d13f7..a718067deecee 100644
---- a/kernel/power/suspend.c
-+++ b/kernel/power/suspend.c
-@@ -192,6 +192,7 @@ static int __init mem_sleep_default_setup(char *str)
- 		if (mem_sleep_labels[state] &&
- 		    !strcmp(str, mem_sleep_labels[state])) {
- 			mem_sleep_default = state;
-+			mem_sleep_current = state;
- 			break;
- 		}
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_aer.c b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+index a39e70bd4b21b..621d14ea3b81a 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
+@@ -92,7 +92,8 @@ static void adf_device_reset_worker(struct work_struct *work)
+ 	if (adf_dev_restart(accel_dev)) {
+ 		/* The device hanged and we can't restart it so stop here */
+ 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
+-		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
++		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
++		    completion_done(&reset_data->compl))
+ 			kfree(reset_data);
+ 		WARN(1, "QAT: device restart failed. Device is unusable\n");
+ 		return;
+@@ -100,11 +101,19 @@ static void adf_device_reset_worker(struct work_struct *work)
+ 	adf_dev_restarted_notify(accel_dev);
+ 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
  
+-	/* The dev is back alive. Notify the caller if in sync mode */
+-	if (reset_data->mode == ADF_DEV_RESET_SYNC)
+-		complete(&reset_data->compl);
+-	else
++	/*
++	 * The dev is back alive. Notify the caller if in sync mode
++	 *
++	 * If device restart will take a more time than expected,
++	 * the schedule_reset() function can timeout and exit. This can be
++	 * detected by calling the completion_done() function. In this case
++	 * the reset_data structure needs to be freed here.
++	 */
++	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
++	    completion_done(&reset_data->compl))
+ 		kfree(reset_data);
++	else
++		complete(&reset_data->compl);
+ }
+ 
+ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
+@@ -137,8 +146,9 @@ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
+ 			dev_err(&GET_DEV(accel_dev),
+ 				"Reset device timeout expired\n");
+ 			ret = -EFAULT;
++		} else {
++			kfree(reset_data);
+ 		}
+-		kfree(reset_data);
+ 		return ret;
+ 	}
+ 	return 0;
 -- 
 2.43.0
 
