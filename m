@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B1F482D1;
-	Mon,  1 Apr 2024 16:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E9447A6A;
+	Mon,  1 Apr 2024 16:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988184; cv=none; b=R4jPCcr8tlsiJRj1uN9tCVJe6JxfvBqn1eDof3QgHTHqU1v0+647B7fZo9oizI5RQXzZOMm007GJZJ/du4YHDUYKIyKk1l46lNAJE44tfeGnZxx9W2PfIVxsE4sR/VXRfDJPLtn+8UByPOMsnoB5MgifynhM0Rk2HDBusJAz3G0=
+	t=1711988187; cv=none; b=CdMp8deaKgnPTUlNpolqBzaZFt2ZCirByea2uwW6TyPz0KSPAEK07TuT3m3TzeLskNACTSSyutuYWohtHCyCOABL9/1QFOAtu6QtRAK8T17R6HXhaOzFDjHFSlj0FyWVPURlYH4VdkRhQb5Le0tUrvGi7D5i2iDjlpse6Ror7lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988184; c=relaxed/simple;
-	bh=CNd17Tu/Hm0mcmtmBT8mK25EMlSmUCARQbM3v3P+I3I=;
+	s=arc-20240116; t=1711988187; c=relaxed/simple;
+	bh=lx86JM82je5ThMJ+nGsNy9rzbmXb2x+BFJxn+B9ZZCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAcnmg1Bhz+nLfClOgI89vMU4CQ38eT0f7IkEJ+XmB01p9r0/8FDl0iUiO7T3Lj0hUw8KGrhnNhmC9pk9LuHlJnHi59irAMSeiC48zW6JSU4lbit9ymATOm4UGMVwGPxwLR3GU+tiiP+piYxRiJRK/elrvPmgNsUWw49IOoFBwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PD/R6Jdd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nDxSZ9cRBH8TBqvtsf1hbQm+fyoYEOQ2iRai9YoCXuJrLUKqNvQsmAZg8Txy75PWck45n7jKq2GAF2TutNP8H8fcIi+AIDHP6G/FZVXK3F9FtGzQwO8EUXkd/tHLpY+ST3eQrSuuZkYhmcf05gWYL1vYnjlkDy8SDBHYXvcU630=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4F+KnpD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PD/R6Jdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4334FC433C7;
-	Mon,  1 Apr 2024 16:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4F+KnpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0001C433C7;
+	Mon,  1 Apr 2024 16:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988182;
-	bh=CNd17Tu/Hm0mcmtmBT8mK25EMlSmUCARQbM3v3P+I3I=;
+	s=korg; t=1711988186;
+	bh=lx86JM82je5ThMJ+nGsNy9rzbmXb2x+BFJxn+B9ZZCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PD/R6JddQAIpBGpEcycTz4UuhfURyNhFCAa2Cq9mKwxV/fWr9H4nRMzf97SNmMrAU
-	 zK0RzqrmR9nNjHh0oTdXAFbd04terDrF0mxNTtfzfM9kn6bF7AFlUDXuJfI6LY+Kr5
-	 0YVuP/P7IahCK91FHvqrIDl8LGdFwHlyrV3YbYfc=
+	b=W4F+KnpDKKYwGET7IkZ2y+1RpSHHkPBCh7fekmULe2BX0uuE8WkCZNlkWH+HT42wc
+	 7U4hcRcDOe1n11OTqmtsilJ8c8oVRP0dgWDpkra68ps8bLr+Q32h0kG2oOjmAHu+Xe
+	 DvsyhEZdgcauCoYlysL4YdvX5EkpuKoC/65tDIgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Song Liu <song@kernel.org>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	Greg Edwards <gedwards@ddn.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 101/432] md: export helpers to stop sync_thread
-Date: Mon,  1 Apr 2024 17:41:28 +0200
-Message-ID: <20240401152556.137567289@linuxfoundation.org>
+Subject: [PATCH 6.7 110/432] block: Fix page refcounts for unaligned buffers in __bio_release_pages()
+Date: Mon,  1 Apr 2024 17:41:37 +0200
+Message-ID: <20240401152556.410754737@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,85 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 7a2347e284d7ec2f0759be4db60fa7ca937284fc ]
+[ Upstream commit 38b43539d64b2fa020b3b9a752a986769f87f7a6 ]
 
-Add new helpers:
+Fix an incorrect number of pages being released for buffers that do not
+start at the beginning of a page.
 
-  void md_idle_sync_thread(struct mddev *mddev);
-  void md_frozen_sync_thread(struct mddev *mddev);
-  void md_unfrozen_sync_thread(struct mddev *mddev);
-
-The helpers will be used in dm-raid in later patches to fix regressions
-and prevent calling md_reap_sync_thread() directly.
-
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Acked-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240305072306.2562024-3-yukuai1@huaweicloud.com
+Fixes: 1b151e2435fc ("block: Remove special-casing of compound pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Tested-by: Greg Edwards <gedwards@ddn.com>
+Link: https://lore.kernel.org/r/86e592a9-98d4-4cff-a646-0c0084328356@cybernetics.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 29 +++++++++++++++++++++++++++++
- drivers/md/md.h |  3 +++
- 2 files changed, 32 insertions(+)
+ block/bio.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 007fd071b44ed..740541f6cad98 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4945,6 +4945,35 @@ static void stop_sync_thread(struct mddev *mddev, bool locked, bool check_seq)
- 		mddev_lock_nointr(mddev);
+diff --git a/block/bio.c b/block/bio.c
+index 270f6b99926ea..62419aa09d731 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1149,7 +1149,7 @@ void __bio_release_pages(struct bio *bio, bool mark_dirty)
+ 
+ 	bio_for_each_folio_all(fi, bio) {
+ 		struct page *page;
+-		size_t done = 0;
++		size_t nr_pages;
+ 
+ 		if (mark_dirty) {
+ 			folio_lock(fi.folio);
+@@ -1157,10 +1157,11 @@ void __bio_release_pages(struct bio *bio, bool mark_dirty)
+ 			folio_unlock(fi.folio);
+ 		}
+ 		page = folio_page(fi.folio, fi.offset / PAGE_SIZE);
++		nr_pages = (fi.offset + fi.length - 1) / PAGE_SIZE -
++			   fi.offset / PAGE_SIZE + 1;
+ 		do {
+ 			bio_release_page(bio, page++);
+-			done += PAGE_SIZE;
+-		} while (done < fi.length);
++		} while (--nr_pages != 0);
+ 	}
  }
- 
-+void md_idle_sync_thread(struct mddev *mddev)
-+{
-+	lockdep_assert_held(&mddev->reconfig_mutex);
-+
-+	clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
-+	stop_sync_thread(mddev, true, true);
-+}
-+EXPORT_SYMBOL_GPL(md_idle_sync_thread);
-+
-+void md_frozen_sync_thread(struct mddev *mddev)
-+{
-+	lockdep_assert_held(&mddev->reconfig_mutex);
-+
-+	set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
-+	stop_sync_thread(mddev, true, false);
-+}
-+EXPORT_SYMBOL_GPL(md_frozen_sync_thread);
-+
-+void md_unfrozen_sync_thread(struct mddev *mddev)
-+{
-+	lockdep_assert_held(&mddev->reconfig_mutex);
-+
-+	clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
-+	set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
-+	md_wakeup_thread(mddev->thread);
-+	sysfs_notify_dirent_safe(mddev->sysfs_action);
-+}
-+EXPORT_SYMBOL_GPL(md_unfrozen_sync_thread);
-+
- static void idle_sync_thread(struct mddev *mddev)
- {
- 	mutex_lock(&mddev->sync_mutex);
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index 27d187ca6258a..0d06d640aa06d 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -782,6 +782,9 @@ extern void md_rdev_clear(struct md_rdev *rdev);
- extern void md_handle_request(struct mddev *mddev, struct bio *bio);
- extern int mddev_suspend(struct mddev *mddev, bool interruptible);
- extern void mddev_resume(struct mddev *mddev);
-+extern void md_idle_sync_thread(struct mddev *mddev);
-+extern void md_frozen_sync_thread(struct mddev *mddev);
-+extern void md_unfrozen_sync_thread(struct mddev *mddev);
- 
- extern void md_reload_sb(struct mddev *mddev, int raid_disk);
- extern void md_update_sb(struct mddev *mddev, int force);
+ EXPORT_SYMBOL_GPL(__bio_release_pages);
 -- 
 2.43.0
 
