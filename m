@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253D40876;
-	Mon,  1 Apr 2024 17:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F3147A64;
+	Mon,  1 Apr 2024 17:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991263; cv=none; b=KAWwrUYM8drMGu3SST14/FJC+Ldjs9MWhGHicO05yUiDHraweD4IpL53fqr+Eo1niVN83aAzeWy/i70RmLfejImr/pI5T7HmoH9sdEYz1jNYO+oJbYaoYYv5Gvt/hBMqaNn/BKfr567/QEc8VyNHNBVjzfxPR2QtSQsITtUpKGw=
+	t=1711991267; cv=none; b=bJEqyJFKbsUg8g+9Mtoel9Cyq+1cZnebPH8jUd9SrHsoyNS2a26YY/hwrPH0qh5m2CItqb1e6Lk8kyFSPI7ir3NQWn/VMcHWrbNLe0qBaLivpTMU+gksA+2kyqmuvmUvtjfCg+Y6OMemmqNLlB4yrcBhPGMmKDbQiCDjofZ9gv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991263; c=relaxed/simple;
-	bh=+26gvznnCS3DFpzmo/2D+ZAva8V8Xlrt4HeLN/VMOCY=;
+	s=arc-20240116; t=1711991267; c=relaxed/simple;
+	bh=GhDefM2vhU2HhJexO6PZ5nCmy3+UxykQugJ0URUYnJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C12wK/efuNdvN3ZVgvq7pfTv8cokkirpL+G0SbW8mrGO7hzhbVaKSkdf2fvDtQ9poxu1vIWCeOrwYdAdlp0a61L3unxSRnR5h3zdPQWGCUghVde3eAptt2bgdzAIthDYZ9H+oy+x7c5Uh0z0d17ndramTWi+9TVsChZ1deaINNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrSl7b9Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxN+TigCADLgzFt6YLRsZ+rfEtdrP1F7vCuDNGCrTPQvRFPKLdz0RzN0nhGDTr8vZ8gtEPuEAU7aVTtxwEYRB1O6sbpyX9jSU9ucNZ95KraEB4BspO8veMBq+oTZ5neB+JVR//ajXSUMFETqV/L95RCU6o765pdcVgi2GTS2YdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrRc/klZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrSl7b9Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F81C433F1;
-	Mon,  1 Apr 2024 17:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrRc/klZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80437C433C7;
+	Mon,  1 Apr 2024 17:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991263;
-	bh=+26gvznnCS3DFpzmo/2D+ZAva8V8Xlrt4HeLN/VMOCY=;
+	s=korg; t=1711991267;
+	bh=GhDefM2vhU2HhJexO6PZ5nCmy3+UxykQugJ0URUYnJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrSl7b9QdFO7cANT3hZEJgIO8cHOdc+clvcxGQVA+qReyrsTYtkzUPm6Bl7NOdL1A
-	 Gbvi1wogOd3ctgh1CTTv5G3ihVz29JhGG4KOLtZpKMk326v4akNGzuz9rdG6BXxZ2C
-	 CrpFdCuJpccd0Zi3AXm1XvFYzra+Kn5DQ4IwK77A=
+	b=LrRc/klZJkfsQ/yhZvS1vXVQYNQccwUT5rqFHNhzhp6N9fjpoSQw6wKjV/8ooXJl8
+	 pJfYL/hz83d8UhDu865wYf0Km+1vUHxxlSNE31Olcr76T142QS9c7f9wlt2HFJcsdv
+	 T5r9ud4Lxzv2R1TZfdmV4evsQnP1vCkOsYQ2r6Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/272] iommu/dma: Force swiotlb_max_mapping_size on an untrusted device
-Date: Mon,  1 Apr 2024 17:46:13 +0200
-Message-ID: <20240401152536.530267770@linuxfoundation.org>
+Subject: [PATCH 6.1 184/272] printk: Update @console_may_schedule in console_trylock_spinning()
+Date: Mon,  1 Apr 2024 17:46:14 +0200
+Message-ID: <20240401152536.561886618@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -54,94 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit afc5aa46ed560f01ceda897c053c6a40c77ce5c4 ]
+[ Upstream commit 8076972468584d4a21dab9aa50e388b3ea9ad8c7 ]
 
-The swiotlb does not support a mapping size > swiotlb_max_mapping_size().
-On the other hand, with a 64KB PAGE_SIZE configuration, it's observed that
-an NVME device can map a size between 300KB~512KB, which certainly failed
-the swiotlb mappings, though the default pool of swiotlb has many slots:
-    systemd[1]: Started Journal Service.
- => nvme 0000:00:01.0: swiotlb buffer is full (sz: 327680 bytes), total 32768 (slots), used 32 (slots)
-    note: journal-offline[392] exited with irqs disabled
-    note: journal-offline[392] exited with preempt_count 1
+console_trylock_spinning() may takeover the console lock from a
+schedulable context. Update @console_may_schedule to make sure it
+reflects a trylock acquire.
 
-Call trace:
-[    3.099918]  swiotlb_tbl_map_single+0x214/0x240
-[    3.099921]  iommu_dma_map_page+0x218/0x328
-[    3.099928]  dma_map_page_attrs+0x2e8/0x3a0
-[    3.101985]  nvme_prep_rq.part.0+0x408/0x878 [nvme]
-[    3.102308]  nvme_queue_rqs+0xc0/0x300 [nvme]
-[    3.102313]  blk_mq_flush_plug_list.part.0+0x57c/0x600
-[    3.102321]  blk_add_rq_to_plug+0x180/0x2a0
-[    3.102323]  blk_mq_submit_bio+0x4c8/0x6b8
-[    3.103463]  __submit_bio+0x44/0x220
-[    3.103468]  submit_bio_noacct_nocheck+0x2b8/0x360
-[    3.103470]  submit_bio_noacct+0x180/0x6c8
-[    3.103471]  submit_bio+0x34/0x130
-[    3.103473]  ext4_bio_write_folio+0x5a4/0x8c8
-[    3.104766]  mpage_submit_folio+0xa0/0x100
-[    3.104769]  mpage_map_and_submit_buffers+0x1a4/0x400
-[    3.104771]  ext4_do_writepages+0x6a0/0xd78
-[    3.105615]  ext4_writepages+0x80/0x118
-[    3.105616]  do_writepages+0x90/0x1e8
-[    3.105619]  filemap_fdatawrite_wbc+0x94/0xe0
-[    3.105622]  __filemap_fdatawrite_range+0x68/0xb8
-[    3.106656]  file_write_and_wait_range+0x84/0x120
-[    3.106658]  ext4_sync_file+0x7c/0x4c0
-[    3.106660]  vfs_fsync_range+0x3c/0xa8
-[    3.106663]  do_fsync+0x44/0xc0
-
-Since untrusted devices might go down the swiotlb pathway with dma-iommu,
-these devices should not map a size larger than swiotlb_max_mapping_size.
-
-To fix this bug, add iommu_dma_max_mapping_size() for untrusted devices to
-take into account swiotlb_max_mapping_size() v.s. iova_rcache_range() from
-the iommu_dma_opt_mapping_size().
-
-Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
-Link: https://lore.kernel.org/r/ee51a3a5c32cf885b18f6416171802669f4a718a.1707851466.git.nicolinc@nvidia.com
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-[will: Drop redundant is_swiotlb_active(dev) check]
-Signed-off-by: Will Deacon <will@kernel.org>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Closes: https://lore.kernel.org/lkml/20240222090538.23017-1-quic_mojha@quicinc.com
+Fixes: dbdda842fe96 ("printk: Add console owner and waiter logic to load balance console writes")
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/875xybmo2z.fsf@jogness.linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/printk/printk.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index aa6d62cc567ae..3fa66dba0a326 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1547,6 +1547,14 @@ static size_t iommu_dma_opt_mapping_size(void)
- 	return iova_rcache_range();
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index c55ee859dbd08..0ae06d5046bb0 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -1947,6 +1947,12 @@ static int console_trylock_spinning(void)
+ 	 */
+ 	mutex_acquire(&console_lock_dep_map, 0, 1, _THIS_IP_);
+ 
++	/*
++	 * Update @console_may_schedule for trylock because the previous
++	 * owner may have been schedulable.
++	 */
++	console_may_schedule = 0;
++
+ 	return 1;
  }
  
-+static size_t iommu_dma_max_mapping_size(struct device *dev)
-+{
-+	if (dev_is_untrusted(dev))
-+		return swiotlb_max_mapping_size(dev);
-+
-+	return SIZE_MAX;
-+}
-+
- static const struct dma_map_ops iommu_dma_ops = {
- 	.flags			= DMA_F_PCI_P2PDMA_SUPPORTED,
- 	.alloc			= iommu_dma_alloc,
-@@ -1569,6 +1577,7 @@ static const struct dma_map_ops iommu_dma_ops = {
- 	.unmap_resource		= iommu_dma_unmap_resource,
- 	.get_merge_boundary	= iommu_dma_get_merge_boundary,
- 	.opt_mapping_size	= iommu_dma_opt_mapping_size,
-+	.max_mapping_size       = iommu_dma_max_mapping_size,
- };
- 
- /*
 -- 
 2.43.0
 
