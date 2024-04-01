@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE9E43AD6;
-	Mon,  1 Apr 2024 16:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08742446AC;
+	Mon,  1 Apr 2024 16:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987950; cv=none; b=Wt+cVL/OFGEH78V9cKd+fCadc8h23Ykc0xTOIE3elc0XOxBecPMijC8IdEKV9o5MVFFhv4W3HV5BG/eHt4B8QeHofLYzRmOHptBk49dIDAIYK8E1TVPK5Zi1fTm/tfaUhti7FhqKMk84nqjkHWI1MWbbNS1825YH/4jE/bZub7A=
+	t=1711987953; cv=none; b=bQnRbPVPYzlFk6m9OB0DAkBGMAyDD3JTXb8SvtKPp4nrrr05tNA4XWaRM8z8YyB9rqkJrlAD4DBeRzvbd11XXAz/jOmJlrlpmzyVqU2YAujbHJowH/6F9g5Ld3Kle5rty1REUqGWFCbmM2j2w2wk6Skbs6MdPd4+Vq2kPHdcVjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987950; c=relaxed/simple;
-	bh=879sPgWfEQrnyN9tgjdEZzI6RmNoKazVltba8sIUNaU=;
+	s=arc-20240116; t=1711987953; c=relaxed/simple;
+	bh=sgxFuLlwx2+7L9o+n2oy/Xx7bFn14WDMcNjx6kUMSlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWa3zu3YdiNEjKh7EVnkP66WtB+bObV791kWNL8nmAVFB7u8SWd9rn6IZCaZv0AfAlev8DChSjjvSOii58C5hgHNU7rYSfbxQIJlPVQDK77t/UHfEvVEZ2hK7wr/OKBgudzKKREJ+Hef9qy/KskFlC60W6qEG4klOv8V9qzTuW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7RK4G+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jy+GUkPzCTcJaH2j9m8Fr5zepr7NoG3hxTykP2cjTj27ocsvXAWBEKZd2Jup39KyHkpDH/szhaQTLiXQroscOTVtvWkGsjbJwPyvH8dD2t8lX06ASIhYRa/2UJM7ULNkPG23QdWraraDBDK4B/7xg+5DM2FmA8rR7cv/NUxnMyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tP8Dgim1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7RK4G+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C421C433C7;
-	Mon,  1 Apr 2024 16:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tP8Dgim1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7514BC433F1;
+	Mon,  1 Apr 2024 16:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987949;
-	bh=879sPgWfEQrnyN9tgjdEZzI6RmNoKazVltba8sIUNaU=;
+	s=korg; t=1711987952;
+	bh=sgxFuLlwx2+7L9o+n2oy/Xx7bFn14WDMcNjx6kUMSlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7RK4G+YGKLyh4gCD8jrvA6ZiWra4uPS6aWt8cI2y/meEUtzTnJ4X9zYkiOw+HWYr
-	 gVHiPQmDwn9J/CTlfi0nmK8OJBgC2NVlAvWjpsLFdvFyLzcZlLW7ihnaTNf+8Jso0e
-	 a0IVt2rJ7q7RpWYxxkN6DcRTJxKX7i9SqeID78RM=
+	b=tP8Dgim1Ma/1wd/AYR5Qpv+FzVhlmaxLOE3LnNI42McD/foD/OtAVcoBexbVO0FIG
+	 zysetVTEvNm7rHsMi9tgMmqf03IEGl3uX9QmtkssIAN1vKbiSA7YGlRRBFJpIPkxAH
+	 dY5aAnvruHEVWNqA6JwWZIqfrmECL5UzthiOgC2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 011/432] smack: Handle SMACK64TRANSMUTE in smack_inode_setsecurity()
-Date: Mon,  1 Apr 2024 17:39:58 +0200
-Message-ID: <20240401152553.465775992@linuxfoundation.org>
+Subject: [PATCH 6.7 012/432] arm: dts: marvell: Fix maxium->maxim typo in brownstone dts
+Date: Mon,  1 Apr 2024 17:39:59 +0200
+Message-ID: <20240401152553.494467800@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -45,48 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Duje Mihanović <duje.mihanovic@skole.hr>
 
-[ Upstream commit ac02f007d64eb2769d0bde742aac4d7a5fc6e8a5 ]
+[ Upstream commit 831e0cd4f9ee15a4f02ae10b67e7fdc10eb2b4fc ]
 
-If the SMACK64TRANSMUTE xattr is provided, and the inode is a directory,
-update the in-memory inode flags by setting SMK_INODE_TRANSMUTE.
+Fix an obvious spelling error in the PMIC compatible in the MMP2
+Brownstone DTS file.
 
-Cc: stable@vger.kernel.org
-Fixes: 5c6d1125f8db ("Smack: Transmute labels on specified directories") # v2.6.38.x
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Fixes: 58f1193e6210 ("mfd: max8925: Add dts")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Closes: https://lore.kernel.org/linux-devicetree/1410884282-18041-1-git-send-email-k.kozlowski@samsung.com/
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240125-brownstone-typo-fix-v2-1-45bc48a0c81c@skole.hr
+[krzysztof: Just 10 years to take a patch, not bad! Rephrased commit
+ msg]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack_lsm.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/boot/dts/marvell/mmp2-brownstone.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 0fe3ccec62a52..e1e297deb02e6 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -2854,6 +2854,15 @@ static int smack_inode_setsecurity(struct inode *inode, const char *name,
- 	if (value == NULL || size > SMK_LONGLABEL || size == 0)
- 		return -EINVAL;
- 
-+	if (strcmp(name, XATTR_SMACK_TRANSMUTE) == 0) {
-+		if (!S_ISDIR(inode->i_mode) || size != TRANS_TRUE_SIZE ||
-+		    strncmp(value, TRANS_TRUE, TRANS_TRUE_SIZE) != 0)
-+			return -EINVAL;
-+
-+		nsp->smk_flags |= SMK_INODE_TRANSMUTE;
-+		return 0;
-+	}
-+
- 	skp = smk_import_entry(value, size);
- 	if (IS_ERR(skp))
- 		return PTR_ERR(skp);
+diff --git a/arch/arm/boot/dts/marvell/mmp2-brownstone.dts b/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
+index 04f1ae1382e7a..bc64348b82185 100644
+--- a/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
++++ b/arch/arm/boot/dts/marvell/mmp2-brownstone.dts
+@@ -28,7 +28,7 @@ &uart3 {
+ &twsi1 {
+ 	status = "okay";
+ 	pmic: max8925@3c {
+-		compatible = "maxium,max8925";
++		compatible = "maxim,max8925";
+ 		reg = <0x3c>;
+ 		interrupts = <1>;
+ 		interrupt-parent = <&intcmux4>;
 -- 
 2.43.0
 
