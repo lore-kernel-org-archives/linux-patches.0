@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C51C129;
-	Mon,  1 Apr 2024 16:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756F2C129;
+	Mon,  1 Apr 2024 16:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988648; cv=none; b=PCI8pIFD7ea3laTmfqPYb5MVCbK+rC7cuWaFl0K/UqywB2aO4HRp6ybWtPdYAOlRBdhE3TsABY/TABz4X9F/exIvxFkLo8EfK/v+HNRXZeRIHNZvxCqRuO1IUSpe1WYbToRu5jl46JP+YwntG2NxsTcvoTbHfh4O0OStc9S6hOU=
+	t=1711988651; cv=none; b=Xp07+5DPm7in0a6UwBuq9Yo7UIwiEX31f0JjyUAuQIe79iMfVSoJfL30KGjyJJUc2yU4w4I9TxJnfi2HY1Xffl6cuWZCaqVuLf1jDE2KvVo6SKsjQ7N3CIJ/ojgtNpV1a/kQp1EwTZVtVQNeef48NiPwDYsrnIDT1eoduPhLHQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988648; c=relaxed/simple;
-	bh=J8lN1RWai3rEFGlsv/J/21gMvC3p3Bv3ygrtyp4Vzas=;
+	s=arc-20240116; t=1711988651; c=relaxed/simple;
+	bh=DAXdInYhAGpdm9L1MmQy5g3xuO6aPyMUYi4cbjaSxzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/ezZJ1NnZK/tzWCoJ9pe2WjOpV2OunixTRce7lXE0Cr3g6SD3SB8IVtCFhUozzMgU0K6xH7URejJuDl5wNCyU/rmCd/3V1t0pskDIxRvMA7GnVpDnSRmFwYrEK0FonG1cPiewbgZlZzQcuACPpKrukKyiNh7zH+7Gu8i9EfIHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEA3Ta2E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTjWbwzbSruq8zvxglQomB4Ru9mhrGErSC1kZhAc5uLPtRlPzR61QCpV8JN++649SgS/i6r1Ljx7uiXNEyUXeq3BnGCrWrK3K3Uyz3f5170cuR3T3jrW9EbXUlEuhZzv0KrpJjkX1HBfJrpo5zmBsBnEgkuWDzBmNjlq4Y0uhEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ldhfmuqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEA3Ta2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65403C433F1;
-	Mon,  1 Apr 2024 16:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ldhfmuqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82CAC43390;
+	Mon,  1 Apr 2024 16:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988647;
-	bh=J8lN1RWai3rEFGlsv/J/21gMvC3p3Bv3ygrtyp4Vzas=;
+	s=korg; t=1711988651;
+	bh=DAXdInYhAGpdm9L1MmQy5g3xuO6aPyMUYi4cbjaSxzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SEA3Ta2ELoz87sKk98uW/UMIaGQtKGw/AoMnIn1MNM66aJuukKnC20p08Y0qhUWIF
-	 e35YZa98K6w8eW7gPhkWXXQkeyoQw++Y4oIAeCGjie+RMVf9NPYKolJVxE74dtuyQa
-	 Gwn1WhDNaVA1azyOPDDF9TWQHWQmIz2CcR+B0nlc=
+	b=LdhfmuquTOKVCjLweDfqa+DN0Mh4kAny3UVrdQzKMbhC8t3JfNlq6ISFLhE6kfOTT
+	 XipwQbwEB8Pt1ACg4VpHqTvfJHNB20v85FyJ58ukn+vM2hIBvuZ9xmYbyFJUWBBGiN
+	 Ca4FnETiIlLnpaER4uGi928x72PAfW2MWQ8zxYN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olliver Schinagl <oliver@schinagl.nl>,
-	Gil Fine <gil.fine@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.7 247/432] thunderbolt: Fix NULL pointer dereference in tb_port_update_credits()
-Date: Mon,  1 Apr 2024 17:43:54 +0200
-Message-ID: <20240401152600.507108778@linuxfoundation.org>
+	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.7 248/432] cgroup/cpuset: Fix retval in update_cpumask()
+Date: Mon,  1 Apr 2024 17:43:55 +0200
+Message-ID: <20240401152600.536315722@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,65 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Kamalesh Babulal <kamalesh.babulal@oracle.com>
 
-commit d3d17e23d1a0d1f959b4fa55b35f1802d9c584fa upstream.
+commit 25125a4762835d62ba1e540c1351d447fc1f6c7c upstream.
 
-Olliver reported that his system crashes when plugging in Thunderbolt 1
-device:
+The update_cpumask(), checks for newly requested cpumask by calling
+validate_change(), which returns an error on passing an invalid set
+of cpu(s). Independent of the error returned, update_cpumask() always
+returns zero, suppressing the error and returning success to the user
+on writing an invalid cpu range for a cpuset. Fix it by returning
+retval instead, which is returned by validate_change().
 
- BUG: kernel NULL pointer dereference, address: 0000000000000020
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- RIP: 0010:tb_port_do_update_credits+0x1b/0x130 [thunderbolt]
- Call Trace:
-  <TASK>
-  ? __die+0x23/0x70
-  ? page_fault_oops+0x171/0x4e0
-  ? exc_page_fault+0x7f/0x180
-  ? asm_exc_page_fault+0x26/0x30
-  ? tb_port_do_update_credits+0x1b/0x130
-  ? tb_switch_update_link_attributes+0x83/0xd0
-  tb_switch_add+0x7a2/0xfe0
-  tb_scan_port+0x236/0x6f0
-  tb_handle_hotplug+0x6db/0x900
-  process_one_work+0x171/0x340
-  worker_thread+0x27b/0x3a0
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xe5/0x120
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x31/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1b/0x30
-  </TASK>
-
-This is due the fact that some Thunderbolt 1 devices only have one lane
-adapter. Fix this by checking for the lane 1 before we read its credits.
-
-Reported-by: Olliver Schinagl <oliver@schinagl.nl>
-Closes: https://lore.kernel.org/linux-usb/c24c7882-6254-4e68-8f22-f3e8f65dc84f@schinagl.nl/
-Fixes: 81af2952e606 ("thunderbolt: Add support for asymmetric link")
-Cc: stable@vger.kernel.org
-Cc: Gil Fine <gil.fine@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 99fe36ba6fc1 ("cgroup/cpuset: Improve temporary cpumasks handling")
+Signed-off-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Cc: stable@vger.kernel.org # v6.6+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/switch.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cpuset.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -1265,6 +1265,9 @@ int tb_port_update_credits(struct tb_por
- 	ret = tb_port_do_update_credits(port);
- 	if (ret)
- 		return ret;
-+
-+	if (!port->dual_link_port)
-+		return 0;
- 	return tb_port_do_update_credits(port->dual_link_port);
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -2466,7 +2466,7 @@ static int update_cpumask(struct cpuset
+ 		update_partition_sd_lb(cs, old_prs);
+ out_free:
+ 	free_cpumasks(NULL, &tmp);
+-	return 0;
++	return retval;
  }
  
+ /**
 
 
