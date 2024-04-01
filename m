@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128C73D961;
-	Mon,  1 Apr 2024 16:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2854F3D961;
+	Mon,  1 Apr 2024 16:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988895; cv=none; b=i+KUAeSgCx3G3rXTlZgn6Dtz2sFMDIWHQ2WQUQW+JITbRRQcMNUzZ2lHNDcWPc6XKtyt5Kor9UaEI0V74SqV6+QQaWppwayOt8MKlMNWrizhf9JJclvqh2Je9uN/31LaXPDZ0upT8qT8Ht39YRuKoIWayopWPaHDJHUyVGDYdoA=
+	t=1711988898; cv=none; b=jZyG3Qw0LOmjxi7TXjbQA+8cDrKzUkq1kJ6/KS+ogdk4dPV7J5hPrLAJuny3lL9zk3lRsiYJ5xYrOgj0qvDIEh/ByjbiiJC0VUMc3Cn4EWMNPFGKESLI9k9VtcJ3BX5J3by8+AD3t8O0AMI85ygP55eduWMhPge7tdQ6txAGvd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988895; c=relaxed/simple;
-	bh=IwzX0J7jilj0a5kjVbUKqP8AmbWR4JoBWU+zgBZfrSA=;
+	s=arc-20240116; t=1711988898; c=relaxed/simple;
+	bh=IvTe5IArURdZYNjl8W/Sjx4IdV+Ir+7h40dKFN09IeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryrC86HzgV74dWIK27DcjoTvUNemAuR7dn2X0grZU0XrrM0VnEXS7RQbzaREg0Zahlb0pGRr9sS1yNoPrLYJ4Dm2fScmawE5fTiWiqbDGdEtA0lDYU3f3Jhc39YQ+r5rCnuXHGdwjmkCN3qwk0VCBdfg1Rzz6SH3GNtx6cWarzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INEjMFC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G38VLmkEr57n+Z4rAtO4NLoQXrRbTyAYNp2EwwJxxesyQ2YItLGflg5Lg3VUYwMuhgvLHLwqjGZ095LUMYRjm9RYgKK8i+2xkwl9tR0+DdK/q8JwWUBJS79tOjzGgXLm0Cu7HHuX/MAhj6mzn1HcROs9TNaKebLL1mHx8Iy0OXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIxUvIKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INEjMFC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC52C433C7;
-	Mon,  1 Apr 2024 16:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIxUvIKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2F6C433C7;
+	Mon,  1 Apr 2024 16:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988894;
-	bh=IwzX0J7jilj0a5kjVbUKqP8AmbWR4JoBWU+zgBZfrSA=;
+	s=korg; t=1711988898;
+	bh=IvTe5IArURdZYNjl8W/Sjx4IdV+Ir+7h40dKFN09IeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INEjMFC7LFnU5+Wh2l12p0mT2bOuqFvPTGhgqor5VWM1tKaq6+taKRt1ZG8ONBsii
-	 ItnfuNdvaFgDSG4suH3gCedpbZGklR+aV+V9W+uMALa4V6DVGlLMdbhU0K52SNoqAZ
-	 HiSkT+LepNL8QWJ1ZG/xWD9CWe6b96AWI0GVUIts=
+	b=ZIxUvIKy+bP1nGPjVOV9ZT76565xn3VQ+eRaTcSgESu4/fdjX+X7UOEewQyg2VhiM
+	 yB6PTmxpBQlmhIb5PKVPej1mhwyIaYb20N+CYLZxwCL9gLWRbk5eGzCF7tspL9R+/Q
+	 myczZIU7FZBvr7jT/3HQ7gGLO8tEtqeWZCqEpVbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Wang <me@jwang.link>,
-	Mark Brown <broonie@kernel.org>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>
-Subject: [PATCH 6.7 292/432] ASoC: amd: yc: Revert "Fix non-functional mic on Lenovo 21J2"
-Date: Mon,  1 Apr 2024 17:44:39 +0200
-Message-ID: <20240401152601.878861404@linuxfoundation.org>
+	Rohit Keshri <rkeshri@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linuxfoundation.org>
+Subject: [PATCH 6.7 293/432] Fix memory leak in posix_clock_open()
+Date: Mon,  1 Apr 2024 17:44:40 +0200
+Message-ID: <20240401152601.908758564@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,52 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Wang <me@jwang.link>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 861b3415e4dee06cc00cd1754808a7827b9105bf upstream.
+commit 5b4cdd9c5676559b8a7c944ac5269b914b8c0bb8 upstream.
 
-This reverts commit ed00a6945dc32462c2d3744a3518d2316da66fcc,
-which added a quirk entry to enable the Yellow Carp (YC)
-driver for the Lenovo 21J2 laptop.
+If the clk ops.open() function returns an error, we don't release the
+pccontext we allocated for this clock.
 
-Although the microphone functioned with the YC driver, it
-resulted in incorrect driver usage. The Lenovo 21J2 is not a
-Yellow Carp platform, but a Pink Sardine platform, which
-already has an upstreamed driver.
+Re-organize the code slightly to make it all more obvious.
 
-The microphone on the Lenovo 21J2 operates correctly with the
-CONFIG_SND_SOC_AMD_PS flag enabled and does not require the
-quirk entry. So this patch removes the quirk entry.
-
-Thanks to Mukunda Vijendar [1] for pointing this out.
-
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-
-Signed-off-by: Jiawei Wang <me@jwang.link>
-Link: https://lore.kernel.org/linux-sound/023092e1-689c-4b00-b93f-4092c3724fb6@amd.com/ [1]
-Link: https://msgid.link/r/20240313015853.3573242-2-me@jwang.link
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Luca Stefani <luca.stefani.ge1@gmail.com>
+Reported-by: Rohit Keshri <rkeshri@redhat.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: 60c6946675fc ("posix-clock: introduce posix_clock_context concept")
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 -------
- 1 file changed, 7 deletions(-)
+ kernel/time/posix-clock.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -203,13 +203,6 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "21J2"),
--		}
--	},
--	{
--		.driver_data = &acp6x_card,
--		.matches = {
--			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21J0"),
- 		}
- 	},
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -129,15 +129,17 @@ static int posix_clock_open(struct inode
+ 		goto out;
+ 	}
+ 	pccontext->clk = clk;
+-	fp->private_data = pccontext;
+-	if (clk->ops.open)
++	if (clk->ops.open) {
+ 		err = clk->ops.open(pccontext, fp->f_mode);
+-	else
+-		err = 0;
+-
+-	if (!err) {
+-		get_device(clk->dev);
++		if (err) {
++			kfree(pccontext);
++			goto out;
++		}
+ 	}
++
++	fp->private_data = pccontext;
++	get_device(clk->dev);
++	err = 0;
+ out:
+ 	up_read(&clk->rwsem);
+ 	return err;
 
 
