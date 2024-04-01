@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F652481B7;
-	Mon,  1 Apr 2024 16:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C6B4596E;
+	Mon,  1 Apr 2024 16:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989789; cv=none; b=Xp1fkYbK5P1uAyCB/RC8fsIHPck+cG9KF7345WmUquzHyNaSMdz4vHvftC5LFaKADy+Tk2knPcoxtIpMCGFQk2K8f0PK/+rsQEiJiOtkkV6vWeI2SJjxjLVsCf4ZI8QwOmY40N36gmic9UL837ijvZNP3HqZn1IiZikb+QVHrug=
+	t=1711989792; cv=none; b=MJrSIdzTRK9C7ov/kB+IJmg7e2h3/9bhv7dGFz0zWz4dl31ZIvVHgA2swPkFR57PNT1ICLj2efNfxkUCYbVdtJ2e+tBllKm7O6C3k4BeGRzS+fzRT6iKBMqZP+78dNxOnDgMzckkQXiBBsE0F2UPYt0JqRgrZPjD5a2BpBCKLaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989789; c=relaxed/simple;
-	bh=yzHaemWBfxYJc/RdHC/jst5i74iHpBL1o7BbFoc6NCY=;
+	s=arc-20240116; t=1711989792; c=relaxed/simple;
+	bh=oUXS9kWjKC+ox0YZuj03aHbKefSKdC6k2A/gS1L55mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMMgXoIGxzIXk25WCJ+UU05++6abmxHy0Y6qy86UbK2ZPADK1uFSFX6nQAr6SbE5BrF3nKDNB/9LtsInb9Jem5HHsAy03wL2gGm47OkP6LgZGROMgDIfr7mKUjJh+uMs5PNO8DL1MbIPNGc64JoDkBFMDxhciuNkmvj+1L193os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGRf16dB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jY/1UnBuI6G5fsm4K4+vEqCxgmgoJG06NceEJT/m+MVJ1dKWNbmaIZvSSKJMtrqP79UJPDqWZIC+e76rExnw6ukbWyOzEWGDZDBEJuGoUkOmHneQEgET9MwUYUsgTau9KG9VUIzekS8ncij3b2gRIIChoUePyatZTss6Wqalg3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDCwSDbN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGRf16dB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E26C433F1;
-	Mon,  1 Apr 2024 16:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDCwSDbN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E774AC433F1;
+	Mon,  1 Apr 2024 16:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989789;
-	bh=yzHaemWBfxYJc/RdHC/jst5i74iHpBL1o7BbFoc6NCY=;
+	s=korg; t=1711989792;
+	bh=oUXS9kWjKC+ox0YZuj03aHbKefSKdC6k2A/gS1L55mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGRf16dBEKT7HKQCzyqNwxJeWH8nslHRZYm6R5J1IAor8hZDyEV/+mtDE763OndWm
-	 UztoeRF7b/63xEXKXPujkAE9BWTdpOJZ7cY4fqFR4bnMxdC8EEyYRfKxxVXxV5eGCp
-	 uuMuff+4xcOLgNI3u5JIkeWyoN4DTg6FATdD0KOs=
+	b=TDCwSDbN4vB3/Dt0Sb7PeUHrZNexyo1i28vcCm1icnMEjhRwz7ojyM2TT4GERFXBu
+	 XomjsaV6uUWONWW8SrVjw15tIwc6uKeA0L17fDU1CLzDSWZKSFHF8s7UHHXhD6ie/r
+	 q+MbrAlrgRG4eRf5kS4WJGMW4OC/4uo2t/97s/8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/396] cifs: allow changing password during remount
-Date: Mon,  1 Apr 2024 17:42:54 +0200
-Message-ID: <20240401152551.646331514@linuxfoundation.org>
+Subject: [PATCH 6.6 116/396] sparc32: Fix parport build with sparc32
+Date: Mon,  1 Apr 2024 17:42:45 +0200
+Message-ID: <20240401152551.376537090@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -50,136 +54,570 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Sam Ravnborg <sam@ravnborg.org>
 
-[ Upstream commit c1eb537bf4560b3ad4df606c266c665624f3b502 ]
+[ Upstream commit 91d3ff922c346d6d8cb8de5ff8d504fe0ca9e17e ]
 
-There are cases where a session is disconnected and password has changed
-on the server (or expired) for this user and this currently can not
-be fixed without unmount and mounting again.  This patch allows
-remount to change the password (for the non Kerberos case, Kerberos
-ticket refresh is handled differently) when the session is disconnected
-and the user can not reconnect due to still using old password.
+include/asm/parport.h is sparc64 specific.
+Rename it to parport_64.h and use the generic version for sparc32.
 
-Future patches should also allow us to setup the keyring (cifscreds)
-to have an "alternate password" so we would be able to change
-the password before the session drops (without the risk of races
-between when the password changes and the disconnect occurs -
-ie cases where the old password is still needed because the new
-password has not fully rolled out to all servers yet).
+This fixed all{mod,yes}config build errors like:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+parport_pc.c:(.text):undefined-reference-to-ebus_dma_enable
+parport_pc.c:(.text):undefined-reference-to-ebus_dma_irq_enable
+parport_pc.c:(.text):undefined-reference-to-ebus_dma_register
+
+The errors occur as the sparc32 build references sparc64 symbols.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Maciej W. Rozycki <macro@orcam.me.uk>
+Closes: https://lore.kernel.org/r/20230406160548.25721-1-rdunlap@infradead.org/
+Fixes: 66bcd06099bb ("parport_pc: Also enable driver for PCI systems")
+Cc: stable@vger.kernel.org # v5.18+
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20240224-sam-fix-sparc32-all-builds-v2-6-1f186603c5c4@ravnborg.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_debug.c |  2 ++
- fs/smb/client/cifsglob.h   |  1 +
- fs/smb/client/fs_context.c | 27 ++++++++++++++++++++++-----
- fs/smb/client/smb2pdu.c    |  5 +++++
- 4 files changed, 30 insertions(+), 5 deletions(-)
+ arch/sparc/include/asm/parport.h    | 259 +---------------------------
+ arch/sparc/include/asm/parport_64.h | 256 +++++++++++++++++++++++++++
+ 2 files changed, 263 insertions(+), 252 deletions(-)
+ create mode 100644 arch/sparc/include/asm/parport_64.h
 
-diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
-index 3230ed7eaddec..7206167f4184a 100644
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -486,6 +486,8 @@ static int cifs_debug_data_proc_show(struct seq_file *m, void *v)
- 				ses->ses_count, ses->serverOS, ses->serverNOS,
- 				ses->capabilities, ses->ses_status);
- 			}
-+			if (ses->expired_pwd)
-+				seq_puts(m, "password no longer valid ");
- 			spin_unlock(&ses->ses_lock);
+diff --git a/arch/sparc/include/asm/parport.h b/arch/sparc/include/asm/parport.h
+index 0a7ffcfd59cda..e2eed8f97665f 100644
+--- a/arch/sparc/include/asm/parport.h
++++ b/arch/sparc/include/asm/parport.h
+@@ -1,256 +1,11 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+-/* parport.h: sparc64 specific parport initialization and dma.
+- *
+- * Copyright (C) 1999  Eddie C. Dost  (ecd@skynet.be)
+- */
++#ifndef ___ASM_SPARC_PARPORT_H
++#define ___ASM_SPARC_PARPORT_H
  
- 			seq_printf(m, "\n\tSecurity type: %s ",
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 57bf6b406c590..91a4061233f1a 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1052,6 +1052,7 @@ struct cifs_ses {
- 	enum securityEnum sectype; /* what security flavor was specified? */
- 	bool sign;		/* is signing required? */
- 	bool domainAuto:1;
-+	bool expired_pwd;  /* track if access denied or expired pwd so can know if need to update */
- 	unsigned int flags;
- 	__u16 session_flags;
- 	__u8 smb3signingkey[SMB3_SIGN_KEY_SIZE];
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 6ecbf48d0f0c6..e4a6b240d2263 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -771,7 +771,7 @@ static void smb3_fs_context_free(struct fs_context *fc)
-  */
- static int smb3_verify_reconfigure_ctx(struct fs_context *fc,
- 				       struct smb3_fs_context *new_ctx,
--				       struct smb3_fs_context *old_ctx)
-+				       struct smb3_fs_context *old_ctx, bool need_recon)
- {
- 	if (new_ctx->posix_paths != old_ctx->posix_paths) {
- 		cifs_errorf(fc, "can not change posixpaths during remount\n");
-@@ -797,8 +797,15 @@ static int smb3_verify_reconfigure_ctx(struct fs_context *fc,
- 	}
- 	if (new_ctx->password &&
- 	    (!old_ctx->password || strcmp(new_ctx->password, old_ctx->password))) {
--		cifs_errorf(fc, "can not change password during remount\n");
+-#ifndef _ASM_SPARC64_PARPORT_H
+-#define _ASM_SPARC64_PARPORT_H 1
+-
+-#include <linux/of.h>
+-#include <linux/platform_device.h>
+-
+-#include <asm/ebus_dma.h>
+-#include <asm/ns87303.h>
+-#include <asm/prom.h>
+-
+-#define PARPORT_PC_MAX_PORTS	PARPORT_MAX
+-
+-/*
+- * While sparc64 doesn't have an ISA DMA API, we provide something that looks
+- * close enough to make parport_pc happy
+- */
+-#define HAS_DMA
+-
+-#ifdef CONFIG_PARPORT_PC_FIFO
+-static DEFINE_SPINLOCK(dma_spin_lock);
+-
+-#define claim_dma_lock() \
+-({	unsigned long flags; \
+-	spin_lock_irqsave(&dma_spin_lock, flags); \
+-	flags; \
+-})
+-
+-#define release_dma_lock(__flags) \
+-	spin_unlock_irqrestore(&dma_spin_lock, __flags);
++#if defined(__sparc__) && defined(__arch64__)
++#include <asm/parport_64.h>
++#else
++#include <asm-generic/parport.h>
++#endif
+ #endif
+ 
+-static struct sparc_ebus_info {
+-	struct ebus_dma_info info;
+-	unsigned int addr;
+-	unsigned int count;
+-	int lock;
+-
+-	struct parport *port;
+-} sparc_ebus_dmas[PARPORT_PC_MAX_PORTS];
+-
+-static DECLARE_BITMAP(dma_slot_map, PARPORT_PC_MAX_PORTS);
+-
+-static inline int request_dma(unsigned int dmanr, const char *device_id)
+-{
+-	if (dmanr >= PARPORT_PC_MAX_PORTS)
 -		return -EINVAL;
-+		if (need_recon == false) {
-+			cifs_errorf(fc,
-+				    "can not change password of active session during remount\n");
-+			return -EINVAL;
-+		} else if (old_ctx->sectype == Kerberos) {
-+			cifs_errorf(fc,
-+				    "can not change password for Kerberos via remount\n");
-+			return -EINVAL;
-+		}
- 	}
- 	if (new_ctx->domainname &&
- 	    (!old_ctx->domainname || strcmp(new_ctx->domainname, old_ctx->domainname))) {
-@@ -842,9 +849,14 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	struct smb3_fs_context *ctx = smb3_fc2context(fc);
- 	struct dentry *root = fc->root;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(root->d_sb);
-+	struct cifs_ses *ses = cifs_sb_master_tcon(cifs_sb)->ses;
-+	bool need_recon = false;
- 	int rc;
- 
--	rc = smb3_verify_reconfigure_ctx(fc, ctx, cifs_sb->ctx);
-+	if (ses->expired_pwd)
-+		need_recon = true;
+-	if (xchg(&sparc_ebus_dmas[dmanr].lock, 1) != 0)
+-		return -EBUSY;
+-	return 0;
+-}
+-
+-static inline void free_dma(unsigned int dmanr)
+-{
+-	if (dmanr >= PARPORT_PC_MAX_PORTS) {
+-		printk(KERN_WARNING "Trying to free DMA%d\n", dmanr);
+-		return;
+-	}
+-	if (xchg(&sparc_ebus_dmas[dmanr].lock, 0) == 0) {
+-		printk(KERN_WARNING "Trying to free free DMA%d\n", dmanr);
+-		return;
+-	}
+-}
+-
+-static inline void enable_dma(unsigned int dmanr)
+-{
+-	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 1);
+-
+-	if (ebus_dma_request(&sparc_ebus_dmas[dmanr].info,
+-			     sparc_ebus_dmas[dmanr].addr,
+-			     sparc_ebus_dmas[dmanr].count))
+-		BUG();
+-}
+-
+-static inline void disable_dma(unsigned int dmanr)
+-{
+-	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 0);
+-}
+-
+-static inline void clear_dma_ff(unsigned int dmanr)
+-{
+-	/* nothing */
+-}
+-
+-static inline void set_dma_mode(unsigned int dmanr, char mode)
+-{
+-	ebus_dma_prepare(&sparc_ebus_dmas[dmanr].info, (mode != DMA_MODE_WRITE));
+-}
+-
+-static inline void set_dma_addr(unsigned int dmanr, unsigned int addr)
+-{
+-	sparc_ebus_dmas[dmanr].addr = addr;
+-}
+-
+-static inline void set_dma_count(unsigned int dmanr, unsigned int count)
+-{
+-	sparc_ebus_dmas[dmanr].count = count;
+-}
+-
+-static inline unsigned int get_dma_residue(unsigned int dmanr)
+-{
+-	return ebus_dma_residue(&sparc_ebus_dmas[dmanr].info);
+-}
+-
+-static int ecpp_probe(struct platform_device *op)
+-{
+-	unsigned long base = op->resource[0].start;
+-	unsigned long config = op->resource[1].start;
+-	unsigned long d_base = op->resource[2].start;
+-	unsigned long d_len;
+-	struct device_node *parent;
+-	struct parport *p;
+-	int slot, err;
+-
+-	parent = op->dev.of_node->parent;
+-	if (of_node_name_eq(parent, "dma")) {
+-		p = parport_pc_probe_port(base, base + 0x400,
+-					  op->archdata.irqs[0], PARPORT_DMA_NOFIFO,
+-					  op->dev.parent->parent, 0);
+-		if (!p)
+-			return -ENOMEM;
+-		dev_set_drvdata(&op->dev, p);
+-		return 0;
+-	}
+-
+-	for (slot = 0; slot < PARPORT_PC_MAX_PORTS; slot++) {
+-		if (!test_and_set_bit(slot, dma_slot_map))
+-			break;
+-	}
+-	err = -ENODEV;
+-	if (slot >= PARPORT_PC_MAX_PORTS)
+-		goto out_err;
+-
+-	spin_lock_init(&sparc_ebus_dmas[slot].info.lock);
+-
+-	d_len = (op->resource[2].end - d_base) + 1UL;
+-	sparc_ebus_dmas[slot].info.regs =
+-		of_ioremap(&op->resource[2], 0, d_len, "ECPP DMA");
+-
+-	if (!sparc_ebus_dmas[slot].info.regs)
+-		goto out_clear_map;
+-
+-	sparc_ebus_dmas[slot].info.flags = 0;
+-	sparc_ebus_dmas[slot].info.callback = NULL;
+-	sparc_ebus_dmas[slot].info.client_cookie = NULL;
+-	sparc_ebus_dmas[slot].info.irq = 0xdeadbeef;
+-	strcpy(sparc_ebus_dmas[slot].info.name, "parport");
+-	if (ebus_dma_register(&sparc_ebus_dmas[slot].info))
+-		goto out_unmap_regs;
+-
+-	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 1);
+-
+-	/* Configure IRQ to Push Pull, Level Low */
+-	/* Enable ECP, set bit 2 of the CTR first */
+-	outb(0x04, base + 0x02);
+-	ns87303_modify(config, PCR,
+-		       PCR_EPP_ENABLE |
+-		       PCR_IRQ_ODRAIN,
+-		       PCR_ECP_ENABLE |
+-		       PCR_ECP_CLK_ENA |
+-		       PCR_IRQ_POLAR);
+-
+-	/* CTR bit 5 controls direction of port */
+-	ns87303_modify(config, PTR,
+-		       0, PTR_LPT_REG_DIR);
+-
+-	p = parport_pc_probe_port(base, base + 0x400,
+-				  op->archdata.irqs[0],
+-				  slot,
+-				  op->dev.parent,
+-				  0);
+-	err = -ENOMEM;
+-	if (!p)
+-		goto out_disable_irq;
+-
+-	dev_set_drvdata(&op->dev, p);
+-
+-	return 0;
+-
+-out_disable_irq:
+-	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
+-	ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
+-
+-out_unmap_regs:
+-	of_iounmap(&op->resource[2], sparc_ebus_dmas[slot].info.regs, d_len);
+-
+-out_clear_map:
+-	clear_bit(slot, dma_slot_map);
+-
+-out_err:
+-	return err;
+-}
+-
+-static int ecpp_remove(struct platform_device *op)
+-{
+-	struct parport *p = dev_get_drvdata(&op->dev);
+-	int slot = p->dma;
+-
+-	parport_pc_unregister_port(p);
+-
+-	if (slot != PARPORT_DMA_NOFIFO) {
+-		unsigned long d_base = op->resource[2].start;
+-		unsigned long d_len;
+-
+-		d_len = (op->resource[2].end - d_base) + 1UL;
+-
+-		ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
+-		ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
+-		of_iounmap(&op->resource[2],
+-			   sparc_ebus_dmas[slot].info.regs,
+-			   d_len);
+-		clear_bit(slot, dma_slot_map);
+-	}
+-
+-	return 0;
+-}
+-
+-static const struct of_device_id ecpp_match[] = {
+-	{
+-		.name = "ecpp",
+-	},
+-	{
+-		.name = "parallel",
+-		.compatible = "ecpp",
+-	},
+-	{
+-		.name = "parallel",
+-		.compatible = "ns87317-ecpp",
+-	},
+-	{
+-		.name = "parallel",
+-		.compatible = "pnpALI,1533,3",
+-	},
+-	{},
+-};
+-
+-static struct platform_driver ecpp_driver = {
+-	.driver = {
+-		.name = "ecpp",
+-		.of_match_table = ecpp_match,
+-	},
+-	.probe			= ecpp_probe,
+-	.remove			= ecpp_remove,
+-};
+-
+-static int parport_pc_find_nonpci_ports(int autoirq, int autodma)
+-{
+-	return platform_driver_register(&ecpp_driver);
+-}
+-
+-#endif /* !(_ASM_SPARC64_PARPORT_H */
+diff --git a/arch/sparc/include/asm/parport_64.h b/arch/sparc/include/asm/parport_64.h
+new file mode 100644
+index 0000000000000..0a7ffcfd59cda
+--- /dev/null
++++ b/arch/sparc/include/asm/parport_64.h
+@@ -0,0 +1,256 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* parport.h: sparc64 specific parport initialization and dma.
++ *
++ * Copyright (C) 1999  Eddie C. Dost  (ecd@skynet.be)
++ */
 +
-+	rc = smb3_verify_reconfigure_ctx(fc, ctx, cifs_sb->ctx, need_recon);
- 	if (rc)
- 		return rc;
- 
-@@ -857,7 +869,12 @@ static int smb3_reconfigure(struct fs_context *fc)
- 	STEAL_STRING(cifs_sb, ctx, UNC);
- 	STEAL_STRING(cifs_sb, ctx, source);
- 	STEAL_STRING(cifs_sb, ctx, username);
--	STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
-+	if (need_recon == false)
-+		STEAL_STRING_SENSITIVE(cifs_sb, ctx, password);
-+	else  {
-+		kfree_sensitive(ses->password);
-+		ses->password = kstrdup(ctx->password, GFP_KERNEL);
++#ifndef _ASM_SPARC64_PARPORT_H
++#define _ASM_SPARC64_PARPORT_H 1
++
++#include <linux/of.h>
++#include <linux/platform_device.h>
++
++#include <asm/ebus_dma.h>
++#include <asm/ns87303.h>
++#include <asm/prom.h>
++
++#define PARPORT_PC_MAX_PORTS	PARPORT_MAX
++
++/*
++ * While sparc64 doesn't have an ISA DMA API, we provide something that looks
++ * close enough to make parport_pc happy
++ */
++#define HAS_DMA
++
++#ifdef CONFIG_PARPORT_PC_FIFO
++static DEFINE_SPINLOCK(dma_spin_lock);
++
++#define claim_dma_lock() \
++({	unsigned long flags; \
++	spin_lock_irqsave(&dma_spin_lock, flags); \
++	flags; \
++})
++
++#define release_dma_lock(__flags) \
++	spin_unlock_irqrestore(&dma_spin_lock, __flags);
++#endif
++
++static struct sparc_ebus_info {
++	struct ebus_dma_info info;
++	unsigned int addr;
++	unsigned int count;
++	int lock;
++
++	struct parport *port;
++} sparc_ebus_dmas[PARPORT_PC_MAX_PORTS];
++
++static DECLARE_BITMAP(dma_slot_map, PARPORT_PC_MAX_PORTS);
++
++static inline int request_dma(unsigned int dmanr, const char *device_id)
++{
++	if (dmanr >= PARPORT_PC_MAX_PORTS)
++		return -EINVAL;
++	if (xchg(&sparc_ebus_dmas[dmanr].lock, 1) != 0)
++		return -EBUSY;
++	return 0;
++}
++
++static inline void free_dma(unsigned int dmanr)
++{
++	if (dmanr >= PARPORT_PC_MAX_PORTS) {
++		printk(KERN_WARNING "Trying to free DMA%d\n", dmanr);
++		return;
 +	}
- 	STEAL_STRING(cifs_sb, ctx, domainname);
- 	STEAL_STRING(cifs_sb, ctx, nodename);
- 	STEAL_STRING(cifs_sb, ctx, iocharset);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 9d34a55fdb5e4..fca55702b51ad 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1536,6 +1536,11 @@ SMB2_sess_sendreceive(struct SMB2_sess_data *sess_data)
- 			    &sess_data->buf0_type,
- 			    CIFS_LOG_ERROR | CIFS_SESS_OP, &rsp_iov);
- 	cifs_small_buf_release(sess_data->iov[0].iov_base);
-+	if (rc == 0)
-+		sess_data->ses->expired_pwd = false;
-+	else if ((rc == -EACCES) || (rc == -EKEYEXPIRED) || (rc == -EKEYREVOKED))
-+		sess_data->ses->expired_pwd = true;
++	if (xchg(&sparc_ebus_dmas[dmanr].lock, 0) == 0) {
++		printk(KERN_WARNING "Trying to free free DMA%d\n", dmanr);
++		return;
++	}
++}
 +
- 	memcpy(&sess_data->iov[0], &rsp_iov, sizeof(struct kvec));
- 
- 	return rc;
++static inline void enable_dma(unsigned int dmanr)
++{
++	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 1);
++
++	if (ebus_dma_request(&sparc_ebus_dmas[dmanr].info,
++			     sparc_ebus_dmas[dmanr].addr,
++			     sparc_ebus_dmas[dmanr].count))
++		BUG();
++}
++
++static inline void disable_dma(unsigned int dmanr)
++{
++	ebus_dma_enable(&sparc_ebus_dmas[dmanr].info, 0);
++}
++
++static inline void clear_dma_ff(unsigned int dmanr)
++{
++	/* nothing */
++}
++
++static inline void set_dma_mode(unsigned int dmanr, char mode)
++{
++	ebus_dma_prepare(&sparc_ebus_dmas[dmanr].info, (mode != DMA_MODE_WRITE));
++}
++
++static inline void set_dma_addr(unsigned int dmanr, unsigned int addr)
++{
++	sparc_ebus_dmas[dmanr].addr = addr;
++}
++
++static inline void set_dma_count(unsigned int dmanr, unsigned int count)
++{
++	sparc_ebus_dmas[dmanr].count = count;
++}
++
++static inline unsigned int get_dma_residue(unsigned int dmanr)
++{
++	return ebus_dma_residue(&sparc_ebus_dmas[dmanr].info);
++}
++
++static int ecpp_probe(struct platform_device *op)
++{
++	unsigned long base = op->resource[0].start;
++	unsigned long config = op->resource[1].start;
++	unsigned long d_base = op->resource[2].start;
++	unsigned long d_len;
++	struct device_node *parent;
++	struct parport *p;
++	int slot, err;
++
++	parent = op->dev.of_node->parent;
++	if (of_node_name_eq(parent, "dma")) {
++		p = parport_pc_probe_port(base, base + 0x400,
++					  op->archdata.irqs[0], PARPORT_DMA_NOFIFO,
++					  op->dev.parent->parent, 0);
++		if (!p)
++			return -ENOMEM;
++		dev_set_drvdata(&op->dev, p);
++		return 0;
++	}
++
++	for (slot = 0; slot < PARPORT_PC_MAX_PORTS; slot++) {
++		if (!test_and_set_bit(slot, dma_slot_map))
++			break;
++	}
++	err = -ENODEV;
++	if (slot >= PARPORT_PC_MAX_PORTS)
++		goto out_err;
++
++	spin_lock_init(&sparc_ebus_dmas[slot].info.lock);
++
++	d_len = (op->resource[2].end - d_base) + 1UL;
++	sparc_ebus_dmas[slot].info.regs =
++		of_ioremap(&op->resource[2], 0, d_len, "ECPP DMA");
++
++	if (!sparc_ebus_dmas[slot].info.regs)
++		goto out_clear_map;
++
++	sparc_ebus_dmas[slot].info.flags = 0;
++	sparc_ebus_dmas[slot].info.callback = NULL;
++	sparc_ebus_dmas[slot].info.client_cookie = NULL;
++	sparc_ebus_dmas[slot].info.irq = 0xdeadbeef;
++	strcpy(sparc_ebus_dmas[slot].info.name, "parport");
++	if (ebus_dma_register(&sparc_ebus_dmas[slot].info))
++		goto out_unmap_regs;
++
++	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 1);
++
++	/* Configure IRQ to Push Pull, Level Low */
++	/* Enable ECP, set bit 2 of the CTR first */
++	outb(0x04, base + 0x02);
++	ns87303_modify(config, PCR,
++		       PCR_EPP_ENABLE |
++		       PCR_IRQ_ODRAIN,
++		       PCR_ECP_ENABLE |
++		       PCR_ECP_CLK_ENA |
++		       PCR_IRQ_POLAR);
++
++	/* CTR bit 5 controls direction of port */
++	ns87303_modify(config, PTR,
++		       0, PTR_LPT_REG_DIR);
++
++	p = parport_pc_probe_port(base, base + 0x400,
++				  op->archdata.irqs[0],
++				  slot,
++				  op->dev.parent,
++				  0);
++	err = -ENOMEM;
++	if (!p)
++		goto out_disable_irq;
++
++	dev_set_drvdata(&op->dev, p);
++
++	return 0;
++
++out_disable_irq:
++	ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
++	ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
++
++out_unmap_regs:
++	of_iounmap(&op->resource[2], sparc_ebus_dmas[slot].info.regs, d_len);
++
++out_clear_map:
++	clear_bit(slot, dma_slot_map);
++
++out_err:
++	return err;
++}
++
++static int ecpp_remove(struct platform_device *op)
++{
++	struct parport *p = dev_get_drvdata(&op->dev);
++	int slot = p->dma;
++
++	parport_pc_unregister_port(p);
++
++	if (slot != PARPORT_DMA_NOFIFO) {
++		unsigned long d_base = op->resource[2].start;
++		unsigned long d_len;
++
++		d_len = (op->resource[2].end - d_base) + 1UL;
++
++		ebus_dma_irq_enable(&sparc_ebus_dmas[slot].info, 0);
++		ebus_dma_unregister(&sparc_ebus_dmas[slot].info);
++		of_iounmap(&op->resource[2],
++			   sparc_ebus_dmas[slot].info.regs,
++			   d_len);
++		clear_bit(slot, dma_slot_map);
++	}
++
++	return 0;
++}
++
++static const struct of_device_id ecpp_match[] = {
++	{
++		.name = "ecpp",
++	},
++	{
++		.name = "parallel",
++		.compatible = "ecpp",
++	},
++	{
++		.name = "parallel",
++		.compatible = "ns87317-ecpp",
++	},
++	{
++		.name = "parallel",
++		.compatible = "pnpALI,1533,3",
++	},
++	{},
++};
++
++static struct platform_driver ecpp_driver = {
++	.driver = {
++		.name = "ecpp",
++		.of_match_table = ecpp_match,
++	},
++	.probe			= ecpp_probe,
++	.remove			= ecpp_remove,
++};
++
++static int parport_pc_find_nonpci_ports(int autoirq, int autodma)
++{
++	return platform_driver_register(&ecpp_driver);
++}
++
++#endif /* !(_ASM_SPARC64_PARPORT_H */
 -- 
 2.43.0
 
