@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF624778C;
-	Mon,  1 Apr 2024 15:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA946B8B;
+	Mon,  1 Apr 2024 15:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986904; cv=none; b=Wu2JHSmYfR9TJ06GUAgA/NHBnzpqFpsoc4h1+9ZD6iklN2VuhvjrMb3AhUlfirRqzEBbq+VKV7sxcQAota8m6weht1plP0zViqtRjh+21K1Jxb7lGIn+1bP/rlGi54nym0AMR8rt/YLo5qQc+9j1JoliLGQeJJKHGTmn/9JpDZc=
+	t=1711986907; cv=none; b=FDFr2yxiE80zkodrusqWPRWv5SUL4n+gI9/HaIEPsAWTsopvfNco6QULtjJuW65aIwgvWvluE9M6ov2CrSE89eti1zKDC2UV80goqwMmD5a0OO/QhBN1mu+nVNWPRXNzBhk0jV3JRQuHjABH357OBcC7croVGLU+S1jM7uU3aYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986904; c=relaxed/simple;
-	bh=J4dOEknYgD9M/UWK6+btH9ya6W5Gg/MwWXxKdF62BAg=;
+	s=arc-20240116; t=1711986907; c=relaxed/simple;
+	bh=8NcXt8Lv/5WPtWStYeirNQ2AWfVphdM92cn2avuUQ9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFGWLSeX0AeOaUcYAZwqEtvbI3CUCayWdseXvNj2xqGzvsFL6zQU9TlRi6Fjj+cF2hYglh0QllGi/+F+9JA1Lkdm3eCMndiq070chPwg+krgIeSsuMlie11XFAP6f4TBZCMg/OXBDC8yx/4UcxpwZfFCibHJ7mLlLMBDHXnk2OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HD2zM2Lj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IT3SBE+ma9PbjQ2H2wMzG/pxQWyOlHLShOszxQrOH5Njd7gk3UAcr1RZR+NPK2yuHhmwhh9gwySwtpVhSRtDfxede3nP/BIUHCoU0CdbKrlWDtWFzAXLaEC6NGKQXk5xqoz5SrXhpPeioKPfecIs7nw/X5wXUNWr1QhM9emgvwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xl0CqZNw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HD2zM2Lj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075FDC433C7;
-	Mon,  1 Apr 2024 15:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xl0CqZNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269D1C433F1;
+	Mon,  1 Apr 2024 15:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986904;
-	bh=J4dOEknYgD9M/UWK6+btH9ya6W5Gg/MwWXxKdF62BAg=;
+	s=korg; t=1711986907;
+	bh=8NcXt8Lv/5WPtWStYeirNQ2AWfVphdM92cn2avuUQ9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HD2zM2LjPiC2sCOnB4FccnunolJItk5GbQ0qo8VsNpXSApv5OVDW3lh+Pff0bQjR1
-	 wZwIHmJCkac5vh2GpTCwJ1mO6qBnMQa7hhyjqGafiCn4NCFJJsn+JDj7x+t/5mTvqd
-	 7U7264yHam7yDNi5z8whMulfBFqguN47VVLwne8c=
+	b=Xl0CqZNwAs76TItrz9fTZNo5w7klt4OVouzUL5Bmv4r1f9g66YVKhzqZiJTniEKNO
+	 zcBZpXCxOq0rZTpGLEEMjNyUOJ8hRxhJGqRkQj+JTxA9sPzfx04/JNjBkUZAaielSz
+	 4xfpdDvUnjji0p2oBeQHrlAI4nrMy2ypsGKZyvNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Josua Mayer <josua@solid-run.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 122/399] io_uring: fix mshot read defer taskrun cqe posting
-Date: Mon,  1 Apr 2024 17:41:28 +0200
-Message-ID: <20240401152552.829587075@linuxfoundation.org>
+Subject: [PATCH 6.8 123/399] hwmon: (amc6821) add of_match table
+Date: Mon,  1 Apr 2024 17:41:29 +0200
+Message-ID: <20240401152552.859536884@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit 70581dcd0601a09f134f23268e3374e15d736824 ]
+[ Upstream commit 3f003fda98a7a8d5f399057d92e6ed56b468657c ]
 
-We can't post CQEs from io-wq with DEFER_TASKRUN set, normal completions
-are handled but aux should be explicitly disallowed by opcode handlers.
+Add of_match table for "ti,amc6821" compatible string.
+This fixes automatic driver loading by userspace when using device-tree,
+and if built as a module like major linux distributions do.
+
+While devices probe just fine with i2c_device_id table, userspace can't
+match the "ti,amc6821" compatible string from dt with the plain
+"amc6821" device id. As a result, the kernel module can not be loaded.
 
 Cc: stable@vger.kernel.org
-Fixes: fc68fcda04910 ("io_uring/rw: add support for IORING_OP_READ_MULTISHOT")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/6fb7cba6f5366da25f4d3eb95273f062309d97fa.1709740837.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Link: https://lore.kernel.org/r/20240307-amc6821-of-match-v1-1-5f40464a3110@solid-run.com
+[groeck: Cleaned up patch description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/amc6821.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index d5e79d9bdc717..8756e367acd91 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -932,6 +932,8 @@ int io_read_mshot(struct io_kiocb *req, unsigned int issue_flags)
- 	 */
- 	if (!file_can_poll(req->file))
- 		return -EBADFD;
-+	if (issue_flags & IO_URING_F_IOWQ)
-+		return -EAGAIN;
+diff --git a/drivers/hwmon/amc6821.c b/drivers/hwmon/amc6821.c
+index 2a7a4b6b00942..9b02b304c2f5d 100644
+--- a/drivers/hwmon/amc6821.c
++++ b/drivers/hwmon/amc6821.c
+@@ -934,10 +934,21 @@ static const struct i2c_device_id amc6821_id[] = {
  
- 	ret = __io_read(req, issue_flags);
+ MODULE_DEVICE_TABLE(i2c, amc6821_id);
  
++static const struct of_device_id __maybe_unused amc6821_of_match[] = {
++	{
++		.compatible = "ti,amc6821",
++		.data = (void *)amc6821,
++	},
++	{ }
++};
++
++MODULE_DEVICE_TABLE(of, amc6821_of_match);
++
+ static struct i2c_driver amc6821_driver = {
+ 	.class = I2C_CLASS_HWMON,
+ 	.driver = {
+ 		.name	= "amc6821",
++		.of_match_table = of_match_ptr(amc6821_of_match),
+ 	},
+ 	.probe = amc6821_probe,
+ 	.id_table = amc6821_id,
 -- 
 2.43.0
 
