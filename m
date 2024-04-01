@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FFC1DFF4;
-	Mon,  1 Apr 2024 17:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083A71DFF4;
+	Mon,  1 Apr 2024 17:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991132; cv=none; b=eab3TCYCIZyOnvTb3u2QtEgFJw5/MsxxmANDSEFwMOgtgsMCOdCeARKE0lP8Nw0b1obAD8j2+t6he0UO2v+hh9IqaNk16m8jJ/S+lz15ZXYYCID1RQ+6NDauSgw3oths14yGCcex4IJV1W6GOPrjybsP+0LPjfxVnGT85cSHWS8=
+	t=1711991136; cv=none; b=LHvEZKVBqobBzHm3t3xlPYclVrqIbWRAkceN7NpXgjbYhxO552pmf6bvmO7ZG7VImlGSqoIxcXXgiatFsYTxzNuvLGSoWUxOR1KAVPN73ir5e57vOqZLTNBhB2fNKXqa7XMYSDOxWwDQBeG5JUV5gYnSYIdX12xWa+Bj63c8KTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991132; c=relaxed/simple;
-	bh=+6URVwDLuobUNmO16BVqfYqTTpCHaU2kH7oqsx1ndkI=;
+	s=arc-20240116; t=1711991136; c=relaxed/simple;
+	bh=XAtt1RdGWmQyUf+Dj3W4WjTJGHZS59yOtUB+dFmSo9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCQVR3QhxKrnKHKHTNh2Pmj/WP7keUOWhpbaQIhWIC6+z/f72AhCYXpPVe6BCNptB5naxcIpw81hehP4xAlp9LPdmzDuaLRYF27aWXc2HJDVum4xTLUSkIURm3c7cK5YXBpMEXihbbdRhBleriOk6BunzWG6o0ngDqnyTDLIvMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4/2ogLt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwNe1ofooou88TRJX5UxTwEv8lllvGNyg/sYSxJvKp7LJa6EZin27o7nnelEhUu1jT5tqvbh2hKsbwKqEBJOHWIe/qkQGeZnTqUj+W7DJUT0uK7KGZtP8Ksaat+vVnBymuCrjunx/npdh7xRyzS0xLzLgYuIpI3RAqKLQJXnJmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkyX8mHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4/2ogLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C15FC433F1;
-	Mon,  1 Apr 2024 17:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkyX8mHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA78C433F1;
+	Mon,  1 Apr 2024 17:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991132;
-	bh=+6URVwDLuobUNmO16BVqfYqTTpCHaU2kH7oqsx1ndkI=;
+	s=korg; t=1711991135;
+	bh=XAtt1RdGWmQyUf+Dj3W4WjTJGHZS59yOtUB+dFmSo9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4/2ogLt9ntE9mm9czhcwoeTR8lwi3Ccz/vSi7v/rxY7MUaps60F0MP35uAqHcKJ+
-	 uNlOTbyODovurWPdYHJHvqlWbaEtrEY3psxYTzuZu4T9okuQBOMGxzU+EWYZ9O58OO
-	 UIhXyhoy+mRf93C2oKTNLt2d4y4JkYiMaoy2KCqU=
+	b=wkyX8mHsgOW8gan3YhqsFJ1q5VIoGExfezZvzKkyOF9pP3AKYkcSmjJkXcpsQAqqN
+	 eK+/OxNeb4ggK2WJFwnYyWs9RvVageYKd8wt5Y7c5S6l9PssFfmVcTDlOVBhAm/GoU
+	 xV7aDAOcQO6qTxYZU5HKAaXBZwf73Y1AdzMSEKig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 172/272] iio: accel: adxl367: fix I2C FIFO data register
-Date: Mon,  1 Apr 2024 17:46:02 +0200
-Message-ID: <20240401152536.130445241@linuxfoundation.org>
+	Andi Shyti <andi.shyti@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>
+Subject: [PATCH 6.1 173/272] i2c: i801: Avoid potential double call to gpiod_remove_lookup_table
+Date: Mon,  1 Apr 2024 17:46:03 +0200
+Message-ID: <20240401152536.170590319@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 11dadb631007324c7a8bcb2650eda88ed2b9eed0 upstream.
+commit ceb013b2d9a2946035de5e1827624edc85ae9484 upstream.
 
-As specified in the datasheet, the I2C FIFO data register is
-0x18, not 0x42. 0x42 was used by mistake when adapting the
-ADXL372 driver.
+If registering the platform device fails, the lookup table is
+removed in the error path. On module removal we would try to
+remove the lookup table again. Fix this by setting priv->lookup
+only if registering the platform device was successful.
+In addition free the memory allocated for the lookup table in
+the error path.
 
-Fix this mistake.
-
-Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240207033657.206171-2-demonsingur@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: d308dfbf62ef ("i2c: mux/i801: Switch to use descriptor passing")
+Cc: stable@vger.kernel.org
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl367_i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-i801.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/adxl367_i2c.c b/drivers/iio/accel/adxl367_i2c.c
-index b595fe94f3a3..62c74bdc0d77 100644
---- a/drivers/iio/accel/adxl367_i2c.c
-+++ b/drivers/iio/accel/adxl367_i2c.c
-@@ -11,7 +11,7 @@
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -1422,7 +1422,6 @@ static void i801_add_mux(struct i801_pri
+ 		lookup->table[i] = GPIO_LOOKUP(mux_config->gpio_chip,
+ 					       mux_config->gpios[i], "mux", 0);
+ 	gpiod_add_lookup_table(lookup);
+-	priv->lookup = lookup;
  
- #include "adxl367.h"
+ 	/*
+ 	 * Register the mux device, we use PLATFORM_DEVID_NONE here
+@@ -1436,7 +1435,10 @@ static void i801_add_mux(struct i801_pri
+ 				sizeof(struct i2c_mux_gpio_platform_data));
+ 	if (IS_ERR(priv->mux_pdev)) {
+ 		gpiod_remove_lookup_table(lookup);
++		devm_kfree(dev, lookup);
+ 		dev_err(dev, "Failed to register i2c-mux-gpio device\n");
++	} else {
++		priv->lookup = lookup;
+ 	}
+ }
  
--#define ADXL367_I2C_FIFO_DATA	0x42
-+#define ADXL367_I2C_FIFO_DATA	0x18
- 
- struct adxl367_i2c_state {
- 	struct regmap *regmap;
--- 
-2.44.0
-
 
 
