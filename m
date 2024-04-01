@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268DB38DE5;
-	Mon,  1 Apr 2024 17:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B29C482DF;
+	Mon,  1 Apr 2024 17:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991216; cv=none; b=Ae1i0mQXUy2brSLHqK8SIWpmlZ7ocb6Nkiizp5VZs6ZqJIPvpVqcotLJ+HJgSrVJEVPHWAMmS5ZxFI7EFoO6tMSk8gy6Zchk8/kRbKFhRtGmakM/kqZZsb9G/DuEFPJmgLEEzauSKpAqi8jaLwAv37wQW2fxlj0GN++fICmTy7s=
+	t=1711991219; cv=none; b=c2F3/iZZAkHil1XgMEYgJFq7bjNVh/rGUTyDfGHQKolqTWT3nRkERzBQYe0JJrTQkG7xKL4TerQFIXR1A2YNkkc/IbWUFUCtQI99Wp3qkJq8zdI5Rr4T5etvnaIN4kzldVWYFv73vOoDlcO3SCSA0pgzIKLHbpT3D17gSfvT2w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991216; c=relaxed/simple;
-	bh=W9HKN0ve170sj9I8vC1bD5k+OGtu2E0m7Seej9T9fyc=;
+	s=arc-20240116; t=1711991219; c=relaxed/simple;
+	bh=Mv4u2dCpUYmG12oHJ0MgOxCytAr/IvKGwzxJOaNc9l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uA6RSqkHxYT0jxIYJC2kYIS3TyekgvlHOrIA+ncaL1SUTJxxQiBVYp1XLTsMzu+ss7l/CjUNbKEGWreYxBAPqbThfM1QMHOO1wOmtUN4/0FY8P+lk8UQr3hg8HUbJWBoOURhXagfNG4QkDfSRqZhewqJiOkoUgFMzgtVDNMgH4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMfgDf1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7LaKJje09FfiBIM1q11DEUH+qD5VwRUVd8ixl9ku7xsg9UyZ4iOr2vfOlKOtvOoZU+R9oNFtkU8xPA44HIrHClFIlXrhPk2J4oC+fLZVkcZRPiO4o4WAVRGffA3CFkUU86fWwWl7WqBRThalxjvSgYEDtCan7TysoKE27uZkk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAhhrgJu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMfgDf1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D5AC433F1;
-	Mon,  1 Apr 2024 17:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAhhrgJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87848C433C7;
+	Mon,  1 Apr 2024 17:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991215;
-	bh=W9HKN0ve170sj9I8vC1bD5k+OGtu2E0m7Seej9T9fyc=;
+	s=korg; t=1711991218;
+	bh=Mv4u2dCpUYmG12oHJ0MgOxCytAr/IvKGwzxJOaNc9l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMfgDf1TH0Yur6ErNZelfvf+LrSEXhfSxrDgrcAafL35DCARwu7hG5t/v+oHWMpU2
-	 IyRJSkpadcrb5QXBDqAS7jg2QmBvYMAhdbpFB/eklL0itrEQGzzgAmkHt4XFgVYVmZ
-	 3TrgJ3QdJmOfDoisDEeLVvP5IBo8Xv+fJW7auFuI=
+	b=XAhhrgJuQhFgvNDDH0AprwGIwcYW0euKkVueS2oxbfEAGjdZm1AQU+WubCGWgle1r
+	 5BRL2ISWWKg8F1MIiMxZTkryZthv6P9hIbVXfGTctJpSjXjXKoSdIK01lGteuxxh76
+	 hCODrJe23K2jojG/GFyz2yK03gePSBBl7HBzsdOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
-	Greg Edwards <gedwards@ddn.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 197/272] block: Fix page refcounts for unaligned buffers in __bio_release_pages()
-Date: Mon,  1 Apr 2024 17:46:27 +0200
-Message-ID: <20240401152537.042085411@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 6.1 198/272] blk-mq: release scheduler resource when request completes
+Date: Mon,  1 Apr 2024 17:46:28 +0200
+Message-ID: <20240401152537.071372186@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,52 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-commit 38b43539d64b2fa020b3b9a752a986769f87f7a6 upstream.
+commit e5c0ca13659e9d18f53368d651ed7e6e433ec1cf upstream.
 
-Fix an incorrect number of pages being released for buffers that do not
-start at the beginning of a page.
+Chuck reported [1] an IO hang problem on NFS exports that reside on SATA
+devices and bisected to commit 615939a2ae73 ("blk-mq: defer to the normal
+submission path for post-flush requests").
 
-Fixes: 1b151e2435fc ("block: Remove special-casing of compound pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Tested-by: Greg Edwards <gedwards@ddn.com>
-Link: https://lore.kernel.org/r/86e592a9-98d4-4cff-a646-0c0084328356@cybernetics.com
+We analysed the IO hang problem, found there are two postflush requests
+waiting for each other.
+
+The first postflush request completed the REQ_FSEQ_DATA sequence, so go to
+the REQ_FSEQ_POSTFLUSH sequence and added in the flush pending list, but
+failed to blk_kick_flush() because of the second postflush request which
+is inflight waiting in scheduler queue.
+
+The second postflush waiting in scheduler queue can't be dispatched because
+the first postflush hasn't released scheduler resource even though it has
+completed by itself.
+
+Fix it by releasing scheduler resource when the first postflush request
+completed, so the second postflush can be dispatched and completed, then
+make blk_kick_flush() succeed.
+
+While at it, remove the check for e->ops.finish_request, as all
+schedulers set that. Reaffirm this requirement by adding a WARN_ON_ONCE()
+at scheduler registration time, just like we do for insert_requests and
+dispatch_request.
+
+[1] https://lore.kernel.org/all/7A57C7AE-A51A-4254-888B-FE15CA21F9E9@oracle.com/
+
+Link: https://lore.kernel.org/linux-block/20230819031206.2744005-1-chengming.zhou@linux.dev/
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202308172100.8ce4b853-oliver.sang@intel.com
+Fixes: 615939a2ae73 ("blk-mq: defer to the normal submission path for post-flush requests")
+Reported-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Tested-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/20230813152325.3017343-1-chengming.zhou@linux.dev
+[axboe: folded in incremental fix and added tags]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Tony: backport to v6.1 by replacing bio_release_page() loop with
-  folio_put_refs() as commits fd363244e883 and e4cc64657bec are not
-  present. ]
+[bvanassche: changed RQF_USE_SCHED into RQF_ELVPRIV; restored the
+finish_request pointer check before calling finish_request and removed
+the new warning from the elevator code. This patch fixes an I/O hang
+when submitting a REQ_FUA request to a request queue for a zoned block
+device for which FUA has been disabled (QUEUE_FLAG_FUA is not set).]
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ block/blk-mq.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1112,19 +1112,16 @@ void __bio_release_pages(struct bio *bio
- 	struct folio_iter fi;
- 
- 	bio_for_each_folio_all(fi, bio) {
--		struct page *page;
--		size_t done = 0;
-+		size_t nr_pages;
- 
- 		if (mark_dirty) {
- 			folio_lock(fi.folio);
- 			folio_mark_dirty(fi.folio);
- 			folio_unlock(fi.folio);
- 		}
--		page = folio_page(fi.folio, fi.offset / PAGE_SIZE);
--		do {
--			folio_put(fi.folio);
--			done += PAGE_SIZE;
--		} while (done < fi.length);
-+		nr_pages = (fi.offset + fi.length - 1) / PAGE_SIZE -
-+			   fi.offset / PAGE_SIZE + 1;
-+		folio_put_refs(fi.folio, nr_pages);
- 	}
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -675,6 +675,22 @@ out_queue_exit:
  }
- EXPORT_SYMBOL_GPL(__bio_release_pages);
+ EXPORT_SYMBOL_GPL(blk_mq_alloc_request_hctx);
+ 
++static void blk_mq_finish_request(struct request *rq)
++{
++	struct request_queue *q = rq->q;
++
++	if ((rq->rq_flags & RQF_ELVPRIV) &&
++	    q->elevator->type->ops.finish_request) {
++		q->elevator->type->ops.finish_request(rq);
++		/*
++		 * For postflush request that may need to be
++		 * completed twice, we should clear this flag
++		 * to avoid double finish_request() on the rq.
++		 */
++		rq->rq_flags &= ~RQF_ELVPRIV;
++	}
++}
++
+ static void __blk_mq_free_request(struct request *rq)
+ {
+ 	struct request_queue *q = rq->q;
+@@ -701,9 +717,7 @@ void blk_mq_free_request(struct request
+ {
+ 	struct request_queue *q = rq->q;
+ 
+-	if ((rq->rq_flags & RQF_ELVPRIV) &&
+-	    q->elevator->type->ops.finish_request)
+-		q->elevator->type->ops.finish_request(rq);
++	blk_mq_finish_request(rq);
+ 
+ 	if (unlikely(laptop_mode && !blk_rq_is_passthrough(rq)))
+ 		laptop_io_completion(q->disk->bdi);
+@@ -1025,6 +1039,8 @@ inline void __blk_mq_end_request(struct
+ 	if (blk_mq_need_time_stamp(rq))
+ 		__blk_mq_end_request_acct(rq, ktime_get_ns());
+ 
++	blk_mq_finish_request(rq);
++
+ 	if (rq->end_io) {
+ 		rq_qos_done(rq->q, rq);
+ 		if (rq->end_io(rq, error) == RQ_END_IO_FREE)
+@@ -1079,6 +1095,8 @@ void blk_mq_end_request_batch(struct io_
+ 		if (iob->need_ts)
+ 			__blk_mq_end_request_acct(rq, now);
+ 
++		blk_mq_finish_request(rq);
++
+ 		rq_qos_done(rq->q, rq);
+ 
+ 		/*
 
 
