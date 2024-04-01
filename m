@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C370AC129;
-	Mon,  1 Apr 2024 16:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48133C129;
+	Mon,  1 Apr 2024 16:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988668; cv=none; b=LJj2GUMJd8fCDD21ZqNiDIzqfV+e4qphBGRWny0cdA3+o73SnFF5ovbLTvBQhvsEz2hOD+mOkkhX4/F3HHmTYal1Nl68aCAy5TPxuJh6cf9L9vdgrHYtZnJNpTS9+BNzBryEjCLzV/0Gzz+D/weVF8YACHy/EgnHGTsSLlNJ6Tc=
+	t=1711988673; cv=none; b=P7sGcIzVcewPDNUfKdArve/uSiV1MlWso6oCsDYmDDpMgnyXQN4XfooJ9a+AberocUi6YKTmJajloxGACu5AnwNkgr+iHnrXbh5+q6HvpzdMFPNG+4TQiFi8uBV6sPYq+r+tbhtjP9S/aqaPWcEu7iqhniT6iCQV3feJCQA9u4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988668; c=relaxed/simple;
-	bh=NALkcoPQB0ZMTMKCbfetJ6Veaji9aUnqZyFF8NC/jRc=;
+	s=arc-20240116; t=1711988673; c=relaxed/simple;
+	bh=VeAoUSFmxgKa4zjwRj5Gs+UNV8pPaPZQaBNBzbpiPjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrmCNcjnD81IRptpYvQs78gkEFDTw4lgq7Di4DyEh7B/eC9eCD0NqjS4IkZNFmQTTeKCgyddoJf6hn0A7F9R3VGZfD2zrmIoFmI+/5MSSioGfoiiZm4YUxk5ker7BhorIJQml4CmdjV1igP89eY+gv34qyeh8AiMTXZHVYZ1wbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2Vw+RW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSdKvMp8UWOybFFpKlQX7RpLDYvpUAbsZnhwp1BDxQzYJtfcITsutxuBiHNzLplyLP2hFVV8BrBV19xEUt5xzJvb3PsEFRu2fM2Kgm2YDJownMXWpjOtu7DpVr2g/rjVdU/WHbPZ4LIAvncaIJ4Cx4GiPW6Nnqn2SrHrLX6j69o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhoC4InV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2Vw+RW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FC7C433C7;
-	Mon,  1 Apr 2024 16:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhoC4InV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405B7C433F1;
+	Mon,  1 Apr 2024 16:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988668;
-	bh=NALkcoPQB0ZMTMKCbfetJ6Veaji9aUnqZyFF8NC/jRc=;
+	s=korg; t=1711988671;
+	bh=VeAoUSFmxgKa4zjwRj5Gs+UNV8pPaPZQaBNBzbpiPjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2Vw+RW1UDFIq7fmSj2OQX/memfvbzldr9BJvA2OiIkMuBU/dxkv9RdpqmJDwCpkW
-	 lPHoyKATrg/voeQKNm2d7XqGPsKE0CjzfGAXR9A7sLDsMlQJfXyMwdcK5cU2GxYDj0
-	 g6Hf+zs2PirwDIpav5G0rvHZty6b0HWkvPWHpfyI=
+	b=hhoC4InVrjZdgKd7G0ldTxMFiiG2PJgyF8YBF5MWOELhQCY+FAMCY7yEHB1hhxFnM
+	 K6GvjiD3g/S5dItiWVfK8/IMuq4TTI2Tz2TGiPFF6seQpbwAve3WhhmZ1IW3bd8TB7
+	 zRZR/SGh8ZHSBBD00orFTekakoic876niHn8l0P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <tatashin@google.com>,
-	Michael Krebs <mkrebs@google.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.7 253/432] KVM: x86: Mark target gfn of emulated atomic instruction as dirty
-Date: Mon,  1 Apr 2024 17:44:00 +0200
-Message-ID: <20240401152600.684574271@linuxfoundation.org>
+	Gabe Kirkpatrick <gkirkpatrick@google.com>,
+	Josh Eads <josheads@google.com>,
+	Peter Gonda <pgonda@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.7 254/432] KVM: SVM: Flush pages under kvm->lock to fix UAF in svm_register_enc_region()
+Date: Mon,  1 Apr 2024 17:44:01 +0200
+Message-ID: <20240401152600.713691966@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -55,60 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 910c57dfa4d113aae6571c2a8b9ae8c430975902 upstream.
+commit 5ef1d8c1ddbf696e47b226e11888eaf8d9e8e807 upstream.
 
-When emulating an atomic access on behalf of the guest, mark the target
-gfn dirty if the CMPXCHG by KVM is attempted and doesn't fault.  This
-fixes a bug where KVM effectively corrupts guest memory during live
-migration by writing to guest memory without informing userspace that the
-page is dirty.
+Do the cache flush of converted pages in svm_register_enc_region() before
+dropping kvm->lock to fix use-after-free issues where region and/or its
+array of pages could be freed by a different task, e.g. if userspace has
+__unregister_enc_region_locked() already queued up for the region.
 
-Marking the page dirty got unintentionally dropped when KVM's emulated
-CMPXCHG was converted to do a user access.  Before that, KVM explicitly
-mapped the guest page into kernel memory, and marked the page dirty during
-the unmap phase.
+Note, the "obvious" alternative of using local variables doesn't fully
+resolve the bug, as region->pages is also dynamically allocated.  I.e. the
+region structure itself would be fine, but region->pages could be freed.
 
-Mark the page dirty even if the CMPXCHG fails, as the old data is written
-back on failure, i.e. the page is still written.  The value written is
-guaranteed to be the same because the operation is atomic, but KVM's ABI
-is that all writes are dirty logged regardless of the value written.  And
-more importantly, that's what KVM did before the buggy commit.
+Flushing multiple pages under kvm->lock is unfortunate, but the entire
+flow is a rare slow path, and the manual flush is only needed on CPUs that
+lack coherency for encrypted memory.
 
-Huge kudos to the folks on the Cc list (and many others), who did all the
-actual work of triaging and debugging.
-
-Fixes: 1c2361f667f3 ("KVM: x86: Use __try_cmpxchg_user() to emulate atomic accesses")
+Fixes: 19a23da53932 ("Fix unsynchronized access to sev members through svm_register_enc_region")
+Reported-by: Gabe Kirkpatrick <gkirkpatrick@google.com>
+Cc: Josh Eads <josheads@google.com>
+Cc: Peter Gonda <pgonda@google.com>
 Cc: stable@vger.kernel.org
-Cc: David Matlack <dmatlack@google.com>
-Cc: Pasha Tatashin <tatashin@google.com>
-Cc: Michael Krebs <mkrebs@google.com>
-base-commit: 6769ea8da8a93ed4630f1ce64df6aafcaabfce64
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20240215010004.1456078-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20240217013430.2079561-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/svm/sev.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -7951,6 +7951,16 @@ static int emulator_cmpxchg_emulated(str
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1975,20 +1975,22 @@ int sev_mem_enc_register_region(struct k
+ 		goto e_free;
+ 	}
  
- 	if (r < 0)
- 		return X86EMUL_UNHANDLEABLE;
-+
-+	/*
-+	 * Mark the page dirty _before_ checking whether or not the CMPXCHG was
-+	 * successful, as the old value is written back on failure.  Note, for
-+	 * live migration, this is unnecessarily conservative as CMPXCHG writes
-+	 * back the original value and the access is atomic, but KVM's ABI is
-+	 * that all writes are dirty logged, regardless of the value written.
-+	 */
-+	kvm_vcpu_mark_page_dirty(vcpu, gpa_to_gfn(gpa));
-+
- 	if (r)
- 		return X86EMUL_CMPXCHG_FAILED;
+-	region->uaddr = range->addr;
+-	region->size = range->size;
+-
+-	list_add_tail(&region->list, &sev->regions_list);
+-	mutex_unlock(&kvm->lock);
+-
+ 	/*
+ 	 * The guest may change the memory encryption attribute from C=0 -> C=1
+ 	 * or vice versa for this memory range. Lets make sure caches are
+ 	 * flushed to ensure that guest data gets written into memory with
+-	 * correct C-bit.
++	 * correct C-bit.  Note, this must be done before dropping kvm->lock,
++	 * as region and its array of pages can be freed by a different task
++	 * once kvm->lock is released.
+ 	 */
+ 	sev_clflush_pages(region->pages, region->npages);
  
++	region->uaddr = range->addr;
++	region->size = range->size;
++
++	list_add_tail(&region->list, &sev->regions_list);
++	mutex_unlock(&kvm->lock);
++
+ 	return ret;
+ 
+ e_free:
 
 
