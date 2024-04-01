@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E812D38DD8;
-	Mon,  1 Apr 2024 16:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A0E1E525;
+	Mon,  1 Apr 2024 16:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989472; cv=none; b=Ikoq1X2+4TwdK+tlWKhKrjGLP3OUarArCauTsL5TbxGYwql9IM9AGyviIBSdvEFMmyEIDGzaiHG5HJG4PM1w4JvWYskBdTksV4waMa7hpZIKTJh1+JZHgIDbT5StuinIm/MpneRmare1guLamFJwVXgwp2P0u6EQbvKUkAv35i8=
+	t=1711989474; cv=none; b=I/oDXzmY5b4FEHVTAjZ8SFuPyQ6/h8cpiLWmwthEeVqtICjr75Swq+harSOGuIfSFM57rGTEBxruTfilEJD8aQ1kPqSxg83al6W1c2jwFUy6dE9t7PhhP+EWI31cZegSXgDqbAHXC1NuDaR321yghArhiy2KQvaWfD/jW0a7tiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989472; c=relaxed/simple;
-	bh=j5vHoVnODiCffhk7BgoLJNeMRN3k/u/d0UWgJnOl13g=;
+	s=arc-20240116; t=1711989474; c=relaxed/simple;
+	bh=Ai1fCukQ5nTAYgkRQdnKdAOLAA0EkgJzLIsn77eyOGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzQ6NsTr9QZP3L3vIhqEXSEdFg2FuwScXK5FBvvRVqgGO5J4LbBnJWH+KceJlobuMdbwmARjC1jOYuwbZlcOubIQzWC1Ttg+BfCQFqoZ9N647Fg0LoNsLYaRkdpb5MQvT9p4fhiPBg7Ep444s4FXjAc6eB8NboZm2za5aqhXQjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/CimBdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gLL5UyQ4W5dDOg417QrwWYOulYxNF/lue/JtbNZd+CU8LqGG/sCvbX4WD51BvWzsPb0pqkjEgb20TuSE1zx4+E+aPmkr9H2aW9rtUJ/6yjATRKLHZf4YKPinTK0vxC+1WJC97+PtAfDM13XPKy3OONs1iir+iZoEeKC8/PhLPdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8wAynga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/CimBdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E54C433F1;
-	Mon,  1 Apr 2024 16:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8wAynga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A20C433C7;
+	Mon,  1 Apr 2024 16:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989471;
-	bh=j5vHoVnODiCffhk7BgoLJNeMRN3k/u/d0UWgJnOl13g=;
+	s=korg; t=1711989474;
+	bh=Ai1fCukQ5nTAYgkRQdnKdAOLAA0EkgJzLIsn77eyOGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/CimBdvGkGO9L/3EsNpR3hp6bXzqCzO9/3ixdVMbB8kR/aNGUvfR8E7lziW1oG3t
-	 KKggqAENnXh1yGIL2ALf0Ufn01lH19/B7K/Vqd0/92gQMluC9OQTBsfoKrfRCjXf+I
-	 hBtmz4vlEuTkioItRY/0PDXTJ4BWeHJX2AHIxfdY=
+	b=U8wAyngaOIyzlsdQIEiWMR/+frUG+YXk2graP9mWUQ8aVj6jaQjaoxe3zZ/XFzD/1
+	 lhdrrs+ssV1ZLxSpXxvbnDgbXTAlmCD7a9maAU92wt1ofgayx0RqNERvK9OAA4+mDm
+	 lDoxbHt10v/+IBKLuyul9EsgwXAs4tuPAnJsNJ7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/396] powercap: intel_rapl: Fix a NULL pointer dereference
-Date: Mon,  1 Apr 2024 17:41:19 +0200
-Message-ID: <20240401152548.804256385@linuxfoundation.org>
+Subject: [PATCH 6.6 031/396] sched: Simplify tg_set_cfs_bandwidth()
+Date: Mon,  1 Apr 2024 17:41:20 +0200
+Message-ID: <20240401152548.834357513@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,47 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 2d1f5006ff95770da502f8cee2a224a1ff83866e ]
+[ Upstream commit 6fb45460615358157a6d3c990e74f9c1395247e2 ]
 
-A NULL pointer dereference is triggered when probing the MMIO RAPL
-driver on platforms with CPU ID not listed in intel_rapl_common CPU
-model list.
+Use guards to reduce gotos and simplify control flow.
 
-This is because the intel_rapl_common module still probes on such
-platforms even if 'defaults_msr' is not set after commit 1488ac990ac8
-("powercap: intel_rapl: Allow probing without CPUID match"). Thus the
-MMIO RAPL rp->priv->defaults is NULL when registering to RAPL framework.
-
-Fix the problem by adding sanity check to ensure rp->priv->rapl_defaults
-is always valid.
-
-Fixes: 1488ac990ac8 ("powercap: intel_rapl: Allow probing without CPUID match")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Stable-dep-of: 1aa09b9379a7 ("powercap: intel_rapl: Fix locking in TPMI RAPL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/cpu.h |  2 ++
+ kernel/sched/core.c | 38 +++++++++++++++++++-------------------
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 2feed036c1cd4..1a739afd47d96 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -759,6 +759,11 @@ static int rapl_config(struct rapl_package *rp)
- 	default:
- 		return -EINVAL;
+diff --git a/include/linux/cpu.h b/include/linux/cpu.h
+index 59dd421a8e35d..e990c180282e7 100644
+--- a/include/linux/cpu.h
++++ b/include/linux/cpu.h
+@@ -157,6 +157,8 @@ static inline int remove_cpu(unsigned int cpu) { return -EPERM; }
+ static inline void smp_shutdown_nonboot_cpus(unsigned int primary_cpu) { }
+ #endif	/* !CONFIG_HOTPLUG_CPU */
+ 
++DEFINE_LOCK_GUARD_0(cpus_read_lock, cpus_read_lock(), cpus_read_unlock())
++
+ #ifdef CONFIG_PM_SLEEP_SMP
+ extern int freeze_secondary_cpus(int primary);
+ extern void thaw_secondary_cpus(void);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a854b71836dd5..1f91e2c12731e 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10868,11 +10868,12 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota,
+ 	 * Prevent race between setting of cfs_rq->runtime_enabled and
+ 	 * unthrottle_offline_cfs_rqs().
+ 	 */
+-	cpus_read_lock();
+-	mutex_lock(&cfs_constraints_mutex);
++	guard(cpus_read_lock)();
++	guard(mutex)(&cfs_constraints_mutex);
++
+ 	ret = __cfs_schedulable(tg, period, quota);
+ 	if (ret)
+-		goto out_unlock;
++		return ret;
+ 
+ 	runtime_enabled = quota != RUNTIME_INF;
+ 	runtime_was_enabled = cfs_b->quota != RUNTIME_INF;
+@@ -10882,39 +10883,38 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota,
+ 	 */
+ 	if (runtime_enabled && !runtime_was_enabled)
+ 		cfs_bandwidth_usage_inc();
+-	raw_spin_lock_irq(&cfs_b->lock);
+-	cfs_b->period = ns_to_ktime(period);
+-	cfs_b->quota = quota;
+-	cfs_b->burst = burst;
+ 
+-	__refill_cfs_bandwidth_runtime(cfs_b);
++	scoped_guard (raw_spinlock_irq, &cfs_b->lock) {
++		cfs_b->period = ns_to_ktime(period);
++		cfs_b->quota = quota;
++		cfs_b->burst = burst;
+ 
+-	/* Restart the period timer (if active) to handle new period expiry: */
+-	if (runtime_enabled)
+-		start_cfs_bandwidth(cfs_b);
++		__refill_cfs_bandwidth_runtime(cfs_b);
+ 
+-	raw_spin_unlock_irq(&cfs_b->lock);
++		/*
++		 * Restart the period timer (if active) to handle new
++		 * period expiry:
++		 */
++		if (runtime_enabled)
++			start_cfs_bandwidth(cfs_b);
++	}
+ 
+ 	for_each_online_cpu(i) {
+ 		struct cfs_rq *cfs_rq = tg->cfs_rq[i];
+ 		struct rq *rq = cfs_rq->rq;
+-		struct rq_flags rf;
+ 
+-		rq_lock_irq(rq, &rf);
++		guard(rq_lock_irq)(rq);
+ 		cfs_rq->runtime_enabled = runtime_enabled;
+ 		cfs_rq->runtime_remaining = 0;
+ 
+ 		if (cfs_rq->throttled)
+ 			unthrottle_cfs_rq(cfs_rq);
+-		rq_unlock_irq(rq, &rf);
  	}
 +
-+	/* defaults_msr can be NULL on unsupported platforms */
-+	if (!rp->priv->defaults || !rp->priv->rpi)
-+		return -ENODEV;
-+
- 	return 0;
+ 	if (runtime_was_enabled && !runtime_enabled)
+ 		cfs_bandwidth_usage_dec();
+-out_unlock:
+-	mutex_unlock(&cfs_constraints_mutex);
+-	cpus_read_unlock();
+ 
+-	return ret;
++	return 0;
  }
  
+ static int tg_set_cfs_quota(struct task_group *tg, long cfs_quota_us)
 -- 
 2.43.0
 
