@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C99C129;
-	Mon,  1 Apr 2024 16:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C801446AC;
+	Mon,  1 Apr 2024 16:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988594; cv=none; b=HNUeU63V91lvR1MhqLX4NBBWKoEUVL+RsZj2LaLfYFneoky56c+//rBE5935n1GPGOYK/60WE0itC70wTC+lP167EiuTwemVjvKbYmvKYACjyS202Lm3Ner4/dyBFVJXnHtSUsqARAUmBpTDsEwq07haghTh52yFXNul41P2Bq8=
+	t=1711988597; cv=none; b=OsYmX4AE7Yf2WxUIzYho27FklwiEssn00L3C5Vt8ZEejtJNiI8iv7PWkWdEpTGqgyk9qGQJSbGtiql+9UO2Da9LrDYGQ2sJ60rZ2CtR9hf6fEJ5khG836bcmcjkZ60wgbwcaMa9Ynr4UttOTaa0tfFuMxv5t+ZS5Aq8kAY9upEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988594; c=relaxed/simple;
-	bh=CJBdm/QALX3cyQUgyoUEtjLjTDSQH9JWAi41OcenZ1w=;
+	s=arc-20240116; t=1711988597; c=relaxed/simple;
+	bh=4ssyFjpDjJ6m6n19FTRqT802pz96sSOSxTP2OWnem6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqOoQ7OZ4yAlr+iw9fheCDY/kDgSS6hD5SBJcRc13hfqxXv1V8tZnQipkDM/Ce8IgLQBMbz7UbtuLDPxitdaUB9a0YZMQmgQErqM3Vg+RqmxShB4zaf+dnQds9LANoFxMOyhL7XvAgCe9vc5mds9ReUaAjJ+lAEBkQLUSpz4Lw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OX6iNdT9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r2x/xgU3bfHwfQ3MkRoxPoxiNlTIviqlOdWILCqK/cmXJwK8K0stN0j/wvPSesASxUb9a2NGDu16+FXaCUq5Fd8eqz3NwaKQDucp7kUQL9S8+jQC8xekJiQ0J6rIfvLKGF04/kXw2y7NgSnk1FhNjDSZz6k38ZMqN5+v3fIvTIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5RDW4iM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OX6iNdT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA2C433C7;
-	Mon,  1 Apr 2024 16:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5RDW4iM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027ACC433C7;
+	Mon,  1 Apr 2024 16:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988594;
-	bh=CJBdm/QALX3cyQUgyoUEtjLjTDSQH9JWAi41OcenZ1w=;
+	s=korg; t=1711988597;
+	bh=4ssyFjpDjJ6m6n19FTRqT802pz96sSOSxTP2OWnem6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OX6iNdT9Mu7DXu9/HhtzWPzoi+AUtOqIovvJsIyvQWQbMmoAEQmdgyVxMTvP8PzWR
-	 Ub48FI5gA7uidFkMFMlbenUaaIbN6lDYglvCZA2nVopflBeDSJ2nTQfOWihtsHuOvm
-	 /bIRnhFnA+eccNMTtJO5U/FmvV0z6nsiU09InHOs=
+	b=e5RDW4iMwyGBC8c/PLH86VEBSYjjxQ3qscc3mRcdLPPD1uID9HNOPqnHMt3ouoyLl
+	 C2doic7ux4eqA8OBVT1YnswcBElKXBBf0GKiqlO5V6D13Mpgqj5c3rkqw8UpiEwabr
+	 NYiIuPd4ESeAh6DldLEnpMGYqUZRxrWcBCkH5bM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lillian Berry <lillian@star-ark.net>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 202/432] wireguard: netlink: check for dangling peer via is_dead instead of empty list
-Date: Mon,  1 Apr 2024 17:43:09 +0200
-Message-ID: <20240401152559.161733396@linuxfoundation.org>
+Subject: [PATCH 6.7 193/432] drm/i915: Add missing ; to __assign_str() macros in tracepoint code
+Date: Mon,  1 Apr 2024 17:43:00 +0200
+Message-ID: <20240401152558.894605354@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -47,93 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 55b6c738673871c9b0edae05d0c97995c1ff08c4 ]
+[ Upstream commit 0df4c388a1e310400a6e90fb10b286e2673756f0 ]
 
-If all peers are removed via wg_peer_remove_all(), rather than setting
-peer_list to empty, the peer is added to a temporary list with a head on
-the stack of wg_peer_remove_all(). If a netlink dump is resumed and the
-cursored peer is one that has been removed via wg_peer_remove_all(), it
-will iterate from that peer and then attempt to dump freed peers.
+I'm working on improving the __assign_str() and __string() macros to be
+more efficient, and removed some unneeded semicolons. This triggered a bug
+in the build as some of the __assign_str() macros in intel_display_trace
+was missing a terminating semicolon.
 
-Fix this by instead checking peer->is_dead, which was explictly created
-for this purpose. Also move up the device_update_lock lockdep assertion,
-since reading is_dead relies on that.
+Link: https://lore.kernel.org/linux-trace-kernel/20240222133057.2af72a19@gandalf.local.home
 
-It can be reproduced by a small script like:
-
-    echo "Setting config..."
-    ip link add dev wg0 type wireguard
-    wg setconf wg0 /big-config
-    (
-            while true; do
-                    echo "Showing config..."
-                    wg showconf wg0 > /dev/null
-            done
-    ) &
-    sleep 4
-    wg setconf wg0 <(printf "[Peer]\nPublicKey=$(wg genkey)\n")
-
-Resulting in:
-
-    BUG: KASAN: slab-use-after-free in __lock_acquire+0x182a/0x1b20
-    Read of size 8 at addr ffff88811956ec70 by task wg/59
-    CPU: 2 PID: 59 Comm: wg Not tainted 6.8.0-rc2-debug+ #5
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x47/0x70
-     print_address_description.constprop.0+0x2c/0x380
-     print_report+0xab/0x250
-     kasan_report+0xba/0xf0
-     __lock_acquire+0x182a/0x1b20
-     lock_acquire+0x191/0x4b0
-     down_read+0x80/0x440
-     get_peer+0x140/0xcb0
-     wg_get_device_dump+0x471/0x1130
-
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Reported-by: Lillian Berry <lillian@star-ark.net>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 2ceea5d88048b ("drm/i915: Print plane name in fbc tracepoints")
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireguard/netlink.c | 6 +++---
+ drivers/gpu/drm/i915/display/intel_display_trace.h | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index e220d761b1f27..c17aee454fa3b 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -255,17 +255,17 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (!peers_nest)
- 		goto out;
- 	ret = 0;
--	/* If the last cursor was removed via list_del_init in peer_remove, then
-+	lockdep_assert_held(&wg->device_update_lock);
-+	/* If the last cursor was removed in peer_remove or peer_remove_all, then
- 	 * we just treat this the same as there being no more peers left. The
- 	 * reason is that seq_nr should indicate to userspace that this isn't a
- 	 * coherent dump anyway, so they'll try again.
- 	 */
- 	if (list_empty(&wg->peer_list) ||
--	    (ctx->next_peer && list_empty(&ctx->next_peer->peer_list))) {
-+	    (ctx->next_peer && ctx->next_peer->is_dead)) {
- 		nla_nest_cancel(skb, peers_nest);
- 		goto out;
- 	}
--	lockdep_assert_held(&wg->device_update_lock);
- 	peer = list_prepare_entry(ctx->next_peer, &wg->peer_list, peer_list);
- 	list_for_each_entry_continue(peer, &wg->peer_list, peer_list) {
- 		if (get_peer(peer, skb, ctx)) {
+diff --git a/drivers/gpu/drm/i915/display/intel_display_trace.h b/drivers/gpu/drm/i915/display/intel_display_trace.h
+index 99bdb833591ce..7862e7cefe027 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_trace.h
++++ b/drivers/gpu/drm/i915/display/intel_display_trace.h
+@@ -411,7 +411,7 @@ TRACE_EVENT(intel_fbc_activate,
+ 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
+ 									 plane->pipe);
+ 			   __assign_str(dev, __dev_name_kms(plane));
+-			   __assign_str(name, plane->base.name)
++			   __assign_str(name, plane->base.name);
+ 			   __entry->pipe = crtc->pipe;
+ 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
+ 			   __entry->scanline = intel_get_crtc_scanline(crtc);
+@@ -438,7 +438,7 @@ TRACE_EVENT(intel_fbc_deactivate,
+ 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
+ 									 plane->pipe);
+ 			   __assign_str(dev, __dev_name_kms(plane));
+-			   __assign_str(name, plane->base.name)
++			   __assign_str(name, plane->base.name);
+ 			   __entry->pipe = crtc->pipe;
+ 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
+ 			   __entry->scanline = intel_get_crtc_scanline(crtc);
+@@ -465,7 +465,7 @@ TRACE_EVENT(intel_fbc_nuke,
+ 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
+ 									 plane->pipe);
+ 			   __assign_str(dev, __dev_name_kms(plane));
+-			   __assign_str(name, plane->base.name)
++			   __assign_str(name, plane->base.name);
+ 			   __entry->pipe = crtc->pipe;
+ 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
+ 			   __entry->scanline = intel_get_crtc_scanline(crtc);
 -- 
 2.43.0
 
