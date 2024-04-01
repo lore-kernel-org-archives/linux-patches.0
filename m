@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143284F207;
-	Mon,  1 Apr 2024 16:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FC04F897;
+	Mon,  1 Apr 2024 16:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990347; cv=none; b=bw7eTpOqY0jJWHJm+U/L6Kqr7W5lgHISX6vQtVlrosEp9sFUbEQikkoZMk0iV7bXYRtTsoRuNcRR5AZsSAp3+X5NHJYlDiIaN8NJR+4+HWPb/y+UVqJCnFNs9mN9M8k3h0aQZXOPQv7pG7SvP1Clkgijz8pFkafllUCobwBYRro=
+	t=1711990350; cv=none; b=QCFKPP7zMAAz9MKYRUY41Ebf3bUbQ111lrC1b9wWMPn+ZqonMf2Zd6tfnNn1am8nzUvPBHCVM00odkR5meto0NTUlEa6zSz8/eXXLDiMZRrQdAkrNqWlFFpoy5xe82rxTwrFTrhYreGnWCDHNiAKlpoCe7/EQSZmW9q2jk+QN0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990347; c=relaxed/simple;
-	bh=xiqTiyEGZowxrRQ07+h+fkxMRd8DvneZEcW2g8RlNo8=;
+	s=arc-20240116; t=1711990350; c=relaxed/simple;
+	bh=tVmEkOp19snKovC9m/5DaEUQzS01VaRESjxqtXDO34k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAcubtYwaPXmBgFqQ7dMXVSGrcigL596EPERlJCbHjRm7TN9uk5n7CNS0+ifIK3Hmm5J35RHuKQ5zHYeQmHVerSEMtvbuqAzRpOtf1bjK6f3eMzy/CDssAES2tSuLS7no2Zoyf4g8gr3muCFRT1kxw3r1EgKFzzsFlMUQiAJeA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvZAH8GL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/Bmx77aymAzd4MRzSSGp3gKBuWLKr6o+aAl2DXd9UqifoJ7G1H/zr5kfWJaFcmVin+YaVCTj5o22Mt3YAjoYq3nMN4CGHu6jz8I5TPuiGQC5o61Ay6nOHE7UjpUnYPJNHNTQfun+lkxqtC8WE8pt9vB8YgBKEDwbKUt3OGtFoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEljUIOk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvZAH8GL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A7C433C7;
-	Mon,  1 Apr 2024 16:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEljUIOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BC9C433F1;
+	Mon,  1 Apr 2024 16:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990346;
-	bh=xiqTiyEGZowxrRQ07+h+fkxMRd8DvneZEcW2g8RlNo8=;
+	s=korg; t=1711990350;
+	bh=tVmEkOp19snKovC9m/5DaEUQzS01VaRESjxqtXDO34k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvZAH8GLOG9uGzI2vgJZic7CIRkoIXOEDWa1uqEKOQpTxCNq+eHH2u8xKjjPyqNi/
-	 BGRRUqBmMAPqfOF8vfE3uOGnw4BIYVRYVan+QODyM3jzkDE58INdPHuyhc0JeZhZxY
-	 Kqis6JkrKF6IFGfgiSOiiomyIZmQt+9CqZis3veA=
+	b=jEljUIOk/WAI/AXYAP8JO8RHmVeDqbIExy3XH8cryD/9s1hKzwiE7ZV4m9GSB6/uE
+	 /mv5yIOhprcoq8P7MnaP9Ike8GYfIZG9huGW/mxzM6Shi83qyA630xY/VXro78z4ny
+	 ImvC7FhMlvMmeU0MaQotcmUtu9jbhUc3qVZxuwRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.6 323/396] wifi: iwlwifi: fw: dont always use FW dump trig
-Date: Mon,  1 Apr 2024 17:46:12 +0200
-Message-ID: <20240401152557.544507786@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 324/396] Revert "drm/amd/display: Fix sending VSC (+ colorimetry) packets for DP/eDP displays without PSR"
+Date: Mon,  1 Apr 2024 17:46:13 +0200
+Message-ID: <20240401152557.573591612@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -50,60 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 045a5b645dd59929b0e05375f493cde3a0318271 upstream.
+commit 78aca9ee5e012e130dbfbd7191bc2302b0cf3b37 upstream.
 
-Since the dump_data (struct iwl_fwrt_dump_data) is a union,
-it's not safe to unconditionally access and use the 'trig'
-member, it might be 'desc' instead. Access it only if it's
-known to be 'trig' rather than 'desc', i.e. if ini-debug
-is present.
+This causes flicker on a bunch of eDP panels. The info_packet code
+also caused regressions on other OSes that we haven't' seen on Linux
+yet, but that is likely due to the fact that we haven't had a chance
+to test those environments on Linux.
 
+We'll need to revisit this.
+
+This reverts commit 202260f64519e591b5cd99626e441b6559f571a3.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3207
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3151
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 0eb50c674a1e ("iwlwifi: yoyo: send hcmd to fw after dump collection completes.")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.e2976bc58b29.I72fbd6135b3623227de53d8a2bb82776066cb72b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c             |    8 ++----
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c |   13 +++-------
+ 2 files changed, 8 insertions(+), 13 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -2933,8 +2933,6 @@ static void iwl_fw_dbg_collect_sync(stru
- 	struct iwl_fw_dbg_params params = {0};
- 	struct iwl_fwrt_dump_data *dump_data =
- 		&fwrt->dump.wks[wk_idx].dump_data;
--	u32 policy;
--	u32 time_point;
- 	if (!test_bit(wk_idx, &fwrt->dump.active_wks))
- 		return;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6121,9 +6121,8 @@ create_stream_for_sink(struct amdgpu_dm_
  
-@@ -2965,13 +2963,16 @@ static void iwl_fw_dbg_collect_sync(stru
- 
- 	iwl_fw_dbg_stop_restart_recording(fwrt, &params, false);
- 
--	policy = le32_to_cpu(dump_data->trig->apply_policy);
--	time_point = le32_to_cpu(dump_data->trig->time_point);
--
--	if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
--		IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
--		iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
-+	if (iwl_trans_dbg_ini_valid(fwrt->trans)) {
-+		u32 policy = le32_to_cpu(dump_data->trig->apply_policy);
-+		u32 time_point = le32_to_cpu(dump_data->trig->time_point);
+ 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+ 		mod_build_hf_vsif_infopacket(stream, &stream->vsp_infopacket);
+-	else if (stream->signal == SIGNAL_TYPE_DISPLAY_PORT ||
+-			 stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST ||
+-			 stream->signal == SIGNAL_TYPE_EDP) {
 +
-+		if (policy & IWL_FW_INI_APPLY_POLICY_DUMP_COMPLETE_CMD) {
-+			IWL_DEBUG_FW_INFO(fwrt, "WRT: sending dump complete\n");
-+			iwl_send_dbg_dump_complete_cmd(fwrt, time_point, 0);
-+		}
++	if (stream->link->psr_settings.psr_feature_enabled || stream->link->replay_settings.replay_feature_enabled) {
+ 		//
+ 		// should decide stream support vsc sdp colorimetry capability
+ 		// before building vsc info packet
+@@ -6139,9 +6138,8 @@ create_stream_for_sink(struct amdgpu_dm_
+ 		if (stream->out_transfer_func->tf == TRANSFER_FUNCTION_GAMMA22)
+ 			tf = TRANSFER_FUNC_GAMMA_22;
+ 		mod_build_vsc_infopacket(stream, &stream->vsc_infopacket, stream->output_color_space, tf);
++		aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
+ 
+-		if (stream->link->psr_settings.psr_feature_enabled)
+-			aconnector->psr_skip_count = AMDGPU_DM_PSR_ENTRY_DELAY;
  	}
-+
- 	if (fwrt->trans->dbg.last_tp_resetfw == IWL_FW_INI_RESET_FW_MODE_STOP_FW_ONLY)
- 		iwl_force_nmi(fwrt->trans);
+ finish:
+ 	dc_sink_release(sink);
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -147,15 +147,12 @@ void mod_build_vsc_infopacket(const stru
+ 	}
  
+ 	/* VSC packet set to 4 for PSR-SU, or 2 for PSR1 */
+-	if (stream->link->psr_settings.psr_feature_enabled) {
+-		if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
+-			vsc_packet_revision = vsc_packet_rev4;
+-		else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
+-			vsc_packet_revision = vsc_packet_rev2;
+-	}
+-
+-	if (stream->link->replay_settings.config.replay_supported)
++	if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
++		vsc_packet_revision = vsc_packet_rev4;
++	else if (stream->link->replay_settings.config.replay_supported)
+ 		vsc_packet_revision = vsc_packet_rev4;
++	else if (stream->link->psr_settings.psr_version == DC_PSR_VERSION_1)
++		vsc_packet_revision = vsc_packet_rev2;
+ 
+ 	/* Update to revision 5 for extended colorimetry support */
+ 	if (stream->use_vsc_sdp_for_colorimetry)
 
 
