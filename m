@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8910A3B;
-	Mon,  1 Apr 2024 16:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9404487BC;
+	Mon,  1 Apr 2024 16:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989275; cv=none; b=YA7qc5g6Xy//90b7ArUwYuwgIyRC0LEQzPt5qarG2ySeWzXrWJe5loI6WdECx60ht/0oJYJZp/UZkr0j9+DuNVkpFx61boLKUTSH2wxNMMQZEqOFOBVLq0EESUiM4H7hfd0WjNRwHZMBA064YNeYkSzpnaPS8bVyn/bTHkjDevc=
+	t=1711989278; cv=none; b=MFu50ItirsNwtorgjNM01zFTchZI0i4+vV2yWauX/r6TGtd/vMl2REl2+ymQFUMGoGK/bosZVg2oI78oaVyOVoLNnL7DY52VdmO6DvQISBc5nQBzbYKZ7CL6Xz4dO9gQdDMIqQG94Y9UCf4X1+oHoNp8w7AfNwR/hHwgZdq6pEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989275; c=relaxed/simple;
-	bh=WM5uRdNK1cJuOgfj2DUamCbW/o83gTS6NK80IrGRcM0=;
+	s=arc-20240116; t=1711989278; c=relaxed/simple;
+	bh=KyPwdPKevL8RLruA3SLmtkxyv2T66BahGyeGsY5rTVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kw4rUNG1f1gDIZc4BxNkAp82Gn8dO22XcatDyzWh8+iV+3kaJfTP2fzoA42na0K7MnTF//DxdDNb1luM1nVpzVRfrCkOCIM1yVMei8BgZu7QR5xome5P9ppPP6qzFmVHtEkp6Jew8wSSJIJOQCMKczV+QUnFRbEODIkn3vYBd04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEOmg4NB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqoJ5gJeB8ISYFkBdg5ftAFPkay6ouCWu4NStB4ADAkO0r/1/r7whxUVEoLCylncU1VM7jKCOY75+bueARwwnnwA6vPOuZMLPx4JKk6oGEsbIZmgIjjZKXHuj97AV2MATrASeGvhMqVDUuKpaer3Ip/Bvq+zoJzYH7qRhdDMP2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnB/4VeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEOmg4NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AA9C43394;
-	Mon,  1 Apr 2024 16:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnB/4VeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F05C43390;
+	Mon,  1 Apr 2024 16:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989275;
-	bh=WM5uRdNK1cJuOgfj2DUamCbW/o83gTS6NK80IrGRcM0=;
+	s=korg; t=1711989278;
+	bh=KyPwdPKevL8RLruA3SLmtkxyv2T66BahGyeGsY5rTVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEOmg4NBvNrOSsnYMxPFu6AxkN0niQJrLcL6zY4vhsjotokaICLSm16yV1SO6c5YY
-	 759QkVUdrk3mnt11fx4T0Lch0If1NOrxL3LNwmPC1BrQiZjlnzsmtWYfg7KMJam2Zg
-	 jfrBSE0j2IYKOHl4Yuz0nNur6VtUDoEG68ARyDNY=
+	b=wnB/4VeC4SsMpjBvztSqnvspnhidPh5MHd2NGENxCJegg2k4qldrt3EggqCl7E66p
+	 mR2j8i6p/Tnl0l3LdMQALqyw8+HeRw2E8zuaCOdT3ttRBmjudw2xroojc0OHf2LGeW
+	 KDEVlkqplxCP/Zv0seuoZZtA2YG+kkJuPrl0sVD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Quinn Tran <qutran@marvell.com>,
+	Bikash Hazarika <bhazarika@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.7 414/432] scsi: qla2xxx: Split FCE|EFT trace control
-Date: Mon,  1 Apr 2024 17:46:41 +0200
-Message-ID: <20240401152605.738848028@linuxfoundation.org>
+Subject: [PATCH 6.7 415/432] scsi: qla2xxx: Update manufacturer detail
+Date: Mon,  1 Apr 2024 17:46:42 +0200
+Message-ID: <20240401152605.778228241@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,224 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Bikash Hazarika <bhazarika@marvell.com>
 
-commit 76a192e1a566e15365704b9f8fb3b70825f85064 upstream.
+commit 688fa069fda6fce24d243cddfe0c7024428acb74 upstream.
 
-Current code combines the allocation of FCE|EFT trace buffers and enables
-the features all in 1 step.
-
-Split this step into separate steps in preparation for follow-on patch to
-allow user to have a choice to enable / disable FCE trace feature.
+Update manufacturer detail from "Marvell Semiconductor, Inc." to
+"Marvell".
 
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240227164127.36465-4-njavali@marvell.com
+Link: https://lore.kernel.org/r/20240227164127.36465-5-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |  102 ++++++++++++++++------------------------
- 1 file changed, 41 insertions(+), 61 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2669,6 +2669,40 @@ exit:
- 	return rval;
- }
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -82,7 +82,7 @@ typedef union {
+ #include "qla_nvme.h"
+ #define QLA2XXX_DRIVER_NAME	"qla2xxx"
+ #define QLA2XXX_APIDEV		"ql2xapidev"
+-#define QLA2XXX_MANUFACTURER	"Marvell Semiconductor, Inc."
++#define QLA2XXX_MANUFACTURER	"Marvell"
  
-+static void qla_enable_fce_trace(scsi_qla_host_t *vha)
-+{
-+	int rval;
-+	struct qla_hw_data *ha = vha->hw;
-+
-+	if (ha->fce) {
-+		ha->flags.fce_enabled = 1;
-+		memset(ha->fce, 0, fce_calc_size(ha->fce_bufs));
-+		rval = qla2x00_enable_fce_trace(vha,
-+		    ha->fce_dma, ha->fce_bufs, ha->fce_mb, &ha->fce_bufs);
-+
-+		if (rval) {
-+			ql_log(ql_log_warn, vha, 0x8033,
-+			    "Unable to reinitialize FCE (%d).\n", rval);
-+			ha->flags.fce_enabled = 0;
-+		}
-+	}
-+}
-+
-+static void qla_enable_eft_trace(scsi_qla_host_t *vha)
-+{
-+	int rval;
-+	struct qla_hw_data *ha = vha->hw;
-+
-+	if (ha->eft) {
-+		memset(ha->eft, 0, EFT_SIZE);
-+		rval = qla2x00_enable_eft_trace(vha, ha->eft_dma, EFT_NUM_BUFFERS);
-+
-+		if (rval) {
-+			ql_log(ql_log_warn, vha, 0x8034,
-+			    "Unable to reinitialize EFT (%d).\n", rval);
-+		}
-+	}
-+}
  /*
- * qla2x00_initialize_adapter
- *      Initialize board.
-@@ -3672,9 +3706,8 @@ qla24xx_chip_diag(scsi_qla_host_t *vha)
- }
- 
- static void
--qla2x00_init_fce_trace(scsi_qla_host_t *vha)
-+qla2x00_alloc_fce_trace(scsi_qla_host_t *vha)
- {
--	int rval;
- 	dma_addr_t tc_dma;
- 	void *tc;
- 	struct qla_hw_data *ha = vha->hw;
-@@ -3703,27 +3736,17 @@ qla2x00_init_fce_trace(scsi_qla_host_t *
- 		return;
- 	}
- 
--	rval = qla2x00_enable_fce_trace(vha, tc_dma, FCE_NUM_BUFFERS,
--					ha->fce_mb, &ha->fce_bufs);
--	if (rval) {
--		ql_log(ql_log_warn, vha, 0x00bf,
--		       "Unable to initialize FCE (%d).\n", rval);
--		dma_free_coherent(&ha->pdev->dev, FCE_SIZE, tc, tc_dma);
--		return;
--	}
--
- 	ql_dbg(ql_dbg_init, vha, 0x00c0,
- 	       "Allocated (%d KB) for FCE...\n", FCE_SIZE / 1024);
- 
--	ha->flags.fce_enabled = 1;
- 	ha->fce_dma = tc_dma;
- 	ha->fce = tc;
-+	ha->fce_bufs = FCE_NUM_BUFFERS;
- }
- 
- static void
--qla2x00_init_eft_trace(scsi_qla_host_t *vha)
-+qla2x00_alloc_eft_trace(scsi_qla_host_t *vha)
- {
--	int rval;
- 	dma_addr_t tc_dma;
- 	void *tc;
- 	struct qla_hw_data *ha = vha->hw;
-@@ -3748,14 +3771,6 @@ qla2x00_init_eft_trace(scsi_qla_host_t *
- 		return;
- 	}
- 
--	rval = qla2x00_enable_eft_trace(vha, tc_dma, EFT_NUM_BUFFERS);
--	if (rval) {
--		ql_log(ql_log_warn, vha, 0x00c2,
--		       "Unable to initialize EFT (%d).\n", rval);
--		dma_free_coherent(&ha->pdev->dev, EFT_SIZE, tc, tc_dma);
--		return;
--	}
--
- 	ql_dbg(ql_dbg_init, vha, 0x00c3,
- 	       "Allocated (%d KB) EFT ...\n", EFT_SIZE / 1024);
- 
-@@ -3763,13 +3778,6 @@ qla2x00_init_eft_trace(scsi_qla_host_t *
- 	ha->eft = tc;
- }
- 
--static void
--qla2x00_alloc_offload_mem(scsi_qla_host_t *vha)
--{
--	qla2x00_init_fce_trace(vha);
--	qla2x00_init_eft_trace(vha);
--}
--
- void
- qla2x00_alloc_fw_dump(scsi_qla_host_t *vha)
- {
-@@ -3824,10 +3832,10 @@ qla2x00_alloc_fw_dump(scsi_qla_host_t *v
- 		if (ha->tgt.atio_ring)
- 			mq_size += ha->tgt.atio_q_length * sizeof(request_t);
- 
--		qla2x00_init_fce_trace(vha);
-+		qla2x00_alloc_fce_trace(vha);
- 		if (ha->fce)
- 			fce_size = sizeof(struct qla2xxx_fce_chain) + FCE_SIZE;
--		qla2x00_init_eft_trace(vha);
-+		qla2x00_alloc_eft_trace(vha);
- 		if (ha->eft)
- 			eft_size = EFT_SIZE;
- 	}
-@@ -4257,7 +4265,6 @@ qla2x00_setup_chip(scsi_qla_host_t *vha)
- 	struct qla_hw_data *ha = vha->hw;
- 	struct device_reg_2xxx __iomem *reg = &ha->iobase->isp;
- 	unsigned long flags;
--	uint16_t fw_major_version;
- 	int done_once = 0;
- 
- 	if (IS_P3P_TYPE(ha)) {
-@@ -4324,7 +4331,6 @@ execute_fw_with_lr:
- 					goto failed;
- 
- enable_82xx_npiv:
--				fw_major_version = ha->fw_major_version;
- 				if (IS_P3P_TYPE(ha))
- 					qla82xx_check_md_needed(vha);
- 				else
-@@ -4353,12 +4359,11 @@ enable_82xx_npiv:
- 				if (rval != QLA_SUCCESS)
- 					goto failed;
- 
--				if (!fw_major_version && !(IS_P3P_TYPE(ha)))
--					qla2x00_alloc_offload_mem(vha);
--
- 				if (ql2xallocfwdump && !(IS_P3P_TYPE(ha)))
- 					qla2x00_alloc_fw_dump(vha);
- 
-+				qla_enable_fce_trace(vha);
-+				qla_enable_eft_trace(vha);
- 			} else {
- 				goto failed;
- 			}
-@@ -7491,7 +7496,6 @@ qla2x00_abort_isp_cleanup(scsi_qla_host_
- int
- qla2x00_abort_isp(scsi_qla_host_t *vha)
- {
--	int rval;
- 	uint8_t        status = 0;
- 	struct qla_hw_data *ha = vha->hw;
- 	struct scsi_qla_host *vp, *tvp;
-@@ -7585,31 +7589,7 @@ qla2x00_abort_isp(scsi_qla_host_t *vha)
- 
- 			if (IS_QLA81XX(ha) || IS_QLA8031(ha))
- 				qla2x00_get_fw_version(vha);
--			if (ha->fce) {
--				ha->flags.fce_enabled = 1;
--				memset(ha->fce, 0,
--				    fce_calc_size(ha->fce_bufs));
--				rval = qla2x00_enable_fce_trace(vha,
--				    ha->fce_dma, ha->fce_bufs, ha->fce_mb,
--				    &ha->fce_bufs);
--				if (rval) {
--					ql_log(ql_log_warn, vha, 0x8033,
--					    "Unable to reinitialize FCE "
--					    "(%d).\n", rval);
--					ha->flags.fce_enabled = 0;
--				}
--			}
- 
--			if (ha->eft) {
--				memset(ha->eft, 0, EFT_SIZE);
--				rval = qla2x00_enable_eft_trace(vha,
--				    ha->eft_dma, EFT_NUM_BUFFERS);
--				if (rval) {
--					ql_log(ql_log_warn, vha, 0x8034,
--					    "Unable to reinitialize EFT "
--					    "(%d).\n", rval);
--				}
--			}
- 		} else {	/* failed the ISP abort */
- 			vha->flags.online = 1;
- 			if (test_bit(ISP_ABORT_RETRY, &vha->dpc_flags)) {
+  * We have MAILBOX_REGISTER_COUNT sized arrays in a few places,
 
 
