@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC5BC129;
-	Mon,  1 Apr 2024 16:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C370AC129;
+	Mon,  1 Apr 2024 16:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988664; cv=none; b=H+1LnHqDmq3cLnA9o+b86wMzCI8yuGY6YsLPE2dmOfJ/ZbJgZ8BM7PmKeXwhjQzdYhMAo7garTIOPke8ayP9jFjKSOk4166ru3dby4pBEJgcOirl/3f8f6TvDSarERbddruZAjRaYhQZQferGWNAJAZrUkPd/PeFGmOoQWUP0iU=
+	t=1711988668; cv=none; b=LJj2GUMJd8fCDD21ZqNiDIzqfV+e4qphBGRWny0cdA3+o73SnFF5ovbLTvBQhvsEz2hOD+mOkkhX4/F3HHmTYal1Nl68aCAy5TPxuJh6cf9L9vdgrHYtZnJNpTS9+BNzBryEjCLzV/0Gzz+D/weVF8YACHy/EgnHGTsSLlNJ6Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988664; c=relaxed/simple;
-	bh=U6KvEDROeKffK10BbSe5kcqF3LQ2EB4tHrJB73p+7U8=;
+	s=arc-20240116; t=1711988668; c=relaxed/simple;
+	bh=NALkcoPQB0ZMTMKCbfetJ6Veaji9aUnqZyFF8NC/jRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFWyXo3a7ok68PXCzfsMx/mn2i2Yh/2h2a5VhDG7Qtd1/vOR6YTVBK5PU4Vx3JRsl88+id4d0b0kTpbhEFV1jxYo7LBdV5PBnMU9PtZGxvQHhyCPSb1kdEd+t3E6XtJIBnqeM49kUlybSRiIbTE+RwCIPghsRL+Y0AN99ZomRsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrSsg7gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JrmCNcjnD81IRptpYvQs78gkEFDTw4lgq7Di4DyEh7B/eC9eCD0NqjS4IkZNFmQTTeKCgyddoJf6hn0A7F9R3VGZfD2zrmIoFmI+/5MSSioGfoiiZm4YUxk5ker7BhorIJQml4CmdjV1igP89eY+gv34qyeh8AiMTXZHVYZ1wbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2Vw+RW1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrSsg7gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1BFC433F1;
-	Mon,  1 Apr 2024 16:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2Vw+RW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FC7C433C7;
+	Mon,  1 Apr 2024 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988664;
-	bh=U6KvEDROeKffK10BbSe5kcqF3LQ2EB4tHrJB73p+7U8=;
+	s=korg; t=1711988668;
+	bh=NALkcoPQB0ZMTMKCbfetJ6Veaji9aUnqZyFF8NC/jRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrSsg7gvevPAXQJC2MJM2NjrLSCxEtKum6WzJK2pqNbIMXwkX8zZ6JMmpTLFViUAG
-	 9ko4Nw2TqYSe4r6AK71JMpJktybXiRy4c0ZxYhwNsDvNACr1nt3If0S9cbABf8E5Se
-	 dOBA8BtVI0kfO/xBm3XaUK5a3o2+G0BA3bbCZjjA=
+	b=n2Vw+RW1UDFIq7fmSj2OQX/memfvbzldr9BJvA2OiIkMuBU/dxkv9RdpqmJDwCpkW
+	 lPHoyKATrg/voeQKNm2d7XqGPsKE0CjzfGAXR9A7sLDsMlQJfXyMwdcK5cU2GxYDj0
+	 g6Hf+zs2PirwDIpav5G0rvHZty6b0HWkvPWHpfyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edmund Raile <edmund.raile@proton.me>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.7 252/432] firewire: ohci: prevent leak of left-over IRQ on unbind
-Date: Mon,  1 Apr 2024 17:43:59 +0200
-Message-ID: <20240401152600.655615054@linuxfoundation.org>
+	David Matlack <dmatlack@google.com>,
+	Pasha Tatashin <tatashin@google.com>,
+	Michael Krebs <mkrebs@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.7 253/432] KVM: x86: Mark target gfn of emulated atomic instruction as dirty
+Date: Mon,  1 Apr 2024 17:44:00 +0200
+Message-ID: <20240401152600.684574271@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,72 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edmund Raile <edmund.raile@proton.me>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 575801663c7dc38f826212b39e3b91a4a8661c33 upstream.
+commit 910c57dfa4d113aae6571c2a8b9ae8c430975902 upstream.
 
-Commit 5a95f1ded28691e6 ("firewire: ohci: use devres for requested IRQ")
-also removed the call to free_irq() in pci_remove(), leading to a
-leftover irq of devm_request_irq() at pci_disable_msi() in pci_remove()
-when unbinding the driver from the device
+When emulating an atomic access on behalf of the guest, mark the target
+gfn dirty if the CMPXCHG by KVM is attempted and doesn't fault.  This
+fixes a bug where KVM effectively corrupts guest memory during live
+migration by writing to guest memory without informing userspace that the
+page is dirty.
 
-remove_proc_entry: removing non-empty directory 'irq/136', leaking at
-least 'firewire_ohci'
-Call Trace:
- ? remove_proc_entry+0x19c/0x1c0
- ? __warn+0x81/0x130
- ? remove_proc_entry+0x19c/0x1c0
- ? report_bug+0x171/0x1a0
- ? console_unlock+0x78/0x120
- ? handle_bug+0x3c/0x80
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? remove_proc_entry+0x19c/0x1c0
- unregister_irq_proc+0xf4/0x120
- free_desc+0x3d/0xe0
- ? kfree+0x29f/0x2f0
- irq_free_descs+0x47/0x70
- msi_domain_free_locked.part.0+0x19d/0x1d0
- msi_domain_free_irqs_all_locked+0x81/0xc0
- pci_free_msi_irqs+0x12/0x40
- pci_disable_msi+0x4c/0x60
- pci_remove+0x9d/0xc0 [firewire_ohci
-     01b483699bebf9cb07a3d69df0aa2bee71db1b26]
- pci_device_remove+0x37/0xa0
- device_release_driver_internal+0x19f/0x200
- unbind_store+0xa1/0xb0
+Marking the page dirty got unintentionally dropped when KVM's emulated
+CMPXCHG was converted to do a user access.  Before that, KVM explicitly
+mapped the guest page into kernel memory, and marked the page dirty during
+the unmap phase.
 
-remove irq with devm_free_irq() before pci_disable_msi()
-also remove it in fail_msi: of pci_probe() as this would lead to
-an identical leak
+Mark the page dirty even if the CMPXCHG fails, as the old data is written
+back on failure, i.e. the page is still written.  The value written is
+guaranteed to be the same because the operation is atomic, but KVM's ABI
+is that all writes are dirty logged regardless of the value written.  And
+more importantly, that's what KVM did before the buggy commit.
 
+Huge kudos to the folks on the Cc list (and many others), who did all the
+actual work of triaging and debugging.
+
+Fixes: 1c2361f667f3 ("KVM: x86: Use __try_cmpxchg_user() to emulate atomic accesses")
 Cc: stable@vger.kernel.org
-Fixes: 5a95f1ded28691e6 ("firewire: ohci: use devres for requested IRQ")
-Signed-off-by: Edmund Raile <edmund.raile@proton.me>
-Link: https://lore.kernel.org/r/20240229144723.13047-2-edmund.raile@proton.me
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Cc: David Matlack <dmatlack@google.com>
+Cc: Pasha Tatashin <tatashin@google.com>
+Cc: Michael Krebs <mkrebs@google.com>
+base-commit: 6769ea8da8a93ed4630f1ce64df6aafcaabfce64
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20240215010004.1456078-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/ohci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/x86.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -3773,6 +3773,7 @@ static int pci_probe(struct pci_dev *dev
- 	return 0;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7951,6 +7951,16 @@ static int emulator_cmpxchg_emulated(str
  
-  fail_msi:
-+	devm_free_irq(&dev->dev, dev->irq, ohci);
- 	pci_disable_msi(dev);
+ 	if (r < 0)
+ 		return X86EMUL_UNHANDLEABLE;
++
++	/*
++	 * Mark the page dirty _before_ checking whether or not the CMPXCHG was
++	 * successful, as the old value is written back on failure.  Note, for
++	 * live migration, this is unnecessarily conservative as CMPXCHG writes
++	 * back the original value and the access is atomic, but KVM's ABI is
++	 * that all writes are dirty logged, regardless of the value written.
++	 */
++	kvm_vcpu_mark_page_dirty(vcpu, gpa_to_gfn(gpa));
++
+ 	if (r)
+ 		return X86EMUL_CMPXCHG_FAILED;
  
- 	return err;
-@@ -3800,6 +3801,7 @@ static void pci_remove(struct pci_dev *d
- 
- 	software_reset(ohci);
- 
-+	devm_free_irq(&dev->dev, dev->irq, ohci);
- 	pci_disable_msi(dev);
- 
- 	dev_notice(&dev->dev, "removing fw-ohci device\n");
 
 
