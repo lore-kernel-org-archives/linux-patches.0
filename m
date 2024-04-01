@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F31D3D961;
-	Mon,  1 Apr 2024 16:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C2E3D961;
+	Mon,  1 Apr 2024 16:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988978; cv=none; b=qyr31XkzpJCHglIt19dlV1izgRCUoJuLUTwVRXsdzjUshuptnbsC6hg/a32zXjjZH7xCxKgfzW4tSPpOyyb2u0E5Xue2eU0IIXqNSsMf5pM9Z0hJOqLgxQ0le7xW+P2ZIO94WBZm//qJZahGiGwcOJKEZzaOH19nVWVOetGM86k=
+	t=1711988982; cv=none; b=cy3V6LVVwUd28sEfOSLRn+fAwHntqj3+F5ER4Dopi/iFlAEWdVVi8/F4S8mvQI/8G5hLECJJVO6FP2aepF3CmRGYirUqTMPLidZ+BXsaSZu3hlhuF/jF2LkehB9Clz32fq0aR+98JjqELg6mvZEVjzqGrtqzPdZHVSE4YNgwb9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988978; c=relaxed/simple;
-	bh=Ps+lxVMn5n+895Ra2M/y8actCQ/Fv7vZ17VUho0kHlI=;
+	s=arc-20240116; t=1711988982; c=relaxed/simple;
+	bh=FFK8t2moLStvmfHYKr0OEZE7PhTYvADZmNWR+fzaF+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GI6JbBe4WFIeK6bObKZG1EEiDiQlh7Ufg2T40ADIDg54X8ZM8b7ZPylGzFKU9QocKaj+d6HZfTp/9QtF14hJFNvmzScmL+xitwdiV4Fd77vTgxRj4hvN6L/0d9Oh1zfQVV/htae49zk4JDa0WKA6tABC5Qh4PUoR4HIaMhojflE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZj4Us6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHYTWboC/pCnP0ON+U8sSUeHFrbvFQohfTicp8dSSjL5KZc/wR03YVPiD1GA4sU7jISMvyJk3pTOK1t7nSUywKkv+KWbng2n0TdepFIvB5JOP2JtyduZxWqqJYQPRTnbpy0RVNRWIkivMogfy7H7LL7oWue/8bq/e1BfHbeBwSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKsKGAkl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZj4Us6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28E4C433F1;
-	Mon,  1 Apr 2024 16:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKsKGAkl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528DEC43390;
+	Mon,  1 Apr 2024 16:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988978;
-	bh=Ps+lxVMn5n+895Ra2M/y8actCQ/Fv7vZ17VUho0kHlI=;
+	s=korg; t=1711988981;
+	bh=FFK8t2moLStvmfHYKr0OEZE7PhTYvADZmNWR+fzaF+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZj4Us6kNgEhmRqKQS0c3wmm0OB/ewQfNiZ95jyFf4VExZRePrdW/MfFi2cDaNjpv
-	 1sGefKLY7szzRNHpNrmH5uzFW8g0eqbRW58Mp3j76rb+Dnz1PMsebsuNxqZF5b6+/g
-	 +yjH6TomZZQBUyGzZ/8OkhTDSadQa319CJHaB7SY=
+	b=OKsKGAkltXMYrSZfnrpSnTtXcJkWflhd8PCzWA+mE+x3m1mjDo4ivDZY6GrA0NMe4
+	 oOsCL51oiQ7dsUUBtQGlQUvkOs/nArMzm5kV85CBsP+oaRfoR/nKuilvIC3jIydsxa
+	 RytQlN4XgyBnQ8qAoYMvShHCeXvpQrqp+iHB8F5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ranygh@riseup.net,
-	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.7 345/432] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
-Date: Mon,  1 Apr 2024 17:45:32 +0200
-Message-ID: <20240401152603.531412117@linuxfoundation.org>
+Subject: [PATCH 6.7 346/432] wifi: cfg80211: add a flag to disable wireless extensions
+Date: Mon,  1 Apr 2024 17:45:33 +0200
+Message-ID: <20240401152603.560746409@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,44 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
+commit be23b2d7c3b7c8bf57b1cf0bf890bd65df9d0186 upstream.
 
-When moving a station out of a VLAN and deleting the VLAN afterwards, the
-fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
-use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
-after the VLAN change.
+Wireless extensions are already disabled if MLO is enabled,
+given that we cannot support MLO there with all the hard-
+coded assumptions about BSSID etc.
+
+However, the WiFi7 ecosystem is still stabilizing, and some
+devices may need MLO disabled while that happens. In that
+case, we might end up with a device that supports wext (but
+not MLO) in one kernel, and then breaks wext in the future
+(by enabling MLO), which is not desirable.
+
+Add a flag to let such drivers/devices disable wext even if
+MLO isn't yet enabled.
 
 Cc: stable@vger.kernel.org
-Reported-by: ranygh@riseup.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
+Link: https://msgid.link/20240314110951.b50f1dc4ec21.I656ddd8178eedb49dc5c6c0e70f8ce5807afb54f@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/net/cfg80211.h   |    2 ++
+ net/wireless/wext-core.c |    7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2164,15 +2164,14 @@ static int ieee80211_change_station(stru
- 		}
- 
- 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
--		    sta->sdata->u.vlan.sta) {
--			ieee80211_clear_fast_rx(sta);
-+		    sta->sdata->u.vlan.sta)
- 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
--		}
- 
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
- 			ieee80211_vif_dec_num_mcast(sta->sdata);
- 
- 		sta->sdata = vlansdata;
-+		ieee80211_check_fast_rx(sta);
- 		ieee80211_check_fast_xmit(sta);
- 
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -4914,6 +4914,7 @@ struct cfg80211_ops {
+  *	NL80211_REGDOM_SET_BY_DRIVER.
+  * @WIPHY_FLAG_CHANNEL_CHANGE_ON_BEACON: reg_call_notifier() is called if driver
+  *	set this flag to update channels on beacon hints.
++ * @WIPHY_FLAG_DISABLE_WEXT: disable wireless extensions for this device
+  */
+ enum wiphy_flags {
+ 	WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK		= BIT(0),
+@@ -4925,6 +4926,7 @@ enum wiphy_flags {
+ 	WIPHY_FLAG_4ADDR_STATION		= BIT(6),
+ 	WIPHY_FLAG_CONTROL_PORT_PROTOCOL	= BIT(7),
+ 	WIPHY_FLAG_IBSS_RSN			= BIT(8),
++	WIPHY_FLAG_DISABLE_WEXT			= BIT(9),
+ 	WIPHY_FLAG_MESH_AUTH			= BIT(10),
+ 	WIPHY_FLAG_SUPPORTS_EXT_KCK_32          = BIT(11),
+ 	/* use hole at 12 */
+--- a/net/wireless/wext-core.c
++++ b/net/wireless/wext-core.c
+@@ -4,6 +4,7 @@
+  * Authors :	Jean Tourrilhes - HPL - <jt@hpl.hp.com>
+  * Copyright (c) 1997-2007 Jean Tourrilhes, All Rights Reserved.
+  * Copyright	2009 Johannes Berg <johannes@sipsolutions.net>
++ * Copyright (C) 2024 Intel Corporation
+  *
+  * (As all part of the Linux kernel, this file is GPL)
+  */
+@@ -662,7 +663,8 @@ struct iw_statistics *get_wireless_stats
+ 	    dev->ieee80211_ptr->wiphy->wext &&
+ 	    dev->ieee80211_ptr->wiphy->wext->get_wireless_stats) {
+ 		wireless_warn_cfg80211_wext();
+-		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
++		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
++							WIPHY_FLAG_DISABLE_WEXT))
+ 			return NULL;
+ 		return dev->ieee80211_ptr->wiphy->wext->get_wireless_stats(dev);
+ 	}
+@@ -704,7 +706,8 @@ static iw_handler get_handler(struct net
+ #ifdef CONFIG_CFG80211_WEXT
+ 	if (dev->ieee80211_ptr && dev->ieee80211_ptr->wiphy) {
+ 		wireless_warn_cfg80211_wext();
+-		if (dev->ieee80211_ptr->wiphy->flags & WIPHY_FLAG_SUPPORTS_MLO)
++		if (dev->ieee80211_ptr->wiphy->flags & (WIPHY_FLAG_SUPPORTS_MLO |
++							WIPHY_FLAG_DISABLE_WEXT))
+ 			return NULL;
+ 		handlers = dev->ieee80211_ptr->wiphy->wext;
+ 	}
 
 
