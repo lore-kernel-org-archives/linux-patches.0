@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C08F38F84;
-	Mon,  1 Apr 2024 16:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50881E525;
+	Mon,  1 Apr 2024 16:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989235; cv=none; b=bDaVFb23CONBwv5Vf/0J+F8lD/SS9uMQatYNXG+hIzyMQAP5OhjpEb6BRg7ChySuEc5AjjDrVCLya/kMkp07hTcOfhY/4HJDAQrWvaTqcr+BAaXG1+KBkGHzazi3mSX4VvLJ1e7qX0C4JCBIr252QX/9+B+KVssRFTSTHXyWoU4=
+	t=1711989238; cv=none; b=jUyc4984YnBiS6GADZNi2RTNRcE5OJNAdLaF/7QF+TMoGX6ZHwjOySJTNpnQjKcUf1HdZOR8vyaHIebqCtdli80TSffRS0lm3tOsUkdmhrjDCEpvWkZ/k3dDljyWsOfRQOA02MdWouWwwc0e+dCFPXMWjxslIqIjw5loO2B/vxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989235; c=relaxed/simple;
-	bh=Y+DhQ7+a9IzLQK1Z1PsEVFgG2tM1QyJ4M7sf1qUBAys=;
+	s=arc-20240116; t=1711989238; c=relaxed/simple;
+	bh=rmnYDa5Fx3gvX0SOO8yrN56iETvGYONWjerSq0kTaQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIwNhKO3a3jG8GFPqDFsQgTwFZLJJBQkmsfgcdzgAEkHIa0VjuxCvIXZeEWRSSizUHLnGv81g7Et+ltYLveN5hRJJhAjuOqbk18DjZS2Wjk1iIVOw4hOgMqStzVrHZWLLQQ3fYZR41Ll3oJDjAb6prGXmNo1/yzRSpD5XDgwnQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q16toa6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtOQifr7ODbq4Me7AH3tYIRw3/QhpYPcqmSaGb7UnCSMAa95nQOileGHEssGfYkA3Rd66ZU3mSRWgMz8eqmTIHMRVODM03gHuhX4N+fNwIUWTqnTaoorVKOFm5vSmBiNcX+iBIY2TUHCJCAwbpwt9DgL5s+xjQZd3YMXyYegbaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LumfQqbj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q16toa6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF7AC433C7;
-	Mon,  1 Apr 2024 16:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LumfQqbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B37C433F1;
+	Mon,  1 Apr 2024 16:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989234;
-	bh=Y+DhQ7+a9IzLQK1Z1PsEVFgG2tM1QyJ4M7sf1qUBAys=;
+	s=korg; t=1711989237;
+	bh=rmnYDa5Fx3gvX0SOO8yrN56iETvGYONWjerSq0kTaQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q16toa6whIRx0lSxRThKhJHJYxo6u3PtJS4TR8IVG38m40YeoO4TgRDLCQRJvw1rj
-	 cOTjgmfVPGFUzobLGmiykAScdMY8EOFfClYmmuik+Qs1FJSuNcLxNRfUA8e/KsQGzS
-	 MvbC6KIL4h1qINpwvgKi4PxwH9XOEZQdEc86nNpQ=
+	b=LumfQqbjjDzCCKQ8nuI0TGu6pK9071Hq6wXoF7mBM2Sgu1J+72ayGgnQkR1Qinf0z
+	 YOPKYn3sl61mI0zM1qTC8YwPWqm4R9Jns85TUL1GOHyPPCuHnrUGlyn/JeBI6F6jCk
+	 SHk+WycvVEkOY2PulC39gWVEKKJnT4Wp/9O0vyFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.7 422/432] x86/bugs: Fix the SRSO mitigation on Zen3/4
-Date: Mon,  1 Apr 2024 17:46:49 +0200
-Message-ID: <20240401152606.002408454@linuxfoundation.org>
+	Jiri Bohac <jbohac@suse.cz>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 423/432] crash: use macro to add crashk_res into iomem early for specific arch
+Date: Mon,  1 Apr 2024 17:46:50 +0200
+Message-ID: <20240401152606.041706178@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,125 +55,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Baoquan He <bhe@redhat.com>
 
-commit 4535e1a4174c4111d92c5a9a21e542d232e0fcaa upstream.
+commit 32fbe5246582af4f611ccccee33fd6e559087252 upstream.
 
-The original version of the mitigation would patch in the calls to the
-untraining routines directly.  That is, the alternative() in UNTRAIN_RET
-will patch in the CALL to srso_alias_untrain_ret() directly.
+There are regression reports[1][2] that crashkernel region on x86_64 can't
+be added into iomem tree sometime.  This causes the later failure of kdump
+loading.
 
-However, even if commit e7c25c441e9e ("x86/cpu: Cleanup the untrain
-mess") meant well in trying to clean up the situation, due to micro-
-architectural reasons, the untraining routine srso_alias_untrain_ret()
-must be the target of a CALL instruction and not of a JMP instruction as
-it is done now.
+This happened after commit 4a693ce65b18 ("kdump: defer the insertion of
+crashkernel resources") was merged.
 
-Reshuffle the alternative macros to accomplish that.
+Even though, these reported issues are proved to be related to other
+component, they are just exposed after above commmit applied, I still
+would like to keep crashk_res and crashk_low_res being added into iomem
+early as before because the early adding has been always there on x86_64
+and working very well.  For safety of kdump, Let's change it back.
 
-Fixes: e7c25c441e9e ("x86/cpu: Cleanup the untrain mess")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Here, add a macro HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY to limit that
+only ARCH defining the macro can have the early adding
+crashk_res/_low_res into iomem. Then define
+HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY on x86 to enable it.
+
+Note: In reserve_crashkernel_low(), there's a remnant of crashk_low_res
+handling which was mistakenly added back in commit 85fcde402db1 ("kexec:
+split crashkernel reservation code out from crash_core.c").
+
+[1]
+[PATCH V2] x86/kexec: do not update E820 kexec table for setup_data
+https://lore.kernel.org/all/Zfv8iCL6CT2JqLIC@darkstar.users.ipa.redhat.com/T/#u
+
+[2]
+Question about Address Range Validation in Crash Kernel Allocation
+https://lore.kernel.org/all/4eeac1f733584855965a2ea62fa4da58@huawei.com/T/#u
+
+Link: https://lkml.kernel.org/r/ZgDYemRQ2jxjLkq+@MiWiFi-R3L-srv
+Fixes: 4a693ce65b18 ("kdump: defer the insertion of crashkernel resources")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Bohac <jbohac@suse.cz>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Baoquan He <bhe@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/asm-prototypes.h |    1 +
- arch/x86/include/asm/nospec-branch.h  |   21 ++++++++++++++++-----
- arch/x86/lib/retpoline.S              |   11 ++++++-----
- 3 files changed, 23 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/crash_core.h |    2 ++
+ kernel/crash_core.c               |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/arch/x86/include/asm/asm-prototypes.h
-+++ b/arch/x86/include/asm/asm-prototypes.h
-@@ -13,6 +13,7 @@
- #include <asm/preempt.h>
- #include <asm/asm.h>
- #include <asm/gsseg.h>
-+#include <asm/nospec-branch.h>
- 
- #ifndef CONFIG_X86_CMPXCHG64
- extern void cmpxchg8b_emu(void);
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -271,11 +271,20 @@
- .Lskip_rsb_\@:
- .endm
- 
-+/*
-+ * The CALL to srso_alias_untrain_ret() must be patched in directly at
-+ * the spot where untraining must be done, ie., srso_alias_untrain_ret()
-+ * must be the target of a CALL instruction instead of indirectly
-+ * jumping to a wrapper which then calls it. Therefore, this macro is
-+ * called outside of __UNTRAIN_RET below, for the time being, before the
-+ * kernel can support nested alternatives with arbitrary nesting.
-+ */
-+.macro CALL_UNTRAIN_RET
- #if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_SRSO)
--#define CALL_UNTRAIN_RET	"call entry_untrain_ret"
--#else
--#define CALL_UNTRAIN_RET	""
-+	ALTERNATIVE_2 "", "call entry_untrain_ret", X86_FEATURE_UNRET, \
-+		          "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
+--- a/arch/x86/include/asm/crash_core.h
++++ b/arch/x86/include/asm/crash_core.h
+@@ -39,4 +39,6 @@ static inline unsigned long crash_low_si
  #endif
-+.endm
+ }
  
- /*
-  * Mitigate RETBleed for AMD/Hygon Zen uarch. Requires KERNEL CR3 because the
-@@ -291,8 +300,8 @@
- .macro __UNTRAIN_RET ibpb_feature, call_depth_insns
- #if defined(CONFIG_RETHUNK) || defined(CONFIG_CPU_IBPB_ENTRY)
- 	VALIDATE_UNRET_END
--	ALTERNATIVE_3 "",						\
--		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
-+	CALL_UNTRAIN_RET
-+	ALTERNATIVE_2 "",						\
- 		      "call entry_ibpb", \ibpb_feature,			\
- 		     __stringify(\call_depth_insns), X86_FEATURE_CALL_DEPTH
- #endif
-@@ -351,6 +360,8 @@ extern void retbleed_return_thunk(void);
- static inline void retbleed_return_thunk(void) {}
- #endif
- 
-+extern void srso_alias_untrain_ret(void);
++#define HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
 +
- #ifdef CONFIG_CPU_SRSO
- extern void srso_return_thunk(void);
- extern void srso_alias_return_thunk(void);
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -163,6 +163,7 @@ SYM_CODE_START_NOALIGN(srso_alias_untrai
- 	lfence
- 	jmp srso_alias_return_thunk
- SYM_FUNC_END(srso_alias_untrain_ret)
-+__EXPORT_THUNK(srso_alias_untrain_ret)
- 	.popsection
+ #endif /* _X86_CRASH_CORE_H */
+--- a/kernel/crash_core.c
++++ b/kernel/crash_core.c
+@@ -377,6 +377,9 @@ static int __init reserve_crashkernel_lo
  
- 	.pushsection .text..__x86.rethunk_safe
-@@ -224,10 +225,12 @@ SYM_CODE_START(srso_return_thunk)
- SYM_CODE_END(srso_return_thunk)
+ 	crashk_low_res.start = low_base;
+ 	crashk_low_res.end   = low_base + low_size - 1;
++#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
++	insert_resource(&iomem_resource, &crashk_low_res);
++#endif
+ #endif
+ 	return 0;
+ }
+@@ -458,8 +461,12 @@ retry:
  
- #define JMP_SRSO_UNTRAIN_RET "jmp srso_untrain_ret"
--#define JMP_SRSO_ALIAS_UNTRAIN_RET "jmp srso_alias_untrain_ret"
- #else /* !CONFIG_CPU_SRSO */
- #define JMP_SRSO_UNTRAIN_RET "ud2"
--#define JMP_SRSO_ALIAS_UNTRAIN_RET "ud2"
-+/* Dummy for the alternative in CALL_UNTRAIN_RET. */
-+SYM_CODE_START(srso_alias_untrain_ret)
-+	RET
-+SYM_FUNC_END(srso_alias_untrain_ret)
- #endif /* CONFIG_CPU_SRSO */
+ 	crashk_res.start = crash_base;
+ 	crashk_res.end = crash_base + crash_size - 1;
++#ifdef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
++	insert_resource(&iomem_resource, &crashk_res);
++#endif
+ }
  
- #ifdef CONFIG_CPU_UNRET_ENTRY
-@@ -319,9 +322,7 @@ SYM_FUNC_END(retbleed_untrain_ret)
- #if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_SRSO)
++#ifndef HAVE_ARCH_ADD_CRASH_RES_TO_IOMEM_EARLY
+ static __init int insert_crashkernel_resources(void)
+ {
+ 	if (crashk_res.start < crashk_res.end)
+@@ -472,6 +479,7 @@ static __init int insert_crashkernel_res
+ }
+ early_initcall(insert_crashkernel_resources);
+ #endif
++#endif
  
- SYM_FUNC_START(entry_untrain_ret)
--	ALTERNATIVE_2 JMP_RETBLEED_UNTRAIN_RET,				\
--		      JMP_SRSO_UNTRAIN_RET, X86_FEATURE_SRSO,		\
--		      JMP_SRSO_ALIAS_UNTRAIN_RET, X86_FEATURE_SRSO_ALIAS
-+	ALTERNATIVE JMP_RETBLEED_UNTRAIN_RET, JMP_SRSO_UNTRAIN_RET, X86_FEATURE_SRSO
- SYM_FUNC_END(entry_untrain_ret)
- __EXPORT_THUNK(entry_untrain_ret)
- 
+ int crash_prepare_elf64_headers(struct crash_mem *mem, int need_kernel_map,
+ 			  void **addr, unsigned long *sz)
 
 
