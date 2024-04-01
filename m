@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E67863E;
-	Mon,  1 Apr 2024 16:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B66B63E;
+	Mon,  1 Apr 2024 16:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990545; cv=none; b=XDWirS3/LS7T1oEyn9I8G4uqwuA9wVPa+YaSWi1zW3jZN8LGV3cjPkh/RTv9oetn0FYKTbX66v0ik9L7cXofT2wIjbBHnRygYKYOnoobd7haNn4geCkeu0NKd5xbbsF1Cm8Ll8i4w64+L2S/c3g2BuaanB+JzjFHRvRLSvXFU44=
+	t=1711990548; cv=none; b=R+LUzR+sagBkDrFafalxnCYzsPVHSFsrrzmAnuCVMib8JiIvB9ROizGlN+JK8RUF2jLZw5Gpd1AOmWjhc13LA87Zi80WSJUwn2d8juQP5sr7JnAxkNK5bi45XnrLjZ83Rrayb7ZRPetAU9DNPIQIXQ8QxILgCNJLcPmQNxO91gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990545; c=relaxed/simple;
-	bh=75cXP3ygDjUKxg87C1EKzq3O1Gr0IYq8YaB6+RX7NDA=;
+	s=arc-20240116; t=1711990548; c=relaxed/simple;
+	bh=MwCLm8gjAmdJzOSnJDiXxJPPy8oZpo4racy8QXYP4Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9ycWc4U7jRBN58/TdmAs93URYCfELKgBlu1CQzeFxqzYCeKTJy0ch2ESvJcOVU9LCAqtKNm5nDjev015ixTK/7bY5z1kRFUSfbQdJQKidiPwspvM15igrxdpgPFaWdDBBgv/PkKeflvloTaqEDKPHQbLMvD8WVkPGTBeoWOxQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ke0mI5Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d5hT8WsJRi8Tx4za0okUY5q14TX+uaon2BqVua46PZ/zkSJq/iOcfP3OsLDfrjSvmVx4Xmzv9hh5FZ+4l9mLCnPZtndgVTbntqf+KkR9BYoitp99X/GgnDiYwkl9CemnOWI2RdD7W8CAE8tkibtzMNpKxwlfovAf0bbQGLEM334=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhzEuW9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ke0mI5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20153C433C7;
-	Mon,  1 Apr 2024 16:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhzEuW9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBC0C433F1;
+	Mon,  1 Apr 2024 16:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990545;
-	bh=75cXP3ygDjUKxg87C1EKzq3O1Gr0IYq8YaB6+RX7NDA=;
+	s=korg; t=1711990548;
+	bh=MwCLm8gjAmdJzOSnJDiXxJPPy8oZpo4racy8QXYP4Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ke0mI5ZO36+OcVInAnpbXnpScIrcClwCcKITblL7yAlz/onMqSPhOF2BB4IdueRn
-	 Lzm9yMALgfZ6YSH9Xq6HgcyItbM9DY288e6p59yqalULMCVd7KX92IQpNdSmolPFqh
-	 EyS2GF3fXXq74josFPRctHIMRae18qlLS3+XUYd0=
+	b=nhzEuW9JP7IYJGquK55nJZNCd6CP0oz6XpGC+yc9CJIcQfY7zpmUBB02tJPoVxq09
+	 f0oSigviZC6N62ZbFRg0CCrLKlmM9qmS+NSxFj6YyhkqutSSguQzAZe2ZFrQlBjo+a
+	 ltLOt62ApjkGv6gTt2ty3htHObi+mRkrYkP118Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 387/396] scsi: qla2xxx: Delay I/O Abort on PCI error
-Date: Mon,  1 Apr 2024 17:47:16 +0200
-Message-ID: <20240401152559.453248058@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.6 388/396] x86/bugs: Use fixed addressing for VERW operand
+Date: Mon,  1 Apr 2024 17:47:17 +0200
+Message-ID: <20240401152559.481576368@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,57 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 591c1fdf2016d118b8fbde427b796fac13f3f070 upstream.
+commit 8009479ee919b9a91674f48050ccbff64eafedaa upstream.
 
-Currently when PCI error is detected, I/O is aborted manually through the
-ABORT IOCB mechanism which is not guaranteed to succeed.
+The macro used for MDS mitigation executes VERW with relative
+addressing for the operand. This was necessary in earlier versions of
+the series. Now it is unnecessary and creates a problem for backports
+on older kernels that don't support relocations in alternatives.
+Relocation support was added by commit 270a69c4485d ("x86/alternative:
+Support relocations in alternatives").  Also asm for fixed addressing
+is much cleaner than relative RIP addressing.
 
-Instead, wait for the OS or system to notify driver to wind down I/O
-through the pci_error_handlers api.  Set eeh_busy flag to pause all traffic
-and wait for I/O to drain.
+Simplify the asm by using fixed addressing for VERW operand.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240227164127.36465-11-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ dhansen: tweak changelog ]
+
+Closes: https://lore.kernel.org/lkml/20558f89-299b-472e-9a96-171403a83bd6@suse.com/
+Fixes: baf8361e5455 ("x86/bugs: Add asm helpers for executing VERW")
+Reported-by: Nikolay Borisov <nik.borisov@suse.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20240226-verw-arg-fix-v1-1-7b37ee6fd57d%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -2741,7 +2741,13 @@ qla2x00_dev_loss_tmo_callbk(struct fc_rp
- 		return;
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -337,7 +337,7 @@
+  * Note: Only the memory operand variant of VERW clears the CPU buffers.
+  */
+ .macro CLEAR_CPU_BUFFERS
+-	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", __stringify(verw mds_verw_sel), X86_FEATURE_CLEAR_CPU_BUF
+ .endm
  
- 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
--		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
-+		/* Will wait for wind down of adapter */
-+		ql_dbg(ql_dbg_aer, fcport->vha, 0x900c,
-+		    "%s pci offline detected (id %06x)\n", __func__,
-+		    fcport->d_id.b24);
-+		qla_pci_set_eeh_busy(fcport->vha);
-+		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
-+		    0, WAIT_TARGET);
- 		return;
- 	}
- }
-@@ -2763,7 +2769,11 @@ qla2x00_terminate_rport_io(struct fc_rpo
- 	vha = fcport->vha;
- 
- 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
--		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
-+		/* Will wait for wind down of adapter */
-+		ql_dbg(ql_dbg_aer, fcport->vha, 0x900b,
-+		    "%s pci offline detected (id %06x)\n", __func__,
-+		    fcport->d_id.b24);
-+		qla_pci_set_eeh_busy(vha);
- 		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
- 			0, WAIT_TARGET);
- 		return;
+ #else /* __ASSEMBLY__ */
 
 
