@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFA9446AC;
-	Mon,  1 Apr 2024 16:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5136446AC;
+	Mon,  1 Apr 2024 16:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988023; cv=none; b=hHG4RplqnlVXUZVPp1GRKeXvb3VsPGY6wW8ED10eDIvXqj2aParP23E+wC5QopuWDPUZYCfbM9HXvwccaR4nNK0nqMWvB+b1hGxQL0s+V6ZiKMqikF/a9yckflDCCJLd4IiRgtlm8HxwIGl4NRVaggJm32ATLCfb+fbbUE6EmOE=
+	t=1711988027; cv=none; b=Uj5U0QU+sghbDXDYOXG+FRTezTBDmY89TLGfKjLFDydp0sQwT0pqbwrDzPuU9wanRRc/Jjro5wm6V8E5F+PvLqc4ULmcmgHT/GkDHmT0LpyxQmu7i/g+Xy3S+KMRKyorS0ZAJxUcyuBq3HrQtPHiQvR7mK/mpq/Rgvmex9wqGHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988023; c=relaxed/simple;
-	bh=nrmC1tgN9FOa6vyP2AYBwb7krLpmHe7Tio0M0OMn5ac=;
+	s=arc-20240116; t=1711988027; c=relaxed/simple;
+	bh=NFdwz9RVLvQ6J3eDO/r4UnAjrrLwGChTsa2AqM12Uso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0Y9mM82fBrfJN1l5ea17Mt/f/SlZFiL5Yan/5PnQTq/Tmxs9y4eRkUASpv3rPdNt8GpH5TmC4drjKM8Vp7U0AGt/kAjoCcBsXNyA3GXm/b1N+G3Xee9rEqsefJI2PRBU2+RXP0FoEEJKz+8fYv2lJrNGwMzBoA8oV4EqZE35SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP5Bd0Bz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCfMpS0vd4FkVGmwfOjtvKQK1p/yPAHVRxcHrGlsWgLyOsAm667aPXiuz/H4I8yNNKmaCBZUDKokYRFdUVWM8axYi1bkgp3RaSH0uLk0QEgNwFXp5ORzbMyAKfBkqncjbuL6HfCcTjOxzwKXYAMlNr0tqtHX58m7t/FSsFGKHn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Swl0NtI5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP5Bd0Bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AD6C433C7;
-	Mon,  1 Apr 2024 16:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Swl0NtI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F1AC433C7;
+	Mon,  1 Apr 2024 16:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988023;
-	bh=nrmC1tgN9FOa6vyP2AYBwb7krLpmHe7Tio0M0OMn5ac=;
+	s=korg; t=1711988026;
+	bh=NFdwz9RVLvQ6J3eDO/r4UnAjrrLwGChTsa2AqM12Uso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fP5Bd0BzjzkwxR97qKNxi4OuceopaRjXaNYymyDYNFF4k+ZAb8bNFHFC8xqXT2+oB
-	 GknsWUUnmEO/Soo/NI0olK/oJbcYHUhSDO3jCMslEw6Z2zIh4Y/yzfMyOyTWRrUC1W
-	 6GhOuNzqWG6v3k4pCbA8vqW5/3tl+TESSdZccTeE=
+	b=Swl0NtI53QjO0XS+qm5o3gKInAdvU6REqK40zqSPbNi7eAkBQUz0ZeNhlHV6Fen15
+	 1mxDtHwgm7LhjvgvWoZ5wrhiw+arIVyNM9dIBixtjXBEkBfA1jCZOz0p6MNN4tEJlA
+	 c2cLwi053tqwl9iLpinAQaOwLAvcYM+CWr+WSjgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Gui-Dong Han <2045gemini@gmail.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 061/432] parisc: Strip upper 32 bit of sum in csum_ipv6_magic for 64-bit builds
-Date: Mon,  1 Apr 2024 17:40:48 +0200
-Message-ID: <20240401152554.946351662@linuxfoundation.org>
+Subject: [PATCH 6.7 062/432] md/raid5: fix atomicity violation in raid5_cache_count
+Date: Mon,  1 Apr 2024 17:40:49 +0200
+Message-ID: <20240401152554.975597407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,52 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Gui-Dong Han <2045gemini@gmail.com>
 
-[ Upstream commit 0568b6f0d863643db2edcc7be31165740c89fa82 ]
+[ Upstream commit dfd2bf436709b2bccb78c2dda550dde93700efa7 ]
 
-IPv6 checksum tests with unaligned addresses on 64-bit builds result
-in unexpected failures.
+In raid5_cache_count():
+    if (conf->max_nr_stripes < conf->min_nr_stripes)
+        return 0;
+    return conf->max_nr_stripes - conf->min_nr_stripes;
+The current check is ineffective, as the values could change immediately
+after being checked.
 
-Expected expected == csum_result, but
-    expected == 46591 (0xb5ff)
-    csum_result == 46381 (0xb52d)
-with alignment offset 1
+In raid5_set_cache_size():
+    ...
+    conf->min_nr_stripes = size;
+    ...
+    while (size > conf->max_nr_stripes)
+        conf->min_nr_stripes = conf->max_nr_stripes;
+    ...
 
-Oddly enough, the problem disappeared after adding test code into
-the beginning of csum_ipv6_magic().
+Due to intermediate value updates in raid5_set_cache_size(), concurrent
+execution of raid5_cache_count() and raid5_set_cache_size() may lead to
+inconsistent reads of conf->max_nr_stripes and conf->min_nr_stripes.
+The current checks are ineffective as values could change immediately
+after being checked, raising the risk of conf->min_nr_stripes exceeding
+conf->max_nr_stripes and potentially causing an integer overflow.
 
-As it turns out, the 'sum' parameter of csum_ipv6_magic() is declared as
-__wsum, which is a 32-bit variable. However, it is treated as 64-bit
-variable in the 64-bit assembler code. Tests showed that the upper 32 bit
-of the register used to pass the variable are _not_ cleared when entering
-the function. This can result in checksum calculation errors.
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency bugs
+including data races and atomicity violations. The above possible bug is
+reported when our tool analyzes the source code of Linux 6.2.
 
-Clearing the upper 32 bit of 'sum' as first operation in the assembler
-code fixes the problem.
+To resolve this issue, it is suggested to introduce local variables
+'min_stripes' and 'max_stripes' in raid5_cache_count() to ensure the
+values remain stable throughout the check. Adding locks in
+raid5_cache_count() fails to resolve atomicity violations, as
+raid5_set_cache_size() may hold intermediate values of
+conf->min_nr_stripes while unlocked. With this patch applied, our tool no
+longer reports the bug, with the kernel configuration allyesconfig for
+x86_64. Due to the lack of associated hardware, we cannot test the patch
+in runtime testing, and just verify it according to the code logic.
 
-Acked-by: Helge Deller <deller@gmx.de>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: edbe83ab4c27 ("md/raid5: allow the stripe_cache to grow and shrink.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240112071017.16313-1-2045gemini@gmail.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/checksum.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid5.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
-index c949aa20fa162..2aceebcd695c8 100644
---- a/arch/parisc/include/asm/checksum.h
-+++ b/arch/parisc/include/asm/checksum.h
-@@ -126,6 +126,7 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- 	** Try to keep 4 registers with "live" values ahead of the ALU.
- 	*/
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index f03e4231bec11..8cdf759a5d272 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -2422,7 +2422,7 @@ static int grow_one_stripe(struct r5conf *conf, gfp_t gfp)
+ 	atomic_inc(&conf->active_stripes);
  
-+"	depdi		0, 31, 32, %0\n"/* clear upper half of incoming checksum */
- "	ldd,ma		8(%1), %4\n"	/* get 1st saddr word */
- "	ldd,ma		8(%2), %5\n"	/* get 1st daddr word */
- "	add		%4, %0, %0\n"
+ 	raid5_release_stripe(sh);
+-	conf->max_nr_stripes++;
++	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes + 1);
+ 	return 1;
+ }
+ 
+@@ -2717,7 +2717,7 @@ static int drop_one_stripe(struct r5conf *conf)
+ 	shrink_buffers(sh);
+ 	free_stripe(conf->slab_cache, sh);
+ 	atomic_dec(&conf->active_stripes);
+-	conf->max_nr_stripes--;
++	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes - 1);
+ 	return 1;
+ }
+ 
+@@ -6878,7 +6878,7 @@ raid5_set_cache_size(struct mddev *mddev, int size)
+ 	if (size <= 16 || size > 32768)
+ 		return -EINVAL;
+ 
+-	conf->min_nr_stripes = size;
++	WRITE_ONCE(conf->min_nr_stripes, size);
+ 	mutex_lock(&conf->cache_size_mutex);
+ 	while (size < conf->max_nr_stripes &&
+ 	       drop_one_stripe(conf))
+@@ -6890,7 +6890,7 @@ raid5_set_cache_size(struct mddev *mddev, int size)
+ 	mutex_lock(&conf->cache_size_mutex);
+ 	while (size > conf->max_nr_stripes)
+ 		if (!grow_one_stripe(conf, GFP_KERNEL)) {
+-			conf->min_nr_stripes = conf->max_nr_stripes;
++			WRITE_ONCE(conf->min_nr_stripes, conf->max_nr_stripes);
+ 			result = -ENOMEM;
+ 			break;
+ 		}
+@@ -7448,11 +7448,13 @@ static unsigned long raid5_cache_count(struct shrinker *shrink,
+ 				       struct shrink_control *sc)
+ {
+ 	struct r5conf *conf = shrink->private_data;
++	int max_stripes = READ_ONCE(conf->max_nr_stripes);
++	int min_stripes = READ_ONCE(conf->min_nr_stripes);
+ 
+-	if (conf->max_nr_stripes < conf->min_nr_stripes)
++	if (max_stripes < min_stripes)
+ 		/* unlikely, but not impossible */
+ 		return 0;
+-	return conf->max_nr_stripes - conf->min_nr_stripes;
++	return max_stripes - min_stripes;
+ }
+ 
+ static struct r5conf *setup_conf(struct mddev *mddev)
 -- 
 2.43.0
 
