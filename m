@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2E51C0DE7;
-	Mon,  1 Apr 2024 17:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3051C0DE7;
+	Mon,  1 Apr 2024 17:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990946; cv=none; b=JuyLcDVjF19uoi5s/a1bHsBYKmw+JV45QJKjgx7Ugucu65XheI3iG2IBjVYLxHJbGpb2g1VtXKiVF7icn90qmse/Qpf226flmx8aT5du/cZjHQM8F/nKFV1V/qB98OKkD1m/QGyOBluOjM4WFggVEd6i/tVSXIUZtH/2yx1REPY=
+	t=1711990949; cv=none; b=ZZeQkELJw3HmEDm9rn2SDJOv2T1fmln9pbrHQZtGGEFWOq7vJfsIE0uw/XZgL89GDT8RFr2Z/kcDfVLH97feW55emOY6B05tsq243wE4sMTbFXWM7FW3C15Dj33bwhEctb4lr+lLakmHEk9YEOd0BXT3XUNTdXggyfR1RPAQErQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990946; c=relaxed/simple;
-	bh=C6f2aBOnOaHj1yswGYJqMLgK8mLCJ9WVZ5gX0KtJqdY=;
+	s=arc-20240116; t=1711990949; c=relaxed/simple;
+	bh=3ULS1fHPvT0t8tlj8hF1e6HZaCVfnCrEZZQB/skBJtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2psbzDeay5Q7Ha32baL/Oj+NjIivBMsb7mgB7HP/rux1L16SD5ATX/PIB8bib+Mi+JuJ9tz6q7wmDrCnrX8nauFki7edcpvN/Ah7kIfmMflN1vZdzARQvTx4+6BcsQREIxSVJ4moIsSSIozNZ3LSkVgEkIWVDWoU1ber3/uMDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuJlPQQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O96LJV/p8w4LVh4xKxFULOFS/wruZK2OMX2udvTFeQXcQBOFK4DjgIZPlJ3uuwZGSNWW/NdK/bDNa/PmK6uCyRPstH1D2+fHY9TcxBtzVpwJUglx8kYyj+Khs4lMX4f9EG8emD6kqzIZM1lEwjkespOVNw0kx7qdLA6+Ak4iXso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aepf8i6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuJlPQQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923A8C433C7;
-	Mon,  1 Apr 2024 17:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aepf8i6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE674C433F1;
+	Mon,  1 Apr 2024 17:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990946;
-	bh=C6f2aBOnOaHj1yswGYJqMLgK8mLCJ9WVZ5gX0KtJqdY=;
+	s=korg; t=1711990949;
+	bh=3ULS1fHPvT0t8tlj8hF1e6HZaCVfnCrEZZQB/skBJtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuJlPQQhMG9vdqniFkkRdCTCKORuutj66/K5//BU+aRWPGdLl+m6I5p6MpL/r3Yxu
-	 dy5G7gmd1UyKFJeJhSWZXWXkmjvd7Tye9Ty3sVcHWD3V4jBAx9zSxoMvDINAGRTUp7
-	 tMDRf6xiosY1bRs2WJ1Jru49camv5mj6Pjf0kG0A=
+	b=Aepf8i6+clT4p8NkkSI1IahgCHV/0oX6r7tx+w3oJ6uJ24+g2SuG9KAEBBeCnA7o4
+	 /HQVLRLUb0a61BhaZGNYZt6pg83dPVFm3I6doqsGxtdlZcIqLZNDpIhj/xvK33s72J
+	 LR4XxuwMQrmQclU5onz1Huw7BohUOZqOig4oEvzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Wayne Chang <waynec@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/272] slimbus: core: Remove usage of the deprecated ida_simple_xx() API
-Date: Mon,  1 Apr 2024 17:44:37 +0200
-Message-ID: <20240401152533.341108783@linuxfoundation.org>
+Subject: [PATCH 6.1 088/272] phy: tegra: xusb: Add API to retrieve the port number of phy
+Date: Mon,  1 Apr 2024 17:44:38 +0200
+Message-ID: <20240401152533.370013869@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,43 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Wayne Chang <waynec@nvidia.com>
 
-[ Upstream commit 89ffa4cccec54467446f141a79b9e36893079fb8 ]
+[ Upstream commit d843f031d9e90462253015bc0bd9e3852d206bf2 ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+This patch introduces a new API, tegra_xusb_padctl_get_port_number,
+to the Tegra XUSB Pad Controller driver. This API is used to identify
+the USB port that is associated with a given PHY.
 
-Note that the upper limit of ida_simple_get() is exclusive, but the one of
-ida_alloc_range() is inclusive. So change this change allows one more
-device. Previously address 0xFE was never used.
+The function takes a PHY pointer for either a USB2 PHY or USB3 PHY as input
+and returns the corresponding port number. If the PHY pointer is invalid,
+it returns -ENODEV.
 
-Fixes: 46a2bb5a7f7e ("slimbus: core: Add slim controllers support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240224114137.85781-2-srinivas.kandagatla@linaro.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20240307030328.1487748-2-waynec@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/tegra/xusb.c       | 13 +++++++++++++
+ include/linux/phy/tegra/xusb.h |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/slimbus/core.c b/drivers/slimbus/core.c
-index 219483b79c09c..37fd655994ef3 100644
---- a/drivers/slimbus/core.c
-+++ b/drivers/slimbus/core.c
-@@ -436,8 +436,8 @@ static int slim_device_alloc_laddr(struct slim_device *sbdev,
- 		if (ret < 0)
- 			goto err;
- 	} else if (report_present) {
--		ret = ida_simple_get(&ctrl->laddr_ida,
--				     0, SLIM_LA_MANAGER - 1, GFP_KERNEL);
-+		ret = ida_alloc_max(&ctrl->laddr_ida,
-+				    SLIM_LA_MANAGER - 1, GFP_KERNEL);
- 		if (ret < 0)
- 			goto err;
+diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
+index 4d5b4071d47d5..dc22b1dd2c8ba 100644
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -1518,6 +1518,19 @@ int tegra_xusb_padctl_get_usb3_companion(struct tegra_xusb_padctl *padctl,
+ }
+ EXPORT_SYMBOL_GPL(tegra_xusb_padctl_get_usb3_companion);
  
++int tegra_xusb_padctl_get_port_number(struct phy *phy)
++{
++	struct tegra_xusb_lane *lane;
++
++	if (!phy)
++		return -ENODEV;
++
++	lane = phy_get_drvdata(phy);
++
++	return lane->index;
++}
++EXPORT_SYMBOL_GPL(tegra_xusb_padctl_get_port_number);
++
+ MODULE_AUTHOR("Thierry Reding <treding@nvidia.com>");
+ MODULE_DESCRIPTION("Tegra XUSB Pad Controller driver");
+ MODULE_LICENSE("GPL v2");
+diff --git a/include/linux/phy/tegra/xusb.h b/include/linux/phy/tegra/xusb.h
+index 70998e6dd6fdc..6ca51e0080ec0 100644
+--- a/include/linux/phy/tegra/xusb.h
++++ b/include/linux/phy/tegra/xusb.h
+@@ -26,6 +26,7 @@ void tegra_phy_xusb_utmi_pad_power_down(struct phy *phy);
+ int tegra_phy_xusb_utmi_port_reset(struct phy *phy);
+ int tegra_xusb_padctl_get_usb3_companion(struct tegra_xusb_padctl *padctl,
+ 					 unsigned int port);
++int tegra_xusb_padctl_get_port_number(struct phy *phy);
+ int tegra_xusb_padctl_enable_phy_sleepwalk(struct tegra_xusb_padctl *padctl, struct phy *phy,
+ 					   enum usb_device_speed speed);
+ int tegra_xusb_padctl_disable_phy_sleepwalk(struct tegra_xusb_padctl *padctl, struct phy *phy);
 -- 
 2.43.0
 
