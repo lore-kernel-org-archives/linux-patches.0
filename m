@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF5846420;
-	Mon,  1 Apr 2024 15:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDDC46420;
+	Mon,  1 Apr 2024 15:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986763; cv=none; b=MyQH3CrvwPeNBlTdGei+WQu7jq5sg6cYGjQIdVN92fVJz9F+fziWGSC2CWC33gygrg4/GxbilWO/juG5+iqOypdPKOYg6jUrA/Y6+dsnQUHjjUygi+a1RYCInzUKJ1CnpIDz/DaBVYzEwCVPgWhCv3R9xbzHl8VustlPq5ytfvo=
+	t=1711986767; cv=none; b=IWnSBThYccTKXYsfSRovSCwYsj/GTUjuzDq3qyFsJrQMrynMHPImB0pGqVvukRnTt83dKLl5TXNhH1+O4STmgCs0AiMW+1/RlNsDaddJEDeE1OBISpTHU9VPN0H5cANCJvfW6U+AQfUk6WfzVVRjfVAB323TMRNDqujCRQp8qbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986763; c=relaxed/simple;
-	bh=4NqSPQPPVhuYUlqYN1Bjh3h9IqipgsUpJfias/3VXlA=;
+	s=arc-20240116; t=1711986767; c=relaxed/simple;
+	bh=3ft5dnFv0PRrFBNh8A4909KOFSuhreG3WaW6Tye9jvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8eUQWQy3W6ohUvQLwDTe5hgCQoGCWEjOgIleHpFgNFshW4IMLs3zme5spOhYdDKoNDd9wut35Fu2EQGD9bJ3E4Q3cKSSHR6DndZ/w4GsGf5ANDe2zvns1pLEbEDBDHjwATw1hQKBtY49xPdcHsDOrKfzoUNyVlPPkfI/tzZiQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wuxl8E4Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wz7bU0IUIbbWQtUmt63anB4darzCW78iAKP8EL48up+iC957RRbiY0uFvzfyuON/v3JI1v439h57Eq5qTogwvBVn11TbzKLLSuGZPdd5lvgojB9hi4k4ot6YLdpVOpOOKkwKz0KqKNCcmXCVkJh5ik3L5NXfDLqK8eY3+XTtW2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0WwMoDv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wuxl8E4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48496C433C7;
-	Mon,  1 Apr 2024 15:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0WwMoDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FF3C433C7;
+	Mon,  1 Apr 2024 15:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986763;
-	bh=4NqSPQPPVhuYUlqYN1Bjh3h9IqipgsUpJfias/3VXlA=;
+	s=korg; t=1711986766;
+	bh=3ft5dnFv0PRrFBNh8A4909KOFSuhreG3WaW6Tye9jvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wuxl8E4ZoE9IuevR5hleAAYn7/p3JlHAIPPOOyRRaLw6ERooaNoT+wKMZvoFiDtMO
-	 ToB2JljTqrIsVuJCM4mggWPubKw7FmDDSv/QugLmnW4Sr7MWJQMRPD6PMGbgq2sBgZ
-	 7EbTIoMv1jE518ZtBD3jrVsruHaaJsMDG1iTRJog=
+	b=d0WwMoDv39rdtpRVarixfAe1eIMn70CjzihzTR9ydc8+lxTOnItbbxLlItpSv8IpB
+	 icIk9qCZ7A9HwAJCzqV2OQIGn1QaP6DwWVFDZKfPy4bfgy/mw1E3WeCN9kZnJUrohP
+	 gae5BOmDOUpp3Ocv/cJByc3xi0jaaS6cSsYbJtmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Daniel Vogelbacher <daniel@chaospixel.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 078/399] powerpc/fsl: Fix mfpmr build errors with newer binutils
-Date: Mon,  1 Apr 2024 17:40:44 +0200
-Message-ID: <20240401152551.510962656@linuxfoundation.org>
+Subject: [PATCH 6.8 079/399] USB: serial: ftdi_sio: add support for GMC Z216C Adapter IR-USB
+Date: Mon,  1 Apr 2024 17:40:45 +0200
+Message-ID: <20240401152551.540191199@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,59 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Daniel Vogelbacher <daniel@chaospixel.com>
 
-[ Upstream commit 5f491356b7149564ab22323ccce79c8d595bfd0c ]
+[ Upstream commit 3fb7bc4f3a98c48981318b87cf553c5f115fd5ca ]
 
-Binutils 2.38 complains about the use of mfpmr when building
-ppc6xx_defconfig:
+The GMC IR-USB adapter cable utilizes a FTDI FT232R chip.
 
-    CC      arch/powerpc/kernel/pmc.o
-  {standard input}: Assembler messages:
-  {standard input}:45: Error: unrecognized opcode: `mfpmr'
-  {standard input}:56: Error: unrecognized opcode: `mtpmr'
+Add VID/PID for this adapter so it can be used as serial device via
+ftdi_sio.
 
-This is because by default the kernel is built with -mcpu=powerpc, and
-the mt/mfpmr instructions are not defined.
-
-It can be avoided by enabling CONFIG_E300C3_CPU, but just adding that to
-the defconfig will leave open the possibility of randconfig failures.
-
-So add machine directives around the mt/mfpmr instructions to tell
-binutils how to assemble them.
-
+Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
 Cc: stable@vger.kernel.org
-Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240229122521.762431-3-mpe@ellerman.id.au
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/reg_fsl_emb.h | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/serial/ftdi_sio.c     | 2 ++
+ drivers/usb/serial/ftdi_sio_ids.h | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/reg_fsl_emb.h b/arch/powerpc/include/asm/reg_fsl_emb.h
-index a21f529c43d96..8359c06d92d9f 100644
---- a/arch/powerpc/include/asm/reg_fsl_emb.h
-+++ b/arch/powerpc/include/asm/reg_fsl_emb.h
-@@ -12,9 +12,16 @@
- #ifndef __ASSEMBLY__
- /* Performance Monitor Registers */
- #define mfpmr(rn)	({unsigned int rval; \
--			asm volatile("mfpmr %0," __stringify(rn) \
-+			asm volatile(".machine push; " \
-+				     ".machine e300; " \
-+				     "mfpmr %0," __stringify(rn) ";" \
-+				     ".machine pop; " \
- 				     : "=r" (rval)); rval;})
--#define mtpmr(rn, v)	asm volatile("mtpmr " __stringify(rn) ",%0" : : "r" (v))
-+#define mtpmr(rn, v)	asm volatile(".machine push; " \
-+				     ".machine e300; " \
-+				     "mtpmr " __stringify(rn) ",%0; " \
-+				     ".machine pop; " \
-+				     : : "r" (v))
- #endif /* __ASSEMBLY__ */
+diff --git a/drivers/usb/serial/ftdi_sio.c b/drivers/usb/serial/ftdi_sio.c
+index 13a56783830df..22d01a0f10fbc 100644
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1077,6 +1077,8 @@ static const struct usb_device_id id_table_combined[] = {
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_UNBUF_PID),
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
++	/* GMC devices */
++	{ USB_DEVICE(GMC_VID, GMC_Z216C_PID) },
+ 	{ }					/* Terminating entry */
+ };
  
- /* Freescale Book E Performance Monitor APU Registers */
+diff --git a/drivers/usb/serial/ftdi_sio_ids.h b/drivers/usb/serial/ftdi_sio_ids.h
+index 21a2b5a25fc09..5ee60ba2a73cd 100644
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1606,3 +1606,9 @@
+ #define UBLOX_VID			0x1546
+ #define UBLOX_C099F9P_ZED_PID		0x0502
+ #define UBLOX_C099F9P_ODIN_PID		0x0503
++
++/*
++ * GMC devices
++ */
++#define GMC_VID				0x1cd7
++#define GMC_Z216C_PID			0x0217 /* GMC Z216C Adapter IR-USB */
 -- 
 2.43.0
 
