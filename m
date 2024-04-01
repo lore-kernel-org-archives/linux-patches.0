@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF14087B;
-	Mon,  1 Apr 2024 16:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C0D1CA8F;
+	Mon,  1 Apr 2024 16:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988689; cv=none; b=pBRiYdFal6lV0GDncsxwSFfyskDPMcSBwcL+rR7nPH77m2+NAzLe1VukdMR1UUPDsi1y3nt2V87dTPxxjs6lnVWirwR5HCEUGn4+7+tfUBPpzmKQiAxP9g/advMjgrsWklHpJVZAIMehbw09mVyblPZSKxn+PaaKuMEY0sjHh54=
+	t=1711988692; cv=none; b=PIZosGaUTAyMkyKXu9eRA7ytZPuQKIQpAb26a8mlgvEo9RB6ivcD772jX/8hfB9c/qMVcBF/Lj90s+XVF6tp7LPTDRKwNB7SPC3LtU66Tant9L5hD25Fg2Z83meOqbmCAzrl5JsIGiph6C89bqksHsqXa3HafNS/GbQx5vIVZQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988689; c=relaxed/simple;
-	bh=Slaswz8P6KfsoXBCSULndJARxSqgy1Fp2IcXu+mvKX0=;
+	s=arc-20240116; t=1711988692; c=relaxed/simple;
+	bh=KirYtTUyJ0yyNTpe5OjDAtrMQGdyAurcuQEMMN3SZhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJwJuNejupKFXsOvqvvdq56HlUUFDLHDi1AoyiYD6QawdxwAQcMDs9UJEq5O3KNC1JTbekLc3XYCYV1wMZXSAz7ILStU5eLJpOOpZAY+LyyosikLsEWF4gfd42EbSCy/vIS/eGdAN5P3aFuraJBKoPKf0rla9Ayes+QCO1T8H8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaF3xT5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ywy4a4zycApNvmv/cyqVpYY3aqQX114nU2Flt/XTzKIR2SpKYPkkZYvvnDkVcPGisAwJVHi8WBtXtHp8Gvd5oxbImTI+xTv3rn//FntAc4jEI8asYG8jYNC3WyyR0a6oQMvMqiowT4dk8o7CwpbktQQ8BnhZLC4hUkgW2EdwZ3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qL/J+4G8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaF3xT5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73203C433F1;
-	Mon,  1 Apr 2024 16:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qL/J+4G8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9951C433F1;
+	Mon,  1 Apr 2024 16:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988688;
-	bh=Slaswz8P6KfsoXBCSULndJARxSqgy1Fp2IcXu+mvKX0=;
+	s=korg; t=1711988692;
+	bh=KirYtTUyJ0yyNTpe5OjDAtrMQGdyAurcuQEMMN3SZhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaF3xT5so2vr/67N3QgRh5FnZkUeG+rGNBHoJTGFXhNu3+gAdkLnj+pSPXqfylfOz
-	 YPYH+eX/vQPU5U0Zx/UkcmBFo6+f5tQb7MoBmm10oiYIF+XOtaqQobi3HJ0b20+Yzq
-	 A1Jx0n2HRbU1po9IC1rezI3bAaO71x4mJcwt4IAo=
+	b=qL/J+4G8Qjh8RopsnhlEfUk72gpViyuxa/yJv43Yn2iECNylE6e+ljm3pkpttBEFU
+	 jQ3eRxLKETTMAKDub03q4WD8VcSi63riV6iAZoCKtobXArMdg+lzNgG41DDJrT+poY
+	 NLFvt+QodDM9TlSsbFuq/NfBST+rvagOKc/XYt7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Grassein <adrien.grassein@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 231/432] drm/bridge: lt8912b: do not return negative values from .get_modes()
-Date: Mon,  1 Apr 2024 17:43:38 +0200
-Message-ID: <20240401152600.023028892@linuxfoundation.org>
+	Audra Mitchell <audra@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.7 232/432] workqueue: Shorten events_freezable_power_efficient name
+Date: Mon,  1 Apr 2024 17:43:39 +0200
+Message-ID: <20240401152600.055750002@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,60 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Audra Mitchell <audra@redhat.com>
 
-[ Upstream commit 171b711b26cce208bb628526b1b368aeec7b6fa4 ]
+commit 8318d6a6362f5903edb4c904a8dd447e59be4ad1 upstream.
 
-The .get_modes() hooks aren't supposed to return negative error
-codes. Return 0 for no modes, whatever the reason.
+Since we have set the WQ_NAME_LEN to 32, decrease the name of
+events_freezable_power_efficient so that it does not trip the name length
+warning when the workqueue is created.
 
-Cc: Adrien Grassein <adrien.grassein@gmail.com>
-Cc: stable@vger.kernel.org
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/dcdddcbcb64b6f6cdc55022ee50c10dee8ddbc3d.1709913674.git.jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Audra Mitchell <audra@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index f0ebd56b4736a..e5839c89a355a 100644
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -430,23 +430,21 @@ lt8912_connector_mode_valid(struct drm_connector *connector,
- static int lt8912_connector_get_modes(struct drm_connector *connector)
- {
- 	const struct drm_edid *drm_edid;
--	int ret = -1;
--	int num = 0;
- 	struct lt8912 *lt = connector_to_lt8912(connector);
- 	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
-+	int ret, num;
- 
- 	drm_edid = drm_bridge_edid_read(lt->hdmi_port, connector);
- 	drm_edid_connector_update(connector, drm_edid);
--	if (drm_edid) {
--		num = drm_edid_connector_add_modes(connector);
--	} else {
--		return ret;
--	}
-+	if (!drm_edid)
-+		return 0;
-+
-+	num = drm_edid_connector_add_modes(connector);
- 
- 	ret = drm_display_info_set_bus_formats(&connector->display_info,
- 					       &bus_format, 1);
--	if (ret)
--		num = ret;
-+	if (ret < 0)
-+		num = 0;
- 
- 	drm_edid_free(drm_edid);
- 	return num;
--- 
-2.43.0
-
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -7109,7 +7109,7 @@ void __init workqueue_init_early(void)
+ 					      WQ_FREEZABLE, 0);
+ 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
+ 					      WQ_POWER_EFFICIENT, 0);
+-	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_power_efficient",
++	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_pwr_efficient",
+ 					      WQ_FREEZABLE | WQ_POWER_EFFICIENT,
+ 					      0);
+ 	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
 
 
