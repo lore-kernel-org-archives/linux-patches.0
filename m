@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EF8BA3F;
-	Mon,  1 Apr 2024 17:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEB5BA3F;
+	Mon,  1 Apr 2024 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990863; cv=none; b=uZTDDYqIgYdcAN8C14GH++H0SAic/3+NzXdpVmMFVeGJLN7JSnsnyr1fcDh3Nu3WosRFM0TUeECU7vF5Rv563QvfUFYRX88PL/Bdcs7jMO3TlvtOWnaddZ+gpYyYagMgF2lkiwe8qmtpkOKFIIYH7H8E3HWt6/UNVkoHg94+1fc=
+	t=1711990866; cv=none; b=o21oxdMUgMFGSYZX61NilOjQz39LT4ebK+mEYlMhTHR9sGFIFwom/56oyLLJerihBaDHtxN5oqSbVC1o0mKaSSc+GZQ+tpaORB0XWfaaL/xAR2CbSTOZhdhadRJcSi5qpYoImSH/X/5PHvPq+bxLQZdCwqyILh6HSYfR1wOF6P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990863; c=relaxed/simple;
-	bh=j2DqJof0ACJalfJOiwmqGYq1hq5xXxLIf6D7SZfNzXM=;
+	s=arc-20240116; t=1711990866; c=relaxed/simple;
+	bh=RFmApErE2ViLL9EusVr5fnVSCrkiFaQddYIlpN0dVTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEQ9vfZbdSjoxrc1MGYtfndAXfw17Oeg8F0Rk1ytnrdt0pHGpHQajuwkHtJHEQjvYF1axohBxGba509mK+z8CIKNs7exUueZq7JOhqTBX78+TLxbu6uyfWO7oXEtYtGVrG+aLPLhKsvGzFLi9ntBX0x6Trru/OGerEsrJJaR0Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omaHCdkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xjd51jYUVawlHMx7232SdF5CS3iY3YWiSjfpXyEOrt56195/6cz4ypj3H5DDraiGErTvTBWiMvbNBybMsvrB1gMyhX40/pMwI70MvqB4aU5haZ/FYynFnxHISrpZgmEzFD0fM2rGcuXNuymF018ryBfg3U5sDacElaxZhfayPcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1IZRFAK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omaHCdkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B841CC433C7;
-	Mon,  1 Apr 2024 17:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1IZRFAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86BDC433C7;
+	Mon,  1 Apr 2024 17:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990863;
-	bh=j2DqJof0ACJalfJOiwmqGYq1hq5xXxLIf6D7SZfNzXM=;
+	s=korg; t=1711990866;
+	bh=RFmApErE2ViLL9EusVr5fnVSCrkiFaQddYIlpN0dVTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omaHCdkDOnGID39P541EL3Bu3ohizYiYDGYZzVzyAosY4T9bLMaDohgz446o35Bpk
-	 BGtzT8Jbca3bMMVkEo5lMN6OVnvqdz+XciHWSj5o3Ag51ZEu78RcvUmiVmAsamI7Mf
-	 BLVEKfljPAxDLPZlUNs8Xzfyi1eYKa3ZFRJHXVcg=
+	b=X1IZRFAKQK1qLxuuHCv8EUF9MyiKcONR9GupRyaM5kVA9N9NV/bUazjK7vtqT52XB
+	 Evnm2d7E7EoestebTylrGCpspOvJx+cSZIMoc9VEPHTmXFqHM5mNMb2zWMvMMMF21K
+	 DLcutjzHiRB5Y3vnn0me4/FXLf8pe+swP4XhD/ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Johan Hovold <johan@kernel.org>,
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/272] USB: serial: add device ID for VeriFone adapter
-Date: Mon,  1 Apr 2024 17:44:10 +0200
-Message-ID: <20240401152532.430563764@linuxfoundation.org>
+Subject: [PATCH 6.1 051/272] cpufreq: Limit resolving a frequency to policy min/max
+Date: Mon,  1 Apr 2024 17:44:01 +0200
+Message-ID: <20240401152532.115646528@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,92 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
 
-[ Upstream commit cda704809797a8a86284f9df3eef5e62ec8a3175 ]
+[ Upstream commit d394abcb12bb1a6f309c1221fdb8e73594ecf1b4 ]
 
-Add device ID for a (probably fake) CP2102 UART device.
+Resolving a frequency to an efficient one should not transgress
+policy->max (which can be set for thermal reason) and policy->min.
 
-lsusb -v output:
+Currently, there is possibility where scaling_cur_freq can exceed
+scaling_max_freq when scaling_max_freq is an inefficient frequency.
 
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               1.10
-  bDeviceClass            0 [unknown]
-  bDeviceSubClass         0 [unknown]
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x11ca VeriFone Inc
-  idProduct          0x0212 Verifone USB to Printer
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Verifone USB to Printer
-  iSerial                 3 0001
-  bNumConfigurations      1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0 [unknown]
-      bInterfaceProtocol      0
-      iInterface              2 Verifone USB to Printer
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x81  EP 1 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-Device Status:     0x0000
-  (Bus Powered)
+Add a check to ensure that resolving a frequency will respect
+policy->min/max.
 
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: All applicable <stable@vger.kernel.org>
+Fixes: 1f39fa0dccff ("cpufreq: Introducing CPUFREQ_RELATION_E")
+Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+[ rjw: Whitespace adjustment, changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/cpufreq.h | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
-index b3e60b3847941..bd0632e77d8b0 100644
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -177,6 +177,7 @@ static const struct usb_device_id id_table[] = {
- 	{ USB_DEVICE(0x10C4, 0xF004) }, /* Elan Digital Systems USBcount50 */
- 	{ USB_DEVICE(0x10C5, 0xEA61) }, /* Silicon Labs MobiData GPRS USB Modem */
- 	{ USB_DEVICE(0x10CE, 0xEA6A) }, /* Silicon Labs MobiData GPRS USB Modem 100EU */
-+	{ USB_DEVICE(0x11CA, 0x0212) }, /* Verifone USB to Printer (UART, CP2102) */
- 	{ USB_DEVICE(0x12B8, 0xEC60) }, /* Link G4 ECU */
- 	{ USB_DEVICE(0x12B8, 0xEC62) }, /* Link G4+ ECU */
- 	{ USB_DEVICE(0x13AD, 0x9999) }, /* Baltech card reader */
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index d5595d57f4e53..9d208648c84d5 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -1023,6 +1023,18 @@ static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
+ 						   efficiencies);
+ }
+ 
++static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
++{
++	unsigned int freq;
++
++	if (idx < 0)
++		return false;
++
++	freq = policy->freq_table[idx].frequency;
++
++	return freq == clamp_val(freq, policy->min, policy->max);
++}
++
+ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
+ 						 unsigned int target_freq,
+ 						 unsigned int relation)
+@@ -1056,7 +1068,8 @@ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
+ 		return 0;
+ 	}
+ 
+-	if (idx < 0 && efficiencies) {
++	/* Limit frequency index to honor policy->min/max */
++	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
+ 		efficiencies = false;
+ 		goto retry;
+ 	}
 -- 
 2.43.0
 
