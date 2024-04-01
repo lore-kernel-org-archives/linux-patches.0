@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576E91DFFC;
-	Mon,  1 Apr 2024 16:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F228F3E47B;
+	Mon,  1 Apr 2024 16:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988279; cv=none; b=LJEsV0wP7az84j9iqVch0qPGKN7N3UTCKC5YVn7nU+ztjkEIliFmu/i4+LHwyvOdMopgy8m6Me5ZmyJXIn2lSyyBRW1aTOyNJTut4Shrwl2VN1sUwlbB2w5W5jSWTrkeETiEJvkJEPXM1VS+r6126MfrZqjstioRFONZu1zocv0=
+	t=1711988283; cv=none; b=QE2us7pOrZeEyDZvKUTta8sew5axp9IA2Cc3UdmM6J88neJ3G3DFMWeZ+NfenZI8HOASYa/Gxo2NytnTORdCevuG0UAd5xFZrbFFcg4Z2WwzrY/sZVj6nc5BhxD6iOKay3Utu8HTsqU03DbnfBwUnqxdZRUIUIayfM5LSCK2yyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988279; c=relaxed/simple;
-	bh=cvKjPck94p0Q7ZHsXLKym8V6Qc8EUYKmINCbQ1eCrNw=;
+	s=arc-20240116; t=1711988283; c=relaxed/simple;
+	bh=3edgxXf534sPOgZyKc/vGNXh0hcbFQNqAkuHoyW2g2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bB5y77e698Jt976k6rByAGVjvj/+CJvXV9W9N6rCPMqaGvbciKhhrMVAQv657xOheXsH4ifqKkRl5g2dioJW8lVb0BqdzFx/yVrBDMdHdspnjLZz8v0KSQZQJTqypFQ7svwUe1dAlg8u81opsexW+cKWGCSIMHLucuJ2WtBci+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdTWZpo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cHtsl7ev18dkvbPVDoalTpXV2DhCgPXI/AhKUrMs/BswoQ1tI8oPRzlOfsYC2LMzht/VjA4L4zhVTvNkpUvcAyqr/AxOzSmb3lzpWNVCGdErWjXu6UyD3vDdcKVqJD0RAXM7Az06gonK5pKBX2jKxEQq44MnC6Hc+pmkxihcifw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkWG4PJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdTWZpo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC65C433C7;
-	Mon,  1 Apr 2024 16:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkWG4PJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4AAC433F1;
+	Mon,  1 Apr 2024 16:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988279;
-	bh=cvKjPck94p0Q7ZHsXLKym8V6Qc8EUYKmINCbQ1eCrNw=;
+	s=korg; t=1711988282;
+	bh=3edgxXf534sPOgZyKc/vGNXh0hcbFQNqAkuHoyW2g2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdTWZpo7m4D3P0fEScAM3w99aQx05TWQxFizIa6R89f/vfxlr1WeBlBtVRFHTNON/
-	 5OFHe5kRQ1TTyTe/w5lH/kQNAzB45cC1sEyHsudZkP8UxzKqPR4Y9GoxBM8SkTpPR0
-	 CV5GUp+/GSWdyVUQTVinE2gG93VqUEem8g0UxkR8=
+	b=ZkWG4PJ5LjG5GobOQvpejGIvYpIHAfj0xnHqMpikKTMEKXEaTZB+5lM7KP0q7TKGV
+	 pWPVCdMkBafOBQ18s7KZxdstNrRxv2zHoC2jpu0zqQws1ByXszl4RPcOQYA9gjT1UD
+	 ujBTpKRz3wx7Q3TgREkWLc9qCrJpylhYEm1oav8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 109/432] powerpc: xor_vmx: Add -mhard-float to CFLAGS
-Date: Mon,  1 Apr 2024 17:41:36 +0200
-Message-ID: <20240401152556.381081326@linuxfoundation.org>
+Subject: [PATCH 6.7 100/432] md: dont clear MD_RECOVERY_FROZEN for new dm-raid until resume
+Date: Mon,  1 Apr 2024 17:41:27 +0200
+Message-ID: <20240401152556.107099792@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,45 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 35f20786c481d5ced9283ff42de5c69b65e5ed13 ]
+[ Upstream commit 2f03d0c2cd451c7ac2f317079d4ec518f0986b55 ]
 
-arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
-powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
-error when building with clang after a recent change in main:
+After commit 9dbd1aa3a81c ("dm raid: add reshaping support to the
+target") raid_ctr() will set MD_RECOVERY_FROZEN before md_run() and
+expect to keep array frozen until resume. However, md_run() will clear
+the flag by setting mddev->recovery to 0.
 
-  error: option '-msoft-float' cannot be specified with '-maltivec'
-  make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
+Before commit 1baae052cccd ("md: Don't ignore suspended array in
+md_check_recovery()"), dm-raid actually relied on suspending to prevent
+starting new sync_thread.
 
-Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
-to override the previous inclusion of '-msoft-float' (as the last option
-wins), which matches how other areas of the kernel use '-maltivec', such
-as AMDGPU.
+Fix this problem by keeping 'MD_RECOVERY_FROZEN' for dm-raid in
+md_run().
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
-Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
+Fixes: 1baae052cccd ("md: Don't ignore suspended array in md_check_recovery()")
+Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Acked-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240305072306.2562024-2-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-index 6eac63e79a899..0ab65eeb93ee3 100644
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -76,7 +76,7 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
- obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 40dea4c06457f..007fd071b44ed 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6064,7 +6064,10 @@ int md_run(struct mddev *mddev)
+ 			pr_warn("True protection against single-disk failure might be compromised.\n");
+ 	}
  
- obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
--CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
-+CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
- # Enable <altivec.h>
- CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
+-	mddev->recovery = 0;
++	/* dm-raid expect sync_thread to be frozen until resume */
++	if (mddev->gendisk)
++		mddev->recovery = 0;
++
+ 	/* may be over-ridden by personality */
+ 	mddev->resync_max_sectors = mddev->dev_sectors;
  
 -- 
 2.43.0
