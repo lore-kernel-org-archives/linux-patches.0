@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC8F1E525;
-	Mon,  1 Apr 2024 16:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAE03613C;
+	Mon,  1 Apr 2024 16:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990107; cv=none; b=Zm+vsiWM1XfbtmqFNSw8aVnWP3wamZEYAUuoZmhks93+ia7p5sICm9Gow9j3LVsG8fyydP42bWySsjEsLkNB8BgJkj8UavEiZmaKqIXIrg3TkAdE1bzcBGkIa1gPcJ3bqoNXCl70A7MjeDlQ8TcsDC4xBnh3pYh0hfTLH+zKQZE=
+	t=1711990110; cv=none; b=F5jCxSd8s8fwY5EMYeXjd7yxpaUyxYnHVT12vukdZltzviDhKC6QzbRm1b2mu++9P6FLD8zcDS7Kd1soSJk1pq8/N1inP0Xy0crP1Dtc24lo/IH5X0H6cyTVsIt+qeDWL8FkVSclo21OTYpdMyG+oaThb/Y5vG76xyv80x/seJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990107; c=relaxed/simple;
-	bh=Vq6A99tFXabI7Q04SOTkDIz9tPtW4yo2wP6AorNqq3c=;
+	s=arc-20240116; t=1711990110; c=relaxed/simple;
+	bh=gWOdiABM0ZPlXsuQaWspwS5O5FfeJ81a0f3hG42LhqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByBvsZDq1dbt5+fjEVgoctQxe6C0dWG+5T7klsY6Kjvg0tpTdrxLvB6voPXU7uI96ZW0RR9GWd5K2JkzajFhFwd6CywghY/y5X8wwUGaeGIEsrnka5Cq0WP9FklJbTJhdh/32+ehBw5Fi45u0xxniheHY8YMkzlj6xfX9I4MU4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuXzYo1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4hf1ruecJkJbVWaqt5yX6eWNoPK5YDeK6O8IihHbjf6A7l4rFQdMle5/mbUQn+A24gcuhWFB8zT7UZ6IHEEal/0PFrRC4TUF4S4REpIS7bz3PAp7fnACgsNbaClalRELWavp8AQt9k9YdUhJz2zwmWunfA54McMJO9JDhPHANo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDi+/HKu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuXzYo1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA589C433F1;
-	Mon,  1 Apr 2024 16:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDi+/HKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6094C433F1;
+	Mon,  1 Apr 2024 16:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990107;
-	bh=Vq6A99tFXabI7Q04SOTkDIz9tPtW4yo2wP6AorNqq3c=;
+	s=korg; t=1711990110;
+	bh=gWOdiABM0ZPlXsuQaWspwS5O5FfeJ81a0f3hG42LhqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WuXzYo1v0zihTt3xnnhwRibWC59Lay1xzzaX+A3Tvh3cEIlGdxxmg7TUVbjmJQosD
-	 Mnp1j4EUybi2ZqrkAAlfuExBbgyyy2QU15S2swNhUtey4ey+tFKjMK2C7w8yg7SycR
-	 s60dLI4UyI5x4z2f33TLsa+wv3AsA4t7EPuMaL8I=
+	b=jDi+/HKui65hF4fpw508vhoPQbpG6VW+0MWQpuWQfzIqry6JYuRIKGZ7eRLqbVdUF
+	 RgGEcQhMZmZz76yNDszogNWQI3Qd6bivF047p6lDol9rii369t6vKRdg+iT8GtI0ie
+	 vPh3zj1dYFJGnQKdmu/iZYSe7Ex9L46/rclNK/jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 209/396] cgroup/cpuset: Fix retval in update_cpumask()
-Date: Mon,  1 Apr 2024 17:44:18 +0200
-Message-ID: <20240401152554.159062178@linuxfoundation.org>
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 242/396] iio: accel: adxl367: fix DEVID read after reset
+Date: Mon,  1 Apr 2024 17:44:51 +0200
+Message-ID: <20240401152555.129118118@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,37 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-commit 25125a4762835d62ba1e540c1351d447fc1f6c7c upstream.
+commit 1b926914bbe4e30cb32f268893ef7d82a85275b8 upstream.
 
-The update_cpumask(), checks for newly requested cpumask by calling
-validate_change(), which returns an error on passing an invalid set
-of cpu(s). Independent of the error returned, update_cpumask() always
-returns zero, suppressing the error and returning success to the user
-on writing an invalid cpu range for a cpuset. Fix it by returning
-retval instead, which is returned by validate_change().
+regmap_read_poll_timeout() will not sleep before reading,
+causing the first read to return -ENXIO on I2C, since the
+chip does not respond to it while it is being reset.
 
-Fixes: 99fe36ba6fc1 ("cgroup/cpuset: Improve temporary cpumasks handling")
-Signed-off-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+The datasheet specifies that a soft reset operation has a
+latency of 7.5ms.
+
+Add a 15ms sleep between reset and reading the DEVID register,
+and switch to a simple regmap_read() call.
+
+Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
+Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240207033657.206171-1-demonsingur@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/adxl367.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1948,7 +1948,7 @@ static int update_cpumask(struct cpuset
- 	}
- out_free:
- 	free_cpumasks(NULL, &tmp);
--	return 0;
-+	return retval;
- }
+--- a/drivers/iio/accel/adxl367.c
++++ b/drivers/iio/accel/adxl367.c
+@@ -1429,9 +1429,11 @@ static int adxl367_verify_devid(struct a
+ 	unsigned int val;
+ 	int ret;
  
- /*
+-	ret = regmap_read_poll_timeout(st->regmap, ADXL367_REG_DEVID, val,
+-				       val == ADXL367_DEVID_AD, 1000, 10000);
++	ret = regmap_read(st->regmap, ADXL367_REG_DEVID, &val);
+ 	if (ret)
++		return dev_err_probe(st->dev, ret, "Failed to read dev id\n");
++
++	if (val != ADXL367_DEVID_AD)
+ 		return dev_err_probe(st->dev, -ENODEV,
+ 				     "Invalid dev id 0x%02X, expected 0x%02X\n",
+ 				     val, ADXL367_DEVID_AD);
+@@ -1510,6 +1512,8 @@ int adxl367_probe(struct device *dev, co
+ 	if (ret)
+ 		return ret;
+ 
++	fsleep(15000);
++
+ 	ret = adxl367_verify_devid(st);
+ 	if (ret)
+ 		return ret;
 
 
