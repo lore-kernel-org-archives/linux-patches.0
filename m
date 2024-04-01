@@ -1,54 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5451CA8F;
-	Mon,  1 Apr 2024 16:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5B043AD6;
+	Mon,  1 Apr 2024 16:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987512; cv=none; b=kFJKXRaV4Op4GJ1nAIiZRohQ9xBUyYi8yBvNcz/9M/IL1EY/niIHM0O/VE+bEysDHgpeZaUCFNVry93x6jCU0GA/jmyL0+KM8FfjvPNGS4AMqtnylxansuAWY1v6g/PzLt3ZuxE4dh2ayHoarNCuIQzmOZsLVlwi6Rvt/TZLR5E=
+	t=1711987515; cv=none; b=G1pghV1VVYIqs7Y0CutlIM016RusacKDPXul+a+9GAM37HT5DySxPiIaHl1/V07bmTKUDo68yHPjiUIepMhDcbGdjtAK2k+iTnIycJaH/xHm7FkbBCbLI0d/4PbRdgKsHj/suNlJqvhEIB6r+aeAoVIKuEXqCAXfW1TZRerFO4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987512; c=relaxed/simple;
-	bh=ZK4ATIthivDUUeJM+j6m4LZmFrnnR7Ki52u3oIe3/2A=;
+	s=arc-20240116; t=1711987515; c=relaxed/simple;
+	bh=/1mbhlcuqyoP/bVqMiAq3hHCDPxY2XVDUvO3l9QOCY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAleCs6TwwOJYS5IRYm/7PpDxT3/bq43VadHxqMVSs7u3TTEUndn5VqWkRG/X3aG33VQRNHgr0xMIyU+YhpMQ0c83Aq4UXZ1mEfrdovSfqjbnAtc79asmvTuuImM/EFzFyyVAJpAs4KEUiuo3QAvKIbl2h17CmzuZZ4BiRy2SWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0WFmbjH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RCYI7q2e9cWe5RIom5CTdc3NpjSADhbgEsFjeXFNDj9fZnZqvU+7Fc0TXpM3lOLClMV/MFr/Lo0DnzpdpjTDmZA240jW1I80ksKNYHDEKD/yDqR0qqRxlfhLfGZHMkqVx+ULmeIRkYf3wc1ll++tlk2f/JQYX+p3lc4LoumILm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17DlP4GH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0WFmbjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9517C433F1;
-	Mon,  1 Apr 2024 16:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17DlP4GH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51DECC433C7;
+	Mon,  1 Apr 2024 16:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987512;
-	bh=ZK4ATIthivDUUeJM+j6m4LZmFrnnR7Ki52u3oIe3/2A=;
+	s=korg; t=1711987515;
+	bh=/1mbhlcuqyoP/bVqMiAq3hHCDPxY2XVDUvO3l9QOCY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0WFmbjHIAiKgB8Joj/zRBQLklRHhGRNVmR28975zp3IzDHdKCKDstQLvMbqGkv1d
-	 Wi6+DzmBU/b+rm5UYnCB6X+usmadofST2xRfMYrMpYYXpeeoPrSmS6dNN4NUeh/xIM
-	 dEUzOAk552MSOU/7uLMuyuSWz9nduauXrAYkvMBg=
+	b=17DlP4GHrH4C4m/O1O8RNcoKfi21SX8eKegWtT9DrYcazKDbc8WwPQ/e/PVxwVxXb
+	 pXFlTg8nyXkSja4xTtUAtDzbnLX1ARwtu7zhllzyW1iuHLiPtQHAEdvCwWcOiV8WNI
+	 b6rqGE1abqjE1C11zGglO0GlkZDxScAbpBNG2/hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Borislav Petkov <bp@alien8.de>,
-	David Hildenbrand <david@redhat.com>,
-	Florent Revest <revest@chromium.org>,
-	Helge Deller <deller@gmx.de>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Kees Cook <keescook@chromium.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Sam James <sam@gentoo.org>,
-	Stefan Roesch <shr@devkernel.io>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Yin Fengwei <fengwei.yin@intel.com>,
+	Edward Liaw <edliaw@google.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.8 292/399] ARM: prctl: reject PR_SET_MDWE on pre-ARMv6
-Date: Mon,  1 Apr 2024 17:44:18 +0200
-Message-ID: <20240401152557.902261301@linuxfoundation.org>
+Subject: [PATCH 6.8 310/399] selftests/mm: sigbus-wp test requires UFFD_FEATURE_WP_HUGETLBFS_SHMEM
+Date: Mon,  1 Apr 2024 17:44:36 +0200
+Message-ID: <20240401152558.441099793@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -67,61 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Edward Liaw <edliaw@google.com>
 
-commit 166ce846dc5974a266f6c2a2896dbef5425a6f21 upstream.
+commit 105840ebd76d8dbc1a7d734748ae320076f3201e upstream.
 
-On v5 and lower CPUs we can't provide MDWE protection, so ensure we fail
-any attempt to enable it via prctl(PR_SET_MDWE).
+The sigbus-wp test requires the UFFD_FEATURE_WP_HUGETLBFS_SHMEM flag for
+shmem and hugetlb targets.  Otherwise it is not backwards compatible with
+kernels <5.19 and fails with EINVAL.
 
-Previously such an attempt would misleadingly succeed, leading to any
-subsequent mmap(PROT_READ|PROT_WRITE) or execve() failing unconditionally
-(the latter somewhat violently via force_fatal_sig(SIGSEGV) due to
-READ_IMPLIES_EXEC).
-
-Link: https://lkml.kernel.org/r/20240227013546.15769-6-zev@bewilderbeest.net
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: <stable@vger.kernel.org>	[6.3+]
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Florent Revest <revest@chromium.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: Russell King (Oracle) <linux@armlinux.org.uk>
-Cc: Sam James <sam@gentoo.org>
-Cc: Stefan Roesch <shr@devkernel.io>
-Cc: Yang Shi <yang@os.amperecomputing.com>
-Cc: Yin Fengwei <fengwei.yin@intel.com>
+Link: https://lkml.kernel.org/r/20240321232023.2064975-1-edliaw@google.com
+Fixes: 73c1ea939b65 ("selftests/mm: move uffd sig/events tests into uffd unit tests")
+Signed-off-by: Edward Liaw <edliaw@google.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Peter Xu <peterx@redhat.com
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/mman.h |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
- create mode 100644 arch/arm/include/asm/mman.h
+ tools/testing/selftests/mm/uffd-unit-tests.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/arch/arm/include/asm/mman.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __ASM_MMAN_H__
-+#define __ASM_MMAN_H__
-+
-+#include <asm/system_info.h>
-+#include <uapi/asm/mman.h>
-+
-+static inline bool arch_memory_deny_write_exec_supported(void)
-+{
-+	return cpu_architecture() >= CPU_ARCH_ARMv6;
-+}
-+#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
-+
-+#endif /* __ASM_MMAN_H__ */
+--- a/tools/testing/selftests/mm/uffd-unit-tests.c
++++ b/tools/testing/selftests/mm/uffd-unit-tests.c
+@@ -1427,7 +1427,8 @@ uffd_test_case_t uffd_tests[] = {
+ 		.uffd_fn = uffd_sigbus_wp_test,
+ 		.mem_targets = MEM_ALL,
+ 		.uffd_feature_required = UFFD_FEATURE_SIGBUS |
+-		UFFD_FEATURE_EVENT_FORK | UFFD_FEATURE_PAGEFAULT_FLAG_WP,
++		UFFD_FEATURE_EVENT_FORK | UFFD_FEATURE_PAGEFAULT_FLAG_WP |
++		UFFD_FEATURE_WP_HUGETLBFS_SHMEM,
+ 	},
+ 	{
+ 		.name = "events",
 
 
