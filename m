@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7368D47A5D;
-	Mon,  1 Apr 2024 17:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257FA47A5D;
+	Mon,  1 Apr 2024 17:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991344; cv=none; b=PIh/h8g8TFFv/IxpMDeVHvv0bsKZfDkGnqsym1SSM5v/Qaea5C0AiNH3EA5fMvJpHPtpn2/Uh7ZZFW/N3E04uS3W5/7vLg4A6CeI9I0YxIyXsM0CjGhXBY8pI2bKFwsytk/JAYPShNLoXK0+1q9i7qeZapCNXA7LAHFBIXZfT98=
+	t=1711991347; cv=none; b=XOe+ribM6a4EfOw3TKs0qyAKbv9rBZu4DdUxfobyxIA6QkUXt/y8LI1fxS8DjxWids6P+WD+N6DZ7WwtgAlssKbPxD6hLTiblOAH1yzQ/124+E2Hv2rGFRe/16abQDdkwf46s4fCvYn45qfDEuZ77dqe+iQI9lyikskTYN6U0Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991344; c=relaxed/simple;
-	bh=6AMjOB5BwPyeXc3q0yTIdA0kNjf7PBNs9ZqYnDqML2s=;
+	s=arc-20240116; t=1711991347; c=relaxed/simple;
+	bh=ARNH/ve2L9YcTIVTxScuvwQL8T2avxsmlQYTU2uqzI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=USqEW+vELaxcpdW9x1WwKBHltBmF6DW159R94LADPJVE7HKuD4707JIfS4sKdv69cH6jeva1DxeJgQsvvkM0W7+3+nVg9p+Ij2o8NRNWktCbZMD4i8mE7LH6c5wVo8QmniMLAXy2GBXX9p/pFMN34xuttrBbheBfifYsuTDaZpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEurqE/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MS7CoyBW9njjkzHTtnuVcLLaL/IKtsJxRsrSyXhChXi/x2na7IUVk6rBznl55qvUe0aCYQZfVhvN3nrd/nuv+4/kkUa9cy7Ppk1xGQgp4ZlrCyuHkL2SkYkQDtojzIVrRyzJ7pCJfaw2teI30oOK623HOqhMVACiEyw2PhbXcnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxgbW9Em; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEurqE/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FA2C433C7;
-	Mon,  1 Apr 2024 17:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxgbW9Em"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A98BC433C7;
+	Mon,  1 Apr 2024 17:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991344;
-	bh=6AMjOB5BwPyeXc3q0yTIdA0kNjf7PBNs9ZqYnDqML2s=;
+	s=korg; t=1711991346;
+	bh=ARNH/ve2L9YcTIVTxScuvwQL8T2avxsmlQYTU2uqzI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEurqE/EXXpWGdAgreqf0JOojbGwBiqPF7Gs0Lgd47TmqEn+UxAAx7Uy6T+v75+Xp
-	 b64eDgcuU4Ybcjtv39v2cyYw6Gp5JhcX5GW9X68FlSUJfJ36k6zheyJLwQdj0c6dkO
-	 XqC3TbYlA9NBWuKdyhbAmtLJS5Idp5eAiVF101qQ=
+	b=RxgbW9EmYhGM1QZHZHKyIqrscJYVztu5OqVCvqyyWQy/kJWy1KJL5+t05v4MgDfw5
+	 Vm2X1uLfF66ssu2LthbSma1/6fUp2kbmR1nzNrSDUR51d9DaWD2yeZxpca+mtlfrxa
+	 pe6+elamgFkzKBU8C7mLt0P2dDAd/y/oZemZo1Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 6.1 236/272] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
-Date: Mon,  1 Apr 2024 17:47:06 +0200
-Message-ID: <20240401152538.342706487@linuxfoundation.org>
+	syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com,
+	Bart Van Assche <bvanassche@acm.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 237/272] scsi: core: Fix unremoved procfs host directory regression
+Date: Mon,  1 Apr 2024 17:47:07 +0200
+Message-ID: <20240401152538.372778466@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,95 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
+commit f23a4d6e07570826fe95023ca1aa96a011fa9f84 upstream.
 
-The dreamcastcard->timer could schedule the spu_dma_work and the
-spu_dma_work could also arm the dreamcastcard->timer.
+Commit fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name}
+directory earlier") fixed a bug related to modules loading/unloading, by
+adding a call to scsi_proc_hostdir_rm() on scsi_remove_host(). But that led
+to a potential duplicate call to the hostdir_rm() routine, since it's also
+called from scsi_host_dev_release(). That triggered a regression report,
+which was then fixed by commit be03df3d4bfe ("scsi: core: Fix a procfs host
+directory removal regression"). The fix just dropped the hostdir_rm() call
+from dev_release().
 
-When the snd_pcm_substream is closing, the aica_channel will be
-deallocated. But it could still be dereferenced in the worker
-thread. The reason is that del_timer() will return directly
-regardless of whether the timer handler is running or not and
-the worker could be rescheduled in the timer handler. As a result,
-the UAF bug will happen. The racy situation is shown below:
+But it happens that this proc directory is created on scsi_host_alloc(),
+and that function "pairs" with scsi_host_dev_release(), while
+scsi_remove_host() pairs with scsi_add_host(). In other words, it seems the
+reason for removing the proc directory on dev_release() was meant to cover
+cases in which a SCSI host structure was allocated, but the call to
+scsi_add_host() didn't happen. And that pattern happens to exist in some
+error paths, for example.
 
-      (Thread 1)                 |      (Thread 2)
-snd_aicapcm_pcm_close()          |
- ...                             |  run_spu_dma() //worker
-                                 |    mod_timer()
-  flush_work()                   |
-  del_timer()                    |  aica_period_elapsed() //timer
-  kfree(dreamcastcard->channel)  |    schedule_work()
-                                 |  run_spu_dma() //worker
-  ...                            |    dreamcastcard->channel-> //USE
+Syzkaller causes that by using USB raw gadget device, error'ing on
+usb-storage driver, at usb_stor_probe2(). By checking that path, we can see
+that the BadDevice label leads to a scsi_host_put() after a SCSI host
+allocation, but there's no call to scsi_add_host() in such path. That leads
+to messages like this in dmesg (and a leak of the SCSI host proc
+structure):
 
-In order to mitigate this bug and other possible corner cases,
-call mod_timer() conditionally in run_spu_dma(), then implement
-PCM sync_stop op to cancel both the timer and worker. The sync_stop
-op will be called from PCM core appropriately when needed.
+usb-storage 4-1:87.51: USB Mass Storage device detected
+proc_dir_entry 'scsi/usb-storage' already registered
+WARNING: CPU: 1 PID: 3519 at fs/proc/generic.c:377 proc_register+0x347/0x4e0 fs/proc/generic.c:376
 
-Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The proper fix seems to still call scsi_proc_hostdir_rm() on dev_release(),
+but guard that with the state check for SHOST_CREATED; there is even a
+comment in scsi_host_dev_release() detailing that: such conditional is
+meant for cases where the SCSI host was allocated but there was no calls to
+{add,remove}_host(), like the usb-storage case.
+
+This is what we propose here and with that, the error path of usb-storage
+does not trigger the warning anymore.
+
+Reported-by: syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com
+Fixes: be03df3d4bfe ("scsi: core: Fix a procfs host directory removal regression")
+Cc: stable@vger.kernel.org
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Link: https://lore.kernel.org/r/20240313113006.2834799-1-gpiccoli@igalia.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/sh/aica.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/scsi/hosts.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/sound/sh/aica.c
-+++ b/sound/sh/aica.c
-@@ -278,7 +278,8 @@ static void run_spu_dma(struct work_stru
- 		dreamcastcard->clicks++;
- 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
- 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
--		mod_timer(&dreamcastcard->timer, jiffies + 1);
-+		if (snd_pcm_running(dreamcastcard->substream))
-+			mod_timer(&dreamcastcard->timer, jiffies + 1);
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -353,12 +353,13 @@ static void scsi_host_dev_release(struct
+ 
+ 	if (shost->shost_state == SHOST_CREATED) {
+ 		/*
+-		 * Free the shost_dev device name here if scsi_host_alloc()
+-		 * and scsi_host_put() have been called but neither
++		 * Free the shost_dev device name and remove the proc host dir
++		 * here if scsi_host_{alloc,put}() have been called but neither
+ 		 * scsi_host_add() nor scsi_host_remove() has been called.
+ 		 * This avoids that the memory allocated for the shost_dev
+-		 * name is leaked.
++		 * name as well as the proc dir structure are leaked.
+ 		 */
++		scsi_proc_hostdir_rm(shost->hostt);
+ 		kfree(dev_name(&shost->shost_dev));
  	}
- }
  
-@@ -290,6 +291,8 @@ static void aica_period_elapsed(struct t
- 	/*timer function - so cannot sleep */
- 	int play_period;
- 	struct snd_pcm_runtime *runtime;
-+	if (!snd_pcm_running(substream))
-+		return;
- 	runtime = substream->runtime;
- 	dreamcastcard = substream->pcm->private_data;
- 	/* Have we played out an additional period? */
-@@ -350,12 +353,19 @@ static int snd_aicapcm_pcm_open(struct s
- 	return 0;
- }
- 
-+static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
-+{
-+	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
-+
-+	del_timer_sync(&dreamcastcard->timer);
-+	cancel_work_sync(&dreamcastcard->spu_dma_work);
-+	return 0;
-+}
-+
- static int snd_aicapcm_pcm_close(struct snd_pcm_substream
- 				 *substream)
- {
- 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
--	flush_work(&(dreamcastcard->spu_dma_work));
--	del_timer(&dreamcastcard->timer);
- 	dreamcastcard->substream = NULL;
- 	kfree(dreamcastcard->channel);
- 	spu_disable();
-@@ -401,6 +411,7 @@ static const struct snd_pcm_ops snd_aica
- 	.prepare = snd_aicapcm_pcm_prepare,
- 	.trigger = snd_aicapcm_pcm_trigger,
- 	.pointer = snd_aicapcm_pcm_pointer,
-+	.sync_stop = snd_aicapcm_pcm_sync_stop,
- };
- 
- /* TO DO: set up to handle more than one pcm instance */
 
 
