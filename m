@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45361E86C;
-	Mon,  1 Apr 2024 16:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA555BA3F;
+	Mon,  1 Apr 2024 16:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990739; cv=none; b=rRdjwJDQdUc2pCYjMk9jnVH6h+YP//CbIa5ekSIxO7awiCAKVMuhEMSXpyTiJ6vlTDH9az1nfWiPlqAOVbuFFHpeaZiMgPuKg7pmVyDtBnDNz4k8iPqs4GQn4f9T1iJwcjbk93jYAiOwLop83Q4Oc82Sp9IJDFZaMJNG6rYds0k=
+	t=1711990741; cv=none; b=k4rIpJarOA22AoHrmVQJ1PTKlM3RGJROtfvi4vxWMzEbu2eNLxF9udhXj3q4Bh1/emGllkPFt1FJCz7XaKCFahgT3NJcVtIubupQOjHXsFi2XfXrUwQKZzeNRbDL0jR12JnmxSHQ4HBf/gbSXjNrWRqIU3Njhn2rnYzluT0godY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990739; c=relaxed/simple;
-	bh=rRabb+c587IzB4ZbPoyck2vkyDxDgN/8F9smEVeO56I=;
+	s=arc-20240116; t=1711990741; c=relaxed/simple;
+	bh=C3RmaAHeVCjZiIaFgzOxtTqLiUHooWMmtYxAZamd6oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZfykyNaMWpmvdqah2saXV7TTg9Iw3yWNMUvp4YemNH/KaqtCwRp4MdM9vKXZ9Tw7rgLwIA+GYOCMGJWQTXKUKIJBbgxUvgGw8xtsCCk1kTGkscioRZdFFdeVRef74x3JPnzklprgkXC/yp/b4EbPDw6QM51/pT/c92XdC1lhPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtXe61Hz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhGfBatmfGeICKXIJL4N9OYngIp4RTA1I6+t0YZUyck4y3f1GGNrUp00PZOODYMEETU446SJBTrST3xg8xBnZQdXbjag9V58XMFZagYZOqKXadU32Ik925dPXplrghm9TRr0kNSymcLTCYU+yNNuZzp8nn5r+JD5Vy5OxYJJCvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzyUm8UC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtXe61Hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03716C433C7;
-	Mon,  1 Apr 2024 16:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzyUm8UC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17166C433F1;
+	Mon,  1 Apr 2024 16:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990738;
-	bh=rRabb+c587IzB4ZbPoyck2vkyDxDgN/8F9smEVeO56I=;
+	s=korg; t=1711990741;
+	bh=C3RmaAHeVCjZiIaFgzOxtTqLiUHooWMmtYxAZamd6oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtXe61Hzu6LBAT2jNexDcic5aU/brOL+mX1HgMykdwKVW1U+wIundUZrLunreGv21
-	 LTQAUxtBCeDMEFmWyGNf8N5u2Mouf5WClW6R/e2X+L6EAV6Q4oNEO+3BebEJVPsAoc
-	 F1zpgDjPxWHo8WRr8ccOg5Z5sdPVAaI7Np23w0T0=
+	b=CzyUm8UCvzTmBZ41xKMy2wA6PNXvUVwxfvM2xDWqp2yNYs8RMPFv+G0LPUmW14Yrf
+	 fBwchX0tVVwlC6EKAHq74vd68InSwU2hreYJESnsjR8DFfCzu8PuHSWED4I4sWlDyz
+	 Hraw6yAgFTVZlK0b0ZC5H/Ikc2RHp2xdBv9RU2f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/272] md/raid5: fix atomicity violation in raid5_cache_count
-Date: Mon,  1 Apr 2024 17:44:00 +0200
-Message-ID: <20240401152532.085739409@linuxfoundation.org>
+Subject: [PATCH 6.1 023/272] media: mc: Add num_links flag to media_pad
+Date: Mon,  1 Apr 2024 17:43:33 +0200
+Message-ID: <20240401152531.077127040@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,117 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit dfd2bf436709b2bccb78c2dda550dde93700efa7 ]
+[ Upstream commit baeddf94aa61879b118f2faa37ed126d772670cc ]
 
-In raid5_cache_count():
-    if (conf->max_nr_stripes < conf->min_nr_stripes)
-        return 0;
-    return conf->max_nr_stripes - conf->min_nr_stripes;
-The current check is ineffective, as the values could change immediately
-after being checked.
+Maintain a counter of the links connected to a pad in the media_pad
+structure. This helps checking if a pad is connected to anything, which
+will be used in the pipeline building code.
 
-In raid5_set_cache_size():
-    ...
-    conf->min_nr_stripes = size;
-    ...
-    while (size > conf->max_nr_stripes)
-        conf->min_nr_stripes = conf->max_nr_stripes;
-    ...
-
-Due to intermediate value updates in raid5_set_cache_size(), concurrent
-execution of raid5_cache_count() and raid5_set_cache_size() may lead to
-inconsistent reads of conf->max_nr_stripes and conf->min_nr_stripes.
-The current checks are ineffective as values could change immediately
-after being checked, raising the risk of conf->min_nr_stripes exceeding
-conf->max_nr_stripes and potentially causing an integer overflow.
-
-This possible bug is found by an experimental static analysis tool
-developed by our team. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency bugs
-including data races and atomicity violations. The above possible bug is
-reported when our tool analyzes the source code of Linux 6.2.
-
-To resolve this issue, it is suggested to introduce local variables
-'min_stripes' and 'max_stripes' in raid5_cache_count() to ensure the
-values remain stable throughout the check. Adding locks in
-raid5_cache_count() fails to resolve atomicity violations, as
-raid5_set_cache_size() may hold intermediate values of
-conf->min_nr_stripes while unlocked. With this patch applied, our tool no
-longer reports the bug, with the kernel configuration allyesconfig for
-x86_64. Due to the lack of associated hardware, we cannot test the patch
-in runtime testing, and just verify it according to the code logic.
-
-Fixes: edbe83ab4c27 ("md/raid5: allow the stripe_cache to grow and shrink.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240112071017.16313-1-2045gemini@gmail.com
-Signed-off-by: Song Liu <song@kernel.org>
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/media/mc/mc-entity.c | 6 ++++++
+ include/media/media-entity.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index e4564ca1f2434..8cf2317857e0a 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2420,7 +2420,7 @@ static int grow_one_stripe(struct r5conf *conf, gfp_t gfp)
- 	atomic_inc(&conf->active_stripes);
+diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
+index 688780c8734d4..c7cb49205b017 100644
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -957,6 +957,9 @@ static void __media_entity_remove_link(struct media_entity *entity,
  
- 	raid5_release_stripe(sh);
--	conf->max_nr_stripes++;
-+	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes + 1);
- 	return 1;
+ 	/* Remove the reverse links for a data link. */
+ 	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) == MEDIA_LNK_FL_DATA_LINK) {
++		link->source->num_links--;
++		link->sink->num_links--;
++
+ 		if (link->source->entity == entity)
+ 			remote = link->sink->entity;
+ 		else
+@@ -1068,6 +1071,9 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
+ 	sink->num_links++;
+ 	source->num_links++;
+ 
++	link->source->num_links++;
++	link->sink->num_links++;
++
+ 	return 0;
  }
+ EXPORT_SYMBOL_GPL(media_create_pad_link);
+diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+index 28c9de8a1f348..03bb0963942bd 100644
+--- a/include/media/media-entity.h
++++ b/include/media/media-entity.h
+@@ -205,6 +205,7 @@ enum media_pad_signal_type {
+  * @graph_obj:	Embedded structure containing the media object common data
+  * @entity:	Entity this pad belongs to
+  * @index:	Pad index in the entity pads array, numbered from 0 to n
++ * @num_links:	Number of links connected to this pad
+  * @sig_type:	Type of the signal inside a media pad
+  * @flags:	Pad flags, as defined in
+  *		:ref:`include/uapi/linux/media.h <media_header>`
+@@ -216,6 +217,7 @@ struct media_pad {
+ 	struct media_gobj graph_obj;	/* must be first field in struct */
+ 	struct media_entity *entity;
+ 	u16 index;
++	u16 num_links;
+ 	enum media_pad_signal_type sig_type;
+ 	unsigned long flags;
  
-@@ -2717,7 +2717,7 @@ static int drop_one_stripe(struct r5conf *conf)
- 	shrink_buffers(sh);
- 	free_stripe(conf->slab_cache, sh);
- 	atomic_dec(&conf->active_stripes);
--	conf->max_nr_stripes--;
-+	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes - 1);
- 	return 1;
- }
- 
-@@ -6891,7 +6891,7 @@ raid5_set_cache_size(struct mddev *mddev, int size)
- 	if (size <= 16 || size > 32768)
- 		return -EINVAL;
- 
--	conf->min_nr_stripes = size;
-+	WRITE_ONCE(conf->min_nr_stripes, size);
- 	mutex_lock(&conf->cache_size_mutex);
- 	while (size < conf->max_nr_stripes &&
- 	       drop_one_stripe(conf))
-@@ -6903,7 +6903,7 @@ raid5_set_cache_size(struct mddev *mddev, int size)
- 	mutex_lock(&conf->cache_size_mutex);
- 	while (size > conf->max_nr_stripes)
- 		if (!grow_one_stripe(conf, GFP_KERNEL)) {
--			conf->min_nr_stripes = conf->max_nr_stripes;
-+			WRITE_ONCE(conf->min_nr_stripes, conf->max_nr_stripes);
- 			result = -ENOMEM;
- 			break;
- 		}
-@@ -7468,11 +7468,13 @@ static unsigned long raid5_cache_count(struct shrinker *shrink,
- 				       struct shrink_control *sc)
- {
- 	struct r5conf *conf = container_of(shrink, struct r5conf, shrinker);
-+	int max_stripes = READ_ONCE(conf->max_nr_stripes);
-+	int min_stripes = READ_ONCE(conf->min_nr_stripes);
- 
--	if (conf->max_nr_stripes < conf->min_nr_stripes)
-+	if (max_stripes < min_stripes)
- 		/* unlikely, but not impossible */
- 		return 0;
--	return conf->max_nr_stripes - conf->min_nr_stripes;
-+	return max_stripes - min_stripes;
- }
- 
- static struct r5conf *setup_conf(struct mddev *mddev)
 -- 
 2.43.0
 
