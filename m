@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9C8381D5;
-	Mon,  1 Apr 2024 16:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C2E1C0DE7;
+	Mon,  1 Apr 2024 16:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989050; cv=none; b=PfjltFg+OCpw4JSVJ5fg9T1dvnhD28CTQj378k03nQ6iVASB1+6pV8HRhK9fZBvF+9/Bd446ePLaqErpUhow4M7fHgv3fI99ME5yVlKVFYX0LL7zMw+7jy+6dalvu1iK1KicQLrBIqeC8eSemJN44eLyuUnKLjED4JW1ZO2Grco=
+	t=1711989054; cv=none; b=IA2UIfyfafeixPfoT4LtIKt+pDmePaSalO17ZytUrryi7lEAw5VIwcM/oOJVcYPC4SAfx9gxIQimLR3Km6g2DwGu6pPz14YCgiAO2rBoQZmPJ57DoufRMsNBqyuy8CAAICqL0idw+3jghpXXzYEUjhLZsNuDIakq2m2bMvZKflk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989050; c=relaxed/simple;
-	bh=5Bv76+vBgWzTmp5iR1LtRjzpbTEaWMcwG5kG9d2w2Lw=;
+	s=arc-20240116; t=1711989054; c=relaxed/simple;
+	bh=Oo44f3g+c0MqYWpcWXaLxItD+jfvIzeumIU/e8ohXhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mz85P/oaQDP4GAXFqPzZrBHhj+xM6nCOQT6ksjvkZtJdf2hjNUBMfdFsrUqnB6A75Ct5jUfF9MaOLSanb7nswgcJMLFRIjC2GGutjdrhMgPut1AmtYpvk4EnTCSoPLljBIX0qWDmNtpWt7YM8MD8PYUW67/GedwMSsgGONRNpj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqHH1n5D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dy1qQHCtCY+xr75mWH2JovGkacS+QTEbjPXvpjxNp+XMjmAUc0JrAFNUIcLMpKlcxxUaxwqya5d5rwMc4cCe4qbPQuNK8/f95aGQ0oA39LjVBMUgmhdLuPNrfKkpWAiRf9bvPV51hb8zfRdozgv0flnLaoXzfP6skCkw9kK5pDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjK5hHzD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqHH1n5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A69DC433F1;
-	Mon,  1 Apr 2024 16:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjK5hHzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4794C43390;
+	Mon,  1 Apr 2024 16:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989050;
-	bh=5Bv76+vBgWzTmp5iR1LtRjzpbTEaWMcwG5kG9d2w2Lw=;
+	s=korg; t=1711989054;
+	bh=Oo44f3g+c0MqYWpcWXaLxItD+jfvIzeumIU/e8ohXhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqHH1n5DW3kymdyJWKJBvHqDkz4Ok0h3Op0mNEDc+DEWTc/DPpWouExYieT+uJnWU
-	 mb4017ZGmc4AWT+pHB5gDLYbxC9ub5GCSkk9y2ZSqLlcmjaW8Qr1haLZ3dKkWcnTQq
-	 vIa5iP/k0wfl8IRZp+RRkcuH9+vycOjNrOvvtHis=
+	b=BjK5hHzD1dmCweB+HHGgX5jwgXnubbK/ywxZOhNoZND1yPEGq2SCKqE8b6uw/Edat
+	 Jdh9Ch7/IU2iDIP46E2EaUUmj1MB4MvDEFml8rW8bLNzAzEjQeP+0F41qYGkhZKjPQ
+	 FTjbVbruUL4+Lh1b44SiHADPaRrYyGbyCbw0cE+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Sharma <shashank.sharma@amd.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 367/432] drm/amdgpu: fix deadlock while reading mqd from debugfs
-Date: Mon,  1 Apr 2024 17:45:54 +0200
-Message-ID: <20240401152604.215304358@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.7 368/432] drm/amd/display: Remove MPC rate control logic from DCN30 and above
+Date: Mon,  1 Apr 2024 17:45:55 +0200
+Message-ID: <20240401152604.250551731@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,207 +54,369 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: George Shen <george.shen@amd.com>
 
-commit 8678b1060ae2b75feb60b87e5b75e17374e3c1c5 upstream.
+commit edfa93d87fc46913868481fe8ed3fb62c891ffb5 upstream.
 
-An errant disk backup on my desktop got into debugfs and triggered the
-following deadlock scenario in the amdgpu debugfs files. The machine
-also hard-resets immediately after those lines are printed (although I
-wasn't able to reproduce that part when reading by hand):
+[Why]
+MPC flow rate control is not needed for DCN30 and above. Current logic
+that uses it can result in underflow for certain edge cases (such as
+DSC N422 + ODM combine + 422 left edge pixel).
 
-[ 1318.016074][ T1082] ======================================================
-[ 1318.016607][ T1082] WARNING: possible circular locking dependency detected
-[ 1318.017107][ T1082] 6.8.0-rc7-00015-ge0c8221b72c0 #17 Not tainted
-[ 1318.017598][ T1082] ------------------------------------------------------
-[ 1318.018096][ T1082] tar/1082 is trying to acquire lock:
-[ 1318.018585][ T1082] ffff98c44175d6a0 (&mm->mmap_lock){++++}-{3:3}, at: __might_fault+0x40/0x80
-[ 1318.019084][ T1082]
-[ 1318.019084][ T1082] but task is already holding lock:
-[ 1318.020052][ T1082] ffff98c4c13f55f8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: amdgpu_debugfs_mqd_read+0x6a/0x250 [amdgpu]
-[ 1318.020607][ T1082]
-[ 1318.020607][ T1082] which lock already depends on the new lock.
-[ 1318.020607][ T1082]
-[ 1318.022081][ T1082]
-[ 1318.022081][ T1082] the existing dependency chain (in reverse order) is:
-[ 1318.023083][ T1082]
-[ 1318.023083][ T1082] -> #2 (reservation_ww_class_mutex){+.+.}-{3:3}:
-[ 1318.024114][ T1082]        __ww_mutex_lock.constprop.0+0xe0/0x12f0
-[ 1318.024639][ T1082]        ww_mutex_lock+0x32/0x90
-[ 1318.025161][ T1082]        dma_resv_lockdep+0x18a/0x330
-[ 1318.025683][ T1082]        do_one_initcall+0x6a/0x350
-[ 1318.026210][ T1082]        kernel_init_freeable+0x1a3/0x310
-[ 1318.026728][ T1082]        kernel_init+0x15/0x1a0
-[ 1318.027242][ T1082]        ret_from_fork+0x2c/0x40
-[ 1318.027759][ T1082]        ret_from_fork_asm+0x11/0x20
-[ 1318.028281][ T1082]
-[ 1318.028281][ T1082] -> #1 (reservation_ww_class_acquire){+.+.}-{0:0}:
-[ 1318.029297][ T1082]        dma_resv_lockdep+0x16c/0x330
-[ 1318.029790][ T1082]        do_one_initcall+0x6a/0x350
-[ 1318.030263][ T1082]        kernel_init_freeable+0x1a3/0x310
-[ 1318.030722][ T1082]        kernel_init+0x15/0x1a0
-[ 1318.031168][ T1082]        ret_from_fork+0x2c/0x40
-[ 1318.031598][ T1082]        ret_from_fork_asm+0x11/0x20
-[ 1318.032011][ T1082]
-[ 1318.032011][ T1082] -> #0 (&mm->mmap_lock){++++}-{3:3}:
-[ 1318.032778][ T1082]        __lock_acquire+0x14bf/0x2680
-[ 1318.033141][ T1082]        lock_acquire+0xcd/0x2c0
-[ 1318.033487][ T1082]        __might_fault+0x58/0x80
-[ 1318.033814][ T1082]        amdgpu_debugfs_mqd_read+0x103/0x250 [amdgpu]
-[ 1318.034181][ T1082]        full_proxy_read+0x55/0x80
-[ 1318.034487][ T1082]        vfs_read+0xa7/0x360
-[ 1318.034788][ T1082]        ksys_read+0x70/0xf0
-[ 1318.035085][ T1082]        do_syscall_64+0x94/0x180
-[ 1318.035375][ T1082]        entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[ 1318.035664][ T1082]
-[ 1318.035664][ T1082] other info that might help us debug this:
-[ 1318.035664][ T1082]
-[ 1318.036487][ T1082] Chain exists of:
-[ 1318.036487][ T1082]   &mm->mmap_lock --> reservation_ww_class_acquire --> reservation_ww_class_mutex
-[ 1318.036487][ T1082]
-[ 1318.037310][ T1082]  Possible unsafe locking scenario:
-[ 1318.037310][ T1082]
-[ 1318.037838][ T1082]        CPU0                    CPU1
-[ 1318.038101][ T1082]        ----                    ----
-[ 1318.038350][ T1082]   lock(reservation_ww_class_mutex);
-[ 1318.038590][ T1082]                                lock(reservation_ww_class_acquire);
-[ 1318.038839][ T1082]                                lock(reservation_ww_class_mutex);
-[ 1318.039083][ T1082]   rlock(&mm->mmap_lock);
-[ 1318.039328][ T1082]
-[ 1318.039328][ T1082]  *** DEADLOCK ***
-[ 1318.039328][ T1082]
-[ 1318.040029][ T1082] 1 lock held by tar/1082:
-[ 1318.040259][ T1082]  #0: ffff98c4c13f55f8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: amdgpu_debugfs_mqd_read+0x6a/0x250 [amdgpu]
-[ 1318.040560][ T1082]
-[ 1318.040560][ T1082] stack backtrace:
-[ 1318.041053][ T1082] CPU: 22 PID: 1082 Comm: tar Not tainted 6.8.0-rc7-00015-ge0c8221b72c0 #17 3316c85d50e282c5643b075d1f01a4f6365e39c2
-[ 1318.041329][ T1082] Hardware name: Gigabyte Technology Co., Ltd. B650 AORUS PRO AX/B650 AORUS PRO AX, BIOS F20 12/14/2023
-[ 1318.041614][ T1082] Call Trace:
-[ 1318.041895][ T1082]  <TASK>
-[ 1318.042175][ T1082]  dump_stack_lvl+0x4a/0x80
-[ 1318.042460][ T1082]  check_noncircular+0x145/0x160
-[ 1318.042743][ T1082]  __lock_acquire+0x14bf/0x2680
-[ 1318.043022][ T1082]  lock_acquire+0xcd/0x2c0
-[ 1318.043301][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.043580][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.043856][ T1082]  __might_fault+0x58/0x80
-[ 1318.044131][ T1082]  ? __might_fault+0x40/0x80
-[ 1318.044408][ T1082]  amdgpu_debugfs_mqd_read+0x103/0x250 [amdgpu 8fe2afaa910cbd7654c8cab23563a94d6caebaab]
-[ 1318.044749][ T1082]  full_proxy_read+0x55/0x80
-[ 1318.045042][ T1082]  vfs_read+0xa7/0x360
-[ 1318.045333][ T1082]  ksys_read+0x70/0xf0
-[ 1318.045623][ T1082]  do_syscall_64+0x94/0x180
-[ 1318.045913][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.046201][ T1082]  ? lockdep_hardirqs_on+0x7d/0x100
-[ 1318.046487][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.046773][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047057][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047337][ T1082]  ? do_syscall_64+0xa0/0x180
-[ 1318.047611][ T1082]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[ 1318.047887][ T1082] RIP: 0033:0x7f480b70a39d
-[ 1318.048162][ T1082] Code: 91 ba 0d 00 f7 d8 64 89 02 b8 ff ff ff ff eb b2 e8 18 a3 01 00 0f 1f 84 00 00 00 00 00 80 3d a9 3c 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 53 48 83
-[ 1318.048769][ T1082] RSP: 002b:00007ffde77f5c68 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[ 1318.049083][ T1082] RAX: ffffffffffffffda RBX: 0000000000000800 RCX: 00007f480b70a39d
-[ 1318.049392][ T1082] RDX: 0000000000000800 RSI: 000055c9f2120c00 RDI: 0000000000000008
-[ 1318.049703][ T1082] RBP: 0000000000000800 R08: 000055c9f2120a94 R09: 0000000000000007
-[ 1318.050011][ T1082] R10: 0000000000000000 R11: 0000000000000246 R12: 000055c9f2120c00
-[ 1318.050324][ T1082] R13: 0000000000000008 R14: 0000000000000008 R15: 0000000000000800
-[ 1318.050638][ T1082]  </TASK>
+[How]
+Remove MPC flow rate control logic and programming for DCN30 and above.
 
-amdgpu_debugfs_mqd_read() holds a reservation when it calls
-put_user(), which may fault and acquire the mmap_sem. This violates
-the established locking order.
-
-Bounce the mqd data through a kernel buffer to get put_user() out of
-the illegal section.
-
-Fixes: 445d85e3c1df ("drm/amdgpu: add debugfs interface for reading MQDs")
-Cc: stable@vger.kernel.org # v6.5+
-Reviewed-by: Shashank Sharma <shashank.sharma@amd.com>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |   46 +++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.c          |   54 ++++++++------
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.h          |   14 +--
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_mpc.c          |    5 -
+ drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c |   41 ----------
+ drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c   |   41 ----------
+ drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c   |   41 ----------
+ 6 files changed, 41 insertions(+), 155 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -524,46 +524,58 @@ static ssize_t amdgpu_debugfs_mqd_read(s
- {
- 	struct amdgpu_ring *ring = file_inode(f)->i_private;
- 	volatile u32 *mqd;
--	int r;
-+	u32 *kbuf;
-+	int r, i;
- 	uint32_t value, result;
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.c
+@@ -44,6 +44,36 @@
+ #define NUM_ELEMENTS(a) (sizeof(a) / sizeof((a)[0]))
  
- 	if (*pos & 3 || size & 3)
- 		return -EINVAL;
  
--	result = 0;
-+	kbuf = kmalloc(ring->mqd_size, GFP_KERNEL);
-+	if (!kbuf)
-+		return -ENOMEM;
- 
- 	r = amdgpu_bo_reserve(ring->mqd_obj, false);
- 	if (unlikely(r != 0))
--		return r;
-+		goto err_free;
- 
- 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&mqd);
--	if (r) {
--		amdgpu_bo_unreserve(ring->mqd_obj);
--		return r;
--	}
-+	if (r)
-+		goto err_unreserve;
++void mpc3_mpc_init(struct mpc *mpc)
++{
++	struct dcn30_mpc *mpc30 = TO_DCN30_MPC(mpc);
++	int opp_id;
 +
-+	/*
-+	 * Copy to local buffer to avoid put_user(), which might fault
-+	 * and acquire mmap_sem, under reservation_ww_class_mutex.
++	mpc1_mpc_init(mpc);
++
++	for (opp_id = 0; opp_id < MAX_OPP; opp_id++) {
++		if (REG(MUX[opp_id]))
++			/* disable mpc out rate and flow control */
++			REG_UPDATE_2(MUX[opp_id], MPC_OUT_RATE_CONTROL_DISABLE,
++					1, MPC_OUT_FLOW_CONTROL_COUNT, 0);
++	}
++}
++
++void mpc3_mpc_init_single_inst(struct mpc *mpc, unsigned int mpcc_id)
++{
++	struct dcn30_mpc *mpc30 = TO_DCN30_MPC(mpc);
++
++	mpc1_mpc_init_single_inst(mpc, mpcc_id);
++
++	/* assuming mpc out mux is connected to opp with the same index at this
++	 * point in time (e.g. transitioning from vbios to driver)
 +	 */
-+	for (i = 0; i < ring->mqd_size/sizeof(u32); i++)
-+		kbuf[i] = mqd[i];
++	if (mpcc_id < MAX_OPP && REG(MUX[mpcc_id]))
++		/* disable mpc out rate and flow control */
++		REG_UPDATE_2(MUX[mpcc_id], MPC_OUT_RATE_CONTROL_DISABLE,
++				1, MPC_OUT_FLOW_CONTROL_COUNT, 0);
++}
 +
-+	amdgpu_bo_kunmap(ring->mqd_obj);
-+	amdgpu_bo_unreserve(ring->mqd_obj);
- 
-+	result = 0;
- 	while (size) {
- 		if (*pos >= ring->mqd_size)
--			goto done;
-+			break;
- 
--		value = mqd[*pos/4];
-+		value = kbuf[*pos/4];
- 		r = put_user(value, (uint32_t *)buf);
- 		if (r)
--			goto done;
-+			goto err_free;
- 		buf += 4;
- 		result += 4;
- 		size -= 4;
- 		*pos += 4;
- 	}
- 
--done:
--	amdgpu_bo_kunmap(ring->mqd_obj);
--	mqd = NULL;
--	amdgpu_bo_unreserve(ring->mqd_obj);
--	if (r)
--		return r;
--
-+	kfree(kbuf);
- 	return result;
-+
-+err_unreserve:
-+	amdgpu_bo_unreserve(ring->mqd_obj);
-+err_free:
-+	kfree(kbuf);
-+	return r;
+ bool mpc3_is_dwb_idle(
+ 	struct mpc *mpc,
+ 	int dwb_id)
+@@ -80,25 +110,6 @@ void mpc3_disable_dwb_mux(
+ 		MPC_DWB0_MUX, 0xf);
  }
  
- static const struct file_operations amdgpu_debugfs_mqd_fops = {
+-void mpc3_set_out_rate_control(
+-	struct mpc *mpc,
+-	int opp_id,
+-	bool enable,
+-	bool rate_2x_mode,
+-	struct mpc_dwb_flow_control *flow_control)
+-{
+-	struct dcn30_mpc *mpc30 = TO_DCN30_MPC(mpc);
+-
+-	REG_UPDATE_2(MUX[opp_id],
+-			MPC_OUT_RATE_CONTROL_DISABLE, !enable,
+-			MPC_OUT_RATE_CONTROL, rate_2x_mode);
+-
+-	if (flow_control)
+-		REG_UPDATE_2(MUX[opp_id],
+-			MPC_OUT_FLOW_CONTROL_MODE, flow_control->flow_ctrl_mode,
+-			MPC_OUT_FLOW_CONTROL_COUNT, flow_control->flow_ctrl_cnt1);
+-}
+-
+ enum dc_lut_mode mpc3_get_ogam_current(struct mpc *mpc, int mpcc_id)
+ {
+ 	/*Contrary to DCN2 and DCN1 wherein a single status register field holds this info;
+@@ -1386,8 +1397,8 @@ static const struct mpc_funcs dcn30_mpc_
+ 	.read_mpcc_state = mpc1_read_mpcc_state,
+ 	.insert_plane = mpc1_insert_plane,
+ 	.remove_mpcc = mpc1_remove_mpcc,
+-	.mpc_init = mpc1_mpc_init,
+-	.mpc_init_single_inst = mpc1_mpc_init_single_inst,
++	.mpc_init = mpc3_mpc_init,
++	.mpc_init_single_inst = mpc3_mpc_init_single_inst,
+ 	.update_blending = mpc2_update_blending,
+ 	.cursor_lock = mpc1_cursor_lock,
+ 	.get_mpcc_for_dpp = mpc1_get_mpcc_for_dpp,
+@@ -1404,7 +1415,6 @@ static const struct mpc_funcs dcn30_mpc_
+ 	.set_dwb_mux = mpc3_set_dwb_mux,
+ 	.disable_dwb_mux = mpc3_disable_dwb_mux,
+ 	.is_dwb_idle = mpc3_is_dwb_idle,
+-	.set_out_rate_control = mpc3_set_out_rate_control,
+ 	.set_gamut_remap = mpc3_set_gamut_remap,
+ 	.program_shaper = mpc3_program_shaper,
+ 	.acquire_rmu = mpcc3_acquire_rmu,
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.h
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_mpc.h
+@@ -1007,6 +1007,13 @@ void dcn30_mpc_construct(struct dcn30_mp
+ 	int num_mpcc,
+ 	int num_rmu);
+ 
++void mpc3_mpc_init(
++	struct mpc *mpc);
++
++void mpc3_mpc_init_single_inst(
++	struct mpc *mpc,
++	unsigned int mpcc_id);
++
+ bool mpc3_program_shaper(
+ 		struct mpc *mpc,
+ 		const struct pwl_params *params,
+@@ -1074,13 +1081,6 @@ bool mpc3_is_dwb_idle(
+ 	struct mpc *mpc,
+ 	int dwb_id);
+ 
+-void mpc3_set_out_rate_control(
+-	struct mpc *mpc,
+-	int opp_id,
+-	bool enable,
+-	bool rate_2x_mode,
+-	struct mpc_dwb_flow_control *flow_control);
+-
+ void mpc3_power_on_ogam_lut(
+ 	struct mpc *mpc, int mpcc_id,
+ 	bool power_on);
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_mpc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_mpc.c
+@@ -47,7 +47,7 @@ void mpc32_mpc_init(struct mpc *mpc)
+ 	struct dcn30_mpc *mpc30 = TO_DCN30_MPC(mpc);
+ 	int mpcc_id;
+ 
+-	mpc1_mpc_init(mpc);
++	mpc3_mpc_init(mpc);
+ 
+ 	if (mpc->ctx->dc->debug.enable_mem_low_power.bits.mpc) {
+ 		if (mpc30->mpc_mask->MPCC_MCM_SHAPER_MEM_LOW_PWR_MODE && mpc30->mpc_mask->MPCC_MCM_3DLUT_MEM_LOW_PWR_MODE) {
+@@ -990,7 +990,7 @@ static const struct mpc_funcs dcn32_mpc_
+ 	.insert_plane = mpc1_insert_plane,
+ 	.remove_mpcc = mpc1_remove_mpcc,
+ 	.mpc_init = mpc32_mpc_init,
+-	.mpc_init_single_inst = mpc1_mpc_init_single_inst,
++	.mpc_init_single_inst = mpc3_mpc_init_single_inst,
+ 	.update_blending = mpc2_update_blending,
+ 	.cursor_lock = mpc1_cursor_lock,
+ 	.get_mpcc_for_dpp = mpc1_get_mpcc_for_dpp,
+@@ -1007,7 +1007,6 @@ static const struct mpc_funcs dcn32_mpc_
+ 	.set_dwb_mux = mpc3_set_dwb_mux,
+ 	.disable_dwb_mux = mpc3_disable_dwb_mux,
+ 	.is_dwb_idle = mpc3_is_dwb_idle,
+-	.set_out_rate_control = mpc3_set_out_rate_control,
+ 	.set_gamut_remap = mpc3_set_gamut_remap,
+ 	.program_shaper = mpc32_program_shaper,
+ 	.program_3dlut = mpc32_program_3dlut,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn314/dcn314_hwseq.c
+@@ -69,29 +69,6 @@
+ #define FN(reg_name, field_name) \
+ 	hws->shifts->field_name, hws->masks->field_name
+ 
+-static int calc_mpc_flow_ctrl_cnt(const struct dc_stream_state *stream,
+-		int opp_cnt)
+-{
+-	bool hblank_halved = optc2_is_two_pixels_per_containter(&stream->timing);
+-	int flow_ctrl_cnt;
+-
+-	if (opp_cnt >= 2)
+-		hblank_halved = true;
+-
+-	flow_ctrl_cnt = stream->timing.h_total - stream->timing.h_addressable -
+-			stream->timing.h_border_left -
+-			stream->timing.h_border_right;
+-
+-	if (hblank_halved)
+-		flow_ctrl_cnt /= 2;
+-
+-	/* ODM combine 4:1 case */
+-	if (opp_cnt == 4)
+-		flow_ctrl_cnt /= 2;
+-
+-	return flow_ctrl_cnt;
+-}
+-
+ static void update_dsc_on_stream(struct pipe_ctx *pipe_ctx, bool enable)
+ {
+ 	struct display_stream_compressor *dsc = pipe_ctx->stream_res.dsc;
+@@ -183,10 +160,6 @@ void dcn314_update_odm(struct dc *dc, st
+ 	struct pipe_ctx *odm_pipe;
+ 	int opp_cnt = 0;
+ 	int opp_inst[MAX_PIPES] = {0};
+-	bool rate_control_2x_pclk = (pipe_ctx->stream->timing.flags.INTERLACE || optc2_is_two_pixels_per_containter(&pipe_ctx->stream->timing));
+-	struct mpc_dwb_flow_control flow_control;
+-	struct mpc *mpc = dc->res_pool->mpc;
+-	int i;
+ 
+ 	opp_cnt = get_odm_config(pipe_ctx, opp_inst);
+ 
+@@ -199,20 +172,6 @@ void dcn314_update_odm(struct dc *dc, st
+ 		pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
+ 				pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
+ 
+-	rate_control_2x_pclk = rate_control_2x_pclk || opp_cnt > 1;
+-	flow_control.flow_ctrl_mode = 0;
+-	flow_control.flow_ctrl_cnt0 = 0x80;
+-	flow_control.flow_ctrl_cnt1 = calc_mpc_flow_ctrl_cnt(pipe_ctx->stream, opp_cnt);
+-	if (mpc->funcs->set_out_rate_control) {
+-		for (i = 0; i < opp_cnt; ++i) {
+-			mpc->funcs->set_out_rate_control(
+-					mpc, opp_inst[i],
+-					true,
+-					rate_control_2x_pclk,
+-					&flow_control);
+-		}
+-	}
+-
+ 	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
+ 		odm_pipe->stream_res.opp->funcs->opp_pipe_clock_control(
+ 				odm_pipe->stream_res.opp,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -969,29 +969,6 @@ void dcn32_init_hw(struct dc *dc)
+ 	}
+ }
+ 
+-static int calc_mpc_flow_ctrl_cnt(const struct dc_stream_state *stream,
+-		int opp_cnt)
+-{
+-	bool hblank_halved = optc2_is_two_pixels_per_containter(&stream->timing);
+-	int flow_ctrl_cnt;
+-
+-	if (opp_cnt >= 2)
+-		hblank_halved = true;
+-
+-	flow_ctrl_cnt = stream->timing.h_total - stream->timing.h_addressable -
+-			stream->timing.h_border_left -
+-			stream->timing.h_border_right;
+-
+-	if (hblank_halved)
+-		flow_ctrl_cnt /= 2;
+-
+-	/* ODM combine 4:1 case */
+-	if (opp_cnt == 4)
+-		flow_ctrl_cnt /= 2;
+-
+-	return flow_ctrl_cnt;
+-}
+-
+ static void update_dsc_on_stream(struct pipe_ctx *pipe_ctx, bool enable)
+ {
+ 	struct display_stream_compressor *dsc = pipe_ctx->stream_res.dsc;
+@@ -1106,10 +1083,6 @@ void dcn32_update_odm(struct dc *dc, str
+ 	struct pipe_ctx *odm_pipe;
+ 	int opp_cnt = 0;
+ 	int opp_inst[MAX_PIPES] = {0};
+-	bool rate_control_2x_pclk = (pipe_ctx->stream->timing.flags.INTERLACE || optc2_is_two_pixels_per_containter(&pipe_ctx->stream->timing));
+-	struct mpc_dwb_flow_control flow_control;
+-	struct mpc *mpc = dc->res_pool->mpc;
+-	int i;
+ 
+ 	opp_cnt = get_odm_config(pipe_ctx, opp_inst);
+ 
+@@ -1122,20 +1095,6 @@ void dcn32_update_odm(struct dc *dc, str
+ 		pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
+ 				pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
+ 
+-	rate_control_2x_pclk = rate_control_2x_pclk || opp_cnt > 1;
+-	flow_control.flow_ctrl_mode = 0;
+-	flow_control.flow_ctrl_cnt0 = 0x80;
+-	flow_control.flow_ctrl_cnt1 = calc_mpc_flow_ctrl_cnt(pipe_ctx->stream, opp_cnt);
+-	if (mpc->funcs->set_out_rate_control) {
+-		for (i = 0; i < opp_cnt; ++i) {
+-			mpc->funcs->set_out_rate_control(
+-					mpc, opp_inst[i],
+-					true,
+-					rate_control_2x_pclk,
+-					&flow_control);
+-		}
+-	}
+-
+ 	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
+ 		odm_pipe->stream_res.opp->funcs->opp_pipe_clock_control(
+ 				odm_pipe->stream_res.opp,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -338,29 +338,6 @@ void dcn35_init_hw(struct dc *dc)
+ 	}
+ }
+ 
+-static int calc_mpc_flow_ctrl_cnt(const struct dc_stream_state *stream,
+-		int opp_cnt)
+-{
+-	bool hblank_halved = optc2_is_two_pixels_per_containter(&stream->timing);
+-	int flow_ctrl_cnt;
+-
+-	if (opp_cnt >= 2)
+-		hblank_halved = true;
+-
+-	flow_ctrl_cnt = stream->timing.h_total - stream->timing.h_addressable -
+-			stream->timing.h_border_left -
+-			stream->timing.h_border_right;
+-
+-	if (hblank_halved)
+-		flow_ctrl_cnt /= 2;
+-
+-	/* ODM combine 4:1 case */
+-	if (opp_cnt == 4)
+-		flow_ctrl_cnt /= 2;
+-
+-	return flow_ctrl_cnt;
+-}
+-
+ static void update_dsc_on_stream(struct pipe_ctx *pipe_ctx, bool enable)
+ {
+ 	struct display_stream_compressor *dsc = pipe_ctx->stream_res.dsc;
+@@ -454,10 +431,6 @@ void dcn35_update_odm(struct dc *dc, str
+ 	struct pipe_ctx *odm_pipe;
+ 	int opp_cnt = 0;
+ 	int opp_inst[MAX_PIPES] = {0};
+-	bool rate_control_2x_pclk = (pipe_ctx->stream->timing.flags.INTERLACE || optc2_is_two_pixels_per_containter(&pipe_ctx->stream->timing));
+-	struct mpc_dwb_flow_control flow_control;
+-	struct mpc *mpc = dc->res_pool->mpc;
+-	int i;
+ 
+ 	opp_cnt = get_odm_config(pipe_ctx, opp_inst);
+ 
+@@ -470,20 +443,6 @@ void dcn35_update_odm(struct dc *dc, str
+ 		pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
+ 				pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
+ 
+-	rate_control_2x_pclk = rate_control_2x_pclk || opp_cnt > 1;
+-	flow_control.flow_ctrl_mode = 0;
+-	flow_control.flow_ctrl_cnt0 = 0x80;
+-	flow_control.flow_ctrl_cnt1 = calc_mpc_flow_ctrl_cnt(pipe_ctx->stream, opp_cnt);
+-	if (mpc->funcs->set_out_rate_control) {
+-		for (i = 0; i < opp_cnt; ++i) {
+-			mpc->funcs->set_out_rate_control(
+-					mpc, opp_inst[i],
+-					true,
+-					rate_control_2x_pclk,
+-					&flow_control);
+-		}
+-	}
+-
+ 	for (odm_pipe = pipe_ctx->next_odm_pipe; odm_pipe; odm_pipe = odm_pipe->next_odm_pipe) {
+ 		odm_pipe->stream_res.opp->funcs->opp_pipe_clock_control(
+ 				odm_pipe->stream_res.opp,
 
 
