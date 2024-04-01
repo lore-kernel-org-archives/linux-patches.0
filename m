@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C801446AC;
-	Mon,  1 Apr 2024 16:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D54C129;
+	Mon,  1 Apr 2024 16:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988597; cv=none; b=OsYmX4AE7Yf2WxUIzYho27FklwiEssn00L3C5Vt8ZEejtJNiI8iv7PWkWdEpTGqgyk9qGQJSbGtiql+9UO2Da9LrDYGQ2sJ60rZ2CtR9hf6fEJ5khG836bcmcjkZ60wgbwcaMa9Ynr4UttOTaa0tfFuMxv5t+ZS5Aq8kAY9upEw=
+	t=1711988600; cv=none; b=AqIoS4BbBmZO+0ESJChpHb+Rigji9qyZ7hLH7P0Cv1BRe+fbf5WQr93y0gM65svd/S71w6Guc6t84NH5SUNN3tHN1AILo3RHImBrd+D1JiqbQ3CcgGGT6b7NCLuuC+89ULjhcQMCvL4CVIVJC11kqd1+pdDXsq+9h8Bd16Kotok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988597; c=relaxed/simple;
-	bh=4ssyFjpDjJ6m6n19FTRqT802pz96sSOSxTP2OWnem6c=;
+	s=arc-20240116; t=1711988600; c=relaxed/simple;
+	bh=pyVlEXxS4nYJqaSGp4xBDW2FGK82xTYHDRD9Gxu+pmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r2x/xgU3bfHwfQ3MkRoxPoxiNlTIviqlOdWILCqK/cmXJwK8K0stN0j/wvPSesASxUb9a2NGDu16+FXaCUq5Fd8eqz3NwaKQDucp7kUQL9S8+jQC8xekJiQ0J6rIfvLKGF04/kXw2y7NgSnk1FhNjDSZz6k38ZMqN5+v3fIvTIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5RDW4iM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j43ojm7KuIiNbKlrOeXfzOGobs3lXuUzJm9VVSx/119t7/XJtBJiEpXvguyZlV9Q2AFFgLVmKUW5pu5GdMwbg6xLNh9P7Q9LSGlhDIMyrzV5PdUIWKPNfh/YRDWaXt2UjpVqlVADqRwJFcy2Zr1aaGP/VMv/zDIkE+bm6xBj7S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9H9p2WY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5RDW4iM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027ACC433C7;
-	Mon,  1 Apr 2024 16:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9H9p2WY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E05C433F1;
+	Mon,  1 Apr 2024 16:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988597;
-	bh=4ssyFjpDjJ6m6n19FTRqT802pz96sSOSxTP2OWnem6c=;
+	s=korg; t=1711988600;
+	bh=pyVlEXxS4nYJqaSGp4xBDW2FGK82xTYHDRD9Gxu+pmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5RDW4iMwyGBC8c/PLH86VEBSYjjxQ3qscc3mRcdLPPD1uID9HNOPqnHMt3ouoyLl
-	 C2doic7ux4eqA8OBVT1YnswcBElKXBBf0GKiqlO5V6D13Mpgqj5c3rkqw8UpiEwabr
-	 NYiIuPd4ESeAh6DldLEnpMGYqUZRxrWcBCkH5bM0=
+	b=R9H9p2WYMxRL5gOZ+qelgStwpA4+UvkuaiKOWr0gzNCGbsaTG5zwlo7dg9A5xZqP8
+	 l18OaVtS+HKn1P+TtOFA3Uh8szke5VozJS3up4HJbkfdPiqRfYxtFx0v8ALC+Szogj
+	 izd7XwZefKdCplgFEYZpT3Pa8e3jKKqMvQ0RjHCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 193/432] drm/i915: Add missing ; to __assign_str() macros in tracepoint code
-Date: Mon,  1 Apr 2024 17:43:00 +0200
-Message-ID: <20240401152558.894605354@linuxfoundation.org>
+Subject: [PATCH 6.7 226/432] vfio: Introduce interface to flush virqfd inject workqueue
+Date: Mon,  1 Apr 2024 17:43:33 +0200
+Message-ID: <20240401152559.877358546@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -48,67 +47,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 0df4c388a1e310400a6e90fb10b286e2673756f0 ]
+[ Upstream commit b620ecbd17a03cacd06f014a5d3f3a11285ce053 ]
 
-I'm working on improving the __assign_str() and __string() macros to be
-more efficient, and removed some unneeded semicolons. This triggered a bug
-in the build as some of the __assign_str() macros in intel_display_trace
-was missing a terminating semicolon.
+In order to synchronize changes that can affect the thread callback,
+introduce an interface to force a flush of the inject workqueue.  The
+irqfd pointer is only valid under spinlock, but the workqueue cannot
+be flushed under spinlock.  Therefore the flush work for the irqfd is
+queued under spinlock.  The vfio_irqfd_cleanup_wq workqueue is re-used
+for queuing this work such that flushing the workqueue is also ordered
+relative to shutdown.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240222133057.2af72a19@gandalf.local.home
-
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: David Airlie <airlied@gmail.com>
-Cc: stable@vger.kernel.org
-Fixes: 2ceea5d88048b ("drm/i915: Print plane name in fbc tracepoints")
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20240308230557.805580-4-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Stable-dep-of: 18c198c96a81 ("vfio/pci: Create persistent INTx handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_trace.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/vfio/virqfd.c | 21 +++++++++++++++++++++
+ include/linux/vfio.h  |  2 ++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_trace.h b/drivers/gpu/drm/i915/display/intel_display_trace.h
-index 99bdb833591ce..7862e7cefe027 100644
---- a/drivers/gpu/drm/i915/display/intel_display_trace.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_trace.h
-@@ -411,7 +411,7 @@ TRACE_EVENT(intel_fbc_activate,
- 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
- 									 plane->pipe);
- 			   __assign_str(dev, __dev_name_kms(plane));
--			   __assign_str(name, plane->base.name)
-+			   __assign_str(name, plane->base.name);
- 			   __entry->pipe = crtc->pipe;
- 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
- 			   __entry->scanline = intel_get_crtc_scanline(crtc);
-@@ -438,7 +438,7 @@ TRACE_EVENT(intel_fbc_deactivate,
- 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
- 									 plane->pipe);
- 			   __assign_str(dev, __dev_name_kms(plane));
--			   __assign_str(name, plane->base.name)
-+			   __assign_str(name, plane->base.name);
- 			   __entry->pipe = crtc->pipe;
- 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
- 			   __entry->scanline = intel_get_crtc_scanline(crtc);
-@@ -465,7 +465,7 @@ TRACE_EVENT(intel_fbc_nuke,
- 			   struct intel_crtc *crtc = intel_crtc_for_pipe(to_i915(plane->base.dev),
- 									 plane->pipe);
- 			   __assign_str(dev, __dev_name_kms(plane));
--			   __assign_str(name, plane->base.name)
-+			   __assign_str(name, plane->base.name);
- 			   __entry->pipe = crtc->pipe;
- 			   __entry->frame = intel_crtc_get_vblank_counter(crtc);
- 			   __entry->scanline = intel_get_crtc_scanline(crtc);
+diff --git a/drivers/vfio/virqfd.c b/drivers/vfio/virqfd.c
+index 29c564b7a6e13..5322691338019 100644
+--- a/drivers/vfio/virqfd.c
++++ b/drivers/vfio/virqfd.c
+@@ -101,6 +101,13 @@ static void virqfd_inject(struct work_struct *work)
+ 		virqfd->thread(virqfd->opaque, virqfd->data);
+ }
+ 
++static void virqfd_flush_inject(struct work_struct *work)
++{
++	struct virqfd *virqfd = container_of(work, struct virqfd, flush_inject);
++
++	flush_work(&virqfd->inject);
++}
++
+ int vfio_virqfd_enable(void *opaque,
+ 		       int (*handler)(void *, void *),
+ 		       void (*thread)(void *, void *),
+@@ -124,6 +131,7 @@ int vfio_virqfd_enable(void *opaque,
+ 
+ 	INIT_WORK(&virqfd->shutdown, virqfd_shutdown);
+ 	INIT_WORK(&virqfd->inject, virqfd_inject);
++	INIT_WORK(&virqfd->flush_inject, virqfd_flush_inject);
+ 
+ 	irqfd = fdget(fd);
+ 	if (!irqfd.file) {
+@@ -213,3 +221,16 @@ void vfio_virqfd_disable(struct virqfd **pvirqfd)
+ 	flush_workqueue(vfio_irqfd_cleanup_wq);
+ }
+ EXPORT_SYMBOL_GPL(vfio_virqfd_disable);
++
++void vfio_virqfd_flush_thread(struct virqfd **pvirqfd)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&virqfd_lock, flags);
++	if (*pvirqfd && (*pvirqfd)->thread)
++		queue_work(vfio_irqfd_cleanup_wq, &(*pvirqfd)->flush_inject);
++	spin_unlock_irqrestore(&virqfd_lock, flags);
++
++	flush_workqueue(vfio_irqfd_cleanup_wq);
++}
++EXPORT_SYMBOL_GPL(vfio_virqfd_flush_thread);
+diff --git a/include/linux/vfio.h b/include/linux/vfio.h
+index a65b2513f8cdc..5ac5f182ce0bb 100644
+--- a/include/linux/vfio.h
++++ b/include/linux/vfio.h
+@@ -349,6 +349,7 @@ struct virqfd {
+ 	wait_queue_entry_t		wait;
+ 	poll_table		pt;
+ 	struct work_struct	shutdown;
++	struct work_struct	flush_inject;
+ 	struct virqfd		**pvirqfd;
+ };
+ 
+@@ -356,5 +357,6 @@ int vfio_virqfd_enable(void *opaque, int (*handler)(void *, void *),
+ 		       void (*thread)(void *, void *), void *data,
+ 		       struct virqfd **pvirqfd, int fd);
+ void vfio_virqfd_disable(struct virqfd **pvirqfd);
++void vfio_virqfd_flush_thread(struct virqfd **pvirqfd);
+ 
+ #endif /* VFIO_H */
 -- 
 2.43.0
 
