@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7773613C;
-	Mon,  1 Apr 2024 16:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F68F1C0DE7;
+	Mon,  1 Apr 2024 16:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989145; cv=none; b=U5YK7ZbkZwzEwOVu4VfUfT9FR5n0PoWsuVTnd2L1MdYH61AcWL7DUpuWE/H0DQtzE2TGrwLw7wk4VZdbvFXNpW+AwjSnDPj35ayYyT2Ot1E1udO94mO1kqXSZsdl7nLqdMW+aNKN5IcYVhEO9pV/nI/HDo04FO8swulFTSE3fuM=
+	t=1711989149; cv=none; b=RZKFNm1/Vrk1gFw5EGDhd88ki0cmsE+52Zxuqedc9UTXml5VprRMl8kh/Um5oSZprMZtzdAgIJpuXKMhcJiEyxMhfOtgybbG6yyVVEuWkZUNumziuUSj5geYPPEovZT2V+fURogS25Nse+ap+yuWUC5BWyWsOuTJPOYbFvIaP/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989145; c=relaxed/simple;
-	bh=qfZthv6AgG/7/vlsHd//b8iISVXoHfeHpse9B3F8dqk=;
+	s=arc-20240116; t=1711989149; c=relaxed/simple;
+	bh=dzeaFgERnWIJUN7ZqPYDm66U239LSbxor8iNQ6SCRWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvQ02AxdTYpKjhkiFenDvM6ACvRJ4jw+vKcxmK8V1WEgxXT2dNw9sq+qX5O7PaM/mXMqBNhKdSayUxJaWw5gQFr0SZo4GTfcq6xw3GEsF2XAlWMVwsVIO6n2VKaPt19C3FfYP+0OkLz+b9zNRosA5sbVfOWBqA5P6+f2a+/sbpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQrfbSvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWgBWBvlhEO8XRMt6Yiuymu0AR6P2IAGS9lBzV7OTUB2UZY/y1UMajZyo75Ash8HtivbtTJ43KzwnlWuFl1ro09VPTq5aki1m6cMgQyAb923c3p1f42ksN1vZYH6ZNNcyKy3uRszg2vizi3ZhNhDLJ4E22wQSpuIGgbZtQLFvOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/KSwbEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQrfbSvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1208DC433C7;
-	Mon,  1 Apr 2024 16:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/KSwbEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D93C433F1;
+	Mon,  1 Apr 2024 16:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989145;
-	bh=qfZthv6AgG/7/vlsHd//b8iISVXoHfeHpse9B3F8dqk=;
+	s=korg; t=1711989149;
+	bh=dzeaFgERnWIJUN7ZqPYDm66U239LSbxor8iNQ6SCRWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQrfbSvwrfhLPMRVzQy7btdHW++2v68hywBxExfE3wWqK/rRFl0usF5aZotprxtRK
-	 VPgj5ngYjgbNyVFPeMdfO8jkLzvP9WERDGc5sGPdrhagZ1YqUgS7fYXFZZBGrr1arw
-	 bs8OBJ4C2LA07RsvS53mBdRARE5rvT+8xAr4frP4=
+	b=t/KSwbEk2WhIJP6ZGdYlZY+fl5AHxpvC/gTO82kELwPOeYq1hLGYovN/g2Fsp4VPP
+	 p1wYt8AS/JVrxCXpY7aK07FnQ47e1GYNBAgXFUJgN2L4iGoFF384vk9Y4Ecw2ECC2K
+	 SvMUCFHFYuS71cEOVvs6j4VYBdDr75OOv/eze4KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sanath S <Sanath.S@amd.com>
-Subject: [PATCH 6.7 395/432] usb: dwc3: Properly set system wakeup
-Date: Mon,  1 Apr 2024 17:46:22 +0200
-Message-ID: <20240401152605.132593860@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.7 396/432] USB: core: Fix deadlock in usb_deauthorize_interface()
+Date: Mon,  1 Apr 2024 17:46:23 +0200
+Message-ID: <20240401152605.163256614@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -51,128 +49,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit f9aa41130ac69d13a53ce2a153ca79c70d43f39c upstream.
+commit 80ba43e9f799cbdd83842fc27db667289b3150f5 upstream.
 
-If the device is configured for system wakeup, then make sure that the
-xHCI driver knows about it and make sure to permit wakeup only at the
-appropriate time.
+Among the attribute file callback routines in
+drivers/usb/core/sysfs.c, the interface_authorized_store() function is
+the only one which acquires a device lock on an ancestor device: It
+calls usb_deauthorize_interface(), which locks the interface's parent
+USB device.
 
-For host mode, if the controller goes through the dwc3 code path, then a
-child xHCI platform device is created. Make sure the platform device
-also inherits the wakeup setting for xHCI to enable remote wakeup.
+The will lead to deadlock if another process already owns that lock
+and tries to remove the interface, whether through a configuration
+change or because the device has been disconnected.  As part of the
+removal procedure, device_del() waits for all ongoing sysfs attribute
+callbacks to complete.  But usb_deauthorize_interface() can't complete
+until the device lock has been released, and the lock won't be
+released until the removal has finished.
 
-For device mode, make sure to disable system wakeup if no gadget driver
-is bound. We may experience unwanted system wakeup due to the wakeup
-signal from the controller PMU detecting connection/disconnection when
-in low power (D3). E.g. In the case of Steam Deck, the PCI PME prevents
-the system staying in suspend.
+The mechanism provided by sysfs to prevent this kind of deadlock is
+to use the sysfs_break_active_protection() function, which tells sysfs
+not to wait for the attribute callback.
 
+Reported-and-tested by: Yue Sun <samsun1006219@gmail.com>
+Reported by: xingwei lee <xrivendell7@gmail.com>
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/linux-usb/CAEkJfYO6jRVC8Tfrd_R=cjO0hguhrV31fDPrLrNOOHocDkPoAA@mail.gmail.com/#r
+Fixes: 310d2b4124c0 ("usb: interface authorization: SysFS part of USB interface authorization")
 Cc: stable@vger.kernel.org
-Reported-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Closes: https://lore.kernel.org/linux-usb/70a7692d-647c-9be7-00a6-06fc60f77294@igalia.com/T/#mf00d6669c2eff7b308d1162acd1d66c09f0853c7
-Fixes: d07e8819a03d ("usb: dwc3: add xHCI Host support")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Tested-by: Sanath S <Sanath.S@amd.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com> # Steam Deck
-Link: https://lore.kernel.org/r/667cfda7009b502e08462c8fb3f65841d103cc0a.1709865476.git.Thinh.Nguyen@synopsys.com
+Link: https://lore.kernel.org/r/1c37eea1-9f56-4534-b9d8-b443438dc869@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c   |    2 ++
- drivers/usb/dwc3/core.h   |    2 ++
- drivers/usb/dwc3/gadget.c |   10 ++++++++++
- drivers/usb/dwc3/host.c   |   11 +++++++++++
- 4 files changed, 25 insertions(+)
+ drivers/usb/core/sysfs.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1507,6 +1507,8 @@ static void dwc3_get_properties(struct d
- 	else
- 		dwc->sysdev = dwc->dev;
- 
-+	dwc->sys_wakeup = device_may_wakeup(dwc->sysdev);
-+
- 	ret = device_property_read_string(dev, "usb-psy-name", &usb_psy_name);
- 	if (ret >= 0) {
- 		dwc->usb_psy = power_supply_get_by_name(usb_psy_name);
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1127,6 +1127,7 @@ struct dwc3_scratchpad_array {
-  *	3	- Reserved
-  * @dis_metastability_quirk: set to disable metastability quirk.
-  * @dis_split_quirk: set to disable split boundary.
-+ * @sys_wakeup: set if the device may do system wakeup.
-  * @wakeup_configured: set if the device is configured for remote wakeup.
-  * @suspended: set to track suspend event due to U3/L2.
-  * @imod_interval: set the interrupt moderation interval in 250ns
-@@ -1350,6 +1351,7 @@ struct dwc3 {
- 
- 	unsigned		dis_split_quirk:1;
- 	unsigned		async_callbacks:1;
-+	unsigned		sys_wakeup:1;
- 	unsigned		wakeup_configured:1;
- 	unsigned		suspended:1;
- 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2968,6 +2968,9 @@ static int dwc3_gadget_start(struct usb_
- 	dwc->gadget_driver	= driver;
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	if (dwc->sys_wakeup)
-+		device_wakeup_enable(dwc->sysdev);
-+
- 	return 0;
- }
- 
-@@ -2983,6 +2986,9 @@ static int dwc3_gadget_stop(struct usb_g
- 	struct dwc3		*dwc = gadget_to_dwc(g);
- 	unsigned long		flags;
- 
-+	if (dwc->sys_wakeup)
-+		device_wakeup_disable(dwc->sysdev);
-+
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc->gadget_driver	= NULL;
- 	dwc->max_cfg_eps = 0;
-@@ -4664,6 +4670,10 @@ int dwc3_gadget_init(struct dwc3 *dwc)
- 	else
- 		dwc3_gadget_set_speed(dwc->gadget, dwc->maximum_speed);
- 
-+	/* No system wakeup if no gadget driver bound */
-+	if (dwc->sys_wakeup)
-+		device_wakeup_disable(dwc->sysdev);
-+
- 	return 0;
- 
- err5:
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -123,6 +123,14 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		goto err;
- 	}
- 
-+	if (dwc->sys_wakeup) {
-+		/* Restore wakeup setting if switched from device */
-+		device_wakeup_enable(dwc->sysdev);
-+
-+		/* Pass on wakeup setting to the new xhci platform device */
-+		device_init_wakeup(&xhci->dev, true);
-+	}
-+
- 	return 0;
- err:
- 	platform_device_put(xhci);
-@@ -131,6 +139,9 @@ err:
- 
- void dwc3_host_exit(struct dwc3 *dwc)
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -1168,14 +1168,24 @@ static ssize_t interface_authorized_stor
  {
-+	if (dwc->sys_wakeup)
-+		device_init_wakeup(&dwc->xhci->dev, false);
-+
- 	platform_device_unregister(dwc->xhci);
- 	dwc->xhci = NULL;
+ 	struct usb_interface *intf = to_usb_interface(dev);
+ 	bool val;
++	struct kernfs_node *kn;
+ 
+ 	if (kstrtobool(buf, &val) != 0)
+ 		return -EINVAL;
+ 
+-	if (val)
++	if (val) {
+ 		usb_authorize_interface(intf);
+-	else
+-		usb_deauthorize_interface(intf);
++	} else {
++		/*
++		 * Prevent deadlock if another process is concurrently
++		 * trying to unregister intf.
++		 */
++		kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++		if (kn) {
++			usb_deauthorize_interface(intf);
++			sysfs_unbreak_active_protection(kn);
++		}
++	}
+ 
+ 	return count;
  }
 
 
