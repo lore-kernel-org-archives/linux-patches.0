@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F2B1E86C;
-	Mon,  1 Apr 2024 16:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD941E86C;
+	Mon,  1 Apr 2024 16:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989585; cv=none; b=KEDoIwCMz4OswdJCS4D34qHsVNIXgc+P47qeYqK1E99z4N3oJji/VNgDSOgXwUQAqJIMDNKPrTjPoW+At1bHaYju2W8GQNDaJMdw95/Lvlvh2H92ABx64y/N5GAgQIuDxc8sfLG6Ha5ATCRNM2mFict3oDToGTY8fYiLEq+1OSk=
+	t=1711989588; cv=none; b=d8AMGb31U4tDMhIgtzYQFvs813wo5ZlQhwK9cS5fYWXw/rrWiMxxq9rJ18O8VVpqKbWZ/9oVsJo+/O/Xty2IQXFMU7qb4LKHcrjXJHtVb6MWlQZDg2TVLrBFGW+zZbh2ISBOBBda4I/1i9M7VeJFWCi9Njuf7U0fdA5B4wHH2Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989585; c=relaxed/simple;
-	bh=gZ4e5xHhCRCmM+5Zs+ug6p3R62j/5YMUgXzEBy/rijg=;
+	s=arc-20240116; t=1711989588; c=relaxed/simple;
+	bh=iIAkceeLCKE9PgboPfOsF/RcjE5XgALdrugUocIJitc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCuXn8WA3BXwxBmKj8lEDUn8jmRDIXOLom6643RbA1cUnCWokJrpnn23jfhX9qgJVJw90NqVWngFjt3IC3cu/JZYv0vkdvrl7eTntDHBP9BDIaHku/JqfOGdGfiE1BJ3xTlc3KaQ6l1ZXo5gBLf4z3ojnnyERbPJmmSOOVtLadQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn/RGMjk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ofTqnaiX6zVOdo43dgH4S/XMT+c3z80yoUPz8YJ4x+B9TVpKKLo6OpYj1TPueJnnW2BwwDnyaRsMc701Oii32MOTwqx6BTXAbAnQ6jZWA/448RJdz0grytOCmLOqoB9TJHAqopyFd45rIkWu8aWWhwGQsL3S0a4ut3nNF05w8SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zX2rR5iT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn/RGMjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E7CC433C7;
-	Mon,  1 Apr 2024 16:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zX2rR5iT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21B7C433F1;
+	Mon,  1 Apr 2024 16:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989584;
-	bh=gZ4e5xHhCRCmM+5Zs+ug6p3R62j/5YMUgXzEBy/rijg=;
+	s=korg; t=1711989588;
+	bh=iIAkceeLCKE9PgboPfOsF/RcjE5XgALdrugUocIJitc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wn/RGMjkrNk2+fmKjs7OsK/BBgc13qgNkNeJTAjU7a32HVVjvwN4zdgQVwAeK/ocY
-	 SReXsGP8hcpOYgxr6583MQU+zgvVeR1lh5KkknKxLK0X3eb/UIz39LN59gyJL9Ajns
-	 0akKUPfjidrSnL5QhezJNeXzb6p8TwOFl2Ei3u14=
+	b=zX2rR5iTk4zJcvSQ3EpTc0fYRG7jUspDqHHR4YG1yPY4zXNDPT52TI1V/ErM2n8cm
+	 /kIu4RF5f/QWznLpGAzJgxAWCW0CoyM0B6Z9ujNGQNuK0ve9EcWU1E42Hyn3feWwkr
+	 /tbgy7/97JeZNOpxoLLUqM0/14rYhxFFFS9I+7Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>,
+	Roger Quadros <rogerq@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/396] parisc: Avoid clobbering the C/B bits in the PSW with tophys and tovirt macros
-Date: Mon,  1 Apr 2024 17:41:43 +0200
-Message-ID: <20240401152549.536148810@linuxfoundation.org>
+Subject: [PATCH 6.6 086/396] usb: dwc3-am62: fix module unload/reload behavior
+Date: Mon,  1 Apr 2024 17:42:15 +0200
+Message-ID: <20240401152550.481740932@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,61 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 4603fbaa76b5e703b38ac8cc718102834eb6e330 ]
+[ Upstream commit 6661befe41009c210efa2c1bcd16a5cc4cff8a06 ]
 
-Use add,l to avoid clobbering the C/B bits in the PSW.
+As runtime PM is enabled, the module can be runtime
+suspended when .remove() is called.
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.10+
+Do a pm_runtime_get_sync() to make sure module is active
+before doing any register operations.
+
+Doing a pm_runtime_put_sync() should disable the refclk
+so no need to disable it again.
+
+Fixes the below warning at module removel.
+
+[   39.705310] ------------[ cut here ]------------
+[   39.710004] clk:162:3 already disabled
+[   39.713941] WARNING: CPU: 0 PID: 921 at drivers/clk/clk.c:1090 clk_core_disable+0xb0/0xb8
+
+We called of_platform_populate() in .probe() so call the
+cleanup function of_platform_depopulate() in .remove().
+Get rid of the now unnnecessary dwc3_ti_remove_core().
+Without this, module re-load doesn't work properly.
+
+Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240227-for-v6-9-am62-usb-errata-3-0-v4-1-0ada8ddb0767@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/assembly.h | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/usb/dwc3/dwc3-am62.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/arch/parisc/include/asm/assembly.h b/arch/parisc/include/asm/assembly.h
-index 5937d5edaba1e..000a28e1c5e8d 100644
---- a/arch/parisc/include/asm/assembly.h
-+++ b/arch/parisc/include/asm/assembly.h
-@@ -97,26 +97,28 @@
- 	 * version takes two arguments: a src and destination register.
- 	 * However, the source and destination registers can not be
- 	 * the same register.
-+	 *
-+	 * We use add,l to avoid clobbering the C/B bits in the PSW.
- 	 */
+diff --git a/drivers/usb/dwc3/dwc3-am62.c b/drivers/usb/dwc3/dwc3-am62.c
+index 90a587bc29b74..f85603b7f7c5e 100644
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -267,21 +267,14 @@ static int dwc3_ti_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- 	.macro  tophys  grvirt, grphys
--	ldil    L%(__PAGE_OFFSET), \grphys
--	sub     \grvirt, \grphys, \grphys
-+	ldil    L%(-__PAGE_OFFSET), \grphys
-+	addl    \grvirt, \grphys, \grphys
- 	.endm
--	
-+
- 	.macro  tovirt  grphys, grvirt
- 	ldil    L%(__PAGE_OFFSET), \grvirt
--	add     \grphys, \grvirt, \grvirt
-+	addl    \grphys, \grvirt, \grvirt
- 	.endm
+-static int dwc3_ti_remove_core(struct device *dev, void *c)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-
+-	platform_device_unregister(pdev);
+-	return 0;
+-}
+-
+ static void dwc3_ti_remove(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct dwc3_am62 *am62 = platform_get_drvdata(pdev);
+ 	u32 reg;
  
- 	.macro  tophys_r1  gr
--	ldil    L%(__PAGE_OFFSET), %r1
--	sub     \gr, %r1, \gr
-+	ldil    L%(-__PAGE_OFFSET), %r1
-+	addl    \gr, %r1, \gr
- 	.endm
--	
-+
- 	.macro  tovirt_r1  gr
- 	ldil    L%(__PAGE_OFFSET), %r1
--	add     \gr, %r1, \gr
-+	addl    \gr, %r1, \gr
- 	.endm
+-	device_for_each_child(dev, NULL, dwc3_ti_remove_core);
++	pm_runtime_get_sync(dev);
++	of_platform_depopulate(dev);
  
- 	.macro delay value
+ 	/* Clear mode valid bit */
+ 	reg = dwc3_ti_readl(am62, USBSS_MODE_CONTROL);
+@@ -289,7 +282,6 @@ static void dwc3_ti_remove(struct platform_device *pdev)
+ 	dwc3_ti_writel(am62, USBSS_MODE_CONTROL, reg);
+ 
+ 	pm_runtime_put_sync(dev);
+-	clk_disable_unprepare(am62->usb2_refclk);
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_suspended(dev);
+ }
 -- 
 2.43.0
 
