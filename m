@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6452D1E525;
-	Mon,  1 Apr 2024 16:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13021C0DE7;
+	Mon,  1 Apr 2024 16:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989204; cv=none; b=MI2Ifw7bP8MpS3HdTRTSV3rW9UitxxtCip1Tk9Rv1rlSasXPxIvb+QTvGXiBTlcy6XVyTi7L0NPlRnksoJlm4HhYmzlHf1aF/IIT0IwM+GzDw2Hv0s024eDg2hZbp2ovnOtw3VotNLXcNDI4VOCMEG6JOkWKqJmURfZc3rXMdBY=
+	t=1711989207; cv=none; b=t9KjD98Va0ah1z+rqAm2tR7QCOJ+9W0bz3wse/oDuTtomOeJx4b1nt0UePgjt0IITZt7FX9L0oIukmHw44rrGPjAVNcNlScD78k+l28/2qlHFDGCRfV5RsEfnXBEcSOlDI68b1Pchxg4M5Kp80xvjVHcCJ+ESm+PaFKHDDggMoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989204; c=relaxed/simple;
-	bh=Q056fO9672aFXqMqpO/d8vlmPiWAUf0+VE/UlFRJoME=;
+	s=arc-20240116; t=1711989207; c=relaxed/simple;
+	bh=iHxiHNTXE/+C65spDfpmoXtAZ7FFQ9zNzgeBi+9LppM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqeUUpgnRHJsfKXVh2VlATBdG/AMstvkXnan+0fMVN/BVX1P1O/EqH2U0eOu8rGhjKkY8PaA6NaVPxHrz1pxf1497x1bc52CGq/SLhbV2HUr2PvLem+eLBoMVd8W65wqn0YecSbjWhW0xt+j0m1Q0azm2zdIwLZb/an3WPyMigc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBJ9iJVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t2de2GXGXoekOtFXW3kQVayu7u/AGcDs9yrnLDHz2+kU6OU4tcjftMB4VjxwlI55OVDfonSiAGDSvF+DkHjrhlB7ofZiXlag9mXdmWf320Hzi5CT0BODtsp6zQZR9Lyp+OyvUiARbF1y/2dlQ2GxnyCTpWTdFGAL8CahOgQTSu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+qYPXLM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBJ9iJVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBA4C43390;
-	Mon,  1 Apr 2024 16:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+qYPXLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FEEC433C7;
+	Mon,  1 Apr 2024 16:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989204;
-	bh=Q056fO9672aFXqMqpO/d8vlmPiWAUf0+VE/UlFRJoME=;
+	s=korg; t=1711989207;
+	bh=iHxiHNTXE/+C65spDfpmoXtAZ7FFQ9zNzgeBi+9LppM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBJ9iJVAxfOLN9cSX9RvuEqChWzqvyU6aJExWgG3AFDQFCVEY1bEFD97+7wSF0lqh
-	 aL+CaA1f5HY+tBKkA0bfM1EsEo9qHcBBDV3NiDwo83gUbywyEKlMjJaNo4QoE+vU7f
-	 UzEZe2Al98xoNQ+OkI1oVixi9fi0HlkUtiombfpE=
+	b=G+qYPXLMJPs4pziGb3GVHYAsk+Bh54/Ef7cxThhdrwTUUR3CpLr/xkp/Bok517Kzi
+	 93w8okTl+cQw2+LnfCtn/uYLSCkfI+eTRZwjhBUB7gIgYlBNW80IKj56RPTaqFHJnr
+	 e8oeCJZJAek0pCw21cc49ekm9rH3Wd0CDtOstyyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Dhere <chaitanya.dhere@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 384/432] drm/amd/display: set odm_combine_policy based on context in dcn32 resource
-Date: Mon,  1 Apr 2024 17:46:11 +0200
-Message-ID: <20240401152604.755658919@linuxfoundation.org>
+Subject: [PATCH 6.7 385/432] drm/amdgpu: make damage clips support configurable
+Date: Mon,  1 Apr 2024 17:46:12 +0200
+Message-ID: <20240401152604.795262601@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -54,158 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-[ Upstream commit 0a5fd7811a17af708cefdaab93af86838353002d ]
+[ Upstream commit fc184dbe9fd99ad2dfb197b6fe18768bae1774b1 ]
 
-[why]
-When populating dml pipes, odm combine policy should be assigned based
-on the pipe topology of the context passed in. DML pipes could be
-repopulated multiple times during single validate bandwidth attempt. We
-need to make sure that whenever we repopulate the dml pipes it is always
-aligned with the updated context. There is a case where DML pipes get
-repopulated during FPO optimization after ODM combine policy is changed.
-Since in the current code we reinitlaize ODM combine policy, even though
-the current context has ODM combine enabled, we overwrite it despite the
-pipes are already split. This causes DML to think that MPC combine is
-used so we mistakenly enable MPC combine because we apply pipe split
-with ODM combine policy reset. This issue doesn't impact non windowed
-MPO with ODM case because the legacy policy has restricted use cases. We
-don't encounter the case where both ODM and FPO optimizations are
-enabled together. So we decide to leave it as is because it is about to
-be replaced anyway.
+We have observed that there are quite a number of PSR-SU panels on the
+market that are unable to keep up with what user space throws at them,
+resulting in hangs and random black screens. So, make damage clips
+support configurable and disable it by default for PSR-SU displays.
 
-Cc: stable@vger.kernel.org # 6.6+
-Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dcn32/dcn32_resource.c | 16 ++++++++++++++-
- .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c  | 15 ++++++++++----
- drivers/gpu/drm/amd/display/dc/inc/resource.h | 20 ++++++++-----------
- 3 files changed, 34 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h               |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 13 +++++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  7 +++++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index cc468bdcb3de2..f663de1cdcdca 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -1925,7 +1925,21 @@ int dcn32_populate_dml_pipes_from_context(
- 		dcn32_zero_pipe_dcc_fraction(pipes, pipe_cnt);
- 		DC_FP_END();
- 		pipes[pipe_cnt].pipe.dest.vfront_porch = timing->v_front_porch;
--		pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
-+		if (dc->config.enable_windowed_mpo_odm &&
-+				dc->debug.enable_single_display_2to1_odm_policy) {
-+			switch (resource_get_odm_slice_count(pipe)) {
-+			case 2:
-+				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
-+				break;
-+			case 4:
-+				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_4to1;
-+				break;
-+			default:
-+				pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
-+			}
-+		} else {
-+			pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
-+		}
- 		pipes[pipe_cnt].pipe.src.gpuvm_min_page_size_kbytes = 256; // according to spreadsheet
- 		pipes[pipe_cnt].pipe.src.unbounded_req_mode = false;
- 		pipes[pipe_cnt].pipe.scale_ratio_depth.lb_depth = dm_lb_19;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 5b6d9643b02dc..b315ca6f1cee8 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -1265,7 +1265,7 @@ static bool update_pipes_with_split_flags(struct dc *dc, struct dc_state *contex
- 	return updated;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 31d4b5a2c5e83..13c62a26aa19c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -198,6 +198,7 @@ extern uint amdgpu_dc_debug_mask;
+ extern uint amdgpu_dc_visual_confirm;
+ extern uint amdgpu_dm_abm_level;
+ extern int amdgpu_backlight;
++extern int amdgpu_damage_clips;
+ extern struct amdgpu_mgpu_info mgpu_info;
+ extern int amdgpu_ras_enable;
+ extern uint amdgpu_ras_mask;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 10c4a8cfa18a0..855ab596323c7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -209,6 +209,7 @@ int amdgpu_umsch_mm;
+ int amdgpu_seamless = -1; /* auto */
+ uint amdgpu_debug_mask;
+ int amdgpu_agp = -1; /* auto */
++int amdgpu_damage_clips = -1; /* auto */
  
--static bool should_allow_odm_power_optimization(struct dc *dc,
-+static bool should_apply_odm_power_optimization(struct dc *dc,
- 		struct dc_state *context, struct vba_vars_st *v, int *split,
- 		bool *merge)
+ static void amdgpu_drv_delayed_reset_work_handler(struct work_struct *work);
+ 
+@@ -857,6 +858,18 @@ int amdgpu_backlight = -1;
+ MODULE_PARM_DESC(backlight, "Backlight control (0 = pwm, 1 = aux, -1 auto (default))");
+ module_param_named(backlight, amdgpu_backlight, bint, 0444);
+ 
++/**
++ * DOC: damageclips (int)
++ * Enable or disable damage clips support. If damage clips support is disabled,
++ * we will force full frame updates, irrespective of what user space sends to
++ * us.
++ *
++ * Defaults to -1 (where it is enabled unless a PSR-SU display is detected).
++ */
++MODULE_PARM_DESC(damageclips,
++		 "Damage clips support (0 = disable, 1 = enable, -1 auto (default))");
++module_param_named(damageclips, amdgpu_damage_clips, int, 0444);
++
+ /**
+  * DOC: tmz (int)
+  * Trusted Memory Zone (TMZ) is a method to protect data being written
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index f5dceb4eb99a3..342e41c78fb34 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5147,6 +5147,7 @@ static void fill_dc_dirty_rects(struct drm_plane *plane,
+ 				struct drm_plane_state *new_plane_state,
+ 				struct drm_crtc_state *crtc_state,
+ 				struct dc_flip_addrs *flip_addrs,
++				bool is_psr_su,
+ 				bool *dirty_regions_changed)
  {
-@@ -1369,9 +1369,12 @@ static void try_odm_power_optimization_and_revalidate(
- {
- 	int i;
- 	unsigned int new_vlevel;
-+	unsigned int cur_policy[MAX_PIPES];
+ 	struct dm_crtc_state *dm_crtc_state = to_dm_crtc_state(crtc_state);
+@@ -5171,6 +5172,10 @@ static void fill_dc_dirty_rects(struct drm_plane *plane,
+ 	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
+ 	clips = drm_plane_get_damage_clips(new_plane_state);
  
--	for (i = 0; i < pipe_cnt; i++)
-+	for (i = 0; i < pipe_cnt; i++) {
-+		cur_policy[i] = pipes[i].pipe.dest.odm_combine_policy;
- 		pipes[i].pipe.dest.odm_combine_policy = dm_odm_combine_policy_2to1;
-+	}
++	if (num_clips && (!amdgpu_damage_clips || (amdgpu_damage_clips < 0 &&
++						   is_psr_su)))
++		goto ffu;
++
+ 	if (!dm_crtc_state->mpo_requested) {
+ 		if (!num_clips || num_clips > DC_MAX_DIRTY_RECTS)
+ 			goto ffu;
+@@ -8216,6 +8221,8 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 			fill_dc_dirty_rects(plane, old_plane_state,
+ 					    new_plane_state, new_crtc_state,
+ 					    &bundle->flip_addrs[planes_count],
++					    acrtc_state->stream->link->psr_settings.psr_version ==
++					    DC_PSR_VERSION_SU_1,
+ 					    &dirty_rects_changed);
  
- 	new_vlevel = dml_get_voltage_level(&context->bw_ctx.dml, pipes, pipe_cnt);
- 
-@@ -1380,6 +1383,9 @@ static void try_odm_power_optimization_and_revalidate(
- 		memset(merge, 0, MAX_PIPES * sizeof(bool));
- 		*vlevel = dcn20_validate_apply_pipe_split_flags(dc, context, new_vlevel, split, merge);
- 		context->bw_ctx.dml.vba.VoltageLevel = *vlevel;
-+	} else {
-+		for (i = 0; i < pipe_cnt; i++)
-+			pipes[i].pipe.dest.odm_combine_policy = cur_policy[i];
- 	}
- }
- 
-@@ -1550,7 +1556,7 @@ static void dcn32_full_validate_bw_helper(struct dc *dc,
- 		}
- 	}
- 
--	if (should_allow_odm_power_optimization(dc, context, vba, split, merge))
-+	if (should_apply_odm_power_optimization(dc, context, vba, split, merge))
- 		try_odm_power_optimization_and_revalidate(
- 				dc, context, pipes, split, merge, vlevel, *pipe_cnt);
- 
-@@ -2178,7 +2184,8 @@ bool dcn32_internal_validate_bw(struct dc *dc,
- 		int i;
- 
- 		pipe_cnt = dc->res_pool->funcs->populate_dml_pipes(dc, context, pipes, fast_validate);
--		dcn32_update_dml_pipes_odm_policy_based_on_context(dc, context, pipes);
-+		if (!dc->config.enable_windowed_mpo_odm)
-+			dcn32_update_dml_pipes_odm_policy_based_on_context(dc, context, pipes);
- 
- 		/* repopulate_pipes = 1 means the pipes were either split or merged. In this case
- 		 * we have to re-calculate the DET allocation and run through DML once more to
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/resource.h b/drivers/gpu/drm/amd/display/dc/inc/resource.h
-index 06ca8bfb91e7d..3d7244393807a 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/resource.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/resource.h
-@@ -427,22 +427,18 @@ struct pipe_ctx *resource_get_primary_dpp_pipe(const struct pipe_ctx *dpp_pipe);
- int resource_get_mpc_slice_index(const struct pipe_ctx *dpp_pipe);
- 
- /*
-- * Get number of MPC "cuts" of the plane associated with the pipe. MPC slice
-- * count is equal to MPC splits + 1. For example if a plane is cut 3 times, it
-- * will have 4 pieces of slice.
-- * return - 0 if pipe is not used for a plane with MPCC combine. otherwise
-- * the number of MPC "cuts" for the plane.
-+ * Get the number of MPC slices associated with the pipe.
-+ * The function returns 0 if the pipe is not associated with an MPC combine
-+ * pipe topology.
-  */
--int resource_get_mpc_slice_count(const struct pipe_ctx *opp_head);
-+int resource_get_mpc_slice_count(const struct pipe_ctx *pipe);
- 
- /*
-- * Get number of ODM "cuts" of the timing associated with the pipe. ODM slice
-- * count is equal to ODM splits + 1. For example if a timing is cut 3 times, it
-- * will have 4 pieces of slice.
-- * return - 0 if pipe is not used for ODM combine. otherwise
-- * the number of ODM "cuts" for the timing.
-+ * Get the number of ODM slices associated with the pipe.
-+ * The function returns 0 if the pipe is not associated with an ODM combine
-+ * pipe topology.
-  */
--int resource_get_odm_slice_count(const struct pipe_ctx *otg_master);
-+int resource_get_odm_slice_count(const struct pipe_ctx *pipe);
- 
- /* Get the ODM slice index counting from 0 from left most slice */
- int resource_get_odm_slice_index(const struct pipe_ctx *opp_head);
+ 			/*
 -- 
 2.43.0
 
