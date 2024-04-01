@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083A71DFF4;
-	Mon,  1 Apr 2024 17:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7965F482CA;
+	Mon,  1 Apr 2024 17:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991136; cv=none; b=LHvEZKVBqobBzHm3t3xlPYclVrqIbWRAkceN7NpXgjbYhxO552pmf6bvmO7ZG7VImlGSqoIxcXXgiatFsYTxzNuvLGSoWUxOR1KAVPN73ir5e57vOqZLTNBhB2fNKXqa7XMYSDOxWwDQBeG5JUV5gYnSYIdX12xWa+Bj63c8KTs=
+	t=1711991139; cv=none; b=Phsz3yyfHlIZZYz444fNoAJWXOWdhoZAK3/DxkI10lVhfOULADUpaI+UUCAC01a9Qlo0HWob3efef6kTZGgGd3bKy2150l4/pnjas7OoUBxmQjqEhpFw1IkkLVAxviOr4wsBVwxySx8kBRyOaKN83EPLzTcoVJe07+GdOCWmQmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991136; c=relaxed/simple;
-	bh=XAtt1RdGWmQyUf+Dj3W4WjTJGHZS59yOtUB+dFmSo9Q=;
+	s=arc-20240116; t=1711991139; c=relaxed/simple;
+	bh=vCZI962tPdepX5qkeUovUiYFhAOenMqIxtVUfv4DdsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwNe1ofooou88TRJX5UxTwEv8lllvGNyg/sYSxJvKp7LJa6EZin27o7nnelEhUu1jT5tqvbh2hKsbwKqEBJOHWIe/qkQGeZnTqUj+W7DJUT0uK7KGZtP8Ksaat+vVnBymuCrjunx/npdh7xRyzS0xLzLgYuIpI3RAqKLQJXnJmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkyX8mHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L8/yiv0BfcXS1Kc2rV2SHJ490bUFyKxuZnaZqbGk4xTkjWMb0bHuMFQcCIUwSC8xmNElRH/KLPmjBW0CLjPmRB685UxbKB8XL6evGMGjQJyOlPPUjDCu7uCbtQ8rOOmKz29mo4TcKcd+1AYMYUpt7F2v7vBswSOw+NrPopcryvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZeK2I4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkyX8mHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA78C433F1;
-	Mon,  1 Apr 2024 17:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZeK2I4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FDAC433F1;
+	Mon,  1 Apr 2024 17:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991135;
-	bh=XAtt1RdGWmQyUf+Dj3W4WjTJGHZS59yOtUB+dFmSo9Q=;
+	s=korg; t=1711991139;
+	bh=vCZI962tPdepX5qkeUovUiYFhAOenMqIxtVUfv4DdsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkyX8mHsgOW8gan3YhqsFJ1q5VIoGExfezZvzKkyOF9pP3AKYkcSmjJkXcpsQAqqN
-	 eK+/OxNeb4ggK2WJFwnYyWs9RvVageYKd8wt5Y7c5S6l9PssFfmVcTDlOVBhAm/GoU
-	 xV7aDAOcQO6qTxYZU5HKAaXBZwf73Y1AdzMSEKig=
+	b=PZeK2I4KXbKn3LZv0r+QkMHWKEMqVI6Ml7Hvx+ZMdExq6OLIGXlXfOXt4H64wLIic
+	 5rHbneGfR53O6gxBER8yd0RmiFCGOxU94i9aqh0PX6llFbGAYAU1459pijJhxE2qYg
+	 EY6KQxiEZJn4DFe1TkUaiLI+v55/QC1IMMGBIsAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Subject: [PATCH 6.1 173/272] i2c: i801: Avoid potential double call to gpiod_remove_lookup_table
-Date: Mon,  1 Apr 2024 17:46:03 +0200
-Message-ID: <20240401152536.170590319@linuxfoundation.org>
+	=?UTF-8?q?Mano=20S=C3=A9gransan?= <mano.segransan@protonmail.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 174/272] drm/amd/display: handle range offsets in VRR ranges
+Date: Mon,  1 Apr 2024 17:46:04 +0200
+Message-ID: <20240401152536.200678537@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -45,54 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ceb013b2d9a2946035de5e1827624edc85ae9484 upstream.
+commit 937844d661354bf142dc1c621396fdab10ecbacc upstream.
 
-If registering the platform device fails, the lookup table is
-removed in the error path. On module removal we would try to
-remove the lookup table again. Fix this by setting priv->lookup
-only if registering the platform device was successful.
-In addition free the memory allocated for the lookup table in
-the error path.
+Need to check the offset bits for values greater than 255.
 
-Fixes: d308dfbf62ef ("i2c: mux/i801: Switch to use descriptor passing")
+v2: also update amdgpu_dm_connector values.
+
+Suggested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Tested-by: Mano Ségransan <mano.segransan@protonmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3203
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1422,7 +1422,6 @@ static void i801_add_mux(struct i801_pri
- 		lookup->table[i] = GPIO_LOOKUP(mux_config->gpio_chip,
- 					       mux_config->gpios[i], "mux", 0);
- 	gpiod_add_lookup_table(lookup);
--	priv->lookup = lookup;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10503,14 +10503,23 @@ void amdgpu_dm_update_freesync_caps(stru
+ 				if (range->flags != 1)
+ 					continue;
  
- 	/*
- 	 * Register the mux device, we use PLATFORM_DEVID_NONE here
-@@ -1436,7 +1435,10 @@ static void i801_add_mux(struct i801_pri
- 				sizeof(struct i2c_mux_gpio_platform_data));
- 	if (IS_ERR(priv->mux_pdev)) {
- 		gpiod_remove_lookup_table(lookup);
-+		devm_kfree(dev, lookup);
- 		dev_err(dev, "Failed to register i2c-mux-gpio device\n");
-+	} else {
-+		priv->lookup = lookup;
- 	}
- }
+-				amdgpu_dm_connector->min_vfreq = range->min_vfreq;
+-				amdgpu_dm_connector->max_vfreq = range->max_vfreq;
+-				amdgpu_dm_connector->pixel_clock_mhz =
+-					range->pixel_clock_mhz * 10;
+-
+ 				connector->display_info.monitor_range.min_vfreq = range->min_vfreq;
+ 				connector->display_info.monitor_range.max_vfreq = range->max_vfreq;
+ 
++				if (edid->revision >= 4) {
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MIN_VFREQ)
++						connector->display_info.monitor_range.min_vfreq += 255;
++					if (data->pad2 & DRM_EDID_RANGE_OFFSET_MAX_VFREQ)
++						connector->display_info.monitor_range.max_vfreq += 255;
++				}
++
++				amdgpu_dm_connector->min_vfreq =
++					connector->display_info.monitor_range.min_vfreq;
++				amdgpu_dm_connector->max_vfreq =
++					connector->display_info.monitor_range.max_vfreq;
++				amdgpu_dm_connector->pixel_clock_mhz =
++					range->pixel_clock_mhz * 10;
++
+ 				break;
+ 			}
  
 
 
