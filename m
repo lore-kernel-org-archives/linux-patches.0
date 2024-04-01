@@ -1,84 +1,186 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2978A4AEC3
-	for <patches@lists.linux.dev>; Mon,  1 Apr 2024 17:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F464F5ED;
+	Mon,  1 Apr 2024 18:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991808; cv=none; b=Vw8/1mCUNpT2nsG2J1bmyWdRl4z5MY/IOJJfd9Nbjv8vSNnIZPKjgrC3XA+OIDDjId7uSW1vnFZQlui8lSjyYWK8iuiJka0J/Q4ZtMoCkbsaqNRsrQt1WVvbUwqhFnqluG28kSn0ad02wTPsqusLoD4JR2bwUHUwRCau4PJJmSw=
+	t=1711995867; cv=none; b=Yt4l0Fe86x7WNKYqO/Pd9h82rNOI2C4JwCEmE+Feh4jB1z02foioFh2kcigpZ7SVP+fzUC9nEkgWOpW+cK6YBC1LuQuXwM2Is5d9DG43KQgEdur0xNlanLV/kGkNp+qUTc3bzrzlifirp/e3wov8882gy2u4Uxo/jo8h6R04rHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991808; c=relaxed/simple;
-	bh=nyE92QsmSijPAgW5fCXN9A/NNpgraYl0b7qLIoQqZGs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sE0+M92vm39JeKbvSZfitjLpKugixvJ201yKscjGv1n6wFB60pm4TBgaz4jkFNqij5NUC0mydOPYmJpAYHp0NEXJJyZRcQYGmmr3VC41vacY5ZsmrBkdQy75unFptGr/D9zWptOcqDSFgGR0nitbsI988QzbMzgO28xIziLkJTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=USfuLNb3; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1711995867; c=relaxed/simple;
+	bh=v5//NGqmsFVDnGzhvsk7EyqTibVqjq4qRRtWuGQKJsE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NPuVuMbu9TXTSszgcduUx4bgn2PNygMFFEvvxrL2dKAcwtac3fAQESjry6HLcACW5KaIowkiG8EaHCexi7aFHY1TISOYjt1yG3yG253vNy1y/FeEYTZb6DUTGyMrPGTMwWOx2aIXv6jgLnAsLiofwbY+GRjJYfg1Dh58eoq/Kqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SGpDzeDq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="USfuLNb3"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1e25da9c4c4so98445ad.1
-        for <patches@lists.linux.dev>; Mon, 01 Apr 2024 10:16:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1711991805; x=1712596605; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8fa5EnP8W2aS/t4kiCQUSns+zPxCGVmzWOLF7r3sV1I=;
-        b=USfuLNb3ysn6+6Mqbkj7DQvrckxNdTyD19nVouYv21Ss2jLnLJu4c9XSKXEL8CpL07
-         DDh39hn2u84fLhHFdbed5795rYRYL++2ZdnXPkp6BljKrgmsVTopZFAqLm0ZT7Ig66vF
-         sV2s1eOk09CZhv9iT/51L3dlYM7jktpE07WNMJ8NS8Z6NqX5YPPaT6FxiII7umMLwwVl
-         F1nbVeeA7XD3ZEdoqxcFcxRBBkv+szNTOYGGJA4npfIsHZJcUjIz3dPSwBlY5y6d8qyQ
-         A3cPA8KRUymtmDG7r4qk3PS/fIl0TskmsLiCaNeZffyoi9glbehmGkPmKL/LRG+V8eVM
-         4q2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711991805; x=1712596605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8fa5EnP8W2aS/t4kiCQUSns+zPxCGVmzWOLF7r3sV1I=;
-        b=fiD6pSRUcr+OQ4Lxtir0BjbSN5C5MlToAH1BRpGfSI+McrZUMy3mhbMg1nX0ZVrdkD
-         P26aqv3IHzB2jafAbRGrEcs2BHbzESup/O8CQSx3ClouXpqWNSOREqnjs0Ox6IOfXt+C
-         pYDW3UWSVESDYLPooJ8iObFqrjpvgNm82DoJGmPAGxnjeSQr3sGF0mLD7VrPloz1kGIh
-         Un14vwv22XSobQlATS1B72AP/bI6XkaHgcAvxK+NHC7WfAE78t4n2mCn8SaehbwCLrIp
-         Una5HBBmCP4QNseRZ5hBK9LJUvkzo8qQgKVJVZJt3LpsxP9y3SMqKZ/2DP+pRxQNFYDW
-         eqrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWJsG+IeDFyYIM0dpN0h1zHxf/tVfqAivht48XHNf0ARhZTG5Q20udNzAtYxCGSfE0LElWdB0uzqAsFzNOqd/PB6SYvTY1Tug==
-X-Gm-Message-State: AOJu0Ywd9v/tFrTiDabrCISIQ0gp5xb0Rh5mYht/VAVaIGdJ+U2OiSbn
-	1a9e7VcluFLYCCHEkjP7IX+ktZ3cnxn3XPtMVRdAlzyKMMU4ewj7ppC+oLpp+pE+dmrzrD5GbhZ
-	rFgAAxBEpehK88JoAhH1EqbxquU+VUGfe5YAT
-X-Google-Smtp-Source: AGHT+IE3REtGqUHfJ4mA1gZLLDUMjjmkJZI7+58PEHx6u5kucIfNx6BoHW88vb4OIl85YrjTFIpJvVtYZ4TCoio83eg=
-X-Received: by 2002:a17:902:b193:b0:1e2:1955:1b1c with SMTP id
- s19-20020a170902b19300b001e219551b1cmr544750plr.27.1711991804957; Mon, 01 Apr
- 2024 10:16:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SGpDzeDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14369C433C7;
+	Mon,  1 Apr 2024 18:24:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711995865;
+	bh=v5//NGqmsFVDnGzhvsk7EyqTibVqjq4qRRtWuGQKJsE=;
+	h=From:Date:Subject:To:Cc:From;
+	b=SGpDzeDq6M9jklr2zsSGYXjkwLg/8vHciarHq5sG97XFBCjttynIM86XN4UOhD7Ql
+	 CHB9RP69aOmjV/9jNGDX1RVsIPIMpDdzdvvdio43O1savIEro+l0AaD3wjaTjJBnGC
+	 fWhNfI/jS/N1GixCAQd99Bc59Kkd5zXzxEVRUM1NlIYBY6PioVD4yLi4i2PoHs9CLM
+	 uRVApnm0CQwFq5+kSZwiO/h7e9H+WKn0cSP4JixZNE/Kf5N6x3cRg554edOdJjY8aD
+	 wSZzUGbRsHav6ZS+3vPzZCEDo/MT33Gzxzx9CvgGf5UxIh+5/z/jPV99RGMTcSsbDJ
+	 hkwhu2NBATBhw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 01 Apr 2024 11:24:17 -0700
+Subject: [PATCH bluetooth] Bluetooth: Fix type of len in
+ {l2cap,sco}_sock_getsockopt_old()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401152553.125349965@linuxfoundation.org> <20240401152601.112837269@linuxfoundation.org>
-In-Reply-To: <20240401152601.112837269@linuxfoundation.org>
-From: Peter Collingbourne <pcc@google.com>
-Date: Mon, 1 Apr 2024 10:16:30 -0700
-Message-ID: <CAMn1gO6XMjbn7o63JiHyLrf_z0AFW69LZ_RcxG=1DWw9KttWGg@mail.gmail.com>
-Subject: Re: [PATCH 6.7 267/432] serial: 8250_dw: Do not reclock if already at
- correct rate
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Hans de Goede <hdegoede@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240401-bluetooth-fix-len-type-getsockopt_old-v1-1-c6b5448b5374@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAND7CmYC/z2N0QrCMAwAf2Xk2UC3BRV/RWTMLm7B0pQ2ymTs3
+ y0++Hhw3G1QOAsXuDQbZH5LEY0V2kMDfhnjzChTZehcR45ci/fwYlO1BR+yYuCI9kmMM1tR/9R
+ kg4YJT72n8cxHR0RQWylz1X+fK/wTcNv3L5/jXoKCAAAA
+To: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+ keescook@chromium.org, linux-bluetooth@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5307; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=v5//NGqmsFVDnGzhvsk7EyqTibVqjq4qRRtWuGQKJsE=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGlcv29EWk/amRpT3Nr2VGzu/oTbVYImwfyfQnaxlYfPS
+ N1wuP1TRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZiI0StGhvk1s5OWXF35WvDt
+ lcK2PsOfIrtDFgQuvyqXs55BWPbhx1cM/7PkptzwmNkTIakytasoSOmrgoQPe1iBrED21poDVy/
+ cYwYA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Mon, Apr 1, 2024 at 9:25=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.7-stable review patch.  If anyone has any objections, please let me kno=
-w.
+After an innocuous optimization change in LLVM main (19.0.0), x86_64
+allmodconfig (which enables CONFIG_KCSAN / -fsanitize=thread) fails to
+build due to the checks in check_copy_size():
 
-Hi Greg,
+  In file included from net/bluetooth/sco.c:27:
+  In file included from include/linux/module.h:13:
+  In file included from include/linux/stat.h:19:
+  In file included from include/linux/time.h:60:
+  In file included from include/linux/time32.h:13:
+  In file included from include/linux/timex.h:67:
+  In file included from arch/x86/include/asm/timex.h:6:
+  In file included from arch/x86/include/asm/tsc.h:10:
+  In file included from arch/x86/include/asm/msr.h:15:
+  In file included from include/linux/percpu.h:7:
+  In file included from include/linux/smp.h:118:
+  include/linux/thread_info.h:244:4: error: call to '__bad_copy_from' declared with 'error' attribute: copy source size is too small
+    244 |                         __bad_copy_from();
+        |                         ^
 
-This patch is being reverted for now, so it shouldn't go into any
-stable branches (I see that you sent similar messages for 6.6 and
-6.1).
+The same exact error occurs in l2cap_sock.c. The copy_to_user()
+statements that are failing come from l2cap_sock_getsockopt_old() and
+sco_sock_getsockopt_old(). This does not occur with GCC with or without
+KCSAN or Clang without KCSAN enabled.
 
-Peter
+len is defined as an 'int' because it is assigned from
+'__user int *optlen'. However, it is clamped against the result of
+sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+platforms). This is done with min_t() because min() requires compatible
+types, which results in both len and the result of sizeof() being casted
+to 'unsigned int', meaning len changes signs and the result of sizeof()
+is truncated. From there, len is passed to copy_to_user(), which has a
+third parameter type of 'unsigned long', so it is widened and changes
+signs again. This excessive casting in combination with the KCSAN
+instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+call, failing the build.
+
+The official recommendation from LLVM developers is to consistently use
+long types for all size variables to avoid the unnecessary casting in
+the first place. Change the type of len to size_t in both
+l2cap_sock_getsockopt_old() and sco_sock_getsockopt_old(). This clears
+up the error while allowing min_t() to be replaced with min(), resulting
+in simpler code with no casts and fewer implicit conversions. While len
+is a different type than optlen now, it should result in no functional
+change because the result of sizeof() will clamp all values of optlen in
+the same manner as before.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ net/bluetooth/l2cap_sock.c | 7 ++++---
+ net/bluetooth/sco.c        | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 4287aa6cc988..81193427bf05 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -439,7 +439,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+ 	struct l2cap_options opts;
+ 	struct l2cap_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
+ 
+ 	BT_DBG("sk %p", sk);
+@@ -486,7 +487,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 
+ 		BT_DBG("mode 0x%2.2x", chan->mode);
+ 
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *) &opts, len))
+ 			err = -EFAULT;
+ 
+@@ -536,7 +537,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
+ 		cinfo.hci_handle = chan->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
+ 
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 43daf965a01e..9a72d7f1946c 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -967,7 +967,8 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct sco_options opts;
+ 	struct sco_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -989,7 +990,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+ 
+ 		BT_DBG("mtu %u", opts.mtu);
+ 
+-		len = min_t(unsigned int, len, sizeof(opts));
++		len = min(len, sizeof(opts));
+ 		if (copy_to_user(optval, (char *)&opts, len))
+ 			err = -EFAULT;
+ 
+@@ -1007,7 +1008,7 @@ static int sco_sock_getsockopt_old(struct socket *sock, int optname,
+ 		cinfo.hci_handle = sco_pi(sk)->conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, sco_pi(sk)->conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *)&cinfo, len))
+ 			err = -EFAULT;
+ 
+
+---
+base-commit: 7835fcfd132eb88b87e8eb901f88436f63ab60f7
+change-id: 20240401-bluetooth-fix-len-type-getsockopt_old-73c4a8e60444
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
