@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543021C0DE7;
-	Mon,  1 Apr 2024 16:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA8B1C0DE7;
+	Mon,  1 Apr 2024 16:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989336; cv=none; b=laYAxA5hQBWg+goU4IvUM6byBzbivaC5WW++1yqzKfBNiJNiIGmYNrbjfw2Zjs7uUacEIdU/ra59UG9ffg0i4XvJtYZNKmZliUxFAr08cWNqiWOCwyIbC1aCKOalysyByWMT7HxW1rQmPY5qvPsdh064YSA/JszjZyJLF63cpjI=
+	t=1711989339; cv=none; b=tbeTI2shm2oLCH+kBn9FQcj4ePb31jQn+nse6qah4ukPOdZdkJ7F75NNDmiz48W+qI6ls/AyZnMlsR9HrJpnPfCcff4VtaIyZNwKn3ephkddq+UlBWrAYu0D9AqBRZiL+0As32FfiyKRMwhUbdFvvizR0mnlQ4p1+2hZbN64gIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989336; c=relaxed/simple;
-	bh=CG3cfBVEmp/pUouHclVtKKQYayS1E2mUHstl88XVfHc=;
+	s=arc-20240116; t=1711989339; c=relaxed/simple;
+	bh=g0f9+WxAkjp93oEdVx1j6MoJwJsPwyNWwg3D0Uczs1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGAlBnLSccxiCJ0ncInkek8OhhQSIlfgMPV/XR1YRcVYURESUbiPYNfphqMVkdsxiPBUR5bD+vk7DDUolgKlLjGIHuxfckpyBV5QADFZUGQHsWjE3ovNhiMmbvBr5fZqOOEi4SUrtNu5MO9Ewf3uVwS8qZe9frj1tDhBfsVwvbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHCU7/Js; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Or06G5OJbkV0bGFIxKCOf4jdy2BxKXZzLCM9LdZ3dJNjljvHaM/qGzrmG2c/3do1s0IQUHDcgehgcGlMNKqLCSQ5eJFRgXnQSUxQrD5jUm7OWjmtS0PRkvdp+7cmOIxx7yh9FIo2su35rPnUh5gkNAZUqi81t35i8fXplk8xyI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNeAvtST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHCU7/Js"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BF0C433C7;
-	Mon,  1 Apr 2024 16:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNeAvtST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DF5C433C7;
+	Mon,  1 Apr 2024 16:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989336;
-	bh=CG3cfBVEmp/pUouHclVtKKQYayS1E2mUHstl88XVfHc=;
+	s=korg; t=1711989339;
+	bh=g0f9+WxAkjp93oEdVx1j6MoJwJsPwyNWwg3D0Uczs1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHCU7/JsGc/f8m8yatHqrzHBtMX6yQff9JzubcLcgdfCbWMQgJVKqFop8Oj+pE4gR
-	 AxbD1yijEkNBZDlSr0rHWVY+J4r1JHPOZwBfiHNN75UgARwxT4bYBGIgDNJESpueQ6
-	 f2awBIsnJBliggSQx5AaGP+yYmRYFd9bnmeHyP9U=
+	b=yNeAvtSTB0dnKpLl2cFJ0uC0fe/iAXVM7kdzAqdFv/lVoxcG1LgJ7MkQwfsn2dvXO
+	 I26ZUBwGDcU1+xOQkjKt+QDvtlf3sp2/6xCn2b0V0zCpLOj0Kkoko0r1dImHGQu0JC
+	 r6yj58suxZIyS8HkzBDM6ZaZKoj1BiRk6/rxf/eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/396] media: mc: Fix flags handling when creating pad links
-Date: Mon,  1 Apr 2024 17:41:08 +0200
-Message-ID: <20240401152548.468848053@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 002/396] KVM: x86: Use a switch statement and macros in __feature_translate()
+Date: Mon,  1 Apr 2024 17:40:51 +0200
+Message-ID: <20240401152547.948509012@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,59 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Jim Mattson <jmattson@google.com>
 
-[ Upstream commit 422f7af75d03d50895938d38bc9cb8be759c440f ]
+commit 80c883db87d9ffe2d685e91ba07a087b1c246c78 upstream.
 
-The media_create_pad_link() function doesn't correctly clear reject link
-type flags, nor does it set the DATA_LINK flag. It only works because
-the MEDIA_LNK_FL_DATA_LINK flag's value is 0.
+Use a switch statement with macro-generated case statements to handle
+translating feature flags in order to reduce the probability of runtime
+errors due to copy+paste goofs, to make compile-time errors easier to
+debug, and to make the code more readable.
 
-Fix it by returning an error if any link type flag is set. This doesn't
-introduce any regression, as nobody calls the media_create_pad_link()
-function with link type flags (easily checked by grepping for the flag
-in the source code, there are very few hits).
+E.g. the compiler won't directly generate an error for duplicate if
+statements
 
-Set the MEDIA_LNK_FL_DATA_LINK explicitly, which is a no-op that the
-compiler will optimize out, but is still useful to make the code more
-explicit and easier to understand.
+	if (x86_feature == X86_FEATURE_SGX1)
+		return KVM_X86_FEATURE_SGX1;
+	else if (x86_feature == X86_FEATURE_SGX2)
+		return KVM_X86_FEATURE_SGX1;
 
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+and so instead reverse_cpuid_check() will fail due to the untranslated
+entry pointing at a Linux-defined leaf, which provides practically no
+hint as to what is broken
+
+  arch/x86/kvm/reverse_cpuid.h:108:2: error: call to __compiletime_assert_450 declared with 'error' attribute:
+                                      BUILD_BUG_ON failed: x86_leaf == CPUID_LNX_4
+          BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
+          ^
+whereas duplicate case statements very explicitly point at the offending
+code:
+
+  arch/x86/kvm/reverse_cpuid.h:125:2: error: duplicate case value '361'
+          KVM_X86_TRANSLATE_FEATURE(SGX2);
+          ^
+  arch/x86/kvm/reverse_cpuid.h:124:2: error: duplicate case value '360'
+          KVM_X86_TRANSLATE_FEATURE(SGX1);
+          ^
+
+And without macros, the opposite type of copy+paste goof doesn't generate
+any error at compile-time, e.g. this yields no complaints:
+
+        case X86_FEATURE_SGX1:
+                return KVM_X86_FEATURE_SGX1;
+        case X86_FEATURE_SGX2:
+                return KVM_X86_FEATURE_SGX1;
+
+Note, __feature_translate() is forcibly inlined and the feature is known
+at compile-time, so the code generation between an if-elif sequence and a
+switch statement should be identical.
+
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20231024001636.890236-2-jmattson@google.com
+[sean: use a macro, rewrite changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-entity.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kvm/reverse_cpuid.h |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/mc/mc-entity.c b/drivers/media/mc/mc-entity.c
-index 737fc14e92dd3..330d876f41945 100644
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -1079,6 +1079,11 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
- 	struct media_link *link;
- 	struct media_link *backlink;
+--- a/arch/x86/kvm/reverse_cpuid.h
++++ b/arch/x86/kvm/reverse_cpuid.h
+@@ -116,20 +116,19 @@ static __always_inline void reverse_cpui
+  */
+ static __always_inline u32 __feature_translate(int x86_feature)
+ {
+-	if (x86_feature == X86_FEATURE_SGX1)
+-		return KVM_X86_FEATURE_SGX1;
+-	else if (x86_feature == X86_FEATURE_SGX2)
+-		return KVM_X86_FEATURE_SGX2;
+-	else if (x86_feature == X86_FEATURE_SGX_EDECCSSA)
+-		return KVM_X86_FEATURE_SGX_EDECCSSA;
+-	else if (x86_feature == X86_FEATURE_CONSTANT_TSC)
+-		return KVM_X86_FEATURE_CONSTANT_TSC;
+-	else if (x86_feature == X86_FEATURE_PERFMON_V2)
+-		return KVM_X86_FEATURE_PERFMON_V2;
+-	else if (x86_feature == X86_FEATURE_RRSBA_CTRL)
+-		return KVM_X86_FEATURE_RRSBA_CTRL;
++#define KVM_X86_TRANSLATE_FEATURE(f)	\
++	case X86_FEATURE_##f: return KVM_X86_FEATURE_##f
  
-+	if (flags & MEDIA_LNK_FL_LINK_TYPE)
-+		return -EINVAL;
-+
-+	flags |= MEDIA_LNK_FL_DATA_LINK;
-+
- 	if (WARN_ON(!source || !sink) ||
- 	    WARN_ON(source_pad >= source->num_pads) ||
- 	    WARN_ON(sink_pad >= sink->num_pads))
-@@ -1094,7 +1099,7 @@ media_create_pad_link(struct media_entity *source, u16 source_pad,
+-	return x86_feature;
++	switch (x86_feature) {
++	KVM_X86_TRANSLATE_FEATURE(SGX1);
++	KVM_X86_TRANSLATE_FEATURE(SGX2);
++	KVM_X86_TRANSLATE_FEATURE(SGX_EDECCSSA);
++	KVM_X86_TRANSLATE_FEATURE(CONSTANT_TSC);
++	KVM_X86_TRANSLATE_FEATURE(PERFMON_V2);
++	KVM_X86_TRANSLATE_FEATURE(RRSBA_CTRL);
++	default:
++		return x86_feature;
++	}
+ }
  
- 	link->source = &source->pads[source_pad];
- 	link->sink = &sink->pads[sink_pad];
--	link->flags = flags & ~MEDIA_LNK_FL_INTERFACE_LINK;
-+	link->flags = flags;
- 
- 	/* Initialize graph object embedded at the new link */
- 	media_gobj_create(source->graph_obj.mdev, MEDIA_GRAPH_LINK,
--- 
-2.43.0
-
+ static __always_inline u32 __feature_leaf(int x86_feature)
 
 
