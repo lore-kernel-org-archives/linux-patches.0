@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E40A47A5D;
-	Mon,  1 Apr 2024 17:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857347A6B;
+	Mon,  1 Apr 2024 17:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990853; cv=none; b=Y439MRZx7/4k6sSVMfYQelrQyfqpxE3klDhIUg8lSSxvylaadI7Sfs9tl1nNGA4MbXOeyVMijBnbQ9kB5cHNg+F24xoczJeR3CGZ/NnXMZuffxBfPReserUsnQLbk5w0oNDVi3fLNpII84qSS0YOxMGFoRLhrsG79lUodq3lEgU=
+	t=1711990856; cv=none; b=LQ4K5Wz0NsaXhGMV+TD13C8Z8JNKt/7+M7WDcbrOTyILhFgqB1ANIepXOT5f1BEBTdFzwFZn8H3440BL7MJde7NA1eWFlGehGKBXlPR4MAJ2Sz/awYqNq4uXquiStAjO+WiT65ggyb6z/vYDB+q9QXPF2ND4ocsM0K7XZDE6gkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990853; c=relaxed/simple;
-	bh=8PIhGgsN9LVTLYp5nSfpITLyUXgt0l9MItqtrJfygOk=;
+	s=arc-20240116; t=1711990856; c=relaxed/simple;
+	bh=Ux594vPgpac524bAHtE2607NuX0GdXiz/iaTpImU8I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzPRW7eCm0ED78wqDE/a9Mwqqx0kRykXo5v3RwYhIDJGRl7bAXIRXsU40ZOD2m/OkJn4K3HYcb1xt2dcm4yK0Y6kK+sRZ5UsV0Zeq+2bE7okj/C6mDHW7ujmYZZG1EbcEuyNsf++1LfbRAINt83Q4kgDh7NWs5F3JtuXq1ZiSt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjWxiOOY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQas6KzxtNBNi0wTTFrJSMQOiMBcRfNDDLwjsgj4GIoIBgpGcpwSZHUjBnfHPOqiGIHt8hYbcMqTGjT9YDegGqSkl0dLEoLs5Au0IXFNEQa+G8oDK6V+VEQLLTT47nQEfrGMGX+hZYointja96G9gHHg1k9h/IdXJ1TYwX9fTiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kw/+1zPs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjWxiOOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F995C433C7;
-	Mon,  1 Apr 2024 17:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kw/+1zPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFD5C433F1;
+	Mon,  1 Apr 2024 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990853;
-	bh=8PIhGgsN9LVTLYp5nSfpITLyUXgt0l9MItqtrJfygOk=;
+	s=korg; t=1711990856;
+	bh=Ux594vPgpac524bAHtE2607NuX0GdXiz/iaTpImU8I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjWxiOOYq18oIhnhfGvTqSyRFqdzegP1lTvfZ+tyRvnVUKHGP4qc1dE92zbY2nGJ0
-	 xp75Tm2pMP2QUgxYChTxRP/79ZbxeyqyoV3lKCiGIlbQu1lyHMget8BgIZ/idbMy3V
-	 ZdSg8jcYGtG+bp+Nw0Ka3QAnaUQ5kVNC91G0RNcc=
+	b=Kw/+1zPs5bS2rkqQsLKQ2SW7srJBnv6NK3o3LodhkHbTFmgJ+iEzeo09aMVinj+/a
+	 UldcW9PaB+gVzVH5LjKrm33cAcSQQRtukWCQ1FfM7sGzOEtEDo70el43B5AhoX5wXj
+	 aYx25MgimZsG+3XkEXutcSn/8Z7W17y3Fng5yeE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/272] usb: xhci: Add error handling in xhci_map_urb_for_dma
-Date: Mon,  1 Apr 2024 17:44:07 +0200
-Message-ID: <20240401152532.329444736@linuxfoundation.org>
+Subject: [PATCH 6.1 058/272] powerpc/fsl: Fix mfpmr build errors with newer binutils
+Date: Mon,  1 Apr 2024 17:44:08 +0200
+Message-ID: <20240401152532.365543401@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,41 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit be95cc6d71dfd0cba66e3621c65413321b398052 ]
+[ Upstream commit 5f491356b7149564ab22323ccce79c8d595bfd0c ]
 
-Currently xhci_map_urb_for_dma() creates a temporary buffer and copies
-the SG list to the new linear buffer. But if the kzalloc_node() fails,
-then the following sg_pcopy_to_buffer() can lead to crash since it
-tries to memcpy to NULL pointer.
+Binutils 2.38 complains about the use of mfpmr when building
+ppc6xx_defconfig:
 
-So return -ENOMEM if kzalloc returns null pointer.
+    CC      arch/powerpc/kernel/pmc.o
+  {standard input}: Assembler messages:
+  {standard input}:45: Error: unrecognized opcode: `mfpmr'
+  {standard input}:56: Error: unrecognized opcode: `mtpmr'
 
-Cc: stable@vger.kernel.org # 5.11
-Fixes: 2017a1e58472 ("usb: xhci: Use temporary buffer to consolidate SG")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240229141438.619372-10-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is because by default the kernel is built with -mcpu=powerpc, and
+the mt/mfpmr instructions are not defined.
+
+It can be avoided by enabling CONFIG_E300C3_CPU, but just adding that to
+the defconfig will leave open the possibility of randconfig failures.
+
+So add machine directives around the mt/mfpmr instructions to tell
+binutils how to assemble them.
+
+Cc: stable@vger.kernel.org
+Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240229122521.762431-3-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/include/asm/reg_fsl_emb.h | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index c02ad4f76bb3c..565aba6b99860 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -1334,6 +1334,8 @@ static int xhci_map_temp_buffer(struct usb_hcd *hcd, struct urb *urb)
+diff --git a/arch/powerpc/include/asm/reg_fsl_emb.h b/arch/powerpc/include/asm/reg_fsl_emb.h
+index a21f529c43d96..8359c06d92d9f 100644
+--- a/arch/powerpc/include/asm/reg_fsl_emb.h
++++ b/arch/powerpc/include/asm/reg_fsl_emb.h
+@@ -12,9 +12,16 @@
+ #ifndef __ASSEMBLY__
+ /* Performance Monitor Registers */
+ #define mfpmr(rn)	({unsigned int rval; \
+-			asm volatile("mfpmr %0," __stringify(rn) \
++			asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mfpmr %0," __stringify(rn) ";" \
++				     ".machine pop; " \
+ 				     : "=r" (rval)); rval;})
+-#define mtpmr(rn, v)	asm volatile("mtpmr " __stringify(rn) ",%0" : : "r" (v))
++#define mtpmr(rn, v)	asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mtpmr " __stringify(rn) ",%0; " \
++				     ".machine pop; " \
++				     : : "r" (v))
+ #endif /* __ASSEMBLY__ */
  
- 	temp = kzalloc_node(buf_len, GFP_ATOMIC,
- 			    dev_to_node(hcd->self.sysdev));
-+	if (!temp)
-+		return -ENOMEM;
- 
- 	if (usb_urb_dir_out(urb))
- 		sg_pcopy_to_buffer(urb->sg, urb->num_sgs,
+ /* Freescale Book E Performance Monitor APU Registers */
 -- 
 2.43.0
 
