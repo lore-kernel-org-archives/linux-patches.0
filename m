@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D60481B8;
-	Mon,  1 Apr 2024 16:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D4F481D5;
+	Mon,  1 Apr 2024 16:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989819; cv=none; b=CdHcwIIEtw51qZ8+ODsuPXDDlB/gRH3C55Ui0/enwymJODizghP5WOIHdEzlUhSLSQDWdIQxI+5wYp3h85+fV1YfM+PQkbElbIlBnCBYMBlv8IZ7/PUPiGbgnnx7H0PPFwvReU81P6zINoXgrJvCJ+HA7zQIfDSTDyS6ZepoR7M=
+	t=1711989823; cv=none; b=BXUqocZuQPMQiamqP9H2kUVgmoRKsPnLPJh4r81r6XfKbwqe+4sM+e4jeX6CYSt9rzSazLVtPGgKqp9FKRtD0r2zuYGumzPuYpscudeFUzmSqJriPZ+DZZWtw949QXPhoITR4ZAgOY9Mmjm1YZ5DIIrezLsT/3Mu9WYn/4YPC1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989819; c=relaxed/simple;
-	bh=r47pnePTRTnMWcBUD+42Tdfp+MGhu/CHx5yO+j3g2ck=;
+	s=arc-20240116; t=1711989823; c=relaxed/simple;
+	bh=tNKCUkBTmNgZwIsR9hk+qI4QjW5m/CloCQqBWQTpvAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMGlZ7gH94C0/859z/6hOcw4Y71CDgoDw6Y8whNNaF9j2661ZKFJtbEEm+QmvH6HmnTPmUH5dO1SUuYaJea/mBIthCKTFBs+ajNN+gid9/zyjYjT3qgn07Y8E98S0UoaBDdThgtiksbY4XvKJtH5wCVgwali3L9bFgBISYgbV8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugfqDmxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qriaffNWIgF8oCIsENYeDJJ9vU+iAhtl4kMKJ3tCjxSyv0zVtOrWTS3C9HaCW4LN+FdgB1NHKnowyLAsBjRAs28vZvqI/mwRttgxhTQpzvwIS6sL1p3xcsWg0Q6UxfzSTRJ6g8PaH4z4rggMsLqr0OyWWe33iiXFk3UXX4Jjr4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2UniMoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugfqDmxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9B0C433F1;
-	Mon,  1 Apr 2024 16:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2UniMoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23AAC43394;
+	Mon,  1 Apr 2024 16:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989819;
-	bh=r47pnePTRTnMWcBUD+42Tdfp+MGhu/CHx5yO+j3g2ck=;
+	s=korg; t=1711989823;
+	bh=tNKCUkBTmNgZwIsR9hk+qI4QjW5m/CloCQqBWQTpvAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugfqDmxLsvNlCz00+mE1jY1/OOrbTZolzY9FwUfA4sdCVW1woNZ/TBeOebvSI+HRK
-	 MB2n5Xq1v8K6WAo9u3hq4UoeF6joc2b2Pnm8yavbeXkqlpH6zUOsjCv7yJw1wYVpQg
-	 ouBvr+Tgr5kp9MtAIUXICw9k0gpMeLl4tHv0OFtY=
+	b=G2UniMoXzOWGcwsbHNbz4pE2qQXi5aR8UHsL/w0yEOEonBSSEem+n+dK2mY6G+bf9
+	 KwjYgIJwL4jPctQQJ5Uy/v+vB3uzGMjBN7ir/KrKl3Nl8c1+i0x4t3yXxE6vcctfxy
+	 dTNW4MKjCnRxNkWlHLdjgcdSOs4tRz0zA7h+DE48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Kerello <christophe.kerello@foss.st.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/396] mtd: rawnand: Fix and simplify again the continuous read derivations
-Date: Mon,  1 Apr 2024 17:43:32 +0200
-Message-ID: <20240401152552.799872444@linuxfoundation.org>
+Subject: [PATCH 6.6 164/396] mtd: rawnand: Constrain even more when continuous reads are enabled
+Date: Mon,  1 Apr 2024 17:43:33 +0200
+Message-ID: <20240401152552.829681324@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -53,82 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit c7ee7c8d4b60fe46d4861b1200bc1c7ab657960a ]
+[ Upstream commit 78ffbefba8d7822b232585570b293de5bc397da6 ]
 
-We need to avoid the first page if we don't read it entirely.
-We need to avoid the last page if we don't read it entirely.
-While rather simple, this logic has been failed in the previous
-fix. This time I wrote about 30 unit tests locally to check each
-possible condition, hopefully I covered them all.
+As a matter of fact, continuous reads require additional handling at the
+operation level in order for them to work properly. The core helpers do
+have this additional logic now, but any time a controller implements its
+own page helper, this extra logic is "lost". This means we need another
+level of per-controller driver checks to ensure they can leverage
+continuous reads. This is for now unsupported, so in order to ensure
+continuous reads are enabled only when fully using the core page
+helpers, we need to add more initial checks.
+
+Also, as performance is not relevant during raw accesses, we also
+prevent these from enabling the feature.
+
+This should solve the issue seen with controllers such as the STM32 FMC2
+when in sequencer mode. In this case, the continuous read feature would
+be enabled but not leveraged, and most importantly not disabled, leading
+to further operations to fail.
 
 Reported-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Closes: https://lore.kernel.org/linux-mtd/20240221175327.42f7076d@xps-13/T/#m399bacb10db8f58f6b1f0149a1df867ec086bb0a
-Suggested-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Fixes: 828f6df1bcba ("mtd: rawnand: Clarify conditions to enable continuous reads")
+Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
 Cc: stable@vger.kernel.org
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Tested-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Link: https://lore.kernel.org/linux-mtd/20240223115545.354541-2-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20240307115315.1942678-1-miquel.raynal@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 34 +++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ drivers/mtd/nand/raw/nand_base.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index 76167b8ca9dda..9118b5753c553 100644
+index 9118b5753c553..c059ac4c19f11 100644
 --- a/drivers/mtd/nand/raw/nand_base.c
 +++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -3461,30 +3461,36 @@ static void rawnand_enable_cont_reads(struct nand_chip *chip, unsigned int page,
- 				      u32 readlen, int col)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
--	unsigned int end_page, end_col;
-+	unsigned int first_page, last_page;
+@@ -3578,7 +3578,8 @@ static int nand_do_read_ops(struct nand_chip *chip, loff_t from,
+ 	oob = ops->oobbuf;
+ 	oob_required = oob ? 1 : 0;
  
- 	chip->cont_read.ongoing = false;
+-	rawnand_enable_cont_reads(chip, page, readlen, col);
++	if (likely(ops->mode != MTD_OPS_RAW))
++		rawnand_enable_cont_reads(chip, page, readlen, col);
  
- 	if (!chip->controller->supported_op.cont_read)
+ 	while (1) {
+ 		struct mtd_ecc_stats ecc_stats = mtd->ecc_stats;
+@@ -5196,6 +5197,15 @@ static void rawnand_late_check_supported_ops(struct nand_chip *chip)
+ 	if (!nand_has_exec_op(chip))
  		return;
  
--	end_page = DIV_ROUND_UP(col + readlen, mtd->writesize);
--	end_col = (col + readlen) % mtd->writesize;
 +	/*
-+	 * Don't bother making any calculations if the length is too small.
-+	 * Side effect: avoids possible integer underflows below.
++	 * For now, continuous reads can only be used with the core page helpers.
++	 * This can be extended later.
 +	 */
-+	if (readlen < (2 * mtd->writesize))
++	if (!(chip->ecc.read_page == nand_read_page_hwecc ||
++	      chip->ecc.read_page == nand_read_page_syndrome ||
++	      chip->ecc.read_page == nand_read_page_swecc))
 +		return;
- 
-+	/* Derive the page where continuous read should start (the first full page read) */
-+	first_page = page;
- 	if (col)
--		page++;
--
--	if (end_col && end_page)
--		end_page--;
-+		first_page++;
- 
--	if (page + 1 > end_page)
--		return;
--
--	chip->cont_read.first_page = page;
--	chip->cont_read.last_page = end_page;
--	chip->cont_read.ongoing = true;
-+	/* Derive the page where continuous read should stop (the last full page read) */
-+	last_page = page + ((col + readlen) / mtd->writesize) - 1;
- 
--	rawnand_cap_cont_reads(chip);
-+	/* Configure and enable continuous read when suitable */
-+	if (first_page < last_page) {
-+		chip->cont_read.first_page = first_page;
-+		chip->cont_read.last_page = last_page;
-+		chip->cont_read.ongoing = true;
-+		/* May reset the ongoing flag */
-+		rawnand_cap_cont_reads(chip);
-+	}
++
+ 	rawnand_check_cont_read_support(chip);
  }
  
- static void rawnand_cont_read_skip_first_page(struct nand_chip *chip, unsigned int page)
 -- 
 2.43.0
 
