@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652411E86C;
-	Mon,  1 Apr 2024 16:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C108C1E86C;
+	Mon,  1 Apr 2024 16:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989578; cv=none; b=T33YkiIIPIDzIBshuGyuWvMhe3NHIPgo+h/6MuaEuoFjROISHL5lrklkCWU7eueIU4Pd3Zo13i/5eMn7H9Y2/lZC31R+iYjO/68vynjUjd6Q7VsIpM+xrym51sJUGuGd1yh+KTGQycXKbnBC4wZO6R3oNELznm5b9oGDUm0Tw8c=
+	t=1711989581; cv=none; b=dv4IStNDV8o/ihyV0RhGT9JfBG1OfyP+HUw74MGMdlW0++gMJwIxN2Kv2gVBKazjow22T3zSrrSu94X2lfVMxot4EfStQJ4Typ+hiOCWsCjI1Ixgvt7wwP3R0250c4CVn1OFOLbavanWqszC6N3Dj+BadcW8aG3ccmFWAgGbRvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989578; c=relaxed/simple;
-	bh=Li3rMVHiVwxn+YQ5PpW9j9gWojv1k2xG2i5tqHCkDkw=;
+	s=arc-20240116; t=1711989581; c=relaxed/simple;
+	bh=yQo07kxyelPTYQkQTF1ebvU/j7XkjCr9vwtpfycP1Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BsWLzOa+g1yActUI+s2vqqPQk4k7J2xz4vK7FYYRSatsASGCh+f+wfsw1GRL9jVkT3yOUYdh23y/zK4jFz1A054KKeJCB1MzBRCzeLU5rnw1C/wz3jWmB6IiOTIA6LAM4w/41NBgjTl75kNLheEhFN2+4ZIsPxVCFcZ0QZulmis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl4A5wGQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HnP9CRLFD0iqJCPmsFq6wOPiMW4yiVZa/nZVgJ2x+ULiSAQVOmTmXH8oUZclqCfTKOwplIqJPmvKlv0k7C9j3+HAcV/Rpv9gpyuVErZ8bGg2NlZcOag1fmdafBy61yeE/zlDn8vsbJj4C1fkUcqGih9ge75G40HI2xGQOE/igAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCnzTOdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl4A5wGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA02AC433F1;
-	Mon,  1 Apr 2024 16:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCnzTOdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DECC433C7;
+	Mon,  1 Apr 2024 16:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989578;
-	bh=Li3rMVHiVwxn+YQ5PpW9j9gWojv1k2xG2i5tqHCkDkw=;
+	s=korg; t=1711989581;
+	bh=yQo07kxyelPTYQkQTF1ebvU/j7XkjCr9vwtpfycP1Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bl4A5wGQ6KHlIJi+7Ukor3jnc/4jAFIkHaNnGO+bUeKZQUlpyE/eYIlsA9K71SlGQ
-	 7iFtXcXwGDjwSylNS0eutIwoGbD7a0uFjxD6Ajd4iy/bcK1fujp565rZKTJuhgp996
-	 iLcs55419vl5LemiA1cSQb+nbYclBBQuZA2P5e7w=
+	b=gCnzTOdA0vAbF/gX3/cODjGnRAjenquw8UjQw4xixskxsnIQwS9RVhYQKbKBk/sMP
+	 B6Vff2ohTDLyBgkxlGMTvIRy6s9BWAQMXLMiN1MRqJ2z7yNG5KaeavfBuyZcZM/eaA
+	 4jLKdllyIWsVUpUYEDoOw6tfAB63qSyYj0J5EGeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/396] docs: Restore "smart quotes" for quotes
-Date: Mon,  1 Apr 2024 17:41:51 +0200
-Message-ID: <20240401152549.772639647@linuxfoundation.org>
+Subject: [PATCH 6.6 063/396] cpufreq: Limit resolving a frequency to policy min/max
+Date: Mon,  1 Apr 2024 17:41:52 +0200
+Message-ID: <20240401152549.802478287@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,59 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akira Yokosawa <akiyks@gmail.com>
+From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
 
-[ Upstream commit fe2562582bffe675721e77e00b3bf5bfa1d7aeab ]
+[ Upstream commit d394abcb12bb1a6f309c1221fdb8e73594ecf1b4 ]
 
-Commit eaae75754d81 ("docs: turn off "smart quotes" in the HTML build")
-disabled conversion of quote marks along with that of dashes.
-Despite the short summary, the change affects not only HTML build
-but also other build targets including PDF.
+Resolving a frequency to an efficient one should not transgress
+policy->max (which can be set for thermal reason) and policy->min.
 
-However, as "smart quotes" had been enabled for more than half a
-decade already, quite a few readers of HTML pages are likely expecting
-conversions of "foo" -> “foo” and 'bar' -> ‘bar’.
+Currently, there is possibility where scaling_cur_freq can exceed
+scaling_max_freq when scaling_max_freq is an inefficient frequency.
 
-Furthermore, in LaTeX typesetting convention, it is common to use
-distinct marks for opening and closing quote marks.
+Add a check to ensure that resolving a frequency will respect
+policy->min/max.
 
-To satisfy such readers' expectation, restore conversion of quotes
-only by setting smartquotes_action [1].
-
-Link: [1] https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-smartquotes_action
-Cc: stable@vger.kernel.org  # v6.4
-Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20240225094600.65628-1-akiyks@gmail.com
+Cc: All applicable <stable@vger.kernel.org>
+Fixes: 1f39fa0dccff ("cpufreq: Introducing CPUFREQ_RELATION_E")
+Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+[ rjw: Whitespace adjustment, changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/conf.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/cpufreq.h | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/conf.py b/Documentation/conf.py
-index dfc19c915d5c4..e385e24fe9e72 100644
---- a/Documentation/conf.py
-+++ b/Documentation/conf.py
-@@ -345,9 +345,9 @@ sys.stderr.write("Using %s theme\n" % html_theme)
- html_static_path = ['sphinx-static']
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 71d186d6933a5..3a4cefb25ba61 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -1021,6 +1021,18 @@ static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
+ 						   efficiencies);
+ }
  
- # If true, Docutils "smart quotes" will be used to convert quotes and dashes
--# to typographically correct entities.  This will convert "--" to "—",
--# which is not always what we want, so disable it.
--smartquotes = False
-+# to typographically correct entities.  However, conversion of "--" to "—"
-+# is not always what we want, so enable only quotes.
-+smartquotes_action = 'q'
++static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
++{
++	unsigned int freq;
++
++	if (idx < 0)
++		return false;
++
++	freq = policy->freq_table[idx].frequency;
++
++	return freq == clamp_val(freq, policy->min, policy->max);
++}
++
+ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
+ 						 unsigned int target_freq,
+ 						 unsigned int relation)
+@@ -1054,7 +1066,8 @@ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
+ 		return 0;
+ 	}
  
- # Custom sidebar templates, maps document names to template names.
- # Note that the RTD theme ignores this
+-	if (idx < 0 && efficiencies) {
++	/* Limit frequency index to honor policy->min/max */
++	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
+ 		efficiencies = false;
+ 		goto retry;
+ 	}
 -- 
 2.43.0
 
