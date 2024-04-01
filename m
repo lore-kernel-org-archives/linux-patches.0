@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F95EBA3F;
-	Mon,  1 Apr 2024 17:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41ACE1C0DE7;
+	Mon,  1 Apr 2024 17:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990899; cv=none; b=XCz1vaEW8LzLC/PJ8vynbQn8V6atF1JxIXD67dEgv4MLL8i+RYXFOiSmD+N/nnmHENYUYC0TpOF1VYkucYBrCXkY4eW6zEcpqGLTMEB0Rm1dOZcgScmOkXE7c3dIQS5X/mAbb/oLXelNnSMF9onpQjZKmMhLmrYIFauXNhzlS2M=
+	t=1711990902; cv=none; b=IVQ3+Q0bTa14LoRu4KmJW+Gkrd3VHKDVESyH5uyMd3Jtn1v33uA/ynkQsFvWPilqNVXYcY+qQPDggsrvsIWjEUaUBO8UeT5Tghx0bYT6q/L02HHo7he+tPpcFRHcrZbsTd7/S07fVhcLufHjV6QGqAATKKJzYynUlDiOdnJKGjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990899; c=relaxed/simple;
-	bh=dXVbM1sVoEPjH6IQlvWbhJihCX3yx/YruJdzkUoIdWY=;
+	s=arc-20240116; t=1711990902; c=relaxed/simple;
+	bh=Prt8DmzcFDskio+QCEBYPET610Yxwzok4xLRmQjmx7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSdhs+RmraNaoKiu5E82+pG7ZF+58tvkn8Urx7H2RgOtMMDESovFt/QIRkE/HX+HOOQ9njbI5bBP1jtdE/UkNoIlFwaetFbC6KLETpEImVWFw3/HFwHVM2Oe9fus3RZ6Cno3afViwRa6asL0mfQdXahPJClhy29cSDhL595fqDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzpSD6YY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrRiuJPjiwTaFgs00v7yf/kswtNzsMDALveTmkE3mA4Jppu8EuxM8TWCQ7biIkxBUrWaYmfZbl63jsNVGSOna3uXymx8DMJxuSbo41mgxZm77uqMyNrY9IHSJszko59upeP6JXF0wb3ejmDA7og6dMrvvvPAM0LfleqATeSsJDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4FjY9e2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzpSD6YY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7791BC433C7;
-	Mon,  1 Apr 2024 17:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4FjY9e2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D847C433C7;
+	Mon,  1 Apr 2024 17:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990898;
-	bh=dXVbM1sVoEPjH6IQlvWbhJihCX3yx/YruJdzkUoIdWY=;
+	s=korg; t=1711990902;
+	bh=Prt8DmzcFDskio+QCEBYPET610Yxwzok4xLRmQjmx7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzpSD6YYRD8ZUehmqNnFrB0ax4H/M8hKfU//AATijViUobcSLBIbl3nZHcjnypSpi
-	 0Wlv5MOdYDgeJTn63sVpLABNYusQquzutLpUaDhoFqORggV0mTajlelco56mvHbRld
-	 Egy2cEzAZGiYeAkTErIKIinz+rkNWcZ2udllOcwo=
+	b=q4FjY9e2tBZ6NpJzCoHjeMLJzQQ4cLoJVT5IP8y/9sx+SdQnMpio8lrnKNsYxgEi2
+	 TOsbxx89t4iaH2OfVCqKj3Q6uPTXtHkQ0sMIlnCfJkcW+6FQYzxYWOdT28d1c7NE5B
+	 htaHb7INJIXG4Q8rGmzC01Hix/3PDYDcDEtXa7jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/272] vfio: Use GFP_KERNEL_ACCOUNT for userspace persistent allocations
-Date: Mon,  1 Apr 2024 17:44:51 +0200
-Message-ID: <20240401152533.798174239@linuxfoundation.org>
+Subject: [PATCH 6.1 102/272] vfio/pci: Consolidate irq cleanup on MSI/MSI-X disable
+Date: Mon,  1 Apr 2024 17:44:52 +0200
+Message-ID: <20240401152533.827966700@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -52,191 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 0886196ca8810c5b1f5097b71c4bc0df40b10208 ]
+[ Upstream commit a65f35cfd504e5135540939cffd4323083190b36 ]
 
-Use GFP_KERNEL_ACCOUNT for userspace persistent allocations.
+vfio_msi_disable() releases all previously allocated state
+associated with each interrupt before disabling MSI/MSI-X.
 
-The GFP_KERNEL_ACCOUNT option lets the memory allocator know that this
-is untrusted allocation triggered from userspace and should be a subject
-of kmem accounting, and as such it is controlled by the cgroup
-mechanism.
+vfio_msi_disable() iterates twice over the interrupt state:
+first directly with a for loop to do virqfd cleanup, followed
+by another for loop within vfio_msi_set_block() that removes
+the interrupt handler and its associated state using
+vfio_msi_set_vector_signal().
 
-The way to find the relevant allocations was for example to look at the
-close_device function and trace back all the kfrees to their
-allocations.
+Simplify interrupt cleanup by iterating over allocated interrupts
+once.
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20230108154427.32609-4-yishaih@nvidia.com
+Link: https://lore.kernel.org/r/837acb8cbe86a258a50da05e56a1f17c1a19abbe.1683740667.git.reinette.chatre@intel.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Stable-dep-of: fe9a7082684e ("vfio/pci: Disable auto-enable of exclusive INTx IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/container.c           |  2 +-
- drivers/vfio/pci/vfio_pci_config.c |  6 +++---
- drivers/vfio/pci/vfio_pci_core.c   |  7 ++++---
- drivers/vfio/pci/vfio_pci_igd.c    |  2 +-
- drivers/vfio/pci/vfio_pci_intrs.c  | 10 ++++++----
- drivers/vfio/pci/vfio_pci_rdwr.c   |  2 +-
- drivers/vfio/virqfd.c              |  2 +-
- 7 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/vfio/container.c b/drivers/vfio/container.c
-index d74164abbf401..ab9d8e3481f75 100644
---- a/drivers/vfio/container.c
-+++ b/drivers/vfio/container.c
-@@ -366,7 +366,7 @@ static int vfio_fops_open(struct inode *inode, struct file *filep)
- {
- 	struct vfio_container *container;
- 
--	container = kzalloc(sizeof(*container), GFP_KERNEL);
-+	container = kzalloc(sizeof(*container), GFP_KERNEL_ACCOUNT);
- 	if (!container)
- 		return -ENOMEM;
- 
-diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
-index 4a350421c5f62..523e0144c86fa 100644
---- a/drivers/vfio/pci/vfio_pci_config.c
-+++ b/drivers/vfio/pci/vfio_pci_config.c
-@@ -1244,7 +1244,7 @@ static int vfio_msi_cap_len(struct vfio_pci_core_device *vdev, u8 pos)
- 	if (vdev->msi_perm)
- 		return len;
- 
--	vdev->msi_perm = kmalloc(sizeof(struct perm_bits), GFP_KERNEL);
-+	vdev->msi_perm = kmalloc(sizeof(struct perm_bits), GFP_KERNEL_ACCOUNT);
- 	if (!vdev->msi_perm)
- 		return -ENOMEM;
- 
-@@ -1731,11 +1731,11 @@ int vfio_config_init(struct vfio_pci_core_device *vdev)
- 	 * no requirements on the length of a capability, so the gap between
- 	 * capabilities needs byte granularity.
- 	 */
--	map = kmalloc(pdev->cfg_size, GFP_KERNEL);
-+	map = kmalloc(pdev->cfg_size, GFP_KERNEL_ACCOUNT);
- 	if (!map)
- 		return -ENOMEM;
- 
--	vconfig = kmalloc(pdev->cfg_size, GFP_KERNEL);
-+	vconfig = kmalloc(pdev->cfg_size, GFP_KERNEL_ACCOUNT);
- 	if (!vconfig) {
- 		kfree(map);
- 		return -ENOMEM;
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index e030c2120183e..f357fd157e1ed 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -141,7 +141,8 @@ static void vfio_pci_probe_mmaps(struct vfio_pci_core_device *vdev)
- 			 * of the exclusive page in case that hot-add
- 			 * device's bar is assigned into it.
- 			 */
--			dummy_res = kzalloc(sizeof(*dummy_res), GFP_KERNEL);
-+			dummy_res =
-+				kzalloc(sizeof(*dummy_res), GFP_KERNEL_ACCOUNT);
- 			if (dummy_res == NULL)
- 				goto no_mmap;
- 
-@@ -856,7 +857,7 @@ int vfio_pci_core_register_dev_region(struct vfio_pci_core_device *vdev,
- 
- 	region = krealloc(vdev->region,
- 			  (vdev->num_regions + 1) * sizeof(*region),
--			  GFP_KERNEL);
-+			  GFP_KERNEL_ACCOUNT);
- 	if (!region)
- 		return -ENOMEM;
- 
-@@ -1637,7 +1638,7 @@ static int __vfio_pci_add_vma(struct vfio_pci_core_device *vdev,
- {
- 	struct vfio_pci_mmap_vma *mmap_vma;
- 
--	mmap_vma = kmalloc(sizeof(*mmap_vma), GFP_KERNEL);
-+	mmap_vma = kmalloc(sizeof(*mmap_vma), GFP_KERNEL_ACCOUNT);
- 	if (!mmap_vma)
- 		return -ENOMEM;
- 
-diff --git a/drivers/vfio/pci/vfio_pci_igd.c b/drivers/vfio/pci/vfio_pci_igd.c
-index 5e6ca59269548..dd70e2431bd74 100644
---- a/drivers/vfio/pci/vfio_pci_igd.c
-+++ b/drivers/vfio/pci/vfio_pci_igd.c
-@@ -180,7 +180,7 @@ static int vfio_pci_igd_opregion_init(struct vfio_pci_core_device *vdev)
- 	if (!addr || !(~addr))
- 		return -ENODEV;
- 
--	opregionvbt = kzalloc(sizeof(*opregionvbt), GFP_KERNEL);
-+	opregionvbt = kzalloc(sizeof(*opregionvbt), GFP_KERNEL_ACCOUNT);
- 	if (!opregionvbt)
- 		return -ENOMEM;
- 
 diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 40c3d7cf163f6..bffb0741518b9 100644
+index bffb0741518b9..6a9c6a143cc3a 100644
 --- a/drivers/vfio/pci/vfio_pci_intrs.c
 +++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -177,7 +177,7 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev)
- 	if (!vdev->pdev->irq)
- 		return -ENODEV;
- 
--	vdev->ctx = kzalloc(sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
-+	vdev->ctx = kzalloc(sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL_ACCOUNT);
- 	if (!vdev->ctx)
- 		return -ENOMEM;
- 
-@@ -216,7 +216,7 @@ static int vfio_intx_set_signal(struct vfio_pci_core_device *vdev, int fd)
- 	if (fd < 0) /* Disable only */
- 		return 0;
- 
--	vdev->ctx[0].name = kasprintf(GFP_KERNEL, "vfio-intx(%s)",
-+	vdev->ctx[0].name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-intx(%s)",
- 				      pci_name(pdev));
- 	if (!vdev->ctx[0].name)
- 		return -ENOMEM;
-@@ -284,7 +284,8 @@ static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msi
- 	if (!is_irq_none(vdev))
- 		return -EINVAL;
- 
--	vdev->ctx = kcalloc(nvec, sizeof(struct vfio_pci_irq_ctx), GFP_KERNEL);
-+	vdev->ctx = kcalloc(nvec, sizeof(struct vfio_pci_irq_ctx),
-+			    GFP_KERNEL_ACCOUNT);
- 	if (!vdev->ctx)
- 		return -ENOMEM;
- 
-@@ -343,7 +344,8 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
- 	if (fd < 0)
- 		return 0;
- 
--	vdev->ctx[vector].name = kasprintf(GFP_KERNEL, "vfio-msi%s[%d](%s)",
-+	vdev->ctx[vector].name = kasprintf(GFP_KERNEL_ACCOUNT,
-+					   "vfio-msi%s[%d](%s)",
- 					   msix ? "x" : "", vector,
- 					   pci_name(pdev));
- 	if (!vdev->ctx[vector].name)
-diff --git a/drivers/vfio/pci/vfio_pci_rdwr.c b/drivers/vfio/pci/vfio_pci_rdwr.c
-index e352a033b4aef..e27de61ac9fe7 100644
---- a/drivers/vfio/pci/vfio_pci_rdwr.c
-+++ b/drivers/vfio/pci/vfio_pci_rdwr.c
-@@ -470,7 +470,7 @@ int vfio_pci_ioeventfd(struct vfio_pci_core_device *vdev, loff_t offset,
- 		goto out_unlock;
+@@ -426,10 +426,9 @@ static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+ 	for (i = 0; i < vdev->num_ctx; i++) {
+ 		vfio_virqfd_disable(&vdev->ctx[i].unmask);
+ 		vfio_virqfd_disable(&vdev->ctx[i].mask);
++		vfio_msi_set_vector_signal(vdev, i, -1, msix);
  	}
  
--	ioeventfd = kzalloc(sizeof(*ioeventfd), GFP_KERNEL);
-+	ioeventfd = kzalloc(sizeof(*ioeventfd), GFP_KERNEL_ACCOUNT);
- 	if (!ioeventfd) {
- 		ret = -ENOMEM;
- 		goto out_unlock;
-diff --git a/drivers/vfio/virqfd.c b/drivers/vfio/virqfd.c
-index 414e98d82b02e..a928c68df4763 100644
---- a/drivers/vfio/virqfd.c
-+++ b/drivers/vfio/virqfd.c
-@@ -115,7 +115,7 @@ int vfio_virqfd_enable(void *opaque,
- 	int ret = 0;
- 	__poll_t events;
- 
--	virqfd = kzalloc(sizeof(*virqfd), GFP_KERNEL);
-+	virqfd = kzalloc(sizeof(*virqfd), GFP_KERNEL_ACCOUNT);
- 	if (!virqfd)
- 		return -ENOMEM;
- 
+-	vfio_msi_set_block(vdev, 0, vdev->num_ctx, NULL, msix);
+-
+ 	cmd = vfio_pci_memory_lock_and_enable(vdev);
+ 	pci_free_irq_vectors(pdev);
+ 	vfio_pci_memory_unlock_and_restore(vdev, cmd);
 -- 
 2.43.0
 
