@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23F61DFF4;
-	Mon,  1 Apr 2024 17:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA841C0DE7;
+	Mon,  1 Apr 2024 17:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990936; cv=none; b=BafEFfImdeuyt6qle3ZZ4UKMlQobREyC19unGOBoHiDqt/JfSogKFzGi04gncbrlPjG9WphJlphuauzLvx4oM/dDf4nyrTuPg1ivQVT2VBj2Rvsksc92uEcPas8rtsjJtXVIBaO+69gdfiRZgGGDJQ9/WlYG+rfDh72/vuH71iw=
+	t=1711990939; cv=none; b=flvWS5a/0B82BSqbxJ6rVg0wbd4Vjm0y09BvWbhNa9Dod7cQcR83pk2YaZ83dw1clu5HuGxAZBU09gJePnS7xyj0+4mbA6aRBHQikaKbGFiTDnHQ46bdE0SvIneTqxe2J/BrWHz8QBzFKZOIEhSJx0VRHeihrgttXH2oG/VD5AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990936; c=relaxed/simple;
-	bh=+ejQoD9Sk9GP1DpyVWMvkS0mkaB0tZ/RUIvbgziptlM=;
+	s=arc-20240116; t=1711990939; c=relaxed/simple;
+	bh=R6UIBp6Yv9a8alvLqMGs2ySIhflvEB/PTK/5J6Zfh+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivRu7NBZ2Zt2zhU8sBafaR8XyxLJOZ2Sd0Hdtns5UCBJC6z9jduW0Mlatzw+Oo5lRn1b2ButNMmO3VoSiZXlx9gG0/jxdz/B+bS+0vNdFCUiULSxuC/5Q7DIWn56cAZ3+vhHMhjfCRiNxNorzfgq7bxrh/vR4YCKkV+vXWhPnD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNFIC02U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFPygXKkg0dxouo4MG8KdTNiQebxfZn36KR6JZs1XpvsoVDkEeRBq/cOS3MuNBV1f9/1hulHJuVS9q7wJA0bcUP/QKbpNw+IJYUenOYQarPho59N1tX5Lzn7ugRb4qZ6H4rOGHzdaJg+LxaulVwPHau6DX1woBXW1Eas27Rc0Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaJvfdzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNFIC02U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B51C433C7;
-	Mon,  1 Apr 2024 17:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaJvfdzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28855C433F1;
+	Mon,  1 Apr 2024 17:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990936;
-	bh=+ejQoD9Sk9GP1DpyVWMvkS0mkaB0tZ/RUIvbgziptlM=;
+	s=korg; t=1711990939;
+	bh=R6UIBp6Yv9a8alvLqMGs2ySIhflvEB/PTK/5J6Zfh+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNFIC02UxVoWY2kC+Mhpyd2Upu03gGmbfwwOs7MxEYs/DO1bHx58TSEFmdtCUJM6L
-	 ONQV4zxvD4AwXQd9xXoQrwUASXD/3ilzk3XUb0gahWue8l84AIqUrGqxYoXIdcqvdI
-	 TOeUcagP7vL9oLbJw19Rp7nZd/Cd4o/wnyMbDseI=
+	b=NaJvfdzVqloK/ryiqHCOY7wZPkF8GfjyYdMpL2AkUo34mBc4Ise+1QFbSOS7dUrkU
+	 o+ywA28r0l7qFMfwR1Pfpd5m3O7/Ucm0aNPr/L+p4kbDLa0/RH5jv4zRC0OFldbTRf
+	 5MDwPa6AIuXswn+wXUb27wmWy7Zn+S01wSSDH3E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Camelia Groza <camelia.groza@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stable@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/272] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
-Date: Mon,  1 Apr 2024 17:45:02 +0200
-Message-ID: <20240401152534.158847613@linuxfoundation.org>
+Subject: [PATCH 6.1 086/272] nvmem: meson-efuse: fix function pointer type mismatch
+Date: Mon,  1 Apr 2024 17:44:36 +0200
+Message-ID: <20240401152533.311706469@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -53,71 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
+[ Upstream commit cbd38332c140829ab752ba4e727f98be5c257f18 ]
 
-smp_call_function_single disables IRQs when executing the callback. To
-prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
-This is already done by qman_update_cgr and qman_delete_cgr; fix the
-other lockers.
+clang-16 warns about casting functions to incompatible types, as is done
+here to call clk_disable_unprepare:
 
-Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
-CC: stable@vger.kernel.org
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+drivers/nvmem/meson-efuse.c:78:12: error: cast from 'void (*)(struct clk *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+   78 |                                        (void(*)(void *))clk_disable_unprepare,
+
+The pattern of getting, enabling and setting a disable callback for a
+clock can be replaced with devm_clk_get_enabled(), which also fixes
+this warning.
+
+Fixes: 611fbca1c861 ("nvmem: meson-efuse: add peripheral clock")
+Cc: Stable@vger.kernel.org
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240224114023.85535-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/nvmem/meson-efuse.c | 25 +++----------------------
+ 1 file changed, 3 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index 739e4eee6b75c..1bf1f1ea67f00 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -1456,11 +1456,11 @@ static void qm_congestion_task(struct work_struct *work)
- 	union qm_mc_result *mcr;
- 	struct qman_cgr *cgr;
+diff --git a/drivers/nvmem/meson-efuse.c b/drivers/nvmem/meson-efuse.c
+index d6b533497ce1a..ba2714bef8d0e 100644
+--- a/drivers/nvmem/meson-efuse.c
++++ b/drivers/nvmem/meson-efuse.c
+@@ -47,7 +47,6 @@ static int meson_efuse_probe(struct platform_device *pdev)
+ 	struct nvmem_config *econfig;
+ 	struct clk *clk;
+ 	unsigned int size;
+-	int ret;
  
--	spin_lock(&p->cgr_lock);
-+	spin_lock_irq(&p->cgr_lock);
- 	qm_mc_start(&p->p);
- 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
- 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
--		spin_unlock(&p->cgr_lock);
-+		spin_unlock_irq(&p->cgr_lock);
- 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
- 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
- 		return;
-@@ -1476,7 +1476,7 @@ static void qm_congestion_task(struct work_struct *work)
- 	list_for_each_entry(cgr, &p->cgr_cbs, node)
- 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
- 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
--	spin_unlock(&p->cgr_lock);
-+	spin_unlock_irq(&p->cgr_lock);
- 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
- }
+ 	sm_np = of_parse_phandle(pdev->dev.of_node, "secure-monitor", 0);
+ 	if (!sm_np) {
+@@ -60,27 +59,9 @@ static int meson_efuse_probe(struct platform_device *pdev)
+ 	if (!fw)
+ 		return -EPROBE_DEFER;
  
-@@ -2440,7 +2440,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	preempt_enable();
+-	clk = devm_clk_get(dev, NULL);
+-	if (IS_ERR(clk)) {
+-		ret = PTR_ERR(clk);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(dev, "failed to get efuse gate");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(clk);
+-	if (ret) {
+-		dev_err(dev, "failed to enable gate");
+-		return ret;
+-	}
+-
+-	ret = devm_add_action_or_reset(dev,
+-				       (void(*)(void *))clk_disable_unprepare,
+-				       clk);
+-	if (ret) {
+-		dev_err(dev, "failed to add disable callback");
+-		return ret;
+-	}
++	clk = devm_clk_get_enabled(dev, NULL);
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk), "failed to get efuse gate");
  
- 	cgr->chan = p->config->channel;
--	spin_lock(&p->cgr_lock);
-+	spin_lock_irq(&p->cgr_lock);
- 
- 	if (opts) {
- 		struct qm_mcc_initcgr local_opts = *opts;
-@@ -2477,7 +2477,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
- 		cgr->cb(p, cgr, 1);
- out:
--	spin_unlock(&p->cgr_lock);
-+	spin_unlock_irq(&p->cgr_lock);
- 	put_affine_portal();
- 	return ret;
- }
+ 	if (meson_sm_call(fw, SM_EFUSE_USER_MAX, &size, 0, 0, 0, 0, 0) < 0) {
+ 		dev_err(dev, "failed to get max user");
 -- 
 2.43.0
 
