@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB70383BA;
-	Mon,  1 Apr 2024 15:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5052447A55;
+	Mon,  1 Apr 2024 15:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987162; cv=none; b=Wl7T43uVzV66MJa8wcP4J60d6+m7UIUxYcijMOkD+A4VArBchQiNXYdzJSMz/qBpiXjiLbY+CEbB8uNHnDvX61bE64OIqncdK3Lv4t9fPAaH4pZtWUGjCFHhh0jIF2+2bmxvThkpFQtvaDvVUKxvszWdAmGwEOQQJn2oDG6PORw=
+	t=1711987165; cv=none; b=LXyzdP19fe/KTFgROacSUgbg5mFlvhH3qk7rWSvxaq0ZuDSgR3sKcnvTqNPgcIV7eX0oxeuXgEpt9bnTXW6ecZ8RaAmejunazuyPK2/YTs/ObWUEzbo9YUud5rVZZN3Im6Nbg1pX57btugHn2XlQ6u0G0nDaZ7JBJmND87+gZCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987162; c=relaxed/simple;
-	bh=iPrN7jjmAEMDRxX9JQBoyODFcP4lo4/ScFxQZKb+Fz8=;
+	s=arc-20240116; t=1711987165; c=relaxed/simple;
+	bh=UId+cSejJ7mZJ02ieOZPcft9alG4qMifqA9QRd4wjx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDbqQWPDhykQiVh7lWhZGfrLil8H9m5Ji5MddKc9vVNuCYjGENJyhR7WLHnKesgjZoShLZofTf6LiIRsaObL4sZlvQ/d1zBtc1f2pFVvFrdtHt/InEDycwFlKcEL7/nkom9hcmMpPrwngqiqERHHfFqjCCOVI8mDc6zB4s+Gr8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5yq6NDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ex4b7gGBSAHUKXev/tJk4QEdVoE0iimOLecYSg1iI7TDB7aQw6dSXesVkel1Qat8sQfxSq4UUWZ5SEaxzhXsVhBA8jCSIwnDsso34muScpz5TARNf4lPYoSO6J94odqblO6M6UPdvUi6BPAYOVAoNpNSXO0phaWIurm7X43pmeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLXip2Nj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5yq6NDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE11C433F1;
-	Mon,  1 Apr 2024 15:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLXip2Nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2762C433C7;
+	Mon,  1 Apr 2024 15:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987162;
-	bh=iPrN7jjmAEMDRxX9JQBoyODFcP4lo4/ScFxQZKb+Fz8=;
+	s=korg; t=1711987165;
+	bh=UId+cSejJ7mZJ02ieOZPcft9alG4qMifqA9QRd4wjx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5yq6NDLwWwlaFzcaSD6Q/VtEKgm1HGP1DrhP1dkJmwlAvJSiFyKfY5liqsBSWvv7
-	 lNhIjCSSjdrLqdvgcoqWZ55odnFLEaarQx3nUVyqHuXC/Ie867K3V1uPhIiKBCChZy
-	 EkaALkYwxrPZqtlTNhEquTpQFcnQXLoRqHFAA75Q=
+	b=CLXip2NjEGu8SRxC4tQlP7cv1R9BWJyqD+7hABh6UR83WTylJRnGvJ2D5Kf+rKtlp
+	 lijlw4IxW4KTRKsjKGWZqRXUrsFaGkIXuOupvHVXDfqI3eRviUQbZ63TinP9+uJhjz
+	 KnMVk2Ahx+pWxBWjM66mUsa9Ltsbd35QXrJrZ0TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>,
-	"Dmitry V . Levin" <ldv@strace.io>
-Subject: [PATCH 6.8 173/399] lsm: use 32-bit compatible data types in LSM syscalls
-Date: Mon,  1 Apr 2024 17:42:19 +0200
-Message-ID: <20240401152554.342130860@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 164/399] s390/zcrypt: fix reference counting on zcrypt card objects
+Date: Mon,  1 Apr 2024 17:42:10 +0200
+Message-ID: <20240401152554.077368212@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,399 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Schaufler <casey@schaufler-ca.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit a5a858f622a0aff5cdb5e271442cd01b2a01467f ]
+[ Upstream commit 50ed48c80fecbe17218afed4f8bed005c802976c ]
 
-Change the size parameters in lsm_list_modules(), lsm_set_self_attr()
-and lsm_get_self_attr() from size_t to u32. This avoids the need to
-have different interfaces for 32 and 64 bit systems.
+Tests with hot-plugging crytpo cards on KVM guests with debug
+kernel build revealed an use after free for the load field of
+the struct zcrypt_card. The reason was an incorrect reference
+handling of the zcrypt card object which could lead to a free
+of the zcrypt card object while it was still in use.
 
+This is an example of the slab message:
+
+    kernel: 0x00000000885a7512-0x00000000885a7513 @offset=1298. First byte 0x68 instead of 0x6b
+    kernel: Allocated in zcrypt_card_alloc+0x36/0x70 [zcrypt] age=18046 cpu=3 pid=43
+    kernel:  kmalloc_trace+0x3f2/0x470
+    kernel:  zcrypt_card_alloc+0x36/0x70 [zcrypt]
+    kernel:  zcrypt_cex4_card_probe+0x26/0x380 [zcrypt_cex4]
+    kernel:  ap_device_probe+0x15c/0x290
+    kernel:  really_probe+0xd2/0x468
+    kernel:  driver_probe_device+0x40/0xf0
+    kernel:  __device_attach_driver+0xc0/0x140
+    kernel:  bus_for_each_drv+0x8c/0xd0
+    kernel:  __device_attach+0x114/0x198
+    kernel:  bus_probe_device+0xb4/0xc8
+    kernel:  device_add+0x4d2/0x6e0
+    kernel:  ap_scan_adapter+0x3d0/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel: Freed in zcrypt_card_put+0x54/0x80 [zcrypt] age=9024 cpu=3 pid=43
+    kernel:  kfree+0x37e/0x418
+    kernel:  zcrypt_card_put+0x54/0x80 [zcrypt]
+    kernel:  ap_device_remove+0x4c/0xe0
+    kernel:  device_release_driver_internal+0x1c4/0x270
+    kernel:  bus_remove_device+0x100/0x188
+    kernel:  device_del+0x164/0x3c0
+    kernel:  device_unregister+0x30/0x90
+    kernel:  ap_scan_adapter+0xc8/0x7c0
+    kernel:  ap_scan_bus+0x5a/0x3b0
+    kernel:  ap_scan_bus_wq_callback+0x40/0x60
+    kernel:  process_one_work+0x26e/0x620
+    kernel:  worker_thread+0x21c/0x440
+    kernel:  kthread+0x150/0x168
+    kernel:  __ret_from_fork+0x3c/0x58
+    kernel:  ret_from_fork+0xa/0x30
+    kernel: Slab 0x00000372022169c0 objects=20 used=18 fp=0x00000000885a7c88 flags=0x3ffff00000000a00(workingset|slab|node=0|zone=1|lastcpupid=0x1ffff)
+    kernel: Object 0x00000000885a74b8 @offset=1208 fp=0x00000000885a7c88
+    kernel: Redzone  00000000885a74b0: bb bb bb bb bb bb bb bb                          ........
+    kernel: Object   00000000885a74b8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74c8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74d8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74e8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a74f8: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+    kernel: Object   00000000885a7508: 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 68 4b 6b 6b 6b a5  kkkkkkkkkkhKkkk.
+    kernel: Redzone  00000000885a7518: bb bb bb bb bb bb bb bb                          ........
+    kernel: Padding  00000000885a756c: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
+    kernel: CPU: 0 PID: 387 Comm: systemd-udevd Not tainted 6.8.0-HF #2
+    kernel: Hardware name: IBM 3931 A01 704 (KVM/Linux)
+    kernel: Call Trace:
+    kernel:  [<00000000ca5ab5b8>] dump_stack_lvl+0x90/0x120
+    kernel:  [<00000000c99d78bc>] check_bytes_and_report+0x114/0x140
+    kernel:  [<00000000c99d53cc>] check_object+0x334/0x3f8
+    kernel:  [<00000000c99d820c>] alloc_debug_processing+0xc4/0x1f8
+    kernel:  [<00000000c99d852e>] get_partial_node.part.0+0x1ee/0x3e0
+    kernel:  [<00000000c99d94ec>] ___slab_alloc+0xaf4/0x13c8
+    kernel:  [<00000000c99d9e38>] __slab_alloc.constprop.0+0x78/0xb8
+    kernel:  [<00000000c99dc8dc>] __kmalloc+0x434/0x590
+    kernel:  [<00000000c9b4c0ce>] ext4_htree_store_dirent+0x4e/0x1c0
+    kernel:  [<00000000c9b908a2>] htree_dirblock_to_tree+0x17a/0x3f0
+    kernel:  [<00000000c9b919dc>] ext4_htree_fill_tree+0x134/0x400
+    kernel:  [<00000000c9b4b3d0>] ext4_dx_readdir+0x160/0x2f0
+    kernel:  [<00000000c9b4bedc>] ext4_readdir+0x5f4/0x760
+    kernel:  [<00000000c9a7efc4>] iterate_dir+0xb4/0x280
+    kernel:  [<00000000c9a7f1ea>] __do_sys_getdents64+0x5a/0x120
+    kernel:  [<00000000ca5d6946>] __do_syscall+0x256/0x310
+    kernel:  [<00000000ca5eea10>] system_call+0x70/0x98
+    kernel: INFO: lockdep is turned off.
+    kernel: FIX kmalloc-96: Restoring Poison 0x00000000885a7512-0x00000000885a7513=0x6b
+    kernel: FIX kmalloc-96: Marking all objects used
+
+The fix is simple: Before use of the queue not only the queue object
+but also the card object needs to increase it's reference count
+with a call to zcrypt_card_get(). Similar after use of the queue
+not only the queue but also the card object's reference count is
+decreased with zcrypt_card_put().
+
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Fixes: a04a1198088a ("LSM: syscalls for current process attributes")
-Fixes: ad4aff9ec25f ("LSM: Create lsm_list_modules system call")
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
-Reported-and-reviewed-by: Dmitry V. Levin <ldv@strace.io>
-[PM: subject and metadata tweaks, syscall.h fixes]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/lsm_hook_defs.h                        |  4 ++--
- include/linux/security.h                             |  8 ++++----
- include/linux/syscalls.h                             |  6 +++---
- security/apparmor/lsm.c                              |  4 ++--
- security/lsm_syscalls.c                              | 10 +++++-----
- security/security.c                                  | 12 ++++++------
- security/selinux/hooks.c                             |  4 ++--
- security/smack/smack_lsm.c                           |  4 ++--
- tools/testing/selftests/lsm/common.h                 |  6 +++---
- tools/testing/selftests/lsm/lsm_get_self_attr_test.c | 10 +++++-----
- tools/testing/selftests/lsm/lsm_list_modules_test.c  |  8 ++++----
- tools/testing/selftests/lsm/lsm_set_self_attr_test.c |  6 +++---
- 12 files changed, 41 insertions(+), 41 deletions(-)
+ drivers/s390/crypto/zcrypt_api.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/lsm_hook_defs.h b/include/linux/lsm_hook_defs.h
-index 76458b6d53da7..f9b5baf1b5f46 100644
---- a/include/linux/lsm_hook_defs.h
-+++ b/include/linux/lsm_hook_defs.h
-@@ -265,9 +265,9 @@ LSM_HOOK(int, 0, netlink_send, struct sock *sk, struct sk_buff *skb)
- LSM_HOOK(void, LSM_RET_VOID, d_instantiate, struct dentry *dentry,
- 	 struct inode *inode)
- LSM_HOOK(int, -EOPNOTSUPP, getselfattr, unsigned int attr,
--	 struct lsm_ctx __user *ctx, size_t *size, u32 flags)
-+	 struct lsm_ctx __user *ctx, u32 *size, u32 flags)
- LSM_HOOK(int, -EOPNOTSUPP, setselfattr, unsigned int attr,
--	 struct lsm_ctx *ctx, size_t size, u32 flags)
-+	 struct lsm_ctx *ctx, u32 size, u32 flags)
- LSM_HOOK(int, -EINVAL, getprocattr, struct task_struct *p, const char *name,
- 	 char **value)
- LSM_HOOK(int, -EINVAL, setprocattr, const char *name, void *value, size_t size)
-diff --git a/include/linux/security.h b/include/linux/security.h
-index d0eb20f90b264..3180d823e0233 100644
---- a/include/linux/security.h
-+++ b/include/linux/security.h
-@@ -478,9 +478,9 @@ int security_sem_semop(struct kern_ipc_perm *sma, struct sembuf *sops,
- 			unsigned nsops, int alter);
- void security_d_instantiate(struct dentry *dentry, struct inode *inode);
- int security_getselfattr(unsigned int attr, struct lsm_ctx __user *ctx,
--			 size_t __user *size, u32 flags);
-+			 u32 __user *size, u32 flags);
- int security_setselfattr(unsigned int attr, struct lsm_ctx __user *ctx,
--			 size_t size, u32 flags);
-+			 u32 size, u32 flags);
- int security_getprocattr(struct task_struct *p, int lsmid, const char *name,
- 			 char **value);
- int security_setprocattr(int lsmid, const char *name, void *value, size_t size);
-@@ -494,7 +494,7 @@ int security_inode_notifysecctx(struct inode *inode, void *ctx, u32 ctxlen);
- int security_inode_setsecctx(struct dentry *dentry, void *ctx, u32 ctxlen);
- int security_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen);
- int security_locked_down(enum lockdown_reason what);
--int lsm_fill_user_ctx(struct lsm_ctx __user *uctx, size_t *uctx_len,
-+int lsm_fill_user_ctx(struct lsm_ctx __user *uctx, u32 *uctx_len,
- 		      void *val, size_t val_len, u64 id, u64 flags);
- #else /* CONFIG_SECURITY */
- 
-@@ -1434,7 +1434,7 @@ static inline int security_locked_down(enum lockdown_reason what)
- 	return 0;
- }
- static inline int lsm_fill_user_ctx(struct lsm_ctx __user *uctx,
--				    size_t *uctx_len, void *val, size_t val_len,
-+				    u32 *uctx_len, void *val, size_t val_len,
- 				    u64 id, u64 flags)
+diff --git a/drivers/s390/crypto/zcrypt_api.c b/drivers/s390/crypto/zcrypt_api.c
+index 74200f54dfff7..53ddae5ad890b 100644
+--- a/drivers/s390/crypto/zcrypt_api.c
++++ b/drivers/s390/crypto/zcrypt_api.c
+@@ -579,6 +579,7 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
  {
- 	return -EOPNOTSUPP;
-diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index 77eb9b0e76850..e619ac10cd234 100644
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -960,10 +960,10 @@ asmlinkage long sys_cachestat(unsigned int fd,
- 		struct cachestat __user *cstat, unsigned int flags);
- asmlinkage long sys_map_shadow_stack(unsigned long addr, unsigned long size, unsigned int flags);
- asmlinkage long sys_lsm_get_self_attr(unsigned int attr, struct lsm_ctx *ctx,
--				      size_t *size, __u32 flags);
-+				      u32 *size, u32 flags);
- asmlinkage long sys_lsm_set_self_attr(unsigned int attr, struct lsm_ctx *ctx,
--				      size_t size, __u32 flags);
--asmlinkage long sys_lsm_list_modules(u64 *ids, size_t *size, u32 flags);
-+				      u32 size, u32 flags);
-+asmlinkage long sys_lsm_list_modules(u64 *ids, u32 *size, u32 flags);
- 
- /*
-  * Architecture-specific system calls
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index 9a3dcaafb5b1e..cef8c466af80d 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -779,7 +779,7 @@ static int apparmor_sb_pivotroot(const struct path *old_path,
+ 	if (!zq || !try_module_get(zq->queue->ap_dev.device.driver->owner))
+ 		return NULL;
++	zcrypt_card_get(zc);
+ 	zcrypt_queue_get(zq);
+ 	get_device(&zq->queue->ap_dev.device);
+ 	atomic_add(weight, &zc->load);
+@@ -598,6 +599,7 @@ static inline void zcrypt_drop_queue(struct zcrypt_card *zc,
+ 	atomic_sub(weight, &zq->load);
+ 	put_device(&zq->queue->ap_dev.device);
+ 	zcrypt_queue_put(zq);
++	zcrypt_card_put(zc);
+ 	module_put(mod);
  }
  
- static int apparmor_getselfattr(unsigned int attr, struct lsm_ctx __user *lx,
--				size_t *size, u32 flags)
-+				u32 *size, u32 flags)
- {
- 	int error = -ENOENT;
- 	struct aa_task_ctx *ctx = task_ctx(current);
-@@ -924,7 +924,7 @@ static int do_setattr(u64 attr, void *value, size_t size)
- }
- 
- static int apparmor_setselfattr(unsigned int attr, struct lsm_ctx *ctx,
--				size_t size, u32 flags)
-+				u32 size, u32 flags)
- {
- 	int rc;
- 
-diff --git a/security/lsm_syscalls.c b/security/lsm_syscalls.c
-index 5d391b1f7e694..8440948a690c9 100644
---- a/security/lsm_syscalls.c
-+++ b/security/lsm_syscalls.c
-@@ -53,7 +53,7 @@ u64 lsm_name_to_attr(const char *name)
-  * value indicating the reason for the error is returned.
-  */
- SYSCALL_DEFINE4(lsm_set_self_attr, unsigned int, attr, struct lsm_ctx __user *,
--		ctx, size_t, size, u32, flags)
-+		ctx, u32, size, u32, flags)
- {
- 	return security_setselfattr(attr, ctx, size, flags);
- }
-@@ -75,7 +75,7 @@ SYSCALL_DEFINE4(lsm_set_self_attr, unsigned int, attr, struct lsm_ctx __user *,
-  * a negative value indicating the error is returned.
-  */
- SYSCALL_DEFINE4(lsm_get_self_attr, unsigned int, attr, struct lsm_ctx __user *,
--		ctx, size_t __user *, size, u32, flags)
-+		ctx, u32 __user *, size, u32, flags)
- {
- 	return security_getselfattr(attr, ctx, size, flags);
- }
-@@ -93,11 +93,11 @@ SYSCALL_DEFINE4(lsm_get_self_attr, unsigned int, attr, struct lsm_ctx __user *,
-  * required size. In all other cases a negative value indicating the
-  * error is returned.
-  */
--SYSCALL_DEFINE3(lsm_list_modules, u64 __user *, ids, size_t __user *, size,
-+SYSCALL_DEFINE3(lsm_list_modules, u64 __user *, ids, u32 __user *, size,
- 		u32, flags)
- {
--	size_t total_size = lsm_active_cnt * sizeof(*ids);
--	size_t usize;
-+	u32 total_size = lsm_active_cnt * sizeof(*ids);
-+	u32 usize;
- 	int i;
- 
- 	if (flags)
-diff --git a/security/security.c b/security/security.c
-index 7035ee35a3930..fb7505c734853 100644
---- a/security/security.c
-+++ b/security/security.c
-@@ -785,7 +785,7 @@ static int lsm_superblock_alloc(struct super_block *sb)
-  * Returns 0 on success, -E2BIG if userspace buffer is not large enough,
-  * -EFAULT on a copyout error, -ENOMEM if memory can't be allocated.
-  */
--int lsm_fill_user_ctx(struct lsm_ctx __user *uctx, size_t *uctx_len,
-+int lsm_fill_user_ctx(struct lsm_ctx __user *uctx, u32 *uctx_len,
- 		      void *val, size_t val_len,
- 		      u64 id, u64 flags)
- {
-@@ -3918,14 +3918,14 @@ EXPORT_SYMBOL(security_d_instantiate);
-  * If @size is insufficient to contain the data -E2BIG is returned.
-  */
- int security_getselfattr(unsigned int attr, struct lsm_ctx __user *uctx,
--			 size_t __user *size, u32 flags)
-+			 u32 __user *size, u32 flags)
- {
- 	struct security_hook_list *hp;
- 	struct lsm_ctx lctx = { .id = LSM_ID_UNDEF, };
- 	u8 __user *base = (u8 __user *)uctx;
--	size_t total = 0;
--	size_t entrysize;
--	size_t left;
-+	u32 entrysize;
-+	u32 total = 0;
-+	u32 left;
- 	bool toobig = false;
- 	bool single = false;
- 	int count = 0;
-@@ -4011,7 +4011,7 @@ int security_getselfattr(unsigned int attr, struct lsm_ctx __user *uctx,
-  * LSM specific failure.
-  */
- int security_setselfattr(unsigned int attr, struct lsm_ctx __user *uctx,
--			 size_t size, u32 flags)
-+			 u32 size, u32 flags)
- {
- 	struct security_hook_list *hp;
- 	struct lsm_ctx *lctx;
-diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
-index 338b023a8c3ed..71e6e7079d7f7 100644
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -6556,7 +6556,7 @@ static int selinux_lsm_setattr(u64 attr, void *value, size_t size)
-  * There will only ever be one attribute.
-  */
- static int selinux_getselfattr(unsigned int attr, struct lsm_ctx __user *ctx,
--			       size_t *size, u32 flags)
-+			       u32 *size, u32 flags)
- {
- 	int rc;
- 	char *val = NULL;
-@@ -6571,7 +6571,7 @@ static int selinux_getselfattr(unsigned int attr, struct lsm_ctx __user *ctx,
- }
- 
- static int selinux_setselfattr(unsigned int attr, struct lsm_ctx *ctx,
--			       size_t size, u32 flags)
-+			       u32 size, u32 flags)
- {
- 	int rc;
- 
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 6e5f74813c101..6f9a80783a5a3 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -3651,7 +3651,7 @@ static void smack_d_instantiate(struct dentry *opt_dentry, struct inode *inode)
-  * There will only ever be one attribute.
-  */
- static int smack_getselfattr(unsigned int attr, struct lsm_ctx __user *ctx,
--			     size_t *size, u32 flags)
-+			     u32 *size, u32 flags)
- {
- 	int rc;
- 	struct smack_known *skp;
-@@ -3772,7 +3772,7 @@ static int do_setattr(u64 attr, void *value, size_t size)
-  * Returns 0 on success, an error code otherwise.
-  */
- static int smack_setselfattr(unsigned int attr, struct lsm_ctx *ctx,
--			     size_t size, u32 flags)
-+			     u32 size, u32 flags)
- {
- 	int rc;
- 
-diff --git a/tools/testing/selftests/lsm/common.h b/tools/testing/selftests/lsm/common.h
-index d404329e5eeb7..06d12110d241b 100644
---- a/tools/testing/selftests/lsm/common.h
-+++ b/tools/testing/selftests/lsm/common.h
-@@ -7,7 +7,7 @@
- 
- #ifndef lsm_get_self_attr
- static inline int lsm_get_self_attr(unsigned int attr, struct lsm_ctx *ctx,
--				    size_t *size, __u32 flags)
-+				    __u32 *size, __u32 flags)
- {
- 	return syscall(__NR_lsm_get_self_attr, attr, ctx, size, flags);
- }
-@@ -15,14 +15,14 @@ static inline int lsm_get_self_attr(unsigned int attr, struct lsm_ctx *ctx,
- 
- #ifndef lsm_set_self_attr
- static inline int lsm_set_self_attr(unsigned int attr, struct lsm_ctx *ctx,
--				    size_t size, __u32 flags)
-+				    __u32 size, __u32 flags)
- {
- 	return syscall(__NR_lsm_set_self_attr, attr, ctx, size, flags);
- }
- #endif
- 
- #ifndef lsm_list_modules
--static inline int lsm_list_modules(__u64 *ids, size_t *size, __u32 flags)
-+static inline int lsm_list_modules(__u64 *ids, __u32 *size, __u32 flags)
- {
- 	return syscall(__NR_lsm_list_modules, ids, size, flags);
- }
-diff --git a/tools/testing/selftests/lsm/lsm_get_self_attr_test.c b/tools/testing/selftests/lsm/lsm_get_self_attr_test.c
-index e0e313d9047a3..df215e4aa63fe 100644
---- a/tools/testing/selftests/lsm/lsm_get_self_attr_test.c
-+++ b/tools/testing/selftests/lsm/lsm_get_self_attr_test.c
-@@ -40,7 +40,7 @@ TEST(size_null_lsm_get_self_attr)
- TEST(ctx_null_lsm_get_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 	int rc;
- 
- 	rc = lsm_get_self_attr(LSM_ATTR_CURRENT, NULL, &size, 0);
-@@ -57,7 +57,7 @@ TEST(size_too_small_lsm_get_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
--	size_t size = 1;
-+	__u32 size = 1;
- 
- 	ASSERT_NE(NULL, ctx);
- 	errno = 0;
-@@ -77,7 +77,7 @@ TEST(flags_zero_lsm_get_self_attr)
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
- 	__u64 *syscall_lsms = calloc(page_size, 1);
--	size_t size;
-+	__u32 size;
- 	int lsmcount;
- 	int i;
- 
-@@ -117,7 +117,7 @@ TEST(flags_overset_lsm_get_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
--	size_t size;
-+	__u32 size;
- 
- 	ASSERT_NE(NULL, ctx);
- 
-@@ -140,7 +140,7 @@ TEST(flags_overset_lsm_get_self_attr)
- TEST(basic_lsm_get_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
- 	struct lsm_ctx *tctx = NULL;
- 	__u64 *syscall_lsms = calloc(page_size, 1);
-diff --git a/tools/testing/selftests/lsm/lsm_list_modules_test.c b/tools/testing/selftests/lsm/lsm_list_modules_test.c
-index 9df29b1e34978..868641dbb309c 100644
---- a/tools/testing/selftests/lsm/lsm_list_modules_test.c
-+++ b/tools/testing/selftests/lsm/lsm_list_modules_test.c
-@@ -31,7 +31,7 @@ TEST(size_null_lsm_list_modules)
- TEST(ids_null_lsm_list_modules)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 
- 	errno = 0;
- 	ASSERT_EQ(-1, lsm_list_modules(NULL, &size, 0));
-@@ -43,7 +43,7 @@ TEST(size_too_small_lsm_list_modules)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	__u64 *syscall_lsms = calloc(page_size, 1);
--	size_t size = 1;
-+	__u32 size = 1;
- 
- 	ASSERT_NE(NULL, syscall_lsms);
- 	errno = 0;
-@@ -58,7 +58,7 @@ TEST(flags_set_lsm_list_modules)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	__u64 *syscall_lsms = calloc(page_size, 1);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 
- 	ASSERT_NE(NULL, syscall_lsms);
- 	errno = 0;
-@@ -72,7 +72,7 @@ TEST(flags_set_lsm_list_modules)
- TEST(correct_lsm_list_modules)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 	__u64 *syscall_lsms = calloc(page_size, 1);
- 	char *sysfs_lsms = calloc(page_size, 1);
- 	char *name;
-diff --git a/tools/testing/selftests/lsm/lsm_set_self_attr_test.c b/tools/testing/selftests/lsm/lsm_set_self_attr_test.c
-index e9712c6cf5962..66dec47e3ca3f 100644
---- a/tools/testing/selftests/lsm/lsm_set_self_attr_test.c
-+++ b/tools/testing/selftests/lsm/lsm_set_self_attr_test.c
-@@ -25,7 +25,7 @@ TEST(size_too_small_lsm_set_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 
- 	ASSERT_NE(NULL, ctx);
- 	if (attr_lsm_count()) {
-@@ -41,7 +41,7 @@ TEST(flags_zero_lsm_set_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	struct lsm_ctx *ctx = calloc(page_size, 1);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 
- 	ASSERT_NE(NULL, ctx);
- 	if (attr_lsm_count()) {
-@@ -57,7 +57,7 @@ TEST(flags_overset_lsm_set_self_attr)
- {
- 	const long page_size = sysconf(_SC_PAGESIZE);
- 	char *ctx = calloc(page_size, 1);
--	size_t size = page_size;
-+	__u32 size = page_size;
- 	struct lsm_ctx *tctx = (struct lsm_ctx *)ctx;
- 
- 	ASSERT_NE(NULL, ctx);
 -- 
 2.43.0
 
