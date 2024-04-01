@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5AD4EB24;
-	Mon,  1 Apr 2024 16:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CC04D9F6;
+	Mon,  1 Apr 2024 16:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990408; cv=none; b=diZu59vGybOOikgMGpKxurizn2mNdjiNasyObaTLCbNjjihqDF/giR/81nP+x+45IK8N1v+yhueEut+2M1hrcsIO3u0SHoae72LhXzgstPezwoxvc3Q6RT4UHhLfrVgpXBXFUPl1HI3eHDv5sX8tKN6IhVlSkHfaQH2syZ6m0vw=
+	t=1711990411; cv=none; b=RN9MXfQO0m+o60MJp6cXgrvOIZDKEfeOmmDHUW5I6HZWXaF004AZESQDo2d4nA2zIbThoR9HlADFSiwQfdQ7odcGFf1zATSWfqC3uU/2CgWYSBd/tfjk4EGbp+dB5dobJ4fhRyJBcUGQhZj3ywsWKQLX6sTt7fed6GNpkUh+tEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990408; c=relaxed/simple;
-	bh=u62Z3+QVD3e4QMHArHi801BYg3ckW8J5KaEJIAX3qCs=;
+	s=arc-20240116; t=1711990411; c=relaxed/simple;
+	bh=3Z6iiYY9lX3Q+6lKbfcehWlMXpiAYuTJclcAmjr3Heo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dYIJXX2s+g9C84NdiWmdS9klELq4/iN/71PyadVgnCjxqH74sU1VHhjZV1aRPzbqOd5V0b/YalbY6o1FOH34u+eKCyk3ysj1qzqyVrYJ/LSQDtMz1jXwk0IAHfsF8agprxLjm3soVNiuzs+CNX0frxLifOAesovPAIhfnvyUkMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQAiFhHi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W33eFDxMaQxL3sUOzw1RB79bFZ+0Zuk8Yc7mjr/9tR+F09sx6XyFfxY+4zMmwYfun/Kz2E2jvr3TxwZe+pHZEIsypFhgtQOtqYLQk1+bU3iFagc+VIPk/THL4xCXtuvoutN9LlR3WC6bQi4QRVKXsxr5MFG/F0EzUYwwDUbmoIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7kDJzEi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQAiFhHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5DEC433C7;
-	Mon,  1 Apr 2024 16:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7kDJzEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB333C433F1;
+	Mon,  1 Apr 2024 16:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990408;
-	bh=u62Z3+QVD3e4QMHArHi801BYg3ckW8J5KaEJIAX3qCs=;
+	s=korg; t=1711990411;
+	bh=3Z6iiYY9lX3Q+6lKbfcehWlMXpiAYuTJclcAmjr3Heo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQAiFhHiVFtCe59fm7EHh+VI2+UYY8fEWp6lkbrltHYqYmkn7iPvfPp1lUPa8t+F3
-	 H2ZB8tDvYlLgCG1Ozg3MirP59lPwohghci6fII3cC8NBw6zWqyA/bhnuGUPn6MRqZy
-	 UzTryQsy1seS/vHzJCxJrfCO8WSt5diW+/CLwyRo=
+	b=J7kDJzEiof02+hChZphUzhhzeg0KrFAnYhY3F5uJkVYzj2OM6nVHVVNcdzYRNHyBN
+	 4ZjH5hTXnL5A4L9pd2qwFgab0XSFipdAmBdqEx9/5a6iI9EOcbzBWW9whN27/QNE3K
+	 pDMRDkuh4mn+QUG2l5Ldg759wQA5BdEAyYjwuwQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jonathon Hall <jonathon.hall@puri.sm>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 344/396] drm/i915/dsi: Go back to the previous INIT_OTP/DISPLAY_ON order, mostly
-Date: Mon,  1 Apr 2024 17:46:33 +0200
-Message-ID: <20240401152558.174066120@linuxfoundation.org>
+Subject: [PATCH 6.6 345/396] drm/i915: Do not match JSL in ehl_combo_pll_div_frac_wa_needed()
+Date: Mon,  1 Apr 2024 17:46:34 +0200
+Message-ID: <20240401152558.203188486@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,138 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Jonathon Hall <jonathon.hall@puri.sm>
 
-commit 18846627ef1210dcd55d65342b055ea97a46ffff upstream.
+commit e41d769f1a7a1dc533c35ef7b366be3dbf432a1c upstream.
 
-Reinstate commit 88b065943cb5 ("drm/i915/dsi: Do display on
-sequence later on icl+"), for the most part. Turns out some
-machines (eg. Chuwi Minibook X) really do need that updated order.
-It is also the order the Windows driver uses.
+Since commit 0c65dc062611 ("drm/i915/jsl: s/JSL/JASPERLAKE for
+platform/subplatform defines"), boot freezes on a Jasper Lake tablet
+(Librem 11), usually with graphical corruption on the eDP display,
+but sometimes just a black screen.  This commit was included in 6.6 and
+later.
 
-However we can't just undo the revert since that would again
-break Lenovo 82TQ. After staring at the VBT sequences for both
-machines I've concluded that the Lenovo 82TQ sequences look
-somewhat broken:
- - INIT_OTP is not present at all
- - what should be in INIT_OTP is found in DISPLAY_ON
- - what should be in DISPLAY_ON is found in BACKLIGHT_ON
-   (along with the actual backlight stuff)
+That commit was intended to refactor EHL and JSL macros, but the change
+to ehl_combo_pll_div_frac_wa_needed() started matching JSL incorrectly
+when it was only intended to match EHL.
 
-The Chuwi Minibook X on the other hand has a full complement
-of sequences in its VBT.
+It replaced:
+	return ((IS_PLATFORM(i915, INTEL_ELKHARTLAKE) &&
+		 IS_JSL_EHL_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
+with:
+	return (((IS_ELKHARTLAKE(i915) || IS_JASPERLAKE(i915)) &&
+		 IS_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
 
-So let's try to deal with the broken sequences in the
-Lenovo 82TQ VBT by simply swapping the (non-existent)
-INIT_OTP sequence with the DISPLAY_ON sequence. Thus we
-execute DISPLAY_ON when intending to execute INIT_OTP,
-and execute nothing at all when intending to execute
-DISPLAY_ON. That should be 100% equivalent to the
-revert, for such broken VBTs.
+Remove IS_JASPERLAKE() to fix the regression.
 
+Signed-off-by: Jonathon Hall <jonathon.hall@puri.sm>
 Cc: stable@vger.kernel.org
-Fixes: 6992eb815d08 ("Revert "drm/i915/dsi: Do display on sequence later on icl+"")
-References: https://gitlab.freedesktop.org/drm/intel/-/issues/10071
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10334
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240305083659.8396-1-ville.syrjala@linux.intel.com
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 94ae4612ea336bfc3c12b3fc68467c6711a4f39b)
+Fixes: 0c65dc062611 ("drm/i915/jsl: s/JSL/JASPERLAKE for platform/subplatform defines")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240313135424.3731410-1-jonathon.hall@puri.sm
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 1ef48859317b2a77672dea8682df133abf9c44ed)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c    |    3 +-
- drivers/gpu/drm/i915/display/intel_bios.c |   43 +++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dpll_mgr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -1155,7 +1155,6 @@ static void gen11_dsi_powerup_panel(stru
- 	}
- 
- 	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_INIT_OTP);
--	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_DISPLAY_ON);
- 
- 	/* ensure all panel commands dispatched before enabling transcoder */
- 	wait_for_cmds_dispatched_to_panel(encoder);
-@@ -1256,6 +1255,8 @@ static void gen11_dsi_enable(struct inte
- 	/* step6d: enable dsi transcoder */
- 	gen11_dsi_enable_transcoder(encoder);
- 
-+	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_DISPLAY_ON);
-+
- 	/* step7: enable backlight */
- 	intel_backlight_enable(crtc_state, conn_state);
- 	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_BACKLIGHT_ON);
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -1945,16 +1945,12 @@ static int get_init_otp_deassert_fragmen
-  * these devices we split the init OTP sequence into a deassert sequence and
-  * the actual init OTP part.
-  */
--static void fixup_mipi_sequences(struct drm_i915_private *i915,
--				 struct intel_panel *panel)
-+static void vlv_fixup_mipi_sequences(struct drm_i915_private *i915,
-+				     struct intel_panel *panel)
+--- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
++++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
+@@ -2462,7 +2462,7 @@ static void icl_wrpll_params_populate(st
+ static bool
+ ehl_combo_pll_div_frac_wa_needed(struct drm_i915_private *i915)
  {
- 	u8 *init_otp;
- 	int len;
- 
--	/* Limit this to VLV for now. */
--	if (!IS_VALLEYVIEW(i915))
--		return;
--
- 	/* Limit this to v1 vid-mode sequences */
- 	if (panel->vbt.dsi.config->is_cmd_mode ||
- 	    panel->vbt.dsi.seq_version != 1)
-@@ -1990,6 +1986,41 @@ static void fixup_mipi_sequences(struct
- 	panel->vbt.dsi.sequence[MIPI_SEQ_INIT_OTP] = init_otp + len - 1;
- }
- 
-+/*
-+ * Some machines (eg. Lenovo 82TQ) appear to have broken
-+ * VBT sequences:
-+ * - INIT_OTP is not present at all
-+ * - what should be in INIT_OTP is in DISPLAY_ON
-+ * - what should be in DISPLAY_ON is in BACKLIGHT_ON
-+ *   (along with the actual backlight stuff)
-+ *
-+ * To make those work we simply swap DISPLAY_ON and INIT_OTP.
-+ *
-+ * TODO: Do we need to limit this to specific machines,
-+ *       or examine the contents of the sequences to
-+ *       avoid false positives?
-+ */
-+static void icl_fixup_mipi_sequences(struct drm_i915_private *i915,
-+				     struct intel_panel *panel)
-+{
-+	if (!panel->vbt.dsi.sequence[MIPI_SEQ_INIT_OTP] &&
-+	    panel->vbt.dsi.sequence[MIPI_SEQ_DISPLAY_ON]) {
-+		drm_dbg_kms(&i915->drm, "Broken VBT: Swapping INIT_OTP and DISPLAY_ON sequences\n");
-+
-+		swap(panel->vbt.dsi.sequence[MIPI_SEQ_INIT_OTP],
-+		     panel->vbt.dsi.sequence[MIPI_SEQ_DISPLAY_ON]);
-+	}
-+}
-+
-+static void fixup_mipi_sequences(struct drm_i915_private *i915,
-+				 struct intel_panel *panel)
-+{
-+	if (DISPLAY_VER(i915) >= 11)
-+		icl_fixup_mipi_sequences(i915, panel);
-+	else if (IS_VALLEYVIEW(i915))
-+		vlv_fixup_mipi_sequences(i915, panel);
-+}
-+
- static void
- parse_mipi_sequence(struct drm_i915_private *i915,
- 		    struct intel_panel *panel)
+-	return (((IS_ELKHARTLAKE(i915) || IS_JASPERLAKE(i915)) &&
++	return ((IS_ELKHARTLAKE(i915) &&
+ 		 IS_DISPLAY_STEP(i915, STEP_B0, STEP_FOREVER)) ||
+ 		 IS_TIGERLAKE(i915) || IS_ALDERLAKE_S(i915) || IS_ALDERLAKE_P(i915)) &&
+ 		 i915->display.dpll.ref_clks.nssc == 38400;
 
 
