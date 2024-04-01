@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBDD47A5D;
-	Mon,  1 Apr 2024 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4A23D961;
+	Mon,  1 Apr 2024 16:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988247; cv=none; b=Af5gxAYUuxloPkgf5Iu6+JzLb+9B0zsg8QHOCXuUACfExASnK7bqWoOIwDKl0AFo7e/R3QZreBWPFlJabSc0CSQp94w3TwJ7ZK4CUlR6rgnBt/SY+U6rTrqIRxcq3AJnt+ZMFkN7bLI3Wa8vMBIq17eKes5579BNUtwNzewvUrg=
+	t=1711988250; cv=none; b=tgcLOoHCKuizbmcslSClOq0VwN5cRfFXixeIQ4gdSZHxkf+FFWhyiUHrYKDYxLiN3UF94kugahTwRg9ZvusvN9VMP+qMzI7Ehc5V0ZRwJyKPVR85BskJA0XGP5AWKuvr44z4nyFQkUqeSXjawwiLW+xGurMElaI79gZoLnNW9F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988247; c=relaxed/simple;
-	bh=p8m179phBJQ5JOMN1fPQBBfh9RxGF3UOMcY/cAH22O4=;
+	s=arc-20240116; t=1711988250; c=relaxed/simple;
+	bh=XcrBkKR88ZmIqvudhM7x+kK0QTn/voCjh/puiKL2J7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WPEXqt2bkBnjOBYmJ3Oyu96UTmM+ASxh38svw9I72Z0gXYf7YFC/SW7kLAsryNcIe9pq46FtESDYASzcX+EBt49HcCX8Fw6gk1SwsrZ4S5e/3g7mdlSOUs5+WbSXjw3QpLopDVg1HSY0vU7hFTeCZOIlxGzFhXT6EQ5hJq9XV1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vt+2RnKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gRYLK7+jG3bxjWEMvdi8cs5k0jAD8GwiSH8+a0iBbWyy7o3rZQYuYkQoV5vzKjeRrc4j6G8d4h9Xy+lAbvHsf1A8kQvtL8wr/Glo6ySUuaZzIRZ5+hWnqtmOVajLOYB1B4whEFnbW7VUIoviM7+E55apr+TNZ1GablzSHU92SLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beZKze9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt+2RnKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949F8C433C7;
-	Mon,  1 Apr 2024 16:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beZKze9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8574C433F1;
+	Mon,  1 Apr 2024 16:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988247;
-	bh=p8m179phBJQ5JOMN1fPQBBfh9RxGF3UOMcY/cAH22O4=;
+	s=korg; t=1711988250;
+	bh=XcrBkKR88ZmIqvudhM7x+kK0QTn/voCjh/puiKL2J7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vt+2RnKsrBWkhQi17OBzZ1cdEoDZwk49N6w1ncr0TqRzjVF95nBMF/qfs+Q5UfXOO
-	 0jd1BmR1d/NCq4/3zIvzfCHUBWNhWt2vOB0YKaATxhsJiPhMOi/PWiKQSZYxoUL6Ln
-	 /X5ZiQ4vO96N/MmSqqMBdA9zr6SIulPemXjcXQI8=
+	b=beZKze9ayl7KD+YG4BGyRA50Ro/v6+4ym96AGfowpTyM71zZOdIbAOS2tlOi+yJh4
+	 VliBjRhgyWqMZkzXv55OBpxAXFbYWMpgkbTpskZ4jcK8+pXMIyxxdtMEhNe2EBjdvP
+	 zARoCHYyG1cpQnOcewE8pqRVMof0pGEdf5jrK+TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
-	Madhan Sai <madhan.singaraju@candelatech.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 127/432] debugfs: fix wait/cancellation handling during remove
-Date: Mon,  1 Apr 2024 17:41:54 +0200
-Message-ID: <20240401152556.912119993@linuxfoundation.org>
+Subject: [PATCH 6.7 128/432] PCI/AER: Block runtime suspend when handling errors
+Date: Mon,  1 Apr 2024 17:41:55 +0200
+Message-ID: <20240401152556.940636192@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -52,71 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-[ Upstream commit 952c3fce297f12c7ff59380adb66b564e2bc9b64 ]
+[ Upstream commit 002bf2fbc00e5c4b95fb167287e2ae7d1973281e ]
 
-Ben Greear further reports deadlocks during concurrent debugfs
-remove while files are being accessed, even though the code in
-question now uses debugfs cancellations. Turns out that despite
-all the review on the locking, we missed completely that the
-logic is wrong: if the refcount hits zero we can finish (and
-need not wait for the completion), but if it doesn't we have
-to trigger all the cancellations. As written, we can _never_
-get into the loop triggering the cancellations. Fix this, and
-explain it better while at it.
+PM runtime can be done simultaneously with AER error handling.  Avoid that
+by using pm_runtime_get_sync() before and pm_runtime_put() after reset in
+pcie_do_recovery() for all recovering devices.
 
-Cc: stable@vger.kernel.org
-Fixes: 8c88a474357e ("debugfs: add API to allow debugfs operations cancellation")
-Reported-by: Ben Greear <greearb@candelatech.com>
-Closes: https://lore.kernel.org/r/1c9fa9e5-09f1-0522-fdbc-dbcef4d255ca@candelatech.com
-Tested-by: Madhan Sai <madhan.singaraju@candelatech.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20240229153635.6bfab7eb34d3.I6c7aeff8c9d6628a8bc1ddcf332205a49d801f17@changeid
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+pm_runtime_get_sync() will increase dev->power.usage_count counter to
+prevent any possible future request to runtime suspend a device.  It will
+also resume a device, if it was previously in D3hot state.
+
+I tested with igc device by doing simultaneous aer_inject and rpm
+suspend/resume via /sys/bus/pci/devices/PCI_ID/power/control and can
+reproduce:
+
+  igc 0000:02:00.0: not ready 65535ms after bus reset; giving up
+  pcieport 0000:00:1c.2: AER: Root Port link has been reset (-25)
+  pcieport 0000:00:1c.2: AER: subordinate device reset failed
+  pcieport 0000:00:1c.2: AER: device recovery failed
+  igc 0000:02:00.0: Unable to change power state from D3hot to D0, device inaccessible
+
+The problem disappears when this patch is applied.
+
+Link: https://lore.kernel.org/r/20240212120135.146068-1-stanislaw.gruszka@linux.intel.com
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/inode.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/pci/pcie/err.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/debugfs/inode.c b/fs/debugfs/inode.c
-index 034a617cb1a5e..a40da00654336 100644
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -751,13 +751,28 @@ static void __debugfs_file_removed(struct dentry *dentry)
- 	if ((unsigned long)fsd & DEBUGFS_FSDATA_IS_REAL_FOPS_BIT)
- 		return;
+diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
+index 59c90d04a609a..705893b5f7b09 100644
+--- a/drivers/pci/pcie/err.c
++++ b/drivers/pci/pcie/err.c
+@@ -13,6 +13,7 @@
+ #define dev_fmt(fmt) "AER: " fmt
  
--	/* if we hit zero, just wait for all to finish */
--	if (!refcount_dec_and_test(&fsd->active_users)) {
--		wait_for_completion(&fsd->active_users_drained);
-+	/* if this was the last reference, we're done */
-+	if (refcount_dec_and_test(&fsd->active_users))
- 		return;
--	}
+ #include <linux/pci.h>
++#include <linux/pm_runtime.h>
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+@@ -85,6 +86,18 @@ static int report_error_detected(struct pci_dev *dev,
+ 	return 0;
+ }
  
--	/* if we didn't hit zero, try to cancel any we can */
-+	/*
-+	 * If there's still a reference, the code that obtained it can
-+	 * be in different states:
-+	 *  - The common case of not using cancellations, or already
-+	 *    after debugfs_leave_cancellation(), where we just need
-+	 *    to wait for debugfs_file_put() which signals the completion;
-+	 *  - inside a cancellation section, i.e. between
-+	 *    debugfs_enter_cancellation() and debugfs_leave_cancellation(),
-+	 *    in which case we need to trigger the ->cancel() function,
-+	 *    and then wait for debugfs_file_put() just like in the
-+	 *    previous case;
-+	 *  - before debugfs_enter_cancellation() (but obviously after
-+	 *    debugfs_file_get()), in which case we may not see the
-+	 *    cancellation in the list on the first round of the loop,
-+	 *    but debugfs_enter_cancellation() signals the completion
-+	 *    after adding it, so this code gets woken up to call the
-+	 *    ->cancel() function.
-+	 */
- 	while (refcount_read(&fsd->active_users)) {
- 		struct debugfs_cancellation *c;
++static int pci_pm_runtime_get_sync(struct pci_dev *pdev, void *data)
++{
++	pm_runtime_get_sync(&pdev->dev);
++	return 0;
++}
++
++static int pci_pm_runtime_put(struct pci_dev *pdev, void *data)
++{
++	pm_runtime_put(&pdev->dev);
++	return 0;
++}
++
+ static int report_frozen_detected(struct pci_dev *dev, void *data)
+ {
+ 	return report_error_detected(dev, pci_channel_io_frozen, data);
+@@ -207,6 +220,8 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+ 	else
+ 		bridge = pci_upstream_bridge(dev);
  
++	pci_walk_bridge(bridge, pci_pm_runtime_get_sync, NULL);
++
+ 	pci_dbg(bridge, "broadcast error_detected message\n");
+ 	if (state == pci_channel_io_frozen) {
+ 		pci_walk_bridge(bridge, report_frozen_detected, &status);
+@@ -251,10 +266,15 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+ 		pcie_clear_device_status(dev);
+ 		pci_aer_clear_nonfatal_status(dev);
+ 	}
++
++	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
++
+ 	pci_info(bridge, "device recovery successful\n");
+ 	return status;
+ 
+ failed:
++	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
++
+ 	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
+ 
+ 	/* TODO: Should kernel panic here? */
 -- 
 2.43.0
 
