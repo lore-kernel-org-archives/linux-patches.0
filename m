@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320E147A6B;
-	Mon,  1 Apr 2024 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94AF63E;
+	Mon,  1 Apr 2024 16:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989970; cv=none; b=Bm76viUG2zkj0ZFgVHAvTPItG/Uz0WBEn03JmrSBK8NEIL35nkxcfrlcr7lMV7QJUATRxfL/pwedSJwBhzQfY6nHRzML0B+9hhKNP6tnB7KjOOvxrRSvrZznXf3HrFNN5UtXyXvH3kx5H6LJMrpU3LGQ17I9EqFbb443DKfo8ks=
+	t=1711989973; cv=none; b=DwfmWOjh1bHNDKXtRhgOOHy1v/b/Y6N4c0npinknhzDT+2By0iiRdT5GBWsckxBbj25VJYQN9ObuBQmiHdOIgAkMFbu1DL16Ei7Emfkqr2NlYbdAuLeM7qAhT1EY6ExygthtNHhI6FfF1XADIf7owwGCqIA/je4BQTrZuUVzbA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989970; c=relaxed/simple;
-	bh=Fgg/plg3JU3GKrE5u7P0XNU4IPppAhQ9X+xoM9NVOlI=;
+	s=arc-20240116; t=1711989973; c=relaxed/simple;
+	bh=rdTFRxs812F5JtWTLhsSnbdg8PTuXj685BF0Fhx3CDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkxDzAHWoa/TM/3JgB+D+WTKX6fKVNmq2Ic3IF4KU9K57d8m7OTZt0a0hFXKaQJHDh/yQZZf5K3IRLGdeC3qq+TPFZL70EgRV2no+AV6eLPYluTaVOAKQzsxJ9jzqSqG1+EsZGgM7Z/Yc/KkQiLeYbgRrD3VDKR9P22slryUuME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPCb4fUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U5VyL2A1GLFwoUTLA0YObJKHQXLJWmOe4Wh9y2NKpsRPV88rnaRqYPwNVDegrAk2vPA4lxC7lrcmLawm8qLfC528qTT6qo0jLQY7kj+Sf6utolRGlA5XJ7x+CZUaGisI+8CEz7jMj2z+qiczaJrgyBYkPbkZRQbkjCY2DZrleyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5I0Ptv+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPCb4fUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53D8C433F1;
-	Mon,  1 Apr 2024 16:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5I0Ptv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176CBC433F1;
+	Mon,  1 Apr 2024 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989970;
-	bh=Fgg/plg3JU3GKrE5u7P0XNU4IPppAhQ9X+xoM9NVOlI=;
+	s=korg; t=1711989973;
+	bh=rdTFRxs812F5JtWTLhsSnbdg8PTuXj685BF0Fhx3CDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPCb4fUR0GbfJs4qm0KAWxS+B5So/iASZ4ED60W6Y0g3+Rt+eVJ77nj7sKNtDvmrE
-	 wRa/X37JS91LybZBxwqPmQl0Mr8XjjwdpJCK+0pOAKrfZ9qDcvbqgCyAh/8dL2NxSa
-	 /Li85uzerrL3wh7OPW3XPNy8rKk9LF4RqAdtm2wk=
+	b=g5I0Ptv+ocZ/rJke5Z1CwD1T/60sQHq3BvDcTbR+EtlGYc7nwAfQQRHajrmBTNWQl
+	 bOm0zsL1ZQBQiVB6tmpbYt2HU47+zGUwpo4sucksjdGm5TxU9xNzCbRuLtXioamMUk
+	 xsLjldHLDoEOvkO99+vquag0JA9A5iRIwYt47xWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 207/396] selftests: mptcp: diag: return KSFT_FAIL not test_cnt
-Date: Mon,  1 Apr 2024 17:44:16 +0200
-Message-ID: <20240401152554.101456903@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 181/396] drm/amdgpu: amdgpu_ttm_gart_bind set gtt bound flag
+Date: Mon,  1 Apr 2024 17:43:50 +0200
+Message-ID: <20240401152553.338970333@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,58 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 45bcc0346561daa3f59e19a753cc7f3e08e8dff1 upstream.
+[ Upstream commit 6c6064cbe58b43533e3451ad6a8ba9736c109ac3 ]
 
-The test counter 'test_cnt' should not be returned in diag.sh, e.g. what
-if only the 4th test fail? Will do 'exit 4' which is 'exit ${KSFT_SKIP}',
-the whole test will be marked as skipped instead of 'failed'!
+Otherwise after the GTT bo is released, the GTT and gart space is freed
+but amdgpu_ttm_backend_unbind will not clear the gart page table entry
+and leave valid mapping entry pointing to the stale system page. Then
+if GPU access the gart address mistakely, it will read undefined value
+instead page fault, harder to debug and reproduce the real issue.
 
-So we should do ret=${KSFT_FAIL} instead.
-
-Fixes: df62f2ec3df6 ("selftests/mptcp: add diag interface tests")
 Cc: stable@vger.kernel.org
-Fixes: 42fb6cddec3b ("selftests: mptcp: more stable diag tests")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/diag.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/mptcp/diag.sh
-+++ b/tools/testing/selftests/net/mptcp/diag.sh
-@@ -69,7 +69,7 @@ __chk_nr()
- 		else
- 			echo "[ fail ] expected $expected found $nr"
- 			mptcp_lib_result_fail "${msg}"
--			ret=$test_cnt
-+			ret=${KSFT_FAIL}
- 		fi
- 	else
- 		echo "[  ok  ]"
-@@ -115,11 +115,11 @@ wait_msk_nr()
- 	if [ $i -ge $timeout ]; then
- 		echo "[ fail ] timeout while expecting $expected max $max last $nr"
- 		mptcp_lib_result_fail "${msg} # timeout"
--		ret=$test_cnt
-+		ret=${KSFT_FAIL}
- 	elif [ $nr != $expected ]; then
- 		echo "[ fail ] expected $expected found $nr"
- 		mptcp_lib_result_fail "${msg} # unexpected result"
--		ret=$test_cnt
-+		ret=${KSFT_FAIL}
- 	else
- 		echo "[  ok  ]"
- 		mptcp_lib_result_pass "${msg}"
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index f573909332c01..928107d0bfea4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -869,6 +869,7 @@ static void amdgpu_ttm_gart_bind(struct amdgpu_device *adev,
+ 		amdgpu_gart_bind(adev, gtt->offset, ttm->num_pages,
+ 				 gtt->ttm.dma_address, flags);
+ 	}
++	gtt->bound = true;
+ }
+ 
+ /*
+-- 
+2.43.0
+
 
 
