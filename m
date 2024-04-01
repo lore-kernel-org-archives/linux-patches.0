@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7E917552;
-	Mon,  1 Apr 2024 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2722C482F6;
+	Mon,  1 Apr 2024 15:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986939; cv=none; b=ftGHHLLkEwtvzVT9+vu4PuMDcWLTEj51Ag1R17pdwGy8dICpTrJ59Ff8NRiXHFLc3DAkcyRy4yauu5gpn0Mfq+AEMzbY8TXpSCUzRASLWiobEhiC7p4ZDNZn3Oulb/PmjH12svE9KAAtuj1M+fhTEtFbPuznKesXQQtYimqu2HI=
+	t=1711986942; cv=none; b=PWM02nm2E3nN2qkePAaqPiGSw1ioO6UKWegIwB5Pp6pdMBDUkyFIAPX0h0c0dm9kQVJw2K712pY+EAhPykNX82eEPyYOySSb4NenZR7e2cufaSupSicxjep/hoh2K0SIcJxjBm3lp5AMYh8QnEOa5OYeSt8xCER9FxUzi4g1oCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986939; c=relaxed/simple;
-	bh=2xv2B7KcKgqh+jj0vQHhWCK88nrsVfzzRDHT24Uh/6U=;
+	s=arc-20240116; t=1711986942; c=relaxed/simple;
+	bh=6UjETvatjXJ6EEh8T9MCdwGd6IrgZ+kXaVdRzoRnqdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Diyqm9r/xVoztF1rfowzR6CR2oqyqRwsS2s1cWWpbFCUXJZnLYqiPX6Twgr1DQM0Jyr6aijAiK1eQDNfPJIJgqUCEA0PVqXFGZ5xUk8w/RsOjavQpxHEmhT8FILpW3e3Wyitb+bXH62TYrXapf5yLuyTx1UPEK/byqIhW3/KKMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6dvPvkO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RFOUG1PjONSj3WBZjbHELbQDlYvyg8X4JHO+dgGFU4nGBO1lNacqdJ1tXHqWoyecWXAQl0CYgf38Jy3t1xXK2fE4exJO9X9mI0Mux9R7p7Hu7VV0m4J5EeVS7LBKnjP/uGQiK/VcrhNb54qtpQ9fbosfziAcS9vU4lkqhnYPlTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUAPywPJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6dvPvkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95894C433C7;
-	Mon,  1 Apr 2024 15:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUAPywPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D055C43390;
+	Mon,  1 Apr 2024 15:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986939;
-	bh=2xv2B7KcKgqh+jj0vQHhWCK88nrsVfzzRDHT24Uh/6U=;
+	s=korg; t=1711986942;
+	bh=6UjETvatjXJ6EEh8T9MCdwGd6IrgZ+kXaVdRzoRnqdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6dvPvkOm3XPRhRw3dojg2WrW74BALhSSOcRAKVDJGd/K3/aeh+pyXm4R1WP5T2B0
-	 Fc6t5eZFAZPtouBe0ZUHG2bvZY5FplPazrUWr5Jkb7/wZrnSTTYcDsrFHLJcbdsGB3
-	 Jw0/Mgambf9Z0VgyaDHomYpdtrwibZ+uyVWCEnEU=
+	b=kUAPywPJU90HUXT+JkYwwpPC7g+5DkOj17S/WP3Yuyxy5VFtwnBaTnArhCn3453VJ
+	 U3ZTrwhxD29uNGlJ+4kso0A+mPgdrUsTOEZI5ZqJ+Xw0U16AnT/lpkDNz8TjQHmivG
+	 wWllTXPnBxfeS2MwH+Y6w0fbdycMxzPl2VkJMplA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Moulding <dan@danm.net>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
 	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 103/399] Revert "Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d""
-Date: Mon,  1 Apr 2024 17:41:09 +0200
-Message-ID: <20240401152552.260248827@linuxfoundation.org>
+Subject: [PATCH 6.8 104/399] md: dont clear MD_RECOVERY_FROZEN for new dm-raid until resume
+Date: Mon,  1 Apr 2024 17:41:10 +0200
+Message-ID: <20240401152552.290641664@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -53,69 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 3445139e3a594be77eff48bc17eff67cf983daed ]
+[ Upstream commit 2f03d0c2cd451c7ac2f317079d4ec518f0986b55 ]
 
-This reverts commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d.
+After commit 9dbd1aa3a81c ("dm raid: add reshaping support to the
+target") raid_ctr() will set MD_RECOVERY_FROZEN before md_run() and
+expect to keep array frozen until resume. However, md_run() will clear
+the flag by setting mddev->recovery to 0.
 
-The original set [1][2] was expected to undo a suboptimal fix in [2], and
-replace it with a better fix [1]. However, as reported by Dan Moulding [2]
-causes an issue with raid5 with journal device.
+Before commit 1baae052cccd ("md: Don't ignore suspended array in
+md_check_recovery()"), dm-raid actually relied on suspending to prevent
+starting new sync_thread.
 
-Revert [2] for now to close the issue. We will follow up on another issue
-reported by Juxiao Bi, as [2] is expected to fix it. We believe this is a
-good trade-off, because the latter issue happens less freqently.
+Fix this problem by keeping 'MD_RECOVERY_FROZEN' for dm-raid in
+md_run().
 
-In the meanwhile, we will NOT revert [1], as it contains the right logic.
-
-[1] commit d6e035aad6c0 ("md: bypass block throttle for superblock update")
-[2] commit bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
-
-Reported-by: Dan Moulding <dan@danm.net>
-Closes: https://lore.kernel.org/linux-raid/20240123005700.9302-1-dan@danm.net/
-Fixes: bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
-Cc: stable@vger.kernel.org # v5.19+
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
+Fixes: 1baae052cccd ("md: Don't ignore suspended array in md_check_recovery()")
+Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Acked-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Song Liu <song@kernel.org>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240125082131.788600-1-song@kernel.org
+Link: https://lore.kernel.org/r/20240305072306.2562024-2-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/md/md.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 6cddea04f942a..4357673bee269 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -36,6 +36,7 @@
-  */
- 
- #include <linux/blkdev.h>
-+#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6773,7 +6774,18 @@ static void raid5d(struct md_thread *thread)
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
-+
-+			/*
-+			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
-+			 * seeing md_check_recovery() is needed to clear
-+			 * the flag when using mdmon.
-+			 */
-+			continue;
- 		}
-+
-+		wait_event_lock_irq(mddev->sb_wait,
-+			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
-+			conf->device_lock);
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index fbe528ed236f6..3d3a419190042 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6039,7 +6039,10 @@ int md_run(struct mddev *mddev)
+ 			pr_warn("True protection against single-disk failure might be compromised.\n");
  	}
- 	pr_debug("%d stripes handled\n", handled);
+ 
+-	mddev->recovery = 0;
++	/* dm-raid expect sync_thread to be frozen until resume */
++	if (mddev->gendisk)
++		mddev->recovery = 0;
++
+ 	/* may be over-ridden by personality */
+ 	mddev->resync_max_sectors = mddev->dev_sectors;
  
 -- 
 2.43.0
