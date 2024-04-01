@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB261C0DE7;
-	Mon,  1 Apr 2024 16:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF8F47A76;
+	Mon,  1 Apr 2024 16:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989954; cv=none; b=ioT8iMoggrdEHKX/+RMFvABqBxv5HSKIcKQmmNy03W8rR5TUq6py/C9/eNP8NBtvvsUaIW32hmN05mkGJCAvpJ1r6K5dGfMDr8drrpCPPyJI1QiqRVqkVwJBMhPKB+Ok3qAj15IojT7ifOd9tIQzrzqff8mobNJ2mhyo7Y3puS4=
+	t=1711989957; cv=none; b=qOHz5FK7BctiWTzbESWmxKNrSUWxrGk9W55cGb7EG7Fwq+oLGlVck94rithc4Hn403E21/Qw93ttAfvcf8VtRZt08tDD2fB9YRB36UQPttPBar61xQ2lxKdgG7ZGbolR9oWUDuZtpsl7oc5JeZuI7xCLh9ihxtdx77fURxwJlUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989954; c=relaxed/simple;
-	bh=HIwB2UWIIDkcDGSbcaRSpJu9ev93TBfw8FiOkDoTs+Q=;
+	s=arc-20240116; t=1711989957; c=relaxed/simple;
+	bh=M8KAPMPjvKJfL6rSeF6EG2GoPUQe9YtuzEIAoCOTEq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6XRANd0x4Y+bo1bmtfyy9U3oj7kA2J7kLHqybU+qZAOFXJfK+J4q1KMaDMgv5iHviS5a3vn6dPbhPV0u+0zZbV555EnLJPnGQ5fsfXQAN63UGjzv99620OWJ+FymWySoMlVfENgy0H4DHYSJrOZwsLyZGxmpav3MHzLhnw7LqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqiGwHSv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baS8T3KQODHUAE6tdUtEAa+cOM4tmAmUjIvr7CzxLcQcbEG9wxb4LHahHy//zN4re/ovrxQ9DCdsGnyMZeFDoC0vPukDmj/3xS0xRiEDY2bSD+qYkqkjvoHp8tVpJSnq4XEmQUCb+XkGleDavxTxc0clDpLgzt8/7uLF0CrTR2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leOFHSmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqiGwHSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A6FC433C7;
-	Mon,  1 Apr 2024 16:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leOFHSmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFC2C433F1;
+	Mon,  1 Apr 2024 16:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989953;
-	bh=HIwB2UWIIDkcDGSbcaRSpJu9ev93TBfw8FiOkDoTs+Q=;
+	s=korg; t=1711989956;
+	bh=M8KAPMPjvKJfL6rSeF6EG2GoPUQe9YtuzEIAoCOTEq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LqiGwHSvMK+NqO3VxJRE9T6ZCjGsRumxIQi1hA/Y47Emw3POFyxEZOgi301nKYS+q
-	 RHnuE7IJAwD7kgWythm4cEqi4CbQbEFykgmheBQwpPDldEyo7TdlljcZvFp72yCJMN
-	 pRf3wmieIg1nrRO7VDzc0Fa9E119XcCgF5CCp0dc=
+	b=leOFHSmB8uLxI6aqn4dSVrYgfo91Y6UwKi1SiPHZcYVqFR9sUVuSreyWKqRC2QABo
+	 kYzifonWhulMg6CPZEaLZ8BxAxnLH7Dan404+MhP7kiuQeGxR9b0uEwR9cdbijiJlR
+	 MkjoecIkd+5hfGEH2sEL3zlHzTM3I+teq5WCbMJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.6 202/396] drm/nouveau: fix stale locked mutex in nouveau_gem_ioctl_pushbuf
-Date: Mon,  1 Apr 2024 17:44:11 +0200
-Message-ID: <20240401152553.952738438@linuxfoundation.org>
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 203/396] crypto: rk3288 - Fix use after free in unprepare
+Date: Mon,  1 Apr 2024 17:44:12 +0200
+Message-ID: <20240401152553.982947306@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,37 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit daf8739c3322a762ce84f240f50e0c39181a41ab upstream.
+commit c0afb6b88fbbc177fa322a835f874be217bffe45 upstream.
 
-If VM_BIND is enabled on the client the legacy submission ioctl can't be
-used, however if a client tries to do so regardless it will return an
-error. In this case the clients mutex remained unlocked leading to a
-deadlock inside nouveau_drm_postclose or any other nouveau ioctl call.
+The unprepare call must be carried out before the finalize call
+as the latter can free the request.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Cc: Danilo Krummrich <dakr@redhat.com>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240305133853.2214268-1-kherbst@redhat.com
+Fixes: c66c17a0f69b ("crypto: rk3288 - Remove prepare/unprepare request")
+Reported-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_gem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_gem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
-@@ -758,7 +758,7 @@ nouveau_gem_ioctl_pushbuf(struct drm_dev
- 		return -ENOMEM;
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index 1b13b4aa16ec..a235e6c300f1 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -332,12 +332,12 @@ static int rk_hash_run(struct crypto_engine *engine, void *breq)
+ theend:
+ 	pm_runtime_put_autosuspend(rkc->dev);
  
- 	if (unlikely(nouveau_cli_uvmm(cli)))
--		return -ENOSYS;
-+		return nouveau_abi16_put(abi16, -ENOSYS);
++	rk_hash_unprepare(engine, breq);
++
+ 	local_bh_disable();
+ 	crypto_finalize_hash_request(engine, breq, err);
+ 	local_bh_enable();
  
- 	list_for_each_entry(temp, &abi16->channels, head) {
- 		if (temp->chan->chid == req->channel) {
+-	rk_hash_unprepare(engine, breq);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.44.0
+
 
 
