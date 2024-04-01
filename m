@@ -1,45 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78AF45BE4;
-	Mon,  1 Apr 2024 16:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC823D961;
+	Mon,  1 Apr 2024 16:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988951; cv=none; b=aruqrxQXPRvDa4cO2aiF1XU8q/acnkt+MyYmyrbNVgml8Ma06k5iacSG24zns0KBSWoF4J3faI+523y3tDpHKLnKZAGCbVcNIKB00C5mXKZ+4xe4dpyoo92oR3xPdKYG2sJNchpEEGtW7a11ladtQH9QJlOONVInazA5B3QyiE0=
+	t=1711988955; cv=none; b=aguYRVXAUmfsfATz5N3rB3K2sP193ucg1G3z4L9TM6YrIKDKuFiPjIG/OZujD9RBdBzDeSUXLVvRh82SBgYgENFzUmZdsFyKFtLUmjgUjXlZiTsTJEyx3wWzr/SO5MQ33W84CPUJUiIDyPwMpiSCZu54E4C4h23KZrE7yexDxmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988951; c=relaxed/simple;
-	bh=WIzCII/aDQDRhLtMTmiEQHE900E4ZJj/yR/fTcKLh6A=;
+	s=arc-20240116; t=1711988955; c=relaxed/simple;
+	bh=M++KOEqTBWB0jxXkts8ta0v/dcapetbAStff7/ggZtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hv3/3x5vSKTaV3cvxjz1GweMTVHMerwll+B8ySubKjLx4en0JlTBxK8b6dy+eZ54X/qMUapDRGQBCseZHC+Wfdo2y2gRnqmjbqzL3jbQe774W8DiuFEbEf4yHxLbXClPZn2fON99IXwyDFrJkf2r31/G6E5uSHmAvA9jftG9bf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olZ+7gAD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5dmPt9+8FOpEbP8AdoXHHCDNdOpOu+AtZu4tnr8lHM7YsaK5uBek7VTmsFTV6DcoDEzxQPRsE7zq2AeNC67Ri0yrK5qOOQW53IW/L/yTfbR2x8LRGhIF/w93xFAcWiaI+W4afr8GN9JwvbSiYR0Y1taGPO4ZeVI4QGI8Kkx1aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjiLmCvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olZ+7gAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51577C433C7;
-	Mon,  1 Apr 2024 16:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjiLmCvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C90CC433F1;
+	Mon,  1 Apr 2024 16:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988951;
-	bh=WIzCII/aDQDRhLtMTmiEQHE900E4ZJj/yR/fTcKLh6A=;
+	s=korg; t=1711988955;
+	bh=M++KOEqTBWB0jxXkts8ta0v/dcapetbAStff7/ggZtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olZ+7gADSkUjnNY4D4O71vb02t6leCEeHmInhesnsDA7Oi+jTW4GylaIdZZ4oFMyX
-	 qDeroPESxs8daOt306aDcWSGp06zCF1umTDEU7L8aBzMiUOyPSQ2cfLhzMxMUZ6sdD
-	 jhJHsuZMbpBcGpHXJSr/hmgsN1lTh744YcOaTRNY=
+	b=FjiLmCvBXKgMkq/amcPyMQpwx5HH7rpfA/IQULY0pvjYmNtjDhO+JzasKHY7MmWxK
+	 Q3KdYK4osC5P1Q4V0nkIP7FBI2S7v6/g7Bu0MotCUDVJJ4Mp2yucaDGTPqsx1iUeZy
+	 lMQfi/T3anrFg9UFDSF8qokQLtP2kHdz5Dpz7PWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Chikunov <vt@altlinux.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Zev Weiss <zev@bewilderbeest.net>,
+	Borislav Petkov <bp@alien8.de>,
 	David Hildenbrand <david@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
+	Florent Revest <revest@chromium.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Kees Cook <keescook@chromium.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"Russell King (Oracle)" <linux@armlinux.org.uk>,
+	Sam James <sam@gentoo.org>,
+	Stefan Roesch <shr@devkernel.io>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Yin Fengwei <fengwei.yin@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 320/432] selftests/mm: Fix build with _FORTIFY_SOURCE
-Date: Mon,  1 Apr 2024 17:45:07 +0200
-Message-ID: <20240401152602.744919045@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.7 338/432] prctl: generalize PR_SET_MDWE support check to be per-arch
+Date: Mon,  1 Apr 2024 17:45:25 +0200
+Message-ID: <20240401152603.306621407@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -58,91 +67,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Chikunov <vt@altlinux.org>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-[ Upstream commit 8b65ef5ad4862904e476a8f3d4e4418c950ddb90 ]
+commit d5aad4c2ca057e760a92a9a7d65bd38d72963f27 upstream.
 
-Add missing flags argument to open(2) call with O_CREAT.
+Patch series "ARM: prctl: Reject PR_SET_MDWE where not supported".
 
-Some tests fail to compile if _FORTIFY_SOURCE is defined (to any valid
-value) (together with -O), resulting in similar error messages such as:
+I noticed after a recent kernel update that my ARM926 system started
+segfaulting on any execve() after calling prctl(PR_SET_MDWE).  After some
+investigation it appears that ARMv5 is incapable of providing the
+appropriate protections for MDWE, since any readable memory is also
+implicitly executable.
 
-  In file included from /usr/include/fcntl.h:342,
-                   from gup_test.c:1:
-  In function 'open',
-      inlined from 'main' at gup_test.c:206:10:
-  /usr/include/bits/fcntl2.h:50:11: error: call to '__open_missing_mode' declared with attribute error: open with O_CREAT or O_TMPFILE in second argument needs 3 arguments
-     50 |           __open_missing_mode ();
-        |           ^~~~~~~~~~~~~~~~~~~~~~
+The prctl_set_mdwe() function already had some special-case logic added
+disabling it on PARISC (commit 793838138c15, "prctl: Disable
+prctl(PR_SET_MDWE) on parisc"); this patch series (1) generalizes that
+check to use an arch_*() function, and (2) adds a corresponding override
+for ARM to disable MDWE on pre-ARMv6 CPUs.
 
-_FORTIFY_SOURCE is enabled by default in some distributions, so the
-tests are not built by default and are skipped.
+With the series applied, prctl(PR_SET_MDWE) is rejected on ARMv5 and
+subsequent execve() calls (as well as mmap(PROT_READ|PROT_WRITE)) can
+succeed instead of unconditionally failing; on ARMv6 the prctl works as it
+did previously.
 
-open(2) man-page warns about missing flags argument: "if it is not
-supplied, some arbitrary bytes from the stack will be applied as the
-file mode."
+[0] https://lore.kernel.org/all/2023112456-linked-nape-bf19@gregkh/
 
-Link: https://lkml.kernel.org/r/20240318023445.3192922-1-vt@altlinux.org
-Fixes: aeb85ed4f41a ("tools/testing/selftests/vm/gup_benchmark.c: allow user specified file")
-Fixes: fbe37501b252 ("mm: huge_memory: debugfs for file-backed THP split")
-Fixes: c942f5bd17b3 ("selftests: soft-dirty: add test for mprotect")
-Signed-off-by: Vitaly Chikunov <vt@altlinux.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
+
+This patch (of 2):
+
+There exist systems other than PARISC where MDWE may not be feasible to
+support; rather than cluttering up the generic code with additional
+arch-specific logic let's add a generic function for checking MDWE support
+and allow each arch to override it as needed.
+
+Link: https://lkml.kernel.org/r/20240227013546.15769-4-zev@bewilderbeest.net
+Link: https://lkml.kernel.org/r/20240227013546.15769-5-zev@bewilderbeest.net
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Acked-by: Helge Deller <deller@gmx.de>	[parisc]
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Florent Revest <revest@chromium.org>
+Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Ondrej Mosnacek <omosnace@redhat.com>
+Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: Russell King (Oracle) <linux@armlinux.org.uk>
+Cc: Sam James <sam@gentoo.org>
+Cc: Stefan Roesch <shr@devkernel.io>
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Cc: Yin Fengwei <fengwei.yin@intel.com>
+Cc: <stable@vger.kernel.org>	[6.3+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/gup_test.c             | 2 +-
- tools/testing/selftests/mm/soft-dirty.c           | 2 +-
- tools/testing/selftests/mm/split_huge_page_test.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/parisc/include/asm/mman.h |   14 ++++++++++++++
+ include/linux/mman.h           |    8 ++++++++
+ kernel/sys.c                   |    7 +++++--
+ 3 files changed, 27 insertions(+), 2 deletions(-)
+ create mode 100644 arch/parisc/include/asm/mman.h
 
-diff --git a/tools/testing/selftests/mm/gup_test.c b/tools/testing/selftests/mm/gup_test.c
-index cbe99594d319b..18a49c70d4c63 100644
---- a/tools/testing/selftests/mm/gup_test.c
-+++ b/tools/testing/selftests/mm/gup_test.c
-@@ -203,7 +203,7 @@ int main(int argc, char **argv)
- 	ksft_print_header();
- 	ksft_set_plan(nthreads);
+--- /dev/null
++++ b/arch/parisc/include/asm/mman.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __ASM_MMAN_H__
++#define __ASM_MMAN_H__
++
++#include <uapi/asm/mman.h>
++
++/* PARISC cannot allow mdwe as it needs writable stacks */
++static inline bool arch_memory_deny_write_exec_supported(void)
++{
++	return false;
++}
++#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
++
++#endif /* __ASM_MMAN_H__ */
+--- a/include/linux/mman.h
++++ b/include/linux/mman.h
+@@ -162,6 +162,14 @@ calc_vm_flag_bits(unsigned long flags)
  
--	filed = open(file, O_RDWR|O_CREAT);
-+	filed = open(file, O_RDWR|O_CREAT, 0664);
- 	if (filed < 0)
- 		ksft_exit_fail_msg("Unable to open %s: %s\n", file, strerror(errno));
+ unsigned long vm_commit_limit(void);
  
-diff --git a/tools/testing/selftests/mm/soft-dirty.c b/tools/testing/selftests/mm/soft-dirty.c
-index cc5f144430d4d..7dbfa53d93a05 100644
---- a/tools/testing/selftests/mm/soft-dirty.c
-+++ b/tools/testing/selftests/mm/soft-dirty.c
-@@ -137,7 +137,7 @@ static void test_mprotect(int pagemap_fd, int pagesize, bool anon)
- 		if (!map)
- 			ksft_exit_fail_msg("anon mmap failed\n");
- 	} else {
--		test_fd = open(fname, O_RDWR | O_CREAT);
-+		test_fd = open(fname, O_RDWR | O_CREAT, 0664);
- 		if (test_fd < 0) {
- 			ksft_test_result_skip("Test %s open() file failed\n", __func__);
- 			return;
-diff --git a/tools/testing/selftests/mm/split_huge_page_test.c b/tools/testing/selftests/mm/split_huge_page_test.c
-index 0e74635c8c3d9..dff3be23488b4 100644
---- a/tools/testing/selftests/mm/split_huge_page_test.c
-+++ b/tools/testing/selftests/mm/split_huge_page_test.c
-@@ -253,7 +253,7 @@ void split_file_backed_thp(void)
- 		goto cleanup;
- 	}
++#ifndef arch_memory_deny_write_exec_supported
++static inline bool arch_memory_deny_write_exec_supported(void)
++{
++	return true;
++}
++#define arch_memory_deny_write_exec_supported arch_memory_deny_write_exec_supported
++#endif
++
+ /*
+  * Denies creating a writable executable mapping or gaining executable permissions.
+  *
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -2408,8 +2408,11 @@ static inline int prctl_set_mdwe(unsigne
+ 	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
+ 		return -EINVAL;
  
--	fd = open(testfile, O_CREAT|O_WRONLY);
-+	fd = open(testfile, O_CREAT|O_WRONLY, 0664);
- 	if (fd == -1) {
- 		perror("Cannot open testing file\n");
- 		goto cleanup;
--- 
-2.43.0
-
+-	/* PARISC cannot allow mdwe as it needs writable stacks */
+-	if (IS_ENABLED(CONFIG_PARISC))
++	/*
++	 * EOPNOTSUPP might be more appropriate here in principle, but
++	 * existing userspace depends on EINVAL specifically.
++	 */
++	if (!arch_memory_deny_write_exec_supported())
+ 		return -EINVAL;
+ 
+ 	current_bits = get_current_mdwe();
 
 
