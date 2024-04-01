@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB2A1CA8F;
-	Mon,  1 Apr 2024 16:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0C51CA8F;
+	Mon,  1 Apr 2024 16:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987355; cv=none; b=X5ACxRdHxdFkegtr3b7ux9An29fyuKI3T+I+MoIGv/ABk6yIQ8b2455qFldWWjfWWs3kaJy3jGqFRJM2llXYHOM9yF9wpIlmLk6jD35NjVUx4RmC4tE57SG0UtjhI6lYYoZfKoULWUzr6UmLCBvGDhRemoe8YdcA2UrVO0xvgHs=
+	t=1711987358; cv=none; b=S2K2mgS6V7VGCtyWlkjuRBz+wEGhZGyuLEg41lz8jJyqSXAR8fxj98IIqoyoppiKlawl+Ot3jDXIHckylQ46qkqAwfK2iE0hgiGdYSKCKSnBzNvol3Fo/FPYmJkfwwwNdIZ9RhfUkFd82/pxSW6ReveQ6ujhnJKGc195nn5TQPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987355; c=relaxed/simple;
-	bh=cYT3cLvuEmIH5GTFGnx1VgHFhbCxP82OFm6GhpOu4Cc=;
+	s=arc-20240116; t=1711987358; c=relaxed/simple;
+	bh=ftn3IKUYKC8z6hUOdzgDe8fp+T+Ev5TJq2mqb1FLxDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EI6G4YGikX/HildAkHCLGOA+3avEpQ+OAFTdnVWztnwIIVSO4uLcqa0JCbBo1P0/tGlgk8MLhK2CycIZucRBabcqMTMdtPrgUraXIbVDn4mmDI5K/NR4LYeqoc2xNAW6fqnvLCEk8SnCZq9q2TNiORO1zVkaLu8gkELywICLYmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2u33V79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YM/g943C0a6JYZdHdqMO2OCPVzM3Wg0znH4NoIBtaRIyUH7poJdCpszfKC734KKguoyqnAqdpY6rS9YhgOqIr2H/DHtdz4GyuDWbtPV0yftMakfx3phYcHcaI/A2/FQ98BhdjgZ6uWCIDUyevdttMUhKJUo5GU1N7W4hTzMus4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRryDUMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2u33V79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FA4C433F1;
-	Mon,  1 Apr 2024 16:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRryDUMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F1DC433C7;
+	Mon,  1 Apr 2024 16:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987355;
-	bh=cYT3cLvuEmIH5GTFGnx1VgHFhbCxP82OFm6GhpOu4Cc=;
+	s=korg; t=1711987358;
+	bh=ftn3IKUYKC8z6hUOdzgDe8fp+T+Ev5TJq2mqb1FLxDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2u33V79iGH90F00uZIf7fqnWf1VWEjD2kgmGnjn1fkjNdvEEpFbJYJgnW+ukHpHA
-	 Ewa4WAqwXG2g2tiA1ykjV5cb727bydlIYkC35Ds0LufDI3dHi4HnJUbcBeBKwbpoRT
-	 +ej8cHuuDIYjOwYjyKrI+w/1+oB3jYrR5kDHKge4=
+	b=oRryDUMV01cwgqBZ/hDdLkRNyMZGRi0fR1v2Uk1N0LVv3/2ECq43/V+Y8ePO+qqpe
+	 81DOoBny4+kevlT4Y8bSy7ZpGWvmzP4WWzwRrdq0rIvIZocLNPKXMxctdHk/tIGYFk
+	 as9wAqXy4HO1xzOgUk+u2fIDXA0aYcrOlqMv+DtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Eric Auger <eric.auger@redhat.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 234/399] vfio: Introduce interface to flush virqfd inject workqueue
-Date: Mon,  1 Apr 2024 17:43:20 +0200
-Message-ID: <20240401152556.163910323@linuxfoundation.org>
+Subject: [PATCH 6.8 235/399] vfio/pci: Create persistent INTx handler
+Date: Mon,  1 Apr 2024 17:43:21 +0200
+Message-ID: <20240401152556.194172201@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -55,90 +55,267 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit b620ecbd17a03cacd06f014a5d3f3a11285ce053 ]
+[ Upstream commit 18c198c96a815c962adc2b9b77909eec0be7df4d ]
 
-In order to synchronize changes that can affect the thread callback,
-introduce an interface to force a flush of the inject workqueue.  The
-irqfd pointer is only valid under spinlock, but the workqueue cannot
-be flushed under spinlock.  Therefore the flush work for the irqfd is
-queued under spinlock.  The vfio_irqfd_cleanup_wq workqueue is re-used
-for queuing this work such that flushing the workqueue is also ordered
-relative to shutdown.
+A vulnerability exists where the eventfd for INTx signaling can be
+deconfigured, which unregisters the IRQ handler but still allows
+eventfds to be signaled with a NULL context through the SET_IRQS ioctl
+or through unmask irqfd if the device interrupt is pending.
 
+Ideally this could be solved with some additional locking; the igate
+mutex serializes the ioctl and config space accesses, and the interrupt
+handler is unregistered relative to the trigger, but the irqfd path
+runs asynchronous to those.  The igate mutex cannot be acquired from the
+atomic context of the eventfd wake function.  Disabling the irqfd
+relative to the eventfd registration is potentially incompatible with
+existing userspace.
+
+As a result, the solution implemented here moves configuration of the
+INTx interrupt handler to track the lifetime of the INTx context object
+and irq_type configuration, rather than registration of a particular
+trigger eventfd.  Synchronization is added between the ioctl path and
+eventfd_signal() wrapper such that the eventfd trigger can be
+dynamically updated relative to in-flight interrupts or irqfd callbacks.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 89e1f7d4c66d ("vfio: Add PCI device driver")
+Reported-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20240308230557.805580-4-alex.williamson@redhat.com
+Link: https://lore.kernel.org/r/20240308230557.805580-5-alex.williamson@redhat.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Stable-dep-of: 18c198c96a81 ("vfio/pci: Create persistent INTx handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/virqfd.c | 21 +++++++++++++++++++++
- include/linux/vfio.h  |  2 ++
- 2 files changed, 23 insertions(+)
+ drivers/vfio/pci/vfio_pci_intrs.c | 145 ++++++++++++++++--------------
+ 1 file changed, 78 insertions(+), 67 deletions(-)
 
-diff --git a/drivers/vfio/virqfd.c b/drivers/vfio/virqfd.c
-index 29c564b7a6e13..5322691338019 100644
---- a/drivers/vfio/virqfd.c
-+++ b/drivers/vfio/virqfd.c
-@@ -101,6 +101,13 @@ static void virqfd_inject(struct work_struct *work)
- 		virqfd->thread(virqfd->opaque, virqfd->data);
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 75c85eec21b3c..fb5392b749fff 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -90,11 +90,15 @@ static void vfio_send_intx_eventfd(void *opaque, void *unused)
+ 
+ 	if (likely(is_intx(vdev) && !vdev->virq_disabled)) {
+ 		struct vfio_pci_irq_ctx *ctx;
++		struct eventfd_ctx *trigger;
+ 
+ 		ctx = vfio_irq_ctx_get(vdev, 0);
+ 		if (WARN_ON_ONCE(!ctx))
+ 			return;
+-		eventfd_signal(ctx->trigger);
++
++		trigger = READ_ONCE(ctx->trigger);
++		if (likely(trigger))
++			eventfd_signal(trigger);
+ 	}
  }
  
-+static void virqfd_flush_inject(struct work_struct *work)
-+{
-+	struct virqfd *virqfd = container_of(work, struct virqfd, flush_inject);
-+
-+	flush_work(&virqfd->inject);
-+}
-+
- int vfio_virqfd_enable(void *opaque,
- 		       int (*handler)(void *, void *),
- 		       void (*thread)(void *, void *),
-@@ -124,6 +131,7 @@ int vfio_virqfd_enable(void *opaque,
- 
- 	INIT_WORK(&virqfd->shutdown, virqfd_shutdown);
- 	INIT_WORK(&virqfd->inject, virqfd_inject);
-+	INIT_WORK(&virqfd->flush_inject, virqfd_flush_inject);
- 
- 	irqfd = fdget(fd);
- 	if (!irqfd.file) {
-@@ -213,3 +221,16 @@ void vfio_virqfd_disable(struct virqfd **pvirqfd)
- 	flush_workqueue(vfio_irqfd_cleanup_wq);
+@@ -253,100 +257,100 @@ static irqreturn_t vfio_intx_handler(int irq, void *dev_id)
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(vfio_virqfd_disable);
-+
-+void vfio_virqfd_flush_thread(struct virqfd **pvirqfd)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&virqfd_lock, flags);
-+	if (*pvirqfd && (*pvirqfd)->thread)
-+		queue_work(vfio_irqfd_cleanup_wq, &(*pvirqfd)->flush_inject);
-+	spin_unlock_irqrestore(&virqfd_lock, flags);
-+
-+	flush_workqueue(vfio_irqfd_cleanup_wq);
-+}
-+EXPORT_SYMBOL_GPL(vfio_virqfd_flush_thread);
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index 89b265bc6ec31..8b1a298204091 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -356,6 +356,7 @@ struct virqfd {
- 	wait_queue_entry_t		wait;
- 	poll_table		pt;
- 	struct work_struct	shutdown;
-+	struct work_struct	flush_inject;
- 	struct virqfd		**pvirqfd;
- };
  
-@@ -363,5 +364,6 @@ int vfio_virqfd_enable(void *opaque, int (*handler)(void *, void *),
- 		       void (*thread)(void *, void *), void *data,
- 		       struct virqfd **pvirqfd, int fd);
- void vfio_virqfd_disable(struct virqfd **pvirqfd);
-+void vfio_virqfd_flush_thread(struct virqfd **pvirqfd);
+-static int vfio_intx_enable(struct vfio_pci_core_device *vdev)
++static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
++			    struct eventfd_ctx *trigger)
+ {
++	struct pci_dev *pdev = vdev->pdev;
+ 	struct vfio_pci_irq_ctx *ctx;
++	unsigned long irqflags;
++	char *name;
++	int ret;
  
- #endif /* VFIO_H */
+ 	if (!is_irq_none(vdev))
+ 		return -EINVAL;
+ 
+-	if (!vdev->pdev->irq)
++	if (!pdev->irq)
+ 		return -ENODEV;
+ 
++	name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-intx(%s)", pci_name(pdev));
++	if (!name)
++		return -ENOMEM;
++
+ 	ctx = vfio_irq_ctx_alloc(vdev, 0);
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	ctx->name = name;
++	ctx->trigger = trigger;
++
+ 	/*
+-	 * If the virtual interrupt is masked, restore it.  Devices
+-	 * supporting DisINTx can be masked at the hardware level
+-	 * here, non-PCI-2.3 devices will have to wait until the
+-	 * interrupt is enabled.
++	 * Fill the initial masked state based on virq_disabled.  After
++	 * enable, changing the DisINTx bit in vconfig directly changes INTx
++	 * masking.  igate prevents races during setup, once running masked
++	 * is protected via irqlock.
++	 *
++	 * Devices supporting DisINTx also reflect the current mask state in
++	 * the physical DisINTx bit, which is not affected during IRQ setup.
++	 *
++	 * Devices without DisINTx support require an exclusive interrupt.
++	 * IRQ masking is performed at the IRQ chip.  Again, igate protects
++	 * against races during setup and IRQ handlers and irqfds are not
++	 * yet active, therefore masked is stable and can be used to
++	 * conditionally auto-enable the IRQ.
++	 *
++	 * irq_type must be stable while the IRQ handler is registered,
++	 * therefore it must be set before request_irq().
+ 	 */
+ 	ctx->masked = vdev->virq_disabled;
+-	if (vdev->pci_2_3)
+-		pci_intx(vdev->pdev, !ctx->masked);
++	if (vdev->pci_2_3) {
++		pci_intx(pdev, !ctx->masked);
++		irqflags = IRQF_SHARED;
++	} else {
++		irqflags = ctx->masked ? IRQF_NO_AUTOEN : 0;
++	}
+ 
+ 	vdev->irq_type = VFIO_PCI_INTX_IRQ_INDEX;
+ 
++	ret = request_irq(pdev->irq, vfio_intx_handler,
++			  irqflags, ctx->name, vdev);
++	if (ret) {
++		vdev->irq_type = VFIO_PCI_NUM_IRQS;
++		kfree(name);
++		vfio_irq_ctx_free(vdev, ctx, 0);
++		return ret;
++	}
++
+ 	return 0;
+ }
+ 
+-static int vfio_intx_set_signal(struct vfio_pci_core_device *vdev, int fd)
++static int vfio_intx_set_signal(struct vfio_pci_core_device *vdev,
++				struct eventfd_ctx *trigger)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+-	unsigned long irqflags = IRQF_SHARED;
+ 	struct vfio_pci_irq_ctx *ctx;
+-	struct eventfd_ctx *trigger;
+-	unsigned long flags;
+-	int ret;
++	struct eventfd_ctx *old;
+ 
+ 	ctx = vfio_irq_ctx_get(vdev, 0);
+ 	if (WARN_ON_ONCE(!ctx))
+ 		return -EINVAL;
+ 
+-	if (ctx->trigger) {
+-		free_irq(pdev->irq, vdev);
+-		kfree(ctx->name);
+-		eventfd_ctx_put(ctx->trigger);
+-		ctx->trigger = NULL;
+-	}
+-
+-	if (fd < 0) /* Disable only */
+-		return 0;
+-
+-	ctx->name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-intx(%s)",
+-			      pci_name(pdev));
+-	if (!ctx->name)
+-		return -ENOMEM;
+-
+-	trigger = eventfd_ctx_fdget(fd);
+-	if (IS_ERR(trigger)) {
+-		kfree(ctx->name);
+-		return PTR_ERR(trigger);
+-	}
++	old = ctx->trigger;
+ 
+-	ctx->trigger = trigger;
++	WRITE_ONCE(ctx->trigger, trigger);
+ 
+-	/*
+-	 * Devices without DisINTx support require an exclusive interrupt,
+-	 * IRQ masking is performed at the IRQ chip.  The masked status is
+-	 * protected by vdev->irqlock. Setup the IRQ without auto-enable and
+-	 * unmask as necessary below under lock.  DisINTx is unmodified by
+-	 * the IRQ configuration and may therefore use auto-enable.
+-	 */
+-	if (!vdev->pci_2_3)
+-		irqflags = IRQF_NO_AUTOEN;
+-
+-	ret = request_irq(pdev->irq, vfio_intx_handler,
+-			  irqflags, ctx->name, vdev);
+-	if (ret) {
+-		ctx->trigger = NULL;
+-		kfree(ctx->name);
+-		eventfd_ctx_put(trigger);
+-		return ret;
++	/* Releasing an old ctx requires synchronizing in-flight users */
++	if (old) {
++		synchronize_irq(pdev->irq);
++		vfio_virqfd_flush_thread(&ctx->unmask);
++		eventfd_ctx_put(old);
+ 	}
+ 
+-	spin_lock_irqsave(&vdev->irqlock, flags);
+-	if (!vdev->pci_2_3 && !ctx->masked)
+-		enable_irq(pdev->irq);
+-	spin_unlock_irqrestore(&vdev->irqlock, flags);
+-
+ 	return 0;
+ }
+ 
+ static void vfio_intx_disable(struct vfio_pci_core_device *vdev)
+ {
++	struct pci_dev *pdev = vdev->pdev;
+ 	struct vfio_pci_irq_ctx *ctx;
+ 
+ 	ctx = vfio_irq_ctx_get(vdev, 0);
+@@ -354,10 +358,13 @@ static void vfio_intx_disable(struct vfio_pci_core_device *vdev)
+ 	if (ctx) {
+ 		vfio_virqfd_disable(&ctx->unmask);
+ 		vfio_virqfd_disable(&ctx->mask);
++		free_irq(pdev->irq, vdev);
++		if (ctx->trigger)
++			eventfd_ctx_put(ctx->trigger);
++		kfree(ctx->name);
++		vfio_irq_ctx_free(vdev, ctx, 0);
+ 	}
+-	vfio_intx_set_signal(vdev, -1);
+ 	vdev->irq_type = VFIO_PCI_NUM_IRQS;
+-	vfio_irq_ctx_free(vdev, ctx, 0);
+ }
+ 
+ /*
+@@ -641,19 +648,23 @@ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
+ 		return -EINVAL;
+ 
+ 	if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
++		struct eventfd_ctx *trigger = NULL;
+ 		int32_t fd = *(int32_t *)data;
+ 		int ret;
+ 
+-		if (is_intx(vdev))
+-			return vfio_intx_set_signal(vdev, fd);
++		if (fd >= 0) {
++			trigger = eventfd_ctx_fdget(fd);
++			if (IS_ERR(trigger))
++				return PTR_ERR(trigger);
++		}
+ 
+-		ret = vfio_intx_enable(vdev);
+-		if (ret)
+-			return ret;
++		if (is_intx(vdev))
++			ret = vfio_intx_set_signal(vdev, trigger);
++		else
++			ret = vfio_intx_enable(vdev, trigger);
+ 
+-		ret = vfio_intx_set_signal(vdev, fd);
+-		if (ret)
+-			vfio_intx_disable(vdev);
++		if (ret && trigger)
++			eventfd_ctx_put(trigger);
+ 
+ 		return ret;
+ 	}
 -- 
 2.43.0
 
