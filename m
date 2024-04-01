@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4513F8F4;
-	Mon,  1 Apr 2024 16:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F423F8F4;
+	Mon,  1 Apr 2024 16:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988333; cv=none; b=gv5TTjXnktCimchytWR4AAaYsFZ9wOM7MYB+/cDWpcWly3hVwYaMAYx/F8+TP5wiLpXUGXJO1NmOqiGTKPr1ObNRH/nZFd+djRTwh1FTbp5zcRqhbl5qFgTVKw0DZ2aEnCKA1S7ZAMyF8B2sHvrq4zo+hIODm+RI99GDlFCS0c8=
+	t=1711988336; cv=none; b=tKXF0cdxD7IuRLNSs6XRc480zpPrcrOS/Z6inw/E9YOKjlonf989xI3IytSJXtoPu5WygClaH66wBqhglVt0Zvu5vY5zujnoTJfUYbusvpBy+w4oPPZkaVg4NNRsZyE6SFKl6+R4s39kTU152uvSloO7VM4qjigFAWLXdrMUmC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988333; c=relaxed/simple;
-	bh=9KX1w5199xJTlxbLK2EV4SqNJp/q2Kv1jDKaa6OUNM0=;
+	s=arc-20240116; t=1711988336; c=relaxed/simple;
+	bh=+azZDFIhrn86m6JuD94M9RmNzmsaahLgYPX097l00G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yck5RE+vWte4N5dk4liCfF7PpN9AAB7Rj9rh7CQzBEo4zqzxrQ8blgHNXDQzdO3SJ6xr5Rvzdp2m7Yg0Hyz88G5X9oqT81ROgL7TzXRc/OXf5CcH34tkucd/t7I1ENULqI3xmgsl1DaA7si0RY6eZ+Yp9jzs1ZdalqE8KTilrOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbBTUv7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nT6L9SyH/3Q/o3AqSkXdZhgx8lTdv/C9bhaFG1C7It671xlMWDa5HkomJFzWRrhiGCVlIZ0DQxQALREKWvofZLy/QnwlyJFxz/O8NRVHqoWGJgwIlV6VQyciq5nQE2j8C/zaYABtJID/P7e+85MC9HiqJGLhcPXRs92KUrjymzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN3vZ6GA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbBTUv7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD88C433F1;
-	Mon,  1 Apr 2024 16:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN3vZ6GA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F75C433C7;
+	Mon,  1 Apr 2024 16:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988333;
-	bh=9KX1w5199xJTlxbLK2EV4SqNJp/q2Kv1jDKaa6OUNM0=;
+	s=korg; t=1711988336;
+	bh=+azZDFIhrn86m6JuD94M9RmNzmsaahLgYPX097l00G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbBTUv7bo0y8U3+vQT2EYD4EC51Ibxjd5t6K78bLEdaGSatN1OasuD1DDeQ9yK+lK
-	 rWcrK3MzZy58YmzfehL2s2OJcrkbQxYQpzje/LhSdzC+v+DBQXjQNJupTTzapLlh0x
-	 /vZvbTYgWrnQ4EGoOdjJSwYdp045g1nE+w+/J5dU=
+	b=GN3vZ6GAK80mHBHLjGwGXwhQC/K3SGi6Rfjdr8XiIsmp0c2nk3QboG8+fhpgJ4+O+
+	 BjQSrfIZV6U/w+DJdUt2lc3/LEj9RCuemfYBxeXcil5CM2NV69IrtLA1FwQKIWCuQq
+	 H6K6nQ5LDwm+t+xdaJ0my8qEF0aqMu/7uztXCFMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sargun Dhillon <sargun@meta.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 153/432] platform/x86/intel/tpmi: Change vsec offset to u64
-Date: Mon,  1 Apr 2024 17:42:20 +0200
-Message-ID: <20240401152557.707174113@linuxfoundation.org>
+Subject: [PATCH 6.7 154/432] io_uring/rw: return IOU_ISSUE_SKIP_COMPLETE for multishot retry
+Date: Mon,  1 Apr 2024 17:42:21 +0200
+Message-ID: <20240401152557.737419500@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -45,72 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 57221a07ff37ff356f9265acd228bc3c8744c8fc ]
+[ Upstream commit 0a3737db8479b77f95f4bfda8e71b03c697eb56a ]
 
-The vsec offset can be 64 bit long depending on the PFS start. So change
-type to u64. Also use 64 bit formatting for seq_printf.
+If read multishot is being invoked from the poll retry handler, then we
+should return IOU_ISSUE_SKIP_COMPLETE rather than -EAGAIN. If not, then
+a CQE will be posted with -EAGAIN rather than triggering the retry when
+the file is flagged as readable again.
 
-Fixes: 47731fd2865f ("platform/x86/intel: Intel TPMI enumeration driver")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: stable@vger.kernel.org # v6.3+
-Link: https://lore.kernel.org/r/20240305194644.2077867-1-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reported-by: Sargun Dhillon <sargun@meta.com>
+Fixes: fc68fcda04910 ("io_uring/rw: add support for IORING_OP_READ_MULTISHOT")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/tpmi.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ io_uring/rw.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/tpmi.c b/drivers/platform/x86/intel/tpmi.c
-index 311abcac894a6..c2f6e20b45bc0 100644
---- a/drivers/platform/x86/intel/tpmi.c
-+++ b/drivers/platform/x86/intel/tpmi.c
-@@ -96,7 +96,7 @@ struct intel_tpmi_pfs_entry {
-  */
- struct intel_tpmi_pm_feature {
- 	struct intel_tpmi_pfs_entry pfs_header;
--	unsigned int vsec_offset;
-+	u64 vsec_offset;
- 	struct intel_vsec_device *vsec_dev;
- };
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index f66ace04403f7..70c5beb05d4e9 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -942,6 +942,8 @@ int io_read_mshot(struct io_kiocb *req, unsigned int issue_flags)
+ 		 */
+ 		if (io_kbuf_recycle(req, issue_flags))
+ 			rw->len = 0;
++		if (issue_flags & IO_URING_F_MULTISHOT)
++			return IOU_ISSUE_SKIP_COMPLETE;
+ 		return -EAGAIN;
+ 	}
  
-@@ -389,7 +389,7 @@ static int tpmi_pfs_dbg_show(struct seq_file *s, void *unused)
- 			read_blocked = feature_state.read_blocked ? 'Y' : 'N';
- 			write_blocked = feature_state.write_blocked ? 'Y' : 'N';
- 		}
--		seq_printf(s, "0x%02x\t\t0x%02x\t\t0x%04x\t\t0x%04x\t\t0x%02x\t\t0x%08x\t%c\t%c\t\t%c\t\t%c\n",
-+		seq_printf(s, "0x%02x\t\t0x%02x\t\t0x%04x\t\t0x%04x\t\t0x%02x\t\t0x%016llx\t%c\t%c\t\t%c\t\t%c\n",
- 			   pfs->pfs_header.tpmi_id, pfs->pfs_header.num_entries,
- 			   pfs->pfs_header.entry_size, pfs->pfs_header.cap_offset,
- 			   pfs->pfs_header.attribute, pfs->vsec_offset, locked, disabled,
-@@ -408,7 +408,8 @@ static int tpmi_mem_dump_show(struct seq_file *s, void *unused)
- 	struct intel_tpmi_pm_feature *pfs = s->private;
- 	int count, ret = 0;
- 	void __iomem *mem;
--	u32 off, size;
-+	u32 size;
-+	u64 off;
- 	u8 *buffer;
- 
- 	size = TPMI_GET_SINGLE_ENTRY_SIZE(pfs);
-@@ -424,7 +425,7 @@ static int tpmi_mem_dump_show(struct seq_file *s, void *unused)
- 	mutex_lock(&tpmi_dev_lock);
- 
- 	for (count = 0; count < pfs->pfs_header.num_entries; ++count) {
--		seq_printf(s, "TPMI Instance:%d offset:0x%x\n", count, off);
-+		seq_printf(s, "TPMI Instance:%d offset:0x%llx\n", count, off);
- 
- 		mem = ioremap(off, size);
- 		if (!mem) {
 -- 
 2.43.0
 
