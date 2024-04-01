@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AC747A6B;
-	Mon,  1 Apr 2024 17:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62654CB47;
+	Mon,  1 Apr 2024 17:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990952; cv=none; b=ZBVD5X9yCVPHyIVVD8+Po4BYQZ4ZgQ4emjILFGEFJ/3yEc0lAcudNiLm9n8Yv+pdebDdyyRlnZN32/vsYHiizoAHkx+5NHThSDYvvVcMAW3nYzl/z7plk9tmfoD+EvzyE8zW7n6FWOBmuPRzZf3XAO/ug2Y2r+7KRhoCJ0I+Llo=
+	t=1711990955; cv=none; b=mmHB+DRetUdT+bnj0L8hrioz5pfAFLBBGFVT573rO4p3gYbr40H7M34+VjWxqMRwUBn93eBLOtFRsaaYG5dCm6IkWKicS2qSCFsDVtMn4fgCy6uCcq/XZupW4CaFdGSury/WmAy9tym4Yfz5oPATDaG0LSQktANbp3WKEu3xsxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990952; c=relaxed/simple;
-	bh=RfnBzRUoBwZlbxzIXRF3lzdHcDi6KgZVnjKhN0yhO+U=;
+	s=arc-20240116; t=1711990955; c=relaxed/simple;
+	bh=dRU428QNPowfHqC7zlQkxm7YiCcanPuynRaI04mFVao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmYRxAeNEP18rfzJsqruPnPK6ATD0BIe/VSj7Dl2lz0+dLYmt5lAHQSBW5AlSqGQJnWIEKNhuS7IgMhKZm4cguSZyaVlmvfuBFkqlk3USbf9XHzxKJ5TjjZaYMN0uCqprgX3CwripTFirWJpS+dSNEEVqFTr71sF623GNn8lAzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qatoFXHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f0Strx5EdF17wLfXiEDYJhysrhSeVel0zxf3A7ZKMA5DwI/rGJ9N4dtu7Iw1PttGZ7p9xGiHbgUiXiVw8xBOr9xGXuuOxkisq+lp8pjLi+9wKl8aQSCo8nAaLWGmO/H4dLnnc03dbxoNLCR5zpM59HFv1mvuwgOXqH5ArH7v8iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jh1i9Rmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qatoFXHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A566C433F1;
-	Mon,  1 Apr 2024 17:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jh1i9Rmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364FEC433B1;
+	Mon,  1 Apr 2024 17:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990952;
-	bh=RfnBzRUoBwZlbxzIXRF3lzdHcDi6KgZVnjKhN0yhO+U=;
+	s=korg; t=1711990955;
+	bh=dRU428QNPowfHqC7zlQkxm7YiCcanPuynRaI04mFVao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qatoFXHfOXROUTq5nPWUpS3UJmvIG2HS8VCN7ApAz+qYgGzq+Ak2MVs8CHqUqkGsG
-	 R4Ak9t5x9myOqB0KkvJhP07uLXju/+um3SLeSFABlx08QqV5RjuY0UqodwOMF4WOW/
-	 qoyNTomX3PH2coClvM+w/ncoCiGg7kuQyQ1g/Sh4=
+	b=jh1i9RmpTtJ2YJ3WNsmNAkq3pVv/6vavfuzFVmmgqND2wuifC1+sMXWvRC8P6WxGg
+	 LarSGuoxAghrwIOjcSkYJMh9Nx0688ACfgoicNlEjHb5rwxIar0i+9kugg5+2lkaC+
+	 sD5svzSJVZnxQF2LIwlNpZSGPgDjYiwxQcW1hSiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/272] usb: gadget: tegra-xudc: Fix USB3 PHY retrieval logic
-Date: Mon,  1 Apr 2024 17:44:39 +0200
-Message-ID: <20240401152533.399687141@linuxfoundation.org>
+Subject: [PATCH 6.1 090/272] speakup: Fix 8bit characters from direct synth
+Date: Mon,  1 Apr 2024 17:44:40 +0200
+Message-ID: <20240401152533.439426092@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -51,110 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-[ Upstream commit 84fa943d93c31ee978355e6c6c69592dae3c9f59 ]
+[ Upstream commit b6c8dafc9d86eb77e502bb018ec4105e8d2fbf78 ]
 
-This commit resolves an issue in the tegra-xudc USB gadget driver that
-incorrectly fetched USB3 PHY instances. The problem stemmed from the
-assumption of a one-to-one correspondence between USB2 and USB3 PHY
-names and their association with physical USB ports in the device tree.
+When userland echoes 8bit characters to /dev/synth with e.g.
 
-Previously, the driver associated USB3 PHY names directly with the USB3
-instance number, leading to mismatches when mapping the physical USB
-ports. For instance, if using USB3-1 PHY, the driver expect the
-corresponding PHY name as 'usb3-1'. However, the physical USB ports in
-the device tree were designated as USB2-0 and USB3-0 as we only have
-one device controller, causing a misalignment.
+echo -e '\xe9' > /dev/synth
 
-This commit rectifies the issue by adjusting the PHY naming logic.
-Now, the driver correctly correlates the USB2 and USB3 PHY instances,
-allowing the USB2-0 and USB3-1 PHYs to form a physical USB port pair
-while accurately reflecting their configuration in the device tree by
-naming them USB2-0 and USB3-0, respectively.
+synth_write would get characters beyond 0x7f, and thus negative when
+char is signed.  When given to synth_buffer_add which takes a u16, this
+would sign-extend and produce a U+ffxy character rather than U+xy.
+Users thus get garbled text instead of accents in their output.
 
-The change ensures that the PHY and PHY names align appropriately,
-resolving the mismatch between physical USB ports and their associated
-names in the device tree.
+Let's fix this by making sure that we read unsigned characters.
 
-Fixes: b4e19931c98a ("usb: gadget: tegra-xudc: Support multiple device modes")
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Fixes: 89fc2ae80bb1 ("speakup: extend synth buffer to 16bit unicode characters")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20240307030328.1487748-3-waynec@nvidia.com
+Link: https://lore.kernel.org/r/20240204155736.2oh4ot7tiaa2wpbh@begin
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 39 ++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ drivers/accessibility/speakup/synth.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index a8cadc45c65aa..fd7a9535973ed 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -3486,8 +3486,8 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
+diff --git a/drivers/accessibility/speakup/synth.c b/drivers/accessibility/speakup/synth.c
+index eea2a2fa4f015..45f9061031338 100644
+--- a/drivers/accessibility/speakup/synth.c
++++ b/drivers/accessibility/speakup/synth.c
+@@ -208,8 +208,10 @@ void spk_do_flush(void)
+ 	wake_up_process(speakup_task);
+ }
  
- static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+-void synth_write(const char *buf, size_t count)
++void synth_write(const char *_buf, size_t count)
  {
--	int err = 0, usb3;
--	unsigned int i;
-+	int err = 0, usb3_companion_port;
-+	unsigned int i, j;
- 
- 	xudc->utmi_phy = devm_kcalloc(xudc->dev, xudc->soc->num_phys,
- 					   sizeof(*xudc->utmi_phy), GFP_KERNEL);
-@@ -3515,7 +3515,7 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		if (IS_ERR(xudc->utmi_phy[i])) {
- 			err = PTR_ERR(xudc->utmi_phy[i]);
- 			dev_err_probe(xudc->dev, err,
--				      "failed to get usb2-%d PHY\n", i);
-+				"failed to get PHY for phy-name usb2-%d\n", i);
- 			goto clean_up;
- 		} else if (xudc->utmi_phy[i]) {
- 			/* Get usb-phy, if utmi phy is available */
-@@ -3534,19 +3534,30 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		}
- 
- 		/* Get USB3 phy */
--		usb3 = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
--		if (usb3 < 0)
-+		usb3_companion_port = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
-+		if (usb3_companion_port < 0)
- 			continue;
- 
--		snprintf(phy_name, sizeof(phy_name), "usb3-%d", usb3);
--		xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
--		if (IS_ERR(xudc->usb3_phy[i])) {
--			err = PTR_ERR(xudc->usb3_phy[i]);
--			dev_err_probe(xudc->dev, err,
--				      "failed to get usb3-%d PHY\n", usb3);
--			goto clean_up;
--		} else if (xudc->usb3_phy[i])
--			dev_dbg(xudc->dev, "usb3-%d PHY registered", usb3);
-+		for (j = 0; j < xudc->soc->num_phys; j++) {
-+			snprintf(phy_name, sizeof(phy_name), "usb3-%d", j);
-+			xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
-+			if (IS_ERR(xudc->usb3_phy[i])) {
-+				err = PTR_ERR(xudc->usb3_phy[i]);
-+				dev_err_probe(xudc->dev, err,
-+					"failed to get PHY for phy-name usb3-%d\n", j);
-+				goto clean_up;
-+			} else if (xudc->usb3_phy[i]) {
-+				int usb2_port =
-+					tegra_xusb_padctl_get_port_number(xudc->utmi_phy[i]);
-+				int usb3_port =
-+					tegra_xusb_padctl_get_port_number(xudc->usb3_phy[i]);
-+				if (usb3_port == usb3_companion_port) {
-+					dev_dbg(xudc->dev, "USB2 port %d is paired with USB3 port %d for device mode port %d\n",
-+					 usb2_port, usb3_port, i);
-+					break;
-+				}
-+			}
-+		}
- 	}
- 
- 	return err;
++	const unsigned char *buf = (const unsigned char *) _buf;
++
+ 	while (count--)
+ 		synth_buffer_add(*buf++);
+ 	synth_start();
 -- 
 2.43.0
 
