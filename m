@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5440876;
-	Mon,  1 Apr 2024 16:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A551E525;
+	Mon,  1 Apr 2024 16:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990030; cv=none; b=O1vVVp3zAcRp+JRwGK7rfQ25XQOSCZ5CSsU0+qqq4cujt8c8Oh9d/hSgyYPnAPKtTDR+OFU+z6sQGlZo0bQxTUJQG3GZjL38obCchHaG10vCJ4cFIM75+GeLR5NWd37OIqP5kQiN0WjjIsPKJLcE1Vj5yqrqrKe9Y4uz8MoQI34=
+	t=1711990034; cv=none; b=JSHyrJxcKO9/fQva48kRnYf9Y3yPw2myO+GbG4GlX/hIVbIT+jETFWtoN2mKLB2ZyoYsQlhJTX/YFW4w5esJLzJ8cbd4R3E/OAln6guO93DzBxG9JPFud5rnIhML2gth84ZYz+8r9U/eZaAKvsbc2qglmiTu9TMwMgxdNdE1R5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990030; c=relaxed/simple;
-	bh=ApU9Y2W4M0hdbw7TIMcl4OHlD6Dq5DOo5Uu/O0C9A1Y=;
+	s=arc-20240116; t=1711990034; c=relaxed/simple;
+	bh=TiTXvtU0w/nZlvAgXGhoi39i7rmq2bSnAYBQFGF2I/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QXPNc+6GloCrd5KKWH0m6Xh6sqa1uUoD35jOn6LXkNOtBbzLWMbXxUemYgG48I7G9N8PS4qkJEjsay2AIdWgAOzbuCwfivHj5nb3etLjulMkmdZ3P5FTfwepvpRqE0CT7vkJlqW/5Xtn6NxQhvWFgVea3Ron592xFqMDyuUGyok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+VuTsKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UjmTNvGBDfy+DSFi1+rgHZdQoeHYxx+bUO9SEABtUgZefxH/7B1dBsgP9673xUoNqlC/XoB/I4yPErRrRCUApYjHWYHQw1qyVeH95SHDLoNW5KLnQSyqwrLwccQcJVvHi9jIUjIT56yY/dxAX6dkhHJRreO7JUCG8YWgGrERaMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwGqS4n8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+VuTsKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D25C433C7;
-	Mon,  1 Apr 2024 16:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwGqS4n8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F6FC433F1;
+	Mon,  1 Apr 2024 16:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990030;
-	bh=ApU9Y2W4M0hdbw7TIMcl4OHlD6Dq5DOo5Uu/O0C9A1Y=;
+	s=korg; t=1711990033;
+	bh=TiTXvtU0w/nZlvAgXGhoi39i7rmq2bSnAYBQFGF2I/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+VuTsKXFHPAberhaKNmXIAWNVzp7v6PNhuFxJKNf/Yi06QW4Q1F68yPt0hDqANPC
-	 VjUouaSCidD46UHuEuhhr4qrHNFNOoO0FUoeKjEN6ozM9ydpCPfwlLOfzCV2mBfzP6
-	 K3o8vPf+k9gc5ox0E+ZPGtv7ISwx7Kl2qw/2U14M=
+	b=ZwGqS4n8jS6aim/rDtvI3ME9lHHtJSgXVnnlRIddA0M6nMEzFfTUAcThWAeJIzWAN
+	 0c/fTXYcz/yXxa8/ZjatHU24E0IdUJprIeJMuyZdU6D5Ejt1I2VgYWQtHnnqvDDexf
+	 r4BanJo44Kn3oMjBHyYVd5cMarN1PbATdVraJND8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Subject: [PATCH 6.6 226/396] tty: serial: fsl_lpuart: avoid idle preamble pending if CTS is enabled
-Date: Mon,  1 Apr 2024 17:44:35 +0200
-Message-ID: <20240401152554.658289799@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.6 227/396] serial: 8250_dw: Do not reclock if already at correct rate
+Date: Mon,  1 Apr 2024 17:44:36 +0200
+Message-ID: <20240401152554.687535422@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -45,56 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 74cb7e0355fae9641f825afa389d3fba3b617714 upstream.
+commit e5d6bd25f93d6ae158bb4cd04956cb497a85b8ef upstream.
 
-If the remote uart device is not connected or not enabled after booting
-up, the CTS line is high by default. At this time, if we enable the flow
-control when opening the device(for example, using “stty -F /dev/ttyLP4
-crtscts” command), there will be a pending idle preamble(first writing 0
-and then writing 1 to UARTCTRL_TE will queue an idle preamble) that
-cannot be sent out, resulting in the uart port fail to close(waiting for
-TX empty), so the user space stty will have to wait for a long time or
-forever.
+When userspace opens the console, we call set_termios() passing a
+termios with the console's configured baud rate. Currently this causes
+dw8250_set_termios() to disable and then re-enable the UART clock at
+the same frequency as it was originally. This can cause corruption
+of any concurrent console output. Fix it by skipping the reclocking
+if we are already at the correct rate.
 
-This is an LPUART IP bug(idle preamble has higher priority than CTS),
-here add a workaround patch to enable TX CTS after enabling UARTCTRL_TE,
-so that the idle preamble does not get stuck due to CTS is deasserted.
-
-Fixes: 380c966c093e ("tty: serial: fsl_lpuart: add 32-bit register interface support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20240305015706.1050769-1-sherry.sun@nxp.com
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Fixes: 4e26b134bd17 ("serial: 8250_dw: clock rate handling for all ACPI platforms")
+Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240222192635.1050502-1-pcc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -2345,9 +2345,12 @@ lpuart32_set_termios(struct uart_port *p
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -357,9 +357,9 @@ static void dw8250_set_termios(struct ua
+ 	long rate;
+ 	int ret;
  
- 	lpuart32_write(&sport->port, bd, UARTBAUD);
- 	lpuart32_serial_setbrg(sport, baud);
--	lpuart32_write(&sport->port, modem, UARTMODIR);
--	lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
-+	lpuart32_write(&sport->port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
- 	/* restore control register */
-+	lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+	/* re-enable the CTS if needed */
-+	lpuart32_write(&sport->port, modem, UARTMODIR);
+-	clk_disable_unprepare(d->clk);
+ 	rate = clk_round_rate(d->clk, newrate);
+-	if (rate > 0) {
++	if (rate > 0 && p->uartclk != rate) {
++		clk_disable_unprepare(d->clk);
+ 		/*
+ 		 * Note that any clock-notifer worker will block in
+ 		 * serial8250_update_uartclk() until we are done.
+@@ -367,8 +367,8 @@ static void dw8250_set_termios(struct ua
+ 		ret = clk_set_rate(d->clk, newrate);
+ 		if (!ret)
+ 			p->uartclk = rate;
++		clk_prepare_enable(d->clk);
+ 	}
+-	clk_prepare_enable(d->clk);
  
- 	if ((ctrl & (UARTCTRL_PE | UARTCTRL_M)) == UARTCTRL_PE)
- 		sport->is_cs7 = true;
+ 	dw8250_do_set_termios(p, termios, old);
+ }
 
 
