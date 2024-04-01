@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8F93B2A4;
-	Mon,  1 Apr 2024 16:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25121E86C;
+	Mon,  1 Apr 2024 16:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989598; cv=none; b=FhO2rve/i0cJtR7BbrxLuxp0oscaGy6S5ViiqgcGpBUyeNK+3whKC7uskKt+UBdadL9F0JgMFzlpRC7cC8fPyP9WGcFZ3Z7bVb0UfQvygq/LGOHD9Le8Jw8GS3PhiEvCBGAjX4E2XsXLu8owkSfC8pf5yio4GbYsMxWiD1GGkdw=
+	t=1711989601; cv=none; b=VtYUwvBwLdeRgf61zBULzDM/HsRsDgTw4onX0iJSx597TtYJIGofmR3s3Udb9hgIFK12XkNgal646i+5uyv/Jfh1hk6t87jiJEgGYRa7BSumho7Q7WIYJjkWzCSFnvzjPHQz49nJAoQuVWkZv2ZzYGwcgRmmTREM4lf+SgLHop8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989598; c=relaxed/simple;
-	bh=3+ahxgjO930wFtWiFSerQWpVc9TLjjsH1Ryg4+YN01I=;
+	s=arc-20240116; t=1711989601; c=relaxed/simple;
+	bh=gHYTFgSjMCiKQ/RNt9Ru4OUmavjjayEdqEuk9gQrP8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8N0q4nD/drQppmkB3F2YDMUFV6pb5YujGdrldo5/KlDHy4CzNy516cs5D5Khrp59IRmWhJg657E+BUCtTKoK6vlEivmG6iAvkFIOw0tuR48QTqwdcR4TQ98/690U+35niUo/E1KjCkOuUd+TA5qMs+QVjyt1GzNs9nqXy1R07g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBVp8ye1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puVxvz+FLLKmZQuMzqj+FDdRjh9CzT3LzWcr21weuwSEbHnYH+N53Jy+iDydyLhpBihsbG+HHrxOIDDtRSEHSX6VklL1hcUqapOwDWWdf8Y8RS0x+xisQcHZigUfiV+DaTlIdALLFSYW9+6XbVn22xHjv9zdYchSRfI1I7sqIIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWzkDLTJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBVp8ye1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B00C433F1;
-	Mon,  1 Apr 2024 16:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWzkDLTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A00C433F1;
+	Mon,  1 Apr 2024 16:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989598;
-	bh=3+ahxgjO930wFtWiFSerQWpVc9TLjjsH1Ryg4+YN01I=;
+	s=korg; t=1711989601;
+	bh=gHYTFgSjMCiKQ/RNt9Ru4OUmavjjayEdqEuk9gQrP8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBVp8ye1yQd5neEkUefkOzLekzGbJomkmlYPjn0rDnpllZGMoPsbUkH29uctfhEMo
-	 aL8HNPbNcpp9YB4/D5I3OIjO4aFVhK8kGB/fuUzqd9IesT7rnEQ4Y5DJKF3ZOjZh4I
-	 93OAiWjDqPPZYwTbCh3Jy3rh/HobRJGIws13I8UU=
+	b=lWzkDLTJQthKFX7wl9/76DQeA1Y4I2MP3ohQAl8qa0pvP9+Qm8iFHCHMEjufioyk7
+	 rEGhtjuyOwoMhBPs8IWIzzSeqIpZohvcbnPCRXGXpH3tjGRL2A5Grxwe85oiq/t689
+	 Ci5LfanMVoZkwHW/dlxBvzmd6cpYmQE/RXmCYayg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Tony Battersby <tonyb@cybernetics.com>,
+	Greg Edwards <gedwards@ddn.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/396] powerpc: xor_vmx: Add -mhard-float to CFLAGS
-Date: Mon,  1 Apr 2024 17:42:26 +0200
-Message-ID: <20240401152550.815088868@linuxfoundation.org>
+Subject: [PATCH 6.6 098/396] block: Fix page refcounts for unaligned buffers in __bio_release_pages()
+Date: Mon,  1 Apr 2024 17:42:27 +0200
+Message-ID: <20240401152550.844216763@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -51,46 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 35f20786c481d5ced9283ff42de5c69b65e5ed13 ]
+[ Upstream commit 38b43539d64b2fa020b3b9a752a986769f87f7a6 ]
 
-arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
-powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
-error when building with clang after a recent change in main:
+Fix an incorrect number of pages being released for buffers that do not
+start at the beginning of a page.
 
-  error: option '-msoft-float' cannot be specified with '-maltivec'
-  make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
-
-Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
-to override the previous inclusion of '-msoft-float' (as the last option
-wins), which matches how other areas of the kernel use '-maltivec', such
-as AMDGPU.
-
+Fixes: 1b151e2435fc ("block: Remove special-casing of compound pages")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
-Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Tested-by: Greg Edwards <gedwards@ddn.com>
+Link: https://lore.kernel.org/r/86e592a9-98d4-4cff-a646-0c0084328356@cybernetics.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/bio.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/lib/Makefile b/arch/powerpc/lib/Makefile
-index 6eac63e79a899..0ab65eeb93ee3 100644
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -76,7 +76,7 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
- obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
+diff --git a/block/bio.c b/block/bio.c
+index 270f6b99926ea..62419aa09d731 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1149,7 +1149,7 @@ void __bio_release_pages(struct bio *bio, bool mark_dirty)
  
- obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
--CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
-+CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
- # Enable <altivec.h>
- CFLAGS_xor_vmx.o += -isystem $(shell $(CC) -print-file-name=include)
+ 	bio_for_each_folio_all(fi, bio) {
+ 		struct page *page;
+-		size_t done = 0;
++		size_t nr_pages;
  
+ 		if (mark_dirty) {
+ 			folio_lock(fi.folio);
+@@ -1157,10 +1157,11 @@ void __bio_release_pages(struct bio *bio, bool mark_dirty)
+ 			folio_unlock(fi.folio);
+ 		}
+ 		page = folio_page(fi.folio, fi.offset / PAGE_SIZE);
++		nr_pages = (fi.offset + fi.length - 1) / PAGE_SIZE -
++			   fi.offset / PAGE_SIZE + 1;
+ 		do {
+ 			bio_release_page(bio, page++);
+-			done += PAGE_SIZE;
+-		} while (done < fi.length);
++		} while (--nr_pages != 0);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(__bio_release_pages);
 -- 
 2.43.0
 
