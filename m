@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDBE481D1;
-	Mon,  1 Apr 2024 16:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F544654F;
+	Mon,  1 Apr 2024 16:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989870; cv=none; b=BTIqv6t4x2bUpJdU5Qg/eUXeT8u+OCJACwZ9UR1DQ+JyfbA0GHCcnzsA9sApJ98NfefYzSurtkBNLWLJ1xKSEOllS4nBv4z+L5CrOxX0dlrHKYPrtAj/axreA6BAGx77+Jw71zHy0b/8yrVxijqGP3NFFOdC7NVjv59EbZhT2Pw=
+	t=1711989873; cv=none; b=N3bGvXiesqTm43k9z2yWGaxrzrUz99zKyedAE8L4GcOBnJQ9sasRqRBblPryeERmkfAbVfnH1H7KGv2PwphKQAKZknd3MbWnT5+r6/ezlH5slEZ+KFc4/7kVlWETa/xaxcZOffNFEO4T1cowS9DgfOhzK0SI8wwkWbVUy5FOgcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989870; c=relaxed/simple;
-	bh=VZAzM+K0xXEju8eXJ1Rzstc/mFstNdkOTz7zopzJ18w=;
+	s=arc-20240116; t=1711989873; c=relaxed/simple;
+	bh=soeq7qXeCXQ6aUjA4srX62hXoW2fCRex5HeZHbm5bIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQE4BuIoHt+GIYyZefQ/8Kj+ayhwTRW7g/uI8bFkhInw/uDrbqbTfm3kLcZIo2dJ6D7cuNKQ2B795eUj9561OOUZywXOUpppRV56xnlfRWMHu9BILgYIznMOhDmhZW/acdO8BpSqmG8z2O5jS16MWnJktqJMpEiagsbPM1sfZIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDGCigcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a5TB+RhNJIezLeX7Vneeu6i7RlvU7UpESamUOO8NuCM7/mZS+hKLD+kI6rz+wnKo/DcoI/kEFt5Lh+1t2XoyWFl5/f5OLPJ69/KRhmxP+hRVbtn6WHkZNRue6i3/KAMwLrC3LRoqfkMxOHPArQuWg+Trggwwsf0OmI0Pf2PF6mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmnLdWV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDGCigcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7167BC433C7;
-	Mon,  1 Apr 2024 16:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmnLdWV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E630BC433F1;
+	Mon,  1 Apr 2024 16:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989869;
-	bh=VZAzM+K0xXEju8eXJ1Rzstc/mFstNdkOTz7zopzJ18w=;
+	s=korg; t=1711989873;
+	bh=soeq7qXeCXQ6aUjA4srX62hXoW2fCRex5HeZHbm5bIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDGCigcdk3NF7YagRIBPKYIaWkamANJLNcUKjgs7LAxbZ9WLdWikdxeyELXZyYCh7
-	 iKWdWYSPt57S9nCq5VGbfLDodHTCvbBo6Ki4lzNoWnXOuAJwFUCItXmb4QeIH+Lc83
-	 4U9/6W6slScW2VwT1RKTC1h93L00Azs69zFnoVuk=
+	b=DmnLdWV3HjvNn9z2OSDtg7kqo+9uEmTyJ+sMnJBZnUyJpOzFc1WLXPz+kYrofn/9b
+	 DIMBdaFqUieIx4Ie6uzOHUf1Qf9d+kM1zjjIxez4cPyzMQ9SF7K/4vbchTbNVZdd1U
+	 2EEK+kFxBM9hdX458UGapbjhjktlJ+aZC3E0aenc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Zhang <qiang4.zhang@intel.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/396] memtest: use {READ,WRITE}_ONCE in memory scanning
-Date: Mon,  1 Apr 2024 17:43:19 +0200
-Message-ID: <20240401152552.417309733@linuxfoundation.org>
+Subject: [PATCH 6.6 177/396] wireguard: netlink: access device through ctx instead of peer
+Date: Mon,  1 Apr 2024 17:43:46 +0200
+Message-ID: <20240401152553.221135902@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -55,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Zhang <qiang4.zhang@intel.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit 82634d7e24271698e50a3ec811e5f50de790a65f ]
+[ Upstream commit 71cbd32e3db82ea4a74e3ef9aeeaa6971969c86f ]
 
-memtest failed to find bad memory when compiled with clang.  So use
-{WRITE,READ}_ONCE to access memory to avoid compiler over optimization.
+The previous commit fixed a bug that led to a NULL peer->device being
+dereferenced. It's actually easier and faster performance-wise to
+instead get the device from ctx->wg. This semantically makes more sense
+too, since ctx->wg->peer_allowedips.seq is compared with
+ctx->allowedips_seq, basing them both in ctx. This also acts as a
+defence in depth provision against freed peers.
 
-Link: https://lkml.kernel.org/r/20240312080422.691222-1-qiang4.zhang@intel.com
-Signed-off-by: Qiang Zhang <qiang4.zhang@intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memtest.c | 4 ++--
+ drivers/net/wireguard/netlink.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memtest.c b/mm/memtest.c
-index 32f3e9dda8370..c2c609c391199 100644
---- a/mm/memtest.c
-+++ b/mm/memtest.c
-@@ -51,10 +51,10 @@ static void __init memtest(u64 pattern, phys_addr_t start_phys, phys_addr_t size
- 	last_bad = 0;
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index 12d80306ff3bc..a6661c9500d40 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -164,8 +164,8 @@ get_peer(struct wg_peer *peer, struct sk_buff *skb, struct dump_ctx *ctx)
+ 	if (!allowedips_node)
+ 		goto no_allowedips;
+ 	if (!ctx->allowedips_seq)
+-		ctx->allowedips_seq = peer->device->peer_allowedips.seq;
+-	else if (ctx->allowedips_seq != peer->device->peer_allowedips.seq)
++		ctx->allowedips_seq = ctx->wg->peer_allowedips.seq;
++	else if (ctx->allowedips_seq != ctx->wg->peer_allowedips.seq)
+ 		goto no_allowedips;
  
- 	for (p = start; p < end; p++)
--		*p = pattern;
-+		WRITE_ONCE(*p, pattern);
- 
- 	for (p = start; p < end; p++, start_phys_aligned += incr) {
--		if (*p == pattern)
-+		if (READ_ONCE(*p) == pattern)
- 			continue;
- 		if (start_phys_aligned == last_bad + incr) {
- 			last_bad += incr;
+ 	allowedips_nest = nla_nest_start(skb, WGPEER_A_ALLOWEDIPS);
 -- 
 2.43.0
 
