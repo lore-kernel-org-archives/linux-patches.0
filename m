@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DEF4DA10;
-	Mon,  1 Apr 2024 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934BD63E;
+	Mon,  1 Apr 2024 16:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990368; cv=none; b=FI6sQUB2IFMAw0s9yWx8SP1Wdu4mIxjdoyBbd/Z1mLqQsgYui20izkGviyKpFjEoLqzDnLmYvZu/YI7A3dhZBOtaLV5MhrWx44vt8+L3vy/llRUJwhLhCUJReA2VIA6Veks083Wt9ao9kEqCB5pWSC+SUg7WVl/ASmWT7B0VFVw=
+	t=1711990371; cv=none; b=u1XbQvzusfXPs69MFZvupSauE+/eEQy1Lf+cguVGiFPHpC2LIgn4h7hNXg4dkKvKe/fOaUg1jvyY0i2jkEYUYbsnlxrNlLid3Ne1Rc3mgjiJVmvtpe1Ff4WtZa5OtS17Ek/QsjJzxJ7HVXyfSVstDsMJjW4O2KvHsGatRxjGcuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990368; c=relaxed/simple;
-	bh=o3IE693d365Ayud37RpmMDwAZryHs0Tb/Tdkp3/k0TY=;
+	s=arc-20240116; t=1711990371; c=relaxed/simple;
+	bh=TcohJ/P/XQ0XnFjJSJAP2IbEEJdBG3SlQi4lPX3kY2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHUaNFmPPeZqVCVwR605Nijy/0t4wKPHVQv4sWEblmQjOybCxM2x456rTJKtTQ8/0y6PuOeFF+d1OHAjPtUPahJDjdsPo7W5XO84FjuzKUPw9/1PZQ4g5OoHuv3SG2SUJ6m38L3xCKRYFp91yu1hD3o2eSMdmKHh3wb+gZTTPII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp1kn3Kf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cr9ST4z+lA6xElk9o9UxbCi1/+EkiykcPakGysBJ06J37Unz1W3lf1ih+k0avaEM32eM24b8Zbw85QS4wWYAeBci9E00iyHVRiJOO92tzKcp9HUBHY3K++K9QRl+o5boLxxDIv1hGIwUql4ob1DPl3PDHa53IBjdU9YQkdPGkF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO3UQSVg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp1kn3Kf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF5FC433F1;
-	Mon,  1 Apr 2024 16:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO3UQSVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0593AC433C7;
+	Mon,  1 Apr 2024 16:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990368;
-	bh=o3IE693d365Ayud37RpmMDwAZryHs0Tb/Tdkp3/k0TY=;
+	s=korg; t=1711990371;
+	bh=TcohJ/P/XQ0XnFjJSJAP2IbEEJdBG3SlQi4lPX3kY2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xp1kn3KfiFsxOGIE2VWuz87qF0ZPlBfvlbbnpwgRSnfv1Kxs0cJvKKmiZHVGEGsQT
-	 4UHBvb+TjOx7zg72cRIme9XcMA0rCOFtXmTIHXyIthjagAIulUbuFiXpYh4xXFWnsA
-	 D5nF3BSE6AnjV0zUvvYy7Fy+k5NRFWq4QpLAEtv4=
+	b=qO3UQSVgN2E90Ey08WYZoUd14SXVAOPgGH+UYlWJs4MK9qrQyT3I6EtLfnsDvXB/Q
+	 IiJ9Rz2xoWpnGGY09r+dm+tvVmJYUeD/LViv0BAxStrCL4UY4cfR+eQVt0RIpxx45P
+	 To/kTgoaEdbFgAwIzbFNH5SuYHMZKwb3r5IZqOdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	Edward Liaw <edliaw@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 330/396] selftests/mm: fix ARM related issue with fork after pthread_create
-Date: Mon,  1 Apr 2024 17:46:19 +0200
-Message-ID: <20240401152557.754533339@linuxfoundation.org>
+	Romain Naour <romain.naour@skf.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 331/396] mmc: sdhci-omap: re-tuning is needed after a pm transition to support emmc HS200 mode
+Date: Mon,  1 Apr 2024 17:46:20 +0200
+Message-ID: <20240401152557.783370067@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,109 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Romain Naour <romain.naour@skf.com>
 
-commit 8c864371b2a15a23ce35aa7e2bd241baaad6fbe8 upstream.
+commit f9e2a5b00a35f2c064dc679808bc8db5cc779ed6 upstream.
 
-Following issue was observed while running the uffd-unit-tests selftest
-on ARM devices. On x86_64 no issues were detected:
+"PM runtime functions" was been added in sdhci-omap driver in commit
+f433e8aac6b9 ("mmc: sdhci-omap: Implement PM runtime functions") along
+with "card power off and enable aggressive PM" in commit 3edf588e7fe0
+("mmc: sdhci-omap: Allow SDIO card power off and enable aggressive PM").
 
-pthread_create followed by fork caused deadlock in certain cases wherein
-fork required some work to be completed by the created thread.  Used
-synchronization to ensure that created thread's start function has started
-before invoking fork.
+Since then, the sdhci-omap driver doesn't work using mmc-hs200 mode
+due to the tuning values being lost during a pm transition.
 
-[edliaw@google.com: refactored to use atomic_bool]
-Link: https://lkml.kernel.org/r/20240325194100.775052-1-edliaw@google.com
-Fixes: 760aee0b71e3 ("selftests/mm: add tests for RO pinning vs fork()")
-Signed-off-by: Lokesh Gidra <lokeshgidra@google.com>
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+As for the sdhci_am654 driver, request a new tuning sequence before
+suspend (sdhci_omap_runtime_suspend()), otherwise the device will
+trigger cache flush error:
+
+  mmc1: cache flush error -110 (ETIMEDOUT)
+  mmc1: error -110 doing aggressive suspend
+
+followed by I/O errors produced by fdisk -l /dev/mmcblk1boot1:
+
+  I/O error, dev mmcblk1boot0, sector 64384 op 0x0:(READ) flags 0x80700 phys_seg 1
+  prio class 2
+  I/O error, dev mmcblk1boot1, sector 64384 op 0x0:(READ) flags 0x80700 phys_seg 1
+  prio class 2
+  I/O error, dev mmcblk1boot1, sector 64384 op 0x0:(READ) flags 0x0 phys_seg 1
+  prio class 2
+  Buffer I/O error on dev mmcblk1boot1, logical block 8048, async page read
+  I/O error, dev mmcblk1boot0, sector 64384 op 0x0:(READ) flags 0x0 phys_seg 1
+  prio class 2
+  Buffer I/O error on dev mmcblk1boot0, logical block 8048, async page read
+
+Don't re-tune if auto retuning is supported in HW (when SDHCI_TUNING_MODE_3
+is available).
+
+Link: https://lore.kernel.org/all/2e5f1997-564c-44e4-b357-6343e0dae7ab@smile.fr
+Fixes: f433e8aac6b9 ("mmc: sdhci-omap: Implement PM runtime functions")
+Signed-off-by: Romain Naour <romain.naour@skf.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240315234444.816978-1-romain.naour@smile.fr
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/uffd-common.c     |    3 +++
- tools/testing/selftests/mm/uffd-common.h     |    2 ++
- tools/testing/selftests/mm/uffd-unit-tests.c |   10 ++++++++++
- 3 files changed, 15 insertions(+)
+ drivers/mmc/host/sdhci-omap.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/selftests/mm/uffd-common.c
-+++ b/tools/testing/selftests/mm/uffd-common.c
-@@ -17,6 +17,7 @@ bool map_shared;
- bool test_uffdio_wp = true;
- unsigned long long *count_verify;
- uffd_test_ops_t *uffd_test_ops;
-+atomic_bool ready_for_fork;
+--- a/drivers/mmc/host/sdhci-omap.c
++++ b/drivers/mmc/host/sdhci-omap.c
+@@ -1439,6 +1439,9 @@ static int __maybe_unused sdhci_omap_run
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_omap_host *omap_host = sdhci_pltfm_priv(pltfm_host);
  
- static int uffd_mem_fd_create(off_t mem_size, bool hugetlb)
- {
-@@ -507,6 +508,8 @@ void *uffd_poll_thread(void *arg)
- 	pollfd[1].fd = pipefd[cpu*2];
- 	pollfd[1].events = POLLIN;
- 
-+	ready_for_fork = true;
++	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
++		mmc_retune_needed(host->mmc);
 +
- 	for (;;) {
- 		ret = poll(pollfd, 2, -1);
- 		if (ret <= 0) {
---- a/tools/testing/selftests/mm/uffd-common.h
-+++ b/tools/testing/selftests/mm/uffd-common.h
-@@ -32,6 +32,7 @@
- #include <inttypes.h>
- #include <stdint.h>
- #include <sys/random.h>
-+#include <stdatomic.h>
+ 	if (omap_host->con != -EINVAL)
+ 		sdhci_runtime_suspend_host(host);
  
- #include "../kselftest.h"
- #include "vm_util.h"
-@@ -97,6 +98,7 @@ extern bool map_shared;
- extern bool test_uffdio_wp;
- extern unsigned long long *count_verify;
- extern volatile bool test_uffdio_copy_eexist;
-+extern atomic_bool ready_for_fork;
- 
- extern uffd_test_ops_t anon_uffd_test_ops;
- extern uffd_test_ops_t shmem_uffd_test_ops;
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -770,6 +770,8 @@ static void uffd_sigbus_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
-+	ready_for_fork = false;
-+
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 
- 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
-@@ -785,6 +787,9 @@ static void uffd_sigbus_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
-+
- 	pid = fork();
- 	if (pid < 0)
- 		err("fork");
-@@ -824,6 +829,8 @@ static void uffd_events_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
-+	ready_for_fork = false;
-+
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
- 			  true, wp, false))
-@@ -833,6 +840,9 @@ static void uffd_events_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
-+
- 	pid = fork();
- 	if (pid < 0)
- 		err("fork");
 
 
