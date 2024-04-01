@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C8B4C3C3;
-	Mon,  1 Apr 2024 16:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F39BA3F;
+	Mon,  1 Apr 2024 16:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711990561; cv=none; b=PBUr7EMc/IOWGsOGRWLWMYegOlJrSGbzy0Z45oUarrJpuhkEn+uEM2cX4gxSjj1X46LN9jTeKR8nyLiZgkMXuYkRwdUtnDuPSyMSIksV/bJOex8FpMOZW86fepJCnC4RL5jFH1/9cWmiQ/IiRIVe2F4CZIaWwsBvuajYauq24Po=
+	t=1711990564; cv=none; b=EKTJaVkTS2prqb5Zy7JO04KQXWvnSaloPCMn9IPRBlAVJSwB6KiQ3W4RdiKb2M6sBATf785rPeCtyheQTfIqwnNBOx5dEU6FPx4ShqtWlJvVKh7GnAoQTl/5jwYsE9XKKt2Swa5F4egi+I9mrP/WNMRPJL7bo7uAY8UfesGEei8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711990561; c=relaxed/simple;
-	bh=6t/eOv2WzQQudqPLpEXYx08r2PveDcTInCMPyII0VZ4=;
+	s=arc-20240116; t=1711990564; c=relaxed/simple;
+	bh=VOTV5T1DWEw3wEdyqyMAJvg6w56GxKGu+vA6JTpdlvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eq9iaonKDHIkiFHQiQlLhNWQZClXBgZiDuniK8JWBnNUdHnQSZ/f5K5nlsdam8tSx8upA3YEkJ8gxnaKlqd2Hqkteu+mUD/iUW4ShveEH2V+DFjbDYpeZCv2z4doeBz9IIkkAuAcW0+4syAska+3TzbQtgJ9hQm3I8dCkLIuh3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUAQgkOc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsEG6xAgEJw+Bwgw8c53MzMKC//iJka1Sre3NbKSi3xXQUm448xuCp6BLod51rl5t+pen1aNeXWtkdg03jx8xo4tk29hnp6KaaIEMNEdfBXJT84/q/Up8u/fRU0deH2b2d22HbY21xjslKUQVgdziNfKw/cTNVLcd0YYJ6l0T4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgvNrt73; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUAQgkOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9345AC433F1;
-	Mon,  1 Apr 2024 16:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgvNrt73"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0EFC433C7;
+	Mon,  1 Apr 2024 16:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711990561;
-	bh=6t/eOv2WzQQudqPLpEXYx08r2PveDcTInCMPyII0VZ4=;
+	s=korg; t=1711990563;
+	bh=VOTV5T1DWEw3wEdyqyMAJvg6w56GxKGu+vA6JTpdlvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUAQgkOc2t6iSsCMOoDgZBwD6zbXp0YdVg17fpUkB3jbRGpQ+kUddkZHQ6lL9lvgi
-	 jN4p6QsNCJ/6uYCR6UAC5UbmaKqAbESrYnfaXn87PE7SbJqd4Qrslo1p8eYTVWtvqf
-	 3/TO9dtToisw0HtOAFnIi9UXDgIaXAse/mx4FfYo=
+	b=FgvNrt733itITdOXW7I945vWSrDsmq3tkGj4P2KyLkYtLYd1RedjEjVqXqyYEu2Y6
+	 C2D7fx+s1FiujSg16I6r0gGhHZDEhXCgD1GI56oQRbO6hQiIV48OuP9cUkQPAfNKCF
+	 lRIv+AhOaBSSglzJ0DCo8NIRxTAQibcSXGK/hPv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Justin Tee <justintee8345@gmail.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Xingui Yang <yangxingui@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 392/396] scsi: lpfc: Correct size for wqe for memset()
-Date: Mon,  1 Apr 2024 17:47:21 +0200
-Message-ID: <20240401152559.597485913@linuxfoundation.org>
+Subject: [PATCH 6.6 393/396] scsi: libsas: Add a helper sas_get_sas_addr_and_dev_type()
+Date: Mon,  1 Apr 2024 17:47:22 +0200
+Message-ID: <20240401152559.626682798@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -52,33 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-commit 28d41991182c210ec1654f8af2e140ef4cc73f20 upstream.
+commit a57345279fd311ba679b8083feb0eec5272c7729 upstream.
 
-The wqe is of type lpfc_wqe128. It should be memset with the same type.
+Add a helper to get attached_sas_addr and device type from disc_resp.
 
-Fixes: 6c621a2229b0 ("scsi: lpfc: Separate NVMET RQ buffer posting from IO resources SGL/iocbq/context")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20240304090649.833953-1-usama.anjum@collabora.com
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Justin Tee <justintee8345@gmail.com>
+Suggested-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20240307141413.48049-2-yangxingui@huawei.com
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_nvmet.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/libsas/sas_expander.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/lpfc/lpfc_nvmet.c
-+++ b/drivers/scsi/lpfc/lpfc_nvmet.c
-@@ -1586,7 +1586,7 @@ lpfc_nvmet_setup_io_context(struct lpfc_
- 		wqe = &nvmewqe->wqe;
+--- a/drivers/scsi/libsas/sas_expander.c
++++ b/drivers/scsi/libsas/sas_expander.c
+@@ -1621,6 +1621,16 @@ out_err:
  
- 		/* Initialize WQE */
--		memset(wqe, 0, sizeof(union lpfc_wqe));
-+		memset(wqe, 0, sizeof(*wqe));
+ /* ---------- Domain revalidation ---------- */
  
- 		ctx_buf->iocbq->cmd_dmabuf = NULL;
- 		spin_lock(&phba->sli4_hba.sgl_list_lock);
++static void sas_get_sas_addr_and_dev_type(struct smp_disc_resp *disc_resp,
++					  u8 *sas_addr,
++					  enum sas_device_type *type)
++{
++	memcpy(sas_addr, disc_resp->disc.attached_sas_addr, SAS_ADDR_SIZE);
++	*type = to_dev_type(&disc_resp->disc);
++	if (*type == SAS_PHY_UNUSED)
++		memset(sas_addr, 0, SAS_ADDR_SIZE);
++}
++
+ static int sas_get_phy_discover(struct domain_device *dev,
+ 				int phy_id, struct smp_disc_resp *disc_resp)
+ {
+@@ -1674,13 +1684,8 @@ int sas_get_phy_attached_dev(struct doma
+ 		return -ENOMEM;
+ 
+ 	res = sas_get_phy_discover(dev, phy_id, disc_resp);
+-	if (res == 0) {
+-		memcpy(sas_addr, disc_resp->disc.attached_sas_addr,
+-		       SAS_ADDR_SIZE);
+-		*type = to_dev_type(&disc_resp->disc);
+-		if (*type == 0)
+-			memset(sas_addr, 0, SAS_ADDR_SIZE);
+-	}
++	if (res == 0)
++		sas_get_sas_addr_and_dev_type(disc_resp, sas_addr, type);
+ 	kfree(disc_resp);
+ 	return res;
+ }
 
 
