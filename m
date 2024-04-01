@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D54C129;
-	Mon,  1 Apr 2024 16:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48430C129;
+	Mon,  1 Apr 2024 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988600; cv=none; b=AqIoS4BbBmZO+0ESJChpHb+Rigji9qyZ7hLH7P0Cv1BRe+fbf5WQr93y0gM65svd/S71w6Guc6t84NH5SUNN3tHN1AILo3RHImBrd+D1JiqbQ3CcgGGT6b7NCLuuC+89ULjhcQMCvL4CVIVJC11kqd1+pdDXsq+9h8Bd16Kotok=
+	t=1711988604; cv=none; b=APrjMOvnsjkDOw+GbWk0HR0BmevObu17X8OqKeII4pa4AUvncIwpmXWarActzn8xVT3IJPfomw/zbPHyAA6i34JHO2ponrP/ggvvX/Z6p4vLXSkhbq6+rjFbsqqG4lLzxNjKUZZWKaZY6Uco/4YIWNyxG5LrJ19iM2M5UdeA3p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988600; c=relaxed/simple;
-	bh=pyVlEXxS4nYJqaSGp4xBDW2FGK82xTYHDRD9Gxu+pmE=;
+	s=arc-20240116; t=1711988604; c=relaxed/simple;
+	bh=rzzbD7FvATK2uFkf3w6SXyAE2CZb6uYHP9lddivl7WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j43ojm7KuIiNbKlrOeXfzOGobs3lXuUzJm9VVSx/119t7/XJtBJiEpXvguyZlV9Q2AFFgLVmKUW5pu5GdMwbg6xLNh9P7Q9LSGlhDIMyrzV5PdUIWKPNfh/YRDWaXt2UjpVqlVADqRwJFcy2Zr1aaGP/VMv/zDIkE+bm6xBj7S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9H9p2WY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eU7bp2NWXQgnZxef1eE+EZt8rwwhibbcaInmyXBrvRhe3a6rNcSRAyQr59vPdTdyIpwTnG+Gy/OIdKhaGj55NzX4+jOH+M8ihmHwK0vP0i2MsQB6/Q8EzY5SSo8HvSsRj7/w4ONQp6m2dpG+SRimzX8fSuDWTjDGYfeqhw9V6n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wHOMl8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9H9p2WY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E05C433F1;
-	Mon,  1 Apr 2024 16:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wHOMl8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A084FC433F1;
+	Mon,  1 Apr 2024 16:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988600;
-	bh=pyVlEXxS4nYJqaSGp4xBDW2FGK82xTYHDRD9Gxu+pmE=;
+	s=korg; t=1711988604;
+	bh=rzzbD7FvATK2uFkf3w6SXyAE2CZb6uYHP9lddivl7WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9H9p2WYMxRL5gOZ+qelgStwpA4+UvkuaiKOWr0gzNCGbsaTG5zwlo7dg9A5xZqP8
-	 l18OaVtS+HKn1P+TtOFA3Uh8szke5VozJS3up4HJbkfdPiqRfYxtFx0v8ALC+Szogj
-	 izd7XwZefKdCplgFEYZpT3Pa8e3jKKqMvQ0RjHCM=
+	b=2wHOMl8I4t1mztiWBvVjy5qlVL7cOkxB3CKYXvHL/tMI8VZwXUxrW0T9Z1iKE6g6L
+	 MQpfBA6TZTcENb2HABjEVzDp4AQomNDFcXvFlrb9oWZh79BcnNk4lsk055LeOesiSf
+	 zDCIn5pOZHzCkODkkJCgRzpLVTwtEOc35DQbCsGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 226/432] vfio: Introduce interface to flush virqfd inject workqueue
-Date: Mon,  1 Apr 2024 17:43:33 +0200
-Message-ID: <20240401152559.877358546@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.7 235/432] netfilter: nf_tables: disallow anonymous set with timeout flag
+Date: Mon,  1 Apr 2024 17:43:42 +0200
+Message-ID: <20240401152600.144772596@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -53,94 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b620ecbd17a03cacd06f014a5d3f3a11285ce053 ]
+commit 16603605b667b70da974bea8216c93e7db043bf1 upstream.
 
-In order to synchronize changes that can affect the thread callback,
-introduce an interface to force a flush of the inject workqueue.  The
-irqfd pointer is only valid under spinlock, but the workqueue cannot
-be flushed under spinlock.  Therefore the flush work for the irqfd is
-queued under spinlock.  The vfio_irqfd_cleanup_wq workqueue is re-used
-for queuing this work such that flushing the workqueue is also ordered
-relative to shutdown.
+Anonymous sets are never used with timeout from userspace, reject this.
+Exception to this rule is NFT_SET_EVAL to ensure legacy meters still work.
 
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20240308230557.805580-4-alex.williamson@redhat.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Stable-dep-of: 18c198c96a81 ("vfio/pci: Create persistent INTx handler")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/virqfd.c | 21 +++++++++++++++++++++
- include/linux/vfio.h  |  2 ++
- 2 files changed, 23 insertions(+)
+ net/netfilter/nf_tables_api.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vfio/virqfd.c b/drivers/vfio/virqfd.c
-index 29c564b7a6e13..5322691338019 100644
---- a/drivers/vfio/virqfd.c
-+++ b/drivers/vfio/virqfd.c
-@@ -101,6 +101,13 @@ static void virqfd_inject(struct work_struct *work)
- 		virqfd->thread(virqfd->opaque, virqfd->data);
- }
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5000,6 +5000,9 @@ static int nf_tables_newset(struct sk_bu
+ 		if ((flags & (NFT_SET_EVAL | NFT_SET_OBJECT)) ==
+ 			     (NFT_SET_EVAL | NFT_SET_OBJECT))
+ 			return -EOPNOTSUPP;
++		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
++			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
++			return -EOPNOTSUPP;
+ 	}
  
-+static void virqfd_flush_inject(struct work_struct *work)
-+{
-+	struct virqfd *virqfd = container_of(work, struct virqfd, flush_inject);
-+
-+	flush_work(&virqfd->inject);
-+}
-+
- int vfio_virqfd_enable(void *opaque,
- 		       int (*handler)(void *, void *),
- 		       void (*thread)(void *, void *),
-@@ -124,6 +131,7 @@ int vfio_virqfd_enable(void *opaque,
- 
- 	INIT_WORK(&virqfd->shutdown, virqfd_shutdown);
- 	INIT_WORK(&virqfd->inject, virqfd_inject);
-+	INIT_WORK(&virqfd->flush_inject, virqfd_flush_inject);
- 
- 	irqfd = fdget(fd);
- 	if (!irqfd.file) {
-@@ -213,3 +221,16 @@ void vfio_virqfd_disable(struct virqfd **pvirqfd)
- 	flush_workqueue(vfio_irqfd_cleanup_wq);
- }
- EXPORT_SYMBOL_GPL(vfio_virqfd_disable);
-+
-+void vfio_virqfd_flush_thread(struct virqfd **pvirqfd)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&virqfd_lock, flags);
-+	if (*pvirqfd && (*pvirqfd)->thread)
-+		queue_work(vfio_irqfd_cleanup_wq, &(*pvirqfd)->flush_inject);
-+	spin_unlock_irqrestore(&virqfd_lock, flags);
-+
-+	flush_workqueue(vfio_irqfd_cleanup_wq);
-+}
-+EXPORT_SYMBOL_GPL(vfio_virqfd_flush_thread);
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index a65b2513f8cdc..5ac5f182ce0bb 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -349,6 +349,7 @@ struct virqfd {
- 	wait_queue_entry_t		wait;
- 	poll_table		pt;
- 	struct work_struct	shutdown;
-+	struct work_struct	flush_inject;
- 	struct virqfd		**pvirqfd;
- };
- 
-@@ -356,5 +357,6 @@ int vfio_virqfd_enable(void *opaque, int (*handler)(void *, void *),
- 		       void (*thread)(void *, void *), void *data,
- 		       struct virqfd **pvirqfd, int fd);
- void vfio_virqfd_disable(struct virqfd **pvirqfd);
-+void vfio_virqfd_flush_thread(struct virqfd **pvirqfd);
- 
- #endif /* VFIO_H */
--- 
-2.43.0
-
+ 	desc.dtype = 0;
 
 
