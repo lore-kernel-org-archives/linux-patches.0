@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1469383BA;
-	Mon,  1 Apr 2024 16:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274F51CA8F;
+	Mon,  1 Apr 2024 16:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711987576; cv=none; b=D0f4EiPkOY20ICJQDlsJESC/LWV2hXc3Hecr3bkogUdNXjX9Xfy+MqqLO6IfL2q+kZzOOtpWrDp+NzpEmSfExdwmsN9F2Ttyp9yNwWBPNrQ+74xokzcKvR9i+Bvf+H2ZHjQaBR+C/qQ/CvJ75Rl+62Jh7hGKBEGJgm8XNhn3tLQ=
+	t=1711987580; cv=none; b=adoa8SbubrsidaN0E1K/tkzGoODbCdbvHmq3/u6AU66YehYcph3q1ovIHzdIwrm+ODt8pbz0hOOp5i4b69KCZbZFzdom7XI8Uq+KE68MoEaGBY7JJgA9qoWgNP3pSb4wTftf1MQvN53p1p/Cc0gZihS4SSNa8JRZpVC3LHCKkps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711987576; c=relaxed/simple;
-	bh=ABYdlW2rEBpZFugLjYzcTf0Ep6/CPmSHoBFbjQS8ntI=;
+	s=arc-20240116; t=1711987580; c=relaxed/simple;
+	bh=OU+r4reZe1UkLKVbwLihC4fOftRkkCljSSkEgTH3/qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhDf9wZzMIg9E9EErNxeqFQi+IBptz31rpLJJ9A/G11BjMzKuFBiQsAawuOMFBaHcgL9DGoXD2qcqKH5F7lvG9lQ5Z7CkjCiNMqX7y382OrPKsxh254MMONq7Rm4dF7lUB4oic6fo4iF3L9lDPV8uXWsptvm2lPx4xEB56tX6o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSF1UFTo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntkBOhjWjznN17BrtMkGYCfGLun/zWFhRx6lxbhG0pmwawBzM6sGI6usvTRMD9Pq62b/zdbe++vOXOprcTuvUX1h8hRvsIf6VTFsUcvcPYi+Zv+NuoWS44T/Nf1z+KOCoYEgTwsNq0Sc101H34B4OIGVcwT45MRsuP+h5JHVE4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ1VOGIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSF1UFTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E120C433F1;
-	Mon,  1 Apr 2024 16:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ1VOGIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A455C433C7;
+	Mon,  1 Apr 2024 16:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711987576;
-	bh=ABYdlW2rEBpZFugLjYzcTf0Ep6/CPmSHoBFbjQS8ntI=;
+	s=korg; t=1711987580;
+	bh=OU+r4reZe1UkLKVbwLihC4fOftRkkCljSSkEgTH3/qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSF1UFToKBjdz9H7TZVJNifdZJv0OBRH8DA5hel1q7UEzSIgeYjJk8DAK9zox8Szb
-	 JijG4ER24t+V45CzxHWIYveJZlzczg25skPuKSrrBpsW4GyGUcCqGPCywUAM/+L5+B
-	 G+mx4VuEVYnYrqdVNuov/zVvigGh7eallbZ1rWi8=
+	b=EZ1VOGIblnP36mJl/6IbJg5dyqL92whorNngtdRAhrGXABph/YmvKc74/LBsn3BMS
+	 I/u3BXfjZlYPZJwbAPr7PfIjwNEvYD2qwAAyJE0WTml2tU7kbATJfLJUcx20gDUZdE
+	 gAQFyER7IAkgnmz1LH7prZ9gf8NEP7yIZXnGIDpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ranygh@riseup.net,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.8 299/399] wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes
-Date: Mon,  1 Apr 2024 17:44:25 +0200
-Message-ID: <20240401152558.120026480@linuxfoundation.org>
+	Radek Podgorny <radek@podgorny.cz>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.8 290/399] x86/efistub: Reinstate soft limit for initrd loading
+Date: Mon,  1 Apr 2024 17:44:16 +0200
+Message-ID: <20240401152557.842127804@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,44 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 4f2bdb3c5e3189297e156b3ff84b140423d64685 upstream.
+commit decd347c2a75d32984beb8807d470b763a53b542 upstream.
 
-When moving a station out of a VLAN and deleting the VLAN afterwards, the
-fast_rx entry still holds a pointer to the VLAN's netdev, which can cause
-use-after-free bugs. Fix this by immediately calling ieee80211_check_fast_rx
-after the VLAN change.
+Commit
 
-Cc: stable@vger.kernel.org
-Reported-by: ranygh@riseup.net
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://msgid.link/20240316074336.40442-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
+
+dropped the memcopy of the image's setup header into the boot_params
+struct provided to the core kernel, on the basis that EFI boot does not
+need it and should rely only on a single protocol to interface with the
+boot chain. It is also a prerequisite for being able to increase the
+section alignment to 4k, which is needed to enable memory protections
+when running in the boot services.
+
+So only the setup_header fields that matter to the core kernel are
+populated explicitly, and everything else is ignored. One thing was
+overlooked, though: the initrd_addr_max field in the setup_header is not
+used by the core kernel, but it is used by the EFI stub itself when it
+loads the initrd, where its default value of INT_MAX is used as the soft
+limit for memory allocation.
+
+This means that, in the old situation, the initrd was virtually always
+loaded in the lower 2G of memory, but now, due to initrd_addr_max being
+0x0, the initrd may end up anywhere in memory. This should not be an
+issue principle, as most systems can deal with this fine. However, it
+does appear to tickle some problems in older UEFI implementations, where
+the memory ends up being corrupted, resulting in errors when unpacking
+the initramfs.
+
+So set the initrd_addr_max field to INT_MAX like it was before.
+
+Fixes: 8117961d98fb2 ("x86/efi: Disregard setup header of loaded image")
+Reported-by: Radek Podgorny <radek@podgorny.cz>
+Closes: https://lore.kernel.org/all/a99a831a-8ad5-4cb0-bff9-be637311f771@podgorny.cz
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/firmware/efi/libstub/x86-stub.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2164,15 +2164,14 @@ static int ieee80211_change_station(stru
- 		}
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -487,6 +487,7 @@ efi_status_t __efiapi efi_pe_entry(efi_h
+ 	hdr->vid_mode	= 0xffff;
  
- 		if (sta->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
--		    sta->sdata->u.vlan.sta) {
--			ieee80211_clear_fast_rx(sta);
-+		    sta->sdata->u.vlan.sta)
- 			RCU_INIT_POINTER(sta->sdata->u.vlan.sta, NULL);
--		}
+ 	hdr->type_of_loader = 0x21;
++	hdr->initrd_addr_max = INT_MAX;
  
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED))
- 			ieee80211_vif_dec_num_mcast(sta->sdata);
- 
- 		sta->sdata = vlansdata;
-+		ieee80211_check_fast_rx(sta);
- 		ieee80211_check_fast_xmit(sta);
- 
- 		if (test_sta_flag(sta, WLAN_STA_AUTHORIZED)) {
+ 	/* Convert unicode cmdline to ascii */
+ 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
 
 
