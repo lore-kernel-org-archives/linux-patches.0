@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811F147A7C;
-	Mon,  1 Apr 2024 15:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B3C481B3;
+	Mon,  1 Apr 2024 15:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986757; cv=none; b=iFLrD/TPAz6jLiwbiADFpIAMy0I6wo0KMwig+z5o0vSQ2oy0YDZYWZahuZMlhXEHUErXaQLaVM3ddumURv39oqrcYKt6qdDLTo012F09dFk2TuLkHm9MiQpnStNc2ZInOEVnHtqrCl9c+un2Cc9SKyZtJOVsKo34kANRkpDhVlY=
+	t=1711986761; cv=none; b=J0n+ka51Ymn1J5MexwjsefZEK+NceUjMpU8OoN+rUO92bqgz4XJO4MTzs/ZXiNKPP3UUySYbgHRpiOCz4a3zfj/AIHOuWSFeWyYV/ddLKU52IlFhKeHoLqqGr2p22ifE6uiZrfaOy3Hm3Fi+zumreJ/6AsfioDzZju3Hw2iJYzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986757; c=relaxed/simple;
-	bh=elDdT0Tb9xw+nyvrOBqi+aeSlFnIde7DA8PU/uJ0Zis=;
+	s=arc-20240116; t=1711986761; c=relaxed/simple;
+	bh=beh/cGdFu2+St3YJ7kBncTGZHpTL/+g0MtBXXgF0se0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/Qtx8y1FSVK/3B+lw5+FHKMeefJ5pKd/0NmXMMPKNd++/84g5pY4ptFuvAo4PUELhTeEQniEk+t66+zw7UQO8MicI5pxB2gRsZtU9ywA/qFE3Juz4iimfS6bdcTwPM9d7SWbYvWSUIY1CujuFy0gRgCGid8xwj1zePvfemogRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzDYLgtI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ta/LMXPm2NtHKw2WTp7cDJMSc2RHm48crj5v4mTsf6k9QZRK735CaZP73DUqNhtQXnS4dfQVLVIjIN8/cuIJWialThAOQFv6DdMkjMj2CM9K8JDup0OrEuQMumPhyrFALr+H9Ok/oYGV49/VDM0gsLMeFvuSJv6UQAo7C1Fvu24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IL4OS/do; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzDYLgtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BECCC433F1;
-	Mon,  1 Apr 2024 15:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IL4OS/do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBD2C433C7;
+	Mon,  1 Apr 2024 15:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986757;
-	bh=elDdT0Tb9xw+nyvrOBqi+aeSlFnIde7DA8PU/uJ0Zis=;
+	s=korg; t=1711986760;
+	bh=beh/cGdFu2+St3YJ7kBncTGZHpTL/+g0MtBXXgF0se0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EzDYLgtIyO5fFckSob5ShuZa1cxxIdlVx9aPCSeblY8EgMPQpu7f/u8GmpK9qDpaO
-	 QJvFlwvHw4FbHG9pJDv1N52HhOtHmEgd36NZ6jG3lZN9F07JM07WNEQXw/at0nhcU6
-	 8FqvTN4HkplcSPJUmD1KtnOtHdCLloskYotZv0qc=
+	b=IL4OS/doFHjpp9BGsJwARcX88tvQ/lOB+aHhQoUafOgipHEuBp8buBic8Kw4wUYgM
+	 lRkSCiDshZZR6lHeJvav9lfP1p4SR4DSMC6iaQ1A3lkSHPWm/JDWDY0gzYx/OuXdzo
+	 E6E2bcUfzdXpaQkMS3WSggUkODHq6M2GX9SUB5Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Prashanth K <quic_prashk@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 076/399] clk: qcom: mmcc-msm8974: fix terminating of frequency table arrays
-Date: Mon,  1 Apr 2024 17:40:42 +0200
-Message-ID: <20240401152551.451356804@linuxfoundation.org>
+Subject: [PATCH 6.8 077/399] usb: xhci: Add error handling in xhci_map_urb_for_dma
+Date: Mon,  1 Apr 2024 17:40:43 +0200
+Message-ID: <20240401152551.481035306@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -52,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit e2c02a85bf53ae86d79b5fccf0a75ac0b78e0c96 ]
+[ Upstream commit be95cc6d71dfd0cba66e3621c65413321b398052 ]
 
-The frequency table arrays are supposed to be terminated with an
-empty element. Add such entry to the end of the arrays where it
-is missing in order to avoid possible out-of-bound access when
-the table is traversed by functions like qcom_find_freq() or
-qcom_find_freq_floor().
+Currently xhci_map_urb_for_dma() creates a temporary buffer and copies
+the SG list to the new linear buffer. But if the kzalloc_node() fails,
+then the following sg_pcopy_to_buffer() can lead to crash since it
+tries to memcpy to NULL pointer.
 
-Only compile tested.
+So return -ENOMEM if kzalloc returns null pointer.
 
-Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-7-074334f0905c@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org # 5.11
+Fixes: 2017a1e58472 ("usb: xhci: Use temporary buffer to consolidate SG")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240229141438.619372-10-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8974.c | 2 ++
+ drivers/usb/host/xhci.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-index a31f6cf0c4e0c..36f460b78be2c 100644
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -290,6 +290,7 @@ static struct freq_tbl ftbl_mmss_axi_clk[] = {
- 	F(291750000, P_MMPLL1, 4, 0, 0),
- 	F(400000000, P_MMPLL0, 2, 0, 0),
- 	F(466800000, P_MMPLL1, 2.5, 0, 0),
-+	{ }
- };
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 0886829d53e51..afccd58c9a75a 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -1220,6 +1220,8 @@ static int xhci_map_temp_buffer(struct usb_hcd *hcd, struct urb *urb)
  
- static struct clk_rcg2 mmss_axi_clk_src = {
-@@ -314,6 +315,7 @@ static struct freq_tbl ftbl_ocmemnoc_clk[] = {
- 	F(150000000, P_GPLL0, 4, 0, 0),
- 	F(291750000, P_MMPLL1, 4, 0, 0),
- 	F(400000000, P_MMPLL0, 2, 0, 0),
-+	{ }
- };
+ 	temp = kzalloc_node(buf_len, GFP_ATOMIC,
+ 			    dev_to_node(hcd->self.sysdev));
++	if (!temp)
++		return -ENOMEM;
  
- static struct clk_rcg2 ocmemnoc_clk_src = {
+ 	if (usb_urb_dir_out(urb))
+ 		sg_pcopy_to_buffer(urb->sg, urb->num_sgs,
 -- 
 2.43.0
 
