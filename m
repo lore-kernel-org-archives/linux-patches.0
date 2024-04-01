@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94AF63E;
-	Mon,  1 Apr 2024 16:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0572C4644C;
+	Mon,  1 Apr 2024 16:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711989973; cv=none; b=DwfmWOjh1bHNDKXtRhgOOHy1v/b/Y6N4c0npinknhzDT+2By0iiRdT5GBWsckxBbj25VJYQN9ObuBQmiHdOIgAkMFbu1DL16Ei7Emfkqr2NlYbdAuLeM7qAhT1EY6ExygthtNHhI6FfF1XADIf7owwGCqIA/je4BQTrZuUVzbA0=
+	t=1711989977; cv=none; b=nn+eQGmi7jFZGOlTqLwul8SbOU7VDNs1kHWIT7rMNRVN7VJ2cIU6LFdlr2lG/HvbcIZ33m8R8GOzRxXGT2/bV0e0QuBLUnjwTCWnFTZ5n8h/miiBPhto5S4FauBUU7cw7GihX0CVC4KjKYxI8Jh5IgWGonZ8Mh63EGK6gIfKVco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711989973; c=relaxed/simple;
-	bh=rdTFRxs812F5JtWTLhsSnbdg8PTuXj685BF0Fhx3CDA=;
+	s=arc-20240116; t=1711989977; c=relaxed/simple;
+	bh=7N01FboA15G92vAsEYHpDABxL7mJKlGF0d+4kpZH20Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U5VyL2A1GLFwoUTLA0YObJKHQXLJWmOe4Wh9y2NKpsRPV88rnaRqYPwNVDegrAk2vPA4lxC7lrcmLawm8qLfC528qTT6qo0jLQY7kj+Sf6utolRGlA5XJ7x+CZUaGisI+8CEz7jMj2z+qiczaJrgyBYkPbkZRQbkjCY2DZrleyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5I0Ptv+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDdA1zslhWw3JLezwVTTsRztegwrU4yCd4HmJf/3EQX3i5R/u9yFLfv7/EBcvsTxBMNoP2WZuZ2dxd97Kmd2gZjex6/SPeVhFWPM3I0GH8VWvGrPXaOu8+ZVkJDAYDnpF3+hGmJ+UevM9vUzolBjim0g6WiIkRC7X/0Cj8Cf51M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oC4Z6oMm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5I0Ptv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176CBC433F1;
-	Mon,  1 Apr 2024 16:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oC4Z6oMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56273C433F1;
+	Mon,  1 Apr 2024 16:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711989973;
-	bh=rdTFRxs812F5JtWTLhsSnbdg8PTuXj685BF0Fhx3CDA=;
+	s=korg; t=1711989976;
+	bh=7N01FboA15G92vAsEYHpDABxL7mJKlGF0d+4kpZH20Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5I0Ptv+ocZ/rJke5Z1CwD1T/60sQHq3BvDcTbR+EtlGYc7nwAfQQRHajrmBTNWQl
-	 bOm0zsL1ZQBQiVB6tmpbYt2HU47+zGUwpo4sucksjdGm5TxU9xNzCbRuLtXioamMUk
-	 xsLjldHLDoEOvkO99+vquag0JA9A5iRIwYt47xWw=
+	b=oC4Z6oMmrUl+dgLRZHfNZ99tdObK7XkWENhz0SKu0A4Q+cCWclPNnfxMoONrrjC4S
+	 pRkm5oOKXDYy8bOr8IKwY5e+W4Jy2QFeBiunhkoucHuW/gN0x3nAdeIqCmn6S6SuHv
+	 rTVaKOFfsYiHi0L6DVB/RTYyonAR8w3EuvcGd8Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/396] drm/amdgpu: amdgpu_ttm_gart_bind set gtt bound flag
-Date: Mon,  1 Apr 2024 17:43:50 +0200
-Message-ID: <20240401152553.338970333@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.6 208/396] usb: typec: tpcm: Fix PORT_RESET behavior for self powered devices
+Date: Mon,  1 Apr 2024 17:44:17 +0200
+Message-ID: <20240401152554.129995563@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 References: <20240401152547.867452742@linuxfoundation.org>
@@ -46,46 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-[ Upstream commit 6c6064cbe58b43533e3451ad6a8ba9736c109ac3 ]
+commit 197331b27ac890d0209232d5f669830cd00e8918 upstream.
 
-Otherwise after the GTT bo is released, the GTT and gart space is freed
-but amdgpu_ttm_backend_unbind will not clear the gart page table entry
-and leave valid mapping entry pointing to the stale system page. Then
-if GPU access the gart address mistakely, it will read undefined value
-instead page fault, harder to debug and reproduce the real issue.
+While commit 69f89168b310 ("usb: typec: tpcm: Fix issues with power being
+removed during reset") fixes the boot issues for bus powered devices such
+as LibreTech Renegade Elite/Firefly, it trades off the CC pins NOT being
+Hi-Zed during errory recovery (i.e PORT_RESET) for devices which are NOT
+bus powered(a.k.a self powered). This change Hi-Zs the CC pins only for
+self powered devices, thus preventing brown out for bus powered devices
 
+Adhering to spec is gaining more importance due to the Common charger
+initiative enforced by the European Union.
+
+Quoting from the spec:
+    4.5.2.2.2.1 ErrorRecovery State Requirements
+    The port shall not drive VBUS or VCONN, and shall present a
+    high-impedance to ground (above zOPEN) on its CC1 and CC2 pins.
+
+Hi-Zing the CC pins is the inteded behavior for PORT_RESET.
+CC pins are set to default state after tErrorRecovery in
+PORT_RESET_WAIT_OFF.
+
+    4.5.2.2.2.2 Exiting From ErrorRecovery State
+    A Sink shall transition to Unattached.SNK after tErrorRecovery.
+    A Source shall transition to Unattached.SRC after tErrorRecovery.
+
+Fixes: 69f89168b310 ("usb: typec: tpcm: Fix issues with power being removed during reset")
 Cc: stable@vger.kernel.org
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Tested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240228000512.746252-1-badhri@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/tcpm/tcpm.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index f573909332c01..928107d0bfea4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -869,6 +869,7 @@ static void amdgpu_ttm_gart_bind(struct amdgpu_device *adev,
- 		amdgpu_gart_bind(adev, gtt->offset, ttm->num_pages,
- 				 gtt->ttm.dma_address, flags);
- 	}
-+	gtt->bound = true;
- }
- 
- /*
--- 
-2.43.0
-
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4859,8 +4859,11 @@ static void run_state_machine(struct tcp
+ 		break;
+ 	case PORT_RESET:
+ 		tcpm_reset_port(port);
+-		tcpm_set_cc(port, tcpm_default_state(port) == SNK_UNATTACHED ?
+-			    TYPEC_CC_RD : tcpm_rp_cc(port));
++		if (port->self_powered)
++			tcpm_set_cc(port, TYPEC_CC_OPEN);
++		else
++			tcpm_set_cc(port, tcpm_default_state(port) == SNK_UNATTACHED ?
++				    TYPEC_CC_RD : tcpm_rp_cc(port));
+ 		tcpm_set_state(port, PORT_RESET_WAIT_OFF,
+ 			       PD_T_ERROR_RECOVERY);
+ 		break;
 
 
