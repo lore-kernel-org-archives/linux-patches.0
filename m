@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F51A46420;
-	Mon,  1 Apr 2024 15:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352246420;
+	Mon,  1 Apr 2024 15:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711986615; cv=none; b=qWjNK2/rS3/s2xIfyIC58BKxWvXutIsaP2QSKXljfd9PZYP7puEJ6W45qXgfTcOCluYNSOfn08BMqnVvZ91nq+cvRbVrgN2LX38KdQd+qrvOvfXHjIPxXSfUSxvMzAtI2PY0B5rnksvacyQ09WJWOSfmkad2pfEjQyXHSYQ3o08=
+	t=1711986618; cv=none; b=Mj8q2RulQjkG7xevYmLXMg1fEGFZhCrDdTNK70+hw3bZ6KZPOM73WVVKkrXyKlzJZYpdpXTV/ku8WwwEemy58RjGVN4kekTPs2p8sqRf6AI3JeFUvS5JIY4YNwF6JOpJEAvGD/LvYji/RQ5rXGsSf03+FjFST/YJqv9WOcI7/Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711986615; c=relaxed/simple;
-	bh=EUx4k95MuGDwof6lqxYH7eRj4hnh7L9ACjVlgAv49Ik=;
+	s=arc-20240116; t=1711986618; c=relaxed/simple;
+	bh=iezbkCOLBDNPUnnvXN4dcCe8D60gSu8vtuJmaxI1F3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AgLXD/0Cekq1q+WBkSLa05wvzoZitZUck6q/dOW2RLxMZXjE0xW3T0CEDAr5LHuc4w98vAbAEJSiVdm7DwPYfFeMyjCZZcjd5TjhR9OXHGMBbtddkUwFa05Y258J1pVQ9icRt+BslscYyYcgmSIe3+tOIW9BHDEoQ3pdslE6Mtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czK/NutA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRP4943z0/dd6Q12visJN8MPPDBLSqitlL7yUDpYiMBUT7eSUaC6wNs2eFgqrdE+OF+O2UfUzmNw+Kl5t+ICMm/OuN17ZZeKQEE2QILLOLugKb9PbtXh3tV7++Sfgvwce5moND5/IzITD+Q00t+q7TReAY5bzy0m0yPUsd15p4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THNRD+Xa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czK/NutA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866FFC433C7;
-	Mon,  1 Apr 2024 15:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THNRD+Xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2E7C433F1;
+	Mon,  1 Apr 2024 15:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711986614;
-	bh=EUx4k95MuGDwof6lqxYH7eRj4hnh7L9ACjVlgAv49Ik=;
+	s=korg; t=1711986618;
+	bh=iezbkCOLBDNPUnnvXN4dcCe8D60gSu8vtuJmaxI1F3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czK/NutA2FF5/Qq+G0vilDPeMDQutAp+W8oxMTGAZzxFxDFTK/am48mn2paO6BB4+
-	 izZP8HKGIsABYsNTiDGz8SjmjqsH/gSLt5tfKF0K5oiEpBk08AjOSJfdF3Wr4ryLdU
-	 vwx3Gwd+PjIJ/dwYpkGTcDAb4fk6a5WF0nQMAkkc=
+	b=THNRD+Xa0DnvRWWIK1TQq8Ui+Ch0uxaJqufSJYOnDx0A1fUoJfBC/TzD+sx3E6mUs
+	 gy4ItHbgMP5VDSokFQDG6muUUbGYOoWjJTZCZknOfp4MrOo0SY7OiNVRgs32ooBeZV
+	 tVjce+W8BwtHuw+AiItKIHtxXNmLi8GUpxKkHCjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 003/399] wifi: brcmfmac: avoid invalid list operation when vendor attach fails
-Date: Mon,  1 Apr 2024 17:39:29 +0200
-Message-ID: <20240401152549.240020131@linuxfoundation.org>
+Subject: [PATCH 6.8 030/399] powercap: intel_rapl: Fix a NULL pointer dereference
+Date: Mon,  1 Apr 2024 17:39:56 +0200
+Message-ID: <20240401152550.063272304@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152549.131030308@linuxfoundation.org>
 References: <20240401152549.131030308@linuxfoundation.org>
@@ -51,40 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit b822015a1f57268f5b2ff656736dc4004e7097da ]
+[ Upstream commit 2d1f5006ff95770da502f8cee2a224a1ff83866e ]
 
-When the brcmf_fwvid_attach() fails the driver instance is not added
-to the vendor list. Hence we should not try to delete it from that
-list when the brcmf_fwvid_detach() function is called in cleanup path.
+A NULL pointer dereference is triggered when probing the MMIO RAPL
+driver on platforms with CPU ID not listed in intel_rapl_common CPU
+model list.
 
-Cc: stable@vger.kernel.org # 6.2.x
-Fixes: d6a5c562214f ("wifi: brcmfmac: add support for vendor-specific firmware api")
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240106103835.269149-3-arend.vanspriel@broadcom.com
+This is because the intel_rapl_common module still probes on such
+platforms even if 'defaults_msr' is not set after commit 1488ac990ac8
+("powercap: intel_rapl: Allow probing without CPUID match"). Thus the
+MMIO RAPL rp->priv->defaults is NULL when registering to RAPL framework.
+
+Fix the problem by adding sanity check to ensure rp->priv->rapl_defaults
+is always valid.
+
+Fixes: 1488ac990ac8 ("powercap: intel_rapl: Allow probing without CPUID match")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/powercap/intel_rapl_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-index 86eafdb405419..f610818c2b059 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.c
-@@ -187,9 +187,10 @@ void brcmf_fwvid_detach_ops(struct brcmf_pub *drvr)
- 
- 	mutex_lock(&fwvid_list_lock);
- 
--	drvr->vops = NULL;
--	list_del(&drvr->bus_if->list);
--
-+	if (drvr->vops) {
-+		drvr->vops = NULL;
-+		list_del(&drvr->bus_if->list);
-+	}
- 	mutex_unlock(&fwvid_list_lock);
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index 2feed036c1cd4..1a739afd47d96 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -759,6 +759,11 @@ static int rapl_config(struct rapl_package *rp)
+ 	default:
+ 		return -EINVAL;
+ 	}
++
++	/* defaults_msr can be NULL on unsupported platforms */
++	if (!rp->priv->defaults || !rp->priv->rpi)
++		return -ENODEV;
++
+ 	return 0;
  }
  
 -- 
