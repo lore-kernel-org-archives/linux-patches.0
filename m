@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAD1482CA;
-	Mon,  1 Apr 2024 17:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822E947A5D;
+	Mon,  1 Apr 2024 17:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711991350; cv=none; b=gLTSs+zDf0llAnU+KezvJgKLJ7Kgkasx9scD67l7lMq6CPizygvVrTjhvMin6ym3uYoAm4qxYX21+mBWFjxHoZakLQbPDdkmsqJMXFvrE2CqlNKGiJ8PmLuVXJ/GX3YvioTLEdBxpokq8sCMG1aTGKhsg+phc83DCBd/H7RniMY=
+	t=1711991353; cv=none; b=cGU88u/6m7symdTyqygACYm75dmqRMLivb1eYQVLR5DDzk6C0HDSKYcitFvggLvgTplImfs16tQmYr79sNMauFRziDWA+fKKgHHl8SlhOYpBvCFY326m8pkiKPOD04SmApWHYcRrYQwzWaavm4MCldH15U+TTv/tODkFZfbQt2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711991350; c=relaxed/simple;
-	bh=Q6VI6vABHdLZ97qypGph3jBepIDB+pVshWJXLeoCZMY=;
+	s=arc-20240116; t=1711991353; c=relaxed/simple;
+	bh=eSo3IKlA+zREdDvBaG1kr1cJjQkhuHSfc/9EH5YaHOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSyJ5CvSks4VxZigDAONgN0LS48bw9h4hlDoj6mDcxH9Zs4UaKt3WqdkHy1iXvBHZDGdoPH8GjJIp9Fm1oA/ITiaVOySTfLdQA3asxaGCXbUSIntbat3cHu1oCzctUCbPt2QMei5b/5eLlQ6RVG5h3hqAI7AnGziT/cWVcjv0wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsfZ7xuk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQPdqbJov+M7KSXZPbflnt2gqsMpHO3SAZGeJHHbh6Diet1aXeA80/BbFMcs3RnXU8ke+euz1nbfbJsM2oqRnJE4B1E4OJi797o1eyD4yXCEI4LvpOKOZCHUQ6S9pl6qP4L8K+YWgdoS1Ux/VdeUnHkWfuk9rMaTZEyHetDUZjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eE5KCnaf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsfZ7xuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC92C433F1;
-	Mon,  1 Apr 2024 17:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eE5KCnaf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02116C433F1;
+	Mon,  1 Apr 2024 17:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711991350;
-	bh=Q6VI6vABHdLZ97qypGph3jBepIDB+pVshWJXLeoCZMY=;
+	s=korg; t=1711991353;
+	bh=eSo3IKlA+zREdDvBaG1kr1cJjQkhuHSfc/9EH5YaHOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AsfZ7xuk0xjNIPmgWzLUUhk54Y/enshKk4lqRWxsu9aqhl4lN5q+PYcku+OJ6Bnmm
-	 fHE1TmoqTFtNlqU9Qs1Twz5hz3yr2bQkA2JfcJBEIWRmvvlQ0HApmtXe6ZymyS2NND
-	 CC5Kj9PpK1neU6H4k+MunhMtF3T5TO3whMEVlKfk=
+	b=eE5KCnafdgVZi8ZT7TsPrJSb20w60Z+cRsHds+SatlC9po7TfP03QYNEa6QafThZg
+	 7fqrj+PHmI1q6Pq9BDMbd4yaaz07670UzFCZRwSrw/eBjbd/mHuf6JBZ1z/qSt2PU+
+	 d2p7W1peBfKvOZIxx/OSyhF5k34iOwHtz5eXjr70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.1 238/272] staging: vc04_services: changen strncpy() to strscpy_pad()
-Date: Mon,  1 Apr 2024 17:47:08 +0200
-Message-ID: <20240401152538.402203059@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 212/272] efi/libstub: Cast away type warning in use of max()
+Date: Mon,  1 Apr 2024 17:46:42 +0200
+Message-ID: <20240401152537.550993533@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
 References: <20240401152530.237785232@linuxfoundation.org>
@@ -50,42 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit ef25725b7f8aaffd7756974d3246ec44fae0a5cf upstream.
+commit 61d130f261a3c15ae2c4b6f3ac3517d5d5b78855 upstream.
 
-gcc-14 warns about this strncpy() that results in a non-terminated
-string for an overflow:
+Avoid a type mismatch warning in max() by switching to max_t() and
+providing the type explicitly.
 
-In file included from include/linux/string.h:369,
-                 from drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c:20:
-In function 'strncpy',
-    inlined from 'create_component' at drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c:940:2:
-include/linux/fortify-string.h:108:33: error: '__builtin_strncpy' specified bound 128 equals destination size [-Werror=stringop-truncation]
-
-Change it to strscpy_pad(), which produces a properly terminated and
-zero-padded string.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240313163712.224585-1-arnd@kernel.org
+Fixes: 3cb4a4827596abc82e ("efi/libstub: fix efi_random_alloc() ...")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/randomalloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
-+++ b/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
-@@ -938,8 +938,8 @@ static int create_component(struct vchiq
- 	/* build component create message */
- 	m.h.type = MMAL_MSG_TYPE_COMPONENT_CREATE;
- 	m.u.component_create.client_component = component->client_component;
--	strncpy(m.u.component_create.name, name,
--		sizeof(m.u.component_create.name));
-+	strscpy_pad(m.u.component_create.name, name,
-+		    sizeof(m.u.component_create.name));
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -119,7 +119,7 @@ efi_status_t efi_random_alloc(unsigned l
+ 			continue;
+ 		}
  
- 	ret = send_synchronous_mmal_msg(instance, &m,
- 					sizeof(m.u.component_create),
+-		target = round_up(max(md->phys_addr, alloc_min), align) + target_slot * align;
++		target = round_up(max_t(u64, md->phys_addr, alloc_min), align) + target_slot * align;
+ 		pages = size / EFI_PAGE_SIZE;
+ 
+ 		status = efi_bs_call(allocate_pages, EFI_ALLOCATE_ADDRESS,
 
 
