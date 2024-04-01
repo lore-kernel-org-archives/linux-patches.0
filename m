@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753CD47A62;
-	Mon,  1 Apr 2024 16:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E2A3D961;
+	Mon,  1 Apr 2024 16:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711988253; cv=none; b=EpBZZCMqbAznTDN6pZAAiKk16w22Z7PTLATeXwc7THpOeO4/tPTc9vwksmIqu5tE+Xfp+HTI0knm9nAxU8FI+NK9tTCsomuTYBJC3WVNXvGyAT55NIWHE7dTk2X4J+7cvHBbVdQuKRbqbjGXT6ckhM8gglW/O9oS+p3+38QXol8=
+	t=1711988257; cv=none; b=igHHYlXfqluWphGRHx3UIkHKSZWCZExA1Zpci2nPDB3ub54Q8+bEfprJtCKugI9P38kZVQpMTQ6ciInyDOxEjOw1glOg8w9eCkef1jaUHH7qf0vCKKJHW/QyWBw5k341lgKD5g4GzaQZpJboZi7cZ1yaEcfojQAWYdQWuNbEDEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711988253; c=relaxed/simple;
-	bh=k1I2oGFAjBCVDpxCUmQ3oUNBZqnrOqvaH0u6Qxm1Wao=;
+	s=arc-20240116; t=1711988257; c=relaxed/simple;
+	bh=Etq7OAgXmOruMNuKydRFiuG7oSBp1rpdEfgCJttc/4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CA84qG2DtpCQM5c44cX5L6t4HnZ2Mev89WRTL4QQQacMKFb9kiJPfH0hq9fnB31P1djTc3SKwBtdBCl/VYEXgfVJQqXuNPYaEaLfBrOeWG0ABXk5fcQGuwsIEDXRPGqfFyATqs3ETRLMlIL4ZXYaXUYRQ1538P1AWwKU6ZbLXYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yS+xRvuT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmI3IYDwpFNQsw6NPp82x7Mg2NrIKh6vxjUdoAZM/axGV5G4wicAIb98SnXGpx/AoMVcqkXG7pxHmqhQLgfwdkiyqURceG+zQHza81+f+AYO1tpRGxX+gbOi3JOCNBCtId6QYxSGUfnUjC2FqXjwNmJPrpbGYjX3B211cqX7dyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l26dDA9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yS+xRvuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8DFC433F1;
-	Mon,  1 Apr 2024 16:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l26dDA9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CACC433C7;
+	Mon,  1 Apr 2024 16:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1711988253;
-	bh=k1I2oGFAjBCVDpxCUmQ3oUNBZqnrOqvaH0u6Qxm1Wao=;
+	s=korg; t=1711988256;
+	bh=Etq7OAgXmOruMNuKydRFiuG7oSBp1rpdEfgCJttc/4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yS+xRvuTh+Btfmf2P2X04UsvAIkLfMk3f/F7ZI7ivoNummPTI2n1IWvjuZe2ANxzS
-	 POb28HZEaPy3shAEDH9WOCnPFqXXp2xpq7Hh8rMNLhqZC5WUcllK+q9Whms1+DcTjU
-	 hSXjzW45QNA27jv+9wv6vhtws3+/tdcg+DJlfQYo=
+	b=l26dDA9aZ2UTk0ekUh1Kxb/hovnNR7Bx3Ch124fpu8KeTzRoY48IruDFT9Md3SuuN
+	 jqWkMzwtXPit5W33ONY/rOZg8PV0Gzuvx55TDRTYlos9N/USLLMVuLf8JTHLyZ39fJ
+	 47l020WHykd9OeDg2fWBRXS60bClAJJICJtSUR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 129/432] io_uring/net: correctly handle multishot recvmsg retry setup
-Date: Mon,  1 Apr 2024 17:41:56 +0200
-Message-ID: <20240401152556.979448279@linuxfoundation.org>
+Subject: [PATCH 6.7 103/432] md: add a new helper reshape_interrupted()
+Date: Mon,  1 Apr 2024 17:41:30 +0200
+Message-ID: <20240401152556.199505912@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
 References: <20240401152553.125349965@linuxfoundation.org>
@@ -50,38 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit deaef31bc1ec7966698a427da8c161930830e1cf ]
+[ Upstream commit 503f9d43790fdd0c6e6ae2f4dd3f70b146ac4159 ]
 
-If we loop for multishot receive on the initial attempt, and then abort
-later on to wait for more, we miss a case where we should be copying the
-io_async_msghdr from the stack to stable storage. This leads to the next
-retry potentially failing, if the application had the msghdr on the
-stack.
+The helper will be used for dm-raid456 later to detect the case that
+reshape can't make progress.
 
-Cc: stable@vger.kernel.org
-Fixes: 9bb66906f23e ("io_uring: support multishot in recvmsg")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Acked-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240305072306.2562024-5-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/md.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index 4aaeada03f1e7..386a6745ae32f 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -915,7 +915,8 @@ int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 			kfree(kmsg->free_iov);
- 		io_netmsg_recycle(req, issue_flags);
- 		req->flags &= ~REQ_F_NEED_CLEANUP;
--	}
-+	} else if (ret == -EAGAIN)
-+		return io_setup_async_msg(req, kmsg, issue_flags);
- 
- 	return ret;
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index db0cb00e4c9ac..ea0fd76c17e75 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -571,6 +571,25 @@ static inline bool md_is_rdwr(struct mddev *mddev)
+ 	return (mddev->ro == MD_RDWR);
  }
+ 
++static inline bool reshape_interrupted(struct mddev *mddev)
++{
++	/* reshape never start */
++	if (mddev->reshape_position == MaxSector)
++		return false;
++
++	/* interrupted */
++	if (!test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
++		return true;
++
++	/* running reshape will be interrupted soon. */
++	if (test_bit(MD_RECOVERY_WAIT, &mddev->recovery) ||
++	    test_bit(MD_RECOVERY_INTR, &mddev->recovery) ||
++	    test_bit(MD_RECOVERY_FROZEN, &mddev->recovery))
++		return true;
++
++	return false;
++}
++
+ static inline int __must_check mddev_lock(struct mddev *mddev)
+ {
+ 	return mutex_lock_interruptible(&mddev->reconfig_mutex);
 -- 
 2.43.0
 
