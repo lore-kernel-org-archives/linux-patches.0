@@ -1,115 +1,91 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0986218035
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 05:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325B17BBB;
+	Tue,  2 Apr 2024 05:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712035390; cv=none; b=GCJqhPNcfbgJNMFTnDyW4y0mRZ+PxqY6hlUeeKrLA/M9y8cL1iZ16Ais8YGZoypmCsFg9sOB2yFoitXHiEb5ckrRhYcD3fcIDDZV26PNEL93zWW7o/whgHmke3NITmpSsLCs00CaODoViqCEAlv7rpvqh6AzJ9Cgr5vhtr8K17I=
+	t=1712036447; cv=none; b=AFUK2GkSvM8uGUxz8VRXIz+mk0WLiIhfMLcsZs4I29rZF6vi9nQNDeqKq2QcjLZ+DkcJYA9dZS7Ycby5sHu6ZyoM4daNC92xqLjaCEwvVe748SugYTw+BeSiBQ6tDmfZtBSaTbCha65J++Qh7RrKnKzfzQ4wFVKtXzrxwQjTlAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712035390; c=relaxed/simple;
-	bh=o9JqQU4pt1QfRlOQu21GoPMKrOOCIXPEfH5LBAIp6L4=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=VFFAZyN66rVHD3rALSY/PwAiZdO08aTj9rXY79lUnLMV6p+QoF2t0h+2Xprls/kipcTy2M9XSDRzQujMLLTHrOCDAbT91wCrB+wE8AoPYAjWKZnNui9b0nQ4KlA5vuB1L/DHD/lUXljgq1ueN7RwgnXP+mFBR7t/2foln8EgO/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=iD3GJsl7; arc=none smtp.client-ip=44.202.169.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1712036447; c=relaxed/simple;
+	bh=+RXMODCJPF9BeRgEEKhCXn02zZG7tPP6TJksESLam+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XxWdnwg2YHyMEvlGcTEAOmuCREBcJXLM+OzwMji4MyLGb1qWoQ/+5/LBR3NonSIWdFT7PvEuRWuiXHYTZpOIywkB4WWtvvj8tviwNcC6CXXcuCEU3dCIA4Xx+4iNfyC7TDgKgeymBZP+9Ds+DHAPhsr4MXJNA81EFRrGOsnPMo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2N0+7FN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="iD3GJsl7"
-Received: from eig-obgw-6001a.ext.cloudfilter.net ([10.0.30.140])
-	by cmsmtp with ESMTPS
-	id qyJLrLeLaQr4SrWbsrVATA; Tue, 02 Apr 2024 05:23:00 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id rWbrrc9Ur9zHMrWbsrDWJg; Tue, 02 Apr 2024 05:23:00 +0000
-X-Authority-Analysis: v=2.4 cv=fo4XZ04f c=1 sm=1 tr=0 ts=660b9634
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=raytVjVEu-sA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=u83x1h+5LHq9SftQChawmhCm98M6VZCKcE9nJ2kSJFQ=; b=iD3GJsl7Jl8+N029Q7hgVXgcK6
-	9e2mFMrDEMKQI67WOAsR/HGri4Ge+1tZVYCHX/DBoBQDMLYBA14z3G+/5sS7it/T5b4IrlEwxjjkd
-	TBmjnZsiogPLEQRsRhWY3qWRjQMFsOiiXr/MT3KEpigw6q35OvS4whwNp8VA62hfgwIqaVwtqL3sq
-	oOOtlhmPnIqDw+du8sle8banKou33yD2aIQ5Rwa1zAhRxMEDMkC7Kda/uppqH8kKgdt4Yyr2CLr6A
-	/MThA+A0Brc3jZsRpUjUrs+vx7A7gm82al71MAIMuTD0F4xsoSLCnufQOstuBvzCIobbyI3m5q3Qq
-	3Vm2tTtg==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:55212 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rrWbp-0024p2-1v;
-	Mon, 01 Apr 2024 23:22:57 -0600
-Subject: Re: [PATCH 6.1 000/272] 6.1.84-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2N0+7FN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A8EC433C7;
+	Tue,  2 Apr 2024 05:40:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712036447;
+	bh=+RXMODCJPF9BeRgEEKhCXn02zZG7tPP6TJksESLam+4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=2N0+7FN2zo0VrrxakmLB0zetXw8EWIBVNXweXG4CSxXzfBlDHjqwXJdeH9YhKQ4xX
+	 ooUV9NPioeHBJ0d4pEqC7bnriAghOOwIg2kXeP3gPz77RG9lPAFQLKaedRWdpNPHfj
+	 8SUseO/buT6tshdHIAQfNft9r6pjVDt1cooVjaoE=
+Date: Tue, 2 Apr 2024 07:40:43 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Christian A. Ehrhardt" <lk@c--e.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 6.1 251/272] usb: typec: ucsi: Check for notifications
+ after init
+Message-ID: <2024040216-cahoots-gizzard-4ffb@gregkh>
 References: <20240401152530.237785232@linuxfoundation.org>
-In-Reply-To: <20240401152530.237785232@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <2919e282-6c72-7bd2-d4e3-5427d3d27bcd@w6rz.net>
-Date: Mon, 1 Apr 2024 22:22:54 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ <20240401152538.859016197@linuxfoundation.org>
+ <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rrWbp-0024p2-1v
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:55212
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 60
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfB50/1AXlqP7Dolh3A+d8PThetrMDlbu42SiPliESx70kf9Q94Nlm20F6EuqOON4+xy+zG6ZwuZgR+SsMQ3IO1XMXJHOsN5SIMOq0eVr7V6hL29w85x9
- 91EULCV+8OBpgok1MGphU1vjr8ESNYiS+SPG/Oi0PddigPgql181NHcgRLf8Mfz+I9KoI8K1p5F1KQ==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
 
-On 4/1/24 8:43 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.84 release.
-> There are 272 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.84-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, Apr 01, 2024 at 10:16:45PM +0200, Christian A. Ehrhardt wrote:
+> 
+> Hi Greg,
+> 
+> On Mon, Apr 01, 2024 at 05:47:21PM +0200, Greg Kroah-Hartman wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Christian A. Ehrhardt <lk@c--e.de>
+> > 
+> > commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 upstream.
+> > 
+> > The completion notification for the final SET_NOTIFICATION_ENABLE
+> > command during initialization can include a connector change
+> > notification.  However, at the time this completion notification is
+> > processed, the ucsi struct is not ready to handle this notification.
+> > As a result the notification is ignored and the controller
+> > never sends an interrupt again.
+> > 
+> > Re-check CCI for a pending connector state change after
+> > initialization is complete. Adjust the corresponding debug
+> > message accordingly.
+> > 
+> > Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+> > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> > Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >  drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
+> >  1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> This change has an out of bounds memory access. Please drop it from
+> the stable trees until a fix is available.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Shouldn't we get a fix for Linus's tree too?  Have I missed that
+somewhere?  Or should this just be reverted now?
 
-Tested-by: Ron Economos <re@w6rz.net>
+thanks,
 
+greg k-h
