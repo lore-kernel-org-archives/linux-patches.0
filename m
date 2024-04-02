@@ -1,114 +1,117 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3291627E2
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 11:10:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B6A6341B
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 11:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712056218; cv=none; b=KOOhNu22n5gUY38rGlcwKhJ/Ag8mZmdiW/JcTLJrcLPsggylmwvSZEZFcNYnQzwugx70/80x79NVIJXPzCyZ8LQieVaetm7Uv9zlGldT33ZMAdxjsK7oW5Ii8HLCtsn5yLphKk3fMYj1y3SSzb/SoGWjLvABOcLfvlmFR9+CAfs=
+	t=1712057572; cv=none; b=DF1GA4nearNSs9Q3krl/W3QBwuNyZpKITAYfxFwPVAYDbLE+l56NupctmCwb9XuWfXtIaNiIYSbxxUjz3+EHU5mfLh5zLQyVChFy8bvsLLnw/lyJF6ceDdAUBGMKXocnoLakkQlUM0NHjtHBiVv3yWnOWDWvFrs0yYeNGO74sAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712056218; c=relaxed/simple;
-	bh=CjsMd5sW/WZNkRb0zSSxjKe3R9mfl+xaZ0ShNeNRl3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m2DO5+E1XN64UmsMiR1h/+fcbBA2aokJRawe6cXEYmHqvZ+JHAbRKQYkfsqkrPzQoG3uKQMnBI/ZS6zvwunNpGKmg/z3XbvRiyaNssj2A7hvOVWMC5Q2FWwZ+BP1xm9UT1kqnl3afmCC4EaNhQA6fnOqNS3ui4RQ5rxZEa/nXGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GmaIL5Pe; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1712057572; c=relaxed/simple;
+	bh=YRmGqypfvRqmg3mcQPuCwYHUt0Glp5uhzSXwBXtnwMY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QMWQHWRBbobEvYGlx8ctCjGnMudTYfWLbdYI4fKROBQTzQh4ktNxvuav6emuP1lg8ORwX1fBZ7UNyQRTkBizNHw6XTt0fIMWJPnDsySiaBVXG9zX8B8N8Z9Sjwj1EdJtYNwfJ6Y/J2XcBjR4HBjp4A7DgtpIaaHX+tor0crr/2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Osj5uhk2; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GmaIL5Pe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712056217; x=1743592217;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=CjsMd5sW/WZNkRb0zSSxjKe3R9mfl+xaZ0ShNeNRl3I=;
-  b=GmaIL5PeN0Ve9rMsR/FMrNNhtYKAlCNCepV0LNgj1x2l6ey5EMXSgoP7
-   tD8EDTab6tgkVHtrkcsBPyROvTTskC9fzWqTQW+gKid8NMeaNUyAjRK6P
-   2fXZ69boP/Ux9YPxTcERn/OcPeM5g7GO8elBvCUHBDyg1u6NQFmHWgthk
-   X6/dARoUntHGZTOuWai2RlZ/vtmAacBzqU5UmyctDhKZW55F5QuJU1JiZ
-   wSTzXVADm5F0jNe95h7nfbyVUi6WTI93VI7XlgnJb+iAlBfT5euYLa2eE
-   XBO0sAtLP6ISKEpooSjRwUrj1J2mSrx/QJvdntDABOLlobpPFPIHbNTpU
-   w==;
-X-CSE-ConnectionGUID: NG9LFFdlRBWe2z7NYToUeQ==
-X-CSE-MsgGUID: IopQyTLpQvK186cf0fnhcw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="17790530"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="17790530"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Apr 2024 04:10:16 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="937083358"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="937083358"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 02 Apr 2024 04:10:13 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 02 Apr 2024 14:10:12 +0300
-Date: Tue, 2 Apr 2024 14:10:12 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: gregkh@linuxfoundation.org, dmitry.baryshkov@linaro.org,
-	luca.weiss@fairphone.com, linux-usb@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] usb: typec: ptn36502: Only select DRM_AUX_BRIDGE with OF
-Message-ID: <ZgvnlOK/84GLdV2V@kuha.fi.intel.com>
-References: <20240328-fix-ptn36502-drm_aux_bridge-select-v1-1-85552117e26e@kernel.org>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Osj5uhk2"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2a2559fe607so489248a91.2
+        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 04:32:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1712057570; x=1712662370; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mWJ1eWNsf3mDKXSgx9qyOAX+jE4gBs0xL5TwqXBogn4=;
+        b=Osj5uhk2dFHfcCyQCpICZnsNYpjrtIiqsaYRkFAlp2G1ie4vlnAUflZXfT1nw83oZl
+         lhGK8cyUuIxFb52+SxNeys7P3H1IPowZO2apXA/WGofl/z6hk0rVynEZp+dVlAbiOQ/k
+         DV8h5uPVc+S+0pRbs/6vzuEzb3b+JXW9lIuIQG+/xTHbfo5ExVZGMx2UAYHbv76yW2LP
+         yd/CVpv2nEVRD23VR4TLaogu+PcDyF6bS7AnryjjaVLEAhHOv2QGcuJ6xXqdrwQ972Do
+         vwNlulPKod5yzb/1J2h1I7encc/34wavlvO2GzMdxiQRvH/GEs/i3arhmEyzLSkJkcSX
+         5RWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712057570; x=1712662370;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mWJ1eWNsf3mDKXSgx9qyOAX+jE4gBs0xL5TwqXBogn4=;
+        b=sWxxmB4LoIsg07nh2iK6KuvxYGvqBe/UhJ/cGVng8GV0gMmA0fuS9d0WxU3QiT47QD
+         pGk0PkkMPanVtuh8tUvzdPBPYgbTTUkg+f55i3hQxUoYNRSX2MezvEkI+TNQbav9CobU
+         EjlXx3ozaHsZxv9utP0iYn4axDlxXoDGKOJaZ/uP0qfxK3Khwr10kxaPyNf7IUqSwcHg
+         zvIpblhJ+JMnJ1xwhw3hjvvYXoVWdzBcZGV3Uk8v/WhMzWlNkj7jUv/7ev0Z6j0UFQcX
+         vLAqp9g5wxR6ITKBZcINrJvR/tNl67XHvWTYzq7FWfhYuDbfFScHWWhk+h9TsGhWCIIw
+         1wng==
+X-Forwarded-Encrypted: i=1; AJvYcCWyBsbDjJKL3g0GbErN1pB5JV+LOr1woWJXG9+Fr7H95syV0sgLnWE6OSWJf8VoRIvFgzFkkCFz3TjQEZtqwiqwT02sFZEyRQ==
+X-Gm-Message-State: AOJu0Yy+Ud5EuohQufSbJz4y43ez17VfDuTncbZaWnc5vtIOJ3VVCi31
+	UnUPe4gtT8NOFUslfnwYoxh/yGqBl7U0og9lk4s+5RWfaY69MBtfzYwwPvM3J/FgRviYnE23XVo
+	R2BL+3fNCTkxp+joSi883xqOxL0XQ/kr1i04GNA==
+X-Google-Smtp-Source: AGHT+IHx7EUuj7nvRf9Fi4J4iGIeWWtS0WlmsxgcMUaOaz7SMmHrxBW5v4aSmkZaEIencF5agCUbDZwn4zRGfIEOf2I=
+X-Received: by 2002:a17:90a:a092:b0:2a2:2dad:66a3 with SMTP id
+ r18-20020a17090aa09200b002a22dad66a3mr6122871pjp.13.1712057570207; Tue, 02
+ Apr 2024 04:32:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240328-fix-ptn36502-drm_aux_bridge-select-v1-1-85552117e26e@kernel.org>
+References: <20240401152547.867452742@linuxfoundation.org>
+In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 2 Apr 2024 20:32:39 +0900
+Message-ID: <CAKL4bV4EQ0SMMCE2fYqovSm3PHThObmKHNJpaNSNOWKGP59CDg@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 28, 2024 at 09:03:20AM -0700, Nathan Chancellor wrote:
-> CONFIG_DRM_AUX_BRIDGE depends on CONFIG_OF but that dependency is not
-> included when CONFIG_TYPEC_MUX_PTN36502 selects it, resulting in a
-> Kconfig warning when CONFIG_OF is disabled:
-> 
->   WARNING: unmet direct dependencies detected for DRM_AUX_BRIDGE
->     Depends on [n]: HAS_IOMEM [=y] && DRM_BRIDGE [=y] && OF [=n]
->     Selected by [m]:
->     - TYPEC_MUX_PTN36502 [=m] && USB_SUPPORT [=y] && TYPEC [=m] && I2C [=y] && (DRM [=y] || DRM [=y]=n) && DRM_BRIDGE [=y]
-> 
-> Only select CONFIG_DRM_AUX_BRIDGE when CONFIG_DRM_BRIDGE and CONFIG_OF
-> are enabled to clear up the warning. This results in no functional
-> change because prior to the refactoring that introduces this warning,
-> ptn36502_register_bridge() returned 0 when CONFIG_OF was disabled, which
-> continues to occur with drm_aux_bridge_register() when
-> CONFIG_DRM_AUX_BRIDGE is not enabled.
-> 
-> Fixes: 9dc28ea21eb4 ("usb: typec: ptn36502: switch to DRM_AUX_BRIDGE")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi Greg
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+On Tue, Apr 2, 2024 at 1:36=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.24 release.
+> There are 396 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.24-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> ---
->  drivers/usb/typec/mux/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/typec/mux/Kconfig b/drivers/usb/typec/mux/Kconfig
-> index 4827e86fed6d..ce7db6ad3057 100644
-> --- a/drivers/usb/typec/mux/Kconfig
-> +++ b/drivers/usb/typec/mux/Kconfig
-> @@ -60,7 +60,7 @@ config TYPEC_MUX_PTN36502
->  	tristate "NXP PTN36502 Type-C redriver driver"
->  	depends on I2C
->  	depends on DRM || DRM=n
-> -	select DRM_AUX_BRIDGE if DRM_BRIDGE
-> +	select DRM_AUX_BRIDGE if DRM_BRIDGE && OF
->  	select REGMAP_I2C
->  	help
->  	  Say Y or M if your system has a NXP PTN36502 Type-C redriver chip
-> 
-> ---
-> base-commit: ef83531c8e4a5f2fc9c602be7e2a300de1575ee4
-> change-id: 20240328-fix-ptn36502-drm_aux_bridge-select-83ddfd8a5375
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
+6.6.24-rc1 tested.
 
--- 
-heikki
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.6.24-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Tue Apr  2 19:48:41 JST 2024
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
