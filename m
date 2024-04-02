@@ -1,67 +1,67 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B784154777
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C641554777
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:18:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712049164; cv=none; b=UKh++p5yw0AT1OGu70Iw7xo9qIz2xnFLMcX43stvnzruR1g8bB4z/J+1zNvIlAjxesdd69hkLknbUvlrn0ILQ4DGxv1RLRJtOaTzScERZIEwLt4Zj20jDbfCGiYRyVijoQnEcgW7EnGsGtA3HKGsyd5AXymmsFJTtipJo9yvrqU=
+	t=1712049517; cv=none; b=YjzssD1T1YgcPEuCQcZKhc6oFcOb95ti4yYmOzzuwlyaxkLE67JoCYI/Nphpku2euJafYFFwBncRdV099zrr/IUyTEXR2TmGZjtenHIxyfcmKl9vQzttzTSYDEH6JlFiIjbbOWgSsAkTq66RhR0fNHddo1toBTZkC89UWNXHpbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712049164; c=relaxed/simple;
-	bh=l0kuH/gfbmiikxbhEulmwyHjIEKOY/iskP8dru6n0As=;
+	s=arc-20240116; t=1712049517; c=relaxed/simple;
+	bh=o/P8asTQgXNr+LtSR/rVKgTHlr8EJ1cZ5yL0HTpm700=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LpL3Tg2Rjv1BxAkO2JTtD56Mybn++j8UCHzk/Cy1ulR/QaefssteGKrc1Q5dl9uSDti4qlXOYkseavccmVEh23kO7nQABGa1HpaE+C2bB7Rn/X7SrXX87fFlCmqhOGBYlrrKM30TGEGY2vXIKyAKc3gFmu68W3T1WlHHqdMh6ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DQX+N+R4; arc=none smtp.client-ip=209.85.221.176
+	 To:Cc:Content-Type; b=kg4fxCbTpgvpdP1a0MxAlInZnZtRtsrQjLVwRpZOhbU5RkVeWsIhBI7DDTmCgdjK0+/lYEqvpyyiImk+xG3V8XCL2S8CnemkqQpJ5JF95s2rFjdMTThw/SCZDOPIv9P631aYyg7Yl0FPhQEKPlzxG2fBD7HFvU/PdQJXQsCD2E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jMia3Swe; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DQX+N+R4"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-4d8a2ff9d68so1626606e0c.0
-        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:12:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jMia3Swe"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7e3a6fe180bso72043241.2
+        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712049160; x=1712653960; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1712049514; x=1712654314; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+P752m0UXgMwu+wcLoyQGRKQoJ9RrigTqZcnP7ifrkk=;
-        b=DQX+N+R4fr9lIIcOvJZqENeFnXiF1bq4EtPUnrP/E01ArJ6rdD0xlGWWY7fgLXW0/C
-         Y3SV++yqXIeOKBw66aJLytUDXjhybeF2fhDo5FnrXYr20gutzTqbHkETGy1fi64fQOVv
-         fJX6Q4uL1HMvWVb9tSBVVr7DPUhR8662+qNuyMIcRN0puW8ldHJ5NEechYy4nUBZqaDY
-         PRwgZQsO2Y6ZTQw8OAh5e54jvKU87GxI+DMUsFxTcDslpgKFK/IUvXm4AYd0AO/+I+Bv
-         FFlQCF/vR8SWg2xN2XjOS7t7SrcBDLWkLFopLkucE9lurnEB9NNMzg8AKaNO5lW+e4ee
-         ElAA==
+        bh=r66TFNSLT4YD94GnwLNWPiQzwjcsChSUIFxq6D9Qnwo=;
+        b=jMia3SweQBlrFlKamUXlV/S2gfr1hLjfl02OKnFokdOTBvBO9dYWki4GBaPirLfHv2
+         6sAF1d7oQ7kK2ZJWC0tK1k8GRAv9W2WzzT0/GHGhk9Jdk0B59S2bCHjrlpG04GGHxNBr
+         +Ib5zt+qtXVTD09t4nlpA4pRvdWkxfhRzo3FYOxS7uHpiojQw2IZLYykdYfvWgS8RJyS
+         yfLYL1Dw7fUysCJmT4ZeZsQDV4clKMWqqBk4QMToYf72/pXSpiv7P4+4hHl3raTD6fMB
+         aJR9A1eX3d8Z26a5tdo34Bwf4s4FfIljiKn+TphAlQ811zgrofBJRBQJJBNRxpnSPnwh
+         BPjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712049160; x=1712653960;
+        d=1e100.net; s=20230601; t=1712049514; x=1712654314;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+P752m0UXgMwu+wcLoyQGRKQoJ9RrigTqZcnP7ifrkk=;
-        b=azU7E1vGk/yJajLsSwRwKKh4WATxq/ynWQBmm1EHfWZpeKOoNbr6bjH0k2suyb+6Co
-         GYj6S8TB/0f07OPO1+K4/MeWjx/Xv2LhkDcYY15wxfpmmsqYvrqEbTGy9xzhu2sOnIuI
-         ghEEsEVV5ry0cHdPus8KU+tGsE5k1fii74DAJ52fk5LcjHcXtJYcdZxvOMX6ifoUYSFP
-         11Bixs0N4LT7sYSXtlfB24d8sXh05St4c4i43hinLhsh4NhFZhjEbdg7Dj1N+0IuR4tz
-         6xxxy9L0beg5HA4+4hFr1RzGl6vuJGBrdSHl6BqzAhnyPQuSTapvlRHPjSQB/ehADQay
-         yHGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUWNJfxYlnT7OW/TGrgCt/PaZ7i5JOzvgnqtSLaDdQRL74DjZccoKT9JsLB5sYzFPrIS9TLWyClPre6T8z+qEfeNN5TrkgxTg==
-X-Gm-Message-State: AOJu0YyPqyebz3REio2dc/UABhOdrNYfG2jJy1offnS0UvtQjyMVYQlr
-	ZchWM38xQDOM6h1fFqed+hYa8dH6KAOXef9n0PE99tLaAzXlx3qH66Jph7/KtjR41B+3rp4FC/w
-	PUrn7WsvrxJR9cL1dium2St13HEAod+tesVaEvQ==
-X-Google-Smtp-Source: AGHT+IGOwJVS4tsWfZd+Ju7r2YOHsi//JygXPETSWaASHl0frkCaqLwDK8NaKNahmunxLBxFRjKO4hlQwlv7FcfaS3o=
-X-Received: by 2002:a1f:fe4c:0:b0:4d8:37eb:9562 with SMTP id
- l73-20020a1ffe4c000000b004d837eb9562mr7441662vki.0.1712049160602; Tue, 02 Apr
- 2024 02:12:40 -0700 (PDT)
+        bh=r66TFNSLT4YD94GnwLNWPiQzwjcsChSUIFxq6D9Qnwo=;
+        b=JmF9dWIWqlkSqRo2JBSqpRdi4nXTU0B6xOkd8J/8AltuEd2LxDYzNwwDDo0/YhG68H
+         xguTLSyx8PFnQEphCBsQ6vxdoGiue7ABMMyedE41xC7KoO5IDWS2noSaDAuTOGt42w2i
+         LxTUBF3Pdpr8yEXcQdlRwLPjCU0ctgFgId6GqkfjFU6adB11hOdPUsN8so0f89hwZJ2e
+         ExxQZOIADDdxjIsb4jpObueWb/b/k0LM0Fp0AItgGW83VkvQiU8jVkE0p6UwVP5/O64q
+         YnVLqkq3he3yezP1ls2//T+xsA9sunhGJ2pAfMzAAgT+8MgeFjUo8Jkez3HZPB6XOp8p
+         9lvw==
+X-Forwarded-Encrypted: i=1; AJvYcCXD8IgmEWrwuWSgPmGyXeKWlvLHacZNf3vme4RQLniEkoaBv+GD4bjjpvvI3vbrIWvrWG1B6M1SQ4tKddsQQ4J0TMjzyj7rLA==
+X-Gm-Message-State: AOJu0YwCj0uNHavgAFEv/FpMpKQuiochpmlAzxrEVhOol68gtDS56E/L
+	PwTGTlHdT8kOkEzcA860cHL1QvK9jeJHg4RfwP+D89skQDgSetsnSBGgyVIS/1cJHqN4Krk5WJ0
+	XGqpHnyv8EN7wPCpZGjD2zqoZsB3rloPVqeIhCQkoTJiZmiAQkyo=
+X-Google-Smtp-Source: AGHT+IHQ73nyKalKwygD4j92nMTrgX97gI21W8eoJIJZkooD2dfv2lbsfKe7svLrUcejklRdqZgrt81nkzCspg1NleI=
+X-Received: by 2002:a05:6102:2459:b0:475:111d:c0dc with SMTP id
+ g25-20020a056102245900b00475111dc0dcmr8809724vss.14.1712049514705; Tue, 02
+ Apr 2024 02:18:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401152553.125349965@linuxfoundation.org>
-In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
+References: <20240401152547.867452742@linuxfoundation.org>
+In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 2 Apr 2024 14:42:29 +0530
-Message-ID: <CA+G9fYvc8axBi9Hm_WDac5v-4DiDmiFuKxk=Ghx80obEO9Uknw@mail.gmail.com>
-Subject: Re: [PATCH 6.7 000/432] 6.7.12-rc1 review
+Date: Tue, 2 Apr 2024 14:48:23 +0530
+Message-ID: <CA+G9fYuiYQk8FrF=1kvMW-7jeNskkL309+3qtmgoMjF8KMQnxA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -69,20 +69,18 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
+	broonie@kernel.org, Anders Roxell <anders.roxell@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Stefan Wahren <wahrenst@gmx.net>, 
+	Kent Gibson <warthog618@gmail.com>, Linus Walleij <linus.walleij@linaro.org>, 
+	"open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 1 Apr 2024 at 21:41, Greg Kroah-Hartman
+On Mon, 1 Apr 2024 at 22:06, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> Note, this will be the LAST 6.7.y kernel release.  After this one it
-> will be end-of-life.  Please move to 6.8.y now.
->
-> ------------------------------------------
->
-> This is the start of the stable review cycle for the 6.7.12 release.
-> There are 432 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.6.24 release.
+> There are 396 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -91,10 +89,10 @@ On Mon, 1 Apr 2024 at 21:41, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.7.12-rc1.gz
+6.6.24-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.7.y
+-rc.git linux-6.6.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -152,8 +150,8 @@ gpiod-test:ERROR:tests-edge-event.c:125:_gpiod_test_func_read_both_events:
 not ok 19 /gpiod/edge-event/read_both_events
 
 Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.7.y/build/v6.=
-7.11-433-gb15156435f06/testrun/23252698/suite/libgpiod/tests/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.=
+6.23-397-g75a2533b74d0/testrun/23254910/suite/libgpiod/tests/
 
 --
 Linaro LKFT
