@@ -1,117 +1,123 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B6A6341B
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 11:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0B71EA8D;
+	Tue,  2 Apr 2024 11:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712057572; cv=none; b=DF1GA4nearNSs9Q3krl/W3QBwuNyZpKITAYfxFwPVAYDbLE+l56NupctmCwb9XuWfXtIaNiIYSbxxUjz3+EHU5mfLh5zLQyVChFy8bvsLLnw/lyJF6ceDdAUBGMKXocnoLakkQlUM0NHjtHBiVv3yWnOWDWvFrs0yYeNGO74sAA=
+	t=1712058257; cv=none; b=fGzAEjT/u+RPHqPBMtIEY7Ee7iriLqe/fFkjtjPmFTfufx119PIRXsIAZSoqgb5CHkkUMs+HrMJHYf4790+/80RjQexYqp3xh30yKuc6eiIZQG/Vlh4QCJxlUCr0xK3wipuj76jcnhSEXFHZSbgbHzYtUDFwTWDeL3tbTyv924k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712057572; c=relaxed/simple;
-	bh=YRmGqypfvRqmg3mcQPuCwYHUt0Glp5uhzSXwBXtnwMY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QMWQHWRBbobEvYGlx8ctCjGnMudTYfWLbdYI4fKROBQTzQh4ktNxvuav6emuP1lg8ORwX1fBZ7UNyQRTkBizNHw6XTt0fIMWJPnDsySiaBVXG9zX8B8N8Z9Sjwj1EdJtYNwfJ6Y/J2XcBjR4HBjp4A7DgtpIaaHX+tor0crr/2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Osj5uhk2; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1712058257; c=relaxed/simple;
+	bh=DpQ1x3R3SARZhczID3H+l6QkUcoWZQNWBI3Aop4zjd4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sr5tSKqmxPUA1RAqyWbDvhscOD2twTAjnVq/+8RToSiAMraj0O71OcosxA6/dEVZIDgErECUu3/27D06CddbVaWTC2Huvwh48SzJ0QLe3Skc2EFYFxhIjPWDprHpFFBHHrczQH2n6uk9P8OYyK8Dwu7qzS7qKT89tyytpsjWbn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keTjQP/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Osj5uhk2"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2a2559fe607so489248a91.2
-        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 04:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1712057570; x=1712662370; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mWJ1eWNsf3mDKXSgx9qyOAX+jE4gBs0xL5TwqXBogn4=;
-        b=Osj5uhk2dFHfcCyQCpICZnsNYpjrtIiqsaYRkFAlp2G1ie4vlnAUflZXfT1nw83oZl
-         lhGK8cyUuIxFb52+SxNeys7P3H1IPowZO2apXA/WGofl/z6hk0rVynEZp+dVlAbiOQ/k
-         DV8h5uPVc+S+0pRbs/6vzuEzb3b+JXW9lIuIQG+/xTHbfo5ExVZGMx2UAYHbv76yW2LP
-         yd/CVpv2nEVRD23VR4TLaogu+PcDyF6bS7AnryjjaVLEAhHOv2QGcuJ6xXqdrwQ972Do
-         vwNlulPKod5yzb/1J2h1I7encc/34wavlvO2GzMdxiQRvH/GEs/i3arhmEyzLSkJkcSX
-         5RWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712057570; x=1712662370;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mWJ1eWNsf3mDKXSgx9qyOAX+jE4gBs0xL5TwqXBogn4=;
-        b=sWxxmB4LoIsg07nh2iK6KuvxYGvqBe/UhJ/cGVng8GV0gMmA0fuS9d0WxU3QiT47QD
-         pGk0PkkMPanVtuh8tUvzdPBPYgbTTUkg+f55i3hQxUoYNRSX2MezvEkI+TNQbav9CobU
-         EjlXx3ozaHsZxv9utP0iYn4axDlxXoDGKOJaZ/uP0qfxK3Khwr10kxaPyNf7IUqSwcHg
-         zvIpblhJ+JMnJ1xwhw3hjvvYXoVWdzBcZGV3Uk8v/WhMzWlNkj7jUv/7ev0Z6j0UFQcX
-         vLAqp9g5wxR6ITKBZcINrJvR/tNl67XHvWTYzq7FWfhYuDbfFScHWWhk+h9TsGhWCIIw
-         1wng==
-X-Forwarded-Encrypted: i=1; AJvYcCWyBsbDjJKL3g0GbErN1pB5JV+LOr1woWJXG9+Fr7H95syV0sgLnWE6OSWJf8VoRIvFgzFkkCFz3TjQEZtqwiqwT02sFZEyRQ==
-X-Gm-Message-State: AOJu0Yy+Ud5EuohQufSbJz4y43ez17VfDuTncbZaWnc5vtIOJ3VVCi31
-	UnUPe4gtT8NOFUslfnwYoxh/yGqBl7U0og9lk4s+5RWfaY69MBtfzYwwPvM3J/FgRviYnE23XVo
-	R2BL+3fNCTkxp+joSi883xqOxL0XQ/kr1i04GNA==
-X-Google-Smtp-Source: AGHT+IHx7EUuj7nvRf9Fi4J4iGIeWWtS0WlmsxgcMUaOaz7SMmHrxBW5v4aSmkZaEIencF5agCUbDZwn4zRGfIEOf2I=
-X-Received: by 2002:a17:90a:a092:b0:2a2:2dad:66a3 with SMTP id
- r18-20020a17090aa09200b002a22dad66a3mr6122871pjp.13.1712057570207; Tue, 02
- Apr 2024 04:32:50 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keTjQP/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A7EC43390;
+	Tue,  2 Apr 2024 11:44:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712058256;
+	bh=DpQ1x3R3SARZhczID3H+l6QkUcoWZQNWBI3Aop4zjd4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=keTjQP/TuNEFmuDJ/ndqUWVWzKYfOvgfFKfqNN1VFR3mFZpD/bcMF19oRva66l40J
+	 TP/WZx/xGTr8svgzpHSpdKh5uRIaL6B1pdxeAPF1TKw+E7yTlclI8Iukm0ycrapwyk
+	 tHj9SQQbNxN8roAmHWpZH3e6duGhE77ioZFxRHhk=
+Date: Tue, 2 Apr 2024 13:44:12 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Alexander Wetzel <alexander@wetzel-home.de>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	LTP List <ltp@lists.linux.it>
+Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
+Message-ID: <2024040258-disk-smokiness-5baf@gregkh>
+References: <20240401152547.867452742@linuxfoundation.org>
+ <CA+G9fYvewkbwR_i07HHTM=8E2yS-0wRhOT-C45LP3SNtzgd+4Q@mail.gmail.com>
+ <29a7a1e5-da67-47fc-b1fd-ef65902ec252@wetzel-home.de>
+ <1d1071f3-641a-4b7c-bd35-a629ba8d5a7b@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401152547.867452742@linuxfoundation.org>
-In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 2 Apr 2024 20:32:39 +0900
-Message-ID: <CAKL4bV4EQ0SMMCE2fYqovSm3PHThObmKHNJpaNSNOWKGP59CDg@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1d1071f3-641a-4b7c-bd35-a629ba8d5a7b@moroto.mountain>
 
-Hi Greg
+On Tue, Apr 02, 2024 at 01:37:50PM +0300, Dan Carpenter wrote:
+> On Mon, Apr 01, 2024 at 09:22:52PM +0200, Alexander Wetzel wrote:
+> > 
+> > > Following kernel warnings have been noticed on qemu-x86_64 while running LTP
+> > > cve ioctl_sg01 tests the kernel with stable-rc 6.6.24-rc1, 6.7.12-rc1 and
+> > > 6.8.3-rc1.
+> > > 
+> > > We have started bi-secting this issue.
+> > > Always reproduced.
+> > > 
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > > 
+> > > ioctl_sg01.c:81: TINFO: Found SCSI device /dev/sg0
+> > > ------------[ cut here ]------------
+> > > [   36.606841] WARNING: CPU: 0 PID: 8 at drivers/scsi/sg.c:2237
+> > > sg_remove_sfp_usercontext+0x145/0x150
+> > > [   36.609445] Modules linked in:
+> > > [   36.610793] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.6.24-rc1 #1
+> > > [   36.611568] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009),
+> > > BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+> > > [   36.612872] Workqueue: events sg_remove_sfp_usercontext
+> > > [   36.613691] RIP: 0010:sg_remove_sfp_usercontext+0x145/0x150
+> > > 
+> > > <trim>
+> > > 
+> > > [   36.621539] Call Trace:
+> > > [   36.621953]  <TASK>
+> > > [   36.622444]  ? show_regs+0x69/0x80
+> > > [   36.622819]  ? __warn+0x8d/0x150
+> > > [   36.623078]  ? sg_remove_sfp_usercontext+0x145/0x150
+> > > [   36.623558]  ? report_bug+0x171/0x1a0
+> > > [   36.623881]  ? handle_bug+0x42/0x80
+> > > [   36.624070]  ? exc_invalid_op+0x1c/0x70
+> > > [   36.624491]  ? asm_exc_invalid_op+0x1f/0x30
+> > > [   36.624897]  ? sg_remove_sfp_usercontext+0x145/0x150
+> > > [   36.625408]  process_one_work+0x141/0x300
+> > > [   36.625769]  worker_thread+0x2f6/0x430
+> > > [   36.626073]  ? __pfx_worker_thread+0x10/0x10
+> > > [   36.626529]  kthread+0x105/0x140
+> > > [   36.626778]  ? __pfx_kthread+0x10/0x10
+> > > [   36.627059]  ret_from_fork+0x41/0x60
+> > > [   36.627441]  ? __pfx_kthread+0x10/0x10
+> > > [   36.627735]  ret_from_fork_asm+0x1b/0x30
+> > > [   36.628293]  </TASK>
+> > > [   36.628604] ---[ end trace 0000000000000000 ]---
+> > > ioctl_sg01.c:122: TPASS: Output buffer is empty, no data leaked
+> > > 
+> > > Suspecting commit:
+> > > -----
+> > > scsi: sg: Avoid sg device teardown race
+> > > commit 27f58c04a8f438078583041468ec60597841284d upstream.
+> > > 
+> > 
+> > Correct. The issue is already been worked on.
+> > 
+> > commit 27f58c04a8f4 ("scsi: sg: Avoid sg device teardown race") fixed a real
+> > issue. But also added an incorrect WARN_ON_ONCE(). Thus the scary - but
+> > otherwise harmless - error message.
+> 
+> If you have Reboot on Oops turned on (apparently Android enables this)
+> then WARN() will reboot the system so it can be pretty annoying.
 
-On Tue, Apr 2, 2024 at 1:36=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.24 release.
-> There are 396 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.24-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Agreed, I've dropped this stable change for now because of this.
 
-6.6.24-rc1 tested.
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.6.24-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Tue Apr  2 19:48:41 JST 2024
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+greg k-h
