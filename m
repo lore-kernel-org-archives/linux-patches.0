@@ -1,75 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FC42BD1C;
-	Tue,  2 Apr 2024 07:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E202BD1C
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 07:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712044511; cv=none; b=b/lw04Lhtk7mrpWyjssG2bAAYGJ8NadYc5yfb7tWndXxmTQzBO5e1JNToF5v3Iw0XYGidOffjpmsj5Z7o9izBd/ahT+D8bVhdjdzw5lw65TowPEEjNQtTsugQv7G92Vg+2UcToantXvN3QxSvfZbSOGM5LFuO9uSV0u4zIgHilQ=
+	t=1712044516; cv=none; b=c1JBBYPxAfi7bQDKQtQe3T6Xq7uwxHjmeP0q4pq+yFfcNzdIBHmc3dZNCJo2MrugriN014ZetZVTAOoKlPSY8Eg0jRvUCP6/VrIEnyut8qBw9nE/wAYs1CSHBAfBG2zbiwPD6XM8kw2+HIRRmP69TUthGKP4aiYJ7Qa8zvNgjaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712044511; c=relaxed/simple;
-	bh=10U4+yFju8Dqq6Dbw4RyRPSS2JSMgc7aCRbWUvAXGYk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yxgp3vBgmBmeQhRdWBp+9p4sGGvbCo7rkC/bfMCYvrwXiimnYjw8yelet2q+DSIXiMSP58U3s6ODHCx/LLv1ybm/tom3P6SrtvT4pp0Es8927To8WiysMvh/KywR6xpeuaqbgWaOIaITDDInng6MAnr/3zJfNzGJFFs5btKesmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwTpM7Om; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwTpM7Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0E1C433F1;
-	Tue,  2 Apr 2024 07:55:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712044511;
-	bh=10U4+yFju8Dqq6Dbw4RyRPSS2JSMgc7aCRbWUvAXGYk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CwTpM7OmCGMKGSx2iG+kL9/N7pAEakz/TqXSUDPhai+jg6DUzUfH/BCDd1o/cMc56
-	 6Mgk9IdNWjamQVHcFpsJbOKsuPXxjsdn2/qS24QVDh/0JvH0gMlXaOxpi2paIciad+
-	 3LA1naiqQzMfUY77EeYw7Ze7ILaPNwpTiQNJCz7A=
-Date: Tue, 2 Apr 2024 09:55:07 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Easwar Hariharan <eahariha@linux.microsoft.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.8 102/399] ACPI: CPPC: Use access_width over bit_width
- for system memory accesses
-Message-ID: <2024040235-clutter-pushing-01e2@gregkh>
-References: <20240401152549.131030308@linuxfoundation.org>
- <20240401152552.230440447@linuxfoundation.org>
- <4fabd250-bfa8-4482-b2f2-b787844aeb0b@linux.microsoft.com>
+	s=arc-20240116; t=1712044516; c=relaxed/simple;
+	bh=pkDrgI4cwGNdPGL5YHccOBzQWAmIAJyhXqCvS9+ib+Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n73WfxZusi/XUBvxATTQ+DmR94UMc5/cCtkff5KKgSEcKm84ud/tZuL6dAqFRbjDVCeiLLFzutLbAdLR1Ee3hn/IVuES0BpLf3cqwMm5PdDxxD+M5mtcf+DG5tNMzf13q/k7q+s450xiTahmXxEUHP+Fc9lkzXbLa4KgEm0tOAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 89CC11042;
+	Tue,  2 Apr 2024 00:55:46 -0700 (PDT)
+Received: from [10.57.73.65] (unknown [10.57.73.65])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A0D883F64C;
+	Tue,  2 Apr 2024 00:55:12 -0700 (PDT)
+Message-ID: <38e3a29c-3c78-489e-bd76-a7d060a307d4@arm.com>
+Date: Tue, 2 Apr 2024 08:55:06 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4fabd250-bfa8-4482-b2f2-b787844aeb0b@linux.microsoft.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.7 112/432] mm: swap: fix race between
+ free_swap_and_cache() and swapoff()
+Content-Language: en-GB
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, David Hildenbrand <david@redhat.com>,
+ "Huang, Ying" <ying.huang@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
+References: <20240401152553.125349965@linuxfoundation.org>
+ <20240401152556.469367725@linuxfoundation.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
+In-Reply-To: <20240401152556.469367725@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 01, 2024 at 10:16:46AM -0700, Easwar Hariharan wrote:
-> On 4/1/2024 8:41 AM, Greg Kroah-Hartman wrote:
-> > 6.8-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Jarred White <jarredwhite@linux.microsoft.com>
-> > 
-> > [ Upstream commit 2f4a4d63a193be6fd530d180bb13c3592052904c ]
-> > 
-> > To align with ACPI 6.3+, since bit_width can be any 8-bit value, it
-> > cannot be depended on to be always on a clean 8b boundary. This was
-> > uncovered on the Cobalt 100 platform.
-> > 
+On 01/04/2024 16:41, Greg Kroah-Hartman wrote:
+> 6.7-stable review patch.  If anyone has any objections, please let me know.
+
+LGTM!
+
 > 
-> Hi Greg,
+> ------------------
 > 
-> Please drop this patch from all stable kernels as we seem to have a regression reported
-> on AmpereOne systems: https://lore.kernel.org/all/20240329220054.1205596-1-vanshikonda@os.amperecomputing.com/
+> From: Ryan Roberts <ryan.roberts@arm.com>
+> 
+> [ Upstream commit 82b1c07a0af603e3c47b906c8e991dc96f01688e ]
+> 
+> There was previously a theoretical window where swapoff() could run and
+> teardown a swap_info_struct while a call to free_swap_and_cache() was
+> running in another thread.  This could cause, amongst other bad
+> possibilities, swap_page_trans_huge_swapped() (called by
+> free_swap_and_cache()) to access the freed memory for swap_map.
+> 
+> This is a theoretical problem and I haven't been able to provoke it from a
+> test case.  But there has been agreement based on code review that this is
+> possible (see link below).
+> 
+> Fix it by using get_swap_device()/put_swap_device(), which will stall
+> swapoff().  There was an extra check in _swap_info_get() to confirm that
+> the swap entry was not free.  This isn't present in get_swap_device()
+> because it doesn't make sense in general due to the race between getting
+> the reference and swapoff.  So I've added an equivalent check directly in
+> free_swap_and_cache().
+> 
+> Details of how to provoke one possible issue (thanks to David Hildenbrand
+> for deriving this):
+> 
+> --8<-----
+> 
+> __swap_entry_free() might be the last user and result in
+> "count == SWAP_HAS_CACHE".
+> 
+> swapoff->try_to_unuse() will stop as soon as soon as si->inuse_pages==0.
+> 
+> So the question is: could someone reclaim the folio and turn
+> si->inuse_pages==0, before we completed swap_page_trans_huge_swapped().
+> 
+> Imagine the following: 2 MiB folio in the swapcache. Only 2 subpages are
+> still references by swap entries.
+> 
+> Process 1 still references subpage 0 via swap entry.
+> Process 2 still references subpage 1 via swap entry.
+> 
+> Process 1 quits. Calls free_swap_and_cache().
+> -> count == SWAP_HAS_CACHE
+> [then, preempted in the hypervisor etc.]
+> 
+> Process 2 quits. Calls free_swap_and_cache().
+> -> count == SWAP_HAS_CACHE
+> 
+> Process 2 goes ahead, passes swap_page_trans_huge_swapped(), and calls
+> __try_to_reclaim_swap().
+> 
+> __try_to_reclaim_swap()->folio_free_swap()->delete_from_swap_cache()->
+> put_swap_folio()->free_swap_slot()->swapcache_free_entries()->
+> swap_entry_free()->swap_range_free()->
+> ...
+> WRITE_ONCE(si->inuse_pages, si->inuse_pages - nr_entries);
+> 
+> What stops swapoff to succeed after process 2 reclaimed the swap cache
+> but before process1 finished its call to swap_page_trans_huge_swapped()?
+> 
+> --8<-----
+> 
+> Link: https://lkml.kernel.org/r/20240306140356.3974886-1-ryan.roberts@arm.com
+> Fixes: 7c00bafee87c ("mm/swap: free swap slots in batch")
+> Closes: https://lore.kernel.org/linux-mm/65a66eb9-41f8-4790-8db2-0c70ea15979f@redhat.com/
+> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: "Huang, Ying" <ying.huang@intel.com>
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  mm/swapfile.c | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/mm/swapfile.c b/mm/swapfile.c
+> index 022581ec40be3..91397a2539cbe 100644
+> --- a/mm/swapfile.c
+> +++ b/mm/swapfile.c
+> @@ -1226,6 +1226,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
+>   * with get_swap_device() and put_swap_device(), unless the swap
+>   * functions call get/put_swap_device() by themselves.
+>   *
+> + * Note that when only holding the PTL, swapoff might succeed immediately
+> + * after freeing a swap entry. Therefore, immediately after
+> + * __swap_entry_free(), the swap info might become stale and should not
+> + * be touched without a prior get_swap_device().
+> + *
+>   * Check whether swap entry is valid in the swap device.  If so,
+>   * return pointer to swap_info_struct, and keep the swap entry valid
+>   * via preventing the swap device from being swapoff, until
+> @@ -1603,13 +1608,19 @@ int free_swap_and_cache(swp_entry_t entry)
+>  	if (non_swap_entry(entry))
+>  		return 1;
+>  
+> -	p = _swap_info_get(entry);
+> +	p = get_swap_device(entry);
+>  	if (p) {
+> +		if (WARN_ON(data_race(!p->swap_map[swp_offset(entry)]))) {
+> +			put_swap_device(p);
+> +			return 0;
+> +		}
+> +
+>  		count = __swap_entry_free(p, entry);
+>  		if (count == SWAP_HAS_CACHE &&
+>  		    !swap_page_trans_huge_swapped(p, entry))
+>  			__try_to_reclaim_swap(p, swp_offset(entry),
+>  					      TTRS_UNMAPPED | TTRS_FULL);
+> +		put_swap_device(p);
+>  	}
+>  	return p != NULL;
+>  }
 
-Ok, all now dropped.  Please let us know when the fix gets into Linus's
-tree (and also properly tag it for stable inclusion as it is fixing a
-commit that was tagged for stable inclusion.)
-
-thanks,
-
-greg k-h
