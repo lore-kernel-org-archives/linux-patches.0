@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715A83CF65;
-	Tue,  2 Apr 2024 07:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BF12BD1C;
+	Tue,  2 Apr 2024 07:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712044274; cv=none; b=hVkwBlWLp4s68ZHZraruHhML139DukME+zxVKzOMSkws1UEBlMbg1ue+qqmu7UWMAzRHgvsoJjCejRzDNeIlChUAwMCymF8YPFuou2E/uUgF8qzipye61C1tFU59r8Ei/QkH/Y9U6M36CjE1IVQ0l3GlKOP4CIWXDJWpF7RO9dA=
+	t=1712044370; cv=none; b=RpIH4jn+FrL/Uwei+syUYY8e+/XpSu0Zy6mwoD/yn5GPMfWNjHdHz5JT4sG3dtGvdoUIT5Kjw/OgWzVN3jOq276sgT2YCEpvP4+SsAhY8aYm4LobBBG1sVqptIa9BdgeFhbIK9IDdItvt82ewakbLYxUhFpkM3+PVstGKnuVNAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712044274; c=relaxed/simple;
-	bh=dhWigLLIcz+WQD+U4cGPhrHKZup43HIU9h/Q0qIlO4M=;
+	s=arc-20240116; t=1712044370; c=relaxed/simple;
+	bh=WwfqxIqdxxJob6FHg3dVuAgvuc55Xj+SyK/XAogMEHk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lXwOraBT+Fj5DdMOTXjGggtnWOVvu6yl3eZArrjOltuXXC/YC/TCuhRG0Xh6cyNkm8fp34pS5yD5zNTJ2DOuyCOOTGJvBoVKrPpVcYh2nJdWmvK/MacnZQojER/WXZQVC5oV34ZbTxMF6iNBkZdS4DPRO8yToFEA6QSUXZNoxxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryIaugh6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uPARHRNVTWJ5A+KJnihvHKQ4tyn1d25O6hWZ+OMR3jSaYvZyFMdO+H+84puDVq4qW/bc67+toJpNdymby6aYPUMTrpsOOKw5gGmc6b+l+m2fkv2YyCYJdb2hR3HBoVT170/V9Ei/uV5TSA5GfUtLnhWKu7+7R9CjtXWCcwcGJHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6kEQmLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryIaugh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6CEC433C7;
-	Tue,  2 Apr 2024 07:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6kEQmLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C33C433F1;
+	Tue,  2 Apr 2024 07:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712044274;
-	bh=dhWigLLIcz+WQD+U4cGPhrHKZup43HIU9h/Q0qIlO4M=;
+	s=korg; t=1712044370;
+	bh=WwfqxIqdxxJob6FHg3dVuAgvuc55Xj+SyK/XAogMEHk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ryIaugh69IdHZn2ILN3LOgMpV1zNUdpwoqMIpewtUwU+l+O5H4uZRgjA/2VUc126j
-	 uEZdcxlWK+OSuN7xkGFXc6ON6TV7CdVioYNodJ8A7rr7DtawJeJ4IprWizLCBnTm1Q
-	 /wBo1LvihwptoT+tBqsi3lVig0KPe3Phu+wncZzo=
-Date: Tue, 2 Apr 2024 09:51:11 +0200
+	b=v6kEQmLhc3brqNY0Lezi1sV00zH7dvV/j3raEVauJdi4EHH8LnwKcRBJqy21rBJpg
+	 i8tBURCcamZlZXMsCYf5ujeRyXZ5gobrcu50ooBgL1pWPYIjwRfSpvXHjpqsFUp9CA
+	 1IFBJVihgEpuDzdbIoSPO8gn8nAlvR7v6vVEbYtM=
+Date: Tue, 2 Apr 2024 09:52:47 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Alexander Wetzel <alexander@wetzel-home.de>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	LTP List <ltp@lists.linux.it>
-Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
-Message-ID: <2024040257-slackness-composer-9696@gregkh>
-References: <20240401152547.867452742@linuxfoundation.org>
- <CA+G9fYvewkbwR_i07HHTM=8E2yS-0wRhOT-C45LP3SNtzgd+4Q@mail.gmail.com>
- <29a7a1e5-da67-47fc-b1fd-ef65902ec252@wetzel-home.de>
+To: "Christian A. Ehrhardt" <lk@c--e.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 6.1 251/272] usb: typec: ucsi: Check for notifications
+ after init
+Message-ID: <2024040223-steerable-regretful-a9f9@gregkh>
+References: <20240401152530.237785232@linuxfoundation.org>
+ <20240401152538.859016197@linuxfoundation.org>
+ <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
+ <2024040216-cahoots-gizzard-4ffb@gregkh>
+ <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,69 +45,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <29a7a1e5-da67-47fc-b1fd-ef65902ec252@wetzel-home.de>
+In-Reply-To: <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
 
-On Mon, Apr 01, 2024 at 09:22:52PM +0200, Alexander Wetzel wrote:
+On Tue, Apr 02, 2024 at 08:06:52AM +0200, Christian A. Ehrhardt wrote:
 > 
-> > Following kernel warnings have been noticed on qemu-x86_64 while running LTP
-> > cve ioctl_sg01 tests the kernel with stable-rc 6.6.24-rc1, 6.7.12-rc1 and
-> > 6.8.3-rc1.
-> > 
-> > We have started bi-secting this issue.
-> > Always reproduced.
-> > 
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> > ioctl_sg01.c:81: TINFO: Found SCSI device /dev/sg0
-> > ------------[ cut here ]------------
-> > [   36.606841] WARNING: CPU: 0 PID: 8 at drivers/scsi/sg.c:2237
-> > sg_remove_sfp_usercontext+0x145/0x150
-> > [   36.609445] Modules linked in:
-> > [   36.610793] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.6.24-rc1 #1
-> > [   36.611568] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009),
-> > BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-> > [   36.612872] Workqueue: events sg_remove_sfp_usercontext
-> > [   36.613691] RIP: 0010:sg_remove_sfp_usercontext+0x145/0x150
-> > 
-> > <trim>
-> > 
-> > [   36.621539] Call Trace:
-> > [   36.621953]  <TASK>
-> > [   36.622444]  ? show_regs+0x69/0x80
-> > [   36.622819]  ? __warn+0x8d/0x150
-> > [   36.623078]  ? sg_remove_sfp_usercontext+0x145/0x150
-> > [   36.623558]  ? report_bug+0x171/0x1a0
-> > [   36.623881]  ? handle_bug+0x42/0x80
-> > [   36.624070]  ? exc_invalid_op+0x1c/0x70
-> > [   36.624491]  ? asm_exc_invalid_op+0x1f/0x30
-> > [   36.624897]  ? sg_remove_sfp_usercontext+0x145/0x150
-> > [   36.625408]  process_one_work+0x141/0x300
-> > [   36.625769]  worker_thread+0x2f6/0x430
-> > [   36.626073]  ? __pfx_worker_thread+0x10/0x10
-> > [   36.626529]  kthread+0x105/0x140
-> > [   36.626778]  ? __pfx_kthread+0x10/0x10
-> > [   36.627059]  ret_from_fork+0x41/0x60
-> > [   36.627441]  ? __pfx_kthread+0x10/0x10
-> > [   36.627735]  ret_from_fork_asm+0x1b/0x30
-> > [   36.628293]  </TASK>
-> > [   36.628604] ---[ end trace 0000000000000000 ]---
-> > ioctl_sg01.c:122: TPASS: Output buffer is empty, no data leaked
-> > 
-> > Suspecting commit:
-> > -----
-> > scsi: sg: Avoid sg device teardown race
-> > commit 27f58c04a8f438078583041468ec60597841284d upstream.
-> > 
+> Hi Greg,
 > 
-> Correct. The issue is already been worked on.
+> On Tue, Apr 02, 2024 at 07:40:43AM +0200, Greg Kroah-Hartman wrote:
+> > On Mon, Apr 01, 2024 at 10:16:45PM +0200, Christian A. Ehrhardt wrote:
+> > > 
+> > > Hi Greg,
+> > > 
+> > > On Mon, Apr 01, 2024 at 05:47:21PM +0200, Greg Kroah-Hartman wrote:
+> > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > > ------------------
+> > > > 
+> > > > From: Christian A. Ehrhardt <lk@c--e.de>
+> > > > 
+> > > > commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 upstream.
+> > > > 
+> > > > The completion notification for the final SET_NOTIFICATION_ENABLE
+> > > > command during initialization can include a connector change
+> > > > notification.  However, at the time this completion notification is
+> > > > processed, the ucsi struct is not ready to handle this notification.
+> > > > As a result the notification is ignored and the controller
+> > > > never sends an interrupt again.
+> > > > 
+> > > > Re-check CCI for a pending connector state change after
+> > > > initialization is complete. Adjust the corresponding debug
+> > > > message accordingly.
+> > > > 
+> > > > Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
+> > > > Cc: stable@vger.kernel.org
+> > > > Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+> > > > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > > > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> > > > Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
+> > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > > > ---
+> > > >  drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
+> > > >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > > 
+> > > This change has an out of bounds memory access. Please drop it from
+> > > the stable trees until a fix is available.
+> > 
+> > Shouldn't we get a fix for Linus's tree too?  Have I missed that
+> > somewhere?  Or should this just be reverted now?
 > 
-> commit 27f58c04a8f4 ("scsi: sg: Avoid sg device teardown race") fixed a real
-> issue. But also added an incorrect WARN_ON_ONCE(). Thus the scary - but
-> otherwise harmless - error message.
+> I posted the fix a few hours after sending this mail. It is here:
+>     https://lore.kernel.org/all/20240401210515.1902048-1-lk@c--e.de/
 > 
-> Current patch fixing the broken commit is proposed here:
-> https://lore.kernel.org/all/20240401191038.18359-1-Alexander@wetzel-home.de/
+> Either this should be fast tracked to Linus or the original change
+> reverted, yes.
 
-I will drop the offending commit from all queues now, thanks.
+I've dropped the offending commit from the stable queues now.  Once this
+fix gets into Linus's tree, let us know and I will add both in then.
+
+thanks,
 
 greg k-h
