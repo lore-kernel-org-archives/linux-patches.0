@@ -1,37 +1,28 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C596323D;
-	Tue,  2 Apr 2024 05:59:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from cae.in-ulm.de (cae.in-ulm.de [217.10.14.231])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D26182DD
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 06:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.14.231
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712037552; cv=none; b=av8JiA9p7KoprTij3cg6kTws88SQ7+wHcr11A4viEIyN8vbSPKJKSp6rDYI84d/Pp9bd8da0U+WztXKzAJyU7g8F3KgC+4w7jVKZaCpJLlppQVHQ3mVv9nIF83xEQkWvDa5Djs0f3Od5cn2YXSWcFNa9NLMOsdfZeL8INsmKtgY=
+	t=1712038017; cv=none; b=owV18wL5Fa9D95n5Bo0/BHFtax9ZTAzDZH6xUTmiNSw/uhyXDW/Tk742jmii9LuSfzIbt/gzNLIQPZq/FOLNU/ix39jgw9uD9ZCahPDI9WgqoemPJtH4/MF2PpFUzZC23+H7T1pvcpidxWHHrWrC2HBa4Mys6dnhSgmW8sWh7T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712037552; c=relaxed/simple;
-	bh=wcK13Ddvs/cXCCw4diL8Bj8+MEOJemoyiyzBJ5GEaNY=;
+	s=arc-20240116; t=1712038017; c=relaxed/simple;
+	bh=JBHXHj+hOTVqdrhCgwy4UVPS5ZJzcSVea2tXUaTYIoM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DVKN5AwhKugso4WkcvkoekIomLn1MvmeXVrznCZ9xvvVG+WVoIQkl06preU7eBE1avkhYzewWVKiEIU9PTtUdvBwqTmY/wEg2mU0YXHg13KjTk3tpBqfMm7lY8u996f0PzObgCdNDg34ZC26zfPxOSMSg+Blo6YvQzCD+SB//80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPTzfPnl; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPTzfPnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AF3C433C7;
-	Tue,  2 Apr 2024 05:59:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712037551;
-	bh=wcK13Ddvs/cXCCw4diL8Bj8+MEOJemoyiyzBJ5GEaNY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QPTzfPnloVCmjEFaipNNoMRpO/UO4vp4aMTcYTWRVT4QL5QO5DPTUM6Cuw1Eg8raV
-	 jRkU8JAgyQJTI+7zO12WA9GWXmL4bTNsa+1LjjmQuKxC6+UInEcw0YTCetmU4OfYCL
-	 A/7yrKa2MPcW3gl6p3llQ3IoebjZjCANirQ3ffzw=
-Date: Tue, 2 Apr 2024 07:59:08 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Christian A. Ehrhardt" <lk@c--e.de>
+	 Content-Type:Content-Disposition:In-Reply-To; b=t3lHUG7lsHzJXxHIqrva3hM/GtobTv43EJa0NodKDmj9Wh+9yrZzXWQnQ8Ao3rPM6FldlHrUftpQMdtIrIXpR4pWsIKvA15Zb+ojeIHla/TmN7rN9r+LHz2RJ+g8JQJBqP8HKYhpgtj7581ET5cHNJYrc8VPR/E9C+Ir86AEBFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de; spf=pass smtp.mailfrom=c--e.de; arc=none smtp.client-ip=217.10.14.231
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c--e.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=c--e.de
+Received: by cae.in-ulm.de (Postfix, from userid 1000)
+	id 1489F140139; Tue,  2 Apr 2024 08:06:52 +0200 (CEST)
+Date: Tue, 2 Apr 2024 08:06:52 +0200
+From: "Christian A. Ehrhardt" <lk@c--e.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>
 Subject: Re: [PATCH 6.1 251/272] usb: typec: ucsi: Check for notifications
  after init
-Message-ID: <2024040255-pampers-scrutiny-6b75@gregkh>
+Message-ID: <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
 References: <20240401152530.237785232@linuxfoundation.org>
  <20240401152538.859016197@linuxfoundation.org>
  <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
@@ -45,6 +36,9 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <2024040216-cahoots-gizzard-4ffb@gregkh>
+
+
+Hi Greg,
 
 On Tue, Apr 02, 2024 at 07:40:43AM +0200, Greg Kroah-Hartman wrote:
 > On Mon, Apr 01, 2024 at 10:16:45PM +0200, Christian A. Ehrhardt wrote:
@@ -88,4 +82,12 @@ On Tue, Apr 02, 2024 at 07:40:43AM +0200, Greg Kroah-Hartman wrote:
 > Shouldn't we get a fix for Linus's tree too?  Have I missed that
 > somewhere?  Or should this just be reverted now?
 
-Ah, I see the fix now, still catching up on email this morning...
+I posted the fix a few hours after sending this mail. It is here:
+    https://lore.kernel.org/all/20240401210515.1902048-1-lk@c--e.de/
+
+Either this should be fast tracked to Linus or the original change
+reverted, yes.
+
+Best regards
+Christian
+
