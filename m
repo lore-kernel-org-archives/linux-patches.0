@@ -1,25 +1,25 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 573692BD1C
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 07:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B882E648
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 07:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712044489; cv=none; b=ZlSS3vwrjr2quPJXtZaO3JfByUAY7ZJtGs4mNtw+ho36s0L41Hq7NqTC2spMQKa/mv6x/LZiBXpoU368ojQ/+jPNeBsAWkQCJ0RXunuoNtaFf5P3TV6iEQ3CxDp87NFaKrB6mjoGuttnp+yjSDcSxYPfYYBfRUKP2azyo0G26Q4=
+	t=1712044500; cv=none; b=IOthXBJOjpd/M/o/doq3Ioo9rV6OKnr1aijbw+8Mko328cRN4xDe/VD5K+pTCPyck55n0ud7NTg+vq1BFrb9kLk+X2l7UADL8zbcAFPd/PaUffc9fgHFlyLGkwWXsOhA25fy9Ah+q2knpDsZj7MRTwLwiudrxrU6n2+pBTWfIuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712044489; c=relaxed/simple;
-	bh=L6qjDpB9SNgll1zi3jh5f8TOfz7iJJT2ZzT2yX4Wq6I=;
+	s=arc-20240116; t=1712044500; c=relaxed/simple;
+	bh=Xada8Kkuv6c9gPboHs+cZ8DIdhlvdTxfEPDsVm7WgAw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uQvamMZCdG2frBjYQpfXUujyJCabXj2bzq3yHzxP+bpPo0oYFfEYGSRSecf8IEn9DXdseZ/38e8ofO1Knqwgv97o8BCn+7oNV69iIpu/Crds6aDKPUP7nAe1ni08BLC8HScuaDB9Ogn015kAS95ShjMNyjfu8u+6yLMNzzgYjfo=
+	 In-Reply-To:Content-Type; b=GSREFRWgzi0SaLqLqc5WIahNBneFKtr/+cZ7nPpBd8C+bgnRfQ/fiIL+J9zT40pXz353EOls1Cpy+qDZdw1Cd67tGZRC8D5oLb1RReZjLd4c6e/KJ9MdHHcMgKhoiy9Xl/h7oxueLe/cGfadsA/alkyCxjL4qi95yC6f6H5ACTA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9C65A1042;
-	Tue,  2 Apr 2024 00:55:17 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 675A61042;
+	Tue,  2 Apr 2024 00:55:30 -0700 (PDT)
 Received: from [10.57.73.65] (unknown [10.57.73.65])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 94A1B3F64C;
-	Tue,  2 Apr 2024 00:54:44 -0700 (PDT)
-Message-ID: <582b72c3-e572-42e8-88ee-ce2705eceef2@arm.com>
-Date: Tue, 2 Apr 2024 08:54:42 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0CA473F64C;
+	Tue,  2 Apr 2024 00:54:56 -0700 (PDT)
+Message-ID: <ffaa1c70-fb64-4982-92b7-8a68091369cb@arm.com>
+Date: Tue, 2 Apr 2024 08:54:55 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -27,22 +27,22 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 080/272] mm: swap: fix race between
+Subject: Re: [PATCH 6.6 100/396] mm: swap: fix race between
  free_swap_and_cache() and swapoff()
+Content-Language: en-GB
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, David Hildenbrand <david@redhat.com>,
  "Huang, Ying" <ying.huang@intel.com>,
  Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
-References: <20240401152530.237785232@linuxfoundation.org>
- <20240401152533.098385229@linuxfoundation.org>
-Content-Language: en-GB
+References: <20240401152547.867452742@linuxfoundation.org>
+ <20240401152550.902916260@linuxfoundation.org>
 From: Ryan Roberts <ryan.roberts@arm.com>
-In-Reply-To: <20240401152533.098385229@linuxfoundation.org>
+In-Reply-To: <20240401152550.902916260@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/04/2024 16:44, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
+On 01/04/2024 16:42, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 LGTM!
 
@@ -124,10 +124,10 @@ LGTM!
 >  1 file changed, 12 insertions(+), 1 deletion(-)
 > 
 > diff --git a/mm/swapfile.c b/mm/swapfile.c
-> index 324844f98d67c..0d6182db44a6a 100644
+> index 750314fff0c46..eada1351753e3 100644
 > --- a/mm/swapfile.c
 > +++ b/mm/swapfile.c
-> @@ -1229,6 +1229,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
+> @@ -1226,6 +1226,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
 >   * with get_swap_device() and put_swap_device(), unless the swap
 >   * functions call get/put_swap_device() by themselves.
 >   *
@@ -139,7 +139,7 @@ LGTM!
 >   * Check whether swap entry is valid in the swap device.  If so,
 >   * return pointer to swap_info_struct, and keep the swap entry valid
 >   * via preventing the swap device from being swapoff, until
-> @@ -1630,13 +1635,19 @@ int free_swap_and_cache(swp_entry_t entry)
+> @@ -1603,13 +1608,19 @@ int free_swap_and_cache(swp_entry_t entry)
 >  	if (non_swap_entry(entry))
 >  		return 1;
 >  
