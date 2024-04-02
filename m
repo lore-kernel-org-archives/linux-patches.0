@@ -1,107 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BF12BD1C;
-	Tue,  2 Apr 2024 07:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 573692BD1C
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 07:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712044370; cv=none; b=RpIH4jn+FrL/Uwei+syUYY8e+/XpSu0Zy6mwoD/yn5GPMfWNjHdHz5JT4sG3dtGvdoUIT5Kjw/OgWzVN3jOq276sgT2YCEpvP4+SsAhY8aYm4LobBBG1sVqptIa9BdgeFhbIK9IDdItvt82ewakbLYxUhFpkM3+PVstGKnuVNAg=
+	t=1712044489; cv=none; b=ZlSS3vwrjr2quPJXtZaO3JfByUAY7ZJtGs4mNtw+ho36s0L41Hq7NqTC2spMQKa/mv6x/LZiBXpoU368ojQ/+jPNeBsAWkQCJ0RXunuoNtaFf5P3TV6iEQ3CxDp87NFaKrB6mjoGuttnp+yjSDcSxYPfYYBfRUKP2azyo0G26Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712044370; c=relaxed/simple;
-	bh=WwfqxIqdxxJob6FHg3dVuAgvuc55Xj+SyK/XAogMEHk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uPARHRNVTWJ5A+KJnihvHKQ4tyn1d25O6hWZ+OMR3jSaYvZyFMdO+H+84puDVq4qW/bc67+toJpNdymby6aYPUMTrpsOOKw5gGmc6b+l+m2fkv2YyCYJdb2hR3HBoVT170/V9Ei/uV5TSA5GfUtLnhWKu7+7R9CjtXWCcwcGJHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6kEQmLh; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6kEQmLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C33C433F1;
-	Tue,  2 Apr 2024 07:52:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712044370;
-	bh=WwfqxIqdxxJob6FHg3dVuAgvuc55Xj+SyK/XAogMEHk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=v6kEQmLhc3brqNY0Lezi1sV00zH7dvV/j3raEVauJdi4EHH8LnwKcRBJqy21rBJpg
-	 i8tBURCcamZlZXMsCYf5ujeRyXZ5gobrcu50ooBgL1pWPYIjwRfSpvXHjpqsFUp9CA
-	 1IFBJVihgEpuDzdbIoSPO8gn8nAlvR7v6vVEbYtM=
-Date: Tue, 2 Apr 2024 09:52:47 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Christian A. Ehrhardt" <lk@c--e.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 6.1 251/272] usb: typec: ucsi: Check for notifications
- after init
-Message-ID: <2024040223-steerable-regretful-a9f9@gregkh>
-References: <20240401152530.237785232@linuxfoundation.org>
- <20240401152538.859016197@linuxfoundation.org>
- <ZgsWLUHW8nqUv7pi@cae.in-ulm.de>
- <2024040216-cahoots-gizzard-4ffb@gregkh>
- <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
+	s=arc-20240116; t=1712044489; c=relaxed/simple;
+	bh=L6qjDpB9SNgll1zi3jh5f8TOfz7iJJT2ZzT2yX4Wq6I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uQvamMZCdG2frBjYQpfXUujyJCabXj2bzq3yHzxP+bpPo0oYFfEYGSRSecf8IEn9DXdseZ/38e8ofO1Knqwgv97o8BCn+7oNV69iIpu/Crds6aDKPUP7nAe1ni08BLC8HScuaDB9Ogn015kAS95ShjMNyjfu8u+6yLMNzzgYjfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9C65A1042;
+	Tue,  2 Apr 2024 00:55:17 -0700 (PDT)
+Received: from [10.57.73.65] (unknown [10.57.73.65])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 94A1B3F64C;
+	Tue,  2 Apr 2024 00:54:44 -0700 (PDT)
+Message-ID: <582b72c3-e572-42e8-88ee-ce2705eceef2@arm.com>
+Date: Tue, 2 Apr 2024 08:54:42 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZgugfCVW2j1Uwm4J@cae.in-ulm.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 080/272] mm: swap: fix race between
+ free_swap_and_cache() and swapoff()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, David Hildenbrand <david@redhat.com>,
+ "Huang, Ying" <ying.huang@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
+References: <20240401152530.237785232@linuxfoundation.org>
+ <20240401152533.098385229@linuxfoundation.org>
+Content-Language: en-GB
+From: Ryan Roberts <ryan.roberts@arm.com>
+In-Reply-To: <20240401152533.098385229@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 02, 2024 at 08:06:52AM +0200, Christian A. Ehrhardt wrote:
-> 
-> Hi Greg,
-> 
-> On Tue, Apr 02, 2024 at 07:40:43AM +0200, Greg Kroah-Hartman wrote:
-> > On Mon, Apr 01, 2024 at 10:16:45PM +0200, Christian A. Ehrhardt wrote:
-> > > 
-> > > Hi Greg,
-> > > 
-> > > On Mon, Apr 01, 2024 at 05:47:21PM +0200, Greg Kroah-Hartman wrote:
-> > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > > 
-> > > > ------------------
-> > > > 
-> > > > From: Christian A. Ehrhardt <lk@c--e.de>
-> > > > 
-> > > > commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 upstream.
-> > > > 
-> > > > The completion notification for the final SET_NOTIFICATION_ENABLE
-> > > > command during initialization can include a connector change
-> > > > notification.  However, at the time this completion notification is
-> > > > processed, the ucsi struct is not ready to handle this notification.
-> > > > As a result the notification is ignored and the controller
-> > > > never sends an interrupt again.
-> > > > 
-> > > > Re-check CCI for a pending connector state change after
-> > > > initialization is complete. Adjust the corresponding debug
-> > > > message accordingly.
-> > > > 
-> > > > Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
-> > > > Cc: stable@vger.kernel.org
-> > > > Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-> > > > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > > > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-> > > > Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
-> > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > ---
-> > > >  drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
-> > > >  1 file changed, 9 insertions(+), 1 deletion(-)
-> > > 
-> > > This change has an out of bounds memory access. Please drop it from
-> > > the stable trees until a fix is available.
-> > 
-> > Shouldn't we get a fix for Linus's tree too?  Have I missed that
-> > somewhere?  Or should this just be reverted now?
-> 
-> I posted the fix a few hours after sending this mail. It is here:
->     https://lore.kernel.org/all/20240401210515.1902048-1-lk@c--e.de/
-> 
-> Either this should be fast tracked to Linus or the original change
-> reverted, yes.
+On 01/04/2024 16:44, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
 
-I've dropped the offending commit from the stable queues now.  Once this
-fix gets into Linus's tree, let us know and I will add both in then.
+LGTM!
 
-thanks,
+> 
+> ------------------
+> 
+> From: Ryan Roberts <ryan.roberts@arm.com>
+> 
+> [ Upstream commit 82b1c07a0af603e3c47b906c8e991dc96f01688e ]
+> 
+> There was previously a theoretical window where swapoff() could run and
+> teardown a swap_info_struct while a call to free_swap_and_cache() was
+> running in another thread.  This could cause, amongst other bad
+> possibilities, swap_page_trans_huge_swapped() (called by
+> free_swap_and_cache()) to access the freed memory for swap_map.
+> 
+> This is a theoretical problem and I haven't been able to provoke it from a
+> test case.  But there has been agreement based on code review that this is
+> possible (see link below).
+> 
+> Fix it by using get_swap_device()/put_swap_device(), which will stall
+> swapoff().  There was an extra check in _swap_info_get() to confirm that
+> the swap entry was not free.  This isn't present in get_swap_device()
+> because it doesn't make sense in general due to the race between getting
+> the reference and swapoff.  So I've added an equivalent check directly in
+> free_swap_and_cache().
+> 
+> Details of how to provoke one possible issue (thanks to David Hildenbrand
+> for deriving this):
+> 
+> --8<-----
+> 
+> __swap_entry_free() might be the last user and result in
+> "count == SWAP_HAS_CACHE".
+> 
+> swapoff->try_to_unuse() will stop as soon as soon as si->inuse_pages==0.
+> 
+> So the question is: could someone reclaim the folio and turn
+> si->inuse_pages==0, before we completed swap_page_trans_huge_swapped().
+> 
+> Imagine the following: 2 MiB folio in the swapcache. Only 2 subpages are
+> still references by swap entries.
+> 
+> Process 1 still references subpage 0 via swap entry.
+> Process 2 still references subpage 1 via swap entry.
+> 
+> Process 1 quits. Calls free_swap_and_cache().
+> -> count == SWAP_HAS_CACHE
+> [then, preempted in the hypervisor etc.]
+> 
+> Process 2 quits. Calls free_swap_and_cache().
+> -> count == SWAP_HAS_CACHE
+> 
+> Process 2 goes ahead, passes swap_page_trans_huge_swapped(), and calls
+> __try_to_reclaim_swap().
+> 
+> __try_to_reclaim_swap()->folio_free_swap()->delete_from_swap_cache()->
+> put_swap_folio()->free_swap_slot()->swapcache_free_entries()->
+> swap_entry_free()->swap_range_free()->
+> ...
+> WRITE_ONCE(si->inuse_pages, si->inuse_pages - nr_entries);
+> 
+> What stops swapoff to succeed after process 2 reclaimed the swap cache
+> but before process1 finished its call to swap_page_trans_huge_swapped()?
+> 
+> --8<-----
+> 
+> Link: https://lkml.kernel.org/r/20240306140356.3974886-1-ryan.roberts@arm.com
+> Fixes: 7c00bafee87c ("mm/swap: free swap slots in batch")
+> Closes: https://lore.kernel.org/linux-mm/65a66eb9-41f8-4790-8db2-0c70ea15979f@redhat.com/
+> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: "Huang, Ying" <ying.huang@intel.com>
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  mm/swapfile.c | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/mm/swapfile.c b/mm/swapfile.c
+> index 324844f98d67c..0d6182db44a6a 100644
+> --- a/mm/swapfile.c
+> +++ b/mm/swapfile.c
+> @@ -1229,6 +1229,11 @@ static unsigned char __swap_entry_free_locked(struct swap_info_struct *p,
+>   * with get_swap_device() and put_swap_device(), unless the swap
+>   * functions call get/put_swap_device() by themselves.
+>   *
+> + * Note that when only holding the PTL, swapoff might succeed immediately
+> + * after freeing a swap entry. Therefore, immediately after
+> + * __swap_entry_free(), the swap info might become stale and should not
+> + * be touched without a prior get_swap_device().
+> + *
+>   * Check whether swap entry is valid in the swap device.  If so,
+>   * return pointer to swap_info_struct, and keep the swap entry valid
+>   * via preventing the swap device from being swapoff, until
+> @@ -1630,13 +1635,19 @@ int free_swap_and_cache(swp_entry_t entry)
+>  	if (non_swap_entry(entry))
+>  		return 1;
+>  
+> -	p = _swap_info_get(entry);
+> +	p = get_swap_device(entry);
+>  	if (p) {
+> +		if (WARN_ON(data_race(!p->swap_map[swp_offset(entry)]))) {
+> +			put_swap_device(p);
+> +			return 0;
+> +		}
+> +
+>  		count = __swap_entry_free(p, entry);
+>  		if (count == SWAP_HAS_CACHE &&
+>  		    !swap_page_trans_huge_swapped(p, entry))
+>  			__try_to_reclaim_swap(p, swp_offset(entry),
+>  					      TTRS_UNMAPPED | TTRS_FULL);
+> +		put_swap_device(p);
+>  	}
+>  	return p != NULL;
+>  }
 
-greg k-h
