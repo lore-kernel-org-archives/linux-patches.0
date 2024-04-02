@@ -1,67 +1,67 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D4058AA7
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC84558203
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712051212; cv=none; b=Vtli0BIulsVo8MuTGnqjLKuDFhF4vKZXs5OZJTnr/YwEiWUjSY/1EoQAozQyLY0YQxLht4tHlgWKLhX5cmKFHzCpfxeWUuG8I7ltuwUnXzKPMRfH8uQL8fj0Qs+lJVb9Dg9S2bDZeE5IPOTmlbRtl38hj7fSP9k0EBdhrHGrt3Y=
+	t=1712051332; cv=none; b=Z//IN06wDc4BIXzRQt4tQTf9rfyZEmvxP/PAv7jA/wyNNg5p0+Ob6zKMqKwuSxRdMOVDFAJsbi8Gyh/OgQS3Wj+PPup3zsuRnWcVcxFKdipPAzDRIp2fhy0qURbez8142ZEJynGpLaUgWQ2e6+Ybzwzu7cmEZRcg3rK+x2A+vRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712051212; c=relaxed/simple;
-	bh=5KWH23f+CkrAqT9Dewsp1JwFaTdF1nWGTz25jhY/NPI=;
+	s=arc-20240116; t=1712051332; c=relaxed/simple;
+	bh=/6opIaW565ST1SlftEf3TIDZp0a8kcSv8D9Tuf8A6MA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ElOn/LfU1AEtGaUkBj+hzjGJ8EniKUkpOkZGS2UwxuwDJMFif0mWqaKImXdKwsiibJcr/OM4rJEEPE0/TdZmtJWHrd7v2rb4ffdTft3+jXr+Li7U+XqHmx0YQ2lDQC+qfi9HmcnFCIdMoWuco35r55gUsic7uLlyktgf55oWOCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3egMjlEL; arc=none smtp.client-ip=209.85.221.180
+	 To:Cc:Content-Type; b=Bekg89+I00ishBXHLqOEzxXdvTgyRngQDGfqdEYqUie1aQBqq5YZx6gdXZLxsztepwOQxfRjBjGnnNB1gjZZpUQs9ZJ0K0xHQ7G0t72mMZ0bAhkgUQJJEaz+H25BK+MxKTwJlIYOCAnHCbN+li1ZXv6syjY06fkZKYxXIQbn+8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BPcFR8Jo; arc=none smtp.client-ip=209.85.222.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3egMjlEL"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-4d870fb9f5cso1838175e0c.3
-        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:46:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BPcFR8Jo"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-7e096ab9287so1725601241.2
+        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712051209; x=1712656009; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1712051329; x=1712656129; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=57Qln/YxVwij9SZ8Uk2+ZQTIMAfQPcYDAn1WRCFZujE=;
-        b=3egMjlEL1fidmeCs8vOFXlV/orhpPg2ywSFfFO4ExYTwKgpNAfpBxjvfsX3PEWDjgI
-         mdWeKuVtglZghJ9h9LMFVfKRIwdXJ/1vhHea2f6Q2T57Cz0wngoy0IOx5ob6xq1gReBJ
-         PjWJZRc+8b0HzClnXApC+3X2YWHA1v70IwxAL2AvqiiMkylJL0caxsgcsjDZcGvNe9Gr
-         obpb7Ddf0/hZHNfnHIaEFQkndTeGEpR+BxA17cTj5gI7UoSW6k7Osz2a/dbSNXh6Yqof
-         hyxRePJelyLKdjzJlqn8ic7lurQjsdsJIyE8zeA9+FLKWIlNzdmBKg7ORVrk+yhP5xD3
-         3C/A==
+        bh=A4P9MrH43tW9abxwsM09/mfJ8gZJX942gU6DHzH5JkI=;
+        b=BPcFR8JoCHAy4yeYhzYEojjVALwIhdR/TQXtQpDtCyNEEGIoSYeTUcYLdWr+T70ba/
+         ochd+LsPNaAgqDE2Iugj6VRpemSvCSfQ5B6qw/uI5RTPGAjk9lq40ocGNEOOUxpuoh5s
+         TRCzAyF3CbFOuTxRu8f2zEld3RTFRB1TauYYKSqFmlZlCjIsMuKhTgIp3q4gHguzuYLc
+         LS+YPpznfpaB99GtGDfxfNuPRKabs8m8tePf43fSdxxO8vyaJUKLXpE5oVCKu9ULSCYa
+         oZvhKr1fSBETxbtPrP7cRbWa9OGpjRMhNQzEMHqJDJ6jc0nDZLLlZQ7AfWXgibZEG4hi
+         vhew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712051209; x=1712656009;
+        d=1e100.net; s=20230601; t=1712051329; x=1712656129;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=57Qln/YxVwij9SZ8Uk2+ZQTIMAfQPcYDAn1WRCFZujE=;
-        b=HGJ+D5qAd9E4wmJEy+D+7vgiXHqHMwbJQc5ib7l+JECJH1YKFRDY265RgfNwv43Pu/
-         F22aBkvJX+xVx7ceHC60Y7AhBA4ZbhGlkm4+ju8uZ+K6zLWWtj6Flymm8BiYxKMgE4Se
-         vsEXLPuxfEtbmfrtkbay9vBrLNlg8+uG+KbL1kktcPdZ/ifY4Pz/ugzPWBjPOmlBdRWO
-         epkKpkWPvx8dJZxOLCdVHoPWTgLioJbqcuPUnb+KCEQB7j9IT9edw48iqbsM3nsaiaIE
-         uE3hjujwfu6r7BRwyFlQJAGFryXu5mvQoWcLEwQGRBhC4wZVyslK+QLDBfS73KbBJd+F
-         XMsw==
-X-Forwarded-Encrypted: i=1; AJvYcCWyAqt+u055gkniwTWfj+pdrSe/y8VGm8p2VBt/LW7YJp6jiUXvC0y8sDXsgfkdqxSxojVXPcrjJOzVI8EJyUWDEqVtXLvZoQ==
-X-Gm-Message-State: AOJu0YzpfrskFcJwxOOC4bjqcn+hlYt73mTcZ7eJ8p3SVMVMCoQynFOc
-	FgyZo/YKsHS7JdEy5lmQNwwQB3/BcCVQAcZdYyVkg6lbA3C90+MOTNxOch0NK9m+i2Km4fH7XNL
-	AxC51F6ZAfIQiHFME80uaZSspOy+e4FJQcERK
-X-Google-Smtp-Source: AGHT+IGQf3QzhQLw9j6incX1IXi9f33qMcGOHachbPjJXSe8XAem2rfd7FCRPcCKfwdQFdRHcq9OG/7bKX/RqoZHYWY=
-X-Received: by 2002:a05:6122:c90:b0:4d3:4aad:22d4 with SMTP id
- ba16-20020a0561220c9000b004d34aad22d4mr9329783vkb.0.1712051209441; Tue, 02
- Apr 2024 02:46:49 -0700 (PDT)
+        bh=A4P9MrH43tW9abxwsM09/mfJ8gZJX942gU6DHzH5JkI=;
+        b=KAKKy/IEDlhjCAW1LlR1zwispNrmJuadXZvHT6sqU8/gpvt7BBNgY6m2QiM4NdutF9
+         MikZucN23jT6SLyhUQILcYjh36LXNinFQxx15DA2+UjT79b45scKAaURbwcEQzV9S/Uw
+         fMwz9khdNz9UKeRrpAOQriqjjC+3tDGXfA4+iS6ZhSl9j5Zwrw+Gll6bj5AGYg8jn7tA
+         Se+9DQwm8zMyW1NJ41QYEheuzm08obpMHThHXSxj3kBvuU4y+InBUG0QjhOirb2ChDXi
+         9vK4elLYohEuibxcelqQzJfeXjYcz9FtfsJO3ECf9a2g7WyOmV6DQQ9txvnomcBS9snP
+         n+sg==
+X-Forwarded-Encrypted: i=1; AJvYcCUh1h2MBrllizhrrmTlcxPQthbECv4bWV/DTqdZ8rOlzfQbWtNSHpIIW7sBq46QCk1iE5xsekI7+qSBrqqsFBvFvkxZcmH7OQ==
+X-Gm-Message-State: AOJu0Yz45n0rHDuFot2Ea8d8bYK8XGhznpDVEwjZtjndIk85G7Vi4O/g
+	c/snUfgiWRusCptd+hCJT3kc/es7vf0hDzIbswHHB81IhVbMoHY9qKt+JEU3VWNLOWTt9XUHrdn
+	WXtqDV+7M3yfTLO1JdlzuHPsIX0omkU3hVxhn
+X-Google-Smtp-Source: AGHT+IEuI/3Rm82F2eFCVLgg9j5UIQnVXaNnxGLIK9710lNnknOhJaLAXY9bxHdptvhHHGoFFNiYjlFvjJefD/9iG+Y=
+X-Received: by 2002:a05:6102:2172:b0:478:618e:f0c8 with SMTP id
+ i18-20020a056102217200b00478618ef0c8mr6431208vsg.11.1712051329606; Tue, 02
+ Apr 2024 02:48:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401212303.537355-1-ojeda@kernel.org> <20240401212303.537355-2-ojeda@kernel.org>
-In-Reply-To: <20240401212303.537355-2-ojeda@kernel.org>
+References: <20240401212303.537355-1-ojeda@kernel.org> <20240401212303.537355-3-ojeda@kernel.org>
+In-Reply-To: <20240401212303.537355-3-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 2 Apr 2024 11:46:38 +0200
-Message-ID: <CAH5fLgh7jbq8ea4CBJJRPY3gfm6=-_ck2mqArWDG6s+bLfMr7g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] rust: sync: implement `Default` for `LockClassKey`
+Date: Tue, 2 Apr 2024 11:48:39 +0200
+Message-ID: <CAH5fLgjS5NeXHTqqgcb5nhC9XZ1qSzh5tWD+fvNUf93_PNGWdg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] rust: kernel: remove redundant imports
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -75,22 +75,24 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, Apr 1, 2024 at 11:23=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> In the upcoming Rust 1.78.0, Clippy suggests to implement `Default` even
-> when `new()` is `const`, since `Default::default()` may call `const`
-> functions even if it is not `const` itself [1]:
+> Rust's `unused_imports` lint covers both unused and redundant imports.
+> In the upcoming 1.78.0, the lint detects more cases of redundant imports
+> [1], e.g.:
 >
->     error: you should consider adding a `Default` implementation for `Loc=
-kClassKey`
->       --> rust/kernel/sync.rs:31:5
+>     error: the item `bindings` is imported redundantly
+>       --> rust/kernel/print.rs:38:9
 >        |
->     31 | /     pub const fn new() -> Self {
->     32 | |         Self(Opaque::uninit())
->     33 | |     }
->        | |_____^
+>     38 |     use crate::bindings;
+>        |         ^^^^^^^^^^^^^^^ the item `bindings` is already defined b=
+y prelude
 >
-> Thus implement it.
+> Most cases are `use crate::bindings`, plus a few other items like `Box`.
+> Thus clean them up.
 >
-> Link: https://github.com/rust-lang/rust-clippy/pull/10903 [1]
+> Note that, in the `bindings` case, the message "defined by prelude"
+> above means the extern prelude, i.e. the `--extern` flags we pass.
+>
+> Link: https://github.com/rust-lang/rust/pull/117772 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
