@@ -1,158 +1,96 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C641554777
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D4058AA7
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712049517; cv=none; b=YjzssD1T1YgcPEuCQcZKhc6oFcOb95ti4yYmOzzuwlyaxkLE67JoCYI/Nphpku2euJafYFFwBncRdV099zrr/IUyTEXR2TmGZjtenHIxyfcmKl9vQzttzTSYDEH6JlFiIjbbOWgSsAkTq66RhR0fNHddo1toBTZkC89UWNXHpbk=
+	t=1712051212; cv=none; b=Vtli0BIulsVo8MuTGnqjLKuDFhF4vKZXs5OZJTnr/YwEiWUjSY/1EoQAozQyLY0YQxLht4tHlgWKLhX5cmKFHzCpfxeWUuG8I7ltuwUnXzKPMRfH8uQL8fj0Qs+lJVb9Dg9S2bDZeE5IPOTmlbRtl38hj7fSP9k0EBdhrHGrt3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712049517; c=relaxed/simple;
-	bh=o/P8asTQgXNr+LtSR/rVKgTHlr8EJ1cZ5yL0HTpm700=;
+	s=arc-20240116; t=1712051212; c=relaxed/simple;
+	bh=5KWH23f+CkrAqT9Dewsp1JwFaTdF1nWGTz25jhY/NPI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kg4fxCbTpgvpdP1a0MxAlInZnZtRtsrQjLVwRpZOhbU5RkVeWsIhBI7DDTmCgdjK0+/lYEqvpyyiImk+xG3V8XCL2S8CnemkqQpJ5JF95s2rFjdMTThw/SCZDOPIv9P631aYyg7Yl0FPhQEKPlzxG2fBD7HFvU/PdQJXQsCD2E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jMia3Swe; arc=none smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=ElOn/LfU1AEtGaUkBj+hzjGJ8EniKUkpOkZGS2UwxuwDJMFif0mWqaKImXdKwsiibJcr/OM4rJEEPE0/TdZmtJWHrd7v2rb4ffdTft3+jXr+Li7U+XqHmx0YQ2lDQC+qfi9HmcnFCIdMoWuco35r55gUsic7uLlyktgf55oWOCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3egMjlEL; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jMia3Swe"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7e3a6fe180bso72043241.2
-        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3egMjlEL"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-4d870fb9f5cso1838175e0c.3
+        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712049514; x=1712654314; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1712051209; x=1712656009; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r66TFNSLT4YD94GnwLNWPiQzwjcsChSUIFxq6D9Qnwo=;
-        b=jMia3SweQBlrFlKamUXlV/S2gfr1hLjfl02OKnFokdOTBvBO9dYWki4GBaPirLfHv2
-         6sAF1d7oQ7kK2ZJWC0tK1k8GRAv9W2WzzT0/GHGhk9Jdk0B59S2bCHjrlpG04GGHxNBr
-         +Ib5zt+qtXVTD09t4nlpA4pRvdWkxfhRzo3FYOxS7uHpiojQw2IZLYykdYfvWgS8RJyS
-         yfLYL1Dw7fUysCJmT4ZeZsQDV4clKMWqqBk4QMToYf72/pXSpiv7P4+4hHl3raTD6fMB
-         aJR9A1eX3d8Z26a5tdo34Bwf4s4FfIljiKn+TphAlQ811zgrofBJRBQJJBNRxpnSPnwh
-         BPjw==
+        bh=57Qln/YxVwij9SZ8Uk2+ZQTIMAfQPcYDAn1WRCFZujE=;
+        b=3egMjlEL1fidmeCs8vOFXlV/orhpPg2ywSFfFO4ExYTwKgpNAfpBxjvfsX3PEWDjgI
+         mdWeKuVtglZghJ9h9LMFVfKRIwdXJ/1vhHea2f6Q2T57Cz0wngoy0IOx5ob6xq1gReBJ
+         PjWJZRc+8b0HzClnXApC+3X2YWHA1v70IwxAL2AvqiiMkylJL0caxsgcsjDZcGvNe9Gr
+         obpb7Ddf0/hZHNfnHIaEFQkndTeGEpR+BxA17cTj5gI7UoSW6k7Osz2a/dbSNXh6Yqof
+         hyxRePJelyLKdjzJlqn8ic7lurQjsdsJIyE8zeA9+FLKWIlNzdmBKg7ORVrk+yhP5xD3
+         3C/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712049514; x=1712654314;
+        d=1e100.net; s=20230601; t=1712051209; x=1712656009;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=r66TFNSLT4YD94GnwLNWPiQzwjcsChSUIFxq6D9Qnwo=;
-        b=JmF9dWIWqlkSqRo2JBSqpRdi4nXTU0B6xOkd8J/8AltuEd2LxDYzNwwDDo0/YhG68H
-         xguTLSyx8PFnQEphCBsQ6vxdoGiue7ABMMyedE41xC7KoO5IDWS2noSaDAuTOGt42w2i
-         LxTUBF3Pdpr8yEXcQdlRwLPjCU0ctgFgId6GqkfjFU6adB11hOdPUsN8so0f89hwZJ2e
-         ExxQZOIADDdxjIsb4jpObueWb/b/k0LM0Fp0AItgGW83VkvQiU8jVkE0p6UwVP5/O64q
-         YnVLqkq3he3yezP1ls2//T+xsA9sunhGJ2pAfMzAAgT+8MgeFjUo8Jkez3HZPB6XOp8p
-         9lvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXD8IgmEWrwuWSgPmGyXeKWlvLHacZNf3vme4RQLniEkoaBv+GD4bjjpvvI3vbrIWvrWG1B6M1SQ4tKddsQQ4J0TMjzyj7rLA==
-X-Gm-Message-State: AOJu0YwCj0uNHavgAFEv/FpMpKQuiochpmlAzxrEVhOol68gtDS56E/L
-	PwTGTlHdT8kOkEzcA860cHL1QvK9jeJHg4RfwP+D89skQDgSetsnSBGgyVIS/1cJHqN4Krk5WJ0
-	XGqpHnyv8EN7wPCpZGjD2zqoZsB3rloPVqeIhCQkoTJiZmiAQkyo=
-X-Google-Smtp-Source: AGHT+IHQ73nyKalKwygD4j92nMTrgX97gI21W8eoJIJZkooD2dfv2lbsfKe7svLrUcejklRdqZgrt81nkzCspg1NleI=
-X-Received: by 2002:a05:6102:2459:b0:475:111d:c0dc with SMTP id
- g25-20020a056102245900b00475111dc0dcmr8809724vss.14.1712049514705; Tue, 02
- Apr 2024 02:18:34 -0700 (PDT)
+        bh=57Qln/YxVwij9SZ8Uk2+ZQTIMAfQPcYDAn1WRCFZujE=;
+        b=HGJ+D5qAd9E4wmJEy+D+7vgiXHqHMwbJQc5ib7l+JECJH1YKFRDY265RgfNwv43Pu/
+         F22aBkvJX+xVx7ceHC60Y7AhBA4ZbhGlkm4+ju8uZ+K6zLWWtj6Flymm8BiYxKMgE4Se
+         vsEXLPuxfEtbmfrtkbay9vBrLNlg8+uG+KbL1kktcPdZ/ifY4Pz/ugzPWBjPOmlBdRWO
+         epkKpkWPvx8dJZxOLCdVHoPWTgLioJbqcuPUnb+KCEQB7j9IT9edw48iqbsM3nsaiaIE
+         uE3hjujwfu6r7BRwyFlQJAGFryXu5mvQoWcLEwQGRBhC4wZVyslK+QLDBfS73KbBJd+F
+         XMsw==
+X-Forwarded-Encrypted: i=1; AJvYcCWyAqt+u055gkniwTWfj+pdrSe/y8VGm8p2VBt/LW7YJp6jiUXvC0y8sDXsgfkdqxSxojVXPcrjJOzVI8EJyUWDEqVtXLvZoQ==
+X-Gm-Message-State: AOJu0YzpfrskFcJwxOOC4bjqcn+hlYt73mTcZ7eJ8p3SVMVMCoQynFOc
+	FgyZo/YKsHS7JdEy5lmQNwwQB3/BcCVQAcZdYyVkg6lbA3C90+MOTNxOch0NK9m+i2Km4fH7XNL
+	AxC51F6ZAfIQiHFME80uaZSspOy+e4FJQcERK
+X-Google-Smtp-Source: AGHT+IGQf3QzhQLw9j6incX1IXi9f33qMcGOHachbPjJXSe8XAem2rfd7FCRPcCKfwdQFdRHcq9OG/7bKX/RqoZHYWY=
+X-Received: by 2002:a05:6122:c90:b0:4d3:4aad:22d4 with SMTP id
+ ba16-20020a0561220c9000b004d34aad22d4mr9329783vkb.0.1712051209441; Tue, 02
+ Apr 2024 02:46:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240401152547.867452742@linuxfoundation.org>
-In-Reply-To: <20240401152547.867452742@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 2 Apr 2024 14:48:23 +0530
-Message-ID: <CA+G9fYuiYQk8FrF=1kvMW-7jeNskkL309+3qtmgoMjF8KMQnxA@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Anders Roxell <anders.roxell@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Stefan Wahren <wahrenst@gmx.net>, 
-	Kent Gibson <warthog618@gmail.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	"open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+References: <20240401212303.537355-1-ojeda@kernel.org> <20240401212303.537355-2-ojeda@kernel.org>
+In-Reply-To: <20240401212303.537355-2-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Tue, 2 Apr 2024 11:46:38 +0200
+Message-ID: <CAH5fLgh7jbq8ea4CBJJRPY3gfm6=-_ck2mqArWDG6s+bLfMr7g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rust: sync: implement `Default` for `LockClassKey`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 1 Apr 2024 at 22:06, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Mon, Apr 1, 2024 at 11:23=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> This is the start of the stable review cycle for the 6.6.24 release.
-> There are 396 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> In the upcoming Rust 1.78.0, Clippy suggests to implement `Default` even
+> when `new()` is `const`, since `Default::default()` may call `const`
+> functions even if it is not `const` itself [1]:
 >
-> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
-> Anything received after that time might be too late.
+>     error: you should consider adding a `Default` implementation for `Loc=
+kClassKey`
+>       --> rust/kernel/sync.rs:31:5
+>        |
+>     31 | /     pub const fn new() -> Self {
+>     32 | |         Self(Opaque::uninit())
+>     33 | |     }
+>        | |_____^
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.24-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
+> Thus implement it.
 >
-> thanks,
->
-> greg k-h
+> Link: https://github.com/rust-lang/rust-clippy/pull/10903 [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Results from Linaro=E2=80=99s test farm.
-Regressions on arm64, arm, x86_64, and i386 with libgpiod tests.
-
-libgpiod test regressions noticed on Linux stable-rc 6.8, 6.7 and 6.6
-and Linux next and mainline master.
-
-Anders bisected and found this first bad commit,
-  gpio: cdev: sanitize the label before requesting the interrupt
-  commit b34490879baa847d16fc529c8ea6e6d34f004b38 upstream.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-LKFT is running libgpiod test suite version
-  v2.0.1-0-gae275c3 (and also tested v2.1)
-
-libgpiod
-  - _gpiod_edge-event_edge_event_wait_timeout
-  - _gpiod_edge-event_event_copy
-  - _gpiod_edge-event_null_buffer
-  - _gpiod_edge-event_read_both_events
-  - _gpiod_edge-event_read_both_events_blocking
-  - _gpiod_edge-event_read_falling_edge_event
-  - _gpiod_edge-event_read_rising_edge_event
-  - _gpiod_edge-event_read_rising_edge_event_polled
-  - _gpiod_edge-event_reading_more_events_than_the_queue_contains_doesnt_bl=
-ock
-  - _gpiod_edge-event_seqno
-  - _gpiod_line-info_edge_detection_settings
-
-Test log:
--------
-ok 16 /gpiod/edge-event/edge_event_buffer_max_capacity
-**
-gpiod-test:ERROR:tests-edge-event.c:52:_gpiod_test_func_edge_event_wait_tim=
-eout:
-'_request' should not be NULL
-# gpiod-test:ERROR:tests-edge-event.c:52:_gpiod_test_func_edge_event_wait_t=
-imeout:
-'_request' should not be NULL
-not ok 17 /gpiod/edge-event/edge_event_wait_timeout
-ok 18 /gpiod/edge-event/cannot_request_lines_in_output_mode_with_edge_detec=
-tion
-**
-gpiod-test:ERROR:tests-edge-event.c:125:_gpiod_test_func_read_both_events:
-'_request' should not be NULL
-# gpiod-test:ERROR:tests-edge-event.c:125:_gpiod_test_func_read_both_events=
-:
-'_request' should not be NULL
-not ok 19 /gpiod/edge-event/read_both_events
-
-Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.=
-6.23-397-g75a2533b74d0/testrun/23254910/suite/libgpiod/tests/
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
