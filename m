@@ -1,86 +1,149 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9627A58AAF
-	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 09:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0464CDF9
+	for <patches@lists.linux.dev>; Tue,  2 Apr 2024 10:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712051747; cv=none; b=iW4xMUeBcYD09UrGlKXbmHK8jlmSrz3wU/EdjaZtNPTkpoUY8p9hNCj3npI34LDQH2jzeM6u0QJpXR2IBDH/Jyv5OCLNLvvoh/R4WT2cfuQBuZUBuymcl4UCMR+MozAzGbcvwemGE1E24N6ZksgCRz4KB2coUiKMDcgK1hGbWyk=
+	t=1712054277; cv=none; b=WTcQwD1EcDZ9Qny4JMffmr1sCAE70A2Tzh5PkPfqaVJSk+QzxbM+9IJjY7VUuqt2zC0YzrUw+CrCKBuvzXHGeoAb50w9SPUW6qwoQOTB/+oIYT7zaq8tqpuf49QLrKK72sroyxFr7znlbElXPT7LlagezGKrv+CIvyWpcZP2gfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712051747; c=relaxed/simple;
-	bh=a+YljDVrbcAwyR/tcUOKBAwbhaSbQeo8lJMXH+opy20=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I+0EcCJDeMzjjQGOryQsEcXWKLZKXuxzesHfahkBoxnRypzBBznDZPQMQi63qxE2ukZjXfB/5fZWVMXVcu2fvT+CuLOAnTP6ibq7wu3DlVhF5pyt8Bh6gyJcB8+GGs08iPv72zH0TY9dr0Q084uPzkjk8MbP5myHgBmQSWE76KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=u0gKcu9f; arc=none smtp.client-ip=209.85.217.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1712054277; c=relaxed/simple;
+	bh=r91xpWnGr3JVgNBrgKZPO2sDxnqrY2gA5+Cyn/xLnOk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cnw0hzybDdYLQCYl+ZGFvJUZnRUBhQYAB1ijw9TxcIjNmPMwjH8pXhp9cxGfZNsRhrkBnk8OV0/Pamy1ul8eCRRj53q9tzsTM0VllLfuu40GfGt/I1kvVX5Ay1aEhLF/0z2JvCfYDpEQoCsVAd1JdTkWfVWm6e0vlts3ehDIZpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mmgc0xMr; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="u0gKcu9f"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4765cffb446so1510223137.0
-        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 02:55:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mmgc0xMr"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-56df8e6a376so45361a12.0
+        for <patches@lists.linux.dev>; Tue, 02 Apr 2024 03:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712051744; x=1712656544; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a+YljDVrbcAwyR/tcUOKBAwbhaSbQeo8lJMXH+opy20=;
-        b=u0gKcu9fcS9H5vvo8uQ+4HK95zdh/IoMRrEB17mVBG1u3eFRNclBU8JP8PD7/m/VBL
-         PZ1uu59G1M7ZQeW798/o8ssYND5K8A22CRVUF4//V143sN7Arm+cogGl1mXBMUQ/2yR0
-         VLeK8ZxSApXuaNHel+coIrhuY5gDDo6fJ2l0hcmZfMh2uYkAXBwGsZtysk93s6wtBtKG
-         iBG07T31dlU5KF7INq4TKeDweLVJMyDGi9OWPqOf2bNcsRxbWbb724j6HTL282uo8GGB
-         91pR/5Fz8yB0xZHLBY3rdSelwTrXsRovnL9rSB5mfwTJEXjMEr/rKVwmdxFclZ7trxAN
-         0TqQ==
+        d=linaro.org; s=google; t=1712054274; x=1712659074; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jz9Y9PjigYVKEbCw1GNYP1RDI4ZuVwZ4udJg2a4ZlkM=;
+        b=Mmgc0xMrUjelp/IdQzIk8BDI/faq7TNX8/ADSvT1f39/hkMQuaVsSjuk6IzV45bIyF
+         M6UwuXw9vYMt/eo0iQoFljmL6D/WbgSpQsX6SET1zkKwzA9cM6jC6qYKhqkK7gc0rg8R
+         LFYrPelmNg5kEIPlKg00K8EjoPjB8sh9p4qshS1G43IiTS19mmnOdkhUJEKQYl6jzqE6
+         xQq5uOCp/YXJFYzTA1vwXr/9l15oTNEE6pXTiqP7wrgktE67y+rYYUWBh8h021a1VM6Y
+         NRoGD9QGQUYrRCJ5PjC3KUADATKsh5WCOj/sJJsG1mKIAui/nusTvFCtZfVr9/6rYUAG
+         dd/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712051744; x=1712656544;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a+YljDVrbcAwyR/tcUOKBAwbhaSbQeo8lJMXH+opy20=;
-        b=ayO8eNxVtG88pIEcWdjUf883remSirGlIWllefPRawQPmf/ZB/dM2fwN2KJgyoBfno
-         MS5l5Vp//NIuv8c2RyLYZBGOhQPKL/O5C8m4gkLwlVh16V58RwG94iPQ9gmYN4yhZn93
-         rEWsETpxq77M74XX3T2V/DZ6B1Sbw9kno3HKGuVLtwosXNewmXbAYeEBI3/Ol5ONgJqB
-         bor2xo+FbZfTznRls8iqhuyIJXbf1x1gohu+Bbea/ieq/9aDooy85lX7HBZCEomhwGkU
-         paqIwdntI58txs4OKsdeUG7cBUzThf+1WN34JmbrJ07euXpq/v2VgprWLmcxkRaauuW+
-         RLVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWUVBXqJsK4eLDLkMUg2TRaNMHDUJCudvZkGQ7zP6cRpaTMM4Wghj/pKXfz1r7X6+nLBFCB0KSb4piJB4Jx2Y+3ydJCA6z6Tg==
-X-Gm-Message-State: AOJu0Yy5rDr9g6XWlZIGpMKz6xWnNzy/FYiq8XGGv+cWlkfSzRnCr1wG
-	10VEdFs0l6N97l7pal6LSJR76qjCIbCaAHyMelI1guerVLdshXL+rtt3jg25fXcIrrw19gdCMSi
-	CnnGpENP4EbfkuN6KFpf3UJGvZTFwyNHQWiNy
-X-Google-Smtp-Source: AGHT+IGv3VAH51GyjjtjsnXbb/DrFswdNA8szNO89cktWs1ewiqSuc3VC/AWKEjqHLDt3jRpmLOWygntlWniMVRckAo=
-X-Received: by 2002:a05:6102:378:b0:475:fe59:f33 with SMTP id
- f24-20020a056102037800b00475fe590f33mr6501047vsa.29.1712051744314; Tue, 02
- Apr 2024 02:55:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712054274; x=1712659074;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jz9Y9PjigYVKEbCw1GNYP1RDI4ZuVwZ4udJg2a4ZlkM=;
+        b=fo22yuP26ei6F7mz8XlijptBUXHlgUZ3f0mWprEgUGmhvgs8W7Saf7145Q5qsZAiZg
+         RT8TMiSS3YElHKckOeQc6ry9DTsQQeCT51chHDgBZmA+giZvBcB+zATkGgzMQXCTdgeQ
+         36HAJBvrPAX5OG6JEy3U3v7S9aRCN8YHGxAUotDBf7DwqUsJYGBVqDOzKYcT9GRbwjwQ
+         A6T99T4BzUnQofkENLAxFVmqfXarcsT5bDuSs6EO1wbFYG9W70Dt/+aLyDf/UxGlcfqI
+         iZliq4rdwNNzN1AmP4LbzHS4ziAdloWW4l+gVzC9j/7Loa6bIDCeVgn0RCkWYrvyaeb3
+         UpRw==
+X-Forwarded-Encrypted: i=1; AJvYcCX2PLujtl2wj7DU96bW+zMXJTa5Ewt7JslM4OwH+k1am8/5rZPL3aD2YpyOlP3isCE5RhxgXhpvFsDbeZAazGwRbdkW+uvFhQ==
+X-Gm-Message-State: AOJu0Yzqnm+0myrg3K/FJzFyQy5QzuDa+XTEDOK8psAkHyFAfzJQ7ted
+	0UMF4E8NbZbO4nymqQKFnBtG771m+/dvY21Ej9547zAXDbMXFZ57DRmNIiJTsNs=
+X-Google-Smtp-Source: AGHT+IFLXanUhL+rTkL5dhPieUFNxekE62yhWKGrRFO2Vdc9oBu4cKCdI7vD6zG/l7HO+KOWLoErNA==
+X-Received: by 2002:a50:d5c8:0:b0:568:aced:e5a0 with SMTP id g8-20020a50d5c8000000b00568acede5a0mr13872744edj.14.1712054274194;
+        Tue, 02 Apr 2024 03:37:54 -0700 (PDT)
+Received: from localhost ([102.222.70.76])
+        by smtp.gmail.com with ESMTPSA id k7-20020aa7c047000000b0056c443ce781sm6591488edo.85.2024.04.02.03.37.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Apr 2024 03:37:53 -0700 (PDT)
+Date: Tue, 2 Apr 2024 13:37:50 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Alexander Wetzel <alexander@wetzel-home.de>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	LTP List <ltp@lists.linux.it>
+Subject: Re: [PATCH 6.6 000/396] 6.6.24-rc1 review
+Message-ID: <1d1071f3-641a-4b7c-bd35-a629ba8d5a7b@moroto.mountain>
+References: <20240401152547.867452742@linuxfoundation.org>
+ <CA+G9fYvewkbwR_i07HHTM=8E2yS-0wRhOT-C45LP3SNtzgd+4Q@mail.gmail.com>
+ <29a7a1e5-da67-47fc-b1fd-ef65902ec252@wetzel-home.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240217002602.57270-1-ojeda@kernel.org>
-In-Reply-To: <20240217002602.57270-1-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 2 Apr 2024 11:55:33 +0200
-Message-ID: <CAH5fLggb8jr2yaQwcQFmrP935_h+SRPT=xH+tRQe7dngiLB2fA@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: rust: use `-Zdwarf-version` to support DWARFv5
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <29a7a1e5-da67-47fc-b1fd-ef65902ec252@wetzel-home.de>
 
-On Sat, Feb 17, 2024 at 1:26=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Rust 1.64.0 introduced (unstable) support for the `-Zdwarf-version`
-> flag, which allows to select DWARFv5, thus use it.
->
-> Link: https://github.com/rust-lang/rust/issues/103057
-> Link: https://github.com/rust-lang/rust/pull/98350
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Mon, Apr 01, 2024 at 09:22:52PM +0200, Alexander Wetzel wrote:
+> 
+> > Following kernel warnings have been noticed on qemu-x86_64 while running LTP
+> > cve ioctl_sg01 tests the kernel with stable-rc 6.6.24-rc1, 6.7.12-rc1 and
+> > 6.8.3-rc1.
+> > 
+> > We have started bi-secting this issue.
+> > Always reproduced.
+> > 
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > 
+> > ioctl_sg01.c:81: TINFO: Found SCSI device /dev/sg0
+> > ------------[ cut here ]------------
+> > [   36.606841] WARNING: CPU: 0 PID: 8 at drivers/scsi/sg.c:2237
+> > sg_remove_sfp_usercontext+0x145/0x150
+> > [   36.609445] Modules linked in:
+> > [   36.610793] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.6.24-rc1 #1
+> > [   36.611568] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009),
+> > BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+> > [   36.612872] Workqueue: events sg_remove_sfp_usercontext
+> > [   36.613691] RIP: 0010:sg_remove_sfp_usercontext+0x145/0x150
+> > 
+> > <trim>
+> > 
+> > [   36.621539] Call Trace:
+> > [   36.621953]  <TASK>
+> > [   36.622444]  ? show_regs+0x69/0x80
+> > [   36.622819]  ? __warn+0x8d/0x150
+> > [   36.623078]  ? sg_remove_sfp_usercontext+0x145/0x150
+> > [   36.623558]  ? report_bug+0x171/0x1a0
+> > [   36.623881]  ? handle_bug+0x42/0x80
+> > [   36.624070]  ? exc_invalid_op+0x1c/0x70
+> > [   36.624491]  ? asm_exc_invalid_op+0x1f/0x30
+> > [   36.624897]  ? sg_remove_sfp_usercontext+0x145/0x150
+> > [   36.625408]  process_one_work+0x141/0x300
+> > [   36.625769]  worker_thread+0x2f6/0x430
+> > [   36.626073]  ? __pfx_worker_thread+0x10/0x10
+> > [   36.626529]  kthread+0x105/0x140
+> > [   36.626778]  ? __pfx_kthread+0x10/0x10
+> > [   36.627059]  ret_from_fork+0x41/0x60
+> > [   36.627441]  ? __pfx_kthread+0x10/0x10
+> > [   36.627735]  ret_from_fork_asm+0x1b/0x30
+> > [   36.628293]  </TASK>
+> > [   36.628604] ---[ end trace 0000000000000000 ]---
+> > ioctl_sg01.c:122: TPASS: Output buffer is empty, no data leaked
+> > 
+> > Suspecting commit:
+> > -----
+> > scsi: sg: Avoid sg device teardown race
+> > commit 27f58c04a8f438078583041468ec60597841284d upstream.
+> > 
+> 
+> Correct. The issue is already been worked on.
+> 
+> commit 27f58c04a8f4 ("scsi: sg: Avoid sg device teardown race") fixed a real
+> issue. But also added an incorrect WARN_ON_ONCE(). Thus the scary - but
+> otherwise harmless - error message.
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+If you have Reboot on Oops turned on (apparently Android enables this)
+then WARN() will reboot the system so it can be pretty annoying.
+
+regards,
+dan carpenter
+
