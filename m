@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07197154446;
-	Wed,  3 Apr 2024 17:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF30154429;
+	Wed,  3 Apr 2024 17:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712167029; cv=none; b=R9sBt6H0EzAZQ7+pWfgQA9bIBQ4VWY6oyL55VMIj1XMketRPGdHlpUzb06PvDI/wbVQ0Cy3495onB7BPy0vnDpEgFy8XATec7hDliJuLhbPrOS/Ho7WTEFsNrBdMT+Uu9c+nbdm2C2HsUhs/uTYk7JYXsRIfm98gWMm/4crplvI=
+	t=1712167031; cv=none; b=rEVHWHJRmJ5o1R9VF8mlq7+RirGg1By379QOYM98q8tfVW4ZJX9lLp26W1FVWLz8HWJ0vGyvXJLEOV7GfD3X5byHsHAcAJ+Q3gWRHBx6H1RSjnUWGeuf0nsNsB/OFLxnit2Vj96D0ckHzyTkxmmzToPT7EVdRXci2IH7m4M/7Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712167029; c=relaxed/simple;
-	bh=GHJe9yZIlF/f7phLnU8UrF+LwCEpjKZfpqse6RVPJtM=;
+	s=arc-20240116; t=1712167031; c=relaxed/simple;
+	bh=0Pl2AWSj8h7GqT1fbc+8PuwfGi5celowpLT7BxPrOoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTfzO9CRoIqQv7vwEzsX7BSAMBoSqMYXW66SVIXH3wt5fPFnBi9Ph3155sUJeMTMpn9xm8aTNzWQZhEuy/si++7f0HBYPaadYqJ508GkA2S0DP11lDqEXjrpDiPv5lFnXOD7yheRUwjrslphp1wkFhRU5oU50PCTd6XahC7dqrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0/aWil+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWeAOMeOHGtabQobW+k2MQjIdpwqPQRG9Vc4QDMBrls4BRvNVFboiK21mn5ZNKYfUNLS9nsBIubp2CAd71V5kMTfp+LFBgtPluyFZCMs9rG9Jr5WV3+DoDuN4g8MPaAu5xUzOydW9NQePd+RoWprsHqtZ+nsJowK4/Y8F1stkrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7MZxcTE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0/aWil+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B33C433F1;
-	Wed,  3 Apr 2024 17:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7MZxcTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4499AC433C7;
+	Wed,  3 Apr 2024 17:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712167028;
-	bh=GHJe9yZIlF/f7phLnU8UrF+LwCEpjKZfpqse6RVPJtM=;
+	s=korg; t=1712167031;
+	bh=0Pl2AWSj8h7GqT1fbc+8PuwfGi5celowpLT7BxPrOoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0/aWil+VpCBGMDX8Z+PIcAbyqmud3rGhWXAKy96kMkXMEJGESbu5eNqsjzJRNX00
-	 NxXYhd4qyQNPT6bvWREqYfhMtQZ7Ylv6tectDCJ+ucqrZlpoZCRThZimoXcoQUmQ5V
-	 xK++b/QPAvZ+XQ3eDklkdtj9ypOuYYTB+iTjT9Hk=
+	b=a7MZxcTE3MaIkrYlTBCGhncmel2d4ikrcUw5lFpGd5T7SohYFF769Lst03dfwJaB2
+	 W2/QE3y2D9dBLfdDR2Nr5sDCx73wDOrXJfG8ZSbq248ZfD4auJ5c5MAZuzQ2MYSyQm
+	 xPTfQSPmkZ7itumiq1zIfQjyZJuEb0xvBsd6L1DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Audra Mitchell <audra@redhat.com>
-Subject: [PATCH 6.6 08/11] Revert "workqueue: Replace pwq_activate_inactive_work() with [__]pwq_activate_work()"
-Date: Wed,  3 Apr 2024 19:55:57 +0200
-Message-ID: <20240403175127.106469745@linuxfoundation.org>
+Subject: [PATCH 6.6 09/11] Revert "workqueue: Factor out pwq_is_empty()"
+Date: Wed,  3 Apr 2024 19:55:58 +0200
+Message-ID: <20240403175127.141519196@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240403175126.839589571@linuxfoundation.org>
 References: <20240403175126.839589571@linuxfoundation.org>
@@ -56,8 +56,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-This reverts commit 6c592f0bb96815117538491e5ba12e0a8a8c4493 which is
-commit 4c6380305d21e36581b451f7337a36c93b64e050 upstream.
+This reverts commit bad184d26a4f68aa00ad75502f9669950a790f71 which is
+commit afa87ce85379e2d93863fce595afdb5771a84004 upstream.
 
 The workqueue patches backported to 6.6.y caused some reported
 regressions, so revert them for now.
@@ -71,69 +71,58 @@ Cc: Audra Mitchell <audra@redhat.com>
 Link: https://lore.kernel.org/all/ce4c2f67-c298-48a0-87a3-f933d646c73b@leemhuis.info/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |   31 ++++++-------------------------
- 1 file changed, 6 insertions(+), 25 deletions(-)
+ kernel/workqueue.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 --- a/kernel/workqueue.c
 +++ b/kernel/workqueue.c
-@@ -1455,36 +1455,16 @@ static bool pwq_is_empty(struct pool_wor
- 	return !pwq->nr_active && list_empty(&pwq->inactive_works);
+@@ -1450,11 +1450,6 @@ static void put_pwq_unlocked(struct pool
+ 	}
  }
  
--static void __pwq_activate_work(struct pool_workqueue *pwq,
--				struct work_struct *work)
-+static void pwq_activate_inactive_work(struct work_struct *work)
- {
-+	struct pool_workqueue *pwq = get_work_pwq(work);
-+
- 	trace_workqueue_activate_work(work);
- 	if (list_empty(&pwq->pool->worklist))
- 		pwq->pool->watchdog_ts = jiffies;
- 	move_linked_works(work, &pwq->pool->worklist, NULL);
- 	__clear_bit(WORK_STRUCT_INACTIVE_BIT, work_data_bits(work));
+-static bool pwq_is_empty(struct pool_workqueue *pwq)
+-{
+-	return !pwq->nr_active && list_empty(&pwq->inactive_works);
 -}
 -
--/**
-- * pwq_activate_work - Activate a work item if inactive
-- * @pwq: pool_workqueue @work belongs to
-- * @work: work item to activate
-- *
-- * Returns %true if activated. %false if already active.
-- */
--static bool pwq_activate_work(struct pool_workqueue *pwq,
--			      struct work_struct *work)
--{
--	struct worker_pool *pool = pwq->pool;
--
--	lockdep_assert_held(&pool->lock);
--
--	if (!(*work_data_bits(work) & WORK_STRUCT_INACTIVE))
--		return false;
--
- 	pwq->nr_active++;
--	__pwq_activate_work(pwq, work);
--	return true;
- }
+ static void pwq_activate_inactive_work(struct work_struct *work)
+ {
+ 	struct pool_workqueue *pwq = get_work_pwq(work);
+@@ -3324,7 +3319,7 @@ reflush:
+ 		bool drained;
  
- static void pwq_activate_first_inactive(struct pool_workqueue *pwq)
-@@ -1492,7 +1472,7 @@ static void pwq_activate_first_inactive(
- 	struct work_struct *work = list_first_entry(&pwq->inactive_works,
- 						    struct work_struct, entry);
+ 		raw_spin_lock_irq(&pwq->pool->lock);
+-		drained = pwq_is_empty(pwq);
++		drained = !pwq->nr_active && list_empty(&pwq->inactive_works);
+ 		raw_spin_unlock_irq(&pwq->pool->lock);
  
--	pwq_activate_work(pwq, work);
-+	pwq_activate_inactive_work(work);
- }
+ 		if (drained)
+@@ -4784,7 +4779,7 @@ static bool pwq_busy(struct pool_workque
  
- /**
-@@ -1630,7 +1610,8 @@ static int try_to_grab_pending(struct wo
- 		 * management later on and cause stall.  Make sure the work
- 		 * item is activated before grabbing.
- 		 */
--		pwq_activate_work(pwq, work);
-+		if (*work_data_bits(work) & WORK_STRUCT_INACTIVE)
-+			pwq_activate_inactive_work(work);
+ 	if ((pwq != pwq->wq->dfl_pwq) && (pwq->refcnt > 1))
+ 		return true;
+-	if (!pwq_is_empty(pwq))
++	if (pwq->nr_active || !list_empty(&pwq->inactive_works))
+ 		return true;
  
- 		list_del_init(&work->entry);
- 		pwq_dec_nr_in_flight(pwq, *work_data_bits(work));
+ 	return false;
+@@ -5222,7 +5217,7 @@ void show_one_workqueue(struct workqueue
+ 	unsigned long flags;
+ 
+ 	for_each_pwq(pwq, wq) {
+-		if (!pwq_is_empty(pwq)) {
++		if (pwq->nr_active || !list_empty(&pwq->inactive_works)) {
+ 			idle = false;
+ 			break;
+ 		}
+@@ -5234,7 +5229,7 @@ void show_one_workqueue(struct workqueue
+ 
+ 	for_each_pwq(pwq, wq) {
+ 		raw_spin_lock_irqsave(&pwq->pool->lock, flags);
+-		if (!pwq_is_empty(pwq)) {
++		if (pwq->nr_active || !list_empty(&pwq->inactive_works)) {
+ 			/*
+ 			 * Defer printing to avoid deadlocks in console
+ 			 * drivers that queue work while holding locks
 
 
