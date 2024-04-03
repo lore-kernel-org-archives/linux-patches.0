@@ -1,89 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E3E154429;
-	Wed,  3 Apr 2024 17:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D69154C03;
+	Wed,  3 Apr 2024 21:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712167038; cv=none; b=Z2zU0nfaupLvK0q0C1aFlDghARmdieGU6nPyWdaCkqgYvLSnAJR11EMphpd+5++M8eBRLCDobJGs3kV1O+oPSLGEQiwQYVXsyHR6KjzWNw+KX8orr3Jacnm+AcBY1KDOsRUfiRLkYV7O/CHIhOcobXL3xb/xRpGzgFKzPEXFYtg=
+	t=1712179600; cv=none; b=quaZA7XRxJRW/JBSK389xRHLCNOusG5cYlRz16jXVHrurRcpyPvI+BIIUZioRnkSagvERxu6NfX1+aHaGrDpjBgdaj58nbErpa3gu2b2O9HGzbniOzJoFrwFlKIqwivhZLd3lpTdOJdJSioxsP8HfmMDjYyY41CL+PszzrMG1Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712167038; c=relaxed/simple;
-	bh=WNJZ5yoiDQqncHuK3ryCd8D+B9x8jk3fHMrAxa0ISHM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHo6BPkb+7+xUBEngkWY2sxuBxBCdv3XtnjkecVn8YmYlbUsgnTN4VWDZXrr7Bf7yiSjOpdMnb2w924e4iheseNyKQnnC61VBUTjn8gkZa3IBGAoLw1MGmyi4PC7OTuctL/kpqns+AJqtNcH4px3h88fH2trRQoZQWM7LukuRxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZvdhn2R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712179600; c=relaxed/simple;
+	bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=r3WduC3nkk4/E3Cn0UNyIrTz4EURRXIGZHVNcjraSeqWYO830q0DxUHa0+AWvRURYCJkEPl9fFazrdzhWa8MybwZWk7VVqO/L/oDnwCSLnlRC3aDphejONJ+D39hONvtO+1ur6mJe/eMAb4as9G+po18lO//4HFpl5mB9dGG5Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ktc2F9up; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZvdhn2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CD9C433C7;
-	Wed,  3 Apr 2024 17:57:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712167037;
-	bh=WNJZ5yoiDQqncHuK3ryCd8D+B9x8jk3fHMrAxa0ISHM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZvdhn2RvsufcyLBXDglNuSIc+IkqNkqbhbROe9iEvBn2GXa/VDzw5fLMz/XHiDDZ
-	 lg7/r0MbTEWmIPfyj/e9gGs64MJAbynhMThXY+4trjjzPEMvvHJS+1Yh9KVrMRhEqD
-	 CN4Ng7LP+92RcD+4KKqqQWn2CzjAeM1e0jovo8VA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Tejun Heo <tj@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Audra Mitchell <audra@redhat.com>
-Subject: [PATCH 6.6 01/11] Revert "workqueue: Shorten events_freezable_power_efficient name"
-Date: Wed,  3 Apr 2024 19:55:50 +0200
-Message-ID: <20240403175126.884958823@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240403175126.839589571@linuxfoundation.org>
-References: <20240403175126.839589571@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ktc2F9up"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8DAC433C7;
+	Wed,  3 Apr 2024 21:26:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712179599;
+	bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Ktc2F9upSHLYJeJBJNHTOnUusHoxtK47LjzSsOYnKfz+Qsa85rSAD88zEaFDsypRk
+	 us2jhXnYu7LYyWBgNuV6QD3TTVvpuPxSp4QAufjTVuAF5fVRFVI9kSmVUK5xPVVF2A
+	 fM9piB+FjZhUehw1koZF6tYQ57QyZbjE9mX1ny41BBHa4oVVcyyJEBNE3MUFasW+dF
+	 Xrh4GxfZQy4nUYT8w3FWVeWKdXWjuh5+toyRaYDXHC5Z/1xek7xy1u0jTyq52TfpUs
+	 0q/gfS439vzgQctyZGMT5uQpCCCexawI1093iT7UroMnaTnUgf1ihLcerBigU3T0xC
+	 GnrySdKdnjxXg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 03 Apr 2024 14:26:33 -0700
+Subject: [PATCH] MIPS: Add prototypes for plat_post_relocation() and
+ relocate_kernel()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240403-mips-kaslr-missing-prototypes-v1-1-26b2390c1b7a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIjJDWYC/x3MSwqFMAxA0a1IxgZaPyBuRRz4STWobUlEFHHvr
+ 7zZPZP7gpIwKbTZC0IXKwefYPMMpnXwCyHPyVCYojKVKfHgqLgNuktKVfYLRglnOJ9IiqOtp9E
+ 1TW1LB+kRhRzf/3/Xf98PQpSEnW8AAAA=
+To: tsbogend@alpha.franken.de
+Cc: arnd@arndb.de, nathan@kernel.org, linux-mips@vger.kernel.org, 
+ patches@lists.linux.dev
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1705; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGm8J/vPLO/X/6l7fI2P1O6CzZ9stp1idLt76szlpdtsP
+ /HEWaS7dpSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJrKln+Key+pHAbDWpuA1f
+ 407dOrlMcLVT1OojVWyO/890X74jZ3KMkeFBHOc2i4+Kal6b159e+/OF2sKCjm1SPxn+2mcr/Mz
+ ZbMcNAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+When building malta_defconfig with CONFIG_RELOCATABLE=y, there are two
+warnings due to missing prototypes for functions only used when that
+configuration is enabled:
 
-------------------
+  arch/mips/kernel/relocate.c:42:12: warning: no previous prototype for 'plat_post_relocation' [-Wmissing-prototypes]
+     42 | int __weak plat_post_relocation(long offset)
+        |            ^~~~~~~~~~~~~~~~~~~~
+  arch/mips/kernel/relocate.c:324:14: warning: no previous prototype for 'relocate_kernel' [-Wmissing-prototypes]
+    324 | void *__init relocate_kernel(void)
+        |              ^~~~~~~~~~~~~~~
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While relocate_kernel() is only called from assembly, it makes sense to
+keep the prototypes together in C to fix the warnings. Add them to
+silence the warnings.
 
-This reverts commit 8b934390272d50ae0e7e320617437a03e5712baa which is
-commit 8318d6a6362f5903edb4c904a8dd447e59be4ad1 upstream.
-
-The workqueue patches backported to 6.6.y caused some reported
-regressions, so revert them for now.
-
-Reported-by: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Audra Mitchell <audra@redhat.com>
-Link: https://lore.kernel.org/all/ce4c2f67-c298-48a0-87a3-f933d646c73b@leemhuis.info/
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- kernel/workqueue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/include/asm/setup.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -7109,7 +7109,7 @@ void __init workqueue_init_early(void)
- 					      WQ_FREEZABLE, 0);
- 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
- 					      WQ_POWER_EFFICIENT, 0);
--	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_pwr_efficient",
-+	system_freezable_power_efficient_wq = alloc_workqueue("events_freezable_power_efficient",
- 					      WQ_FREEZABLE | WQ_POWER_EFFICIENT,
- 					      0);
- 	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
+diff --git a/arch/mips/include/asm/setup.h b/arch/mips/include/asm/setup.h
+index 4dce41138bad..d8077136372c 100644
+--- a/arch/mips/include/asm/setup.h
++++ b/arch/mips/include/asm/setup.h
+@@ -2,6 +2,7 @@
+ #ifndef _MIPS_SETUP_H
+ #define _MIPS_SETUP_H
+ 
++#include <linux/init.h>
+ #include <linux/types.h>
+ #include <uapi/asm/setup.h>
+ 
+@@ -29,4 +30,9 @@ extern void per_cpu_trap_init(bool);
+ extern void cpu_cache_init(void);
+ extern void tlb_init(void);
+ 
++#ifdef CONFIG_RELOCATABLE
++extern void * __init relocate_kernel(void);
++extern int plat_post_relocation(long);
++#endif
++
+ #endif /* __SETUP_H */
 
+---
+base-commit: 39cd87c4eb2b893354f3b850f916353f2658ae6f
+change-id: 20240403-mips-kaslr-missing-prototypes-b15cbf88513f
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
