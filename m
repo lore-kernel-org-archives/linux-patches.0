@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D85314E2F9;
-	Wed,  3 Apr 2024 17:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49E4154458;
+	Wed,  3 Apr 2024 17:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712167019; cv=none; b=QfHV80N6Q5iR1n4rXc0XVfA0rGDWm2cpqWm/GMisEAYRpH9y6xwmGRhvDqlKUj/qQDA/hGTFbafCbRqoHd+SNRPK3tDhZ+LW3bq2HfH9Iu9BMCvLbU6s3yxmNiCZzWccKyqSLeFPbQB9SWL1Xi1OOud3IClKQr7dIWfP0h/7HXY=
+	t=1712167022; cv=none; b=OBet3v7DsSEHk89Q3pKUpE5ifEwsWNgOx3UG7r8KXl5StGo+xYI9r3Sf5dBXbhg8wA1J7pvwAU6rRHei2LSG6gHz6C97OKvSqimVyOFmg/fDgusGxZcnOtRYWTIeH0QDyiCoE/djA2mjsIQIzUKs3ycGgiNUECssVIydOQldpnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712167019; c=relaxed/simple;
-	bh=opMUIsWsjOFYIkbK3hmZl6XeAIkDLapkdLZyeQnHttY=;
+	s=arc-20240116; t=1712167022; c=relaxed/simple;
+	bh=Zy0Z4HwFkWw/RVYn+fh1FA/mYof9nQY0hhA/SVA0AS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzSmK5eLhu27eSrJJk6aKrc4P3/QeKc1NAdnpKZfmrz/1I84gW+heFrUxUblD0Xhixcz133VKdv8e3BSjRFgQ5Rl1d0ghGnIarO5dvMD0aYvYajy2b2HwZtptqpMXBm1yGxSasuZ1nHtSbuA23MTnfXFMnsU6kN65kglX6FxwRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK7XBnyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjbffXsDCKYLMpmOwwNRD7++u8VB+ZCpbrb2QqoP3LVNYsper0sT/MiXkQXeChz19Rxda68WbhmI6XIGiuebKvuCciMjKxiIfs2sKDCU9OiGas2hkbmmXz9R6Mmb6/2OrA65wN0W/o3OFcDr8ut8QaUDRAXP0ha9T1o1iZZfc+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUYoVZUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK7XBnyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1CFC433C7;
-	Wed,  3 Apr 2024 17:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUYoVZUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38F1C433C7;
+	Wed,  3 Apr 2024 17:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712167019;
-	bh=opMUIsWsjOFYIkbK3hmZl6XeAIkDLapkdLZyeQnHttY=;
+	s=korg; t=1712167022;
+	bh=Zy0Z4HwFkWw/RVYn+fh1FA/mYof9nQY0hhA/SVA0AS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jK7XBnyN0cLerJMYnoYzTqIZ/u4ZrjFBCLOqoFg9TIfWt4RWssKv14M0u+SFdioH8
-	 cl0dvsaUijOBVg+3VpV65k6QKy93iKcUvQcIefOFBB3RtxJOQCwissNxIvgr0uhmoo
-	 YA+76vluLmeDSuwcdPO8U5NWRnfBFY86ACRN0xy4=
+	b=WUYoVZUl84QRCfPJnoNF0yK+opCTzbYc0JvsKoLQTDsSswVXVAmCvIOBNvKXT3KMN
+	 fzefawMxsIN9+g6Br8kzZ95PQ8yky9zzDSUpGwyCutzFgwPXea415dG1KExROFAMS/
+	 tgXi2wN3COyVhPtAuDOK0QBiKgG6N4zJa4e0q9zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Audra Mitchell <audra@redhat.com>
-Subject: [PATCH 6.6 05/11] Revert "workqueue: RCU protect wq->dfl_pwq and implement accessors for it"
-Date: Wed,  3 Apr 2024 19:55:54 +0200
-Message-ID: <20240403175127.016413378@linuxfoundation.org>
+Subject: [PATCH 6.6 06/11] Revert "workqueue: Make wq_adjust_max_active() round-robin pwqs while activating"
+Date: Wed,  3 Apr 2024 19:55:55 +0200
+Message-ID: <20240403175127.046849260@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240403175126.839589571@linuxfoundation.org>
 References: <20240403175126.839589571@linuxfoundation.org>
@@ -56,8 +56,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-This reverts commit bd31fb926dfa02d2ccfb4b79389168b1d16f36b1 which is
-commit 9f66cff212bb3c1cd25996aaa0dfd0c9e9d8baab upstream.
+This reverts commit 5f99fee6f2dea1228980c3e785ab1a2c69b4da3c which is
+commit qc5404d4e6df6faba1007544b5f4e62c7c14416dd upstream.
 
 The workqueue patches backported to 6.6.y caused some reported
 regressions, so revert them for now.
@@ -71,154 +71,58 @@ Cc: Audra Mitchell <audra@redhat.com>
 Link: https://lore.kernel.org/all/ce4c2f67-c298-48a0-87a3-f933d646c73b@leemhuis.info/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |   64 +++++++++++++++++++----------------------------------
- 1 file changed, 24 insertions(+), 40 deletions(-)
+ kernel/workqueue.c |   33 +++++++++++++--------------------
+ 1 file changed, 13 insertions(+), 20 deletions(-)
 
 --- a/kernel/workqueue.c
 +++ b/kernel/workqueue.c
-@@ -304,7 +304,7 @@ struct workqueue_struct {
- 	int			saved_max_active; /* WQ: saved max_active */
- 
- 	struct workqueue_attrs	*unbound_attrs;	/* PW: only for unbound wqs */
--	struct pool_workqueue __rcu *dfl_pwq;   /* PW: only for unbound wqs */
-+	struct pool_workqueue	*dfl_pwq;	/* PW: only for unbound wqs */
- 
- #ifdef CONFIG_SYSFS
- 	struct wq_device	*wq_dev;	/* I: for sysfs interface */
-@@ -629,23 +629,6 @@ static int worker_pool_assign_id(struct
- 	return ret;
- }
- 
--static struct pool_workqueue __rcu **
--unbound_pwq_slot(struct workqueue_struct *wq, int cpu)
--{
--       if (cpu >= 0)
--               return per_cpu_ptr(wq->cpu_pwq, cpu);
--       else
--               return &wq->dfl_pwq;
--}
--
--/* @cpu < 0 for dfl_pwq */
--static struct pool_workqueue *unbound_pwq(struct workqueue_struct *wq, int cpu)
--{
--	return rcu_dereference_check(*unbound_pwq_slot(wq, cpu),
--				     lockdep_is_held(&wq_pool_mutex) ||
--				     lockdep_is_held(&wq->mutex));
--}
--
- static unsigned int work_color_to_flags(int color)
+@@ -4710,7 +4710,7 @@ static int init_rescuer(struct workqueue
+  */
+ static void wq_adjust_max_active(struct workqueue_struct *wq)
  {
- 	return color << WORK_STRUCT_COLOR_SHIFT;
-@@ -4335,11 +4318,10 @@ static void wq_calc_pod_cpumask(struct w
- 				"possible intersect\n");
- }
+-	bool activated;
++	struct pool_workqueue *pwq;
  
--/* install @pwq into @wq and return the old pwq, @cpu < 0 for dfl_pwq */
-+/* install @pwq into @wq's cpu_pwq and return the old pwq */
- static struct pool_workqueue *install_unbound_pwq(struct workqueue_struct *wq,
- 					int cpu, struct pool_workqueue *pwq)
- {
--	struct pool_workqueue __rcu **slot = unbound_pwq_slot(wq, cpu);
- 	struct pool_workqueue *old_pwq;
+ 	lockdep_assert_held(&wq->mutex);
  
- 	lockdep_assert_held(&wq_pool_mutex);
-@@ -4348,8 +4330,8 @@ static struct pool_workqueue *install_un
- 	/* link_pwq() can handle duplicate calls */
- 	link_pwq(pwq);
+@@ -4730,26 +4730,19 @@ static void wq_adjust_max_active(struct
+ 	 */
+ 	WRITE_ONCE(wq->max_active, wq->saved_max_active);
  
--	old_pwq = rcu_access_pointer(*slot);
--	rcu_assign_pointer(*slot, pwq);
-+	old_pwq = rcu_access_pointer(*per_cpu_ptr(wq->cpu_pwq, cpu));
-+	rcu_assign_pointer(*per_cpu_ptr(wq->cpu_pwq, cpu), pwq);
- 	return old_pwq;
- }
- 
-@@ -4449,11 +4431,14 @@ static void apply_wqattrs_commit(struct
- 
- 	copy_workqueue_attrs(ctx->wq->unbound_attrs, ctx->attrs);
- 
--	/* save the previous pwqs and install the new ones */
-+	/* save the previous pwq and install the new one */
- 	for_each_possible_cpu(cpu)
- 		ctx->pwq_tbl[cpu] = install_unbound_pwq(ctx->wq, cpu,
- 							ctx->pwq_tbl[cpu]);
--	ctx->dfl_pwq = install_unbound_pwq(ctx->wq, -1, ctx->dfl_pwq);
+-	/*
+-	 * Round-robin through pwq's activating the first inactive work item
+-	 * until max_active is filled.
+-	 */
+-	do {
+-		struct pool_workqueue *pwq;
++	for_each_pwq(pwq, wq) {
++		unsigned long flags;
 +
-+	/* @dfl_pwq might not have been used, ensure it's linked */
-+	link_pwq(ctx->dfl_pwq);
-+	swap(ctx->wq->dfl_pwq, ctx->dfl_pwq);
++		/* this function can be called during early boot w/ irq disabled */
++		raw_spin_lock_irqsave(&pwq->pool->lock, flags);
  
- 	mutex_unlock(&ctx->wq->mutex);
- }
-@@ -4576,7 +4561,9 @@ static void wq_update_pod(struct workque
- 
- 	/* nothing to do if the target cpumask matches the current pwq */
- 	wq_calc_pod_cpumask(target_attrs, cpu, off_cpu);
--	if (wqattrs_equal(target_attrs, unbound_pwq(wq, cpu)->pool->attrs))
-+	pwq = rcu_dereference_protected(*per_cpu_ptr(wq->cpu_pwq, cpu),
-+					lockdep_is_held(&wq_pool_mutex));
-+	if (wqattrs_equal(target_attrs, pwq->pool->attrs))
- 		return;
- 
- 	/* create a new pwq */
-@@ -4594,11 +4581,10 @@ static void wq_update_pod(struct workque
- 
- use_dfl_pwq:
- 	mutex_lock(&wq->mutex);
--	pwq = unbound_pwq(wq, -1);
--	raw_spin_lock_irq(&pwq->pool->lock);
--	get_pwq(pwq);
--	raw_spin_unlock_irq(&pwq->pool->lock);
--	old_pwq = install_unbound_pwq(wq, cpu, pwq);
-+	raw_spin_lock_irq(&wq->dfl_pwq->pool->lock);
-+	get_pwq(wq->dfl_pwq);
-+	raw_spin_unlock_irq(&wq->dfl_pwq->pool->lock);
-+	old_pwq = install_unbound_pwq(wq, cpu, wq->dfl_pwq);
- out_unlock:
- 	mutex_unlock(&wq->mutex);
- 	put_pwq_unlocked(old_pwq);
-@@ -4636,13 +4622,10 @@ static int alloc_and_link_pwqs(struct wo
- 
- 	cpus_read_lock();
- 	if (wq->flags & __WQ_ORDERED) {
--		struct pool_workqueue *dfl_pwq;
+-		activated = false;
+-		for_each_pwq(pwq, wq) {
+-			unsigned long flags;
 -
- 		ret = apply_workqueue_attrs(wq, ordered_wq_attrs[highpri]);
- 		/* there should only be single pwq for ordering guarantee */
--		dfl_pwq = rcu_access_pointer(wq->dfl_pwq);
--		WARN(!ret && (wq->pwqs.next != &dfl_pwq->pwqs_node ||
--			      wq->pwqs.prev != &dfl_pwq->pwqs_node),
-+		WARN(!ret && (wq->pwqs.next != &wq->dfl_pwq->pwqs_node ||
-+			      wq->pwqs.prev != &wq->dfl_pwq->pwqs_node),
- 		     "ordering guarantee broken for workqueue %s\n", wq->name);
- 	} else {
- 		ret = apply_workqueue_attrs(wq, unbound_std_wq_attrs[highpri]);
-@@ -4873,7 +4856,7 @@ static bool pwq_busy(struct pool_workque
- 		if (pwq->nr_in_flight[i])
- 			return true;
- 
--	if ((pwq != rcu_access_pointer(pwq->wq->dfl_pwq)) && (pwq->refcnt > 1))
-+	if ((pwq != pwq->wq->dfl_pwq) && (pwq->refcnt > 1))
- 		return true;
- 	if (!pwq_is_empty(pwq))
- 		return true;
-@@ -4957,12 +4940,13 @@ void destroy_workqueue(struct workqueue_
- 	rcu_read_lock();
- 
- 	for_each_possible_cpu(cpu) {
--		put_pwq_unlocked(unbound_pwq(wq, cpu));
--		RCU_INIT_POINTER(*unbound_pwq_slot(wq, cpu), NULL);
-+		pwq = rcu_access_pointer(*per_cpu_ptr(wq->cpu_pwq, cpu));
-+		RCU_INIT_POINTER(*per_cpu_ptr(wq->cpu_pwq, cpu), NULL);
-+		put_pwq_unlocked(pwq);
- 	}
- 
--	put_pwq_unlocked(unbound_pwq(wq, -1));
--	RCU_INIT_POINTER(*unbound_pwq_slot(wq, -1), NULL);
-+	put_pwq_unlocked(wq->dfl_pwq);
-+	wq->dfl_pwq = NULL;
- 
- 	rcu_read_unlock();
+-			/* can be called during early boot w/ irq disabled */
+-			raw_spin_lock_irqsave(&pwq->pool->lock, flags);
+-			if (pwq_activate_first_inactive(pwq)) {
+-				activated = true;
+-				kick_pool(pwq->pool);
+-			}
+-			raw_spin_unlock_irqrestore(&pwq->pool->lock, flags);
+-		}
+-	} while (activated);
++		while (pwq_activate_first_inactive(pwq))
++			;
++
++		kick_pool(pwq->pool);
++
++		raw_spin_unlock_irqrestore(&pwq->pool->lock, flags);
++	}
  }
+ 
+ __printf(1, 4)
 
 
