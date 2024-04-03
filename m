@@ -1,90 +1,133 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5C0147C6C;
-	Wed,  3 Apr 2024 13:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2741552E9;
+	Wed,  3 Apr 2024 17:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712151989; cv=none; b=UaIhNM9Hnpj8oXBmsljuK8UszRWUFcv6cUpPb9leIXLLhry/d4eObXcxB0P+4y+SB7q5HzvL/tDZTwROtA7seACq+B+XcdeeJsMPFtBGxTX83oGobONyXuwgUTsaaM5dZG1SpnN9cXH0nzeuupV0pbpwZnhyPuawazOBUsMdo28=
+	t=1712166955; cv=none; b=CinqlYr/gLMKGKhOSy8Euk8H8MS1yNKiHX1dsGsFadNgLyVqWIvje804g8LpxLRO6NJb6BTI3vlDy3PfiHkJh+ltroAEjPtgywtEjTJHSUnWZTgLADd7Pu1UgZcmvn/UP2ZCYzhCLsbkY8N1SINQozmaMZoIQR6Y+eJb/Q9+PIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712151989; c=relaxed/simple;
-	bh=WuiTGRd6X6pwBTtMeMT80INaLrWMzOmSLX5xvViWD48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hZXEvXwzc9biNVnFcPeN0fZXg5c+xhr7BIKLVlZLMbjymQsxedQb1YKQleoNGS4ynAURK3jbVmtP8m6qNtBt+6nLf8yQZsFmj6DTVnxvQo/8vw3l5XbfFILyjaBod2+d5Ipjj/v26a3VmNUA++iBc2PYYoOlNXDS5S1U690ASdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cv8L7PFY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712166955; c=relaxed/simple;
+	bh=J5TfZyKONccTNWMd4sxbl/pluk/b9ke3PXnf0oemFG4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eDloQI1duwok8u7jesCTxc4Gl472jRMDZi7bJnkGXeeuCaFbUF6Dbt81qUWfupkCdlFxllXD34ie/SW5IgCIyxHfeaWjBiaD9pCp7+pwht8nPGHG82kvv4nE4TwqsaQ0nPWfCnz56GDCReSoF1x0WoXOh/d9V97/VOQAHQB4yXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQ+NT4TX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cv8L7PFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72838C433C7;
-	Wed,  3 Apr 2024 13:46:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712151988;
-	bh=WuiTGRd6X6pwBTtMeMT80INaLrWMzOmSLX5xvViWD48=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cv8L7PFYOerCMbxYxPHBDJNwj7QAsJ19FihdLejmMo8NxBfGtXrmaW2+uCD0GnnKz
-	 U44+niPuP+qTIIwGdcaWtGaHX2ZJmBwOfbwxGcXC9ngHY2CCCxowLOiNaWtHsLaHOc
-	 UAzLe6HA3/fcad1ihISlVEyIWQ/XsUROF30qnhEGoLiYcOqbJ4Z6Pp+7t6ECTv0H45
-	 ovdtyrKF6uDvj5Kxe7QNm0eD04EkzlDEGx0TDkiDEzvD1YRGa3JAaq8tbVfXdkUwbp
-	 nJISZFffql5EIVcaXoxyVWR7x5/sKwSPr6VuD6fSA45sjlm3IxaYagrTIFEKIzV2WE
-	 aYU6LeZ6vlrzg==
-Date: Wed, 3 Apr 2024 14:46:23 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.7 000/432] 6.7.12-rc1 review
-Message-ID: <20240403-decline-moaning-c359d0994d82@spud>
-References: <20240401152553.125349965@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ+NT4TX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FBCC433C7;
+	Wed,  3 Apr 2024 17:55:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1712166955;
+	bh=J5TfZyKONccTNWMd4sxbl/pluk/b9ke3PXnf0oemFG4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eQ+NT4TXJbO2k9h6D/+MkUvv1+CLOXn8T0NxhUhriK2vA6oyNcNiXV6yGZW+JOXRf
+	 XFcbyBjPwjvI1mnqSyhPM7M5Q9iPsm+LKfBSIzdbcm4HakLG9c9w4zWmGyEJ6feB3P
+	 MbRb50TXJV+gJShZ+GjPQSIhFZP9aGh6wkZM5rIQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 6.8 00/11] 6.8.4-rc1 review
+Date: Wed,  3 Apr 2024 19:55:39 +0200
+Message-ID: <20240403175125.754099419@linuxfoundation.org>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="uj/+5Rr97HgkSGh/"
-Content-Disposition: inline
-In-Reply-To: <20240401152553.125349965@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.4-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.8.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.8.4-rc1
+X-KernelTest-Deadline: 2024-04-05T17:51+00:00
+Content-Transfer-Encoding: 8bit
+
+This is the start of the stable review cycle for the 6.8.4 release.
+There are 11 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
+
+Responses should be made by Fri, 05 Apr 2024 17:51:13 +0000.
+Anything received after that time might be too late.
+
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.4-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.8.4-rc1
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue.c: Increase workqueue name length"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Move pwq->max_active to wq->max_active"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Factor out pwq_is_empty()"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Replace pwq_activate_inactive_work() with [__]pwq_activate_work()"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Move nr_active handling into helpers"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Make wq_adjust_max_active() round-robin pwqs while activating"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: RCU protect wq->dfl_pwq and implement accessors for it"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Introduce struct wq_node_nr_active"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Implement system-wide nr_active enforcement for unbound workqueues"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Don't call cpumask_test_cpu() with -1 CPU in wq_update_node_max_active()"
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "workqueue: Shorten events_freezable_power_efficient name"
 
 
---uj/+5Rr97HgkSGh/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-------------
 
-On Mon, Apr 01, 2024 at 05:39:47PM +0200, Greg Kroah-Hartman wrote:
-> Note, this will be the LAST 6.7.y kernel release.  After this one it
-> will be end-of-life.  Please move to 6.8.y now.
->=20
-> ------------------------------------------
->=20
-> This is the start of the stable review cycle for the 6.7.12 release.
-> There are 432 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Wed, 03 Apr 2024 15:24:46 +0000.
-> Anything received after that time might be too late.
+Diffstat:
 
-IK I am late, bank holiday for Easter delayed things :)
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+ Makefile                  |   4 +-
+ include/linux/workqueue.h |  35 +--
+ kernel/workqueue.c        | 757 ++++++++--------------------------------------
+ 3 files changed, 132 insertions(+), 664 deletions(-)
 
-Cheers,
-Conor.
 
---uj/+5Rr97HgkSGh/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZg1drwAKCRB4tDGHoIJi
-0q5JAQCdIG8NNdgAbpWrAV04DxULNawavKtPdeOgvqvjs49TxQEAh0NWln1+cvJ9
-+HQjHIoCM5K1CDyOnFJr/KTI5nqk8gA=
-=Gp0J
------END PGP SIGNATURE-----
-
---uj/+5Rr97HgkSGh/--
