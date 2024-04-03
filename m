@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15C9152DE1;
-	Wed,  3 Apr 2024 17:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB2714E2F9;
+	Wed,  3 Apr 2024 17:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712166963; cv=none; b=XOvZG1fEIFyfkcN8JuRSyj8Fo7QcLptrXIiE0dl+hplFTctYHTUbqcLQpNJRGqvxBcE+EiQaViefK6vczDf+rfoyF1Vi+DknID2BoiagLXSuovEYufFwwSmz2tBGn59Eu2VL12Tq8bSm2HN4XY6A/5W+mjmG0FEb6dNC4P+LC8Q=
+	t=1712166966; cv=none; b=GZk/TWImPJNgc+i/Kw4AsE7G9qDy009tdj6XGb+48CexIgsLXGdL5PfELrjWlGQ78BgaFy2JmbRIrcVIMqWGOfCRlIz8dGDdLLAyiOQbZNoWRNthzHKBI+3yo3gAhpjZYAeUfd+9xpz8p7LY6v5UZ5fpWrkePEP9JC2tk5qsksU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712166963; c=relaxed/simple;
-	bh=0E6K4sJbYRr46UIYuK7bOo/c9/pqyiwy8AyeY4wYDkc=;
+	s=arc-20240116; t=1712166966; c=relaxed/simple;
+	bh=F6hMKdnqXA8S0wcqysR5Ci8gbkFt3VQ5s3RCPgVuG64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJmHsNPqP6G7RAITqAx8WcKeo38XbQpI5k8uRHp8DxNVoxjguXsLWVdQJrw3eBtlfhLO1orKLCaV7zvRtVGwiqGsqxEfjY0Yz2d/7CXtABZ/sx8Y6XJgwsiMvbJRSzmYbX0xNRowtakzMOUmLYz1vV0gCRN0WCCsASoUAs1e9NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCwf4vek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pBYsaZSdemk+A4jEe2SAZQUVtrspiN5wdJMj+R8VBNI8zjJZNGbtFg3TyEFtvHVFWKeXf1T4GpiG5LkNVXHrebhzturKElQg5F6N2YIZV3P68ZY+gWYi9E2oJmkwizCm4T8+gsr70ikGzwQ9NS20BBghjhQgL1j+1qCuMUxeIlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyD3e4wC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCwf4vek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE46C433C7;
-	Wed,  3 Apr 2024 17:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyD3e4wC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DCCC433C7;
+	Wed,  3 Apr 2024 17:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712166963;
-	bh=0E6K4sJbYRr46UIYuK7bOo/c9/pqyiwy8AyeY4wYDkc=;
+	s=korg; t=1712166966;
+	bh=F6hMKdnqXA8S0wcqysR5Ci8gbkFt3VQ5s3RCPgVuG64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCwf4vekE/JB5xLtAjlrxM0okECqimVDNm8tY1XHosdIPSfZH600AC2PioRSozUNz
-	 2X0ugTnbzWTnt7v3HfqDoSS6ruS9O3DItAxgW3x0oTkuJAME87H17Q0JMCkreCTlhZ
-	 WQQDoajXHxI4vpt9fzAUdEjdh0YBKvjtN7LbXbWQ=
+	b=oyD3e4wCcABOvn1lDJMovJjZTf9afwvU8x8xqgeZLXQXxJmqGGGve8FdkcIwL6Gq+
+	 WFkOOZwq2AXOcyX9xMuZuinZqR2Q78fHJ/lEzoMEyK+97BzjgluQGwTZUPDgs4wRgn
+	 mIRejXlMG/VoeqWkKBxauGZta+mVPDTxUParlb9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Audra Mitchell <audra@redhat.com>
-Subject: [PATCH 6.8 02/11] Revert "workqueue: Dont call cpumask_test_cpu() with -1 CPU in wq_update_node_max_active()"
-Date: Wed,  3 Apr 2024 19:55:41 +0200
-Message-ID: <20240403175125.844735323@linuxfoundation.org>
+Subject: [PATCH 6.8 11/11] Revert "workqueue.c: Increase workqueue name length"
+Date: Wed,  3 Apr 2024 19:55:50 +0200
+Message-ID: <20240403175126.132802692@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240403175125.754099419@linuxfoundation.org>
 References: <20240403175125.754099419@linuxfoundation.org>
@@ -56,8 +56,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-This reverts commit 9fc557d489f8163c1aabcb89114b8eba960f4097 which is commit
-15930da42f8981dc42c19038042947b475b19f47 upstream.
+This reverts commit 43f0cec175f92c7a01e43d5d6f276262670a97ed which is commit
+31c89007285d365aa36f71d8fb0701581c770a27 upstream.
 
 The workqueue patches backported to 6.8.y caused some reported
 regressions, so revert them for now.
@@ -71,19 +71,41 @@ Cc: Audra Mitchell <audra@redhat.com>
 Link: https://lore.kernel.org/all/ce4c2f67-c298-48a0-87a3-f933d646c73b@leemhuis.info/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/workqueue.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 --- a/kernel/workqueue.c
 +++ b/kernel/workqueue.c
-@@ -1506,7 +1506,7 @@ static void wq_update_node_max_active(st
+@@ -108,7 +108,7 @@ enum {
+ 	RESCUER_NICE_LEVEL	= MIN_NICE,
+ 	HIGHPRI_NICE_LEVEL	= MIN_NICE,
  
- 	lockdep_assert_held(&wq->mutex);
+-	WQ_NAME_LEN		= 32,
++	WQ_NAME_LEN		= 24,
+ };
  
--	if (off_cpu >= 0 && !cpumask_test_cpu(off_cpu, effective))
-+	if (!cpumask_test_cpu(off_cpu, effective))
- 		off_cpu = -1;
+ /*
+@@ -4666,7 +4666,6 @@ struct workqueue_struct *alloc_workqueue
+ 	va_list args;
+ 	struct workqueue_struct *wq;
+ 	struct pool_workqueue *pwq;
+-	int len;
  
- 	total_cpus = cpumask_weight_and(effective, cpu_online_mask);
+ 	/*
+ 	 * Unbound && max_active == 1 used to imply ordered, which is no longer
+@@ -4693,12 +4692,9 @@ struct workqueue_struct *alloc_workqueue
+ 	}
+ 
+ 	va_start(args, max_active);
+-	len = vsnprintf(wq->name, sizeof(wq->name), fmt, args);
++	vsnprintf(wq->name, sizeof(wq->name), fmt, args);
+ 	va_end(args);
+ 
+-	if (len >= WQ_NAME_LEN)
+-		pr_warn_once("workqueue: name exceeds WQ_NAME_LEN. Truncating to: %s\n", wq->name);
+-
+ 	max_active = max_active ?: WQ_DFL_ACTIVE;
+ 	max_active = wq_clamp_max_active(max_active, flags, wq->name);
+ 
 
 
