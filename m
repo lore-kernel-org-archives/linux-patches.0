@@ -1,107 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D69154C03;
-	Wed,  3 Apr 2024 21:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AF715686D
+	for <patches@lists.linux.dev>; Wed,  3 Apr 2024 23:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712179600; cv=none; b=quaZA7XRxJRW/JBSK389xRHLCNOusG5cYlRz16jXVHrurRcpyPvI+BIIUZioRnkSagvERxu6NfX1+aHaGrDpjBgdaj58nbErpa3gu2b2O9HGzbniOzJoFrwFlKIqwivhZLd3lpTdOJdJSioxsP8HfmMDjYyY41CL+PszzrMG1Fo=
+	t=1712185210; cv=none; b=kRAMf7x5zetVBtIJ7BpwpCzrzYfxIMzRALTLRG0GAdBTCwZFe7WnBysXLduOAaJbBQ+8OAvsSoADUyhb6nRJm/JQNRRH2PFsXQUMKIH+Yc8lM4M00Tma/g18rVo+uWdy0UdLn5pwv9LrrqKOXPyQ7Z+OTq+tUJfHr0qrCKW2SJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712179600; c=relaxed/simple;
-	bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=r3WduC3nkk4/E3Cn0UNyIrTz4EURRXIGZHVNcjraSeqWYO830q0DxUHa0+AWvRURYCJkEPl9fFazrdzhWa8MybwZWk7VVqO/L/oDnwCSLnlRC3aDphejONJ+D39hONvtO+1ur6mJe/eMAb4as9G+po18lO//4HFpl5mB9dGG5Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ktc2F9up; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712185210; c=relaxed/simple;
+	bh=jmIV0GOw5opWjSRaLZcl7S1Iprv49UC3ViIj5KVGbdU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Lbe/0GPaVwRMfrM+FooW9daNoBl/AzMiBbVQ2hceJZkKWU/EzkFDxXpvPoLrylmx9UWzrOONC8LGQ6zjI7dlMPHqpq73iX5t6xez9alNP4r5Pt0e+gvFymCWCHpFTlQ43Y65XBh/7BM29ciJwNqyE8AtDRdWvNbcm49pgJWLmwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTlQDcuJ; arc=none smtp.client-ip=209.85.166.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ktc2F9up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8DAC433C7;
-	Wed,  3 Apr 2024 21:26:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712179599;
-	bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Ktc2F9upSHLYJeJBJNHTOnUusHoxtK47LjzSsOYnKfz+Qsa85rSAD88zEaFDsypRk
-	 us2jhXnYu7LYyWBgNuV6QD3TTVvpuPxSp4QAufjTVuAF5fVRFVI9kSmVUK5xPVVF2A
-	 fM9piB+FjZhUehw1koZF6tYQ57QyZbjE9mX1ny41BBHa4oVVcyyJEBNE3MUFasW+dF
-	 Xrh4GxfZQy4nUYT8w3FWVeWKdXWjuh5+toyRaYDXHC5Z/1xek7xy1u0jTyq52TfpUs
-	 0q/gfS439vzgQctyZGMT5uQpCCCexawI1093iT7UroMnaTnUgf1ihLcerBigU3T0xC
-	 GnrySdKdnjxXg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 03 Apr 2024 14:26:33 -0700
-Subject: [PATCH] MIPS: Add prototypes for plat_post_relocation() and
- relocate_kernel()
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTlQDcuJ"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7cc0e831e11so7748039f.1
+        for <patches@lists.linux.dev>; Wed, 03 Apr 2024 16:00:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1712185208; x=1712790008; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dDl1NAxggtWfWoUqJc0/YE9Vva3ljQrZuJwUEtA4epk=;
+        b=HTlQDcuJzW2WKCeKanb3vKPDIpZAM4xVWOmtXmaOI8lw8INHcD3sHiTosgevB2nwdt
+         +kr/l3ayo9QTVWie9Ur+8ORTweDruPT3o0TBe2/KZnQN+iFHgiOVV0fLqz0P29ZTapTw
+         eGnk9VXOLxXPy4oSmWfMjwOZii6zblSvJ3c4Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712185208; x=1712790008;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dDl1NAxggtWfWoUqJc0/YE9Vva3ljQrZuJwUEtA4epk=;
+        b=MkKRsx4UQ57l67S8nSg0vGFu2gs23g/ExBejggB86aQek1gzF27xlMmuD2smKvAkXt
+         i0xM2gZMhtr1CSq4ZwLIAK7OLY4O1QU4OXWsBhKvQ6982eDRBexl1t3PsGFTUVz3eTES
+         ITnXflSo26La3zJTXDeCMe0aPwymkBrHylwhaxZP+OgIRQ7Rfok8dzA8s53/YqPNvsuk
+         M6Vxt2Yy5ROozxifIP6nq5ZYY6P0glV4lzwvoj3t9+KUoREdOFShEbdDE7pl4X6T1683
+         MBfhr9MsEVAm1qO2eHCu3obEexgDcn0JJjDc3wT6kP7mO+eDX9zOYm0gL7CskWLn71hN
+         1O3w==
+X-Gm-Message-State: AOJu0YwGfmL7bx9V8cQoGkY0shFz5Xwl1Jts/L2Lb1jAKCsa/0l9+Ql0
+	9B0NebQnBIi3jBNFvZp/E7KDi5EH1COtPKfM+SwSEyDWP7ovkdFIo9BWb99EkTo=
+X-Google-Smtp-Source: AGHT+IFl5XEZ2ibJnPA43ZuAvjF2L0kiBzzsvfNYmw9cYR0Av/jzR05d3ho2D1+yTpz0sqmI2dVeRg==
+X-Received: by 2002:a05:6602:3418:b0:7d0:bd2b:43ba with SMTP id n24-20020a056602341800b007d0bd2b43bamr1609782ioz.0.1712185207862;
+        Wed, 03 Apr 2024 16:00:07 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id t31-20020a056638349f00b0047be37bfbbdsm4057220jal.153.2024.04.03.16.00.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Apr 2024 16:00:07 -0700 (PDT)
+Message-ID: <a515127e-7609-4947-aec1-4a7cbdf72c40@linuxfoundation.org>
+Date: Wed, 3 Apr 2024 17:00:06 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.8 00/11] 6.8.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240403175125.754099419@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240403175125.754099419@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-mips-kaslr-missing-prototypes-v1-1-26b2390c1b7a@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAIjJDWYC/x3MSwqFMAxA0a1IxgZaPyBuRRz4STWobUlEFHHvr
- 7zZPZP7gpIwKbTZC0IXKwefYPMMpnXwCyHPyVCYojKVKfHgqLgNuktKVfYLRglnOJ9IiqOtp9E
- 1TW1LB+kRhRzf/3/Xf98PQpSEnW8AAAA=
-To: tsbogend@alpha.franken.de
-Cc: arnd@arndb.de, nathan@kernel.org, linux-mips@vger.kernel.org, 
- patches@lists.linux.dev
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1705; i=nathan@kernel.org;
- h=from:subject:message-id; bh=kJE+lfdH+I/Zdzhe3po1uIOJn2JpkwG6xhHLBNDZ5dA=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGm8J/vPLO/X/6l7fI2P1O6CzZ9stp1idLt76szlpdtsP
- /HEWaS7dpSyMIhxMciKKbJUP1Y9bmg45yzjjVOTYOawMoEMYeDiFICJrKln+Key+pHAbDWpuA1f
- 407dOrlMcLVT1OojVWyO/890X74jZ3KMkeFBHOc2i4+Kal6b159e+/OF2sKCjm1SPxn+2mcr/Mz
- ZbMcNAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building malta_defconfig with CONFIG_RELOCATABLE=y, there are two
-warnings due to missing prototypes for functions only used when that
-configuration is enabled:
+On 4/3/24 11:55, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.4 release.
+> There are 11 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 05 Apr 2024 17:51:13 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-  arch/mips/kernel/relocate.c:42:12: warning: no previous prototype for 'plat_post_relocation' [-Wmissing-prototypes]
-     42 | int __weak plat_post_relocation(long offset)
-        |            ^~~~~~~~~~~~~~~~~~~~
-  arch/mips/kernel/relocate.c:324:14: warning: no previous prototype for 'relocate_kernel' [-Wmissing-prototypes]
-    324 | void *__init relocate_kernel(void)
-        |              ^~~~~~~~~~~~~~~
+Compiled and booted on my test system. No dmesg regressions.
 
-While relocate_kernel() is only called from assembly, it makes sense to
-keep the prototypes together in C to fix the warnings. Add them to
-silence the warnings.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/mips/include/asm/setup.h | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arch/mips/include/asm/setup.h b/arch/mips/include/asm/setup.h
-index 4dce41138bad..d8077136372c 100644
---- a/arch/mips/include/asm/setup.h
-+++ b/arch/mips/include/asm/setup.h
-@@ -2,6 +2,7 @@
- #ifndef _MIPS_SETUP_H
- #define _MIPS_SETUP_H
- 
-+#include <linux/init.h>
- #include <linux/types.h>
- #include <uapi/asm/setup.h>
- 
-@@ -29,4 +30,9 @@ extern void per_cpu_trap_init(bool);
- extern void cpu_cache_init(void);
- extern void tlb_init(void);
- 
-+#ifdef CONFIG_RELOCATABLE
-+extern void * __init relocate_kernel(void);
-+extern int plat_post_relocation(long);
-+#endif
-+
- #endif /* __SETUP_H */
-
----
-base-commit: 39cd87c4eb2b893354f3b850f916353f2658ae6f
-change-id: 20240403-mips-kaslr-missing-prototypes-b15cbf88513f
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+thanks,
+-- Shuah
