@@ -1,82 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE41484D37;
-	Thu,  4 Apr 2024 12:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A0E8627A
+	for <patches@lists.linux.dev>; Thu,  4 Apr 2024 12:41:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712232611; cv=none; b=J7pE2ApkXBtn9zZnNJYpJP/f2pUhPlWlOzCRScV8a5ys/By9Xn3OYzBOXX2rT1ia/OJGpDMn2EyKpL4FStgaV72RlW1ROa/qQOtydj4692lQVMbXtUBojaCA/84dA77SWnmN8VjGILGgSl05GZqUaYWVnTQ15tWjCc5sAAaYYog=
+	t=1712234487; cv=none; b=hecqPG/cAUg//940bnvbDyUEOX7e+BXusjxMn2RyFMDxv8oAFLEvuFYaHSRyK7dquZYqSFoZd5FeHfMGcQsVBL9iJBjlRSV3iRsEgCcFtsylkPYpLNxJATAVEN9SRHC0ILDiBY/XmbV1EPqzPgzAWRWBcP3jVON7SkmIlBiXFak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712232611; c=relaxed/simple;
-	bh=o15dZi6UCpDmIye31DR7EHenj10EP41qtu/qjRdTnHI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UMunef45ajcvHQNwdNiEWl6QmGMbH3O9nVnCKOcDeCfZctYxjCQnh/kfRcfDDgzudD+QArPVhr8yQPR0aeco6ugGLfEuUMMsFTbCq5U1PU1s3iNnqcOCTASG+XTGqcUzstr5ec3W7arP5EUh/v9DhhM/wWv0CwRwJP3ymstpQrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SB/qjHQC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712234487; c=relaxed/simple;
+	bh=VB1gjWxgq3H3NWgFmMgqv5zGPvWFQxnyCbF71rK8suI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WXxPHtTOLXZLPyexMQw0dnGRmGoz2ATBQMUv0S8Gmk6OXlOAp5tho50Tva2fLjxcHz12bMmtOu23g2De1p2r2kD4SuL2Ji1ZyrZNPc55C8laROja0r54lAqTdGCN9CiSg4AemccsFXL4OweoLi0nzmxAoJ7hKpYg7JD9q6Ahxa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pxVh70mN; arc=none smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SB/qjHQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185F8C433C7;
-	Thu,  4 Apr 2024 12:10:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712232611;
-	bh=o15dZi6UCpDmIye31DR7EHenj10EP41qtu/qjRdTnHI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SB/qjHQCsjn3qjTaAjh9jix45QHy4mEjDKmhG/M++hF1H+e1/6+4scHalPb8D7qkg
-	 pL+u/1T88qs7oSi0fLlGAzM93rhDagFrwPUVzVzDD6H84IbLGADqp5ApofIxxWS3LK
-	 mBjNb16s9/7RVzQM4FxLlUdraYTQRJPCizxyA7Hku72kmx5BLwp4TGvSRlw9DC9PVq
-	 PY8uQPYIlZYkqiaJphjpMvRJ/ZMSIJNyHtOyekDnsI3OsfjcXlWJ+BrED/jdumRo1N
-	 VerSAehkLRdqDQx1Q2Tew0u1IaJ6lWFo/XfRP0HUNv5lOC8889I0usyIng/ZXEjrfS
-	 hI3Zc8Vd8ZRiw==
-Date: Thu, 4 Apr 2024 13:10:05 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.8 00/11] 6.8.4-rc1 review
-Message-ID: <81eeb067-5bfd-48c9-9ed3-ff60fcdd2fc0@sirena.org.uk>
-References: <20240403175125.754099419@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pxVh70mN"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4765cffb446so391009137.0
+        for <patches@lists.linux.dev>; Thu, 04 Apr 2024 05:41:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1712234483; x=1712839283; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bHQ1Hof4gKb6D2NbosG6UAy+Sr/kwbAbAaqsg+GZo3M=;
+        b=pxVh70mNyhkMPxOAYr4Kh5a4so9MxoxxCACBME9EEYyDp0v1P8KDa0Nek//IS1MUEL
+         MJYJ13tQJDaMpNWfnPVBptmB5FAGcxbNf2HH3sdIWWept7zwTa4kEGidKDWX3GKgoOrt
+         y4pQMWMFx1XGpngG2ulf/JAzgK0uSt62vJc1PFnb7Omty2f3gn2TzRlzWROHoih7vuv1
+         uvdPCiqo1SJ8RQ53SARhPWdKw6Ci8J405r4FfR0BE+qdPQ2ZcKAnn/LzveQhhBIFx0jP
+         2ov0KauuxfDcPw4AxHFkwRVz9R7dh4EErIt9UM3UiIUoklbhHu9oiZRzl9RFZvrffuRP
+         GfCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712234483; x=1712839283;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bHQ1Hof4gKb6D2NbosG6UAy+Sr/kwbAbAaqsg+GZo3M=;
+        b=FgL+99eQX4v072Yd1a/2hw9n8W4wxC3YOHmVMmbX4duGxQ5drAUXnEbh7v51mhsCJV
+         mVRdQUnEzyQAiRbX+J0IgPy07Mlj8aDW9nipupI8LAQP4ji0FVSRiNpyveioQLgH+X1w
+         A0qce/ns3hDp9m0uFwE1b/7vtCR4YfvsURUFTjc/cCc+ek4QP/Tgq4XkdUdhzCWYSfZT
+         hk4lQzk1MFH5wFzKGNrguv8GRs184p/fx0+WC6jzXEba6qu5pESY4Z/f/yd4zUqAlTR8
+         wXkBraP9DfYeOIA/OomSZv56xyjUkZawoQNT/+bwWQD3uI1zm8bIVz182TZNtIpvVo7U
+         /6wA==
+X-Forwarded-Encrypted: i=1; AJvYcCWI18ptkDRohWYQA8yXlPUs6g2rH8ho8CTFpQ1Ainb/s2bjvFFT4gj6AiwNlFov7c3Iis84WU1br8t0vBKv+omubNhwYMDaQw==
+X-Gm-Message-State: AOJu0Yxyjz2aoSu2wvp2IuFMwhwuJHHBkB7PGPTtse+x+9fuN0aL5FB6
+	jvj1kWimZV5nsiJt+bn2547DUk+3BdrWL+UEtBxY83Ao+nedCgE7vWcU+nqjZYVqrE5Cb1i4jKd
+	9ym3PqrYwkt8bHJ+SVNei2evOEn2LDFHeOtIT
+X-Google-Smtp-Source: AGHT+IFPUV3XDlGbaJh0qXH0CVflqRkGjDzOhIshfasLsrm7uDlKmnUOsZ0i2TrnZBi4+kj/z4V7VA3vArBGT/irjZQ=
+X-Received: by 2002:a67:fb4d:0:b0:479:bffa:1b53 with SMTP id
+ e13-20020a67fb4d000000b00479bffa1b53mr1975366vsr.7.1712234483409; Thu, 04 Apr
+ 2024 05:41:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pNtLI10WrIpMEkHV"
-Content-Disposition: inline
-In-Reply-To: <20240403175125.754099419@linuxfoundation.org>
-X-Cookie: Buckle up!
+References: <20240401212303.537355-1-ojeda@kernel.org> <20240401212303.537355-4-ojeda@kernel.org>
+In-Reply-To: <20240401212303.537355-4-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Thu, 4 Apr 2024 14:41:12 +0200
+Message-ID: <CAH5fLgiLCraafBG5+n_TLZ_hRHM7Yj49QDd=TudHJVkomXyLqw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.78.0
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Apr 1, 2024 at 11:23=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> This is the next upgrade to the Rust toolchain, from 1.77.1 to 1.78.0
+> (i.e. the latest) [1].
+>
+> See the upgrade policy [2] and the comments on the first upgrade in
+> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+>
+> # Unstable features
+>
+> There have been no changes to the set of unstable features used in
+> our own code. Therefore, the only unstable features allowed to be used
+> outside the `kernel` crate is still `new_uninit`.
+>
+> However, since we are finally dropping our `alloc` fork [3], all the
+> unstable features used by `alloc` (~30 language ones, ~60 library ones)
+> are not a concern anymore. This reduces the maintenance burden, increases
+> the chances of new compiler versions working without changes and gets
+> us closer to the goal of supporting several compiler versions.
+>
+> It also means that, ignoring non-language/library features, we are
+> currently left with just the few language features needed to implement th=
+e
+> kernel `Arc`, the `new_uninit` library feature, the `compiler_builtins`
+> marker and the few `no_*` `cfg`s we pass when compiling `core`/`alloc`.
+>
+> Please see [4] for details.
+>
+> # Required changes
+>
+> ## LLVM's data layout
+>
+> Rust 1.77.0 (i.e. the previous upgrade) introduced a check for matching
+> LLVM data layouts [5]. Then, Rust 1.78.0 upgraded LLVM's bundled major
+> version from 17 to 18 [6], which changed the data layout in x86 [7]. Thus
+> update the data layout in our custom target specification for x86 so
+> that the compiler does not complain about the mismatch:
+>
+>     error: data-layout for target `target-5559158138856098584`,
+>     `e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S1=
+28`,
+>     differs from LLVM target's `x86_64-linux-gnu` default layout,
+>     `e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16=
+:32:64-S128`
+>
+> In the future, the goal is to drop the custom target specifications.
+> Meanwhile, if we want to support other LLVM versions used in `rustc`
+> (e.g. for LTO), we will need to add some extra logic (e.g. conditional on
+> LLVM's version, or extracting the data layout from an existing built-in
+> target specification).
+>
+> ## `unused_imports`
+>
+> Rust's `unused_imports` lint covers both unused and redundant imports.
+> Now, in 1.78.0, the lint detects more cases of redundant imports [8].
+> Thus one of the previous patches cleaned them up.
+>
+> ## Clippy's `new_without_default`
+>
+> Clippy now suggests to implement `Default` even when `new()` is `const`,
+> since `Default::default()` may call `const` functions even if it is not
+> `const` itself [9]. Thus one of the previous patches implemented it.
+>
+> # Other changes in Rust
+>
+> Rust 1.78.0 introduced `feature(asm_goto)` [10] [11]. This feature was
+> discussed in the past [12].
+>
+> Rust 1.78.0 introduced support for mutable pointers to Rust statics,
+> including a test case for the Linux kernel's `VTABLE` use case [13].
+>
+> Rust 1.78.0 with debug assertions enabled (i.e. `-Cdebug-assertions=3Dy`,
+> kernel's `CONFIG_RUST_DEBUG_ASSERTIONS=3Dy`) now always checks all unsafe
+> preconditions, without a way to opt-out for particular cases [14].
+>
+> Rust 1.78.0 also improved a couple issues we reported when giving feedbac=
+k
+> for the new `--check-cfg` feature [15] [16].
+>
+> # `alloc` upgrade and reviewing
+>
+> As mentioned above, compiler upgrades will not update `alloc` anymore,
+> since we are dropping our `alloc` fork [3].
+>
+> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1=
+780-2024-05-02 [1]
+> Link: https://rust-for-linux.com/rust-version-policy [2]
+> Link: https://lore.kernel.org/rust-for-linux/20240328013603.206764-1-weds=
+onaf@gmail.com/ [3]
+> Link: https://github.com/Rust-for-Linux/linux/issues/2 [4]
+> Link: https://github.com/rust-lang/rust/pull/120062 [5]
+> Link: https://github.com/rust-lang/rust/pull/120055 [6]
+> Link: https://reviews.llvm.org/D86310 [7]
+> Link: https://github.com/rust-lang/rust/pull/117772 [8]
+> Link: https://github.com/rust-lang/rust-clippy/pull/10903 [9]
+> Link: https://github.com/rust-lang/rust/pull/119365 [10]
+> Link: https://github.com/rust-lang/rust/issues/119364 [11]
+> Link: https://lore.kernel.org/rust-for-linux/ZWipTZysC2YL7qsq@Boquns-Mac-=
+mini.home/ [12]
+> Link: https://github.com/rust-lang/rust/pull/120932 [13]
+> Link: https://github.com/rust-lang/rust/issues/120969 [14]
+> Link: https://github.com/rust-lang/rust/pull/121202 [15]
+> Link: https://github.com/rust-lang/rust/pull/121237 [16]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
---pNtLI10WrIpMEkHV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Apr 03, 2024 at 07:55:39PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.8.4 release.
-> There are 11 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
---pNtLI10WrIpMEkHV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmYOmJwACgkQJNaLcl1U
-h9CS9wf+LPCt+CFvdeJURvMXUGVxidgAh/UWN9rI4fqNgeDGAS+VtkUCrm02QZBp
-s5Nlk/lwLcTessAd3hG9r8DPpjC/Ljub8R680RdwCmXJS/ugqM6BX6ZrWfXbnyjl
-P3c7rc52qUfCvcAqvnX1VYD+RftkiDL405vhGB8Z7PPLFLJeBfgc5CHtkGA3LbJU
-mvCIcnlA7VllLKxsl5x9G/9QlbMgkD1EyxWT79091pi4ydjP9a1mbpue5bff9hWL
-JDaIUsA5HYgzKspgWauSO9/TfM2XGyFtUMsqAs9AvZuKoIF2PaWzlZJcEaXiFqFM
-D7x8MeeGozEuKfLP4+ND0apckv02Cg==
-=O8WI
------END PGP SIGNATURE-----
-
---pNtLI10WrIpMEkHV--
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
