@@ -1,105 +1,120 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F476171BB
-	for <patches@lists.linux.dev>; Fri,  5 Apr 2024 02:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D6847F7E;
+	Fri,  5 Apr 2024 07:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712285793; cv=none; b=W/LpxQ6m/+8R43df9mFJygZtSDAlbagju5ZPl3+NyaXuAWqrRYlu9KnvpMxx+zed1o/sr38ROkuZ2H1HumfqxhfoQYZTszAkD6UTo1Ecx6bBqgDgLVAeBAEGt2gi5oDrISHXjTk6Tnmhq+9S7lcnKEJUMLEcWpDCPzPzTXqu0pM=
+	t=1712302466; cv=none; b=n6HWexNCumLhCFzpDh7AXt21OiXPTzUEP/Ac5sLKdoCag7HIk7mUY2+lTvHqoTl4ItfcY/qidT4hiEIcBHN1XWODj94Sq80Iv4SYlz0QmzURnAJinPvabjm0G1HdtSfq0+KK8dluXBPTsFkdMXujiDarjHKfoim/nzCP4pNvTBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712285793; c=relaxed/simple;
-	bh=kM6XH+bKgyVxIo9DuSq7aqXJXv9/t19xjoc9OIcTDSY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WTmSuDDM3Lwrqjidab6VusAh05tYvkGQfhhpDp0KqOsvczFhZlAgKlUQqW15Mv/Yb8aQuU6VGmCJ/exFQKb1fu9WVLXjoJFJPKZ1Zebq80MBYV0oNLQUhP58EygnjfXC/fSXBXveQYHVm2bVOzXRjqjZk7KA5mkIlSt/AH06UnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YRtLyQ1x; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1712302466; c=relaxed/simple;
+	bh=oaq9Chvq0Xt0yDSaB529RRq1eKJleLzX7w7NqMqrl24=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FeIce2uWxvlLx1AMQYQf7OHaOvslyxZsmrrRR8QQ2NF3WadeKatDXBjk615OO50teqbVK7s3ZtBqoVHwkeFLE2gBDF72P8WvkGpeXejf4/Jufhln3jDJ3cnO58LGoxjsGtTGfFypHTqymGkzB0vtjRNdSMBLlc6ulwhG2x/9ZfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JxdH4r7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YRtLyQ1x"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6151d2489b4so19492217b3.0
-        for <patches@lists.linux.dev>; Thu, 04 Apr 2024 19:56:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712285790; x=1712890590; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dEsqNh0qk6wjxNfe1EBS/5T4PtCYN6iMohqr+1wRzko=;
-        b=YRtLyQ1xEYsQOhrwJo1VPXz81k1wQeJrX1ZUs7kMEmp3rNZJyT+y1eRDnOUIuFl3Qd
-         PJaRBK2ZqhCeXnRAN94p0yeztLnS60xThXKkBW9vFDE0MyfCdPyWsOjkHgIqoEAUxtNr
-         4Xz4T/PQZZQwQpm63hE28W4T49mQrNnJ43Xv+bKaV9isLA195IcDq7J5XBN/A4y3U1+1
-         Js9JYnMnzRIU0LoDjnvS1ydt3cnPCFAg6T2pkRc7OTIqbToV3WpgwRnlW+t6BRTtuN34
-         FvXfGBn81VhAySnfA1lL+fiFD/fceZdbf7sxOdaIQx1V+kBLwCnFhiCsbUdE7lYZ/0CL
-         xdLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712285790; x=1712890590;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dEsqNh0qk6wjxNfe1EBS/5T4PtCYN6iMohqr+1wRzko=;
-        b=li8o1O/kOCFcp9ilDuMr0djisxXncDZYOdLPPWbqjbTYvga00uM20/rc2dbJQ4tAgQ
-         yWiUrAIIIp89rT0Ik6nJEjHkz2Af94fDRKRwbZv2M2yS4vLRf8unUqfuR3wujalGgJkK
-         eLI+DbMeQXdhSZMtzuCxH2BjPJWdOB8F5/20QqsXpc/fiYQsa9lUBR2iBJ5iF69YEAbl
-         oOjw1ZfcqnMOEV/hzZhMLVfSaqIfVyd9V61b0brmODmRSuDLgTwDReMPqFhzt/VLMQeN
-         tpfgyEM9SfUMU9Lr2t4HoEWi+ua5nyRPCn288y/oz3rhuMrguSol0j1rnbpaEmtTQkfr
-         zTuw==
-X-Forwarded-Encrypted: i=1; AJvYcCUe8crrpHizqNgZK/m5HX2aohpVQayuOu+uJmJhuzKtSqnoD37mQMiohTtx/jgWsvgDKpY09rDfwno4MkgGtf7Oq31ZiheBJQ==
-X-Gm-Message-State: AOJu0Yxyl672ROKXCDSO2dA7Z1AzzDGkHs1e3IRu2TN3bieIH6RIyxIr
-	J4TK3r/bphH+809MaLNS3tOnaryF9N5TShLy3E9Oc2stifaiAMgRRypJolA2Wllfh6akxw6JaJO
-	qmabHHveQ2TIyIMt09gFaWtLynUIMv+aN9pJZjg==
-X-Google-Smtp-Source: AGHT+IG4u2Lg5AEQseN8XhnyCdvNikS9yjicoQQjhDBxxVZhO/lMnvhSuSj5pAzYdpOCxOv9gcRM1CyMxY7VDXAbmhM=
-X-Received: by 2002:a25:aace:0:b0:dcc:c279:d2fa with SMTP id
- t72-20020a25aace000000b00dccc279d2famr88256ybi.30.1712285790527; Thu, 04 Apr
- 2024 19:56:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JxdH4r7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EA8C433F1;
+	Fri,  5 Apr 2024 07:34:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712302465;
+	bh=oaq9Chvq0Xt0yDSaB529RRq1eKJleLzX7w7NqMqrl24=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JxdH4r7gT+DnO3b8C6d9K6qOC8OKy698/iGb6CRqMtMtnyI4yH1atmnDXRWbgVy8C
+	 dHELKn+OiiNNbpkAck78a62oRO+Z5dNhnHD/e4EtarFk4DRIz0Ovl65AcAwi8b48yQ
+	 RYktGhaJWEeehCVL7D788Zx/rRiFvrf7+nSmP71t4MzrD7b9DMt0eWHGLlCEiqMERL
+	 dPJMUjDboxCy5KNlW3JsnEHHnsATZ73IOdHeft6RdkvPIdtRi9AgPBBHhUGMDP22po
+	 FlzrcRKnsRYvrRsrBva8j1TJENfLaXQzC9kfE3Ql9H1Akk8knq0BAqBgyRpyx0Zb9E
+	 Bh9W4Kef6EUqQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rse5j-00000000606-2pQx;
+	Fri, 05 Apr 2024 09:34:27 +0200
+Date: Fri, 5 Apr 2024 09:34:27 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Stephen Boyd <swboyd@chromium.org>, Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-phy@lists.infradead.org, freedreno@lists.freedesktop.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for
+ QSERDES_DP_PHY_MODE
+Message-ID: <Zg-pg-QAAfC9Pybr@hovoldconsulting.com>
+References: <20240405000111.1450598-1-swboyd@chromium.org>
+ <Zg9MQOAZpsndSNtb@hu-bjorande-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240405000111.1450598-1-swboyd@chromium.org>
-In-Reply-To: <20240405000111.1450598-1-swboyd@chromium.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 5 Apr 2024 05:56:19 +0300
-Message-ID: <CAA8EJppHXkTNSNaCoYWZaRmKw=AfWL4N0WCqR6uFgNdbkw4VUw@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-phy@lists.infradead.org, 
-	freedreno@lists.freedesktop.org, Douglas Anderson <dianders@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Steev Klimaszewski <steev@kali.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zg9MQOAZpsndSNtb@hu-bjorande-lv.qualcomm.com>
 
-On Fri, 5 Apr 2024 at 03:01, Stephen Boyd <swboyd@chromium.org> wrote:
+On Thu, Apr 04, 2024 at 05:56:32PM -0700, Bjorn Andersson wrote:
+> On Thu, Apr 04, 2024 at 05:01:03PM -0700, Stephen Boyd wrote:
+> > The register base that was used to write to the QSERDES_DP_PHY_MODE
+> > register was 'dp_dp_phy' before commit 815891eee668 ("phy:
+> > qcom-qmp-combo: Introduce orientation variable"). There isn't any
+> > explanation in the commit why this is changed, so I suspect it was an
+> > oversight or happened while being extracted from some other series.
+> 
+> Thanks for catching that, I wrote that patch long before Johan did the
+> rename of "pcs" to "dp_dp_phy", and must have missed that while later
+> rebasing the patch.
+> 
+> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 >
-> The register base that was used to write to the QSERDES_DP_PHY_MODE
-> register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-> qcom-qmp-combo: Introduce orientation variable"). There isn't any
-> explanation in the commit why this is changed, so I suspect it was an
-> oversight or happened while being extracted from some other series.
-> Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-> suspect this is dead code, but that can be fixed in another patch. It's
-> not good to write to the wrong register space, and maybe some other
-> version of this phy relies on this.
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
-> Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> > Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
+> > suspect this is dead code, but that can be fixed in another patch. It's
+> > not good to write to the wrong register space, and maybe some other
+> > version of this phy relies on this.
 
+This code is still reached on sc8280xp, but I guess only Qualcomm can
+tell us what these bits are for (and they should).
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The write to qmp->pcs + QSERDES_DP_PHY_MODE does not seem to have any
+effect on sc8280xp and that register still reads back as 0x2020202 after
+the incorrect write.
 
--- 
-With best wishes
-Dmitry
+qmp->dp_dp_phy + QSERDES_DP_PHY_MODE reads back as 0x4c4c4c4c before the
+fixed write and either 0x4c4c4c4c or 0x5c5c5c5c after depending on the
+orientation.
+
+Can someone please replace the magic constants in this driver, and at
+least explain what the impact of bit 0x10 not reflecting the orientation
+is?
+
+> > Fixes: 815891eee668 ("phy: qcom-qmp-combo: Introduce orientation variable")
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+
+Either way, good catch, this was clearly unintentional:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+I think this should go to stable as well even if the impact is currently
+not fully understood:
+
+Cc: stable@vger.kernel.org	# 6.5
+
+> > @@ -2150,9 +2150,9 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
+> >  	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
+> >  
+> >  	if (reverse)
+> > -		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
+> > +		writel(0x4c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
+> >  	else
+> > -		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
+> > +		writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
+
+Johan
