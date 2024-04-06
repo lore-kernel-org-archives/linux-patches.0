@@ -1,115 +1,76 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676EE173336
-	for <patches@lists.linux.dev>; Fri,  5 Apr 2024 19:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E262C6B0;
+	Sat,  6 Apr 2024 09:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712347077; cv=none; b=K7+Z+p+ZQKgv9y4vZ7+uFAb/5lJ4zzkQC7uXhrTgYT9/tXwiuTaLWdqT1TPDep6wtoh2BBWYKz9kwwTapd2C8Q0imyG7adtldi7z/X+pBuwZDCGrHBGOTHjtKd9EBykF3uLiOQuZMwJujJYGm5sOPNBSeTABLzFTTXV98P9X9JA=
+	t=1712395139; cv=none; b=WBfAq789Qk/rECah4p0T+g3PzW10zWnJjcWyFC8c3VjS83jQoCexQMPQ0pXarG0dprgEXr8BGrsF6zhrHTHe4J77AaAqhjx/k+1CsUy5AfGrN+qwlHrrGdEevnJRu3EcL6Zti4cQhutoy2YBGW4hddGPKN/6JALAGXhN7Z6EKeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712347077; c=relaxed/simple;
-	bh=vcGVlRQz1k/GxZb7T5mm+BvlwaKO6QWZVTPvRp5hpQY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LzaMSSFvLOq+EJH4Ua+iBU56ojIN7wIVZb9O4iDEnW4OJH4+OV1kBPlfHmdq04KfSsuH25X5b/+ifCdRgqRZ3NBq1OJhqoxRXPJMWEnHDnXCG1tivkiHoQQDrxSydPdBKI/2nggImQVaA6tiHOlHGxhI0H8TBn5qttDTpKJQXWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fbg1g8M7; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1712395139; c=relaxed/simple;
+	bh=CKx+Sd6xfsfIpNID92BJjS5Q/0Wk3rO67hmInznC/5Q=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=JLyAwQa8adA2cwG2IZrTG5N4T4+XmKJUsYWm/sIcRhMT3kRKiGqx8P3mbJe+JNahW1pL1MIK3FPy8+8jhMPXCJ0gdv9BdAxbpClv7rqb1ip36dLtkbYeU9A0sHwwGGhFJUNzonvskt+jeRqCScvzfkTvdw0Oby8Q/xV/5ROlPOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ryhhr482; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fbg1g8M7"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-516d3a470d5so1544818e87.3
-        for <patches@lists.linux.dev>; Fri, 05 Apr 2024 12:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1712347074; x=1712951874; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=djSDb4ARr+uYrvgN8eRFQUZSJ4nYLrBVFrRGdM6sRAs=;
-        b=fbg1g8M7mv02ixQJU1+a9tF1JnX8xnA4NWGoV1EuXFGJkBsPxWicIBiYflXBe0feZX
-         wpdOeMGrR4S76iAk/XNY54Ao8FPAlfQp1EghItxx1uvv5E3XyfoAj5vd09Fn3myfPN7T
-         nxnwnNh3qulGZLmWjnDKyLmqF/nQ11ehFeNc0PihkfejiaUvOIuUnJo3KhDbyoCkOS5Y
-         lHdRQpppK5ekFHnKvUC5pjEQFBk1VREUbKMEi8unXS54RAgVnOPerozQeL9Q05R30SFU
-         I+CvJqjd/Kw0bW58k0WdvVSe6PnnR5OggvB6CF7Bthp8G3fpC7pnKH0JcrUj4mEiR8WS
-         sa0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712347074; x=1712951874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=djSDb4ARr+uYrvgN8eRFQUZSJ4nYLrBVFrRGdM6sRAs=;
-        b=Q5PSSd3bu96E4H30VjCPdAQBNRFFbrEeV0iShZ/oQf3AiZi5lY0/SfFe2i6JJ4jS8e
-         dwA9V3AYZa5nF4l0ieHXu0wxbbKqxYMatjEUWBty05+FrWuV7Jfr4pFpg//zH7xyCPc6
-         h+LLA9WpctaD+Rs+v3FjtQqzZCWFbT7VY3VFDUYMkEMhJBU1JM87b41XXNcY8X09rMMQ
-         idsF9VIGV8p0OfWCGtjAnD/NDXlxhzmmzl9ycjFOtPhp4YJutPlZ+A/zL6x3H8QJTQsm
-         iWB+kowshkjBPvaKhxTa5hYEiw68KIgTg2IplU4JH7pwbuRTdleqpHmYHK2/Fjg45D8h
-         3hAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsRiTUHv0zC2L9Ep5yjXTVnaTw0/mOGLRkyEOxJBTI1z85ahkCa8JDmHBXVbCNdpj0ovCCL9X1PQMNY4s2kmqxsqHhbTFgBQ==
-X-Gm-Message-State: AOJu0Yzu1qOi+czjJn9159fgueeSl8Njg8HJrWKVbJhy1PK2D0UA+ezT
-	uANk7yVtCC2A9Q+60gNAb01vm8XfygSmBTLdnhgkGkPijXypOeFvPhs1BAsx6mrlZvyWXN+64Gg
-	foNvkXQ76d4L08k9JNeE/YTxWwSQK0EWBJJus
-X-Google-Smtp-Source: AGHT+IEI5tCV/tLIzJl1zhvmYgYEcOj4a8SU+B1nmDwswy/V0l1zUgcxaVh6wGimoJvL8b/VSgyjgbLEs9K12/PT7hU=
-X-Received: by 2002:ac2:55a6:0:b0:513:ca65:8c58 with SMTP id
- y6-20020ac255a6000000b00513ca658c58mr1880055lfg.43.1712347074344; Fri, 05 Apr
- 2024 12:57:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ryhhr482"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905D4C433A6;
+	Sat,  6 Apr 2024 09:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712395138;
+	bh=CKx+Sd6xfsfIpNID92BJjS5Q/0Wk3rO67hmInznC/5Q=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Ryhhr482/stDZaEN/VQttZWuBNtZbYJa+0k2Mm+MCL97kevMFtmJKqRZUejPMxS/C
+	 fCIwj6Y+Rq7elkWblvVBrKlHsphTOM+EHjgREosXHjMkEjMm9QlLAD31sAT6kUWE7k
+	 h5BCmCMvkPjYqaoRILptvnDhA9QIKjWun8biVBOBK7hVQXq5NL4P61vc9RsyOlBw0I
+	 AQCj0Rv+PwqrwwsjAhmjZYEvv46bKyKG4kkbE3wOGIL/DApCw706tUDstqBcuNDWK5
+	 +XdvZHT5+VwjQxBdNAU/6KmJU+Dgxvgx5C63RU3pIYxxNtOZgRYujdpbWZgVVFmED3
+	 QWskxeTmOmb8g==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-phy@lists.infradead.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, freedreno@lists.freedesktop.org, 
+ Douglas Anderson <dianders@chromium.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20240404234345.1446300-1-swboyd@chromium.org>
+References: <20240404234345.1446300-1-swboyd@chromium.org>
+Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix VCO div offset on v3
+Message-Id: <171239513422.352254.9763002024133782932.b4-ty@kernel.org>
+Date: Sat, 06 Apr 2024 14:48:54 +0530
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
-In-Reply-To: <20240405-ppc-fix-wa-fatal-warnings-clang-v1-1-bdcd969f2ef0@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Fri, 5 Apr 2024 12:57:41 -0700
-Message-ID: <CAFhGd8pcaUqH1z=uywHadFUkNUnK_tkoDzf7P5kOqmgEpx5nwg@mail.gmail.com>
-Subject: Re: [PATCH] powerpc: Fix fatal warnings flag for LLVM's integrated assembler
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: mpe@ellerman.id.au, morbo@google.com, ajd@linux.ibm.com, 
-	bgray@linux.ibm.com, linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
 
-On Fri, Apr 5, 2024 at 12:31=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> When building with LLVM_IAS=3D1, there is an error because
-> '-fatal-warnings' is not recognized as a valid flag:
->
->   clang: error: unsupported argument '-fatal-warnings' to option '-Wa,'
->
-> Use the double hyphen version of the flag, '--fatal-warnings', which
-> works with both the GNU assembler and LLVM's integrated assembler.
->
-> Fixes: 608d4a5ca563 ("powerpc: Error on assembly warnings")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Nice catch.
+On Thu, 04 Apr 2024 16:43:44 -0700, Stephen Boyd wrote:
+> Commit ec17373aebd0 ("phy: qcom: qmp-combo: extract common function to
+> setup clocks") changed the offset that is used to write to
+> DP_PHY_VCO_DIV from QSERDES_V3_DP_PHY_VCO_DIV to
+> QSERDES_V4_DP_PHY_VCO_DIV. Unfortunately, this offset is different
+> between v3 and v4 phys:
+> 
+>  #define QSERDES_V3_DP_PHY_VCO_DIV                 0x064
+>  #define QSERDES_V4_DP_PHY_VCO_DIV                 0x070
+> 
+> [...]
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+Applied, thanks!
 
-> ---
->  arch/powerpc/Kbuild | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/powerpc/Kbuild b/arch/powerpc/Kbuild
-> index da862e9558bc..571f260b0842 100644
-> --- a/arch/powerpc/Kbuild
-> +++ b/arch/powerpc/Kbuild
-> @@ -1,6 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
-> -subdir-ccflags-$(CONFIG_PPC_WERROR) :=3D -Werror -Wa,-fatal-warnings
-> -subdir-asflags-$(CONFIG_PPC_WERROR) :=3D -Wa,-fatal-warnings
-> +subdir-ccflags-$(CONFIG_PPC_WERROR) :=3D -Werror -Wa,--fatal-warnings
-> +subdir-asflags-$(CONFIG_PPC_WERROR) :=3D -Wa,--fatal-warnings
->
->  obj-y +=3D kernel/
->  obj-y +=3D mm/
->
-> ---
-> base-commit: bfe51886ca544956eb4ff924d1937ac01d0ca9c8
-> change-id: 20240405-ppc-fix-wa-fatal-warnings-clang-603f0ebb0133
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+[1/1] phy: qcom: qmp-combo: Fix VCO div offset on v3
+      commit: 5abed58a8bde6d349bde364a160510b5bb904d18
+
+Best regards,
+-- 
+~Vinod
+
+
