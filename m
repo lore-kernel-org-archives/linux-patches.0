@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1037EF0A;
-	Mon,  8 Apr 2024 13:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7467C086;
+	Mon,  8 Apr 2024 13:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582308; cv=none; b=ghLH57af7ZL1Mytmsuzgj9hh+sxN+xPhqKh/pkyaaRatplnIV4Gpruz+1H+3Ws4RjqDecJO7HGVwVD8yKNsvZOnvUHaafBZG081N9xbRCJRfphZ04auQaSIp6B+tOrwAcU+HH3HGLduBI4Q+Rb+h6dOWGcMGO0CweyQ+7CbW3xQ=
+	t=1712582312; cv=none; b=DH79u1ZbSUZLbq9F0Md1dQaW5Zr74uC3lxeOqautF5eGgXEcEPANeBRFM87L5fNy9OH5K5gTFFAr5vB8A7bennSzayiNzdq0RVD45aTTtxsoj/+RvQpMEDBCJCGFjCFyonD/dLtDzrESEmkMDqukd4m+rKM4QmHrOBHS3GuuTsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582308; c=relaxed/simple;
-	bh=ET12j8L2nyVrEUuKofJkLF5T4B8um7j3hp605UrSQcE=;
+	s=arc-20240116; t=1712582312; c=relaxed/simple;
+	bh=gDV8cjyzf//e81wAI0HK/119f4vnprHu+X8sOWbjz+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ntaJYkvHq0BkWBbZMmkpNB49LsOd3gf1ANSQTl4laSCwzuoP9txpZv7ieXeHBpk5ihU9E6FYXdBMiKRbY9eWyWLxFzU1gIEtXjd4lnKpg/04tc1d/FEHZm7eVkr1pbzTx027lnciXE7XF6D5UjanHcwMGsrOmPrCTImBKYxiSVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cyt+BlU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tc7rAS4fwLGnwYv6LsQHaWiF4tYPNNPIvUdG3lc4px1ZCE9Dul11JnvSNoFmGnQKvh0ZUkfd9Q54UB/ZldL5AO+kP5n1QBFikFTkSoLUjFYZtEWbdZd2CpFjDXqhg7LVYZ80AaDCiDQZBGAg9Oh9U5sCV0cnFpZR0xFbBk6vAFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxXutDGK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cyt+BlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7F5C43390;
-	Mon,  8 Apr 2024 13:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxXutDGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2492C433C7;
+	Mon,  8 Apr 2024 13:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582308;
-	bh=ET12j8L2nyVrEUuKofJkLF5T4B8um7j3hp605UrSQcE=;
+	s=korg; t=1712582311;
+	bh=gDV8cjyzf//e81wAI0HK/119f4vnprHu+X8sOWbjz+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cyt+BlUgdZ6hPm7e0kDsrGbKBCxpYvvF2bdJAl8lo4KEqvz6POPCcREq28r4xFaq
-	 CB1uoDjTs69uOdit9EI5nmDNhfSwMl2QkXo1abV70RH5gWBimcW8+AoFBStHJamltT
-	 4VqEA7TteP4jKahFkYotMecoBV/WII4RIzlM1/RE=
+	b=vxXutDGK4LEeU5zmzxDw6dgiESpuoty8c391fblxoBCkUMDMFE3XJUZ2sfCDrrJTa
+	 ANJqt1Cx27j0Z6lCpaPK5ufBFp1q6WvWHe6aKtupwNa76RFeBvzRNvY+K5vpfFEIT/
+	 tFuw63hKfLcfNILQ8lk8o0XEc2h+/e6MbBXe5014=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.8 064/273] RISC-V: KVM: Fix APLIC setipnum_le/be write emulation
-Date: Mon,  8 Apr 2024 14:55:39 +0200
-Message-ID: <20240408125311.288920669@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Chao Song <chao.song@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 095/138] ASoC: rt711-sdw: fix locking sequence
+Date: Mon,  8 Apr 2024 14:58:29 +0200
+Message-ID: <20240408125259.187280915@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,71 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit d8dd9f113e16bef3b29c9dcceb584a6f144f55e4 upstream.
+[ Upstream commit aae86cfd8790bcc7693a5a0894df58de5cb5128c ]
 
-The writes to setipnum_le/be register for APLIC in MSI-mode have special
-consideration for level-triggered interrupts as-per the section "4.9.2
-Special consideration for level-sensitive interrupt sources" of the RISC-V
-AIA specification.
+The disable_irq_lock protects the 'disable_irq' value, we need to lock
+before testing it.
 
-Particularly, the below text from the RISC-V AIA specification defines
-the behaviour of writes to setipnum_le/be register for level-triggered
-interrupts:
-
-"A second option is for the interrupt service routine to write the
-APLIC’s source identity number for the interrupt to the domain’s
-setipnum register just before exiting. This will cause the interrupt’s
-pending bit to be set to one again if the source is still asserting
-an interrupt, but not if the source is not asserting an interrupt."
-
-Fix setipnum_le/be write emulation for in-kernel APLIC by implementing
-the above behaviour in aplic_write_pending() function.
-
-Cc: stable@vger.kernel.org
-Fixes: 74967aa208e2 ("RISC-V: KVM: Add in-kernel emulation of AIA APLIC")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20240321085041.1955293-2-apatel@ventanamicro.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b69de265bd0e ("ASoC: rt711: fix for JD event handling in ClockStop Mode0")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@linux.intel.com>
+Link: https://msgid.link/r/20240325221817.206465-4-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_aplic.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ sound/soc/codecs/rt711-sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/kvm/aia_aplic.c
-+++ b/arch/riscv/kvm/aia_aplic.c
-@@ -137,11 +137,21 @@ static void aplic_write_pending(struct a
- 	raw_spin_lock_irqsave(&irqd->lock, flags);
+diff --git a/sound/soc/codecs/rt711-sdw.c b/sound/soc/codecs/rt711-sdw.c
+index 9545b8a7eb192..af7a0ab5669f4 100644
+--- a/sound/soc/codecs/rt711-sdw.c
++++ b/sound/soc/codecs/rt711-sdw.c
+@@ -542,12 +542,12 @@ static int __maybe_unused rt711_dev_resume(struct device *dev)
+ 		return 0;
  
- 	sm = irqd->sourcecfg & APLIC_SOURCECFG_SM_MASK;
--	if (!pending &&
--	    ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
--	     (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)))
-+	if (sm == APLIC_SOURCECFG_SM_INACTIVE)
- 		goto skip_write_pending;
+ 	if (!slave->unattach_request) {
++		mutex_lock(&rt711->disable_irq_lock);
+ 		if (rt711->disable_irq == true) {
+-			mutex_lock(&rt711->disable_irq_lock);
+ 			sdw_write_no_pm(slave, SDW_SCP_INTMASK1, SDW_SCP_INT1_IMPL_DEF);
+ 			rt711->disable_irq = false;
+-			mutex_unlock(&rt711->disable_irq_lock);
+ 		}
++		mutex_unlock(&rt711->disable_irq_lock);
+ 		goto regmap_sync;
+ 	}
  
-+	if (sm == APLIC_SOURCECFG_SM_LEVEL_HIGH ||
-+	    sm == APLIC_SOURCECFG_SM_LEVEL_LOW) {
-+		if (!pending)
-+			goto skip_write_pending;
-+		if ((irqd->state & APLIC_IRQ_STATE_INPUT) &&
-+		    sm == APLIC_SOURCECFG_SM_LEVEL_LOW)
-+			goto skip_write_pending;
-+		if (!(irqd->state & APLIC_IRQ_STATE_INPUT) &&
-+		    sm == APLIC_SOURCECFG_SM_LEVEL_HIGH)
-+			goto skip_write_pending;
-+	}
-+
- 	if (pending)
- 		irqd->state |= APLIC_IRQ_STATE_PENDING;
- 	else
+-- 
+2.43.0
+
 
 
