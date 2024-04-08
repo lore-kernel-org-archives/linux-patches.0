@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C977F496;
-	Mon,  8 Apr 2024 14:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261707E0F3;
+	Mon,  8 Apr 2024 14:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585049; cv=none; b=dFRHfoTeHhjrSzZuyVh3Ljmhp1OyOtPCUkAiUeB7PEmgpG1LgFdNmd1r4j/6W9KHLt/w3ZnHg04YTrgd+pwPjVe4q1HSVVYiBCyoY+djfOCnXViHEKvTrTxGfIFMzKo7kJoKJhhAaTtVDQLr4VMp2IaryKwrF8N2GnpXjkiItIU=
+	t=1712585052; cv=none; b=P02U4Of+wxvwOYHfPawuUaPY2GdOQEmgQzBdBreN4K05oIQSN87W+Xyb4u7VV3+YseDK7j/vyxPEb7p11gWKnbuEbky9wtpqKitv798orqmjygVd9lpeLinQMd8Hg8CgTGVKNbAadRi7Z2kfyklS+Wa6ddzXG2/H1O9q6Udr0kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585049; c=relaxed/simple;
-	bh=NxRQuqugex1EqV87o78wWK8PVC5zM/GlEGpPs9KTrB0=;
+	s=arc-20240116; t=1712585052; c=relaxed/simple;
+	bh=pN1P/vKXqpeiAGKlrO8EmxKX6uRaVm3LGP7+tmfcDR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1FM2mZhPbDtOP+0HRPEYMUu/DKcdQRtdyzLGQT+0ekPY4r045Qyr7UWrib/1ruVg4Dv7tv5cjQJ1zv9lJEl7exQzD5ZQwJGHFey5zZyJZq8bRpomQ8BB+1CrzqmEDanH7w/yFiRD7WJAlzK2rB6smmfsemnXfBgTgpRMPdhrP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSXmXgJj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XO13nwiMYv3ZIEGLWkE4t40R/dnaAG4R4sLyXOM8Jpa9X9d9Dkfc6l4qAR0cTJe3mdjxsL++pBhbu8Ky2ktpDTshKVYjtuoYVWSwDw45yos92p7SpUDA0jigQm6nhyhQlQJoejxtCo8Ykg5qbR5GL9Vc29y0o+EHqvnIq3gMeF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UimtgBVV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSXmXgJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3714C433F1;
-	Mon,  8 Apr 2024 14:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UimtgBVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E39C433C7;
+	Mon,  8 Apr 2024 14:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585049;
-	bh=NxRQuqugex1EqV87o78wWK8PVC5zM/GlEGpPs9KTrB0=;
+	s=korg; t=1712585052;
+	bh=pN1P/vKXqpeiAGKlrO8EmxKX6uRaVm3LGP7+tmfcDR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSXmXgJjRzTP4HsT72g6wIXUFRigfuuiuk5tzpKThsVXD1W//HDq4j9zrA/AusmMy
-	 Z7v+4ByQ4fB8zNqy8OaRsfe9yG6bu0dCQjiorSSgOsImTVKvXVby33d1BiFbAJcuAo
-	 qlimIGAyyxCuBPz272MNi6FUqA2jwrHZq1oqPMTI=
+	b=UimtgBVVjrPZdvMkUdQ8Y4nGjxNsFYY96j79s37NhCczvrMBymIBKIWRJaq1EBWoM
+	 0tyGc2YjyNA1/WpiPlDhgyvWfNdEah5XVo99KirgXJ3eAefj/NKAit6/Pp1yrkiChC
+	 rN0g7rF8+DsnAx5XKbsHICagxICB3hUcZyq/AgOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 644/690] selftests: net: gro fwd: update vxlan GRO test expectations
-Date: Mon,  8 Apr 2024 14:58:30 +0200
-Message-ID: <20240408125422.985521863@linuxfoundation.org>
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 616/690] ACPICA: debugger: check status of acpi_evaluate_object() in acpi_db_walk_for_fields()
+Date: Mon,  8 Apr 2024 14:58:02 +0200
+Message-ID: <20240408125421.926350670@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,51 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-commit 0fb101be97ca27850c5ecdbd1269423ce4d1f607 upstream.
+[ Upstream commit 40e2710860e57411ab57a1529c5a2748abbe8a19 ]
 
-UDP tunnel packets can't be GRO in-between their endpoints as this
-causes different issues. The UDP GRO fwd vxlan tests were relying on
-this and their expectations have to be fixed.
+ACPICA commit 9061cd9aa131205657c811a52a9f8325a040c6c9
 
-We keep both vxlan tests and expected no GRO from happening. The vxlan
-UDP GRO bench test was removed as it's not providing any valuable
-information now.
+Errors in acpi_evaluate_object() can lead to incorrect state of buffer.
 
-Fixes: a062260a9d5f ("selftests: net: add UDP GRO forwarding self-tests")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This can lead to access to data in previously ACPI_FREEd buffer and
+secondary ACPI_FREE to the same buffer later.
+
+Handle errors in acpi_evaluate_object the same way it is done earlier
+with acpi_ns_handle_to_pathname.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Link: https://github.com/acpica/acpica/commit/9061cd9a
+Fixes: 5fd033288a86 ("ACPICA: debugger: add command to dump all fields of particular subtype")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro_fwd.sh |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/acpi/acpica/dbnames.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/udpgro_fwd.sh
-+++ b/tools/testing/selftests/net/udpgro_fwd.sh
-@@ -238,7 +238,7 @@ for family in 4 6; do
+diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
+index b91155ea9c343..c9131259f717b 100644
+--- a/drivers/acpi/acpica/dbnames.c
++++ b/drivers/acpi/acpica/dbnames.c
+@@ -550,8 +550,12 @@ acpi_db_walk_for_fields(acpi_handle obj_handle,
+ 	ACPI_FREE(buffer.pointer);
  
- 	create_vxlan_pair
- 	ip netns exec $NS_DST ethtool -K veth$DST rx-gro-list on
--	run_test "GRO frag list over UDP tunnel" $OL_NET$DST 1 1
-+	run_test "GRO frag list over UDP tunnel" $OL_NET$DST 10 10
- 	cleanup
- 
- 	# use NAT to circumvent GRO FWD check
-@@ -251,13 +251,7 @@ for family in 4 6; do
- 	# load arp cache before running the test to reduce the amount of
- 	# stray traffic on top of the UDP tunnel
- 	ip netns exec $NS_SRC $PING -q -c 1 $OL_NET$DST_NAT >/dev/null
--	run_test "GRO fwd over UDP tunnel" $OL_NET$DST_NAT 1 1 $OL_NET$DST
--	cleanup
+ 	buffer.length = ACPI_ALLOCATE_LOCAL_BUFFER;
+-	acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
 -
--	create_vxlan_pair
--	run_bench "UDP tunnel fwd perf" $OL_NET$DST
--	ip netns exec $NS_DST ethtool -K veth$DST rx-udp-gro-forwarding on
--	run_bench "UDP tunnel GRO fwd perf" $OL_NET$DST
-+	run_test "GRO fwd over UDP tunnel" $OL_NET$DST_NAT 10 10 $OL_NET$DST
- 	cleanup
- done
- 
++	status = acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
++	if (ACPI_FAILURE(status)) {
++		acpi_os_printf("Could Not evaluate object %p\n",
++			       obj_handle);
++		return (AE_OK);
++	}
+ 	/*
+ 	 * Since this is a field unit, surround the output in braces
+ 	 */
+-- 
+2.43.0
+
 
 
