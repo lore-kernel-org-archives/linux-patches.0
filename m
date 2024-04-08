@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7C07172F;
-	Mon,  8 Apr 2024 13:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE527172F;
+	Mon,  8 Apr 2024 13:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582165; cv=none; b=oGIQGEPsDFTZkKq3qPVDkwnOYzLUxnvoXWvGEBCCVY1uMhY4FC8gJlkMyE+hvDExBLkx2TM+n8IveDd4+5fYZJiS0SqrdO2bqkip0FtZfTtAHlKNQYKmDRY2NSJsyc9Z+A0E642iWG+JaDGa7ki+nop6t+Hht5nAjtJ5XOcHQjQ=
+	t=1712582168; cv=none; b=rzmqlHFFdT1yQEGoz/AlAd4hKDcc2JHJIZqYhVEHf0A85gS5/l/zjYgKig6vmR1nm+Ls3bbtekFeHuEJj+JdhEIFAx/LKqS9EjK17NHXd7eZmTsx99/njFQiYf8D5ZmIBTOBk4cPR5Fb20FcQnKZ1sTWQ/8KQJmBA1pnHa59gBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582165; c=relaxed/simple;
-	bh=Gvj5QVuqTtYzDab1K8J5jWyFdXSGcxUvYowTFHHQRcw=;
+	s=arc-20240116; t=1712582168; c=relaxed/simple;
+	bh=8Eauqu2DPaLa+CyBiHUXBbzlFU3ZH9nerxdejMi9Pnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fppb+Q4bh+2NXlnnRUZnmi5reQkd4y2KGIuiGVrnZNebtcxBu6Kl/9M28dRcMto5eMHDFPqkG24yGhR5tgX+KJhp5HW9bcguz+/jzWdXurrB8Q4ofnBhSW4//tJs4YtOw4TCpuiMRpV5XnClhqtpswDmKu3wKZb3G3oLrw7EFCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbWuOg2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPauNcOTTHrE9bSwxjzfhybcKIrBKCQaNaPEXMGGnmYuRLbK3nknrcufVLrCnYZUbgbJGdWAIoudkIMsrSR/VklGtsQ0hYb/Nkxn8ZlAMeAIYhK7b7EqzejulT02jlFR+5F78lpiM84ydtq1lfIXpyQbOzjufE3YEJh+9Sv1SMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibg3FmRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbWuOg2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40E6C433F1;
-	Mon,  8 Apr 2024 13:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibg3FmRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA646C433C7;
+	Mon,  8 Apr 2024 13:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582165;
-	bh=Gvj5QVuqTtYzDab1K8J5jWyFdXSGcxUvYowTFHHQRcw=;
+	s=korg; t=1712582168;
+	bh=8Eauqu2DPaLa+CyBiHUXBbzlFU3ZH9nerxdejMi9Pnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbWuOg2xLv8XbRXIs+7ZYL2OWMiOICtV0GjWzl1Fmp0bUBWUZH0AhzU+JPNzXXu40
-	 qXuV3LFvxL+XEVp+qbsVfkjtIE1QlSQEA6kCRAwCv3qySjl4jb8x0fCmQRMwx+vdwH
-	 Xs5XjFzEh0FIxW9f3r2YmkduJGgcD0eLJtIV/P+U=
+	b=Ibg3FmRra7tfxC0/lJZ6RtFg/GOl6amKLXRJ4MclU8SkHvTbmvW8elhSBe68g6yW+
+	 6Xm6zr36yQU3ONF4Qn9sLDL1k33HZ+g8ZJugwfjxOOo9x7PtkJaordWiXlBqcfOAUU
+	 Fj869eJ3FFEv9LuQCvdso7lixib+T5tXLVKDrels=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 116/690] net: ravb: Add R-Car Gen4 support
-Date: Mon,  8 Apr 2024 14:49:42 +0200
-Message-ID: <20240408125403.741318124@linuxfoundation.org>
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 098/690] drm/imx/ipuv3: do not return negative values from .get_modes()
+Date: Mon,  8 Apr 2024 14:49:24 +0200
+Message-ID: <20240408125403.036933588@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,34 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 949f252a8594a860007e7035a0cb1c19a4e218b0 upstream.
+[ Upstream commit c2da9ada64962fcd2e6395ed9987b9874ea032d3 ]
 
-Add support for the Renesas Ethernet AVB (EtherAVB-IF) blocks on R-Car
-Gen4 SoCs (e.g. R-Car V4H) by matching on a family-specific compatible
-value.
+The .get_modes() hooks aren't supposed to return negative error
+codes. Return 0 for no modes, whatever the reason.
 
-These are treated the same as EtherAVB on R-Car Gen3.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/2ee968890feba777e627d781128b074b2c43cddb.1662718171.git.geert+renesas@glider.be
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: stable@vger.kernel.org
+Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/311f6eec96d47949b16a670529f4d89fcd97aefa.1709913674.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/imx/parallel-display.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2067,6 +2067,7 @@ static const struct of_device_id ravb_ma
- 	{ .compatible = "renesas,etheravb-rcar-gen2", .data = &ravb_gen2_hw_info },
- 	{ .compatible = "renesas,etheravb-r8a7795", .data = &ravb_gen3_hw_info },
- 	{ .compatible = "renesas,etheravb-rcar-gen3", .data = &ravb_gen3_hw_info },
-+	{ .compatible = "renesas,etheravb-rcar-gen4", .data = &ravb_gen3_hw_info },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, ravb_match_table);
+diff --git a/drivers/gpu/drm/imx/parallel-display.c b/drivers/gpu/drm/imx/parallel-display.c
+index 63ba2ad846791..5423ea4c1ef9a 100644
+--- a/drivers/gpu/drm/imx/parallel-display.c
++++ b/drivers/gpu/drm/imx/parallel-display.c
+@@ -70,14 +70,14 @@ static int imx_pd_connector_get_modes(struct drm_connector *connector)
+ 		int ret;
+ 
+ 		if (!mode)
+-			return -EINVAL;
++			return 0;
+ 
+ 		ret = of_get_drm_display_mode(np, &imxpd->mode,
+ 					      &imxpd->bus_flags,
+ 					      OF_USE_NATIVE_MODE);
+ 		if (ret) {
+ 			drm_mode_destroy(connector->dev, mode);
+-			return ret;
++			return 0;
+ 		}
+ 
+ 		drm_mode_copy(mode, &imxpd->mode);
+-- 
+2.43.0
+
 
 
