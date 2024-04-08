@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A826F08B;
-	Mon,  8 Apr 2024 13:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9674B2E62C;
+	Mon,  8 Apr 2024 13:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581349; cv=none; b=CQ9UK1Zws7DmxIcUEUv54WbQ8+ZaVKRS8I5w3lw2cD+6ab97XZpUmrT97dSrjTX3BAH2bRpTLvOpq4/4OAd4axCC61kRS51+BcwkCO4xFmVWbQlBE3RhsgdkykuNcpi5nQtU+eBrKpf/F28nbPXXlk0jRi90bISpCJtGpo7MjA0=
+	t=1712581352; cv=none; b=HjduANmDN2glzLoSMjUHW94JFNhwIJod157YJvr+YJojoDPtHj+RsfrTOh6/qJl2Y22flLi+0wfB2dCRYCu8/fzBP56kqL8VKjH2IbaLCrLv5Q/VnTikQufzUkJbofpm/8uDkHo8Tkp8HARYhJcanGGq0/Hg2EBX7Au/cI/OyFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581349; c=relaxed/simple;
-	bh=3LiNNVZcyDaKQqpM4bKfBctEBlW985j/OtCmY/IX6aQ=;
+	s=arc-20240116; t=1712581352; c=relaxed/simple;
+	bh=tKkkVWydQbrMDH9CMV8J4PceVXNt7gg5/XqAVM864d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpsuPPQo2WIFSy9Alr5DlD5prew6UJlSBG/LLygRtPv7i8KRvko42NCDpN+nmhIyFLvLKAshtBNrkKpYQVa2c0rV8BmnYPVC4bZ30McMbYYJKNHhEUM5iH93RTcs3pHLAqqw4E/brKA7NLU+16K/jzyURwaAAKjYEI+N6BqXL54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYQ/Hicz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qoPQDc0gATYrcWAmMun+csBmZ411cgFQXyyBL7wJd4Xfz5ckf139eRDwEtcmNcREcwsHjpLcDuAB+/2lcEekXSW/jxKRKpZ6ndWxyfWZHFHvXwbPwb9F0Q5oUxyVRixefUMoQnW5VEuLaS0BkculCqp2asX7Nlri35qnn1QnXek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qu2DM7px; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYQ/Hicz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A0C433F1;
-	Mon,  8 Apr 2024 13:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qu2DM7px"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C23BC433C7;
+	Mon,  8 Apr 2024 13:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581349;
-	bh=3LiNNVZcyDaKQqpM4bKfBctEBlW985j/OtCmY/IX6aQ=;
+	s=korg; t=1712581352;
+	bh=tKkkVWydQbrMDH9CMV8J4PceVXNt7gg5/XqAVM864d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYQ/HiczMugNwJZjgRaqH51wb2eUruTRNtqf823pRo3GqTfvSLIIeDEDdGf8dQfSG
-	 pR7y3w1Y1vDQc5c/p4gCcRWnSAtmsBusabiCO6QB2Zp6vs/doqPk0SCBqri2c3GA8i
-	 wPrgp4WiltumJuGmLNxN7lqTyu8/1/ZV9CdhLQbw=
+	b=Qu2DM7pxWkHsyKSHLy6Ff2rqLGoeeSh5BtMr8shfmXfioZriVbH00E+xobQYtNbpI
+	 /vFSDWNGUO3GQ1kxA9qbE+I0tFKTzIP2jgMKhVNumzD6gOgZIxsiavKZhwIJ5PYg+v
+	 o6ADqhITjlRNcp/TW+8zGHr48ogUokPvebUPBWJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.1 006/138] ixgbe: avoid sleeping allocation in ixgbe_ipsec_vf_add_sa()
-Date: Mon,  8 Apr 2024 14:57:00 +0200
-Message-ID: <20240408125256.423082655@linuxfoundation.org>
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 037/690] parisc: Fix csum_ipv6_magic on 32-bit systems
+Date: Mon,  8 Apr 2024 14:48:23 +0200
+Message-ID: <20240408125400.882457712@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,77 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit aec806fb4afba5fe80b09e29351379a4292baa43 ]
+[ Upstream commit 4408ba75e4ba80c91fde7e10bccccf388f5c09be ]
 
-Change kzalloc() flags used in ixgbe_ipsec_vf_add_sa() to GFP_ATOMIC, to
-avoid sleeping in IRQ context.
+Calculating the IPv6 checksum on 32-bit systems missed overflows when
+adding the proto+len fields into the checksum. This results in the
+following unit test failure.
 
-Dan Carpenter, with the help of Smatch, has found following issue:
-The patch eda0333ac293: "ixgbe: add VF IPsec management" from Aug 13,
-2018 (linux-next), leads to the following Smatch static checker
-warning: drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c:917 ixgbe_ipsec_vf_add_sa()
-	warn: sleeping in IRQ context
+    # test_csum_ipv6_magic: ASSERTION FAILED at lib/checksum_kunit.c:506
+    Expected ( u64)csum_result == ( u64)expected, but
+        ( u64)csum_result == 46722 (0xb682)
+        ( u64)expected == 46721 (0xb681)
+    not ok 5 test_csum_ipv6_magic
 
-The call tree that Smatch is worried about is:
-ixgbe_msix_other() <- IRQ handler
--> ixgbe_msg_task()
-   -> ixgbe_rcv_msg_from_vf()
-      -> ixgbe_ipsec_vf_add_sa()
+This is probably rarely seen in the real world because proto+len are
+usually small values which will rarely result in overflows when calculating
+the checksum. However, the unit test code uses large values for the length
+field, causing the test to fail.
 
-Fixes: eda0333ac293 ("ixgbe: add VF IPsec management")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/intel-wired-lan/db31a0b0-4d9f-4e6b-aed8-88266eb5665c@moroto.mountain
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix the problem by adding the missing carry into the final checksum.
+
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/parisc/include/asm/checksum.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
-index 774de63dd93a6..15fc2acffb871 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
-@@ -908,7 +908,13 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
- 		goto err_out;
- 	}
+diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
+index f705e5dd10742..e619e67440db9 100644
+--- a/arch/parisc/include/asm/checksum.h
++++ b/arch/parisc/include/asm/checksum.h
+@@ -163,7 +163,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ "	ldw,ma		4(%2), %7\n"	/* 4th daddr */
+ "	addc		%6, %0, %0\n"
+ "	addc		%7, %0, %0\n"
+-"	addc		%3, %0, %0\n"	/* fold in proto+len, catch carry */
++"	addc		%3, %0, %0\n"	/* fold in proto+len */
++"	addc		0, %0, %0\n"	/* add carry */
  
--	xs = kzalloc(sizeof(*xs), GFP_KERNEL);
-+	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
-+	if (unlikely(!algo)) {
-+		err = -ENOENT;
-+		goto err_out;
-+	}
-+
-+	xs = kzalloc(sizeof(*xs), GFP_ATOMIC);
- 	if (unlikely(!xs)) {
- 		err = -ENOMEM;
- 		goto err_out;
-@@ -924,14 +930,8 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
- 		memcpy(&xs->id.daddr.a4, sam->addr, sizeof(xs->id.daddr.a4));
- 	xs->xso.dev = adapter->netdev;
- 
--	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
--	if (unlikely(!algo)) {
--		err = -ENOENT;
--		goto err_xs;
--	}
--
- 	aead_len = sizeof(*xs->aead) + IXGBE_IPSEC_KEY_BITS / 8;
--	xs->aead = kzalloc(aead_len, GFP_KERNEL);
-+	xs->aead = kzalloc(aead_len, GFP_ATOMIC);
- 	if (unlikely(!xs->aead)) {
- 		err = -ENOMEM;
- 		goto err_xs;
+ #endif
+ 	: "=r" (sum), "=r" (saddr), "=r" (daddr), "=r" (len),
 -- 
 2.43.0
 
