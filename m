@@ -1,81 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32970446AD;
-	Sat,  6 Apr 2024 09:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E004184D;
+	Mon,  8 Apr 2024 02:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712395144; cv=none; b=YN3LjRL/EMCQYSSLJfZn35f3tGb64p8OXHW9WQOQfU8ITLQrfMdnQoMvhQmk01/KhlVKNiefsd3ZFmzK7nqhKW/nvCEcxYcJ0KjC2QXcNLB2l+u04l/mmNCJHTdzHBbWd+iuD/bwiGvnOY82RfSJ55oZHIAkHHUfzP4PIzZjT5E=
+	t=1712543743; cv=none; b=PLWdCQMzpiQdTkIS9zIAqcmG9Us3uQLo81HF9Elgg6CvBgVyJqLfWuCW2fk+fpk9wWltDIANynn8QzJE9C/NKSH2cW64AqV3IfkRz07QNy1K4i0MrUTJRdIRjvP0zyMAfjFc4jlwW16tcAelE9kPtjPkGzvBrW2WyBHW4NhykTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712395144; c=relaxed/simple;
-	bh=1iz5fj0staSEBeBD4iubGSRLqhDhiBIKfBjemrptmJE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=eHA702xU/J3OCj9p9JEsfxLy4Z0DFbKjWZ4Zgm4bUVY7k41jOV7YKIBEpSYapYlL9o6gkIVl+/n9bv88qBSQEX9z5TJ5bfs1X3kPjkJVphHiUWPRG3Jjj4TECvjQ5/4Ij4cZuut/Xc1mJbdA1ifkDruxLIU/VmfTAayAsHotSqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ag1LVMaD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1712543743; c=relaxed/simple;
+	bh=CYcF3xviOioTw0bSRBXtITDLMhC0u3sV5C5DSixd4p0=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=c77M4cU6FA7vVcgwhEBP3gVMZIpA7tUJEhH3s+QtJzq00Xzwn9qJeq8m/phYnP39+aSn3uw6y0FJ1xiwPXlHjySTlhvpI7hTqVlrmUYEcuoi+1Cq8/eQOGzuhY5vv4mUZb0iFQmmfQQrDayuclZlkDYcabi9BVMxPyszzCJJYQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vL/D+LCF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ag1LVMaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E35DC43394;
-	Sat,  6 Apr 2024 09:18:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vL/D+LCF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA97EC433F1;
+	Mon,  8 Apr 2024 02:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1712395144;
-	bh=1iz5fj0staSEBeBD4iubGSRLqhDhiBIKfBjemrptmJE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ag1LVMaDwFBCTCC8hW1EdfxpTKqKuWopYK1dHwSVtSR/m3ufyCM+/Z3lJh7EEqYUf
-	 e7jhCey2MXWcUUfwrdL4uynOmNDwHTY3ZxHFtLPIiRYjWeV5n5V5+Y6+QTlQHMfKsm
-	 O7YjYL0RGSRrtD9eWDMy/R0Sr7NP2EH/hkZrwqtzXCIMzU1CQcQMcPjqiijTs8vZp5
-	 sxp4txYdi7whwSjcTgg/J9iZJEabVirHvAshc3/Lim7i7YSeZnPqxLpr62nsY7RvE/
-	 DcEm+q1gHrMVa48qfo0WQHhdqpR8E3kYXzSZ5lJS6Isp40I4Tqzo5+fBXivY8uilDi
-	 jnwJxow/JBuIw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- linux-phy@lists.infradead.org, freedreno@lists.freedesktop.org, 
- Douglas Anderson <dianders@chromium.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Steev Klimaszewski <steev@kali.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Bjorn Andersson <quic_bjorande@quicinc.com>
-In-Reply-To: <20240405000111.1450598-1-swboyd@chromium.org>
-References: <20240405000111.1450598-1-swboyd@chromium.org>
-Subject: Re: [PATCH] phy: qcom: qmp-combo: Fix register base for
- QSERDES_DP_PHY_MODE
-Message-Id: <171239513898.352254.11562819537572881543.b4-ty@kernel.org>
-Date: Sat, 06 Apr 2024 14:48:58 +0530
+	s=k20201202; t=1712543743;
+	bh=CYcF3xviOioTw0bSRBXtITDLMhC0u3sV5C5DSixd4p0=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=vL/D+LCFPI5gREdEQ/yKUOesLuqnXbdKoWGFiLaFBW3ZKPFzaRihMJCLedYvaVKKa
+	 Rasct69JPHDevWVLJLhw6YPj5adHXfRkZXbQQtwsOrvRywvfEYk30jljjIWO/BHpRo
+	 WO0hfG4I2jEBy5REK43t5efdRGgBHW53S1yLpM3yi7PoMQvf5A2k82dM7J5oKURjBT
+	 LmKYLuq/5+WYTy1xX6U0tbBtz4/TiPRB4hMR+X5/8xQzIobtAJZqdq5kz6pmcMTACU
+	 KRswV8C88ZqXPCB5WkefZG3/kygGTsXQWVtV2VUuJl1rbx9EbvSX68nF5jGzswPJJ6
+	 hKjNcUWDjRkqQ==
+Message-ID: <07ff4ebb70e7b9edfa20e394fdba9244.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240325184204.745706-2-sboyd@kernel.org>
+References: <20240325184204.745706-1-sboyd@kernel.org> <20240325184204.745706-2-sboyd@kernel.org>
+Subject: Re: [PATCH v2 1/5] clk: Remove prepare_lock hold assertion in __clk_release()
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, Douglas Anderson <dianders@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Date: Sun, 07 Apr 2024 19:35:40 -0700
+User-Agent: alot/0.10
 
+Quoting Stephen Boyd (2024-03-25 11:41:55)
+> Removing this assertion lets us move the kref_put() call outside the
+> prepare_lock section. We don't need to hold the prepare_lock here to
+> free memory and destroy the clk_core structure. We've already unlinked
+> the clk from the clk tree and by the time the release function runs
+> nothing holds a reference to the clk_core anymore so anything with the
+> pointer can't access the memory that's being freed anyway. Way back in
+> commit 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of
+> prepare_lock") we didn't need to have this assertion either.
+>=20
+> Fixes: 496eadf821c2 ("clk: Use lockdep asserts to find missing hold of pr=
+epare_lock")
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
 
-On Thu, 04 Apr 2024 17:01:03 -0700, Stephen Boyd wrote:
-> The register base that was used to write to the QSERDES_DP_PHY_MODE
-> register was 'dp_dp_phy' before commit 815891eee668 ("phy:
-> qcom-qmp-combo: Introduce orientation variable"). There isn't any
-> explanation in the commit why this is changed, so I suspect it was an
-> oversight or happened while being extracted from some other series.
-> Oddly the value being 0x4c or 0x5c doesn't seem to matter for me, so I
-> suspect this is dead code, but that can be fixed in another patch. It's
-> not good to write to the wrong register space, and maybe some other
-> version of this phy relies on this.
-> 
-> [...]
-
-Applied, thanks!
-
-[1/1] phy: qcom: qmp-combo: Fix register base for QSERDES_DP_PHY_MODE
-      commit: ee13e1f3c72b9464a4d73017c060ab503eed653a
-
-Best regards,
--- 
-~Vinod
-
-
+Applied to clk-fixes
