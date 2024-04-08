@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2653183A06;
-	Mon,  8 Apr 2024 13:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59A17D3E0;
+	Mon,  8 Apr 2024 13:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582688; cv=none; b=Sqq1Zml4FgUCh0AOgnVXuAQf8ywbG26QPAst2KrPSr7bHiQ3+rOZlfaEnr68ktwX717rNq2YTKmGBY6u9DQT8qIRU9Y0sfOxhyfKAeOtHsTi6mHSXeOa9mIYfQ9xp/W7D7jFGt9SnbV4wAYkt+lQ4pnNM6nigDB45agQ2zhNcCg=
+	t=1712582690; cv=none; b=bkQjDVY05TfTt4OABce7v0nWAMjuJ5VLvCzlF9VJ7yyQHuRmA5cmSbLaCWfXF6Ivsa71h8Dy8mQ/ofNucfoPxb0Gy59iCJ+obOdJfHCr2e9wzObSI8QBrgT+whwbH6ctaCW4XasWPJEbZu1GPQzyY2m1knStf4NvYIx3j77zw2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582688; c=relaxed/simple;
-	bh=04Gi2D1gWD5jo905sehyc0ydG1cgv+a+JP4RNy4PyWI=;
+	s=arc-20240116; t=1712582690; c=relaxed/simple;
+	bh=rkzLRix5ibMLZMekAGAT1KgX7aL4nqHx9MkRoh8BByI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUDFmuOwpfgb9TvdzE7eIlJVZ925zj7HqNvfFxsfgVIaFHjgygg/CJ/OCavcs8L6GQEGNDWAty2GGlbDwPR8JiSONFvsaWDUBCNep8fNW6A0rs4qLmTnm1Nf9Yjx3DHHcxALc0knYHyyfFIAvmkl5wV4bvaqevRnVBojv5RKrzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1TyhamT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZETl9dyGzOAv3foGrzHtTjKrHamdJC63qa+AZ1TUZ5A4LHvgvIDZOY71RuWarkWB4Nqu38PoZIQDdlXs8t2QAmHXbVj3lKSpMX1RW+Wnwecg5aIp9ae1/3oxNifAJ1AkbH6JkytCCIrpBTSS1+BcvaMlkxTE49b2cO6/9NjheyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8VrDprN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1TyhamT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B21C433F1;
-	Mon,  8 Apr 2024 13:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8VrDprN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44704C433C7;
+	Mon,  8 Apr 2024 13:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582687;
-	bh=04Gi2D1gWD5jo905sehyc0ydG1cgv+a+JP4RNy4PyWI=;
+	s=korg; t=1712582690;
+	bh=rkzLRix5ibMLZMekAGAT1KgX7aL4nqHx9MkRoh8BByI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1TyhamTc/lEtzafauwXsAWW6fQFuQRMGrad4HIXPzuo5IAmkesNwBLXXRsjBKfH1
-	 BTE5qE7jieom9fVG697zkbsW3ifIIRX5PqSqT/cdND8847QOW6E7Izo8CKAKCiu8SI
-	 MgXPGX+uN4n+HkLpbkRWq7CA9rc1FAK40NkGoUmM=
+	b=b8VrDprNtitaHXfPV97KOo0jrz6PB9GfO/nTXCjz5o/isPC1qztayNgSHXWjuzR1/
+	 tXXOa6zE3rVJWU7CRuKEE05K7t7y6/xIqkWfVNhprKcpOGmkFPXERI7ldwMsMTznAZ
+	 RhoMA0YBg3/UrFvo7dDjakgqm4CI1OATN/I3hLsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Erhard F." <erhard_f@mailbox.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.15 165/690] x86/static_call: Add support for Jcc tail-calls
-Date: Mon,  8 Apr 2024 14:50:31 +0200
-Message-ID: <20240408125405.529079653@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Shaoqin Huang <shahuang@redhat.com>
+Subject: [PATCH 6.8 096/273] KVM: arm64: Use TLBI_TTL_UNKNOWN in __kvm_tlb_flush_vmid_range()
+Date: Mon,  8 Apr 2024 14:56:11 +0200
+Message-ID: <20240408125312.280258650@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,133 +50,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Will Deacon <will@kernel.org>
 
-commit 923510c88d2b7d947c4217835fd9ca6bd65cc56c upstream.
+commit 0f0ff097bf77663b8d2692e33d56119947611bb0 upstream.
 
-Clang likes to create conditional tail calls like:
+Commit c910f2b65518 ("arm64/mm: Update tlb invalidation routines for
+FEAT_LPA2") updated the __tlbi_level() macro to take the target level
+as an argument, with TLBI_TTL_UNKNOWN (rather than 0) indicating that
+the caller cannot provide level information. Unfortunately, the two
+implementations of __kvm_tlb_flush_vmid_range() were not updated and so
+now ask for an level 0 invalidation if FEAT_LPA2 is implemented.
 
-  0000000000000350 <amd_pmu_add_event>:
-  350:       0f 1f 44 00 00          nopl   0x0(%rax,%rax,1) 351: R_X86_64_NONE      __fentry__-0x4
-  355:       48 83 bf 20 01 00 00 00         cmpq   $0x0,0x120(%rdi)
-  35d:       0f 85 00 00 00 00       jne    363 <amd_pmu_add_event+0x13>     35f: R_X86_64_PLT32     __SCT__amd_pmu_branch_add-0x4
-  363:       e9 00 00 00 00          jmp    368 <amd_pmu_add_event+0x18>     364: R_X86_64_PLT32     __x86_return_thunk-0x4
+Fix the problem by passing TLBI_TTL_UNKNOWN instead of 0 as the level
+argument to __flush_s2_tlb_range_op() in __kvm_tlb_flush_vmid_range().
 
-Where 0x35d is a static call site that's turned into a conditional
-tail-call using the Jcc class of instructions.
-
-Teach the in-line static call text patching about this.
-
-Notably, since there is no conditional-ret, in that case patch the Jcc
-to point at an empty stub function that does the ret -- or the return
-thunk when needed.
-
-Reported-by: "Erhard F." <erhard_f@mailbox.org>
-Change-Id: I99c8fc3f721e5d1c74f06710b38d4bac5230303a
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/Y9Kdg9QjHkr9G5b5@hirez.programming.kicks-ass.net
-[cascardo: __static_call_validate didn't have the bool tramp argument]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Fixes: c910f2b65518 ("arm64/mm: Update tlb invalidation routines for FEAT_LPA2")
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240327124853.11206-4-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/static_call.c |   50 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 47 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/tlb.c |    3 ++-
+ arch/arm64/kvm/hyp/vhe/tlb.c  |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -9,6 +9,7 @@ enum insn_type {
- 	NOP = 1,  /* site cond-call */
- 	JMP = 2,  /* tramp / site tail-call */
- 	RET = 3,  /* tramp / site cond-tail-call */
-+	JCC = 4,
- };
+--- a/arch/arm64/kvm/hyp/nvhe/tlb.c
++++ b/arch/arm64/kvm/hyp/nvhe/tlb.c
+@@ -154,7 +154,8 @@ void __kvm_tlb_flush_vmid_range(struct k
+ 	/* Switch to requested VMID */
+ 	__tlb_switch_to_guest(mmu, &cxt, false);
  
- /*
-@@ -25,12 +26,40 @@ static const u8 xor5rax[] = { 0x2e, 0x2e
+-	__flush_s2_tlb_range_op(ipas2e1is, start, pages, stride, 0);
++	__flush_s2_tlb_range_op(ipas2e1is, start, pages, stride,
++				TLBI_TTL_UNKNOWN);
  
- static const u8 retinsn[] = { RET_INSN_OPCODE, 0xcc, 0xcc, 0xcc, 0xcc };
+ 	dsb(ish);
+ 	__tlbi(vmalle1is);
+--- a/arch/arm64/kvm/hyp/vhe/tlb.c
++++ b/arch/arm64/kvm/hyp/vhe/tlb.c
+@@ -171,7 +171,8 @@ void __kvm_tlb_flush_vmid_range(struct k
+ 	/* Switch to requested VMID */
+ 	__tlb_switch_to_guest(mmu, &cxt);
  
-+static u8 __is_Jcc(u8 *insn) /* Jcc.d32 */
-+{
-+	u8 ret = 0;
-+
-+	if (insn[0] == 0x0f) {
-+		u8 tmp = insn[1];
-+		if ((tmp & 0xf0) == 0x80)
-+			ret = tmp;
-+	}
-+
-+	return ret;
-+}
-+
-+extern void __static_call_return(void);
-+
-+asm (".global __static_call_return\n\t"
-+     ".type __static_call_return, @function\n\t"
-+     ASM_FUNC_ALIGN "\n\t"
-+     "__static_call_return:\n\t"
-+     ANNOTATE_NOENDBR
-+     ANNOTATE_RETPOLINE_SAFE
-+     "ret; int3\n\t"
-+     ".size __static_call_return, . - __static_call_return \n\t");
-+
- static void __ref __static_call_transform(void *insn, enum insn_type type,
- 					  void *func, bool modinit)
- {
- 	const void *emulate = NULL;
- 	int size = CALL_INSN_SIZE;
- 	const void *code;
-+	u8 op, buf[6];
-+
-+	if ((type == JMP || type == RET) && (op = __is_Jcc(insn)))
-+		type = JCC;
+-	__flush_s2_tlb_range_op(ipas2e1is, start, pages, stride, 0);
++	__flush_s2_tlb_range_op(ipas2e1is, start, pages, stride,
++				TLBI_TTL_UNKNOWN);
  
- 	switch (type) {
- 	case CALL:
-@@ -56,6 +85,20 @@ static void __ref __static_call_transfor
- 		else
- 			code = &retinsn;
- 		break;
-+
-+	case JCC:
-+		if (!func) {
-+			func = __static_call_return;
-+			if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
-+				func = x86_return_thunk;
-+		}
-+
-+		buf[0] = 0x0f;
-+		__text_gen_insn(buf+1, op, insn+1, func, 5);
-+		code = buf;
-+		size = 6;
-+
-+		break;
- 	}
- 
- 	if (memcmp(insn, code, size) == 0)
-@@ -67,13 +110,14 @@ static void __ref __static_call_transfor
- 	text_poke_bp(insn, code, size, emulate);
- }
- 
--static void __static_call_validate(void *insn, bool tail)
-+static void __static_call_validate(u8 *insn, bool tail)
- {
--	u8 opcode = *(u8 *)insn;
-+	u8 opcode = insn[0];
- 
- 	if (tail) {
- 		if (opcode == JMP32_INSN_OPCODE ||
--		    opcode == RET_INSN_OPCODE)
-+		    opcode == RET_INSN_OPCODE ||
-+		    __is_Jcc(insn))
- 			return;
- 	} else {
- 		if (opcode == CALL_INSN_OPCODE ||
+ 	dsb(ish);
+ 	__tlbi(vmalle1is);
 
 
