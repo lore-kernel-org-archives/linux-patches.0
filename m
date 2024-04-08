@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25D16A352;
-	Mon,  8 Apr 2024 13:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FA7481A6;
+	Mon,  8 Apr 2024 13:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581390; cv=none; b=Ofc3pWGy70i7qiGJB4uYu/3NxmxGfUgVDXxe6KQUkVw9RBnBAQul1iqmkpOeujiJW3/V5OrTjbmJhG2BW6c7hA/06nVNnhiriSY0XhFsyy5BXff7+QU4XIR75Dedl51Ihky2IFSPIeb2eEp+JTUdMM/haZQICy4Mv51/mUErMSs=
+	t=1712581393; cv=none; b=jFO9uSvNYn+pNqVko4v7EpA88QP6jN/dKe7DtsPWwkcNUpAcZ9iLJBWPTfMyfNU+3G8VZI6xIkrjz9JVz/56Ee3EA+tfMhInv9QgXS7Aes+AOxWzjRTx87VbRKWyB5R3nIetweRF9A3mKEacMqfBSTMjOVID23Shmp6VP7XqaNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581390; c=relaxed/simple;
-	bh=n1tzjMIKJw8GhjDTOCYb6QUPKx8K4WNLSW/HpRtjApw=;
+	s=arc-20240116; t=1712581393; c=relaxed/simple;
+	bh=cTZQTlwF5dBfqGYDNXZWpTMr6+sdinOSMeDlUFWLJHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkTmDyKpHGeB8toqrjV/3OZB3D/NaSX/xYaOMJIE2mhhfiARyV3eLHZQz9frlb9ufhdI+p8YrtoyNADSnnO098Ty+SY9bbfGn29gQBhU2mKHVKfbXkoOLfHY3/AHl4SA1Xj8BktPtkAK/hIRQBmvIh7lHrqVLK6H7D83VgLIdl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddWcZRQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rece24DW60z/wmxTlYD6nt4t9RnNGufrcAzbHRUDiQ5uSaTL2/beCtb7BdFD4MOlK0q+zYxdcM+ESZe2BOld8y/+V21TxMtMjWn7lk7nQLgL/1tqn3ODvNX8vyEUXuLi6jHoqG9borucM/ZJjc6+syh1c0FvS9KpWm1C/howSDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ffh75CyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddWcZRQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C9BC433F1;
-	Mon,  8 Apr 2024 13:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ffh75CyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2914CC433C7;
+	Mon,  8 Apr 2024 13:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581390;
-	bh=n1tzjMIKJw8GhjDTOCYb6QUPKx8K4WNLSW/HpRtjApw=;
+	s=korg; t=1712581393;
+	bh=cTZQTlwF5dBfqGYDNXZWpTMr6+sdinOSMeDlUFWLJHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddWcZRQflBtS55cXRAf1tUDIZoOLs3J2jB+fRCTp8tgeol0MI1x1qww/XlECyaQHm
-	 WIlRjTj/ysGOGJSyO+fW/+Md1BViZCyukloSeVz1TWthC+4pn5GYzP2uccslMd0p2M
-	 fHnAIjWz7Lbr9iflVer+fL+eNySqPWxQoU4JDXo0=
+	b=Ffh75CyNkTqnPrdm5tjdgMTMibe/uVYis2tw2dcN26YNFLnSGortxVdfhwuaVvA0c
+	 ZucJydTQzgNhg/jgiWhkFMOoi7uLJTMhid4yliftfWLMXLSbl75HJlh3997RNbow7p
+	 pzy3Lv3X/Dbyij/ppB8VhxfQhlgsY0qmtwcRZrFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/690] clk: qcom: mmcc-apq8084: fix terminating of frequency table arrays
-Date: Mon,  8 Apr 2024 14:48:29 +0200
-Message-ID: <20240408125401.091609006@linuxfoundation.org>
+Subject: [PATCH 6.1 013/138] net: hns3: mark unexcuted loopback test result as UNEXECUTED
+Date: Mon,  8 Apr 2024 14:57:07 +0200
+Message-ID: <20240408125256.643421540@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +50,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit a903cfd38d8dee7e754fb89fd1bebed99e28003d ]
+[ Upstream commit 5bd088d6c21a45ee70e6116879310e54174d75eb ]
 
-The frequency table arrays are supposed to be terminated with an
-empty element. Add such entry to the end of the arrays where it
-is missing in order to avoid possible out-of-bound access when
-the table is traversed by functions like qcom_find_freq() or
-qcom_find_freq_floor().
+Currently, loopback test may be skipped when resetting, but the test
+result will still show as 'PASS', because the driver doesn't set
+ETH_TEST_FL_FAILED flag. Fix it by setting the flag and
+initializating the value to UNEXECUTED.
 
-Only compile tested.
-
-Fixes: 2b46cd23a5a2 ("clk: qcom: Add APQ8084 Multimedia Clock Controller (MMCC) support")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240229-freq-table-terminator-v1-6-074334f0905c@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4c8dab1c709c ("net: hns3: reconstruct function hns3_self_test")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-apq8084.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../ethernet/hisilicon/hns3/hns3_ethtool.c    | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-apq8084.c b/drivers/clk/qcom/mmcc-apq8084.c
-index fbfcf00067394..c2fd0e8f4bc09 100644
---- a/drivers/clk/qcom/mmcc-apq8084.c
-+++ b/drivers/clk/qcom/mmcc-apq8084.c
-@@ -333,6 +333,7 @@ static struct freq_tbl ftbl_mmss_axi_clk[] = {
- 	F(333430000, P_MMPLL1, 3.5, 0, 0),
- 	F(400000000, P_MMPLL0, 2, 0, 0),
- 	F(466800000, P_MMPLL1, 2.5, 0, 0),
-+	{ }
- };
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+index e22835ae8a941..9fce976a08f01 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+@@ -78,6 +78,9 @@ static const struct hns3_stats hns3_rxq_stats[] = {
+ #define HNS3_NIC_LB_TEST_NO_MEM_ERR	1
+ #define HNS3_NIC_LB_TEST_TX_CNT_ERR	2
+ #define HNS3_NIC_LB_TEST_RX_CNT_ERR	3
++#define HNS3_NIC_LB_TEST_UNEXECUTED	4
++
++static int hns3_get_sset_count(struct net_device *netdev, int stringset);
  
- static struct clk_rcg2 mmss_axi_clk_src = {
-@@ -357,6 +358,7 @@ static struct freq_tbl ftbl_ocmemnoc_clk[] = {
- 	F(150000000, P_GPLL0, 4, 0, 0),
- 	F(228570000, P_MMPLL0, 3.5, 0, 0),
- 	F(320000000, P_MMPLL0, 2.5, 0, 0),
-+	{ }
- };
+ static int hns3_lp_setup(struct net_device *ndev, enum hnae3_loop loop, bool en)
+ {
+@@ -419,18 +422,26 @@ static void hns3_do_external_lb(struct net_device *ndev,
+ static void hns3_self_test(struct net_device *ndev,
+ 			   struct ethtool_test *eth_test, u64 *data)
+ {
++	int cnt = hns3_get_sset_count(ndev, ETH_SS_TEST);
+ 	struct hns3_nic_priv *priv = netdev_priv(ndev);
+ 	struct hnae3_handle *h = priv->ae_handle;
+ 	int st_param[HNAE3_LOOP_NONE][2];
+ 	bool if_running = netif_running(ndev);
++	int i;
++
++	/* initialize the loopback test result, avoid marking an unexcuted
++	 * loopback test as PASS.
++	 */
++	for (i = 0; i < cnt; i++)
++		data[i] = HNS3_NIC_LB_TEST_UNEXECUTED;
  
- static struct clk_rcg2 ocmemnoc_clk_src = {
+ 	if (hns3_nic_resetting(ndev)) {
+ 		netdev_err(ndev, "dev resetting!");
+-		return;
++		goto failure;
+ 	}
+ 
+ 	if (!(eth_test->flags & ETH_TEST_FL_OFFLINE))
+-		return;
++		goto failure;
+ 
+ 	if (netif_msg_ifdown(h))
+ 		netdev_info(ndev, "self test start\n");
+@@ -452,6 +463,10 @@ static void hns3_self_test(struct net_device *ndev,
+ 
+ 	if (netif_msg_ifdown(h))
+ 		netdev_info(ndev, "self test end\n");
++	return;
++
++failure:
++	eth_test->flags |= ETH_TEST_FL_FAILED;
+ }
+ 
+ static void hns3_update_limit_promisc_mode(struct net_device *netdev,
 -- 
 2.43.0
 
