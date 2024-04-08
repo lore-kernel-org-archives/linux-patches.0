@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146A471B3D;
-	Mon,  8 Apr 2024 13:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF26A71B3D;
+	Mon,  8 Apr 2024 13:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582177; cv=none; b=rrK68Zklf0hxIWwtT2E70a155de1CExE1rcPAGKipax8oJOavHDTct6MbCQobP4nHG+4x/5alEkaQ5XHwuUd29kQPtE05ZI7xLx6N0ZH07RyJSzPCqejgU6jpF6yFwnYDwMvfHo03SX/Q7mcQTGtKGnpFtlrsLbiRIB5bjz/be0=
+	t=1712582180; cv=none; b=L6dCe5jHzRmGN07ARMyJS+K6oRRdJp5Fe3KovAFeHTv48cAewNRlYNkG2EbDaY5CM4Bd5lxX/tZu0MhisMVixGXAsY9uJnFchkNVYowU8J6YguPLxNlGhFrZ6is9IL8ek2zeSriA1TDQYOMbUFFPjlDc3UqM+myLVVNV4wZK/EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582177; c=relaxed/simple;
-	bh=HI9f4Dr3JoQ0Q6hgGGWLKsiFoOgYzxxIEaPG7+/L/Tc=;
+	s=arc-20240116; t=1712582180; c=relaxed/simple;
+	bh=FwM4uMpGE0UqxwwAqQrI7HqtbqOK94bRADjBluvuBB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=To7pljliKDbY6V0JNnN3SmpB248K88ZJyj48N3NN2EAeLwGCxnU/3uyzwik7Sax8qUE6xUsBpatla4v9IJFhxhFFEP81rRqmSdoseNyGS1HXov8s9zy+fC3rDqUuIDTVI7DspbaXYiOpFuEHwIZ5F3hrCNTGArLU22ymMCUHKck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJdHtCIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imW/APbvuxzu3YVhwHETguU1AN8YHKB0ypGRODO9XvVodJB7/gA9Osl2genVYbcZ6aWNInCx1Dp86u4YJWjoKfsTApCbInM4NTz5xMR9EgzP7fZ6mXku8K5VGr+5vPGTRCz5XMDWpxVf6Ry4oR4QIJ9Ebe5xDvGTcZ7ngIo/pPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cSNuvnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJdHtCIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87753C433C7;
-	Mon,  8 Apr 2024 13:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cSNuvnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C19C433F1;
+	Mon,  8 Apr 2024 13:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582176;
-	bh=HI9f4Dr3JoQ0Q6hgGGWLKsiFoOgYzxxIEaPG7+/L/Tc=;
+	s=korg; t=1712582179;
+	bh=FwM4uMpGE0UqxwwAqQrI7HqtbqOK94bRADjBluvuBB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJdHtCIfTMXQw5Dsh48ZDHPNuh0SPuvDgfDG627tObS5VgDig8gPt3m5AEl/JlNdW
-	 ebDJpFJl/dolQPlleWSgQLtk+Eh+xP1+Jqcn/G7vJEN3RQ5XpNwYy2VAfIGG/JkXLk
-	 r9IpNJCXAL7uoLIWBZ3zylWbPji0Bapje4iXUYJ4=
+	b=2cSNuvntDweks4tK0ykU5BiTZ3ElDXkYMtT4L/6OW8ZMDvcEMNfJQTG6X2tKBYR2E
+	 qLy0QnmJj0iF6+OUzTzvgxz/ELSsRwa7IEGe4R4or/x7iqPSRuVETZ9DcJd4TomfHX
+	 snlSBN9zJsIDsbQrzs5YmaTCi1r+7pV6sID/XAbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/138] net: ravb: Always update error counters
-Date: Mon,  8 Apr 2024 14:58:18 +0200
-Message-ID: <20240408125258.838831119@linuxfoundation.org>
+Subject: [PATCH 5.15 117/690] cpufreq: brcmstb-avs-cpufreq: fix up "add check for cpufreq_cpu_gets return value"
+Date: Mon,  8 Apr 2024 14:49:43 +0200
+Message-ID: <20240408125403.773152465@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +49,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 101b76418d7163240bc74a7e06867dca0e51183e ]
+In commit d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for
+cpufreq_cpu_get's return value"), build warnings occur because a
+variable is created after some logic, resulting in:
 
-The error statistics should be updated each time the poll function is
-called, even if the full RX work budget has been consumed. This prevents
-the counts from becoming stuck when RX bandwidth usage is high.
+drivers/cpufreq/brcmstb-avs-cpufreq.c: In function 'brcm_avs_cpufreq_get':
+drivers/cpufreq/brcmstb-avs-cpufreq.c:486:9: error: ISO C90 forbids mixed
+declarations and code [-Werror=declaration-after-statement]
+  486 |         struct private_data *priv = policy->driver_data;
+      |         ^~~~~~
+cc1: all warnings being treated as errors
+make[2]: *** [scripts/Makefile.build:289:
+drivers/cpufreq/brcmstb-avs-cpufreq.o] Error 1
+make[1]: *** [scripts/Makefile.build:552: drivers/cpufreq] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1907: drivers] Error 2
 
-This also ensures that error counters are not updated after we've
-re-enabled interrupts as that could result in a race condition.
+Fix this up.
 
-Also drop an unnecessary space.
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20240402145305.82148-2-paul.barker.ct@bp.renesas.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/e114d9e5-26af-42be-9baa-72c3a6ec8fe5@oracle.com
+Link: https://lore.kernel.org/stable/20240327015023.GC7502@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net/T/#m15bff0fe96986ef780e848b4fff362bf8ea03f08
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Fixes: d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
+Cc: Anastasia Belova <abelova@astralinux.ru>
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/cpufreq/brcmstb-avs-cpufreq.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index b11cc365d19e3..756ac4a07f60b 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1309,6 +1309,15 @@ static int ravb_poll(struct napi_struct *napi, int budget)
- 	netif_wake_subqueue(ndev, q);
- 	spin_unlock_irqrestore(&priv->lock, flags);
- 
-+	/* Receive error message handling */
-+	priv->rx_over_errors = priv->stats[RAVB_BE].rx_over_errors;
-+	if (info->nc_queues)
-+		priv->rx_over_errors += priv->stats[RAVB_NC].rx_over_errors;
-+	if (priv->rx_over_errors != ndev->stats.rx_over_errors)
-+		ndev->stats.rx_over_errors = priv->rx_over_errors;
-+	if (priv->rx_fifo_errors != ndev->stats.rx_fifo_errors)
-+		ndev->stats.rx_fifo_errors = priv->rx_fifo_errors;
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -481,10 +481,11 @@ static bool brcm_avs_is_firmware_loaded(
+ static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct private_data *priv;
 +
- 	if (!unmask)
- 		goto out;
+ 	if (!policy)
+ 		return 0;
+-	struct private_data *priv = policy->driver_data;
+-
++	priv = policy->driver_data;
+ 	cpufreq_cpu_put(policy);
  
-@@ -1325,14 +1334,6 @@ static int ravb_poll(struct napi_struct *napi, int budget)
- 	}
- 	spin_unlock_irqrestore(&priv->lock, flags);
- 
--	/* Receive error message handling */
--	priv->rx_over_errors =  priv->stats[RAVB_BE].rx_over_errors;
--	if (info->nc_queues)
--		priv->rx_over_errors += priv->stats[RAVB_NC].rx_over_errors;
--	if (priv->rx_over_errors != ndev->stats.rx_over_errors)
--		ndev->stats.rx_over_errors = priv->rx_over_errors;
--	if (priv->rx_fifo_errors != ndev->stats.rx_fifo_errors)
--		ndev->stats.rx_fifo_errors = priv->rx_fifo_errors;
- out:
- 	return budget - quota;
- }
--- 
-2.43.0
-
+ 	return brcm_avs_get_frequency(priv->base);
 
 
