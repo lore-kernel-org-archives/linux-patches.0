@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0157012AAED;
-	Mon,  8 Apr 2024 13:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DEC1292FC;
+	Mon,  8 Apr 2024 13:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583859; cv=none; b=p5ZwL1NXVz28A8ARANq3Mmewyr6+shPZSKBOObje5rrG8VUgMFwwMh9LZrmhJD26XOxEbVdd1Zzan1Hy63W277FgKtpNvSZwGoLsH10Qxol2KxZtzk5S8ngKZHqSP365uYkqcz1Jb/SDBUy9NgAB4TPoMh+D44d3LsrPIpdcaW8=
+	t=1712583861; cv=none; b=LWZtOxXdpa7Qos7ypfwz+yBF2841Vu+L8kyj9VqPf3e1XP5W2c5mufG0Geh1mrXPfL7/VwLUbhJcm9JL21FpiSMbr5yNrB4R/E5uR+Ind10uRwHqveWQICOgVycsZwAoeoTmk+4MUcIASLiQc8ZsugeebeJxtCboJgsex7cGKSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583859; c=relaxed/simple;
-	bh=cZvfZ41iEFayFTGYTu5ZcdquDMNod32E4ykETtYwCEE=;
+	s=arc-20240116; t=1712583861; c=relaxed/simple;
+	bh=AlC5v0nrF/HBrlk0yQDOTiZencsCOHAqrxl4H1yrQjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpsZoVBXK7/jEkyzm8yx90wx9QodUwtx27+HDIe18zhpxPEsDRaiKNlhVYVTaduM4oQao46GjrefzKF1ATZ6xewAfWqcrp5anOewngjkDtRS2jw/wsUd6teVNhIKvdd8nbUnZwvLDK9rt8UOAEncoOcJ1jo34RzrpSz5hpBg8KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kc8x4eZA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=npDehXqUomPY92wDMTQs6zGHe/fGfxJmNh7Q/+h786RnjibZefyUbvRV+QCdn4oxn66vX4XB2MEvcniG1E5SPwjzyT2u67CBSypDh0U/v2VZeZe7cjiCOTiAr8e1h0Kdgt6eGJIclUaNQ6RU2v9DvfvsaiBlCrwPyzWifRBFIYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEfoXffy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc8x4eZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA08C433C7;
-	Mon,  8 Apr 2024 13:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEfoXffy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDB0C433C7;
+	Mon,  8 Apr 2024 13:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583858;
-	bh=cZvfZ41iEFayFTGYTu5ZcdquDMNod32E4ykETtYwCEE=;
+	s=korg; t=1712583861;
+	bh=AlC5v0nrF/HBrlk0yQDOTiZencsCOHAqrxl4H1yrQjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kc8x4eZAsN66og5E8pdrt62vJOIxnBXfloKIYTtw2t7k4p0LOpk3CLp/k86iID39b
-	 uxjMGF/k5cfLQlEQEc3Uaims3xXwF115DgvvIQ5uOzrugCL6+MqHH2bZ+Ui8LsVF1S
-	 +R1VunU8RiyexHs6YxdgcNYhQhPZLkb90VlYE/pk=
+	b=pEfoXffy//g3HLIq+zFHUmxEFG2qgmuDUtRCD0azh8OZcwEgqAIqBV4E/BW+N0AZ8
+	 /wJ1XXMC0DrkVq5IV5FSk4x/rKr5Snryh+dFoO0treCHGky/bBoovZXlgB86w/7Vos
+	 S9AooMJRG5S7ZHB0pQMmoxPLj7fw13u65Ik9EQis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 296/690] dnotify: use fsnotify group lock helpers
-Date: Mon,  8 Apr 2024 14:52:42 +0200
-Message-ID: <20240408125410.331594101@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 243/252] selftests: mptcp: connect: fix shellcheck warnings
+Date: Mon,  8 Apr 2024 14:59:02 +0200
+Message-ID: <20240408125314.189160252@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,102 +47,241 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit aabb45fdcb31f00f1e7cae2bce83e83474a87c03 ]
+commit e3aae1098f109f0bd33c971deff1926f4e4441d0 upstream.
 
-Before commit 9542e6a643fc6 ("nfsd: Containerise filecache laundrette")
-nfsd would close open files in direct reclaim context.  There is no
-guarantee that others memory shrinkers don't do the same and no
-guarantee that future shrinkers won't do that.
+shellcheck recently helped to prevent issues. It is then good to fix the
+other harmless issues in order to spot "real" ones later.
 
-For example, if overlayfs implements inode cache of fscache would
-keep open files to cached objects, inode shrinkers could end up closing
-open files to underlying fs.
+Here, two categories of warnings are now ignored:
 
-Direct reclaim from dnotify mark allocation context may try to close
-open files that have dnotify marks of the same group and hit a deadlock
-on mark_mutex.
+- SC2317: Command appears to be unreachable. The cleanup() function is
+  invoked indirectly via the EXIT trap.
 
-Set the FSNOTIFY_GROUP_NOFS flag to prevent going into direct reclaim
-from allocations under dnotify group lock and use the safe group lock
-helpers.
+- SC2086: Double quote to prevent globbing and word splitting. This is
+  recommended, but the current usage is correct and there is no need to
+  do all these modifications to be compliant with this rule.
 
-Link: https://lore.kernel.org/r/20220422120327.3459282-11-amir73il@gmail.com
-Suggested-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220321112310.vpr7oxro2xkz5llh@quack3.lan/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+For the modifications:
+
+  - SC2034: ksft_skip appears unused.
+  - SC2181: Check exit code directly with e.g. 'if mycmd;', not
+            indirectly with $?.
+  - SC2004: $/${} is unnecessary on arithmetic variables.
+  - SC2155: Declare and assign separately to avoid masking return
+            values.
+  - SC2166: Prefer [ p ] && [ q ] as [ p -a q ] is not well defined.
+  - SC2059: Don't use variables in the printf format string. Use printf
+            '..%s..' "$foo".
+
+Now this script is shellcheck (0.9.0) compliant. We can easily spot new
+issues.
+
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240306-upstream-net-next-20240304-selftests-mptcp-shared-code-shellcheck-v2-8-bc79e6e5e6a0@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/dnotify/dnotify.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |   76 ++++++++++++---------
+ 1 file changed, 47 insertions(+), 29 deletions(-)
 
-diff --git a/fs/notify/dnotify/dnotify.c b/fs/notify/dnotify/dnotify.c
-index 6c586802c50e6..fa81c59a2ad41 100644
---- a/fs/notify/dnotify/dnotify.c
-+++ b/fs/notify/dnotify/dnotify.c
-@@ -150,7 +150,7 @@ void dnotify_flush(struct file *filp, fl_owner_t id)
- 		return;
- 	dn_mark = container_of(fsn_mark, struct dnotify_mark, fsn_mark);
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -1,6 +1,11 @@
+ #!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
  
--	mutex_lock(&dnotify_group->mark_mutex);
-+	fsnotify_group_lock(dnotify_group);
++# Double quotes to prevent globbing and word splitting is recommended in new
++# code but we accept it, especially because there were too many before having
++# address all other issues detected by shellcheck.
++#shellcheck disable=SC2086
++
+ . "$(dirname "${0}")/mptcp_lib.sh"
  
- 	spin_lock(&fsn_mark->lock);
- 	prev = &dn_mark->dn;
-@@ -173,7 +173,7 @@ void dnotify_flush(struct file *filp, fl_owner_t id)
- 		free = true;
+ time_start=$(date +%s)
+@@ -13,7 +18,6 @@ sout=""
+ cin_disconnect=""
+ cin=""
+ cout=""
+-ksft_skip=4
+ capture=false
+ timeout_poll=30
+ timeout_test=$((timeout_poll * 2 + 1))
+@@ -131,6 +135,8 @@ ns4="ns4-$rndh"
+ TEST_COUNT=0
+ TEST_GROUP=""
+ 
++# This function is used in the cleanup trap
++#shellcheck disable=SC2317
+ cleanup()
+ {
+ 	rm -f "$cin_disconnect" "$cout_disconnect"
+@@ -225,8 +231,9 @@ set_ethtool_flags() {
+ 	local dev="$2"
+ 	local flags="$3"
+ 
+-	ip netns exec $ns ethtool -K $dev $flags 2>/dev/null
+-	[ $? -eq 0 ] && echo "INFO: set $ns dev $dev: ethtool -K $flags"
++	if ip netns exec $ns ethtool -K $dev $flags 2>/dev/null; then
++		echo "INFO: set $ns dev $dev: ethtool -K $flags"
++	fi
+ }
+ 
+ set_random_ethtool_flags() {
+@@ -363,7 +370,7 @@ do_transfer()
+ 	local extra_args="$7"
+ 
+ 	local port
+-	port=$((10000+$TEST_COUNT))
++	port=$((10000+TEST_COUNT))
+ 	TEST_COUNT=$((TEST_COUNT+1))
+ 
+ 	if [ "$rcvbuf" -gt 0 ]; then
+@@ -420,12 +427,18 @@ do_transfer()
+ 			nstat -n
+ 	fi
+ 
+-	local stat_synrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
+-	local stat_ackrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
+-	local stat_cookietx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
+-	local stat_cookierx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
+-	local stat_csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
+-	local stat_csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
++	local stat_synrx_last_l
++	local stat_ackrx_last_l
++	local stat_cookietx_last
++	local stat_cookierx_last
++	local stat_csum_err_s
++	local stat_csum_err_c
++	stat_synrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
++	stat_ackrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
++	stat_cookietx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
++	stat_cookierx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
++	stat_csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
++	stat_csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
+ 
+ 	timeout ${timeout_test} \
+ 		ip netns exec ${listener_ns} \
+@@ -488,11 +501,16 @@ do_transfer()
+ 	check_transfer $cin $sout "file received by server"
+ 	rets=$?
+ 
+-	local stat_synrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
+-	local stat_ackrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
+-	local stat_cookietx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
+-	local stat_cookierx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
+-	local stat_ooo_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtTCPOFOQueue")
++	local stat_synrx_now_l
++	local stat_ackrx_now_l
++	local stat_cookietx_now
++	local stat_cookierx_now
++	local stat_ooo_now
++	stat_synrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
++	stat_ackrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
++	stat_cookietx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
++	stat_cookierx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
++	stat_ooo_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtTCPOFOQueue")
+ 
+ 	expect_synrx=$((stat_synrx_last_l))
+ 	expect_ackrx=$((stat_ackrx_last_l))
+@@ -501,8 +519,8 @@ do_transfer()
+ 	cookies=${cookies##*=}
+ 
+ 	if [ ${cl_proto} = "MPTCP" ] && [ ${srv_proto} = "MPTCP" ]; then
+-		expect_synrx=$((stat_synrx_last_l+$connect_per_transfer))
+-		expect_ackrx=$((stat_ackrx_last_l+$connect_per_transfer))
++		expect_synrx=$((stat_synrx_last_l+connect_per_transfer))
++		expect_ackrx=$((stat_ackrx_last_l+connect_per_transfer))
+ 	fi
+ 
+ 	if [ ${stat_synrx_now_l} -lt ${expect_synrx} ]; then
+@@ -510,7 +528,7 @@ do_transfer()
+ 			"${stat_synrx_now_l}" "${expect_synrx}" 1>&2
+ 		retc=1
+ 	fi
+-	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} -a ${stat_ooo_now} -eq 0 ]; then
++	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} ] && [ ${stat_ooo_now} -eq 0 ]; then
+ 		if [ ${stat_ooo_now} -eq 0 ]; then
+ 			printf "[ FAIL ] lower MPC ACK rx (%d) than expected (%d)\n" \
+ 				"${stat_ackrx_now_l}" "${expect_ackrx}" 1>&2
+@@ -521,18 +539,20 @@ do_transfer()
+ 	fi
+ 
+ 	if $checksum; then
+-		local csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
+-		local csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
++		local csum_err_s
++		local csum_err_c
++		csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
++		csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
+ 
+ 		local csum_err_s_nr=$((csum_err_s - stat_csum_err_s))
+ 		if [ $csum_err_s_nr -gt 0 ]; then
+-			printf "[ FAIL ]\nserver got $csum_err_s_nr data checksum error[s]"
++			printf "[ FAIL ]\nserver got %d data checksum error[s]" ${csum_err_s_nr}
+ 			rets=1
+ 		fi
+ 
+ 		local csum_err_c_nr=$((csum_err_c - stat_csum_err_c))
+ 		if [ $csum_err_c_nr -gt 0 ]; then
+-			printf "[ FAIL ]\nclient got $csum_err_c_nr data checksum error[s]"
++			printf "[ FAIL ]\nclient got %d data checksum error[s]" ${csum_err_c_nr}
+ 			retc=1
+ 		fi
+ 	fi
+@@ -701,7 +721,7 @@ run_test_transparent()
+ 		return
+ 	fi
+ 
+-ip netns exec "$listener_ns" nft -f /dev/stdin <<"EOF"
++	if ! ip netns exec "$listener_ns" nft -f /dev/stdin <<"EOF"
+ flush ruleset
+ table inet mangle {
+ 	chain divert {
+@@ -712,7 +732,7 @@ table inet mangle {
  	}
+ }
+ EOF
+-	if [ $? -ne 0 ]; then
++	then
+ 		echo "SKIP: $msg, could not load nft ruleset"
+ 		mptcp_lib_fail_if_expected_feature "nft rules"
+ 		mptcp_lib_result_skip "${TEST_GROUP}"
+@@ -727,8 +747,7 @@ EOF
+ 		local_addr="0.0.0.0"
+ 	fi
  
--	mutex_unlock(&dnotify_group->mark_mutex);
-+	fsnotify_group_unlock(dnotify_group);
+-	ip -net "$listener_ns" $r6flag rule add fwmark 1 lookup 100
+-	if [ $? -ne 0 ]; then
++	if ! ip -net "$listener_ns" $r6flag rule add fwmark 1 lookup 100; then
+ 		ip netns exec "$listener_ns" nft flush ruleset
+ 		echo "SKIP: $msg, ip $r6flag rule failed"
+ 		mptcp_lib_fail_if_expected_feature "ip rule"
+@@ -736,8 +755,7 @@ EOF
+ 		return
+ 	fi
  
- 	if (free)
- 		fsnotify_free_mark(fsn_mark);
-@@ -306,7 +306,7 @@ int fcntl_dirnotify(int fd, struct file *filp, unsigned long arg)
- 	new_dn_mark->dn = NULL;
+-	ip -net "$listener_ns" route add local $local_addr/0 dev lo table 100
+-	if [ $? -ne 0 ]; then
++	if ! ip -net "$listener_ns" route add local $local_addr/0 dev lo table 100; then
+ 		ip netns exec "$listener_ns" nft flush ruleset
+ 		ip -net "$listener_ns" $r6flag rule del fwmark 1 lookup 100
+ 		echo "SKIP: $msg, ip route add local $local_addr failed"
+@@ -900,7 +918,7 @@ stop_if_error "Could not even run ping t
+ echo -n "INFO: Using loss of $tc_loss "
+ test "$tc_delay" -gt 0 && echo -n "delay $tc_delay ms "
  
- 	/* this is needed to prevent the fcntl/close race described below */
--	mutex_lock(&dnotify_group->mark_mutex);
-+	fsnotify_group_lock(dnotify_group);
+-reorder_delay=$(($tc_delay / 4))
++reorder_delay=$((tc_delay / 4))
  
- 	/* add the new_fsn_mark or find an old one. */
- 	fsn_mark = fsnotify_find_mark(&inode->i_fsnotify_marks, dnotify_group);
-@@ -316,7 +316,7 @@ int fcntl_dirnotify(int fd, struct file *filp, unsigned long arg)
- 	} else {
- 		error = fsnotify_add_inode_mark_locked(new_fsn_mark, inode, 0);
- 		if (error) {
--			mutex_unlock(&dnotify_group->mark_mutex);
-+			fsnotify_group_unlock(dnotify_group);
- 			goto out_err;
- 		}
- 		spin_lock(&new_fsn_mark->lock);
-@@ -365,7 +365,7 @@ int fcntl_dirnotify(int fd, struct file *filp, unsigned long arg)
- 
- 	if (destroy)
- 		fsnotify_detach_mark(fsn_mark);
--	mutex_unlock(&dnotify_group->mark_mutex);
-+	fsnotify_group_unlock(dnotify_group);
- 	if (destroy)
- 		fsnotify_free_mark(fsn_mark);
- 	fsnotify_put_mark(fsn_mark);
-@@ -383,7 +383,8 @@ static int __init dnotify_init(void)
- 					  SLAB_PANIC|SLAB_ACCOUNT);
- 	dnotify_mark_cache = KMEM_CACHE(dnotify_mark, SLAB_PANIC|SLAB_ACCOUNT);
- 
--	dnotify_group = fsnotify_alloc_group(&dnotify_fsnotify_ops, 0);
-+	dnotify_group = fsnotify_alloc_group(&dnotify_fsnotify_ops,
-+					     FSNOTIFY_GROUP_NOFS);
- 	if (IS_ERR(dnotify_group))
- 		panic("unable to allocate fsnotify group for dnotify\n");
- 	return 0;
--- 
-2.43.0
-
+ if [ -z "${tc_reorder}" ]; then
+ 	reorder1=$((RANDOM%10))
 
 
