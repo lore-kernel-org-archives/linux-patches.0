@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1ED2DF73;
-	Mon,  8 Apr 2024 13:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501062DF73;
+	Mon,  8 Apr 2024 13:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581606; cv=none; b=kWRFpXF3prVibVFJRyMY4KYWxMfOyJ+5OUNojvQGpKDQjQVRG0kLZ3IpRJPpDBiAnK/lFKsVX6krNrAGBd6IbH3ZBpG5s8zZvBY7ZV9gFrvwKjxiYMjTW51jHTcU1hfVd+ANDlIices0l4PyNzdaKooSYCyQ4B20gHYPAgDYImc=
+	t=1712581609; cv=none; b=b5TvcJZLUAT3rZt2hg8edlklRgXuGzDprAbELt5NFTho8+UzTTLIem77NHFj++aKrFn8YG2sus16svi00Ys9RPeiuwWu3cUaGCFKGa6ODGOsIp9Qqk7mThx3fCWX2vhz3gVO3fznA7wlm94hws2v5st9pPKR0ZbbncSyyhJbuvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581606; c=relaxed/simple;
-	bh=CCDxNZ7Ykk0JYoEAPZ0SGHm8fw9X6PIfCBKk/3fcC1c=;
+	s=arc-20240116; t=1712581609; c=relaxed/simple;
+	bh=oYqI0Bo0792rWkGKQWPahSZrRUK/MnRhJV720hEOdLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzLEQ7G03+4oDciWGqLqZ4l3rvxGEXkVNa+9CzqU4T354ZghGddUikvhKy/8m4tRXgsgXq400FFXHlC+i6DeNgMBZSnDgc+HScUVhX1aZLXx0xA6USwGceCwQRRzWwhFq0Mje9OGywyFxnb5PQFlGUNtRD/o2aqQUFO2QyaYGE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ozy4fubk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ww6cdLv9Co1HVvuncQiOD3NI3nuRSjVuqfKChPKbQKzghz0VcvqDKZR3PsJwqHsYXVuPoVuqmfoVDtc4DZ/fmHR3a+Co/2U++MgiF1m3qnDjCpVEKKeYtQZge2puGcufrqru+JpvtfKVpD0fs7tX/BCiFWibs4Jf619QpBE3uoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXO0IJ8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ozy4fubk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D34C433F1;
-	Mon,  8 Apr 2024 13:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXO0IJ8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01C4C433F1;
+	Mon,  8 Apr 2024 13:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581606;
-	bh=CCDxNZ7Ykk0JYoEAPZ0SGHm8fw9X6PIfCBKk/3fcC1c=;
+	s=korg; t=1712581609;
+	bh=oYqI0Bo0792rWkGKQWPahSZrRUK/MnRhJV720hEOdLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ozy4fubkNliqD9uLHbJ4k6caJHG80E+7IV0+yO+e1YsAk1q7mpavicBa351pvePLa
-	 si2XmAd9UJEmG2dsbc/UiO30vj3Zt5krngNd0XKBDaVuhnHZmHA2MXphyT6x01spaF
-	 Dck4tkVRDVuvSMMVPqcy8Htgts3/LVlojQd5fAPY=
+	b=uXO0IJ8yMDcv57ZcoBWhjOVnWij0+ZjMLtKIHnWtHNm8G7T+JpjtISHiXrE+mzfPM
+	 Q/6TPzGE9D0PpkqaEINKqZVFumNJ68/8acTupahgipLFNkXanM/JOiU6OgWYqMh785
+	 bO/xOXyj8isNDNlUQDxwUK0Ioko0NTx/fn0ZwnLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay12@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexander Aring <aahringo@redhat.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 004/273] bpf, arm64: fix bug in BPF_LDX_MEMSX
-Date: Mon,  8 Apr 2024 14:54:39 +0200
-Message-ID: <20240408125309.419268184@linuxfoundation.org>
+Subject: [PATCH 5.15 067/690] mac802154: fix llsec key resources release in mac802154_llsec_key_del
+Date: Mon,  8 Apr 2024 14:48:53 +0200
+Message-ID: <20240408125401.948264596@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Puranjay Mohan <puranjay12@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 114b5b3b4bde7358624437be2f12cde1b265224e ]
+[ Upstream commit e8a1e58345cf40b7b272e08ac7b32328b2543e40 ]
 
-A64_LDRSW() takes three registers: Xt, Xn, Xm as arguments and it loads
-and sign extends the value at address Xn + Xm into register Xt.
+mac802154_llsec_key_del() can free resources of a key directly without
+following the RCU rules for waiting before the end of a grace period. This
+may lead to use-after-free in case llsec_lookup_key() is traversing the
+list of keys in parallel with a key deletion:
 
-Currently, the offset is being directly used in place of the tmp
-register which has the offset already loaded by the last emitted
-instruction.
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 4 PID: 16000 at lib/refcount.c:25 refcount_warn_saturate+0x162/0x2a0
+Modules linked in:
+CPU: 4 PID: 16000 Comm: wpan-ping Not tainted 6.7.0 #19
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0x162/0x2a0
+Call Trace:
+ <TASK>
+ llsec_lookup_key.isra.0+0x890/0x9e0
+ mac802154_llsec_encrypt+0x30c/0x9c0
+ ieee802154_subif_start_xmit+0x24/0x1e0
+ dev_hard_start_xmit+0x13e/0x690
+ sch_direct_xmit+0x2ae/0xbc0
+ __dev_queue_xmit+0x11dd/0x3c20
+ dgram_sendmsg+0x90b/0xd60
+ __sys_sendto+0x466/0x4c0
+ __x64_sys_sendto+0xe0/0x1c0
+ do_syscall_64+0x45/0xf0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-This will cause JIT failures. The easiest way to reproduce this is to
-test the following code through test_bpf module:
+Also, ieee802154_llsec_key_entry structures are not freed by
+mac802154_llsec_key_del():
 
-{
-	"BPF_LDX_MEMSX | BPF_W",
-	.u.insns_int = {
-		BPF_LD_IMM64(R1, 0x00000000deadbeefULL),
-		BPF_LD_IMM64(R2, 0xffffffffdeadbeefULL),
-		BPF_STX_MEM(BPF_DW, R10, R1, -7),
-		BPF_LDX_MEMSX(BPF_W, R0, R10, -7),
-		BPF_JMP_REG(BPF_JNE, R0, R2, 1),
-		BPF_ALU64_IMM(BPF_MOV, R0, 0),
-		BPF_EXIT_INSN(),
-	},
-	INTERNAL,
-	{ },
-	{ { 0, 0 } },
-	.stack_depth = 7,
-},
+unreferenced object 0xffff8880613b6980 (size 64):
+  comm "iwpan", pid 2176, jiffies 4294761134 (age 60.475s)
+  hex dump (first 32 bytes):
+    78 0d 8f 18 80 88 ff ff 22 01 00 00 00 00 ad de  x.......".......
+    00 00 00 00 00 00 00 00 03 00 cd ab 00 00 00 00  ................
+  backtrace:
+    [<ffffffff81dcfa62>] __kmem_cache_alloc_node+0x1e2/0x2d0
+    [<ffffffff81c43865>] kmalloc_trace+0x25/0xc0
+    [<ffffffff88968b09>] mac802154_llsec_key_add+0xac9/0xcf0
+    [<ffffffff8896e41a>] ieee802154_add_llsec_key+0x5a/0x80
+    [<ffffffff8892adc6>] nl802154_add_llsec_key+0x426/0x5b0
+    [<ffffffff86ff293e>] genl_family_rcv_msg_doit+0x1fe/0x2f0
+    [<ffffffff86ff46d1>] genl_rcv_msg+0x531/0x7d0
+    [<ffffffff86fee7a9>] netlink_rcv_skb+0x169/0x440
+    [<ffffffff86ff1d88>] genl_rcv+0x28/0x40
+    [<ffffffff86fec15c>] netlink_unicast+0x53c/0x820
+    [<ffffffff86fecd8b>] netlink_sendmsg+0x93b/0xe60
+    [<ffffffff86b91b35>] ____sys_sendmsg+0xac5/0xca0
+    [<ffffffff86b9c3dd>] ___sys_sendmsg+0x11d/0x1c0
+    [<ffffffff86b9c65a>] __sys_sendmsg+0xfa/0x1d0
+    [<ffffffff88eadbf5>] do_syscall_64+0x45/0xf0
+    [<ffffffff890000ea>] entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-We need to use the offset as -7 to trigger this code path, there could
-be other valid ways to trigger this from proper BPF programs as well.
+Handle the proper resource release in the RCU callback function
+mac802154_llsec_key_del_rcu().
 
-This code is rejected by the JIT because -7 is passed to A64_LDRSW() but
-it expects a valid register (0 - 31).
+Note that if llsec_lookup_key() finds a key, it gets a refcount via
+llsec_key_get() and locally copies key id from key_entry (which is a
+list element). So it's safe to call llsec_key_put() and free the list
+entry after the RCU grace period elapses.
 
- roott@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
- [11300.490371] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
- [11300.491750] test_bpf: #345 BPF_LDX_MEMSX | BPF_W
- [11300.493179] aarch64_insn_encode_register: unknown register encoding -7
- [11300.494133] aarch64_insn_encode_register: unknown register encoding -7
- [11300.495292] FAIL to select_runtime err=-524
- [11300.496804] test_bpf: Summary: 0 PASSED, 1 FAILED, [0/0 JIT'ed]
- modprobe: ERROR: could not insert 'test_bpf': Invalid argument
+Found by Linux Verification Center (linuxtesting.org).
 
-Applying this patch fixes the issue.
-
- root@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
- [  292.837436] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
- [  292.839416] test_bpf: #345 BPF_LDX_MEMSX | BPF_W jited:1 156 PASS
- [  292.844794] test_bpf: Summary: 1 PASSED, 0 FAILED, [1/1 JIT'ed]
-
-Fixes: cc88f540da52 ("bpf, arm64: Support sign-extension load instructions")
-Signed-off-by: Puranjay Mohan <puranjay12@gmail.com>
-Message-ID: <20240312235917.103626-1-puranjay12@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 5d637d5aabd8 ("mac802154: add llsec structures and mutators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Message-ID: <20240228163840.6667-1-pchelkin@ispras.ru>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/cfg802154.h |  1 +
+ net/mac802154/llsec.c   | 18 +++++++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 8955da5c47cf7..582c4c2491edc 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1189,7 +1189,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx,
- 			} else {
- 				emit_a64_mov_i(1, tmp, off, ctx);
- 				if (sign_extend)
--					emit(A64_LDRSW(dst, src_adj, off_adj), ctx);
-+					emit(A64_LDRSW(dst, src, tmp), ctx);
- 				else
- 					emit(A64_LDR32(dst, src, tmp), ctx);
- 			}
+diff --git a/include/net/cfg802154.h b/include/net/cfg802154.h
+index 6ed07844eb244..5290781abba3d 100644
+--- a/include/net/cfg802154.h
++++ b/include/net/cfg802154.h
+@@ -257,6 +257,7 @@ struct ieee802154_llsec_key {
+ 
+ struct ieee802154_llsec_key_entry {
+ 	struct list_head list;
++	struct rcu_head rcu;
+ 
+ 	struct ieee802154_llsec_key_id id;
+ 	struct ieee802154_llsec_key *key;
+diff --git a/net/mac802154/llsec.c b/net/mac802154/llsec.c
+index 55550ead2ced8..a4cc9d077c59c 100644
+--- a/net/mac802154/llsec.c
++++ b/net/mac802154/llsec.c
+@@ -265,19 +265,27 @@ int mac802154_llsec_key_add(struct mac802154_llsec *sec,
+ 	return -ENOMEM;
+ }
+ 
++static void mac802154_llsec_key_del_rcu(struct rcu_head *rcu)
++{
++	struct ieee802154_llsec_key_entry *pos;
++	struct mac802154_llsec_key *mkey;
++
++	pos = container_of(rcu, struct ieee802154_llsec_key_entry, rcu);
++	mkey = container_of(pos->key, struct mac802154_llsec_key, key);
++
++	llsec_key_put(mkey);
++	kfree_sensitive(pos);
++}
++
+ int mac802154_llsec_key_del(struct mac802154_llsec *sec,
+ 			    const struct ieee802154_llsec_key_id *key)
+ {
+ 	struct ieee802154_llsec_key_entry *pos;
+ 
+ 	list_for_each_entry(pos, &sec->table.keys, list) {
+-		struct mac802154_llsec_key *mkey;
+-
+-		mkey = container_of(pos->key, struct mac802154_llsec_key, key);
+-
+ 		if (llsec_key_id_equal(&pos->id, key)) {
+ 			list_del_rcu(&pos->list);
+-			llsec_key_put(mkey);
++			call_rcu(&pos->rcu, mac802154_llsec_key_del_rcu);
+ 			return 0;
+ 		}
+ 	}
 -- 
 2.43.0
 
