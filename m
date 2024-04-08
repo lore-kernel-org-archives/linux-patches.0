@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3719C7E0F3;
-	Mon,  8 Apr 2024 13:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0B87E11E;
+	Mon,  8 Apr 2024 13:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581920; cv=none; b=BHUmOSMFj+4zbfGAx3cUVGeHxYxSUUkIhW5GnHOSG6SPEEmLJ7ekbas5THXzpZIzGayKoQVj5XlTEot3jf1sO5YfSbtBOutzBu+g6C6mqXM8Z6N/HOGo0cU44gVJkW+7MkAmK7W9IosoUMq6ZAQLoBm5Ph0mV5WvNV9uAQwJtqQ=
+	t=1712581922; cv=none; b=gGo+IHBCfqwUJsdWWawbGYJKkw3tMe0osvHxQhceKhhwjWP+xg6R529zLnqpWV9/zd1oGz7cJWzjnYhlQggb6MdsTF26akRReAurXRAdLf0BUPQNHgjF5fD7uOlXEA54WK9oXQUdWs3afvEUwrFfjPIiudLCnPspsEUZfVa2GgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581920; c=relaxed/simple;
-	bh=bHMRwI+SUIEJ77ao9xljTpXk3t7dFS6suIjDTUMbe5U=;
+	s=arc-20240116; t=1712581922; c=relaxed/simple;
+	bh=aFcEpAqDME5lFk1/O09E+oOpscHmyy/4httspKCHPEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkW2l4bWqB5rWaMBoKc+fcJAVxWa4vFPL0mxSwH8ttTAgrmMmAjFBxW4HqANjHNPE6lFHtFBs6Mbs4xvJL55pvw7co9WWBPffIn9zYJPZRPnZSUzNCnbnRr7c6oLSawnD+JBFcYX9U4NNVX/auAkK9VHOrISnND/pj218Fh5IaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Te94Yxxq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D7QY9W4fErybUwESQin0Bx/g+F8Quk+/zi1zHwHqUZqJpRBqG7Ya+kmDSIIHU51su8o3R7c3zmCZUWYBhqt6a3tST0bQENcShl1CZBbpo8AuAxLGjJNBiQpVlXAJ78RjxdJfunvknVGOxrr/p9pVR4TGkr7su5ayviGI+0vPfYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLy0Tfhq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te94Yxxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0D8C433F1;
-	Mon,  8 Apr 2024 13:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLy0Tfhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C00C433F1;
+	Mon,  8 Apr 2024 13:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581919;
-	bh=bHMRwI+SUIEJ77ao9xljTpXk3t7dFS6suIjDTUMbe5U=;
+	s=korg; t=1712581922;
+	bh=aFcEpAqDME5lFk1/O09E+oOpscHmyy/4httspKCHPEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Te94YxxqS6p7IFBcwmiicsBk3PmoptIahqNB2SCdHD2OWbnL1i9wzln18wSMYrYVO
-	 yrQEUXHjfKoo8z9HduAvlOd1UG3RkdJKXRmbBqznIgDYZ0GwYzPjfZB0Wa8B2OuLq0
-	 565A80Vyh7R6/lmHQpsJXmSM8FGdgsuzrLgeuqmI=
+	b=dLy0TfhqFHUGp0Qii/+Chi+a9wjRkfw9XCNQcDW6yIxgnJbW1bCGnmfm/vSeiEBvZ
+	 9mQLMJZ1r+Ea7WAsXARG+HfRK6Evs1EwtyAJcWsmUXoL8FrReuJEqjSjYSU5cJdUIw
+	 vd4bHskcRmy32zutaEkJ6B5GsupXbLhKgD1kg/w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 062/138] udp: do not transition UDP GRO fraglist partial checksums to unnecessary
-Date: Mon,  8 Apr 2024 14:57:56 +0200
-Message-ID: <20240408125258.150854521@linuxfoundation.org>
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 050/252] drm/i915/mtl: Update workaround 14018575942
+Date: Mon,  8 Apr 2024 14:55:49 +0200
+Message-ID: <20240408125308.190532657@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-commit f0b8c30345565344df2e33a8417a27503589247d upstream.
+[ Upstream commit 186bce682772e7346bf7ced5325b5f4ff050ccfb ]
 
-UDP GRO validates checksums and in udp4/6_gro_complete fraglist packets
-are converted to CHECKSUM_UNNECESSARY to avoid later checks. However
-this is an issue for CHECKSUM_PARTIAL packets as they can be looped in
-an egress path and then their partial checksums are not fixed.
+Applying WA 14018575942 only on Compute engine has impact on
+some apps like chrome. Updating this WA to apply on Render
+engine as well as it is helping with performance on Chrome.
 
-Different issues can be observed, from invalid checksum on packets to
-traces like:
+Note: There is no concern from media team thus not applying
+WA on media engines. We will revisit if any issues reported
+from media team.
 
-  gen01: hw csum failure
-  skb len=3008 headroom=160 headlen=1376 tailroom=0
-  mac=(106,14) net=(120,40) trans=160
-  shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
-  csum(0xffff232e ip_summed=2 complete_sw=0 valid=0 level=0)
-  hash(0x77e3d716 sw=1 l4=1) proto=0x86dd pkttype=0 iif=12
-  ...
+V2(Matt):
+ - Use correct WA number
 
-Fix this by only converting CHECKSUM_NONE packets to
-CHECKSUM_UNNECESSARY by reusing __skb_incr_checksum_unnecessary. All
-other checksum types are kept as-is, including CHECKSUM_COMPLETE as
-fraglist packets being segmented back would have their skb->csum valid.
-
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 668f37e1ee11 ("drm/i915/mtl: Update workaround 14018778641")
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228103738.2018458-1-tejas.upadhyay@intel.com
+(cherry picked from commit 71271280175aa0ed6673e40cce7c01296bcd05f6)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c |    8 +-------
- net/ipv6/udp_offload.c |    8 +-------
- 2 files changed, 2 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_workarounds.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -710,13 +710,7 @@ INDIRECT_CALLABLE_SCOPE int udp4_gro_com
- 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
- 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
+diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+index 37b2b0440923f..0ea52f77b4c72 100644
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -1644,6 +1644,7 @@ static void
+ xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+ {
+ 	/* Wa_14018575942 / Wa_18018781329 */
++	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
+ 	wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
  
--		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
--			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
--				skb->csum_level++;
--		} else {
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--			skb->csum_level = 0;
--		}
-+		__skb_incr_checksum_unnecessary(skb);
- 
- 		return 0;
- 	}
---- a/net/ipv6/udp_offload.c
-+++ b/net/ipv6/udp_offload.c
-@@ -169,13 +169,7 @@ INDIRECT_CALLABLE_SCOPE int udp6_gro_com
- 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
- 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
- 
--		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
--			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
--				skb->csum_level++;
--		} else {
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--			skb->csum_level = 0;
--		}
-+		__skb_incr_checksum_unnecessary(skb);
- 
- 		return 0;
- 	}
+ 	/* Wa_22016670082 */
+-- 
+2.43.0
+
 
 
