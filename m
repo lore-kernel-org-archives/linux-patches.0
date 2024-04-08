@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B05C7D062;
-	Mon,  8 Apr 2024 13:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BC8524AF;
+	Mon,  8 Apr 2024 13:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583690; cv=none; b=ftVu8OyYVZnY6sR4TMkrHS9YTnnXc+6hNm6gfuS0pZA2mSrVO7pe6krWRVdPy2ak6KlWuzi5MyYix0YcQcFQPLKZzE3olcHiAQX9CmjbhJ0VGeX3xaQZOhLe6Yvc2gWIu/qgvDOIat5B4B9ZeSZEhX8/OLuxN4XUmL+LJFE8xbE=
+	t=1712583693; cv=none; b=aPafFCi6sk5I3S+Jw7Yk6bmQfdNoPQr3WdcnCCF5yiNu2JmEK3CNTqmpKgobWRBCkrVDVl2NXw+pEkpwfw3UhM6NR7QjbQfgMALJVNs/Dax0Qh6iNWiwOfVPTH3SsAyr4/vKoVPYTJAOWr/YoYvyswm22NuDyk4YiQ2QOf1hREM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583690; c=relaxed/simple;
-	bh=7hmlePcG9MfJoFctW1QEBO37HyJXQ01+JE2ggWx3V6A=;
+	s=arc-20240116; t=1712583693; c=relaxed/simple;
+	bh=X6FuGkPkTuGQ0fbnQUvOUW+aaJyS2cLgtVkTLR80b3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhd7rvH55qjcSg3yBKkKByg6wWV3J6Z5cKOWOFqBcVONETtMo+hokGRi+rG37g7RtEj9sJQNuQk4dLgEKeWIOfMgVOh7utpHk1TJzsxxN23xrw2nXSrytol0aIdwdZF1EkMiIwn+dlwk5BFkykMzQI0dQVKCO6hrKWyq0jfC4b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9WyhlPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAfgQOI0ipemcjtoVS3gzLEN979znp5cKRCqZG351zWHQIzyM6sQEiGqzkZfNbYB8JR48dY+wAdWQaEqBs/QxpCC415FdB7GM8YR4/a9Htb8qVv7z04N7IJBDKbe/qSTmSTy06NX5HAEWVhICdoh8ysZY8vmCfiIIYaURTcnnmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYrrSETa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9WyhlPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9687FC43390;
-	Mon,  8 Apr 2024 13:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYrrSETa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0AFC433C7;
+	Mon,  8 Apr 2024 13:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583690;
-	bh=7hmlePcG9MfJoFctW1QEBO37HyJXQ01+JE2ggWx3V6A=;
+	s=korg; t=1712583692;
+	bh=X6FuGkPkTuGQ0fbnQUvOUW+aaJyS2cLgtVkTLR80b3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9WyhlPeAF+68yy/3KfNblyvIe8pGHu80bade5QWS1x26ucEU8l474Wep6NKbXbyQ
-	 YXz0mUXTn8aR1MU4JEckbgy0aqkrTSpBzVkp6SAK79/4Efe4M13JUk3hGHFV5YQaiy
-	 gLPy3vE7yEg7Zi5mM0HinwQWUxBOee5mvtRMD/JA=
+	b=LYrrSETahRWvKXyxWiD6f7XRRtU1Ezt+YIuiSOjcabzncoXlAACvZwuF3bgd44P6+
+	 9cZOAsaZDBY+zzXwi+n2Y5xR1pc0nHNw2AxbDJNdNm7OHsGf4aRyZZEwawejE7ioIP
+	 EktqRzvfWzFQm0/Gm96J6wZQSuG/xlJVtBfZ4jGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.8 197/273] gpio: cdev: fix missed label sanitizing in debounce_setup()
-Date: Mon,  8 Apr 2024 14:57:52 +0200
-Message-ID: <20240408125315.442587814@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.8 209/273] io_uring/rw: dont allow multishot reads without NOWAIT support
+Date: Mon,  8 Apr 2024 14:58:04 +0200
+Message-ID: <20240408125315.848752367@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
 References: <20240408125309.280181634@linuxfoundation.org>
@@ -50,110 +49,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 83092341e15d0dfee1caa8dc502f66c815ccd78a upstream.
+commit 2a975d426c82ff05ec1f0b773798d909fe4a3105 upstream.
 
-When adding sanitization of the label, the path through
-edge_detector_setup() that leads to debounce_setup() was overlooked.
-A request taking this path does not allocate a new label and the
-request label is freed twice when the request is released, resulting
-in memory corruption.
-
-Add label sanitization to debounce_setup().
+Supporting multishot reads requires support for NOWAIT, as the
+alternative would be always having io-wq execute the work item whenever
+the poll readiness triggered. Any fast file type will have NOWAIT
+support (eg it understands both O_NONBLOCK and IOCB_NOWAIT). If the
+given file type does not, then simply resort to single shot execution.
 
 Cc: stable@vger.kernel.org
-Fixes: b34490879baa ("gpio: cdev: sanitize the label before requesting the interrupt")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-[Bartosz: rebased on top of the fix for empty GPIO labels]
-Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: fc68fcda04910 ("io_uring/rw: add support for IORING_OP_READ_MULTISHOT")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |   49 +++++++++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ io_uring/rw.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -734,6 +734,25 @@ static u32 line_event_id(int level)
- 		       GPIO_V2_LINE_EVENT_FALLING_EDGE;
- }
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -938,6 +938,13 @@ int io_read_mshot(struct io_kiocb *req,
+ 	ret = __io_read(req, issue_flags);
  
-+static inline char *make_irq_label(const char *orig)
-+{
-+	char *new;
+ 	/*
++	 * If the file doesn't support proper NOWAIT, then disable multishot
++	 * and stay in single shot mode.
++	 */
++	if (!io_file_supports_nowait(req))
++		req->flags &= ~REQ_F_APOLL_MULTISHOT;
 +
-+	if (!orig)
-+		return NULL;
-+
-+	new = kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
-+	if (!new)
-+		return ERR_PTR(-ENOMEM);
-+
-+	return new;
-+}
-+
-+static inline void free_irq_label(const char *label)
-+{
-+	kfree(label);
-+}
-+
- #ifdef CONFIG_HTE
- 
- static enum hte_return process_hw_ts_thread(void *p)
-@@ -1021,6 +1040,7 @@ static int debounce_setup(struct line *l
- {
- 	unsigned long irqflags;
- 	int ret, level, irq;
-+	char *label;
- 
- 	/* try hardware */
- 	ret = gpiod_set_debounce(line->desc, debounce_period_us);
-@@ -1043,11 +1063,17 @@ static int debounce_setup(struct line *l
- 			if (irq < 0)
- 				return -ENXIO;
- 
-+			label = make_irq_label(line->req->label);
-+			if (IS_ERR(label))
-+				return -ENOMEM;
-+
- 			irqflags = IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING;
- 			ret = request_irq(irq, debounce_irq_handler, irqflags,
--					  line->req->label, line);
--			if (ret)
-+					  label, line);
-+			if (ret) {
-+				free_irq_label(label);
- 				return ret;
-+			}
- 			line->irq = irq;
- 		} else {
- 			ret = hte_edge_setup(line, GPIO_V2_LINE_FLAG_EDGE_BOTH);
-@@ -1089,25 +1115,6 @@ static u32 gpio_v2_line_config_debounce_
- 	return 0;
- }
- 
--static inline char *make_irq_label(const char *orig)
--{
--	char *new;
--
--	if (!orig)
--		return NULL;
--
--	new = kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
--	if (!new)
--		return ERR_PTR(-ENOMEM);
--
--	return new;
--}
--
--static inline void free_irq_label(const char *label)
--{
--	kfree(label);
--}
--
- static void edge_detector_stop(struct line *line)
- {
- 	if (line->irq) {
++	/*
+ 	 * If we get -EAGAIN, recycle our buffer and just let normal poll
+ 	 * handling arm it.
+ 	 */
+@@ -956,7 +963,7 @@ int io_read_mshot(struct io_kiocb *req,
+ 	/*
+ 	 * Any successful return value will keep the multishot read armed.
+ 	 */
+-	if (ret > 0) {
++	if (ret > 0 && req->flags & REQ_F_APOLL_MULTISHOT) {
+ 		/*
+ 		 * Put our buffer and post a CQE. If we fail to post a CQE, then
+ 		 * jump to the termination path. This request is then done.
 
 
