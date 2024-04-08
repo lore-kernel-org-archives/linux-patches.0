@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40207BAEE;
-	Mon,  8 Apr 2024 13:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCB77BAF5;
+	Mon,  8 Apr 2024 13:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582148; cv=none; b=FilbJfO5gbVlxOa2ukEc6fE3sD/xss8zziEqHFjb89okW05HGeVhVbEkMDdtcHAOxn5oLckVcQuBvJrRoplNIksANem8utK6XcAWvP9AEEs4zW1eS/gFgTIsqiVh/QyYvHX2bMGne61oTelsRTvVYehe/ffRmDN3q1330sodTW4=
+	t=1712582151; cv=none; b=IW4yxtI9pKkclGhqYBhNaxj19Rfk9T3fkJAFipyLFtjZ127P8Ea3Q/z2rpPWzSLIgwxVWNFXv0vi76Wz9F8MaKY95Bwq77gA0M6hONKDXJXqTfkJ2xIDQPG6Xy0lZhpr7jliNW0IwtTn9IFZlKALe+DW+KQBkXw7QrYNpSirBgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582148; c=relaxed/simple;
-	bh=k5hCFbJ3X6de+KjSa399A4heGYSbbtSQo/vcDxeEkB0=;
+	s=arc-20240116; t=1712582151; c=relaxed/simple;
+	bh=X8D8cdg5i19atHGCaLhVWygbdG5PSnY0k6+Chze4fiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoHAHnDDpZmkVqM0xC8x+rz1h7TQuCaAXCBDUttZ/2hTPSbl/px/2xMoQ6pemQj2FoZl5c/1Y4wu9uH6vbDE+1n5si2adbf1BEItw5dG/8OZ9trZLDsO5kpc6JzAHOXgoJG39Qczlh4QBmI5KE5LkjCfKZpwYxwdknzxpkyGQZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMstUIDF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxzMqHi8WoEbDKrDLqR95yAhugmXTTWHHGJpmA6MIExTjTMjYGvvO979X15umNtCZ+DHIQ9rxZ8E28ZE8n/ljE7+g9M/GKvl7XPGZ/NM3kT+Jf8kOuYGElelOMmhaLmsqhwY9rVUfZf5CJ5oACUmSU6tzp11FhoRgYhFC/vSrPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsqBcC6I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMstUIDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACBEC43390;
-	Mon,  8 Apr 2024 13:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsqBcC6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D97DC433F1;
+	Mon,  8 Apr 2024 13:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582147;
-	bh=k5hCFbJ3X6de+KjSa399A4heGYSbbtSQo/vcDxeEkB0=;
+	s=korg; t=1712582150;
+	bh=X8D8cdg5i19atHGCaLhVWygbdG5PSnY0k6+Chze4fiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMstUIDFI9gVtcitqthV3ku1XBIFnCN4B5nBXwzUnoV7NM5pjr2fZlJzig1I2kciE
-	 GTd+tbRIEyLyTwJD17zLjyGuF+FSdE/a71DWkp9sLX4SoH0/lHEvVwoqgoH53Rm+pJ
-	 Wzyc8DU5e20PqWbgnU0/xk+hwsi/IEo0KPrC6Ews=
+	b=EsqBcC6IbuBiLMA/1isddbg0klW80lRHdsTCwC/eCaGCu/lJhfxRerpqGKMy17vWx
+	 0Dgc61hYxOkuDilSestgb8MHq6gtPBkUKDIsrG3R2IGD79k7PQynorpuOfp9fZ5ZHO
+	 EDR7vN1G9cjBVzXNMCgI/TE18whamO7rvWfH7Y4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Simon Horman <horms@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 050/273] net: lan743x: Add set RFE read fifo threshold for PCI1x1x chips
-Date: Mon,  8 Apr 2024 14:55:25 +0200
-Message-ID: <20240408125310.848545615@linuxfoundation.org>
+Subject: [PATCH 6.1 082/138] net: ravb: Let IP-specific receive function to interrogate descriptors
+Date: Mon,  8 Apr 2024 14:58:16 +0200
+Message-ID: <20240408125258.776005484@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,95 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit e4a58989f5c839316ac63675e8800b9eed7dbe96 ]
+[ Upstream commit 2b993bfdb47b3aaafd8fe9cd5038b5e297b18ee1 ]
 
-PCI11x1x Rev B0 devices might drop packets when receiving back to back frames
-at 2.5G link speed. Change the B0 Rev device's Receive filtering Engine FIFO
-threshold parameter from its hardware default of 4 to 3 dwords to prevent the
-problem. Rev C0 and later hardware already defaults to 3 dwords.
+ravb_poll() initial code used to interrogate the first descriptor of the
+RX queue in case gPTP is false to determine if ravb_rx() should be called.
+This is done for non-gPTP IPs. For gPTP IPs the driver PTP-specific
+information was used to determine if receive function should be called. As
+every IP has its own receive function that interrogates the RX descriptors
+list in the same way the ravb_poll() was doing there is no need to double
+check this in ravb_poll(). Removing the code from ravb_poll() leads to a
+cleaner code.
 
-Fixes: bb4f6bffe33c ("net: lan743x: Add PCI11010 / PCI11414 device IDs")
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326065805.686128-1-Raju.Lakkaraju@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 596a4254915f ("net: ravb: Always process TX descriptor ring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 18 ++++++++++++++++++
- drivers/net/ethernet/microchip/lan743x_main.h |  4 ++++
- 2 files changed, 22 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 45e209a7d0831..6bf3367404eba 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -25,6 +25,8 @@
- #define PCS_POWER_STATE_DOWN	0x6
- #define PCS_POWER_STATE_UP	0x4
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index e7b70006261f7..36e2718c564ac 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1290,25 +1290,16 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+ 	struct net_device *ndev = napi->dev;
+ 	struct ravb_private *priv = netdev_priv(ndev);
+ 	const struct ravb_hw_info *info = priv->info;
+-	bool gptp = info->gptp || info->ccc_gac;
+-	struct ravb_rx_desc *desc;
+ 	unsigned long flags;
+ 	int q = napi - priv->napi;
+ 	int mask = BIT(q);
+ 	int quota = budget;
+-	unsigned int entry;
  
-+#define RFE_RD_FIFO_TH_3_DWORDS	0x3
-+
- static void pci11x1x_strap_get_status(struct lan743x_adapter *adapter)
- {
- 	u32 chip_rev;
-@@ -3272,6 +3274,21 @@ static void lan743x_full_cleanup(struct lan743x_adapter *adapter)
- 	lan743x_pci_cleanup(adapter);
- }
+-	if (!gptp) {
+-		entry = priv->cur_rx[q] % priv->num_rx_ring[q];
+-		desc = &priv->gbeth_rx_ring[entry];
+-	}
+ 	/* Processing RX Descriptor Ring */
+ 	/* Clear RX interrupt */
+ 	ravb_write(ndev, ~(mask | RIS0_RESERVED), RIS0);
+-	if (gptp || desc->die_dt != DT_FEMPTY) {
+-		if (ravb_rx(ndev, &quota, q))
+-			goto out;
+-	}
++	if (ravb_rx(ndev, &quota, q))
++		goto out;
  
-+static void pci11x1x_set_rfe_rd_fifo_threshold(struct lan743x_adapter *adapter)
-+{
-+	u16 rev = adapter->csr.id_rev & ID_REV_CHIP_REV_MASK_;
-+
-+	if (rev == ID_REV_CHIP_REV_PCI11X1X_B0_) {
-+		u32 misc_ctl;
-+
-+		misc_ctl = lan743x_csr_read(adapter, MISC_CTL_0);
-+		misc_ctl &= ~MISC_CTL_0_RFE_READ_FIFO_MASK_;
-+		misc_ctl |= FIELD_PREP(MISC_CTL_0_RFE_READ_FIFO_MASK_,
-+				       RFE_RD_FIFO_TH_3_DWORDS);
-+		lan743x_csr_write(adapter, MISC_CTL_0, misc_ctl);
-+	}
-+}
-+
- static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 				 struct pci_dev *pdev)
- {
-@@ -3287,6 +3304,7 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 		pci11x1x_strap_get_status(adapter);
- 		spin_lock_init(&adapter->eth_syslock_spinlock);
- 		mutex_init(&adapter->sgmii_rw_lock);
-+		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
- 	} else {
- 		adapter->max_tx_channels = LAN743X_MAX_TX_CHANNELS;
- 		adapter->used_tx_channels = LAN743X_USED_TX_CHANNELS;
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index be79cb0ae5af3..645bc048e52ef 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -26,6 +26,7 @@
- #define ID_REV_CHIP_REV_MASK_		(0x0000FFFF)
- #define ID_REV_CHIP_REV_A0_		(0x00000000)
- #define ID_REV_CHIP_REV_B0_		(0x00000010)
-+#define ID_REV_CHIP_REV_PCI11X1X_B0_	(0x000000B0)
- 
- #define FPGA_REV			(0x04)
- #define FPGA_REV_GET_MINOR_(fpga_rev)	(((fpga_rev) >> 8) & 0x000000FF)
-@@ -311,6 +312,9 @@
- #define SGMII_CTL_LINK_STATUS_SOURCE_	BIT(8)
- #define SGMII_CTL_SGMII_POWER_DN_	BIT(1)
- 
-+#define MISC_CTL_0			(0x920)
-+#define MISC_CTL_0_RFE_READ_FIFO_MASK_	GENMASK(6, 4)
-+
- /* Vendor Specific SGMII MMD details */
- #define SR_VSMMD_PCS_ID1		0x0004
- #define SR_VSMMD_PCS_ID2		0x0005
+ 	/* Processing TX Descriptor Ring */
+ 	spin_lock_irqsave(&priv->lock, flags);
 -- 
 2.43.0
 
