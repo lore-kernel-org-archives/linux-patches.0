@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0628481A6;
-	Mon,  8 Apr 2024 13:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB7B7BB06;
+	Mon,  8 Apr 2024 13:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582744; cv=none; b=SwLaZAYVMQCZQqwuFin+Op04djBt8xpkTxNIbBe0E2gVCSrW5pyXMnr1EmDGaDg03XCEm9xzgTHU9imQQ7IFeiRIk/ZRkvn7dZmGLUUON++yQ5MDc609YClkobgmrmhY4pDsASjXl0xEcjLU/641LwBq6F2t/rcik4Zb3K3GwRw=
+	t=1712582746; cv=none; b=tLGgVYMB7z1UDWAGRnQHV7xOgeslsKi+ZHNu1fn9ECWOJACi6MCo3ulyAVpueM8k3fNG32yfUrqRp1Te+c0DJpb0mlYYqIuBoF4m5BM54UBow9JLAQcnPJ+eADVnF4CslVrxy+xPzURKgUaJ9smerK2S589Ba/aCfeDmWR2neIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582744; c=relaxed/simple;
-	bh=eNMQeopq75lRztzjDC02Knl0lmleE3JZvshGWotNfQE=;
+	s=arc-20240116; t=1712582746; c=relaxed/simple;
+	bh=AlkSEPzBMtIMB4ugCT0K25m6dYWSJyEm/6G5nL0wYOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMf3lJCQXE0+LBQQEKPiD7nEOH1sE1mR3l3tuHGrWvuozoJPPvYtoMQVKNjFrcBj6QCkZlsg43+m4GGiajZswAlE+RTt+f0IF5fiGxKotjWm1E5IhEZFOxjqIlX/ZSyjHwAn08MPaQxJvEEKMQgfdOlzPTRPCKS9J39wugsMKUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0tJ2Dk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGbkps5O4AYU6XDmpxRfwbuXvick8DDfHsAEHkOiWKcUfbxrywx7rI3voWNU3Y8gT5jaZbg7PPzaw++ztZvemjfqRUg7ul7YoZYy7t8A1nA6NaQSGpceEc8p78l5PBQbgY2EHe4JDpMviFoQ2uN4JugoR97IjXB1007ECLm4baM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7fRikwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0tJ2Dk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067ABC433C7;
-	Mon,  8 Apr 2024 13:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7fRikwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9688C43399;
+	Mon,  8 Apr 2024 13:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582743;
-	bh=eNMQeopq75lRztzjDC02Knl0lmleE3JZvshGWotNfQE=;
+	s=korg; t=1712582746;
+	bh=AlkSEPzBMtIMB4ugCT0K25m6dYWSJyEm/6G5nL0wYOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0tJ2Dk2bL7Jv6jHKB1fDOxJf5PDDsgjROpKSt2hIt7u4fq5P9TBYFuar6PzIX8L1
-	 9w29/G3iETipjUwmstxUFL2v95OAQZKMzdCrewqaHl6zmK0R/c2WdMCowxwbywHWa0
-	 XBZS2VbOoJqzUCMJp9/uFl6og4zbMJ++fpPEzueU=
+	b=w7fRikwRKxDrRs/zQQefiyGuUKwiFr2c+NhOrVqaxzMzHkkvcZ5VshSZTSHOA32B9
+	 ARS8tGBNFUQN+/XObBv41amOXlPTgCFxjZj+/8o+Cq61CLxZRcZkCfPz6D2V6cVkxC
+	 j3bUseKrxsNv20vmwSkBSCWNYX0N5e9viJkUwRhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 172/690] inotify: Dont force FS_IN_IGNORED
-Date: Mon,  8 Apr 2024 14:50:38 +0200
-Message-ID: <20240408125405.789573512@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 130/138] smb: client: fix potential UAF in smb2_is_valid_lease_break()
+Date: Mon,  8 Apr 2024 14:59:04 +0200
+Message-ID: <20240408125300.274625874@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit e0462f91d24756916fded4313d508e0fc52f39c9 ]
+commit 705c76fbf726c7a2f6ff9143d4013b18daaaebf1 upstream.
 
-According to Amir:
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-"FS_IN_IGNORED is completely internal to inotify and there is no need
-to set it in i_fsnotify_mask at all, so if we remove the bit from the
-output of inotify_arg_to_mask() no functionality will change and we will
-be able to overload the event bit for FS_ERROR."
-
-This is done in preparation to overload FS_ERROR with the notification
-mechanism in fanotify.
-
-Link: https://lore.kernel.org/r/20211025192746.66445-8-krisman@collabora.com
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/inotify/inotify_user.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2misc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index 9fb7701d2f8a0..b87759b8402be 100644
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -94,10 +94,10 @@ static inline __u32 inotify_arg_to_mask(struct inode *inode, u32 arg)
- 	__u32 mask;
- 
- 	/*
--	 * Everything should accept their own ignored and should receive events
--	 * when the inode is unmounted.  All directories care about children.
-+	 * Everything should receive events when the inode is unmounted.
-+	 * All directories care about children.
- 	 */
--	mask = (FS_IN_IGNORED | FS_UNMOUNT);
-+	mask = (FS_UNMOUNT);
- 	if (S_ISDIR(inode->i_mode))
- 		mask |= FS_EVENT_ON_CHILD;
- 
--- 
-2.43.0
-
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -622,6 +622,8 @@ smb2_is_valid_lease_break(char *buffer,
+ 	/* look up tcon based on tid & uid */
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
++		if (cifs_ses_exiting(ses))
++			continue;
+ 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+ 			spin_lock(&tcon->open_file_lock);
+ 			cifs_stats_inc(
 
 
