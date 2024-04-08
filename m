@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E8F7D07F;
-	Mon,  8 Apr 2024 13:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89557D07C;
+	Mon,  8 Apr 2024 13:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581472; cv=none; b=CxLf0EnqGEZsQOE9yO7Duq8HHbJxqhu3DjJvDEsf/G/Es6pxik517zeEq6VrVOVInsZjVx50+1y6E9k6Lv3+c7p84QCv2lXVEpKK5hHy5kPxbccb0IcJoUW+6CmI5AsNNc3MdwIlUexYwvCQVZXptPQJM1n2vjiKEp5mgTXYTqE=
+	t=1712581474; cv=none; b=LMTuQz34EgZxGiD+OFO6i6Bvk4Tvzf31586NkP26DYjBE0oLvaG4o6ynnGp6cHejHi575UdTNABqRficK8JJCHiREIxpyZ4uGoce1G9OtavI2g/X7lBTjZNeC+BAsHqidzOxnGqoP8/b0Fg4sbO3JMyJZ7Yrxq6NYyQpSlBaM+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581472; c=relaxed/simple;
-	bh=ArSJAl4tSTJCvgIh8UUN+38Yda4QLUf5+JhT6Htf9jk=;
+	s=arc-20240116; t=1712581474; c=relaxed/simple;
+	bh=SaA6Xj5WiaSyWzSfN+hAXEvx5u8Q4AuENMp1y3+kRZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETOOkRux1n2T6cPZTZMlXfxEMLARA0lsC8hFG+PfqJqpJegswgr/XPIaqeIWEqIL19CtjjoTZgfwSnwCe+31mMDHesJjL2UdYqgtxACH4dEeUPYhqF1gpY41y+NajBsa6cpuSNdufZ+j86YPN14EkA6QcGJI9ruywSnRPQKDztk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NwTzRco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqI0lFNwyQ+JpptT5d9S/bY1B28XRts2jvyiV5Iy3Rc1hox6JapD12XcbrvKD4QPyUVFx7cquJMcV75gT3cVOM0a0P5XMPxQJ//ebymPuwqeJRiiG3l7OhrYvHgwsdrmaqfp1s6ul1jkd9LwL2vUhKhdz1jGlFAUM3ZzHpZz9UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9N1rQRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NwTzRco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C5CC433C7;
-	Mon,  8 Apr 2024 13:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9N1rQRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1F4C433F1;
+	Mon,  8 Apr 2024 13:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581471;
-	bh=ArSJAl4tSTJCvgIh8UUN+38Yda4QLUf5+JhT6Htf9jk=;
+	s=korg; t=1712581474;
+	bh=SaA6Xj5WiaSyWzSfN+hAXEvx5u8Q4AuENMp1y3+kRZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NwTzRcoxp8LWjylWWqXI2zIyYZKF83OXHe6gvuuDMBAcqDeKIlJyzyrY3fXwZlkY
-	 S4GOSTJzEKFApiuvGjlZ/sgxP71flQ/ue4kmnxieNCTC2HF6KuSRcDcBKaWl/FcR2m
-	 YUgx5kHxIoTcsEMmZCM6S3CJJ0I6VnLbEJSh06jk=
+	b=P9N1rQRxDAUpk9QbPA66NcA4R8/P6OXdjEQoo8FCCNcgUdSfwKXMaGujNlmjUmlFs
+	 eoujPhOcTtFKsFuynk54eBwodB2Hhh9D5dubm3EJbl2/x8BNi5DZaE82zSXLdtYN+m
+	 ZKKa/MgiRgHb0kvqA2bTj3k5OA2hFpHmzbgBHJRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Antonio SJ Musumeci <trapexit@spawn.link>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/252] tools: ynl: fix setting presence bits in simple nests
-Date: Mon,  8 Apr 2024 14:55:08 +0200
-Message-ID: <20240408125306.937244177@linuxfoundation.org>
+Subject: [PATCH 5.15 054/690] fuse: fix root lookup with nonzero generation
+Date: Mon,  8 Apr 2024 14:48:40 +0200
+Message-ID: <20240408125401.476856946@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit f6c8f5e8694c7a78c94e408b628afa6255cc428a ]
+[ Upstream commit 68ca1b49e430f6534d0774a94147a823e3b8b26e ]
 
-When we set members of simple nested structures in requests
-we need to set "presence" bits for all the nesting layers
-below. This has nothing to do with the presence type of
-the last layer.
+The root inode has a fixed nodeid and generation (1, 0).
 
-Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240321020214.1250202-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Prior to the commit 15db16837a35 ("fuse: fix illegal access to inode with
+reused nodeid") generation number on lookup was ignored.  After this commit
+lookup with the wrong generation number resulted in the inode being
+unhashed.  This is correct for non-root inodes, but replacing the root
+inode is wrong and results in weird behavior.
+
+Fix by reverting to the old behavior if ignoring the generation for the
+root inode, but issuing a warning in dmesg.
+
+Reported-by: Antonio SJ Musumeci <trapexit@spawn.link>
+Closes: https://lore.kernel.org/all/CAOQ4uxhek5ytdN8Yz2tNEOg5ea4NkBb4nk0FGPjPk_9nz-VG3g@mail.gmail.com/
+Fixes: 15db16837a35 ("fuse: fix illegal access to inode with reused nodeid")
+Cc: <stable@vger.kernel.org> # v5.14
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/ynl-gen-c.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fuse/dir.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/net/ynl/ynl-gen-c.py b/tools/net/ynl/ynl-gen-c.py
-index 897af958cee85..575b7e248e521 100755
---- a/tools/net/ynl/ynl-gen-c.py
-+++ b/tools/net/ynl/ynl-gen-c.py
-@@ -198,8 +198,11 @@ class Type(SpecAttr):
-         presence = ''
-         for i in range(0, len(ref)):
-             presence = f"{var}->{'.'.join(ref[:i] + [''])}_present.{ref[i]}"
--            if self.presence_type() == 'bit':
--                code.append(presence + ' = 1;')
-+            # Every layer below last is a nest, so we know it uses bit presence
-+            # last layer is "self" and may be a complex type
-+            if i == len(ref) - 1 and self.presence_type() != 'bit':
-+                continue
-+            code.append(presence + ' = 1;')
-         code += self._setter_lines(ri, member, presence)
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index 4ea52906ae150..44d1c8cc58a42 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -390,6 +390,10 @@ int fuse_lookup_name(struct super_block *sb, u64 nodeid, const struct qstr *name
+ 		goto out_put_forget;
+ 	if (fuse_invalid_attr(&outarg->attr))
+ 		goto out_put_forget;
++	if (outarg->nodeid == FUSE_ROOT_ID && outarg->generation != 0) {
++		pr_warn_once("root generation should be zero\n");
++		outarg->generation = 0;
++	}
  
-         func_name = f"{op_prefix(ri, direction, deref=deref)}_set_{'_'.join(ref)}"
+ 	*inode = fuse_iget(sb, outarg->nodeid, outarg->generation,
+ 			   &outarg->attr, entry_attr_timeout(outarg),
 -- 
 2.43.0
 
