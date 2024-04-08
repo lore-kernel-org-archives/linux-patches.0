@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033132DF73;
-	Mon,  8 Apr 2024 13:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16622DF73;
+	Mon,  8 Apr 2024 13:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581601; cv=none; b=HYCVaj8iHXYrZVCTJuPEDk/oUNePf9YkbVuM9MyjUeVi/sW6PmA4Hu++eQhfpjuzKLAhywSAOz07fB+Kjkh0M95bbQXvAFCaiuGODMEVMKYikHFbfWIX3V98m/+MdVnu0NNzhzrZe5Povj1P7ITPa++lDiY75nY5IRl5wai59Mc=
+	t=1712581603; cv=none; b=Sn28tuwbJvXLz5eYn4Osxl/ZQhXlg4AyG6OfHAKzdz7ANzv8nyz4XIL7aD/m2M/RqtGJQec0WKOD3cVvRb1eo5/pLQojqp6FR2+rAn0436R9SpIdVAH+pIvpHQfVjW8S+Bbiwfgby+3DJ/OxmyEtq5cF1G7xFHt7+GwmZ6FiYv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581601; c=relaxed/simple;
-	bh=x1orwebO4HkvMaaJg9wtz/ruKAM8p23WBBXp28qjyPM=;
+	s=arc-20240116; t=1712581603; c=relaxed/simple;
+	bh=JBugk8JeSbsPuB3Jhx+FEvuZowQjjdEiso3q2mTjjUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPxT/HDA8xc29EIKE+6G/A+zemum3Rb2anPN1bKJYMLBbqMNCr89qKo/wB7J9Nr+/WHPc0hJ1jrPCErpVYI9iK9Vw8gPTX1tezo95sYvMHSSp0sMwTJtf4780Ftx+6i+hZYFqjmjOyuMR7oqoXi/ErporOV25UXQNIymCbdetGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcQT1Iga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nr5+ZtT1EBus+TmIC+12QA/ulAIHOkYQtoCzcMGwleXyKpwt0cXn5yrUJCXUGpISplyC8yB5q31jLavgsAtX22E1wypYkQalFYYivnbD5+n4XwWW4o4NNMKdJzhOmZnOgMCiOkcbswLOvSyn7yMYEqRN5lRRWb1vkEVVfWcRg3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+Roq5bk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcQT1Iga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D2DC433F1;
-	Mon,  8 Apr 2024 13:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+Roq5bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C4FC433C7;
+	Mon,  8 Apr 2024 13:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581600;
-	bh=x1orwebO4HkvMaaJg9wtz/ruKAM8p23WBBXp28qjyPM=;
+	s=korg; t=1712581603;
+	bh=JBugk8JeSbsPuB3Jhx+FEvuZowQjjdEiso3q2mTjjUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcQT1Iga6GBJnkbnrp8D6UTStSx7/t5uyrsG2yXNxPc++20XIPMOoyn6RyDq9kqde
-	 U9dS2og2vM8ailfVUC2R/dg738PzicA3lj95swRZWVMx/63OdI8AJ4JgPxpxZqBEoi
-	 rHggPsLz2UwFzqkSwyoMdVE5FDu91q3nky3B1dgo=
+	b=r+Roq5bkpIBrS/JM0f35q/zuRk18PiLCUF74rfuTWWJ4vzH8FRo30WN9Uy9cBX7NU
+	 wlzg1U+EGMfQldpy3QwXP/gJAgnY3G9jVypb2iwAkUwAJ0tklx/b48Km2timi8S3J0
+	 XEWaf9DVp+lfK4BIoVuwDuuDj5RWGfN+H+aiiSAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 037/138] net: usb: ax88179_178a: avoid the interface always configured as random address
-Date: Mon,  8 Apr 2024 14:57:31 +0200
-Message-ID: <20240408125257.378387182@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 022/252] tcp: properly terminate timers for kernel sockets
+Date: Mon,  8 Apr 2024 14:55:21 +0200
+Message-ID: <20240408125307.340393931@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +49,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 2e91bb99b9d4f756e92e83c4453f894dda220f09 upstream.
+[ Upstream commit 151c9c724d05d5b0dd8acd3e11cb69ef1f2dbada ]
 
-After the commit d2689b6a86b9 ("net: usb: ax88179_178a: avoid two
-consecutive device resets"), reset is not executed from bind operation and
-mac address is not read from the device registers or the devicetree at that
-moment. Since the check to configure if the assigned mac address is random
-or not for the interface, happens after the bind operation from
-usbnet_probe, the interface keeps configured as random address, although the
-address is correctly read and set during open operation (the only reset
-now).
+We had various syzbot reports about tcp timers firing after
+the corresponding netns has been dismantled.
 
-In order to keep only one reset for the device and to avoid the interface
-always configured as random address, after reset, configure correctly the
-suitable field from the driver, if the mac address is read successfully from
-the device registers or the devicetree. Take into account if a locally
-administered address (random) was previously stored.
+Fortunately Josef Bacik could trigger the issue more often,
+and could test a patch I wrote two years ago.
 
-cc: stable@vger.kernel.org # 6.6+
-Fixes: d2689b6a86b9 ("net: usb: ax88179_178a: avoid two consecutive device resets")
-Reported-by: Dave Stevenson  <dave.stevenson@raspberrypi.com>
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240403132158.344838-1-jtornosm@redhat.com
+When TCP sockets are closed, we call inet_csk_clear_xmit_timers()
+to 'stop' the timers.
+
+inet_csk_clear_xmit_timers() can be called from any context,
+including when socket lock is held.
+This is the reason it uses sk_stop_timer(), aka del_timer().
+This means that ongoing timers might finish much later.
+
+For user sockets, this is fine because each running timer
+holds a reference on the socket, and the user socket holds
+a reference on the netns.
+
+For kernel sockets, we risk that the netns is freed before
+timer can complete, because kernel sockets do not hold
+reference on the netns.
+
+This patch adds inet_csk_clear_xmit_timers_sync() function
+that using sk_stop_timer_sync() to make sure all timers
+are terminated before the kernel socket is released.
+Modules using kernel sockets close them in their netns exit()
+handler.
+
+Also add sock_not_owned_by_me() helper to get LOCKDEP
+support : inet_csk_clear_xmit_timers_sync() must not be called
+while socket lock is held.
+
+It is very possible we can revert in the future commit
+3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
+which attempted to solve the issue in rds only.
+(net/smc/af_smc.c and net/mptcp/subflow.c have similar code)
+
+We probably can remove the check_net() tests from
+tcp_out_of_resources() and __tcp_close() in the future.
+
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Closes: https://lore.kernel.org/netdev/20240314210740.GA2823176@perftesting/
+Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
+Fixes: 8a68173691f0 ("net: sk_clone_lock() should only do get_net() if the parent is not a kernel socket")
+Link: https://lore.kernel.org/bpf/CANn89i+484ffqb93aQm1N-tjxxvb3WDKX0EbD7318RwRgsatjw@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/r/20240322135732.1535772-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/net/inet_connection_sock.h |  1 +
+ include/net/sock.h                 |  7 +++++++
+ net/ipv4/inet_connection_sock.c    | 14 ++++++++++++++
+ net/ipv4/tcp.c                     |  2 ++
+ 4 files changed, 24 insertions(+)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1273,6 +1273,8 @@ static void ax88179_get_mac_addr(struct
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 01a73bf74fa19..6ecac01115d9c 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -173,6 +173,7 @@ void inet_csk_init_xmit_timers(struct sock *sk,
+ 			       void (*delack_handler)(struct timer_list *),
+ 			       void (*keepalive_handler)(struct timer_list *));
+ void inet_csk_clear_xmit_timers(struct sock *sk);
++void inet_csk_clear_xmit_timers_sync(struct sock *sk);
  
- 	if (is_valid_ether_addr(mac)) {
- 		eth_hw_addr_set(dev->net, mac);
-+		if (!is_local_ether_addr(mac))
-+			dev->net->addr_assign_type = NET_ADDR_PERM;
- 	} else {
- 		netdev_info(dev->net, "invalid MAC address, using random\n");
- 		eth_hw_addr_random(dev->net);
+ static inline void inet_csk_schedule_ack(struct sock *sk)
+ {
+diff --git a/include/net/sock.h b/include/net/sock.h
+index e70c903b04f30..25780942ec8bf 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1808,6 +1808,13 @@ static inline void sock_owned_by_me(const struct sock *sk)
+ #endif
+ }
+ 
++static inline void sock_not_owned_by_me(const struct sock *sk)
++{
++#ifdef CONFIG_LOCKDEP
++	WARN_ON_ONCE(lockdep_sock_is_held(sk) && debug_locks);
++#endif
++}
++
+ static inline bool sock_owned_by_user(const struct sock *sk)
+ {
+ 	sock_owned_by_me(sk);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 762817d6c8d70..a587cb6be807c 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -774,6 +774,20 @@ void inet_csk_clear_xmit_timers(struct sock *sk)
+ }
+ EXPORT_SYMBOL(inet_csk_clear_xmit_timers);
+ 
++void inet_csk_clear_xmit_timers_sync(struct sock *sk)
++{
++	struct inet_connection_sock *icsk = inet_csk(sk);
++
++	/* ongoing timer handlers need to acquire socket lock. */
++	sock_not_owned_by_me(sk);
++
++	icsk->icsk_pending = icsk->icsk_ack.pending = 0;
++
++	sk_stop_timer_sync(sk, &icsk->icsk_retransmit_timer);
++	sk_stop_timer_sync(sk, &icsk->icsk_delack_timer);
++	sk_stop_timer_sync(sk, &sk->sk_timer);
++}
++
+ void inet_csk_delete_keepalive_timer(struct sock *sk)
+ {
+ 	sk_stop_timer(sk, &sk->sk_timer);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 68bb8d6bcc113..f8df35f7352a5 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2931,6 +2931,8 @@ void tcp_close(struct sock *sk, long timeout)
+ 	lock_sock(sk);
+ 	__tcp_close(sk, timeout);
+ 	release_sock(sk);
++	if (!sk->sk_net_refcnt)
++		inet_csk_clear_xmit_timers_sync(sk);
+ 	sock_put(sk);
+ }
+ EXPORT_SYMBOL(tcp_close);
+-- 
+2.43.0
+
 
 
