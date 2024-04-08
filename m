@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E78C6EB72;
-	Mon,  8 Apr 2024 13:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2B56EB72;
+	Mon,  8 Apr 2024 13:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584407; cv=none; b=A6BUcnaYD8OWyDO08m4wFp4Z24VoSEkVEXa380BolIHxezbUuvgGzlzbLmd3QIMiHqTy0jAFaZbzZKYCInxLOrPNeB4PGYWgIocZkpybTaIByDM5hg+W0gC6CVlCYShhRPFwzSVqjiYdBbsbSYCZrg7WeTFXckIrVx43NMjaQeA=
+	t=1712584410; cv=none; b=dKHj8Nm/YiTx1bm7DyF79qrD5/z7mnWs3x5sWtiM0Mn6OLqtRwl8Bh5E76QU7yJuU7PURLKXAp2CTlW+fM0tZ+DhbAtu/FvfYv6pcruS+aX0F0L+HNEks9DFZIYr5dimZieiKevUBAOXw2wefLIbWzERyyUazGe9Y2Ot+aK5yAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584407; c=relaxed/simple;
-	bh=cWOjhagEYoWrzQbWynYvpFEjMCicnDmYYVVI0LIejh8=;
+	s=arc-20240116; t=1712584410; c=relaxed/simple;
+	bh=taLhaOU4tF+R17HE4kzeYFMLLuRayI7MYwPfS0faN1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiyVyu3psF0qoEFU+QRKTkZPE76RJoVxr45praCSTMhTSY0iKQKG9TyvdOA31Ev+ARab3UdkJHTNNUIS/+Hb9gTdsmySKyDVbeLm1ckEKv4axP0qiYMoA6mqPKDEBCb3kpDNJfO2cWUZSRw/Jgi7pmdh6nGRAajndn88Sr/o6DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiiNs7mK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7UM8bYpttkeDOWlpfdkSEWhTXbQxjHmoiDjArspf0Bt1AvsP1tkQYciNM1urskjufc508vTKiM4ASYxCp6W6GppdUrlbJfxtM0J0CjhS45qU4hvMoLpAtIQbCTxvY5GAxjV1G7wkYNMTnjA0N+baHJgdeBj8eqtNB5EcMV879c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/Z/afKl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiiNs7mK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4EAC433C7;
-	Mon,  8 Apr 2024 13:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/Z/afKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC60C433C7;
+	Mon,  8 Apr 2024 13:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584407;
-	bh=cWOjhagEYoWrzQbWynYvpFEjMCicnDmYYVVI0LIejh8=;
+	s=korg; t=1712584410;
+	bh=taLhaOU4tF+R17HE4kzeYFMLLuRayI7MYwPfS0faN1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZiiNs7mK4v93bbuwb0G2ZO8Vs5omhsFRLA9p8bn/KTlvoJkWawDpYaiPn++bG7yyz
-	 d/OUGn+j1Td0P4r4fQpn5ZRHiw8WM10GuIvfbp+n5w/jzvp+2dvd7x4zaO3GWW5KBr
-	 K5MioR0XQHzit2t8mc83QreWhG3aujtC6zafAfvo=
+	b=O/Z/afKlO4rgoy9Mwv5bUlk0IsMBXbvv3Y6BrkfPomjtHgGoTMnfpKxQiY/CC22rx
+	 8j3RkrhmVSv4Hkyl9QHn3cwsDdvkC9EUuYpcu2rBv3zoscvW7K+caXeQNEY/dZvFcu
+	 8U72rRUy8nM7wcBVryrpqRsdkmbP2Ri5usZoFRCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 5.15 428/690] NFSD: Add tracepoints to report NFSv4 callback completions
-Date: Mon,  8 Apr 2024 14:54:54 +0200
-Message-ID: <20240408125415.099637969@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 429/690] NFSD: Add a mechanism to wait for a DELEGRETURN
+Date: Mon,  8 Apr 2024 14:54:55 +0200
+Message-ID: <20240408125415.135625578@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,134 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1035d65446a018ca2dd179e29a2fcd6d29057781 ]
+[ Upstream commit c035362eb935fe9381d9d1cc453bc2a37460e24c ]
 
-Wireshark has always been lousy about dissecting NFSv4 callbacks,
-especially NFSv4.0 backchannel requests. Add tracepoints so we
-can surgically capture these events in the trace log.
+Subsequent patches will use this mechanism to wake up an operation
+that is waiting for a client to return a delegation.
 
-Tracepoints are time-stamped and ordered so that we can now observe
-the timing relationship between a CB_RECALL Reply and the client's
-DELEGRETURN Call. Example:
+The new tracepoint records whether the wait timed out or was
+properly awoken by the expected DELEGRETURN:
 
-            nfsd-1153  [002]   211.986391: nfsd_cb_recall:       addr=192.168.1.67:45767 client 62ea82e4:fee7492a stateid 00000003:00000001
+            nfsd-1155  [002] 83799.493199: nfsd_delegret_wakeup: xid=0x14b7d6ef fh_hash=0xf6826792 (timed out)
 
-            nfsd-1153  [002]   212.095634: nfsd_compound:        xid=0x0000002c opcnt=2
-            nfsd-1153  [002]   212.095647: nfsd_compound_status: op=1/2 OP_PUTFH status=0
-            nfsd-1153  [002]   212.095658: nfsd_file_put:        hash=0xf72 inode=0xffff9291148c7410 ref=3 flags=HASHED|REFERENCED may=READ file=0xffff929103b3ea00
-            nfsd-1153  [002]   212.095661: nfsd_compound_status: op=2/2 OP_DELEGRETURN status=0
-   kworker/u25:8-148   [002]   212.096713: nfsd_cb_recall_done:  client 62ea82e4:fee7492a stateid 00000003:00000001 status=0
-
+Suggested-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4layouts.c |  2 +-
- fs/nfsd/nfs4proc.c    |  4 ++++
- fs/nfsd/nfs4state.c   |  4 ++++
- fs/nfsd/trace.h       | 39 +++++++++++++++++++++++++++++++++++++++
- 4 files changed, 48 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c | 30 ++++++++++++++++++++++++++++++
+ fs/nfsd/nfsd.h      |  7 +++++++
+ fs/nfsd/trace.h     | 23 +++++++++++++++++++++++
+ 3 files changed, 60 insertions(+)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 7018d209b784a..e4e23b2a3e655 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -657,7 +657,7 @@ nfsd4_cb_layout_done(struct nfsd4_callback *cb, struct rpc_task *task)
- 	ktime_t now, cutoff;
- 	const struct nfsd4_layout_ops *ops;
- 
--
-+	trace_nfsd_cb_layout_done(&ls->ls_stid.sc_stateid, task);
- 	switch (task->tk_status) {
- 	case 0:
- 	case -NFS4ERR_DELAY:
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index e4c0dc577fe35..ce8062c959315 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1604,6 +1604,10 @@ static void nfsd4_cb_offload_release(struct nfsd4_callback *cb)
- static int nfsd4_cb_offload_done(struct nfsd4_callback *cb,
- 				 struct rpc_task *task)
- {
-+	struct nfsd4_cb_offload *cbo =
-+		container_of(cb, struct nfsd4_cb_offload, co_cb);
-+
-+	trace_nfsd_cb_offload_done(&cbo->co_res.cb_stateid, task);
- 	return 1;
- }
- 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 66cf8217ebe57..a0c5658599ead 100644
+index a0c5658599ead..6cb654e308787 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -357,6 +357,8 @@ nfsd4_cb_notify_lock_prepare(struct nfsd4_callback *cb)
- static int
- nfsd4_cb_notify_lock_done(struct nfsd4_callback *cb, struct rpc_task *task)
- {
-+	trace_nfsd_cb_notify_lock_done(&zero_stateid, task);
+@@ -4734,6 +4734,35 @@ nfs4_share_conflict(struct svc_fh *current_fh, unsigned int deny_type)
+ 	return ret;
+ }
+ 
++static bool nfsd4_deleg_present(const struct inode *inode)
++{
++	struct file_lock_context *ctx = smp_load_acquire(&inode->i_flctx);
 +
- 	/*
- 	 * Since this is just an optimization, we don't try very hard if it
- 	 * turns out not to succeed. We'll requeue it on NFS4ERR_DELAY, and
-@@ -4760,6 +4762,8 @@ static int nfsd4_cb_recall_done(struct nfsd4_callback *cb,
++	return ctx && !list_empty_careful(&ctx->flc_lease);
++}
++
++/**
++ * nfsd_wait_for_delegreturn - wait for delegations to be returned
++ * @rqstp: the RPC transaction being executed
++ * @inode: in-core inode of the file being waited for
++ *
++ * The timeout prevents deadlock if all nfsd threads happen to be
++ * tied up waiting for returning delegations.
++ *
++ * Return values:
++ *   %true: delegation was returned
++ *   %false: timed out waiting for delegreturn
++ */
++bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp, struct inode *inode)
++{
++	long __maybe_unused timeo;
++
++	timeo = wait_var_event_timeout(inode, !nfsd4_deleg_present(inode),
++				       NFSD_DELEGRETURN_TIMEOUT);
++	trace_nfsd_delegret_wakeup(rqstp, inode, timeo);
++	return timeo > 0;
++}
++
+ static void nfsd4_cb_recall_prepare(struct nfsd4_callback *cb)
  {
  	struct nfs4_delegation *dp = cb_to_delegation(cb);
+@@ -6797,6 +6826,7 @@ nfsd4_delegreturn(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (status)
+ 		goto put_stateid;
  
-+	trace_nfsd_cb_recall_done(&dp->dl_stid.sc_stateid, task);
-+
- 	if (dp->dl_stid.sc_type == NFS4_CLOSED_DELEG_STID ||
- 	    dp->dl_stid.sc_type == NFS4_REVOKED_DELEG_STID)
- 	        return 1;
++	wake_up_var(d_inode(cstate->current_fh.fh_dentry));
+ 	destroy_delegation(dp);
+ put_stateid:
+ 	nfs4_put_stid(&dp->dl_stid);
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 57a468ed85c35..6ab4ad41ae84e 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -164,6 +164,7 @@ char * nfs4_recoverydir(void);
+ bool nfsd4_spo_must_allow(struct svc_rqst *rqstp);
+ int nfsd4_create_laundry_wq(void);
+ void nfsd4_destroy_laundry_wq(void);
++bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp, struct inode *inode);
+ #else
+ static inline int nfsd4_init_slabs(void) { return 0; }
+ static inline void nfsd4_free_slabs(void) { }
+@@ -179,6 +180,11 @@ static inline bool nfsd4_spo_must_allow(struct svc_rqst *rqstp)
+ }
+ static inline int nfsd4_create_laundry_wq(void) { return 0; };
+ static inline void nfsd4_destroy_laundry_wq(void) {};
++static inline bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp,
++					      struct inode *inode)
++{
++	return false;
++}
+ #endif
+ 
+ /*
+@@ -343,6 +349,7 @@ void		nfsd_lockd_shutdown(void);
+ #define	NFSD_COURTESY_CLIENT_TIMEOUT	(24 * 60 * 60)	/* seconds */
+ #define	NFSD_CLIENT_MAX_TRIM_PER_RUN	128
+ #define	NFS4_CLIENTS_PER_GB		1024
++#define NFSD_DELEGRETURN_TIMEOUT	(HZ / 34)	/* 30ms */
+ 
+ /*
+  * The following attributes are currently not supported by the NFSv4 server:
 diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index c5d4a258680c3..d832429e575e4 100644
+index d832429e575e4..1229502b6e9e0 100644
 --- a/fs/nfsd/trace.h
 +++ b/fs/nfsd/trace.h
-@@ -1449,6 +1449,45 @@ TRACE_EVENT(nfsd_cb_offload,
- 		__entry->fh_hash, __entry->count, __entry->status)
- );
+@@ -538,6 +538,29 @@ DEFINE_NFSD_COPY_ERR_EVENT(clone_file_range_err);
+ #include "filecache.h"
+ #include "vfs.h"
  
-+DECLARE_EVENT_CLASS(nfsd_cb_done_class,
++TRACE_EVENT(nfsd_delegret_wakeup,
 +	TP_PROTO(
-+		const stateid_t *stp,
-+		const struct rpc_task *task
++		const struct svc_rqst *rqstp,
++		const struct inode *inode,
++		long timeo
 +	),
-+	TP_ARGS(stp, task),
++	TP_ARGS(rqstp, inode, timeo),
 +	TP_STRUCT__entry(
-+		__field(u32, cl_boot)
-+		__field(u32, cl_id)
-+		__field(u32, si_id)
-+		__field(u32, si_generation)
-+		__field(int, status)
++		__field(u32, xid)
++		__field(const void *, inode)
++		__field(long, timeo)
 +	),
 +	TP_fast_assign(
-+		__entry->cl_boot = stp->si_opaque.so_clid.cl_boot;
-+		__entry->cl_id = stp->si_opaque.so_clid.cl_id;
-+		__entry->si_id = stp->si_opaque.so_id;
-+		__entry->si_generation = stp->si_generation;
-+		__entry->status = task->tk_status;
++		__entry->xid = be32_to_cpu(rqstp->rq_xid);
++		__entry->inode = inode;
++		__entry->timeo = timeo;
 +	),
-+	TP_printk("client %08x:%08x stateid %08x:%08x status=%d",
-+		__entry->cl_boot, __entry->cl_id, __entry->si_id,
-+		__entry->si_generation, __entry->status
++	TP_printk("xid=0x%08x inode=%p%s",
++		  __entry->xid, __entry->inode,
++		  __entry->timeo == 0 ? " (timed out)" : ""
 +	)
 +);
 +
-+#define DEFINE_NFSD_CB_DONE_EVENT(name)			\
-+DEFINE_EVENT(nfsd_cb_done_class, name,			\
-+	TP_PROTO(					\
-+		const stateid_t *stp,			\
-+		const struct rpc_task *task		\
-+	),						\
-+	TP_ARGS(stp, task))
-+
-+DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_recall_done);
-+DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_notify_lock_done);
-+DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_layout_done);
-+DEFINE_NFSD_CB_DONE_EVENT(nfsd_cb_offload_done);
-+
- #endif /* _NFSD_TRACE_H */
- 
- #undef TRACE_INCLUDE_PATH
+ DECLARE_EVENT_CLASS(nfsd_stateid_class,
+ 	TP_PROTO(stateid_t *stp),
+ 	TP_ARGS(stp),
 -- 
 2.43.0
 
