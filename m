@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB57D2E62C;
-	Mon,  8 Apr 2024 13:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A826F08B;
+	Mon,  8 Apr 2024 13:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581346; cv=none; b=MClWhXm6REGOk7Gc8GwVo4mO2XulLWLKQVaG91d5CBVF7AvG6hs+iEqKADfIBqjAODAKhuy+QA+vyBBNJlZiIjYWX9eL+nxMPajnoKjHOooIoMJEf4LmGbcVnzP0b2Dsn33L8iempFT4dB9pWlW9iSGTEpaKkNcf9PIGdKnXrjM=
+	t=1712581349; cv=none; b=CQ9UK1Zws7DmxIcUEUv54WbQ8+ZaVKRS8I5w3lw2cD+6ab97XZpUmrT97dSrjTX3BAH2bRpTLvOpq4/4OAd4axCC61kRS51+BcwkCO4xFmVWbQlBE3RhsgdkykuNcpi5nQtU+eBrKpf/F28nbPXXlk0jRi90bISpCJtGpo7MjA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581346; c=relaxed/simple;
-	bh=uINnUpd8bOS/mmQ5KnxTcXSAT9G2ANvhNm9jgeKCnGw=;
+	s=arc-20240116; t=1712581349; c=relaxed/simple;
+	bh=3LiNNVZcyDaKQqpM4bKfBctEBlW985j/OtCmY/IX6aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wju7A8qUZnoH0tmTMa+Pl2vBtHAnqXuJts040ICemNJfKXqGLPKxsbd2xQLvMed7Crp5pl7j7Po/2CrVi29EIW7wbEh/cF/6Ciydf4lmleSpmkF+0fuo3dhYTSD2tkRipkTVn0aXJlg5LAVhjjqJHfqEzw1sXASfzMo71TInPLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImDNSrVB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpsuPPQo2WIFSy9Alr5DlD5prew6UJlSBG/LLygRtPv7i8KRvko42NCDpN+nmhIyFLvLKAshtBNrkKpYQVa2c0rV8BmnYPVC4bZ30McMbYYJKNHhEUM5iH93RTcs3pHLAqqw4E/brKA7NLU+16K/jzyURwaAAKjYEI+N6BqXL54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYQ/Hicz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImDNSrVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365E9C433F1;
-	Mon,  8 Apr 2024 13:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYQ/Hicz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A0C433F1;
+	Mon,  8 Apr 2024 13:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581346;
-	bh=uINnUpd8bOS/mmQ5KnxTcXSAT9G2ANvhNm9jgeKCnGw=;
+	s=korg; t=1712581349;
+	bh=3LiNNVZcyDaKQqpM4bKfBctEBlW985j/OtCmY/IX6aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImDNSrVBsQ4VE2N/CxRlqJl3kqNL0ZUkQKgwHIjJxg+hDvVscrCs2MV/+jwFiJ+Mc
-	 Jr26HoPIpMoOD49tnJNczedZ0GzJfO9JUjZQAM6h4J1hWcerJrs7uU9hmsmE/1Dhor
-	 KxBf92ztUK+xnQNzAEcN8mdJsbyaVwXlF1lk1Nt8=
+	b=PYQ/HiczMugNwJZjgRaqH51wb2eUruTRNtqf823pRo3GqTfvSLIIeDEDdGf8dQfSG
+	 pR7y3w1Y1vDQc5c/p4gCcRWnSAtmsBusabiCO6QB2Zp6vs/doqPk0SCBqri2c3GA8i
+	 wPrgp4WiltumJuGmLNxN7lqTyu8/1/ZV9CdhLQbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/690] crypto: qat - resolve race condition during AER recovery
-Date: Mon,  8 Apr 2024 14:48:09 +0200
-Message-ID: <20240408125400.402932983@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 006/138] ixgbe: avoid sleeping allocation in ixgbe_ipsec_vf_add_sa()
+Date: Mon,  8 Apr 2024 14:57:00 +0200
+Message-ID: <20240408125256.423082655@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +51,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damian Muszynski <damian.muszynski@intel.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 7d42e097607c4d246d99225bf2b195b6167a210c ]
+[ Upstream commit aec806fb4afba5fe80b09e29351379a4292baa43 ]
 
-During the PCI AER system's error recovery process, the kernel driver
-may encounter a race condition with freeing the reset_data structure's
-memory. If the device restart will take more than 10 seconds the function
-scheduling that restart will exit due to a timeout, and the reset_data
-structure will be freed. However, this data structure is used for
-completion notification after the restart is completed, which leads
-to a UAF bug.
+Change kzalloc() flags used in ixgbe_ipsec_vf_add_sa() to GFP_ATOMIC, to
+avoid sleeping in IRQ context.
 
-This results in a KFENCE bug notice.
+Dan Carpenter, with the help of Smatch, has found following issue:
+The patch eda0333ac293: "ixgbe: add VF IPsec management" from Aug 13,
+2018 (linux-next), leads to the following Smatch static checker
+warning: drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c:917 ixgbe_ipsec_vf_add_sa()
+	warn: sleeping in IRQ context
 
-  BUG: KFENCE: use-after-free read in adf_device_reset_worker+0x38/0xa0 [intel_qat]
-  Use-after-free read at 0x00000000bc56fddf (in kfence-#142):
-  adf_device_reset_worker+0x38/0xa0 [intel_qat]
-  process_one_work+0x173/0x340
+The call tree that Smatch is worried about is:
+ixgbe_msix_other() <- IRQ handler
+-> ixgbe_msg_task()
+   -> ixgbe_rcv_msg_from_vf()
+      -> ixgbe_ipsec_vf_add_sa()
 
-To resolve this race condition, the memory associated to the container
-of the work_struct is freed on the worker if the timeout expired,
-otherwise on the function that schedules the worker.
-The timeout detection can be done by checking if the caller is
-still waiting for completion or not by using completion_done() function.
-
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: eda0333ac293 ("ixgbe: add VF IPsec management")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/intel-wired-lan/db31a0b0-4d9f-4e6b-aed8-88266eb5665c@moroto.mountain
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_aer.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_aer.c b/drivers/crypto/qat/qat_common/adf_aer.c
-index b3138f8fc3f30..040595a6ab75f 100644
---- a/drivers/crypto/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/qat/qat_common/adf_aer.c
-@@ -95,7 +95,8 @@ static void adf_device_reset_worker(struct work_struct *work)
- 	if (adf_dev_init(accel_dev) || adf_dev_start(accel_dev)) {
- 		/* The device hanged and we can't restart it so stop here */
- 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
--		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
-+		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
-+		    completion_done(&reset_data->compl))
- 			kfree(reset_data);
- 		WARN(1, "QAT: device restart failed. Device is unusable\n");
- 		return;
-@@ -103,11 +104,19 @@ static void adf_device_reset_worker(struct work_struct *work)
- 	adf_dev_restarted_notify(accel_dev);
- 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
- 
--	/* The dev is back alive. Notify the caller if in sync mode */
--	if (reset_data->mode == ADF_DEV_RESET_SYNC)
--		complete(&reset_data->compl);
--	else
-+	/*
-+	 * The dev is back alive. Notify the caller if in sync mode
-+	 *
-+	 * If device restart will take a more time than expected,
-+	 * the schedule_reset() function can timeout and exit. This can be
-+	 * detected by calling the completion_done() function. In this case
-+	 * the reset_data structure needs to be freed here.
-+	 */
-+	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
-+	    completion_done(&reset_data->compl))
- 		kfree(reset_data);
-+	else
-+		complete(&reset_data->compl);
- }
- 
- static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
-@@ -140,8 +149,9 @@ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
- 			dev_err(&GET_DEV(accel_dev),
- 				"Reset device timeout expired\n");
- 			ret = -EFAULT;
-+		} else {
-+			kfree(reset_data);
- 		}
--		kfree(reset_data);
- 		return ret;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
+index 774de63dd93a6..15fc2acffb871 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ipsec.c
+@@ -908,7 +908,13 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
+ 		goto err_out;
  	}
- 	return 0;
+ 
+-	xs = kzalloc(sizeof(*xs), GFP_KERNEL);
++	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
++	if (unlikely(!algo)) {
++		err = -ENOENT;
++		goto err_out;
++	}
++
++	xs = kzalloc(sizeof(*xs), GFP_ATOMIC);
+ 	if (unlikely(!xs)) {
+ 		err = -ENOMEM;
+ 		goto err_out;
+@@ -924,14 +930,8 @@ int ixgbe_ipsec_vf_add_sa(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
+ 		memcpy(&xs->id.daddr.a4, sam->addr, sizeof(xs->id.daddr.a4));
+ 	xs->xso.dev = adapter->netdev;
+ 
+-	algo = xfrm_aead_get_byname(aes_gcm_name, IXGBE_IPSEC_AUTH_BITS, 1);
+-	if (unlikely(!algo)) {
+-		err = -ENOENT;
+-		goto err_xs;
+-	}
+-
+ 	aead_len = sizeof(*xs->aead) + IXGBE_IPSEC_KEY_BITS / 8;
+-	xs->aead = kzalloc(aead_len, GFP_KERNEL);
++	xs->aead = kzalloc(aead_len, GFP_ATOMIC);
+ 	if (unlikely(!xs->aead)) {
+ 		err = -ENOMEM;
+ 		goto err_xs;
 -- 
 2.43.0
 
