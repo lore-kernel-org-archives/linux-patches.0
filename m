@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B5181724;
-	Mon,  8 Apr 2024 13:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A05B84D03;
+	Mon,  8 Apr 2024 13:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581847; cv=none; b=qavPixNWwDUSlCpZxykpSGeUU/DqKw0Rz0AG2QnjCgpPzRgO+20y8oOO0Y2UOSj5SNn2t3o6kybhHlewUR9XJoVrFLhLKqVPCv5u08kPLVTm8l2NPrGGHSdyHz47xp67l67vHhombfjwRVgaLGaz9NJfSQl23Ao2h6tDFYajLuM=
+	t=1712581850; cv=none; b=IwuvUPJKirwej5CEkHZyts9dgNoob3TZjCa+aXBlpnf/Uv10gRNkOnz5u+l/pcc29JS0vA6RygFKhDN+3+j0dszL3fUqQ/4PbDBjDtYkHuZjmNHWMwnOTaNpXe6DPjDx6v8BTdaxVoHSlOMzRTiUqNKIPyy6MiTSa+cMO03HCc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581847; c=relaxed/simple;
-	bh=JlnRkrpMZJZUj1q5VoQ9OlVSMF6cw4JZO6AcFGswBEI=;
+	s=arc-20240116; t=1712581850; c=relaxed/simple;
+	bh=p1uNTQT6UPwmAHYzicBYzeC6DJIx9bSfW3BgnCeOxCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKrFCcbskENYHJVq5sUm+BCh+WQbPRX3nXVxwbeZ6POfDK4tjhOhxoZn+adCDDG2qeM/Gri5TJhsci2LNci0Yq7cL4OA/qGe1dfk5HkLx2ly1ZBuzccRyRTmz/wrGamyV8taiZ1GFfk2a9sNsXuB9iZaNicAxOjVjdSHVzhjpTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNQbB8lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ey70TbiD/+oHlCh8a+UQYcjat1ifQ8Rw/AayZ3o8DoNzQYj0vNRMImQV0tTA6VDJe5jJTrRNdj48wpkdqPNs1Nia5xgwanDe0CRCMQHhmpqiS7MKGYO98Jw6A6ikQ0gOGdaRz9/xGo9RVZ96g2K4jZ2D/DqPjjdqkxSIk5+tFk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyfn9nKJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNQbB8lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDDEC433C7;
-	Mon,  8 Apr 2024 13:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyfn9nKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CB7C43330;
+	Mon,  8 Apr 2024 13:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581846;
-	bh=JlnRkrpMZJZUj1q5VoQ9OlVSMF6cw4JZO6AcFGswBEI=;
+	s=korg; t=1712581849;
+	bh=p1uNTQT6UPwmAHYzicBYzeC6DJIx9bSfW3BgnCeOxCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNQbB8lvcvHcbPteogb8S5iA0A/QoSf4F+jWLpRH1iyJ8Z/QBgcSEFKs49g7T9Um0
-	 gczp1g/t+28cfFBI8v6w+Tn/O+hq/4+JHq1lKJh2tGI74DTB6PE2Zq6xmC+bdRzV0P
-	 iYqtZzxcafRmDPkHx6yMLjcUVoQCL6q3SXG4I1es=
+	b=iyfn9nKJjZXS6yj9/oPM8BK86V++JO8yYRfo8AGNzGO8EZK9vQt7ak3Ay24V5vUYh
+	 72+8V/dCvBVppbgQl6ninsKkavzFUmdh9/wqgxjabUyiS+93tUJffX/scP2JYu8JdM
+	 FrDwpgACF/GDWYeDlYfpj7EUrveoNueIqUUJVAuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/690] ring-buffer: Do not set shortest_full when full target is hit
-Date: Mon,  8 Apr 2024 14:49:13 +0200
-Message-ID: <20240408125402.636612952@linuxfoundation.org>
+Subject: [PATCH 6.6 031/252] tls: get psock ref after taking rxlock to avoid leak
+Date: Mon,  8 Apr 2024 14:55:30 +0200
+Message-ID: <20240408125307.612069168@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 761d9473e27f0c8782895013a3e7b52a37c8bcfc ]
+[ Upstream commit 417e91e856099e9b8a42a2520e2255e6afe024be ]
 
-The rb_watermark_hit() checks if the amount of data in the ring buffer is
-above the percentage level passed in by the "full" variable. If it is, it
-returns true.
+At the start of tls_sw_recvmsg, we take a reference on the psock, and
+then call tls_rx_reader_lock. If that fails, we return directly
+without releasing the reference.
 
-But it also sets the "shortest_full" field of the cpu_buffer that informs
-writers that it needs to call the irq_work if the amount of data on the
-ring buffer is above the requested amount.
+Instead of adding a new label, just take the reference after locking
+has succeeded, since we don't need it before.
 
-The rb_watermark_hit() always sets the shortest_full even if the amount in
-the ring buffer is what it wants. As it is not going to wait, because it
-has what it wants, there's no reason to set shortest_full.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240312115641.6aa8ba08@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 4cbc325ed6b4 ("tls: rx: allow only one reader at a time")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/fe2ade22d030051ce4c3638704ed58b67d0df643.1711120964.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 15067de333497..c942c3e990a3d 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -940,9 +940,10 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
- 		pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
- 		ret = !pagebusy && full_hit(buffer, cpu, full);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 925de4caa894a..df166f6afad82 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1976,10 +1976,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	if (unlikely(flags & MSG_ERRQUEUE))
+ 		return sock_recv_errqueue(sk, msg, len, SOL_IP, IP_RECVERR);
  
--		if (!cpu_buffer->shortest_full ||
--		    cpu_buffer->shortest_full > full)
--			cpu_buffer->shortest_full = full;
-+		if (!ret && (!cpu_buffer->shortest_full ||
-+			     cpu_buffer->shortest_full > full)) {
-+		    cpu_buffer->shortest_full = full;
-+		}
- 		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
- 	}
- 	return ret;
+-	psock = sk_psock_get(sk);
+ 	err = tls_rx_reader_lock(sk, ctx, flags & MSG_DONTWAIT);
+ 	if (err < 0)
+ 		return err;
++	psock = sk_psock_get(sk);
+ 	bpf_strp_enabled = sk_psock_strp_enabled(psock);
+ 
+ 	/* If crypto failed the connection is broken */
 -- 
 2.43.0
 
