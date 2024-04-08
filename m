@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C267CF25;
-	Mon,  8 Apr 2024 13:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34F57D062;
+	Mon,  8 Apr 2024 13:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581335; cv=none; b=qOl+l2AgV8YvajraUw30LMkQEYb1VPK590TKzTymMA+YBY19B0PD3V/5BcDKlShwGPvi+v6DIJRQE+q1QGpi7yg0OHpTGQWoXueBHfcnU4hVy0lJLCsorRyWbLhhUTH/MGwUZhrVn8100OWTqvXf6/N4PiD2S6ZPZ6sjPpHhdZI=
+	t=1712581337; cv=none; b=uhPPsFvG/SYJBt8NG6I46LlOvTaMgphhbVMuTNKDW8yC7//Ad+/m0Z2Ms4PY+4vrmg9mGhndvfbehSlHExGu4z/2RAsCVJKbbxZ0YpdDtEYFdwCX7I+U55hRI1PJQAkHfNcbwl3DEJVA7FPCfJczLuBmQjjCAaITAPSXlTgPOrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581335; c=relaxed/simple;
-	bh=HqTyyEjIJlEDNh37qmKAtEyQJQgv8BNxpHvnPH/VFcQ=;
+	s=arc-20240116; t=1712581337; c=relaxed/simple;
+	bh=d5WtnGIwY/ty292BDhUut9H23IG009q8FeeOKUYdjzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6N9O7bVA3pwwB5k1fefqI5/1URna33QKA3LUohq4nrIb23i7IDy1AVuv6MUZjXiEBCeU1+dnyORqrSRdZLZBLXRmQqc1zNVa/XGdIpnksf7CtPhysF0X/PcOlF61i1CEJ/MNhAxH1+YWPauf9meRJrxMI+RIKIATpsSkx0O25A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFhEqmeX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b17/KvO04DLZ0sFiex635re27iDQj9KqAsEswzs27p19mW5/FpkkVibNt+ou3MFgS9axurbMFHMUsd05/d/q55HiePhdE3u5uJo3tdeLteRMXIjPAGtojkKb9MVTWsStBTRY73ixez2sVUZ9i9571HlWYG5aZiULiwmcwfT3eU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwbdQEg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFhEqmeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED4AC433C7;
-	Mon,  8 Apr 2024 13:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwbdQEg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D9EC433C7;
+	Mon,  8 Apr 2024 13:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581334;
-	bh=HqTyyEjIJlEDNh37qmKAtEyQJQgv8BNxpHvnPH/VFcQ=;
+	s=korg; t=1712581337;
+	bh=d5WtnGIwY/ty292BDhUut9H23IG009q8FeeOKUYdjzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFhEqmeXAgfcx3fXzFp0k+2ISpPjK959SnWFyR1Fh3PqjkW/e+mUnRMMl4Q2pBKF3
-	 WykiMctvQAxpngpD1kuE26qLkyRKuJAgtrhZvNnNxiymsWmCunFpHZFjLlmwQh1+My
-	 PMEKbRtzoBwQK2qQSq0AgOio/nI/4ioZDTkwbP8w=
+	b=iwbdQEg/5s55erjWOQ7BOqMsiJ9DzzyrVkFZ7AX6SvyZDqhSTIQ+m5UkFulnfl/qr
+	 FmZQVwFAIruGWxOsgNm2d+YeUSqHP0G7Kj03TTu45KpcUEm3ZkTxOa9k3kz90Rkluw
+	 /DPbbv4jl1CUb4fbhPIO5k2gXjm1Td3r6icAJbLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Stable@vger.kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/690] mtd: rawnand: meson: fix scrambling mode value in command macro
-Date: Mon,  8 Apr 2024 14:48:20 +0200
-Message-ID: <20240408125400.778451355@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Subject: [PATCH 6.1 005/138] wifi: iwlwifi: mvm: rfi: fix potential response leaks
+Date: Mon,  8 Apr 2024 14:56:59 +0200
+Message-ID: <20240408125256.391470964@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ef6f463599e16924cdd02ce5056ab52879dc008c ]
+[ Upstream commit 06a093807eb7b5c5b29b6cff49f8174a4e702341 ]
 
-Scrambling mode is enabled by value (1 << 19). NFC_CMD_SCRAMBLER_ENABLE
-is already (1 << 19), so there is no need to shift it again in CMDRWGEN
-macro.
+If the rx payload length check fails, or if kmemdup() fails,
+we still need to free the command response. Fix that.
 
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Cc: <Stable@vger.kernel.org>
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240210214551.441610-1-avkrasnov@salutedevices.com
+Fixes: 21254908cbe9 ("iwlwifi: mvm: add RFI-M support")
+Co-authored-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240319100755.db2fa0196aa7.I116293b132502ac68a65527330fa37799694b79c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rfi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
-index 9d441965321ad..9198d54cb34ee 100644
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -59,7 +59,7 @@
- #define CMDRWGEN(cmd_dir, ran, bch, short_mode, page_size, pages)	\
- 	(								\
- 		(cmd_dir)			|			\
--		((ran) << 19)			|			\
-+		(ran)				|			\
- 		((bch) << 14)			|			\
- 		((short_mode) << 13)		|			\
- 		(((page_size) & 0x7f) << 6)	|			\
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
+index bb77bc9aa8218..fb2408c0551d2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
+@@ -122,14 +122,18 @@ struct iwl_rfi_freq_table_resp_cmd *iwl_rfi_get_freq_table(struct iwl_mvm *mvm)
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) != resp_size))
++	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) !=
++			 resp_size)) {
++		iwl_free_resp(&cmd);
+ 		return ERR_PTR(-EIO);
++	}
+ 
+ 	resp = kmemdup(cmd.resp_pkt->data, resp_size, GFP_KERNEL);
++	iwl_free_resp(&cmd);
++
+ 	if (!resp)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	iwl_free_resp(&cmd);
+ 	return resp;
+ }
+ 
 -- 
 2.43.0
 
