@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF7B7FBCF;
-	Mon,  8 Apr 2024 14:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E18B80022;
+	Mon,  8 Apr 2024 14:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585101; cv=none; b=aGZsFdgT0+JxofRxjl6b3MSrlg5gfWupXXlePun6roCfjKxc//DGm5epAlJts2iZdsD6a87Xbg+ULh5HSiBBtgL65Flt1yX76qaaccQ2B8O9QqQw2ObsS7Jt/vUaC9NTypjVAH2se0KJXobciglUEsMU2jeuPO40Uh8VlgMVH7Y=
+	t=1712585104; cv=none; b=ebKRB9ZPGl7a70yz3Q8g/ufc2Dz/+pmioeSrqkkr3db4zcUq4gba9AROpQsTLTnd4ZLq1kh9X5HXD5n79YGfQ0xw7AOm8Z/+U2lUZwJWhShANH6U77s7LuUo4QbFfuteDV6Sw6dZTiXBngKV2HfUBgs8SVJRWbvJIwdLvjEzSMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585101; c=relaxed/simple;
-	bh=31SwdHWZufX3i+XuLQrSZF59EKGxOxN1nbTJQwNVEFY=;
+	s=arc-20240116; t=1712585104; c=relaxed/simple;
+	bh=EGFLo4IuLgzJdA43rEzj9T97XY62u3BfP2dhNneljCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAMvbciJ4o9Nh21kwZoVjshs3j8gg/zf/oDrxPT9kQKSi2Y4cRcH8s8PyHe/N+FKedx//3iIL2QsVRN2CH1K0feuDl3n0/ccKpF4g1CWzEXlgrGupPv/beaBEPvZ/Xw1P3Rl8AIdwxJzI2UCDBzSv5wz/v4nELLDU034YceGJ8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq8y4jZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OsZr3C+1lq8q+W6s/ISn5MD94cwOqjcRQlwaQ5r6xxeSddaxT4EzNliAgMnPsetDOvW2EJCb6Csec+A3CRKMcVlg55l6Ki7mfJSCnD2DarCkX/0W2nJ6hrzfJvKFWSIvsKs1nlQc3aVqFOLRG0AUUAfMhQjt+fAicUkD+Nir00s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGnGMNd3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq8y4jZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217E7C43390;
-	Mon,  8 Apr 2024 14:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGnGMNd3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA8DC433C7;
+	Mon,  8 Apr 2024 14:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585101;
-	bh=31SwdHWZufX3i+XuLQrSZF59EKGxOxN1nbTJQwNVEFY=;
+	s=korg; t=1712585104;
+	bh=EGFLo4IuLgzJdA43rEzj9T97XY62u3BfP2dhNneljCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kq8y4jZudrdPDWmXyuQXx90+aDXQ/64Tz6afqCN1D6gd8NExWeIBDxGdk96iteoFO
-	 oQj5BfFNScNPGUo3WLTgrHX4Vig/xS3f9tGGqwxhiGKdZbNf/uUv8E7gE0e2CWkbjU
-	 rs5qDqYM8jcdTwhEL/F9xA1eKG+kAW6nuYskKaD4=
+	b=nGnGMNd3pExYGbOW1j3ByjURQ5Vkn+SJRnCBE0jXMafhDxao5LS2l4rCn4bL+LHmR
+	 HaHMyUgSqrMeRPVZUw6U6GoBsv1b1+3KLdLcwsQJCZfOk5/DfpRePc2wJFMrtuuoJM
+	 O8RPCWeGFvWeon/EU7x8G2G1YQd753WPpia/yqQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Kirjanov <dkirjanov@suse.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 664/690] drivers: net: convert to boolean for the mac_managed_pm flag
-Date: Mon,  8 Apr 2024 14:58:50 +0200
-Message-ID: <20240408125423.736953092@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 647/690] ipv6: Fix infinite recursion in fib6_dump_done().
+Date: Mon,  8 Apr 2024 14:58:33 +0200
+Message-ID: <20240408125423.095441447@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,70 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Kirjanov <dkirjanov@suse.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit eca485d22165695587bed02d8b9d0f7f44246c4a ]
+commit d21d40605bca7bd5fc23ef03d4c1ca1f48bc2cae upstream.
 
-Signed-off-by: Dennis Kirjanov <dkirjanov@suse.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: cbc17e7802f5 ("net: fec: Set mac_managed_pm during probe")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+syzkaller reported infinite recursive calls of fib6_dump_done() during
+netlink socket destruction.  [1]
+
+>From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then
+the response was generated.  The following recvmmsg() resumed the dump
+for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due
+to the fault injection.  [0]
+
+  12:01:34 executing program 3:
+  r0 = socket$nl_route(0x10, 0x3, 0x0)
+  sendmsg$nl_route(r0, ... snip ...)
+  recvmmsg(r0, ... snip ...) (fail_nth: 8)
+
+Here, fib6_dump_done() was set to nlk_sk(sk)->cb.done, and the next call
+of inet6_dump_fib() set it to nlk_sk(sk)->cb.args[3].  syzkaller stopped
+receiving the response halfway through, and finally netlink_sock_destruct()
+called nlk_sk(sk)->cb.done().
+
+fib6_dump_done() calls fib6_dump_end() and nlk_sk(sk)->cb.done() if it
+is still not NULL.  fib6_dump_end() rewrites nlk_sk(sk)->cb.done() by
+nlk_sk(sk)->cb.args[3], but it has the same function, not NULL, calling
+itself recursively and hitting the stack guard page.
+
+To avoid the issue, let's set the destructor after kzalloc().
+
+[0]:
+FAULT_INJECTION: forcing a failure.
+name failslab, interval 1, probability 0, space 0, times 0
+CPU: 1 PID: 432110 Comm: syz-executor.3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:117)
+ should_fail_ex (lib/fault-inject.c:52 lib/fault-inject.c:153)
+ should_failslab (mm/slub.c:3733)
+ kmalloc_trace (mm/slub.c:3748 mm/slub.c:3827 mm/slub.c:3992)
+ inet6_dump_fib (./include/linux/slab.h:628 ./include/linux/slab.h:749 net/ipv6/ip6_fib.c:662)
+ rtnl_dump_all (net/core/rtnetlink.c:4029)
+ netlink_dump (net/netlink/af_netlink.c:2269)
+ netlink_recvmsg (net/netlink/af_netlink.c:1988)
+ ____sys_recvmsg (net/socket.c:1046 net/socket.c:2801)
+ ___sys_recvmsg (net/socket.c:2846)
+ do_recvmmsg (net/socket.c:2943)
+ __x64_sys_recvmmsg (net/socket.c:3041 net/socket.c:3034 net/socket.c:3034)
+
+[1]:
+BUG: TASK stack guard page was hit at 00000000f2fa9af1 (stack is 00000000b7912430..000000009a436beb)
+stack guard page: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 223719 Comm: kworker/1:3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Workqueue: events netlink_sock_destruct_work
+RIP: 0010:fib6_dump_done (net/ipv6/ip6_fib.c:570)
+Code: 3c 24 e8 f3 e9 51 fd e9 28 fd ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 41 57 41 56 41 55 41 54 55 48 89 fd <53> 48 8d 5d 60 e8 b6 4d 07 fd 48 89 da 48 b8 00 00 00 00 00 fc ff
+RSP: 0018:ffffc9000d980000 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffffffff84405990 RCX: ffffffff844059d3
+RDX: ffff8881028e0000 RSI: ffffffff84405ac2 RDI: ffff88810c02f358
+RBP: ffff88810c02f358 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000224 R12: 0000000000000000
+R13: ffff888007c82c78 R14: ffff888007c82c68 R15: ffff888007c82c68
+FS:  0000000000000000(0000) GS:ffff88811b100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffc9000d97fff8 CR3: 0000000102309002 CR4: 0000000000770ef0
+PKRU: 55555554
+Call Trace:
+ <#DF>
+ </#DF>
+ <TASK>
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ ...
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ netlink_sock_destruct (net/netlink/af_netlink.c:401)
+ __sk_destruct (net/core/sock.c:2177 (discriminator 2))
+ sk_destruct (net/core/sock.c:2224)
+ __sk_free (net/core/sock.c:2235)
+ sk_free (net/core/sock.c:2246)
+ process_one_work (kernel/workqueue.c:3259)
+ worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
+ kthread (kernel/kthread.c:388)
+ ret_from_fork (arch/x86/kernel/process.c:153)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:256)
+Modules linked in:
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240401211003.25274-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 2 +-
- drivers/net/ethernet/realtek/r8169_main.c | 2 +-
- drivers/net/usb/asix_devices.c            | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/ip6_fib.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 39875ccbaa0fc..6662c0013959e 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2132,7 +2132,7 @@ static int fec_enet_mii_probe(struct net_device *ndev)
- 	fep->link = 0;
- 	fep->full_duplex = 0;
- 
--	phy_dev->mac_managed_pm = 1;
-+	phy_dev->mac_managed_pm = true;
- 
- 	phy_attached_info(phy_dev);
- 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index e7e805a152631..623286f221054 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -5177,7 +5177,7 @@ static int r8169_mdio_register(struct rtl8169_private *tp)
- 		return -EUNATCH;
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -645,19 +645,19 @@ static int inet6_dump_fib(struct sk_buff
+ 	if (!w) {
+ 		/* New dump:
+ 		 *
+-		 * 1. hook callback destructor.
+-		 */
+-		cb->args[3] = (long)cb->done;
+-		cb->done = fib6_dump_done;
+-
+-		/*
+-		 * 2. allocate and initialize walker.
++		 * 1. allocate and initialize walker.
+ 		 */
+ 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
+ 		if (!w)
+ 			return -ENOMEM;
+ 		w->func = fib6_dump_node;
+ 		cb->args[2] = (long)w;
++
++		/* 2. hook callback destructor.
++		 */
++		cb->args[3] = (long)cb->done;
++		cb->done = fib6_dump_done;
++
  	}
  
--	tp->phydev->mac_managed_pm = 1;
-+	tp->phydev->mac_managed_pm = true;
- 
- 	phy_support_asym_pause(tp->phydev);
- 
-diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
-index 254637c2b1830..5a4137b2531f1 100644
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -694,7 +694,7 @@ static int ax88772_init_phy(struct usbnet *dev)
- 	}
- 
- 	phy_suspend(priv->phydev);
--	priv->phydev->mac_managed_pm = 1;
-+	priv->phydev->mac_managed_pm = true;
- 
- 	phy_attached_info(priv->phydev);
- 
-@@ -711,7 +711,7 @@ static int ax88772_init_phy(struct usbnet *dev)
- 		return -ENODEV;
- 	}
- 
--	priv->phydev_int->mac_managed_pm = 1;
-+	priv->phydev_int->mac_managed_pm = true;
- 	phy_suspend(priv->phydev_int);
- 
- 	return 0;
--- 
-2.43.0
-
+ 	arg.skb = skb;
 
 
