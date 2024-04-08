@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D146A342;
-	Mon,  8 Apr 2024 13:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF517BAFF;
+	Mon,  8 Apr 2024 13:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584230; cv=none; b=WO0ylG9Ckw1awfJlO6kQCQASyPcXvWZYCBycBlpUI6UpJNEK6UyEhjmVLoUwfrU4joRER4o9CCOAwCL4nB9zqFzAxkmPkiRfFOe38YFlH78RbKt0cuAXVLaAw4Q1o/U2mwVj8gwIXqMZY9mfikGFiUFppD3axPzbUeaJw4VQwds=
+	t=1712584233; cv=none; b=aROndRE7uQfd7IRJNYWR/aostzXkOFmWrA/eKkMrASPSia86vBqXrRLpJ7Gh5iwb0HRypYleR8UaFnCz1giiaHXeh5XHawmFN+cpn8WB7H9obtpTelAkjJhsL5VOvAE69FJu8+ul4ZfFi57+6ZnnkHjgD2Gpy4EXqM79tOIU3is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584230; c=relaxed/simple;
-	bh=TxDsciJacmhxk/wai7Jcv2+bSBYbCtU+ETOP1PPvOgw=;
+	s=arc-20240116; t=1712584233; c=relaxed/simple;
+	bh=dINWdPh8nhdKTeQ1Cg7fXGXPdpbuNA0BelUQGwQNkeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqLdEj+5D8crgGAXSYD1oBQZT06NCxlPKAFQ4RtAfOMYRLDMgIBWfjCL+qvJPyIO228esNxYVwj4ql6UJz0GkZEjEi6Mg7bomWulDeowoLnT0KRdE0zvUCp2+kqTdNtde16XYrQILeZWfOrKDTj+eL8AXKKydAYnUYw2ZNC9t2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SK+FpL6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xxa2QU5+BHWUSJHhqntjn0DayW1ZBw9VA7g18/TEDB+cnUj07IykYQ+iZbQ9CLHlws2ykpmjZaCY4TjSB9J1yzLTzA55BGpSgfx65nIFDVTa0bkOluBEUftbG+ngn4kvv23034hQYZiOWS9xMSBD34Z2bQd5u7WyaAsUwznerk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOSqFe/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SK+FpL6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D1EC433C7;
-	Mon,  8 Apr 2024 13:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOSqFe/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7EBC433F1;
+	Mon,  8 Apr 2024 13:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584230;
-	bh=TxDsciJacmhxk/wai7Jcv2+bSBYbCtU+ETOP1PPvOgw=;
+	s=korg; t=1712584233;
+	bh=dINWdPh8nhdKTeQ1Cg7fXGXPdpbuNA0BelUQGwQNkeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SK+FpL6fTq5ED+FvUpGgKqRlQCt3E6bPgaBdSH+LV+cBFZ45a5ZRZaaAKpp6L95bM
-	 67ynN/IeqsBb90ut6jGwr+rrL92VC3V7L+1s8DUF3F9h/+s1ZCWaRTxlhqCB7Fsi8i
-	 +1yjzDyviqJT94XovK4jsglbJ5D4eqcJdI02rjxE=
+	b=mOSqFe/RMUUbUdCfv4vsG2KSgngsAQKrNWuF6I0W5mn9w+s0TrWKxsR3dlJb23FeG
+	 ih15qhUoKIbPMypwB/LP8dISsAWM+SGOZNQyOCVFHWJnImelov4LuGQPHoyPepBF4U
+	 L97D0+HcYBdq0dBDQy67vjN3F0a4RQlg7IyzNJa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 367/690] NFSD: Remove nfsd_file::nf_hashval
-Date: Mon,  8 Apr 2024 14:53:53 +0200
-Message-ID: <20240408125412.862985880@linuxfoundation.org>
+Subject: [PATCH 5.15 368/690] NFSD: Replace the "init once" mechanism
+Date: Mon,  8 Apr 2024 14:53:54 +0200
+Message-ID: <20240408125412.902299083@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,61 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit f0743c2b25c65debd4f599a7c861428cd9de5906 ]
+[ Upstream commit c7b824c3d06c85e054caf86e227255112c5e3c38 ]
 
-The value in this field can always be computed from nf_inode, thus
-it is no longer used.
+In a moment, the nfsd_file_hashtbl global will be replaced with an
+rhashtable. Replace the one or two spots that need to check if the
+hash table is available. We can easily reuse the SHUTDOWN flag for
+this purpose.
+
+Document that this mechanism relies on callers to hold the
+nfsd_mutex to prevent init, shutdown, and purging to run
+concurrently.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/filecache.c | 6 ++----
- fs/nfsd/filecache.h | 1 -
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ fs/nfsd/filecache.c | 42 ++++++++++++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index dd59deec8b011..29b1f57692a60 100644
+index 29b1f57692a60..33bb4d31b4972 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -167,8 +167,7 @@ nfsd_file_mark_find_or_create(struct nfsd_file *nf)
+@@ -27,7 +27,7 @@
+ #define NFSD_FILE_HASH_SIZE                  (1 << NFSD_FILE_HASH_BITS)
+ #define NFSD_LAUNDRETTE_DELAY		     (2 * HZ)
+ 
+-#define NFSD_FILE_SHUTDOWN		     (1)
++#define NFSD_FILE_CACHE_UP		     (0)
+ 
+ /* We only care about NFSD_MAY_READ/WRITE for this cache */
+ #define NFSD_FILE_MAY_MASK	(NFSD_MAY_READ|NFSD_MAY_WRITE)
+@@ -58,7 +58,7 @@ static struct kmem_cache		*nfsd_file_slab;
+ static struct kmem_cache		*nfsd_file_mark_slab;
+ static struct nfsd_fcache_bucket	*nfsd_file_hashtbl;
+ static struct list_lru			nfsd_file_lru;
+-static long				nfsd_file_lru_flags;
++static unsigned long			nfsd_file_flags;
+ static struct fsnotify_group		*nfsd_file_fsnotify_group;
+ static atomic_long_t			nfsd_filecache_count;
+ static struct delayed_work		nfsd_filecache_laundrette;
+@@ -66,9 +66,8 @@ static struct delayed_work		nfsd_filecache_laundrette;
+ static void
+ nfsd_file_schedule_laundrette(void)
+ {
+-	long count = atomic_long_read(&nfsd_filecache_count);
+-
+-	if (count == 0 || test_bit(NFSD_FILE_SHUTDOWN, &nfsd_file_lru_flags))
++	if ((atomic_long_read(&nfsd_filecache_count) == 0) ||
++	    test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 0)
+ 		return;
+ 
+ 	queue_delayed_work(system_wq, &nfsd_filecache_laundrette,
+@@ -697,9 +696,8 @@ nfsd_file_cache_init(void)
+ 	int		ret = -ENOMEM;
+ 	unsigned int	i;
+ 
+-	clear_bit(NFSD_FILE_SHUTDOWN, &nfsd_file_lru_flags);
+-
+-	if (nfsd_file_hashtbl)
++	lockdep_assert_held(&nfsd_mutex);
++	if (test_and_set_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 1)
+ 		return 0;
+ 
+ 	nfsd_filecache_wq = alloc_workqueue("nfsd_filecache", 0, 0);
+@@ -785,8 +783,8 @@ nfsd_file_cache_init(void)
+ /*
+  * Note this can deadlock with nfsd_file_lru_cb.
+  */
+-void
+-nfsd_file_cache_purge(struct net *net)
++static void
++__nfsd_file_cache_purge(struct net *net)
+ {
+ 	unsigned int		i;
+ 	struct nfsd_file	*nf;
+@@ -794,9 +792,6 @@ nfsd_file_cache_purge(struct net *net)
+ 	LIST_HEAD(dispose);
+ 	bool del;
+ 
+-	if (!nfsd_file_hashtbl)
+-		return;
+-
+ 	for (i = 0; i < NFSD_FILE_HASH_SIZE; i++) {
+ 		struct nfsd_fcache_bucket *nfb = &nfsd_file_hashtbl[i];
+ 
+@@ -857,6 +852,19 @@ nfsd_file_cache_start_net(struct net *net)
+ 	return nn->fcache_disposal ? 0 : -ENOMEM;
  }
  
- static struct nfsd_file *
--nfsd_file_alloc(struct inode *inode, unsigned int may, unsigned int hashval,
--		struct net *net)
-+nfsd_file_alloc(struct inode *inode, unsigned int may, struct net *net)
++/**
++ * nfsd_file_cache_purge - Remove all cache items associated with @net
++ * @net: target net namespace
++ *
++ */
++void
++nfsd_file_cache_purge(struct net *net)
++{
++	lockdep_assert_held(&nfsd_mutex);
++	if (test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 1)
++		__nfsd_file_cache_purge(net);
++}
++
+ void
+ nfsd_file_cache_shutdown_net(struct net *net)
  {
- 	struct nfsd_file *nf;
+@@ -869,7 +877,9 @@ nfsd_file_cache_shutdown(void)
+ {
+ 	int i;
  
-@@ -182,7 +181,6 @@ nfsd_file_alloc(struct inode *inode, unsigned int may, unsigned int hashval,
- 		nf->nf_net = net;
- 		nf->nf_flags = 0;
- 		nf->nf_inode = inode;
--		nf->nf_hashval = hashval;
- 		refcount_set(&nf->nf_ref, 1);
- 		nf->nf_may = may & NFSD_FILE_MAY_MASK;
- 		nf->nf_mark = NULL;
-@@ -1005,7 +1003,7 @@ nfsd_do_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (nf)
- 		goto wait_for_construction;
+-	set_bit(NFSD_FILE_SHUTDOWN, &nfsd_file_lru_flags);
++	lockdep_assert_held(&nfsd_mutex);
++	if (test_and_clear_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 0)
++		return;
  
--	new = nfsd_file_alloc(inode, may_flags, hashval, net);
-+	new = nfsd_file_alloc(inode, may_flags, net);
- 	if (!new) {
- 		status = nfserr_jukebox;
- 		goto out_status;
-diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
-index c6ad5fe47f12f..82051e1b8420d 100644
---- a/fs/nfsd/filecache.h
-+++ b/fs/nfsd/filecache.h
-@@ -40,7 +40,6 @@ struct nfsd_file {
- #define NFSD_FILE_REFERENCED	(2)
- 	unsigned long		nf_flags;
- 	struct inode		*nf_inode;
--	unsigned int		nf_hashval;
- 	refcount_t		nf_ref;
- 	unsigned char		nf_may;
- 	struct nfsd_file_mark	*nf_mark;
+ 	lease_unregister_notifier(&nfsd_file_lease_notifier);
+ 	unregister_shrinker(&nfsd_file_shrinker);
+@@ -878,7 +888,7 @@ nfsd_file_cache_shutdown(void)
+ 	 * calling nfsd_file_cache_purge
+ 	 */
+ 	cancel_delayed_work_sync(&nfsd_filecache_laundrette);
+-	nfsd_file_cache_purge(NULL);
++	__nfsd_file_cache_purge(NULL);
+ 	list_lru_destroy(&nfsd_file_lru);
+ 	rcu_barrier();
+ 	fsnotify_put_group(nfsd_file_fsnotify_group);
+@@ -1142,7 +1152,7 @@ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
+ 	 * don't end up racing with server shutdown
+ 	 */
+ 	mutex_lock(&nfsd_mutex);
+-	if (nfsd_file_hashtbl) {
++	if (test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 1) {
+ 		for (i = 0; i < NFSD_FILE_HASH_SIZE; i++) {
+ 			count += nfsd_file_hashtbl[i].nfb_count;
+ 			longest = max(longest, nfsd_file_hashtbl[i].nfb_count);
 -- 
 2.43.0
 
