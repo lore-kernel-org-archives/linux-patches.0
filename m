@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6656B7C08B;
-	Mon,  8 Apr 2024 13:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F68362148;
+	Mon,  8 Apr 2024 13:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581294; cv=none; b=KYgjqtOBMG7YZvRHofHPDEcZ1cfcJTA78gmorGPh49rbF2sY1QlTCa1YkX7iPnaE6p3u4+ctglp5qqBqPQREK2gd/tJ8mLF5xvNWI+6lrOoYDNbXYO50F4mnS6MFBvOUXeZyxodXRyoK6295lP66f5J87nWZaMqf4KSldi4KzOw=
+	t=1712581297; cv=none; b=oO5fHYgrlU4opLk0EMzwDdUa+RQJ5ba4Eo2LAE/vkDyfScc8lRaTzbp4V5H3EojQo04yCcmYS07eycLEfX/ycwldIqEX8a0mSyB7A+ztZh4xF7DQPZ8Sv987wCGIK8i4zNvIdNuJC5Ci8ZPly229I4/nsDvIX4BFsUM7vJY1rdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581294; c=relaxed/simple;
-	bh=VgMR1rDFEV1y3GJzoQEmQDA38KOg0Wdjm115F+JmlVk=;
+	s=arc-20240116; t=1712581297; c=relaxed/simple;
+	bh=4sAAdv1HAmcD13Mw+l/KKwJuR8vNaizX0wtuCNI+8yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AD4x11bfTZe+tfz5iaEbbxIBvN/Z2oRLceHGe2RIbORaPkSsDJdtU8btVck4IGvv4qydbp7nycRy9hMcJ/Lt9qfwWPYjQCe+w1/LGMuP75y/7jvNp2ng8nNKNukCsWH9JRCxhPWwu/Nxp2DpYI0iLPYPXV4zrsp7c3RHAwAMJGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzqCkkx6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3Kt4KtjvOlkddGbIJbNnCf/06SVaz0E8e7N63MeC1tzBVR9SaVtZasEvj3+oWjM0qZiZLW+4+yupzmtNn3BZsb72zEOQ70fA5T1RQ2ro738mRw3sXpsI2B/Ph4ulsUbt7Pf1CauOM9xa3XUCN1yDEKUFzucGIVD9oygS08qh0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSLKFk2X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzqCkkx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D49EC433F1;
-	Mon,  8 Apr 2024 13:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSLKFk2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8949BC433C7;
+	Mon,  8 Apr 2024 13:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581294;
-	bh=VgMR1rDFEV1y3GJzoQEmQDA38KOg0Wdjm115F+JmlVk=;
+	s=korg; t=1712581296;
+	bh=4sAAdv1HAmcD13Mw+l/KKwJuR8vNaizX0wtuCNI+8yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzqCkkx6Edb2hrvsrs8O9bHomX/vv21zCXsRI9aaE1H0YeI6DlH+7jlwpebUxsqOo
-	 1pm3tr2SLTtdX+V0VIycGdj5HcwmpDvFYJ40ScKgwemcIHzQkD6bIM773BZkq7Crf4
-	 6uEe/ge5WVNnCpyk4/pa5iP7JMIe2p2XLZrroCNM=
+	b=bSLKFk2XIzrwQVsm/3/UWnJSzLJ0KbmP7K5bUSY0kW85AKb1SlXXID1qE5IC02G9d
+	 WFORYtLpHdvsG529WRGkhKldXso6iZCn2vm1SW7l/5H8eN7MF3iVFA08TT6Xsedbyv
+	 eem/TmR8K7ZVGtyr+x3GHGCKkqDj//d1ktfkuZ08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 006/690] KVM: x86: Use a switch statement and macros in __feature_translate()
-Date: Mon,  8 Apr 2024 14:47:52 +0200
-Message-ID: <20240408125359.778217488@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 007/690] timers: Update kernel-doc for various functions
+Date: Mon,  8 Apr 2024 14:47:53 +0200
+Message-ID: <20240408125359.809766281@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,87 +53,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 80c883db87d9ffe2d685e91ba07a087b1c246c78 upstream.
+[ Upstream commit 14f043f1340bf30bc60af127bff39f55889fef26 ]
 
-Use a switch statement with macro-generated case statements to handle
-translating feature flags in order to reduce the probability of runtime
-errors due to copy+paste goofs, to make compile-time errors easier to
-debug, and to make the code more readable.
+The kernel-doc of timer related functions is partially uncomprehensible
+word salad. Rewrite it to make it useful.
 
-E.g. the compiler won't directly generate an error for duplicate if
-statements
-
-	if (x86_feature == X86_FEATURE_SGX1)
-		return KVM_X86_FEATURE_SGX1;
-	else if (x86_feature == X86_FEATURE_SGX2)
-		return KVM_X86_FEATURE_SGX1;
-
-and so instead reverse_cpuid_check() will fail due to the untranslated
-entry pointing at a Linux-defined leaf, which provides practically no
-hint as to what is broken
-
-  arch/x86/kvm/reverse_cpuid.h:108:2: error: call to __compiletime_assert_450 declared with 'error' attribute:
-                                      BUILD_BUG_ON failed: x86_leaf == CPUID_LNX_4
-          BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
-          ^
-whereas duplicate case statements very explicitly point at the offending
-code:
-
-  arch/x86/kvm/reverse_cpuid.h:125:2: error: duplicate case value '361'
-          KVM_X86_TRANSLATE_FEATURE(SGX2);
-          ^
-  arch/x86/kvm/reverse_cpuid.h:124:2: error: duplicate case value '360'
-          KVM_X86_TRANSLATE_FEATURE(SGX1);
-          ^
-
-And without macros, the opposite type of copy+paste goof doesn't generate
-any error at compile-time, e.g. this yields no complaints:
-
-        case X86_FEATURE_SGX1:
-                return KVM_X86_FEATURE_SGX1;
-        case X86_FEATURE_SGX2:
-                return KVM_X86_FEATURE_SGX1;
-
-Note, __feature_translate() is forcibly inlined and the feature is known
-at compile-time, so the code generation between an if-elif sequence and a
-switch statement should be identical.
-
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20231024001636.890236-2-jmattson@google.com
-[sean: use a macro, rewrite changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/r/20221123201624.828703870@linutronix.de
+Stable-dep-of: 0f7352557a35 ("wifi: brcmfmac: Fix use-after-free bug in brcmf_cfg80211_detach")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/reverse_cpuid.h |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ kernel/time/timer.c | 148 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 90 insertions(+), 58 deletions(-)
 
---- a/arch/x86/kvm/reverse_cpuid.h
-+++ b/arch/x86/kvm/reverse_cpuid.h
-@@ -97,14 +97,16 @@ static __always_inline void reverse_cpui
-  */
- static __always_inline u32 __feature_translate(int x86_feature)
- {
--	if (x86_feature == X86_FEATURE_SGX1)
--		return KVM_X86_FEATURE_SGX1;
--	else if (x86_feature == X86_FEATURE_SGX2)
--		return KVM_X86_FEATURE_SGX2;
--	else if (x86_feature == X86_FEATURE_RRSBA_CTRL)
--		return KVM_X86_FEATURE_RRSBA_CTRL;
-+#define KVM_X86_TRANSLATE_FEATURE(f)	\
-+	case X86_FEATURE_##f: return KVM_X86_FEATURE_##f
- 
--	return x86_feature;
-+	switch (x86_feature) {
-+	KVM_X86_TRANSLATE_FEATURE(SGX1);
-+	KVM_X86_TRANSLATE_FEATURE(SGX2);
-+	KVM_X86_TRANSLATE_FEATURE(RRSBA_CTRL);
-+	default:
-+		return x86_feature;
-+	}
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index 9dd2a39cb3b00..f64dd2bd0a84c 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1068,14 +1068,16 @@ __mod_timer(struct timer_list *timer, unsigned long expires, unsigned int option
  }
  
- static __always_inline u32 __feature_leaf(int x86_feature)
+ /**
+- * mod_timer_pending - modify a pending timer's timeout
+- * @timer: the pending timer to be modified
+- * @expires: new timeout in jiffies
++ * mod_timer_pending - Modify a pending timer's timeout
++ * @timer:	The pending timer to be modified
++ * @expires:	New absolute timeout in jiffies
+  *
+- * mod_timer_pending() is the same for pending timers as mod_timer(),
+- * but will not re-activate and modify already deleted timers.
++ * mod_timer_pending() is the same for pending timers as mod_timer(), but
++ * will not activate inactive timers.
+  *
+- * It is useful for unserialized use of timers.
++ * Return:
++ * * %0 - The timer was inactive and not modified
++ * * %1 - The timer was active and requeued to expire at @expires
+  */
+ int mod_timer_pending(struct timer_list *timer, unsigned long expires)
+ {
+@@ -1084,24 +1086,27 @@ int mod_timer_pending(struct timer_list *timer, unsigned long expires)
+ EXPORT_SYMBOL(mod_timer_pending);
+ 
+ /**
+- * mod_timer - modify a timer's timeout
+- * @timer: the timer to be modified
+- * @expires: new timeout in jiffies
+- *
+- * mod_timer() is a more efficient way to update the expire field of an
+- * active timer (if the timer is inactive it will be activated)
++ * mod_timer - Modify a timer's timeout
++ * @timer:	The timer to be modified
++ * @expires:	New absolute timeout in jiffies
+  *
+  * mod_timer(timer, expires) is equivalent to:
+  *
+  *     del_timer(timer); timer->expires = expires; add_timer(timer);
+  *
++ * mod_timer() is more efficient than the above open coded sequence. In
++ * case that the timer is inactive, the del_timer() part is a NOP. The
++ * timer is in any case activated with the new expiry time @expires.
++ *
+  * Note that if there are multiple unserialized concurrent users of the
+  * same timer, then mod_timer() is the only safe way to modify the timeout,
+  * since add_timer() cannot modify an already running timer.
+  *
+- * The function returns whether it has modified a pending timer or not.
+- * (ie. mod_timer() of an inactive timer returns 0, mod_timer() of an
+- * active timer returns 1.)
++ * Return:
++ * * %0 - The timer was inactive and started
++ * * %1 - The timer was active and requeued to expire at @expires or
++ *	  the timer was active and not modified because @expires did
++ *	  not change the effective expiry time
+  */
+ int mod_timer(struct timer_list *timer, unsigned long expires)
+ {
+@@ -1112,11 +1117,18 @@ EXPORT_SYMBOL(mod_timer);
+ /**
+  * timer_reduce - Modify a timer's timeout if it would reduce the timeout
+  * @timer:	The timer to be modified
+- * @expires:	New timeout in jiffies
++ * @expires:	New absolute timeout in jiffies
+  *
+  * timer_reduce() is very similar to mod_timer(), except that it will only
+- * modify a running timer if that would reduce the expiration time (it will
+- * start a timer that isn't running).
++ * modify an enqueued timer if that would reduce the expiration time. If
++ * @timer is not enqueued it starts the timer.
++ *
++ * Return:
++ * * %0 - The timer was inactive and started
++ * * %1 - The timer was active and requeued to expire at @expires or
++ *	  the timer was active and not modified because @expires
++ *	  did not change the effective expiry time such that the
++ *	  timer would expire earlier than already scheduled
+  */
+ int timer_reduce(struct timer_list *timer, unsigned long expires)
+ {
+@@ -1125,18 +1137,21 @@ int timer_reduce(struct timer_list *timer, unsigned long expires)
+ EXPORT_SYMBOL(timer_reduce);
+ 
+ /**
+- * add_timer - start a timer
+- * @timer: the timer to be added
++ * add_timer - Start a timer
++ * @timer:	The timer to be started
+  *
+- * The kernel will do a ->function(@timer) callback from the
+- * timer interrupt at the ->expires point in the future. The
+- * current time is 'jiffies'.
++ * Start @timer to expire at @timer->expires in the future. @timer->expires
++ * is the absolute expiry time measured in 'jiffies'. When the timer expires
++ * timer->function(timer) will be invoked from soft interrupt context.
+  *
+- * The timer's ->expires, ->function fields must be set prior calling this
+- * function.
++ * The @timer->expires and @timer->function fields must be set prior
++ * to calling this function.
++ *
++ * If @timer->expires is already in the past @timer will be queued to
++ * expire at the next timer tick.
+  *
+- * Timers with an ->expires field in the past will be executed in the next
+- * timer tick.
++ * This can only operate on an inactive timer. Attempts to invoke this on
++ * an active timer are rejected with a warning.
+  */
+ void add_timer(struct timer_list *timer)
+ {
+@@ -1146,11 +1161,13 @@ void add_timer(struct timer_list *timer)
+ EXPORT_SYMBOL(add_timer);
+ 
+ /**
+- * add_timer_on - start a timer on a particular CPU
+- * @timer: the timer to be added
+- * @cpu: the CPU to start it on
++ * add_timer_on - Start a timer on a particular CPU
++ * @timer:	The timer to be started
++ * @cpu:	The CPU to start it on
++ *
++ * Same as add_timer() except that it starts the timer on the given CPU.
+  *
+- * This is not very scalable on SMP. Double adds are not possible.
++ * See add_timer() for further details.
+  */
+ void add_timer_on(struct timer_list *timer, int cpu)
+ {
+@@ -1185,15 +1202,18 @@ void add_timer_on(struct timer_list *timer, int cpu)
+ EXPORT_SYMBOL_GPL(add_timer_on);
+ 
+ /**
+- * del_timer - deactivate a timer.
+- * @timer: the timer to be deactivated
+- *
+- * del_timer() deactivates a timer - this works on both active and inactive
+- * timers.
+- *
+- * The function returns whether it has deactivated a pending timer or not.
+- * (ie. del_timer() of an inactive timer returns 0, del_timer() of an
+- * active timer returns 1.)
++ * del_timer - Deactivate a timer.
++ * @timer:	The timer to be deactivated
++ *
++ * The function only deactivates a pending timer, but contrary to
++ * del_timer_sync() it does not take into account whether the timer's
++ * callback function is concurrently executed on a different CPU or not.
++ * It neither prevents rearming of the timer. If @timer can be rearmed
++ * concurrently then the return value of this function is meaningless.
++ *
++ * Return:
++ * * %0 - The timer was not pending
++ * * %1 - The timer was pending and deactivated
+  */
+ int del_timer(struct timer_list *timer)
+ {
+@@ -1215,10 +1235,19 @@ EXPORT_SYMBOL(del_timer);
+ 
+ /**
+  * try_to_del_timer_sync - Try to deactivate a timer
+- * @timer: timer to delete
++ * @timer:	Timer to deactivate
++ *
++ * This function tries to deactivate a timer. On success the timer is not
++ * queued and the timer callback function is not running on any CPU.
+  *
+- * This function tries to deactivate a timer. Upon successful (ret >= 0)
+- * exit the timer is not queued and the handler is not running on any CPU.
++ * This function does not guarantee that the timer cannot be rearmed right
++ * after dropping the base lock. That needs to be prevented by the calling
++ * code if necessary.
++ *
++ * Return:
++ * * %0  - The timer was not pending
++ * * %1  - The timer was pending and deactivated
++ * * %-1 - The timer callback function is running on a different CPU
+  */
+ int try_to_del_timer_sync(struct timer_list *timer)
+ {
+@@ -1314,23 +1343,19 @@ static inline void del_timer_wait_running(struct timer_list *timer) { }
+ 
+ #if defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT)
+ /**
+- * del_timer_sync - deactivate a timer and wait for the handler to finish.
+- * @timer: the timer to be deactivated
+- *
+- * This function only differs from del_timer() on SMP: besides deactivating
+- * the timer it also makes sure the handler has finished executing on other
+- * CPUs.
++ * del_timer_sync - Deactivate a timer and wait for the handler to finish.
++ * @timer:	The timer to be deactivated
+  *
+  * Synchronization rules: Callers must prevent restarting of the timer,
+  * otherwise this function is meaningless. It must not be called from
+  * interrupt contexts unless the timer is an irqsafe one. The caller must
+- * not hold locks which would prevent completion of the timer's
+- * handler. The timer's handler must not call add_timer_on(). Upon exit the
+- * timer is not queued and the handler is not running on any CPU.
++ * not hold locks which would prevent completion of the timer's callback
++ * function. The timer's handler must not call add_timer_on(). Upon exit
++ * the timer is not queued and the handler is not running on any CPU.
+  *
+- * Note: For !irqsafe timers, you must not hold locks that are held in
+- *   interrupt context while calling this function. Even if the lock has
+- *   nothing to do with the timer in question.  Here's why::
++ * For !irqsafe timers, the caller must not hold locks that are held in
++ * interrupt context. Even if the lock has nothing to do with the timer in
++ * question.  Here's why::
+  *
+  *    CPU0                             CPU1
+  *    ----                             ----
+@@ -1344,10 +1369,17 @@ static inline void del_timer_wait_running(struct timer_list *timer) { }
+  *    while (base->running_timer == mytimer);
+  *
+  * Now del_timer_sync() will never return and never release somelock.
+- * The interrupt on the other CPU is waiting to grab somelock but
+- * it has interrupted the softirq that CPU0 is waiting to finish.
++ * The interrupt on the other CPU is waiting to grab somelock but it has
++ * interrupted the softirq that CPU0 is waiting to finish.
++ *
++ * This function cannot guarantee that the timer is not rearmed again by
++ * some concurrent or preempting code, right after it dropped the base
++ * lock. If there is the possibility of a concurrent rearm then the return
++ * value of the function is meaningless.
+  *
+- * The function returns whether it has deactivated a pending timer or not.
++ * Return:
++ * * %0	- The timer was not pending
++ * * %1	- The timer was pending and deactivated
+  */
+ int del_timer_sync(struct timer_list *timer)
+ {
+-- 
+2.43.0
+
 
 
