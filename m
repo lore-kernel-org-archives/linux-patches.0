@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A6679F0;
-	Mon,  8 Apr 2024 13:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25A27C08C;
+	Mon,  8 Apr 2024 13:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584145; cv=none; b=PPP4G3DtvvnulAsZgHWdm0/HuFOqzT/9/eMmkplp50n7z2t7ql6exSC/HmI4C/RXpOkm9cTf8ieUAKFAfv+aE30/bS7f4gMFKyVvAzxLzuWok2iZq86LTrDN697raNuaoZnYV6TsEsS6Fw24GQ5erfqBUbQEtVS61lV/v5tUkQw=
+	t=1712584147; cv=none; b=OvGKr5Fi3/IHhd7cjX8wYpboQsmdoHvUKZyAKsoyRhICUrPPk+ZNLqD0HNHrYuTJ6xM9eZseKxCDX9o2OyYIlWnhBBH1N+YcR0y3ybms6n/3Ok7Tqz2QfqvE2qk1JWgq5MFZ9uthKGl5f8X1LqKlu+2C5DSkA39SLzib95tDFI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584145; c=relaxed/simple;
-	bh=WwyFZO5TQyer23VKESiXblpmHu3cL7P8Xv0vf+VjcZQ=;
+	s=arc-20240116; t=1712584147; c=relaxed/simple;
+	bh=nRTFhvtz8pChsze8NEQYa2j1K2Is96EedcmqYSKYv4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndyUBqBc1JAtFEvoe5dAQM7nmbONE4wXG7TXXfJvSMYEpiJ9VRuJzzlsebEqS+tAR+11LDJ1dRb/2TCzdK33m1s+Fvcksii4RKJezWRb0R9Zl0eZZOMxYypq8VNY+3UUSovqKlLXOQ96RzuMXSryMHZVP4FqtbcWwY8yetWaLtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6lDqtw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OT+QFef95+UiGRpy0TugdeJeohpjaud8eKwgP2Z+SGIX6InnhCptI4M55dnsf5EIyPJ1pEyMem0xDypEU25cqIQH4++N2JFjucs8fDrRP1mK0cOlwkC5hGN7KYulbWZamsukZm+3nLJFHZvHrLh+LHkyh6PiHtamugLHLNsJCwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPV22Lr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6lDqtw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46777C433C7;
-	Mon,  8 Apr 2024 13:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPV22Lr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6BDC433F1;
+	Mon,  8 Apr 2024 13:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584144;
-	bh=WwyFZO5TQyer23VKESiXblpmHu3cL7P8Xv0vf+VjcZQ=;
+	s=korg; t=1712584147;
+	bh=nRTFhvtz8pChsze8NEQYa2j1K2Is96EedcmqYSKYv4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6lDqtw8owG6eM8MEuT3mfDbcYlFt6qafjq53YMseiItP/b563XS9sfEnnNcttIh0
-	 HTE3oMbeXB6TDPzeRQljzexPESZlCQkB5J+pjcFFAVe/tjxQaGNWTvVNxKFHqu4juO
-	 sLh3uPcsa/fwVvB/iWyaSQH44U7NubTEDWfuAv8s=
+	b=lPV22Lr/YqEAxg0S4rDH4WbFXDCauHpA1ivTlhaikyzM6d3wC2Ld32HwFS3uz2A/9
+	 GAWiZtMmwpKK/Q3w35GYgUopT3z8JPwQQmBSL/vNvM/zkqD7keE4ZfIt0rRI53GrE+
+	 iamhR3wvADyhoKFfgy/h8aa7mx/Y+yMq0Dh9T2WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com,
-	syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com,
-	syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.8 268/273] bpf: support deferring bpf_link dealloc to after RCU grace period
-Date: Mon,  8 Apr 2024 14:59:03 +0200
-Message-ID: <20240408125317.817336581@linuxfoundation.org>
+	Roberto Bergantinos Corpas <rbergant@redhat.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 341/690] NLM: Defend against file_lock changes after vfs_test_lock()
+Date: Mon,  8 Apr 2024 14:53:27 +0200
+Message-ID: <20240408125411.974031570@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,166 +47,147 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit 1a80dbcb2dbaf6e4c216e62e30fa7d3daa8001ce upstream.
+[ Upstream commit 184cefbe62627730c30282df12bcff9aae4816ea ]
 
-BPF link for some program types is passed as a "context" which can be
-used by those BPF programs to look up additional information. E.g., for
-multi-kprobes and multi-uprobes, link is used to fetch BPF cookie values.
+Instead of trusting that struct file_lock returns completely unchanged
+after vfs_test_lock() when there's no conflicting lock, stash away our
+nlm_lockowner reference so we can properly release it for all cases.
 
-Because of this runtime dependency, when bpf_link refcnt drops to zero
-there could still be active BPF programs running accessing link data.
+This defends against another file_lock implementation overwriting fl_owner
+when the return type is F_UNLCK.
 
-This patch adds generic support to defer bpf_link dealloc callback to
-after RCU GP, if requested. This is done by exposing two different
-deallocation callbacks, one synchronous and one deferred. If deferred
-one is provided, bpf_link_free() will schedule dealloc_deferred()
-callback to happen after RCU GP.
-
-BPF is using two flavors of RCU: "classic" non-sleepable one and RCU
-tasks trace one. The latter is used when sleepable BPF programs are
-used. bpf_link_free() accommodates that by checking underlying BPF
-program's sleepable flag, and goes either through normal RCU GP only for
-non-sleepable, or through RCU tasks trace GP *and* then normal RCU GP
-(taking into account rcu_trace_implies_rcu_gp() optimization), if BPF
-program is sleepable.
-
-We use this for multi-kprobe and multi-uprobe links, which dereference
-link during program run. We also preventively switch raw_tp link to use
-deferred dealloc callback, as upcoming changes in bpf-next tree expose
-raw_tp link data (specifically, cookie value) to BPF program at runtime
-as well.
-
-Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
-Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
-Reported-by: syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com
-Reported-by: syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com
-Reported-by: syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20240328052426.3042617-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
+Tested-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- include/linux/bpf.h      |   16 +++++++++++++++-
- kernel/bpf/syscall.c     |   35 ++++++++++++++++++++++++++++++++---
- kernel/trace/bpf_trace.c |    4 ++--
- 3 files changed, 49 insertions(+), 6 deletions(-)
+ fs/lockd/svc4proc.c         |  4 +++-
+ fs/lockd/svclock.c          | 10 +---------
+ fs/lockd/svcproc.c          |  5 ++++-
+ include/linux/lockd/lockd.h |  1 +
+ 4 files changed, 9 insertions(+), 11 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1568,12 +1568,26 @@ struct bpf_link {
- 	enum bpf_link_type type;
- 	const struct bpf_link_ops *ops;
- 	struct bpf_prog *prog;
--	struct work_struct work;
-+	/* rcu is used before freeing, work can be used to schedule that
-+	 * RCU-based freeing before that, so they never overlap
-+	 */
-+	union {
-+		struct rcu_head rcu;
-+		struct work_struct work;
-+	};
- };
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 1c9214801e69e..930e90f21b151 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -95,6 +95,7 @@ __nlm4svc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_host	*host;
+ 	struct nlm_file	*file;
++	struct nlm_lockowner *test_owner;
+ 	__be32 rc = rpc_success;
  
- struct bpf_link_ops {
- 	void (*release)(struct bpf_link *link);
-+	/* deallocate link resources callback, called without RCU grace period
-+	 * waiting
-+	 */
- 	void (*dealloc)(struct bpf_link *link);
-+	/* deallocate link resources callback, called after RCU grace period;
-+	 * if underlying BPF program is sleepable we go through tasks trace
-+	 * RCU GP and then "classic" RCU GP
-+	 */
-+	void (*dealloc_deferred)(struct bpf_link *link);
- 	int (*detach)(struct bpf_link *link);
- 	int (*update_prog)(struct bpf_link *link, struct bpf_prog *new_prog,
- 			   struct bpf_prog *old_prog);
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2895,17 +2895,46 @@ void bpf_link_inc(struct bpf_link *link)
- 	atomic64_inc(&link->refcnt);
+ 	dprintk("lockd: TEST4        called\n");
+@@ -104,6 +105,7 @@ __nlm4svc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	if ((resp->status = nlm4svc_retrieve_args(rqstp, argp, &host, &file)))
+ 		return resp->status == nlm_drop_reply ? rpc_drop_reply :rpc_success;
+ 
++	test_owner = argp->lock.fl.fl_owner;
+ 	/* Now check for conflicting locks */
+ 	resp->status = nlmsvc_testlock(rqstp, file, host, &argp->lock, &resp->lock, &resp->cookie);
+ 	if (resp->status == nlm_drop_reply)
+@@ -111,7 +113,7 @@ __nlm4svc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	else
+ 		dprintk("lockd: TEST4        status %d\n", ntohl(resp->status));
+ 
+-	nlmsvc_release_lockowner(&argp->lock);
++	nlmsvc_put_lockowner(test_owner);
+ 	nlmsvc_release_host(host);
+ 	nlm_release_file(file);
+ 	return rc;
+diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
+index cb3658ab9b7ae..9c1aa75441e1c 100644
+--- a/fs/lockd/svclock.c
++++ b/fs/lockd/svclock.c
+@@ -340,7 +340,7 @@ nlmsvc_get_lockowner(struct nlm_lockowner *lockowner)
+ 	return lockowner;
  }
  
-+static void bpf_link_defer_dealloc_rcu_gp(struct rcu_head *rcu)
-+{
-+	struct bpf_link *link = container_of(rcu, struct bpf_link, rcu);
-+
-+	/* free bpf_link and its containing memory */
-+	link->ops->dealloc_deferred(link);
-+}
-+
-+static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
-+{
-+	if (rcu_trace_implies_rcu_gp())
-+		bpf_link_defer_dealloc_rcu_gp(rcu);
-+	else
-+		call_rcu(rcu, bpf_link_defer_dealloc_rcu_gp);
-+}
-+
- /* bpf_link_free is guaranteed to be called from process context */
- static void bpf_link_free(struct bpf_link *link)
+-static void nlmsvc_put_lockowner(struct nlm_lockowner *lockowner)
++void nlmsvc_put_lockowner(struct nlm_lockowner *lockowner)
  {
-+	bool sleepable = false;
-+
- 	bpf_link_free_id(link->id);
- 	if (link->prog) {
-+		sleepable = link->prog->aux->sleepable;
- 		/* detach BPF program, clean up used resources */
- 		link->ops->release(link);
- 		bpf_prog_put(link->prog);
+ 	if (!refcount_dec_and_lock(&lockowner->count, &lockowner->host->h_lock))
+ 		return;
+@@ -590,7 +590,6 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 	int			error;
+ 	int			mode;
+ 	__be32			ret;
+-	struct nlm_lockowner	*test_owner;
+ 
+ 	dprintk("lockd: nlmsvc_testlock(%s/%ld, ty=%d, %Ld-%Ld)\n",
+ 				nlmsvc_file_inode(file)->i_sb->s_id,
+@@ -604,9 +603,6 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 		goto out;
  	}
--	/* free bpf_link and its containing memory */
--	link->ops->dealloc(link);
-+	if (link->ops->dealloc_deferred) {
-+		/* schedule BPF link deallocation; if underlying BPF program
-+		 * is sleepable, we need to first wait for RCU tasks trace
-+		 * sync, then go through "classic" RCU grace period
-+		 */
-+		if (sleepable)
-+			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
-+		else
-+			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
-+	}
-+	if (link->ops->dealloc)
-+		link->ops->dealloc(link);
- }
  
- static void bpf_link_put_deferred(struct work_struct *work)
-@@ -3415,7 +3444,7 @@ static int bpf_raw_tp_link_fill_link_inf
+-	/* If there's a conflicting lock, remember to clean up the test lock */
+-	test_owner = (struct nlm_lockowner *)lock->fl.fl_owner;
+-
+ 	mode = lock_to_openmode(&lock->fl);
+ 	error = vfs_test_lock(file->f_file[mode], &lock->fl);
+ 	if (error) {
+@@ -635,10 +631,6 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 	conflock->fl.fl_end = lock->fl.fl_end;
+ 	locks_release_private(&lock->fl);
  
- static const struct bpf_link_ops bpf_raw_tp_link_lops = {
- 	.release = bpf_raw_tp_link_release,
--	.dealloc = bpf_raw_tp_link_dealloc,
-+	.dealloc_deferred = bpf_raw_tp_link_dealloc,
- 	.show_fdinfo = bpf_raw_tp_link_show_fdinfo,
- 	.fill_link_info = bpf_raw_tp_link_fill_link_info,
- };
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2713,7 +2713,7 @@ static int bpf_kprobe_multi_link_fill_li
+-	/* Clean up the test lock */
+-	lock->fl.fl_owner = NULL;
+-	nlmsvc_put_lockowner(test_owner);
+-
+ 	ret = nlm_lck_denied;
+ out:
+ 	return ret;
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index 99696d3f6dd66..c215a4599d5c8 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -116,6 +116,7 @@ __nlmsvc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_host	*host;
+ 	struct nlm_file	*file;
++	struct nlm_lockowner *test_owner;
+ 	__be32 rc = rpc_success;
  
- static const struct bpf_link_ops bpf_kprobe_multi_link_lops = {
- 	.release = bpf_kprobe_multi_link_release,
--	.dealloc = bpf_kprobe_multi_link_dealloc,
-+	.dealloc_deferred = bpf_kprobe_multi_link_dealloc,
- 	.fill_link_info = bpf_kprobe_multi_link_fill_link_info,
- };
+ 	dprintk("lockd: TEST          called\n");
+@@ -125,6 +126,8 @@ __nlmsvc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 	if ((resp->status = nlmsvc_retrieve_args(rqstp, argp, &host, &file)))
+ 		return resp->status == nlm_drop_reply ? rpc_drop_reply :rpc_success;
  
-@@ -3227,7 +3227,7 @@ static int bpf_uprobe_multi_link_fill_li
++	test_owner = argp->lock.fl.fl_owner;
++
+ 	/* Now check for conflicting locks */
+ 	resp->status = cast_status(nlmsvc_testlock(rqstp, file, host, &argp->lock, &resp->lock, &resp->cookie));
+ 	if (resp->status == nlm_drop_reply)
+@@ -133,7 +136,7 @@ __nlmsvc_proc_test(struct svc_rqst *rqstp, struct nlm_res *resp)
+ 		dprintk("lockd: TEST          status %d vers %d\n",
+ 			ntohl(resp->status), rqstp->rq_vers);
  
- static const struct bpf_link_ops bpf_uprobe_multi_link_lops = {
- 	.release = bpf_uprobe_multi_link_release,
--	.dealloc = bpf_uprobe_multi_link_dealloc,
-+	.dealloc_deferred = bpf_uprobe_multi_link_dealloc,
- 	.fill_link_info = bpf_uprobe_multi_link_fill_link_info,
- };
- 
+-	nlmsvc_release_lockowner(&argp->lock);
++	nlmsvc_put_lockowner(test_owner);
+ 	nlmsvc_release_host(host);
+ 	nlm_release_file(file);
+ 	return rc;
+diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
+index fcef192e5e45e..70ce419e27093 100644
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -292,6 +292,7 @@ void		  nlmsvc_locks_init_private(struct file_lock *, struct nlm_host *, pid_t);
+ __be32		  nlm_lookup_file(struct svc_rqst *, struct nlm_file **,
+ 					struct nlm_lock *);
+ void		  nlm_release_file(struct nlm_file *);
++void		  nlmsvc_put_lockowner(struct nlm_lockowner *);
+ void		  nlmsvc_release_lockowner(struct nlm_lock *);
+ void		  nlmsvc_mark_resources(struct net *);
+ void		  nlmsvc_free_host_resources(struct nlm_host *);
+-- 
+2.43.0
+
 
 
