@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184EC7D07E;
-	Mon,  8 Apr 2024 13:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010BE85620;
+	Mon,  8 Apr 2024 13:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582314; cv=none; b=ejSSkraqf95s9EesYDpB9TPxMl0/HZna8Fj+FCrYIkGlLO6fxXSN5MiJ0aE8q2ygIuwaX6CvUDx0HpyRS1vnQfh77OqtNky4dvpJ4lp/hGDDO+2uwUl6ReSIdUO8UNlqT9gQlMrl+1CkcHUy0/E9OQEvkTdarjfc4fd96KuyzJ4=
+	t=1712582317; cv=none; b=Td5Gbj3oEG8JnMfbx9duBTmDQelRSlcBJI8F9F7SZ/L6agGjF2zt8IpQ6LiicokhvVDTksl0EoLxue37LvgV6wJnFHJq6J+qnImsDO4ktu7qE3xOXmvyIPnb9QtyCW5VDeGY9W+Bk9GjRH/MN1s52wboLT/ZNU7SpI5/eINtgAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582314; c=relaxed/simple;
-	bh=qQDZyz6jshTP1QXK56FgQFLsZVCg12xLuUz4jiRKRCA=;
+	s=arc-20240116; t=1712582317; c=relaxed/simple;
+	bh=Uu35xLT7yqpjX0G2X8S/fX42+rrqYvOQfQmJNzOd0VY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UacvXXmzTPabHl2YYMtZvmy8iB/BW2WkfeCcb9dE7321oQHDGz23W38wMiF1+s2ZadQalPoCT/kkwYjRwRq5JTDC3olTiH7FAU3pz074EMYJAolG7y3HbGma373rgc8F57JXKWaj78Q8GOoM22svI9UwDiqtHQwxKyWMBEUP5uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utsdRSL6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m79Iv1cHMD0a+gtcDidXTvjDFSEEK3Akq4nQW93E8lVgv7Rh8hMBud6H11wtCZFzyhUbJt9IlLwqmkdPRm80fF7nz2OrwgswFpO8p7fVouSK0KZ7uxX3snnxDpZS4SJXiQEDDoIQ3hBTeQTamWlpDDcoLY6UAOhcMW/M3YS2sAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuVwg1sJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utsdRSL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B2DC433F1;
-	Mon,  8 Apr 2024 13:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuVwg1sJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79275C433C7;
+	Mon,  8 Apr 2024 13:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582314;
-	bh=qQDZyz6jshTP1QXK56FgQFLsZVCg12xLuUz4jiRKRCA=;
+	s=korg; t=1712582316;
+	bh=Uu35xLT7yqpjX0G2X8S/fX42+rrqYvOQfQmJNzOd0VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utsdRSL64u07yyJTlXxTxGNXR8ybvHL2UXB3dgPXlMkcQ2YZHA0f2WRPt3lVchKGu
-	 Dx4cqw3KCjDGtBhcA+BnopBRY3Yc1WKtlQFam8TQf9sWvn0uIu4pmf23+8iRZeQTmP
-	 C06LSVeNIb0BjMYcqyy5WQZjZv1sGiJFDPkTVyrU=
+	b=fuVwg1sJXApmq3RzIEEL0wWsI0FQSlFxFAT62L+bNfFyvOJAQLfEHgKOl3Os24MmG
+	 4VNTyqxBFSSXpjS4WOqZ31YtLNmXYQ+JBmC08hk2YGMpn5XybszU8JPy+XV9m/oejW
+	 GVzBmx75IZX+ZoxjDx63/CiNRRPjETxbiQq2jJE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ting Chen <hexrabbit@devco.re>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 083/252] netfilter: nf_tables: release mutex after nft_gc_seq_end from abort path
-Date: Mon,  8 Apr 2024 14:56:22 +0200
-Message-ID: <20240408125309.214140983@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 5.15 132/690] mei: me: add arrow lake point H DID
+Date: Mon,  8 Apr 2024 14:49:58 +0200
+Message-ID: <20240408125404.317533626@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 0d459e2ffb541841714839e8228b845458ed3b27 upstream.
+commit 8436f25802ec028ac7254990893f3e01926d9b79 upstream.
 
-The commit mutex should not be released during the critical section
-between nft_gc_seq_begin() and nft_gc_seq_end(), otherwise, async GC
-worker could collect expired objects and get the released commit lock
-within the same GC sequence.
-
-nf_tables_module_autoload() temporarily releases the mutex to load
-module dependencies, then it goes back to replay the transaction again.
-Move it at the end of the abort phase after nft_gc_seq_end() is called.
+Add Arrow Lake H device id.
 
 Cc: stable@vger.kernel.org
-Fixes: 720344340fb9 ("netfilter: nf_tables: GC transaction race with abort path")
-Reported-by: Kuan-Ting Chen <hexrabbit@devco.re>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240211103912.117105-2-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    1 +
+ drivers/misc/mei/pci-me.c     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10518,11 +10518,6 @@ static int __nf_tables_abort(struct net
- 		nf_tables_abort_release(trans);
- 	}
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -113,6 +113,7 @@
  
--	if (action == NFNL_ABORT_AUTOLOAD)
--		nf_tables_module_autoload(net);
--	else
--		nf_tables_module_autoload_cleanup(net);
--
- 	return err;
- }
+ #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
+ #define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
++#define MEI_DEV_ID_ARL_H      0x7770  /* Arrow Lake Point H */
  
-@@ -10539,6 +10534,14 @@ static int nf_tables_abort(struct net *n
+ /*
+  * MEI HW Section
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -119,6 +119,7 @@ static const struct pci_device_id mei_me
  
- 	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
++	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_H, MEI_ME_PCH15_CFG)},
  
-+	/* module autoload needs to happen after GC sequence update because it
-+	 * temporarily releases and grabs mutex again.
-+	 */
-+	if (action == NFNL_ABORT_AUTOLOAD)
-+		nf_tables_module_autoload(net);
-+	else
-+		nf_tables_module_autoload_cleanup(net);
-+
- 	mutex_unlock(&nft_net->commit_mutex);
- 
- 	return ret;
+ 	/* required last entry */
+ 	{0, }
 
 
