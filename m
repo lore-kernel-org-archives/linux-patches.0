@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77127B3F3;
-	Mon,  8 Apr 2024 13:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186847B3E5;
+	Mon,  8 Apr 2024 13:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582086; cv=none; b=cVLZ67Cjsv+/osUDz3ld1t2aaPItDE1ZnIn84KlP84mH3EU19nr1dGGK7XxZdhmCzkspEcFIr3oH3woG2ZvaedioKW7rUwTrfc+xAgPQw2QBN5v2l9B6K9vfbG9mcG6K1XXfGQ063MseANF5DWxWhwhRqj4xGrJY4InD6sTel6E=
+	t=1712582090; cv=none; b=eWCmXSH9RK1OkFPlbFGJ8MHqPZmrw9m8N+jTEcQ55jpaiv46nQFyJw65s2+KvX26FT2Tk6y/HbOdUeXWdUBefvR4H1d7IOj+cZRKd9m29GKriP/8LRZe3s5nTygU4NaTgytJZkUd/6v6ow2I/W2icdglqmd982ngoH4mUjf6SnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582086; c=relaxed/simple;
-	bh=rj8J9uxGZI9KTqarcIxv6K+TFNg9QicHSGqTdLSQgMo=;
+	s=arc-20240116; t=1712582090; c=relaxed/simple;
+	bh=0iIRDluz93Rbp/stYHM7ESl0RtbGOaHeT3gWZ+8nnmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tdjLjIgrOtBYmFrKggnfmBOPDvPok62ONqFnvQmlVNwO7SBUcNL9CalrwEVFjzWI5rS8d7HPKlJW6qi7l6BwwBhY7rMMnro6t5hTjyYlGvLnfte8dqSL8XH0jW6E8krGqjbzVAVvW4iniabMb9QytLGwwolPiRLufSxTv/WNb4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUU7T1H+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTJ0U8v5CA3NaNs/9BX36eVG/C2a2rnJAGXCKgwxXKBvxMbGpMnTLJ2C74Hl2l043xQd52P6yLaKRxMwMzL5t4/QzwE/n/yzrL4esKOvyAVnzK8A+/AHY+ynQCXWggsEtoTVlw//36FLRm5i4HKHzlsyGlXWULSTcen7t0dUHNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPxulRF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUU7T1H+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFCAC433C7;
-	Mon,  8 Apr 2024 13:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPxulRF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F57FC433C7;
+	Mon,  8 Apr 2024 13:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582086;
-	bh=rj8J9uxGZI9KTqarcIxv6K+TFNg9QicHSGqTdLSQgMo=;
+	s=korg; t=1712582089;
+	bh=0iIRDluz93Rbp/stYHM7ESl0RtbGOaHeT3gWZ+8nnmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUU7T1H+TQtB+P8Rdco68G5ysrYMDEDsrAERYenrMR3si7vH6XlEnBFve/j2uH4Fu
-	 RTWrwGuzb56m9222ns/IyOyGkKl1WK/uAIWiMCDJ2TT+vv3487ohg1gdl8T87bOpmg
-	 ENtrbk55ZUOeyu7GnwIPADKY1cLfxbAzleklhpzA=
+	b=lPxulRF7R88O3rn6+bqg4CrGmxW8Nt/v2sBHPRK2XaB3ehWqpt1sORJSCLJXtJGrD
+	 zwN2A3TX9vqdtJpGAvXPh/vyvMejlcejwMolO6gdMmwWLXqg99Q2+mLZj4QA3XeH0N
+	 ymskc17+wcAKbDhHJmqKjPgBww15yo+/FeiyaXDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <simon.horman@corigine.com>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Matt <cryptearth@googlemail.com>,
+	Conrad Kostecki <conikost@gentoo.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/138] r8169: use spinlock to protect access to registers Config2 and Config5
-Date: Mon,  8 Apr 2024 14:58:11 +0200
-Message-ID: <20240408125258.621812011@linuxfoundation.org>
+Subject: [PATCH 5.15 110/690] ahci: asm1064: asm1166: dont limit reported ports
+Date: Mon,  8 Apr 2024 14:49:36 +0200
+Message-ID: <20240408125403.510278334@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,166 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Conrad Kostecki <conikost@gentoo.org>
 
-[ Upstream commit 6bc6c4e6893ee79a9862c61d1635e7da6d5a3333 ]
+[ Upstream commit 6cd8adc3e18960f6e59d797285ed34ef473cc896 ]
 
-For disabling ASPM during NAPI poll we'll have to access both registers
-in atomic context. Use a spinlock to protect access.
+Previously, patches have been added to limit the reported count of SATA
+ports for asm1064 and asm1166 SATA controllers, as those controllers do
+report more ports than physically having.
 
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 5e864d90b208 ("r8169: skip DASH fw status checks when DASH is disabled")
+While it is allowed to report more ports than physically having in CAP.NP,
+it is not allowed to report more ports than physically having in the PI
+(Ports Implemented) register, which is what these HBAs do.
+(This is a AHCI spec violation.)
+
+Unfortunately, it seems that the PMP implementation in these ASMedia HBAs
+is also violating the AHCI and SATA-IO PMP specification.
+
+What these HBAs do is that they do not report that they support PMP
+(CAP.SPM (Supports Port Multiplier) is not set).
+
+Instead, they have decided to add extra "virtual" ports in the PI register
+that is used if a port multiplier is connected to any of the physical
+ports of the HBA.
+
+Enumerating the devices behind the PMP as specified in the AHCI and
+SATA-IO specifications, by using PMP READ and PMP WRITE commands to the
+physical ports of the HBA is not possible, you have to use the "virtual"
+ports.
+
+This is of course bad, because this gives us no way to detect the device
+and vendor ID of the PMP actually connected to the HBA, which means that
+we can not apply the proper PMP quirks for the PMP that is connected to
+the HBA.
+
+Limiting the port map will thus stop these controllers from working with
+SATA Port Multipliers.
+
+This patch reverts both patches for asm1064 and asm1166, so old behavior
+is restored and SATA PMP will work again, but it will also reintroduce the
+(minutes long) extra boot time for the ASMedia controllers that do not
+have a PMP connected (either on the PCIe card itself, or an external PMP).
+
+However, a longer boot time for some, is the lesser evil compared to some
+other users not being able to detect their drives at all.
+
+Fixes: 0077a504e1a4 ("ahci: asm1166: correct count of reported ports")
+Fixes: 9815e3961754 ("ahci: asm1064: correct count of reported ports")
+Cc: stable@vger.kernel.org
+Reported-by: Matt <cryptearth@googlemail.com>
+Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+[cassel: rewrote commit message]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 47 ++++++++++++++++++-----
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ drivers/ata/ahci.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index c7dd0eb94817f..4a1710b2726ce 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -615,6 +615,7 @@ struct rtl8169_private {
- 		struct work_struct work;
- 	} wk;
- 
-+	spinlock_t config25_lock;
- 	spinlock_t mac_ocp_lock;
- 
- 	unsigned supports_gmii:1;
-@@ -680,6 +681,28 @@ static void rtl_pci_commit(struct rtl8169_private *tp)
- 	RTL_R8(tp, ChipCmd);
- }
- 
-+static void rtl_mod_config2(struct rtl8169_private *tp, u8 clear, u8 set)
-+{
-+	unsigned long flags;
-+	u8 val;
-+
-+	spin_lock_irqsave(&tp->config25_lock, flags);
-+	val = RTL_R8(tp, Config2);
-+	RTL_W8(tp, Config2, (val & ~clear) | set);
-+	spin_unlock_irqrestore(&tp->config25_lock, flags);
-+}
-+
-+static void rtl_mod_config5(struct rtl8169_private *tp, u8 clear, u8 set)
-+{
-+	unsigned long flags;
-+	u8 val;
-+
-+	spin_lock_irqsave(&tp->config25_lock, flags);
-+	val = RTL_R8(tp, Config5);
-+	RTL_W8(tp, Config5, (val & ~clear) | set);
-+	spin_unlock_irqrestore(&tp->config25_lock, flags);
-+}
-+
- static bool rtl_is_8125(struct rtl8169_private *tp)
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 2d1f5cede60b2..7807c7b9f37ab 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -666,19 +666,6 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
  {
- 	return tp->mac_version >= RTL_GIGA_MAC_VER_61;
-@@ -1401,6 +1424,7 @@ static void __rtl8169_set_wol(struct rtl8169_private *tp, u32 wolopts)
- 		{ WAKE_MAGIC, Config3, MagicPacket }
- 	};
- 	unsigned int i, tmp = ARRAY_SIZE(cfg);
-+	unsigned long flags;
- 	u8 options;
- 
- 	rtl_unlock_config_regs(tp);
-@@ -1419,12 +1443,14 @@ static void __rtl8169_set_wol(struct rtl8169_private *tp, u32 wolopts)
- 			r8168_mac_ocp_modify(tp, 0xc0b6, BIT(0), 0);
- 	}
- 
-+	spin_lock_irqsave(&tp->config25_lock, flags);
- 	for (i = 0; i < tmp; i++) {
- 		options = RTL_R8(tp, cfg[i].reg) & ~cfg[i].mask;
- 		if (wolopts & cfg[i].opt)
- 			options |= cfg[i].mask;
- 		RTL_W8(tp, cfg[i].reg, options);
- 	}
-+	spin_unlock_irqrestore(&tp->config25_lock, flags);
- 
- 	switch (tp->mac_version) {
- 	case RTL_GIGA_MAC_VER_02 ... RTL_GIGA_MAC_VER_06:
-@@ -1436,10 +1462,10 @@ static void __rtl8169_set_wol(struct rtl8169_private *tp, u32 wolopts)
- 	case RTL_GIGA_MAC_VER_34:
- 	case RTL_GIGA_MAC_VER_37:
- 	case RTL_GIGA_MAC_VER_39 ... RTL_GIGA_MAC_VER_63:
--		options = RTL_R8(tp, Config2) & ~PME_SIGNAL;
- 		if (wolopts)
--			options |= PME_SIGNAL;
--		RTL_W8(tp, Config2, options);
-+			rtl_mod_config2(tp, 0, PME_SIGNAL);
-+		else
-+			rtl_mod_config2(tp, PME_SIGNAL, 0);
- 		break;
- 	default:
- 		break;
-@@ -2748,8 +2774,8 @@ static void rtl_hw_aspm_clkreq_enable(struct rtl8169_private *tp, bool enable)
- {
- 	/* Don't enable ASPM in the chip if OS can't control ASPM */
- 	if (enable && tp->aspm_manageable) {
--		RTL_W8(tp, Config5, RTL_R8(tp, Config5) | ASPM_en);
--		RTL_W8(tp, Config2, RTL_R8(tp, Config2) | ClkReqEn);
-+		rtl_mod_config5(tp, 0, ASPM_en);
-+		rtl_mod_config2(tp, 0, ClkReqEn);
- 
- 		switch (tp->mac_version) {
- 		case RTL_GIGA_MAC_VER_46 ... RTL_GIGA_MAC_VER_48:
-@@ -2772,8 +2798,8 @@ static void rtl_hw_aspm_clkreq_enable(struct rtl8169_private *tp, bool enable)
- 			break;
- 		}
- 
--		RTL_W8(tp, Config2, RTL_R8(tp, Config2) & ~ClkReqEn);
--		RTL_W8(tp, Config5, RTL_R8(tp, Config5) & ~ASPM_en);
-+		rtl_mod_config2(tp, ClkReqEn, 0);
-+		rtl_mod_config5(tp, ASPM_en, 0);
- 	}
- 
- 	udelay(10);
-@@ -2934,7 +2960,7 @@ static void rtl_hw_start_8168e_1(struct rtl8169_private *tp)
- 	RTL_W32(tp, MISC, RTL_R32(tp, MISC) | TXPLA_RST);
- 	RTL_W32(tp, MISC, RTL_R32(tp, MISC) & ~TXPLA_RST);
- 
--	RTL_W8(tp, Config5, RTL_R8(tp, Config5) & ~Spi_en);
-+	rtl_mod_config5(tp, Spi_en, 0);
- }
- 
- static void rtl_hw_start_8168e_2(struct rtl8169_private *tp)
-@@ -2967,7 +2993,7 @@ static void rtl_hw_start_8168e_2(struct rtl8169_private *tp)
- 
- 	RTL_W8(tp, DLLPR, RTL_R8(tp, DLLPR) | PFM_EN);
- 	RTL_W32(tp, MISC, RTL_R32(tp, MISC) | PWM_EN);
--	RTL_W8(tp, Config5, RTL_R8(tp, Config5) & ~Spi_en);
-+	rtl_mod_config5(tp, Spi_en, 0);
- 
- 	rtl_hw_aspm_clkreq_enable(tp, true);
- }
-@@ -2990,7 +3016,7 @@ static void rtl_hw_start_8168f(struct rtl8169_private *tp)
- 	RTL_W8(tp, MCU, RTL_R8(tp, MCU) & ~NOW_IS_OOB);
- 	RTL_W8(tp, DLLPR, RTL_R8(tp, DLLPR) | PFM_EN);
- 	RTL_W32(tp, MISC, RTL_R32(tp, MISC) | PWM_EN);
--	RTL_W8(tp, Config5, RTL_R8(tp, Config5) & ~Spi_en);
-+	rtl_mod_config5(tp, Spi_en, 0);
- 
- 	rtl8168_config_eee_mac(tp);
- }
-@@ -5259,6 +5285,7 @@ static int rtl_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	tp->eee_adv = -1;
- 	tp->ocp_base = OCP_STD_PHY_BASE;
- 
-+	spin_lock_init(&tp->config25_lock);
- 	spin_lock_init(&tp->mac_ocp_lock);
- 
- 	dev->tstats = devm_netdev_alloc_pcpu_stats(&pdev->dev,
+-	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA) {
+-		switch (pdev->device) {
+-		case 0x1166:
+-			dev_info(&pdev->dev, "ASM1166 has only six ports\n");
+-			hpriv->saved_port_map = 0x3f;
+-			break;
+-		case 0x1064:
+-			dev_info(&pdev->dev, "ASM1064 has only four ports\n");
+-			hpriv->saved_port_map = 0xf;
+-			break;
+-		}
+-	}
+-
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
+ 		dev_info(&pdev->dev, "JMB361 has only one port\n");
+ 		hpriv->force_port_map = 1;
 -- 
 2.43.0
 
