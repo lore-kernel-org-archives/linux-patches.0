@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F4D524AF;
-	Mon,  8 Apr 2024 13:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1587C6D4;
+	Mon,  8 Apr 2024 13:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583271; cv=none; b=EAgY9spFht+c9hVB/YQtRYLiSdqYWKYLOHgSXD6H1z+sv8Ffw8wDvmkEDYixITwvCXt8XEFFPjjT5V4hX3xuIx3FzXIgWS4P3YZ13lpmrw65YeEEEiG4tZdkwi8Ahtzy/J1gsla7OWaFZbFXvovZPrUuijMSdNCNtOgA4N5nbY8=
+	t=1712583273; cv=none; b=srq9fUdyitj9EygKSF+08Xy2vsh3TIvJJOdN2F3a20dRpAX7hy7wIG7f6OJ/kImkOncb6nIwN5hr/ZRkMzZA9ls8y0lfnnjKfJYi+OAucXVbmiJyNaJO5g0Vhdi4abaAJaoqYwWft00/tknCN34G/yb1oq0Pf0i8ttA8TVFrHrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583271; c=relaxed/simple;
-	bh=faAPl0wlLM8jRN7GLcUQ5/WzGH2VQ4rxlY+w/UCCzUg=;
+	s=arc-20240116; t=1712583273; c=relaxed/simple;
+	bh=DfhlFBwCtoSWHHIw+6oZtF1k90S1OIcl2nJeY/ILW6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVsyaJZnPV07INhekBlcL/r+QrhEVITj2UkWQ/Bv+S3UUBEWeMBhgDbbnK2QUrz5WBmi0lpAbWgo/PmItiUxEpmaqpN33lZgMtH0CCUBXIZeBMs0t/gb2AuwIAR8XSo/IKlQd9O4gLRO2OBYOGBoKASGbO2sA45EA+HF3NyNPsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILOClTtN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=feAK19Rj1fjvEiFJejF6DuD192Vj8iBZ28LZmFwzi3/6U7iy/yjzG8ze7kRAFLdJM4YXvQhyxo/A+yPqb6divzUY0Xs9zI0hiHVuERBDWB8ZJrJTi0pmAqjZuTbeyhduW8R491JZn1sBxPYx44IkyAmyGNVA6hZXuQDlimm+q6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z08xSaR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILOClTtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20898C433F1;
-	Mon,  8 Apr 2024 13:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z08xSaR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32985C43394;
+	Mon,  8 Apr 2024 13:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583270;
-	bh=faAPl0wlLM8jRN7GLcUQ5/WzGH2VQ4rxlY+w/UCCzUg=;
+	s=korg; t=1712583273;
+	bh=DfhlFBwCtoSWHHIw+6oZtF1k90S1OIcl2nJeY/ILW6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILOClTtNF6m56BJ0zpvdym1hatmzSsbSxmhgeGq463l4Eei6/SXQnaePJA34nfWOQ
-	 Voc4gHrL5/o94TBz3e86xlK7vhdrqAogziYou3KBgQm7TahzQiO2XvDnzfT6sDhRSx
-	 DTH78fO3RKYU2ZNgW6Tnvu+JC8tJ71TPp8kUyS88=
+	b=z08xSaR7h2193b+KpbiqrT8h9waeJDxLbMOsBIs8GcYhymmBrXxoITYPIMi24V+Bn
+	 F5BJLQYDMxvkO/S+1UTZHiiZwlXKvHUSCNmuHhEKRkN2eLYYo56FVdmCHjSbqrkTJ1
+	 rq9j/GcCwJi3UTEAHYiMexJP0KVGFAF1VY3i382Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/252] spi: s3c64xx: explicitly include <linux/bits.h>
-Date: Mon,  8 Apr 2024 14:57:55 +0200
-Message-ID: <20240408125312.119914211@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 229/690] SUNRPC: stop using ->sv_nrthreads as a refcount
+Date: Mon,  8 Apr 2024 14:51:35 +0200
+Message-ID: <20240408125407.922206257@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +46,357 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 4568fa574fcef3811a8140702979f076ef0f5bc0 ]
+[ Upstream commit ec52361df99b490f6af412b046df9799b92c1050 ]
 
-The driver uses GENMASK() but does not include <linux/bits.h>.
+The use of sv_nrthreads as a general refcount results in clumsy code, as
+is seen by various comments needed to explain the situation.
 
-It is good practice to directly include all headers used, it avoids
-implicit dependencies and spurious breakage if someone rearranges
-headers and causes the implicit include to vanish.
+This patch introduces a 'struct kref' and uses that for reference
+counting, leaving sv_nrthreads to be a pure count of threads.  The kref
+is managed particularly in svc_get() and svc_put(), and also nfsd_put();
 
-Include the missing header.
+svc_destroy() now takes a pointer to the embedded kref, rather than to
+the serv.
 
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20240207120431.2766269-4-tudor.ambarus@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: a3d3eab627bb ("spi: s3c64xx: Use DMA mode from fifo size")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+nfsd allows the svc_serv to exist with ->sv_nrhtreads being zero.  This
+happens when a transport is created before the first thread is started.
+To support this, a 'keep_active' flag is introduced which holds a ref on
+the svc_serv.  This is set when any listening socket is successfully
+added (unless there are running threads), and cleared when the number of
+threads is set.  So when the last thread exits, the nfs_serv will be
+destroyed.
+The use of 'keep_active' replaces previous code which checked if there
+were any permanent sockets.
+
+We no longer clear ->rq_server when nfsd() exits.  This was done
+to prevent svc_exit_thread() from calling svc_destroy().
+Instead we take an extra reference to the svc_serv to prevent
+svc_destroy() from being called.
+
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/spi/spi-s3c64xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/lockd/svc.c             |  4 ----
+ fs/nfs/callback.c          |  2 +-
+ fs/nfsd/netns.h            |  7 +++++++
+ fs/nfsd/nfsctl.c           | 22 +++++++++-----------
+ fs/nfsd/nfssvc.c           | 42 +++++++++++++++++++++++---------------
+ include/linux/sunrpc/svc.h | 14 ++++---------
+ net/sunrpc/svc.c           | 22 ++++++++++----------
+ 7 files changed, 59 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-index 26d389d95af92..1e519b1537e71 100644
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -3,6 +3,7 @@
- // Copyright (c) 2009 Samsung Electronics Co., Ltd.
- //      Jaswinder Singh <jassi.brar@samsung.com>
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 135bd86ed3adb..a9669b106dbde 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -486,10 +486,6 @@ int lockd_up(struct net *net, const struct cred *cred)
+ 		goto err_put;
+ 	}
+ 	nlmsvc_users++;
+-	/*
+-	 * Note: svc_serv structures have an initial use count of 1,
+-	 * so we exit through here on both success and failure.
+-	 */
+ err_put:
+ 	svc_put(serv);
+ err_create:
+diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
+index dddd66749a881..09ec60b99f65e 100644
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -169,7 +169,7 @@ static int nfs_callback_start_svc(int minorversion, struct rpc_xprt *xprt,
+ 	if (nrservs < NFS4_MIN_NR_CALLBACK_THREADS)
+ 		nrservs = NFS4_MIN_NR_CALLBACK_THREADS;
  
-+#include <linux/bits.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/dma-mapping.h>
+-	if (serv->sv_nrthreads-1 == nrservs)
++	if (serv->sv_nrthreads == nrservs)
+ 		return 0;
+ 
+ 	ret = serv->sv_ops->svo_setup(serv, NULL, nrservs);
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 935c1028c2175..08bcd8f23b013 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -123,6 +123,13 @@ struct nfsd_net {
+ 	u32 clverifier_counter;
+ 
+ 	struct svc_serv *nfsd_serv;
++	/* When a listening socket is added to nfsd, keep_active is set
++	 * and this justifies a reference on nfsd_serv.  This stops
++	 * nfsd_serv from being freed.  When the number of threads is
++	 * set, keep_active is cleared and the reference is dropped.  So
++	 * when the last thread exits, the service will be destroyed.
++	 */
++	int keep_active;
+ 
+ 	wait_queue_head_t ntf_wq;
+ 	atomic_t ntf_refcnt;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 5c8d985acf5fb..53076c5afe62c 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -742,13 +742,12 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net, const struct cred
+ 		return err;
+ 
+ 	err = svc_addsock(nn->nfsd_serv, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
+-	if (err < 0 && list_empty(&nn->nfsd_serv->sv_permsocks)) {
+-		nfsd_put(net);
+-		return err;
+-	}
+ 
+-	/* Decrease the count, but don't shut down the service */
+-	nn->nfsd_serv->sv_nrthreads--;
++	if (err >= 0 &&
++	    !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
++		svc_get(nn->nfsd_serv);
++
++	nfsd_put(net);
+ 	return err;
+ }
+ 
+@@ -783,8 +782,10 @@ static ssize_t __write_ports_addxprt(char *buf, struct net *net, const struct cr
+ 	if (err < 0 && err != -EAFNOSUPPORT)
+ 		goto out_close;
+ 
+-	/* Decrease the count, but don't shut down the service */
+-	nn->nfsd_serv->sv_nrthreads--;
++	if (!nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
++		svc_get(nn->nfsd_serv);
++
++	nfsd_put(net);
+ 	return 0;
+ out_close:
+ 	xprt = svc_find_xprt(nn->nfsd_serv, transport, net, PF_INET, port);
+@@ -793,10 +794,7 @@ static ssize_t __write_ports_addxprt(char *buf, struct net *net, const struct cr
+ 		svc_xprt_put(xprt);
+ 	}
+ out_err:
+-	if (!list_empty(&nn->nfsd_serv->sv_permsocks))
+-		nn->nfsd_serv->sv_nrthreads--;
+-	 else
+-		nfsd_put(net);
++	nfsd_put(net);
+ 	return err;
+ }
+ 
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 4aee1cfe0d1bb..141d884fee4f4 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -60,13 +60,13 @@ static __be32			nfsd_init_request(struct svc_rqst *,
+  * extent ->sv_temp_socks and ->sv_permsocks. It also protects nfsdstats.th_cnt
+  *
+  * If (out side the lock) nn->nfsd_serv is non-NULL, then it must point to a
+- * properly initialised 'struct svc_serv' with ->sv_nrthreads > 0. That number
+- * of nfsd threads must exist and each must listed in ->sp_all_threads in each
+- * entry of ->sv_pools[].
++ * properly initialised 'struct svc_serv' with ->sv_nrthreads > 0 (unless
++ * nn->keep_active is set).  That number of nfsd threads must
++ * exist and each must be listed in ->sp_all_threads in some entry of
++ * ->sv_pools[].
+  *
+- * Transitions of the thread count between zero and non-zero are of particular
+- * interest since the svc_serv needs to be created and initialized at that
+- * point, or freed.
++ * Each active thread holds a counted reference on nn->nfsd_serv, as does
++ * the nn->keep_active flag and various transient calls to svc_get().
+  *
+  * Finally, the nfsd_mutex also protects some of the global variables that are
+  * accessed when nfsd starts and that are settable via the write_* routines in
+@@ -700,14 +700,22 @@ int nfsd_get_nrthreads(int n, int *nthreads, struct net *net)
+ 	return 0;
+ }
+ 
++/* This is the callback for kref_put() below.
++ * There is no code here as the first thing to be done is
++ * call svc_shutdown_net(), but we cannot get the 'net' from
++ * the kref.  So do all the work when kref_put returns true.
++ */
++static void nfsd_noop(struct kref *ref)
++{
++}
++
+ void nfsd_put(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+-	nn->nfsd_serv->sv_nrthreads -= 1;
+-	if (nn->nfsd_serv->sv_nrthreads == 0) {
++	if (kref_put(&nn->nfsd_serv->sv_refcnt, nfsd_noop)) {
+ 		svc_shutdown_net(nn->nfsd_serv, net);
+-		svc_destroy(nn->nfsd_serv);
++		svc_destroy(&nn->nfsd_serv->sv_refcnt);
+ 		nfsd_complete_shutdown(net);
+ 	}
+ }
+@@ -803,15 +811,14 @@ nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
+ 			NULL, nrservs);
+ 	if (error)
+ 		goto out_shutdown;
+-	/* We are holding a reference to nn->nfsd_serv which
+-	 * we don't want to count in the return value,
+-	 * so subtract 1
+-	 */
+-	error = nn->nfsd_serv->sv_nrthreads - 1;
++	error = nn->nfsd_serv->sv_nrthreads;
+ out_shutdown:
+ 	if (error < 0 && !nfsd_up_before)
+ 		nfsd_shutdown_net(net);
+ out_put:
++	/* Threads now hold service active */
++	if (xchg(&nn->keep_active, 0))
++		nfsd_put(net);
+ 	nfsd_put(net);
+ out:
+ 	mutex_unlock(&nfsd_mutex);
+@@ -980,11 +987,15 @@ nfsd(void *vrqstp)
+ 	nfsdstats.th_cnt --;
+ 
+ out:
+-	rqstp->rq_server = NULL;
++	/* Take an extra ref so that the svc_put in svc_exit_thread()
++	 * doesn't call svc_destroy()
++	 */
++	svc_get(nn->nfsd_serv);
+ 
+ 	/* Release the thread */
+ 	svc_exit_thread(rqstp);
+ 
++	/* Now if needed we call svc_destroy in appropriate context */
+ 	nfsd_put(net);
+ 
+ 	/* Release module */
+@@ -1099,7 +1110,6 @@ int nfsd_pool_stats_open(struct inode *inode, struct file *file)
+ 		mutex_unlock(&nfsd_mutex);
+ 		return -ENODEV;
+ 	}
+-	/* bump up the psudo refcount while traversing */
+ 	svc_get(nn->nfsd_serv);
+ 	ret = svc_pool_stats_open(nn->nfsd_serv, file);
+ 	mutex_unlock(&nfsd_mutex);
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index b378e9ad141b4..fdc32ffef0184 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -85,6 +85,7 @@ struct svc_serv {
+ 	struct svc_program *	sv_program;	/* RPC program */
+ 	struct svc_stat *	sv_stats;	/* RPC statistics */
+ 	spinlock_t		sv_lock;
++	struct kref		sv_refcnt;
+ 	unsigned int		sv_nrthreads;	/* # of server threads */
+ 	unsigned int		sv_maxconn;	/* max connections allowed or
+ 						 * '0' causing max to be based
+@@ -119,19 +120,14 @@ struct svc_serv {
+  * @serv:  the svc_serv to have count incremented
+  *
+  * Returns: the svc_serv that was passed in.
+- *
+- * We use sv_nrthreads as a reference count.  svc_put() drops
+- * this refcount, so we need to bump it up around operations that
+- * change the number of threads.  Horrible, but there it is.
+- * Should be called with the "service mutex" held.
+  */
+ static inline struct svc_serv *svc_get(struct svc_serv *serv)
+ {
+-	serv->sv_nrthreads++;
++	kref_get(&serv->sv_refcnt);
+ 	return serv;
+ }
+ 
+-void svc_destroy(struct svc_serv *serv);
++void svc_destroy(struct kref *);
+ 
+ /**
+  * svc_put - decrement reference count on a SUNRPC serv
+@@ -142,9 +138,7 @@ void svc_destroy(struct svc_serv *serv);
+  */
+ static inline void svc_put(struct svc_serv *serv)
+ {
+-	serv->sv_nrthreads -= 1;
+-	if (serv->sv_nrthreads == 0)
+-		svc_destroy(serv);
++	kref_put(&serv->sv_refcnt, svc_destroy);
+ }
+ 
+ /*
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index 85f324418d175..6cde8c87e5733 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -435,7 +435,7 @@ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
+ 		return NULL;
+ 	serv->sv_name      = prog->pg_name;
+ 	serv->sv_program   = prog;
+-	serv->sv_nrthreads = 1;
++	kref_init(&serv->sv_refcnt);
+ 	serv->sv_stats     = prog->pg_stats;
+ 	if (bufsize > RPCSVC_MAXPAYLOAD)
+ 		bufsize = RPCSVC_MAXPAYLOAD;
+@@ -526,10 +526,11 @@ EXPORT_SYMBOL_GPL(svc_shutdown_net);
+  * protect the sv_nrthreads, sv_permsocks and sv_tempsocks.
+  */
+ void
+-svc_destroy(struct svc_serv *serv)
++svc_destroy(struct kref *ref)
+ {
+-	dprintk("svc: svc_destroy(%s)\n", serv->sv_program->pg_name);
++	struct svc_serv *serv = container_of(ref, struct svc_serv, sv_refcnt);
+ 
++	dprintk("svc: svc_destroy(%s)\n", serv->sv_program->pg_name);
+ 	del_timer_sync(&serv->sv_temptimer);
+ 
+ 	/*
+@@ -637,6 +638,7 @@ svc_prepare_thread(struct svc_serv *serv, struct svc_pool *pool, int node)
+ 	if (!rqstp)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	svc_get(serv);
+ 	serv->sv_nrthreads++;
+ 	spin_lock_bh(&pool->sp_lock);
+ 	pool->sp_nrthreads++;
+@@ -776,8 +778,7 @@ int
+ svc_set_num_threads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ {
+ 	if (pool == NULL) {
+-		/* The -1 assumes caller has done a svc_get() */
+-		nrservs -= (serv->sv_nrthreads-1);
++		nrservs -= serv->sv_nrthreads;
+ 	} else {
+ 		spin_lock_bh(&pool->sp_lock);
+ 		nrservs -= pool->sp_nrthreads;
+@@ -818,8 +819,7 @@ int
+ svc_set_num_threads_sync(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ {
+ 	if (pool == NULL) {
+-		/* The -1 assumes caller has done a svc_get() */
+-		nrservs -= (serv->sv_nrthreads-1);
++		nrservs -= serv->sv_nrthreads;
+ 	} else {
+ 		spin_lock_bh(&pool->sp_lock);
+ 		nrservs -= pool->sp_nrthreads;
+@@ -884,12 +884,12 @@ svc_exit_thread(struct svc_rqst *rqstp)
+ 		list_del_rcu(&rqstp->rq_all);
+ 	spin_unlock_bh(&pool->sp_lock);
+ 
++	serv->sv_nrthreads -= 1;
++	svc_sock_update_bufs(serv);
++
+ 	svc_rqst_free(rqstp);
+ 
+-	if (!serv)
+-		return;
+-	svc_sock_update_bufs(serv);
+-	svc_destroy(serv);
++	svc_put(serv);
+ }
+ EXPORT_SYMBOL_GPL(svc_exit_thread);
+ 
 -- 
 2.43.0
 
