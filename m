@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3747BB07;
-	Mon,  8 Apr 2024 13:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520FD745D6;
+	Mon,  8 Apr 2024 13:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581539; cv=none; b=Z9DJ1x2iAffGmS2o/uQSMqhYb4FtDy8+pAip2MqnBeTQoXya15ejZihZ3OQ27fzIWlfOAsYmmQoPdWbJAbzrfKKRKFxoVgz4QqqrBLwxR6l9sTTTXN4CO8dsWw8lWffju9ALM6l8JaOjBIAv8w0t+LY5lvOdboxZRikyAG5j/Ck=
+	t=1712581542; cv=none; b=Dnnwn+gdugjn9KBnlec0kZXWe8JLLmlNOeSbO24q/cy3XPQsrN4+RPKYaXgu/YsHsrQVAm3xD/1Cd4Jv60sykVXt/wETcQKBHIRFZCR1nFjAcwDVTNjtXFbeCob+FSQR7QaWIxqnEQ/T8TDSAqFnILdGhPPX9rkytqutytnjuVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581539; c=relaxed/simple;
-	bh=EfUnSHYxGHmu8tkqMgBO43Gd08qGJxrMzRlHJX3hkAQ=;
+	s=arc-20240116; t=1712581542; c=relaxed/simple;
+	bh=Cj9b2ATFjAEd7hnG0Am3IQ0iKKktBn9KmIvr0Fk0pYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUltJ52tCOOe7NlpMjpIGrHbPHU0IOaOTwE8GTqkyIfUjm3EfTiQUZwmOc1qLi/7tgRrD8MrYlwioc31Q4YbVbQP5f7S40P/4JDdliFuVzdOvJFk/ds+Zl2MjdMdWrpuKPG7VqQ23GgT2PbF+5gC7dLpk4mqntw/27qJ5X4E4ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SX9QkxuV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bkbdLtllMyfZWOpQOIJ87dT2bD4SnqIhkUVefin64kNlRqyV8oxyz5tqcTKrcqYAsoT2x9jDMnmFM+viO/VJSgyZpr2iKqmYbc+M0T+JiNlEjfbIdmvsyQ9oJxzPAjVq9arNagzjrKooCULLZW/HHe8YUGhoAsHBKWlY7ZGdAR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9p9bN1d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SX9QkxuV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88726C433C7;
-	Mon,  8 Apr 2024 13:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9p9bN1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF74C433C7;
+	Mon,  8 Apr 2024 13:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581538;
-	bh=EfUnSHYxGHmu8tkqMgBO43Gd08qGJxrMzRlHJX3hkAQ=;
+	s=korg; t=1712581541;
+	bh=Cj9b2ATFjAEd7hnG0Am3IQ0iKKktBn9KmIvr0Fk0pYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SX9QkxuVYkhbBztwkIyXeU9pVrdInDTWUE6DwFWUi+34cG7ExKG4DA8u3aEcwUrpE
-	 04bgXTxlYA24yqitAHB60oT/FKoQt6xsE/EFe4l5QRqMnkFq0qaZs/wHfyKwWVyCUx
-	 q2+z7KQXxOPwc7UEXFSYMXeOJma/4x49y1yM6MWg=
+	b=N9p9bN1dF5FqNCowK566IA8KDdtd839xnygqIPEoMD5sSG7Me6GGtArsTdq9O8j3H
+	 GEf1M53ZPy1daL8pB1Pd0AC4e2Za/tk9EEJ4eDixyUlaG8EBW5XvqZuPZAdmFSU1qj
+	 XhJRblwdOVsh1hS9jxP04udcSPcPEZdw/1Kt7GYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ricky Wu <ricky_wu@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/252] ice: realloc VSI stats arrays
-Date: Mon,  8 Apr 2024 14:55:15 +0200
-Message-ID: <20240408125307.152787118@linuxfoundation.org>
+Subject: [PATCH 5.15 061/690] PCI/PM: Drain runtime-idle callbacks before driver removal
+Date: Mon,  8 Apr 2024 14:48:47 +0200
+Message-ID: <20240408125401.724212713@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,145 +49,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5995ef88e3a8c2b014f51256a88be8e336532ce7 ]
+[ Upstream commit 9d5286d4e7f68beab450deddbb6a32edd5ecf4bf ]
 
-Previously only case when queues amount is lower was covered. Implement
-realloc for case when queues amount is higher than previous one. Use
-krealloc() function and zero new allocated elements.
+A race condition between the .runtime_idle() callback and the .remove()
+callback in the rtsx_pcr PCI driver leads to a kernel crash due to an
+unhandled page fault [1].
 
-It has to be done before ice_vsi_def_cfg(), because stats element for
-ring is set there.
+The problem is that rtsx_pci_runtime_idle() is not expected to be running
+after pm_runtime_get_sync() has been called, but the latter doesn't really
+guarantee that.  It only guarantees that the suspend and resume callbacks
+will not be running when it returns.
 
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 1cb7fdb1dfde ("ice: fix memory corruption bug with suspend and rebuild")
+However, if a .runtime_idle() callback is already running when
+pm_runtime_get_sync() is called, the latter will notice that the runtime PM
+status of the device is RPM_ACTIVE and it will return right away without
+waiting for the former to complete.  In fact, it cannot wait for
+.runtime_idle() to complete because it may be called from that callback (it
+arguably does not make much sense to do that, but it is not strictly
+prohibited).
+
+Thus in general, whoever is providing a .runtime_idle() callback needs
+to protect it from running in parallel with whatever code runs after
+pm_runtime_get_sync().  [Note that .runtime_idle() will not start after
+pm_runtime_get_sync() has returned, but it may continue running then if it
+has started earlier.]
+
+One way to address that race condition is to call pm_runtime_barrier()
+after pm_runtime_get_sync() (not before it, because a nonzero value of the
+runtime PM usage counter is necessary to prevent runtime PM callbacks from
+being invoked) to wait for the .runtime_idle() callback to complete should
+it be running at that point.  A suitable place for doing that is in
+pci_device_remove() which calls pm_runtime_get_sync() before removing the
+driver, so it may as well call pm_runtime_barrier() subsequently, which
+will prevent the race in question from occurring, not just in the rtsx_pcr
+driver, but in any PCI drivers providing .runtime_idle() callbacks.
+
+Link: https://lore.kernel.org/lkml/20240229062201.49500-1-kai.heng.feng@canonical.com/ # [1]
+Link: https://lore.kernel.org/r/5761426.DvuYhMxLoT@kreacher
+Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Ricky Wu <ricky_wu@realtek.com>
+Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 58 ++++++++++++++++--------
- 1 file changed, 39 insertions(+), 19 deletions(-)
+ drivers/pci/pci-driver.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 7f4bc110ead44..47298ab675a55 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -3084,27 +3084,26 @@ ice_vsi_rebuild_set_coalesce(struct ice_vsi *vsi,
- }
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 3a9c49b0d05b0..46b82bacaff68 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -461,6 +461,13 @@ static void pci_device_remove(struct device *dev)
  
- /**
-- * ice_vsi_realloc_stat_arrays - Frees unused stat structures
-+ * ice_vsi_realloc_stat_arrays - Frees unused stat structures or alloc new ones
-  * @vsi: VSI pointer
-- * @prev_txq: Number of Tx rings before ring reallocation
-- * @prev_rxq: Number of Rx rings before ring reallocation
-  */
--static void
--ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi, int prev_txq, int prev_rxq)
-+static int
-+ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi)
- {
-+	u16 req_txq = vsi->req_txq ? vsi->req_txq : vsi->alloc_txq;
-+	u16 req_rxq = vsi->req_rxq ? vsi->req_rxq : vsi->alloc_rxq;
-+	struct ice_ring_stats **tx_ring_stats;
-+	struct ice_ring_stats **rx_ring_stats;
- 	struct ice_vsi_stats *vsi_stat;
- 	struct ice_pf *pf = vsi->back;
-+	u16 prev_txq = vsi->alloc_txq;
-+	u16 prev_rxq = vsi->alloc_rxq;
- 	int i;
- 
--	if (!prev_txq || !prev_rxq)
--		return;
--	if (vsi->type == ICE_VSI_CHNL)
--		return;
--
- 	vsi_stat = pf->vsi_stats[vsi->idx];
- 
--	if (vsi->num_txq < prev_txq) {
--		for (i = vsi->num_txq; i < prev_txq; i++) {
-+	if (req_txq < prev_txq) {
-+		for (i = req_txq; i < prev_txq; i++) {
- 			if (vsi_stat->tx_ring_stats[i]) {
- 				kfree_rcu(vsi_stat->tx_ring_stats[i], rcu);
- 				WRITE_ONCE(vsi_stat->tx_ring_stats[i], NULL);
-@@ -3112,14 +3111,36 @@ ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi, int prev_txq, int prev_rxq)
- 		}
+ 	if (drv->remove) {
+ 		pm_runtime_get_sync(dev);
++		/*
++		 * If the driver provides a .runtime_idle() callback and it has
++		 * started to run already, it may continue to run in parallel
++		 * with the code below, so wait until all of the runtime PM
++		 * activity has completed.
++		 */
++		pm_runtime_barrier(dev);
+ 		drv->remove(pci_dev);
+ 		pm_runtime_put_noidle(dev);
  	}
- 
--	if (vsi->num_rxq < prev_rxq) {
--		for (i = vsi->num_rxq; i < prev_rxq; i++) {
-+	tx_ring_stats = vsi_stat->rx_ring_stats;
-+	vsi_stat->tx_ring_stats =
-+		krealloc_array(vsi_stat->tx_ring_stats, req_txq,
-+			       sizeof(*vsi_stat->tx_ring_stats),
-+			       GFP_KERNEL | __GFP_ZERO);
-+	if (!vsi_stat->tx_ring_stats) {
-+		vsi_stat->tx_ring_stats = tx_ring_stats;
-+		return -ENOMEM;
-+	}
-+
-+	if (req_rxq < prev_rxq) {
-+		for (i = req_rxq; i < prev_rxq; i++) {
- 			if (vsi_stat->rx_ring_stats[i]) {
- 				kfree_rcu(vsi_stat->rx_ring_stats[i], rcu);
- 				WRITE_ONCE(vsi_stat->rx_ring_stats[i], NULL);
- 			}
- 		}
- 	}
-+
-+	rx_ring_stats = vsi_stat->rx_ring_stats;
-+	vsi_stat->rx_ring_stats =
-+		krealloc_array(vsi_stat->rx_ring_stats, req_rxq,
-+			       sizeof(*vsi_stat->rx_ring_stats),
-+			       GFP_KERNEL | __GFP_ZERO);
-+	if (!vsi_stat->rx_ring_stats) {
-+		vsi_stat->rx_ring_stats = rx_ring_stats;
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
- }
- 
- /**
-@@ -3136,9 +3157,9 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
- {
- 	struct ice_vsi_cfg_params params = {};
- 	struct ice_coalesce_stored *coalesce;
--	int ret, prev_txq, prev_rxq;
- 	int prev_num_q_vectors = 0;
- 	struct ice_pf *pf;
-+	int ret;
- 
- 	if (!vsi)
- 		return -EINVAL;
-@@ -3157,8 +3178,9 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
- 
- 	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
- 
--	prev_txq = vsi->num_txq;
--	prev_rxq = vsi->num_rxq;
-+	ret = ice_vsi_realloc_stat_arrays(vsi);
-+	if (ret)
-+		goto err_vsi_cfg;
- 
- 	ice_vsi_decfg(vsi);
- 	ret = ice_vsi_cfg_def(vsi, &params);
-@@ -3176,8 +3198,6 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
- 		return ice_schedule_reset(pf, ICE_RESET_PFR);
- 	}
- 
--	ice_vsi_realloc_stat_arrays(vsi, prev_txq, prev_rxq);
--
- 	ice_vsi_rebuild_set_coalesce(vsi, coalesce, prev_num_q_vectors);
- 	kfree(coalesce);
- 
 -- 
 2.43.0
 
