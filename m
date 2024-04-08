@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98A04D5AB;
-	Mon,  8 Apr 2024 13:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE15524AF;
+	Mon,  8 Apr 2024 13:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584336; cv=none; b=u0sgx94QUKScr8hs+V3T1LeU00N4Ir4sEzlSZYjhuucT2nq9xnmnU5xIqHISyT3kjl9P2tz+4Y4aUSvM9a71PTZREfVnsV5FRm3/DdsrXUyqCH4dWDD/SvIO7YPnWai/05jL+ESypyQsXCVnjsWimI7jgrzZxcChSVt3PGtrmjs=
+	t=1712584339; cv=none; b=K12DWLTzfbxhKFQLscr7sp1UkIPsd2/4LIY+pqNLGTitAluCYfcwk3TIh4lLuba6B8bsG4PtE7wucsesPfnh48N2i0nqEr6nCLA0spbm5B+7OeWChT7BtQsBmJdXolpat79lM8tpUj1vk1SJZWeT9b5hbql737Uw/YolmqNX3rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584336; c=relaxed/simple;
-	bh=64hHa4fNtmpMdCZZ972ojOhFG19OA3t3E/mL6cqMFsA=;
+	s=arc-20240116; t=1712584339; c=relaxed/simple;
+	bh=+DBHKNOFYhy300SdAghtOZfxPkFM5kWS6J/LfhiqE3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tI1l8hefYYkmT/nGlUnqeJ/Hb4uhWUqp1QPGztpcyXq4cANGWau7qJgOPGd8CRd7X8MeJMcUgoGOnG4UDI9MqMI0X5EElYddV5LGBYsYJ1uRNDpMrlLduIOVKzdXWIO3KeCM2J1kDn+uohEvi26hnQzhnDQC01USsAjuZNQSMpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2+wrX35; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efuE4g5P0YZjns817EO2DEkHaD8u6t0BxWXcGl0pXr5IWd2NTt3QamUu+X/MgPoxE0KpFAE47GhEj0pX4O8zw6CBvsoGWwTL67q8qdWlcBL0p9HtJ9B7cQa3E6CzuyWCfU00ppRHSVzHu7ZF6SF74/IUpD7hJJXUC6dFAoqdFtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBglfU5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2+wrX35"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9FCC433F1;
-	Mon,  8 Apr 2024 13:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBglfU5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25528C433C7;
+	Mon,  8 Apr 2024 13:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584336;
-	bh=64hHa4fNtmpMdCZZ972ojOhFG19OA3t3E/mL6cqMFsA=;
+	s=korg; t=1712584339;
+	bh=+DBHKNOFYhy300SdAghtOZfxPkFM5kWS6J/LfhiqE3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2+wrX35T5Jr/uHL0I5EbnMXA9uYSoMbqkgMt2XjHjNg/fcuL7bfFBm5eHOabkR0x
-	 sosshBwB4h/ZY5nNp2lffEHnpDBIDXTq8KK2fi1SSVe9cdp+zENSmWyMPrBsXQhuB1
-	 yuHYybSZjM+0Xrqkc/NBVJPP2SvvMidoVJYEEb8Q=
+	b=LBglfU5GNYy+6eAOdDiNqSo5qqR82ovCWOn/dHfHF7+KCku4886br+4rmdEq8P30o
+	 OgZfvu7mF/5GjepThepLfu1sB5kpMf8Lfxp+Rif3SF1EAUC/3T8pPPpCYwKjY5dOLK
+	 50ttuF2RANGSbJrk95T/SjusoyW5AhL4aYkt+mTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 403/690] NFSD: introduce struct nfsd_attrs
-Date: Mon,  8 Apr 2024 14:54:29 +0200
-Message-ID: <20240408125414.156673874@linuxfoundation.org>
+Subject: [PATCH 5.15 404/690] NFSD: set attributes when creating symlinks
+Date: Mon,  8 Apr 2024 14:54:30 +0200
+Message-ID: <20240408125414.202779997@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,429 +52,171 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 7fe2a71dda349a1afa75781f0cc7975be9784d15 ]
+[ Upstream commit 93adc1e391a761441d783828b93979b38093d011 ]
 
-The attributes that nfsd might want to set on a file include 'struct
-iattr' as well as an ACL and security label.
-The latter two are passed around quite separately from the first, in
-part because they are only needed for NFSv4.  This leads to some
-clumsiness in the code, such as the attributes NOT being set in
-nfsd_create_setattr().
+The NFS protocol includes attributes when creating symlinks.
+Linux does store attributes for symlinks and allows them to be set,
+though they are not used for permission checking.
 
-We need to keep the directory locked until all attributes are set to
-ensure the file is never visibile without all its attributes.  This need
-combined with the inconsistent handling of attributes leads to more
-clumsiness.
+NFSD currently doesn't set standard (struct iattr) attributes when
+creating symlinks, but for NFSv4 it does set ACLs and security labels.
+This is inconsistent.
 
-As a first step towards tidying this up, introduce 'struct nfsd_attrs'.
-This is passed (by reference) to vfs.c functions that work with
-attributes, and is assembled by the various nfs*proc functions which
-call them.  As yet only iattr is included, but future patches will
-expand this.
+To improve consistency, pass the provided attributes into nfsd_symlink()
+and call nfsd_create_setattr() to set them.
+
+NOTE: this results in a behaviour change for all NFS versions when the
+client sends non-default attributes with a SYMLINK request. With the
+Linux client, the only attributes are:
+        attr.ia_mode = S_IFLNK | S_IRWXUGO;
+        attr.ia_valid = ATTR_MODE;
+so the final outcome will be unchanged. Other clients might sent
+different attributes, and if they did they probably expect them to be
+honoured.
+
+We ignore any error from nfsd_create_setattr().  It isn't really clear
+what should be done if a file is successfully created, but the
+attributes cannot be set.  NFS doesn't allow partial success to be
+reported.  Reporting failure is probably more misleading than reporting
+success, so the status is ignored.
 
 Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs3proc.c  | 20 ++++++++++++++++----
- fs/nfsd/nfs4proc.c  | 23 ++++++++++++++++-------
- fs/nfsd/nfs4state.c |  5 ++++-
- fs/nfsd/nfsproc.c   | 17 +++++++++++++----
- fs/nfsd/vfs.c       | 24 ++++++++++++++----------
- fs/nfsd/vfs.h       | 12 ++++++++----
- 6 files changed, 71 insertions(+), 30 deletions(-)
+ fs/nfsd/nfs3proc.c |  5 ++++-
+ fs/nfsd/nfs4proc.c |  2 +-
+ fs/nfsd/nfsproc.c  |  5 ++++-
+ fs/nfsd/vfs.c      | 25 ++++++++++++++++++-------
+ fs/nfsd/vfs.h      |  5 +++--
+ 5 files changed, 30 insertions(+), 12 deletions(-)
 
 diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index 57854ca022d18..113567b3a98a5 100644
+index 113567b3a98a5..cb91088bce2e8 100644
 --- a/fs/nfsd/nfs3proc.c
 +++ b/fs/nfsd/nfs3proc.c
-@@ -67,12 +67,15 @@ nfsd3_proc_setattr(struct svc_rqst *rqstp)
+@@ -397,6 +397,9 @@ nfsd3_proc_symlink(struct svc_rqst *rqstp)
  {
- 	struct nfsd3_sattrargs *argp = rqstp->rq_argp;
- 	struct nfsd3_attrstat *resp = rqstp->rq_resp;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= &argp->attrs,
-+	};
- 
- 	dprintk("nfsd: SETATTR(3)  %s\n",
- 				SVCFH_fmt(&argp->fh));
- 
- 	fh_copy(&resp->fh, &argp->fh);
--	resp->status = nfsd_setattr(rqstp, &resp->fh, &argp->attrs,
-+	resp->status = nfsd_setattr(rqstp, &resp->fh, &attrs,
- 				    argp->check_guard, argp->guardtime);
- 	return rpc_success;
- }
-@@ -233,6 +236,9 @@ nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- {
- 	struct iattr *iap = &argp->attrs;
- 	struct dentry *parent, *child;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= iap,
-+	};
- 	__u32 v_mtime, v_atime;
- 	struct inode *inode;
- 	__be32 status;
-@@ -331,7 +337,7 @@ nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	}
- 
- set_attr:
--	status = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
-+	status = nfsd_create_setattr(rqstp, fhp, resfhp, &attrs);
- 
- out:
- 	fh_unlock(fhp);
-@@ -368,6 +374,9 @@ nfsd3_proc_mkdir(struct svc_rqst *rqstp)
- {
- 	struct nfsd3_createargs *argp = rqstp->rq_argp;
+ 	struct nfsd3_symlinkargs *argp = rqstp->rq_argp;
  	struct nfsd3_diropres *resp = rqstp->rq_resp;
 +	struct nfsd_attrs attrs = {
 +		.na_iattr	= &argp->attrs,
 +	};
  
- 	dprintk("nfsd: MKDIR(3)    %s %.*s\n",
- 				SVCFH_fmt(&argp->fh),
-@@ -378,7 +387,7 @@ nfsd3_proc_mkdir(struct svc_rqst *rqstp)
- 	fh_copy(&resp->dirfh, &argp->fh);
+ 	if (argp->tlen == 0) {
+ 		resp->status = nfserr_inval;
+@@ -423,7 +426,7 @@ nfsd3_proc_symlink(struct svc_rqst *rqstp)
+ 	fh_copy(&resp->dirfh, &argp->ffh);
  	fh_init(&resp->fh, NFS3_FHSIZE);
- 	resp->status = nfsd_create(rqstp, &resp->dirfh, argp->name, argp->len,
--				   &argp->attrs, S_IFDIR, 0, &resp->fh);
-+				   &attrs, S_IFDIR, 0, &resp->fh);
- 	fh_unlock(&resp->dirfh);
- 	return rpc_success;
- }
-@@ -428,6 +437,9 @@ nfsd3_proc_mknod(struct svc_rqst *rqstp)
- {
- 	struct nfsd3_mknodargs *argp = rqstp->rq_argp;
- 	struct nfsd3_diropres  *resp = rqstp->rq_resp;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= &argp->attrs,
-+	};
- 	int type;
- 	dev_t	rdev = 0;
- 
-@@ -453,7 +465,7 @@ nfsd3_proc_mknod(struct svc_rqst *rqstp)
- 
- 	type = nfs3_ftypes[argp->ftype];
- 	resp->status = nfsd_create(rqstp, &resp->dirfh, argp->name, argp->len,
--				   &argp->attrs, type, rdev, &resp->fh);
-+				   &attrs, type, rdev, &resp->fh);
- 	fh_unlock(&resp->dirfh);
+ 	resp->status = nfsd_symlink(rqstp, &resp->dirfh, argp->fname,
+-				    argp->flen, argp->tname, &resp->fh);
++				    argp->flen, argp->tname, &attrs, &resp->fh);
+ 	kfree(argp->tname);
  out:
  	return rpc_success;
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index ae0948271da9c..9b04611a318d7 100644
+index 9b04611a318d7..96f6fe4f86fd8 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -286,6 +286,9 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		  struct svc_fh *resfhp, struct nfsd4_open *open)
- {
- 	struct iattr *iap = &open->op_iattr;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= iap,
-+	};
- 	struct dentry *parent, *child;
- 	__u32 v_mtime, v_atime;
- 	struct inode *inode;
-@@ -404,7 +407,7 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	}
- 
- set_attr:
--	status = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
-+	status = nfsd_create_setattr(rqstp, fhp, resfhp, &attrs);
- 
- out:
- 	fh_unlock(fhp);
-@@ -787,6 +790,9 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	     union nfsd4_op_u *u)
- {
- 	struct nfsd4_create *create = &u->create;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= &create->cr_iattr,
-+	};
- 	struct svc_fh resfh;
- 	__be32 status;
- 	dev_t rdev;
-@@ -818,7 +824,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			goto out_umask;
- 		status = nfsd_create(rqstp, &cstate->current_fh,
- 				     create->cr_name, create->cr_namelen,
--				     &create->cr_iattr, S_IFBLK, rdev, &resfh);
-+				     &attrs, S_IFBLK, rdev, &resfh);
+@@ -813,7 +813,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	case NF4LNK:
+ 		status = nfsd_symlink(rqstp, &cstate->current_fh,
+ 				      create->cr_name, create->cr_namelen,
+-				      create->cr_data, &resfh);
++				      create->cr_data, &attrs, &resfh);
  		break;
  
- 	case NF4CHR:
-@@ -829,26 +835,26 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			goto out_umask;
- 		status = nfsd_create(rqstp, &cstate->current_fh,
- 				     create->cr_name, create->cr_namelen,
--				     &create->cr_iattr, S_IFCHR, rdev, &resfh);
-+				     &attrs, S_IFCHR, rdev, &resfh);
- 		break;
- 
- 	case NF4SOCK:
- 		status = nfsd_create(rqstp, &cstate->current_fh,
- 				     create->cr_name, create->cr_namelen,
--				     &create->cr_iattr, S_IFSOCK, 0, &resfh);
-+				     &attrs, S_IFSOCK, 0, &resfh);
- 		break;
- 
- 	case NF4FIFO:
- 		status = nfsd_create(rqstp, &cstate->current_fh,
- 				     create->cr_name, create->cr_namelen,
--				     &create->cr_iattr, S_IFIFO, 0, &resfh);
-+				     &attrs, S_IFIFO, 0, &resfh);
- 		break;
- 
- 	case NF4DIR:
- 		create->cr_iattr.ia_valid &= ~ATTR_SIZE;
- 		status = nfsd_create(rqstp, &cstate->current_fh,
- 				     create->cr_name, create->cr_namelen,
--				     &create->cr_iattr, S_IFDIR, 0, &resfh);
-+				     &attrs, S_IFDIR, 0, &resfh);
- 		break;
- 
- 	default:
-@@ -1142,6 +1148,9 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	      union nfsd4_op_u *u)
- {
- 	struct nfsd4_setattr *setattr = &u->setattr;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= &setattr->sa_iattr,
-+	};
- 	__be32 status = nfs_ok;
- 	int err;
- 
-@@ -1174,7 +1183,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				&setattr->sa_label);
- 	if (status)
- 		goto out;
--	status = nfsd_setattr(rqstp, &cstate->current_fh, &setattr->sa_iattr,
-+	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
- 				0, (time64_t)0);
- out:
- 	fh_drop_write(&cstate->current_fh);
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 7122ebc50a035..a299aeaa0de07 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5077,11 +5077,14 @@ nfsd4_truncate(struct svc_rqst *rqstp, struct svc_fh *fh,
- 		.ia_valid = ATTR_SIZE,
- 		.ia_size = 0,
- 	};
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= &iattr,
-+	};
- 	if (!open->op_truncate)
- 		return 0;
- 	if (!(open->op_share_access & NFS4_SHARE_ACCESS_WRITE))
- 		return nfserr_inval;
--	return nfsd_setattr(rqstp, fh, &iattr, 0, (time64_t)0);
-+	return nfsd_setattr(rqstp, fh, &attrs, 0, (time64_t)0);
- }
- 
- static __be32 nfs4_get_vfs_file(struct svc_rqst *rqstp, struct nfs4_file *fp,
+ 	case NF4BLK:
 diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index f65eba938a57d..c75d83bc3f21b 100644
+index c75d83bc3f21b..09afd188099be 100644
 --- a/fs/nfsd/nfsproc.c
 +++ b/fs/nfsd/nfsproc.c
-@@ -51,6 +51,9 @@ nfsd_proc_setattr(struct svc_rqst *rqstp)
- 	struct nfsd_sattrargs *argp = rqstp->rq_argp;
- 	struct nfsd_attrstat *resp = rqstp->rq_resp;
- 	struct iattr *iap = &argp->attrs;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= iap,
-+	};
- 	struct svc_fh *fhp;
- 
- 	dprintk("nfsd: SETATTR  %s, valid=%x, size=%ld\n",
-@@ -100,7 +103,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp)
- 		}
- 	}
- 
--	resp->status = nfsd_setattr(rqstp, fhp, iap, 0, (time64_t)0);
-+	resp->status = nfsd_setattr(rqstp, fhp, &attrs, 0, (time64_t)0);
- 	if (resp->status != nfs_ok)
- 		goto out;
- 
-@@ -261,6 +264,9 @@ nfsd_proc_create(struct svc_rqst *rqstp)
- 	svc_fh		*dirfhp = &argp->fh;
- 	svc_fh		*newfhp = &resp->fh;
- 	struct iattr	*attr = &argp->attrs;
-+	struct nfsd_attrs attrs = {
-+		.na_iattr	= attr,
-+	};
- 	struct inode	*inode;
- 	struct dentry	*dchild;
- 	int		type, mode;
-@@ -386,7 +392,7 @@ nfsd_proc_create(struct svc_rqst *rqstp)
- 	if (!inode) {
- 		/* File doesn't exist. Create it and set attrs */
- 		resp->status = nfsd_create_locked(rqstp, dirfhp, argp->name,
--						  argp->len, attr, type, rdev,
-+						  argp->len, &attrs, type, rdev,
- 						  newfhp);
- 	} else if (type == S_IFREG) {
- 		dprintk("nfsd:   existing %s, valid=%x, size=%ld\n",
-@@ -397,7 +403,7 @@ nfsd_proc_create(struct svc_rqst *rqstp)
- 		 */
- 		attr->ia_valid &= ATTR_SIZE;
- 		if (attr->ia_valid)
--			resp->status = nfsd_setattr(rqstp, newfhp, attr, 0,
-+			resp->status = nfsd_setattr(rqstp, newfhp, &attrs, 0,
- 						    (time64_t)0);
- 	}
- 
-@@ -512,6 +518,9 @@ nfsd_proc_mkdir(struct svc_rqst *rqstp)
+@@ -479,6 +479,9 @@ nfsd_proc_symlink(struct svc_rqst *rqstp)
  {
- 	struct nfsd_createargs *argp = rqstp->rq_argp;
- 	struct nfsd_diropres *resp = rqstp->rq_resp;
+ 	struct nfsd_symlinkargs *argp = rqstp->rq_argp;
+ 	struct nfsd_stat *resp = rqstp->rq_resp;
 +	struct nfsd_attrs attrs = {
 +		.na_iattr	= &argp->attrs,
 +	};
+ 	struct svc_fh	newfh;
  
- 	dprintk("nfsd: MKDIR    %s %.*s\n", SVCFH_fmt(&argp->fh), argp->len, argp->name);
+ 	if (argp->tlen > NFS_MAXPATHLEN) {
+@@ -500,7 +503,7 @@ nfsd_proc_symlink(struct svc_rqst *rqstp)
  
-@@ -523,7 +532,7 @@ nfsd_proc_mkdir(struct svc_rqst *rqstp)
- 	argp->attrs.ia_valid &= ~ATTR_SIZE;
- 	fh_init(&resp->fh, NFS_FHSIZE);
- 	resp->status = nfsd_create(rqstp, &argp->fh, argp->name, argp->len,
--				   &argp->attrs, S_IFDIR, 0, &resp->fh);
-+				   &attrs, S_IFDIR, 0, &resp->fh);
- 	fh_put(&argp->fh);
- 	if (resp->status != nfs_ok)
- 		goto out;
+ 	fh_init(&newfh, NFS_FHSIZE);
+ 	resp->status = nfsd_symlink(rqstp, &argp->ffh, argp->fname, argp->flen,
+-				    argp->tname, &newfh);
++				    argp->tname, &attrs, &newfh);
+ 
+ 	kfree(argp->tname);
+ 	fh_put(&argp->ffh);
 diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 6689ad5bb790d..489225de05a2a 100644
+index 489225de05a2a..bfdb42aa23a01 100644
 --- a/fs/nfsd/vfs.c
 +++ b/fs/nfsd/vfs.c
-@@ -350,11 +350,13 @@ nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
-  * Set various file attributes.  After this call fhp needs an fh_put.
-  */
- __be32
--nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
-+nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+	     struct nfsd_attrs *attr,
- 	     int check_guard, time64_t guardtime)
- {
- 	struct dentry	*dentry;
- 	struct inode	*inode;
-+	struct iattr	*iap = attr->na_iattr;
- 	int		accmode = NFSD_MAY_SATTR;
- 	umode_t		ftype = 0;
- 	__be32		err;
-@@ -1203,14 +1205,15 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, u64 offset,
-  * @rqstp: RPC transaction being executed
-  * @fhp: NFS filehandle of parent directory
-  * @resfhp: NFS filehandle of new object
-- * @iap: requested attributes of new object
-+ * @attrs: requested attributes of new object
-  *
-  * Returns nfs_ok on success, or an nfsstat in network byte order.
-  */
- __be32
- nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		    struct svc_fh *resfhp, struct iattr *iap)
-+		    struct svc_fh *resfhp, struct nfsd_attrs *attrs)
- {
-+	struct iattr *iap = attrs->na_iattr;
- 	__be32 status;
- 
- 	/*
-@@ -1231,7 +1234,7 @@ nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	 * if the attributes have not changed.
- 	 */
- 	if (iap->ia_valid)
--		status = nfsd_setattr(rqstp, resfhp, iap, 0, (time64_t)0);
-+		status = nfsd_setattr(rqstp, resfhp, attrs, 0, (time64_t)0);
- 	else
- 		status = nfserrno(commit_metadata(resfhp));
- 
-@@ -1270,11 +1273,12 @@ nfsd_check_ignore_resizing(struct iattr *iap)
- /* The parent directory should already be locked: */
- __be32
- nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		char *fname, int flen, struct iattr *iap,
--		int type, dev_t rdev, struct svc_fh *resfhp)
-+		   char *fname, int flen, struct nfsd_attrs *attrs,
-+		   int type, dev_t rdev, struct svc_fh *resfhp)
- {
- 	struct dentry	*dentry, *dchild;
- 	struct inode	*dirp;
-+	struct iattr	*iap = attrs->na_iattr;
- 	__be32		err;
- 	int		host_err;
- 
-@@ -1348,7 +1352,7 @@ nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (host_err < 0)
- 		goto out_nfserr;
- 
--	err = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
-+	err = nfsd_create_setattr(rqstp, fhp, resfhp, attrs);
- 
- out:
- 	dput(dchild);
-@@ -1367,8 +1371,8 @@ nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
-  */
- __be32
- nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		char *fname, int flen, struct iattr *iap,
--		int type, dev_t rdev, struct svc_fh *resfhp)
-+	    char *fname, int flen, struct nfsd_attrs *attrs,
-+	    int type, dev_t rdev, struct svc_fh *resfhp)
- {
- 	struct dentry	*dentry, *dchild = NULL;
- 	__be32		err;
-@@ -1400,7 +1404,7 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	dput(dchild);
- 	if (err)
- 		return err;
--	return nfsd_create_locked(rqstp, fhp, fname, flen, iap, type,
-+	return nfsd_create_locked(rqstp, fhp, fname, flen, attrs, type,
- 					rdev, resfhp);
+@@ -1446,15 +1446,25 @@ nfsd_readlink(struct svc_rqst *rqstp, struct svc_fh *fhp, char *buf, int *lenp)
+ 	return 0;
  }
  
+-/*
+- * Create a symlink and look up its inode
++/**
++ * nfsd_symlink - Create a symlink and look up its inode
++ * @rqstp: RPC transaction being executed
++ * @fhp: NFS filehandle of parent directory
++ * @fname: filename of the new symlink
++ * @flen: length of @fname
++ * @path: content of the new symlink (NUL-terminated)
++ * @attrs: requested attributes of new object
++ * @resfhp: NFS filehandle of new object
++ *
+  * N.B. After this call _both_ fhp and resfhp need an fh_put
++ *
++ * Returns nfs_ok on success, or an nfsstat in network byte order.
+  */
+ __be32
+ nfsd_symlink(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-				char *fname, int flen,
+-				char *path,
+-				struct svc_fh *resfhp)
++	     char *fname, int flen,
++	     char *path, struct nfsd_attrs *attrs,
++	     struct svc_fh *resfhp)
+ {
+ 	struct dentry	*dentry, *dnew;
+ 	__be32		err, cerr;
+@@ -1484,13 +1494,14 @@ nfsd_symlink(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 
+ 	host_err = vfs_symlink(&init_user_ns, d_inode(dentry), dnew, path);
+ 	err = nfserrno(host_err);
++	cerr = fh_compose(resfhp, fhp->fh_export, dnew, fhp);
++	if (!err)
++		nfsd_create_setattr(rqstp, fhp, resfhp, attrs);
+ 	fh_unlock(fhp);
+ 	if (!err)
+ 		err = nfserrno(commit_metadata(fhp));
+-
+ 	fh_drop_write(fhp);
+ 
+-	cerr = fh_compose(resfhp, fhp->fh_export, dnew, fhp);
+ 	dput(dnew);
+ 	if (err==0) err = cerr;
+ out:
 diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index 26347d76f44a0..d8b1a36fca956 100644
+index d8b1a36fca956..5047cec4c423c 100644
 --- a/fs/nfsd/vfs.h
 +++ b/fs/nfsd/vfs.h
-@@ -42,6 +42,10 @@ struct nfsd_file;
- typedef int (*nfsd_filldir_t)(void *, const char *, int, loff_t, u64, unsigned);
- 
- /* nfsd/vfs.c */
-+struct nfsd_attrs {
-+	struct iattr		*na_iattr;	/* input */
-+};
-+
- int		nfsd_cross_mnt(struct svc_rqst *rqstp, struct dentry **dpp,
- 		                struct svc_export **expp);
- __be32		nfsd_lookup(struct svc_rqst *, struct svc_fh *,
-@@ -50,7 +54,7 @@ __be32		 nfsd_lookup_dentry(struct svc_rqst *, struct svc_fh *,
- 				const char *, unsigned int,
- 				struct svc_export **, struct dentry **);
- __be32		nfsd_setattr(struct svc_rqst *, struct svc_fh *,
--				struct iattr *, int, time64_t);
-+				struct nfsd_attrs *, int, time64_t);
- int nfsd_mountpoint(struct dentry *, struct svc_export *);
- #ifdef CONFIG_NFSD_V4
- __be32          nfsd4_set_nfs4_label(struct svc_rqst *, struct svc_fh *,
-@@ -63,14 +67,14 @@ __be32		nfsd4_clone_file_range(struct svc_rqst *rqstp,
- 				       u64 count, bool sync);
- #endif /* CONFIG_NFSD_V4 */
- __be32		nfsd_create_locked(struct svc_rqst *, struct svc_fh *,
--				char *name, int len, struct iattr *attrs,
-+				char *name, int len, struct nfsd_attrs *attrs,
- 				int type, dev_t rdev, struct svc_fh *res);
- __be32		nfsd_create(struct svc_rqst *, struct svc_fh *,
--				char *name, int len, struct iattr *attrs,
-+				char *name, int len, struct nfsd_attrs *attrs,
- 				int type, dev_t rdev, struct svc_fh *res);
- __be32		nfsd_access(struct svc_rqst *, struct svc_fh *, u32 *, u32 *);
- __be32		nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
--				struct svc_fh *resfhp, struct iattr *iap);
-+				struct svc_fh *resfhp, struct nfsd_attrs *iap);
- __be32		nfsd_commit(struct svc_rqst *rqst, struct svc_fh *fhp,
- 				u64 offset, u32 count, __be32 *verf);
- #ifdef CONFIG_NFSD_V4
+@@ -114,8 +114,9 @@ __be32		nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ __be32		nfsd_readlink(struct svc_rqst *, struct svc_fh *,
+ 				char *, int *);
+ __be32		nfsd_symlink(struct svc_rqst *, struct svc_fh *,
+-				char *name, int len, char *path,
+-				struct svc_fh *res);
++			     char *name, int len, char *path,
++			     struct nfsd_attrs *attrs,
++			     struct svc_fh *res);
+ __be32		nfsd_link(struct svc_rqst *, struct svc_fh *,
+ 				char *, int, struct svc_fh *);
+ ssize_t		nfsd_copy_file_range(struct file *, u64,
 -- 
 2.43.0
 
