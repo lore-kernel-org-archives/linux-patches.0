@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534577E105;
-	Mon,  8 Apr 2024 14:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF527F499;
+	Mon,  8 Apr 2024 14:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584970; cv=none; b=Jfj3H0YgAKJIh4kqQgAuQcO0GHQAJsX+3rpgm+GtI9YvF2MlXNT4/BJIueCTfZR633lTHq7tuLGHjU0cDhq0ZLciTefaHXvr6WvBxxw9170HP31fRtI1M8UaFPyZEtb8eQsgDAGKlQx/C7Edg+Q6ElIAWmHSbZGKaYAMDFIjB3U=
+	t=1712584973; cv=none; b=jJy4M87RbibK561Tqws/olPqxLqXu/VSCdxXIjx8b8j0wJPLysh+0Q4gF3dXI5m7T0MW6Rhnq8yKURIIQGP8PWajsGaIcerHP+eE9C11w33gCRENLgl9hI9duThjcFarfK15N4HFZyHeCSv8iFUTeUlGE6OAWoZwswU2qJOUQ7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584970; c=relaxed/simple;
-	bh=r01Ji3t9FrpPuXGQaDAcJkXMhfrDiXxn0rFN/u6puC8=;
+	s=arc-20240116; t=1712584973; c=relaxed/simple;
+	bh=/TYVNtY1C1XGsRQZaaMq1IsN3METX0rWkMa2HOSKdX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Il8rhP2Z+Gz9kKxHR8iUxmH0WL+UqJLUs37B/FVORzYn/371OK3ljVxSJ73hKGKEP5hKeKwrlhhtpLp6qkjOFwWY8np0BbQb1RIypTBJ8YSCA87tqueUWA88vVdc05cnWLnwzjSFynZ+nDhEaWnIpRFsaWCJGDd9m98XZ4nOBms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAF7Ql+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N4SKb/LZsUeJrJf7NoXINWpHbY/otWOYFnDThCsjsxJmZ40V1k2vhJ/8SVLvQEKH7SajkqD6sLJZBKOAywZV5Np2txKmjkKrn7v+qXckvnfBDHnNbQmiN7fdds8R0OzkBr7JIu+/rIfBF+xqdBl053DDCCkd7dlSo2tXCRsL7eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1fl7M9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAF7Ql+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEB0C433C7;
-	Mon,  8 Apr 2024 14:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1fl7M9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB6EC433C7;
+	Mon,  8 Apr 2024 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584970;
-	bh=r01Ji3t9FrpPuXGQaDAcJkXMhfrDiXxn0rFN/u6puC8=;
+	s=korg; t=1712584973;
+	bh=/TYVNtY1C1XGsRQZaaMq1IsN3METX0rWkMa2HOSKdX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAF7Ql+0pkccClns79n7n2UB0Fh09CuYtPzxEXcl3ReOspJae4D1u+pn/31UDdIuu
-	 Q+gpiT7ElY2001AfE7yRDBbFKw84lkvney8u/iGwa6Yx5e1dPN470+8BXbaCADgbWA
-	 CEz8Y950e5CaTbHBX3vamRpyeoHeRkb0p10/ZWl8=
+	b=N1fl7M9EgXO2373a4h86f0lYcFZo3OpzLyMoQy8Tg00eTifgqYOuk5/gKmytydNvJ
+	 xmjNLMPdMQWFVOayh8ZySScohCxTho09UHWml9G8Ne6+3geEMw+OYjOqd/bZKgNEkU
+	 DZwfnWAZiswfuVfP4zXefsoBvbMcfjF8rOT4bYuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Subject: [PATCH 5.15 588/690] usb: dwc2: host: Fix ISOC flow in DDMA mode
-Date: Mon,  8 Apr 2024 14:57:34 +0200
-Message-ID: <20240408125420.879155676@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	amd-gfx@lists.freedesktop.org,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 579/690] drm/amdgpu: Use drm_mode_copy()
+Date: Mon,  8 Apr 2024 14:57:25 +0200
+Message-ID: <20240408125420.579306553@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -43,140 +49,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit b258e42688501cadb1a6dd658d6f015df9f32d8f upstream.
+[ Upstream commit 426c89aa203bcec9d9cf6eea36735eafa1b1f099 ]
 
-Fixed ISOC completion flow in DDMA mode. Added isoc
-descriptor actual length value and update urb's start_frame
-value.
-Fixed initialization of ISOC DMA descriptors flow.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-Fixes: 56f5b1cff22a ("staging: Core files for the DWC2 driver")
-Fixes: 20f2eb9c4cf8 ("staging: dwc2: add microframe scheduler from downstream Pi kernel")
-Fixes: c17b337c1ea4 ("usb: dwc2: host: program descriptor for next frame")
-Fixes: dc4c76e7b22c ("staging: HCD descriptor DMA support for the DWC2 driver")
-Fixes: 762d3a1a9cd7 ("usb: dwc2: host: process all completed urbs")
-CC: stable@vger.kernel.org
-Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
-Link: https://lore.kernel.org/r/a8b1e1711cc6cabfb45d92ede12e35445c66f06c.1708944698.git.Minas.Harutyunyan@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
+
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 79f3e38f60e5 ("drm/amd/display: Preserve original aspect ratio in create stream")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/hcd.c      |   12 ++++++++++--
- drivers/usb/dwc2/hcd_ddma.c |   17 +++++++++++------
- drivers/usb/dwc2/hw.h       |    2 +-
- 3 files changed, 22 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c    | 4 ++--
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -2734,8 +2734,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
- 			hsotg->available_host_channels--;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+index c777aff164b76..654f99f4107ea 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -625,7 +625,7 @@ amdgpu_connector_fixup_lcd_native_mode(struct drm_encoder *encoder,
+ 		if (mode->type & DRM_MODE_TYPE_PREFERRED) {
+ 			if (mode->hdisplay != native_mode->hdisplay ||
+ 			    mode->vdisplay != native_mode->vdisplay)
+-				memcpy(native_mode, mode, sizeof(*mode));
++				drm_mode_copy(native_mode, mode);
  		}
- 		qh = list_entry(qh_ptr, struct dwc2_qh, qh_list_entry);
--		if (dwc2_assign_and_init_hc(hsotg, qh))
-+		if (dwc2_assign_and_init_hc(hsotg, qh)) {
-+			if (hsotg->params.uframe_sched)
-+				hsotg->available_host_channels++;
- 			break;
-+		}
- 
- 		/*
- 		 * Move the QH from the periodic ready schedule to the
-@@ -2768,8 +2771,11 @@ enum dwc2_transaction_type dwc2_hcd_sele
- 			hsotg->available_host_channels--;
- 		}
- 
--		if (dwc2_assign_and_init_hc(hsotg, qh))
-+		if (dwc2_assign_and_init_hc(hsotg, qh)) {
-+			if (hsotg->params.uframe_sched)
-+				hsotg->available_host_channels++;
- 			break;
-+		}
- 
- 		/*
- 		 * Move the QH from the non-periodic inactive schedule to the
-@@ -4176,6 +4182,8 @@ void dwc2_host_complete(struct dwc2_hsot
- 			 urb->actual_length);
- 
- 	if (usb_pipetype(urb->pipe) == PIPE_ISOCHRONOUS) {
-+		if (!hsotg->params.dma_desc_enable)
-+			urb->start_frame = qtd->qh->start_active_frame;
- 		urb->error_count = dwc2_hcd_urb_get_error_count(qtd->urb);
- 		for (i = 0; i < urb->number_of_packets; ++i) {
- 			urb->iso_frame_desc[i].actual_length =
---- a/drivers/usb/dwc2/hcd_ddma.c
-+++ b/drivers/usb/dwc2/hcd_ddma.c
-@@ -589,7 +589,7 @@ static void dwc2_init_isoc_dma_desc(stru
- 	idx = qh->td_last;
- 	inc = qh->host_interval;
- 	hsotg->frame_number = dwc2_hcd_get_frame_number(hsotg);
--	cur_idx = dwc2_frame_list_idx(hsotg->frame_number);
-+	cur_idx = idx;
- 	next_idx = dwc2_desclist_idx_inc(qh->td_last, inc, qh->dev_speed);
- 
- 	/*
-@@ -896,6 +896,8 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- {
- 	struct dwc2_dma_desc *dma_desc;
- 	struct dwc2_hcd_iso_packet_desc *frame_desc;
-+	u16 frame_desc_idx;
-+	struct urb *usb_urb = qtd->urb->priv;
- 	u16 remain = 0;
- 	int rc = 0;
- 
-@@ -908,8 +910,11 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- 				DMA_FROM_DEVICE);
- 
- 	dma_desc = &qh->desc_list[idx];
-+	frame_desc_idx = (idx - qtd->isoc_td_first) & (usb_urb->number_of_packets - 1);
- 
--	frame_desc = &qtd->urb->iso_descs[qtd->isoc_frame_index_last];
-+	frame_desc = &qtd->urb->iso_descs[frame_desc_idx];
-+	if (idx == qtd->isoc_td_first)
-+		usb_urb->start_frame = dwc2_hcd_get_frame_number(hsotg);
- 	dma_desc->buf = (u32)(qtd->urb->dma + frame_desc->offset);
- 	if (chan->ep_is_in)
- 		remain = (dma_desc->status & HOST_DMA_ISOC_NBYTES_MASK) >>
-@@ -930,7 +935,7 @@ static int dwc2_cmpl_host_isoc_dma_desc(
- 		frame_desc->status = 0;
  	}
  
--	if (++qtd->isoc_frame_index == qtd->urb->packet_count) {
-+	if (++qtd->isoc_frame_index == usb_urb->number_of_packets) {
- 		/*
- 		 * urb->status is not used for isoc transfers here. The
- 		 * individual frame_desc status are used instead.
-@@ -1035,11 +1040,11 @@ static void dwc2_complete_isoc_xfer_ddma
- 				return;
- 			idx = dwc2_desclist_idx_inc(idx, qh->host_interval,
- 						    chan->speed);
--			if (!rc)
-+			if (rc == 0)
- 				continue;
+@@ -634,7 +634,7 @@ amdgpu_connector_fixup_lcd_native_mode(struct drm_encoder *encoder,
+ 		list_for_each_entry_safe(mode, t, &connector->probed_modes, head) {
+ 			if (mode->hdisplay == native_mode->hdisplay &&
+ 			    mode->vdisplay == native_mode->vdisplay) {
+-				*native_mode = *mode;
++				drm_mode_copy(native_mode, mode);
+ 				drm_mode_set_crtcinfo(native_mode, CRTC_INTERLACE_HALVE_V);
+ 				DRM_DEBUG_KMS("Determined LVDS native mode details from EDID\n");
+ 				break;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 7385efe699f88..9356decd14513 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6219,7 +6219,7 @@ get_highest_refresh_rate_mode(struct amdgpu_dm_connector *aconnector,
+ 		}
+ 	}
  
--			if (rc == DWC2_CMPL_DONE)
--				break;
-+			if (rc == DWC2_CMPL_DONE || rc == DWC2_CMPL_STOP)
-+				goto stop_scan;
+-	aconnector->freesync_vid_base = *m_pref;
++	drm_mode_copy(&aconnector->freesync_vid_base, m_pref);
+ 	return m_pref;
+ }
  
- 			/* rc == DWC2_CMPL_STOP */
- 
---- a/drivers/usb/dwc2/hw.h
-+++ b/drivers/usb/dwc2/hw.h
-@@ -728,7 +728,7 @@
- #define TXSTS_QTOP_TOKEN_MASK		(0x3 << 25)
- #define TXSTS_QTOP_TOKEN_SHIFT		25
- #define TXSTS_QTOP_TERMINATE		BIT(24)
--#define TXSTS_QSPCAVAIL_MASK		(0xff << 16)
-+#define TXSTS_QSPCAVAIL_MASK		(0x7f << 16)
- #define TXSTS_QSPCAVAIL_SHIFT		16
- #define TXSTS_FSPCAVAIL_MASK		(0xffff << 0)
- #define TXSTS_FSPCAVAIL_SHIFT		0
+@@ -6333,8 +6333,8 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 				 is_freesync_video_mode(&mode, aconnector);
+ 		if (recalculate_timing) {
+ 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
+-			saved_mode = mode;
+-			mode = *freesync_mode;
++			drm_mode_copy(&saved_mode, &mode);
++			drm_mode_copy(&mode, freesync_mode);
+ 		} else {
+ 			decide_crtc_timing_for_drm_display_mode(
+ 				&mode, preferred_mode, scale);
+-- 
+2.43.0
+
 
 
