@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA7C524AF;
-	Mon,  8 Apr 2024 13:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F8A42046;
+	Mon,  8 Apr 2024 13:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584348; cv=none; b=My559mrSgXyvJ7StRKu7FOg4znY6/vhEG1ovXrZxj03P5NDXKyv6jvyBfwz6AWGoPf1/GmOgSyd5j6e8Qha1HcbXnDpEMCr46UkScOQjztQp+sYKo9Lvmm3N+sRuulkVQx3/E24Z04nZ5Nrm5fvAoyUaXJx9TlX1Ur3rTUr3kL4=
+	t=1712584351; cv=none; b=Uazf5xo4IQZeZX585yQkjnewoI1wvIIAqBj1bcHf7BXQb6NUVon1RFEvuY6sVGhDCs7xj20gApiuqmSlIv6lBzrmtcrCODfqazJF0O7gO9toFqgmNVILMWv5dlGv4sCUrOqVy/86hQOIaMrwa7O2fS4h7aHJnx8svAGAnqxm6wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584348; c=relaxed/simple;
-	bh=B6OZc1lzMbNDIu0eQGEKJ1MvTVu5cwwaFsku3zAw4/Q=;
+	s=arc-20240116; t=1712584351; c=relaxed/simple;
+	bh=tXkVuyBvxZAiNFT1fqSNiOw4RVdmfsja1K7aE4o+FFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWjIu9dRxepf18PJt7dGCksEAc79/zRqq0Wgftz4j/UsCIKj9kOQwbGgXzr15TpAZ2iFW29L9wrkSouD0TQFAk2zyz23OQroaC4IUu890bA5W5/ejdocBUNZjpZ2Lzh0SGnzhFbpcWXQAIbwsOzVUlinNVwmecy20+PVq6+i2bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftOCPiQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kctw4b5NH00lqfC1X6c/VEIIRkONThhWnGXAJxW2Vstc+FodrAfH6zS2KN7Hd3nfiZZPy7d4pKnkEwBVT29Ll8lltZyNgDKOJGpPneYMlRBB0yLZWBVgduRDsKuYGjAFl6gLQxFyJ4G/2nmjL4ZwkocfYzl7El7LGBDZipT3uuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo6rJFoK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftOCPiQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84C8C433C7;
-	Mon,  8 Apr 2024 13:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo6rJFoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD28DC433F1;
+	Mon,  8 Apr 2024 13:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584348;
-	bh=B6OZc1lzMbNDIu0eQGEKJ1MvTVu5cwwaFsku3zAw4/Q=;
+	s=korg; t=1712584351;
+	bh=tXkVuyBvxZAiNFT1fqSNiOw4RVdmfsja1K7aE4o+FFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftOCPiQs1MMxWQ8pBWc+AtXekIxtzi5oZllSDjpsyuvp4Z2rwR1BXo+E8PEGGlk4u
-	 poqzReVhXrsYLQPE8joInko4QjrXBFJjlWZgCnDMiEWCPUn59x+VmyxI553aK8zA2m
-	 mXSeHt03Rn/QZPoz3N68z1z8/yuU6Nwli+f1exOQ=
+	b=lo6rJFoKDz1O2Dks66Flu9GbWHmXPdjzxxDSSVaQG5HgtkbIBjJecoVugtm6usvpz
+	 YvpP4JKy/r6Cy5YQWagrwoDMl3kpU4zhcksPyBxz6mwbOBVoqMs10XUF0iY8/sXaV/
+	 YWN6CkQy4WVItSxSxrp+pDSCruncPxVHOfRFnUfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 407/690] NFSD: change nfsd_create()/nfsd_symlink() to unlock directory before returning.
-Date: Mon,  8 Apr 2024 14:54:33 +0200
-Message-ID: <20240408125414.317952581@linuxfoundation.org>
+Subject: [PATCH 5.15 408/690] NFSD: always drop directory lock in nfsd_unlink()
+Date: Mon,  8 Apr 2024 14:54:34 +0200
+Message-ID: <20240408125414.356486731@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,134 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 927bfc5600cd6333c9ef9f090f19e66b7d4c8ee1 ]
+[ Upstream commit b677c0c63a135a916493c064906582e9f3ed4802 ]
 
-nfsd_create() usually returns with the directory still locked.
-nfsd_symlink() usually returns with it unlocked.  This is clumsy.
+Some error paths in nfsd_unlink() allow it to exit without unlocking the
+directory.  This is not a problem in practice as the directory will be
+locked with an fh_put(), but it is untidy and potentially confusing.
 
-Until recently nfsd_create() needed to keep the directory locked until
-ACLs and security label had been set.  These are now set inside
-nfsd_create() (in nfsd_setattr()) so this need is gone.
+This allows us to remove all the fh_unlock() calls that are immediately
+after nfsd_unlink() calls.
 
-So change nfsd_create() and nfsd_symlink() to always unlock, and remove
-any fh_unlock() calls that follow calls to these functions.
-
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs3proc.c |  2 --
- fs/nfsd/nfs4proc.c |  2 --
- fs/nfsd/vfs.c      | 38 +++++++++++++++++++++-----------------
- 3 files changed, 21 insertions(+), 21 deletions(-)
+ fs/nfsd/nfs3proc.c | 2 --
+ fs/nfsd/nfs4proc.c | 4 +---
+ fs/nfsd/vfs.c      | 7 +++++--
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index cb91088bce2e8..c7c2c7db30f54 100644
+index c7c2c7db30f54..fbdc109fbd067 100644
 --- a/fs/nfsd/nfs3proc.c
 +++ b/fs/nfsd/nfs3proc.c
-@@ -388,7 +388,6 @@ nfsd3_proc_mkdir(struct svc_rqst *rqstp)
- 	fh_init(&resp->fh, NFS3_FHSIZE);
- 	resp->status = nfsd_create(rqstp, &resp->dirfh, argp->name, argp->len,
- 				   &attrs, S_IFDIR, 0, &resp->fh);
--	fh_unlock(&resp->dirfh);
+@@ -490,7 +490,6 @@ nfsd3_proc_remove(struct svc_rqst *rqstp)
+ 	fh_copy(&resp->fh, &argp->fh);
+ 	resp->status = nfsd_unlink(rqstp, &resp->fh, -S_IFDIR,
+ 				   argp->name, argp->len);
+-	fh_unlock(&resp->fh);
  	return rpc_success;
  }
  
-@@ -469,7 +468,6 @@ nfsd3_proc_mknod(struct svc_rqst *rqstp)
- 	type = nfs3_ftypes[argp->ftype];
- 	resp->status = nfsd_create(rqstp, &resp->dirfh, argp->name, argp->len,
- 				   &attrs, type, rdev, &resp->fh);
--	fh_unlock(&resp->dirfh);
- out:
+@@ -511,7 +510,6 @@ nfsd3_proc_rmdir(struct svc_rqst *rqstp)
+ 	fh_copy(&resp->fh, &argp->fh);
+ 	resp->status = nfsd_unlink(rqstp, &resp->fh, S_IFDIR,
+ 				   argp->name, argp->len);
+-	fh_unlock(&resp->fh);
  	return rpc_success;
  }
+ 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index ffa2806fd5d3b..fb2487ceac46e 100644
+index fb2487ceac46e..26cd2479e30cf 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -823,8 +823,6 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		create->cr_bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 	if (attrs.na_aclerr)
- 		create->cr_bmval[0] &= ~FATTR4_WORD0_ACL;
--
--	fh_unlock(&cstate->current_fh);
- 	set_change_info(&create->cr_cinfo, &cstate->current_fh);
- 	fh_dup2(&cstate->current_fh, &resfh);
- out:
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index e91ac3bc68764..90bd6968fbf68 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1380,8 +1380,10 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	fh_lock_nested(fhp, I_MUTEX_PARENT);
- 	dchild = lookup_one_len(fname, dentry, flen);
- 	host_err = PTR_ERR(dchild);
--	if (IS_ERR(dchild))
--		return nfserrno(host_err);
-+	if (IS_ERR(dchild)) {
-+		err = nfserrno(host_err);
-+		goto out_unlock;
-+	}
- 	err = fh_compose(resfhp, fhp->fh_export, dchild, fhp);
- 	/*
- 	 * We unconditionally drop our ref to dchild as fh_compose will have
-@@ -1389,9 +1391,12 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	 */
- 	dput(dchild);
- 	if (err)
--		return err;
--	return nfsd_create_locked(rqstp, fhp, fname, flen, attrs, type,
--					rdev, resfhp);
-+		goto out_unlock;
-+	err = nfsd_create_locked(rqstp, fhp, fname, flen, attrs, type,
-+				 rdev, resfhp);
-+out_unlock:
-+	fh_unlock(fhp);
-+	return err;
+@@ -1002,10 +1002,8 @@ nfsd4_remove(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		return nfserr_grace;
+ 	status = nfsd_unlink(rqstp, &cstate->current_fh, 0,
+ 			     remove->rm_name, remove->rm_namelen);
+-	if (!status) {
+-		fh_unlock(&cstate->current_fh);
++	if (!status)
+ 		set_change_info(&remove->rm_cinfo, &cstate->current_fh);
+-	}
+ 	return status;
  }
  
- /*
-@@ -1468,16 +1473,19 @@ nfsd_symlink(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		goto out;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 90bd6968fbf68..4b1304fe718fd 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1754,12 +1754,12 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ 	rdentry = lookup_one_len(fname, dentry, flen);
+ 	host_err = PTR_ERR(rdentry);
+ 	if (IS_ERR(rdentry))
+-		goto out_drop_write;
++		goto out_unlock;
  
- 	host_err = fh_want_write(fhp);
--	if (host_err)
--		goto out_nfserr;
-+	if (host_err) {
-+		err = nfserrno(host_err);
-+		goto out;
-+	}
- 
- 	fh_lock(fhp);
- 	dentry = fhp->fh_dentry;
- 	dnew = lookup_one_len(fname, dentry, flen);
--	host_err = PTR_ERR(dnew);
--	if (IS_ERR(dnew))
--		goto out_nfserr;
--
-+	if (IS_ERR(dnew)) {
-+		err = nfserrno(PTR_ERR(dnew));
-+		fh_unlock(fhp);
-+		goto out_drop_write;
-+	}
- 	host_err = vfs_symlink(&init_user_ns, d_inode(dentry), dnew, path);
- 	err = nfserrno(host_err);
- 	cerr = fh_compose(resfhp, fhp->fh_export, dnew, fhp);
-@@ -1486,16 +1494,12 @@ nfsd_symlink(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	fh_unlock(fhp);
- 	if (!err)
- 		err = nfserrno(commit_metadata(fhp));
--	fh_drop_write(fhp);
--
- 	dput(dnew);
- 	if (err==0) err = cerr;
-+out_drop_write:
-+	fh_drop_write(fhp);
+ 	if (d_really_is_negative(rdentry)) {
+ 		dput(rdentry);
+ 		host_err = -ENOENT;
+-		goto out_drop_write;
++		goto out_unlock;
+ 	}
+ 	rinode = d_inode(rdentry);
+ 	ihold(rinode);
+@@ -1797,6 +1797,9 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ 	}
  out:
  	return err;
--
--out_nfserr:
--	err = nfserrno(host_err);
--	goto out;
++out_unlock:
++	fh_unlock(fhp);
++	goto out_drop_write;
  }
  
  /*
