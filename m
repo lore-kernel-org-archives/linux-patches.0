@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8457E10B;
-	Mon,  8 Apr 2024 13:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F150C7E118;
+	Mon,  8 Apr 2024 13:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584036; cv=none; b=pcg1o0uuaT1Yy9TEl3Ye1mj/i2d7OWmEd+P8hahqySpao7sVz/jJrASw0efNaCj8GiLbM5p5Cg5eZSGXp0339G6ER2h+Uufjk4P8gHBoQ3khSNIGfe43stQaT0cV1ogKYemfqgE6k/FzVoFC48Wo83tYSRzgyrGE0/l7FSpVJW8=
+	t=1712584040; cv=none; b=RA5qevv0Xdh/P2Xq8LBuAXBFb2SyOfjl2UQ919epk61zETdUh/EsnlSTd9lCcG20IVPu8R4+Oq5jpu5YUia7Tw8JuO3pyS+zkGvAmZUNLYk6PQdZ4uVU0d7uKN4FIruxjZ87uQ7q3PxAtxrMuvPvUJ5MlHVYmpiwoGJEbjrAWaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584036; c=relaxed/simple;
-	bh=NOScHutPeaM20eOCwsOOxkNdCKp2jiJefR2jcPn9sSo=;
+	s=arc-20240116; t=1712584040; c=relaxed/simple;
+	bh=9xWntgzwNwXvZVR5dhr+SDxY5AB1u2+IcG7DTjZv/FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxoOTnh7ekO4duFdK9107taJib5ZeI3RDaryrK8t6/wqhTnEzKMaFatVL51WdJ2sEO2S2Zw0217phmpiJ0hXR07TzlVdN23CggeVR6i6j+PaqbNCplzAGvX29QuREqsnWr5DUkO9wB84QUOguj2B+UN+DlydP4BL9U+EROHlfSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXAxQVEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3D1kJmw0tE8j/qJXzKO2Yuxr4d4+ZYrxFynrMwpyQiiC2QVwRfMcXrI0NjpcSRcs+Hg8U7KIK6pRGdRnsmFmLoU0Lu/Bhxv3QX8zrUA+B7JO8Sp9J4WXTISB0LwNrbhln+LqAqZeL+aXV+9lDGNZCIjBWocda1FYzTPKPStiVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kQ6TIG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXAxQVEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4454DC433C7;
-	Mon,  8 Apr 2024 13:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kQ6TIG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CF7C433F1;
+	Mon,  8 Apr 2024 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584036;
-	bh=NOScHutPeaM20eOCwsOOxkNdCKp2jiJefR2jcPn9sSo=;
+	s=korg; t=1712584039;
+	bh=9xWntgzwNwXvZVR5dhr+SDxY5AB1u2+IcG7DTjZv/FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXAxQVEb4Bg6sp/DP4zCSKhsis/cCOWfiXzPkPOUU6CMqnOv6RZ8SQ+UW9r7BdkAE
-	 XtDVOJtk9jzIwLNAfBme0FEN4N/oE4s+5eWFAPW7dW5cdQ8f1gHcGZVXn/Hw1VuQBK
-	 pvXjog+McrjHQl5zDuM8LGG8EwzKykRvDNbLJkkg=
+	b=0kQ6TIG18bO48szu2cZBLySWLmD03NtRkVtIiv0bxHJOyukZlGDLNRFyTvVxxJJSD
+	 XRD3Zqz+PxVT8IHjsmtraLVghNGna5UgHYfpHPBLtM34I3fZElqOgfl6MI0gBT+o65
+	 YU3rfE39nIDOPFrmpOPxJpIKlVbvc0Sgf2vd8YMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 324/690] NFSD: Move documenting comment for nfsd4_process_open2()
-Date: Mon,  8 Apr 2024 14:53:10 +0200
-Message-ID: <20240408125411.355058318@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.8 252/273] smb: client: fix potential UAF in cifs_dump_full_key()
+Date: Mon,  8 Apr 2024 14:58:47 +0200
+Message-ID: <20240408125317.274997517@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +46,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 7e2ce0cc15a509b859199235a2bad9cece00f67a ]
+commit 58acd1f497162e7d282077f816faa519487be045 upstream.
 
-Clean up nfsd4_open() by converting a large comment at the only
-call site for nfsd4_process_open2() to a kerneldoc comment in
-front of that function.
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c  |  6 +-----
- fs/nfsd/nfs4state.c | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ fs/smb/client/ioctl.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 6a9c7e6a23ba5..3ac2978c596ae 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -628,11 +628,7 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		status = nfserr_inval;
- 		goto out;
- 	}
--	/*
--	 * nfsd4_process_open2() does the actual opening of the file.  If
--	 * successful, it (1) truncates the file if open->op_truncate was
--	 * set, (2) sets open->op_stateid, (3) sets open->op_delegation.
--	 */
-+
- 	status = nfsd4_process_open2(rqstp, resfh, open);
- 	WARN(status && open->op_created,
- 	     "nfsd4_process_open2 failed to open newly-created file! status=%u\n",
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index f9681a4d116ad..d79b736019d49 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5465,6 +5465,18 @@ static void nfsd4_deleg_xgrade_none_ext(struct nfsd4_open *open,
- 	 */
- }
- 
-+/**
-+ * nfsd4_process_open2 - finish open processing
-+ * @rqstp: the RPC transaction being executed
-+ * @current_fh: NFSv4 COMPOUND's current filehandle
-+ * @open: OPEN arguments
-+ *
-+ * If successful, (1) truncate the file if open->op_truncate was
-+ * set, (2) set open->op_stateid, (3) set open->op_delegation.
-+ *
-+ * Returns %nfs_ok on success; otherwise an nfs4stat value in
-+ * network byte order is returned.
-+ */
- __be32
- nfsd4_process_open2(struct svc_rqst *rqstp, struct svc_fh *current_fh, struct nfsd4_open *open)
- {
--- 
-2.43.0
-
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -247,7 +247,9 @@ static int cifs_dump_full_key(struct cif
+ 		spin_lock(&cifs_tcp_ses_lock);
+ 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
+ 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
+-				if (ses_it->Suid == out.session_id) {
++				spin_lock(&ses_it->ses_lock);
++				if (ses_it->ses_status != SES_EXITING &&
++				    ses_it->Suid == out.session_id) {
+ 					ses = ses_it;
+ 					/*
+ 					 * since we are using the session outside the crit
+@@ -255,9 +257,11 @@ static int cifs_dump_full_key(struct cif
+ 					 * so increment its refcount
+ 					 */
+ 					cifs_smb_ses_inc_refcount(ses);
++					spin_unlock(&ses_it->ses_lock);
+ 					found = true;
+ 					goto search_end;
+ 				}
++				spin_unlock(&ses_it->ses_lock);
+ 			}
+ 		}
+ search_end:
 
 
