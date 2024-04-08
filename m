@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11582DF73;
-	Mon,  8 Apr 2024 13:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314582DF73;
+	Mon,  8 Apr 2024 13:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581492; cv=none; b=SEWer4N1Z2Yz84WB6UbwoVSH5cZ52QWEK5f0ln1gEu6IMKrSjnrfoYxgvmZvZS9BJyr83lCOfzW3jv88QTmetmqscBdTzw8Mof4qoKLjfUAHTaw1LgUUqg4GlQarN8Gt73Qdwj5uRhsvtBvz8q1OyN5JywIWaKeo4w3AkagjyJA=
+	t=1712581495; cv=none; b=S/A8niX75FA9HKMyCBUK9CUnhvHYtqw6J3602qH7RptLlgQ40boLYTpOERqauApoaSpaRQJo2psMYx4ehmm23+rB1FThUU6+uKz+VwKsgfxW9awYuBHX4y5doSj2pMhA1uYyLMFF3bo4Np+BbHOu6BF29PLK6lBDUxzfvyRbHq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581492; c=relaxed/simple;
-	bh=4ztLEga/GUQA/wpWO29x0g4Uz/wcESVVt6gPb6o9RCs=;
+	s=arc-20240116; t=1712581495; c=relaxed/simple;
+	bh=sq1AOi/vlHFXp+/2TFLzTGvJMDbxcbvWe4FOCoE+2sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnWroXu2YRzEEC4PzIRRsXnRxxuXebkuTzs4Ok36Coe2BB7/BFKuRI8zmPuIMnimcXMMdbkztieFQXP9aZstKyhe4RrsUOfF8h42AOfJg6DaykYV984fnjvwXTG8qSsdRUFlu3/9k2duRvfRrB5ZyAcEahZrsE9jd5qoBYaXFBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6h9LYBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PSl2I2eiadopJSaHerrmiv9nFbHj+rcjNhGOcBuMF22jW2pofB+0BbaNzSVYCD2z4kosvlhvgoRYw/ELkxp30saq7EFBvPcmUa7VfMe/2GqopMS0gKPPY8Q2K3uondGk31qpdXzrDUP/48ZhgIn/jXRFLMoDFqCxKJP/SjDVrfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZEohJ8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6h9LYBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6226C433F1;
-	Mon,  8 Apr 2024 13:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZEohJ8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC659C433F1;
+	Mon,  8 Apr 2024 13:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581492;
-	bh=4ztLEga/GUQA/wpWO29x0g4Uz/wcESVVt6gPb6o9RCs=;
+	s=korg; t=1712581495;
+	bh=sq1AOi/vlHFXp+/2TFLzTGvJMDbxcbvWe4FOCoE+2sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6h9LYBb2i3EQc07+QQivLRpKPG9OBNsSYGkEsdkzaGWaBqDc615Yes9AAS2y3LeD
-	 FsbmvpG+xOF6N0DBB6OTtjjxSa9YsRQP4ksxJCBhqQIOGMVh2a1oepaQTidJY6HlJ2
-	 2OvwXoFyQcJZjifOTKCcoZ6dSrqlJRrdEzBF+XeM=
+	b=PZEohJ8pz0k1Ni2nqpst8Sv0DAwdPloaWW3C8pWxAHV4mC1n+JJXuGYXKCssnf0lb
+	 hrp9hmp9WIN9POjXAfRjqgcanFIw9cIsDQ4FIOaUUn1+lT5JeHKxAwa4xGjvy83py4
+	 cvfAOaBljbFt3hLNPT/0P42LaqVzIZZPFSUsx6mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jameson Thies <jthies@google.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/690] usb: typec: ucsi: Clean up UCSI_CABLE_PROP macros
-Date: Mon,  8 Apr 2024 14:48:42 +0200
-Message-ID: <20240408125401.548368618@linuxfoundation.org>
+Subject: [PATCH 6.1 021/138] Octeontx2-af: fix pause frame configuration in GMP mode
+Date: Mon,  8 Apr 2024 14:57:15 +0200
+Message-ID: <20240408125256.888812274@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 4d0a5a9915793377c0fe1a8d78de6bcd92cea963 ]
+[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
 
-Clean up UCSI_CABLE_PROP macros by fixing a bitmask shifting error for
-plug type and updating the modal support macro for consistent naming.
+The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
+different speeds, allowing for efficient data transfer.
 
-Fixes: 3cf657f07918 ("usb: typec: ucsi: Remove all bit-fields")
-Cc: stable@vger.kernel.org
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jameson Thies <jthies@google.com>
-Link: https://lore.kernel.org/r/20240305025804.1290919-2-jthies@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The previous patch which added pause frame configuration has a bug due
+to which pause frame feature is not working in GMP mode.
+
+This patch fixes the issue by configurating appropriate registers.
+
+Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index cee666790907e..3dc3da8dbbdf8 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -220,12 +220,12 @@ struct ucsi_cable_property {
- #define UCSI_CABLE_PROP_FLAG_VBUS_IN_CABLE	BIT(0)
- #define UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE	BIT(1)
- #define UCSI_CABLE_PROP_FLAG_DIRECTIONALITY	BIT(2)
--#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	((_f_) & GENMASK(3, 0))
-+#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	(((_f_) & GENMASK(4, 3)) >> 3)
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_A	0
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_B	1
- #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_C	2
- #define   UCSI_CABLE_PROPERTY_PLUG_OTHER	3
--#define UCSI_CABLE_PROP_MODE_SUPPORT		BIT(5)
-+#define UCSI_CABLE_PROP_FLAG_MODE_SUPPORT	BIT(5)
- 	u8 latency;
- } __packed;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index e6fe599f7bf3a..254cad45a555f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -814,6 +814,11 @@ static int cgx_lmac_enadis_pause_frm(void *cgxd, int lmac_id,
+ 	if (!is_lmac_valid(cgx, lmac_id))
+ 		return -ENODEV;
  
++	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
++	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
++	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
++	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
++
+ 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
+ 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
+ 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
 -- 
 2.43.0
 
