@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CB77BAF0;
-	Mon,  8 Apr 2024 13:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FB474438;
+	Mon,  8 Apr 2024 13:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583175; cv=none; b=dxJHFN+UcLd9uWGk0yRJZHOrptxP/1uHhKpFG6DvY9Ow4Y2tnv+dZICDL127AL2EpVEbqMoTlGu857Ety/SnH9nOoNOEwS5X4jTqM3bNoIbmyBPFS16nw/PB6ONeRrd0Ie5ABBCP0mTFAicqyFWG5ZXOGaELqKeHw1NOK+1mCxw=
+	t=1712583177; cv=none; b=mZnLaOM/J5hCEP4LBketHfz46TgjXfMMw6IwXy9oVJSwmFrqg8rh/I0x1roaqUnqYiaJm1MWRi9Re6FPKYJSCGsCJ+4+Qt84TkpEpjXe+BZiN+7tXBnUklgiXV+PmiR5RnFJIIdwdFEDb5OPg4aO2bjxIaWeVDM6rbxbCiB3V6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583175; c=relaxed/simple;
-	bh=O5i9JM8XCHKJbwXWixY+uNXA6Yf1NYMtSQswOhoxCno=;
+	s=arc-20240116; t=1712583177; c=relaxed/simple;
+	bh=OaTQ+O8E/I241LHW/zlgOWdSzAP1Y/YN27crO4zsWMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8tGjUgQUkMaQW1/Q11m8WPjcMdJpr+3gR6tj1A6mLnYosLAfSx+8kCUauN0xY6Hs17aG0Ctqt9Hicx8j6bHOyDTNbo9UyCayWlCTD3eDfVVNiYVmFL86s/cAyfR4+PXtsb0SNVZdYC+DO8UylpjzAeb+Tnj4JQUZv3Nwjd6BPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7VsrrAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbpqWZTY7KUZ4/1d9gVdYyzkf7373Iccu9gOkOOF09+RDuhmFeCefvBvwEMg2WfxGyPwqnzjg5il1Zgei815jbyzNxquDZU83P/34I0RF/VGhDLxhL9VzIW5gjoxRAoxmcCtXbbos6FQCii2n7H5s4iI7eWG2sYy0KzCahSzw1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRcE5nU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7VsrrAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C634C433C7;
-	Mon,  8 Apr 2024 13:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRcE5nU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23068C433C7;
+	Mon,  8 Apr 2024 13:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583174;
-	bh=O5i9JM8XCHKJbwXWixY+uNXA6Yf1NYMtSQswOhoxCno=;
+	s=korg; t=1712583177;
+	bh=OaTQ+O8E/I241LHW/zlgOWdSzAP1Y/YN27crO4zsWMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7VsrrANhbldsq1gSgbdaB76IzF2TCzCn8TjPkq0ed7AxVKkHESxT7vdzZzzJIPkx
-	 q3C+sYEiJWsBO6PQUxt3q+XAg1qiYXSGIZx6vI3i4XCSsE/3LPtxKhzdaTaIL27RQP
-	 TNfqtDjaisj1N4sqfA3as5eUo2ikTns0Vvm6aYXg=
+	b=uRcE5nU1dzc7o+XiPdPdogs5yQAUGbWYcFeVgOYgc34nr/UIhZGKUT4Qzk96e+vtl
+	 4d58yAi9n6eGDwRTrgPs+vjdPXVPW4ni4ufwmqf6gXKz4yZC6FOhhqKu0lznPirdKh
+	 2roKHxlkxpNEIZFO9ipmYjwyKPbArjwjn7IHnJi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/252] nouveau/uvmm: fix addr/range calcs for remap operations
-Date: Mon,  8 Apr 2024 14:57:45 +0200
-Message-ID: <20240408125311.806399110@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 219/690] fanotify: support secondary dir fh and name in fanotify_info
+Date: Mon,  8 Apr 2024 14:51:25 +0200
+Message-ID: <20240408125407.487514469@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,249 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit be141849ec00ef39935bf169c0f194ac70bf85ce ]
+[ Upstream commit 3cf984e950c1c3f41d407ed31db33beb996be132 ]
 
-dEQP-VK.sparse_resources.image_rebind.2d_array.r64i.128_128_8
-was causing a remap operation like the below.
+Allow storing a secondary dir fh and name tupple in fanotify_info.
+This will be used to store the new parent and name information in
+FAN_RENAME event.
 
-op_remap: prev: 0000003fffed0000 00000000000f0000 00000000a5abd18a 0000000000000000
-op_remap: next:
-op_remap: unmap: 0000003fffed0000 0000000000100000 0
-op_map: map: 0000003ffffc0000 0000000000010000 000000005b1ba33c 00000000000e0000
-
-This was resulting in an unmap operation from 0x3fffed0000+0xf0000, 0x100000
-which was corrupting the pagetables and oopsing the kernel.
-
-Fixes the prev + unmap range calcs to use start/end and map back to addr/range.
-
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Cc: Danilo Krummrich <dakr@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328024317.2041851-1-airlied@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20211129201537.1932819-8-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/notify/fanotify/fanotify.c      | 20 ++++++--
+ fs/notify/fanotify/fanotify.h      | 79 +++++++++++++++++++++++++++---
+ fs/notify/fanotify/fanotify_user.c |  3 +-
+ 3 files changed, 88 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-index aae780e4a4aa3..2bbcdc649e862 100644
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -804,15 +804,15 @@ op_remap(struct drm_gpuva_op_remap *r,
- 	struct drm_gpuva_op_unmap *u = r->unmap;
- 	struct nouveau_uvma *uvma = uvma_from_va(u->va);
- 	u64 addr = uvma->va.va.addr;
--	u64 range = uvma->va.va.range;
-+	u64 end = uvma->va.va.addr + uvma->va.va.range;
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index 2b13c79cebc62..5f184b2d6ea7c 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -76,8 +76,10 @@ static bool fanotify_info_equal(struct fanotify_info *info1,
+ 				struct fanotify_info *info2)
+ {
+ 	if (info1->dir_fh_totlen != info2->dir_fh_totlen ||
++	    info1->dir2_fh_totlen != info2->dir2_fh_totlen ||
+ 	    info1->file_fh_totlen != info2->file_fh_totlen ||
+-	    info1->name_len != info2->name_len)
++	    info1->name_len != info2->name_len ||
++	    info1->name2_len != info2->name2_len)
+ 		return false;
  
- 	if (r->prev)
- 		addr = r->prev->va.addr + r->prev->va.range;
+ 	if (info1->dir_fh_totlen &&
+@@ -85,14 +87,24 @@ static bool fanotify_info_equal(struct fanotify_info *info1,
+ 			       fanotify_info_dir_fh(info2)))
+ 		return false;
  
- 	if (r->next)
--		range = r->next->va.addr - addr;
-+		end = r->next->va.addr;
++	if (info1->dir2_fh_totlen &&
++	    !fanotify_fh_equal(fanotify_info_dir2_fh(info1),
++			       fanotify_info_dir2_fh(info2)))
++		return false;
++
+ 	if (info1->file_fh_totlen &&
+ 	    !fanotify_fh_equal(fanotify_info_file_fh(info1),
+ 			       fanotify_info_file_fh(info2)))
+ 		return false;
  
--	op_unmap_range(u, addr, range);
-+	op_unmap_range(u, addr, end - addr);
+-	return !info1->name_len ||
+-		!memcmp(fanotify_info_name(info1), fanotify_info_name(info2),
+-			info1->name_len);
++	if (info1->name_len &&
++	    memcmp(fanotify_info_name(info1), fanotify_info_name(info2),
++		   info1->name_len))
++		return false;
++
++	return !info1->name2_len ||
++		!memcmp(fanotify_info_name2(info1), fanotify_info_name2(info2),
++			info1->name2_len);
  }
  
- static int
+ static bool fanotify_name_event_equal(struct fanotify_name_event *fne1,
+diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
+index 7ac6f9f1e4148..8fa3bc0effd45 100644
+--- a/fs/notify/fanotify/fanotify.h
++++ b/fs/notify/fanotify/fanotify.h
+@@ -40,31 +40,45 @@ struct fanotify_fh {
+ struct fanotify_info {
+ 	/* size of dir_fh/file_fh including fanotify_fh hdr size */
+ 	u8 dir_fh_totlen;
++	u8 dir2_fh_totlen;
+ 	u8 file_fh_totlen;
+ 	u8 name_len;
+-	u8 pad;
++	u8 name2_len;
++	u8 pad[3];
+ 	unsigned char buf[];
+ 	/*
+ 	 * (struct fanotify_fh) dir_fh starts at buf[0]
+-	 * (optional) file_fh starts at buf[dir_fh_totlen]
+-	 * name starts at buf[dir_fh_totlen + file_fh_totlen]
++	 * (optional) dir2_fh starts at buf[dir_fh_totlen]
++	 * (optional) file_fh starts at buf[dir_fh_totlen + dir2_fh_totlen]
++	 * name starts at buf[dir_fh_totlen + dir2_fh_totlen + file_fh_totlen]
++	 * ...
+ 	 */
+ #define FANOTIFY_DIR_FH_SIZE(info)	((info)->dir_fh_totlen)
++#define FANOTIFY_DIR2_FH_SIZE(info)	((info)->dir2_fh_totlen)
+ #define FANOTIFY_FILE_FH_SIZE(info)	((info)->file_fh_totlen)
+ #define FANOTIFY_NAME_SIZE(info)	((info)->name_len + 1)
++#define FANOTIFY_NAME2_SIZE(info)	((info)->name2_len + 1)
+ 
+ #define FANOTIFY_DIR_FH_OFFSET(info)	0
+-#define FANOTIFY_FILE_FH_OFFSET(info) \
++#define FANOTIFY_DIR2_FH_OFFSET(info) \
+ 	(FANOTIFY_DIR_FH_OFFSET(info) + FANOTIFY_DIR_FH_SIZE(info))
++#define FANOTIFY_FILE_FH_OFFSET(info) \
++	(FANOTIFY_DIR2_FH_OFFSET(info) + FANOTIFY_DIR2_FH_SIZE(info))
+ #define FANOTIFY_NAME_OFFSET(info) \
+ 	(FANOTIFY_FILE_FH_OFFSET(info) + FANOTIFY_FILE_FH_SIZE(info))
++#define FANOTIFY_NAME2_OFFSET(info) \
++	(FANOTIFY_NAME_OFFSET(info) + FANOTIFY_NAME_SIZE(info))
+ 
+ #define FANOTIFY_DIR_FH_BUF(info) \
+ 	((info)->buf + FANOTIFY_DIR_FH_OFFSET(info))
++#define FANOTIFY_DIR2_FH_BUF(info) \
++	((info)->buf + FANOTIFY_DIR2_FH_OFFSET(info))
+ #define FANOTIFY_FILE_FH_BUF(info) \
+ 	((info)->buf + FANOTIFY_FILE_FH_OFFSET(info))
+ #define FANOTIFY_NAME_BUF(info) \
+ 	((info)->buf + FANOTIFY_NAME_OFFSET(info))
++#define FANOTIFY_NAME2_BUF(info) \
++	((info)->buf + FANOTIFY_NAME2_OFFSET(info))
+ } __aligned(4);
+ 
+ static inline bool fanotify_fh_has_ext_buf(struct fanotify_fh *fh)
+@@ -106,6 +120,20 @@ static inline struct fanotify_fh *fanotify_info_dir_fh(struct fanotify_info *inf
+ 	return (struct fanotify_fh *)FANOTIFY_DIR_FH_BUF(info);
+ }
+ 
++static inline int fanotify_info_dir2_fh_len(struct fanotify_info *info)
++{
++	if (!info->dir2_fh_totlen ||
++	    WARN_ON_ONCE(info->dir2_fh_totlen < FANOTIFY_FH_HDR_LEN))
++		return 0;
++
++	return info->dir2_fh_totlen - FANOTIFY_FH_HDR_LEN;
++}
++
++static inline struct fanotify_fh *fanotify_info_dir2_fh(struct fanotify_info *info)
++{
++	return (struct fanotify_fh *)FANOTIFY_DIR2_FH_BUF(info);
++}
++
+ static inline int fanotify_info_file_fh_len(struct fanotify_info *info)
+ {
+ 	if (!info->file_fh_totlen ||
+@@ -128,31 +156,55 @@ static inline char *fanotify_info_name(struct fanotify_info *info)
+ 	return FANOTIFY_NAME_BUF(info);
+ }
+ 
++static inline char *fanotify_info_name2(struct fanotify_info *info)
++{
++	if (!info->name2_len)
++		return NULL;
++
++	return FANOTIFY_NAME2_BUF(info);
++}
++
+ static inline void fanotify_info_init(struct fanotify_info *info)
+ {
+ 	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
+ 	BUILD_BUG_ON(NAME_MAX > U8_MAX);
+ 
+ 	info->dir_fh_totlen = 0;
++	info->dir2_fh_totlen = 0;
+ 	info->file_fh_totlen = 0;
+ 	info->name_len = 0;
++	info->name2_len = 0;
+ }
+ 
+ /* These set/copy helpers MUST be called by order */
+ static inline void fanotify_info_set_dir_fh(struct fanotify_info *info,
+ 					    unsigned int totlen)
+ {
+-	if (WARN_ON_ONCE(info->file_fh_totlen > 0) ||
+-	    WARN_ON_ONCE(info->name_len > 0))
++	if (WARN_ON_ONCE(info->dir2_fh_totlen > 0) ||
++	    WARN_ON_ONCE(info->file_fh_totlen > 0) ||
++	    WARN_ON_ONCE(info->name_len > 0) ||
++	    WARN_ON_ONCE(info->name2_len > 0))
+ 		return;
+ 
+ 	info->dir_fh_totlen = totlen;
+ }
+ 
++static inline void fanotify_info_set_dir2_fh(struct fanotify_info *info,
++					     unsigned int totlen)
++{
++	if (WARN_ON_ONCE(info->file_fh_totlen > 0) ||
++	    WARN_ON_ONCE(info->name_len > 0) ||
++	    WARN_ON_ONCE(info->name2_len > 0))
++		return;
++
++	info->dir2_fh_totlen = totlen;
++}
++
+ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
+ 					     unsigned int totlen)
+ {
+-	if (WARN_ON_ONCE(info->name_len > 0))
++	if (WARN_ON_ONCE(info->name_len > 0) ||
++	    WARN_ON_ONCE(info->name2_len > 0))
+ 		return;
+ 
+ 	info->file_fh_totlen = totlen;
+@@ -161,13 +213,24 @@ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
+ static inline void fanotify_info_copy_name(struct fanotify_info *info,
+ 					   const struct qstr *name)
+ {
+-	if (WARN_ON_ONCE(name->len > NAME_MAX))
++	if (WARN_ON_ONCE(name->len > NAME_MAX) ||
++	    WARN_ON_ONCE(info->name2_len > 0))
+ 		return;
+ 
+ 	info->name_len = name->len;
+ 	strcpy(fanotify_info_name(info), name->name);
+ }
+ 
++static inline void fanotify_info_copy_name2(struct fanotify_info *info,
++					    const struct qstr *name)
++{
++	if (WARN_ON_ONCE(name->len > NAME_MAX))
++		return;
++
++	info->name2_len = name->len;
++	strcpy(fanotify_info_name2(info), name->name);
++}
++
+ /*
+  * Common structure for fanotify events. Concrete structs are allocated in
+  * fanotify_handle_event() and freed when the information is retrieved by
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index bfafda0447ea7..526e3b5a98f34 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -332,11 +332,10 @@ static int process_access_response(struct fsnotify_group *group,
+ static size_t copy_error_info_to_user(struct fanotify_event *event,
+ 				      char __user *buf, int count)
+ {
+-	struct fanotify_event_info_error info;
++	struct fanotify_event_info_error info = { };
+ 	struct fanotify_error_event *fee = FANOTIFY_EE(event);
+ 
+ 	info.hdr.info_type = FAN_EVENT_INFO_TYPE_ERROR;
+-	info.hdr.pad = 0;
+ 	info.hdr.len = FANOTIFY_ERROR_INFO_LEN;
+ 
+ 	if (WARN_ON(count < info.hdr.len))
 -- 
 2.43.0
 
