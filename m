@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415FB8063B;
-	Mon,  8 Apr 2024 14:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335AD74438;
+	Mon,  8 Apr 2024 14:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585177; cv=none; b=YXK+ciZ6g8Rrw8GsNZ21n7zziHeX2ZxSZ6z6CTr4ysSDyKZ9yElBFnXa75c18Gwg5Enxn4VQhP1MOWZDsvxFoYJKrfr7BCh4cnqNYXq8z5JTdwJ8GJa6Tz4uY+ry17MnOSjrSJwaGZBGfM7qZabcQabpfa9Y9xVofzhncTGb2wo=
+	t=1712585180; cv=none; b=oURbS+CzpqUVNoRCevqg0lKqjTCsRxh8VnhiUE8wrPy53xZ8yf48Qa8RjVGdX3mnkAMDCVVpZf8D9WNkf34IM3aq19v/0gnPeR210gDpW49OZpdM4bKrZ/Q45WIyASjmuQKKXfgyGTHL8OgzUUWOMn/JRG9qB0qcKj5OqPwtIaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585177; c=relaxed/simple;
-	bh=pzFZPEf0sJJqIY3Ts+EK4JrKCtea31Kjk04UH+QxUlA=;
+	s=arc-20240116; t=1712585180; c=relaxed/simple;
+	bh=/lPDgzCmyRdPVk0nIu1gokLXiuwvGgpMhYJDFNl9WxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyPKEeTznhghboRLqrA3Oq1QMCkcBTFv7dUAImYV+vdDQ7Qmzza3wgTmb5DUJoCXTtKMfyO5dskmrYUtwJFpx2U4ttHvqKJGOQ1LZ8L5wBKcdu8F6Em2tHifMBKf+GuYoW23g+fTZp5bvZQHdpmKmerDMlpZOwvZQxJmj5IDG5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hfu4dW7M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThxkhN4mjttaNj+mfUt41zmdLUlxni+JMEbl2pvLu1lYLNU0QHxAgvEVzdI3KexuZwUJ/Y+pHAUsEWGlmTyC2bIKu/gNtUAALaW1fYi8gfi0semNWz6bPp5keWdk997n5hyY07jKZOaeFP1p5nd8cYyxsLtjAWzOMdXHuw5mr04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nu3rOALm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hfu4dW7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE13C433C7;
-	Mon,  8 Apr 2024 14:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nu3rOALm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86F9C433F1;
+	Mon,  8 Apr 2024 14:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585177;
-	bh=pzFZPEf0sJJqIY3Ts+EK4JrKCtea31Kjk04UH+QxUlA=;
+	s=korg; t=1712585180;
+	bh=/lPDgzCmyRdPVk0nIu1gokLXiuwvGgpMhYJDFNl9WxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hfu4dW7MlcJNtpjeepxYfh6p6KT9888ppx1GybZ6ifA+D1WQv/rdrgmPUr3L2COwz
-	 2L5DItIpUArW3+J5kFeGUGHstj15dNhsP3ZklcGJ2LVbSK1ZK0TdeA51hnztf6q3ab
-	 LGQWVUqbjbaxcrIVbhcnxTXT1r3+Z4CYI1bMWcDE=
+	b=Nu3rOALmSygV88A5gY1V1qZhuEDL0fM0CFwMmP2T/K20yHDICfFcKjgdGdfmbc3br
+	 JQuD1SuwJsNNT8Zu8Wy0W+1cOAxcvLBag9CL1ygakQj7W38tlxGG+38UaOBVzdtSDV
+	 maD+HQF1nRG7GkrSZnggfdQwuGirNo/tLws6EPyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"min15.li" <min15.li@samsung.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Tokunori Ikegami <ikegami.t@gmail.com>
-Subject: [PATCH 5.15 690/690] nvme: fix miss command type check
-Date: Mon,  8 Apr 2024 14:59:16 +0200
-Message-ID: <20240408125424.719628041@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.15 680/690] of: dynamic: Synchronize of_changeset_destroy() with the devlink removals
+Date: Mon,  8 Apr 2024 14:59:06 +0200
+Message-ID: <20240408125424.362888304@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,56 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: min15.li <min15.li@samsung.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit 31a5978243d24d77be4bacca56c78a0fbc43b00d upstream.
+commit 8917e7385346bd6584890ed362985c219fe6ae84 upstream.
 
-In the function nvme_passthru_end(), only the value of the command
-opcode is checked, without checking the command type (IO command or
-Admin command). When we send a Dataset Management command (The opcode
-of the Dataset Management command is the same as the Set Feature
-command), kernel thinks it is a set feature command, then sets the
-controller's keep alive interval, and calls nvme_keep_alive_work().
+In the following sequence:
+  1) of_platform_depopulate()
+  2) of_overlay_remove()
 
-Signed-off-by: min15.li <min15.li@samsung.com>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Fixes: b58da2d270db ("nvme: update keep alive interval when kato is modified")
-Signed-off-by: Tokunori Ikegami <ikegami.t@gmail.com>
+During the step 1, devices are destroyed and devlinks are removed.
+During the step 2, OF nodes are destroyed but
+__of_changeset_entry_destroy() can raise warnings related to missing
+of_node_put():
+  ERROR: memory leak, expected refcount 1 instead of 2 ...
+
+Indeed, during the devlink removals performed at step 1, the removal
+itself releasing the device (and the attached of_node) is done by a job
+queued in a workqueue and so, it is done asynchronously with respect to
+function calls.
+When the warning is present, of_node_put() will be called but wrongly
+too late from the workqueue job.
+
+In order to be sure that any ongoing devlink removals are done before
+the of_node destruction, synchronize the of_changeset_destroy() with the
+devlink removals.
+
+Fixes: 80dd33cf72d1 ("drivers: base: Fix device link removal")
+Cc: stable@vger.kernel.org
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240325152140.198219-3-herve.codina@bootlin.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/of/dynamic.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1185,7 +1185,7 @@ static u32 nvme_passthru_start(struct nv
- 	return effects;
- }
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -9,6 +9,7 @@
  
--static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects,
-+static void nvme_passthru_end(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u32 effects,
- 			      struct nvme_command *cmd, int status)
+ #define pr_fmt(fmt)	"OF: " fmt
+ 
++#include <linux/device.h>
+ #include <linux/of.h>
+ #include <linux/spinlock.h>
+ #include <linux/slab.h>
+@@ -678,6 +679,17 @@ void of_changeset_destroy(struct of_chan
  {
- 	if (effects & NVME_CMD_EFFECTS_CSE_MASK) {
-@@ -1201,6 +1201,8 @@ static void nvme_passthru_end(struct nvm
- 		nvme_queue_scan(ctrl);
- 		flush_work(&ctrl->scan_work);
- 	}
-+	if (ns)
-+		return;
+ 	struct of_changeset_entry *ce, *cen;
  
- 	switch (cmd->common.opcode) {
- 	case nvme_admin_set_features:
-@@ -1235,7 +1237,7 @@ int nvme_execute_passthru_rq(struct requ
- 	effects = nvme_passthru_start(ctrl, ns, cmd->common.opcode);
- 	ret = nvme_execute_rq(disk, rq, false);
- 	if (effects) /* nothing to be done for zero cmd effects */
--		nvme_passthru_end(ctrl, effects, cmd, ret);
-+		nvme_passthru_end(ctrl, ns, effects, cmd, ret);
- 
- 	return ret;
++	/*
++	 * When a device is deleted, the device links to/from it are also queued
++	 * for deletion. Until these device links are freed, the devices
++	 * themselves aren't freed. If the device being deleted is due to an
++	 * overlay change, this device might be holding a reference to a device
++	 * node that will be freed. So, wait until all already pending device
++	 * links are deleted before freeing a device node. This ensures we don't
++	 * free any device node that has a non-zero reference count.
++	 */
++	device_link_wait_removal();
++
+ 	list_for_each_entry_safe_reverse(ce, cen, &ocs->entries, node)
+ 		__of_changeset_entry_destroy(ce);
  }
 
 
