@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB3B2DF73;
-	Mon,  8 Apr 2024 13:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8C2E62C;
+	Mon,  8 Apr 2024 13:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581639; cv=none; b=qIyvXqdsx8hsnK8KvGavn/XApH7FFTuYh1G4RKgoZH1V6Pf8ZQYTieTJaO9zxR5HXFLvebpd80XUv+GruSjHyXaaPXSJlDyZkDRNnqpoA42kajkmzrEcQFFJhk37gLHeghQQtrcDp56+LBgnAaKmwtxTRl9Eem7zmWiNIXuKF94=
+	t=1712581641; cv=none; b=kBffunwDBD20jv+3eMIA6K2iMrMeHg9co5UL4J4uheTDI6pzmXddcflHiPYq8ykbaTOXctNwrlPGx+z6EMc+Lt73jeiWGN1kk9mHRNb1tEreJsN8nFJbUm6Jew5LRrjEHH9Vd0SbIGsDf8caCJC3wwf2m3J2IqnU0drD8n07Y4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581639; c=relaxed/simple;
-	bh=HL3+KMgnQe4yTAEF+dC8FK0em8/J/kltI+ZKp6Rt2aw=;
+	s=arc-20240116; t=1712581641; c=relaxed/simple;
+	bh=7ZGrhziDn3fsa2IOniI8uJParAyimtPhVuf0ExRESBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vFg6hfzN90Y/1bNOjRUoI+W81FIr4Ui6mK5pbFY76oMbteAZlF0VLQw63pJUnRvU0CqpIabZPPYFTR+M6qUBp36q6wI+5/t9t54xFsHud9USlj0pwVBck1rxkDddCM5S/6clm08CdQD0wFmYJIeSbXbpNLSqzL1Lr7fqdWplw2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUGPcCJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlu24S+kcvLssO74qvx4/gnJxOA2Lt4F3vu8xiRCXvT7a9l3euHSedwpnbLAbdvAmwynKWrLlkUvTXY3t46IN+qC0dy6seO8cggxNKvKZOnuJi8tUuyRnQUkcu6dBj/lBogth/S2PRI558jMOANfuNTBIwKcu6C+XbWRSZUxuHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxn1/+0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUGPcCJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C81C433C7;
-	Mon,  8 Apr 2024 13:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxn1/+0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFA5C433F1;
+	Mon,  8 Apr 2024 13:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581638;
-	bh=HL3+KMgnQe4yTAEF+dC8FK0em8/J/kltI+ZKp6Rt2aw=;
+	s=korg; t=1712581641;
+	bh=7ZGrhziDn3fsa2IOniI8uJParAyimtPhVuf0ExRESBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUGPcCJMW5/tX5eeosC7+CmE/TLe5qM226XUCcrpwYUOGvMrcRkKH+ndgzIWMUM0H
-	 zD+KfdA/0ywQWeVg+gPPVOSkqM8aoLHta23vGi0gWJCMPOEJZKCcVKvm3pWGt9xQWt
-	 hyVSq8Sy4k5Tez6TYTqAl6g0uoN87ULeRKKWqMTc=
+	b=sxn1/+0ReAtgCoA8jmmYQjglT4EgR4ewkhi+0MwoNJKxuKym/AcLCY6cq/vNkewWJ
+	 mQ4WW136S3jOafm0YfUVDiMd0AWQNuG+W/H4Vu8SskX0Tp/F4Bbs/iqtAgFOxWECR/
+	 1UC789ziYByFi51YVnhEEh8ANfl3pG3rXnpcEmIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 040/138] netfilter: nf_tables: reject new basechain after table flag update
-Date: Mon,  8 Apr 2024 14:57:34 +0200
-Message-ID: <20240408125257.475467198@linuxfoundation.org>
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 025/252] ACPICA: debugger: check status of acpi_evaluate_object() in acpi_db_walk_for_fields()
+Date: Mon,  8 Apr 2024 14:55:24 +0200
+Message-ID: <20240408125307.431377544@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,63 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-commit 994209ddf4f430946f6247616b2e33d179243769 upstream.
+[ Upstream commit 40e2710860e57411ab57a1529c5a2748abbe8a19 ]
 
-When dormant flag is toggled, hooks are disabled in the commit phase by
-iterating over current chains in table (existing and new).
+ACPICA commit 9061cd9aa131205657c811a52a9f8325a040c6c9
 
-The following configuration allows for an inconsistent state:
+Errors in acpi_evaluate_object() can lead to incorrect state of buffer.
 
-  add table x
-  add chain x y { type filter hook input priority 0; }
-  add table x { flags dormant; }
-  add chain x w { type filter hook input priority 1; }
+This can lead to access to data in previously ACPI_FREEd buffer and
+secondary ACPI_FREE to the same buffer later.
 
-which triggers the following warning when trying to unregister chain w
-which is already unregistered.
+Handle errors in acpi_evaluate_object the same way it is done earlier
+with acpi_ns_handle_to_pathname.
 
-[  127.322252] WARNING: CPU: 7 PID: 1211 at net/netfilter/core.c:50                                                                     1 __nf_unregister_net_hook+0x21a/0x260
-[...]
-[  127.322519] Call Trace:
-[  127.322521]  <TASK>
-[  127.322524]  ? __warn+0x9f/0x1a0
-[  127.322531]  ? __nf_unregister_net_hook+0x21a/0x260
-[  127.322537]  ? report_bug+0x1b1/0x1e0
-[  127.322545]  ? handle_bug+0x3c/0x70
-[  127.322552]  ? exc_invalid_op+0x17/0x40
-[  127.322556]  ? asm_exc_invalid_op+0x1a/0x20
-[  127.322563]  ? kasan_save_free_info+0x3b/0x60
-[  127.322570]  ? __nf_unregister_net_hook+0x6a/0x260
-[  127.322577]  ? __nf_unregister_net_hook+0x21a/0x260
-[  127.322583]  ? __nf_unregister_net_hook+0x6a/0x260
-[  127.322590]  ? __nf_tables_unregister_hook+0x8a/0xe0 [nf_tables]
-[  127.322655]  nft_table_disable+0x75/0xf0 [nf_tables]
-[  127.322717]  nf_tables_commit+0x2571/0x2620 [nf_tables]
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/acpica/acpica/commit/9061cd9a
+Fixes: 5fd033288a86 ("ACPICA: debugger: add command to dump all fields of particular subtype")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/acpica/dbnames.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2372,6 +2372,9 @@ static int nf_tables_addchain(struct nft
- 		struct nft_stats __percpu *stats = NULL;
- 		struct nft_chain_hook hook;
+diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
+index b91155ea9c343..c9131259f717b 100644
+--- a/drivers/acpi/acpica/dbnames.c
++++ b/drivers/acpi/acpica/dbnames.c
+@@ -550,8 +550,12 @@ acpi_db_walk_for_fields(acpi_handle obj_handle,
+ 	ACPI_FREE(buffer.pointer);
  
-+		if (table->flags & __NFT_TABLE_F_UPDATE)
-+			return -EINVAL;
-+
- 		if (flags & NFT_CHAIN_BINDING)
- 			return -EOPNOTSUPP;
- 
+ 	buffer.length = ACPI_ALLOCATE_LOCAL_BUFFER;
+-	acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
+-
++	status = acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
++	if (ACPI_FAILURE(status)) {
++		acpi_os_printf("Could Not evaluate object %p\n",
++			       obj_handle);
++		return (AE_OK);
++	}
+ 	/*
+ 	 * Since this is a field unit, surround the output in braces
+ 	 */
+-- 
+2.43.0
+
 
 
