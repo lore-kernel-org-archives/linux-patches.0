@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D537C0B0;
-	Mon,  8 Apr 2024 13:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600287C092;
+	Mon,  8 Apr 2024 13:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584174; cv=none; b=cBxZeji1T8aAmUDO1W4VFjuQpwVNbqXizFchbIxhn3R4Ccp9ueJk6bUXHqjbMFAiEDsYnGSJjRIGqwv4AXLjDrsyfk9EWBb/bTV1kejY6Xd8rzwl68DxkxYEC8tkwHwB5m3pkhJzrFphjXnOox/KIZ33o8Kq/+3U4zgTRMIa1fs=
+	t=1712584177; cv=none; b=Q+wM/RIySVh1CMVlM8g1oyI0ZNic5tMaQ6jhGNr73gYKYUThO7eiyblf74X4+lMBTUE4JPopy1TPdLioFOmJZT4vJnSS2H8SYywsmWmY7ZYEXD2lBOL6iMRYgCO+AXolylrYmWqtZNZk+77lE6inQj55F2xRh9Jmwe+kVCkF2KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584174; c=relaxed/simple;
-	bh=MSXPvBhyM++DdwrD2gDnzHUaUj8fKe6Cibxrlo5HH8s=;
+	s=arc-20240116; t=1712584177; c=relaxed/simple;
+	bh=C9uNpwT6j98kbrbIYRHc0+quXDJqfZ6r3WrmMsM6xL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ia5VlUvsWW9c/QzT+dPhdD7qeqfkGAzbaeBeRudjHpGAUx31Iu8xpntlC+ieCcvY1Rp7g0GURAd8fSIQFDFCQFhtknBkyWzgMB/AAcvKE9LBqzIZva7hWC7Ivtm+2rDV7+3TsliYSFhNm1PY60dAhlwhsPQmbQ+8x8SaSKBdFt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrLTFMqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZWRoo9Yy/JDsyDuhY+kBt0yjUoHYLLLREKwKFKSiZa0z+KBgNfpoDJlFsZtKOA6y8KTXrcFZpUjI7HIo07dnQHnU9LGgVHILKuMxk7J4JIJe82CUe/YjD+32NKASRFQ9Sbm0pwwI5aKQUnMwI+GM7PaBjfoZJdC1sFNyceA/e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rx13ya2h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrLTFMqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3BFC43390;
-	Mon,  8 Apr 2024 13:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rx13ya2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3B8C433C7;
+	Mon,  8 Apr 2024 13:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584174;
-	bh=MSXPvBhyM++DdwrD2gDnzHUaUj8fKe6Cibxrlo5HH8s=;
+	s=korg; t=1712584177;
+	bh=C9uNpwT6j98kbrbIYRHc0+quXDJqfZ6r3WrmMsM6xL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrLTFMqyd2jI58n1h3ioFjCsMjXQx6V4cAW16i+GVx0bmAaR0WcRyz4ZUFkv3rY01
-	 GQpGDXbYYyiTc1FQZpGL85ZwCA19Fj2qo2b5NX9vYG/Yi2ZScaIb9lmyr9GCU6gOAq
-	 LK0gJicO4Fvt3+Hw5WMve0JB06UzBjdC1B/aOo3Y=
+	b=Rx13ya2hYqP134v35xpxdOhb2IdaldkxSMm7qdpQ2QWIdeo81hZBJC6ThxdqpSouW
+	 rQTnzwHFLFvRwxZxvrZ4A8ZPdg6hScvYVcaBaX+/215QNtqEyxnTdIL3hGALcVg4k8
+	 S6qH1cxXEGBYpZN5Bc0QZW3zaAoTTzVWbVqrQjUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 319/690] NFSD: Remove do_nfsd_create()
-Date: Mon,  8 Apr 2024 14:53:05 +0200
-Message-ID: <20240408125411.166835175@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.8 247/273] smb: client: serialise cifs_construct_tcon() with cifs_mount_mutex
+Date: Mon,  8 Apr 2024 14:58:42 +0200
+Message-ID: <20240408125317.122571678@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,212 +46,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 1c388f27759c5d9271d4fca081f7ee138986eb7d ]
+commit 93cee45ccfebc62a3bb4cd622b89e00c8c7d8493 upstream.
 
-Now that its two callers have their own version-specific instance of
-this function, do_nfsd_create() is no longer used.
+Serialise cifs_construct_tcon() with cifs_mount_mutex to handle
+parallel mounts that may end up reusing the session and tcon created
+by it.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org # 6.4+
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.c | 150 --------------------------------------------------
- fs/nfsd/vfs.h |  10 ----
- 2 files changed, 160 deletions(-)
+ fs/smb/client/connect.c    |   13 ++++++++++++-
+ fs/smb/client/fs_context.c |    6 +++---
+ fs/smb/client/fs_context.h |   12 ++++++++++++
+ 3 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index e4f100a43ce52..9dd14c0eaebd1 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1395,156 +1395,6 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 					rdev, resfhp);
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3989,7 +3989,7 @@ cifs_set_vol_auth(struct smb3_fs_context
  }
  
--/*
-- * NFSv3 and NFSv4 version of nfsd_create
-- */
--__be32
--do_nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		char *fname, int flen, struct iattr *iap,
--		struct svc_fh *resfhp, int createmode, u32 *verifier,
--	        bool *truncp, bool *created)
--{
--	struct dentry	*dentry, *dchild = NULL;
--	struct inode	*dirp;
--	__be32		err;
--	int		host_err;
--	__u32		v_mtime=0, v_atime=0;
--
--	err = nfserr_perm;
--	if (!flen)
--		goto out;
--	err = nfserr_exist;
--	if (isdotent(fname, flen))
--		goto out;
--	if (!(iap->ia_valid & ATTR_MODE))
--		iap->ia_mode = 0;
--	err = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_EXEC);
--	if (err)
--		goto out;
--
--	dentry = fhp->fh_dentry;
--	dirp = d_inode(dentry);
--
--	host_err = fh_want_write(fhp);
--	if (host_err)
--		goto out_nfserr;
--
--	fh_lock_nested(fhp, I_MUTEX_PARENT);
--
--	/*
--	 * Compose the response file handle.
--	 */
--	dchild = lookup_one_len(fname, dentry, flen);
--	host_err = PTR_ERR(dchild);
--	if (IS_ERR(dchild))
--		goto out_nfserr;
--
--	/* If file doesn't exist, check for permissions to create one */
--	if (d_really_is_negative(dchild)) {
--		err = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_CREATE);
--		if (err)
--			goto out;
--	}
--
--	err = fh_compose(resfhp, fhp->fh_export, dchild, fhp);
--	if (err)
--		goto out;
--
--	if (nfsd_create_is_exclusive(createmode)) {
--		/* solaris7 gets confused (bugid 4218508) if these have
--		 * the high bit set, as do xfs filesystems without the
--		 * "bigtime" feature.  So just clear the high bits. If this is
--		 * ever changed to use different attrs for storing the
--		 * verifier, then do_open_lookup() will also need to be fixed
--		 * accordingly.
--		 */
--		v_mtime = verifier[0]&0x7fffffff;
--		v_atime = verifier[1]&0x7fffffff;
--	}
--	
--	if (d_really_is_positive(dchild)) {
--		err = 0;
--
--		switch (createmode) {
--		case NFS3_CREATE_UNCHECKED:
--			if (! d_is_reg(dchild))
--				goto out;
--			else if (truncp) {
--				/* in nfsv4, we need to treat this case a little
--				 * differently.  we don't want to truncate the
--				 * file now; this would be wrong if the OPEN
--				 * fails for some other reason.  furthermore,
--				 * if the size is nonzero, we should ignore it
--				 * according to spec!
--				 */
--				*truncp = (iap->ia_valid & ATTR_SIZE) && !iap->ia_size;
--			}
--			else {
--				iap->ia_valid &= ATTR_SIZE;
--				goto set_attr;
--			}
--			break;
--		case NFS3_CREATE_EXCLUSIVE:
--			if (   d_inode(dchild)->i_mtime.tv_sec == v_mtime
--			    && d_inode(dchild)->i_atime.tv_sec == v_atime
--			    && d_inode(dchild)->i_size  == 0 ) {
--				if (created)
--					*created = true;
--				break;
--			}
--			fallthrough;
--		case NFS4_CREATE_EXCLUSIVE4_1:
--			if (   d_inode(dchild)->i_mtime.tv_sec == v_mtime
--			    && d_inode(dchild)->i_atime.tv_sec == v_atime
--			    && d_inode(dchild)->i_size  == 0 ) {
--				if (created)
--					*created = true;
--				goto set_attr;
--			}
--			fallthrough;
--		case NFS3_CREATE_GUARDED:
--			err = nfserr_exist;
--		}
--		goto out;
--	}
--
--	if (!IS_POSIXACL(dirp))
--		iap->ia_mode &= ~current_umask();
--
--	host_err = vfs_create(&init_user_ns, dirp, dchild, iap->ia_mode, true);
--	if (host_err < 0)
--		goto out_nfserr;
--	if (created)
--		*created = true;
--
--	nfsd_check_ignore_resizing(iap);
--
--	if (nfsd_create_is_exclusive(createmode)) {
--		/* Cram the verifier into atime/mtime */
--		iap->ia_valid = ATTR_MTIME|ATTR_ATIME
--			| ATTR_MTIME_SET|ATTR_ATIME_SET;
--		/* XXX someone who knows this better please fix it for nsec */ 
--		iap->ia_mtime.tv_sec = v_mtime;
--		iap->ia_atime.tv_sec = v_atime;
--		iap->ia_mtime.tv_nsec = 0;
--		iap->ia_atime.tv_nsec = 0;
--	}
--
-- set_attr:
--	err = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
--
-- out:
--	fh_unlock(fhp);
--	if (dchild && !IS_ERR(dchild))
--		dput(dchild);
--	fh_drop_write(fhp);
-- 	return err;
-- 
-- out_nfserr:
--	err = nfserrno(host_err);
--	goto out;
--}
--
- /*
-  * Read a symlink. On entry, *lenp must contain the maximum path length that
-  * fits into the buffer. On return, it contains the true length.
-diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index 1f32a83456b03..f99794b033a55 100644
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -71,10 +71,6 @@ __be32		nfsd_create(struct svc_rqst *, struct svc_fh *,
- __be32		nfsd_access(struct svc_rqst *, struct svc_fh *, u32 *, u32 *);
- __be32		nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 				struct svc_fh *resfhp, struct iattr *iap);
--__be32		do_nfsd_create(struct svc_rqst *, struct svc_fh *,
--				char *name, int len, struct iattr *attrs,
--				struct svc_fh *res, int createmode,
--				u32 *verifier, bool *truncp, bool *created);
- __be32		nfsd_commit(struct svc_rqst *rqst, struct svc_fh *fhp,
- 				u64 offset, u32 count, __be32 *verf);
- #ifdef CONFIG_NFSD_V4
-@@ -161,10 +157,4 @@ static inline __be32 fh_getattr(const struct svc_fh *fh, struct kstat *stat)
- 				    AT_STATX_SYNC_AS_STAT));
+ static struct cifs_tcon *
+-cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
++__cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
+ {
+ 	int rc;
+ 	struct cifs_tcon *master_tcon = cifs_sb_master_tcon(cifs_sb);
+@@ -4087,6 +4087,17 @@ out:
+ 	return tcon;
  }
  
--static inline int nfsd_create_is_exclusive(int createmode)
--{
--	return createmode == NFS3_CREATE_EXCLUSIVE
--	       || createmode == NFS4_CREATE_EXCLUSIVE4_1;
--}
--
- #endif /* LINUX_NFSD_VFS_H */
--- 
-2.43.0
-
++static struct cifs_tcon *
++cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
++{
++	struct cifs_tcon *ret;
++
++	cifs_mount_lock();
++	ret = __cifs_construct_tcon(cifs_sb, fsuid);
++	cifs_mount_unlock();
++	return ret;
++}
++
+ struct cifs_tcon *
+ cifs_sb_master_tcon(struct cifs_sb_info *cifs_sb)
+ {
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -37,7 +37,7 @@
+ #include "rfc1002pdu.h"
+ #include "fs_context.h"
+ 
+-static DEFINE_MUTEX(cifs_mount_mutex);
++DEFINE_MUTEX(cifs_mount_mutex);
+ 
+ static const match_table_t cifs_smb_version_tokens = {
+ 	{ Smb_1, SMB1_VERSION_STRING },
+@@ -753,9 +753,9 @@ static int smb3_get_tree(struct fs_conte
+ 
+ 	if (err)
+ 		return err;
+-	mutex_lock(&cifs_mount_mutex);
++	cifs_mount_lock();
+ 	ret = smb3_get_tree_common(fc);
+-	mutex_unlock(&cifs_mount_mutex);
++	cifs_mount_unlock();
+ 	return ret;
+ }
+ 
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -295,4 +295,16 @@ extern void smb3_update_mnt_flags(struct
+ #define MAX_CACHED_FIDS 16
+ extern char *cifs_sanitize_prepath(char *prepath, gfp_t gfp);
+ 
++extern struct mutex cifs_mount_mutex;
++
++static inline void cifs_mount_lock(void)
++{
++	mutex_lock(&cifs_mount_mutex);
++}
++
++static inline void cifs_mount_unlock(void)
++{
++	mutex_unlock(&cifs_mount_mutex);
++}
++
+ #endif
 
 
