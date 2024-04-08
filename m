@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F047E59F;
-	Mon,  8 Apr 2024 13:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75FA7E0E4;
+	Mon,  8 Apr 2024 13:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583896; cv=none; b=OBKj416G9YwhAbBKB99BLddOlJjxJE2EgjH3Mso85GiU0dGuVLSKO3CQYuKgo3+gHWALswpkntQzO3TLaptytg3BeFUTt+S/zP86JnXwrlrsjZMIbPxpaMjmIQuS8HpOCdpjioZUDyIppiQ9brFDMccczowZ/NkoJk+e8MLiZ2Y=
+	t=1712583899; cv=none; b=MYBpNiY71KxaiK85RWST6JrwiClIqiBc7UCzFuISVH28wkg5MX+zpVhAbntpGtaYlEU4wZk1n+GzAQvHaxC5FUEuWfIIiOJW8c3Yqn9d5H9b7hZTifqotxUwayioRJOhlQ+g06xZD+Pqncolc0RM3/qQ9ZrXCITC51+udcjZ2Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583896; c=relaxed/simple;
-	bh=ZhkQivp2y1t5jRBTjc+HWKf2TzTLSTO9XDt8YEGcyBw=;
+	s=arc-20240116; t=1712583899; c=relaxed/simple;
+	bh=MDBRB25FrOp4pNwrf47XxmRvdtUbke3CqVH2B6NyTvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftxFh4i//SNX2GBwIsBZFvwTvc7lHG536LULQX0NCsGE6iMeNi190kN7F1Osp26CXV6I1NNwcaNVhsgpZkplUS532VTTmRxuneo9d3mfe6zlPwGxVFjry6pp1gleq5/feG+6OQTTvn5hrii0AHu4Dchaib60+plE4VWwH+Odem0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKnCOMd6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUUQTkxPM+QEJDPqEhlpB7RwqnOUw5WmkzvMnr96YIylsE2i6J5MxgKBdUL/W6yd/rLtvSzOq6YAl9gUkp5n6Pw0YlKviGZXhR+v0ax3dGrMIDctWiQEEUg4UjCHGCOvv8HAEP7LgsBbkJ1/0y0aO14MG/5TDjclubzHKciRiS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4Y8+LW1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKnCOMd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BDBC433F1;
-	Mon,  8 Apr 2024 13:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4Y8+LW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3177CC433C7;
+	Mon,  8 Apr 2024 13:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583896;
-	bh=ZhkQivp2y1t5jRBTjc+HWKf2TzTLSTO9XDt8YEGcyBw=;
+	s=korg; t=1712583899;
+	bh=MDBRB25FrOp4pNwrf47XxmRvdtUbke3CqVH2B6NyTvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKnCOMd6Gyx8GF1kAo6tVmRLFeX7QjJomHtFdcJawFmEb90VmwbrQ8JXDHzJaKFUC
-	 uUej4rWxy3qmJqGZFAePUg5svgZR0+eaq+e4Q3Ll+P2CyQx7TgQ5oyLwYY0ohzbPrI
-	 h/RPDEFK9ociWXkzg8nghBy0tIj7s+esQg3QBkuU=
+	b=m4Y8+LW1oQP63yaXT1+LDM0885Czgmyes+zJM5syJRcILc1DEbOX0Q5YOMfRYM5Qs
+	 RYd5iAJ4+Bs0jMW6LEnfsdxVMGi8PMCMkGJAAk4J1WIoWDDsjvaw99riZHNk3u9HSg
+	 spnRO9/VssZmPOelUvOZrphMbFcQSypR0OPrGuaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 300/690] fanotify: implement "evictable" inode marks
-Date: Mon,  8 Apr 2024 14:52:46 +0200
-Message-ID: <20240408125410.465600912@linuxfoundation.org>
+	syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com,
+	syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com,
+	syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 247/252] bpf: support deferring bpf_link dealloc to after RCU grace period
+Date: Mon,  8 Apr 2024 14:59:06 +0200
+Message-ID: <20240408125314.324391140@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,163 +50,166 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 7d5e005d982527e4029b0139823d179986e34cdc ]
+commit 1a80dbcb2dbaf6e4c216e62e30fa7d3daa8001ce upstream.
 
-When an inode mark is created with flag FAN_MARK_EVICTABLE, it will not
-pin the marked inode to inode cache, so when inode is evicted from cache
-due to memory pressure, the mark will be lost.
+BPF link for some program types is passed as a "context" which can be
+used by those BPF programs to look up additional information. E.g., for
+multi-kprobes and multi-uprobes, link is used to fetch BPF cookie values.
 
-When an inode mark with flag FAN_MARK_EVICATBLE is updated without using
-this flag, the marked inode is pinned to inode cache.
+Because of this runtime dependency, when bpf_link refcnt drops to zero
+there could still be active BPF programs running accessing link data.
 
-When an inode mark is updated with flag FAN_MARK_EVICTABLE but an
-existing mark already has the inode pinned, the mark update fails with
-error EEXIST.
+This patch adds generic support to defer bpf_link dealloc callback to
+after RCU GP, if requested. This is done by exposing two different
+deallocation callbacks, one synchronous and one deferred. If deferred
+one is provided, bpf_link_free() will schedule dealloc_deferred()
+callback to happen after RCU GP.
 
-Evictable inode marks can be used to setup inode marks with ignored mask
-to suppress events from uninteresting files or directories in a lazy
-manner, upon receiving the first event, without having to iterate all
-the uninteresting files or directories before hand.
+BPF is using two flavors of RCU: "classic" non-sleepable one and RCU
+tasks trace one. The latter is used when sleepable BPF programs are
+used. bpf_link_free() accommodates that by checking underlying BPF
+program's sleepable flag, and goes either through normal RCU GP only for
+non-sleepable, or through RCU tasks trace GP *and* then normal RCU GP
+(taking into account rcu_trace_implies_rcu_gp() optimization), if BPF
+program is sleepable.
 
-The evictbale inode mark feature allows performing this lazy marks setup
-without exhausting the system memory with pinned inodes.
+We use this for multi-kprobe and multi-uprobe links, which dereference
+link during program run. We also preventively switch raw_tp link to use
+deferred dealloc callback, as upcoming changes in bpf-next tree expose
+raw_tp link data (specifically, cookie value) to BPF program at runtime
+as well.
 
-This change does not enable the feature yet.
-
-Link: https://lore.kernel.org/linux-fsdevel/CAOQ4uxiRDpuS=2uA6+ZUM7yG9vVU-u212tkunBmSnP_u=mkv=Q@mail.gmail.com/
-Link: https://lore.kernel.org/r/20220422120327.3459282-15-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Reported-by: syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com
+Reported-by: syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com
+Reported-by: syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20240328052426.3042617-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify.h      |  2 ++
- fs/notify/fanotify/fanotify_user.c | 38 ++++++++++++++++++++++++++++--
- include/uapi/linux/fanotify.h      |  1 +
- 3 files changed, 39 insertions(+), 2 deletions(-)
+ include/linux/bpf.h      |   16 +++++++++++++++-
+ kernel/bpf/syscall.c     |   35 ++++++++++++++++++++++++++++++++---
+ kernel/trace/bpf_trace.c |    4 ++--
+ 3 files changed, 49 insertions(+), 6 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 87142bc0131a4..80e0ec95b1131 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -497,6 +497,8 @@ static inline unsigned int fanotify_mark_user_flags(struct fsnotify_mark *mark)
- 
- 	if (mark->flags & FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY)
- 		mflags |= FAN_MARK_IGNORED_SURV_MODIFY;
-+	if (mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF)
-+		mflags |= FAN_MARK_EVICTABLE;
- 
- 	return mflags;
- }
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 0ea0047c6340a..9bb182dc3f9b3 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1080,6 +1080,7 @@ static int fanotify_remove_inode_mark(struct fsnotify_group *group,
- static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
- 				       unsigned int fan_flags)
- {
-+	bool want_iref = !(fan_flags & FAN_MARK_EVICTABLE);
- 	bool recalc = false;
- 
- 	/*
-@@ -1095,7 +1096,18 @@ static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
- 			recalc = true;
- 	}
- 
--	return recalc;
-+	if (fsn_mark->connector->type != FSNOTIFY_OBJ_TYPE_INODE ||
-+	    want_iref == !(fsn_mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF))
-+		return recalc;
-+
-+	/*
-+	 * NO_IREF may be removed from a mark, but not added.
-+	 * When removed, fsnotify_recalc_mask() will take the inode ref.
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1524,12 +1524,26 @@ struct bpf_link {
+ 	enum bpf_link_type type;
+ 	const struct bpf_link_ops *ops;
+ 	struct bpf_prog *prog;
+-	struct work_struct work;
++	/* rcu is used before freeing, work can be used to schedule that
++	 * RCU-based freeing before that, so they never overlap
 +	 */
-+	WARN_ON_ONCE(!want_iref);
-+	fsn_mark->flags &= ~FSNOTIFY_MARK_FLAG_NO_IREF;
-+
-+	return true;
++	union {
++		struct rcu_head rcu;
++		struct work_struct work;
++	};
+ };
+ 
+ struct bpf_link_ops {
+ 	void (*release)(struct bpf_link *link);
++	/* deallocate link resources callback, called without RCU grace period
++	 * waiting
++	 */
+ 	void (*dealloc)(struct bpf_link *link);
++	/* deallocate link resources callback, called after RCU grace period;
++	 * if underlying BPF program is sleepable we go through tasks trace
++	 * RCU GP and then "classic" RCU GP
++	 */
++	void (*dealloc_deferred)(struct bpf_link *link);
+ 	int (*detach)(struct bpf_link *link);
+ 	int (*update_prog)(struct bpf_link *link, struct bpf_prog *new_prog,
+ 			   struct bpf_prog *old_prog);
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2866,17 +2866,46 @@ void bpf_link_inc(struct bpf_link *link)
+ 	atomic64_inc(&link->refcnt);
  }
  
- static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
-@@ -1121,6 +1133,7 @@ static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
- static struct fsnotify_mark *fanotify_add_new_mark(struct fsnotify_group *group,
- 						   fsnotify_connp_t *connp,
- 						   unsigned int obj_type,
-+						   unsigned int fan_flags,
- 						   __kernel_fsid_t *fsid)
- {
- 	struct ucounts *ucounts = group->fanotify_data.ucounts;
-@@ -1143,6 +1156,9 @@ static struct fsnotify_mark *fanotify_add_new_mark(struct fsnotify_group *group,
- 	}
- 
- 	fsnotify_init_mark(mark, group);
-+	if (fan_flags & FAN_MARK_EVICTABLE)
-+		mark->flags |= FSNOTIFY_MARK_FLAG_NO_IREF;
++static void bpf_link_defer_dealloc_rcu_gp(struct rcu_head *rcu)
++{
++	struct bpf_link *link = container_of(rcu, struct bpf_link, rcu);
 +
- 	ret = fsnotify_add_mark_locked(mark, connp, obj_type, 0, fsid);
- 	if (ret) {
- 		fsnotify_put_mark(mark);
-@@ -1179,13 +1195,23 @@ static int fanotify_add_mark(struct fsnotify_group *group,
- 	mutex_lock(&group->mark_mutex);
- 	fsn_mark = fsnotify_find_mark(connp, group);
- 	if (!fsn_mark) {
--		fsn_mark = fanotify_add_new_mark(group, connp, obj_type, fsid);
-+		fsn_mark = fanotify_add_new_mark(group, connp, obj_type,
-+						 fan_flags, fsid);
- 		if (IS_ERR(fsn_mark)) {
- 			mutex_unlock(&group->mark_mutex);
- 			return PTR_ERR(fsn_mark);
- 		}
++	/* free bpf_link and its containing memory */
++	link->ops->dealloc_deferred(link);
++}
++
++static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
++{
++	if (rcu_trace_implies_rcu_gp())
++		bpf_link_defer_dealloc_rcu_gp(rcu);
++	else
++		call_rcu(rcu, bpf_link_defer_dealloc_rcu_gp);
++}
++
+ /* bpf_link_free is guaranteed to be called from process context */
+ static void bpf_link_free(struct bpf_link *link)
+ {
++	bool sleepable = false;
++
+ 	bpf_link_free_id(link->id);
+ 	if (link->prog) {
++		sleepable = link->prog->aux->sleepable;
+ 		/* detach BPF program, clean up used resources */
+ 		link->ops->release(link);
+ 		bpf_prog_put(link->prog);
  	}
- 
-+	/*
-+	 * Non evictable mark cannot be downgraded to evictable mark.
-+	 */
-+	if (fan_flags & FAN_MARK_EVICTABLE &&
-+	    !(fsn_mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF)) {
-+		ret = -EEXIST;
-+		goto out;
+-	/* free bpf_link and its containing memory */
+-	link->ops->dealloc(link);
++	if (link->ops->dealloc_deferred) {
++		/* schedule BPF link deallocation; if underlying BPF program
++		 * is sleepable, we need to first wait for RCU tasks trace
++		 * sync, then go through "classic" RCU grace period
++		 */
++		if (sleepable)
++			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
++		else
++			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
 +	}
-+
- 	/*
- 	 * Error events are pre-allocated per group, only if strictly
- 	 * needed (i.e. FAN_FS_ERROR was requested).
-@@ -1615,6 +1641,14 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 	    mark_type != FAN_MARK_FILESYSTEM)
- 		goto fput_and_out;
++	if (link->ops->dealloc)
++		link->ops->dealloc(link);
+ }
  
-+	/*
-+	 * Evictable is only relevant for inode marks, because only inode object
-+	 * can be evicted on memory pressure.
-+	 */
-+	if (flags & FAN_MARK_EVICTABLE &&
-+	     mark_type != FAN_MARK_INODE)
-+		goto fput_and_out;
-+
- 	/*
- 	 * Events that do not carry enough information to report
- 	 * event->fd require a group that supports reporting fid.  Those
-diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
-index e8ac38cc2fd6d..f1f89132d60e2 100644
---- a/include/uapi/linux/fanotify.h
-+++ b/include/uapi/linux/fanotify.h
-@@ -82,6 +82,7 @@
- #define FAN_MARK_IGNORED_SURV_MODIFY	0x00000040
- #define FAN_MARK_FLUSH		0x00000080
- /* FAN_MARK_FILESYSTEM is	0x00000100 */
-+#define FAN_MARK_EVICTABLE	0x00000200
+ static void bpf_link_put_deferred(struct work_struct *work)
+@@ -3381,7 +3410,7 @@ static int bpf_raw_tp_link_fill_link_inf
  
- /* These are NOT bitwise flags.  Both bits can be used togther.  */
- #define FAN_MARK_INODE		0x00000000
--- 
-2.43.0
-
+ static const struct bpf_link_ops bpf_raw_tp_link_lops = {
+ 	.release = bpf_raw_tp_link_release,
+-	.dealloc = bpf_raw_tp_link_dealloc,
++	.dealloc_deferred = bpf_raw_tp_link_dealloc,
+ 	.show_fdinfo = bpf_raw_tp_link_show_fdinfo,
+ 	.fill_link_info = bpf_raw_tp_link_fill_link_info,
+ };
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2639,7 +2639,7 @@ static int bpf_kprobe_multi_link_fill_li
+ 
+ static const struct bpf_link_ops bpf_kprobe_multi_link_lops = {
+ 	.release = bpf_kprobe_multi_link_release,
+-	.dealloc = bpf_kprobe_multi_link_dealloc,
++	.dealloc_deferred = bpf_kprobe_multi_link_dealloc,
+ 	.fill_link_info = bpf_kprobe_multi_link_fill_link_info,
+ };
+ 
+@@ -3081,7 +3081,7 @@ static void bpf_uprobe_multi_link_deallo
+ 
+ static const struct bpf_link_ops bpf_uprobe_multi_link_lops = {
+ 	.release = bpf_uprobe_multi_link_release,
+-	.dealloc = bpf_uprobe_multi_link_dealloc,
++	.dealloc_deferred = bpf_uprobe_multi_link_dealloc,
+ };
+ 
+ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
 
 
