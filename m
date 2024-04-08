@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8F42E405;
-	Mon,  8 Apr 2024 13:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2D32E405;
+	Mon,  8 Apr 2024 13:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582565; cv=none; b=BF2PqzLPbyIlWTttH262miYY5F60bBgbU6JcogN38OAtB1+uqhRX71FvQKzaBxDxxotjpQKLMKROIHusJjdi6aRVi14QEFOFVEu++pOGrMVeyIU2TobMJwPkz5yCj1cj33tUABsxcn9OluwCoeN3u8ny8uz0+fcokb/k25AWVA8=
+	t=1712582568; cv=none; b=Hge2WdIjvQIsk2xEMxZgpwlvIimFzR8WIiJCzTCoD1sS1jVLeuMBtiKUODJVwvRJhv+UBHrIOYaXPweRKCKbdqtat27l95COIc9vdn2Gpo+o2qXUvhHYUZkM8MRGIBVt3W2V2MZOolrAzLAW8eQqRRYRr/jLUjFPTC3voH8hvXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582565; c=relaxed/simple;
-	bh=UI3/908qC/UcGjMq6w4WvKcoqt7gvbL/pv+5nlYuZ8M=;
+	s=arc-20240116; t=1712582568; c=relaxed/simple;
+	bh=LfR0p6/1sgIAawVEnIAYd9154/R5tssw+Hi5urOHU3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbSBVADjy2aIDcTSPUQxeV4lBLs1A8jxU0snGPp0ZxWrDW6L8FFe4tPVDr1ji/748kzcCHH99SMYjEmrvxUQi8awzECTHo0Ke3zSEmiG2+yL9amG6jwTfQY5K+gHO1Q1XHL20nyGrwwYQsd9TYilp8Zxq7ZMbKUcRW2GWZTP1EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ8Eyb5R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q7XgPH9qm1Rheko4r2cnQRFhdPO7Zw7FD1qwZTRc8wvFZdbdE/u4tsFRqRhY3oN7soLX1XW4DOTZLhMEMIcRx/2F5CLlHpBruX0c/MIi59fbXvaSuji2WKzXDxGMsMVj1KMqZv6466HosFdSAUIJ8yTzf4mMoIr++iRQIVOKaZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK7e/KM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ8Eyb5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF9DC433F1;
-	Mon,  8 Apr 2024 13:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK7e/KM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880DBC433F1;
+	Mon,  8 Apr 2024 13:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582565;
-	bh=UI3/908qC/UcGjMq6w4WvKcoqt7gvbL/pv+5nlYuZ8M=;
+	s=korg; t=1712582567;
+	bh=LfR0p6/1sgIAawVEnIAYd9154/R5tssw+Hi5urOHU3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ8Eyb5RNBJkxzkI5+/T0APVVnOfUC3qy+pM8dsqDdH9HZ9erJ0dqOa+5WX04AFN2
-	 ndTPR4OuVfEW8GW/lOh42gFd3FSuyRkZvqz+Hf664jlqsvmUuEvtPc5oQ9Bb78FoHN
-	 chYQKOenuBgCHKETURoo65CGv+TzBYLkugZgQaow=
+	b=UK7e/KM5MWYX+2Dtg7wKkFK0rvjseHjrx4Vl9xKwG2be7CxHjUgC1XD/yLgg2XDdE
+	 YpMbN85V6Xtv77fG/Z19W594svnjYO7V8nG6ipp7AA7n64tIGX/soPMtJjL5nQ5y5P
+	 cR3D6d4ZpAKy7QelWRi0DUnVJy+Do6FTmKcFRd8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	I Gede Agastya Darma Laksana <gedeagas22@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 116/138] ALSA: hda/realtek: Update Panasonic CF-SZ6 quirk to support headset with microphone
-Date: Mon,  8 Apr 2024 14:58:50 +0200
-Message-ID: <20240408125259.840857794@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 103/252] net/sched: act_skbmod: prevent kernel-infoleak
+Date: Mon,  8 Apr 2024 14:56:42 +0200
+Message-ID: <20240408125309.842983982@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +47,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1576f263ee2147dc395531476881058609ad3d38 upstream.
+commit d313eb8b77557a6d5855f42d2234bd592c7b50dd upstream.
 
-This patch addresses an issue with the Panasonic CF-SZ6's existing quirk,
-specifically its headset microphone functionality. Previously, the quirk
-used ALC269_FIXUP_HEADSET_MODE, which does not support the CF-SZ6's design
-of a single 3.5mm jack for both mic and audio output effectively. The
-device uses pin 0x19 for the headset mic without jack detection.
+syzbot found that tcf_skbmod_dump() was copying four bytes
+from kernel stack to user space [1].
 
-Following verification on the CF-SZ6 and discussions with the original
-patch author, i determined that the update to
-ALC269_FIXUP_ASPIRE_HEADSET_MIC is the appropriate solution. This change
-is custom-designed for the CF-SZ6's unique hardware setup, which includes
-a single 3.5mm jack for both mic and audio output, connecting the headset
-microphone to pin 0x19 without the use of jack detection.
+The issue here is that 'struct tc_skbmod' has a four bytes hole.
 
-Fixes: 0fca97a29b83 ("ALSA: hda/realtek - Add Panasonic CF-SZ6 headset jack quirk")
-Signed-off-by: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
-Cc: <stable@vger.kernel.org>
-Message-ID: <20240401174602.14133-1-gedeagas22@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+We need to clear the structure before filling fields.
+
+[1]
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+ BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+ BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
+ BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+  instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+  copy_to_user_iter lib/iov_iter.c:24 [inline]
+  iterate_ubuf include/linux/iov_iter.h:29 [inline]
+  iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+  iterate_and_advance include/linux/iov_iter.h:271 [inline]
+  _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+  copy_to_iter include/linux/uio.h:196 [inline]
+  simple_copy_to_iter net/core/datagram.c:532 [inline]
+  __skb_datagram_iter+0x185/0x1000 net/core/datagram.c:420
+  skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:546
+  skb_copy_datagram_msg include/linux/skbuff.h:4050 [inline]
+  netlink_recvmsg+0x432/0x1610 net/netlink/af_netlink.c:1962
+  sock_recvmsg_nosec net/socket.c:1046 [inline]
+  sock_recvmsg+0x2c4/0x340 net/socket.c:1068
+  __sys_recvfrom+0x35a/0x5f0 net/socket.c:2242
+  __do_sys_recvfrom net/socket.c:2260 [inline]
+  __se_sys_recvfrom net/socket.c:2256 [inline]
+  __x64_sys_recvfrom+0x126/0x1d0 net/socket.c:2256
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was stored to memory at:
+  pskb_expand_head+0x30f/0x19d0 net/core/skbuff.c:2253
+  netlink_trim+0x2c2/0x330 net/netlink/af_netlink.c:1317
+  netlink_unicast+0x9f/0x1260 net/netlink/af_netlink.c:1351
+  nlmsg_unicast include/net/netlink.h:1144 [inline]
+  nlmsg_notify+0x21d/0x2f0 net/netlink/af_netlink.c:2610
+  rtnetlink_send+0x73/0x90 net/core/rtnetlink.c:741
+  rtnetlink_maybe_send include/linux/rtnetlink.h:17 [inline]
+  tcf_add_notify net/sched/act_api.c:2048 [inline]
+  tcf_action_add net/sched/act_api.c:2071 [inline]
+  tc_ctl_action+0x146e/0x19d0 net/sched/act_api.c:2119
+  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
+  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
+  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
+  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+  __sys_sendmsg net/socket.c:2667 [inline]
+  __do_sys_sendmsg net/socket.c:2676 [inline]
+  __se_sys_sendmsg net/socket.c:2674 [inline]
+  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was stored to memory at:
+  __nla_put lib/nlattr.c:1041 [inline]
+  nla_put+0x1c6/0x230 lib/nlattr.c:1099
+  tcf_skbmod_dump+0x23f/0xc20 net/sched/act_skbmod.c:256
+  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
+  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
+  tcf_action_dump+0x1fd/0x460 net/sched/act_api.c:1251
+  tca_get_fill+0x519/0x7a0 net/sched/act_api.c:1628
+  tcf_add_notify_msg net/sched/act_api.c:2023 [inline]
+  tcf_add_notify net/sched/act_api.c:2042 [inline]
+  tcf_action_add net/sched/act_api.c:2071 [inline]
+  tc_ctl_action+0x1365/0x19d0 net/sched/act_api.c:2119
+  rtnetlink_rcv_msg+0x1737/0x1900 net/core/rtnetlink.c:6595
+  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2559
+  rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6613
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0xf4c/0x1260 net/netlink/af_netlink.c:1361
+  netlink_sendmsg+0x10df/0x11f0 net/netlink/af_netlink.c:1905
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:745
+  ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+  __sys_sendmsg net/socket.c:2667 [inline]
+  __do_sys_sendmsg net/socket.c:2676 [inline]
+  __se_sys_sendmsg net/socket.c:2674 [inline]
+  __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Local variable opt created at:
+  tcf_skbmod_dump+0x9d/0xc20 net/sched/act_skbmod.c:244
+  tcf_action_dump_old net/sched/act_api.c:1191 [inline]
+  tcf_action_dump_1+0x85e/0x970 net/sched/act_api.c:1227
+
+Bytes 188-191 of 248 are uninitialized
+Memory access of size 248 starts at ffff888117697680
+Data copied to user address 00007ffe56d855f0
+
+Fixes: 86da71b57383 ("net_sched: Introduce skbmod action")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240403130908.93421-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_skbmod.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9905,7 +9905,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x1254, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x12cc, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
--	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_HEADSET_MODE),
-+	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
+--- a/net/sched/act_skbmod.c
++++ b/net/sched/act_skbmod.c
+@@ -241,13 +241,13 @@ static int tcf_skbmod_dump(struct sk_buf
+ 	struct tcf_skbmod *d = to_skbmod(a);
+ 	unsigned char *b = skb_tail_pointer(skb);
+ 	struct tcf_skbmod_params  *p;
+-	struct tc_skbmod opt = {
+-		.index   = d->tcf_index,
+-		.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
+-		.bindcnt = atomic_read(&d->tcf_bindcnt) - bind,
+-	};
++	struct tc_skbmod opt;
+ 	struct tcf_t t;
+ 
++	memset(&opt, 0, sizeof(opt));
++	opt.index   = d->tcf_index;
++	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
++	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
+ 	spin_lock_bh(&d->tcf_lock);
+ 	opt.action = d->tcf_action;
+ 	p = rcu_dereference_protected(d->skbmod_p,
 
 
