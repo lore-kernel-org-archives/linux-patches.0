@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE237C0AB;
-	Mon,  8 Apr 2024 13:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E677E0F3;
+	Mon,  8 Apr 2024 13:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583576; cv=none; b=dGIbZHbl5ojcF+uXfhz4/uGjQyVDGBoZb0nctfKeVbB5jVL4UKlVQX3m3YvQ+A3Zw4wgVpOdi3a5r154BRaSyL2Jst3/HZWsaeaGVDqxGguExhZ8v9N/9xGy0lpSnTeXeoxAsrAuTG83M08zH7KbnwVnjhUc40Z5CzZDswZ8jq0=
+	t=1712583579; cv=none; b=Tm+0VnFN0MzMGmNuwPyDbajz54POGi8Lo3Tmh+EdUUyy7Y09Iv6OzKSn2hiddz+iR3Jmbs4l3SjzxR2sz+svLj1mI7cOzrFxBx8G077Kfppi4dowmdmdKIJh5pcw4asHKcEde743ZQyugHpywr/kOsf4wWJ1z/Lynh0MmJSIY4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583576; c=relaxed/simple;
-	bh=V3JpCMa86AIj6qslayMHkbMwuJR/cAHVta0EDLlXT5E=;
+	s=arc-20240116; t=1712583579; c=relaxed/simple;
+	bh=cfeGW69u5B2sxVNRYIsmPz8ZhKZ8g+hD3fqozSUFOHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6CYwVGxb+RysZ3yqcU+PHbxGwTLD4wk3vhA9Zfx0gR6TZc43fuGT71w0Vv5ksrgVN3TK67uKQviYmo208agppQ1NWmKzJh38garxhTXbK9SSZLdrO05GGa2BmnPM6gdgA6jVZmRZRlIeIznyq0MrRGFPjPJ5qgtGnqYO1pUhxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWnNnXTv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzfhn37EXis9GGm8QG3i3F6ZQiA1+q9+9e8vXanKsfveoVl3HgSiyLjUh8AXbhoPEFWM/eLpBXKgkIezJSHuSOvsC+J0xW/bEA0+JQHlVWOnGDKDoO+yACQX8+lJyUWaaRa0vKFebrhcxMF2i8/FtG12TN6EaqmrCDJPtCxXsII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcygb/2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWnNnXTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F2CC43390;
-	Mon,  8 Apr 2024 13:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcygb/2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44C8C433F1;
+	Mon,  8 Apr 2024 13:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583576;
-	bh=V3JpCMa86AIj6qslayMHkbMwuJR/cAHVta0EDLlXT5E=;
+	s=korg; t=1712583579;
+	bh=cfeGW69u5B2sxVNRYIsmPz8ZhKZ8g+hD3fqozSUFOHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWnNnXTve9nsG2w9ozIPSTpNti7vv68PwpoX1BuwwOrTrsBgQpIDgYX4Ti7rwx0yb
-	 dMH1hWk2C4Tfesq7YSLb8Ff60KdOkRWar1Z2dYouDvWd/TIM1XgGdkEHGk/uXriOX3
-	 1CQuSuymbStXCo/E/6On86fimuN0OKmAC7VrjWv0=
+	b=qcygb/2Kzs+UDPARyYHFHn41kpQ/cRDBNUBfVBnKO1+tpDuY821X8LRGwxil5ZQ67
+	 O2B6QiInrsOP8Ls+9BPZTXaU2YOY99Akq3wIRutmA6Bfjr5lXw0GvpZKWST+VkVCwQ
+	 KQUKVKULrR1rut+9u0eBIqaB+TpSgbmqWPCx4gyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Omar Sandoval <osandov@fb.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 193/273] stackdepot: rename pool_index to pool_index_plus_1
-Date: Mon,  8 Apr 2024 14:57:48 +0200
-Message-ID: <20240408125315.310219564@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 210/252] io_uring/kbuf: get rid of bl->is_ready
+Date: Mon,  8 Apr 2024 14:58:29 +0200
+Message-ID: <20240408125313.170906862@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,88 +45,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Collingbourne <pcc@google.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit a6c1d9cb9a68bfa4512248419c4f4d880d19fe90 ]
+commit 3b80cff5a4d117c53d38ce805823084eaeffbde6 upstream.
 
-Commit 3ee34eabac2a ("lib/stackdepot: fix first entry having a 0-handle")
-changed the meaning of the pool_index field to mean "the pool index plus
-1".  This made the code accessing this field less self-documenting, as
-well as causing debuggers such as drgn to not be able to easily remain
-compatible with both old and new kernels, because they typically do that
-by testing for presence of the new field.  Because stackdepot is a
-debugging tool, we should make sure that it is debugger friendly.
-Therefore, give the field a different name to improve readability as well
-as enabling debugger backwards compatibility.
+Now that xarray is being exclusively used for the buffer_list lookup,
+this check is no longer needed. Get rid of it and the is_ready member.
 
-This is needed in 6.9, which would otherwise become an odd release with
-the new semantics and old name so debuggers wouldn't recognize the new
-semantics there.
-
-Fixes: 3ee34eabac2a ("lib/stackdepot: fix first entry having a 0-handle")
-Link: https://lkml.kernel.org/r/20240402001500.53533-1-pcc@google.com
-Link: https://linux-review.googlesource.com/id/Ib3e70c36c1d230dd0a118dc22649b33e768b9f88
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Acked-by: Marco Elver <elver@google.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Omar Sandoval <osandov@fb.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.4+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/stackdepot.h | 7 +++----
- lib/stackdepot.c           | 4 ++--
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ io_uring/kbuf.c |    8 --------
+ io_uring/kbuf.h |    2 --
+ 2 files changed, 10 deletions(-)
 
-diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
-index c4b5ad57c0660..bf0136891a0f2 100644
---- a/include/linux/stackdepot.h
-+++ b/include/linux/stackdepot.h
-@@ -44,10 +44,9 @@ typedef u32 depot_stack_handle_t;
- union handle_parts {
- 	depot_stack_handle_t handle;
- 	struct {
--		/* pool_index is offset by 1 */
--		u32 pool_index	: DEPOT_POOL_INDEX_BITS;
--		u32 offset	: DEPOT_OFFSET_BITS;
--		u32 extra	: STACK_DEPOT_EXTRA_BITS;
-+		u32 pool_index_plus_1	: DEPOT_POOL_INDEX_BITS;
-+		u32 offset		: DEPOT_OFFSET_BITS;
-+		u32 extra		: STACK_DEPOT_EXTRA_BITS;
- 	};
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -59,7 +59,6 @@ static int io_buffer_add_list(struct io_
+ 	 * always under the ->uring_lock, but the RCU lookup from mmap does.
+ 	 */
+ 	bl->bgid = bgid;
+-	smp_store_release(&bl->is_ready, 1);
+ 	return xa_err(xa_store(&ctx->io_bl_xa, bgid, bl, GFP_KERNEL));
+ }
+ 
+@@ -691,13 +690,6 @@ void *io_pbuf_get_address(struct io_ring
+ 
+ 	if (!bl || !bl->is_mmap)
+ 		return NULL;
+-	/*
+-	 * Ensure the list is fully setup. Only strictly needed for RCU lookup
+-	 * via mmap, and in that case only for the array indexed groups. For
+-	 * the xarray lookups, it's either visible and ready, or not at all.
+-	 */
+-	if (!smp_load_acquire(&bl->is_ready))
+-		return NULL;
+ 
+ 	return bl->buf_ring;
+ }
+--- a/io_uring/kbuf.h
++++ b/io_uring/kbuf.h
+@@ -29,8 +29,6 @@ struct io_buffer_list {
+ 	__u8 is_mapped;
+ 	/* ring mapped provided buffers, but mmap'ed by application */
+ 	__u8 is_mmap;
+-	/* bl is visible from an RCU point of view for lookup */
+-	__u8 is_ready;
  };
  
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index ee4bbe6513aa4..ee830f14afb78 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -330,7 +330,7 @@ static struct stack_record *depot_pop_free_pool(void **prealloc, size_t size)
- 	stack = current_pool + pool_offset;
- 
- 	/* Pre-initialize handle once. */
--	stack->handle.pool_index = pool_index + 1;
-+	stack->handle.pool_index_plus_1 = pool_index + 1;
- 	stack->handle.offset = pool_offset >> DEPOT_STACK_ALIGN;
- 	stack->handle.extra = 0;
- 	INIT_LIST_HEAD(&stack->hash_list);
-@@ -441,7 +441,7 @@ static struct stack_record *depot_fetch_stack(depot_stack_handle_t handle)
- 	const int pools_num_cached = READ_ONCE(pools_num);
- 	union handle_parts parts = { .handle = handle };
- 	void *pool;
--	u32 pool_index = parts.pool_index - 1;
-+	u32 pool_index = parts.pool_index_plus_1 - 1;
- 	size_t offset = parts.offset << DEPOT_STACK_ALIGN;
- 	struct stack_record *stack;
- 
--- 
-2.43.0
-
+ struct io_buffer {
 
 
