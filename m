@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169AE80BFC;
-	Mon,  8 Apr 2024 14:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CCF80614;
+	Mon,  8 Apr 2024 14:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585151; cv=none; b=YDjKHgi8ET2MjewraIJ8wIQnx0EhC2gW7rEIEq1YPRZeq0I/oHAeX6sJppvCLAH9G6e8kOafkEcjqLhKu6Rv7An2eHXg5Qk6AVvl4TJVYJNmzxaocjdRQnqhXJbZ3Yjck3sdPGQC3QmM7HHfy4pe1em7KexelYaBaGHFdvbLROo=
+	t=1712585154; cv=none; b=R7BGu5j+ifV/xv1ZBZjFTK5OkkA42Wd2sBptsIa1ttcDGZKgjMp6hZ+ZP/uGn57flH/jsKbKLc40XQy34qCMlyiOwDGrqQlE9gH8E3KXa5j3g1nmqUiKzSGW75os07kao/9obsvIRRRaFAEfampK+UFn1Oep2el9l4pFosmBdkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585151; c=relaxed/simple;
-	bh=pnT9XAQcWnhl4XusK6VoVo5m0l8h63JBY0J3OQTCTmY=;
+	s=arc-20240116; t=1712585154; c=relaxed/simple;
+	bh=x5JY+2OaA03Eiyjk4YrsYzpxx2SI2HZw9jj/qOVNpNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYcdQY0NRFnBiu89vRFlbIr/NAgCntMfpxZS3hApSY2YZ6JatnkRZiwKYKWTmPGC1DzYherCdBT+uNai6iRroeMEoh7KSrGOa9AkhLv7BpDFI/n8anmSkTXBAWvYruCc4p2XQfr5MzXcpeXVeLJS0HShtmBQWy4Kyn+AMWSvdl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqOFIvRq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCuq6bL2T75sBi8AYHSs5qP//OiLJhxkOcINYwoFwhnbsl00xiVJQpc9SsdPg4QQA0Ox18iXRLKFqHZiz5quQW7kcp41RIFprJM4Vy+/ONPYinePH6B5QWgL+k98m/VhLNl7uufgV7gtnRd0RjVGOzpQ6ES978Q32/g7/9Orufs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VFXefnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqOFIvRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB2BC433F1;
-	Mon,  8 Apr 2024 14:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VFXefnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C923C433F1;
+	Mon,  8 Apr 2024 14:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585151;
-	bh=pnT9XAQcWnhl4XusK6VoVo5m0l8h63JBY0J3OQTCTmY=;
+	s=korg; t=1712585153;
+	bh=x5JY+2OaA03Eiyjk4YrsYzpxx2SI2HZw9jj/qOVNpNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OqOFIvRqtRM9958XaLqi2zwgqXLpb5gwOklVUWwokBod8ZSdQuSIKeL/3sqQTkkPI
-	 cqp6gZtpb0awUrSHF1mhnTY3oHJukicKBNXCILT0xwZSvxnWvi8cCHWqR6+Qcvs+18
-	 tIs3nDDhaMLKe4V564yrUPi0gwJSej+4teIX5kjw=
+	b=2VFXefnI+JzFcHC9cUoxLu0rRo6DcjB2Xols2gN8E7YACz+alP9SzqA4J6G7H7DHA
+	 Jy6OIlhMFpDqHGVwJyekMxk/rhZKsT7jJH1P9axnyuejdZ+UQL3rS8tTuTqGVo4yZ7
+	 8fhT+pJ1xeFqf13GFvw5b0+IrKqVRCyVehtuRi4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
 	Antoine Tenart <atenart@kernel.org>,
 	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 650/690] udp: do not transition UDP GRO fraglist partial checksums to unnecessary
-Date: Mon,  8 Apr 2024 14:58:36 +0200
-Message-ID: <20240408125423.188017000@linuxfoundation.org>
+Subject: [PATCH 5.15 651/690] udp: prevent local UDP tunnel packets from being GROed
+Date: Mon,  8 Apr 2024 14:58:37 +0200
+Message-ID: <20240408125423.226214034@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,72 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Antoine Tenart <atenart@kernel.org>
 
-commit f0b8c30345565344df2e33a8417a27503589247d upstream.
+commit 64235eabc4b5b18c507c08a1f16cdac6c5661220 upstream.
 
-UDP GRO validates checksums and in udp4/6_gro_complete fraglist packets
-are converted to CHECKSUM_UNNECESSARY to avoid later checks. However
-this is an issue for CHECKSUM_PARTIAL packets as they can be looped in
-an egress path and then their partial checksums are not fixed.
+GRO has a fundamental issue with UDP tunnel packets as it can't detect
+those in a foolproof way and GRO could happen before they reach the
+tunnel endpoint. Previous commits have fixed issues when UDP tunnel
+packets come from a remote host, but if those packets are issued locally
+they could run into checksum issues.
 
-Different issues can be observed, from invalid checksum on packets to
-traces like:
+If the inner packet has a partial checksum the information will be lost
+in the GRO logic, either in udp4/6_gro_complete or in
+udp_gro_complete_segment and packets will have an invalid checksum when
+leaving the host.
 
-  gen01: hw csum failure
-  skb len=3008 headroom=160 headlen=1376 tailroom=0
-  mac=(106,14) net=(120,40) trans=160
-  shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
-  csum(0xffff232e ip_summed=2 complete_sw=0 valid=0 level=0)
-  hash(0x77e3d716 sw=1 l4=1) proto=0x86dd pkttype=0 iif=12
-  ...
+Prevent local UDP tunnel packets from ever being GROed at the outer UDP
+level.
 
-Fix this by only converting CHECKSUM_NONE packets to
-CHECKSUM_UNNECESSARY by reusing __skb_incr_checksum_unnecessary. All
-other checksum types are kept as-is, including CHECKSUM_COMPLETE as
-fraglist packets being segmented back would have their skb->csum valid.
+Due to skb->encapsulation being wrongly used in some drivers this is
+actually only preventing UDP tunnel packets with a partial checksum to
+be GROed (see iptunnel_handle_offloads) but those were also the packets
+triggering issues so in practice this should be sufficient.
 
 Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Fixes: 36707061d6ba ("udp: allow forwarding of plain (non-fraglisted) UDP GRO packets")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Antoine Tenart <atenart@kernel.org>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp_offload.c |    8 +-------
- net/ipv6/udp_offload.c |    8 +-------
- 2 files changed, 2 insertions(+), 14 deletions(-)
+ net/ipv4/udp_offload.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/net/ipv4/udp_offload.c
 +++ b/net/ipv4/udp_offload.c
-@@ -685,13 +685,7 @@ INDIRECT_CALLABLE_SCOPE int udp4_gro_com
- 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
- 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
+@@ -522,6 +522,12 @@ struct sk_buff *udp_gro_receive(struct l
+ 	 */
+ 	NAPI_GRO_CB(skb)->is_flist = 0;
+ 	if (!sk || !udp_sk(sk)->gro_receive) {
++		/* If the packet was locally encapsulated in a UDP tunnel that
++		 * wasn't detected above, do not GRO.
++		 */
++		if (skb->encapsulation)
++			goto out;
++
+ 		if (skb->dev->features & NETIF_F_GRO_FRAGLIST)
+ 			NAPI_GRO_CB(skb)->is_flist = sk ? !udp_sk(sk)->gro_enabled : 1;
  
--		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
--			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
--				skb->csum_level++;
--		} else {
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--			skb->csum_level = 0;
--		}
-+		__skb_incr_checksum_unnecessary(skb);
- 
- 		return 0;
- 	}
---- a/net/ipv6/udp_offload.c
-+++ b/net/ipv6/udp_offload.c
-@@ -170,13 +170,7 @@ INDIRECT_CALLABLE_SCOPE int udp6_gro_com
- 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
- 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
- 
--		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
--			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
--				skb->csum_level++;
--		} else {
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--			skb->csum_level = 0;
--		}
-+		__skb_incr_checksum_unnecessary(skb);
- 
- 		return 0;
- 	}
 
 
