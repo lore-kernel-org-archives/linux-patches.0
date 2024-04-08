@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88C670CDA;
-	Mon,  8 Apr 2024 13:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4CF7E59F;
+	Mon,  8 Apr 2024 13:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582249; cv=none; b=jENP85DBCptbIrNsYQBGsLME5AN7pChbG0Ucpwt+d19QuyxR5znS4SU4B5l9ciyTT2wpE9tTmCcF0hFl7AAsonZV7QtvJbVrjj9kRuFz3u+KP0y3KUbW7j5yWRfOd5MGmtD9OjUzt+91sGCGfVG3ETByeOBA8mv3DA3bokoNFTA=
+	t=1712582252; cv=none; b=cgV/Jk6MlpnQCNeXngw+6XIqCEbYHOMA0wx+1GN2b5nBY+rl2um0wXBJE0q1Hb0pc0PXJaKJlciBCPX9RBmFHBW1luXFc5VTXlN7AbDHEEYWBmBeS0LKatAqaoHWI/eCEP21L3+erX5LAzcvmy46KoNXEv4o/9i6f00PL49G4RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582249; c=relaxed/simple;
-	bh=U0/HVNlJl2RIz7ukhfD3Tm3NZwSL0/E+5OFF9WbeiXY=;
+	s=arc-20240116; t=1712582252; c=relaxed/simple;
+	bh=1HfvCRfvOy8mLVMJLV6BU6WF/MVrjYHsadKQrEmG8zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUtWXC0419kXMp5fKDMY9AoWisN0SW6K9mns2O64vmnezzuCV66Nezo5OuuNyeQc9DXUdVxINyHxgwJjUTcRpz5ORC8HUeGmnM9c7fapaiGjbvTjx6QkDkr3kvafkWKK8q1e7JU5lFEpQt5g0NTYpePs15sOmkkmoInj6s0akLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i483n418; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+RLjzBK85OBIrCE+CY+0GI6KY+sXrMye/WO8hYIwtRw0+gKSq6RwKQ311n2GupsmwDWYvoFhj2DGQeQhp5uFQhhd4onUXx4l47Hk8jKMiOr8S60Mvk9Dy7589NdrsfwZPUch0noJGkI+GWV/SNeKirn4xkPsSMKAFf1cRH6qy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1xH6EgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i483n418"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F34AC433F1;
-	Mon,  8 Apr 2024 13:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1xH6EgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F730C433C7;
+	Mon,  8 Apr 2024 13:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582249;
-	bh=U0/HVNlJl2RIz7ukhfD3Tm3NZwSL0/E+5OFF9WbeiXY=;
+	s=korg; t=1712582252;
+	bh=1HfvCRfvOy8mLVMJLV6BU6WF/MVrjYHsadKQrEmG8zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i483n418GZdU13AlhafmTTnKW/1mSx++0azZQNNPceq7FiirKOZLNg/LnH9YZYTqv
-	 8g8zk5F3S6neeHMj/8IIEsql0cZqC4TJG3bXLheAAEqEWUKAn9nykRaDMebz+jMJtj
-	 jG52ROEnF+seF/ThcZ8rzhB5WHJT1dIQs7SrAjts=
+	b=C1xH6EgOc+xk61NFyfky5zPHpnWjgdAynJDszT4t+r/eLQm58zDzxqzLyJr26o1nb
+	 EEueTot/L8RdShzxcrrmEHkmi7CZyBWzzJ25cD6rMkSskUGIl0DuKlwIILveeMuQbi
+	 9V0/BsP3JIsdxWp0PS2UZAtIu5Y8RCXowgra73IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH 6.6 078/252] Bluetooth: qca: fix device-address endianness
-Date: Mon,  8 Apr 2024 14:56:17 +0200
-Message-ID: <20240408125309.060040158@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 127/690] USB: usb-storage: Prevent divide-by-0 error in isd200_ata_command
+Date: Mon,  8 Apr 2024 14:49:53 +0200
+Message-ID: <20240408125404.148895915@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,112 +48,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 77f45cca8bc55d00520a192f5a7715133591c83e upstream.
+commit 014bcf41d946b36a8f0b8e9b5d9529efbb822f49 upstream.
 
-The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-device address in big-endian order when setting it using the
-EDL_WRITE_BD_ADDR_OPCODE command.
+The isd200 sub-driver in usb-storage uses the HEADS and SECTORS values
+in the ATA ID information to calculate cylinder and head values when
+creating a CDB for READ or WRITE commands.  The calculation involves
+division and modulus operations, which will cause a crash if either of
+these values is 0.  While this never happens with a genuine device, it
+could happen with a flawed or subversive emulation, as reported by the
+syzbot fuzzer.
 
-Presumably, this is the case for all non-ROME devices which all use the
-EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
-use a different command and expect the address in little-endian order).
+Protect against this possibility by refusing to bind to the device if
+either the ATA_ID_HEADS or ATA_ID_SECTORS value in the device's ID
+information is 0.  This requires isd200_Initialization() to return a
+negative error code when initialization fails; currently it always
+returns 0 (even when there is an error).
 
-Reverse the little-endian address before setting it to make sure that
-the address can be configured using tools like btmgmt or using the
-'local-bd-address' devicetree property.
-
-Note that this can potentially break systems with boot firmware which
-has started relying on the broken behaviour and is incorrectly passing
-the address via devicetree in big-endian order.
-
-The only device affected by this should be the WCN3991 used in some
-Chromebooks. As ChromeOS updates the kernel and devicetree in lockstep,
-the new 'qcom,local-bd-address-broken' property can be used to determine
-if the firmware is buggy so that the underlying driver bug can be fixed
-without breaking backwards compatibility.
-
-Set the HCI_QUIRK_BDADDR_PROPERTY_BROKEN quirk for such platforms so
-that the address is reversed when parsing the address property.
-
-Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
-Cc: stable@vger.kernel.org      # 5.1
-Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: syzbot+28748250ab47a8f04100@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-usb/0000000000003eb868061245ba7f@google.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: PrasannaKumar Muralidharan <prasannatsmkumar@gmail.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/b1e605ea-333f-4ac0-9511-da04f411763e@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c   |    8 ++++++--
- drivers/bluetooth/hci_qca.c |   10 ++++++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/storage/isd200.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -758,11 +758,15 @@ EXPORT_SYMBOL_GPL(qca_uart_setup);
- 
- int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+--- a/drivers/usb/storage/isd200.c
++++ b/drivers/usb/storage/isd200.c
+@@ -1105,7 +1105,7 @@ static void isd200_dump_driveid(struct u
+ static int isd200_get_inquiry_data( struct us_data *us )
  {
-+	bdaddr_t bdaddr_swapped;
- 	struct sk_buff *skb;
- 	int err;
+ 	struct isd200_info *info = (struct isd200_info *)us->extra;
+-	int retStatus = ISD200_GOOD;
++	int retStatus;
+ 	u16 *id = info->id;
  
--	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6, bdaddr,
--				HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	baswap(&bdaddr_swapped, bdaddr);
+ 	usb_stor_dbg(us, "Entering isd200_get_inquiry_data\n");
+@@ -1137,6 +1137,13 @@ static int isd200_get_inquiry_data( stru
+ 				isd200_fix_driveid(id);
+ 				isd200_dump_driveid(us, id);
+ 
++				/* Prevent division by 0 in isd200_scsi_to_ata() */
++				if (id[ATA_ID_HEADS] == 0 || id[ATA_ID_SECTORS] == 0) {
++					usb_stor_dbg(us, "   Invalid ATA Identify data\n");
++					retStatus = ISD200_ERROR;
++					goto Done;
++				}
 +
-+	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6,
-+				&bdaddr_swapped, HCI_EV_VENDOR,
-+				HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		err = PTR_ERR(skb);
- 		bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -225,6 +225,7 @@ struct qca_serdev {
- 	struct qca_power *bt_power;
- 	u32 init_speed;
- 	u32 oper_speed;
-+	bool bdaddr_property_broken;
- 	const char *firmware_name;
- };
+ 				memset(&info->InquiryData, 0, sizeof(info->InquiryData));
  
-@@ -1824,6 +1825,7 @@ static int qca_setup(struct hci_uart *hu
- 	const char *firmware_name = qca_get_firmware_name(hu);
- 	int ret;
- 	struct qca_btsoc_version ver;
-+	struct qca_serdev *qcadev;
- 	const char *soc_name;
+ 				/* Standard IDE interface only supports disks */
+@@ -1202,6 +1209,7 @@ static int isd200_get_inquiry_data( stru
+ 		}
+ 	}
  
- 	ret = qca_check_speeds(hu);
-@@ -1882,6 +1884,11 @@ retry:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++ Done:
+ 	usb_stor_dbg(us, "Leaving isd200_get_inquiry_data %08X\n", retStatus);
+ 
+ 	return(retStatus);
+@@ -1481,22 +1489,27 @@ static int isd200_init_info(struct us_da
+ 
+ static int isd200_Initialization(struct us_data *us)
+ {
++	int rc = 0;
 +
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+		if (qcadev->bdaddr_property_broken)
-+			set_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks);
-+
- 		hci_set_aosp_capable(hdev);
+ 	usb_stor_dbg(us, "ISD200 Initialization...\n");
  
- 		ret = qca_read_soc_version(hdev, &ver, soc_type);
-@@ -2253,6 +2260,9 @@ static int qca_serdev_probe(struct serde
- 	if (!qcadev->oper_speed)
- 		BT_DBG("UART will pick default operating speed");
+ 	/* Initialize ISD200 info struct */
  
-+	qcadev->bdaddr_property_broken = device_property_read_bool(&serdev->dev,
-+			"qcom,local-bd-address-broken");
-+
- 	if (data)
- 		qcadev->btsoc_type = data->soc_type;
- 	else
+-	if (isd200_init_info(us) == ISD200_ERROR) {
++	if (isd200_init_info(us) < 0) {
+ 		usb_stor_dbg(us, "ERROR Initializing ISD200 Info struct\n");
++		rc = -ENOMEM;
+ 	} else {
+ 		/* Get device specific data */
+ 
+-		if (isd200_get_inquiry_data(us) != ISD200_GOOD)
++		if (isd200_get_inquiry_data(us) != ISD200_GOOD) {
+ 			usb_stor_dbg(us, "ISD200 Initialization Failure\n");
+-		else
++			rc = -EINVAL;
++		} else {
+ 			usb_stor_dbg(us, "ISD200 Initialization complete\n");
++		}
+ 	}
+ 
+-	return 0;
++	return rc;
+ }
+ 
+ 
 
 
