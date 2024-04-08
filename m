@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29347E111;
-	Mon,  8 Apr 2024 13:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B627D414;
+	Mon,  8 Apr 2024 13:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583464; cv=none; b=rUV1PdmFPkQQkYWRc+F2ec/gvwRrFQNH/bMv7Llh/rQ1HCodj2TuCVziUdgYJDOGB3QlT9iYDojvocdrfS7YuK083Re2PYsz6BEIyhGOIrmhf3uMePOfpmneO/tJQRx8J0BLxEHOKp+nNKa2BCbVnjYGtmDl7IdNIxFiEymcUac=
+	t=1712583466; cv=none; b=qiDBlmkl+B2l3IzPLvrgL1F8pG4J79ywfUuA44pJVCvMJf3iKW9U3srm5YfUCrChUjRkSnExPkrvX5K1ilAuSaSp6V710SIsLSHEZt8Pbhnr8vKxExixsDfkXZJw2yOHFOvPMPCT8laAdZ190HT1EepHzWs7h+AeW6ZCgkwKbOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583464; c=relaxed/simple;
-	bh=1i18xejKdyUni0ljU+IHQuId+CQyub2GKi/vAaJtAHA=;
+	s=arc-20240116; t=1712583466; c=relaxed/simple;
+	bh=8RY95xkioBEGGIT2AIGytAx5r4p9vQpgz99rP+kbMag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNlIP5G8Lcy/092eSQ5lqkde6f8PS7zU11GkvCaMNkP62xMyssec+IrD2dzzY5Bc+2XwVjISoLeFJWghaTLT7tEZJ7RcQJTb3ul+GhbFa2MlV83pKN0sWsdcIDDhcWQYogJiJNGyGh7kKJk1QWyZ8fY5jNIoBYSAeYGfzbhhACs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4EHCYET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YP4Zhq5O8aXv3nlRISCYoqlmPg5GrGx4+/ZULrVYt0PHShJNfSshXOg6KQl1s9eHeWBoP5QjVF26zmh/on5HlXo3ojpBF9qxwuouqn0YpVVX1D82NwTKpI+B8EF9e3GW22XBR3prvekmtOvVY9MiQoMiEj2kvPstPGD7yghZMJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUTITc0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4EHCYET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BEBC433F1;
-	Mon,  8 Apr 2024 13:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUTITc0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D569C433F1;
+	Mon,  8 Apr 2024 13:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583463;
-	bh=1i18xejKdyUni0ljU+IHQuId+CQyub2GKi/vAaJtAHA=;
+	s=korg; t=1712583466;
+	bh=8RY95xkioBEGGIT2AIGytAx5r4p9vQpgz99rP+kbMag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4EHCYETbO71A8KHUqjG6ywRkp5dOyiXhnxjW9s1TyBTDqJm0t9t0ymPHZ0hgSDIU
-	 5TPbgZgXTWZXb9eatuXdFkeflxMEmw5EmyCyXpydK4ohAE3iB9WyUDKf0qApNSvqdj
-	 BysCqFa5HVdfCkUTKptEouqgZIJ06gvs4fCvod4s=
+	b=oUTITc0pLtTfpXP7NUs5KIbmuVTW3wzb1eUXBpdJWAGwyvCZDTfQlYTKJTfad1CH2
+	 ZyQAny7OvhPccdwy80egDK6P60FhqVOPR4iavy0jp2EdpQN+tmYNgUovp7tBqJfD87
+	 Wv8NBPEEvkleCZlaqMT7xDwmCW6SZip13+aY2lsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 250/690] nfsd: improve stateid access bitmask documentation
-Date: Mon,  8 Apr 2024 14:51:56 +0200
-Message-ID: <20240408125408.664494430@linuxfoundation.org>
+	Nikita Travkin <nikita@trvn.ru>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 182/273] thermal: gov_power_allocator: Allow binding without cooling devices
+Date: Mon,  8 Apr 2024 14:57:37 +0200
+Message-ID: <20240408125314.939341866@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Nikita Travkin <nikita@trvn.ru>
 
-[ Upstream commit 3dcd1d8aab00c5d3a0a3725253c86440b1a0f5a7 ]
+[ Upstream commit 1057c4c36ef8b236a2e28edef301da0801338c5f ]
 
-The use of the bitmaps is confusing.  Add a cross-reference to make it
-easier to find the existing comment.  Add an updated reference with URL
-to make it quicker to look up.  And a bit more editorializing about the
-value of this.
+IPA was recently refactored to split out memory allocation into a
+separate funciton. That funciton was made to return -EINVAL if there is
+zero power_actors and thus no memory to allocate. This causes IPA to
+fail probing when the thermal zone has no attached cooling devices.
 
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Since cooling devices can attach after the thermal zone is created and
+the governer is attached to it, failing probe due to the lack of cooling
+devices is incorrect.
+
+Change the allocate_actors_buffer() to return success when there is no
+cooling devices present.
+
+Fixes: 912e97c67cc3 ("thermal: gov_power_allocator: Move memory allocation out of throttle()")
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 14 ++++++++++----
- fs/nfsd/state.h     |  4 ++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/thermal/gov_power_allocator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index e14b38d6751d8..f7e2beded6d7f 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -360,11 +360,13 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops = {
-  * st_{access,deny}_bmap field of the stateid, in order to track not
-  * only what share bits are currently in force, but also what
-  * combinations of share bits previous opens have used.  This allows us
-- * to enforce the recommendation of rfc 3530 14.2.19 that the server
-- * return an error if the client attempt to downgrade to a combination
-- * of share bits not explicable by closing some of its previous opens.
-+ * to enforce the recommendation in
-+ * https://datatracker.ietf.org/doc/html/rfc7530#section-16.19.4 that
-+ * the server return an error if the client attempt to downgrade to a
-+ * combination of share bits not explicable by closing some of its
-+ * previous opens.
-  *
-- * XXX: This enforcement is actually incomplete, since we don't keep
-+ * This enforcement is arguably incomplete, since we don't keep
-  * track of access/deny bit combinations; so, e.g., we allow:
-  *
-  *	OPEN allow read, deny write
-@@ -372,6 +374,10 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops = {
-  *	DOWNGRADE allow read, deny none
-  *
-  * which we should reject.
-+ *
-+ * But you could also argue that our current code is already overkill,
-+ * since it only exists to return NFS4ERR_INVAL on incorrect client
-+ * behavior.
-  */
- static unsigned int
- bmap_to_share_mode(unsigned long bmap)
-diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index e73bdbb1634ab..6eb3c7157214b 100644
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -568,6 +568,10 @@ struct nfs4_ol_stateid {
- 	struct list_head		st_locks;
- 	struct nfs4_stateowner		*st_stateowner;
- 	struct nfs4_clnt_odstate	*st_clnt_odstate;
-+/*
-+ * These bitmasks use 3 separate bits for READ, ALLOW, and BOTH; see the
-+ * comment above bmap_to_share_mode() for explanation:
-+ */
- 	unsigned char			st_access_bmap;
- 	unsigned char			st_deny_bmap;
- 	struct nfs4_ol_stateid		*st_openstp;
+diff --git a/drivers/thermal/gov_power_allocator.c b/drivers/thermal/gov_power_allocator.c
+index 81e061f183ad1..207a6a3936b54 100644
+--- a/drivers/thermal/gov_power_allocator.c
++++ b/drivers/thermal/gov_power_allocator.c
+@@ -606,7 +606,7 @@ static int allocate_actors_buffer(struct power_allocator_params *params,
+ 
+ 	/* There might be no cooling devices yet. */
+ 	if (!num_actors) {
+-		ret = -EINVAL;
++		ret = 0;
+ 		goto clean_state;
+ 	}
+ 
 -- 
 2.43.0
 
