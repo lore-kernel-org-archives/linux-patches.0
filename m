@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9787D3FE;
-	Mon,  8 Apr 2024 14:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7387D3FE;
+	Mon,  8 Apr 2024 14:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584844; cv=none; b=XQfyVowq/q1QocBWdparxWoKrcBXXUattZMPvjV3XHHCXMsXmO9moAA62+B0zTWxJt7lXH9Sz/TcdFBCmzu8yMwdAkC0ahXjxk2BroNT16S26w4M/FgFNXDYPkSf+V0e5jPlPXIdMsIaW90PiqFsEhj4x8YSag5E+NviQt6Bd58=
+	t=1712584847; cv=none; b=IB3R6TZ3BoYZwv0xxZDt+1QSgLW7+yoMlWerk243j4Ps7CyY0VzTBR8HEJUZQ0nkLVqCcOHNh8TEwAV1cmabFhGh/enIPT4J5+vrfiel+7D6+MAB0GbzoNcv+9xm7fsSiJM71LNfqs2TYqYowBw+RwigOvFeDWaYB/3P6fwFR9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584844; c=relaxed/simple;
-	bh=ea8aiDlL4oIE2vsqvWd1mxRa6jomX9pvUdgOEUiFRWw=;
+	s=arc-20240116; t=1712584847; c=relaxed/simple;
+	bh=bpC27zbjXz53r2neStML1+D5+FsKmhZEhRj1RqSvglA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWidVUwLKpJTyI4K7aN8jnb/bVnpibs70O6Y6Szn14W5mwZfLDDyfgSmWOHJSCDwIRrm1G/8pOdgouuqz56SZJ3mpIF/WEp2ejo2wRjYasdRyj9k3IRoDZQ/Sz/XhXF/a5KDqyrxrr+qCIesTmpZSYVDt/alKghhm0NnUzTWsCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgWvmD3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QT2Q0RWPjQMl89+AzCfM/fBDzVIyIYw3ubykSvVOrIH4qETheD9aoW+3FwwU7lpDlBkjJ+6y8guTIxa/NMq0oEevuzKpOdwO7R7zDArHQWj4ZbJPUZrqwTegqYJ5eLjRF+Sr8mCj6CnhKze849y+d4eMWUuDDyaoqLK72otfUC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mfr7qAUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgWvmD3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45039C433F1;
-	Mon,  8 Apr 2024 14:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mfr7qAUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31094C433C7;
+	Mon,  8 Apr 2024 14:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584844;
-	bh=ea8aiDlL4oIE2vsqvWd1mxRa6jomX9pvUdgOEUiFRWw=;
+	s=korg; t=1712584847;
+	bh=bpC27zbjXz53r2neStML1+D5+FsKmhZEhRj1RqSvglA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgWvmD3QHqV84/KypMUCeZMCUpTi4Rs4sa9Xrcs3nZeQQYjOWvqOChjVtfK8uTzxG
-	 x7z4hDkXrsUfsOGGpsZrh9LYgVneAAfa4GpXomywjYaFeAja2wlMT0qlwYzaPUwXfh
-	 ReDKAimif5T8hC15vUtUMCyDwqNLjJgIY8DDGrgY=
+	b=Mfr7qAUbyH25V9Iri8chv81DKnWpjmbCiuXnQmB4T+P54iJhTCLWu0a7OWpZPq6YB
+	 lilTeXGda+AcdL6ZOTuG+Ehyg+GabUKX2+8s+8pgYCyzLXAZgWqei2lCPfuHNEYxPi
+	 41uZfdcCzZNKKu994gvv0rAsWf612j4VLkmYIYx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 549/690] NFSD: fix possible oops when nfsd/pool_stats is closed.
-Date: Mon,  8 Apr 2024 14:56:55 +0200
-Message-ID: <20240408125419.518748990@linuxfoundation.org>
+	Claus Hansen Ries <chr@terma.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 576/690] net: ll_temac: platform_get_resource replaced by wrong function
+Date: Mon,  8 Apr 2024 14:57:22 +0200
+Message-ID: <20240408125420.471799851@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,53 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Claus Hansen Ries <chr@terma.com>
 
-[ Upstream commit 88956eabfdea7d01d550535af120d4ef265b1d02 ]
+commit 3a38a829c8bc27d78552c28e582eb1d885d07d11 upstream.
 
-If /proc/fs/nfsd/pool_stats is open when the last nfsd thread exits, then
-when the file is closed a NULL pointer is dereferenced.
-This is because nfsd_pool_stats_release() assumes that the
-pointer to the svc_serv cannot become NULL while a reference is held.
+The function platform_get_resource was replaced with
+devm_platform_ioremap_resource_byname and is called using 0 as name.
 
-This used to be the case but a recent patch split nfsd_last_thread() out
-from nfsd_put(), and clearing the pointer is done in nfsd_last_thread().
+This eventually ends up in platform_get_resource_byname in the call
+stack, where it causes a null pointer in strcmp.
 
-This is easily reproduced by running
-   rpc.nfsd 8 ; ( rpc.nfsd 0;true) < /proc/fs/nfsd/pool_stats
+	if (type == resource_type(r) && !strcmp(r->name, name))
 
-Fortunately nfsd_pool_stats_release() has easy access to the svc_serv
-pointer, and so can call svc_put() on it directly.
+It should have been replaced with devm_platform_ioremap_resource.
 
-Fixes: 9f28a971ee9f ("nfsd: separate nfsd_last_thread() from nfsd_put()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: bd69058f50d5 ("net: ll_temac: Use devm_platform_ioremap_resource_byname()")
+Signed-off-by: Claus Hansen Ries <chr@terma.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/cca18f9c630a41c18487729770b492bb@terma.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index ee5713fca1870..2a1dd580dfb94 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -1084,11 +1084,12 @@ int nfsd_pool_stats_open(struct inode *inode, struct file *file)
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1433,7 +1433,7 @@ static int temac_probe(struct platform_d
+ 	}
  
- int nfsd_pool_stats_release(struct inode *inode, struct file *file)
- {
-+	struct seq_file *seq = file->private_data;
-+	struct svc_serv *serv = seq->private;
- 	int ret = seq_release(inode, file);
--	struct net *net = inode->i_sb->s_fs_info;
- 
- 	mutex_lock(&nfsd_mutex);
--	nfsd_put(net);
-+	svc_put(serv);
- 	mutex_unlock(&nfsd_mutex);
- 	return ret;
- }
--- 
-2.43.0
-
+ 	/* map device registers */
+-	lp->regs = devm_platform_ioremap_resource_byname(pdev, 0);
++	lp->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(lp->regs)) {
+ 		dev_err(&pdev->dev, "could not map TEMAC registers\n");
+ 		return -ENOMEM;
 
 
