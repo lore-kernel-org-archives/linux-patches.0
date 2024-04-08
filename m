@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F262E62C;
-	Mon,  8 Apr 2024 13:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAA12E62C;
+	Mon,  8 Apr 2024 13:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581770; cv=none; b=R6ltCYgVtBbaTfNbujZeN9TjBlhm/OIlpl8paNZnvd1PsSiGDJUX1W6bqDa+U3EOjD+5LQFp1zMYx4wz55XFunZKV8BrphnThZkNF3+ZhGsLSRnyMCA8neooaatAQRn65hAKDWwXWlk20nrty0vxeKzL85nkdelMYciYmCjGmWs=
+	t=1712581773; cv=none; b=jtXLftMvoRAivyqEu9oWiooo7MdYx1QbSBfzcU4Amb41jXgGzjmVAjyPPL0zj3BVYsLtNF6xk+bdejIctbLmRVctu5OK1glhrZqoNxveYUG0/E/YWyJbJmY0tuLTrOOL+3dcGGDMtIHpcsf3Jsv6B4nDea8Ta8aLCk0Jgm7e5qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581770; c=relaxed/simple;
-	bh=4XtemMhZkLhNAemwR9EnIKAbcXjU3G4S2srWNHtbTUU=;
+	s=arc-20240116; t=1712581773; c=relaxed/simple;
+	bh=mN/7eVPKnNP5nlhRT6fAB7m1zWiRmxxEHpqAJV5LIhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzXW7VCllOwsMe0ZJM2o+/Tsgs1v8cNM+BXUy4QSSe5M5aDAvXApNvFD0MyR6B02CCc1A3pg97gMVCGZIN8HCtZDHeSqCEQu5n6IJxBAvRQF+p/8D/dbyHfAx1dPmKOZdC4xBf/9lDzFOH4wSYopT6O/nVZPqpaUfOYpg6nhInk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyBXyRq6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QNcCkV4HPIN02HY3MTuKMEvkC4FqcqoGvc7b2573Qz+e6jA9GrfurVOmsHokppqax2uKbXqUi75IdeTijqybPezL0r4600bGqLUqg+2WfZLu5mmuhVJp2Uj/zfKcv5+CGq/xS+lxZM92VTj2IVU4Ikos6dBrusRHT26R07l7HIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5CPyhyR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyBXyRq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3E6C433C7;
-	Mon,  8 Apr 2024 13:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5CPyhyR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D345C433F1;
+	Mon,  8 Apr 2024 13:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581770;
-	bh=4XtemMhZkLhNAemwR9EnIKAbcXjU3G4S2srWNHtbTUU=;
+	s=korg; t=1712581773;
+	bh=mN/7eVPKnNP5nlhRT6fAB7m1zWiRmxxEHpqAJV5LIhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pyBXyRq6qaKsQ0FPEpuPMtSNRZ2fp8WhLCvtsqef/S/vo5+p8z/wXeYl4HXZANRKv
-	 pasAJ181jAsB42ZsmJim/mP9X9ViNOk82cmsAr0PoATqADJ2Et/ExkaYOObzFZmcoh
-	 J6ejBBfkilO4asyozb7+vBN8erfTgWVKUDIjMUEw=
+	b=Q5CPyhyRXWToNyYL4lKU6k+rrAQo7tThKm61hoVxZAsYESTnc8BZOnvQpupwpN8Cy
+	 SQ1D3rKfEc2yjeiLll3s53IxUF2fjSz1l1NTToMdzPMjmWabWWEOaUxJvwfqmnlwty
+	 dH4xWZoS/Jqj2kLy0Et3Fzvd7+JAhYcKvDfqYaeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	intel-xe@lists.freedesktop.org,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/690] nfs: fix UAF in direct writes
-Date: Mon,  8 Apr 2024 14:49:07 +0200
-Message-ID: <20240408125402.439173529@linuxfoundation.org>
+Subject: [PATCH 6.8 019/273] drm/xe: Remove unused xe_bo->props struct
+Date: Mon,  8 Apr 2024 14:54:54 +0200
+Message-ID: <20240408125309.891281897@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,129 +48,180 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit 17f46b803d4f23c66cacce81db35fef3adb8f2af ]
+[ Upstream commit fd00fe8cdbb241644131ece133a2eb1c3951f21e ]
 
-In production we have been hitting the following warning consistently
+Property struct is not being used so remove it and related dead code.
 
-------------[ cut here ]------------
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 17 PID: 1800359 at lib/refcount.c:28 refcount_warn_saturate+0x9c/0xe0
-Workqueue: nfsiod nfs_direct_write_schedule_work [nfs]
-RIP: 0010:refcount_warn_saturate+0x9c/0xe0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __warn+0x9f/0x130
- ? refcount_warn_saturate+0x9c/0xe0
- ? report_bug+0xcc/0x150
- ? handle_bug+0x3d/0x70
- ? exc_invalid_op+0x16/0x40
- ? asm_exc_invalid_op+0x16/0x20
- ? refcount_warn_saturate+0x9c/0xe0
- nfs_direct_write_schedule_work+0x237/0x250 [nfs]
- process_one_work+0x12f/0x4a0
- worker_thread+0x14e/0x3b0
- ? ZSTD_getCParams_internal+0x220/0x220
- kthread+0xdc/0x120
- ? __btf_name_valid+0xa0/0xa0
- ret_from_fork+0x1f/0x30
-
-This is because we're completing the nfs_direct_request twice in a row.
-
-The source of this is when we have our commit requests to submit, we
-process them and send them off, and then in the completion path for the
-commit requests we have
-
-if (nfs_commit_end(cinfo.mds))
-	nfs_direct_write_complete(dreq);
-
-However since we're submitting asynchronous requests we sometimes have
-one that completes before we submit the next one, so we end up calling
-complete on the nfs_direct_request twice.
-
-The only other place we use nfs_generic_commit_list() is in
-__nfs_commit_inode, which wraps this call in a
-
-nfs_commit_begin();
-nfs_commit_end();
-
-Which is a common pattern for this style of completion handling, one
-that is also repeated in the direct code with get_dreq()/put_dreq()
-calls around where we process events as well as in the completion paths.
-
-Fix this by using the same pattern for the commit requests.
-
-Before with my 200 node rocksdb stress running this warning would pop
-every 10ish minutes.  With my patch the stress test has been running for
-several hours without popping.
-
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: ddfa2d6a846a ("drm/xe/uapi: Kill VM_MADVISE IOCTL")
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: intel-xe@lists.freedesktop.org
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240311151159.10036-1-nirmoy.das@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 002d8f0b4f76aabbf8e00c538a124b91625d7260)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c        | 11 +++++++++--
- fs/nfs/write.c         |  2 +-
- include/linux/nfs_fs.h |  1 +
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c       | 59 +++++---------------------------
+ drivers/gpu/drm/xe/xe_bo_types.h | 19 ----------
+ 2 files changed, 9 insertions(+), 69 deletions(-)
 
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index bbe2a5cc49f68..3185899676adf 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -678,10 +678,17 @@ static void nfs_direct_commit_schedule(struct nfs_direct_req *dreq)
- 	LIST_HEAD(mds_list);
- 
- 	nfs_init_cinfo_from_dreq(&cinfo, dreq);
-+	nfs_commit_begin(cinfo.mds);
- 	nfs_scan_commit(dreq->inode, &mds_list, &cinfo);
- 	res = nfs_generic_commit_list(dreq->inode, &mds_list, 0, &cinfo);
--	if (res < 0) /* res == -ENOMEM */
--		nfs_direct_write_reschedule(dreq);
-+	if (res < 0) { /* res == -ENOMEM */
-+		spin_lock(&dreq->lock);
-+		if (dreq->flags == 0)
-+			dreq->flags = NFS_ODIRECT_RESCHED_WRITES;
-+		spin_unlock(&dreq->lock);
-+	}
-+	if (nfs_commit_end(cinfo.mds))
-+		nfs_direct_write_complete(dreq);
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index 4d3b80ec906d0..eb2c44a328278 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -140,9 +140,6 @@ static void try_add_system(struct xe_device *xe, struct xe_bo *bo,
+ 			.mem_type = XE_PL_TT,
+ 		};
+ 		*c += 1;
+-
+-		if (bo->props.preferred_mem_type == XE_BO_PROPS_INVALID)
+-			bo->props.preferred_mem_type = XE_PL_TT;
+ 	}
  }
  
- static void nfs_direct_write_clear_reqs(struct nfs_direct_req *dreq)
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 4231d51fc1add..3d06bad2760da 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -1644,7 +1644,7 @@ static int wait_on_commit(struct nfs_mds_commit_info *cinfo)
- 				       !atomic_read(&cinfo->rpcs_out));
+@@ -177,25 +174,15 @@ static void add_vram(struct xe_device *xe, struct xe_bo *bo,
+ 	}
+ 	places[*c] = place;
+ 	*c += 1;
+-
+-	if (bo->props.preferred_mem_type == XE_BO_PROPS_INVALID)
+-		bo->props.preferred_mem_type = mem_type;
  }
  
--static void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo)
+ static void try_add_vram(struct xe_device *xe, struct xe_bo *bo,
+ 			 u32 bo_flags, u32 *c)
  {
- 	atomic_inc(&cinfo->rpcs_out);
+-	if (bo->props.preferred_gt == XE_GT1) {
+-		if (bo_flags & XE_BO_CREATE_VRAM1_BIT)
+-			add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM1, c);
+-		if (bo_flags & XE_BO_CREATE_VRAM0_BIT)
+-			add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM0, c);
+-	} else {
+-		if (bo_flags & XE_BO_CREATE_VRAM0_BIT)
+-			add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM0, c);
+-		if (bo_flags & XE_BO_CREATE_VRAM1_BIT)
+-			add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM1, c);
+-	}
++	if (bo_flags & XE_BO_CREATE_VRAM0_BIT)
++		add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM0, c);
++	if (bo_flags & XE_BO_CREATE_VRAM1_BIT)
++		add_vram(xe, bo, bo->placements, bo_flags, XE_PL_VRAM1, c);
  }
-diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
-index 5ddc30405f7f4..886bfa99a6af4 100644
---- a/include/linux/nfs_fs.h
-+++ b/include/linux/nfs_fs.h
-@@ -588,6 +588,7 @@ extern int nfs_wb_page_cancel(struct inode *inode, struct page* page);
- extern int  nfs_commit_inode(struct inode *, int);
- extern struct nfs_commit_data *nfs_commitdata_alloc(void);
- extern void nfs_commit_free(struct nfs_commit_data *data);
-+void nfs_commit_begin(struct nfs_mds_commit_info *cinfo);
- bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
  
- static inline int
+ static void try_add_stolen(struct xe_device *xe, struct xe_bo *bo,
+@@ -219,17 +206,8 @@ static int __xe_bo_placement_for_flags(struct xe_device *xe, struct xe_bo *bo,
+ {
+ 	u32 c = 0;
+ 
+-	bo->props.preferred_mem_type = XE_BO_PROPS_INVALID;
+-
+-	/* The order of placements should indicate preferred location */
+-
+-	if (bo->props.preferred_mem_class == DRM_XE_MEM_REGION_CLASS_SYSMEM) {
+-		try_add_system(xe, bo, bo_flags, &c);
+-		try_add_vram(xe, bo, bo_flags, &c);
+-	} else {
+-		try_add_vram(xe, bo, bo_flags, &c);
+-		try_add_system(xe, bo, bo_flags, &c);
+-	}
++	try_add_vram(xe, bo, bo_flags, &c);
++	try_add_system(xe, bo, bo_flags, &c);
+ 	try_add_stolen(xe, bo, bo_flags, &c);
+ 
+ 	if (!c)
+@@ -1106,19 +1084,12 @@ static void xe_gem_object_close(struct drm_gem_object *obj,
+ 	}
+ }
+ 
+-static bool should_migrate_to_system(struct xe_bo *bo)
+-{
+-	struct xe_device *xe = xe_bo_device(bo);
+-
+-	return xe_device_in_fault_mode(xe) && bo->props.cpu_atomic;
+-}
+-
+ static vm_fault_t xe_gem_fault(struct vm_fault *vmf)
+ {
+ 	struct ttm_buffer_object *tbo = vmf->vma->vm_private_data;
+ 	struct drm_device *ddev = tbo->base.dev;
+ 	vm_fault_t ret;
+-	int idx, r = 0;
++	int idx;
+ 
+ 	ret = ttm_bo_vm_reserve(tbo, vmf);
+ 	if (ret)
+@@ -1129,17 +1100,8 @@ static vm_fault_t xe_gem_fault(struct vm_fault *vmf)
+ 
+ 		trace_xe_bo_cpu_fault(bo);
+ 
+-		if (should_migrate_to_system(bo)) {
+-			r = xe_bo_migrate(bo, XE_PL_TT);
+-			if (r == -EBUSY || r == -ERESTARTSYS || r == -EINTR)
+-				ret = VM_FAULT_NOPAGE;
+-			else if (r)
+-				ret = VM_FAULT_SIGBUS;
+-		}
+-		if (!ret)
+-			ret = ttm_bo_vm_fault_reserved(vmf,
+-						       vmf->vma->vm_page_prot,
+-						       TTM_BO_VM_NUM_PREFAULT);
++		ret = ttm_bo_vm_fault_reserved(vmf, vmf->vma->vm_page_prot,
++					       TTM_BO_VM_NUM_PREFAULT);
+ 		drm_dev_exit(idx);
+ 	} else {
+ 		ret = ttm_bo_vm_dummy_page(vmf, vmf->vma->vm_page_prot);
+@@ -1253,9 +1215,6 @@ struct xe_bo *___xe_bo_create_locked(struct xe_device *xe, struct xe_bo *bo,
+ 	bo->flags = flags;
+ 	bo->cpu_caching = cpu_caching;
+ 	bo->ttm.base.funcs = &xe_gem_object_funcs;
+-	bo->props.preferred_mem_class = XE_BO_PROPS_INVALID;
+-	bo->props.preferred_gt = XE_BO_PROPS_INVALID;
+-	bo->props.preferred_mem_type = XE_BO_PROPS_INVALID;
+ 	bo->ttm.priority = XE_BO_PRIORITY_NORMAL;
+ 	INIT_LIST_HEAD(&bo->pinned_link);
+ #ifdef CONFIG_PROC_FS
+diff --git a/drivers/gpu/drm/xe/xe_bo_types.h b/drivers/gpu/drm/xe/xe_bo_types.h
+index 64c2249a4e407..81dca15315d5c 100644
+--- a/drivers/gpu/drm/xe/xe_bo_types.h
++++ b/drivers/gpu/drm/xe/xe_bo_types.h
+@@ -56,25 +56,6 @@ struct xe_bo {
+ 	 */
+ 	struct list_head client_link;
+ #endif
+-	/** @props: BO user controlled properties */
+-	struct {
+-		/** @preferred_mem: preferred memory class for this BO */
+-		s16 preferred_mem_class;
+-		/** @prefered_gt: preferred GT for this BO */
+-		s16 preferred_gt;
+-		/** @preferred_mem_type: preferred memory type */
+-		s32 preferred_mem_type;
+-		/**
+-		 * @cpu_atomic: the CPU expects to do atomics operations to
+-		 * this BO
+-		 */
+-		bool cpu_atomic;
+-		/**
+-		 * @device_atomic: the device expects to do atomics operations
+-		 * to this BO
+-		 */
+-		bool device_atomic;
+-	} props;
+ 	/** @freed: List node for delayed put. */
+ 	struct llist_node freed;
+ 	/** @created: Whether the bo has passed initial creation */
 -- 
 2.43.0
 
