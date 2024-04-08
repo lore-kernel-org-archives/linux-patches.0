@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A6980045;
-	Mon,  8 Apr 2024 13:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F1678286;
+	Mon,  8 Apr 2024 13:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582031; cv=none; b=WBvGDf7WtWr3iXJxfNQLiqNeK6H9d/mv4E2DfT1NzG3RE9ak6aKrq4NGBkxoBIGygigoLxTZrdmLGCAxOvE1KTSXH+EAi7BGuv4b+0RpvcoUzxSZIiyF55sbF855GDVMIkLc5qzxZGIitsx4QuUdQlmG2V7npUmXXBohkdOjXsY=
+	t=1712582034; cv=none; b=psbCKJPnnTPRR8kzgIVFVvfsOhN7weHrx0bnEWv8bzz9g70EXhZ0iAnryo+/sLUbuV48XsGjyUTGkgUmYFNSH05c3Sy+Nm1g3ZTxOZ/pR8wzbLO15UMWACuSJx1FqjQnqqxI8WB0RMm33aSchLwZmHMwn9zuXVdK1YwOTPz4WcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582031; c=relaxed/simple;
-	bh=ebCXqAqj/85FU2Y2jIzYrBEw6RD9YZXEFnzm69qNw48=;
+	s=arc-20240116; t=1712582034; c=relaxed/simple;
+	bh=WsVjFeAherLOP9mQdhqz+fgFpC8GX4QRjioI4ensOus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrgNRSzVUTmvwLPGuELlEo6kEILZ0SvnyqD3Lovd4oYwA9A8b8VUfYBu1Ey+kHhsTNHw/HHtF0yv0zR3oUjX9eTSw6rPdxF3rtDIN85HK4T2YTS65qb9DHiPQakuCwUihl2roQsbKDp3dxFTqD3X6la6fpghQeh4K5vmlJHi1K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aD8qUvSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkTdCuVbKrIhThZYFMMxZhJoBiy3RYKqigOY0+hIoBBEh1qORnZ4vH/9n9LF9DR1IPPDndwijaX+45pyALU4+txvE8DVarDZSgDaaRHArLXr0XYSO9Fq6FljdUlJFgtBUaiu8Wyo5y6nbbHJxa2MI8HSGt8boLFu13LluAPx5yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcc8vezC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aD8qUvSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96D8C433C7;
-	Mon,  8 Apr 2024 13:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcc8vezC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D163BC433F1;
+	Mon,  8 Apr 2024 13:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582031;
-	bh=ebCXqAqj/85FU2Y2jIzYrBEw6RD9YZXEFnzm69qNw48=;
+	s=korg; t=1712582034;
+	bh=WsVjFeAherLOP9mQdhqz+fgFpC8GX4QRjioI4ensOus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aD8qUvSgk1p6wOk3N/C0k+daYnq4uUXGglTcrysZr1fTJfUVpWBXEX8YsF6+od+DZ
-	 kxEA08j/LpSp3d5cdwwj0NS7I5f4afKwP4eOnSPdxjhfGlXIqIvhbFrZXWjkfu3N09
-	 XdSQIgyOTv4wOMdBT8onL80yHPlOECgMcjD0ocD4=
+	b=vcc8vezCIvHSrSOaflFcrWvi1mTZPnawbPZm6souhCtowK5bjEAtmJwY6ewpHAvwi
+	 /cOKfBMvYVmGkM7g4yR8fj70hXG5RkUxyFw/Dd3Eu32r2aTvEPFC41iV6dSt6bQDfa
+	 1ZytfepEEA73U/saLyQxBYq3XItUF51IhWSkVIrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 041/273] drm/amd/display: Update P010 scaling cap
-Date: Mon,  8 Apr 2024 14:55:16 +0200
-Message-ID: <20240408125310.566702685@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan <gurucharanx.g@intel.com>
+Subject: [PATCH 6.1 073/138] i40e: Store the irq number in i40e_q_vector
+Date: Mon,  8 Apr 2024 14:58:07 +0200
+Message-ID: <20240408125258.495553345@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,86 +50,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charlene Liu <charlene.liu@amd.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit 038c532346418fb5ab09c8fc6d650283d9a02966 ]
+[ Upstream commit 6b85a4f39ff7177b2428d4deab1151a31754e391 ]
 
-[Why]
-Keep the same as previous APU and also insert clock dump
+Make it easy to figure out the IRQ number for a particular i40e_q_vector by
+storing the assigned IRQ in the structure itself.
 
-Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Charlene Liu <charlene.liu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: f341055b10bd ("drm/amd/display: Send DTBCLK disable message on first commit")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Acked-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Acked-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: ea558de7238b ("i40e: Enforce software interrupt during busy-poll exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c  | 25 +++++++++----------
- .../dc/resource/dcn35/dcn35_resource.c        |  2 +-
- 2 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e.h      | 1 +
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-index 3db46bdc71a35..9cbab880c6233 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-@@ -384,19 +384,6 @@ static void dcn35_enable_pme_wa(struct clk_mgr *clk_mgr_base)
- 	dcn35_smu_enable_pme_wa(clk_mgr);
- }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
+index 7d4cc4eafd59e..59c4e9d642980 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -992,6 +992,7 @@ struct i40e_q_vector {
+ 	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 	char name[I40E_INT_NAME_STR_LEN];
+ 	bool arm_wb_state;
++	int irq_num;		/* IRQ assigned to this q_vector */
+ } ____cacheline_internodealigned_in_smp;
  
--void dcn35_init_clocks(struct clk_mgr *clk_mgr)
--{
--	uint32_t ref_dtbclk = clk_mgr->clks.ref_dtbclk_khz;
--
--	memset(&(clk_mgr->clks), 0, sizeof(struct dc_clocks));
--
--	// Assumption is that boot state always supports pstate
--	clk_mgr->clks.ref_dtbclk_khz = ref_dtbclk;	// restore ref_dtbclk
--	clk_mgr->clks.p_state_change_support = true;
--	clk_mgr->clks.prev_p_state_change_support = true;
--	clk_mgr->clks.pwr_state = DCN_PWR_STATE_UNKNOWN;
--	clk_mgr->clks.zstate_support = DCN_ZSTATE_SUPPORT_UNKNOWN;
--}
+ /* lan device */
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 5be56db1dafda..ee0d7c29e8f17 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -4145,6 +4145,7 @@ static int i40e_vsi_request_irq_msix(struct i40e_vsi *vsi, char *basename)
+ 		}
  
- bool dcn35_are_clock_states_equal(struct dc_clocks *a,
- 		struct dc_clocks *b)
-@@ -421,7 +408,19 @@ static void dcn35_dump_clk_registers(struct clk_state_registers_and_bypass *regs
- 		struct clk_mgr_dcn35 *clk_mgr)
- {
- }
-+void dcn35_init_clocks(struct clk_mgr *clk_mgr)
-+{
-+	uint32_t ref_dtbclk = clk_mgr->clks.ref_dtbclk_khz;
- 
-+	memset(&(clk_mgr->clks), 0, sizeof(struct dc_clocks));
-+
-+	// Assumption is that boot state always supports pstate
-+	clk_mgr->clks.ref_dtbclk_khz = ref_dtbclk;	// restore ref_dtbclk
-+	clk_mgr->clks.p_state_change_support = true;
-+	clk_mgr->clks.prev_p_state_change_support = true;
-+	clk_mgr->clks.pwr_state = DCN_PWR_STATE_UNKNOWN;
-+	clk_mgr->clks.zstate_support = DCN_ZSTATE_SUPPORT_UNKNOWN;
-+}
- static struct clk_bw_params dcn35_bw_params = {
- 	.vram_type = Ddr4MemType,
- 	.num_channels = 1,
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
-index 5fdcda8f86026..04d230aa8861f 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn35/dcn35_resource.c
-@@ -701,7 +701,7 @@ static const struct dc_plane_cap plane_cap = {
- 
- 	// 6:1 downscaling ratio: 1000/6 = 166.666
- 	.max_downscale_factor = {
--			.argb8888 = 167,
-+			.argb8888 = 250,
- 			.nv12 = 167,
- 			.fp16 = 167
- 	},
+ 		/* register for affinity change notifications */
++		q_vector->irq_num = irq_num;
+ 		q_vector->affinity_notify.notify = i40e_irq_affinity_notify;
+ 		q_vector->affinity_notify.release = i40e_irq_affinity_release;
+ 		irq_set_affinity_notifier(irq_num, &q_vector->affinity_notify);
 -- 
 2.43.0
 
