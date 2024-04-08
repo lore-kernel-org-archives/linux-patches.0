@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4947F48C;
-	Mon,  8 Apr 2024 13:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01A576402;
+	Mon,  8 Apr 2024 13:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583926; cv=none; b=VBvT9R+f3FhK3aOoluGP//ZbXB8e4dYuTmM6+VcmIykWnmU4Vlugg88Yum6aXM49k0AowJURdPn/vwsmZO1WVbuRC4VjfHL3my4WxE3+x4KVVnGD1QOA3jUMBOrjTPjT4Lpu1bsfpbeRRGYQLLRBKzgUVV+JQRI/QbnoDVhisBk=
+	t=1712583928; cv=none; b=atx4TK/4cIHyTt/YgKQ6ZdP7LstvkH/8Jx0LaYHtbzH+C8V+foHR2khe4u2+eUgzxo8rB0J+jVKTW0TR0yy/ESC1B0H6N34LIq2eGoKvsJWGD//ELuWNwBFrcfFnm8rWB/HjsFYD9Jomh+7/Tr7xavvt8o+v7d9osBjBdGchX/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583926; c=relaxed/simple;
-	bh=fbortn6Qbrwfy0FHLRDz2Jd23YqosFdaiJDp7NIZSC8=;
+	s=arc-20240116; t=1712583928; c=relaxed/simple;
+	bh=FsTqoeKIDsgrRv3bwDyXmJ84yYKQAZ6vGKRqtPwp8Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hE6O4JDP3vxqZS82eTF2dnNCROv9RMkp+oQj5dJv/q7D+DJN+tXY39YLNgd2iLesSoLXIpgsXu7o4la0PpCLQ0C0WOswALtFY8tkng8626Kl2G6VjCTJNOi8cSLCYWtsQqMUTgYvMtlc9mhS7WPlG63rw4ylOTjfPbZ84/SxV3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8l4gHnR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGIVzder9F8cpf2OkdRc0DMbYsCVUr8+pO3WY/LZstOB62gWmVhdIsdCNhtv0A8WFnvAj8yC4E42C12Z6uGxiaG5pBlM8SBFoU9EfiXpKdJ/na13rxz1pQFnftw7b2sNx9D2aAw3vohitY+gS9EXTvR+geWKAptNGzm1dv/Oiv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aab9qfSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8l4gHnR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7C2C433F1;
-	Mon,  8 Apr 2024 13:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aab9qfSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C85C433C7;
+	Mon,  8 Apr 2024 13:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583925;
-	bh=fbortn6Qbrwfy0FHLRDz2Jd23YqosFdaiJDp7NIZSC8=;
+	s=korg; t=1712583928;
+	bh=FsTqoeKIDsgrRv3bwDyXmJ84yYKQAZ6vGKRqtPwp8Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8l4gHnRHAgeBg+IWvKb9NJLBE++OH89ETWDqe+ll2UqQ6u0SLX+YiwNZZ7V4z5Oe
-	 CN+Ej0kEYNKmujOofFXOOHtThW7EHoDq1uvkGsqWthJ1iDOUKpHUEiasJawiPu4Pe/
-	 qkyjDdlQPpoCX1ewwkHP2FEvjGnjm0pNiTKI+pXw=
+	b=Aab9qfSPFV2i8NMTeOYV8FaQRcB52D/erce0+9BLAqm9VfBbDZOntqCVByGKYkcAL
+	 Vg1/AWhj4f5mRRvcCnzMqToxIAHRshAoEpVsWPxGwbUT/dn+V8kbkKDAe6KDtMn4rb
+	 g9lsceelXc9/w41rTDLDRZjBYhwIwlw1ikSHgOfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 303/690] fsnotify: introduce mark type iterator
-Date: Mon,  8 Apr 2024 14:52:49 +0200
-Message-ID: <20240408125410.574608532@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PATCH 6.6 250/252] x86/sme: Move early SME kernel encryption handling into .head.text
+Date: Mon,  8 Apr 2024 14:59:09 +0200
+Message-ID: <20240408125314.415138135@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,246 +47,217 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 14362a2541797cf9df0e86fb12dcd7950baf566e ]
+commit 48204aba801f1b512b3abed10b8e1a63e03f3dd1 upstream.
 
-fsnotify_foreach_iter_mark_type() is used to reduce boilerplate code
-of iterating all marks of a specific group interested in an event
-by consulting the iterator report_mask.
+The .head.text section is the initial primary entrypoint of the core
+kernel, and is entered with the CPU executing from a 1:1 mapping of
+memory. Such code must never access global variables using absolute
+references, as these are based on the kernel virtual mapping which is
+not active yet at this point.
 
-Use an open coded version of that iterator in fsnotify_iter_next()
-that collects all marks of the current iteration group without
-consulting the iterator report_mask.
+Given that the SME startup code is also called from this early execution
+context, move it into .head.text as well. This will allow more thorough
+build time checks in the future to ensure that early startup code only
+uses RIP-relative references to global variables.
 
-At the moment, the two iterator variants are the same, but this
-decoupling will allow us to exclude some of the group's marks from
-reporting the event, for example for event on child and inode marks
-on parent did not request to watch events on children.
+Also replace some occurrences of __pa_symbol() [which relies on the
+compiler generating an absolute reference, which is not guaranteed] and
+an open coded RIP-relative access with RIP_REL_REF().
 
-Fixes: 2f02fd3fa13e ("fanotify: fix ignore mask logic for events on child and on dir")
-Reported-by: Jan Kara <jack@suse.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220511190213.831646-2-amir73il@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20240227151907.387873-18-ardb+git@google.com
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify.c    | 14 +++------
- fs/notify/fsnotify.c             | 53 ++++++++++++++++----------------
- include/linux/fsnotify_backend.h | 31 ++++++++++++++-----
- 3 files changed, 54 insertions(+), 44 deletions(-)
+ arch/x86/include/asm/mem_encrypt.h |    8 +++----
+ arch/x86/mm/mem_encrypt_identity.c |   42 ++++++++++++++-----------------------
+ 2 files changed, 21 insertions(+), 29 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 985e995d2a398..263d303d8f8f1 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -319,11 +319,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 			return 0;
- 	}
+--- a/arch/x86/include/asm/mem_encrypt.h
++++ b/arch/x86/include/asm/mem_encrypt.h
+@@ -46,8 +46,8 @@ void __init sme_unmap_bootdata(char *rea
+ void __init sme_early_init(void);
+ void __init sev_setup_arch(void);
  
--	fsnotify_foreach_iter_type(type) {
--		if (!fsnotify_iter_should_report_type(iter_info, type))
--			continue;
--		mark = iter_info->marks[type];
+-void __init sme_encrypt_kernel(struct boot_params *bp);
+-void __init sme_enable(struct boot_params *bp);
++void sme_encrypt_kernel(struct boot_params *bp);
++void sme_enable(struct boot_params *bp);
+ 
+ int __init early_set_memory_decrypted(unsigned long vaddr, unsigned long size);
+ int __init early_set_memory_encrypted(unsigned long vaddr, unsigned long size);
+@@ -81,8 +81,8 @@ static inline void __init sme_unmap_boot
+ static inline void __init sme_early_init(void) { }
+ static inline void __init sev_setup_arch(void) { }
+ 
+-static inline void __init sme_encrypt_kernel(struct boot_params *bp) { }
+-static inline void __init sme_enable(struct boot_params *bp) { }
++static inline void sme_encrypt_kernel(struct boot_params *bp) { }
++static inline void sme_enable(struct boot_params *bp) { }
+ 
+ static inline void sev_es_init_vc_handling(void) { }
+ 
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -41,6 +41,7 @@
+ #include <linux/mem_encrypt.h>
+ #include <linux/cc_platform.h>
+ 
++#include <asm/init.h>
+ #include <asm/setup.h>
+ #include <asm/sections.h>
+ #include <asm/cmdline.h>
+@@ -98,7 +99,7 @@ static char sme_workarea[2 * PMD_SIZE] _
+ static char sme_cmdline_arg[] __initdata = "mem_encrypt";
+ static char sme_cmdline_on[]  __initdata = "on";
+ 
+-static void __init sme_clear_pgd(struct sme_populate_pgd_data *ppd)
++static void __head sme_clear_pgd(struct sme_populate_pgd_data *ppd)
+ {
+ 	unsigned long pgd_start, pgd_end, pgd_size;
+ 	pgd_t *pgd_p;
+@@ -113,7 +114,7 @@ static void __init sme_clear_pgd(struct
+ 	memset(pgd_p, 0, pgd_size);
+ }
+ 
+-static pud_t __init *sme_prepare_pgd(struct sme_populate_pgd_data *ppd)
++static pud_t __head *sme_prepare_pgd(struct sme_populate_pgd_data *ppd)
+ {
+ 	pgd_t *pgd;
+ 	p4d_t *p4d;
+@@ -150,7 +151,7 @@ static pud_t __init *sme_prepare_pgd(str
+ 	return pud;
+ }
+ 
+-static void __init sme_populate_pgd_large(struct sme_populate_pgd_data *ppd)
++static void __head sme_populate_pgd_large(struct sme_populate_pgd_data *ppd)
+ {
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+@@ -166,7 +167,7 @@ static void __init sme_populate_pgd_larg
+ 	set_pmd(pmd, __pmd(ppd->paddr | ppd->pmd_flags));
+ }
+ 
+-static void __init sme_populate_pgd(struct sme_populate_pgd_data *ppd)
++static void __head sme_populate_pgd(struct sme_populate_pgd_data *ppd)
+ {
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+@@ -192,7 +193,7 @@ static void __init sme_populate_pgd(stru
+ 		set_pte(pte, __pte(ppd->paddr | ppd->pte_flags));
+ }
+ 
+-static void __init __sme_map_range_pmd(struct sme_populate_pgd_data *ppd)
++static void __head __sme_map_range_pmd(struct sme_populate_pgd_data *ppd)
+ {
+ 	while (ppd->vaddr < ppd->vaddr_end) {
+ 		sme_populate_pgd_large(ppd);
+@@ -202,7 +203,7 @@ static void __init __sme_map_range_pmd(s
+ 	}
+ }
+ 
+-static void __init __sme_map_range_pte(struct sme_populate_pgd_data *ppd)
++static void __head __sme_map_range_pte(struct sme_populate_pgd_data *ppd)
+ {
+ 	while (ppd->vaddr < ppd->vaddr_end) {
+ 		sme_populate_pgd(ppd);
+@@ -212,7 +213,7 @@ static void __init __sme_map_range_pte(s
+ 	}
+ }
+ 
+-static void __init __sme_map_range(struct sme_populate_pgd_data *ppd,
++static void __head __sme_map_range(struct sme_populate_pgd_data *ppd,
+ 				   pmdval_t pmd_flags, pteval_t pte_flags)
+ {
+ 	unsigned long vaddr_end;
+@@ -236,22 +237,22 @@ static void __init __sme_map_range(struc
+ 	__sme_map_range_pte(ppd);
+ }
+ 
+-static void __init sme_map_range_encrypted(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_encrypted(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_ENC, PTE_FLAGS_ENC);
+ }
+ 
+-static void __init sme_map_range_decrypted(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_decrypted(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_DEC, PTE_FLAGS_DEC);
+ }
+ 
+-static void __init sme_map_range_decrypted_wp(struct sme_populate_pgd_data *ppd)
++static void __head sme_map_range_decrypted_wp(struct sme_populate_pgd_data *ppd)
+ {
+ 	__sme_map_range(ppd, PMD_FLAGS_DEC_WP, PTE_FLAGS_DEC_WP);
+ }
+ 
+-static unsigned long __init sme_pgtable_calc(unsigned long len)
++static unsigned long __head sme_pgtable_calc(unsigned long len)
+ {
+ 	unsigned long entries = 0, tables = 0;
+ 
+@@ -288,7 +289,7 @@ static unsigned long __init sme_pgtable_
+ 	return entries + tables;
+ }
+ 
+-void __init sme_encrypt_kernel(struct boot_params *bp)
++void __head sme_encrypt_kernel(struct boot_params *bp)
+ {
+ 	unsigned long workarea_start, workarea_end, workarea_len;
+ 	unsigned long execute_start, execute_end, execute_len;
+@@ -323,9 +324,8 @@ void __init sme_encrypt_kernel(struct bo
+ 	 *     memory from being cached.
+ 	 */
+ 
+-	/* Physical addresses gives us the identity mapped virtual addresses */
+-	kernel_start = __pa_symbol(_text);
+-	kernel_end = ALIGN(__pa_symbol(_end), PMD_SIZE);
++	kernel_start = (unsigned long)RIP_REL_REF(_text);
++	kernel_end = ALIGN((unsigned long)RIP_REL_REF(_end), PMD_SIZE);
+ 	kernel_len = kernel_end - kernel_start;
+ 
+ 	initrd_start = 0;
+@@ -343,14 +343,6 @@ void __init sme_encrypt_kernel(struct bo
+ #endif
+ 
+ 	/*
+-	 * We're running identity mapped, so we must obtain the address to the
+-	 * SME encryption workarea using rip-relative addressing.
+-	 */
+-	asm ("lea sme_workarea(%%rip), %0"
+-	     : "=r" (workarea_start)
+-	     : "p" (sme_workarea));
 -
-+	fsnotify_foreach_iter_mark_type(iter_info, mark, type) {
- 		/* Apply ignore mask regardless of ISDIR and ON_CHILD flags */
- 		marks_ignored_mask |= mark->ignored_mask;
+-	/*
+ 	 * Calculate required number of workarea bytes needed:
+ 	 *   executable encryption area size:
+ 	 *     stack page (PAGE_SIZE)
+@@ -359,7 +351,7 @@ void __init sme_encrypt_kernel(struct bo
+ 	 *   pagetable structures for the encryption of the kernel
+ 	 *   pagetable structures for workarea (in case not currently mapped)
+ 	 */
+-	execute_start = workarea_start;
++	execute_start = workarea_start = (unsigned long)RIP_REL_REF(sme_workarea);
+ 	execute_end = execute_start + (PAGE_SIZE * 2) + PMD_SIZE;
+ 	execute_len = execute_end - execute_start;
  
-@@ -849,16 +845,14 @@ static struct fanotify_event *fanotify_alloc_event(
-  */
- static __kernel_fsid_t fanotify_get_fsid(struct fsnotify_iter_info *iter_info)
- {
-+	struct fsnotify_mark *mark;
- 	int type;
- 	__kernel_fsid_t fsid = {};
- 
--	fsnotify_foreach_iter_type(type) {
-+	fsnotify_foreach_iter_mark_type(iter_info, mark, type) {
- 		struct fsnotify_mark_connector *conn;
- 
--		if (!fsnotify_iter_should_report_type(iter_info, type))
--			continue;
--
--		conn = READ_ONCE(iter_info->marks[type]->connector);
-+		conn = READ_ONCE(mark->connector);
- 		/* Mark is just getting destroyed or created? */
- 		if (!conn)
- 			continue;
-diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
-index 6eee19d15e8cd..35740a64ee453 100644
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -335,31 +335,23 @@ static int send_to_group(__u32 mask, const void *data, int data_type,
- 	struct fsnotify_mark *mark;
- 	int type;
- 
--	if (WARN_ON(!iter_info->report_mask))
-+	if (!iter_info->report_mask)
- 		return 0;
- 
- 	/* clear ignored on inode modification */
- 	if (mask & FS_MODIFY) {
--		fsnotify_foreach_iter_type(type) {
--			if (!fsnotify_iter_should_report_type(iter_info, type))
--				continue;
--			mark = iter_info->marks[type];
--			if (mark &&
--			    !(mark->flags & FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY))
-+		fsnotify_foreach_iter_mark_type(iter_info, mark, type) {
-+			if (!(mark->flags &
-+			      FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY))
- 				mark->ignored_mask = 0;
- 		}
- 	}
- 
--	fsnotify_foreach_iter_type(type) {
--		if (!fsnotify_iter_should_report_type(iter_info, type))
--			continue;
--		mark = iter_info->marks[type];
--		/* does the object mark tell us to do something? */
--		if (mark) {
--			group = mark->group;
--			marks_mask |= mark->mask;
--			marks_ignored_mask |= mark->ignored_mask;
--		}
-+	/* Are any of the group marks interested in this event? */
-+	fsnotify_foreach_iter_mark_type(iter_info, mark, type) {
-+		group = mark->group;
-+		marks_mask |= mark->mask;
-+		marks_ignored_mask |= mark->ignored_mask;
- 	}
- 
- 	pr_debug("%s: group=%p mask=%x marks_mask=%x marks_ignored_mask=%x data=%p data_type=%d dir=%p cookie=%d\n",
-@@ -403,11 +395,11 @@ static struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
- 
- /*
-  * iter_info is a multi head priority queue of marks.
-- * Pick a subset of marks from queue heads, all with the
-- * same group and set the report_mask for selected subset.
-- * Returns the report_mask of the selected subset.
-+ * Pick a subset of marks from queue heads, all with the same group
-+ * and set the report_mask to a subset of the selected marks.
-+ * Returns false if there are no more groups to iterate.
-  */
--static unsigned int fsnotify_iter_select_report_types(
-+static bool fsnotify_iter_select_report_types(
- 		struct fsnotify_iter_info *iter_info)
- {
- 	struct fsnotify_group *max_prio_group = NULL;
-@@ -423,30 +415,37 @@ static unsigned int fsnotify_iter_select_report_types(
- 	}
- 
- 	if (!max_prio_group)
--		return 0;
-+		return false;
- 
- 	/* Set the report mask for marks from same group as max prio group */
-+	iter_info->current_group = max_prio_group;
- 	iter_info->report_mask = 0;
- 	fsnotify_foreach_iter_type(type) {
- 		mark = iter_info->marks[type];
--		if (mark &&
--		    fsnotify_compare_groups(max_prio_group, mark->group) == 0)
-+		if (mark && mark->group == iter_info->current_group)
- 			fsnotify_iter_set_report_type(iter_info, type);
- 	}
- 
--	return iter_info->report_mask;
-+	return true;
+@@ -502,7 +494,7 @@ void __init sme_encrypt_kernel(struct bo
+ 	native_write_cr3(__native_read_cr3());
  }
  
- /*
-- * Pop from iter_info multi head queue, the marks that were iterated in the
-+ * Pop from iter_info multi head queue, the marks that belong to the group of
-  * current iteration step.
-  */
- static void fsnotify_iter_next(struct fsnotify_iter_info *iter_info)
+-void __init sme_enable(struct boot_params *bp)
++void __head sme_enable(struct boot_params *bp)
  {
-+	struct fsnotify_mark *mark;
- 	int type;
- 
-+	/*
-+	 * We cannot use fsnotify_foreach_iter_mark_type() here because we
-+	 * may need to advance a mark of type X that belongs to current_group
-+	 * but was not selected for reporting.
-+	 */
- 	fsnotify_foreach_iter_type(type) {
--		if (fsnotify_iter_should_report_type(iter_info, type))
-+		mark = iter_info->marks[type];
-+		if (mark && mark->group == iter_info->current_group)
- 			iter_info->marks[type] =
- 				fsnotify_next_mark(iter_info->marks[type]);
- 	}
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index 9a1a9e78f69f5..9560734759fa6 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -399,6 +399,7 @@ static inline bool fsnotify_valid_obj_type(unsigned int obj_type)
- 
- struct fsnotify_iter_info {
- 	struct fsnotify_mark *marks[FSNOTIFY_ITER_TYPE_COUNT];
-+	struct fsnotify_group *current_group;
- 	unsigned int report_mask;
- 	int srcu_idx;
- };
-@@ -415,20 +416,31 @@ static inline void fsnotify_iter_set_report_type(
- 	iter_info->report_mask |= (1U << iter_type);
- }
- 
--static inline void fsnotify_iter_set_report_type_mark(
--		struct fsnotify_iter_info *iter_info, int iter_type,
--		struct fsnotify_mark *mark)
-+static inline struct fsnotify_mark *fsnotify_iter_mark(
-+		struct fsnotify_iter_info *iter_info, int iter_type)
- {
--	iter_info->marks[iter_type] = mark;
--	iter_info->report_mask |= (1U << iter_type);
-+	if (fsnotify_iter_should_report_type(iter_info, iter_type))
-+		return iter_info->marks[iter_type];
-+	return NULL;
-+}
-+
-+static inline int fsnotify_iter_step(struct fsnotify_iter_info *iter, int type,
-+				     struct fsnotify_mark **markp)
-+{
-+	while (type < FSNOTIFY_ITER_TYPE_COUNT) {
-+		*markp = fsnotify_iter_mark(iter, type);
-+		if (*markp)
-+			break;
-+		type++;
-+	}
-+	return type;
- }
- 
- #define FSNOTIFY_ITER_FUNCS(name, NAME) \
- static inline struct fsnotify_mark *fsnotify_iter_##name##_mark( \
- 		struct fsnotify_iter_info *iter_info) \
- { \
--	return (iter_info->report_mask & (1U << FSNOTIFY_ITER_TYPE_##NAME)) ? \
--		iter_info->marks[FSNOTIFY_ITER_TYPE_##NAME] : NULL; \
-+	return fsnotify_iter_mark(iter_info, FSNOTIFY_ITER_TYPE_##NAME); \
- }
- 
- FSNOTIFY_ITER_FUNCS(inode, INODE)
-@@ -438,6 +450,11 @@ FSNOTIFY_ITER_FUNCS(sb, SB)
- 
- #define fsnotify_foreach_iter_type(type) \
- 	for (type = 0; type < FSNOTIFY_ITER_TYPE_COUNT; type++)
-+#define fsnotify_foreach_iter_mark_type(iter, mark, type) \
-+	for (type = 0; \
-+	     type = fsnotify_iter_step(iter, type, &mark), \
-+	     type < FSNOTIFY_ITER_TYPE_COUNT; \
-+	     type++)
- 
- /*
-  * fsnotify_connp_t is what we embed in objects which connector can be attached
--- 
-2.43.0
-
+ 	const char *cmdline_ptr, *cmdline_arg, *cmdline_on;
+ 	unsigned int eax, ebx, ecx, edx;
 
 
