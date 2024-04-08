@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CAF768F0;
-	Mon,  8 Apr 2024 13:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAA36FE35;
+	Mon,  8 Apr 2024 13:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583119; cv=none; b=VK8jkhxE5vWcBLsNJPFJD3TbsU1Rm6hB+okTNtGKvkaZPmmR2NP7HCcqDOfUotihrBN55VJNtYSTEyBZrwA/pliVzJLiXRB202bHXSy49iAD8CAb6bm0nU+0IU7rTu1yCaz0Rk5SCpysH8q+GJbeg2RkTMTphRG5Dpy5ywMF0zo=
+	t=1712583121; cv=none; b=A2xpn8DsdT2JrbafM5BwNwSEnEg3c3bkHM1MRvZLOkTT9rWsouequARsOYTtaO1GKfp2pWpF0Yg1s9oIO3QNUcWnt8hN1M90xAsW21dKoJIbWSoy9fIblUqd/SieHpI6jH5mWcGmSXWRKj40PnwshORS4+SCD+s9vqjrYNX8d0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583119; c=relaxed/simple;
-	bh=3EpC5rm18XBpMuo48yMCmHL0vdDm8jqrOgCByY1VKlo=;
+	s=arc-20240116; t=1712583121; c=relaxed/simple;
+	bh=thXKxMJzTVqYg/s5cqyNJ5BAVbBgc08/7HuJxD441gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4ZwbAeCLtpyK6ebSb0FG+oaLsjlH1C7FJoEjcFqR0TODuG3BtIRldUzZAJkWPqTRdS6QtwaJ9+k2+wTGnUEddRh6fCbe6j6HIbtTx6TfoZQbE1kSjZ5E8QpZbmAA8F9z4yv61x6XVgeuF8feMSC5nkALjfSBFmr6svm5OD4k14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqHCRSer; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrR3jgzWr9zEewCIK2mRoZ6frzBVK/kD1o5MBJTaGXXgTmaJsAnIDvKgVSbuBulwkqRdUjJ9P9ncvuPYzodtxR/jiIHjjoIwNvun27hrNnhqgUJd1D1CgV4ldEvnMFwaLbN4xuzLZa0oyCA0sTnzfRj1DwpuUQwixtAWLFQjdg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+foeCub; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqHCRSer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F6EC43394;
-	Mon,  8 Apr 2024 13:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+foeCub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360F0C433C7;
+	Mon,  8 Apr 2024 13:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583118;
-	bh=3EpC5rm18XBpMuo48yMCmHL0vdDm8jqrOgCByY1VKlo=;
+	s=korg; t=1712583121;
+	bh=thXKxMJzTVqYg/s5cqyNJ5BAVbBgc08/7HuJxD441gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqHCRSerGHuIQvsWKw+88zCcHqGwOU1LcO+XVvj/hv+hgD74NKsqGWFBPEQhs4qSG
-	 oRzmnLR5BZmgT3rzJR00jlnqNsrZqK5pF4i8iGm6Hat6ozM2wsui6xNjeGc358KkSC
-	 VvscWIPKr/ol2+Tm3jJE8AgjNFSiU3OdomnxQfOo=
+	b=H+foeCubAZVmqq5K7seVLYYXoyOSTqQdZfcRoCzYnVEby/U9p24mtqXsCpVKSwQXb
+	 4CtukOcLmo9Ya7+gsyewbSJs1R1Tj0XqEbS7wMj6hrwYpsKZ7G6eUkiSSZLGLT8NyE
+	 EezMF8s4RSMfVKnQleM0FPtibZvzg7IUR7uZ3CKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Frank S. Filz" <ffilzlnx@mindspring.com>,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 209/690] nfsd: update create verifier comment
-Date: Mon,  8 Apr 2024 14:51:15 +0200
-Message-ID: <20240408125407.103470021@linuxfoundation.org>
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 159/252] 9p: Fix read/write debug statements to report server reply
+Date: Mon,  8 Apr 2024 14:57:38 +0200
+Message-ID: <20240408125311.589370079@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +46,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 2336d696862186fd4a6ddd1ea0cb243b3e32847c ]
+[ Upstream commit be3193e58ec210b2a72fb1134c2a0695088a911d ]
 
-I don't know if that Solaris behavior matters any more or if it's still
-possible to look up that bug ID any more.  The XFS behavior's definitely
-still relevant, though; any but the most recent XFS filesystems will
-lose the top bits.
+Previous conversion to iov missed these debug statements which would now
+always print the requested size instead of the actual server reply.
 
-Reported-by: Frank S. Filz <ffilzlnx@mindspring.com>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Write also added a loop in a much older commit but we didn't report
+these, while reads do report each iteration -- it's more coherent to
+keep reporting all requests to server so move that at the same time.
+
+Fixes: 7f02464739da ("9p: convert to advancing variant of iov_iter_get_pages_alloc()")
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Message-ID: <20240109-9p-rw-trace-v1-1-327178114257@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/9p/client.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 24a5b5cfcfb03..59e30cff920ca 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1436,7 +1436,8 @@ do_nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+diff --git a/net/9p/client.c b/net/9p/client.c
+index e265a0ca6bddd..f7e90b4769bba 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1583,7 +1583,7 @@ p9_client_read_once(struct p9_fid *fid, u64 offset, struct iov_iter *to,
+ 		received = rsize;
+ 	}
  
- 	if (nfsd_create_is_exclusive(createmode)) {
- 		/* solaris7 gets confused (bugid 4218508) if these have
--		 * the high bit set, so just clear the high bits. If this is
-+		 * the high bit set, as do xfs filesystems without the
-+		 * "bigtime" feature.  So just clear the high bits. If this is
- 		 * ever changed to use different attrs for storing the
- 		 * verifier, then do_open_lookup() will also need to be fixed
- 		 * accordingly.
+-	p9_debug(P9_DEBUG_9P, "<<< RREAD count %d\n", count);
++	p9_debug(P9_DEBUG_9P, "<<< RREAD count %d\n", received);
+ 
+ 	if (non_zc) {
+ 		int n = copy_to_iter(dataptr, received, to);
+@@ -1609,9 +1609,6 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
+ 	int total = 0;
+ 	*err = 0;
+ 
+-	p9_debug(P9_DEBUG_9P, ">>> TWRITE fid %d offset %llu count %zd\n",
+-		 fid->fid, offset, iov_iter_count(from));
+-
+ 	while (iov_iter_count(from)) {
+ 		int count = iov_iter_count(from);
+ 		int rsize = fid->iounit;
+@@ -1623,6 +1620,9 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
+ 		if (count < rsize)
+ 			rsize = count;
+ 
++		p9_debug(P9_DEBUG_9P, ">>> TWRITE fid %d offset %llu count %d (/%d)\n",
++			 fid->fid, offset, rsize, count);
++
+ 		/* Don't bother zerocopy for small IO (< 1024) */
+ 		if (clnt->trans_mod->zc_request && rsize > 1024) {
+ 			req = p9_client_zc_rpc(clnt, P9_TWRITE, NULL, from, 0,
+@@ -1650,7 +1650,7 @@ p9_client_write(struct p9_fid *fid, u64 offset, struct iov_iter *from, int *err)
+ 			written = rsize;
+ 		}
+ 
+-		p9_debug(P9_DEBUG_9P, "<<< RWRITE count %d\n", count);
++		p9_debug(P9_DEBUG_9P, "<<< RWRITE count %d\n", written);
+ 
+ 		p9_req_put(clnt, req);
+ 		iov_iter_revert(from, count - written - iov_iter_count(from));
 -- 
 2.43.0
 
