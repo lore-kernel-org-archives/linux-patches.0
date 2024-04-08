@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDE22E62C;
-	Mon,  8 Apr 2024 13:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729C070CDA;
+	Mon,  8 Apr 2024 13:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581791; cv=none; b=QfeNiWpXYuewORJ+i5rZbroe78TC8sCUDaDAHuBIprlQoQvvVwvV5n6Yf8B2pzox1X3fvOz6q//mMGVVJZqtmYvkj/Oepwe4gh4osXUc2xvGhCkcCIzmnRZPubCZfz5Q92DeowYhqY0Xyfo0uyuyJEH8IM+f/YZgmzSb2V4qEBg=
+	t=1712581794; cv=none; b=ISJWK40nvNYataOP7p5JEvOc0yUVgDgqTJYP8yh+LBERl41HYnLyzXoPRy6isHWu+AfoA+h8+BAij61Rf/tJu8e9ZPS4je6kAx+i2TINszHF45XzcBbtHRjoRDwNzDSPj40Zw2lT35ZF52XNSIMIGVfzOg+ILBd5a2IV6ZAngp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581791; c=relaxed/simple;
-	bh=0IVUcbZqHFz+sTizvVUTGs1bqPaU1XsMxE/bp/CRcyI=;
+	s=arc-20240116; t=1712581794; c=relaxed/simple;
+	bh=tyvHKsiy2TABhj3ZWVp7jlaw9PBbQWYNXQ2SNAz9hyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZvFvqqAYBsKbtVbCJjqDRuLp2SvPahwWvUi6pAk7P9hPtWisMBlrncASbync8guQOMpdnvNP00hwQOu2qdRzT4SDBvG2/NEsW78yYnjKZ8nJb1rBErgh2whXJuJ/X8koc4tGm8fka4qD8U6z8QkU25LYonLeL/ozMyaL/PPd7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrL/kBFL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEue3tapjDCul+W10Q9ofzut9D3G3imBwjt4Kr7yajN0oLQAb7T0E6OJ7NCq6RqzGgyC+IuciBml0QD6vt7LYpuR11e9/jrOGDPD5vdF/oxyAdremsAfFjlWU/jODkjyPxycPxA9M2taBi9XExoaiXxpf8vcK17lr/lzxiuNbAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTvaKUwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrL/kBFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B2CC433F1;
-	Mon,  8 Apr 2024 13:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTvaKUwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6671C43390;
+	Mon,  8 Apr 2024 13:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581791;
-	bh=0IVUcbZqHFz+sTizvVUTGs1bqPaU1XsMxE/bp/CRcyI=;
+	s=korg; t=1712581794;
+	bh=tyvHKsiy2TABhj3ZWVp7jlaw9PBbQWYNXQ2SNAz9hyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrL/kBFL+iMmU0iXYDy0X0+dFSsYLMwU+fIeWTl1TRd+NvOTsUnYmyi4yrKq6K36+
-	 C3sZkvTmPg4avU3V0u2LpYFzdNa78nTgrkY3WTz5qop0hKgtdo7C9zh+2BAPssm4Vu
-	 oV4ytLiQx4bvLvBmqySugjbs1VvIehUr/0OlsWXk=
+	b=VTvaKUwBi+rR0iCbQRxZikIfY2ZU8CaljKxx+JRjTgN8bhwXvi3SJ34zVNCTjdA5h
+	 Y6FnCIBEpPx2fnvACce53gcFunz3RH0sVnTjNq3Z6qhOjoxWbzGVZq1nwvA91Fxy/x
+	 X47jLKvFXU7MwVTYXHCppJhICD2nQPK1kMwAAIUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 052/138] gro: fix ownership transfer
-Date: Mon,  8 Apr 2024 14:57:46 +0200
-Message-ID: <20240408125257.844996664@linuxfoundation.org>
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 040/252] Octeontx2-af: fix pause frame configuration in GMP mode
+Date: Mon,  8 Apr 2024 14:55:39 +0200
+Message-ID: <20240408125307.884607169@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-commit ed4cccef64c1d0d5b91e69f7a8a6697c3a865486 upstream.
+[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
 
-If packets are GROed with fraglist they might be segmented later on and
-continue their journey in the stack. In skb_segment_list those skbs can
-be reused as-is. This is an issue as their destructor was removed in
-skb_gro_receive_list but not the reference to their socket, and then
-they can't be orphaned. Fix this by also removing the reference to the
-socket.
+The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
+different speeds, allowing for efficient data transfer.
 
-For example this could be observed,
+The previous patch which added pause frame configuration has a bug due
+to which pause frame feature is not working in GMP mode.
 
-  kernel BUG at include/linux/skbuff.h:3131!  (skb_orphan)
-  RIP: 0010:ip6_rcv_core+0x11bc/0x19a0
-  Call Trace:
-   ipv6_list_rcv+0x250/0x3f0
-   __netif_receive_skb_list_core+0x49d/0x8f0
-   netif_receive_skb_list_internal+0x634/0xd40
-   napi_complete_done+0x1d2/0x7d0
-   gro_cell_poll+0x118/0x1f0
+This patch fixes the issue by configurating appropriate registers.
 
-A similar construction is found in skb_gro_receive, apply the same
-change there.
-
-Fixes: 5e10da5385d2 ("skbuff: allow 'slow_gro' for skb carring sock reference")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c         |    3 ++-
- net/ipv4/udp_offload.c |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -252,8 +252,9 @@ int skb_gro_receive(struct sk_buff *p, s
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 6c18d3d2442eb..2539c985f695a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -808,6 +808,11 @@ static int cgx_lmac_enadis_pause_frm(void *cgxd, int lmac_id,
+ 	if (!is_lmac_valid(cgx, lmac_id))
+ 		return -ENODEV;
  
- merge:
--	/* sk owenrship - if any - completely transferred to the aggregated packet */
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
- 	skb->destructor = NULL;
-+	skb->sk = NULL;
- 	delta_truesize = skb->truesize;
- 	if (offset > headlen) {
- 		unsigned int eat = offset - headlen;
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -441,8 +441,9 @@ static int skb_gro_receive_list(struct s
- 	NAPI_GRO_CB(p)->count++;
- 	p->data_len += skb->len;
- 
--	/* sk owenrship - if any - completely transferred to the aggregated packet */
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
- 	skb->destructor = NULL;
-+	skb->sk = NULL;
- 	p->truesize += skb->truesize;
- 	p->len += skb->len;
- 
++	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
++	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
++	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
++	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
++
+ 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
+ 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
+ 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
+-- 
+2.43.0
+
 
 
