@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080822DF73;
-	Mon,  8 Apr 2024 13:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA122DF73;
+	Mon,  8 Apr 2024 13:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581580; cv=none; b=WUmyUSjAgtyM2PLxKsQfvjU/Jp1kQEtvqM5hRz0A70FCFVnTLisyeNMhg8jO1hJ7Z88mdNthDXRqVt5vJ4EwBMk4dR5TWBkyEUcoReZfkD6+xa82SXCxkMPVt8Ci07kykuj4YuwEC1o85VyC6KKt0unmR85U0hTvn0YeaDFjuHc=
+	t=1712581583; cv=none; b=DdiRx9Ex/aAm6RT4BT5fJoyokuFUIjTHwCLvWFj39N98iWlMMtNPNb9e1gILR1n83XKwEwgpNZYJz8OOIglK//dHmiEl9pYqfvFLyXoQrIMaOWhCZ7WEwJnSCPrCGkwbgKNg1lnLwgxyZ87P5NegFhoOYN/oUPiw/VHpJ8tkpt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581580; c=relaxed/simple;
-	bh=C5jzM+G0U6DMZguxCPOMjdh2OrK+zl1TaMKsWGiN7/s=;
+	s=arc-20240116; t=1712581583; c=relaxed/simple;
+	bh=rW5W7eHrrIF/9c/uXoNMvlHAJR47zW1GoyldKbKAAbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIyJmZNC8EGB5WnlbmIZM9rGiIB5CF0g0wYR6kH4s+OcBzgMcwtAaalUmHh9r6+bSnHo3ifgkToGYHUeTzkfFdlpyYzx/v9fKNknwnSxjd1Ja+mUAk9kv3lZoAu7h+rOIlvbe07BWIXethA3QmBju4HqJ9UIE8ngEFPvZWM3E40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCNhsNbe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TeMWPIx+aJBkfhlySyTKl0+w/YJ+B9MaNBqXg+iD4luK1XcByxlYDb/TZcX/YYjMoUbdsgRo3aMNAxwEl3oDWTwRAHvhtQP4BN1qWqH2AaTyuNLoq2vpmuXqE2LPNJU7u7peWVMpHbkp/GxZDaRskLqI4AIUSQzjZk2HrKN6Lzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMeh4GDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCNhsNbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5FFC433C7;
-	Mon,  8 Apr 2024 13:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMeh4GDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8D4C433F1;
+	Mon,  8 Apr 2024 13:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581579;
-	bh=C5jzM+G0U6DMZguxCPOMjdh2OrK+zl1TaMKsWGiN7/s=;
+	s=korg; t=1712581582;
+	bh=rW5W7eHrrIF/9c/uXoNMvlHAJR47zW1GoyldKbKAAbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCNhsNbeA9QPLSu8gQq1mrSLqjXNMOCsrwbm1HUG6bEL/W0bgwFQTFGjcoU7HOAw8
-	 eYHSFkpQpiDC0fydkJmkujY9vBZU0DzmIZBRDEOwqyfh6LOIYCR/W9H+BEeQUGB0sx
-	 DYotL/4njG9B0Znt6D3M2vvpnCgAZ3/V62RUuVig=
+	b=hMeh4GDzdRyRUHMukyO6jsPbD6lBxB53jxQO5yNvkJf8ZUDWnpo0H2aXnUEq3S8eY
+	 MSs02PBWvbuyZLQiN5H+tBw10zuqFxssua5QhjVKauga7PXQEeOzZM4+z2835BM6Eh
+	 v00vBzpL2c9bvbd0waZOTQ6q1SCVMG7vk7fTmYBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Salvatore Albano <d.albano@gmail.com>,
-	Stanislav Fomichev <sdf@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Niels van Aert <nvaert1986@hotmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 002/273] xsk: Dont assume metadata is always requested in TX completion
-Date: Mon,  8 Apr 2024 14:54:37 +0200
-Message-ID: <20240408125309.358859480@linuxfoundation.org>
+Subject: [PATCH 5.15 065/690] PCI/DPC: Quirk PIO log size for Intel Raptor Lake Root Ports
+Date: Mon,  8 Apr 2024 14:48:51 +0200
+Message-ID: <20240408125401.879149146@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit f6e922365faf4cd576bd1cf3e64b58c8a32e1856 ]
+[ Upstream commit 627c6db20703b5d18d928464f411d0d4ec327508 ]
 
-`compl->tx_timestam != NULL` means that the user has explicitly
-requested the metadata via XDP_TX_METADATA+XDP_TX_METADATA_TIMESTAMP.
+Commit 5459c0b70467 ("PCI/DPC: Quirk PIO log size for certain Intel Root
+Ports") and commit 3b8803494a06 ("PCI/DPC: Quirk PIO log size for Intel Ice
+Lake Root Ports") add quirks for Ice, Tiger and Alder Lake Root Ports.
+System firmware for Raptor Lake still has the bug, so Linux logs the
+warning below on several Raptor Lake systems like Dell Precision 3581 with
+Intel Raptor Lake processor (0W18NX) system firmware/BIOS version 1.10.1.
 
-Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
-Reported-by: Daniele Salvatore Albano <d.albano@gmail.com>
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Daniele Salvatore Albano <d.albano@gmail.com>
-Link: https://lore.kernel.org/bpf/20240318165427.1403313-1-sdf@google.com
+  pci 0000:00:07.0: [8086:a76e] type 01 class 0x060400
+  pci 0000:00:07.0: DPC: RP PIO log size 0 is invalid
+  pci 0000:00:07.1: [8086:a73f] type 01 class 0x060400
+  pci 0000:00:07.1: DPC: RP PIO log size 0 is invalid
+
+Apply the quirk for Raptor Lake Root Ports as well.
+
+This also enables the DPC driver to dump the RP PIO Log registers when DPC
+is triggered.
+
+Link: https://lore.kernel.org/r/20240305113057.56468-1-pmenzel@molgen.mpg.de
+Reported-by: Niels van Aert <nvaert1986@hotmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218560
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: <stable@vger.kernel.org>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Niels van Aert <nvaert1986@hotmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h | 2 ++
+ drivers/pci/quirks.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index 3cb4dc9bd70e4..3d54de168a6d9 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -188,6 +188,8 @@ static inline void xsk_tx_metadata_complete(struct xsk_tx_metadata_compl *compl,
- {
- 	if (!compl)
- 		return;
-+	if (!compl->tx_timestamp)
-+		return;
- 
- 	*compl->tx_timestamp = ops->tmo_fill_timestamp(priv);
- }
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 59b3dd33092bf..43e120b828169 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5985,4 +5985,6 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2b, dpc_log_size);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2d, dpc_log_size);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2f, dpc_log_size);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a31, dpc_log_size);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0xa73f, dpc_log_size);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0xa76e, dpc_log_size);
+ #endif
 -- 
 2.43.0
 
