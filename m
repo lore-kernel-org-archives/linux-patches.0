@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9847BAFD;
-	Mon,  8 Apr 2024 13:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C7C7B3E5;
+	Mon,  8 Apr 2024 13:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583943; cv=none; b=WaTb9HJJQVQdYxNx1NDu6mAtOel7MBP46aRHNW3Sb3wGWwKBnz8C1m3GDkbjuzUpqXohEu5Aa0Yw631bITKUSiFfu/ybe5SFZguQR36VvxMXeOywlyj13jDjfYA1j+9tT/uhQh1uxDcjRNgQSczguM1DE1uBy4TqVoZseUcqNiA=
+	t=1712583946; cv=none; b=SOynHFhE74LpYuObjvytPWUWrVOfkqtJIQb6dLrtsEBIu34iiOH0E9IL6mqClUFxvtLmKuB97/nmBKk57eKX37lQHYzxhd0dgoI9zfqX0A48TORb8aXCIqCqtm7N8AHXgYXfdZ9yi+WPf9eKC0TTgaIqKceGnAfuojtI5560nqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583943; c=relaxed/simple;
-	bh=sKSzK1Tm9bpS6l/B7XY+KldpNJwPJflpym7ieBTHNCU=;
+	s=arc-20240116; t=1712583946; c=relaxed/simple;
+	bh=jHvBzsK4zl4XHuugyjqixf7mD78SjsJUnDbfz9w3Mdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gK5LIL45VvJ37cwywvEG88sQ8ectAFr2/AkYau5wYmXznG0xJmwDLB/MfuhuVrbRH5bvDJGw/9vWttjOUebTL0wXo7z3bIPuLsmHQeSLC1rapltKgcP1TKEok3o9i0rzE2gp2VG0unQu3uqBrQfm6G11IKDCBlZ9l5eADgHodbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBgeqQih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=evEfjJu+g3gnSrst7wI+IcJO0j2Roz9H92u4JY180po8+cf0/JH0WW/soJr4XV82Bi4flk4ddGl4okdsKvECz6rY51rJAFKZGxvqsp4JZYoE42c4b6sXXmjjjiUEsC7zUUL41FGgaX98V/LJUDvOhEwiPMW4edX1DKrksXXhIJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsoiFOao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBgeqQih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39B6C43399;
-	Mon,  8 Apr 2024 13:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsoiFOao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1E9C433F1;
+	Mon,  8 Apr 2024 13:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583943;
-	bh=sKSzK1Tm9bpS6l/B7XY+KldpNJwPJflpym7ieBTHNCU=;
+	s=korg; t=1712583946;
+	bh=jHvBzsK4zl4XHuugyjqixf7mD78SjsJUnDbfz9w3Mdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBgeqQihIrwkffLe/N0hBrgDmIwBrvyyESAMcj1ZcdDKlNNw25wo0USvh20tl0AFM
-	 Yycu27nRWy+BBmtr9ljN0/gkIeyKe+en/acocqf1BjHK10blflhUuBwOA8OfBSwjfj
-	 CVWuBK+RWKVduykZfWM7/zaGo0kTluU4AnuQpTkQ=
+	b=dsoiFOao6OOqmfZAyQeWBCKghVyN+5ElCEg1vgemjCSCN8x9zl+5B+BppzTkGxsCi
+	 jt2GlrZ/fXTChxiEIXRNVvgKMvlclnlnIEeZJQ5MrjHLaFt4Ym49KY4cfJZGXjHon/
+	 3aaStRbBcIBgl4JnQ3lN7QZTjQrCL9pZIqBSGBd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Vineet Gupta <vgupta@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Vineet Gupta <vineetg@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.8 236/273] riscv: Fix vector state restore in rt_sigreturn()
-Date: Mon,  8 Apr 2024 14:58:31 +0200
-Message-ID: <20240408125316.759435540@linuxfoundation.org>
+	Vasily Averin <vvs@openvz.org>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 305/690] fanotify: fix incorrect fmode_t casts
+Date: Mon,  8 Apr 2024 14:52:51 +0200
+Message-ID: <20240408125410.643941340@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,107 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Vasily Averin <vvs@openvz.org>
 
-commit c27fa53b858b4ee6552a719aa599c250cf98a586 upstream.
+[ Upstream commit dccd855771b37820b6d976a99729c88259549f85 ]
 
-The RISC-V Vector specification states in "Appendix D: Calling
-Convention for Vector State" [1] that "Executing a system call causes
-all caller-saved vector registers (v0-v31, vl, vtype) and vstart to
-become unspecified.". In the RISC-V kernel this is called "discarding
-the vstate".
+Fixes sparce warnings:
+fs/notify/fanotify/fanotify_user.c:267:63: sparse:
+ warning: restricted fmode_t degrades to integer
+fs/notify/fanotify/fanotify_user.c:1351:28: sparse:
+ warning: restricted fmode_t degrades to integer
 
-Returning from a signal handler via the rt_sigreturn() syscall, vector
-discard is also performed. However, this is not an issue since the
-vector state should be restored from the sigcontext, and therefore not
-care about the vector discard.
+FMODE_NONTIFY have bitwise fmode_t type and requires __force attribute
+for any casts.
 
-The "live state" is the actual vector register in the running context,
-and the "vstate" is the vector state of the task. A dirty live state,
-means that the vstate and live state are not in synch.
-
-When vectorized user_from_copy() was introduced, an bug sneaked in at
-the restoration code, related to the discard of the live state.
-
-An example when this go wrong:
-
-  1. A userland application is executing vector code
-  2. The application receives a signal, and the signal handler is
-     entered.
-  3. The application returns from the signal handler, using the
-     rt_sigreturn() syscall.
-  4. The live vector state is discarded upon entering the
-     rt_sigreturn(), and the live state is marked as "dirty", indicating
-     that the live state need to be synchronized with the current
-     vstate.
-  5. rt_sigreturn() restores the vstate, except the Vector registers,
-     from the sigcontext
-  6. rt_sigreturn() restores the Vector registers, from the sigcontext,
-     and now the vectorized user_from_copy() is used. The dirty live
-     state from the discard is saved to the vstate, making the vstate
-     corrupt.
-  7. rt_sigreturn() returns to the application, which crashes due to
-     corrupted vstate.
-
-Note that the vectorized user_from_copy() is invoked depending on the
-value of CONFIG_RISCV_ISA_V_UCOPY_THRESHOLD. Default is 768, which
-means that vlen has to be larger than 128b for this bug to trigger.
-
-The fix is simply to mark the live state as non-dirty/clean prior
-performing the vstate restore.
-
-Link: https://github.com/riscv/riscv-isa-manual/releases/download/riscv-isa-release-8abdb41-2024-03-26/unpriv-isa-asciidoc.pdf # [1]
-Reported-by: Charlie Jenkins <charlie@rivosinc.com>
-Reported-by: Vineet Gupta <vgupta@kernel.org>
-Fixes: c2a658d41924 ("riscv: lib: vectorize copy_to_user/copy_from_user")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Andy Chiu <andy.chiu@sifive.com>
-Tested-by: Vineet Gupta <vineetg@rivosinc.com>
-Link: https://lore.kernel.org/r/20240403072638.567446-1-bjorn@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vasily Averin <vvs@openvz.org>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/9adfd6ac-1b89-791e-796b-49ada3293985@openvz.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/riscv/kernel/signal.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -119,6 +119,13 @@ static long __restore_v_state(struct pt_
- 	struct __sc_riscv_v_state __user *state = sc_vec;
- 	void __user *datap;
- 
-+	/*
-+	 * Mark the vstate as clean prior performing the actual copy,
-+	 * to avoid getting the vstate incorrectly clobbered by the
-+	 *  discarded vector state.
-+	 */
-+	riscv_v_vstate_set_restore(current, regs);
-+
- 	/* Copy everything of __sc_riscv_v_state except datap. */
- 	err = __copy_from_user(&current->thread.vstate, &state->v_state,
- 			       offsetof(struct __riscv_v_ext_state, datap));
-@@ -133,13 +140,7 @@ static long __restore_v_state(struct pt_
- 	 * Copy the whole vector content from user space datap. Use
- 	 * copy_from_user to prevent information leak.
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 4471043955f87..6db5a0b03a78d 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -260,7 +260,7 @@ static int create_fd(struct fsnotify_group *group, struct path *path,
+ 	 * originally opened O_WRONLY.
  	 */
--	err = copy_from_user(current->thread.vstate.datap, datap, riscv_v_vsize);
--	if (unlikely(err))
--		return err;
--
--	riscv_v_vstate_set_restore(current, regs);
--
--	return err;
-+	return copy_from_user(current->thread.vstate.datap, datap, riscv_v_vsize);
- }
- #else
- #define save_v_state(task, regs) (0)
+ 	new_file = dentry_open(path,
+-			       group->fanotify_data.f_flags | FMODE_NONOTIFY,
++			       group->fanotify_data.f_flags | __FMODE_NONOTIFY,
+ 			       current_cred());
+ 	if (IS_ERR(new_file)) {
+ 		/*
+@@ -1373,7 +1373,7 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
+ 	    (!(fid_mode & FAN_REPORT_NAME) || !(fid_mode & FAN_REPORT_FID)))
+ 		return -EINVAL;
+ 
+-	f_flags = O_RDWR | FMODE_NONOTIFY;
++	f_flags = O_RDWR | __FMODE_NONOTIFY;
+ 	if (flags & FAN_CLOEXEC)
+ 		f_flags |= O_CLOEXEC;
+ 	if (flags & FAN_NONBLOCK)
+-- 
+2.43.0
+
 
 
