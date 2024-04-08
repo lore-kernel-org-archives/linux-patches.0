@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634AF2E405;
-	Mon,  8 Apr 2024 13:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11582DF73;
+	Mon,  8 Apr 2024 13:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581489; cv=none; b=ubfSM5sJtEAgAjWVpct12T2T3XXcddOSKYu/P2jo5owj5q2ldyXwF/cjDhtAYCtUmOSsCuy3iAbEx6RdcWinNyZXA2bMWsqPYnNCfiSPw36DgbeM6oOiz4rkn8SntwujaphmCGJTMfdBA09G7wuv9z+C2KC6utvRAgXvmIYk0rk=
+	t=1712581492; cv=none; b=SEWer4N1Z2Yz84WB6UbwoVSH5cZ52QWEK5f0ln1gEu6IMKrSjnrfoYxgvmZvZS9BJyr83lCOfzW3jv88QTmetmqscBdTzw8Mof4qoKLjfUAHTaw1LgUUqg4GlQarN8Gt73Qdwj5uRhsvtBvz8q1OyN5JywIWaKeo4w3AkagjyJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581489; c=relaxed/simple;
-	bh=Wztw/SiwYAU+WaCoZl6RPnI71v2MuIXHoFsasqLN8Rk=;
+	s=arc-20240116; t=1712581492; c=relaxed/simple;
+	bh=4ztLEga/GUQA/wpWO29x0g4Uz/wcESVVt6gPb6o9RCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=us9W+k0J69d0q2adC/ZxsHwOMmfd0BIW8xIuQqHTyKGOxURPJLwny6/IUyWO8SKIvikN2+RkBiZU1uovtTzqcxvBDCcNNjwx42hWdx8j1iiNvupHg3JOUBdI0ywi1NesfcObP3DlTOR1Io0yh8MbaYjTdK4j6JLdhNbLYFKE4Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zi2Ixenw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnWroXu2YRzEEC4PzIRRsXnRxxuXebkuTzs4Ok36Coe2BB7/BFKuRI8zmPuIMnimcXMMdbkztieFQXP9aZstKyhe4RrsUOfF8h42AOfJg6DaykYV984fnjvwXTG8qSsdRUFlu3/9k2duRvfRrB5ZyAcEahZrsE9jd5qoBYaXFBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6h9LYBb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zi2Ixenw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF762C433C7;
-	Mon,  8 Apr 2024 13:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6h9LYBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6226C433F1;
+	Mon,  8 Apr 2024 13:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581489;
-	bh=Wztw/SiwYAU+WaCoZl6RPnI71v2MuIXHoFsasqLN8Rk=;
+	s=korg; t=1712581492;
+	bh=4ztLEga/GUQA/wpWO29x0g4Uz/wcESVVt6gPb6o9RCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zi2IxenwDZCqCOxZ1fIkjgClPk1StnxyBpFo5Ni+dxRz4RDX6yYSNBZ0sB12p0vD6
-	 MQfO3xqBtxxu3ohuQu3OVKtyMKx95xFtG5R1TFAjEuriNHZ69rB0UcYR+AwJpQCeYL
-	 yxKrj7wrsPPQAKbV/VA6aH8Dm0ZiVx4sT7Mdcna8=
+	b=m6h9LYBb2i3EQc07+QQivLRpKPG9OBNsSYGkEsdkzaGWaBqDc615Yes9AAS2y3LeD
+	 FsbmvpG+xOF6N0DBB6OTtjjxSa9YsRQP4ksxJCBhqQIOGMVh2a1oepaQTidJY6HlJ2
+	 2OvwXoFyQcJZjifOTKCcoZ6dSrqlJRrdEzBF+XeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Subject: [PATCH 6.6 011/252] wifi: iwlwifi: mvm: rfi: fix potential response leaks
-Date: Mon,  8 Apr 2024 14:55:10 +0200
-Message-ID: <20240408125306.997494072@linuxfoundation.org>
+	Benson Leung <bleung@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jameson Thies <jthies@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 056/690] usb: typec: ucsi: Clean up UCSI_CABLE_PROP macros
+Date: Mon,  8 Apr 2024 14:48:42 +0200
+Message-ID: <20240408125401.548368618@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jameson Thies <jthies@google.com>
 
-[ Upstream commit 06a093807eb7b5c5b29b6cff49f8174a4e702341 ]
+[ Upstream commit 4d0a5a9915793377c0fe1a8d78de6bcd92cea963 ]
 
-If the rx payload length check fails, or if kmemdup() fails,
-we still need to free the command response. Fix that.
+Clean up UCSI_CABLE_PROP macros by fixing a bitmask shifting error for
+plug type and updating the modal support macro for consistent naming.
 
-Fixes: 21254908cbe9 ("iwlwifi: mvm: add RFI-M support")
-Co-authored-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.db2fa0196aa7.I116293b132502ac68a65527330fa37799694b79c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3cf657f07918 ("usb: typec: ucsi: Remove all bit-fields")
+Cc: stable@vger.kernel.org
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Link: https://lore.kernel.org/r/20240305025804.1290919-2-jthies@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rfi.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-index 2ecd32bed752f..045c862a8fc4f 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-@@ -132,14 +132,18 @@ struct iwl_rfi_freq_table_resp_cmd *iwl_rfi_get_freq_table(struct iwl_mvm *mvm)
- 	if (ret)
- 		return ERR_PTR(ret);
- 
--	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) != resp_size))
-+	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) !=
-+			 resp_size)) {
-+		iwl_free_resp(&cmd);
- 		return ERR_PTR(-EIO);
-+	}
- 
- 	resp = kmemdup(cmd.resp_pkt->data, resp_size, GFP_KERNEL);
-+	iwl_free_resp(&cmd);
-+
- 	if (!resp)
- 		return ERR_PTR(-ENOMEM);
- 
--	iwl_free_resp(&cmd);
- 	return resp;
- }
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index cee666790907e..3dc3da8dbbdf8 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -220,12 +220,12 @@ struct ucsi_cable_property {
+ #define UCSI_CABLE_PROP_FLAG_VBUS_IN_CABLE	BIT(0)
+ #define UCSI_CABLE_PROP_FLAG_ACTIVE_CABLE	BIT(1)
+ #define UCSI_CABLE_PROP_FLAG_DIRECTIONALITY	BIT(2)
+-#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	((_f_) & GENMASK(3, 0))
++#define UCSI_CABLE_PROP_FLAG_PLUG_TYPE(_f_)	(((_f_) & GENMASK(4, 3)) >> 3)
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_A	0
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_B	1
+ #define   UCSI_CABLE_PROPERTY_PLUG_TYPE_C	2
+ #define   UCSI_CABLE_PROPERTY_PLUG_OTHER	3
+-#define UCSI_CABLE_PROP_MODE_SUPPORT		BIT(5)
++#define UCSI_CABLE_PROP_FLAG_MODE_SUPPORT	BIT(5)
+ 	u8 latency;
+ } __packed;
  
 -- 
 2.43.0
