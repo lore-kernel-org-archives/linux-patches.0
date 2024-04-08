@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959EE7350E;
-	Mon,  8 Apr 2024 13:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DA67442A;
+	Mon,  8 Apr 2024 13:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582159; cv=none; b=AOim/g8hBK1ggXJfvZgwQvlDEoIsnxH6dLOMIy8VA5yaz3lTYcPrFnpLB/eJ0rPwKELViTH3yPNuer6hx2BRBgADLuYE6WAV//HS8FauBV+1R2Pshp946B1KylTOJ9jCecRRnF2maC1sFp11T8iB5NKR6Pqf22QH0jlOcjMpSRw=
+	t=1712582162; cv=none; b=PMFPPu9y/SzoDNbPha81UUhjcBvQ1/5L+VWX/w2EbUUVcsXkMIZYsgmRGt5lFNpZ8T/nugjNERaoSVu0GJ5pr2BqVLfr7EVrN4dGTOqgy7qLszAI9EwE/mdM3WtjEIm/AnDaHtzqEBq8zyUfNy8EPB20uo2YyZc2jSmNqok9G5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582159; c=relaxed/simple;
-	bh=vGhuM3PdE6BbHFd2gZ131slYvF6l/W0EwcnmGRSsCHc=;
+	s=arc-20240116; t=1712582162; c=relaxed/simple;
+	bh=+Nd7S7+R5g+YsIHBVMvQWrUcO4CCyuzIIkmIEijwh3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kv9hfSnDjDky+Xzi8TI0jhrUgcFjgDPgBUexpvmc7je0zRkVEouKZf6Ii0rtUK5Yv5ZKsPPsSTUHbCuL9I1/bjebh93dcYLcHoUoUbR4y2SPQ/G4lR+M3m88lf9SmsI+rr0RYdGlHfJDz/MB+Eh5rEhE3eJqvxgV0jAhoQIFPQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc/d2Oc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TI8JHoBa6GIGgg8qe52JfWM2cHKphksM9SLxKvu5OIfcL5yvvMtZopEq0/BjR4xRyRozmCzESWa+QXZKzFAyPjGoroO/6Kx1woOtWVGgMVQ9v+8nFGLfmJGz6QDXIGmLSi/fkXthXNtWXjIcRVD5YRHVrk8ISEg6p0NZBDyk/Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHXC8Sqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc/d2Oc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8B6C433C7;
-	Mon,  8 Apr 2024 13:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHXC8Sqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C83C43390;
+	Mon,  8 Apr 2024 13:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582159;
-	bh=vGhuM3PdE6BbHFd2gZ131slYvF6l/W0EwcnmGRSsCHc=;
+	s=korg; t=1712582162;
+	bh=+Nd7S7+R5g+YsIHBVMvQWrUcO4CCyuzIIkmIEijwh3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hc/d2Oc7oHNHSQ/Vkht1LChIIIjAHKFsbc5OPwKz9vQsK6foiI1rHTufjKNLUA0YU
-	 mjFvt+elRScuL+YSaEdE8iaXoXlPmsRxVDCTaUvIWC2cy/uRIqeY9Hmxq2dr4hhMgf
-	 x4acx9t2lRAGX6PfQZdCUHzUXkyY4fZVwTBv2CEw=
+	b=xHXC8SqoulwEGKQCfxBGyaOmEpHrYXKCc3rd8fr84Ldqz9KudPw+PFjD+glHFISIx
+	 c62bQuiLYGqQPpgj9NVV0Umyt4tQb0ftPPIwgMQRW4vjwzcy2BseHERrm2Ym3EbcwI
+	 yxXLI6R5qcNY6M1kOMBVVNTffZeplNqg2CmlkkPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Paul Barker <paul.barker.ct@bp.renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 051/273] Octeontx2-af: fix pause frame configuration in GMP mode
-Date: Mon,  8 Apr 2024 14:55:26 +0200
-Message-ID: <20240408125310.878762107@linuxfoundation.org>
+Subject: [PATCH 6.1 083/138] net: ravb: Always process TX descriptor ring
+Date: Mon,  8 Apr 2024 14:58:17 +0200
+Message-ID: <20240408125258.806943510@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Paul Barker <paul.barker.ct@bp.renesas.com>
 
-[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
+[ Upstream commit 596a4254915f94c927217fe09c33a6828f33fb25 ]
 
-The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
-different speeds, allowing for efficient data transfer.
+The TX queue should be serviced each time the poll function is called,
+even if the full RX work budget has been consumed. This prevents
+starvation of the TX queue when RX bandwidth usage is high.
 
-The previous patch which added pause frame configuration has a bug due
-to which pause frame feature is not working in GMP mode.
-
-This patch fixes the issue by configurating appropriate registers.
-
-Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20240402145305.82148-1-paul.barker.ct@bp.renesas.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 3c0f55b3e48ea..b86f3224f0b78 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -808,6 +808,11 @@ static int cgx_lmac_enadis_pause_frm(void *cgxd, int lmac_id,
- 	if (!is_lmac_valid(cgx, lmac_id))
- 		return -ENODEV;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 36e2718c564ac..b11cc365d19e3 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1294,12 +1294,12 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+ 	int q = napi - priv->napi;
+ 	int mask = BIT(q);
+ 	int quota = budget;
++	bool unmask;
  
-+	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
-+	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
-+	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
-+	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
+ 	/* Processing RX Descriptor Ring */
+ 	/* Clear RX interrupt */
+ 	ravb_write(ndev, ~(mask | RIS0_RESERVED), RIS0);
+-	if (ravb_rx(ndev, &quota, q))
+-		goto out;
++	unmask = !ravb_rx(ndev, &quota, q);
+ 
+ 	/* Processing TX Descriptor Ring */
+ 	spin_lock_irqsave(&priv->lock, flags);
+@@ -1309,6 +1309,9 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+ 	netif_wake_subqueue(ndev, q);
+ 	spin_unlock_irqrestore(&priv->lock, flags);
+ 
++	if (!unmask)
++		goto out;
 +
- 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
- 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
- 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
+ 	napi_complete(napi);
+ 
+ 	/* Re-enable RX/TX interrupts */
 -- 
 2.43.0
 
