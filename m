@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F021353E3;
-	Mon,  8 Apr 2024 13:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6ED137918;
+	Mon,  8 Apr 2024 13:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583053; cv=none; b=FPfNqOCeryUMAB6UkB3iI56EEU+7e3AetlvtORuuhPz8tfeRqPoa7BN0bTbj3WLEhOZGKmEgInCu34OMdJahh44sIpRe3RPQQZSAWH1Km8s996xVDeRWRC6h2m27owDWOxDkeevhj8JVi1p/G38VDl2F+EXkjGXd4JH61XBbva8=
+	t=1712583056; cv=none; b=RzLUfM5yzCF2+11cMiL5SIKM7F6cxVaD4PX9jpZcwBrJpTVRrD5TK4aXsoVwYGK26Ro4FnGQH/r2I/38JfhHFxpW37grt9d58g9V12wpvLMqRKOUJqYhY89MMYDPy5D66YknTY4JLcT+bFmlTZBW17No1QNrIdBZvFg8Z2wRiEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583053; c=relaxed/simple;
-	bh=jZVlPYcVTrdH4ogniJ3BFZ8tcPCzAG6xMv9rvP1Z6WM=;
+	s=arc-20240116; t=1712583056; c=relaxed/simple;
+	bh=U9McpEbZuIUywBWh+wRWg+1Rl6KFi8PqokMu40kaCbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fE2OK07nHIQ+8QhZUSIaI9U/QRvDBrdtYYxRr2plhhx3DtUbi+UiAQwCXuTDwYlWqvoRY4t7uDwgNWcfV1Nt8Kk2F48QFuLNmj3AV9JFTxn6Keq2BU52dlFHXNm2F/YEhwUAZ59smjtITvXYUfRuIaf9u3ezBUjTYqQ4MmuXULA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7aCyshu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwlZK0V7/WJ3vBxkKbm2Hp6ceNsDdTJRym1Mtviow5hUaGgTHHXWgDNCLoPJEzgEA4qgeY7EdR06BM5IKdbXx2FXunr0WvtquyPYbbDFQKlo+Y84VaUZYn0rzpjG1hmW6/x1/A8/8lNsfuiSaoBKuF3o+p2i/djTDdvC7V+Xq8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb+XuRBH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7aCyshu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD86C433F1;
-	Mon,  8 Apr 2024 13:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb+XuRBH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E7C43390;
+	Mon,  8 Apr 2024 13:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583053;
-	bh=jZVlPYcVTrdH4ogniJ3BFZ8tcPCzAG6xMv9rvP1Z6WM=;
+	s=korg; t=1712583056;
+	bh=U9McpEbZuIUywBWh+wRWg+1Rl6KFi8PqokMu40kaCbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7aCyshu3L0m9Jzrk5PhjqF3Tlv7JUywM/c6HGinsnCR4HfLzv4JQfBQFQpEEEQNU
-	 69pA0ZugVvcWYo3wa5IkeAdAGZhi2xsbaquJOElxkY7T2Y1zgq/S7CRhB4VdC1wBQs
-	 wOhNuAI1mV71/8FlKVhNWIIE8k/9uxQoyNTHwIEg=
+	b=Cb+XuRBHQz9RyAke7ISEvv1PTgmdxg4h+VtyfFLh5wIdB64iJcV6G06J4VFKIw5QK
+	 X3iQvTysSFLldOqBuWM0trSeydPvUmmxccwlAt1mqoagDYFHU+8imQu7hqf9Iasgo9
+	 C5xTvsOZyV3Nqc+5VDvoloio8WrBOYDrn88tJ3PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/252] e1000e: move force SMBUS from enable ulp function to avoid PHY loss issue
-Date: Mon,  8 Apr 2024 14:57:31 +0200
-Message-ID: <20240408125311.373767008@linuxfoundation.org>
+Subject: [PATCH 6.8 135/273] mean_and_variance: Drop always failing tests
+Date: Mon,  8 Apr 2024 14:56:50 +0200
+Message-ID: <20240408125313.485220939@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,100 +47,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 861e8086029e003305750b4126ecd6617465f5c7 ]
+[ Upstream commit 97ca7c1f93bbac6982717a7055cd727813c45e61 ]
 
-Forcing SMBUS inside the ULP enabling flow leads to sporadic PHY loss on
-some systems. It is suspected to be caused by initiating PHY transactions
-before the interface settles.
+mean_and_variance_test_2 and mean_and_variance_test_4 always fail.
+The input parameters to those tests are identical to the input parameters
+to tests 1 and 3, yet the expected result for tests 2 and 4 is different
+for the mean and stddev tests. That will always fail.
 
-Separating this configuration from the ULP enabling flow and moving it to
-the shutdown function allows enough time for the interface to settle and
-avoids adding a delay.
+     Expected mean_and_variance_get_mean(mv) == mean[i], but
+        mean_and_variance_get_mean(mv) == 22 (0x16)
+        mean[i] == 10 (0xa)
 
-Fixes: 6607c99e7034 ("e1000e: i219 - fix to enable both ULP and EEE in Sx state")
-Co-developed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Drop the bad tests.
+
+Fixes: 65bc41090720 ("mean and variance: More tests")
+Closes: https://lore.kernel.org/lkml/065b94eb-6a24-4248-b7d7-d3212efb4787@roeck-us.net/
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 19 -------------------
- drivers/net/ethernet/intel/e1000e/netdev.c  | 18 ++++++++++++++++++
- 2 files changed, 18 insertions(+), 19 deletions(-)
+ fs/bcachefs/mean_and_variance_test.c | 28 +---------------------------
+ 1 file changed, 1 insertion(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index 717c52913e84b..4d83c9a0c023a 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1165,25 +1165,6 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000_hw *hw, bool to_sx)
- 	if (ret_val)
- 		goto out;
+diff --git a/fs/bcachefs/mean_and_variance_test.c b/fs/bcachefs/mean_and_variance_test.c
+index 019583c3ca0ea..51093fa848202 100644
+--- a/fs/bcachefs/mean_and_variance_test.c
++++ b/fs/bcachefs/mean_and_variance_test.c
+@@ -130,20 +130,8 @@ static void mean_and_variance_test_1(struct kunit *test)
+ 			d, mean, stddev, weighted_mean, weighted_stddev);
+ }
  
--	/* Switching PHY interface always returns MDI error
--	 * so disable retry mechanism to avoid wasting time
--	 */
--	e1000e_disable_phy_retry(hw);
+-static void mean_and_variance_test_2(struct kunit *test)
+-{
+-	s64 d[]			= { 100, 10, 10, 10, 10, 10, 10 };
+-	s64 mean[]		= {  10, 10, 10, 10, 10, 10, 10 };
+-	s64 stddev[]		= {   9,  9,  9,  9,  9,  9,  9 };
+-	s64 weighted_mean[]	= {  32, 27, 22, 19, 17, 15, 14 };
+-	s64 weighted_stddev[]	= {  38, 35, 31, 27, 24, 21, 18 };
 -
--	/* Force SMBus mode in PHY */
--	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
--	if (ret_val)
--		goto release;
--	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
--	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
+-	do_mean_and_variance_test(test, 10, 6, ARRAY_SIZE(d), 2,
+-			d, mean, stddev, weighted_mean, weighted_stddev);
+-}
 -
--	e1000e_enable_phy_retry(hw);
--
--	/* Force SMBus mode in MAC */
--	mac_reg = er32(CTRL_EXT);
--	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
--	ew32(CTRL_EXT, mac_reg);
--
- 	/* Si workaround for ULP entry flow on i127/rev6 h/w.  Enable
- 	 * LPLU and disable Gig speed when entering ULP
- 	 */
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index cc8c531ec3dff..3692fce201959 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6623,6 +6623,7 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 	struct e1000_hw *hw = &adapter->hw;
- 	u32 ctrl, ctrl_ext, rctl, status, wufc;
- 	int retval = 0;
-+	u16 smb_ctrl;
+ /* Test behaviour where we switch from one steady state to another: */
+-static void mean_and_variance_test_3(struct kunit *test)
++static void mean_and_variance_test_2(struct kunit *test)
+ {
+ 	s64 d[]			= { 100, 100, 100, 100, 100 };
+ 	s64 mean[]		= {  22,  32,  40,  46,  50 };
+@@ -155,18 +143,6 @@ static void mean_and_variance_test_3(struct kunit *test)
+ 			d, mean, stddev, weighted_mean, weighted_stddev);
+ }
  
- 	/* Runtime suspend should only enable wakeup for link changes */
- 	if (runtime)
-@@ -6696,6 +6697,23 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 			if (retval)
- 				return retval;
- 		}
-+
-+		/* Force SMBUS to allow WOL */
-+		/* Switching PHY interface always returns MDI error
-+		 * so disable retry mechanism to avoid wasting time
-+		 */
-+		e1000e_disable_phy_retry(hw);
-+
-+		e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
-+		smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
-+		e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
-+
-+		e1000e_enable_phy_retry(hw);
-+
-+		/* Force SMBus mode in MAC */
-+		ctrl_ext = er32(CTRL_EXT);
-+		ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
-+		ew32(CTRL_EXT, ctrl_ext);
- 	}
+-static void mean_and_variance_test_4(struct kunit *test)
+-{
+-	s64 d[]			= { 100, 100, 100, 100, 100 };
+-	s64 mean[]		= {  10,  11,  12,  13,  14 };
+-	s64 stddev[]		= {   9,  13,  15,  17,  19 };
+-	s64 weighted_mean[]	= {  32,  49,  61,  71,  78 };
+-	s64 weighted_stddev[]	= {  38,  44,  44,  41,  38 };
+-
+-	do_mean_and_variance_test(test, 10, 6, ARRAY_SIZE(d), 2,
+-			d, mean, stddev, weighted_mean, weighted_stddev);
+-}
+-
+ static void mean_and_variance_fast_divpow2(struct kunit *test)
+ {
+ 	s64 i;
+@@ -224,8 +200,6 @@ static struct kunit_case mean_and_variance_test_cases[] = {
+ 	KUNIT_CASE(mean_and_variance_weighted_advanced_test),
+ 	KUNIT_CASE(mean_and_variance_test_1),
+ 	KUNIT_CASE(mean_and_variance_test_2),
+-	KUNIT_CASE(mean_and_variance_test_3),
+-	KUNIT_CASE(mean_and_variance_test_4),
+ 	{}
+ };
  
- 	/* Ensure that the appropriate bits are set in LPI_CTRL
 -- 
 2.43.0
 
