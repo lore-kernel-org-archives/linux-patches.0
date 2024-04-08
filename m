@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF4942046;
-	Mon,  8 Apr 2024 13:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2F7762E5;
+	Mon,  8 Apr 2024 13:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584483; cv=none; b=hOGWN8b5Co7vCwxo3soksoqL83DslV7Ovu//4M7tTVO7SUR8gDHSrzAz8O8Mnv1uU2PL2GsE4XIUe5tFXuEnSAPz7cr3tm+NWfUbwX1OKXYjmVqarxYkTYhwwGkeOrIOlLde9ys8ddgDloqqeq7LuENah3mwB+c+anUkNysVmaI=
+	t=1712584486; cv=none; b=PhluhpiTVhXbLtuw1+g2yaTlTfw9eJMSwRtgRLzH2JqWSiLu5ryYl79KH/2zDuX6DeymTICUoOHLPk+9wrQ4Ha5ApfWVsQ6q51Y0FZJlUak3V0KAqOlD7nule0dTca+h8VUp/5xcRm2KDXWslfiZgBdEAMRU5Bw/F6repc2p5G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584483; c=relaxed/simple;
-	bh=HsLK+CH7D5qw030Pdc9pYr0hvv8WDPY92zQonQkjC+w=;
+	s=arc-20240116; t=1712584486; c=relaxed/simple;
+	bh=146dG95hfu5cDdbG8LCtviTfjXdKHXonrdiLhzEeNBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KiWip2O8XHYuusp5RM08y2P5PE4HE2SKOUrT5ZQm+9w8p3VwOXDistIBfZka0xmD+n3k43iOpNAn8iBX5P67GPKFr/3//I/KVUsjp8rNWoGJPbvfRoJG42+Uej9PLuILiWGPzLrA9t31NrxX7RoD85BQhyI4h3+mQsrJPfhttlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2ggnJV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmwkMzQjtgFf5tHJers8FjB2yf8y9dw9F245kQDxD6tIHBPEDfXGQtQhZehWcHzz+a/wkmxEZv1deqweTxv0n9F18s/Bm8zaHUkEO1cE2gHQOXpWSE1DoYu2pbLoK3qtmL8QRG76ni25szoYOQamLt1Rh1TfUPSHFxGS9SsrGHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+uSW6sK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2ggnJV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE906C433C7;
-	Mon,  8 Apr 2024 13:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+uSW6sK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAECEC43390;
+	Mon,  8 Apr 2024 13:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584483;
-	bh=HsLK+CH7D5qw030Pdc9pYr0hvv8WDPY92zQonQkjC+w=;
+	s=korg; t=1712584486;
+	bh=146dG95hfu5cDdbG8LCtviTfjXdKHXonrdiLhzEeNBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E2ggnJV4SKKJ7npHhOQQtjchpfh2XehZPGW0Ymc8QSjcsvpKm9w++VKtFpKIfDIdt
-	 ks5o+8f/VygiN4APC9lKl5W/dUMDMLhgyFgD9AU2CMPu/XynyscezBYp28lCi+Ij+Y
-	 6ydKm5NNcfRRYGOvN7XqLYAwZC1WL49OEgmTM5pI=
+	b=u+uSW6sKjTMGbvyypu9JkMq07OIv5ZD71lWA7c1yM9+yc3UnVmISQ0cf7r5NPyW7u
+	 BMLfFpYzHGYcqAg5CQ4F3xXXWTINMzpyVUlgF8WcbIT8/glEFS+733fTXDBFlNvv6/
+	 vgtgJpYDVV4Bk8O61WsNDbs8Qd+StlHNUZ+MxKuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 423/690] NFSD: drop fname and flen args from nfsd_create_locked()
-Date: Mon,  8 Apr 2024 14:54:49 +0200
-Message-ID: <20240408125414.929058542@linuxfoundation.org>
+Subject: [PATCH 5.15 424/690] nfsd: clean up mounted_on_fileid handling
+Date: Mon,  8 Apr 2024 14:54:50 +0200
+Message-ID: <20240408125414.958670349@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,76 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 9558f9304ca1903090fa5d995a3269a8e82804b4 ]
+[ Upstream commit 6106d9119b6599fa23dc556b429d887b4c2d9f62 ]
 
-nfsd_create_locked() does not use the "fname" and "flen" arguments, so
-drop them from declaration and all callers.
+We only need the inode number for this, not a full rack of attributes.
+Rename this function make it take a pointer to a u64 instead of
+struct kstat, and change it to just request STATX_INO.
 
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+[ cel: renamed get_mounted_on_ino() ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfsproc.c | 5 ++---
- fs/nfsd/vfs.c     | 5 ++---
- fs/nfsd/vfs.h     | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ fs/nfsd/nfs4xdr.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 4b19cc727ea50..ee02ede74bf53 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -391,9 +391,8 @@ nfsd_proc_create(struct svc_rqst *rqstp)
- 	resp->status = nfs_ok;
- 	if (!inode) {
- 		/* File doesn't exist. Create it and set attrs */
--		resp->status = nfsd_create_locked(rqstp, dirfhp, argp->name,
--						  argp->len, &attrs, type, rdev,
--						  newfhp);
-+		resp->status = nfsd_create_locked(rqstp, dirfhp, &attrs, type,
-+						  rdev, newfhp);
- 	} else if (type == S_IFREG) {
- 		dprintk("nfsd:   existing %s, valid=%x, size=%ld\n",
- 			argp->name, attr->ia_valid, (long) attr->ia_size);
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 343af6341e5e1..77f8ab3826d75 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1257,7 +1257,7 @@ nfsd_check_ignore_resizing(struct iattr *iap)
- /* The parent directory should already be locked: */
- __be32
- nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		   char *fname, int flen, struct nfsd_attrs *attrs,
-+		   struct nfsd_attrs *attrs,
- 		   int type, dev_t rdev, struct svc_fh *resfhp)
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 0f30d93577e7b..3ad9b41c51730 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2772,9 +2772,10 @@ static __be32 fattr_handle_absent_fs(u32 *bmval0, u32 *bmval1, u32 *bmval2, u32
+ }
+ 
+ 
+-static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
++static int nfsd4_get_mounted_on_ino(struct svc_export *exp, u64 *pino)
  {
- 	struct dentry	*dentry, *dchild;
-@@ -1384,8 +1384,7 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (err)
- 		goto out_unlock;
- 	fh_fill_pre_attrs(fhp);
--	err = nfsd_create_locked(rqstp, fhp, fname, flen, attrs, type,
--				 rdev, resfhp);
-+	err = nfsd_create_locked(rqstp, fhp, attrs, type, rdev, resfhp);
- 	fh_fill_post_attrs(fhp);
- out_unlock:
- 	inode_unlock(dentry->d_inode);
-diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index c95cd414b4bb0..120521bc7b247 100644
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -79,8 +79,8 @@ __be32		nfsd4_clone_file_range(struct svc_rqst *rqstp,
- 				       u64 count, bool sync);
- #endif /* CONFIG_NFSD_V4 */
- __be32		nfsd_create_locked(struct svc_rqst *, struct svc_fh *,
--				char *name, int len, struct nfsd_attrs *attrs,
--				int type, dev_t rdev, struct svc_fh *res);
-+				struct nfsd_attrs *attrs, int type, dev_t rdev,
-+				struct svc_fh *res);
- __be32		nfsd_create(struct svc_rqst *, struct svc_fh *,
- 				char *name, int len, struct nfsd_attrs *attrs,
- 				int type, dev_t rdev, struct svc_fh *res);
+ 	struct path path = exp->ex_path;
++	struct kstat stat;
+ 	int err;
+ 
+ 	path_get(&path);
+@@ -2782,8 +2783,10 @@ static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
+ 		if (path.dentry != path.mnt->mnt_root)
+ 			break;
+ 	}
+-	err = vfs_getattr(&path, stat, STATX_BASIC_STATS, AT_STATX_SYNC_AS_STAT);
++	err = vfs_getattr(&path, &stat, STATX_INO, AT_STATX_SYNC_AS_STAT);
+ 	path_put(&path);
++	if (!err)
++		*pino = stat.ino;
+ 	return err;
+ }
+ 
+@@ -3280,22 +3283,21 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 		*p++ = cpu_to_be32(stat.btime.tv_nsec);
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_MOUNTED_ON_FILEID) {
+-		struct kstat parent_stat;
+ 		u64 ino = stat.ino;
+ 
+ 		p = xdr_reserve_space(xdr, 8);
+ 		if (!p)
+                 	goto out_resource;
+ 		/*
+-		 * Get parent's attributes if not ignoring crossmount
+-		 * and this is the root of a cross-mounted filesystem.
++		 * Get ino of mountpoint in parent filesystem, if not ignoring
++		 * crossmount and this is the root of a cross-mounted
++		 * filesystem.
+ 		 */
+ 		if (ignore_crossmnt == 0 &&
+ 		    dentry == exp->ex_path.mnt->mnt_root) {
+-			err = get_parent_attributes(exp, &parent_stat);
++			err = nfsd4_get_mounted_on_ino(exp, &ino);
+ 			if (err)
+ 				goto out_nfserr;
+-			ino = parent_stat.ino;
+ 		}
+ 		p = xdr_encode_hyper(p, ino);
+ 	}
 -- 
 2.43.0
 
