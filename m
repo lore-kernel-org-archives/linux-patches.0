@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D809C8120D;
-	Mon,  8 Apr 2024 13:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F638120F;
+	Mon,  8 Apr 2024 13:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582048; cv=none; b=QsToSyHJaHtu0DcQJg5oMlPzIURa3erHAL9BGqeiG3/nq/D6NCDvVO79jbGAs8a8u5Q0qELGAFBkqaEG54p7GzmUIFpb/3ugM8DLKd+F2wW05cjisqHHakVePBS2JjfsSUImpT6Yal1wz6YWlw+t9ojwZFQTYuk+14EDkrMuPd4=
+	t=1712582051; cv=none; b=RZ9Gi2XlcYNtI1lUaU3lyQpJq7LvMEENEIBp3ANr48kCtTLt5IMTmSZgbN9phJqWskKm8G4+UvfdE912bjk1BxVWguBijZtCDAUxYXgERPuaVd76zxmij3dSvptpCM4gmUr96oLNv1du0ATXrMHNaH0xWye8iHukLXiDOdS+OTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582048; c=relaxed/simple;
-	bh=qOQ4tzqAJ4gi4i+lHW4XYqcqcLJSZGIF3QSrweI3wVA=;
+	s=arc-20240116; t=1712582051; c=relaxed/simple;
+	bh=1ob2YYiujx+YbM9/yRAc/xQQmoRfXEj7woeZN5P6eec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfpCLKeG2vH/Ti5DRy88en0lKfdiJNXgKzjiTL8vlrcfmHBxy3hcgj96KVIlmZ+AJVUC9PIx6ZwAMoMqf6eXoTwY/V+V4VjqYXulSD362UsDQ6kn5Bsscct0r4gt69XZ1X9RXimkH5x/5PV/D1w8CGdgn/HkWLCFokuTPbuDCJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yu7W4hmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESez3bYmTd9wWaAmLITM7LnFRzkOjB9XGNdrEQiGFJ4q8NP4ThEC9/AUPlGK8oKK2WtNi7Kbr+rLq9BmicGS8yk+tPIPe66HxiXt2JvcGb4SMaGSEMZ1u0L7ATBKiGzhPcxFrwTmSFCaHMIGdH2+xqUGBRcgVEyiJ/qi9+LL4OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOob+E4y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yu7W4hmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA64C433F1;
-	Mon,  8 Apr 2024 13:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOob+E4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395C6C433C7;
+	Mon,  8 Apr 2024 13:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582048;
-	bh=qOQ4tzqAJ4gi4i+lHW4XYqcqcLJSZGIF3QSrweI3wVA=;
+	s=korg; t=1712582051;
+	bh=1ob2YYiujx+YbM9/yRAc/xQQmoRfXEj7woeZN5P6eec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yu7W4hmFzYmlbU5ZRqi+Ns1MrBjvX2bKsH4fVtBejIuem01DIFM9UUYQwL+kyiIMA
-	 h9U7QNg75pPqlEZLhyagdyiBPewv7kpu5SVMSwDSg3TKXcv4fEynO/LbRtaAbpnaSW
-	 XqE/9LqsQoKOTGtVbMHvdQInX5mJeYasZmessiqM=
+	b=dOob+E4y90XOZrVaVS3xPL/2GN3rgkRGop4NeWkqhTYfH/lAoFUHFhfpJObKM122M
+	 exRCry1gGWwbvIizfF0K9bFnsdSl7UjFl0C5soDQESty3A60Do+1+R31l3rHPOXQCY
+	 78ShgcHhI+Fi2tm6536Qgdf+ND5BPV5lma8u2eRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.1 074/138] i40e: Remove _t suffix from enum type names
-Date: Mon,  8 Apr 2024 14:58:08 +0200
-Message-ID: <20240408125258.527645933@linuxfoundation.org>
+	Lillian Berry <lillian@star-ark.net>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 107/690] wireguard: netlink: check for dangling peer via is_dead instead of empty list
+Date: Mon,  8 Apr 2024 14:49:33 +0200
+Message-ID: <20240408125403.381509513@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,107 +49,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit addca9175e5f74cf29e8ad918c38c09b8663b5b8 ]
+[ Upstream commit 55b6c738673871c9b0edae05d0c97995c1ff08c4 ]
 
-Enum type names should not be suffixed by '_t'. Either to use
-'typedef enum name name_t' to so plain 'name_t var' instead of
-'enum name_t var'.
+If all peers are removed via wg_peer_remove_all(), rather than setting
+peer_list to empty, the peer is added to a temporary list with a head on
+the stack of wg_peer_remove_all(). If a netlink dump is resumed and the
+cursored peer is one that has been removed via wg_peer_remove_all(), it
+will iterate from that peer and then attempt to dump freed peers.
 
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20231113231047.548659-6-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ea558de7238b ("i40e: Enforce software interrupt during busy-poll exit")
+Fix this by instead checking peer->is_dead, which was explictly created
+for this purpose. Also move up the device_update_lock lockdep assertion,
+since reading is_dead relies on that.
+
+It can be reproduced by a small script like:
+
+    echo "Setting config..."
+    ip link add dev wg0 type wireguard
+    wg setconf wg0 /big-config
+    (
+            while true; do
+                    echo "Showing config..."
+                    wg showconf wg0 > /dev/null
+            done
+    ) &
+    sleep 4
+    wg setconf wg0 <(printf "[Peer]\nPublicKey=$(wg genkey)\n")
+
+Resulting in:
+
+    BUG: KASAN: slab-use-after-free in __lock_acquire+0x182a/0x1b20
+    Read of size 8 at addr ffff88811956ec70 by task wg/59
+    CPU: 2 PID: 59 Comm: wg Not tainted 6.8.0-rc2-debug+ #5
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x47/0x70
+     print_address_description.constprop.0+0x2c/0x380
+     print_report+0xab/0x250
+     kasan_report+0xba/0xf0
+     __lock_acquire+0x182a/0x1b20
+     lock_acquire+0x191/0x4b0
+     down_read+0x80/0x440
+     get_peer+0x140/0xcb0
+     wg_get_device_dump+0x471/0x1130
+
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: Lillian Berry <lillian@star-ark.net>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h      | 4 ++--
- drivers/net/ethernet/intel/i40e/i40e_ptp.c  | 6 +++---
- drivers/net/ethernet/intel/i40e/i40e_txrx.h | 4 ++--
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wireguard/netlink.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index 59c4e9d642980..35862dedd59b5 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -108,7 +108,7 @@
- #define I40E_MAX_BW_INACTIVE_ACCUM	4 /* accumulate 4 credits max */
- 
- /* driver state flags */
--enum i40e_state_t {
-+enum i40e_state {
- 	__I40E_TESTING,
- 	__I40E_CONFIG_BUSY,
- 	__I40E_CONFIG_DONE,
-@@ -156,7 +156,7 @@ enum i40e_state_t {
- 	BIT_ULL(__I40E_PF_RESET_AND_REBUILD_REQUESTED)
- 
- /* VSI state flags */
--enum i40e_vsi_state_t {
-+enum i40e_vsi_state {
- 	__I40E_VSI_DOWN,
- 	__I40E_VSI_NEEDS_RESTART,
- 	__I40E_VSI_SYNCING_FILTERS,
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_ptp.c b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-index 97a9efe7b713e..5f2555848a69e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-@@ -34,7 +34,7 @@ enum i40e_ptp_pin {
- 	GPIO_4
- };
- 
--enum i40e_can_set_pins_t {
-+enum i40e_can_set_pins {
- 	CANT_DO_PINS = -1,
- 	CAN_SET_PINS,
- 	CAN_DO_PINS
-@@ -192,7 +192,7 @@ static bool i40e_is_ptp_pin_dev(struct i40e_hw *hw)
-  * return CAN_DO_PINS if pins can be manipulated within a NIC or
-  * return CANT_DO_PINS otherwise.
-  **/
--static enum i40e_can_set_pins_t i40e_can_set_pins(struct i40e_pf *pf)
-+static enum i40e_can_set_pins i40e_can_set_pins(struct i40e_pf *pf)
- {
- 	if (!i40e_is_ptp_pin_dev(&pf->hw)) {
- 		dev_warn(&pf->pdev->dev,
-@@ -1081,7 +1081,7 @@ static void i40e_ptp_set_pins_hw(struct i40e_pf *pf)
- static int i40e_ptp_set_pins(struct i40e_pf *pf,
- 			     struct i40e_ptp_pins_settings *pins)
- {
--	enum i40e_can_set_pins_t pin_caps = i40e_can_set_pins(pf);
-+	enum i40e_can_set_pins pin_caps = i40e_can_set_pins(pf);
- 	int i = 0;
- 
- 	if (pin_caps == CANT_DO_PINS)
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.h b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-index 768290dc6f48b..602ddd956245e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.h
-@@ -57,7 +57,7 @@ static inline u16 i40e_intrl_usec_to_reg(int intrl)
-  * mentioning ITR_INDX, ITR_NONE cannot be used as an index 'n' into any
-  * register but instead is a special value meaning "don't update" ITR0/1/2.
-  */
--enum i40e_dyn_idx_t {
-+enum i40e_dyn_idx {
- 	I40E_IDX_ITR0 = 0,
- 	I40E_IDX_ITR1 = 1,
- 	I40E_IDX_ITR2 = 2,
-@@ -304,7 +304,7 @@ struct i40e_rx_queue_stats {
- 	u64 page_busy_count;
- };
- 
--enum i40e_ring_state_t {
-+enum i40e_ring_state {
- 	__I40E_TX_FDIR_INIT_DONE,
- 	__I40E_TX_XPS_INIT_DONE,
- 	__I40E_RING_STATE_NBITS /* must be last */
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index f5bc279c9a8c2..6523f9d5a1527 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -255,17 +255,17 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (!peers_nest)
+ 		goto out;
+ 	ret = 0;
+-	/* If the last cursor was removed via list_del_init in peer_remove, then
++	lockdep_assert_held(&wg->device_update_lock);
++	/* If the last cursor was removed in peer_remove or peer_remove_all, then
+ 	 * we just treat this the same as there being no more peers left. The
+ 	 * reason is that seq_nr should indicate to userspace that this isn't a
+ 	 * coherent dump anyway, so they'll try again.
+ 	 */
+ 	if (list_empty(&wg->peer_list) ||
+-	    (ctx->next_peer && list_empty(&ctx->next_peer->peer_list))) {
++	    (ctx->next_peer && ctx->next_peer->is_dead)) {
+ 		nla_nest_cancel(skb, peers_nest);
+ 		goto out;
+ 	}
+-	lockdep_assert_held(&wg->device_update_lock);
+ 	peer = list_prepare_entry(ctx->next_peer, &wg->peer_list, peer_list);
+ 	list_for_each_entry_continue(peer, &wg->peer_list, peer_list) {
+ 		if (get_peer(peer, skb, ctx)) {
 -- 
 2.43.0
 
