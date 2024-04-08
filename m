@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183917FBC8;
-	Mon,  8 Apr 2024 13:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B6B7E580;
+	Mon,  8 Apr 2024 13:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582594; cv=none; b=Dxca0tu/WAVfs6J802AdvHdh3jtdMr+s1p56qh8xOjTHuJ2EQuW91pMwr7LeL9E38slXBPVwoXjfL2rKePIZ7QNnQ0BybBb4d/4MdvnpZpQIQub7UNZH5zhidU1n3qhdDwqwqXwNQwL278o+/gXiNkd6C7EWRtZLQDB+8Pkin7Y=
+	t=1712582597; cv=none; b=DFpb+sqNxXIn73OCo8Dss9z0BhNGPwiCpSac+RYxyQf0IgKRgBoJ077A/4sSecZn3j4597CmM4AQSeHRA07NpXe4qY4xTaaOhjPkI072ewnylGI+wU+xmmg/J4cwncI/QMhZYZMD97Y98UfoPLEQ0R2vqDKOASTe3VuAAIOvVUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582594; c=relaxed/simple;
-	bh=QUw/JlurGEiERxBupHIAifAk+XSWhz+XMu4JitWdrJk=;
+	s=arc-20240116; t=1712582597; c=relaxed/simple;
+	bh=rpEpBYwYtIzVF9BbfRsZ3B2kpFmvXAVcbleN5HzjF+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ic3L+uSvwUv61atun0uKWzjEMc9IxFl2JT2nWzc2N1HaVkenU+bmWHfbmlbU8YnXuOUN/QRE6ymg94YCuqEjXSVGyAWbcDz8GrfjlgIuqZwwwOgtA1c3Hr7ZOdtgHEov4IOfGB5XpMpGRUu6xHs6nwJUm2s31TMIh8ISr70vjQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLJkxs7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RODH1+u8kKWun8rZy1u7rH+pb5GtIFtOFGZ5SsLnptFJqZeNE3NCFOab9sTLRAyKS6VB1qLxHjpYW4sV3VtlvPF7ESgHI4ttPt4BSdiuK/LOfCRCEwdiUQ/g2GQiWHBfX8cbyKC1PNV0pRbNp+YL3eBgN8kj6Hk4+90uYGG9TzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkpV5rRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLJkxs7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914EBC433C7;
-	Mon,  8 Apr 2024 13:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkpV5rRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE82C433C7;
+	Mon,  8 Apr 2024 13:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582594;
-	bh=QUw/JlurGEiERxBupHIAifAk+XSWhz+XMu4JitWdrJk=;
+	s=korg; t=1712582596;
+	bh=rpEpBYwYtIzVF9BbfRsZ3B2kpFmvXAVcbleN5HzjF+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLJkxs7Cw8utrU/g9Cv1A3boFAJymmYBMFP97l14ds1PmU0b3MCRyvO6iwKLDm0UD
-	 nKKvW+/vf7rwvD7OAauBq1HFu5/Z7OTUmmb5A7nRI/nJcT0mtMFM66bvEmOUsF3DqR
-	 wa1Ufxg1a9o6ro0Bi1NvWsfo6xSbMv7jxOCOFRfM=
+	b=LkpV5rRvKxPdpiZNtYxms3CmgqKVa4v4xTk6DFCJVJia4F93S9jAuhgyP4ZhCqE7P
+	 d6M7nQFi6AZFaKuVzqX5uPeMiU8Js+uCNzzwKkz/SAxfB+LJsseXrcNzNw7Uk6OtId
+	 eHjdoZD24KpwA0ZfSndmsZLESwNyGzMISn/8WAZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 105/252] net/sched: fix lockdep splat in qdisc_tree_reduce_backlog()
-Date: Mon,  8 Apr 2024 14:56:44 +0200
-Message-ID: <20240408125309.903146698@linuxfoundation.org>
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 5.15 158/690] Documentation/hw-vuln: Add documentation for RFDS
+Date: Mon,  8 Apr 2024 14:50:24 +0200
+Message-ID: <20240408125405.254704070@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,87 +48,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 7eb322360b0266481e560d1807ee79e0cef5742b upstream.
+commit 4e42765d1be01111df0c0275bbaf1db1acef346e upstream.
 
-qdisc_tree_reduce_backlog() is called with the qdisc lock held,
-not RTNL.
+Add the documentation for transient execution vulnerability Register
+File Data Sampling (RFDS) that affects Intel Atom CPUs.
 
-We must use qdisc_lookup_rcu() instead of qdisc_lookup()
+  [ pawan: s/ATOM_GRACEMONT/ALDERLAKE_N/ ]
 
-syzbot reported:
-
-WARNING: suspicious RCU usage
-6.1.74-syzkaller #0 Not tainted
------------------------------
-net/sched/sch_api.c:305 suspicious rcu_dereference_protected() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-3 locks held by udevd/1142:
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: net_tx_action+0x64a/0x970 net/core/dev.c:5282
-  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:350 [inline]
-  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: net_tx_action+0x754/0x970 net/core/dev.c:5297
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: qdisc_tree_reduce_backlog+0x84/0x580 net/sched/sch_api.c:792
-
-stack backtrace:
-CPU: 1 PID: 1142 Comm: udevd Not tainted 6.1.74-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Call Trace:
- <TASK>
-  [<ffffffff85b85f14>] __dump_stack lib/dump_stack.c:88 [inline]
-  [<ffffffff85b85f14>] dump_stack_lvl+0x1b1/0x28f lib/dump_stack.c:106
-  [<ffffffff85b86007>] dump_stack+0x15/0x1e lib/dump_stack.c:113
-  [<ffffffff81802299>] lockdep_rcu_suspicious+0x1b9/0x260 kernel/locking/lockdep.c:6592
-  [<ffffffff84f0054c>] qdisc_lookup+0xac/0x6f0 net/sched/sch_api.c:305
-  [<ffffffff84f037c3>] qdisc_tree_reduce_backlog+0x243/0x580 net/sched/sch_api.c:811
-  [<ffffffff84f5b78c>] pfifo_tail_enqueue+0x32c/0x4b0 net/sched/sch_fifo.c:51
-  [<ffffffff84fbcf63>] qdisc_enqueue include/net/sch_generic.h:833 [inline]
-  [<ffffffff84fbcf63>] netem_dequeue+0xeb3/0x15d0 net/sched/sch_netem.c:723
-  [<ffffffff84eecab9>] dequeue_skb net/sched/sch_generic.c:292 [inline]
-  [<ffffffff84eecab9>] qdisc_restart net/sched/sch_generic.c:397 [inline]
-  [<ffffffff84eecab9>] __qdisc_run+0x249/0x1e60 net/sched/sch_generic.c:415
-  [<ffffffff84d7aa96>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
-  [<ffffffff84d85d29>] net_tx_action+0x7c9/0x970 net/core/dev.c:5313
-  [<ffffffff85e002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:616
-  [<ffffffff81568bca>] invoke_softirq kernel/softirq.c:447 [inline]
-  [<ffffffff81568bca>] __irq_exit_rcu+0xca/0x230 kernel/softirq.c:700
-  [<ffffffff81568ae9>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:712
-  [<ffffffff85b89f52>] sysvec_apic_timer_interrupt+0x42/0x90 arch/x86/kernel/apic/apic.c:1107
-  [<ffffffff85c00ccb>] asm_sysvec_apic_timer_interrupt+0x1b/0x20 arch/x86/include/asm/idtentry.h:656
-
-Fixes: d636fc5dd692 ("net: sched: add rcu annotations around qdisc->qdisc_sleeping")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240402134133.2352776-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/hw-vuln/index.rst                  |    1 
+ Documentation/admin-guide/hw-vuln/reg-file-data-sampling.rst |  104 +++++++++++
+ 2 files changed, 105 insertions(+)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -809,7 +809,7 @@ void qdisc_tree_reduce_backlog(struct Qd
- 		notify = !sch->q.qlen && !WARN_ON_ONCE(!n &&
- 						       !qdisc_is_offloaded);
- 		/* TODO: perform the search on a per txq basis */
--		sch = qdisc_lookup(qdisc_dev(sch), TC_H_MAJ(parentid));
-+		sch = qdisc_lookup_rcu(qdisc_dev(sch), TC_H_MAJ(parentid));
- 		if (sch == NULL) {
- 			WARN_ON_ONCE(parentid != TC_H_ROOT);
- 			break;
+--- a/Documentation/admin-guide/hw-vuln/index.rst
++++ b/Documentation/admin-guide/hw-vuln/index.rst
+@@ -21,3 +21,4 @@ are configurable at compile, boot or run
+    cross-thread-rsb.rst
+    gather_data_sampling.rst
+    srso
++   reg-file-data-sampling
+--- /dev/null
++++ b/Documentation/admin-guide/hw-vuln/reg-file-data-sampling.rst
+@@ -0,0 +1,104 @@
++==================================
++Register File Data Sampling (RFDS)
++==================================
++
++Register File Data Sampling (RFDS) is a microarchitectural vulnerability that
++only affects Intel Atom parts(also branded as E-cores). RFDS may allow
++a malicious actor to infer data values previously used in floating point
++registers, vector registers, or integer registers. RFDS does not provide the
++ability to choose which data is inferred. CVE-2023-28746 is assigned to RFDS.
++
++Affected Processors
++===================
++Below is the list of affected Intel processors [#f1]_:
++
++   ===================  ============
++   Common name          Family_Model
++   ===================  ============
++   ATOM_GOLDMONT           06_5CH
++   ATOM_GOLDMONT_D         06_5FH
++   ATOM_GOLDMONT_PLUS      06_7AH
++   ATOM_TREMONT_D          06_86H
++   ATOM_TREMONT            06_96H
++   ALDERLAKE               06_97H
++   ALDERLAKE_L             06_9AH
++   ATOM_TREMONT_L          06_9CH
++   RAPTORLAKE              06_B7H
++   RAPTORLAKE_P            06_BAH
++   ALDERLAKE_N             06_BEH
++   RAPTORLAKE_S            06_BFH
++   ===================  ============
++
++As an exception to this table, Intel Xeon E family parts ALDERLAKE(06_97H) and
++RAPTORLAKE(06_B7H) codenamed Catlow are not affected. They are reported as
++vulnerable in Linux because they share the same family/model with an affected
++part. Unlike their affected counterparts, they do not enumerate RFDS_CLEAR or
++CPUID.HYBRID. This information could be used to distinguish between the
++affected and unaffected parts, but it is deemed not worth adding complexity as
++the reporting is fixed automatically when these parts enumerate RFDS_NO.
++
++Mitigation
++==========
++Intel released a microcode update that enables software to clear sensitive
++information using the VERW instruction. Like MDS, RFDS deploys the same
++mitigation strategy to force the CPU to clear the affected buffers before an
++attacker can extract the secrets. This is achieved by using the otherwise
++unused and obsolete VERW instruction in combination with a microcode update.
++The microcode clears the affected CPU buffers when the VERW instruction is
++executed.
++
++Mitigation points
++-----------------
++VERW is executed by the kernel before returning to user space, and by KVM
++before VMentry. None of the affected cores support SMT, so VERW is not required
++at C-state transitions.
++
++New bits in IA32_ARCH_CAPABILITIES
++----------------------------------
++Newer processors and microcode update on existing affected processors added new
++bits to IA32_ARCH_CAPABILITIES MSR. These bits can be used to enumerate
++vulnerability and mitigation capability:
++
++- Bit 27 - RFDS_NO - When set, processor is not affected by RFDS.
++- Bit 28 - RFDS_CLEAR - When set, processor is affected by RFDS, and has the
++  microcode that clears the affected buffers on VERW execution.
++
++Mitigation control on the kernel command line
++---------------------------------------------
++The kernel command line allows to control RFDS mitigation at boot time with the
++parameter "reg_file_data_sampling=". The valid arguments are:
++
++  ==========  =================================================================
++  on          If the CPU is vulnerable, enable mitigation; CPU buffer clearing
++              on exit to userspace and before entering a VM.
++  off         Disables mitigation.
++  ==========  =================================================================
++
++Mitigation default is selected by CONFIG_MITIGATION_RFDS.
++
++Mitigation status information
++-----------------------------
++The Linux kernel provides a sysfs interface to enumerate the current
++vulnerability status of the system: whether the system is vulnerable, and
++which mitigations are active. The relevant sysfs file is:
++
++	/sys/devices/system/cpu/vulnerabilities/reg_file_data_sampling
++
++The possible values in this file are:
++
++  .. list-table::
++
++     * - 'Not affected'
++       - The processor is not vulnerable
++     * - 'Vulnerable'
++       - The processor is vulnerable, but no mitigation enabled
++     * - 'Vulnerable: No microcode'
++       - The processor is vulnerable but microcode is not updated.
++     * - 'Mitigation: Clear Register File'
++       - The processor is vulnerable and the CPU buffer clearing mitigation is
++	 enabled.
++
++References
++----------
++.. [#f1] Affected Processors
++   https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/processors-affected-consolidated-product-cpu-model.html
 
 
