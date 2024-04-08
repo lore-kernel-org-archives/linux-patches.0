@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1083524AF;
-	Mon,  8 Apr 2024 13:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40573524AF;
+	Mon,  8 Apr 2024 13:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584124; cv=none; b=AXJKBNUEIMwSlfWXpPnYi8ZA7+Iymkx8hoD2RBbTyxjX87IweVnmqtfkDqvuIs9gLkyv4KlPZzXpHl0qzRml5BsDDziU7rHUlYnMHQQaJ4Yhk2GM5IedJXzdbxqUxcVrxPnDnE/9plNnsNxro2LejBXEJTM3LZfRYtxJurrd/i0=
+	t=1712584127; cv=none; b=KDcXmrghrzFPsHgfp9UpT3cTJajZXWwor7L5TA35gBENIShGTbnu+nNZEy+kr3hY4/OwszdRisJEEikuIqGgzanPUZUTkqJacWXpevVff8bSRXFcLgA8DhQgv7vGdi0Xz1ef4k7X6QFwo54TuoWpuYZZee3yQAbj9xhredigpjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584124; c=relaxed/simple;
-	bh=U6rOhJFV7kEROhGQkk4dJvZrXMHEw1o2gKa5MTXbtow=;
+	s=arc-20240116; t=1712584127; c=relaxed/simple;
+	bh=w9o0PurTtFbThhc72EpakqWt6d9H3KnZY8i3fOGXN+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QToa5HHeShAN/bR1n7hkHTVE3UyDOoP5et2t0g2LkjwelwvyJjNqk1CENirsTIReQS4LcFXesgMS5gnp8TSTOf0FSFgAAjyc/YXxldaHmQaqhKeMewKdJoUqjcw2SGqJh/XVptU41rlRJOch0xx6Wprc6wr/vfSdpJnfNwH9npo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikTodzWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hpcW1D7rDusoup7K3r8DFEEAH4FTd/uSnAnA0lv/HJLf/qcNQ4D6wr1PkJlaOy7IqYWgzwNemsYXdlrYOrfpjBBow61rPoMwV8F5cdFJFhHQOg8wYckqLpJTV1tlrrF96BB3xjiDYFdncyLK8A0F7XmzFkZBWfUoe+2ba5nNOhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgd2S4F7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikTodzWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD64C433C7;
-	Mon,  8 Apr 2024 13:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgd2S4F7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01BEC433C7;
+	Mon,  8 Apr 2024 13:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584124;
-	bh=U6rOhJFV7kEROhGQkk4dJvZrXMHEw1o2gKa5MTXbtow=;
+	s=korg; t=1712584127;
+	bh=w9o0PurTtFbThhc72EpakqWt6d9H3KnZY8i3fOGXN+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikTodzWV1JZOjA1b3Z84l7oj5bAF7ideSV3JySfKF2kFVREhrnYKIVuhtIbblbclK
-	 rjJ9zZmCMgb2DJXjr28MACgnCUBwmM42r3p6lIKZoHtfnvQF41rGfxe0a5L0LKR4mi
-	 AkLis0MfdFjIPU/QEPTOS0opVmL6enS1lJZGfDu8=
+	b=pgd2S4F7dlSGzo+C7OeW0qAaS17qwrLJapPPCZI8dkAoCkKcbqeHwBaLkugXBZ3Na
+	 JTDy+6WP3SFMAVbkrKK4qz0NDh9Qg1owYEfVbCO+IFEaq3bfDzCG3+MbYmbNLTBprX
+	 jK34spsrztMs9mzmGgqLzEJVQrsx3HdzpUsVQbyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.8 265/273] drm/xe: Rework rebinding
-Date: Mon,  8 Apr 2024 14:59:00 +0200
-Message-ID: <20240408125317.726821004@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 338/690] fanotify: cleanups for fanotify_mark() input validations
+Date: Mon,  8 Apr 2024 14:53:24 +0200
+Message-ID: <20240408125411.859099615@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,200 +45,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit a00e7e3fb4b9b30a9f2286a6f892b6e781e560a8 upstream.
+[ Upstream commit 8afd7215aa97f8868d033f6e1d01a276ab2d29c0 ]
 
-Instead of handling the vm's rebind fence separately,
-which is error prone if they are not strictly ordered,
-attach rebind fences as kernel fences to the vm's resv.
+Create helper fanotify_may_update_existing_mark() for checking for
+conflicts between existing mark flags and fanotify_mark() flags.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240327091136.3271-3-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 5a091aff50b780ae29c7faf70a7a6c21c98a54c4)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use variable mark_cmd to make the checks for mark command bits
+cleaner.
+
+Link: https://lore.kernel.org/r/20220629144210.2983229-3-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpu/drm/xe/xe_exec.c     |   31 +++----------------------------
- drivers/gpu/drm/xe/xe_pt.c       |    2 +-
- drivers/gpu/drm/xe/xe_vm.c       |   27 +++++++++------------------
- drivers/gpu/drm/xe/xe_vm.h       |    2 +-
- drivers/gpu/drm/xe/xe_vm_types.h |    3 ---
- 5 files changed, 14 insertions(+), 51 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 30 +++++++++++++++++++++---------
+ include/linux/fanotify.h           |  9 +++++----
+ 2 files changed, 26 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_exec.c
-+++ b/drivers/gpu/drm/xe/xe_exec.c
-@@ -113,7 +113,6 @@ int xe_exec_ioctl(struct drm_device *dev
- 	struct drm_exec *exec = &vm_exec.exec;
- 	u32 i, num_syncs = 0, num_ufence = 0;
- 	struct xe_sched_job *job;
--	struct dma_fence *rebind_fence;
- 	struct xe_vm *vm;
- 	bool write_locked, skip_retry = false;
- 	ktime_t end = 0;
-@@ -256,35 +255,11 @@ retry:
- 	 * Rebind any invalidated userptr or evicted BOs in the VM, non-compute
- 	 * VM mode only.
- 	 */
--	rebind_fence = xe_vm_rebind(vm, false);
--	if (IS_ERR(rebind_fence)) {
--		err = PTR_ERR(rebind_fence);
-+	err = xe_vm_rebind(vm, false);
-+	if (err)
- 		goto err_put_job;
--	}
--
--	/*
--	 * We store the rebind_fence in the VM so subsequent execs don't get
--	 * scheduled before the rebinds of userptrs / evicted BOs is complete.
--	 */
--	if (rebind_fence) {
--		dma_fence_put(vm->rebind_fence);
--		vm->rebind_fence = rebind_fence;
--	}
--	if (vm->rebind_fence) {
--		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT,
--			     &vm->rebind_fence->flags)) {
--			dma_fence_put(vm->rebind_fence);
--			vm->rebind_fence = NULL;
--		} else {
--			dma_fence_get(vm->rebind_fence);
--			err = drm_sched_job_add_dependency(&job->drm,
--							   vm->rebind_fence);
--			if (err)
--				goto err_put_job;
--		}
--	}
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 9367216263cab..870db0f361f4c 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1183,6 +1183,19 @@ static int fanotify_group_init_error_pool(struct fsnotify_group *group)
+ 					 sizeof(struct fanotify_error_event));
+ }
  
--	/* Wait behind munmap style rebinds */
-+	/* Wait behind rebinds */
- 	if (!xe_vm_in_lr_mode(vm)) {
- 		err = drm_sched_job_add_resv_dependencies(&job->drm,
- 							  xe_vm_resv(vm),
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1300,7 +1300,7 @@ __xe_pt_bind_vma(struct xe_tile *tile, s
- 		}
- 
- 		/* add shared fence now for pagetable delayed destroy */
--		dma_resv_add_fence(xe_vm_resv(vm), fence, !rebind &&
-+		dma_resv_add_fence(xe_vm_resv(vm), fence, rebind ||
- 				   last_munmap_rebind ?
- 				   DMA_RESV_USAGE_KERNEL :
- 				   DMA_RESV_USAGE_BOOKKEEP);
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -520,7 +520,6 @@ static void preempt_rebind_work_func(str
- {
- 	struct xe_vm *vm = container_of(w, struct xe_vm, preempt.rebind_work);
- 	struct drm_exec exec;
--	struct dma_fence *rebind_fence;
- 	unsigned int fence_count = 0;
- 	LIST_HEAD(preempt_fences);
- 	ktime_t end = 0;
-@@ -566,18 +565,11 @@ retry:
- 	if (err)
- 		goto out_unlock;
- 
--	rebind_fence = xe_vm_rebind(vm, true);
--	if (IS_ERR(rebind_fence)) {
--		err = PTR_ERR(rebind_fence);
-+	err = xe_vm_rebind(vm, true);
-+	if (err)
- 		goto out_unlock;
--	}
- 
--	if (rebind_fence) {
--		dma_fence_wait(rebind_fence, false);
--		dma_fence_put(rebind_fence);
--	}
--
--	/* Wait on munmap style VM unbinds */
-+	/* Wait on rebinds and munmap style VM unbinds */
- 	wait = dma_resv_wait_timeout(xe_vm_resv(vm),
- 				     DMA_RESV_USAGE_KERNEL,
- 				     false, MAX_SCHEDULE_TIMEOUT);
-@@ -771,14 +763,14 @@ xe_vm_bind_vma(struct xe_vma *vma, struc
- 	       struct xe_sync_entry *syncs, u32 num_syncs,
- 	       bool first_op, bool last_op);
- 
--struct dma_fence *xe_vm_rebind(struct xe_vm *vm, bool rebind_worker)
-+int xe_vm_rebind(struct xe_vm *vm, bool rebind_worker)
- {
--	struct dma_fence *fence = NULL;
-+	struct dma_fence *fence;
- 	struct xe_vma *vma, *next;
- 
- 	lockdep_assert_held(&vm->lock);
- 	if (xe_vm_in_lr_mode(vm) && !rebind_worker)
--		return NULL;
-+		return 0;
- 
- 	xe_vm_assert_held(vm);
- 	list_for_each_entry_safe(vma, next, &vm->rebind_list,
-@@ -786,17 +778,17 @@ struct dma_fence *xe_vm_rebind(struct xe
- 		xe_assert(vm->xe, vma->tile_present);
- 
- 		list_del_init(&vma->combined_links.rebind);
--		dma_fence_put(fence);
- 		if (rebind_worker)
- 			trace_xe_vma_rebind_worker(vma);
- 		else
- 			trace_xe_vma_rebind_exec(vma);
- 		fence = xe_vm_bind_vma(vma, NULL, NULL, 0, false, false);
- 		if (IS_ERR(fence))
--			return fence;
-+			return PTR_ERR(fence);
-+		dma_fence_put(fence);
++static int fanotify_may_update_existing_mark(struct fsnotify_mark *fsn_mark,
++					      unsigned int fan_flags)
++{
++	/*
++	 * Non evictable mark cannot be downgraded to evictable mark.
++	 */
++	if (fan_flags & FAN_MARK_EVICTABLE &&
++	    !(fsn_mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF))
++		return -EEXIST;
++
++	return 0;
++}
++
+ static int fanotify_add_mark(struct fsnotify_group *group,
+ 			     fsnotify_connp_t *connp, unsigned int obj_type,
+ 			     __u32 mask, unsigned int fan_flags,
+@@ -1204,13 +1217,11 @@ static int fanotify_add_mark(struct fsnotify_group *group,
  	}
  
--	return fence;
-+	return 0;
- }
- 
- static void xe_vma_free(struct xe_vma *vma)
-@@ -1575,7 +1567,6 @@ static void vm_destroy_work_func(struct
- 		XE_WARN_ON(vm->pt_root[id]);
- 
- 	trace_xe_vm_free(vm);
--	dma_fence_put(vm->rebind_fence);
- 	kfree(vm);
- }
- 
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -207,7 +207,7 @@ int __xe_vm_userptr_needs_repin(struct x
- 
- int xe_vm_userptr_check_repin(struct xe_vm *vm);
- 
--struct dma_fence *xe_vm_rebind(struct xe_vm *vm, bool rebind_worker);
-+int xe_vm_rebind(struct xe_vm *vm, bool rebind_worker);
- 
- int xe_vm_invalidate_vma(struct xe_vma *vma);
- 
---- a/drivers/gpu/drm/xe/xe_vm_types.h
-+++ b/drivers/gpu/drm/xe/xe_vm_types.h
-@@ -171,9 +171,6 @@ struct xe_vm {
+ 	/*
+-	 * Non evictable mark cannot be downgraded to evictable mark.
++	 * Check if requested mark flags conflict with an existing mark flags.
  	 */
- 	struct list_head rebind_list;
+-	if (fan_flags & FAN_MARK_EVICTABLE &&
+-	    !(fsn_mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF)) {
+-		ret = -EEXIST;
++	ret = fanotify_may_update_existing_mark(fsn_mark, fan_flags);
++	if (ret)
+ 		goto out;
+-	}
  
--	/** @rebind_fence: rebind fence from execbuf */
--	struct dma_fence *rebind_fence;
--
- 	/**
- 	 * @destroy_work: worker to destroy VM, needed as a dma_fence signaling
- 	 * from an irq context can be last put and the destroy needs to be able
+ 	/*
+ 	 * Error events are pre-allocated per group, only if strictly
+@@ -1567,6 +1578,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	__kernel_fsid_t __fsid, *fsid = NULL;
+ 	u32 valid_mask = FANOTIFY_EVENTS | FANOTIFY_EVENT_FLAGS;
+ 	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
++	unsigned int mark_cmd = flags & FANOTIFY_MARK_CMD_BITS;
+ 	bool ignore = flags & FAN_MARK_IGNORED_MASK;
+ 	unsigned int obj_type, fid_mode;
+ 	u32 umask = 0;
+@@ -1596,7 +1608,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 		return -EINVAL;
+ 	}
+ 
+-	switch (flags & (FAN_MARK_ADD | FAN_MARK_REMOVE | FAN_MARK_FLUSH)) {
++	switch (mark_cmd) {
+ 	case FAN_MARK_ADD:
+ 	case FAN_MARK_REMOVE:
+ 		if (!mask)
+@@ -1685,7 +1697,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	if (mask & FAN_RENAME && !(fid_mode & FAN_REPORT_NAME))
+ 		goto fput_and_out;
+ 
+-	if (flags & FAN_MARK_FLUSH) {
++	if (mark_cmd == FAN_MARK_FLUSH) {
+ 		ret = 0;
+ 		if (mark_type == FAN_MARK_MOUNT)
+ 			fsnotify_clear_vfsmount_marks_by_group(group);
+@@ -1701,7 +1713,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	if (ret)
+ 		goto fput_and_out;
+ 
+-	if (flags & FAN_MARK_ADD) {
++	if (mark_cmd == FAN_MARK_ADD) {
+ 		ret = fanotify_events_supported(group, &path, mask, flags);
+ 		if (ret)
+ 			goto path_put_and_out;
+@@ -1739,7 +1751,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	}
+ 
+ 	/* create/update an inode mark */
+-	switch (flags & (FAN_MARK_ADD | FAN_MARK_REMOVE)) {
++	switch (mark_cmd) {
+ 	case FAN_MARK_ADD:
+ 		if (mark_type == FAN_MARK_MOUNT)
+ 			ret = fanotify_add_vfsmount_mark(group, mnt, mask,
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 4f6cbe6c6e235..c9e185407ebcb 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -61,15 +61,16 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+ #define FANOTIFY_MARK_TYPE_BITS	(FAN_MARK_INODE | FAN_MARK_MOUNT | \
+ 				 FAN_MARK_FILESYSTEM)
+ 
++#define FANOTIFY_MARK_CMD_BITS	(FAN_MARK_ADD | FAN_MARK_REMOVE | \
++				 FAN_MARK_FLUSH)
++
+ #define FANOTIFY_MARK_FLAGS	(FANOTIFY_MARK_TYPE_BITS | \
+-				 FAN_MARK_ADD | \
+-				 FAN_MARK_REMOVE | \
++				 FANOTIFY_MARK_CMD_BITS | \
+ 				 FAN_MARK_DONT_FOLLOW | \
+ 				 FAN_MARK_ONLYDIR | \
+ 				 FAN_MARK_IGNORED_MASK | \
+ 				 FAN_MARK_IGNORED_SURV_MODIFY | \
+-				 FAN_MARK_EVICTABLE | \
+-				 FAN_MARK_FLUSH)
++				 FAN_MARK_EVICTABLE)
+ 
+ /*
+  * Events that can be reported with data type FSNOTIFY_EVENT_PATH.
+-- 
+2.43.0
+
 
 
