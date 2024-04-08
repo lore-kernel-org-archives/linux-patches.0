@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CE3768EA;
-	Mon,  8 Apr 2024 13:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3FF768EA;
+	Mon,  8 Apr 2024 13:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583378; cv=none; b=Yz3W5JKATgWu2hmb7s+SreVLka6x6WR9Y3b4Q0Wg+pqcgsOV1n1C0r4KncS87QP9nQSzfIvPxZoSD1BaKvWGwgRmSkfATvK14FE8YG6pxOWKgW0iD36bMxr59xCKLUP2rrdNwNA+I4jO97+9YUzvozEkso7yShhIs8Qyw8yaT1I=
+	t=1712583381; cv=none; b=YmldTmGxETipCzD3JHH+2p+ox93ZtwQ9Jq+PNKODNgBcNnEfM7+D6aoRC9gOx0VEnyMu54hPUFigqyXjPZTfBxLfscofjeKZg2oY/VpMjMp3/d7DDnNL6FMNtglMxqdm5nbZUoewmHO510HbkJZEc/2+ymJnG9IrbQ5QMz0YESs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583378; c=relaxed/simple;
-	bh=Kgn6zkLEnRTN1pnKd4guJOcFCEGKqKEBksJwS7iNivE=;
+	s=arc-20240116; t=1712583381; c=relaxed/simple;
+	bh=RsXOOfPj6Eh8TE2rU3Cq5uX8axLZoVJNlXQEvfxvn1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvFC/rTCB+mghcfjnhWCca6RGTBVaR/vL3ASiuQq+9nqaexxhjg7aCq3kW0lEOkJ+lYWC4tAF3d91BfE3larvMV8znSwZwMk44odI0yfBpR3Qrk5vGTtx4PmEBE+7e4unI/0cFDVGodMVCkYqNFf3P8z9wuNB8WbOFUqezeMM8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaQKM2b+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTGsb3yS61E2yBwdYg5PrXHaOrO6Rei7bC/vXT4sHURMznHyL8T7+LTrF5Mvuuj9L8DsEiGulI8agnbmSnPejlPRTtSsVRPQm+ASS7cSpjIk9p2a7l3zm2sQdBffl4G1MTfJr0KAyQ9TLFTMApTBZh3b46lMeC8ptPgWFLoWyi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh5uuaC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaQKM2b+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA6AC433F1;
-	Mon,  8 Apr 2024 13:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh5uuaC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C46C433C7;
+	Mon,  8 Apr 2024 13:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583378;
-	bh=Kgn6zkLEnRTN1pnKd4guJOcFCEGKqKEBksJwS7iNivE=;
+	s=korg; t=1712583381;
+	bh=RsXOOfPj6Eh8TE2rU3Cq5uX8axLZoVJNlXQEvfxvn1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WaQKM2b+JVomhHIYj/VlGisY78PY8Cjx97CwrUNEXjr4zuIf7TvK8R2Q69/I5l6FS
-	 PFw86g9YqdK5zwHbpoWike4HnyWpCvIjpQtBoHyOQU8oPIPjO8j2OtHeIp2xeRjJcB
-	 651WCHtnxayUgRQd4Ahw5ckCY/qidw7NvdEX/SHM=
+	b=Xh5uuaC3BbzhOxD5aPPUyayd2IEALmm+84+Nu70uSt3y2ddUoVnBkUmomi3MzU1e+
+	 IBEeak4oDqvG8oYbLSPjqFi910KyGYsNBYqS9VkgNhrDIOFO7nSTcJhlAtHe9pMi/x
+	 3n7AkmQTt0DppwEekHR1uZAlmYH/RMKJd3A6TLFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 241/690] lockd: rename lockd_create_svc() to lockd_get()
-Date: Mon,  8 Apr 2024 14:51:47 +0200
-Message-ID: <20240408125408.385243112@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 173/273] regmap: maple: Fix uninitialized symbol ret warnings
+Date: Mon,  8 Apr 2024 14:57:28 +0200
+Message-ID: <20240408125314.634003332@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,72 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit ecd3ad68d2c6d3ae178a63a2d9a02c392904fd36 ]
+[ Upstream commit eaa03486d932572dfd1c5f64f9dfebe572ad88c0 ]
 
-lockd_create_svc() already does an svc_get() if the service already
-exists, so it is more like a "get" than a "create".
+Fix warnings reported by smatch by initializing local 'ret' variable
+to 0.
 
-So:
- - Move the increment of nlmsvc_users into the function as well
- - rename to lockd_get().
+drivers/base/regmap/regcache-maple.c:186 regcache_maple_drop()
+error: uninitialized symbol 'ret'.
+drivers/base/regmap/regcache-maple.c:290 regcache_maple_sync()
+error: uninitialized symbol 'ret'.
 
-It is now the inverse of lockd_put().
-
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: f033c26de5a5 ("regmap: Add maple tree based register cache")
+Link: https://lore.kernel.org/r/20240329144630.1965159-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 7f12c280fd30d..1a7c11118b320 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -396,16 +396,14 @@ static const struct svc_serv_ops lockd_sv_ops = {
- 	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
- };
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index c1776127a5724..55999a50ccc0b 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -112,7 +112,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
+ 	unsigned long *entry, *lower, *upper;
+ 	unsigned long lower_index, lower_last;
+ 	unsigned long upper_index, upper_last;
+-	int ret;
++	int ret = 0;
  
--static int lockd_create_svc(void)
-+static int lockd_get(void)
- {
- 	struct svc_serv *serv;
- 	int error;
+ 	lower = NULL;
+ 	upper = NULL;
+@@ -244,7 +244,7 @@ static int regcache_maple_sync(struct regmap *map, unsigned int min,
+ 	unsigned long lmin = min;
+ 	unsigned long lmax = max;
+ 	unsigned int r, v, sync_start;
+-	int ret;
++	int ret = 0;
+ 	bool sync_needed = false;
  
--	/*
--	 * Check whether we're already up and running.
--	 */
- 	if (nlmsvc_serv) {
- 		svc_get(nlmsvc_serv);
-+		nlmsvc_users++;
- 		return 0;
- 	}
- 
-@@ -439,6 +437,7 @@ static int lockd_create_svc(void)
- 	register_inet6addr_notifier(&lockd_inet6addr_notifier);
- #endif
- 	dprintk("lockd_up: service created\n");
-+	nlmsvc_users++;
- 	return 0;
- }
- 
-@@ -472,10 +471,9 @@ int lockd_up(struct net *net, const struct cred *cred)
- 
- 	mutex_lock(&nlmsvc_mutex);
- 
--	error = lockd_create_svc();
-+	error = lockd_get();
- 	if (error)
- 		goto err;
--	nlmsvc_users++;
- 
- 	error = lockd_up_net(nlmsvc_serv, net, cred);
- 	if (error < 0) {
+ 	map->cache_bypass = true;
 -- 
 2.43.0
 
