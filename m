@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFCD2E62C;
-	Mon,  8 Apr 2024 13:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F02E62C;
+	Mon,  8 Apr 2024 13:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581521; cv=none; b=qqvmu4MmrKLJ4+ONNKMiHLYqyPHNcKuuKy4yaM4b81ut9nGH0iNQCz8mBiAe1f8B/LfezZfXxdTDV7jN/p50vn+G6QvATHQs0oj8gdJMsYbwP5lttCtbzqxV4Y1zmO+arFFCn7lnAaMnbk/lydMcqily6iRUYmXjv8WOtLHXBXs=
+	t=1712581524; cv=none; b=m4KV5hab8oqcJLVZQoqMcqhPrtaaZGWPPVc/law4qUilMQ49Zg9x5NOqK+LCm8LpfcJV4l2CT6LmyXYsS1VaADWgtw0rJiyswqOrYFZ/pjVSHvnqOMpGWkEYirdkNTjZES2MISeyKofyzKXXGrlFvqfe+kCrHQt6sPMgx9V2ioQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581521; c=relaxed/simple;
-	bh=I1nL7XBuy9d0nUUBJuMGkuqfbXApqqgyMrPXEX9BTgE=;
+	s=arc-20240116; t=1712581524; c=relaxed/simple;
+	bh=mwCexVm62qyAFVZLrUNHFcaRMkcfdKZpppuvxXX6a7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQu9f27YQOaWRtYK7uY0ZSjsytGX9XQcrUoaGSR1pQ72NzrBkT8rqelXwXostfE9a9LikPOa5uyrXEk0t3yGMiMe0lnm53zYcyhsCP2v2BM92L2S8E18jboccfr9JJJpqn/vRvjekWWC0dbRPh8j2JIEVLjg/ivNrtZ6Jw2h41Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CebJGsMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3DQwY7pKsT2HsEnQ+3FneNvAR5+ZdGV+0NGLhAAQ6MmyIqa6DE2LlA0+7cEuVS3MpGgl3KcXSA73D+XQukjQuGKEYpq8aKEFC4gbXshLSMlzoVU8M9tpHPFSnRZt+TR2FSpxHqaP2IPMFd87LikXRFKSKNsICFmL4zousp/n0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQe9vf48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CebJGsMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE75C433F1;
-	Mon,  8 Apr 2024 13:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQe9vf48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103DAC43390;
+	Mon,  8 Apr 2024 13:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581521;
-	bh=I1nL7XBuy9d0nUUBJuMGkuqfbXApqqgyMrPXEX9BTgE=;
+	s=korg; t=1712581524;
+	bh=mwCexVm62qyAFVZLrUNHFcaRMkcfdKZpppuvxXX6a7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CebJGsMyHhsQghszCCbAPVQrj5AfSDIkYMpUtSuWXRnDkeUWgNsJaNH2r4Z+Xe48p
-	 cKMaMu34sl5YvcZpwsv/aklu/Hz7Ge3k+vz0X4s7sYdNQTgdnn8dYeaAy2q+TTFNfJ
-	 lpVCrDu3Vvxp5+CTQd10X/wz/KIMraXzPZzHl3m4=
+	b=mQe9vf48N7vwF42ui/NM87Atva92k/MA7cOYQLG5wTS511RVGni3rFoZdrx7U6Rzn
+	 nn+NX33kvXhcnKRwJEOxhK0lzZASj2E9ncQBNw1l6Bv14eAg4A5LY8ILx0UqCLDYF+
+	 SJ5ZE+/JpUGQoYU0xxrWNj83Jk/LyoLtExSA76pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lyakas <alex.lyakas@zadara.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/690] btrfs: fix off-by-one chunk length calculation at contains_pending_extent()
-Date: Mon,  8 Apr 2024 14:48:45 +0200
-Message-ID: <20240408125401.652942779@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 030/138] arm64: dts: qcom: sc7180-trogdor: mark bluetooth address as broken
+Date: Mon,  8 Apr 2024 14:57:24 +0200
+Message-ID: <20240408125257.163931303@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,51 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit ae6bd7f9b46a29af52ebfac25d395757e2031d0d ]
+commit e12e28009e584c8f8363439f6a928ec86278a106 upstream.
 
-At contains_pending_extent() the value of the end offset of a chunk we
-found in the device's allocation state io tree is inclusive, so when
-we calculate the length we pass to the in_range() macro, we must sum
-1 to the expression "physical_end - physical_offset".
+Several Qualcomm Bluetooth controllers lack persistent storage for the
+device address and instead one can be provided by the boot firmware
+using the 'local-bd-address' devicetree property.
 
-In practice the wrong calculation should be harmless as chunks sizes
-are never 1 byte and we should never have 1 byte ranges of unallocated
-space. Nevertheless fix the wrong calculation.
+The Bluetooth bindings clearly states that the address should be
+specified in little-endian order, but due to a long-standing bug in the
+Qualcomm driver which reversed the address some boot firmware has been
+providing the address in big-endian order instead.
 
-Reported-by: Alex Lyakas <alex.lyakas@zadara.com>
-Link: https://lore.kernel.org/linux-btrfs/CAOcd+r30e-f4R-5x-S7sV22RJPe7+pgwherA6xqN2_qe7o4XTg@mail.gmail.com/
-Fixes: 1c11b63eff2a ("btrfs: replace pending/pinned chunks lists with io tree")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
+so mark the 'local-bd-address' property as broken to maintain backwards
+compatibility with older firmware when fixing the underlying driver bug.
+
+Note that ChromeOS always updates the kernel and devicetree in lockstep
+so that there is no need to handle backwards compatibility with older
+devicetrees.
+
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Cc: stable@vger.kernel.org      # 5.10
+Cc: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index cc18ba50a61cf..1ce0fa487e5b2 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1473,7 +1473,7 @@ static bool contains_pending_extent(struct btrfs_device *device, u64 *start,
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -923,6 +923,8 @@ ap_spi_fp: &spi10 {
+ 		vddrf-supply = <&pp1300_l2c>;
+ 		vddch0-supply = <&pp3300_l10c>;
+ 		max-speed = <3200000>;
++
++		qcom,local-bd-address-broken;
+ 	};
+ };
  
- 		if (in_range(physical_start, *start, len) ||
- 		    in_range(*start, physical_start,
--			     physical_end - physical_start)) {
-+			     physical_end + 1 - physical_start)) {
- 			*start = physical_end + 1;
- 			return true;
- 		}
--- 
-2.43.0
-
 
 
