@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB3B8004B;
-	Mon,  8 Apr 2024 14:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66818004F;
+	Mon,  8 Apr 2024 14:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584911; cv=none; b=OggDQsTaB7Lhz1aDmalVNTkjVreRffoXSfHqg3DOxTHbBgIQqWtSOrj5lm+quJRaDe64NEKKatk/1QzsRJqbTVgzpUjTHsarXEL8YGqwrSEhIBiQhGFdyXFMlNQaNTdoaQrrvpCquA+2wGI8HmFbs2QaeCVxAqMoaq5sIIC3PPg=
+	t=1712584914; cv=none; b=ITPre+TdMXb5l6n5QWQ7xdisITBkoXtPsrrI/gGgAeKJWxdRRO/6bg248u07zD2Hge3iAHa1lME08FNIEiw6sI0JzkqOmdAg2Uk1nNNV32FLr1J1toBTgE2lcaX/dP48O23nPSh7nRMxQueYb/N+UVFwdDD3+4PqxE/LmFm8x94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584911; c=relaxed/simple;
-	bh=PuM+TdXgWewqil07r1jTEk4UblsRMXXSpuBtRXaSaPE=;
+	s=arc-20240116; t=1712584914; c=relaxed/simple;
+	bh=V1PGbPa/m3u+c/DjIEGsmykkvQCd8a5uUfy9Ea74gWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oe2mrK+xAHvdVLyq5hzX0N7s5YJ44KajLGh8hwhjB+w/E6M1CbadJj2mOYviRmD3W50GMsEK0YfykVt09IefKskdtwSdkDrhEKDDEhfmS/FQg4OiLsZjVZchNYnoQINURcLNWg18rRBtF+3F76uLcvvDeWic/N0mhOMGXCHcla8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knzkzjKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ej9uqrr9QaA+I//BOXPAPyJy5MxjRpH3OPpjEYPrn5aLMM0GPr9HsZZpOjX0EteNIoxtxjWfBmcCLSRXGLbci4IjwmEOaPqbEsMNEFjhavlD+py0oRAUmzaQIv3ncjk26b551N8tKRZXMuXC9Z2BOTlTIKIXWK8xZ/25fCl04Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgSTVVQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knzkzjKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0233AC433F1;
-	Mon,  8 Apr 2024 14:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgSTVVQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1403C433F1;
+	Mon,  8 Apr 2024 14:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584911;
-	bh=PuM+TdXgWewqil07r1jTEk4UblsRMXXSpuBtRXaSaPE=;
+	s=korg; t=1712584914;
+	bh=V1PGbPa/m3u+c/DjIEGsmykkvQCd8a5uUfy9Ea74gWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knzkzjKmI1kHV3wNRjVFowjBgQ8BTF68FekmPYgd7NBN77K89gZgg0vhk93X6HmIk
-	 fWejsTRVZyO7g/YsHbnKIQ/PWhmvJoQ9JNelx7A7xVJxN4vn7aGKadjd+uEH5/JWWU
-	 nMFK4w29WrfO62QGgBicX2GooMxo5PtYd7btI30E=
+	b=IgSTVVQxiiv1qGO/Nc3rtxbXUhFdtAnVnPH3huv/vnMc0aDEXDWdFB8c3UaxPj8ve
+	 KebcD924JkPIKIVI/zKVniFJENQRski8jpZxMFSCsXGKgJJgvd7gWx6ALhS1dpx3c7
+	 8INszc5gE+ZvgJx7pVFb/t9ACTFaGMbvRUV03mr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH 5.15 581/690] ALSA: sh: aica: reorder cleanup operations to avoid UAF bugs
-Date: Mon,  8 Apr 2024 14:57:27 +0200
-Message-ID: <20240408125420.640279333@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 599/690] scsi: qla2xxx: Fix double free of fcport
+Date: Mon,  8 Apr 2024 14:57:45 +0200
+Message-ID: <20240408125421.297032784@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,95 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-commit 051e0840ffa8ab25554d6b14b62c9ab9e4901457 upstream.
+commit 82f522ae0d97119a43da53e0f729275691b9c525 upstream.
 
-The dreamcastcard->timer could schedule the spu_dma_work and the
-spu_dma_work could also arm the dreamcastcard->timer.
+The server was crashing after LOGO because fcport was getting freed twice.
 
-When the snd_pcm_substream is closing, the aica_channel will be
-deallocated. But it could still be dereferenced in the worker
-thread. The reason is that del_timer() will return directly
-regardless of whether the timer handler is running or not and
-the worker could be rescheduled in the timer handler. As a result,
-the UAF bug will happen. The racy situation is shown below:
+ -----------[ cut here ]-----------
+ kernel BUG at mm/slub.c:371!
+ invalid opcode: 0000 1 SMP PTI
+ CPU: 35 PID: 4610 Comm: bash Kdump: loaded Tainted: G OE --------- - - 4.18.0-425.3.1.el8.x86_64 #1
+ Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
+ RIP: 0010:set_freepointer.part.57+0x0/0x10
+ RSP: 0018:ffffb07107027d90 EFLAGS: 00010246
+ RAX: ffff9cb7e3150000 RBX: ffff9cb7e332b9c0 RCX: ffff9cb7e3150400
+ RDX: 0000000000001f37 RSI: 0000000000000000 RDI: ffff9cb7c0005500
+ RBP: fffff693448c5400 R08: 0000000080000000 R09: 0000000000000009
+ R10: 0000000000000000 R11: 0000000000132af0 R12: ffff9cb7c0005500
+ R13: ffff9cb7e3150000 R14: ffffffffc06990e0 R15: ffff9cb7ea85ea58
+ FS: 00007ff6b79c2740(0000) GS:ffff9cb8f7ec0000(0000) knlGS:0000000000000000
+ CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000055b426b7d700 CR3: 0000000169c18002 CR4: 00000000007706e0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ PKRU: 55555554
+ Call Trace:
+ kfree+0x238/0x250
+ qla2x00_els_dcmd_sp_free+0x20/0x230 [qla2xxx]
+ ? qla24xx_els_dcmd_iocb+0x607/0x690 [qla2xxx]
+ qla2x00_issue_logo+0x28c/0x2a0 [qla2xxx]
+ ? qla2x00_issue_logo+0x28c/0x2a0 [qla2xxx]
+ ? kernfs_fop_write+0x11e/0x1a0
 
-      (Thread 1)                 |      (Thread 2)
-snd_aicapcm_pcm_close()          |
- ...                             |  run_spu_dma() //worker
-                                 |    mod_timer()
-  flush_work()                   |
-  del_timer()                    |  aica_period_elapsed() //timer
-  kfree(dreamcastcard->channel)  |    schedule_work()
-                                 |  run_spu_dma() //worker
-  ...                            |    dreamcastcard->channel-> //USE
+Remove one of the free calls and add check for valid fcport. Also use
+function qla2x00_free_fcport() instead of kfree().
 
-In order to mitigate this bug and other possible corner cases,
-call mod_timer() conditionally in run_spu_dma(), then implement
-PCM sync_stop op to cancel both the timer and worker. The sync_stop
-op will be called from PCM core appropriately when needed.
-
-Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Message-ID: <20240326094238.95442-1-duoming@zju.edu.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240227164127.36465-9-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/sh/aica.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_iocb.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/sh/aica.c
-+++ b/sound/sh/aica.c
-@@ -278,7 +278,8 @@ static void run_spu_dma(struct work_stru
- 		dreamcastcard->clicks++;
- 		if (unlikely(dreamcastcard->clicks >= AICA_PERIOD_NUMBER))
- 			dreamcastcard->clicks %= AICA_PERIOD_NUMBER;
--		mod_timer(&dreamcastcard->timer, jiffies + 1);
-+		if (snd_pcm_running(dreamcastcard->substream))
-+			mod_timer(&dreamcastcard->timer, jiffies + 1);
- 	}
- }
- 
-@@ -290,6 +291,8 @@ static void aica_period_elapsed(struct t
- 	/*timer function - so cannot sleep */
- 	int play_period;
- 	struct snd_pcm_runtime *runtime;
-+	if (!snd_pcm_running(substream))
-+		return;
- 	runtime = substream->runtime;
- 	dreamcastcard = substream->pcm->private_data;
- 	/* Have we played out an additional period? */
-@@ -350,12 +353,19 @@ static int snd_aicapcm_pcm_open(struct s
- 	return 0;
- }
- 
-+static int snd_aicapcm_pcm_sync_stop(struct snd_pcm_substream *substream)
-+{
-+	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
-+
-+	del_timer_sync(&dreamcastcard->timer);
-+	cancel_work_sync(&dreamcastcard->spu_dma_work);
-+	return 0;
-+}
-+
- static int snd_aicapcm_pcm_close(struct snd_pcm_substream
- 				 *substream)
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2638,7 +2638,8 @@ static void qla2x00_els_dcmd_sp_free(srb
  {
- 	struct snd_card_aica *dreamcastcard = substream->pcm->private_data;
--	flush_work(&(dreamcastcard->spu_dma_work));
--	del_timer(&dreamcastcard->timer);
- 	dreamcastcard->substream = NULL;
- 	kfree(dreamcastcard->channel);
- 	spu_disable();
-@@ -401,6 +411,7 @@ static const struct snd_pcm_ops snd_aica
- 	.prepare = snd_aicapcm_pcm_prepare,
- 	.trigger = snd_aicapcm_pcm_trigger,
- 	.pointer = snd_aicapcm_pcm_pointer,
-+	.sync_stop = snd_aicapcm_pcm_sync_stop,
- };
+ 	struct srb_iocb *elsio = &sp->u.iocb_cmd;
  
- /* TO DO: set up to handle more than one pcm instance */
+-	kfree(sp->fcport);
++	if (sp->fcport)
++		qla2x00_free_fcport(sp->fcport);
+ 
+ 	if (elsio->u.els_logo.els_logo_pyld)
+ 		dma_free_coherent(&sp->vha->hw->pdev->dev, DMA_POOL_SIZE,
+@@ -2751,6 +2752,7 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *v
+ 	if (!elsio->u.els_logo.els_logo_pyld) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
++		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
+ 	}
+ 
+@@ -2785,7 +2787,6 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *v
+ 	    fcport->d_id.b.area, fcport->d_id.b.al_pa);
+ 
+ 	wait_for_completion(&elsio->u.els_logo.comp);
+-	qla2x00_free_fcport(fcport);
+ 
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
 
 
