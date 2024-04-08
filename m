@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91552DF73;
-	Mon,  8 Apr 2024 13:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EEE768F0;
+	Mon,  8 Apr 2024 13:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582799; cv=none; b=gAWsg85YmFP9tvt0FrrioBVFNn9vG2N71B2v9QaLNP9WOL4edwgXh9ylQ1KcNrI0zBfjbRdSl8xG6InZD5Vvx0nlO+MALbHsbreqAwYLqVQczyX37a3FAd1VOvEm2AnWehU5Qae/3M9TJauNdPHVe6uR7g9Fe631EbJz7EwMTB8=
+	t=1712582802; cv=none; b=Wb5ktZ0v+C0VDBkOs+AwyQaZDI8Vf0RjSbL44vIw9xa157Y/fNnZh2KcMpBbK4AhUf5CUCyI1G9BiGk6giHo28El0U3m3yOTburM3HVL2iTXROIKwRvgpZUgp+XDwXaT4squzo8g1dMiJqEJNJDoePTL/00tcPXs9Ti4u/2VCYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582799; c=relaxed/simple;
-	bh=Xk1aHvoxZBFwL8zjS6cjQ0kN3SOd5GCWppfSuVtM/gQ=;
+	s=arc-20240116; t=1712582802; c=relaxed/simple;
+	bh=Ce2wzsgrvi0irEpaiWBiPibYCP35NBY3zuIv4abL1aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZUdCHHto5TmqZ8AxZRAMECoPU4u7W65x1gqsgUjL6/tt0Fa75+kT/oMtu/pn2I14fHW8wl2wbUgxrtzZN45XROPJZJIzah9aNOobxd63N697/AUzggY/GmhogiDoYJVQwYNXeib8CdrRNKdbOhNFE4H5QkMe+HdtslwMVRLQ2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7DO280q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o17WYjL7X9yURcFnAPn0PbqkX3f0eowQXVjs8H4gUE+1EIOSa79jsTlG6fO0YA2jTBQWIVBbmtMHhCxtVy80GxKSSoisTYUxVMIxVj7dyHVtudQLBm5TKSClTuabpJGXVLLgpuNBfXnmav0HuIkqmA/lFUiCjJb0y7b8e7x9bJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehoeorfD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7DO280q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7455FC433F1;
-	Mon,  8 Apr 2024 13:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehoeorfD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6667CC433A6;
+	Mon,  8 Apr 2024 13:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582798;
-	bh=Xk1aHvoxZBFwL8zjS6cjQ0kN3SOd5GCWppfSuVtM/gQ=;
+	s=korg; t=1712582801;
+	bh=Ce2wzsgrvi0irEpaiWBiPibYCP35NBY3zuIv4abL1aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7DO280qyCh/lBNmGMbY/mYFeCOysAwWi9xN6tpFwKdHfD3eK4VDutS0y+c9f6VFq
-	 m+lAh3nig0GmyqsBsmOlZ1VnvWAtLZKvSeN6wdC4dOEx/lnlPZuyUSlhjcg/VANp7l
-	 xepCNYW7cw8AmQFiJQzWVbUSoE+ANR/watcAGX+k=
+	b=ehoeorfDJMrFnhhKLrVujW+B8OMOBFHDdpE9m6MK4Otv9mO1Jl4nuhe8TfXv5WFnG
+	 /zPu/CeVdTNTud1dVJT8bS8ycV36m7E9EbpyWkrz0R9+ByIHsiY1jvmVXmNJuq68cq
+	 eTxp4wDHzchB6mCBtQz3lkmzCH8dDulO6IU4hI64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 167/690] fsnotify: pass dentry instead of inode data
-Date: Mon,  8 Apr 2024 14:50:33 +0200
-Message-ID: <20240408125405.603520393@linuxfoundation.org>
+	Michael Krummsdorf <michael.krummsdorf@tq-group.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 106/273] net: dsa: mv88e6xxx: fix usable ports on 88e6020
+Date: Mon,  8 Apr 2024 14:56:21 +0200
+Message-ID: <20240408125312.598654044@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,101 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
 
-[ Upstream commit fd5a3ff49a19aa69e2bc1e26e98037c2d778e61a ]
+commit 625aefac340f45a4fc60908da763f437599a0d6f upstream.
 
-Define a new data type to pass for event - FSNOTIFY_EVENT_DENTRY.
-Use it to pass the dentry instead of it's ->d_inode where available.
+The switch has 4 ports with 2 internal PHYs, but ports are numbered up
+to 6, with ports 0, 1, 5 and 6 being usable.
 
-This is needed in preparation to the refactor to retrieve the super
-block from the data field.  In some cases (i.e. mkdir in kernfs), the
-data inode comes from a negative dentry, such that no super block
-information would be available. By receiving the dentry itself, instead
-of the inode, fsnotify can derive the super block even on these cases.
-
-Link: https://lore.kernel.org/r/20211025192746.66445-3-krisman@collabora.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[Expand explanation in commit message]
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 71d94a432a15 ("net: dsa: mv88e6xxx: add support for MV88E6020 switch")
+Signed-off-by: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240326123655.40666-1-matthias.schiffer@ew.tq-group.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fsnotify.h         |  5 ++---
- include/linux/fsnotify_backend.h | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
-index 298fd2bc29e49..70e6b147a76ad 100644
---- a/include/linux/fsnotify.h
-+++ b/include/linux/fsnotify.h
-@@ -39,8 +39,7 @@ static inline int fsnotify_name(__u32 mask, const void *data, int data_type,
- static inline void fsnotify_dirent(struct inode *dir, struct dentry *dentry,
- 				   __u32 mask)
- {
--	fsnotify_name(mask, d_inode(dentry), FSNOTIFY_EVENT_INODE,
--		      dir, &dentry->d_name, 0);
-+	fsnotify_name(mask, dentry, FSNOTIFY_EVENT_DENTRY, dir, &dentry->d_name, 0);
- }
- 
- static inline void fsnotify_inode(struct inode *inode, __u32 mask)
-@@ -87,7 +86,7 @@ static inline int fsnotify_parent(struct dentry *dentry, __u32 mask,
-  */
- static inline void fsnotify_dentry(struct dentry *dentry, __u32 mask)
- {
--	fsnotify_parent(dentry, mask, d_inode(dentry), FSNOTIFY_EVENT_INODE);
-+	fsnotify_parent(dentry, mask, dentry, FSNOTIFY_EVENT_DENTRY);
- }
- 
- static inline int fsnotify_file(struct file *file, __u32 mask)
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index 1ce66748a2d29..a2db821e8a8f2 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -248,6 +248,7 @@ enum fsnotify_data_type {
- 	FSNOTIFY_EVENT_NONE,
- 	FSNOTIFY_EVENT_PATH,
- 	FSNOTIFY_EVENT_INODE,
-+	FSNOTIFY_EVENT_DENTRY,
- };
- 
- static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
-@@ -255,6 +256,8 @@ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
- 	switch (data_type) {
- 	case FSNOTIFY_EVENT_INODE:
- 		return (struct inode *)data;
-+	case FSNOTIFY_EVENT_DENTRY:
-+		return d_inode(data);
- 	case FSNOTIFY_EVENT_PATH:
- 		return d_inode(((const struct path *)data)->dentry);
- 	default:
-@@ -262,6 +265,19 @@ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
- 	}
- }
- 
-+static inline struct dentry *fsnotify_data_dentry(const void *data, int data_type)
-+{
-+	switch (data_type) {
-+	case FSNOTIFY_EVENT_DENTRY:
-+		/* Non const is needed for dget() */
-+		return (struct dentry *)data;
-+	case FSNOTIFY_EVENT_PATH:
-+		return ((const struct path *)data)->dentry;
-+	default:
-+		return NULL;
-+	}
-+}
-+
- static inline const struct path *fsnotify_data_path(const void *data,
- 						    int data_type)
- {
--- 
-2.43.0
-
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -5500,8 +5500,12 @@ static const struct mv88e6xxx_info mv88e
+ 		.family = MV88E6XXX_FAMILY_6250,
+ 		.name = "Marvell 88E6020",
+ 		.num_databases = 64,
+-		.num_ports = 4,
++		/* Ports 2-4 are not routed to pins
++		 * => usable ports 0, 1, 5, 6
++		 */
++		.num_ports = 7,
+ 		.num_internal_phys = 2,
++		.invalid_port_mask = BIT(2) | BIT(3) | BIT(4),
+ 		.max_vid = 4095,
+ 		.port_base_addr = 0x8,
+ 		.phy_base_addr = 0x0,
 
 
