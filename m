@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48407BB0C;
-	Mon,  8 Apr 2024 13:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD987D085;
+	Mon,  8 Apr 2024 13:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582197; cv=none; b=TfGts4Lo4eAgSu/21LEbG/j3xurSs60TMOoAYrF9RiD3vzPf93aWfAsPOiifPlQ4IhLH27Nhy+xAyzfC7dY8g8kWZATLaVmzHa6Ng+y3j/CPL8oemb7arYnyQjDPB18MmOxurCTgjwjI4GCgRDrCYr65cU+pTdc4zuTtkQBdmtc=
+	t=1712582201; cv=none; b=bPdBBO+2zoDOIF23oh47hpt6ct4SJgfZJDqCa9Vj3WEdBH1zzICtVZ9EQttGcJZqDIF2ic+CwwXCnf69HlpX08ikrwTn+hsXBJ4e0Qbp8XSEfRgdAQmmZsq2RbroWVzbUP7ZCw6DCdjnp1WUSAGSz6zMk3fa4tA3W9xKouDJ/oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582197; c=relaxed/simple;
-	bh=R53H/n4fI4G1TdhtXLRUPSmpSr7hLl1YLVIitmjPtrY=;
+	s=arc-20240116; t=1712582201; c=relaxed/simple;
+	bh=RtoX7ZWxTxhUqK8EZ4mZEZ9Mr6eLoydK/C281ciizm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxx84yxw5JOH9MGI3ypZiab1g4anSyNSn4CNHXVchpO70aoMJoF+BnCUsVchApMUqsfYskyOWtiJIkyEWQBr/lbKBqjkpXoiWbfEkcOL3xBe5YuWG1OnV6Z+bt2k9DwQLUHw68836e3rKx7BW5pOjMxCXnbPH+4uC5FyhnrkXOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3QHQIyB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jomoxJtYMP53NVd8zrU8sTPXp4LUhp2OsJI5RX/HKlF8fuQvIB8uTNksNs+qrZcZsAi5B8eqAWbRBvW286LQUAsfJYGGcU1KLFUAR5kXo87YvQIXdbMknwsjtFsn5MAaJ1cDeGjfU8FP2+BIX/yd4kdz1/t17VlWCanY2Yf+6xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDd6GToQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3QHQIyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03165C433F1;
-	Mon,  8 Apr 2024 13:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDd6GToQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE08EC433F1;
+	Mon,  8 Apr 2024 13:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582197;
-	bh=R53H/n4fI4G1TdhtXLRUPSmpSr7hLl1YLVIitmjPtrY=;
+	s=korg; t=1712582200;
+	bh=RtoX7ZWxTxhUqK8EZ4mZEZ9Mr6eLoydK/C281ciizm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3QHQIyBJtK2MXdAiN9qXuHaHN0LwDykrDBk6Udw6tcrtgsUPJFOOzjLONpYMKfEl
-	 8kDTzIDNi11fDvrhqtWI8jNvlLyusaSpoSM+z7mNfAhlZQUdox1GRbNDL2QYMk7+m/
-	 SdggJ3f1qCVcZ01qfGR+tFby3Y1XN15JSbSwaI8o=
+	b=kDd6GToQ8+Ni2Sm+8gSQZsbsm+GGOH23KEHo411EQoFg3MeKKBhwBw96D0OYUAYMB
+	 w+pv8T/t6OSSovhAFboK2lV1/Y/vyYbnn6UNl1H/e+QaX+RPgbgdU0FwkI2zDmHdPa
+	 b/Zur7/kxlm1lGNMpYopMRH8V11G0OuN77BLX7jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lonial con <kongln9170@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 119/690] netfilter: nf_tables: disallow anonymous set with timeout flag
-Date: Mon,  8 Apr 2024 14:49:45 +0200
-Message-ID: <20240408125403.853776157@linuxfoundation.org>
+	Sandipan Das <sandipan.das@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 074/252] x86/cpufeatures: Add CPUID_LNX_5 to track recently added Linux-defined word
+Date: Mon,  8 Apr 2024 14:56:13 +0200
+Message-ID: <20240408125308.928146674@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,37 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 16603605b667b70da974bea8216c93e7db043bf1 upstream.
+commit 8cb4a9a82b21623dbb4b3051dd30d98356cf95bc upstream.
 
-Anonymous sets are never used with timeout from userspace, reject this.
-Exception to this rule is NFT_SET_EVAL to ensure legacy meters still work.
+Add CPUID_LNX_5 to track cpufeatures' word 21, and add the appropriate
+compile-time assert in KVM to prevent direct lookups on the features in
+CPUID_LNX_5.  KVM uses X86_FEATURE_* flags to manage guest CPUID, and so
+must translate features that are scattered by Linux from the Linux-defined
+bit to the hardware-defined bit, i.e. should never try to directly access
+scattered features in guest CPUID.
 
-Cc: stable@vger.kernel.org
-Fixes: 761da2935d6e ("netfilter: nf_tables: add set timeout API support")
-Reported-by: lonial con <kongln9170@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Opportunistically add NR_CPUID_WORDS to enum cpuid_leafs, along with a
+compile-time assert in KVM's CPUID infrastructure to ensure that future
+additions update cpuid_leafs along with NCAPINTS.
+
+No functional change intended.
+
+Fixes: 7f274e609f3d ("x86/cpufeatures: Add new word for scattered features")
+Cc: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/include/asm/cpufeature.h |    2 ++
+ arch/x86/kvm/reverse_cpuid.h      |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4641,6 +4641,9 @@ static int nf_tables_newset(struct sk_bu
- 		if ((flags & (NFT_SET_EVAL | NFT_SET_OBJECT)) ==
- 			     (NFT_SET_EVAL | NFT_SET_OBJECT))
- 			return -EOPNOTSUPP;
-+		if ((flags & (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT | NFT_SET_EVAL)) ==
-+			     (NFT_SET_ANONYMOUS | NFT_SET_TIMEOUT))
-+			return -EOPNOTSUPP;
- 	}
+--- a/arch/x86/include/asm/cpufeature.h
++++ b/arch/x86/include/asm/cpufeature.h
+@@ -33,6 +33,8 @@ enum cpuid_leafs
+ 	CPUID_7_EDX,
+ 	CPUID_8000_001F_EAX,
+ 	CPUID_8000_0021_EAX,
++	CPUID_LNX_5,
++	NR_CPUID_WORDS,
+ };
  
- 	desc.dtype = 0;
+ #define X86_CAP_FMT_NUM "%d:%d"
+--- a/arch/x86/kvm/reverse_cpuid.h
++++ b/arch/x86/kvm/reverse_cpuid.h
+@@ -102,10 +102,12 @@ static const struct cpuid_reg reverse_cp
+  */
+ static __always_inline void reverse_cpuid_check(unsigned int x86_leaf)
+ {
++	BUILD_BUG_ON(NR_CPUID_WORDS != NCAPINTS);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_1);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_2);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_3);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
++	BUILD_BUG_ON(x86_leaf == CPUID_LNX_5);
+ 	BUILD_BUG_ON(x86_leaf >= ARRAY_SIZE(reverse_cpuid));
+ 	BUILD_BUG_ON(reverse_cpuid[x86_leaf].function == 0);
+ }
 
 
