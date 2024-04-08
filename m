@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A768242046;
-	Mon,  8 Apr 2024 13:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8094142046;
+	Mon,  8 Apr 2024 13:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584477; cv=none; b=mHPSvi/e21liSogFI80M3PwDTI/JX0DwMnvkFEPPVQ6LhQ7Fd+ybPnfa36Ki+h2rE2EFXK02Vpd2asKRiCck8o3sdNDhedwZw+SC0A0ZdO1Dgo9Bzro8L67K/r+QIRqhGrgnqwCGWVNMS8oTxw5Bq0HfQnFKMakf1iGT3yLWo+U=
+	t=1712584480; cv=none; b=XdRHs3kJIIWR1Bz7Mrohg/SagYlUFWOab+qcy9ziC8ck1OWpMmWLu/b3RWG1CRiBjHl0MRB9olnQl+aVll+2V55rvtoBhwr+OulR64PDReOYMzEdgbK6DfERR0LdIV/k2cygoM4qmj2mjCQdhJ6XSALMZtqp/8rq8qlaGzY8zds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584477; c=relaxed/simple;
-	bh=vhzWFvrT7Ct4bcD5pvMm/99zmNKioSsCsKVXiuIwFRI=;
+	s=arc-20240116; t=1712584480; c=relaxed/simple;
+	bh=UOlvs8JznmNoUi65FoFcwnVtRXl+UTE0Hc/aHIOTPfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/zYpstcr2wlRsh3lYU54nbPBnknKtA3haf5e4c1ObZI/P+tYL77P2ILR8WkeESko2GzwmOWaisGdzQgB2ZhyiDuty2xS4eCnmt6ubHoo24X9urpG/3pB0HOQzARbdMhzUmse0e15YeJne9XquX21sli8Ub1DUUpzadxHRzATcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCuVEQg4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=luqaHUyK/6tv8BpdBe+4wr8HilZB9wtrhBVhWXZXdITu+RfuTyBWC6DXs6g08Ca5cSNg0z2XYvpws43eP6zoWx/AxuIriQ8vQuXOpffn2DHxp6W0z6AJyfST/0YnknIu7zxukYmYUDgp3QZ5YAGgiUpdKZInsFhLa7JZXhJITdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOf7+rd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCuVEQg4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B018C433F1;
-	Mon,  8 Apr 2024 13:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOf7+rd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09208C433F1;
+	Mon,  8 Apr 2024 13:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584477;
-	bh=vhzWFvrT7Ct4bcD5pvMm/99zmNKioSsCsKVXiuIwFRI=;
+	s=korg; t=1712584480;
+	bh=UOlvs8JznmNoUi65FoFcwnVtRXl+UTE0Hc/aHIOTPfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCuVEQg4FdxNJ52vzaR+BYF5Mc2SbLFogXBHHhCfe1q41WFRy9tRgdtP2qeL+9Y+V
-	 nNCjeb7ExTsSt4wmUJHGq2PkdLEW9vaUe4OwujIGjkUHn4qKyuuP2U6WHoKIirxBGz
-	 WjNm2I76SFLQdguvpl2g6zT8TzmIPQ528N2KKtrQ=
+	b=LOf7+rd+2iY0WveSRyPQxIH5Z0zhnKJf0ecD0p6gEIMq76cxcPlB06wd6MGtGdV/s
+	 V77ZPWwMGSqya1dPrdqcAxKcACBJTCzlTS5dlFQJLY+ZS/m6gN3ucKXxzk9H1Cvtvy
+	 0GmCUcZdQZAG9oKQ0YXqOf7AZZEa+j1XHaVV3IbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 421/690] nfsd: Propagate some error code returned by memdup_user()
-Date: Mon,  8 Apr 2024 14:54:47 +0200
-Message-ID: <20240408125414.858866891@linuxfoundation.org>
+Subject: [PATCH 5.15 422/690] NFSD: Increase NFSD_MAX_OPS_PER_COMPOUND
+Date: Mon,  8 Apr 2024 14:54:48 +0200
+Message-ID: <20240408125414.889548919@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,52 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 30a30fcc3fc1ad4c5d017c9fcb75dc8f59e7bdad ]
+[ Upstream commit 80e591ce636f3ae6855a0ca26963da1fdd6d4508 ]
 
-Propagate the error code returned by memdup_user() instead of a hard coded
--EFAULT.
+When attempting an NFSv4 mount, a Solaris NFSv4 client builds a
+single large COMPOUND that chains a series of LOOKUPs to get to the
+pseudo filesystem root directory that is to be mounted. The Linux
+NFS server's current maximum of 16 operations per NFSv4 COMPOUND is
+not large enough to ensure that this works for paths that are more
+than a few components deep.
 
-Suggested-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Since NFSD_MAX_OPS_PER_COMPOUND is mostly a sanity check, and most
+NFSv4 COMPOUNDS are between 3 and 6 operations (thus they do not
+trigger any re-allocation of the operation array on the server),
+increasing this maximum should result in little to no impact.
+
+The ops array can get large now, so allocate it via vmalloc() to
+help ensure memory fragmentation won't cause an allocation failure.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216383
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4recover.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4xdr.c | 7 ++++---
+ fs/nfsd/state.h   | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 4edfc95806412..5d680045fa2c7 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -808,7 +808,7 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 				return -EFAULT;
- 			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
- 			if (IS_ERR(name.data))
--				return -EFAULT;
-+				return PTR_ERR(name.data);
- 			name.len = namelen;
- 			get_user(princhashlen, &ci->cc_princhash.cp_len);
- 			if (princhashlen > 0) {
-@@ -817,7 +817,7 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 						princhashlen);
- 				if (IS_ERR(princhash.data)) {
- 					kfree(name.data);
--					return -EFAULT;
-+					return PTR_ERR(princhash.data);
- 				}
- 				princhash.len = princhashlen;
- 			} else
-@@ -830,7 +830,7 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 				return -EFAULT;
- 			name.data = memdup_user(&cnm->cn_id, namelen);
- 			if (IS_ERR(name.data))
--				return -EFAULT;
-+				return PTR_ERR(name.data);
- 			name.len = namelen;
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 5aafbd0f7ae30..0f30d93577e7b 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -42,6 +42,8 @@
+ #include <linux/sunrpc/svcauth_gss.h>
+ #include <linux/sunrpc/addr.h>
+ #include <linux/xattr.h>
++#include <linux/vmalloc.h>
++
+ #include <uapi/linux/xattr.h>
+ 
+ #include "idmap.h"
+@@ -2364,10 +2366,9 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
+ 			    NFSD_MAX_OPS_PER_COMPOUND);
+ 
+ 	if (argp->opcnt > ARRAY_SIZE(argp->iops)) {
+-		argp->ops = kzalloc(argp->opcnt * sizeof(*argp->ops), GFP_KERNEL);
++		argp->ops = vcalloc(argp->opcnt, sizeof(*argp->ops));
+ 		if (!argp->ops) {
+ 			argp->ops = argp->iops;
+-			dprintk("nfsd: couldn't allocate room for COMPOUND\n");
+ 			return false;
  		}
- 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
+ 	}
+@@ -5399,7 +5400,7 @@ void nfsd4_release_compoundargs(struct svc_rqst *rqstp)
+ 	struct nfsd4_compoundargs *args = rqstp->rq_argp;
+ 
+ 	if (args->ops != args->iops) {
+-		kfree(args->ops);
++		vfree(args->ops);
+ 		args->ops = args->iops;
+ 	}
+ 	while (args->to_free) {
+diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
+index ae596dbf86675..5d28beb290fef 100644
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -175,7 +175,7 @@ static inline struct nfs4_delegation *delegstateid(struct nfs4_stid *s)
+ /* Maximum number of slots per session. 160 is useful for long haul TCP */
+ #define NFSD_MAX_SLOTS_PER_SESSION     160
+ /* Maximum number of operations per session compound */
+-#define NFSD_MAX_OPS_PER_COMPOUND	16
++#define NFSD_MAX_OPS_PER_COMPOUND	50
+ /* Maximum  session per slot cache size */
+ #define NFSD_SLOT_CACHE_SIZE		2048
+ /* Maximum number of NFSD_SLOT_CACHE_SIZE slots per session */
 -- 
 2.43.0
 
