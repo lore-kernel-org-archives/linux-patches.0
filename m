@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D116F53D;
-	Mon,  8 Apr 2024 13:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5092E62C;
+	Mon,  8 Apr 2024 13:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581445; cv=none; b=AimPDjr9M8eUPoiMozm9RggB8EuX7fZXrkANp1JygefpMq5srFAJXQfhlO+9MZ+zmYedzgcBQfEZFzJYmL5xWmbbVGCRquDuC5hJxlVTu2hgei6B3ss4HOBRzIjNhXJqFDoJfKw1YH+rC8fXNjG+rEqY0eDWytpSOYYFzOtnZHM=
+	t=1712581448; cv=none; b=a09AepmVjbLzQDLCaFEsGRSzKPXgs1zzvpmFkPNbjiaBgI2La0qV4sfpPcldfo13rWSseFK+y0aiqqjBWLE7wVUz4d+FKMS9b3PV733oqPMkXdJCtjxYOt6zsUz4Q3O+k3HJIyVAUjQGwPgfUMdCmNKqN05ONpOZUPEoKadCIAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581445; c=relaxed/simple;
-	bh=DUB2hXY1/ExP3a3QEwJzpWWCxpOcm+9xBtb1ZuVddMg=;
+	s=arc-20240116; t=1712581448; c=relaxed/simple;
+	bh=77MVwSq0bPpA7rFgxiaRn7wCOFilcBBd7hT8/iqM5fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BvdY4wxf1KIi1DQt3Bfv5dahNQiynMWYMCzi2aguB+aInDK+CZPheFtV7q3aqJ7zgR3AvLfGMtsTbjgl1GBpRO2cGOthi/zvNkLzxwA4lYJMDXG+0Cl1kFG31eeBN7V1IIvaykVofb1rpieMYQVG4JEGe/MMZbbs6T/MsjY90q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5m7xHq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6WAY4L9nHuYO5aoqjz5Zhg2XA+Dc4lcu+PqZg1zMW/3civwlTX+EmaJlCCb/iXWdGKFyquUftby0FqQMN+XXIJVPyDU2srdpGaoCMZv/ojDlHB5tH8sSKmYNsqft0rUijp3QTHTPViA0VjHcqanB6xt+ODgRNVe6v9LpXJHIRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJ7J2wuY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5m7xHq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0C9C433F1;
-	Mon,  8 Apr 2024 13:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJ7J2wuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E75C433C7;
+	Mon,  8 Apr 2024 13:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581445;
-	bh=DUB2hXY1/ExP3a3QEwJzpWWCxpOcm+9xBtb1ZuVddMg=;
+	s=korg; t=1712581448;
+	bh=77MVwSq0bPpA7rFgxiaRn7wCOFilcBBd7hT8/iqM5fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5m7xHq7W9Fvbl2zVE1gkRpx6Ttd1oGVKURgerXO/Ayzamf6Wdy4H5AD4Wqexf0+Q
-	 Y4yeI1/fDtRZU0HQuim5MSW/9wj7w+GEInHbksn//rpfNWah1w022+jXHXzOyh8uxz
-	 E5DeAhFrHEJAnoRjdU5lj/zQA4PpxTnyFHolOfPY=
+	b=zJ7J2wuYACna4VEsYKnFvK2rHAybh8dQyiWSn6lkHTR9OvaDDNQ0p8ECx52rQ1dc4
+	 I7GfgRaGBerVeHeUSQkY43t9vysnduG2HosQ5qlq7y5vfgnvd5noucXpIRA7AmP8UR
+	 71yYNnMxtErRaJ5W7vvzdBUos+dW8hTIw4ihsSJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Jacobs?= <aurel@gnuage.org>,
-	Johan Hovold <johan@kernel.org>,
+	Peter Collingbourne <pcc@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Marco Elver <elver@google.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Evgenii Stepanov <eugenis@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/690] USB: serial: option: add MeiG Smart SLM320 product
-Date: Mon,  8 Apr 2024 14:48:36 +0200
-Message-ID: <20240408125401.342049981@linuxfoundation.org>
+Subject: [PATCH 5.15 027/690] kasan: test: add memcpy test that avoids out-of-bounds write
+Date: Mon,  8 Apr 2024 14:48:13 +0200
+Message-ID: <20240408125400.547268136@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -45,87 +54,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurélien Jacobs <aurel@gnuage.org>
+From: Peter Collingbourne <pcc@google.com>
 
-[ Upstream commit 46809c51565b83881aede6cdf3b0d25254966a41 ]
+[ Upstream commit 758cabae312d3aded781aacc6d0c946b299c52df ]
 
-Update the USB serial option driver to support MeiG Smart SLM320.
+With HW tag-based KASAN, error checks are performed implicitly by the
+load and store instructions in the memcpy implementation.  A failed
+check results in tag checks being disabled and execution will keep
+going.  As a result, under HW tag-based KASAN, prior to commit
+1b0668be62cf ("kasan: test: disable kmalloc_memmove_invalid_size for
+HW_TAGS"), this memcpy would end up corrupting memory until it hits an
+inaccessible page and causes a kernel panic.
 
-ID 2dee:4d41 UNISOC UNISOC-8910
+This is a pre-existing issue that was revealed by commit 285133040e6c
+("arm64: Import latest memcpy()/memmove() implementation") which changed
+the memcpy implementation from using signed comparisons (incorrectly,
+resulting in the memcpy being terminated early for negative sizes) to
+using unsigned comparisons.
 
-T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 9 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
-P: Vendor=2dee ProdID=4d41 Rev=00.00
-S: Manufacturer=UNISOC
-S: Product=UNISOC-8910
-C: #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=400mA
-I: If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+It is unclear how this could be handled by memcpy itself in a reasonable
+way.  One possibility would be to add an exception handler that would
+force memcpy to return if a tag check fault is detected -- this would
+make the behavior roughly similar to generic and SW tag-based KASAN.
+However, this wouldn't solve the problem for asynchronous mode and also
+makes memcpy behavior inconsistent with manually copying data.
 
-Tested successfully a PPP LTE connection using If#= 0.
-Not sure of the purpose of every other serial interfaces.
+This test was added as a part of a series that taught KASAN to detect
+negative sizes in memory operations, see commit 8cceeff48f23 ("kasan:
+detect negative size in memory operation function").  Therefore we
+should keep testing for negative sizes with generic and SW tag-based
+KASAN.  But there is some value in testing small memcpy overflows, so
+let's add another test with memcpy that does not destabilize the kernel
+by performing out-of-bounds writes, and run it in all modes.
 
-Signed-off-by: Aurélien Jacobs <aurel@gnuage.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://linux-review.googlesource.com/id/I048d1e6a9aff766c4a53f989fb0c83de68923882
+Link: https://lkml.kernel.org/r/20210910211356.3603758-1-pcc@google.com
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Evgenii Stepanov <eugenis@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: e10aea105e9e ("kasan/test: avoid gcc warning for intentional overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ lib/test_kasan.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index c0a0cca65437f..1a3e5a9414f07 100644
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -613,6 +613,11 @@ static void option_instat_callback(struct urb *urb);
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+diff --git a/lib/test_kasan.c b/lib/test_kasan.c
+index 89f444cabd4a8..f0b8b05ccf194 100644
+--- a/lib/test_kasan.c
++++ b/lib/test_kasan.c
+@@ -500,7 +500,7 @@ static void kmalloc_oob_in_memset(struct kunit *test)
+ 	kfree(ptr);
+ }
  
-+/* MeiG Smart Technology products */
-+#define MEIGSMART_VENDOR_ID			0x2dee
-+/* MeiG Smart SLM320 based on UNISOC UIS8910 */
-+#define MEIGSMART_PRODUCT_SLM320		0x4d41
+-static void kmalloc_memmove_invalid_size(struct kunit *test)
++static void kmalloc_memmove_negative_size(struct kunit *test)
+ {
+ 	char *ptr;
+ 	size_t size = 64;
+@@ -522,6 +522,21 @@ static void kmalloc_memmove_invalid_size(struct kunit *test)
+ 	kfree(ptr);
+ }
+ 
++static void kmalloc_memmove_invalid_size(struct kunit *test)
++{
++	char *ptr;
++	size_t size = 64;
++	volatile size_t invalid_size = size;
 +
- /* Device flags */
- 
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2282,6 +2287,7 @@ static const struct usb_device_id option_ids[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
++	ptr = kmalloc(size, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ptr);
++
++	memset((char *)ptr, 0, 64);
++	KUNIT_EXPECT_KASAN_FAIL(test,
++		memmove((char *)ptr, (char *)ptr + 4, invalid_size));
++	kfree(ptr);
++}
++
+ static void kmalloc_uaf(struct kunit *test)
+ {
+ 	char *ptr;
+@@ -1139,6 +1154,7 @@ static struct kunit_case kasan_kunit_test_cases[] = {
+ 	KUNIT_CASE(kmalloc_oob_memset_4),
+ 	KUNIT_CASE(kmalloc_oob_memset_8),
+ 	KUNIT_CASE(kmalloc_oob_memset_16),
++	KUNIT_CASE(kmalloc_memmove_negative_size),
+ 	KUNIT_CASE(kmalloc_memmove_invalid_size),
+ 	KUNIT_CASE(kmalloc_uaf),
+ 	KUNIT_CASE(kmalloc_uaf_memset),
 -- 
 2.43.0
 
