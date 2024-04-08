@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1F77D3FD;
-	Mon,  8 Apr 2024 14:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E136A7E0F3;
+	Mon,  8 Apr 2024 14:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585058; cv=none; b=sul4P+pd+4HmpHZorrRym+n2JUz86SqoHNAnTzAnKNuT61RN2MUwHARtg4n6R2byfTpXW+Oj2WYau8MRryc/IYrnS+DKit73f41T3TyL3bCfM5pWYkY6A2hpSEegFhoGg8TX5EoRS32RaRrFEu1RTgHNEOnC8eKrgv+X8j+ru2Q=
+	t=1712585061; cv=none; b=QFS1n0H55029D5Oa96fudSOr19ccHlBlQG9+IE/SAISvePIWomszAnL5Y9/dBK2vWwv0LgveiU9euuXxW5aaPx1q0GuYD52gYBfWyB792QcXdMK69W49FjDrWi6XZXXYdOik9TD6KaIJX7tAfxtwj0rE7ZSvCzdbsJFjJ0xoIjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585058; c=relaxed/simple;
-	bh=pSG8KXFQl1UPjmo6F1O0MBARC89pDTLxo4p6LPGTS8E=;
+	s=arc-20240116; t=1712585061; c=relaxed/simple;
+	bh=UroffI2rA+lViRJVvWvfu83p/hBDMajxWZiyIp1PQlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rl+r0kVbne87DBfpHRu4YJfSGcyD3KNXMaTvzILlOCBsr+XvwJjtwiigKRWZMTZ1IVq5Ltm4GboJJl3kFPHVAxP+SrjiZjxUvcXAmrWA5KLEdIsVmRHw8oF602xj8Uw8fS5lksHn7a8ChKMJSnzGUiAG7Bl6Ztn3hUR/WRaC2+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6burZQ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYNItfoE/bby0SUW/qQb2bht1vM2yUy7Cm0AmuqH0LigILWEOhnsyi0HL2JT1qjuG/XA7IEnKfJB7BbsQGF1TFD/MwVVz6wtX5p1VAQBVE1o5qCqucGzntzHFYR2gATs5QXEYcnM1AI1sQWhwVMrOzuHPitWxSDcbP1G4cR+lM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ha2aIXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6burZQ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884CDC433C7;
-	Mon,  8 Apr 2024 14:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ha2aIXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A96BC433C7;
+	Mon,  8 Apr 2024 14:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585057;
-	bh=pSG8KXFQl1UPjmo6F1O0MBARC89pDTLxo4p6LPGTS8E=;
+	s=korg; t=1712585060;
+	bh=UroffI2rA+lViRJVvWvfu83p/hBDMajxWZiyIp1PQlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6burZQ8PoXhldDeiwBj6gJcHXFY90RWSP4Va1nX4GRWGnM/UX+RiFYbFqMCNeVeH
-	 Odhh8XiuPBSKcoT8Z5bfdXTjmw2LQJazSAkAjWg+1FHQjN+VV9eNUUPXkI1n/LPb6H
-	 U3uR7SOjYzQQVdIzxTSUb14ZfUKm/rNKnn+A5CrU=
+	b=1Ha2aIXExcOicrvYQZ/z8+TbefsNku7aQ5gWzGPRA03HsezZGOjrmH6nYXqkBeXwG
+	 CgTtgxKYDEwFICnusK6Po86o1EcXITyFJgUoL/2mm8hU4UCMBMrQ9uNtj44hdTT3/n
+	 gLKD09OhcYijXNfyDPs1hYpBgjD1+f96SYXoNlVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com,
-	syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Andrei Matei <andreimatei1@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 618/690] bpf: Protect against int overflow for stack access size
-Date: Mon,  8 Apr 2024 14:58:04 +0200
-Message-ID: <20240408125422.005473365@linuxfoundation.org>
+Subject: [PATCH 5.15 619/690] Octeontx2-af: fix pause frame configuration in GMP mode
+Date: Mon,  8 Apr 2024 14:58:05 +0200
+Message-ID: <20240408125422.053016927@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -54,51 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit ecc6a2101840177e57c925c102d2d29f260d37c8 ]
+[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
 
-This patch re-introduces protection against the size of access to stack
-memory being negative; the access size can appear negative as a result
-of overflowing its signed int representation. This should not actually
-happen, as there are other protections along the way, but we should
-protect against it anyway. One code path was missing such protections
-(fixed in the previous patch in the series), causing out-of-bounds array
-accesses in check_stack_range_initialized(). This patch causes the
-verification of a program with such a non-sensical access size to fail.
+The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
+different speeds, allowing for efficient data transfer.
 
-This check used to exist in a more indirect way, but was inadvertendly
-removed in a833a17aeac7.
+The previous patch which added pause frame configuration has a bug due
+to which pause frame feature is not working in GMP mode.
 
-Fixes: a833a17aeac7 ("bpf: Fix verification of indirect var-off stack access")
-Reported-by: syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com
-Reported-by: syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/CAADnVQLORV5PT0iTAhRER+iLBTkByCYNBYyvBSgjN1T31K+gOw@mail.gmail.com/
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
-Link: https://lore.kernel.org/r/20240327024245.318299-3-andreimatei1@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This patch fixes the issue by configurating appropriate registers.
+
+Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++++
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f099c5481b662..008ddb694c8a1 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4320,6 +4320,11 @@ static int check_stack_access_within_bounds(
- 	err = check_stack_slot_within_bounds(min_off, state, type);
- 	if (!err && max_off > 0)
- 		err = -EINVAL; /* out of stack access into non-negative offsets */
-+	if (!err && access_size < 0)
-+		/* access_size should not be negative (or overflow an int); others checks
-+		 * along the way should have prevented such an access.
-+		 */
-+		err = -EFAULT; /* invalid negative access size; integer overflow? */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 3ade1a6e2f1e0..4dec201158956 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -787,6 +787,11 @@ static int cgx_lmac_enadis_pause_frm(void *cgxd, int lmac_id,
+ 	if (!is_lmac_valid(cgx, lmac_id))
+ 		return -ENODEV;
  
- 	if (err) {
- 		if (tnum_is_const(reg->var_off)) {
++	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
++	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
++	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
++	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
++
+ 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
+ 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
+ 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
 -- 
 2.43.0
 
