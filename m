@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBDC7EF1F;
-	Mon,  8 Apr 2024 13:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD5F7FBB2;
+	Mon,  8 Apr 2024 13:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582869; cv=none; b=B++NcSHZkCPe8JTf3bvQER3l2gSBcGbNLDONBKBmqIIjcADb+cECW1c536JwBqEVMbXtvYSl8tysjho7yrQsdgiH7njf4lkjUFyAizwl4ewmB4Bk2xK2VeW734YhrJ/mwpHhvckXLdJRWyfbYE8/KoyS1dSLLqtlmdWpmABcC3U=
+	t=1712582872; cv=none; b=dervgwzd6ng7sPLGOD8o8QjwYSCAg0Afh4Aa6ecNZpnNvTjNdDdl+GTFwJpeC6rBH0oyYYk+bITRblPQvUNGJf/fRKFR1bFT8yvCQFf+Xtq0d8cqVUS49lHK2yc2fKotdQ5gzhQ1RpgaGSALXmjDKEyawbJpbsMHyQmwLKSloC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582869; c=relaxed/simple;
-	bh=Kz1g8AvD2axPeBN9UcMurfBm3GeXmMgV7ztFXp7vNqs=;
+	s=arc-20240116; t=1712582872; c=relaxed/simple;
+	bh=sqD6pfYPeDyvHef/98gn5vtvLP/89OryUJrE+Q/CuEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwDOyFJ8Agm+TF3k3hXyyOh4nNIgZs1Cg1RulVaddqAzRK9C0rXpdh2tmM0p8HFnFCC2iiAVU8WLoIPnyjh0W9QKR4oNqVqLsxkrPvAuAhpYtZP3j6taEKxzNOEPZY6Ld4nyR+b7nGHZCVr2MNVHakbiXt+nmFTdMBUQZ8CdTgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCCyJQfV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAHaXAI/pBB7bmBbPiLmPsWUgR6tkATwpSsbXE3EsSliYe0ZyfR9xd5fw/w1h8RBG3luNiDb6rZqOuk5MlQtqFSg/QLstgj0T3df8eApTnrjr0Ix1TvlzRyX1fnQYR0ld9NqtrSRX+1y3wZbw8tpdoDfEhaoey/xN2mzoF4bhWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+FXGEKn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCCyJQfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95055C433F1;
-	Mon,  8 Apr 2024 13:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+FXGEKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D34C433F1;
+	Mon,  8 Apr 2024 13:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582869;
-	bh=Kz1g8AvD2axPeBN9UcMurfBm3GeXmMgV7ztFXp7vNqs=;
+	s=korg; t=1712582871;
+	bh=sqD6pfYPeDyvHef/98gn5vtvLP/89OryUJrE+Q/CuEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCCyJQfVWzWl9KWM6T6y923gHzMw8ay2C1wPKwIV+uRUge0KcAKPnH6WtSfad1yXG
-	 3QJklnIIFP1xxopXUAEy3qh2CEraWepu0Jgw36YJpeh/E7+HclpCOdOxUk/PjGvjAd
-	 Bv1rxfTujP0aqEN5XpZXY97v54PZh0LkL/uefw08=
+	b=J+FXGEKnASJh6pHRN2wswj4pnO5Z2eecOp0QH36o0dlGgZ68Lr7s1pUtfRkhtw3hj
+	 uuNVE5VUwajt/LJgsoTSObjYA3/gq0X0MEkTcSXbgoaUDKDoPeouCfriUlMtV2xoVP
+	 S8OCkxCC67W5GnghATZgmKkbOgOkNHyiSy240mA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 182/690] fsnotify: Support FS_ERROR event type
-Date: Mon,  8 Apr 2024 14:50:48 +0200
-Message-ID: <20240408125406.143642307@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 112/273] tcp: Fix bind() regression for v6-only wildcard and v4-mapped-v6 non-wildcard addresses.
+Date: Mon,  8 Apr 2024 14:56:27 +0200
+Message-ID: <20240408125312.779005573@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +46,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 9daa811073fa19c08e8aad3b90f9235fed161acf ]
+commit ea111449501ea32bf6da82750de860243691efc7 upstream.
 
-Expose a new type of fsnotify event for filesystems to report errors for
-userspace monitoring tools.  fanotify will send this type of
-notification for FAN_FS_ERROR events.  This also introduce a helper for
-generating the new event.
+Commit 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard
+address.") introduced bind() regression for v4-mapped-v6 address.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-18-krisman@collabora.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+When we bind() the following two addresses on the same port, the 2nd
+bind() should succeed but fails now.
+
+  1. [::] w/ IPV6_ONLY
+  2. ::ffff:127.0.0.1
+
+After the chagne, v4-mapped-v6 uses bhash2 instead of bhash to
+detect conflict faster, but I forgot to add a necessary change.
+
+During the 2nd bind(), inet_bind2_bucket_match_addr_any() returns
+the tb2 bucket of [::], and inet_bhash2_conflict() finally calls
+inet_bind_conflict(), which returns true, meaning conflict.
+
+  inet_bhash2_addr_any_conflict
+  |- inet_bind2_bucket_match_addr_any  <-- return [::] bucket
+  `- inet_bhash2_conflict
+     `- __inet_bhash2_conflict <-- checks IPV6_ONLY for AF_INET
+        |                          but not for v4-mapped-v6 address
+        `- inet_bind_conflict  <-- does not check address
+
+inet_bind_conflict() does not check socket addresses because
+__inet_bhash2_conflict() is expected to do so.
+
+However, it checks IPV6_V6ONLY attribute only against AF_INET
+socket, and not for v4-mapped-v6 address.
+
+As a result, v4-mapped-v6 address conflicts with v6-only wildcard
+address.
+
+To avoid that, let's add the missing test to use bhash2 for
+v4-mapped-v6 address.
+
+Fixes: 5e07e672412b ("tcp: Use bhash2 for v4-mapped-v6 non-wildcard address.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240326204251.51301-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fsnotify.h         | 13 +++++++++++++
- include/linux/fsnotify_backend.h | 32 +++++++++++++++++++++++++++++++-
- 2 files changed, 44 insertions(+), 1 deletion(-)
+ net/ipv4/inet_connection_sock.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
-index a327a95fa68f1..67d6db6c8df8f 100644
---- a/include/linux/fsnotify.h
-+++ b/include/linux/fsnotify.h
-@@ -375,4 +375,17 @@ static inline void fsnotify_change(struct dentry *dentry, unsigned int ia_valid)
- 		fsnotify_dentry(dentry, mask);
- }
- 
-+static inline int fsnotify_sb_error(struct super_block *sb, struct inode *inode,
-+				    int error)
-+{
-+	struct fs_error_report report = {
-+		.error = error,
-+		.inode = inode,
-+		.sb = sb,
-+	};
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index c038e28e2f1e..4184d45f890c 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -203,8 +203,15 @@ static bool __inet_bhash2_conflict(const struct sock *sk, struct sock *sk2,
+ 				   kuid_t sk_uid, bool relax,
+ 				   bool reuseport_cb_ok, bool reuseport_ok)
+ {
+-	if (sk->sk_family == AF_INET && ipv6_only_sock(sk2))
+-		return false;
++	if (ipv6_only_sock(sk2)) {
++		if (sk->sk_family == AF_INET)
++			return false;
 +
-+	return fsnotify(FS_ERROR, &report, FSNOTIFY_EVENT_ERROR,
-+			NULL, NULL, NULL, 0);
-+}
-+
- #endif	/* _LINUX_FS_NOTIFY_H */
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index 3a7c314361824..00dbaafbcf953 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -42,6 +42,12 @@
- 
- #define FS_UNMOUNT		0x00002000	/* inode on umount fs */
- #define FS_Q_OVERFLOW		0x00004000	/* Event queued overflowed */
-+#define FS_ERROR		0x00008000	/* Filesystem Error (fanotify) */
-+
-+/*
-+ * FS_IN_IGNORED overloads FS_ERROR.  It is only used internally by inotify
-+ * which does not support FS_ERROR.
-+ */
- #define FS_IN_IGNORED		0x00008000	/* last inotify event here */
- 
- #define FS_OPEN_PERM		0x00010000	/* open event in an permission hook */
-@@ -95,7 +101,8 @@
- #define ALL_FSNOTIFY_EVENTS (ALL_FSNOTIFY_DIRENT_EVENTS | \
- 			     FS_EVENTS_POSS_ON_CHILD | \
- 			     FS_DELETE_SELF | FS_MOVE_SELF | FS_DN_RENAME | \
--			     FS_UNMOUNT | FS_Q_OVERFLOW | FS_IN_IGNORED)
-+			     FS_UNMOUNT | FS_Q_OVERFLOW | FS_IN_IGNORED | \
-+			     FS_ERROR)
- 
- /* Extra flags that may be reported with event or control handling of events */
- #define ALL_FSNOTIFY_FLAGS  (FS_EXCL_UNLINK | FS_ISDIR | FS_IN_ONESHOT | \
-@@ -250,6 +257,13 @@ enum fsnotify_data_type {
- 	FSNOTIFY_EVENT_PATH,
- 	FSNOTIFY_EVENT_INODE,
- 	FSNOTIFY_EVENT_DENTRY,
-+	FSNOTIFY_EVENT_ERROR,
-+};
-+
-+struct fs_error_report {
-+	int error;
-+	struct inode *inode;
-+	struct super_block *sb;
- };
- 
- static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
-@@ -261,6 +275,8 @@ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
- 		return d_inode(data);
- 	case FSNOTIFY_EVENT_PATH:
- 		return d_inode(((const struct path *)data)->dentry);
-+	case FSNOTIFY_EVENT_ERROR:
-+		return ((struct fs_error_report *)data)->inode;
- 	default:
- 		return NULL;
- 	}
-@@ -300,6 +316,20 @@ static inline struct super_block *fsnotify_data_sb(const void *data,
- 		return ((struct dentry *)data)->d_sb;
- 	case FSNOTIFY_EVENT_PATH:
- 		return ((const struct path *)data)->dentry->d_sb;
-+	case FSNOTIFY_EVENT_ERROR:
-+		return ((struct fs_error_report *) data)->sb;
-+	default:
-+		return NULL;
++#if IS_ENABLED(CONFIG_IPV6)
++		if (ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr))
++			return false;
++#endif
 +	}
-+}
-+
-+static inline struct fs_error_report *fsnotify_data_error_report(
-+							const void *data,
-+							int data_type)
-+{
-+	switch (data_type) {
-+	case FSNOTIFY_EVENT_ERROR:
-+		return (struct fs_error_report *) data;
- 	default:
- 		return NULL;
- 	}
+ 
+ 	return inet_bind_conflict(sk, sk2, sk_uid, relax,
+ 				  reuseport_cb_ok, reuseport_ok);
 -- 
-2.43.0
+2.44.0
 
 
 
