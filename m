@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F16839E6;
-	Mon,  8 Apr 2024 13:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC1885284;
+	Mon,  8 Apr 2024 13:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582696; cv=none; b=TzAqmb4pI8llUaWMfCpFD6Tn/T/qFdl2AWgKmQLJ08mlLOqiXQ9kP9LgTgsluLZNLtsbpIC/QTKB0liDewHrl2vNRr1uUPTkGLnWmLQ78JjdTgV2Y3dwCFckB1qMwFeIx3XzG+CL4Qa3vSmUiYtI1CaaPBKVzanghkRcdQ22N8Q=
+	t=1712582699; cv=none; b=nuxqCXWlSoOQDcf+3TKXUeioRkhIRvLMlHnkTjxujK16AciMZ/LK49yCs3vaOU8l02LwBv+HwqegkHRmiohiOuAubOqkcF3aVRn5gaPxmIzMG8JkyQ1GEg08d/vc7wo+DEFRZXaqHb+xRF9X0v45vVdkYoiwV8FFUlpyVBIhjEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582696; c=relaxed/simple;
-	bh=okIcUjaj+/uD6BSTtyDrNGX/9bvSvfnhcaq/tB3FDk0=;
+	s=arc-20240116; t=1712582699; c=relaxed/simple;
+	bh=AZJqBFkiZ7ds04KrSC4aNj8EJws8DOQsPUhRW+7oP0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrSRyRQOsbXlW+RpWgG1BEkk1KzsYyj/kScfMXz83qiThga9/pITCFpY/2XgZkJc6S60XkK31IiOUZbtMg6nSGx5l4GYNEr+vKrNIOUDkwly5nYx3ANSpT8McyQ62ID+dsQPOyUTOXz4v/0o5vsvlbFTiDN7K/lrmDbnvKNh7Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mC/udfm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1WRUOVzU+Ik5M/lbwOV5rU1uVmgnw19Z6vnT9DTIjiJPpruMMkpmVfvJdrXp4gb2sngY1ySrsdDNJvLL6MGL6+9hS697U2EX5+h/peYWxnWHR09v1pR4ePEhRTJRlnCA0m8XOlphYCtWJkdFSOu984DbGi16vZoO0xeWpxy0fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0K5c1GnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mC/udfm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB40C433C7;
-	Mon,  8 Apr 2024 13:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0K5c1GnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D87C433F1;
+	Mon,  8 Apr 2024 13:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582696;
-	bh=okIcUjaj+/uD6BSTtyDrNGX/9bvSvfnhcaq/tB3FDk0=;
+	s=korg; t=1712582699;
+	bh=AZJqBFkiZ7ds04KrSC4aNj8EJws8DOQsPUhRW+7oP0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mC/udfm04eKUhAwqNsDkVnddjD9yoRvyfaeBDNiw5M+TOAZXw6zdnJXhOfrZ5+GxL
-	 B/FzutCx6s12ECN3trTg4FKozhVFo3F2R0sLDnGzPSdgLT0XxwnlGmhWsY6wleuppL
-	 XbuP5YwSP4kBjtnEP/rXrzq5YVqeShEv6IusTABQ=
+	b=0K5c1GnB0dS8/of7TaBjY1AkM5rkxX0OUWHELAqoCtUJ7X0Up5hPXPKmdOORw8Bty
+	 juSkOtt8Sekdz4q/FC0IflzjFvi2nUqYGPlrlWH+JAQzjWQryFbcTmePQsQiC/HbDS
+	 p3Rh63oCwqd07JnOxiVu0ga0rg1yo105AT/VxAN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Mete Durlu <meted@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/138] s390/pai: rework paiXXX_start and paiXXX_stop functions
-Date: Mon,  8 Apr 2024 14:58:41 +0200
-Message-ID: <20240408125259.559249203@linuxfoundation.org>
+Subject: [PATCH 5.15 142/690] swiotlb: Fix alignment checks when both allocation and DMA masks are present
+Date: Mon,  8 Apr 2024 14:50:08 +0200
+Message-ID: <20240408125404.664613612@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,158 +49,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit cb1259b7b574bd90ef22dac2c6282327cdae31c6 ]
+[ Upstream commit 51b30ecb73b481d5fac6ccf2ecb4a309c9ee3310 ]
 
-The PAI crypto counter and PAI NNPA counters start and stop functions
-are streamlined. Move the conditions to invoke start and stop functions
-to its respective function body and call them unconditionally.
-The start and stop functions now determine how to proceed.
-No functional change.
+Nicolin reports that swiotlb buffer allocations fail for an NVME device
+behind an IOMMU using 64KiB pages. This is because we end up with a
+minimum allocation alignment of 64KiB (for the IOMMU to map the buffer
+safely) but a minimum DMA alignment mask corresponding to a 4KiB NVME
+page (i.e. preserving the 4KiB page offset from the original allocation).
+If the original address is not 4KiB-aligned, the allocation will fail
+because swiotlb_search_pool_area() erroneously compares these unmasked
+bits with the 64KiB-aligned candidate allocation.
 
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Mete Durlu <meted@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: e9f3af02f639 ("s390/pai: fix sampling event removal for PMU device driver")
+Tweak swiotlb_search_pool_area() so that the DMA alignment mask is
+reduced based on the required alignment of the allocation.
+
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Link: https://lore.kernel.org/r/cover.1707851466.git.nicolinc@nvidia.com
+Reported-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_pai_crypto.c | 29 ++++++++++++-------------
- arch/s390/kernel/perf_pai_ext.c    | 35 ++++++++++++++----------------
- 2 files changed, 30 insertions(+), 34 deletions(-)
+ kernel/dma/swiotlb.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
-index 3758e972bb5f9..ba2d2e61df747 100644
---- a/arch/s390/kernel/perf_pai_crypto.c
-+++ b/arch/s390/kernel/perf_pai_crypto.c
-@@ -245,10 +245,14 @@ static void paicrypt_start(struct perf_event *event, int flags)
- 	 * Events are added, deleted and re-added when 2 or more events
- 	 * are active at the same time.
- 	 */
--	if (!event->hw.last_tag) {
--		event->hw.last_tag = 1;
--		sum = paicrypt_getall(event);		/* Get current value */
--		local64_set(&event->hw.prev_count, sum);
-+	if (!event->attr.sample_period) {	/* Counting */
-+		if (!event->hw.last_tag) {
-+			event->hw.last_tag = 1;
-+			sum = paicrypt_getall(event);	/* Get current value */
-+			local64_set(&event->hw.prev_count, sum);
-+		}
-+	} else {				/* Sampling */
-+		perf_sched_cb_inc(event->pmu);
- 	}
- }
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index a9849670bdb54..5c7ed5d519424 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -469,8 +469,7 @@ static int swiotlb_find_slots(struct device *dev, phys_addr_t orig_addr,
+ 	dma_addr_t tbl_dma_addr =
+ 		phys_to_dma_unencrypted(dev, mem->start) & boundary_mask;
+ 	unsigned long max_slots = get_max_slots(boundary_mask);
+-	unsigned int iotlb_align_mask =
+-		dma_get_min_align_mask(dev) & ~(IO_TLB_SIZE - 1);
++	unsigned int iotlb_align_mask = dma_get_min_align_mask(dev);
+ 	unsigned int nslots = nr_slots(alloc_size), stride;
+ 	unsigned int index, wrap, count = 0, i;
+ 	unsigned int offset = swiotlb_align_offset(dev, orig_addr);
+@@ -478,6 +477,14 @@ static int swiotlb_find_slots(struct device *dev, phys_addr_t orig_addr,
  
-@@ -263,19 +267,18 @@ static int paicrypt_add(struct perf_event *event, int flags)
- 		__ctl_set_bit(0, 50);
- 	}
- 	cpump->event = event;
--	if (flags & PERF_EF_START && !event->attr.sample_period) {
--		/* Only counting needs initial counter value */
-+	if (flags & PERF_EF_START)
- 		paicrypt_start(event, PERF_EF_RELOAD);
--	}
- 	event->hw.state = 0;
--	if (event->attr.sample_period)
--		perf_sched_cb_inc(event->pmu);
- 	return 0;
- }
+ 	BUG_ON(!nslots);
  
- static void paicrypt_stop(struct perf_event *event, int flags)
- {
--	paicrypt_read(event);
-+	if (!event->attr.sample_period)	/* Counting */
-+		paicrypt_read(event);
-+	else				/* Sampling */
-+		perf_sched_cb_dec(event->pmu);
- 	event->hw.state = PERF_HES_STOPPED;
- }
- 
-@@ -283,11 +286,7 @@ static void paicrypt_del(struct perf_event *event, int flags)
- {
- 	struct paicrypt_map *cpump = this_cpu_ptr(&paicrypt_map);
- 
--	if (event->attr.sample_period)
--		perf_sched_cb_dec(event->pmu);
--	if (!event->attr.sample_period)
--		/* Only counting needs to read counter */
--		paicrypt_stop(event, PERF_EF_UPDATE);
-+	paicrypt_stop(event, PERF_EF_UPDATE);
- 	if (--cpump->active_events == 0) {
- 		__ctl_clear_bit(0, 50);
- 		WRITE_ONCE(S390_lowcore.ccd, 0);
-diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
-index 53915401c3f63..09aebfcf679df 100644
---- a/arch/s390/kernel/perf_pai_ext.c
-+++ b/arch/s390/kernel/perf_pai_ext.c
-@@ -327,11 +327,15 @@ static void paiext_start(struct perf_event *event, int flags)
- {
- 	u64 sum;
- 
--	if (event->hw.last_tag)
--		return;
--	event->hw.last_tag = 1;
--	sum = paiext_getall(event);		/* Get current value */
--	local64_set(&event->hw.prev_count, sum);
-+	if (!event->attr.sample_period) {	/* Counting */
-+		if (!event->hw.last_tag) {
-+			event->hw.last_tag = 1;
-+			sum = paiext_getall(event);	/* Get current value */
-+			local64_set(&event->hw.prev_count, sum);
-+		}
-+	} else {				/* Sampling */
-+		perf_sched_cb_inc(event->pmu);
-+	}
- }
- 
- static int paiext_add(struct perf_event *event, int flags)
-@@ -348,21 +352,19 @@ static int paiext_add(struct perf_event *event, int flags)
- 		debug_sprintf_event(paiext_dbg, 4, "%s 1508 %llx acc %llx\n",
- 				    __func__, S390_lowcore.aicd, pcb->acc);
- 	}
--	if (flags & PERF_EF_START && !event->attr.sample_period) {
--		/* Only counting needs initial counter value */
-+	cpump->event = event;
-+	if (flags & PERF_EF_START)
- 		paiext_start(event, PERF_EF_RELOAD);
--	}
- 	event->hw.state = 0;
--	if (event->attr.sample_period) {
--		cpump->event = event;
--		perf_sched_cb_inc(event->pmu);
--	}
- 	return 0;
- }
- 
- static void paiext_stop(struct perf_event *event, int flags)
- {
--	paiext_read(event);
-+	if (!event->attr.sample_period)	/* Counting */
-+		paiext_read(event);
-+	else				/* Sampling */
-+		perf_sched_cb_dec(event->pmu);
- 	event->hw.state = PERF_HES_STOPPED;
- }
- 
-@@ -372,12 +374,7 @@ static void paiext_del(struct perf_event *event, int flags)
- 	struct paiext_map *cpump = mp->mapptr;
- 	struct paiext_cb *pcb = cpump->paiext_cb;
- 
--	if (event->attr.sample_period)
--		perf_sched_cb_dec(event->pmu);
--	if (!event->attr.sample_period) {
--		/* Only counting needs to read counter */
--		paiext_stop(event, PERF_EF_UPDATE);
--	}
-+	paiext_stop(event, PERF_EF_UPDATE);
- 	if (--cpump->active_events == 0) {
- 		/* Disable CPU instruction lookup for PAIE1 control block */
- 		__ctl_clear_bit(0, 49);
++	/*
++	 * Ensure that the allocation is at least slot-aligned and update
++	 * 'iotlb_align_mask' to ignore bits that will be preserved when
++	 * offsetting into the allocation.
++	 */
++	alloc_align_mask |= (IO_TLB_SIZE - 1);
++	iotlb_align_mask &= ~alloc_align_mask;
++
+ 	/*
+ 	 * For mappings with an alignment requirement don't bother looping to
+ 	 * unaligned slots once we found an aligned one.  For allocations of
 -- 
 2.43.0
 
