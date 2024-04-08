@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A11768EA;
-	Mon,  8 Apr 2024 13:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91552DF73;
+	Mon,  8 Apr 2024 13:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582796; cv=none; b=CMLPFBfpf5hfxivY0IQGJUQ9uhK4UFMuNYZXe3Rm6cF1xiiDtQr/FfmtBMiqec9+qy/V1IS2tPTTqbz45IU1uvg3DcehoaHKQPYONyn3uARGrVFksHihuxLjW2/6KASyzP3IQ2+so4aHh9DdWXTfSyEToyiExmT9C0zAOahbroo=
+	t=1712582799; cv=none; b=gAWsg85YmFP9tvt0FrrioBVFNn9vG2N71B2v9QaLNP9WOL4edwgXh9ylQ1KcNrI0zBfjbRdSl8xG6InZD5Vvx0nlO+MALbHsbreqAwYLqVQczyX37a3FAd1VOvEm2AnWehU5Qae/3M9TJauNdPHVe6uR7g9Fe631EbJz7EwMTB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582796; c=relaxed/simple;
-	bh=6YBEHVxYjXe25cpSd6sBP2WTDbR1eItjZMQJqD9UyTs=;
+	s=arc-20240116; t=1712582799; c=relaxed/simple;
+	bh=Xk1aHvoxZBFwL8zjS6cjQ0kN3SOd5GCWppfSuVtM/gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnhTdlcLC5+MZiVWBBICAPWOs4A5TFyrFVm2lglN1AB/34S2tN56x3NU4Kkak/WHP2amyYd+X3RsevriW4As18jFIaJsbxwVk/h9Y0FM1JCcVNbLZHhM51spI/5ZdjA2B8r7SZSbS91/HQUSOuILRm6nl8ov0N3Ikfet2ovh0oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YvZ+xo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VZUdCHHto5TmqZ8AxZRAMECoPU4u7W65x1gqsgUjL6/tt0Fa75+kT/oMtu/pn2I14fHW8wl2wbUgxrtzZN45XROPJZJIzah9aNOobxd63N697/AUzggY/GmhogiDoYJVQwYNXeib8CdrRNKdbOhNFE4H5QkMe+HdtslwMVRLQ2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7DO280q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YvZ+xo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D088C43390;
-	Mon,  8 Apr 2024 13:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7DO280q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7455FC433F1;
+	Mon,  8 Apr 2024 13:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582795;
-	bh=6YBEHVxYjXe25cpSd6sBP2WTDbR1eItjZMQJqD9UyTs=;
+	s=korg; t=1712582798;
+	bh=Xk1aHvoxZBFwL8zjS6cjQ0kN3SOd5GCWppfSuVtM/gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YvZ+xo0CSZ0FDYpHuqBnBnCc2FbOLTgbIYgViHrSWClHoyag7EolvXsfwmy5HOih
-	 /5lgYwk32ogwh5W8VixBA6a0Suk+EW439h31wHwvUbapEjGmBtTRAUrK4LcBKyIJL/
-	 c8VXpLUP02gvRnquhTFa4Jl6LiaXzRsxnNSOW5Tk=
+	b=g7DO280qyCh/lBNmGMbY/mYFeCOysAwWi9xN6tpFwKdHfD3eK4VDutS0y+c9f6VFq
+	 m+lAh3nig0GmyqsBsmOlZ1VnvWAtLZKvSeN6wdC4dOEx/lnlPZuyUSlhjcg/VANp7l
+	 xepCNYW7cw8AmQFiJQzWVbUSoE+ANR/watcAGX+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 134/138] selftests: mptcp: join: fix dev in check_endpoint
-Date: Mon,  8 Apr 2024 14:59:08 +0200
-Message-ID: <20240408125300.397182348@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 167/690] fsnotify: pass dentry instead of inode data
+Date: Mon,  8 Apr 2024 14:50:33 +0200
+Message-ID: <20240408125405.603520393@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 40061817d95bce6dd5634a61a65cd5922e6ccc92 upstream.
+[ Upstream commit fd5a3ff49a19aa69e2bc1e26e98037c2d778e61a ]
 
-There's a bug in pm_nl_check_endpoint(), 'dev' didn't be parsed correctly.
-If calling it in the 2nd test of endpoint_tests() too, it fails with an
-error like this:
+Define a new data type to pass for event - FSNOTIFY_EVENT_DENTRY.
+Use it to pass the dentry instead of it's ->d_inode where available.
 
- creation  [FAIL] expected '10.0.2.2 id 2 subflow dev dev' \
-                     found '10.0.2.2 id 2 subflow dev ns2eth2'
+This is needed in preparation to the refactor to retrieve the super
+block from the data field.  In some cases (i.e. mkdir in kernfs), the
+data inode comes from a negative dentry, such that no super block
+information would be available. By receiving the dentry itself, instead
+of the inode, fsnotify can derive the super block even on these cases.
 
-The reason is '$2' should be set to 'dev', not '$1'. This patch fixes it.
-
-Fixes: 69c6ce7b6eca ("selftests: mptcp: add implicit endpoint test case")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-2-324a8981da48@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in mptcp_join.sh: only the fix has been added, not the
-  verification because this modified subtest is quite different in
-  v6.1: to add this verification, we would need to change a bit the
-  subtest: pm_nl_check_endpoint() takes an extra argument for the
-  title, the next chk_subflow_nr() will no longer need the title, etc.
-  Easier with only the fix without the extra test. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20211025192746.66445-3-krisman@collabora.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[Expand explanation in commit message]
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
-Notes:
----
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/fsnotify.h         |  5 ++---
+ include/linux/fsnotify_backend.h | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -725,7 +725,7 @@ pm_nl_check_endpoint()
- 			[ -n "$_flags" ]; flags="flags $_flags"
- 			shift
- 		elif [ $1 = "dev" ]; then
--			[ -n "$2" ]; dev="dev $1"
-+			[ -n "$2" ]; dev="dev $2"
- 			shift
- 		elif [ $1 = "id" ]; then
- 			_id=$2
+diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
+index 298fd2bc29e49..70e6b147a76ad 100644
+--- a/include/linux/fsnotify.h
++++ b/include/linux/fsnotify.h
+@@ -39,8 +39,7 @@ static inline int fsnotify_name(__u32 mask, const void *data, int data_type,
+ static inline void fsnotify_dirent(struct inode *dir, struct dentry *dentry,
+ 				   __u32 mask)
+ {
+-	fsnotify_name(mask, d_inode(dentry), FSNOTIFY_EVENT_INODE,
+-		      dir, &dentry->d_name, 0);
++	fsnotify_name(mask, dentry, FSNOTIFY_EVENT_DENTRY, dir, &dentry->d_name, 0);
+ }
+ 
+ static inline void fsnotify_inode(struct inode *inode, __u32 mask)
+@@ -87,7 +86,7 @@ static inline int fsnotify_parent(struct dentry *dentry, __u32 mask,
+  */
+ static inline void fsnotify_dentry(struct dentry *dentry, __u32 mask)
+ {
+-	fsnotify_parent(dentry, mask, d_inode(dentry), FSNOTIFY_EVENT_INODE);
++	fsnotify_parent(dentry, mask, dentry, FSNOTIFY_EVENT_DENTRY);
+ }
+ 
+ static inline int fsnotify_file(struct file *file, __u32 mask)
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index 1ce66748a2d29..a2db821e8a8f2 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -248,6 +248,7 @@ enum fsnotify_data_type {
+ 	FSNOTIFY_EVENT_NONE,
+ 	FSNOTIFY_EVENT_PATH,
+ 	FSNOTIFY_EVENT_INODE,
++	FSNOTIFY_EVENT_DENTRY,
+ };
+ 
+ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
+@@ -255,6 +256,8 @@ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
+ 	switch (data_type) {
+ 	case FSNOTIFY_EVENT_INODE:
+ 		return (struct inode *)data;
++	case FSNOTIFY_EVENT_DENTRY:
++		return d_inode(data);
+ 	case FSNOTIFY_EVENT_PATH:
+ 		return d_inode(((const struct path *)data)->dentry);
+ 	default:
+@@ -262,6 +265,19 @@ static inline struct inode *fsnotify_data_inode(const void *data, int data_type)
+ 	}
+ }
+ 
++static inline struct dentry *fsnotify_data_dentry(const void *data, int data_type)
++{
++	switch (data_type) {
++	case FSNOTIFY_EVENT_DENTRY:
++		/* Non const is needed for dget() */
++		return (struct dentry *)data;
++	case FSNOTIFY_EVENT_PATH:
++		return ((const struct path *)data)->dentry;
++	default:
++		return NULL;
++	}
++}
++
+ static inline const struct path *fsnotify_data_path(const void *data,
+ 						    int data_type)
+ {
+-- 
+2.43.0
+
 
 
