@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9044D12837C;
-	Mon,  8 Apr 2024 13:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7687474BE8;
+	Mon,  8 Apr 2024 13:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581870; cv=none; b=U6MS1S8idc1jhmDYmkVzioTKAfOihsnbJ61muFNlwFb1wQ8Lor0KxjwNqeBf0j4Wa9mcGEcGuTr7dfngRaPvixS5cAo13N8WspawQTOIF8HBXffhO5EPtKkqWY0oZzWNjH7a//9WMUfntdUNZxvc0aBSYYNgvLRnN8RVeEsvl44=
+	t=1712581873; cv=none; b=u1+my6SAc/3tlcru4vebkfyY2/R/7b41bUgZ1Upshkmsa9ZzVYyfxAmSqqHbV7d9n9FN5CxDYAsbWL7QyNzMw7Q/Wp9mB5F2npX4AxvDCL148qdvyyKJoZulXAbzZn5bEfBYl3/v85s5HMc5TilrZlN0X/lSRVJASP87zrwCG4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581870; c=relaxed/simple;
-	bh=3EJL2KWYVWCtwej9YmMZZSOT9DORTrX/DyzwUFhbGs4=;
+	s=arc-20240116; t=1712581873; c=relaxed/simple;
+	bh=eGUyge6QZypW1v3zTg5rXsAp2S8GfNdMAkOZs94FS4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=axJLP7FU2aMkfiSSgqjkykNXGVBIkjSxo2XscbBgH8vSdwzVXHkTRgtyFNdZHZTzWSx8xyus2c4VUA+U29WB5Fp+3HsYgMBsncAhXwVTLt9i8Ha/FZqqvtVZ02Ud2LTwZsiWFHeG5GTyVRn5otRlSUtoNkjuUqYXJxGTg5JwA0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpWAe7+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxIEvcdsAiAYs9H2U85mdvgptaoKJmNPyL10jh/1BBLc5g0lT6nZYja4Yb0WWow1JjL4RaqEMrZFvHwWC+fjh8ZV4hNaZY8SVjqVUYno/JzGteE90jjICtOH7pU4oE3h7xO22IeP0obNzhxHtoZ2zbQ8UM1TJLOilDs15HtfCC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uv13UTww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpWAe7+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A5AC433F1;
-	Mon,  8 Apr 2024 13:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uv13UTww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A216FC43390;
+	Mon,  8 Apr 2024 13:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581870;
-	bh=3EJL2KWYVWCtwej9YmMZZSOT9DORTrX/DyzwUFhbGs4=;
+	s=korg; t=1712581873;
+	bh=eGUyge6QZypW1v3zTg5rXsAp2S8GfNdMAkOZs94FS4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpWAe7+wtgO/kTVhF/B6mecJiTekXSQOq3+P5heDZ/LJJHZUrlQVgtpCHrxA56Go5
-	 ykw45NrldDQwWRkyqOgFILbQ+lgW+b9GD1iBFsi4hTmLThvvQl2vqlsQ3f1cppxPfY
-	 R2GaD/xJAQf/j7xF6p1l60tbepNBzrhcs7OifXbE=
+	b=uv13UTwwVezPEyXajs0EvsJ2Bk9KOyGOkL/DE0GsbGBg7lJuLPoCe0T0cDOLxjFNI
+	 URHw+ND3A81y7mS2wzT5fZWbSIBJVIC3B2qkEjovdtUfg62x9HHF5cnQ9vUmW/BMRO
+	 6BiPbHpqnGf7bW7utRWhW9D9L010dfzkC20bNOQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/252] drm/i915: Eliminate IS_MTL_GRAPHICS_STEP
-Date: Mon,  8 Apr 2024 14:55:45 +0200
-Message-ID: <20240408125308.066743743@linuxfoundation.org>
+Subject: [PATCH 5.15 089/690] ring-buffer: Fix full_waiters_pending in poll
+Date: Mon,  8 Apr 2024 14:49:15 +0200
+Message-ID: <20240408125402.706307708@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,392 +48,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 5a213086a025349361b5cf75c8fd4591d96a7a99 ]
+[ Upstream commit 8145f1c35fa648da662078efab299c4467b85ad5 ]
 
-Several workarounds are guarded by IS_MTL_GRAPHICS_STEP.  However none
-of these workarounds are actually tied to MTL as a platform; they only
-relate to the Xe_LPG graphics IP, regardless of what platform it appears
-in.  At the moment MTL is the only platform that uses Xe_LPG with IP
-versions 12.70 and 12.71, but we can't count on this being true in the
-future.  Switch these to use a new IS_GFX_GT_IP_STEP() macro instead
-that is purely based on IP version.  IS_GFX_GT_IP_STEP() is also
-GT-based rather than device-based, which will help prevent mistakes
-where we accidentally try to apply Xe_LPG graphics workarounds to the
-Xe_LPM+ media GT and vice-versa.
+If a reader of the ring buffer is doing a poll, and waiting for the ring
+buffer to hit a specific watermark, there could be a case where it gets
+into an infinite ping-pong loop.
 
-v2:
- - Switch to a more generic and shorter IS_GT_IP_STEP macro that can be
-   used for both graphics and media IP (and any other kind of GTs that
-   show up in the future).
-v3:
- - Switch back to long-form IS_GFX_GT_IP_STEP macro.  (Jani)
- - Move macro to intel_gt.h.  (Andi)
-v4:
- - Build IS_GFX_GT_IP_STEP on top of IS_GFX_GT_IP_RANGE and
-   IS_GRAPHICS_STEP building blocks and name the parameters from/until
-   rather than begin/fixed.  (Jani)
- - Fix usage examples in comment.
-v5:
- - Tweak comment on macro.  (Gustavo)
+The poll code has:
 
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821180619.650007-15-matthew.d.roper@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+  rbwork->full_waiters_pending = true;
+  if (!cpu_buffer->shortest_full ||
+      cpu_buffer->shortest_full > full)
+         cpu_buffer->shortest_full = full;
+
+The writer will see full_waiters_pending and check if the ring buffer is
+filled over the percentage of the shortest_full value. If it is, it calls
+an irq_work to wake up all the waiters.
+
+But the code could get into a circular loop:
+
+	CPU 0					CPU 1
+	-----					-----
+ [ Poll ]
+   [ shortest_full = 0 ]
+   rbwork->full_waiters_pending = true;
+					  if (rbwork->full_waiters_pending &&
+					      [ buffer percent ] > shortest_full) {
+					         rbwork->wakeup_full = true;
+					         [ queue_irqwork ]
+
+   cpu_buffer->shortest_full = full;
+
+					  [ IRQ work ]
+					  if (rbwork->wakeup_full) {
+					        cpu_buffer->shortest_full = 0;
+					        wakeup poll waiters;
+  [woken]
+   if ([ buffer percent ] > full)
+      break;
+   rbwork->full_waiters_pending = true;
+					  if (rbwork->full_waiters_pending &&
+					      [ buffer percent ] > shortest_full) {
+					         rbwork->wakeup_full = true;
+					         [ queue_irqwork ]
+
+   cpu_buffer->shortest_full = full;
+
+					  [ IRQ work ]
+					  if (rbwork->wakeup_full) {
+					        cpu_buffer->shortest_full = 0;
+					        wakeup poll waiters;
+  [woken]
+
+ [ Wash, rinse, repeat! ]
+
+In the poll, the shortest_full needs to be set before the
+full_pending_waiters, as once that is set, the writer will compare the
+current shortest_full (which is incorrect) to decide to call the irq_work,
+which will reset the shortest_full (expecting the readers to update it).
+
+Also move the setting of full_waiters_pending after the check if the ring
+buffer has the required percentage filled. There's no reason to tell the
+writer to wake up waiters if there are no waiters.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240312131952.630922155@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/i915/display/skl_universal_plane.c    |  5 +-
- drivers/gpu/drm/i915/gt/gen8_engine_cs.c      | 11 +++--
- drivers/gpu/drm/i915/gt/intel_gt.h            | 20 ++++++++
- drivers/gpu/drm/i915/gt/intel_gt_mcr.c        |  7 ++-
- drivers/gpu/drm/i915/gt/intel_lrc.c           |  4 +-
- drivers/gpu/drm/i915/gt/intel_reset.c         |  2 +-
- drivers/gpu/drm/i915/gt/intel_workarounds.c   | 48 ++++++++++---------
- drivers/gpu/drm/i915/gt/uc/intel_guc.c        |  2 +-
- .../gpu/drm/i915/gt/uc/intel_guc_submission.c |  2 +-
- drivers/gpu/drm/i915/i915_drv.h               |  4 --
- 10 files changed, 62 insertions(+), 43 deletions(-)
+ kernel/trace/ring_buffer.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_universal_plane.c b/drivers/gpu/drm/i915/display/skl_universal_plane.c
-index ffc15d278a39d..d557ecd4e1ebe 100644
---- a/drivers/gpu/drm/i915/display/skl_universal_plane.c
-+++ b/drivers/gpu/drm/i915/display/skl_universal_plane.c
-@@ -20,6 +20,7 @@
- #include "skl_scaler.h"
- #include "skl_universal_plane.h"
- #include "skl_watermark.h"
-+#include "gt/intel_gt.h"
- #include "pxp/intel_pxp.h"
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 4d5b942806ba4..4ffedcd255b3e 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1082,16 +1082,32 @@ __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
+ 		poll_wait(filp, &rbwork->full_waiters, poll_table);
  
- static const u32 skl_plane_formats[] = {
-@@ -2169,8 +2170,8 @@ static bool skl_plane_has_rc_ccs(struct drm_i915_private *i915,
- 				 enum pipe pipe, enum plane_id plane_id)
- {
- 	/* Wa_14017240301 */
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_STEP(to_gt(i915), IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(to_gt(i915), IP_VER(12, 71), STEP_A0, STEP_B0))
- 		return false;
+ 		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-		rbwork->full_waiters_pending = true;
+ 		if (!cpu_buffer->shortest_full ||
+ 		    cpu_buffer->shortest_full > full)
+ 			cpu_buffer->shortest_full = full;
+ 		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+-	} else {
+-		poll_wait(filp, &rbwork->waiters, poll_table);
+-		rbwork->waiters_pending = true;
++		if (full_hit(buffer, cpu, full))
++			return EPOLLIN | EPOLLRDNORM;
++		/*
++		 * Only allow full_waiters_pending update to be seen after
++		 * the shortest_full is set. If the writer sees the
++		 * full_waiters_pending flag set, it will compare the
++		 * amount in the ring buffer to shortest_full. If the amount
++		 * in the ring buffer is greater than the shortest_full
++		 * percent, it will call the irq_work handler to wake up
++		 * this list. The irq_handler will reset shortest_full
++		 * back to zero. That's done under the reader_lock, but
++		 * the below smp_mb() makes sure that the update to
++		 * full_waiters_pending doesn't leak up into the above.
++		 */
++		smp_mb();
++		rbwork->full_waiters_pending = true;
++		return 0;
+ 	}
  
- 	/* Wa_22011186057 */
-diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-index 7ad36198aab2a..3ac3e12d9c524 100644
---- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-@@ -4,9 +4,9 @@
-  */
- 
- #include "gen8_engine_cs.h"
--#include "i915_drv.h"
- #include "intel_engine_regs.h"
- #include "intel_gpu_commands.h"
-+#include "intel_gt.h"
- #include "intel_lrc.h"
- #include "intel_ring.h"
- 
-@@ -226,8 +226,8 @@ u32 *gen12_emit_aux_table_inv(struct intel_engine_cs *engine, u32 *cs)
- static int mtl_dummy_pipe_control(struct i915_request *rq)
- {
- 	/* Wa_14016712196 */
--	if (IS_MTL_GRAPHICS_STEP(rq->i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(rq->i915, P, STEP_A0, STEP_B0)) {
-+	if (IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
- 		u32 *cs;
- 
- 		/* dummy PIPE_CONTROL + depth flush */
-@@ -808,6 +808,7 @@ u32 *gen12_emit_fini_breadcrumb_xcs(struct i915_request *rq, u32 *cs)
- u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
- {
- 	struct drm_i915_private *i915 = rq->i915;
-+	struct intel_gt *gt = rq->engine->gt;
- 	u32 flags = (PIPE_CONTROL_CS_STALL |
- 		     PIPE_CONTROL_TLB_INVALIDATE |
- 		     PIPE_CONTROL_TILE_CACHE_FLUSH |
-@@ -818,8 +819,8 @@ u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
- 		     PIPE_CONTROL_FLUSH_ENABLE);
- 
- 	/* Wa_14016712196 */
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
- 		/* dummy PIPE_CONTROL + depth flush */
- 		cs = gen12_emit_pipe_control(cs, 0,
- 					     PIPE_CONTROL_DEPTH_CACHE_FLUSH, 0);
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt.h b/drivers/gpu/drm/i915/gt/intel_gt.h
-index 15c25980411db..6e63b46682f76 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt.h
-@@ -25,6 +25,26 @@ struct drm_printer;
- 	 GRAPHICS_VER_FULL((gt)->i915) >= (from) && \
- 	 GRAPHICS_VER_FULL((gt)->i915) <= (until)))
- 
-+/*
-+ * Check that the GT is a graphics GT with a specific IP version and has
-+ * a stepping in the range [from, until).  The lower stepping bound is
-+ * inclusive, the upper bound is exclusive.  The most common use-case of this
-+ * macro is for checking bounds for workarounds, which usually have a stepping
-+ * ("from") at which the hardware issue is first present and another stepping
-+ * ("until") at which a hardware fix is present and the software workaround is
-+ * no longer necessary.  E.g.,
-+ *
-+ *    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0)
-+ *    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B1, STEP_FOREVER)
-+ *
-+ * "STEP_FOREVER" can be passed as "until" for workarounds that have no upper
-+ * stepping bound for the specified IP version.
-+ */
-+#define IS_GFX_GT_IP_STEP(gt, ipver, from, until) ( \
-+	BUILD_BUG_ON_ZERO((until) <= (from)) + \
-+	(IS_GFX_GT_IP_RANGE((gt), (ipver), (ipver)) && \
-+	 IS_GRAPHICS_STEP((gt)->i915, (from), (until))))
++	poll_wait(filp, &rbwork->waiters, poll_table);
++	rbwork->waiters_pending = true;
 +
- #define GT_TRACE(gt, fmt, ...) do {					\
- 	const struct intel_gt *gt__ __maybe_unused = (gt);		\
- 	GEM_TRACE("%s " fmt, dev_name(gt__->i915->drm.dev),		\
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_mcr.c b/drivers/gpu/drm/i915/gt/intel_gt_mcr.c
-index 2c0f1f3e28ff8..c6dec485aefbe 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_mcr.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_mcr.c
-@@ -3,8 +3,7 @@
-  * Copyright © 2022 Intel Corporation
-  */
+ 	/*
+ 	 * There's a tight race between setting the waiters_pending and
+ 	 * checking if the ring buffer is empty.  Once the waiters_pending bit
+@@ -1107,9 +1123,6 @@ __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
+ 	 */
+ 	smp_mb();
  
--#include "i915_drv.h"
+-	if (full)
+-		return full_hit(buffer, cpu, full) ? EPOLLIN | EPOLLRDNORM : 0;
 -
-+#include "intel_gt.h"
- #include "intel_gt_mcr.h"
- #include "intel_gt_print.h"
- #include "intel_gt_regs.h"
-@@ -166,8 +165,8 @@ void intel_gt_mcr_init(struct intel_gt *gt)
- 		gt->steering_table[OADDRM] = xelpmp_oaddrm_steering_table;
- 	} else if (GRAPHICS_VER_FULL(i915) >= IP_VER(12, 70)) {
- 		/* Wa_14016747170 */
--		if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--		    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
-+		if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+		    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
- 			fuse = REG_FIELD_GET(MTL_GT_L3_EXC_MASK,
- 					     intel_uncore_read(gt->uncore,
- 							       MTL_GT_ACTIVITY_FACTOR));
-diff --git a/drivers/gpu/drm/i915/gt/intel_lrc.c b/drivers/gpu/drm/i915/gt/intel_lrc.c
-index f297c5808e7c8..b99efa348ad1e 100644
---- a/drivers/gpu/drm/i915/gt/intel_lrc.c
-+++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
-@@ -1347,8 +1347,8 @@ gen12_emit_indirect_ctx_rcs(const struct intel_context *ce, u32 *cs)
- 	cs = gen12_emit_aux_table_inv(ce->engine, cs);
- 
- 	/* Wa_16014892111 */
--	if (IS_MTL_GRAPHICS_STEP(ce->engine->i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(ce->engine->i915, P, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(ce->engine->gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(ce->engine->gt, IP_VER(12, 71), STEP_A0, STEP_B0) ||
- 	    IS_DG2(ce->engine->i915))
- 		cs = dg2_emit_draw_watermark_setting(cs);
- 
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
-index 3a3f71ce3cb77..63d0892d3c45a 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -1641,7 +1641,7 @@ bool intel_engine_reset_needs_wa_22011802037(struct intel_gt *gt)
- 	if (GRAPHICS_VER(gt->i915) < 11)
- 		return false;
- 
--	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0))
- 		return true;
- 
- 	if (GRAPHICS_VER_FULL(gt->i915) >= IP_VER(12, 70))
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index 4c24f3897aee1..b6237e999be93 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -784,24 +784,24 @@ static void dg2_ctx_workarounds_init(struct intel_engine_cs *engine,
- static void xelpg_ctx_gt_tuning_init(struct intel_engine_cs *engine,
- 				     struct i915_wa_list *wal)
- {
--	struct drm_i915_private *i915 = engine->i915;
-+	struct intel_gt *gt = engine->gt;
- 
- 	dg2_ctx_gt_tuning_init(engine, wal);
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_B0, STEP_FOREVER) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_B0, STEP_FOREVER))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_B0, STEP_FOREVER) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B0, STEP_FOREVER))
- 		wa_add(wal, DRAW_WATERMARK, VERT_WM_VAL, 0x3FF, 0, false);
- }
- 
- static void xelpg_ctx_workarounds_init(struct intel_engine_cs *engine,
- 				       struct i915_wa_list *wal)
- {
--	struct drm_i915_private *i915 = engine->i915;
-+	struct intel_gt *gt = engine->gt;
- 
- 	xelpg_ctx_gt_tuning_init(engine, wal);
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0)) {
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
- 		/* Wa_14014947963 */
- 		wa_masked_field_set(wal, VF_PREEMPTION,
- 				    PREEMPTION_VERTEX_COUNT, 0x4000);
-@@ -1644,8 +1644,8 @@ xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- 	/* Wa_22016670082 */
- 	wa_write_or(wal, GEN12_SQCNT1, GEN12_STRICT_RAR_ENABLE);
- 
--	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(gt->i915, P, STEP_A0, STEP_B0)) {
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
- 		/* Wa_14014830051 */
- 		wa_mcr_write_clr(wal, SARB_CHICKEN1, COMP_CKN_IN);
- 
-@@ -2297,23 +2297,24 @@ static void
- rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- {
- 	struct drm_i915_private *i915 = engine->i915;
-+	struct intel_gt *gt = engine->gt;
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0)) {
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
- 		/* Wa_22014600077 */
- 		wa_mcr_masked_en(wal, GEN10_CACHE_MODE_SS,
- 				 ENABLE_EU_COUNT_FOR_TDL_FLUSH);
- 	}
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0) ||
- 	    IS_DG2(i915)) {
- 		/* Wa_1509727124 */
- 		wa_mcr_masked_en(wal, GEN10_SAMPLER_MODE,
- 				 SC_DISABLE_POWER_OPTIMIZATION_EBB);
- 	}
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
- 	    IS_DG2(i915)) {
- 		/* Wa_22012856258 */
- 		wa_mcr_masked_en(wal, GEN8_ROW_CHICKEN2,
-@@ -2829,8 +2830,9 @@ static void
- general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- {
- 	struct drm_i915_private *i915 = engine->i915;
-+	struct intel_gt *gt = engine->gt;
- 
--	add_render_compute_tuning_settings(engine->gt, wal);
-+	add_render_compute_tuning_settings(gt, wal);
- 
- 	if (GRAPHICS_VER(i915) >= 11) {
- 		/* This is not a Wa (although referred to as
-@@ -2851,13 +2853,13 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 				 GEN11_INDIRECT_STATE_BASE_ADDR_OVERRIDE);
- 	}
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_B0, STEP_FOREVER) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_B0, STEP_FOREVER))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_B0, STEP_FOREVER) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B0, STEP_FOREVER))
- 		/* Wa_14017856879 */
- 		wa_mcr_masked_en(wal, GEN9_ROW_CHICKEN3, MTL_DISABLE_FIX_FOR_EOT_FLUSH);
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
- 		/*
- 		 * Wa_14017066071
- 		 * Wa_14017654203
-@@ -2865,13 +2867,13 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		wa_mcr_masked_en(wal, GEN10_SAMPLER_MODE,
- 				 MTL_DISABLE_SAMPLER_SC_OOO);
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
- 		/* Wa_22015279794 */
- 		wa_mcr_masked_en(wal, GEN10_CACHE_MODE_SS,
- 				 DISABLE_PREFETCH_INTO_IC);
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0) ||
- 	    IS_DG2(i915)) {
- 		/* Wa_22013037850 */
- 		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0_UDW,
-@@ -2881,8 +2883,8 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		wa_masked_en(wal, VFG_PREEMPTION_CHICKEN, POLYGON_TRIFAN_LINELOOP_DISABLE);
- 	}
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0) ||
- 	    IS_PONTEVECCHIO(i915) ||
- 	    IS_DG2(i915)) {
- 		/* Wa_22014226127 */
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-index da967938fea58..861d0c58388cf 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-@@ -273,7 +273,7 @@ static u32 guc_ctl_wa_flags(struct intel_guc *guc)
- 		flags |= GUC_WA_POLLCS;
- 
- 	/* Wa_14014475959 */
--	if (IS_MTL_GRAPHICS_STEP(gt->i915, M, STEP_A0, STEP_B0) ||
-+	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
- 	    IS_DG2(gt->i915))
- 		flags |= GUC_WA_HOLD_CCS_SWITCHOUT;
- 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index 7a3e02ea56639..b5de5a9f59671 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -4297,7 +4297,7 @@ static void guc_default_vfuncs(struct intel_engine_cs *engine)
- 
- 	/* Wa_14014475959:dg2 */
- 	if (engine->class == COMPUTE_CLASS)
--		if (IS_MTL_GRAPHICS_STEP(engine->i915, M, STEP_A0, STEP_B0) ||
-+		if (IS_GFX_GT_IP_STEP(engine->gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
- 		    IS_DG2(engine->i915))
- 			engine->flags |= I915_ENGINE_USES_WA_HOLD_CCS_SWITCHOUT;
- 
-diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
-index 7a8ce7239bc9e..e0e0493d6c1f0 100644
---- a/drivers/gpu/drm/i915/i915_drv.h
-+++ b/drivers/gpu/drm/i915/i915_drv.h
-@@ -658,10 +658,6 @@ IS_SUBPLATFORM(const struct drm_i915_private *i915,
- #define IS_XEHPSDV_GRAPHICS_STEP(__i915, since, until) \
- 	(IS_XEHPSDV(__i915) && IS_GRAPHICS_STEP(__i915, since, until))
- 
--#define IS_MTL_GRAPHICS_STEP(__i915, variant, since, until) \
--	(IS_SUBPLATFORM(__i915, INTEL_METEORLAKE, INTEL_SUBPLATFORM_##variant) && \
--	 IS_GRAPHICS_STEP(__i915, since, until))
--
- #define IS_MTL_DISPLAY_STEP(__i915, since, until) \
- 	(IS_METEORLAKE(__i915) && \
- 	 IS_DISPLAY_STEP(__i915, since, until))
+ 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
+ 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
+ 		return EPOLLIN | EPOLLRDNORM;
 -- 
 2.43.0
 
