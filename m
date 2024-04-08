@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2B56EB72;
-	Mon,  8 Apr 2024 13:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401926EB72;
+	Mon,  8 Apr 2024 13:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584410; cv=none; b=dKHj8Nm/YiTx1bm7DyF79qrD5/z7mnWs3x5sWtiM0Mn6OLqtRwl8Bh5E76QU7yJuU7PURLKXAp2CTlW+fM0tZ+DhbAtu/FvfYv6pcruS+aX0F0L+HNEks9DFZIYr5dimZieiKevUBAOXw2wefLIbWzERyyUazGe9Y2Ot+aK5yAE=
+	t=1712584413; cv=none; b=J7NWAXOb5YOIC/u6syzpvT4/fNOKwH4t4N0tMied0FFkJgJk/ftWxuUO89FbAXSk+yP1vFEyhyaxbb7Qod5I03hH7dR70cNXQHNooNE077m/zALEEpjp9QPP2OdCeoS8MsmWVYnUijwgZrcuHhVl3A/3uBIXi8MG2bYVnMg28Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584410; c=relaxed/simple;
-	bh=taLhaOU4tF+R17HE4kzeYFMLLuRayI7MYwPfS0faN1c=;
+	s=arc-20240116; t=1712584413; c=relaxed/simple;
+	bh=tbTu+AseHWIEIAdHCJ13iLvbZAfqn3hmL8mG1QVVKEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7UM8bYpttkeDOWlpfdkSEWhTXbQxjHmoiDjArspf0Bt1AvsP1tkQYciNM1urskjufc508vTKiM4ASYxCp6W6GppdUrlbJfxtM0J0CjhS45qU4hvMoLpAtIQbCTxvY5GAxjV1G7wkYNMTnjA0N+baHJgdeBj8eqtNB5EcMV879c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/Z/afKl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=etFT+8h7pttjOqsTezDSxlrIC3AmMKClh4bMQF4xAiBXPZamF52OFSqeFJENbuWIHnjj0EGuP4PELnIe4m6gYsRCQ26WgQEcDoiOPWWbBXM1hKxDqMmdEm2VEIhjnrN8Z+mgeQVlw1Pe85/djg8etq9/xEk4t5RxKe9jPpypJuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwUGWYSe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/Z/afKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC60C433C7;
-	Mon,  8 Apr 2024 13:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwUGWYSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA80C433F1;
+	Mon,  8 Apr 2024 13:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584410;
-	bh=taLhaOU4tF+R17HE4kzeYFMLLuRayI7MYwPfS0faN1c=;
+	s=korg; t=1712584413;
+	bh=tbTu+AseHWIEIAdHCJ13iLvbZAfqn3hmL8mG1QVVKEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/Z/afKlO4rgoy9Mwv5bUlk0IsMBXbvv3Y6BrkfPomjtHgGoTMnfpKxQiY/CC22rx
-	 8j3RkrhmVSv4Hkyl9QHn3cwsDdvkC9EUuYpcu2rBv3zoscvW7K+caXeQNEY/dZvFcu
-	 8U72rRUy8nM7wcBVryrpqRsdkmbP2Ri5usZoFRCo=
+	b=MwUGWYSeTawDux/dA5C4AvZ16TTzxd1sfjD0BgcDt7SHdeKzZVUkgkM1k0T1qrYcz
+	 0Q2YwlkrMStZcxkB2GmM1TQvweHBvHZY0i3WmEYzJS64E8iwHzzPw6YULYyK0pQP2U
+	 V4UslEsV0ck1eZu9sQUvVdO9an9cfdIAsN37zv10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 429/690] NFSD: Add a mechanism to wait for a DELEGRETURN
-Date: Mon,  8 Apr 2024 14:54:55 +0200
-Message-ID: <20240408125415.135625578@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 430/690] NFSD: Refactor nfsd_setattr()
+Date: Mon,  8 Apr 2024 14:54:56 +0200
+Message-ID: <20240408125415.185557432@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,140 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c035362eb935fe9381d9d1cc453bc2a37460e24c ]
+[ Upstream commit c0aa1913db57219e91a0a8832363cbafb3a9cf8f ]
 
-Subsequent patches will use this mechanism to wake up an operation
-that is waiting for a client to return a delegation.
+Move code that will be retried (in a subsequent patch) into a helper
+function.
 
-The new tracepoint records whether the wait timed out or was
-properly awoken by the expected DELEGRETURN:
-
-            nfsd-1155  [002] 83799.493199: nfsd_delegret_wakeup: xid=0x14b7d6ef fh_hash=0xf6826792 (timed out)
-
-Suggested-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4state.c | 30 ++++++++++++++++++++++++++++++
- fs/nfsd/nfsd.h      |  7 +++++++
- fs/nfsd/trace.h     | 23 +++++++++++++++++++++++
- 3 files changed, 60 insertions(+)
+ fs/nfsd/vfs.c | 97 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 57 insertions(+), 40 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index a0c5658599ead..6cb654e308787 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -4734,6 +4734,35 @@ nfs4_share_conflict(struct svc_fh *current_fh, unsigned int deny_type)
- 	return ret;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 77f8ab3826d75..392df2353556e 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -344,8 +344,61 @@ nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	return nfserrno(get_write_access(inode));
  }
  
-+static bool nfsd4_deleg_present(const struct inode *inode)
+-/*
+- * Set various file attributes.  After this call fhp needs an fh_put.
++static int __nfsd_setattr(struct dentry *dentry, struct iattr *iap)
 +{
-+	struct file_lock_context *ctx = smp_load_acquire(&inode->i_flctx);
++	int host_err;
 +
-+	return ctx && !list_empty_careful(&ctx->flc_lease);
++	if (iap->ia_valid & ATTR_SIZE) {
++		/*
++		 * RFC5661, Section 18.30.4:
++		 *   Changing the size of a file with SETATTR indirectly
++		 *   changes the time_modify and change attributes.
++		 *
++		 * (and similar for the older RFCs)
++		 */
++		struct iattr size_attr = {
++			.ia_valid	= ATTR_SIZE | ATTR_CTIME | ATTR_MTIME,
++			.ia_size	= iap->ia_size,
++		};
++
++		if (iap->ia_size < 0)
++			return -EFBIG;
++
++		host_err = notify_change(&init_user_ns, dentry, &size_attr, NULL);
++		if (host_err)
++			return host_err;
++		iap->ia_valid &= ~ATTR_SIZE;
++
++		/*
++		 * Avoid the additional setattr call below if the only other
++		 * attribute that the client sends is the mtime, as we update
++		 * it as part of the size change above.
++		 */
++		if ((iap->ia_valid & ~ATTR_MTIME) == 0)
++			return 0;
++	}
++
++	if (!iap->ia_valid)
++		return 0;
++
++	iap->ia_valid |= ATTR_CTIME;
++	return notify_change(&init_user_ns, dentry, iap, NULL);
 +}
 +
 +/**
-+ * nfsd_wait_for_delegreturn - wait for delegations to be returned
-+ * @rqstp: the RPC transaction being executed
-+ * @inode: in-core inode of the file being waited for
++ * nfsd_setattr - Set various file attributes.
++ * @rqstp: controlling RPC transaction
++ * @fhp: filehandle of target
++ * @attr: attributes to set
++ * @check_guard: set to 1 if guardtime is a valid timestamp
++ * @guardtime: do not act if ctime.tv_sec does not match this timestamp
 + *
-+ * The timeout prevents deadlock if all nfsd threads happen to be
-+ * tied up waiting for returning delegations.
++ * This call may adjust the contents of @attr (in particular, this
++ * call may change the bits in the na_iattr.ia_valid field).
 + *
-+ * Return values:
-+ *   %true: delegation was returned
-+ *   %false: timed out waiting for delegreturn
-+ */
-+bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp, struct inode *inode)
-+{
-+	long __maybe_unused timeo;
-+
-+	timeo = wait_var_event_timeout(inode, !nfsd4_deleg_present(inode),
-+				       NFSD_DELEGRETURN_TIMEOUT);
-+	trace_nfsd_delegret_wakeup(rqstp, inode, timeo);
-+	return timeo > 0;
-+}
-+
- static void nfsd4_cb_recall_prepare(struct nfsd4_callback *cb)
- {
- 	struct nfs4_delegation *dp = cb_to_delegation(cb);
-@@ -6797,6 +6826,7 @@ nfsd4_delegreturn(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	if (status)
- 		goto put_stateid;
++ * Returns nfs_ok on success, otherwise an NFS status code is
++ * returned. Caller must release @fhp by calling fh_put in either
++ * case.
+  */
+ __be32
+ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+@@ -358,7 +411,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	int		accmode = NFSD_MAY_SATTR;
+ 	umode_t		ftype = 0;
+ 	__be32		err;
+-	int		host_err = 0;
++	int		host_err;
+ 	bool		get_write_count;
+ 	bool		size_change = (iap->ia_valid & ATTR_SIZE);
  
-+	wake_up_var(d_inode(cstate->current_fh.fh_dentry));
- 	destroy_delegation(dp);
- put_stateid:
- 	nfs4_put_stid(&dp->dl_stid);
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 57a468ed85c35..6ab4ad41ae84e 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -164,6 +164,7 @@ char * nfs4_recoverydir(void);
- bool nfsd4_spo_must_allow(struct svc_rqst *rqstp);
- int nfsd4_create_laundry_wq(void);
- void nfsd4_destroy_laundry_wq(void);
-+bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp, struct inode *inode);
- #else
- static inline int nfsd4_init_slabs(void) { return 0; }
- static inline void nfsd4_free_slabs(void) { }
-@@ -179,6 +180,11 @@ static inline bool nfsd4_spo_must_allow(struct svc_rqst *rqstp)
- }
- static inline int nfsd4_create_laundry_wq(void) { return 0; };
- static inline void nfsd4_destroy_laundry_wq(void) {};
-+static inline bool nfsd_wait_for_delegreturn(struct svc_rqst *rqstp,
-+					      struct inode *inode)
-+{
-+	return false;
-+}
- #endif
+@@ -415,43 +468,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	}
  
- /*
-@@ -343,6 +349,7 @@ void		nfsd_lockd_shutdown(void);
- #define	NFSD_COURTESY_CLIENT_TIMEOUT	(24 * 60 * 60)	/* seconds */
- #define	NFSD_CLIENT_MAX_TRIM_PER_RUN	128
- #define	NFS4_CLIENTS_PER_GB		1024
-+#define NFSD_DELEGRETURN_TIMEOUT	(HZ / 34)	/* 30ms */
- 
- /*
-  * The following attributes are currently not supported by the NFSv4 server:
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index d832429e575e4..1229502b6e9e0 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -538,6 +538,29 @@ DEFINE_NFSD_COPY_ERR_EVENT(clone_file_range_err);
- #include "filecache.h"
- #include "vfs.h"
- 
-+TRACE_EVENT(nfsd_delegret_wakeup,
-+	TP_PROTO(
-+		const struct svc_rqst *rqstp,
-+		const struct inode *inode,
-+		long timeo
-+	),
-+	TP_ARGS(rqstp, inode, timeo),
-+	TP_STRUCT__entry(
-+		__field(u32, xid)
-+		__field(const void *, inode)
-+		__field(long, timeo)
-+	),
-+	TP_fast_assign(
-+		__entry->xid = be32_to_cpu(rqstp->rq_xid);
-+		__entry->inode = inode;
-+		__entry->timeo = timeo;
-+	),
-+	TP_printk("xid=0x%08x inode=%p%s",
-+		  __entry->xid, __entry->inode,
-+		  __entry->timeo == 0 ? " (timed out)" : ""
-+	)
-+);
-+
- DECLARE_EVENT_CLASS(nfsd_stateid_class,
- 	TP_PROTO(stateid_t *stp),
- 	TP_ARGS(stp),
+ 	inode_lock(inode);
+-	if (size_change) {
+-		/*
+-		 * RFC5661, Section 18.30.4:
+-		 *   Changing the size of a file with SETATTR indirectly
+-		 *   changes the time_modify and change attributes.
+-		 *
+-		 * (and similar for the older RFCs)
+-		 */
+-		struct iattr size_attr = {
+-			.ia_valid	= ATTR_SIZE | ATTR_CTIME | ATTR_MTIME,
+-			.ia_size	= iap->ia_size,
+-		};
+-
+-		host_err = -EFBIG;
+-		if (iap->ia_size < 0)
+-			goto out_unlock;
+-
+-		host_err = notify_change(&init_user_ns, dentry, &size_attr, NULL);
+-		if (host_err)
+-			goto out_unlock;
+-		iap->ia_valid &= ~ATTR_SIZE;
+-
+-		/*
+-		 * Avoid the additional setattr call below if the only other
+-		 * attribute that the client sends is the mtime, as we update
+-		 * it as part of the size change above.
+-		 */
+-		if ((iap->ia_valid & ~ATTR_MTIME) == 0)
+-			goto out_unlock;
+-	}
+-
+-	if (iap->ia_valid) {
+-		iap->ia_valid |= ATTR_CTIME;
+-		host_err = notify_change(&init_user_ns, dentry, iap, NULL);
+-	}
+-
+-out_unlock:
++	host_err = __nfsd_setattr(dentry, iap);
+ 	if (attr->na_seclabel && attr->na_seclabel->len)
+ 		attr->na_labelerr = security_inode_setsecctx(dentry,
+ 			attr->na_seclabel->data, attr->na_seclabel->len);
 -- 
 2.43.0
 
