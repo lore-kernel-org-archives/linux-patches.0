@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B527B7D07E;
-	Mon,  8 Apr 2024 13:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0CC7F7C6;
+	Mon,  8 Apr 2024 13:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584001; cv=none; b=JrN8r23zBEBp9XoH0Q95ydQNyiy7BjoXkVs1flN/JFZGCFVvYfdyLuLtyg1ffMhsDzeJ8bau6t7xrFZGPVs5KNbsxsF6jqKgPbA2wb4SwWH0YjxbRjsOvj/V5qg89H3rSyMFoZRrg2Cw6uozg1FR4NrPkuZ5KtyGEZjc0j919m4=
+	t=1712584005; cv=none; b=nOltP0TsJgk1Zs+wQt8KQMmnOf9/9pyqlf2uFgXL2+0vVJ9L0xTLiZz7Wi/dkIqQt11TDcT+pVWm1M1C6GVXGWq+OPNALIbUih4xePiL6QWnzC6z1GVx6Ed7bP3EqUaKvdnvqv30SttHIxPoxB6IhMb9U4/kZFvahFCxP0SXWMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584001; c=relaxed/simple;
-	bh=DhCE44rGo9Q1AC0KtQ78880apy9K3tzXOZ2YW3ZV+eE=;
+	s=arc-20240116; t=1712584005; c=relaxed/simple;
+	bh=NeStGnpTqt0LuVAdhLz9cU+sexQRcutfpjJnkyOFcog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EE8wYGDwyLSkXM319ojWjm5Xs0pVpgd475/htV6w5O8np6RnZdPJcmS6pa/C6EBQS6+nnkf+0TQBVyy3+a+2r4S9lfCrcpgrooLbwSvaO1g+bjjt5zbF3dvofRmExwB7j9u0tytSAnOTsdG2BGIOyvWonPdJWbCKymYbflbdEVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHQt4GeM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UuPO5kg7NWMqSpw9hHCRKk6JXNMchs5DCcHZpLepTqbD3CDjw4c9pMPFKb/LymuyqACPbb9Uo5Mws+gbbKrODbspJBsKB6mADPvdsaUFbvtvt2VxMh5U1tiPX0TvOgjY+OHoyV0WYgA0sfdPLjMWS8jBBbtSQGaanrgxFReAty0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkKRwh37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHQt4GeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296B1C433C7;
-	Mon,  8 Apr 2024 13:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkKRwh37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC38C433F1;
+	Mon,  8 Apr 2024 13:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584001;
-	bh=DhCE44rGo9Q1AC0KtQ78880apy9K3tzXOZ2YW3ZV+eE=;
+	s=korg; t=1712584004;
+	bh=NeStGnpTqt0LuVAdhLz9cU+sexQRcutfpjJnkyOFcog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHQt4GeMlEpN+Y578tk/ds4tnYpmhV+Y5ELfPNPnFeMQBQPDmZPfw+P2U/PKIG2hQ
-	 32fzdMspdV8l0bd9fglEnhhwTdMzfnB76LbwN1UnoKYV7rcrnkm7kqDOnFr4lPQP6V
-	 5xDrM8PaAHlHINxYlWzJTCLD5Q1x/OfAuPeRWx1A=
+	b=KkKRwh37kJuOn9z/YrLjeW/dgO9CHrbC+rmPoH87TLDgNaue/MZmeXrgN+NNRJxk7
+	 VcoSE6H2h/d97FWKE5O3bdbzelf7K9mTuYtUGB8y9rQqmCNd6eiIcsizqgbkf6MitU
+	 1k7ESv5LXkcwveliyVbwFqicdprgCyy4yxonVipc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 237/252] smb: client: fix potential UAF in cifs_signal_cifsd_for_reconnect()
-Date: Mon,  8 Apr 2024 14:58:56 +0200
-Message-ID: <20240408125314.006347842@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.8 222/273] ASoC: SOF: ipc4-pcm: Move struct sof_ipc4_timestamp_info definition locally
+Date: Mon,  8 Apr 2024 14:58:17 +0200
+Message-ID: <20240408125316.302964648@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit e0e50401cc3921c9eaf1b0e667db174519ea939f upstream.
+commit 31d2874d083ba6cc2a4f4b26dab73c3be1c92658 upstream.
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+The sof_ipc4_timestamp_info is only used by ipc4-pcm.c internally, it
+should not be in a generic header implying that it might be used elsewhere.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org # 6.8
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240321130814.4412-12-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/ipc4-pcm.c  |   14 ++++++++++++++
+ sound/soc/sof/ipc4-priv.h |   14 --------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -178,6 +178,8 @@ cifs_signal_cifsd_for_reconnect(struct T
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -15,6 +15,20 @@
+ #include "ipc4-topology.h"
+ #include "ipc4-fw-reg.h"
  
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
-+		if (cifs_ses_exiting(ses))
-+			continue;
- 		spin_lock(&ses->chan_lock);
- 		for (i = 0; i < ses->chan_count; i++) {
- 			if (!ses->chans[i].server)
++/**
++ * struct sof_ipc4_timestamp_info - IPC4 timestamp info
++ * @host_copier: the host copier of the pcm stream
++ * @dai_copier: the dai copier of the pcm stream
++ * @stream_start_offset: reported by fw in memory window
++ * @llp_offset: llp offset in memory window
++ */
++struct sof_ipc4_timestamp_info {
++	struct sof_ipc4_copier *host_copier;
++	struct sof_ipc4_copier *dai_copier;
++	u64 stream_start_offset;
++	u32 llp_offset;
++};
++
+ static int sof_ipc4_set_multi_pipeline_state(struct snd_sof_dev *sdev, u32 state,
+ 					     struct ipc4_pipeline_set_state_data *trigger_list)
+ {
+--- a/sound/soc/sof/ipc4-priv.h
++++ b/sound/soc/sof/ipc4-priv.h
+@@ -88,20 +88,6 @@ struct sof_ipc4_fw_data {
+ 	struct mutex pipeline_state_mutex; /* protect pipeline triggers, ref counts and states */
+ };
+ 
+-/**
+- * struct sof_ipc4_timestamp_info - IPC4 timestamp info
+- * @host_copier: the host copier of the pcm stream
+- * @dai_copier: the dai copier of the pcm stream
+- * @stream_start_offset: reported by fw in memory window
+- * @llp_offset: llp offset in memory window
+- */
+-struct sof_ipc4_timestamp_info {
+-	struct sof_ipc4_copier *host_copier;
+-	struct sof_ipc4_copier *dai_copier;
+-	u64 stream_start_offset;
+-	u32 llp_offset;
+-};
+-
+ extern const struct sof_ipc_fw_loader_ops ipc4_loader_ops;
+ extern const struct sof_ipc_tplg_ops ipc4_tplg_ops;
+ extern const struct sof_ipc_tplg_control_ops tplg_ipc4_control_ops;
 
 
