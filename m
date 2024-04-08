@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988747E575;
-	Mon,  8 Apr 2024 13:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F1B7E578;
+	Mon,  8 Apr 2024 13:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581937; cv=none; b=dq8BkyT25OmlG9xBVDKHVkjNudtumc+NNOpkJkxchnhKeu3wM6QJZB0ktK0wSjvsR7hh5VczTvBwAfvSTBGR2WVVM/LXfC9r+0cN0d1x1Uw7s66HooOQFYbRgW/GDd2dkfY55zI+yGLADvQNUcDSu75N6+EbgCej71N78DT2kvM=
+	t=1712581940; cv=none; b=JoQqCaI4KOQOKXqZcQ4zWZeUTmAhrDpFdKvSA1snLfNOwQ62sIOz6j0BIbd/QAtfdPmoRZT3pM/st0HPzqK43/eLj8jQHs+7awdtMfGmtGM/mnUfg064rOc41skKpQoUFg5ZnRPq3tkHrQMVgxjuTKo1yHHaPa9anTDPcdjFwHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581937; c=relaxed/simple;
-	bh=QATtAMl4bMrDQ26qkmUE+R9DT3soHRjpfnpE3A2nhNI=;
+	s=arc-20240116; t=1712581940; c=relaxed/simple;
+	bh=f83hRAmzBBAuByeFWb6G2T49SWsQ5v7KSeg88UehqE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXahxVpv+aP6lQ7M0ip7eltETuGoIxxFsgs7yMCN0mun70FmFvFTmLmMRwcfVgHot8SfNBOszqtri5sWlMFziVpE9n7lUxpa73EpFb94LSEoc1MPh9Rid+5Aug505rWNdvEINizCHGb0BYmKE9rDxuyLlbP/JyUFxe+f8bDhn1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vAh0/7Xn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZAKULGKutwxrhOcVi0Db/NB/u5OJna01Hs8ZoloPP1Mcb+b+NDYcjy3aMULTaaAt1uwaIDnkR0NxIDmFO9ersOWmm6MG5t9yrhrOt9Pd3msuuG1fRdasiGVgvgxpwOn8JM72oBX4L7WarFEfDWJdVBuCLNJJURVqA1sljWn2Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dR7KiuJ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAh0/7Xn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21177C433C7;
-	Mon,  8 Apr 2024 13:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dR7KiuJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0061BC433C7;
+	Mon,  8 Apr 2024 13:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581937;
-	bh=QATtAMl4bMrDQ26qkmUE+R9DT3soHRjpfnpE3A2nhNI=;
+	s=korg; t=1712581940;
+	bh=f83hRAmzBBAuByeFWb6G2T49SWsQ5v7KSeg88UehqE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vAh0/7XnyE0JrSU76avd4bAH0GjIGCWy/VIN+E0gEChvcAjY1tljj1+LTPbDqfvKx
-	 GsrT8A3J1QHnXy+m+inz9I0jU3nTvA1kI/v/03DcQEhQleUICRasbVvi+9Yih3LnL5
-	 ZXe1/F4JluopOomOo/qJn6NT9pQLVpRzpkuW/maw=
+	b=dR7KiuJ54cKCkVNeqASWRS+ixbNva99aJRYDMEBwqT7xLE/9e8tiM+C/64wX5canz
+	 ajkT+FaTSgSTlA+FFatnKfwQSktwTb0a9s3PKyGDvUzaSyXWD5uWaWMMDrxZocsRG3
+	 Z8OHuPR8sutLHZDqBv41ysUNGVCJeLQS7vnIPl64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 044/138] vboxsf: Avoid an spurious warning if load_nls_xxx() fails
-Date: Mon,  8 Apr 2024 14:57:38 +0200
-Message-ID: <20240408125257.600512912@linuxfoundation.org>
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 028/252] net: hns3: mark unexcuted loopback test result as UNEXECUTED
+Date: Mon,  8 Apr 2024 14:55:27 +0200
+Message-ID: <20240408125307.521727571@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +50,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jian Shen <shenjian15@huawei.com>
 
-commit de3f64b738af57e2732b91a0774facc675b75b54 upstream.
+[ Upstream commit 5bd088d6c21a45ee70e6116879310e54174d75eb ]
 
-If an load_nls_xxx() function fails a few lines above, the 'sbi->bdi_id' is
-still 0.
-So, in the error handling path, we will call ida_simple_remove(..., 0)
-which is not allocated yet.
+Currently, loopback test may be skipped when resetting, but the test
+result will still show as 'PASS', because the driver doesn't set
+ETH_TEST_FL_FAILED flag. Fix it by setting the flag and
+initializating the value to UNEXECUTED.
 
-In order to prevent a spurious "ida_free called for id=0 which is not
-allocated." message, tweak the error handling path and add a new label.
-
-Fixes: 0fd169576648 ("fs: Add VirtualBox guest shared folder (vboxsf) support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/d09eaaa4e2e08206c58a1a27ca9b3e81dc168773.1698835730.git.christophe.jaillet@wanadoo.fr
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4c8dab1c709c ("net: hns3: reconstruct function hns3_self_test")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/vboxsf/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../ethernet/hisilicon/hns3/hns3_ethtool.c    | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/fs/vboxsf/super.c
-+++ b/fs/vboxsf/super.c
-@@ -151,7 +151,7 @@ static int vboxsf_fill_super(struct supe
- 		if (!sbi->nls) {
- 			vbg_err("vboxsf: Count not load '%s' nls\n", nls_name);
- 			err = -EINVAL;
--			goto fail_free;
-+			goto fail_destroy_idr;
- 		}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+index 682239f33082b..78181eea93c1c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+@@ -78,6 +78,9 @@ static const struct hns3_stats hns3_rxq_stats[] = {
+ #define HNS3_NIC_LB_TEST_NO_MEM_ERR	1
+ #define HNS3_NIC_LB_TEST_TX_CNT_ERR	2
+ #define HNS3_NIC_LB_TEST_RX_CNT_ERR	3
++#define HNS3_NIC_LB_TEST_UNEXECUTED	4
++
++static int hns3_get_sset_count(struct net_device *netdev, int stringset);
+ 
+ static int hns3_lp_setup(struct net_device *ndev, enum hnae3_loop loop, bool en)
+ {
+@@ -418,18 +421,26 @@ static void hns3_do_external_lb(struct net_device *ndev,
+ static void hns3_self_test(struct net_device *ndev,
+ 			   struct ethtool_test *eth_test, u64 *data)
+ {
++	int cnt = hns3_get_sset_count(ndev, ETH_SS_TEST);
+ 	struct hns3_nic_priv *priv = netdev_priv(ndev);
+ 	struct hnae3_handle *h = priv->ae_handle;
+ 	int st_param[HNAE3_LOOP_NONE][2];
+ 	bool if_running = netif_running(ndev);
++	int i;
++
++	/* initialize the loopback test result, avoid marking an unexcuted
++	 * loopback test as PASS.
++	 */
++	for (i = 0; i < cnt; i++)
++		data[i] = HNS3_NIC_LB_TEST_UNEXECUTED;
+ 
+ 	if (hns3_nic_resetting(ndev)) {
+ 		netdev_err(ndev, "dev resetting!");
+-		return;
++		goto failure;
  	}
  
-@@ -224,6 +224,7 @@ fail_free:
- 		ida_simple_remove(&vboxsf_bdi_ida, sbi->bdi_id);
- 	if (sbi->nls)
- 		unload_nls(sbi->nls);
-+fail_destroy_idr:
- 	idr_destroy(&sbi->ino_idr);
- 	kfree(sbi);
- 	return err;
+ 	if (!(eth_test->flags & ETH_TEST_FL_OFFLINE))
+-		return;
++		goto failure;
+ 
+ 	if (netif_msg_ifdown(h))
+ 		netdev_info(ndev, "self test start\n");
+@@ -451,6 +462,10 @@ static void hns3_self_test(struct net_device *ndev,
+ 
+ 	if (netif_msg_ifdown(h))
+ 		netdev_info(ndev, "self test end\n");
++	return;
++
++failure:
++	eth_test->flags |= ETH_TEST_FL_FAILED;
+ }
+ 
+ static void hns3_update_limit_promisc_mode(struct net_device *netdev,
+-- 
+2.43.0
+
 
 
