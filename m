@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6B676413;
-	Mon,  8 Apr 2024 13:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFB176413;
+	Mon,  8 Apr 2024 13:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582918; cv=none; b=qimiXvmmaqNfzZwm52W0dk9kTI4kKh3DuxH9ITpncktOCaHy97XEyWPDSnZOFRchL68xhNj1uwKUSB4dD2RguFCoCa+Djf4gfD9bC7qbvRbW3rdGsTMVxc8r2ciUJL80WK3dpgXoZ57GaMvcj+NY+wNg5n8qDWOLWqk5HLowZns=
+	t=1712582921; cv=none; b=YSR6jdKnDFhvi3zjc7CheCkeGzUUnohTQg+0Ow/RC7vaAVo6rj6APqWMGebqwwqCD5FNvRejKqrADKupRXVbnZQBYmC2tWWnHgen3ke/bFbP4ZP6RQugDXwC5ylr9F77KHEiUKzxV1xYTF8d7HiaGd+472BmItEqhuHEhV5nBlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582918; c=relaxed/simple;
-	bh=4H6+uos6fmY3Jg5Ehmjki9iC6hXRocXJiRJdazPZG5g=;
+	s=arc-20240116; t=1712582921; c=relaxed/simple;
+	bh=Yba3FVYZN9OBkHzQL1dbSq1nJJ2cLGl12+MP+2ggimg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhZw6U7Fz5/WIZ6qoDmVQKjjVDNNnSi8/TmkY87OGdj/HWtt1b2jFYM7eMPUHoA+Fe2hhySLvnMir18KD6cO+VpTaAzI8wFiJBTjniA3lLNNVpwL20sOqghv2VEYkv84EE045nsRjimMKQM2ZoU7tUPklFW0OMIRpLYJvKkrxo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxbe8L0d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OE6rCHc6ndtU3jz5ATmXO9p86k0M4YMHmpXSCedQRQlaX8RATOk9LqWrNX55fADZGcX1Hb0wv1rNsw6bCe9dlAddxfOP4lBAOwzhBppmIoxYECPU+BblQpXYW4xI9hON8q4D+eKQk5yFkJtYgXgT43rIYpWVIh3tV67uw9DdTV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwcbEs0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxbe8L0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F89C433C7;
-	Mon,  8 Apr 2024 13:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwcbEs0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB160C433C7;
+	Mon,  8 Apr 2024 13:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582918;
-	bh=4H6+uos6fmY3Jg5Ehmjki9iC6hXRocXJiRJdazPZG5g=;
+	s=korg; t=1712582921;
+	bh=Yba3FVYZN9OBkHzQL1dbSq1nJJ2cLGl12+MP+2ggimg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxbe8L0dMqk0NO5IPfokV3Nh+eKYvYFEepvDInJKVW0Hxh4hLIobqOiLWEMzVbbNV
-	 zI8MFs0/n+DwgNUnBvGcNHL2PX2tSoM3/sqlsh0fV6NnVgMv8+2lrXb/h9Y0o56ISs
-	 NPZPqYdloLkz+8y5OMGAQw0wDzpssG8HvABY3SUI=
+	b=vwcbEs0R/TYFHeixmC+7gLX0fviGs2KJ3RojgtBiBCkYRKWiFoU2IVZbSBNnI3i2V
+	 wgk1VCSyRGR64/o2e32CcciKourDPWcKiTWjarpmM6Z0m6D+iHAR5gaBkDnXipCAKp
+	 Amtsk/CgrNg+HD24wY33eF1XiDYdR/W8w7fY56Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Mushayev <nikolay.mushayev@intel.com>,
-	Nir Efrati <nir.efrati@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.8 117/273] e1000e: Workaround for sporadic MDI error on Meteor Lake systems
-Date: Mon,  8 Apr 2024 14:56:32 +0200
-Message-ID: <20240408125312.934033981@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 136/252] drm/amd: Evict resources during PM ops prepare() callback
+Date: Mon,  8 Apr 2024 14:57:15 +0200
+Message-ID: <20240408125310.864387925@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,403 +46,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 6dbdd4de0362c37e54e8b049781402e5a409e7d0 upstream.
+[ Upstream commit 5095d5418193eb2748c7d8553c7150b8f1c44696 ]
 
-On some Meteor Lake systems accessing the PHY via the MDIO interface may
-result in an MDI error. This issue happens sporadically and in most cases
-a second access to the PHY via the MDIO interface results in success.
+Linux PM core has a prepare() callback run before suspend.
 
-As a workaround, introduce a retry counter which is set to 3 on Meteor
-Lake systems. The driver will only return an error if 3 consecutive PHY
-access attempts fail. The retry mechanism is disabled in specific flows,
-where MDI errors are expected.
+If the system is under high memory pressure, the resources may need
+to be evicted into swap instead.  If the storage backing for swap
+is offlined during the suspend() step then such a call may fail.
 
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Suggested-by: Nikolay Mushayev <nikolay.mushayev@intel.com>
-Co-developed-by: Nir Efrati <nir.efrati@intel.com>
-Signed-off-by: Nir Efrati <nir.efrati@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So move this step into prepare() to move evict majority of
+resources and update all non-pmops callers to call the same callback.
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2362
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: ca299b4512d4 ("drm/amd: Flush GFXOFF requests in prepare stage")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/hw.h      |    2 
- drivers/net/ethernet/intel/e1000e/ich8lan.c |   33 ++++
- drivers/net/ethernet/intel/e1000e/phy.c     |  190 +++++++++++++++++-----------
- drivers/net/ethernet/intel/e1000e/phy.h     |    2 
- 4 files changed, 154 insertions(+), 73 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 31 ++++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    | 10 ++++---
+ 3 files changed, 34 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000e/hw.h
-+++ b/drivers/net/ethernet/intel/e1000e/hw.h
-@@ -628,6 +628,7 @@ struct e1000_phy_info {
- 	u32 id;
- 	u32 reset_delay_us;	/* in usec */
- 	u32 revision;
-+	u32 retry_count;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 85efd686e538d..d59e8536192ca 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1369,6 +1369,7 @@ void amdgpu_driver_postclose_kms(struct drm_device *dev,
+ void amdgpu_driver_release_kms(struct drm_device *dev);
  
- 	enum e1000_media_type media_type;
- 
-@@ -644,6 +645,7 @@ struct e1000_phy_info {
- 	bool polarity_correction;
- 	bool speed_downgraded;
- 	bool autoneg_wait_to_complete;
-+	bool retry_enabled;
- };
- 
- struct e1000_nvm_info {
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -222,11 +222,18 @@ out:
- 	if (hw->mac.type >= e1000_pch_lpt) {
- 		/* Only unforce SMBus if ME is not active */
- 		if (!(er32(FWSM) & E1000_ICH_FWSM_FW_VALID)) {
-+			/* Switching PHY interface always returns MDI error
-+			 * so disable retry mechanism to avoid wasting time
-+			 */
-+			e1000e_disable_phy_retry(hw);
-+
- 			/* Unforce SMBus mode in PHY */
- 			e1e_rphy_locked(hw, CV_SMB_CTRL, &phy_reg);
- 			phy_reg &= ~CV_SMB_CTRL_FORCE_SMBUS;
- 			e1e_wphy_locked(hw, CV_SMB_CTRL, phy_reg);
- 
-+			e1000e_enable_phy_retry(hw);
-+
- 			/* Unforce SMBus mode in MAC */
- 			mac_reg = er32(CTRL_EXT);
- 			mac_reg &= ~E1000_CTRL_EXT_FORCE_SMBUS;
-@@ -310,6 +317,11 @@ static s32 e1000_init_phy_workarounds_pc
- 		goto out;
- 	}
- 
-+	/* There is no guarantee that the PHY is accessible at this time
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
- 	/* The MAC-PHY interconnect may be in SMBus mode.  If the PHY is
- 	 * inaccessible and resetting the PHY is not blocked, toggle the
- 	 * LANPHYPC Value bit to force the interconnect to PCIe mode.
-@@ -380,6 +392,8 @@ static s32 e1000_init_phy_workarounds_pc
- 		break;
- 	}
- 
-+	e1000e_enable_phy_retry(hw);
-+
- 	hw->phy.ops.release(hw);
- 	if (!ret_val) {
- 
-@@ -449,6 +463,11 @@ static s32 e1000_init_phy_params_pchlan(
- 
- 	phy->id = e1000_phy_unknown;
- 
-+	if (hw->mac.type == e1000_pch_mtp) {
-+		phy->retry_count = 2;
-+		e1000e_enable_phy_retry(hw);
-+	}
-+
- 	ret_val = e1000_init_phy_workarounds_pchlan(hw);
- 	if (ret_val)
- 		return ret_val;
-@@ -1146,6 +1165,11 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
- 	if (ret_val)
- 		goto out;
- 
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
- 	/* Force SMBus mode in PHY */
- 	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
- 	if (ret_val)
-@@ -1153,6 +1177,8 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
- 	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
- 	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
- 
-+	e1000e_enable_phy_retry(hw);
-+
- 	/* Force SMBus mode in MAC */
- 	mac_reg = er32(CTRL_EXT);
- 	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
-@@ -1313,6 +1339,11 @@ static s32 e1000_disable_ulp_lpt_lp(stru
- 		/* Toggle LANPHYPC Value bit */
- 		e1000_toggle_lanphypc_pch_lpt(hw);
- 
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
- 	/* Unforce SMBus mode in PHY */
- 	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
- 	if (ret_val) {
-@@ -1333,6 +1364,8 @@ static s32 e1000_disable_ulp_lpt_lp(stru
- 	phy_reg &= ~CV_SMB_CTRL_FORCE_SMBUS;
- 	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
- 
-+	e1000e_enable_phy_retry(hw);
-+
- 	/* Unforce SMBus mode in MAC */
- 	mac_reg = er32(CTRL_EXT);
- 	mac_reg &= ~E1000_CTRL_EXT_FORCE_SMBUS;
---- a/drivers/net/ethernet/intel/e1000e/phy.c
-+++ b/drivers/net/ethernet/intel/e1000e/phy.c
-@@ -107,6 +107,16 @@ s32 e1000e_phy_reset_dsp(struct e1000_hw
- 	return e1e_wphy(hw, M88E1000_PHY_GEN_CONTROL, 0);
- }
- 
-+void e1000e_disable_phy_retry(struct e1000_hw *hw)
+ int amdgpu_device_ip_suspend(struct amdgpu_device *adev);
++int amdgpu_device_prepare(struct drm_device *dev);
+ int amdgpu_device_suspend(struct drm_device *dev, bool fbcon);
+ int amdgpu_device_resume(struct drm_device *dev, bool fbcon);
+ u32 amdgpu_get_vblank_counter_kms(struct drm_crtc *crtc);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 79261bec26542..707c17641c757 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1549,6 +1549,7 @@ static void amdgpu_switcheroo_set_state(struct pci_dev *pdev,
+ 	} else {
+ 		pr_info("switched off\n");
+ 		dev->switch_power_state = DRM_SWITCH_POWER_CHANGING;
++		amdgpu_device_prepare(dev);
+ 		amdgpu_device_suspend(dev, true);
+ 		amdgpu_device_cache_pci_state(pdev);
+ 		/* Shut down the device */
+@@ -4094,6 +4095,31 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ /*
+  * Suspend & resume.
+  */
++/**
++ * amdgpu_device_prepare - prepare for device suspend
++ *
++ * @dev: drm dev pointer
++ *
++ * Prepare to put the hw in the suspend state (all asics).
++ * Returns 0 for success or an error on failure.
++ * Called at driver suspend.
++ */
++int amdgpu_device_prepare(struct drm_device *dev)
 +{
-+	hw->phy.retry_enabled = false;
-+}
++	struct amdgpu_device *adev = drm_to_adev(dev);
++	int r;
 +
-+void e1000e_enable_phy_retry(struct e1000_hw *hw)
-+{
-+	hw->phy.retry_enabled = true;
++	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
++		return 0;
++
++	/* Evict the majority of BOs before starting suspend sequence */
++	r = amdgpu_device_evict_resources(adev);
++	if (r)
++		return r;
++
++	return 0;
 +}
 +
  /**
-  *  e1000e_read_phy_reg_mdic - Read MDI control register
-  *  @hw: pointer to the HW structure
-@@ -118,55 +128,73 @@ s32 e1000e_phy_reset_dsp(struct e1000_hw
-  **/
- s32 e1000e_read_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 *data)
- {
-+	u32 i, mdic = 0, retry_counter, retry_max;
- 	struct e1000_phy_info *phy = &hw->phy;
--	u32 i, mdic = 0;
-+	bool success;
+  * amdgpu_device_suspend - initiate device suspend
+  *
+@@ -4114,11 +4140,6 @@ int amdgpu_device_suspend(struct drm_device *dev, bool fbcon)
  
- 	if (offset > MAX_PHY_REG_ADDRESS) {
- 		e_dbg("PHY Address %d is out of range\n", offset);
- 		return -E1000_ERR_PARAM;
- 	}
+ 	adev->in_suspend = true;
  
-+	retry_max = phy->retry_enabled ? phy->retry_count : 0;
-+
- 	/* Set up Op-code, Phy Address, and register offset in the MDI
- 	 * Control register.  The MAC will take care of interfacing with the
- 	 * PHY to retrieve the desired data.
+-	/* Evict the majority of BOs before grabbing the full access */
+-	r = amdgpu_device_evict_resources(adev);
+-	if (r)
+-		return r;
+-
+ 	if (amdgpu_sriov_vf(adev)) {
+ 		amdgpu_virt_fini_data_exchange(adev);
+ 		r = amdgpu_virt_request_full_gpu(adev, false);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 3204c3a42f2a3..f9bc38d20ce3e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2386,8 +2386,9 @@ static int amdgpu_pmops_prepare(struct device *dev)
+ 	/* Return a positive number here so
+ 	 * DPM_FLAG_SMART_SUSPEND works properly
  	 */
--	mdic = ((offset << E1000_MDIC_REG_SHIFT) |
--		(phy->addr << E1000_MDIC_PHY_SHIFT) |
--		(E1000_MDIC_OP_READ));
--
--	ew32(MDIC, mdic);
--
--	/* Poll the ready bit to see if the MDI read completed
--	 * Increasing the time out as testing showed failures with
--	 * the lower time out
--	 */
--	for (i = 0; i < (E1000_GEN_POLL_TIMEOUT * 3); i++) {
--		udelay(50);
--		mdic = er32(MDIC);
--		if (mdic & E1000_MDIC_READY)
--			break;
--	}
--	if (!(mdic & E1000_MDIC_READY)) {
--		e_dbg("MDI Read PHY Reg Address %d did not complete\n", offset);
--		return -E1000_ERR_PHY;
--	}
--	if (mdic & E1000_MDIC_ERROR) {
--		e_dbg("MDI Read PHY Reg Address %d Error\n", offset);
--		return -E1000_ERR_PHY;
--	}
--	if (FIELD_GET(E1000_MDIC_REG_MASK, mdic) != offset) {
--		e_dbg("MDI Read offset error - requested %d, returned %d\n",
--		      offset, FIELD_GET(E1000_MDIC_REG_MASK, mdic));
--		return -E1000_ERR_PHY;
-+	for (retry_counter = 0; retry_counter <= retry_max; retry_counter++) {
-+		success = true;
-+
-+		mdic = ((offset << E1000_MDIC_REG_SHIFT) |
-+			(phy->addr << E1000_MDIC_PHY_SHIFT) |
-+			(E1000_MDIC_OP_READ));
-+
-+		ew32(MDIC, mdic);
-+
-+		/* Poll the ready bit to see if the MDI read completed
-+		 * Increasing the time out as testing showed failures with
-+		 * the lower time out
-+		 */
-+		for (i = 0; i < (E1000_GEN_POLL_TIMEOUT * 3); i++) {
-+			usleep_range(50, 60);
-+			mdic = er32(MDIC);
-+			if (mdic & E1000_MDIC_READY)
-+				break;
-+		}
-+		if (!(mdic & E1000_MDIC_READY)) {
-+			e_dbg("MDI Read PHY Reg Address %d did not complete\n",
-+			      offset);
-+			success = false;
-+		}
-+		if (mdic & E1000_MDIC_ERROR) {
-+			e_dbg("MDI Read PHY Reg Address %d Error\n", offset);
-+			success = false;
-+		}
-+		if (FIELD_GET(E1000_MDIC_REG_MASK, mdic) != offset) {
-+			e_dbg("MDI Read offset error - requested %d, returned %d\n",
-+			      offset, FIELD_GET(E1000_MDIC_REG_MASK, mdic));
-+			success = false;
-+		}
-+
-+		/* Allow some time after each MDIC transaction to avoid
-+		 * reading duplicate data in the next MDIC transaction.
-+		 */
-+		if (hw->mac.type == e1000_pch2lan)
-+			usleep_range(100, 150);
-+
-+		if (success) {
-+			*data = (u16)mdic;
-+			return 0;
-+		}
-+
-+		if (retry_counter != retry_max) {
-+			e_dbg("Perform retry on PHY transaction...\n");
-+			mdelay(10);
-+		}
- 	}
--	*data = (u16)mdic;
+-	if (amdgpu_device_supports_boco(drm_dev))
+-		return pm_runtime_suspended(dev);
++	if (amdgpu_device_supports_boco(drm_dev) &&
++	    pm_runtime_suspended(dev))
++		return 1;
  
--	/* Allow some time after each MDIC transaction to avoid
--	 * reading duplicate data in the next MDIC transaction.
--	 */
--	if (hw->mac.type == e1000_pch2lan)
--		udelay(100);
--	return 0;
-+	return -E1000_ERR_PHY;
- }
- 
- /**
-@@ -179,56 +207,72 @@ s32 e1000e_read_phy_reg_mdic(struct e100
-  **/
- s32 e1000e_write_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 data)
- {
-+	u32 i, mdic = 0, retry_counter, retry_max;
- 	struct e1000_phy_info *phy = &hw->phy;
--	u32 i, mdic = 0;
-+	bool success;
- 
- 	if (offset > MAX_PHY_REG_ADDRESS) {
- 		e_dbg("PHY Address %d is out of range\n", offset);
- 		return -E1000_ERR_PARAM;
- 	}
- 
-+	retry_max = phy->retry_enabled ? phy->retry_count : 0;
-+
- 	/* Set up Op-code, Phy Address, and register offset in the MDI
- 	 * Control register.  The MAC will take care of interfacing with the
- 	 * PHY to retrieve the desired data.
- 	 */
--	mdic = (((u32)data) |
--		(offset << E1000_MDIC_REG_SHIFT) |
--		(phy->addr << E1000_MDIC_PHY_SHIFT) |
--		(E1000_MDIC_OP_WRITE));
--
--	ew32(MDIC, mdic);
--
--	/* Poll the ready bit to see if the MDI read completed
--	 * Increasing the time out as testing showed failures with
--	 * the lower time out
--	 */
--	for (i = 0; i < (E1000_GEN_POLL_TIMEOUT * 3); i++) {
--		udelay(50);
--		mdic = er32(MDIC);
--		if (mdic & E1000_MDIC_READY)
--			break;
--	}
--	if (!(mdic & E1000_MDIC_READY)) {
--		e_dbg("MDI Write PHY Reg Address %d did not complete\n", offset);
--		return -E1000_ERR_PHY;
--	}
--	if (mdic & E1000_MDIC_ERROR) {
--		e_dbg("MDI Write PHY Red Address %d Error\n", offset);
--		return -E1000_ERR_PHY;
--	}
--	if (FIELD_GET(E1000_MDIC_REG_MASK, mdic) != offset) {
--		e_dbg("MDI Write offset error - requested %d, returned %d\n",
--		      offset, FIELD_GET(E1000_MDIC_REG_MASK, mdic));
--		return -E1000_ERR_PHY;
--	}
-+	for (retry_counter = 0; retry_counter <= retry_max; retry_counter++) {
-+		success = true;
- 
--	/* Allow some time after each MDIC transaction to avoid
--	 * reading duplicate data in the next MDIC transaction.
--	 */
--	if (hw->mac.type == e1000_pch2lan)
--		udelay(100);
-+		mdic = (((u32)data) |
-+			(offset << E1000_MDIC_REG_SHIFT) |
-+			(phy->addr << E1000_MDIC_PHY_SHIFT) |
-+			(E1000_MDIC_OP_WRITE));
-+
-+		ew32(MDIC, mdic);
-+
-+		/* Poll the ready bit to see if the MDI read completed
-+		 * Increasing the time out as testing showed failures with
-+		 * the lower time out
-+		 */
-+		for (i = 0; i < (E1000_GEN_POLL_TIMEOUT * 3); i++) {
-+			usleep_range(50, 60);
-+			mdic = er32(MDIC);
-+			if (mdic & E1000_MDIC_READY)
-+				break;
-+		}
-+		if (!(mdic & E1000_MDIC_READY)) {
-+			e_dbg("MDI Write PHY Reg Address %d did not complete\n",
-+			      offset);
-+			success = false;
-+		}
-+		if (mdic & E1000_MDIC_ERROR) {
-+			e_dbg("MDI Write PHY Reg Address %d Error\n", offset);
-+			success = false;
-+		}
-+		if (FIELD_GET(E1000_MDIC_REG_MASK, mdic) != offset) {
-+			e_dbg("MDI Write offset error - requested %d, returned %d\n",
-+			      offset, FIELD_GET(E1000_MDIC_REG_MASK, mdic));
-+			success = false;
-+		}
-+
-+		/* Allow some time after each MDIC transaction to avoid
-+		 * reading duplicate data in the next MDIC transaction.
-+		 */
-+		if (hw->mac.type == e1000_pch2lan)
-+			usleep_range(100, 150);
-+
-+		if (success)
-+			return 0;
-+
-+		if (retry_counter != retry_max) {
-+			e_dbg("Perform retry on PHY transaction...\n");
-+			mdelay(10);
-+		}
-+	}
+ 	/* if we will not support s3 or s2i for the device
+ 	 *  then skip suspend
+@@ -2396,7 +2397,7 @@ static int amdgpu_pmops_prepare(struct device *dev)
+ 	    !amdgpu_acpi_is_s3_active(adev))
+ 		return 1;
  
 -	return 0;
-+	return -E1000_ERR_PHY;
++	return amdgpu_device_prepare(drm_dev);
  }
  
- /**
---- a/drivers/net/ethernet/intel/e1000e/phy.h
-+++ b/drivers/net/ethernet/intel/e1000e/phy.h
-@@ -51,6 +51,8 @@ s32 e1000e_read_phy_reg_bm2(struct e1000
- s32 e1000e_write_phy_reg_bm2(struct e1000_hw *hw, u32 offset, u16 data);
- void e1000_power_up_phy_copper(struct e1000_hw *hw);
- void e1000_power_down_phy_copper(struct e1000_hw *hw);
-+void e1000e_disable_phy_retry(struct e1000_hw *hw);
-+void e1000e_enable_phy_retry(struct e1000_hw *hw);
- s32 e1000e_read_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 *data);
- s32 e1000e_write_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 data);
- s32 e1000_read_phy_reg_hv(struct e1000_hw *hw, u32 offset, u16 *data);
+ static void amdgpu_pmops_complete(struct device *dev)
+@@ -2598,6 +2599,9 @@ static int amdgpu_pmops_runtime_suspend(struct device *dev)
+ 	if (amdgpu_device_supports_boco(drm_dev))
+ 		adev->mp1_state = PP_MP1_STATE_UNLOAD;
+ 
++	ret = amdgpu_device_prepare(drm_dev);
++	if (ret)
++		return ret;
+ 	ret = amdgpu_device_suspend(drm_dev, false);
+ 	if (ret) {
+ 		adev->in_runpm = false;
+-- 
+2.43.0
+
 
 
