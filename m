@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A9280034;
-	Mon,  8 Apr 2024 14:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E16A80034;
+	Mon,  8 Apr 2024 14:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585127; cv=none; b=mOwGOlrIBxCcehdXMLJMOOjfVGw5rFfWsd9HUyagYc0G2fShITAq2coa0pRhgO4XkP2XcEmnyyBcz2GQbYN6nHM8jLGjzHI1ntoc55HnQjQcYOcDlKz+qQO4R2nzJXotK+J2CRIkhlRA41AUr2tQWcIDvwDEYnlD1hkjBx9pKn8=
+	t=1712585131; cv=none; b=SJt0aY6BS/elIxlvtHv6IIFcQ1kDeD3Ts+ZvNWlJVjcgJ1i3CrVwh/yI5i4aMf/rVCAeh0+MnbrZXGNwchVe/01OjPU0C9DfoUA8p5AdL+MqNe2c5ka6GxWmzJpZavJ4+7IwS3NN6bdpowccMFvgMmxz3G6AKIGcjd+SGs04L1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585127; c=relaxed/simple;
-	bh=SE60aKq+T0144ebmmKorBcy3Go1fPjHt5iDoL3zJmoc=;
+	s=arc-20240116; t=1712585131; c=relaxed/simple;
+	bh=3Dwh6Lo+sO9UBQ2iXDyU6Qss/X1uNzLS5ZJi88Eph8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYQ8N9WU/TrCIGFptvT+eWkcaBI9kZludcgMj6kwbMzmgoLVOfHGCqeyAFlI3hzJPCMM76UqLqfZRNCGXc6sT1qYpqO7uufEkUJhbrzJaVE5kFBk9qw8cMf8WPCf22w2FtZqWhKru5FSS9cBLej+d8JWBScRPVuDBKaNb2vKlwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVE8hgkW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oc6M+o5jAoMNNLiWRC8xdpMF1jYkvPzGCBxu1AzdiJSH2k6e6kx3+lKHyrkr0M6oV+tF/K7J9zC5wH5cPI+U0mXnWNyONi7chJ3x3iDVsXEDgcc8fTq7hQKT12B79vazd6WEWxPeZOGcnlZfkJX/6TBqXX3cNAzhPgcBFttf22g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVWcIPdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVE8hgkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B647C433C7;
-	Mon,  8 Apr 2024 14:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVWcIPdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437B7C43390;
+	Mon,  8 Apr 2024 14:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585127;
-	bh=SE60aKq+T0144ebmmKorBcy3Go1fPjHt5iDoL3zJmoc=;
+	s=korg; t=1712585130;
+	bh=3Dwh6Lo+sO9UBQ2iXDyU6Qss/X1uNzLS5ZJi88Eph8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NVE8hgkWMGCVW9WlPWdGNA1hx44uJ12vV8soX0H/3uT6Jv42Zfdmykj1oMvX2lSbp
-	 bgNfobnYmjp43uzx8nrXczRm9qVldfFxCKNZxZwAqlUU7WIrgYMI4Xpbghb1ytiDzR
-	 BllYbsVnNdMgsSob4GOqiefuq+oyPVOe2v3FmdeY=
+	b=PVWcIPdPN26a9znbc/a9BneP1ykwhEUZvKMgkYmZK2PKio2Ndx2OZXo2qbyXqv1hU
+	 9zEVtbUN1azFLxUKFm7cR5U+KVPYmXmLzOPiTx+A/wmFmqkGjo0Ixqvc0ovcm7r2+M
+	 tGDAKaImM9NAACBDA3bLk9LyzKIfEz//AEH4iXTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arnd Bergmann <arnd@arndb.de>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 672/690] scsi: mylex: Fix sysfs buffer lengths
-Date: Mon,  8 Apr 2024 14:58:58 +0200
-Message-ID: <20240408125424.053913948@linuxfoundation.org>
+Subject: [PATCH 5.15 673/690] ata: sata_mv: Fix PCI device ID table declaration compilation warning
+Date: Mon,  8 Apr 2024 14:58:59 +0200
+Message-ID: <20240408125424.093452081@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -54,185 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
+[ Upstream commit 3137b83a90646917c90951d66489db466b4ae106 ]
 
-The myrb and myrs drivers use an odd way of implementing their sysfs files,
-calling snprintf() with a fixed length of 32 bytes to print into a page
-sized buffer. One of the strings is actually longer than 32 bytes, which
-clang can warn about:
+Building with W=1 shows a warning for an unused variable when CONFIG_PCI
+is diabled:
 
-drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
-drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
+drivers/ata/sata_mv.c:790:35: error: unused variable 'mv_pci_tbl' [-Werror,-Wunused-const-variable]
+static const struct pci_device_id mv_pci_tbl[] = {
 
-These could all be plain sprintf() without a length as the buffer is always
-long enough. On the other hand, sysfs files should not be overly long
-either, so just double the length to make sure the longest strings don't
-get truncated here.
+Move the table into the same block that containsn the pci_driver
+definition.
 
-Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
-Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
+Fixes: 7bb3c5290ca0 ("sata_mv: Remove PCI dependency")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/myrb.c | 20 ++++++++++----------
- drivers/scsi/myrs.c | 24 ++++++++++++------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ drivers/ata/sata_mv.c | 63 +++++++++++++++++++++----------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
-index 386256369dfc3..2a61cb7268839 100644
---- a/drivers/scsi/myrb.c
-+++ b/drivers/scsi/myrb.c
-@@ -1775,9 +1775,9 @@ static ssize_t raid_state_show(struct device *dev,
+diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
+index c53633d47bfb3..1c9dde51d456c 100644
+--- a/drivers/ata/sata_mv.c
++++ b/drivers/ata/sata_mv.c
+@@ -787,37 +787,6 @@ static const struct ata_port_info mv_port_info[] = {
+ 	},
+ };
  
- 		name = myrb_devstate_name(ldev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->state);
- 	} else {
- 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
-@@ -1796,9 +1796,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		else
- 			name = myrb_devstate_name(pdev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->state);
- 	}
- 	return ret;
-@@ -1886,11 +1886,11 @@ static ssize_t raid_level_show(struct device *dev,
+-static const struct pci_device_id mv_pci_tbl[] = {
+-	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
+-	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
+-	/* RocketRAID 1720/174x have different identifiers */
+-	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
+-
+-	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
+-	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
+-	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
+-
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
+-
+-	/* Adaptec 1430SA */
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
+-
+-	/* Marvell 7042 support */
+-	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
+-
+-	/* Highpoint RocketRAID PCIe series */
+-	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
+-	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
+-
+-	{ }			/* terminate list */
+-};
+-
+ static const struct mv_hw_ops mv5xxx_ops = {
+ 	.phy_errata		= mv5_phy_errata,
+ 	.enable_leds		= mv5_enable_leds,
+@@ -4311,6 +4280,36 @@ static int mv_pci_init_one(struct pci_dev *pdev,
+ static int mv_pci_device_resume(struct pci_dev *pdev);
+ #endif
  
- 		name = myrb_raidlevel_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->state);
--		return snprintf(buf, 32, "%s\n", name);
-+		return snprintf(buf, 64, "%s\n", name);
- 	}
--	return snprintf(buf, 32, "Physical Drive\n");
-+	return snprintf(buf, 64, "Physical Drive\n");
- }
- static DEVICE_ATTR_RO(raid_level);
++static const struct pci_device_id mv_pci_tbl[] = {
++	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
++	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
++	/* RocketRAID 1720/174x have different identifiers */
++	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
++
++	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
++	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
++	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
++
++	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
++
++	/* Adaptec 1430SA */
++	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
++
++	/* Marvell 7042 support */
++	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
++
++	/* Highpoint RocketRAID PCIe series */
++	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
++	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
++
++	{ }			/* terminate list */
++};
  
-@@ -1903,15 +1903,15 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
+ static struct pci_driver mv_pci_driver = {
+ 	.name			= DRV_NAME,
+@@ -4323,6 +4322,7 @@ static struct pci_driver mv_pci_driver = {
+ #endif
  
- 	if (sdev->channel < myrb_logical_channel(sdev->host))
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
+ };
++MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
  
- 	status = myrb_get_rbld_progress(cb, &rbld_buf);
+ /**
+  *      mv_print_info - Dump key info to kernel log for perusal.
+@@ -4495,7 +4495,6 @@ static void __exit mv_exit(void)
+ MODULE_AUTHOR("Brett Russ");
+ MODULE_DESCRIPTION("SCSI low-level driver for Marvell SATA controllers");
+ MODULE_LICENSE("GPL v2");
+-MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ MODULE_VERSION(DRV_VERSION);
+ MODULE_ALIAS("platform:" DRV_NAME);
  
- 	if (rbld_buf.ldev_num != sdev->id ||
- 	    status != MYRB_STATUS_SUCCESS)
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- 
--	return snprintf(buf, 32, "rebuilding block %u of %u\n",
-+	return snprintf(buf, 64, "rebuilding block %u of %u\n",
- 			rbld_buf.ldev_size - rbld_buf.blocks_left,
- 			rbld_buf.ldev_size);
- }
-diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
-index a4d244ee4548c..3f05f13fb107a 100644
---- a/drivers/scsi/myrs.c
-+++ b/drivers/scsi/myrs.c
-@@ -949,9 +949,9 @@ static ssize_t raid_state_show(struct device *dev,
- 
- 		name = myrs_devstate_name(ldev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->dev_state);
- 	} else {
- 		struct myrs_pdev_info *pdev_info;
-@@ -960,9 +960,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		pdev_info = sdev->hostdata;
- 		name = myrs_devstate_name(pdev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->dev_state);
- 	}
- 	return ret;
-@@ -1068,13 +1068,13 @@ static ssize_t raid_level_show(struct device *dev,
- 		ldev_info = sdev->hostdata;
- 		name = myrs_raid_level_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->dev_state);
- 
- 	} else
- 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
- 
--	return snprintf(buf, 32, "%s\n", name);
-+	return snprintf(buf, 64, "%s\n", name);
- }
- static DEVICE_ATTR_RO(raid_level);
- 
-@@ -1088,7 +1088,7 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	ldev_info = sdev->hostdata;
- 	ldev_num = ldev_info->ldev_num;
-@@ -1100,11 +1100,11 @@ static ssize_t rebuild_show(struct device *dev,
- 		return -EIO;
- 	}
- 	if (ldev_info->rbld_active) {
--		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
-+		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
- 				(size_t)ldev_info->rbld_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	} else
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- }
- 
- static ssize_t rebuild_store(struct device *dev,
-@@ -1192,7 +1192,7 @@ static ssize_t consistency_check_show(struct device *dev,
- 	unsigned short ldev_num;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not checking\n");
-+		return snprintf(buf, 64, "physical device - not checking\n");
- 
- 	ldev_info = sdev->hostdata;
- 	if (!ldev_info)
-@@ -1200,11 +1200,11 @@ static ssize_t consistency_check_show(struct device *dev,
- 	ldev_num = ldev_info->ldev_num;
- 	myrs_get_ldev_info(cs, ldev_num, ldev_info);
- 	if (ldev_info->cc_active)
--		return snprintf(buf, 32, "checking block %zu of %zu\n",
-+		return snprintf(buf, 64, "checking block %zu of %zu\n",
- 				(size_t)ldev_info->cc_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	else
--		return snprintf(buf, 32, "not checking\n");
-+		return snprintf(buf, 64, "not checking\n");
- }
- 
- static ssize_t consistency_check_store(struct device *dev,
 -- 
 2.43.0
 
