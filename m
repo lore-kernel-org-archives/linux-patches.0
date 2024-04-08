@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C516CDA9;
-	Mon,  8 Apr 2024 13:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302806CDA9;
+	Mon,  8 Apr 2024 13:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583139; cv=none; b=VTJWkuaemBtjVK/n/iKaqV9xETmGsnEm1d1EHN09+Bfw+qAYu9tJFnp4jJUdnb7KK6G6II2KMLsVltAH7HsGfvpe+xeTgSE3gnQseyIMV1gBdY5e7kG9nMvGL8DiJjHd0rOhsdXCPZ0fRDEiJ7B/NcMmiKb49ZzcG/LQu/vSXmM=
+	t=1712583142; cv=none; b=t0udmxFXgnAaDyd32vertuzuEh5/4SM8mZ4BCb8fyO8Tmnt+0XxLfFLxEiutDvaRmgx08EKVLsgSJrZ4zTXQJ6ImdpppQ1MWl06oEB+RHl1qY8cQSdwzvLdIn1GsJigJkl2+IGirYQWymhfp7MNpehAnZG/Cq4WwGtNEw+xYtU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583139; c=relaxed/simple;
-	bh=GoQS4DrOYXVKJ5/VpivvpQZAgcO+3qSfur1J+Xb+vuA=;
+	s=arc-20240116; t=1712583142; c=relaxed/simple;
+	bh=1CEYr7lQZGVo/v0T7YB6l53pBurORd7wqWUya0l2+yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjfEnVQFRqIm5NLwxwLX5gsgGKDpQygt/C0Iiu6wZV3snVIvyiX34HwyhhuW6cKmwjdFLMwZoa4Te+76C78hrych07oU/B53FtmwzQdaeQXOIttH3xsd3uQzUOdOYUUaFPPpjjUC2/XlNCdlxnNLcLJVZNx+dOTj9MlAstBrBqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfrWOICc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqn0JCSkQUGOziWzyVGW+nLKW2I4ms/ipPGQQuZwqK18/p1MooRoyiEQ/tBywwgY8gxanrZlXSYhWBdjZ92VlfZS2RcG3dFkSsAXO9D5G7aJ1LD6DdGNp/bGXjj9tzjR0QPgy0K52BbeYxooz7FcSUtZ12EgqruatbVV2myRN5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSaTFmBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfrWOICc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32FFC433F1;
-	Mon,  8 Apr 2024 13:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSaTFmBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FF6C43394;
+	Mon,  8 Apr 2024 13:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583139;
-	bh=GoQS4DrOYXVKJ5/VpivvpQZAgcO+3qSfur1J+Xb+vuA=;
+	s=korg; t=1712583142;
+	bh=1CEYr7lQZGVo/v0T7YB6l53pBurORd7wqWUya0l2+yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfrWOICcOJkbCeOP12EMfVDQZidZRkk4fJ/1T62B9U78IM9CyaUxb6meMQqWFdW9Q
-	 JG5hKpkxjR4DZ9LLbD6KyFtB2VZ6C9U6PxAGaE/C/XjaoheMoCTl/ycL3XwGGbB16y
-	 k/I7/f2HEUCHUKn3B5wI6PBbv2Dludl1gWJ5/EGQ=
+	b=XSaTFmBxhUfQ5WYjDxxMmcx9KbwLmzmctiUqOYVNUs7ilo5yYCv+cdZvA1YOySnyH
+	 vLwsGpfYA1iKJddV8FKLAGWCvCI9emd0diR/W819ZCuHfLn9keqga751HvKhx+1LA5
+	 kZzddfOM50Nf+Zl2eRU6Fh3HVrip0swomI/f1zk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff layton <jlayton@kernel.org>,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 211/690] nfsd4: remove obselete comment
-Date: Mon,  8 Apr 2024 14:51:17 +0200
-Message-ID: <20240408125407.174794094@linuxfoundation.org>
+	Pu Lehui <pulehui@huawei.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 161/252] drivers/perf: riscv: Disable PERF_SAMPLE_BRANCH_* while not supported
+Date: Mon,  8 Apr 2024 14:57:40 +0200
+Message-ID: <20240408125311.650448087@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 80479eb862102f9513e93fcf726c78cc0be2e3b2 ]
+[ Upstream commit ea6873118493019474abbf57d5a800da365734df ]
 
-Mandatory locking has been removed.  And the rest of this comment is
-redundant with the code.
+RISC-V perf driver does not yet support branch sampling. Although the
+specification is in the works [0], it is best to disable such events
+until support is available, otherwise we will get unexpected results.
+Due to this reason, two riscv bpf testcases get_branch_snapshot and
+perf_branches/perf_branches_hw fail.
 
-Reported-by: Jeff layton <jlayton@kernel.org>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://github.com/riscv/riscv-control-transfer-records [0]
+Fixes: f5bfa23f576f ("RISC-V: Add a perf core library for pmu drivers")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20240312012053.1178140-1-pulehui@huaweicloud.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/perf/riscv_pmu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 59e30cff920ca..925aa08ca1075 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -744,9 +744,6 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 	path.dentry = fhp->fh_dentry;
- 	inode = d_inode(path.dentry);
+diff --git a/drivers/perf/riscv_pmu.c b/drivers/perf/riscv_pmu.c
+index c78a6fd6c57f6..b4efdddb2ad91 100644
+--- a/drivers/perf/riscv_pmu.c
++++ b/drivers/perf/riscv_pmu.c
+@@ -313,6 +313,10 @@ static int riscv_pmu_event_init(struct perf_event *event)
+ 	u64 event_config = 0;
+ 	uint64_t cmask;
  
--	/* Disallow write access to files with the append-only bit set
--	 * or any access when mandatory locking enabled
--	 */
- 	err = nfserr_perm;
- 	if (IS_APPEND(inode) && (may_flags & NFSD_MAY_WRITE))
- 		goto out;
++	/* driver does not support branch stack sampling */
++	if (has_branch_stack(event))
++		return -EOPNOTSUPP;
++
+ 	hwc->flags = 0;
+ 	mapped_event = rvpmu->event_map(event, &event_config);
+ 	if (mapped_event < 0) {
 -- 
 2.43.0
 
