@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E361374C09;
-	Mon,  8 Apr 2024 13:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA38274C09;
+	Mon,  8 Apr 2024 13:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582361; cv=none; b=Ms6rPjCLDw/+3k9iP8+HsjsAB0McKFux+7Y1eZNgvugZVi9DPrEb4gLESzCFmLA+GqrdYHCfj2r8urJfaqZArcSAsAJhE9uxRBrIn0ntZLh0sTdlB309GjfFXxaa963+W+eNhONSJ9Vwa9Bb/Pm7VbDTcPHKVLdxbF4OGHyvJlk=
+	t=1712582363; cv=none; b=WlMl9mWt+EKYtn/g+cgvnQQgmjCdMFJwHYflCrjZSI+s4O5UUtuWh4LhNKK7Gm2N2Bufw5LoANasjtsJZhEta/5MrpmEu6YpX74dylh2gPwDf9uqDvs/YPvnTQcekwlV1zWaPkiDMjS35y1bMfEiw8ZI6sJQygBBWOvWLFqtHro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582361; c=relaxed/simple;
-	bh=h1dt10nipVLswfPO1OQcz4tSFVg75PnC5MLqRjamSaI=;
+	s=arc-20240116; t=1712582363; c=relaxed/simple;
+	bh=dK572EHZrjrILRrX0TKuxH0QJDZgz3Gp7TtF3q+PRlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KZWBAYhK7yEY1Bwx+Nkws8rVywIzCYbAooyVxaJ6pSNU8pqltrahkXlaEgT6PWvT/a84RQhD4fYO8n/ekBTntbktvC8TjAMXy91RTuBUwoAa1wNZYXqXVggpLXyfIdBFCcwmhS0w7/Hk2HDla5BH31yHN9CgSX1dBvfoCgpWxW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3f5Kqnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTUWymaoxVTnaB2Vp3oYitI4R/emC7GI13GIW81L83QhCsVKl3f/ORkN+SfgBm86gR+yboWDVA3vWOvtRi6qIyCfEiM64T2c+AXapBRwg468FkQ7LNtw8sA8e7xlVk6ZF6wFaD5qzbXc0oIPKIqVRzLX+SHqbay7fkahvFUuH6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbBaiA8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3f5Kqnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696F3C43390;
-	Mon,  8 Apr 2024 13:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbBaiA8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5249CC433C7;
+	Mon,  8 Apr 2024 13:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582360;
-	bh=h1dt10nipVLswfPO1OQcz4tSFVg75PnC5MLqRjamSaI=;
+	s=korg; t=1712582363;
+	bh=dK572EHZrjrILRrX0TKuxH0QJDZgz3Gp7TtF3q+PRlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3f5KqnbTFvLdPlDG+R9Bhx7Ih7qiRxgzVt1acoq+MQtJwGcBygsHQNbLjAGfn+Q7
-	 mAXFbriSrfcXkV3EZkcHbJ6NFvVVNBWLW+pwD9BIaaP19jGojRZMvPPM5dq8WDrjdk
-	 iC4zjm6gu1xmJ13cCFBAi4UG8pGZwesll0WSlwJ4=
+	b=lbBaiA8uGoLOQn4Pn916ABPYRt4lVWODrZl9z5O/YZL2f4Mo4dyTBcFMxpS8AUi0h
+	 F7jM5PMLx8sLl9vPEvtx9u5rXTjPM6H8yt3+k+TdYxQlrmKlP1EMndlBgpX1hM7pf0
+	 TT/OH9iPpLA8HGB6ZeqjQG++A7H1puECJ3ogfKJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.8 068/273] selinux: avoid dereference of garbage after mount failure
-Date: Mon,  8 Apr 2024 14:55:43 +0200
-Message-ID: <20240408125311.415746960@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 099/138] scsi: sd: Unregister device if device_add_disk() failed in sd_probe()
+Date: Mon,  8 Apr 2024 14:58:33 +0200
+Message-ID: <20240408125259.310737161@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,66 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Li Nan <linan122@huawei.com>
 
-commit 37801a36b4d68892ce807264f784d818f8d0d39b upstream.
+[ Upstream commit 0296bea01cfa6526be6bd2d16dc83b4e7f1af91f ]
 
-In case kern_mount() fails and returns an error pointer return in the
-error branch instead of continuing and dereferencing the error pointer.
+"if device_add() succeeds, you should call device_del() when you want to
+get rid of it."
 
-While on it drop the never read static variable selinuxfs_mount.
+In sd_probe(), device_add_disk() fails when device_add() has already
+succeeded, so change put_device() to device_unregister() to ensure device
+resources are released.
 
-Cc: stable@vger.kernel.org
-Fixes: 0619f0f5e36f ("selinux: wrap selinuxfs state")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2a7a891f4c40 ("scsi: sd: Add error handling support for add_disk()")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Link: https://lore.kernel.org/r/20231208082335.1754205-1-linan666@huaweicloud.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/selinuxfs.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/scsi/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -2123,7 +2123,6 @@ static struct file_system_type sel_fs_ty
- 	.kill_sb	= sel_kill_sb,
- };
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index c793bca882236..f32236c3f81c6 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3636,7 +3636,7 @@ static int sd_probe(struct device *dev)
  
--static struct vfsmount *selinuxfs_mount __ro_after_init;
- struct path selinux_null __ro_after_init;
- 
- static int __init init_sel_fs(void)
-@@ -2145,18 +2144,21 @@ static int __init init_sel_fs(void)
- 		return err;
+ 	error = device_add_disk(dev, gd, NULL);
+ 	if (error) {
+-		put_device(&sdkp->disk_dev);
++		device_unregister(&sdkp->disk_dev);
+ 		put_disk(gd);
+ 		goto out;
  	}
- 
--	selinux_null.mnt = selinuxfs_mount = kern_mount(&sel_fs_type);
--	if (IS_ERR(selinuxfs_mount)) {
-+	selinux_null.mnt = kern_mount(&sel_fs_type);
-+	if (IS_ERR(selinux_null.mnt)) {
- 		pr_err("selinuxfs:  could not mount!\n");
--		err = PTR_ERR(selinuxfs_mount);
--		selinuxfs_mount = NULL;
-+		err = PTR_ERR(selinux_null.mnt);
-+		selinux_null.mnt = NULL;
-+		return err;
- 	}
-+
- 	selinux_null.dentry = d_hash_and_lookup(selinux_null.mnt->mnt_root,
- 						&null_name);
- 	if (IS_ERR(selinux_null.dentry)) {
- 		pr_err("selinuxfs:  could not lookup null!\n");
- 		err = PTR_ERR(selinux_null.dentry);
- 		selinux_null.dentry = NULL;
-+		return err;
- 	}
- 
- 	return err;
+-- 
+2.43.0
+
 
 
