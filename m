@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700E07BAE7;
-	Mon,  8 Apr 2024 13:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD41471727;
+	Mon,  8 Apr 2024 13:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581832; cv=none; b=Vz+LG5HMSuKMD4CQthGWzeS0yE3GsRMkklfaqHPUl+MtJk/cALNLkT40ZOzNxxRmAwwmLmKSavX/46lO0MOP7I4N0hbw4FGxydmIJVOf8yMUMFj+OC2EHxNr/7W7B2hjtqurDdGvWeRA+/9e7C41oznMO6rTuZLxCPubJn/1dO8=
+	t=1712581835; cv=none; b=NNSyTEieH01BieOnyaYa/ycJOSQavdGUBN+N3Dt0k4cYnN90rKvlcbZGj8qixhn0/Qy/Txgumqd3HeXJ570GeKU3sEMyzBQAjO/IJd6zESC+rgvyms1/fNIr2AQbJ6Q5FpFOJq+Sxdup6/5cpfvYznVXqEWGNJ2dm2292SueFF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581832; c=relaxed/simple;
-	bh=cveR2VnG6Z6tfljjrwe3/wRIWNBwZJEh9bu7aDvvs/g=;
+	s=arc-20240116; t=1712581835; c=relaxed/simple;
+	bh=rCcnSoFOrdh3Gx8sgV52+rGPSE4nyXDxfNRb4Mh087A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0L7K1GmmJLRb7JRTJbNUEfQ3VwdeLyBd9Ixpt9aPw+vnD6fIPr1BjZKRzaew/nR6IVPj7GdLWINoVWKSiZJCRY7PGvdquCml7Y75RvjhkVp7aw9RR0nuwqsa+NSwz9Hb8abBMHj3+4D93UUlK/RvdEi9Bh0YaUFheeD6RFaBIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpG/MGw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TE3xyH5Eqgej8gtiVPvu35lSKAqh2U4yMM6qZE6tZASWSKo9VQWgjG0NviXL56HHdlSzEmLo69Y4Z2l1dCxsD/T5Y7xLzcfhvNPusxU9N2ekXw9ybC8jUWS2PQBsaILi0J8cb9Tk7nJD2YFakLmd0Z+SWtoxAmi1f8IsZQ6F66w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbf8Vtys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpG/MGw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA168C433F1;
-	Mon,  8 Apr 2024 13:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbf8Vtys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5550C43394;
+	Mon,  8 Apr 2024 13:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581832;
-	bh=cveR2VnG6Z6tfljjrwe3/wRIWNBwZJEh9bu7aDvvs/g=;
+	s=korg; t=1712581835;
+	bh=rCcnSoFOrdh3Gx8sgV52+rGPSE4nyXDxfNRb4Mh087A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpG/MGw+7g6iB5wzDHgAdUGaZsMqWwF56uWUJZhw0smkBOs7TIcBQpfA2HT6iwqD3
-	 vX78fdhAnHkmyQPsLq4rV5+NUrv8WoqIbGm7k0mmZJ0C2R77zuLJ1AZBYN6CSPIZlv
-	 n1SXySN4m66zbHfOBAmQo/oiAx4pXjSxCzvMiWig=
+	b=vbf8Vtys1iSQoRIYQH8hTyfiR/bWzd4E9QLwy/hR/QGsPOnZH7M8xcKdrH47a3F63
+	 j2XoQ68taVpcan3igAr1lKXfVqewpkC7g5PW+2R6s3wZjvJTdAxbmt0EpzNK8IBJFy
+	 t3OC9Eu0JZ3NbnRMaBl3BjDDX8yZyQ4hkp8z9dxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Matt Atwood <matthew.s.atwood@intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linke li <lilinke99@qq.com>,
+	Rabin Vincent <rabin@rab.in>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/252] drm/i915: Tidy workaround definitions
-Date: Mon,  8 Apr 2024 14:55:42 +0200
-Message-ID: <20240408125307.975468213@linuxfoundation.org>
+Subject: [PATCH 5.15 086/690] ring-buffer: Fix waking up ring buffer readers
+Date: Mon,  8 Apr 2024 14:49:12 +0200
+Message-ID: <20240408125402.605400638@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,185 +53,255 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit f1c805716516f9e648e13f0108cea8096e0c7023 ]
+[ Upstream commit b3594573681b53316ec0365332681a30463edfd6 ]
 
-Removal of the DG2 pre-production workarounds has left duplicate
-condition blocks in a couple places, as well as some inconsistent
-platform ordering.  Reshuffle and consolidate some of the workarounds to
-reduce the number of condition blocks and to more consistently follow
-the "newest platform first" convention.  Code movement only; no
-functional change.
+A task can wait on a ring buffer for when it fills up to a specific
+watermark. The writer will check the minimum watermark that waiters are
+waiting for and if the ring buffer is past that, it will wake up all the
+waiters.
 
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230816214201.534095-11-matthew.d.roper@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+The waiters are in a wait loop, and will first check if a signal is
+pending and then check if the ring buffer is at the desired level where it
+should break out of the loop.
+
+If a file that uses a ring buffer closes, and there's threads waiting on
+the ring buffer, it needs to wake up those threads. To do this, a
+"wait_index" was used.
+
+Before entering the wait loop, the waiter will read the wait_index. On
+wakeup, it will check if the wait_index is different than when it entered
+the loop, and will exit the loop if it is. The waker will only need to
+update the wait_index before waking up the waiters.
+
+This had a couple of bugs. One trivial one and one broken by design.
+
+The trivial bug was that the waiter checked the wait_index after the
+schedule() call. It had to be checked between the prepare_to_wait() and
+the schedule() which it was not.
+
+The main bug is that the first check to set the default wait_index will
+always be outside the prepare_to_wait() and the schedule(). That's because
+the ring_buffer_wait() doesn't have enough context to know if it should
+break out of the loop.
+
+The loop itself is not needed, because all the callers to the
+ring_buffer_wait() also has their own loop, as the callers have a better
+sense of what the context is to decide whether to break out of the loop
+or not.
+
+Just have the ring_buffer_wait() block once, and if it gets woken up, exit
+the function and let the callers decide what to do next.
+
+Link: https://lore.kernel.org/all/CAHk-=whs5MdtNjzFkTyaUy=vHi=qwWgPi0JgTe6OYUYMNSRZfg@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240308202431.792933613@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linke li <lilinke99@qq.com>
+Cc: Rabin Vincent <rabin@rab.in>
+Fixes: e30f53aad2202 ("tracing: Do not busy wait in buffer splice")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 761d9473e27f ("ring-buffer: Do not set shortest_full when full target is hit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 100 +++++++++-----------
- 1 file changed, 46 insertions(+), 54 deletions(-)
+ kernel/trace/ring_buffer.c | 139 ++++++++++++++++++-------------------
+ 1 file changed, 68 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index 7b426f3015b34..69973dc518280 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -2337,6 +2337,19 @@ rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- 			   true);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index d9bed77f96c1f..15067de333497 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -406,7 +406,6 @@ struct rb_irq_work {
+ 	struct irq_work			work;
+ 	wait_queue_head_t		waiters;
+ 	wait_queue_head_t		full_waiters;
+-	long				wait_index;
+ 	bool				waiters_pending;
+ 	bool				full_waiters_pending;
+ 	bool				wakeup_full;
+@@ -915,14 +914,40 @@ void ring_buffer_wake_waiters(struct trace_buffer *buffer, int cpu)
+ 		rbwork = &cpu_buffer->irq_work;
  	}
  
-+	if (IS_DG2(i915) || IS_ALDERLAKE_P(i915) || IS_ALDERLAKE_S(i915) ||
-+	    IS_DG1(i915) || IS_ROCKETLAKE(i915) || IS_TIGERLAKE(i915)) {
-+		/*
-+		 * Wa_1606700617:tgl,dg1,adl-p
-+		 * Wa_22010271021:tgl,rkl,dg1,adl-s,adl-p
-+		 * Wa_14010826681:tgl,dg1,rkl,adl-p
-+		 * Wa_18019627453:dg2
-+		 */
-+		wa_masked_en(wal,
-+			     GEN9_CS_DEBUG_MODE1,
-+			     FF_DOP_CLOCK_GATE_DISABLE);
-+	}
-+
- 	if (IS_ALDERLAKE_P(i915) || IS_ALDERLAKE_S(i915) || IS_DG1(i915) ||
- 	    IS_ROCKETLAKE(i915) || IS_TIGERLAKE(i915)) {
- 		/* Wa_1606931601:tgl,rkl,dg1,adl-s,adl-p */
-@@ -2350,19 +2363,11 @@ rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- 		 */
- 		wa_write_or(wal, GEN7_FF_THREAD_MODE,
- 			    GEN12_FF_TESSELATION_DOP_GATE_DISABLE);
--	}
- 
--	if (IS_ALDERLAKE_P(i915) || IS_DG2(i915) || IS_ALDERLAKE_S(i915) ||
--	    IS_DG1(i915) || IS_ROCKETLAKE(i915) || IS_TIGERLAKE(i915)) {
--		/*
--		 * Wa_1606700617:tgl,dg1,adl-p
--		 * Wa_22010271021:tgl,rkl,dg1,adl-s,adl-p
--		 * Wa_14010826681:tgl,dg1,rkl,adl-p
--		 * Wa_18019627453:dg2
--		 */
--		wa_masked_en(wal,
--			     GEN9_CS_DEBUG_MODE1,
--			     FF_DOP_CLOCK_GATE_DISABLE);
-+		/* Wa_1406941453:tgl,rkl,dg1,adl-s,adl-p */
-+		wa_mcr_masked_en(wal,
-+				 GEN10_SAMPLER_MODE,
-+				 ENABLE_SMALLPL);
- 	}
- 
- 	if (IS_ALDERLAKE_P(i915) || IS_ALDERLAKE_S(i915) ||
-@@ -2389,14 +2394,6 @@ rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- 			     GEN8_RC_SEMA_IDLE_MSG_DISABLE);
- 	}
- 
--	if (IS_DG1(i915) || IS_ROCKETLAKE(i915) || IS_TIGERLAKE(i915) ||
--	    IS_ALDERLAKE_S(i915) || IS_ALDERLAKE_P(i915)) {
--		/* Wa_1406941453:tgl,rkl,dg1,adl-s,adl-p */
--		wa_mcr_masked_en(wal,
--				 GEN10_SAMPLER_MODE,
--				 ENABLE_SMALLPL);
--	}
+-	rbwork->wait_index++;
+-	/* make sure the waiters see the new index */
+-	smp_wmb();
 -
- 	if (GRAPHICS_VER(i915) == 11) {
- 		/* This is not an Wa. Enable for better image quality */
- 		wa_masked_en(wal,
-@@ -2877,6 +2874,9 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		/* Wa_22013037850 */
- 		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0_UDW,
- 				DISABLE_128B_EVICTION_COMMAND_UDW);
-+
-+		/* Wa_18017747507 */
-+		wa_masked_en(wal, VFG_PREEMPTION_CHICKEN, POLYGON_TRIFAN_LINELOOP_DISABLE);
- 	}
- 
- 	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
-@@ -2887,11 +2887,20 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0, DISABLE_D8_D16_COASLESCE);
- 	}
- 
--	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
--	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
--	    IS_DG2(i915)) {
--		/* Wa_18017747507 */
--		wa_masked_en(wal, VFG_PREEMPTION_CHICKEN, POLYGON_TRIFAN_LINELOOP_DISABLE);
-+	if (IS_PONTEVECCHIO(i915) || IS_DG2(i915)) {
-+		/* Wa_14015227452:dg2,pvc */
-+		wa_mcr_masked_en(wal, GEN9_ROW_CHICKEN4, XEHP_DIS_BBL_SYSPIPE);
-+
-+		/* Wa_16015675438:dg2,pvc */
-+		wa_masked_en(wal, FF_SLICE_CS_CHICKEN2, GEN12_PERF_FIX_BALANCING_CFE_DISABLE);
-+	}
-+
-+	if (IS_DG2(i915)) {
-+		/*
-+		 * Wa_16011620976:dg2_g11
-+		 * Wa_22015475538:dg2
-+		 */
-+		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0_UDW, DIS_CHAIN_2XSIMD8);
- 	}
- 
- 	if (IS_DG2_G11(i915)) {
-@@ -2906,6 +2915,18 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		/* Wa_22013059131:dg2 */
- 		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0,
- 				FORCE_1_SUB_MESSAGE_PER_FRAGMENT);
-+
-+		/*
-+		 * Wa_22012654132
-+		 *
-+		 * Note that register 0xE420 is write-only and cannot be read
-+		 * back for verification on DG2 (due to Wa_14012342262), so
-+		 * we need to explicitly skip the readback.
-+		 */
-+		wa_mcr_add(wal, GEN10_CACHE_MODE_SS, 0,
-+			   _MASKED_BIT_ENABLE(ENABLE_PREFETCH_INTO_IC),
-+			   0 /* write-only, so skip validation */,
-+			   true);
- 	}
- 
- 	if (IS_XEHPSDV(i915)) {
-@@ -2923,35 +2944,6 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 		wa_mcr_masked_en(wal, GEN8_HALF_SLICE_CHICKEN1,
- 				 GEN7_PSD_SINGLE_PORT_DISPATCH_ENABLE);
- 	}
--
--	if (IS_DG2(i915) || IS_PONTEVECCHIO(i915)) {
--		/* Wa_14015227452:dg2,pvc */
--		wa_mcr_masked_en(wal, GEN9_ROW_CHICKEN4, XEHP_DIS_BBL_SYSPIPE);
--
--		/* Wa_16015675438:dg2,pvc */
--		wa_masked_en(wal, FF_SLICE_CS_CHICKEN2, GEN12_PERF_FIX_BALANCING_CFE_DISABLE);
--	}
--
--	if (IS_DG2(i915)) {
--		/*
--		 * Wa_16011620976:dg2_g11
--		 * Wa_22015475538:dg2
--		 */
--		wa_mcr_write_or(wal, LSC_CHICKEN_BIT_0_UDW, DIS_CHAIN_2XSIMD8);
--	}
--
--	if (IS_DG2_G11(i915))
--		/*
--		 * Wa_22012654132
--		 *
--		 * Note that register 0xE420 is write-only and cannot be read
--		 * back for verification on DG2 (due to Wa_14012342262), so
--		 * we need to explicitly skip the readback.
--		 */
--		wa_mcr_add(wal, GEN10_CACHE_MODE_SS, 0,
--			   _MASKED_BIT_ENABLE(ENABLE_PREFETCH_INTO_IC),
--			   0 /* write-only, so skip validation */,
--			   true);
+ 	/* This can be called in any context */
+ 	irq_work_queue(&rbwork->work);
  }
  
- static void
++static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
++{
++	struct ring_buffer_per_cpu *cpu_buffer;
++	bool ret = false;
++
++	/* Reads of all CPUs always waits for any data */
++	if (cpu == RING_BUFFER_ALL_CPUS)
++		return !ring_buffer_empty(buffer);
++
++	cpu_buffer = buffer->buffers[cpu];
++
++	if (!ring_buffer_empty_cpu(buffer, cpu)) {
++		unsigned long flags;
++		bool pagebusy;
++
++		if (!full)
++			return true;
++
++		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
++		pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
++		ret = !pagebusy && full_hit(buffer, cpu, full);
++
++		if (!cpu_buffer->shortest_full ||
++		    cpu_buffer->shortest_full > full)
++			cpu_buffer->shortest_full = full;
++		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
++	}
++	return ret;
++}
++
+ /**
+  * ring_buffer_wait - wait for input to the ring buffer
+  * @buffer: buffer to wait on
+@@ -938,7 +963,6 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
+ 	struct ring_buffer_per_cpu *cpu_buffer;
+ 	DEFINE_WAIT(wait);
+ 	struct rb_irq_work *work;
+-	long wait_index;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -957,81 +981,54 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
+ 		work = &cpu_buffer->irq_work;
+ 	}
+ 
+-	wait_index = READ_ONCE(work->wait_index);
+-
+-	while (true) {
+-		if (full)
+-			prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
+-		else
+-			prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
+-
+-		/*
+-		 * The events can happen in critical sections where
+-		 * checking a work queue can cause deadlocks.
+-		 * After adding a task to the queue, this flag is set
+-		 * only to notify events to try to wake up the queue
+-		 * using irq_work.
+-		 *
+-		 * We don't clear it even if the buffer is no longer
+-		 * empty. The flag only causes the next event to run
+-		 * irq_work to do the work queue wake up. The worse
+-		 * that can happen if we race with !trace_empty() is that
+-		 * an event will cause an irq_work to try to wake up
+-		 * an empty queue.
+-		 *
+-		 * There's no reason to protect this flag either, as
+-		 * the work queue and irq_work logic will do the necessary
+-		 * synchronization for the wake ups. The only thing
+-		 * that is necessary is that the wake up happens after
+-		 * a task has been queued. It's OK for spurious wake ups.
+-		 */
+-		if (full)
+-			work->full_waiters_pending = true;
+-		else
+-			work->waiters_pending = true;
+-
+-		if (signal_pending(current)) {
+-			ret = -EINTR;
+-			break;
+-		}
+-
+-		if (cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer))
+-			break;
+-
+-		if (cpu != RING_BUFFER_ALL_CPUS &&
+-		    !ring_buffer_empty_cpu(buffer, cpu)) {
+-			unsigned long flags;
+-			bool pagebusy;
+-			bool done;
+-
+-			if (!full)
+-				break;
+-
+-			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+-			pagebusy = cpu_buffer->reader_page == cpu_buffer->commit_page;
+-			done = !pagebusy && full_hit(buffer, cpu, full);
++	if (full)
++		prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
++	else
++		prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
+ 
+-			if (!cpu_buffer->shortest_full ||
+-			    cpu_buffer->shortest_full > full)
+-				cpu_buffer->shortest_full = full;
+-			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+-			if (done)
+-				break;
+-		}
++	/*
++	 * The events can happen in critical sections where
++	 * checking a work queue can cause deadlocks.
++	 * After adding a task to the queue, this flag is set
++	 * only to notify events to try to wake up the queue
++	 * using irq_work.
++	 *
++	 * We don't clear it even if the buffer is no longer
++	 * empty. The flag only causes the next event to run
++	 * irq_work to do the work queue wake up. The worse
++	 * that can happen if we race with !trace_empty() is that
++	 * an event will cause an irq_work to try to wake up
++	 * an empty queue.
++	 *
++	 * There's no reason to protect this flag either, as
++	 * the work queue and irq_work logic will do the necessary
++	 * synchronization for the wake ups. The only thing
++	 * that is necessary is that the wake up happens after
++	 * a task has been queued. It's OK for spurious wake ups.
++	 */
++	if (full)
++		work->full_waiters_pending = true;
++	else
++		work->waiters_pending = true;
+ 
+-		schedule();
++	if (rb_watermark_hit(buffer, cpu, full))
++		goto out;
+ 
+-		/* Make sure to see the new wait index */
+-		smp_rmb();
+-		if (wait_index != work->wait_index)
+-			break;
++	if (signal_pending(current)) {
++		ret = -EINTR;
++		goto out;
+ 	}
+ 
++	schedule();
++ out:
+ 	if (full)
+ 		finish_wait(&work->full_waiters, &wait);
+ 	else
+ 		finish_wait(&work->waiters, &wait);
+ 
++	if (!ret && !rb_watermark_hit(buffer, cpu, full) && signal_pending(current))
++		ret = -EINTR;
++
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
