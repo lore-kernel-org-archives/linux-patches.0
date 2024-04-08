@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF13C80604;
-	Mon,  8 Apr 2024 13:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FECB8060B;
+	Mon,  8 Apr 2024 13:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582614; cv=none; b=bj2pL62LGoQxV2PAu1IuRgkq4H8Cluv6ouSnB3QD9euJGjEhlDb/O7B6p7vyCrvZ7NJQmDSAvXbIQSkBAKGxWSXX//WBA3iwOerWahwRLAh1N/3cynLIw84a95VooAgZLGsQdDFL7Q+6JzDabGX8AuLhTDVEgQXAoDUaxX4gAPY=
+	t=1712582617; cv=none; b=RRcT+vw2qemSyoOUzBQ8na3MCxnkF3gfPjIwo/+JPhpnAezwU9NMIXgUtkQZL2NchwVphrm91hl5iIQqyIX/oaKk/Oj/bm8uzim0yfQPH6iHIhO+ILxff6sMmNEVs0qdK03NyZ+9cVPVfBKy9KSSNSCJ7kG1SS3QpmPKYkDUt5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582614; c=relaxed/simple;
-	bh=dOLHdskRVFsMZX4d5rOUvDTF5wqJi9U/NyRskaSRBtU=;
+	s=arc-20240116; t=1712582617; c=relaxed/simple;
+	bh=o+CXbIAbKaRXJJ4PUBmxeH8gn2EqOah8MfYlHqFMUik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7luIZnW6mi7RkEaZCNbyuqoACrhFgCCNQF9t9jToh7MUEG+NV5sstXJMSF2BppR6RTkK826BiHi/TwQL9Y3whPqK/MUh12JFa80PPlv+pJGUeHTBIUAdDQmeIVeOn6+lEeRC9VtFOVNQ2AsNfzN1WWOc7M+FtEzlDtMPUx/gzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARJn6NDa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cYqVgKx3jZ0ZWoYyX7w6W51zC1p1Qs2rknzqeycfyhsLkUnqEMvR0gn/kdxpLZu7F3O9pcX2Q7j+9z3dWbOzBGFywujOmiethcmae0ctVguxKyZyD4anKh56X2DsmLZQQvMtVl2a9zDufg5uG4tlVA9q8hwW8c7Qj0tQ8lGNqWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSL6393F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARJn6NDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440A2C433C7;
-	Mon,  8 Apr 2024 13:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSL6393F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B345C433F1;
+	Mon,  8 Apr 2024 13:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582614;
-	bh=dOLHdskRVFsMZX4d5rOUvDTF5wqJi9U/NyRskaSRBtU=;
+	s=korg; t=1712582617;
+	bh=o+CXbIAbKaRXJJ4PUBmxeH8gn2EqOah8MfYlHqFMUik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARJn6NDaOIq99kn2gmREw8S92kMJnt3U9x22BeCrHSbXDbYmxNAJRXqLb/Lp3+S/P
-	 OT0D8b4aib+zX7FerxR0GdRLQiV4pAXsZwin2T97V8f5ZV/rYr8GRDdH7P5jmzbsPj
-	 v3yH0O8iwLjwtlkbtdcKKy5QN0p5GNMEYuT+qBM4=
+	b=fSL6393F2pJ18YSgsiokLQi1QpuqG6DG09TJWKMk0RLNUrDJazjk83PTdRGItznL5
+	 ABfxj8z4zn2L6sXjbIdW364mi5Zw0tQZ7zTRvKE9eh1kUNWTYfPsqxxYyP3u6rRSdY
+	 J5KjQrN5KQ21vD/MccaS23bxlPObDyLn2QwYKJqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.8 090/273] netfilter: nf_tables: discard table flag update with pending basechain deletion
-Date: Mon,  8 Apr 2024 14:56:05 +0200
-Message-ID: <20240408125312.098046187@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.1 120/138] x86/mce: Make sure to grab mce_sysfs_mutex in set_bank()
+Date: Mon,  8 Apr 2024 14:58:54 +0200
+Message-ID: <20240408125259.965665181@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,45 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 1bc83a019bbe268be3526406245ec28c2458a518 upstream.
+commit 3ddf944b32f88741c303f0b21459dbb3872b8bc5 upstream.
 
-Hook unregistration is deferred to the commit phase, same occurs with
-hook updates triggered by the table dormant flag. When both commands are
-combined, this results in deleting a basechain while leaving its hook
-still registered in the core.
+Modifying a MCA bank's MCA_CTL bits which control which error types to
+be reported is done over
 
-Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  /sys/devices/system/machinecheck/
+  ├── machinecheck0
+  │   ├── bank0
+  │   ├── bank1
+  │   ├── bank10
+  │   ├── bank11
+  ...
+
+sysfs nodes by writing the new bit mask of events to enable.
+
+When the write is accepted, the kernel deletes all current timers and
+reinits all banks.
+
+Doing that in parallel can lead to initializing a timer which is already
+armed and in the timer wheel, i.e., in use already:
+
+  ODEBUG: init active (active state 0) object: ffff888063a28000 object
+  type: timer_list hint: mce_timer_fn+0x0/0x240 arch/x86/kernel/cpu/mce/core.c:2642
+  WARNING: CPU: 0 PID: 8120 at lib/debugobjects.c:514
+  debug_print_object+0x1a0/0x2a0 lib/debugobjects.c:514
+
+Fix that by grabbing the sysfs mutex as the rest of the MCA sysfs code
+does.
+
+Reported by: Yue Sun <samsun1006219@gmail.com>
+Reported by: xingwei lee <xrivendell7@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/CAEkJfYNiENwQY8yV1LYJ9LjJs%2Bx_-PqMv98gKig55=2vbzffRw@mail.gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1207,10 +1207,11 @@ static bool nft_table_pending_update(con
- 		return true;
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2471,12 +2471,14 @@ static ssize_t set_bank(struct device *s
+ 		return -EINVAL;
  
- 	list_for_each_entry(trans, &nft_net->commit_list, list) {
--		if ((trans->msg_type == NFT_MSG_NEWCHAIN ||
--		     trans->msg_type == NFT_MSG_DELCHAIN) &&
--		    trans->ctx.table == ctx->table &&
--		    nft_trans_chain_update(trans))
-+		if (trans->ctx.table == ctx->table &&
-+		    ((trans->msg_type == NFT_MSG_NEWCHAIN &&
-+		      nft_trans_chain_update(trans)) ||
-+		     (trans->msg_type == NFT_MSG_DELCHAIN &&
-+		      nft_is_base_chain(trans->ctx.chain))))
- 			return true;
- 	}
+ 	b = &per_cpu(mce_banks_array, s->id)[bank];
+-
+ 	if (!b->init)
+ 		return -ENODEV;
  
+ 	b->ctl = new;
++
++	mutex_lock(&mce_sysfs_mutex);
+ 	mce_restart();
++	mutex_unlock(&mce_sysfs_mutex);
+ 
+ 	return size;
+ }
 
 
