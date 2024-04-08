@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F352745C5;
-	Mon,  8 Apr 2024 13:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E2C2E62C;
+	Mon,  8 Apr 2024 13:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581727; cv=none; b=UrzaaW/Hv6t6tC7YDeqzZkhJ0NqOYk2UaEyU1ooO+9Q0YidraphHnKRBSoOZ6IqWfi9tp4MkN+7j6zdq6JOWGCi5XSRo8QudfGGsNqDrASicAs8bds1zFmhP7iwFEEdDpOg7Z5sIZdlgMYzzUcVbqLjDhmOyDGPFWeOFz7CcYOI=
+	t=1712581730; cv=none; b=ked4R8tglpYcrUupaU4MQklmkUbqQ/Jc2O7x9EyX+8jg/vbGYISfCbbm70/BB/9phANrRH6STMd639YNIoNfRr2/axHyH+9QFcBqRho5RKG2C+9T3O2xj/XGx4256UdXCpwVmQpoVVMRIs8xLFQ/DsSv4BWpga773kCAK4WUA/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581727; c=relaxed/simple;
-	bh=fj7V0ejjORC+LythzLkIofrg1o1kzy/suHjCqFZJZ8o=;
+	s=arc-20240116; t=1712581730; c=relaxed/simple;
+	bh=afWCE3KGTDTj+haRJSNSi+ejPHX/PQ9Z6P1nk+F04KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvPB92sGuNLXnFz1yNeDH9E2gNJR54/8R7jUHp44z1UvEosR//gUCejbJeCE7AGtf6LWDxPN5mPS3JO85hDB88kHm7hqwUQ0Z5S/YatMEyjqeXQ1mFwonI/T1k51LyudoXn8EyTi4F5Ab12wpLFCWRNVb3ckvhAaBygLTfqjNa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g43XlivN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKLxH05f4t7jY33zxse4U8WoLvpLF9II2Lntj1mMd5mvxNYY/NGMwZHMhfoTLCNAxigDNSLLrO0zrL9Jsoq5DbB5DybL6EA+2hOZQWHcCY9raD4fVpLACaL1ZsDzXjfToH86+hgpu+iwbrOYLFHrDiuRdqFXdULm4FgjZKn91zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8dZhR3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g43XlivN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81963C433F1;
-	Mon,  8 Apr 2024 13:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8dZhR3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646BDC433F1;
+	Mon,  8 Apr 2024 13:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581726;
-	bh=fj7V0ejjORC+LythzLkIofrg1o1kzy/suHjCqFZJZ8o=;
+	s=korg; t=1712581729;
+	bh=afWCE3KGTDTj+haRJSNSi+ejPHX/PQ9Z6P1nk+F04KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g43XlivN4AHNNJdF4lpATzw57VzpkPHJhKLYsp10QrV81yTQ4CkV7ToAX+5Dtcnq6
-	 6O/d7CJIIiQgGNSAn7UX1rmT4b5v3tLom7HTvrH9kXNw2nlEfcvr1VepIfCo9lb9F1
-	 sGtXIpQrd/pZIBzlfHpIb7n+MhjWneJVCN5Zzt4k=
+	b=F8dZhR3InD/x4XYmDqrRW8UkdaLj3m+FPvhAG1rKfWP1SSS/izVN4ff84/4b42WlW
+	 eJV2LClcgvfj4Tge/icCWluspY5i+l3o7aoxnK+eY+dHZ88gziSedhc0Qz49E/96uC
+	 i2viG6AJ/SjAwXo7K7LAfWqA5T2CKriNQXEtUXyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 047/138] net/sched: fix lockdep splat in qdisc_tree_reduce_backlog()
-Date: Mon,  8 Apr 2024 14:57:41 +0200
-Message-ID: <20240408125257.692154459@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 035/252] netfilter: nf_tables: reject destroy command to remove basechain hooks
+Date: Mon,  8 Apr 2024 14:55:34 +0200
+Message-ID: <20240408125307.733223333@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,87 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7eb322360b0266481e560d1807ee79e0cef5742b upstream.
+[ Upstream commit b32ca27fa238ff83427d23bef2a5b741e2a88a1e ]
 
-qdisc_tree_reduce_backlog() is called with the qdisc lock held,
-not RTNL.
+Report EOPNOTSUPP if NFT_MSG_DESTROYCHAIN is used to delete hooks in an
+existing netdev basechain, thus, only NFT_MSG_DELCHAIN is allowed.
 
-We must use qdisc_lookup_rcu() instead of qdisc_lookup()
-
-syzbot reported:
-
-WARNING: suspicious RCU usage
-6.1.74-syzkaller #0 Not tainted
------------------------------
-net/sched/sch_api.c:305 suspicious rcu_dereference_protected() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-3 locks held by udevd/1142:
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
-  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: net_tx_action+0x64a/0x970 net/core/dev.c:5282
-  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:350 [inline]
-  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: net_tx_action+0x754/0x970 net/core/dev.c:5297
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
-  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: qdisc_tree_reduce_backlog+0x84/0x580 net/sched/sch_api.c:792
-
-stack backtrace:
-CPU: 1 PID: 1142 Comm: udevd Not tainted 6.1.74-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Call Trace:
- <TASK>
-  [<ffffffff85b85f14>] __dump_stack lib/dump_stack.c:88 [inline]
-  [<ffffffff85b85f14>] dump_stack_lvl+0x1b1/0x28f lib/dump_stack.c:106
-  [<ffffffff85b86007>] dump_stack+0x15/0x1e lib/dump_stack.c:113
-  [<ffffffff81802299>] lockdep_rcu_suspicious+0x1b9/0x260 kernel/locking/lockdep.c:6592
-  [<ffffffff84f0054c>] qdisc_lookup+0xac/0x6f0 net/sched/sch_api.c:305
-  [<ffffffff84f037c3>] qdisc_tree_reduce_backlog+0x243/0x580 net/sched/sch_api.c:811
-  [<ffffffff84f5b78c>] pfifo_tail_enqueue+0x32c/0x4b0 net/sched/sch_fifo.c:51
-  [<ffffffff84fbcf63>] qdisc_enqueue include/net/sch_generic.h:833 [inline]
-  [<ffffffff84fbcf63>] netem_dequeue+0xeb3/0x15d0 net/sched/sch_netem.c:723
-  [<ffffffff84eecab9>] dequeue_skb net/sched/sch_generic.c:292 [inline]
-  [<ffffffff84eecab9>] qdisc_restart net/sched/sch_generic.c:397 [inline]
-  [<ffffffff84eecab9>] __qdisc_run+0x249/0x1e60 net/sched/sch_generic.c:415
-  [<ffffffff84d7aa96>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
-  [<ffffffff84d85d29>] net_tx_action+0x7c9/0x970 net/core/dev.c:5313
-  [<ffffffff85e002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:616
-  [<ffffffff81568bca>] invoke_softirq kernel/softirq.c:447 [inline]
-  [<ffffffff81568bca>] __irq_exit_rcu+0xca/0x230 kernel/softirq.c:700
-  [<ffffffff81568ae9>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:712
-  [<ffffffff85b89f52>] sysvec_apic_timer_interrupt+0x42/0x90 arch/x86/kernel/apic/apic.c:1107
-  [<ffffffff85c00ccb>] asm_sysvec_apic_timer_interrupt+0x1b/0x20 arch/x86/include/asm/idtentry.h:656
-
-Fixes: d636fc5dd692 ("net: sched: add rcu annotations around qdisc->qdisc_sleeping")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240402134133.2352776-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7d937b107108f ("netfilter: nf_tables: support for deleting devices in an existing netdev chain")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -806,7 +806,7 @@ void qdisc_tree_reduce_backlog(struct Qd
- 		notify = !sch->q.qlen && !WARN_ON_ONCE(!n &&
- 						       !qdisc_is_offloaded);
- 		/* TODO: perform the search on a per txq basis */
--		sch = qdisc_lookup(qdisc_dev(sch), TC_H_MAJ(parentid));
-+		sch = qdisc_lookup_rcu(qdisc_dev(sch), TC_H_MAJ(parentid));
- 		if (sch == NULL) {
- 			WARN_ON_ONCE(parentid != TC_H_ROOT);
- 			break;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index f10419ba6e0bd..0653f1e5e8929 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2934,7 +2934,8 @@ static int nf_tables_delchain(struct sk_buff *skb, const struct nfnl_info *info,
+ 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, chain, nla);
+ 
+ 	if (nla[NFTA_CHAIN_HOOK]) {
+-		if (chain->flags & NFT_CHAIN_HW_OFFLOAD)
++		if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_DESTROYCHAIN ||
++		    chain->flags & NFT_CHAIN_HW_OFFLOAD)
+ 			return -EOPNOTSUPP;
+ 
+ 		if (nft_is_base_chain(chain)) {
+-- 
+2.43.0
+
 
 
