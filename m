@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3636FE35;
-	Mon,  8 Apr 2024 13:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CA381726;
+	Mon,  8 Apr 2024 13:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582054; cv=none; b=OHXQxeE073hljaX5B6RGW7I/xQ/RrU0UB6cVdLIQvZwjp6ja0Giz5R2TIXDazAtE24qtEs+5J5LDGmaxhhvoOk+XdOGsjPitPOxWm3Fwb24JqUitPCW3AF/ohh1Z8pMYV77af3IcMNrBImTMwVRoOf6smFzw+E80+InObbKccXs=
+	t=1712582057; cv=none; b=s0UrQSfCXVSLhzpozEhI0H8V/QfkrQt0TBzv5+lErbWE0tGUeuIeAZmlWjgnNb9el8tX7yrnfBG6zY29KDjhKHk6gfmlqBCwb/Md1GWZcnYAgr7ehXkFwYtOmvByrRne9rKHeoEuFBbPJQkYsHh1huxYJ2MQdjdYtgjEZ90uIS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582054; c=relaxed/simple;
-	bh=UtAsA4TKW+/icmU659cg0QFdcy3hdYhcZ07NY/k0f1M=;
+	s=arc-20240116; t=1712582057; c=relaxed/simple;
+	bh=F+N9VqxhkRWC8R7rt1KJ48w8s/e8V7gpSR1r73Gib3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrVFI+aHVn6uws4izOpIa3CIlqFyFp4PCeEhU9TrBi67yKE8051c6P+DW2eSLIXyABkBc3fCHOuy/RUvSCx89sc4be0PVTPsNwQNfHzr9Jg0Wh/kWIIMMUd3+UXxB/VFn+xyWHIkZp2u6NiDd970kIrEJautUb//eQIA/VKugTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7426h8Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWYoUe/6Tb/1UsyDXHlaehWrjv046IcqLmKJT8nODjU9A0KQuRLDPdq9p+H/FYaptENB94IVq0wqAvZ3Krpv/lrLEf2tqDG9zXIxASl3ZdZPOOLE1lkHy1J/euOImUTUKbnKyaG+fGlWJUDpSx3A+bWGNPQ9Gr+SxudZoB4na6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0V6HXsw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7426h8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23955C43390;
-	Mon,  8 Apr 2024 13:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0V6HXsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8EFC433C7;
+	Mon,  8 Apr 2024 13:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582054;
-	bh=UtAsA4TKW+/icmU659cg0QFdcy3hdYhcZ07NY/k0f1M=;
+	s=korg; t=1712582057;
+	bh=F+N9VqxhkRWC8R7rt1KJ48w8s/e8V7gpSR1r73Gib3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7426h8QJMhFDJwHf4luiCQL1FwEvmZ0kw6PBWkBTGrc67tM8Lgu1BK1kKE0/dfsk
-	 cty2TZcW2+1B+GLZ22y9VQIRjq60Ft0DPC3akPHJgPJ/A+rtGa04ayUt6Cntd6GIjC
-	 PaJIgcOng9LhldM07qZNCvKZFmhY6R0ai9FsVoN8=
+	b=o0V6HXswyovdgcwAvRtojC2Lmul7pH8GQdtLWG7TGs1UPdEr+uvtskLVDW/bfX086
+	 yYpGi6Aywj1I9x3VDyXqvm26w8YPOWX9Q2NQEaAt9XDa6Q5uA0fCuGI+lekl5NRvyU
+	 ynrvXuFNrgaFZKOj0ZhAAvTp/T3Evg234eGb78To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nikolay Borisov <nik.borisov@suse.com>,
+	syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com,
+	syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Andrei Matei <andreimatei1@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/252] x86/CPU/AMD: Move the DIV0 bug detection to the Zen1 init function
-Date: Mon,  8 Apr 2024 14:55:59 +0200
-Message-ID: <20240408125308.501026151@linuxfoundation.org>
+Subject: [PATCH 6.8 043/273] bpf: Protect against int overflow for stack access size
+Date: Mon,  8 Apr 2024 14:55:18 +0200
+Message-ID: <20240408125310.626999629@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,62 +50,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Andrei Matei <andreimatei1@gmail.com>
 
-[ Upstream commit bfff3c6692ce64fa9d86eb829d18229c307a0855 ]
+[ Upstream commit ecc6a2101840177e57c925c102d2d29f260d37c8 ]
 
-No functional changes.
+This patch re-introduces protection against the size of access to stack
+memory being negative; the access size can appear negative as a result
+of overflowing its signed int representation. This should not actually
+happen, as there are other protections along the way, but we should
+protect against it anyway. One code path was missing such protections
+(fixed in the previous patch in the series), causing out-of-bounds array
+accesses in check_stack_range_initialized(). This patch causes the
+verification of a program with such a non-sensical access size to fail.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: http://lore.kernel.org/r/20231120104152.13740-9-bp@alien8.de
-Stable-dep-of: c7b2edd8377b ("perf/x86/amd/core: Update and fix stalled-cycles-* events for Zen 2 and later")
+This check used to exist in a more indirect way, but was inadvertendly
+removed in a833a17aeac7.
+
+Fixes: a833a17aeac7 ("bpf: Fix verification of indirect var-off stack access")
+Reported-by: syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com
+Reported-by: syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/CAADnVQLORV5PT0iTAhRER+iLBTkByCYNBYyvBSgjN1T31K+gOw@mail.gmail.com/
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Link: https://lore.kernel.org/r/20240327024245.318299-3-andreimatei1@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index d8a0dc01a7db2..f4373530c7de0 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -70,10 +70,6 @@ static const int amd_erratum_383[] =
- static const int amd_erratum_1054[] =
- 	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x17, 0, 0, 0x2f, 0xf));
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ddea9567f7559..19e575e6b7fe0 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6618,6 +6618,11 @@ static int check_stack_access_within_bounds(
+ 	err = check_stack_slot_within_bounds(env, min_off, state, type);
+ 	if (!err && max_off > 0)
+ 		err = -EINVAL; /* out of stack access into non-negative offsets */
++	if (!err && access_size < 0)
++		/* access_size should not be negative (or overflow an int); others checks
++		 * along the way should have prevented such an access.
++		 */
++		err = -EFAULT; /* invalid negative access size; integer overflow? */
  
--static const int amd_div0[] =
--	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x17, 0x00, 0x0, 0x2f, 0xf),
--			   AMD_MODEL_RANGE(0x17, 0x50, 0x0, 0x5f, 0xf));
--
- static const int amd_erratum_1485[] =
- 	AMD_LEGACY_ERRATUM(AMD_MODEL_RANGE(0x19, 0x10, 0x0, 0x1f, 0xf),
- 			   AMD_MODEL_RANGE(0x19, 0x60, 0x0, 0xaf, 0xf));
-@@ -1043,6 +1039,9 @@ static void init_amd_zen(struct cpuinfo_x86 *c)
- 		if (c->x86 == 0x19 && !cpu_has(c, X86_FEATURE_BTC_NO))
- 			set_cpu_cap(c, X86_FEATURE_BTC_NO);
- 	}
-+
-+	pr_notice_once("AMD Zen1 DIV0 bug detected. Disable SMT for full protection.\n");
-+	setup_force_cpu_bug(X86_BUG_DIV0);
- }
- 
- static bool cpu_has_zenbleed_microcode(void)
-@@ -1211,11 +1210,6 @@ static void init_amd(struct cpuinfo_x86 *c)
- 	    cpu_has(c, X86_FEATURE_AUTOIBRS))
- 		WARN_ON_ONCE(msr_set_bit(MSR_EFER, _EFER_AUTOIBRS));
- 
--	if (cpu_has_amd_erratum(c, amd_div0)) {
--		pr_notice_once("AMD Zen1 DIV0 bug detected. Disable SMT for full protection.\n");
--		setup_force_cpu_bug(X86_BUG_DIV0);
--	}
--
- 	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) &&
- 	     cpu_has_amd_erratum(c, amd_erratum_1485))
- 		msr_set_bit(MSR_ZEN4_BP_CFG, MSR_ZEN4_BP_CFG_SHARED_BTB_FIX_BIT);
+ 	if (err) {
+ 		if (tnum_is_const(reg->var_off)) {
 -- 
 2.43.0
 
