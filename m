@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D548B7C080;
-	Mon,  8 Apr 2024 13:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1777C080;
+	Mon,  8 Apr 2024 13:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582182; cv=none; b=tzP/uKGAGx0zW8ypRi4x59o7wPns9d04Uk6ivx8hGeRuffegaXK0wyS4/RGwgRSMhItHJLkoO5rqz3rNEG5rUCDd3nlhgJvFnXimBQYwVkiQjXbT34pCvAQMBGD/8yupSOFTuIA1ZuHVIjXl9ST0ZqTqzAi1JnhS6d00rWGdaMs=
+	t=1712582186; cv=none; b=qmrY4SJsXiagImMJT1IOS1Q4cK0eA1va0voGaK2qbIfYvlWgQ/tcKzsyPSPZ7Iozo/8c1lFGt5L96TYyn+b7StWW7/TBuWJwnM9a9UFOJ+EkARHCPrp1Uawqhunrc4rDcfidJ/D/if4ZHx3PT374r4ptGPYooegYMyjr4dlx4YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582182; c=relaxed/simple;
-	bh=L4p8N32dkw3ikXBZIGVDKjn52DioWltro1h7fASP1IE=;
+	s=arc-20240116; t=1712582186; c=relaxed/simple;
+	bh=k3gdoISJAI+RLBPgcvpYZej4ViHGLFofaQlqoisOeZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RwT++f2aAWoCtHHbvhr5yjADjeckzbLIUcAmn4aWO+edH9zxqW+P5qfa6Iq02iGVPimNDN4XTmCVQACddkx0r7VIOlRWRziT18nSMCGvkPIE9H4+qStwoepuHL6b4uSuznTDMfag1Ldx94RRT2BW1tP1AqRKxYdne5IPykb5JtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKtM568G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UVDKWO9mOGqZ9y5NryccUP5y6KcDnYwzTk7kBEF1o+OEQlI+OyvWjhJbmZ69QEgpTuawyjQpAStGMjD3reiH9lZ0GuiSkUxAZpoOTzzgQiLleiSH3ZNTK+iHnV2ZV0Zthr5MqD1Zk4VHPbOXIbZJurpq4Bow2/MfLf5Kk9WwDRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwewdhJa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKtM568G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F3C433C7;
-	Mon,  8 Apr 2024 13:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwewdhJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B391C433C7;
+	Mon,  8 Apr 2024 13:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582182;
-	bh=L4p8N32dkw3ikXBZIGVDKjn52DioWltro1h7fASP1IE=;
+	s=korg; t=1712582185;
+	bh=k3gdoISJAI+RLBPgcvpYZej4ViHGLFofaQlqoisOeZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKtM568G7Eh1F8qK2Y5hN86tCsP+E+b0XRf+CN0tx+UAKm789vL2hQ0ObKoOh2rnI
-	 vwT/HUcCqSl+nAmr0uVDVTuG1zbmOa/6NRNVzdzLpGnVpQ6Z3hggB4RPR81aHVRMiW
-	 SvZ3T16j8eTGyFIdjcmLSgd7f8z1xDz7sGTZ8hLs=
+	b=qwewdhJay1e8ff6f3G5KbAHfAl3xtSBVLTGm2SQTAvqQh/bkqP5SotZUGmOPpewZq
+	 kvCmUlwf22HpChemoeKzzRRZvPl82QK0+3/bJ7vwIkl6jHAhH9xMMq9TiViHiXskfM
+	 vtJDLT9ZvkwEgncOkNyGDWi8bKXrT2fSdxQ4y2Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.6 070/252] RISC-V: KVM: Fix APLIC in_clrip[x] read emulation
-Date: Mon,  8 Apr 2024 14:56:09 +0200
-Message-ID: <20240408125308.807060879@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 053/273] drm/i915: Stop doing double audio enable/disable on SDVO and g4x+ DP
+Date: Mon,  8 Apr 2024 14:55:28 +0200
+Message-ID: <20240408125310.945918290@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +49,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 8e936e98718f005c986be0bfa1ee6b355acf96be upstream.
+[ Upstream commit f378ab7870046704fb92e64d50a67dda2cae8420 ]
 
-The reads to APLIC in_clrip[x] registers returns rectified input values
-of the interrupt sources.
+Looks like I misplaced a few hunks when I moved the audio
+enable/disable out from the encoder enable/disable hooks.
+So we are now doing a double audio enable/disable on SDVO
+and g4x+ DP. Probably harmless as doing it twice shouldn't
+really change anything, but let's do it just once, as intended.
 
-A rectified input value of an interrupt source is defined by the section
-"4.5.2 Source configurations (sourcecfg[1]–sourcecfg[1023])" of the
-RISC-V AIA specification as:
-
-    rectified input value = (incoming wire value) XOR (source is inverted)
-
-Update the riscv_aplic_input() implementation to match the above.
-
-Cc: stable@vger.kernel.org
-Fixes: 74967aa208e2 ("RISC-V: KVM: Add in-kernel emulation of AIA APLIC")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20240321085041.1955293-3-apatel@ventanamicro.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cff742cc6851 ("drm/i915: Hoist the encoder->audio_{enable,disable}() calls higher up")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240226193251.29619-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 315bd0a0825776d6c66d474bf572db64fa019ad8)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_aplic.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/g4x_dp.c     | 2 --
+ drivers/gpu/drm/i915/display/intel_sdvo.c | 4 ----
+ 2 files changed, 6 deletions(-)
 
-diff --git a/arch/riscv/kvm/aia_aplic.c b/arch/riscv/kvm/aia_aplic.c
-index 5e842b92dc46..b467ba5ed910 100644
---- a/arch/riscv/kvm/aia_aplic.c
-+++ b/arch/riscv/kvm/aia_aplic.c
-@@ -197,16 +197,31 @@ static void aplic_write_enabled(struct aplic *aplic, u32 irq, bool enabled)
- 
- static bool aplic_read_input(struct aplic *aplic, u32 irq)
+diff --git a/drivers/gpu/drm/i915/display/g4x_dp.c b/drivers/gpu/drm/i915/display/g4x_dp.c
+index dfe0b07a122d1..06ec04e667e32 100644
+--- a/drivers/gpu/drm/i915/display/g4x_dp.c
++++ b/drivers/gpu/drm/i915/display/g4x_dp.c
+@@ -717,7 +717,6 @@ static void g4x_enable_dp(struct intel_atomic_state *state,
  {
--	bool ret;
--	unsigned long flags;
-+	u32 sourcecfg, sm, raw_input, irq_inverted;
- 	struct aplic_irq *irqd;
-+	unsigned long flags;
-+	bool ret = false;
+ 	intel_enable_dp(state, encoder, pipe_config, conn_state);
+ 	intel_edp_backlight_on(pipe_config, conn_state);
+-	encoder->audio_enable(encoder, pipe_config, conn_state);
+ }
  
- 	if (!irq || aplic->nr_irqs <= irq)
- 		return false;
- 	irqd = &aplic->irqs[irq];
+ static void vlv_enable_dp(struct intel_atomic_state *state,
+@@ -726,7 +725,6 @@ static void vlv_enable_dp(struct intel_atomic_state *state,
+ 			  const struct drm_connector_state *conn_state)
+ {
+ 	intel_edp_backlight_on(pipe_config, conn_state);
+-	encoder->audio_enable(encoder, pipe_config, conn_state);
+ }
  
- 	raw_spin_lock_irqsave(&irqd->lock, flags);
--	ret = (irqd->state & APLIC_IRQ_STATE_INPUT) ? true : false;
-+
-+	sourcecfg = irqd->sourcecfg;
-+	if (sourcecfg & APLIC_SOURCECFG_D)
-+		goto skip;
-+
-+	sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-+	if (sm == APLIC_SOURCECFG_SM_INACTIVE)
-+		goto skip;
-+
-+	raw_input = (irqd->state & APLIC_IRQ_STATE_INPUT) ? 1 : 0;
-+	irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
-+			sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-+	ret = !!(raw_input ^ irq_inverted);
-+
-+skip:
- 	raw_spin_unlock_irqrestore(&irqd->lock, flags);
+ static void g4x_pre_enable_dp(struct intel_atomic_state *state,
+diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+index 2915d7afe5ccc..cc978ee6d1309 100644
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -1830,8 +1830,6 @@ static void intel_disable_sdvo(struct intel_atomic_state *state,
+ 	struct intel_crtc *crtc = to_intel_crtc(old_crtc_state->uapi.crtc);
+ 	u32 temp;
  
- 	return ret;
+-	encoder->audio_disable(encoder, old_crtc_state, conn_state);
+-
+ 	intel_sdvo_set_active_outputs(intel_sdvo, 0);
+ 	if (0)
+ 		intel_sdvo_set_encoder_power_state(intel_sdvo,
+@@ -1923,8 +1921,6 @@ static void intel_enable_sdvo(struct intel_atomic_state *state,
+ 		intel_sdvo_set_encoder_power_state(intel_sdvo,
+ 						   DRM_MODE_DPMS_ON);
+ 	intel_sdvo_set_active_outputs(intel_sdvo, intel_sdvo_connector->output_flag);
+-
+-	encoder->audio_enable(encoder, pipe_config, conn_state);
+ }
+ 
+ static enum drm_mode_status
 -- 
-2.44.0
+2.43.0
 
 
 
