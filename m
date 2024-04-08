@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF9811E8;
-	Mon,  8 Apr 2024 13:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89ADE6CDA9;
+	Mon,  8 Apr 2024 13:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582629; cv=none; b=WebIdDl3Lr5x7xi830AvDrgyzzGntbmTS1pfE1fq4LGPu9RVKlaj4HluqoO0YoVrCoXKmwiGBc+YIy3La0Ambjn0BkmOkyD7O/uVCCZwdlYGLBxaOahZlz/QQ2/V4cVzWw35Sod18q6fi+LlGNQMVBxGKIb7L38z3E1lTUeKmkE=
+	t=1712582632; cv=none; b=gofwtluVhsRMfKAO8w6dTpkSGaV7RAlShJe7brnpNdFE/4yVrgwG3Rpz5bmgqfnQaRPwg3a85icm/7QSAnnJ1hT6oKG9fYSvoy7/NmdPQY7oU6VrB8o4HyqA51xjHQbA0rqRlWqzbb4OEcpfEfpn0W6La7eO01SCcy2ALLbT9i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582629; c=relaxed/simple;
-	bh=URsG9oxHMq3SFHwI5elFPm7kcguJbJEq+m3tEGzic3M=;
+	s=arc-20240116; t=1712582632; c=relaxed/simple;
+	bh=rKLPAaK3kW41F2/Mbgoe73+5rH9LInkzF1CXuG8tjj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgqxozsim0LA9EO+bciT5K3fEPBvEbuDHj8GjRmsntsy194KTV7EV044z15ysyiXcm2MM2n0RCwbnquts8euCKSn0hLerh60yFfxwlIPy0DV3Ex3xEkDeAYGb2QnUzzuuH38GV2SemZg18OXLrOEXYXGQp7FObOwhCHSn33A7eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hascb9EJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSBDVIm07chbq5WD3SgAY1QbhEWR/9LBBCF2n+DGiT+4IeTZ0rBq2fmCm60VZi8wcrxHD1jMNtCzrwF/heEwOkUAY/3SIXQ6VHRXh25O9xLJfNqNE7ZDURqQW++WpEQaQOns2leD3c0XJ2EMlnPqeN7oA8azBUDcbqZwOGt3f04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gwiz/1FL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hascb9EJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C14AC43390;
-	Mon,  8 Apr 2024 13:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gwiz/1FL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E69C433F1;
+	Mon,  8 Apr 2024 13:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582629;
-	bh=URsG9oxHMq3SFHwI5elFPm7kcguJbJEq+m3tEGzic3M=;
+	s=korg; t=1712582632;
+	bh=rKLPAaK3kW41F2/Mbgoe73+5rH9LInkzF1CXuG8tjj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hascb9EJvEeZ3vcF/hRO8++3pHJhCD9O/Va/u3EDKabK5bpUFejq4xbvOx8D9jpf4
-	 ki1JeU+o0YEAsJjD60obvEqtNzPH0jZtXZLGP+oI6cpzsSn+byoEZ4vyUg0EDqyqvy
-	 pKIvBxvOlIh6hSvbP3euPQ1qGaFv/Tch3tOlyrms=
+	b=Gwiz/1FLoIlaxtFs/7AmeJoTbV5hb6L9YvzbM5lgZEgvV91EWMhvhd1Y7IIGWCuwp
+	 JjiQvmJB1VYoPOmXwHs3kG0X1Uhe804wZZMPof+O+9OXi0nqfvYaGK7hUoRlnRRvvD
+	 hJIByDQZ0YkV7UbqAEyYUB14w/DwTrUrCG4nBDJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Elena Reshetova <elena.reshetova@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 121/138] x86/coco: Require seeding RNG with RDRAND on CoCo systems
-Date: Mon,  8 Apr 2024 14:58:55 +0200
-Message-ID: <20240408125259.996156439@linuxfoundation.org>
+	Duanqiang Wen <duanqiangwen@net-swift.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 108/252] net: txgbe: fix i2c dev name cannot match clkdev
+Date: Mon,  8 Apr 2024 14:56:47 +0200
+Message-ID: <20240408125309.994317719@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,157 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Duanqiang Wen <duanqiangwen@net-swift.com>
 
-commit 99485c4c026f024e7cb82da84c7951dbe3deb584 upstream.
+commit c644920ce9220d83e070f575a4df711741c07f07 upstream.
 
-There are few uses of CoCo that don't rely on working cryptography and
-hence a working RNG. Unfortunately, the CoCo threat model means that the
-VM host cannot be trusted and may actively work against guests to
-extract secrets or manipulate computation. Since a malicious host can
-modify or observe nearly all inputs to guests, the only remaining source
-of entropy for CoCo guests is RDRAND.
+txgbe clkdev shortened clk_name, so i2c_dev info_name
+also need to shorten. Otherwise, i2c_dev cannot initialize
+clock.
 
-If RDRAND is broken -- due to CPU hardware fault -- the RNG as a whole
-is meant to gracefully continue on gathering entropy from other sources,
-but since there aren't other sources on CoCo, this is catastrophic.
-This is mostly a concern at boot time when initially seeding the RNG, as
-after that the consequences of a broken RDRAND are much more
-theoretical.
-
-So, try at boot to seed the RNG using 256 bits of RDRAND output. If this
-fails, panic(). This will also trigger if the system is booted without
-RDRAND, as RDRAND is essential for a safe CoCo boot.
-
-Add this deliberately to be "just a CoCo x86 driver feature" and not
-part of the RNG itself. Many device drivers and platforms have some
-desire to contribute something to the RNG, and add_device_randomness()
-is specifically meant for this purpose.
-
-Any driver can call it with seed data of any quality, or even garbage
-quality, and it can only possibly make the quality of the RNG better or
-have no effect, but can never make it worse.
-
-Rather than trying to build something into the core of the RNG, consider
-the particular CoCo issue just a CoCo issue, and therefore separate it
-all out into driver (well, arch/platform) code.
-
-  [ bp: Massage commit message. ]
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Elena Reshetova <elena.reshetova@intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240326160735.73531-1-Jason@zx2c4.com
+Fixes: e30cef001da2 ("net: txgbe: fix clk_name exceed MAX_DEV_ID limits")
+Signed-off-by: Duanqiang Wen <duanqiangwen@net-swift.com>
+Link: https://lore.kernel.org/r/20240402021843.126192-1-duanqiangwen@net-swift.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/core.c        |   41 +++++++++++++++++++++++++++++++++++++++++
- arch/x86/include/asm/coco.h |    2 ++
- arch/x86/kernel/setup.c     |    2 ++
- 3 files changed, 45 insertions(+)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/x86/coco/core.c
-+++ b/arch/x86/coco/core.c
-@@ -3,13 +3,17 @@
-  * Confidential Computing Platform Capability checks
-  *
-  * Copyright (C) 2021 Advanced Micro Devices, Inc.
-+ * Copyright (C) 2024 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  *
-  * Author: Tom Lendacky <thomas.lendacky@amd.com>
-  */
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
+@@ -20,6 +20,8 @@
+ #include "txgbe_phy.h"
+ #include "txgbe_hw.h"
  
- #include <linux/export.h>
- #include <linux/cc_platform.h>
-+#include <linux/string.h>
-+#include <linux/random.h>
- 
-+#include <asm/archrandom.h>
- #include <asm/coco.h>
- #include <asm/processor.h>
- 
-@@ -128,3 +132,40 @@ u64 cc_mkdec(u64 val)
- 	}
- }
- EXPORT_SYMBOL_GPL(cc_mkdec);
++#define TXGBE_I2C_CLK_DEV_NAME "i2c_dw"
 +
-+__init void cc_random_init(void)
-+{
-+	/*
-+	 * The seed is 32 bytes (in units of longs), which is 256 bits, which
-+	 * is the security level that the RNG is targeting.
-+	 */
-+	unsigned long rng_seed[32 / sizeof(long)];
-+	size_t i, longs;
-+
-+	if (!cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
-+		return;
-+
-+	/*
-+	 * Since the CoCo threat model includes the host, the only reliable
-+	 * source of entropy that can be neither observed nor manipulated is
-+	 * RDRAND. Usually, RDRAND failure is considered tolerable, but since
-+	 * CoCo guests have no other unobservable source of entropy, it's
-+	 * important to at least ensure the RNG gets some initial random seeds.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(rng_seed); i += longs) {
-+		longs = arch_get_random_longs(&rng_seed[i], ARRAY_SIZE(rng_seed) - i);
-+
-+		/*
-+		 * A zero return value means that the guest doesn't have RDRAND
-+		 * or the CPU is physically broken, and in both cases that
-+		 * means most crypto inside of the CoCo instance will be
-+		 * broken, defeating the purpose of CoCo in the first place. So
-+		 * just panic here because it's absolutely unsafe to continue
-+		 * executing.
-+		 */
-+		if (longs == 0)
-+			panic("RDRAND is defective.");
-+	}
-+	add_device_randomness(rng_seed, sizeof(rng_seed));
-+	memzero_explicit(rng_seed, sizeof(rng_seed));
-+}
---- a/arch/x86/include/asm/coco.h
-+++ b/arch/x86/include/asm/coco.h
-@@ -23,6 +23,7 @@ static inline void cc_set_mask(u64 mask)
- 
- u64 cc_mkenc(u64 val);
- u64 cc_mkdec(u64 val);
-+void cc_random_init(void);
- #else
- static inline u64 cc_mkenc(u64 val)
+ static int txgbe_swnodes_register(struct txgbe *txgbe)
  {
-@@ -33,6 +34,7 @@ static inline u64 cc_mkdec(u64 val)
- {
- 	return val;
- }
-+static inline void cc_random_init(void) { }
- #endif
+ 	struct txgbe_nodes *nodes = &txgbe->nodes;
+@@ -551,8 +553,8 @@ static int txgbe_clock_register(struct t
+ 	char clk_name[32];
+ 	struct clk *clk;
  
- #endif /* _ASM_X86_COCO_H */
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -33,6 +33,7 @@
- #include <asm/numa.h>
- #include <asm/bios_ebda.h>
- #include <asm/bugs.h>
-+#include <asm/coco.h>
- #include <asm/cpu.h>
- #include <asm/efi.h>
- #include <asm/gart.h>
-@@ -1132,6 +1133,7 @@ void __init setup_arch(char **cmdline_p)
- 	 * memory size.
- 	 */
- 	sev_setup_arch();
-+	cc_random_init();
+-	snprintf(clk_name, sizeof(clk_name), "i2c_dw.%d",
+-		 pci_dev_id(pdev));
++	snprintf(clk_name, sizeof(clk_name), "%s.%d",
++		 TXGBE_I2C_CLK_DEV_NAME, pci_dev_id(pdev));
  
- 	efi_fake_memmap();
- 	efi_find_mirror();
+ 	clk = clk_register_fixed_rate(NULL, clk_name, NULL, 0, 156250000);
+ 	if (IS_ERR(clk))
+@@ -614,7 +616,7 @@ static int txgbe_i2c_register(struct txg
+ 
+ 	info.parent = &pdev->dev;
+ 	info.fwnode = software_node_fwnode(txgbe->nodes.group[SWNODE_I2C]);
+-	info.name = "i2c_designware";
++	info.name = TXGBE_I2C_CLK_DEV_NAME;
+ 	info.id = pci_dev_id(pdev);
+ 
+ 	info.res = &DEFINE_RES_IRQ(pdev->irq);
 
 
