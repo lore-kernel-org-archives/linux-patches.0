@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0912DF73;
-	Mon,  8 Apr 2024 13:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EFC2DF73;
+	Mon,  8 Apr 2024 13:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581703; cv=none; b=CEgqYsHR1OXROsoUyK3vwR+fjvt4txZv3fotjLTGrC7WPWDH8qqCc2ZctCr/VWUmkt9rMmAe8ZvtIilsosg2+8MpWpiI5IXlg6B2AUq9Kf/BOBWOPet7p7j47Ya/OZHgSaUL1M4b83dVJer5D/nGUw2jMyrCvbj/cVLjGYib6TI=
+	t=1712581706; cv=none; b=gDV83lxT6C0vvZJuSCalDDnD+5BsCTpnwN0JxM9Ow7ihvWvybENyC2PX4OUgWMZOLWWJT8p3Q7xibBagKJ8OOLreaxZUS44kfdZYr3ts9KFAVQ4O11WPjJYmxzo1n711V50In+djmIeSwYu9E/eaCkMoSTXHwoVYYgfmnI8mrd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581703; c=relaxed/simple;
-	bh=L1teBPjZXxBiihp4GgERmW1qkgreN5gAQmRlvfZH2Dk=;
+	s=arc-20240116; t=1712581706; c=relaxed/simple;
+	bh=m4eIIIWBIfyKLKQzvdjiArZpHbMb5TM51bfPRBJtQ7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zi8DWu5mKeHYT1BaW7lPlUYsmx16BcjXYP+oBjikD1smOn3IbtYfAbYhrxTjrjHXuklA44dUJwS3e6fhFRrfAALJJEQfvDoOpJfZ48L8GFGyfkExXuu36COY8eVjZ+gpgkfwNLCHT5JvdxNHgtQdiu69kHP/P/Kylfvk0DVTza0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x377Kn2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFcgtbPOxhdHgagxA8gtvvICtRBxGL1a7XCeTnFXrs2tgdJ80Z+aUQiy/aC/jAYmkm/nL9IVHElBGYDCqOwxwM0cKonR9xbZbgGjC2lNQGeJBuPw4JoD6P8Xw33lOt1sTjLwWUcbVXH6GvzqvbQATc2CKX0qowYSYixnEIL/Ij8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kf8mpCgk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x377Kn2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E5BC43390;
-	Mon,  8 Apr 2024 13:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kf8mpCgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1118CC433C7;
+	Mon,  8 Apr 2024 13:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581703;
-	bh=L1teBPjZXxBiihp4GgERmW1qkgreN5gAQmRlvfZH2Dk=;
+	s=korg; t=1712581706;
+	bh=m4eIIIWBIfyKLKQzvdjiArZpHbMb5TM51bfPRBJtQ7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x377Kn2vgXLjT8iby2KEJ/aUk1nk9xQ3q7O9BLXiCo5Hz7JQAVneKyL/j3xNZ+Pga
-	 dkEtgY42TNasjub1NIEeT2aLznyschUbE6FmYetc5aqPDuwb5LZwfY5JBIwFtGvZe/
-	 Pb1GWmPjL3sIoWwJRwrzCEE0pZhuaJcxqsHQdrpU=
+	b=kf8mpCgkvAFJ736KdxvIkLuh9l+le0OBi7Cr8xmu/P61cnsT6jaC3N20dTkzRKTK5
+	 wqfOMhqjpgpm4rlXCKd9b+ll51ttICHPI4yF1BEvtU3+jBqTSzDqYTUGL7V8S1wWW1
+	 x15aSLmv3M7rgHECDGBwnZMN4ncygXFXP/cesVZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com,
-	syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Andrei Matei <andreimatei1@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Stable@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/252] bpf: Protect against int overflow for stack access size
-Date: Mon,  8 Apr 2024 14:55:32 +0200
-Message-ID: <20240408125307.672496912@linuxfoundation.org>
+Subject: [PATCH 5.15 076/690] slimbus: core: Remove usage of the deprecated ida_simple_xx() API
+Date: Mon,  8 Apr 2024 14:49:02 +0200
+Message-ID: <20240408125402.263746090@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,55 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Matei <andreimatei1@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit ecc6a2101840177e57c925c102d2d29f260d37c8 ]
+[ Upstream commit 89ffa4cccec54467446f141a79b9e36893079fb8 ]
 
-This patch re-introduces protection against the size of access to stack
-memory being negative; the access size can appear negative as a result
-of overflowing its signed int representation. This should not actually
-happen, as there are other protections along the way, but we should
-protect against it anyway. One code path was missing such protections
-(fixed in the previous patch in the series), causing out-of-bounds array
-accesses in check_stack_range_initialized(). This patch causes the
-verification of a program with such a non-sensical access size to fail.
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-This check used to exist in a more indirect way, but was inadvertendly
-removed in a833a17aeac7.
+Note that the upper limit of ida_simple_get() is exclusive, but the one of
+ida_alloc_range() is inclusive. So change this change allows one more
+device. Previously address 0xFE was never used.
 
-Fixes: a833a17aeac7 ("bpf: Fix verification of indirect var-off stack access")
-Reported-by: syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com
-Reported-by: syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/CAADnVQLORV5PT0iTAhRER+iLBTkByCYNBYyvBSgjN1T31K+gOw@mail.gmail.com/
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
-Link: https://lore.kernel.org/r/20240327024245.318299-3-andreimatei1@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 46a2bb5a7f7e ("slimbus: core: Add slim controllers support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240224114137.85781-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/slimbus/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 396c4c66932f2..c9fc734989c68 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6637,6 +6637,11 @@ static int check_stack_access_within_bounds(
- 	err = check_stack_slot_within_bounds(env, min_off, state, type);
- 	if (!err && max_off > 0)
- 		err = -EINVAL; /* out of stack access into non-negative offsets */
-+	if (!err && access_size < 0)
-+		/* access_size should not be negative (or overflow an int); others checks
-+		 * along the way should have prevented such an access.
-+		 */
-+		err = -EFAULT; /* invalid negative access size; integer overflow? */
+diff --git a/drivers/slimbus/core.c b/drivers/slimbus/core.c
+index 78480e332ab8f..d1e3de844812e 100644
+--- a/drivers/slimbus/core.c
++++ b/drivers/slimbus/core.c
+@@ -436,8 +436,8 @@ static int slim_device_alloc_laddr(struct slim_device *sbdev,
+ 		if (ret < 0)
+ 			goto err;
+ 	} else if (report_present) {
+-		ret = ida_simple_get(&ctrl->laddr_ida,
+-				     0, SLIM_LA_MANAGER - 1, GFP_KERNEL);
++		ret = ida_alloc_max(&ctrl->laddr_ida,
++				    SLIM_LA_MANAGER - 1, GFP_KERNEL);
+ 		if (ret < 0)
+ 			goto err;
  
- 	if (err) {
- 		if (tnum_is_const(reg->var_off)) {
 -- 
 2.43.0
 
