@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADD27F474;
-	Mon,  8 Apr 2024 14:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128D47F49C;
+	Mon,  8 Apr 2024 14:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585084; cv=none; b=Ut0xYl+23YZKHDzJX05U25M/vWvw/W/Z2TuOy9aZTAutbOrrtMKmaJF2TxJO3P67SJp4tiqhihmpgffxxPiPD9ig4DQNhehP6j/ME41d2E3YgE8ITKBZMwiDGSLCmIJmAIhxiOjVk8pQkah+q37NnAOPL5fD65nrvNo2J76Uyfs=
+	t=1712585087; cv=none; b=lUnYJFBQdpEuLuSjDebR0w2hwj/5jAAIWmDiDnywkKhqbcfQiYVVez6VaXt7hxc9usSM4k9zMOBxyeN4/VcK25ODJ1UgThwfqjPe2aX/2YNH+jej8Rg7WXUVlCIAj2Pb+ltCFX6KdXipzTC/GbSSOnAKsotqhKtNkhR/bokBGXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585084; c=relaxed/simple;
-	bh=OjQ/tsNgPBWm67L2u9zaWTXe0UFFWh0GSVWTR51jPtg=;
+	s=arc-20240116; t=1712585087; c=relaxed/simple;
+	bh=vDIzNt0BslmmFiQPTzlOHufrQJJk/MiqAZY35oQMS6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aasBLe/a7fET7iJb9KIiiSGBeYSr3cnfOLyR7rTHgcWh9qhOMHI+TG/SOFXAaxttQWcPaWHig2g0ktUQZEH7QG9oeHzh26gM9DnqLfjTg6v+b2oI8cC6sl4acekM6LBHc0w+RjNl/ck0EzBbc46REFUW6kf9KQh7MBAa69oi9vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI2WB9w9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWvN2gfAkTyYerymmLq6ul1dIEj0bSySdGd01m6+CqntOboMlLAUqVhFiRlS20nSXlG67K+dEz1J6thYKeJ/3UnwKl80UwWwp4lEWAwmxGgiMEyz89qi+e17araLWf/r1WvE5/6z9JKEZwI6JriXjenspGIna+SH5nwCYBUM7oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTfPZCKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI2WB9w9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E669C433F1;
-	Mon,  8 Apr 2024 14:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTfPZCKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3F2C433F1;
+	Mon,  8 Apr 2024 14:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585084;
-	bh=OjQ/tsNgPBWm67L2u9zaWTXe0UFFWh0GSVWTR51jPtg=;
+	s=korg; t=1712585086;
+	bh=vDIzNt0BslmmFiQPTzlOHufrQJJk/MiqAZY35oQMS6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BI2WB9w9Mp3BpJrRnMKOsbv17l6IGmeP8Hgp45mOOMe5NWAjeihzbHJtGor7f7tGc
-	 V/PmcKNZKPqmoBczj+escu1cvUHxLeKmc/EPoD8pduHUfgXGA5aeQwI2bzrZoX1hP8
-	 pq1p4ZNRn3GrsoCrE4D/+yLRHNaTZhPRBp1iDfLo=
+	b=PTfPZCKiYkCPqDlVrYp8Y3dJWLFkkzoTADV7BLUyrLWpPZiQd81LgvyrjDpN81QJQ
+	 mLKCzsXlhfFzlltqFMjNkclz8vpP3Gbg/cUDZSLD8sq5JKr23Xnq72kFwa0ruEUk4p
+	 q8FoiiMe+24WoqqnqTc1cqitKRjpBWUGa7SxX3nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	stable <stable@kernel.org>,
-	Sean Anderson <sean.anderson@seco.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 658/690] Revert "usb: phy: generic: Get the vbus supply"
-Date: Mon,  8 Apr 2024 14:58:44 +0200
-Message-ID: <20240408125423.506459406@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 659/690] usb: typec: ucsi: Check for notifications after init
+Date: Mon,  8 Apr 2024 14:58:45 +0200
+Message-ID: <20240408125423.548139042@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-[ Upstream commit fdada0db0b2ae2addef4ccafe50937874dbeeebe ]
+[ Upstream commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 ]
 
-This reverts commit 75fd6485cccef269ac9eb3b71cf56753341195ef.
-This patch was applied twice by accident, causing probe failures.
-Revert the accident.
+The completion notification for the final SET_NOTIFICATION_ENABLE
+command during initialization can include a connector change
+notification.  However, at the time this completion notification is
+processed, the ucsi struct is not ready to handle this notification.
+As a result the notification is ignored and the controller
+never sends an interrupt again.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Fixes: 75fd6485ccce ("usb: phy: generic: Get the vbus supply")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20240314092628.1869414-1-alexander.stein@ew.tq-group.com
+Re-check CCI for a pending connector state change after
+initialization is complete. Adjust the corresponding debug
+message accordingly.
+
+Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-generic.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/phy/phy-generic.c b/drivers/usb/phy/phy-generic.c
-index 34b9f81401871..661a229c105dd 100644
---- a/drivers/usb/phy/phy-generic.c
-+++ b/drivers/usb/phy/phy-generic.c
-@@ -268,13 +268,6 @@ int usb_phy_gen_create_phy(struct device *dev, struct usb_phy_generic *nop)
- 			return -EPROBE_DEFER;
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 985e512c0e659..df7c42df9ea0d 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -854,7 +854,7 @@ void ucsi_connector_change(struct ucsi *ucsi, u8 num)
+ 	struct ucsi_connector *con = &ucsi->connector[num - 1];
+ 
+ 	if (!(ucsi->ntfy & UCSI_ENABLE_NTFY_CONNECTOR_CHANGE)) {
+-		dev_dbg(ucsi->dev, "Bogus connector change event\n");
++		dev_dbg(ucsi->dev, "Early connector change event\n");
+ 		return;
  	}
  
--	nop->vbus_draw = devm_regulator_get_exclusive(dev, "vbus");
--	if (PTR_ERR(nop->vbus_draw) == -ENODEV)
--		nop->vbus_draw = NULL;
--	if (IS_ERR(nop->vbus_draw))
--		return dev_err_probe(dev, PTR_ERR(nop->vbus_draw),
--				     "could not get vbus regulator\n");
--
- 	nop->dev		= dev;
- 	nop->phy.dev		= nop->dev;
- 	nop->phy.label		= "nop-xceiv";
+@@ -1241,6 +1241,7 @@ static int ucsi_init(struct ucsi *ucsi)
+ {
+ 	struct ucsi_connector *con;
+ 	u64 command, ntfy;
++	u32 cci;
+ 	int ret;
+ 	int i;
+ 
+@@ -1292,6 +1293,13 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		goto err_unregister;
+ 
+ 	ucsi->ntfy = ntfy;
++
++	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
++	if (ret)
++		return ret;
++	if (UCSI_CCI_CONNECTOR(READ_ONCE(cci)))
++		ucsi_connector_change(ucsi, cci);
++
+ 	return 0;
+ 
+ err_unregister:
 -- 
 2.43.0
 
