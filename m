@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C497E118;
-	Mon,  8 Apr 2024 13:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29347E111;
+	Mon,  8 Apr 2024 13:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583461; cv=none; b=Wwnmy9nRuOIvlPcblqOLNb6o6KlaBdrXr2IqI+YUpKIuYpeul3hCz4XzyRfgr0M8U57U9e4jNZMPgMtZH2L0I9hhx+y4yKOX2XTc6abSOUMyuDkZEHu9EJWvX9WdNg5b3YejtCrcBqfTgPNyCCAg0okb2QTdejNgYwM4F6amyGw=
+	t=1712583464; cv=none; b=rUV1PdmFPkQQkYWRc+F2ec/gvwRrFQNH/bMv7Llh/rQ1HCodj2TuCVziUdgYJDOGB3QlT9iYDojvocdrfS7YuK083Re2PYsz6BEIyhGOIrmhf3uMePOfpmneO/tJQRx8J0BLxEHOKp+nNKa2BCbVnjYGtmDl7IdNIxFiEymcUac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583461; c=relaxed/simple;
-	bh=yAImMykiGDTPsiGej3zl6X0KPFLI7JyDw14SRu6jPLs=;
+	s=arc-20240116; t=1712583464; c=relaxed/simple;
+	bh=1i18xejKdyUni0ljU+IHQuId+CQyub2GKi/vAaJtAHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fugBs6niguMuDLlW6tXrMm1zbcua/CTacnPuyy8tObMjjKr2FD90oBpjrkmOEKTJREUAi+R0ilP9OBBHgBzkokq2k54Eer4x6DJZ4lVsWE7KAiVc2ZUooR5rSb8e7VLp6bjFNvlPCxfH4HoovPvDMPngYfrY7/7LF4lsnzb4sh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feJDF0wn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNlIP5G8Lcy/092eSQ5lqkde6f8PS7zU11GkvCaMNkP62xMyssec+IrD2dzzY5Bc+2XwVjISoLeFJWghaTLT7tEZJ7RcQJTb3ul+GhbFa2MlV83pKN0sWsdcIDDhcWQYogJiJNGyGh7kKJk1QWyZ8fY5jNIoBYSAeYGfzbhhACs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4EHCYET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feJDF0wn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D7FC433C7;
-	Mon,  8 Apr 2024 13:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4EHCYET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BEBC433F1;
+	Mon,  8 Apr 2024 13:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583460;
-	bh=yAImMykiGDTPsiGej3zl6X0KPFLI7JyDw14SRu6jPLs=;
+	s=korg; t=1712583463;
+	bh=1i18xejKdyUni0ljU+IHQuId+CQyub2GKi/vAaJtAHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feJDF0wnBg04i4CYo/9/o5BMQJW9NkVxIKU9pTRtQia4lVzkYCrusL+IpF8fF+PAq
-	 CjvkInh5dtV+Al4Pu6pn8AalBEByw5ysG9lplpHvFKM77EjVDevcp0LroG+CnUhW3J
-	 I6g5dG7Jwc7/eG0s0TlPLd+AS91p3g7Aej2qDrkE=
+	b=O4EHCYETbO71A8KHUqjG6ywRkp5dOyiXhnxjW9s1TyBTDqJm0t9t0ymPHZ0hgSDIU
+	 5TPbgZgXTWZXb9eatuXdFkeflxMEmw5EmyCyXpydK4ohAE3iB9WyUDKf0qApNSvqdj
+	 BysCqFa5HVdfCkUTKptEouqgZIJ06gvs4fCvod4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <andrea@rivosinc.com>,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Puranjay Mohan <puranjay12@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/252] riscv: Disable preemption when using patch_map()
-Date: Mon,  8 Apr 2024 14:58:17 +0200
-Message-ID: <20240408125312.797908310@linuxfoundation.org>
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 250/690] nfsd: improve stateid access bitmask documentation
+Date: Mon,  8 Apr 2024 14:51:56 +0200
+Message-ID: <20240408125408.664494430@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,81 +46,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit a370c2419e4680a27382d9231edcf739d5d74efc ]
+[ Upstream commit 3dcd1d8aab00c5d3a0a3725253c86440b1a0f5a7 ]
 
-patch_map() uses fixmap mappings to circumvent the non-writability of
-the kernel text mapping.
+The use of the bitmaps is confusing.  Add a cross-reference to make it
+easier to find the existing comment.  Add an updated reference with URL
+to make it quicker to look up.  And a bit more editorializing about the
+value of this.
 
-The __set_fixmap() function only flushes the current cpu tlb, it does
-not emit an IPI so we must make sure that while we use a fixmap mapping,
-the current task is not migrated on another cpu which could miss the
-newly introduced fixmap mapping.
-
-So in order to avoid any task migration, disable the preemption.
-
-Reported-by: Andrea Parri <andrea@rivosinc.com>
-Closes: https://lore.kernel.org/all/ZcS+GAaM25LXsBOl@andrea/
-Reported-by: Andy Chiu <andy.chiu@sifive.com>
-Closes: https://lore.kernel.org/linux-riscv/CABgGipUMz3Sffu-CkmeUB1dKVwVQ73+7=sgC45-m0AE9RCjOZg@mail.gmail.com/
-Fixes: cad539baa48f ("riscv: implement a memset like function for text")
-Fixes: 0ff7c3b33127 ("riscv: Use text_mutex instead of patch_lock")
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Acked-by: Puranjay Mohan <puranjay12@gmail.com>
-Link: https://lore.kernel.org/r/20240326203017.310422-3-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/riscv/kernel/patch.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfsd/nfs4state.c | 14 ++++++++++----
+ fs/nfsd/state.h     |  4 ++++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
-index 37e87fdcf6a00..30e12b310cab7 100644
---- a/arch/riscv/kernel/patch.c
-+++ b/arch/riscv/kernel/patch.c
-@@ -80,6 +80,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
- 	 */
- 	lockdep_assert_held(&text_mutex);
- 
-+	preempt_disable();
-+
- 	if (across_pages)
- 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
- 
-@@ -92,6 +94,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
- 	if (across_pages)
- 		patch_unmap(FIX_TEXT_POKE1);
- 
-+	preempt_enable();
-+
- 	return 0;
- }
- NOKPROBE_SYMBOL(__patch_insn_set);
-@@ -122,6 +126,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
- 	if (!riscv_patch_in_stop_machine)
- 		lockdep_assert_held(&text_mutex);
- 
-+	preempt_disable();
-+
- 	if (across_pages)
- 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
- 
-@@ -134,6 +140,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
- 	if (across_pages)
- 		patch_unmap(FIX_TEXT_POKE1);
- 
-+	preempt_enable();
-+
- 	return ret;
- }
- NOKPROBE_SYMBOL(__patch_insn_write);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index e14b38d6751d8..f7e2beded6d7f 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -360,11 +360,13 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops = {
+  * st_{access,deny}_bmap field of the stateid, in order to track not
+  * only what share bits are currently in force, but also what
+  * combinations of share bits previous opens have used.  This allows us
+- * to enforce the recommendation of rfc 3530 14.2.19 that the server
+- * return an error if the client attempt to downgrade to a combination
+- * of share bits not explicable by closing some of its previous opens.
++ * to enforce the recommendation in
++ * https://datatracker.ietf.org/doc/html/rfc7530#section-16.19.4 that
++ * the server return an error if the client attempt to downgrade to a
++ * combination of share bits not explicable by closing some of its
++ * previous opens.
+  *
+- * XXX: This enforcement is actually incomplete, since we don't keep
++ * This enforcement is arguably incomplete, since we don't keep
+  * track of access/deny bit combinations; so, e.g., we allow:
+  *
+  *	OPEN allow read, deny write
+@@ -372,6 +374,10 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops = {
+  *	DOWNGRADE allow read, deny none
+  *
+  * which we should reject.
++ *
++ * But you could also argue that our current code is already overkill,
++ * since it only exists to return NFS4ERR_INVAL on incorrect client
++ * behavior.
+  */
+ static unsigned int
+ bmap_to_share_mode(unsigned long bmap)
+diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
+index e73bdbb1634ab..6eb3c7157214b 100644
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -568,6 +568,10 @@ struct nfs4_ol_stateid {
+ 	struct list_head		st_locks;
+ 	struct nfs4_stateowner		*st_stateowner;
+ 	struct nfs4_clnt_odstate	*st_clnt_odstate;
++/*
++ * These bitmasks use 3 separate bits for READ, ALLOW, and BOTH; see the
++ * comment above bmap_to_share_mode() for explanation:
++ */
+ 	unsigned char			st_access_bmap;
+ 	unsigned char			st_deny_bmap;
+ 	struct nfs4_ol_stateid		*st_openstp;
 -- 
 2.43.0
 
