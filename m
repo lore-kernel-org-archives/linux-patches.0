@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C064D2DF73;
-	Mon,  8 Apr 2024 13:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0912DF73;
+	Mon,  8 Apr 2024 13:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581700; cv=none; b=qb3ay1BtDPZvnYoSoDH6xdTQqlNRUliPxrzx/m9YrSJaY/S5g/1t/XZhYqQX8Oo/ApGVFmr+kSq8qkak+TLLLlfqDH0VEnyJvusFGOTp8IXIB+lfupKK9dlQqhauGkicxqalzZp48CPmwlYKGpp9v1eC0/iGtZNjVXcXwla7zlE=
+	t=1712581703; cv=none; b=CEgqYsHR1OXROsoUyK3vwR+fjvt4txZv3fotjLTGrC7WPWDH8qqCc2ZctCr/VWUmkt9rMmAe8ZvtIilsosg2+8MpWpiI5IXlg6B2AUq9Kf/BOBWOPet7p7j47Ya/OZHgSaUL1M4b83dVJer5D/nGUw2jMyrCvbj/cVLjGYib6TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581700; c=relaxed/simple;
-	bh=sOCntd393LIs/gGnBT+c/J29lBHtmWTyrObYxRU4R6Y=;
+	s=arc-20240116; t=1712581703; c=relaxed/simple;
+	bh=L1teBPjZXxBiihp4GgERmW1qkgreN5gAQmRlvfZH2Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdLmN/Niayge5yorUnKqieDgtxHqoS6GHn+i13A8czywiQgUSWVigkCbQKpH30mTIBw+Q/FwcSwyGrhNVKWSeH2dmuepSbI8vkRmpHznfcW8HJEu5Acdm2kjwm4LfNRaiav0ohtQvCpPBBiA1d4zV4JwlGi2UrS9KMOeYZvb93I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J913nXrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zi8DWu5mKeHYT1BaW7lPlUYsmx16BcjXYP+oBjikD1smOn3IbtYfAbYhrxTjrjHXuklA44dUJwS3e6fhFRrfAALJJEQfvDoOpJfZ48L8GFGyfkExXuu36COY8eVjZ+gpgkfwNLCHT5JvdxNHgtQdiu69kHP/P/Kylfvk0DVTza0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x377Kn2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J913nXrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2E6C433C7;
-	Mon,  8 Apr 2024 13:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x377Kn2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E5BC43390;
+	Mon,  8 Apr 2024 13:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581700;
-	bh=sOCntd393LIs/gGnBT+c/J29lBHtmWTyrObYxRU4R6Y=;
+	s=korg; t=1712581703;
+	bh=L1teBPjZXxBiihp4GgERmW1qkgreN5gAQmRlvfZH2Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J913nXrvhjuh4QI2Gn6yRsGkRli+MLtKqfhGOxmeHuZSYZ5XwccJyeL6JYz2EullP
-	 P/+LiDBRKv9z744Qd8c/RhtnY5EQSD/bV+qF0yvnfw6y89bAp3rCJYYtbyhVo33aQS
-	 MEzt9pAlwEnzxYFFRzMYd5lLOA/7gBOito85qBtM=
+	b=x377Kn2vgXLjT8iby2KEJ/aUk1nk9xQ3q7O9BLXiCo5Hz7JQAVneKyL/j3xNZ+Pga
+	 dkEtgY42TNasjub1NIEeT2aLznyschUbE6FmYetc5aqPDuwb5LZwfY5JBIwFtGvZe/
+	 Pb1GWmPjL3sIoWwJRwrzCEE0pZhuaJcxqsHQdrpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	syzbot+bc922f476bd65abbd466@syzkaller.appspotmail.com,
-	syzbot+d4066896495db380182e@syzkaller.appspotmail.com,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>
-Subject: [PATCH 6.1 045/138] bpf, sockmap: Prevent lock inversion deadlock in map delete elem
-Date: Mon,  8 Apr 2024 14:57:39 +0200
-Message-ID: <20240408125257.630365536@linuxfoundation.org>
+	syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com,
+	syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Andrei Matei <andreimatei1@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 033/252] bpf: Protect against int overflow for stack access size
+Date: Mon,  8 Apr 2024 14:55:32 +0200
+Message-ID: <20240408125307.672496912@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,78 +50,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Andrei Matei <andreimatei1@gmail.com>
 
-commit ff91059932401894e6c86341915615c5eb0eca48 upstream.
+[ Upstream commit ecc6a2101840177e57c925c102d2d29f260d37c8 ]
 
-syzkaller started using corpuses where a BPF tracing program deletes
-elements from a sockmap/sockhash map. Because BPF tracing programs can be
-invoked from any interrupt context, locks taken during a map_delete_elem
-operation must be hardirq-safe. Otherwise a deadlock due to lock inversion
-is possible, as reported by lockdep:
+This patch re-introduces protection against the size of access to stack
+memory being negative; the access size can appear negative as a result
+of overflowing its signed int representation. This should not actually
+happen, as there are other protections along the way, but we should
+protect against it anyway. One code path was missing such protections
+(fixed in the previous patch in the series), causing out-of-bounds array
+accesses in check_stack_range_initialized(). This patch causes the
+verification of a program with such a non-sensical access size to fail.
 
-       CPU0                    CPU1
-       ----                    ----
-  lock(&htab->buckets[i].lock);
-                               local_irq_disable();
-                               lock(&host->lock);
-                               lock(&htab->buckets[i].lock);
-  <Interrupt>
-    lock(&host->lock);
+This check used to exist in a more indirect way, but was inadvertendly
+removed in a833a17aeac7.
 
-Locks in sockmap are hardirq-unsafe by design. We expects elements to be
-deleted from sockmap/sockhash only in task (normal) context with interrupts
-enabled, or in softirq context.
-
-Detect when map_delete_elem operation is invoked from a context which is
-_not_ hardirq-unsafe, that is interrupts are disabled, and bail out with an
-error.
-
-Note that map updates are not affected by this issue. BPF verifier does not
-allow updating sockmap/sockhash from a BPF tracing program today.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Reported-by: syzbot+bc922f476bd65abbd466@syzkaller.appspotmail.com
-Reported-by: syzbot+d4066896495db380182e@syzkaller.appspotmail.com
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+d4066896495db380182e@syzkaller.appspotmail.com
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=d4066896495db380182e
-Closes: https://syzkaller.appspot.com/bug?extid=bc922f476bd65abbd466
-Link: https://lore.kernel.org/bpf/20240402104621.1050319-1-jakub@cloudflare.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a833a17aeac7 ("bpf: Fix verification of indirect var-off stack access")
+Reported-by: syzbot+33f4297b5f927648741a@syzkaller.appspotmail.com
+Reported-by: syzbot+aafd0513053a1cbf52ef@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/CAADnVQLORV5PT0iTAhRER+iLBTkByCYNBYyvBSgjN1T31K+gOw@mail.gmail.com/
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Link: https://lore.kernel.org/r/20240327024245.318299-3-andreimatei1@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -413,6 +413,9 @@ static int __sock_map_delete(struct bpf_
- 	struct sock *sk;
- 	int err = 0;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 396c4c66932f2..c9fc734989c68 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6637,6 +6637,11 @@ static int check_stack_access_within_bounds(
+ 	err = check_stack_slot_within_bounds(env, min_off, state, type);
+ 	if (!err && max_off > 0)
+ 		err = -EINVAL; /* out of stack access into non-negative offsets */
++	if (!err && access_size < 0)
++		/* access_size should not be negative (or overflow an int); others checks
++		 * along the way should have prevented such an access.
++		 */
++		err = -EFAULT; /* invalid negative access size; integer overflow? */
  
-+	if (irqs_disabled())
-+		return -EOPNOTSUPP; /* locks here are hardirq-unsafe */
-+
- 	raw_spin_lock_bh(&stab->lock);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
-@@ -926,6 +929,9 @@ static int sock_hash_delete_elem(struct
- 	struct bpf_shtab_elem *elem;
- 	int ret = -ENOENT;
- 
-+	if (irqs_disabled())
-+		return -EOPNOTSUPP; /* locks here are hardirq-unsafe */
-+
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
+ 	if (err) {
+ 		if (tnum_is_const(reg->var_off)) {
+-- 
+2.43.0
+
 
 
