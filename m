@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C464E62148;
-	Mon,  8 Apr 2024 13:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B236376413;
+	Mon,  8 Apr 2024 13:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582395; cv=none; b=AdCxb0CRG0SVDPoiPkEXF+EgUBMCK/rTYS/jDX4tiQGHw1cDrvIbg9rE2s6j+4E6HBzEKmfa3GILI//sHj5ge1TPTgxLUhYhhQ6msXe55pcOPGS7AxTo94g4tEJs1VQggnGqti5EUj7GV8WWUZ3ZwI4DkKcN/BE5mrvHQTSvV/8=
+	t=1712582398; cv=none; b=uHDgRf6WIVleQoqJwCeJzqOxyCfDZ4PUuzci+jKmL2Q5mmHVX2vx/AvsucJQksMheMyNZRNOMAxKPUJ+oNAroE3IFCURU4CPvNxnhvOfd+ahtCiu/KWZ/yKMi7cIWNwLqEnwqSa2kkilt7C6IMC2YlI2QEq+iolkIRiX6CXMpB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582395; c=relaxed/simple;
-	bh=ilk4JOlWWQNCF+nzMo6Ld2yfReCxmRfEaWPuL6eHgAI=;
+	s=arc-20240116; t=1712582398; c=relaxed/simple;
+	bh=Nyrey9Gwv3foM57Y+pF3CuY0RVm5EHjZqS35yOa31YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uz34Cxw7g+JgJKaY/HnEGnTG8JDfuRTtcWLtZYP9souHIdI/DdGIDycl3XAcfMWRWIp/8YtDSjll1uwJHi7bwXB013rGXhWl4lGPUIowVJ65WZPJzJwKAdiL3rrzSxDlu0HyJqzmQvfsqXioRClmrOCR3Fb7Ckc3pXRODTIpaZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlIMk8IH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJkkfgixOXLALnM8q0RvYzOCaqeKGEtYi3kwajkq/MxMhf45P2fZcdezqwvdfDUKTDAdAUMH4BfJxqxigGx/R/8ulYcT5DOT0Rw8U5zEqX44r1xq110LekPZFOrlMRywjQOZvekzFHrIpgxYH41L/8DWpPxqYuw4TJByEJYKojk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwJpp5YI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlIMk8IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C93BC433C7;
-	Mon,  8 Apr 2024 13:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwJpp5YI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3270BC433C7;
+	Mon,  8 Apr 2024 13:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582395;
-	bh=ilk4JOlWWQNCF+nzMo6Ld2yfReCxmRfEaWPuL6eHgAI=;
+	s=korg; t=1712582398;
+	bh=Nyrey9Gwv3foM57Y+pF3CuY0RVm5EHjZqS35yOa31YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlIMk8IHyQ7ztluygDwcBzkk+yG41BrQghadQwwwdinZeNGdDn914IT2etHLhLifU
-	 eGe64i+zyZRRdoi9/Q/BaXrvbCV8oKh+Uu4MW0JQV9xCBlqD/RpNThxcVm5jRW5NCU
-	 nhr4VlbJI95UhgHV06oFWnzVCeephTP0r9fhb0a0=
+	b=hwJpp5YIQTpJuD4uwf3817+wss2/4J8NO72F4a4Ki8XZi/XCMwlSTG8BN2zpoYsq5
+	 hbgQ64bZYqu5/UXSTPAq/ZlrfERAfOJrx2wtmHAU/5D1iih5NGJm2V19RfzLeXy3ay
+	 huUn/vJdB8LhOg5GyMoYly7iPibRFW/HNRNQGlBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 138/690] ACPI: CPPC: Use access_width over bit_width for system memory accesses
-Date: Mon,  8 Apr 2024 14:50:04 +0200
-Message-ID: <20240408125404.516383908@linuxfoundation.org>
+	Sandipan Das <sandipan.das@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.8 071/273] x86/cpufeatures: Add CPUID_LNX_5 to track recently added Linux-defined word
+Date: Mon,  8 Apr 2024 14:55:46 +0200
+Message-ID: <20240408125311.507161910@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,167 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jarred White <jarredwhite@linux.microsoft.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2f4a4d63a193be6fd530d180bb13c3592052904c upstream.
+commit 8cb4a9a82b21623dbb4b3051dd30d98356cf95bc upstream.
 
-To align with ACPI 6.3+, since bit_width can be any 8-bit value, it
-cannot be depended on to be always on a clean 8b boundary. This was
-uncovered on the Cobalt 100 platform.
+Add CPUID_LNX_5 to track cpufeatures' word 21, and add the appropriate
+compile-time assert in KVM to prevent direct lookups on the features in
+CPUID_LNX_5.  KVM uses X86_FEATURE_* flags to manage guest CPUID, and so
+must translate features that are scattered by Linux from the Linux-defined
+bit to the hardware-defined bit, i.e. should never try to directly access
+scattered features in guest CPUID.
 
-SError Interrupt on CPU26, code 0xbe000011 -- SError
- CPU: 26 PID: 1510 Comm: systemd-udevd Not tainted 5.15.2.1-13 #1
- Hardware name: MICROSOFT CORPORATION, BIOS MICROSOFT CORPORATION
- pstate: 62400009 (nZCv daif +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
- pc : cppc_get_perf_caps+0xec/0x410
- lr : cppc_get_perf_caps+0xe8/0x410
- sp : ffff8000155ab730
- x29: ffff8000155ab730 x28: ffff0080139d0038 x27: ffff0080139d0078
- x26: 0000000000000000 x25: ffff0080139d0058 x24: 00000000ffffffff
- x23: ffff0080139d0298 x22: ffff0080139d0278 x21: 0000000000000000
- x20: ffff00802b251910 x19: ffff0080139d0000 x18: ffffffffffffffff
- x17: 0000000000000000 x16: ffffdc7e111bad04 x15: ffff00802b251008
- x14: ffffffffffffffff x13: ffff013f1fd63300 x12: 0000000000000006
- x11: ffffdc7e128f4420 x10: 0000000000000000 x9 : ffffdc7e111badec
- x8 : ffff00802b251980 x7 : 0000000000000000 x6 : ffff0080139d0028
- x5 : 0000000000000000 x4 : ffff0080139d0018 x3 : 00000000ffffffff
- x2 : 0000000000000008 x1 : ffff8000155ab7a0 x0 : 0000000000000000
- Kernel panic - not syncing: Asynchronous SError Interrupt
- CPU: 26 PID: 1510 Comm: systemd-udevd Not tainted
-5.15.2.1-13 #1
- Hardware name: MICROSOFT CORPORATION, BIOS MICROSOFT CORPORATION
- Call trace:
-  dump_backtrace+0x0/0x1e0
-  show_stack+0x24/0x30
-  dump_stack_lvl+0x8c/0xb8
-  dump_stack+0x18/0x34
-  panic+0x16c/0x384
-  add_taint+0x0/0xc0
-  arm64_serror_panic+0x7c/0x90
-  arm64_is_fatal_ras_serror+0x34/0xa4
-  do_serror+0x50/0x6c
-  el1h_64_error_handler+0x40/0x74
-  el1h_64_error+0x7c/0x80
-  cppc_get_perf_caps+0xec/0x410
-  cppc_cpufreq_cpu_init+0x74/0x400 [cppc_cpufreq]
-  cpufreq_online+0x2dc/0xa30
-  cpufreq_add_dev+0xc0/0xd4
-  subsys_interface_register+0x134/0x14c
-  cpufreq_register_driver+0x1b0/0x354
-  cppc_cpufreq_init+0x1a8/0x1000 [cppc_cpufreq]
-  do_one_initcall+0x50/0x250
-  do_init_module+0x60/0x27c
-  load_module+0x2300/0x2570
-  __do_sys_finit_module+0xa8/0x114
-  __arm64_sys_finit_module+0x2c/0x3c
-  invoke_syscall+0x78/0x100
-  el0_svc_common.constprop.0+0x180/0x1a0
-  do_el0_svc+0x84/0xa0
-  el0_svc+0x2c/0xc0
-  el0t_64_sync_handler+0xa4/0x12c
-  el0t_64_sync+0x1a4/0x1a8
+Opportunistically add NR_CPUID_WORDS to enum cpuid_leafs, along with a
+compile-time assert in KVM's CPUID infrastructure to ensure that future
+additions update cpuid_leafs along with NCAPINTS.
 
-Instead, use access_width to determine the size and use the offset and
-width to shift and mask the bits to read/write out. Make sure to add a
-check for system memory since pcc redefines the access_width to
-subspace id.
+No functional change intended.
 
-If access_width is not set, then fall back to using bit_width.
-
-Signed-off-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
-[ rjw: Subject and changelog edits, comment adjustments ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ eahariha: Backport to v5.15 by dropping SystemIO bits as
-  commit a2c8f92bea5f is not present ]
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Fixes: 7f274e609f3d ("x86/cpufeatures: Add new word for scattered features")
+Cc: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/cpufeature.h |    2 ++
+ arch/x86/kvm/reverse_cpuid.h      |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -161,6 +161,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
+--- a/arch/x86/include/asm/cpufeature.h
++++ b/arch/x86/include/asm/cpufeature.h
+@@ -33,6 +33,8 @@ enum cpuid_leafs
+ 	CPUID_7_EDX,
+ 	CPUID_8000_001F_EAX,
+ 	CPUID_8000_0021_EAX,
++	CPUID_LNX_5,
++	NR_CPUID_WORDS,
+ };
  
-+/* Check for valid access_width, otherwise, fallback to using bit_width */
-+#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
-+
-+/* Shift and apply the mask for CPC reads/writes */
-+#define MASK_VAL(reg, val) ((val) >> ((reg)->bit_offset & 			\
-+					GENMASK(((reg)->bit_width), 0)))
-+
- static ssize_t show_feedback_ctrs(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
+ #define X86_CAP_FMT_NUM "%d:%d"
+--- a/arch/x86/kvm/reverse_cpuid.h
++++ b/arch/x86/kvm/reverse_cpuid.h
+@@ -102,10 +102,12 @@ static const struct cpuid_reg reverse_cp
+  */
+ static __always_inline void reverse_cpuid_check(unsigned int x86_leaf)
  {
-@@ -762,8 +769,10 @@ int acpi_cppc_processor_probe(struct acp
- 			} else if (gas_t->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY) {
- 				if (gas_t->address) {
- 					void __iomem *addr;
-+					size_t access_width;
- 
--					addr = ioremap(gas_t->address, gas_t->bit_width/8);
-+					access_width = GET_BIT_WIDTH(gas_t) / 8;
-+					addr = ioremap(gas_t->address, access_width);
- 					if (!addr)
- 						goto out_free;
- 					cpc_ptr->cpc_regs[i-2].sys_mem_vaddr = addr;
-@@ -936,6 +945,7 @@ static int cpc_read(int cpu, struct cpc_
- {
- 	int ret_val = 0;
- 	void __iomem *vaddr = NULL;
-+	int size;
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
- 
-@@ -955,7 +965,9 @@ static int cpc_read(int cpu, struct cpc_
- 		return acpi_os_read_memory((acpi_physical_address)reg->address,
- 				val, reg->bit_width);
- 
--	switch (reg->bit_width) {
-+	size = GET_BIT_WIDTH(reg);
-+
-+	switch (size) {
- 	case 8:
- 		*val = readb_relaxed(vaddr);
- 		break;
-@@ -974,12 +986,16 @@ static int cpc_read(int cpu, struct cpc_
- 		ret_val = -EFAULT;
- 	}
- 
-+	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
-+		*val = MASK_VAL(reg, *val);
-+
- 	return ret_val;
++	BUILD_BUG_ON(NR_CPUID_WORDS != NCAPINTS);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_1);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_2);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_3);
+ 	BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
++	BUILD_BUG_ON(x86_leaf == CPUID_LNX_5);
+ 	BUILD_BUG_ON(x86_leaf >= ARRAY_SIZE(reverse_cpuid));
+ 	BUILD_BUG_ON(reverse_cpuid[x86_leaf].function == 0);
  }
- 
- static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- {
- 	int ret_val = 0;
-+	int size;
- 	void __iomem *vaddr = NULL;
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
-@@ -994,7 +1010,12 @@ static int cpc_write(int cpu, struct cpc
- 		return acpi_os_write_memory((acpi_physical_address)reg->address,
- 				val, reg->bit_width);
- 
--	switch (reg->bit_width) {
-+	size = GET_BIT_WIDTH(reg);
-+
-+	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
-+		val = MASK_VAL(reg, val);
-+
-+	switch (size) {
- 	case 8:
- 		writeb_relaxed(val, vaddr);
- 		break;
 
 
