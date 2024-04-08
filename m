@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C2F7E0EB;
-	Mon,  8 Apr 2024 13:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784252DF73;
+	Mon,  8 Apr 2024 13:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583746; cv=none; b=b92zuFYWExklDrsCSUgH/pWAa9wswS9hSxShgiPnDCAi88YfGyahBE5CPaDUs1rSjEfIX+LPhnHjeotJpilFumMzK7bODGlzCkHd5wtbyJeiC7kkxUZ4fgH0021uHaLut5MBaBGhQ5z87KfC9Zwp2P8IuvdaVpf1H8VlP1dst+0=
+	t=1712583748; cv=none; b=TYK4bRAeqeRzKc/+0oCT0+eer76iq0vlHm68UmsZ42Df6F6uw0MPHMmuHJYpb8iLMfvic5yd17LqY54z7wn1OfqzBsbgZTG1+qLQcjlAgFZ7q2c1VUVdGTnTH5XLhrks7lgu7ad0yYlMeTv1m7L+Pk+3TtMGimypeyiZXXSUh1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583746; c=relaxed/simple;
-	bh=6ehRmKgZhoAfB6cjv6bd9cGi6I7Ba5iOUINWErNgako=;
+	s=arc-20240116; t=1712583748; c=relaxed/simple;
+	bh=KOygjfRjr4BVPPj5vjcfCnGPnafNvObA8GCFoKGvSAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VF1KgGr7K/RP/u3AiEXzSVeg8LW1+BpXOnWzXjg49UK+k5bic76G3R6XxH013VCFgiNKg7groBSHX8JnuRqIAssN4uY3r83CB8ANP07fLv2Ro5wnXKxDmQws1G6VWcQfeWVSudzy/4mcRsJIxqHL+F4/wDs0bZq45WTYqp5YJcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwU6w95N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M8VHRqkazgBH98UDop60Cr4gqLc+7W7XCgkxgEMiBaVp3qVYBBKK1mqyctz5ffJgY5wdK4UDcXK/qxdsZhp6MP0uPL+ukbSa4mU3FXSRGXj3pKGn9C6Q7bvMEkouYxgzTV/gE6NvXkR2y9GlGx2u6rjCK3IIFQZ0INGoiOO+kb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhejvihW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwU6w95N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4E6C433C7;
-	Mon,  8 Apr 2024 13:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhejvihW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00910C433F1;
+	Mon,  8 Apr 2024 13:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583745;
-	bh=6ehRmKgZhoAfB6cjv6bd9cGi6I7Ba5iOUINWErNgako=;
+	s=korg; t=1712583748;
+	bh=KOygjfRjr4BVPPj5vjcfCnGPnafNvObA8GCFoKGvSAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwU6w95N4sw3HRgIUbK3b6SnBQdII8kaSFZ2FwzK5kSDRh9+jJKuSRErDZVNr1fXu
-	 2WkadsBz14plEKVQ8a9XnnOXLX2P2pmGz0rJwTVpO/Q7PoR1GEloKioFG9Lb68XztP
-	 qog9a1Y2m4ci6oxBvANLYZcvCDREtdIHkR7/ehC0=
+	b=QhejvihWQMW1ImNVDcIwGc182iN93cdLuZr1vndSaIJ4Lp3bkXtPIK51xO7vX8qZd
+	 6iYG2c3XXh+BogflgiTiRp+azVs1xUO74rv+rrICzveK+i4LFZsdDdlVZEb16eTQxW
+	 L3TU5ZWgy5kfItHjyucs2srAcISt6W98+UpPGrG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 229/252] smb: client: fix potential UAF in cifs_debug_files_proc_show()
-Date: Mon,  8 Apr 2024 14:58:48 +0200
-Message-ID: <20240408125313.763454547@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.8 215/273] ASoC: SOF: Intel: hda: Implement get_stream_position (Linear Link Position)
+Date: Mon,  8 Apr 2024 14:58:10 +0200
+Message-ID: <20240408125316.060060932@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +48,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit ca545b7f0823f19db0f1148d59bc5e1a56634502 upstream.
+commit 67b182bea08a8d1092b91b57aefdfe420fce1634 upstream.
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+When the Linear Link Position is not available in firmware SRAM window we
+use the host accessible position registers to read it.
+The address of the PPLCLLPL/U registers depend on the number of streams
+(playback+capture).
+At probe time the pplc_addr is calculated for each stream and we can use
+it to read the LLP without the need of address re-calculation.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Set the get_stream_position callback in sof_hda_common_ops for all
+platforms:
+The callback is used for IPC4 delay calculations only but the register is
+a generic HDA register, not tied to any specific IPC version.
+
+Cc: stable@vger.kernel.org # 6.8
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240321130814.4412-5-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_debug.c |    2 ++
- fs/smb/client/cifsglob.h   |   10 ++++++++++
- 2 files changed, 12 insertions(+)
+ sound/soc/sof/intel/hda-common-ops.c |    2 ++
+ sound/soc/sof/intel/hda-stream.c     |   32 ++++++++++++++++++++++++++++++++
+ sound/soc/sof/intel/hda.h            |    3 +++
+ 3 files changed, 37 insertions(+)
 
---- a/fs/smb/client/cifs_debug.c
-+++ b/fs/smb/client/cifs_debug.c
-@@ -250,6 +250,8 @@ static int cifs_debug_files_proc_show(st
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
- 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
-+			if (cifs_ses_exiting(ses))
-+				continue;
- 			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 				spin_lock(&tcon->open_file_lock);
- 				list_for_each_entry(cfile, &tcon->openFileList, tlist) {
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -2281,4 +2281,14 @@ struct smb2_compound_vars {
- 	struct smb2_file_link_info link_info;
- };
+--- a/sound/soc/sof/intel/hda-common-ops.c
++++ b/sound/soc/sof/intel/hda-common-ops.c
+@@ -57,6 +57,8 @@ struct snd_sof_dsp_ops sof_hda_common_op
+ 	.pcm_pointer	= hda_dsp_pcm_pointer,
+ 	.pcm_ack	= hda_dsp_pcm_ack,
  
-+static inline bool cifs_ses_exiting(struct cifs_ses *ses)
++	.get_stream_position = hda_dsp_get_stream_llp,
++
+ 	/* firmware loading */
+ 	.load_firmware = snd_sof_load_firmware_raw,
+ 
+--- a/sound/soc/sof/intel/hda-stream.c
++++ b/sound/soc/sof/intel/hda-stream.c
+@@ -1054,3 +1054,35 @@ snd_pcm_uframes_t hda_dsp_stream_get_pos
+ 
+ 	return pos;
+ }
++
++/**
++ * hda_dsp_get_stream_llp - Retrieve the LLP (Linear Link Position) of the stream
++ * @sdev: SOF device
++ * @component: ASoC component
++ * @substream: PCM substream
++ *
++ * Returns the raw Linear Link Position value
++ */
++u64 hda_dsp_get_stream_llp(struct snd_sof_dev *sdev,
++			   struct snd_soc_component *component,
++			   struct snd_pcm_substream *substream)
 +{
-+	bool ret;
++	struct hdac_stream *hstream = substream->runtime->private_data;
++	struct hdac_ext_stream *hext_stream = stream_to_hdac_ext_stream(hstream);
++	u32 llp_l, llp_u;
 +
-+	spin_lock(&ses->ses_lock);
-+	ret = ses->ses_status == SES_EXITING;
-+	spin_unlock(&ses->ses_lock);
-+	return ret;
++	/*
++	 * The pplc_addr have been calculated during probe in
++	 * hda_dsp_stream_init():
++	 * pplc_addr = sdev->bar[HDA_DSP_PP_BAR] +
++	 *	       SOF_HDA_PPLC_BASE +
++	 *	       SOF_HDA_PPLC_MULTI * total_stream +
++	 *	       SOF_HDA_PPLC_INTERVAL * stream_index
++	 *
++	 * Use this pre-calculated address to avoid repeated re-calculation.
++	 */
++	llp_l = readl(hext_stream->pplc_addr + AZX_REG_PPLCLLPL);
++	llp_u = readl(hext_stream->pplc_addr + AZX_REG_PPLCLLPU);
++
++	return ((u64)llp_u << 32) | llp_l;
 +}
-+
- #endif	/* _CIFS_GLOB_H */
+--- a/sound/soc/sof/intel/hda.h
++++ b/sound/soc/sof/intel/hda.h
+@@ -657,6 +657,9 @@ bool hda_dsp_check_stream_irq(struct snd
+ 
+ snd_pcm_uframes_t hda_dsp_stream_get_position(struct hdac_stream *hstream,
+ 					      int direction, bool can_sleep);
++u64 hda_dsp_get_stream_llp(struct snd_sof_dev *sdev,
++			   struct snd_soc_component *component,
++			   struct snd_pcm_substream *substream);
+ 
+ struct hdac_ext_stream *
+ 	hda_dsp_stream_get(struct snd_sof_dev *sdev, int direction, u32 flags);
 
 
