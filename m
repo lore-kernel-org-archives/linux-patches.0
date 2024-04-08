@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836E142046;
-	Mon,  8 Apr 2024 13:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DE42046;
+	Mon,  8 Apr 2024 13:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584342; cv=none; b=uFvrR9F6O5Uz9qCLqBukBs6ialc986M5V/52P1jrKfxhjfw9cNGRf5vxhX3FaMPy/F9ZQ/zCCZWWk2Eo5BUCZ9yFEaWpnUnjgFIT8HmFJ6HxzLb5jAeWIWwgKQ0dz5VO7N4dYBG8sDj4Z+aTkeVHMMuW3v8G//OhgrkvD5hzX08=
+	t=1712584345; cv=none; b=OxcQaIxsfQRO+LHllw+5uT86LYLLBZJ7F2OeGjE80bV9/xvEWaKwxRN53HQXdB0uOnznYhyPijYSj3aenpYcI3BGtKXslGlJ24P7B/LhHlb1UFQy1/gJdH3fzepfsUtfm/y8Zk5daA+x95AQbdlNpTLSaRMkS8k9L8XXqEWKRHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584342; c=relaxed/simple;
-	bh=BmZJsCfsbsA4TjpF5rRhff0+iV29l9UnC0tYtA9mrg0=;
+	s=arc-20240116; t=1712584345; c=relaxed/simple;
+	bh=hmW7wU2LF1VNJodT4vqaZOJ1gTFxImXyEKbIkvUxzjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmPNi6RlqzFMTiBZP1bshwqJPFl2B8R2TE/ctju1esMhsHa4fL4fFiA+mvgHEEmo+AGm8kFOyFLHGLcPBa/COQVddHjxY3oRfb/rcdwJ/GmRAp2FsUg1eVFDe5UXcX6CM+3/K5jkEBp1kHY+sFB4TGskO/Tj0vGhLTs45iBY1ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q296mpe6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LjZa4JRLK8B5W939HgNpc60/6YeLia+f2nsQEyACltmPWLjbNeCsw2WSQtG4qqlVH4gk6SC/xqjKUi4R7KaDSTiMMml08lR+IL5dPO+1RBLV1jFRE2MBdqBSeHe78RG0KNzFr86NoZDU++jGKFxatsog13zzlAqkNgINB0ToEXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8fYPtls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q296mpe6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC68C433C7;
-	Mon,  8 Apr 2024 13:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8fYPtls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14A3C433F1;
+	Mon,  8 Apr 2024 13:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584342;
-	bh=BmZJsCfsbsA4TjpF5rRhff0+iV29l9UnC0tYtA9mrg0=;
+	s=korg; t=1712584345;
+	bh=hmW7wU2LF1VNJodT4vqaZOJ1gTFxImXyEKbIkvUxzjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q296mpe6WpbyD7p1LXERYRAiFkwpW94Ybcbeld/rNxCf1+OMGQjs2IJAAWspu/iFV
-	 oniUe6n/aFFVuvnAYwGn4lkWzcJfULjZ2c6i4UGxoT5xe74gqz9F2vDNGRH6/uAUjV
-	 baUFMzCKigur4ZMePsXg0x7j6GDGQncdfASJ7RXQ=
+	b=A8fYPtls7wkyeTgwfCKpnjtYEMZw7lcWOskXCuCyP/dFVU/fOlJ1W2jON9VBx7GzO
+	 svA67ERI8mIwrm+vyK1E4QphKjsOznfIvB2zFPwClcslYdQx/s86FDnpERUtPTWlLw
+	 wf/bE8x5yT6xVuL5DUgZB80TGPlBV1BEA4uTLg5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 405/690] NFSD: add security label to struct nfsd_attrs
-Date: Mon,  8 Apr 2024 14:54:31 +0200
-Message-ID: <20240408125414.238811437@linuxfoundation.org>
+Subject: [PATCH 5.15 406/690] NFSD: add posix ACLs to struct nfsd_attrs
+Date: Mon,  8 Apr 2024 14:54:32 +0200
+Message-ID: <20240408125414.278686096@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,205 +52,295 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit d6a97d3f589a3a46a16183e03f3774daee251317 ]
+[ Upstream commit c0cbe70742f4a70893cd6e5f6b10b6e89b6db95b ]
 
-nfsd_setattr() now sets a security label if provided, and nfsv4 provides
-it in the 'open' and 'create' paths and the 'setattr' path.
-If setting the label failed (including because the kernel doesn't
-support labels), an error field in 'struct nfsd_attrs' is set, and the
-caller can respond.  The open/create callers clear
-FATTR4_WORD2_SECURITY_LABEL in the returned attr set in this case.
-The setattr caller returns the error.
+pacl and dpacl pointers are added to struct nfsd_attrs, which requires
+that we have an nfsd_attrs_free() function to free them.
+Those nfsv4 functions that can set ACLs now set up these pointers
+based on the passed in NFSv4 ACL.
+
+nfsd_setattr() sets the acls as appropriate.
+
+Errors are handled as with security labels.
 
 Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4proc.c | 49 +++++++++-------------------------------------
- fs/nfsd/vfs.c      | 29 +++------------------------
- fs/nfsd/vfs.h      |  5 +++--
- 3 files changed, 15 insertions(+), 68 deletions(-)
+ fs/nfsd/acl.h      |  6 ++++--
+ fs/nfsd/nfs4acl.c  | 46 +++++++---------------------------------------
+ fs/nfsd/nfs4proc.c | 46 ++++++++++++++++------------------------------
+ fs/nfsd/vfs.c      |  9 +++++++++
+ fs/nfsd/vfs.h      | 11 +++++++++++
+ 5 files changed, 47 insertions(+), 71 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 96f6fe4f86fd8..7ebf807f33d98 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -64,36 +64,6 @@ MODULE_PARM_DESC(nfsd4_ssc_umount_timeout,
- 		"idle msecs before unmount export from source server");
- #endif
+diff --git a/fs/nfsd/acl.h b/fs/nfsd/acl.h
+index ba14d2f4b64f4..4b7324458a94e 100644
+--- a/fs/nfsd/acl.h
++++ b/fs/nfsd/acl.h
+@@ -38,6 +38,8 @@
+ struct nfs4_acl;
+ struct svc_fh;
+ struct svc_rqst;
++struct nfsd_attrs;
++enum nfs_ftype4;
  
--#ifdef CONFIG_NFSD_V4_SECURITY_LABEL
--#include <linux/security.h>
--
--static inline void
--nfsd4_security_inode_setsecctx(struct svc_fh *resfh, struct xdr_netobj *label, u32 *bmval)
--{
--	struct inode *inode = d_inode(resfh->fh_dentry);
--	int status;
--
--	inode_lock(inode);
--	status = security_inode_setsecctx(resfh->fh_dentry,
--		label->data, label->len);
--	inode_unlock(inode);
--
--	if (status)
--		/*
--		 * XXX: We should really fail the whole open, but we may
--		 * already have created a new file, so it may be too
--		 * late.  For now this seems the least of evils:
--		 */
--		bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
--
--	return;
--}
--#else
--static inline void
--nfsd4_security_inode_setsecctx(struct svc_fh *resfh, struct xdr_netobj *label, u32 *bmval)
--{ }
--#endif
--
- #define NFSDDBG_FACILITY		NFSDDBG_PROC
+ int nfs4_acl_bytes(int entries);
+ int nfs4_acl_get_whotype(char *, u32);
+@@ -45,7 +47,7 @@ __be32 nfs4_acl_write_who(struct xdr_stream *xdr, int who);
  
- static u32 nfsd_attrmask[] = {
-@@ -288,6 +258,7 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	struct iattr *iap = &open->op_iattr;
- 	struct nfsd_attrs attrs = {
- 		.na_iattr	= iap,
-+		.na_seclabel	= &open->op_label,
- 	};
- 	struct dentry *parent, *child;
- 	__u32 v_mtime, v_atime;
-@@ -409,6 +380,8 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- set_attr:
- 	status = nfsd_create_setattr(rqstp, fhp, resfhp, &attrs);
+ int nfsd4_get_nfs4_acl(struct svc_rqst *rqstp, struct dentry *dentry,
+ 		struct nfs4_acl **acl);
+-__be32 nfsd4_set_nfs4_acl(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-		struct nfs4_acl *acl);
++__be32 nfsd4_acl_to_attr(enum nfs_ftype4 type, struct nfs4_acl *acl,
++			 struct nfsd_attrs *attr);
  
-+	if (attrs.na_labelerr)
-+		open->op_bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- out:
- 	fh_unlock(fhp);
- 	if (child && !IS_ERR(child))
-@@ -450,9 +423,6 @@ do_open_lookup(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate, stru
- 		status = nfsd4_create_file(rqstp, current_fh, *resfh, open);
- 		current->fs->umask = 0;
- 
--		if (!status && open->op_label.len)
--			nfsd4_security_inode_setsecctx(*resfh, &open->op_label, open->op_bmval);
--
- 		/*
- 		 * Following rfc 3530 14.2.16, and rfc 5661 18.16.4
- 		 * use the returned bitmask to indicate which attributes
-@@ -792,6 +762,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfsd4_create *create = &u->create;
- 	struct nfsd_attrs attrs = {
- 		.na_iattr	= &create->cr_iattr,
-+		.na_seclabel	= &create->cr_label,
- 	};
- 	struct svc_fh resfh;
- 	__be32 status;
-@@ -864,8 +835,8 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	if (status)
- 		goto out;
- 
--	if (create->cr_label.len)
--		nfsd4_security_inode_setsecctx(&resfh, &create->cr_label, create->cr_bmval);
-+	if (attrs.na_labelerr)
-+		create->cr_bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 
- 	if (create->cr_acl != NULL)
- 		do_set_nfs4_acl(rqstp, &resfh, create->cr_acl,
-@@ -1150,6 +1121,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfsd4_setattr *setattr = &u->setattr;
- 	struct nfsd_attrs attrs = {
- 		.na_iattr	= &setattr->sa_iattr,
-+		.na_seclabel	= &setattr->sa_label,
- 	};
- 	__be32 status = nfs_ok;
- 	int err;
-@@ -1178,13 +1150,10 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 					    setattr->sa_acl);
- 	if (status)
- 		goto out;
--	if (setattr->sa_label.len)
--		status = nfsd4_set_nfs4_label(rqstp, &cstate->current_fh,
--				&setattr->sa_label);
--	if (status)
--		goto out;
- 	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
- 				0, (time64_t)0);
-+	if (!status)
-+		status = nfserrno(attrs.na_labelerr);
- out:
- 	fh_drop_write(&cstate->current_fh);
- 	return status;
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index bfdb42aa23a01..f9f62282d91f8 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -459,6 +459,9 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	host_err = notify_change(&init_user_ns, dentry, iap, NULL);
- 
- out_unlock:
-+	if (attr->na_seclabel && attr->na_seclabel->len)
-+		attr->na_labelerr = security_inode_setsecctx(dentry,
-+			attr->na_seclabel->data, attr->na_seclabel->len);
- 	fh_unlock(fhp);
- 	if (size_change)
- 		put_write_access(inode);
-@@ -497,32 +500,6 @@ int nfsd4_is_junction(struct dentry *dentry)
- 		return 0;
- 	return 1;
+ #endif /* LINUX_NFS4_ACL_H */
+diff --git a/fs/nfsd/nfs4acl.c b/fs/nfsd/nfs4acl.c
+index eaa3a0cf38f14..bb8e2f6d7d03c 100644
+--- a/fs/nfsd/nfs4acl.c
++++ b/fs/nfsd/nfs4acl.c
+@@ -751,58 +751,26 @@ static int nfs4_acl_nfsv4_to_posix(struct nfs4_acl *acl,
+ 	return ret;
  }
--#ifdef CONFIG_NFSD_V4_SECURITY_LABEL
--__be32 nfsd4_set_nfs4_label(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		struct xdr_netobj *label)
--{
+ 
+-__be32
+-nfsd4_set_nfs4_acl(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-		struct nfs4_acl *acl)
++__be32 nfsd4_acl_to_attr(enum nfs_ftype4 type, struct nfs4_acl *acl,
++			 struct nfsd_attrs *attr)
+ {
 -	__be32 error;
--	int host_error;
+ 	int host_error;
 -	struct dentry *dentry;
--
--	error = fh_verify(rqstp, fhp, 0 /* S_IFREG */, NFSD_MAY_SATTR);
+-	struct inode *inode;
+-	struct posix_acl *pacl = NULL, *dpacl = NULL;
+ 	unsigned int flags = 0;
+ 
+-	/* Get inode */
+-	error = fh_verify(rqstp, fhp, 0, NFSD_MAY_SATTR);
 -	if (error)
 -		return error;
 -
 -	dentry = fhp->fh_dentry;
--
--	inode_lock(d_inode(dentry));
--	host_error = security_inode_setsecctx(dentry, label->data, label->len);
--	inode_unlock(d_inode(dentry));
--	return nfserrno(host_error);
--}
--#else
--__be32 nfsd4_set_nfs4_label(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		struct xdr_netobj *label)
--{
--	return nfserr_notsupp;
--}
--#endif
+-	inode = d_inode(dentry);
++	if (!acl)
++		return nfs_ok;
  
- static struct nfsd4_compound_state *nfsd4_get_cstate(struct svc_rqst *rqstp)
+-	if (S_ISDIR(inode->i_mode))
++	if (type == NF4DIR)
+ 		flags = NFS4_ACL_DIR;
+ 
+-	host_error = nfs4_acl_nfsv4_to_posix(acl, &pacl, &dpacl, flags);
++	host_error = nfs4_acl_nfsv4_to_posix(acl, &attr->na_pacl,
++					     &attr->na_dpacl, flags);
+ 	if (host_error == -EINVAL)
+ 		return nfserr_attrnotsupp;
+-	if (host_error < 0)
+-		goto out_nfserr;
+-
+-	fh_lock(fhp);
+-
+-	host_error = set_posix_acl(&init_user_ns, inode, ACL_TYPE_ACCESS, pacl);
+-	if (host_error < 0)
+-		goto out_drop_lock;
+-
+-	if (S_ISDIR(inode->i_mode)) {
+-		host_error = set_posix_acl(&init_user_ns, inode,
+-					   ACL_TYPE_DEFAULT, dpacl);
+-	}
+-
+-out_drop_lock:
+-	fh_unlock(fhp);
+-
+-	posix_acl_release(pacl);
+-	posix_acl_release(dpacl);
+-out_nfserr:
+-	if (host_error == -EOPNOTSUPP)
+-		return nfserr_attrnotsupp;
+ 	else
+ 		return nfserrno(host_error);
+ }
+ 
+-
+ static short
+ ace2type(struct nfs4_ace *ace)
  {
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 7ebf807f33d98..ffa2806fd5d3b 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -128,26 +128,6 @@ is_create_with_attrs(struct nfsd4_open *open)
+ 		    || open->op_createmode == NFS4_CREATE_EXCLUSIVE4_1);
+ }
+ 
+-/*
+- * if error occurs when setting the acl, just clear the acl bit
+- * in the returned attr bitmap.
+- */
+-static void
+-do_set_nfs4_acl(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-		struct nfs4_acl *acl, u32 *bmval)
+-{
+-	__be32 status;
+-
+-	status = nfsd4_set_nfs4_acl(rqstp, fhp, acl);
+-	if (status)
+-		/*
+-		 * We should probably fail the whole open at this point,
+-		 * but we've already created the file, so it's too late;
+-		 * So this seems the least of evils:
+-		 */
+-		bmval[0] &= ~FATTR4_WORD0_ACL;
+-}
+-
+ static inline void
+ fh_dup2(struct svc_fh *dst, struct svc_fh *src)
+ {
+@@ -281,6 +261,9 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (host_err)
+ 		return nfserrno(host_err);
+ 
++	if (is_create_with_attrs(open))
++		nfsd4_acl_to_attr(NF4REG, open->op_acl, &attrs);
++
+ 	fh_lock_nested(fhp, I_MUTEX_PARENT);
+ 
+ 	child = lookup_one_len(open->op_fname, parent, open->op_fnamelen);
+@@ -382,8 +365,11 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 
+ 	if (attrs.na_labelerr)
+ 		open->op_bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
++	if (attrs.na_aclerr)
++		open->op_bmval[0] &= ~FATTR4_WORD0_ACL;
+ out:
+ 	fh_unlock(fhp);
++	nfsd_attrs_free(&attrs);
+ 	if (child && !IS_ERR(child))
+ 		dput(child);
+ 	fh_drop_write(fhp);
+@@ -446,9 +432,6 @@ do_open_lookup(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate, stru
+ 	if (status)
+ 		goto out;
+ 
+-	if (is_create_with_attrs(open) && open->op_acl != NULL)
+-		do_set_nfs4_acl(rqstp, *resfh, open->op_acl, open->op_bmval);
+-
+ 	nfsd4_set_open_owner_reply_cache(cstate, open, *resfh);
+ 	accmode = NFSD_MAY_NOP;
+ 	if (open->op_created ||
+@@ -779,6 +762,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (status)
+ 		return status;
+ 
++	status = nfsd4_acl_to_attr(create->cr_type, create->cr_acl, &attrs);
+ 	current->fs->umask = create->cr_umask;
+ 	switch (create->cr_type) {
+ 	case NF4LNK:
+@@ -837,10 +821,8 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 
+ 	if (attrs.na_labelerr)
+ 		create->cr_bmval[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
+-
+-	if (create->cr_acl != NULL)
+-		do_set_nfs4_acl(rqstp, &resfh, create->cr_acl,
+-				create->cr_bmval);
++	if (attrs.na_aclerr)
++		create->cr_bmval[0] &= ~FATTR4_WORD0_ACL;
+ 
+ 	fh_unlock(&cstate->current_fh);
+ 	set_change_info(&create->cr_cinfo, &cstate->current_fh);
+@@ -849,6 +831,7 @@ nfsd4_create(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	fh_put(&resfh);
+ out_umask:
+ 	current->fs->umask = 0;
++	nfsd_attrs_free(&attrs);
+ 	return status;
+ }
+ 
+@@ -1123,6 +1106,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		.na_iattr	= &setattr->sa_iattr,
+ 		.na_seclabel	= &setattr->sa_label,
+ 	};
++	struct inode *inode;
+ 	__be32 status = nfs_ok;
+ 	int err;
+ 
+@@ -1145,9 +1129,10 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (status)
+ 		goto out;
+ 
+-	if (setattr->sa_acl != NULL)
+-		status = nfsd4_set_nfs4_acl(rqstp, &cstate->current_fh,
+-					    setattr->sa_acl);
++	inode = cstate->current_fh.fh_dentry->d_inode;
++	status = nfsd4_acl_to_attr(S_ISDIR(inode->i_mode) ? NF4DIR : NF4REG,
++				   setattr->sa_acl, &attrs);
++
+ 	if (status)
+ 		goto out;
+ 	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
+@@ -1155,6 +1140,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (!status)
+ 		status = nfserrno(attrs.na_labelerr);
+ out:
++	nfsd_attrs_free(&attrs);
+ 	fh_drop_write(&cstate->current_fh);
+ 	return status;
+ }
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index f9f62282d91f8..e91ac3bc68764 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -462,6 +462,15 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (attr->na_seclabel && attr->na_seclabel->len)
+ 		attr->na_labelerr = security_inode_setsecctx(dentry,
+ 			attr->na_seclabel->data, attr->na_seclabel->len);
++	if (IS_ENABLED(CONFIG_FS_POSIX_ACL) && attr->na_pacl)
++		attr->na_aclerr = set_posix_acl(&init_user_ns,
++						inode, ACL_TYPE_ACCESS,
++						attr->na_pacl);
++	if (IS_ENABLED(CONFIG_FS_POSIX_ACL) &&
++	    !attr->na_aclerr && attr->na_dpacl && S_ISDIR(inode->i_mode))
++		attr->na_aclerr = set_posix_acl(&init_user_ns,
++						inode, ACL_TYPE_DEFAULT,
++						attr->na_dpacl);
+ 	fh_unlock(fhp);
+ 	if (size_change)
+ 		put_write_access(inode);
 diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index 5047cec4c423c..d5d4cfe37c933 100644
+index d5d4cfe37c933..c95cd414b4bb0 100644
 --- a/fs/nfsd/vfs.h
 +++ b/fs/nfsd/vfs.h
-@@ -44,6 +44,9 @@ typedef int (*nfsd_filldir_t)(void *, const char *, int, loff_t, u64, unsigned);
- /* nfsd/vfs.c */
+@@ -6,6 +6,8 @@
+ #ifndef LINUX_NFSD_VFS_H
+ #define LINUX_NFSD_VFS_H
+ 
++#include <linux/fs.h>
++#include <linux/posix_acl.h>
+ #include "nfsfh.h"
+ #include "nfsd.h"
+ 
+@@ -45,10 +47,19 @@ typedef int (*nfsd_filldir_t)(void *, const char *, int, loff_t, u64, unsigned);
  struct nfsd_attrs {
  	struct iattr		*na_iattr;	/* input */
-+	struct xdr_netobj	*na_seclabel;	/* input */
-+
-+	int			na_labelerr;	/* output */
+ 	struct xdr_netobj	*na_seclabel;	/* input */
++	struct posix_acl	*na_pacl;	/* input */
++	struct posix_acl	*na_dpacl;	/* input */
+ 
+ 	int			na_labelerr;	/* output */
++	int			na_aclerr;	/* output */
  };
  
++static inline void nfsd_attrs_free(struct nfsd_attrs *attrs)
++{
++	posix_acl_release(attrs->na_pacl);
++	posix_acl_release(attrs->na_dpacl);
++}
++
  int		nfsd_cross_mnt(struct svc_rqst *rqstp, struct dentry **dpp,
-@@ -57,8 +60,6 @@ __be32		nfsd_setattr(struct svc_rqst *, struct svc_fh *,
- 				struct nfsd_attrs *, int, time64_t);
- int nfsd_mountpoint(struct dentry *, struct svc_export *);
- #ifdef CONFIG_NFSD_V4
--__be32          nfsd4_set_nfs4_label(struct svc_rqst *, struct svc_fh *,
--		    struct xdr_netobj *);
- __be32		nfsd4_vfs_fallocate(struct svc_rqst *, struct svc_fh *,
- 				    struct file *, loff_t, loff_t, int);
- __be32		nfsd4_clone_file_range(struct svc_rqst *rqstp,
+ 		                struct svc_export **expp);
+ __be32		nfsd_lookup(struct svc_rqst *, struct svc_fh *,
 -- 
 2.43.0
 
