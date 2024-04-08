@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EE68173C;
-	Mon,  8 Apr 2024 13:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B522757E3;
+	Mon,  8 Apr 2024 13:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582656; cv=none; b=hXh8ydIuBwPkb4hgCUct0IgKTmkyieqdPLArYBiqdm8fH3VT06KlGV3uAG8Loy+JcX8yq+zgn/GWCBXxvkMwmtpcGxwsIHJOFhYSTNPR7vIcrMpPiZdta0ecX4A1/5c0Pph6W+u1+3ATJfBQrZxRL3uG5AgO16cNxRY23125qlg=
+	t=1712582658; cv=none; b=Yc+ihdR6b0rLsP2lDsJKMbfOcG3aYL25cW+w37/IC8+/qxQ6LOdmemsnwzocgYUg96l0FwZ2pdjpWS36h3B1KJy6VOwkO/Ut7mgNYajkEmW0bVWsXohmQjHtDeUfpzKDLhW+/9kfs9B4yI4LaM4H9mpEKaVsYRrMsJq06ElmVQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582656; c=relaxed/simple;
-	bh=oF6qLilZ7fNq5kz7mQdiD+mUTKthRzS2abUEuQsM8vA=;
+	s=arc-20240116; t=1712582658; c=relaxed/simple;
+	bh=VpaN91ob+oXAVRHiDrkdqkctmaJ8RtbDe+T1vLH0XfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=seVn1lQTPWJdVCzoSrM2nRBDWSEAD6VwIY4RXtLElMVSZ+fNXTcCsdAYUtqX5m3/pvb5+LXqchTGpZbmDIG6qTXbOa0YqGTByT0TPxc/MpHEel4F/tu6/XZL89iMAurCI4n/pFuvR9cS/RZf3XIs9LjlDM8gU1G8r99G9b37HrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f00X1KWH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqKPzMDmC8AMwPw17GmIurqgMzm4wudP9EGNy59ztKgIkmVkm8IYv0YblbvOu17L0eJV+f7DsuyOlcmrFIh7CfuKOIJxYdm21MGzGk+id7YSdVkxQhihkQ9ELPJp4DvS+XvnkGMAQonfQUNIOfUF1gtYZBjJiCKhkTmOiovvjUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DViKtLpG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f00X1KWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45277C433C7;
-	Mon,  8 Apr 2024 13:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DViKtLpG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251B6C43394;
+	Mon,  8 Apr 2024 13:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582655;
-	bh=oF6qLilZ7fNq5kz7mQdiD+mUTKthRzS2abUEuQsM8vA=;
+	s=korg; t=1712582658;
+	bh=VpaN91ob+oXAVRHiDrkdqkctmaJ8RtbDe+T1vLH0XfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f00X1KWHWCGLsX/e4GfKEzFJBHGcD1NfYvDspCjjJB4EZT9QxOQ5/NADayUJyYXNa
-	 H6p4NjGVXnoJJaIXM9ygTiJqKdkQ36NXg3ARRyttsyz4pAP/5MYIBPYaXI8z0kyN7m
-	 Yhsn1+8TiGSbOQidq3QNczJftEqOsttQmkxSUy+A=
+	b=DViKtLpGJKzgIkU7VvC9zD9l0Iw1tkmZeaNsbEIDQ/mf07XgbfUzbUlvOXvDFutFl
+	 e+opbpVc+GoxEisp4BVFma4ivjuKftmTha2ziKZJqkAf4AlJPy9ZFOcADDs5b4Gvx3
+	 GrKtADmQZ3aP6cC9QyjwsG5wgVADzCYU7Njm6u9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 123/138] riscv: Fix spurious errors from __get/put_kernel_nofault
-Date: Mon,  8 Apr 2024 14:58:57 +0200
-Message-ID: <20240408125300.059167913@linuxfoundation.org>
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 110/252] net: phy: micrel: Fix potential null pointer dereference
+Date: Mon,  8 Apr 2024 14:56:49 +0200
+Message-ID: <20240408125310.053679940@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-commit d080a08b06b6266cc3e0e86c5acfd80db937cb6b upstream.
+commit 96c155943a703f0655c0c4cab540f67055960e91 upstream.
 
-These macros did not initialize __kr_err, so they could fail even if
-the access did not fault.
+In lan8814_get_sig_rx() and lan8814_get_sig_tx() ptp_parse_header() may
+return NULL as ptp_header due to abnormal packet type or corrupted packet.
+Fix this bug by adding ptp_header check.
 
-Cc: stable@vger.kernel.org
-Fixes: d464118cdc41 ("riscv: implement __get_kernel_nofault and __put_user_nofault")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20240312022030.320789-1-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240329061631.33199-1-amishin@t-argos.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/uaccess.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/micrel.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -319,7 +319,7 @@ unsigned long __must_check clear_user(vo
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -2503,7 +2503,7 @@ static void lan8814_txtstamp(struct mii_
+ 	}
+ }
  
- #define __get_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__get_user_nocheck(*((type *)(dst)), (type *)(src), __kr_err);	\
- 	if (unlikely(__kr_err))						\
-@@ -328,7 +328,7 @@ do {									\
+-static void lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
++static bool lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
+ {
+ 	struct ptp_header *ptp_header;
+ 	u32 type;
+@@ -2513,7 +2513,11 @@ static void lan8814_get_sig_rx(struct sk
+ 	ptp_header = ptp_parse_header(skb, type);
+ 	skb_pull_inline(skb, ETH_HLEN);
  
- #define __put_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__put_user_nocheck(*((type *)(src)), (type *)(dst), __kr_err);	\
- 	if (unlikely(__kr_err))						\
++	if (!ptp_header)
++		return false;
++
+ 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
++	return true;
+ }
+ 
+ static bool lan8814_match_rx_skb(struct kszphy_ptp_priv *ptp_priv,
+@@ -2525,7 +2529,8 @@ static bool lan8814_match_rx_skb(struct
+ 	bool ret = false;
+ 	u16 skb_sig;
+ 
+-	lan8814_get_sig_rx(skb, &skb_sig);
++	if (!lan8814_get_sig_rx(skb, &skb_sig))
++		return ret;
+ 
+ 	/* Iterate over all RX timestamps and match it with the received skbs */
+ 	spin_lock_irqsave(&ptp_priv->rx_ts_lock, flags);
+@@ -2805,7 +2810,7 @@ static int lan8814_ptpci_adjfine(struct
+ 	return 0;
+ }
+ 
+-static void lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
++static bool lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
+ {
+ 	struct ptp_header *ptp_header;
+ 	u32 type;
+@@ -2813,7 +2818,11 @@ static void lan8814_get_sig_tx(struct sk
+ 	type = ptp_classify_raw(skb);
+ 	ptp_header = ptp_parse_header(skb, type);
+ 
++	if (!ptp_header)
++		return false;
++
+ 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
++	return true;
+ }
+ 
+ static void lan8814_match_tx_skb(struct kszphy_ptp_priv *ptp_priv,
+@@ -2827,7 +2836,8 @@ static void lan8814_match_tx_skb(struct
+ 
+ 	spin_lock_irqsave(&ptp_priv->tx_queue.lock, flags);
+ 	skb_queue_walk_safe(&ptp_priv->tx_queue, skb, skb_tmp) {
+-		lan8814_get_sig_tx(skb, &skb_sig);
++		if (!lan8814_get_sig_tx(skb, &skb_sig))
++			continue;
+ 
+ 		if (memcmp(&skb_sig, &seq_id, sizeof(seq_id)))
+ 			continue;
+@@ -2881,7 +2891,8 @@ static bool lan8814_match_skb(struct ksz
+ 
+ 	spin_lock_irqsave(&ptp_priv->rx_queue.lock, flags);
+ 	skb_queue_walk_safe(&ptp_priv->rx_queue, skb, skb_tmp) {
+-		lan8814_get_sig_rx(skb, &skb_sig);
++		if (!lan8814_get_sig_rx(skb, &skb_sig))
++			continue;
+ 
+ 		if (memcmp(&skb_sig, &rx_ts->seq_id, sizeof(rx_ts->seq_id)))
+ 			continue;
 
 
