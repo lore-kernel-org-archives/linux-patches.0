@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342E47EF1E;
-	Mon,  8 Apr 2024 13:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3157EF1E;
+	Mon,  8 Apr 2024 13:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582273; cv=none; b=F3H8renVHm01l0/y82o3lYkyIUvV3cmU6RVDGx5pqSX8iKBW4XDWPjtPu6GM6c7/D9dZxD1tTN9zaTmzNdoaB4UktG5DYs4xayIGD3wxz1SSbOV6NGV4XbuaAZ1KwZXsKDjamOwjJ/V5OXBZKoh1a1s3wP/r6iNWo/hvx5keADY=
+	t=1712582276; cv=none; b=iuXNcyWfCAYRsPBt+vpxghbx+Lr2hZE+rTfY+4y6lA0oB6EWMVFknpGCNiUo59HVCWzo9SM/eTQp1P0qn8/YMLVhxjrfXk+Y1GEk95wUChSKJWCCyw2HdA0D/R+9jsy7vyfbUM1yx9rcSXV83jttSRT5ySUwyYjTRLwXw7hTJ0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582273; c=relaxed/simple;
-	bh=5aIkaipLaEAa7bBRdozZ1pUgGtSaSxWerUDTvTzsCK4=;
+	s=arc-20240116; t=1712582276; c=relaxed/simple;
+	bh=cwfI24eRqambZ5N9WGBGodUkapd5kBCKHHczLtvuVz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+nWB9xKSAEvAtGet5odJkHbTZyWd0AkmFO8OEk4/gUmpu4WT839uI/32ej9kEX8TpUnLD12WeFUHQm/QmRRAGpf72R4gO5Bqm7OQmCLzZxsCFbPgTO6xredBuuiOZexxtgfs+4y0o+KNJmCqGdk6wo2Bc+66Uxig7GDdUEBym8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYuKoYEl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwNOF7uKq5Nk2ZIwfHVR9bx240or2LW5rz7icXH37je6BSgA2oaBKSFcun4MwEDn+eujk2o/Xx97QGkGqOBob46o3iq8jljucwc3QzH5QfpxwThFfYLLTLDO10qX/Puv7Z4T0zBNQ34Z4gHZTVgTiwo3Oj1Nw10I2C+kPuarzj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYdiaiDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYuKoYEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BD3C433F1;
-	Mon,  8 Apr 2024 13:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYdiaiDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4436C43390;
+	Mon,  8 Apr 2024 13:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582273;
-	bh=5aIkaipLaEAa7bBRdozZ1pUgGtSaSxWerUDTvTzsCK4=;
+	s=korg; t=1712582276;
+	bh=cwfI24eRqambZ5N9WGBGodUkapd5kBCKHHczLtvuVz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYuKoYElP1/kco1pQjY+0HAtWBRQ0zV7yJOVmfQdDov2uEv7OV0iykeJqwFgRfEzM
-	 Uriwo0RzwoIBPYM8fwvNl9AHOcIMrEdJQGY7INkC5a1O5jmkmGxH3dEUtEexA+1voX
-	 jkv4TfpkjBaov0vdI7dRTPi0hTZb4osyIPxJgXh4=
+	b=jYdiaiDHQtrOHyMLIwd/FhzVAaylyvXblnwUqBbMl+DRnfsRBn+3v9KZ7P4p7jaf4
+	 6AK0XHeRkFQeBTw3NUy9yD+HLYHhF3/EZwctvIprTDOlYVWLQ9IoSNPoM4V64wkCpW
+	 36l0wN9cSY0G216YkLTJdaps/WBQeT3F7IneKWtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/138] drm/panfrost: fix power transition timeout warnings
-Date: Mon,  8 Apr 2024 14:58:26 +0200
-Message-ID: <20240408125259.091990955@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 080/252] Bluetooth: hci_event: set the conn encrypted before conn establishes
+Date: Mon,  8 Apr 2024 14:56:19 +0200
+Message-ID: <20240408125309.122165528@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 2bd02f5a0bac4bb13e0da18652dc75ba0e4958ec ]
+commit c569242cd49287d53b73a94233db40097d838535 upstream.
 
-Increase the timeout value to prevent system logs on Amlogic boards flooding
-with power transition warnings:
+We have a BT headset (Lenovo Thinkplus XT99), the pairing and
+connecting has no problem, once this headset is paired, bluez will
+remember this device and will auto re-connect it whenever the device
+is powered on. The auto re-connecting works well with Windows and
+Android, but with Linux, it always fails. Through debugging, we found
+at the rfcomm connection stage, the bluetooth stack reports
+"Connection refused - security block (0x0003)".
 
-[   13.047638] panfrost ffe40000.gpu: shader power transition timeout
-[   13.048674] panfrost ffe40000.gpu: l2 power transition timeout
-[   13.937324] panfrost ffe40000.gpu: shader power transition timeout
-[   13.938351] panfrost ffe40000.gpu: l2 power transition timeout
+For this device, the re-connecting negotiation process is different
+from other BT headsets, it sends the Link_KEY_REQUEST command before
+the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
+command during the negotiation. When the device sends the "connect
+complete" to hci, the ev->encr_mode is 1.
+
+So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
+is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
+this conn, and update conn->enc_key_size accordingly.
+
+After this change, this BT headset could re-connect with Linux
+successfully. This is the btmon log after applying the patch, after
+receiving the "Connect Complete" with "Encryption: Enabled", will send
+the command to read encryption key size:
+> HCI Event: Connect Request (0x04) plen 10
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Class: 0x240404
+          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
+          Minor class: Wearable Headset Device
+          Rendering (Printing, Speaker)
+          Audio (Speaker, Microphone, Headset)
+        Link type: ACL (0x01)
 ...
-[39829.506904] panfrost ffe40000.gpu: shader power transition timeout
-[39829.507938] panfrost ffe40000.gpu: l2 power transition timeout
-[39949.508369] panfrost ffe40000.gpu: shader power transition timeout
-[39949.509405] panfrost ffe40000.gpu: l2 power transition timeout
+> HCI Event: Link Key Request (0x17) plen 6
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link key: ${32-hex-digits-key}
+...
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 256
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link type: ACL (0x01)
+        Encryption: Enabled (0x01)
+< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
+        Handle: 256
+< ACL Data TX: Handle 256 flags 0x00 dlen 10
+      L2CAP: Information Request (0x0a) ident 1 len 2
+        Type: Extended features supported (0x0002)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 1
+        Status: Success (0x00)
+        Handle: 256
+        Key size: 16
 
-The 2000 value has been found through trial and error testing with devices
-using G52 and G31 GPUs.
-
-Fixes: 22aa1a209018 ("drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240322164525.2617508-1-christianshewitt@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/bluez/bluez/issues/704
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index 55d2430485168..40b6314459926 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-@@ -379,19 +379,19 @@ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3219,6 +3219,31 @@ static void hci_conn_complete_evt(struct
+ 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
+ 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
  
- 	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present);
- 	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
--					 val, !val, 1, 1000);
-+					 val, !val, 1, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "shader power transition timeout");
- 
- 	gpu_write(pfdev, TILER_PWROFF_LO, pfdev->features.tiler_present);
- 	ret = readl_relaxed_poll_timeout(pfdev->iomem + TILER_PWRTRANS_LO,
--					 val, !val, 1, 1000);
-+					 val, !val, 1, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "tiler power transition timeout");
- 
- 	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present);
- 	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
--				 val, !val, 0, 1000);
-+				 val, !val, 0, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "l2 power transition timeout");
- }
--- 
-2.43.0
-
++		/* "Link key request" completed ahead of "connect request" completes */
++		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
++		    ev->link_type == ACL_LINK) {
++			struct link_key *key;
++			struct hci_cp_read_enc_key_size cp;
++
++			key = hci_find_link_key(hdev, &ev->bdaddr);
++			if (key) {
++				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
++
++				if (!(hdev->commands[20] & 0x10)) {
++					conn->enc_key_size = HCI_LINK_KEY_SIZE;
++				} else {
++					cp.handle = cpu_to_le16(conn->handle);
++					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
++							 sizeof(cp), &cp)) {
++						bt_dev_err(hdev, "sending read key size failed");
++						conn->enc_key_size = HCI_LINK_KEY_SIZE;
++					}
++				}
++
++				hci_encrypt_cfm(conn, ev->status);
++			}
++		}
++
+ 		/* Get remote features */
+ 		if (conn->type == ACL_LINK) {
+ 			struct hci_cp_read_remote_features cp;
 
 
