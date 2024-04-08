@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010BE85620;
-	Mon,  8 Apr 2024 13:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B00768F0;
+	Mon,  8 Apr 2024 13:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582317; cv=none; b=Td5Gbj3oEG8JnMfbx9duBTmDQelRSlcBJI8F9F7SZ/L6agGjF2zt8IpQ6LiicokhvVDTksl0EoLxue37LvgV6wJnFHJq6J+qnImsDO4ktu7qE3xOXmvyIPnb9QtyCW5VDeGY9W+Bk9GjRH/MN1s52wboLT/ZNU7SpI5/eINtgAw=
+	t=1712582320; cv=none; b=L/pFYxnhnnPCrIrHnzC9jZcuhZz/gzMOWi3gDo3QCInBjFV9daJEd8T4BnHrf2b8c+uUh+vGh0yzdOB4wvG0gUSAR9qt/dZnCJQL+fuBUxwbZpBJ06YKQLC2zYbubRNDo7tkTjW6D6geXQhMMDYFzYsuu4XPWfwNg3UtRXsIjGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582317; c=relaxed/simple;
-	bh=Uu35xLT7yqpjX0G2X8S/fX42+rrqYvOQfQmJNzOd0VY=;
+	s=arc-20240116; t=1712582320; c=relaxed/simple;
+	bh=e1Ff7Efw2dSLyGnqwNlEND7ppMA0J5nT1gBksvAYf8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m79Iv1cHMD0a+gtcDidXTvjDFSEEK3Akq4nQW93E8lVgv7Rh8hMBud6H11wtCZFzyhUbJt9IlLwqmkdPRm80fF7nz2OrwgswFpO8p7fVouSK0KZ7uxX3snnxDpZS4SJXiQEDDoIQ3hBTeQTamWlpDDcoLY6UAOhcMW/M3YS2sAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuVwg1sJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WIgKFI4ZRAi6MaQaHZRDwbG6rNlL1uR7s2ZK70FjdGw+vxm+glS9ttnJeaLQA63kPvkQjA8aibx9khsJW5nodDjwS8NG8mGFfLxN6sPE+gS17sC7l8tIX4KWgdwI4VJ4oi0WZiqiKiCT/yfv+ZC6cfahuXwLz5nVHkJn3GR7l3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpZvTVzK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuVwg1sJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79275C433C7;
-	Mon,  8 Apr 2024 13:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpZvTVzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA6CC433F1;
+	Mon,  8 Apr 2024 13:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582316;
-	bh=Uu35xLT7yqpjX0G2X8S/fX42+rrqYvOQfQmJNzOd0VY=;
+	s=korg; t=1712582319;
+	bh=e1Ff7Efw2dSLyGnqwNlEND7ppMA0J5nT1gBksvAYf8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuVwg1sJXApmq3RzIEEL0wWsI0FQSlFxFAT62L+bNfFyvOJAQLfEHgKOl3Os24MmG
-	 4VNTyqxBFSSXpjS4WOqZ31YtLNmXYQ+JBmC08hk2YGMpn5XybszU8JPy+XV9m/oejW
-	 GVzBmx75IZX+ZoxjDx63/CiNRRPjETxbiQq2jJE4=
+	b=tpZvTVzKt2qEEn6ZdOVmmWVpyP2IAM/KxHAfknswh1F+LmSmhG6SJGQSWcp7Dk83+
+	 UTGbjJZLLi0mEb/55il4wkNuqfQhQ4lACKqt/91NuAuNhre9goUjM38UVOsae9T9kz
+	 JB555kPZrERkEkdArbsLJzCMKahsYTJzIgO5jjRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.15 132/690] mei: me: add arrow lake point H DID
-Date: Mon,  8 Apr 2024 14:49:58 +0200
-Message-ID: <20240408125404.317533626@linuxfoundation.org>
+	Anup Patel <apatel@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.8 065/273] RISC-V: KVM: Fix APLIC in_clrip[x] read emulation
+Date: Mon,  8 Apr 2024 14:55:40 +0200
+Message-ID: <20240408125311.320062293@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,47 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Anup Patel <apatel@ventanamicro.com>
 
-commit 8436f25802ec028ac7254990893f3e01926d9b79 upstream.
+commit 8e936e98718f005c986be0bfa1ee6b355acf96be upstream.
 
-Add Arrow Lake H device id.
+The reads to APLIC in_clrip[x] registers returns rectified input values
+of the interrupt sources.
+
+A rectified input value of an interrupt source is defined by the section
+"4.5.2 Source configurations (sourcecfg[1]–sourcecfg[1023])" of the
+RISC-V AIA specification as:
+
+    rectified input value = (incoming wire value) XOR (source is inverted)
+
+Update the riscv_aplic_input() implementation to match the above.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240211103912.117105-2-tomas.winkler@intel.com
+Fixes: 74967aa208e2 ("RISC-V: KVM: Add in-kernel emulation of AIA APLIC")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20240321085041.1955293-3-apatel@ventanamicro.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ arch/riscv/kvm/aia_aplic.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -113,6 +113,7 @@
+--- a/arch/riscv/kvm/aia_aplic.c
++++ b/arch/riscv/kvm/aia_aplic.c
+@@ -197,16 +197,31 @@ static void aplic_write_enabled(struct a
  
- #define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
- #define MEI_DEV_ID_ARL_S      0x7F68  /* Arrow Lake Point S */
-+#define MEI_DEV_ID_ARL_H      0x7770  /* Arrow Lake Point H */
+ static bool aplic_read_input(struct aplic *aplic, u32 irq)
+ {
+-	bool ret;
+-	unsigned long flags;
++	u32 sourcecfg, sm, raw_input, irq_inverted;
+ 	struct aplic_irq *irqd;
++	unsigned long flags;
++	bool ret = false;
  
- /*
-  * MEI HW Section
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -119,6 +119,7 @@ static const struct pci_device_id mei_me
+ 	if (!irq || aplic->nr_irqs <= irq)
+ 		return false;
+ 	irqd = &aplic->irqs[irq];
  
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_S, MEI_ME_PCH15_CFG)},
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_ARL_H, MEI_ME_PCH15_CFG)},
+ 	raw_spin_lock_irqsave(&irqd->lock, flags);
+-	ret = (irqd->state & APLIC_IRQ_STATE_INPUT) ? true : false;
++
++	sourcecfg = irqd->sourcecfg;
++	if (sourcecfg & APLIC_SOURCECFG_D)
++		goto skip;
++
++	sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
++	if (sm == APLIC_SOURCECFG_SM_INACTIVE)
++		goto skip;
++
++	raw_input = (irqd->state & APLIC_IRQ_STATE_INPUT) ? 1 : 0;
++	irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
++			sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
++	ret = !!(raw_input ^ irq_inverted);
++
++skip:
+ 	raw_spin_unlock_irqrestore(&irqd->lock, flags);
  
- 	/* required last entry */
- 	{0, }
+ 	return ret;
 
 
