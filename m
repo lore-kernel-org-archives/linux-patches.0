@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCF47F7CF;
-	Mon,  8 Apr 2024 13:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CA47E580;
+	Mon,  8 Apr 2024 13:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584791; cv=none; b=hHiI7pvpYsY5db8mzhptMsgDzINQU5ykud8wX4rYpVx4E7OcNB1L8IGggA6ozIMJNCie1JV1bBjg9sEbFBMJSHJNTpXhiPcbijKwzCREOtjWpU6pAzGxB6R2zbmkIO9aQ4pAaiibxmuo53a1+Qigpo0H/GSGGzSWONOVZPQIzEA=
+	t=1712584794; cv=none; b=HuEmFEORePlpBG2oXbov+vqKsa2LJEFSr8AkadSwYw5Y5ZsUr29sHxDspwjZRHY8R7zcVrqgAY4jaJ4BJW4W7kkrXgl1JkVCqkeIdYEkwkDTL/UNcRQ8Mhw74Po8YnVjyQIoCs4aRWfk82f0SIxuhfAkYVcrTzKLBHdGxWZ+vHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584791; c=relaxed/simple;
-	bh=TJQROmOsmJJtepvnSMSUOewH9bFooKnbgBUf7je9l9M=;
+	s=arc-20240116; t=1712584794; c=relaxed/simple;
+	bh=n2BWadht5M5BVHGakBXfhmBZydUYatfmazuezocYS3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWbH2siCuDy3nkCsEVflDhHY6hdwFjdOyGcoAOi6hce81Q5/xliztlfCQtbLhIxVrFM+8ZvVGA+A2cXjAOGm64Ls9DtnjBxU36i8arkcsqrR7hYhiMVsSCTG0gcKKRpZOj3xY2XOhygSFT7tMTzenPq2k3QfYWM5TSqnM73qXvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkvHUOyL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JW5sjxeOrYqGht6LYxxFW4Wh6KBtfGbFhWiBqoUB0caooHTORwM8w7F4crVR0XRM+apyg696YTtHh1L8QSyEY9JhBS/tdjj4ss4iSUL8G9SPokOxoTKhsW9FrWk+ih4n2/MP52BSIAvFjHxVuD/f31E+dnhN3q3z+ARWyL5STdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+Eug0ij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkvHUOyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB8CC433F1;
-	Mon,  8 Apr 2024 13:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+Eug0ij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0192C433C7;
+	Mon,  8 Apr 2024 13:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584791;
-	bh=TJQROmOsmJJtepvnSMSUOewH9bFooKnbgBUf7je9l9M=;
+	s=korg; t=1712584794;
+	bh=n2BWadht5M5BVHGakBXfhmBZydUYatfmazuezocYS3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkvHUOyLbwSjrIykhp2crq8H0nNY7sABux5pRnyFKBh+7K0KBJTh3FbI0/MIJBD10
-	 YLu275IB5AtmtveLbhTs7SsLIY884VcOfLiUpcM7Y4d58TVHWFfuEuNA+X0cfrlg7B
-	 8apwyV7TygJFl1HwxH1LJDUD/PilrWHgNx3All3Q=
+	b=p+Eug0ijXLYXxa8BD/BCft9/n7drf1U82WYFwr92BJarIIFHLszoot/IQI6ChFLxQ
+	 BZece+ICQStjke6m1wRgMGoI6ETDR1bAsJ7woPPKey4RtBWgjnL5XnuCOAPSdHkyWg
+	 0OB4KZaqQSCLnscft/OHyLEexHdD4/TjJDyNeu98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.15 559/690] powerpc: xor_vmx: Add -mhard-float to CFLAGS
-Date: Mon,  8 Apr 2024 14:57:05 +0200
-Message-ID: <20240408125419.878064507@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 560/690] selftests: mptcp: diag: return KSFT_FAIL not test_cnt
+Date: Mon,  8 Apr 2024 14:57:06 +0200
+Message-ID: <20240408125419.914087677@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,44 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 35f20786c481d5ced9283ff42de5c69b65e5ed13 upstream.
+commit 45bcc0346561daa3f59e19a753cc7f3e08e8dff1 upstream.
 
-arch/powerpc/lib/xor_vmx.o is built with '-msoft-float' (from the main
-powerpc Makefile) and '-maltivec' (from its CFLAGS), which causes an
-error when building with clang after a recent change in main:
+The test counter 'test_cnt' should not be returned in diag.sh, e.g. what
+if only the 4th test fail? Will do 'exit 4' which is 'exit ${KSFT_SKIP}',
+the whole test will be marked as skipped instead of 'failed'!
 
-  error: option '-msoft-float' cannot be specified with '-maltivec'
-  make[6]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Error 1
+So we should do ret=${KSFT_FAIL} instead.
 
-Explicitly add '-mhard-float' before '-maltivec' in xor_vmx.o's CFLAGS
-to override the previous inclusion of '-msoft-float' (as the last option
-wins), which matches how other areas of the kernel use '-maltivec', such
-as AMDGPU.
-
+Fixes: df62f2ec3df6 ("selftests/mptcp: add diag interface tests")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1986
-Link: https://github.com/llvm/llvm-project/commit/4792f912b232141ecba4cbae538873be3c28556c
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-f24140e81376@kernel.org
-[nathan: Fixed conflicts due to lack of 04e85bbf71c9 in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 42fb6cddec3b ("selftests: mptcp: more stable diag tests")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/lib/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/diag.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -67,6 +67,6 @@ obj-$(CONFIG_PPC_LIB_RHEAP) += rheap.o
- obj-$(CONFIG_FTR_FIXUP_SELFTEST) += feature-fixups-test.o
- 
- obj-$(CONFIG_ALTIVEC)	+= xor_vmx.o xor_vmx_glue.o
--CFLAGS_xor_vmx.o += -maltivec $(call cc-option,-mabi=altivec)
-+CFLAGS_xor_vmx.o += -mhard-float -maltivec $(call cc-option,-mabi=altivec)
- 
- obj-$(CONFIG_PPC64) += $(obj64-y)
+--- a/tools/testing/selftests/net/mptcp/diag.sh
++++ b/tools/testing/selftests/net/mptcp/diag.sh
+@@ -53,7 +53,7 @@ __chk_nr()
+ 	printf "%-50s" "$msg"
+ 	if [ $nr != $expected ]; then
+ 		echo "[ fail ] expected $expected found $nr"
+-		ret=$test_cnt
++		ret=${KSFT_FAIL}
+ 	else
+ 		echo "[  ok  ]"
+ 	fi
+@@ -88,10 +88,10 @@ wait_msk_nr()
+ 	printf "%-50s" "$msg"
+ 	if [ $i -ge $timeout ]; then
+ 		echo "[ fail ] timeout while expecting $expected max $max last $nr"
+-		ret=$test_cnt
++		ret=${KSFT_FAIL}
+ 	elif [ $nr != $expected ]; then
+ 		echo "[ fail ] expected $expected found $nr"
+-		ret=$test_cnt
++		ret=${KSFT_FAIL}
+ 	else
+ 		echo "[  ok  ]"
+ 	fi
 
 
