@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34F57D062;
-	Mon,  8 Apr 2024 13:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97B52E405;
+	Mon,  8 Apr 2024 13:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581337; cv=none; b=uhPPsFvG/SYJBt8NG6I46LlOvTaMgphhbVMuTNKDW8yC7//Ad+/m0Z2Ms4PY+4vrmg9mGhndvfbehSlHExGu4z/2RAsCVJKbbxZ0YpdDtEYFdwCX7I+U55hRI1PJQAkHfNcbwl3DEJVA7FPCfJczLuBmQjjCAaITAPSXlTgPOrg=
+	t=1712581340; cv=none; b=LVYkEJjTAEVJcHZecHsnXOhFGIz95zKxAd/rVoCjSpBTPyj0Uhv4b7hUvGEE9Poaz/v93UOFsa3cX0maoqoh1NgWo2jfgVw5yiP7D3dFFguTCzLesvm8n80cbWfMYrDspnb6bjjNfi73EGaoVkAgmmIvEkFgz0IEE2A5l1AFAUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581337; c=relaxed/simple;
-	bh=d5WtnGIwY/ty292BDhUut9H23IG009q8FeeOKUYdjzY=;
+	s=arc-20240116; t=1712581340; c=relaxed/simple;
+	bh=FhvtkwyQAxbTHVN7wSwVU/CZblCJyoDRnMgs7eN+M6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b17/KvO04DLZ0sFiex635re27iDQj9KqAsEswzs27p19mW5/FpkkVibNt+ou3MFgS9axurbMFHMUsd05/d/q55HiePhdE3u5uJo3tdeLteRMXIjPAGtojkKb9MVTWsStBTRY73ixez2sVUZ9i9571HlWYG5aZiULiwmcwfT3eU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwbdQEg/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AoWOglrWiuCAZTmKTeh8l1my9iw0KgNhGnLcEz7Eo+NRqw6Gqc8h2xZyAmBUjOGvecTztdPGCERfUgrjF1rPC6UQ8k8cRsmAwrizUIcj3mV3XtrJ/rgydWXDhjwz3dTM5GZ+L5VZHZwFUYmjuQ8PtXJqoWZLNjKb4sLnVFCm6Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNmROGmF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwbdQEg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D9EC433C7;
-	Mon,  8 Apr 2024 13:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNmROGmF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E49EC433F1;
+	Mon,  8 Apr 2024 13:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581337;
-	bh=d5WtnGIwY/ty292BDhUut9H23IG009q8FeeOKUYdjzY=;
+	s=korg; t=1712581340;
+	bh=FhvtkwyQAxbTHVN7wSwVU/CZblCJyoDRnMgs7eN+M6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwbdQEg/5s55erjWOQ7BOqMsiJ9DzzyrVkFZ7AX6SvyZDqhSTIQ+m5UkFulnfl/qr
-	 FmZQVwFAIruGWxOsgNm2d+YeUSqHP0G7Kj03TTu45KpcUEm3ZkTxOa9k3kz90Rkluw
-	 /DPbbv4jl1CUb4fbhPIO5k2gXjm1Td3r6icAJbLk=
+	b=XNmROGmFTTNdvuHQ7HvuwMZbPW7hKzREe3tJ5maDGD5MMogUFNultEKVn93VxOSe9
+	 LH44DtETfW7u/bYdIDActAs7hGY8cJExJM/hfe1A3O34XrD9vqSMOCUzkPhGu0fuoq
+	 0W7BV0bBYWYbWBlQDfE61U+VRxWfbgcVnH/OdWvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Subject: [PATCH 6.1 005/138] wifi: iwlwifi: mvm: rfi: fix potential response leaks
-Date: Mon,  8 Apr 2024 14:56:59 +0200
-Message-ID: <20240408125256.391470964@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 035/690] parisc: Avoid clobbering the C/B bits in the PSW with tophys and tovirt macros
+Date: Mon,  8 Apr 2024 14:48:21 +0200
+Message-ID: <20240408125400.818205196@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: John David Anglin <dave.anglin@bell.net>
 
-[ Upstream commit 06a093807eb7b5c5b29b6cff49f8174a4e702341 ]
+[ Upstream commit 4603fbaa76b5e703b38ac8cc718102834eb6e330 ]
 
-If the rx payload length check fails, or if kmemdup() fails,
-we still need to free the command response. Fix that.
+Use add,l to avoid clobbering the C/B bits in the PSW.
 
-Fixes: 21254908cbe9 ("iwlwifi: mvm: add RFI-M support")
-Co-authored-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.db2fa0196aa7.I116293b132502ac68a65527330fa37799694b79c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v5.10+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rfi.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/assembly.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-index bb77bc9aa8218..fb2408c0551d2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
-@@ -122,14 +122,18 @@ struct iwl_rfi_freq_table_resp_cmd *iwl_rfi_get_freq_table(struct iwl_mvm *mvm)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/arch/parisc/include/asm/assembly.h b/arch/parisc/include/asm/assembly.h
+index fd8c1ebd27470..12b9236effbc4 100644
+--- a/arch/parisc/include/asm/assembly.h
++++ b/arch/parisc/include/asm/assembly.h
+@@ -79,26 +79,28 @@
+ 	 * version takes two arguments: a src and destination register.
+ 	 * However, the source and destination registers can not be
+ 	 * the same register.
++	 *
++	 * We use add,l to avoid clobbering the C/B bits in the PSW.
+ 	 */
  
--	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) != resp_size))
-+	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) !=
-+			 resp_size)) {
-+		iwl_free_resp(&cmd);
- 		return ERR_PTR(-EIO);
-+	}
- 
- 	resp = kmemdup(cmd.resp_pkt->data, resp_size, GFP_KERNEL);
-+	iwl_free_resp(&cmd);
+ 	.macro  tophys  grvirt, grphys
+-	ldil    L%(__PAGE_OFFSET), \grphys
+-	sub     \grvirt, \grphys, \grphys
++	ldil    L%(-__PAGE_OFFSET), \grphys
++	addl    \grvirt, \grphys, \grphys
+ 	.endm
+-	
 +
- 	if (!resp)
- 		return ERR_PTR(-ENOMEM);
+ 	.macro  tovirt  grphys, grvirt
+ 	ldil    L%(__PAGE_OFFSET), \grvirt
+-	add     \grphys, \grvirt, \grvirt
++	addl    \grphys, \grvirt, \grvirt
+ 	.endm
  
--	iwl_free_resp(&cmd);
- 	return resp;
- }
+ 	.macro  tophys_r1  gr
+-	ldil    L%(__PAGE_OFFSET), %r1
+-	sub     \gr, %r1, \gr
++	ldil    L%(-__PAGE_OFFSET), %r1
++	addl    \gr, %r1, \gr
+ 	.endm
+-	
++
+ 	.macro  tovirt_r1  gr
+ 	ldil    L%(__PAGE_OFFSET), %r1
+-	add     \gr, %r1, \gr
++	addl    \gr, %r1, \gr
+ 	.endm
  
+ 	.macro delay value
 -- 
 2.43.0
 
