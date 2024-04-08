@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E2C2E62C;
-	Mon,  8 Apr 2024 13:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E592DF73;
+	Mon,  8 Apr 2024 13:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581730; cv=none; b=ked4R8tglpYcrUupaU4MQklmkUbqQ/Jc2O7x9EyX+8jg/vbGYISfCbbm70/BB/9phANrRH6STMd639YNIoNfRr2/axHyH+9QFcBqRho5RKG2C+9T3O2xj/XGx4256UdXCpwVmQpoVVMRIs8xLFQ/DsSv4BWpga773kCAK4WUA/U=
+	t=1712581732; cv=none; b=d+QooIzDZAUYtMYprvl88S/8iBqyZOjkyVW2xtwSmtpDHvmAtyn4iFQM3n4K4cYKWKEgUyPFk3INtVNYZuImq1Qq5ZIY6Gn8FYZZDg6faRP4lffO/0yx3q6mGEIlqiy3V2uFndPttnJ2S9cQRb7oU/hD7iSOGlr0Wm+skOVXlpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581730; c=relaxed/simple;
-	bh=afWCE3KGTDTj+haRJSNSi+ejPHX/PQ9Z6P1nk+F04KA=;
+	s=arc-20240116; t=1712581732; c=relaxed/simple;
+	bh=ZR0v06q28rSFl40Rf5cewsT0nGtYT5e9uP5dLgkqE4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKLxH05f4t7jY33zxse4U8WoLvpLF9II2Lntj1mMd5mvxNYY/NGMwZHMhfoTLCNAxigDNSLLrO0zrL9Jsoq5DbB5DybL6EA+2hOZQWHcCY9raD4fVpLACaL1ZsDzXjfToH86+hgpu+iwbrOYLFHrDiuRdqFXdULm4FgjZKn91zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8dZhR3I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkCaRi8CSwXGklqkkDY+m3OV0WqB1krRaWsuWeG4pvxagpOFYdVsFMHp1C+67ham/VzAg5awQRNRqPUCCuILi1169A3RgEuijseEqi12wukUQ95CKDiC59NUu2fAyPC9pnEi88jw2jTBeJ+eSqy1cNBqTMzyhPLMNfPZsfEVz0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBjy5oYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8dZhR3I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646BDC433F1;
-	Mon,  8 Apr 2024 13:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBjy5oYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FB9C433C7;
+	Mon,  8 Apr 2024 13:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581729;
-	bh=afWCE3KGTDTj+haRJSNSi+ejPHX/PQ9Z6P1nk+F04KA=;
+	s=korg; t=1712581732;
+	bh=ZR0v06q28rSFl40Rf5cewsT0nGtYT5e9uP5dLgkqE4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8dZhR3InD/x4XYmDqrRW8UkdaLj3m+FPvhAG1rKfWP1SSS/izVN4ff84/4b42WlW
-	 eJV2LClcgvfj4Tge/icCWluspY5i+l3o7aoxnK+eY+dHZ88gziSedhc0Qz49E/96uC
-	 i2viG6AJ/SjAwXo7K7LAfWqA5T2CKriNQXEtUXyY=
+	b=RBjy5oYoq9pdwW3CzEaK9zFpW5A6pQtBaz0GUJaQrYwB0dAljxN5WZSLjrFOmARsS
+	 TE5BwbD6n8f6wpXxqZjtJ5QybJVa5VC00VqJzSpxR7WNWgjf7s6G3iEMBzRWM8lgfX
+	 Ot2lkGy6i2BFowquVXlao0P33A9mML2b4+BfqzTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wayne Chang <waynec@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/252] netfilter: nf_tables: reject destroy command to remove basechain hooks
-Date: Mon,  8 Apr 2024 14:55:34 +0200
-Message-ID: <20240408125307.733223333@linuxfoundation.org>
+Subject: [PATCH 5.15 078/690] usb: gadget: tegra-xudc: Fix USB3 PHY retrieval logic
+Date: Mon,  8 Apr 2024 14:49:04 +0200
+Message-ID: <20240408125402.323631289@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +47,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Wayne Chang <waynec@nvidia.com>
 
-[ Upstream commit b32ca27fa238ff83427d23bef2a5b741e2a88a1e ]
+[ Upstream commit 84fa943d93c31ee978355e6c6c69592dae3c9f59 ]
 
-Report EOPNOTSUPP if NFT_MSG_DESTROYCHAIN is used to delete hooks in an
-existing netdev basechain, thus, only NFT_MSG_DELCHAIN is allowed.
+This commit resolves an issue in the tegra-xudc USB gadget driver that
+incorrectly fetched USB3 PHY instances. The problem stemmed from the
+assumption of a one-to-one correspondence between USB2 and USB3 PHY
+names and their association with physical USB ports in the device tree.
 
-Fixes: 7d937b107108f ("netfilter: nf_tables: support for deleting devices in an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Previously, the driver associated USB3 PHY names directly with the USB3
+instance number, leading to mismatches when mapping the physical USB
+ports. For instance, if using USB3-1 PHY, the driver expect the
+corresponding PHY name as 'usb3-1'. However, the physical USB ports in
+the device tree were designated as USB2-0 and USB3-0 as we only have
+one device controller, causing a misalignment.
+
+This commit rectifies the issue by adjusting the PHY naming logic.
+Now, the driver correctly correlates the USB2 and USB3 PHY instances,
+allowing the USB2-0 and USB3-1 PHYs to form a physical USB port pair
+while accurately reflecting their configuration in the device tree by
+naming them USB2-0 and USB3-0, respectively.
+
+The change ensures that the PHY and PHY names align appropriately,
+resolving the mismatch between physical USB ports and their associated
+names in the device tree.
+
+Fixes: b4e19931c98a ("usb: gadget: tegra-xudc: Support multiple device modes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20240307030328.1487748-3-waynec@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/tegra-xudc.c | 39 ++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f10419ba6e0bd..0653f1e5e8929 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2934,7 +2934,8 @@ static int nf_tables_delchain(struct sk_buff *skb, const struct nfnl_info *info,
- 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, chain, nla);
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 52996bf2cc705..fdbb9d73aa8e4 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -3480,8 +3480,8 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
  
- 	if (nla[NFTA_CHAIN_HOOK]) {
--		if (chain->flags & NFT_CHAIN_HW_OFFLOAD)
-+		if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_DESTROYCHAIN ||
-+		    chain->flags & NFT_CHAIN_HW_OFFLOAD)
- 			return -EOPNOTSUPP;
+ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+ {
+-	int err = 0, usb3;
+-	unsigned int i;
++	int err = 0, usb3_companion_port;
++	unsigned int i, j;
  
- 		if (nft_is_base_chain(chain)) {
+ 	xudc->utmi_phy = devm_kcalloc(xudc->dev, xudc->soc->num_phys,
+ 					   sizeof(*xudc->utmi_phy), GFP_KERNEL);
+@@ -3509,7 +3509,7 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+ 		if (IS_ERR(xudc->utmi_phy[i])) {
+ 			err = PTR_ERR(xudc->utmi_phy[i]);
+ 			dev_err_probe(xudc->dev, err,
+-				      "failed to get usb2-%d PHY\n", i);
++				"failed to get PHY for phy-name usb2-%d\n", i);
+ 			goto clean_up;
+ 		} else if (xudc->utmi_phy[i]) {
+ 			/* Get usb-phy, if utmi phy is available */
+@@ -3528,19 +3528,30 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+ 		}
+ 
+ 		/* Get USB3 phy */
+-		usb3 = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
+-		if (usb3 < 0)
++		usb3_companion_port = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
++		if (usb3_companion_port < 0)
+ 			continue;
+ 
+-		snprintf(phy_name, sizeof(phy_name), "usb3-%d", usb3);
+-		xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
+-		if (IS_ERR(xudc->usb3_phy[i])) {
+-			err = PTR_ERR(xudc->usb3_phy[i]);
+-			dev_err_probe(xudc->dev, err,
+-				      "failed to get usb3-%d PHY\n", usb3);
+-			goto clean_up;
+-		} else if (xudc->usb3_phy[i])
+-			dev_dbg(xudc->dev, "usb3-%d PHY registered", usb3);
++		for (j = 0; j < xudc->soc->num_phys; j++) {
++			snprintf(phy_name, sizeof(phy_name), "usb3-%d", j);
++			xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
++			if (IS_ERR(xudc->usb3_phy[i])) {
++				err = PTR_ERR(xudc->usb3_phy[i]);
++				dev_err_probe(xudc->dev, err,
++					"failed to get PHY for phy-name usb3-%d\n", j);
++				goto clean_up;
++			} else if (xudc->usb3_phy[i]) {
++				int usb2_port =
++					tegra_xusb_padctl_get_port_number(xudc->utmi_phy[i]);
++				int usb3_port =
++					tegra_xusb_padctl_get_port_number(xudc->usb3_phy[i]);
++				if (usb3_port == usb3_companion_port) {
++					dev_dbg(xudc->dev, "USB2 port %d is paired with USB3 port %d for device mode port %d\n",
++					 usb2_port, usb3_port, i);
++					break;
++				}
++			}
++		}
+ 	}
+ 
+ 	return err;
 -- 
 2.43.0
 
