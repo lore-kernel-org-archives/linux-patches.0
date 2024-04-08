@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6727F482;
-	Mon,  8 Apr 2024 13:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A097F494;
+	Mon,  8 Apr 2024 13:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583104; cv=none; b=NAgtyzWt/zc+2wovoz3uckMna2ySA4KG8G4k3ejo3SQ2eHhpsh28EX7lIsguwwpJK2JHgfusG/nxfqkuVHb9OgwEVX2Zw1Jvx00T+2EJM779zk/T66VjWZmdaTWyp+UMkz98dNk3w2BgepmuFyZ+ZOvK6cLPv/4htHNIlDkOOso=
+	t=1712583107; cv=none; b=H0MbAJsrd3EUIvBS4IqfpRrl0k7RaOUywi4h8ocg5ByV2IuTIA69ZHNDWPB/GxmR80eUqzzdeGeudeswlICx6GMrWk/SItaUHDTRsYX+7+FQziDWWU7OBbr/BjknP5haTzYjaGCk76vIXS0bkT0DTGkejghw+ZjxVGLet3jkPho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583104; c=relaxed/simple;
-	bh=X10fs5A4Ug9mnRKI2QSQmph4i3Lmh7XU1bWKNBEJqPk=;
+	s=arc-20240116; t=1712583107; c=relaxed/simple;
+	bh=A6RNwQyHRgabfNddpVJQQX+T1dVrn3Csw4G5hAmdTiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYavf/2VZcruM0UDh93Qda7uMSvAmhi6f4tVr8du3ja0rhDzHFOUwh4EtQjgNoaTTNuEDfKStb4MZFh/ga5SvEg/Rvns2vQfHQD2VVjDwIArJM0yklokcMFcuUiiVsuN2APeap0Al0+z7vGQzBjZBgWtu1re7urgV4sIFf7je5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBJBSX5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajEACKJWpK4Fn7tvp8GCdOBXFz7pAK1SA3i/7bEKfWqRo79pKpIlwGGSDkEXqNDZP67j7qiEcApfzArUJsQUSZ3ZysHkCjvlcNeIiMe6piJAVD3cfoVZ5GyAmOlkEcjph1rPHy/dTOooYyIuj3jY3pk1dEa6sxGh6nWyMo6jMDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m67urGrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBJBSX5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96711C43390;
-	Mon,  8 Apr 2024 13:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m67urGrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3ABC433F1;
+	Mon,  8 Apr 2024 13:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583104;
-	bh=X10fs5A4Ug9mnRKI2QSQmph4i3Lmh7XU1bWKNBEJqPk=;
+	s=korg; t=1712583106;
+	bh=A6RNwQyHRgabfNddpVJQQX+T1dVrn3Csw4G5hAmdTiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBJBSX5nprWqMz6QBF3qX2aJxF4O8yD2gAK2aC/QLaTfwoG/SbIC9rJc7gTLFE1/T
-	 +VoksV9lVAXvXBYek/mYc6f0QBFI3YHEDF3WHs05nVl09LftbPdy7ovzCI7+rzedNh
-	 JENrAk72DuLk76fdl+odkrWr8MAk7k/RZLcVugTI=
+	b=m67urGrrEspLzkJdEG3Asz1NeuK/StE3VU+g4BrIGn6Dfs5nQQOZbbjkJZ3+ZRoMg
+	 0fYJ6UyF8o4ZYnyqlke9PScfriS3igDq180yFdN4ITJyHUlBMRBu+yK1P+6FimSI7x
+	 gTq7lGz2NPjYSCil2vsMjpFkyozPQj09r8X4KM6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ashish Kalra <ashish.kalra@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/252] KVM: SVM: Add support for allowing zero SEV ASIDs
-Date: Mon,  8 Apr 2024 14:57:36 +0200
-Message-ID: <20240408125311.529654970@linuxfoundation.org>
+Subject: [PATCH 6.8 140/273] KVM: SVM: Add support for allowing zero SEV ASIDs
+Date: Mon,  8 Apr 2024 14:56:55 +0200
+Message-ID: <20240408125313.638227183@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -83,7 +83,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 19 insertions(+), 10 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index ea68a08cc89c2..c5845f31c34dc 100644
+index 4c841610277dc..86088d1250b3d 100644
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
 @@ -144,10 +144,21 @@ static void sev_misc_cg_uncharge(struct kvm_sev_info *sev)
@@ -122,7 +122,7 @@ index ea68a08cc89c2..c5845f31c34dc 100644
  again:
  	asid = find_next_zero_bit(sev_asid_bitmap, max_asid + 1, min_asid);
  	if (asid > max_asid) {
-@@ -2236,8 +2241,10 @@ void __init sev_hardware_setup(void)
+@@ -2239,8 +2244,10 @@ void __init sev_hardware_setup(void)
  		goto out;
  	}
  
@@ -135,7 +135,7 @@ index ea68a08cc89c2..c5845f31c34dc 100644
  	sev_supported = true;
  
  	/* SEV-ES support requested? */
-@@ -2268,7 +2275,9 @@ void __init sev_hardware_setup(void)
+@@ -2271,7 +2278,9 @@ void __init sev_hardware_setup(void)
  out:
  	if (boot_cpu_has(X86_FEATURE_SEV))
  		pr_info("SEV %s (ASIDs %u - %u)\n",
