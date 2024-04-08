@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F3D8529C;
-	Mon,  8 Apr 2024 13:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF0882C88;
+	Mon,  8 Apr 2024 13:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583734; cv=none; b=S+68rsIguhFy4IM4QrveCSV5ruyfgb9k2LE1L9S7UeMj0mgKC5Cgs2cAmrRU/q37pR/dAjLtIHKc1j5gEwADJHJwue44F0aPSV8XSQvJ2AKEqxilCSerBrwMIpSOCk4oohNY9j6SOr4y7JP9vqDBTGfyRc9opLhRXyXqdGBIops=
+	t=1712583737; cv=none; b=BmkjPhtyy90eBYzczyHRsQpvEajXb0kTKBJcgO7IBMMNv8LevF2HEbfG67l2oJTAdiXneP94LJhJ3TE24MYKdL9VfPqMqzBIauUWU8bcnqL9C3GDYmu7gGcxsy4GfFQTzFQyajbMqyHZCULm8gZ+A3wr1TmO5YB8xvw6Lmhaye4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583734; c=relaxed/simple;
-	bh=PJQMLLsBdZPRcdy4CIQRHxTdjg/WgAQKgeflSa1SK1c=;
+	s=arc-20240116; t=1712583737; c=relaxed/simple;
+	bh=XmdL2AORM+JfojCvc7JZ2RjCKca7AlFsYM7mWoSo4B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrqJvwHvALszqZzNHtCBpCUBMR5wANqk1sQ/ioe/9SwOjqEgGBAMSZxD/jynXXlLjML+e0AuCh1nHM41oFGy9O9phwuE0m4nAKXOovu0UP56cAQcHeQHlkR9FglDnnxjXlCJkmZLC5K1eiSlblOaEczzzkPaztT5IetHk0BzcuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pj4V7HRX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q50LxUXnkKEfLCwc45A9Kti/WrTSQyg5DP4dsp5xYRE6LQjAcL/jDJsBMRGXKMhfaK/u8LbqwwTs1zhL0I79slwldyNQM8AGOhjpZVvxvXNtPQthap8PLI2hc5k5HwNL7whHMZF4HC5Scoz3KFsTDuc5iarTW+J+FEJe8vz2RHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5vnBrga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pj4V7HRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6941BC433F1;
-	Mon,  8 Apr 2024 13:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5vnBrga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641B4C433F1;
+	Mon,  8 Apr 2024 13:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583733;
-	bh=PJQMLLsBdZPRcdy4CIQRHxTdjg/WgAQKgeflSa1SK1c=;
+	s=korg; t=1712583736;
+	bh=XmdL2AORM+JfojCvc7JZ2RjCKca7AlFsYM7mWoSo4B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pj4V7HRXBRpYwMdE6/H7J2IH0QtNArHze9BfIY81sr9AYxGWNIpX/sq29i4Kt0NPY
-	 zsSvakM6vf4xd23WX4JEqOLkILY7JsXsl1MJYgdSuyPXd4LSrEm3+x1BM6Ia1GI32k
-	 cfrchK3VUbQYp8dND9IeJKqtifiIQ6fO4X77hPac=
+	b=W5vnBrgaKbuFauA5L+gN1EnhGMxRhRGlv5xsJpjlZS1AmMRpu++5JvFytasqa8q7u
+	 3rbpKHUsmJ0TO0F3v+d3HaMujBV5CJXRoYUw/Xd0xlTqoFXup35o9RqhNN5MAkWzhu
+	 dGhYA1I9v0hd7j1r8Tdcp0zlvnon9Yn6xXGlHI7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 279/690] NFSD: Move svc_serv_ops::svo_function into struct svc_serv
-Date: Mon,  8 Apr 2024 14:52:25 +0200
-Message-ID: <20240408125409.709246705@linuxfoundation.org>
+	Ritvik Budhiraja <rbudhiraja@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 228/252] smb3: retrying on failed server close
+Date: Mon,  8 Apr 2024 14:58:47 +0200
+Message-ID: <20240408125313.733941630@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,271 +46,319 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ritvik Budhiraja <rbudhiraja@microsoft.com>
 
-[ Upstream commit 37902c6313090235c847af89c5515591261ee338 ]
+commit 173217bd73365867378b5e75a86f0049e1069ee8 upstream.
 
-Hoist svo_function back into svc_serv and remove struct
-svc_serv_ops, since the struct is now devoid of fields.
+In the current implementation, CIFS close sends a close to the
+server and does not check for the success of the server close.
+This patch adds functionality to check for server close return
+status and retries in case of an EBUSY or EAGAIN error.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+This can help avoid handle leaks
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ritvik Budhiraja <rbudhiraja@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svc.c             |  6 +-----
- fs/nfs/callback.c          | 43 ++++++++++----------------------------
- fs/nfsd/nfssvc.c           |  7 +------
- include/linux/sunrpc/svc.h | 14 ++++---------
- net/sunrpc/svc.c           | 37 ++++++++++++++++++++++----------
- 5 files changed, 43 insertions(+), 64 deletions(-)
+ fs/smb/client/cached_dir.c |    6 ++--
+ fs/smb/client/cifsfs.c     |   11 +++++++
+ fs/smb/client/cifsglob.h   |    7 +++--
+ fs/smb/client/file.c       |   63 ++++++++++++++++++++++++++++++++++++++++-----
+ fs/smb/client/smb1ops.c    |    4 +-
+ fs/smb/client/smb2ops.c    |    9 +++---
+ fs/smb/client/smb2pdu.c    |    2 -
+ 7 files changed, 85 insertions(+), 17 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index bfde31124f3af..59ef8a1f843f3 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -349,10 +349,6 @@ static struct notifier_block lockd_inet6addr_notifier = {
- };
- #endif
- 
--static const struct svc_serv_ops lockd_sv_ops = {
--	.svo_function		= lockd,
--};
--
- static int lockd_get(void)
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -401,6 +401,7 @@ smb2_close_cached_fid(struct kref *ref)
  {
- 	struct svc_serv *serv;
-@@ -376,7 +372,7 @@ static int lockd_get(void)
- 		nlm_timeout = LOCKD_DFLT_TIMEO;
- 	nlmsvc_timeout = nlm_timeout * HZ;
+ 	struct cached_fid *cfid = container_of(ref, struct cached_fid,
+ 					       refcount);
++	int rc;
  
--	serv = svc_create(&nlmsvc_program, LOCKD_BUFSIZE, &lockd_sv_ops);
-+	serv = svc_create(&nlmsvc_program, LOCKD_BUFSIZE, lockd);
- 	if (!serv) {
- 		printk(KERN_WARNING "lockd_up: create service failed\n");
- 		return -ENOMEM;
-diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
-index a494f9e7bd0a0..456af7d230cf1 100644
---- a/fs/nfs/callback.c
-+++ b/fs/nfs/callback.c
-@@ -231,29 +231,10 @@ static int nfs_callback_up_net(int minorversion, struct svc_serv *serv,
- 	return ret;
- }
+ 	spin_lock(&cfid->cfids->cfid_list_lock);
+ 	if (cfid->on_list) {
+@@ -414,9 +415,10 @@ smb2_close_cached_fid(struct kref *ref)
+ 	cfid->dentry = NULL;
  
--static const struct svc_serv_ops nfs40_cb_sv_ops = {
--	.svo_function		= nfs4_callback_svc,
--};
--#if defined(CONFIG_NFS_V4_1)
--static const struct svc_serv_ops nfs41_cb_sv_ops = {
--	.svo_function		= nfs41_callback_svc,
--};
--
--static const struct svc_serv_ops *nfs4_cb_sv_ops[] = {
--	[0] = &nfs40_cb_sv_ops,
--	[1] = &nfs41_cb_sv_ops,
--};
--#else
--static const struct svc_serv_ops *nfs4_cb_sv_ops[] = {
--	[0] = &nfs40_cb_sv_ops,
--	[1] = NULL,
--};
--#endif
--
- static struct svc_serv *nfs_callback_create_svc(int minorversion)
- {
- 	struct nfs_callback_data *cb_info = &nfs_callback_info[minorversion];
--	const struct svc_serv_ops *sv_ops;
-+	int (*threadfn)(void *data);
- 	struct svc_serv *serv;
+ 	if (cfid->is_open) {
+-		SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
++		rc = SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
+ 			   cfid->fid.volatile_fid);
+-		atomic_dec(&cfid->tcon->num_remote_opens);
++		if (rc != -EBUSY && rc != -EAGAIN)
++			atomic_dec(&cfid->tcon->num_remote_opens);
+ 	}
  
- 	/*
-@@ -262,17 +243,6 @@ static struct svc_serv *nfs_callback_create_svc(int minorversion)
- 	if (cb_info->serv)
- 		return svc_get(cb_info->serv);
+ 	free_cached_dir(cfid);
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -159,6 +159,7 @@ struct workqueue_struct	*decrypt_wq;
+ struct workqueue_struct	*fileinfo_put_wq;
+ struct workqueue_struct	*cifsoplockd_wq;
+ struct workqueue_struct	*deferredclose_wq;
++struct workqueue_struct	*serverclose_wq;
+ __u32 cifs_lock_secret;
  
--	switch (minorversion) {
--	case 0:
--		sv_ops = nfs4_cb_sv_ops[0];
--		break;
--	default:
--		sv_ops = nfs4_cb_sv_ops[1];
--	}
--
--	if (sv_ops == NULL)
--		return ERR_PTR(-ENOTSUPP);
--
- 	/*
- 	 * Sanity check: if there's no task,
- 	 * we should be the first user ...
-@@ -281,7 +251,16 @@ static struct svc_serv *nfs_callback_create_svc(int minorversion)
- 		printk(KERN_WARNING "nfs_callback_create_svc: no kthread, %d users??\n",
- 			cb_info->users);
- 
--	serv = svc_create(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE, sv_ops);
-+	threadfn = nfs4_callback_svc;
-+#if defined(CONFIG_NFS_V4_1)
-+	if (minorversion)
-+		threadfn = nfs41_callback_svc;
-+#else
-+	if (minorversion)
-+		return ERR_PTR(-ENOTSUPP);
-+#endif
-+	serv = svc_create(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE,
-+			  threadfn);
- 	if (!serv) {
- 		printk(KERN_ERR "nfs_callback_create_svc: create service failed\n");
- 		return ERR_PTR(-ENOMEM);
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index d25d4c12a499a..2f74be98ff2d9 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -612,10 +612,6 @@ static int nfsd_get_default_max_blksize(void)
- 	return ret;
- }
- 
--static const struct svc_serv_ops nfsd_thread_sv_ops = {
--	.svo_function		= nfsd,
--};
--
- void nfsd_shutdown_threads(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-@@ -654,8 +650,7 @@ int nfsd_create_serv(struct net *net)
- 	if (nfsd_max_blksize == 0)
- 		nfsd_max_blksize = nfsd_get_default_max_blksize();
- 	nfsd_reset_versions(nn);
--	serv = svc_create_pooled(&nfsd_program, nfsd_max_blksize,
--				 &nfsd_thread_sv_ops);
-+	serv = svc_create_pooled(&nfsd_program, nfsd_max_blksize, nfsd);
- 	if (serv == NULL)
- 		return -ENOMEM;
- 
-diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index 61768495354a0..1d9a81bab3fa2 100644
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -52,13 +52,6 @@ struct svc_pool {
- 	unsigned long		sp_flags;
- } ____cacheline_aligned_in_smp;
- 
--struct svc_serv;
--
--struct svc_serv_ops {
--	/* function for service threads to run */
--	int		(*svo_function)(void *);
--};
--
  /*
-  * RPC service.
-  *
-@@ -91,7 +84,8 @@ struct svc_serv {
+@@ -1877,6 +1878,13 @@ init_cifs(void)
+ 		goto out_destroy_cifsoplockd_wq;
+ 	}
  
- 	unsigned int		sv_nrpools;	/* number of thread pools */
- 	struct svc_pool *	sv_pools;	/* array of thread pools */
--	const struct svc_serv_ops *sv_ops;	/* server operations */
-+	int			(*sv_threadfn)(void *data);
++	serverclose_wq = alloc_workqueue("serverclose",
++					   WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
++	if (!serverclose_wq) {
++		rc = -ENOMEM;
++		goto out_destroy_serverclose_wq;
++	}
 +
- #if defined(CONFIG_SUNRPC_BACKCHANNEL)
- 	struct list_head	sv_cb_list;	/* queue for callback requests
- 						 * that arrive over the same
-@@ -494,7 +488,7 @@ int svc_rpcb_setup(struct svc_serv *serv, struct net *net);
- void svc_rpcb_cleanup(struct svc_serv *serv, struct net *net);
- int svc_bind(struct svc_serv *serv, struct net *net);
- struct svc_serv *svc_create(struct svc_program *, unsigned int,
--			    const struct svc_serv_ops *);
-+			    int (*threadfn)(void *data));
- struct svc_rqst *svc_rqst_alloc(struct svc_serv *serv,
- 					struct svc_pool *pool, int node);
- void		   svc_rqst_replace_page(struct svc_rqst *rqstp,
-@@ -502,7 +496,7 @@ void		   svc_rqst_replace_page(struct svc_rqst *rqstp,
- void		   svc_rqst_free(struct svc_rqst *);
- void		   svc_exit_thread(struct svc_rqst *);
- struct svc_serv *  svc_create_pooled(struct svc_program *, unsigned int,
--			const struct svc_serv_ops *);
-+				     int (*threadfn)(void *data));
- int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
- int		   svc_pool_stats_open(struct svc_serv *serv, struct file *file);
- int		   svc_process(struct svc_rqst *);
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 239d10018216a..87da3ff46ce9a 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -448,7 +448,7 @@ __svc_init_bc(struct svc_serv *serv)
-  */
- static struct svc_serv *
- __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
--	     const struct svc_serv_ops *ops)
-+	     int (*threadfn)(void *data))
- {
- 	struct svc_serv	*serv;
- 	unsigned int vers;
-@@ -465,7 +465,7 @@ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
- 		bufsize = RPCSVC_MAXPAYLOAD;
- 	serv->sv_max_payload = bufsize? bufsize : 4096;
- 	serv->sv_max_mesg  = roundup(serv->sv_max_payload + PAGE_SIZE, PAGE_SIZE);
--	serv->sv_ops = ops;
-+	serv->sv_threadfn = threadfn;
- 	xdrsize = 0;
- 	while (prog) {
- 		prog->pg_lovers = prog->pg_nvers-1;
-@@ -511,22 +511,37 @@ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
- 	return serv;
+ 	rc = cifs_init_inodecache();
+ 	if (rc)
+ 		goto out_destroy_deferredclose_wq;
+@@ -1951,6 +1959,8 @@ out_destroy_decrypt_wq:
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
++out_destroy_serverclose_wq:
++	destroy_workqueue(serverclose_wq);
+ out_clean_proc:
+ 	cifs_proc_clean();
+ 	return rc;
+@@ -1980,6 +1990,7 @@ exit_cifs(void)
+ 	destroy_workqueue(cifsoplockd_wq);
+ 	destroy_workqueue(decrypt_wq);
+ 	destroy_workqueue(fileinfo_put_wq);
++	destroy_workqueue(serverclose_wq);
+ 	destroy_workqueue(cifsiod_wq);
+ 	cifs_proc_clean();
+ }
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -425,10 +425,10 @@ struct smb_version_operations {
+ 	/* set fid protocol-specific info */
+ 	void (*set_fid)(struct cifsFileInfo *, struct cifs_fid *, __u32);
+ 	/* close a file */
+-	void (*close)(const unsigned int, struct cifs_tcon *,
++	int (*close)(const unsigned int, struct cifs_tcon *,
+ 		      struct cifs_fid *);
+ 	/* close a file, returning file attributes and timestamps */
+-	void (*close_getattr)(const unsigned int xid, struct cifs_tcon *tcon,
++	int (*close_getattr)(const unsigned int xid, struct cifs_tcon *tcon,
+ 		      struct cifsFileInfo *pfile_info);
+ 	/* send a flush request to the server */
+ 	int (*flush)(const unsigned int, struct cifs_tcon *, struct cifs_fid *);
+@@ -1408,6 +1408,7 @@ struct cifsFileInfo {
+ 	bool invalidHandle:1;	/* file closed via session abend */
+ 	bool swapfile:1;
+ 	bool oplock_break_cancelled:1;
++	bool offload:1; /* offload final part of _put to a wq */
+ 	unsigned int oplock_epoch; /* epoch from the lease break */
+ 	__u32 oplock_level; /* oplock/lease level from the lease break */
+ 	int count;
+@@ -1416,6 +1417,7 @@ struct cifsFileInfo {
+ 	struct cifs_search_info srch_inf;
+ 	struct work_struct oplock_break; /* work for oplock breaks */
+ 	struct work_struct put; /* work for the final part of _put */
++	struct work_struct serverclose; /* work for serverclose */
+ 	struct delayed_work deferred;
+ 	bool deferred_close_scheduled; /* Flag to indicate close is scheduled */
+ 	char *symlink_target;
+@@ -2073,6 +2075,7 @@ extern struct workqueue_struct *decrypt_
+ extern struct workqueue_struct *fileinfo_put_wq;
+ extern struct workqueue_struct *cifsoplockd_wq;
+ extern struct workqueue_struct *deferredclose_wq;
++extern struct workqueue_struct *serverclose_wq;
+ extern __u32 cifs_lock_secret;
+ 
+ extern mempool_t *cifs_mid_poolp;
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -459,6 +459,7 @@ cifs_down_write(struct rw_semaphore *sem
  }
  
--struct svc_serv *
--svc_create(struct svc_program *prog, unsigned int bufsize,
--	   const struct svc_serv_ops *ops)
-+/**
-+ * svc_create - Create an RPC service
-+ * @prog: the RPC program the new service will handle
-+ * @bufsize: maximum message size for @prog
-+ * @threadfn: a function to service RPC requests for @prog
-+ *
-+ * Returns an instantiated struct svc_serv object or NULL.
-+ */
-+struct svc_serv *svc_create(struct svc_program *prog, unsigned int bufsize,
-+			    int (*threadfn)(void *data))
- {
--	return __svc_create(prog, bufsize, /*npools*/1, ops);
-+	return __svc_create(prog, bufsize, 1, threadfn);
+ static void cifsFileInfo_put_work(struct work_struct *work);
++void serverclose_work(struct work_struct *work);
+ 
+ struct cifsFileInfo *cifs_new_fileinfo(struct cifs_fid *fid, struct file *file,
+ 				       struct tcon_link *tlink, __u32 oplock,
+@@ -505,6 +506,7 @@ struct cifsFileInfo *cifs_new_fileinfo(s
+ 	cfile->tlink = cifs_get_tlink(tlink);
+ 	INIT_WORK(&cfile->oplock_break, cifs_oplock_break);
+ 	INIT_WORK(&cfile->put, cifsFileInfo_put_work);
++	INIT_WORK(&cfile->serverclose, serverclose_work);
+ 	INIT_DELAYED_WORK(&cfile->deferred, smb2_deferred_work_close);
+ 	mutex_init(&cfile->fh_mutex);
+ 	spin_lock_init(&cfile->file_info_lock);
+@@ -596,6 +598,40 @@ static void cifsFileInfo_put_work(struct
+ 	cifsFileInfo_put_final(cifs_file);
  }
- EXPORT_SYMBOL_GPL(svc_create);
  
--struct svc_serv *
--svc_create_pooled(struct svc_program *prog, unsigned int bufsize,
--		  const struct svc_serv_ops *ops)
-+/**
-+ * svc_create_pooled - Create an RPC service with pooled threads
-+ * @prog: the RPC program the new service will handle
-+ * @bufsize: maximum message size for @prog
-+ * @threadfn: a function to service RPC requests for @prog
-+ *
-+ * Returns an instantiated struct svc_serv object or NULL.
-+ */
-+struct svc_serv *svc_create_pooled(struct svc_program *prog,
-+				   unsigned int bufsize,
-+				   int (*threadfn)(void *data))
++void serverclose_work(struct work_struct *work)
++{
++	struct cifsFileInfo *cifs_file = container_of(work,
++			struct cifsFileInfo, serverclose);
++
++	struct cifs_tcon *tcon = tlink_tcon(cifs_file->tlink);
++
++	struct TCP_Server_Info *server = tcon->ses->server;
++	int rc = 0;
++	int retries = 0;
++	int MAX_RETRIES = 4;
++
++	do {
++		if (server->ops->close_getattr)
++			rc = server->ops->close_getattr(0, tcon, cifs_file);
++		else if (server->ops->close)
++			rc = server->ops->close(0, tcon, &cifs_file->fid);
++
++		if (rc == -EBUSY || rc == -EAGAIN) {
++			retries++;
++			msleep(250);
++		}
++	} while ((rc == -EBUSY || rc == -EAGAIN) && (retries < MAX_RETRIES)
++	);
++
++	if (retries == MAX_RETRIES)
++		pr_warn("Serverclose failed %d times, giving up\n", MAX_RETRIES);
++
++	if (cifs_file->offload)
++		queue_work(fileinfo_put_wq, &cifs_file->put);
++	else
++		cifsFileInfo_put_final(cifs_file);
++}
++
+ /**
+  * cifsFileInfo_put - release a reference of file priv data
+  *
+@@ -636,10 +672,13 @@ void _cifsFileInfo_put(struct cifsFileIn
+ 	struct cifs_fid fid = {};
+ 	struct cifs_pending_open open;
+ 	bool oplock_break_cancelled;
++	bool serverclose_offloaded = false;
+ 
+ 	spin_lock(&tcon->open_file_lock);
+ 	spin_lock(&cifsi->open_file_lock);
+ 	spin_lock(&cifs_file->file_info_lock);
++
++	cifs_file->offload = offload;
+ 	if (--cifs_file->count > 0) {
+ 		spin_unlock(&cifs_file->file_info_lock);
+ 		spin_unlock(&cifsi->open_file_lock);
+@@ -681,13 +720,20 @@ void _cifsFileInfo_put(struct cifsFileIn
+ 	if (!tcon->need_reconnect && !cifs_file->invalidHandle) {
+ 		struct TCP_Server_Info *server = tcon->ses->server;
+ 		unsigned int xid;
++		int rc = 0;
+ 
+ 		xid = get_xid();
+ 		if (server->ops->close_getattr)
+-			server->ops->close_getattr(xid, tcon, cifs_file);
++			rc = server->ops->close_getattr(xid, tcon, cifs_file);
+ 		else if (server->ops->close)
+-			server->ops->close(xid, tcon, &cifs_file->fid);
++			rc = server->ops->close(xid, tcon, &cifs_file->fid);
+ 		_free_xid(xid);
++
++		if (rc == -EBUSY || rc == -EAGAIN) {
++			// Server close failed, hence offloading it as an async op
++			queue_work(serverclose_wq, &cifs_file->serverclose);
++			serverclose_offloaded = true;
++		}
+ 	}
+ 
+ 	if (oplock_break_cancelled)
+@@ -695,10 +741,15 @@ void _cifsFileInfo_put(struct cifsFileIn
+ 
+ 	cifs_del_pending_open(&open);
+ 
+-	if (offload)
+-		queue_work(fileinfo_put_wq, &cifs_file->put);
+-	else
+-		cifsFileInfo_put_final(cifs_file);
++	// if serverclose has been offloaded to wq (on failure), it will
++	// handle offloading put as well. If serverclose not offloaded,
++	// we need to handle offloading put here.
++	if (!serverclose_offloaded) {
++		if (offload)
++			queue_work(fileinfo_put_wq, &cifs_file->put);
++		else
++			cifsFileInfo_put_final(cifs_file);
++	}
+ }
+ 
+ int cifs_open(struct inode *inode, struct file *file)
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -753,11 +753,11 @@ cifs_set_fid(struct cifsFileInfo *cfile,
+ 	cinode->can_cache_brlcks = CIFS_CACHE_WRITE(cinode);
+ }
+ 
+-static void
++static int
+ cifs_close_file(const unsigned int xid, struct cifs_tcon *tcon,
+ 		struct cifs_fid *fid)
  {
- 	struct svc_serv *serv;
- 	unsigned int npools = svc_pool_map_get();
+-	CIFSSMBClose(xid, tcon, fid->netfid);
++	return CIFSSMBClose(xid, tcon, fid->netfid);
+ }
  
--	serv = __svc_create(prog, bufsize, npools, ops);
-+	serv = __svc_create(prog, bufsize, npools, threadfn);
- 	if (!serv)
- 		goto out_err;
- 	return serv;
-@@ -736,7 +751,7 @@ svc_start_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
- 		if (IS_ERR(rqstp))
- 			return PTR_ERR(rqstp);
+ static int
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -1392,14 +1392,14 @@ smb2_set_fid(struct cifsFileInfo *cfile,
+ 	memcpy(cfile->fid.create_guid, fid->create_guid, 16);
+ }
  
--		task = kthread_create_on_node(serv->sv_ops->svo_function, rqstp,
-+		task = kthread_create_on_node(serv->sv_threadfn, rqstp,
- 					      node, "%s", serv->sv_name);
- 		if (IS_ERR(task)) {
- 			svc_exit_thread(rqstp);
--- 
-2.43.0
-
+-static void
++static int
+ smb2_close_file(const unsigned int xid, struct cifs_tcon *tcon,
+ 		struct cifs_fid *fid)
+ {
+-	SMB2_close(xid, tcon, fid->persistent_fid, fid->volatile_fid);
++	return SMB2_close(xid, tcon, fid->persistent_fid, fid->volatile_fid);
+ }
+ 
+-static void
++static int
+ smb2_close_getattr(const unsigned int xid, struct cifs_tcon *tcon,
+ 		   struct cifsFileInfo *cfile)
+ {
+@@ -1410,7 +1410,7 @@ smb2_close_getattr(const unsigned int xi
+ 	rc = __SMB2_close(xid, tcon, cfile->fid.persistent_fid,
+ 		   cfile->fid.volatile_fid, &file_inf);
+ 	if (rc)
+-		return;
++		return rc;
+ 
+ 	inode = d_inode(cfile->dentry);
+ 
+@@ -1439,6 +1439,7 @@ smb2_close_getattr(const unsigned int xi
+ 
+ 	/* End of file and Attributes should not have to be updated on close */
+ 	spin_unlock(&inode->i_lock);
++	return rc;
+ }
+ 
+ static int
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -3549,9 +3549,9 @@ __SMB2_close(const unsigned int xid, str
+ 			memcpy(&pbuf->network_open_info,
+ 			       &rsp->network_open_info,
+ 			       sizeof(pbuf->network_open_info));
++		atomic_dec(&tcon->num_remote_opens);
+ 	}
+ 
+-	atomic_dec(&tcon->num_remote_opens);
+ close_exit:
+ 	SMB2_close_free(&rqst);
+ 	free_rsp_buf(resp_buftype, rsp);
 
 
