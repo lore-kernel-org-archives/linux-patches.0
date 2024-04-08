@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE046EB72;
-	Mon,  8 Apr 2024 13:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981926EB72;
+	Mon,  8 Apr 2024 13:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584439; cv=none; b=BDqsqKaLclIWhv3imtXCXPy8ANp3kSj3KWdWKg/Gi2241H0oaqThVZDvYW6U5PT6tXtV+iLYo+KIgQKC0s0sn2O188MVuYsoi3QJTQP2CVfNuEw/vzWheTjE7TZGGugEE89wcpxsKvfysk5cHsQEaAcsPPxVmnRC9MkQyyVEpQY=
+	t=1712584442; cv=none; b=Nowl4THUzaDkNkgPN7aYyjcKjWTnN/TTNv7qPXmQGnbSAY1O9PnxZfhF/ov6FgKzApRWnTY0LfiKmdUqrMXUyIiPlfM9wYqdS4wRViF5i5pGfKorQUIuWTgIGrX8GXj9GZEAdK94xNh7wYxiPQpQ0QKRO/0qseI3psHUgw8FdXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584439; c=relaxed/simple;
-	bh=K6ybJAY8vexWxJAr0VVpPcEHGgcQe0iSSPj25Tt0APs=;
+	s=arc-20240116; t=1712584442; c=relaxed/simple;
+	bh=4z3LdOBE9gId0FfmkVwECJPmyFvdfDz4/HXkg2ANNYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1V9EI/+Byvt1dMUAN9p03qNPHYBAt7sziNB0JX2m7Sec1wVNinB08TaVdS/XgVO9qfst9beK51fsUmIAqRTsk5t34gHYc6ILYjrdYkCMi3TcsIsL+1qHZRcXoUDnWEIyu+xYRWHuBz+uF9sAnrwO6gY3EyYiQWoYDpZqALRXRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2A9s5nfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mx2b+ZKfk72OkV+Q795EGN8RcXKejCHZc3LR7C7MJsB9k3DMBONFHde6adXxnfwJXdP+G2zjyrd3EDb0VyD8Jx5EbMob1R780lZzBp9JCxWfoERzxzLTkPTWEmHJO7wWXBwhWRY6DqxXpVrAX8DjFvGcI2ee9nDpDVvEZSH5qC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B85xK/h7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2A9s5nfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B13C433C7;
-	Mon,  8 Apr 2024 13:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B85xK/h7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15996C433C7;
+	Mon,  8 Apr 2024 13:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584439;
-	bh=K6ybJAY8vexWxJAr0VVpPcEHGgcQe0iSSPj25Tt0APs=;
+	s=korg; t=1712584442;
+	bh=4z3LdOBE9gId0FfmkVwECJPmyFvdfDz4/HXkg2ANNYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2A9s5nfSa4J3MAu64gdmvuCeYopUsTFPrOEdeh9phE03kWgTw/S4fBMAkGhb6L8Rg
-	 FDNcHR5c5t2ZLceUo5NGZlzhH/lDNs//W6hAXpJ/cGiBQC6tp8WM2YnhMVPTQuo42G
-	 oy1E2ROFwBMOhZJr6Z6V3s2FPKUAQfCUgcgWt/s4=
+	b=B85xK/h71tUJYJ76X/mYj0NKtJEl4s5hzHfYR+Gz+9C+lo2JKWky2wKkGPE5VUF5X
+	 ZCfSpXOKslyxLvjsguVtMdRFjlD1vnm2H8IrbHyEHgfCVjKj6xX7wWDiIGqLsOoT2a
+	 U9RIg+5L33a5BQL6EypZtapxr99Mt8nBnICP/o9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 438/690] NFSD: Refactor common code out of dirlist helpers
-Date: Mon,  8 Apr 2024 14:55:04 +0200
-Message-ID: <20240408125415.501029528@linuxfoundation.org>
+Subject: [PATCH 5.15 439/690] NFSD: Use xdr_inline_decode() to decode NFSv3 symlinks
+Date: Mon,  8 Apr 2024 14:55:05 +0200
+Message-ID: <20240408125415.542682325@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,110 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 98124f5bd6c76699d514fbe491dd95265369cc99 ]
+[ Upstream commit c3d2a04f05c590303c125a176e6e43df4a436fdb ]
 
-The dust has settled a bit and it's become obvious what code is
-totally common between nfsd_init_dirlist_pages() and
-nfsd3_init_dirlist_pages(). Move that common code to SUNRPC.
+Replace the check for buffer over/underflow with a helper that is
+commonly used for this purpose. The helper also sets xdr->nwords
+correctly after successfully linearizing the symlink argument into
+the stream's scratch buffer.
 
-The new helper brackets the existing xdr_init_decode_pages() API.
-
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs3proc.c         | 10 +---------
- fs/nfsd/nfsproc.c          | 10 +---------
- include/linux/sunrpc/xdr.h |  2 ++
- net/sunrpc/xdr.c           | 22 ++++++++++++++++++++++
- 4 files changed, 26 insertions(+), 18 deletions(-)
+ fs/nfsd/nfs3xdr.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index 58695e4e18b46..923d9a80df92c 100644
---- a/fs/nfsd/nfs3proc.c
-+++ b/fs/nfsd/nfs3proc.c
-@@ -574,15 +574,7 @@ static void nfsd3_init_dirlist_pages(struct svc_rqst *rqstp,
- 	buf->pages = rqstp->rq_next_page;
- 	rqstp->rq_next_page += (buf->buflen + PAGE_SIZE - 1) >> PAGE_SHIFT;
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index 0293b8d65f10f..71e32cf288854 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -616,8 +616,6 @@ nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+ 	struct nfsd3_symlinkargs *args = rqstp->rq_argp;
+ 	struct kvec *head = rqstp->rq_arg.head;
+-	struct kvec *tail = rqstp->rq_arg.tail;
+-	size_t remaining;
  
--	/* This is xdr_init_encode(), but it assumes that
--	 * the head kvec has already been consumed. */
--	xdr_set_scratch_buffer(xdr, NULL, 0);
--	xdr->buf = buf;
--	xdr->page_ptr = buf->pages;
--	xdr->iov = NULL;
--	xdr->p = page_address(*buf->pages);
--	xdr->end = (void *)xdr->p + min_t(u32, buf->buflen, PAGE_SIZE);
--	xdr->rqst = NULL;
-+	xdr_init_encode_pages(xdr, buf, buf->pages,  NULL);
+ 	if (!svcxdr_decode_diropargs3(xdr, &args->ffh, &args->fname, &args->flen))
+ 		return false;
+@@ -626,16 +624,10 @@ nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ 	if (xdr_stream_decode_u32(xdr, &args->tlen) < 0)
+ 		return false;
+ 
+-	/* request sanity */
+-	remaining = head->iov_len + rqstp->rq_arg.page_len + tail->iov_len;
+-	remaining -= xdr_stream_pos(xdr);
+-	if (remaining < xdr_align_size(args->tlen))
+-		return false;
+-
+-	args->first.iov_base = xdr->p;
++	/* symlink_data */
+ 	args->first.iov_len = head->iov_len - xdr_stream_pos(xdr);
+-
+-	return true;
++	args->first.iov_base = xdr_inline_decode(xdr, args->tlen);
++	return args->first.iov_base != NULL;
  }
  
- /*
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 49778ff410e32..82b3ddeacc338 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -575,15 +575,7 @@ static void nfsd_init_dirlist_pages(struct svc_rqst *rqstp,
- 	buf->pages = rqstp->rq_next_page;
- 	rqstp->rq_next_page++;
- 
--	/* This is xdr_init_encode(), but it assumes that
--	 * the head kvec has already been consumed. */
--	xdr_set_scratch_buffer(xdr, NULL, 0);
--	xdr->buf = buf;
--	xdr->page_ptr = buf->pages;
--	xdr->iov = NULL;
--	xdr->p = page_address(*buf->pages);
--	xdr->end = (void *)xdr->p + min_t(u32, buf->buflen, PAGE_SIZE);
--	xdr->rqst = NULL;
-+	xdr_init_encode_pages(xdr, buf, buf->pages,  NULL);
- }
- 
- /*
-diff --git a/include/linux/sunrpc/xdr.h b/include/linux/sunrpc/xdr.h
-index 3a2c714d6b629..98e197376a0d9 100644
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -240,6 +240,8 @@ typedef int	(*kxdrdproc_t)(struct rpc_rqst *rqstp, struct xdr_stream *xdr,
- 
- extern void xdr_init_encode(struct xdr_stream *xdr, struct xdr_buf *buf,
- 			    __be32 *p, struct rpc_rqst *rqst);
-+extern void xdr_init_encode_pages(struct xdr_stream *xdr, struct xdr_buf *buf,
-+			   struct page **pages, struct rpc_rqst *rqst);
- extern __be32 *xdr_reserve_space(struct xdr_stream *xdr, size_t nbytes);
- extern int xdr_reserve_space_vec(struct xdr_stream *xdr, struct kvec *vec,
- 		size_t nbytes);
-diff --git a/net/sunrpc/xdr.c b/net/sunrpc/xdr.c
-index f0a0a4ad6d525..b227d0c8471ff 100644
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -918,6 +918,28 @@ void xdr_init_encode(struct xdr_stream *xdr, struct xdr_buf *buf, __be32 *p,
- }
- EXPORT_SYMBOL_GPL(xdr_init_encode);
- 
-+/**
-+ * xdr_init_encode_pages - Initialize an xdr_stream for encoding into pages
-+ * @xdr: pointer to xdr_stream struct
-+ * @buf: pointer to XDR buffer into which to encode data
-+ * @pages: list of pages to decode into
-+ * @rqst: pointer to controlling rpc_rqst, for debugging
-+ *
-+ */
-+void xdr_init_encode_pages(struct xdr_stream *xdr, struct xdr_buf *buf,
-+			   struct page **pages, struct rpc_rqst *rqst)
-+{
-+	xdr_reset_scratch_buffer(xdr);
-+
-+	xdr->buf = buf;
-+	xdr->page_ptr = pages;
-+	xdr->iov = NULL;
-+	xdr->p = page_address(*pages);
-+	xdr->end = (void *)xdr->p + min_t(u32, buf->buflen, PAGE_SIZE);
-+	xdr->rqst = rqst;
-+}
-+EXPORT_SYMBOL_GPL(xdr_init_encode_pages);
-+
- /**
-  * xdr_commit_encode - Ensure all data is written to buffer
-  * @xdr: pointer to xdr_stream
+ bool
 -- 
 2.43.0
 
