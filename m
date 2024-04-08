@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA9B7FBD3;
-	Mon,  8 Apr 2024 13:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B61978285;
+	Mon,  8 Apr 2024 13:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583154; cv=none; b=g56Hfw/j/NWiXStmicQpGwCmZa0QfmUJ7XY7zkHxjgCwrEDU+48MwI4wdAMhm3HDN5yqPLnnRA1gruF3rJMYcy9e2spP+SiwHRftn4M533ScV5rLLHsIXcDm7KlwIfDbEsMPGX0V1H+V+yi3YiEetTWue0Ynwq2ZR3yA3FX5hdk=
+	t=1712583157; cv=none; b=c2CMQPq4xwWG9zIuBL5GAhGiUMnAlE/pnwNkGOdFKrXgmqkWFnIucd6DjKAY/VySNEuiA5y7Gz6ErYmtvWsigEgwSb+g3OSJuoGrUqvFUkJLtyUl7iO78iaC/U9DkXA6Mq2JQrBpIYhkBGoqM2I1zypBK5DmulxT05Hiu9qYf5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583154; c=relaxed/simple;
-	bh=IySIGsMeS3AdL6uIJiPnPi/9LhYoK/vvd7BGYtUMoHk=;
+	s=arc-20240116; t=1712583157; c=relaxed/simple;
+	bh=S3Ftjr1IXYSCSOkKjOpL03yIOvoJj6NwYEyCxq/Vgs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfABKBcdSJa/tVtkuI96KTlerXfvRj8g+ZmNbl1GBw4C9ZcaqOxz3mGX+ZUN8OZrzKh893BT/OmZtyABIp2QgGvli0w4THUSSt7UA6ITaPVNracA40wg2ifMyj18yLTbui72JHZ+B7jcU9+M4wjpVorN/AYvWfe3vHlP95ZjqzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SffaSROb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOKfi/9u+405MkPdKebx2uiyEKm/BdPtQBOyoalxon8SHbgF8nHYdwkIzMmO/boZi3o13bnp3ZzbS7HsaM6JrXk7MrbKDEsFvw8yyK1MHwEKc5a4P1BxCluv2QMGXmd2P+W/6I++LrO4Jlc35e5XWKIVV8s9eW0jX9kpbg1kQ8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxgEW2qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SffaSROb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39C4C433F1;
-	Mon,  8 Apr 2024 13:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxgEW2qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CAFC43394;
+	Mon,  8 Apr 2024 13:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583154;
-	bh=IySIGsMeS3AdL6uIJiPnPi/9LhYoK/vvd7BGYtUMoHk=;
+	s=korg; t=1712583157;
+	bh=S3Ftjr1IXYSCSOkKjOpL03yIOvoJj6NwYEyCxq/Vgs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SffaSRObjZuLpCYehEBUGh+PCLu6kfHEJ5Fj8p+PNGa6vpg9tP3GB6lUYeM0NTGHC
-	 uFLtl+e2+AedkLGLrQQhwIfve+FibqNNtWkV234PJmGOyzHepvC8xHlmgl2bPesCiW
-	 yX9peQTrIEfn07G6O2AlubmCKAySe3M8PQvFUFcA=
+	b=kxgEW2qgdX3MMCF4FTWiLxOYQYL95GgvZ1jcbmeSC4iILt4qLtUpQmVXdx+n1u/KG
+	 edGWqOal5/5hGlLqK6MFP0e4tmN6Q5SjfTHekHNw+Dp/N7LCY2Y5BBb0ifL++SuIpw
+	 2gkfgjQJ1Pq//0P+HOkQ0Utt9jfv404stIJeteYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 118/273] ipv6: Fix infinite recursion in fib6_dump_done().
-Date: Mon,  8 Apr 2024 14:56:33 +0200
-Message-ID: <20240408125312.964049415@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 213/690] fsnotify: clarify object type argument
+Date: Mon,  8 Apr 2024 14:51:19 +0200
+Message-ID: <20240408125407.247825114@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,138 +47,278 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit d21d40605bca7bd5fc23ef03d4c1ca1f48bc2cae upstream.
+[ Upstream commit ad69cd9972e79aba103ba5365de0acd35770c265 ]
 
-syzkaller reported infinite recursive calls of fib6_dump_done() during
-netlink socket destruction.  [1]
+In preparation for separating object type from iterator type, rename
+some 'type' arguments in functions to 'obj_type' and remove the unused
+interface to clear marks by object type mask.
 
->From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then
-the response was generated.  The following recvmmsg() resumed the dump
-for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due
-to the fault injection.  [0]
-
-  12:01:34 executing program 3:
-  r0 = socket$nl_route(0x10, 0x3, 0x0)
-  sendmsg$nl_route(r0, ... snip ...)
-  recvmmsg(r0, ... snip ...) (fail_nth: 8)
-
-Here, fib6_dump_done() was set to nlk_sk(sk)->cb.done, and the next call
-of inet6_dump_fib() set it to nlk_sk(sk)->cb.args[3].  syzkaller stopped
-receiving the response halfway through, and finally netlink_sock_destruct()
-called nlk_sk(sk)->cb.done().
-
-fib6_dump_done() calls fib6_dump_end() and nlk_sk(sk)->cb.done() if it
-is still not NULL.  fib6_dump_end() rewrites nlk_sk(sk)->cb.done() by
-nlk_sk(sk)->cb.args[3], but it has the same function, not NULL, calling
-itself recursively and hitting the stack guard page.
-
-To avoid the issue, let's set the destructor after kzalloc().
-
-[0]:
-FAULT_INJECTION: forcing a failure.
-name failslab, interval 1, probability 0, space 0, times 0
-CPU: 1 PID: 432110 Comm: syz-executor.3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:117)
- should_fail_ex (lib/fault-inject.c:52 lib/fault-inject.c:153)
- should_failslab (mm/slub.c:3733)
- kmalloc_trace (mm/slub.c:3748 mm/slub.c:3827 mm/slub.c:3992)
- inet6_dump_fib (./include/linux/slab.h:628 ./include/linux/slab.h:749 net/ipv6/ip6_fib.c:662)
- rtnl_dump_all (net/core/rtnetlink.c:4029)
- netlink_dump (net/netlink/af_netlink.c:2269)
- netlink_recvmsg (net/netlink/af_netlink.c:1988)
- ____sys_recvmsg (net/socket.c:1046 net/socket.c:2801)
- ___sys_recvmsg (net/socket.c:2846)
- do_recvmmsg (net/socket.c:2943)
- __x64_sys_recvmmsg (net/socket.c:3041 net/socket.c:3034 net/socket.c:3034)
-
-[1]:
-BUG: TASK stack guard page was hit at 00000000f2fa9af1 (stack is 00000000b7912430..000000009a436beb)
-stack guard page: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 223719 Comm: kworker/1:3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: events netlink_sock_destruct_work
-RIP: 0010:fib6_dump_done (net/ipv6/ip6_fib.c:570)
-Code: 3c 24 e8 f3 e9 51 fd e9 28 fd ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 41 57 41 56 41 55 41 54 55 48 89 fd <53> 48 8d 5d 60 e8 b6 4d 07 fd 48 89 da 48 b8 00 00 00 00 00 fc ff
-RSP: 0018:ffffc9000d980000 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffffffff84405990 RCX: ffffffff844059d3
-RDX: ffff8881028e0000 RSI: ffffffff84405ac2 RDI: ffff88810c02f358
-RBP: ffff88810c02f358 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000224 R12: 0000000000000000
-R13: ffff888007c82c78 R14: ffff888007c82c68 R15: ffff888007c82c68
-FS:  0000000000000000(0000) GS:ffff88811b100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffc9000d97fff8 CR3: 0000000102309002 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <#DF>
- </#DF>
- <TASK>
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- ...
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
- netlink_sock_destruct (net/netlink/af_netlink.c:401)
- __sk_destruct (net/core/sock.c:2177 (discriminator 2))
- sk_destruct (net/core/sock.c:2224)
- __sk_free (net/core/sock.c:2235)
- sk_free (net/core/sock.c:2246)
- process_one_work (kernel/workqueue.c:3259)
- worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
- kthread (kernel/kthread.c:388)
- ret_from_fork (arch/x86/kernel/process.c:153)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:256)
-Modules linked in:
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240401211003.25274-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20211129201537.1932819-2-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- net/ipv6/ip6_fib.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/notify/fanotify/fanotify_user.c |  8 ++++----
+ fs/notify/group.c                  |  2 +-
+ fs/notify/mark.c                   | 27 +++++++++++++++------------
+ include/linux/fsnotify_backend.h   | 28 ++++++++++++----------------
+ 4 files changed, 32 insertions(+), 33 deletions(-)
 
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -645,19 +645,19 @@ static int inet6_dump_fib(struct sk_buff
- 	if (!w) {
- 		/* New dump:
- 		 *
--		 * 1. hook callback destructor.
--		 */
--		cb->args[3] = (long)cb->done;
--		cb->done = fib6_dump_done;
--
--		/*
--		 * 2. allocate and initialize walker.
-+		 * 1. allocate and initialize walker.
- 		 */
- 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
- 		if (!w)
- 			return -ENOMEM;
- 		w->func = fib6_dump_node;
- 		cb->args[2] = (long)w;
-+
-+		/* 2. hook callback destructor.
-+		 */
-+		cb->args[3] = (long)cb->done;
-+		cb->done = fib6_dump_done;
-+
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 58b0a7fabd4a6..e8f6c843e9204 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1057,7 +1057,7 @@ static __u32 fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
+ 
+ static struct fsnotify_mark *fanotify_add_new_mark(struct fsnotify_group *group,
+ 						   fsnotify_connp_t *connp,
+-						   unsigned int type,
++						   unsigned int obj_type,
+ 						   __kernel_fsid_t *fsid)
+ {
+ 	struct ucounts *ucounts = group->fanotify_data.ucounts;
+@@ -1080,7 +1080,7 @@ static struct fsnotify_mark *fanotify_add_new_mark(struct fsnotify_group *group,
  	}
  
- 	arg.skb = skb;
+ 	fsnotify_init_mark(mark, group);
+-	ret = fsnotify_add_mark_locked(mark, connp, type, 0, fsid);
++	ret = fsnotify_add_mark_locked(mark, connp, obj_type, 0, fsid);
+ 	if (ret) {
+ 		fsnotify_put_mark(mark);
+ 		goto out_dec_ucounts;
+@@ -1105,7 +1105,7 @@ static int fanotify_group_init_error_pool(struct fsnotify_group *group)
+ }
+ 
+ static int fanotify_add_mark(struct fsnotify_group *group,
+-			     fsnotify_connp_t *connp, unsigned int type,
++			     fsnotify_connp_t *connp, unsigned int obj_type,
+ 			     __u32 mask, unsigned int flags,
+ 			     __kernel_fsid_t *fsid)
+ {
+@@ -1116,7 +1116,7 @@ static int fanotify_add_mark(struct fsnotify_group *group,
+ 	mutex_lock(&group->mark_mutex);
+ 	fsn_mark = fsnotify_find_mark(connp, group);
+ 	if (!fsn_mark) {
+-		fsn_mark = fanotify_add_new_mark(group, connp, type, fsid);
++		fsn_mark = fanotify_add_new_mark(group, connp, obj_type, fsid);
+ 		if (IS_ERR(fsn_mark)) {
+ 			mutex_unlock(&group->mark_mutex);
+ 			return PTR_ERR(fsn_mark);
+diff --git a/fs/notify/group.c b/fs/notify/group.c
+index 6a297efc47887..b7d4d64f87c29 100644
+--- a/fs/notify/group.c
++++ b/fs/notify/group.c
+@@ -58,7 +58,7 @@ void fsnotify_destroy_group(struct fsnotify_group *group)
+ 	fsnotify_group_stop_queueing(group);
+ 
+ 	/* Clear all marks for this group and queue them for destruction */
+-	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_ALL_TYPES_MASK);
++	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_ANY);
+ 
+ 	/*
+ 	 * Some marks can still be pinned when waiting for response from
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index bea106fac0901..7c0946e16918a 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -496,7 +496,7 @@ int fsnotify_compare_groups(struct fsnotify_group *a, struct fsnotify_group *b)
+ }
+ 
+ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
+-					       unsigned int type,
++					       unsigned int obj_type,
+ 					       __kernel_fsid_t *fsid)
+ {
+ 	struct inode *inode = NULL;
+@@ -507,7 +507,7 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
+ 		return -ENOMEM;
+ 	spin_lock_init(&conn->lock);
+ 	INIT_HLIST_HEAD(&conn->list);
+-	conn->type = type;
++	conn->type = obj_type;
+ 	conn->obj = connp;
+ 	/* Cache fsid of filesystem containing the object */
+ 	if (fsid) {
+@@ -572,7 +572,8 @@ static struct fsnotify_mark_connector *fsnotify_grab_connector(
+  * priority, highest number first, and then by the group's location in memory.
+  */
+ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
+-				  fsnotify_connp_t *connp, unsigned int type,
++				  fsnotify_connp_t *connp,
++				  unsigned int obj_type,
+ 				  int allow_dups, __kernel_fsid_t *fsid)
+ {
+ 	struct fsnotify_mark *lmark, *last = NULL;
+@@ -580,7 +581,7 @@ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
+ 	int cmp;
+ 	int err = 0;
+ 
+-	if (WARN_ON(!fsnotify_valid_obj_type(type)))
++	if (WARN_ON(!fsnotify_valid_obj_type(obj_type)))
+ 		return -EINVAL;
+ 
+ 	/* Backend is expected to check for zero fsid (e.g. tmpfs) */
+@@ -592,7 +593,8 @@ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
+ 	conn = fsnotify_grab_connector(connp);
+ 	if (!conn) {
+ 		spin_unlock(&mark->lock);
+-		err = fsnotify_attach_connector_to_object(connp, type, fsid);
++		err = fsnotify_attach_connector_to_object(connp, obj_type,
++							  fsid);
+ 		if (err)
+ 			return err;
+ 		goto restart;
+@@ -665,7 +667,7 @@ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
+  * event types should be delivered to which group.
+  */
+ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+-			     fsnotify_connp_t *connp, unsigned int type,
++			     fsnotify_connp_t *connp, unsigned int obj_type,
+ 			     int allow_dups, __kernel_fsid_t *fsid)
+ {
+ 	struct fsnotify_group *group = mark->group;
+@@ -686,7 +688,7 @@ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ 	fsnotify_get_mark(mark); /* for g_list */
+ 	spin_unlock(&mark->lock);
+ 
+-	ret = fsnotify_add_mark_list(mark, connp, type, allow_dups, fsid);
++	ret = fsnotify_add_mark_list(mark, connp, obj_type, allow_dups, fsid);
+ 	if (ret)
+ 		goto err;
+ 
+@@ -706,13 +708,14 @@ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ }
+ 
+ int fsnotify_add_mark(struct fsnotify_mark *mark, fsnotify_connp_t *connp,
+-		      unsigned int type, int allow_dups, __kernel_fsid_t *fsid)
++		      unsigned int obj_type, int allow_dups,
++		      __kernel_fsid_t *fsid)
+ {
+ 	int ret;
+ 	struct fsnotify_group *group = mark->group;
+ 
+ 	mutex_lock(&group->mark_mutex);
+-	ret = fsnotify_add_mark_locked(mark, connp, type, allow_dups, fsid);
++	ret = fsnotify_add_mark_locked(mark, connp, obj_type, allow_dups, fsid);
+ 	mutex_unlock(&group->mark_mutex);
+ 	return ret;
+ }
+@@ -747,14 +750,14 @@ EXPORT_SYMBOL_GPL(fsnotify_find_mark);
+ 
+ /* Clear any marks in a group with given type mask */
+ void fsnotify_clear_marks_by_group(struct fsnotify_group *group,
+-				   unsigned int type_mask)
++				   unsigned int obj_type)
+ {
+ 	struct fsnotify_mark *lmark, *mark;
+ 	LIST_HEAD(to_free);
+ 	struct list_head *head = &to_free;
+ 
+ 	/* Skip selection step if we want to clear all marks. */
+-	if (type_mask == FSNOTIFY_OBJ_ALL_TYPES_MASK) {
++	if (obj_type == FSNOTIFY_OBJ_TYPE_ANY) {
+ 		head = &group->marks_list;
+ 		goto clear;
+ 	}
+@@ -769,7 +772,7 @@ void fsnotify_clear_marks_by_group(struct fsnotify_group *group,
+ 	 */
+ 	mutex_lock(&group->mark_mutex);
+ 	list_for_each_entry_safe(mark, lmark, &group->marks_list, g_list) {
+-		if ((1U << mark->connector->type) & type_mask)
++		if (mark->connector->type == obj_type)
+ 			list_move(&mark->g_list, &to_free);
+ 	}
+ 	mutex_unlock(&group->mark_mutex);
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index 51ef2b079bfa0..b9c84b1dbcc8f 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -338,6 +338,7 @@ static inline struct fs_error_report *fsnotify_data_error_report(
+ }
+ 
+ enum fsnotify_obj_type {
++	FSNOTIFY_OBJ_TYPE_ANY = -1,
+ 	FSNOTIFY_OBJ_TYPE_INODE,
+ 	FSNOTIFY_OBJ_TYPE_PARENT,
+ 	FSNOTIFY_OBJ_TYPE_VFSMOUNT,
+@@ -346,15 +347,9 @@ enum fsnotify_obj_type {
+ 	FSNOTIFY_OBJ_TYPE_DETACHED = FSNOTIFY_OBJ_TYPE_COUNT
+ };
+ 
+-#define FSNOTIFY_OBJ_TYPE_INODE_FL	(1U << FSNOTIFY_OBJ_TYPE_INODE)
+-#define FSNOTIFY_OBJ_TYPE_PARENT_FL	(1U << FSNOTIFY_OBJ_TYPE_PARENT)
+-#define FSNOTIFY_OBJ_TYPE_VFSMOUNT_FL	(1U << FSNOTIFY_OBJ_TYPE_VFSMOUNT)
+-#define FSNOTIFY_OBJ_TYPE_SB_FL		(1U << FSNOTIFY_OBJ_TYPE_SB)
+-#define FSNOTIFY_OBJ_ALL_TYPES_MASK	((1U << FSNOTIFY_OBJ_TYPE_COUNT) - 1)
+-
+-static inline bool fsnotify_valid_obj_type(unsigned int type)
++static inline bool fsnotify_valid_obj_type(unsigned int obj_type)
+ {
+-	return (type < FSNOTIFY_OBJ_TYPE_COUNT);
++	return (obj_type < FSNOTIFY_OBJ_TYPE_COUNT);
+ }
+ 
+ struct fsnotify_iter_info {
+@@ -387,7 +382,7 @@ static inline void fsnotify_iter_set_report_type_mark(
+ static inline struct fsnotify_mark *fsnotify_iter_##name##_mark( \
+ 		struct fsnotify_iter_info *iter_info) \
+ { \
+-	return (iter_info->report_mask & FSNOTIFY_OBJ_TYPE_##NAME##_FL) ? \
++	return (iter_info->report_mask & (1U << FSNOTIFY_OBJ_TYPE_##NAME)) ? \
+ 		iter_info->marks[FSNOTIFY_OBJ_TYPE_##NAME] : NULL; \
+ }
+ 
+@@ -604,11 +599,11 @@ extern int fsnotify_get_conn_fsid(const struct fsnotify_mark_connector *conn,
+ 				  __kernel_fsid_t *fsid);
+ /* attach the mark to the object */
+ extern int fsnotify_add_mark(struct fsnotify_mark *mark,
+-			     fsnotify_connp_t *connp, unsigned int type,
++			     fsnotify_connp_t *connp, unsigned int obj_type,
+ 			     int allow_dups, __kernel_fsid_t *fsid);
+ extern int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ 				    fsnotify_connp_t *connp,
+-				    unsigned int type, int allow_dups,
++				    unsigned int obj_type, int allow_dups,
+ 				    __kernel_fsid_t *fsid);
+ 
+ /* attach the mark to the inode */
+@@ -637,22 +632,23 @@ extern void fsnotify_detach_mark(struct fsnotify_mark *mark);
+ extern void fsnotify_free_mark(struct fsnotify_mark *mark);
+ /* Wait until all marks queued for destruction are destroyed */
+ extern void fsnotify_wait_marks_destroyed(void);
+-/* run all the marks in a group, and clear all of the marks attached to given object type */
+-extern void fsnotify_clear_marks_by_group(struct fsnotify_group *group, unsigned int type);
++/* Clear all of the marks of a group attached to a given object type */
++extern void fsnotify_clear_marks_by_group(struct fsnotify_group *group,
++					  unsigned int obj_type);
+ /* run all the marks in a group, and clear all of the vfsmount marks */
+ static inline void fsnotify_clear_vfsmount_marks_by_group(struct fsnotify_group *group)
+ {
+-	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_VFSMOUNT_FL);
++	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_VFSMOUNT);
+ }
+ /* run all the marks in a group, and clear all of the inode marks */
+ static inline void fsnotify_clear_inode_marks_by_group(struct fsnotify_group *group)
+ {
+-	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_INODE_FL);
++	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_INODE);
+ }
+ /* run all the marks in a group, and clear all of the sn marks */
+ static inline void fsnotify_clear_sb_marks_by_group(struct fsnotify_group *group)
+ {
+-	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_SB_FL);
++	fsnotify_clear_marks_by_group(group, FSNOTIFY_OBJ_TYPE_SB);
+ }
+ extern void fsnotify_get_mark(struct fsnotify_mark *mark);
+ extern void fsnotify_put_mark(struct fsnotify_mark *mark);
+-- 
+2.43.0
+
 
 
