@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AC62DF73;
-	Mon,  8 Apr 2024 13:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9DF2DF73;
+	Mon,  8 Apr 2024 13:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582787; cv=none; b=tPufBsLTNUwtASzGpRlO0KdrvkAGYwIEX7kAY6EXKpHXScHb4gp1muueTgfuBy+dLtALQI+Le+KI6H6ZJdVhdxPJG8m/iiQpqc+qS1ShQKDlznZklrlIWRNM+E2U3aH4nfZ/LOLnaVOi0I60DxnYt4hkyIMny1yISQLxVvaGy3U=
+	t=1712582790; cv=none; b=sxp+JeWDAF3i/2JDPg/X3KuPSAOAe6GGpDZAjAqu6/1CIVDNITesCvnWpzLMO+CaYLbrPGVmFT5rDCzzbV23IJn5Zd52IQFzF2U0fYYHVwZcdNxtzwcpc0G/2zCS+OBctzGjd/HKbLME1CxeKwPiN5gpw4Q3g0K7bNhgjR85eHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582787; c=relaxed/simple;
-	bh=yUOQCrDIhYzusdtcc0zSQ6G8QchPyuiLnfMutQKdxPM=;
+	s=arc-20240116; t=1712582790; c=relaxed/simple;
+	bh=abEaaUcRm6DvMHULovQuQuVujQJFuVb9n3BaRqBvXE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6JNq59oBp6hzrZ22uOVvVHGtevmm4FuslDt8n9Z15XvyiD6pRV0v5Xkp7f3NVtTzt5QMsyysqtiouoziIuL+FIuX8bjKNLllM6u2IjxstJ2x+lXehHGjf0Ls7Skr1oDI2pnQlMMEWcYf1MfCIkt+B46uSJTU3sJqTej7OKE5Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ub29sgDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBtAMVDUQMrlDB6KmkI/IyBaEfJ28QB3EZHLwGdcEDFsZL6CqgeNWrfOb3fOM0Kqycn1dKbdSlSYNUAgix/eJ8dDnwSAJGEfD0AcRGxvu6w/JnqKdw4PHrCErZqrdrb8xdqRMKLyGs9tVf2GPI8ge7gcDODUM+rPCdSay6i+uoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1YVlYlw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub29sgDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D580EC433F1;
-	Mon,  8 Apr 2024 13:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1YVlYlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB969C433C7;
+	Mon,  8 Apr 2024 13:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582787;
-	bh=yUOQCrDIhYzusdtcc0zSQ6G8QchPyuiLnfMutQKdxPM=;
+	s=korg; t=1712582790;
+	bh=abEaaUcRm6DvMHULovQuQuVujQJFuVb9n3BaRqBvXE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ub29sgDbHqWrEWGL+/jkyL/CS6mQnf9nnNezRm5mW+3wxsdclZY7LIQ5R5+IDHJbp
-	 vQ1uDSysinhbMrf05yaC1VnA42eVSxf4SZgzw/OR74glfa5+8WhR1REXircTDwb1ig
-	 NcX3rHyniWrcPCJ2nlhR8Dw7tcbnIHmKzwfPPIMU=
+	b=O1YVlYlwPLZDUPSMBhViTySh41BBJdZfipVuKtiON4U/wSmbB/Caol7knBAw1/17a
+	 dCbpLkczCyQn/w1O/X8e1s/gPfzvvBDUJAR2wuX1oOMARDDRMxTWfSpA6mDTUKD9TA
+	 Tq6c9Yyp0psCOgmjTNuxMlS0cCgFKk4YasO7ijcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 105/273] net: phy: micrel: Fix potential null pointer dereference
-Date: Mon,  8 Apr 2024 14:56:20 +0200
-Message-ID: <20240408125312.568397973@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 124/252] udp: do not transition UDP GRO fraglist partial checksums to unnecessary
+Date: Mon,  8 Apr 2024 14:57:03 +0200
+Message-ID: <20240408125310.473126041@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +47,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit 96c155943a703f0655c0c4cab540f67055960e91 upstream.
+commit f0b8c30345565344df2e33a8417a27503589247d upstream.
 
-In lan8814_get_sig_rx() and lan8814_get_sig_tx() ptp_parse_header() may
-return NULL as ptp_header due to abnormal packet type or corrupted packet.
-Fix this bug by adding ptp_header check.
+UDP GRO validates checksums and in udp4/6_gro_complete fraglist packets
+are converted to CHECKSUM_UNNECESSARY to avoid later checks. However
+this is an issue for CHECKSUM_PARTIAL packets as they can be looped in
+an egress path and then their partial checksums are not fixed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Different issues can be observed, from invalid checksum on packets to
+traces like:
 
-Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240329061631.33199-1-amishin@t-argos.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  gen01: hw csum failure
+  skb len=3008 headroom=160 headlen=1376 tailroom=0
+  mac=(106,14) net=(120,40) trans=160
+  shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
+  csum(0xffff232e ip_summed=2 complete_sw=0 valid=0 level=0)
+  hash(0x77e3d716 sw=1 l4=1) proto=0x86dd pkttype=0 iif=12
+  ...
+
+Fix this by only converting CHECKSUM_NONE packets to
+CHECKSUM_UNNECESSARY by reusing __skb_incr_checksum_unnecessary. All
+other checksum types are kept as-is, including CHECKSUM_COMPLETE as
+fraglist packets being segmented back would have their skb->csum valid.
+
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ net/ipv4/udp_offload.c |    8 +-------
+ net/ipv6/udp_offload.c |    8 +-------
+ 2 files changed, 2 insertions(+), 14 deletions(-)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -2528,7 +2528,7 @@ static void lan8814_txtstamp(struct mii_
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -722,13 +722,7 @@ INDIRECT_CALLABLE_SCOPE int udp4_gro_com
+ 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
+ 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
+ 
+-		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
+-			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
+-				skb->csum_level++;
+-		} else {
+-			skb->ip_summed = CHECKSUM_UNNECESSARY;
+-			skb->csum_level = 0;
+-		}
++		__skb_incr_checksum_unnecessary(skb);
+ 
+ 		return 0;
  	}
- }
+--- a/net/ipv6/udp_offload.c
++++ b/net/ipv6/udp_offload.c
+@@ -174,13 +174,7 @@ INDIRECT_CALLABLE_SCOPE int udp6_gro_com
+ 		skb_shinfo(skb)->gso_type |= (SKB_GSO_FRAGLIST|SKB_GSO_UDP_L4);
+ 		skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
  
--static void lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
-+static bool lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
- {
- 	struct ptp_header *ptp_header;
- 	u32 type;
-@@ -2538,7 +2538,11 @@ static void lan8814_get_sig_rx(struct sk
- 	ptp_header = ptp_parse_header(skb, type);
- 	skb_pull_inline(skb, ETH_HLEN);
+-		if (skb->ip_summed == CHECKSUM_UNNECESSARY) {
+-			if (skb->csum_level < SKB_MAX_CSUM_LEVEL)
+-				skb->csum_level++;
+-		} else {
+-			skb->ip_summed = CHECKSUM_UNNECESSARY;
+-			skb->csum_level = 0;
+-		}
++		__skb_incr_checksum_unnecessary(skb);
  
-+	if (!ptp_header)
-+		return false;
-+
- 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
-+	return true;
- }
- 
- static bool lan8814_match_rx_skb(struct kszphy_ptp_priv *ptp_priv,
-@@ -2550,7 +2554,8 @@ static bool lan8814_match_rx_skb(struct
- 	bool ret = false;
- 	u16 skb_sig;
- 
--	lan8814_get_sig_rx(skb, &skb_sig);
-+	if (!lan8814_get_sig_rx(skb, &skb_sig))
-+		return ret;
- 
- 	/* Iterate over all RX timestamps and match it with the received skbs */
- 	spin_lock_irqsave(&ptp_priv->rx_ts_lock, flags);
-@@ -2830,7 +2835,7 @@ static int lan8814_ptpci_adjfine(struct
- 	return 0;
- }
- 
--static void lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
-+static bool lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
- {
- 	struct ptp_header *ptp_header;
- 	u32 type;
-@@ -2838,7 +2843,11 @@ static void lan8814_get_sig_tx(struct sk
- 	type = ptp_classify_raw(skb);
- 	ptp_header = ptp_parse_header(skb, type);
- 
-+	if (!ptp_header)
-+		return false;
-+
- 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
-+	return true;
- }
- 
- static void lan8814_match_tx_skb(struct kszphy_ptp_priv *ptp_priv,
-@@ -2852,7 +2861,8 @@ static void lan8814_match_tx_skb(struct
- 
- 	spin_lock_irqsave(&ptp_priv->tx_queue.lock, flags);
- 	skb_queue_walk_safe(&ptp_priv->tx_queue, skb, skb_tmp) {
--		lan8814_get_sig_tx(skb, &skb_sig);
-+		if (!lan8814_get_sig_tx(skb, &skb_sig))
-+			continue;
- 
- 		if (memcmp(&skb_sig, &seq_id, sizeof(seq_id)))
- 			continue;
-@@ -2906,7 +2916,8 @@ static bool lan8814_match_skb(struct ksz
- 
- 	spin_lock_irqsave(&ptp_priv->rx_queue.lock, flags);
- 	skb_queue_walk_safe(&ptp_priv->rx_queue, skb, skb_tmp) {
--		lan8814_get_sig_rx(skb, &skb_sig);
-+		if (!lan8814_get_sig_rx(skb, &skb_sig))
-+			continue;
- 
- 		if (memcmp(&skb_sig, &rx_ts->seq_id, sizeof(rx_ts->seq_id)))
- 			continue;
+ 		return 0;
+ 	}
 
 
