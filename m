@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6587C092;
-	Mon,  8 Apr 2024 13:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5BD7C6C5;
+	Mon,  8 Apr 2024 13:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583978; cv=none; b=kmHy+SH7RR23ZUdzuRar8Ezxg6S3juBVkv4Ny4Ncj69qb2Ei1LyWa4t986W9KjkpuGRyH85P+JCgfFbXhL/2BUFvXrwh+jZ/T5N9oioLGfqQI9Mbl3qmjA+5h16oce8bSBVUifndO7ZkoOUebbRyJt9b7ZhPyJbyTArR1V89y6E=
+	t=1712583981; cv=none; b=HLWfoStR6RJA7gIbSmSCBOx/88G/0s6Oh84gEM1aE203hpUcOe9lbM6nqypVXTSfzrhmx6jlq1t5HzGCztqVzkznt/InV2yTTFdzzdGRYXQUfYDvV02+CoBA08fNUJ4K1uOtbWAuoo1MzCG+pA0VYaH7xoNbkHjLwejZAoshayo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583978; c=relaxed/simple;
-	bh=T4996eeippnpCifAlxMWQ2+lkfbwGcmrawYEsuN19Nk=;
+	s=arc-20240116; t=1712583981; c=relaxed/simple;
+	bh=ToATflDgHrTJHE1YZuViVgzeD+a9JuhRgQ03zQEIbfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtOgXIOpXjzLkH5qSRLRM7a1OVrIsJXlob//WkIib4e/stqVOuXR8ny6/TgIGxGGOJecs+yNbHR+jtB/k2lTuMBlFArg25L11PqoE0oyzqjgGAikWbDU8LL5IF8R84/ncidQxuNGO1omYaDEhrHDJu8xN1M2DcGu9aKgdg4JHwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qx0VNV5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZiaLHUo/SuUvVJjKvGqY+iYtRSAELvP9a4TF/JyGndRH2Zl/IoJ9+f/UY+H4eF8xQTdnUnpGRsgqgxwvbvRA0n90cUM/XIWNC5uKrPo2RQZUeiqeY8zh5RxoPSInX+tTJyj/FcLT4vL9e3SJW2La/hKJtcshk+sJlIdXQAJPhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH54EwZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qx0VNV5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E967FC433C7;
-	Mon,  8 Apr 2024 13:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH54EwZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6475C433F1;
+	Mon,  8 Apr 2024 13:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583978;
-	bh=T4996eeippnpCifAlxMWQ2+lkfbwGcmrawYEsuN19Nk=;
+	s=korg; t=1712583981;
+	bh=ToATflDgHrTJHE1YZuViVgzeD+a9JuhRgQ03zQEIbfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qx0VNV5cnSVZ/2ivZx9/cVwAFd0J4+bwYc7tDCeY40INQaCScxQ8h4rZCj7V7e+Ke
-	 uYKANwk9f9rnhdoy7IfHBnU50VusCzPCKv6Re1GXKc0g+DSz6Ysafx0btFqac4LbNO
-	 jNcPykJ2fUjohekKOIkSIyhHDWxbVEERBxK5ikOc=
+	b=mH54EwZh4I8Vbx6uqY2j49VaHLNpAK88CEPO9wRYn/FDLtOhcHPqjByZH4zYreqzx
+	 FgVRTrLPO+qmA1/pY6fqSQuyT12YJ0LWUf6eGbnLDNOwsvaowV0Gx1yMiKE9g76Twq
+	 cx11ntmAPYB/Y1mQzZSzN0pBl3+2cwvRNl1TW8us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.8 241/273] riscv: Fix spurious errors from __get/put_kernel_nofault
-Date: Mon,  8 Apr 2024 14:58:36 +0200
-Message-ID: <20240408125316.918309300@linuxfoundation.org>
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 310/690] fs/lock: add helper locks_owner_has_blockers to check for blockers
+Date: Mon,  8 Apr 2024 14:52:56 +0200
+Message-ID: <20240408125410.821039427@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit d080a08b06b6266cc3e0e86c5acfd80db937cb6b upstream.
+[ Upstream commit 591502c5cb325b1c6ec59ab161927d606b918aa0 ]
 
-These macros did not initialize __kr_err, so they could fail even if
-the access did not fault.
+Add helper locks_owner_has_blockers to check if there is any blockers
+for a given lockowner.
 
-Cc: stable@vger.kernel.org
-Fixes: d464118cdc41 ("riscv: implement __get_kernel_nofault and __put_user_nofault")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20240312022030.320789-1-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/riscv/include/asm/uaccess.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/locks.c         | 28 ++++++++++++++++++++++++++++
+ include/linux/fs.h |  7 +++++++
+ 2 files changed, 35 insertions(+)
 
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -319,7 +319,7 @@ unsigned long __must_check clear_user(vo
+diff --git a/fs/locks.c b/fs/locks.c
+index 4899a4666f24d..f8c4844ebcce4 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -376,6 +376,34 @@ void locks_release_private(struct file_lock *fl)
+ }
+ EXPORT_SYMBOL_GPL(locks_release_private);
  
- #define __get_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__get_user_nocheck(*((type *)(dst)), (type *)(src), __kr_err);	\
- 	if (unlikely(__kr_err))						\
-@@ -328,7 +328,7 @@ do {									\
++/**
++ * locks_owner_has_blockers - Check for blocking lock requests
++ * @flctx: file lock context
++ * @owner: lock owner
++ *
++ * Return values:
++ *   %true: @owner has at least one blocker
++ *   %false: @owner has no blockers
++ */
++bool locks_owner_has_blockers(struct file_lock_context *flctx,
++		fl_owner_t owner)
++{
++	struct file_lock *fl;
++
++	spin_lock(&flctx->flc_lock);
++	list_for_each_entry(fl, &flctx->flc_posix, fl_list) {
++		if (fl->fl_owner != owner)
++			continue;
++		if (!list_empty(&fl->fl_blocked_requests)) {
++			spin_unlock(&flctx->flc_lock);
++			return true;
++		}
++	}
++	spin_unlock(&flctx->flc_lock);
++	return false;
++}
++EXPORT_SYMBOL_GPL(locks_owner_has_blockers);
++
+ /* Free a lock which is not in use. */
+ void locks_free_lock(struct file_lock *fl)
+ {
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index f32723d937fb5..9b7ce642d4f08 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1212,6 +1212,8 @@ extern void lease_unregister_notifier(struct notifier_block *);
+ struct files_struct;
+ extern void show_fd_locks(struct seq_file *f,
+ 			 struct file *filp, struct files_struct *files);
++extern bool locks_owner_has_blockers(struct file_lock_context *flctx,
++			fl_owner_t owner);
+ #else /* !CONFIG_FILE_LOCKING */
+ static inline int fcntl_getlk(struct file *file, unsigned int cmd,
+ 			      struct flock __user *user)
+@@ -1352,6 +1354,11 @@ static inline int lease_modify(struct file_lock *fl, int arg,
+ struct files_struct;
+ static inline void show_fd_locks(struct seq_file *f,
+ 			struct file *filp, struct files_struct *files) {}
++static inline bool locks_owner_has_blockers(struct file_lock_context *flctx,
++			fl_owner_t owner)
++{
++	return false;
++}
+ #endif /* !CONFIG_FILE_LOCKING */
  
- #define __put_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__put_user_nocheck(*((type *)(src)), (type *)(dst), __kr_err);	\
- 	if (unlikely(__kr_err))						\
+ static inline struct inode *file_inode(const struct file *f)
+-- 
+2.43.0
+
 
 
