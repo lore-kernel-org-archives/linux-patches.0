@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1882E405;
-	Mon,  8 Apr 2024 13:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329287D3F7;
+	Mon,  8 Apr 2024 13:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582825; cv=none; b=Q8D7EL0X/kLXohNpFNAlI19iXjJdV0hw/e1NHjdo5U6e7dOZ2lMth4U/lUMPfko8aY9gjlURK06EmbJZWtHjKZ3uXFHKUuZ105m44Ol57Rgv4e5exZyvG8+jQdiksLEQqtF/cmoOWs4cR12MXq8wanaQKncrEr72aEtkzSpgeQY=
+	t=1712582828; cv=none; b=VOYH7uZo9ORQYXtCrnFrHvlX7gDmJIVIngZTVRRrRiHkTwna/VKeHnGXwf/1lhWVnHQkwHk6TQLyhJxmll3C/iT9bYaF/kUku6b5/95robgWg7eFUkFR879mQhaFuCJmkBxPOKe12KgufrCmGMkBEZOe78DAvCx2PK1KKgNw7hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582825; c=relaxed/simple;
-	bh=VuBCR92U/0DvCH5xQYa+uKVxVnhcj0uRCpgzUAkv7jE=;
+	s=arc-20240116; t=1712582828; c=relaxed/simple;
+	bh=sM1sIl563BEP+ismBOHzlBSjxo6AhSyC7SrYq2hAl3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qU6Em0XRX0bnCMwdWAvo/H7V3427nPWyv8MtvF/+e0RzP1PiKMmlrX5wtOCElFHsGUFLYDVo31vMguBGD5Gfk8/BqqWNgl8W8yGNf3OxXQqYSK76NC2UvMyakmZ0+7U2LOppiuGVBpIMhVissO+TxA5jCQoy0KnAt1tAAhQhSHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNqHFeOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t9HP+xyXx3GAvFQGMP8mFwkeu0HvX7if8LtpCRh4E5RGEpixZb6ZqZ0t9Ak7I/XW+41uJdfUzjMcrPli8vkJWuGkoB+CkrBlOKRW5v/z/cUc1Vr/ZwKH6bVphjHAcoFcBu00c7hDNJLXux/upDPHsV0Cg7VUYAbzKAK3Mi4+7Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBe7gkhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNqHFeOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95C3C433C7;
-	Mon,  8 Apr 2024 13:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBe7gkhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DA6C433C7;
+	Mon,  8 Apr 2024 13:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582825;
-	bh=VuBCR92U/0DvCH5xQYa+uKVxVnhcj0uRCpgzUAkv7jE=;
+	s=korg; t=1712582828;
+	bh=sM1sIl563BEP+ismBOHzlBSjxo6AhSyC7SrYq2hAl3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNqHFeOd/UmqSuyI+GetVifQKSXt0I2SmySee1rSp7sIV8dVONgjXGnbaXe8066RB
-	 BKU1tQ2z0D2Z4OJazTL+/6I39+WP3HhORnpIGO6A9ZMFMOAkQad+Ake8oz4LcIg/m5
-	 jayKf64QtBMsYKL3vYmo+A4gS/uMwGeK20yeS1wU=
+	b=qBe7gkhU2aJ/RggmMBZb18ZQLdEhxTHM3MR+/4DHNhU5CUM/Au4lNqmW4QBKQ2+dB
+	 2/FG1yAwVIWJwZ6u/n8aZaDTuwBxv9PQ3r5Rk6VR8UfsvKnnMXCuyyy71bwzYOruTQ
+	 OPYtDBBn5gRAfmPQnAXriH+VddNgr1UheP5mjV5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.8 108/273] gro: fix ownership transfer
-Date: Mon,  8 Apr 2024 14:56:23 +0200
-Message-ID: <20240408125312.658101895@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 127/252] octeontx2-pf: check negative error code in otx2_open()
+Date: Mon,  8 Apr 2024 14:57:06 +0200
+Message-ID: <20240408125310.564788039@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-commit ed4cccef64c1d0d5b91e69f7a8a6697c3a865486 upstream.
+commit e709acbd84fb6ef32736331b0147f027a3ef4c20 upstream.
 
-If packets are GROed with fraglist they might be segmented later on and
-continue their journey in the stack. In skb_segment_list those skbs can
-be reused as-is. This is an issue as their destructor was removed in
-skb_gro_receive_list but not the reference to their socket, and then
-they can't be orphaned. Fix this by also removing the reference to the
-socket.
+otx2_rxtx_enable() return negative error code such as -EIO,
+check -EIO rather than EIO to fix this problem.
 
-For example this could be observed,
-
-  kernel BUG at include/linux/skbuff.h:3131!  (skb_orphan)
-  RIP: 0010:ip6_rcv_core+0x11bc/0x19a0
-  Call Trace:
-   ipv6_list_rcv+0x250/0x3f0
-   __netif_receive_skb_list_core+0x49d/0x8f0
-   netif_receive_skb_list_internal+0x634/0xd40
-   napi_complete_done+0x1d2/0x7d0
-   gro_cell_poll+0x118/0x1f0
-
-A similar construction is found in skb_gro_receive, apply the same
-change there.
-
-Fixes: 5e10da5385d2 ("skbuff: allow 'slow_gro' for skb carring sock reference")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c926252205c4 ("octeontx2-pf: Disable packet I/O for graceful exit")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://lore.kernel.org/r/20240328020620.4054692-1-suhui@nfschina.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/gro.c         |    3 ++-
- net/ipv4/udp_offload.c |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -195,8 +195,9 @@ int skb_gro_receive(struct sk_buff *p, s
- 	}
- 
- merge:
--	/* sk owenrship - if any - completely transferred to the aggregated packet */
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
- 	skb->destructor = NULL;
-+	skb->sk = NULL;
- 	delta_truesize = skb->truesize;
- 	if (offset > headlen) {
- 		unsigned int eat = offset - headlen;
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -449,8 +449,9 @@ static int skb_gro_receive_list(struct s
- 	NAPI_GRO_CB(p)->count++;
- 	p->data_len += skb->len;
- 
--	/* sk owenrship - if any - completely transferred to the aggregated packet */
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
- 	skb->destructor = NULL;
-+	skb->sk = NULL;
- 	p->truesize += skb->truesize;
- 	p->len += skb->len;
- 
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1933,7 +1933,7 @@ int otx2_open(struct net_device *netdev)
+ 	 * mcam entries are enabled to receive the packets. Hence disable the
+ 	 * packet I/O.
+ 	 */
+-	if (err == EIO)
++	if (err == -EIO)
+ 		goto err_disable_rxtx;
+ 	else if (err)
+ 		goto err_tx_stop_queues;
 
 
