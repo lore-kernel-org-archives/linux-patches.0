@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEC2DF73;
-	Mon,  8 Apr 2024 13:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CD82E62C;
+	Mon,  8 Apr 2024 13:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581645; cv=none; b=dsqR7/vtkZM5QuHrXZS6HlfEbTz1nop2Zn7ts+BZI5PwW6ZAf8jc/DkEmNqAZ7t5dQNg8V9W9Aqf2o2Q9tgySXDebIcHDJU7g4cOR3bxFyne5gi0+zMXnEx4rFB4/YVGU4byHI3RtSaHm4TqccGCtShd8+PHWM8rNOZ17nievDg=
+	t=1712581648; cv=none; b=KeJrudqcWJhrMQai5mNvLJVtApOLhKjfhYJHfDf2AavKGtMIk23fzWvPgfcJOeCro3sbqr1LnUimN+5qIx0s0i4VCUYbQ76HJYGI1jOqbOhTu34VbONQaUZisWkmKr74XWZGrsdBtD3Lo8wSP9fQwrDSXbVPId8/kVn8noZ6EK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581645; c=relaxed/simple;
-	bh=NUsdpof4R7/qY9JOb6s9aYkNeOYkNRJSpT7K6zhlIXU=;
+	s=arc-20240116; t=1712581648; c=relaxed/simple;
+	bh=T9Gekoz+NXHhQB4rnrRvgIIByV+a5VkAWaMtx9dZZ8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdUWBi6ngLD86MbuZ6KZsjbhNPXvAlbzvZrOwFCdjqPCPdFqX6jQOllxU23RaWDSMZ2Xquvlkqo6uDZV7xu1CXd7xMkSivnagfS7qnASgzEV0qzj4N6Fj6ue5RGMwIu91e6hnv8ZRXagtlE+pwibUlU/gZX7k5xu+eDsd2Ak+jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8TgWu7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCHNQJrdRsDh8XFfa35u8grpRuLu1sByjyHYmTTjT4m2GaRM5/p9Huc4VYAoPj6CsPUWuaX+WgW5iOMJdwByEhyJ0U+W9v2m/WmQJF5QriqNWm53JiuRn/+7HAM8nvhtEJdlNatE5enA0jyMAdz+9kxgtke9kNzUvNK3VvWFlaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etNUasZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8TgWu7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69043C433F1;
-	Mon,  8 Apr 2024 13:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etNUasZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D696C433F1;
+	Mon,  8 Apr 2024 13:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581644;
-	bh=NUsdpof4R7/qY9JOb6s9aYkNeOYkNRJSpT7K6zhlIXU=;
+	s=korg; t=1712581647;
+	bh=T9Gekoz+NXHhQB4rnrRvgIIByV+a5VkAWaMtx9dZZ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8TgWu7rnhelJpWYnfZN0Jui5/YTQJ7GMDErcXuTM7hBeZ+UVid60x19ESvF8U6tk
-	 NCcGVen1folo/HyXXdMuQxHIKUWqGYdPpeMCXrA0Sza5Rac/eELYG0hbarKs78v5Z8
-	 BJV4f2NAHnKYe1fK859BBrjVhxdR2IZD58L4isd4=
+	b=etNUasZUR9yoDmeh+HHF8sR6FHLI7TEZjjtFjI1P/qjBWtvkJwOdClAZGyAlMTHqZ
+	 1rxKRlYXp+ILIUsWBqvY4vRLJOWOuVJfdIHKGcNcAwJB7VE4XuYDwnTCbmTTuh/gLu
+	 Sp4UisndSSSdqBZ+20vN9nPteiGiwKOGgITOk1ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
-	Jeremy Cline <jeremy@jcline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com,
-	syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
-Subject: [PATCH 6.8 007/273] nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet
-Date: Mon,  8 Apr 2024 14:54:42 +0200
-Message-ID: <20240408125309.511046440@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 070/690] mmc: core: Fix switch on gp3 partition
+Date: Mon,  8 Apr 2024 14:48:56 +0200
+Message-ID: <20240408125402.051273661@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,55 +49,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-[ Upstream commit d24b03535e5eb82e025219c2f632b485409c898f ]
+[ Upstream commit 4af59a8df5ea930038cd3355e822f5eedf4accc1 ]
 
-syzbot reported the following uninit-value access issue [1][2]:
+Commit e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB
+partitions.") added a mask check for 'part_type', but the mask used was
+wrong leading to the code intended for rpmb also being executed for GP3.
 
-nci_rx_work() parses and processes received packet. When the payload
-length is zero, each message type handler reads uninitialized payload
-and KMSAN detects this issue. The receipt of a packet with a zero-size
-payload is considered unexpected, and therefore, such packets should be
-silently discarded.
+On some MMCs (but not all) this would make gp3 partition inaccessible:
+armadillo:~# head -c 1 < /dev/mmcblk2gp3
+head: standard input: I/O error
+armadillo:~# dmesg -c
+[  422.976583] mmc2: running CQE recovery
+[  423.058182] mmc2: running CQE recovery
+[  423.137607] mmc2: running CQE recovery
+[  423.137802] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 4 prio class 0
+[  423.237125] mmc2: running CQE recovery
+[  423.318206] mmc2: running CQE recovery
+[  423.397680] mmc2: running CQE recovery
+[  423.397837] blk_update_request: I/O error, dev mmcblk2gp3, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[  423.408287] Buffer I/O error on dev mmcblk2gp3, logical block 0, async page read
 
-This patch resolved this issue by checking payload size before calling
-each message type handler codes.
+the part_type values of interest here are defined as follow:
+main  0
+boot0 1
+boot1 2
+rpmb  3
+gp0   4
+gp1   5
+gp2   6
+gp3   7
 
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
-Reported-and-tested-by: syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com
-Reported-and-tested-by: syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7ea9413ea6749baf5574 [1]
-Closes: https://syzkaller.appspot.com/bug?extid=29b5ca705d2e0f4a44d2 [2]
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Jeremy Cline <jeremy@jcline.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+so mask with EXT_CSD_PART_CONFIG_ACC_MASK (7) to correctly identify rpmb
+
+Fixes: e7794c14fd73 ("mmc: rpmb: fixes pause retune on all RPMB partitions.")
+Cc: stable@vger.kernel.org
+Cc: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240306-mmc-partswitch-v1-1-bf116985d950@codewreck.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/core/block.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index cdad47b140fa4..0d26c8ec9993e 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -1516,6 +1516,11 @@ static void nci_rx_work(struct work_struct *work)
- 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
- 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
+diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
+index c3202e2e99e82..281794a50d463 100644
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -862,10 +862,11 @@ static const struct block_device_operations mmc_bdops = {
+ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ 				   unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
  
-+		if (!nci_plen(skb->data)) {
-+			kfree_skb(skb);
-+			break;
-+		}
-+
- 		/* Process frame */
- 		switch (nci_mt(skb->data)) {
- 		case NCI_MT_RSP_PKT:
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		if (card->ext_csd.cmdq_en) {
+ 			ret = mmc_cmdq_disable(card);
+ 			if (ret)
+@@ -880,10 +881,11 @@ static int mmc_blk_part_switch_pre(struct mmc_card *card,
+ static int mmc_blk_part_switch_post(struct mmc_card *card,
+ 				    unsigned int part_type)
+ {
+-	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_RPMB;
++	const unsigned int mask = EXT_CSD_PART_CONFIG_ACC_MASK;
++	const unsigned int rpmb = EXT_CSD_PART_CONFIG_ACC_RPMB;
+ 	int ret = 0;
+ 
+-	if ((part_type & mask) == mask) {
++	if ((part_type & mask) == rpmb) {
+ 		mmc_retune_unpause(card->host);
+ 		if (card->reenable_cmdq && !card->ext_csd.cmdq_en)
+ 			ret = mmc_cmdq_enable(card);
 -- 
 2.43.0
 
