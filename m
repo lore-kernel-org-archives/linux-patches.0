@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3189A6FE35;
-	Mon,  8 Apr 2024 13:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1BC78286;
+	Mon,  8 Apr 2024 13:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582892; cv=none; b=j0llf6ie+aCVz79TJEFoKpkrezQufC79gqw/6BkaMj5IedZfPxDRa6oKmUKMGDJErdsVb+qziNdJnRSBHOVOtNvH078bJRxwdv6rd9CbUwTvgor7KzeAH1byN+dql25HwP/08uEJzRDuIDG1AkU9Phw90MRuPv4z/RZOeGwbli4=
+	t=1712582895; cv=none; b=Z36kIQFi21rPm5ZzkQye6XXH42autihqUOlm7tkbG4+iDoBXj5lZkzo6WBkWqq4lVKJ542ka/2AdsJNJOUKVthEZySDKG185WYFpAFN+JbMEi0ZfSxlvgF2VWR3cgVTG9hnGr8d7TlA+xOtUJ6LU/aRmxkF9dALdw4A4ZvNYCGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582892; c=relaxed/simple;
-	bh=qZh2Rz+KtQDtGp/uzPFSLa5vEJphHLxdTgK3nXN9QmA=;
+	s=arc-20240116; t=1712582895; c=relaxed/simple;
+	bh=CjXwFn1cl35r8jpMEQt6o0kIVEhmY1lUacymVU1oEoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JciOSgmOSpmthpWCTSWk0YB8vPXudJaFiOGBHtUQkfClaA6CjH9DVrJMCSDGp0kJ2Dc8g4fieYNv28tEEFQYlpAhDwhx4b+vO9Nic7rCnjd8bhnpC4z1y59h2Cv7V/SfdL9C9qsyGGbd+Dr610SmJPRq4FM1QxnVDmosSmi96A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YN/ZFP6d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYt83n8bhtTJBG7rArspbFqcEwSEy2zD3jJLcTZjTDQwkFdt/Rj3Ybg8WLlh1rJSkTOguWmqZDUtNSBIEkH6TrHKz9NHDruEDXACtL1Oj1CCUSTXnH6ISgIrX4dCfehYcy5EJKlidIBc4LIAWmKUXFT5ONDapVSIQZjC6CaRt+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odw8yzQI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YN/ZFP6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE28C43394;
-	Mon,  8 Apr 2024 13:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odw8yzQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A203C433C7;
+	Mon,  8 Apr 2024 13:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582892;
-	bh=qZh2Rz+KtQDtGp/uzPFSLa5vEJphHLxdTgK3nXN9QmA=;
+	s=korg; t=1712582895;
+	bh=CjXwFn1cl35r8jpMEQt6o0kIVEhmY1lUacymVU1oEoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YN/ZFP6dCdCVqfkL1wDBbB/8lrI14tgukiJNsgBnY+QPwnLE+mjuIgq77ozFvJ7Va
-	 NPD9kN14VDsOrnyZPQPMIUrFotkurVVHw2ZKWgXOU0dd73BkeRNRVvRZCyoBIdqjdp
-	 7ALqRleQ03qpxj/pb+n5zmWNznZJYLBvftIzpHC0=
+	b=odw8yzQIWtoBN6JwIAG7uWmMCokwKZrnqT0WciFpWObDDZkQB2qe/Ef8Y9E7qhd24
+	 lDxRd6cFL+bQDOJw3MCYFVTkbI2Z/B9zGkfIrfQwif0y8Ep6paP3x8gPcQIot/CHJR
+	 NdeQv5xhLWFQJLA3ndzNXfclBB5/a9ohrP+r8QkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.6 133/252] usb: typec: ucsi: Check for notifications after init
-Date: Mon,  8 Apr 2024 14:57:12 +0200
-Message-ID: <20240408125310.766403766@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 168/690] fsnotify: clarify contract for create event hooks
+Date: Mon,  8 Apr 2024 14:50:34 +0200
+Message-ID: <20240408125405.653551146@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +48,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 808a8b9e0b87bbc72bcc1f7ddfe5d04746e7ce56 ]
+[ Upstream commit dabe729dddca550446e9cc118c96d1f91703345b ]
 
-The completion notification for the final SET_NOTIFICATION_ENABLE
-command during initialization can include a connector change
-notification.  However, at the time this completion notification is
-processed, the ucsi struct is not ready to handle this notification.
-As a result the notification is ignored and the controller
-never sends an interrupt again.
+Clarify argument names and contract for fsnotify_create() and
+fsnotify_mkdir() to reflect the anomaly of kernfs, which leaves dentries
+negavite after mkdir/create.
 
-Re-check CCI for a pending connector state change after
-initialization is complete. Adjust the corresponding debug
-message accordingly.
+Remove the WARN_ON(!inode) in audit code that were added by the Fixes
+commit under the wrong assumption that dentries cannot be negative after
+mkdir/create.
 
-Fixes: 71a1fa0df2a3 ("usb: typec: ucsi: Store the notification mask")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-3-lk@c--e.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aa93bdc5500c ("fsnotify: use helpers to access data by data_type")
+Link: https://lore.kernel.org/linux-fsdevel/87mtp5yz0q.fsf@collabora.com/
+Link: https://lore.kernel.org/r/20211025192746.66445-4-krisman@collabora.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/linux/fsnotify.h | 22 ++++++++++++++++------
+ kernel/audit_fsnotify.c  |  3 +--
+ kernel/audit_watch.c     |  3 +--
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 70d9f4eebf1a7..15fbadaca55b1 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -959,7 +959,7 @@ void ucsi_connector_change(struct ucsi *ucsi, u8 num)
- 	struct ucsi_connector *con = &ucsi->connector[num - 1];
+diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
+index 70e6b147a76ad..a327a95fa68f1 100644
+--- a/include/linux/fsnotify.h
++++ b/include/linux/fsnotify.h
+@@ -192,16 +192,22 @@ static inline void fsnotify_inoderemove(struct inode *inode)
  
- 	if (!(ucsi->ntfy & UCSI_ENABLE_NTFY_CONNECTOR_CHANGE)) {
--		dev_dbg(ucsi->dev, "Bogus connector change event\n");
-+		dev_dbg(ucsi->dev, "Early connector change event\n");
- 		return;
- 	}
- 
-@@ -1390,6 +1390,7 @@ static int ucsi_init(struct ucsi *ucsi)
+ /*
+  * fsnotify_create - 'name' was linked in
++ *
++ * Caller must make sure that dentry->d_name is stable.
++ * Note: some filesystems (e.g. kernfs) leave @dentry negative and instantiate
++ * ->d_inode later
+  */
+-static inline void fsnotify_create(struct inode *inode, struct dentry *dentry)
++static inline void fsnotify_create(struct inode *dir, struct dentry *dentry)
  {
- 	struct ucsi_connector *con, *connector;
- 	u64 command, ntfy;
-+	u32 cci;
- 	int ret;
- 	int i;
+-	audit_inode_child(inode, dentry, AUDIT_TYPE_CHILD_CREATE);
++	audit_inode_child(dir, dentry, AUDIT_TYPE_CHILD_CREATE);
  
-@@ -1442,6 +1443,13 @@ static int ucsi_init(struct ucsi *ucsi)
+-	fsnotify_dirent(inode, dentry, FS_CREATE);
++	fsnotify_dirent(dir, dentry, FS_CREATE);
+ }
  
- 	ucsi->connector = connector;
- 	ucsi->ntfy = ntfy;
-+
-+	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	if (ret)
-+		return ret;
-+	if (UCSI_CCI_CONNECTOR(READ_ONCE(cci)))
-+		ucsi_connector_change(ucsi, cci);
-+
- 	return 0;
+ /*
+  * fsnotify_link - new hardlink in 'inode' directory
++ *
++ * Caller must make sure that new_dentry->d_name is stable.
+  * Note: We have to pass also the linked inode ptr as some filesystems leave
+  *   new_dentry->d_inode NULL and instantiate inode pointer later
+  */
+@@ -266,12 +272,16 @@ static inline void fsnotify_unlink(struct inode *dir, struct dentry *dentry)
  
- err_unregister:
+ /*
+  * fsnotify_mkdir - directory 'name' was created
++ *
++ * Caller must make sure that dentry->d_name is stable.
++ * Note: some filesystems (e.g. kernfs) leave @dentry negative and instantiate
++ * ->d_inode later
+  */
+-static inline void fsnotify_mkdir(struct inode *inode, struct dentry *dentry)
++static inline void fsnotify_mkdir(struct inode *dir, struct dentry *dentry)
+ {
+-	audit_inode_child(inode, dentry, AUDIT_TYPE_CHILD_CREATE);
++	audit_inode_child(dir, dentry, AUDIT_TYPE_CHILD_CREATE);
+ 
+-	fsnotify_dirent(inode, dentry, FS_CREATE | FS_ISDIR);
++	fsnotify_dirent(dir, dentry, FS_CREATE | FS_ISDIR);
+ }
+ 
+ /*
+diff --git a/kernel/audit_fsnotify.c b/kernel/audit_fsnotify.c
+index c428312938e95..7a506b65e8630 100644
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -161,8 +161,7 @@ static int audit_mark_handle_event(struct fsnotify_mark *inode_mark, u32 mask,
+ 
+ 	audit_mark = container_of(inode_mark, struct audit_fsnotify_mark, mark);
+ 
+-	if (WARN_ON_ONCE(inode_mark->group != audit_fsnotify_group) ||
+-	    WARN_ON_ONCE(!inode))
++	if (WARN_ON_ONCE(inode_mark->group != audit_fsnotify_group))
+ 		return 0;
+ 
+ 	if (mask & (FS_CREATE|FS_MOVED_TO|FS_DELETE|FS_MOVED_FROM)) {
+diff --git a/kernel/audit_watch.c b/kernel/audit_watch.c
+index edbeffee64b8e..fd7b30a2d9a4b 100644
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -472,8 +472,7 @@ static int audit_watch_handle_event(struct fsnotify_mark *inode_mark, u32 mask,
+ 
+ 	parent = container_of(inode_mark, struct audit_parent, mark);
+ 
+-	if (WARN_ON_ONCE(inode_mark->group != audit_watch_group) ||
+-	    WARN_ON_ONCE(!inode))
++	if (WARN_ON_ONCE(inode_mark->group != audit_watch_group))
+ 		return 0;
+ 
+ 	if (mask & (FS_CREATE|FS_MOVED_TO) && inode)
 -- 
 2.43.0
 
