@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AD57FBB2;
-	Mon,  8 Apr 2024 14:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388AC7C092;
+	Mon,  8 Apr 2024 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584871; cv=none; b=KQB0qUtSZqoGDkbldVJyEXvtUe21Ivwtk05YqBTxKJb1Xg2YPZK08SGo6KFiY6Zz3s4JWRs5zn6n9xqHb/km0ddxQ1PhzqxMwZtopA3LDd+TbcU0zDqD5eph1/3KXI1yPXenQPBcgZgvy5EFzfAnnV6M89KnWUg6TGnisphHwhU=
+	t=1712584874; cv=none; b=tzCuZMkFmTrdRlZS7AS1IlxAJZVcjaOC6IWUd8FIlMcC2JkXxHTiqqqnwQs4zkx44CYGLrZNbsUNYz5exubD1jNgfwIIOdNDMBEImc403mWJgNmceE6LOk2YbiPawLBEaGekXDilMPw38/XZWwyU+kZRPe8c36UtXfay04rGVEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584871; c=relaxed/simple;
-	bh=GgjYMMV9B64e8sQsv1HvJaYi1SlQ44/hAHHs70StKGw=;
+	s=arc-20240116; t=1712584874; c=relaxed/simple;
+	bh=uid/OMQJ312PcQM4dt5mc1HmzNYdV+VOSr3UmNWQkwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOkne7LmRhmTP8CekSST7oCykwdFi2bs/XZJg7vezZkI+9gIEAx6rD7wk4M5nTzWKH1g73hcErhJpp3ipFdH4cL96nB6tvoB12zAp/YArCHEM6kydAUYvpWM7VIK39kzNbvZcIMGuemHYjAdeF56tl0lDPFVvXH+ye6/MU2p6DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynZUJmm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnbYKZ1PS2XkAru5LN58aafs4fueaJpmprArHJUkdzzdIKio/24C9DFLfF9qKlfBtnkiqLKGe/zTJ/hU0uwbR0hc5QQomloPAv6+UyrwVDn++mvzSI+d5xNbz5Aw85fyUW3/S9LQ8RWf2uddme7RYsp8Qf/iDQYkLeEx7C/nVwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+FNtqqG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynZUJmm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B4EC433C7;
-	Mon,  8 Apr 2024 14:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+FNtqqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719F8C433C7;
+	Mon,  8 Apr 2024 14:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584870;
-	bh=GgjYMMV9B64e8sQsv1HvJaYi1SlQ44/hAHHs70StKGw=;
+	s=korg; t=1712584873;
+	bh=uid/OMQJ312PcQM4dt5mc1HmzNYdV+VOSr3UmNWQkwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynZUJmm/d0DS7Zqyr3U4kwZSzeVRBgvggRUHhstzzjO2fJX1XjJd+obLqPiA5mCQw
-	 2I0VM3X9N75nXjKCJkxyipyTZdVTz2TFr9d3tyzcnQ4NooZ2zs83QhgJIRx8qILjdz
-	 vutB/TrQd6cZTQCeFIU6dZGkGLElMIJlIqLhvqYc=
+	b=H+FNtqqGgQsBdUi+EgnsNVfWqohcjJJInEAhv8JhlWiiqBtlL1jGqnqhzlusDJ5Kf
+	 l/kA79f9OGL9SI49p5YeDuFiVBhqo26Q/gg2qLgEHqgccSUu3FHMt5CFVKUWt4UG8e
+	 /qC7oyk02FzXYAixuHycncHC4d+RQZTbr6wZ8WBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 555/690] nfsd: dont call locks_release_private() twice concurrently
-Date: Mon,  8 Apr 2024 14:57:01 +0200
-Message-ID: <20240408125419.719976126@linuxfoundation.org>
+Subject: [PATCH 5.15 546/690] nfsd: Simplify code around svc_exit_thread() call in nfsd()
+Date: Mon,  8 Apr 2024 14:56:52 +0200
+Message-ID: <20240408125419.428394000@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,52 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 05eda6e75773592760285e10ac86c56d683be17f ]
+[ Upstream commit 18e4cf915543257eae2925671934937163f5639b ]
 
-It is possible for free_blocked_lock() to be called twice concurrently,
-once from nfsd4_lock() and once from nfsd4_release_lockowner() calling
-remove_blocked_locks().  This is why a kref was added.
+Previously a thread could exit asynchronously (due to a signal) so some
+care was needed to hold nfsd_mutex over the last svc_put() call.  Now a
+thread can only exit when svc_set_num_threads() is called, and this is
+always called under nfsd_mutex.  So no care is needed.
 
-It is perfectly safe for locks_delete_block() and kref_put() to be
-called in parallel as they use locking or atomicity respectively as
-protection.  However locks_release_private() has no locking.  It is
-safe for it to be called twice sequentially, but not concurrently.
+Not only is the mutex held when a thread exits now, but the svc refcount
+is elevated, so the svc_put() in svc_exit_thread() will never be a final
+put, so the mutex isn't even needed at this point in the code.
 
-This patch moves that call from free_blocked_lock() where it could race
-with itself, to free_nbl() where it cannot.  This will slightly delay
-the freeing of private info or release of the owner - but not by much.
-It is arguably more natural for this freeing to happen in free_nbl()
-where the structure itself is freed.
-
-This bug was found by code inspection - it has not been seen in practice.
-
-Fixes: 47446d74f170 ("nfsd4: add refcount for nfsd4_blocked_lock")
 Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4state.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfssvc.c           | 23 -----------------------
+ include/linux/sunrpc/svc.h | 13 -------------
+ 2 files changed, 36 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 0f1ece95bd642..ccc235a8bc1b4 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -318,6 +318,7 @@ free_nbl(struct kref *kref)
- 	struct nfsd4_blocked_lock *nbl;
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 8063fab2c0279..8907dba22c3f2 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -979,31 +979,8 @@ nfsd(void *vrqstp)
+ 	atomic_dec(&nfsdstats.th_cnt);
  
- 	nbl = container_of(kref, struct nfsd4_blocked_lock, nbl_kref);
-+	locks_release_private(&nbl->nbl_lock);
- 	kfree(nbl);
+ out:
+-	/* Take an extra ref so that the svc_put in svc_exit_thread()
+-	 * doesn't call svc_destroy()
+-	 */
+-	svc_get(nn->nfsd_serv);
+-
+ 	/* Release the thread */
+ 	svc_exit_thread(rqstp);
+-
+-	/* We need to drop a ref, but may not drop the last reference
+-	 * without holding nfsd_mutex, and we cannot wait for nfsd_mutex as that
+-	 * could deadlock with nfsd_shutdown_threads() waiting for us.
+-	 * So three options are:
+-	 * - drop a non-final reference,
+-	 * - get the mutex without waiting
+-	 * - sleep briefly andd try the above again
+-	 */
+-	while (!svc_put_not_last(nn->nfsd_serv)) {
+-		if (mutex_trylock(&nfsd_mutex)) {
+-			nfsd_put(net);
+-			mutex_unlock(&nfsd_mutex);
+-			break;
+-		}
+-		msleep(20);
+-	}
+-
+ 	return 0;
  }
  
-@@ -325,7 +326,6 @@ static void
- free_blocked_lock(struct nfsd4_blocked_lock *nbl)
- {
- 	locks_delete_block(&nbl->nbl_lock);
--	locks_release_private(&nbl->nbl_lock);
- 	kref_put(&nbl->nbl_kref, free_nbl);
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index 53405c282209f..6e48c1c88f1bb 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -123,19 +123,6 @@ static inline void svc_put(struct svc_serv *serv)
+ 	kref_put(&serv->sv_refcnt, svc_destroy);
  }
  
+-/**
+- * svc_put_not_last - decrement non-final reference count on SUNRPC serv
+- * @serv:  the svc_serv to have count decremented
+- *
+- * Returns: %true is refcount was decremented.
+- *
+- * If the refcount is 1, it is not decremented and instead failure is reported.
+- */
+-static inline bool svc_put_not_last(struct svc_serv *serv)
+-{
+-	return refcount_dec_not_one(&serv->sv_refcnt.refcount);
+-}
+-
+ /*
+  * Maximum payload size supported by a kernel RPC server.
+  * This is use to determine the max number of pages nfsd is
 -- 
 2.43.0
 
