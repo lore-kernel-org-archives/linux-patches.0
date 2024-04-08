@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FE67BB15;
-	Mon,  8 Apr 2024 14:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83CE7BB15;
+	Mon,  8 Apr 2024 14:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584943; cv=none; b=hHAQYJbt3KNvIzeaPIGxk9IcN5JibW+UTM4xdD7Rf7t9sBBQmfbbWKGMczr0gKqTyar++uMw96OSe/7/bc/z9IaM6YL8kH7YfWkGfbpzbixhztRDzRsDruvcArWVUXBDahPM/ZfpDzVZ4Rhn7pBWlkcQ+lM0zo2KYa2c+ZE2qY8=
+	t=1712584946; cv=none; b=afOorHk1r//bd6AS2+pVmaq+IuAyeV6xhwQosisPM+cNyyb9Ki15UtR9Lu6rsh4l93yxRNZvlracFQgHoN6M3cE7p7KwwduPzu2N9mD4nEyuc5WHMuiZkdXZnAEMwfJkVFrLFxp79IoDquL03fK3ZaJgDHRtOsj1yHOFsHR3O10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584943; c=relaxed/simple;
-	bh=rwsmPCVFOdzrn6qUomHsarnHWO4IP+PruIqR2Xzt91Q=;
+	s=arc-20240116; t=1712584946; c=relaxed/simple;
+	bh=TociAV7GPS3iMjz8NobOJR1fmHjVhyWfPV7nRnwpx2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qdr1JgZTeuJ7kHMiH0e+Bw1MsW29MHTqOZUfAcK2pthkO23Ndg7wwq1Jl2283CuOIhZIEPrt99YqECZ9E5TRuW9ZnKZIyidbl8xc4i25iapvwkGRr8rcFRJ7gU5PiLlj8ur0wsGB5B4Uf/rRcGR48YalkY+ST+mRbu81hpZ33ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKM8G2kW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqgojD+mRzZ9KmHcPI73MNN5UDV64w3ZOJzliS1+KLDCTB6D0JJRPgn0gNBbLzfu9lYSyuQrVBt/Hf2K9mPewSUSeQqzz3/XdAhDsnlNJTERlvA8toGUOyCS6DXmDcm7ZgUUDWq7kkrtiTOlK2cGqSX2XeU3mZEb75zsNbtOPBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuFRGnUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKM8G2kW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DBAC433F1;
-	Mon,  8 Apr 2024 14:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuFRGnUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1468AC43390;
+	Mon,  8 Apr 2024 14:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584943;
-	bh=rwsmPCVFOdzrn6qUomHsarnHWO4IP+PruIqR2Xzt91Q=;
+	s=korg; t=1712584946;
+	bh=TociAV7GPS3iMjz8NobOJR1fmHjVhyWfPV7nRnwpx2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKM8G2kWkz6dqJCJZn29Jlh/FEt7rW9HsDw7ra2MI4jAe99YBoDkqTomjYnqI0nLs
-	 jteLiAiwiuO8u8vqwtkuG6YCW9pEytYUk6oELmTAmfPY0T6W3VK8HGf/OqMual0H8x
-	 VjBWMIwxBCEVyyJTC6hWwkzEkQN11Zw3Q3Nvt6TA=
+	b=nuFRGnUpfFo2GgzcBR79OL0+j5GS5JI6sOzsn3mgPi5USacO6ZFAKw6r3U2nHLlS0
+	 PnKTGn0B6gGjoMZteTdWm2QPbBU3imPdn09L5buZqpMYbu/rHZ2EmlDUAU6v70fvXl
+	 kVmYQ57LFZgBECtD8263ZhmMzLnoFKvvRbk5snMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com,
-	Bart Van Assche <bvanassche@acm.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 582/690] scsi: core: Fix unremoved procfs host directory regression
-Date: Mon,  8 Apr 2024 14:57:28 +0200
-Message-ID: <20240408125420.670198439@linuxfoundation.org>
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Jeremy Cline <jeremy@jcline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com,
+	syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 609/690] nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet
+Date: Mon,  8 Apr 2024 14:57:55 +0200
+Message-ID: <20240408125421.660143872@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -54,80 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-commit f23a4d6e07570826fe95023ca1aa96a011fa9f84 upstream.
+[ Upstream commit d24b03535e5eb82e025219c2f632b485409c898f ]
 
-Commit fc663711b944 ("scsi: core: Remove the /proc/scsi/${proc_name}
-directory earlier") fixed a bug related to modules loading/unloading, by
-adding a call to scsi_proc_hostdir_rm() on scsi_remove_host(). But that led
-to a potential duplicate call to the hostdir_rm() routine, since it's also
-called from scsi_host_dev_release(). That triggered a regression report,
-which was then fixed by commit be03df3d4bfe ("scsi: core: Fix a procfs host
-directory removal regression"). The fix just dropped the hostdir_rm() call
-from dev_release().
+syzbot reported the following uninit-value access issue [1][2]:
 
-But it happens that this proc directory is created on scsi_host_alloc(),
-and that function "pairs" with scsi_host_dev_release(), while
-scsi_remove_host() pairs with scsi_add_host(). In other words, it seems the
-reason for removing the proc directory on dev_release() was meant to cover
-cases in which a SCSI host structure was allocated, but the call to
-scsi_add_host() didn't happen. And that pattern happens to exist in some
-error paths, for example.
+nci_rx_work() parses and processes received packet. When the payload
+length is zero, each message type handler reads uninitialized payload
+and KMSAN detects this issue. The receipt of a packet with a zero-size
+payload is considered unexpected, and therefore, such packets should be
+silently discarded.
 
-Syzkaller causes that by using USB raw gadget device, error'ing on
-usb-storage driver, at usb_stor_probe2(). By checking that path, we can see
-that the BadDevice label leads to a scsi_host_put() after a SCSI host
-allocation, but there's no call to scsi_add_host() in such path. That leads
-to messages like this in dmesg (and a leak of the SCSI host proc
-structure):
+This patch resolved this issue by checking payload size before calling
+each message type handler codes.
 
-usb-storage 4-1:87.51: USB Mass Storage device detected
-proc_dir_entry 'scsi/usb-storage' already registered
-WARNING: CPU: 1 PID: 3519 at fs/proc/generic.c:377 proc_register+0x347/0x4e0 fs/proc/generic.c:376
-
-The proper fix seems to still call scsi_proc_hostdir_rm() on dev_release(),
-but guard that with the state check for SHOST_CREATED; there is even a
-comment in scsi_host_dev_release() detailing that: such conditional is
-meant for cases where the SCSI host was allocated but there was no calls to
-{add,remove}_host(), like the usb-storage case.
-
-This is what we propose here and with that, the error path of usb-storage
-does not trigger the warning anymore.
-
-Reported-by: syzbot+c645abf505ed21f931b5@syzkaller.appspotmail.com
-Fixes: be03df3d4bfe ("scsi: core: Fix a procfs host directory removal regression")
-Cc: stable@vger.kernel.org
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Link: https://lore.kernel.org/r/20240313113006.2834799-1-gpiccoli@igalia.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com
+Reported-and-tested-by: syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7ea9413ea6749baf5574 [1]
+Closes: https://syzkaller.appspot.com/bug?extid=29b5ca705d2e0f4a44d2 [2]
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -334,12 +334,13 @@ static void scsi_host_dev_release(struct
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 419a1d0ba4c92..2a821f2b2ffe8 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1516,6 +1516,11 @@ static void nci_rx_work(struct work_struct *work)
+ 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
+ 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
  
- 	if (shost->shost_state == SHOST_CREATED) {
- 		/*
--		 * Free the shost_dev device name here if scsi_host_alloc()
--		 * and scsi_host_put() have been called but neither
-+		 * Free the shost_dev device name and remove the proc host dir
-+		 * here if scsi_host_{alloc,put}() have been called but neither
- 		 * scsi_host_add() nor scsi_host_remove() has been called.
- 		 * This avoids that the memory allocated for the shost_dev
--		 * name is leaked.
-+		 * name as well as the proc dir structure are leaked.
- 		 */
-+		scsi_proc_hostdir_rm(shost->hostt);
- 		kfree(dev_name(&shost->shost_dev));
- 	}
- 
++		if (!nci_plen(skb->data)) {
++			kfree_skb(skb);
++			break;
++		}
++
+ 		/* Process frame */
+ 		switch (nci_mt(skb->data)) {
+ 		case NCI_MT_RSP_PKT:
+-- 
+2.43.0
+
 
 
