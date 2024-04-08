@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29217D074;
-	Mon,  8 Apr 2024 14:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4D07D062;
+	Mon,  8 Apr 2024 14:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585028; cv=none; b=ZjuKP7Uj77gSsyOADX9ZfD4Uh66gXblk1e7TSO6HMB5tQ2ThjZO9u/hLrRGj54WG5yNfy81JHBS2pUKD6ItKrjmtP6lFjqw1OodU/mtTTImfcZq0K80zIkhtXEZXv5GQNGzV00XImThCDmvEctmgq5Lc3+ATsspJWxqVLzoiwK0=
+	t=1712585031; cv=none; b=PWwMB+q9EEdfCnR7uGX1fIXglCaZH9TIkuSM18CpsyInbP2dL9Ij0iEFnq8geqH76kViw1NI1TJMrNMFuLU+ezGChWwBRzjnMj3vU01d0ayBka6IGAHmb1OP0z28q88HtEtOlY17D11bdQCw8UVnn+HlfZwA/BMyqnpV9fsHROc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585028; c=relaxed/simple;
-	bh=JWwKCml/gfwENVLIv0pKhMKCvJaDyPxnxggBftA9qvQ=;
+	s=arc-20240116; t=1712585031; c=relaxed/simple;
+	bh=VpT5kLgpFJgQp+lDZs4x4AX4DTFMaXlBktl2atoy3sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDcM/QMENMKvBoi2pyQLc23NDo2U9bmUX56M5RCzcDpaIDebxWL6k4EGcsMo2j1o3msk3bDpEs62+b04hkv2hLwQ2VI3j2hY8GMy/sx1peFu5zuItBs4PBFl6Ghakn5QOPagicqSnx8Xso0uH4pZu6ZwDSdgnyxGIL2dyL0prGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnfKFrTR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5Q0MwFtItBQwEMMYn47pEwoDwHQsnFrCf2w0xwA30ePLVijXBn8frLK5/sYjOVsM1F6JvNNXTadkThIr+i8M69MxfGVdazJ3n3JGskEVrfWuIv271k9SbOAQFinarPhG4zivVEG1FYGgZjGtYa1b1B4o6Cz/A+Obb2dLtDvJ58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBunSeio; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnfKFrTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEB9C433C7;
-	Mon,  8 Apr 2024 14:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBunSeio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1550AC433F1;
+	Mon,  8 Apr 2024 14:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585028;
-	bh=JWwKCml/gfwENVLIv0pKhMKCvJaDyPxnxggBftA9qvQ=;
+	s=korg; t=1712585031;
+	bh=VpT5kLgpFJgQp+lDZs4x4AX4DTFMaXlBktl2atoy3sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnfKFrTRkYWI9+Fjm9H9mpkOHKZUWuZ+uHcgyLRxbIZcah02s2EHo0WsdmrJsWLQ6
-	 SRQTmCPzl66V0/FJMrBQkg2+SwoGghOH2xvpEGfVyNarOLAdWRJze3dGAErdTki/sO
-	 BWQsdisd0TakwwqoZcxgT04c9UOcCDgoHHzD5VWQ=
+	b=iBunSeiojFUu3WgnDhzLwNSYa5XERF3owSV14FUjTgr8c80TVUaLVAXO25jefSlxz
+	 qLqWe9RsRmgG3ZugznHCkzz8OgoJrIVfnOvEZY5cfXW1ts7BgyKVb5Ja0cZ20rRPbR
+	 4o8ILH39fYmb6Oe3Xdca4RULOYWNF+Vd6KhqUhoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 638/690] netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get()
-Date: Mon,  8 Apr 2024 14:58:24 +0200
-Message-ID: <20240408125422.782282732@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 639/690] netfilter: validate user input for expected length
+Date: Mon,  8 Apr 2024 14:58:25 +0200
+Message-ID: <20240408125422.819347453@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,58 +52,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 24225011d81b471acc0e1e315b7d9905459a6304 upstream.
+commit 0c83842df40f86e529db6842231154772c20edcc upstream.
 
-nft_unregister_flowtable_type() within nf_flow_inet_module_exit() can
-concurrent with __nft_flowtable_type_get() within nf_tables_newflowtable().
-And thhere is not any protection when iterate over nf_tables_flowtables
-list in __nft_flowtable_type_get(). Therefore, there is pertential
-data-race of nf_tables_flowtables list entry.
+I got multiple syzbot reports showing old bugs exposed
+by BPF after commit 20f2505fb436 ("bpf: Try to avoid kzalloc
+in cgroup/{s,g}etsockopt")
 
-Use list_for_each_entry_rcu() to iterate over nf_tables_flowtables list
-in __nft_flowtable_type_get(), and use rcu_read_lock() in the caller
-nft_flowtable_type_get() to protect the entire type query process.
+setsockopt() @optlen argument should be taken into account
+before copying data.
 
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
+ BUG: KASAN: slab-out-of-bounds in do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
+ BUG: KASAN: slab-out-of-bounds in do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
+Read of size 96 at addr ffff88802cd73da0 by task syz-executor.4/7238
+
+CPU: 1 PID: 7238 Comm: syz-executor.4 Not tainted 6.9.0-rc2-next-20240403-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
+  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+  copy_from_sockptr include/linux/sockptr.h:55 [inline]
+  do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
+  do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
+  nf_setsockopt+0x295/0x2c0 net/netfilter/nf_sockopt.c:101
+  do_sock_setsockopt+0x3af/0x720 net/socket.c:2311
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfb/0x240
+ entry_SYSCALL_64_after_hwframe+0x72/0x7a
+RIP: 0033:0x7fd22067dde9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fd21f9ff0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
+RAX: ffffffffffffffda RBX: 00007fd2207abf80 RCX: 00007fd22067dde9
+RDX: 0000000000000040 RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 00007fd2206ca47a R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000020000880 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000000b R14: 00007fd2207abf80 R15: 00007ffd2d0170d8
+ </TASK>
+
+Allocated by task 7238:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
+  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:387
+  kasan_kmalloc include/linux/kasan.h:211 [inline]
+  __do_kmalloc_node mm/slub.c:4069 [inline]
+  __kmalloc_noprof+0x200/0x410 mm/slub.c:4082
+  kmalloc_noprof include/linux/slab.h:664 [inline]
+  __cgroup_bpf_run_filter_setsockopt+0xd47/0x1050 kernel/bpf/cgroup.c:1869
+  do_sock_setsockopt+0x6b4/0x720 net/socket.c:2293
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfb/0x240
+ entry_SYSCALL_64_after_hwframe+0x72/0x7a
+
+The buggy address belongs to the object at ffff88802cd73da0
+ which belongs to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes inside of
+ allocated 1-byte region [ffff88802cd73da0, ffff88802cd73da1)
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88802cd73020 pfn:0x2cd73
+flags: 0xfff80000000000(node=0|zone=1|lastcpupid=0xfff)
+page_type: 0xffffefff(slab)
+raw: 00fff80000000000 ffff888015041280 dead000000000100 dead000000000122
+raw: ffff88802cd73020 000000008080007f 00000001ffffefff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5103, tgid 2119833701 (syz-executor.4), ts 5103, free_ts 70804600828
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1490
+  prep_new_page mm/page_alloc.c:1498 [inline]
+  get_page_from_freelist+0x2e7e/0x2f40 mm/page_alloc.c:3454
+  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4712
+  __alloc_pages_node_noprof include/linux/gfp.h:244 [inline]
+  alloc_pages_node_noprof include/linux/gfp.h:271 [inline]
+  alloc_slab_page+0x5f/0x120 mm/slub.c:2249
+  allocate_slab+0x5a/0x2e0 mm/slub.c:2412
+  new_slab mm/slub.c:2465 [inline]
+  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3615
+  __slab_alloc+0x58/0xa0 mm/slub.c:3705
+  __slab_alloc_node mm/slub.c:3758 [inline]
+  slab_alloc_node mm/slub.c:3936 [inline]
+  __do_kmalloc_node mm/slub.c:4068 [inline]
+  kmalloc_node_track_caller_noprof+0x286/0x450 mm/slub.c:4089
+  kstrdup+0x3a/0x80 mm/util.c:62
+  device_rename+0xb5/0x1b0 drivers/base/core.c:4558
+  dev_change_name+0x275/0x860 net/core/dev.c:1232
+  do_setlink+0xa4b/0x41f0 net/core/rtnetlink.c:2864
+  __rtnl_newlink net/core/rtnetlink.c:3680 [inline]
+  rtnl_newlink+0x180b/0x20a0 net/core/rtnetlink.c:3727
+  rtnetlink_rcv_msg+0x89b/0x10d0 net/core/rtnetlink.c:6594
+  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2559
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1361
+page last free pid 5146 tgid 5146 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1110 [inline]
+  free_unref_page+0xd3c/0xec0 mm/page_alloc.c:2617
+  discard_slab mm/slub.c:2511 [inline]
+  __put_partials+0xeb/0x130 mm/slub.c:2980
+  put_cpu_partial+0x17c/0x250 mm/slub.c:3055
+  __slab_free+0x2ea/0x3d0 mm/slub.c:4254
+  qlink_free mm/kasan/quarantine.c:163 [inline]
+  qlist_free_all+0x9e/0x140 mm/kasan/quarantine.c:179
+  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
+  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:322
+  kasan_slab_alloc include/linux/kasan.h:201 [inline]
+  slab_post_alloc_hook mm/slub.c:3888 [inline]
+  slab_alloc_node mm/slub.c:3948 [inline]
+  __do_kmalloc_node mm/slub.c:4068 [inline]
+  __kmalloc_node_noprof+0x1d7/0x450 mm/slub.c:4076
+  kmalloc_node_noprof include/linux/slab.h:681 [inline]
+  kvmalloc_node_noprof+0x72/0x190 mm/util.c:634
+  bucket_table_alloc lib/rhashtable.c:186 [inline]
+  rhashtable_rehash_alloc+0x9e/0x290 lib/rhashtable.c:367
+  rht_deferred_worker+0x4e1/0x2440 lib/rhashtable.c:427
+  process_one_work kernel/workqueue.c:3218 [inline]
+  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3299
+  worker_thread+0x86d/0xd70 kernel/workqueue.c:3380
+  kthread+0x2f0/0x390 kernel/kthread.c:388
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:243
+
+Memory state around the buggy address:
+ ffff88802cd73c80: 07 fc fc fc 05 fc fc fc 05 fc fc fc fa fc fc fc
+ ffff88802cd73d00: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
+>ffff88802cd73d80: fa fc fc fc 01 fc fc fc fa fc fc fc fa fc fc fc
+                               ^
+ ffff88802cd73e00: fa fc fc fc fa fc fc fc 05 fc fc fc 07 fc fc fc
+ ffff88802cd73e80: 07 fc fc fc 07 fc fc fc 07 fc fc fc 07 fc fc fc
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20240404122051.2303764-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/ebtables.c |    6 ++++++
+ net/ipv4/netfilter/arp_tables.c |    4 ++++
+ net/ipv4/netfilter/ip_tables.c  |    4 ++++
+ net/ipv6/netfilter/ip6_tables.c |    4 ++++
+ 4 files changed, 18 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7693,11 +7693,12 @@ static int nft_flowtable_parse_hook(cons
- 	return err;
- }
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1111,6 +1111,8 @@ static int do_replace(struct net *net, s
+ 	struct ebt_table_info *newinfo;
+ 	struct ebt_replace tmp;
  
-+/* call under rcu_read_lock */
- static const struct nf_flowtable_type *__nft_flowtable_type_get(u8 family)
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1422,6 +1424,8 @@ static int update_counters(struct net *n
  {
- 	const struct nf_flowtable_type *type;
+ 	struct ebt_replace hlp;
  
--	list_for_each_entry(type, &nf_tables_flowtables, list) {
-+	list_for_each_entry_rcu(type, &nf_tables_flowtables, list) {
- 		if (family == type->family)
- 			return type;
- 	}
-@@ -7709,9 +7710,13 @@ nft_flowtable_type_get(struct net *net,
++	if (len < sizeof(hlp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
+ 
+@@ -2351,6 +2355,8 @@ static int compat_update_counters(struct
  {
- 	const struct nf_flowtable_type *type;
+ 	struct compat_ebt_replace hlp;
  
-+	rcu_read_lock();
- 	type = __nft_flowtable_type_get(family);
--	if (type != NULL && try_module_get(type->owner))
-+	if (type != NULL && try_module_get(type->owner)) {
-+		rcu_read_unlock();
- 		return type;
-+	}
-+	rcu_read_unlock();
++	if (len < sizeof(hlp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
  
- 	lockdep_nfnl_nft_mutex_not_held();
- #ifdef CONFIG_MODULES
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -955,6 +955,8 @@ static int do_replace(struct net *net, s
+ 	void *loc_cpu_entry;
+ 	struct arpt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1253,6 +1255,8 @@ static int compat_do_replace(struct net
+ 	void *loc_cpu_entry;
+ 	struct arpt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1109,6 +1109,8 @@ do_replace(struct net *net, sockptr_t ar
+ 	void *loc_cpu_entry;
+ 	struct ipt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1493,6 +1495,8 @@ compat_do_replace(struct net *net, sockp
+ 	void *loc_cpu_entry;
+ 	struct ipt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1127,6 +1127,8 @@ do_replace(struct net *net, sockptr_t ar
+ 	void *loc_cpu_entry;
+ 	struct ip6t_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1503,6 +1505,8 @@ compat_do_replace(struct net *net, sockp
+ 	void *loc_cpu_entry;
+ 	struct ip6t_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
 
 
