@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348FC76413;
-	Mon,  8 Apr 2024 13:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4966CDA8;
+	Mon,  8 Apr 2024 13:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581501; cv=none; b=GNzl5CQ9dUsfLXj95urft9muNTX9+fJzKT5+cRR6zniM3TqVZBI9OUQKw5/jysOBcZYHkgllwl/Dr4cz1QBfbYQskugpuxfiAuv9UU/a7b3shBgmgGBIvcA/d1o2Ysm6lSiJiuFGueENgx/W81MfkGOvdhm5XYBntubBGqitn4o=
+	t=1712581504; cv=none; b=FkSrpyCiv9d/5JwTSZVkqvuZSyxchvWjJpQsHIVxsXl9mC6wmCFaAcV7zARgp7TpHa7gUGfKzPw5n5A3hT5l9r+tfd0eUGiZ0GlLhgjKz2HflLjAfSdHIuuoO6FAoWtBXV1t329YGvNyoTHd94icMbiA4vS6bsd7hbnZ28Agzxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581501; c=relaxed/simple;
-	bh=7LrHL5C8txertr8OqDQJbseWA59YZ8KeD2hQ5mRjPZ4=;
+	s=arc-20240116; t=1712581504; c=relaxed/simple;
+	bh=UgIbFtA6XRmY5DObalqbB8UnGYfbTvufJ+2jmUY/Yvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqxK4iZzcHtVnZYw3hHtFJpGqscEvcr9StVoQzGaH7qvhJESNd0oLifWacLo4OxJrXOKmyzNE+EYPX2xdGezAoXSIbHSqNZoPy/3txXcdfk/XrO2NSibAEz9NM1EEf+JbAPKDsTzUkbzAkzNwzBfPUKMpnWqcvXJd4MjM54Vn1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7cEYHhh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSxMvONvLgtQlOdS8ORA7dSGaLEM5xWGr6gie3XLrlyWHEqj3/ps3f/FhNmhmgYCRXDnMzZPuCaIIWnHhMdeHSzsPDtbTFAftDfteI0p/ZRyVasyCofB+Q3m/tQnQM0hZFmCX7PnnpA1x2wbNCNXte/HS9DgBbv0vBF2MC/X1QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgcU349P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7cEYHhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FB8C433C7;
-	Mon,  8 Apr 2024 13:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgcU349P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971CBC433C7;
+	Mon,  8 Apr 2024 13:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581501;
-	bh=7LrHL5C8txertr8OqDQJbseWA59YZ8KeD2hQ5mRjPZ4=;
+	s=korg; t=1712581504;
+	bh=UgIbFtA6XRmY5DObalqbB8UnGYfbTvufJ+2jmUY/Yvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7cEYHhh3XCI7ZmK+HhHzwr8n1F+QAgT40R7gLLglqtA7TJKPsBGHMQXkABlHSsPY
-	 qo/3PftadJVcrYic75eMg1FUOuG/tCj2gS67Z1eKU+LFsqMQIq+W691KVoKeBAUmq5
-	 C9r6EM/pmKkzernFkM8KE68NEW6ybyeC/bHw8O5c=
+	b=mgcU349P3TGmK3oPEGpvYw4gQtcMs6C0sZys0IL1Yc721tuYx9NxwWa5+PfH6olZo
+	 0XgR6jdmcNJondq4uHV0dtVGhbGXmj19akTHSg59+nzIwCu//A4fKu6TsUZVJNSeQy
+	 Y6ClC6ewE2II0I4MmaEM2iAQggAFO0mWqItPJBds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/252] wifi: iwlwifi: disable multi rx queue for 9000
-Date: Mon,  8 Apr 2024 14:55:11 +0200
-Message-ID: <20240408125307.029712718@linuxfoundation.org>
+Subject: [PATCH 5.15 057/690] printk/console: Split out code that enables default console
+Date: Mon,  8 Apr 2024 14:48:43 +0200
+Message-ID: <20240408125401.585119811@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,103 +47,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Petr Mladek <pmladek@suse.com>
 
-[ Upstream commit 29fa9a984b6d1075020f12071a89897fd62ed27f ]
+[ Upstream commit ed758b30d541e9bf713cd58612a4414e57dc6d73 ]
 
-Multi rx queue allows to spread the load of the Rx streams on different
-CPUs. 9000 series required complex synchronization mechanisms from the
-driver side since the hardware / firmware is not able to provide
-information about duplicate packets and timeouts inside the reordering
-buffer.
+Put the code enabling a console by default into a separate function
+called try_enable_default_console().
 
-Users have complained that for newer devices, all those synchronization
-mechanisms have caused spurious packet drops. Those packet drops
-disappeared if we simplify the code, but unfortunately, we can't have
-RSS enabled on 9000 series without this complex code.
+Rename try_enable_new_console() to try_enable_preferred_console() to
+make the purpose of the different variants more clear.
 
-Remove support for RSS on 9000 so that we can make the code much simpler
-for newer devices and fix the bugs for them.
+It is a code refactoring without any functional change.
 
-The down side of this patch is a that all the Rx path will be routed to
-a single CPU, but this has never been an issue, the modern CPUs are just
-fast enough to cope with all the traffic.
-
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231017115047.2917eb8b7af9.Iddd7dcf335387ba46fcbbb6067ef4ff9cd3755a7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: e78d78773089 ("wifi: iwlwifi: mvm: include link ID when releasing frames")
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://lore.kernel.org/r/20211122132649.12737-2-pmladek@suse.com
+Stable-dep-of: 801410b26a0e ("serial: Lock console when calling into driver before registration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-trans.h    |  2 +-
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |  4 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c     | 11 ++++++++++-
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ kernel/printk/printk.c | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index 168eda2132fb8..9dcc1506bd0b0 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -278,7 +278,7 @@ static inline void iwl_free_rxb(struct iwl_rx_cmd_buffer *r)
- #define IWL_MGMT_TID		15
- #define IWL_FRAME_LIMIT	64
- #define IWL_MAX_RX_HW_QUEUES	16
--#define IWL_9000_MAX_RX_HW_QUEUES	6
-+#define IWL_9000_MAX_RX_HW_QUEUES	1
- 
- /**
-  * enum iwl_wowlan_status - WoWLAN image/device status
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index aaa9840d0d4c5..ee9d14250a261 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -352,7 +352,9 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 		ieee80211_hw_set(hw, HAS_RATE_CONTROL);
- 	}
- 
--	if (iwl_mvm_has_new_rx_api(mvm))
-+	/* We want to use the mac80211's reorder buffer for 9000 */
-+	if (iwl_mvm_has_new_rx_api(mvm) &&
-+	    mvm->trans->trans_cfg->device_family > IWL_DEVICE_FAMILY_9000)
- 		ieee80211_hw_set(hw, SUPPORTS_REORDERING_BUFFER);
- 
- 	if (fw_has_capa(&mvm->fw->ucode_capa,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-index bac0228b8c866..92b3e18dbe877 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-@@ -963,6 +963,9 @@ static bool iwl_mvm_reorder(struct iwl_mvm *mvm,
- 	baid = (reorder & IWL_RX_MPDU_REORDER_BAID_MASK) >>
- 		IWL_RX_MPDU_REORDER_BAID_SHIFT;
- 
-+	if (mvm->trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_9000)
-+		return false;
-+
- 	/*
- 	 * This also covers the case of receiving a Block Ack Request
- 	 * outside a BA session; we'll pass it to mac80211 and that
-@@ -2621,9 +2624,15 @@ void iwl_mvm_rx_mpdu_mq(struct iwl_mvm *mvm, struct napi_struct *napi,
- 
- 	if (!iwl_mvm_reorder(mvm, napi, queue, sta, skb, desc) &&
- 	    likely(!iwl_mvm_time_sync_frame(mvm, skb, hdr->addr2)) &&
--	    likely(!iwl_mvm_mei_filter_scan(mvm, skb)))
-+	    likely(!iwl_mvm_mei_filter_scan(mvm, skb))) {
-+		if (mvm->trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_9000 &&
-+		    (desc->mac_flags2 & IWL_RX_MPDU_MFLG2_AMSDU) &&
-+		    !(desc->amsdu_info & IWL_RX_MPDU_AMSDU_LAST_SUBFRAME))
-+			rx_status->flag |= RX_FLAG_AMSDU_MORE;
-+
- 		iwl_mvm_pass_packet_to_mac80211(mvm, napi, skb, queue, sta,
- 						link_sta);
-+	}
- out:
- 	rcu_read_unlock();
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 8b110b245d92c..4bef2963284af 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -2888,7 +2888,8 @@ early_param("keep_bootcon", keep_bootcon_setup);
+  * Care need to be taken with consoles that are statically
+  * enabled such as netconsole
+  */
+-static int try_enable_new_console(struct console *newcon, bool user_specified)
++static int try_enable_preferred_console(struct console *newcon,
++					bool user_specified)
+ {
+ 	struct console_cmdline *c;
+ 	int i, err;
+@@ -2936,6 +2937,23 @@ static int try_enable_new_console(struct console *newcon, bool user_specified)
+ 	return -ENOENT;
  }
+ 
++/* Try to enable the console unconditionally */
++static void try_enable_default_console(struct console *newcon)
++{
++	if (newcon->index < 0)
++		newcon->index = 0;
++
++	if (newcon->setup && newcon->setup(newcon, NULL) != 0)
++		return;
++
++	newcon->flags |= CON_ENABLED;
++
++	if (newcon->device) {
++		newcon->flags |= CON_CONSDEV;
++		has_preferred_console = true;
++	}
++}
++
+ /*
+  * The console driver calls this routine during kernel initialization
+  * to register the console printing procedure with printk() and to
+@@ -2991,25 +3009,15 @@ void register_console(struct console *newcon)
+ 	 *	didn't select a console we take the first one
+ 	 *	that registers here.
+ 	 */
+-	if (!has_preferred_console) {
+-		if (newcon->index < 0)
+-			newcon->index = 0;
+-		if (newcon->setup == NULL ||
+-		    newcon->setup(newcon, NULL) == 0) {
+-			newcon->flags |= CON_ENABLED;
+-			if (newcon->device) {
+-				newcon->flags |= CON_CONSDEV;
+-				has_preferred_console = true;
+-			}
+-		}
+-	}
++	if (!has_preferred_console)
++		try_enable_default_console(newcon);
+ 
+ 	/* See if this console matches one we selected on the command line */
+-	err = try_enable_new_console(newcon, true);
++	err = try_enable_preferred_console(newcon, true);
+ 
+ 	/* If not, try to match against the platform default(s) */
+ 	if (err == -ENOENT)
+-		err = try_enable_new_console(newcon, false);
++		err = try_enable_preferred_console(newcon, false);
+ 
+ 	/* printk() messages are not printed to the Braille console. */
+ 	if (err || newcon->flags & CON_BRL)
 -- 
 2.43.0
 
