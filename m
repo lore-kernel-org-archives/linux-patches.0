@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC60879F0;
-	Mon,  8 Apr 2024 13:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948DD79F0;
+	Mon,  8 Apr 2024 13:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583969; cv=none; b=LNzXC38XVJ1SER+QGhDGHnhWphcgGmR+P3it4eU4NCrNt90/JK/qvnsr1AkFFHIegxsYbecBP3p3bnTNibXoUUZs/znsNdh4NJz0/BS53EBu53cRk/0UIUXvEoYUqKOaQtckS3xm6ht4JrnuLF2l2L9WI+HsVf12LOsNSTUiRbc=
+	t=1712583972; cv=none; b=MG4PlQl2jD7fvNhUs2q68GvN375VXZ/2Dg0RgKUJLe4KpQHBDrFP8RcwPqvS6pWxV2t+T4IxGg0sOVrqqvgdbSzrumQNGKigsdXnbCG9iLg5CFh6QnlFV8undFJgIM+L71XwXW8m6PL+Oi9wtVYK0Jx7oCbSAPFn43gLF3byTV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583969; c=relaxed/simple;
-	bh=hXnLleezAG9gR4XyagoUi7wHIkKXNKbozjoNsGu5XPA=;
+	s=arc-20240116; t=1712583972; c=relaxed/simple;
+	bh=WGSp13Ge5nqR6Kja8I4XOoqp8BOJrSg88Gp1BocK4ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gaR6KeJhUAtl65riZxMPrWGbtwwjCYdBeoCWiXZ6QdO1q8yqFBwehuK0egB6DM6CtGyHCQJzF1pZKuYfhEhGDfDS0MJabTwRsYmo325/JSsqv2AmDd5HjbYRVSJUvcblC89UxyH2mrRkB4jVPAZerfs6t8M5nFSZnV7/1PbUPPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX7cLfNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWTXA4v0OPwGrcrfShHYVLiUsFpGLKQX+Uw3k6V47kmS1bBtmOdparKbz2INiPL1vUUolV7/5dWLXpOgmI2f7B7qB653S55d98W5Df+X2B7XtfmNvwCO0Dqlag+DaDU/RcVbxL5+VUYLBAjVgUtRtmvqvA82Ctj2m1aiNYydoow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5l/VNNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX7cLfNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36628C433F1;
-	Mon,  8 Apr 2024 13:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5l/VNNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D39CC433F1;
+	Mon,  8 Apr 2024 13:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583969;
-	bh=hXnLleezAG9gR4XyagoUi7wHIkKXNKbozjoNsGu5XPA=;
+	s=korg; t=1712583972;
+	bh=WGSp13Ge5nqR6Kja8I4XOoqp8BOJrSg88Gp1BocK4ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vX7cLfNjove8UWjgr0pVp9ijTMrRL610IoJAitY63LUmnTCpOkbIF9FtT8qLoR+Hm
-	 OedWioCKG5074qTDQFCEV2XiAh5AAhc0E4JhQAD4FXrF4Lvwd1ZRykj9XnP9q6q3+i
-	 8Y/y41AUb/tT5xMJgfrNVD+Rn1LU/rw3zi4hTkdI=
+	b=V5l/VNNdaCluKNChiFxROE07CLzBj8r8N2VINyewx0+VlN4nSPYim4097rqhgD6fc
+	 GYYCYdADfr7X/4zZDopQuaAbSXel1KVDA3/rPI6UT1GzXw0oysJDKK8p7ewqYpl0So
+	 YTN8fbxPsOuBveYox0Jk0883UFj64bJwGm2YASUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.8 221/273] ASoC: SOF: Remove the get_stream_position callback
-Date: Mon,  8 Apr 2024 14:58:16 +0200
-Message-ID: <20240408125316.266235344@linuxfoundation.org>
+	stable@kernel.org,
+	Ulrich Weigand <ulrich.weigand@de.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.8 240/273] s390/entry: align system call table on 8 bytes
+Date: Mon,  8 Apr 2024 14:58:35 +0200
+Message-ID: <20240408125316.887670991@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
 References: <20240408125309.280181634@linuxfoundation.org>
@@ -52,61 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 07007b8ac42cffc23043d00e56b0f67a75dc4b22 upstream.
+commit 378ca2d2ad410a1cd5690d06b46c5e2297f4c8c0 upstream.
 
-The get_stream_position has been replaced by get_dai_frame_counter and all
-related code can be dropped form the core.
+Align system call table on 8 bytes. With sys_call_table entry size
+of 8 bytes that eliminates the possibility of a system call pointer
+crossing cache line boundary.
 
-Cc: stable@vger.kernel.org # 6.8
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://msgid.link/r/20240321130814.4412-11-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@kernel.org
+Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ops.h      |   10 ----------
- sound/soc/sof/sof-priv.h |    9 ---------
- 2 files changed, 19 deletions(-)
+ arch/s390/kernel/entry.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/sof/ops.h
-+++ b/sound/soc/sof/ops.h
-@@ -523,16 +523,6 @@ static inline int snd_sof_pcm_platform_a
- 	return 0;
- }
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -653,6 +653,7 @@ SYM_DATA_START_LOCAL(daton_psw)
+ SYM_DATA_END(daton_psw)
  
--static inline u64 snd_sof_pcm_get_stream_position(struct snd_sof_dev *sdev,
--						  struct snd_soc_component *component,
--						  struct snd_pcm_substream *substream)
--{
--	if (sof_ops(sdev) && sof_ops(sdev)->get_stream_position)
--		return sof_ops(sdev)->get_stream_position(sdev, component, substream);
--
--	return 0;
--}
--
- static inline u64
- snd_sof_pcm_get_dai_frame_counter(struct snd_sof_dev *sdev,
- 				  struct snd_soc_component *component,
---- a/sound/soc/sof/sof-priv.h
-+++ b/sound/soc/sof/sof-priv.h
-@@ -255,15 +255,6 @@ struct snd_sof_dsp_ops {
- 	int (*pcm_ack)(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream); /* optional */
- 
- 	/*
--	 * optional callback to retrieve the link DMA position for the substream
--	 * when the position is not reported in the shared SRAM windows but
--	 * instead from a host-accessible hardware counter.
--	 */
--	u64 (*get_stream_position)(struct snd_sof_dev *sdev,
--				   struct snd_soc_component *component,
--				   struct snd_pcm_substream *substream); /* optional */
--
--	/*
- 	 * optional callback to retrieve the number of frames left/arrived from/to
- 	 * the DSP on the DAI side (link/codec/DMIC/etc).
- 	 *
+ 	.section .rodata, "a"
++	.balign	8
+ #define SYSCALL(esame,emu)	.quad __s390x_ ## esame
+ SYM_DATA_START(sys_call_table)
+ #include "asm/syscall_table.h"
 
 
