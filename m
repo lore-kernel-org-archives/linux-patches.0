@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362282DF73;
-	Mon,  8 Apr 2024 13:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B2B74BF5;
+	Mon,  8 Apr 2024 13:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582460; cv=none; b=sZuLbbG5FwfNZBPEwysIHEepmTzBYIwyBQre0UrWrvSUgBCsyzzeUw2gFeCt9Ty1TUZSlBk6x/yAm1rkrJpI9tpd1GyinLCzmdw4VJKC5y+yiw4pF/JnpeWV6enjiAlg80fQ70lKezwlRELT8wuEnYd580qYFfsPCsXj9dbkEhI=
+	t=1712582463; cv=none; b=UAIhKMgM8Hk3bJFeMRsV6DITNfskX1OUmm0ceJjCrP7SRRsySpDqtU+URcy+Xule2di6F58tEcMIicYdICCnNZ+ak+oNm83ir+/FypnwJE17zK4XmEicxA3Hm0P/pxIP/p1sVVmUqjqXskBKvF6Hgn0n5hX0Z9PMI8Mic29KIa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582460; c=relaxed/simple;
-	bh=DAWfp3pVypxaYaTxJIkRW0sheVno3zg9DVClXrmXneg=;
+	s=arc-20240116; t=1712582463; c=relaxed/simple;
+	bh=srGjS6wC6xztwvSqhzohZnwhyXtrsDFPk0WMCR8FCfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfHUiNcOYitUDKzsHdQSc2PPpM4FBl5oxEMrycjQvgC53YYeXv9ppzC145TYRcm5wan4oNJ18E44QN6IsArXwnUbhKS0erDFQvKrZoNh4t/1tLPDefel67lvpdaiYAyFGEKPqxmkQiHRSfl34O6KUjKd9aVhrR1gAjD6fPSUJUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5kEGrj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szHrhc0Kz0Nd0QRaes/HB3Y8+0fMzhH/7ndsrHLdSL53+2MmE8xLImuE4PNvlvBxq+85/57VXWEDhi1CXK1kQ3SWXoie7/HyAITA3Mg7iytVHNTWazQm/GR+azRFQsda022lHBp+J4IX0ULmBs6joV8WpNLKCfARV7LW7NmX7Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Op5Ja9+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5kEGrj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60BFC433C7;
-	Mon,  8 Apr 2024 13:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Op5Ja9+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C528C433C7;
+	Mon,  8 Apr 2024 13:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582460;
-	bh=DAWfp3pVypxaYaTxJIkRW0sheVno3zg9DVClXrmXneg=;
+	s=korg; t=1712582463;
+	bh=srGjS6wC6xztwvSqhzohZnwhyXtrsDFPk0WMCR8FCfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5kEGrj/zHQwYWDZiDnFdHowuKiGrSZG79yNihbzivupZP6yDONjpDnmOSs8QJ249
-	 q4S6u3VzY62FoPtDpcacmhXMhk6zFMtEuQFKpIPmbsVdXPxGD9FppzMzF39C6kx6u7
-	 9kbl3hgid1J/6UIaxqQ6QuosHvj8FfJTusXwh6Cg=
+	b=Op5Ja9+DOLtEv9UsXOmNnR8vuj0huVSkVWdQwKUJ/2PuY8gUQVFpNUDrvLqqSjK8H
+	 heYhfFkn42l2T4GDJi1KOr/hidpOoHqmDOktFAIcCR1Af8V0W6wIYzrkFvGsDZxesV
+	 r3PXpy91G8m5fhfV1WRLHmhqvq0xLEZqXLRAIRBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Bastien Nocera <hadess@hadess.net>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.8 078/273] Bluetooth: Fix TOCTOU in HCI debugfs implementation
-Date: Mon,  8 Apr 2024 14:55:53 +0200
-Message-ID: <20240408125311.726244335@linuxfoundation.org>
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 108/138] s390/pai: fix sampling event removal for PMU device driver
+Date: Mon,  8 Apr 2024 14:58:42 +0200
+Message-ID: <20240408125259.590784335@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,196 +48,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-commit 7835fcfd132eb88b87e8eb901f88436f63ab60f7 upstream.
+[ Upstream commit e9f3af02f63909f41b43c28330434cc437639c5c ]
 
-struct hci_dev members conn_info_max_age, conn_info_min_age,
-le_conn_max_interval, le_conn_min_interval, le_adv_max_interval,
-and le_adv_min_interval can be modified from the HCI core code, as well
-through debugfs.
+In case of a sampling event, the PAI PMU device drivers need a
+reference to this event.  Currently to PMU device driver reference
+is removed when a sampling event is destroyed. This may lead to
+situations where the reference of the PMU device driver is removed
+while being used by a different sampling event.
+Reset the event reference pointer of the PMU device driver when
+a sampling event is deleted and before the next one might be added.
 
-The debugfs implementation, that's only available to privileged users,
-will check for boundaries, making sure that the minimum value being set
-is strictly above the maximum value that already exists, and vice-versa.
-
-However, as both minimum and maximum values can be changed concurrently
-to us modifying them, we need to make sure that the value we check is
-the value we end up using.
-
-For example, with ->conn_info_max_age set to 10, conn_info_min_age_set()
-gets called from vfs handlers to set conn_info_min_age to 8.
-
-In conn_info_min_age_set(), this goes through:
-	if (val == 0 || val > hdev->conn_info_max_age)
-		return -EINVAL;
-
-Concurrently, conn_info_max_age_set() gets called to set to set the
-conn_info_max_age to 7:
-	if (val == 0 || val > hdev->conn_info_max_age)
-		return -EINVAL;
-That check will also pass because we used the old value (10) for
-conn_info_max_age.
-
-After those checks that both passed, the struct hci_dev access
-is mutex-locked, disabling concurrent access, but that does not matter
-because the invalid value checks both passed, and we'll end up with
-conn_info_min_age = 8 and conn_info_max_age = 7
-
-To fix this problem, we need to lock the structure access before so the
-check and assignment are not interrupted.
-
-This fix was originally devised by the BassCheck[1] team, and
-considered the problem to be an atomicity one. This isn't the case as
-there aren't any concerns about the variable changing while we check it,
-but rather after we check it parallel to another change.
-
-This patch fixes CVE-2024-24858 and CVE-2024-24857.
-
-[1] https://sites.google.com/view/basscheck/
-
-Co-developed-by: Gui-Dong Han <2045gemini@gmail.com>
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Link: https://lore.kernel.org/linux-bluetooth/20231222161317.6255-1-2045gemini@gmail.com/
-Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24858
-Link: https://lore.kernel.org/linux-bluetooth/20231222162931.6553-1-2045gemini@gmail.com/
-Link: https://lore.kernel.org/linux-bluetooth/20231222162310.6461-1-2045gemini@gmail.com/
-Link: https://nvd.nist.gov/vuln/detail/CVE-2024-24857
-Fixes: 31ad169148df ("Bluetooth: Add conn info lifetime parameters to debugfs")
-Fixes: 729a1051da6f ("Bluetooth: Expose default LE advertising interval via debugfs")
-Fixes: 71c3b60ec6d2 ("Bluetooth: Move BR/EDR debugfs file creation into hci_debugfs.c")
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 39d62336f5c1 ("s390/pai: add support for cryptography counters")
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c |   48 +++++++++++++++++++++++++++++---------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ arch/s390/kernel/perf_pai_crypto.c | 10 +++++++---
+ arch/s390/kernel/perf_pai_ext.c    | 10 +++++++---
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -218,10 +218,12 @@ static int conn_info_min_age_set(void *d
+diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
+index ba2d2e61df747..93ccb5c955530 100644
+--- a/arch/s390/kernel/perf_pai_crypto.c
++++ b/arch/s390/kernel/perf_pai_crypto.c
+@@ -53,7 +53,6 @@ static void paicrypt_event_destroy(struct perf_event *event)
  {
- 	struct hci_dev *hdev = data;
+ 	struct paicrypt_map *cpump = per_cpu_ptr(&paicrypt_map, event->cpu);
  
--	if (val == 0 || val > hdev->conn_info_max_age)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val > hdev->conn_info_max_age) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
+-	cpump->event = NULL;
+ 	static_branch_dec(&pai_key);
+ 	mutex_lock(&pai_reserve_mutex);
+ 	debug_sprintf_event(cfm_dbg, 5, "%s event %#llx cpu %d users %d"
+@@ -275,10 +274,15 @@ static int paicrypt_add(struct perf_event *event, int flags)
  
--	hci_dev_lock(hdev);
- 	hdev->conn_info_min_age = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -246,10 +248,12 @@ static int conn_info_max_age_set(void *d
+ static void paicrypt_stop(struct perf_event *event, int flags)
  {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val < hdev->conn_info_min_age)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val < hdev->conn_info_min_age) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
+-	if (!event->attr.sample_period)	/* Counting */
++	struct paicrypt_mapptr *mp = this_cpu_ptr(paicrypt_root.mapptr);
++	struct paicrypt_map *cpump = mp->mapptr;
++
++	if (!event->attr.sample_period) {	/* Counting */
+ 		paicrypt_read(event);
+-	else				/* Sampling */
++	} else {				/* Sampling */
+ 		perf_sched_cb_dec(event->pmu);
++		cpump->event = NULL;
 +	}
+ 	event->hw.state = PERF_HES_STOPPED;
+ }
  
--	hci_dev_lock(hdev);
- 	hdev->conn_info_max_age = val;
- 	hci_dev_unlock(hdev);
+diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
+index 09aebfcf679df..bbaad21123d38 100644
+--- a/arch/s390/kernel/perf_pai_ext.c
++++ b/arch/s390/kernel/perf_pai_ext.c
+@@ -128,7 +128,6 @@ static void paiext_event_destroy(struct perf_event *event)
+ 	struct paiext_map *cpump = mp->mapptr;
  
-@@ -567,10 +571,12 @@ static int sniff_min_interval_set(void *
+ 	mutex_lock(&paiext_reserve_mutex);
+-	cpump->event = NULL;
+ 	if (refcount_dec_and_test(&cpump->refcnt))	/* Last reference gone */
+ 		paiext_free(mp);
+ 	paiext_root_free();
+@@ -361,10 +360,15 @@ static int paiext_add(struct perf_event *event, int flags)
+ 
+ static void paiext_stop(struct perf_event *event, int flags)
  {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val % 2 || val > hdev->sniff_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val % 2 || val > hdev->sniff_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
+-	if (!event->attr.sample_period)	/* Counting */
++	struct paiext_mapptr *mp = this_cpu_ptr(paiext_root.mapptr);
++	struct paiext_map *cpump = mp->mapptr;
++
++	if (!event->attr.sample_period) {	/* Counting */
+ 		paiext_read(event);
+-	else				/* Sampling */
++	} else {				/* Sampling */
+ 		perf_sched_cb_dec(event->pmu);
++		cpump->event = NULL;
 +	}
+ 	event->hw.state = PERF_HES_STOPPED;
+ }
  
--	hci_dev_lock(hdev);
- 	hdev->sniff_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -595,10 +601,12 @@ static int sniff_max_interval_set(void *
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val == 0 || val % 2 || val < hdev->sniff_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val == 0 || val % 2 || val < hdev->sniff_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->sniff_max_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -850,10 +858,12 @@ static int conn_min_interval_set(void *d
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0006 || val > 0x0c80 || val > hdev->le_conn_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_conn_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -878,10 +888,12 @@ static int conn_max_interval_set(void *d
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0006 || val > 0x0c80 || val < hdev->le_conn_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_conn_max_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -990,10 +1002,12 @@ static int adv_min_interval_set(void *da
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0020 || val > 0x4000 || val > hdev->le_adv_max_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_adv_min_interval = val;
- 	hci_dev_unlock(hdev);
- 
-@@ -1018,10 +1032,12 @@ static int adv_max_interval_set(void *da
- {
- 	struct hci_dev *hdev = data;
- 
--	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval)
-+	hci_dev_lock(hdev);
-+	if (val < 0x0020 || val > 0x4000 || val < hdev->le_adv_min_interval) {
-+		hci_dev_unlock(hdev);
- 		return -EINVAL;
-+	}
- 
--	hci_dev_lock(hdev);
- 	hdev->le_adv_max_interval = val;
- 	hci_dev_unlock(hdev);
- 
+-- 
+2.43.0
+
 
 
