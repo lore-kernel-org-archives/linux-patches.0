@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A366F7BAE4;
-	Mon,  8 Apr 2024 13:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882038061B;
+	Mon,  8 Apr 2024 13:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582623; cv=none; b=XhR+OqqzrzZHcInwWIXuYxjxL9zEaPTChQ+Of8vFt48t3nk8pjnCK7Vo6cm8kCchSTC0p3dZ5j1Qw77BHfsBU5wsuoPTi2mYo9pssR5/n0R6dssoQ0X9ZNl9+X6I9PnSm1voMOz3ld/e1IO4EdGMbz5gCViRlShYaNNZhOMsfUk=
+	t=1712582626; cv=none; b=jotfV3TXZjMrsxarnoEamE98T167Yj85WLgauiY9oKX/CXIZBMZg7orJzuODQWyrZ8hWPPlY3MOLg9DwP/jiZp8rbpw+h4YyOZYUpPMB4BIUCBeO+nAmG0ABCnofwPGWktWhJrfiGpzUjMeTMEPNGZccghgP2kGgPQrtlmVWCkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582623; c=relaxed/simple;
-	bh=R1SgYRTmZXosVK482rCcirfdkzY6KilmQgQDSPBEKj8=;
+	s=arc-20240116; t=1712582626; c=relaxed/simple;
+	bh=KwvRjKd/qiQq2jNND1iBs8gGfmFlfDYKGxjdOxcihL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuZjniFzV5JdGSgC+9WJH0vCF8NJ8L6bF/hIiNwroXZdj90OOd+DvQNHX9yMAbaMFvAdNBH8vjoSj30YMTTJMPfu0gxflRPSscSgmIz4fNoTvCsTE/VNvIXXIpgqJliPk+U8C3mXahJsYiJkBG/nYlxc1b3KsS8Ad7T4Ph6SOZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5Pa59Aw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktGlDGKOzS+c6JKBON9UmnFg5AJZJEowpnFrS+0BR8/JzfqmkH2baSECHWS0pkBZPiiEyCGaOyHIUJc+EFtANAM0ucmX+xDv6rqO0ofsGBYqWBJwN+M+gThB/XWpMplEKQygIVONx07iJbMX2UDt2oKni2ODlMvqSuJ4a/PZpgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJq+W4ZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5Pa59Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B12C433C7;
-	Mon,  8 Apr 2024 13:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJq+W4ZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1036FC433C7;
+	Mon,  8 Apr 2024 13:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582623;
-	bh=R1SgYRTmZXosVK482rCcirfdkzY6KilmQgQDSPBEKj8=;
+	s=korg; t=1712582626;
+	bh=KwvRjKd/qiQq2jNND1iBs8gGfmFlfDYKGxjdOxcihL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5Pa59Awzin51+Tg114xi28aTv9AsdziRQr/mLA2t4nyiZ1dVOs85Q/mNV4fOcJhz
-	 +FUKxX17pbn9/JIOVWLJTW9PH+KdcWpJ9xUvP4pgC5kbcBOqYcEFrlpNCDDBzowlnk
-	 W7ocQPNwwQnB2WkTgO0tzC4HCJK7emwDnMB8rBZ4=
+	b=QJq+W4ZGhszaTCArkumkK+ET0SBe6xS4oF8QrvfgTDlm5NXkUgTxNktT95w9Mat9d
+	 FT3BGvvAx00yVZUCKVxPw6llBoB04Knl2UgA7JuV+6weyv0GrlWZlIHR1+jiO/9HIo
+	 elCP66yTlsnbj7bveiHsKumq/0N4uPqpVTA+f1k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 5.15 160/690] KVM/x86: Export RFDS_NO and RFDS_CLEAR to guests
-Date: Mon,  8 Apr 2024 14:50:26 +0200
-Message-ID: <20240408125405.337123299@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 091/273] netfilter: validate user input for expected length
+Date: Mon,  8 Apr 2024 14:56:06 +0200
+Message-ID: <20240408125312.128258939@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,257 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 2a0180129d726a4b953232175857d442651b55a0 upstream.
+commit 0c83842df40f86e529db6842231154772c20edcc upstream.
 
-Mitigation for RFDS requires RFDS_CLEAR capability which is enumerated
-by MSR_IA32_ARCH_CAPABILITIES bit 27. If the host has it set, export it
-to guests so that they can deploy the mitigation.
+I got multiple syzbot reports showing old bugs exposed
+by BPF after commit 20f2505fb436 ("bpf: Try to avoid kzalloc
+in cgroup/{s,g}etsockopt")
 
-RFDS_NO indicates that the system is not vulnerable to RFDS, export it
-to guests so that they don't deploy the mitigation unnecessarily. When
-the host is not affected by X86_BUG_RFDS, but has RFDS_NO=0, synthesize
-RFDS_NO to the guest.
+setsockopt() @optlen argument should be taken into account
+before copying data.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+ BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
+ BUG: KASAN: slab-out-of-bounds in do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
+ BUG: KASAN: slab-out-of-bounds in do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
+Read of size 96 at addr ffff88802cd73da0 by task syz-executor.4/7238
+
+CPU: 1 PID: 7238 Comm: syz-executor.4 Not tainted 6.9.0-rc2-next-20240403-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  print_address_description mm/kasan/report.c:377 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:488
+  kasan_report+0x143/0x180 mm/kasan/report.c:601
+  kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
+  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
+  copy_from_sockptr include/linux/sockptr.h:55 [inline]
+  do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
+  do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
+  nf_setsockopt+0x295/0x2c0 net/netfilter/nf_sockopt.c:101
+  do_sock_setsockopt+0x3af/0x720 net/socket.c:2311
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfb/0x240
+ entry_SYSCALL_64_after_hwframe+0x72/0x7a
+RIP: 0033:0x7fd22067dde9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fd21f9ff0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
+RAX: ffffffffffffffda RBX: 00007fd2207abf80 RCX: 00007fd22067dde9
+RDX: 0000000000000040 RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 00007fd2206ca47a R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000020000880 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000000b R14: 00007fd2207abf80 R15: 00007ffd2d0170d8
+ </TASK>
+
+Allocated by task 7238:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
+  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:387
+  kasan_kmalloc include/linux/kasan.h:211 [inline]
+  __do_kmalloc_node mm/slub.c:4069 [inline]
+  __kmalloc_noprof+0x200/0x410 mm/slub.c:4082
+  kmalloc_noprof include/linux/slab.h:664 [inline]
+  __cgroup_bpf_run_filter_setsockopt+0xd47/0x1050 kernel/bpf/cgroup.c:1869
+  do_sock_setsockopt+0x6b4/0x720 net/socket.c:2293
+  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
+  __do_sys_setsockopt net/socket.c:2343 [inline]
+  __se_sys_setsockopt net/socket.c:2340 [inline]
+  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
+ do_syscall_64+0xfb/0x240
+ entry_SYSCALL_64_after_hwframe+0x72/0x7a
+
+The buggy address belongs to the object at ffff88802cd73da0
+ which belongs to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes inside of
+ allocated 1-byte region [ffff88802cd73da0, ffff88802cd73da1)
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88802cd73020 pfn:0x2cd73
+flags: 0xfff80000000000(node=0|zone=1|lastcpupid=0xfff)
+page_type: 0xffffefff(slab)
+raw: 00fff80000000000 ffff888015041280 dead000000000100 dead000000000122
+raw: ffff88802cd73020 000000008080007f 00000001ffffefff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5103, tgid 2119833701 (syz-executor.4), ts 5103, free_ts 70804600828
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1490
+  prep_new_page mm/page_alloc.c:1498 [inline]
+  get_page_from_freelist+0x2e7e/0x2f40 mm/page_alloc.c:3454
+  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4712
+  __alloc_pages_node_noprof include/linux/gfp.h:244 [inline]
+  alloc_pages_node_noprof include/linux/gfp.h:271 [inline]
+  alloc_slab_page+0x5f/0x120 mm/slub.c:2249
+  allocate_slab+0x5a/0x2e0 mm/slub.c:2412
+  new_slab mm/slub.c:2465 [inline]
+  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3615
+  __slab_alloc+0x58/0xa0 mm/slub.c:3705
+  __slab_alloc_node mm/slub.c:3758 [inline]
+  slab_alloc_node mm/slub.c:3936 [inline]
+  __do_kmalloc_node mm/slub.c:4068 [inline]
+  kmalloc_node_track_caller_noprof+0x286/0x450 mm/slub.c:4089
+  kstrdup+0x3a/0x80 mm/util.c:62
+  device_rename+0xb5/0x1b0 drivers/base/core.c:4558
+  dev_change_name+0x275/0x860 net/core/dev.c:1232
+  do_setlink+0xa4b/0x41f0 net/core/rtnetlink.c:2864
+  __rtnl_newlink net/core/rtnetlink.c:3680 [inline]
+  rtnl_newlink+0x180b/0x20a0 net/core/rtnetlink.c:3727
+  rtnetlink_rcv_msg+0x89b/0x10d0 net/core/rtnetlink.c:6594
+  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2559
+  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1361
+page last free pid 5146 tgid 5146 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1110 [inline]
+  free_unref_page+0xd3c/0xec0 mm/page_alloc.c:2617
+  discard_slab mm/slub.c:2511 [inline]
+  __put_partials+0xeb/0x130 mm/slub.c:2980
+  put_cpu_partial+0x17c/0x250 mm/slub.c:3055
+  __slab_free+0x2ea/0x3d0 mm/slub.c:4254
+  qlink_free mm/kasan/quarantine.c:163 [inline]
+  qlist_free_all+0x9e/0x140 mm/kasan/quarantine.c:179
+  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
+  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:322
+  kasan_slab_alloc include/linux/kasan.h:201 [inline]
+  slab_post_alloc_hook mm/slub.c:3888 [inline]
+  slab_alloc_node mm/slub.c:3948 [inline]
+  __do_kmalloc_node mm/slub.c:4068 [inline]
+  __kmalloc_node_noprof+0x1d7/0x450 mm/slub.c:4076
+  kmalloc_node_noprof include/linux/slab.h:681 [inline]
+  kvmalloc_node_noprof+0x72/0x190 mm/util.c:634
+  bucket_table_alloc lib/rhashtable.c:186 [inline]
+  rhashtable_rehash_alloc+0x9e/0x290 lib/rhashtable.c:367
+  rht_deferred_worker+0x4e1/0x2440 lib/rhashtable.c:427
+  process_one_work kernel/workqueue.c:3218 [inline]
+  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3299
+  worker_thread+0x86d/0xd70 kernel/workqueue.c:3380
+  kthread+0x2f0/0x390 kernel/kthread.c:388
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:243
+
+Memory state around the buggy address:
+ ffff88802cd73c80: 07 fc fc fc 05 fc fc fc 05 fc fc fc fa fc fc fc
+ ffff88802cd73d00: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
+>ffff88802cd73d80: fa fc fc fc 01 fc fc fc fa fc fc fc fa fc fc fc
+                               ^
+ ffff88802cd73e00: fa fc fc fc fa fc fc fc 05 fc fc fc 07 fc fc fc
+ ffff88802cd73e80: 07 fc fc fc 07 fc fc fc 07 fc fc fc 07 fc fc fc
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20240404122051.2303764-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c |    6 ++++++
+ net/ipv4/netfilter/arp_tables.c |    4 ++++
+ net/ipv4/netfilter/ip_tables.c  |    4 ++++
+ net/ipv6/netfilter/ip6_tables.c |    4 ++++
+ 4 files changed, 18 insertions(+)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -1498,7 +1498,8 @@ static unsigned int num_msr_based_featur
- 	 ARCH_CAP_SKIP_VMENTRY_L1DFLUSH | ARCH_CAP_SSB_NO | ARCH_CAP_MDS_NO | \
- 	 ARCH_CAP_PSCHANGE_MC_NO | ARCH_CAP_TSX_CTRL_MSR | ARCH_CAP_TAA_NO | \
- 	 ARCH_CAP_SBDR_SSDP_NO | ARCH_CAP_FBSDP_NO | ARCH_CAP_PSDP_NO | \
--	 ARCH_CAP_FB_CLEAR | ARCH_CAP_RRSBA | ARCH_CAP_PBRSB_NO | ARCH_CAP_GDS_NO)
-+	 ARCH_CAP_FB_CLEAR | ARCH_CAP_RRSBA | ARCH_CAP_PBRSB_NO | ARCH_CAP_GDS_NO | \
-+	 ARCH_CAP_RFDS_NO | ARCH_CAP_RFDS_CLEAR)
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1111,6 +1111,8 @@ static int do_replace(struct net *net, s
+ 	struct ebt_table_info *newinfo;
+ 	struct ebt_replace tmp;
  
- static u64 kvm_get_arch_capabilities(void)
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1423,6 +1425,8 @@ static int update_counters(struct net *n
  {
-@@ -1535,6 +1536,8 @@ static u64 kvm_get_arch_capabilities(voi
- 		data |= ARCH_CAP_SSB_NO;
- 	if (!boot_cpu_has_bug(X86_BUG_MDS))
- 		data |= ARCH_CAP_MDS_NO;
-+	if (!boot_cpu_has_bug(X86_BUG_RFDS))
-+		data |= ARCH_CAP_RFDS_NO;
+ 	struct ebt_replace hlp;
  
- 	if (!boot_cpu_has(X86_FEATURE_RTM)) {
- 		/*
++	if (len < sizeof(hlp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
+ 
+@@ -2352,6 +2356,8 @@ static int compat_update_counters(struct
+ {
+ 	struct compat_ebt_replace hlp;
+ 
++	if (len < sizeof(hlp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
+ 
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -956,6 +956,8 @@ static int do_replace(struct net *net, s
+ 	void *loc_cpu_entry;
+ 	struct arpt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1254,6 +1256,8 @@ static int compat_do_replace(struct net
+ 	void *loc_cpu_entry;
+ 	struct arpt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -1108,6 +1108,8 @@ do_replace(struct net *net, sockptr_t ar
+ 	void *loc_cpu_entry;
+ 	struct ipt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1492,6 +1494,8 @@ compat_do_replace(struct net *net, sockp
+ 	void *loc_cpu_entry;
+ 	struct ipt_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -1125,6 +1125,8 @@ do_replace(struct net *net, sockptr_t ar
+ 	void *loc_cpu_entry;
+ 	struct ip6t_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
+@@ -1501,6 +1503,8 @@ compat_do_replace(struct net *net, sockp
+ 	void *loc_cpu_entry;
+ 	struct ip6t_entry *iter;
+ 
++	if (len < sizeof(tmp))
++		return -EINVAL;
+ 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
+ 		return -EFAULT;
+ 
 
 
