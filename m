@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6437E0E4;
-	Mon,  8 Apr 2024 13:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B8E4D5AB;
+	Mon,  8 Apr 2024 13:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583867; cv=none; b=nTFWjGcAj5Hy5EU2xqkcbxlvt5dZgumpWjSSu5wjZ9SsrK1kIywUqXzsp0asseJqqaQ4Gi8u0nSZT7F8LnEPvOcL//BgjJWkGmL8IGkeUv82dB22ZxjZWQ1lecX5mfGBcXqjPFKIX3yIuu78sdfV9FEyKJuo207h2LBzQAZIEus=
+	t=1712583870; cv=none; b=GIByrTZFiNG+scxE95dFl0XKeg9LZXIKa+FENQPcTe5b87gIEmw7Ae1OYxl6LrzO7bvgVkgt0n82YPemirSXvzwcCqyIm+LzdbdEFbNepF3LBw9eEC8QKhlhGyoFVyzVtoMdHyWS5xrMQtzT+hoqQoom1BPn4+f5Ai2XCgoag4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583867; c=relaxed/simple;
-	bh=+ox5GqGKewCeyaV5Bz4wuvw66mSmAQxO2eLX9ci48yI=;
+	s=arc-20240116; t=1712583870; c=relaxed/simple;
+	bh=95Uza7XXIOnxaHo5+HLpX607gbQbTGZpx4BRddNQ+DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbEDXPeL7frurzm9NOhL+P2jZ8SB6pmQ8QhhQa3iLhCOcl8nnESTdCH+Mfakpcxxo245BoNVRUJwFGuDBn9NvD+eQQIJ3VwlH5egC9uUhUlqaui36FbSFuXPxSZXOxgsdxm6cmmx7pU7yF85hrweu1SOggTceAio23GDsKscTNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWng+upz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+SpWgIAaRx5cu3t2+XovAY0N8BbfAlycAXyzc1td43b+9zQb9PWEs4lR/h5GvyEdbl2I+s7Wz5bd7nIG4NUOkj9wXpliPhvhFVfLRjs5xnfH98Lb/VKLan8GHoBX4RKL8uxAuKUdqPyN8eoH3LErGR6beb0qcfX+dDUaPhz2EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6PRm12B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWng+upz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B58C433C7;
-	Mon,  8 Apr 2024 13:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6PRm12B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8E9C433C7;
+	Mon,  8 Apr 2024 13:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583867;
-	bh=+ox5GqGKewCeyaV5Bz4wuvw66mSmAQxO2eLX9ci48yI=;
+	s=korg; t=1712583870;
+	bh=95Uza7XXIOnxaHo5+HLpX607gbQbTGZpx4BRddNQ+DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWng+upzuhFlskeTap8PAsFihX7+4vOis3kQusKU9Axd7uYu8oHR3ri8GBDxjmFWY
-	 dSr/QHNZKKGPA5jYSRhYkOUI528LuDrCzfSO5u/QVjW3Tys2SBKet/YmSNjs0tH9rA
-	 ApwC9muqNkO8wvPLD0HFlpiNj6FRJFhAlmo+pmss=
+	b=B6PRm12B2L9+lVQ2I9vCGXuaPXb7Ga3udeEejUYNtaHrmcbDTU9OqTfPkSc64DR9W
+	 2eB6jXZ11NS+FkJLu4O/6klc5rb3ZUFsuC0AP9al+nNvSt3CoYqMEeB+n6Us5qv59D
+	 2vpkkbsnL0aajeEt1mtMUC8fTiT5i7rIkhjRHaHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 297/690] fsnotify: allow adding an inode mark without pinning inode
-Date: Mon,  8 Apr 2024 14:52:43 +0200
-Message-ID: <20240408125410.374843136@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 244/252] mptcp: dont overwrite sock_ops in mptcp_is_tcpsk()
+Date: Mon,  8 Apr 2024 14:59:03 +0200
+Message-ID: <20240408125314.225890434@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,220 +49,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit c3638b5b13740fa31762d414bbce8b7a694e582a ]
+commit 8e2b8a9fa512709e6fee744dcd4e2a20ee7f5c56 upstream.
 
-fsnotify_add_mark() and variants implicitly take a reference on inode
-when attaching a mark to an inode.
+Eric Dumazet suggests:
 
-Make that behavior opt-out with the mark flag FSNOTIFY_MARK_FLAG_NO_IREF.
+ > The fact that mptcp_is_tcpsk() was able to write over sock->ops was a
+ > bit strange to me.
+ > mptcp_is_tcpsk() should answer a question, with a read-only argument.
 
-Instead of taking the inode reference when attaching connector to inode
-and dropping the inode reference when detaching connector from inode,
-take the inode reference on attach of the first mark that wants to hold
-an inode reference and drop the inode reference on detach of the last
-mark that wants to hold an inode reference.
+re-factor code to avoid overwriting sock_ops inside that function. Also,
+change the helper name to reflect the semantics and to disambiguate from
+its dual, sk_is_mptcp(). While at it, collapse mptcp_stream_accept() and
+mptcp_accept() into a single function, where fallback / non-fallback are
+separated into a single sk_is_mptcp() conditional.
 
-Backends can "upgrade" an existing mark to take an inode reference, but
-cannot "downgrade" a mark with inode reference to release the refernce.
-
-This leaves the choice to the backend whether or not to pin the inode
-when adding an inode mark.
-
-This is intended to be used when adding a mark with ignored mask that is
-used for optimization in cases where group can afford getting unneeded
-events and reinstate the mark with ignored mask when inode is accessed
-again after being evicted.
-
-Link: https://lore.kernel.org/r/20220422120327.3459282-12-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/432
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/mark.c                 | 76 +++++++++++++++++++++++---------
- include/linux/fsnotify_backend.h |  2 +
- 2 files changed, 58 insertions(+), 20 deletions(-)
+ net/mptcp/protocol.c |  108 ++++++++++++++++++++-------------------------------
+ 1 file changed, 44 insertions(+), 64 deletions(-)
 
-diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index 982ca2f20ff5d..c74ef947447d6 100644
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -116,20 +116,64 @@ __u32 fsnotify_conn_mask(struct fsnotify_mark_connector *conn)
- 	return *fsnotify_conn_mask_p(conn);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -55,28 +55,14 @@ static u64 mptcp_wnd_end(const struct mp
+ 	return READ_ONCE(msk->wnd_end);
  }
  
--static void __fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
-+static void fsnotify_get_inode_ref(struct inode *inode)
-+{
-+	ihold(inode);
-+	atomic_long_inc(&inode->i_sb->s_fsnotify_connectors);
-+}
-+
-+/*
-+ * Grab or drop inode reference for the connector if needed.
-+ *
-+ * When it's time to drop the reference, we only clear the HAS_IREF flag and
-+ * return the inode object. fsnotify_drop_object() will be resonsible for doing
-+ * iput() outside of spinlocks. This happens when last mark that wanted iref is
-+ * detached.
-+ */
-+static struct inode *fsnotify_update_iref(struct fsnotify_mark_connector *conn,
-+					  bool want_iref)
-+{
-+	bool has_iref = conn->flags & FSNOTIFY_CONN_FLAG_HAS_IREF;
-+	struct inode *inode = NULL;
-+
-+	if (conn->type != FSNOTIFY_OBJ_TYPE_INODE ||
-+	    want_iref == has_iref)
-+		return NULL;
-+
-+	if (want_iref) {
-+		/* Pin inode if any mark wants inode refcount held */
-+		fsnotify_get_inode_ref(fsnotify_conn_inode(conn));
-+		conn->flags |= FSNOTIFY_CONN_FLAG_HAS_IREF;
-+	} else {
-+		/* Unpin inode after detach of last mark that wanted iref */
-+		inode = fsnotify_conn_inode(conn);
-+		conn->flags &= ~FSNOTIFY_CONN_FLAG_HAS_IREF;
-+	}
-+
-+	return inode;
-+}
-+
-+static void *__fsnotify_recalc_mask(struct fsnotify_mark_connector *conn)
+-static bool mptcp_is_tcpsk(struct sock *sk)
++static const struct proto_ops *mptcp_fallback_tcp_ops(const struct sock *sk)
  {
- 	u32 new_mask = 0;
-+	bool want_iref = false;
- 	struct fsnotify_mark *mark;
- 
- 	assert_spin_locked(&conn->lock);
- 	/* We can get detached connector here when inode is getting unlinked. */
- 	if (!fsnotify_valid_obj_type(conn->type))
--		return;
-+		return NULL;
- 	hlist_for_each_entry(mark, &conn->list, obj_list) {
--		if (mark->flags & FSNOTIFY_MARK_FLAG_ATTACHED)
--			new_mask |= fsnotify_calc_mask(mark);
-+		if (!(mark->flags & FSNOTIFY_MARK_FLAG_ATTACHED))
-+			continue;
-+		new_mask |= fsnotify_calc_mask(mark);
-+		if (conn->type == FSNOTIFY_OBJ_TYPE_INODE &&
-+		    !(mark->flags & FSNOTIFY_MARK_FLAG_NO_IREF))
-+			want_iref = true;
- 	}
- 	*fsnotify_conn_mask_p(conn) = new_mask;
-+
-+	return fsnotify_update_iref(conn, want_iref);
+-	struct socket *sock = sk->sk_socket;
+-
+-	if (unlikely(sk->sk_prot == &tcp_prot)) {
+-		/* we are being invoked after mptcp_accept() has
+-		 * accepted a non-mp-capable flow: sk is a tcp_sk,
+-		 * not an mptcp one.
+-		 *
+-		 * Hand the socket over to tcp so all further socket ops
+-		 * bypass mptcp.
+-		 */
+-		WRITE_ONCE(sock->ops, &inet_stream_ops);
+-		return true;
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+-	} else if (unlikely(sk->sk_prot == &tcpv6_prot)) {
+-		WRITE_ONCE(sock->ops, &inet6_stream_ops);
+-		return true;
++	if (sk->sk_prot == &tcpv6_prot)
++		return &inet6_stream_ops;
+ #endif
+-	}
+-
+-	return false;
++	WARN_ON_ONCE(sk->sk_prot != &tcp_prot);
++	return &inet_stream_ops;
  }
  
- /*
-@@ -169,12 +213,6 @@ static void fsnotify_connector_destroy_workfn(struct work_struct *work)
- 	}
+ static int __mptcp_socket_create(struct mptcp_sock *msk)
+@@ -3328,44 +3314,6 @@ void mptcp_rcv_space_init(struct mptcp_s
+ 		msk->rcvq_space.space = TCP_INIT_CWND * TCP_MSS_DEFAULT;
  }
  
--static void fsnotify_get_inode_ref(struct inode *inode)
+-static struct sock *mptcp_accept(struct sock *ssk, int flags, int *err,
+-				 bool kern)
 -{
--	ihold(inode);
--	atomic_long_inc(&inode->i_sb->s_fsnotify_connectors);
+-	struct sock *newsk;
+-
+-	pr_debug("ssk=%p, listener=%p", ssk, mptcp_subflow_ctx(ssk));
+-	newsk = inet_csk_accept(ssk, flags, err, kern);
+-	if (!newsk)
+-		return NULL;
+-
+-	pr_debug("newsk=%p, subflow is mptcp=%d", newsk, sk_is_mptcp(newsk));
+-	if (sk_is_mptcp(newsk)) {
+-		struct mptcp_subflow_context *subflow;
+-		struct sock *new_mptcp_sock;
+-
+-		subflow = mptcp_subflow_ctx(newsk);
+-		new_mptcp_sock = subflow->conn;
+-
+-		/* is_mptcp should be false if subflow->conn is missing, see
+-		 * subflow_syn_recv_sock()
+-		 */
+-		if (WARN_ON_ONCE(!new_mptcp_sock)) {
+-			tcp_sk(newsk)->is_mptcp = 0;
+-			goto out;
+-		}
+-
+-		newsk = new_mptcp_sock;
+-		MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_MPCAPABLEPASSIVEACK);
+-	} else {
+-		MPTCP_INC_STATS(sock_net(ssk),
+-				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
+-	}
+-
+-out:
+-	newsk->sk_kern_sock = kern;
+-	return newsk;
 -}
 -
- static void fsnotify_put_inode_ref(struct inode *inode)
+ void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags)
  {
- 	struct super_block *sb = inode->i_sb;
-@@ -213,6 +251,10 @@ static void *fsnotify_detach_connector_from_object(
- 	if (conn->type == FSNOTIFY_OBJ_TYPE_INODE) {
- 		inode = fsnotify_conn_inode(conn);
- 		inode->i_fsnotify_mask = 0;
+ 	struct mptcp_subflow_context *subflow, *tmp;
+@@ -3802,7 +3750,6 @@ static struct proto mptcp_prot = {
+ 	.connect	= mptcp_connect,
+ 	.disconnect	= mptcp_disconnect,
+ 	.close		= mptcp_close,
+-	.accept		= mptcp_accept,
+ 	.setsockopt	= mptcp_setsockopt,
+ 	.getsockopt	= mptcp_getsockopt,
+ 	.shutdown	= mptcp_shutdown,
+@@ -3912,18 +3859,36 @@ static int mptcp_stream_accept(struct so
+ 	if (!ssk)
+ 		return -EINVAL;
+ 
+-	newsk = mptcp_accept(ssk, flags, &err, kern);
++	pr_debug("ssk=%p, listener=%p", ssk, mptcp_subflow_ctx(ssk));
++	newsk = inet_csk_accept(ssk, flags, &err, kern);
+ 	if (!newsk)
+ 		return err;
+ 
+-	lock_sock(newsk);
+-
+-	__inet_accept(sock, newsock, newsk);
+-	if (!mptcp_is_tcpsk(newsock->sk)) {
+-		struct mptcp_sock *msk = mptcp_sk(newsk);
++	pr_debug("newsk=%p, subflow is mptcp=%d", newsk, sk_is_mptcp(newsk));
++	if (sk_is_mptcp(newsk)) {
+ 		struct mptcp_subflow_context *subflow;
++		struct sock *new_mptcp_sock;
 +
-+		/* Unpin inode when detaching from connector */
-+		if (!(conn->flags & FSNOTIFY_CONN_FLAG_HAS_IREF))
-+			inode = NULL;
- 	} else if (conn->type == FSNOTIFY_OBJ_TYPE_VFSMOUNT) {
- 		fsnotify_conn_mount(conn)->mnt_fsnotify_mask = 0;
- 	} else if (conn->type == FSNOTIFY_OBJ_TYPE_SB) {
-@@ -274,7 +316,8 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
- 		objp = fsnotify_detach_connector_from_object(conn, &type);
- 		free_conn = true;
- 	} else {
--		__fsnotify_recalc_mask(conn);
-+		objp = __fsnotify_recalc_mask(conn);
-+		type = conn->type;
++		subflow = mptcp_subflow_ctx(newsk);
++		new_mptcp_sock = subflow->conn;
++
++		/* is_mptcp should be false if subflow->conn is missing, see
++		 * subflow_syn_recv_sock()
++		 */
++		if (WARN_ON_ONCE(!new_mptcp_sock)) {
++			tcp_sk(newsk)->is_mptcp = 0;
++			goto tcpfallback;
++		}
++
++		newsk = new_mptcp_sock;
++		MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_MPCAPABLEPASSIVEACK);
++
++		newsk->sk_kern_sock = kern;
++		lock_sock(newsk);
++		__inet_accept(sock, newsock, newsk);
+ 
+ 		set_bit(SOCK_CUSTOM_SOCKOPT, &newsock->flags);
++		msk = mptcp_sk(newsk);
+ 		msk->in_accept_queue = 0;
+ 
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+@@ -3945,6 +3910,21 @@ static int mptcp_stream_accept(struct so
+ 			if (unlikely(list_is_singular(&msk->conn_list)))
+ 				mptcp_set_state(newsk, TCP_CLOSE);
+ 		}
++	} else {
++		MPTCP_INC_STATS(sock_net(ssk),
++				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
++tcpfallback:
++		newsk->sk_kern_sock = kern;
++		lock_sock(newsk);
++		__inet_accept(sock, newsock, newsk);
++		/* we are being invoked after accepting a non-mp-capable
++		 * flow: sk is a tcp_sk, not an mptcp one.
++		 *
++		 * Hand the socket over to tcp so all further socket ops
++		 * bypass mptcp.
++		 */
++		WRITE_ONCE(newsock->sk->sk_socket->ops,
++			   mptcp_fallback_tcp_ops(newsock->sk));
  	}
- 	WRITE_ONCE(mark->connector, NULL);
- 	spin_unlock(&conn->lock);
-@@ -497,7 +540,6 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
- 					       unsigned int obj_type,
- 					       __kernel_fsid_t *fsid)
- {
--	struct inode *inode = NULL;
- 	struct fsnotify_mark_connector *conn;
+ 	release_sock(newsk);
  
- 	conn = kmem_cache_alloc(fsnotify_mark_connector_cachep, GFP_KERNEL);
-@@ -505,6 +547,7 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
- 		return -ENOMEM;
- 	spin_lock_init(&conn->lock);
- 	INIT_HLIST_HEAD(&conn->list);
-+	conn->flags = 0;
- 	conn->type = obj_type;
- 	conn->obj = connp;
- 	/* Cache fsid of filesystem containing the object */
-@@ -515,10 +558,6 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
- 		conn->fsid.val[0] = conn->fsid.val[1] = 0;
- 		conn->flags = 0;
- 	}
--	if (conn->type == FSNOTIFY_OBJ_TYPE_INODE) {
--		inode = fsnotify_conn_inode(conn);
--		fsnotify_get_inode_ref(inode);
--	}
- 	fsnotify_get_sb_connectors(conn);
- 
- 	/*
-@@ -527,8 +566,6 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
- 	 */
- 	if (cmpxchg(connp, NULL, conn)) {
- 		/* Someone else created list structure for us */
--		if (inode)
--			fsnotify_put_inode_ref(inode);
- 		fsnotify_put_sb_connectors(conn);
- 		kmem_cache_free(fsnotify_mark_connector_cachep, conn);
- 	}
-@@ -690,8 +727,7 @@ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
- 	if (ret)
- 		goto err;
- 
--	if (mark->mask || mark->ignored_mask)
--		fsnotify_recalc_mask(mark->connector);
-+	fsnotify_recalc_mask(mark->connector);
- 
- 	return ret;
- err:
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index d62111e832440..9a1a9e78f69f5 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -456,6 +456,7 @@ struct fsnotify_mark_connector {
- 	spinlock_t lock;
- 	unsigned short type;	/* Type of object [lock] */
- #define FSNOTIFY_CONN_FLAG_HAS_FSID	0x01
-+#define FSNOTIFY_CONN_FLAG_HAS_IREF	0x02
- 	unsigned short flags;	/* flags [lock] */
- 	__kernel_fsid_t fsid;	/* fsid of filesystem containing object */
- 	union {
-@@ -510,6 +511,7 @@ struct fsnotify_mark {
- #define FSNOTIFY_MARK_FLAG_IN_ONESHOT		0x0020
- 	/* fanotify mark flags */
- #define FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY	0x0100
-+#define FSNOTIFY_MARK_FLAG_NO_IREF		0x0200
- 	unsigned int flags;		/* flags [mark->lock] */
- };
- 
--- 
-2.43.0
-
 
 
