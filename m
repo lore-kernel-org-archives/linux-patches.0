@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED007CF17;
-	Mon,  8 Apr 2024 13:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672747C0BE;
+	Mon,  8 Apr 2024 13:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581894; cv=none; b=WFXv6e626MaKg3f8jtEe+HQOG6o7mLXkRvGfzRdidfVBo6uRVCgf+mHZfB0XSLDwY6jBoAC0FOqn/wv03a8c/1kM3A2h2TkyDrss6G2pdRaQMGz+nPgaoTnDxme5O+EIfuUC5NX7Ec+WrkxBSEMb0gG6ExQ86QkQV0Ex6mXbE3M=
+	t=1712581896; cv=none; b=eTsBn7Knelh84qsGJ5SNHAoTJZ/2Ywq7UHm1Zt7MpmRMbGxcjMszOdbLbFuBZb/EKpdNEb2x0m+CYQFa/3r8UUS50hpFS35huYZvKQ0qNS3kVmVv/IUJ8PxOyWq5qMYp3tBxxPzg+x453hKh2KsLLcFWP9mwTI5VZMJy8Q0ks/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581894; c=relaxed/simple;
-	bh=V3xQqMMz721X7T6Cq+kRzZ1IfXbaTvDCUTWo/2/rdSo=;
+	s=arc-20240116; t=1712581896; c=relaxed/simple;
+	bh=IaQlqgZmoruSz/ZpwZtKZW1lkQzm/fio3km6PDSAkK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smf1AEyD+eP334KAzi4/SviCicsIIC0fCz9EDGmJDyfHKeAVo0qYnN2pL6t+vFV8w6VFcLGGttESc7I0D6yCNGRUWUqV2tAo8l51WoonhqDs7JYQqTzGq+8RiY9EVujgCiCXhUqda8HIX1GWxdKjz+sJz2Kdy5feoaKsM7QVag0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCgx8QnD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxC5OHsA8/vWGVWgdq7zIoLuhjNfV1B7tZpAY+Y+6BAaamZokqavDoiE2B6N1eqJaFCvhyNUq2gpPDxn0kjli7h1kk/JbGBQV+Xic9D0TcjfaUCDpGZKJAvXwN6+OGNNANM98CBbDvXUDOVkhcZU0lIWE7V2M4V+1DGZmAmgH3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pD68NY0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCgx8QnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C567C433F1;
-	Mon,  8 Apr 2024 13:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pD68NY0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13C3C433F1;
+	Mon,  8 Apr 2024 13:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581893;
-	bh=V3xQqMMz721X7T6Cq+kRzZ1IfXbaTvDCUTWo/2/rdSo=;
+	s=korg; t=1712581896;
+	bh=IaQlqgZmoruSz/ZpwZtKZW1lkQzm/fio3km6PDSAkK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCgx8QnDW3q2bM+uM709HVH1guyX+S1kJUOrnRwD9XyP7q41T7pK5ZObbs8YJw+Ot
-	 7uwi+xhGywF3daTerXz5Ja6UXYONfMGaxrJYzONt1yBNyGb73gL/nVxTu53up3Deab
-	 xaRcR5EiprOLfNAxp7IvduKQM9Xgx+R1FUn/Xjco=
+	b=pD68NY0hiXuTXvjMs9BjthkfcKohlYHmm1T5cX80QAnn77dbV2eeD5maloOVZyfga
+	 pWMdASkc0vRr6wBGn+XbSHmic/mHkpeGWzVV3LqdlZukwAyjeUtsrQ99OW1+pLbFvd
+	 p4sIaH8pH2+0U/2iTvZxssGmI9tsec7JSiGWUQAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atlas Yu <atlas.yu@canonical.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 060/138] r8169: skip DASH fw status checks when DASH is disabled
-Date: Mon,  8 Apr 2024 14:57:54 +0200
-Message-ID: <20240408125258.088500262@linuxfoundation.org>
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 048/252] drm/i915/mtl: Update workaround 14016712196
+Date: Mon,  8 Apr 2024 14:55:47 +0200
+Message-ID: <20240408125308.128219188@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Atlas Yu <atlas.yu@canonical.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-commit 5e864d90b20803edf6bd44a99fb9afa7171785f2 upstream.
+[ Upstream commit 7467e1da906468bcbd311023b30708193103ecf9 ]
 
-On devices that support DASH, the current code in the "rtl_loop_wait" function
-raises false alarms when DASH is disabled. This occurs because the function
-attempts to wait for the DASH firmware to be ready, even though it's not
-relevant in this case.
+Now this workaround is permanent workaround on MTL and DG2,
+earlier we used to apply on MTL A0 step only.
+VLK-45480
 
-r8169 0000:0c:00.0 eth0: RTL8168ep/8111ep, 38:7c:76:49:08:d9, XID 502, IRQ 86
-r8169 0000:0c:00.0 eth0: jumbo features [frames: 9194 bytes, tx checksumming: ko]
-r8169 0000:0c:00.0 eth0: DASH disabled
-...
-r8169 0000:0c:00.0 eth0: rtl_ep_ocp_read_cond == 0 (loop: 30, delay: 10000).
-
-This patch modifies the driver start/stop functions to skip checking the DASH
-firmware status when DASH is explicitly disabled. This prevents unnecessary
-delays and false alarms.
-
-The patch has been tested on several ThinkStation P8/PX workstations.
-
-Fixes: 0ab0c45d8aae ("r8169: add handling DASH when DASH is disabled")
-Signed-off-by: Atlas Yu <atlas.yu@canonical.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/20240328055152.18443-1-atlas.yu@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d922b80b1010 ("drm/i915/gt: Add workaround 14016712196")
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Acked-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230828063450.2642748-1-tejas.upadhyay@intel.com
+Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |   31 ++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gt/gen8_engine_cs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -1135,17 +1135,40 @@ static void rtl8168ep_stop_cmac(struct r
- 	RTL_W8(tp, IBCR0, RTL_R8(tp, IBCR0) & ~0x01);
- }
- 
-+static void rtl_dash_loop_wait(struct rtl8169_private *tp,
-+			       const struct rtl_cond *c,
-+			       unsigned long usecs, int n, bool high)
-+{
-+	if (!tp->dash_enabled)
-+		return;
-+	rtl_loop_wait(tp, c, usecs, n, high);
-+}
-+
-+static void rtl_dash_loop_wait_high(struct rtl8169_private *tp,
-+				    const struct rtl_cond *c,
-+				    unsigned long d, int n)
-+{
-+	rtl_dash_loop_wait(tp, c, d, n, true);
-+}
-+
-+static void rtl_dash_loop_wait_low(struct rtl8169_private *tp,
-+				   const struct rtl_cond *c,
-+				   unsigned long d, int n)
-+{
-+	rtl_dash_loop_wait(tp, c, d, n, false);
-+}
-+
- static void rtl8168dp_driver_start(struct rtl8169_private *tp)
+diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
+index 3ac3e12d9c524..ba4c2422b3402 100644
+--- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
+@@ -226,8 +226,8 @@ u32 *gen12_emit_aux_table_inv(struct intel_engine_cs *engine, u32 *cs)
+ static int mtl_dummy_pipe_control(struct i915_request *rq)
  {
- 	r8168dp_oob_notify(tp, OOB_CMD_DRIVER_START);
--	rtl_loop_wait_high(tp, &rtl_dp_ocp_read_cond, 10000, 10);
-+	rtl_dash_loop_wait_high(tp, &rtl_dp_ocp_read_cond, 10000, 10);
- }
+ 	/* Wa_14016712196 */
+-	if (IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
+-	    IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
++	if (IS_GFX_GT_IP_RANGE(rq->engine->gt, IP_VER(12, 70), IP_VER(12, 71)) ||
++	    IS_DG2(rq->i915)) {
+ 		u32 *cs;
  
- static void rtl8168ep_driver_start(struct rtl8169_private *tp)
- {
- 	r8168ep_ocp_write(tp, 0x01, 0x180, OOB_CMD_DRIVER_START);
- 	r8168ep_ocp_write(tp, 0x01, 0x30, r8168ep_ocp_read(tp, 0x30) | 0x01);
--	rtl_loop_wait_high(tp, &rtl_ep_ocp_read_cond, 10000, 30);
-+	rtl_dash_loop_wait_high(tp, &rtl_ep_ocp_read_cond, 10000, 30);
- }
+ 		/* dummy PIPE_CONTROL + depth flush */
+@@ -819,8 +819,7 @@ u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
+ 		     PIPE_CONTROL_FLUSH_ENABLE);
  
- static void rtl8168_driver_start(struct rtl8169_private *tp)
-@@ -1159,7 +1182,7 @@ static void rtl8168_driver_start(struct
- static void rtl8168dp_driver_stop(struct rtl8169_private *tp)
- {
- 	r8168dp_oob_notify(tp, OOB_CMD_DRIVER_STOP);
--	rtl_loop_wait_low(tp, &rtl_dp_ocp_read_cond, 10000, 10);
-+	rtl_dash_loop_wait_low(tp, &rtl_dp_ocp_read_cond, 10000, 10);
- }
- 
- static void rtl8168ep_driver_stop(struct rtl8169_private *tp)
-@@ -1167,7 +1190,7 @@ static void rtl8168ep_driver_stop(struct
- 	rtl8168ep_stop_cmac(tp);
- 	r8168ep_ocp_write(tp, 0x01, 0x180, OOB_CMD_DRIVER_STOP);
- 	r8168ep_ocp_write(tp, 0x01, 0x30, r8168ep_ocp_read(tp, 0x30) | 0x01);
--	rtl_loop_wait_low(tp, &rtl_ep_ocp_read_cond, 10000, 10);
-+	rtl_dash_loop_wait_low(tp, &rtl_ep_ocp_read_cond, 10000, 10);
- }
- 
- static void rtl8168_driver_stop(struct rtl8169_private *tp)
+ 	/* Wa_14016712196 */
+-	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
+-	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
++	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)) || IS_DG2(i915))
+ 		/* dummy PIPE_CONTROL + depth flush */
+ 		cs = gen12_emit_pipe_control(cs, 0,
+ 					     PIPE_CONTROL_DEPTH_CACHE_FLUSH, 0);
+-- 
+2.43.0
+
 
 
