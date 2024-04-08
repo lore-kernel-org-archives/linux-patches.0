@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E8369E1C;
-	Mon,  8 Apr 2024 14:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EA98003B;
+	Mon,  8 Apr 2024 14:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585107; cv=none; b=MIau2YHfX53s7lYn22s021gksPxA/Vw5ab3xSGTzVc5pdgR+OaO0iKa18VfnHMibmC2hzD5dBOrgGMGw75C8iznNv8LWPugddmQpFB2NdouqiScXVq8/C990Z3/rCHKz9wPZvfrn6YoWSEF/qveoLhUdlarnWXqAN2Gamg2YTI0=
+	t=1712585110; cv=none; b=qQkNIRkR9JaqnxFtU52iUrFE2MsL/jzQd0hblWDA7khN1wGygG6v0pF+OL4Mh4uzF2cQdZ5jO0KSNNKUjWG1UFHjbbcrE8zKMv7E4uef8/fqMnt0zR59j8YOmVGHyRqXQ+McFh+wTzsBMT6Qr6zw/N+8oGnLalPYvqFbcY1wxx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585107; c=relaxed/simple;
-	bh=4Nz0M14N9sw4Z+c6fJX9f1Hprc6nfiek0PMDhJ+Wckc=;
+	s=arc-20240116; t=1712585110; c=relaxed/simple;
+	bh=W1b+bWViIcIeEFstJRpIKYA8SA2D/B2AJdAW2zcoyCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=to5HEgHhHPrh4uqmsdailCHaVPXxbBSw5j1UZlGZoYVn2NOqauBBgyWC4zWyna14K+j/Tiq45GMHNc5QzTuueGkLxTvKoszNYBMztkpz5v7O/4MnecIK3T0B3CmXknLMQMGjBkNZ1jGcjvdahkfyflDYVo5u0kmEo0XLXno1+nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoNptXKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJ0OvNVjKPer6JQRhGW5Pu9j15q98lTZlfB75HDDPXC2JehAhiiyCzqPzfPsulWHpYwuzaq4lBhW7JOTWp5KfhB7HtiU1zpCtjg+vCVjLRAcZc7gRBPrpL3RblJdnSQ1wfXKu0JcgVilxJBpTawI0vWqQfUK4bbl6YkW4TsvcsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVP9YWFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoNptXKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A49C43390;
-	Mon,  8 Apr 2024 14:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVP9YWFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB510C433F1;
+	Mon,  8 Apr 2024 14:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585107;
-	bh=4Nz0M14N9sw4Z+c6fJX9f1Hprc6nfiek0PMDhJ+Wckc=;
+	s=korg; t=1712585110;
+	bh=W1b+bWViIcIeEFstJRpIKYA8SA2D/B2AJdAW2zcoyCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RoNptXKpiMbXTc8sKks20vQdbZ0ijR2PJ4vA6lP1K/8rIDG1O+Ks3lDo88Sjdia/D
-	 zy651CAdFokJaEJr96aznJ1UnSpYnSHYIQaHJVatGEc+ffRJ2FxsZKr1jItWE5wq2W
-	 XRYITuMznjRVJqORwVGlZjkvYoLzGMoqKlaOzPBU=
+	b=vVP9YWFePw3upW+P1oqr8lrgrqp81QVo41SI7HIH0cUFzL/egTCbhfdjk6ml04bjO
+	 xIPXKRtLepGV+fbPRU95JfOKicaSl68nvDLCkxNW/ImIWqYgo8WXDOqHp/TUWXXod3
+	 yMDMkl7iBqSvFbsI91n4BJOV5LB5UEDRoGX61q3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	John Ernberg <john.ernberg@actia.se>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Barker <paul.barker.ct@bp.renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 665/690] net: fec: Set mac_managed_pm during probe
-Date: Mon,  8 Apr 2024 14:58:51 +0200
-Message-ID: <20240408125423.777631746@linuxfoundation.org>
+Subject: [PATCH 5.15 666/690] net: ravb: Always process TX descriptor ring
+Date: Mon,  8 Apr 2024 14:58:52 +0200
+Message-ID: <20240408125423.817053740@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,93 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Paul Barker <paul.barker.ct@bp.renesas.com>
 
-[ Upstream commit cbc17e7802f5de37c7c262204baadfad3f7f99e5 ]
+[ Upstream commit 596a4254915f94c927217fe09c33a6828f33fb25 ]
 
-Setting mac_managed_pm during interface up is too late.
+The TX queue should be serviced each time the poll function is called,
+even if the full RX work budget has been consumed. This prevents
+starvation of the TX queue when RX bandwidth usage is high.
 
-In situations where the link is not brought up yet and the system suspends
-the regular PHY power management will run. Since the FEC ETHEREN control
-bit is cleared (automatically) on suspend the controller is off in resume.
-When the regular PHY power management resume path runs in this context it
-will write to the MII_DATA register but nothing will be transmitted on the
-MDIO bus.
-
-This can be observed by the following log:
-
-    fec 5b040000.ethernet eth0: MDIO read timeout
-    Microchip LAN87xx T1 5b040000.ethernet-1:04: PM: dpm_run_callback(): mdio_bus_phy_resume+0x0/0xc8 returns -110
-    Microchip LAN87xx T1 5b040000.ethernet-1:04: PM: failed to resume: error -110
-
-The data written will however remain in the MII_DATA register.
-
-When the link later is set to administrative up it will trigger a call to
-fec_restart() which will restore the MII_SPEED register. This triggers the
-quirk explained in f166f890c8f0 ("net: ethernet: fec: Replace interrupt
-driven MDIO with polled IO") causing an extra MII_EVENT.
-
-This extra event desynchronizes all the MDIO register reads, causing them
-to complete too early. Leading all reads to read as 0 because
-fec_enet_mdio_wait() returns too early.
-
-When a Microchip LAN8700R PHY is connected to the FEC, the 0 reads causes
-the PHY to be initialized incorrectly and the PHY will not transmit any
-ethernet signal in this state. It cannot be brought out of this state
-without a power cycle of the PHY.
-
-Fixes: 557d5dc83f68 ("net: fec: use mac-managed PHY PM")
-Closes: https://lore.kernel.org/netdev/1f45bdbe-eab1-4e59-8f24-add177590d27@actia.se/
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-[jernberg: commit message]
-Signed-off-by: John Ernberg <john.ernberg@actia.se>
-Link: https://lore.kernel.org/r/20240328155909.59613-2-john.ernberg@actia.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20240402145305.82148-1-paul.barker.ct@bp.renesas.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 6662c0013959e..972808777f308 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2132,8 +2132,6 @@ static int fec_enet_mii_probe(struct net_device *ndev)
- 	fep->link = 0;
- 	fep->full_duplex = 0;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index c2fa3e9e24574..eee446e500486 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -969,12 +969,12 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+ 	int q = napi - priv->napi;
+ 	int mask = BIT(q);
+ 	int quota = budget;
++	bool unmask;
  
--	phy_dev->mac_managed_pm = true;
--
- 	phy_attached_info(phy_dev);
+ 	/* Processing RX Descriptor Ring */
+ 	/* Clear RX interrupt */
+ 	ravb_write(ndev, ~(mask | RIS0_RESERVED), RIS0);
+-	if (ravb_rx(ndev, &quota, q))
+-		goto out;
++	unmask = !ravb_rx(ndev, &quota, q);
  
- 	return 0;
-@@ -2145,10 +2143,12 @@ static int fec_enet_mii_init(struct platform_device *pdev)
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 	bool suppress_preamble = false;
-+	struct phy_device *phydev;
- 	struct device_node *node;
- 	int err = -ENXIO;
- 	u32 mii_speed, holdtime;
- 	u32 bus_freq;
-+	int addr;
+ 	/* Processing TX Descriptor Ring */
+ 	spin_lock_irqsave(&priv->lock, flags);
+@@ -984,6 +984,9 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+ 	netif_wake_subqueue(ndev, q);
+ 	spin_unlock_irqrestore(&priv->lock, flags);
  
- 	/*
- 	 * The i.MX28 dual fec interfaces are not equal.
-@@ -2258,6 +2258,13 @@ static int fec_enet_mii_init(struct platform_device *pdev)
- 		goto err_out_free_mdiobus;
- 	of_node_put(node);
- 
-+	/* find all the PHY devices on the bus and set mac_managed_pm to true */
-+	for (addr = 0; addr < PHY_MAX_ADDR; addr++) {
-+		phydev = mdiobus_get_phy(fep->mii_bus, addr);
-+		if (phydev)
-+			phydev->mac_managed_pm = true;
-+	}
++	if (!unmask)
++		goto out;
 +
- 	mii_cnt++;
+ 	napi_complete(napi);
  
- 	/* save fec0 mii_bus */
+ 	/* Re-enable RX/TX interrupts */
 -- 
 2.43.0
 
