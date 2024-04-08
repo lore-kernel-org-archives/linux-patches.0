@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDFB42046;
-	Mon,  8 Apr 2024 13:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2838142046;
+	Mon,  8 Apr 2024 13:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584501; cv=none; b=vAIRB6uCy6VXVhjrjRJspPOmWk/+NmR7t7WAD8D4xUVQnNugJMYwdnmYWJISC5+X5C9SKeUnBJz6Jn2fzLXGjiicreyTI4tl9AlsRvBYogFLIFlLEmobkUuh3bxgYZip5EUnulxLKZsX0KNjGOlRYHp2KwAaKuiGSPWz5nLxLVI=
+	t=1712584504; cv=none; b=DeqcWV1iZprdEv6MaNC9XhaXhwHJrcOD5DlM6sQf9Lmhh0nkk4ultvq+Nq4dViVHbKpBWWPTYoJoDUAHFNbZieCGttWGoA5o8Evke8J6nv6oUZmLXIXfiG+Yi9lm63qg8DOsTxdnb91My1mUXWjnkMOG4T3uz0dhS1wz92jjXLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584501; c=relaxed/simple;
-	bh=XcLawigW5NARb7ki/Nd/3pOkD/lilKPCz8okykQ9+EQ=;
+	s=arc-20240116; t=1712584504; c=relaxed/simple;
+	bh=Qqkl55vnM9TkbdUdJTKpvQn1wSm11EFxSR9N4g/310E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+KZv1jkKPIrYn/KH+67XwHNTf57VvsHQ0f3MomJzOlNt956ilgyLcpxQJ7bMJNACJ4cbh2Mp5eWCp6/tOsqbmRbWsvK/s4j7g1p3lVWkrE51QGtTBiRUQdkgG6eTHRakjxDJhb7+1LoF8YzVNAM8xVjZGfZNf0nW2urarmiLI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQgZoxl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7Qx2W6Kd7ku+x0Q4N/SMg8t0QThSVENGxT7KtpbSPfmQfZUBWPdlYabZR1JXkpzEjSB/F+njVZt4ELBTfZlgdUoZwQzakt5oDC4mnLH5U4FovbXmmCUSJg/5V/r149mM3jhsAjunMsuENrxjuO9cdp+mF+HrbQYhRfKuc4OzXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JINSaMO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQgZoxl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F03AC433F1;
-	Mon,  8 Apr 2024 13:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JINSaMO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A457DC433C7;
+	Mon,  8 Apr 2024 13:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584501;
-	bh=XcLawigW5NARb7ki/Nd/3pOkD/lilKPCz8okykQ9+EQ=;
+	s=korg; t=1712584504;
+	bh=Qqkl55vnM9TkbdUdJTKpvQn1wSm11EFxSR9N4g/310E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQgZoxl1gBVOUbE5eHEZo5ULPf+C4d/R5Au1oA6Cy4CkAZrhHvglrgKMm2jzQfRYb
-	 Z+WoUkTNx9hbMb+xduvu4Wmc8AY8dtQc6UJn3/8XFgHH9y9tzq2u5Bl0odCEuT4p7W
-	 iX42t8FQCV0vLAethGAItVtjp5LTRXeV2CsrwwBs=
+	b=JINSaMO8lGnLzC4T+CyTx7QjYX+0sHEn5G0E7D1sP5zcR6n+AFTkVL7SzIdaPVCZ6
+	 4N/DkqXoFxTwkLddiV+hzM8WDB1Ex9GPTDyzuN5N8fE8f3CKg0AIGZwZbeitGz3NFs
+	 KNITb45F9hTc1aM/nv1/setJwpQ+G5Lf0KEVt9is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzbot+ff796f04613b4c84ad89@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 460/690] nfsd: rework hashtable handling in nfsd_do_file_acquire
-Date: Mon,  8 Apr 2024 14:55:26 +0200
-Message-ID: <20240408125416.283064114@linuxfoundation.org>
+Subject: [PATCH 5.15 461/690] NFSD: unregister shrinker when nfsd_init_net() fails
+Date: Mon,  8 Apr 2024 14:55:27 +0200
+Message-ID: <20240408125416.321264397@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,122 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 243a5263014a30436c93ed3f1f864c1da845455e ]
+[ Upstream commit bd86c69dae65de30f6d47249418ba7889809e31a ]
 
-nfsd_file is RCU-freed, so we need to hold the rcu_read_lock long enough
-to get a reference after finding it in the hash. Take the
-rcu_read_lock() and call rhashtable_lookup directly.
+syzbot is reporting UAF read at register_shrinker_prepared() [1], for
+commit 7746b32f467b3813 ("NFSD: add shrinker to reap courtesy clients on
+low memory condition") missed that nfsd4_leases_net_shutdown() from
+nfsd_exit_net() is called only when nfsd_init_net() succeeded.
+If nfsd_init_net() fails due to nfsd_reply_cache_init() failure,
+register_shrinker() from nfsd4_init_leases_net() has to be undone
+before nfsd_init_net() returns.
 
-Switch to using rhashtable_lookup_insert_key as well, and use the usual
-retry mechanism if we hit an -EEXIST. Rename the "retry" bool to
-open_retry, and eliminiate the insert_err goto target.
-
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://syzkaller.appspot.com/bug?extid=ff796f04613b4c84ad89 [1]
+Reported-by: syzbot <syzbot+ff796f04613b4c84ad89@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Fixes: 7746b32f467b3813 ("NFSD: add shrinker to reap courtesy clients on low memory condition")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/filecache.c | 52 +++++++++++++++++++--------------------------
- 1 file changed, 22 insertions(+), 30 deletions(-)
+ fs/nfsd/nfsctl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index a0d93e797cdce..0b19eb015c6c8 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -1041,9 +1041,10 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		.need	= may_flags & NFSD_FILE_MAY_MASK,
- 		.net	= SVC_NET(rqstp),
- 	};
--	struct nfsd_file *nf, *new;
--	bool retry = true;
-+	bool open_retry = true;
-+	struct nfsd_file *nf;
- 	__be32 status;
-+	int ret;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 6a29bcfc93909..dc74a947a440c 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1458,12 +1458,14 @@ static __net_init int nfsd_init_net(struct net *net)
+ 		goto out_drc_error;
+ 	retval = nfsd_reply_cache_init(nn);
+ 	if (retval)
+-		goto out_drc_error;
++		goto out_cache_error;
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
  
- 	status = fh_verify(rqstp, fhp, S_IFREG,
- 				may_flags|NFSD_MAY_OWNER_OVERRIDE);
-@@ -1053,35 +1054,33 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	key.cred = get_current_cred();
+ 	return 0;
  
- retry:
--	/* Avoid allocation if the item is already in cache */
--	nf = rhashtable_lookup_fast(&nfsd_file_rhash_tbl, &key,
--				    nfsd_file_rhash_params);
-+	rcu_read_lock();
-+	nf = rhashtable_lookup(&nfsd_file_rhash_tbl, &key,
-+			       nfsd_file_rhash_params);
- 	if (nf)
- 		nf = nfsd_file_get(nf);
-+	rcu_read_unlock();
- 	if (nf)
- 		goto wait_for_construction;
- 
--	new = nfsd_file_alloc(&key, may_flags);
--	if (!new) {
-+	nf = nfsd_file_alloc(&key, may_flags);
-+	if (!nf) {
- 		status = nfserr_jukebox;
- 		goto out_status;
- 	}
- 
--	nf = rhashtable_lookup_get_insert_key(&nfsd_file_rhash_tbl,
--					      &key, &new->nf_rhash,
--					      nfsd_file_rhash_params);
--	if (!nf) {
--		nf = new;
--		goto open_file;
--	}
--	if (IS_ERR(nf))
--		goto insert_err;
--	nf = nfsd_file_get(nf);
--	if (nf == NULL) {
--		nf = new;
-+	ret = rhashtable_lookup_insert_key(&nfsd_file_rhash_tbl,
-+					   &key, &nf->nf_rhash,
-+					   nfsd_file_rhash_params);
-+	if (likely(ret == 0))
- 		goto open_file;
--	}
--	nfsd_file_slab_free(&new->nf_rcu);
-+
-+	nfsd_file_slab_free(&nf->nf_rcu);
-+	if (ret == -EEXIST)
-+		goto retry;
-+	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, ret);
-+	status = nfserr_jukebox;
-+	goto out_status;
- 
- wait_for_construction:
- 	wait_on_bit(&nf->nf_flags, NFSD_FILE_PENDING, TASK_UNINTERRUPTIBLE);
-@@ -1089,11 +1088,11 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	/* Did construction of this file fail? */
- 	if (!test_bit(NFSD_FILE_HASHED, &nf->nf_flags)) {
- 		trace_nfsd_file_cons_err(rqstp, key.inode, may_flags, nf);
--		if (!retry) {
-+		if (!open_retry) {
- 			status = nfserr_jukebox;
- 			goto out;
- 		}
--		retry = false;
-+		open_retry = false;
- 		nfsd_file_put_noref(nf);
- 		goto retry;
- 	}
-@@ -1141,13 +1140,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	smp_mb__after_atomic();
- 	wake_up_bit(&nf->nf_flags, NFSD_FILE_PENDING);
- 	goto out;
--
--insert_err:
--	nfsd_file_slab_free(&new->nf_rcu);
--	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, PTR_ERR(nf));
--	nf = NULL;
--	status = nfserr_jukebox;
--	goto out_status;
- }
- 
- /**
++out_cache_error:
++	nfsd4_leases_net_shutdown(nn);
+ out_drc_error:
+ 	nfsd_idmap_shutdown(net);
+ out_idmap_error:
 -- 
 2.43.0
 
