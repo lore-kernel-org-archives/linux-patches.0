@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB77E59F;
-	Mon,  8 Apr 2024 13:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082036D1A9;
+	Mon,  8 Apr 2024 13:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583544; cv=none; b=aH7znnngliwQ+WUZPcGGOfUsJg5dlVTZXgllBaRQ+UDgn1m1PoDBhMv/WXwjleERdlQo5UPUi3hrLPuXNVwB0g+JbVYuR735bLxUmMXA4adErvZo2K+iGdiGWhU3/lnEvp/2hOzmvHRyNc0Z5anOj0YRr9Fe1lWd1jm9ggL9gtc=
+	t=1712583547; cv=none; b=Vxc0Pdg0Akuf6BrhvZt1aMkJVQD3zvtEcER+mUukz3qQ6/ggxU26KDw8WNAw9bFLlmt1beokjorr6R2H6ivDF59cubuj29bHdoGH34yv/P6LhSOBpYynVvnmfKY9+Xd+46vUbNwYd5ijMbgqhI/rD9ajJQKApm3mG3UK26gsi9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583544; c=relaxed/simple;
-	bh=kLkJgrBe/ICo8RPJrqT3bWK7Wh9BQgMvf4Gr+8iXnqE=;
+	s=arc-20240116; t=1712583547; c=relaxed/simple;
+	bh=dNjQ0CnRXkdBr2J71NHb/+jdRWtBMBQL2elgFPZRrtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHwAd4Ewp54AeuS3sz8o1CmDHuFo0Vx/Zgczf9V/0qpNV0vUal+BIe0hqJGoxGw3zQmTrcgq12kCmBTxdsgVexMOtnv3AKTSWDvXj9xu8PTImj1c1frOzZqZB+aW0LqRuHSWSlmKKzUQn8ErkCJ/Ko/4qSjZNtpJ9etr1Of96RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeizBpRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=razYxZZS2I0c+U9KMpZhOQ0gfrpyVIJaWCl1Y25yh3qHv3zG3Ay1rx3TguSRRZsKVSPPn1azgEyWJnxN0UOVP+3mXZiaonjcTLw+TQBaWR4jQ0xSNkiH5CtqvtPuZybvNGKWL7E7JL8sWIT5aXzjCrWt/ypgv4awidT9hBStjbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCDwifWL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeizBpRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9024AC433C7;
-	Mon,  8 Apr 2024 13:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCDwifWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF39C433C7;
+	Mon,  8 Apr 2024 13:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583544;
-	bh=kLkJgrBe/ICo8RPJrqT3bWK7Wh9BQgMvf4Gr+8iXnqE=;
+	s=korg; t=1712583546;
+	bh=dNjQ0CnRXkdBr2J71NHb/+jdRWtBMBQL2elgFPZRrtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NeizBpRcsD8jrzJoRWMM8p4I1hns5pLW/br86E4ej3cPx43d/9Qwv+x+rxZsXEy1j
-	 WJOW96Es08RMMcZHPH9jO1jLDI4eiHFZ5SJlz02H2Vwqrze/5SwbHT4/IorLnzgvO9
-	 LmUN0o4Nnjavekq5D720FOCe6R8f4ayppqGbm8Hc=
+	b=YCDwifWLl8Zqttuk1yLU3purOG/2PF6guPGZjTpDUC9Zl8bA4oBlWiNas4TcVxuDA
+	 zBzBipq/yBe5kYxe3VOFIZd9Ro0KNKVTbBr5kDI3pVmi/qNgGJ//W6ax1Vq9OfEYDZ
+	 xZjfdJGrrxtUPwCORdRH3wXS1loNDR+CtC1WvXHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 258/690] NFSD: De-duplicate net_generic(SVC_NET(rqstp), nfsd_net_id)
-Date: Mon,  8 Apr 2024 14:52:04 +0200
-Message-ID: <20240408125408.961974590@linuxfoundation.org>
+	Andrea Parri <andrea@rivosinc.com>,
+	Andy Chiu <andy.chiu@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Puranjay Mohan <puranjay12@gmail.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 190/273] riscv: Disable preemption when using patch_map()
+Date: Mon,  8 Apr 2024 14:57:45 +0200
+Message-ID: <20240408125315.200973830@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +50,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit fb7622c2dbd1aa41133a8c73e1137b833c074519 ]
+[ Upstream commit a370c2419e4680a27382d9231edcf739d5d74efc ]
 
-Since this pointer is used repeatedly, move it to a stack variable.
+patch_map() uses fixmap mappings to circumvent the non-writability of
+the kernel text mapping.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The __set_fixmap() function only flushes the current cpu tlb, it does
+not emit an IPI so we must make sure that while we use a fixmap mapping,
+the current task is not migrated on another cpu which could miss the
+newly introduced fixmap mapping.
+
+So in order to avoid any task migration, disable the preemption.
+
+Reported-by: Andrea Parri <andrea@rivosinc.com>
+Closes: https://lore.kernel.org/all/ZcS+GAaM25LXsBOl@andrea/
+Reported-by: Andy Chiu <andy.chiu@sifive.com>
+Closes: https://lore.kernel.org/linux-riscv/CABgGipUMz3Sffu-CkmeUB1dKVwVQ73+7=sgC45-m0AE9RCjOZg@mail.gmail.com/
+Fixes: cad539baa48f ("riscv: implement a memset like function for text")
+Fixes: 0ff7c3b33127 ("riscv: Use text_mutex instead of patch_lock")
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Acked-by: Puranjay Mohan <puranjay12@gmail.com>
+Link: https://lore.kernel.org/r/20240326203017.310422-3-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/riscv/kernel/patch.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 98d370dcca867..17985d868887a 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -966,6 +966,7 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
- 				unsigned long *cnt, int stable,
- 				__be32 *verf)
- {
-+	struct nfsd_net		*nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 	struct file		*file = nf->nf_file;
- 	struct super_block	*sb = file_inode(file)->i_sb;
- 	struct svc_export	*exp;
-@@ -1010,13 +1011,10 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
- 	iov_iter_kvec(&iter, WRITE, vec, vlen, *cnt);
- 	since = READ_ONCE(file->f_wb_err);
- 	if (verf)
--		nfsd_copy_boot_verifier(verf,
--				net_generic(SVC_NET(rqstp),
--				nfsd_net_id));
-+		nfsd_copy_boot_verifier(verf, nn);
- 	host_err = vfs_iter_write(file, &iter, &pos, flags);
- 	if (host_err < 0) {
--		nfsd_reset_boot_verifier(net_generic(SVC_NET(rqstp),
--					 nfsd_net_id));
-+		nfsd_reset_boot_verifier(nn);
- 		goto out_nfserr;
- 	}
- 	*cnt = host_err;
-@@ -1029,8 +1027,7 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
- 	if (stable && use_wgather) {
- 		host_err = wait_for_concurrent_writes(file);
- 		if (host_err < 0)
--			nfsd_reset_boot_verifier(net_generic(SVC_NET(rqstp),
--						 nfsd_net_id));
-+			nfsd_reset_boot_verifier(nn);
- 	}
+diff --git a/arch/riscv/kernel/patch.c b/arch/riscv/kernel/patch.c
+index 37e87fdcf6a00..30e12b310cab7 100644
+--- a/arch/riscv/kernel/patch.c
++++ b/arch/riscv/kernel/patch.c
+@@ -80,6 +80,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
+ 	 */
+ 	lockdep_assert_held(&text_mutex);
  
- out_nfserr:
++	preempt_disable();
++
+ 	if (across_pages)
+ 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
+ 
+@@ -92,6 +94,8 @@ static int __patch_insn_set(void *addr, u8 c, size_t len)
+ 	if (across_pages)
+ 		patch_unmap(FIX_TEXT_POKE1);
+ 
++	preempt_enable();
++
+ 	return 0;
+ }
+ NOKPROBE_SYMBOL(__patch_insn_set);
+@@ -122,6 +126,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
+ 	if (!riscv_patch_in_stop_machine)
+ 		lockdep_assert_held(&text_mutex);
+ 
++	preempt_disable();
++
+ 	if (across_pages)
+ 		patch_map(addr + PAGE_SIZE, FIX_TEXT_POKE1);
+ 
+@@ -134,6 +140,8 @@ static int __patch_insn_write(void *addr, const void *insn, size_t len)
+ 	if (across_pages)
+ 		patch_unmap(FIX_TEXT_POKE1);
+ 
++	preempt_enable();
++
+ 	return ret;
+ }
+ NOKPROBE_SYMBOL(__patch_insn_write);
 -- 
 2.43.0
 
