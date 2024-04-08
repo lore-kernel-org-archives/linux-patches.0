@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E852DF73;
-	Mon,  8 Apr 2024 13:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444F82DF73;
+	Mon,  8 Apr 2024 13:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581677; cv=none; b=jEcoK2GkoBhX4pi9A+d1sZguuDlvLw2JO0qF9bA6To72tIPix1XEYvqNjTHRTa4nNNG1H/g1FJz0XjAp1LAUWb18yLpH20hFPs3Ljl9IpeFUPh9rgHJkVOC4NzU0b1hVJwjc4/yKdBB32J+k7L+Sd4A/K2nQ1gTxch9PgHQnjno=
+	t=1712581680; cv=none; b=ehn30DCJ+CSbTGBvO6BT0p3b6hodUfNUAHxjQJfBzf5akmDSTAT5IiWc78wB3wkmArtJONF1BS6csCBxy+B5TmV6J+R/5ke9JftbqY0DSNq3UxGObK7eAH+j6nJB//CrlthhoSO5ccX1R3oWSc3YLvd7DZn0ypfoupfRGQ1g53E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581677; c=relaxed/simple;
-	bh=+rafZ48EXoVgT8gX8jCaEUqm+MmQcuj4t7HXjCB3RzM=;
+	s=arc-20240116; t=1712581680; c=relaxed/simple;
+	bh=u+tiSeUGJkD/HykCYr4umzTY1uKH42b3G/t0Aru+rWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW6BT41fn+/XwbUJovfZjtpkn9E6LTZnn2n/wKiv31hrx1DM767nT/nlabI4mK6tgf5sJW8zCsoy6jj8Qb2R3s3K98RsOfjtHtcz8zLuL/TSuqwEZokVzlCy1vxoEnmp2k6PYCWEks3nZWIHbxs4v5SOWiMKoFYCMRMYSf5CuAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6U3Ahlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhiaM4k1C4dorZPbpzDoUkhi427OCK98P7GU+59CwKMmePMHLhrrlG865yQ3BgHDt2YVjTQ5pLtbwJJ0BIG3dtYLf7nbtJhP4Fw1Z2Hre+WlNGPf2nUpJBmjBE/mHv/5s5/Z0eJTrNOunoY7GWTC0/5wwwjHv/FCfAMKcd+J4SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXoznwvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6U3Ahlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F42C433F1;
-	Mon,  8 Apr 2024 13:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXoznwvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AF4C433F1;
+	Mon,  8 Apr 2024 13:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581677;
-	bh=+rafZ48EXoVgT8gX8jCaEUqm+MmQcuj4t7HXjCB3RzM=;
+	s=korg; t=1712581680;
+	bh=u+tiSeUGJkD/HykCYr4umzTY1uKH42b3G/t0Aru+rWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6U3Ahlk9sBhVbhTfrrvhARgJ79ybfSryVhupSfFj4oQSkzQtS2fcnIYD2wzXcJ8w
-	 BM5AROS7MHUzhXYLeh1cW/mr7YZSnu3Gj5pINU/m6tAvENZk01RFmNPes4QGgGIq8i
-	 J/pMILKClPDyqY2yYhmSP1PpLwANkIstxprajGP4=
+	b=xXoznwvRdKiwC7h+QO1DWtHw49G017GkpQWIQq0KAYljT3UFCY21yIqhKVV9jvDRe
+	 L+yiUX/2+PwyvjWhoblNq6Q0FalOZ1+LOdBZEnhAHW/EaUEJGql1RoJz/tfAcy1QgK
+	 GPVwY0NaQMo1pCeJ6bT9h9/Tc1peyO6917eNNCc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 043/138] netfilter: validate user input for expected length
-Date: Mon,  8 Apr 2024 14:57:37 +0200
-Message-ID: <20240408125257.568862041@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 023/138] dm integrity: fix out-of-range warning
+Date: Mon,  8 Apr 2024 14:57:17 +0200
+Message-ID: <20240408125256.950431808@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
 References: <20240408125256.218368873@linuxfoundation.org>
@@ -52,253 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 0c83842df40f86e529db6842231154772c20edcc upstream.
+[ Upstream commit 8e91c2342351e0f5ef6c0a704384a7f6fc70c3b2 ]
 
-I got multiple syzbot reports showing old bugs exposed
-by BPF after commit 20f2505fb436 ("bpf: Try to avoid kzalloc
-in cgroup/{s,g}etsockopt")
+Depending on the value of CONFIG_HZ, clang complains about a pointless
+comparison:
 
-setsockopt() @optlen argument should be taken into account
-before copying data.
+drivers/md/dm-integrity.c:4085:12: error: result of comparison of
+                        constant 42949672950 with expression of type
+                        'unsigned int' is always false
+                        [-Werror,-Wtautological-constant-out-of-range-compare]
+                        if (val >= (uint64_t)UINT_MAX * 1000 / HZ) {
 
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
- BUG: KASAN: slab-out-of-bounds in do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
- BUG: KASAN: slab-out-of-bounds in do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-Read of size 96 at addr ffff88802cd73da0 by task syz-executor.4/7238
+As the check remains useful for other configurations, shut up the
+warning by adding a second type cast to uint64_t.
 
-CPU: 1 PID: 7238 Comm: syz-executor.4 Not tainted 6.9.0-rc2-next-20240403-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:488
-  kasan_report+0x143/0x180 mm/kasan/report.c:601
-  kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
-  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
-  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
-  copy_from_sockptr include/linux/sockptr.h:55 [inline]
-  do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
-  do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-  nf_setsockopt+0x295/0x2c0 net/netfilter/nf_sockopt.c:101
-  do_sock_setsockopt+0x3af/0x720 net/socket.c:2311
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
-RIP: 0033:0x7fd22067dde9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd21f9ff0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
-RAX: ffffffffffffffda RBX: 00007fd2207abf80 RCX: 00007fd22067dde9
-RDX: 0000000000000040 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007fd2206ca47a R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000020000880 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd2207abf80 R15: 00007ffd2d0170d8
- </TASK>
-
-Allocated by task 7238:
-  kasan_save_stack mm/kasan/common.c:47 [inline]
-  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
-  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:387
-  kasan_kmalloc include/linux/kasan.h:211 [inline]
-  __do_kmalloc_node mm/slub.c:4069 [inline]
-  __kmalloc_noprof+0x200/0x410 mm/slub.c:4082
-  kmalloc_noprof include/linux/slab.h:664 [inline]
-  __cgroup_bpf_run_filter_setsockopt+0xd47/0x1050 kernel/bpf/cgroup.c:1869
-  do_sock_setsockopt+0x6b4/0x720 net/socket.c:2293
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
-
-The buggy address belongs to the object at ffff88802cd73da0
- which belongs to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes inside of
- allocated 1-byte region [ffff88802cd73da0, ffff88802cd73da1)
-
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88802cd73020 pfn:0x2cd73
-flags: 0xfff80000000000(node=0|zone=1|lastcpupid=0xfff)
-page_type: 0xffffefff(slab)
-raw: 00fff80000000000 ffff888015041280 dead000000000100 dead000000000122
-raw: ffff88802cd73020 000000008080007f 00000001ffffefff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5103, tgid 2119833701 (syz-executor.4), ts 5103, free_ts 70804600828
-  set_page_owner include/linux/page_owner.h:32 [inline]
-  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1490
-  prep_new_page mm/page_alloc.c:1498 [inline]
-  get_page_from_freelist+0x2e7e/0x2f40 mm/page_alloc.c:3454
-  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4712
-  __alloc_pages_node_noprof include/linux/gfp.h:244 [inline]
-  alloc_pages_node_noprof include/linux/gfp.h:271 [inline]
-  alloc_slab_page+0x5f/0x120 mm/slub.c:2249
-  allocate_slab+0x5a/0x2e0 mm/slub.c:2412
-  new_slab mm/slub.c:2465 [inline]
-  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3615
-  __slab_alloc+0x58/0xa0 mm/slub.c:3705
-  __slab_alloc_node mm/slub.c:3758 [inline]
-  slab_alloc_node mm/slub.c:3936 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  kmalloc_node_track_caller_noprof+0x286/0x450 mm/slub.c:4089
-  kstrdup+0x3a/0x80 mm/util.c:62
-  device_rename+0xb5/0x1b0 drivers/base/core.c:4558
-  dev_change_name+0x275/0x860 net/core/dev.c:1232
-  do_setlink+0xa4b/0x41f0 net/core/rtnetlink.c:2864
-  __rtnl_newlink net/core/rtnetlink.c:3680 [inline]
-  rtnl_newlink+0x180b/0x20a0 net/core/rtnetlink.c:3727
-  rtnetlink_rcv_msg+0x89b/0x10d0 net/core/rtnetlink.c:6594
-  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2559
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1361
-page last free pid 5146 tgid 5146 stack trace:
-  reset_page_owner include/linux/page_owner.h:25 [inline]
-  free_pages_prepare mm/page_alloc.c:1110 [inline]
-  free_unref_page+0xd3c/0xec0 mm/page_alloc.c:2617
-  discard_slab mm/slub.c:2511 [inline]
-  __put_partials+0xeb/0x130 mm/slub.c:2980
-  put_cpu_partial+0x17c/0x250 mm/slub.c:3055
-  __slab_free+0x2ea/0x3d0 mm/slub.c:4254
-  qlink_free mm/kasan/quarantine.c:163 [inline]
-  qlist_free_all+0x9e/0x140 mm/kasan/quarantine.c:179
-  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
-  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:322
-  kasan_slab_alloc include/linux/kasan.h:201 [inline]
-  slab_post_alloc_hook mm/slub.c:3888 [inline]
-  slab_alloc_node mm/slub.c:3948 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  __kmalloc_node_noprof+0x1d7/0x450 mm/slub.c:4076
-  kmalloc_node_noprof include/linux/slab.h:681 [inline]
-  kvmalloc_node_noprof+0x72/0x190 mm/util.c:634
-  bucket_table_alloc lib/rhashtable.c:186 [inline]
-  rhashtable_rehash_alloc+0x9e/0x290 lib/rhashtable.c:367
-  rht_deferred_worker+0x4e1/0x2440 lib/rhashtable.c:427
-  process_one_work kernel/workqueue.c:3218 [inline]
-  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3299
-  worker_thread+0x86d/0xd70 kernel/workqueue.c:3380
-  kthread+0x2f0/0x390 kernel/kthread.c:388
-  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:243
-
-Memory state around the buggy address:
- ffff88802cd73c80: 07 fc fc fc 05 fc fc fc 05 fc fc fc fa fc fc fc
- ffff88802cd73d00: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
->ffff88802cd73d80: fa fc fc fc 01 fc fc fc fa fc fc fc fa fc fc fc
-                               ^
- ffff88802cd73e00: fa fc fc fc fa fc fc fc 05 fc fc fc 07 fc fc fc
- ffff88802cd73e80: 07 fc fc fc 07 fc fc fc 07 fc fc fc 07 fc fc fc
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://lore.kernel.org/r/20240404122051.2303764-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- net/ipv4/netfilter/arp_tables.c |    4 ++++
- net/ipv4/netfilter/ip_tables.c  |    4 ++++
- net/ipv6/netfilter/ip6_tables.c |    4 ++++
- 4 files changed, 18 insertions(+)
+ drivers/md/dm-integrity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1111,6 +1111,8 @@ static int do_replace(struct net *net, s
- 	struct ebt_table_info *newinfo;
- 	struct ebt_replace tmp;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1423,6 +1425,8 @@ static int update_counters(struct net *n
- {
- 	struct ebt_replace hlp;
- 
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
-@@ -2352,6 +2356,8 @@ static int compat_update_counters(struct
- {
- 	struct compat_ebt_replace hlp;
- 
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -956,6 +956,8 @@ static int do_replace(struct net *net, s
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1254,6 +1256,8 @@ static int compat_do_replace(struct net
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1110,6 +1110,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1494,6 +1496,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1127,6 +1127,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1503,6 +1505,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 9c9e2b50c63c3..696365f8f3b5f 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -4167,7 +4167,7 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
+ 		} else if (sscanf(opt_string, "sectors_per_bit:%llu%c", &llval, &dummy) == 1) {
+ 			log2_sectors_per_bitmap_bit = !llval ? 0 : __ilog2_u64(llval);
+ 		} else if (sscanf(opt_string, "bitmap_flush_interval:%u%c", &val, &dummy) == 1) {
+-			if (val >= (uint64_t)UINT_MAX * 1000 / HZ) {
++			if ((uint64_t)val >= (uint64_t)UINT_MAX * 1000 / HZ) {
+ 				r = -EINVAL;
+ 				ti->error = "Invalid bitmap_flush_interval argument";
+ 				goto bad;
+-- 
+2.43.0
+
 
 
