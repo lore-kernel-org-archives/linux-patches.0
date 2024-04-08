@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5360A2DF73;
-	Mon,  8 Apr 2024 13:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CB52DF73;
+	Mon,  8 Apr 2024 13:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581405; cv=none; b=uJcjaafWPchLX5LkolYmXNAKNXiVSa2mMA12FDozJD12nVrijyVF6lhCjrZHhSVsOOznt7LIwo4TsoI90M5wuQkEcwSO9W7MERFHGYzU8BMxltfnwT+Wqt7THoHbVboCRpzpbQJ5KDUcSQIMEMF+jB+06BWJja+kqz53ivbfgIU=
+	t=1712581408; cv=none; b=TyhI90NJPhOh1ETV9ZieeS3vG2j7sjnn/zPx8bKzjejftaZURv1DdAdV4cNpmv4qTs0npfGZgsz8zDf89VWUGq04rtR2QVKDOh80Y6XruhHWrd0CtYbrTQ4xK2d1cVwabUlwsZcnZQYo1nzzGjrgFCSVfzTax7PRkRfLVO41mGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581405; c=relaxed/simple;
-	bh=pyktpuonQeYvpydggD62+vI7bJILeR44fAa3rd9UBxc=;
+	s=arc-20240116; t=1712581408; c=relaxed/simple;
+	bh=XomF1350aEMRrK+NIVkckI2nizc1T+yVJiEKg2R5Z2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRomLNK2iOnzQAI+MA8ksYTu3AhLz/yC0iJ63zziRlMWdf6V0WuhwUmxuQLnw41azRbXe2UGii8gvTlhE0Gqjq3kQxPSiCrOrFcGGsGf49lnwwVe6HvJ/8OZmUCxTHTfP0oElz3wks8ZaX6HZZeoceeZK3Gd+Wz8qeVTgVEwSMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LX5XOPbN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHHZT4gyvsw3KGNcowg2kwTdsPm6NgSgHI2m+9zNKIKmARer22jjeF5ppFZSpE072QYVaeVaFjfyc1iNIxxOb68nvOOu7eMmvNgmNA/T3wbQe/nNV1FLs5O2aXrg1JYKvEzO0xvwUEF0r5xhYpSze8tG/98sGS+ONXaZRafQm+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyQJVMdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LX5XOPbN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA0FC433C7;
-	Mon,  8 Apr 2024 13:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyQJVMdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30F7C433F1;
+	Mon,  8 Apr 2024 13:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581405;
-	bh=pyktpuonQeYvpydggD62+vI7bJILeR44fAa3rd9UBxc=;
+	s=korg; t=1712581408;
+	bh=XomF1350aEMRrK+NIVkckI2nizc1T+yVJiEKg2R5Z2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LX5XOPbNWrTHLoSenR0C3nV7+vct7zgGCb8NGw4no/u+861kWt9iesG4jlfKjxJsQ
-	 fPt9HMq5U2RdR/ePZpWbGGT+8iMISxz8OJiuRhY5Zqcz3hDp6kpsnulaMx64groQk8
-	 atby4GzIIq57P8lSIl78Jjg9EP+LPH05WJnWIVQ8=
+	b=ZyQJVMdcmfqX4Kb7hIkCAG81xC0Bsu7vB+x+S7g87M2Rc/V4+iIzsHIh0w6F1UqsV
+	 Rr/up9ae8CZ5ZHHMEFV+nZ/jPAWpL8OMrNgV7N0osl/SgWokfGl6uqrlWw5hu6ZTzX
+	 7M+FrTl557KBh0NbYoODdDJ+SKq7jgtzO3RWfEKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/138] tls: adjust recv return with async crypto and failed copy to userspace
-Date: Mon,  8 Apr 2024 14:57:09 +0200
-Message-ID: <20240408125256.705178193@linuxfoundation.org>
+Subject: [PATCH 5.15 046/690] powerpc/fsl: Fix mfpmr build errors with newer binutils
+Date: Mon,  8 Apr 2024 14:48:32 +0200
+Message-ID: <20240408125401.195517544@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 85eef9a41d019b59be7bc91793f26251909c0710 ]
+[ Upstream commit 5f491356b7149564ab22323ccce79c8d595bfd0c ]
 
-process_rx_list may not copy as many bytes as we want to the userspace
-buffer, for example in case we hit an EFAULT during the copy. If this
-happens, we should only count the bytes that were actually copied,
-which may be 0.
+Binutils 2.38 complains about the use of mfpmr when building
+ppc6xx_defconfig:
 
-Subtracting async_copy_bytes is correct in both peek and !peek cases,
-because decrypted == async_copy_bytes + peeked for the peek case: peek
-is always !ZC, and we can go through either the sync or async path. In
-the async case, we add chunk to both decrypted and
-async_copy_bytes. In the sync case, we add chunk to both decrypted and
-peeked. I missed that in commit 6caaf104423d ("tls: fix peeking with
-sync+async decryption").
+    CC      arch/powerpc/kernel/pmc.o
+  {standard input}: Assembler messages:
+  {standard input}:45: Error: unrecognized opcode: `mfpmr'
+  {standard input}:56: Error: unrecognized opcode: `mtpmr'
 
-Fixes: 4d42cd6bc2ac ("tls: rx: fix return value for async crypto")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1b5a1eaab3c088a9dd5d9f1059ceecd7afe888d1.1711120964.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is because by default the kernel is built with -mcpu=powerpc, and
+the mt/mfpmr instructions are not defined.
+
+It can be avoided by enabling CONFIG_E300C3_CPU, but just adding that to
+the defconfig will leave open the possibility of randconfig failures.
+
+So add machine directives around the mt/mfpmr instructions to tell
+binutils how to assemble them.
+
+Cc: stable@vger.kernel.org
+Reported-by: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240229122521.762431-3-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/include/asm/reg_fsl_emb.h | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index e40f6ed65e6a2..7166c0606527f 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2244,6 +2244,9 @@ int tls_sw_recvmsg(struct sock *sk,
- 		else
- 			err = process_rx_list(ctx, msg, &control, 0,
- 					      async_copy_bytes, is_peek, NULL);
-+
-+		/* we could have copied less than we wanted, and possibly nothing */
-+		decrypted += max(err, 0) - async_copy_bytes;
- 	}
+diff --git a/arch/powerpc/include/asm/reg_fsl_emb.h b/arch/powerpc/include/asm/reg_fsl_emb.h
+index a21f529c43d96..8359c06d92d9f 100644
+--- a/arch/powerpc/include/asm/reg_fsl_emb.h
++++ b/arch/powerpc/include/asm/reg_fsl_emb.h
+@@ -12,9 +12,16 @@
+ #ifndef __ASSEMBLY__
+ /* Performance Monitor Registers */
+ #define mfpmr(rn)	({unsigned int rval; \
+-			asm volatile("mfpmr %0," __stringify(rn) \
++			asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mfpmr %0," __stringify(rn) ";" \
++				     ".machine pop; " \
+ 				     : "=r" (rval)); rval;})
+-#define mtpmr(rn, v)	asm volatile("mtpmr " __stringify(rn) ",%0" : : "r" (v))
++#define mtpmr(rn, v)	asm volatile(".machine push; " \
++				     ".machine e300; " \
++				     "mtpmr " __stringify(rn) ",%0; " \
++				     ".machine pop; " \
++				     : : "r" (v))
+ #endif /* __ASSEMBLY__ */
  
- 	copied += decrypted;
+ /* Freescale Book E Performance Monitor APU Registers */
 -- 
 2.43.0
 
