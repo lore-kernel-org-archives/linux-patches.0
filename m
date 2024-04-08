@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713E47D09F;
-	Mon,  8 Apr 2024 13:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CE3768EA;
+	Mon,  8 Apr 2024 13:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583375; cv=none; b=duPVP8GjGosZ+M2yCNWZoYXy4756QN14Pvn/bsRuCJosvY8/zae/PWMbDHWqN0H7ZZHUiNMwm/+/BwSxV10sRx14Y4IIxSGwavItulMBeKGfFSIKVdsKGZTDJg6KN0KSSdOPimr9hOfz5HFOT2QuVHQMyBq8QekFQB5I5FrlPaA=
+	t=1712583378; cv=none; b=Yz3W5JKATgWu2hmb7s+SreVLka6x6WR9Y3b4Q0Wg+pqcgsOV1n1C0r4KncS87QP9nQSzfIvPxZoSD1BaKvWGwgRmSkfATvK14FE8YG6pxOWKgW0iD36bMxr59xCKLUP2rrdNwNA+I4jO97+9YUzvozEkso7yShhIs8Qyw8yaT1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583375; c=relaxed/simple;
-	bh=dd9w9qTK1Cse1b6SvZ4b1cjOjjMOZQKntb9OUgpicGw=;
+	s=arc-20240116; t=1712583378; c=relaxed/simple;
+	bh=Kgn6zkLEnRTN1pnKd4guJOcFCEGKqKEBksJwS7iNivE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFjHaWBfiPVJT/mLB4iqNqGOBkMT08Vn164BCHpuG9KJEf1lKCt9xU7/AB9QvtmvyZQbhHpmmvCw+p5eCBiw+tBsPna6TTHiFzPcmVZPMY4RpSikIuYratJ0iVCPWL9V0eTOgqkMkleVjMJ0OBR53zYn6lMJRmY8C+1+atCiFy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqJBojXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvFC/rTCB+mghcfjnhWCca6RGTBVaR/vL3ASiuQq+9nqaexxhjg7aCq3kW0lEOkJ+lYWC4tAF3d91BfE3larvMV8znSwZwMk44odI0yfBpR3Qrk5vGTtx4PmEBE+7e4unI/0cFDVGodMVCkYqNFf3P8z9wuNB8WbOFUqezeMM8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaQKM2b+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqJBojXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC93FC433F1;
-	Mon,  8 Apr 2024 13:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaQKM2b+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA6AC433F1;
+	Mon,  8 Apr 2024 13:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583375;
-	bh=dd9w9qTK1Cse1b6SvZ4b1cjOjjMOZQKntb9OUgpicGw=;
+	s=korg; t=1712583378;
+	bh=Kgn6zkLEnRTN1pnKd4guJOcFCEGKqKEBksJwS7iNivE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqJBojXqcBQKCk1PeBWWrL3T1CeLGwWRDn2oPPZxTyPmT0fvpztA+W+M14/KtDXgI
-	 jnCV9GYdw3OqjVSdaJaRYykc1EBparnAgVCmxP2t7u5uAJemy6HE/urvJu/EwNFO7a
-	 wlrWEngVxNpEI6dldP1zu4kndzhnibQl+zqAzBYU=
+	b=WaQKM2b+JVomhHIYj/VlGisY78PY8Cjx97CwrUNEXjr4zuIf7TvK8R2Q69/I5l6FS
+	 PFw86g9YqdK5zwHbpoWike4HnyWpCvIjpQtBoHyOQU8oPIPjO8j2OtHeIp2xeRjJcB
+	 651WCHtnxayUgRQd4Ahw5ckCY/qidw7NvdEX/SHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huai-Yuan Liu <qq810974084@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/252] spi: mchp-pci1xxx: Fix a possible null pointer dereference in pci1xxx_spi_probe
-Date: Mon,  8 Apr 2024 14:58:08 +0200
-Message-ID: <20240408125312.528858933@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 241/690] lockd: rename lockd_create_svc() to lockd_get()
+Date: Mon,  8 Apr 2024 14:51:47 +0200
+Message-ID: <20240408125408.385243112@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +46,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huai-Yuan Liu <qq810974084@gmail.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 1f886a7bfb3faf4c1021e73f045538008ce7634e ]
+[ Upstream commit ecd3ad68d2c6d3ae178a63a2d9a02c392904fd36 ]
 
-In function pci1xxxx_spi_probe, there is a potential null pointer that
-may be caused by a failed memory allocation by the function devm_kzalloc.
-Hence, a null pointer check needs to be added to prevent null pointer
-dereferencing later in the code.
+lockd_create_svc() already does an svc_get() if the service already
+exists, so it is more like a "get" than a "create".
 
-To fix this issue, spi_bus->spi_int[iter] should be checked. The memory
-allocated by devm_kzalloc will be automatically released, so just directly
-return -ENOMEM without worrying about memory leaks.
+So:
+ - Move the increment of nlmsvc_users into the function as well
+ - rename to lockd_get().
 
-Fixes: 1cc0cbea7167 ("spi: microchip: pci1xxxx: Add driver for SPI controller of PCI1XXXX PCIe switch")
-Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
-Link: https://msgid.link/r/20240403014221.969801-1-qq810974084@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It is now the inverse of lockd_put().
+
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/spi/spi-pci1xxxx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/lockd/svc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-pci1xxxx.c b/drivers/spi/spi-pci1xxxx.c
-index 3638e974f5d49..06bf58b7e5d72 100644
---- a/drivers/spi/spi-pci1xxxx.c
-+++ b/drivers/spi/spi-pci1xxxx.c
-@@ -275,6 +275,8 @@ static int pci1xxxx_spi_probe(struct pci_dev *pdev, const struct pci_device_id *
- 		spi_bus->spi_int[iter] = devm_kzalloc(&pdev->dev,
- 						      sizeof(struct pci1xxxx_spi_internal),
- 						      GFP_KERNEL);
-+		if (!spi_bus->spi_int[iter])
-+			return -ENOMEM;
- 		spi_sub_ptr = spi_bus->spi_int[iter];
- 		spi_sub_ptr->spi_host = devm_spi_alloc_host(dev, sizeof(struct spi_controller));
- 		if (!spi_sub_ptr->spi_host)
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 7f12c280fd30d..1a7c11118b320 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -396,16 +396,14 @@ static const struct svc_serv_ops lockd_sv_ops = {
+ 	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
+ };
+ 
+-static int lockd_create_svc(void)
++static int lockd_get(void)
+ {
+ 	struct svc_serv *serv;
+ 	int error;
+ 
+-	/*
+-	 * Check whether we're already up and running.
+-	 */
+ 	if (nlmsvc_serv) {
+ 		svc_get(nlmsvc_serv);
++		nlmsvc_users++;
+ 		return 0;
+ 	}
+ 
+@@ -439,6 +437,7 @@ static int lockd_create_svc(void)
+ 	register_inet6addr_notifier(&lockd_inet6addr_notifier);
+ #endif
+ 	dprintk("lockd_up: service created\n");
++	nlmsvc_users++;
+ 	return 0;
+ }
+ 
+@@ -472,10 +471,9 @@ int lockd_up(struct net *net, const struct cred *cred)
+ 
+ 	mutex_lock(&nlmsvc_mutex);
+ 
+-	error = lockd_create_svc();
++	error = lockd_get();
+ 	if (error)
+ 		goto err;
+-	nlmsvc_users++;
+ 
+ 	error = lockd_up_net(nlmsvc_serv, net, cred);
+ 	if (error < 0) {
 -- 
 2.43.0
 
