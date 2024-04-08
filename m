@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B736EB49;
-	Mon,  8 Apr 2024 13:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00D36A342;
+	Mon,  8 Apr 2024 13:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584245; cv=none; b=E/ZQmAvsvmenXNhNFM4OX2zHd1aabtDGSL8fThpss01u3Ke8NmFB0u+1ORFB6sSTiG4ab84p7XZFpuQMkZAXb6Dtyx4VWMZzI8/L72qSQmHs07yELu+5S5SgVsxemSdho60qthGwlS5QicsAiYff8GbqYqWC/p2JVHTEwZnuaCo=
+	t=1712584248; cv=none; b=hDxsvTh9zlUmV7gyJjgQfv66TLCWaKbv/9T4qB8VQVb+DRR3Gk7cmwNdZqt6uBgpyRmeS/yfw1SKBbv1lSB2K9fnOdzV317nwfEnXUIK27ZrLf805LlWXczMbTOpxrGM7AY6oRFtaGxNKgfimdjdpv6dg5JCYLiLWgeYv4T88no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584245; c=relaxed/simple;
-	bh=E1he/mfFbjeGKs0VtYQQQbGY6CIJSEGdV1vOIysXsZU=;
+	s=arc-20240116; t=1712584248; c=relaxed/simple;
+	bh=mxq/uzf61xKjh9Q1Kk/57+yrDk5R6H7mUdDBVltwoyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHQzdU6ScGIaS8hvsGR01ldeeIqxqCr9BpWVpoyM3DvMCr0WEXrnmMUWLZr9gXNDyZpEsCNX7KljCrwhupy77n646HcoYXyr7qzUN8+CNJ/weA7oX5ZXJ0dGTmuW5OLpL4cI0cXXlwxftzwJLRDd5S05N1Oi99JcLDtYRIYxl2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAyictQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3Qp69RQ2NlE/t8YjPQxeu0BSdJH7Dy4QSoI1a77lmmkwpGdYpi4qUKg2O/fVRFqvUojcC9/RypeNpLRu7Uz/aEyqTzSFz5nHyxNQBodUHCzWQJIflKndLMTCirYTkZccMA0w1v1mg0Q0gpbogflDfpNAldn6F3f5R2KPrzWWHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgAYHEm3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAyictQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BEAC433C7;
-	Mon,  8 Apr 2024 13:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgAYHEm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA8AC433F1;
+	Mon,  8 Apr 2024 13:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584244;
-	bh=E1he/mfFbjeGKs0VtYQQQbGY6CIJSEGdV1vOIysXsZU=;
+	s=korg; t=1712584247;
+	bh=mxq/uzf61xKjh9Q1Kk/57+yrDk5R6H7mUdDBVltwoyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAyictQDALGd7IaV09/KqBqzlSJNBc+9HWiGKi33o0hpFYH1YWSFtv315gksZP2MM
-	 OF/CFoe+PqMF+DjFXxD6kyocNXf4HJD2Xivc4EUtmGz0bO/muPgC3C5OITVAAco+8t
-	 +OlzKvlG1VRj2n6VevXm4zB3vWHqkr2VUefW564U=
+	b=mgAYHEm3rMD/qlTkZ7YnoiDHEIj4RUCNxMh+2fW7WswsM9+Zyet9pWpNqRrOmRRhR
+	 znGG+kp8PFfGv5ZgOl3BAzQlLePCAFU/rfVVdKkjK8t0QpaRIgTaogYa1m14C2BDkN
+	 V3RSvkt10KChQpiIm0cRTaH3SERhHcGcqeXWtDao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 372/690] NFSD: Separate tracepoints for acquire and create
-Date: Mon,  8 Apr 2024 14:53:58 +0200
-Message-ID: <20240408125413.041169108@linuxfoundation.org>
+Subject: [PATCH 5.15 346/690] NFSD: Report filecache LRU size
+Date: Mon,  8 Apr 2024 14:53:32 +0200
+Message-ID: <20240408125412.126219024@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,159 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit be0230069fcbf7d332d010b57c1d0cfd623a84d6 ]
+[ Upstream commit 0fd244c115f0321fc5e34ad2291f2a572508e3f7 ]
 
-These tracepoints collect different information: the create case does
-not open a file, so there's no nf_file available.
+Surface the NFSD filecache's LRU list length to help field
+troubleshooters monitor filecache issues.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/filecache.c |  9 ++++----
- fs/nfsd/nfs4state.c |  1 +
- fs/nfsd/trace.h     | 54 ++++++++++++++++++++++++++++++++++++++-------
- 3 files changed, 52 insertions(+), 12 deletions(-)
+ fs/nfsd/filecache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index c6dc55c0f758b..85813affb8abf 100644
+index 1d3d13b78be0e..377d8211200ff 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -1039,7 +1039,7 @@ nfsd_file_is_cached(struct inode *inode)
- }
- 
- static __be32
--nfsd_do_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		     unsigned int may_flags, struct nfsd_file **pnf, bool open)
+@@ -1047,7 +1047,7 @@ nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
  {
- 	struct nfsd_file_lookup_key key = {
-@@ -1120,7 +1120,8 @@ nfsd_do_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	unsigned int i, count = 0, longest = 0;
+-	unsigned long hits = 0;
++	unsigned long lru = 0, hits = 0;
  
- out_status:
- 	put_cred(key.cred);
--	trace_nfsd_file_acquire(rqstp, key.inode, may_flags, nf, status);
-+	if (open)
-+		trace_nfsd_file_acquire(rqstp, key.inode, may_flags, nf, status);
- 	return status;
- 
- open_file:
-@@ -1168,7 +1169,7 @@ __be32
- nfsd_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		  unsigned int may_flags, struct nfsd_file **pnf)
- {
--	return nfsd_do_file_acquire(rqstp, fhp, may_flags, pnf, true);
-+	return nfsd_file_do_acquire(rqstp, fhp, may_flags, pnf, true);
- }
- 
- /**
-@@ -1185,7 +1186,7 @@ __be32
- nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		 unsigned int may_flags, struct nfsd_file **pnf)
- {
--	return nfsd_do_file_acquire(rqstp, fhp, may_flags, pnf, false);
-+	return nfsd_file_do_acquire(rqstp, fhp, may_flags, pnf, false);
- }
- 
- /*
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 08700b6acba31..d349abf0821d6 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5121,6 +5121,7 @@ static __be32 nfs4_get_vfs_file(struct svc_rqst *rqstp, struct nfs4_file *fp,
- 				goto out_put_access;
- 			nf->nf_file = open->op_filp;
- 			open->op_filp = NULL;
-+			trace_nfsd_file_create(rqstp, access, nf);
+ 	/*
+ 	 * No need for spinlocks here since we're not terribly interested in
+@@ -1060,6 +1060,7 @@ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
+ 			count += nfsd_file_hashtbl[i].nfb_count;
+ 			longest = max(longest, nfsd_file_hashtbl[i].nfb_count);
  		}
++		lru = list_lru_count(&nfsd_file_lru);
+ 	}
+ 	mutex_unlock(&nfsd_mutex);
  
- 		spin_lock(&fp->fi_lock);
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index f94db18777ad7..12dbc190e6595 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -781,10 +781,10 @@ DEFINE_NFSD_FILE_EVENT(nfsd_file_unhash_and_dispose);
+@@ -1068,6 +1069,7 @@ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
  
- TRACE_EVENT(nfsd_file_acquire,
- 	TP_PROTO(
--		struct svc_rqst *rqstp,
--		struct inode *inode,
-+		const struct svc_rqst *rqstp,
-+		const struct inode *inode,
- 		unsigned int may_flags,
--		struct nfsd_file *nf,
-+		const struct nfsd_file *nf,
- 		__be32 status
- 	),
- 
-@@ -792,12 +792,12 @@ TRACE_EVENT(nfsd_file_acquire,
- 
- 	TP_STRUCT__entry(
- 		__field(u32, xid)
--		__field(void *, inode)
-+		__field(const void *, inode)
- 		__field(unsigned long, may_flags)
--		__field(int, nf_ref)
-+		__field(unsigned int, nf_ref)
- 		__field(unsigned long, nf_flags)
- 		__field(unsigned long, nf_may)
--		__field(struct file *, nf_file)
-+		__field(const void *, nf_file)
- 		__field(u32, status)
- 	),
- 
-@@ -812,12 +812,50 @@ TRACE_EVENT(nfsd_file_acquire,
- 		__entry->status = be32_to_cpu(status);
- 	),
- 
--	TP_printk("xid=0x%x inode=%p may_flags=%s ref=%d nf_flags=%s nf_may=%s nf_file=%p status=%u",
-+	TP_printk("xid=0x%x inode=%p may_flags=%s ref=%u nf_flags=%s nf_may=%s nf_file=%p status=%u",
- 			__entry->xid, __entry->inode,
- 			show_nfsd_may_flags(__entry->may_flags),
- 			__entry->nf_ref, show_nf_flags(__entry->nf_flags),
- 			show_nfsd_may_flags(__entry->nf_may),
--			__entry->nf_file, __entry->status)
-+			__entry->nf_file, __entry->status
-+	)
-+);
-+
-+TRACE_EVENT(nfsd_file_create,
-+	TP_PROTO(
-+		const struct svc_rqst *rqstp,
-+		unsigned int may_flags,
-+		const struct nfsd_file *nf
-+	),
-+
-+	TP_ARGS(rqstp, may_flags, nf),
-+
-+	TP_STRUCT__entry(
-+		__field(const void *, nf_inode)
-+		__field(const void *, nf_file)
-+		__field(unsigned long, may_flags)
-+		__field(unsigned long, nf_flags)
-+		__field(unsigned long, nf_may)
-+		__field(unsigned int, nf_ref)
-+		__field(u32, xid)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->nf_inode = nf->nf_inode;
-+		__entry->nf_file = nf->nf_file;
-+		__entry->may_flags = may_flags;
-+		__entry->nf_flags = nf->nf_flags;
-+		__entry->nf_may = nf->nf_may;
-+		__entry->nf_ref = refcount_read(&nf->nf_ref);
-+		__entry->xid = be32_to_cpu(rqstp->rq_xid);
-+	),
-+
-+	TP_printk("xid=0x%x inode=%p may_flags=%s ref=%u nf_flags=%s nf_may=%s nf_file=%p",
-+		__entry->xid, __entry->nf_inode,
-+		show_nfsd_may_flags(__entry->may_flags),
-+		__entry->nf_ref, show_nf_flags(__entry->nf_flags),
-+		show_nfsd_may_flags(__entry->nf_may), __entry->nf_file
-+	)
- );
- 
- TRACE_EVENT(nfsd_file_insert_err,
+ 	seq_printf(m, "total entries: %u\n", count);
+ 	seq_printf(m, "longest chain: %u\n", longest);
++	seq_printf(m, "lru entries:   %lu\n", lru);
+ 	seq_printf(m, "cache hits:    %lu\n", hits);
+ 	return 0;
+ }
 -- 
 2.43.0
 
