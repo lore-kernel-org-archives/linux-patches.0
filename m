@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F877F492;
-	Mon,  8 Apr 2024 14:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C977F496;
+	Mon,  8 Apr 2024 14:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585046; cv=none; b=uv9oDcGj9KT/yWol6FQdBIK1xQ25aZlUjjHw3dClnny1Us0l99jCC+PooCIatLlpmsfD3S3r4q4jYqNnAOPUb73ImeCYggSvwqfJ7P64hlHOFGVsJjShuLos5+k9lJMMKJI0vv4SZ9bxn2P9J/mzPBKFpxXixRpvfi/3w3hJu8A=
+	t=1712585049; cv=none; b=dFRHfoTeHhjrSzZuyVh3Ljmhp1OyOtPCUkAiUeB7PEmgpG1LgFdNmd1r4j/6W9KHLt/w3ZnHg04YTrgd+pwPjVe4q1HSVVYiBCyoY+djfOCnXViHEKvTrTxGfIFMzKo7kJoKJhhAaTtVDQLr4VMp2IaryKwrF8N2GnpXjkiItIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585046; c=relaxed/simple;
-	bh=fYnkUsXLnqzYCjOcRxKpfimnKN175dfjr8aUSOH1IGk=;
+	s=arc-20240116; t=1712585049; c=relaxed/simple;
+	bh=NxRQuqugex1EqV87o78wWK8PVC5zM/GlEGpPs9KTrB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9t6UzlwXoA8Bfe8ISxMQQAV3VdLBBM4oUFNawFD+zPz4qh2oysAAt5z5dlrvbI/lARLDokGtyVb/54ZvA2pnnRGHgdj1Dk8Ow02/yU8cTBTH1i4fsEJgNotSuqQYRF6b9eFqkdoVqJUN0BjDdElexU8npXPDZRw0YPbV9luTFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3JmvPk0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1FM2mZhPbDtOP+0HRPEYMUu/DKcdQRtdyzLGQT+0ekPY4r045Qyr7UWrib/1ruVg4Dv7tv5cjQJ1zv9lJEl7exQzD5ZQwJGHFey5zZyJZq8bRpomQ8BB+1CrzqmEDanH7w/yFiRD7WJAlzK2rB6smmfsemnXfBgTgpRMPdhrP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSXmXgJj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3JmvPk0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CA6C433C7;
-	Mon,  8 Apr 2024 14:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSXmXgJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3714C433F1;
+	Mon,  8 Apr 2024 14:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585046;
-	bh=fYnkUsXLnqzYCjOcRxKpfimnKN175dfjr8aUSOH1IGk=;
+	s=korg; t=1712585049;
+	bh=NxRQuqugex1EqV87o78wWK8PVC5zM/GlEGpPs9KTrB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3JmvPk0enEaC2sElmxmSd5Dndl92IE8yOhODyAQFkvglox3/QsC+ixQO/QMoA4DP
-	 NVmD4ZJHNPsokWGpn+staH/zJh0o4XwDlI4jqo7wCqVHpJJ8xW1bVGxPQbdxGIJwxq
-	 zQy/QT3gVmJbQcTJZx62WHUK49nnT9Ej6qymbVuw=
+	b=GSXmXgJjRzTP4HsT72g6wIXUFRigfuuiuk5tzpKThsVXD1W//HDq4j9zrA/AusmMy
+	 Z7v+4ByQ4fB8zNqy8OaRsfe9yG6bu0dCQjiorSSgOsImTVKvXVby33d1BiFbAJcuAo
+	 qlimIGAyyxCuBPz272MNi6FUqA2jwrHZq1oqPMTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Wejman <piotrwejman90@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 643/690] net: stmmac: fix rx queue priority assignment
-Date: Mon,  8 Apr 2024 14:58:29 +0200
-Message-ID: <20240408125422.955087712@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 644/690] selftests: net: gro fwd: update vxlan GRO test expectations
+Date: Mon,  8 Apr 2024 14:58:30 +0200
+Message-ID: <20240408125422.985521863@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,139 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Wejman <piotrwejman90@gmail.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit b3da86d432b7cd65b025a11f68613e333d2483db upstream.
+commit 0fb101be97ca27850c5ecdbd1269423ce4d1f607 upstream.
 
-The driver should ensure that same priority is not mapped to multiple
-rx queues. From DesignWare Cores Ethernet Quality-of-Service
-Databook, section 17.1.29 MAC_RxQ_Ctrl2:
-"[...]The software must ensure that the content of this field is
-mutually exclusive to the PSRQ fields for other queues, that is,
-the same priority is not mapped to multiple Rx queues[...]"
+UDP tunnel packets can't be GRO in-between their endpoints as this
+causes different issues. The UDP GRO fwd vxlan tests were relying on
+this and their expectations have to be fixed.
 
-Previously rx_queue_priority() function was:
-- clearing all priorities from a queue
-- adding new priorities to that queue
-After this patch it will:
-- first assign new priorities to a queue
-- then remove those priorities from all other queues
-- keep other priorities previously assigned to that queue
+We keep both vxlan tests and expected no GRO from happening. The vxlan
+UDP GRO bench test was removed as it's not providing any valuable
+information now.
 
-Fixes: a8f5102af2a7 ("net: stmmac: TX and RX queue priority configuration")
-Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
-Signed-off-by: Piotr Wejman <piotrwejman90@gmail.com>
-Link: https://lore.kernel.org/r/20240401192239.33942-1-piotrwejman90@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a062260a9d5f ("selftests: net: add UDP GRO forwarding self-tests")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   |   40 +++++++++++++++-----
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |   38 +++++++++++++++----
- 2 files changed, 62 insertions(+), 16 deletions(-)
+ tools/testing/selftests/net/udpgro_fwd.sh |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -88,19 +88,41 @@ static void dwmac4_rx_queue_priority(str
- 				     u32 prio, u32 queue)
- {
- 	void __iomem *ioaddr = hw->pcsr;
--	u32 base_register;
--	u32 value;
-+	u32 clear_mask = 0;
-+	u32 ctrl2, ctrl3;
-+	int i;
+--- a/tools/testing/selftests/net/udpgro_fwd.sh
++++ b/tools/testing/selftests/net/udpgro_fwd.sh
+@@ -238,7 +238,7 @@ for family in 4 6; do
  
--	base_register = (queue < 4) ? GMAC_RXQ_CTRL2 : GMAC_RXQ_CTRL3;
--	if (queue >= 4)
--		queue -= 4;
-+	ctrl2 = readl(ioaddr + GMAC_RXQ_CTRL2);
-+	ctrl3 = readl(ioaddr + GMAC_RXQ_CTRL3);
-+
-+	/* The software must ensure that the same priority
-+	 * is not mapped to multiple Rx queues
-+	 */
-+	for (i = 0; i < 4; i++)
-+		clear_mask |= ((prio << GMAC_RXQCTRL_PSRQX_SHIFT(i)) &
-+						GMAC_RXQCTRL_PSRQX_MASK(i));
+ 	create_vxlan_pair
+ 	ip netns exec $NS_DST ethtool -K veth$DST rx-gro-list on
+-	run_test "GRO frag list over UDP tunnel" $OL_NET$DST 1 1
++	run_test "GRO frag list over UDP tunnel" $OL_NET$DST 10 10
+ 	cleanup
  
--	value = readl(ioaddr + base_register);
-+	ctrl2 &= ~clear_mask;
-+	ctrl3 &= ~clear_mask;
+ 	# use NAT to circumvent GRO FWD check
+@@ -251,13 +251,7 @@ for family in 4 6; do
+ 	# load arp cache before running the test to reduce the amount of
+ 	# stray traffic on top of the UDP tunnel
+ 	ip netns exec $NS_SRC $PING -q -c 1 $OL_NET$DST_NAT >/dev/null
+-	run_test "GRO fwd over UDP tunnel" $OL_NET$DST_NAT 1 1 $OL_NET$DST
+-	cleanup
+-
+-	create_vxlan_pair
+-	run_bench "UDP tunnel fwd perf" $OL_NET$DST
+-	ip netns exec $NS_DST ethtool -K veth$DST rx-udp-gro-forwarding on
+-	run_bench "UDP tunnel GRO fwd perf" $OL_NET$DST
++	run_test "GRO fwd over UDP tunnel" $OL_NET$DST_NAT 10 10 $OL_NET$DST
+ 	cleanup
+ done
  
--	value &= ~GMAC_RXQCTRL_PSRQX_MASK(queue);
--	value |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
-+	/* First assign new priorities to a queue, then
-+	 * clear them from others queues
-+	 */
-+	if (queue < 4) {
-+		ctrl2 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
- 						GMAC_RXQCTRL_PSRQX_MASK(queue);
--	writel(value, ioaddr + base_register);
-+
-+		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
-+		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
-+	} else {
-+		queue -= 4;
-+
-+		ctrl3 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
-+						GMAC_RXQCTRL_PSRQX_MASK(queue);
-+
-+		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
-+		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
-+	}
- }
- 
- static void dwmac4_tx_queue_priority(struct mac_device_info *hw,
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -97,17 +97,41 @@ static void dwxgmac2_rx_queue_prio(struc
- 				   u32 queue)
- {
- 	void __iomem *ioaddr = hw->pcsr;
--	u32 value, reg;
-+	u32 clear_mask = 0;
-+	u32 ctrl2, ctrl3;
-+	int i;
- 
--	reg = (queue < 4) ? XGMAC_RXQ_CTRL2 : XGMAC_RXQ_CTRL3;
--	if (queue >= 4)
-+	ctrl2 = readl(ioaddr + XGMAC_RXQ_CTRL2);
-+	ctrl3 = readl(ioaddr + XGMAC_RXQ_CTRL3);
-+
-+	/* The software must ensure that the same priority
-+	 * is not mapped to multiple Rx queues
-+	 */
-+	for (i = 0; i < 4; i++)
-+		clear_mask |= ((prio << XGMAC_PSRQ_SHIFT(i)) &
-+						XGMAC_PSRQ(i));
-+
-+	ctrl2 &= ~clear_mask;
-+	ctrl3 &= ~clear_mask;
-+
-+	/* First assign new priorities to a queue, then
-+	 * clear them from others queues
-+	 */
-+	if (queue < 4) {
-+		ctrl2 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
-+						XGMAC_PSRQ(queue);
-+
-+		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
-+		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
-+	} else {
- 		queue -= 4;
- 
--	value = readl(ioaddr + reg);
--	value &= ~XGMAC_PSRQ(queue);
--	value |= (prio << XGMAC_PSRQ_SHIFT(queue)) & XGMAC_PSRQ(queue);
-+		ctrl3 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
-+						XGMAC_PSRQ(queue);
- 
--	writel(value, ioaddr + reg);
-+		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
-+		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
-+	}
- }
- 
- static void dwxgmac2_tx_queue_prio(struct mac_device_info *hw, u32 prio,
 
 
