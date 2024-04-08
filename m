@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1507CF39;
-	Mon,  8 Apr 2024 13:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5807BAE7;
+	Mon,  8 Apr 2024 13:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583294; cv=none; b=mHpvu5Y4m7+BU6ZpPmjFY2MT8zFaROCLCPQLjAp0PjYRsxBacvJaPdjanLZl/refsrRIXV6AcYYkAK0wsc3/t32Or/pEmBBsdzzv0fYQYo4aAcvubxgZLQNe3SL9JKCgBUHXzh/A0Br6mFZeKYKiQRS0FWXabwrQistkPIZiWig=
+	t=1712583297; cv=none; b=lsKwSGuAkD5DV3jDzRUGLyn/hkPSw4YBv1jyB3ziwY+VNZ6RWI1Tl6mWzCDFzKAdFBxTkuTuxIBGLqFREeS5kQ+b/TNRBupv0mfj54SXs+mkFv+Do/ItpUdOWSSY986ZzY/Hma5nVYr4nsxxfjN3iANaZoqyJwM6bfM2E4VXD5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583294; c=relaxed/simple;
-	bh=L5RpJcHwsu+kPsnvbYI7scbphDlpF7z5jH+G9jY99cE=;
+	s=arc-20240116; t=1712583297; c=relaxed/simple;
+	bh=oBItHM/fNLUxLwNXZUoCt3zaXOxGBh9UEhC185lDc6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wwji+cSLR7Jea+OHiwXp7LrA4GBQV48QbMO1Ayv8cHwFa/NOG6u/ZM+GaMsrkIA9ZJZtR0xTv8ts8EM9fwb5+jgVi2B4CUJXPqKbBbFv1WLs05+MT9Sxqc7JWDc1bIr4yBxQ9qdJ9Sx2ve6QQxMO4qhf4uJbJX/x14EoMCv7VqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0n+dQhJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xrh63tovIOcl0rdO6lXtAC/F3Wl+93brYajc8kfhGBBhtcpIhnbplHDhwhv0J+wxXt1YyutzDq2xHZ+UkZ4Kv+wvyhBcyRGGXOv5HajKXwHmAEwpASiUGbNud3thmg9FQ9vZAFooetp5nwMDPndyOeRHyepivq6gN/N2ezYCVKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGaxlpBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0n+dQhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD9EC433F1;
-	Mon,  8 Apr 2024 13:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGaxlpBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D195C433C7;
+	Mon,  8 Apr 2024 13:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583293;
-	bh=L5RpJcHwsu+kPsnvbYI7scbphDlpF7z5jH+G9jY99cE=;
+	s=korg; t=1712583296;
+	bh=oBItHM/fNLUxLwNXZUoCt3zaXOxGBh9UEhC185lDc6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0n+dQhJ8R949hlbtBZhfwUTImG6fDXAMJNxbvlyGwPN/glGTy/YzACAPd7Kwir5h
-	 Z/Ng0pr7BFNzD30FSSeC5kMx38n9rtFN68mZXRSOi9cJjXjXzhYcvUPmK+dq6auTNG
-	 OlhGNsABjfiXRGc+Uv9wfdyNn+FGUBlHoGPzxPis=
+	b=PGaxlpBOt6yvLsn3TDa90+RLI9FOZu8p48v12KLLEyz/OGq9omlY3JbXeBf/HDQA3
+	 kto0xxnMdLT2553M13Ufbp/V+1V2UjBM9qdvS/JAo/fzqxzuniNFraHWWJYghGG/3S
+	 aAWqwZhR0rRfwrXksy1axpw6SRT7CJ6pQgqpbhq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 231/690] SUNRPC: use sv_lock to protect updates to sv_nrthreads.
-Date: Mon,  8 Apr 2024 14:51:37 +0200
-Message-ID: <20240408125407.986854671@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Chao Song <chao.song@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 161/273] ASoC: rt712-sdca-sdw: fix locking sequence
+Date: Mon,  8 Apr 2024 14:57:16 +0200
+Message-ID: <20240408125314.270649546@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,82 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 2a36395fac3b72771f87c3ee4387e3a96d85a7cc ]
+[ Upstream commit c8b2e5c1b959d100990e4f0cbad38e7d047bb97c ]
 
-Using sv_lock means we don't need to hold the service mutex over these
-updates.
+The disable_irq_lock protects the 'disable_irq' value, we need to lock
+before testing it.
 
-In particular,  svc_exit_thread() no longer requires synchronisation, so
-threads can exit asynchronously.
-
-Note that we could use an atomic_t, but as there are many more read
-sites than writes, that would add unnecessary noise to the code.
-Some reads are already racy, and there is no need for them to not be.
-
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 7a8735c1551e ("ASoC: rt712-sdca: fix for JD event handling in ClockStop Mode0")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@linux.intel.com>
+Link: https://msgid.link/r/20240325221817.206465-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 5 ++---
- net/sunrpc/svc.c | 9 +++++++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ sound/soc/codecs/rt712-sdca-sdw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 32f2c46a38323..16884a90e1ab0 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -55,9 +55,8 @@ static __be32			nfsd_init_request(struct svc_rqst *,
- 						struct svc_process_info *);
+diff --git a/sound/soc/codecs/rt712-sdca-sdw.c b/sound/soc/codecs/rt712-sdca-sdw.c
+index 6b644a89c5890..ba877432cea61 100644
+--- a/sound/soc/codecs/rt712-sdca-sdw.c
++++ b/sound/soc/codecs/rt712-sdca-sdw.c
+@@ -438,13 +438,14 @@ static int __maybe_unused rt712_sdca_dev_resume(struct device *dev)
+ 		return 0;
  
- /*
-- * nfsd_mutex protects nn->nfsd_serv -- both the pointer itself and the members
-- * of the svc_serv struct. In particular, ->sv_nrthreads but also to some
-- * extent ->sv_temp_socks and ->sv_permsocks.
-+ * nfsd_mutex protects nn->nfsd_serv -- both the pointer itself and some members
-+ * of the svc_serv struct such as ->sv_temp_socks and ->sv_permsocks.
-  *
-  * If (out side the lock) nn->nfsd_serv is non-NULL, then it must point to a
-  * properly initialised 'struct svc_serv' with ->sv_nrthreads > 0 (unless
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 6cde8c87e5733..c8a0649e5cdf1 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -523,7 +523,7 @@ EXPORT_SYMBOL_GPL(svc_shutdown_net);
- 
- /*
-  * Destroy an RPC service. Should be called with appropriate locking to
-- * protect the sv_nrthreads, sv_permsocks and sv_tempsocks.
-+ * protect sv_permsocks and sv_tempsocks.
-  */
- void
- svc_destroy(struct kref *ref)
-@@ -639,7 +639,10 @@ svc_prepare_thread(struct svc_serv *serv, struct svc_pool *pool, int node)
- 		return ERR_PTR(-ENOMEM);
- 
- 	svc_get(serv);
--	serv->sv_nrthreads++;
-+	spin_lock_bh(&serv->sv_lock);
-+	serv->sv_nrthreads += 1;
-+	spin_unlock_bh(&serv->sv_lock);
+ 	if (!slave->unattach_request) {
++		mutex_lock(&rt712->disable_irq_lock);
+ 		if (rt712->disable_irq == true) {
+-			mutex_lock(&rt712->disable_irq_lock);
 +
- 	spin_lock_bh(&pool->sp_lock);
- 	pool->sp_nrthreads++;
- 	list_add_rcu(&rqstp->rq_all, &pool->sp_all_threads);
-@@ -884,7 +887,9 @@ svc_exit_thread(struct svc_rqst *rqstp)
- 		list_del_rcu(&rqstp->rq_all);
- 	spin_unlock_bh(&pool->sp_lock);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_0);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
+ 			rt712->disable_irq = false;
+-			mutex_unlock(&rt712->disable_irq_lock);
+ 		}
++		mutex_unlock(&rt712->disable_irq_lock);
+ 		goto regmap_sync;
+ 	}
  
-+	spin_lock_bh(&serv->sv_lock);
- 	serv->sv_nrthreads -= 1;
-+	spin_unlock_bh(&serv->sv_lock);
- 	svc_sock_update_bufs(serv);
- 
- 	svc_rqst_free(rqstp);
 -- 
 2.43.0
 
