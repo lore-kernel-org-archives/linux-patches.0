@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D6180BF3;
-	Mon,  8 Apr 2024 14:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E277F8063B;
+	Mon,  8 Apr 2024 14:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585186; cv=none; b=tMdgALQ6dJfmJ6yYtWV6wK+CxKYeuwqJsfxEC8iv6rmVw+BcLTxH3FzyJ99avY8gjMAMQUHDmqE2+GbfpDpa02SVBbixOtptbK7dJ9rhLxLZaVJKtazp1uTEpR3W/S01rLuSDZd5W69gbAh66SufWXsB4PyDWtqjiZr7vqYYX2Y=
+	t=1712585189; cv=none; b=Rprz7ea2mvMttFEdEJZt9LZ6COcHm3h7rrYRa4GEZai8SWguoSZeMBIcQFahkniXUbBIVJwV4EBuVSpp9VyuAacfO6gQ9YkVxX6ypUCFygTlDX2G/3Y69EnUTA0xnxTFLzNV6GfWrBPc2ytsg78GfiybSmZCDrvNrvGUlbPRV3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585186; c=relaxed/simple;
-	bh=nvN5SQ+jjbjMmizusGpgRHSKSkS0l+3MhGVwklqrq/A=;
+	s=arc-20240116; t=1712585189; c=relaxed/simple;
+	bh=w1Xqb2J+Yxc5INT33x/l1ZbZ/jCyDGpYF4KFb4w0ifc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCnnso2N+yE3cIIqnhYfVJkmDzQFsu4lquCnY8ClGVSRRFrVRj4e5gAJTHqDvd4Pgt7N3ZNN9u7SMZ/1NDHTb1n0hm8xKeIG5v9DR0OvDRQKp4VZQXfz4NR4AJSs+xRBaaF/mFxjmgZw7RWx1Ny8wLPmnNu9uanzl275K2Udy50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOmzklwn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PfuC4EqdScdI7pGQlvU/Yjqr4LM5jVAAr3zTo8KktmGCKV1Epfhh8mfGj0jNUkBEpUtfQt0HcC1kAWtg5c8FyT5MNpHJUD53K2QOcZMKSiJ7xmtZg8BATq7nB6pW9xEpiSUkQWLgnLnXbbPCHXm9qnTthl7Fgj9svgofj06p3yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rghnOiBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOmzklwn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805ADC433C7;
-	Mon,  8 Apr 2024 14:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rghnOiBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCE8C43390;
+	Mon,  8 Apr 2024 14:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585185;
-	bh=nvN5SQ+jjbjMmizusGpgRHSKSkS0l+3MhGVwklqrq/A=;
+	s=korg; t=1712585188;
+	bh=w1Xqb2J+Yxc5INT33x/l1ZbZ/jCyDGpYF4KFb4w0ifc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOmzklwnyuYLLsf68/ky5oLP4pA+4bbVJKAwo3vcwGmWy82QDnTL4ha3Up02TLArI
-	 QmUdNw3SwNPI9gdWgmbNbg+s+JjyP/Idi+AqPcgwNB4wIA0mEAzHJoe1HbDamrS4nh
-	 2+aoSVxyd3Qi5Jf94LH/4BoBCblEbEcXraHjxigU=
+	b=rghnOiBJU6nAV5DMQrz0Xkx2WfSPML1XSkGM2FFops5aBD6N+ukykPz1lpNCXcc5a
+	 ly1JWFb/g0PMH4TVZw+NSY0QrN7r6je/qJe+4ghb+g+u0dmg1HWyueO2ycVoxDRFl7
+	 rffTemnt6iXX0cpFT5BKo+zeRR37m/NJqL28N0dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ulrich Weigand <ulrich.weigand@de.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.15 682/690] s390/entry: align system call table on 8 bytes
-Date: Mon,  8 Apr 2024 14:59:08 +0200
-Message-ID: <20240408125424.432126203@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 683/690] riscv: Fix spurious errors from __get/put_kernel_nofault
+Date: Mon,  8 Apr 2024 14:59:09 +0200
+Message-ID: <20240408125424.467199520@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,33 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit 378ca2d2ad410a1cd5690d06b46c5e2297f4c8c0 upstream.
+commit d080a08b06b6266cc3e0e86c5acfd80db937cb6b upstream.
 
-Align system call table on 8 bytes. With sys_call_table entry size
-of 8 bytes that eliminates the possibility of a system call pointer
-crossing cache line boundary.
+These macros did not initialize __kr_err, so they could fail even if
+the access did not fault.
 
-Cc: stable@kernel.org
-Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Fixes: d464118cdc41 ("riscv: implement __get_kernel_nofault and __put_user_nofault")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20240312022030.320789-1-samuel.holland@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/entry.S |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/include/asm/uaccess.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -685,6 +685,7 @@ ENDPROC(stack_overflow)
- .Lthis_cpu:	.short	0
- .Lstosm_tmp:	.byte	0
- 	.section .rodata, "a"
-+	.balign	8
- #define SYSCALL(esame,emu)	.quad __s390x_ ## esame
- 	.globl	sys_call_table
- sys_call_table:
+--- a/arch/riscv/include/asm/uaccess.h
++++ b/arch/riscv/include/asm/uaccess.h
+@@ -467,7 +467,7 @@ unsigned long __must_check clear_user(vo
+ 
+ #define __get_kernel_nofault(dst, src, type, err_label)			\
+ do {									\
+-	long __kr_err;							\
++	long __kr_err = 0;						\
+ 									\
+ 	__get_user_nocheck(*((type *)(dst)), (type *)(src), __kr_err);	\
+ 	if (unlikely(__kr_err))						\
+@@ -476,7 +476,7 @@ do {									\
+ 
+ #define __put_kernel_nofault(dst, src, type, err_label)			\
+ do {									\
+-	long __kr_err;							\
++	long __kr_err = 0;						\
+ 									\
+ 	__put_user_nocheck(*((type *)(src)), (type *)(dst), __kr_err);	\
+ 	if (unlikely(__kr_err))						\
 
 
