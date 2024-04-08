@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568C871742;
-	Mon,  8 Apr 2024 13:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A78D7C0AB;
+	Mon,  8 Apr 2024 13:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581463; cv=none; b=flMb+erHEUZuSmqcydB04bUUtk6nyAe66xBviGM7M+vx28YNhh0BHIXPxCbIFMZE/etz0r4IQMbb3L9wld35B0Zh4HYADRaruWAHqYqwPCAEcMIBEpSJj3x2+a7VBN9ySpNkNsD7xfEw5Q7JXGZ41FDA4rI3C6noA1pFKVViqE0=
+	t=1712581466; cv=none; b=CwwYxEiOuBUbuPH78lvdIBoakdEAUhZfvpTXigusYChGtGCeuY5fooV2pl9+gdH6VkzRkHttVDW4qJ2pj3oEY8ZWm7lnxYfwkvkltAXMWFBfZve6dR0epaXfUUKrFng5OfvjsvTS8fJVl51oiihkXHwXijIATjn+uFzyG+L5oYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581463; c=relaxed/simple;
-	bh=ASRjNpvftRSE5otoamRla/xuPeq4dz/2hbG4UYE5FUY=;
+	s=arc-20240116; t=1712581466; c=relaxed/simple;
+	bh=GT9Kvt6/z1+7/Xpl2+cosILDoOcIZyYtUaXOIhzG+ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Es4ZO70nmF+D2WqU+R1j03d57N2P5P1i98fPgL49K56T2QtXprjyFXJBqT5O8T9UgcqhshIRTAaHOGWt0l/dDJe4CBRqG33M65US0TW2m9RVR1wLP4bKcbbR7v7dPBqDTd+vcZQW0N3U2wm/LfpRj+jVW8aIRvbp7lVBmiGs9Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPK2+g4r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DesRr72pCF9Q+hO7Rse2s7Lc++b4HoNU9nWS271jXgw75W2Num7oeqyMr+8uMGzrLnzEEOu4yt7DtFhDscOsS0angLDs8EPC05DNyIvZRhpH0eGK77xUjckOAbkqNuD/ZJmkgIIbT+vKwG8RbNGgNrf8EIFuteUGbA+XJa9DAXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9j9lWFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPK2+g4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C92C433C7;
-	Mon,  8 Apr 2024 13:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9j9lWFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68DFC433F1;
+	Mon,  8 Apr 2024 13:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581463;
-	bh=ASRjNpvftRSE5otoamRla/xuPeq4dz/2hbG4UYE5FUY=;
+	s=korg; t=1712581466;
+	bh=GT9Kvt6/z1+7/Xpl2+cosILDoOcIZyYtUaXOIhzG+ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPK2+g4rzOQoGIq+cfJblWlThHTt1Vqp314j3px/qBFQQE5TDMVqjG6w3qvMgnvcD
-	 RCjpjl8gx3oIK4RvTd9SWaZ7qeN6kcZIbSk3wQg2LILNXLAT2mjbsatMtyl616+Pdi
-	 SUHrIuN1juRfUJqxJwl9W9ySmsjBXdLwc9K3JQ5E=
+	b=y9j9lWFrNF7UqVvYWxXgEv0d2yivom7TMh5d3GjO3iaC73NcTiZMfW/jftxBoJ2jJ
+	 t/G9EakTMpKs1EVZph8PBC61Abc+0t47MsDLYY8JdemR4qAMyRgpW4daoG7p3jK/jS
+	 GR/KxNcealSfQWMtHW01Mlewuelme9vWWfWs8DtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay12@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/252] bpf, arm64: fix bug in BPF_LDX_MEMSX
-Date: Mon,  8 Apr 2024 14:55:04 +0200
-Message-ID: <20240408125306.814844262@linuxfoundation.org>
+Subject: [PATCH 5.15 053/690] mmc: tmio: avoid concurrent runs of mmc_request_done()
+Date: Mon,  8 Apr 2024 14:48:39 +0200
+Message-ID: <20240408125401.442230827@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Puranjay Mohan <puranjay12@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 114b5b3b4bde7358624437be2f12cde1b265224e ]
+[ Upstream commit e8d1b41e69d72c62865bebe8f441163ec00b3d44 ]
 
-A64_LDRSW() takes three registers: Xt, Xn, Xm as arguments and it loads
-and sign extends the value at address Xn + Xm into register Xt.
+With the to-be-fixed commit, the reset_work handler cleared 'host->mrq'
+outside of the spinlock protected critical section. That leaves a small
+race window during execution of 'tmio_mmc_reset()' where the done_work
+handler could grab a pointer to the now invalid 'host->mrq'. Both would
+use it to call mmc_request_done() causing problems (see link below).
 
-Currently, the offset is being directly used in place of the tmp
-register which has the offset already loaded by the last emitted
-instruction.
+However, 'host->mrq' cannot simply be cleared earlier inside the
+critical section. That would allow new mrqs to come in asynchronously
+while the actual reset of the controller still needs to be done. So,
+like 'tmio_mmc_set_ios()', an ERR_PTR is used to prevent new mrqs from
+coming in but still avoiding concurrency between work handlers.
 
-This will cause JIT failures. The easiest way to reproduce this is to
-test the following code through test_bpf module:
-
-{
-	"BPF_LDX_MEMSX | BPF_W",
-	.u.insns_int = {
-		BPF_LD_IMM64(R1, 0x00000000deadbeefULL),
-		BPF_LD_IMM64(R2, 0xffffffffdeadbeefULL),
-		BPF_STX_MEM(BPF_DW, R10, R1, -7),
-		BPF_LDX_MEMSX(BPF_W, R0, R10, -7),
-		BPF_JMP_REG(BPF_JNE, R0, R2, 1),
-		BPF_ALU64_IMM(BPF_MOV, R0, 0),
-		BPF_EXIT_INSN(),
-	},
-	INTERNAL,
-	{ },
-	{ { 0, 0 } },
-	.stack_depth = 7,
-},
-
-We need to use the offset as -7 to trigger this code path, there could
-be other valid ways to trigger this from proper BPF programs as well.
-
-This code is rejected by the JIT because -7 is passed to A64_LDRSW() but
-it expects a valid register (0 - 31).
-
- roott@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
- [11300.490371] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
- [11300.491750] test_bpf: #345 BPF_LDX_MEMSX | BPF_W
- [11300.493179] aarch64_insn_encode_register: unknown register encoding -7
- [11300.494133] aarch64_insn_encode_register: unknown register encoding -7
- [11300.495292] FAIL to select_runtime err=-524
- [11300.496804] test_bpf: Summary: 0 PASSED, 1 FAILED, [0/0 JIT'ed]
- modprobe: ERROR: could not insert 'test_bpf': Invalid argument
-
-Applying this patch fixes the issue.
-
- root@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
- [  292.837436] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
- [  292.839416] test_bpf: #345 BPF_LDX_MEMSX | BPF_W jited:1 156 PASS
- [  292.844794] test_bpf: Summary: 1 PASSED, 0 FAILED, [1/1 JIT'ed]
-
-Fixes: cc88f540da52 ("bpf, arm64: Support sign-extension load instructions")
-Signed-off-by: Puranjay Mohan <puranjay12@gmail.com>
-Message-ID: <20240312235917.103626-1-puranjay12@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
+Closes: https://lore.kernel.org/all/20240220061356.3001761-1-dirk.behme@de.bosch.com/
+Fixes: df3ef2d3c92c ("mmc: protect the tmio_mmc driver against a theoretical race")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Dirk Behme <dirk.behme@de.bosch.com>
+Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: stable@vger.kernel.org # 3.0+
+Link: https://lore.kernel.org/r/20240305104423.3177-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/tmio_mmc_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 150d1c6543f7f..5fe4d8b3fdc89 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -1189,7 +1189,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx,
- 			} else {
- 				emit_a64_mov_i(1, tmp, off, ctx);
- 				if (sign_extend)
--					emit(A64_LDRSW(dst, src_adj, off_adj), ctx);
-+					emit(A64_LDRSW(dst, src, tmp), ctx);
- 				else
- 					emit(A64_LDR32(dst, src, tmp), ctx);
- 			}
+diff --git a/drivers/mmc/host/tmio_mmc_core.c b/drivers/mmc/host/tmio_mmc_core.c
+index 437048bb80273..5024cae411d3a 100644
+--- a/drivers/mmc/host/tmio_mmc_core.c
++++ b/drivers/mmc/host/tmio_mmc_core.c
+@@ -259,6 +259,8 @@ static void tmio_mmc_reset_work(struct work_struct *work)
+ 	else
+ 		mrq->cmd->error = -ETIMEDOUT;
+ 
++	/* No new calls yet, but disallow concurrent tmio_mmc_done_work() */
++	host->mrq = ERR_PTR(-EBUSY);
+ 	host->cmd = NULL;
+ 	host->data = NULL;
+ 
 -- 
 2.43.0
 
