@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75FA7E0E4;
-	Mon,  8 Apr 2024 13:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A19A7F470;
+	Mon,  8 Apr 2024 13:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583899; cv=none; b=MYBpNiY71KxaiK85RWST6JrwiClIqiBc7UCzFuISVH28wkg5MX+zpVhAbntpGtaYlEU4wZk1n+GzAQvHaxC5FUEuWfIIiOJW8c3Yqn9d5H9b7hZTifqotxUwayioRJOhlQ+g06xZD+Pqncolc0RM3/qQ9ZrXCITC51+udcjZ2Ag=
+	t=1712583902; cv=none; b=NgsAek9U+h+CR0o3S58Q2FBLlsEP3YRuO4fYpwe6k/zqlYvl2kJ/OvxtwDnCUiBEggXkfc6ijmxfJp1rX816Mno/ufD8H0k2p82+bPSYY4TX8FvvCmE3DWW9LC1C2wloo/iUl5iXgc8B0pTUZ40CHloA/UCIM1zozKpCOi+2RNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583899; c=relaxed/simple;
-	bh=MDBRB25FrOp4pNwrf47XxmRvdtUbke3CqVH2B6NyTvw=;
+	s=arc-20240116; t=1712583902; c=relaxed/simple;
+	bh=A3T02lGkitPFzVpAhOJsIOOc0yKJqL63zXc/ptCqdcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BUUQTkxPM+QEJDPqEhlpB7RwqnOUw5WmkzvMnr96YIylsE2i6J5MxgKBdUL/W6yd/rLtvSzOq6YAl9gUkp5n6Pw0YlKviGZXhR+v0ax3dGrMIDctWiQEEUg4UjCHGCOvv8HAEP7LgsBbkJ1/0y0aO14MG/5TDjclubzHKciRiS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4Y8+LW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KBxHX524RU6o/noIX1RZrgced6qmD4uw15iuFNET8ndtsZk1tg6EohHOVZRlmGy+teeLfAEVzc63gPzlGEQj9bOKD2c8cZmyEIEE779R7SXtSfmphO8qb0UYy/tYT6gVYn+iUiqVjEwjhO3iVTYwYW53Xgg9pWRwwxJNzz9yLXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBQh5sEf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4Y8+LW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3177CC433C7;
-	Mon,  8 Apr 2024 13:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBQh5sEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B45C433C7;
+	Mon,  8 Apr 2024 13:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583899;
-	bh=MDBRB25FrOp4pNwrf47XxmRvdtUbke3CqVH2B6NyTvw=;
+	s=korg; t=1712583902;
+	bh=A3T02lGkitPFzVpAhOJsIOOc0yKJqL63zXc/ptCqdcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4Y8+LW1oQP63yaXT1+LDM0885Czgmyes+zJM5syJRcILc1DEbOX0Q5YOMfRYM5Qs
-	 RYd5iAJ4+Bs0jMW6LEnfsdxVMGi8PMCMkGJAAk4J1WIoWDDsjvaw99riZHNk3u9HSg
-	 spnRO9/VssZmPOelUvOZrphMbFcQSypR0OPrGuaw=
+	b=oBQh5sEf52yUj6Eq1IYwp69ZI0hPXVf2OWLMT3YnpZGEwRWONpb2+73Zg0n2+MAGM
+	 y1wtAWsojox8WsyjbYRBMH68QBPe4sYeQC+MBGnRuAVKbWf+KwP3GD4SZLj8Rpuarf
+	 Kr8m23PrCuTeEm25BnCda+yzJ4N6v1Y0yT+bnxo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com,
-	syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com,
-	syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 247/252] bpf: support deferring bpf_link dealloc to after RCU grace period
-Date: Mon,  8 Apr 2024 14:59:06 +0200
-Message-ID: <20240408125314.324391140@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.8 232/273] x86/mce: Make sure to grab mce_sysfs_mutex in set_bank()
+Date: Mon,  8 Apr 2024 14:58:27 +0200
+Message-ID: <20240408125316.628864746@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,168 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 1a80dbcb2dbaf6e4c216e62e30fa7d3daa8001ce upstream.
+commit 3ddf944b32f88741c303f0b21459dbb3872b8bc5 upstream.
 
-BPF link for some program types is passed as a "context" which can be
-used by those BPF programs to look up additional information. E.g., for
-multi-kprobes and multi-uprobes, link is used to fetch BPF cookie values.
+Modifying a MCA bank's MCA_CTL bits which control which error types to
+be reported is done over
 
-Because of this runtime dependency, when bpf_link refcnt drops to zero
-there could still be active BPF programs running accessing link data.
+  /sys/devices/system/machinecheck/
+  ├── machinecheck0
+  │   ├── bank0
+  │   ├── bank1
+  │   ├── bank10
+  │   ├── bank11
+  ...
 
-This patch adds generic support to defer bpf_link dealloc callback to
-after RCU GP, if requested. This is done by exposing two different
-deallocation callbacks, one synchronous and one deferred. If deferred
-one is provided, bpf_link_free() will schedule dealloc_deferred()
-callback to happen after RCU GP.
+sysfs nodes by writing the new bit mask of events to enable.
 
-BPF is using two flavors of RCU: "classic" non-sleepable one and RCU
-tasks trace one. The latter is used when sleepable BPF programs are
-used. bpf_link_free() accommodates that by checking underlying BPF
-program's sleepable flag, and goes either through normal RCU GP only for
-non-sleepable, or through RCU tasks trace GP *and* then normal RCU GP
-(taking into account rcu_trace_implies_rcu_gp() optimization), if BPF
-program is sleepable.
+When the write is accepted, the kernel deletes all current timers and
+reinits all banks.
 
-We use this for multi-kprobe and multi-uprobe links, which dereference
-link during program run. We also preventively switch raw_tp link to use
-deferred dealloc callback, as upcoming changes in bpf-next tree expose
-raw_tp link data (specifically, cookie value) to BPF program at runtime
-as well.
+Doing that in parallel can lead to initializing a timer which is already
+armed and in the timer wheel, i.e., in use already:
 
-Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
-Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
-Reported-by: syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com
-Reported-by: syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com
-Reported-by: syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20240328052426.3042617-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  ODEBUG: init active (active state 0) object: ffff888063a28000 object
+  type: timer_list hint: mce_timer_fn+0x0/0x240 arch/x86/kernel/cpu/mce/core.c:2642
+  WARNING: CPU: 0 PID: 8120 at lib/debugobjects.c:514
+  debug_print_object+0x1a0/0x2a0 lib/debugobjects.c:514
+
+Fix that by grabbing the sysfs mutex as the rest of the MCA sysfs code
+does.
+
+Reported by: Yue Sun <samsun1006219@gmail.com>
+Reported by: xingwei lee <xrivendell7@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/CAEkJfYNiENwQY8yV1LYJ9LjJs%2Bx_-PqMv98gKig55=2vbzffRw@mail.gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h      |   16 +++++++++++++++-
- kernel/bpf/syscall.c     |   35 ++++++++++++++++++++++++++++++++---
- kernel/trace/bpf_trace.c |    4 ++--
- 3 files changed, 49 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1524,12 +1524,26 @@ struct bpf_link {
- 	enum bpf_link_type type;
- 	const struct bpf_link_ops *ops;
- 	struct bpf_prog *prog;
--	struct work_struct work;
-+	/* rcu is used before freeing, work can be used to schedule that
-+	 * RCU-based freeing before that, so they never overlap
-+	 */
-+	union {
-+		struct rcu_head rcu;
-+		struct work_struct work;
-+	};
- };
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2474,12 +2474,14 @@ static ssize_t set_bank(struct device *s
+ 		return -EINVAL;
  
- struct bpf_link_ops {
- 	void (*release)(struct bpf_link *link);
-+	/* deallocate link resources callback, called without RCU grace period
-+	 * waiting
-+	 */
- 	void (*dealloc)(struct bpf_link *link);
-+	/* deallocate link resources callback, called after RCU grace period;
-+	 * if underlying BPF program is sleepable we go through tasks trace
-+	 * RCU GP and then "classic" RCU GP
-+	 */
-+	void (*dealloc_deferred)(struct bpf_link *link);
- 	int (*detach)(struct bpf_link *link);
- 	int (*update_prog)(struct bpf_link *link, struct bpf_prog *new_prog,
- 			   struct bpf_prog *old_prog);
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2866,17 +2866,46 @@ void bpf_link_inc(struct bpf_link *link)
- 	atomic64_inc(&link->refcnt);
+ 	b = &per_cpu(mce_banks_array, s->id)[bank];
+-
+ 	if (!b->init)
+ 		return -ENODEV;
+ 
+ 	b->ctl = new;
++
++	mutex_lock(&mce_sysfs_mutex);
+ 	mce_restart();
++	mutex_unlock(&mce_sysfs_mutex);
+ 
+ 	return size;
  }
- 
-+static void bpf_link_defer_dealloc_rcu_gp(struct rcu_head *rcu)
-+{
-+	struct bpf_link *link = container_of(rcu, struct bpf_link, rcu);
-+
-+	/* free bpf_link and its containing memory */
-+	link->ops->dealloc_deferred(link);
-+}
-+
-+static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
-+{
-+	if (rcu_trace_implies_rcu_gp())
-+		bpf_link_defer_dealloc_rcu_gp(rcu);
-+	else
-+		call_rcu(rcu, bpf_link_defer_dealloc_rcu_gp);
-+}
-+
- /* bpf_link_free is guaranteed to be called from process context */
- static void bpf_link_free(struct bpf_link *link)
- {
-+	bool sleepable = false;
-+
- 	bpf_link_free_id(link->id);
- 	if (link->prog) {
-+		sleepable = link->prog->aux->sleepable;
- 		/* detach BPF program, clean up used resources */
- 		link->ops->release(link);
- 		bpf_prog_put(link->prog);
- 	}
--	/* free bpf_link and its containing memory */
--	link->ops->dealloc(link);
-+	if (link->ops->dealloc_deferred) {
-+		/* schedule BPF link deallocation; if underlying BPF program
-+		 * is sleepable, we need to first wait for RCU tasks trace
-+		 * sync, then go through "classic" RCU grace period
-+		 */
-+		if (sleepable)
-+			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
-+		else
-+			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
-+	}
-+	if (link->ops->dealloc)
-+		link->ops->dealloc(link);
- }
- 
- static void bpf_link_put_deferred(struct work_struct *work)
-@@ -3381,7 +3410,7 @@ static int bpf_raw_tp_link_fill_link_inf
- 
- static const struct bpf_link_ops bpf_raw_tp_link_lops = {
- 	.release = bpf_raw_tp_link_release,
--	.dealloc = bpf_raw_tp_link_dealloc,
-+	.dealloc_deferred = bpf_raw_tp_link_dealloc,
- 	.show_fdinfo = bpf_raw_tp_link_show_fdinfo,
- 	.fill_link_info = bpf_raw_tp_link_fill_link_info,
- };
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2639,7 +2639,7 @@ static int bpf_kprobe_multi_link_fill_li
- 
- static const struct bpf_link_ops bpf_kprobe_multi_link_lops = {
- 	.release = bpf_kprobe_multi_link_release,
--	.dealloc = bpf_kprobe_multi_link_dealloc,
-+	.dealloc_deferred = bpf_kprobe_multi_link_dealloc,
- 	.fill_link_info = bpf_kprobe_multi_link_fill_link_info,
- };
- 
-@@ -3081,7 +3081,7 @@ static void bpf_uprobe_multi_link_deallo
- 
- static const struct bpf_link_ops bpf_uprobe_multi_link_lops = {
- 	.release = bpf_uprobe_multi_link_release,
--	.dealloc = bpf_uprobe_multi_link_dealloc,
-+	.dealloc_deferred = bpf_uprobe_multi_link_dealloc,
- };
- 
- static int uprobe_prog_run(struct bpf_uprobe *uprobe,
 
 
