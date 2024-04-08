@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3382E7D08D;
-	Mon,  8 Apr 2024 13:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182D82E405;
+	Mon,  8 Apr 2024 13:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581902; cv=none; b=dAa0es1tJsi4u61iHVZty0JIho0SzaLf1z3vGhMQsYEOlYveVO454rZbsAKNyk7ARBZ0DKBjNKR65kwyw0l8xsJST34xG8S45BUuzT0iBwZAii6y7z1o4vVDG7mAMPzSoun7hRmu/XOmZaUhB4S02OivFIoItnM6FaoB72U/J1s=
+	t=1712581905; cv=none; b=rI3ecFtir0tmHQg4ssRmkNc17TmaKg+V8EdumhJSgw9pn0TLbBsTDpBdaeUKkF/gXI3xlhJXW9rmESrpTZH8BKeXvc+y3QLwV4jwuwwisdKdIDyk5yR1E7eX83SfvWwdK/PTY4SAi47WmC2/3EXtkwwqt94HF+FktamIAZHS7/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581902; c=relaxed/simple;
-	bh=RvV11/yMkQntTvxQqFgeg/wxEdECOL/flT6x0uINzuc=;
+	s=arc-20240116; t=1712581905; c=relaxed/simple;
+	bh=mgtmn5E2YCnD+Mio5umWNDmsfIeBaL6EEElT+/b18ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n3hP2vG3plRkuYRoCf1TsvjU4A2ROl+8KhmC6ojz1VVKnYgbYYds+wkrESwC8BAsubk6cB9FT/lYngPXQE/292LTHdndhn/53X5PIj6ZpLu5ziWdyDQb1BJrYTjeXqRwUynGfy9qULG3I1/YjdkaweC/pYnibYhhKkWUXwa4a08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3K5E339; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYTiBiaYuhus1ukHBAg89uLFmBluQzCwW7pR/ESqkJkjW0N5sGSBBv8f4jMJA2pMJK0CYqEryNY679P+kxo5F3QagkPF0NbDgLyCDehkacUDDs7GSkX6RG9Sac8/G8ID3auO6KxqNL0J+GiEJp5MFOuBrvdGWRajXPIoQBXgnX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5y7fOw4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3K5E339"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D26C433F1;
-	Mon,  8 Apr 2024 13:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5y7fOw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E3DC433F1;
+	Mon,  8 Apr 2024 13:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581902;
-	bh=RvV11/yMkQntTvxQqFgeg/wxEdECOL/flT6x0uINzuc=;
+	s=korg; t=1712581905;
+	bh=mgtmn5E2YCnD+Mio5umWNDmsfIeBaL6EEElT+/b18ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3K5E339FJXO8Y/4LFWYE6hPIJm8DEW/6/ZDQ0JSF51SnANJ/HMxKczdDBKtrNgV9
-	 n6rHhY0gNOHjI97PlChXtjkho3IVRK0waIXz1ySMZ+k50LrBfA+MxG2FQf2ZDcMX19
-	 AVdJkoDi33KSsKtBBd3NYYyHZQAU7XUlNlEeSQRE=
+	b=a5y7fOw4pVWYIjEp0w0O/jDDSEhrIw3tkqIrYChwcGlnGaIedROVk3dXbX5eyv093
+	 nxtCfRNZeYZ5teUoL9tYxj8xFnymoyNnol5QfCG3ohiLoJqSbtotxlInVMA0pdDfr1
+	 Op3vCKwAtFPWxdgLIuoKxOUGIfRCz8yJeNqMS6rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Liviu Dudau <liviu@dudau.co.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 029/273] net: wwan: t7xx: Split 64bit accesses to fix alignment issues
-Date: Mon,  8 Apr 2024 14:55:04 +0200
-Message-ID: <20240408125310.194352288@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 061/138] udp: do not accept non-tunnel GSO skbs landing in a tunnel
+Date: Mon,  8 Apr 2024 14:57:55 +0200
+Message-ID: <20240408125258.118994592@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,200 +45,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bj=C3=B8rn Mork <bjorn@mork.no>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 7d5a7dd5a35876f0ecc286f3602a88887a788217 ]
+commit 3d010c8031e39f5fa1e8b13ada77e0321091011f upstream.
 
-Some of the registers are aligned on a 32bit boundary, causing
-alignment faults on 64bit platforms.
+When rx-udp-gro-forwarding is enabled UDP packets might be GROed when
+being forwarded. If such packets might land in a tunnel this can cause
+various issues and udp_gro_receive makes sure this isn't the case by
+looking for a matching socket. This is performed in
+udp4/6_gro_lookup_skb but only in the current netns. This is an issue
+with tunneled packets when the endpoint is in another netns. In such
+cases the packets will be GROed at the UDP level, which leads to various
+issues later on. The same thing can happen with rx-gro-list.
 
- Unable to handle kernel paging request at virtual address ffffffc084a1d004
- Mem abort info:
- ESR =3D 0x0000000096000061
- EC =3D 0x25: DABT (current EL), IL =3D 32 bits
- SET =3D 0, FnV =3D 0
- EA =3D 0, S1PTW =3D 0
- FSC =3D 0x21: alignment fault
- Data abort info:
- ISV =3D 0, ISS =3D 0x00000061, ISS2 =3D 0x00000000
- CM =3D 0, WnR =3D 1, TnD =3D 0, TagAccess =3D 0
- GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
- swapper pgtable: 4k pages, 39-bit VAs, pgdp=3D0000000046ad6000
- [ffffffc084a1d004] pgd=3D100000013ffff003, p4d=3D100000013ffff003, pud=3D1=
-00000013ffff003, pmd=3D0068000020a00711
- Internal error: Oops: 0000000096000061 [#1] SMP
- Modules linked in: mtk_t7xx(+) qcserial pppoe ppp_async option nft_fib_ine=
-t nf_flow_table_inet mt7921u(O) mt7921s(O) mt7921e(O) mt7921_common(O) iwlm=
-vm(O) iwldvm(O) usb_wwan rndis_host qmi_wwan pppox ppp_generic nft_reject_i=
-pv6 nft_reject_ipv4 nft_reject_inet nft_reject nft_redir nft_quota nft_numg=
-en nft_nat nft_masq nft_log nft_limit nft_hash nft_flow_offload nft_fib_ipv=
-6 nft_fib_ipv4 nft_fib nft_ct nft_chain_nat nf_tables nf_nat nf_flow_table =
-nf_conntrack mt7996e(O) mt792x_usb(O) mt792x_lib(O) mt7915e(O) mt76_usb(O) =
-mt76_sdio(O) mt76_connac_lib(O) mt76(O) mac80211(O) iwlwifi(O) huawei_cdc_n=
-cm cfg80211(O) cdc_ncm cdc_ether wwan usbserial usbnet slhc sfp rtc_pcf8563=
- nfnetlink nf_reject_ipv6 nf_reject_ipv4 nf_log_syslog nf_defrag_ipv6 nf_de=
-frag_ipv4 mt6577_auxadc mdio_i2c libcrc32c compat(O) cdc_wdm cdc_acm at24 c=
-rypto_safexcel pwm_fan i2c_gpio i2c_smbus industrialio i2c_algo_bit i2c_mux=
-_reg i2c_mux_pca954x i2c_mux_pca9541 i2c_mux_gpio i2c_mux dummy oid_registr=
-y tun sha512_arm64 sha1_ce sha1_generic seqiv
- md5 geniv des_generic libdes cbc authencesn authenc leds_gpio xhci_plat_hc=
-d xhci_pci xhci_mtk_hcd xhci_hcd nvme nvme_core gpio_button_hotplug(O) dm_m=
-irror dm_region_hash dm_log dm_crypt dm_mod dax usbcore usb_common ptp aqua=
-ntia pps_core mii tpm encrypted_keys trusted
- CPU: 3 PID: 5266 Comm: kworker/u9:1 Tainted: G O 6.6.22 #0
- Hardware name: Bananapi BPI-R4 (DT)
- Workqueue: md_hk_wq t7xx_fsm_uninit [mtk_t7xx]
- pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=3D--)
- pc : t7xx_cldma_hw_set_start_addr+0x1c/0x3c [mtk_t7xx]
- lr : t7xx_cldma_start+0xac/0x13c [mtk_t7xx]
- sp : ffffffc085d63d30
- x29: ffffffc085d63d30 x28: 0000000000000000 x27: 0000000000000000
- x26: 0000000000000000 x25: ffffff80c804f2c0 x24: ffffff80ca196c05
- x23: 0000000000000000 x22: ffffff80c814b9b8 x21: ffffff80c814b128
- x20: 0000000000000001 x19: ffffff80c814b080 x18: 0000000000000014
- x17: 0000000055c9806b x16: 000000007c5296d0 x15: 000000000f6bca68
- x14: 00000000dbdbdce4 x13: 000000001aeaf72a x12: 0000000000000001
- x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
- x8 : ffffff80ca1ef6b4 x7 : ffffff80c814b818 x6 : 0000000000000018
- x5 : 0000000000000870 x4 : 0000000000000000 x3 : 0000000000000000
- x2 : 000000010a947000 x1 : ffffffc084a1d004 x0 : ffffffc084a1d004
- Call trace:
- t7xx_cldma_hw_set_start_addr+0x1c/0x3c [mtk_t7xx]
- t7xx_fsm_uninit+0x578/0x5ec [mtk_t7xx]
- process_one_work+0x154/0x2a0
- worker_thread+0x2ac/0x488
- kthread+0xe0/0xec
- ret_from_fork+0x10/0x20
- Code: f9400800 91001000 8b214001 d50332bf (f9000022)
- ---[ end trace 0000000000000000 ]---
+We saw this with geneve packets being GROed at the UDP level. In such
+case gso_size is set; later the packet goes through the geneve rx path,
+the geneve header is pulled, the offset are adjusted and frag_list skbs
+are not adjusted with regard to geneve. When those skbs hit
+skb_fragment, it will misbehave. Different outcomes are possible
+depending on what the GROed skbs look like; from corrupted packets to
+kernel crashes.
 
-The inclusion of io-64-nonatomic-lo-hi.h indicates that all 64bit
-accesses can be replaced by pairs of nonatomic 32bit access.  Fix
-alignment by forcing all accesses to be 32bit on 64bit platforms.
+One example is a BUG_ON[1] triggered in skb_segment while processing the
+frag_list. Because gso_size is wrong (geneve header was pulled)
+skb_segment thinks there is "geneve header size" of data in frag_list,
+although it's in fact the next packet. The BUG_ON itself has nothing to
+do with the issue. This is only one of the potential issues.
 
-Link: https://forum.openwrt.org/t/fibocom-fm350-gl-support/142682/72
-Fixes: 39d439047f1d ("net: wwan: t7xx: Add control DMA interface")
-Signed-off-by: Bj=C3=B8rn Mork <bjorn@mork.no>
-Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Tested-by: Liviu Dudau <liviu@dudau.co.uk>
-Link: https://lore.kernel.org/r/20240322144000.1683822-1-bjorn@mork.no
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Looking up for a matching socket in udp_gro_receive is fragile: the
+lookup could be extended to all netns (not speaking about performances)
+but nothing prevents those packets from being modified in between and we
+could still not find a matching socket. It's OK to keep the current
+logic there as it should cover most cases but we also need to make sure
+we handle tunnel packets being GROed too early.
+
+This is done by extending the checks in udp_unexpected_gso: GSO packets
+lacking the SKB_GSO_UDP_TUNNEL/_CSUM bits and landing in a tunnel must
+be segmented.
+
+[1] kernel BUG at net/core/skbuff.c:4408!
+    RIP: 0010:skb_segment+0xd2a/0xf70
+    __udp_gso_segment+0xaa/0x560
+
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Fixes: 36707061d6ba ("udp: allow forwarding of plain (non-fraglisted) UDP GRO packets")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/t7xx/t7xx_cldma.c     | 4 ++--
- drivers/net/wwan/t7xx/t7xx_hif_cldma.c | 9 +++++----
- drivers/net/wwan/t7xx/t7xx_pcie_mac.c  | 8 ++++----
- 3 files changed, 11 insertions(+), 10 deletions(-)
+ include/linux/udp.h    |   28 ++++++++++++++++++++++++++++
+ net/ipv4/udp.c         |    7 +++++++
+ net/ipv4/udp_offload.c |    6 ++++--
+ net/ipv6/udp.c         |    2 +-
+ 4 files changed, 40 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_cldma.c b/drivers/net/wwan/t7xx/t7x=
-x_cldma.c
-index 9f43f256db1d0..f0a4783baf1f3 100644
---- a/drivers/net/wwan/t7xx/t7xx_cldma.c
-+++ b/drivers/net/wwan/t7xx/t7xx_cldma.c
-@@ -106,7 +106,7 @@ bool t7xx_cldma_tx_addr_is_set(struct t7xx_cldma_hw *hw=
-_info, unsigned int qno)
- {
- 	u32 offset =3D REG_CLDMA_UL_START_ADDRL_0 + qno * ADDR_SIZE;
-=20
--	return ioread64(hw_info->ap_pdn_base + offset);
-+	return ioread64_lo_hi(hw_info->ap_pdn_base + offset);
- }
-=20
- void t7xx_cldma_hw_set_start_addr(struct t7xx_cldma_hw *hw_info, unsigned =
-int qno, u64 address,
-@@ -117,7 +117,7 @@ void t7xx_cldma_hw_set_start_addr(struct t7xx_cldma_hw =
-*hw_info, unsigned int qn
-=20
- 	reg =3D tx_rx =3D=3D MTK_RX ? hw_info->ap_ao_base + REG_CLDMA_DL_START_AD=
-DRL_0 :
- 				hw_info->ap_pdn_base + REG_CLDMA_UL_START_ADDRL_0;
--	iowrite64(address, reg + offset);
-+	iowrite64_lo_hi(address, reg + offset);
- }
-=20
- void t7xx_cldma_hw_resume_queue(struct t7xx_cldma_hw *hw_info, unsigned in=
-t qno,
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c b/drivers/net/wwan/t7xx=
-/t7xx_hif_cldma.c
-index cc70360364b7d..554ba4669cc8d 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
-@@ -139,8 +139,9 @@ static int t7xx_cldma_gpd_rx_from_q(struct cldma_queue =
-*queue, int budget, bool
- 				return -ENODEV;
- 			}
-=20
--			gpd_addr =3D ioread64(hw_info->ap_pdn_base + REG_CLDMA_DL_CURRENT_ADDRL=
-_0 +
--					    queue->index * sizeof(u64));
-+			gpd_addr =3D ioread64_lo_hi(hw_info->ap_pdn_base +
-+						  REG_CLDMA_DL_CURRENT_ADDRL_0 +
-+						  queue->index * sizeof(u64));
- 			if (req->gpd_addr =3D=3D gpd_addr || hwo_polling_count++ >=3D 100)
- 				return 0;
-=20
-@@ -318,8 +319,8 @@ static void t7xx_cldma_txq_empty_hndl(struct cldma_queu=
-e *queue)
- 		struct t7xx_cldma_hw *hw_info =3D &md_ctrl->hw_info;
-=20
- 		/* Check current processing TGPD, 64-bit address is in a table by Q inde=
-x */
--		ul_curr_addr =3D ioread64(hw_info->ap_pdn_base + REG_CLDMA_UL_CURRENT_AD=
-DRL_0 +
--					queue->index * sizeof(u64));
-+		ul_curr_addr =3D ioread64_lo_hi(hw_info->ap_pdn_base + REG_CLDMA_UL_CURR=
-ENT_ADDRL_0 +
-+					      queue->index * sizeof(u64));
- 		if (req->gpd_addr !=3D ul_curr_addr) {
- 			spin_unlock_irqrestore(&md_ctrl->cldma_lock, flags);
- 			dev_err(md_ctrl->dev, "CLDMA%d queue %d is not empty\n",
-diff --git a/drivers/net/wwan/t7xx/t7xx_pcie_mac.c b/drivers/net/wwan/t7xx/=
-t7xx_pcie_mac.c
-index 76da4c15e3de1..f071ec7ff23d5 100644
---- a/drivers/net/wwan/t7xx/t7xx_pcie_mac.c
-+++ b/drivers/net/wwan/t7xx/t7xx_pcie_mac.c
-@@ -75,7 +75,7 @@ static void t7xx_pcie_mac_atr_tables_dis(void __iomem *pb=
-ase, enum t7xx_atr_src_
- 	for (i =3D 0; i < ATR_TABLE_NUM_PER_ATR; i++) {
- 		offset =3D ATR_PORT_OFFSET * port + ATR_TABLE_OFFSET * i;
- 		reg =3D pbase + ATR_PCIE_WIN0_T0_ATR_PARAM_SRC_ADDR + offset;
--		iowrite64(0, reg);
-+		iowrite64_lo_hi(0, reg);
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -140,6 +140,24 @@ static inline void udp_cmsg_recv(struct
  	}
  }
-=20
-@@ -112,17 +112,17 @@ static int t7xx_pcie_mac_atr_cfg(struct t7xx_pci_dev =
-*t7xx_dev, struct t7xx_atr_
-=20
- 	reg =3D pbase + ATR_PCIE_WIN0_T0_TRSL_ADDR + offset;
- 	value =3D cfg->trsl_addr & ATR_PCIE_WIN0_ADDR_ALGMT;
--	iowrite64(value, reg);
-+	iowrite64_lo_hi(value, reg);
-=20
- 	reg =3D pbase + ATR_PCIE_WIN0_T0_TRSL_PARAM + offset;
- 	iowrite32(cfg->trsl_id, reg);
-=20
- 	reg =3D pbase + ATR_PCIE_WIN0_T0_ATR_PARAM_SRC_ADDR + offset;
- 	value =3D (cfg->src_addr & ATR_PCIE_WIN0_ADDR_ALGMT) | (atr_size << 1) | =
-BIT(0);
--	iowrite64(value, reg);
-+	iowrite64_lo_hi(value, reg);
-=20
- 	/* Ensure ATR is set */
--	ioread64(reg);
-+	ioread64_lo_hi(reg);
- 	return 0;
+ 
++DECLARE_STATIC_KEY_FALSE(udp_encap_needed_key);
++#if IS_ENABLED(CONFIG_IPV6)
++DECLARE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++#endif
++
++static inline bool udp_encap_needed(void)
++{
++	if (static_branch_unlikely(&udp_encap_needed_key))
++		return true;
++
++#if IS_ENABLED(CONFIG_IPV6)
++	if (static_branch_unlikely(&udpv6_encap_needed_key))
++		return true;
++#endif
++
++	return false;
++}
++
+ static inline bool udp_unexpected_gso(struct sock *sk, struct sk_buff *skb)
+ {
+ 	if (!skb_is_gso(skb))
+@@ -153,6 +171,16 @@ static inline bool udp_unexpected_gso(st
+ 	    !udp_test_bit(ACCEPT_FRAGLIST, sk))
+ 		return true;
+ 
++	/* GSO packets lacking the SKB_GSO_UDP_TUNNEL/_CSUM bits might still
++	 * land in a tunnel as the socket check in udp_gro_receive cannot be
++	 * foolproof.
++	 */
++	if (udp_encap_needed() &&
++	    READ_ONCE(udp_sk(sk)->encap_rcv) &&
++	    !(skb_shinfo(skb)->gso_type &
++	      (SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM)))
++		return true;
++
+ 	return false;
  }
-=20
---=20
-2.43.0
-
+ 
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -603,6 +603,13 @@ static inline bool __udp_is_mcast_sock(s
+ }
+ 
+ DEFINE_STATIC_KEY_FALSE(udp_encap_needed_key);
++EXPORT_SYMBOL(udp_encap_needed_key);
++
++#if IS_ENABLED(CONFIG_IPV6)
++DEFINE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++EXPORT_SYMBOL(udpv6_encap_needed_key);
++#endif
++
+ void udp_encap_enable(void)
+ {
+ 	static_branch_inc(&udp_encap_needed_key);
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -544,8 +544,10 @@ struct sk_buff *udp_gro_receive(struct l
+ 	unsigned int off = skb_gro_offset(skb);
+ 	int flush = 1;
+ 
+-	/* we can do L4 aggregation only if the packet can't land in a tunnel
+-	 * otherwise we could corrupt the inner stream
++	/* We can do L4 aggregation only if the packet can't land in a tunnel
++	 * otherwise we could corrupt the inner stream. Detecting such packets
++	 * cannot be foolproof and the aggregation might still happen in some
++	 * cases. Such packets should be caught in udp_unexpected_gso later.
+ 	 */
+ 	NAPI_GRO_CB(skb)->is_flist = 0;
+ 	if (!sk || !udp_sk(sk)->gro_receive) {
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -476,7 +476,7 @@ csum_copy_err:
+ 	goto try_again;
+ }
+ 
+-DEFINE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++DECLARE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
+ void udpv6_encap_enable(void)
+ {
+ 	static_branch_inc(&udpv6_encap_needed_key);
 
 
