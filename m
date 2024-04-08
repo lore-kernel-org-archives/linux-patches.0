@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314582DF73;
-	Mon,  8 Apr 2024 13:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459552DF73;
+	Mon,  8 Apr 2024 13:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581495; cv=none; b=S/A8niX75FA9HKMyCBUK9CUnhvHYtqw6J3602qH7RptLlgQ40boLYTpOERqauApoaSpaRQJo2psMYx4ehmm23+rB1FThUU6+uKz+VwKsgfxW9awYuBHX4y5doSj2pMhA1uYyLMFF3bo4Np+BbHOu6BF29PLK6lBDUxzfvyRbHq8=
+	t=1712581498; cv=none; b=OEaOxMLJQEJ6uJJExOrVdw4UdU5yWchLbq70LQOuI8EWdKVqn6i6KhqPscyoIYIouPEMwnrQuQnEkRk0L0Ku3dNGyH+VkShJwzOpWrMbTvv/mK8Sesq0NGuyBhbMTXWNkozsoDTfdb5rOUHQD7vnvjx5AHmuvXVvpztALqGvF6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581495; c=relaxed/simple;
-	bh=sq1AOi/vlHFXp+/2TFLzTGvJMDbxcbvWe4FOCoE+2sQ=;
+	s=arc-20240116; t=1712581498; c=relaxed/simple;
+	bh=Ps/gmsruFVGcpRGneaod62Q2RA9L1HI+lQzDcAds2SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSl2I2eiadopJSaHerrmiv9nFbHj+rcjNhGOcBuMF22jW2pofB+0BbaNzSVYCD2z4kosvlhvgoRYw/ELkxp30saq7EFBvPcmUa7VfMe/2GqopMS0gKPPY8Q2K3uondGk31qpdXzrDUP/48ZhgIn/jXRFLMoDFqCxKJP/SjDVrfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZEohJ8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw4kJukw+wPb6J3on4MWKEMnonJHY0IV2K2ioUxo1G09H6QtZJJ1K+2oV4RnfIYfcZyUzvftfZlB/YJGYkgaOJmgNDOhWlVFvVhIZ9g8vhAqoiwWrijeyqJWZClftj8ribyAznlQi5aEMPwbkClFj4Gtg8XJowHbm2hzZ8mGae4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwovCF+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZEohJ8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC659C433F1;
-	Mon,  8 Apr 2024 13:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwovCF+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89C9C433F1;
+	Mon,  8 Apr 2024 13:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581495;
-	bh=sq1AOi/vlHFXp+/2TFLzTGvJMDbxcbvWe4FOCoE+2sQ=;
+	s=korg; t=1712581498;
+	bh=Ps/gmsruFVGcpRGneaod62Q2RA9L1HI+lQzDcAds2SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZEohJ8pz0k1Ni2nqpst8Sv0DAwdPloaWW3C8pWxAHV4mC1n+JJXuGYXKCssnf0lb
-	 hrp9hmp9WIN9POjXAfRjqgcanFIw9cIsDQ4FIOaUUn1+lT5JeHKxAwa4xGjvy83py4
-	 cvfAOaBljbFt3hLNPT/0P42LaqVzIZZPFSUsx6mw=
+	b=BwovCF+WtIneJJeXHE14mpG5XKMUInc+3pTvaxdFSutpdXpsoKQN/5bsQMecyiyu2
+	 qYEp2DLvUpwgH3ZbG1dCi6Sp18l6kPHANLOQaAofLtfSTZd5e0uGH4DptD0F+jqsic
+	 yyIfMh6+MEZkv3K1m02M+IobghdH1+MMr+pA918E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/138] Octeontx2-af: fix pause frame configuration in GMP mode
-Date: Mon,  8 Apr 2024 14:57:15 +0200
-Message-ID: <20240408125256.888812274@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 027/138] r8169: fix issue caused by buggy BIOS on certain boards with RTL8168d
+Date: Mon,  8 Apr 2024 14:57:21 +0200
+Message-ID: <20240408125257.071479892@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
 References: <20240408125256.218368873@linuxfoundation.org>
@@ -52,46 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 40d4b4807cadd83fb3f46cc8cd67a945b5b25461 ]
+commit 5d872c9f46bd2ea3524af3c2420a364a13667135 upstream.
 
-The Octeontx2 MAC block (CGX) has separate data paths (SMU and GMP) for
-different speeds, allowing for efficient data transfer.
+On some boards with this chip version the BIOS is buggy and misses
+to reset the PHY page selector. This results in the PHY ID read
+accessing registers on a different page, returning a more or
+less random value. Fix this by resetting the page selector first.
 
-The previous patch which added pause frame configuration has a bug due
-to which pause frame feature is not working in GMP mode.
-
-This patch fixes the issue by configurating appropriate registers.
-
-Fixes: f7e086e754fe ("octeontx2-af: Pause frame configuration at cgx")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Fixes: f1e911d5d0df ("r8169: add basic phylib support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326052720.4441-1-hkelam@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/64f2055e-98b8-45ec-8568-665e3d54d4e6@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index e6fe599f7bf3a..254cad45a555f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -814,6 +814,11 @@ static int cgx_lmac_enadis_pause_frm(void *cgxd, int lmac_id,
- 	if (!is_lmac_valid(cgx, lmac_id))
- 		return -ENODEV;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -5032,6 +5032,15 @@ static int r8169_mdio_register(struct rt
+ 	struct mii_bus *new_bus;
+ 	int ret;
  
-+	cfg = cgx_read(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL);
-+	cfg &= ~CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK;
-+	cfg |= rx_pause ? CGX_GMP_GMI_RXX_FRM_CTL_CTL_BCK : 0x0;
-+	cgx_write(cgx, lmac_id, CGXX_GMP_GMI_RXX_FRM_CTL, cfg);
++	/* On some boards with this chip version the BIOS is buggy and misses
++	 * to reset the PHY page selector. This results in the PHY ID read
++	 * accessing registers on a different page, returning a more or
++	 * less random value. Fix this by resetting the page selector first.
++	 */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_25 ||
++	    tp->mac_version == RTL_GIGA_MAC_VER_26)
++		r8169_mdio_write(tp, 0x1f, 0);
 +
- 	cfg = cgx_read(cgx, lmac_id, CGXX_SMUX_RX_FRM_CTL);
- 	cfg &= ~CGX_SMUX_RX_FRM_CTL_CTL_BCK;
- 	cfg |= rx_pause ? CGX_SMUX_RX_FRM_CTL_CTL_BCK : 0x0;
--- 
-2.43.0
-
+ 	new_bus = devm_mdiobus_alloc(&pdev->dev);
+ 	if (!new_bus)
+ 		return -ENOMEM;
 
 
