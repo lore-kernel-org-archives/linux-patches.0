@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAE27D09F;
-	Mon,  8 Apr 2024 13:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CE17D09F;
+	Mon,  8 Apr 2024 13:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583358; cv=none; b=IeTjXXDr+JYtcrHFMRHshjAfp+3UUADr6u9cVcWG7tjKT8tsd7J2V1ukeeOS+Gq7XCPAn2iK4nNmxw0GmnvwJ98RLMHOqmbQgyx59/Nzj+0UtZKUtm4tnD/Ep2TohvG6tZc3P9AwmKamTmU3ylbR7bML+qj2mYakVdZvm/AU1Cg=
+	t=1712583361; cv=none; b=pN3VFy8SsQ/hSSBGL+mhaKYMjQnNW6Sy8bYoohgyZE2K7RB8/jJ35rLLvMA2scnWnrt077FidoX+tMaIubi8QpScnZQtOLNCM6khuA+UnAmMVF4x/RrRe92wyYrv7UrmjDQvIdQztW/XL4Sy73srMSeZgmmd2WOIEvpNhUGVnKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583358; c=relaxed/simple;
-	bh=zDf+dIarDF90JWDRA6b4L3VaODHtt2FIjlsw2LE5Ozc=;
+	s=arc-20240116; t=1712583361; c=relaxed/simple;
+	bh=/wl4n6TMvO5XNaYBxluFbm/n+7Me0egCTrepcjudcis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJtg+bc97HgRSwmj7Od9Li4JacjDiibSdq0Pj/v5VKma8gWiaxKP3Abb6b6r1mOUKQrdT75ELoDWYgLnPBx/sN59M2TsuZl/DAj4Ac4kesH1XeXMpQtsxX6ZtFxVSN/ca8U+EhlLItwI97tSRA60XCXZzsfxqE5E6+J1IOBewzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ishjP7up; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9NIm/8AJi7KHhNKbww0cIYEYka5HSwpYwktdjVxBEVQjMb82UcnH32WaedsMIO3rhy0zNkJalP0qhhaBciIg7Coy09rKcaLLmlCprXsHj1tkJziAEdjplqRqHSe48mYPVik72ul2w8dbAFi/+MxkqSWEW/3agXQJripc0j3QD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wv2rCCsG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ishjP7up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982BCC433F1;
-	Mon,  8 Apr 2024 13:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wv2rCCsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFF5C433F1;
+	Mon,  8 Apr 2024 13:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583358;
-	bh=zDf+dIarDF90JWDRA6b4L3VaODHtt2FIjlsw2LE5Ozc=;
+	s=korg; t=1712583360;
+	bh=/wl4n6TMvO5XNaYBxluFbm/n+7Me0egCTrepcjudcis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ishjP7upXSy0y38nZbTEkTXezZ4/irVdLLTO39Y1XhwYiMgDF2snWS/N4hAHf3XY6
-	 S3GvwihnWlXyVf1IuwsIN6HkNr2SAN4nIgyaHUNQvhvAA6b8WMtHJFRfVmetj77+3b
-	 kOcyqIhkRqucgtYlxJRmPO283XWvLeYMoYlqd/m0=
+	b=wv2rCCsGboXGXog9c+uthXbnPJn2obZ8z3iMr7gazuc53fl7dwI2NMCDlH4UOeiQn
+	 cPW9kPlTs5xEfmYDIehPoBLNMm/MxynrvPunPehdVtmqcFuhxz83ceviKqwhWGFLn/
+	 GFUHJoaLrE4xCsxRsdr6AI6Sy7hXq/ixMjuy394o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/252] scsi: mylex: Fix sysfs buffer lengths
-Date: Mon,  8 Apr 2024 14:58:04 +0200
-Message-ID: <20240408125312.406504076@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 238/690] lockd: move lockd_start_svc() call into lockd_create_svc()
+Date: Mon,  8 Apr 2024 14:51:44 +0200
+Message-ID: <20240408125408.265634422@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,191 +46,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
+[ Upstream commit b73a2972041bee70eb0cbbb25fa77828c63c916b ]
 
-The myrb and myrs drivers use an odd way of implementing their sysfs files,
-calling snprintf() with a fixed length of 32 bytes to print into a page
-sized buffer. One of the strings is actually longer than 32 bytes, which
-clang can warn about:
+lockd_start_svc() only needs to be called once, just after the svc is
+created.  If the start fails, the svc is discarded too.
 
-drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
-drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
+It thus makes sense to call lockd_start_svc() from lockd_create_svc().
+This allows us to remove the test against nlmsvc_rqst at the start of
+lockd_start_svc() - it must always be NULL.
 
-These could all be plain sprintf() without a length as the buffer is always
-long enough. On the other hand, sysfs files should not be overly long
-either, so just double the length to make sure the longest strings don't
-get truncated here.
+lockd_up() only held an extra reference on the svc until a thread was
+created - then it dropped it.  The thread - and thus the extra reference
+- will remain until kthread_stop() is called.
+Now that the thread is created in lockd_create_svc(), the extra
+reference can be dropped there.  So the 'serv' variable is no longer
+needed in lockd_up().
 
-Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
-Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/scsi/myrb.c | 20 ++++++++++----------
- drivers/scsi/myrs.c | 24 ++++++++++++------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ fs/lockd/svc.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
-index ca2e932dd9b70..f684eb5e04898 100644
---- a/drivers/scsi/myrb.c
-+++ b/drivers/scsi/myrb.c
-@@ -1775,9 +1775,9 @@ static ssize_t raid_state_show(struct device *dev,
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 20cebb191350f..91e7c839841ec 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -359,9 +359,6 @@ static int lockd_start_svc(struct svc_serv *serv)
+ {
+ 	int error;
  
- 		name = myrb_devstate_name(ldev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->state);
- 	} else {
- 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
-@@ -1796,9 +1796,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		else
- 			name = myrb_devstate_name(pdev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->state);
+-	if (nlmsvc_rqst)
+-		return 0;
+-
+ 	/*
+ 	 * Create the kernel thread and wait for it to start.
+ 	 */
+@@ -406,6 +403,7 @@ static const struct svc_serv_ops lockd_sv_ops = {
+ static int lockd_create_svc(void)
+ {
+ 	struct svc_serv *serv;
++	int error;
+ 
+ 	/*
+ 	 * Check whether we're already up and running.
+@@ -432,6 +430,13 @@ static int lockd_create_svc(void)
+ 		printk(KERN_WARNING "lockd_up: create service failed\n");
+ 		return -ENOMEM;
  	}
- 	return ret;
-@@ -1886,11 +1886,11 @@ static ssize_t raid_level_show(struct device *dev,
++
++	error = lockd_start_svc(serv);
++	/* The thread now holds the only reference */
++	svc_put(serv);
++	if (error < 0)
++		return error;
++
+ 	nlmsvc_serv = serv;
+ 	register_inetaddr_notifier(&lockd_inetaddr_notifier);
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -446,7 +451,6 @@ static int lockd_create_svc(void)
+  */
+ int lockd_up(struct net *net, const struct cred *cred)
+ {
+-	struct svc_serv *serv;
+ 	int error;
  
- 		name = myrb_raidlevel_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->state);
--		return snprintf(buf, 32, "%s\n", name);
-+		return snprintf(buf, 64, "%s\n", name);
+ 	mutex_lock(&nlmsvc_mutex);
+@@ -454,25 +458,19 @@ int lockd_up(struct net *net, const struct cred *cred)
+ 	error = lockd_create_svc();
+ 	if (error)
+ 		goto err_create;
+-	serv = nlmsvc_serv;
+ 
+-	error = lockd_up_net(serv, net, cred);
++	error = lockd_up_net(nlmsvc_serv, net, cred);
+ 	if (error < 0) {
+ 		goto err_put;
  	}
--	return snprintf(buf, 32, "Physical Drive\n");
-+	return snprintf(buf, 64, "Physical Drive\n");
- }
- static DEVICE_ATTR_RO(raid_level);
  
-@@ -1903,15 +1903,15 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < myrb_logical_channel(sdev->host))
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	status = myrb_get_rbld_progress(cb, &rbld_buf);
- 
- 	if (rbld_buf.ldev_num != sdev->id ||
- 	    status != MYRB_STATUS_SUCCESS)
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- 
--	return snprintf(buf, 32, "rebuilding block %u of %u\n",
-+	return snprintf(buf, 64, "rebuilding block %u of %u\n",
- 			rbld_buf.ldev_size - rbld_buf.blocks_left,
- 			rbld_buf.ldev_size);
- }
-diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
-index a1eec65a9713f..e824be9d9bbb9 100644
---- a/drivers/scsi/myrs.c
-+++ b/drivers/scsi/myrs.c
-@@ -947,9 +947,9 @@ static ssize_t raid_state_show(struct device *dev,
- 
- 		name = myrs_devstate_name(ldev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->dev_state);
- 	} else {
- 		struct myrs_pdev_info *pdev_info;
-@@ -958,9 +958,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		pdev_info = sdev->hostdata;
- 		name = myrs_devstate_name(pdev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->dev_state);
+-	error = lockd_start_svc(serv);
+-	if (error < 0) {
+-		lockd_down_net(serv, net);
+-		goto err_put;
+-	}
+ 	nlmsvc_users++;
+ err_put:
+ 	if (nlmsvc_users == 0) {
+ 		lockd_unregister_notifiers();
++		kthread_stop(nlmsvc_task);
+ 		nlmsvc_serv = NULL;
  	}
- 	return ret;
-@@ -1066,13 +1066,13 @@ static ssize_t raid_level_show(struct device *dev,
- 		ldev_info = sdev->hostdata;
- 		name = myrs_raid_level_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->dev_state);
- 
- 	} else
- 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
- 
--	return snprintf(buf, 32, "%s\n", name);
-+	return snprintf(buf, 64, "%s\n", name);
- }
- static DEVICE_ATTR_RO(raid_level);
- 
-@@ -1086,7 +1086,7 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	ldev_info = sdev->hostdata;
- 	ldev_num = ldev_info->ldev_num;
-@@ -1098,11 +1098,11 @@ static ssize_t rebuild_show(struct device *dev,
- 		return -EIO;
- 	}
- 	if (ldev_info->rbld_active) {
--		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
-+		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
- 				(size_t)ldev_info->rbld_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	} else
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- }
- 
- static ssize_t rebuild_store(struct device *dev,
-@@ -1190,7 +1190,7 @@ static ssize_t consistency_check_show(struct device *dev,
- 	unsigned short ldev_num;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not checking\n");
-+		return snprintf(buf, 64, "physical device - not checking\n");
- 
- 	ldev_info = sdev->hostdata;
- 	if (!ldev_info)
-@@ -1198,11 +1198,11 @@ static ssize_t consistency_check_show(struct device *dev,
- 	ldev_num = ldev_info->ldev_num;
- 	myrs_get_ldev_info(cs, ldev_num, ldev_info);
- 	if (ldev_info->cc_active)
--		return snprintf(buf, 32, "checking block %zu of %zu\n",
-+		return snprintf(buf, 64, "checking block %zu of %zu\n",
- 				(size_t)ldev_info->cc_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	else
--		return snprintf(buf, 32, "not checking\n");
-+		return snprintf(buf, 64, "not checking\n");
- }
- 
- static ssize_t consistency_check_store(struct device *dev,
+-	svc_put(serv);
+ err_create:
+ 	mutex_unlock(&nlmsvc_mutex);
+ 	return error;
 -- 
 2.43.0
 
