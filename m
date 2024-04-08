@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C992127B7B;
-	Mon,  8 Apr 2024 13:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8C5128370;
+	Mon,  8 Apr 2024 13:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583841; cv=none; b=G4ZEqvrEwlCnM5IjXdCjllpUDn25lGPQyynedrun7Dyof28zDTJynYw2+SNge/RV7mk2CgXs1sekeflyCK7HnQ420O77yx3iVeDyxZ6glTcYnT2e4WBNeiDa7vuumBCpLJLdd0LOTAsXQrEvy6c4UDl7Flj1PcW//2Ihcn1IlZU=
+	t=1712583844; cv=none; b=XAMYqTMoyH1s2bB62pI2CaZfsu88ZX8C8UdkMdPpdbmK7gHPc02XcPjG7/rPOxPjY+NWACsutSGZRuMGa95pt69fQyXqUOrri6gLpEtVE2GxUdq5v3kl2U8zLw59ndNH26hZbySr1zxca7/NMCh2Rtbb+R8iBaJctqWPOMQS37g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583841; c=relaxed/simple;
-	bh=C+wwCE05ANkR0iIjumODgA9l4SdOWXYIC49enn3BedE=;
+	s=arc-20240116; t=1712583844; c=relaxed/simple;
+	bh=SDStYoPgA+FgODYjNPDRT43YBUnnCmjgB7BuIamYU3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPu38PqjdO/2pcj6M29f3PbM9bYsbD1tItVKnGfvTX/6q7QSZPy0xwpufusrP1SiQ4/Pm6QSCjV5nKfS+aMCH36cjpl80ZEKc3JheH8nlXxWsT+yOZWKkg4usXVQYH6r3RYVoc0e3Rlm7nVWyUoIYH8gvb2BhLOQCQLzjlvu6Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+/3DDkv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbvhvQX6xUU7CdibsVTYzTzNno7os165X0ORSg1iOZ9iYEFHCZsY0sfO17aSLGPPUAxrdJjm1xOXjk8nwG37t1tnOn9ihoreb55LN9JJNtzsiFjbIRtUHbuChTLCPv2Tm3viibYy2sIRIwprkkV8J6cXOg5YdhcRr5f6VIMER1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S543U6xX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+/3DDkv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB2EC433F1;
-	Mon,  8 Apr 2024 13:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S543U6xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022F4C433F1;
+	Mon,  8 Apr 2024 13:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583841;
-	bh=C+wwCE05ANkR0iIjumODgA9l4SdOWXYIC49enn3BedE=;
+	s=korg; t=1712583844;
+	bh=SDStYoPgA+FgODYjNPDRT43YBUnnCmjgB7BuIamYU3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+/3DDkvq3LwWusWuUB2XQ7mvaDp2jQDKrNllX7pQxrXXw2z9Run/FIXkmOmZDHsA
-	 iIW1tDLXx5fo1dY7zUJ+ayU3Z5wn6yHv+kVUquj82kxI3qpuREXJYixgzQcJTeLVtK
-	 MTMqdupy4F/T20B5mm4cW2RL8ynNjwmSFVdpcIPc=
+	b=S543U6xX0+fwGZYI0COXypGmvb9vh1hRMxoWWXtUEwFbz/bAHY+33ZqmhEnC2wJLh
+	 PzAzaVRLURN5Q/ano0dnynVxXf0V8P1+zxCv+96hjYKm0Da/o+QikGAhxZkA/Sm/DT
+	 SOZ0bmZgSgEXqjaUK+Ih14dDeaLBxzZBm3LLQM2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 288/690] fanotify: do not allow setting dirent events in mask of non-dir
-Date: Mon,  8 Apr 2024 14:52:34 +0200
-Message-ID: <20240408125410.040322984@linuxfoundation.org>
+	Wolfgang Walter <linux@stwm.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 241/252] Revert "x86/mpparse: Register APIC address only once"
+Date: Mon,  8 Apr 2024 14:59:00 +0200
+Message-ID: <20240408125314.129555371@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit ceaf69f8eadcafb323392be88e7a5248c415d423 ]
+This reverts commit bebb5af001dc6cb4f505bb21c4d5e2efbdc112e2 which is
+commit f2208aa12c27bfada3c15c550c03ca81d42dcac2 upstream.
 
-Dirent events (create/delete/move) are only reported on watched
-directory inodes, but in fanotify as well as in legacy inotify, it was
-always allowed to set them on non-dir inode, which does not result in
-any meaningful outcome.
+It is reported to cause problems in the stable branches, so revert it.
 
-Until kernel v5.17, dirent events in fanotify also differed from events
-"on child" (e.g. FAN_OPEN) in the information provided in the event.
-For example, FAN_OPEN could be set in the mask of a non-dir or the mask
-of its parent and event would report the fid of the child regardless of
-the marked object.
-By contrast, FAN_DELETE is not reported if the child is marked and the
-child fid was not reported in the events.
-
-Since kernel v5.17, with fanotify group flag FAN_REPORT_TARGET_FID, the
-fid of the child is reported with dirent events, like events "on child",
-which may create confusion for users expecting the same behavior as
-events "on child" when setting events in the mask on a child.
-
-The desired semantics of setting dirent events in the mask of a child
-are not clear, so for now, deny this action for a group initialized
-with flag FAN_REPORT_TARGET_FID and for the new event FAN_RENAME.
-We may relax this restriction in the future if we decide on the
-semantics and implement them.
-
-Fixes: d61fd650e9d2 ("fanotify: introduce group flag FAN_REPORT_TARGET_FID")
-Fixes: 8cc3b1ccd930 ("fanotify: wire up FAN_RENAME event")
-Link: https://lore.kernel.org/linux-fsdevel/20220505133057.zm5t6vumc4xdcnsg@quack3.lan/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220507080028.219826-1-amir73il@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/899b7c1419a064a2b721b78eade06659@stwm.de
+Reported-by: Wolfgang Walter <linux@stwm.de>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/x86/kernel/mpparse.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 4f607fd793f3a..336ccec2abed3 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1671,6 +1671,19 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 	else
- 		mnt = path.mnt;
+--- a/arch/x86/kernel/mpparse.c
++++ b/arch/x86/kernel/mpparse.c
+@@ -196,12 +196,12 @@ static int __init smp_read_mpc(struct mp
+ 	if (!smp_check_mpc(mpc, oem, str))
+ 		return 0;
  
-+	/*
-+	 * FAN_RENAME is not allowed on non-dir (for now).
-+	 * We shouldn't have allowed setting any dirent events in mask of
-+	 * non-dir, but because we always allowed it, error only if group
-+	 * was initialized with the new flag FAN_REPORT_TARGET_FID.
-+	 */
-+	ret = -ENOTDIR;
-+	if (inode && !S_ISDIR(inode->i_mode) &&
-+	    ((mask & FAN_RENAME) ||
-+	     ((mask & FANOTIFY_DIRENT_EVENTS) &&
-+	      FAN_GROUP_FLAG(group, FAN_REPORT_TARGET_FID))))
-+		goto path_put_and_out;
+-	if (early) {
+-		/* Initialize the lapic mapping */
+-		if (!acpi_lapic)
+-			register_lapic_address(mpc->lapic);
++	/* Initialize the lapic mapping */
++	if (!acpi_lapic)
++		register_lapic_address(mpc->lapic);
 +
- 	/* Mask out FAN_EVENT_ON_CHILD flag for sb/mount/non-dir marks */
- 	if (mnt || !S_ISDIR(inode->i_mode)) {
- 		mask &= ~FAN_EVENT_ON_CHILD;
--- 
-2.43.0
-
++	if (early)
+ 		return 1;
+-	}
+ 
+ 	/* Now process the configuration blocks. */
+ 	while (count < mpc->length) {
 
 
