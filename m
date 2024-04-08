@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C05F7C0BF;
-	Mon,  8 Apr 2024 13:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3B27C6C5;
+	Mon,  8 Apr 2024 13:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583238; cv=none; b=CLZC2avnqWwfQB8EgtfG9kMGbNvr9G0Jc4G1lb9HGX1nXR0XKpfridY6htFVzmvkpUI/hxOcM/M9yM3ILiPw4Yi+PxGX38ahnM/fcFBkjUKFYpL8dToCo58Rwob0y5CbNUtLlUTvXABmLkfkfmXgSknYhm+kX2wZZOISi/oWWZM=
+	t=1712583241; cv=none; b=lDYbVmRfhOv9ApVLEn4dKnsq3q4Xkx3XdiHUMVr+q/vUa1PBQTwpnW9bybxf7mJjedTPLVZWTaAsS4k1TOTuJyQeK1NY3oSL9rPZ0QIopZYhpH1owF5T6pBOjlVuUQxN5mVNY7zPmJLusa8SWuHKeHp5odKHbqEvaj31JB4h0y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583238; c=relaxed/simple;
-	bh=i0efmPvNIo4nAJDzUl9FkZ3W6LcZzmDkYxxkgeC+ALY=;
+	s=arc-20240116; t=1712583241; c=relaxed/simple;
+	bh=cc11txN4mMeI3esiWnjCNS4HTYT/01I0LX6y3q6O0QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1NNPE2tCNYSbKp8xrZheumnhe4IZZBx84x3A0XZMufl1FL6PmIzfEAzuVMyHO6IwV13nXxzaHVS6RoDL2VdkMnxrr5oOQQAmphHEgTZRgJlFMvKPLdIvxHGRfayoGzdyFXTwnCM0Ps3pnCn1v7DMMwbi6Wpa11zn257iIyRkC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWYyqwr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtagznUfKGKSliTVkdgk4CHEnkmMwcAabOSTrjDFrubo5uJsbLYYTbRRlESRGdaCkRiC5MblcagIIu452ZXFsLff12lYj21VFEtABQ3ceFDL69I+T3guUVEihNeXFugb8rkhyQ8yQMCLQvc4eLIu8kOarGJ3WkUGfSFbSXgwPVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohnWeNBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWYyqwr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B09BC433F1;
-	Mon,  8 Apr 2024 13:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohnWeNBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FD8C433C7;
+	Mon,  8 Apr 2024 13:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583238;
-	bh=i0efmPvNIo4nAJDzUl9FkZ3W6LcZzmDkYxxkgeC+ALY=;
+	s=korg; t=1712583241;
+	bh=cc11txN4mMeI3esiWnjCNS4HTYT/01I0LX6y3q6O0QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWYyqwr/5Jf3fS1W0d8vT7JZhNY5jN/N4Goah5mVd4Hq6ToaMB+ySSkXBe0BGO3OV
-	 7Sg+cRrq1C7MO+XWooOZnMyIekruNmR1BXjT1oWYaDmIIW20DN4g74xMRz8JevCvu6
-	 Jgq1DxXcFLrOaeKMwo67O9ejDso6OQtkQBwqdcrQ=
+	b=ohnWeNBVDFxuWYQzk4VLz/apWq0/1HiCnFklgarjl4RBL3n2vzBpiIRbj7U4ya/4C
+	 1ScQIxlyrhQhyWwJ5ALJTZmxPwPyg5vneNOIRoNJ92nmC+mH3fRRBEzjpdC+yjDOqM
+	 1lTdH+fzPU0TCp1JXVLhrH/cKhF3QtahwnS0iraM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Lee <slee08177@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 155/273] drm/panfrost: fix power transition timeout warnings
-Date: Mon,  8 Apr 2024 14:57:10 +0200
-Message-ID: <20240408125314.090765395@linuxfoundation.org>
+Subject: [PATCH 6.6 173/252] ASoC: ops: Fix wraparound for mask in snd_soc_get_volsw
+Date: Mon,  8 Apr 2024 14:57:52 +0200
+Message-ID: <20240408125312.028034726@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Stephen Lee <slee08177@gmail.com>
 
-[ Upstream commit 2bd02f5a0bac4bb13e0da18652dc75ba0e4958ec ]
+[ Upstream commit fc563aa900659a850e2ada4af26b9d7a3de6c591 ]
 
-Increase the timeout value to prevent system logs on Amlogic boards flooding
-with power transition warnings:
+In snd_soc_info_volsw(), mask is generated by figuring out the index of
+the most significant bit set in max and converting the index to a
+bitmask through bit shift 1. Unintended wraparound occurs when max is an
+integer value with msb bit set. Since the bit shift value 1 is treated
+as an integer type, the left shift operation will wraparound and set
+mask to 0 instead of all 1's. In order to fix this, we type cast 1 as
+`1ULL` to prevent the wraparound.
 
-[   13.047638] panfrost ffe40000.gpu: shader power transition timeout
-[   13.048674] panfrost ffe40000.gpu: l2 power transition timeout
-[   13.937324] panfrost ffe40000.gpu: shader power transition timeout
-[   13.938351] panfrost ffe40000.gpu: l2 power transition timeout
-...
-[39829.506904] panfrost ffe40000.gpu: shader power transition timeout
-[39829.507938] panfrost ffe40000.gpu: l2 power transition timeout
-[39949.508369] panfrost ffe40000.gpu: shader power transition timeout
-[39949.509405] panfrost ffe40000.gpu: l2 power transition timeout
-
-The 2000 value has been found through trial and error testing with devices
-using G52 and G31 GPUs.
-
-Fixes: 22aa1a209018 ("drm/panfrost: Really power off GPU cores in panfrost_gpu_power_off()")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240322164525.2617508-1-christianshewitt@gmail.com
+Fixes: 7077148fb50a ("ASoC: core: Split ops out of soc-core.c")
+Signed-off-by: Stephen Lee <slee08177@gmail.com>
+Link: https://msgid.link/r/20240326010131.6211-1-slee08177@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/soc-ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index 9063ce2546422..fd8e44992184f 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-@@ -441,19 +441,19 @@ void panfrost_gpu_power_off(struct panfrost_device *pfdev)
- 
- 	gpu_write(pfdev, SHADER_PWROFF_LO, pfdev->features.shader_present);
- 	ret = readl_relaxed_poll_timeout(pfdev->iomem + SHADER_PWRTRANS_LO,
--					 val, !val, 1, 1000);
-+					 val, !val, 1, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "shader power transition timeout");
- 
- 	gpu_write(pfdev, TILER_PWROFF_LO, pfdev->features.tiler_present);
- 	ret = readl_relaxed_poll_timeout(pfdev->iomem + TILER_PWRTRANS_LO,
--					 val, !val, 1, 1000);
-+					 val, !val, 1, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "tiler power transition timeout");
- 
- 	gpu_write(pfdev, L2_PWROFF_LO, pfdev->features.l2_present);
- 	ret = readl_poll_timeout(pfdev->iomem + L2_PWRTRANS_LO,
--				 val, !val, 0, 1000);
-+				 val, !val, 0, 2000);
- 	if (ret)
- 		dev_err(pfdev->dev, "l2 power transition timeout");
- }
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 2d25748ca7066..b27e89ff6a167 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -263,7 +263,7 @@ int snd_soc_get_volsw(struct snd_kcontrol *kcontrol,
+ 	int max = mc->max;
+ 	int min = mc->min;
+ 	int sign_bit = mc->sign_bit;
+-	unsigned int mask = (1 << fls(max)) - 1;
++	unsigned int mask = (1ULL << fls(max)) - 1;
+ 	unsigned int invert = mc->invert;
+ 	int val;
+ 	int ret;
 -- 
 2.43.0
 
