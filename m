@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790E47EF1B;
-	Mon,  8 Apr 2024 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756AD7F476;
+	Mon,  8 Apr 2024 13:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583074; cv=none; b=UEn9OwlVxNeBWIIsBsmXWHVCqJ/vkmlZfPTze4Ng+IGLFkj/Ko3nTsbeywDertkE5og0Sv+LVov9IEl7FknRpV29Ubib9wQ+uM11OF0vJvG43OPMvDNYBvvI0tDgN3XuAgwyqL8z3FVAP3CUjiTV8GiATqSBJVTJg8XP8KimMvc=
+	t=1712583077; cv=none; b=r17fZrowkeXzldrRNM5hiR34hxn1YsnxF0on441p9g0jUlcnPqvFDVS3BY9k9jsvcGZat2ls5WhBOnfibjDkmy/o1kUTcPhlfpYx6JGrnYkQ1bR3Twev0Ge7fXW3xpbFsBeFahu3zjxPHBf8awr1QA3USsd+sRHfV2W0E8ZIH24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583074; c=relaxed/simple;
-	bh=8kHpTRoViLbK8EtwmSnXxjn0vbB5iG0Uk1GMJtkyD3k=;
+	s=arc-20240116; t=1712583077; c=relaxed/simple;
+	bh=fswDvvbPOwx+HrIBrvA4QzTy83EWfVc76IC94Wwj3Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSRvRENFM2YaeWbFRTeqsf2XMmI+6tXjv2GIkL//zOG+u7T7P4r+7kB4S5caaVUW4ius9XNvOkYpmpSD0JQPdyfHwcWU0M6s1i1c9r4G+UQNUGE8V3EGzzOKY0ewamsnMolr0PvW0WvnnUUeiTZXCf2oZd9WUG6qpfw55wpTY/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtbZ534X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGLCCywlQdeBujKiqQBq+8PQaKmGtFZeURTiDst32hKc/lrMDzuu6oIQDEYUXl/70oGr66NjgUBzjlGX9+/GPEJRk87IgPGOziW8ELZDbub0JLBhkUyaFKWFDlcq06zKerP+o13kIxwpAD8W8NhBeQvSdzrh/LQ+3Vb0sL41ne0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDj184hS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtbZ534X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB55C433F1;
-	Mon,  8 Apr 2024 13:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDj184hS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08FAC43390;
+	Mon,  8 Apr 2024 13:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583074;
-	bh=8kHpTRoViLbK8EtwmSnXxjn0vbB5iG0Uk1GMJtkyD3k=;
+	s=korg; t=1712583077;
+	bh=fswDvvbPOwx+HrIBrvA4QzTy83EWfVc76IC94Wwj3Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtbZ534X799ABEV+frJsr1uxo0HWbjBOQU6UxSLlBOYVv3USfc0sDGAmkYRD1fpA8
-	 LmmisJdf6lClr0f+xEeCadu0O9FHmDeQ/u662Q+ZmViHvE3ifCNI1EWN4o/g21Hc43
-	 SaEf48OG52z7rTKWdQSmpRofIUnQ1N6GCaFlCiT4=
+	b=JDj184hS8SmzeQ5G7gPBs+tTqdYu91VBhO59WyhXw2QD9fW5fA/tdQkgVlsxb0Nww
+	 NEBhj4YGbokALIEVNDCo0ga44kJ25Hg9IqS4skReJ3XYqgMyZZ+UMvEY6H1QWV58s+
+	 I4UkZoqhz4u+D2/b3pwjWEnL8GG4QB2HOsOmzmRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/252] net: ravb: Always process TX descriptor ring
-Date: Mon,  8 Apr 2024 14:57:33 +0200
-Message-ID: <20240408125311.439287743@linuxfoundation.org>
+Subject: [PATCH 6.8 137/273] net: ravb: Always process TX descriptor ring
+Date: Mon,  8 Apr 2024 14:56:52 +0200
+Message-ID: <20240408125313.544724489@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -71,10 +71,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index b87e9252ea176..14595d23b1903 100644
+index 266ed984a98fa..03c49bec6ee0b 100644
 --- a/drivers/net/ethernet/renesas/ravb_main.c
 +++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1292,12 +1292,12 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+@@ -1288,12 +1288,12 @@ static int ravb_poll(struct napi_struct *napi, int budget)
  	int q = napi - priv->napi;
  	int mask = BIT(q);
  	int quota = budget;
@@ -89,7 +89,7 @@ index b87e9252ea176..14595d23b1903 100644
  
  	/* Processing TX Descriptor Ring */
  	spin_lock_irqsave(&priv->lock, flags);
-@@ -1307,6 +1307,9 @@ static int ravb_poll(struct napi_struct *napi, int budget)
+@@ -1303,6 +1303,9 @@ static int ravb_poll(struct napi_struct *napi, int budget)
  	netif_wake_subqueue(ndev, q);
  	spin_unlock_irqrestore(&priv->lock, flags);
  
