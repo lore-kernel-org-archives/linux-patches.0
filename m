@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023097BAEE;
-	Mon,  8 Apr 2024 13:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1747BAEE;
+	Mon,  8 Apr 2024 13:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584110; cv=none; b=AGOEl4tblQbpotT4947E3WLmXEIW3IpVBgvKeyPCKO58BR7PUrLPJXduk3BarjQvOiR/38oHfT0M+IHUmuugmi/75OK3p6Jy22B2vatWKr6IVkzpynkppriYvjm+oabogb5A18cnNfp6FCh6odNRc1b7WUEp38YG3LA0e9lDMcE=
+	t=1712584112; cv=none; b=GYEpdWjAhqRNB0Sr3PUYMauiiUrx7mRYE/pYBDcTqXGFOwPeIyYHHXd+muD4UgCscXbANurG5+HFPldLL3F7d4qOVTOiSbYYM5wipGJ1GE3znJmWBM2Q68gGZwva4qrGvyjBRQCG/GVfA1OJPycBkqnPVc7++CmPH5/r5L9EkiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584110; c=relaxed/simple;
-	bh=2KQwLutt+oKU4479H+IPEDkqbFK8L3JKJPklv+DPnf4=;
+	s=arc-20240116; t=1712584112; c=relaxed/simple;
+	bh=sMWnnV2oqDgLNThvj4YPL6J4HWwNYPhnHM0sb0Fdtos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BUK/GmBs0eeqRJKZKS7z+WpDbrQ1IS9CUCS35p13KWpQkWuL1WAH9/QOvpJs3ZQEcHHIc8Pd+Tv8FnIh16vX4VaYOx/F4QaIPs9kUeTQZ+A08WjyvRYT2BC+nEwH1WGc/PY0OhrZA8U5efM1iNxeZvbyMYiDD+sXsaAs/t96vO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7ZjsZCU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tbZNMugR82gkSp+CkDNIRNodk3YALHZIZ8jngJ+Djj73xbOroE+g0tepNtczAZ3ZhqyOoe9Qq/Dl0PtEDyqF48d/xgX53TqVSJPvsQiM3YzsXSvBy6qvzYzgXnyqPUZZ7JCVjEJNUBtK3O0CDvEbuUdZYvaRBEtrssN3DzYTn9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT/Ee0z4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7ZjsZCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515ACC433F1;
-	Mon,  8 Apr 2024 13:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT/Ee0z4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364B6C433F1;
+	Mon,  8 Apr 2024 13:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584109;
-	bh=2KQwLutt+oKU4479H+IPEDkqbFK8L3JKJPklv+DPnf4=;
+	s=korg; t=1712584112;
+	bh=sMWnnV2oqDgLNThvj4YPL6J4HWwNYPhnHM0sb0Fdtos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7ZjsZCUWZHAkVLjsX4dlyF4HoYn5tcHUU8bZO8HLzFvcI+JefKqjW85RmisBvcdQ
-	 66Zzyfu2VTMPaLzGW3HpdSusefJeyzYQTWCBvDmiFNob47ATZ6tqx71FFMdPUDHx7u
-	 1/YCvsqh4zwiR6Evy8SthZn1nOHmtBZOQOSF3Tfc=
+	b=lT/Ee0z44kvVpqGy6RrYHienLoe5l5iQ5ZkwnNM3oAvuQo9CdFSyy4wN9z4CfMXHj
+	 8SHlj7fuZt5BN7ADD8c0YKsMDlNAJAv1vzDT4cSrI0XWEBBoOspECFDqjn9h8aWJON
+	 h/4H6Q4pNYWXFTEUuCalDYNfROYLFoqLqevEtIcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 335/690] NFSD: Decode NFSv4 birth time attribute
-Date: Mon,  8 Apr 2024 14:53:21 +0200
-Message-ID: <20240408125411.742648421@linuxfoundation.org>
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Michal Mrozek <michal.mrozek@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 263/273] drm/i915/gt: Enable only one CCS for compute workload
+Date: Mon,  8 Apr 2024 14:58:58 +0200
+Message-ID: <20240408125317.660155889@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +48,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-[ Upstream commit 5b2f3e0777da2a5dd62824bbe2fdab1d12caaf8f ]
+commit 6db31251bb265813994bfb104eb4b4d0f44d64fb upstream.
 
-NFSD has advertised support for the NFSv4 time_create attribute
-since commit e377a3e698fb ("nfsd: Add support for the birth time
-attribute").
+Enable only one CCS engine by default with all the compute sices
+allocated to it.
 
-Igor Mammedov reports that Mac OS clients attempt to set the NFSv4
-birth time attribute via OPEN(CREATE) and SETATTR if the server
-indicates that it supports it, but since the above commit was
-merged, those attempts now fail.
+While generating the list of UABI engines to be exposed to the
+user, exclude any additional CCS engines beyond the first
+instance.
 
-Table 5 in RFC 8881 lists the time_create attribute as one that can
-be both set and retrieved, but the above commit did not add server
-support for clients to provide a time_create attribute. IMO that's
-a bug in our implementation of the NFSv4 protocol, which this commit
-addresses.
+This change can be tested with igt i915_query.
 
-Whether NFSD silently ignores the new birth time or actually sets it
-is another matter. I haven't found another filesystem service in the
-Linux kernel that enables users or clients to modify a file's birth
-time attribute.
-
-This commit reflects my (perhaps incorrect) understanding of whether
-Linux users can set a file's birth time. NFSD will now recognize a
-time_create attribute but it ignores its value. It clears the
-time_create bit in the returned attribute bitmask to indicate that
-the value was not used.
-
-Reported-by: Igor Mammedov <imammedo@redhat.com>
-Fixes: e377a3e698fb ("nfsd: Add support for the birth time attribute")
-Tested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: d2eae8e98d59 ("drm/i915/dg2: Drop force_probe requirement")
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: <stable@vger.kernel.org> # v6.2+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Acked-by: Michal Mrozek <michal.mrozek@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240328073409.674098-4-andi.shyti@linux.intel.com
+(cherry picked from commit 2bebae0112b117de7e8a7289277a4bd2403b9e17)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c | 9 +++++++++
- fs/nfsd/nfsd.h    | 3 ++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/Makefile               |    1 
+ drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c |   39 ++++++++++++++++++++++++++++
+ drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h |   13 +++++++++
+ drivers/gpu/drm/i915/gt/intel_gt_regs.h     |    5 +++
+ drivers/gpu/drm/i915/gt/intel_workarounds.c |    7 +++++
+ 5 files changed, 65 insertions(+)
+ create mode 100644 drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
+ create mode 100644 drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 96d41b1cc2d17..07f891d7fa0ae 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -470,6 +470,15 @@ nfsd4_decode_fattr4(struct nfsd4_compoundargs *argp, u32 *bmval, u32 bmlen,
- 			return nfserr_bad_xdr;
- 		}
- 	}
-+	if (bmval[1] & FATTR4_WORD1_TIME_CREATE) {
-+		struct timespec64 ts;
+--- a/drivers/gpu/drm/i915/Makefile
++++ b/drivers/gpu/drm/i915/Makefile
+@@ -118,6 +118,7 @@ gt-y += \
+ 	gt/intel_ggtt_fencing.o \
+ 	gt/intel_gt.o \
+ 	gt/intel_gt_buffer_pool.o \
++	gt/intel_gt_ccs_mode.o \
+ 	gt/intel_gt_clock_utils.o \
+ 	gt/intel_gt_debugfs.o \
+ 	gt/intel_gt_engines_debugfs.o \
+--- /dev/null
++++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
+@@ -0,0 +1,39 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Copyright © 2024 Intel Corporation
++ */
 +
-+		/* No Linux filesystem supports setting this attribute. */
-+		bmval[1] &= ~FATTR4_WORD1_TIME_CREATE;
-+		status = nfsd4_decode_nfstime4(argp, &ts);
-+		if (status)
-+			return status;
++#include "i915_drv.h"
++#include "intel_gt.h"
++#include "intel_gt_ccs_mode.h"
++#include "intel_gt_regs.h"
++
++void intel_gt_apply_ccs_mode(struct intel_gt *gt)
++{
++	int cslice;
++	u32 mode = 0;
++	int first_ccs = __ffs(CCS_MASK(gt));
++
++	if (!IS_DG2(gt->i915))
++		return;
++
++	/* Build the value for the fixed CCS load balancing */
++	for (cslice = 0; cslice < I915_MAX_CCS; cslice++) {
++		if (CCS_MASK(gt) & BIT(cslice))
++			/*
++			 * If available, assign the cslice
++			 * to the first available engine...
++			 */
++			mode |= XEHP_CCS_MODE_CSLICE(cslice, first_ccs);
++
++		else
++			/*
++			 * ... otherwise, mark the cslice as
++			 * unavailable if no CCS dispatches here
++			 */
++			mode |= XEHP_CCS_MODE_CSLICE(cslice,
++						     XEHP_CCS_MODE_CSLICE_MASK);
 +	}
- 	if (bmval[1] & FATTR4_WORD1_TIME_MODIFY_SET) {
- 		u32 set_it;
++
++	intel_uncore_write(gt->uncore, XEHP_CCS_MODE, mode);
++}
+--- /dev/null
++++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2024 Intel Corporation
++ */
++
++#ifndef __INTEL_GT_CCS_MODE_H__
++#define __INTEL_GT_CCS_MODE_H__
++
++struct intel_gt;
++
++void intel_gt_apply_ccs_mode(struct intel_gt *gt);
++
++#endif /* __INTEL_GT_CCS_MODE_H__ */
+--- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
++++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+@@ -1480,6 +1480,11 @@
+ #define   XEHP_RCU_MODE_FIXED_SLICE_CCS_MODE	REG_BIT(1)
+ #define   GEN12_RCU_MODE_CCS_ENABLE		REG_BIT(0)
  
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 847b482155ae9..9a8b09afc1733 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -465,7 +465,8 @@ static inline bool nfsd_attrs_supported(u32 minorversion, const u32 *bmval)
- 	(FATTR4_WORD0_SIZE | FATTR4_WORD0_ACL)
- #define NFSD_WRITEABLE_ATTRS_WORD1 \
- 	(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER | FATTR4_WORD1_OWNER_GROUP \
--	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_MODIFY_SET)
-+	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_CREATE \
-+	| FATTR4_WORD1_TIME_MODIFY_SET)
- #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
- #define MAYBE_FATTR4_WORD2_SECURITY_LABEL \
- 	FATTR4_WORD2_SECURITY_LABEL
--- 
-2.43.0
-
++#define XEHP_CCS_MODE				_MMIO(0x14804)
++#define   XEHP_CCS_MODE_CSLICE_MASK		REG_GENMASK(2, 0) /* CCS0-3 + rsvd */
++#define   XEHP_CCS_MODE_CSLICE_WIDTH		ilog2(XEHP_CCS_MODE_CSLICE_MASK + 1)
++#define   XEHP_CCS_MODE_CSLICE(cslice, ccs)	(ccs << (cslice * XEHP_CCS_MODE_CSLICE_WIDTH))
++
+ #define CHV_FUSE_GT				_MMIO(VLV_GUNIT_BASE + 0x2168)
+ #define   CHV_FGT_DISABLE_SS0			(1 << 10)
+ #define   CHV_FGT_DISABLE_SS1			(1 << 11)
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -10,6 +10,7 @@
+ #include "intel_engine_regs.h"
+ #include "intel_gpu_commands.h"
+ #include "intel_gt.h"
++#include "intel_gt_ccs_mode.h"
+ #include "intel_gt_mcr.h"
+ #include "intel_gt_print.h"
+ #include "intel_gt_regs.h"
+@@ -2865,6 +2866,12 @@ static void ccs_engine_wa_mode(struct in
+ 	 * made to completely disable automatic CCS load balancing.
+ 	 */
+ 	wa_masked_en(wal, GEN12_RCU_MODE, XEHP_RCU_MODE_FIXED_SLICE_CCS_MODE);
++
++	/*
++	 * After having disabled automatic load balancing we need to
++	 * assign all slices to a single CCS. We will call it CCS mode 1
++	 */
++	intel_gt_apply_ccs_mode(gt);
+ }
+ 
+ /*
 
 
