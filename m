@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59452DF73;
-	Mon,  8 Apr 2024 13:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74506A352;
+	Mon,  8 Apr 2024 13:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581591; cv=none; b=UUjJPzpbdXFyQ2ThHPRzm6jUDO/t5+01BDQ+REYMWeEulvbOA/vqXBtczs18e/fdXiLqhKjb60YyTiwT9fU7NsA+wU2G9oZqa5So1J2R4au0vtt6bHtEGVsMaIo1tQ11v0VpZ9ChfsGGatvSP/afv+xMaziPuF3ywPaqtL+vZKo=
+	t=1712581594; cv=none; b=AcF5OslmKoWDHAehsKWMNuE7cGB+M2qwEFT6DtMF4aFxsxC1VqdbPdWA6FpG4Uy1oA2n0/Bc40qWz8YJEJY0Q0UpgE/MkTU0Qvw9riC3KHwSRSEjufi3N+P22cuu2lg57mGpBbAf8jOVrzsK5hJxqzbiDYuxJ+oK/u4SZL0AioU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581591; c=relaxed/simple;
-	bh=s0Szbl+Ag46bco0h0UQt2k9imWF42/BIuyQr44uqJYE=;
+	s=arc-20240116; t=1712581594; c=relaxed/simple;
+	bh=ooPP8yh6x0BW3pj+Q8Rv4Nv1+VSP2x5BaBS8F4ZmKWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tt6CjccXJ4IVvqRg6xVKmtOqzDkz8qhNFhOz7344NMKi3Sy3baUsyNXhOBXGEulJAvpgDhV001nRpRy+GpFqvbvmQNpkDMJ5fjLrz72/BTyykMjPM0sqGcbtZE9npaTk4IQLPiGcvXBWu2Etez0Kimwxj7JGGuUqDGgLU+kFGv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muzOrC9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdqbFwXL03kl+OZW4cIeLztCWHUdcAoIasBBPn0bJgdqi3twVaRidoYsTX9PRAtnrEAhXpgKhvDMzdAzsx8ILxMFalKzTwK1GG8fcjyp/iOgb9xXPUiyJ57biv75Wk6nQHTfBMA+62uRw42qZOUHMW6DVd802IOElfsF6qsbHc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elRgAI//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muzOrC9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E0BC433C7;
-	Mon,  8 Apr 2024 13:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elRgAI//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4786BC433C7;
+	Mon,  8 Apr 2024 13:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581591;
-	bh=s0Szbl+Ag46bco0h0UQt2k9imWF42/BIuyQr44uqJYE=;
+	s=korg; t=1712581594;
+	bh=ooPP8yh6x0BW3pj+Q8Rv4Nv1+VSP2x5BaBS8F4ZmKWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muzOrC9DmPBgnuDK6e744FnSBg+9bzczQosL5oJizSPkbNw2ehzkFujyFgskRRKY7
-	 lwcLlL3SNqHyleKEn80ibcbaA4KPFjErgCuvT0l9ku0ISvI//ZcElj7viNqPGYxPVr
-	 oa2ui4Vtt1K1OC9tfyVPyjak9maXRgNrsKjatwHw=
+	b=elRgAI//DvDpQCQ3ri4bOfwXNyHXEpYgs+MYj3y9ieKFjGTXsbjUy22o8fyu0mmVB
+	 RzAC6ksVx6AlHAvZhbXoX4VqFrM927sSSodcA1B/9aKz+xDAuIpSEWe98JJGpYnfma
+	 yrUyvu5dmHtxVfNSHoW6EuKCtTR7grnp+EYnPgB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/138] inet: inet_defrag: prevent sk release while still in use
-Date: Mon,  8 Apr 2024 14:57:16 +0200
-Message-ID: <20240408125256.918722988@linuxfoundation.org>
+Subject: [PATCH 6.8 003/273] s390/bpf: Fix bpf_plt pointer arithmetic
+Date: Mon,  8 Apr 2024 14:54:38 +0200
+Message-ID: <20240408125309.389289720@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,317 +47,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 18685451fc4e546fc0e718580d32df3c0e5c8272 ]
+[ Upstream commit 7ded842b356d151ece8ac4985940438e6d3998bb ]
 
-ip_local_out() and other functions can pass skb->sk as function argument.
+Kui-Feng Lee reported a crash on s390x triggered by the
+dummy_st_ops/dummy_init_ptr_arg test [1]:
 
-If the skb is a fragment and reassembly happens before such function call
-returns, the sk must not be released.
+  [<0000000000000002>] 0x2
+  [<00000000009d5cde>] bpf_struct_ops_test_run+0x156/0x250
+  [<000000000033145a>] __sys_bpf+0xa1a/0xd00
+  [<00000000003319dc>] __s390x_sys_bpf+0x44/0x50
+  [<0000000000c4382c>] __do_syscall+0x244/0x300
+  [<0000000000c59a40>] system_call+0x70/0x98
 
-This affects skb fragments reassembled via netfilter or similar
-modules, e.g. openvswitch or ct_act.c, when run as part of tx pipeline.
+This is caused by GCC moving memcpy() after assignments in
+bpf_jit_plt(), resulting in NULL pointers being written instead of
+the return and the target addresses.
 
-Eric Dumazet made an initial analysis of this bug.  Quoting Eric:
-  Calling ip_defrag() in output path is also implying skb_orphan(),
-  which is buggy because output path relies on sk not disappearing.
+Looking at the GCC internals, the reordering is allowed because the
+alias analysis thinks that the memcpy() destination and the assignments'
+left-hand-sides are based on different objects: new_plt and
+bpf_plt_ret/bpf_plt_target respectively, and therefore they cannot
+alias.
 
-  A relevant old patch about the issue was :
-  8282f27449bf ("inet: frag: Always orphan skbs inside ip_defrag()")
+This is in turn due to a violation of the C standard:
 
-  [..]
+  When two pointers are subtracted, both shall point to elements of the
+  same array object, or one past the last element of the array object
+  ...
 
-  net/ipv4/ip_output.c depends on skb->sk being set, and probably to an
-  inet socket, not an arbitrary one.
+>From the C's perspective, bpf_plt_ret and bpf_plt are distinct objects
+and cannot be subtracted. In the practical terms, doing so confuses the
+GCC's alias analysis.
 
-  If we orphan the packet in ipvlan, then downstream things like FQ
-  packet scheduler will not work properly.
+The code was written this way in order to let the C side know a few
+offsets defined in the assembly. While nice, this is by no means
+necessary. Fix the noncompliance by hardcoding these offsets.
 
-  We need to change ip_defrag() to only use skb_orphan() when really
-  needed, ie whenever frag_list is going to be used.
+[1] https://lore.kernel.org/bpf/c9923c1d-971d-4022-8dc8-1364e929d34c@gmail.com/
 
-Eric suggested to stash sk in fragment queue and made an initial patch.
-However there is a problem with this:
-
-If skb is refragmented again right after, ip_do_fragment() will copy
-head->sk to the new fragments, and sets up destructor to sock_wfree.
-IOW, we have no choice but to fix up sk_wmem accouting to reflect the
-fully reassembled skb, else wmem will underflow.
-
-This change moves the orphan down into the core, to last possible moment.
-As ip_defrag_offset is aliased with sk_buff->sk member, we must move the
-offset into the FRAG_CB, else skb->sk gets clobbered.
-
-This allows to delay the orphaning long enough to learn if the skb has
-to be queued or if the skb is completing the reasm queue.
-
-In the former case, things work as before, skb is orphaned.  This is
-safe because skb gets queued/stolen and won't continue past reasm engine.
-
-In the latter case, we will steal the skb->sk reference, reattach it to
-the head skb, and fix up wmem accouting when inet_frag inflates truesize.
-
-Fixes: 7026b1ddb6b8 ("netfilter: Pass socket pointer down through okfn().")
-Diagnosed-by: Eric Dumazet <edumazet@google.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Reported-by: syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240326101845.30836-1-fw@strlen.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f1d5df84cd8c ("s390/bpf: Implement bpf_arch_text_poke()")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20240320015515.11883-1-iii@linux.ibm.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h                  |  7 +--
- net/ipv4/inet_fragment.c                | 70 ++++++++++++++++++++-----
- net/ipv4/ip_fragment.c                  |  2 +-
- net/ipv6/netfilter/nf_conntrack_reasm.c |  2 +-
- 4 files changed, 60 insertions(+), 21 deletions(-)
+ arch/s390/net/bpf_jit_comp.c | 46 ++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 26 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index c30d419ebf545..c4a8520dc748f 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -745,8 +745,6 @@ typedef unsigned char *sk_buff_data_t;
-  *	@list: queue head
-  *	@ll_node: anchor in an llist (eg socket defer_list)
-  *	@sk: Socket we are owned by
-- *	@ip_defrag_offset: (aka @sk) alternate use of @sk, used in
-- *		fragmentation management
-  *	@dev: Device we arrived on/are leaving by
-  *	@dev_scratch: (aka @dev) alternate use of @dev when @dev would be %NULL
-  *	@cb: Control buffer. Free for use by every layer. Put private vars here
-@@ -870,10 +868,7 @@ struct sk_buff {
- 		struct llist_node	ll_node;
- 	};
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index b418333bb0863..5af0402e94b88 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -516,11 +516,12 @@ static void bpf_skip(struct bpf_jit *jit, int size)
+  * PLT for hotpatchable calls. The calling convention is the same as for the
+  * ftrace hotpatch trampolines: %r0 is return address, %r1 is clobbered.
+  */
+-extern const char bpf_plt[];
+-extern const char bpf_plt_ret[];
+-extern const char bpf_plt_target[];
+-extern const char bpf_plt_end[];
+-#define BPF_PLT_SIZE 32
++struct bpf_plt {
++	char code[16];
++	void *ret;
++	void *target;
++} __packed;
++extern const struct bpf_plt bpf_plt;
+ asm(
+ 	".pushsection .rodata\n"
+ 	"	.balign 8\n"
+@@ -531,15 +532,14 @@ asm(
+ 	"	.balign 8\n"
+ 	"bpf_plt_ret: .quad 0\n"
+ 	"bpf_plt_target: .quad 0\n"
+-	"bpf_plt_end:\n"
+ 	"	.popsection\n"
+ );
  
--	union {
--		struct sock		*sk;
--		int			ip_defrag_offset;
--	};
-+	struct sock		*sk;
- 
- 	union {
- 		ktime_t		tstamp;
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index c9f9ac5013a71..834cdc57755f7 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -24,6 +24,8 @@
- #include <net/ip.h>
- #include <net/ipv6.h>
- 
-+#include "../core/sock_destructor.h"
-+
- /* Use skb->cb to track consecutive/adjacent fragments coming at
-  * the end of the queue. Nodes in the rb-tree queue will
-  * contain "runs" of one or more adjacent fragments.
-@@ -39,6 +41,7 @@ struct ipfrag_skb_cb {
- 	};
- 	struct sk_buff		*next_frag;
- 	int			frag_run_len;
-+	int			ip_defrag_offset;
- };
- 
- #define FRAG_CB(skb)		((struct ipfrag_skb_cb *)((skb)->cb))
-@@ -390,12 +393,12 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 	 */
- 	if (!last)
- 		fragrun_create(q, skb);  /* First fragment. */
--	else if (last->ip_defrag_offset + last->len < end) {
-+	else if (FRAG_CB(last)->ip_defrag_offset + last->len < end) {
- 		/* This is the common case: skb goes to the end. */
- 		/* Detect and discard overlaps. */
--		if (offset < last->ip_defrag_offset + last->len)
-+		if (offset < FRAG_CB(last)->ip_defrag_offset + last->len)
- 			return IPFRAG_OVERLAP;
--		if (offset == last->ip_defrag_offset + last->len)
-+		if (offset == FRAG_CB(last)->ip_defrag_offset + last->len)
- 			fragrun_append_to_last(q, skb);
- 		else
- 			fragrun_create(q, skb);
-@@ -412,13 +415,13 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 
- 			parent = *rbn;
- 			curr = rb_to_skb(parent);
--			curr_run_end = curr->ip_defrag_offset +
-+			curr_run_end = FRAG_CB(curr)->ip_defrag_offset +
- 					FRAG_CB(curr)->frag_run_len;
--			if (end <= curr->ip_defrag_offset)
-+			if (end <= FRAG_CB(curr)->ip_defrag_offset)
- 				rbn = &parent->rb_left;
- 			else if (offset >= curr_run_end)
- 				rbn = &parent->rb_right;
--			else if (offset >= curr->ip_defrag_offset &&
-+			else if (offset >= FRAG_CB(curr)->ip_defrag_offset &&
- 				 end <= curr_run_end)
- 				return IPFRAG_DUP;
- 			else
-@@ -432,7 +435,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 		rb_insert_color(&skb->rbnode, &q->rb_fragments);
- 	}
- 
--	skb->ip_defrag_offset = offset;
-+	FRAG_CB(skb)->ip_defrag_offset = offset;
- 
- 	return IPFRAG_OK;
- }
-@@ -442,13 +445,28 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 			      struct sk_buff *parent)
+-static void bpf_jit_plt(void *plt, void *ret, void *target)
++static void bpf_jit_plt(struct bpf_plt *plt, void *ret, void *target)
  {
- 	struct sk_buff *fp, *head = skb_rb_first(&q->rb_fragments);
--	struct sk_buff **nextp;
-+	void (*destructor)(struct sk_buff *);
-+	unsigned int orig_truesize = 0;
-+	struct sk_buff **nextp = NULL;
-+	struct sock *sk = skb->sk;
- 	int delta;
- 
-+	if (sk && is_skb_wmem(skb)) {
-+		/* TX: skb->sk might have been passed as argument to
-+		 * dst->output and must remain valid until tx completes.
-+		 *
-+		 * Move sk to reassembled skb and fix up wmem accounting.
-+		 */
-+		orig_truesize = skb->truesize;
-+		destructor = skb->destructor;
-+	}
-+
- 	if (head != skb) {
- 		fp = skb_clone(skb, GFP_ATOMIC);
--		if (!fp)
--			return NULL;
-+		if (!fp) {
-+			head = skb;
-+			goto out_restore_sk;
-+		}
- 		FRAG_CB(fp)->next_frag = FRAG_CB(skb)->next_frag;
- 		if (RB_EMPTY_NODE(&skb->rbnode))
- 			FRAG_CB(parent)->next_frag = fp;
-@@ -457,6 +475,12 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 					&q->rb_fragments);
- 		if (q->fragments_tail == skb)
- 			q->fragments_tail = fp;
-+
-+		if (orig_truesize) {
-+			/* prevent skb_morph from releasing sk */
-+			skb->sk = NULL;
-+			skb->destructor = NULL;
-+		}
- 		skb_morph(skb, head);
- 		FRAG_CB(skb)->next_frag = FRAG_CB(head)->next_frag;
- 		rb_replace_node(&head->rbnode, &skb->rbnode,
-@@ -464,13 +488,13 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 		consume_skb(head);
- 		head = skb;
- 	}
--	WARN_ON(head->ip_defrag_offset != 0);
-+	WARN_ON(FRAG_CB(head)->ip_defrag_offset != 0);
- 
- 	delta = -head->truesize;
- 
- 	/* Head of list must not be cloned. */
- 	if (skb_unclone(head, GFP_ATOMIC))
--		return NULL;
-+		goto out_restore_sk;
- 
- 	delta += head->truesize;
- 	if (delta)
-@@ -486,7 +510,7 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 
- 		clone = alloc_skb(0, GFP_ATOMIC);
- 		if (!clone)
--			return NULL;
-+			goto out_restore_sk;
- 		skb_shinfo(clone)->frag_list = skb_shinfo(head)->frag_list;
- 		skb_frag_list_init(head);
- 		for (i = 0; i < skb_shinfo(head)->nr_frags; i++)
-@@ -503,6 +527,21 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
- 		nextp = &skb_shinfo(head)->frag_list;
- 	}
- 
-+out_restore_sk:
-+	if (orig_truesize) {
-+		int ts_delta = head->truesize - orig_truesize;
-+
-+		/* if this reassembled skb is fragmented later,
-+		 * fraglist skbs will get skb->sk assigned from head->sk,
-+		 * and each frag skb will be released via sock_wfree.
-+		 *
-+		 * Update sk_wmem_alloc.
-+		 */
-+		head->sk = sk;
-+		head->destructor = destructor;
-+		refcount_add(ts_delta, &sk->sk_wmem_alloc);
-+	}
-+
- 	return nextp;
+-	memcpy(plt, bpf_plt, BPF_PLT_SIZE);
+-	*(void **)((char *)plt + (bpf_plt_ret - bpf_plt)) = ret;
+-	*(void **)((char *)plt + (bpf_plt_target - bpf_plt)) = target ?: ret;
++	memcpy(plt, &bpf_plt, sizeof(*plt));
++	plt->ret = ret;
++	plt->target = target;
  }
- EXPORT_SYMBOL(inet_frag_reasm_prepare);
-@@ -510,6 +549,8 @@ EXPORT_SYMBOL(inet_frag_reasm_prepare);
- void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
- 			    void *reasm_data, bool try_coalesce)
+ 
+ /*
+@@ -662,9 +662,9 @@ static void bpf_jit_epilogue(struct bpf_jit *jit, u32 stack_depth)
+ 	jit->prg = ALIGN(jit->prg, 8);
+ 	jit->prologue_plt = jit->prg;
+ 	if (jit->prg_buf)
+-		bpf_jit_plt(jit->prg_buf + jit->prg,
++		bpf_jit_plt((struct bpf_plt *)(jit->prg_buf + jit->prg),
+ 			    jit->prg_buf + jit->prologue_plt_ret, NULL);
+-	jit->prg += BPF_PLT_SIZE;
++	jit->prg += sizeof(struct bpf_plt);
+ }
+ 
+ static int get_probe_mem_regno(const u8 *insn)
+@@ -2040,9 +2040,6 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 	struct bpf_jit jit;
+ 	int pass;
+ 
+-	if (WARN_ON_ONCE(bpf_plt_end - bpf_plt != BPF_PLT_SIZE))
+-		return orig_fp;
+-
+ 	if (!fp->jit_requested)
+ 		return orig_fp;
+ 
+@@ -2148,14 +2145,11 @@ bool bpf_jit_supports_far_kfunc_call(void)
+ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+ 		       void *old_addr, void *new_addr)
  {
-+	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
-+	const unsigned int head_truesize = head->truesize;
- 	struct sk_buff **nextp = reasm_data;
- 	struct rb_node *rbn;
- 	struct sk_buff *fp;
-@@ -573,6 +614,9 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
- 	head->prev = NULL;
- 	head->tstamp = q->stamp;
- 	head->mono_delivery_time = q->mono_delivery_time;
-+
-+	if (sk)
-+		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
- }
- EXPORT_SYMBOL(inet_frag_reasm_finish);
++	struct bpf_plt expected_plt, current_plt, new_plt, *plt;
+ 	struct {
+ 		u16 opc;
+ 		s32 disp;
+ 	} __packed insn;
+-	char expected_plt[BPF_PLT_SIZE];
+-	char current_plt[BPF_PLT_SIZE];
+-	char new_plt[BPF_PLT_SIZE];
+-	char *plt;
+ 	char *ret;
+ 	int err;
  
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index fb153569889ec..6c309c1ec3b0f 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -378,6 +378,7 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb)
+@@ -2174,18 +2168,18 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+ 		 */
+ 	} else {
+ 		/* Verify the PLT. */
+-		plt = (char *)ip + (insn.disp << 1);
+-		err = copy_from_kernel_nofault(current_plt, plt, BPF_PLT_SIZE);
++		plt = ip + (insn.disp << 1);
++		err = copy_from_kernel_nofault(&current_plt, plt,
++					       sizeof(current_plt));
+ 		if (err < 0)
+ 			return err;
+ 		ret = (char *)ip + 6;
+-		bpf_jit_plt(expected_plt, ret, old_addr);
+-		if (memcmp(current_plt, expected_plt, BPF_PLT_SIZE))
++		bpf_jit_plt(&expected_plt, ret, old_addr);
++		if (memcmp(&current_plt, &expected_plt, sizeof(current_plt)))
+ 			return -EINVAL;
+ 		/* Adjust the call address. */
+-		bpf_jit_plt(new_plt, ret, new_addr);
+-		s390_kernel_write(plt + (bpf_plt_target - bpf_plt),
+-				  new_plt + (bpf_plt_target - bpf_plt),
++		bpf_jit_plt(&new_plt, ret, new_addr);
++		s390_kernel_write(&plt->target, &new_plt.target,
+ 				  sizeof(void *));
  	}
  
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
- 
- insert_error:
-@@ -480,7 +481,6 @@ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
- 	struct ipq *qp;
- 
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
--	skb_orphan(skb);
- 
- 	/* Lookup (or create) queue header */
- 	qp = ip_find(net, ip_hdr(skb), user, vif);
-diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
-index 38db0064d6613..87a394179092c 100644
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -293,6 +293,7 @@ static int nf_ct_frag6_queue(struct frag_queue *fq, struct sk_buff *skb,
- 	}
- 
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
- 
- insert_error:
-@@ -468,7 +469,6 @@ int nf_ct_frag6_gather(struct net *net, struct sk_buff *skb, u32 user)
- 	hdr = ipv6_hdr(skb);
- 	fhdr = (struct frag_hdr *)skb_transport_header(skb);
- 
--	skb_orphan(skb);
- 	fq = fq_find(net, fhdr->identification, user, hdr,
- 		     skb->dev ? skb->dev->ifindex : 0);
- 	if (fq == NULL) {
 -- 
 2.43.0
 
