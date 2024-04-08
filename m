@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2F7762E5;
-	Mon,  8 Apr 2024 13:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA2E6EB72;
+	Mon,  8 Apr 2024 13:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584486; cv=none; b=PhluhpiTVhXbLtuw1+g2yaTlTfw9eJMSwRtgRLzH2JqWSiLu5ryYl79KH/2zDuX6DeymTICUoOHLPk+9wrQ4Ha5ApfWVsQ6q51Y0FZJlUak3V0KAqOlD7nule0dTca+h8VUp/5xcRm2KDXWslfiZgBdEAMRU5Bw/F6repc2p5G4=
+	t=1712584489; cv=none; b=XXVyI1xVZUkll9OPrnz3oALSyDWQBgO5mSSZlmEDzAirIjRdYrjBijCMLtwFSv3yuFKx7jbEzf/4fgfqa0BfTqvUBrBBtpECc9WdWydHc32Dds7SvkTQpy3lq2yzkVW3dH9i0MJlFX73hLLBLswNTP0vE9N0M/klFnRpBoC8U7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584486; c=relaxed/simple;
-	bh=146dG95hfu5cDdbG8LCtviTfjXdKHXonrdiLhzEeNBs=;
+	s=arc-20240116; t=1712584489; c=relaxed/simple;
+	bh=zrEmmviOT6firgP2LkwLtHxP+4U8auWJkgeMtdFqELg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmwkMzQjtgFf5tHJers8FjB2yf8y9dw9F245kQDxD6tIHBPEDfXGQtQhZehWcHzz+a/wkmxEZv1deqweTxv0n9F18s/Bm8zaHUkEO1cE2gHQOXpWSE1DoYu2pbLoK3qtmL8QRG76ni25szoYOQamLt1Rh1TfUPSHFxGS9SsrGHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+uSW6sK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1YGoe9WdhVfKzY4kK2QiofKh4kHkjHc8wHM+wAiVlF8uMu4aG5YKBMBFuY9hPvPSoFrpk/0jvIKR4vG/U4UL0X3XBWdaYY/WljMcnGCkMld8q/KUqmp1HOjZHi94kmq9/gQX+EZbNoKz3WQ+VpEONyiDnF1OTHnyyDL/Waj5UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYMOrb1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+uSW6sK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAECEC43390;
-	Mon,  8 Apr 2024 13:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYMOrb1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D2DC433F1;
+	Mon,  8 Apr 2024 13:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584486;
-	bh=146dG95hfu5cDdbG8LCtviTfjXdKHXonrdiLhzEeNBs=;
+	s=korg; t=1712584489;
+	bh=zrEmmviOT6firgP2LkwLtHxP+4U8auWJkgeMtdFqELg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+uSW6sKjTMGbvyypu9JkMq07OIv5ZD71lWA7c1yM9+yc3UnVmISQ0cf7r5NPyW7u
-	 BMLfFpYzHGYcqAg5CQ4F3xXXWTINMzpyVUlgF8WcbIT8/glEFS+733fTXDBFlNvv6/
-	 vgtgJpYDVV4Bk8O61WsNDbs8Qd+StlHNUZ+MxKuw=
+	b=yYMOrb1AHaF4IXViq1KAQL8ej4qorpbp9MCl17fN6/1HN24HP1/SENBYGr/Yvfj0D
+	 v8kKZw/bN2Sh0h1h4PY1fIE5fAMe+2sYk1pMQnmB0az1r/Ime1fL99vm3yaf64gfBu
+	 knNTK7aVIJFKMMoMom2cEGGAgdcuHJPnEo5iraDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 424/690] nfsd: clean up mounted_on_fileid handling
-Date: Mon,  8 Apr 2024 14:54:50 +0200
-Message-ID: <20240408125414.958670349@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.15 415/690] nfsd_splice_actor(): handle compound pages
+Date: Mon,  8 Apr 2024 14:54:41 +0200
+Message-ID: <20240408125414.625567765@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,76 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 6106d9119b6599fa23dc556b429d887b4c2d9f62 ]
+[ Upstream commit bfbfb6182ad1d7d184b16f25165faad879147f79 ]
 
-We only need the inode number for this, not a full rack of attributes.
-Rename this function make it take a pointer to a u64 instead of
-struct kstat, and change it to just request STATX_INO.
+pipe_buffer might refer to a compound page (and contain more than a PAGE_SIZE
+worth of data).  Theoretically it had been possible since way back, but
+nfsd_splice_actor() hadn't run into that until copy_page_to_iter() change.
+Fortunately, the only thing that changes for compound pages is that we
+need to stuff each relevant subpage in and convert the offset into offset
+in the first subpage.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: renamed get_mounted_on_ino() ]
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Benjamin Coddington <bcodding@redhat.com>
+Fixes: f0f6b614f83d "copy_page_to_iter(): don't split high-order page in case of ITER_PIPE"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4xdr.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/nfsd/vfs.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 0f30d93577e7b..3ad9b41c51730 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2772,9 +2772,10 @@ static __be32 fattr_handle_absent_fs(u32 *bmval0, u32 *bmval1, u32 *bmval2, u32
- }
- 
- 
--static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
-+static int nfsd4_get_mounted_on_ino(struct svc_export *exp, u64 *pino)
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index ad689215b1f37..343af6341e5e1 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -846,10 +846,15 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
+ 		  struct splice_desc *sd)
  {
- 	struct path path = exp->ex_path;
-+	struct kstat stat;
- 	int err;
- 
- 	path_get(&path);
-@@ -2782,8 +2783,10 @@ static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
- 		if (path.dentry != path.mnt->mnt_root)
- 			break;
- 	}
--	err = vfs_getattr(&path, stat, STATX_BASIC_STATS, AT_STATX_SYNC_AS_STAT);
-+	err = vfs_getattr(&path, &stat, STATX_INO, AT_STATX_SYNC_AS_STAT);
- 	path_put(&path);
-+	if (!err)
-+		*pino = stat.ino;
- 	return err;
+ 	struct svc_rqst *rqstp = sd->u.data;
+-
+-	svc_rqst_replace_page(rqstp, buf->page);
+-	if (rqstp->rq_res.page_len == 0)
+-		rqstp->rq_res.page_base = buf->offset;
++	struct page *page = buf->page;	// may be a compound one
++	unsigned offset = buf->offset;
++	int i;
++
++	page += offset / PAGE_SIZE;
++	for (i = sd->len; i > 0; i -= PAGE_SIZE)
++		svc_rqst_replace_page(rqstp, page++);
++	if (rqstp->rq_res.page_len == 0)	// first call
++		rqstp->rq_res.page_base = offset % PAGE_SIZE;
+ 	rqstp->rq_res.page_len += sd->len;
+ 	return sd->len;
  }
- 
-@@ -3280,22 +3283,21 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
- 		*p++ = cpu_to_be32(stat.btime.tv_nsec);
- 	}
- 	if (bmval1 & FATTR4_WORD1_MOUNTED_ON_FILEID) {
--		struct kstat parent_stat;
- 		u64 ino = stat.ino;
- 
- 		p = xdr_reserve_space(xdr, 8);
- 		if (!p)
-                 	goto out_resource;
- 		/*
--		 * Get parent's attributes if not ignoring crossmount
--		 * and this is the root of a cross-mounted filesystem.
-+		 * Get ino of mountpoint in parent filesystem, if not ignoring
-+		 * crossmount and this is the root of a cross-mounted
-+		 * filesystem.
- 		 */
- 		if (ignore_crossmnt == 0 &&
- 		    dentry == exp->ex_path.mnt->mnt_root) {
--			err = get_parent_attributes(exp, &parent_stat);
-+			err = nfsd4_get_mounted_on_ino(exp, &ino);
- 			if (err)
- 				goto out_nfserr;
--			ino = parent_stat.ino;
- 		}
- 		p = xdr_encode_hyper(p, ino);
- 	}
 -- 
 2.43.0
 
