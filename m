@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B3485631;
-	Mon,  8 Apr 2024 13:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95320839E6;
+	Mon,  8 Apr 2024 13:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582702; cv=none; b=Yh1c8gBdMn5OJZ872juHokmJ3ko/SjvHMnDC1IQkypDstKpjKVPJPcrFY328hvosRjJ59Y12MpUOfl527S3sdDgcjaPE1XDbxt+eBSds9NS9ZAk+fIkOBdukJIG41Qtm4HW+WMP3Q8N1ZH5ZWkD1vj0R/Z/NkgMxH5gqsJ5hYYA=
+	t=1712582705; cv=none; b=Cr8TMpo950dV2aKHvrQQEgbi0n3/Wjeaz14FCK+F5y99h/YJe3KYT1udSqn3alzRhtjvop8xgL+8cU78aVR5vUqcDBYGQD11K1Pgu8mUbCRluPGyrbQwa2MhGCyX/iMNJYSYweUEO5kBQrfSuSRwm8aIlKaA9SmVcwvIlNe6Xak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582702; c=relaxed/simple;
-	bh=UASRQWEEHny6bZL1oAcOqbpCEpWsk2ys30o5Wzh7PJY=;
+	s=arc-20240116; t=1712582705; c=relaxed/simple;
+	bh=aCasu0xm5uSC9JUj3ccDEqSlknuPMIlnS5stDS+i658=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDZdjld7E7eghS7GVGZdJZ9jmJxN7n79S3mNVTYSLZaPn18g07q4JJiLiURqqVh9L+EHpW7Ki7MFjTze8RWN6jNYv5AdeiDmOIGyQZPjisiRw1EnmHeKjRdJXeUR+Qq7f1pAvVZZvk40LfBgFZJL/48hE5fl8Y8mt08HWLBlDjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToOte288; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJXHvXtAkVllYD7dN0hNe+Mn6uSF0PmBn62l6ayDBqh2GssUqlXNAlaMp7677pRMW3uZ5P51I/8U1CV9dqiJf+472nMMRjIQeXFUscAcwRLbelzQeaoUuN/a+DN5eG87e55SGzwbWdG4tm9AhmvLPFeSOUD58KPIELln3oAwcwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHYhh5Xg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToOte288"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E75C433F1;
-	Mon,  8 Apr 2024 13:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHYhh5Xg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EEAC433F1;
+	Mon,  8 Apr 2024 13:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582702;
-	bh=UASRQWEEHny6bZL1oAcOqbpCEpWsk2ys30o5Wzh7PJY=;
+	s=korg; t=1712582705;
+	bh=aCasu0xm5uSC9JUj3ccDEqSlknuPMIlnS5stDS+i658=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToOte288v1jqgt7y7Zwx0gtpwwrdGYucUCKofc3dCMcZzGU9m8kNyXVzeeu5RG58l
-	 bzMDQJOohHUtqfSaFYQVaUNH+rjve3f6uMcN2a0yuxpTHHjF+BOlgB+ZFBcW4vrkCA
-	 +NJdwnM+7jkT0SVyT7WyDmYWh4lclPS0sw2pGj1E=
+	b=DHYhh5XgDaSH3j0p7l3B+loLISWaoh6YZucXc8M2FTsJSxYDB6y57GV8VNQvFEFkc
+	 GjFoWIdGNRIEWDh8KMt9+EoGR578bNCIgW6TImggaqdU4Uq4sGP6+fpy5NDhqjTZ3M
+	 xe5Tv6AHt4F8xB37GIaASmccm/vfQsa8HBhw4sok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.6 114/252] ice: fix enabling RX VLAN filtering
-Date: Mon,  8 Apr 2024 14:56:53 +0200
-Message-ID: <20240408125310.173745693@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 169/690] fsnotify: Dont insert unmergeable events in hashtable
+Date: Mon,  8 Apr 2024 14:50:35 +0200
+Message-ID: <20240408125405.692515983@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit 8edfc7a40e3300fc6c5fa7a3228a24d5bcd86ba5 upstream.
+[ Upstream commit cc53b55f697fe5aa98bdbfdfe67c6401da242155 ]
 
-ice_port_vlan_on/off() was introduced in commit 2946204b3fa8 ("ice:
-implement bridge port vlan"). But ice_port_vlan_on() incorrectly assigns
-ena_rx_filtering to inner_vlan_ops in DVM mode.
-This causes an error when rx_filtering cannot be enabled in legacy mode.
+Some events, like the overflow event, are not mergeable, so they are not
+hashed.  But, when failing inside fsnotify_add_event for lack of space,
+fsnotify_add_event() still calls the insert hook, which adds the
+overflow event to the merge list.  Add a check to prevent any kind of
+unmergeable event to be inserted in the hashtable.
 
-Reproducer:
- echo 1 > /sys/class/net/$PF/device/sriov_numvfs
- ip link set $PF vf 0 spoofchk off trust on vlan 3
-dmesg:
- ice 0000:41:00.0: failed to enable Rx VLAN filtering for VF 0 VSI 9 during VF rebuild, error -95
-
-Fixes: 2946204b3fa8 ("ice: implement bridge port vlan")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 94e00d28a680 ("fsnotify: use hash table for faster events merge")
+Link: https://lore.kernel.org/r/20211025192746.66445-5-krisman@collabora.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- .../ethernet/intel/ice/ice_vf_vsi_vlan_ops.c   | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ fs/notify/fanotify/fanotify.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-index 80dc4bcdd3a4..b3e1bdcb80f8 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-@@ -26,24 +26,22 @@ static void ice_port_vlan_on(struct ice_vsi *vsi)
- 	struct ice_vsi_vlan_ops *vlan_ops;
- 	struct ice_pf *pf = vsi->back;
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index 057abd2cf8875..310246f8d3f19 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -702,6 +702,9 @@ static void fanotify_insert_event(struct fsnotify_group *group,
  
-+	/* setup inner VLAN ops */
-+	vlan_ops = &vsi->inner_vlan_ops;
+ 	assert_spin_locked(&group->notification_lock);
+ 
++	if (!fanotify_is_hashed_event(event->mask))
++		return;
 +
- 	if (ice_is_dvm_ena(&pf->hw)) {
--		vlan_ops = &vsi->outer_vlan_ops;
--
--		/* setup outer VLAN ops */
--		vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
--		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
--
--		/* setup inner VLAN ops */
--		vlan_ops = &vsi->inner_vlan_ops;
- 		vlan_ops->add_vlan = noop_vlan_arg;
- 		vlan_ops->del_vlan = noop_vlan_arg;
- 		vlan_ops->ena_stripping = ice_vsi_ena_inner_stripping;
- 		vlan_ops->dis_stripping = ice_vsi_dis_inner_stripping;
- 		vlan_ops->ena_insertion = ice_vsi_ena_inner_insertion;
- 		vlan_ops->dis_insertion = ice_vsi_dis_inner_insertion;
--	} else {
--		vlan_ops = &vsi->inner_vlan_ops;
+ 	pr_debug("%s: group=%p event=%p bucket=%u\n", __func__,
+ 		 group, event, bucket);
  
-+		/* setup outer VLAN ops */
-+		vlan_ops = &vsi->outer_vlan_ops;
-+		vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
-+		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
-+	} else {
- 		vlan_ops->set_port_vlan = ice_vsi_set_inner_port_vlan;
- 		vlan_ops->clear_port_vlan = ice_vsi_clear_inner_port_vlan;
- 	}
+@@ -779,8 +782,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
+ 
+ 	fsn_event = &event->fse;
+ 	ret = fsnotify_add_event(group, fsn_event, fanotify_merge,
+-				 fanotify_is_hashed_event(mask) ?
+-				 fanotify_insert_event : NULL);
++				 fanotify_insert_event);
+ 	if (ret) {
+ 		/* Permission events shouldn't be merged */
+ 		BUG_ON(ret == 1 && mask & FANOTIFY_PERM_EVENTS);
 -- 
-2.44.0
+2.43.0
 
 
 
