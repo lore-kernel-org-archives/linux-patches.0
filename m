@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5825778285;
-	Mon,  8 Apr 2024 13:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E877F49B;
+	Mon,  8 Apr 2024 13:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582860; cv=none; b=dc2oKcllF/+rfGmiGGPfP2HrHxQNwjBOV/9wTKUtmIlasFZooqIwtfrcmd57lHwcQ/bWvKoRrWTmFoHYSqMuHrPon8TxlqyqlqaWhOyM66PyFX833fyu17700JwRK4gQfBpuKI4LuCOXPAJpr1m7RHO3GztLeP0dlkPViW8LlRM=
+	t=1712582863; cv=none; b=gB6zyHjZCdxx1/hCstsNNLZiVdYEja9K6vu/fq5yJ8CI6CPg547CXuevIsPBcJYFrVhGSWOCy8ncv7/tv8rd2xvoWGGqIFS/kGw3TRgpcjVgsYZQy1CQhkStgr8nNPYHxga2kiNXIujdPBZUeuccZB3XeMi3qDLVEbIxlTn5jzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582860; c=relaxed/simple;
-	bh=WJyeYpIES6JtQFOTvTXutyRm4jcTq+PD3PgTtyHlhA4=;
+	s=arc-20240116; t=1712582863; c=relaxed/simple;
+	bh=AlQ9wX9Lsgqt/bgdyZUfyATy47SByO4UgOrWD8HGAnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oM7qlWCZnSit3yznAl/lSdpIoRbEOjZodpsEwP0tSlZqbV949qMqr4DE0hDjBlT8Mcm5jvGLzxAMz3lIGSM6yjcpdGuSxX1h20IV+BtHBiZ7Wg4qKoi11qXZlanZHLXHac0KJ5vA8jb2QZrX0rK1trBDqoFnxTb3ol3oyVpzpB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/6N03Md; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlIdqd0eFixb+dcl5ZrCdRXxGDju3Gl4VwsSsJbaQvtLs1s3cUAj7mF0LQ9gTPMM29xVlGFLQSbXWLtecvsd2DcnedmHPqbOxa2v1LOq0elCS6bmmAjfsirEBqQoYfIuVVZsVQh3nxwpLhW/OoEZIkT/laClUcjIhRsOLNOCQ14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOCalfeQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/6N03Md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2262C433C7;
-	Mon,  8 Apr 2024 13:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOCalfeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C4EC433C7;
+	Mon,  8 Apr 2024 13:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582860;
-	bh=WJyeYpIES6JtQFOTvTXutyRm4jcTq+PD3PgTtyHlhA4=;
+	s=korg; t=1712582863;
+	bh=AlQ9wX9Lsgqt/bgdyZUfyATy47SByO4UgOrWD8HGAnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/6N03MdCDb1tPyknxwKvkbLliaNvgXYZ4wKbq+pak7WsEofyTa8ci0XhaJeb8ZFq
-	 rmnb9asMRv4zDsGENwAQZ3tNVoibs10SoQehkV3He+ymI8v+AcW0Cbvd8BCGxen3Xx
-	 IjYYVHQJALvwYaQUAZ+4nP8oQDB9aFQBKBXLm1qE=
+	b=oOCalfeQDUPrxWYYMrHJ+hGkk23PTa9nX49I2aeLq6GbQS9+DZqgJ+NrC6G6kxieB
+	 RChStVcNRYLRavM2wsKvL0tjFaqbpQocTPgJJ3wRTim8rSZqqF7eFffEzdtBLBcPuU
+	 EM4i//dZHTEvcSoY9BjQB06aW6eGWg/mEMKyyEgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 111/273] i40e: Fix VF MAC filter removal
-Date: Mon,  8 Apr 2024 14:56:26 +0200
-Message-ID: <20240408125312.748746262@linuxfoundation.org>
+Subject: [PATCH 6.6 116/252] erspan: make sure erspan_base_hdr is present in skb->head
+Date: Mon,  8 Apr 2024 14:56:55 +0200
+Message-ID: <20240408125310.233175554@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,69 +48,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit ea2a1cfc3b2019bdea6324acd3c03606b60d71ad upstream.
+commit 17af420545a750f763025149fa7b833a4fc8b8f0 upstream.
 
-Commit 73d9629e1c8c ("i40e: Do not allow untrusted VF to remove
-administratively set MAC") fixed an issue where untrusted VF was
-allowed to remove its own MAC address although this was assigned
-administratively from PF. Unfortunately the introduced check
-is wrong because it causes that MAC filters for other MAC addresses
-including multi-cast ones are not removed.
+syzbot reported a problem in ip6erspan_rcv() [1]
 
-<snip>
-	if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
-	    i40e_can_vf_change_mac(vf))
-		was_unimac_deleted = true;
-	else
-		continue;
+Issue is that ip6erspan_rcv() (and erspan_rcv()) no longer make
+sure erspan_base_hdr is present in skb linear part (skb->head)
+before getting @ver field from it.
 
-	if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
-	...
-</snip>
+Add the missing pskb_may_pull() calls.
 
-The else path with `continue` effectively skips any MAC filter
-removal except one for primary MAC addr when VF is allowed to do so.
-Fix the check condition so the `continue` is only done for primary
-MAC address.
+v2: Reload iph pointer in erspan_rcv() after pskb_may_pull()
+    because skb->head might have changed.
 
-Fixes: 73d9629e1c8c ("i40e: Do not allow untrusted VF to remove administratively set MAC")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240329180638.211412-1-anthony.l.nguyen@intel.com
+[1]
+
+ BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
+ BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2756 [inline]
+ BUG: KMSAN: uninit-value in ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
+ BUG: KMSAN: uninit-value in gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
+  pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
+  pskb_may_pull include/linux/skbuff.h:2756 [inline]
+  ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
+  gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
+  ip6_protocol_deliver_rcu+0x1d4c/0x2ca0 net/ipv6/ip6_input.c:438
+  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
+  dst_input include/net/dst.h:460 [inline]
+  ip6_rcv_finish+0x955/0x970 net/ipv6/ip6_input.c:79
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ipv6_rcv+0xde/0x390 net/ipv6/ip6_input.c:310
+  __netif_receive_skb_one_core net/core/dev.c:5538 [inline]
+  __netif_receive_skb+0x1da/0xa00 net/core/dev.c:5652
+  netif_receive_skb_internal net/core/dev.c:5738 [inline]
+  netif_receive_skb+0x58/0x660 net/core/dev.c:5798
+  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1549
+  tun_get_user+0x5566/0x69e0 drivers/net/tun.c:2002
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2108 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0xb63/0x1520 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:3804 [inline]
+  slab_alloc_node mm/slub.c:3845 [inline]
+  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
+  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
+  alloc_skb include/linux/skbuff.h:1318 [inline]
+  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
+  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
+  tun_alloc_skb drivers/net/tun.c:1525 [inline]
+  tun_get_user+0x209a/0x69e0 drivers/net/tun.c:1846
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2108 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0xb63/0x1520 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+CPU: 1 PID: 5045 Comm: syz-executor114 Not tainted 6.9.0-rc1-syzkaller-00021-g962490525cff #0
+
+Fixes: cb73ee40b1b3 ("net: ip_gre: use erspan key field for tunnel lookup")
+Reported-by: syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/000000000000772f2c0614b66ef7@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/20240328112248.1101491-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/ip_gre.c  |    5 +++++
+ net/ipv6/ip6_gre.c |    3 +++
+ 2 files changed, 8 insertions(+)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3143,11 +3143,12 @@ static int i40e_vc_del_mac_addr_msg(stru
- 		/* Allow to delete VF primary MAC only if it was not set
- 		 * administratively by PF or if VF is trusted.
- 		 */
--		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
--		    i40e_can_vf_change_mac(vf))
--			was_unimac_deleted = true;
--		else
--			continue;
-+		if (ether_addr_equal(addr, vf->default_lan_addr.addr)) {
-+			if (i40e_can_vf_change_mac(vf))
-+				was_unimac_deleted = true;
-+			else
-+				continue;
-+		}
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -280,8 +280,13 @@ static int erspan_rcv(struct sk_buff *sk
+ 					  tpi->flags | TUNNEL_NO_KEY,
+ 					  iph->saddr, iph->daddr, 0);
+ 	} else {
++		if (unlikely(!pskb_may_pull(skb,
++					    gre_hdr_len + sizeof(*ershdr))))
++			return PACKET_REJECT;
++
+ 		ershdr = (struct erspan_base_hdr *)(skb->data + gre_hdr_len);
+ 		ver = ershdr->ver;
++		iph = ip_hdr(skb);
+ 		tunnel = ip_tunnel_lookup(itn, skb->dev->ifindex,
+ 					  tpi->flags | TUNNEL_KEY,
+ 					  iph->saddr, iph->daddr, tpi->key);
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -528,6 +528,9 @@ static int ip6erspan_rcv(struct sk_buff
+ 	struct ip6_tnl *tunnel;
+ 	u8 ver;
  
- 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
- 			ret = -EINVAL;
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ershdr))))
++		return PACKET_REJECT;
++
+ 	ipv6h = ipv6_hdr(skb);
+ 	ershdr = (struct erspan_base_hdr *)skb->data;
+ 	ver = ershdr->ver;
 
 
