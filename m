@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AB12E62C;
-	Mon,  8 Apr 2024 13:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C482E62C;
+	Mon,  8 Apr 2024 13:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581803; cv=none; b=kM6C1Mrg4qqZk9yPAjX8sdRkRbc1MupbuVzzvUCahvL+vF4KwPwANGkKUeEUlnRaZBxXikIgQbL+zdM9pmdo7G1gu2EAY6CJLWkbjah4tqMHY2+o2bb6/1MYGuvczwDBcBMY3wMfszJe7bdUZSTjJ8fLwiW/OzJ31/E/0Mb7FVQ=
+	t=1712581806; cv=none; b=GoZxPv209q71QC4m64uWBnv4cpgCRh1fbbMVYpePKGddzm7+DL4BEr7OiEOjheoPsiNqMt6Rka3JGjbdsVTgP9Yg9uD1NroLilbq+wctv95SZrB2TGSHFopmmmqybljVhGtrtx1t5vlCKvdAFkl2sZWUURGnhobGUgoi7UwAOxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581803; c=relaxed/simple;
-	bh=astHKp+inOEyjDnfLJl/vMayBoDIT+KuXKJJvLZ9ffM=;
+	s=arc-20240116; t=1712581806; c=relaxed/simple;
+	bh=lDnAWy6E9UJz0CVsyyzMjSYsHFsIW5MUrXworUrgGzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZxgTITQ4SQIr3j1dlN1ggVrSLj4Dcvv8mCcWfKk8b5eU0HLfEKGWJ/mzUSi2GFyXEqzdm5Wkiexcyqouv5Suembp/tWljKWkthcTuWfd6tP7ffktaLlpZ7c2GlRfRv90p3IZYVlDgbY2QUZADYamYfjA8oBrQlDfGj6+y7m12Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz3tqR4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XozRAn5diBPicw+DOivKwQ/+/0vb66QZB8efp3EmazT8xubPUXhItjgT1Ivca1huLAn8gNr9jFOkwt6EZztxKKBnf81ZKwpVuFrY0g7+Sn3fLZdz/9EkAmeX2au8sP0urC9jTDCxw5PJXQg/HZoG8EZTjkSUUnZ1SiVGJ3XulCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKZwPiq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz3tqR4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E46C433C7;
-	Mon,  8 Apr 2024 13:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKZwPiq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A5FC43390;
+	Mon,  8 Apr 2024 13:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581803;
-	bh=astHKp+inOEyjDnfLJl/vMayBoDIT+KuXKJJvLZ9ffM=;
+	s=korg; t=1712581806;
+	bh=lDnAWy6E9UJz0CVsyyzMjSYsHFsIW5MUrXworUrgGzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vz3tqR4e5w2xqddVAwwh7F6Ig3KsBqRbjeR80sdcS56QGWAVp2wTY8l/Azl15n/O1
-	 3bSRTfyvATlOi+O6hTQLT+fYVn2Q4WblZ5a1wHh9E+k6v82k7nPU/+l0IRlACmgy7P
-	 U5vIdmYM6FAEKU3inH2LUOqp5I2kXSHkzjutJxqM=
+	b=RKZwPiq0nPSnQVhUIitFVYA+TsmnpHCGdcYZ/5wQGS7kjWrCu0TGL8XvhvvWxeGdJ
+	 zBs//lg7zrtagvW0UHvTwWB0bbWbsJ7sMtCbArjrh4xMFbsVMxOZgzUoe1NMEcg+v6
+	 Mgy+9YcLCDY5hEE/YvlW0BI7VDg7zxstCFPLFOQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 053/138] x86/bugs: Fix the SRSO mitigation on Zen3/4
-Date: Mon,  8 Apr 2024 14:57:47 +0200
-Message-ID: <20240408125257.875945330@linuxfoundation.org>
+	xingwei lee <xrivendell7@gmail.com>,
+	yue sun <samsun1006219@gmail.com>,
+	syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 041/252] inet: inet_defrag: prevent sk release while still in use
+Date: Mon,  8 Apr 2024 14:55:40 +0200
+Message-ID: <20240408125307.914426164@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +51,319 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Florian Westphal <fw@strlen.de>
 
-commit 4535e1a4174c4111d92c5a9a21e542d232e0fcaa upstream.
+[ Upstream commit 18685451fc4e546fc0e718580d32df3c0e5c8272 ]
 
-The original version of the mitigation would patch in the calls to the
-untraining routines directly.  That is, the alternative() in UNTRAIN_RET
-will patch in the CALL to srso_alias_untrain_ret() directly.
+ip_local_out() and other functions can pass skb->sk as function argument.
 
-However, even if commit e7c25c441e9e ("x86/cpu: Cleanup the untrain
-mess") meant well in trying to clean up the situation, due to micro-
-architectural reasons, the untraining routine srso_alias_untrain_ret()
-must be the target of a CALL instruction and not of a JMP instruction as
-it is done now.
+If the skb is a fragment and reassembly happens before such function call
+returns, the sk must not be released.
 
-Reshuffle the alternative macros to accomplish that.
+This affects skb fragments reassembled via netfilter or similar
+modules, e.g. openvswitch or ct_act.c, when run as part of tx pipeline.
 
-Fixes: e7c25c441e9e ("x86/cpu: Cleanup the untrain mess")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Eric Dumazet made an initial analysis of this bug.  Quoting Eric:
+  Calling ip_defrag() in output path is also implying skb_orphan(),
+  which is buggy because output path relies on sk not disappearing.
+
+  A relevant old patch about the issue was :
+  8282f27449bf ("inet: frag: Always orphan skbs inside ip_defrag()")
+
+  [..]
+
+  net/ipv4/ip_output.c depends on skb->sk being set, and probably to an
+  inet socket, not an arbitrary one.
+
+  If we orphan the packet in ipvlan, then downstream things like FQ
+  packet scheduler will not work properly.
+
+  We need to change ip_defrag() to only use skb_orphan() when really
+  needed, ie whenever frag_list is going to be used.
+
+Eric suggested to stash sk in fragment queue and made an initial patch.
+However there is a problem with this:
+
+If skb is refragmented again right after, ip_do_fragment() will copy
+head->sk to the new fragments, and sets up destructor to sock_wfree.
+IOW, we have no choice but to fix up sk_wmem accouting to reflect the
+fully reassembled skb, else wmem will underflow.
+
+This change moves the orphan down into the core, to last possible moment.
+As ip_defrag_offset is aliased with sk_buff->sk member, we must move the
+offset into the FRAG_CB, else skb->sk gets clobbered.
+
+This allows to delay the orphaning long enough to learn if the skb has
+to be queued or if the skb is completing the reasm queue.
+
+In the former case, things work as before, skb is orphaned.  This is
+safe because skb gets queued/stolen and won't continue past reasm engine.
+
+In the latter case, we will steal the skb->sk reference, reattach it to
+the head skb, and fix up wmem accouting when inet_frag inflates truesize.
+
+Fixes: 7026b1ddb6b8 ("netfilter: Pass socket pointer down through okfn().")
+Diagnosed-by: Eric Dumazet <edumazet@google.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Reported-by: syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240326101845.30836-1-fw@strlen.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/asm-prototypes.h |    1 +
- arch/x86/include/asm/nospec-branch.h  |   20 ++++++++++++++------
- arch/x86/lib/retpoline.S              |    4 +---
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ include/linux/skbuff.h                  |  7 +--
+ net/ipv4/inet_fragment.c                | 70 ++++++++++++++++++++-----
+ net/ipv4/ip_fragment.c                  |  2 +-
+ net/ipv6/netfilter/nf_conntrack_reasm.c |  2 +-
+ 4 files changed, 60 insertions(+), 21 deletions(-)
 
---- a/arch/x86/include/asm/asm-prototypes.h
-+++ b/arch/x86/include/asm/asm-prototypes.h
-@@ -12,6 +12,7 @@
- #include <asm/special_insns.h>
- #include <asm/preempt.h>
- #include <asm/asm.h>
-+#include <asm/nospec-branch.h>
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 2922059908cc5..9e61f6df6bc55 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -736,8 +736,6 @@ typedef unsigned char *sk_buff_data_t;
+  *	@list: queue head
+  *	@ll_node: anchor in an llist (eg socket defer_list)
+  *	@sk: Socket we are owned by
+- *	@ip_defrag_offset: (aka @sk) alternate use of @sk, used in
+- *		fragmentation management
+  *	@dev: Device we arrived on/are leaving by
+  *	@dev_scratch: (aka @dev) alternate use of @dev when @dev would be %NULL
+  *	@cb: Control buffer. Free for use by every layer. Put private vars here
+@@ -860,10 +858,7 @@ struct sk_buff {
+ 		struct llist_node	ll_node;
+ 	};
  
- #ifndef CONFIG_X86_CMPXCHG64
- extern void cmpxchg8b_emu(void);
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -167,11 +167,20 @@
- .Lskip_rsb_\@:
- .endm
+-	union {
+-		struct sock		*sk;
+-		int			ip_defrag_offset;
+-	};
++	struct sock		*sk;
  
-+/*
-+ * The CALL to srso_alias_untrain_ret() must be patched in directly at
-+ * the spot where untraining must be done, ie., srso_alias_untrain_ret()
-+ * must be the target of a CALL instruction instead of indirectly
-+ * jumping to a wrapper which then calls it. Therefore, this macro is
-+ * called outside of __UNTRAIN_RET below, for the time being, before the
-+ * kernel can support nested alternatives with arbitrary nesting.
-+ */
-+.macro CALL_UNTRAIN_RET
- #ifdef CONFIG_CPU_UNRET_ENTRY
--#define CALL_UNTRAIN_RET	"call entry_untrain_ret"
--#else
--#define CALL_UNTRAIN_RET	""
-+	ALTERNATIVE_2 "", "call entry_untrain_ret", X86_FEATURE_UNRET, \
-+		          "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
- #endif
-+.endm
+ 	union {
+ 		ktime_t		tstamp;
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 7072fc0783ef5..c88c9034d6300 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -24,6 +24,8 @@
+ #include <net/ip.h>
+ #include <net/ipv6.h>
  
- /*
-  * Mitigate RETBleed for AMD/Hygon Zen uarch. Requires KERNEL CR3 because the
-@@ -188,9 +197,8 @@
- #if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_IBPB_ENTRY) || \
- 	defined(CONFIG_CPU_SRSO)
- 	ANNOTATE_UNRET_END
--	ALTERNATIVE_2 "",						\
--		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
--		      "call entry_ibpb", X86_FEATURE_ENTRY_IBPB
-+	CALL_UNTRAIN_RET
-+	ALTERNATIVE "", "call entry_ibpb", X86_FEATURE_ENTRY_IBPB
- #endif
- .endm
++#include "../core/sock_destructor.h"
++
+ /* Use skb->cb to track consecutive/adjacent fragments coming at
+  * the end of the queue. Nodes in the rb-tree queue will
+  * contain "runs" of one or more adjacent fragments.
+@@ -39,6 +41,7 @@ struct ipfrag_skb_cb {
+ 	};
+ 	struct sk_buff		*next_frag;
+ 	int			frag_run_len;
++	int			ip_defrag_offset;
+ };
  
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -252,9 +252,7 @@ SYM_CODE_START(srso_return_thunk)
- SYM_CODE_END(srso_return_thunk)
+ #define FRAG_CB(skb)		((struct ipfrag_skb_cb *)((skb)->cb))
+@@ -396,12 +399,12 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	 */
+ 	if (!last)
+ 		fragrun_create(q, skb);  /* First fragment. */
+-	else if (last->ip_defrag_offset + last->len < end) {
++	else if (FRAG_CB(last)->ip_defrag_offset + last->len < end) {
+ 		/* This is the common case: skb goes to the end. */
+ 		/* Detect and discard overlaps. */
+-		if (offset < last->ip_defrag_offset + last->len)
++		if (offset < FRAG_CB(last)->ip_defrag_offset + last->len)
+ 			return IPFRAG_OVERLAP;
+-		if (offset == last->ip_defrag_offset + last->len)
++		if (offset == FRAG_CB(last)->ip_defrag_offset + last->len)
+ 			fragrun_append_to_last(q, skb);
+ 		else
+ 			fragrun_create(q, skb);
+@@ -418,13 +421,13 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
  
- SYM_FUNC_START(entry_untrain_ret)
--	ALTERNATIVE_2 "jmp retbleed_untrain_ret", \
--		      "jmp srso_untrain_ret", X86_FEATURE_SRSO, \
--		      "jmp srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
-+	ALTERNATIVE "jmp retbleed_untrain_ret", "jmp srso_untrain_ret", X86_FEATURE_SRSO
- SYM_FUNC_END(entry_untrain_ret)
- __EXPORT_THUNK(entry_untrain_ret)
+ 			parent = *rbn;
+ 			curr = rb_to_skb(parent);
+-			curr_run_end = curr->ip_defrag_offset +
++			curr_run_end = FRAG_CB(curr)->ip_defrag_offset +
+ 					FRAG_CB(curr)->frag_run_len;
+-			if (end <= curr->ip_defrag_offset)
++			if (end <= FRAG_CB(curr)->ip_defrag_offset)
+ 				rbn = &parent->rb_left;
+ 			else if (offset >= curr_run_end)
+ 				rbn = &parent->rb_right;
+-			else if (offset >= curr->ip_defrag_offset &&
++			else if (offset >= FRAG_CB(curr)->ip_defrag_offset &&
+ 				 end <= curr_run_end)
+ 				return IPFRAG_DUP;
+ 			else
+@@ -438,7 +441,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 		rb_insert_color(&skb->rbnode, &q->rb_fragments);
+ 	}
  
+-	skb->ip_defrag_offset = offset;
++	FRAG_CB(skb)->ip_defrag_offset = offset;
+ 
+ 	return IPFRAG_OK;
+ }
+@@ -448,13 +451,28 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			      struct sk_buff *parent)
+ {
+ 	struct sk_buff *fp, *head = skb_rb_first(&q->rb_fragments);
+-	struct sk_buff **nextp;
++	void (*destructor)(struct sk_buff *);
++	unsigned int orig_truesize = 0;
++	struct sk_buff **nextp = NULL;
++	struct sock *sk = skb->sk;
+ 	int delta;
+ 
++	if (sk && is_skb_wmem(skb)) {
++		/* TX: skb->sk might have been passed as argument to
++		 * dst->output and must remain valid until tx completes.
++		 *
++		 * Move sk to reassembled skb and fix up wmem accounting.
++		 */
++		orig_truesize = skb->truesize;
++		destructor = skb->destructor;
++	}
++
+ 	if (head != skb) {
+ 		fp = skb_clone(skb, GFP_ATOMIC);
+-		if (!fp)
+-			return NULL;
++		if (!fp) {
++			head = skb;
++			goto out_restore_sk;
++		}
+ 		FRAG_CB(fp)->next_frag = FRAG_CB(skb)->next_frag;
+ 		if (RB_EMPTY_NODE(&skb->rbnode))
+ 			FRAG_CB(parent)->next_frag = fp;
+@@ -463,6 +481,12 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 					&q->rb_fragments);
+ 		if (q->fragments_tail == skb)
+ 			q->fragments_tail = fp;
++
++		if (orig_truesize) {
++			/* prevent skb_morph from releasing sk */
++			skb->sk = NULL;
++			skb->destructor = NULL;
++		}
+ 		skb_morph(skb, head);
+ 		FRAG_CB(skb)->next_frag = FRAG_CB(head)->next_frag;
+ 		rb_replace_node(&head->rbnode, &skb->rbnode,
+@@ -470,13 +494,13 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 		consume_skb(head);
+ 		head = skb;
+ 	}
+-	WARN_ON(head->ip_defrag_offset != 0);
++	WARN_ON(FRAG_CB(head)->ip_defrag_offset != 0);
+ 
+ 	delta = -head->truesize;
+ 
+ 	/* Head of list must not be cloned. */
+ 	if (skb_unclone(head, GFP_ATOMIC))
+-		return NULL;
++		goto out_restore_sk;
+ 
+ 	delta += head->truesize;
+ 	if (delta)
+@@ -492,7 +516,7 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 
+ 		clone = alloc_skb(0, GFP_ATOMIC);
+ 		if (!clone)
+-			return NULL;
++			goto out_restore_sk;
+ 		skb_shinfo(clone)->frag_list = skb_shinfo(head)->frag_list;
+ 		skb_frag_list_init(head);
+ 		for (i = 0; i < skb_shinfo(head)->nr_frags; i++)
+@@ -509,6 +533,21 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 		nextp = &skb_shinfo(head)->frag_list;
+ 	}
+ 
++out_restore_sk:
++	if (orig_truesize) {
++		int ts_delta = head->truesize - orig_truesize;
++
++		/* if this reassembled skb is fragmented later,
++		 * fraglist skbs will get skb->sk assigned from head->sk,
++		 * and each frag skb will be released via sock_wfree.
++		 *
++		 * Update sk_wmem_alloc.
++		 */
++		head->sk = sk;
++		head->destructor = destructor;
++		refcount_add(ts_delta, &sk->sk_wmem_alloc);
++	}
++
+ 	return nextp;
+ }
+ EXPORT_SYMBOL(inet_frag_reasm_prepare);
+@@ -516,6 +555,8 @@ EXPORT_SYMBOL(inet_frag_reasm_prepare);
+ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 			    void *reasm_data, bool try_coalesce)
+ {
++	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
++	const unsigned int head_truesize = head->truesize;
+ 	struct sk_buff **nextp = reasm_data;
+ 	struct rb_node *rbn;
+ 	struct sk_buff *fp;
+@@ -579,6 +620,9 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 	head->prev = NULL;
+ 	head->tstamp = q->stamp;
+ 	head->mono_delivery_time = q->mono_delivery_time;
++
++	if (sk)
++		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
+ }
+ EXPORT_SYMBOL(inet_frag_reasm_finish);
+ 
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index a4941f53b5237..fb947d1613fe2 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -384,6 +384,7 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb)
+ 	}
+ 
+ 	skb_dst_drop(skb);
++	skb_orphan(skb);
+ 	return -EINPROGRESS;
+ 
+ insert_error:
+@@ -487,7 +488,6 @@ int ip_defrag(struct net *net, struct sk_buff *skb, u32 user)
+ 	struct ipq *qp;
+ 
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
+-	skb_orphan(skb);
+ 
+ 	/* Lookup (or create) queue header */
+ 	qp = ip_find(net, ip_hdr(skb), user, vif);
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index b2dd48911c8d6..efbec7ee27d0a 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -294,6 +294,7 @@ static int nf_ct_frag6_queue(struct frag_queue *fq, struct sk_buff *skb,
+ 	}
+ 
+ 	skb_dst_drop(skb);
++	skb_orphan(skb);
+ 	return -EINPROGRESS;
+ 
+ insert_error:
+@@ -469,7 +470,6 @@ int nf_ct_frag6_gather(struct net *net, struct sk_buff *skb, u32 user)
+ 	hdr = ipv6_hdr(skb);
+ 	fhdr = (struct frag_hdr *)skb_transport_header(skb);
+ 
+-	skb_orphan(skb);
+ 	fq = fq_find(net, fhdr->identification, user, hdr,
+ 		     skb->dev ? skb->dev->ifindex : 0);
+ 	if (fq == NULL) {
+-- 
+2.43.0
+
 
 
