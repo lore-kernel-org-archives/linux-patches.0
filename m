@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEE781745;
-	Mon,  8 Apr 2024 13:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B1E823A8;
+	Mon,  8 Apr 2024 13:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584078; cv=none; b=IbfFC0TkorVgX0Z7x1faEd6KNCXwLCTyMPTorxT82YUAaPkOiVQKa63wpljX84KPDHkjsBkZhIItYtWK6b+dEunlRkb2ZTlQQH0YJ2vev2jxIc2VD9UajkBl6xl/q5GFXuG4JEYfoqOSVcv2flHKp29ZtDLSerbxVCYHzv56Cag=
+	t=1712584081; cv=none; b=ivAzVdHuliFkEuUiwKJyI47Kps4CyDWmDfvkS7mmQfVhgn+Ap4fZnzxUxBRoMiIV23b6BZyk2EkMO3FsFGp6oFNdJ4eTAcIWK0SGEXZav1LGdevMX+lm0rFcqgh3gI1Q4kfLPGfURM652y38fw63EvrF/uN3uBKkyzFDV3RJKn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584078; c=relaxed/simple;
-	bh=2RmQqspAo7/FDVT/GKR1m93mdmS17KeZvP4NjtK9/9w=;
+	s=arc-20240116; t=1712584081; c=relaxed/simple;
+	bh=wMo6FpBTf9J+JmB7orybW2Ctq9t9J4YpN9nSS+CBIzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rge9esFkvxtHww3Qst4VZT36gw3/0XY06MItKHdfWnwzX5wazpI+rrmcDYstbaiv9e/HRlLVNIVq/6R37xIOuRE1MYGRrdJZtQM15Pk/1NXPymnBqvZ7PmKT/Nm/iqOx1HL3a3K81+kXWlXr+lT9S34tibXTI/ll390Ij+nEcDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVeGQ9tG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AVjWO+WCb8Wml8/qnVnoo17DqcqsJbD+o0GO06Bbqe0aeyg3rmTubVhygIzAAuSgMR8+721kM2Y6QfSypilGmdyWem/YEXq1gsGzq4aYyhpJHRb5SZ/wzGyu/WaWPTrv5psFLCWpCDe/Z5ka/WMaq1T8Pdxdeeg1DUR/JLPDzCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x26aO29Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVeGQ9tG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392A7C433F1;
-	Mon,  8 Apr 2024 13:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x26aO29Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1880BC43390;
+	Mon,  8 Apr 2024 13:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584077;
-	bh=2RmQqspAo7/FDVT/GKR1m93mdmS17KeZvP4NjtK9/9w=;
+	s=korg; t=1712584080;
+	bh=wMo6FpBTf9J+JmB7orybW2Ctq9t9J4YpN9nSS+CBIzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVeGQ9tGed/Kz9EnV5U54w+Lqmww2hyJ6gCMl3LIx2PXTeEWxrQHdpS7mJZ3TNsop
-	 HYeqwuDVKjECLXOpfQV90QMo9pXeBP1I/StsOGt7HlXGIHTN7DXJc5U/AT847cFW0s
-	 sa3mSImwDBTcv5yuJ7JY6c8qj2JKjVn2JOcRE4FA=
+	b=x26aO29Z+NxuvuocOM/e5uCQ3ZdgottHcXEJs0JgQeV4xmIJxh3ant/3WtUbCymoM
+	 pRGoUIwdMT0qRoNhPJBiA/dU9ioKVl30RRK2d2Y+ZuP3KokPK+SFlAtrvYvu3oWjYj
+	 85BqYFSDIyn+iMFe7iZXmqUiK/kj6dbOaiqqax0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 330/690] NFSD: Add documenting comment for nfsd4_release_lockowner()
-Date: Mon,  8 Apr 2024 14:53:16 +0200
-Message-ID: <20240408125411.563542079@linuxfoundation.org>
+	Uma Shankar <uma.shankar@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 258/273] drm/i915/mst: Limit MST+DSC to TGL+
+Date: Mon,  8 Apr 2024 14:58:53 +0200
+Message-ID: <20240408125317.481385068@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,77 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 043862b09cc00273e35e6c3a6389957953a34207 ]
+commit 51bc63392e96ca45d7be98bc43c180b174ffca09 upstream.
 
-And return explicit nfserr values that match what is documented in the
-new comment / API contract.
+The MST code currently assumes that glk+ already supports MST+DSC,
+which is incorrect. We need to check for TGL+ actually. ICL does
+support SST+DSC, but supposedly it can't do MST+FEC which will
+also rule out MST+DSC.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Note that a straight TGL+ check doesn't work here because DSC
+support can get fused out, so we do need to also check 'has_dsc'.
+
+Cc: stable@vger.kernel.org
+Fixes: d51f25eb479a ("drm/i915: Add DSC support to MST path")
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240402135148.23011-6-ville.syrjala@linux.intel.com
+(cherry picked from commit c9c92f286dbdf872390ef3e74dbe5f0641e46f55)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_device.h |    1 +
+ drivers/gpu/drm/i915/display/intel_dp_mst.c         |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 2d52656095340..08700b6acba31 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7542,6 +7542,23 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
- 	return status;
- }
- 
-+/**
-+ * nfsd4_release_lockowner - process NFSv4.0 RELEASE_LOCKOWNER operations
-+ * @rqstp: RPC transaction
-+ * @cstate: NFSv4 COMPOUND state
-+ * @u: RELEASE_LOCKOWNER arguments
-+ *
-+ * The lockowner's so_count is bumped when a lock record is added
-+ * or when copying a conflicting lock. The latter case is brief,
-+ * but can lead to fleeting false positives when looking for
-+ * locks-in-use.
-+ *
-+ * Return values:
-+ *   %nfs_ok: lockowner released or not found
-+ *   %nfserr_locks_held: lockowner still in use
-+ *   %nfserr_stale_clientid: clientid no longer active
-+ *   %nfserr_expired: clientid not recognized
-+ */
- __be32
- nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 			struct nfsd4_compound_state *cstate,
-@@ -7568,7 +7585,7 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
- 	if (!lo) {
- 		spin_unlock(&clp->cl_lock);
--		return status;
-+		return nfs_ok;
+--- a/drivers/gpu/drm/i915/display/intel_display_device.h
++++ b/drivers/gpu/drm/i915/display/intel_display_device.h
+@@ -47,6 +47,7 @@ struct drm_printer;
+ #define HAS_DPT(i915)			(DISPLAY_VER(i915) >= 13)
+ #define HAS_DSB(i915)			(DISPLAY_INFO(i915)->has_dsb)
+ #define HAS_DSC(__i915)			(DISPLAY_RUNTIME_INFO(__i915)->has_dsc)
++#define HAS_DSC_MST(__i915)		(DISPLAY_VER(__i915) >= 12 && HAS_DSC(__i915))
+ #define HAS_FBC(i915)			(DISPLAY_RUNTIME_INFO(i915)->fbc_mask != 0)
+ #define HAS_FPGA_DBG_UNCLAIMED(i915)	(DISPLAY_INFO(i915)->has_fpga_dbg)
+ #define HAS_FW_BLC(i915)		(DISPLAY_VER(i915) >= 3)
+--- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+@@ -1338,7 +1338,7 @@ intel_dp_mst_mode_valid_ctx(struct drm_c
+ 		return 0;
  	}
- 	if (atomic_read(&lo->lo_owner.so_count) != 2) {
- 		spin_unlock(&clp->cl_lock);
-@@ -7584,11 +7601,11 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 		put_ol_stateid_locked(stp, &reaplist);
- 	}
- 	spin_unlock(&clp->cl_lock);
-+
- 	free_ol_stateid_reaplist(&reaplist);
- 	remove_blocked_locks(lo);
- 	nfs4_put_stateowner(&lo->lo_owner);
--
--	return status;
-+	return nfs_ok;
- }
  
- static inline struct nfs4_client_reclaim *
--- 
-2.43.0
-
+-	if (DISPLAY_VER(dev_priv) >= 10 &&
++	if (HAS_DSC_MST(dev_priv) &&
+ 	    drm_dp_sink_supports_dsc(intel_connector->dp.dsc_dpcd)) {
+ 		/*
+ 		 * TBD pass the connector BPC,
 
 
