@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FB474438;
-	Mon,  8 Apr 2024 13:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD9F7BB15;
+	Mon,  8 Apr 2024 13:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583177; cv=none; b=mZnLaOM/J5hCEP4LBketHfz46TgjXfMMw6IwXy9oVJSwmFrqg8rh/I0x1roaqUnqYiaJm1MWRi9Re6FPKYJSCGsCJ+4+Qt84TkpEpjXe+BZiN+7tXBnUklgiXV+PmiR5RnFJIIdwdFEDb5OPg4aO2bjxIaWeVDM6rbxbCiB3V6U=
+	t=1712583181; cv=none; b=M7V0QvASMIFqKPeEf2ysw2uYx0TNVAyVKX4uXSuS3f5BIBbB9hc5Lm4ypV1lqDOd6LAQXS2dOnH9DqYYAKnpkkTG3V0sci6HN6oPX546IcmgYF+U1Fc2eUXFmPKTq3Wg9Mi8fCZEeYeI6yGvubn0TlwGBvBbvM3JKMVPe5MFwTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583177; c=relaxed/simple;
-	bh=OaTQ+O8E/I241LHW/zlgOWdSzAP1Y/YN27crO4zsWMo=;
+	s=arc-20240116; t=1712583181; c=relaxed/simple;
+	bh=hrJkgTH5YNjxYEx4hvz2V8HUCvhHPekUVHghyn/N8ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbpqWZTY7KUZ4/1d9gVdYyzkf7373Iccu9gOkOOF09+RDuhmFeCefvBvwEMg2WfxGyPwqnzjg5il1Zgei815jbyzNxquDZU83P/34I0RF/VGhDLxhL9VzIW5gjoxRAoxmcCtXbbos6FQCii2n7H5s4iI7eWG2sYy0KzCahSzw1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRcE5nU1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eWc7yrYHH3Wq3kMwo6S2DA8H41hKfQ/tZj2RAF37Y17+TKxSG1xeQl2IYIfoOVwmJuLJ8BkPAy8lpFLhRd5dIA1YMBbjD6MTjby2RAP8j20emqPOyoU8U/LrlbXUuaVPF1CJgFyXz9omKruEQEPz9DtwA/sRIYmNQYRbvufzu04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtMHgUxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRcE5nU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23068C433C7;
-	Mon,  8 Apr 2024 13:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtMHgUxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C080C433C7;
+	Mon,  8 Apr 2024 13:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583177;
-	bh=OaTQ+O8E/I241LHW/zlgOWdSzAP1Y/YN27crO4zsWMo=;
+	s=korg; t=1712583180;
+	bh=hrJkgTH5YNjxYEx4hvz2V8HUCvhHPekUVHghyn/N8ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRcE5nU1dzc7o+XiPdPdogs5yQAUGbWYcFeVgOYgc34nr/UIhZGKUT4Qzk96e+vtl
-	 4d58yAi9n6eGDwRTrgPs+vjdPXVPW4ni4ufwmqf6gXKz4yZC6FOhhqKu0lznPirdKh
-	 2roKHxlkxpNEIZFO9ipmYjwyKPbArjwjn7IHnJi0=
+	b=xtMHgUxXofVU3TjdqtTT00/1pY8NXsHpbZ01gOPXjYqk99Kaemw3KLSYejwQSJNRX
+	 CdbxMNc4gPZT/vp4gPCcCoPmpOmjsNrSwpgjcbUW8svPsUmAEhO2xAkAmya/PgYlU2
+	 i5V31PsfMaNVlJ43/QVRUDr3Tc9tXCALdnSrU/FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 219/690] fanotify: support secondary dir fh and name in fanotify_info
-Date: Mon,  8 Apr 2024 14:51:25 +0200
-Message-ID: <20240408125407.487514469@linuxfoundation.org>
+	Pu Lehui <pulehui@huawei.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 149/273] drivers/perf: riscv: Disable PERF_SAMPLE_BRANCH_* while not supported
+Date: Mon,  8 Apr 2024 14:57:04 +0200
+Message-ID: <20240408125313.911523129@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,249 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 3cf984e950c1c3f41d407ed31db33beb996be132 ]
+[ Upstream commit ea6873118493019474abbf57d5a800da365734df ]
 
-Allow storing a secondary dir fh and name tupple in fanotify_info.
-This will be used to store the new parent and name information in
-FAN_RENAME event.
+RISC-V perf driver does not yet support branch sampling. Although the
+specification is in the works [0], it is best to disable such events
+until support is available, otherwise we will get unexpected results.
+Due to this reason, two riscv bpf testcases get_branch_snapshot and
+perf_branches/perf_branches_hw fail.
 
-Link: https://lore.kernel.org/r/20211129201537.1932819-8-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://github.com/riscv/riscv-control-transfer-records [0]
+Fixes: f5bfa23f576f ("RISC-V: Add a perf core library for pmu drivers")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20240312012053.1178140-1-pulehui@huaweicloud.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c      | 20 ++++++--
- fs/notify/fanotify/fanotify.h      | 79 +++++++++++++++++++++++++++---
- fs/notify/fanotify/fanotify_user.c |  3 +-
- 3 files changed, 88 insertions(+), 14 deletions(-)
+ drivers/perf/riscv_pmu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 2b13c79cebc62..5f184b2d6ea7c 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -76,8 +76,10 @@ static bool fanotify_info_equal(struct fanotify_info *info1,
- 				struct fanotify_info *info2)
- {
- 	if (info1->dir_fh_totlen != info2->dir_fh_totlen ||
-+	    info1->dir2_fh_totlen != info2->dir2_fh_totlen ||
- 	    info1->file_fh_totlen != info2->file_fh_totlen ||
--	    info1->name_len != info2->name_len)
-+	    info1->name_len != info2->name_len ||
-+	    info1->name2_len != info2->name2_len)
- 		return false;
+diff --git a/drivers/perf/riscv_pmu.c b/drivers/perf/riscv_pmu.c
+index c78a6fd6c57f6..b4efdddb2ad91 100644
+--- a/drivers/perf/riscv_pmu.c
++++ b/drivers/perf/riscv_pmu.c
+@@ -313,6 +313,10 @@ static int riscv_pmu_event_init(struct perf_event *event)
+ 	u64 event_config = 0;
+ 	uint64_t cmask;
  
- 	if (info1->dir_fh_totlen &&
-@@ -85,14 +87,24 @@ static bool fanotify_info_equal(struct fanotify_info *info1,
- 			       fanotify_info_dir_fh(info2)))
- 		return false;
- 
-+	if (info1->dir2_fh_totlen &&
-+	    !fanotify_fh_equal(fanotify_info_dir2_fh(info1),
-+			       fanotify_info_dir2_fh(info2)))
-+		return false;
++	/* driver does not support branch stack sampling */
++	if (has_branch_stack(event))
++		return -EOPNOTSUPP;
 +
- 	if (info1->file_fh_totlen &&
- 	    !fanotify_fh_equal(fanotify_info_file_fh(info1),
- 			       fanotify_info_file_fh(info2)))
- 		return false;
- 
--	return !info1->name_len ||
--		!memcmp(fanotify_info_name(info1), fanotify_info_name(info2),
--			info1->name_len);
-+	if (info1->name_len &&
-+	    memcmp(fanotify_info_name(info1), fanotify_info_name(info2),
-+		   info1->name_len))
-+		return false;
-+
-+	return !info1->name2_len ||
-+		!memcmp(fanotify_info_name2(info1), fanotify_info_name2(info2),
-+			info1->name2_len);
- }
- 
- static bool fanotify_name_event_equal(struct fanotify_name_event *fne1,
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 7ac6f9f1e4148..8fa3bc0effd45 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -40,31 +40,45 @@ struct fanotify_fh {
- struct fanotify_info {
- 	/* size of dir_fh/file_fh including fanotify_fh hdr size */
- 	u8 dir_fh_totlen;
-+	u8 dir2_fh_totlen;
- 	u8 file_fh_totlen;
- 	u8 name_len;
--	u8 pad;
-+	u8 name2_len;
-+	u8 pad[3];
- 	unsigned char buf[];
- 	/*
- 	 * (struct fanotify_fh) dir_fh starts at buf[0]
--	 * (optional) file_fh starts at buf[dir_fh_totlen]
--	 * name starts at buf[dir_fh_totlen + file_fh_totlen]
-+	 * (optional) dir2_fh starts at buf[dir_fh_totlen]
-+	 * (optional) file_fh starts at buf[dir_fh_totlen + dir2_fh_totlen]
-+	 * name starts at buf[dir_fh_totlen + dir2_fh_totlen + file_fh_totlen]
-+	 * ...
- 	 */
- #define FANOTIFY_DIR_FH_SIZE(info)	((info)->dir_fh_totlen)
-+#define FANOTIFY_DIR2_FH_SIZE(info)	((info)->dir2_fh_totlen)
- #define FANOTIFY_FILE_FH_SIZE(info)	((info)->file_fh_totlen)
- #define FANOTIFY_NAME_SIZE(info)	((info)->name_len + 1)
-+#define FANOTIFY_NAME2_SIZE(info)	((info)->name2_len + 1)
- 
- #define FANOTIFY_DIR_FH_OFFSET(info)	0
--#define FANOTIFY_FILE_FH_OFFSET(info) \
-+#define FANOTIFY_DIR2_FH_OFFSET(info) \
- 	(FANOTIFY_DIR_FH_OFFSET(info) + FANOTIFY_DIR_FH_SIZE(info))
-+#define FANOTIFY_FILE_FH_OFFSET(info) \
-+	(FANOTIFY_DIR2_FH_OFFSET(info) + FANOTIFY_DIR2_FH_SIZE(info))
- #define FANOTIFY_NAME_OFFSET(info) \
- 	(FANOTIFY_FILE_FH_OFFSET(info) + FANOTIFY_FILE_FH_SIZE(info))
-+#define FANOTIFY_NAME2_OFFSET(info) \
-+	(FANOTIFY_NAME_OFFSET(info) + FANOTIFY_NAME_SIZE(info))
- 
- #define FANOTIFY_DIR_FH_BUF(info) \
- 	((info)->buf + FANOTIFY_DIR_FH_OFFSET(info))
-+#define FANOTIFY_DIR2_FH_BUF(info) \
-+	((info)->buf + FANOTIFY_DIR2_FH_OFFSET(info))
- #define FANOTIFY_FILE_FH_BUF(info) \
- 	((info)->buf + FANOTIFY_FILE_FH_OFFSET(info))
- #define FANOTIFY_NAME_BUF(info) \
- 	((info)->buf + FANOTIFY_NAME_OFFSET(info))
-+#define FANOTIFY_NAME2_BUF(info) \
-+	((info)->buf + FANOTIFY_NAME2_OFFSET(info))
- } __aligned(4);
- 
- static inline bool fanotify_fh_has_ext_buf(struct fanotify_fh *fh)
-@@ -106,6 +120,20 @@ static inline struct fanotify_fh *fanotify_info_dir_fh(struct fanotify_info *inf
- 	return (struct fanotify_fh *)FANOTIFY_DIR_FH_BUF(info);
- }
- 
-+static inline int fanotify_info_dir2_fh_len(struct fanotify_info *info)
-+{
-+	if (!info->dir2_fh_totlen ||
-+	    WARN_ON_ONCE(info->dir2_fh_totlen < FANOTIFY_FH_HDR_LEN))
-+		return 0;
-+
-+	return info->dir2_fh_totlen - FANOTIFY_FH_HDR_LEN;
-+}
-+
-+static inline struct fanotify_fh *fanotify_info_dir2_fh(struct fanotify_info *info)
-+{
-+	return (struct fanotify_fh *)FANOTIFY_DIR2_FH_BUF(info);
-+}
-+
- static inline int fanotify_info_file_fh_len(struct fanotify_info *info)
- {
- 	if (!info->file_fh_totlen ||
-@@ -128,31 +156,55 @@ static inline char *fanotify_info_name(struct fanotify_info *info)
- 	return FANOTIFY_NAME_BUF(info);
- }
- 
-+static inline char *fanotify_info_name2(struct fanotify_info *info)
-+{
-+	if (!info->name2_len)
-+		return NULL;
-+
-+	return FANOTIFY_NAME2_BUF(info);
-+}
-+
- static inline void fanotify_info_init(struct fanotify_info *info)
- {
- 	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
- 	BUILD_BUG_ON(NAME_MAX > U8_MAX);
- 
- 	info->dir_fh_totlen = 0;
-+	info->dir2_fh_totlen = 0;
- 	info->file_fh_totlen = 0;
- 	info->name_len = 0;
-+	info->name2_len = 0;
- }
- 
- /* These set/copy helpers MUST be called by order */
- static inline void fanotify_info_set_dir_fh(struct fanotify_info *info,
- 					    unsigned int totlen)
- {
--	if (WARN_ON_ONCE(info->file_fh_totlen > 0) ||
--	    WARN_ON_ONCE(info->name_len > 0))
-+	if (WARN_ON_ONCE(info->dir2_fh_totlen > 0) ||
-+	    WARN_ON_ONCE(info->file_fh_totlen > 0) ||
-+	    WARN_ON_ONCE(info->name_len > 0) ||
-+	    WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->dir_fh_totlen = totlen;
- }
- 
-+static inline void fanotify_info_set_dir2_fh(struct fanotify_info *info,
-+					     unsigned int totlen)
-+{
-+	if (WARN_ON_ONCE(info->file_fh_totlen > 0) ||
-+	    WARN_ON_ONCE(info->name_len > 0) ||
-+	    WARN_ON_ONCE(info->name2_len > 0))
-+		return;
-+
-+	info->dir2_fh_totlen = totlen;
-+}
-+
- static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
- 					     unsigned int totlen)
- {
--	if (WARN_ON_ONCE(info->name_len > 0))
-+	if (WARN_ON_ONCE(info->name_len > 0) ||
-+	    WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->file_fh_totlen = totlen;
-@@ -161,13 +213,24 @@ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
- static inline void fanotify_info_copy_name(struct fanotify_info *info,
- 					   const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX))
-+	if (WARN_ON_ONCE(name->len > NAME_MAX) ||
-+	    WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->name_len = name->len;
- 	strcpy(fanotify_info_name(info), name->name);
- }
- 
-+static inline void fanotify_info_copy_name2(struct fanotify_info *info,
-+					    const struct qstr *name)
-+{
-+	if (WARN_ON_ONCE(name->len > NAME_MAX))
-+		return;
-+
-+	info->name2_len = name->len;
-+	strcpy(fanotify_info_name2(info), name->name);
-+}
-+
- /*
-  * Common structure for fanotify events. Concrete structs are allocated in
-  * fanotify_handle_event() and freed when the information is retrieved by
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index bfafda0447ea7..526e3b5a98f34 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -332,11 +332,10 @@ static int process_access_response(struct fsnotify_group *group,
- static size_t copy_error_info_to_user(struct fanotify_event *event,
- 				      char __user *buf, int count)
- {
--	struct fanotify_event_info_error info;
-+	struct fanotify_event_info_error info = { };
- 	struct fanotify_error_event *fee = FANOTIFY_EE(event);
- 
- 	info.hdr.info_type = FAN_EVENT_INFO_TYPE_ERROR;
--	info.hdr.pad = 0;
- 	info.hdr.len = FANOTIFY_ERROR_INFO_LEN;
- 
- 	if (WARN_ON(count < info.hdr.len))
+ 	hwc->flags = 0;
+ 	mapped_event = rvpmu->event_map(event, &event_config);
+ 	if (mapped_event < 0) {
 -- 
 2.43.0
 
