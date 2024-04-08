@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F02E62C;
-	Mon,  8 Apr 2024 13:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D0C2E62C;
+	Mon,  8 Apr 2024 13:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581524; cv=none; b=m4KV5hab8oqcJLVZQoqMcqhPrtaaZGWPPVc/law4qUilMQ49Zg9x5NOqK+LCm8LpfcJV4l2CT6LmyXYsS1VaADWgtw0rJiyswqOrYFZ/pjVSHvnqOMpGWkEYirdkNTjZES2MISeyKofyzKXXGrlFvqfe+kCrHQt6sPMgx9V2ioQ=
+	t=1712581527; cv=none; b=C1/jYLIxwUW0Ubf09q7vM8hSUTmdtjcZa2S6ljUW4Rmpay08PtN7kqDyxz5gkPV2JkIkMWYrut/IjQZyt4lX1uFnrrCbyT/J5c2FkeENA8Iy3z62sk7oVmRALfjUVms29agVmbrl1zTTCaNm2LnLWWcXOFGLbo1Rpcit9Lqbk8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581524; c=relaxed/simple;
-	bh=mwCexVm62qyAFVZLrUNHFcaRMkcfdKZpppuvxXX6a7Y=;
+	s=arc-20240116; t=1712581527; c=relaxed/simple;
+	bh=OqtFJB7z8G3BfQrbmVuM7QDgZee8QG0XRnhHw89Qd6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3DQwY7pKsT2HsEnQ+3FneNvAR5+ZdGV+0NGLhAAQ6MmyIqa6DE2LlA0+7cEuVS3MpGgl3KcXSA73D+XQukjQuGKEYpq8aKEFC4gbXshLSMlzoVU8M9tpHPFSnRZt+TR2FSpxHqaP2IPMFd87LikXRFKSKNsICFmL4zousp/n0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQe9vf48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OpLSsKReuMEwHE/k7imjFwP/XHBCTOZ+z6J6B0qRxcOD3TaGVhmuT74tEtesc0GMvg50pdIZm6NSSEJlOrRkPV925t74gKazU5387KXcnfenpMnCS5TOQeAzgRYQjT+urEd7bzzah0D+lKtzKysnjTyW4NYhIJvIPAAJN6TiDyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgWlQoc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQe9vf48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103DAC43390;
-	Mon,  8 Apr 2024 13:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgWlQoc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED651C433C7;
+	Mon,  8 Apr 2024 13:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581524;
-	bh=mwCexVm62qyAFVZLrUNHFcaRMkcfdKZpppuvxXX6a7Y=;
+	s=korg; t=1712581527;
+	bh=OqtFJB7z8G3BfQrbmVuM7QDgZee8QG0XRnhHw89Qd6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQe9vf48N7vwF42ui/NM87Atva92k/MA7cOYQLG5wTS511RVGni3rFoZdrx7U6Rzn
-	 nn+NX33kvXhcnKRwJEOxhK0lzZASj2E9ncQBNw1l6Bv14eAg4A5LY8ILx0UqCLDYF+
-	 SJ5ZE+/JpUGQoYU0xxrWNj83Jk/LyoLtExSA76pk=
+	b=IgWlQoc0QOkrwDjArHIHPry4GBC+jtLqQ2IF/v0bOWMOsXWB+G3neZZgdA+X5hMOC
+	 cGb1UUwiiUm+zR270wOWYPlZ8CaHg1gEkoBVn24gNjQHieC2BVhHrVx95nTsDKPwSM
+	 eJSZZl/0U65b7v2BCyzV5jgAjsj+ojdzW6jAx6WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 030/138] arm64: dts: qcom: sc7180-trogdor: mark bluetooth address as broken
-Date: Mon,  8 Apr 2024 14:57:24 +0200
-Message-ID: <20240408125257.163931303@linuxfoundation.org>
+	Pavel Sakharov <p.sakharov@ispras.ru>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 006/252] dma-buf: Fix NULL pointer dereference in sanitycheck()
+Date: Mon,  8 Apr 2024 14:55:05 +0200
+Message-ID: <20240408125306.844364559@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Pavel Sakharov <p.sakharov@ispras.ru>
 
-commit e12e28009e584c8f8363439f6a928ec86278a106 upstream.
+[ Upstream commit 2295bd846765c766701e666ed2e4b35396be25e6 ]
 
-Several Qualcomm Bluetooth controllers lack persistent storage for the
-device address and instead one can be provided by the boot firmware
-using the 'local-bd-address' devicetree property.
+If due to a memory allocation failure mock_chain() returns NULL, it is
+passed to dma_fence_enable_sw_signaling() resulting in NULL pointer
+dereference there.
 
-The Bluetooth bindings clearly states that the address should be
-specified in little-endian order, but due to a long-standing bug in the
-Qualcomm driver which reversed the address some boot firmware has been
-providing the address in big-endian order instead.
+Call dma_fence_enable_sw_signaling() only if mock_chain() succeeds.
 
-The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
-so mark the 'local-bd-address' property as broken to maintain backwards
-compatibility with older firmware when fixing the underlying driver bug.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Note that ChromeOS always updates the kernel and devicetree in lockstep
-so that there is no need to handle backwards compatibility with older
-devicetrees.
-
-Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
-Cc: stable@vger.kernel.org      # 5.10
-Cc: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d62c43a953ce ("dma-buf: Enable signaling on fence for selftests")
+Signed-off-by: Pavel Sakharov <p.sakharov@ispras.ru>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240319231527.1821372-1-p.sakharov@ispras.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma-buf/st-dma-fence-chain.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -923,6 +923,8 @@ ap_spi_fp: &spi10 {
- 		vddrf-supply = <&pp1300_l2c>;
- 		vddch0-supply = <&pp3300_l10c>;
- 		max-speed = <3200000>;
-+
-+		qcom,local-bd-address-broken;
- 	};
- };
+diff --git a/drivers/dma-buf/st-dma-fence-chain.c b/drivers/dma-buf/st-dma-fence-chain.c
+index c0979c8049b5a..661de4add4c72 100644
+--- a/drivers/dma-buf/st-dma-fence-chain.c
++++ b/drivers/dma-buf/st-dma-fence-chain.c
+@@ -84,11 +84,11 @@ static int sanitycheck(void *arg)
+ 		return -ENOMEM;
  
+ 	chain = mock_chain(NULL, f, 1);
+-	if (!chain)
++	if (chain)
++		dma_fence_enable_sw_signaling(chain);
++	else
+ 		err = -ENOMEM;
+ 
+-	dma_fence_enable_sw_signaling(chain);
+-
+ 	dma_fence_signal(f);
+ 	dma_fence_put(f);
+ 
+-- 
+2.43.0
+
 
 
