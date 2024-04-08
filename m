@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE27174438;
-	Mon,  8 Apr 2024 14:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC08D8063B;
+	Mon,  8 Apr 2024 14:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585194; cv=none; b=NBsuoBEJZtfe0wUW3S6ZUILDe/x5wES31eObfVTxHidSAtGeO+8uzlcxij1tyx0RBE5+7kiBMisrhK1wCTxPXIEwZNDBSBnWRuCTm1zlMafJDtAPdsAE/X2T3yMVgnSkvoFA2SlvStXG/CrYa/fnT39cyuvSVV/om2WKRXqdRvU=
+	t=1712585197; cv=none; b=J3KyA+o5CGWc1sR9cD9/3JbvhcH5+cM3BT4pBAUxFhD1b5PWo1EZ5VHNCLOmOIM1EMF9CYKbafQy9ygrLVuF07m3yw+RDcdCWq9gtOw5eRCAEq0CU1c2daQEutkZlFomOC0PlaVqv4mVwxbfhtb/jWOZxcE6u5AWWuSthzoQBDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585194; c=relaxed/simple;
-	bh=VEIAMhNBpalqtDMdOHjxBzJxSG/xZmxTtcO+n2tNLjc=;
+	s=arc-20240116; t=1712585197; c=relaxed/simple;
+	bh=ehOo5fyseOkjfBrngTTAHZyPAb2YHtYVhoPgMrpPL3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/CDwX/TVpzw5QU1ih5DbciL3blngoyvq1Vv6O+UwBXGU0dU5Q1I7wwAsWLcL4NLwQZGVVn61r4yZ8n9DQFI7G/UWSi3EfMrmBb5juW+kTkpQRu41GnMw/MjPuOaBHIH3zcQ6OlhHjC3b5IiqCD30qt3jqRzTEAm9LanF44Ch6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0WEXdvs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TY7g+qX9cN1w4JiLFjb9iqr9Bcp99ry5HuiVsrbEbjTuydmGfaigA+pmZKhQuo10w+XHoyqxPBO62+ZQtBS+XnwheAhsmPzCoqLMNlEMLMwJJny4u5FG9VyYbptlHc7cE4AiH7KyKG68ecDokUT7nl61HD9Qogl3dRTbXvLm0j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEoQirCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0WEXdvs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48242C433C7;
-	Mon,  8 Apr 2024 14:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEoQirCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33171C433C7;
+	Mon,  8 Apr 2024 14:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585194;
-	bh=VEIAMhNBpalqtDMdOHjxBzJxSG/xZmxTtcO+n2tNLjc=;
+	s=korg; t=1712585197;
+	bh=ehOo5fyseOkjfBrngTTAHZyPAb2YHtYVhoPgMrpPL3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0WEXdvsbVL4bcXv+mdz8iO/B/KioAMvcIirwU1UYhjreY8lUntWgyum43k4k1h2q
-	 qtoofHxWZaCUIrLbMXpzahILRh0pegutYBIlyo9e2Z0nR3+friuVUUzS5BLrNV3gU0
-	 /rKyz5FQtFv8RCCPsHwYICzfJ93sR1N8MqVtgh+Q=
+	b=GEoQirCViY5kpvWIG4BqKNCItBAycMX7YbuVJ5koemrfdgn9HBeEn9jUQtsZ4kK41
+	 fTOZiXD2w0toIuo6L1K41etKT+9rUtYncn1pfdAEtk30jUUFzRzJO+wJ6HXTRnWR9l
+	 g0RM0c4R2lEOvAXDvzz7jJaw2L2h+rMdc9JQwR2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 685/690] x86/bugs: Fix the SRSO mitigation on Zen3/4
-Date: Mon,  8 Apr 2024 14:59:11 +0200
-Message-ID: <20240408125424.543414117@linuxfoundation.org>
+Subject: [PATCH 5.15 686/690] x86/retpoline: Do the necessary fixup to the Zen3/4 srso return thunk for !SRSO
+Date: Mon,  8 Apr 2024 14:59:12 +0200
+Message-ID: <20240408125424.583300187@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -54,92 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-Commit 4535e1a4174c4111d92c5a9a21e542d232e0fcaa upstream.
+Commit 0e110732473e14d6520e49d75d2c88ef7d46fe67 upstream.
 
-The original version of the mitigation would patch in the calls to the
-untraining routines directly.  That is, the alternative() in UNTRAIN_RET
-will patch in the CALL to srso_alias_untrain_ret() directly.
+The srso_alias_untrain_ret() dummy thunk in the !CONFIG_MITIGATION_SRSO
+case is there only for the altenative in CALL_UNTRAIN_RET to have
+a symbol to resolve.
 
-However, even if commit e7c25c441e9e ("x86/cpu: Cleanup the untrain
-mess") meant well in trying to clean up the situation, due to micro-
-architectural reasons, the untraining routine srso_alias_untrain_ret()
-must be the target of a CALL instruction and not of a JMP instruction as
-it is done now.
+However, testing with kernels which don't have CONFIG_MITIGATION_SRSO
+enabled, leads to the warning in patch_return() to fire:
 
-Reshuffle the alternative macros to accomplish that.
+  missing return thunk: srso_alias_untrain_ret+0x0/0x10-0x0: eb 0e 66 66 2e
+  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:826 apply_returns (arch/x86/kernel/alternative.c:826
 
-Fixes: e7c25c441e9e ("x86/cpu: Cleanup the untrain mess")
+Put in a plain "ret" there so that gcc doesn't put a return thunk in
+in its place which special and gets checked.
+
+In addition:
+
+  ERROR: modpost: "srso_alias_untrain_ret" [arch/x86/kvm/kvm-amd.ko] undefined!
+  make[2]: *** [scripts/Makefile.modpost:145: Module.symvers] Chyba 1
+  make[1]: *** [/usr/src/linux-6.8.3/Makefile:1873: modpost] Chyba 2
+  make: *** [Makefile:240: __sub-make] Chyba 2
+
+since !SRSO builds would use the dummy return thunk as reported by
+petr.pisar@atlas.cz, https://bugzilla.kernel.org/show_bug.cgi?id=218679.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202404020901.da75a60f-oliver.sang@intel.com
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
+Link: https://lore.kernel.org/all/202404020901.da75a60f-oliver.sang@intel.com/
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/asm-prototypes.h |    1 +
- arch/x86/include/asm/nospec-branch.h  |   20 ++++++++++++++------
- arch/x86/lib/retpoline.S              |    4 +---
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ arch/x86/lib/retpoline.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/include/asm/asm-prototypes.h
-+++ b/arch/x86/include/asm/asm-prototypes.h
-@@ -12,6 +12,7 @@
- #include <asm/special_insns.h>
- #include <asm/preempt.h>
- #include <asm/asm.h>
-+#include <asm/nospec-branch.h>
- 
- #ifndef CONFIG_X86_CMPXCHG64
- extern void cmpxchg8b_emu(void);
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -155,11 +155,20 @@
- .Lskip_rsb_\@:
- .endm
- 
-+/*
-+ * The CALL to srso_alias_untrain_ret() must be patched in directly at
-+ * the spot where untraining must be done, ie., srso_alias_untrain_ret()
-+ * must be the target of a CALL instruction instead of indirectly
-+ * jumping to a wrapper which then calls it. Therefore, this macro is
-+ * called outside of __UNTRAIN_RET below, for the time being, before the
-+ * kernel can support nested alternatives with arbitrary nesting.
-+ */
-+.macro CALL_UNTRAIN_RET
- #ifdef CONFIG_CPU_UNRET_ENTRY
--#define CALL_UNTRAIN_RET	"call entry_untrain_ret"
--#else
--#define CALL_UNTRAIN_RET	""
-+	ALTERNATIVE_2 "", "call entry_untrain_ret", X86_FEATURE_UNRET, \
-+		          "call srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
- #endif
-+.endm
- 
- /*
-  * Mitigate RETBleed for AMD/Hygon Zen uarch. Requires KERNEL CR3 because the
-@@ -176,9 +185,8 @@
- #if defined(CONFIG_CPU_UNRET_ENTRY) || defined(CONFIG_CPU_IBPB_ENTRY) || \
- 	defined(CONFIG_CPU_SRSO)
- 	ANNOTATE_UNRET_END
--	ALTERNATIVE_2 "",						\
--		      CALL_UNTRAIN_RET, X86_FEATURE_UNRET,		\
--		      "call entry_ibpb", X86_FEATURE_ENTRY_IBPB
-+	CALL_UNTRAIN_RET
-+	ALTERNATIVE "", "call entry_ibpb", X86_FEATURE_ENTRY_IBPB
- #endif
- .endm
- 
 --- a/arch/x86/lib/retpoline.S
 +++ b/arch/x86/lib/retpoline.S
-@@ -249,9 +249,7 @@ SYM_CODE_START(srso_return_thunk)
- SYM_CODE_END(srso_return_thunk)
+@@ -108,6 +108,7 @@ SYM_START(srso_alias_untrain_ret, SYM_L_
+ 	ret
+ 	int3
+ SYM_FUNC_END(srso_alias_untrain_ret)
++__EXPORT_THUNK(srso_alias_untrain_ret)
+ #endif
  
- SYM_FUNC_START(entry_untrain_ret)
--	ALTERNATIVE_2 "jmp retbleed_untrain_ret", \
--		      "jmp srso_untrain_ret", X86_FEATURE_SRSO, \
--		      "jmp srso_alias_untrain_ret", X86_FEATURE_SRSO_ALIAS
-+	ALTERNATIVE "jmp retbleed_untrain_ret", "jmp srso_untrain_ret", X86_FEATURE_SRSO
- SYM_FUNC_END(entry_untrain_ret)
- __EXPORT_THUNK(entry_untrain_ret)
- 
+ SYM_START(srso_alias_safe_ret, SYM_L_GLOBAL, SYM_A_NONE)
 
 
