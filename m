@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A820412838E;
-	Mon,  8 Apr 2024 13:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F02512838E;
+	Mon,  8 Apr 2024 13:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583398; cv=none; b=gaPrKLlArM5YqKzLd7YSnm55ITAHo9y2PtFRtKuK+A1YpKc//UEYe76fw4s6ME1A+4mNhJe+/NyYWapaCpoEFWWLlD3+vYQ0dZC7F8RGXJFWxpH8hsO74jx0XEqLbHbxKC2krDPb1a0Dk50bK6B3gQ/9knOUfKlsA+eaT5V2mbQ=
+	t=1712583401; cv=none; b=DVMayu08nYLbKIcrR2QsXHc7msVGP7QJTXgUYH1Ox0kvwByZWPMElf95vkdFFTNKNVSPwu+ZBygs0usCw6/Y3/wMHN6Tbp0BTY9q2AJF+lVi6Cm/rQSQ7QG0lx+yeiPr+yhAwogCVnVP3lEcjmxy+MreHQnDyGVkqEZ80C4ynqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583398; c=relaxed/simple;
-	bh=nb2ZaVCi6WYDflp51O3oDXyihGR90ZdsVRVhxeLOakg=;
+	s=arc-20240116; t=1712583401; c=relaxed/simple;
+	bh=64zU8QVoUJESKRbPvAA++R1pkGaAP3Q2sxfbADK1NjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDEKik7+Fr9kff6VZ92sbtWRfvc2ptGycSLhnLyrEOSRel2pRQ3WvdoGgru881rmZnM21PXE/ixM98Yi6xm5qFMsnnaR4lLLdh0LEnlEytwuDZ59T9cJqZm+52G2LmodgJPc/CFaEy0Q4QoSGih0dOaT86NFUZUMJ1PW1+IHSXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faj+VRpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOVTv0uHwSt5VpyEB6BgmxEHeLz8euGPgMLl1u2Aiy0nWmtb/EnyGQuPBIJlcbwEc7wxm77LQRnGYE8EuDW3qAqAEXGhxHjRn4t+jNS2ssMGuXdWBQOyDlw72gqD23g+VCcpKsFkkYMKCQdK2qCK5apM4fqWa8BFuN0myBRNSBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGEqzJDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faj+VRpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A5AC433F1;
-	Mon,  8 Apr 2024 13:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGEqzJDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16489C433F1;
+	Mon,  8 Apr 2024 13:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583398;
-	bh=nb2ZaVCi6WYDflp51O3oDXyihGR90ZdsVRVhxeLOakg=;
+	s=korg; t=1712583401;
+	bh=64zU8QVoUJESKRbPvAA++R1pkGaAP3Q2sxfbADK1NjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faj+VRpV5k9U4oozCtnG1plIdE+MPtgEOnVOgaw06K21VvWY0+f5W5lWT06RO0OY7
-	 mt7Fz9oxrj5Hg9uB7Y0yRx/ck7Sail1bID5bF657sMDLvFG00LTTdE7/izcMc9vPLz
-	 jxKT7ADJysB3Znq5qIZQXC3+yFbpnP2tL4UhWdGU=
+	b=oGEqzJDZ3ww2Xn5plIUZBTlB2Ffo3RE787AKcCYCO/YbfEpqpksyEXeIbU0dhgKJG
+	 T7nfHQw2QCidYXlG8vqy9AuL32mDmnvWSGufaQ9vWa9psY5T1Db2wXvD/tXMK2KsEq
+	 ZKa4GU1GS9Kb1CTaJje/QNAkNGg3MHLuGcVtRcpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 175/273] scsi: mylex: Fix sysfs buffer lengths
-Date: Mon,  8 Apr 2024 14:57:30 +0200
-Message-ID: <20240408125314.701927649@linuxfoundation.org>
+Subject: [PATCH 6.6 192/252] s390/pai: cleanup event initialization
+Date: Mon,  8 Apr 2024 14:58:11 +0200
+Message-ID: <20240408125312.616073754@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,191 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 1197c5b2099f716b3de327437fb50900a0b936c9 ]
+[ Upstream commit 4711b7b8f99583f6105a33e91f106125134beacb ]
 
-The myrb and myrs drivers use an odd way of implementing their sysfs files,
-calling snprintf() with a fixed length of 32 bytes to print into a page
-sized buffer. One of the strings is actually longer than 32 bytes, which
-clang can warn about:
+Setting event::hw.last_tag to zero is not necessary. The memory
+for each event is dynamically allocated by the kernel common code and
+initialized to zero already.  Remove this unnecessary assignment.
+Move the comment to function paicrypt_start() for clarification.
 
-drivers/scsi/myrb.c:1906:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
-drivers/scsi/myrs.c:1089:10: error: 'snprintf' will always be truncated; specified size is 32, but format string expands to at least 34 [-Werror,-Wformat-truncation]
-
-These could all be plain sprintf() without a length as the buffer is always
-long enough. On the other hand, sysfs files should not be overly long
-either, so just double the length to make sure the longest strings don't
-get truncated here.
-
-Fixes: 77266186397c ("scsi: myrs: Add Mylex RAID controller (SCSI interface)")
-Fixes: 081ff398c56c ("scsi: myrb: Add Mylex RAID controller (block interface)")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240326223825.4084412-8-arnd@kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Suggested-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Stable-dep-of: e9f3af02f639 ("s390/pai: fix sampling event removal for PMU device driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/myrb.c | 20 ++++++++++----------
- drivers/scsi/myrs.c | 24 ++++++++++++------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ arch/s390/kernel/perf_pai_crypto.c | 11 +++++------
+ arch/s390/kernel/perf_pai_ext.c    |  1 -
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/myrb.c b/drivers/scsi/myrb.c
-index ca2e932dd9b70..f684eb5e04898 100644
---- a/drivers/scsi/myrb.c
-+++ b/drivers/scsi/myrb.c
-@@ -1775,9 +1775,9 @@ static ssize_t raid_state_show(struct device *dev,
+diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
+index 1ac74333a78dc..270255acacb02 100644
+--- a/arch/s390/kernel/perf_pai_crypto.c
++++ b/arch/s390/kernel/perf_pai_crypto.c
+@@ -210,12 +210,6 @@ static int paicrypt_event_init(struct perf_event *event)
+ 	if (rc)
+ 		return rc;
  
- 		name = myrb_devstate_name(ldev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->state);
- 	} else {
- 		struct myrb_pdev_state *pdev_info = sdev->hostdata;
-@@ -1796,9 +1796,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		else
- 			name = myrb_devstate_name(pdev_info->state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->state);
- 	}
- 	return ret;
-@@ -1886,11 +1886,11 @@ static ssize_t raid_level_show(struct device *dev,
+-	/* Event initialization sets last_tag to 0. When later on the events
+-	 * are deleted and re-added, do not reset the event count value to zero.
+-	 * Events are added, deleted and re-added when 2 or more events
+-	 * are active at the same time.
+-	 */
+-	event->hw.last_tag = 0;
+ 	event->destroy = paicrypt_event_destroy;
  
- 		name = myrb_raidlevel_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->state);
--		return snprintf(buf, 32, "%s\n", name);
-+		return snprintf(buf, 64, "%s\n", name);
- 	}
--	return snprintf(buf, 32, "Physical Drive\n");
-+	return snprintf(buf, 64, "Physical Drive\n");
- }
- static DEVICE_ATTR_RO(raid_level);
+ 	if (a->sample_period) {
+@@ -249,6 +243,11 @@ static void paicrypt_start(struct perf_event *event, int flags)
+ {
+ 	u64 sum;
  
-@@ -1903,15 +1903,15 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
++	/* Event initialization sets last_tag to 0. When later on the events
++	 * are deleted and re-added, do not reset the event count value to zero.
++	 * Events are added, deleted and re-added when 2 or more events
++	 * are active at the same time.
++	 */
+ 	if (!event->hw.last_tag) {
+ 		event->hw.last_tag = 1;
+ 		sum = paicrypt_getall(event);		/* Get current value */
+diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
+index ac32107167eac..8fddde11cfb1f 100644
+--- a/arch/s390/kernel/perf_pai_ext.c
++++ b/arch/s390/kernel/perf_pai_ext.c
+@@ -261,7 +261,6 @@ static int paiext_event_init(struct perf_event *event)
+ 	rc = paiext_alloc(a, event);
+ 	if (rc)
+ 		return rc;
+-	event->hw.last_tag = 0;
+ 	event->destroy = paiext_event_destroy;
  
- 	if (sdev->channel < myrb_logical_channel(sdev->host))
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	status = myrb_get_rbld_progress(cb, &rbld_buf);
- 
- 	if (rbld_buf.ldev_num != sdev->id ||
- 	    status != MYRB_STATUS_SUCCESS)
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- 
--	return snprintf(buf, 32, "rebuilding block %u of %u\n",
-+	return snprintf(buf, 64, "rebuilding block %u of %u\n",
- 			rbld_buf.ldev_size - rbld_buf.blocks_left,
- 			rbld_buf.ldev_size);
- }
-diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
-index a1eec65a9713f..e824be9d9bbb9 100644
---- a/drivers/scsi/myrs.c
-+++ b/drivers/scsi/myrs.c
-@@ -947,9 +947,9 @@ static ssize_t raid_state_show(struct device *dev,
- 
- 		name = myrs_devstate_name(ldev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       ldev_info->dev_state);
- 	} else {
- 		struct myrs_pdev_info *pdev_info;
-@@ -958,9 +958,9 @@ static ssize_t raid_state_show(struct device *dev,
- 		pdev_info = sdev->hostdata;
- 		name = myrs_devstate_name(pdev_info->dev_state);
- 		if (name)
--			ret = snprintf(buf, 32, "%s\n", name);
-+			ret = snprintf(buf, 64, "%s\n", name);
- 		else
--			ret = snprintf(buf, 32, "Invalid (%02X)\n",
-+			ret = snprintf(buf, 64, "Invalid (%02X)\n",
- 				       pdev_info->dev_state);
- 	}
- 	return ret;
-@@ -1066,13 +1066,13 @@ static ssize_t raid_level_show(struct device *dev,
- 		ldev_info = sdev->hostdata;
- 		name = myrs_raid_level_name(ldev_info->raid_level);
- 		if (!name)
--			return snprintf(buf, 32, "Invalid (%02X)\n",
-+			return snprintf(buf, 64, "Invalid (%02X)\n",
- 					ldev_info->dev_state);
- 
- 	} else
- 		name = myrs_raid_level_name(MYRS_RAID_PHYSICAL);
- 
--	return snprintf(buf, 32, "%s\n", name);
-+	return snprintf(buf, 64, "%s\n", name);
- }
- static DEVICE_ATTR_RO(raid_level);
- 
-@@ -1086,7 +1086,7 @@ static ssize_t rebuild_show(struct device *dev,
- 	unsigned char status;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not rebuilding\n");
-+		return snprintf(buf, 64, "physical device - not rebuilding\n");
- 
- 	ldev_info = sdev->hostdata;
- 	ldev_num = ldev_info->ldev_num;
-@@ -1098,11 +1098,11 @@ static ssize_t rebuild_show(struct device *dev,
- 		return -EIO;
- 	}
- 	if (ldev_info->rbld_active) {
--		return snprintf(buf, 32, "rebuilding block %zu of %zu\n",
-+		return snprintf(buf, 64, "rebuilding block %zu of %zu\n",
- 				(size_t)ldev_info->rbld_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	} else
--		return snprintf(buf, 32, "not rebuilding\n");
-+		return snprintf(buf, 64, "not rebuilding\n");
- }
- 
- static ssize_t rebuild_store(struct device *dev,
-@@ -1190,7 +1190,7 @@ static ssize_t consistency_check_show(struct device *dev,
- 	unsigned short ldev_num;
- 
- 	if (sdev->channel < cs->ctlr_info->physchan_present)
--		return snprintf(buf, 32, "physical device - not checking\n");
-+		return snprintf(buf, 64, "physical device - not checking\n");
- 
- 	ldev_info = sdev->hostdata;
- 	if (!ldev_info)
-@@ -1198,11 +1198,11 @@ static ssize_t consistency_check_show(struct device *dev,
- 	ldev_num = ldev_info->ldev_num;
- 	myrs_get_ldev_info(cs, ldev_num, ldev_info);
- 	if (ldev_info->cc_active)
--		return snprintf(buf, 32, "checking block %zu of %zu\n",
-+		return snprintf(buf, 64, "checking block %zu of %zu\n",
- 				(size_t)ldev_info->cc_lba,
- 				(size_t)ldev_info->cfg_devsize);
- 	else
--		return snprintf(buf, 32, "not checking\n");
-+		return snprintf(buf, 64, "not checking\n");
- }
- 
- static ssize_t consistency_check_store(struct device *dev,
+ 	if (a->sample_period) {
 -- 
 2.43.0
 
