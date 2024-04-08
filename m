@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF26A71B3D;
-	Mon,  8 Apr 2024 13:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D548B7C080;
+	Mon,  8 Apr 2024 13:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582180; cv=none; b=L6dCe5jHzRmGN07ARMyJS+K6oRRdJp5Fe3KovAFeHTv48cAewNRlYNkG2EbDaY5CM4Bd5lxX/tZu0MhisMVixGXAsY9uJnFchkNVYowU8J6YguPLxNlGhFrZ6is9IL8ek2zeSriA1TDQYOMbUFFPjlDc3UqM+myLVVNV4wZK/EA=
+	t=1712582182; cv=none; b=tzP/uKGAGx0zW8ypRi4x59o7wPns9d04Uk6ivx8hGeRuffegaXK0wyS4/RGwgRSMhItHJLkoO5rqz3rNEG5rUCDd3nlhgJvFnXimBQYwVkiQjXbT34pCvAQMBGD/8yupSOFTuIA1ZuHVIjXl9ST0ZqTqzAi1JnhS6d00rWGdaMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582180; c=relaxed/simple;
-	bh=FwM4uMpGE0UqxwwAqQrI7HqtbqOK94bRADjBluvuBB8=;
+	s=arc-20240116; t=1712582182; c=relaxed/simple;
+	bh=L4p8N32dkw3ikXBZIGVDKjn52DioWltro1h7fASP1IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imW/APbvuxzu3YVhwHETguU1AN8YHKB0ypGRODO9XvVodJB7/gA9Osl2genVYbcZ6aWNInCx1Dp86u4YJWjoKfsTApCbInM4NTz5xMR9EgzP7fZ6mXku8K5VGr+5vPGTRCz5XMDWpxVf6Ry4oR4QIJ9Ebe5xDvGTcZ7ngIo/pPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cSNuvnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RwT++f2aAWoCtHHbvhr5yjADjeckzbLIUcAmn4aWO+edH9zxqW+P5qfa6Iq02iGVPimNDN4XTmCVQACddkx0r7VIOlRWRziT18nSMCGvkPIE9H4+qStwoepuHL6b4uSuznTDMfag1Ldx94RRT2BW1tP1AqRKxYdne5IPykb5JtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKtM568G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cSNuvnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C19C433F1;
-	Mon,  8 Apr 2024 13:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKtM568G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F3C433C7;
+	Mon,  8 Apr 2024 13:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582179;
-	bh=FwM4uMpGE0UqxwwAqQrI7HqtbqOK94bRADjBluvuBB8=;
+	s=korg; t=1712582182;
+	bh=L4p8N32dkw3ikXBZIGVDKjn52DioWltro1h7fASP1IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cSNuvntDweks4tK0ykU5BiTZ3ElDXkYMtT4L/6OW8ZMDvcEMNfJQTG6X2tKBYR2E
-	 qLy0QnmJj0iF6+OUzTzvgxz/ELSsRwa7IEGe4R4or/x7iqPSRuVETZ9DcJd4TomfHX
-	 snlSBN9zJsIDsbQrzs5YmaTCi1r+7pV6sID/XAbU=
+	b=UKtM568G7Eh1F8qK2Y5hN86tCsP+E+b0XRf+CN0tx+UAKm789vL2hQ0ObKoOh2rnI
+	 vwT/HUcCqSl+nAmr0uVDVTuG1zbmOa/6NRNVzdzLpGnVpQ6Z3hggB4RPR81aHVRMiW
+	 SvZ3T16j8eTGyFIdjcmLSgd7f8z1xDz7sGTZ8hLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/690] cpufreq: brcmstb-avs-cpufreq: fix up "add check for cpufreq_cpu_gets return value"
-Date: Mon,  8 Apr 2024 14:49:43 +0200
-Message-ID: <20240408125403.773152465@linuxfoundation.org>
+	Anup Patel <apatel@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.6 070/252] RISC-V: KVM: Fix APLIC in_clrip[x] read emulation
+Date: Mon,  8 Apr 2024 14:56:09 +0200
+Message-ID: <20240408125308.807060879@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +44,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Anup Patel <apatel@ventanamicro.com>
 
-In commit d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for
-cpufreq_cpu_get's return value"), build warnings occur because a
-variable is created after some logic, resulting in:
+commit 8e936e98718f005c986be0bfa1ee6b355acf96be upstream.
 
-drivers/cpufreq/brcmstb-avs-cpufreq.c: In function 'brcm_avs_cpufreq_get':
-drivers/cpufreq/brcmstb-avs-cpufreq.c:486:9: error: ISO C90 forbids mixed
-declarations and code [-Werror=declaration-after-statement]
-  486 |         struct private_data *priv = policy->driver_data;
-      |         ^~~~~~
-cc1: all warnings being treated as errors
-make[2]: *** [scripts/Makefile.build:289:
-drivers/cpufreq/brcmstb-avs-cpufreq.o] Error 1
-make[1]: *** [scripts/Makefile.build:552: drivers/cpufreq] Error 2
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1907: drivers] Error 2
+The reads to APLIC in_clrip[x] registers returns rectified input values
+of the interrupt sources.
 
-Fix this up.
+A rectified input value of an interrupt source is defined by the section
+"4.5.2 Source configurations (sourcecfg[1]–sourcecfg[1023])" of the
+RISC-V AIA specification as:
 
-Link: https://lore.kernel.org/r/e114d9e5-26af-42be-9baa-72c3a6ec8fe5@oracle.com
-Link: https://lore.kernel.org/stable/20240327015023.GC7502@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net/T/#m15bff0fe96986ef780e848b4fff362bf8ea03f08
-Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Fixes: d951cf510fb0 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
-Cc: Anastasia Belova <abelova@astralinux.ru>
-Cc: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Sasha Levin <sashal@kernel.org>
+    rectified input value = (incoming wire value) XOR (source is inverted)
+
+Update the riscv_aplic_input() implementation to match the above.
+
+Cc: stable@vger.kernel.org
+Fixes: 74967aa208e2 ("RISC-V: KVM: Add in-kernel emulation of AIA APLIC")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20240321085041.1955293-3-apatel@ventanamicro.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/brcmstb-avs-cpufreq.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/kvm/aia_aplic.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
-+++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-@@ -481,10 +481,11 @@ static bool brcm_avs_is_firmware_loaded(
- static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
- {
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
-+	struct private_data *priv;
-+
- 	if (!policy)
- 		return 0;
--	struct private_data *priv = policy->driver_data;
--
-+	priv = policy->driver_data;
- 	cpufreq_cpu_put(policy);
+diff --git a/arch/riscv/kvm/aia_aplic.c b/arch/riscv/kvm/aia_aplic.c
+index 5e842b92dc46..b467ba5ed910 100644
+--- a/arch/riscv/kvm/aia_aplic.c
++++ b/arch/riscv/kvm/aia_aplic.c
+@@ -197,16 +197,31 @@ static void aplic_write_enabled(struct aplic *aplic, u32 irq, bool enabled)
  
- 	return brcm_avs_get_frequency(priv->base);
+ static bool aplic_read_input(struct aplic *aplic, u32 irq)
+ {
+-	bool ret;
+-	unsigned long flags;
++	u32 sourcecfg, sm, raw_input, irq_inverted;
+ 	struct aplic_irq *irqd;
++	unsigned long flags;
++	bool ret = false;
+ 
+ 	if (!irq || aplic->nr_irqs <= irq)
+ 		return false;
+ 	irqd = &aplic->irqs[irq];
+ 
+ 	raw_spin_lock_irqsave(&irqd->lock, flags);
+-	ret = (irqd->state & APLIC_IRQ_STATE_INPUT) ? true : false;
++
++	sourcecfg = irqd->sourcecfg;
++	if (sourcecfg & APLIC_SOURCECFG_D)
++		goto skip;
++
++	sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
++	if (sm == APLIC_SOURCECFG_SM_INACTIVE)
++		goto skip;
++
++	raw_input = (irqd->state & APLIC_IRQ_STATE_INPUT) ? 1 : 0;
++	irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
++			sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
++	ret = !!(raw_input ^ irq_inverted);
++
++skip:
+ 	raw_spin_unlock_irqrestore(&irqd->lock, flags);
+ 
+ 	return ret;
+-- 
+2.44.0
+
 
 
