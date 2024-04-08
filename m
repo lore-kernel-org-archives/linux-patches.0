@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7A4127B67;
-	Mon,  8 Apr 2024 13:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF239128818;
+	Mon,  8 Apr 2024 13:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583832; cv=none; b=IWn1o4pDWCHeRyn0ybeIgYleGwEnsNWLVzMzJFH115HGq9hXi187KrsKuvaYWreZVz4EEP1K63jrkzzfyXEkxqEexI/B9Oz4p8YRD1hITJYA4baiaKgiqGsvyHG4wSEvFYkvhCtpX25sCJ9cZCDAQ0IZREjqYyh+irunB1wR5og=
+	t=1712583835; cv=none; b=Eseaoxlfq//PpmrOda7e58pFizh3x68kfn8saKng7zSZvKPKf6DMnU172+42K6G9nNqNZJMWUFgPvNWGubzJAn45Fc9nR91lQUOztqhjszda8XPChTLnZY+Gv9JMhP+ZKjrBlkm0HYYQJrdIL+SNSuruEs9DNuYe1VYE0MFHKRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583832; c=relaxed/simple;
-	bh=Ndd17AesnPT9U3ww6ztaQ31/uye789IbVhCO+cHQ+Zc=;
+	s=arc-20240116; t=1712583835; c=relaxed/simple;
+	bh=Uu2U0FVRtlRBmCSuo1jRBABfTjKMo2p56NjAjLvVj2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a+BWYXxXbWB/ZAetu7tu5iLbcSPGoP/c75mam9xclQR7fVLzMEb9Jd0Xfi26scZOtGTlxAKAwPiuCndSRxAQP4iSRJ4GfIgyeGHr9vDdCKhofsPK9Zb+aEeQtVgU0IhI5ZV6a3RBs6d2WDS/yjWlIH21PjvtmUCclepxweBCQ4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLz8i9Bd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaRGmP9wZdjHxLvq6NCE59F106PmExatjE8CPY9QNBwwjRWmfkIvtpgdiqOGydQgTEifM7Y7CG9Z9StuNCqY2wDD5LfxSKswUrapMungCF0nKyUftvZxWYvIB7EWUoeYvyyeq04YrwnaJyPdz0ik12eH4WKDdLtENbSs3P96H78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiYO4e23; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLz8i9Bd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5279DC433C7;
-	Mon,  8 Apr 2024 13:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiYO4e23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43845C433F1;
+	Mon,  8 Apr 2024 13:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583832;
-	bh=Ndd17AesnPT9U3ww6ztaQ31/uye789IbVhCO+cHQ+Zc=;
+	s=korg; t=1712583835;
+	bh=Uu2U0FVRtlRBmCSuo1jRBABfTjKMo2p56NjAjLvVj2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLz8i9BdpgD8UWD+DO/9q27isuEIAb41AWiOq6J5TJVAP0mItisH8FmPB8emVacxN
-	 JQm+P30kRAAsGR/lVbJpDQ5wTJs/mpzaDWSiYY5Rq7tdJYNRq38ihy9W/y7FwjpFB1
-	 kNmKVBKFHB5uYSratuJ2B5DrvsPraFpcSxPmvsW8=
+	b=LiYO4e23j76KaMktfvcwO5V3ali+eS3cA6fMQt0m72d5PjZCicamdATvsJyBONLip
+	 mq1VKFufWM4qk8RWgYuq036pdluOl12OVnkj9ouTr2p8MHXEbxazkY6S7Dbnm67YFj
+	 9LrBh+GQqINNHUqbA6ts/Gldx6UrHAgEKMqsFOXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Michal Mrozek <michal.mrozek@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 240/252] drm/i915/gt: Enable only one CCS for compute workload
-Date: Mon,  8 Apr 2024 14:58:59 +0200
-Message-ID: <20240408125314.098386356@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.8 225/273] ASoC: SOF: sof-pcm: Add pointer callback to sof_ipc_pcm_ops
+Date: Mon,  8 Apr 2024 14:58:20 +0200
+Message-ID: <20240408125316.396380071@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,152 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 6db31251bb265813994bfb104eb4b4d0f44d64fb upstream.
+commit 77165bd955d55114028b06787a530b8f9220e4b0 upstream.
 
-Enable only one CCS engine by default with all the compute sices
-allocated to it.
+The IPC specific pointer callback can be used when additional or custom
+handling is needed during the pointer calculation, like executing a delay
+calculation at the same time to minimize drift between the reported pointer
+and the calculated delay.
 
-While generating the list of UABI engines to be exposed to the
-user, exclude any additional CCS engines beyond the first
-instance.
-
-This change can be tested with igt i915_query.
-
-Fixes: d2eae8e98d59 ("drm/i915/dg2: Drop force_probe requirement")
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: <stable@vger.kernel.org> # v6.2+
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Acked-by: Michal Mrozek <michal.mrozek@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328073409.674098-4-andi.shyti@linux.intel.com
-(cherry picked from commit 2bebae0112b117de7e8a7289277a4bd2403b9e17)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org # 6.8
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240321130814.4412-15-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/Makefile               |    1 
- drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c |   39 ++++++++++++++++++++++++++++
- drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h |   13 +++++++++
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |    5 +++
- drivers/gpu/drm/i915/gt/intel_workarounds.c |    7 +++++
- 5 files changed, 65 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
- create mode 100644 drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
+ sound/soc/sof/pcm.c       | 8 ++++++++
+ sound/soc/sof/sof-audio.h | 8 +++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/Makefile
-+++ b/drivers/gpu/drm/i915/Makefile
-@@ -104,6 +104,7 @@ gt-y += \
- 	gt/intel_ggtt_fencing.o \
- 	gt/intel_gt.o \
- 	gt/intel_gt_buffer_pool.o \
-+	gt/intel_gt_ccs_mode.o \
- 	gt/intel_gt_clock_utils.o \
- 	gt/intel_gt_debugfs.o \
- 	gt/intel_gt_engines_debugfs.o \
---- /dev/null
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.c
-@@ -0,0 +1,39 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Copyright © 2024 Intel Corporation
-+ */
-+
-+#include "i915_drv.h"
-+#include "intel_gt.h"
-+#include "intel_gt_ccs_mode.h"
-+#include "intel_gt_regs.h"
-+
-+void intel_gt_apply_ccs_mode(struct intel_gt *gt)
-+{
-+	int cslice;
-+	u32 mode = 0;
-+	int first_ccs = __ffs(CCS_MASK(gt));
-+
-+	if (!IS_DG2(gt->i915))
-+		return;
-+
-+	/* Build the value for the fixed CCS load balancing */
-+	for (cslice = 0; cslice < I915_MAX_CCS; cslice++) {
-+		if (CCS_MASK(gt) & BIT(cslice))
-+			/*
-+			 * If available, assign the cslice
-+			 * to the first available engine...
-+			 */
-+			mode |= XEHP_CCS_MODE_CSLICE(cslice, first_ccs);
-+
-+		else
-+			/*
-+			 * ... otherwise, mark the cslice as
-+			 * unavailable if no CCS dispatches here
-+			 */
-+			mode |= XEHP_CCS_MODE_CSLICE(cslice,
-+						     XEHP_CCS_MODE_CSLICE_MASK);
-+	}
-+
-+	intel_uncore_write(gt->uncore, XEHP_CCS_MODE, mode);
-+}
---- /dev/null
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_ccs_mode.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2024 Intel Corporation
-+ */
-+
-+#ifndef __INTEL_GT_CCS_MODE_H__
-+#define __INTEL_GT_CCS_MODE_H__
-+
-+struct intel_gt;
-+
-+void intel_gt_apply_ccs_mode(struct intel_gt *gt);
-+
-+#endif /* __INTEL_GT_CCS_MODE_H__ */
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -1471,6 +1471,11 @@
- #define   XEHP_RCU_MODE_FIXED_SLICE_CCS_MODE	REG_BIT(1)
- #define   GEN12_RCU_MODE_CCS_ENABLE		REG_BIT(0)
+diff --git a/sound/soc/sof/pcm.c b/sound/soc/sof/pcm.c
+index 33d576b17647..f03cee94bce6 100644
+--- a/sound/soc/sof/pcm.c
++++ b/sound/soc/sof/pcm.c
+@@ -388,13 +388,21 @@ static snd_pcm_uframes_t sof_pcm_pointer(struct snd_soc_component *component,
+ {
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(component);
++	const struct sof_ipc_pcm_ops *pcm_ops = sof_ipc_get_ops(sdev, pcm);
+ 	struct snd_sof_pcm *spcm;
+ 	snd_pcm_uframes_t host, dai;
++	int ret = -EOPNOTSUPP;
  
-+#define XEHP_CCS_MODE				_MMIO(0x14804)
-+#define   XEHP_CCS_MODE_CSLICE_MASK		REG_GENMASK(2, 0) /* CCS0-3 + rsvd */
-+#define   XEHP_CCS_MODE_CSLICE_WIDTH		ilog2(XEHP_CCS_MODE_CSLICE_MASK + 1)
-+#define   XEHP_CCS_MODE_CSLICE(cslice, ccs)	(ccs << (cslice * XEHP_CCS_MODE_CSLICE_WIDTH))
-+
- #define CHV_FUSE_GT				_MMIO(VLV_GUNIT_BASE + 0x2168)
- #define   CHV_FGT_DISABLE_SS0			(1 << 10)
- #define   CHV_FGT_DISABLE_SS1			(1 << 11)
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -10,6 +10,7 @@
- #include "intel_engine_regs.h"
- #include "intel_gpu_commands.h"
- #include "intel_gt.h"
-+#include "intel_gt_ccs_mode.h"
- #include "intel_gt_mcr.h"
- #include "intel_gt_regs.h"
- #include "intel_ring.h"
-@@ -2838,6 +2839,12 @@ static void ccs_engine_wa_mode(struct in
- 	 * made to completely disable automatic CCS load balancing.
- 	 */
- 	wa_masked_en(wal, GEN12_RCU_MODE, XEHP_RCU_MODE_FIXED_SLICE_CCS_MODE);
-+
-+	/*
-+	 * After having disabled automatic load balancing we need to
-+	 * assign all slices to a single CCS. We will call it CCS mode 1
-+	 */
-+	intel_gt_apply_ccs_mode(gt);
- }
+ 	/* nothing to do for BE */
+ 	if (rtd->dai_link->no_pcm)
+ 		return 0;
  
- /*
++	if (pcm_ops && pcm_ops->pointer)
++		ret = pcm_ops->pointer(component, substream, &host);
++
++	if (ret != -EOPNOTSUPP)
++		return ret ? ret : host;
++
+ 	/* use dsp ops pointer callback directly if set */
+ 	if (sof_ops(sdev)->pcm_pointer)
+ 		return sof_ops(sdev)->pcm_pointer(sdev, substream);
+diff --git a/sound/soc/sof/sof-audio.h b/sound/soc/sof/sof-audio.h
+index 04e5cb2c70a7..86bbb531e142 100644
+--- a/sound/soc/sof/sof-audio.h
++++ b/sound/soc/sof/sof-audio.h
+@@ -103,7 +103,10 @@ struct snd_sof_dai_config_data {
+  *	       additional memory in the SOF PCM stream structure
+  * @pcm_free: Function pointer for PCM free that can be used for freeing any
+  *	       additional memory in the SOF PCM stream structure
+- * @delay: Function pointer for pcm delay calculation
++ * @pointer: Function pointer for pcm pointer
++ *	     Note: the @pointer callback may return -EOPNOTSUPP which should be
++ *		   handled in a same way as if the callback is not provided
++ * @delay: Function pointer for pcm delay reporting
+  * @reset_hw_params_during_stop: Flag indicating whether the hw_params should be reset during the
+  *				 STOP pcm trigger
+  * @ipc_first_on_start: Send IPC before invoking platform trigger during
+@@ -124,6 +127,9 @@ struct sof_ipc_pcm_ops {
+ 	int (*dai_link_fixup)(struct snd_soc_pcm_runtime *rtd, struct snd_pcm_hw_params *params);
+ 	int (*pcm_setup)(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm);
+ 	void (*pcm_free)(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm);
++	int (*pointer)(struct snd_soc_component *component,
++		       struct snd_pcm_substream *substream,
++		       snd_pcm_uframes_t *pointer);
+ 	snd_pcm_sframes_t (*delay)(struct snd_soc_component *component,
+ 				   struct snd_pcm_substream *substream);
+ 	bool reset_hw_params_during_stop;
+-- 
+2.44.0
+
 
 
