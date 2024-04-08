@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDFC2DF73;
-	Mon,  8 Apr 2024 13:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0D2481A6;
+	Mon,  8 Apr 2024 13:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581689; cv=none; b=BI6R3C8eJPW5YBhpfMlJK2wGzQewNILFx+4kjEQmOWTg/X7qJ9ftk0pPM9dyg/uJDys9D87wcTrFJ5+aG3ttEEhcGQH5nvaSOUlPjOq2j0S2YcrwcK79L+/6cs/djp/AVQJTpE4GCsWOexUP7WKviRyTO2kZstItTvIcphl/P6w=
+	t=1712581692; cv=none; b=cCGcoWnngN3ydm73d3MbU9e99w9rqa5ZRWZwaOgwldKZZ04V/F8CRJxSys22aHCECZCKqLXQFw18gmAZ56oB8iUQA5/G11Gbhx1qC+0GqDhBIa7LPq4TpktL7Z37aTtIFhTLSZCgDYnHfCxH2bZFZU6oOf7BofG/y6BEgy7BrH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581689; c=relaxed/simple;
-	bh=3Usgp80R/BtBJHiNBDci0RAyltHMk0FuXT7bzXO0WYw=;
+	s=arc-20240116; t=1712581692; c=relaxed/simple;
+	bh=/kNCf/i76SL7H1u+1BJqAx3iqw+7Vao8bTYMjMdGl0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrtukOHH/wrUmrxZhJD5KVV1OQfz3EV+RBwJE2S6KL5NbYDg1tI2IXST//ngmnbAjjP9qcvNcZVS8cal7uVC/SkvkwE98ZAAQ+LwcxMxnRdkUqiyJv7xnbNakBrjzj4TncGgZB6Yc32SQh8GvZC6TdEy6v0OF4sdtHTos3uOqWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLo6Wc4T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgMXUlTsIf6e/khwLDrp/c3lDrusGq919Lb9dcq3YztKnaFg/b5gYs6nDpDCshhZVyssEuS+5EUfxxVG7XPr2xYUCzCdlqjXHk2vAhlhSbbBuRdttR+4X292NErENMG0oCsx3PRZSEbM8i81dhhXUo2WsBEFmFbbHureZ/GI00k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3/oUjEx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLo6Wc4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74986C433F1;
-	Mon,  8 Apr 2024 13:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3/oUjEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3DFC433F1;
+	Mon,  8 Apr 2024 13:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581688;
-	bh=3Usgp80R/BtBJHiNBDci0RAyltHMk0FuXT7bzXO0WYw=;
+	s=korg; t=1712581691;
+	bh=/kNCf/i76SL7H1u+1BJqAx3iqw+7Vao8bTYMjMdGl0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLo6Wc4TY1rAvHBMT3fV0YWNzCzLAmuYXUIGou80YCisqlpbUM/QWwWFrSeW466Iz
-	 KThpqIRYc33y8J+nJnEamTMQ83uxF1QbINvrAQtq4RbcdNpqMXCma1byCdDfNyyG7F
-	 Peh8d9rJFBdEGOwlXRTXKnXqLkM6vdE9PZAQ72W4=
+	b=t3/oUjExrkPCNNjJR4OQHSoaLmulR3HBNUXcfp5ES7H5JTMQV7p/Hs/Kysns4AIDm
+	 nEioEOvgE8DEoo5eG/WYFHLmj5kEgJ6HlNDYS2FdQyVFHtzAifhpggD3OBD7iAR9GW
+	 OaU11thtDRla7L1xocjX9aljtp+6h3ITh9bTk5vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
+	David Thompson <davthompson@nvidia.com>,
+	Asmaa Mnebhi <asmaa@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/252] tls: recv: process_rx_list shouldnt use an offset with kvec
-Date: Mon,  8 Apr 2024 14:55:28 +0200
-Message-ID: <20240408125307.552064922@linuxfoundation.org>
+Subject: [PATCH 6.6 032/252] mlxbf_gige: call request_irq() after NAPI initialized
+Date: Mon,  8 Apr 2024 14:55:31 +0200
+Message-ID: <20240408125307.642525288@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -52,39 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 7608a971fdeb4c3eefa522d1bfe8d4bc6b2481cc ]
+[ Upstream commit f7442a634ac06b953fc1f7418f307b25acd4cfbc ]
 
-Only MSG_PEEK needs to copy from an offset during the final
-process_rx_list call, because the bytes we copied at the beginning of
-tls_sw_recvmsg were left on the rx_list. In the KVEC case, we removed
-data from the rx_list as we were copying it, so there's no need to use
-an offset, just like in the normal case.
+The mlxbf_gige driver encounters a NULL pointer exception in
+mlxbf_gige_open() when kdump is enabled.  The sequence to reproduce
+the exception is as follows:
+a) enable kdump
+b) trigger kdump via "echo c > /proc/sysrq-trigger"
+c) kdump kernel executes
+d) kdump kernel loads mlxbf_gige module
+e) the mlxbf_gige module runs its open() as the
+   the "oob_net0" interface is brought up
+f) mlxbf_gige module will experience an exception
+   during its open(), something like:
 
-Fixes: 692d7b5d1f91 ("tls: Fix recvmsg() to be able to peek across multiple records")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/e5487514f828e0347d2b92ca40002c62b58af73d.1711120964.git.sd@queasysnail.net
+     Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+     Mem abort info:
+       ESR = 0x0000000086000004
+       EC = 0x21: IABT (current EL), IL = 32 bits
+       SET = 0, FnV = 0
+       EA = 0, S1PTW = 0
+       FSC = 0x04: level 0 translation fault
+     user pgtable: 4k pages, 48-bit VAs, pgdp=00000000e29a4000
+     [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+     Internal error: Oops: 0000000086000004 [#1] SMP
+     CPU: 0 PID: 812 Comm: NetworkManager Tainted: G           OE     5.15.0-1035-bluefield #37-Ubuntu
+     Hardware name: https://www.mellanox.com BlueField-3 SmartNIC Main Card/BlueField-3 SmartNIC Main Card, BIOS 4.6.0.13024 Jan 19 2024
+     pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+     pc : 0x0
+     lr : __napi_poll+0x40/0x230
+     sp : ffff800008003e00
+     x29: ffff800008003e00 x28: 0000000000000000 x27: 00000000ffffffff
+     x26: ffff000066027238 x25: ffff00007cedec00 x24: ffff800008003ec8
+     x23: 000000000000012c x22: ffff800008003eb7 x21: 0000000000000000
+     x20: 0000000000000001 x19: ffff000066027238 x18: 0000000000000000
+     x17: ffff578fcb450000 x16: ffffa870b083c7c0 x15: 0000aaab010441d0
+     x14: 0000000000000001 x13: 00726f7272655f65 x12: 6769675f6662786c
+     x11: 0000000000000000 x10: 0000000000000000 x9 : ffffa870b0842398
+     x8 : 0000000000000004 x7 : fe5a48b9069706ea x6 : 17fdb11fc84ae0d2
+     x5 : d94a82549d594f35 x4 : 0000000000000000 x3 : 0000000000400100
+     x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000066027238
+     Call trace:
+      0x0
+      net_rx_action+0x178/0x360
+      __do_softirq+0x15c/0x428
+      __irq_exit_rcu+0xac/0xec
+      irq_exit+0x18/0x2c
+      handle_domain_irq+0x6c/0xa0
+      gic_handle_irq+0xec/0x1b0
+      call_on_irq_stack+0x20/0x2c
+      do_interrupt_handler+0x5c/0x70
+      el1_interrupt+0x30/0x50
+      el1h_64_irq_handler+0x18/0x2c
+      el1h_64_irq+0x7c/0x80
+      __setup_irq+0x4c0/0x950
+      request_threaded_irq+0xf4/0x1bc
+      mlxbf_gige_request_irqs+0x68/0x110 [mlxbf_gige]
+      mlxbf_gige_open+0x5c/0x170 [mlxbf_gige]
+      __dev_open+0x100/0x220
+      __dev_change_flags+0x16c/0x1f0
+      dev_change_flags+0x2c/0x70
+      do_setlink+0x220/0xa40
+      __rtnl_newlink+0x56c/0x8a0
+      rtnl_newlink+0x58/0x84
+      rtnetlink_rcv_msg+0x138/0x3c4
+      netlink_rcv_skb+0x64/0x130
+      rtnetlink_rcv+0x20/0x30
+      netlink_unicast+0x2ec/0x360
+      netlink_sendmsg+0x278/0x490
+      __sock_sendmsg+0x5c/0x6c
+      ____sys_sendmsg+0x290/0x2d4
+      ___sys_sendmsg+0x84/0xd0
+      __sys_sendmsg+0x70/0xd0
+      __arm64_sys_sendmsg+0x2c/0x40
+      invoke_syscall+0x78/0x100
+      el0_svc_common.constprop.0+0x54/0x184
+      do_el0_svc+0x30/0xac
+      el0_svc+0x48/0x160
+      el0t_64_sync_handler+0xa4/0x12c
+      el0t_64_sync+0x1a4/0x1a8
+     Code: bad PC value
+     ---[ end trace 7d1c3f3bf9d81885 ]---
+     Kernel panic - not syncing: Oops: Fatal exception in interrupt
+     Kernel Offset: 0x2870a7a00000 from 0xffff800008000000
+     PHYS_OFFSET: 0x80000000
+     CPU features: 0x0,000005c1,a3332a5a
+     Memory Limit: none
+     ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
+
+The exception happens because there is a pending RX interrupt before the
+call to request_irq(RX IRQ) executes.  Then, the RX IRQ handler fires
+immediately after this request_irq() completes. The RX IRQ handler runs
+"napi_schedule()" before NAPI is fully initialized via "netif_napi_add()"
+and "napi_enable()", both which happen later in the open() logic.
+
+The logic in mlxbf_gige_open() must fully initialize NAPI before any calls
+to request_irq() execute.
+
+Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
+Link: https://lore.kernel.org/r/20240325183627.7641-1-davthompson@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../mellanox/mlxbf_gige/mlxbf_gige_main.c      | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index acf5bb74fd386..8e753d10e694a 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2152,7 +2152,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+index 044ff5f87b5e8..f1fa5f10051f2 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
+@@ -139,13 +139,10 @@ static int mlxbf_gige_open(struct net_device *netdev)
+ 	control |= MLXBF_GIGE_CONTROL_PORT_EN;
+ 	writeq(control, priv->base + MLXBF_GIGE_CONTROL);
  
- 		/* Drain records from the rx_list & copy if required */
--		if (is_peek || is_kvec)
-+		if (is_peek)
- 			err = process_rx_list(ctx, msg, &control, copied + peeked,
- 					      decrypted - peeked, is_peek, NULL);
- 		else
+-	err = mlxbf_gige_request_irqs(priv);
+-	if (err)
+-		return err;
+ 	mlxbf_gige_cache_stats(priv);
+ 	err = mlxbf_gige_clean_port(priv);
+ 	if (err)
+-		goto free_irqs;
++		return err;
+ 
+ 	/* Clear driver's valid_polarity to match hardware,
+ 	 * since the above call to clean_port() resets the
+@@ -166,6 +163,10 @@ static int mlxbf_gige_open(struct net_device *netdev)
+ 	napi_enable(&priv->napi);
+ 	netif_start_queue(netdev);
+ 
++	err = mlxbf_gige_request_irqs(priv);
++	if (err)
++		goto napi_deinit;
++
+ 	/* Set bits in INT_EN that we care about */
+ 	int_en = MLXBF_GIGE_INT_EN_HW_ACCESS_ERROR |
+ 		 MLXBF_GIGE_INT_EN_TX_CHECKSUM_INPUTS |
+@@ -182,14 +183,17 @@ static int mlxbf_gige_open(struct net_device *netdev)
+ 
+ 	return 0;
+ 
++napi_deinit:
++	netif_stop_queue(netdev);
++	napi_disable(&priv->napi);
++	netif_napi_del(&priv->napi);
++	mlxbf_gige_rx_deinit(priv);
++
+ tx_deinit:
+ 	mlxbf_gige_tx_deinit(priv);
+ 
+ phy_deinit:
+ 	phy_stop(phydev);
+-
+-free_irqs:
+-	mlxbf_gige_free_irqs(priv);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
