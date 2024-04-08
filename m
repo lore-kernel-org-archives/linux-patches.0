@@ -1,191 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F761442F5
-	for <patches@lists.linux.dev>; Mon,  8 Apr 2024 18:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7251DDEB
+	for <patches@lists.linux.dev>; Mon,  8 Apr 2024 19:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712599793; cv=none; b=LmkFZ6zY5GoN1ZsNErvNbyV45kKOiqxoAjmDpDWxRR5iIm50e5uDnBcVmnnjswWjF67er68jZQaDk+LZWzZJ8GYPxd/Kwsh6CK3waV0hJZ3bZaXOwqRbWJnyaREZyABnmMbo1Cqu3lA4oFnvRKR1ez1h/kx4GUMgf3KlfFx8MLw=
+	t=1712605289; cv=none; b=gSPTHIf6c2SErYKQoDZnNzjgq56YdHI0wc+RkFyXIcUUBi89rEJc9RZt8bvkhBUGaN1ICFyhS8g2VERWs+cwUb+ivcM8BKHPGs19SJRduvZQNyKqkYj6PohfvCp6xREt9o5y8vQ43KX4qewOOl1PHpOkYFbayZ4A+JcEABoupl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712599793; c=relaxed/simple;
-	bh=RkoEUk6pO/u+YR/CXpMCXKkEmbizOoOkGt2cpPUNcJw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OsAR+lCneWT3kNeWxxtVZNSR9Lyh2RqaZcOSrtAffetvu+yHs0hkQtgEwMe8hqHeASvIzKH/Zx8X5IJoGcPimf5Hp5XKEgt3ainOVL37pLBeG+Buy8lxTadfGZUxKOdnft4IC6q9lx0WKEfYA7bsVpzkjiMQQHzRWUTcODiY4+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VYC1pa/g; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1712605289; c=relaxed/simple;
+	bh=S3xOTyU04Fo6JmhxwRhR9/wKIYvQLxQ0GQTLvmmFAII=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X945bbQmHo6JrDY6qn0XdrG40OvRy4IhkQJ6dJqUkH9Jthbttbt+1qpUS2U+yWXLO7VPHjz0qVaCvE9K4VhOvu+H+E9L5A6KaaiW7kLroCYKHfOdA73IL1GjjKQFf6TjN7xTWdE/jGF51F9qid+9Qkvm7VqDS1LnQh62Fojm0hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=A5JxKENr; arc=none smtp.client-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VYC1pa/g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712599792; x=1744135792;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=RkoEUk6pO/u+YR/CXpMCXKkEmbizOoOkGt2cpPUNcJw=;
-  b=VYC1pa/g4mPJsQ7K6U2Jwsskg6WrpNVKUMQm05vJriWWv/3oR7WkostC
-   Yhihk3TJ+30Foa/hHcl/EsqqiA3LDuA1SyNxznvheUG9dZMcBzUl00acE
-   9/JVWXjFgh+GEBVbjz9mkOA3pqBDENuHO1KeAVjHRWwnVG49IkiiWDq+d
-   AYQOcTOr1AzCFA615/KBlwMXNu/ssDkSdplRxCrNywtTyfSQS4N8t2BDq
-   5gMa8Xwck7WqBlRtFN9uuFNmI6G/tlZWaIsBaQ3LmwxG9d6Ru2FEYD46k
-   vzCA24Islz+20GQllaB5Mj37+inuDVhRE7xOpgjoIvXaTo6Ua6GNSBFXb
-   Q==;
-X-CSE-ConnectionGUID: XgsP9csxR4KRhX/K7NtQyQ==
-X-CSE-MsgGUID: E9Bv9dhPSw2u5gE+zB8zkw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="8055876"
-X-IronPort-AV: E=Sophos;i="6.07,187,1708416000"; 
-   d="scan'208";a="8055876"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 11:09:51 -0700
-X-CSE-ConnectionGUID: wHVS94GMQC2YOYIw8d4wVQ==
-X-CSE-MsgGUID: izCZq3L/QO60q9bhwJ0+nQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,187,1708416000"; 
-   d="scan'208";a="20050531"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 11:09:50 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-edac@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/mce: Implement recovery for errors in TDX/SEAM non-root mode
-Date: Mon,  8 Apr 2024 11:09:44 -0700
-Message-ID: <20240408180944.44638-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.44.0
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="A5JxKENr"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3c5ec0c5696so242852b6e.1
+        for <patches@lists.linux.dev>; Mon, 08 Apr 2024 12:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1712605286; x=1713210086; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vlG2+sb2I/nukv22GaTz5r2V7S8vwQAqFCnvBWEiOp0=;
+        b=A5JxKENr3Plz52Cz4F7GMkF652J6QQPTelMA+ZMUa1YPVxuOpU1HHTj9/tIQPQFsNn
+         8NdZvb43F1JcDST3/V6bVDbS1FBCbMDzjmkulDcfUeeNCaoy8zCtwz7PlLvWrQafc3sU
+         WxIesdY9ehcXrQiKY5JrlhQQHkkCCM/zfKBdM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712605286; x=1713210086;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vlG2+sb2I/nukv22GaTz5r2V7S8vwQAqFCnvBWEiOp0=;
+        b=kiWoRGGrHfl+t8M1fB4x3d2jKhsbfvEFQVTGhXkv/gT9V82UDDxfbGSN4QW/WPEDaR
+         fvvV77nEWkFhpAku6co7TBmZTT7mJWSD6M1db7IcedVrxjNGOe5QCtqcuoJd6Wx+NPcV
+         5TA5IgSTjjYlRwE+6QCTchQNpOsQ+U2mLuC4J4uU20LHeNS8SvMsVLypCrw5rUHkEru/
+         hMXjhjBXrFRsZdsC37QKwYRrc4pQBkoqpfha7JS5Y2QIyDI2PcMq/hPmGgv7lckUE9Q/
+         lup9UJIYndwENAWNnAKovNCZtJQi23ey4ji1A98Y7N68XdrLMUaBtgECQBcZ8lJwzfy+
+         Nl0w==
+X-Forwarded-Encrypted: i=1; AJvYcCXEAXMbUtKx8uCLXiLERiskjogx7Ha0BLkZA3Hu/GXdotI5ULj+G8doCkPyILk/zux89OXqo6OKWSYKh4MeyTbsB/H8sadm6A==
+X-Gm-Message-State: AOJu0YyNPUzEANnjU4r0HkWqMs52kbSHH8mvd8UGNMMe38pKs/eyYI98
+	zZO9LRM9MYa3A79vVM55qOFF7/DDuzXqdhT4GL5VwEcCk1ObPScsrIgCUmUYGw==
+X-Google-Smtp-Source: AGHT+IGek7isLuUjx9ixY5A+C0MVHTE+URqlTgRG2I5lQX2fHlVkLgSJN2j/OD4vraUj3CKdt55rjQ==
+X-Received: by 2002:a05:6808:1c7:b0:3c5:f77e:6133 with SMTP id x7-20020a05680801c700b003c5f77e6133mr2667584oic.34.1712605286570;
+        Mon, 08 Apr 2024 12:41:26 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id k1-20020a544401000000b003c5f66569c9sm357473oiw.46.2024.04.08.12.41.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Apr 2024 12:41:26 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 8 Apr 2024 14:41:24 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.8 000/273] 6.8.5-rc1 review
+Message-ID: <ZhRIZDN-cnwQLuwL@fedora64.linuxtx.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
 
-Machine check SMIs (MSMI) signaled during SEAM operation (typically
-inside TDX guests), on a system with Intel eMCA enabled, might eventually
-be reported to the kernel #MC handler with the saved RIP on the stack
-pointing to the instruction in kernel code after the SEAMCALL instruction
-that entered the SEAM operation. Linux currently says that is a fatal
-error and shuts down.
+On Mon, Apr 08, 2024 at 02:54:35PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.5 release.
+> There are 273 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 10 Apr 2024 12:52:23 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-There is a new bit in IA32_MCG_STATUS that, when set to 1, indicates
-that the machine check didn't originally occur at that saved RIP, but
-during SEAM non-root operation.
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-Add new entries to the severity table to detect this for both data load
-and instruction fetch that set the severity to "AR" (action required).
-
-Increase the width of the mcgmask/mcgres fields in "struct severity"
-from unsigned char to unsigned short since the new bit is in position 12.
-
-Action required for these errors is just mark the page as poisoned and
-return from the machine check handler.
-
-Backport note. Little value in backporting this patch to stable or LTS
-kernels as this is only relevant with support for TDX, which I assume
-won't be backported. But for anyone taking this to v6.1 or older, you
-also need commit a51cbd0d86d3 ("x86/mce: Use severity table to handle
-uncorrected errors in kernel")
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-
----
-The SEAM_NR bit in IA32_MCG_STATUS hasn't yet made it into the Intel
-Software Developers' Manual. But it is described in section 16.5.2
-of "Intel(R) Trust Domain Extensions (Intel(R) TDX) Module Base
-Architecture Specification" downloadable from:
-https://cdrdv2.intel.com/v1/dl/getContent/733575
----
- arch/x86/include/asm/mce.h         |  2 ++
- arch/x86/kernel/cpu/mce/core.c     | 18 ++++++++++++++++++
- arch/x86/kernel/cpu/mce/severity.c | 16 ++++++++++++++--
- 3 files changed, 34 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
-index de3118305838..dfd2e9699bd7 100644
---- a/arch/x86/include/asm/mce.h
-+++ b/arch/x86/include/asm/mce.h
-@@ -13,6 +13,7 @@
- #define MCG_CTL_P		BIT_ULL(8)   /* MCG_CTL register available */
- #define MCG_EXT_P		BIT_ULL(9)   /* Extended registers available */
- #define MCG_CMCI_P		BIT_ULL(10)  /* CMCI supported */
-+#define MCG_SEAM_NR		BIT_ULL(12)  /* MCG_STATUS_SEAM_NR supported */
- #define MCG_EXT_CNT_MASK	0xff0000     /* Number of Extended registers */
- #define MCG_EXT_CNT_SHIFT	16
- #define MCG_EXT_CNT(c)		(((c) & MCG_EXT_CNT_MASK) >> MCG_EXT_CNT_SHIFT)
-@@ -25,6 +26,7 @@
- #define MCG_STATUS_EIPV		BIT_ULL(1)   /* ip points to correct instruction */
- #define MCG_STATUS_MCIP		BIT_ULL(2)   /* machine check in progress */
- #define MCG_STATUS_LMCES	BIT_ULL(3)   /* LMCE signaled */
-+#define MCG_STATUS_SEAM_NR	BIT_ULL(12)  /* Machine check inside SEAM non-root mode */
- 
- /* MCG_EXT_CTL register defines */
- #define MCG_EXT_CTL_LMCE_EN	BIT_ULL(0) /* Enable LMCE */
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 84d41be6d06b..771a9f183260 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -1593,6 +1593,24 @@ noinstr void do_machine_check(struct pt_regs *regs)
- 		else
- 			queue_task_work(&m, msg, kill_me_maybe);
- 
-+	} else if (m.mcgstatus & MCG_STATUS_SEAM_NR) {
-+		/*
-+		 * Saved RIP on stack makes it look like the machine check
-+		 * was taken in the kernel on the instruction following
-+		 * the entry to SEAM mode. But MCG_STATUS_SEAM_NR indicates
-+		 * that the machine check was taken inside SEAM non-root
-+		 * mode.  CPU core has already marked that guest as dead.
-+		 * It is OK for the kernel to resume execution at the
-+		 * apparent point of the machine check as the fault did
-+		 * not occur there. Mark the page as poisoned so it won't
-+		 * be added to free list when the guest is terminated.
-+		 */
-+		if (mce_usable_address(&m)) {
-+			struct page *p = pfn_to_online_page(m.addr >> PAGE_SHIFT);
-+
-+			if (p)
-+				SetPageHWPoison(p);
-+		}
- 	} else {
- 		/*
- 		 * Handle an MCE which has happened in kernel space but from
-diff --git a/arch/x86/kernel/cpu/mce/severity.c b/arch/x86/kernel/cpu/mce/severity.c
-index c4477162c07d..fc8988cfe1c3 100644
---- a/arch/x86/kernel/cpu/mce/severity.c
-+++ b/arch/x86/kernel/cpu/mce/severity.c
-@@ -39,8 +39,8 @@ static struct severity {
- 	u64 mask;
- 	u64 result;
- 	unsigned char sev;
--	unsigned char mcgmask;
--	unsigned char mcgres;
-+	unsigned short mcgmask;
-+	unsigned short mcgres;
- 	unsigned char ser;
- 	unsigned char context;
- 	unsigned char excp;
-@@ -173,6 +173,18 @@ static struct severity {
- 		SER, MASK(MCI_STATUS_OVER|MCI_UC_SAR|MCI_ADDR|MCACOD, MCI_UC_SAR|MCI_ADDR|MCACOD_INSTR),
- 		USER
- 		),
-+	MCESEV(
-+		AR, "Data load error in SEAM non-root mode",
-+		SER, MASK(MCI_STATUS_OVER|MCI_UC_SAR|MCI_ADDR|MCACOD, MCI_UC_SAR|MCI_ADDR|MCACOD_DATA),
-+		MCGMASK(MCG_STATUS_SEAM_NR, MCG_STATUS_SEAM_NR),
-+		KERNEL
-+		),
-+	MCESEV(
-+		AR, "Instruction fetch error in SEAM non-root mode",
-+		SER, MASK(MCI_STATUS_OVER|MCI_UC_SAR|MCI_ADDR|MCACOD, MCI_UC_SAR|MCI_ADDR|MCACOD_INSTR),
-+		MCGMASK(MCG_STATUS_SEAM_NR, MCG_STATUS_SEAM_NR),
-+		KERNEL
-+		),
- 	MCESEV(
- 		PANIC, "Data load in unrecoverable area of kernel",
- 		SER, MASK(MCI_STATUS_OVER|MCI_UC_SAR|MCI_ADDR|MCACOD, MCI_UC_SAR|MCI_ADDR|MCACOD_DATA),
-
-base-commit: fec50db7033ea478773b159e0e2efb135270e3b7
--- 
-2.44.0
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
