@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE032DF73;
-	Mon,  8 Apr 2024 13:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C42DF73;
+	Mon,  8 Apr 2024 13:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581671; cv=none; b=s02NMuV5OaD6w5+S8haHixaoWkucZuvwXkHjJrbKqHCuO+sFUKzza7BYWMPFpUMaFWebCNrMeueIU0mwUOWViaiKxqEmrrMB5AWUUtiZrNx/0rR/FFNSTR/jy9RznaETS43POhPNSOJU01hSXOLI1a/YePgTbEigDFQRNLuHH/I=
+	t=1712581674; cv=none; b=MWWjWY1hzcNEjx5zedxB7iNuI+P6dI/YbHo0tAdZADP0QuoAsLUENVD2pi1zMGG0mTN/Dq338vKV672kCTKJPs/LEnGPGJle2UQlc/nCpwnkn2BbC0ECyEBgVX/lqbClLVMQabhcnRGcCB9QmBgbugT1/jxS9bUnJhaPcb8kWGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581671; c=relaxed/simple;
-	bh=sWYASfj13JmfSWVT/IcI0Jl6JJePFkCHRXFIO+qi6bg=;
+	s=arc-20240116; t=1712581674; c=relaxed/simple;
+	bh=vowLi28RGz4B4lFFx5PbihD5mmzuEJbHAYFvFsyuNEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEl/JbFFjqs8iSZjGBCzPklPEZcx/t0JvZYU+Ygy7fEmWupfy5cWmjGtnU83mzr7JQBSgzqWBhWIyxz4yiYgyU+TpOpn0SEiVJrj/LUJ5lBVTg71o/NSNMpDeQaT0xirXodtSJUGCq//ikoTeeRnCi9XeMyetXALRcEGC377RiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtxqpExB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T7mtHWd6y9iGf/AEuAujuPn6lTt2YaqBXDdTZOnL5v/q/e+MD1H9WlPmgwMU/4uwxwK736Wy7acY1mQ5nYpVqxwfdmC3wMv9QTWoqd9gnNR8J2EI5V08OpOkUm8OX0TGr1hWyYeIjyDZkS4qWYKhv5lgGjOBiiq2+ZOIoryWT38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB3wTKXl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtxqpExB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038C0C433F1;
-	Mon,  8 Apr 2024 13:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB3wTKXl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F21C433C7;
+	Mon,  8 Apr 2024 13:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581671;
-	bh=sWYASfj13JmfSWVT/IcI0Jl6JJePFkCHRXFIO+qi6bg=;
+	s=korg; t=1712581674;
+	bh=vowLi28RGz4B4lFFx5PbihD5mmzuEJbHAYFvFsyuNEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtxqpExB7mNMtBZrNWK7BIuhRCrmo310odXi6Op/w0q65LGN6CB0ELNi4AfNImP4P
-	 bwPDvwzaNXpUAuuZjKOdzA+TR06zOPYl/THAvKfUlaTfz/A+uD4Mu2H/i+Y5rri027
-	 JwTQYtf90KkZdopuQNuuSZa5/RJJ0YEyPJiw3mAs=
+	b=dB3wTKXlp0NexbTih+CwZA1Tt/oyGCVtwI+pLW8hkR/nTi2EubNML22VYLnzRDBXP
+	 uESmIjcSl88naZpI6QRwJQJWM++K8WbPLpDY9bV/I0j6GXeqOMv3nzTNk9ySNQEbvU
+	 2uxtPiXlWXH9mG/1QvHaAZCIiws4cbEZXFMGvR/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 009/273] tools: ynl: fix setting presence bits in simple nests
-Date: Mon,  8 Apr 2024 14:54:44 +0200
-Message-ID: <20240408125309.576157068@linuxfoundation.org>
+Subject: [PATCH 5.15 072/690] landlock: Warn once if a Landlock action is requested while disabled
+Date: Mon,  8 Apr 2024 14:48:58 +0200
+Message-ID: <20240408125402.135982893@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,48 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit f6c8f5e8694c7a78c94e408b628afa6255cc428a ]
+[ Upstream commit 782191c74875cc33b50263e21d76080b1411884d ]
 
-When we set members of simple nested structures in requests
-we need to set "presence" bits for all the nesting layers
-below. This has nothing to do with the presence type of
-the last layer.
+Because sandboxing can be used as an opportunistic security measure,
+user space may not log unsupported features.  Let the system
+administrator know if an application tries to use Landlock but failed
+because it isn't enabled at boot time.  This may be caused by boot
+loader configurations with outdated "lsm" kernel's command-line
+parameter.
 
-Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240321020214.1250202-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 265885daf3e5 ("landlock: Add syscall implementations")
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20240227110550.3702236-2-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/ynl-gen-c.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/landlock/syscalls.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/tools/net/ynl/ynl-gen-c.py b/tools/net/ynl/ynl-gen-c.py
-index 7fc1aa788f6f5..c19dec2394915 100755
---- a/tools/net/ynl/ynl-gen-c.py
-+++ b/tools/net/ynl/ynl-gen-c.py
-@@ -243,8 +243,11 @@ class Type(SpecAttr):
-         presence = ''
-         for i in range(0, len(ref)):
-             presence = f"{var}->{'.'.join(ref[:i] + [''])}_present.{ref[i]}"
--            if self.presence_type() == 'bit':
--                code.append(presence + ' = 1;')
-+            # Every layer below last is a nest, so we know it uses bit presence
-+            # last layer is "self" and may be a complex type
-+            if i == len(ref) - 1 and self.presence_type() != 'bit':
-+                continue
-+            code.append(presence + ' = 1;')
-         code += self._setter_lines(ri, member, presence)
+diff --git a/security/landlock/syscalls.c b/security/landlock/syscalls.c
+index 507d43827afed..229a6918b52f3 100644
+--- a/security/landlock/syscalls.c
++++ b/security/landlock/syscalls.c
+@@ -32,6 +32,18 @@
+ #include "ruleset.h"
+ #include "setup.h"
  
-         func_name = f"{op_prefix(ri, direction, deref=deref)}_set_{'_'.join(ref)}"
++static bool is_initialized(void)
++{
++	if (likely(landlock_initialized))
++		return true;
++
++	pr_warn_once(
++		"Disabled but requested by user space. "
++		"You should enable Landlock at boot time: "
++		"https://docs.kernel.org/userspace-api/landlock.html#boot-time-configuration\n");
++	return false;
++}
++
+ /**
+  * copy_min_struct_from_user - Safe future-proof argument copying
+  *
+@@ -165,7 +177,7 @@ SYSCALL_DEFINE3(landlock_create_ruleset,
+ 	/* Build-time checks. */
+ 	build_check_abi();
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	if (flags) {
+@@ -311,7 +323,7 @@ SYSCALL_DEFINE4(landlock_add_rule, const int, ruleset_fd,
+ 	struct landlock_ruleset *ruleset;
+ 	int res, err;
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	/* No flag for now. */
+@@ -402,7 +414,7 @@ SYSCALL_DEFINE2(landlock_restrict_self, const int, ruleset_fd, const __u32,
+ 	struct landlock_cred_security *new_llcred;
+ 	int err;
+ 
+-	if (!landlock_initialized)
++	if (!is_initialized())
+ 		return -EOPNOTSUPP;
+ 
+ 	/*
 -- 
 2.43.0
 
