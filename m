@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106B76F08E;
-	Mon,  8 Apr 2024 13:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2072E62C;
+	Mon,  8 Apr 2024 13:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581815; cv=none; b=nIqzPdvmklenuJCvZcYSb++qvMMpG+3PgL2jf6Qhz47QGsMXqxNSZ0Tpar5degdRVp1124zvAQL2lNB/ibCqfbKuDfSt36gHHOP4cPmut25EO9osREqt66/CiaXlyIeTBvKRqWp1veK6WSpLfmoimSv5maCQ9F9jaZvlfvClUhg=
+	t=1712581818; cv=none; b=eZa/98am5kdwf0cF2fRZXc4dFB1yI2H3xKQd9HdlXByzX06EhoY1GNqdYgk63I1daRpi8gKrvDkzePhRbEC1QzSqrqq3UlJv6GcJiC8z5i1L4yEBSm7UAbN2PcOB/MTHLQgGWOHLuZadjLxUhy+00ZvRuqAXDXVdMxdi3Wm3fIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581815; c=relaxed/simple;
-	bh=NU3zqsA8fGwd/Jjnfsgi5x0ficKs5vP9qjifHDOwhu8=;
+	s=arc-20240116; t=1712581818; c=relaxed/simple;
+	bh=PXWPZ6pgjotkacdYdWwH8t6jRWLNqQHLss2EHi/Oqd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iivwDxf32AQEhvtzXEfM1Cn6yjUwjiD/mMzjv0JTWZHZOOF6RxmJqmi6hGSvmHjVT9c3QpVCk/tVgz9iQaF89OOeU/zl4gcUhvMul0JRbbU4nFP7BqoKkN294PLrwJ62tPY4qVppUI+w5/oEKVTEqFsb6lTtov/Ub0RdP3k128U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W54eMknt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5qCy906ZeUE5wiHlUwJNOliUrDP8hzDz6TzCszI1HTqS3+XLHdgiuHJ99Coe4VXyW9uPfAUvn3leqhiWJ5QimCx+tzFYOLacEMQMK8sQnMn/50eWnCfLrW4WEU0B7WW+mkrCSJ+fNYke7OU/vQlV2yHybnyDdRMJajQkQosyyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sk7WY1st; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W54eMknt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8249EC433C7;
-	Mon,  8 Apr 2024 13:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sk7WY1st"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE9C433C7;
+	Mon,  8 Apr 2024 13:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581814;
-	bh=NU3zqsA8fGwd/Jjnfsgi5x0ficKs5vP9qjifHDOwhu8=;
+	s=korg; t=1712581817;
+	bh=PXWPZ6pgjotkacdYdWwH8t6jRWLNqQHLss2EHi/Oqd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W54eMknt3s/fngRWslk8i4lsCBjJTX+P14t3iOSBAowkI8VQDHk7PJrF/ZQGeX7wG
-	 FrQzUMk5vx6r5OGvGe+lezeq8XB8hW6YsgDztrWP9KPrYZWQ4pY/MdcKkQVpHepisC
-	 o6xSZaOCwsxH/ATnv0G5Rcwb3krhr12J1rBhsjE4=
+	b=Sk7WY1stteuJMXgGIur/UsU9026HQnxZj+84N3LYnNpJHV2HT0jCZrHEiOStvtzUo
+	 Wohu5eOkBHRs5sm804V9TSXksW0n2oVMHddp1Rc+Z6a4fsPbq8NVAnzSjrW3Tk1Cid
+	 BUrh9Iy/gTPfPi0oj9DEijhqa3CxRc7EutBatt5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 054/138] x86/retpoline: Do the necessary fixup to the Zen3/4 srso return thunk for !SRSO
-Date: Mon,  8 Apr 2024 14:57:48 +0200
-Message-ID: <20240408125257.905920884@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 011/273] wifi: iwlwifi: mvm: pick the version of SESSION_PROTECTION_NOTIF
+Date: Mon,  8 Apr 2024 14:54:46 +0200
+Message-ID: <20240408125309.637455685@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-commit 0e110732473e14d6520e49d75d2c88ef7d46fe67 upstream.
+[ Upstream commit bbe806c294c9c4cd1221140d96e5f367673e393a ]
 
-The srso_alias_untrain_ret() dummy thunk in the !CONFIG_MITIGATION_SRSO
-case is there only for the altenative in CALL_UNTRAIN_RET to have
-a symbol to resolve.
+When we want to know whether we should look for the mac_id or the
+link_id in struct iwl_mvm_session_prot_notif, we should look at the
+version of SESSION_PROTECTION_NOTIF.
 
-However, testing with kernels which don't have CONFIG_MITIGATION_SRSO
-enabled, leads to the warning in patch_return() to fire:
+This causes WARNINGs:
 
-  missing return thunk: srso_alias_untrain_ret+0x0/0x10-0x0: eb 0e 66 66 2e
-  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/alternative.c:826 apply_returns (arch/x86/kernel/alternative.c:826
+WARNING: CPU: 0 PID: 11403 at drivers/net/wireless/intel/iwlwifi/mvm/time-event.c:959 iwl_mvm_rx_session_protect_notif+0x333/0x340 [iwlmvm]
+RIP: 0010:iwl_mvm_rx_session_protect_notif+0x333/0x340 [iwlmvm]
+Code: 00 49 c7 84 24 48 07 00 00 00 00 00 00 41 c6 84 24 78 07 00 00 ff 4c 89 f7 e8 e9 71 54 d9 e9 7d fd ff ff 0f 0b e9 23 fe ff ff <0f> 0b e9 1c fe ff ff 66 0f 1f 44 00 00 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffffb4bb00003d40 EFLAGS: 00010202
+RAX: 0000000000000000 RBX: ffff9ae63a361000 RCX: ffff9ae4a98b60d4
+RDX: ffff9ae4588499c0 RSI: 0000000000000305 RDI: ffff9ae4a98b6358
+RBP: ffffb4bb00003d68 R08: 0000000000000003 R09: 0000000000000010
+R10: ffffb4bb00003d00 R11: 000000000000000f R12: ffff9ae441399050
+R13: ffff9ae4761329e8 R14: 0000000000000001 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff9ae7af400000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055fb75680018 CR3: 00000003dae32006 CR4: 0000000000f70ef0
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ ? show_regs+0x69/0x80
+ ? __warn+0x8d/0x150
+ ? iwl_mvm_rx_session_protect_notif+0x333/0x340 [iwlmvm]
+ ? report_bug+0x196/0x1c0
+ ? handle_bug+0x45/0x80
+ ? exc_invalid_op+0x1c/0xb0
+ ? asm_exc_invalid_op+0x1f/0x30
+ ? iwl_mvm_rx_session_protect_notif+0x333/0x340 [iwlmvm]
+ iwl_mvm_rx_common+0x115/0x340 [iwlmvm]
+ iwl_mvm_rx_mq+0xa6/0x100 [iwlmvm]
+ iwl_pcie_rx_handle+0x263/0xa10 [iwlwifi]
+ iwl_pcie_napi_poll_msix+0x32/0xd0 [iwlwifi]
 
-Put in a plain "ret" there so that gcc doesn't put a return thunk in
-in its place which special and gets checked.
-
-In addition:
-
-  ERROR: modpost: "srso_alias_untrain_ret" [arch/x86/kvm/kvm-amd.ko] undefined!
-  make[2]: *** [scripts/Makefile.modpost:145: Module.symvers] Chyba 1
-  make[1]: *** [/usr/src/linux-6.8.3/Makefile:1873: modpost] Chyba 2
-  make: *** [Makefile:240: __sub-make] Chyba 2
-
-since !SRSO builds would use the dummy return thunk as reported by
-petr.pisar@atlas.cz, https://bugzilla.kernel.org/show_bug.cgi?id=218679.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202404020901.da75a60f-oliver.sang@intel.com
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/all/202404020901.da75a60f-oliver.sang@intel.com/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 085d33c53012 ("wifi: iwlwifi: support link id in SESSION_PROTECTION_NOTIF")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240311081938.39d5618f7b9d.I564d863e53c6cbcb49141467932ecb6a9840b320@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/retpoline.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/time-event.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -110,6 +110,7 @@ SYM_START(srso_alias_untrain_ret, SYM_L_
- 	ret
- 	int3
- SYM_FUNC_END(srso_alias_untrain_ret)
-+__EXPORT_THUNK(srso_alias_untrain_ret)
- #endif
- 
- SYM_START(srso_alias_safe_ret, SYM_L_GLOBAL, SYM_A_NONE)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+index da00ef6e4fbcf..3d96a824dbd65 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-event.c
+@@ -898,9 +898,8 @@ void iwl_mvm_rx_session_protect_notif(struct iwl_mvm *mvm,
+ 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
+ 	struct iwl_mvm_session_prot_notif *notif = (void *)pkt->data;
+ 	unsigned int ver =
+-		iwl_fw_lookup_cmd_ver(mvm->fw,
+-				      WIDE_ID(MAC_CONF_GROUP,
+-					      SESSION_PROTECTION_CMD), 2);
++		iwl_fw_lookup_notif_ver(mvm->fw, MAC_CONF_GROUP,
++					SESSION_PROTECTION_NOTIF, 2);
+ 	int id = le32_to_cpu(notif->mac_link_id);
+ 	struct ieee80211_vif *vif;
+ 	struct iwl_mvm_vif *mvmvif;
+-- 
+2.43.0
+
 
 
