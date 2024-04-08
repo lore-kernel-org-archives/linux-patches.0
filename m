@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE037175B;
-	Mon,  8 Apr 2024 13:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568C871742;
+	Mon,  8 Apr 2024 13:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581460; cv=none; b=coeYcQ/uzoOdM+/1Tx5ES2SxZpVdaqP6NSjJAJ+PkgGh7qayy8atIovbrbpnMfBAYF3ri3jEJau47l7qJ9TzG+xZ3cCInYHK5ej3SboWxK3+uOnGBSK4un8xT+y2XDe3I6QKI5z1mP4s0GtT3PD1JClMpacpu0j2/R8gbh62w8Y=
+	t=1712581463; cv=none; b=flMb+erHEUZuSmqcydB04bUUtk6nyAe66xBviGM7M+vx28YNhh0BHIXPxCbIFMZE/etz0r4IQMbb3L9wld35B0Zh4HYADRaruWAHqYqwPCAEcMIBEpSJj3x2+a7VBN9ySpNkNsD7xfEw5Q7JXGZ41FDA4rI3C6noA1pFKVViqE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581460; c=relaxed/simple;
-	bh=Oi4YoKNspqn+fHxRvJnscXWei5awyVwRciCOIxGjj00=;
+	s=arc-20240116; t=1712581463; c=relaxed/simple;
+	bh=ASRjNpvftRSE5otoamRla/xuPeq4dz/2hbG4UYE5FUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cI+a5dt9l+PU0vh7iiWlNUVioEV3gauGF7uTraaMWWhTrEEipQQ9RJSzr7VUvyow+sqifsGJy18iJqNIglVmccSor3S64V7OQVOqiEHkhGgLb9Oi9AsLOZ4MAZpXfodFoeGcNNECtr/y3dTnlbQa/jELOCOO1ze6MxFTWkoVH/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0iTQh4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Es4ZO70nmF+D2WqU+R1j03d57N2P5P1i98fPgL49K56T2QtXprjyFXJBqT5O8T9UgcqhshIRTAaHOGWt0l/dDJe4CBRqG33M65US0TW2m9RVR1wLP4bKcbbR7v7dPBqDTd+vcZQW0N3U2wm/LfpRj+jVW8aIRvbp7lVBmiGs9Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPK2+g4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0iTQh4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6C8C433C7;
-	Mon,  8 Apr 2024 13:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPK2+g4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C92C433C7;
+	Mon,  8 Apr 2024 13:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581460;
-	bh=Oi4YoKNspqn+fHxRvJnscXWei5awyVwRciCOIxGjj00=;
+	s=korg; t=1712581463;
+	bh=ASRjNpvftRSE5otoamRla/xuPeq4dz/2hbG4UYE5FUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0iTQh4p4xhVLi+O/Cl8GK4aBpaAlaCn0ivcJ59TBwg4fuvRBjHOH+YJIT2D8ZRl6
-	 uH8G8AhcNLV+uxDpMQ48A8rYD86JHfDwwiqiVzsKHW+VGqOCsjA2lE/lZ1cEOi2izy
-	 J9WYGGqGnERp7cl++JjHd05jbyyBehJfU4qxyiys=
+	b=RPK2+g4rzOQoGIq+cfJblWlThHTt1Vqp314j3px/qBFQQE5TDMVqjG6w3qvMgnvcD
+	 RCjpjl8gx3oIK4RvTd9SWaZ7qeN6kcZIbSk3wQg2LILNXLAT2mjbsatMtyl616+Pdi
+	 SUHrIuN1juRfUJqxJwl9W9ySmsjBXdLwc9K3JQ5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	sparclinux@vger.kernel.org,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Nick Alcock <nick.alcock@oracle.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Puranjay Mohan <puranjay12@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/690] sparc: vDSO: fix return value of __setup handler
-Date: Mon,  8 Apr 2024 14:48:07 +0200
-Message-ID: <20240408125400.328628883@linuxfoundation.org>
+Subject: [PATCH 6.6 005/252] bpf, arm64: fix bug in BPF_LDX_MEMSX
+Date: Mon,  8 Apr 2024 14:55:04 +0200
+Message-ID: <20240408125306.814844262@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,59 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Puranjay Mohan <puranjay12@gmail.com>
 
-[ Upstream commit 5378f00c935bebb846b1fdb0e79cb76c137c56b5 ]
+[ Upstream commit 114b5b3b4bde7358624437be2f12cde1b265224e ]
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from vdso_setup().
+A64_LDRSW() takes three registers: Xt, Xn, Xm as arguments and it loads
+and sign extends the value at address Xn + Xm into register Xt.
 
-Fixes: 9a08862a5d2e ("vDSO for sparc")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: sparclinux@vger.kernel.org
-Cc: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Nick Alcock <nick.alcock@oracle.com>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20240211052808.22635-1-rdunlap@infradead.org
+Currently, the offset is being directly used in place of the tmp
+register which has the offset already loaded by the last emitted
+instruction.
+
+This will cause JIT failures. The easiest way to reproduce this is to
+test the following code through test_bpf module:
+
+{
+	"BPF_LDX_MEMSX | BPF_W",
+	.u.insns_int = {
+		BPF_LD_IMM64(R1, 0x00000000deadbeefULL),
+		BPF_LD_IMM64(R2, 0xffffffffdeadbeefULL),
+		BPF_STX_MEM(BPF_DW, R10, R1, -7),
+		BPF_LDX_MEMSX(BPF_W, R0, R10, -7),
+		BPF_JMP_REG(BPF_JNE, R0, R2, 1),
+		BPF_ALU64_IMM(BPF_MOV, R0, 0),
+		BPF_EXIT_INSN(),
+	},
+	INTERNAL,
+	{ },
+	{ { 0, 0 } },
+	.stack_depth = 7,
+},
+
+We need to use the offset as -7 to trigger this code path, there could
+be other valid ways to trigger this from proper BPF programs as well.
+
+This code is rejected by the JIT because -7 is passed to A64_LDRSW() but
+it expects a valid register (0 - 31).
+
+ roott@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
+ [11300.490371] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
+ [11300.491750] test_bpf: #345 BPF_LDX_MEMSX | BPF_W
+ [11300.493179] aarch64_insn_encode_register: unknown register encoding -7
+ [11300.494133] aarch64_insn_encode_register: unknown register encoding -7
+ [11300.495292] FAIL to select_runtime err=-524
+ [11300.496804] test_bpf: Summary: 0 PASSED, 1 FAILED, [0/0 JIT'ed]
+ modprobe: ERROR: could not insert 'test_bpf': Invalid argument
+
+Applying this patch fixes the issue.
+
+ root@pjy:~# modprobe test_bpf test_name="BPF_LDX_MEMSX | BPF_W"
+ [  292.837436] test_bpf: test_bpf: set 'test_bpf' as the default test_suite.
+ [  292.839416] test_bpf: #345 BPF_LDX_MEMSX | BPF_W jited:1 156 PASS
+ [  292.844794] test_bpf: Summary: 1 PASSED, 0 FAILED, [1/1 JIT'ed]
+
+Fixes: cc88f540da52 ("bpf, arm64: Support sign-extension load instructions")
+Signed-off-by: Puranjay Mohan <puranjay12@gmail.com>
+Message-ID: <20240312235917.103626-1-puranjay12@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/vdso/vma.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sparc/vdso/vma.c b/arch/sparc/vdso/vma.c
-index cc19e09b0fa1e..b073153c711ad 100644
---- a/arch/sparc/vdso/vma.c
-+++ b/arch/sparc/vdso/vma.c
-@@ -449,9 +449,8 @@ static __init int vdso_setup(char *s)
- 	unsigned long val;
- 
- 	err = kstrtoul(s, 10, &val);
--	if (err)
--		return err;
--	vdso_enabled = val;
--	return 0;
-+	if (!err)
-+		vdso_enabled = val;
-+	return 1;
- }
- __setup("vdso=", vdso_setup);
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 150d1c6543f7f..5fe4d8b3fdc89 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -1189,7 +1189,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx,
+ 			} else {
+ 				emit_a64_mov_i(1, tmp, off, ctx);
+ 				if (sign_extend)
+-					emit(A64_LDRSW(dst, src_adj, off_adj), ctx);
++					emit(A64_LDRSW(dst, src, tmp), ctx);
+ 				else
+ 					emit(A64_LDR32(dst, src, tmp), ctx);
+ 			}
 -- 
 2.43.0
 
