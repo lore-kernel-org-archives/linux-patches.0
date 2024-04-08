@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827987FBC8;
-	Mon,  8 Apr 2024 13:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA17C0AB;
+	Mon,  8 Apr 2024 13:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583570; cv=none; b=LMirlUn2wIsZDWQSGdO2loq/o5VsFLwfaOGd5slWgxigg2HssnxiNT5y+0RYs6cCTNKYG6tko+mKX2OOwlS+0iruHOImL7Ds8oX5FHjkphBPq+XgIkoNKNtTzgaZ+uJ8cTxpkkAbe3cAFhp7W5j7+O2Ds6+VujnGIj3hHxVzR7U=
+	t=1712583573; cv=none; b=ruOAJjS3LoOa2iW92V7ipHnGrlhUcEOFMkx6hcox14F+7I0MvUKGpdXwyy69NFjL071/MMgY8caaUD+DTGkAfMMTipOs0rmoJpjeOaLLi/fld81IO1p6Y+MT6IMfHtT0Qt22khHGI+KE7p2v/IGQgdr2OfmgWf8fFSVUYSJE6iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583570; c=relaxed/simple;
-	bh=5PY2Noq0WUtP8f2J3VHBWDlldL8BQ+6618ZhTDS/UOY=;
+	s=arc-20240116; t=1712583573; c=relaxed/simple;
+	bh=4iBco4EVv/oIERTY7nr/ZVEqdPSsFQ7fNstwuGSHc5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfXckn7UEF5V2vLfGtleSwmrLDOqNop7ju+k8iCz7g47L9K9ZPJWBAo8tBgYbCxBBFviZY2ekjm0a+7APl4hm3hy9GtQdOSFqcPO52dEJ1xItwAhdHJKrnLQGs/vXws5KwvbBB6X9ZnlqXaR8A7u9TeNbUkps5vGnc2AR5rNs1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=us+dv0Ev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/7cIPA+ioVuLJQw4wPjB2Tp8iG7vsCTd1n8eOLK0RMR3EsgDXMPJRDLx2e+42WTHnZWAj/CtD7s8UEXQ1SWRRnKt42yaSIeKHog/8m7fZNi9BYBWnesA2I2SMetMv/QPOFY7jO5qGkRDXabJIMO/t0N8Mnv7r0R7cAdjHRwgl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFuj6wGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="us+dv0Ev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B67C433C7;
-	Mon,  8 Apr 2024 13:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFuj6wGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3E8C433C7;
+	Mon,  8 Apr 2024 13:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583570;
-	bh=5PY2Noq0WUtP8f2J3VHBWDlldL8BQ+6618ZhTDS/UOY=;
+	s=korg; t=1712583573;
+	bh=4iBco4EVv/oIERTY7nr/ZVEqdPSsFQ7fNstwuGSHc5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=us+dv0EvIgwjtfho0TUk5sP9P82X1W8gnpSO4NyfFfYEDaynrJghvtR/q//Pct58p
-	 ZyTqLHQcpxx9JYLmNpndKR606xbdPTiULpbz8W4GRDSn30O+aefCnColMsxyGTi5Xl
-	 dHFL6fTYv6vi7sgR4hMILhjb9u2YpNXkjFNKIGzA=
+	b=hFuj6wGQWfTczXs0YmuBf81iDCD2AYavnKZsgsmcT/f3o+DGKvHWxaFWgtfTHO2/A
+	 8cHZrJYmhzq1oRfjfgiNPmA5DvIPAW+/KBq3os8yiB2lBYEQSL5l8CTr+T5Mx2h5sr
+	 vTiAmzSBSdw61reElyr3A3PA/4CYtTWLrg8cv/j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 209/252] io_uring/kbuf: get rid of lower BGID lists
-Date: Mon,  8 Apr 2024 14:58:28 +0200
-Message-ID: <20240408125313.140400563@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 261/690] NFSD: Clean up the nfsd_net::nfssvc_boot field
+Date: Mon,  8 Apr 2024 14:52:07 +0200
+Message-ID: <20240408125409.080146771@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,204 +45,176 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 09ab7eff38202159271534d2f5ad45526168f2a5 upstream.
+[ Upstream commit 91d2e9b56cf5c80f9efc530d494968369a8a0e0d ]
 
-Just rely on the xarray for any kind of bgid. This simplifies things, and
-it really doesn't bring us much, if anything.
+There are two boot-time fields in struct nfsd_net: one called
+boot_time and one called nfssvc_boot. The latter is used only to
+form write verifiers, but its documenting comment declares:
 
-Cc: stable@vger.kernel.org # v6.4+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        /* Time of server startup */
+
+Since commit 27c438f53e79 ("nfsd: Support the server resetting the
+boot verifier"), this field can be reset at any time; it's no
+longer tied to server restart. So that comment is stale.
+
+Also, according to pahole, struct timespec64 is 16 bytes long on
+x86_64. The nfssvc_boot field is used only to form a write verifier,
+which is 8 bytes long.
+
+Let's clarify this situation by manufacturing an 8-byte verifier
+in nfs_reset_boot_verifier() and storing only that in struct
+nfsd_net.
+
+We're grabbing 128 bits of time, so compress all of those into a
+64-bit verifier instead of throwing out the high-order bits.
+In the future, the siphash_key can be re-used for other hashed
+objects per-nfsd_net.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- include/linux/io_uring_types.h |    1 
- io_uring/io_uring.c            |    2 -
- io_uring/kbuf.c                |   70 ++++-------------------------------------
- 3 files changed, 8 insertions(+), 65 deletions(-)
+ fs/nfsd/netns.h  |  8 +++++---
+ fs/nfsd/nfsctl.c |  3 ++-
+ fs/nfsd/nfssvc.c | 51 ++++++++++++++++++++++++++++++++++++------------
+ 3 files changed, 45 insertions(+), 17 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -250,7 +250,6 @@ struct io_ring_ctx {
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 9e8b77d2a3a47..a6ed300259849 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -11,6 +11,7 @@
+ #include <net/net_namespace.h>
+ #include <net/netns/generic.h>
+ #include <linux/percpu_counter.h>
++#include <linux/siphash.h>
  
- 		struct io_submit_state	submit_state;
+ /* Hash tables for nfs4_clientid state */
+ #define CLIENT_HASH_BITS                 4
+@@ -108,9 +109,8 @@ struct nfsd_net {
+ 	bool nfsd_net_up;
+ 	bool lockd_up;
  
--		struct io_buffer_list	*io_bl;
- 		struct xarray		io_bl_xa;
+-	/* Time of server startup */
+-	struct timespec64 nfssvc_boot;
+-	seqlock_t boot_lock;
++	seqlock_t writeverf_lock;
++	unsigned char writeverf[8];
  
- 		struct io_hash_table	cancel_table_locked;
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -343,7 +343,6 @@ static __cold struct io_ring_ctx *io_rin
- err:
- 	kfree(ctx->cancel_table.hbs);
- 	kfree(ctx->cancel_table_locked.hbs);
--	kfree(ctx->io_bl);
- 	xa_destroy(&ctx->io_bl_xa);
- 	kfree(ctx);
- 	return NULL;
-@@ -2934,7 +2933,6 @@ static __cold void io_ring_ctx_free(stru
- 		io_wq_put_hash(ctx->hash_map);
- 	kfree(ctx->cancel_table.hbs);
- 	kfree(ctx->cancel_table_locked.hbs);
--	kfree(ctx->io_bl);
- 	xa_destroy(&ctx->io_bl_xa);
- 	kfree(ctx);
- }
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -17,8 +17,6 @@
+ 	/*
+ 	 * Max number of connections this nfsd container will allow. Defaults
+@@ -187,6 +187,8 @@ struct nfsd_net {
+ 	char			nfsd_name[UNX_MAXNODENAME+1];
  
- #define IO_BUFFER_LIST_BUF_PER_PAGE (PAGE_SIZE / sizeof(struct io_uring_buf))
- 
--#define BGID_ARRAY	64
--
- /* BIDs are addressed by a 16-bit field in a CQE */
- #define MAX_BIDS_PER_BGID (1 << 16)
- 
-@@ -31,13 +29,9 @@ struct io_provide_buf {
- 	__u16				bid;
+ 	struct nfsd_fcache_disposal *fcache_disposal;
++
++	siphash_key_t		siphash_key;
  };
  
--static struct io_buffer_list *__io_buffer_get_list(struct io_ring_ctx *ctx,
--						   struct io_buffer_list *bl,
--						   unsigned int bgid)
-+static inline struct io_buffer_list *__io_buffer_get_list(struct io_ring_ctx *ctx,
-+							  unsigned int bgid)
- {
--	if (bl && bgid < BGID_ARRAY)
--		return &bl[bgid];
--
- 	return xa_load(&ctx->io_bl_xa, bgid);
- }
+ /* Simple check to find out if a given net was properly initialized */
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 504b169d27881..68b020f2002b7 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1484,7 +1484,8 @@ static __net_init int nfsd_init_net(struct net *net)
+ 	nn->clientid_counter = nn->clientid_base + 1;
+ 	nn->s2s_cp_cl_id = nn->clientid_counter++;
  
-@@ -53,7 +47,7 @@ static inline struct io_buffer_list *io_
- {
- 	lockdep_assert_held(&ctx->uring_lock);
+-	seqlock_init(&nn->boot_lock);
++	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
++	seqlock_init(&nn->writeverf_lock);
  
--	return __io_buffer_get_list(ctx, ctx->io_bl, bgid);
-+	return __io_buffer_get_list(ctx, bgid);
- }
- 
- static int io_buffer_add_list(struct io_ring_ctx *ctx,
-@@ -66,10 +60,6 @@ static int io_buffer_add_list(struct io_
- 	 */
- 	bl->bgid = bgid;
- 	smp_store_release(&bl->is_ready, 1);
--
--	if (bgid < BGID_ARRAY)
--		return 0;
--
- 	return xa_err(xa_store(&ctx->io_bl_xa, bgid, bl, GFP_KERNEL));
- }
- 
-@@ -215,24 +205,6 @@ void __user *io_buffer_select(struct io_
- 	return ret;
- }
- 
--static __cold int io_init_bl_list(struct io_ring_ctx *ctx)
--{
--	struct io_buffer_list *bl;
--	int i;
--
--	bl = kcalloc(BGID_ARRAY, sizeof(struct io_buffer_list), GFP_KERNEL);
--	if (!bl)
--		return -ENOMEM;
--
--	for (i = 0; i < BGID_ARRAY; i++) {
--		INIT_LIST_HEAD(&bl[i].buf_list);
--		bl[i].bgid = i;
--	}
--
--	smp_store_release(&ctx->io_bl, bl);
--	return 0;
--}
--
- /*
-  * Mark the given mapped range as free for reuse
-  */
-@@ -305,13 +277,6 @@ void io_destroy_buffers(struct io_ring_c
- {
- 	struct io_buffer_list *bl;
- 	unsigned long index;
--	int i;
--
--	for (i = 0; i < BGID_ARRAY; i++) {
--		if (!ctx->io_bl)
--			break;
--		__io_remove_buffers(ctx, &ctx->io_bl[i], -1U);
--	}
- 
- 	xa_for_each(&ctx->io_bl_xa, index, bl) {
- 		xa_erase(&ctx->io_bl_xa, bl->bgid);
-@@ -485,12 +450,6 @@ int io_provide_buffers(struct io_kiocb *
- 
- 	io_ring_submit_lock(ctx, issue_flags);
- 
--	if (unlikely(p->bgid < BGID_ARRAY && !ctx->io_bl)) {
--		ret = io_init_bl_list(ctx);
--		if (ret)
--			goto err;
--	}
--
- 	bl = io_buffer_get_list(ctx, p->bgid);
- 	if (unlikely(!bl)) {
- 		bl = kzalloc(sizeof(*bl), GFP_KERNEL_ACCOUNT);
-@@ -503,14 +462,9 @@ int io_provide_buffers(struct io_kiocb *
- 		if (ret) {
- 			/*
- 			 * Doesn't need rcu free as it was never visible, but
--			 * let's keep it consistent throughout. Also can't
--			 * be a lower indexed array group, as adding one
--			 * where lookup failed cannot happen.
-+			 * let's keep it consistent throughout.
- 			 */
--			if (p->bgid >= BGID_ARRAY)
--				kfree_rcu(bl, rcu);
--			else
--				WARN_ON_ONCE(1);
-+			kfree_rcu(bl, rcu);
- 			goto err;
- 		}
- 	}
-@@ -675,12 +629,6 @@ int io_register_pbuf_ring(struct io_ring
- 	if (reg.ring_entries >= 65536)
- 		return -EINVAL;
- 
--	if (unlikely(reg.bgid < BGID_ARRAY && !ctx->io_bl)) {
--		int ret = io_init_bl_list(ctx);
--		if (ret)
--			return ret;
--	}
--
- 	bl = io_buffer_get_list(ctx, reg.bgid);
- 	if (bl) {
- 		/* if mapped buffer ring OR classic exists, don't allow */
-@@ -730,10 +678,8 @@ int io_unregister_pbuf_ring(struct io_ri
- 		return -EINVAL;
- 
- 	__io_remove_buffers(ctx, bl, -1U);
--	if (bl->bgid >= BGID_ARRAY) {
--		xa_erase(&ctx->io_bl_xa, bl->bgid);
--		kfree_rcu(bl, rcu);
--	}
-+	xa_erase(&ctx->io_bl_xa, bl->bgid);
-+	kfree_rcu(bl, rcu);
  	return 0;
+ 
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 4d1d8aa6d7f9d..5a60664695352 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/fs_struct.h>
+ #include <linux/swap.h>
++#include <linux/siphash.h>
+ 
+ #include <linux/sunrpc/stats.h>
+ #include <linux/sunrpc/svcsock.h>
+@@ -344,33 +345,57 @@ static bool nfsd_needs_lockd(struct nfsd_net *nn)
+ 	return nfsd_vers(nn, 2, NFSD_TEST) || nfsd_vers(nn, 3, NFSD_TEST);
  }
  
-@@ -741,7 +687,7 @@ void *io_pbuf_get_address(struct io_ring
++/**
++ * nfsd_copy_boot_verifier - Atomically copy a write verifier
++ * @verf: buffer in which to receive the verifier cookie
++ * @nn: NFS net namespace
++ *
++ * This function provides a wait-free mechanism for copying the
++ * namespace's boot verifier without tearing it.
++ */
+ void nfsd_copy_boot_verifier(__be32 verf[2], struct nfsd_net *nn)
  {
- 	struct io_buffer_list *bl;
+ 	int seq = 0;
  
--	bl = __io_buffer_get_list(ctx, smp_load_acquire(&ctx->io_bl), bgid);
-+	bl = __io_buffer_get_list(ctx, bgid);
+ 	do {
+-		read_seqbegin_or_lock(&nn->boot_lock, &seq);
+-		/*
+-		 * This is opaque to client, so no need to byte-swap. Use
+-		 * __force to keep sparse happy. y2038 time_t overflow is
+-		 * irrelevant in this usage
+-		 */
+-		verf[0] = (__force __be32)nn->nfssvc_boot.tv_sec;
+-		verf[1] = (__force __be32)nn->nfssvc_boot.tv_nsec;
+-	} while (need_seqretry(&nn->boot_lock, seq));
+-	done_seqretry(&nn->boot_lock, seq);
++		read_seqbegin_or_lock(&nn->writeverf_lock, &seq);
++		memcpy(verf, nn->writeverf, sizeof(*verf));
++	} while (need_seqretry(&nn->writeverf_lock, seq));
++	done_seqretry(&nn->writeverf_lock, seq);
+ }
  
- 	if (!bl || !bl->is_mmap)
- 		return NULL;
+ static void nfsd_reset_boot_verifier_locked(struct nfsd_net *nn)
+ {
+-	ktime_get_raw_ts64(&nn->nfssvc_boot);
++	struct timespec64 now;
++	u64 verf;
++
++	/*
++	 * Because the time value is hashed, y2038 time_t overflow
++	 * is irrelevant in this usage.
++	 */
++	ktime_get_raw_ts64(&now);
++	verf = siphash_2u64(now.tv_sec, now.tv_nsec, &nn->siphash_key);
++	memcpy(nn->writeverf, &verf, sizeof(nn->writeverf));
+ }
+ 
++/**
++ * nfsd_reset_boot_verifier - Generate a new boot verifier
++ * @nn: NFS net namespace
++ *
++ * This function updates the ->writeverf field of @nn. This field
++ * contains an opaque cookie that, according to Section 18.32.3 of
++ * RFC 8881, "the client can use to determine whether a server has
++ * changed instance state (e.g., server restart) between a call to
++ * WRITE and a subsequent call to either WRITE or COMMIT.  This
++ * cookie MUST be unchanged during a single instance of the NFSv4.1
++ * server and MUST be unique between instances of the NFSv4.1
++ * server."
++ */
+ void nfsd_reset_boot_verifier(struct nfsd_net *nn)
+ {
+-	write_seqlock(&nn->boot_lock);
++	write_seqlock(&nn->writeverf_lock);
+ 	nfsd_reset_boot_verifier_locked(nn);
+-	write_sequnlock(&nn->boot_lock);
++	write_sequnlock(&nn->writeverf_lock);
+ }
+ 
+ static int nfsd_startup_net(struct net *net, const struct cred *cred)
+-- 
+2.43.0
+
 
 
