@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE32E2E62C;
-	Mon,  8 Apr 2024 13:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9686F08E;
+	Mon,  8 Apr 2024 13:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581764; cv=none; b=o7fA9I9kHJMpK/TUpAgXKoVbFGgGO9AUzEgwvkaPfbCTho82dd9UGX8rv8QXmaXY09mUQmgc+Agfj+iIvLJ/1/W7xVcZ7y5tHUMrbuEslJYtHpgTdhY7IOixno/zOfWIxfobHA0kkfWtwDngnXVl3FWkOb90ryyJ4jlEHy0iptU=
+	t=1712581767; cv=none; b=IUJC5zofkAaAcKeFqHFE1gMwYrNa4F3aabS14aPpaQ0UU8nJVnJ86RMHSrJruQf7nAbepsoyXWh/t5XtLod8lZ+GH9uHV92GbS3KGLupmCESSRclWnZiOC6PlmVPQ0mJBCadi0CNB7Ynu3UVtpCe21ncQ8bW8uZoq+QAUcHDvIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581764; c=relaxed/simple;
-	bh=+UcuGIvrW49PeukjK1jWbpVlv9Mtd+VmIsQNLjrcbRc=;
+	s=arc-20240116; t=1712581767; c=relaxed/simple;
+	bh=UjpL3h4kzRSyjfbx60qv0kSkByarW7pzLum+ddBs1yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jl3Ezo74qIuJ1usAahkN+6aEtOZPrAolQRezcCGE0Ib4F0yEJaMVu48jMhwgu6Qm2KYb+OxGmwGxgN36hnlxVQ0wWv+ecEI3aQySorSxJWS8sQCVRaeD1WoMYjlAKPCET5PAGA831aPf7AS+vNGwCgZlkxoBF5lWupPVlPTmPQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlFIy8bl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bp7qnJyoIPPWqFb9V3deJF4LJiHqgLL0+7eaZQenUyVZ1tq1JmtOtjOpXCV0ZbMNq+9IaxaHt+cdGWivBoIH7xiqNsQkBRXjPDBEPpwUaseMErskvmt7Pgprw8I54Fziy5/j6J2MogC++bsD/j0RvR3JD/RW/0HtnzEJfwPx1yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN/fKF6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlFIy8bl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493DBC433F1;
-	Mon,  8 Apr 2024 13:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN/fKF6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37371C433F1;
+	Mon,  8 Apr 2024 13:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581764;
-	bh=+UcuGIvrW49PeukjK1jWbpVlv9Mtd+VmIsQNLjrcbRc=;
+	s=korg; t=1712581767;
+	bh=UjpL3h4kzRSyjfbx60qv0kSkByarW7pzLum+ddBs1yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RlFIy8blT9hqhOvVAuNWkRnqC9evUM4m3Ysa1R72fyek8wL5WND5OoTL+wtOxdWFH
-	 nIB0BeI5cSWLDGXhUaFijwAiZo5LQoAKGKA63nzN1fMnisFSyN/bXuQM5CVRV7T1of
-	 Lm+lzNIAP15RhdK+/rE+zW4qnktiwsh137drnJiY=
+	b=GN/fKF6C3aXV3LxjnJtPHozMuWyUPd7hMgYZa+Xa4NX4ML7EFEMq5Hyz5s1bI+Bi5
+	 bZK7D+mM4762b2XdTlmhaqqy+vLEb9NNW1Lfv8CXj5rUJc+gx72T5CusZGU+qL3P+b
+	 e/FLhBcjommUSyCap4Uvnxs4f1VayZS6QsuySHuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 050/138] net: phy: micrel: Fix potential null pointer dereference
-Date: Mon,  8 Apr 2024 14:57:44 +0200
-Message-ID: <20240408125257.784119794@linuxfoundation.org>
+	Justin Chen <justin.chen@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 038/252] net: bcmasp: Bring up unimac after PHY link up
+Date: Mon,  8 Apr 2024 14:55:37 +0200
+Message-ID: <20240408125307.823426302@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +47,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit 96c155943a703f0655c0c4cab540f67055960e91 upstream.
+[ Upstream commit dfd222e2aef68818320a57b13a1c52a44c22bc80 ]
 
-In lan8814_get_sig_rx() and lan8814_get_sig_tx() ptp_parse_header() may
-return NULL as ptp_header due to abnormal packet type or corrupted packet.
-Fix this bug by adding ptp_header check.
+The unimac requires the PHY RX clk during reset or it may be put
+into a bad state. Bring up the unimac after link up to ensure the
+PHY RX clk exists.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240329061631.33199-1-amishin@t-argos.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ .../net/ethernet/broadcom/asp2/bcmasp_intf.c  | 28 +++++++++++++------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -2303,7 +2303,7 @@ static void lan8814_txtstamp(struct mii_
- 	}
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index 9cae5a3090000..b3d04f49f77e9 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -391,7 +391,9 @@ static void umac_reset(struct bcmasp_intf *intf)
+ 	umac_wl(intf, 0x0, UMC_CMD);
+ 	umac_wl(intf, UMC_CMD_SW_RESET, UMC_CMD);
+ 	usleep_range(10, 100);
+-	umac_wl(intf, 0x0, UMC_CMD);
++	/* We hold the umac in reset and bring it out of
++	 * reset when phy link is up.
++	 */
  }
  
--static void lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
-+static bool lan8814_get_sig_rx(struct sk_buff *skb, u16 *sig)
- {
- 	struct ptp_header *ptp_header;
- 	u32 type;
-@@ -2313,7 +2313,11 @@ static void lan8814_get_sig_rx(struct sk
- 	ptp_header = ptp_parse_header(skb, type);
- 	skb_pull_inline(skb, ETH_HLEN);
+ static void umac_set_hw_addr(struct bcmasp_intf *intf,
+@@ -411,6 +413,8 @@ static void umac_enable_set(struct bcmasp_intf *intf, u32 mask,
+ 	u32 reg;
  
-+	if (!ptp_header)
-+		return false;
+ 	reg = umac_rl(intf, UMC_CMD);
++	if (reg & UMC_CMD_SW_RESET)
++		return;
+ 	if (enable)
+ 		reg |= mask;
+ 	else
+@@ -429,7 +433,6 @@ static void umac_init(struct bcmasp_intf *intf)
+ 	umac_wl(intf, 0x800, UMC_FRM_LEN);
+ 	umac_wl(intf, 0xffff, UMC_PAUSE_CNTRL);
+ 	umac_wl(intf, 0x800, UMC_RX_MAX_PKT_SZ);
+-	umac_enable_set(intf, UMC_CMD_PROMISC, 1);
+ }
+ 
+ static int bcmasp_tx_poll(struct napi_struct *napi, int budget)
+@@ -656,6 +659,12 @@ static void bcmasp_adj_link(struct net_device *dev)
+ 			UMC_CMD_HD_EN | UMC_CMD_RX_PAUSE_IGNORE |
+ 			UMC_CMD_TX_PAUSE_IGNORE);
+ 		reg |= cmd_bits;
++		if (reg & UMC_CMD_SW_RESET) {
++			reg &= ~UMC_CMD_SW_RESET;
++			umac_wl(intf, reg, UMC_CMD);
++			udelay(2);
++			reg |= UMC_CMD_TX_EN | UMC_CMD_RX_EN | UMC_CMD_PROMISC;
++		}
+ 		umac_wl(intf, reg, UMC_CMD);
+ 
+ 		intf->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
+@@ -1061,9 +1070,6 @@ static int bcmasp_netif_init(struct net_device *dev, bool phy_connect)
+ 
+ 	umac_init(intf);
+ 
+-	/* Disable the UniMAC RX/TX */
+-	umac_enable_set(intf, (UMC_CMD_RX_EN | UMC_CMD_TX_EN), 0);
+-
+ 	umac_set_hw_addr(intf, dev->dev_addr);
+ 
+ 	intf->old_duplex = -1;
+@@ -1083,9 +1089,6 @@ static int bcmasp_netif_init(struct net_device *dev, bool phy_connect)
+ 
+ 	bcmasp_enable_rx(intf, 1);
+ 
+-	/* Turn on UniMAC TX/RX */
+-	umac_enable_set(intf, (UMC_CMD_RX_EN | UMC_CMD_TX_EN), 1);
+-
+ 	intf->crc_fwd = !!(umac_rl(intf, UMC_CMD) & UMC_CMD_CRC_FWD);
+ 
+ 	bcmasp_netif_start(dev);
+@@ -1321,7 +1324,14 @@ static void bcmasp_suspend_to_wol(struct bcmasp_intf *intf)
+ 	if (intf->wolopts & WAKE_FILTER)
+ 		bcmasp_netfilt_suspend(intf);
+ 
+-	/* UniMAC receive needs to be turned on */
++	/* Bring UniMAC out of reset if needed and enable RX */
++	reg = umac_rl(intf, UMC_CMD);
++	if (reg & UMC_CMD_SW_RESET)
++		reg &= ~UMC_CMD_SW_RESET;
 +
- 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
-+	return true;
- }
- 
- static bool lan8814_match_rx_ts(struct kszphy_ptp_priv *ptp_priv,
-@@ -2325,7 +2329,8 @@ static bool lan8814_match_rx_ts(struct k
- 	bool ret = false;
- 	u16 skb_sig;
- 
--	lan8814_get_sig_rx(skb, &skb_sig);
-+	if (!lan8814_get_sig_rx(skb, &skb_sig))
-+		return ret;
- 
- 	/* Iterate over all RX timestamps and match it with the received skbs */
- 	spin_lock_irqsave(&ptp_priv->rx_ts_lock, flags);
-@@ -2605,7 +2610,7 @@ static int lan8814_ptpci_adjfine(struct
- 	return 0;
- }
- 
--static void lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
-+static bool lan8814_get_sig_tx(struct sk_buff *skb, u16 *sig)
- {
- 	struct ptp_header *ptp_header;
- 	u32 type;
-@@ -2613,7 +2618,11 @@ static void lan8814_get_sig_tx(struct sk
- 	type = ptp_classify_raw(skb);
- 	ptp_header = ptp_parse_header(skb, type);
- 
-+	if (!ptp_header)
-+		return false;
++	reg |= UMC_CMD_RX_EN | UMC_CMD_PROMISC;
++	umac_wl(intf, reg, UMC_CMD);
 +
- 	*sig = (__force u16)(ntohs(ptp_header->sequence_id));
-+	return true;
- }
+ 	umac_enable_set(intf, UMC_CMD_RX_EN, 1);
  
- static void lan8814_dequeue_tx_skb(struct kszphy_ptp_priv *ptp_priv)
-@@ -2631,7 +2640,8 @@ static void lan8814_dequeue_tx_skb(struc
- 
- 	spin_lock_irqsave(&ptp_priv->tx_queue.lock, flags);
- 	skb_queue_walk_safe(&ptp_priv->tx_queue, skb, skb_tmp) {
--		lan8814_get_sig_tx(skb, &skb_sig);
-+		if (!lan8814_get_sig_tx(skb, &skb_sig))
-+			continue;
- 
- 		if (memcmp(&skb_sig, &seq_id, sizeof(seq_id)))
- 			continue;
-@@ -2675,7 +2685,8 @@ static bool lan8814_match_skb(struct ksz
- 
- 	spin_lock_irqsave(&ptp_priv->rx_queue.lock, flags);
- 	skb_queue_walk_safe(&ptp_priv->rx_queue, skb, skb_tmp) {
--		lan8814_get_sig_rx(skb, &skb_sig);
-+		if (!lan8814_get_sig_rx(skb, &skb_sig))
-+			continue;
- 
- 		if (memcmp(&skb_sig, &rx_ts->seq_id, sizeof(rx_ts->seq_id)))
- 			continue;
+ 	if (intf->parent->wol_irq > 0) {
+-- 
+2.43.0
+
 
 
