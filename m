@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1777C080;
-	Mon,  8 Apr 2024 13:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D52757E3;
+	Mon,  8 Apr 2024 13:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582186; cv=none; b=qmrY4SJsXiagImMJT1IOS1Q4cK0eA1va0voGaK2qbIfYvlWgQ/tcKzsyPSPZ7Iozo/8c1lFGt5L96TYyn+b7StWW7/TBuWJwnM9a9UFOJ+EkARHCPrp1Uawqhunrc4rDcfidJ/D/if4ZHx3PT374r4ptGPYooegYMyjr4dlx4YI=
+	t=1712582189; cv=none; b=hRFXVRsi6khIRynWepwkB/kCQ2gM9TLx88ruwlFYsdoOwZb19gQhX5kJQYFu4oRtW34belCSxoH3FNjMXiLxicnmFChysLslsk0ZABa9QBYw8h/2mf1NCdFiz6GbJfd5a4vkQZF36rcjMei0ABub/KFSNXY8oSAE1Q5gpYoOlYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582186; c=relaxed/simple;
-	bh=k3gdoISJAI+RLBPgcvpYZej4ViHGLFofaQlqoisOeZs=;
+	s=arc-20240116; t=1712582189; c=relaxed/simple;
+	bh=06ni3DCbQ3ig9NBb3rJXHn1IFQkHFqei2QnMHNmMJ9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UVDKWO9mOGqZ9y5NryccUP5y6KcDnYwzTk7kBEF1o+OEQlI+OyvWjhJbmZ69QEgpTuawyjQpAStGMjD3reiH9lZ0GuiSkUxAZpoOTzzgQiLleiSH3ZNTK+iHnV2ZV0Zthr5MqD1Zk4VHPbOXIbZJurpq4Bow2/MfLf5Kk9WwDRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwewdhJa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QthGybNYlxGXaRJ6fNcxUn9vKxmNldD8KiWaxv/tg+8NnUHODMQuCalh+XRKg1pA41ObjcIEl5GcABl23MJyW1UAvW3b5HjwOMlWvE1Hz5+jsC47GZTrTmVk2PiuU9hSwXTT6KBcAMA4eRUVpsovqd1QIIzaAUYnU6ObZXP/T5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpDwv0c4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwewdhJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B391C433C7;
-	Mon,  8 Apr 2024 13:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpDwv0c4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572ADC433F1;
+	Mon,  8 Apr 2024 13:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582185;
-	bh=k3gdoISJAI+RLBPgcvpYZej4ViHGLFofaQlqoisOeZs=;
+	s=korg; t=1712582188;
+	bh=06ni3DCbQ3ig9NBb3rJXHn1IFQkHFqei2QnMHNmMJ9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwewdhJay1e8ff6f3G5KbAHfAl3xtSBVLTGm2SQTAvqQh/bkqP5SotZUGmOPpewZq
-	 kvCmUlwf22HpChemoeKzzRRZvPl82QK0+3/bJ7vwIkl6jHAhH9xMMq9TiViHiXskfM
-	 vtJDLT9ZvkwEgncOkNyGDWi8bKXrT2fSdxQ4y2Z4=
+	b=JpDwv0c40rj46UZFN8n7yHh3quugYciGDS0Uka5UM0wMkTyop0K/dgg8vH5DSk7jb
+	 qJ6LrxUYyrpf0++naXPrIGa3HUWwclxFX71sMX1t3xApqBuDgoMwBCwNZfmlvl9BWq
+	 u5fgF9b2vRXg/RnAaEad6X2Wvvi8vSKS5e9lV+/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	=?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@ubuntu.com>,
+	kvm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 053/273] drm/i915: Stop doing double audio enable/disable on SDVO and g4x+ DP
-Date: Mon,  8 Apr 2024 14:55:28 +0200
-Message-ID: <20240408125310.945918290@linuxfoundation.org>
+Subject: [PATCH 6.1 085/138] KVM: SVM: enhance info printks in SEV init
+Date: Mon,  8 Apr 2024 14:58:19 +0200
+Message-ID: <20240408125258.869451928@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,74 +52,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
 
-[ Upstream commit f378ab7870046704fb92e64d50a67dda2cae8420 ]
+[ Upstream commit 6d1bc9754b04075d938b47cf7f7800814b8911a7 ]
 
-Looks like I misplaced a few hunks when I moved the audio
-enable/disable out from the encoder enable/disable hooks.
-So we are now doing a double audio enable/disable on SDVO
-and g4x+ DP. Probably harmless as doing it twice shouldn't
-really change anything, but let's do it just once, as intended.
+Let's print available ASID ranges for SEV/SEV-ES guests.
+This information can be useful for system administrator
+to debug if SEV/SEV-ES fails to enable.
 
-Fixes: cff742cc6851 ("drm/i915: Hoist the encoder->audio_{enable,disable}() calls higher up")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240226193251.29619-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 315bd0a0825776d6c66d474bf572db64fa019ad8)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+There are a few reasons.
+SEV:
+- NPT is disabled (module parameter)
+- CPU lacks some features (sev, decodeassists)
+- Maximum SEV ASID is 0
+
+SEV-ES:
+- mmio_caching is disabled (module parameter)
+- CPU lacks sev_es feature
+- Minimum SEV ASID value is 1 (can be adjusted in BIOS/UEFI)
+
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Stéphane Graber <stgraber@ubuntu.com>
+Cc: kvm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Link: https://lore.kernel.org/r/20230522161249.800829-3-aleksandr.mikhalitsyn@canonical.com
+[sean: print '0' for min SEV-ES ASID if there are no available ASIDs]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 0aa6b90ef9d7 ("KVM: SVM: Add support for allowing zero SEV ASIDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/g4x_dp.c     | 2 --
- drivers/gpu/drm/i915/display/intel_sdvo.c | 4 ----
- 2 files changed, 6 deletions(-)
+ arch/x86/kvm/svm/sev.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/g4x_dp.c b/drivers/gpu/drm/i915/display/g4x_dp.c
-index dfe0b07a122d1..06ec04e667e32 100644
---- a/drivers/gpu/drm/i915/display/g4x_dp.c
-+++ b/drivers/gpu/drm/i915/display/g4x_dp.c
-@@ -717,7 +717,6 @@ static void g4x_enable_dp(struct intel_atomic_state *state,
- {
- 	intel_enable_dp(state, encoder, pipe_config, conn_state);
- 	intel_edp_backlight_on(pipe_config, conn_state);
--	encoder->audio_enable(encoder, pipe_config, conn_state);
- }
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 3dc0ee1fe9db9..1fe9257d87b2d 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2217,7 +2217,6 @@ void __init sev_hardware_setup(void)
+ 	if (misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count))
+ 		goto out;
  
- static void vlv_enable_dp(struct intel_atomic_state *state,
-@@ -726,7 +725,6 @@ static void vlv_enable_dp(struct intel_atomic_state *state,
- 			  const struct drm_connector_state *conn_state)
- {
- 	intel_edp_backlight_on(pipe_config, conn_state);
--	encoder->audio_enable(encoder, pipe_config, conn_state);
- }
+-	pr_info("SEV supported: %u ASIDs\n", sev_asid_count);
+ 	sev_supported = true;
  
- static void g4x_pre_enable_dp(struct intel_atomic_state *state,
-diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-index 2915d7afe5ccc..cc978ee6d1309 100644
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -1830,8 +1830,6 @@ static void intel_disable_sdvo(struct intel_atomic_state *state,
- 	struct intel_crtc *crtc = to_intel_crtc(old_crtc_state->uapi.crtc);
- 	u32 temp;
+ 	/* SEV-ES support requested? */
+@@ -2245,10 +2244,18 @@ void __init sev_hardware_setup(void)
+ 	if (misc_cg_set_capacity(MISC_CG_RES_SEV_ES, sev_es_asid_count))
+ 		goto out;
  
--	encoder->audio_disable(encoder, old_crtc_state, conn_state);
--
- 	intel_sdvo_set_active_outputs(intel_sdvo, 0);
- 	if (0)
- 		intel_sdvo_set_encoder_power_state(intel_sdvo,
-@@ -1923,8 +1921,6 @@ static void intel_enable_sdvo(struct intel_atomic_state *state,
- 		intel_sdvo_set_encoder_power_state(intel_sdvo,
- 						   DRM_MODE_DPMS_ON);
- 	intel_sdvo_set_active_outputs(intel_sdvo, intel_sdvo_connector->output_flag);
--
--	encoder->audio_enable(encoder, pipe_config, conn_state);
- }
+-	pr_info("SEV-ES supported: %u ASIDs\n", sev_es_asid_count);
+ 	sev_es_supported = true;
  
- static enum drm_mode_status
+ out:
++	if (boot_cpu_has(X86_FEATURE_SEV))
++		pr_info("SEV %s (ASIDs %u - %u)\n",
++			sev_supported ? "enabled" : "disabled",
++			min_sev_asid, max_sev_asid);
++	if (boot_cpu_has(X86_FEATURE_SEV_ES))
++		pr_info("SEV-ES %s (ASIDs %u - %u)\n",
++			sev_es_supported ? "enabled" : "disabled",
++			min_sev_asid > 1 ? 1 : 0, min_sev_asid - 1);
++
+ 	sev_enabled = sev_supported;
+ 	sev_es_enabled = sev_es_supported;
+ #endif
 -- 
 2.43.0
 
