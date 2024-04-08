@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5753881ABE;
-	Mon,  8 Apr 2024 13:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CA96D1A9;
+	Mon,  8 Apr 2024 13:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582982; cv=none; b=U9489q68x7gjifYyPWkHntw69lZW5Gr0TPCO0biA5pFeHiJZp7y2mQpDYBdyOgR1CZ11YMvUN+V4n5bRgR9DQ1qsfg42hw3vlDLvY/edO80OaBJb4hu0cjU2yGW+OJGo7icUfyDCan6lm362Y7oxP/Vd9ziu2vdHadL6XeW1R3o=
+	t=1712582985; cv=none; b=lV4YPmvNdH26yMD0PPgHhpm7e7gEfrlSGP8Bf1VXS8YgEotCYQYMBCC8/GMG/61w47RMK6futhYQoZWIssn31aRXCG/wqcuo9jNOKrFy4wBRugBYl8b4gdXfHrPcGp4TydZhgdLlWAOmqAYvhx3xIi9q+TOBHK5q11jWe5RMZsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582982; c=relaxed/simple;
-	bh=6P0sDAWc9fnBXTghOHbRcMT2BWvrkt3RkGwVmmk605Q=;
+	s=arc-20240116; t=1712582985; c=relaxed/simple;
+	bh=Pcj9/mJfk3+IC/53sbw1VlMQfN4nEWIj9+bmFViZLlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrJ5Ig5EgQTYCgeyfV916+9U2kpJvEBtv4xT51TR/9QbJ+gpFaSddTo+rbxJujapQp3jbOTiiQgFRXZXIlHQZetH7xR7JI+weSFx6zKaa8RNEJpLYlzcJ3Gqdzz6BY8+mLIdHoZa+zBKT1R6vkmO0wDDQvzKmrATOORSj4bi+34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbfv0+7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+SZcfTfr3stF1RPmnjIA9lsriL5PH0P/uTr2UJkMYhDBc3dOAwcdv1oysn85AZAJbl/Wc6LGfMy2DDn4TbG2E91MI516QlUvO1Qvokp9Akm4xEL+AMX0JJbZ6UoXyzCzAl4Htp4VZPLVUSsRK5SxbGohfjIt2PT1jhOkb1b9hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTXNQCXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbfv0+7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41B8C43390;
-	Mon,  8 Apr 2024 13:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTXNQCXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA02DC43390;
+	Mon,  8 Apr 2024 13:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582982;
-	bh=6P0sDAWc9fnBXTghOHbRcMT2BWvrkt3RkGwVmmk605Q=;
+	s=korg; t=1712582985;
+	bh=Pcj9/mJfk3+IC/53sbw1VlMQfN4nEWIj9+bmFViZLlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cbfv0+7QvyZzit5kq2DA/iNiq74yk9tOJqP1FnSXoeq7WxOPJeXtPZsxSnStR0/yx
-	 nuUPvkMtkozsUKRVYgALlFiHuRSAie0r4XnX/zeihjEgpBcNQoOml3YQuuh8l7ZnnH
-	 0jOQWDIz2ikTzakS/P/5QmIbFYb/wC6n8+YD3x9M=
+	b=zTXNQCXGtqrnKkMxVvGPZ7WUVF6WhlC+6vE2M54jqrVr9l2qhmofF6MgSLx7IcH35
+	 Slcd+xCwm9b+l/YSPEEVOcpwYapl+lPA1vGe3C8C4G6V9cv7PxdHWYoj0+6bP5Buce
+	 DcxuPF7UqNrOSAZHWXaj0fGyzqOfjIYRoI4/+PLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.15 195/690] NFS: Remove unnecessary TRACE_DEFINE_ENUM()s
-Date: Mon,  8 Apr 2024 14:51:01 +0200
-Message-ID: <20240408125406.621546589@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.6 145/252] i40e: Move memory allocation structures to i40e_alloc.h
+Date: Mon,  8 Apr 2024 14:57:24 +0200
+Message-ID: <20240408125311.153218764@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,131 +51,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 8e09650f5ec68858f4b8b67cdef9e2ece9b208f3 ]
+[ Upstream commit ef5d54078d451973f90e123fafa23fc95c2a08ae ]
 
-Clean up: TRACE_DEFINE_ENUM is unnecessary because the target
-symbols are all C macros, not enums.
+Structures i40e_dma_mem & i40e_virt_mem are defined i40e_osdep.h while
+memory allocation functions that use them are declared in i40e_alloc.h
+Move them there.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 6dbdd4de0362 ("e1000e: Workaround for sporadic MDI error on Meteor Lake systems")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfstrace.h | 68 -----------------------------------------------
- 1 file changed, 68 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_adminq.h |  1 +
+ drivers/net/ethernet/intel/i40e/i40e_alloc.h  | 14 ++++++++++++++
+ drivers/net/ethernet/intel/i40e/i40e_osdep.h  | 12 ------------
+ 3 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfs/nfstrace.h b/fs/nfs/nfstrace.h
-index 8a224871be74c..589f32fdbe637 100644
---- a/fs/nfs/nfstrace.h
-+++ b/fs/nfs/nfstrace.h
-@@ -11,16 +11,6 @@
- #include <linux/tracepoint.h>
- #include <linux/iversion.h>
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_adminq.h b/drivers/net/ethernet/intel/i40e/i40e_adminq.h
+index 267f2e0a21ce8..1c3d2bc5c3f79 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_adminq.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_adminq.h
+@@ -4,6 +4,7 @@
+ #ifndef _I40E_ADMINQ_H_
+ #define _I40E_ADMINQ_H_
  
--TRACE_DEFINE_ENUM(DT_UNKNOWN);
--TRACE_DEFINE_ENUM(DT_FIFO);
--TRACE_DEFINE_ENUM(DT_CHR);
--TRACE_DEFINE_ENUM(DT_DIR);
--TRACE_DEFINE_ENUM(DT_BLK);
--TRACE_DEFINE_ENUM(DT_REG);
--TRACE_DEFINE_ENUM(DT_LNK);
--TRACE_DEFINE_ENUM(DT_SOCK);
--TRACE_DEFINE_ENUM(DT_WHT);
--
- #define nfs_show_file_type(ftype) \
- 	__print_symbolic(ftype, \
- 			{ DT_UNKNOWN, "UNKNOWN" }, \
-@@ -33,24 +23,6 @@ TRACE_DEFINE_ENUM(DT_WHT);
- 			{ DT_SOCK, "SOCK" }, \
- 			{ DT_WHT, "WHT" })
++#include "i40e_alloc.h"
+ #include "i40e_osdep.h"
+ #include "i40e_adminq_cmd.h"
  
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_DATA);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_ATIME);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_ACCESS);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_ACL);
--TRACE_DEFINE_ENUM(NFS_INO_REVAL_PAGECACHE);
--TRACE_DEFINE_ENUM(NFS_INO_REVAL_FORCED);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_LABEL);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_CHANGE);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_CTIME);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_MTIME);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_SIZE);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_OTHER);
--TRACE_DEFINE_ENUM(NFS_INO_DATA_INVAL_DEFER);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_BLOCKS);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_XATTR);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_NLINK);
--TRACE_DEFINE_ENUM(NFS_INO_INVALID_MODE);
--
- #define nfs_show_cache_validity(v) \
- 	__print_flags(v, "|", \
- 			{ NFS_INO_INVALID_DATA, "INVALID_DATA" }, \
-@@ -71,17 +43,6 @@ TRACE_DEFINE_ENUM(NFS_INO_INVALID_MODE);
- 			{ NFS_INO_INVALID_NLINK, "INVALID_NLINK" }, \
- 			{ NFS_INO_INVALID_MODE, "INVALID_MODE" })
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_alloc.h b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+index 4b2d8da048c64..e0dde326255d6 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+@@ -4,8 +4,22 @@
+ #ifndef _I40E_ALLOC_H_
+ #define _I40E_ALLOC_H_
  
--TRACE_DEFINE_ENUM(NFS_INO_ADVISE_RDPLUS);
--TRACE_DEFINE_ENUM(NFS_INO_STALE);
--TRACE_DEFINE_ENUM(NFS_INO_ACL_LRU_SET);
--TRACE_DEFINE_ENUM(NFS_INO_INVALIDATING);
--TRACE_DEFINE_ENUM(NFS_INO_FSCACHE);
--TRACE_DEFINE_ENUM(NFS_INO_FSCACHE_LOCK);
--TRACE_DEFINE_ENUM(NFS_INO_LAYOUTCOMMIT);
--TRACE_DEFINE_ENUM(NFS_INO_LAYOUTCOMMITTING);
--TRACE_DEFINE_ENUM(NFS_INO_LAYOUTSTATS);
--TRACE_DEFINE_ENUM(NFS_INO_ODIRECT);
--
- #define nfs_show_nfsi_flags(v) \
- 	__print_flags(v, "|", \
- 			{ BIT(NFS_INO_ADVISE_RDPLUS), "ADVISE_RDPLUS" }, \
-@@ -270,19 +231,6 @@ TRACE_EVENT(nfs_access_exit,
- 		)
- );
++#include <linux/types.h>
++
+ struct i40e_hw;
  
--TRACE_DEFINE_ENUM(LOOKUP_FOLLOW);
--TRACE_DEFINE_ENUM(LOOKUP_DIRECTORY);
--TRACE_DEFINE_ENUM(LOOKUP_AUTOMOUNT);
--TRACE_DEFINE_ENUM(LOOKUP_PARENT);
--TRACE_DEFINE_ENUM(LOOKUP_REVAL);
--TRACE_DEFINE_ENUM(LOOKUP_RCU);
--TRACE_DEFINE_ENUM(LOOKUP_OPEN);
--TRACE_DEFINE_ENUM(LOOKUP_CREATE);
--TRACE_DEFINE_ENUM(LOOKUP_EXCL);
--TRACE_DEFINE_ENUM(LOOKUP_RENAME_TARGET);
--TRACE_DEFINE_ENUM(LOOKUP_EMPTY);
--TRACE_DEFINE_ENUM(LOOKUP_DOWN);
--
- #define show_lookup_flags(flags) \
- 	__print_flags(flags, "|", \
- 			{ LOOKUP_FOLLOW, "FOLLOW" }, \
-@@ -392,22 +340,6 @@ DEFINE_NFS_LOOKUP_EVENT_DONE(nfs_lookup_exit);
- DEFINE_NFS_LOOKUP_EVENT(nfs_lookup_revalidate_enter);
- DEFINE_NFS_LOOKUP_EVENT_DONE(nfs_lookup_revalidate_exit);
++/* memory allocation tracking */
++struct i40e_dma_mem {
++	void *va;
++	dma_addr_t pa;
++	u32 size;
++};
++
++struct i40e_virt_mem {
++	void *va;
++	u32 size;
++};
++
+ /* prototype for functions used for dynamic memory allocation */
+ int i40e_allocate_dma_mem(struct i40e_hw *hw,
+ 			  struct i40e_dma_mem *mem,
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_osdep.h b/drivers/net/ethernet/intel/i40e/i40e_osdep.h
+index 70cac3bb31ec3..fd18895cfb56b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_osdep.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_osdep.h
+@@ -29,18 +29,6 @@ struct device *i40e_hw_to_dev(struct i40e_hw *hw);
+ #define rd64(a, reg)		readq((a)->hw_addr + (reg))
+ #define i40e_flush(a)		readl((a)->hw_addr + I40E_GLGEN_STAT)
  
--TRACE_DEFINE_ENUM(O_WRONLY);
--TRACE_DEFINE_ENUM(O_RDWR);
--TRACE_DEFINE_ENUM(O_CREAT);
--TRACE_DEFINE_ENUM(O_EXCL);
--TRACE_DEFINE_ENUM(O_NOCTTY);
--TRACE_DEFINE_ENUM(O_TRUNC);
--TRACE_DEFINE_ENUM(O_APPEND);
--TRACE_DEFINE_ENUM(O_NONBLOCK);
--TRACE_DEFINE_ENUM(O_DSYNC);
--TRACE_DEFINE_ENUM(O_DIRECT);
--TRACE_DEFINE_ENUM(O_LARGEFILE);
--TRACE_DEFINE_ENUM(O_DIRECTORY);
--TRACE_DEFINE_ENUM(O_NOFOLLOW);
--TRACE_DEFINE_ENUM(O_NOATIME);
--TRACE_DEFINE_ENUM(O_CLOEXEC);
+-/* memory allocation tracking */
+-struct i40e_dma_mem {
+-	void *va;
+-	dma_addr_t pa;
+-	u32 size;
+-};
 -
- #define show_open_flags(flags) \
- 	__print_flags(flags, "|", \
- 		{ O_WRONLY, "O_WRONLY" }, \
+-struct i40e_virt_mem {
+-	void *va;
+-	u32 size;
+-};
+-
+ #define i40e_debug(h, m, s, ...)				\
+ do {								\
+ 	if (((m) & (h)->debug_mask))				\
 -- 
 2.43.0
 
