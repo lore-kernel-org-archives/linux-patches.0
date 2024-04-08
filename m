@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B12C4D5AB;
-	Mon,  8 Apr 2024 13:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10236FE35;
+	Mon,  8 Apr 2024 13:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583882; cv=none; b=jfMSIIK3id3x4qXquxLnmD4B7JlmQX3OmjtCnfMG8jPnkjsnHJpa2tJZiskW2oHgxSJBTVKZOMWZUyGZKyagveb0dgI8D5zCJGL5kwh0aiJHwn5N6t4MQaizxBlMQudvgWTi5pY1HSjXkWtGpzm7VIu5sarSqFzf6qO1JtG+qek=
+	t=1712583885; cv=none; b=Yg5ZABArVSX0c3KzCoxIp1p7zmYjQF8cNS7TinrkByLlmAwr2SHYOFE3Gsm8YjQKMh0Qpz3C/OYT1In/l1HKN5RyTUNWTD48mObIXnodJmoHZUZ+0g9GJ/mSXnndoq3qVDkPkGrdqxpQGtlBLpXWNPj0kEc1FrIggCUhPQegApg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583882; c=relaxed/simple;
-	bh=Y6i9BntNdLIBJEnhhG8PbMaBYfupZdfIoKgvfsiQlRw=;
+	s=arc-20240116; t=1712583885; c=relaxed/simple;
+	bh=N1v9wdxwv/7VhbxA9zgImmkDAZ7OuoUcs5OMcmnnADE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUsmWPbFpmiQtXQ3t8DRFwZcInV4Iuos910UWXc8BA2b6FB9MDhf3dlZ/wSsmcZWsAARjSLLLfQ7J4W6V7xe5o3n4haYRlCfZG4dY9z2a2AgW1iejRVPj+vWLKQFWwshOWBJPLnkLaPyQgHXLWk5p3mhlQNPjBXh0L1ByXvcmSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD3KfdJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcX1EipHnFgdK7F+qdVWRnJqzoAX+WK53izvo+jfqUEWWbIu9gftmZNndFvua9a4bj8L23DypuJXOmBjka9H9HgMFyYh69Riompd+ZhKddp+3f8u7K2BDTCU2QMP1GiTRLJtirj8rE2+a5tyhSgHQDJbAZG/Uzi3UX5bi+akJVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lu7uy4+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD3KfdJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D707FC433F1;
-	Mon,  8 Apr 2024 13:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lu7uy4+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFD0C433C7;
+	Mon,  8 Apr 2024 13:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583882;
-	bh=Y6i9BntNdLIBJEnhhG8PbMaBYfupZdfIoKgvfsiQlRw=;
+	s=korg; t=1712583885;
+	bh=N1v9wdxwv/7VhbxA9zgImmkDAZ7OuoUcs5OMcmnnADE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xD3KfdJERdwYDTzGlJAMwUVBE629IBxw2Xu+msNMynhjVTtLeIwZnVxxrgLJlEco+
-	 X3cdwC8T3KpiMb8E2k+p7PoxUFS87avVRPZOjg18iktTEu36R3o9BIxFPRxyygnm+1
-	 BFuJo2eB72S+EakXgCNtrvwOteY0kz8e1ckeDhwE=
+	b=lu7uy4+x3AWN1GFYNW7FpLqJRzsRpGncGxrC8QrzZJyxh8HB2IP36FSGLl2gRuGQ6
+	 GsZaIUHVk/ZyUxYgqU4+3Bz+td2SmIk5SzDMNsTsRd0EMUBgScK0USwXDs5IBzC9oP
+	 n1tHzsYZaDJJvgpa5JQEEfurjzYP518aAk4FlKKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 245/252] mptcp: dont account accept() of non-MPC client as fallback to TCP
-Date: Mon,  8 Apr 2024 14:59:04 +0200
-Message-ID: <20240408125314.263433421@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.8 230/273] of: module: prevent NULL pointer dereference in vsnprintf()
+Date: Mon,  8 Apr 2024 14:58:25 +0200
+Message-ID: <20240408125316.568552761@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,108 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 7a1b3490f47e88ec4cbde65f1a77a0f4bc972282 upstream.
+commit a1aa5390cc912934fee76ce80af5f940452fa987 upstream.
 
-Current MPTCP servers increment MPTcpExtMPCapableFallbackACK when they
-accept non-MPC connections. As reported by Christoph, this is "surprising"
-because the counter might become greater than MPTcpExtMPCapableSYNRX.
+In of_modalias(), we can get passed the str and len parameters which would
+cause a kernel oops in vsnprintf() since it only allows passing a NULL ptr
+when the length is also 0. Also, we need to filter out the negative values
+of the len parameter as these will result in a really huge buffer since
+snprintf() takes size_t parameter while ours is ssize_t...
 
-MPTcpExtMPCapableFallbackACK counter's name suggests it should only be
-incremented when a connection was seen using MPTCP options, then a
-fallback to TCP has been done. Let's do that by incrementing it when
-the subflow context of an inbound MPC connection attempt is dropped.
-Also, update mptcp_connect.sh kselftest, to ensure that the
-above MIB does not increment in case a pure TCP client connects to a
-MPTCP server.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/449
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-1-324a8981da48@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/1d211023-3923-685b-20f0-f3f90ea56e1f@omp.ru
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c                               |    2 --
- net/mptcp/subflow.c                                |    2 ++
- tools/testing/selftests/net/mptcp/mptcp_connect.sh |    9 +++++++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/of/module.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3911,8 +3911,6 @@ static int mptcp_stream_accept(struct so
- 				mptcp_set_state(newsk, TCP_CLOSE);
- 		}
- 	} else {
--		MPTCP_INC_STATS(sock_net(ssk),
--				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
- tcpfallback:
- 		newsk->sk_kern_sock = kern;
- 		lock_sock(newsk);
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -905,6 +905,8 @@ dispose_child:
- 	return child;
+--- a/drivers/of/module.c
++++ b/drivers/of/module.c
+@@ -16,6 +16,14 @@ ssize_t of_modalias(const struct device_
+ 	ssize_t csize;
+ 	ssize_t tsize;
  
- fallback:
-+	if (fallback)
-+		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
- 	mptcp_subflow_drop_ctx(child);
- 	return child;
- }
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -433,12 +433,14 @@ do_transfer()
- 	local stat_cookierx_last
- 	local stat_csum_err_s
- 	local stat_csum_err_c
-+	local stat_tcpfb_last_l
- 	stat_synrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
- 	stat_ackrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
- 	stat_cookietx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
- 	stat_cookierx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	stat_csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
- 	stat_csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
-+	stat_tcpfb_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	timeout ${timeout_test} \
- 		ip netns exec ${listener_ns} \
-@@ -506,11 +508,13 @@ do_transfer()
- 	local stat_cookietx_now
- 	local stat_cookierx_now
- 	local stat_ooo_now
-+	local stat_tcpfb_now_l
- 	stat_synrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
- 	stat_ackrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
- 	stat_cookietx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
- 	stat_cookierx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	stat_ooo_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtTCPOFOQueue")
-+	stat_tcpfb_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	expect_synrx=$((stat_synrx_last_l))
- 	expect_ackrx=$((stat_ackrx_last_l))
-@@ -564,6 +568,11 @@ do_transfer()
- 		mptcp_lib_result_fail "${TEST_GROUP}: ${result_msg}"
- 	fi
- 
-+	if [ ${stat_ooo_now} -eq 0 ] && [ ${stat_tcpfb_last_l} -ne ${stat_tcpfb_now_l} ]; then
-+		mptcp_lib_pr_fail "unexpected fallback to TCP"
-+		rets=1
-+	fi
++	/*
++	 * Prevent a kernel oops in vsnprintf() -- it only allows passing a
++	 * NULL ptr when the length is also 0. Also filter out the negative
++	 * lengths...
++	 */
++	if ((len > 0 && !str) || len < 0)
++		return -EINVAL;
 +
- 	if [ $cookies -eq 2 ];then
- 		if [ $stat_cookietx_last -ge $stat_cookietx_now ] ;then
- 			printf " WARN: CookieSent: did not advance"
+ 	/* Name & Type */
+ 	/* %p eats all alphanum characters, so %c must be used here */
+ 	csize = snprintf(str, len, "of:N%pOFn%c%s", np, 'T',
 
 
