@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B00768F0;
-	Mon,  8 Apr 2024 13:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B0E768F0;
+	Mon,  8 Apr 2024 13:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582320; cv=none; b=L/pFYxnhnnPCrIrHnzC9jZcuhZz/gzMOWi3gDo3QCInBjFV9daJEd8T4BnHrf2b8c+uUh+vGh0yzdOB4wvG0gUSAR9qt/dZnCJQL+fuBUxwbZpBJ06YKQLC2zYbubRNDo7tkTjW6D6geXQhMMDYFzYsuu4XPWfwNg3UtRXsIjGI=
+	t=1712582322; cv=none; b=hcQezZ3igjnr5Y7arq1Wot4jI9W7npaAVGxBgOFCgLHCDuzh8QzF1WKIGP0MqCPGvB4/EQf8WnqDA5MbAbFCUKXcom1BN2u0x53PFF8NlpyAf+tn17QcJVUY/oAnenP8zSj3AcmrwYeCtOCwDui0SWDr2yTSZDOZt4nuMZWIHlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582320; c=relaxed/simple;
-	bh=e1Ff7Efw2dSLyGnqwNlEND7ppMA0J5nT1gBksvAYf8w=;
+	s=arc-20240116; t=1712582322; c=relaxed/simple;
+	bh=nCBl2FQTnfgqr/xz1AsOl6lBHUKafYY0q4/yRJZoJhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WIgKFI4ZRAi6MaQaHZRDwbG6rNlL1uR7s2ZK70FjdGw+vxm+glS9ttnJeaLQA63kPvkQjA8aibx9khsJW5nodDjwS8NG8mGFfLxN6sPE+gS17sC7l8tIX4KWgdwI4VJ4oi0WZiqiKiCT/yfv+ZC6cfahuXwLz5nVHkJn3GR7l3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpZvTVzK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clmEkeo1t4isHLZpDEml7l6+QUaO7qB9f487Gwo4INAuwbbBSTsEdmzgKF5YNZ/AFa5L3RYPP/kbiiVBs1+fnzjcZmk0g4uDRacQee1n3FSrS+pL6vMZQfrVP3+/t+hMx5MM2yYZ3OnjCkoB9RVcolq/jo6ZeMjm9R2AuTKN+jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOSecuP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpZvTVzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA6CC433F1;
-	Mon,  8 Apr 2024 13:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOSecuP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B528C433F1;
+	Mon,  8 Apr 2024 13:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582319;
-	bh=e1Ff7Efw2dSLyGnqwNlEND7ppMA0J5nT1gBksvAYf8w=;
+	s=korg; t=1712582322;
+	bh=nCBl2FQTnfgqr/xz1AsOl6lBHUKafYY0q4/yRJZoJhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpZvTVzKt2qEEn6ZdOVmmWVpyP2IAM/KxHAfknswh1F+LmSmhG6SJGQSWcp7Dk83+
-	 UTGbjJZLLi0mEb/55il4wkNuqfQhQ4lACKqt/91NuAuNhre9goUjM38UVOsae9T9kz
-	 JB555kPZrERkEkdArbsLJzCMKahsYTJzIgO5jjRY=
+	b=JOSecuP+vzZsucKEzeSQcDFuDoGypUJzpR5NpCjxGXzVr0NvXX2a1KNA02v63Zcjf
+	 oliTPn0/XoinQ7poGf+7/E+F/W290sdK6wMUh+WxkSOq125KhCsrGd/plNlyjrnbBZ
+	 vuDl0T2G/+h2iVvL5Tqe0cLCwGI+majniW7D37Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.8 065/273] RISC-V: KVM: Fix APLIC in_clrip[x] read emulation
-Date: Mon,  8 Apr 2024 14:55:40 +0200
-Message-ID: <20240408125311.320062293@linuxfoundation.org>
+	Stephen Lee <slee08177@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 096/138] ASoC: ops: Fix wraparound for mask in snd_soc_get_volsw
+Date: Mon,  8 Apr 2024 14:58:30 +0200
+Message-ID: <20240408125259.218619468@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,74 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Stephen Lee <slee08177@gmail.com>
 
-commit 8e936e98718f005c986be0bfa1ee6b355acf96be upstream.
+[ Upstream commit fc563aa900659a850e2ada4af26b9d7a3de6c591 ]
 
-The reads to APLIC in_clrip[x] registers returns rectified input values
-of the interrupt sources.
+In snd_soc_info_volsw(), mask is generated by figuring out the index of
+the most significant bit set in max and converting the index to a
+bitmask through bit shift 1. Unintended wraparound occurs when max is an
+integer value with msb bit set. Since the bit shift value 1 is treated
+as an integer type, the left shift operation will wraparound and set
+mask to 0 instead of all 1's. In order to fix this, we type cast 1 as
+`1ULL` to prevent the wraparound.
 
-A rectified input value of an interrupt source is defined by the section
-"4.5.2 Source configurations (sourcecfg[1]–sourcecfg[1023])" of the
-RISC-V AIA specification as:
-
-    rectified input value = (incoming wire value) XOR (source is inverted)
-
-Update the riscv_aplic_input() implementation to match the above.
-
-Cc: stable@vger.kernel.org
-Fixes: 74967aa208e2 ("RISC-V: KVM: Add in-kernel emulation of AIA APLIC")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20240321085041.1955293-3-apatel@ventanamicro.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7077148fb50a ("ASoC: core: Split ops out of soc-core.c")
+Signed-off-by: Stephen Lee <slee08177@gmail.com>
+Link: https://msgid.link/r/20240326010131.6211-1-slee08177@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_aplic.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ sound/soc/soc-ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kvm/aia_aplic.c
-+++ b/arch/riscv/kvm/aia_aplic.c
-@@ -197,16 +197,31 @@ static void aplic_write_enabled(struct a
- 
- static bool aplic_read_input(struct aplic *aplic, u32 irq)
- {
--	bool ret;
--	unsigned long flags;
-+	u32 sourcecfg, sm, raw_input, irq_inverted;
- 	struct aplic_irq *irqd;
-+	unsigned long flags;
-+	bool ret = false;
- 
- 	if (!irq || aplic->nr_irqs <= irq)
- 		return false;
- 	irqd = &aplic->irqs[irq];
- 
- 	raw_spin_lock_irqsave(&irqd->lock, flags);
--	ret = (irqd->state & APLIC_IRQ_STATE_INPUT) ? true : false;
-+
-+	sourcecfg = irqd->sourcecfg;
-+	if (sourcecfg & APLIC_SOURCECFG_D)
-+		goto skip;
-+
-+	sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
-+	if (sm == APLIC_SOURCECFG_SM_INACTIVE)
-+		goto skip;
-+
-+	raw_input = (irqd->state & APLIC_IRQ_STATE_INPUT) ? 1 : 0;
-+	irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
-+			sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-+	ret = !!(raw_input ^ irq_inverted);
-+
-+skip:
- 	raw_spin_unlock_irqrestore(&irqd->lock, flags);
- 
- 	return ret;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 2d25748ca7066..b27e89ff6a167 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -263,7 +263,7 @@ int snd_soc_get_volsw(struct snd_kcontrol *kcontrol,
+ 	int max = mc->max;
+ 	int min = mc->min;
+ 	int sign_bit = mc->sign_bit;
+-	unsigned int mask = (1 << fls(max)) - 1;
++	unsigned int mask = (1ULL << fls(max)) - 1;
+ 	unsigned int invert = mc->invert;
+ 	int val;
+ 	int ret;
+-- 
+2.43.0
+
 
 
