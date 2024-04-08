@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B007C2DF73;
-	Mon,  8 Apr 2024 13:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B0C2DF73;
+	Mon,  8 Apr 2024 13:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581735; cv=none; b=Si8zI+3w9u1EXH80ihH6pNOliLh8I8kfwlT1eQIIchXfOzT2ZorBxVEjYf/noHHzlsRrkqxLy+D0i2QR8kYq/ziIlv6JTxuTUzPh+08ZDGQPtQeC6I2LHQiI8qD/Mg7DRvQCG9Jds/eBfa/2geRHa4e/EhFrQshC2V8F91rYZmY=
+	t=1712581738; cv=none; b=T8CZvcPOAsn3F1+5icVfWxvmi3serhw/kqVgaJI0DifOvrZMYNnRPwOkJU7pNDkVurr98lfSDSAcDtr9A1fCQQ0ZavWCKtutGuKYlWaHjOU16g91A8zPTUxf1HWeV1t7Vo7R1CRcrqwgngyaxo1CVr8uHIIruIoQSu45QC9kZ6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581735; c=relaxed/simple;
-	bh=N5CAhmplb+0SFphTYFpScXT8G0YmM2oAc1kxu/AKMyk=;
+	s=arc-20240116; t=1712581738; c=relaxed/simple;
+	bh=f5rILZfLm67DWYFFq2fMszQw0oVhzgzAXPFH0+meqbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDequhFZF6Gi3zMioglVgQnZcng3Dfp9+F5M+X34unmZTNDMCqYNPBYdQa7zDCZhJutkvExrxCrY6GQfPhktowM8NYfI3pku2XkEaklfSJ03iZI9vUbVraJ4t8AgGg8zMleM7MBRrGKz1zFX1b6eJnsC4aOSDwa/bleZWqB1ybg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcNLnE0E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gL6QUpNmPODzhDfrs4gh/o6JRjCj9gov16HmjexMJQFubHyq3gxhOIehcMRRsG6Rx4UXRSh/uIazVlXJ2wU4rFqp71EoZmxscr5xYzLOZorCIBLRH/jCw0qUCxfPEk/yHe0b2haRud4YxTMuExpev8Ha2Ad/ohdGp/ZLvUyGBZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDaFn71u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcNLnE0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399E0C433F1;
-	Mon,  8 Apr 2024 13:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDaFn71u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24693C433C7;
+	Mon,  8 Apr 2024 13:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581735;
-	bh=N5CAhmplb+0SFphTYFpScXT8G0YmM2oAc1kxu/AKMyk=;
+	s=korg; t=1712581738;
+	bh=f5rILZfLm67DWYFFq2fMszQw0oVhzgzAXPFH0+meqbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcNLnE0EkQpEOPidYDaAq2yCzW83jWWadOqybSt5IsBammAehQVNkk/aXB7tSEFhN
-	 8bCevYbxLjSbqAyw9+hs2J1kYClrsT9dGcGTq7nsTjpWZ75c+9JlE997RL4an9/qix
-	 8QdGsGiAwlUt4E0UNSacaC5I73iIpG8sucrUG8OA=
+	b=tDaFn71uqCihlH/CxbJbe7NwzX89nS9COzBXE1cvPF55siCQnepMZZLx+x/a1dbVr
+	 qAuV9t3kMzHZ3ZvaYzBHXGAAjad1fw9S6SENLAg+YVAR8re+J4kbLslqpmETnROXWn
+	 IwdtfXxt/qTi5uavW7L7RigW04c1UBeKxPTz8hEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Elliott <elliott@hpe.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.8 016/273] ice: fix memory corruption bug with suspend and rebuild
-Date: Mon,  8 Apr 2024 14:54:51 +0200
-Message-ID: <20240408125309.789166399@linuxfoundation.org>
+	Piotr Wejman <piotrwejman90@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 048/138] net: stmmac: fix rx queue priority assignment
+Date: Mon,  8 Apr 2024 14:57:42 +0200
+Message-ID: <20240408125257.722485710@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,159 +46,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: Piotr Wejman <piotrwejman90@gmail.com>
 
-[ Upstream commit 1cb7fdb1dfde1aab66780b4ba44dba6402172111 ]
+commit b3da86d432b7cd65b025a11f68613e333d2483db upstream.
 
-The ice driver would previously panic after suspend. This is caused
-from the driver *only* calling the ice_vsi_free_q_vectors() function by
-itself, when it is suspending. Since commit b3e7b3a6ee92 ("ice: prevent
-NULL pointer deref during reload") the driver has zeroed out
-num_q_vectors, and only restored it in ice_vsi_cfg_def().
+The driver should ensure that same priority is not mapped to multiple
+rx queues. From DesignWare Cores Ethernet Quality-of-Service
+Databook, section 17.1.29 MAC_RxQ_Ctrl2:
+"[...]The software must ensure that the content of this field is
+mutually exclusive to the PSRQ fields for other queues, that is,
+the same priority is not mapped to multiple Rx queues[...]"
 
-This further causes the ice_rebuild() function to allocate a zero length
-buffer, after which num_q_vectors is updated, and then the new value of
-num_q_vectors is used to index into the zero length buffer, which
-corrupts memory.
+Previously rx_queue_priority() function was:
+- clearing all priorities from a queue
+- adding new priorities to that queue
+After this patch it will:
+- first assign new priorities to a queue
+- then remove those priorities from all other queues
+- keep other priorities previously assigned to that queue
 
-The fix entails making sure all the code referencing num_q_vectors only
-does so after it has been reset via ice_vsi_cfg_def().
-
-I didn't perform a full bisect, but I was able to test against 6.1.77
-kernel and that ice driver works fine for suspend/resume with no panic,
-so sometime since then, this problem was introduced.
-
-Also clean up an un-needed init of a local variable in the function
-being modified.
-
-PANIC from 6.8.0-rc1:
-
-[1026674.915596] PM: suspend exit
-[1026675.664697] ice 0000:17:00.1: PTP reset successful
-[1026675.664707] ice 0000:17:00.1: 2755 msecs passed between update to cached PHC time
-[1026675.667660] ice 0000:b1:00.0: PTP reset successful
-[1026675.675944] ice 0000:b1:00.0: 2832 msecs passed between update to cached PHC time
-[1026677.137733] ixgbe 0000:31:00.0 ens787: NIC Link is Up 1 Gbps, Flow Control: None
-[1026677.190201] BUG: kernel NULL pointer dereference, address: 0000000000000010
-[1026677.192753] ice 0000:17:00.0: PTP reset successful
-[1026677.192764] ice 0000:17:00.0: 4548 msecs passed between update to cached PHC time
-[1026677.197928] #PF: supervisor read access in kernel mode
-[1026677.197933] #PF: error_code(0x0000) - not-present page
-[1026677.197937] PGD 1557a7067 P4D 0
-[1026677.212133] ice 0000:b1:00.1: PTP reset successful
-[1026677.212143] ice 0000:b1:00.1: 4344 msecs passed between update to cached PHC time
-[1026677.212575]
-[1026677.243142] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[1026677.247918] CPU: 23 PID: 42790 Comm: kworker/23:0 Kdump: loaded Tainted: G        W          6.8.0-rc1+ #1
-[1026677.257989] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
-[1026677.269367] Workqueue: ice ice_service_task [ice]
-[1026677.274592] RIP: 0010:ice_vsi_rebuild_set_coalesce+0x130/0x1e0 [ice]
-[1026677.281421] Code: 0f 84 3a ff ff ff 41 0f b7 74 ec 02 66 89 b0 22 02 00 00 81 e6 ff 1f 00 00 e8 ec fd ff ff e9 35 ff ff ff 48 8b 43 30 49 63 ed <41> 0f b7 34 24 41 83 c5 01 48 8b 3c e8 66 89 b7 aa 02 00 00 81 e6
-[1026677.300877] RSP: 0018:ff3be62a6399bcc0 EFLAGS: 00010202
-[1026677.306556] RAX: ff28691e28980828 RBX: ff28691e41099828 RCX: 0000000000188000
-[1026677.314148] RDX: 0000000000000000 RSI: 0000000000000010 RDI: ff28691e41099828
-[1026677.321730] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-[1026677.329311] R10: 0000000000000007 R11: ffffffffffffffc0 R12: 0000000000000010
-[1026677.336896] R13: 0000000000000000 R14: 0000000000000000 R15: ff28691e0eaa81a0
-[1026677.344472] FS:  0000000000000000(0000) GS:ff28693cbffc0000(0000) knlGS:0000000000000000
-[1026677.353000] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[1026677.359195] CR2: 0000000000000010 CR3: 0000000128df4001 CR4: 0000000000771ef0
-[1026677.366779] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[1026677.374369] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[1026677.381952] PKRU: 55555554
-[1026677.385116] Call Trace:
-[1026677.388023]  <TASK>
-[1026677.390589]  ? __die+0x20/0x70
-[1026677.394105]  ? page_fault_oops+0x82/0x160
-[1026677.398576]  ? do_user_addr_fault+0x65/0x6a0
-[1026677.403307]  ? exc_page_fault+0x6a/0x150
-[1026677.407694]  ? asm_exc_page_fault+0x22/0x30
-[1026677.412349]  ? ice_vsi_rebuild_set_coalesce+0x130/0x1e0 [ice]
-[1026677.418614]  ice_vsi_rebuild+0x34b/0x3c0 [ice]
-[1026677.423583]  ice_vsi_rebuild_by_type+0x76/0x180 [ice]
-[1026677.429147]  ice_rebuild+0x18b/0x520 [ice]
-[1026677.433746]  ? delay_tsc+0x8f/0xc0
-[1026677.437630]  ice_do_reset+0xa3/0x190 [ice]
-[1026677.442231]  ice_service_task+0x26/0x440 [ice]
-[1026677.447180]  process_one_work+0x174/0x340
-[1026677.451669]  worker_thread+0x27e/0x390
-[1026677.455890]  ? __pfx_worker_thread+0x10/0x10
-[1026677.460627]  kthread+0xee/0x120
-[1026677.464235]  ? __pfx_kthread+0x10/0x10
-[1026677.468445]  ret_from_fork+0x2d/0x50
-[1026677.472476]  ? __pfx_kthread+0x10/0x10
-[1026677.476671]  ret_from_fork_asm+0x1b/0x30
-[1026677.481050]  </TASK>
-
-Fixes: b3e7b3a6ee92 ("ice: prevent NULL pointer deref during reload")
-Reported-by: Robert Elliott <elliott@hpe.com>
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a8f5102af2a7 ("net: stmmac: TX and RX queue priority configuration")
+Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
+Signed-off-by: Piotr Wejman <piotrwejman90@gmail.com>
+Link: https://lore.kernel.org/r/20240401192239.33942-1-piotrwejman90@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   |   40 +++++++++++++++-----
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |   38 +++++++++++++++----
+ 2 files changed, 62 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index fc23dbe302b46..cfc20684f25ab 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -3238,7 +3238,7 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -87,19 +87,41 @@ static void dwmac4_rx_queue_priority(str
+ 				     u32 prio, u32 queue)
  {
- 	struct ice_vsi_cfg_params params = {};
- 	struct ice_coalesce_stored *coalesce;
--	int prev_num_q_vectors = 0;
-+	int prev_num_q_vectors;
- 	struct ice_pf *pf;
- 	int ret;
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 base_register;
+-	u32 value;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
  
-@@ -3252,13 +3252,6 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
- 	if (WARN_ON(vsi->type == ICE_VSI_VF && !vsi->vf))
- 		return -EINVAL;
- 
--	coalesce = kcalloc(vsi->num_q_vectors,
--			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
--	if (!coalesce)
--		return -ENOMEM;
--
--	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
--
- 	ret = ice_vsi_realloc_stat_arrays(vsi);
- 	if (ret)
- 		goto err_vsi_cfg;
-@@ -3268,6 +3261,13 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
- 	if (ret)
- 		goto err_vsi_cfg;
- 
-+	coalesce = kcalloc(vsi->num_q_vectors,
-+			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
-+	if (!coalesce)
-+		return -ENOMEM;
+-	base_register = (queue < 4) ? GMAC_RXQ_CTRL2 : GMAC_RXQ_CTRL3;
+-	if (queue >= 4)
+-		queue -= 4;
++	ctrl2 = readl(ioaddr + GMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + GMAC_RXQ_CTRL3);
 +
-+	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
-+
- 	ret = ice_vsi_cfg_tc_lan(pf, vsi);
- 	if (ret) {
- 		if (vsi_flags & ICE_VSI_FLAG_INIT) {
-@@ -3286,8 +3286,8 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << GMAC_RXQCTRL_PSRQX_SHIFT(i)) &
++						GMAC_RXQCTRL_PSRQX_MASK(i));
  
- err_vsi_cfg_tc_lan:
- 	ice_vsi_decfg(vsi);
--err_vsi_cfg:
- 	kfree(coalesce);
-+err_vsi_cfg:
- 	return ret;
+-	value = readl(ioaddr + base_register);
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
+ 
+-	value &= ~GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	value |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
+ 						GMAC_RXQCTRL_PSRQX_MASK(queue);
+-	writel(value, ioaddr + base_register);
++
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++	} else {
++		queue -= 4;
++
++		ctrl3 |= (prio << GMAC_RXQCTRL_PSRQX_SHIFT(queue)) &
++						GMAC_RXQCTRL_PSRQX_MASK(queue);
++
++		writel(ctrl3, ioaddr + GMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + GMAC_RXQ_CTRL2);
++	}
  }
  
--- 
-2.43.0
-
+ static void dwmac4_tx_queue_priority(struct mac_device_info *hw,
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -97,17 +97,41 @@ static void dwxgmac2_rx_queue_prio(struc
+ 				   u32 queue)
+ {
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 value, reg;
++	u32 clear_mask = 0;
++	u32 ctrl2, ctrl3;
++	int i;
+ 
+-	reg = (queue < 4) ? XGMAC_RXQ_CTRL2 : XGMAC_RXQ_CTRL3;
+-	if (queue >= 4)
++	ctrl2 = readl(ioaddr + XGMAC_RXQ_CTRL2);
++	ctrl3 = readl(ioaddr + XGMAC_RXQ_CTRL3);
++
++	/* The software must ensure that the same priority
++	 * is not mapped to multiple Rx queues
++	 */
++	for (i = 0; i < 4; i++)
++		clear_mask |= ((prio << XGMAC_PSRQ_SHIFT(i)) &
++						XGMAC_PSRQ(i));
++
++	ctrl2 &= ~clear_mask;
++	ctrl3 &= ~clear_mask;
++
++	/* First assign new priorities to a queue, then
++	 * clear them from others queues
++	 */
++	if (queue < 4) {
++		ctrl2 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
++
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++	} else {
+ 		queue -= 4;
+ 
+-	value = readl(ioaddr + reg);
+-	value &= ~XGMAC_PSRQ(queue);
+-	value |= (prio << XGMAC_PSRQ_SHIFT(queue)) & XGMAC_PSRQ(queue);
++		ctrl3 |= (prio << XGMAC_PSRQ_SHIFT(queue)) &
++						XGMAC_PSRQ(queue);
+ 
+-	writel(value, ioaddr + reg);
++		writel(ctrl3, ioaddr + XGMAC_RXQ_CTRL3);
++		writel(ctrl2, ioaddr + XGMAC_RXQ_CTRL2);
++	}
+ }
+ 
+ static void dwxgmac2_tx_queue_prio(struct mac_device_info *hw, u32 prio,
 
 
