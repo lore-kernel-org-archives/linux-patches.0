@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CA96D1A9;
-	Mon,  8 Apr 2024 13:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25880481A6;
+	Mon,  8 Apr 2024 13:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582985; cv=none; b=lV4YPmvNdH26yMD0PPgHhpm7e7gEfrlSGP8Bf1VXS8YgEotCYQYMBCC8/GMG/61w47RMK6futhYQoZWIssn31aRXCG/wqcuo9jNOKrFy4wBRugBYl8b4gdXfHrPcGp4TydZhgdLlWAOmqAYvhx3xIi9q+TOBHK5q11jWe5RMZsk=
+	t=1712582988; cv=none; b=Aybep+HNJ66taolVxpSrd0E00BVJMoQcbz/+p+HLdUgdwwkYuSDdIHLE++Ihx3OLNhrWAWI7nICaEQDb42wjMS54pxAbpNzJhr2rowtIUxZyT1Ygfao8DTRIJlLtVtBYtVHdE3drIpxLWOWCqwj13uFs/heyU69APkV+AhlcO9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582985; c=relaxed/simple;
-	bh=Pcj9/mJfk3+IC/53sbw1VlMQfN4nEWIj9+bmFViZLlo=;
+	s=arc-20240116; t=1712582988; c=relaxed/simple;
+	bh=neM0l+qPG+os2yhgg81fg4tEAoYbRsKAY0WNsJ9azks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+SZcfTfr3stF1RPmnjIA9lsriL5PH0P/uTr2UJkMYhDBc3dOAwcdv1oysn85AZAJbl/Wc6LGfMy2DDn4TbG2E91MI516QlUvO1Qvokp9Akm4xEL+AMX0JJbZ6UoXyzCzAl4Htp4VZPLVUSsRK5SxbGohfjIt2PT1jhOkb1b9hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTXNQCXG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LsQsOWElo13iPk5VdqesnZXRTu7axT5ZIXQHxReHMWaIXoqthiBBtJ6EJkAQuhZ66Lt2l0XwGO4D1q7cYemoPpJGeMXUeDR2xmMl07wlNLuDe/D6eq88pshmy+ANURT6BMrSQ/Mg4wGJa9rEZpvlcao39Whqr8QOtjcMZQmJkAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQEAGjEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTXNQCXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA02DC43390;
-	Mon,  8 Apr 2024 13:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQEAGjEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ED1C43399;
+	Mon,  8 Apr 2024 13:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582985;
-	bh=Pcj9/mJfk3+IC/53sbw1VlMQfN4nEWIj9+bmFViZLlo=;
+	s=korg; t=1712582988;
+	bh=neM0l+qPG+os2yhgg81fg4tEAoYbRsKAY0WNsJ9azks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTXNQCXGtqrnKkMxVvGPZ7WUVF6WhlC+6vE2M54jqrVr9l2qhmofF6MgSLx7IcH35
-	 Slcd+xCwm9b+l/YSPEEVOcpwYapl+lPA1vGe3C8C4G6V9cv7PxdHWYoj0+6bP5Buce
-	 DcxuPF7UqNrOSAZHWXaj0fGyzqOfjIYRoI4/+PLs=
+	b=cQEAGjEnR8O9Go7BATyNdC+dn+K/5eW2IXlASlvplM5C7cOyxUujKxHKA0HfkqzsV
+	 lRJsHKcvoqBpJoD4Np/LvsWB2/Nf5+XFZ6XTTvdnCvUhzOd4wl57eqZo0qc53Wa64k
+	 4TRxI195aD+8QyN39iFgqBHChhYAND+K93IPNGAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 145/252] i40e: Move memory allocation structures to i40e_alloc.h
-Date: Mon,  8 Apr 2024 14:57:24 +0200
-Message-ID: <20240408125311.153218764@linuxfoundation.org>
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.8 128/273] i40e: fix vf may be used uninitialized in this function warning
+Date: Mon,  8 Apr 2024 14:56:43 +0200
+Message-ID: <20240408125313.267343454@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,96 +50,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit ef5d54078d451973f90e123fafa23fc95c2a08ae ]
+commit f37c4eac99c258111d414d31b740437e1925b8e8 upstream.
 
-Structures i40e_dma_mem & i40e_virt_mem are defined i40e_osdep.h while
-memory allocation functions that use them are declared in i40e_alloc.h
-Move them there.
+To fix the regression introduced by commit 52424f974bc5, which causes
+servers hang in very hard to reproduce conditions with resets races.
+Using two sources for the information is the root cause.
+In this function before the fix bumping v didn't mean bumping vf
+pointer. But the code used this variables interchangeably, so stale vf
+could point to different/not intended vf.
 
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Remove redundant "v" variable and iterate via single VF pointer across
+whole function instead to guarantee VF pointer validity.
+
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 6dbdd4de0362 ("e1000e: Workaround for sporadic MDI error on Meteor Lake systems")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_adminq.h |  1 +
- drivers/net/ethernet/intel/i40e/i40e_alloc.h  | 14 ++++++++++++++
- drivers/net/ethernet/intel/i40e/i40e_osdep.h  | 12 ------------
- 3 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   34 +++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_adminq.h b/drivers/net/ethernet/intel/i40e/i40e_adminq.h
-index 267f2e0a21ce8..1c3d2bc5c3f79 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_adminq.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_adminq.h
-@@ -4,6 +4,7 @@
- #ifndef _I40E_ADMINQ_H_
- #define _I40E_ADMINQ_H_
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1628,8 +1628,8 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ {
+ 	struct i40e_hw *hw = &pf->hw;
+ 	struct i40e_vf *vf;
+-	int i, v;
+ 	u32 reg;
++	int i;
  
-+#include "i40e_alloc.h"
- #include "i40e_osdep.h"
- #include "i40e_adminq_cmd.h"
+ 	/* If we don't have any VFs, then there is nothing to reset */
+ 	if (!pf->num_alloc_vfs)
+@@ -1640,11 +1640,10 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 		return false;
  
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_alloc.h b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
-index 4b2d8da048c64..e0dde326255d6 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
-@@ -4,8 +4,22 @@
- #ifndef _I40E_ALLOC_H_
- #define _I40E_ALLOC_H_
+ 	/* Begin reset on all VFs at once */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
+-		vf = &pf->vf[v];
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is being reset no need to trigger reset again */
+ 		if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+-			i40e_trigger_vf_reset(&pf->vf[v], flr);
++			i40e_trigger_vf_reset(vf, flr);
+ 	}
  
-+#include <linux/types.h>
-+
- struct i40e_hw;
+ 	/* HW requires some time to make sure it can flush the FIFO for a VF
+@@ -1653,14 +1652,13 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	 * the VFs using a simple iterator that increments once that VF has
+ 	 * finished resetting.
+ 	 */
+-	for (i = 0, v = 0; i < 10 && v < pf->num_alloc_vfs; i++) {
++	for (i = 0, vf = &pf->vf[0]; i < 10 && vf < &pf->vf[pf->num_alloc_vfs]; ++i) {
+ 		usleep_range(10000, 20000);
  
-+/* memory allocation tracking */
-+struct i40e_dma_mem {
-+	void *va;
-+	dma_addr_t pa;
-+	u32 size;
-+};
-+
-+struct i40e_virt_mem {
-+	void *va;
-+	u32 size;
-+};
-+
- /* prototype for functions used for dynamic memory allocation */
- int i40e_allocate_dma_mem(struct i40e_hw *hw,
- 			  struct i40e_dma_mem *mem,
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_osdep.h b/drivers/net/ethernet/intel/i40e/i40e_osdep.h
-index 70cac3bb31ec3..fd18895cfb56b 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_osdep.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_osdep.h
-@@ -29,18 +29,6 @@ struct device *i40e_hw_to_dev(struct i40e_hw *hw);
- #define rd64(a, reg)		readq((a)->hw_addr + (reg))
- #define i40e_flush(a)		readl((a)->hw_addr + I40E_GLGEN_STAT)
+ 		/* Check each VF in sequence, beginning with the VF to fail
+ 		 * the previous check.
+ 		 */
+-		while (v < pf->num_alloc_vfs) {
+-			vf = &pf->vf[v];
++		while (vf < &pf->vf[pf->num_alloc_vfs]) {
+ 			if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states)) {
+ 				reg = rd32(hw, I40E_VPGEN_VFRSTAT(vf->vf_id));
+ 				if (!(reg & I40E_VPGEN_VFRSTAT_VFRD_MASK))
+@@ -1670,7 +1668,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 			/* If the current VF has finished resetting, move on
+ 			 * to the next VF in sequence.
+ 			 */
+-			v++;
++			++vf;
+ 		}
+ 	}
  
--/* memory allocation tracking */
--struct i40e_dma_mem {
--	void *va;
--	dma_addr_t pa;
--	u32 size;
--};
--
--struct i40e_virt_mem {
--	void *va;
--	u32 size;
--};
--
- #define i40e_debug(h, m, s, ...)				\
- do {								\
- 	if (((m) & (h)->debug_mask))				\
--- 
-2.43.0
-
+@@ -1680,39 +1678,39 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	/* Display a warning if at least one VF didn't manage to reset in
+ 	 * time, but continue on with the operation.
+ 	 */
+-	if (v < pf->num_alloc_vfs)
++	if (vf < &pf->vf[pf->num_alloc_vfs])
+ 		dev_err(&pf->pdev->dev, "VF reset check timeout on VF %d\n",
+-			pf->vf[v].vf_id);
++			vf->vf_id);
+ 	usleep_range(10000, 20000);
+ 
+ 	/* Begin disabling all the rings associated with VFs, but do not wait
+ 	 * between each VF.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_stop_rings_no_wait(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_stop_rings_no_wait(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Now that we've notified HW to disable all of the VF rings, wait
+ 	 * until they finish.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_wait_queues_disabled(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_wait_queues_disabled(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Hw may need up to 50ms to finish disabling the RX queues. We
+@@ -1721,12 +1719,12 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	mdelay(50);
+ 
+ 	/* Finish the reset on each VF */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_cleanup_reset_vf(&pf->vf[v]);
++		i40e_cleanup_reset_vf(vf);
+ 	}
+ 
+ 	i40e_flush(hw);
 
 
