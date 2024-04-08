@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6315864CF2;
-	Mon,  8 Apr 2024 13:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C38364CF2;
+	Mon,  8 Apr 2024 13:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581431; cv=none; b=MyNLIjrQ6YNHfFfJ8Me2dRWSnlAPfgLX4OMkBNQb9kC9h1DsBxBW9gfPlg96m9WdwseKJQ5yuEpEnHrVZxLzaabgwq2q8UYHyL6RY8QYL9bz43IJmC7aCx1ApndIJfNbZBHKvGouSuWEkPi+aybOnZ0119TjjuJeZ2cG5Blu0To=
+	t=1712581434; cv=none; b=XfoNZd2h0t0ZoeADHIk63E72Bvz/1hg9Vgc1Wn9UN1xFjwIxN4xfsJu/vwFHW5xS3zcTUAT73KYJQwHXek0gg16HOgvPMXGHY/1kyuxeFrzQnEpVj34ORzDtg/XlYsNRyLRFARHJW9xacRD10LpU0FkyVfUlc5vJtSMvPnXR6R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581431; c=relaxed/simple;
-	bh=nUdQS1Nt/aozzK3F/awDRc1O3sG8WtPQJeHbkuRz6xk=;
+	s=arc-20240116; t=1712581434; c=relaxed/simple;
+	bh=FShwbESrRW0uBhY/Y5AQ9wf1o8VKqH9B7Wj8f01oNU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhZV+mgJWAjaYRGA27zhlhwm1N/1LRxd2/2toK4tbuBCcnd0OSjOJFKsL9de6WemOO2rouQW41Al5hD2XzqqrjpCw25AqtO3J3OU5jIBbL7AYszbGTx9HZ5bzSBE9mRq5gIMWGbNQ5z7HY/YQTYQQdQV5aXvAdqHe3yOAT7LTc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV4zeZGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WCwpDdFTreXUfdiyKYai+R0/p4WwGrqtdjX+gtJFxdCgNC/e0+Su2ILi36VxP6anngVMdkD9jgdRLxViC9VRfhFah+Ub2A6jzGpGtfEaJMBfRyAVVq9wTiydBQoPKGir9ZXawlIPqcm4oTKIxVX2Dm8wLt0UCXubKS096JEuFuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YrI6Qrg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV4zeZGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEE5C433C7;
-	Mon,  8 Apr 2024 13:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YrI6Qrg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8ACFC433C7;
+	Mon,  8 Apr 2024 13:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581431;
-	bh=nUdQS1Nt/aozzK3F/awDRc1O3sG8WtPQJeHbkuRz6xk=;
+	s=korg; t=1712581434;
+	bh=FShwbESrRW0uBhY/Y5AQ9wf1o8VKqH9B7Wj8f01oNU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PV4zeZGn6MPXzUrXEuAYtPXB7Pp3GdHdH67HNi4t2toYszziAoDU1461OYdrufBVE
-	 2jtM+aehB2vO5UNzdgNVMBF5PhzbH2tvpZd5qJN1ode/u2lFUl6YcuNWXrPj84KlHY
-	 pdWLumV8vHtZgGu7gucZYHkM9HwbDokEDDQT/kac=
+	b=1YrI6QrgQXmcVKUsnvTFzUG/KllMNo1fLgsf7oyNItuw0xAyPfUsnntGG6lGgXCj3
+	 g+sRaggRqZa58HAJlAHSv5xrWBLlvnkqVw2jqh/KAdnyTN8FtnABJfpZEMj3iDbqPO
+	 Rl5KYTR7I6swA0wXQjpGDAHBkmkTmbdzgpQsr5Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hofmann <mhofmann@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alejandro Colomar <alx@kernel.org>,
+	=?UTF-8?q?Christian=20H=C3=A4ggstr=C3=B6m?= <christian.haggstrom@orexplore.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/252] scripts/bpf_doc: Use silent mode when exec make cmd
-Date: Mon,  8 Apr 2024 14:55:02 +0200
-Message-ID: <20240408125306.753301407@linuxfoundation.org>
+Subject: [PATCH 5.15 049/690] USB: serial: cp210x: add ID for MGP Instruments PDS100
+Date: Mon,  8 Apr 2024 14:48:35 +0200
+Message-ID: <20240408125401.300844631@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Christian Häggström <christian.haggstrom@orexplore.com>
 
-[ Upstream commit 5384cc0d1a88c27448a6a4e65b8abe6486de8012 ]
+[ Upstream commit a0d9d868491a362d421521499d98308c8e3a0398 ]
 
-When getting kernel version via make, the result may be polluted by other
-output, like directory change info. e.g.
+The radiation meter has the text MGP Instruments PDS-100G or PDS-100GN
+produced by Mirion Technologies. Tested by forcing the driver
+association with
 
-  $ export MAKEFLAGS="-w"
-  $ make kernelversion
-  make: Entering directory '/home/net'
-  6.8.0
-  make: Leaving directory '/home/net'
+  echo 10c4 863c > /sys/bus/usb-serial/drivers/cp210x/new_id
 
-This will distort the reStructuredText output and make latter rst2man
-failed like:
+and then setting the serial port in 115200 8N1 mode. The device
+announces ID_USB_VENDOR_ENC=Silicon\x20Labs and ID_USB_MODEL_ENC=PDS100
 
-  [...]
-  bpf-helpers.rst:20: (WARNING/2) Field list ends without a blank line; unexpected unindent.
-  [...]
-
-Using silent mode would help. e.g.
-
-  $ make -s --no-print-directory kernelversion
-  6.8.0
-
-Fixes: fd0a38f9c37d ("scripts/bpf: Set version attribute for bpf-helpers(7) man page")
-Signed-off-by: Michael Hofmann <mhofmann@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Alejandro Colomar <alx@kernel.org>
-Link: https://lore.kernel.org/bpf/20240315023443.2364442-1-liuhangbin@gmail.com
+Signed-off-by: Christian Häggström <christian.haggstrom@orexplore.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/bpf_doc.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/cp210x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/bpf_doc.py b/scripts/bpf_doc.py
-index 0669bac5e900e..3f899cc7e99a9 100755
---- a/scripts/bpf_doc.py
-+++ b/scripts/bpf_doc.py
-@@ -414,8 +414,8 @@ class PrinterRST(Printer):
-             version = version.stdout.decode().rstrip()
-         except:
-             try:
--                version = subprocess.run(['make', 'kernelversion'], cwd=linuxRoot,
--                                         capture_output=True, check=True)
-+                version = subprocess.run(['make', '-s', '--no-print-directory', 'kernelversion'],
-+                                         cwd=linuxRoot, capture_output=True, check=True)
-                 version = version.stdout.decode().rstrip()
-             except:
-                 return 'Linux'
+diff --git a/drivers/usb/serial/cp210x.c b/drivers/usb/serial/cp210x.c
+index bd72e9adc497a..ff814f9298db0 100644
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -144,6 +144,7 @@ static const struct usb_device_id id_table[] = {
+ 	{ USB_DEVICE(0x10C4, 0x85EA) }, /* AC-Services IBUS-IF */
+ 	{ USB_DEVICE(0x10C4, 0x85EB) }, /* AC-Services CIS-IBUS */
+ 	{ USB_DEVICE(0x10C4, 0x85F8) }, /* Virtenio Preon32 */
++	{ USB_DEVICE(0x10C4, 0x863C) }, /* MGP Instruments PDS100 */
+ 	{ USB_DEVICE(0x10C4, 0x8664) }, /* AC-Services CAN-IF */
+ 	{ USB_DEVICE(0x10C4, 0x8665) }, /* AC-Services OBD-IF */
+ 	{ USB_DEVICE(0x10C4, 0x87ED) }, /* IMST USB-Stick for Smart Meter */
 -- 
 2.43.0
 
