@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552588595F;
-	Mon,  8 Apr 2024 13:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD3F7D414;
+	Mon,  8 Apr 2024 13:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583792; cv=none; b=azsK3umEpiqRwNNukxTq2pn1olJlzTh+Y3k7iwXJ0jdu6m+ttYqSX3pCqXf5PeOHy4Y0Prl+o+DYmkB2vRC5eqxgE+KGdaa5nl1ye4L7/vB8AQKasfv4v5g93ejLg7SkA+Suq5heJ5YKlIlAd6xi4qKGJKYV4j1lRXDaujOsNTA=
+	t=1712583795; cv=none; b=FUbni7hkmwIRFef0vk9XnxF3tIsQNs7XyhZMHrsuI7VVE4dxfeZ/fgB+IfN1irBUMkSKZGj1zo2kHS4Cylul7QzV6pE4qFGsThY9Utl0TK1vSP0j8hNZS0zoW9pCerNb02GjmfUEY/eGxHVTFmdY3C7/Q+IHVlcTTB+cPeBEF2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583792; c=relaxed/simple;
-	bh=pENROCP0L8hJt7flZbZQDhY7HlrCb/u2VWQP8WvYoEU=;
+	s=arc-20240116; t=1712583795; c=relaxed/simple;
+	bh=MbDm9GNz0xx20jrp5tLnIXPyOVqS26BwuTJKeMLQ6Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHl0uMyF0lxbz0Jfkp5gE9PFFD9xGHl8sChm+cv5Kh4IZ6aS+zblx12nqDWJUVDaxubK/1ag7R9ap5QGN9cuL86G5tukaD7q5wBaLR8mArNj7r9kojkcLtapRz1yOZ8VnJEH1+vCWaqgErBIaNTDojaqbz1od6FPJmgYDyvCBhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sh0VxAFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBciqDcRvsqMjA834nlGyOaS1ldTONabWelbFjbW+nnsXhm36WH8Ku7M41MbyYUaHmhwbWWWw0XFI7q8O4ZA9zfk7jCzBbtNwjARFv9Iufw/lfL2N+CSR3dtXgZVXAGSAgX3FS1AjisSPl3KPe/YFpq9QZebkLSAhc90SNjSXD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRzObNjy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sh0VxAFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06E8C433C7;
-	Mon,  8 Apr 2024 13:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRzObNjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC5CC433F1;
+	Mon,  8 Apr 2024 13:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583792;
-	bh=pENROCP0L8hJt7flZbZQDhY7HlrCb/u2VWQP8WvYoEU=;
+	s=korg; t=1712583795;
+	bh=MbDm9GNz0xx20jrp5tLnIXPyOVqS26BwuTJKeMLQ6Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sh0VxAFKstSoQmUl7g/DiStqhKhR4yXSCrMjUkSRGbiyjbUY7QBdjYjILFARjrnSP
-	 P57p3tq38fU1JCwwgwaRWlx1omKQ0iH0xwefmh/4/OEayntA9UML+lBxjSeQd8iaZa
-	 ZeqKAovISLcTTj7MQthyTFQ20Z/QrElTnQ178rvQ=
+	b=oRzObNjyYhaCwNbm0FAMF3EPdqLq3WUqauljSzOEcwhGgDHASF+dKY9FTY45KLxmX
+	 iJmNUCfaQzFotvFCUoE5gdUOmcSEFCY/cIGNutccjFiMlZx3MchTXQQzfNZZbgtxJ+
+	 WQVjPYVk3WfiG43VEVKlhSJKLXC3FIyKZc6uG0t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bang Li <libang.linuxer@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 285/690] fsnotify: remove redundant parameter judgment
-Date: Mon,  8 Apr 2024 14:52:31 +0200
-Message-ID: <20240408125409.945147360@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 234/252] smb: client: fix potential UAF in smb2_is_valid_lease_break()
+Date: Mon,  8 Apr 2024 14:58:53 +0200
+Message-ID: <20240408125313.917050937@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bang Li <libang.linuxer@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit f92ca72b0263d601807bbd23ed25cbe6f4da89f4 ]
+commit 705c76fbf726c7a2f6ff9143d4013b18daaaebf1 upstream.
 
-iput() has already judged the incoming parameter, so there is no need to
-repeat the judgment here.
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Link: https://lore.kernel.org/r/20220311151240.62045-1-libang.linuxer@gmail.com
-Signed-off-by: Bang Li <libang.linuxer@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2misc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
-index 494f653efbc6e..70a8516b78bc5 100644
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -70,8 +70,7 @@ static void fsnotify_unmount_inodes(struct super_block *sb)
- 		spin_unlock(&inode->i_lock);
- 		spin_unlock(&sb->s_inode_list_lock);
- 
--		if (iput_inode)
--			iput(iput_inode);
-+		iput(iput_inode);
- 
- 		/* for each watch, send FS_UNMOUNT and then remove it */
- 		fsnotify_inode(inode, FS_UNMOUNT);
-@@ -85,8 +84,7 @@ static void fsnotify_unmount_inodes(struct super_block *sb)
- 	}
- 	spin_unlock(&sb->s_inode_list_lock);
- 
--	if (iput_inode)
--		iput(iput_inode);
-+	iput(iput_inode);
- }
- 
- void fsnotify_sb_delete(struct super_block *sb)
--- 
-2.43.0
-
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -622,6 +622,8 @@ smb2_is_valid_lease_break(char *buffer,
+ 	/* look up tcon based on tid & uid */
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
++		if (cifs_ses_exiting(ses))
++			continue;
+ 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+ 			spin_lock(&tcon->open_file_lock);
+ 			cifs_stats_inc(
 
 
