@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A4A7E105;
-	Mon,  8 Apr 2024 13:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E3D7E110;
+	Mon,  8 Apr 2024 13:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582831; cv=none; b=V4+zwsljSwtzPASFYL3GiQ0rYQHnfKTEr9I2Nr1UEXKSSZLbuJsRDlkj0qf61b4OtyC6EOtPDerpbCOj+u3G6Gq+R4JdJ0Wb4OpkcJ1NkZauvcCkJzyH6pgu1JnmqcrY/+M20Az6FozVOLmK/xhbCnjpRfoJwBTfC8/kth7KYgU=
+	t=1712582834; cv=none; b=iRrHf+nEUPUy0IsZqAjke97igYZBAUolLijvvdhjgZGCI5Vj4wIcw2zNlrjVXQHLisEfMnEV4QTBn5qZPsvczZpDpqG+s3saIoUM31MqBJgPDAYE4B2sBPeo+hJ9xawbh8f2YHJdcwsZVnGYzdEwYYy4nA5UA1Wn8ry/ayGcEW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582831; c=relaxed/simple;
-	bh=LvvFNEqnEIeQCDpIFU7RR7OiSGxpOXk3+9QcHArveK4=;
+	s=arc-20240116; t=1712582834; c=relaxed/simple;
+	bh=iSQ7hOWbxt5AfpWrNC3D56u5STPjv2juOm9tLasZCMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx6ZFoLddYMiQ9Mxp0wdT/BLAYl3lKOvlFRr37g/66Juj/QPaVjaS+CJtBun1ewy6+7Vtc4rSercX4zr2i4d/7leWUyNqghCpSm0+q/gtCOAC20U7/Zwfqv8vOtNvKCRm0sW0lf1RgGc/bQkPnJxy/U4EQnk7xe2pPP2pqIKmBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoxTjwCo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hl8yIfm6ZNVc37aEFRCP+a33nrTtALtkVUe6DPyIN1c3MIcJ5gZQ/1UqG+ph022pXfzDfnXUxNsMWMkofh00RSDwjrN49rSHbxa0dqxX3KzStNbPdHmuOHEgmZal30Lq4PP4CL2LSxaDRuO96z8aL69D05DutydDfR0Y0wVT7sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZppYmU8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoxTjwCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982EBC433C7;
-	Mon,  8 Apr 2024 13:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZppYmU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8429AC433F1;
+	Mon,  8 Apr 2024 13:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582831;
-	bh=LvvFNEqnEIeQCDpIFU7RR7OiSGxpOXk3+9QcHArveK4=;
+	s=korg; t=1712582833;
+	bh=iSQ7hOWbxt5AfpWrNC3D56u5STPjv2juOm9tLasZCMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoxTjwCoIX5lxJqZIAbBgMWoqxOcEX320OgOBDQmDZvhXb0W5YRRGGQ1WrMvQzUVs
-	 9VtW1tmZbv43ygOA3cbjZMWCo39VmV3mxuZB/2EaPmEgxHdsGd4Xdx8KvX/J2MgQXt
-	 V+YQN6RZnA5rpmFF/Oa5PYEZB0/eHKIx0bnxIAv0=
+	b=KZppYmU8VcUMvfkFUokFWPLzaNrJSfvGEEqO67Inb7tf883ywHLjdA0BCRGUiB1Rr
+	 08KKrKXI5Q5uT9hMKFRkIlJ2yk1iTe1v3ycOfLYZRmKRX8dUkDzP03UnFCeJ3oQF2I
+	 4jXHQ16TXwpn6wdwdHYBY+vNcmM0qCrJf25YYZ6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Shaoqin Huang <shahuang@redhat.com>,
-	Quentin Perret <qperret@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.8 097/273] KVM: arm64: Ensure target address is granule-aligned for range TLBI
-Date: Mon,  8 Apr 2024 14:56:12 +0200
-Message-ID: <20240408125312.310698810@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 179/690] fanotify: Allow file handle encoding for unhashed events
+Date: Mon,  8 Apr 2024 14:50:45 +0200
+Message-ID: <20240408125406.048869760@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,60 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit 4c36a156738887c1edd78589fe192d757989bcde upstream.
+[ Upstream commit 74fe4734897a2da2ae2a665a5e622cd490d36eaf ]
 
-When zapping a table entry in stage2_try_break_pte(), we issue range
-TLB invalidation for the region that was mapped by the table. However,
-we neglect to align the base address down to the granule size and so
-if we ended up reaching the table entry via a misaligned address then
-we will accidentally skip invalidation for some prefix of the affected
-address range.
+Allow passing a NULL hash to fanotify_encode_fh and avoid calculating
+the hash if not needed.
 
-Align 'ctx->addr' down to the granule size when performing TLB
-invalidation for an unmapped table in stage2_try_break_pte().
-
-Cc: Raghavendra Rao Ananta <rananta@google.com>
-Cc: Gavin Shan <gshan@redhat.com>
-Cc: Shaoqin Huang <shahuang@redhat.com>
-Cc: Quentin Perret <qperret@google.com>
-Fixes: defc8cc7abf0 ("KVM: arm64: Invalidate the table entries upon a range")
-Signed-off-by: Will Deacon <will@kernel.org>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240327124853.11206-5-will@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20211025192746.66445-15-krisman@collabora.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/arm64/kvm/hyp/pgtable.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/notify/fanotify/fanotify.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -829,12 +829,15 @@ static bool stage2_try_break_pte(const s
- 		 * Perform the appropriate TLB invalidation based on the
- 		 * evicted pte value (if any).
- 		 */
--		if (kvm_pte_table(ctx->old, ctx->level))
--			kvm_tlb_flush_vmid_range(mmu, ctx->addr,
--						kvm_granule_size(ctx->level));
--		else if (kvm_pte_valid(ctx->old))
-+		if (kvm_pte_table(ctx->old, ctx->level)) {
-+			u64 size = kvm_granule_size(ctx->level);
-+			u64 addr = ALIGN_DOWN(ctx->addr, size);
-+
-+			kvm_tlb_flush_vmid_range(mmu, addr, size);
-+		} else if (kvm_pte_valid(ctx->old)) {
- 			kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, mmu,
- 				     ctx->addr, ctx->level);
-+		}
- 	}
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index 397ee623ff1e8..ec84fee7ad01c 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -403,8 +403,12 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
+ 	fh->type = type;
+ 	fh->len = fh_len;
  
- 	if (stage2_pte_is_counted(ctx->old))
+-	/* Mix fh into event merge key */
+-	*hash ^= fanotify_hash_fh(fh);
++	/*
++	 * Mix fh into event merge key.  Hash might be NULL in case of
++	 * unhashed FID events (i.e. FAN_FS_ERROR).
++	 */
++	if (hash)
++		*hash ^= fanotify_hash_fh(fh);
+ 
+ 	return FANOTIFY_FH_HDR_LEN + fh_len;
+ 
+-- 
+2.43.0
+
 
 
