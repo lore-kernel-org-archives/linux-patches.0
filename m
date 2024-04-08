@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C142046;
-	Mon,  8 Apr 2024 13:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24E07C0BF;
+	Mon,  8 Apr 2024 13:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583230; cv=none; b=hdj9+S+0NMOCeZXLxJthtcwyKQKZ9DgO1mTwyeEcNslRn7GWnaRmYm3AL5UzEfIzEj0N5T0+rmfY24MOIIzgjn1vu4Fb9HYEC/h4Kn7RBgIdehVLQNUlmuBzt3LqLhICh52vu7QtRj27yLyzX86Yu8vDyIZLFGgvFsfUV39OimA=
+	t=1712583232; cv=none; b=MxxiJfvUG+BTNO1+ESW5u8WXcAjzBtGYFRDyetPzupuwkVgSnBcHk8vvZcY+ZE59NGzSaDfhjvBFe0YHM2d36r80QyRbLAT/9FB3oYXbnntTx0T2yDQBD7jtjdmkbAbQfYbDiGBiSL9udg6UC7BNliQuXPnb5RpK0WXxSoSSxHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583230; c=relaxed/simple;
-	bh=3HCpQYVREw9ReSFuXvksQW+ecotZ9Wf8neP5jorJEd8=;
+	s=arc-20240116; t=1712583232; c=relaxed/simple;
+	bh=ji3GTCzdGsoPHwAfX6CXK9zmw8m+YK6sJoyteMCm1rY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW8XqvkGngvCEpz6q1xny0xL304h9+YBf/Gq8bA4NNd2cIMiwUxav+d08ANBgEei8juOaH+Pqoh9yed7TCTwOqetpLJ5WMktnZl+Sxdh5ka2cxHDFoLKylLJngGibuwXXk/LCouk3PTpGrAUcMeOvoy13nzi8T1kogcS88B7gUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQ8neMiQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QfXPeru8mZPrI7X62VWA0JXYA7ynfj2DsxNM4b3Y3XwHu6mqTbIf33bwuEK+u1IAYcFPHV5C/3c5Zq7alKo88eRxSE/sGZDPdRSR5+5l5Eh7AJxje3YxJeqMLboiAJy71DDc0L9tbvVZjzkS/y+9r67cTdVwQEyJ/w7KjoZ6Now=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6ipT3sh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQ8neMiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703F6C433F1;
-	Mon,  8 Apr 2024 13:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6ipT3sh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3C9C43390;
+	Mon,  8 Apr 2024 13:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583229;
-	bh=3HCpQYVREw9ReSFuXvksQW+ecotZ9Wf8neP5jorJEd8=;
+	s=korg; t=1712583232;
+	bh=ji3GTCzdGsoPHwAfX6CXK9zmw8m+YK6sJoyteMCm1rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQ8neMiQjUIq+SeOCCoeZ/AMYLmNRCuo7gYLfBZSrygXl7brQ6zMkEGMb0M7MawRz
-	 6nQgmeOI+b0zBGE8GnHyXSatYzsTXFKI+8sLZJMIxF/WIx6Aiu56XgCkRlyBrdzwGf
-	 QYZWeS4fJKhpT8G7N3gwxvFYlVpOjSNQE7ewxneA=
+	b=I6ipT3shL9VCPhO5XtzyggjpX1urDHBHaNnKnVs3nwV3xX9UhNOLEiEzwmiMB6e/D
+	 /+FRtVUFmUwdHSrA5kwNlFbfjhkaR5TRQRmY5yTVyI2ysnGDmdTjy/B4a+ts6vRvCK
+	 SiGPSWcJb2B3zVt3jkqPztx2W5FgUPwoeaybhwA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Chao Song <chao.song@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 154/273] ALSA: hda: cs35l56: Add ACPI device match tables
-Date: Mon,  8 Apr 2024 14:57:09 +0200
-Message-ID: <20240408125314.060383154@linuxfoundation.org>
+Subject: [PATCH 6.6 172/252] ASoC: rt722-sdca-sdw: fix locking sequence
+Date: Mon,  8 Apr 2024 14:57:51 +0200
+Message-ID: <20240408125311.997586746@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 2d0401ee38d43ab0e4cdd02dfc9d402befb2b5c8 ]
+[ Upstream commit adb354bbc231b23d3a05163ce35c1d598512ff64 ]
 
-Adding the ACPI HIDs to the match table triggers the cs35l56-hda modules
-to be loaded on boot so that Serial Multi Instantiate can add the
-devices to the bus and begin the driver init sequence.
+The disable_irq_lock protects the 'disable_irq' value, we need to lock
+before testing it.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
-Message-ID: <20240328121355.18972-1-simont@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a0b7c59ac1a9 ("ASoC: rt722-sdca: fix for JD event handling in ClockStop Mode0")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@linux.intel.com>
+Link: https://msgid.link/r/20240325221817.206465-6-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda_i2c.c | 13 +++++++++++--
- sound/pci/hda/cs35l56_hda_spi.c | 13 +++++++++++--
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt722-sdca-sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda_i2c.c b/sound/pci/hda/cs35l56_hda_i2c.c
-index a9ef6d86de839..09a810a50a12b 100644
---- a/sound/pci/hda/cs35l56_hda_i2c.c
-+++ b/sound/pci/hda/cs35l56_hda_i2c.c
-@@ -53,10 +53,19 @@ static const struct i2c_device_id cs35l56_hda_i2c_id[] = {
- 	{}
- };
+diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
+index a38ec58622145..43a4e79e56966 100644
+--- a/sound/soc/codecs/rt722-sdca-sdw.c
++++ b/sound/soc/codecs/rt722-sdca-sdw.c
+@@ -464,13 +464,13 @@ static int __maybe_unused rt722_sdca_dev_resume(struct device *dev)
+ 		return 0;
  
-+static const struct acpi_device_id cs35l56_acpi_hda_match[] = {
-+	{ "CSC3554", 0 },
-+	{ "CSC3556", 0 },
-+	{ "CSC3557", 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(acpi, cs35l56_acpi_hda_match);
-+
- static struct i2c_driver cs35l56_hda_i2c_driver = {
- 	.driver = {
--		.name		= "cs35l56-hda",
--		.pm		= &cs35l56_hda_pm_ops,
-+		.name		  = "cs35l56-hda",
-+		.acpi_match_table = cs35l56_acpi_hda_match,
-+		.pm		  = &cs35l56_hda_pm_ops,
- 	},
- 	.id_table	= cs35l56_hda_i2c_id,
- 	.probe		= cs35l56_hda_i2c_probe,
-diff --git a/sound/pci/hda/cs35l56_hda_spi.c b/sound/pci/hda/cs35l56_hda_spi.c
-index 080426de90830..04f9fe6197dc5 100644
---- a/sound/pci/hda/cs35l56_hda_spi.c
-+++ b/sound/pci/hda/cs35l56_hda_spi.c
-@@ -53,10 +53,19 @@ static const struct spi_device_id cs35l56_hda_spi_id[] = {
- 	{}
- };
+ 	if (!slave->unattach_request) {
++		mutex_lock(&rt722->disable_irq_lock);
+ 		if (rt722->disable_irq == true) {
+-			mutex_lock(&rt722->disable_irq_lock);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_6);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
+ 			rt722->disable_irq = false;
+-			mutex_unlock(&rt722->disable_irq_lock);
+ 		}
++		mutex_unlock(&rt722->disable_irq_lock);
+ 		goto regmap_sync;
+ 	}
  
-+static const struct acpi_device_id cs35l56_acpi_hda_match[] = {
-+	{ "CSC3554", 0 },
-+	{ "CSC3556", 0 },
-+	{ "CSC3557", 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(acpi, cs35l56_acpi_hda_match);
-+
- static struct spi_driver cs35l56_hda_spi_driver = {
- 	.driver = {
--		.name		= "cs35l56-hda",
--		.pm		= &cs35l56_hda_pm_ops,
-+		.name		  = "cs35l56-hda",
-+		.acpi_match_table = cs35l56_acpi_hda_match,
-+		.pm		  = &cs35l56_hda_pm_ops,
- 	},
- 	.id_table	= cs35l56_hda_spi_id,
- 	.probe		= cs35l56_hda_spi_probe,
 -- 
 2.43.0
 
