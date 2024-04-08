@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB26F08E;
-	Mon,  8 Apr 2024 13:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17302E62C;
+	Mon,  8 Apr 2024 13:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581823; cv=none; b=IHYAljfYydu8SviKZZ16WqxWBNvEJ9Q6DukfbfFWtkOmU488tqPyj2uG55qAp29sJUmVVLsbznEA2s3HSoYQ/1g40ZHeOIZVUIvsVgSTw6KVCtNs8MFk/TspehwBsdRi41M9X7IXzyVQoc0RfJRCSFb0NLbElHZEe75/fVSm0tU=
+	t=1712581826; cv=none; b=rj5q4mCrnvbpiaVrrvQgCJLcWQSzoN/7J0o1cBZI/7ghoO1Q0Dg1Kn4FG208vEK39AM0bFzDvDADNuyQAajVCnlilrNh5+r9vyU4ArjomJdRH9YnBcpxkERyAnFI2C7lalZih4+ZYtuSnVViziHYa8IaY3ZTwE+F/AiEgQmZhzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581823; c=relaxed/simple;
-	bh=RfpyX1zdLYZwarg1juQD3Z4jGXNF4YokuTgopjsAklI=;
+	s=arc-20240116; t=1712581826; c=relaxed/simple;
+	bh=Vnq88HixqJZmyYkPb5nnxPhz4D98spFR6TtLcFgBNgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMrCe1PVdFOsDqV5tsYpVKOMXMDXfargxObWYNpg2USs9l/i4XAQtUZn5IQmqvfqhXaa5teMANVXg1QvPf95RWtJjqNQVskOLpyNRUaKv3gyA1K/kXKY4ZNHZBj+8M2jbDEZhcwBnWaUkp06eTWAlUuoF9+RgMMAzCuvxtBwrEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsCAW09r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHGoBTgJl7g95DWcF1Z5StHazLrrSaak2X7et/QTpgdI6OTcI8tiRQqvpsvwSEGc3jn490equIZV1qhu7k1J0WELYqpIy+yaM/Yt2mHVAQHOZVBzBoxY05ayweEnvURMeEqmLiP+8VyPhwt54oxCqdiOSLsTA8iC86cwno86Xh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxXiqdl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsCAW09r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4A4C433F1;
-	Mon,  8 Apr 2024 13:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxXiqdl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DBBC433F1;
+	Mon,  8 Apr 2024 13:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581823;
-	bh=RfpyX1zdLYZwarg1juQD3Z4jGXNF4YokuTgopjsAklI=;
+	s=korg; t=1712581826;
+	bh=Vnq88HixqJZmyYkPb5nnxPhz4D98spFR6TtLcFgBNgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsCAW09rvZ+GCUPS5dQy6t1F4T0Jzd2irLiyWfvwFUl9x9ET0Lh7cnOfU6W7Txd8M
-	 Sc0vZot3oe+vqY0AMkgc02YEVZ0WwaLzbdrL/uymN09HNJTk1daPqVMcsB6FBvCyBF
-	 txb7ipIfMB6PH5e8KkmuJRixtMpioXU2LTuDz0a4=
+	b=yxXiqdl+tRSMdjiiijzOJWejGSJHN35XhDj1XxcOyP3uEBf749hNJT/B/FAxLjFLb
+	 TwUdp+n6XMr5KLQ0mGbAuiK9Czg0v/FBLusaBijIKEukAcR72SqA4Y/+94bgY/Z16A
+	 DZz4geH3YK90+0AhvuRvWGvpVcQrU75LeWFScr9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/690] ksmbd: retrieve number of blocks using vfs_getattr in set_file_allocation_info
-Date: Mon,  8 Apr 2024 14:49:11 +0200
-Message-ID: <20240408125402.574684008@linuxfoundation.org>
+Subject: [PATCH 6.8 023/273] drm/xe/device: fix XE_MAX_GT_PER_TILE check
+Date: Mon,  8 Apr 2024 14:54:58 +0200
+Message-ID: <20240408125310.013030177@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit 34cd86b6632718b7df3999d96f51e63de41c5e4f ]
+[ Upstream commit 23e1ee3a2317f41f47d4f7255257431c5f8d1c2c ]
 
-Use vfs_getattr() to retrieve stat information, rather than make
-assumptions about how a filesystem fills inode structs.
+Here XE_MAX_GT_PER_TILE is the total, therefore the gt index should
+always be less than.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240318180532.57522-5-matthew.auld@intel.com
+(cherry picked from commit a5ef563b1d676548a4c5016540833ff970230964)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_device.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 0613b8d14409c..14cd86a14012f 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -5759,15 +5759,21 @@ static int set_file_allocation_info(struct ksmbd_work *work,
+diff --git a/drivers/gpu/drm/xe/xe_device.h b/drivers/gpu/drm/xe/xe_device.h
+index 08d8b72c77319..ee8be4c6b59b1 100644
+--- a/drivers/gpu/drm/xe/xe_device.h
++++ b/drivers/gpu/drm/xe/xe_device.h
+@@ -58,7 +58,7 @@ static inline struct xe_tile *xe_device_get_root_tile(struct xe_device *xe)
  
- 	loff_t alloc_blks;
- 	struct inode *inode;
-+	struct kstat stat;
- 	int rc;
+ static inline struct xe_gt *xe_tile_get_gt(struct xe_tile *tile, u8 gt_id)
+ {
+-	if (drm_WARN_ON(&tile_to_xe(tile)->drm, gt_id > XE_MAX_GT_PER_TILE))
++	if (drm_WARN_ON(&tile_to_xe(tile)->drm, gt_id >= XE_MAX_GT_PER_TILE))
+ 		gt_id = 0;
  
- 	if (!(fp->daccess & FILE_WRITE_DATA_LE))
- 		return -EACCES;
- 
-+	rc = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
-+			 AT_STATX_SYNC_AS_STAT);
-+	if (rc)
-+		return rc;
-+
- 	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
- 	inode = file_inode(fp->filp);
- 
--	if (alloc_blks > inode->i_blocks) {
-+	if (alloc_blks > stat.blocks) {
- 		smb_break_all_levII_oplock(work, fp, 1);
- 		rc = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
- 				   alloc_blks * 512);
-@@ -5775,7 +5781,7 @@ static int set_file_allocation_info(struct ksmbd_work *work,
- 			pr_err("vfs_fallocate is failed : %d\n", rc);
- 			return rc;
- 		}
--	} else if (alloc_blks < inode->i_blocks) {
-+	} else if (alloc_blks < stat.blocks) {
- 		loff_t size;
- 
- 		/*
+ 	return gt_id ? tile->media_gt : tile->primary_gt;
 -- 
 2.43.0
 
