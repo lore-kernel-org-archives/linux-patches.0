@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40CF8120F;
-	Mon,  8 Apr 2024 13:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F78E81219;
+	Mon,  8 Apr 2024 13:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583186; cv=none; b=h6ajc5PVAYC13Odq9lvehwyr4zm4lod1YK395Rwsw12MthJgG8CthUdZwMcj0CUiGGGIYAHS1nBfi5la5UPyx2B7/dfkSuffrJyILZEIzugPKhzSeJ5r6y3Ij7UVa6MTtVN+e9PiRgiLoabMs4jFEzTyeRB07MWEXajokDe8cCg=
+	t=1712583189; cv=none; b=VamwW9s8Tly0fcpUiFyTR00NFeoSBg8SfCQilikR+5PnNmiHE2s4vOL+r9RL77A33OJeDyU6q9a+2w+AbnpLRgh86eTHl4RXlVQJzC6J5YJ1Ezd+jTxyS/hqfUDOBQGuzs/mHEPB+X+S4GiqUnSQlHmUP8tot69bCEGFryM8W94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583186; c=relaxed/simple;
-	bh=uYX9CIpYMOj6v+skSJY9IhaWbE5/PmOkAo7+GNFAPNM=;
+	s=arc-20240116; t=1712583189; c=relaxed/simple;
+	bh=F1EyR6PfRyV6yLKy2iTGCg7xMX9JN9O+k4TOyNB90os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCskAlVtOUthC9PsYor2kHs2XV0RkOooH6cAr7jgYtUzQyaKLB26bQLi4sOXHijOTVF5ygMmKiJ1oBfTfgtgdEqTtHTVGEWMdXiJjNgvC9gOiQi0iOD87Gxehs6TDIpUtoNhNFKI5TTWoOVztzDMrW1XQJd91yiBHPSvioSdnTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMfXyrRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSH1EecoFRQgijRMyyQakJElimm1jFMc/YuSszI8Q1QJ9tY4oFjSD94psfSlpfNBdPG7EcPEdAUtp0saJv8OfkoBjLsIAoaoMZQfIcpzByZ6DxqL+TwOd/Mm0xUS6kxopZMtAC5Z2YsSh+GPSsAYFCg2TvkgO7p6uvHqZg0DU+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wq0TxDIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMfXyrRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14D2C433F1;
-	Mon,  8 Apr 2024 13:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wq0TxDIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2D2C433C7;
+	Mon,  8 Apr 2024 13:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583186;
-	bh=uYX9CIpYMOj6v+skSJY9IhaWbE5/PmOkAo7+GNFAPNM=;
+	s=korg; t=1712583189;
+	bh=F1EyR6PfRyV6yLKy2iTGCg7xMX9JN9O+k4TOyNB90os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sMfXyrRrEHWIc750Rt4erC42d0obIAXUquQgDS7gEW64ZJXvZaQx+hVLW9APWQvIq
-	 WpUy6gJTKzzvY3ZuXIjn8mFFPlPS+69Q8H9eNTcrlLAGu+I/YWg5aHPTRMDleVKRBp
-	 Icz99WRlfBOudzqoHJIOVDJWr3MSEcB2QC1G45Fk=
+	b=wq0TxDISMAKg3TMdcyoz2CWmX/zmxd2Sp3YStEXI8JkemEoXn1mwx7Q3zCHv9NlsA
+	 NLT+o9bP6QGah3Sblu6TSx0PmCfw+cOl6bIyF6OMd2F0nHWH/bvT03G2+yo7BAuIB9
+	 t0OtRPWxvrkJoxY6y6SZwVEQrKZBu2m34FQxUZuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 220/690] fanotify: record old and new parent and name in FAN_RENAME event
-Date: Mon,  8 Apr 2024 14:51:26 +0200
-Message-ID: <20240408125407.517385615@linuxfoundation.org>
+Subject: [PATCH 5.15 214/690] fsnotify: separate mark iterator type from object type enum
+Date: Mon,  8 Apr 2024 14:51:20 +0200
+Message-ID: <20240408125407.279932213@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,147 +53,242 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 3982534ba5ce45e890b2f5ef5e7372c1accd14c7 ]
+[ Upstream commit 1c9007d62bea6fd164285314f7553f73e5308863 ]
 
-In the special case of FAN_RENAME event, we record both the old
-and new parent and name.
+They are two different types that use the same enum, so this confusing.
 
-Link: https://lore.kernel.org/r/20211129201537.1932819-9-amir73il@gmail.com
+Use the object type to indicate the type of object mark is attached to
+and the iter type to indicate the type of watch.
+
+A group can have two different watches of the same object type (parent
+and child watches) that match the same event.
+
+Link: https://lore.kernel.org/r/20211129201537.1932819-3-amir73il@gmail.com
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/notify/fanotify/fanotify.c | 42 +++++++++++++++++++++++++++++++----
- include/uapi/linux/fanotify.h |  2 ++
- 2 files changed, 40 insertions(+), 4 deletions(-)
+ fs/notify/fanotify/fanotify.c    |  6 ++---
+ fs/notify/fsnotify.c             | 18 +++++++-------
+ fs/notify/mark.c                 |  4 ++--
+ include/linux/fsnotify_backend.h | 41 ++++++++++++++++++++++----------
+ 4 files changed, 42 insertions(+), 27 deletions(-)
 
 diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 5f184b2d6ea7c..db81eab905442 100644
+index b6091775aa6ef..652fe84cb8acd 100644
 --- a/fs/notify/fanotify/fanotify.c
 +++ b/fs/notify/fanotify/fanotify.c
-@@ -592,21 +592,28 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 							__kernel_fsid_t *fsid,
- 							const struct qstr *name,
- 							struct inode *child,
-+							struct dentry *moved,
- 							unsigned int *hash,
- 							gfp_t gfp)
+@@ -299,7 +299,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
+ 			return 0;
+ 	}
+ 
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		if (!fsnotify_iter_should_report_type(iter_info, type))
+ 			continue;
+ 		mark = iter_info->marks[type];
+@@ -318,7 +318,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
+ 		 * If the event is on a child and this mark is on a parent not
+ 		 * watching children, don't send it!
+ 		 */
+-		if (type == FSNOTIFY_OBJ_TYPE_PARENT &&
++		if (type == FSNOTIFY_ITER_TYPE_PARENT &&
+ 		    !(mark->mask & FS_EVENT_ON_CHILD))
+ 			continue;
+ 
+@@ -746,7 +746,7 @@ static __kernel_fsid_t fanotify_get_fsid(struct fsnotify_iter_info *iter_info)
+ 	int type;
+ 	__kernel_fsid_t fsid = {};
+ 
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		struct fsnotify_mark_connector *conn;
+ 
+ 		if (!fsnotify_iter_should_report_type(iter_info, type))
+diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
+index 4034ca566f95c..0c94457c625e2 100644
+--- a/fs/notify/fsnotify.c
++++ b/fs/notify/fsnotify.c
+@@ -330,7 +330,7 @@ static int send_to_group(__u32 mask, const void *data, int data_type,
+ 
+ 	/* clear ignored on inode modification */
+ 	if (mask & FS_MODIFY) {
+-		fsnotify_foreach_obj_type(type) {
++		fsnotify_foreach_iter_type(type) {
+ 			if (!fsnotify_iter_should_report_type(iter_info, type))
+ 				continue;
+ 			mark = iter_info->marks[type];
+@@ -340,7 +340,7 @@ static int send_to_group(__u32 mask, const void *data, int data_type,
+ 		}
+ 	}
+ 
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		if (!fsnotify_iter_should_report_type(iter_info, type))
+ 			continue;
+ 		mark = iter_info->marks[type];
+@@ -405,7 +405,7 @@ static unsigned int fsnotify_iter_select_report_types(
+ 	int type;
+ 
+ 	/* Choose max prio group among groups of all queue heads */
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		mark = iter_info->marks[type];
+ 		if (mark &&
+ 		    fsnotify_compare_groups(max_prio_group, mark->group) > 0)
+@@ -417,7 +417,7 @@ static unsigned int fsnotify_iter_select_report_types(
+ 
+ 	/* Set the report mask for marks from same group as max prio group */
+ 	iter_info->report_mask = 0;
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		mark = iter_info->marks[type];
+ 		if (mark &&
+ 		    fsnotify_compare_groups(max_prio_group, mark->group) == 0)
+@@ -435,7 +435,7 @@ static void fsnotify_iter_next(struct fsnotify_iter_info *iter_info)
  {
- 	struct fanotify_name_event *fne;
- 	struct fanotify_info *info;
- 	struct fanotify_fh *dfh, *ffh;
-+	struct inode *dir2 = moved ? d_inode(moved->d_parent) : NULL;
-+	const struct qstr *name2 = moved ? &moved->d_name : NULL;
- 	unsigned int dir_fh_len = fanotify_encode_fh_len(dir);
-+	unsigned int dir2_fh_len = fanotify_encode_fh_len(dir2);
- 	unsigned int child_fh_len = fanotify_encode_fh_len(child);
- 	unsigned long name_len = name ? name->len : 0;
-+	unsigned long name2_len = name2 ? name2->len : 0;
- 	unsigned int len, size;
+ 	int type;
  
- 	/* Reserve terminating null byte even for empty name */
--	size = sizeof(*fne) + name_len + 1;
-+	size = sizeof(*fne) + name_len + name2_len + 2;
- 	if (dir_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + dir_fh_len;
-+	if (dir2_fh_len)
-+		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
- 	if (child_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
- 	fne = kmalloc(size, gfp);
-@@ -623,6 +630,11 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		len = fanotify_encode_fh(dfh, dir, dir_fh_len, hash, 0);
- 		fanotify_info_set_dir_fh(info, len);
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		if (fsnotify_iter_should_report_type(iter_info, type))
+ 			iter_info->marks[type] =
+ 				fsnotify_next_mark(iter_info->marks[type]);
+@@ -519,18 +519,18 @@ int fsnotify(__u32 mask, const void *data, int data_type, struct inode *dir,
+ 
+ 	iter_info.srcu_idx = srcu_read_lock(&fsnotify_mark_srcu);
+ 
+-	iter_info.marks[FSNOTIFY_OBJ_TYPE_SB] =
++	iter_info.marks[FSNOTIFY_ITER_TYPE_SB] =
+ 		fsnotify_first_mark(&sb->s_fsnotify_marks);
+ 	if (mnt) {
+-		iter_info.marks[FSNOTIFY_OBJ_TYPE_VFSMOUNT] =
++		iter_info.marks[FSNOTIFY_ITER_TYPE_VFSMOUNT] =
+ 			fsnotify_first_mark(&mnt->mnt_fsnotify_marks);
  	}
-+	if (dir2_fh_len) {
-+		dfh = fanotify_info_dir2_fh(info);
-+		len = fanotify_encode_fh(dfh, dir2, dir2_fh_len, hash, 0);
-+		fanotify_info_set_dir2_fh(info, len);
-+	}
- 	if (child_fh_len) {
- 		ffh = fanotify_info_file_fh(info);
- 		len = fanotify_encode_fh(ffh, child, child_fh_len, hash, 0);
-@@ -632,11 +644,22 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		fanotify_info_copy_name(info, name);
- 		*hash ^= full_name_hash((void *)name_len, name->name, name_len);
+ 	if (inode) {
+-		iter_info.marks[FSNOTIFY_OBJ_TYPE_INODE] =
++		iter_info.marks[FSNOTIFY_ITER_TYPE_INODE] =
+ 			fsnotify_first_mark(&inode->i_fsnotify_marks);
  	}
-+	if (name2_len) {
-+		fanotify_info_copy_name2(info, name2);
-+		*hash ^= full_name_hash((void *)name2_len, name2->name,
-+					name2_len);
-+	}
+ 	if (parent) {
+-		iter_info.marks[FSNOTIFY_OBJ_TYPE_PARENT] =
++		iter_info.marks[FSNOTIFY_ITER_TYPE_PARENT] =
+ 			fsnotify_first_mark(&parent->i_fsnotify_marks);
+ 	}
  
- 	pr_debug("%s: size=%u dir_fh_len=%u child_fh_len=%u name_len=%u name='%.*s'\n",
- 		 __func__, size, dir_fh_len, child_fh_len,
- 		 info->name_len, info->name_len, fanotify_info_name(info));
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index 7c0946e16918a..b42629d2fc1c6 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -353,7 +353,7 @@ bool fsnotify_prepare_user_wait(struct fsnotify_iter_info *iter_info)
+ {
+ 	int type;
  
-+	if (dir2_fh_len) {
-+		pr_debug("%s: dir2_fh_len=%u name2_len=%u name2='%.*s'\n",
-+			 __func__, dir2_fh_len, info->name2_len,
-+			 info->name2_len, fanotify_info_name2(info));
-+	}
-+
- 	return &fne->fae;
+-	fsnotify_foreach_obj_type(type) {
++	fsnotify_foreach_iter_type(type) {
+ 		/* This can fail if mark is being removed */
+ 		if (!fsnotify_get_mark_safe(iter_info->marks[type])) {
+ 			__release(&fsnotify_mark_srcu);
+@@ -382,7 +382,7 @@ void fsnotify_finish_user_wait(struct fsnotify_iter_info *iter_info)
+ 	int type;
+ 
+ 	iter_info->srcu_idx = srcu_read_lock(&fsnotify_mark_srcu);
+-	fsnotify_foreach_obj_type(type)
++	fsnotify_foreach_iter_type(type)
+ 		fsnotify_put_mark_wake(iter_info->marks[type]);
  }
  
-@@ -692,6 +715,7 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 	struct inode *dirid = fanotify_dfid_inode(mask, data, data_type, dir);
- 	const struct path *path = fsnotify_data_path(data, data_type);
- 	struct mem_cgroup *old_memcg;
-+	struct dentry *moved = NULL;
- 	struct inode *child = NULL;
- 	bool name_event = false;
- 	unsigned int hash = 0;
-@@ -727,6 +751,15 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 		} else if ((mask & ALL_FSNOTIFY_DIRENT_EVENTS) || !ondir) {
- 			name_event = true;
- 		}
-+
-+		/*
-+		 * In the special case of FAN_RENAME event, we record both
-+		 * old and new parent+name.
-+		 * 'dirid' and 'file_name' are the old parent+name and
-+		 * 'moved' has the new parent+name.
-+		 */
-+		if (mask & FAN_RENAME)
-+			moved = fsnotify_data_dentry(data, data_type);
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index b9c84b1dbcc8f..73739fee1710f 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -337,10 +337,25 @@ static inline struct fs_error_report *fsnotify_data_error_report(
  	}
+ }
  
- 	/*
-@@ -748,9 +781,9 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 	} else if (fanotify_is_error_event(mask)) {
- 		event = fanotify_alloc_error_event(group, fsid, data,
- 						   data_type, &hash);
--	} else if (name_event && (file_name || child)) {
--		event = fanotify_alloc_name_event(id, fsid, file_name, child,
--						  &hash, gfp);
-+	} else if (name_event && (file_name || moved || child)) {
-+		event = fanotify_alloc_name_event(dirid, fsid, file_name, child,
-+						  moved, &hash, gfp);
- 	} else if (fid_mode) {
- 		event = fanotify_alloc_fid_event(id, fsid, &hash, gfp);
- 	} else {
-@@ -860,6 +893,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	BUILD_BUG_ON(FAN_OPEN_EXEC != FS_OPEN_EXEC);
- 	BUILD_BUG_ON(FAN_OPEN_EXEC_PERM != FS_OPEN_EXEC_PERM);
- 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
-+	BUILD_BUG_ON(FAN_RENAME != FS_RENAME);
- 
- 	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
- 
-diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
-index 60f73639a896a..9d0e2dc5767b5 100644
---- a/include/uapi/linux/fanotify.h
-+++ b/include/uapi/linux/fanotify.h
-@@ -28,6 +28,8 @@
- 
- #define FAN_EVENT_ON_CHILD	0x08000000	/* Interested in child events */
- 
-+#define FAN_RENAME		0x10000000	/* File was renamed */
++/*
++ * Index to merged marks iterator array that correlates to a type of watch.
++ * The type of watched object can be deduced from the iterator type, but not
++ * the other way around, because an event can match different watched objects
++ * of the same object type.
++ * For example, both parent and child are watching an object of type inode.
++ */
++enum fsnotify_iter_type {
++	FSNOTIFY_ITER_TYPE_INODE,
++	FSNOTIFY_ITER_TYPE_VFSMOUNT,
++	FSNOTIFY_ITER_TYPE_SB,
++	FSNOTIFY_ITER_TYPE_PARENT,
++	FSNOTIFY_ITER_TYPE_COUNT
++};
 +
- #define FAN_ONDIR		0x40000000	/* Event occurred against dir */
++/* The type of object that a mark is attached to */
+ enum fsnotify_obj_type {
+ 	FSNOTIFY_OBJ_TYPE_ANY = -1,
+ 	FSNOTIFY_OBJ_TYPE_INODE,
+-	FSNOTIFY_OBJ_TYPE_PARENT,
+ 	FSNOTIFY_OBJ_TYPE_VFSMOUNT,
+ 	FSNOTIFY_OBJ_TYPE_SB,
+ 	FSNOTIFY_OBJ_TYPE_COUNT,
+@@ -353,37 +368,37 @@ static inline bool fsnotify_valid_obj_type(unsigned int obj_type)
+ }
  
- /* helper events */
+ struct fsnotify_iter_info {
+-	struct fsnotify_mark *marks[FSNOTIFY_OBJ_TYPE_COUNT];
++	struct fsnotify_mark *marks[FSNOTIFY_ITER_TYPE_COUNT];
+ 	unsigned int report_mask;
+ 	int srcu_idx;
+ };
+ 
+ static inline bool fsnotify_iter_should_report_type(
+-		struct fsnotify_iter_info *iter_info, int type)
++		struct fsnotify_iter_info *iter_info, int iter_type)
+ {
+-	return (iter_info->report_mask & (1U << type));
++	return (iter_info->report_mask & (1U << iter_type));
+ }
+ 
+ static inline void fsnotify_iter_set_report_type(
+-		struct fsnotify_iter_info *iter_info, int type)
++		struct fsnotify_iter_info *iter_info, int iter_type)
+ {
+-	iter_info->report_mask |= (1U << type);
++	iter_info->report_mask |= (1U << iter_type);
+ }
+ 
+ static inline void fsnotify_iter_set_report_type_mark(
+-		struct fsnotify_iter_info *iter_info, int type,
++		struct fsnotify_iter_info *iter_info, int iter_type,
+ 		struct fsnotify_mark *mark)
+ {
+-	iter_info->marks[type] = mark;
+-	iter_info->report_mask |= (1U << type);
++	iter_info->marks[iter_type] = mark;
++	iter_info->report_mask |= (1U << iter_type);
+ }
+ 
+ #define FSNOTIFY_ITER_FUNCS(name, NAME) \
+ static inline struct fsnotify_mark *fsnotify_iter_##name##_mark( \
+ 		struct fsnotify_iter_info *iter_info) \
+ { \
+-	return (iter_info->report_mask & (1U << FSNOTIFY_OBJ_TYPE_##NAME)) ? \
+-		iter_info->marks[FSNOTIFY_OBJ_TYPE_##NAME] : NULL; \
++	return (iter_info->report_mask & (1U << FSNOTIFY_ITER_TYPE_##NAME)) ? \
++		iter_info->marks[FSNOTIFY_ITER_TYPE_##NAME] : NULL; \
+ }
+ 
+ FSNOTIFY_ITER_FUNCS(inode, INODE)
+@@ -391,8 +406,8 @@ FSNOTIFY_ITER_FUNCS(parent, PARENT)
+ FSNOTIFY_ITER_FUNCS(vfsmount, VFSMOUNT)
+ FSNOTIFY_ITER_FUNCS(sb, SB)
+ 
+-#define fsnotify_foreach_obj_type(type) \
+-	for (type = 0; type < FSNOTIFY_OBJ_TYPE_COUNT; type++)
++#define fsnotify_foreach_iter_type(type) \
++	for (type = 0; type < FSNOTIFY_ITER_TYPE_COUNT; type++)
+ 
+ /*
+  * fsnotify_connp_t is what we embed in objects which connector can be attached
 -- 
 2.43.0
 
