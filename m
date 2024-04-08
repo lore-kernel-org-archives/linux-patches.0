@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F26FE35;
-	Mon,  8 Apr 2024 13:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B12C4D5AB;
+	Mon,  8 Apr 2024 13:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583879; cv=none; b=r9tocrTqpafDZAPYt9LlhkZq2QLA6bBWTIR06kXoc5PmsbL9uz39pOl2ql9m6MD9h7f43UGPgdNRqS2AALi+p+8CwWULjZgI3UOyR+aAfvpCWicwpL7EKVQxIhqpc88Lo3HkT06odynDIlHQq/ErUFW2FaKI4tTcySxISQCdz80=
+	t=1712583882; cv=none; b=jfMSIIK3id3x4qXquxLnmD4B7JlmQX3OmjtCnfMG8jPnkjsnHJpa2tJZiskW2oHgxSJBTVKZOMWZUyGZKyagveb0dgI8D5zCJGL5kwh0aiJHwn5N6t4MQaizxBlMQudvgWTi5pY1HSjXkWtGpzm7VIu5sarSqFzf6qO1JtG+qek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583879; c=relaxed/simple;
-	bh=WtIcB81vpJhY72ewG6pHESJJVG9R9VHJGlfgg/4vpcw=;
+	s=arc-20240116; t=1712583882; c=relaxed/simple;
+	bh=Y6i9BntNdLIBJEnhhG8PbMaBYfupZdfIoKgvfsiQlRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgv6a/2YJbiRzJS2GEO1hzJVg6HG+TEp8CMVT4ab3ZdPp6GYoPpF31V+lcYB3fe5lsb1/rbaEGdeKYj3dL9v6a6F09CHoiGvqWWyTZBfk6QtEpRh9GXqGf3Ih6aWKsE0+j7HgMa2C+KN674FMa6Ozhlw9JKA8iV2kTpbglnd0o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Y7C5Hgq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pUsmWPbFpmiQtXQ3t8DRFwZcInV4Iuos910UWXc8BA2b6FB9MDhf3dlZ/wSsmcZWsAARjSLLLfQ7J4W6V7xe5o3n4haYRlCfZG4dY9z2a2AgW1iejRVPj+vWLKQFWwshOWBJPLnkLaPyQgHXLWk5p3mhlQNPjBXh0L1ByXvcmSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD3KfdJE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Y7C5Hgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F086AC433F1;
-	Mon,  8 Apr 2024 13:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD3KfdJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D707FC433F1;
+	Mon,  8 Apr 2024 13:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583879;
-	bh=WtIcB81vpJhY72ewG6pHESJJVG9R9VHJGlfgg/4vpcw=;
+	s=korg; t=1712583882;
+	bh=Y6i9BntNdLIBJEnhhG8PbMaBYfupZdfIoKgvfsiQlRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Y7C5HgqW5rXI2IkM7i1/MVRnvMC7YByBRX8cbzEM3RoqQcEK1C5MQcr4yybd0rTA
-	 17oYtKdPZxY/WJdeX4whBlWs9klkcXYt9280lRDBHeV1zZbwEttY4DAl/kBqhlMOAI
-	 FKlFW7MD1MD36WXNlpAn9apWnSP2j+l1V3vx3wKw=
+	b=xD3KfdJERdwYDTzGlJAMwUVBE629IBxw2Xu+msNMynhjVTtLeIwZnVxxrgLJlEco+
+	 X3cdwC8T3KpiMb8E2k+p7PoxUFS87avVRPZOjg18iktTEu36R3o9BIxFPRxyygnm+1
+	 BFuJo2eB72S+EakXgCNtrvwOteY0kz8e1ckeDhwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 298/690] fanotify: create helper fanotify_mark_user_flags()
-Date: Mon,  8 Apr 2024 14:52:44 +0200
-Message-ID: <20240408125410.404893119@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 245/252] mptcp: dont account accept() of non-MPC client as fallback to TCP
+Date: Mon,  8 Apr 2024 14:59:04 +0200
+Message-ID: <20240408125314.263433421@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit 4adce25ccfff215939ee465b8c0aa70526d5c352 ]
+commit 7a1b3490f47e88ec4cbde65f1a77a0f4bc972282 upstream.
 
-To translate from fsnotify mark flags to user visible flags.
+Current MPTCP servers increment MPTcpExtMPCapableFallbackACK when they
+accept non-MPC connections. As reported by Christoph, this is "surprising"
+because the counter might become greater than MPTcpExtMPCapableSYNRX.
 
-Link: https://lore.kernel.org/r/20220422120327.3459282-13-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+MPTcpExtMPCapableFallbackACK counter's name suggests it should only be
+incremented when a connection was seen using MPTCP options, then a
+fallback to TCP has been done. Let's do that by incrementing it when
+the subflow context of an inbound MPC connection attempt is dropped.
+Also, update mptcp_connect.sh kselftest, to ensure that the
+above MIB does not increment in case a pure TCP client connects to a
+MPTCP server.
+
+Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/449
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-1-324a8981da48@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify.h | 10 ++++++++++
- fs/notify/fdinfo.c            |  6 ++----
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c                               |    2 --
+ net/mptcp/subflow.c                                |    2 ++
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |    9 +++++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index a3d5b751cac5b..87142bc0131a4 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -490,3 +490,13 @@ static inline unsigned int fanotify_event_hash_bucket(
- {
- 	return event->hash & FANOTIFY_HTABLE_MASK;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3911,8 +3911,6 @@ static int mptcp_stream_accept(struct so
+ 				mptcp_set_state(newsk, TCP_CLOSE);
+ 		}
+ 	} else {
+-		MPTCP_INC_STATS(sock_net(ssk),
+-				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
+ tcpfallback:
+ 		newsk->sk_kern_sock = kern;
+ 		lock_sock(newsk);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -905,6 +905,8 @@ dispose_child:
+ 	return child;
+ 
+ fallback:
++	if (fallback)
++		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
+ 	mptcp_subflow_drop_ctx(child);
+ 	return child;
  }
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -433,12 +433,14 @@ do_transfer()
+ 	local stat_cookierx_last
+ 	local stat_csum_err_s
+ 	local stat_csum_err_c
++	local stat_tcpfb_last_l
+ 	stat_synrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
+ 	stat_ackrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
+ 	stat_cookietx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
+ 	stat_cookierx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
+ 	stat_csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
+ 	stat_csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
++	stat_tcpfb_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
+ 
+ 	timeout ${timeout_test} \
+ 		ip netns exec ${listener_ns} \
+@@ -506,11 +508,13 @@ do_transfer()
+ 	local stat_cookietx_now
+ 	local stat_cookierx_now
+ 	local stat_ooo_now
++	local stat_tcpfb_now_l
+ 	stat_synrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
+ 	stat_ackrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
+ 	stat_cookietx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
+ 	stat_cookierx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
+ 	stat_ooo_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtTCPOFOQueue")
++	stat_tcpfb_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
+ 
+ 	expect_synrx=$((stat_synrx_last_l))
+ 	expect_ackrx=$((stat_ackrx_last_l))
+@@ -564,6 +568,11 @@ do_transfer()
+ 		mptcp_lib_result_fail "${TEST_GROUP}: ${result_msg}"
+ 	fi
+ 
++	if [ ${stat_ooo_now} -eq 0 ] && [ ${stat_tcpfb_last_l} -ne ${stat_tcpfb_now_l} ]; then
++		mptcp_lib_pr_fail "unexpected fallback to TCP"
++		rets=1
++	fi
 +
-+static inline unsigned int fanotify_mark_user_flags(struct fsnotify_mark *mark)
-+{
-+	unsigned int mflags = 0;
-+
-+	if (mark->flags & FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY)
-+		mflags |= FAN_MARK_IGNORED_SURV_MODIFY;
-+
-+	return mflags;
-+}
-diff --git a/fs/notify/fdinfo.c b/fs/notify/fdinfo.c
-index 1f34c5c29fdbd..59fb40abe33d3 100644
---- a/fs/notify/fdinfo.c
-+++ b/fs/notify/fdinfo.c
-@@ -14,6 +14,7 @@
- #include <linux/exportfs.h>
- 
- #include "inotify/inotify.h"
-+#include "fanotify/fanotify.h"
- #include "fdinfo.h"
- #include "fsnotify.h"
- 
-@@ -103,12 +104,9 @@ void inotify_show_fdinfo(struct seq_file *m, struct file *f)
- 
- static void fanotify_fdinfo(struct seq_file *m, struct fsnotify_mark *mark)
- {
--	unsigned int mflags = 0;
-+	unsigned int mflags = fanotify_mark_user_flags(mark);
- 	struct inode *inode;
- 
--	if (mark->flags & FSNOTIFY_MARK_FLAG_IGNORED_SURV_MODIFY)
--		mflags |= FAN_MARK_IGNORED_SURV_MODIFY;
--
- 	if (mark->connector->type == FSNOTIFY_OBJ_TYPE_INODE) {
- 		inode = igrab(fsnotify_conn_inode(mark->connector));
- 		if (!inode)
--- 
-2.43.0
-
+ 	if [ $cookies -eq 2 ];then
+ 		if [ $stat_cookietx_last -ge $stat_cookietx_now ] ;then
+ 			printf " WARN: CookieSent: did not advance"
 
 
