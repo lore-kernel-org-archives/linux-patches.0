@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388AC7C092;
-	Mon,  8 Apr 2024 14:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DC97C0A9;
+	Mon,  8 Apr 2024 14:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584874; cv=none; b=tzCuZMkFmTrdRlZS7AS1IlxAJZVcjaOC6IWUd8FIlMcC2JkXxHTiqqqnwQs4zkx44CYGLrZNbsUNYz5exubD1jNgfwIIOdNDMBEImc403mWJgNmceE6LOk2YbiPawLBEaGekXDilMPw38/XZWwyU+kZRPe8c36UtXfay04rGVEI=
+	t=1712584876; cv=none; b=PBMMgVJ/isNeUjn2WUZRqURqwzYha7zsvXbgCFaqbGvgjzoPjBmtsc5U3O4JZ9UpCHt17px9zJIFyPBtDF6yh3aWtZi7krI9x0JqAoiqmvkEq71cquBMRS/p2vzq1a4H7laBEW2uvKYNQKfcm9Uhta91ILSUK0EDfSzzA6BrlqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584874; c=relaxed/simple;
-	bh=uid/OMQJ312PcQM4dt5mc1HmzNYdV+VOSr3UmNWQkwE=;
+	s=arc-20240116; t=1712584876; c=relaxed/simple;
+	bh=ONy8Fga3sfCZ80k26kR2N22cyeRpfPHMOrrIcgK4a0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnbYKZ1PS2XkAru5LN58aafs4fueaJpmprArHJUkdzzdIKio/24C9DFLfF9qKlfBtnkiqLKGe/zTJ/hU0uwbR0hc5QQomloPAv6+UyrwVDn++mvzSI+d5xNbz5Aw85fyUW3/S9LQ8RWf2uddme7RYsp8Qf/iDQYkLeEx7C/nVwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+FNtqqG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ti9IimSbO29OJscSym0rYI1n67DJum///sCTXwGhYSLfAThZ3i0ypCLsWKYp9n5fb+k+Z5snm60EJl7yIw+snbCJPd/2DIaDmQxkNPF4by3uXCV2xaQ8KciblfzKpGPlgRlKCI+zzvHWu/Vi1KhNgVr5TpmvjYg/Lzkzo11CzB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z39U/yxA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+FNtqqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719F8C433C7;
-	Mon,  8 Apr 2024 14:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z39U/yxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E982C43390;
+	Mon,  8 Apr 2024 14:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584873;
-	bh=uid/OMQJ312PcQM4dt5mc1HmzNYdV+VOSr3UmNWQkwE=;
+	s=korg; t=1712584876;
+	bh=ONy8Fga3sfCZ80k26kR2N22cyeRpfPHMOrrIcgK4a0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+FNtqqGgQsBdUi+EgnsNVfWqohcjJJInEAhv8JhlWiiqBtlL1jGqnqhzlusDJ5Kf
-	 l/kA79f9OGL9SI49p5YeDuFiVBhqo26Q/gg2qLgEHqgccSUu3FHMt5CFVKUWt4UG8e
-	 /qC7oyk02FzXYAixuHycncHC4d+RQZTbr6wZ8WBY=
+	b=Z39U/yxA025exXW1Vuz/v3UBUszmOv8NT7yxqj6G7Jawt6u5ZuGd40zdzE16w1U4r
+	 YFue9QSyBhZtWCrupA99gZx46iUptGV2QjpACB5scpjchblK5ngSI5L8z8ceV5PSFT
+	 RpHLnzMZ74n1OH3+n0EUycBWQLLN2ttDfYADaFWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 546/690] nfsd: Simplify code around svc_exit_thread() call in nfsd()
-Date: Mon,  8 Apr 2024 14:56:52 +0200
-Message-ID: <20240408125419.428394000@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 580/690] drm/amd/display: Preserve original aspect ratio in create stream
+Date: Mon,  8 Apr 2024 14:57:26 +0200
+Message-ID: <20240408125420.610252290@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,86 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 18e4cf915543257eae2925671934937163f5639b ]
+[ Upstream commit 79f3e38f60e5b2416ba99804d83d22e69ae592a3 ]
 
-Previously a thread could exit asynchronously (due to a signal) so some
-care was needed to hold nfsd_mutex over the last svc_put() call.  Now a
-thread can only exit when svc_set_num_threads() is called, and this is
-always called under nfsd_mutex.  So no care is needed.
+[Why]
+The original picture aspect ratio in mode struct may have chance be
+overwritten with wrong aspect ratio data in create_stream_for_sink().
+It will create a different VIC output and cause HDMI compliance test
+failed.
 
-Not only is the mutex held when a thread exits now, but the svc refcount
-is elevated, so the svc_put() in svc_exit_thread() will never be a final
-put, so the mutex isn't even needed at this point in the code.
+[How]
+Preserve the original picture aspect ratio data during create the
+stream.
 
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c           | 23 -----------------------
- include/linux/sunrpc/svc.h | 13 -------------
- 2 files changed, 36 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 8063fab2c0279..8907dba22c3f2 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -979,31 +979,8 @@ nfsd(void *vrqstp)
- 	atomic_dec(&nfsdstats.th_cnt);
- 
- out:
--	/* Take an extra ref so that the svc_put in svc_exit_thread()
--	 * doesn't call svc_destroy()
--	 */
--	svc_get(nn->nfsd_serv);
--
- 	/* Release the thread */
- 	svc_exit_thread(rqstp);
--
--	/* We need to drop a ref, but may not drop the last reference
--	 * without holding nfsd_mutex, and we cannot wait for nfsd_mutex as that
--	 * could deadlock with nfsd_shutdown_threads() waiting for us.
--	 * So three options are:
--	 * - drop a non-final reference,
--	 * - get the mutex without waiting
--	 * - sleep briefly andd try the above again
--	 */
--	while (!svc_put_not_last(nn->nfsd_serv)) {
--		if (mutex_trylock(&nfsd_mutex)) {
--			nfsd_put(net);
--			mutex_unlock(&nfsd_mutex);
--			break;
--		}
--		msleep(20);
--	}
--
- 	return 0;
- }
- 
-diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index 53405c282209f..6e48c1c88f1bb 100644
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -123,19 +123,6 @@ static inline void svc_put(struct svc_serv *serv)
- 	kref_put(&serv->sv_refcnt, svc_destroy);
- }
- 
--/**
-- * svc_put_not_last - decrement non-final reference count on SUNRPC serv
-- * @serv:  the svc_serv to have count decremented
-- *
-- * Returns: %true is refcount was decremented.
-- *
-- * If the refcount is 1, it is not decremented and instead failure is reported.
-- */
--static inline bool svc_put_not_last(struct svc_serv *serv)
--{
--	return refcount_dec_not_one(&serv->sv_refcnt.refcount);
--}
--
- /*
-  * Maximum payload size supported by a kernel RPC server.
-  * This is use to determine the max number of pages nfsd is
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 9356decd14513..b7b8a2d77da67 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6334,7 +6334,9 @@ create_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 		if (recalculate_timing) {
+ 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
+ 			drm_mode_copy(&saved_mode, &mode);
++			saved_mode.picture_aspect_ratio = mode.picture_aspect_ratio;
+ 			drm_mode_copy(&mode, freesync_mode);
++			mode.picture_aspect_ratio = saved_mode.picture_aspect_ratio;
+ 		} else {
+ 			decide_crtc_timing_for_drm_display_mode(
+ 				&mode, preferred_mode, scale);
 -- 
 2.43.0
 
