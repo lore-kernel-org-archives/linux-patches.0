@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20106D1A9;
-	Mon,  8 Apr 2024 13:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084E2762E5;
+	Mon,  8 Apr 2024 13:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582471; cv=none; b=jqXLdSVSOvDCmDOOiw5wXNSH9mmUtrHvt4npdaa5YfSd26TYPyA2AN7w23eD9XscjSBKNe5/J7IuQiWjsthwlYRfWmZ8HL/FHMok3/uUWmXhz/lVgiHTEvAG176GDC9+l9uPm4x5dEn5E/tNRjrbOfMjxPdg158fF0z6vZDx3r8=
+	t=1712582475; cv=none; b=ftlQsS3ix+6OZWWHhjW2ugnXH3dHfL9HwTa1qAUrbh/fmQkw/By/6M5TbqvztxeifVeYoHqkqMQJvXezqoFaeB/SjAzIYsgHWd/7XYdyrT2t5TiSBUi2jjEcMDWwRgUzwliD3SMUj9OoE8og/2jB4GHROjTw81qz/BQgeoRk1d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582471; c=relaxed/simple;
-	bh=QWIcRRJKa9GEFEjpT0+OlPcCrE8uZgJzuu0ro3Iqb0s=;
+	s=arc-20240116; t=1712582475; c=relaxed/simple;
+	bh=sKNIh643/3mpeII46zPupH+qo0h3tjH4PCu2avk/A7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aY9UxJfCwVNi5BgMQmePGwoZsvzznSvwWvyGnYdlqv/cjyaQAeeGQIRCZ2QKOZVFyZ+ty1TTxQhoLbMENSimWgTC8JKg+baQeeP6PREitaHESNDTuhU9BKWRosgRStTXA1xCwhIkSBUGavrqPOdyyZ02LUo3gIudg8xKSutxrJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsDRtzrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uP1ZYMGZstLlsQsa+vSbWoI838zRafr6a8N5tnwNgfsxUK734L29/vdxhAIb9M8mbYYXubbW5FCHELyjWMiDjsgiUFPIGL31dCgvycs9i+SNOllJrRJG1E0jXj56p2Q6jK/2hQ9hvl2mcROKSS42ZsqLV6eQkgqqLc0foyQqpSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRMMw7pQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsDRtzrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BAC43394;
-	Mon,  8 Apr 2024 13:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRMMw7pQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4BCC43390;
+	Mon,  8 Apr 2024 13:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582471;
-	bh=QWIcRRJKa9GEFEjpT0+OlPcCrE8uZgJzuu0ro3Iqb0s=;
+	s=korg; t=1712582474;
+	bh=sKNIh643/3mpeII46zPupH+qo0h3tjH4PCu2avk/A7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XsDRtzrmYa6hUv3mbeLIKga5wOja/0aghEHV+TRYyCyWNJFsavgTo9qVpeRkeV5Un
-	 FLGQ8zQa5vF1sYVJlbFx6+aHuvjnMSyBo+AvoLusy/UsJXmYGiB8F7O4KvRiFoCoCl
-	 SiDs+2g/VRODEXOQ+PBYRim47NspbKx8zidhwlkk=
+	b=lRMMw7pQxWYhPZg5EtLq+yFytldcQ++oLAN2znG9MMzxcLfNDPNvfEbbekc3Il5dr
+	 4+qWEyBcARM+Mr7xkp3bt93BSTPjmKxK8ZRpskDqNxHj6faH+4byRBCDxFqTzNklIQ
+	 yxV5ucAenfvR759vHdPhZoMzrVmqPY8IRSnMMjkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.8 079/273] netfilter: nf_tables: release batch on table validation from abort path
-Date: Mon,  8 Apr 2024 14:55:54 +0200
-Message-ID: <20240408125311.756004480@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 109/138] ata: sata_mv: Fix PCI device ID table declaration compilation warning
+Date: Mon,  8 Apr 2024 14:58:43 +0200
+Message-ID: <20240408125259.622980821@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,83 +47,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit a45e6889575c2067d3c0212b6bc1022891e65b91 upstream.
+[ Upstream commit 3137b83a90646917c90951d66489db466b4ae106 ]
 
-Unlike early commit path stage which triggers a call to abort, an
-explicit release of the batch is required on abort, otherwise mutex is
-released and commit_list remains in place.
+Building with W=1 shows a warning for an unused variable when CONFIG_PCI
+is diabled:
 
-Add WARN_ON_ONCE to ensure commit_list is empty from the abort path
-before releasing the mutex.
+drivers/ata/sata_mv.c:790:35: error: unused variable 'mv_pci_tbl' [-Werror,-Wunused-const-variable]
+static const struct pci_device_id mv_pci_tbl[] = {
 
-After this patch, commit_list is always assumed to be empty before
-grabbing the mutex, therefore
+Move the table into the same block that containsn the pci_driver
+definition.
 
-  03c1f1ef1584 ("netfilter: Cleanup nft_net->module_list from nf_tables_exit_net()")
-
-only needs to release the pending modules for registration.
-
-Cc: stable@vger.kernel.org
-Fixes: c0391b6ab810 ("netfilter: nf_tables: missing validation from the abort path")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7bb3c5290ca0 ("sata_mv: Remove PCI dependency")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/ata/sata_mv.c | 63 +++++++++++++++++++++----------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10451,10 +10451,11 @@ static int __nf_tables_abort(struct net
- 	struct nft_trans *trans, *next;
- 	LIST_HEAD(set_update_list);
- 	struct nft_trans_elem *te;
-+	int err = 0;
+diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
+index 17f9062b0eaa5..9cf540017a5e5 100644
+--- a/drivers/ata/sata_mv.c
++++ b/drivers/ata/sata_mv.c
+@@ -787,37 +787,6 @@ static const struct ata_port_info mv_port_info[] = {
+ 	},
+ };
  
- 	if (action == NFNL_ABORT_VALIDATE &&
- 	    nf_tables_validate(net) < 0)
--		return -EAGAIN;
-+		err = -EAGAIN;
+-static const struct pci_device_id mv_pci_tbl[] = {
+-	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
+-	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
+-	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
+-	/* RocketRAID 1720/174x have different identifiers */
+-	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
+-	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
+-
+-	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
+-	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
+-	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
+-	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
+-
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
+-
+-	/* Adaptec 1430SA */
+-	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
+-
+-	/* Marvell 7042 support */
+-	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
+-
+-	/* Highpoint RocketRAID PCIe series */
+-	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
+-	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
+-
+-	{ }			/* terminate list */
+-};
+-
+ static const struct mv_hw_ops mv5xxx_ops = {
+ 	.phy_errata		= mv5_phy_errata,
+ 	.enable_leds		= mv5_enable_leds,
+@@ -4301,6 +4270,36 @@ static int mv_pci_init_one(struct pci_dev *pdev,
+ static int mv_pci_device_resume(struct pci_dev *pdev);
+ #endif
  
- 	list_for_each_entry_safe_reverse(trans, next, &nft_net->commit_list,
- 					 list) {
-@@ -10647,7 +10648,7 @@ static int __nf_tables_abort(struct net
- 	else
- 		nf_tables_module_autoload_cleanup(net);
- 
--	return 0;
-+	return err;
- }
- 
- static int nf_tables_abort(struct net *net, struct sk_buff *skb,
-@@ -10660,6 +10661,9 @@ static int nf_tables_abort(struct net *n
- 	gc_seq = nft_gc_seq_begin(nft_net);
- 	ret = __nf_tables_abort(net, action);
- 	nft_gc_seq_end(nft_net, gc_seq);
++static const struct pci_device_id mv_pci_tbl[] = {
++	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
++	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
++	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
++	/* RocketRAID 1720/174x have different identifiers */
++	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
++	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
 +
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
++	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
++	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
++	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
++	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
 +
- 	mutex_unlock(&nft_net->commit_mutex);
- 
- 	return ret;
-@@ -11461,9 +11465,10 @@ static void __net_exit nf_tables_exit_ne
- 
- 	gc_seq = nft_gc_seq_begin(nft_net);
- 
--	if (!list_empty(&nft_net->commit_list) ||
--	    !list_empty(&nft_net->module_list))
--		__nf_tables_abort(net, NFNL_ABORT_NONE);
-+	WARN_ON_ONCE(!list_empty(&nft_net->commit_list));
++	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
 +
-+	if (!list_empty(&nft_net->module_list))
-+		nf_tables_module_autoload_cleanup(net);
++	/* Adaptec 1430SA */
++	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
++
++	/* Marvell 7042 support */
++	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
++
++	/* Highpoint RocketRAID PCIe series */
++	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
++	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
++
++	{ }			/* terminate list */
++};
  
- 	__nft_release_tables(net);
+ static struct pci_driver mv_pci_driver = {
+ 	.name			= DRV_NAME,
+@@ -4313,6 +4312,7 @@ static struct pci_driver mv_pci_driver = {
+ #endif
  
+ };
++MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ 
+ /**
+  *      mv_print_info - Dump key info to kernel log for perusal.
+@@ -4485,7 +4485,6 @@ static void __exit mv_exit(void)
+ MODULE_AUTHOR("Brett Russ");
+ MODULE_DESCRIPTION("SCSI low-level driver for Marvell SATA controllers");
+ MODULE_LICENSE("GPL v2");
+-MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ MODULE_VERSION(DRV_VERSION);
+ MODULE_ALIAS("platform:" DRV_NAME);
+ 
+-- 
+2.43.0
+
 
 
