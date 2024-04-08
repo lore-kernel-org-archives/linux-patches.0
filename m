@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8C2E62C;
-	Mon,  8 Apr 2024 13:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEC2DF73;
+	Mon,  8 Apr 2024 13:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581641; cv=none; b=kBffunwDBD20jv+3eMIA6K2iMrMeHg9co5UL4J4uheTDI6pzmXddcflHiPYq8ykbaTOXctNwrlPGx+z6EMc+Lt73jeiWGN1kk9mHRNb1tEreJsN8nFJbUm6Jew5LRrjEHH9Vd0SbIGsDf8caCJC3wwf2m3J2IqnU0drD8n07Y4o=
+	t=1712581645; cv=none; b=dsqR7/vtkZM5QuHrXZS6HlfEbTz1nop2Zn7ts+BZI5PwW6ZAf8jc/DkEmNqAZ7t5dQNg8V9W9Aqf2o2Q9tgySXDebIcHDJU7g4cOR3bxFyne5gi0+zMXnEx4rFB4/YVGU4byHI3RtSaHm4TqccGCtShd8+PHWM8rNOZ17nievDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581641; c=relaxed/simple;
-	bh=7ZGrhziDn3fsa2IOniI8uJParAyimtPhVuf0ExRESBc=;
+	s=arc-20240116; t=1712581645; c=relaxed/simple;
+	bh=NUsdpof4R7/qY9JOb6s9aYkNeOYkNRJSpT7K6zhlIXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlu24S+kcvLssO74qvx4/gnJxOA2Lt4F3vu8xiRCXvT7a9l3euHSedwpnbLAbdvAmwynKWrLlkUvTXY3t46IN+qC0dy6seO8cggxNKvKZOnuJi8tUuyRnQUkcu6dBj/lBogth/S2PRI558jMOANfuNTBIwKcu6C+XbWRSZUxuHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxn1/+0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IdUWBi6ngLD86MbuZ6KZsjbhNPXvAlbzvZrOwFCdjqPCPdFqX6jQOllxU23RaWDSMZ2Xquvlkqo6uDZV7xu1CXd7xMkSivnagfS7qnASgzEV0qzj4N6Fj6ue5RGMwIu91e6hnv8ZRXagtlE+pwibUlU/gZX7k5xu+eDsd2Ak+jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8TgWu7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxn1/+0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFA5C433F1;
-	Mon,  8 Apr 2024 13:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8TgWu7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69043C433F1;
+	Mon,  8 Apr 2024 13:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581641;
-	bh=7ZGrhziDn3fsa2IOniI8uJParAyimtPhVuf0ExRESBc=;
+	s=korg; t=1712581644;
+	bh=NUsdpof4R7/qY9JOb6s9aYkNeOYkNRJSpT7K6zhlIXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxn1/+0ReAtgCoA8jmmYQjglT4EgR4ewkhi+0MwoNJKxuKym/AcLCY6cq/vNkewWJ
-	 mQ4WW136S3jOafm0YfUVDiMd0AWQNuG+W/H4Vu8SskX0Tp/F4Bbs/iqtAgFOxWECR/
-	 1UC789ziYByFi51YVnhEEh8ANfl3pG3rXnpcEmIA=
+	b=c8TgWu7rnhelJpWYnfZN0Jui5/YTQJ7GMDErcXuTM7hBeZ+UVid60x19ESvF8U6tk
+	 NCcGVen1folo/HyXXdMuQxHIKUWqGYdPpeMCXrA0Sza5Rac/eELYG0hbarKs78v5Z8
+	 BJV4f2NAHnKYe1fK859BBrjVhxdR2IZD58L4isd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Kiryushin <kiryushin@ancud.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/252] ACPICA: debugger: check status of acpi_evaluate_object() in acpi_db_walk_for_fields()
-Date: Mon,  8 Apr 2024 14:55:24 +0200
-Message-ID: <20240408125307.431377544@linuxfoundation.org>
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Jeremy Cline <jeremy@jcline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com,
+	syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Subject: [PATCH 6.8 007/273] nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet
+Date: Mon,  8 Apr 2024 14:54:42 +0200
+Message-ID: <20240408125309.511046440@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +51,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Kiryushin <kiryushin@ancud.ru>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-[ Upstream commit 40e2710860e57411ab57a1529c5a2748abbe8a19 ]
+[ Upstream commit d24b03535e5eb82e025219c2f632b485409c898f ]
 
-ACPICA commit 9061cd9aa131205657c811a52a9f8325a040c6c9
+syzbot reported the following uninit-value access issue [1][2]:
 
-Errors in acpi_evaluate_object() can lead to incorrect state of buffer.
+nci_rx_work() parses and processes received packet. When the payload
+length is zero, each message type handler reads uninitialized payload
+and KMSAN detects this issue. The receipt of a packet with a zero-size
+payload is considered unexpected, and therefore, such packets should be
+silently discarded.
 
-This can lead to access to data in previously ACPI_FREEd buffer and
-secondary ACPI_FREE to the same buffer later.
+This patch resolved this issue by checking payload size before calling
+each message type handler codes.
 
-Handle errors in acpi_evaluate_object the same way it is done earlier
-with acpi_ns_handle_to_pathname.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Link: https://github.com/acpica/acpica/commit/9061cd9a
-Fixes: 5fd033288a86 ("ACPICA: debugger: add command to dump all fields of particular subtype")
-Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reported-and-tested-by: syzbot+7ea9413ea6749baf5574@syzkaller.appspotmail.com
+Reported-and-tested-by: syzbot+29b5ca705d2e0f4a44d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7ea9413ea6749baf5574 [1]
+Closes: https://syzkaller.appspot.com/bug?extid=29b5ca705d2e0f4a44d2 [2]
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Jeremy Cline <jeremy@jcline.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dbnames.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/nfc/nci/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
-index b91155ea9c343..c9131259f717b 100644
---- a/drivers/acpi/acpica/dbnames.c
-+++ b/drivers/acpi/acpica/dbnames.c
-@@ -550,8 +550,12 @@ acpi_db_walk_for_fields(acpi_handle obj_handle,
- 	ACPI_FREE(buffer.pointer);
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index cdad47b140fa4..0d26c8ec9993e 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1516,6 +1516,11 @@ static void nci_rx_work(struct work_struct *work)
+ 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
+ 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
  
- 	buffer.length = ACPI_ALLOCATE_LOCAL_BUFFER;
--	acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
--
-+	status = acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
-+	if (ACPI_FAILURE(status)) {
-+		acpi_os_printf("Could Not evaluate object %p\n",
-+			       obj_handle);
-+		return (AE_OK);
-+	}
- 	/*
- 	 * Since this is a field unit, surround the output in braces
- 	 */
++		if (!nci_plen(skb->data)) {
++			kfree_skb(skb);
++			break;
++		}
++
+ 		/* Process frame */
+ 		switch (nci_mt(skb->data)) {
+ 		case NCI_MT_RSP_PKT:
 -- 
 2.43.0
 
