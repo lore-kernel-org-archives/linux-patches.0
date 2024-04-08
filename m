@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC182DF73;
-	Mon,  8 Apr 2024 13:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38426F08E;
+	Mon,  8 Apr 2024 13:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581753; cv=none; b=EPvE/n4AApmGc2GF1wH/J0RRg5XY3t5o926rwdOmuOdudROx7XWXCU65Cccj1cqOpGu3SAXo56X6XE+uGkQHe0phuFpfz7G+8jKi60Pfh3oOzOIBIorNLzkObGVWtXXvm9jRTIKVq/svAtLyplWKG3aiX8NcZ1bSSVkABrL5eHA=
+	t=1712581756; cv=none; b=OPnIHO1Oz4MQnDYboCDqF+hB5MlFtdZUdsj9oKNC4dFKW8MjRqNsLrJQ5vvrVRhmkBP/FeUqWRBALeNdJiMCkVna4vnG9im+/US1CwRG2X4hPUCsNY3NhJuxV5FxPInX/NoAY744sDfMMr3Y6mF8B9NfFyAT/8lj2/71ex86+3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581753; c=relaxed/simple;
-	bh=O30wXV4IcYtbSW1ped+41W4byDuPSHLFrLSfVLbGN0I=;
+	s=arc-20240116; t=1712581756; c=relaxed/simple;
+	bh=sMXx4vtjYbaBJN+68n9CR6w9sLVlTb9BjdnaTtoD13c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gaJlcxHm2rCrmZeH/ojG0Trygg+EixY5XJzhTOADW5nmhWUKo+GxoX5F8rtCx596mmSKvAr+3cc2OGljf3FfZCMRO7TVCTU/fi5p0TAR5MeRfdTX76siVGWFxdqs5wAeVj0YTQc/pT2Ugj1+KGUGFnu4pa3yiU4X/VEE/nE/IE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zakUwgrT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLLRDtJ901P1QS0L+/tppNMs3Zx1VVlf1NdJsCdmBNvnPFZGkh+1B03V5pBgA1PcXDfeaHzWGN0/Tw6oBsuGIBTxwYBSXtGsOyc+yXa1Sv1CROFxCAMKNbhkiprsN4Rv1bh/X9oMWJk47yELnOhM8th6x+WfTvBWKZP6/yVBgkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO0Sr0Y0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zakUwgrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DA1C433F1;
-	Mon,  8 Apr 2024 13:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO0Sr0Y0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD90C433F1;
+	Mon,  8 Apr 2024 13:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581753;
-	bh=O30wXV4IcYtbSW1ped+41W4byDuPSHLFrLSfVLbGN0I=;
+	s=korg; t=1712581755;
+	bh=sMXx4vtjYbaBJN+68n9CR6w9sLVlTb9BjdnaTtoD13c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zakUwgrTpggGF6Z1y0CnV/PIXfsHe6BG9NNAIAkJuK9WyBCuLX+92ot4HO5+MOfHR
-	 2IQNaqypt8i56U7o5I+iS/bZvd9bX18ZtDpxOMRki5Jvx52JUZrF/aGxgttjDgKkaj
-	 hkbOPh4RWMSzXAwf27i/3IHvBKv+Ng2KeI53vAh8=
+	b=qO0Sr0Y0GnWiBOKtm3H5kgIl9J2Xs5ySa1c2j6kPxAMqq124k5mfWhU/WG6k8Oxer
+	 zAazwfV7pM8berLYiO7koO0cHhEtMf5t0crlvvmwZHpb4t/uDjMDUhY4+KQq1xfaBO
+	 syd0TMcllk3VSPtjYbiZdyD2/XzUb56XzpEDtQFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/252] tls: adjust recv return with async crypto and failed copy to userspace
-Date: Mon,  8 Apr 2024 14:55:29 +0200
-Message-ID: <20240408125307.582009646@linuxfoundation.org>
+Subject: [PATCH 6.6 037/252] netfilter: nf_tables: skip netdev hook unregistration if table is dormant
+Date: Mon,  8 Apr 2024 14:55:36 +0200
+Message-ID: <20240408125307.793454498@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -52,47 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 85eef9a41d019b59be7bc91793f26251909c0710 ]
+[ Upstream commit 216e7bf7402caf73f4939a8e0248392e96d7c0da ]
 
-process_rx_list may not copy as many bytes as we want to the userspace
-buffer, for example in case we hit an EFAULT during the copy. If this
-happens, we should only count the bytes that were actually copied,
-which may be 0.
+Skip hook unregistration when adding or deleting devices from an
+existing netdev basechain. Otherwise, commit/abort path try to
+unregister hooks which not enabled.
 
-Subtracting async_copy_bytes is correct in both peek and !peek cases,
-because decrypted == async_copy_bytes + peeked for the peek case: peek
-is always !ZC, and we can go through either the sync or async path. In
-the async case, we add chunk to both decrypted and
-async_copy_bytes. In the sync case, we add chunk to both decrypted and
-peeked. I missed that in commit 6caaf104423d ("tls: fix peeking with
-sync+async decryption").
-
-Fixes: 4d42cd6bc2ac ("tls: rx: fix return value for async crypto")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1b5a1eaab3c088a9dd5d9f1059ceecd7afe888d1.1711120964.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
+Fixes: 7d937b107108 ("netfilter: nf_tables: support for deleting devices in an existing netdev chain")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nf_tables_api.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 8e753d10e694a..925de4caa894a 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2158,6 +2158,9 @@ int tls_sw_recvmsg(struct sock *sk,
- 		else
- 			err = process_rx_list(ctx, msg, &control, 0,
- 					      async_copy_bytes, is_peek, NULL);
-+
-+		/* we could have copied less than we wanted, and possibly nothing */
-+		decrypted += max(err, 0) - async_copy_bytes;
- 	}
- 
- 	copied += decrypted;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 6e4e22a10a826..b2ef7e37f11cd 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10083,9 +10083,11 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 			if (nft_trans_chain_update(trans)) {
+ 				nf_tables_chain_notify(&trans->ctx, NFT_MSG_DELCHAIN,
+ 						       &nft_trans_chain_hooks(trans));
+-				nft_netdev_unregister_hooks(net,
+-							    &nft_trans_chain_hooks(trans),
+-							    true);
++				if (!(trans->ctx.table->flags & NFT_TABLE_F_DORMANT)) {
++					nft_netdev_unregister_hooks(net,
++								    &nft_trans_chain_hooks(trans),
++								    true);
++				}
+ 			} else {
+ 				nft_chain_del(trans->ctx.chain);
+ 				nf_tables_chain_notify(&trans->ctx, NFT_MSG_DELCHAIN,
+@@ -10357,9 +10359,11 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 			break;
+ 		case NFT_MSG_NEWCHAIN:
+ 			if (nft_trans_chain_update(trans)) {
+-				nft_netdev_unregister_hooks(net,
+-							    &nft_trans_chain_hooks(trans),
+-							    true);
++				if (!(trans->ctx.table->flags & NFT_TABLE_F_DORMANT)) {
++					nft_netdev_unregister_hooks(net,
++								    &nft_trans_chain_hooks(trans),
++								    true);
++				}
+ 				free_percpu(nft_trans_chain_stats(trans));
+ 				kfree(nft_trans_chain_name(trans));
+ 				nft_trans_destroy(trans);
 -- 
 2.43.0
 
