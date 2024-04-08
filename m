@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6291326AC7;
-	Mon,  8 Apr 2024 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7D07EF14;
+	Mon,  8 Apr 2024 14:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584892; cv=none; b=hgGkp0wGfkKdoPtb8TJfB5hwULfyPjApYpt/3Oa1RyZqFPJxpXdzrQzJZ1cQkmT8EVzDz8Y03UZhinQl2WcmiA0wHXESqb1OSVu0RYLM7IC74KPhiPTVGOMxl0lrzL9tUaUfvkRSHslrVqUZk5JxNTXurgmrN/hcnMjJzgUUcFM=
+	t=1712584895; cv=none; b=TMQCfvHYHgvxnOeG8A0xQTFJTT3/bWTfABDOtNlRlyxXhQGpSDM/0cGwdlIq4Srx8gb5DZywQP0//RTZKoatiOKsSqIbROb7+WB11cUfrv1Q+XSkptoRV4YXF9ldOUXgNMHDCV7nWOIIuq+/abmW9ioa7nmE96NxD4rMcYHG4as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584892; c=relaxed/simple;
-	bh=5X3/T6q8/PiyFnLHyBhNsdZj8ppJGjNazCEfdkGLQeM=;
+	s=arc-20240116; t=1712584895; c=relaxed/simple;
+	bh=7Xq9nfBIm5wvVZgEgavrXSnldBFS0Zj6iN9GpK3GDBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvLTDRyyIxogrXINFEwJLEdD/uC8A7lZSEOqle43bHqgVf244rLELtbCL8pE406723RbIUEo8/UpghKkdlTjNxeqN9Jgs9F2/ABZn9FJuKEknjStzp/3oXXmhET0m3WP1ja2dbd8/CjobdLIGrxrrQYMGTjkJ2nslTnzN3RfEuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ue+Bryc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f+xr3KpZ6Xkf6b9foFHOw+FLfYsnU9/EghZmpl6ggX7bykYKTmoQGmF/F0xtz2rBwK0m5pr1otp42ToRwXoHIhvn4toArNEBalkZCLnNNdT5MKEI0ELdOZaS5C/ntFKbaXjSDjtaV81ikz1QqBd5TZLi7ZpsSU+1jvF241p3/Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwr1bp1k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ue+Bryc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AA2C433F1;
-	Mon,  8 Apr 2024 14:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwr1bp1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA96C433C7;
+	Mon,  8 Apr 2024 14:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584891;
-	bh=5X3/T6q8/PiyFnLHyBhNsdZj8ppJGjNazCEfdkGLQeM=;
+	s=korg; t=1712584894;
+	bh=7Xq9nfBIm5wvVZgEgavrXSnldBFS0Zj6iN9GpK3GDBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ue+BrycJRTgs6lJ4QnkjHZHKqhiGukY3uNB56ghRPPtcQ24eOmxi7sknw6ZzHM60
-	 dk/VQ+R1lZd7bODVtSVCyVpd6pAk4MXsc2Nv9harqeRQSeyHdi/G/0RNsvQuyYtsTY
-	 R1E2PNYNyb6oJIvXJXWj7hMeYmw7+R/uyiW+dlxM=
+	b=uwr1bp1kPtf1QC9hdIxzqpw07z27aWLc4gEfuK730ZjBs5422UfWsUU/Wr+KGYWZx
+	 TbQrreh8g2np+PoEw4s90zq2WXGo/P0uFJ7j77Di55r8zKiXd0tAlBFMvwBYolcdK7
+	 l+8tGtnBD04av2mAOD/S8ACFPKONsZY7WC4d8zhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 593/690] usb: typec: ucsi: Clear UCSI_CCI_RESET_COMPLETE before reset
-Date: Mon,  8 Apr 2024 14:57:39 +0200
-Message-ID: <20240408125421.079485520@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 594/690] scsi: qla2xxx: Prevent command send on chip reset
+Date: Mon,  8 Apr 2024 14:57:40 +0200
+Message-ID: <20240408125421.110670135@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,74 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 3de4f996a0b5412aa451729008130a488f71563e upstream.
+commit 4895009c4bb72f71f2e682f1e7d2c2d96e482087 upstream.
 
-Check the UCSI_CCI_RESET_COMPLETE complete flag before starting
-another reset. Use a UCSI_SET_NOTIFICATION_ENABLE command to clear
-the flag if it is set.
+Currently IOCBs are allowed to push through while chip reset could be in
+progress. During chip reset the outstanding_cmds array is cleared
+twice. Once when any command on this array is returned as failed and
+secondly when the array is initialize to zero. If a command is inserted on
+to the array between these intervals, then the command will be lost.  Check
+for chip reset before sending IOCB.
 
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240320073927.1641788-6-lk@c--e.de
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240227164127.36465-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_init.c |    8 ++++++--
+ drivers/scsi/qla2xxx/qla_iocb.c |   33 +++++++++++++++++++++++++++++++--
+ 2 files changed, 37 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -879,13 +879,47 @@ static int ucsi_reset_connector(struct u
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1188,8 +1188,12 @@ int qla24xx_async_gnl(struct scsi_qla_ho
+ 	return rval;
  
- static int ucsi_reset_ppm(struct ucsi *ucsi)
- {
--	u64 command = UCSI_PPM_RESET;
-+	u64 command;
- 	unsigned long tmo;
- 	u32 cci;
- 	int ret;
- 
- 	mutex_lock(&ucsi->ppm_lock);
- 
-+	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	if (ret < 0)
-+		goto out;
-+
+ done_free_sp:
+-	/* ref: INIT */
+-	kref_put(&sp->cmd_kref, qla2x00_sp_release);
 +	/*
-+	 * If UCSI_CCI_RESET_COMPLETE is already set we must clear
-+	 * the flag before we start another reset. Send a
-+	 * UCSI_SET_NOTIFICATION_ENABLE command to achieve this.
-+	 * Ignore a timeout and try the reset anyway if this fails.
++	 * use qla24xx_async_gnl_sp_done to purge all pending gnl request.
++	 * kref_put is call behind the scene.
 +	 */
-+	if (cci & UCSI_CCI_RESET_COMPLETE) {
-+		command = UCSI_SET_NOTIFICATION_ENABLE;
-+		ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
-+					     sizeof(command));
-+		if (ret < 0)
-+			goto out;
++	sp->u.iocb_cmd.u.mbx.in_mb[0] = MBS_COMMAND_ERROR;
++	qla24xx_async_gnl_sp_done(sp, QLA_COMMAND_ERROR);
+ 	fcport->flags &= ~(FCF_ASYNC_SENT);
+ done:
+ 	fcport->flags &= ~(FCF_ASYNC_ACTIVE);
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2588,6 +2588,33 @@ void
+ qla2x00_sp_release(struct kref *kref)
+ {
+ 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
++	struct scsi_qla_host *vha = sp->vha;
 +
-+		tmo = jiffies + msecs_to_jiffies(UCSI_TIMEOUT_MS);
-+		do {
-+			ret = ucsi->ops->read(ucsi, UCSI_CCI,
-+					      &cci, sizeof(cci));
-+			if (ret < 0)
-+				goto out;
-+			if (cci & UCSI_CCI_COMMAND_COMPLETE)
-+				break;
-+			if (time_is_before_jiffies(tmo))
-+				break;
-+			msleep(20);
-+		} while (1);
-+
-+		WARN_ON(cci & UCSI_CCI_RESET_COMPLETE);
++	switch (sp->type) {
++	case SRB_CT_PTHRU_CMD:
++		/* GPSC & GFPNID use fcport->ct_desc.ct_sns for both req & rsp */
++		if (sp->u.iocb_cmd.u.ctarg.req &&
++			(!sp->fcport ||
++			 sp->u.iocb_cmd.u.ctarg.req != sp->fcport->ct_desc.ct_sns)) {
++			dma_free_coherent(&vha->hw->pdev->dev,
++			    sp->u.iocb_cmd.u.ctarg.req_allocated_size,
++			    sp->u.iocb_cmd.u.ctarg.req,
++			    sp->u.iocb_cmd.u.ctarg.req_dma);
++			sp->u.iocb_cmd.u.ctarg.req = NULL;
++		}
++		if (sp->u.iocb_cmd.u.ctarg.rsp &&
++			(!sp->fcport ||
++			 sp->u.iocb_cmd.u.ctarg.rsp != sp->fcport->ct_desc.ct_sns)) {
++			dma_free_coherent(&vha->hw->pdev->dev,
++			    sp->u.iocb_cmd.u.ctarg.rsp_allocated_size,
++			    sp->u.iocb_cmd.u.ctarg.rsp,
++			    sp->u.iocb_cmd.u.ctarg.rsp_dma);
++			sp->u.iocb_cmd.u.ctarg.rsp = NULL;
++		}
++		break;
++	default:
++		break;
 +	}
-+
-+	command = UCSI_PPM_RESET;
- 	ret = ucsi->ops->async_write(ucsi, UCSI_CONTROL, &command,
- 				     sizeof(command));
- 	if (ret < 0)
+ 
+ 	sp->free(sp);
+ }
+@@ -2693,7 +2720,7 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *v
+ 	 */
+ 	sp = qla2x00_get_sp(vha, fcport, GFP_KERNEL);
+ 	if (!sp) {
+-		kfree(fcport);
++		qla2x00_free_fcport(fcport);
+ 		ql_log(ql_log_info, vha, 0x70e6,
+ 		 "SRB allocation failed\n");
+ 		return -ENOMEM;
+@@ -2748,6 +2775,7 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *v
+ 	if (rval != QLA_SUCCESS) {
+ 		/* ref: INIT */
+ 		kref_put(&sp->cmd_kref, qla2x00_sp_release);
++		qla2x00_free_fcport(fcport);
+ 		return QLA_FUNCTION_FAILED;
+ 	}
+ 
+@@ -2757,6 +2785,7 @@ qla24xx_els_dcmd_iocb(scsi_qla_host_t *v
+ 	    fcport->d_id.b.area, fcport->d_id.b.al_pa);
+ 
+ 	wait_for_completion(&elsio->u.els_logo.comp);
++	qla2x00_free_fcport(fcport);
+ 
+ 	/* ref: INIT */
+ 	kref_put(&sp->cmd_kref, qla2x00_sp_release);
+@@ -3916,7 +3945,7 @@ qla2x00_start_sp(srb_t *sp)
+ 		return -EAGAIN;
+ 	}
+ 
+-	pkt = __qla2x00_alloc_iocbs(sp->qpair, sp);
++	pkt = qla2x00_alloc_iocbs_ready(sp->qpair, sp);
+ 	if (!pkt) {
+ 		rval = -EAGAIN;
+ 		ql_log(ql_log_warn, vha, 0x700c,
 
 
