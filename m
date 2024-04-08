@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E592DF73;
-	Mon,  8 Apr 2024 13:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B007C2DF73;
+	Mon,  8 Apr 2024 13:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581732; cv=none; b=d+QooIzDZAUYtMYprvl88S/8iBqyZOjkyVW2xtwSmtpDHvmAtyn4iFQM3n4K4cYKWKEgUyPFk3INtVNYZuImq1Qq5ZIY6Gn8FYZZDg6faRP4lffO/0yx3q6mGEIlqiy3V2uFndPttnJ2S9cQRb7oU/hD7iSOGlr0Wm+skOVXlpQ=
+	t=1712581735; cv=none; b=Si8zI+3w9u1EXH80ihH6pNOliLh8I8kfwlT1eQIIchXfOzT2ZorBxVEjYf/noHHzlsRrkqxLy+D0i2QR8kYq/ziIlv6JTxuTUzPh+08ZDGQPtQeC6I2LHQiI8qD/Mg7DRvQCG9Jds/eBfa/2geRHa4e/EhFrQshC2V8F91rYZmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581732; c=relaxed/simple;
-	bh=ZR0v06q28rSFl40Rf5cewsT0nGtYT5e9uP5dLgkqE4Q=;
+	s=arc-20240116; t=1712581735; c=relaxed/simple;
+	bh=N5CAhmplb+0SFphTYFpScXT8G0YmM2oAc1kxu/AKMyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkCaRi8CSwXGklqkkDY+m3OV0WqB1krRaWsuWeG4pvxagpOFYdVsFMHp1C+67ham/VzAg5awQRNRqPUCCuILi1169A3RgEuijseEqi12wukUQ95CKDiC59NUu2fAyPC9pnEi88jw2jTBeJ+eSqy1cNBqTMzyhPLMNfPZsfEVz0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBjy5oYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDequhFZF6Gi3zMioglVgQnZcng3Dfp9+F5M+X34unmZTNDMCqYNPBYdQa7zDCZhJutkvExrxCrY6GQfPhktowM8NYfI3pku2XkEaklfSJ03iZI9vUbVraJ4t8AgGg8zMleM7MBRrGKz1zFX1b6eJnsC4aOSDwa/bleZWqB1ybg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcNLnE0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBjy5oYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FB9C433C7;
-	Mon,  8 Apr 2024 13:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcNLnE0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399E0C433F1;
+	Mon,  8 Apr 2024 13:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581732;
-	bh=ZR0v06q28rSFl40Rf5cewsT0nGtYT5e9uP5dLgkqE4Q=;
+	s=korg; t=1712581735;
+	bh=N5CAhmplb+0SFphTYFpScXT8G0YmM2oAc1kxu/AKMyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBjy5oYoq9pdwW3CzEaK9zFpW5A6pQtBaz0GUJaQrYwB0dAljxN5WZSLjrFOmARsS
-	 TE5BwbD6n8f6wpXxqZjtJ5QybJVa5VC00VqJzSpxR7WNWgjf7s6G3iEMBzRWM8lgfX
-	 Ot2lkGy6i2BFowquVXlao0P33A9mML2b4+BfqzTw=
+	b=jcNLnE0EkQpEOPidYDaAq2yCzW83jWWadOqybSt5IsBammAehQVNkk/aXB7tSEFhN
+	 8bCevYbxLjSbqAyw9+hs2J1kYClrsT9dGcGTq7nsTjpWZ75c+9JlE997RL4an9/qix
+	 8QdGsGiAwlUt4E0UNSacaC5I73iIpG8sucrUG8OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/690] usb: gadget: tegra-xudc: Fix USB3 PHY retrieval logic
-Date: Mon,  8 Apr 2024 14:49:04 +0200
-Message-ID: <20240408125402.323631289@linuxfoundation.org>
+	Robert Elliott <elliott@hpe.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.8 016/273] ice: fix memory corruption bug with suspend and rebuild
+Date: Mon,  8 Apr 2024 14:54:51 +0200
+Message-ID: <20240408125309.789166399@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +51,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit 84fa943d93c31ee978355e6c6c69592dae3c9f59 ]
+[ Upstream commit 1cb7fdb1dfde1aab66780b4ba44dba6402172111 ]
 
-This commit resolves an issue in the tegra-xudc USB gadget driver that
-incorrectly fetched USB3 PHY instances. The problem stemmed from the
-assumption of a one-to-one correspondence between USB2 and USB3 PHY
-names and their association with physical USB ports in the device tree.
+The ice driver would previously panic after suspend. This is caused
+from the driver *only* calling the ice_vsi_free_q_vectors() function by
+itself, when it is suspending. Since commit b3e7b3a6ee92 ("ice: prevent
+NULL pointer deref during reload") the driver has zeroed out
+num_q_vectors, and only restored it in ice_vsi_cfg_def().
 
-Previously, the driver associated USB3 PHY names directly with the USB3
-instance number, leading to mismatches when mapping the physical USB
-ports. For instance, if using USB3-1 PHY, the driver expect the
-corresponding PHY name as 'usb3-1'. However, the physical USB ports in
-the device tree were designated as USB2-0 and USB3-0 as we only have
-one device controller, causing a misalignment.
+This further causes the ice_rebuild() function to allocate a zero length
+buffer, after which num_q_vectors is updated, and then the new value of
+num_q_vectors is used to index into the zero length buffer, which
+corrupts memory.
 
-This commit rectifies the issue by adjusting the PHY naming logic.
-Now, the driver correctly correlates the USB2 and USB3 PHY instances,
-allowing the USB2-0 and USB3-1 PHYs to form a physical USB port pair
-while accurately reflecting their configuration in the device tree by
-naming them USB2-0 and USB3-0, respectively.
+The fix entails making sure all the code referencing num_q_vectors only
+does so after it has been reset via ice_vsi_cfg_def().
 
-The change ensures that the PHY and PHY names align appropriately,
-resolving the mismatch between physical USB ports and their associated
-names in the device tree.
+I didn't perform a full bisect, but I was able to test against 6.1.77
+kernel and that ice driver works fine for suspend/resume with no panic,
+so sometime since then, this problem was introduced.
 
-Fixes: b4e19931c98a ("usb: gadget: tegra-xudc: Support multiple device modes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20240307030328.1487748-3-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also clean up an un-needed init of a local variable in the function
+being modified.
+
+PANIC from 6.8.0-rc1:
+
+[1026674.915596] PM: suspend exit
+[1026675.664697] ice 0000:17:00.1: PTP reset successful
+[1026675.664707] ice 0000:17:00.1: 2755 msecs passed between update to cached PHC time
+[1026675.667660] ice 0000:b1:00.0: PTP reset successful
+[1026675.675944] ice 0000:b1:00.0: 2832 msecs passed between update to cached PHC time
+[1026677.137733] ixgbe 0000:31:00.0 ens787: NIC Link is Up 1 Gbps, Flow Control: None
+[1026677.190201] BUG: kernel NULL pointer dereference, address: 0000000000000010
+[1026677.192753] ice 0000:17:00.0: PTP reset successful
+[1026677.192764] ice 0000:17:00.0: 4548 msecs passed between update to cached PHC time
+[1026677.197928] #PF: supervisor read access in kernel mode
+[1026677.197933] #PF: error_code(0x0000) - not-present page
+[1026677.197937] PGD 1557a7067 P4D 0
+[1026677.212133] ice 0000:b1:00.1: PTP reset successful
+[1026677.212143] ice 0000:b1:00.1: 4344 msecs passed between update to cached PHC time
+[1026677.212575]
+[1026677.243142] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[1026677.247918] CPU: 23 PID: 42790 Comm: kworker/23:0 Kdump: loaded Tainted: G        W          6.8.0-rc1+ #1
+[1026677.257989] Hardware name: Intel Corporation M50CYP2SBSTD/M50CYP2SBSTD, BIOS SE5C620.86B.01.01.0005.2202160810 02/16/2022
+[1026677.269367] Workqueue: ice ice_service_task [ice]
+[1026677.274592] RIP: 0010:ice_vsi_rebuild_set_coalesce+0x130/0x1e0 [ice]
+[1026677.281421] Code: 0f 84 3a ff ff ff 41 0f b7 74 ec 02 66 89 b0 22 02 00 00 81 e6 ff 1f 00 00 e8 ec fd ff ff e9 35 ff ff ff 48 8b 43 30 49 63 ed <41> 0f b7 34 24 41 83 c5 01 48 8b 3c e8 66 89 b7 aa 02 00 00 81 e6
+[1026677.300877] RSP: 0018:ff3be62a6399bcc0 EFLAGS: 00010202
+[1026677.306556] RAX: ff28691e28980828 RBX: ff28691e41099828 RCX: 0000000000188000
+[1026677.314148] RDX: 0000000000000000 RSI: 0000000000000010 RDI: ff28691e41099828
+[1026677.321730] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+[1026677.329311] R10: 0000000000000007 R11: ffffffffffffffc0 R12: 0000000000000010
+[1026677.336896] R13: 0000000000000000 R14: 0000000000000000 R15: ff28691e0eaa81a0
+[1026677.344472] FS:  0000000000000000(0000) GS:ff28693cbffc0000(0000) knlGS:0000000000000000
+[1026677.353000] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[1026677.359195] CR2: 0000000000000010 CR3: 0000000128df4001 CR4: 0000000000771ef0
+[1026677.366779] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[1026677.374369] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[1026677.381952] PKRU: 55555554
+[1026677.385116] Call Trace:
+[1026677.388023]  <TASK>
+[1026677.390589]  ? __die+0x20/0x70
+[1026677.394105]  ? page_fault_oops+0x82/0x160
+[1026677.398576]  ? do_user_addr_fault+0x65/0x6a0
+[1026677.403307]  ? exc_page_fault+0x6a/0x150
+[1026677.407694]  ? asm_exc_page_fault+0x22/0x30
+[1026677.412349]  ? ice_vsi_rebuild_set_coalesce+0x130/0x1e0 [ice]
+[1026677.418614]  ice_vsi_rebuild+0x34b/0x3c0 [ice]
+[1026677.423583]  ice_vsi_rebuild_by_type+0x76/0x180 [ice]
+[1026677.429147]  ice_rebuild+0x18b/0x520 [ice]
+[1026677.433746]  ? delay_tsc+0x8f/0xc0
+[1026677.437630]  ice_do_reset+0xa3/0x190 [ice]
+[1026677.442231]  ice_service_task+0x26/0x440 [ice]
+[1026677.447180]  process_one_work+0x174/0x340
+[1026677.451669]  worker_thread+0x27e/0x390
+[1026677.455890]  ? __pfx_worker_thread+0x10/0x10
+[1026677.460627]  kthread+0xee/0x120
+[1026677.464235]  ? __pfx_kthread+0x10/0x10
+[1026677.468445]  ret_from_fork+0x2d/0x50
+[1026677.472476]  ? __pfx_kthread+0x10/0x10
+[1026677.476671]  ret_from_fork_asm+0x1b/0x30
+[1026677.481050]  </TASK>
+
+Fixes: b3e7b3a6ee92 ("ice: prevent NULL pointer deref during reload")
+Reported-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 39 ++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 52996bf2cc705..fdbb9d73aa8e4 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -3480,8 +3480,8 @@ static void tegra_xudc_device_params_init(struct tegra_xudc *xudc)
- 
- static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index fc23dbe302b46..cfc20684f25ab 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -3238,7 +3238,7 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
  {
--	int err = 0, usb3;
--	unsigned int i;
-+	int err = 0, usb3_companion_port;
-+	unsigned int i, j;
+ 	struct ice_vsi_cfg_params params = {};
+ 	struct ice_coalesce_stored *coalesce;
+-	int prev_num_q_vectors = 0;
++	int prev_num_q_vectors;
+ 	struct ice_pf *pf;
+ 	int ret;
  
- 	xudc->utmi_phy = devm_kcalloc(xudc->dev, xudc->soc->num_phys,
- 					   sizeof(*xudc->utmi_phy), GFP_KERNEL);
-@@ -3509,7 +3509,7 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		if (IS_ERR(xudc->utmi_phy[i])) {
- 			err = PTR_ERR(xudc->utmi_phy[i]);
- 			dev_err_probe(xudc->dev, err,
--				      "failed to get usb2-%d PHY\n", i);
-+				"failed to get PHY for phy-name usb2-%d\n", i);
- 			goto clean_up;
- 		} else if (xudc->utmi_phy[i]) {
- 			/* Get usb-phy, if utmi phy is available */
-@@ -3528,19 +3528,30 @@ static int tegra_xudc_phy_get(struct tegra_xudc *xudc)
- 		}
+@@ -3252,13 +3252,6 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
+ 	if (WARN_ON(vsi->type == ICE_VSI_VF && !vsi->vf))
+ 		return -EINVAL;
  
- 		/* Get USB3 phy */
--		usb3 = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
--		if (usb3 < 0)
-+		usb3_companion_port = tegra_xusb_padctl_get_usb3_companion(xudc->padctl, i);
-+		if (usb3_companion_port < 0)
- 			continue;
+-	coalesce = kcalloc(vsi->num_q_vectors,
+-			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
+-	if (!coalesce)
+-		return -ENOMEM;
+-
+-	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
+-
+ 	ret = ice_vsi_realloc_stat_arrays(vsi);
+ 	if (ret)
+ 		goto err_vsi_cfg;
+@@ -3268,6 +3261,13 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
+ 	if (ret)
+ 		goto err_vsi_cfg;
  
--		snprintf(phy_name, sizeof(phy_name), "usb3-%d", usb3);
--		xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
--		if (IS_ERR(xudc->usb3_phy[i])) {
--			err = PTR_ERR(xudc->usb3_phy[i]);
--			dev_err_probe(xudc->dev, err,
--				      "failed to get usb3-%d PHY\n", usb3);
--			goto clean_up;
--		} else if (xudc->usb3_phy[i])
--			dev_dbg(xudc->dev, "usb3-%d PHY registered", usb3);
-+		for (j = 0; j < xudc->soc->num_phys; j++) {
-+			snprintf(phy_name, sizeof(phy_name), "usb3-%d", j);
-+			xudc->usb3_phy[i] = devm_phy_optional_get(xudc->dev, phy_name);
-+			if (IS_ERR(xudc->usb3_phy[i])) {
-+				err = PTR_ERR(xudc->usb3_phy[i]);
-+				dev_err_probe(xudc->dev, err,
-+					"failed to get PHY for phy-name usb3-%d\n", j);
-+				goto clean_up;
-+			} else if (xudc->usb3_phy[i]) {
-+				int usb2_port =
-+					tegra_xusb_padctl_get_port_number(xudc->utmi_phy[i]);
-+				int usb3_port =
-+					tegra_xusb_padctl_get_port_number(xudc->usb3_phy[i]);
-+				if (usb3_port == usb3_companion_port) {
-+					dev_dbg(xudc->dev, "USB2 port %d is paired with USB3 port %d for device mode port %d\n",
-+					 usb2_port, usb3_port, i);
-+					break;
-+				}
-+			}
-+		}
- 	}
++	coalesce = kcalloc(vsi->num_q_vectors,
++			   sizeof(struct ice_coalesce_stored), GFP_KERNEL);
++	if (!coalesce)
++		return -ENOMEM;
++
++	prev_num_q_vectors = ice_vsi_rebuild_get_coalesce(vsi, coalesce);
++
+ 	ret = ice_vsi_cfg_tc_lan(pf, vsi);
+ 	if (ret) {
+ 		if (vsi_flags & ICE_VSI_FLAG_INIT) {
+@@ -3286,8 +3286,8 @@ int ice_vsi_rebuild(struct ice_vsi *vsi, u32 vsi_flags)
  
- 	return err;
+ err_vsi_cfg_tc_lan:
+ 	ice_vsi_decfg(vsi);
+-err_vsi_cfg:
+ 	kfree(coalesce);
++err_vsi_cfg:
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
