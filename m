@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8A67F7FE;
-	Mon,  8 Apr 2024 14:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEB57FBB2;
+	Mon,  8 Apr 2024 14:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584862; cv=none; b=Hgs1fvATeCNQ//SyJ+J7/noLlIncdwl/b7yGE4Qb8mWnDQdGZTDqwo93Hu13PTD5dF4aPNyxOYJlrvdph18fdhg9eW8E6LCTbsTQEIAvAkRhKj+hKJp2oO7MWPoJ4oIU3YLiK0BIE/gfnsOOLeG5y1E8Dz0J+8ikZ5gKT5LHTM0=
+	t=1712584865; cv=none; b=QspAeyQ8gLbqE1biiXDimxLWxAcPExKvIzVOisvnCVaagXga2JJZelHx+84RAwWZLH2Koi+Wq8IPV27sATsshPsbG5NGfQUPbzswiPSzZzor9MGoCrXye6w/zVWgnLHMlUbH4iwEYK3kZKJljPHxEZWnhDZ6XHeAydZVcUZ99SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584862; c=relaxed/simple;
-	bh=1qO7FjhlmI0/qI5p/w69t3y8/hHHw4u0uqOrjx2VjrE=;
+	s=arc-20240116; t=1712584865; c=relaxed/simple;
+	bh=941zQJu0sDX4iitcXy5xDfwM4zMXff8Z9a3ViEPVe/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cosdyFBqhyiR4ERv39KRYSse4nDyuOxYpQ6hcawPo8SUork6okcI1crPM+N0YnnYFa3oR2oFVXzn3ld8dJDDUFUz6ocMFFKokZxqhi9/AClV88N4NfRIY4qvd7ww0ppYnn9t6dtcymfJLeOPgOmzWtd0eq1bz7CaZGlrvdLbtdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8LlJ/am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7oLjBFBUXXcT5il7ZJ5HAfLy8lsqUwLVSbG3tLlRNFgmCN3+NUYL6d8MBC6ytP+bvzWSgOsa5NCIXCeHQhiBn9i253XKnNNA9H4Q76l8y4noQjaxU+K3Hi4JMRQNTtTCYKVKkAb0rjeNkqRM5qeBddd9nOPC/ljBTNARwTy1jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhEITDRK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8LlJ/am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BFAC43399;
-	Mon,  8 Apr 2024 14:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhEITDRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8DEC433F1;
+	Mon,  8 Apr 2024 14:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584862;
-	bh=1qO7FjhlmI0/qI5p/w69t3y8/hHHw4u0uqOrjx2VjrE=;
+	s=korg; t=1712584865;
+	bh=941zQJu0sDX4iitcXy5xDfwM4zMXff8Z9a3ViEPVe/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8LlJ/amXDb2USCbaHpLq1kco6+NlAXV6aqQCRWUULfquBuAFO7ma52gySNOm/7sK
-	 aNml44mYx3RlYuwwVI8UYMedycuzXbL2rgRIhGSw3pNiUBDjDIzbP87rNRjMlMxCFo
-	 dd3Xm3IEV4ynKN/5MKTKOZJ2bZfoejKwm0dSz6ew=
+	b=vhEITDRKIm3aVP74q4llHLGHxNHNTn3JXX1IS4jFd+kwc5uI4t+GAADUYiqKI4UYD
+	 rdf4rK2WT4UOC1gPQiJWOcHOtiQFhVpDM1LqJ9Co47e++rrMY0EZ34UQ+gtCsc66F+
+	 4yOKQhMNM6zi6QcRed4XaNHkv57w/KPwfbYw67kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
 	NeilBrown <neilb@suse.de>,
-	Jeffrey Layton <jlayton@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 552/690] nfsd: drop the nfsd_put helper
-Date: Mon,  8 Apr 2024 14:56:58 +0200
-Message-ID: <20240408125419.622704589@linuxfoundation.org>
+Subject: [PATCH 5.15 553/690] nfsd: fix RELEASE_LOCKOWNER
+Date: Mon,  8 Apr 2024 14:56:59 +0200
+Message-ID: <20240408125419.652311986@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,129 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 64e6304169f1e1f078e7f0798033f80a7fb0ea46 ]
+[ Upstream commit edcf9725150e42beeca42d085149f4c88fa97afd ]
 
-It's not safe to call nfsd_put once nfsd_last_thread has been called, as
-that function will zero out the nn->nfsd_serv pointer.
+The test on so_count in nfsd4_release_lockowner() is nonsense and
+harmful.  Revert to using check_for_locks(), changing that to not sleep.
 
-Drop the nfsd_put helper altogether and open-code the svc_put in its
-callers instead. That allows us to not be reliant on the value of that
-pointer when handling an error.
+First: harmful.
+As is documented in the kdoc comment for nfsd4_release_lockowner(), the
+test on so_count can transiently return a false positive resulting in a
+return of NFS4ERR_LOCKS_HELD when in fact no locks are held.  This is
+clearly a protocol violation and with the Linux NFS client it can cause
+incorrect behaviour.
 
-Fixes: 2a501f55cd64 ("nfsd: call nfsd_last_thread() before final nfsd_put()")
-Reported-by: Zhi Li <yieli@redhat.com>
-Cc: NeilBrown <neilb@suse.de>
-Signed-off-by: Jeffrey Layton <jlayton@redhat.com>
+If RELEASE_LOCKOWNER is sent while some other thread is still
+processing a LOCK request which failed because, at the time that request
+was received, the given owner held a conflicting lock, then the nfsd
+thread processing that LOCK request can hold a reference (conflock) to
+the lock owner that causes nfsd4_release_lockowner() to return an
+incorrect error.
+
+The Linux NFS client ignores that NFS4ERR_LOCKS_HELD error because it
+never sends NFS4_RELEASE_LOCKOWNER without first releasing any locks, so
+it knows that the error is impossible.  It assumes the lock owner was in
+fact released so it feels free to use the same lock owner identifier in
+some later locking request.
+
+When it does reuse a lock owner identifier for which a previous RELEASE
+failed, it will naturally use a lock_seqid of zero.  However the server,
+which didn't release the lock owner, will expect a larger lock_seqid and
+so will respond with NFS4ERR_BAD_SEQID.
+
+So clearly it is harmful to allow a false positive, which testing
+so_count allows.
+
+The test is nonsense because ... well... it doesn't mean anything.
+
+so_count is the sum of three different counts.
+1/ the set of states listed on so_stateids
+2/ the set of active vfs locks owned by any of those states
+3/ various transient counts such as for conflicting locks.
+
+When it is tested against '2' it is clear that one of these is the
+transient reference obtained by find_lockowner_str_locked().  It is not
+clear what the other one is expected to be.
+
+In practice, the count is often 2 because there is precisely one state
+on so_stateids.  If there were more, this would fail.
+
+In my testing I see two circumstances when RELEASE_LOCKOWNER is called.
+In one case, CLOSE is called before RELEASE_LOCKOWNER.  That results in
+all the lock states being removed, and so the lockowner being discarded
+(it is removed when there are no more references which usually happens
+when the lock state is discarded).  When nfsd4_release_lockowner() finds
+that the lock owner doesn't exist, it returns success.
+
+The other case shows an so_count of '2' and precisely one state listed
+in so_stateid.  It appears that the Linux client uses a separate lock
+owner for each file resulting in one lock state per lock owner, so this
+test on '2' is safe.  For another client it might not be safe.
+
+So this patch changes check_for_locks() to use the (newish)
+find_any_file_locked() so that it doesn't take a reference on the
+nfs4_file and so never calls nfsd_file_put(), and so never sleeps.  With
+this check is it safe to restore the use of check_for_locks() rather
+than testing so_count against the mysterious '2'.
+
+Fixes: ce3c4ad7f4ce ("NFSD: Fix possible sleep during nfsd4_release_lockowner()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org # v6.2+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfsctl.c | 31 +++++++++++++++++--------------
- fs/nfsd/nfsd.h   |  7 -------
- 2 files changed, 17 insertions(+), 21 deletions(-)
+ fs/nfsd/nfs4state.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index eec442edb6556..f77f00c931723 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -709,6 +709,7 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net, const struct cred
- 	char *mesg = buf;
- 	int fd, err;
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+	struct svc_serv *serv;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 4d95b2052c31a..64a8567ea4c40 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7831,14 +7831,16 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+ {
+ 	struct file_lock *fl;
+ 	int status = false;
+-	struct nfsd_file *nf = find_any_file(fp);
++	struct nfsd_file *nf;
+ 	struct inode *inode;
+ 	struct file_lock_context *flctx;
  
- 	err = get_int(&mesg, &fd);
- 	if (err != 0 || fd < 0)
-@@ -718,15 +719,15 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net, const struct cred
- 	if (err != 0)
- 		return err;
- 
--	err = svc_addsock(nn->nfsd_serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
-+	serv = nn->nfsd_serv;
-+	err = svc_addsock(serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
- 
--	if (err < 0 && !nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
-+	if (err < 0 && !serv->sv_nrthreads && !nn->keep_active)
- 		nfsd_last_thread(net);
--	else if (err >= 0 &&
--		 !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
--		svc_get(nn->nfsd_serv);
-+	else if (err >= 0 && !serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
-+		svc_get(serv);
- 
--	nfsd_put(net);
-+	svc_put(serv);
- 	return err;
- }
- 
-@@ -740,6 +741,7 @@ static ssize_t __write_ports_addxprt(char *buf, struct net *net, const struct cr
- 	struct svc_xprt *xprt;
- 	int port, err;
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+	struct svc_serv *serv;
- 
- 	if (sscanf(buf, "%15s %5u", transport, &port) != 2)
- 		return -EINVAL;
-@@ -751,32 +753,33 @@ static ssize_t __write_ports_addxprt(char *buf, struct net *net, const struct cr
- 	if (err != 0)
- 		return err;
- 
--	err = svc_xprt_create(nn->nfsd_serv, transport, net,
-+	serv = nn->nfsd_serv;
-+	err = svc_xprt_create(serv, transport, net,
- 			      PF_INET, port, SVC_SOCK_ANONYMOUS, cred);
- 	if (err < 0)
- 		goto out_err;
- 
--	err = svc_xprt_create(nn->nfsd_serv, transport, net,
-+	err = svc_xprt_create(serv, transport, net,
- 			      PF_INET6, port, SVC_SOCK_ANONYMOUS, cred);
- 	if (err < 0 && err != -EAFNOSUPPORT)
- 		goto out_close;
- 
--	if (!nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
--		svc_get(nn->nfsd_serv);
-+	if (!serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
-+		svc_get(serv);
- 
--	nfsd_put(net);
-+	svc_put(serv);
- 	return 0;
- out_close:
--	xprt = svc_find_xprt(nn->nfsd_serv, transport, net, PF_INET, port);
-+	xprt = svc_find_xprt(serv, transport, net, PF_INET, port);
- 	if (xprt != NULL) {
- 		svc_xprt_close(xprt);
- 		svc_xprt_put(xprt);
++	spin_lock(&fp->fi_lock);
++	nf = find_any_file_locked(fp);
+ 	if (!nf) {
+ 		/* Any valid lock stateid should have some sort of access */
+ 		WARN_ON_ONCE(1);
+-		return status;
++		goto out;
  	}
- out_err:
--	if (!nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
-+	if (!serv->sv_nrthreads && !nn->keep_active)
- 		nfsd_last_thread(net);
  
--	nfsd_put(net);
-+	svc_put(serv);
- 	return err;
+ 	inode = locks_inode(nf->nf_file);
+@@ -7854,7 +7856,8 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+ 		}
+ 		spin_unlock(&flctx->flc_lock);
+ 	}
+-	nfsd_file_put(nf);
++out:
++	spin_unlock(&fp->fi_lock);
+ 	return status;
  }
  
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 3796015dc7656..013bfa24ced21 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -96,13 +96,6 @@ int		nfsd_pool_stats_open(struct inode *, struct file *);
- int		nfsd_pool_stats_release(struct inode *, struct file *);
- void		nfsd_shutdown_threads(struct net *net);
- 
--static inline void nfsd_put(struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--
--	svc_put(nn->nfsd_serv);
--}
--
- bool		i_am_nfsd(void);
- 
- struct nfsdfs_client {
+@@ -7864,10 +7867,8 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+  * @cstate: NFSv4 COMPOUND state
+  * @u: RELEASE_LOCKOWNER arguments
+  *
+- * The lockowner's so_count is bumped when a lock record is added
+- * or when copying a conflicting lock. The latter case is brief,
+- * but can lead to fleeting false positives when looking for
+- * locks-in-use.
++ * Check if theree are any locks still held and if not - free the lockowner
++ * and any lock state that is owned.
+  *
+  * Return values:
+  *   %nfs_ok: lockowner released or not found
+@@ -7903,10 +7904,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 		spin_unlock(&clp->cl_lock);
+ 		return nfs_ok;
+ 	}
+-	if (atomic_read(&lo->lo_owner.so_count) != 2) {
+-		spin_unlock(&clp->cl_lock);
+-		nfs4_put_stateowner(&lo->lo_owner);
+-		return nfserr_locks_held;
++
++	list_for_each_entry(stp, &lo->lo_owner.so_stateids, st_perstateowner) {
++		if (check_for_locks(stp->st_stid.sc_file, lo)) {
++			spin_unlock(&clp->cl_lock);
++			nfs4_put_stateowner(&lo->lo_owner);
++			return nfserr_locks_held;
++		}
+ 	}
+ 	unhash_lockowner_locked(lo);
+ 	while (!list_empty(&lo->lo_owner.so_stateids)) {
 -- 
 2.43.0
 
