@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948DD79F0;
-	Mon,  8 Apr 2024 13:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797A679F0;
+	Mon,  8 Apr 2024 13:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583972; cv=none; b=MG4PlQl2jD7fvNhUs2q68GvN375VXZ/2Dg0RgKUJLe4KpQHBDrFP8RcwPqvS6pWxV2t+T4IxGg0sOVrqqvgdbSzrumQNGKigsdXnbCG9iLg5CFh6QnlFV8undFJgIM+L71XwXW8m6PL+Oi9wtVYK0Jx7oCbSAPFn43gLF3byTV4=
+	t=1712583975; cv=none; b=Iyee11awLPlEbrpY7Y7Zxnnzsm5J5qAHPnr6Ws7zXFWt3sRXUDvj7fI4Eg6X1UPFJ1STokYL0sOYowoW1q7gdTeTN0uXlOF6rdPF8/rpFPHlITgaHltd7vwK/ERBR8ds6LLHJvhPB/0T+3pEm895SBGesg8OGEBLiYZ4iK4kv8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583972; c=relaxed/simple;
-	bh=WGSp13Ge5nqR6Kja8I4XOoqp8BOJrSg88Gp1BocK4ZE=;
+	s=arc-20240116; t=1712583975; c=relaxed/simple;
+	bh=zKr9pPGd7+xRH47SZGe6c4wZ6rat+6tIFfGJPO2OR40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWTXA4v0OPwGrcrfShHYVLiUsFpGLKQX+Uw3k6V47kmS1bBtmOdparKbz2INiPL1vUUolV7/5dWLXpOgmI2f7B7qB653S55d98W5Df+X2B7XtfmNvwCO0Dqlag+DaDU/RcVbxL5+VUYLBAjVgUtRtmvqvA82Ctj2m1aiNYydoow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5l/VNNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSmms6EjgsmaNRDfsAzkeIp4RBhR1xwQyWuLJeQ1mpUnPAkVjRKy6x048da9CH1bZA4clIvy4AXmOfQWyeAsKPnoPe1BNAZ8XWoPTPJYaI6MFcfSRHkZ69aU5+V8NK4o33ENIsw8ynRQIIE8SloIKQYDfhGZo5OSJixc/9purVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/cHjKg3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5l/VNNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D39CC433F1;
-	Mon,  8 Apr 2024 13:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/cHjKg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00235C433C7;
+	Mon,  8 Apr 2024 13:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583972;
-	bh=WGSp13Ge5nqR6Kja8I4XOoqp8BOJrSg88Gp1BocK4ZE=;
+	s=korg; t=1712583975;
+	bh=zKr9pPGd7+xRH47SZGe6c4wZ6rat+6tIFfGJPO2OR40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V5l/VNNdaCluKNChiFxROE07CLzBj8r8N2VINyewx0+VlN4nSPYim4097rqhgD6fc
-	 GYYCYdADfr7X/4zZDopQuaAbSXel1KVDA3/rPI6UT1GzXw0oysJDKK8p7ewqYpl0So
-	 YTN8fbxPsOuBveYox0Jk0883UFj64bJwGm2YASUE=
+	b=U/cHjKg3eDrYKsfsPQjQoxdagND+cCVx8A6Mn8VuyWMpvsU72GS8PmqOo51ATBmVq
+	 QtExedeRdSqRwz6UBu8i2w5GmSvnS7h7iAGRtWsEBGt2KszBJ4ZG7+1efT255yPgzV
+	 Pk5t8hY9m6ezuUBgrZpj21vxLbjz568cU5cGIun0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ulrich Weigand <ulrich.weigand@de.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.8 240/273] s390/entry: align system call table on 8 bytes
-Date: Mon,  8 Apr 2024 14:58:35 +0200
-Message-ID: <20240408125316.887670991@linuxfoundation.org>
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 309/690] NFSD: move create/destroy of laundry_wq to init_nfsd and exit_nfsd
+Date: Mon,  8 Apr 2024 14:52:55 +0200
+Message-ID: <20240408125410.791280362@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,37 +47,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 378ca2d2ad410a1cd5690d06b46c5e2297f4c8c0 upstream.
+[ Upstream commit d76cc46b37e123e8d245cc3490978dbda56f979d ]
 
-Align system call table on 8 bytes. With sys_call_table entry size
-of 8 bytes that eliminates the possibility of a system call pointer
-crossing cache line boundary.
+This patch moves create/destroy of laundry_wq from nfs4_state_start
+and nfs4_state_shutdown_net to init_nfsd and exit_nfsd to prevent
+the laundromat from being freed while a thread is processing a
+conflicting lock.
 
-Cc: stable@kernel.org
-Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/s390/kernel/entry.S |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4state.c | 28 ++++++++++++++++------------
+ fs/nfsd/nfsctl.c    |  4 ++++
+ fs/nfsd/nfsd.h      |  4 ++++
+ 3 files changed, 24 insertions(+), 12 deletions(-)
 
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -653,6 +653,7 @@ SYM_DATA_START_LOCAL(daton_psw)
- SYM_DATA_END(daton_psw)
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 3dfdd9e1c5028..582c9c7ba60a8 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -127,6 +127,21 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops;
  
- 	.section .rodata, "a"
-+	.balign	8
- #define SYSCALL(esame,emu)	.quad __s390x_ ## esame
- SYM_DATA_START(sys_call_table)
- #include "asm/syscall_table.h"
+ static struct workqueue_struct *laundry_wq;
+ 
++int nfsd4_create_laundry_wq(void)
++{
++	int rc = 0;
++
++	laundry_wq = alloc_workqueue("%s", WQ_UNBOUND, 0, "nfsd4");
++	if (laundry_wq == NULL)
++		rc = -ENOMEM;
++	return rc;
++}
++
++void nfsd4_destroy_laundry_wq(void)
++{
++	destroy_workqueue(laundry_wq);
++}
++
+ static bool is_session_dead(struct nfsd4_session *ses)
+ {
+ 	return ses->se_flags & NFS4_SESSION_DEAD;
+@@ -7761,22 +7776,12 @@ nfs4_state_start(void)
+ {
+ 	int ret;
+ 
+-	laundry_wq = alloc_workqueue("%s", WQ_UNBOUND, 0, "nfsd4");
+-	if (laundry_wq == NULL) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+ 	ret = nfsd4_create_callback_queue();
+ 	if (ret)
+-		goto out_free_laundry;
++		return ret;
+ 
+ 	set_max_delegations();
+ 	return 0;
+-
+-out_free_laundry:
+-	destroy_workqueue(laundry_wq);
+-out:
+-	return ret;
+ }
+ 
+ void
+@@ -7813,7 +7818,6 @@ nfs4_state_shutdown_net(struct net *net)
+ void
+ nfs4_state_shutdown(void)
+ {
+-	destroy_workqueue(laundry_wq);
+ 	nfsd4_destroy_callback_queue();
+ }
+ 
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 16920e4512bde..322a208878f2c 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1542,6 +1542,9 @@ static int __init init_nfsd(void)
+ 	if (retval < 0)
+ 		goto out_free_filesystem;
+ 	retval = register_cld_notifier();
++	if (retval)
++		goto out_free_all;
++	retval = nfsd4_create_laundry_wq();
+ 	if (retval)
+ 		goto out_free_all;
+ 	return 0;
+@@ -1566,6 +1569,7 @@ static int __init init_nfsd(void)
+ 
+ static void __exit exit_nfsd(void)
+ {
++	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+ 	nfsd_drc_slab_free();
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 23996c6ca75e3..847b482155ae9 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -162,6 +162,8 @@ void nfs4_state_shutdown_net(struct net *net);
+ int nfs4_reset_recoverydir(char *recdir);
+ char * nfs4_recoverydir(void);
+ bool nfsd4_spo_must_allow(struct svc_rqst *rqstp);
++int nfsd4_create_laundry_wq(void);
++void nfsd4_destroy_laundry_wq(void);
+ #else
+ static inline int nfsd4_init_slabs(void) { return 0; }
+ static inline void nfsd4_free_slabs(void) { }
+@@ -175,6 +177,8 @@ static inline bool nfsd4_spo_must_allow(struct svc_rqst *rqstp)
+ {
+ 	return false;
+ }
++static inline int nfsd4_create_laundry_wq(void) { return 0; };
++static inline void nfsd4_destroy_laundry_wq(void) {};
+ #endif
+ 
+ /*
+-- 
+2.43.0
+
 
 
