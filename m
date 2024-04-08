@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29D876413;
-	Mon,  8 Apr 2024 13:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935287BAE3;
+	Mon,  8 Apr 2024 13:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582909; cv=none; b=tT7W0UlcxFLP+gCU6italyQCd3NPpraWxJ2j/Ox1pZSr4ExoReLFuKAmuF/rQAzIm1MBJq1LVa/IHAxwpWmSXJ6cO4LFFzY3B8gDkzpxGQKsgfO4cP6B55EDVsgDobTxzB6eeiWjAiCf+c9M/RC4phaNuNkF4kMBeqKvPuYmECk=
+	t=1712582912; cv=none; b=ERDKU8SEVhilf8Fo5vufc/GKz4pvds0gnxgZy6zbOQ73WS428Iinw5Ed7XhMOU9V0Mi7zVCM18lkE7UIm/Cx87LcPNrWM+SliF9ZUZfdRpql2hs+m7vsQ21O+uPO2tNthoDoiTYtV1cEFZ7WD9Z0Qrn/IXJdKVLCSO1INWO3zfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582909; c=relaxed/simple;
-	bh=KaYlK6hUfQW4bm77aV5salT0dlyLWVobp1V3p1wHBwo=;
+	s=arc-20240116; t=1712582912; c=relaxed/simple;
+	bh=R+AlE7D8G0x0osvxGqUSniHMFBF+oymulx55WPXTrMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0KS60Jc3IDv246m0FoE2EbKhdHOqyLvbYBj0HKpC7WY76zPNY9GddQjf+qd+bCZ6wowcgh38f00bBp36ctaCgGTBF+9ppkuxmQhxQapFyDroauUXVJ54Ir/tmqVuIiCpiA65LrhEHJLdntXvk4jZ2dDehFHBYd55PFkB2Qo2vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDPJ0kmS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6150MXIEXS41y/DkJZUst/I5aQ4gzDX4Kys1Z4t05RwN26Cdo669HT8V+6dhfiq8vwz4PLnPr2um63dGkTwccKvSDAAdaKprDh9b3rsutiGEzF5qos2zK0iNcNFXibprr+xJ47lNm76aPfIlbQHwYZiEh1ZMAMOn6yWNYyRsLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHnQjnO/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDPJ0kmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F13C433C7;
-	Mon,  8 Apr 2024 13:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHnQjnO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1360DC433F1;
+	Mon,  8 Apr 2024 13:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582909;
-	bh=KaYlK6hUfQW4bm77aV5salT0dlyLWVobp1V3p1wHBwo=;
+	s=korg; t=1712582912;
+	bh=R+AlE7D8G0x0osvxGqUSniHMFBF+oymulx55WPXTrMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDPJ0kmS0PCHeosUn1/yyllc1A2C9kYQVBa2hxszIzubSTxjNV22jYh5F1AZ76yxi
-	 sAZtH5SH3j1RUYqHLAYvfdooq4w+cBeuC2YwyHDvu0SLI+2XfEuMrT6BVSHy8YeTn/
-	 PwF2FHdSUGNdqdl976pLS0eWFwDJkdejCaxSOHSc=
+	b=IHnQjnO/ExC4GNTwEatDZevQqkOS1e0rpFzVLiId/gR+m5+NInYEH/vdYnfK66BST
+	 OsFzUijKmqKikQX2Q3/kbxvFtaQw5aaQ0WXtpKzjNSid6Wdub8ZA56hzGsOAWWShNs
+	 tr6+agebo/0Yj2IIKqKgoqh5yW+BSIEfQ0fOKl5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 116/273] ax25: fix use-after-free bugs caused by ax25_ds_del_timer
-Date: Mon,  8 Apr 2024 14:56:31 +0200
-Message-ID: <20240408125312.903812770@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Chris Park <chris.park@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 135/252] drm/amd/display: Prevent crash when disable stream
+Date: Mon,  8 Apr 2024 14:57:14 +0200
+Message-ID: <20240408125310.828373158@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +51,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Chris Park <chris.park@amd.com>
 
-commit fd819ad3ecf6f3c232a06b27423ce9ed8c20da89 upstream.
+[ Upstream commit 72d72e8fddbcd6c98e1b02d32cf6f2b04e10bd1c ]
 
-When the ax25 device is detaching, the ax25_dev_device_down()
-calls ax25_ds_del_timer() to cleanup the slave_timer. When
-the timer handler is running, the ax25_ds_del_timer() that
-calls del_timer() in it will return directly. As a result,
-the use-after-free bugs could happen, one of the scenarios
-is shown below:
+[Why]
+Disabling stream encoder invokes a function that no longer exists.
 
-      (Thread 1)          |      (Thread 2)
-                          | ax25_ds_timeout()
-ax25_dev_device_down()    |
-  ax25_ds_del_timer()     |
-    del_timer()           |
-  ax25_dev_put() //FREE   |
-                          |  ax25_dev-> //USE
+[How]
+Check if the function declaration is NULL in disable stream encoder.
 
-In order to mitigate bugs, when the device is detaching, use
-timer_shutdown_sync() to stop the timer.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240329015023.9223-1-duoming@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Chris Park <chris.park@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -105,7 +105,7 @@ void ax25_dev_device_down(struct net_dev
- 	spin_lock_bh(&ax25_dev_lock);
- 
- #ifdef CONFIG_AX25_DAMA_SLAVE
--	ax25_ds_del_timer(ax25_dev);
-+	timer_shutdown_sync(&ax25_dev->dama.slave_timer);
- #endif
- 
- 	/*
+diff --git a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+index 2ac41c2a7238c..7b5c1498941dd 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -1181,7 +1181,8 @@ void dce110_disable_stream(struct pipe_ctx *pipe_ctx)
+ 		if (dccg) {
+ 			dccg->funcs->disable_symclk32_se(dccg, dp_hpo_inst);
+ 			dccg->funcs->set_dpstreamclk(dccg, REFCLK, tg->inst, dp_hpo_inst);
+-			dccg->funcs->set_dtbclk_dto(dccg, &dto_params);
++			if (dccg && dccg->funcs->set_dtbclk_dto)
++				dccg->funcs->set_dtbclk_dto(dccg, &dto_params);
+ 		}
+ 	} else if (dccg && dccg->funcs->disable_symclk_se) {
+ 		dccg->funcs->disable_symclk_se(dccg, stream_enc->stream_enc_inst,
+-- 
+2.43.0
+
 
 
