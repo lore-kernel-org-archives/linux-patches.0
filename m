@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D272DF73;
-	Mon,  8 Apr 2024 13:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398FA7E0E8;
+	Mon,  8 Apr 2024 13:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583763; cv=none; b=lbxlBt6ie1aryFKF51MCDwDLT4Mt/RjYzDUcc9JDxvZE6YbpsWGLLanwYURv6i97fKrfpki53Qv9DbxgHFItahsXC5BR+EHcHuY5oSZI3Ug8XVeXefU1WkYGGWqQP4WXUsPFG6qKvrtxl9b63EePhStZaoDfZV7kvSteDRINVjY=
+	t=1712583766; cv=none; b=Rl8vcFpr5m39JUuoQEbd1h/xSrB9qtCih6YKxgGHZWjG3C6UQ+EQax2KgLqzJBinBUQyiUZEnLOT6k2WhJ7dlDWskP8hrClyLjPn7EKVcwq1xZQrdi+dI4aqB+jSFISKB68HhSA1o8DiOlieLOeSXGqxLe/LmiRDQkvKhNaAr7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583763; c=relaxed/simple;
-	bh=fzwbhfsKYp/oOERJ8VN442ewgT+cLGYI+DLh7Gw2bbc=;
+	s=arc-20240116; t=1712583766; c=relaxed/simple;
+	bh=GFnEyf05pp/8sRv/No2JapBeR6ydVLJLrJy/pY3lEP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIkvPUSknFvm98QeMrXLIgyCv4eOvVw2g0rgCg3ox/OjSesl2jm0u+KfTobdFYxhoyI0QRPhl33mziMvi/tljyjJcsd25lR75nAAE4GOBZvaF3gLonfG8JI37O3Z4FDLlmDJRptz9F0wLLvnZOhJogkiYEJyETDXwG308yh3UsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxkSOBoW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqDUcS3dCUeGkcFoOPBR2ZE1rFpESh2X13ub4cn20wFKbiP/beIXRao2Iga9zl2yJbQqZa1+xAYWP70rg8IKdIue63YysUVCB8y+EhstClB/o4TeJUJzIhDMamuQfnyLTs1zSDn/xPMV2aQYzzdyGUJjHiSpAgV5YZiEX2YjDcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly0SQHRC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxkSOBoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21A6C433C7;
-	Mon,  8 Apr 2024 13:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly0SQHRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F18C433C7;
+	Mon,  8 Apr 2024 13:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583763;
-	bh=fzwbhfsKYp/oOERJ8VN442ewgT+cLGYI+DLh7Gw2bbc=;
+	s=korg; t=1712583766;
+	bh=GFnEyf05pp/8sRv/No2JapBeR6ydVLJLrJy/pY3lEP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxkSOBoWevBpOITNGkih3ulgFz09B4qHzewFLIcgZQAuqCBYMJy3iUb5859yotynC
-	 wO+x70c0xjn+OvKWGTDuvmL4A4n8Tp/qc6fla8l+OtFPNGjx2/+LU/QAdn8l9WvZOm
-	 2hJHxkQ0+2dMjQx6pMw2mI43DxUuxuPGjyeqETHE=
+	b=ly0SQHRCtzHsg62Yl5beKP4flLg6vyNncnXWiAdF1dnGHNgytFuo7vE1YmqdaDRoB
+	 V4VMv+LxOP2ouMrdbPrm77Fw7tEnc6QVLoiMmrPlB09RWqEHoOMZGIL0Qz3CJbUCgN
+	 lq5V7iUh1zohOJkCMYrSB/GNYWWPRHJV9Lv1c3rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jakobkoschel@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 282/690] nfsd: fix using the correct variable for sizeof()
-Date: Mon,  8 Apr 2024 14:52:28 +0200
-Message-ID: <20240408125409.826782911@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 231/252] smb: client: fix potential UAF in cifs_stats_proc_show()
+Date: Mon,  8 Apr 2024 14:58:50 +0200
+Message-ID: <20240408125313.824099039@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakob Koschel <jakobkoschel@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 4fc5f5346592cdc91689455d83885b0af65d71b8 ]
+commit 0865ffefea197b437ba78b5dd8d8e256253efd65 upstream.
 
-While the original code is valid, it is not the obvious choice for the
-sizeof() call and in preparation to limit the scope of the list iterator
-variable the sizeof should be changed to the size of the destination.
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4layouts.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifs_debug.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 2673019d30ecd..7018d209b784a 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -421,7 +421,7 @@ nfsd4_insert_layout(struct nfsd4_layoutget *lgp, struct nfs4_layout_stateid *ls)
- 	new = kmem_cache_alloc(nfs4_layout_cache, GFP_KERNEL);
- 	if (!new)
- 		return nfserr_jukebox;
--	memcpy(&new->lo_seg, seg, sizeof(lp->lo_seg));
-+	memcpy(&new->lo_seg, seg, sizeof(new->lo_seg));
- 	new->lo_state = ls;
- 
- 	spin_lock(&fp->fi_lock);
--- 
-2.43.0
-
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -736,6 +736,8 @@ static int cifs_stats_proc_show(struct s
+ 			}
+ #endif /* STATS2 */
+ 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
++			if (cifs_ses_exiting(ses))
++				continue;
+ 			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+ 				i++;
+ 				seq_printf(m, "\n%d) %s", i, tcon->tree_name);
 
 
