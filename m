@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E957E59F;
-	Mon,  8 Apr 2024 13:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB77E59F;
+	Mon,  8 Apr 2024 13:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583541; cv=none; b=IB4LMKa3jIewloxFAtLHU0jhzmSjk3yC9iu9/7BEDbdCpLr5HeJxAMOzFwT+5yPbkWGBmDh7FPb3lrWBgaTeFZDsHICVS4yIT7/Vr46EZewI+9/VN7Afn6eXMpd8IXFp0fE/zVM+yb1+/7zLm1BxZEefiIXriyYUwzfSf21tb3U=
+	t=1712583544; cv=none; b=aH7znnngliwQ+WUZPcGGOfUsJg5dlVTZXgllBaRQ+UDgn1m1PoDBhMv/WXwjleERdlQo5UPUi3hrLPuXNVwB0g+JbVYuR735bLxUmMXA4adErvZo2K+iGdiGWhU3/lnEvp/2hOzmvHRyNc0Z5anOj0YRr9Fe1lWd1jm9ggL9gtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583541; c=relaxed/simple;
-	bh=RZ86TbakRrbfJLY+e66EplpRfpG8CLm1x7Dzb1mhlts=;
+	s=arc-20240116; t=1712583544; c=relaxed/simple;
+	bh=kLkJgrBe/ICo8RPJrqT3bWK7Wh9BQgMvf4Gr+8iXnqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKKhzFLStQt9r5Sig4rBlvCWYFSg4HL8iGBr5CkhEU3k4FHp6cTxsULzb6ZWI3jdZFRVdoFTd6r2u0wKWQwMTdGxBaqPQKaOQqeuKaKU6yA8J4uPomVjXHqKVKcUg/g1g5La348xl+BmGDe3kgUmTGDnqveXHG9bDURe5BDtqYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uR7cU0an; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iHwAd4Ewp54AeuS3sz8o1CmDHuFo0Vx/Zgczf9V/0qpNV0vUal+BIe0hqJGoxGw3zQmTrcgq12kCmBTxdsgVexMOtnv3AKTSWDvXj9xu8PTImj1c1frOzZqZB+aW0LqRuHSWSlmKKzUQn8ErkCJ/Ko/4qSjZNtpJ9etr1Of96RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeizBpRc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uR7cU0an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFF1C433C7;
-	Mon,  8 Apr 2024 13:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeizBpRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9024AC433C7;
+	Mon,  8 Apr 2024 13:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583541;
-	bh=RZ86TbakRrbfJLY+e66EplpRfpG8CLm1x7Dzb1mhlts=;
+	s=korg; t=1712583544;
+	bh=kLkJgrBe/ICo8RPJrqT3bWK7Wh9BQgMvf4Gr+8iXnqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uR7cU0an74zyGCYRYAKaNzcLdJfj8dz6uIG0bjtYc8WjjcDmCoa5rl914ZtrP9QW3
-	 gGFwgbz87m0pwxIOH5HlRbWNYnjN3LpevhcGKV5SGxR7RsIOppq1+vkPy/lnbEFNMF
-	 ZDZizZLZ7KIGSzw9Xqv3pjCiT+dRWWbCzsvCSIwo=
+	b=NeizBpRcsD8jrzJoRWMM8p4I1hns5pLW/br86E4ej3cPx43d/9Qwv+x+rxZsXEy1j
+	 WJOW96Es08RMMcZHPH9jO1jLDI4eiHFZ5SJlz02H2Vwqrze/5SwbHT4/IorLnzgvO9
+	 LmUN0o4Nnjavekq5D720FOCe6R8f4ayppqGbm8Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Christopher Adduono <jc@adduono.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 206/252] ksmbd: do not set SMB2_GLOBAL_CAP_ENCRYPTION for SMB 3.1.1
-Date: Mon,  8 Apr 2024 14:58:25 +0200
-Message-ID: <20240408125313.044434788@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 258/690] NFSD: De-duplicate net_generic(SVC_NET(rqstp), nfsd_net_id)
+Date: Mon,  8 Apr 2024 14:52:04 +0200
+Message-ID: <20240408125408.961974590@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +45,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 5ed11af19e56f0434ce0959376d136005745a936 upstream.
+[ Upstream commit fb7622c2dbd1aa41133a8c73e1137b833c074519 ]
 
-SMB2_GLOBAL_CAP_ENCRYPTION flag should be used only for 3.0 and
-3.0.2 dialects. This flags set cause compatibility problems with
-other SMB clients.
+Since this pointer is used repeatedly, move it to a stack variable.
 
-Reported-by: James Christopher Adduono <jc@adduono.com>
-Tested-by: James Christopher Adduono <jc@adduono.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/smb/server/smb2ops.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/vfs.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/fs/smb/server/smb2ops.c
-+++ b/fs/smb/server/smb2ops.c
-@@ -228,6 +228,11 @@ void init_smb3_0_server(struct ksmbd_con
- 	    conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 98d370dcca867..17985d868887a 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -966,6 +966,7 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 				unsigned long *cnt, int stable,
+ 				__be32 *verf)
+ {
++	struct nfsd_net		*nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct file		*file = nf->nf_file;
+ 	struct super_block	*sb = file_inode(file)->i_sb;
+ 	struct svc_export	*exp;
+@@ -1010,13 +1011,10 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	iov_iter_kvec(&iter, WRITE, vec, vlen, *cnt);
+ 	since = READ_ONCE(file->f_wb_err);
+ 	if (verf)
+-		nfsd_copy_boot_verifier(verf,
+-				net_generic(SVC_NET(rqstp),
+-				nfsd_net_id));
++		nfsd_copy_boot_verifier(verf, nn);
+ 	host_err = vfs_iter_write(file, &iter, &pos, flags);
+ 	if (host_err < 0) {
+-		nfsd_reset_boot_verifier(net_generic(SVC_NET(rqstp),
+-					 nfsd_net_id));
++		nfsd_reset_boot_verifier(nn);
+ 		goto out_nfserr;
+ 	}
+ 	*cnt = host_err;
+@@ -1029,8 +1027,7 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	if (stable && use_wgather) {
+ 		host_err = wait_for_concurrent_writes(file);
+ 		if (host_err < 0)
+-			nfsd_reset_boot_verifier(net_generic(SVC_NET(rqstp),
+-						 nfsd_net_id));
++			nfsd_reset_boot_verifier(nn);
+ 	}
  
-+	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
-+	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
-+	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
-+		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
-+
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
- }
-@@ -275,11 +280,6 @@ int init_smb3_11_server(struct ksmbd_con
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_LEASING |
- 			SMB2_GLOBAL_CAP_DIRECTORY_LEASING;
- 
--	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION ||
--	    (!(server_conf.flags & KSMBD_GLOBAL_FLAG_SMB2_ENCRYPTION_OFF) &&
--	     conn->cli_cap & SMB2_GLOBAL_CAP_ENCRYPTION))
--		conn->vals->capabilities |= SMB2_GLOBAL_CAP_ENCRYPTION;
--
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
- 
+ out_nfserr:
+-- 
+2.43.0
+
 
 
