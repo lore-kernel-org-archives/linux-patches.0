@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC39A823A2;
-	Mon,  8 Apr 2024 13:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61016A35A;
+	Mon,  8 Apr 2024 13:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583698; cv=none; b=CK1M0ImrgsCW1nNHJAjTBEIx+9qVQcINj4TDv52lZPFQefhK0dMFtYSN5SoA3hUmsr6AzhOVJnKaECWRhVXXCUbW7ilCbDrDo2J70WeSlvHtG4Lqz/8qU9QCzoyoP1T+2YAHbhRYQU8GILJ4ov3ABsPtJmPWAqiKY3yM4grmid8=
+	t=1712583702; cv=none; b=GaRPPUam6pSivtUl0JxzhgXvKTC2OYXgZwZKFpDQ6lYUSTzE5dMC2ACKH7PNw/94GOReoykzUbG178C78EmkwY/pbRBiY3STigKSkPDuRTiZPp93fN0uz87bC1hZqbRbLi7qoHS7bdo9sZMg0n38V6ijK93a+IaICH1z8O0Y8gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583698; c=relaxed/simple;
-	bh=1bhMTZbzD2VY6Epf1Eq38w2gYEdDwNEhsZK3vvgGT/Q=;
+	s=arc-20240116; t=1712583702; c=relaxed/simple;
+	bh=lmewIyPsIK4EfW8XAJNHI4nHGHGWIHZNWUXhUa+AL14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NPOQkLGtg3vwgBk+VsuO0dNQHdKKoyLGo3lBSlD4tPlb/Fxf7BVVNFwmky+iFNdTgdhi7dlaCb/CwjbWD6zd7jB3A2SFdwt9A50X4E77HR+bUoYErZA4sqXb7XjjZzeDmCv3Oa/ErSX24CDs/OqTBivk58pmW0LmnRK4Ut7Klf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR33Y9J6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hOpRu8avvetky6iVYQekcIjgMeh556iVpWL+A22ZQHhM9Rp2uTMJGNJWdySRj6g4QLiyox6DqpRkc07wGwvNDrXiVF00p/cnZuwf/isJ1mPUC7wBwHbWjGeXfiNjDLHr32r+Uvwmtv5R4DJ2QfZ05rg4c7LR0Qn3yk4qq4ym+HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNH6g6FO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR33Y9J6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F74EC433F1;
-	Mon,  8 Apr 2024 13:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNH6g6FO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365BBC433F1;
+	Mon,  8 Apr 2024 13:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583698;
-	bh=1bhMTZbzD2VY6Epf1Eq38w2gYEdDwNEhsZK3vvgGT/Q=;
+	s=korg; t=1712583701;
+	bh=lmewIyPsIK4EfW8XAJNHI4nHGHGWIHZNWUXhUa+AL14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR33Y9J6FCQlrLTBMKCokTLQfzBqC4tyjXS4s7mqHwXi3CKwGlQnQJN+zrJy1J5V1
-	 n1p+do3eYiZtg1TLVnLoA5rjZ48FYbb7NxFcDl4wWOiWxfozlJTohGcFz4rvp0ZhNC
-	 f4rSGpTTYkUhzFQdDLif5cgHO4l5ct8ewV0v2KPg=
+	b=LNH6g6FOwMe6rUPcn3zjs2QJjr6d1BY6hBe26UvD+A5Y5wbwvpitxGuK/mE2PtOeC
+	 8JEU+eLN197QlweyIw8Hu44pnBJ/dO4vh/xqky3nHuEbqI87LYmGdY0/Ee2qOSSlSG
+	 wPTB04XXTAwNH1bSfk17BhVo/20ATQfdhAkVkdK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 224/252] riscv: Fix spurious errors from __get/put_kernel_nofault
-Date: Mon,  8 Apr 2024 14:58:43 +0200
-Message-ID: <20240408125313.608981003@linuxfoundation.org>
+	Rasmus Karlsson <rasmus.karlsson@pajlada.com>,
+	Iskren Chernev <me@iskren.info>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.8 210/273] io_uring: use private workqueue for exit work
+Date: Mon,  8 Apr 2024 14:58:05 +0200
+Message-ID: <20240408125315.880074381@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit d080a08b06b6266cc3e0e86c5acfd80db937cb6b upstream.
+commit 73eaa2b583493b680c6f426531d6736c39643bfb upstream.
 
-These macros did not initialize __kr_err, so they could fail even if
-the access did not fault.
+Rather than use the system unbound event workqueue, use an io_uring
+specific one. This avoids dependencies with the tty, which also uses
+the system_unbound_wq, and issues flushes of said workqueue from inside
+its poll handling.
 
 Cc: stable@vger.kernel.org
-Fixes: d464118cdc41 ("riscv: implement __get_kernel_nofault and __put_user_nofault")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20240312022030.320789-1-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: Rasmus Karlsson <rasmus.karlsson@pajlada.com>
+Tested-by: Rasmus Karlsson <rasmus.karlsson@pajlada.com>
+Tested-by: Iskren Chernev <me@iskren.info>
+Link: https://github.com/axboe/liburing/issues/1113
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/uaccess.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -319,7 +319,7 @@ unsigned long __must_check clear_user(vo
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -152,6 +152,7 @@ static bool io_uring_try_cancel_requests
+ static void io_queue_sqe(struct io_kiocb *req);
  
- #define __get_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__get_user_nocheck(*((type *)(dst)), (type *)(src), __kr_err);	\
- 	if (unlikely(__kr_err))						\
-@@ -328,7 +328,7 @@ do {									\
+ struct kmem_cache *req_cachep;
++static struct workqueue_struct *iou_wq __ro_after_init;
  
- #define __put_kernel_nofault(dst, src, type, err_label)			\
- do {									\
--	long __kr_err;							\
-+	long __kr_err = 0;						\
- 									\
- 	__put_user_nocheck(*((type *)(src)), (type *)(dst), __kr_err);	\
- 	if (unlikely(__kr_err))						\
+ static int __read_mostly sysctl_io_uring_disabled;
+ static int __read_mostly sysctl_io_uring_group = -1;
+@@ -3139,7 +3140,7 @@ static __cold void io_ring_ctx_wait_and_
+ 	 * noise and overhead, there's no discernable change in runtime
+ 	 * over using system_wq.
+ 	 */
+-	queue_work(system_unbound_wq, &ctx->exit_work);
++	queue_work(iou_wq, &ctx->exit_work);
+ }
+ 
+ static int io_uring_release(struct inode *inode, struct file *file)
+@@ -4164,6 +4165,8 @@ static int __init io_uring_init(void)
+ 					  SLAB_HWCACHE_ALIGN | SLAB_PANIC | SLAB_ACCOUNT,
+ 					  NULL);
+ 
++	iou_wq = alloc_workqueue("iou_exit", WQ_UNBOUND, 64);
++
+ #ifdef CONFIG_SYSCTL
+ 	register_sysctl_init("kernel", kernel_io_uring_disabled_table);
+ #endif
 
 
