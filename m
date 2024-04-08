@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCA178285;
-	Mon,  8 Apr 2024 13:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47B7F465;
+	Mon,  8 Apr 2024 13:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582588; cv=none; b=Geoh1S2+SCu22N8eYlY74QnwgbhX1hJTguIo3C1zZv68bF4XYFdxnw0yFkksBlPy7yb26GlDFnnGx05Au1MPbdBomu2dKqYFT+5HfVITsb9coNP1sqalEL2uz29MYQXF/RkN7+BCr0QpGO6bYDxIgMpMKQUxLZJ6r89eM95dD+Y=
+	t=1712582591; cv=none; b=JcM8RTacPUulxl2qG0Xctyh9fJ1weLF8cqmG2+jYd7otkQulRM9VJIOe/HIsaRi768btXz6ytv9ybYmvC1GtDkKx36l67HSbXpS6ecjEI7CDTRrOp8YTG4PnTs9sJ+0fkT/UHxOkkWjNcowQNCm4MUvwFfJZisVCo/NafoDYDb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582588; c=relaxed/simple;
-	bh=ldwVgyVITC7fU3oZWajovHyJdNrHRO/9wyGk4TzAjRo=;
+	s=arc-20240116; t=1712582591; c=relaxed/simple;
+	bh=lBhHqPbPI77Z4MoQfo4bOS3nV9EnWGJPKnq/E3RDZJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc+97rqu+1iYq1ooETxUYpu58I2EDQD0aTZSry4rTsxgg2x+c84Uw2V22n/jn0hR9hx04IHiPTNv5B6BBfGALqUqGAAtkv8kaAo+qGLHcghEx9xYXbPHS6R3jLsrKCHLZCRRfeENNF6phywbI5DdwbNArjJ7dKdebUaeTD6teQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYe/Frat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RbhQym75+qYmjwlc+zLcj04w/oxEgfjAi/BrK+IRmwEJRbIDat6B5atsC9EXlHkrZ64H7YIjJz4h+cGglpy3+sZ6DokmMGuKDTNh6AJd730MJu8fTPEXJztlbZRf6nMFG1qShBHdT+/kEydGnZm53t0leRQsddxjV5Tp4Yz1wTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFVERz/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYe/Frat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8150C433F1;
-	Mon,  8 Apr 2024 13:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFVERz/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A5BC43394;
+	Mon,  8 Apr 2024 13:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582588;
-	bh=ldwVgyVITC7fU3oZWajovHyJdNrHRO/9wyGk4TzAjRo=;
+	s=korg; t=1712582591;
+	bh=lBhHqPbPI77Z4MoQfo4bOS3nV9EnWGJPKnq/E3RDZJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYe/FratMPBJtAZVOGPIOrcpYQ9+wIwQZPOOxNz/pJp5mT21yxML1oxODzkhD4bZK
-	 sR5vRxYZ4bffVnSnq3wYJ6WKO+JsIHeOUEThQEDx5ffqjzZDKl9Fp6eBlUm/sAia3G
-	 6OJMYjrA6zpqiOE8nDW0/tGpbTGlmvfoqs7D/K8k=
+	b=DFVERz/A1EnVZpwG3BgxTilg2IN+mtQ/WDfHO32QPWvVKwwiWGrl2ZjxsnGZcWphi
+	 NVG2q2TGoPrgGi4kLq20Nx4p8OBOuptKYUIqZEq/GQZvyWMcr4AS9cg/vjsv/sX2Au
+	 9J5WNXOlx1e6BFxn04G7UA14e6wCe8Plp1g2fSBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.8 088/273] netfilter: nf_tables: flush pending destroy work before exit_net release
-Date: Mon,  8 Apr 2024 14:56:03 +0200
-Message-ID: <20240408125312.037626213@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.1 118/138] of: dynamic: Synchronize of_changeset_destroy() with the devlink removals
+Date: Mon,  8 Apr 2024 14:58:52 +0200
+Message-ID: <20240408125259.903771119@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,129 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit 24cea9677025e0de419989ecb692acd4bb34cac2 upstream.
+commit 8917e7385346bd6584890ed362985c219fe6ae84 upstream.
 
-Similar to 2c9f0293280e ("netfilter: nf_tables: flush pending destroy
-work before netlink notifier") to address a race between exit_net and
-the destroy workqueue.
+In the following sequence:
+  1) of_platform_depopulate()
+  2) of_overlay_remove()
 
-The trace below shows an element to be released via destroy workqueue
-while exit_net path (triggered via module removal) has already released
-the set that is used in such transaction.
+During the step 1, devices are destroyed and devlinks are removed.
+During the step 2, OF nodes are destroyed but
+__of_changeset_entry_destroy() can raise warnings related to missing
+of_node_put():
+  ERROR: memory leak, expected refcount 1 instead of 2 ...
 
-[ 1360.547789] BUG: KASAN: slab-use-after-free in nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
-[ 1360.547861] Read of size 8 at addr ffff888140500cc0 by task kworker/4:1/152465
-[ 1360.547870] CPU: 4 PID: 152465 Comm: kworker/4:1 Not tainted 6.8.0+ #359
-[ 1360.547882] Workqueue: events nf_tables_trans_destroy_work [nf_tables]
-[ 1360.547984] Call Trace:
-[ 1360.547991]  <TASK>
-[ 1360.547998]  dump_stack_lvl+0x53/0x70
-[ 1360.548014]  print_report+0xc4/0x610
-[ 1360.548026]  ? __virt_addr_valid+0xba/0x160
-[ 1360.548040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[ 1360.548054]  ? nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
-[ 1360.548176]  kasan_report+0xae/0xe0
-[ 1360.548189]  ? nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
-[ 1360.548312]  nf_tables_trans_destroy_work+0x3f5/0x590 [nf_tables]
-[ 1360.548447]  ? __pfx_nf_tables_trans_destroy_work+0x10/0x10 [nf_tables]
-[ 1360.548577]  ? _raw_spin_unlock_irq+0x18/0x30
-[ 1360.548591]  process_one_work+0x2f1/0x670
-[ 1360.548610]  worker_thread+0x4d3/0x760
-[ 1360.548627]  ? __pfx_worker_thread+0x10/0x10
-[ 1360.548640]  kthread+0x16b/0x1b0
-[ 1360.548653]  ? __pfx_kthread+0x10/0x10
-[ 1360.548665]  ret_from_fork+0x2f/0x50
-[ 1360.548679]  ? __pfx_kthread+0x10/0x10
-[ 1360.548690]  ret_from_fork_asm+0x1a/0x30
-[ 1360.548707]  </TASK>
+Indeed, during the devlink removals performed at step 1, the removal
+itself releasing the device (and the attached of_node) is done by a job
+queued in a workqueue and so, it is done asynchronously with respect to
+function calls.
+When the warning is present, of_node_put() will be called but wrongly
+too late from the workqueue job.
 
-[ 1360.548719] Allocated by task 192061:
-[ 1360.548726]  kasan_save_stack+0x20/0x40
-[ 1360.548739]  kasan_save_track+0x14/0x30
-[ 1360.548750]  __kasan_kmalloc+0x8f/0xa0
-[ 1360.548760]  __kmalloc_node+0x1f1/0x450
-[ 1360.548771]  nf_tables_newset+0x10c7/0x1b50 [nf_tables]
-[ 1360.548883]  nfnetlink_rcv_batch+0xbc4/0xdc0 [nfnetlink]
-[ 1360.548909]  nfnetlink_rcv+0x1a8/0x1e0 [nfnetlink]
-[ 1360.548927]  netlink_unicast+0x367/0x4f0
-[ 1360.548935]  netlink_sendmsg+0x34b/0x610
-[ 1360.548944]  ____sys_sendmsg+0x4d4/0x510
-[ 1360.548953]  ___sys_sendmsg+0xc9/0x120
-[ 1360.548961]  __sys_sendmsg+0xbe/0x140
-[ 1360.548971]  do_syscall_64+0x55/0x120
-[ 1360.548982]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
+In order to be sure that any ongoing devlink removals are done before
+the of_node destruction, synchronize the of_changeset_destroy() with the
+devlink removals.
 
-[ 1360.548994] Freed by task 192222:
-[ 1360.548999]  kasan_save_stack+0x20/0x40
-[ 1360.549009]  kasan_save_track+0x14/0x30
-[ 1360.549019]  kasan_save_free_info+0x3b/0x60
-[ 1360.549028]  poison_slab_object+0x100/0x180
-[ 1360.549036]  __kasan_slab_free+0x14/0x30
-[ 1360.549042]  kfree+0xb6/0x260
-[ 1360.549049]  __nft_release_table+0x473/0x6a0 [nf_tables]
-[ 1360.549131]  nf_tables_exit_net+0x170/0x240 [nf_tables]
-[ 1360.549221]  ops_exit_list+0x50/0xa0
-[ 1360.549229]  free_exit_list+0x101/0x140
-[ 1360.549236]  unregister_pernet_operations+0x107/0x160
-[ 1360.549245]  unregister_pernet_subsys+0x1c/0x30
-[ 1360.549254]  nf_tables_module_exit+0x43/0x80 [nf_tables]
-[ 1360.549345]  __do_sys_delete_module+0x253/0x370
-[ 1360.549352]  do_syscall_64+0x55/0x120
-[ 1360.549360]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
-
-(gdb) list *__nft_release_table+0x473
-0x1e033 is in __nft_release_table (net/netfilter/nf_tables_api.c:11354).
-11349           list_for_each_entry_safe(flowtable, nf, &table->flowtables, list) {
-11350                   list_del(&flowtable->list);
-11351                   nft_use_dec(&table->use);
-11352                   nf_tables_flowtable_destroy(flowtable);
-11353           }
-11354           list_for_each_entry_safe(set, ns, &table->sets, list) {
-11355                   list_del(&set->list);
-11356                   nft_use_dec(&table->use);
-11357                   if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
-11358                           nft_map_deactivate(&ctx, set);
-(gdb)
-
-[ 1360.549372] Last potentially related work creation:
-[ 1360.549376]  kasan_save_stack+0x20/0x40
-[ 1360.549384]  __kasan_record_aux_stack+0x9b/0xb0
-[ 1360.549392]  __queue_work+0x3fb/0x780
-[ 1360.549399]  queue_work_on+0x4f/0x60
-[ 1360.549407]  nft_rhash_remove+0x33b/0x340 [nf_tables]
-[ 1360.549516]  nf_tables_commit+0x1c6a/0x2620 [nf_tables]
-[ 1360.549625]  nfnetlink_rcv_batch+0x728/0xdc0 [nfnetlink]
-[ 1360.549647]  nfnetlink_rcv+0x1a8/0x1e0 [nfnetlink]
-[ 1360.549671]  netlink_unicast+0x367/0x4f0
-[ 1360.549680]  netlink_sendmsg+0x34b/0x610
-[ 1360.549690]  ____sys_sendmsg+0x4d4/0x510
-[ 1360.549697]  ___sys_sendmsg+0xc9/0x120
-[ 1360.549706]  __sys_sendmsg+0xbe/0x140
-[ 1360.549715]  do_syscall_64+0x55/0x120
-[ 1360.549725]  entry_SYSCALL_64_after_hwframe+0x55/0x5d
-
-Fixes: 0935d5588400 ("netfilter: nf_tables: asynchronous release")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 80dd33cf72d1 ("drivers: base: Fix device link removal")
+Cc: stable@vger.kernel.org
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240325152140.198219-3-herve.codina@bootlin.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/of/dynamic.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -11566,6 +11566,7 @@ static void __exit nf_tables_module_exit
- 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
- 	nft_chain_filter_fini();
- 	nft_chain_route_fini();
-+	nf_tables_trans_destroy_flush_work();
- 	unregister_pernet_subsys(&nf_tables_net_ops);
- 	cancel_work_sync(&trans_gc_work);
- 	cancel_work_sync(&trans_destroy_work);
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -9,6 +9,7 @@
+ 
+ #define pr_fmt(fmt)	"OF: " fmt
+ 
++#include <linux/device.h>
+ #include <linux/of.h>
+ #include <linux/spinlock.h>
+ #include <linux/slab.h>
+@@ -679,6 +680,17 @@ void of_changeset_destroy(struct of_chan
+ {
+ 	struct of_changeset_entry *ce, *cen;
+ 
++	/*
++	 * When a device is deleted, the device links to/from it are also queued
++	 * for deletion. Until these device links are freed, the devices
++	 * themselves aren't freed. If the device being deleted is due to an
++	 * overlay change, this device might be holding a reference to a device
++	 * node that will be freed. So, wait until all already pending device
++	 * links are deleted before freeing a device node. This ensures we don't
++	 * free any device node that has a non-zero reference count.
++	 */
++	device_link_wait_removal();
++
+ 	list_for_each_entry_safe_reverse(ce, cen, &ocs->entries, node)
+ 		__of_changeset_entry_destroy(ce);
+ }
 
 
