@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099222E62C;
-	Mon,  8 Apr 2024 13:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB57D2E62C;
+	Mon,  8 Apr 2024 13:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581344; cv=none; b=WOGbtair2SpF9Y66RmdsF/mWO61elkCdeOopYoEJ0cw0dZ8PG8myyYhkOrQPdKPRWOIDHxhYr6/C83EeM6dbQSIEjEWMBgbcbTlYYn5hbV98bzH7DGW2CiMKwdrG/P/QpZDbzSPgsn00eBfhiPflIRpmvb8m4eGUlFl1oDz4WpI=
+	t=1712581346; cv=none; b=MClWhXm6REGOk7Gc8GwVo4mO2XulLWLKQVaG91d5CBVF7AvG6hs+iEqKADfIBqjAODAKhuy+QA+vyBBNJlZiIjYWX9eL+nxMPajnoKjHOooIoMJEf4LmGbcVnzP0b2Dsn33L8iempFT4dB9pWlW9iSGTEpaKkNcf9PIGdKnXrjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581344; c=relaxed/simple;
-	bh=j1i3e0c/70cKt4+0hbBaupJtZDToEGRxXD/8HPSPIq8=;
+	s=arc-20240116; t=1712581346; c=relaxed/simple;
+	bh=uINnUpd8bOS/mmQ5KnxTcXSAT9G2ANvhNm9jgeKCnGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJiGCjXVOuKJieAjejXJc0PzlyqieMyTd2Z8yW6h5kncql8j+MiY7WyNIVfEgj+F6MzARZljAx3MCSwBa1MQIAfIiINspDuxUj3sdHGzk01pC6BDbAxsKYw8/Bpd/05fJDzKSPYQA46fOoXXISIfE1Dt07b5k9cCsMP3OrOPpO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+rq8JsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wju7A8qUZnoH0tmTMa+Pl2vBtHAnqXuJts040ICemNJfKXqGLPKxsbd2xQLvMed7Crp5pl7j7Po/2CrVi29EIW7wbEh/cF/6Ciydf4lmleSpmkF+0fuo3dhYTSD2tkRipkTVn0aXJlg5LAVhjjqJHfqEzw1sXASfzMo71TInPLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImDNSrVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+rq8JsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDD7C433F1;
-	Mon,  8 Apr 2024 13:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImDNSrVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365E9C433F1;
+	Mon,  8 Apr 2024 13:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581343;
-	bh=j1i3e0c/70cKt4+0hbBaupJtZDToEGRxXD/8HPSPIq8=;
+	s=korg; t=1712581346;
+	bh=uINnUpd8bOS/mmQ5KnxTcXSAT9G2ANvhNm9jgeKCnGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+rq8JsS/o44Kh6ogiGtK5SKmBj3EEYp35jwJJ86T44QwDTLiQ5kqv1oGw8dc2Lt+
-	 p1Kvrqswscj7/i4gZ/NC3olUrZ3H9kGWsQmmFuaRxFPOZ5ng/m6wdrPuOkLPM1B2ic
-	 Bur4u/JEfgw155b5k1TdJa1xNI/lnb5tHOkV6rlc=
+	b=ImDNSrVBsQ4VE2N/CxRlqJl3kqNL0ZUkQKgwHIjJxg+hDvVscrCs2MV/+jwFiJ+Mc
+	 Jr26HoPIpMoOD49tnJNczedZ0GzJfO9JUjZQAM6h4J1hWcerJrs7uU9hmsmE/1Dhor
+	 KxBf92ztUK+xnQNzAEcN8mdJsbyaVwXlF1lk1Nt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Helge Deller <deller@gmx.de>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/690] parisc: Fix ip_fast_csum
-Date: Mon,  8 Apr 2024 14:48:22 +0200
-Message-ID: <20240408125400.852941744@linuxfoundation.org>
+Subject: [PATCH 5.15 023/690] crypto: qat - resolve race condition during AER recovery
+Date: Mon,  8 Apr 2024 14:48:09 +0200
+Message-ID: <20240408125400.402932983@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,64 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Damian Muszynski <damian.muszynski@intel.com>
 
-[ Upstream commit a2abae8f0b638c31bb9799d9dd847306e0d005bd ]
+[ Upstream commit 7d42e097607c4d246d99225bf2b195b6167a210c ]
 
-IP checksum unit tests report the following error when run on hppa/hppa64.
+During the PCI AER system's error recovery process, the kernel driver
+may encounter a race condition with freeing the reset_data structure's
+memory. If the device restart will take more than 10 seconds the function
+scheduling that restart will exit due to a timeout, and the reset_data
+structure will be freed. However, this data structure is used for
+completion notification after the restart is completed, which leads
+to a UAF bug.
 
-    # test_ip_fast_csum: ASSERTION FAILED at lib/checksum_kunit.c:463
-    Expected ( u64)csum_result == ( u64)expected, but
-        ( u64)csum_result == 33754 (0x83da)
-        ( u64)expected == 10946 (0x2ac2)
-    not ok 4 test_ip_fast_csum
+This results in a KFENCE bug notice.
 
-0x83da is the expected result if the IP header length is 20 bytes. 0x2ac2
-is the expected result if the IP header length is 24 bytes. The test fails
-with an IP header length of 24 bytes. It appears that ip_fast_csum()
-always returns the checksum for a 20-byte header, no matter how long
-the header actually is.
+  BUG: KFENCE: use-after-free read in adf_device_reset_worker+0x38/0xa0 [intel_qat]
+  Use-after-free read at 0x00000000bc56fddf (in kfence-#142):
+  adf_device_reset_worker+0x38/0xa0 [intel_qat]
+  process_one_work+0x173/0x340
 
-Code analysis shows a suspicious assembler sequence in ip_fast_csum().
+To resolve this race condition, the memory associated to the container
+of the work_struct is freed on the worker if the timeout expired,
+otherwise on the function that schedules the worker.
+The timeout detection can be done by checking if the caller is
+still waiting for completion or not by using completion_done() function.
 
- "      addc            %0, %3, %0\n"
- "1:    ldws,ma         4(%1), %3\n"
- "      addib,<         0, %2, 1b\n"	<---
-
-While my understanding of HPPA assembler is limited, it does not seem
-to make much sense to subtract 0 from a register and to expect the result
-to ever be negative. Subtracting 1 from the length parameter makes more
-sense. On top of that, the operation should be repeated if and only if
-the result is still > 0, so change the suspicious instruction to
- "      addib,>         -1, %2, 1b\n"
-
-The IP checksum unit test passes after this change.
-
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Charlie Jenkins <charlie@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/checksum.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/adf_aer.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
-index 3c43baca7b397..f705e5dd10742 100644
---- a/arch/parisc/include/asm/checksum.h
-+++ b/arch/parisc/include/asm/checksum.h
-@@ -40,7 +40,7 @@ static inline __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
- "	addc		%0, %5, %0\n"
- "	addc		%0, %3, %0\n"
- "1:	ldws,ma		4(%1), %3\n"
--"	addib,<		0, %2, 1b\n"
-+"	addib,>		-1, %2, 1b\n"
- "	addc		%0, %3, %0\n"
- "\n"
- "	extru		%0, 31, 16, %4\n"
+diff --git a/drivers/crypto/qat/qat_common/adf_aer.c b/drivers/crypto/qat/qat_common/adf_aer.c
+index b3138f8fc3f30..040595a6ab75f 100644
+--- a/drivers/crypto/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/qat/qat_common/adf_aer.c
+@@ -95,7 +95,8 @@ static void adf_device_reset_worker(struct work_struct *work)
+ 	if (adf_dev_init(accel_dev) || adf_dev_start(accel_dev)) {
+ 		/* The device hanged and we can't restart it so stop here */
+ 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
+-		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
++		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
++		    completion_done(&reset_data->compl))
+ 			kfree(reset_data);
+ 		WARN(1, "QAT: device restart failed. Device is unusable\n");
+ 		return;
+@@ -103,11 +104,19 @@ static void adf_device_reset_worker(struct work_struct *work)
+ 	adf_dev_restarted_notify(accel_dev);
+ 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 
+-	/* The dev is back alive. Notify the caller if in sync mode */
+-	if (reset_data->mode == ADF_DEV_RESET_SYNC)
+-		complete(&reset_data->compl);
+-	else
++	/*
++	 * The dev is back alive. Notify the caller if in sync mode
++	 *
++	 * If device restart will take a more time than expected,
++	 * the schedule_reset() function can timeout and exit. This can be
++	 * detected by calling the completion_done() function. In this case
++	 * the reset_data structure needs to be freed here.
++	 */
++	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
++	    completion_done(&reset_data->compl))
+ 		kfree(reset_data);
++	else
++		complete(&reset_data->compl);
+ }
+ 
+ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
+@@ -140,8 +149,9 @@ static int adf_dev_aer_schedule_reset(struct adf_accel_dev *accel_dev,
+ 			dev_err(&GET_DEV(accel_dev),
+ 				"Reset device timeout expired\n");
+ 			ret = -EFAULT;
++		} else {
++			kfree(reset_data);
+ 		}
+-		kfree(reset_data);
+ 		return ret;
+ 	}
+ 	return 0;
 -- 
 2.43.0
 
