@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B0D7442A;
-	Mon,  8 Apr 2024 13:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2097172F;
+	Mon,  8 Apr 2024 13:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581551; cv=none; b=mQEKaNt8DpqVi9Vyrw8IhFhQ0Up+ypHESFBqS2f2gCLwRBN0bBqSOV2niBo3tYGGUPnVvDFhMyDQLs1Jlv0Z5PJWUzOuExc6V8CHvpVY+YV4SbmbhR2W0BocAVoWhkoKyWCbvrMZICRFyMo0xk9zOFWKgdoxNvG8PrkIsjDnuKg=
+	t=1712581553; cv=none; b=oWXvJBXx+MAa62Y2ciFzIZvCsxLqtgLeCP81JWM831yUkzkjhq2VMTEGE8aEvXNK1Q1a0xXqpwkr8LjL5HlYCm3BcO1RrJ0YDyUBbwd8vPYofg6W4JjChTm0MDHXeXLkahC73fcksQQ9605XECIf/n5dswavbHEe8mSIOV2wzZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581551; c=relaxed/simple;
-	bh=ovB4S/qhn8vpeMNYure+rrGyv2fUYABbleFKzV/8FQE=;
+	s=arc-20240116; t=1712581553; c=relaxed/simple;
+	bh=YT4BdKApumypQuZSeB+4PKO90PImlVeMecibkmZ+ois=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXJtGetLsjx8Yjc37MnD7zMFmAPydV+O3O+UkU5LUwAA7EtLDQ87hADCNuuJkdhOUXhSAF7dIwGfdmGv7ufCoObpH8IRVv1pHRoXAHHBPl0FCNIZxQlCSYQBsVXlrY78Qm+jhFOdeWsamEYBf4o9p+8Urki8w1rtMVDB0Ts0C4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNGg5Fnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXpQpTm83VJCLrO+zwmjyJeZ0vWDWDn+0sUNFyl2XIj4kI1UFfdjixmkLUG31K2DgMGEvh8uhah6Mx6ANsbgE8G2DKtbU+GsEy/4aFExUgdZwWc2dMTzaT69YU7OacGTF0Etb3YSTn8UcTLvhWDGSk5ArJgRZo7gs/8pX/hB4nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhPhY11s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNGg5Fnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B3FC433C7;
-	Mon,  8 Apr 2024 13:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhPhY11s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14688C433C7;
+	Mon,  8 Apr 2024 13:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581550;
-	bh=ovB4S/qhn8vpeMNYure+rrGyv2fUYABbleFKzV/8FQE=;
+	s=korg; t=1712581553;
+	bh=YT4BdKApumypQuZSeB+4PKO90PImlVeMecibkmZ+ois=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNGg5FnjoLYLz0nSDxUHkdAyn2JeIR8MRavhRJFJyUt0tlljo27A+9ygoZ7d+EFY4
-	 /j3aNcrF9ftb0AhWBHpsWAnMf0svbQUPePMo0ADur8pPmTUjTQ955UTILN9nufO6Hg
-	 ewWj4Lu2R7xsoOqJk6Y796+zEQF411bhKdr1QOBg=
+	b=lhPhY11s7PhzTrvV8WGonwbf1RWlAtb2Dfo25kMipQFJIyLIApTk4maaXUdWs7nSv
+	 28okgR8pP4wfnZZApSDyCNVrXnScJYfUEFKliQ8/t+dkh3hsTVuBiRAil02tHmY+Zs
+	 KFMnGNhc+QjgkXcaUGlNgVIXfqTq/w4GOHtbbSN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/690] PCI: Work around Intel I210 ROM BAR overlap defect
-Date: Mon,  8 Apr 2024 14:48:48 +0200
-Message-ID: <20240408125401.766228687@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 033/138] Bluetooth: hci_event: set the conn encrypted before conn establishes
+Date: Mon,  8 Apr 2024 14:57:27 +0200
+Message-ID: <20240408125257.255501661@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,109 +48,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 500b55b05d0a21c4adddf4c3b29ee6f32b502046 ]
+commit c569242cd49287d53b73a94233db40097d838535 upstream.
 
-Per PCIe r5, sec 7.5.1.2.4, a device must not claim accesses to its
-Expansion ROM unless both the Memory Space Enable and the Expansion ROM
-Enable bit are set.  But apparently some Intel I210 NICs don't work
-correctly if the ROM BAR overlaps another BAR, even if the Expansion ROM is
-disabled.
+We have a BT headset (Lenovo Thinkplus XT99), the pairing and
+connecting has no problem, once this headset is paired, bluez will
+remember this device and will auto re-connect it whenever the device
+is powered on. The auto re-connecting works well with Windows and
+Android, but with Linux, it always fails. Through debugging, we found
+at the rfcomm connection stage, the bluetooth stack reports
+"Connection refused - security block (0x0003)".
 
-Michael reported that on a Kontron SMARC-sAL28 ARM64 system with U-Boot
-v2021.01-rc3, the ROM BAR overlaps BAR 3, and networking doesn't work at
-all:
+For this device, the re-connecting negotiation process is different
+from other BT headsets, it sends the Link_KEY_REQUEST command before
+the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
+command during the negotiation. When the device sends the "connect
+complete" to hci, the ev->encr_mode is 1.
 
-  BAR 0: 0x40000000 (32-bit, non-prefetchable) [size=1M]
-  BAR 3: 0x40200000 (32-bit, non-prefetchable) [size=16K]
-  ROM:   0x40200000 (disabled) [size=1M]
+So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
+is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
+this conn, and update conn->enc_key_size accordingly.
 
-  NETDEV WATCHDOG: enP2p1s0 (igb): transmit queue 0 timed out
-  Hardware name: Kontron SMARC-sAL28 (Single PHY) on SMARC Eval 2.0 carrier (DT)
-  igb 0002:01:00.0 enP2p1s0: Reset adapter
+After this change, this BT headset could re-connect with Linux
+successfully. This is the btmon log after applying the patch, after
+receiving the "Connect Complete" with "Encryption: Enabled", will send
+the command to read encryption key size:
+> HCI Event: Connect Request (0x04) plen 10
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Class: 0x240404
+          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
+          Minor class: Wearable Headset Device
+          Rendering (Printing, Speaker)
+          Audio (Speaker, Microphone, Headset)
+        Link type: ACL (0x01)
+...
+> HCI Event: Link Key Request (0x17) plen 6
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link key: ${32-hex-digits-key}
+...
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 256
+        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
+        Link type: ACL (0x01)
+        Encryption: Enabled (0x01)
+< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
+        Handle: 256
+< ACL Data TX: Handle 256 flags 0x00 dlen 10
+      L2CAP: Information Request (0x0a) ident 1 len 2
+        Type: Extended features supported (0x0002)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 1
+        Status: Success (0x00)
+        Handle: 256
+        Key size: 16
 
-Previously, pci_std_update_resource() wrote the assigned ROM address to the
-BAR only when the ROM was enabled.  This meant that the I210 ROM BAR could
-be left with an address assigned by firmware, which might overlap with
-other BARs.
-
-Quirk these I210 devices so pci_std_update_resource() always writes the
-assigned address to the ROM BAR, whether or not the ROM is enabled.
-
-Link: https://lore.kernel.org/r/20211223163754.GA1267351@bhelgaas
-Link: https://lore.kernel.org/r/20201230185317.30915-1-michael@walle.cc
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=211105
-Reported-by: Michael Walle <michael@walle.cc>
-Tested-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: 627c6db20703 ("PCI/DPC: Quirk PIO log size for Intel Raptor Lake Root Ports")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/bluez/bluez/issues/704
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c    | 10 ++++++++++
- drivers/pci/setup-res.c |  8 ++++++--
- include/linux/pci.h     |  1 +
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 1b6484c906094..50501c10809d2 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5893,3 +5893,13 @@ static void nvidia_ion_ahci_fixup(struct pci_dev *pdev)
- 	pdev->dev_flags |= PCI_DEV_FLAGS_HAS_MSI_MASKING;
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_NVIDIA, 0x0ab8, nvidia_ion_ahci_fixup);
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3234,6 +3234,31 @@ static void hci_conn_complete_evt(struct
+ 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
+ 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
+ 
++		/* "Link key request" completed ahead of "connect request" completes */
++		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
++		    ev->link_type == ACL_LINK) {
++			struct link_key *key;
++			struct hci_cp_read_enc_key_size cp;
 +
-+static void rom_bar_overlap_defect(struct pci_dev *dev)
-+{
-+	pci_info(dev, "working around ROM BAR overlap defect\n");
-+	dev->rom_bar_overlap = 1;
-+}
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1533, rom_bar_overlap_defect);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1536, rom_bar_overlap_defect);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1537, rom_bar_overlap_defect);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1538, rom_bar_overlap_defect);
-diff --git a/drivers/pci/setup-res.c b/drivers/pci/setup-res.c
-index 875d50c16f19d..b492e67c3d871 100644
---- a/drivers/pci/setup-res.c
-+++ b/drivers/pci/setup-res.c
-@@ -75,12 +75,16 @@ static void pci_std_update_resource(struct pci_dev *dev, int resno)
- 		 * as zero when disabled, so don't update ROM BARs unless
- 		 * they're enabled.  See
- 		 * https://lore.kernel.org/r/43147B3D.1030309@vc.cvut.cz/
-+		 * But we must update ROM BAR for buggy devices where even a
-+		 * disabled ROM can conflict with other BARs.
- 		 */
--		if (!(res->flags & IORESOURCE_ROM_ENABLE))
-+		if (!(res->flags & IORESOURCE_ROM_ENABLE) &&
-+		    !dev->rom_bar_overlap)
- 			return;
- 
- 		reg = dev->rom_base_reg;
--		new |= PCI_ROM_ADDRESS_ENABLE;
-+		if (res->flags & IORESOURCE_ROM_ENABLE)
-+			new |= PCI_ROM_ADDRESS_ENABLE;
- 	} else
- 		return;
- 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 08d26b58f95ca..25e2e7756b1d8 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -455,6 +455,7 @@ struct pci_dev {
- 	unsigned int	link_active_reporting:1;/* Device capable of reporting link active */
- 	unsigned int	no_vf_scan:1;		/* Don't scan for VFs after IOV enablement */
- 	unsigned int	no_command_memory:1;	/* No PCI_COMMAND_MEMORY */
-+	unsigned int	rom_bar_overlap:1;	/* ROM BAR disable broken */
- 	pci_dev_flags_t dev_flags;
- 	atomic_t	enable_cnt;	/* pci_enable_device has been called */
- 
--- 
-2.43.0
-
++			key = hci_find_link_key(hdev, &ev->bdaddr);
++			if (key) {
++				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
++
++				if (!(hdev->commands[20] & 0x10)) {
++					conn->enc_key_size = HCI_LINK_KEY_SIZE;
++				} else {
++					cp.handle = cpu_to_le16(conn->handle);
++					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
++							 sizeof(cp), &cp)) {
++						bt_dev_err(hdev, "sending read key size failed");
++						conn->enc_key_size = HCI_LINK_KEY_SIZE;
++					}
++				}
++
++				hci_encrypt_cfm(conn, ev->status);
++			}
++		}
++
+ 		/* Get remote features */
+ 		if (conn->type == ACL_LINK) {
+ 			struct hci_cp_read_remote_features cp;
 
 
