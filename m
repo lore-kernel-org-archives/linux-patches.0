@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01D27BB1A;
-	Mon,  8 Apr 2024 13:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D647E572;
+	Mon,  8 Apr 2024 13:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584744; cv=none; b=h9QQmuiAD1iOKock5DEtV0f2Kgnmo9BScIIg56DdTfcGU1poJtawHLl/FwWLahHUlccEtFGNEZaXLD2eOn8rcQ15GTqpB5HgTRiwP/DibGHUG4Gqgmof34LWJci1g4MJEw9lIP33MiY5HCVuTP00yblfHvS4equekydjSKIhXOA=
+	t=1712584748; cv=none; b=JCCvfhpwJePWs69YfOxwy/dhojLfSAt4ZeTemoXVLvXTDjG34LJeOD9tydQwYQDV6fv4Jrepj292FdX5jGsd3eOUHztF1etoP0f65wc9mwAZn4eBwmw504ka0aQMJtLLVpinOx3lljP52YjO6m5j+nbG2zI9+rYI3wEG//+5WBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584744; c=relaxed/simple;
-	bh=ScBKePcjDSlTgB7JOMEqZI5R0lbfNZGiHBlsqRU281M=;
+	s=arc-20240116; t=1712584748; c=relaxed/simple;
+	bh=kWW/vn0irVchTGyua5shYOeqCyQjPcmaIT45qHkTDMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdg4bWFCNs5in/Zhu9ukI5t0/ZOF5v0xM+V4C9+y+o9rP4+8R3ofyQk3nJNBgXQRtGzf0p6zhoUGycPMUm/hsBGCHuHlztcSLcNKXLCBuSRnMcsu8/+f/ZfMGhafhfJLYDJtlrED9JAUJgXhg1OxX9sBd1UzOg4D9csp5sxT6B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lu5A5niy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHNIkAND/nIh5Z6JFNUHG5FaHXrqjYlq56ySsEGf9MeakUIJ0avpNp+9yM/jFqYKWnyNyFGArLw4QjQquK8SjEfpxaqtPVQVw+fN7852zfZQ505M1dzLtS/HxzjgyckgXgog9Zl3mSDRj0ksFo+iQ/CAg2niXo7rUTwTY9AQKIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XubQfFie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lu5A5niy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56113C433C7;
-	Mon,  8 Apr 2024 13:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XubQfFie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF7C433F1;
+	Mon,  8 Apr 2024 13:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584744;
-	bh=ScBKePcjDSlTgB7JOMEqZI5R0lbfNZGiHBlsqRU281M=;
+	s=korg; t=1712584747;
+	bh=kWW/vn0irVchTGyua5shYOeqCyQjPcmaIT45qHkTDMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lu5A5niyHxtH8qCDLK9b+mJaMnqxXjUVCGHRLe4qsjzcVw7h5tQcDvNXjRAu1Y5Ps
-	 PRvsirz1Hg6opOvS4Kr4NYso8Tbrs6I7JOyZvxqqr6tsUhKcLiqPjJdm37ljlgy80q
-	 pJGn0pQC+n1T8iZDgUdSEQ1hg4PzkBejZZ1Ih9Ic=
+	b=XubQfFier1V8j5RGN7Y3gQyvlog2htmPIZ7Qkgv91h1DTYLsxcT0rOgGW0ObhAIJC
+	 I3sJ76hTZGf2UrVFOSw2CpmjhVccqo6sc/R978sFQ4rkacrXK1UCkAH8TGT74a5uqh
+	 umdEWmeZIXj80Oh/N+6ewbktgqxBTC7zc/LQIU7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	NeilBrown <neilb@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
+	JianHong Yin <jiyin@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 542/690] lockd: drop inappropriate svc_get() from locked_get()
-Date: Mon,  8 Apr 2024 14:56:48 +0200
-Message-ID: <20240408125419.284707801@linuxfoundation.org>
+Subject: [PATCH 5.15 516/690] nfsd: dont destroy global nfs4_file table in per-net shutdown
+Date: Mon,  8 Apr 2024 14:56:22 +0200
+Message-ID: <20240408125418.338949026@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,54 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 665e89ab7c5af1f2d260834c861a74b01a30f95f ]
+[ Upstream commit 4102db175b5d884d133270fdbd0e59111ce688fc ]
 
-The below-mentioned patch was intended to simplify refcounting on the
-svc_serv used by locked.  The goal was to only ever have a single
-reference from the single thread.  To that end we dropped a call to
-lockd_start_svc() (except when creating thread) which would take a
-reference, and dropped the svc_put(serv) that would drop that reference.
+The nfs4_file table is global, so shutting it down when a containerized
+nfsd is shut down is wrong and can lead to double-frees. Tear down the
+nfs4_file_rhltable in nfs4_state_shutdown instead of
+nfs4_state_shutdown_net.
 
-Unfortunately we didn't also remove the svc_get() from
-lockd_create_svc() in the case where the svc_serv already existed.
-So after the patch:
- - on the first call the svc_serv was allocated and the one reference
-   was given to the thread, so there are no extra references
- - on subsequent calls svc_get() was called so there is now an extra
-   reference.
-This is clearly not consistent.
-
-The inconsistency is also clear in the current code in lockd_get()
-takes *two* references, one on nlmsvc_serv and one by incrementing
-nlmsvc_users.   This clearly does not match lockd_put().
-
-So: drop that svc_get() from lockd_get() (which used to be in
-lockd_create_svc().
-
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Closes: https://lore.kernel.org/linux-nfs/ZHsI%2FH16VX9kJQX1@shredder/T/#u
-Fixes: b73a2972041b ("lockd: move lockd_start_svc() call into lockd_create_svc()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: d47b295e8d76 ("NFSD: Use rhashtable for managing nfs4_file objects")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2169017
+Reported-by: JianHong Yin <jiyin@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/lockd/svc.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 59ef8a1f843f3..5579e67da17db 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -355,7 +355,6 @@ static int lockd_get(void)
- 	int error;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 22799f5ce686e..5c261cc807e8e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8183,7 +8183,6 @@ nfs4_state_shutdown_net(struct net *net)
  
- 	if (nlmsvc_serv) {
--		svc_get(nlmsvc_serv);
- 		nlmsvc_users++;
- 		return 0;
- 	}
+ 	nfsd4_client_tracking_exit(net);
+ 	nfs4_state_destroy_net(net);
+-	rhltable_destroy(&nfs4_file_rhltable);
+ #ifdef CONFIG_NFSD_V4_2_INTER_SSC
+ 	nfsd4_ssc_shutdown_umount(nn);
+ #endif
+@@ -8193,6 +8192,7 @@ void
+ nfs4_state_shutdown(void)
+ {
+ 	nfsd4_destroy_callback_queue();
++	rhltable_destroy(&nfs4_file_rhltable);
+ }
+ 
+ static void
 -- 
 2.43.0
 
