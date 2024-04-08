@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EDF7D07D;
-	Mon,  8 Apr 2024 13:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54E87E110;
+	Mon,  8 Apr 2024 13:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582837; cv=none; b=r9GRvvV1AaAhdUmHik6dYEv0ucVrAztEZdMezhmNba2ubOJjU6v1BnLUsaYf0kZmTZfxKlSawou39BkR6iT9wM9vnoTROd51rMApq4cMuk62RYKAx3mRuw4uKLhoyJ6rG1C75LqQXXxIVOQmL8uA977OB6Q2G1iwJpd3eDILhCE=
+	t=1712582839; cv=none; b=tnGyiE3dz29pLUaTy65iKlLTiJ8AVvZk5f4J2zd6UZ3qN9yHOv+XWpKkrHt4OuIv3YURNN0oH4UKfeVbe3iervA6OYdZgNfeP4/vcmrjmvY5kI7GmKNTQ62yfNNCtEwQznlonxDNcAgTodyd7VTZHETK+JwGRafrdzOteCFq85M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582837; c=relaxed/simple;
-	bh=OJvyWPFM+Uisvzvkv5POpUlVz8xXncqH5N7PQ1UPico=;
+	s=arc-20240116; t=1712582839; c=relaxed/simple;
+	bh=STWTIzK5uMrjE9gO3GUywL3P1+QP5V+OW0ePb5lxLKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOAg90KHMwhzZD4XUj5mPVtdithy7Dz9+lS74lj77W+6e1dot1OF6hu2BWUJCghPdDkkWWpCxUVw7pGUj5tf8uG6xIa8W3Voq5J+Rp59NkzhnyMdIm/vmONXXj9PANvW++IieI2d/8dRREtEMRj9MzlhL1efK9NBCX7dB0wZr/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkvMJeNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jK9IZrokXMIxcDHO6YXDzV47BJ+r8S1LwFpVgpRudhDcMf63eACXopgO5vU3wituG+Ur5ymHxWgLLpJOfO4DlWAUGlaOW/wsD3W56GP0ut8AljDQCk+fxAF6PxHyclDS66GEEnogdZGZzuSXK8h2NLP4BVg3IjkUg627tZCkUQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yi+dmntC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkvMJeNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70716C433F1;
-	Mon,  8 Apr 2024 13:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yi+dmntC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5073BC433F1;
+	Mon,  8 Apr 2024 13:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582836;
-	bh=OJvyWPFM+Uisvzvkv5POpUlVz8xXncqH5N7PQ1UPico=;
+	s=korg; t=1712582839;
+	bh=STWTIzK5uMrjE9gO3GUywL3P1+QP5V+OW0ePb5lxLKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkvMJeNorwAL14OJGg5YZZA+Oq1aWFvMxSJ6alMlraTAc7viQrc+rIv7MdI4azQLE
-	 if5WVFXGIQCJPM9Q65J4yHwSF5iYwWUXJNAE+Ha+uioE9wKxa1s23B65vJDublyiG7
-	 tke9sY46bUJOinqcN4dmZGd4WR6Ks+6JHbYm90dg=
+	b=yi+dmntChIbu6k1GccLPUTEMW1SGwfUw6Xgu433EveLivCa9XKLt7jyyAXRVykWFw
+	 HBt3bfuoD2uNt39ajd5prUCAhaqUKG9F0CyfITIq/JO5oFXhdqFPtvfTsZZQ7Lgq2C
+	 nprHFqTfQxOPnPuVaTcQcMVjYmr9MLU7kmHEofpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Miklos Szeredi <miklos@szeredi.hu>
-Subject: [PATCH 6.1 137/138] mm/secretmem: fix GUP-fast succeeding on secretmem folios
-Date: Mon,  8 Apr 2024 14:59:11 +0200
-Message-ID: <20240408125300.488795726@linuxfoundation.org>
+	Balazs Nemeth <bnemeth@redhat.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Salvatore Daniele <sdaniele@redhat.com>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.8 109/273] idpf: fix kernel panic on unknown packet types
+Date: Mon,  8 Apr 2024 14:56:24 +0200
+Message-ID: <20240408125312.688443857@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,65 +52,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Joshua Hay <joshua.a.hay@intel.com>
 
-commit 65291dcfcf8936e1b23cfd7718fdfde7cfaf7706 upstream.
+commit dd19e827d63ac60debf117676d1126bff884bdb8 upstream.
 
-folio_is_secretmem() currently relies on secretmem folios being LRU
-folios, to save some cycles.
+In the very rare case where a packet type is unknown to the driver,
+idpf_rx_process_skb_fields would return early without calling
+eth_type_trans to set the skb protocol / the network layer handler.
+This is especially problematic if tcpdump is running when such a
+packet is received, i.e. it would cause a kernel panic.
 
-However, folios might reside in a folio batch without the LRU flag set, or
-temporarily have their LRU flag cleared.  Consequently, the LRU flag is
-unreliable for this purpose.
+Instead, call eth_type_trans for every single packet, even when
+the packet type is unknown.
 
-In particular, this is the case when secretmem_fault() allocates a fresh
-page and calls filemap_add_folio()->folio_add_lru().  The folio might be
-added to the per-cpu folio batch and won't get the LRU flag set until the
-batch was drained using e.g., lru_add_drain().
-
-Consequently, folio_is_secretmem() might not detect secretmem folios and
-GUP-fast can succeed in grabbing a secretmem folio, crashing the kernel
-when we would later try reading/writing to the folio, because the folio
-has been unmapped from the directmap.
-
-Fix it by removing that unreliable check.
-
-Link: https://lkml.kernel.org/r/20240326143210.291116-2-david@redhat.com
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Closes: https://lore.kernel.org/lkml/CABOYnLyevJeravW=QrH0JUPYEcDN160aZFb7kwndm-J2rmz0HQ@mail.gmail.com/
-Debugged-by: Miklos Szeredi <miklos@szeredi.hu>
-Tested-by: Miklos Szeredi <mszeredi@redhat.com>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
+Reported-by: Balazs Nemeth <bnemeth@redhat.com>
+Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Salvatore Daniele <sdaniele@redhat.com>
+Signed-off-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/secretmem.h |    4 ++--
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/secretmem.h
-+++ b/include/linux/secretmem.h
-@@ -14,10 +14,10 @@ static inline bool page_is_secretmem(str
- 	 * Using page_mapping() is quite slow because of the actual call
- 	 * instruction and repeated compound_head(page) inside the
- 	 * page_mapping() function.
--	 * We know that secretmem pages are not compound and LRU so we can
-+	 * We know that secretmem pages are not compound, so we can
- 	 * save a couple of cycles here.
- 	 */
--	if (PageCompound(page) || !PageLRU(page))
-+	if (PageCompound(page))
- 		return false;
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -2940,6 +2940,8 @@ static int idpf_rx_process_skb_fields(st
+ 	rx_ptype = le16_get_bits(rx_desc->ptype_err_fflags0,
+ 				 VIRTCHNL2_RX_FLEX_DESC_ADV_PTYPE_M);
  
- 	mapping = (struct address_space *)
++	skb->protocol = eth_type_trans(skb, rxq->vport->netdev);
++
+ 	decoded = rxq->vport->rx_ptype_lkup[rx_ptype];
+ 	/* If we don't know the ptype we can't do anything else with it. Just
+ 	 * pass it up the stack as-is.
+@@ -2950,8 +2952,6 @@ static int idpf_rx_process_skb_fields(st
+ 	/* process RSS/hash */
+ 	idpf_rx_hash(rxq, skb, rx_desc, &decoded);
+ 
+-	skb->protocol = eth_type_trans(skb, rxq->vport->netdev);
+-
+ 	if (le16_get_bits(rx_desc->hdrlen_flags,
+ 			  VIRTCHNL2_RX_FLEX_DESC_ADV_RSC_M))
+ 		return idpf_rx_rsc(rxq, skb, rx_desc, &decoded);
 
 
