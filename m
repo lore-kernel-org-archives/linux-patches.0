@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E08680603;
-	Mon,  8 Apr 2024 14:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376EA8061D;
+	Mon,  8 Apr 2024 14:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585145; cv=none; b=p2FDF8PN75QoeOXnkJtRwhY/F5tiJaDc1TzaH9Evij1tcA9SBNkW9aeK+o1DkRjx86t2cfiwU68kOo9wOSOxQViFg5Lh8Z00ONiAEA6wm9khRKbRIxDMrji5p4jb1pMbWHzAfhhyWuECEDT6ZuGoqgeC6WUfW8yjRKAXBjZUNVY=
+	t=1712585148; cv=none; b=YQNIv5EDZGVMzsCD/rjAfnfod2nJb7WnTf0cOt0Tx6MhPQoPbU0+/ijPvwOy2DHQOxgBlidhcLAXHWzJRCwDHFL+NxXkoDH6oRaEgRfmbIOazP0V/W+552RCyNU7fW94SqsDydBAczhq+nol8cp/sFbicqf85KatX6B6aa8y2Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585145; c=relaxed/simple;
-	bh=kQsR7o+W2GLyhsJU0qCw0IG5QPazfMqIf+CezEz/EqU=;
+	s=arc-20240116; t=1712585148; c=relaxed/simple;
+	bh=J1cGcxdHDl/D3VHjYYODkTaNP0MiXyWm2zXxmyEwnz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAz4k/SDRdya8WpvFeuafB6YKLaBonpHYqU6SYO2Mo6LnP8LAUvobIwE0FSI6AHLXNROTdKuWb09w/cFX1Sr0Pm9CYEGl1QE9zUYQ849YgEkh1YHXjGh7uKwvdT75m9NFiAz40FdPue7t2VCqwcAddzzHzBOm8nPUoFym1WFRFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wn/2P/t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjkqz7oQAwWWpYKVl5we43gOrm0VRJBRQC2acgWWczOuHYOlVkWCY33fX65sR62sC2Nfh2krTFL8u8dPqn2YcFFA6RF63kv8MM878ni65hY0HZuwilfr+bmbZTGR3DHXZrZYzKRbz9oWbLHytwt6n37AEv4mHSfhI7PZV5Q/qKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUlZcosb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wn/2P/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3EC433F1;
-	Mon,  8 Apr 2024 14:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUlZcosb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD645C433C7;
+	Mon,  8 Apr 2024 14:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585145;
-	bh=kQsR7o+W2GLyhsJU0qCw0IG5QPazfMqIf+CezEz/EqU=;
+	s=korg; t=1712585148;
+	bh=J1cGcxdHDl/D3VHjYYODkTaNP0MiXyWm2zXxmyEwnz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wn/2P/tCMqBY43gjqw6IwGcxymXcOFnWa7ucKuuiO0GEya2AaGf2kQE/q74KC4e4
-	 EXegMzvLHgEB1MjClZfp+syn8MG+yF6oQv78630l3s7xXivRoem8dvWgABd6m4fnAf
-	 keu4u6fnB2Aj2ZycknYlhPxL5TyC19t2JQkpuDeg=
+	b=JUlZcosbo4fRgcGi6tBexpdaAsllai2zMmKmLmPavcwm0+3zdKZj7nw6H0AXktISv
+	 suZfHRw23P07sZnI0x4R3dCBaR8pavRcNMqdvP3uuoPYJRK2BuEPYxrwpj02y9y9YU
+	 KttmIHQ2Bay/Mt095jmIUckEec0e5QI9xfSqYbyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+011e4ea1da6692cf881c@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 677/690] fs/pipe: Fix lockdep false-positive in watchqueue pipe_write()
-Date: Mon,  8 Apr 2024 14:59:03 +0200
-Message-ID: <20240408125424.243001626@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 649/690] udp: do not accept non-tunnel GSO skbs landing in a tunnel
+Date: Mon,  8 Apr 2024 14:58:35 +0200
+Message-ID: <20240408125423.158284805@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,74 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 055ca83559912f2cfd91c9441427bac4caf3c74e ]
+commit 3d010c8031e39f5fa1e8b13ada77e0321091011f upstream.
 
-When you try to splice between a normal pipe and a notification pipe,
-get_pipe_info(..., true) fails, so splice() falls back to treating the
-notification pipe like a normal pipe - so we end up in
-iter_file_splice_write(), which first locks the input pipe, then calls
-vfs_iter_write(), which locks the output pipe.
+When rx-udp-gro-forwarding is enabled UDP packets might be GROed when
+being forwarded. If such packets might land in a tunnel this can cause
+various issues and udp_gro_receive makes sure this isn't the case by
+looking for a matching socket. This is performed in
+udp4/6_gro_lookup_skb but only in the current netns. This is an issue
+with tunneled packets when the endpoint is in another netns. In such
+cases the packets will be GROed at the UDP level, which leads to various
+issues later on. The same thing can happen with rx-gro-list.
 
-Lockdep complains about that, because we're taking a pipe lock while
-already holding another pipe lock.
+We saw this with geneve packets being GROed at the UDP level. In such
+case gso_size is set; later the packet goes through the geneve rx path,
+the geneve header is pulled, the offset are adjusted and frag_list skbs
+are not adjusted with regard to geneve. When those skbs hit
+skb_fragment, it will misbehave. Different outcomes are possible
+depending on what the GROed skbs look like; from corrupted packets to
+kernel crashes.
 
-I think this probably (?) can't actually lead to deadlocks, since you'd
-need another way to nest locking a normal pipe into locking a
-watch_queue pipe, but the lockdep annotations don't make that clear.
+One example is a BUG_ON[1] triggered in skb_segment while processing the
+frag_list. Because gso_size is wrong (geneve header was pulled)
+skb_segment thinks there is "geneve header size" of data in frag_list,
+although it's in fact the next packet. The BUG_ON itself has nothing to
+do with the issue. This is only one of the potential issues.
 
-Bail out earlier in pipe_write() for notification pipes, before taking
-the pipe lock.
+Looking up for a matching socket in udp_gro_receive is fragile: the
+lookup could be extended to all netns (not speaking about performances)
+but nothing prevents those packets from being modified in between and we
+could still not find a matching socket. It's OK to keep the current
+logic there as it should cover most cases but we also need to make sure
+we handle tunnel packets being GROed too early.
 
-Reported-and-tested-by: <syzbot+011e4ea1da6692cf881c@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=011e4ea1da6692cf881c
-Fixes: c73be61cede5 ("pipe: Add general notification queue support")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20231124150822.2121798-1-jannh@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is done by extending the checks in udp_unexpected_gso: GSO packets
+lacking the SKB_GSO_UDP_TUNNEL/_CSUM bits and landing in a tunnel must
+be segmented.
+
+[1] kernel BUG at net/core/skbuff.c:4408!
+    RIP: 0010:skb_segment+0xd2a/0xf70
+    __udp_gso_segment+0xaa/0x560
+
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Fixes: 36707061d6ba ("udp: allow forwarding of plain (non-fraglisted) UDP GRO packets")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pipe.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ include/linux/udp.h    |   28 ++++++++++++++++++++++++++++
+ net/ipv4/udp.c         |    7 +++++++
+ net/ipv4/udp_offload.c |    6 ++++--
+ net/ipv6/udp.c         |    2 +-
+ 4 files changed, 40 insertions(+), 3 deletions(-)
 
-diff --git a/fs/pipe.c b/fs/pipe.c
-index a8b8ef2dae7b7..0a8095070b70e 100644
---- a/fs/pipe.c
-+++ b/fs/pipe.c
-@@ -423,6 +423,18 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
- 	bool was_empty = false;
- 	bool wake_next_writer = false;
- 
-+	/*
-+	 * Reject writing to watch queue pipes before the point where we lock
-+	 * the pipe.
-+	 * Otherwise, lockdep would be unhappy if the caller already has another
-+	 * pipe locked.
-+	 * If we had to support locking a normal pipe and a notification pipe at
-+	 * the same time, we could set up lockdep annotations for that, but
-+	 * since we don't actually need that, it's simpler to just bail here.
-+	 */
-+	if (pipe_has_watch_queue(pipe))
-+		return -EXDEV;
-+
- 	/* Null write succeeds. */
- 	if (unlikely(total_len == 0))
- 		return 0;
-@@ -435,11 +447,6 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
- 		goto out;
+--- a/include/linux/udp.h
++++ b/include/linux/udp.h
+@@ -132,6 +132,24 @@ static inline void udp_cmsg_recv(struct
  	}
+ }
  
--	if (pipe_has_watch_queue(pipe)) {
--		ret = -EXDEV;
--		goto out;
--	}
--
- 	/*
- 	 * If it wasn't empty we try to merge new data into
- 	 * the last buffer.
--- 
-2.43.0
-
++DECLARE_STATIC_KEY_FALSE(udp_encap_needed_key);
++#if IS_ENABLED(CONFIG_IPV6)
++DECLARE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++#endif
++
++static inline bool udp_encap_needed(void)
++{
++	if (static_branch_unlikely(&udp_encap_needed_key))
++		return true;
++
++#if IS_ENABLED(CONFIG_IPV6)
++	if (static_branch_unlikely(&udpv6_encap_needed_key))
++		return true;
++#endif
++
++	return false;
++}
++
+ static inline bool udp_unexpected_gso(struct sock *sk, struct sk_buff *skb)
+ {
+ 	if (!skb_is_gso(skb))
+@@ -143,6 +161,16 @@ static inline bool udp_unexpected_gso(st
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST && !udp_sk(sk)->accept_udp_fraglist)
+ 		return true;
+ 
++	/* GSO packets lacking the SKB_GSO_UDP_TUNNEL/_CSUM bits might still
++	 * land in a tunnel as the socket check in udp_gro_receive cannot be
++	 * foolproof.
++	 */
++	if (udp_encap_needed() &&
++	    READ_ONCE(udp_sk(sk)->encap_rcv) &&
++	    !(skb_shinfo(skb)->gso_type &
++	      (SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM)))
++		return true;
++
+ 	return false;
+ }
+ 
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -601,6 +601,13 @@ static inline bool __udp_is_mcast_sock(s
+ }
+ 
+ DEFINE_STATIC_KEY_FALSE(udp_encap_needed_key);
++EXPORT_SYMBOL(udp_encap_needed_key);
++
++#if IS_ENABLED(CONFIG_IPV6)
++DEFINE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++EXPORT_SYMBOL(udpv6_encap_needed_key);
++#endif
++
+ void udp_encap_enable(void)
+ {
+ 	static_branch_inc(&udp_encap_needed_key);
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -515,8 +515,10 @@ struct sk_buff *udp_gro_receive(struct l
+ 	unsigned int off = skb_gro_offset(skb);
+ 	int flush = 1;
+ 
+-	/* we can do L4 aggregation only if the packet can't land in a tunnel
+-	 * otherwise we could corrupt the inner stream
++	/* We can do L4 aggregation only if the packet can't land in a tunnel
++	 * otherwise we could corrupt the inner stream. Detecting such packets
++	 * cannot be foolproof and the aggregation might still happen in some
++	 * cases. Such packets should be caught in udp_unexpected_gso later.
+ 	 */
+ 	NAPI_GRO_CB(skb)->is_flist = 0;
+ 	if (!sk || !udp_sk(sk)->gro_receive) {
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -473,7 +473,7 @@ csum_copy_err:
+ 	goto try_again;
+ }
+ 
+-DEFINE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
++DECLARE_STATIC_KEY_FALSE(udpv6_encap_needed_key);
+ void udpv6_encap_enable(void)
+ {
+ 	static_branch_inc(&udpv6_encap_needed_key);
 
 
