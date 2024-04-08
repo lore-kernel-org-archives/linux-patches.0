@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882038061B;
-	Mon,  8 Apr 2024 13:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF9811E8;
+	Mon,  8 Apr 2024 13:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582626; cv=none; b=jotfV3TXZjMrsxarnoEamE98T167Yj85WLgauiY9oKX/CXIZBMZg7orJzuODQWyrZ8hWPPlY3MOLg9DwP/jiZp8rbpw+h4YyOZYUpPMB4BIUCBeO+nAmG0ABCnofwPGWktWhJrfiGpzUjMeTMEPNGZccghgP2kGgPQrtlmVWCkc=
+	t=1712582629; cv=none; b=WebIdDl3Lr5x7xi830AvDrgyzzGntbmTS1pfE1fq4LGPu9RVKlaj4HluqoO0YoVrCoXKmwiGBc+YIy3La0Ambjn0BkmOkyD7O/uVCCZwdlYGLBxaOahZlz/QQ2/V4cVzWw35Sod18q6fi+LlGNQMVBxGKIb7L38z3E1lTUeKmkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582626; c=relaxed/simple;
-	bh=KwvRjKd/qiQq2jNND1iBs8gGfmFlfDYKGxjdOxcihL0=;
+	s=arc-20240116; t=1712582629; c=relaxed/simple;
+	bh=URsG9oxHMq3SFHwI5elFPm7kcguJbJEq+m3tEGzic3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktGlDGKOzS+c6JKBON9UmnFg5AJZJEowpnFrS+0BR8/JzfqmkH2baSECHWS0pkBZPiiEyCGaOyHIUJc+EFtANAM0ucmX+xDv6rqO0ofsGBYqWBJwN+M+gThB/XWpMplEKQygIVONx07iJbMX2UDt2oKni2ODlMvqSuJ4a/PZpgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJq+W4ZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgqxozsim0LA9EO+bciT5K3fEPBvEbuDHj8GjRmsntsy194KTV7EV044z15ysyiXcm2MM2n0RCwbnquts8euCKSn0hLerh60yFfxwlIPy0DV3Ex3xEkDeAYGb2QnUzzuuH38GV2SemZg18OXLrOEXYXGQp7FObOwhCHSn33A7eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hascb9EJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJq+W4ZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1036FC433C7;
-	Mon,  8 Apr 2024 13:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hascb9EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C14AC43390;
+	Mon,  8 Apr 2024 13:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582626;
-	bh=KwvRjKd/qiQq2jNND1iBs8gGfmFlfDYKGxjdOxcihL0=;
+	s=korg; t=1712582629;
+	bh=URsG9oxHMq3SFHwI5elFPm7kcguJbJEq+m3tEGzic3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QJq+W4ZGhszaTCArkumkK+ET0SBe6xS4oF8QrvfgTDlm5NXkUgTxNktT95w9Mat9d
-	 FT3BGvvAx00yVZUCKVxPw6llBoB04Knl2UgA7JuV+6weyv0GrlWZlIHR1+jiO/9HIo
-	 elCP66yTlsnbj7bveiHsKumq/0N4uPqpVTA+f1k0=
+	b=Hascb9EJvEeZ3vcF/hRO8++3pHJhCD9O/Va/u3EDKabK5bpUFejq4xbvOx8D9jpf4
+	 ki1JeU+o0YEAsJjD60obvEqtNzPH0jZtXZLGP+oI6cpzsSn+byoEZ4vyUg0EDqyqvy
+	 pKIvBxvOlIh6hSvbP3euPQ1qGaFv/Tch3tOlyrms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.8 091/273] netfilter: validate user input for expected length
-Date: Mon,  8 Apr 2024 14:56:06 +0200
-Message-ID: <20240408125312.128258939@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 121/138] x86/coco: Require seeding RNG with RDRAND on CoCo systems
+Date: Mon,  8 Apr 2024 14:58:55 +0200
+Message-ID: <20240408125259.996156439@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,257 +49,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 0c83842df40f86e529db6842231154772c20edcc upstream.
+commit 99485c4c026f024e7cb82da84c7951dbe3deb584 upstream.
 
-I got multiple syzbot reports showing old bugs exposed
-by BPF after commit 20f2505fb436 ("bpf: Try to avoid kzalloc
-in cgroup/{s,g}etsockopt")
+There are few uses of CoCo that don't rely on working cryptography and
+hence a working RNG. Unfortunately, the CoCo threat model means that the
+VM host cannot be trusted and may actively work against guests to
+extract secrets or manipulate computation. Since a malicious host can
+modify or observe nearly all inputs to guests, the only remaining source
+of entropy for CoCo guests is RDRAND.
 
-setsockopt() @optlen argument should be taken into account
-before copying data.
+If RDRAND is broken -- due to CPU hardware fault -- the RNG as a whole
+is meant to gracefully continue on gathering entropy from other sources,
+but since there aren't other sources on CoCo, this is catastrophic.
+This is mostly a concern at boot time when initially seeding the RNG, as
+after that the consequences of a broken RDRAND are much more
+theoretical.
 
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
- BUG: KASAN: slab-out-of-bounds in do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
- BUG: KASAN: slab-out-of-bounds in do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-Read of size 96 at addr ffff88802cd73da0 by task syz-executor.4/7238
+So, try at boot to seed the RNG using 256 bits of RDRAND output. If this
+fails, panic(). This will also trigger if the system is booted without
+RDRAND, as RDRAND is essential for a safe CoCo boot.
 
-CPU: 1 PID: 7238 Comm: syz-executor.4 Not tainted 6.9.0-rc2-next-20240403-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:488
-  kasan_report+0x143/0x180 mm/kasan/report.c:601
-  kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
-  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
-  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
-  copy_from_sockptr include/linux/sockptr.h:55 [inline]
-  do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
-  do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-  nf_setsockopt+0x295/0x2c0 net/netfilter/nf_sockopt.c:101
-  do_sock_setsockopt+0x3af/0x720 net/socket.c:2311
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
-RIP: 0033:0x7fd22067dde9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd21f9ff0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
-RAX: ffffffffffffffda RBX: 00007fd2207abf80 RCX: 00007fd22067dde9
-RDX: 0000000000000040 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007fd2206ca47a R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000020000880 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd2207abf80 R15: 00007ffd2d0170d8
- </TASK>
+Add this deliberately to be "just a CoCo x86 driver feature" and not
+part of the RNG itself. Many device drivers and platforms have some
+desire to contribute something to the RNG, and add_device_randomness()
+is specifically meant for this purpose.
 
-Allocated by task 7238:
-  kasan_save_stack mm/kasan/common.c:47 [inline]
-  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
-  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:387
-  kasan_kmalloc include/linux/kasan.h:211 [inline]
-  __do_kmalloc_node mm/slub.c:4069 [inline]
-  __kmalloc_noprof+0x200/0x410 mm/slub.c:4082
-  kmalloc_noprof include/linux/slab.h:664 [inline]
-  __cgroup_bpf_run_filter_setsockopt+0xd47/0x1050 kernel/bpf/cgroup.c:1869
-  do_sock_setsockopt+0x6b4/0x720 net/socket.c:2293
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
+Any driver can call it with seed data of any quality, or even garbage
+quality, and it can only possibly make the quality of the RNG better or
+have no effect, but can never make it worse.
 
-The buggy address belongs to the object at ffff88802cd73da0
- which belongs to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes inside of
- allocated 1-byte region [ffff88802cd73da0, ffff88802cd73da1)
+Rather than trying to build something into the core of the RNG, consider
+the particular CoCo issue just a CoCo issue, and therefore separate it
+all out into driver (well, arch/platform) code.
 
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88802cd73020 pfn:0x2cd73
-flags: 0xfff80000000000(node=0|zone=1|lastcpupid=0xfff)
-page_type: 0xffffefff(slab)
-raw: 00fff80000000000 ffff888015041280 dead000000000100 dead000000000122
-raw: ffff88802cd73020 000000008080007f 00000001ffffefff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5103, tgid 2119833701 (syz-executor.4), ts 5103, free_ts 70804600828
-  set_page_owner include/linux/page_owner.h:32 [inline]
-  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1490
-  prep_new_page mm/page_alloc.c:1498 [inline]
-  get_page_from_freelist+0x2e7e/0x2f40 mm/page_alloc.c:3454
-  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4712
-  __alloc_pages_node_noprof include/linux/gfp.h:244 [inline]
-  alloc_pages_node_noprof include/linux/gfp.h:271 [inline]
-  alloc_slab_page+0x5f/0x120 mm/slub.c:2249
-  allocate_slab+0x5a/0x2e0 mm/slub.c:2412
-  new_slab mm/slub.c:2465 [inline]
-  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3615
-  __slab_alloc+0x58/0xa0 mm/slub.c:3705
-  __slab_alloc_node mm/slub.c:3758 [inline]
-  slab_alloc_node mm/slub.c:3936 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  kmalloc_node_track_caller_noprof+0x286/0x450 mm/slub.c:4089
-  kstrdup+0x3a/0x80 mm/util.c:62
-  device_rename+0xb5/0x1b0 drivers/base/core.c:4558
-  dev_change_name+0x275/0x860 net/core/dev.c:1232
-  do_setlink+0xa4b/0x41f0 net/core/rtnetlink.c:2864
-  __rtnl_newlink net/core/rtnetlink.c:3680 [inline]
-  rtnl_newlink+0x180b/0x20a0 net/core/rtnetlink.c:3727
-  rtnetlink_rcv_msg+0x89b/0x10d0 net/core/rtnetlink.c:6594
-  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2559
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1361
-page last free pid 5146 tgid 5146 stack trace:
-  reset_page_owner include/linux/page_owner.h:25 [inline]
-  free_pages_prepare mm/page_alloc.c:1110 [inline]
-  free_unref_page+0xd3c/0xec0 mm/page_alloc.c:2617
-  discard_slab mm/slub.c:2511 [inline]
-  __put_partials+0xeb/0x130 mm/slub.c:2980
-  put_cpu_partial+0x17c/0x250 mm/slub.c:3055
-  __slab_free+0x2ea/0x3d0 mm/slub.c:4254
-  qlink_free mm/kasan/quarantine.c:163 [inline]
-  qlist_free_all+0x9e/0x140 mm/kasan/quarantine.c:179
-  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
-  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:322
-  kasan_slab_alloc include/linux/kasan.h:201 [inline]
-  slab_post_alloc_hook mm/slub.c:3888 [inline]
-  slab_alloc_node mm/slub.c:3948 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  __kmalloc_node_noprof+0x1d7/0x450 mm/slub.c:4076
-  kmalloc_node_noprof include/linux/slab.h:681 [inline]
-  kvmalloc_node_noprof+0x72/0x190 mm/util.c:634
-  bucket_table_alloc lib/rhashtable.c:186 [inline]
-  rhashtable_rehash_alloc+0x9e/0x290 lib/rhashtable.c:367
-  rht_deferred_worker+0x4e1/0x2440 lib/rhashtable.c:427
-  process_one_work kernel/workqueue.c:3218 [inline]
-  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3299
-  worker_thread+0x86d/0xd70 kernel/workqueue.c:3380
-  kthread+0x2f0/0x390 kernel/kthread.c:388
-  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:243
+  [ bp: Massage commit message. ]
 
-Memory state around the buggy address:
- ffff88802cd73c80: 07 fc fc fc 05 fc fc fc 05 fc fc fc fa fc fc fc
- ffff88802cd73d00: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
->ffff88802cd73d80: fa fc fc fc 01 fc fc fc fa fc fc fc fa fc fc fc
-                               ^
- ffff88802cd73e00: fa fc fc fc fa fc fc fc 05 fc fc fc 07 fc fc fc
- ffff88802cd73e80: 07 fc fc fc 07 fc fc fc 07 fc fc fc 07 fc fc fc
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://lore.kernel.org/r/20240404122051.2303764-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Elena Reshetova <elena.reshetova@intel.com>
+Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240326160735.73531-1-Jason@zx2c4.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- net/ipv4/netfilter/arp_tables.c |    4 ++++
- net/ipv4/netfilter/ip_tables.c  |    4 ++++
- net/ipv6/netfilter/ip6_tables.c |    4 ++++
- 4 files changed, 18 insertions(+)
+ arch/x86/coco/core.c        |   41 +++++++++++++++++++++++++++++++++++++++++
+ arch/x86/include/asm/coco.h |    2 ++
+ arch/x86/kernel/setup.c     |    2 ++
+ 3 files changed, 45 insertions(+)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1111,6 +1111,8 @@ static int do_replace(struct net *net, s
- 	struct ebt_table_info *newinfo;
- 	struct ebt_replace tmp;
+--- a/arch/x86/coco/core.c
++++ b/arch/x86/coco/core.c
+@@ -3,13 +3,17 @@
+  * Confidential Computing Platform Capability checks
+  *
+  * Copyright (C) 2021 Advanced Micro Devices, Inc.
++ * Copyright (C) 2024 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+  *
+  * Author: Tom Lendacky <thomas.lendacky@amd.com>
+  */
  
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
+ #include <linux/export.h>
+ #include <linux/cc_platform.h>
++#include <linux/string.h>
++#include <linux/random.h>
  
-@@ -1423,6 +1425,8 @@ static int update_counters(struct net *n
++#include <asm/archrandom.h>
+ #include <asm/coco.h>
+ #include <asm/processor.h>
+ 
+@@ -128,3 +132,40 @@ u64 cc_mkdec(u64 val)
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(cc_mkdec);
++
++__init void cc_random_init(void)
++{
++	/*
++	 * The seed is 32 bytes (in units of longs), which is 256 bits, which
++	 * is the security level that the RNG is targeting.
++	 */
++	unsigned long rng_seed[32 / sizeof(long)];
++	size_t i, longs;
++
++	if (!cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
++		return;
++
++	/*
++	 * Since the CoCo threat model includes the host, the only reliable
++	 * source of entropy that can be neither observed nor manipulated is
++	 * RDRAND. Usually, RDRAND failure is considered tolerable, but since
++	 * CoCo guests have no other unobservable source of entropy, it's
++	 * important to at least ensure the RNG gets some initial random seeds.
++	 */
++	for (i = 0; i < ARRAY_SIZE(rng_seed); i += longs) {
++		longs = arch_get_random_longs(&rng_seed[i], ARRAY_SIZE(rng_seed) - i);
++
++		/*
++		 * A zero return value means that the guest doesn't have RDRAND
++		 * or the CPU is physically broken, and in both cases that
++		 * means most crypto inside of the CoCo instance will be
++		 * broken, defeating the purpose of CoCo in the first place. So
++		 * just panic here because it's absolutely unsafe to continue
++		 * executing.
++		 */
++		if (longs == 0)
++			panic("RDRAND is defective.");
++	}
++	add_device_randomness(rng_seed, sizeof(rng_seed));
++	memzero_explicit(rng_seed, sizeof(rng_seed));
++}
+--- a/arch/x86/include/asm/coco.h
++++ b/arch/x86/include/asm/coco.h
+@@ -23,6 +23,7 @@ static inline void cc_set_mask(u64 mask)
+ 
+ u64 cc_mkenc(u64 val);
+ u64 cc_mkdec(u64 val);
++void cc_random_init(void);
+ #else
+ static inline u64 cc_mkenc(u64 val)
  {
- 	struct ebt_replace hlp;
- 
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
- 
-@@ -2352,6 +2356,8 @@ static int compat_update_counters(struct
+@@ -33,6 +34,7 @@ static inline u64 cc_mkdec(u64 val)
  {
- 	struct compat_ebt_replace hlp;
+ 	return val;
+ }
++static inline void cc_random_init(void) { }
+ #endif
  
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+ #endif /* _ASM_X86_COCO_H */
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -33,6 +33,7 @@
+ #include <asm/numa.h>
+ #include <asm/bios_ebda.h>
+ #include <asm/bugs.h>
++#include <asm/coco.h>
+ #include <asm/cpu.h>
+ #include <asm/efi.h>
+ #include <asm/gart.h>
+@@ -1132,6 +1133,7 @@ void __init setup_arch(char **cmdline_p)
+ 	 * memory size.
+ 	 */
+ 	sev_setup_arch();
++	cc_random_init();
  
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -956,6 +956,8 @@ static int do_replace(struct net *net, s
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1254,6 +1256,8 @@ static int compat_do_replace(struct net
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1108,6 +1108,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1492,6 +1494,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1125,6 +1125,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1501,6 +1503,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
+ 	efi_fake_memmap();
+ 	efi_find_mirror();
 
 
