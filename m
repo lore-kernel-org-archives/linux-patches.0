@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B867C0B0;
-	Mon,  8 Apr 2024 13:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2A580620;
+	Mon,  8 Apr 2024 13:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584054; cv=none; b=M1JjSZ/WHANHf6FfrcEIV5Qv3p4SDX40jDDe+pc5r0vIokOXCKOobc5+HYbKhE0OFNmn1OOb1osOOqh7Fi978zKqbt80FPM5/7CEqTVT+aGL4CLNxmGk86ok/0T+BNbHoxhu2KkONmGvDOJVSac6xyMkpafzaBf9hmF5KSUc4xM=
+	t=1712584057; cv=none; b=qExig3mM+LkQM/ofiVYRrDyQblNl2d4D8NqRqzFI6PQo/21/qDMMnra/3UfIEht7UzdVBqnKOnRKUkdhgGh38Y0KDGSdsKFo+N1O4U0RkRUoWmn4/T1l/qIZyTyapZnSYehdD/vfSdbsx9g3SawhAMmAq2n4Qen2PahEb+R+C8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584054; c=relaxed/simple;
-	bh=KBPtMcsfgdNnlW4zzUXvVGF/1hzXal82h1z0UncvRPQ=;
+	s=arc-20240116; t=1712584057; c=relaxed/simple;
+	bh=9nJfqOBCSYlk8iI7EBqaRxafmLUvIIhJWKyBDnourOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFd3CGoPSEehj2S3tD6DwXril5/1zomLoO6fqbcQLvG3LpsStBY/Yr1Ji7ZuQEf6n5vfdtSiNY+JXVIMeJztaka2lywVeJoanjPB5YwXRN+yUriZbeYuIuOWMl76ioIWj553SqC9M7S/fd1TJVAcr7i/nXca/reUwzAFPByq1TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dsh4fVS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFP+i4WwUTCuZIIn/YOxVF1ee2UeypXBf5wYnFz2Ek75F+e7Ji8uVhRMlixPP+LgICk3p7xyaImQMbX55CjtUQSk9YA2j1N9rv6caSDVVF9DzAwHjqH2Tqw9Ihq8HfqWLRgPMHxTwyR6cGcAF4ecbfpkbeQw/lEFYhzqI7RNba0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvyH/cQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dsh4fVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30FBC43390;
-	Mon,  8 Apr 2024 13:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvyH/cQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8839C43390;
+	Mon,  8 Apr 2024 13:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584054;
-	bh=KBPtMcsfgdNnlW4zzUXvVGF/1hzXal82h1z0UncvRPQ=;
+	s=korg; t=1712584057;
+	bh=9nJfqOBCSYlk8iI7EBqaRxafmLUvIIhJWKyBDnourOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dsh4fVSrEfJbbshMJ8GJZIKgNDuX6RBOkFLw3k+GRp5/TqiaK81EuJp06aGgLx+h
-	 l+B9EU/o4mvBkDnruRbpDwMiuP7+gQevsZW0J5sEbX/Fz/joouYURkNLX7K5aZDybu
-	 o3gi0cpDRg08kIzgOiAE7JXS4PHlpffxpFCK1O64=
+	b=KvyH/cQxG0QlAtxQZDpw1c46BTz6F+TvgXhWKqZtmpgg8LbCTPnPb1WVaSbWisFmR
+	 kxGMPUHVyopYA6THPt9z/QEerMmrG22lB6DCVRkcdWu1yDsLgRhFM28XisZ7CPCaAn
+	 2+U9JDGj2Ey1Z5Adcbb2l9bR7XA1Ck14r21EJAQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.8 254/273] smb: client: fix potential UAF in smb2_is_valid_lease_break()
-Date: Mon,  8 Apr 2024 14:58:49 +0200
-Message-ID: <20240408125317.335385771@linuxfoundation.org>
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 327/690] nfsd: Unregister the cld notifier when laundry_wq create failed
+Date: Mon,  8 Apr 2024 14:53:13 +0200
+Message-ID: <20240408125411.457706095@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +46,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 705c76fbf726c7a2f6ff9143d4013b18daaaebf1 upstream.
+[ Upstream commit 62fdb65edb6c43306c774939001f3a00974832aa ]
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+If laundry_wq create failed, the cld notifier should be unregistered.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/smb/client/smb2misc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfsctl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -622,6 +622,8 @@ smb2_is_valid_lease_break(char *buffer,
- 	/* look up tcon based on tid & uid */
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry(ses, &pserver->smb_ses_list, smb_ses_list) {
-+		if (cifs_ses_exiting(ses))
-+			continue;
- 		list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
- 			spin_lock(&tcon->open_file_lock);
- 			cifs_stats_inc(
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 322a208878f2c..55949e60897d5 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1543,12 +1543,14 @@ static int __init init_nfsd(void)
+ 		goto out_free_filesystem;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+-		goto out_free_all;
++		goto out_free_subsys;
+ 	retval = nfsd4_create_laundry_wq();
+ 	if (retval)
+ 		goto out_free_all;
+ 	return 0;
+ out_free_all:
++	unregister_cld_notifier();
++out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+ out_free_filesystem:
+ 	unregister_filesystem(&nfsd_fs_type);
+-- 
+2.43.0
+
 
 
