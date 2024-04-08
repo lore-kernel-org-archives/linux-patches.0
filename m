@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585956CDA9;
-	Mon,  8 Apr 2024 13:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C516CDA9;
+	Mon,  8 Apr 2024 13:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583136; cv=none; b=uAyxIigbsXws4NUEH18P+gWZFF6tGGCP5iLTip7mxCmVVmPiU+0kprSqGALABTWZ72L0TjO7xf6sG8L4CdeSQ+MspXWa44HEjqtQfwi4Wvf2PrJMRQYdVVPHAHo0z/YT0p67LxugLo+qxJjKHec5OLbaTR7rSj8bIJ3dQYUPm40=
+	t=1712583139; cv=none; b=VTJWkuaemBtjVK/n/iKaqV9xETmGsnEm1d1EHN09+Bfw+qAYu9tJFnp4jJUdnb7KK6G6II2KMLsVltAH7HsGfvpe+xeTgSE3gnQseyIMV1gBdY5e7kG9nMvGL8DiJjHd0rOhsdXCPZ0fRDEiJ7B/NcMmiKb49ZzcG/LQu/vSXmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583136; c=relaxed/simple;
-	bh=/tk0OV6gP7tAvthQ2MBqGXysUPDMGzFJ4sEfwKpBFXM=;
+	s=arc-20240116; t=1712583139; c=relaxed/simple;
+	bh=GoQS4DrOYXVKJ5/VpivvpQZAgcO+3qSfur1J+Xb+vuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4JlsMPO3b2TMtq2DZSJF0ixd5MhPsewyEyj4FwMsXtb/MP0b1idHzVaGcPND/EvkUjR1xIO1Sn19BXXFcwZCmWk1x03NRoj6CiWH4j5CUOKlu/IZ+ypB7tpa436hKd1l5cBDuidtkQseimEjtFFU7/yKottO1jkjootyTc+L1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CX0uQkQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjfEnVQFRqIm5NLwxwLX5gsgGKDpQygt/C0Iiu6wZV3snVIvyiX34HwyhhuW6cKmwjdFLMwZoa4Te+76C78hrych07oU/B53FtmwzQdaeQXOIttH3xsd3uQzUOdOYUUaFPPpjjUC2/XlNCdlxnNLcLJVZNx+dOTj9MlAstBrBqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfrWOICc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CX0uQkQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD140C433C7;
-	Mon,  8 Apr 2024 13:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfrWOICc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32FFC433F1;
+	Mon,  8 Apr 2024 13:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583136;
-	bh=/tk0OV6gP7tAvthQ2MBqGXysUPDMGzFJ4sEfwKpBFXM=;
+	s=korg; t=1712583139;
+	bh=GoQS4DrOYXVKJ5/VpivvpQZAgcO+3qSfur1J+Xb+vuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CX0uQkQEAIvog0OMNHAuokqsELJJx+CwpeLFf2axUSxuVxWllDe77YuP5qJxTvOhF
-	 q37w8PjFBYEYP+jD3NQ95PiK0HdiJD4JOiF7BoO7l34WKJDDoBWxNzg24SH+w9Xshw
-	 h4Vcj4ri5z2/kmp/L1x1gLIQgyt/HCkTKFZUxO/M=
+	b=qfrWOICcOJkbCeOP12EMfVDQZidZRkk4fJ/1T62B9U78IM9CyaUxb6meMQqWFdW9Q
+	 JG5hKpkxjR4DZ9LLbD6KyFtB2VZ6C9U6PxAGaE/C/XjaoheMoCTl/ycL3XwGGbB16y
+	 k/I7/f2HEUCHUKn3B5wI6PBbv2Dludl1gWJ5/EGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 143/273] mptcp: dont account accept() of non-MPC client as fallback to TCP
-Date: Mon,  8 Apr 2024 14:56:58 +0200
-Message-ID: <20240408125313.730044529@linuxfoundation.org>
+	Jeff layton <jlayton@kernel.org>,
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 211/690] nfsd4: remove obselete comment
+Date: Mon,  8 Apr 2024 14:51:17 +0200
+Message-ID: <20240408125407.174794094@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,114 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 7a1b3490f47e88ec4cbde65f1a77a0f4bc972282 ]
+[ Upstream commit 80479eb862102f9513e93fcf726c78cc0be2e3b2 ]
 
-Current MPTCP servers increment MPTcpExtMPCapableFallbackACK when they
-accept non-MPC connections. As reported by Christoph, this is "surprising"
-because the counter might become greater than MPTcpExtMPCapableSYNRX.
+Mandatory locking has been removed.  And the rest of this comment is
+redundant with the code.
 
-MPTcpExtMPCapableFallbackACK counter's name suggests it should only be
-incremented when a connection was seen using MPTCP options, then a
-fallback to TCP has been done. Let's do that by incrementing it when
-the subflow context of an inbound MPC connection attempt is dropped.
-Also, update mptcp_connect.sh kselftest, to ensure that the
-above MIB does not increment in case a pure TCP client connects to a
-MPTCP server.
-
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
-Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/449
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-1-324a8981da48@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Jeff layton <jlayton@kernel.org>
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- net/mptcp/protocol.c                               | 2 --
- net/mptcp/subflow.c                                | 2 ++
- tools/testing/selftests/net/mptcp/mptcp_connect.sh | 9 +++++++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ fs/nfsd/vfs.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 7833a49f6214a..2b921af2718d9 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3916,8 +3916,6 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
- 				mptcp_set_state(newsk, TCP_CLOSE);
- 		}
- 	} else {
--		MPTCP_INC_STATS(sock_net(ssk),
--				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
- tcpfallback:
- 		newsk->sk_kern_sock = kern;
- 		lock_sock(newsk);
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 71ba86246ff89..13f66d11b7a0b 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -905,6 +905,8 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 	return child;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 59e30cff920ca..925aa08ca1075 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -744,9 +744,6 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
+ 	path.dentry = fhp->fh_dentry;
+ 	inode = d_inode(path.dentry);
  
- fallback:
-+	if (fallback)
-+		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
- 	mptcp_subflow_drop_ctx(child);
- 	return child;
- }
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_connect.sh b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-index f8e1b3daa7489..713de81822227 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -391,12 +391,14 @@ do_transfer()
- 	local stat_cookierx_last
- 	local stat_csum_err_s
- 	local stat_csum_err_c
-+	local stat_tcpfb_last_l
- 	stat_synrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
- 	stat_ackrx_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
- 	stat_cookietx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
- 	stat_cookierx_last=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	stat_csum_err_s=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtDataCsumErr")
- 	stat_csum_err_c=$(mptcp_lib_get_counter "${connector_ns}" "MPTcpExtDataCsumErr")
-+	stat_tcpfb_last_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	timeout ${timeout_test} \
- 		ip netns exec ${listener_ns} \
-@@ -465,11 +467,13 @@ do_transfer()
- 	local stat_cookietx_now
- 	local stat_cookierx_now
- 	local stat_ooo_now
-+	local stat_tcpfb_now_l
- 	stat_synrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableSYNRX")
- 	stat_ackrx_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableACKRX")
- 	stat_cookietx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesSent")
- 	stat_cookierx_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	stat_ooo_now=$(mptcp_lib_get_counter "${listener_ns}" "TcpExtTCPOFOQueue")
-+	stat_tcpfb_now_l=$(mptcp_lib_get_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	expect_synrx=$((stat_synrx_last_l))
- 	expect_ackrx=$((stat_ackrx_last_l))
-@@ -516,6 +520,11 @@ do_transfer()
- 		fi
- 	fi
- 
-+	if [ ${stat_ooo_now} -eq 0 ] && [ ${stat_tcpfb_last_l} -ne ${stat_tcpfb_now_l} ]; then
-+		mptcp_lib_pr_fail "unexpected fallback to TCP"
-+		rets=1
-+	fi
-+
- 	if [ $cookies -eq 2 ];then
- 		if [ $stat_cookietx_last -ge $stat_cookietx_now ] ;then
- 			extra+=" WARN: CookieSent: did not advance"
+-	/* Disallow write access to files with the append-only bit set
+-	 * or any access when mandatory locking enabled
+-	 */
+ 	err = nfserr_perm;
+ 	if (IS_APPEND(inode) && (may_flags & NFSD_MAY_WRITE))
+ 		goto out;
 -- 
 2.43.0
 
