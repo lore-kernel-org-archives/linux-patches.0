@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5244768F0;
-	Mon,  8 Apr 2024 13:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DC7524AF;
+	Mon,  8 Apr 2024 13:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582804; cv=none; b=bg1Y1tE1UQ3rz6jtVfI9/OeV41tELjqXkbfDLIWLTSQv+yxA2y0Y/k/8k394v6wfYMVAAQoFER5EyLz+C6ZTYa512EF68xSSX0uZHx2a7kxDRYGQOymeod7A2HkTN+xWGFI3bHjD+Uv9yDlG8jPTtnP5MR964wpU8WYjSacjdVg=
+	t=1712582807; cv=none; b=Oga8pAHX1RxX8TKb/cZAXHVVfg88j607+uclw6CFYUB52GS9NHTYf5QnevzEZjXN1Q9P8wP+aCAHF4W0JPo5lwg1SVQORAnWsmKlaOSb2gaud21YOd6j0v8zxYc4IbMzBeN3ExWcTmye9gnmUU8koZMdT0002m/kJFlfZssG4Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582804; c=relaxed/simple;
-	bh=6BhjOJE5/AFteU3rXNAmsY3wMnYPZ/8+059sNYFviTw=;
+	s=arc-20240116; t=1712582807; c=relaxed/simple;
+	bh=ZtUuV3wKMKhlXGy+uU0G4DZsdHMvcOSDtzo6JNt+x6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0Q+4BUfCCA00sOKQPjJeLOeCaC2ODtVafE30xGBsNWc8KGc03NbB8WZzmrJ4D7d1xD+K78rAePoBVsO7cWe9cTlv7Ck0QJAAZcGMGGZbreZiX1XzEoHj4/+TxihDPMRd8Ii743DpObatxWV4jO/amD+UVr+xkUKinSwihK6LQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUUsdarU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4pQjrt999N9c0dlDQ4iyHOQ7ps9IqM4GI+qRRMQjdLYhro17S6cBfMFy3ZWVul3H02KOkCMz1OGj2bkBGjrz4EqbGV0M8ihjxQTmSB3km17QwAUY2JBEvGdAZoNn1V5yXYHWuZ7B+liuN/0Diq0mhvL2aKbtxazvVVxcn+Ll9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6jKsV0X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUUsdarU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDD7C433F1;
-	Mon,  8 Apr 2024 13:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6jKsV0X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F2EC433F1;
+	Mon,  8 Apr 2024 13:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582804;
-	bh=6BhjOJE5/AFteU3rXNAmsY3wMnYPZ/8+059sNYFviTw=;
+	s=korg; t=1712582807;
+	bh=ZtUuV3wKMKhlXGy+uU0G4DZsdHMvcOSDtzo6JNt+x6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUUsdarU/53EjPO2Y4Qn0UUxxji8upBwiWmrlRTDPfPyRzYxBrnn80/qqxdI9Kzjz
-	 ILJU3TPGh96z+2jlWoApgq1or52t+b7atXzkD3NlIqibZmnuJrdyA2nG+JFGTqewQy
-	 u5ccHdgOe70dG9an0p9V4jHSskRrJ3dEeWknM1go=
+	b=Y6jKsV0Xa6XN3pGxVLHUmcooTsDdaUTqT5FWV33nwcfZYe0Dj1fa8kWL4KJkzRs37
+	 BFMIgr1aei8PF99qRZHhXG+it+edLhZUl7KDMi8MyalUTTLxQ4AdRI+xfj1/vLcqzs
+	 Cy4BjPYXXP/Sj7KEkg0RjB2Uqp4faNkVpLkclYaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 125/252] udp: prevent local UDP tunnel packets from being GROed
-Date: Mon,  8 Apr 2024 14:57:04 +0200
-Message-ID: <20240408125310.503605951@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 177/690] fsnotify: Pass group argument to free_event
+Date: Mon,  8 Apr 2024 14:50:43 +0200
+Message-ID: <20240408125405.970264452@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit 64235eabc4b5b18c507c08a1f16cdac6c5661220 upstream.
+[ Upstream commit 330ae77d2a5b0af32c0f29e139bf28ec8591de59 ]
 
-GRO has a fundamental issue with UDP tunnel packets as it can't detect
-those in a foolproof way and GRO could happen before they reach the
-tunnel endpoint. Previous commits have fixed issues when UDP tunnel
-packets come from a remote host, but if those packets are issued locally
-they could run into checksum issues.
+For group-wide mempool backed events, like FS_ERROR, the free_event
+callback will need to reference the group's mempool to free the memory.
+Wire that argument into the current callers.
 
-If the inner packet has a partial checksum the information will be lost
-in the GRO logic, either in udp4/6_gro_complete or in
-udp_gro_complete_segment and packets will have an invalid checksum when
-leaving the host.
-
-Prevent local UDP tunnel packets from ever being GROed at the outer UDP
-level.
-
-Due to skb->encapsulation being wrongly used in some drivers this is
-actually only preventing UDP tunnel packets with a partial checksum to
-be GROed (see iptunnel_handle_offloads) but those were also the packets
-triggering issues so in practice this should be sufficient.
-
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Fixes: 36707061d6ba ("udp: allow forwarding of plain (non-fraglisted) UDP GRO packets")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20211025192746.66445-13-krisman@collabora.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- net/ipv4/udp_offload.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/notify/fanotify/fanotify.c        | 3 ++-
+ fs/notify/group.c                    | 2 +-
+ fs/notify/inotify/inotify_fsnotify.c | 3 ++-
+ fs/notify/notification.c             | 2 +-
+ include/linux/fsnotify_backend.h     | 2 +-
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -559,6 +559,12 @@ struct sk_buff *udp_gro_receive(struct l
- 	 */
- 	NAPI_GRO_CB(skb)->is_flist = 0;
- 	if (!sk || !udp_sk(sk)->gro_receive) {
-+		/* If the packet was locally encapsulated in a UDP tunnel that
-+		 * wasn't detected above, do not GRO.
-+		 */
-+		if (skb->encapsulation)
-+			goto out;
-+
- 		if (skb->dev->features & NETIF_F_GRO_FRAGLIST)
- 			NAPI_GRO_CB(skb)->is_flist = sk ? !udp_test_bit(GRO_ENABLED, sk) : 1;
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index f82e20228999c..c620b4f6fe123 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -835,7 +835,8 @@ static void fanotify_free_name_event(struct fanotify_event *event)
+ 	kfree(FANOTIFY_NE(event));
+ }
  
+-static void fanotify_free_event(struct fsnotify_event *fsn_event)
++static void fanotify_free_event(struct fsnotify_group *group,
++				struct fsnotify_event *fsn_event)
+ {
+ 	struct fanotify_event *event;
+ 
+diff --git a/fs/notify/group.c b/fs/notify/group.c
+index fb89c351295d6..6a297efc47887 100644
+--- a/fs/notify/group.c
++++ b/fs/notify/group.c
+@@ -88,7 +88,7 @@ void fsnotify_destroy_group(struct fsnotify_group *group)
+ 	 * that deliberately ignores overflow events.
+ 	 */
+ 	if (group->overflow_event)
+-		group->ops->free_event(group->overflow_event);
++		group->ops->free_event(group, group->overflow_event);
+ 
+ 	fsnotify_put_group(group);
+ }
+diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
+index be3eb1cebdcce..8279827836399 100644
+--- a/fs/notify/inotify/inotify_fsnotify.c
++++ b/fs/notify/inotify/inotify_fsnotify.c
+@@ -184,7 +184,8 @@ static void inotify_free_group_priv(struct fsnotify_group *group)
+ 		dec_inotify_instances(group->inotify_data.ucounts);
+ }
+ 
+-static void inotify_free_event(struct fsnotify_event *fsn_event)
++static void inotify_free_event(struct fsnotify_group *group,
++			       struct fsnotify_event *fsn_event)
+ {
+ 	kfree(INOTIFY_E(fsn_event));
+ }
+diff --git a/fs/notify/notification.c b/fs/notify/notification.c
+index 44bb10f507153..9022ae650cf86 100644
+--- a/fs/notify/notification.c
++++ b/fs/notify/notification.c
+@@ -64,7 +64,7 @@ void fsnotify_destroy_event(struct fsnotify_group *group,
+ 		WARN_ON(!list_empty(&event->list));
+ 		spin_unlock(&group->notification_lock);
+ 	}
+-	group->ops->free_event(event);
++	group->ops->free_event(group, event);
+ }
+ 
+ /*
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index b71dc788018e4..3a7c314361824 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -156,7 +156,7 @@ struct fsnotify_ops {
+ 			    const struct qstr *file_name, u32 cookie);
+ 	void (*free_group_priv)(struct fsnotify_group *group);
+ 	void (*freeing_mark)(struct fsnotify_mark *mark, struct fsnotify_group *group);
+-	void (*free_event)(struct fsnotify_event *event);
++	void (*free_event)(struct fsnotify_group *group, struct fsnotify_event *event);
+ 	/* called on final put+free to free memory */
+ 	void (*free_mark)(struct fsnotify_mark *mark);
+ };
+-- 
+2.43.0
+
 
 
