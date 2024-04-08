@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA38274C09;
-	Mon,  8 Apr 2024 13:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A07E767;
+	Mon,  8 Apr 2024 13:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582363; cv=none; b=WlMl9mWt+EKYtn/g+cgvnQQgmjCdMFJwHYflCrjZSI+s4O5UUtuWh4LhNKK7Gm2N2Bufw5LoANasjtsJZhEta/5MrpmEu6YpX74dylh2gPwDf9uqDvs/YPvnTQcekwlV1zWaPkiDMjS35y1bMfEiw8ZI6sJQygBBWOvWLFqtHro=
+	t=1712582366; cv=none; b=thrPlYZP0xRGLeyORuiF4P25lMFhsflO9tNd7v6pUKaHM9EpLDZgUXc7OjEkfqjse6m/ZWNNDUXvnieRt9/8y4RtSV0f93c3DW5eu/mZwyn8sHh6M/VFe2sX0HBw95LHmfVMHZGPJsipIQgcQAuFzZ6LDrL8EWtsi/bhzK+TMe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582363; c=relaxed/simple;
-	bh=dK572EHZrjrILRrX0TKuxH0QJDZgz3Gp7TtF3q+PRlE=;
+	s=arc-20240116; t=1712582366; c=relaxed/simple;
+	bh=KAfbm5eVbd6gEdlmR8i75c3SGXg6MIzNKcPTNJr5978=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTUWymaoxVTnaB2Vp3oYitI4R/emC7GI13GIW81L83QhCsVKl3f/ORkN+SfgBm86gR+yboWDVA3vWOvtRi6qIyCfEiM64T2c+AXapBRwg468FkQ7LNtw8sA8e7xlVk6ZF6wFaD5qzbXc0oIPKIqVRzLX+SHqbay7fkahvFUuH6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbBaiA8u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KhJkR5Rz2fnGZpkXitFSo+sGyHZOVrPTUwvZvaOEHYpiOCC4Dvz5djOpNLg2ZEOyhNj0+Afwu8xVwlNXqDr4q8vhtd59DD2UG7LP3/wigRRuNCZyRSdKZfgxt6ZWkazPadQ/kJkQpBvaIPCoyaZxS+59wvRLOzeZWDQkUXO00CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYk8PO47; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbBaiA8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5249CC433C7;
-	Mon,  8 Apr 2024 13:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYk8PO47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DED4C433F1;
+	Mon,  8 Apr 2024 13:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582363;
-	bh=dK572EHZrjrILRrX0TKuxH0QJDZgz3Gp7TtF3q+PRlE=;
+	s=korg; t=1712582366;
+	bh=KAfbm5eVbd6gEdlmR8i75c3SGXg6MIzNKcPTNJr5978=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lbBaiA8uGoLOQn4Pn916ABPYRt4lVWODrZl9z5O/YZL2f4Mo4dyTBcFMxpS8AUi0h
-	 F7jM5PMLx8sLl9vPEvtx9u5rXTjPM6H8yt3+k+TdYxQlrmKlP1EMndlBgpX1hM7pf0
-	 TT/OH9iPpLA8HGB6ZeqjQG++A7H1puECJ3ogfKJg=
+	b=iYk8PO47Z5UrrlosM5gcrbaT3vaDrishUDpkk/wLMxffPOS/wDfQEv5WnkgZNaSqU
+	 w9SkAmftUgSrBklF0IF8RJ96Yat9CjNdEgYraVvxvvYEKxaCVKKiFmpJphvuqZhHx8
+	 LDr2nJ1g9UGAitromOZOOYfxQpcD04TbDRWMKtPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yu Kuai <yukuai3@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/138] scsi: sd: Unregister device if device_add_disk() failed in sd_probe()
-Date: Mon,  8 Apr 2024 14:58:33 +0200
-Message-ID: <20240408125259.310737161@linuxfoundation.org>
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 087/252] net: usb: ax88179_178a: avoid the interface always configured as random address
+Date: Mon,  8 Apr 2024 14:56:26 +0200
+Message-ID: <20240408125309.344497489@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 0296bea01cfa6526be6bd2d16dc83b4e7f1af91f ]
+commit 2e91bb99b9d4f756e92e83c4453f894dda220f09 upstream.
 
-"if device_add() succeeds, you should call device_del() when you want to
-get rid of it."
+After the commit d2689b6a86b9 ("net: usb: ax88179_178a: avoid two
+consecutive device resets"), reset is not executed from bind operation and
+mac address is not read from the device registers or the devicetree at that
+moment. Since the check to configure if the assigned mac address is random
+or not for the interface, happens after the bind operation from
+usbnet_probe, the interface keeps configured as random address, although the
+address is correctly read and set during open operation (the only reset
+now).
 
-In sd_probe(), device_add_disk() fails when device_add() has already
-succeeded, so change put_device() to device_unregister() to ensure device
-resources are released.
+In order to keep only one reset for the device and to avoid the interface
+always configured as random address, after reset, configure correctly the
+suitable field from the driver, if the mac address is read successfully from
+the device registers or the devicetree. Take into account if a locally
+administered address (random) was previously stored.
 
-Fixes: 2a7a891f4c40 ("scsi: sd: Add error handling support for add_disk()")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/r/20231208082335.1754205-1-linan666@huaweicloud.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+cc: stable@vger.kernel.org # 6.6+
+Fixes: d2689b6a86b9 ("net: usb: ax88179_178a: avoid two consecutive device resets")
+Reported-by: Dave Stevenson  <dave.stevenson@raspberrypi.com>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240403132158.344838-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/ax88179_178a.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index c793bca882236..f32236c3f81c6 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3636,7 +3636,7 @@ static int sd_probe(struct device *dev)
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1273,6 +1273,8 @@ static void ax88179_get_mac_addr(struct
  
- 	error = device_add_disk(dev, gd, NULL);
- 	if (error) {
--		put_device(&sdkp->disk_dev);
-+		device_unregister(&sdkp->disk_dev);
- 		put_disk(gd);
- 		goto out;
- 	}
--- 
-2.43.0
-
+ 	if (is_valid_ether_addr(mac)) {
+ 		eth_hw_addr_set(dev->net, mac);
++		if (!is_local_ether_addr(mac))
++			dev->net->addr_assign_type = NET_ADDR_PERM;
+ 	} else {
+ 		netdev_info(dev->net, "invalid MAC address, using random\n");
+ 		eth_hw_addr_random(dev->net);
 
 
