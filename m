@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B627D414;
-	Mon,  8 Apr 2024 13:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3737D414;
+	Mon,  8 Apr 2024 13:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583466; cv=none; b=qiDBlmkl+B2l3IzPLvrgL1F8pG4J79ywfUuA44pJVCvMJf3iKW9U3srm5YfUCrChUjRkSnExPkrvX5K1ilAuSaSp6V710SIsLSHEZt8Pbhnr8vKxExixsDfkXZJw2yOHFOvPMPCT8laAdZ190HT1EepHzWs7h+AeW6ZCgkwKbOQ=
+	t=1712583469; cv=none; b=k46JmjWvMjQEHiBefvT7fS/IMc/q7obhH9ewP2yyrgfFm4Gaj8TD0gRniqnE61YRBnJEuqlP70kr/zPVpKZWEwt0Uxi1rCrrahEbBAskZLI+ZB50tyQRRU+bu7s5xEpyyPAHLToTzosAJ9/DBhYmHWHjXjiML9h3tlCXPSY/QXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583466; c=relaxed/simple;
-	bh=8RY95xkioBEGGIT2AIGytAx5r4p9vQpgz99rP+kbMag=;
+	s=arc-20240116; t=1712583469; c=relaxed/simple;
+	bh=QeoSi8vrkwftq80rPE6SUNfyH8RKkw37JG1q6Su8QQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YP4Zhq5O8aXv3nlRISCYoqlmPg5GrGx4+/ZULrVYt0PHShJNfSshXOg6KQl1s9eHeWBoP5QjVF26zmh/on5HlXo3ojpBF9qxwuouqn0YpVVX1D82NwTKpI+B8EF9e3GW22XBR3prvekmtOvVY9MiQoMiEj2kvPstPGD7yghZMJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUTITc0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcEmvDjzDCt6R6ImsoXUz4sWNM9CUF1uuOGPimNJ76GSGsPu6Bq1go2uFO+R9gxxQc+fBS4ZRRse7F6uhyGvkZFGV6m0bDPiuXSSw2OpJ9uHTmgWIsHAZDkK908LBo+A7OxMWKAaHbMbZflTiuLk0vL2HGxkn/0VvsOFQNDxuwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlGaQRWk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUTITc0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D569C433F1;
-	Mon,  8 Apr 2024 13:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlGaQRWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42126C433F1;
+	Mon,  8 Apr 2024 13:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583466;
-	bh=8RY95xkioBEGGIT2AIGytAx5r4p9vQpgz99rP+kbMag=;
+	s=korg; t=1712583469;
+	bh=QeoSi8vrkwftq80rPE6SUNfyH8RKkw37JG1q6Su8QQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUTITc0pLtTfpXP7NUs5KIbmuVTW3wzb1eUXBpdJWAGwyvCZDTfQlYTKJTfad1CH2
-	 ZyQAny7OvhPccdwy80egDK6P60FhqVOPR4iavy0jp2EdpQN+tmYNgUovp7tBqJfD87
-	 Wv8NBPEEvkleCZlaqMT7xDwmCW6SZip13+aY2lsM=
+	b=FlGaQRWkpWFsl3yVP6C4MPDBWwaOjnJNcK1tI5dq+fa8PqLvF9NP1IvADPaxXAzUZ
+	 uniDGZePDQ4Yr/Oe7bVNwLQa5wsrYbN90lrYXGR6hwc9bo4pdJ9/2UkP/K+AjY7ioZ
+	 nfINfxE9jWFFA+rYXufroMt3UpesPbgoBDsFC41c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Travkin <nikita@trvn.ru>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 182/273] thermal: gov_power_allocator: Allow binding without cooling devices
-Date: Mon,  8 Apr 2024 14:57:37 +0200
-Message-ID: <20240408125314.939341866@linuxfoundation.org>
+Subject: [PATCH 6.6 187/252] Revert "ALSA: emu10k1: fix synthesizer sample playback position and caching"
+Date: Mon,  8 Apr 2024 14:58:06 +0200
+Message-ID: <20240408125312.466208475@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit 1057c4c36ef8b236a2e28edef301da0801338c5f ]
+[ Upstream commit 03f56ed4ead162551ac596c9e3076ff01f1c5836 ]
 
-IPA was recently refactored to split out memory allocation into a
-separate funciton. That funciton was made to return -EINVAL if there is
-zero power_actors and thus no memory to allocate. This causes IPA to
-fail probing when the thermal zone has no attached cooling devices.
+As already anticipated in the original commit, playback was broken for
+very short samples. I just didn't expect it to be an actual problem,
+because we're talking about less than 1.5 milliseconds here. But clearly
+such wavetable samples do actually exist.
 
-Since cooling devices can attach after the thermal zone is created and
-the governer is attached to it, failing probe due to the lack of cooling
-devices is incorrect.
+The problem was that for such short samples we'd set the current
+position beyond the end of the loop, so we'd run off the end of the
+sample and play garbage.
+This is a bigger (more audible) problem than the original one, which was
+that we'd start playback with garbage (whatever was still in the cache),
+which would be mostly masked by the note's attack phase.
 
-Change the allocate_actors_buffer() to return success when there is no
-cooling devices present.
+So revert to the old behavior for now. We'll subsequently fix it
+properly with a bigger patch series.
+Note that this isn't a full revert - the dead code is not re-introduced,
+because that would be silly.
 
-Fixes: 912e97c67cc3 ("thermal: gov_power_allocator: Move memory allocation out of throttle()")
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: df335e9a8bcb ("ALSA: emu10k1: fix synthesizer sample playback position and caching")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218625
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Message-ID: <20240401145805.528794-1-oswald.buddenhagen@gmx.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/gov_power_allocator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/emu10k1/emu10k1_callback.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/gov_power_allocator.c b/drivers/thermal/gov_power_allocator.c
-index 81e061f183ad1..207a6a3936b54 100644
---- a/drivers/thermal/gov_power_allocator.c
-+++ b/drivers/thermal/gov_power_allocator.c
-@@ -606,7 +606,7 @@ static int allocate_actors_buffer(struct power_allocator_params *params,
+diff --git a/sound/pci/emu10k1/emu10k1_callback.c b/sound/pci/emu10k1/emu10k1_callback.c
+index d36234b88fb42..941bfbf812ed3 100644
+--- a/sound/pci/emu10k1/emu10k1_callback.c
++++ b/sound/pci/emu10k1/emu10k1_callback.c
+@@ -255,7 +255,7 @@ lookup_voices(struct snd_emux *emu, struct snd_emu10k1 *hw,
+ 		/* check if sample is finished playing (non-looping only) */
+ 		if (bp != best + V_OFF && bp != best + V_FREE &&
+ 		    (vp->reg.sample_mode & SNDRV_SFNT_SAMPLE_SINGLESHOT)) {
+-			val = snd_emu10k1_ptr_read(hw, CCCA_CURRADDR, vp->ch) - 64;
++			val = snd_emu10k1_ptr_read(hw, CCCA_CURRADDR, vp->ch);
+ 			if (val >= vp->reg.loopstart)
+ 				bp = best + V_OFF;
+ 		}
+@@ -362,7 +362,7 @@ start_voice(struct snd_emux_voice *vp)
  
- 	/* There might be no cooling devices yet. */
- 	if (!num_actors) {
--		ret = -EINVAL;
-+		ret = 0;
- 		goto clean_state;
- 	}
+ 	map = (hw->silent_page.addr << hw->address_mode) | (hw->address_mode ? MAP_PTI_MASK1 : MAP_PTI_MASK0);
  
+-	addr = vp->reg.start + 64;
++	addr = vp->reg.start;
+ 	temp = vp->reg.parm.filterQ;
+ 	ccca = (temp << 28) | addr;
+ 	if (vp->apitch < 0xe400)
+@@ -430,9 +430,6 @@ start_voice(struct snd_emux_voice *vp)
+ 		/* Q & current address (Q 4bit value, MSB) */
+ 		CCCA, ccca,
+ 
+-		/* cache */
+-		CCR, REG_VAL_PUT(CCR_CACHEINVALIDSIZE, 64),
+-
+ 		/* reset volume */
+ 		VTFT, vtarget | vp->ftarget,
+ 		CVCF, vtarget | CVCF_CURRENTFILTER_MASK,
 -- 
 2.43.0
 
