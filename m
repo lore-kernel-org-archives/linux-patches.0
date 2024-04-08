@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADB47D414;
-	Mon,  8 Apr 2024 13:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757557E0F6;
+	Mon,  8 Apr 2024 13:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582544; cv=none; b=KEDlvvuRXDOkYp52UtwRWK4kL2BaAyhtLEbaJBZwfqxO8ImYNDFsRtyRKc6ai18F3vFjupEtgX6h3BR3VT2SZ+44uPUlV4who4t/DH/0ywOS/gOOhTOslD2xas6oRc52q5Qw3dQSY14UpYA55s37W+/3BrnokF/udW5oIPFIoJs=
+	t=1712582547; cv=none; b=fyBPk3KN8x0/7lUthwDw3a3DW/JXvTHjoG9Bzmdk+c3v3bT4Sw0EP47gPqZKYNCheoWHX6n+U5cyBlqs96JagurMTyMixI0rlH6KG03+74dbXr8qvyHrrMeIfYAF8e6rJlx0+KEwJjKmQWrcul2kvJvc94S/OY1ZOvqjkdHPZ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582544; c=relaxed/simple;
-	bh=HhxNqUJoqWtrhaficmFUR7dcQGKIqjKvv3MxwCF63Xw=;
+	s=arc-20240116; t=1712582547; c=relaxed/simple;
+	bh=zW1B/1JOZQ6LtsENd17/bPyWIslYY9qhlpMp/Fy4G5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikHDk4DVWLKawaXgT6ZrX6NDY6gvg2FWxCXjQ7NqRAMEluC1YNV+zMKRmwnsuZ/lkwMhzmf50jfVthfpfjlvelhMwmv2LoEokZohb213IkC4qjn7qkZLHokEOhgihs9/ty49eUwWtgoNgNN7h/etZ3VA3kYCt8KAOXsSl4wUaM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClxNSiZe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYahPExKQDnlKOqMSUKwkjI045QDhRaFFVY75B9nVsvPuW9vbvDKOxKXOTkbJ+k7aUj16765CljMYPJhTCZOskscTIbUyst+Q7QguhVJpJ8PoBKC2ODVTrIviJCvoXsCG+4T+qS3LLcARN/Iq0CYPuF+CjNCKigkamlSSN7Nszc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEcT3//d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClxNSiZe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9FDC433F1;
-	Mon,  8 Apr 2024 13:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEcT3//d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B22C433F1;
+	Mon,  8 Apr 2024 13:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582544;
-	bh=HhxNqUJoqWtrhaficmFUR7dcQGKIqjKvv3MxwCF63Xw=;
+	s=korg; t=1712582547;
+	bh=zW1B/1JOZQ6LtsENd17/bPyWIslYY9qhlpMp/Fy4G5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClxNSiZeACIV34MuA8nJGVff+PSynpbAkUc0aGQkGiq3LdcsW8hYBpUbf+iLnB9n6
-	 F8ueJ3O7wRhiK1ub2pi4ljdtGdepwlqVBizFYGTbgzMXBopqSZm58Rm7Fg2uhh0OF4
-	 Nyt3laL1o60eHMvCkR48GrdnPY8isau8+nj2YcVg=
+	b=bEcT3//dR4aFzKv5Yyr/tyf6MkMHs6UmHwc7DNs08G+r+j78iLT9DvAPW9cU73KtT
+	 MNBeIpYwiHVy8XCpP/5SBcsC2nSDHXZor8a27hcEuqs71UVm55PrquJ9uX+vDzy0F7
+	 pO5iL4r+e6PeUl9A8QPyoO0va1he+/9xwAcZrExA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.15 154/690] x86/bugs: Use ALTERNATIVE() instead of mds_user_clear static key
-Date: Mon,  8 Apr 2024 14:50:20 +0200
-Message-ID: <20240408125405.096767108@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 145/690] iommu/dma: Force swiotlb_max_mapping_size on an untrusted device
+Date: Mon,  8 Apr 2024 14:50:11 +0200
+Message-ID: <20240408125404.771159310@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,200 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 6613d82e617dd7eb8b0c40b2fe3acea655b1d611 upstream.
+[ Upstream commit afc5aa46ed560f01ceda897c053c6a40c77ce5c4 ]
 
-The VERW mitigation at exit-to-user is enabled via a static branch
-mds_user_clear. This static branch is never toggled after boot, and can
-be safely replaced with an ALTERNATIVE() which is convenient to use in
-asm.
+The swiotlb does not support a mapping size > swiotlb_max_mapping_size().
+On the other hand, with a 64KB PAGE_SIZE configuration, it's observed that
+an NVME device can map a size between 300KB~512KB, which certainly failed
+the swiotlb mappings, though the default pool of swiotlb has many slots:
+    systemd[1]: Started Journal Service.
+ => nvme 0000:00:01.0: swiotlb buffer is full (sz: 327680 bytes), total 32768 (slots), used 32 (slots)
+    note: journal-offline[392] exited with irqs disabled
+    note: journal-offline[392] exited with preempt_count 1
 
-Switch to ALTERNATIVE() to use the VERW mitigation late in exit-to-user
-path. Also remove the now redundant VERW in exc_nmi() and
-arch_exit_to_user_mode().
+Call trace:
+[    3.099918]  swiotlb_tbl_map_single+0x214/0x240
+[    3.099921]  iommu_dma_map_page+0x218/0x328
+[    3.099928]  dma_map_page_attrs+0x2e8/0x3a0
+[    3.101985]  nvme_prep_rq.part.0+0x408/0x878 [nvme]
+[    3.102308]  nvme_queue_rqs+0xc0/0x300 [nvme]
+[    3.102313]  blk_mq_flush_plug_list.part.0+0x57c/0x600
+[    3.102321]  blk_add_rq_to_plug+0x180/0x2a0
+[    3.102323]  blk_mq_submit_bio+0x4c8/0x6b8
+[    3.103463]  __submit_bio+0x44/0x220
+[    3.103468]  submit_bio_noacct_nocheck+0x2b8/0x360
+[    3.103470]  submit_bio_noacct+0x180/0x6c8
+[    3.103471]  submit_bio+0x34/0x130
+[    3.103473]  ext4_bio_write_folio+0x5a4/0x8c8
+[    3.104766]  mpage_submit_folio+0xa0/0x100
+[    3.104769]  mpage_map_and_submit_buffers+0x1a4/0x400
+[    3.104771]  ext4_do_writepages+0x6a0/0xd78
+[    3.105615]  ext4_writepages+0x80/0x118
+[    3.105616]  do_writepages+0x90/0x1e8
+[    3.105619]  filemap_fdatawrite_wbc+0x94/0xe0
+[    3.105622]  __filemap_fdatawrite_range+0x68/0xb8
+[    3.106656]  file_write_and_wait_range+0x84/0x120
+[    3.106658]  ext4_sync_file+0x7c/0x4c0
+[    3.106660]  vfs_fsync_range+0x3c/0xa8
+[    3.106663]  do_fsync+0x44/0xc0
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240213-delay-verw-v8-4-a6216d83edb7%40linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since untrusted devices might go down the swiotlb pathway with dma-iommu,
+these devices should not map a size larger than swiotlb_max_mapping_size.
+
+To fix this bug, add iommu_dma_max_mapping_size() for untrusted devices to
+take into account swiotlb_max_mapping_size() v.s. iova_rcache_range() from
+the iommu_dma_opt_mapping_size().
+
+Fixes: 82612d66d51d ("iommu: Allow the dma-iommu api to use bounce buffers")
+Link: https://lore.kernel.org/r/ee51a3a5c32cf885b18f6416171802669f4a718a.1707851466.git.nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+[will: Drop redundant is_swiotlb_active(dev) check]
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/x86/mds.rst            |   36 +++++++++++++++++++++++++----------
- arch/x86/include/asm/entry-common.h  |    1 
- arch/x86/include/asm/nospec-branch.h |   12 -----------
- arch/x86/kernel/cpu/bugs.c           |   15 +++++---------
- arch/x86/kernel/nmi.c                |    3 --
- arch/x86/kvm/vmx/vmx.c               |    2 -
- 6 files changed, 33 insertions(+), 36 deletions(-)
+ drivers/iommu/dma-iommu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/Documentation/x86/mds.rst
-+++ b/Documentation/x86/mds.rst
-@@ -95,6 +95,9 @@ The kernel provides a function to invoke
- 
-     mds_clear_cpu_buffers()
- 
-+Also macro CLEAR_CPU_BUFFERS can be used in ASM late in exit-to-user path.
-+Other than CFLAGS.ZF, this macro doesn't clobber any registers.
-+
- The mitigation is invoked on kernel/userspace, hypervisor/guest and C-state
- (idle) transitions.
- 
-@@ -138,17 +141,30 @@ Mitigation points
- 
-    When transitioning from kernel to user space the CPU buffers are flushed
-    on affected CPUs when the mitigation is not disabled on the kernel
--   command line. The migitation is enabled through the static key
--   mds_user_clear.
-+   command line. The mitigation is enabled through the feature flag
-+   X86_FEATURE_CLEAR_CPU_BUF.
- 
--   The mitigation is invoked in prepare_exit_to_usermode() which covers
--   all but one of the kernel to user space transitions.  The exception
--   is when we return from a Non Maskable Interrupt (NMI), which is
--   handled directly in do_nmi().
--
--   (The reason that NMI is special is that prepare_exit_to_usermode() can
--    enable IRQs.  In NMI context, NMIs are blocked, and we don't want to
--    enable IRQs with NMIs blocked.)
-+   The mitigation is invoked just before transitioning to userspace after
-+   user registers are restored. This is done to minimize the window in
-+   which kernel data could be accessed after VERW e.g. via an NMI after
-+   VERW.
-+
-+   **Corner case not handled**
-+   Interrupts returning to kernel don't clear CPUs buffers since the
-+   exit-to-user path is expected to do that anyways. But, there could be
-+   a case when an NMI is generated in kernel after the exit-to-user path
-+   has cleared the buffers. This case is not handled and NMI returning to
-+   kernel don't clear CPU buffers because:
-+
-+   1. It is rare to get an NMI after VERW, but before returning to userspace.
-+   2. For an unprivileged user, there is no known way to make that NMI
-+      less rare or target it.
-+   3. It would take a large number of these precisely-timed NMIs to mount
-+      an actual attack.  There's presumably not enough bandwidth.
-+   4. The NMI in question occurs after a VERW, i.e. when user state is
-+      restored and most interesting data is already scrubbed. Whats left
-+      is only the data that NMI touches, and that may or may not be of
-+      any interest.
- 
- 
- 2. C-State transition
---- a/arch/x86/include/asm/entry-common.h
-+++ b/arch/x86/include/asm/entry-common.h
-@@ -91,7 +91,6 @@ static inline void arch_exit_to_user_mod
- 
- static __always_inline void arch_exit_to_user_mode(void)
- {
--	mds_user_clear_cpu_buffers();
- 	amd_clear_divider();
- }
- #define arch_exit_to_user_mode arch_exit_to_user_mode
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -370,7 +370,6 @@ DECLARE_STATIC_KEY_FALSE(switch_to_cond_
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_ibpb);
- DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
- 
--DECLARE_STATIC_KEY_FALSE(mds_user_clear);
- DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
- 
- DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
-@@ -405,17 +404,6 @@ static __always_inline void mds_clear_cp
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index a76a46e94a606..aa47d955de6ba 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1296,6 +1296,14 @@ static size_t iommu_dma_opt_mapping_size(void)
+ 	return iova_rcache_range();
  }
  
- /**
-- * mds_user_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
-- *
-- * Clear CPU buffers if the corresponding static key is enabled
-- */
--static __always_inline void mds_user_clear_cpu_buffers(void)
--{
--	if (static_branch_likely(&mds_user_clear))
--		mds_clear_cpu_buffers();
--}
--
--/**
-  * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
-  *
-  * Clear CPU buffers if the corresponding static key is enabled
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -110,9 +110,6 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_cond_i
- /* Control unconditional IBPB in switch_mm() */
- DEFINE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
++static size_t iommu_dma_max_mapping_size(struct device *dev)
++{
++	if (dev_is_untrusted(dev))
++		return swiotlb_max_mapping_size(dev);
++
++	return SIZE_MAX;
++}
++
+ static const struct dma_map_ops iommu_dma_ops = {
+ 	.alloc			= iommu_dma_alloc,
+ 	.free			= iommu_dma_free,
+@@ -1319,6 +1327,7 @@ static const struct dma_map_ops iommu_dma_ops = {
+ 	.unmap_resource		= iommu_dma_unmap_resource,
+ 	.get_merge_boundary	= iommu_dma_get_merge_boundary,
+ 	.opt_mapping_size	= iommu_dma_opt_mapping_size,
++	.max_mapping_size       = iommu_dma_max_mapping_size,
+ };
  
--/* Control MDS CPU buffer clear before returning to user space */
--DEFINE_STATIC_KEY_FALSE(mds_user_clear);
--EXPORT_SYMBOL_GPL(mds_user_clear);
- /* Control MDS CPU buffer clear before idling (halt, mwait) */
- DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
- EXPORT_SYMBOL_GPL(mds_idle_clear);
-@@ -258,7 +255,7 @@ static void __init mds_select_mitigation
- 		if (!boot_cpu_has(X86_FEATURE_MD_CLEAR))
- 			mds_mitigation = MDS_MITIGATION_VMWERV;
- 
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 		if (!boot_cpu_has(X86_BUG_MSBDS_ONLY) &&
- 		    (mds_nosmt || cpu_mitigations_auto_nosmt()))
-@@ -362,7 +359,7 @@ static void __init taa_select_mitigation
- 	 * For guests that can't determine whether the correct microcode is
- 	 * present on host, enable the mitigation for UCODE_NEEDED as well.
- 	 */
--	static_branch_enable(&mds_user_clear);
-+	setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 
- 	if (taa_nosmt || cpu_mitigations_auto_nosmt())
- 		cpu_smt_disable(false);
-@@ -430,7 +427,7 @@ static void __init mmio_select_mitigatio
- 	 */
- 	if (boot_cpu_has_bug(X86_BUG_MDS) || (boot_cpu_has_bug(X86_BUG_TAA) &&
- 					      boot_cpu_has(X86_FEATURE_RTM)))
--		static_branch_enable(&mds_user_clear);
-+		setup_force_cpu_cap(X86_FEATURE_CLEAR_CPU_BUF);
- 	else
- 		static_branch_enable(&mmio_stale_data_clear);
- 
-@@ -490,12 +487,12 @@ static void __init md_clear_update_mitig
- 	if (cpu_mitigations_off())
- 		return;
- 
--	if (!static_key_enabled(&mds_user_clear))
-+	if (!boot_cpu_has(X86_FEATURE_CLEAR_CPU_BUF))
- 		goto out;
- 
- 	/*
--	 * mds_user_clear is now enabled. Update MDS, TAA and MMIO Stale Data
--	 * mitigation, if necessary.
-+	 * X86_FEATURE_CLEAR_CPU_BUF is now enabled. Update MDS, TAA and MMIO
-+	 * Stale Data mitigation, if necessary.
- 	 */
- 	if (mds_mitigation == MDS_MITIGATION_OFF &&
- 	    boot_cpu_has_bug(X86_BUG_MDS)) {
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -519,9 +519,6 @@ nmi_restart:
- 		write_cr2(this_cpu_read(nmi_cr2));
- 	if (this_cpu_dec_return(nmi_state))
- 		goto nmi_restart;
--
--	if (user_mode(regs))
--		mds_user_clear_cpu_buffers();
- }
- 
- #if defined(CONFIG_X86_64) && IS_ENABLED(CONFIG_KVM_INTEL)
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6750,7 +6750,7 @@ static noinstr void vmx_vcpu_enter_exit(
- 	/* L1D Flush includes CPU buffer clear to mitigate MDS */
- 	if (static_branch_unlikely(&vmx_l1d_should_flush))
- 		vmx_l1d_flush(vcpu);
--	else if (static_branch_unlikely(&mds_user_clear))
-+	else if (cpu_feature_enabled(X86_FEATURE_CLEAR_CPU_BUF))
- 		mds_clear_cpu_buffers();
- 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
- 		 kvm_arch_has_assigned_device(vcpu->kvm))
+ /*
+-- 
+2.43.0
+
 
 
