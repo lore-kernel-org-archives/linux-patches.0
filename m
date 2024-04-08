@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78E96FE35;
-	Mon,  8 Apr 2024 13:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3236FE35;
+	Mon,  8 Apr 2024 13:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584103; cv=none; b=UOLS8nQteo0NQ7uajZVrHslbl4yNOJA+ZNJG6NKE0wYhX1hIH7C6E46wWndoS4mPjIq2DYRGpbZo0ZL8jv7OzkIE1h6JoahW0VCHYOqoJyRDb89nppdVQ58K1a8lt6/eES3Mh/veYdhEFHbJUFOGwFhh71eIveOQjXUCfVfFI7k=
+	t=1712584107; cv=none; b=nwIH5d8LvIIUd7FATxfYEKv2Ra6/iaw6zjKmYldXECB96KLBvXwcGhuRV5UvD4wyekmv5pssR1s2s1/ajozNFSQparYyId5tu2o0pzgcKgF7oiY5epjhgH6Q1nNDkCY/y96/36mOxbS8btLrBYOEUKk9dHFqRjo3zgHpUuTQ7o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584103; c=relaxed/simple;
-	bh=Nq6/2PKyGJLHd4ON2TaZZHLT2q8WIvxPC+zVpgRF8e0=;
+	s=arc-20240116; t=1712584107; c=relaxed/simple;
+	bh=Gciw2LSVKgPqCj/BXFd3p5bTyQc64/c5dtawljDSrLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GiWh/0WOY6povfSHOd3WfAoP0ptWkclKzRG4ohxfktYZu/rdDs2yHpUcA2cEQTwRwQc2qgoqKywcTTSeeCxbSeHF3UJnuBP3yWFTdu+atOKF3dSKOZuuY88d6tOGeeLR24vnYMLgdMwrAnTI7y5VETPiEBN28hdpNjNI824+R/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZyXukoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrX4czJvxR8XoALdhW8hHoBSkLW/5kbcOtM4QV+4eSmuktqsjKtdzupCI59kcILEWuq1WwHgIrK4saKF3vt9e71FLwsuH6GnbuC34LqzfkePJHfBsnyDa9/yv4njyb5H/QnnBBWNheDTH35xFoI4U2LoyfmB1baauZHQbVwThfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVwjTHm6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZyXukoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD48C433C7;
-	Mon,  8 Apr 2024 13:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVwjTHm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BB1C433C7;
+	Mon,  8 Apr 2024 13:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584103;
-	bh=Nq6/2PKyGJLHd4ON2TaZZHLT2q8WIvxPC+zVpgRF8e0=;
+	s=korg; t=1712584106;
+	bh=Gciw2LSVKgPqCj/BXFd3p5bTyQc64/c5dtawljDSrLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZyXukoh8ZlZvFsTbTRJajhrGqvYRInrOuhXzRpsWmfZnHqAKgESxuRC3y6jH4mx5
-	 A1ocSqw8ImzrdHYkT1reEFZ2AJCMhqWNtxg2lVpPStGm5uMEdSjLoHS+kd7h/4H4ZB
-	 hHLU4K/Rd1MTE4gzEBceQzH05EYlmPrsIuJ1R+BA=
+	b=UVwjTHm6OJnSetxSOOLZar+CMxDfVAZzC2LACtvojq1lkooPVwIc/UJwnST8kFVk8
+	 VoIIZKZaBUmzH93N6YVcUbqyDQoaC8gpT+RdTGvzeQOYYWXPwxkqyCXdaagZcI+ia6
+	 uE0GfqvOUm5bxPDseNCf/gPXaYgbXZJobE1P8iAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Michal Mrozek <michal.mrozek@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.8 262/273] drm/i915/gt: Do not generate the command streamer for all the CCS
-Date: Mon,  8 Apr 2024 14:58:57 +0200
-Message-ID: <20240408125317.627903821@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 317/690] NFSD: Refactor NFSv3 CREATE
+Date: Mon,  8 Apr 2024 14:53:03 +0200
+Message-ID: <20240408125411.098301030@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,60 +45,185 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit ea315f98e5d6d3191b74beb0c3e5fc16081d517c upstream.
+[ Upstream commit df9606abddfb01090d5ece7dcc2441d848f690f0 ]
 
-We want a fixed load CCS balancing consisting in all slices
-sharing one single user engine. For this reason do not create the
-intel_engine_cs structure with its dedicated command streamer for
-CCS slices beyond the first.
+The NFSv3 CREATE and NFSv4 OPEN(CREATE) use cases are about to
+diverge such that it makes sense to split do_nfsd_create() into one
+version for NFSv3 and one for NFSv4.
 
-Fixes: d2eae8e98d59 ("drm/i915/dg2: Drop force_probe requirement")
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: <stable@vger.kernel.org> # v6.2+
-Acked-by: Michal Mrozek <michal.mrozek@intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328073409.674098-3-andi.shyti@linux.intel.com
-(cherry picked from commit c7a5aa4e57f88470313a8277eb299b221b86e3b1)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As a first step, copy do_nfsd_create() to nfs3proc.c and remove
+NFSv4-specific logic.
+
+One immediate legibility benefit is that the logic for handling
+NFSv3 createhow is now quite straightforward. NFSv4 createhow
+has some subtleties that IMO do not belong in generic code.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_cs.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/nfsd/nfs3proc.c | 127 ++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 121 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-@@ -908,6 +908,23 @@ static intel_engine_mask_t init_engine_m
- 		info->engine_mask &= ~BIT(GSC0);
- 	}
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index 86163ecbb015d..57854ca022d18 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -8,6 +8,7 @@
+ #include <linux/fs.h>
+ #include <linux/ext2_fs.h>
+ #include <linux/magic.h>
++#include <linux/namei.h>
  
-+	/*
-+	 * Do not create the command streamer for CCS slices beyond the first.
-+	 * All the workload submitted to the first engine will be shared among
-+	 * all the slices.
-+	 *
-+	 * Once the user will be allowed to customize the CCS mode, then this
-+	 * check needs to be removed.
-+	 */
-+	if (IS_DG2(gt->i915)) {
-+		u8 first_ccs = __ffs(CCS_MASK(gt));
-+
-+		/* Mask off all the CCS engine */
-+		info->engine_mask &= ~GENMASK(CCS3, CCS0);
-+		/* Put back in the first CCS engine */
-+		info->engine_mask |= BIT(_CCS(first_ccs));
-+	}
-+
- 	return info->engine_mask;
+ #include "cache.h"
+ #include "xdr3.h"
+@@ -220,10 +221,126 @@ nfsd3_proc_write(struct svc_rqst *rqstp)
  }
  
+ /*
+- * With NFSv3, CREATE processing is a lot easier than with NFSv2.
+- * At least in theory; we'll see how it fares in practice when the
+- * first reports about SunOS compatibility problems start to pour in...
++ * Implement NFSv3's unchecked, guarded, and exclusive CREATE
++ * semantics for regular files. Except for the created file,
++ * this operation is stateless on the server.
++ *
++ * Upon return, caller must release @fhp and @resfhp.
+  */
++static __be32
++nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
++		  struct svc_fh *resfhp, struct nfsd3_createargs *argp)
++{
++	struct iattr *iap = &argp->attrs;
++	struct dentry *parent, *child;
++	__u32 v_mtime, v_atime;
++	struct inode *inode;
++	__be32 status;
++	int host_err;
++
++	if (isdotent(argp->name, argp->len))
++		return nfserr_exist;
++	if (!(iap->ia_valid & ATTR_MODE))
++		iap->ia_mode = 0;
++
++	status = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_EXEC);
++	if (status != nfs_ok)
++		return status;
++
++	parent = fhp->fh_dentry;
++	inode = d_inode(parent);
++
++	host_err = fh_want_write(fhp);
++	if (host_err)
++		return nfserrno(host_err);
++
++	fh_lock_nested(fhp, I_MUTEX_PARENT);
++
++	child = lookup_one_len(argp->name, parent, argp->len);
++	if (IS_ERR(child)) {
++		status = nfserrno(PTR_ERR(child));
++		goto out;
++	}
++
++	if (d_really_is_negative(child)) {
++		status = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_CREATE);
++		if (status != nfs_ok)
++			goto out;
++	}
++
++	status = fh_compose(resfhp, fhp->fh_export, child, fhp);
++	if (status != nfs_ok)
++		goto out;
++
++	v_mtime = 0;
++	v_atime = 0;
++	if (argp->createmode == NFS3_CREATE_EXCLUSIVE) {
++		u32 *verifier = (u32 *)argp->verf;
++
++		/*
++		 * Solaris 7 gets confused (bugid 4218508) if these have
++		 * the high bit set, as do xfs filesystems without the
++		 * "bigtime" feature. So just clear the high bits.
++		 */
++		v_mtime = verifier[0] & 0x7fffffff;
++		v_atime = verifier[1] & 0x7fffffff;
++	}
++
++	if (d_really_is_positive(child)) {
++		status = nfs_ok;
++
++		switch (argp->createmode) {
++		case NFS3_CREATE_UNCHECKED:
++			if (!d_is_reg(child))
++				break;
++			iap->ia_valid &= ATTR_SIZE;
++			goto set_attr;
++		case NFS3_CREATE_GUARDED:
++			status = nfserr_exist;
++			break;
++		case NFS3_CREATE_EXCLUSIVE:
++			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
++			    d_inode(child)->i_atime.tv_sec == v_atime &&
++			    d_inode(child)->i_size == 0) {
++				break;
++			}
++			status = nfserr_exist;
++		}
++		goto out;
++	}
++
++	if (!IS_POSIXACL(inode))
++		iap->ia_mode &= ~current_umask();
++
++	host_err = vfs_create(&init_user_ns, inode, child, iap->ia_mode, true);
++	if (host_err < 0) {
++		status = nfserrno(host_err);
++		goto out;
++	}
++
++	/* A newly created file already has a file size of zero. */
++	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
++		iap->ia_valid &= ~ATTR_SIZE;
++	if (argp->createmode == NFS3_CREATE_EXCLUSIVE) {
++		iap->ia_valid = ATTR_MTIME | ATTR_ATIME |
++				ATTR_MTIME_SET | ATTR_ATIME_SET;
++		iap->ia_mtime.tv_sec = v_mtime;
++		iap->ia_atime.tv_sec = v_atime;
++		iap->ia_mtime.tv_nsec = 0;
++		iap->ia_atime.tv_nsec = 0;
++	}
++
++set_attr:
++	status = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
++
++out:
++	fh_unlock(fhp);
++	if (child && !IS_ERR(child))
++		dput(child);
++	fh_drop_write(fhp);
++	return status;
++}
++
+ static __be32
+ nfsd3_proc_create(struct svc_rqst *rqstp)
+ {
+@@ -239,9 +356,7 @@ nfsd3_proc_create(struct svc_rqst *rqstp)
+ 	dirfhp = fh_copy(&resp->dirfh, &argp->fh);
+ 	newfhp = fh_init(&resp->fh, NFS3_FHSIZE);
+ 
+-	resp->status = do_nfsd_create(rqstp, dirfhp, argp->name, argp->len,
+-				      &argp->attrs, newfhp, argp->createmode,
+-				      (u32 *)argp->verf, NULL, NULL);
++	resp->status = nfsd3_create_file(rqstp, dirfhp, newfhp, argp);
+ 	return rpc_success;
+ }
+ 
+-- 
+2.43.0
+
 
 
