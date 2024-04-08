@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF3E7BB15;
-	Mon,  8 Apr 2024 14:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843577F49B;
+	Mon,  8 Apr 2024 14:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584955; cv=none; b=qjxgw/9i/MT/H2oBBL5BdtWbzXPLUfa3ICu1Xzq0wLrw6qrQQAFBF00VOm4bBTosnpoA+sAKS9w5Cfcuzd1bJZ5Wze3xg2zFyKdWRqHgX6DtJ6Sm7qeblQ8gyL26ujVlvgis3mOsNl5CveqIwRrqqOp9DrkgPnCXxkhuBkVtpKk=
+	t=1712584958; cv=none; b=S7TSXVNvUZ9Hby+SoOdiMLIbjhi4PAF3TbLf08aRn8ZIncLIsz9YVSPG9vNlq5qR2FANKdNUAe2DqYGxJCW7lv0/04gjFFSJ45f81DQy0ohkQ1vi7SkbG3CPe6qxKnW1HOiNnFnmImrNp3N4w9lMVq8rcaMHvXO39AMCdrzaqGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584955; c=relaxed/simple;
-	bh=B7TIeqhwIfSDnzoEd1HcQm6q6wMfr7CROY1oLh0Nl0U=;
+	s=arc-20240116; t=1712584958; c=relaxed/simple;
+	bh=5LR9WsTkNRNnlD1au0b7xS4u7ImkjJGvS1kOAh0235I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4ya7k29gWSBbaYyPr6ShvMslebiouthJLKQ7JG6JBQSHMiXYlVUxaN0MPUxcZ+bsBVUazQFKi9hHwYGdzikoxdhs6rZbhOGkITB9PudqlaYLj0ZT22ElsUO3ljfxEAeylW29dLuFscJfdTT3lQWmzQwaOZM0bvneZxbDyy/564=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMB+thfi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9b58BAJpXoNF1Lp5o9xsSbpRv7PeHFfOdN8t9xIcqKkfuyTu/C5ZrBuQe5oZFhva3NHafiaf1lC3UFAaLQYM+FDVgQfYznbEmwPHYe8GNQ+pCfnwqA6775evm8kIfzbA2JbNp8BjjLZK0wAV+UB2Mi5hq3zQZiU67V490UjJDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyC/4wzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMB+thfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C8DC433F1;
-	Mon,  8 Apr 2024 14:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyC/4wzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA26C433F1;
+	Mon,  8 Apr 2024 14:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584955;
-	bh=B7TIeqhwIfSDnzoEd1HcQm6q6wMfr7CROY1oLh0Nl0U=;
+	s=korg; t=1712584958;
+	bh=5LR9WsTkNRNnlD1au0b7xS4u7ImkjJGvS1kOAh0235I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMB+thfi0iyzInoYYTQ3Id+xR8K5y7EF2ovWw4xAmbeA9JXesnjyLWwacIPO0Ishb
-	 9WNJg7edMf9Ai5CzkwwdvF1JB4Z94DRHxuIC0DAUEdtGZ7vUJE12jRMA3IaToEjF/C
-	 nn8dhWbu+gfya/fBSbPxhdFVSRI83wfAxOJpmhdo=
+	b=CyC/4wzjLKjw7vp0gM4Gpoc6RhZ4nwd11D+5ySCQYhpvprrMfhuz0OPkY3F/B+ZPk
+	 0PRUvvWE4qvgwkpJQ7Fz5ASyR/z3u+bLljle92d94rbfa1S7be8K2kROSzutWEaU+i
+	 JNfFrD1TzMSKrfQC7MClRxtZ7IqAgq2pUkzgtiDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	stable <stable@kernel.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 5.15 583/690] staging: vc04_services: changen strncpy() to strscpy_pad()
-Date: Mon,  8 Apr 2024 14:57:29 +0200
-Message-ID: <20240408125420.702883173@linuxfoundation.org>
+Subject: [PATCH 5.15 584/690] staging: vc04_services: fix information leak in create_component()
+Date: Mon,  8 Apr 2024 14:57:30 +0200
+Message-ID: <20240408125420.733504272@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -50,40 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit ef25725b7f8aaffd7756974d3246ec44fae0a5cf upstream.
+commit f37e76abd614b68987abc8e5c22d986013349771 upstream.
 
-gcc-14 warns about this strncpy() that results in a non-terminated
-string for an overflow:
+The m.u.component_create.pid field is for debugging and in the mainline
+kernel it's not used anything.  However, it still needs to be set to
+something to prevent disclosing uninitialized stack data.  Set it to
+zero.
 
-In file included from include/linux/string.h:369,
-                 from drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c:20:
-In function 'strncpy',
-    inlined from 'create_component' at drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c:940:2:
-include/linux/fortify-string.h:108:33: error: '__builtin_strncpy' specified bound 128 equals destination size [-Werror=stringop-truncation]
-
-Change it to strscpy_pad(), which produces a properly terminated and
-zero-padded string.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240313163712.224585-1-arnd@kernel.org
+Fixes: 7b3ad5abf027 ("staging: Import the BCM2835 MMAL-based V4L2 camera driver.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/2d972847-9ebd-481b-b6f9-af390f5aabd3@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
 +++ b/drivers/staging/vc04_services/vchiq-mmal/mmal-vchiq.c
-@@ -940,8 +940,8 @@ static int create_component(struct vchiq
- 	/* build component create message */
- 	m.h.type = MMAL_MSG_TYPE_COMPONENT_CREATE;
+@@ -942,6 +942,7 @@ static int create_component(struct vchiq
  	m.u.component_create.client_component = component->client_component;
--	strncpy(m.u.component_create.name, name,
--		sizeof(m.u.component_create.name));
-+	strscpy_pad(m.u.component_create.name, name,
-+		    sizeof(m.u.component_create.name));
+ 	strscpy_pad(m.u.component_create.name, name,
+ 		    sizeof(m.u.component_create.name));
++	m.u.component_create.pid = 0;
  
  	ret = send_synchronous_mmal_msg(instance, &m,
  					sizeof(m.u.component_create),
