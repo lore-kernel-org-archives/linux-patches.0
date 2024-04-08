@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F157B3A1C7;
-	Mon,  8 Apr 2024 13:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942C79F0;
+	Mon,  8 Apr 2024 13:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584771; cv=none; b=hK74Gqe3X4XcvZqP3IxiFDOYATLyn61ui0xlahKp7laHWuyTjx+80gkELSVPiVj9yDxnC60RYKJIcS/HnXkLyOQ+ITipxTVcP6jcId1MPd4f6esvV6v83Jr/DKHhLAotwc116Se5JJIS6k86oZcOIfFX5UtqaVt4qSxzgKaAG30=
+	t=1712584773; cv=none; b=hluBoQvUhjImaFWOYMv6ach/Oy6Hots1l6YgF8yeEhSWHwEGPwiqoVm/W2Cc6lNvKH90QMoCrwjZcH/ZP/6yoCMCscnZCeouA0obRaqQemN4CNuXlT7xGD5SGQHt9h5hySHXhiJzIB7nOyS43Yd2+X3mHPHXxXjmouySDc53gPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584771; c=relaxed/simple;
-	bh=mQvjYA/AuZqwUULOr/rqZHD6/PMZhI9QQfc0QamtRyU=;
+	s=arc-20240116; t=1712584773; c=relaxed/simple;
+	bh=RUb3pDVSwUIbyvo1s2Fw+G5hC5Ogq+0zi+Bj4H5HwOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaHBbvD0lnrdFgswvtOt53SUYYdbwq3eLTFAqOh8p8SQfXIPCEdijhIGy57E40A6VZkK1ZAhJ0FVOWZZmFFifGPO37Au4A9cYKx9qKQ5kQJMkZ1n0Qd1sA4OpGYTD1KneyyEvioHNEAIquOOw+I1BagYW0i7Lqri4u0vvitvEDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0owBTDKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dl5pgm1zecb/HLOEpWzQMh/qzGd9q/MQvuG8CN81j3R3To0IVHgzF9WtepXUTE093taf1Nfrx2rpp2HaMLeQxYaPJ5r845M1aZprPawDObXVZ8N/FJk1KnKVuXNXZHUPmP8H8cVouyUoqxM3yrkeKEwX10ZKV8v3TLflzr4oLP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzxTCzAn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0owBTDKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DACC433F1;
-	Mon,  8 Apr 2024 13:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzxTCzAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647E3C433C7;
+	Mon,  8 Apr 2024 13:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584770;
-	bh=mQvjYA/AuZqwUULOr/rqZHD6/PMZhI9QQfc0QamtRyU=;
+	s=korg; t=1712584773;
+	bh=RUb3pDVSwUIbyvo1s2Fw+G5hC5Ogq+0zi+Bj4H5HwOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0owBTDKAUpMwHso8wWz1FZutmnipO/6gxJAh5bcaPBpYMpspDufm3LlgpB8fVmquV
-	 yjB2dF45zLv6NVFil9jTLhuRd+JRArDZO60A0WJFjOxCsLGwt+GmIGX7onGlLCZtlV
-	 ZkWceSSsB+a/cyRgUv8oGwaoYR/wS8zg4QYz+Qks=
+	b=kzxTCzAnMHW8Bxr8wkJTVA3BT9ZIxZPBumIHQONwQhJ5iiODhrKmjUCS0iSADYvv0
+	 8AvJthe5f+x0+qDJM56x2suanjBiJje2muoA2JN4t0bfsJJ55GHoojkV4TeLN9y2w4
+	 DEbVkJSjeryGbnY9hBlklVRET5eRO/dcRVKJuYY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyang Xue <bxue@redhat.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 521/690] nfsd: dont hand out delegation on setuid files being opened for write
-Date: Mon,  8 Apr 2024 14:56:27 +0200
-Message-ID: <20240408125418.523805995@linuxfoundation.org>
+Subject: [PATCH 5.15 522/690] NFSD: fix problems with cleanup on errors in nfsd4_copy
+Date: Mon,  8 Apr 2024 14:56:28 +0200
+Message-ID: <20240408125418.556452100@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,92 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 826b67e6376c2a788e3a62c4860dcd79500a27d5 ]
+[ Upstream commit 81e722978ad21072470b73d8f6a50ad62c7d5b7d ]
 
-We had a bug report that xfstest generic/355 was failing on NFSv4.0.
-This test sets various combinations of setuid/setgid modes and tests
-whether DIO writes will cause them to be stripped.
+When nfsd4_copy fails to allocate memory for async_copy->cp_src, or
+nfs4_init_copy_state fails, it calls cleanup_async_copy to do the
+cleanup for the async_copy which causes page fault since async_copy
+is not yet initialized.
 
-What I found was that the server did properly strip those bits, but
-the client didn't notice because it held a delegation that was not
-recalled. The recall didn't occur because the client itself was the
-one generating the activity and we avoid recalls in that case.
+This patche rearranges the order of initializing the fields in
+async_copy and adds checks in cleanup_async_copy to skip un-initialized
+fields.
 
-Clearing setuid bits is an "implicit" activity. The client didn't
-specifically request that we do that, so we need the server to issue a
-CB_RECALL, or avoid the situation entirely by not issuing a delegation.
-
-The easiest fix here is to simply not give out a delegation if the file
-is being opened for write, and the mode has the setuid and/or setgid bit
-set. Note that there is a potential race between the mode and lease
-being set, so we test for this condition both before and after setting
-the lease.
-
-This patch fixes generic/355, generic/683 and generic/684 for me. (Note
-that 355 fails only on v4.0, and 683 and 684 require NFSv4.2 to run and
-fail).
-
-Reported-by: Boyang Xue <bxue@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
+Fixes: 87689df69491 ("NFSD: Shrink size of struct nfsd4_copy")
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4state.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/nfsd/nfs4proc.c  | 12 ++++++++----
+ fs/nfsd/nfs4state.c |  5 +++--
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 628e564e530bf..773971a75b62d 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5439,6 +5439,23 @@ nfsd4_verify_deleg_dentry(struct nfsd4_open *open, struct nfs4_file *fp,
- 	return 0;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index c95e7ec5fb530..ba53cd89ec62c 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1687,9 +1687,12 @@ static void cleanup_async_copy(struct nfsd4_copy *copy)
+ {
+ 	nfs4_free_copy_state(copy);
+ 	release_copy_files(copy);
+-	spin_lock(&copy->cp_clp->async_lock);
+-	list_del(&copy->copies);
+-	spin_unlock(&copy->cp_clp->async_lock);
++	if (copy->cp_clp) {
++		spin_lock(&copy->cp_clp->async_lock);
++		if (!list_empty(&copy->copies))
++			list_del_init(&copy->copies);
++		spin_unlock(&copy->cp_clp->async_lock);
++	}
+ 	nfs4_put_copy(copy);
  }
  
-+/*
-+ * We avoid breaking delegations held by a client due to its own activity, but
-+ * clearing setuid/setgid bits on a write is an implicit activity and the client
-+ * may not notice and continue using the old mode. Avoid giving out a delegation
-+ * on setuid/setgid files when the client is requesting an open for write.
-+ */
-+static int
-+nfsd4_verify_setuid_write(struct nfsd4_open *open, struct nfsd_file *nf)
-+{
-+	struct inode *inode = file_inode(nf->nf_file);
-+
-+	if ((open->op_share_access & NFS4_SHARE_ACCESS_WRITE) &&
-+	    (inode->i_mode & (S_ISUID|S_ISGID)))
-+		return -EAGAIN;
-+	return 0;
-+}
-+
- static struct nfs4_delegation *
- nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 		    struct svc_fh *parent)
-@@ -5472,6 +5489,8 @@ nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 	spin_lock(&fp->fi_lock);
- 	if (nfs4_delegation_exists(clp, fp))
- 		status = -EAGAIN;
-+	else if (nfsd4_verify_setuid_write(open, nf))
-+		status = -EAGAIN;
- 	else if (!fp->fi_deleg_file) {
- 		fp->fi_deleg_file = nf;
- 		/* increment early to prevent fi_deleg_file from being
-@@ -5512,6 +5531,14 @@ nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 	if (status)
- 		goto out_unlock;
+@@ -1786,12 +1789,13 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		async_copy = kzalloc(sizeof(struct nfsd4_copy), GFP_KERNEL);
+ 		if (!async_copy)
+ 			goto out_err;
++		INIT_LIST_HEAD(&async_copy->copies);
++		refcount_set(&async_copy->refcount, 1);
+ 		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
+ 		if (!async_copy->cp_src)
+ 			goto out_err;
+ 		if (!nfs4_init_copy_state(nn, copy))
+ 			goto out_err;
+-		refcount_set(&async_copy->refcount, 1);
+ 		memcpy(&copy->cp_res.cb_stateid, &copy->cp_stateid.cs_stid,
+ 			sizeof(copy->cp_res.cb_stateid));
+ 		dup_copy_fields(copy, async_copy);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 773971a75b62d..fab5805b3ca74 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -990,7 +990,6 @@ static int nfs4_init_cp_state(struct nfsd_net *nn, copy_stateid_t *stid,
  
-+	/*
-+	 * Now that the deleg is set, check again to ensure that nothing
-+	 * raced in and changed the mode while we weren't lookng.
-+	 */
-+	status = nfsd4_verify_setuid_write(open, fp->fi_deleg_file);
-+	if (status)
-+		goto out_unlock;
-+
- 	spin_lock(&state_lock);
- 	spin_lock(&fp->fi_lock);
- 	if (fp->fi_had_conflict)
+ 	stid->cs_stid.si_opaque.so_clid.cl_boot = (u32)nn->boot_time;
+ 	stid->cs_stid.si_opaque.so_clid.cl_id = nn->s2s_cp_cl_id;
+-	stid->cs_type = cs_type;
+ 
+ 	idr_preload(GFP_KERNEL);
+ 	spin_lock(&nn->s2s_cp_lock);
+@@ -1001,6 +1000,7 @@ static int nfs4_init_cp_state(struct nfsd_net *nn, copy_stateid_t *stid,
+ 	idr_preload_end();
+ 	if (new_id < 0)
+ 		return 0;
++	stid->cs_type = cs_type;
+ 	return 1;
+ }
+ 
+@@ -1034,7 +1034,8 @@ void nfs4_free_copy_state(struct nfsd4_copy *copy)
+ {
+ 	struct nfsd_net *nn;
+ 
+-	WARN_ON_ONCE(copy->cp_stateid.cs_type != NFS4_COPY_STID);
++	if (copy->cp_stateid.cs_type != NFS4_COPY_STID)
++		return;
+ 	nn = net_generic(copy->cp_clp->net, nfsd_net_id);
+ 	spin_lock(&nn->s2s_cp_lock);
+ 	idr_remove(&nn->s2s_cp_stateids,
 -- 
 2.43.0
 
