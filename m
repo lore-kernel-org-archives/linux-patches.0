@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1185F6A352;
-	Mon,  8 Apr 2024 13:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B9A6A352;
+	Mon,  8 Apr 2024 13:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583652; cv=none; b=QnDes9qy/sppspStf/ODSOf7Nqop/MXdjoPhim7tv5nIypUdIJ+nlPeQ5KtcJMduQGaVc8XeQUaxTRJclFHV65MZpYknI5u6E6S/AEA+Wr01RcUyDxf2ztd5klJfB8DSpyIesTfUVKDaFSmvUlVCTiHlrjzaxz4oR7wiUDdWYNw=
+	t=1712583655; cv=none; b=pynWDnBNncH03VDMOmLGnEdIOHANaM++GJ+RJ+6TpI28j2b9BgMfnocSlt0jY28jFttoyxrR2TOe/E/7+p1o9atM1LpXli+yOQJ3NZFA+S1XwtXFJSZna2lBFbgW+yoH64YYuyp3JQcb4qTh233FSXXRZ/WqI+7VxMSPCt5JPXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583652; c=relaxed/simple;
-	bh=wcpnKYlSsxXwvGPDV99VpWpk6NCEDEJiRKW9Xa73dJQ=;
+	s=arc-20240116; t=1712583655; c=relaxed/simple;
+	bh=3z08YCY8HIgac9K0NZ+NJGFft2ct4pl6JV25k4ZvDMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZApLbRPPUAaD6EQWli+TNxTBY/EwFvJqLUjI1CYCb/H3qWo3XcoHqgU4x+G46wtHykap/ZTfZfHRfijrca3lzak9ciuJIcCcsyArhf3yBduhuHGZInY3ggJ3seX3lw2g3ikJ9HF7jwpAGCnoo2RBfrDn24fhIqXN7HY231tc90k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXiIRSSU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sks/3vH7wD+5ag5Hs3/I938KZFMAE3XFVZDpTO+JnfbPKYhRvcq0a4ugxId+S9tm6dzk4zut8YkUidnPYoUtjFY6SoF0sGXWSa7Tgh+tLwpup+Oy/uV3a39e/M8e8dgMOipjjaawAhmdKumgOmQQ5HAVYjy66ZUM4M8f0nf8xfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsgsG8Ix; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXiIRSSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B530C433F1;
-	Mon,  8 Apr 2024 13:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsgsG8Ix"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B41BC433F1;
+	Mon,  8 Apr 2024 13:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583651;
-	bh=wcpnKYlSsxXwvGPDV99VpWpk6NCEDEJiRKW9Xa73dJQ=;
+	s=korg; t=1712583654;
+	bh=3z08YCY8HIgac9K0NZ+NJGFft2ct4pl6JV25k4ZvDMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXiIRSSUZP/JLIzHBr1Onn28T5jwRK78ga8aLgKlfdlMfUvPn8Yl3SKejzotYq4RD
-	 PbKuWXi3TxejhjdIqVpX1epxDvRh5uaXQAiDwJ/Y3WTSrftoUMAGK3SCO34i/it5zB
-	 tF2IoYUIRbkbPnytUKKXiMeOpDoU2F4dd2Iej+8s=
+	b=nsgsG8IxL957peQFVK0BsM9Th1GuvjAJoRO2dAnD5kSE4lx/Hsca3/uH+ljj7JY5T
+	 MKJ9jpNXEFGT+3D0jgoBi+q/T/AGqPoZZ9RVmgioe9xJ3dPiLXQ5Rfm56JjO35HNUm
+	 K8Mq8Ku3W9MR1NcLwyl3VCRLsOK6JvBDNywiubi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	I Gede Agastya Darma Laksana <gedeagas22@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 205/273] ALSA: hda/realtek: Update Panasonic CF-SZ6 quirk to support headset with microphone
-Date: Mon,  8 Apr 2024 14:58:00 +0200
-Message-ID: <20240408125315.704913514@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 271/690] NFSD: Remove NFSD_PROC_ARGS_* macros
+Date: Mon,  8 Apr 2024 14:52:17 +0200
+Message-ID: <20240408125409.455570355@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +45,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 1576f263ee2147dc395531476881058609ad3d38 upstream.
+[ Upstream commit c1a3f2ce66c80cd9f2a4376fa35a5c8d05441c73 ]
 
-This patch addresses an issue with the Panasonic CF-SZ6's existing quirk,
-specifically its headset microphone functionality. Previously, the quirk
-used ALC269_FIXUP_HEADSET_MODE, which does not support the CF-SZ6's design
-of a single 3.5mm jack for both mic and audio output effectively. The
-device uses pin 0x19 for the headset mic without jack detection.
+Clean up.
 
-Following verification on the CF-SZ6 and discussions with the original
-patch author, i determined that the update to
-ALC269_FIXUP_ASPIRE_HEADSET_MIC is the appropriate solution. This change
-is custom-designed for the CF-SZ6's unique hardware setup, which includes
-a single 3.5mm jack for both mic and audio output, connecting the headset
-microphone to pin 0x19 without the use of jack detection.
+The PROC_ARGS macros were added when I thought that NFSD tracepoints
+would be reporting endpoint information. However, tracepoints in the
+RPC server now report transport endpoint information, so in general
+there's no need for the upper layers to do that any more, and these
+macros can be retired.
 
-Fixes: 0fca97a29b83 ("ALSA: hda/realtek - Add Panasonic CF-SZ6 headset jack quirk")
-Signed-off-by: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
-Cc: <stable@vger.kernel.org>
-Message-ID: <20240401174602.14133-1-gedeagas22@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- sound/pci/hda/patch_realtek.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/trace.h | 28 +++++++++-------------------
+ 1 file changed, 9 insertions(+), 19 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10189,7 +10189,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x1254, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x12cc, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
--	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_HEADSET_MODE),
-+	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index c55fd77d43605..7f3f40f6c0ff3 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -13,22 +13,6 @@
+ #include "export.h"
+ #include "nfsfh.h"
+ 
+-#define NFSD_TRACE_PROC_ARG_FIELDS \
+-		__field(unsigned int, netns_ino) \
+-		__field(u32, xid) \
+-		__array(unsigned char, server, sizeof(struct sockaddr_in6)) \
+-		__array(unsigned char, client, sizeof(struct sockaddr_in6))
+-
+-#define NFSD_TRACE_PROC_ARG_ASSIGNMENTS \
+-		do { \
+-			__entry->netns_ino = SVC_NET(rqstp)->ns.inum; \
+-			__entry->xid = be32_to_cpu(rqstp->rq_xid); \
+-			memcpy(__entry->server, &rqstp->rq_xprt->xpt_local, \
+-			       rqstp->rq_xprt->xpt_locallen); \
+-			memcpy(__entry->client, &rqstp->rq_xprt->xpt_remote, \
+-			       rqstp->rq_xprt->xpt_remotelen); \
+-		} while (0);
+-
+ #define NFSD_TRACE_PROC_RES_FIELDS \
+ 		__field(unsigned int, netns_ino) \
+ 		__field(u32, xid) \
+@@ -53,16 +37,22 @@ DECLARE_EVENT_CLASS(nfsd_xdr_err_class,
+ 	),
+ 	TP_ARGS(rqstp),
+ 	TP_STRUCT__entry(
+-		NFSD_TRACE_PROC_ARG_FIELDS
+-
++		__field(unsigned int, netns_ino)
++		__field(u32, xid)
+ 		__field(u32, vers)
+ 		__field(u32, proc)
++		__sockaddr(server, rqstp->rq_xprt->xpt_locallen)
++		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
+ 	),
+ 	TP_fast_assign(
+-		NFSD_TRACE_PROC_ARG_ASSIGNMENTS
++		const struct svc_xprt *xprt = rqstp->rq_xprt;
+ 
++		__entry->netns_ino = xprt->xpt_net->ns.inum;
++		__entry->xid = be32_to_cpu(rqstp->rq_xid);
+ 		__entry->vers = rqstp->rq_vers;
+ 		__entry->proc = rqstp->rq_proc;
++		__assign_sockaddr(server, &xprt->xpt_local, xprt->xpt_locallen);
++		__assign_sockaddr(client, &xprt->xpt_remote, xprt->xpt_remotelen);
+ 	),
+ 	TP_printk("xid=0x%08x vers=%u proc=%u",
+ 		__entry->xid, __entry->vers, __entry->proc
+-- 
+2.43.0
+
 
 
