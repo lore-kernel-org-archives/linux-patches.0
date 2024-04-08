@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38426F08E;
-	Mon,  8 Apr 2024 13:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBA42E62C;
+	Mon,  8 Apr 2024 13:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581756; cv=none; b=OPnIHO1Oz4MQnDYboCDqF+hB5MlFtdZUdsj9oKNC4dFKW8MjRqNsLrJQ5vvrVRhmkBP/FeUqWRBALeNdJiMCkVna4vnG9im+/US1CwRG2X4hPUCsNY3NhJuxV5FxPInX/NoAY744sDfMMr3Y6mF8B9NfFyAT/8lj2/71ex86+3I=
+	t=1712581759; cv=none; b=kuy32QxSmvqGpe7OazRvzfVHwTV36/M4MEltBHHPJiEeQvjsgWh5GVEt9VFD1DTzYHeR23fJglqw4Htkl6W2Bpom/RxXuOwBbmnWmgpEr9q0FULxupv3DcC42F6z8EGh+Y+/5qCWDWczYXLqkHOoB2HooEKW3BrU4kRJkB9MXnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581756; c=relaxed/simple;
-	bh=sMXx4vtjYbaBJN+68n9CR6w9sLVlTb9BjdnaTtoD13c=;
+	s=arc-20240116; t=1712581759; c=relaxed/simple;
+	bh=uFdFnXx/mOrKDqo7gotHrdJDDSX5WEreqA52xR3SR18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLLRDtJ901P1QS0L+/tppNMs3Zx1VVlf1NdJsCdmBNvnPFZGkh+1B03V5pBgA1PcXDfeaHzWGN0/Tw6oBsuGIBTxwYBSXtGsOyc+yXa1Sv1CROFxCAMKNbhkiprsN4Rv1bh/X9oMWJk47yELnOhM8th6x+WfTvBWKZP6/yVBgkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO0Sr0Y0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiQ1oOcpzndhxdymSv69/JDLxwX8i487X89QMYo9wBWE7A/jAElXPMD6QudPQhkGs+B3xV8Y6rQe4bg64sqjQyO6PvOEpkl4FCS7sYJuS6MllGLiiia0u4lsfMuz5r3+teYnPRezkKACSaEA3oIv3GLsKMYlEdLJpCMVepws1Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmj7Ms5Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO0Sr0Y0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD90C433F1;
-	Mon,  8 Apr 2024 13:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmj7Ms5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65111C433C7;
+	Mon,  8 Apr 2024 13:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581755;
-	bh=sMXx4vtjYbaBJN+68n9CR6w9sLVlTb9BjdnaTtoD13c=;
+	s=korg; t=1712581758;
+	bh=uFdFnXx/mOrKDqo7gotHrdJDDSX5WEreqA52xR3SR18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qO0Sr0Y0GnWiBOKtm3H5kgIl9J2Xs5ySa1c2j6kPxAMqq124k5mfWhU/WG6k8Oxer
-	 zAazwfV7pM8berLYiO7koO0cHhEtMf5t0crlvvmwZHpb4t/uDjMDUhY4+KQq1xfaBO
-	 syd0TMcllk3VSPtjYbiZdyD2/XzUb56XzpEDtQFQ=
+	b=Bmj7Ms5QhTlVIj3uRSDBtJcBf/1LCG7BE2wxn9nrPdZEeLEJcBzApWPvff9Pu72Ol
+	 v+UNhb4BZfkjVI1uoyZgy5tJSRNDttbaiyMyK5zEFYmnPvojwwkWcUxrej5Z8/35Bj
+	 jDQDPpF2e0UT8YhUwNnyfc3ECxUB9edkQza+0X50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/252] netfilter: nf_tables: skip netdev hook unregistration if table is dormant
-Date: Mon,  8 Apr 2024 14:55:36 +0200
-Message-ID: <20240408125307.793454498@linuxfoundation.org>
+Subject: [PATCH 5.15 080/690] PCI/AER: Block runtime suspend when handling errors
+Date: Mon,  8 Apr 2024 14:49:06 +0200
+Message-ID: <20240408125402.397461804@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +49,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-[ Upstream commit 216e7bf7402caf73f4939a8e0248392e96d7c0da ]
+[ Upstream commit 002bf2fbc00e5c4b95fb167287e2ae7d1973281e ]
 
-Skip hook unregistration when adding or deleting devices from an
-existing netdev basechain. Otherwise, commit/abort path try to
-unregister hooks which not enabled.
+PM runtime can be done simultaneously with AER error handling.  Avoid that
+by using pm_runtime_get_sync() before and pm_runtime_put() after reset in
+pcie_do_recovery() for all recovering devices.
 
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Fixes: 7d937b107108 ("netfilter: nf_tables: support for deleting devices in an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+pm_runtime_get_sync() will increase dev->power.usage_count counter to
+prevent any possible future request to runtime suspend a device.  It will
+also resume a device, if it was previously in D3hot state.
+
+I tested with igc device by doing simultaneous aer_inject and rpm
+suspend/resume via /sys/bus/pci/devices/PCI_ID/power/control and can
+reproduce:
+
+  igc 0000:02:00.0: not ready 65535ms after bus reset; giving up
+  pcieport 0000:00:1c.2: AER: Root Port link has been reset (-25)
+  pcieport 0000:00:1c.2: AER: subordinate device reset failed
+  pcieport 0000:00:1c.2: AER: device recovery failed
+  igc 0000:02:00.0: Unable to change power state from D3hot to D0, device inaccessible
+
+The problem disappears when this patch is applied.
+
+Link: https://lore.kernel.org/r/20240212120135.146068-1-stanislaw.gruszka@linux.intel.com
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/pci/pcie/err.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 6e4e22a10a826..b2ef7e37f11cd 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10083,9 +10083,11 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 			if (nft_trans_chain_update(trans)) {
- 				nf_tables_chain_notify(&trans->ctx, NFT_MSG_DELCHAIN,
- 						       &nft_trans_chain_hooks(trans));
--				nft_netdev_unregister_hooks(net,
--							    &nft_trans_chain_hooks(trans),
--							    true);
-+				if (!(trans->ctx.table->flags & NFT_TABLE_F_DORMANT)) {
-+					nft_netdev_unregister_hooks(net,
-+								    &nft_trans_chain_hooks(trans),
-+								    true);
-+				}
- 			} else {
- 				nft_chain_del(trans->ctx.chain);
- 				nf_tables_chain_notify(&trans->ctx, NFT_MSG_DELCHAIN,
-@@ -10357,9 +10359,11 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 			break;
- 		case NFT_MSG_NEWCHAIN:
- 			if (nft_trans_chain_update(trans)) {
--				nft_netdev_unregister_hooks(net,
--							    &nft_trans_chain_hooks(trans),
--							    true);
-+				if (!(trans->ctx.table->flags & NFT_TABLE_F_DORMANT)) {
-+					nft_netdev_unregister_hooks(net,
-+								    &nft_trans_chain_hooks(trans),
-+								    true);
-+				}
- 				free_percpu(nft_trans_chain_stats(trans));
- 				kfree(nft_trans_chain_name(trans));
- 				nft_trans_destroy(trans);
+diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
+index b576aa890c76b..410fc44d79ee2 100644
+--- a/drivers/pci/pcie/err.c
++++ b/drivers/pci/pcie/err.c
+@@ -13,6 +13,7 @@
+ #define dev_fmt(fmt) "AER: " fmt
+ 
+ #include <linux/pci.h>
++#include <linux/pm_runtime.h>
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+@@ -79,6 +80,18 @@ static int report_error_detected(struct pci_dev *dev,
+ 	return 0;
+ }
+ 
++static int pci_pm_runtime_get_sync(struct pci_dev *pdev, void *data)
++{
++	pm_runtime_get_sync(&pdev->dev);
++	return 0;
++}
++
++static int pci_pm_runtime_put(struct pci_dev *pdev, void *data)
++{
++	pm_runtime_put(&pdev->dev);
++	return 0;
++}
++
+ static int report_frozen_detected(struct pci_dev *dev, void *data)
+ {
+ 	return report_error_detected(dev, pci_channel_io_frozen, data);
+@@ -195,6 +208,8 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+ 	else
+ 		bridge = pci_upstream_bridge(dev);
+ 
++	pci_walk_bridge(bridge, pci_pm_runtime_get_sync, NULL);
++
+ 	pci_dbg(bridge, "broadcast error_detected message\n");
+ 	if (state == pci_channel_io_frozen) {
+ 		pci_walk_bridge(bridge, report_frozen_detected, &status);
+@@ -239,10 +254,15 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+ 		pcie_clear_device_status(dev);
+ 		pci_aer_clear_nonfatal_status(dev);
+ 	}
++
++	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
++
+ 	pci_info(bridge, "device recovery successful\n");
+ 	return status;
+ 
+ failed:
++	pci_walk_bridge(bridge, pci_pm_runtime_put, NULL);
++
+ 	pci_uevent_ers(bridge, PCI_ERS_RESULT_DISCONNECT);
+ 
+ 	/* TODO: Should kernel panic here? */
 -- 
 2.43.0
 
