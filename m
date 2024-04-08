@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5D212E1DB;
-	Mon,  8 Apr 2024 13:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7193013A407;
+	Mon,  8 Apr 2024 13:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583485; cv=none; b=eItjptQ2gk4y+RR4RY59vEX0GvetD0xHYaINmNlyYha4MsovKhF1Vh73cC/uXL/E9b54+WEZmW0P440tDwHicAa5SykpSVI2RGDiMR3/hUUJ2zDinGwK3CmUOCeNohuUKpR4P2+q1dgUMj7MVnA1ohGulOka9So/XrldBtIk5Uk=
+	t=1712583488; cv=none; b=kW5EXTZQPBKIsHutFqYqO9JYsqJkDCVx82rwyTFVYS/g54NQNoNOs15UvWvGHTCkXXeyydUnFaOqPwDsr7YdyC74DxMQjV6Ob2WwcNNbxI4kLX9zyhjulyPhTmCzH41vSk7F+oHPk8BKfglEjYty47m6SnIHExB4zHNuSwP1LvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583485; c=relaxed/simple;
-	bh=RfPC1jf7h55mxD0EI8/pLlfckm7Z2TNyK6TZJ659HKs=;
+	s=arc-20240116; t=1712583488; c=relaxed/simple;
+	bh=YKYcBN5ZFVM44ZnUAvk0+mI3fxurLWHFeDY+ZrchZtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsBAYvBEO+kChnVjspROUF1aiQdJ5sZ07Pc2uj8PYQpnQc2kddW9VdWn4iZI9Y51s473Eqbf1ec4lIZHj/lpPr/1V8zBz+Dni6LH05GRW7j7GJ5ipuFOpS3I4IjwGLe2/dp2Xa3b6VoHMHOzc0pY4hHv1K313a8uOaEznXY1aqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjmC/K0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHhF/Jgv7t+XhA6k5zUHaB8cxl6qXaKj/Cmlb4MqRDG2QM+znIexqKXwIyMtWtxfxyrKzGMMjC8CUENQcOe8HY/+Z5YgdwsPHatok/MtxcXqHP5nGzH6MPmKtzQm+eOZ4vCgueEcuh7XazxBFzQ/jWervS0Ovy3pkEe7AuSTBV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSnOz/1j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjmC/K0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD36C43390;
-	Mon,  8 Apr 2024 13:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSnOz/1j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826FEC43390;
+	Mon,  8 Apr 2024 13:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583484;
-	bh=RfPC1jf7h55mxD0EI8/pLlfckm7Z2TNyK6TZJ659HKs=;
+	s=korg; t=1712583487;
+	bh=YKYcBN5ZFVM44ZnUAvk0+mI3fxurLWHFeDY+ZrchZtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjmC/K0RHFalHLTO81LnUp7lkwzI0beTy0OiCP3NkzcikaVXvqjYEEBTh+VXMlgxs
-	 xrCoxNwaFjz4REeSXcDZtPToRfnOWXbJ7oi4LLmkA4tNjy4+Jlal2n03kOU8asGoDS
-	 RSyhw7QlQGlMr5HWQ78jHl93T0Tl7J8hpKvJtIqc=
+	b=MSnOz/1jrbl12uz00u6FnccujxnAoRi4G+Qg9zDjNm0Gj+/zYNueSmkmUwYPYfA3X
+	 +tyMiRyeAVipB56oj2d7Ho7V5PZsXZbK9YZ60rJE3CuevYgXAo0P3x94vzeEI0Na75
+	 NGhqUe91CAoudqiomP8xo9WFgUGlHE6xzZYoxz38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@virtuozzo.com>,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 252/690] nfs: block notification on fs with its own ->lock
-Date: Mon,  8 Apr 2024 14:51:58 +0200
-Message-ID: <20240408125408.736432878@linuxfoundation.org>
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Michal Mrozek <michal.mrozek@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 184/273] drm/i915/gt: Limit the reserved VM space to only the platforms that need it
+Date: Mon,  8 Apr 2024 14:57:39 +0200
+Message-ID: <20240408125315.003966147@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,185 +52,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-[ Upstream commit 40595cdc93edf4110c0f0c0b06f8d82008f23929 ]
+[ Upstream commit 94bf3e60e1a61973cdb6488af873b8de66250c77 ]
 
-NFSv4.1 supports an optional lock notification feature which notifies
-the client when a lock comes available.  (Normally NFSv4 clients just
-poll for locks if necessary.)  To make that work, we need to request a
-blocking lock from the filesystem.
+Commit 9bb66c179f50 ("drm/i915: Reserve some kernel space per
+vm") reduces the available VM space of one page in order to apply
+Wa_16018031267 and Wa_16018063123.
 
-We turned that off for NFS in commit f657f8eef3ff ("nfs: don't atempt
-blocking locks on nfs reexports") [sic] because it actually blocks the
-nfsd thread while waiting for the lock.
+This page was reserved indiscrimitely in all platforms even when
+not needed. Limit it to DG2 onwards.
 
-Thanks to Vasily Averin for pointing out that NFS isn't the only
-filesystem with that problem.
-
-Any filesystem that leaves ->lock NULL will use posix_lock_file(), which
-does the right thing.  Simplest is just to assume that any filesystem
-that defines its own ->lock is not safe to request a blocking lock from.
-
-So, this patch mostly reverts commit f657f8eef3ff ("nfs: don't atempt
-blocking locks on nfs reexports") [sic] and commit b840be2f00c0 ("lockd:
-don't attempt blocking locks on nfs reexports"), and instead uses a
-check of ->lock (Vasily's suggestion) to decide whether to support
-blocking lock notifications on a given filesystem.  Also add a little
-documentation.
-
-Perhaps someday we could add back an export flag later to allow
-filesystems with "good" ->lock methods to support blocking lock
-notifications.
-
-Reported-by: Vasily Averin <vvs@virtuozzo.com>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-[ cel: Description rewritten to address checkpatch nits ]
-[ cel: Fixed warning when SUNRPC debugging is disabled ]
-[ cel: Fixed NULL check ]
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Vasily Averin <vvs@virtuozzo.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 9bb66c179f50 ("drm/i915: Reserve some kernel space per vm")
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Acked-by: Michal Mrozek <michal.mrozek@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240327200546.640108-1-andi.shyti@linux.intel.com
+(cherry picked from commit 9721634441d5dedba7f9eebb2bf0c9411cbafc4e)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svclock.c          |  6 ++++--
- fs/nfs/export.c             |  2 +-
- fs/nfsd/nfs4state.c         | 18 ++++++++++++------
- include/linux/exportfs.h    |  2 --
- include/linux/lockd/lockd.h |  9 +++++++--
- 5 files changed, 24 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/i915/gt/gen8_ppgtt.c | 3 +++
+ drivers/gpu/drm/i915/gt/intel_gt.c   | 6 ++++++
+ drivers/gpu/drm/i915/gt/intel_gt.h   | 9 +++++----
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
-index e9b85d8fd5fe7..cb3658ab9b7ae 100644
---- a/fs/lockd/svclock.c
-+++ b/fs/lockd/svclock.c
-@@ -470,8 +470,10 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
- 	    struct nlm_host *host, struct nlm_lock *lock, int wait,
- 	    struct nlm_cookie *cookie, int reclaim)
- {
--	struct nlm_block	*block = NULL;
-+#if IS_ENABLED(CONFIG_SUNRPC_DEBUG)
- 	struct inode		*inode = nlmsvc_file_inode(file);
-+#endif
-+	struct nlm_block	*block = NULL;
- 	int			error;
- 	int			mode;
- 	int			async_block = 0;
-@@ -484,7 +486,7 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
- 				(long long)lock->fl.fl_end,
- 				wait);
+diff --git a/drivers/gpu/drm/i915/gt/gen8_ppgtt.c b/drivers/gpu/drm/i915/gt/gen8_ppgtt.c
+index fa46d2308b0ed..81bf2216371be 100644
+--- a/drivers/gpu/drm/i915/gt/gen8_ppgtt.c
++++ b/drivers/gpu/drm/i915/gt/gen8_ppgtt.c
+@@ -961,6 +961,9 @@ static int gen8_init_rsvd(struct i915_address_space *vm)
+ 	struct i915_vma *vma;
+ 	int ret;
  
--	if (inode->i_sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS) {
-+	if (nlmsvc_file_file(file)->f_op->lock) {
- 		async_block = wait;
- 		wait = 0;
- 	}
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index d772c20bbfd15..37a1a88df7717 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -180,5 +180,5 @@ const struct export_operations nfs_export_ops = {
- 	.fetch_iversion = nfs_fetch_iversion,
- 	.flags = EXPORT_OP_NOWCC|EXPORT_OP_NOSUBTREECHK|
- 		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS|
--		EXPORT_OP_NOATOMIC_ATTR|EXPORT_OP_SYNC_LOCKS,
-+		EXPORT_OP_NOATOMIC_ATTR,
- };
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index f7e2beded6d7f..5ee11f0e24d3b 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6874,7 +6874,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfsd4_blocked_lock *nbl = NULL;
- 	struct file_lock *file_lock = NULL;
- 	struct file_lock *conflock = NULL;
--	struct super_block *sb;
- 	__be32 status = 0;
- 	int lkflg;
- 	int err;
-@@ -6896,7 +6895,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		dprintk("NFSD: nfsd4_lock: permission denied!\n");
- 		return status;
- 	}
--	sb = cstate->current_fh.fh_dentry->d_sb;
- 
- 	if (lock->lk_is_new) {
- 		if (nfsd4_has_session(cstate))
-@@ -6948,8 +6946,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	fp = lock_stp->st_stid.sc_file;
- 	switch (lock->lk_type) {
- 		case NFS4_READW_LT:
--			if (nfsd4_has_session(cstate) &&
--			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-+			if (nfsd4_has_session(cstate))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_READ_LT:
-@@ -6961,8 +6958,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			fl_type = F_RDLCK;
- 			break;
- 		case NFS4_WRITEW_LT:
--			if (nfsd4_has_session(cstate) &&
--			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-+			if (nfsd4_has_session(cstate))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_WRITE_LT:
-@@ -6983,6 +6979,16 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		goto out;
- 	}
- 
-+	/*
-+	 * Most filesystems with their own ->lock operations will block
-+	 * the nfsd thread waiting to acquire the lock.  That leads to
-+	 * deadlocks (we don't want every nfsd thread tied up waiting
-+	 * for file locks), so don't attempt blocking lock notifications
-+	 * on those filesystems:
-+	 */
-+	if (nf->nf_file->f_op->lock)
-+		fl_flags &= ~FL_SLEEP;
++	if (!intel_gt_needs_wa_16018031267(vm->gt))
++		return 0;
 +
- 	nbl = find_or_allocate_block(lock_sop, &fp->fi_fhandle, nn);
- 	if (!nbl) {
- 		dprintk("NFSD: %s: unable to allocate block!\n", __func__);
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index 3260fe7148462..fe848901fcc3a 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -221,8 +221,6 @@ struct export_operations {
- #define EXPORT_OP_NOATOMIC_ATTR		(0x10) /* Filesystem cannot supply
- 						  atomic attribute updates
- 						*/
--#define EXPORT_OP_SYNC_LOCKS		(0x20) /* Filesystem can't do
--						  asychronous blocking locks */
- 	unsigned long	flags;
- };
- 
-diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
-index c4ae6506b8b36..fcef192e5e45e 100644
---- a/include/linux/lockd/lockd.h
-+++ b/include/linux/lockd/lockd.h
-@@ -303,10 +303,15 @@ void		  nlmsvc_invalidate_all(void);
- int           nlmsvc_unlock_all_by_sb(struct super_block *sb);
- int           nlmsvc_unlock_all_by_ip(struct sockaddr *server_addr);
- 
-+static inline struct file *nlmsvc_file_file(struct nlm_file *file)
-+{
-+	return file->f_file[O_RDONLY] ?
-+	       file->f_file[O_RDONLY] : file->f_file[O_WRONLY];
-+}
-+
- static inline struct inode *nlmsvc_file_inode(struct nlm_file *file)
- {
--	return locks_inode(file->f_file[O_RDONLY] ?
--			   file->f_file[O_RDONLY] : file->f_file[O_WRONLY]);
-+	return locks_inode(nlmsvc_file_file(file));
+ 	/* The memory will be used only by GPU. */
+ 	obj = i915_gem_object_create_lmem(i915, PAGE_SIZE,
+ 					  I915_BO_ALLOC_VOLATILE |
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
+index a425db5ed3a22..6a2c2718bcc38 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt.c
+@@ -1024,6 +1024,12 @@ enum i915_map_type intel_gt_coherent_map_type(struct intel_gt *gt,
+ 		return I915_MAP_WC;
  }
  
- static inline int __nlm_privileged_request4(const struct sockaddr *sap)
++bool intel_gt_needs_wa_16018031267(struct intel_gt *gt)
++{
++	/* Wa_16018031267, Wa_16018063123 */
++	return IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 55), IP_VER(12, 71));
++}
++
+ bool intel_gt_needs_wa_22016122933(struct intel_gt *gt)
+ {
+ 	return MEDIA_VER_FULL(gt->i915) == IP_VER(13, 0) && gt->type == GT_MEDIA;
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt.h b/drivers/gpu/drm/i915/gt/intel_gt.h
+index 608f5c8729285..003eb93b826fd 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt.h
++++ b/drivers/gpu/drm/i915/gt/intel_gt.h
+@@ -82,17 +82,18 @@ struct drm_printer;
+ 		  ##__VA_ARGS__);					\
+ } while (0)
+ 
+-#define NEEDS_FASTCOLOR_BLT_WABB(engine) ( \
+-	IS_GFX_GT_IP_RANGE(engine->gt, IP_VER(12, 55), IP_VER(12, 71)) && \
+-	engine->class == COPY_ENGINE_CLASS && engine->instance == 0)
+-
+ static inline bool gt_is_root(struct intel_gt *gt)
+ {
+ 	return !gt->info.id;
+ }
+ 
++bool intel_gt_needs_wa_16018031267(struct intel_gt *gt);
+ bool intel_gt_needs_wa_22016122933(struct intel_gt *gt);
+ 
++#define NEEDS_FASTCOLOR_BLT_WABB(engine) ( \
++	intel_gt_needs_wa_16018031267(engine->gt) && \
++	engine->class == COPY_ENGINE_CLASS && engine->instance == 0)
++
+ static inline struct intel_gt *uc_to_gt(struct intel_uc *uc)
+ {
+ 	return container_of(uc, struct intel_gt, uc);
 -- 
 2.43.0
 
