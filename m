@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523527BAF5;
-	Mon,  8 Apr 2024 14:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381B57BAF5;
+	Mon,  8 Apr 2024 14:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584818; cv=none; b=g5E3CFUQihfmIKRuwEKxT+g88ywIf8lAdTUkfRaZC34UdUNLZoMdJNHBYBeqhAlIvIwUq5M9k6m11m92tT0BdwYNLVyeWRKVkp8aJrtTeUAQDAex0+woaGifjHViBiT2Q9/syR08Ue4Pelm/m4Jb8zHzYlVVF83vHo1Hng+rIlQ=
+	t=1712584821; cv=none; b=YHKQbtd2p6ELpKisv9H4liQv+hiWGQL2drE3qGT5JBTNxM3qpUJ5i3+wKvuDeUSiqLIcwcVLn4ImEvr7gfMhif20691SFUL2RpAmd71VfH5YJUZ1RahdprOT8Lt+5PjBrmJElDRrG71mzreGv3ypB16o885nk88EgYE+ii1oCaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584818; c=relaxed/simple;
-	bh=s9c9LcLqKLKXM4Cpa3Wp3iVkP2Q5CJmz1bSaW76zqFA=;
+	s=arc-20240116; t=1712584821; c=relaxed/simple;
+	bh=+CdtoDJd+zmV9Ed4q/zUXoIRe4gPNv0WKB1Gh54LFq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLIQICC0bF0T1SFuUItKdOQLfKab1HnAd82BoQnOnaiRTgO8EIkCmpWIr4CLQ+VgUb6eeAyArzueHEkOvR7ihvQIqCuYW0BWfE1K+HgvKxkSFeNh0x49WsRHqowcvYT3yM9R+wFve38p0xKfvZeNhwjUKEZ4Ypd0g+zGiCJDUJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbt0Mu3y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNn8+Rc3NOOgV0mqd/V8D0Xrvd0Sw0FPC+NXsRgqqPVpKXWuTQmQRaWsPwTZOnGnWg971uCbD8tpbPhJ+H5XXhhHg6qs+mXiDm2YmseYamTHo+e3hH22Z/pP5fAlAK3wS5FAvHn/Vd8xMS0g6g2Ws2YdDcEfMP5O3cNrVLWF8+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQSykcIL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbt0Mu3y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC990C433F1;
-	Mon,  8 Apr 2024 14:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQSykcIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42CDC433C7;
+	Mon,  8 Apr 2024 14:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584818;
-	bh=s9c9LcLqKLKXM4Cpa3Wp3iVkP2Q5CJmz1bSaW76zqFA=;
+	s=korg; t=1712584821;
+	bh=+CdtoDJd+zmV9Ed4q/zUXoIRe4gPNv0WKB1Gh54LFq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbt0Mu3yuqdIz/SqUe3u7s63ujyeMpsA6Z30C9uYwzEXUQI6YXgcESh0fW3ho4/be
-	 QereHIRmhkirZpepcnNhqeSjgkOzG/adTEqw1krxQVgl2hTAJu12Wy1F0gwk2eAs9I
-	 F9cUC/6isaHzEQVKWqyLTLlg9sxf1L9zjUOPWKYA=
+	b=QQSykcILLbexo97stReAbE85OKozO65CoGM1hxZGAd1gQRoq/IBljVyZvWFKljYtd
+	 S8dwXKimUPzcNi31V+L1eQQeX2bvUuyzMUVCWQY+j2WPxE6+cNmhbFDafPe8TIxA+y
+	 n2qZr7mX6XN9iwglpxR9Pw6QQ05J9P+V1NXwvHDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
-	GONG
-Subject: [PATCH 5.15 567/690] serial: sc16is7xx: convert from _raw_ to _noinc_ regmap functions for FIFO
-Date: Mon,  8 Apr 2024 14:57:13 +0200
-Message-ID: <20240408125420.164826371@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 5.15 568/690] mm/migrate: set swap entry values of THP tail pages properly.
+Date: Mon,  8 Apr 2024 14:57:14 +0200
+Message-ID: <20240408125420.194988854@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,83 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit dbf4ab821804df071c8b566d9813083125e6d97b upstream.
+The tail pages in a THP can have swap entry information stored in their
+private field. When migrating to a new page, all tail pages of the new
+page need to update ->private to avoid future data corruption.
 
-The SC16IS7XX IC supports a burst mode to access the FIFOs where the
-initial register address is sent ($00), followed by all the FIFO data
-without having to resend the register address each time. In this mode, the
-IC doesn't increment the register address for each R/W byte.
+This fix is stable-only, since after commit 07e09c483cbe ("mm/huge_memory:
+work on folio->swap instead of page->private when splitting folio"),
+subpages of a swapcached THP no longer requires the maintenance.
 
-The regmap_raw_read() and regmap_raw_write() are functions which can
-perform IO over multiple registers. They are currently used to read/write
-from/to the FIFO, and although they operate correctly in this burst mode on
-the SPI bus, they would corrupt the regmap cache if it was not disabled
-manually. The reason is that when the R/W size is more than 1 byte, these
-functions assume that the register address is incremented and handle the
-cache accordingly.
+Adding THPs to the swapcache was introduced in commit
+38d8b4e6bdc87 ("mm, THP, swap: delay splitting THP during swap out"),
+where each subpage of a THP added to the swapcache had its own swapcache
+entry and required the ->private field to point to the correct swapcache
+entry. Later, when THP migration functionality was implemented in commit
+616b8371539a6 ("mm: thp: enable thp migration in generic path"),
+it initially did not handle the subpages of swapcached THPs, failing to
+update their ->private fields or replace the subpage pointers in the
+swapcache. Subsequently, commit e71769ae5260 ("mm: enable thp migration
+for shmem thp") addressed the swapcache update aspect. This patch fixes
+the update of subpage ->private fields.
 
-Convert FIFO R/W functions to use the regmap _noinc_ versions in order to
-remove the manual cache control which was a workaround when using the
-_raw_ versions. FIFO registers are properly declared as volatile so
-cache will not be used/updated for FIFO accesses.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231211171353.2901416-6-hugo@hugovil.com
-Cc: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Closes: https://lore.kernel.org/linux-mm/1707814102-22682-1-git-send-email-quic_charante@quicinc.com/
+Fixes: 616b8371539a ("mm: thp: enable thp migration in generic path")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ mm/migrate.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -376,9 +376,7 @@ static void sc16is7xx_fifo_read(struct u
- 	const u8 line = sc16is7xx_line(port);
- 	u8 addr = (SC16IS7XX_RHR_REG << SC16IS7XX_REG_SHIFT) | line;
- 
--	regcache_cache_bypass(s->regmap, true);
--	regmap_raw_read(s->regmap, addr, s->buf, rxlen);
--	regcache_cache_bypass(s->regmap, false);
-+	regmap_noinc_read(s->regmap, addr, s->buf, rxlen);
- }
- 
- static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
-@@ -394,9 +392,7 @@ static void sc16is7xx_fifo_write(struct
- 	if (unlikely(!to_send))
- 		return;
- 
--	regcache_cache_bypass(s->regmap, true);
--	regmap_raw_write(s->regmap, addr, s->buf, to_send);
--	regcache_cache_bypass(s->regmap, false);
-+	regmap_noinc_write(s->regmap, addr, s->buf, to_send);
- }
- 
- static void sc16is7xx_port_update(struct uart_port *port, u8 reg,
-@@ -489,6 +485,11 @@ static bool sc16is7xx_regmap_precious(st
- 	return false;
- }
- 
-+static bool sc16is7xx_regmap_noinc(struct device *dev, unsigned int reg)
-+{
-+	return reg == SC16IS7XX_RHR_REG;
-+}
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -424,8 +424,12 @@ int migrate_page_move_mapping(struct add
+ 	if (PageSwapBacked(page)) {
+ 		__SetPageSwapBacked(newpage);
+ 		if (PageSwapCache(page)) {
++			int i;
 +
- static int sc16is7xx_set_baud(struct uart_port *port, int baud)
- {
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-@@ -1439,6 +1440,8 @@ static struct regmap_config regcfg = {
- 	.cache_type = REGCACHE_RBTREE,
- 	.volatile_reg = sc16is7xx_regmap_volatile,
- 	.precious_reg = sc16is7xx_regmap_precious,
-+	.writeable_noinc_reg = sc16is7xx_regmap_noinc,
-+	.readable_noinc_reg = sc16is7xx_regmap_noinc,
- };
- 
- #ifdef CONFIG_SERIAL_SC16IS7XX_SPI
+ 			SetPageSwapCache(newpage);
+-			set_page_private(newpage, page_private(page));
++			for (i = 0; i < (1 << compound_order(page)); i++)
++				set_page_private(newpage + i,
++						 page_private(page + i));
+ 		}
+ 	} else {
+ 		VM_BUG_ON_PAGE(PageSwapCache(page), page);
 
 
