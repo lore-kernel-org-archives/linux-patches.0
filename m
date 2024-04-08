@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B2A8614B;
-	Mon,  8 Apr 2024 13:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF1C7D417;
+	Mon,  8 Apr 2024 13:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583340; cv=none; b=SoEOOADP60tzNNRcWa0IJdjGWG0bNQ4BZC4AkItHwJBtt5UgCJ+FsdhSnUT1k/mO+fCeASToQNUYNr3pBb2++sUBikg0+PtsohVVmZm+UOACCzPB67+yaBr5GlLvgNkjO24EDIZ4JFQ2dDteTu6sGdg2auzLY6C9GFlLac0ElV8=
+	t=1712583344; cv=none; b=Z+LbYwohIf/COpCjMGHN9ojCqOFGUKuLmQSLNGNxCnrUIVcsUH6It74Rj70S0tCND4NqrO7LAklJGyWFd/BhDdAmcPh1ntFZVB/Wg3Egh0NDOilYCSeQCBsmMBDtQY5mAQrfdlhMi/mb5C6gnjlEMv3AZWbUsr6pUAquqztvjtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583340; c=relaxed/simple;
-	bh=fZfVtwFNVN4Km2Uhlsbnp0Y70zDelqCJKUESG9H7vHk=;
+	s=arc-20240116; t=1712583344; c=relaxed/simple;
+	bh=hkyzYiT/J1uzTOr7t8tefRAB6Ide0NZ3Q0huVqOR5SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LnjlV/dmwGLiW9qa55+QyCTJZwb8JeB3WQGNXQ4XcjKXdMZPrvoLsi+JIFc74nrH2xOBnUB3EDIgXcRxsS8TcVACgc68AANB+54FQnqWm0LO00OpzMoOyKm61qPAQKVkWp5jiktAnJ+K5uT7ixr1mLI4clHqPhTW+lVlIoLRVcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx/C8Gai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSHLZaqIq7ywe2PLEXMsnq5kQmPyIkKxRWMXkq7PANns0p+yHBHyIVW/64QomBIvSWDRXahb4gl2FtG2WsVnRDCvLVaR/DCS6p4YZnXWWWs9BjSwcziF3bd+ugmAh8wwfyguS8lNgU+7113uKRJ23iGZ11Anb8aGLFTCOlpo2y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2wckF2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx/C8Gai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FE8C433F1;
-	Mon,  8 Apr 2024 13:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2wckF2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1623DC433F1;
+	Mon,  8 Apr 2024 13:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583340;
-	bh=fZfVtwFNVN4Km2Uhlsbnp0Y70zDelqCJKUESG9H7vHk=;
+	s=korg; t=1712583343;
+	bh=hkyzYiT/J1uzTOr7t8tefRAB6Ide0NZ3Q0huVqOR5SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yx/C8GaivvS8BpkDmJM8Cqdn1hkefi+52pl6d2EGjZxBEOsoaRU+Bk/mf7BnKORQv
-	 QnhevzlHrwBj/FtqYuQlx2y59UPYhVxSEbFOsZ+92AlJoh0Q5vYnL2SLl4Z+BE6wfC
-	 0OQp0DOyftz8sM9c7SD1vFMRopGvTIZPpZGAf6b8=
+	b=w2wckF2FOnYfGrPxrETczw4sD2ebbzfdBQA5wVu9W1vO/AEzfyVJyt8ZyhAG+fUX8
+	 BpMqGw6mBx659jnJeFi39rnOg4eJ+TwmihfgvLsINugH/Nuz2upS8+PkjwlBVRyJoC
+	 x7RTURGd1BG8u/LdxEEIQyzSWZwjvahkkOWcq7Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 236/690] lockd: introduce nlmsvc_serv
-Date: Mon,  8 Apr 2024 14:51:42 +0200
-Message-ID: <20240408125408.172469794@linuxfoundation.org>
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 166/273] spi: s3c64xx: explicitly include <linux/bits.h>
+Date: Mon,  8 Apr 2024 14:57:21 +0200
+Message-ID: <20240408125314.421965144@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,153 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 2840fe864c91a0fe822169b1fbfddbcac9aeac43 ]
+[ Upstream commit 4568fa574fcef3811a8140702979f076ef0f5bc0 ]
 
-lockd has two globals - nlmsvc_task and nlmsvc_rqst - but mostly it
-wants the 'struct svc_serv', and when it doesn't want it exactly it can
-get to what it wants from the serv.
+The driver uses GENMASK() but does not include <linux/bits.h>.
 
-This patch is a first step to removing nlmsvc_task and nlmsvc_rqst.  It
-introduces nlmsvc_serv to store the 'struct svc_serv*'.  This is set as
-soon as the serv is created, and cleared only when it is destroyed.
+It is good practice to directly include all headers used, it avoids
+implicit dependencies and spurious breakage if someone rearranges
+headers and causes the implicit include to vanish.
 
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Include the missing header.
+
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20240207120431.2766269-4-tudor.ambarus@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: a3d3eab627bb ("spi: s3c64xx: Use DMA mode from fifo size")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ drivers/spi/spi-s3c64xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index a9669b106dbde..83874878f41d8 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -54,6 +54,7 @@ EXPORT_SYMBOL_GPL(nlmsvc_ops);
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index 26d389d95af92..1e519b1537e71 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -3,6 +3,7 @@
+ // Copyright (c) 2009 Samsung Electronics Co., Ltd.
+ //      Jaswinder Singh <jassi.brar@samsung.com>
  
- static DEFINE_MUTEX(nlmsvc_mutex);
- static unsigned int		nlmsvc_users;
-+static struct svc_serv		*nlmsvc_serv;
- static struct task_struct	*nlmsvc_task;
- static struct svc_rqst		*nlmsvc_rqst;
- unsigned long			nlmsvc_timeout;
-@@ -306,13 +307,12 @@ static int lockd_inetaddr_event(struct notifier_block *this,
- 	    !atomic_inc_not_zero(&nlm_ntf_refcnt))
- 		goto out;
- 
--	if (nlmsvc_rqst) {
-+	if (nlmsvc_serv) {
- 		dprintk("lockd_inetaddr_event: removed %pI4\n",
- 			&ifa->ifa_local);
- 		sin.sin_family = AF_INET;
- 		sin.sin_addr.s_addr = ifa->ifa_local;
--		svc_age_temp_xprts_now(nlmsvc_rqst->rq_server,
--			(struct sockaddr *)&sin);
-+		svc_age_temp_xprts_now(nlmsvc_serv, (struct sockaddr *)&sin);
- 	}
- 	atomic_dec(&nlm_ntf_refcnt);
- 	wake_up(&nlm_ntf_wq);
-@@ -336,14 +336,13 @@ static int lockd_inet6addr_event(struct notifier_block *this,
- 	    !atomic_inc_not_zero(&nlm_ntf_refcnt))
- 		goto out;
- 
--	if (nlmsvc_rqst) {
-+	if (nlmsvc_serv) {
- 		dprintk("lockd_inet6addr_event: removed %pI6\n", &ifa->addr);
- 		sin6.sin6_family = AF_INET6;
- 		sin6.sin6_addr = ifa->addr;
- 		if (ipv6_addr_type(&sin6.sin6_addr) & IPV6_ADDR_LINKLOCAL)
- 			sin6.sin6_scope_id = ifa->idev->dev->ifindex;
--		svc_age_temp_xprts_now(nlmsvc_rqst->rq_server,
--			(struct sockaddr *)&sin6);
-+		svc_age_temp_xprts_now(nlmsvc_serv, (struct sockaddr *)&sin6);
- 	}
- 	atomic_dec(&nlm_ntf_refcnt);
- 	wake_up(&nlm_ntf_wq);
-@@ -423,15 +422,17 @@ static const struct svc_serv_ops lockd_sv_ops = {
- 	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
- };
- 
--static struct svc_serv *lockd_create_svc(void)
-+static int lockd_create_svc(void)
- {
- 	struct svc_serv *serv;
- 
- 	/*
- 	 * Check whether we're already up and running.
- 	 */
--	if (nlmsvc_rqst)
--		return svc_get(nlmsvc_rqst->rq_server);
-+	if (nlmsvc_serv) {
-+		svc_get(nlmsvc_serv);
-+		return 0;
-+	}
- 
- 	/*
- 	 * Sanity check: if there's no pid,
-@@ -448,14 +449,15 @@ static struct svc_serv *lockd_create_svc(void)
- 	serv = svc_create(&nlmsvc_program, LOCKD_BUFSIZE, &lockd_sv_ops);
- 	if (!serv) {
- 		printk(KERN_WARNING "lockd_up: create service failed\n");
--		return ERR_PTR(-ENOMEM);
-+		return -ENOMEM;
- 	}
-+	nlmsvc_serv = serv;
- 	register_inetaddr_notifier(&lockd_inetaddr_notifier);
- #if IS_ENABLED(CONFIG_IPV6)
- 	register_inet6addr_notifier(&lockd_inet6addr_notifier);
- #endif
- 	dprintk("lockd_up: service created\n");
--	return serv;
-+	return 0;
- }
- 
- /*
-@@ -468,11 +470,10 @@ int lockd_up(struct net *net, const struct cred *cred)
- 
- 	mutex_lock(&nlmsvc_mutex);
- 
--	serv = lockd_create_svc();
--	if (IS_ERR(serv)) {
--		error = PTR_ERR(serv);
-+	error = lockd_create_svc();
-+	if (error)
- 		goto err_create;
--	}
-+	serv = nlmsvc_serv;
- 
- 	error = lockd_up_net(serv, net, cred);
- 	if (error < 0) {
-@@ -487,6 +488,8 @@ int lockd_up(struct net *net, const struct cred *cred)
- 	}
- 	nlmsvc_users++;
- err_put:
-+	if (nlmsvc_users == 0)
-+		nlmsvc_serv = NULL;
- 	svc_put(serv);
- err_create:
- 	mutex_unlock(&nlmsvc_mutex);
-@@ -501,7 +504,7 @@ void
- lockd_down(struct net *net)
- {
- 	mutex_lock(&nlmsvc_mutex);
--	lockd_down_net(nlmsvc_rqst->rq_server, net);
-+	lockd_down_net(nlmsvc_serv, net);
- 	if (nlmsvc_users) {
- 		if (--nlmsvc_users)
- 			goto out;
-@@ -519,6 +522,7 @@ lockd_down(struct net *net)
- 	dprintk("lockd_down: service stopped\n");
- 	lockd_svc_exit_thread();
- 	dprintk("lockd_down: service destroyed\n");
-+	nlmsvc_serv = NULL;
- 	nlmsvc_task = NULL;
- 	nlmsvc_rqst = NULL;
- out:
++#include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
 -- 
 2.43.0
 
