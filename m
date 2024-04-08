@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7A07E59F;
-	Mon,  8 Apr 2024 13:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5825778285;
+	Mon,  8 Apr 2024 13:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582857; cv=none; b=X6swddSwHD3NPU1PMT05/a4ZZKbXJ5ptNV1V8gV5nmiFikSVetOHuUUAzGdz8yyABAVnFSp6XJe2ok0DZlt/cHnzi6xnjmF1MmcH3FCvwogl1nX0XJhjbbwKPXiRfgikYNRd5inyOcGGtVRYuoJKjzaoroyPKqDfcyyiRRbBz+A=
+	t=1712582860; cv=none; b=dc2oKcllF/+rfGmiGGPfP2HrHxQNwjBOV/9wTKUtmIlasFZooqIwtfrcmd57lHwcQ/bWvKoRrWTmFoHYSqMuHrPon8TxlqyqlqaWhOyM66PyFX833fyu17700JwRK4gQfBpuKI4LuCOXPAJpr1m7RHO3GztLeP0dlkPViW8LlRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582857; c=relaxed/simple;
-	bh=s8n4J/x1/CX2olhdQd17vWJyzRcxIdRZQ4Ql5xV6vaU=;
+	s=arc-20240116; t=1712582860; c=relaxed/simple;
+	bh=WJyeYpIES6JtQFOTvTXutyRm4jcTq+PD3PgTtyHlhA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klSMy5G805oZeUNudR/yOKb5y+SYQdP3WdHCXoAhwE4a1nZZab7MCxWURPhaXZOwk5CCn5YgnyAivi3P8mlfeSl+F3BNc+Ozdiydz/dYotH/9H3mvlXjZkfloRTSpPSZeMAaTzVgFXuYKy3brGYtbji1mk2WdieFGryoF58Xswg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtvSVfoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oM7qlWCZnSit3yznAl/lSdpIoRbEOjZodpsEwP0tSlZqbV949qMqr4DE0hDjBlT8Mcm5jvGLzxAMz3lIGSM6yjcpdGuSxX1h20IV+BtHBiZ7Wg4qKoi11qXZlanZHLXHac0KJ5vA8jb2QZrX0rK1trBDqoFnxTb3ol3oyVpzpB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/6N03Md; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtvSVfoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F2BC43390;
-	Mon,  8 Apr 2024 13:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/6N03Md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2262C433C7;
+	Mon,  8 Apr 2024 13:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582857;
-	bh=s8n4J/x1/CX2olhdQd17vWJyzRcxIdRZQ4Ql5xV6vaU=;
+	s=korg; t=1712582860;
+	bh=WJyeYpIES6JtQFOTvTXutyRm4jcTq+PD3PgTtyHlhA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtvSVfoVC1yL70ByZ7K0RvQynDfOP53R9IAFZ9mg1hkjqc4E/0r7Lw6ECo+nQ5m9u
-	 nUyTPp20qK2SJW0IbTrGwn3nQjvXMsTAa4ORdzGaTv+lfCTkj5KsokXOpSaixVMw32
-	 C+cYUV4RqWjzYWKbpjbRWE5hOAQwRr0HH2lnAw0Q=
+	b=e/6N03MdCDb1tPyknxwKvkbLliaNvgXYZ4wKbq+pak7WsEofyTa8ci0XhaJeb8ZFq
+	 rmnb9asMRv4zDsGENwAQZ3tNVoibs10SoQehkV3He+ymI8v+AcW0Cbvd8BCGxen3Xx
+	 IjYYVHQJALvwYaQUAZ+4nP8oQDB9aFQBKBXLm1qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 181/690] fanotify: Require fid_mode for any non-fd event
-Date: Mon,  8 Apr 2024 14:50:47 +0200
-Message-ID: <20240408125406.112140623@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 111/273] i40e: Fix VF MAC filter removal
+Date: Mon,  8 Apr 2024 14:56:26 +0200
+Message-ID: <20240408125312.748746262@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +50,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 4fe595cf1c80e7a5af4d00c4da29def64aff57a2 ]
+commit ea2a1cfc3b2019bdea6324acd3c03606b60d71ad upstream.
 
-Like inode events, FAN_FS_ERROR will require fid mode.  Therefore,
-convert the verification during fanotify_mark(2) to require fid for any
-non-fd event.  This means fid_mode will not only be required for inode
-events, but for any event that doesn't provide a descriptor.
+Commit 73d9629e1c8c ("i40e: Do not allow untrusted VF to remove
+administratively set MAC") fixed an issue where untrusted VF was
+allowed to remove its own MAC address although this was assigned
+administratively from PF. Unfortunately the introduced check
+is wrong because it causes that MAC filters for other MAC addresses
+including multi-cast ones are not removed.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-17-krisman@collabora.com
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+<snip>
+	if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
+	    i40e_can_vf_change_mac(vf))
+		was_unimac_deleted = true;
+	else
+		continue;
+
+	if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
+	...
+</snip>
+
+The else path with `continue` effectively skips any MAC filter
+removal except one for primary MAC addr when VF is allowed to do so.
+Fix the check condition so the `continue` is only done for primary
+MAC address.
+
+Fixes: 73d9629e1c8c ("i40e: Do not allow untrusted VF to remove administratively set MAC")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240329180638.211412-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 12 ++++++------
- include/linux/fanotify.h           |  3 +++
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 8cf8e63a2c3e8..8598b00f7e9c8 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1476,14 +1476,14 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 		goto fput_and_out;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -3143,11 +3143,12 @@ static int i40e_vc_del_mac_addr_msg(stru
+ 		/* Allow to delete VF primary MAC only if it was not set
+ 		 * administratively by PF or if VF is trusted.
+ 		 */
+-		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
+-		    i40e_can_vf_change_mac(vf))
+-			was_unimac_deleted = true;
+-		else
+-			continue;
++		if (ether_addr_equal(addr, vf->default_lan_addr.addr)) {
++			if (i40e_can_vf_change_mac(vf))
++				was_unimac_deleted = true;
++			else
++				continue;
++		}
  
- 	/*
--	 * Events with data type inode do not carry enough information to report
--	 * event->fd, so we do not allow setting a mask for inode events unless
--	 * group supports reporting fid.
--	 * inode events are not supported on a mount mark, because they do not
--	 * carry enough information (i.e. path) to be filtered by mount point.
-+	 * Events that do not carry enough information to report
-+	 * event->fd require a group that supports reporting fid.  Those
-+	 * events are not supported on a mount mark, because they do not
-+	 * carry enough information (i.e. path) to be filtered by mount
-+	 * point.
- 	 */
- 	fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
--	if (mask & FANOTIFY_INODE_EVENTS &&
-+	if (mask & ~(FANOTIFY_FD_EVENTS|FANOTIFY_EVENT_FLAGS) &&
- 	    (!fid_mode || mark_type == FAN_MARK_MOUNT))
- 		goto fput_and_out;
- 
-diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
-index eec3b7c408115..52d464802d99f 100644
---- a/include/linux/fanotify.h
-+++ b/include/linux/fanotify.h
-@@ -84,6 +84,9 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
-  */
- #define FANOTIFY_DIRENT_EVENTS	(FAN_MOVE | FAN_CREATE | FAN_DELETE)
- 
-+/* Events that can be reported with event->fd */
-+#define FANOTIFY_FD_EVENTS (FANOTIFY_PATH_EVENTS | FANOTIFY_PERM_EVENTS)
-+
- /* Events that can only be reported with data type FSNOTIFY_EVENT_INODE */
- #define FANOTIFY_INODE_EVENTS	(FANOTIFY_DIRENT_EVENTS | \
- 				 FAN_ATTRIB | FAN_MOVE_SELF | FAN_DELETE_SELF)
--- 
-2.43.0
-
+ 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
+ 			ret = -EINVAL;
 
 
