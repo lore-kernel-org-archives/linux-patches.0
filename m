@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A4B7C0BE;
-	Mon,  8 Apr 2024 13:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBE970CDA;
+	Mon,  8 Apr 2024 13:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581911; cv=none; b=bvRuNWpyA1AeZ9NQhZInGaxXaoygXd4PkdcXDEKQz+OR7Ai9xOxFdFdClhaIEtIVvBz/33mlRX2gTg/mUcIcksZFGP2tnaFoFqiipzcWaeOHOWlbVY/jjlQuBldl9TZ0CVB5GquQMTBy0/7Ouw8sEaOI8+Yd61azvf56TzwjICU=
+	t=1712581914; cv=none; b=HpgMWqNtqtZPcruaqaa7ZDPAV5MA95d6wjoSuyIoMSiDHvjF7hujtljuq93Cm8mOMBirBqlNFUbLQLyHSiUYviqtZ+UJcPGOCQ+FhY3TrOKPa4od4Tsz076FAr4kwybKsJAj07eayseE3r9Uu1QixQeQI2c7jy0BcseCqNZTbg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581911; c=relaxed/simple;
-	bh=tuOR5SQ9g449ztumhmWG6pSOmpRhj6ITDBabF0m+x3o=;
+	s=arc-20240116; t=1712581914; c=relaxed/simple;
+	bh=NVfFyy0YxwWT3tzFXNeXwwnX9SEvbRg8mN+qDlNtS68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TO9ZSdNYC9FPi42rLD+koVEgR7wYGZqMcaAkP+xUoFqdcq87A74x8pL2AAF5h2QbP0mmacnsRCtSvdiT9i+6ktKlpbX4vCqYlnqMQnx3KNodXukxZenPTEEu7v+WCVVFpL5mNZZUomaYSB2lfyS/GNhjjnDizgUtJxBQvkB72cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsCp8oSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XkD4qWqx1MEJizJ5yLWL+pd5o6vKIK0HZqd6h17b0gmP/pL3mDYikwc3nZgILc7sKYEiVcOlks8v0VG+Nmp1TzqcVywUgWknscOG7t7FTzyPuJR9kVgv0KjXrTYlFybZ6wX0cxxKWUAJeADjzDu34FN+boS+tOG07vxfJzP5P7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MFJP0z4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsCp8oSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970ADC433F1;
-	Mon,  8 Apr 2024 13:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MFJP0z4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B917C433F1;
+	Mon,  8 Apr 2024 13:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581911;
-	bh=tuOR5SQ9g449ztumhmWG6pSOmpRhj6ITDBabF0m+x3o=;
+	s=korg; t=1712581913;
+	bh=NVfFyy0YxwWT3tzFXNeXwwnX9SEvbRg8mN+qDlNtS68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsCp8oSZ8o5qSdDZw+ln3dEmdjBzqafquU4GWxfxcgdKnd/rZ2J8ATRwcwLXMH5Ce
-	 66QMs2dyHVcvEd/XgkmWhOJ00jRVChitAdnqUEo7Xkjd/P2/0fXC6ipVGNySIiZIow
-	 8GS1SPwdhzqRWX00gi6tWI/9aFusf+lIPLN52xnY=
+	b=0MFJP0z4XU6H7wG+gqbJNfXikdo7eKUgTeNvIZQQtWKcMd9TOBKHs7/T0U/WS2STB
+	 hrxq4jnVJI/pRcjhCOrwOUyLgP46lsMvMDwnRVxL8AalAyiyT4pgfzvCOxqAWC5ckm
+	 TtBUCS9JUqE9Qc+RQmye6qG9eEiFg87bHLd7SHrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	Camelia Groza <camelia.groza@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/690] soc: fsl: qbman: Add helper for sanity checking cgr ops
-Date: Mon,  8 Apr 2024 14:49:18 +0200
-Message-ID: <20240408125402.818185715@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Subject: [PATCH 6.8 012/273] wifi: iwlwifi: mvm: rfi: fix potential response leaks
+Date: Mon,  8 Apr 2024 14:54:47 +0200
+Message-ID: <20240408125309.667810965@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,82 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d0e17a4653cebc2c8a20251c837dd1fcec5014d9 ]
+[ Upstream commit 06a093807eb7b5c5b29b6cff49f8174a4e702341 ]
 
-This breaks out/combines get_affine_portal and the cgr sanity check in
-preparation for the next commit. No functional change intended.
+If the rx payload length check fails, or if kmemdup() fails,
+we still need to free the command response. Fix that.
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Acked-by: Camelia Groza <camelia.groza@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
+Fixes: 21254908cbe9 ("iwlwifi: mvm: add RFI-M support")
+Co-authored-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240319100755.db2fa0196aa7.I116293b132502ac68a65527330fa37799694b79c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rfi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index d04a1a39dc286..30c6c09d9d00c 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -2483,13 +2483,8 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
- }
- EXPORT_SYMBOL(qman_create_cgr);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
+index 2ecd32bed752f..045c862a8fc4f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rfi.c
+@@ -132,14 +132,18 @@ struct iwl_rfi_freq_table_resp_cmd *iwl_rfi_get_freq_table(struct iwl_mvm *mvm)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
--int qman_delete_cgr(struct qman_cgr *cgr)
-+static struct qman_portal *qman_cgr_get_affine_portal(struct qman_cgr *cgr)
- {
--	unsigned long irqflags;
--	struct qm_mcr_querycgr cgr_state;
--	struct qm_mcc_initcgr local_opts;
--	int ret = 0;
--	struct qman_cgr *i;
- 	struct qman_portal *p = get_affine_portal();
+-	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) != resp_size))
++	if (WARN_ON_ONCE(iwl_rx_packet_payload_len(cmd.resp_pkt) !=
++			 resp_size)) {
++		iwl_free_resp(&cmd);
+ 		return ERR_PTR(-EIO);
++	}
  
- 	if (cgr->chan != p->config->channel) {
-@@ -2497,10 +2492,25 @@ int qman_delete_cgr(struct qman_cgr *cgr)
- 		dev_err(p->config->dev, "CGR not owned by current portal");
- 		dev_dbg(p->config->dev, " create 0x%x, delete 0x%x\n",
- 			cgr->chan, p->config->channel);
--
--		ret = -EINVAL;
--		goto put_portal;
-+		put_affine_portal();
-+		return NULL;
- 	}
+ 	resp = kmemdup(cmd.resp_pkt->data, resp_size, GFP_KERNEL);
++	iwl_free_resp(&cmd);
 +
-+	return p;
-+}
-+
-+int qman_delete_cgr(struct qman_cgr *cgr)
-+{
-+	unsigned long irqflags;
-+	struct qm_mcr_querycgr cgr_state;
-+	struct qm_mcc_initcgr local_opts;
-+	int ret = 0;
-+	struct qman_cgr *i;
-+	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
-+
-+	if (!p)
-+		return -EINVAL;
-+
- 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
- 	spin_lock_irqsave(&p->cgr_lock, irqflags);
- 	list_del(&cgr->node);
-@@ -2528,7 +2538,6 @@ int qman_delete_cgr(struct qman_cgr *cgr)
- 		list_add(&cgr->node, &p->cgr_cbs);
- release_lock:
- 	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
--put_portal:
- 	put_affine_portal();
- 	return ret;
+ 	if (!resp)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	iwl_free_resp(&cmd);
+ 	return resp;
  }
+ 
 -- 
 2.43.0
 
