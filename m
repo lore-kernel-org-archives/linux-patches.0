@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFCE7D08D;
-	Mon,  8 Apr 2024 13:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A4B7C0BE;
+	Mon,  8 Apr 2024 13:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581908; cv=none; b=ppOLxxwaabnCXAVaj3OOMRUUp1ebuUL0EnNZenozLaRWZHpDf4fiFt9RBv6Q7TVWwvMAobwIYnAZ+dA70gf95GRNwQt+Xer5a2p6BEIDKvUW3FDJiFNFqXA7mN/zm7JtBvHG9+J06806yk8L1G07uRqmVVPvYY/ChNgi8kmtoVM=
+	t=1712581911; cv=none; b=bvRuNWpyA1AeZ9NQhZInGaxXaoygXd4PkdcXDEKQz+OR7Ai9xOxFdFdClhaIEtIVvBz/33mlRX2gTg/mUcIcksZFGP2tnaFoFqiipzcWaeOHOWlbVY/jjlQuBldl9TZ0CVB5GquQMTBy0/7Ouw8sEaOI8+Yd61azvf56TzwjICU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581908; c=relaxed/simple;
-	bh=vMPsrgWNw9/rgTbp3f7JoBPeTjn1wCIsW3HHY8xS+0E=;
+	s=arc-20240116; t=1712581911; c=relaxed/simple;
+	bh=tuOR5SQ9g449ztumhmWG6pSOmpRhj6ITDBabF0m+x3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkIY1goC9K7/GDyMF1QshZmbnFUHMh+GOePWoT9vgid+arwVH4DG5Pg/oMK3COBXddBkSF5+aPCqlLPx+LYHSU6EcHS81x839GA6nHfZXsXXDAQNCPHlecrRLN9v+Xfm+jhOHfE9EolPoOlfjpmwOmcVBCd5NfDoFJz1nNG5zrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Val5nzlW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TO9ZSdNYC9FPi42rLD+koVEgR7wYGZqMcaAkP+xUoFqdcq87A74x8pL2AAF5h2QbP0mmacnsRCtSvdiT9i+6ktKlpbX4vCqYlnqMQnx3KNodXukxZenPTEEu7v+WCVVFpL5mNZZUomaYSB2lfyS/GNhjjnDizgUtJxBQvkB72cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsCp8oSZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Val5nzlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F29C433C7;
-	Mon,  8 Apr 2024 13:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsCp8oSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970ADC433F1;
+	Mon,  8 Apr 2024 13:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581908;
-	bh=vMPsrgWNw9/rgTbp3f7JoBPeTjn1wCIsW3HHY8xS+0E=;
+	s=korg; t=1712581911;
+	bh=tuOR5SQ9g449ztumhmWG6pSOmpRhj6ITDBabF0m+x3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Val5nzlW/EtHYap1SgZ0JDUGNa5pFYTM1mUfVSLcfAiGGnOHID5cOWdbJOyoRr3Fr
-	 hOoiKqCgPydOIJpn/nLf+EtHni+9CBJTWD/7QOYoBQmVlvjHkQ6jmrd6MdlNLBvWZr
-	 zZmGCvw/fYwiSA3yZCKZ7TDLdJ1b64PP/X+TI2N0=
+	b=BsCp8oSZ8o5qSdDZw+ln3dEmdjBzqafquU4GWxfxcgdKnd/rZ2J8ATRwcwLXMH5Ce
+	 66QMs2dyHVcvEd/XgkmWhOJ00jRVChitAdnqUEo7Xkjd/P2/0fXC6ipVGNySIiZIow
+	 8GS1SPwdhzqRWX00gi6tWI/9aFusf+lIPLN52xnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Harish Chegondi <harish.chegondi@intel.com>,
-	Haridhar Kalvala <haridhar.kalvala@intel.com>,
-	Matt Atwood <matthew.s.atwood@intel.com>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/252] drm/i915/xelpg: Extend some workarounds/tuning to gfx version 12.74
-Date: Mon,  8 Apr 2024 14:55:48 +0200
-Message-ID: <20240408125308.160045998@linuxfoundation.org>
+Subject: [PATCH 5.15 092/690] soc: fsl: qbman: Add helper for sanity checking cgr ops
+Date: Mon,  8 Apr 2024 14:49:18 +0200
+Message-ID: <20240408125402.818185715@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,152 +48,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit c44d4ef47fdad0a33966de89f9064e19736bb52f ]
+[ Upstream commit d0e17a4653cebc2c8a20251c837dd1fcec5014d9 ]
 
-Some of our existing Xe_LPG workarounds and tuning are also applicable
-to the version 12.74 variant.  Extend the condition bounds accordingly.
-Also fix the comment on Wa_14018575942 while we're at it.
+This breaks out/combines get_affine_portal and the cgr sanity check in
+preparation for the next commit. No functional change intended.
 
-v2: Extend some more workarounds (Harish)
-
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Harish Chegondi <harish.chegondi@intel.com>
-Signed-off-by: Haridhar Kalvala <haridhar.kalvala@intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240108122738.14399-4-haridhar.kalvala@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Acked-by: Camelia Groza <camelia.groza@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fbec4e7fed89 ("soc: fsl: qbman: Use raw spinlock for cgr_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/gen8_engine_cs.c    |  4 ++--
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 24 +++++++++++++--------
- drivers/gpu/drm/i915/i915_perf.c            |  2 +-
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-index ba4c2422b3402..cddf8c16e9a72 100644
---- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-@@ -226,7 +226,7 @@ u32 *gen12_emit_aux_table_inv(struct intel_engine_cs *engine, u32 *cs)
- static int mtl_dummy_pipe_control(struct i915_request *rq)
- {
- 	/* Wa_14016712196 */
--	if (IS_GFX_GT_IP_RANGE(rq->engine->gt, IP_VER(12, 70), IP_VER(12, 71)) ||
-+	if (IS_GFX_GT_IP_RANGE(rq->engine->gt, IP_VER(12, 70), IP_VER(12, 74)) ||
- 	    IS_DG2(rq->i915)) {
- 		u32 *cs;
- 
-@@ -819,7 +819,7 @@ u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
- 		     PIPE_CONTROL_FLUSH_ENABLE);
- 
- 	/* Wa_14016712196 */
--	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)) || IS_DG2(i915))
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74)) || IS_DG2(i915))
- 		/* dummy PIPE_CONTROL + depth flush */
- 		cs = gen12_emit_pipe_control(cs, 0,
- 					     PIPE_CONTROL_DEPTH_CACHE_FLUSH, 0);
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index b6237e999be93..37b2b0440923f 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -788,8 +788,13 @@ static void xelpg_ctx_gt_tuning_init(struct intel_engine_cs *engine,
- 
- 	dg2_ctx_gt_tuning_init(engine, wal);
- 
--	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_B0, STEP_FOREVER) ||
--	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B0, STEP_FOREVER))
-+	/*
-+	 * Due to Wa_16014892111, the DRAW_WATERMARK tuning must be done in
-+	 * gen12_emit_indirect_ctx_rcs() rather than here on some early
-+	 * steppings.
-+	 */
-+	if (!(IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
-+	      IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0)))
- 		wa_add(wal, DRAW_WATERMARK, VERT_WM_VAL, 0x3FF, 0, false);
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index d04a1a39dc286..30c6c09d9d00c 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -2483,13 +2483,8 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
  }
+ EXPORT_SYMBOL(qman_create_cgr);
  
-@@ -907,7 +912,7 @@ __intel_engine_init_ctx_wa(struct intel_engine_cs *engine,
- 	if (engine->class != RENDER_CLASS)
- 		goto done;
- 
--	if (IS_GFX_GT_IP_RANGE(engine->gt, IP_VER(12, 70), IP_VER(12, 71)))
-+	if (IS_GFX_GT_IP_RANGE(engine->gt, IP_VER(12, 70), IP_VER(12, 74)))
- 		xelpg_ctx_workarounds_init(engine, wal);
- 	else if (IS_PONTEVECCHIO(i915))
- 		; /* noop; none at this time */
-@@ -1638,7 +1643,7 @@ pvc_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
- static void
- xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+-int qman_delete_cgr(struct qman_cgr *cgr)
++static struct qman_portal *qman_cgr_get_affine_portal(struct qman_cgr *cgr)
  {
--	/* Wa_14018778641 / Wa_18018781329 */
-+	/* Wa_14018575942 / Wa_18018781329 */
- 	wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
+-	unsigned long irqflags;
+-	struct qm_mcr_querycgr cgr_state;
+-	struct qm_mcc_initcgr local_opts;
+-	int ret = 0;
+-	struct qman_cgr *i;
+ 	struct qman_portal *p = get_affine_portal();
  
- 	/* Wa_22016670082 */
-@@ -1688,7 +1693,7 @@ xelpmp_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
-  */
- static void gt_tuning_settings(struct intel_gt *gt, struct i915_wa_list *wal)
- {
--	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71))) {
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74))) {
- 		wa_mcr_write_or(wal, XEHP_L3SCQREG7, BLEND_FILL_CACHING_OPT_DIS);
- 		wa_mcr_write_or(wal, XEHP_SQCM, EN_32B_ACCESS);
+ 	if (cgr->chan != p->config->channel) {
+@@ -2497,10 +2492,25 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		dev_err(p->config->dev, "CGR not owned by current portal");
+ 		dev_dbg(p->config->dev, " create 0x%x, delete 0x%x\n",
+ 			cgr->chan, p->config->channel);
+-
+-		ret = -EINVAL;
+-		goto put_portal;
++		put_affine_portal();
++		return NULL;
  	}
-@@ -1721,7 +1726,7 @@ gt_init_workarounds(struct intel_gt *gt, struct i915_wa_list *wal)
- 		return;
- 	}
- 
--	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)))
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74)))
- 		xelpg_gt_workarounds_init(gt, wal);
- 	else if (IS_PONTEVECCHIO(i915))
- 		pvc_gt_workarounds_init(gt, wal);
-@@ -2194,7 +2199,7 @@ void intel_engine_init_whitelist(struct intel_engine_cs *engine)
- 
- 	if (engine->gt->type == GT_MEDIA)
- 		; /* none yet */
--	else if (IS_GFX_GT_IP_RANGE(engine->gt, IP_VER(12, 70), IP_VER(12, 71)))
-+	else if (IS_GFX_GT_IP_RANGE(engine->gt, IP_VER(12, 70), IP_VER(12, 74)))
- 		xelpg_whitelist_build(engine);
- 	else if (IS_PONTEVECCHIO(i915))
- 		pvc_whitelist_build(engine);
-@@ -2801,7 +2806,7 @@ add_render_compute_tuning_settings(struct intel_gt *gt,
- {
- 	struct drm_i915_private *i915 = gt->i915;
- 
--	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)) || IS_DG2(i915))
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74)) || IS_DG2(i915))
- 		wa_mcr_write_clr_set(wal, RT_CTRL, STACKID_CTRL, STACKID_CTRL_512);
- 
- 	/*
-@@ -2854,7 +2859,8 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 	}
- 
- 	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_B0, STEP_FOREVER) ||
--	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B0, STEP_FOREVER))
-+	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_B0, STEP_FOREVER) ||
-+	    IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 74), IP_VER(12, 74)))
- 		/* Wa_14017856879 */
- 		wa_mcr_masked_en(wal, GEN9_ROW_CHICKEN3, MTL_DISABLE_FIX_FOR_EOT_FLUSH);
- 
-diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
-index 48ea17b49b3a0..3f90403d86cb4 100644
---- a/drivers/gpu/drm/i915/i915_perf.c
-+++ b/drivers/gpu/drm/i915/i915_perf.c
-@@ -3258,7 +3258,7 @@ u32 i915_perf_oa_timestamp_frequency(struct drm_i915_private *i915)
- 	struct intel_gt *gt = to_gt(i915);
- 
- 	/* Wa_18013179988 */
--	if (IS_DG2(i915) || IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71))) {
-+	if (IS_DG2(i915) || IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 74))) {
- 		intel_wakeref_t wakeref;
- 		u32 reg, shift;
- 
++
++	return p;
++}
++
++int qman_delete_cgr(struct qman_cgr *cgr)
++{
++	unsigned long irqflags;
++	struct qm_mcr_querycgr cgr_state;
++	struct qm_mcc_initcgr local_opts;
++	int ret = 0;
++	struct qman_cgr *i;
++	struct qman_portal *p = qman_cgr_get_affine_portal(cgr);
++
++	if (!p)
++		return -EINVAL;
++
+ 	memset(&local_opts, 0, sizeof(struct qm_mcc_initcgr));
+ 	spin_lock_irqsave(&p->cgr_lock, irqflags);
+ 	list_del(&cgr->node);
+@@ -2528,7 +2538,6 @@ int qman_delete_cgr(struct qman_cgr *cgr)
+ 		list_add(&cgr->node, &p->cgr_cbs);
+ release_lock:
+ 	spin_unlock_irqrestore(&p->cgr_lock, irqflags);
+-put_portal:
+ 	put_affine_portal();
+ 	return ret;
+ }
 -- 
 2.43.0
 
