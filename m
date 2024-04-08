@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AC881727;
-	Mon,  8 Apr 2024 13:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4128C74C09;
+	Mon,  8 Apr 2024 13:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582638; cv=none; b=pnhZ0SsqQL5lH0J2CvxmN5CegJkdWSEWapwixIQCLNczsZxYqcHnDCGHnXv0sIbMzUpZqgt5AHszZTvvXs5WId8JyacU1DzVjm5hHjxnBvyriUazfF7ANXQHVlAn1Pv4w9b2TOH0d0iHc5ixSkvKQf4A5bQpiyJwNfMOHN52p30=
+	t=1712582641; cv=none; b=pOMpHbu4ahkRbgTJqQw7PUBJgtS3XV+51z/te7KBGmRUFpL0+A45ok30hPNrH4/p6oI8nE8V6nDzKcVDlMj73K5aEQdv6jlKzfaUts5oO8Mx/9YfUgCJvnGjBz/gmyht8v+WsXDKSBgepodQpYSgXXpb6lcDBXiHz+OqFqVHVsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582638; c=relaxed/simple;
-	bh=j3zNujywYCzU46xoqD+r1yA8xpWX7gCnjCjuapawjaA=;
+	s=arc-20240116; t=1712582641; c=relaxed/simple;
+	bh=otaJPD8qbJto1yPyArSgbxgld7Xhg2zTkMOVPrZz0JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAR1GzJOZHj4VdHhR9LhqaXsu3gO9QMwoJrnjAqCGhcicsNaQW+pisiYPWcScAM4iYe3Pim870K8teCmLlPYS/hbyY81M9r7enuA9EMKsDlI/SXQ+YmJIFzoz8OQUmRyfwA7plIE1GuAK7KCVxX5Djz8TByHu7N92E+rRVdRM40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku6nPpBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YCBbiZcBEsKzF7+0FVtsE4mIKSEQBn5FqEb5ur/4KLf2ncWGzQz1fT3KNegtPcmAiTcCi1sTy8tMA6o9WC1L/3jIopyuvbVHNdu1dzxxYwm+PZIXZ/A4mvfDyB0CnS1k31WCc+6AZFNrmQOacktuyY8bOGynBHG0LD+yulY2ZcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X51xz6IW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku6nPpBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4B0C433C7;
-	Mon,  8 Apr 2024 13:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X51xz6IW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9C2C433F1;
+	Mon,  8 Apr 2024 13:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582638;
-	bh=j3zNujywYCzU46xoqD+r1yA8xpWX7gCnjCjuapawjaA=;
+	s=korg; t=1712582641;
+	bh=otaJPD8qbJto1yPyArSgbxgld7Xhg2zTkMOVPrZz0JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ku6nPpBueFpLGSNZCoWqbrYvEdBy/DYhZ0fwJFeeQTw8PC0J/GSmRAYsoazY+wW45
-	 jnCc9yT2BuDcPj0IcWXr3m3p4fMV/x56J0108ifFSButWim6l5WNHpGkiMAbWxh+Fr
-	 rWDrENN/cEsCQJbbpKtfaFkgO6IF9J+OiJgSMX7c=
+	b=X51xz6IWBAZ6TT9Pusx2uHTYsGuEh4xIiwxIVvTE7X5NbSFpAkXtjdX73OiV30jMG
+	 tONVQJLmXgetVJ1NVazy+BEp0Ix6OUOuGrMvMneg/l0nRnvXUpic+8i/x/R0JTiIGt
+	 jL9eqcvSzbv9tHvICvBI+zpahxR8bKlk2DI3xXeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.8 092/273] vboxsf: Avoid an spurious warning if load_nls_xxx() fails
-Date: Mon,  8 Apr 2024 14:56:07 +0200
-Message-ID: <20240408125312.158275442@linuxfoundation.org>
+	stable@kernel.org,
+	Ulrich Weigand <ulrich.weigand@de.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 122/138] s390/entry: align system call table on 8 bytes
+Date: Mon,  8 Apr 2024 14:58:56 +0200
+Message-ID: <20240408125300.027541393@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +49,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit de3f64b738af57e2732b91a0774facc675b75b54 upstream.
+commit 378ca2d2ad410a1cd5690d06b46c5e2297f4c8c0 upstream.
 
-If an load_nls_xxx() function fails a few lines above, the 'sbi->bdi_id' is
-still 0.
-So, in the error handling path, we will call ida_simple_remove(..., 0)
-which is not allocated yet.
+Align system call table on 8 bytes. With sys_call_table entry size
+of 8 bytes that eliminates the possibility of a system call pointer
+crossing cache line boundary.
 
-In order to prevent a spurious "ida_free called for id=0 which is not
-allocated." message, tweak the error handling path and add a new label.
-
-Fixes: 0fd169576648 ("fs: Add VirtualBox guest shared folder (vboxsf) support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/d09eaaa4e2e08206c58a1a27ca9b3e81dc168773.1698835730.git.christophe.jaillet@wanadoo.fr
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: stable@kernel.org
+Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/vboxsf/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kernel/entry.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/vboxsf/super.c
-+++ b/fs/vboxsf/super.c
-@@ -151,7 +151,7 @@ static int vboxsf_fill_super(struct supe
- 		if (!sbi->nls) {
- 			vbg_err("vboxsf: Count not load '%s' nls\n", nls_name);
- 			err = -EINVAL;
--			goto fail_free;
-+			goto fail_destroy_idr;
- 		}
- 	}
- 
-@@ -224,6 +224,7 @@ fail_free:
- 		ida_simple_remove(&vboxsf_bdi_ida, sbi->bdi_id);
- 	if (sbi->nls)
- 		unload_nls(sbi->nls);
-+fail_destroy_idr:
- 	idr_destroy(&sbi->ino_idr);
- 	kfree(sbi);
- 	return err;
+--- a/arch/s390/kernel/entry.S
++++ b/arch/s390/kernel/entry.S
+@@ -699,6 +699,7 @@ ENDPROC(stack_overflow)
+ .Lthis_cpu:	.short	0
+ .Lstosm_tmp:	.byte	0
+ 	.section .rodata, "a"
++	.balign	8
+ #define SYSCALL(esame,emu)	.quad __s390x_ ## esame
+ 	.globl	sys_call_table
+ sys_call_table:
 
 
