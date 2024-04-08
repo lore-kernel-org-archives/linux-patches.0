@@ -1,30 +1,30 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636441465AD
-	for <patches@lists.linux.dev>; Mon,  8 Apr 2024 20:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74D7614600B
+	for <patches@lists.linux.dev>; Mon,  8 Apr 2024 20:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712606844; cv=none; b=nl/t2bgMDcHKrJnBGzBQK99otTYF0bgEnSDyHbH47J1GQa5mE2jmnBhKvvaHoOzz1ebiDG8dPOsFyYDa5T5xkNZ/KhR0zODFuMu3WfZsP/QGQm+6UpfcZbWT2P5Lhcz02hEO3MDw1R9jpqSATkBv7HsUIwAws8CiAj/hIvIbxaI=
+	t=1712606872; cv=none; b=SxlwkouE2x95rBrU/irRQLSowi++bLD85+Em6ckzst5hFSsgJGzNQD4WWQg81BErfhjxhEhkQ3/E3xMqDYptxkvh14aAHce9Iiln9L7/nqJHJzpFon+SlA0oRjCod/NRtaBp60XX3xaFvQQKUuzx3RbO62VbFzjO/aZodCkrz+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712606844; c=relaxed/simple;
-	bh=WltlHLDq8LjdpWjch2/J8wP5JU1xpBITzt0AMqnStb4=;
+	s=arc-20240116; t=1712606872; c=relaxed/simple;
+	bh=4RZHrWkSKjopx8REdxab1MAvkQJ5KivRTA5z1yQcJIo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aREUYzVvpyr0ymPzP8IEJrGgXnVGTUxX0kraG2+FPpO2g/mTI5swS3l1l8UWPJzRjuMU16bFqY7eJtBUIFEY9IWvl+v4sfYmf1ATayOCFJGMhQfFU4/ZHZEExm8vLeUccU7Clk3J01DLm8k7xN/+Oh8z+/NDPy71uAv86pv9fcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=JFs9ax2s; arc=none smtp.client-ip=13.77.154.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zfwjt3lKQ71GePIoahhH1dAPVxh6MVpTi42fgYqIIXA2iBBlCxs4PVD/qnSFOv3QoYvZ9Q26eKeQlzBmXxR3gZjc/9MsEHtVVX0zqWxTmaq7bsKV6UyNqa4r9b9bKpMqQOvj3S8/IgcMvpHCY/CBju9kcs98Vj+lHD6cWl9P2nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=bDST9qjZ; arc=none smtp.client-ip=13.77.154.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="JFs9ax2s"
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="bDST9qjZ"
 Received: by linux.microsoft.com (Postfix, from userid 1131)
-	id 0BE4520EA447; Mon,  8 Apr 2024 13:07:23 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0BE4520EA447
+	id 204D220EA447; Mon,  8 Apr 2024 13:07:51 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 204D220EA447
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1712606843;
-	bh=/aSrf1DAISt0waV7+s3IpY74Ne1v7uCVuxm1tptDBv8=;
+	s=default; t=1712606871;
+	bh=/kc4M6yJ9qTJ0sFpqQ3vqEH4Z4qCN5AjMiJU2JS9mYA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JFs9ax2siOb+i8mnnZVVm9CxwV9b8MDWbYRc+eS2bv8u6eFb9IzplJY0NPcj5mGJ5
-	 eRTi8bQJgX0xWXY0KTHJzVQzZsURWKFJXhX2GfyQh6oBNUGXUiRRh2I9C4zgwySvM+
-	 1SaCZ1bXwsmY9rHfjxRO9kXKn0AaiKKMHvnjIzWs=
-Date: Mon, 8 Apr 2024 13:07:23 -0700
+	b=bDST9qjZr/ZxkAdA+Ut8T+JOAiK3HhvqV6QACHAhk9jemt4qYdGKSrq0GTB3Jp5Ce
+	 nzHWTuFwj//kaLoT/7qBlh6IQh/Yh33c+tavDFgMvU/YsBBLwZPXGFTRJeUWFk7xaM
+	 FcYQL3BvvNOrV21ygwH9YoXBunXPmB1F9rQCYAlw=
+Date: Mon, 8 Apr 2024 13:07:51 -0700
 From: Kelsey Steele <kelseysteele@linux.microsoft.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -34,9 +34,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/138] 6.1.85-rc1 review
-Message-ID: <20240408200723.GB4018@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20240408125256.218368873@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 000/252] 6.6.26-rc1 review
+Message-ID: <20240408200751.GC4018@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20240408125306.643546457@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,12 +45,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On Mon, Apr 08, 2024 at 02:56:54PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.85 release.
-> There are 138 patches in this series, all will be posted as a response
+On Mon, Apr 08, 2024 at 02:54:59PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.26 release.
+> There are 252 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
