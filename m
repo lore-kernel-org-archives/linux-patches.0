@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288212DF73;
-	Mon,  8 Apr 2024 13:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A11768EA;
+	Mon,  8 Apr 2024 13:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582793; cv=none; b=sPOi/hEic3uD/xc/S3VzKBovuRwMtVVoQS0VLCw/dRDh1fTMi/y6120YK14pW61HH9PC1nfhivvaT7tmCQDJ0A6AXV0OmqJdJhjh4j6RPv3xjCpxR3h68amen7g4XWEaTdNQrHEZSN3gj+VleMSMJxr40YOr5OKKpuYCQQzQbbE=
+	t=1712582796; cv=none; b=CMLPFBfpf5hfxivY0IQGJUQ9uhK4UFMuNYZXe3Rm6cF1xiiDtQr/FfmtBMiqec9+qy/V1IS2tPTTqbz45IU1uvg3DcehoaHKQPYONyn3uARGrVFksHihuxLjW2/6KASyzP3IQ2+so4aHh9DdWXTfSyEToyiExmT9C0zAOahbroo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582793; c=relaxed/simple;
-	bh=Ok3HL6gw0QzLFRLNig6jWIz8sc1MKrD2Bs7zD9Jl7YA=;
+	s=arc-20240116; t=1712582796; c=relaxed/simple;
+	bh=6YBEHVxYjXe25cpSd6sBP2WTDbR1eItjZMQJqD9UyTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lg+HvCsnHiORG99z2YagXuAY/q/Jex/a7N2kW1JQCEM6LCOPh+Qx8lzCeyjW2+ze6Lq5kA2IyepMAOQOPXH7XoazjrXE/VoKCy9IWAAO83E62jRD4i+gWZdMxNjEsLi8r6w8hPaRqxGWWX7CHAg6jHkNpyhtMduRsnmBhdmjFf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnZ4djaH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnhTdlcLC5+MZiVWBBICAPWOs4A5TFyrFVm2lglN1AB/34S2tN56x3NU4Kkak/WHP2amyYd+X3RsevriW4As18jFIaJsbxwVk/h9Y0FM1JCcVNbLZHhM51spI/5ZdjA2B8r7SZSbS91/HQUSOuILRm6nl8ov0N3Ikfet2ovh0oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YvZ+xo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnZ4djaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5870C43399;
-	Mon,  8 Apr 2024 13:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YvZ+xo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D088C43390;
+	Mon,  8 Apr 2024 13:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582793;
-	bh=Ok3HL6gw0QzLFRLNig6jWIz8sc1MKrD2Bs7zD9Jl7YA=;
+	s=korg; t=1712582795;
+	bh=6YBEHVxYjXe25cpSd6sBP2WTDbR1eItjZMQJqD9UyTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnZ4djaHuBK8EpZklMt/0HXpsuqp1Nq13APg+Qxoh41BDtuHjw9b2LKODJud2JyCT
-	 xNI9cuVuMT7RqNODJNReNFa0S+QujY/1fhdPpc7NMIgoj2CF7nAh2CFeE5wu6kgRPe
-	 9Ihdisli7gRt871zsMj2vyHr1aCA4xs0A5A4nC5o=
+	b=0YvZ+xo0CSZ0FDYpHuqBnBnCc2FbOLTgbIYgViHrSWClHoyag7EolvXsfwmy5HOih
+	 /5lgYwk32ogwh5W8VixBA6a0Suk+EW439h31wHwvUbapEjGmBtTRAUrK4LcBKyIJL/
+	 c8VXpLUP02gvRnquhTFa4Jl6LiaXzRsxnNSOW5Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 176/690] fsnotify: Protect fsnotify_handle_inode_event from no-inode events
-Date: Mon,  8 Apr 2024 14:50:42 +0200
-Message-ID: <20240408125405.934763379@linuxfoundation.org>
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 134/138] selftests: mptcp: join: fix dev in check_endpoint
+Date: Mon,  8 Apr 2024 14:59:08 +0200
+Message-ID: <20240408125300.397182348@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 24dca90590509a7a6cbe0650100c90c5b8a3468a ]
+commit 40061817d95bce6dd5634a61a65cd5922e6ccc92 upstream.
 
-FAN_FS_ERROR allows events without inodes - i.e. for file system-wide
-errors.  Even though fsnotify_handle_inode_event is not currently used
-by fanotify, this patch protects other backends from cases where neither
-inode or dir are provided.  Also document the constraints of the
-interface (inode and dir cannot be both NULL).
+There's a bug in pm_nl_check_endpoint(), 'dev' didn't be parsed correctly.
+If calling it in the 2nd test of endpoint_tests() too, it fails with an
+error like this:
 
-Link: https://lore.kernel.org/r/20211025192746.66445-12-krisman@collabora.com
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+ creation  [FAIL] expected '10.0.2.2 id 2 subflow dev dev' \
+                     found '10.0.2.2 id 2 subflow dev ns2eth2'
+
+The reason is '$2' should be set to 'dev', not '$1'. This patch fixes it.
+
+Fixes: 69c6ce7b6eca ("selftests: mptcp: add implicit endpoint test case")
+Cc: stable@vger.kernel.org
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-2-324a8981da48@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in mptcp_join.sh: only the fix has been added, not the
+  verification because this modified subtest is quite different in
+  v6.1: to add this verification, we would need to change a bit the
+  subtest: pm_nl_check_endpoint() takes an extra argument for the
+  title, the next chk_subflow_nr() will no longer need the title, etc.
+  Easier with only the fix without the extra test. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c              | 3 +++
- fs/notify/fsnotify.c             | 3 +++
- include/linux/fsnotify_backend.h | 1 +
- 3 files changed, 7 insertions(+)
+Notes:
+---
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 1e8c31ed6c7c4..fbc0628c599af 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -595,6 +595,9 @@ nfsd_file_fsnotify_handle_event(struct fsnotify_mark *mark, u32 mask,
- 				struct inode *inode, struct inode *dir,
- 				const struct qstr *name, u32 cookie)
- {
-+	if (WARN_ON_ONCE(!inode))
-+		return 0;
-+
- 	trace_nfsd_file_fsnotify_handle_event(inode, mask);
- 
- 	/* Should be no marks on non-regular files */
-diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
-index fde3a1115a170..4034ca566f95c 100644
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -252,6 +252,9 @@ static int fsnotify_handle_inode_event(struct fsnotify_group *group,
- 	if (WARN_ON_ONCE(!ops->handle_inode_event))
- 		return 0;
- 
-+	if (WARN_ON_ONCE(!inode && !dir))
-+		return 0;
-+
- 	if ((inode_mark->mask & FS_EXCL_UNLINK) &&
- 	    path && d_unlinked(path->dentry))
- 		return 0;
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index 035438fe4a435..b71dc788018e4 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -136,6 +136,7 @@ struct mem_cgroup;
-  * @dir:	optional directory associated with event -
-  *		if @file_name is not NULL, this is the directory that
-  *		@file_name is relative to.
-+ *		Either @inode or @dir must be non-NULL.
-  * @file_name:	optional file name associated with event
-  * @cookie:	inotify rename cookie
-  *
--- 
-2.43.0
-
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -725,7 +725,7 @@ pm_nl_check_endpoint()
+ 			[ -n "$_flags" ]; flags="flags $_flags"
+ 			shift
+ 		elif [ $1 = "dev" ]; then
+-			[ -n "$2" ]; dev="dev $1"
++			[ -n "$2" ]; dev="dev $2"
+ 			shift
+ 		elif [ $1 = "id" ]; then
+ 			_id=$2
 
 
