@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243A842046;
-	Mon,  8 Apr 2024 13:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7776EB72;
+	Mon,  8 Apr 2024 13:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584536; cv=none; b=oRRPKxCWy8AL1ipaxbb3VDOJglDTcKuxw/YbjdqqNaSu6pXCH9xuuZvK7uuO76YavzgAsjmWpnHD2gL4ZfPiH42W+0V9c2QPOe9xVXXlTwab1rUtGXyc9VkNB50GXAgxIhI/9rAh0Yan7NMLhfmjDH/1PelTZWsLYbA/s/oKgO0=
+	t=1712584539; cv=none; b=feYyl1obAim+g9p1jxM7i1W7XvhtdmSe/3ifV/R6taIli9qOhswB4LHPiJASVWgH3Pj8F4iktG4JlPKTsyzevTClFY5wExb3UISPpTT021M6RsOTUVfzxjD1whwhvzOb3jC7Yjzi5xDWsrg0ZC1c+/f4qPv5HqNaMbcEHn2kQPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584536; c=relaxed/simple;
-	bh=H0ElYoehbUpd1RpRcSWs02ETbTmpiNR0veIvioz6uJ8=;
+	s=arc-20240116; t=1712584539; c=relaxed/simple;
+	bh=EPdeUnJ2a8e1BgDO9ErqsZFuF+RMdFx5Tc7uufLTl7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDJIjytqZf7SL5M9JlEVZQ0oRgf95EzKWScje4tjh2mSJhrhlyAkh8CsWqaUVa1Dd7TChoFalGGYQuMn3I47yVNxzVUTVflkSuC0j9PzDcu002wVzhptbDzKAtF09WsUMhF6cbX2mUH2lcLWj+L31O0zc8ouGg1o7qejmvHtvBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bz7cDlir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AoL4zVTH7WVQCFo/f6nKmhWKeFAY1bwCaLUi2uWq/8e115q3XKU9zES2JPxq0LLaZbL72wvLYhJRNMe9hXBcQRHPlByvJVaqficMD/EYuB6wADfjq7r2G8v+g2iT0g5wVIVpwSi5js0guRwk6kfq4ktX8Zwgg3K6rg3cb/boyF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQfhgThQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bz7cDlir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AD8C433F1;
-	Mon,  8 Apr 2024 13:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQfhgThQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2CEC433F1;
+	Mon,  8 Apr 2024 13:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584536;
-	bh=H0ElYoehbUpd1RpRcSWs02ETbTmpiNR0veIvioz6uJ8=;
+	s=korg; t=1712584538;
+	bh=EPdeUnJ2a8e1BgDO9ErqsZFuF+RMdFx5Tc7uufLTl7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bz7cDlirS9GfdMA3E1SJU1YxIjPlqGlGkZ+1ICCgT8e/nRKMtP8P4kD8/OkQIRDys
-	 fFPBQ7mwpZfrrb56UhAJPQhrIsPOFKz9Esy9nxZeN9I4Gkxc8sDPdouPTqhyVyGo+A
-	 Z08rPB9Xp19nM4rhpH0vkuoa9QrGOt8T2xb7FkPU=
+	b=tQfhgThQUVpvB46wgOJdTtX7scYBx/H+46pSXC4x80O4ygndhrrR/UYtba9EBYmz5
+	 /hgtHYOYWQ1rs648ZWrh6BXhfS+ChegGwR4jVV5PnuQvaTDuS3enqq4xURAAtSKsoR
+	 jKkN/9GE9WM/mLs2NpqkNokmsu1bBgYL4CE22OBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 471/690] NFSD: Remove redundant assignment to variable host_err
-Date: Mon,  8 Apr 2024 14:55:37 +0200
-Message-ID: <20240408125416.667785590@linuxfoundation.org>
+Subject: [PATCH 5.15 472/690] NFSD: Finish converting the NFSv3 GETACL result encoder
+Date: Mon,  8 Apr 2024 14:55:38 +0200
+Message-ID: <20240408125416.702131260@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,36 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 69eed23baf877bbb1f14d7f4df54f89807c9ee2a ]
+[ Upstream commit 841fd0a3cb490eae5dfd262eccb8c8b11d57f8b8 ]
 
-Variable host_err is assigned a value that is never read, it is being
-re-assigned a value in every different execution path in the following
-switch statement. The assignment is redundant and can be removed.
+For some reason, the NFSv2 GETACL result encoder was fully converted
+to use the new nfs_stream_encode_acl(), but the NFSv3 equivalent was
+not similarly converted.
 
-Cleans up clang-scan warning:
-warning: Value stored to 'host_err' is never read [deadcode.DeadStores]
-
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Fixes: 20798dfe249a ("NFSD: Update the NFSv3 GETACL result encoder to use struct xdr_stream")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/vfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfsd/nfs3acl.c | 30 ++++++------------------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 9215350ad095c..88a2ad962a055 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1306,7 +1306,6 @@ nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		iap->ia_mode &= ~current_umask();
+diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
+index 2fb9ee3564558..a34a22e272ad5 100644
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -171,11 +171,7 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+ 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
+ 	struct dentry *dentry = resp->fh.fh_dentry;
+-	struct kvec *head = rqstp->rq_res.head;
+ 	struct inode *inode;
+-	unsigned int base;
+-	int n;
+-	int w;
  
- 	err = 0;
--	host_err = 0;
- 	switch (type) {
- 	case S_IFREG:
- 		host_err = vfs_create(&init_user_ns, dirp, dchild, iap->ia_mode, true);
+ 	if (!svcxdr_encode_nfsstat3(xdr, resp->status))
+ 		return false;
+@@ -187,26 +183,12 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ 		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
+ 			return false;
+ 
+-		base = (char *)xdr->p - (char *)head->iov_base;
+-
+-		rqstp->rq_res.page_len = w = nfsacl_size(
+-			(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
+-			(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
+-		while (w > 0) {
+-			if (!*(rqstp->rq_next_page++))
+-				return false;
+-			w -= PAGE_SIZE;
+-		}
+-
+-		n = nfsacl_encode(&rqstp->rq_res, base, inode,
+-				  resp->acl_access,
+-				  resp->mask & NFS_ACL, 0);
+-		if (n > 0)
+-			n = nfsacl_encode(&rqstp->rq_res, base + n, inode,
+-					  resp->acl_default,
+-					  resp->mask & NFS_DFACL,
+-					  NFS_ACL_DEFAULT);
+-		if (n <= 0)
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
++					   resp->mask & NFS_ACL, 0))
++			return false;
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
++					   resp->mask & NFS_DFACL,
++					   NFS_ACL_DEFAULT))
+ 			return false;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
