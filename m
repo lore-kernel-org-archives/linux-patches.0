@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C06C7641E;
-	Mon,  8 Apr 2024 13:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E8F7D07F;
+	Mon,  8 Apr 2024 13:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581469; cv=none; b=GXrPRq05+CFHQfLl2ZB3dAzlLFrJd2DLP+TwyT+H2Z5IwtIS0wlFwW6hbScjerc4EvxJOEZ4H1OaCmwGyeogeqKy2Nh1roEEa0X3omXpxcUVYpE8v/rspkOIYrlvDxr5y/Fd5OU4CaF5GiMxoIq/eZrF1YzAGB+MDk5reg9hHgg=
+	t=1712581472; cv=none; b=CxLf0EnqGEZsQOE9yO7Duq8HHbJxqhu3DjJvDEsf/G/Es6pxik517zeEq6VrVOVInsZjVx50+1y6E9k6Lv3+c7p84QCv2lXVEpKK5hHy5kPxbccb0IcJoUW+6CmI5AsNNc3MdwIlUexYwvCQVZXptPQJM1n2vjiKEp5mgTXYTqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581469; c=relaxed/simple;
-	bh=DEig/NCiH5gQfUVE36t4b5jmkDZfM0BFnJUSMp4y8jg=;
+	s=arc-20240116; t=1712581472; c=relaxed/simple;
+	bh=ArSJAl4tSTJCvgIh8UUN+38Yda4QLUf5+JhT6Htf9jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i92E+vwjYt2dnB1Ni+DDAy6dMs1CzXw7azq4OC3HsuhmfeVaxfPGeOlu/EpOaNQRMI2i9ByfDPWq2YbFG+/vQyrkKjGG8XVOGSaP/R28nwCU1bgfX0kKhbrzoFyUNdfCM1MrDP5sr7zZoE4cVQWp5k2KrSM1qpVTOA6dcxxSJTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luF6FSKQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETOOkRux1n2T6cPZTZMlXfxEMLARA0lsC8hFG+PfqJqpJegswgr/XPIaqeIWEqIL19CtjjoTZgfwSnwCe+31mMDHesJjL2UdYqgtxACH4dEeUPYhqF1gpY41y+NajBsa6cpuSNdufZ+j86YPN14EkA6QcGJI9ruywSnRPQKDztk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NwTzRco; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luF6FSKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E93C433C7;
-	Mon,  8 Apr 2024 13:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NwTzRco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C5CC433C7;
+	Mon,  8 Apr 2024 13:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581469;
-	bh=DEig/NCiH5gQfUVE36t4b5jmkDZfM0BFnJUSMp4y8jg=;
+	s=korg; t=1712581471;
+	bh=ArSJAl4tSTJCvgIh8UUN+38Yda4QLUf5+JhT6Htf9jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luF6FSKQRBQMxnlikOQX4+Qwl2F6e6O/yorVwQQ4EPBhDe7cnpf06egQdLtY612tV
-	 ww02gmrgwi0sPyoe1XjCHh2m52kJ/giy4Pac0wg/Z/fI/G5234xeb1mEWpBPLOT3F1
-	 9GOmgOTOUGoI+ji7iPYFpE/hgNbn6g+zQ0ibZXho=
+	b=2NwTzRcoxp8LWjylWWqXI2zIyYZKF83OXHe6gvuuDMBAcqDeKIlJyzyrY3fXwZlkY
+	 S4GOSTJzEKFApiuvGjlZ/sgxP71flQ/ue4kmnxieNCTC2HF6KuSRcDcBKaWl/FcR2m
+	 YUgx5kHxIoTcsEMmZCM6S3CJJ0I6VnLbEJSh06jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/138] x86/cpufeatures: Add new word for scattered features
-Date: Mon,  8 Apr 2024 14:57:18 +0200
-Message-ID: <20240408125256.981736281@linuxfoundation.org>
+Subject: [PATCH 6.6 009/252] tools: ynl: fix setting presence bits in simple nests
+Date: Mon,  8 Apr 2024 14:55:08 +0200
+Message-ID: <20240408125306.937244177@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7f274e609f3d5f45c22b1dd59053f6764458b492 ]
+[ Upstream commit f6c8f5e8694c7a78c94e408b628afa6255cc428a ]
 
-Add a new word for scattered features because all free bits among the
-existing Linux-defined auxiliary flags have been exhausted.
+When we set members of simple nested structures in requests
+we need to set "presence" bits for all the nesting layers
+below. This has nothing to do with the presence type of
+the last layer.
 
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/8380d2a0da469a1f0ad75b8954a79fb689599ff6.1711091584.git.sandipan.das@amd.com
-Stable-dep-of: 598c2fafc06f ("perf/x86/amd/lbr: Use freeze based on availability")
+Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20240321020214.1250202-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpufeature.h        | 6 ++++--
- arch/x86/include/asm/cpufeatures.h       | 2 +-
- arch/x86/include/asm/disabled-features.h | 3 ++-
- arch/x86/include/asm/required-features.h | 3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ tools/net/ynl/ynl-gen-c.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpufeature.h b/arch/x86/include/asm/cpufeature.h
-index f835b328ba24f..578c3020be7b4 100644
---- a/arch/x86/include/asm/cpufeature.h
-+++ b/arch/x86/include/asm/cpufeature.h
-@@ -96,8 +96,9 @@ extern const char * const x86_bug_flags[NBUGINTS*32];
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 18, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 19, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 20, feature_bit) ||	\
-+	   CHECK_BIT_IN_MASK_WORD(REQUIRED_MASK, 21, feature_bit) ||	\
- 	   REQUIRED_MASK_CHECK					  ||	\
--	   BUILD_BUG_ON_ZERO(NCAPINTS != 21))
-+	   BUILD_BUG_ON_ZERO(NCAPINTS != 22))
+diff --git a/tools/net/ynl/ynl-gen-c.py b/tools/net/ynl/ynl-gen-c.py
+index 897af958cee85..575b7e248e521 100755
+--- a/tools/net/ynl/ynl-gen-c.py
++++ b/tools/net/ynl/ynl-gen-c.py
+@@ -198,8 +198,11 @@ class Type(SpecAttr):
+         presence = ''
+         for i in range(0, len(ref)):
+             presence = f"{var}->{'.'.join(ref[:i] + [''])}_present.{ref[i]}"
+-            if self.presence_type() == 'bit':
+-                code.append(presence + ' = 1;')
++            # Every layer below last is a nest, so we know it uses bit presence
++            # last layer is "self" and may be a complex type
++            if i == len(ref) - 1 and self.presence_type() != 'bit':
++                continue
++            code.append(presence + ' = 1;')
+         code += self._setter_lines(ri, member, presence)
  
- #define DISABLED_MASK_BIT_SET(feature_bit)				\
- 	 ( CHECK_BIT_IN_MASK_WORD(DISABLED_MASK,  0, feature_bit) ||	\
-@@ -121,8 +122,9 @@ extern const char * const x86_bug_flags[NBUGINTS*32];
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 18, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 19, feature_bit) ||	\
- 	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 20, feature_bit) ||	\
-+	   CHECK_BIT_IN_MASK_WORD(DISABLED_MASK, 21, feature_bit) ||	\
- 	   DISABLED_MASK_CHECK					  ||	\
--	   BUILD_BUG_ON_ZERO(NCAPINTS != 21))
-+	   BUILD_BUG_ON_ZERO(NCAPINTS != 22))
- 
- #define cpu_has(c, bit)							\
- 	(__builtin_constant_p(bit) && REQUIRED_MASK_BIT_SET(bit) ? 1 :	\
-diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
-index 9a157942ae3dd..09cca23f020eb 100644
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -13,7 +13,7 @@
- /*
-  * Defines x86 CPU feature bits
-  */
--#define NCAPINTS			21	   /* N 32-bit words worth of info */
-+#define NCAPINTS			22	   /* N 32-bit words worth of info */
- #define NBUGINTS			2	   /* N 32-bit bug flags */
- 
- /*
-diff --git a/arch/x86/include/asm/disabled-features.h b/arch/x86/include/asm/disabled-features.h
-index 000037078db43..380e963149cc7 100644
---- a/arch/x86/include/asm/disabled-features.h
-+++ b/arch/x86/include/asm/disabled-features.h
-@@ -112,6 +112,7 @@
- #define DISABLED_MASK18	0
- #define DISABLED_MASK19	0
- #define DISABLED_MASK20	0
--#define DISABLED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 21)
-+#define DISABLED_MASK21	0
-+#define DISABLED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 22)
- 
- #endif /* _ASM_X86_DISABLED_FEATURES_H */
-diff --git a/arch/x86/include/asm/required-features.h b/arch/x86/include/asm/required-features.h
-index 7ba1726b71c7b..e9187ddd3d1fd 100644
---- a/arch/x86/include/asm/required-features.h
-+++ b/arch/x86/include/asm/required-features.h
-@@ -99,6 +99,7 @@
- #define REQUIRED_MASK18	0
- #define REQUIRED_MASK19	0
- #define REQUIRED_MASK20	0
--#define REQUIRED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 21)
-+#define REQUIRED_MASK21	0
-+#define REQUIRED_MASK_CHECK BUILD_BUG_ON_ZERO(NCAPINTS != 22)
- 
- #endif /* _ASM_X86_REQUIRED_FEATURES_H */
+         func_name = f"{op_prefix(ri, direction, deref=deref)}_set_{'_'.join(ref)}"
 -- 
 2.43.0
 
