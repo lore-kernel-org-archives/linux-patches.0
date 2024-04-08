@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AC37BB15;
-	Mon,  8 Apr 2024 13:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40CF8120F;
+	Mon,  8 Apr 2024 13:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583183; cv=none; b=UbUXXXkxtKMMN5Olu6obIr8hgEAQuSBlkapfSuaH9VEumm4aEa9loZYFhivXPBpGmJsoZnm+Cf98EZkmKkDAR/N/ZCSb3jyI0CZatuOzmnYxVTzqmEDbIeB5BjedM/Kdx4ijGSpL7cv44as7aNKRWH3zb1ADp+aGku52QCMb3GI=
+	t=1712583186; cv=none; b=h6ajc5PVAYC13Odq9lvehwyr4zm4lod1YK395Rwsw12MthJgG8CthUdZwMcj0CUiGGGIYAHS1nBfi5la5UPyx2B7/dfkSuffrJyILZEIzugPKhzSeJ5r6y3Ij7UVa6MTtVN+e9PiRgiLoabMs4jFEzTyeRB07MWEXajokDe8cCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583183; c=relaxed/simple;
-	bh=Eueu/bweULtXvbFJ6fge3m12UFv5OIQIjlKosWICp4M=;
+	s=arc-20240116; t=1712583186; c=relaxed/simple;
+	bh=uYX9CIpYMOj6v+skSJY9IhaWbE5/PmOkAo7+GNFAPNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pG1N34x5vjmA0rIJOhmgzNzPS8IdZkYeawd4t39j9WjRhzvZXHYynDGG99YDSkBVnA3Oy4MeqQsF80FEQo0ewEUx4sZGGJ+1WPlgZjxznhi70rykG2BA4lmswfsiMALMoK+ugngXrAv4YsVMZZG61v/pWQCj5SE5SAj5tlQ3a+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9nKXJc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCskAlVtOUthC9PsYor2kHs2XV0RkOooH6cAr7jgYtUzQyaKLB26bQLi4sOXHijOTVF5ygMmKiJ1oBfTfgtgdEqTtHTVGEWMdXiJjNgvC9gOiQi0iOD87Gxehs6TDIpUtoNhNFKI5TTWoOVztzDMrW1XQJd91yiBHPSvioSdnTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMfXyrRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9nKXJc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4F3C433C7;
-	Mon,  8 Apr 2024 13:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMfXyrRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14D2C433F1;
+	Mon,  8 Apr 2024 13:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583183;
-	bh=Eueu/bweULtXvbFJ6fge3m12UFv5OIQIjlKosWICp4M=;
+	s=korg; t=1712583186;
+	bh=uYX9CIpYMOj6v+skSJY9IhaWbE5/PmOkAo7+GNFAPNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9nKXJc4HOAPxirt9yksRPZW/gAJczqWqQdmopBYBV4LV/Te8lGz5UZw3Ak/tU4e+
-	 H8m3fgtRnvqpw3/PIa0y06V1VPYoHzVmeC4r6iju/tqg0GX4jEcTqRNg2KGkU/PcKi
-	 6Tir4U+8eoKAUXsVd2v3KYghQa3RMb1DDakdZPas=
+	b=sMfXyrRrEHWIc750Rt4erC42d0obIAXUquQgDS7gEW64ZJXvZaQx+hVLW9APWQvIq
+	 WpUy6gJTKzzvY3ZuXIjn8mFFPlPS+69Q8H9eNTcrlLAGu+I/YWg5aHPTRMDleVKRBp
+	 Icz99WRlfBOudzqoHJIOVDJWr3MSEcB2QC1G45Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Behr <dbehr@chromium.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Simon Ser <contact@emersion.fr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/252] drm/prime: Unbreak virtgpu dma-buf export
-Date: Mon,  8 Apr 2024 14:57:46 +0200
-Message-ID: <20240408125311.846284438@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 220/690] fanotify: record old and new parent and name in FAN_RENAME event
+Date: Mon,  8 Apr 2024 14:51:26 +0200
+Message-ID: <20240408125407.517385615@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit a4ec240f6b7c21cf846d10017c3ce423a0eae92c ]
+[ Upstream commit 3982534ba5ce45e890b2f5ef5e7372c1accd14c7 ]
 
-virtgpu "vram" GEM objects do not implement obj->get_sg_table().  But
-they also don't use drm_gem_map_dma_buf().  In fact they may not even
-have guest visible pages.  But it is perfectly fine to export and share
-with other virtual devices.
+In the special case of FAN_RENAME event, we record both the old
+and new parent and name.
 
-Reported-by: Dominik Behr <dbehr@chromium.org>
-Fixes: 207395da5a97 ("drm/prime: reject DMA-BUF attach when get_sg_table is missing")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Simon Ser <contact@emersion.fr>
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240322214801.319975-1-robdclark@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20211129201537.1932819-9-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpu/drm/drm_prime.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/notify/fanotify/fanotify.c | 42 +++++++++++++++++++++++++++++++----
+ include/uapi/linux/fanotify.h |  2 ++
+ 2 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
-index 7352bde299d54..03bd3c7bd0dc2 100644
---- a/drivers/gpu/drm/drm_prime.c
-+++ b/drivers/gpu/drm/drm_prime.c
-@@ -582,7 +582,12 @@ int drm_gem_map_attach(struct dma_buf *dma_buf,
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index 5f184b2d6ea7c..db81eab905442 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -592,21 +592,28 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
+ 							__kernel_fsid_t *fsid,
+ 							const struct qstr *name,
+ 							struct inode *child,
++							struct dentry *moved,
+ 							unsigned int *hash,
+ 							gfp_t gfp)
  {
- 	struct drm_gem_object *obj = dma_buf->priv;
+ 	struct fanotify_name_event *fne;
+ 	struct fanotify_info *info;
+ 	struct fanotify_fh *dfh, *ffh;
++	struct inode *dir2 = moved ? d_inode(moved->d_parent) : NULL;
++	const struct qstr *name2 = moved ? &moved->d_name : NULL;
+ 	unsigned int dir_fh_len = fanotify_encode_fh_len(dir);
++	unsigned int dir2_fh_len = fanotify_encode_fh_len(dir2);
+ 	unsigned int child_fh_len = fanotify_encode_fh_len(child);
+ 	unsigned long name_len = name ? name->len : 0;
++	unsigned long name2_len = name2 ? name2->len : 0;
+ 	unsigned int len, size;
  
--	if (!obj->funcs->get_sg_table)
-+	/*
-+	 * drm_gem_map_dma_buf() requires obj->get_sg_table(), but drivers
-+	 * that implement their own ->map_dma_buf() do not.
-+	 */
-+	if (dma_buf->ops->map_dma_buf == drm_gem_map_dma_buf &&
-+	    !obj->funcs->get_sg_table)
- 		return -ENOSYS;
+ 	/* Reserve terminating null byte even for empty name */
+-	size = sizeof(*fne) + name_len + 1;
++	size = sizeof(*fne) + name_len + name2_len + 2;
+ 	if (dir_fh_len)
+ 		size += FANOTIFY_FH_HDR_LEN + dir_fh_len;
++	if (dir2_fh_len)
++		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
+ 	if (child_fh_len)
+ 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
+ 	fne = kmalloc(size, gfp);
+@@ -623,6 +630,11 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
+ 		len = fanotify_encode_fh(dfh, dir, dir_fh_len, hash, 0);
+ 		fanotify_info_set_dir_fh(info, len);
+ 	}
++	if (dir2_fh_len) {
++		dfh = fanotify_info_dir2_fh(info);
++		len = fanotify_encode_fh(dfh, dir2, dir2_fh_len, hash, 0);
++		fanotify_info_set_dir2_fh(info, len);
++	}
+ 	if (child_fh_len) {
+ 		ffh = fanotify_info_file_fh(info);
+ 		len = fanotify_encode_fh(ffh, child, child_fh_len, hash, 0);
+@@ -632,11 +644,22 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
+ 		fanotify_info_copy_name(info, name);
+ 		*hash ^= full_name_hash((void *)name_len, name->name, name_len);
+ 	}
++	if (name2_len) {
++		fanotify_info_copy_name2(info, name2);
++		*hash ^= full_name_hash((void *)name2_len, name2->name,
++					name2_len);
++	}
  
- 	return drm_gem_pin(obj);
+ 	pr_debug("%s: size=%u dir_fh_len=%u child_fh_len=%u name_len=%u name='%.*s'\n",
+ 		 __func__, size, dir_fh_len, child_fh_len,
+ 		 info->name_len, info->name_len, fanotify_info_name(info));
+ 
++	if (dir2_fh_len) {
++		pr_debug("%s: dir2_fh_len=%u name2_len=%u name2='%.*s'\n",
++			 __func__, dir2_fh_len, info->name2_len,
++			 info->name2_len, fanotify_info_name2(info));
++	}
++
+ 	return &fne->fae;
+ }
+ 
+@@ -692,6 +715,7 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
+ 	struct inode *dirid = fanotify_dfid_inode(mask, data, data_type, dir);
+ 	const struct path *path = fsnotify_data_path(data, data_type);
+ 	struct mem_cgroup *old_memcg;
++	struct dentry *moved = NULL;
+ 	struct inode *child = NULL;
+ 	bool name_event = false;
+ 	unsigned int hash = 0;
+@@ -727,6 +751,15 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
+ 		} else if ((mask & ALL_FSNOTIFY_DIRENT_EVENTS) || !ondir) {
+ 			name_event = true;
+ 		}
++
++		/*
++		 * In the special case of FAN_RENAME event, we record both
++		 * old and new parent+name.
++		 * 'dirid' and 'file_name' are the old parent+name and
++		 * 'moved' has the new parent+name.
++		 */
++		if (mask & FAN_RENAME)
++			moved = fsnotify_data_dentry(data, data_type);
+ 	}
+ 
+ 	/*
+@@ -748,9 +781,9 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
+ 	} else if (fanotify_is_error_event(mask)) {
+ 		event = fanotify_alloc_error_event(group, fsid, data,
+ 						   data_type, &hash);
+-	} else if (name_event && (file_name || child)) {
+-		event = fanotify_alloc_name_event(id, fsid, file_name, child,
+-						  &hash, gfp);
++	} else if (name_event && (file_name || moved || child)) {
++		event = fanotify_alloc_name_event(dirid, fsid, file_name, child,
++						  moved, &hash, gfp);
+ 	} else if (fid_mode) {
+ 		event = fanotify_alloc_fid_event(id, fsid, &hash, gfp);
+ 	} else {
+@@ -860,6 +893,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
+ 	BUILD_BUG_ON(FAN_OPEN_EXEC != FS_OPEN_EXEC);
+ 	BUILD_BUG_ON(FAN_OPEN_EXEC_PERM != FS_OPEN_EXEC_PERM);
+ 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
++	BUILD_BUG_ON(FAN_RENAME != FS_RENAME);
+ 
+ 	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
+ 
+diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
+index 60f73639a896a..9d0e2dc5767b5 100644
+--- a/include/uapi/linux/fanotify.h
++++ b/include/uapi/linux/fanotify.h
+@@ -28,6 +28,8 @@
+ 
+ #define FAN_EVENT_ON_CHILD	0x08000000	/* Interested in child events */
+ 
++#define FAN_RENAME		0x10000000	/* File was renamed */
++
+ #define FAN_ONDIR		0x40000000	/* Event occurred against dir */
+ 
+ /* helper events */
 -- 
 2.43.0
 
