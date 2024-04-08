@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3157EF1E;
-	Mon,  8 Apr 2024 13:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D4F7EF1E;
+	Mon,  8 Apr 2024 13:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582276; cv=none; b=iuXNcyWfCAYRsPBt+vpxghbx+Lr2hZE+rTfY+4y6lA0oB6EWMVFknpGCNiUo59HVCWzo9SM/eTQp1P0qn8/YMLVhxjrfXk+Y1GEk95wUChSKJWCCyw2HdA0D/R+9jsy7vyfbUM1yx9rcSXV83jttSRT5ySUwyYjTRLwXw7hTJ0U=
+	t=1712582279; cv=none; b=AhuoMaxJbC8rNHu2BIIpI6EuLwI9t6G7kZwfkFPyQJzDhNb0lrHXEj+wmswL6d7+XluN99Wcn7oob47GZSos9cgAaK4Nsjbri56a348B4Fr8OA3DrxoW9uO2z6JSDe6EDYCuX9kbLUIJiX6wMnC4QQq5NJuxjwAJf1L4WOLI3x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582276; c=relaxed/simple;
-	bh=cwfI24eRqambZ5N9WGBGodUkapd5kBCKHHczLtvuVz0=;
+	s=arc-20240116; t=1712582279; c=relaxed/simple;
+	bh=gFC03ZUrKDoI5wjmqMgNN7D/1ZHK25grRXC+l6Rorzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwNOF7uKq5Nk2ZIwfHVR9bx240or2LW5rz7icXH37je6BSgA2oaBKSFcun4MwEDn+eujk2o/Xx97QGkGqOBob46o3iq8jljucwc3QzH5QfpxwThFfYLLTLDO10qX/Puv7Z4T0zBNQ34Z4gHZTVgTiwo3Oj1Nw10I2C+kPuarzj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYdiaiDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAmasaQr43YvoVg7VCHttfCgPisPUyOJHcq15+0xYxU8CFfopnwdE6c7s3ql1csmDpk0hfGKPl5v2WfmoJtKLtcM+dw1Pi6G9vck7JzrdJlsMlwnWYsGkuJfVTp6lLbbY/X/E1U4tnS5JWPC4yswaiMCYzcYYfbrEaiRuXQPYIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgJOh+er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYdiaiDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4436C43390;
-	Mon,  8 Apr 2024 13:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgJOh+er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93848C433C7;
+	Mon,  8 Apr 2024 13:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582276;
-	bh=cwfI24eRqambZ5N9WGBGodUkapd5kBCKHHczLtvuVz0=;
+	s=korg; t=1712582279;
+	bh=gFC03ZUrKDoI5wjmqMgNN7D/1ZHK25grRXC+l6Rorzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYdiaiDHQtrOHyMLIwd/FhzVAaylyvXblnwUqBbMl+DRnfsRBn+3v9KZ7P4p7jaf4
-	 6AK0XHeRkFQeBTw3NUy9yD+HLYHhF3/EZwctvIprTDOlYVWLQ9IoSNPoM4V64wkCpW
-	 36l0wN9cSY0G216YkLTJdaps/WBQeT3F7IneKWtw=
+	b=jgJOh+erMTnA3OZEEca7aHNSsycwnhXgnZKTtSHxZjmUpMZkj0KQenP9gzekB5RPW
+	 PdIu6rfw8ZIBsf2Eh2eItUSlVopXuKGFSV0iMU5AaOnqrvkB1bZkTBMTt6acLQ2ytn
+	 ilYIrzQ2eFjRIQSqWqikpodd7ZqLtkPl9/c2lFE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Hui Wang <hui.wang@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 080/252] Bluetooth: hci_event: set the conn encrypted before conn establishes
-Date: Mon,  8 Apr 2024 14:56:19 +0200
-Message-ID: <20240408125309.122165528@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 129/690] usb: port: Dont try to peer unused USB ports based on location
+Date: Mon,  8 Apr 2024 14:49:55 +0200
+Message-ID: <20240408125404.210615341@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,112 +46,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit c569242cd49287d53b73a94233db40097d838535 upstream.
+commit 69c63350e573367f9c8594162288cffa8a26d0d1 upstream.
 
-We have a BT headset (Lenovo Thinkplus XT99), the pairing and
-connecting has no problem, once this headset is paired, bluez will
-remember this device and will auto re-connect it whenever the device
-is powered on. The auto re-connecting works well with Windows and
-Android, but with Linux, it always fails. Through debugging, we found
-at the rfcomm connection stage, the bluetooth stack reports
-"Connection refused - security block (0x0003)".
+Unused USB ports may have bogus location data in ACPI PLD tables.
+This causes port peering failures as these unused USB2 and USB3 ports
+location may match.
 
-For this device, the re-connecting negotiation process is different
-from other BT headsets, it sends the Link_KEY_REQUEST command before
-the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
-command during the negotiation. When the device sends the "connect
-complete" to hci, the ev->encr_mode is 1.
+Due to these failures the driver prints a
+"usb: port power management may be unreliable" warning, and
+unnecessarily blocks port power off during runtime suspend.
 
-So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
-is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
-this conn, and update conn->enc_key_size accordingly.
+This was debugged on a couple DELL systems where the unused ports
+all returned zeroes in their location data.
+Similar bugreports exist for other systems.
 
-After this change, this BT headset could re-connect with Linux
-successfully. This is the btmon log after applying the patch, after
-receiving the "Connect Complete" with "Encryption: Enabled", will send
-the command to read encryption key size:
-> HCI Event: Connect Request (0x04) plen 10
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Class: 0x240404
-          Major class: Audio/Video (headset, speaker, stereo, video, vcr)
-          Minor class: Wearable Headset Device
-          Rendering (Printing, Speaker)
-          Audio (Speaker, Microphone, Headset)
-        Link type: ACL (0x01)
-...
-> HCI Event: Link Key Request (0x17) plen 6
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-< HCI Command: Link Key Request Reply (0x01|0x000b) plen 22
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link key: ${32-hex-digits-key}
-...
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 256
-        Address: 8C:3C:AA:D8:11:67 (OUI 8C-3C-AA)
-        Link type: ACL (0x01)
-        Encryption: Enabled (0x01)
-< HCI Command: Read Encryption Key... (0x05|0x0008) plen 2
-        Handle: 256
-< ACL Data TX: Handle 256 flags 0x00 dlen 10
-      L2CAP: Information Request (0x0a) ident 1 len 2
-        Type: Extended features supported (0x0002)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Success (0x00)
-        Handle: 256
-        Key size: 16
+Don't try to peer or match ports that have connect type set to
+USB_PORT_NOT_USED.
 
-Cc: stable@vger.kernel.org
-Link: https://github.com/bluez/bluez/issues/704
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3bfd659baec8 ("usb: find internal hub tier mismatch via acpi")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218465
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218486
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/linux-usb/5406d361-f5b7-4309-b0e6-8c94408f7d75@molgen.mpg.de
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218490
+Link: https://lore.kernel.org/r/20240222233343.71856-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/usb/core/port.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3219,6 +3219,31 @@ static void hci_conn_complete_evt(struct
- 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
- 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -450,7 +450,7 @@ static int match_location(struct usb_dev
+ 	struct usb_hub *peer_hub = usb_hub_to_struct_hub(peer_hdev);
+ 	struct usb_device *hdev = to_usb_device(port_dev->dev.parent->parent);
  
-+		/* "Link key request" completed ahead of "connect request" completes */
-+		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
-+		    ev->link_type == ACL_LINK) {
-+			struct link_key *key;
-+			struct hci_cp_read_enc_key_size cp;
-+
-+			key = hci_find_link_key(hdev, &ev->bdaddr);
-+			if (key) {
-+				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
-+
-+				if (!(hdev->commands[20] & 0x10)) {
-+					conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+				} else {
-+					cp.handle = cpu_to_le16(conn->handle);
-+					if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
-+							 sizeof(cp), &cp)) {
-+						bt_dev_err(hdev, "sending read key size failed");
-+						conn->enc_key_size = HCI_LINK_KEY_SIZE;
-+					}
-+				}
-+
-+				hci_encrypt_cfm(conn, ev->status);
-+			}
-+		}
-+
- 		/* Get remote features */
- 		if (conn->type == ACL_LINK) {
- 			struct hci_cp_read_remote_features cp;
+-	if (!peer_hub)
++	if (!peer_hub || port_dev->connect_type == USB_PORT_NOT_USED)
+ 		return 0;
+ 
+ 	hcd = bus_to_hcd(hdev->bus);
+@@ -461,7 +461,8 @@ static int match_location(struct usb_dev
+ 
+ 	for (port1 = 1; port1 <= peer_hdev->maxchild; port1++) {
+ 		peer = peer_hub->ports[port1 - 1];
+-		if (peer && peer->location == port_dev->location) {
++		if (peer && peer->connect_type != USB_PORT_NOT_USED &&
++		    peer->location == port_dev->location) {
+ 			link_peers_report(port_dev, peer);
+ 			return 1; /* done */
+ 		}
 
 
