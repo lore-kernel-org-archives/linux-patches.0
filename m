@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D046B78285;
-	Mon,  8 Apr 2024 13:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA9B7FBD3;
+	Mon,  8 Apr 2024 13:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583151; cv=none; b=ijs7TlqgDqWdZYLpDhg9EKy4oeJrCQeGmuJSIKJGtR6kQYZpIBr5JiYe/olbWNCz85qcFtVOHztrNsWetIeG9SDLSyKZxEMhnVzgLacxBuNuaR6tO0BAKHoAkH2NKkmlU/eDnl8V6dpO2J5jYD65jd+BfMEW2bqOTAvC+FHWm7E=
+	t=1712583154; cv=none; b=g56Hfw/j/NWiXStmicQpGwCmZa0QfmUJ7XY7zkHxjgCwrEDU+48MwI4wdAMhm3HDN5yqPLnnRA1gruF3rJMYcy9e2spP+SiwHRftn4M533ScV5rLLHsIXcDm7KlwIfDbEsMPGX0V1H+V+yi3YiEetTWue0Ynwq2ZR3yA3FX5hdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583151; c=relaxed/simple;
-	bh=nTjnRkWYS18rONTKADiJ2NqOUmnuDfJEFJmHogRGBqw=;
+	s=arc-20240116; t=1712583154; c=relaxed/simple;
+	bh=IySIGsMeS3AdL6uIJiPnPi/9LhYoK/vvd7BGYtUMoHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjLEuzF4zHPiuPojH4KEeeMiwucgL7PNIeRPPFnPFaA7isPat5SI4NfbV0WG++uGoiQEl3eI+BWYFPir+Ryl6+3W7+J18vCUBL7+3+Vda9q5q2LuldbJDzYJ68OdCrJZejAoyLB8iPQIkw5tBktBa3NWEqrJ8m0taKTRybsBjyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKD/mqx7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LfABKBcdSJa/tVtkuI96KTlerXfvRj8g+ZmNbl1GBw4C9ZcaqOxz3mGX+ZUN8OZrzKh893BT/OmZtyABIp2QgGvli0w4THUSSt7UA6ITaPVNracA40wg2ifMyj18yLTbui72JHZ+B7jcU9+M4wjpVorN/AYvWfe3vHlP95ZjqzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SffaSROb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKD/mqx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61C8C433F1;
-	Mon,  8 Apr 2024 13:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SffaSROb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39C4C433F1;
+	Mon,  8 Apr 2024 13:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583151;
-	bh=nTjnRkWYS18rONTKADiJ2NqOUmnuDfJEFJmHogRGBqw=;
+	s=korg; t=1712583154;
+	bh=IySIGsMeS3AdL6uIJiPnPi/9LhYoK/vvd7BGYtUMoHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKD/mqx7w5m0XrXJgHRWF8eerHbiBLzS5N6A4dKxgtJK68Qfwn5/NifVPn5YB2l4w
-	 QRsD1DUcQ76dL+qpBhfCfCsdT/zL2q8Hd506g2OL5Qs6bVoRBiSh6IjLbUqmO6bb5W
-	 e95eOV8KHSAq8noAZwKl5vtCeA9r4plbuRyKxFUg=
+	b=SffaSRObjZuLpCYehEBUGh+PCLu6kfHEJ5Fj8p+PNGa6vpg9tP3GB6lUYeM0NTGHC
+	 uFLtl+e2+AedkLGLrQQhwIfve+FibqNNtWkV234PJmGOyzHepvC8xHlmgl2bPesCiW
+	 yX9peQTrIEfn07G6O2AlubmCKAySe3M8PQvFUFcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 190/690] fanotify: Report fid info for file related file system errors
-Date: Mon,  8 Apr 2024 14:50:56 +0200
-Message-ID: <20240408125406.445833132@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 118/273] ipv6: Fix infinite recursion in fib6_dump_done().
+Date: Mon,  8 Apr 2024 14:56:33 +0200
+Message-ID: <20240408125312.964049415@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,137 +49,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 936d6a38be39177495af38497bf8da1c6128fa1b ]
+commit d21d40605bca7bd5fc23ef03d4c1ca1f48bc2cae upstream.
 
-Plumb the pieces to add a FID report to error records.  Since all error
-event memory must be pre-allocated, we pre-allocate the maximum file
-handle size possible, such that it should always fit.
+syzkaller reported infinite recursive calls of fib6_dump_done() during
+netlink socket destruction.  [1]
 
-For errors that don't expose a file handle, report it with an invalid
-FID. Internally we use zero-length FILEID_ROOT file handle for passing
-the information (which we report as zero-length FILEID_INVALID file
-handle to userspace) so we update the handle reporting code to deal with
-this case correctly.
+>From the log, syzkaller sent an AF_UNSPEC RTM_GETROUTE message, and then
+the response was generated.  The following recvmmsg() resumed the dump
+for IPv6, but the first call of inet6_dump_fib() failed at kzalloc() due
+to the fault injection.  [0]
 
-Link: https://lore.kernel.org/r/20211025192746.66445-27-krisman@collabora.com
-Link: https://lore.kernel.org/r/20211025192746.66445-25-krisman@collabora.com
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-[Folded two patches into 2 to make series bisectable]
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+  12:01:34 executing program 3:
+  r0 = socket$nl_route(0x10, 0x3, 0x0)
+  sendmsg$nl_route(r0, ... snip ...)
+  recvmmsg(r0, ... snip ...) (fail_nth: 8)
+
+Here, fib6_dump_done() was set to nlk_sk(sk)->cb.done, and the next call
+of inet6_dump_fib() set it to nlk_sk(sk)->cb.args[3].  syzkaller stopped
+receiving the response halfway through, and finally netlink_sock_destruct()
+called nlk_sk(sk)->cb.done().
+
+fib6_dump_done() calls fib6_dump_end() and nlk_sk(sk)->cb.done() if it
+is still not NULL.  fib6_dump_end() rewrites nlk_sk(sk)->cb.done() by
+nlk_sk(sk)->cb.args[3], but it has the same function, not NULL, calling
+itself recursively and hitting the stack guard page.
+
+To avoid the issue, let's set the destructor after kzalloc().
+
+[0]:
+FAULT_INJECTION: forcing a failure.
+name failslab, interval 1, probability 0, space 0, times 0
+CPU: 1 PID: 432110 Comm: syz-executor.3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:117)
+ should_fail_ex (lib/fault-inject.c:52 lib/fault-inject.c:153)
+ should_failslab (mm/slub.c:3733)
+ kmalloc_trace (mm/slub.c:3748 mm/slub.c:3827 mm/slub.c:3992)
+ inet6_dump_fib (./include/linux/slab.h:628 ./include/linux/slab.h:749 net/ipv6/ip6_fib.c:662)
+ rtnl_dump_all (net/core/rtnetlink.c:4029)
+ netlink_dump (net/netlink/af_netlink.c:2269)
+ netlink_recvmsg (net/netlink/af_netlink.c:1988)
+ ____sys_recvmsg (net/socket.c:1046 net/socket.c:2801)
+ ___sys_recvmsg (net/socket.c:2846)
+ do_recvmmsg (net/socket.c:2943)
+ __x64_sys_recvmmsg (net/socket.c:3041 net/socket.c:3034 net/socket.c:3034)
+
+[1]:
+BUG: TASK stack guard page was hit at 00000000f2fa9af1 (stack is 00000000b7912430..000000009a436beb)
+stack guard page: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 223719 Comm: kworker/1:3 Not tainted 6.8.0-12821-g537c2e91d354-dirty #11
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Workqueue: events netlink_sock_destruct_work
+RIP: 0010:fib6_dump_done (net/ipv6/ip6_fib.c:570)
+Code: 3c 24 e8 f3 e9 51 fd e9 28 fd ff ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 41 57 41 56 41 55 41 54 55 48 89 fd <53> 48 8d 5d 60 e8 b6 4d 07 fd 48 89 da 48 b8 00 00 00 00 00 fc ff
+RSP: 0018:ffffc9000d980000 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffffffff84405990 RCX: ffffffff844059d3
+RDX: ffff8881028e0000 RSI: ffffffff84405ac2 RDI: ffff88810c02f358
+RBP: ffff88810c02f358 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000224 R12: 0000000000000000
+R13: ffff888007c82c78 R14: ffff888007c82c68 R15: ffff888007c82c68
+FS:  0000000000000000(0000) GS:ffff88811b100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffc9000d97fff8 CR3: 0000000102309002 CR4: 0000000000770ef0
+PKRU: 55555554
+Call Trace:
+ <#DF>
+ </#DF>
+ <TASK>
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ ...
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ fib6_dump_done (net/ipv6/ip6_fib.c:572 (discriminator 1))
+ netlink_sock_destruct (net/netlink/af_netlink.c:401)
+ __sk_destruct (net/core/sock.c:2177 (discriminator 2))
+ sk_destruct (net/core/sock.c:2224)
+ __sk_free (net/core/sock.c:2235)
+ sk_free (net/core/sock.c:2246)
+ process_one_work (kernel/workqueue.c:3259)
+ worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
+ kthread (kernel/kthread.c:388)
+ ret_from_fork (arch/x86/kernel/process.c:153)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:256)
+Modules linked in:
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240401211003.25274-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify.c      | 11 +++++++++++
- fs/notify/fanotify/fanotify.h      |  9 +++++++++
- fs/notify/fanotify/fanotify_user.c |  8 +++++---
- 3 files changed, 25 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_fib.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 45df610debbe4..465f07e70e6dc 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -609,7 +609,9 @@ static struct fanotify_event *fanotify_alloc_error_event(
- {
- 	struct fs_error_report *report =
- 			fsnotify_data_error_report(data, data_type);
-+	struct inode *inode;
- 	struct fanotify_error_event *fee;
-+	int fh_len;
- 
- 	if (WARN_ON_ONCE(!report))
- 		return NULL;
-@@ -622,6 +624,15 @@ static struct fanotify_event *fanotify_alloc_error_event(
- 	fee->err_count = 1;
- 	fee->fsid = *fsid;
- 
-+	inode = report->inode;
-+	fh_len = fanotify_encode_fh_len(inode);
-+
-+	/* Bad fh_len. Fallback to using an invalid fh. Should never happen. */
-+	if (!fh_len && inode)
-+		inode = NULL;
-+
-+	fanotify_encode_fh(&fee->object_fh, inode, fh_len, NULL, 0);
-+
- 	*hash ^= fanotify_hash_fsid(fsid);
- 
- 	return &fee->fae;
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 80af269eebb89..edd7587adcc59 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -208,6 +208,8 @@ struct fanotify_error_event {
- 	u32 err_count; /* Suppressed errors count */
- 
- 	__kernel_fsid_t fsid; /* FSID this error refers to. */
-+
-+	FANOTIFY_INLINE_FH(object_fh, MAX_HANDLE_SZ);
- };
- 
- static inline struct fanotify_error_event *
-@@ -222,6 +224,8 @@ static inline __kernel_fsid_t *fanotify_event_fsid(struct fanotify_event *event)
- 		return &FANOTIFY_FE(event)->fsid;
- 	else if (event->type == FANOTIFY_EVENT_TYPE_FID_NAME)
- 		return &FANOTIFY_NE(event)->fsid;
-+	else if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return &FANOTIFY_EE(event)->fsid;
- 	else
- 		return NULL;
- }
-@@ -233,6 +237,8 @@ static inline struct fanotify_fh *fanotify_event_object_fh(
- 		return &FANOTIFY_FE(event)->object_fh;
- 	else if (event->type == FANOTIFY_EVENT_TYPE_FID_NAME)
- 		return fanotify_info_file_fh(&FANOTIFY_NE(event)->info);
-+	else if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return &FANOTIFY_EE(event)->object_fh;
- 	else
- 		return NULL;
- }
-@@ -266,6 +272,9 @@ static inline int fanotify_event_dir_fh_len(struct fanotify_event *event)
- 
- static inline bool fanotify_event_has_object_fh(struct fanotify_event *event)
- {
-+	/* For error events, even zeroed fh are reported. */
-+	if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return true;
- 	return fanotify_event_object_fh_len(event) > 0;
- }
- 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index c053038e1cf3c..fa3dac9c59f69 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -339,9 +339,6 @@ static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
- 	pr_debug("%s: fh_len=%zu name_len=%zu, info_len=%zu, count=%zu\n",
- 		 __func__, fh_len, name_len, info_len, count);
- 
--	if (!fh_len)
--		return 0;
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -645,19 +645,19 @@ static int inet6_dump_fib(struct sk_buff
+ 	if (!w) {
+ 		/* New dump:
+ 		 *
+-		 * 1. hook callback destructor.
+-		 */
+-		cb->args[3] = (long)cb->done;
+-		cb->done = fib6_dump_done;
 -
- 	if (WARN_ON_ONCE(len < sizeof(info) || len > count))
- 		return -EFAULT;
- 
-@@ -376,6 +373,11 @@ static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
- 
- 	handle.handle_type = fh->type;
- 	handle.handle_bytes = fh_len;
+-		/*
+-		 * 2. allocate and initialize walker.
++		 * 1. allocate and initialize walker.
+ 		 */
+ 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
+ 		if (!w)
+ 			return -ENOMEM;
+ 		w->func = fib6_dump_node;
+ 		cb->args[2] = (long)w;
 +
-+	/* Mangle handle_type for bad file_handle */
-+	if (!fh_len)
-+		handle.handle_type = FILEID_INVALID;
++		/* 2. hook callback destructor.
++		 */
++		cb->args[3] = (long)cb->done;
++		cb->done = fib6_dump_done;
 +
- 	if (copy_to_user(buf, &handle, sizeof(handle)))
- 		return -EFAULT;
+ 	}
  
--- 
-2.43.0
-
+ 	arg.skb = skb;
 
 
