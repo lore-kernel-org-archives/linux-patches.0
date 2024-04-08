@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4726CDA8;
-	Mon,  8 Apr 2024 13:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7BE6CDA8;
+	Mon,  8 Apr 2024 13:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581419; cv=none; b=DB5g8PmPwSiqHeqRD37UWNIi4IYyxgDuDQNTGJkTUqzI7OEZof1cObcSD9l4cfFgH5iGLKNnHrUMf92H5hFzHz/W7AQmAklLn/5V2NLiHyZKLslyc8emi+jKBIM8iJjYypoR1eXfD/QFK0wFYWqGYW69gP6boJMPWlNzlhEWiTM=
+	t=1712581422; cv=none; b=fxKpdLqXeiv5ObgU8DPUfqo7YfFiZ0BdgGk7E/n5Hl9ck5/UgIaCW8HtI+7UmV90b53Kv7UaHku337cwOxHQZVGLPJgcuJSRMSbmJ567YW31cpWvbpAjfFk2VLlkCL+ZqrNbpZtZATHisAr3N740Q1t75qnvcPnuFUUO0O6m064=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581419; c=relaxed/simple;
-	bh=+nj9dmyu2R8QvuXwVFyoRQBGN2DIlzf089++O6AMBKQ=;
+	s=arc-20240116; t=1712581422; c=relaxed/simple;
+	bh=csxZHofYfgG4soKkQR7XabC12xYM1UN6Zydqq/Ji8T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLbSx4YLzq7D4Jr139kwziwISZeAtDWjsqTXcUYN1XAgtG2BjCvIk73P5oSN+NlimPlBk19TisOwQ8XSG0ZiF1MkpausJ15Saar0S3CPusF1EzRSGNN/2tn42sfGrpi6xHu2qIXtEcO4okKv4WR3sU8dUT0YYDv+SgEkDIw92ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=halekLFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rkSldArYPquUrkzmSHl4cl4291AoLacbKKtsZL1mMeBHPyA+ewBFTqCPSSOHQZ0sYIDr21oXJMPtYZ0/46Vu2bJsCKxhbWL2U0/9WS5IvcsaXaZJcLR0CD+Pkb9YRkmdzIRhTqaiIOOi45QbJzIm6OG1SBYkm+WFo4UivbCV5kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6L9akTj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="halekLFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8E0C433C7;
-	Mon,  8 Apr 2024 13:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6L9akTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B9C433F1;
+	Mon,  8 Apr 2024 13:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581419;
-	bh=+nj9dmyu2R8QvuXwVFyoRQBGN2DIlzf089++O6AMBKQ=;
+	s=korg; t=1712581422;
+	bh=csxZHofYfgG4soKkQR7XabC12xYM1UN6Zydqq/Ji8T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=halekLFSwt+qQQgTqkKsdcuavE+5ITKhz9KJdl/RiAvZn0Xhg89ldA5AeiGblX8Co
-	 4/D3oPCwCc/D37ZooIvhgY0n9glmhShbCLrd4dPjmqD5OyaLkcJFaUfzXZVsuu2wxo
-	 k8WFwurbc0gf315kAo2lQbEr0vSS2UwNQUIXQsmY=
+	b=h6L9akTjGLT1lBsGw/tfCIaFmJPLkB6J/+/f5RJtgJ9uw3o2kY3mvmsJwIwl5OPNO
+	 7YyRVP5+mQvNn8bVtkymu8TaQaX+g5b7Ih3Kc4ekVn4d1hHaxOVP9zc60JzDBt9aIx
+	 Tzzfj/uNuoYqJJ0aoz1TctoHSn0fn/ROzrUHYUNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Asmaa Mnebhi <asmaa@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/138] mlxbf_gige: call request_irq() after NAPI initialized
-Date: Mon,  8 Apr 2024 14:57:11 +0200
-Message-ID: <20240408125256.766836545@linuxfoundation.org>
+Subject: [PATCH 6.6 002/252] drm/i915: Pre-populate the cursor physical dma address
+Date: Mon,  8 Apr 2024 14:55:01 +0200
+Message-ID: <20240408125306.722062553@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,171 +47,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit f7442a634ac06b953fc1f7418f307b25acd4cfbc ]
+[ Upstream commit 582dc04b0658ef3b90aeb49cbdd9747c2f1eccc3 ]
 
-The mlxbf_gige driver encounters a NULL pointer exception in
-mlxbf_gige_open() when kdump is enabled.  The sequence to reproduce
-the exception is as follows:
-a) enable kdump
-b) trigger kdump via "echo c > /proc/sysrq-trigger"
-c) kdump kernel executes
-d) kdump kernel loads mlxbf_gige module
-e) the mlxbf_gige module runs its open() as the
-   the "oob_net0" interface is brought up
-f) mlxbf_gige module will experience an exception
-   during its open(), something like:
+Calling i915_gem_object_get_dma_address() from the vblank
+evade critical section triggers might_sleep().
 
-     Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-     Mem abort info:
-       ESR = 0x0000000086000004
-       EC = 0x21: IABT (current EL), IL = 32 bits
-       SET = 0, FnV = 0
-       EA = 0, S1PTW = 0
-       FSC = 0x04: level 0 translation fault
-     user pgtable: 4k pages, 48-bit VAs, pgdp=00000000e29a4000
-     [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-     Internal error: Oops: 0000000086000004 [#1] SMP
-     CPU: 0 PID: 812 Comm: NetworkManager Tainted: G           OE     5.15.0-1035-bluefield #37-Ubuntu
-     Hardware name: https://www.mellanox.com BlueField-3 SmartNIC Main Card/BlueField-3 SmartNIC Main Card, BIOS 4.6.0.13024 Jan 19 2024
-     pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-     pc : 0x0
-     lr : __napi_poll+0x40/0x230
-     sp : ffff800008003e00
-     x29: ffff800008003e00 x28: 0000000000000000 x27: 00000000ffffffff
-     x26: ffff000066027238 x25: ffff00007cedec00 x24: ffff800008003ec8
-     x23: 000000000000012c x22: ffff800008003eb7 x21: 0000000000000000
-     x20: 0000000000000001 x19: ffff000066027238 x18: 0000000000000000
-     x17: ffff578fcb450000 x16: ffffa870b083c7c0 x15: 0000aaab010441d0
-     x14: 0000000000000001 x13: 00726f7272655f65 x12: 6769675f6662786c
-     x11: 0000000000000000 x10: 0000000000000000 x9 : ffffa870b0842398
-     x8 : 0000000000000004 x7 : fe5a48b9069706ea x6 : 17fdb11fc84ae0d2
-     x5 : d94a82549d594f35 x4 : 0000000000000000 x3 : 0000000000400100
-     x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000066027238
-     Call trace:
-      0x0
-      net_rx_action+0x178/0x360
-      __do_softirq+0x15c/0x428
-      __irq_exit_rcu+0xac/0xec
-      irq_exit+0x18/0x2c
-      handle_domain_irq+0x6c/0xa0
-      gic_handle_irq+0xec/0x1b0
-      call_on_irq_stack+0x20/0x2c
-      do_interrupt_handler+0x5c/0x70
-      el1_interrupt+0x30/0x50
-      el1h_64_irq_handler+0x18/0x2c
-      el1h_64_irq+0x7c/0x80
-      __setup_irq+0x4c0/0x950
-      request_threaded_irq+0xf4/0x1bc
-      mlxbf_gige_request_irqs+0x68/0x110 [mlxbf_gige]
-      mlxbf_gige_open+0x5c/0x170 [mlxbf_gige]
-      __dev_open+0x100/0x220
-      __dev_change_flags+0x16c/0x1f0
-      dev_change_flags+0x2c/0x70
-      do_setlink+0x220/0xa40
-      __rtnl_newlink+0x56c/0x8a0
-      rtnl_newlink+0x58/0x84
-      rtnetlink_rcv_msg+0x138/0x3c4
-      netlink_rcv_skb+0x64/0x130
-      rtnetlink_rcv+0x20/0x30
-      netlink_unicast+0x2ec/0x360
-      netlink_sendmsg+0x278/0x490
-      __sock_sendmsg+0x5c/0x6c
-      ____sys_sendmsg+0x290/0x2d4
-      ___sys_sendmsg+0x84/0xd0
-      __sys_sendmsg+0x70/0xd0
-      __arm64_sys_sendmsg+0x2c/0x40
-      invoke_syscall+0x78/0x100
-      el0_svc_common.constprop.0+0x54/0x184
-      do_el0_svc+0x30/0xac
-      el0_svc+0x48/0x160
-      el0t_64_sync_handler+0xa4/0x12c
-      el0t_64_sync+0x1a4/0x1a8
-     Code: bad PC value
-     ---[ end trace 7d1c3f3bf9d81885 ]---
-     Kernel panic - not syncing: Oops: Fatal exception in interrupt
-     Kernel Offset: 0x2870a7a00000 from 0xffff800008000000
-     PHYS_OFFSET: 0x80000000
-     CPU features: 0x0,000005c1,a3332a5a
-     Memory Limit: none
-     ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
+While we know that we've already pinned the framebuffer
+and thus i915_gem_object_get_dma_address() will in fact
+not sleep in this case, it seems reasonable to keep the
+unconditional might_sleep() for maximum coverage.
 
-The exception happens because there is a pending RX interrupt before the
-call to request_irq(RX IRQ) executes.  Then, the RX IRQ handler fires
-immediately after this request_irq() completes. The RX IRQ handler runs
-"napi_schedule()" before NAPI is fully initialized via "netif_napi_add()"
-and "napi_enable()", both which happen later in the open() logic.
+So let's instead pre-populate the dma address during
+fb pinning, which all happens before we enter the
+vblank evade critical section.
 
-The logic in mlxbf_gige_open() must fully initialize NAPI before any calls
-to request_irq() execute.
+We can use u32 for the dma address as this class of
+hardware doesn't support >32bit addresses.
 
-Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Asmaa Mnebhi <asmaa@nvidia.com>
-Link: https://lore.kernel.org/r/20240325183627.7641-1-davthompson@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0225a90981c8 ("drm/i915: Make cursor plane registers unlocked")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Closes: https://lore.kernel.org/intel-gfx/20240227100342.GAZd2zfmYcPS_SndtO@fat_crate.local/
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240325175738.3440-1-ville.syrjala@linux.intel.com
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+(cherry picked from commit c1289a5c3594cf04caa94ebf0edeb50c62009f1f)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxbf_gige/mlxbf_gige_main.c      | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cursor.c        |  4 +---
+ drivers/gpu/drm/i915/display/intel_display_types.h |  1 +
+ drivers/gpu/drm/i915/display/intel_fb_pin.c        | 10 ++++++++++
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-index 113e3d9d33530..65e92541db6e5 100644
---- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-+++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_main.c
-@@ -139,13 +139,10 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 	control |= MLXBF_GIGE_CONTROL_PORT_EN;
- 	writeq(control, priv->base + MLXBF_GIGE_CONTROL);
+diff --git a/drivers/gpu/drm/i915/display/intel_cursor.c b/drivers/gpu/drm/i915/display/intel_cursor.c
+index 0d21c34f74990..61df6cd3f3778 100644
+--- a/drivers/gpu/drm/i915/display/intel_cursor.c
++++ b/drivers/gpu/drm/i915/display/intel_cursor.c
+@@ -34,12 +34,10 @@ static u32 intel_cursor_base(const struct intel_plane_state *plane_state)
+ {
+ 	struct drm_i915_private *dev_priv =
+ 		to_i915(plane_state->uapi.plane->dev);
+-	const struct drm_framebuffer *fb = plane_state->hw.fb;
+-	struct drm_i915_gem_object *obj = intel_fb_obj(fb);
+ 	u32 base;
  
--	err = mlxbf_gige_request_irqs(priv);
--	if (err)
--		return err;
- 	mlxbf_gige_cache_stats(priv);
- 	err = mlxbf_gige_clean_port(priv);
- 	if (err)
--		goto free_irqs;
-+		return err;
+ 	if (DISPLAY_INFO(dev_priv)->cursor_needs_physical)
+-		base = i915_gem_object_get_dma_address(obj, 0);
++		base = plane_state->phys_dma_addr;
+ 	else
+ 		base = intel_plane_ggtt_offset(plane_state);
  
- 	/* Clear driver's valid_polarity to match hardware,
- 	 * since the above call to clean_port() resets the
-@@ -166,6 +163,10 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 	napi_enable(&priv->napi);
- 	netif_start_queue(netdev);
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index 7fc92b1474cc4..8b0dc2b75da4a 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -701,6 +701,7 @@ struct intel_plane_state {
+ #define PLANE_HAS_FENCE BIT(0)
  
-+	err = mlxbf_gige_request_irqs(priv);
-+	if (err)
-+		goto napi_deinit;
+ 	struct intel_fb_view view;
++	u32 phys_dma_addr; /* for cursor_needs_physical */
+ 
+ 	/* Plane pxp decryption state */
+ 	bool decrypt;
+diff --git a/drivers/gpu/drm/i915/display/intel_fb_pin.c b/drivers/gpu/drm/i915/display/intel_fb_pin.c
+index fffd568070d41..a131656757f2b 100644
+--- a/drivers/gpu/drm/i915/display/intel_fb_pin.c
++++ b/drivers/gpu/drm/i915/display/intel_fb_pin.c
+@@ -254,6 +254,16 @@ int intel_plane_pin_fb(struct intel_plane_state *plane_state)
+ 			return PTR_ERR(vma);
+ 
+ 		plane_state->ggtt_vma = vma;
 +
- 	/* Set bits in INT_EN that we care about */
- 	int_en = MLXBF_GIGE_INT_EN_HW_ACCESS_ERROR |
- 		 MLXBF_GIGE_INT_EN_TX_CHECKSUM_INPUTS |
-@@ -182,14 +183,17 @@ static int mlxbf_gige_open(struct net_device *netdev)
- 
- 	return 0;
- 
-+napi_deinit:
-+	netif_stop_queue(netdev);
-+	napi_disable(&priv->napi);
-+	netif_napi_del(&priv->napi);
-+	mlxbf_gige_rx_deinit(priv);
-+
- tx_deinit:
- 	mlxbf_gige_tx_deinit(priv);
- 
- phy_deinit:
- 	phy_stop(phydev);
--
--free_irqs:
--	mlxbf_gige_free_irqs(priv);
- 	return err;
- }
++		/*
++		 * Pre-populate the dma address before we enter the vblank
++		 * evade critical section as i915_gem_object_get_dma_address()
++		 * will trigger might_sleep() even if it won't actually sleep,
++		 * which is the case when the fb has already been pinned.
++		 */
++		if (phys_cursor)
++			plane_state->phys_dma_addr =
++				i915_gem_object_get_dma_address(intel_fb_obj(fb), 0);
+ 	} else {
+ 		struct intel_framebuffer *intel_fb = to_intel_framebuffer(fb);
  
 -- 
 2.43.0
