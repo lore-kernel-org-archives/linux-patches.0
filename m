@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F47D091;
-	Mon,  8 Apr 2024 13:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B32E405;
+	Mon,  8 Apr 2024 13:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583710; cv=none; b=N1d9V3uL9TpWXfN3g7MY2/npOfKnW0w+X1JNw4ALrPgr14MBdPfccexNIIHBf7ESsMUjIC+0+mk5sQKc/Q+CGlO1aWoEpPCdNzZ1qD46hjt6kYvvWpOBrDvhzqBQILGcxRe+Rq++3fRDXbByFuNE0VVoZ0SglUZu0YphyKiov7s=
+	t=1712583713; cv=none; b=rgTohCQI7pcfJe2j+OfVupQ6zFO2LBFSqFSi0WBteqRnho10dRlKt409n/PxEbw0V+JmWEs1xqYVGgD6ymc3SBkY/r33GjYf0hHpa68+wI0b97zyF3rW4fpNAavTHZ40bfRd4l4SICqvMmBf23uh8q9ghbFXiNm1NOsI+ooy6HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583710; c=relaxed/simple;
-	bh=B8gkt2hV06x7DQZXXRneoKufbaipLGRCGKQoIl9yWWE=;
+	s=arc-20240116; t=1712583713; c=relaxed/simple;
+	bh=cq7KfDku9Ql7nYuBiarzKOvRWVvrbcaR0YZBMVllqtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2GBRunbqZHaVTzAkgkgwu3SWNBvXi+mjuIBy9iWp32zFKykvaqfiO8zKRlphwmpHokMbtUiSu0nrhvV0WLAiOsniNprY3+Ki2Xb8jHIhYG+Rl/+youowXcpprC2wkh4o2A+/GwkFEGAufmXqsUVd8nHLfjQE0d02eYyJwW7Zws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th0ZisY9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUs8+sMry64SChYoLFnDmFVzvCuss0MTJWvUfWacKXAYfz9gfnDuIXPAOssOb8Aa9Smo8QpU1KcLzfp1DKxaGJKBzCB19k0RsT8D9wrPpo3Crgl1o2bSLCcPvXd+f9h29opWfhq2IZ48KU6Um5BYDNcK64SFjA7uacv7rpbK2+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1ntwL+I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th0ZisY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1844C43390;
-	Mon,  8 Apr 2024 13:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1ntwL+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1746C433F1;
+	Mon,  8 Apr 2024 13:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583710;
-	bh=B8gkt2hV06x7DQZXXRneoKufbaipLGRCGKQoIl9yWWE=;
+	s=korg; t=1712583713;
+	bh=cq7KfDku9Ql7nYuBiarzKOvRWVvrbcaR0YZBMVllqtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th0ZisY95oqkXi4sWO3IVbgLSmVciHXkfJ3QvjJiSLGsWo6DGe8npVWR3Mt0tGaS7
-	 wG/0S9IS0lj0wJ45aPos7oR3krfGw0S1GEXrYZFAC4YOyPwKTblqOJmm0p238MqEdK
-	 KNAdyBzPgmTIIJ/mb/mv2ABiAxG+JpGe2PX7HxCw=
+	b=P1ntwL+IE7TjPkYQOzWI5zpwlRhuEC1jfQ10S9dvdbAe7u23mqt9/RzxQS+P4z5uO
+	 XsDHfepMhRIKhXQvJTuUAHsXKp4nH/mhmYkSX/yqqD5iTjOS5Y3iGnxOx0R1+w4Fbm
+	 kVmbkPlq7cnSiwGcSd0fBOItbezhb8w7//z7zzOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.8 211/273] io_uring/kbuf: hold io_buffer_list reference over mmap
-Date: Mon,  8 Apr 2024 14:58:06 +0200
-Message-ID: <20240408125315.910064424@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 277/690] SUNRPC: Remove svc_shutdown_net()
+Date: Mon,  8 Apr 2024 14:52:23 +0200
+Message-ID: <20240408125409.640397994@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,118 +45,155 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 561e4f9451d65fc2f7eef564e0064373e3019793 upstream.
+[ Upstream commit c7d7ec8f043e53ad16e30f5ebb8b9df415ec0f2b ]
 
-If we look up the kbuf, ensure that it doesn't get unregistered until
-after we're done with it. Since we're inside mmap, we cannot safely use
-the io_uring lock. Rely on the fact that we can lookup the buffer list
-under RCU now and grab a reference to it, preventing it from being
-unregistered until we're done with it. The lookup returns the
-io_buffer_list directly with it referenced.
+Clean up: svc_shutdown_net() now does nothing but call
+svc_close_net(). Replace all external call sites.
 
-Cc: stable@vger.kernel.org # v6.4+
-Fixes: 5cf4f52e6d8a ("io_uring: free io_buffer_list entries via RCU")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+svc_close_net() is renamed to be the inverse of svc_xprt_create().
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- io_uring/io_uring.c |   11 ++++++-----
- io_uring/kbuf.c     |   31 +++++++++++++++++++++++++------
- io_uring/kbuf.h     |    4 +++-
- 3 files changed, 34 insertions(+), 12 deletions(-)
+ fs/lockd/svc.c                  | 4 ++--
+ fs/nfs/callback.c               | 2 +-
+ fs/nfsd/nfssvc.c                | 2 +-
+ include/linux/sunrpc/svc.h      | 1 -
+ include/linux/sunrpc/svc_xprt.h | 1 +
+ net/sunrpc/svc.c                | 6 ------
+ net/sunrpc/svc_xprt.c           | 9 +++++++--
+ 7 files changed, 12 insertions(+), 13 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3422,14 +3422,15 @@ static void *io_uring_validate_mmap_requ
- 		ptr = ctx->sq_sqes;
- 		break;
- 	case IORING_OFF_PBUF_RING: {
-+		struct io_buffer_list *bl;
- 		unsigned int bgid;
- 
- 		bgid = (offset & ~IORING_OFF_MMAP_MASK) >> IORING_OFF_PBUF_SHIFT;
--		rcu_read_lock();
--		ptr = io_pbuf_get_address(ctx, bgid);
--		rcu_read_unlock();
--		if (!ptr)
--			return ERR_PTR(-EINVAL);
-+		bl = io_pbuf_get_bl(ctx, bgid);
-+		if (IS_ERR(bl))
-+			return bl;
-+		ptr = bl->buf_ring;
-+		io_put_bl(ctx, bl);
- 		break;
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index bba6f2b45b64a..c83ec4a375bc1 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -248,7 +248,7 @@ static int make_socks(struct svc_serv *serv, struct net *net,
+ 	if (warned++ == 0)
+ 		printk(KERN_WARNING
+ 			"lockd_up: makesock failed, error=%d\n", err);
+-	svc_shutdown_net(serv, net);
++	svc_xprt_destroy_all(serv, net);
+ 	svc_rpcb_cleanup(serv, net);
+ 	return err;
+ }
+@@ -287,7 +287,7 @@ static void lockd_down_net(struct svc_serv *serv, struct net *net)
+ 			nlm_shutdown_hosts_net(net);
+ 			cancel_delayed_work_sync(&ln->grace_period_end);
+ 			locks_end_grace(&ln->lockd_manager);
+-			svc_shutdown_net(serv, net);
++			svc_xprt_destroy_all(serv, net);
+ 			svc_rpcb_cleanup(serv, net);
  		}
- 	default:
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -275,7 +275,7 @@ static int __io_remove_buffers(struct io
- 	return i;
+ 	} else {
+diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
+index c1a8767100ae9..c98c68513590f 100644
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -189,7 +189,7 @@ static void nfs_callback_down_net(u32 minorversion, struct svc_serv *serv, struc
+ 		return;
+ 
+ 	dprintk("NFS: destroy per-net callback data; net=%x\n", net->ns.inum);
+-	svc_shutdown_net(serv, net);
++	svc_xprt_destroy_all(serv, net);
  }
  
--static void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
-+void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
+ static int nfs_callback_up_net(int minorversion, struct svc_serv *serv,
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 5790b1eaff72b..38895372ec393 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -722,7 +722,7 @@ void nfsd_put(struct net *net)
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 
+ 	if (kref_put(&nn->nfsd_serv->sv_refcnt, nfsd_noop)) {
+-		svc_shutdown_net(nn->nfsd_serv, net);
++		svc_xprt_destroy_all(nn->nfsd_serv, net);
+ 		nfsd_last_thread(nn->nfsd_serv, net);
+ 		svc_destroy(&nn->nfsd_serv->sv_refcnt);
+ 		spin_lock(&nfsd_notifier_lock);
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index 6ea779b66199f..fd7ccba415f51 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -510,7 +510,6 @@ struct svc_serv *  svc_create_pooled(struct svc_program *, unsigned int,
+ 			const struct svc_serv_ops *);
+ int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
+ int		   svc_pool_stats_open(struct svc_serv *serv, struct file *file);
+-void		   svc_shutdown_net(struct svc_serv *, struct net *);
+ int		   svc_process(struct svc_rqst *);
+ int		   bc_svc_process(struct svc_serv *, struct rpc_rqst *,
+ 			struct svc_rqst *);
+diff --git a/include/linux/sunrpc/svc_xprt.h b/include/linux/sunrpc/svc_xprt.h
+index 30c645583cd06..1f7368f5b4e72 100644
+--- a/include/linux/sunrpc/svc_xprt.h
++++ b/include/linux/sunrpc/svc_xprt.h
+@@ -131,6 +131,7 @@ int	svc_xprt_create(struct svc_serv *serv, const char *xprt_name,
+ 			struct net *net, const int family,
+ 			const unsigned short port, int flags,
+ 			const struct cred *cred);
++void	svc_xprt_destroy_all(struct svc_serv *serv, struct net *net);
+ void	svc_xprt_received(struct svc_xprt *xprt);
+ void	svc_xprt_enqueue(struct svc_xprt *xprt);
+ void	svc_xprt_put(struct svc_xprt *xprt);
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index 6a52942c501c5..6f45f3f45514c 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -536,12 +536,6 @@ svc_create_pooled(struct svc_program *prog, unsigned int bufsize,
+ }
+ EXPORT_SYMBOL_GPL(svc_create_pooled);
+ 
+-void svc_shutdown_net(struct svc_serv *serv, struct net *net)
+-{
+-	svc_close_net(serv, net);
+-}
+-EXPORT_SYMBOL_GPL(svc_shutdown_net);
+-
+ /*
+  * Destroy an RPC service. Should be called with appropriate locking to
+  * protect sv_permsocks and sv_tempsocks.
+diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
+index 19c11b3253f8d..67ccf1a6459ae 100644
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -1150,7 +1150,11 @@ static void svc_clean_up_xprts(struct svc_serv *serv, struct net *net)
+ 	}
+ }
+ 
+-/*
++/**
++ * svc_xprt_destroy_all - Destroy transports associated with @serv
++ * @serv: RPC service to be shut down
++ * @net: target network namespace
++ *
+  * Server threads may still be running (especially in the case where the
+  * service is still running in other network namespaces).
+  *
+@@ -1162,7 +1166,7 @@ static void svc_clean_up_xprts(struct svc_serv *serv, struct net *net)
+  * threads, we may need to wait a little while and then check again to
+  * see if they're done.
+  */
+-void svc_close_net(struct svc_serv *serv, struct net *net)
++void svc_xprt_destroy_all(struct svc_serv *serv, struct net *net)
  {
- 	if (atomic_dec_and_test(&bl->refs)) {
- 		__io_remove_buffers(ctx, bl, -1U);
-@@ -728,16 +728,35 @@ int io_register_pbuf_status(struct io_ri
- 	return 0;
+ 	int delay = 0;
+ 
+@@ -1173,6 +1177,7 @@ void svc_close_net(struct svc_serv *serv, struct net *net)
+ 		msleep(delay++);
+ 	}
  }
- 
--void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid)
-+struct io_buffer_list *io_pbuf_get_bl(struct io_ring_ctx *ctx,
-+				      unsigned long bgid)
- {
- 	struct io_buffer_list *bl;
-+	bool ret;
- 
--	bl = __io_buffer_get_list(ctx, bgid);
-+	/*
-+	 * We have to be a bit careful here - we're inside mmap and cannot grab
-+	 * the uring_lock. This means the buffer_list could be simultaneously
-+	 * going away, if someone is trying to be sneaky. Look it up under rcu
-+	 * so we know it's not going away, and attempt to grab a reference to
-+	 * it. If the ref is already zero, then fail the mapping. If successful,
-+	 * the caller will call io_put_bl() to drop the the reference at at the
-+	 * end. This may then safely free the buffer_list (and drop the pages)
-+	 * at that point, vm_insert_pages() would've already grabbed the
-+	 * necessary vma references.
-+	 */
-+	rcu_read_lock();
-+	bl = xa_load(&ctx->io_bl_xa, bgid);
-+	/* must be a mmap'able buffer ring and have pages */
-+	ret = false;
-+	if (bl && bl->is_mmap)
-+		ret = atomic_inc_not_zero(&bl->refs);
-+	rcu_read_unlock();
- 
--	if (!bl || !bl->is_mmap)
--		return NULL;
-+	if (ret)
-+		return bl;
- 
--	return bl->buf_ring;
-+	return ERR_PTR(-EINVAL);
- }
++EXPORT_SYMBOL_GPL(svc_xprt_destroy_all);
  
  /*
---- a/io_uring/kbuf.h
-+++ b/io_uring/kbuf.h
-@@ -61,7 +61,9 @@ unsigned int __io_put_kbuf(struct io_kio
- 
- bool io_kbuf_recycle_legacy(struct io_kiocb *req, unsigned issue_flags);
- 
--void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid);
-+void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl);
-+struct io_buffer_list *io_pbuf_get_bl(struct io_ring_ctx *ctx,
-+				      unsigned long bgid);
- 
- static inline bool io_kbuf_recycle_ring(struct io_kiocb *req)
- {
+  * Handle defer and revisit of requests
+-- 
+2.43.0
+
 
 
