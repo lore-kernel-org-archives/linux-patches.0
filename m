@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CE17D09F;
-	Mon,  8 Apr 2024 13:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2AD7D09F;
+	Mon,  8 Apr 2024 13:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583361; cv=none; b=pN3VFy8SsQ/hSSBGL+mhaKYMjQnNW6Sy8bYoohgyZE2K7RB8/jJ35rLLvMA2scnWnrt077FidoX+tMaIubi8QpScnZQtOLNCM6khuA+UnAmMVF4x/RrRe92wyYrv7UrmjDQvIdQztW/XL4Sy73srMSeZgmmd2WOIEvpNhUGVnKM=
+	t=1712583364; cv=none; b=lZmtP7NrUN5In77yN1HcH/3G/QzjHtP2OVMdOvwkkKcfmmKJc3dB1fyNbNdwS6clomq5TB0cQUrXF2H+vFQyU5VD2FbwknVUtr/aTHtKx5O7BBhRNu0YIMBXw6d8oiEs7YhEInuhHTfPpDSo9mFUsNQw9WF7gX4Zx5xU+8Ikt50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583361; c=relaxed/simple;
-	bh=/wl4n6TMvO5XNaYBxluFbm/n+7Me0egCTrepcjudcis=;
+	s=arc-20240116; t=1712583364; c=relaxed/simple;
+	bh=7j8y1FivxC/F/+W/jMUbxSviluFhnl2BayQQsa4DEvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9NIm/8AJi7KHhNKbww0cIYEYka5HSwpYwktdjVxBEVQjMb82UcnH32WaedsMIO3rhy0zNkJalP0qhhaBciIg7Coy09rKcaLLmlCprXsHj1tkJziAEdjplqRqHSe48mYPVik72ul2w8dbAFi/+MxkqSWEW/3agXQJripc0j3QD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wv2rCCsG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOexylpo6V/daeZ96GfPlPRxQwDiHDyQ3ioI/1eaqqWQuDBqB3OH+bzUlXQyHdBCovxalmU6VXtemjEwMZA3ZR4XmwtBvt5h3KXPIoK2hl87hvjzJTDBFzWTMbb9yUlPlpd5IzYmYp9zhpmzbuvKGzoJo/HB8P0i7fCf2bKKEGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQfPGwmX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wv2rCCsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFF5C433F1;
-	Mon,  8 Apr 2024 13:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQfPGwmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6720FC433C7;
+	Mon,  8 Apr 2024 13:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583360;
-	bh=/wl4n6TMvO5XNaYBxluFbm/n+7Me0egCTrepcjudcis=;
+	s=korg; t=1712583363;
+	bh=7j8y1FivxC/F/+W/jMUbxSviluFhnl2BayQQsa4DEvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wv2rCCsGboXGXog9c+uthXbnPJn2obZ8z3iMr7gazuc53fl7dwI2NMCDlH4UOeiQn
-	 cPW9kPlTs5xEfmYDIehPoBLNMm/MxynrvPunPehdVtmqcFuhxz83ceviKqwhWGFLn/
-	 GFUHJoaLrE4xCsxRsdr6AI6Sy7hXq/ixMjuy394o=
+	b=jQfPGwmXQkuDoS3xzKIY9/r+pRRoBvhesIqwfF5/4xHwnMdA0rNE7vbecGoeoM7fF
+	 FyyRe2R1id2CmT7RJFMqAMCxT/PeTdyXbn2XkC8hAYtIsIghHS9NSGm8kh16/MoYEm
+	 eLjg9oHyitzk6UuZYSPURgwUzFtGV0ZQAUOP2Gck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 238/690] lockd: move lockd_start_svc() call into lockd_create_svc()
-Date: Mon,  8 Apr 2024 14:51:44 +0200
-Message-ID: <20240408125408.265634422@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 146/273] ASoC: cs42l43: Correct extraction of data pointer in suspend/resume
+Date: Mon,  8 Apr 2024 14:57:01 +0200
+Message-ID: <20240408125313.821692997@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,106 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit b73a2972041bee70eb0cbbb25fa77828c63c916b ]
+[ Upstream commit 56ebbd19c2989f7450341f581e2724a149d0f08e ]
 
-lockd_start_svc() only needs to be called once, just after the svc is
-created.  If the start fails, the svc is discarded too.
+The current code is pulling the wrong pointer causing it to disable the
+wrong IRQ. Correct the code to pull the correct cs42l43 core data
+pointer.
 
-It thus makes sense to call lockd_start_svc() from lockd_create_svc().
-This allows us to remove the test against nlmsvc_rqst at the start of
-lockd_start_svc() - it must always be NULL.
-
-lockd_up() only held an extra reference on the svc until a thread was
-created - then it dropped it.  The thread - and thus the extra reference
-- will remain until kthread_stop() is called.
-Now that the thread is created in lockd_create_svc(), the extra
-reference can be dropped there.  So the 'serv' variable is no longer
-needed in lockd_up().
-
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 64353af49fec ("ASoC: cs42l43: Add system suspend ops to disable IRQ")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://msgid.link/r/20240326105434.852907-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ sound/soc/codecs/cs42l43.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 20cebb191350f..91e7c839841ec 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -359,9 +359,6 @@ static int lockd_start_svc(struct svc_serv *serv)
+diff --git a/sound/soc/codecs/cs42l43.c b/sound/soc/codecs/cs42l43.c
+index a97ccb512deba..a24b52c9dda6b 100644
+--- a/sound/soc/codecs/cs42l43.c
++++ b/sound/soc/codecs/cs42l43.c
+@@ -2338,7 +2338,8 @@ static int cs42l43_codec_runtime_resume(struct device *dev)
+ 
+ static int cs42l43_codec_suspend(struct device *dev)
  {
- 	int error;
+-	struct cs42l43 *cs42l43 = dev_get_drvdata(dev);
++	struct cs42l43_codec *priv = dev_get_drvdata(dev);
++	struct cs42l43 *cs42l43 = priv->core;
  
--	if (nlmsvc_rqst)
--		return 0;
--
- 	/*
- 	 * Create the kernel thread and wait for it to start.
- 	 */
-@@ -406,6 +403,7 @@ static const struct svc_serv_ops lockd_sv_ops = {
- static int lockd_create_svc(void)
+ 	disable_irq(cs42l43->irq);
+ 
+@@ -2347,7 +2348,8 @@ static int cs42l43_codec_suspend(struct device *dev)
+ 
+ static int cs42l43_codec_suspend_noirq(struct device *dev)
  {
- 	struct svc_serv *serv;
-+	int error;
+-	struct cs42l43 *cs42l43 = dev_get_drvdata(dev);
++	struct cs42l43_codec *priv = dev_get_drvdata(dev);
++	struct cs42l43 *cs42l43 = priv->core;
  
- 	/*
- 	 * Check whether we're already up and running.
-@@ -432,6 +430,13 @@ static int lockd_create_svc(void)
- 		printk(KERN_WARNING "lockd_up: create service failed\n");
- 		return -ENOMEM;
- 	}
-+
-+	error = lockd_start_svc(serv);
-+	/* The thread now holds the only reference */
-+	svc_put(serv);
-+	if (error < 0)
-+		return error;
-+
- 	nlmsvc_serv = serv;
- 	register_inetaddr_notifier(&lockd_inetaddr_notifier);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -446,7 +451,6 @@ static int lockd_create_svc(void)
-  */
- int lockd_up(struct net *net, const struct cred *cred)
+ 	enable_irq(cs42l43->irq);
+ 
+@@ -2356,7 +2358,8 @@ static int cs42l43_codec_suspend_noirq(struct device *dev)
+ 
+ static int cs42l43_codec_resume(struct device *dev)
  {
--	struct svc_serv *serv;
- 	int error;
+-	struct cs42l43 *cs42l43 = dev_get_drvdata(dev);
++	struct cs42l43_codec *priv = dev_get_drvdata(dev);
++	struct cs42l43 *cs42l43 = priv->core;
  
- 	mutex_lock(&nlmsvc_mutex);
-@@ -454,25 +458,19 @@ int lockd_up(struct net *net, const struct cred *cred)
- 	error = lockd_create_svc();
- 	if (error)
- 		goto err_create;
--	serv = nlmsvc_serv;
+ 	enable_irq(cs42l43->irq);
  
--	error = lockd_up_net(serv, net, cred);
-+	error = lockd_up_net(nlmsvc_serv, net, cred);
- 	if (error < 0) {
- 		goto err_put;
- 	}
+@@ -2365,7 +2368,8 @@ static int cs42l43_codec_resume(struct device *dev)
  
--	error = lockd_start_svc(serv);
--	if (error < 0) {
--		lockd_down_net(serv, net);
--		goto err_put;
--	}
- 	nlmsvc_users++;
- err_put:
- 	if (nlmsvc_users == 0) {
- 		lockd_unregister_notifiers();
-+		kthread_stop(nlmsvc_task);
- 		nlmsvc_serv = NULL;
- 	}
--	svc_put(serv);
- err_create:
- 	mutex_unlock(&nlmsvc_mutex);
- 	return error;
+ static int cs42l43_codec_resume_noirq(struct device *dev)
+ {
+-	struct cs42l43 *cs42l43 = dev_get_drvdata(dev);
++	struct cs42l43_codec *priv = dev_get_drvdata(dev);
++	struct cs42l43 *cs42l43 = priv->core;
+ 
+ 	disable_irq(cs42l43->irq);
+ 
 -- 
 2.43.0
 
