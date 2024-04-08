@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34AD6A352;
-	Mon,  8 Apr 2024 13:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4136A352;
+	Mon,  8 Apr 2024 13:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583657; cv=none; b=lRtuJw+3BycIGDEhXNUbDdydPBE0AxhNA18WLAnOEwbpRvsYqFOs8glDtLT5hdi3Aty3NYZ4rhyWuTWGFtRlqng1pa2JQZyzWYm66hsRGLQHtGvCGA4/78BWpiMy2Z3mTCQ7e3gpYFkrafaua0tKQhEbHI6DCiWFvpmUTtr9B1g=
+	t=1712583660; cv=none; b=hddUjGERq9XIohVkfKDTII93qgszqOg7vuwPI7KSgtQQEX5fIqWwJM2/JvwQ3QXr5e7czunWodl5ll9ao5kXOaYRBhdU3E0sr+Kqci5LNU3Op2DZCtFMNYPTPRBCB2nTQSCYiluuiYGCpoL/Y+vqycnHKDTB4ivafKpLlYt7Sb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583657; c=relaxed/simple;
-	bh=WX5+aRYmF4S00B7AzIyoxRq1x7uTfLe581XSCTqmtDk=;
+	s=arc-20240116; t=1712583660; c=relaxed/simple;
+	bh=43L5rZTcPNyLXxpSAaoi0xD6uZIFcnXCEIKRVli1Qmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/1R3tttTW/AKyftxRMJwNfdlO/jdjH2nEl8O1aQIlCvt8UY+nx1cO3x2K48HgJ29AQXPey6FN+ExXeQl74iehrK2e44Mfxpp5erN1EjfT1cQ049lwQ4ZO2/qR8ZZ8ADpLOr1kW0yMBWwfm8DGzZlZfG5N9nxv2e/ENbqp14OLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUoztUzO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnFCUsHILGEinNM+qKOUWhnijZP7y/rWyd+fa02M03pCVatW+tMm/Ozdj1hKWxz/s5th55d7BP/IAfgAp3WC8ei4EfjHGyVKZdnXmsYmqef7Llr7lFGvi2nUs+lX+DKTjIlL+aU14V7fqA7iFQtfW6ZsjNDJis7MlU1VjD1IgbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2xaAI7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUoztUzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B108C433F1;
-	Mon,  8 Apr 2024 13:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2xaAI7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47932C433F1;
+	Mon,  8 Apr 2024 13:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583657;
-	bh=WX5+aRYmF4S00B7AzIyoxRq1x7uTfLe581XSCTqmtDk=;
+	s=korg; t=1712583660;
+	bh=43L5rZTcPNyLXxpSAaoi0xD6uZIFcnXCEIKRVli1Qmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUoztUzO/4hOOj96jaFeZd4JFuVv3G+LQ/ixNpbWdWQpWRelipYW53Bvyf3fuxzTK
-	 mqSHsikklrCgrFr5MBzlsJP14jnZZang3zSvNXezEuH9LxNmlFwUCBZLJlwYQZt+HM
-	 wDIN87+YWdXYSCotI5K2s2GLQDaZ76KTL7pPVpTU=
+	b=w2xaAI7J2eLV5MpvhwMpwul0u0CrbEyvRiofS0+dCiu8T9ziV87xfMV+b8qPpFxxT
+	 CLqJKq/3WSXvw49QVH+IbmD0REdUXV0JjEve02IU//APhehb8/JyOgGKMgOFpOEiG2
+	 EgRY6TAiNdnLjWtB1BpOqyAJjN6o8gJeUh121T9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 211/252] io_uring/kbuf: protect io_buffer_list teardown with a reference
-Date: Mon,  8 Apr 2024 14:58:30 +0200
-Message-ID: <20240408125313.201817428@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 220/252] arm64/ptrace: Use saved floating point state type to determine SVE layout
+Date: Mon,  8 Apr 2024 14:58:39 +0200
+Message-ID: <20240408125313.485326128@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -49,77 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Mark Brown <broonie@kernel.org>
 
-commit 6b69c4ab4f685327d9e10caf0d84217ba23a8c4b upstream.
+commit b017a0cea627fcbe158fc2c214fe893e18c4d0c4 upstream.
 
-No functional changes in this patch, just in preparation for being able
-to keep the buffer list alive outside of the ctx->uring_lock.
+The SVE register sets have two different formats, one of which is a wrapped
+version of the standard FPSIMD register set and another with actual SVE
+register data. At present we check TIF_SVE to see if full SVE register
+state should be provided when reading the SVE regset but if we were in a
+syscall we may have saved only floating point registers even though that is
+set.
 
-Cc: stable@vger.kernel.org # v6.4+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix this and simplify the logic by checking and using the format which we
+recorded when deciding if we should use FPSIMD or SVE format.
+
+Fixes: 8c845e273104 ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
+Cc: <stable@vger.kernel.org> # 6.2.x
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240325-arm64-ptrace-fp-type-v1-1-8dc846caf11f@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |   15 +++++++++++----
- io_uring/kbuf.h |    2 ++
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/ptrace.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -59,6 +59,7 @@ static int io_buffer_add_list(struct io_
- 	 * always under the ->uring_lock, but the RCU lookup from mmap does.
- 	 */
- 	bl->bgid = bgid;
-+	atomic_set(&bl->refs, 1);
- 	return xa_err(xa_store(&ctx->io_bl_xa, bgid, bl, GFP_KERNEL));
- }
- 
-@@ -272,6 +273,14 @@ static int __io_remove_buffers(struct io
- 	return i;
- }
- 
-+static void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
-+{
-+	if (atomic_dec_and_test(&bl->refs)) {
-+		__io_remove_buffers(ctx, bl, -1U);
-+		kfree_rcu(bl, rcu);
-+	}
-+}
-+
- void io_destroy_buffers(struct io_ring_ctx *ctx)
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -728,7 +728,6 @@ static void sve_init_header_from_task(st
  {
- 	struct io_buffer_list *bl;
-@@ -279,8 +288,7 @@ void io_destroy_buffers(struct io_ring_c
+ 	unsigned int vq;
+ 	bool active;
+-	bool fpsimd_only;
+ 	enum vec_type task_type;
  
- 	xa_for_each(&ctx->io_bl_xa, index, bl) {
- 		xa_erase(&ctx->io_bl_xa, bl->bgid);
--		__io_remove_buffers(ctx, bl, -1U);
--		kfree_rcu(bl, rcu);
-+		io_put_bl(ctx, bl);
+ 	memset(header, 0, sizeof(*header));
+@@ -744,12 +743,10 @@ static void sve_init_header_from_task(st
+ 	case ARM64_VEC_SVE:
+ 		if (test_tsk_thread_flag(target, TIF_SVE_VL_INHERIT))
+ 			header->flags |= SVE_PT_VL_INHERIT;
+-		fpsimd_only = !test_tsk_thread_flag(target, TIF_SVE);
+ 		break;
+ 	case ARM64_VEC_SME:
+ 		if (test_tsk_thread_flag(target, TIF_SME_VL_INHERIT))
+ 			header->flags |= SVE_PT_VL_INHERIT;
+-		fpsimd_only = false;
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(1);
+@@ -757,7 +754,7 @@ static void sve_init_header_from_task(st
  	}
  
- 	while (!list_empty(&ctx->io_buffers_pages)) {
-@@ -676,9 +684,8 @@ int io_unregister_pbuf_ring(struct io_ri
- 	if (!bl->is_mapped)
- 		return -EINVAL;
- 
--	__io_remove_buffers(ctx, bl, -1U);
- 	xa_erase(&ctx->io_bl_xa, bl->bgid);
--	kfree_rcu(bl, rcu);
-+	io_put_bl(ctx, bl);
- 	return 0;
- }
- 
---- a/io_uring/kbuf.h
-+++ b/io_uring/kbuf.h
-@@ -25,6 +25,8 @@ struct io_buffer_list {
- 	__u16 head;
- 	__u16 mask;
- 
-+	atomic_t refs;
-+
- 	/* ring mapped provided buffers */
- 	__u8 is_mapped;
- 	/* ring mapped provided buffers, but mmap'ed by application */
+ 	if (active) {
+-		if (fpsimd_only) {
++		if (target->thread.fp_type == FP_STATE_FPSIMD) {
+ 			header->flags |= SVE_PT_REGS_FPSIMD;
+ 		} else {
+ 			header->flags |= SVE_PT_REGS_SVE;
 
 
