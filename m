@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2857E58C;
-	Mon,  8 Apr 2024 13:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE91131191;
+	Mon,  8 Apr 2024 13:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583497; cv=none; b=ncpZAA24BBmCs1P4Ic+ZOisu0hjRRnX3+DhKJnC6Dq6lbO36aJuv3Ymk5bprEy6Bts+MQVgRDwE+1S1VYg+o7o0JVS4vI3cPrQWKlSo8NBdCOEnH9FsxLJb/2A5Jzva0U8SaSEzhZ0NwgNsFwA0KeOcZNgJ4ulfM+Gz5Hqx1qBc=
+	t=1712583499; cv=none; b=IGWSbCmuR7DOGtzLnRgaWTVdbyTIsa0sE7HwqCwss283Q6f8NE/U9i/qXs2MPt4wcmmNv5Nf70T07r8872KFHGjriEwm9eLCgHWVEHfoeB4CjVij7GEmDiTNAXiea+xlUNUxXCziE66+sVFhL+lldlAmwCour+jB9uJlnXwzDi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583497; c=relaxed/simple;
-	bh=DkcflPtoNw7oPGbbbtKm9b73DbU8HCs8A7TaPoTxf68=;
+	s=arc-20240116; t=1712583499; c=relaxed/simple;
+	bh=QowQnAWyvhEaAFHF73jGr8negnrZorYy70YHySnFtXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iH3nBLq/4O04PLlX0e/+r+R6Sv7pk3ynL8dM/7wXtXUq98bjLF63hdhx5Ib1be8vW40lV/lwmFf07G9i3n9+8NCLjrnJgMiMgN3fHd/Amj3bUe9yz6xwcWMK6oqmhsUiD/EIDyYscA5nXzjmJXJJdQgy2y8rbdq6DetRW1Pwrfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuY6EY9n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSu1mTSTQhjvkX6zD4oLqFkicwgfDcGfKJcI6cF5vPfhhmdXLgHtQkrpTAmVx/RCon8TGiede8ij8Tn8BiVUnbeELo2t265mDgVg9GcAK4Kf/89nXqD1g0cPPxP/PJyQf9z+gLWNdz/cIsasJx18sHEpj/FhNJWdvWTf2g/xZTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vl2v7SZd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuY6EY9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670FAC43390;
-	Mon,  8 Apr 2024 13:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vl2v7SZd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537B6C433C7;
+	Mon,  8 Apr 2024 13:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583496;
-	bh=DkcflPtoNw7oPGbbbtKm9b73DbU8HCs8A7TaPoTxf68=;
+	s=korg; t=1712583499;
+	bh=QowQnAWyvhEaAFHF73jGr8negnrZorYy70YHySnFtXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuY6EY9nXxwtrh8sh6nX+tcPxHPhQqShAe2jNs219PySMQXOvE7GpVk7GqqF8axSl
-	 7D2FmXQxrmM4RF8dD/4D4/G2ZsB10H6J9HkeIUhfCt33aPhCG7bJUdfytKXzP/DVXQ
-	 CpLGqV8mYTv3cPC6/AshgHXu2tn79zLrMxxwBIcg=
+	b=Vl2v7SZdRg0eBJvB/1UUnGrhGpYh0Tvb34FPUzpl0lxpjS/vpl31OGK3EKItbjOEJ
+	 rctO2LK+GdDchfWe0YC1IRbTCILBRe3SUOU8XmhnUWdTbo4lWsnfQckHuk90Sf3Wys
+	 1+QjNIPidQCFTxS1triPbIy8+2kiMwuxb3PaJmSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 185/273] ata: sata_mv: Fix PCI device ID table declaration compilation warning
-Date: Mon,  8 Apr 2024 14:57:40 +0200
-Message-ID: <20240408125315.037061017@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 6.6 202/252] gpio: cdev: check for NULL labels when sanitizing them for irqs
+Date: Mon,  8 Apr 2024 14:58:21 +0200
+Message-ID: <20240408125312.923918218@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,128 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 3137b83a90646917c90951d66489db466b4ae106 ]
+commit b3b95964590a3d756d69ea8604c856de805479ad upstream.
 
-Building with W=1 shows a warning for an unused variable when CONFIG_PCI
-is diabled:
+We need to take into account that a line's consumer label may be NULL
+and not try to kstrdup() it in that case but rather pass the NULL
+pointer up the stack to the interrupt request function.
 
-drivers/ata/sata_mv.c:790:35: error: unused variable 'mv_pci_tbl' [-Werror,-Wunused-const-variable]
-static const struct pci_device_id mv_pci_tbl[] = {
+To that end: let make_irq_label() return NULL as a valid return value
+and use ERR_PTR() instead to signal an allocation failure to callers.
 
-Move the table into the same block that containsn the pci_driver
-definition.
-
-Fixes: 7bb3c5290ca0 ("sata_mv: Remove PCI dependency")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b34490879baa ("gpio: cdev: sanitize the label before requesting the interrupt")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/lkml/20240402093534.212283-1-naresh.kamboju@linaro.org/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/sata_mv.c | 63 +++++++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
-index e82786c63fbd7..9bec0aee92e04 100644
---- a/drivers/ata/sata_mv.c
-+++ b/drivers/ata/sata_mv.c
-@@ -787,37 +787,6 @@ static const struct ata_port_info mv_port_info[] = {
- 	},
- };
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1012,7 +1012,16 @@ static u32 gpio_v2_line_config_debounce_
  
--static const struct pci_device_id mv_pci_tbl[] = {
--	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
--	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
--	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
--	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
--	/* RocketRAID 1720/174x have different identifiers */
--	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
--	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
--	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
--
--	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
--	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
--	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
--	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
--	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
--
--	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
--
--	/* Adaptec 1430SA */
--	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
--
--	/* Marvell 7042 support */
--	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
--
--	/* Highpoint RocketRAID PCIe series */
--	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
--	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
--
--	{ }			/* terminate list */
--};
--
- static const struct mv_hw_ops mv5xxx_ops = {
- 	.phy_errata		= mv5_phy_errata,
- 	.enable_leds		= mv5_enable_leds,
-@@ -4303,6 +4272,36 @@ static int mv_pci_init_one(struct pci_dev *pdev,
- static int mv_pci_device_resume(struct pci_dev *pdev);
- #endif
+ static inline char *make_irq_label(const char *orig)
+ {
+-	return kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
++	char *new;
++
++	if (!orig)
++		return NULL;
++
++	new = kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
++	if (!new)
++		return ERR_PTR(-ENOMEM);
++
++	return new;
+ }
  
-+static const struct pci_device_id mv_pci_tbl[] = {
-+	{ PCI_VDEVICE(MARVELL, 0x5040), chip_504x },
-+	{ PCI_VDEVICE(MARVELL, 0x5041), chip_504x },
-+	{ PCI_VDEVICE(MARVELL, 0x5080), chip_5080 },
-+	{ PCI_VDEVICE(MARVELL, 0x5081), chip_508x },
-+	/* RocketRAID 1720/174x have different identifiers */
-+	{ PCI_VDEVICE(TTI, 0x1720), chip_6042 },
-+	{ PCI_VDEVICE(TTI, 0x1740), chip_6042 },
-+	{ PCI_VDEVICE(TTI, 0x1742), chip_6042 },
-+
-+	{ PCI_VDEVICE(MARVELL, 0x6040), chip_604x },
-+	{ PCI_VDEVICE(MARVELL, 0x6041), chip_604x },
-+	{ PCI_VDEVICE(MARVELL, 0x6042), chip_6042 },
-+	{ PCI_VDEVICE(MARVELL, 0x6080), chip_608x },
-+	{ PCI_VDEVICE(MARVELL, 0x6081), chip_608x },
-+
-+	{ PCI_VDEVICE(ADAPTEC2, 0x0241), chip_604x },
-+
-+	/* Adaptec 1430SA */
-+	{ PCI_VDEVICE(ADAPTEC2, 0x0243), chip_7042 },
-+
-+	/* Marvell 7042 support */
-+	{ PCI_VDEVICE(MARVELL, 0x7042), chip_7042 },
-+
-+	/* Highpoint RocketRAID PCIe series */
-+	{ PCI_VDEVICE(TTI, 0x2300), chip_7042 },
-+	{ PCI_VDEVICE(TTI, 0x2310), chip_7042 },
-+
-+	{ }			/* terminate list */
-+};
+ static inline void free_irq_label(const char *label)
+@@ -1086,8 +1095,8 @@ static int edge_detector_setup(struct li
+ 	irqflags |= IRQF_ONESHOT;
  
- static struct pci_driver mv_pci_driver = {
- 	.name			= DRV_NAME,
-@@ -4315,6 +4314,7 @@ static struct pci_driver mv_pci_driver = {
- #endif
+ 	label = make_irq_label(line->req->label);
+-	if (!label)
+-		return -ENOMEM;
++	if (IS_ERR(label))
++		return PTR_ERR(label);
  
- };
-+MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
+ 	/* Request a thread to read the events */
+ 	ret = request_threaded_irq(irq, edge_irq_handler, edge_irq_thread,
+@@ -2194,8 +2203,8 @@ static int lineevent_create(struct gpio_
+ 		goto out_free_le;
  
- /**
-  *      mv_print_info - Dump key info to kernel log for perusal.
-@@ -4487,7 +4487,6 @@ static void __exit mv_exit(void)
- MODULE_AUTHOR("Brett Russ");
- MODULE_DESCRIPTION("SCSI low-level driver for Marvell SATA controllers");
- MODULE_LICENSE("GPL v2");
--MODULE_DEVICE_TABLE(pci, mv_pci_tbl);
- MODULE_VERSION(DRV_VERSION);
- MODULE_ALIAS("platform:" DRV_NAME);
+ 	label = make_irq_label(le->label);
+-	if (!label) {
+-		ret = -ENOMEM;
++	if (IS_ERR(label)) {
++		ret = PTR_ERR(label);
+ 		goto out_free_le;
+ 	}
  
--- 
-2.43.0
-
 
 
