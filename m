@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F2279F0;
-	Mon,  8 Apr 2024 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8B97C6CA;
+	Mon,  8 Apr 2024 13:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584679; cv=none; b=GFXjEu1cR9rld5Myx5z8JLx4zyeTaNAh2Khvy60gF556sBtz1mfnOEqw0aGGerAFkM3aBRVTk7EMCqTaMiqz8sT7d2k50KWmJa+w+RXhswRpwi/XP5tKeaQWe+HUkssJn6PvkHcfPN/pIp6yMWO1/z1sj19PMsLCT3MI+fDTZcg=
+	t=1712584682; cv=none; b=cH8l1VOtndgcY5o+qmpPkMpdPvKES/aT6FuL1NOX33U9puAu9xyokYN+VHGLHdEYLCihFTx6O4QFq3HwqVs4xI2VdmoyoF55yKO/XljPyBCqui59DR+pZMvDjvCUuhQu6efZMzYjwUfKAIxMKmk22+9DNR0VBb0iMDiRcSm4sMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584679; c=relaxed/simple;
-	bh=iDMOR+1l/ZrAvADaQbtXIhGF8Uo8DuWVOMewzhSTx/c=;
+	s=arc-20240116; t=1712584682; c=relaxed/simple;
+	bh=ZXTev4ayTHSJQYKGuS6Oh94GJ8+V95M7ypfWSMQTvvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/NQ2+nNr/cUeOKB8tcGBOaXNRdfgdtniKKneSDp58E/ZOvPnI84XQA4cHAs/6CvmEp4e92ODa0moHVxpe4XjvXCvG9Rt/MI8jGKYfPiC7+Rf3UiHuqGriYe7pMmO2otlJvfB3CWb62tiruLBS6Ubx2hC/pfhs4Eq76XNQHKYA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwohdbcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhkcQT4oC3NYqLzgMFP/s+f+bUXOK7Rni4fuiJHYwQ5HqMx8HhQveaardQnuGpsgoOZ72gZRknKAnmJX3CTKjN4DZTqFrQMhQWHmMaS/jB7wf/nkepp1MstCIFp1Het1hAuEsmYUohqRtcQf79pgA4UXiuPp8wUuOaJ6fz0FbPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qP+X0y+j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwohdbcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC26C433F1;
-	Mon,  8 Apr 2024 13:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qP+X0y+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0654FC433C7;
+	Mon,  8 Apr 2024 13:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584679;
-	bh=iDMOR+1l/ZrAvADaQbtXIhGF8Uo8DuWVOMewzhSTx/c=;
+	s=korg; t=1712584682;
+	bh=ZXTev4ayTHSJQYKGuS6Oh94GJ8+V95M7ypfWSMQTvvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwohdbcwfFQc2bBUbD6vuzKUEdKLF2aHWEfrbcOwPQLxgwKCT1ASBhDiTJOSN5e/t
-	 Mnn0TSMTYyTvDWJRm3+OSPlCND+bsz354j3NlSNmDBVUtIrWgnR8tQwEyDAzuAlLY1
-	 9+n+S0gEe7H1Kbt/+hoyftXqGeX6sTubDIPPVqYI=
+	b=qP+X0y+jMZptZcxjb7m8MdAzrySxnj3wrKQb0KxxL2ke4qixKsR6GrG/HMmpbY0kA
+	 16FO2VmvxUfWrX9jzIYrdNH3fWRg6z2AoBIGVGzodY3OUxr7OxWEj3mOnXiQKNaQO2
+	 eUUi1zDFNESQt/oLCjZrDBz+cTI0c+WumHRciba4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>
-Subject: [PATCH 5.15 481/690] NFSD: Clean up nfs4_preprocess_stateid_op() call sites
-Date: Mon,  8 Apr 2024 14:55:47 +0200
-Message-ID: <20240408125417.046113843@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 514/690] NFSD: replace delayed_work with work_struct for nfsd_client_shrinker
+Date: Mon,  8 Apr 2024 14:56:20 +0200
+Message-ID: <20240408125418.272557376@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,108 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit eeff73f7c1c583f79a401284f46c619294859310 ]
+[ Upstream commit 7c24fa225081f31bc6da6a355c1ba801889ab29a ]
 
-Remove the lame-duck dprintk()s around nfs4_preprocess_stateid_op()
-call sites.
+Since nfsd4_state_shrinker_count always calls mod_delayed_work with
+0 delay, we can replace delayed_work with work_struct to save some
+space and overhead.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Tested-by: Jeff Layton <jlayton@kernel.org>
+Also add the call to cancel_work after unregister the shrinker
+in nfs4_state_shutdown_net.
+
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4proc.c | 31 +++++++------------------------
- 1 file changed, 7 insertions(+), 24 deletions(-)
+ fs/nfsd/netns.h     | 2 +-
+ fs/nfsd/nfs4state.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 6ed0baa119433..92d4eb1032ff9 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -943,12 +943,7 @@ nfsd4_read(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 					&read->rd_stateid, RD_STATE,
- 					&read->rd_nf, NULL);
--	if (status) {
--		dprintk("NFSD: nfsd4_read: couldn't process stateid!\n");
--		goto out;
--	}
--	status = nfs_ok;
--out:
-+
- 	read->rd_rqstp = rqstp;
- 	read->rd_fhp = &cstate->current_fh;
- 	return status;
-@@ -1117,10 +1112,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		status = nfs4_preprocess_stateid_op(rqstp, cstate,
- 				&cstate->current_fh, &setattr->sa_stateid,
- 				WR_STATE, NULL, NULL);
--		if (status) {
--			dprintk("NFSD: nfsd4_setattr: couldn't process stateid!\n");
-+		if (status)
- 			return status;
--		}
- 	}
- 	err = fh_want_write(&cstate->current_fh);
- 	if (err)
-@@ -1168,10 +1161,8 @@ nfsd4_write(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			       write->wr_offset, cnt);
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 						stateid, WR_STATE, &nf, NULL);
--	if (status) {
--		dprintk("NFSD: nfsd4_write: couldn't process stateid!\n");
-+	if (status)
- 		return status;
--	}
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 8c854ba3285bb..51a4b7885cae2 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -195,7 +195,7 @@ struct nfsd_net {
  
- 	write->wr_how_written = write->wr_stable_how;
+ 	atomic_t		nfsd_courtesy_clients;
+ 	struct shrinker		nfsd_client_shrinker;
+-	struct delayed_work	nfsd_shrinker_work;
++	struct work_struct	nfsd_shrinker_work;
+ };
  
-@@ -1202,17 +1193,13 @@ nfsd4_verify_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ /* Simple check to find out if a given net was properly initialized */
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index ca0a1816500c3..22799f5ce686e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4411,7 +4411,7 @@ nfsd4_state_shrinker_count(struct shrinker *shrink, struct shrink_control *sc)
+ 	if (!count)
+ 		count = atomic_long_read(&num_delegations);
+ 	if (count)
+-		mod_delayed_work(laundry_wq, &nn->nfsd_shrinker_work, 0);
++		queue_work(laundry_wq, &nn->nfsd_shrinker_work);
+ 	return (unsigned long)count;
+ }
  
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->save_fh,
- 					    src_stateid, RD_STATE, src, NULL);
--	if (status) {
--		dprintk("NFSD: %s: couldn't process src stateid!\n", __func__);
-+	if (status)
- 		goto out;
--	}
+@@ -6228,8 +6228,7 @@ deleg_reaper(struct nfsd_net *nn)
+ static void
+ nfsd4_state_shrinker_worker(struct work_struct *work)
+ {
+-	struct delayed_work *dwork = to_delayed_work(work);
+-	struct nfsd_net *nn = container_of(dwork, struct nfsd_net,
++	struct nfsd_net *nn = container_of(work, struct nfsd_net,
+ 				nfsd_shrinker_work);
  
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 					    dst_stateid, WR_STATE, dst, NULL);
--	if (status) {
--		dprintk("NFSD: %s: couldn't process dst stateid!\n", __func__);
-+	if (status)
- 		goto out_put_src;
--	}
+ 	courtesy_client_reaper(nn);
+@@ -8057,7 +8056,7 @@ static int nfs4_state_create_net(struct net *net)
+ 	INIT_LIST_HEAD(&nn->blocked_locks_lru);
  
- 	/* fix up for NFS-specific error code */
- 	if (!S_ISREG(file_inode((*src)->nf_file)->i_mode) ||
-@@ -1951,10 +1938,8 @@ nfsd4_fallocate(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 					    &fallocate->falloc_stateid,
- 					    WR_STATE, &nf, NULL);
--	if (status != nfs_ok) {
--		dprintk("NFSD: nfsd4_fallocate: couldn't process stateid!\n");
-+	if (status != nfs_ok)
- 		return status;
--	}
+ 	INIT_DELAYED_WORK(&nn->laundromat_work, laundromat_main);
+-	INIT_DELAYED_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
++	INIT_WORK(&nn->nfsd_shrinker_work, nfsd4_state_shrinker_worker);
+ 	get_net(net);
  
- 	status = nfsd4_vfs_fallocate(rqstp, &cstate->current_fh, nf->nf_file,
- 				     fallocate->falloc_offset,
-@@ -2010,10 +1995,8 @@ nfsd4_seek(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 					    &seek->seek_stateid,
- 					    RD_STATE, &nf, NULL);
--	if (status) {
--		dprintk("NFSD: nfsd4_seek: couldn't process stateid!\n");
-+	if (status)
- 		return status;
--	}
+ 	nn->nfsd_client_shrinker.scan_objects = nfsd4_state_shrinker_scan;
+@@ -8164,6 +8163,7 @@ nfs4_state_shutdown_net(struct net *net)
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 	switch (seek->seek_whence) {
- 	case NFS4_CONTENT_DATA:
+ 	unregister_shrinker(&nn->nfsd_client_shrinker);
++	cancel_work(&nn->nfsd_shrinker_work);
+ 	cancel_delayed_work_sync(&nn->laundromat_work);
+ 	locks_end_grace(&nn->nfsd4_manager);
+ 
 -- 
 2.43.0
 
