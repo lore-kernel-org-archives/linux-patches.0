@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E7080619;
-	Mon,  8 Apr 2024 13:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70C780619;
+	Mon,  8 Apr 2024 13:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583625; cv=none; b=bGrY3DVnWm9cfsmpi+ypRcm7t/G0HveLDCjjRR2vQbvSykSHNEcGBQVOQ+jhCXNrZOulljWQBS+KswXwBLQFKt0hdxB6m/UAMYtjClExGdBWXaqZWeWLROyfCkNTmcf9xwEfPv7pLhBW5UyMkaIBME9fjFHR+UmCAJVxCxEkBMU=
+	t=1712583628; cv=none; b=hAd+lwDGort7GifOM61biMhJKtVEwHQEGnOHi5BmGhip8AxPdyOUVn4FOKF3Ey/QD7k7nBb7AMKHqD2Oqe3AOl52i++xFSu8sK5+YTDe0DM2zsBnEWwwoxIRgwRBqOrWcPURqaq/FYe4etECR7imPZPJPgOtllk6DZPdhc6Y2KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583625; c=relaxed/simple;
-	bh=qcEiK+QbEy6ipHKml2J8hNkfkEZgq/nlfyUYK/eRKGs=;
+	s=arc-20240116; t=1712583628; c=relaxed/simple;
+	bh=QIxXb7wByVYZfI7WzX7qKqeiVM080+/8sTpeZt072TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S49JUb5fsSxyMyoCMfZ3QqANtV4+SsYXleoPLvSU+cpUDqgM7KeymB1qczWadxwu3MSSuQlS4xDiGwT2wSR93wiu3Pnnpabdb+wBoqWlWCwTnHZyssxW08DQ7cB+VjRQZCvh2+OEl3I9tzHtSMcSwEIw6PaHcq9gXWyZF4B3hYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW0F2BRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqlHC/xVlmAch8n0QqFJTmj3nS59p/zcIUwApl9RD/T+yOOpPdIPlDHvcmjXkyA+pwW3Q9iAE/wmQz64Wpf/WTHOyF1LSr3jLAkFVlDEPR3nMl+5V7+F5gTT0wmCLScWi9nT+ezcngxJ1Hdr+88GqzFgJi98MznI/SrMaMKhBP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfPqxdND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW0F2BRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9BBC433F1;
-	Mon,  8 Apr 2024 13:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfPqxdND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B66BC433C7;
+	Mon,  8 Apr 2024 13:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583625;
-	bh=qcEiK+QbEy6ipHKml2J8hNkfkEZgq/nlfyUYK/eRKGs=;
+	s=korg; t=1712583628;
+	bh=QIxXb7wByVYZfI7WzX7qKqeiVM080+/8sTpeZt072TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PW0F2BRr2cPR6Tq5M8VfgFrbCasFO6LOfAnCPRmRRjQY3whCsfay+P6CUiWBIjQQf
-	 TUTqyKeEaHq3g6CK3zxyHQ0DdLAeZavYjEVTqwpzPGkwinB1EykfFxVGbneP5H1Dpc
-	 FjSszCaJh7BH6E3q3yHsC+2SCjp+O5+1xlchJJiU=
+	b=MfPqxdND5+sKpDZdOXEW5tjwIaFh/Z7molQ+eJo5ChSQJfBTIPdhnyEy4Y0LbbJQF
+	 hy0A2bDi6KuTZbuFYxxk3JlQA2SmALY2eDFZtrcrZCNAh3lkPoCzjZMNe6Ow9p4l9V
+	 nmS0EEit1p0JtLyzzNSEG253lRftBIyoUZ5DSR+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 6.8 196/273] gpio: cdev: check for NULL labels when sanitizing them for irqs
-Date: Mon,  8 Apr 2024 14:57:51 +0200
-Message-ID: <20240408125315.413060428@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 268/690] orDate: Thu Sep 30 19:19:57 2021 -0400
+Date: Mon,  8 Apr 2024 14:52:14 +0200
+Message-ID: <20240408125409.330662285@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +45,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit b3b95964590a3d756d69ea8604c856de805479ad upstream.
+NFSD: De-duplicate hash bucket indexing
 
-We need to take into account that a line's consumer label may be NULL
-and not try to kstrdup() it in that case but rather pass the NULL
-pointer up the stack to the interrupt request function.
+[ Upstream commit 378a6109dd142a678f629b740f558365150f60f9 ]
 
-To that end: let make_irq_label() return NULL as a valid return value
-and use ERR_PTR() instead to signal an allocation failure to callers.
+Clean up: The details of finding the right hash bucket are exactly
+the same in both nfsd_cache_lookup() and nfsd_cache_update().
 
-Cc: stable@vger.kernel.org
-Fixes: b34490879baa ("gpio: cdev: sanitize the label before requesting the interrupt")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/lkml/20240402093534.212283-1-naresh.kamboju@linaro.org/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpio/gpiolib-cdev.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ fs/nfsd/nfscache.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1091,7 +1091,16 @@ static u32 gpio_v2_line_config_debounce_
- 
- static inline char *make_irq_label(const char *orig)
- {
--	return kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
-+	char *new;
-+
-+	if (!orig)
-+		return NULL;
-+
-+	new = kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
-+	if (!new)
-+		return ERR_PTR(-ENOMEM);
-+
-+	return new;
+diff --git a/fs/nfsd/nfscache.c b/fs/nfsd/nfscache.c
+index a838909502907..7880a2f2d29f6 100644
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -84,12 +84,6 @@ nfsd_hashsize(unsigned int limit)
+ 	return roundup_pow_of_two(limit / TARGET_BUCKET_SIZE);
  }
  
- static inline void free_irq_label(const char *label)
-@@ -1164,8 +1173,8 @@ static int edge_detector_setup(struct li
- 	irqflags |= IRQF_ONESHOT;
+-static u32
+-nfsd_cache_hash(__be32 xid, struct nfsd_net *nn)
+-{
+-	return hash_32((__force u32)xid, nn->maskbits);
+-}
+-
+ static struct svc_cacherep *
+ nfsd_reply_cache_alloc(struct svc_rqst *rqstp, __wsum csum,
+ 			struct nfsd_net *nn)
+@@ -241,6 +235,14 @@ lru_put_end(struct nfsd_drc_bucket *b, struct svc_cacherep *rp)
+ 	list_move_tail(&rp->c_lru, &b->lru_head);
+ }
  
- 	label = make_irq_label(line->req->label);
--	if (!label)
--		return -ENOMEM;
-+	if (IS_ERR(label))
-+		return PTR_ERR(label);
++static noinline struct nfsd_drc_bucket *
++nfsd_cache_bucket_find(__be32 xid, struct nfsd_net *nn)
++{
++	unsigned int hash = hash_32((__force u32)xid, nn->maskbits);
++
++	return &nn->drc_hashtbl[hash];
++}
++
+ static long prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn,
+ 			 unsigned int max)
+ {
+@@ -421,10 +423,8 @@ int nfsd_cache_lookup(struct svc_rqst *rqstp)
+ {
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct svc_cacherep	*rp, *found;
+-	__be32			xid = rqstp->rq_xid;
+ 	__wsum			csum;
+-	u32 hash = nfsd_cache_hash(xid, nn);
+-	struct nfsd_drc_bucket *b = &nn->drc_hashtbl[hash];
++	struct nfsd_drc_bucket	*b = nfsd_cache_bucket_find(rqstp->rq_xid, nn);
+ 	int type = rqstp->rq_cachetype;
+ 	int rtn = RC_DOIT;
  
- 	/* Request a thread to read the events */
- 	ret = request_threaded_irq(irq, edge_irq_handler, edge_irq_thread,
-@@ -2223,8 +2232,8 @@ static int lineevent_create(struct gpio_
- 		goto out_free_le;
+@@ -528,7 +528,6 @@ void nfsd_cache_update(struct svc_rqst *rqstp, int cachetype, __be32 *statp)
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct svc_cacherep *rp = rqstp->rq_cacherep;
+ 	struct kvec	*resv = &rqstp->rq_res.head[0], *cachv;
+-	u32		hash;
+ 	struct nfsd_drc_bucket *b;
+ 	int		len;
+ 	size_t		bufsize = 0;
+@@ -536,8 +535,7 @@ void nfsd_cache_update(struct svc_rqst *rqstp, int cachetype, __be32 *statp)
+ 	if (!rp)
+ 		return;
  
- 	label = make_irq_label(le->label);
--	if (!label) {
--		ret = -ENOMEM;
-+	if (IS_ERR(label)) {
-+		ret = PTR_ERR(label);
- 		goto out_free_le;
- 	}
+-	hash = nfsd_cache_hash(rp->c_key.k_xid, nn);
+-	b = &nn->drc_hashtbl[hash];
++	b = nfsd_cache_bucket_find(rp->c_key.k_xid, nn);
  
+ 	len = resv->iov_len - ((char*)statp - (char*)resv->iov_base);
+ 	len >>= 2;
+-- 
+2.43.0
+
 
 
