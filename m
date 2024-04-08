@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481CC6A352;
-	Mon,  8 Apr 2024 13:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EDF42046;
+	Mon,  8 Apr 2024 13:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583224; cv=none; b=Ruf0kWzmOXn+BHpAnNM0E+/DAATjo/8X7JfdD4w8d22gwyWPdvLlKFXOsL7Mi6mx4+v8a4WQb5Wi+h+NbD3h+sF+y54S6xnxMr+krtpYKUdOhZKQER9QIUpDokqM2ZYmlDk9m8A/5eYKbbgMm7tivBHtEP7wSLnXI0XCQHjpAto=
+	t=1712583227; cv=none; b=bSZiWsk277SuLXAvN+c36a0do6pgXnFhsWguqS6BWlal6nGaS+P/1972ph/9yTWpaeYtfGLEeBV7KNvtFzn8U9kqzWurOgYSUUZpKCvCKw368mioixXogLH/EGg/KA18QYeGD5HrSmfKiGC+cCR7UWT6TlzH6Ik9Y9wzCWW/YIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583224; c=relaxed/simple;
-	bh=KeTurwbzpiRMOqKSdMJSpcKMdVIU82+hLynqX9v+j84=;
+	s=arc-20240116; t=1712583227; c=relaxed/simple;
+	bh=fhvioDovrbj9r5ai6f3ZZCoxCGAcT0FMd1OWYnvsOdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wp/ZhU9/Wrrslr0IvksStvsb1v5ZYc2gKbutwTZ+FLv2R6Wu/nh8t/gNEyczgMbgwQpNk2RbGyWWh5TG0oQmKBRkLA5PVtH8ONpJnUpOfCNz/PH5NMK/xur2j3BpyX3lxal84YbA3UtQg/uJW8SlGj1hkn4iP16Qh/KOkKxfVSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc+AE6Mk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnwn4e6xJ8Hp1naYnnaz+ItlGl3lzpAFaIinLOlnz2zCD0ihxpuQH/CdWJEa3kF/Zntgesz2H2z/LqkOH++pjGbpUa7Qx+16Df3vG/54dBiUBH/f4txv/17ka4u1QPFYVTSc4wCSbWOENAA6Xzmz2Z3Ui55DVsQLXoZq3QD8cVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umf6aOc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc+AE6Mk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72543C433C7;
-	Mon,  8 Apr 2024 13:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umf6aOc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1FCC43390;
+	Mon,  8 Apr 2024 13:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583223;
-	bh=KeTurwbzpiRMOqKSdMJSpcKMdVIU82+hLynqX9v+j84=;
+	s=korg; t=1712583226;
+	bh=fhvioDovrbj9r5ai6f3ZZCoxCGAcT0FMd1OWYnvsOdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hc+AE6MkdCKzuldUEYST6fNezG62SZPL7xas8sXjPN+EX9NNCg2Bi6jsfDgp5pfsP
-	 6jVAeSXMZcVXZQr2X0baRogeqI6y1K0xIRl5r+3I9LfgC3GXURWKG+VEN5OQn2Nm2/
-	 AMp7woQfT1gADhoyijNKJEsbCWalZPl2/shbrDlI=
+	b=umf6aOc7Z1c/GIMwU7OMQCExR2HRQH06ktX/3SCvaf0I6mAQLuIMAkpWloYNnI58G
+	 30et/JDCdXj+wsXG7ycR3Cm3LUhyZXhPlfe+gGxg3dVfWCgtc4mI4baVxEMZrDZiCJ
+	 YPiOv3aY149VaheW46abNfHhV8Jc3SG72KikA+Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Chao Song <chao.song@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/252] ASoC: rt712-sdca-sdw: fix locking sequence
-Date: Mon,  8 Apr 2024 14:57:50 +0200
-Message-ID: <20240408125311.966850608@linuxfoundation.org>
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 224/690] exit: Implement kthread_exit
+Date: Mon,  8 Apr 2024 14:51:30 +0200
+Message-ID: <20240408125407.661249231@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +46,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit c8b2e5c1b959d100990e4f0cbad38e7d047bb97c ]
+[ Upstream commit bbda86e988d4c124e4cfa816291cbd583ae8bfb1 ]
 
-The disable_irq_lock protects the 'disable_irq' value, we need to lock
-before testing it.
+The way the per task_struct exit_code is used by kernel threads is not
+quite compatible how it is used by userspace applications.  The low
+byte of the userspace exit_code value encodes the exit signal.  While
+kthreads just use the value as an int holding ordinary kernel function
+exit status like -EPERM.
 
-Fixes: 7a8735c1551e ("ASoC: rt712-sdca: fix for JD event handling in ClockStop Mode0")
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Chao Song <chao.song@linux.intel.com>
-Link: https://msgid.link/r/20240325221817.206465-5-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add kthread_exit to clearly separate the two kinds of uses.
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Stable-dep-of: ca3574bd653a ("exit: Rename module_put_and_exit to module_put_and_kthread_exit")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- sound/soc/codecs/rt712-sdca-sdw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/kthread.h |  1 +
+ kernel/kthread.c        | 23 +++++++++++++++++++----
+ tools/objtool/check.c   |  1 +
+ 3 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt712-sdca-sdw.c b/sound/soc/codecs/rt712-sdca-sdw.c
-index 6b644a89c5890..ba877432cea61 100644
---- a/sound/soc/codecs/rt712-sdca-sdw.c
-+++ b/sound/soc/codecs/rt712-sdca-sdw.c
-@@ -438,13 +438,14 @@ static int __maybe_unused rt712_sdca_dev_resume(struct device *dev)
- 		return 0;
+diff --git a/include/linux/kthread.h b/include/linux/kthread.h
+index db47aae7c481b..8e21bd13c36dd 100644
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -95,6 +95,7 @@ void *kthread_probe_data(struct task_struct *k);
+ int kthread_park(struct task_struct *k);
+ void kthread_unpark(struct task_struct *k);
+ void kthread_parkme(void);
++void kthread_exit(long result) __noreturn;
  
- 	if (!slave->unattach_request) {
-+		mutex_lock(&rt712->disable_irq_lock);
- 		if (rt712->disable_irq == true) {
--			mutex_lock(&rt712->disable_irq_lock);
+ int kthreadd(void *unused);
+ extern struct task_struct *kthreadd_task;
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index e319a1b62586e..4cc6897b7ca40 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -268,6 +268,21 @@ void kthread_parkme(void)
+ }
+ EXPORT_SYMBOL_GPL(kthread_parkme);
+ 
++/**
++ * kthread_exit - Cause the current kthread return @result to kthread_stop().
++ * @result: The integer value to return to kthread_stop().
++ *
++ * While kthread_exit can be called directly, it exists so that
++ * functions which do some additional work in non-modular code such as
++ * module_put_and_kthread_exit can be implemented.
++ *
++ * Does not return.
++ */
++void __noreturn kthread_exit(long result)
++{
++	do_exit(result);
++}
 +
- 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_0);
- 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
- 			rt712->disable_irq = false;
--			mutex_unlock(&rt712->disable_irq_lock);
- 		}
-+		mutex_unlock(&rt712->disable_irq_lock);
- 		goto regmap_sync;
+ static int kthread(void *_create)
+ {
+ 	/* Copy data: it's on kthread's stack */
+@@ -285,13 +300,13 @@ static int kthread(void *_create)
+ 	done = xchg(&create->done, NULL);
+ 	if (!done) {
+ 		kfree(create);
+-		do_exit(-EINTR);
++		kthread_exit(-EINTR);
  	}
  
+ 	if (!self) {
+ 		create->result = ERR_PTR(-ENOMEM);
+ 		complete(done);
+-		do_exit(-ENOMEM);
++		kthread_exit(-ENOMEM);
+ 	}
+ 
+ 	self->threadfn = threadfn;
+@@ -318,7 +333,7 @@ static int kthread(void *_create)
+ 		__kthread_parkme(self);
+ 		ret = threadfn(data);
+ 	}
+-	do_exit(ret);
++	kthread_exit(ret);
+ }
+ 
+ /* called from kernel_clone() to get node information for about to be created task */
+@@ -628,7 +643,7 @@ EXPORT_SYMBOL_GPL(kthread_park);
+  * instead of calling wake_up_process(): the thread will exit without
+  * calling threadfn().
+  *
+- * If threadfn() may call do_exit() itself, the caller must ensure
++ * If threadfn() may call kthread_exit() itself, the caller must ensure
+  * task_struct can't go away.
+  *
+  * Returns the result of threadfn(), or %-EINTR if wake_up_process()
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index c3bb96e5bfa64..f066837d8e1aa 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -169,6 +169,7 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
+ 		"panic",
+ 		"do_exit",
+ 		"do_task_dead",
++		"kthread_exit",
+ 		"make_task_dead",
+ 		"__module_put_and_exit",
+ 		"complete_and_exit",
 -- 
 2.43.0
 
