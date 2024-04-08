@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBC771753;
-	Mon,  8 Apr 2024 13:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0AB7BAE7;
+	Mon,  8 Apr 2024 13:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582153; cv=none; b=GxBZBbxEa8I8cvLipnCnJe8/1Dp0Yb+RC+jp0ni2F0QvpbcXEeVov3cJMwSbpL5bSk1epYnHHu3143OGbRc5bzLDMMGKXOJmKmiGnk3SkV/f/mgSpJWiIbKTF2kv54nTTo6xC+CgkQur6jxlSUYaY+1+IsYqarEdY6LSKsw3rfI=
+	t=1712582156; cv=none; b=ehzWqL4pl9u9os+SEnjsEf10zzM13HB4AnxK3q2V5LTlql5ROn0jJquCpJo26MXoNeL6grYE6po/w9r8qzfh3YB6HvXNUZhI2J4SjgtGgFAb3s/30SzVtz48g+3IfuZNnu0vxHBTQrxrgRHb3wfeDUO2fCVWFQtHIE5wejrVbLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582153; c=relaxed/simple;
-	bh=/ONEn6yiUN4Q/+8YA3nqe8ujYYtMh6S6vGuYvYdc1WI=;
+	s=arc-20240116; t=1712582156; c=relaxed/simple;
+	bh=saR6ED4fDaM1istcXEmH99JGv/3Zpp17j5CMcblAQIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GYDt17FwpJQQRrftpujet81S/mM0OlBDyHUeGMrhil/kpCyAFEmG5jhExwAWnG/lgNISgv5Kg1+WmnkCzgvGSB+JCZjNxJkiUaIlYQ5Iltg9V2zEazS0tHhYIt0RB77CQCnaaR77tBYmn0whnG2oV9ASYHTTKmSgT8LHJTeqHRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdLDY4zD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tof93yvmqqnfyqVhOKyp1tGcT+QLPZfzquts9d9ajhOt2KmRaMbz3B+kVePjjm/Die/ST+GohCrlg0bhZ36yPGQ9QRJudb92UPEXy5/uZ2lCBBo54U602eVQsxs7RSicpCrisP4ry0FeeA/sdIaAke2/IYk76yNRxOyYUdiGF4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jR1JwJ3u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdLDY4zD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4617AC433F1;
-	Mon,  8 Apr 2024 13:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jR1JwJ3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A83C433C7;
+	Mon,  8 Apr 2024 13:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582153;
-	bh=/ONEn6yiUN4Q/+8YA3nqe8ujYYtMh6S6vGuYvYdc1WI=;
+	s=korg; t=1712582156;
+	bh=saR6ED4fDaM1istcXEmH99JGv/3Zpp17j5CMcblAQIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdLDY4zD1HXFZOGX/UW/HGfaPZwxIJ+Da+1WPJgY+ROgzshxem4HGbvPYEjWMvDge
-	 DDhiMirmK58XOMs3+pjcRqsh2gVvbTSuR8xczd7F2gWFq012P4MVVlzRaR1NVQD3FQ
-	 BNvNlnPaVCtKAj023lttMIaJUTU/Mubu9hgKAXgk=
+	b=jR1JwJ3uZ39aBPM28kRVJ7MDXjMhW4COcmKcmNR2FFKqc+UBGTCYwnbBUtT3E+GrA
+	 /UpZiJxjkVQyhOsbDGOPbF6TcTUejODcLQWIuGsuFSqXam6UnzJ5+we546wQsN78ce
+	 D5du6b0gCjA0U4lBm2k/mTUBchA26gyJGyXGpYII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Altaparmakov <anton@tuxera.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/690] x86/pm: Work around false positive kmemleak report in msr_build_context()
-Date: Mon,  8 Apr 2024 14:49:41 +0200
-Message-ID: <20240408125403.704407142@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>
+Subject: [PATCH 6.6 068/252] gpio: cdev: sanitize the label before requesting the interrupt
+Date: Mon,  8 Apr 2024 14:56:07 +0200
+Message-ID: <20240408125308.747253681@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,105 +47,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Altaparmakov <anton@tuxera.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit e3f269ed0accbb22aa8f25d2daffa23c3fccd407 ]
+commit b34490879baa847d16fc529c8ea6e6d34f004b38 upstream.
 
-Since:
+When an interrupt is requested, a procfs directory is created under
+"/proc/irq/<irqnum>/<label>" where <label> is the string passed to one of
+the request_irq() variants.
 
-  7ee18d677989 ("x86/power: Make restore_processor_context() sane")
+What follows is that the string must not contain the "/" character or
+the procfs mkdir operation will fail. We don't have such constraints for
+GPIO consumer labels which are used verbatim as interrupt labels for
+GPIO irqs. We must therefore sanitize the consumer string before
+requesting the interrupt.
 
-kmemleak reports this issue:
+Let's replace all "/" with ":".
 
-  unreferenced object 0xf68241e0 (size 32):
-    comm "swapper/0", pid 1, jiffies 4294668610 (age 68.432s)
-    hex dump (first 32 bytes):
-      00 cc cc cc 29 10 01 c0 00 00 00 00 00 00 00 00  ....)...........
-      00 42 82 f6 cc cc cc cc cc cc cc cc cc cc cc cc  .B..............
-    backtrace:
-      [<461c1d50>] __kmem_cache_alloc_node+0x106/0x260
-      [<ea65e13b>] __kmalloc+0x54/0x160
-      [<c3858cd2>] msr_build_context.constprop.0+0x35/0x100
-      [<46635aff>] pm_check_save_msr+0x63/0x80
-      [<6b6bb938>] do_one_initcall+0x41/0x1f0
-      [<3f3add60>] kernel_init_freeable+0x199/0x1e8
-      [<3b538fde>] kernel_init+0x1a/0x110
-      [<938ae2b2>] ret_from_fork+0x1c/0x28
-
-Which is a false positive.
-
-Reproducer:
-
-  - Run rsync of whole kernel tree (multiple times if needed).
-  - start a kmemleak scan
-  - Note this is just an example: a lot of our internal tests hit these.
-
-The root cause is similar to the fix in:
-
-  b0b592cf0836 x86/pm: Fix false positive kmemleak report in msr_build_context()
-
-ie. the alignment within the packed struct saved_context
-which has everything unaligned as there is only "u16 gs;" at start of
-struct where in the past there were four u16 there thus aligning
-everything afterwards.  The issue is with the fact that Kmemleak only
-searches for pointers that are aligned (see how pointers are scanned in
-kmemleak.c) so when the struct members are not aligned it doesn't see
-them.
-
-Testing:
-
-We run a lot of tests with our CI, and after applying this fix we do not
-see any kmemleak issues any more whilst without it we see hundreds of
-the above report. From a single, simple test run consisting of 416 individual test
-cases on kernel 5.10 x86 with kmemleak enabled we got 20 failures due to this,
-which is quite a lot. With this fix applied we get zero kmemleak related failures.
-
-Fixes: 7ee18d677989 ("x86/power: Make restore_processor_context() sane")
-Signed-off-by: Anton Altaparmakov <anton@tuxera.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240314142656.17699-1-anton@tuxera.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Closes: https://lore.kernel.org/linux-gpio/39fe95cb-aa83-4b8b-8cab-63947a726754@gmx.net/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/suspend_32.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |   38 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/include/asm/suspend_32.h b/arch/x86/include/asm/suspend_32.h
-index a800abb1a9925..d8416b3bf832e 100644
---- a/arch/x86/include/asm/suspend_32.h
-+++ b/arch/x86/include/asm/suspend_32.h
-@@ -12,11 +12,6 @@
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1010,10 +1010,20 @@ static u32 gpio_v2_line_config_debounce_
+ 	return 0;
+ }
  
- /* image of the saved processor state */
- struct saved_context {
--	/*
--	 * On x86_32, all segment registers except gs are saved at kernel
--	 * entry in pt_regs.
--	 */
--	u16 gs;
- 	unsigned long cr0, cr2, cr3, cr4;
- 	u64 misc_enable;
- 	struct saved_msrs saved_msrs;
-@@ -27,6 +22,11 @@ struct saved_context {
- 	unsigned long tr;
- 	unsigned long safety;
- 	unsigned long return_address;
-+	/*
-+	 * On x86_32, all segment registers except gs are saved at kernel
-+	 * entry in pt_regs.
-+	 */
-+	u16 gs;
- 	bool misc_enable_saved;
- } __attribute__((packed));
++static inline char *make_irq_label(const char *orig)
++{
++	return kstrdup_and_replace(orig, '/', ':', GFP_KERNEL);
++}
++
++static inline void free_irq_label(const char *label)
++{
++	kfree(label);
++}
++
+ static void edge_detector_stop(struct line *line)
+ {
+ 	if (line->irq) {
+-		free_irq(line->irq, line);
++		free_irq_label(free_irq(line->irq, line));
+ 		line->irq = 0;
+ 	}
  
--- 
-2.43.0
-
+@@ -1038,6 +1048,7 @@ static int edge_detector_setup(struct li
+ 	unsigned long irqflags = 0;
+ 	u64 eflags;
+ 	int irq, ret;
++	char *label;
+ 
+ 	eflags = edflags & GPIO_V2_LINE_EDGE_FLAGS;
+ 	if (eflags && !kfifo_initialized(&line->req->events)) {
+@@ -1074,11 +1085,17 @@ static int edge_detector_setup(struct li
+ 			IRQF_TRIGGER_RISING : IRQF_TRIGGER_FALLING;
+ 	irqflags |= IRQF_ONESHOT;
+ 
++	label = make_irq_label(line->req->label);
++	if (!label)
++		return -ENOMEM;
++
+ 	/* Request a thread to read the events */
+ 	ret = request_threaded_irq(irq, edge_irq_handler, edge_irq_thread,
+-				   irqflags, line->req->label, line);
+-	if (ret)
++				   irqflags, label, line);
++	if (ret) {
++		free_irq_label(label);
+ 		return ret;
++	}
+ 
+ 	line->irq = irq;
+ 	return 0;
+@@ -1943,7 +1960,7 @@ static void lineevent_free(struct lineev
+ 		blocking_notifier_chain_unregister(&le->gdev->device_notifier,
+ 						   &le->device_unregistered_nb);
+ 	if (le->irq)
+-		free_irq(le->irq, le);
++		free_irq_label(free_irq(le->irq, le));
+ 	if (le->desc)
+ 		gpiod_free(le->desc);
+ 	kfree(le->label);
+@@ -2091,6 +2108,7 @@ static int lineevent_create(struct gpio_
+ 	int fd;
+ 	int ret;
+ 	int irq, irqflags = 0;
++	char *label;
+ 
+ 	if (copy_from_user(&eventreq, ip, sizeof(eventreq)))
+ 		return -EFAULT;
+@@ -2175,15 +2193,23 @@ static int lineevent_create(struct gpio_
+ 	if (ret)
+ 		goto out_free_le;
+ 
++	label = make_irq_label(le->label);
++	if (!label) {
++		ret = -ENOMEM;
++		goto out_free_le;
++	}
++
+ 	/* Request a thread to read the events */
+ 	ret = request_threaded_irq(irq,
+ 				   lineevent_irq_handler,
+ 				   lineevent_irq_thread,
+ 				   irqflags,
+-				   le->label,
++				   label,
+ 				   le);
+-	if (ret)
++	if (ret) {
++		free_irq_label(label);
+ 		goto out_free_le;
++	}
+ 
+ 	le->irq = irq;
+ 
 
 
