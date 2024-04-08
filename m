@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C451342046;
-	Mon,  8 Apr 2024 13:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF12D6FE35;
+	Mon,  8 Apr 2024 13:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584515; cv=none; b=SLQ0LoRExMvy3yB6m7P1Fl1PQ5MJxVst3MuAcKT8ThUKzDIrkHkYSo1GL2yV/PmKV1W+rYOSaNxnDc5IKJ4G+tC9EhEBWGCc3Nf7EkwsO6y9x+sSpcq5/eL80Mi/c6Mmjhq3fxrSBQKF61h2XXuWDVKymcDprbUDhtRnKp87m/U=
+	t=1712584518; cv=none; b=NIl6zypotRGPPpqdJkHpaeTIkViXEcg+grH9MaFujMQQqeWRdkLcZ/zuOKPVBKdQP3E1bDPyspw4ALqFH2Y2FoMnh7esHO/flpZh2gF0+7DbXGu7QzXXfpxVdroEA/LMjmyQK62gutfWt1vTMRsKp9MgPH9n07P0X1iCQgxsyU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584515; c=relaxed/simple;
-	bh=TaVl3kbbWRNCwd/ULduU9eHN38N7FYif80kVtR4oEik=;
+	s=arc-20240116; t=1712584518; c=relaxed/simple;
+	bh=AWGW4Nnb+mswLHNJV2uRrZJMDWkafBCkKvUal+6XKvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kzbv2MCdzPQWSUmJyb1YP2c+zkLi/VbSW+s427VCPkrklMmpdDineiXsORYMyQFLQW92stxy6ydjzqE4IkbXeBKQ6VHhrVYHwhRP3keWdBKG3pa/aaAhEQXzjI/eG6gKomT+SQM95CeslpPNKHqreYS7p5KrL2WTKzLpRrJ+21M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uq+pzvn8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lGiejSvwYl6+GA14LSukLZ28xBI7WUykJF+kEwqgXLJ68HaJPuiA/i/pwvSYm2B54rLnOTNwkUJSCtIp+BVs5wHIusUovnIswuolhKLtc7D8E0yYJ4clsFc6S/gotXY/7ylw5Bmf6Yt8fa4F1psfqPQ9O6Diiw/IR+oCtPmW5dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTkCrV0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uq+pzvn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC9AC433F1;
-	Mon,  8 Apr 2024 13:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTkCrV0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B655C433C7;
+	Mon,  8 Apr 2024 13:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584515;
-	bh=TaVl3kbbWRNCwd/ULduU9eHN38N7FYif80kVtR4oEik=;
+	s=korg; t=1712584518;
+	bh=AWGW4Nnb+mswLHNJV2uRrZJMDWkafBCkKvUal+6XKvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uq+pzvn8nNNUrJDQRgZC8XEsKwBOXzbw/7UnT9vvlkkquvoLNW9+9Q5ijakMzCh5v
-	 +F0gzakJoXLiNWtkBHhpXgFePmxmTQdxH2ThoL2g8EvrdEEOUOmKTHN+QqS8VuxExd
-	 GKmChcSchbV3vPjOcH7AmdBhZvLwEzB/YSW2Egic=
+	b=ZTkCrV0pabkzYxJP7JNfVuyAdQRqoU41Oy1vyh5rF3TNX+xGH2NCyhFG/qfhtoARM
+	 UTOvBm6HZKfETxJR6BUFypq9/aoVw4PyFka5YgH2dfgO0gfcmabchzHhtcEhZ9yjc8
+	 u+7kiv+WEjTtjPOg4Ve+caakwtyc0PTAszRdZfho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongcheng Yang <yoyang@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 465/690] nfsd: put the export reference in nfsd4_verify_deleg_dentry
-Date: Mon,  8 Apr 2024 14:55:31 +0200
-Message-ID: <20240408125416.465941578@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 466/690] NFSD: Fix trace_nfsd_fh_verify_err() crasher
+Date: Mon,  8 Apr 2024 14:55:32 +0200
+Message-ID: <20240408125416.504988384@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,34 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 50256e4793a5e5ab77703c82a47344ad2e774a59 ]
+[ Upstream commit 5a01c805441bdc86e7af206d8a03735cc9394ffb ]
 
-nfsd_lookup_dentry returns an export reference in addition to the dentry
-ref. Ensure that we put it too.
+Now that the nfsd_fh_verify_err() tracepoint is always called on
+error, it needs to handle cases where the filehandle is not yet
+fully formed.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138866
-Fixes: 876c553cb410 ("NFSD: verify the opened dentry after setting a delegation")
-Reported-by: Yongcheng Yang <yoyang@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 93c128e709ae ("nfsd: ensure we always call fh_verify_error tracepoint")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4state.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/trace.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d19629de2af5d..7cfc92aa2a236 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5397,6 +5397,7 @@ nfsd4_verify_deleg_dentry(struct nfsd4_open *open, struct nfs4_file *fp,
- 	if (err)
- 		return -EAGAIN;
- 
-+	exp_put(exp);
- 	dput(child);
- 	if (child != file_dentry(fp->fi_deleg_file->nf_file))
- 		return -EAGAIN;
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index 1229502b6e9e0..72aa7435d55bd 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -254,7 +254,10 @@ TRACE_EVENT_CONDITION(nfsd_fh_verify_err,
+ 				  rqstp->rq_xprt->xpt_remotelen);
+ 		__entry->xid = be32_to_cpu(rqstp->rq_xid);
+ 		__entry->fh_hash = knfsd_fh_hash(&fhp->fh_handle);
+-		__entry->inode = d_inode(fhp->fh_dentry);
++		if (fhp->fh_dentry)
++			__entry->inode = d_inode(fhp->fh_dentry);
++		else
++			__entry->inode = NULL;
+ 		__entry->type = type;
+ 		__entry->access = access;
+ 		__entry->error = be32_to_cpu(error);
 -- 
 2.43.0
 
