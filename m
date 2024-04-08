@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8385F768EA;
-	Mon,  8 Apr 2024 13:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CFC7641E;
+	Mon,  8 Apr 2024 13:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582553; cv=none; b=d91A4cLF2o/ySiOoLNybDK6CdU3HBe0neqwz0tKMR6uM2WbFQb6b2ZAMcjv9Bb+6vVgmjySIp0qjohQjfVfqiZaCnmn3W1Tnhtn4NcV6f5Kpc5mywsx+gElb7eYNHPzPDaJnikd0Q3VOe6uohqqc5k5UlNwNUd47JKoiIZ0imkE=
+	t=1712582556; cv=none; b=g9tgTm10g3jtNXQiVfXgFam71eeTzp0wvTxwO5927sEePB00TJGWD4CxBd6+FoyxOh+voNhCvLrUtGmuQATM5ZGLWj6m2RD8cMJfX0lUjofHulN+obZqulZCDN1VtSlnWI0IkfKGluS9fCdE/Wdqt+oRs7k6iRyGWmdcpQeLKGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582553; c=relaxed/simple;
-	bh=ZHAOTJJVgd/K+714pnObaIGlqgdS2uC+ohdceg+feIc=;
+	s=arc-20240116; t=1712582556; c=relaxed/simple;
+	bh=L/oV5a9fseatXTzA3MF46cSSQDyYpdDsvmwqtkLYEiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6qHrboa9a9uuaodIt9aoAMF+SNsKqPdiCbtH/kpjEIFzOMDxieBCqIEe7c98B56Napr+6qjxWgdevnLE8pXUAO1IgyH/V3TqMlKrWr3dAZw49P8LS8mOD16UiUaz3B7fd7NCJc95YgUU5V472omIHSqSRTFGxCT9f6YTYpTAJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amFFXSYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnTonL8CA1gYVNKgbFCcrKV3ViLpe2O0O2eRWFI1SPr9QBXTl8vc/lejKC0y3yGTvoazExLT/bA+bD+YzTkSQKCxXmuSZ2aPCuy3isTm8tRoiDO/t63DDBcnCaBt+19urCL/KLM2yn4J9F1niHrNmawPqvzcIldp0IZF2IPERyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3BKc3hq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amFFXSYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09629C433C7;
-	Mon,  8 Apr 2024 13:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3BKc3hq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4024C433C7;
+	Mon,  8 Apr 2024 13:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582553;
-	bh=ZHAOTJJVgd/K+714pnObaIGlqgdS2uC+ohdceg+feIc=;
+	s=korg; t=1712582556;
+	bh=L/oV5a9fseatXTzA3MF46cSSQDyYpdDsvmwqtkLYEiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amFFXSYxdm0c70nt3BtJ9pz14P6Ej6p3J+RT+JxfGmnliEkJfEq2bOR0DqIl6tfhI
-	 t+d8xrvXetTlFaJdtDLtvnVDcDYphTxiybfdLF2HHWoOOHxDD5HIPhvkaTuwDAP+RB
-	 W3lVlPz7GDdSx50sUK56ilmk8X6g+vBUuus89J+s=
+	b=v3BKc3hqgV21gUyWZlKNXwbrCmxZ3zbLlHCnm4ve84expx4BGw1fXOT9HK4Y/TJjd
+	 5OgkRGtb65ehswKPbMS5wVDJ9FwxaW53PIgmZx+AybdaGx9GQlOB9ziGCl2h/+2e/l
+	 X1GQHWPQXdzq4PEQ9328FTsWbKj1PejFn2aghCa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 115/138] ALSA: hda/realtek - Fix inactive headset mic jack
-Date: Mon,  8 Apr 2024 14:58:49 +0200
-Message-ID: <20240408125259.807709025@linuxfoundation.org>
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Quentin Perret <qperret@google.com>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.6 102/252] KVM: arm64: Ensure target address is granule-aligned for range TLBI
+Date: Mon,  8 Apr 2024 14:56:41 +0200
+Message-ID: <20240408125309.811722899@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,37 +51,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Will Deacon <will@kernel.org>
 
-commit daf6c4681a74034d5723e2fb761e0d7f3a1ca18f upstream.
+commit 4c36a156738887c1edd78589fe192d757989bcde upstream.
 
-This patch adds the existing fixup to certain TF platforms implementing
-the ALC274 codec with a headset jack. It fixes/activates the inactive
-microphone of the headset.
+When zapping a table entry in stage2_try_break_pte(), we issue range
+TLB invalidation for the region that was mapped by the table. However,
+we neglect to align the base address down to the granule size and so
+if we ended up reaching the table entry via a misaligned address then
+we will accidentally skip invalidation for some prefix of the affected
+address range.
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: <stable@vger.kernel.org>
-Message-ID: <20240328102757.50310-1-wse@tuxedocomputers.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Align 'ctx->addr' down to the granule size when performing TLB
+invalidation for an unmapped table in stage2_try_break_pte().
+
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: Shaoqin Huang <shahuang@redhat.com>
+Cc: Quentin Perret <qperret@google.com>
+Fixes: defc8cc7abf0 ("KVM: arm64: Invalidate the table entries upon a range")
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240327124853.11206-5-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kvm/hyp/pgtable.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10121,6 +10121,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1d05, 0x1147, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
-+	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -805,12 +805,15 @@ static bool stage2_try_break_pte(const s
+ 		 * Perform the appropriate TLB invalidation based on the
+ 		 * evicted pte value (if any).
+ 		 */
+-		if (kvm_pte_table(ctx->old, ctx->level))
+-			kvm_tlb_flush_vmid_range(mmu, ctx->addr,
+-						kvm_granule_size(ctx->level));
+-		else if (kvm_pte_valid(ctx->old))
++		if (kvm_pte_table(ctx->old, ctx->level)) {
++			u64 size = kvm_granule_size(ctx->level);
++			u64 addr = ALIGN_DOWN(ctx->addr, size);
++
++			kvm_tlb_flush_vmid_range(mmu, addr, size);
++		} else if (kvm_pte_valid(ctx->old)) {
+ 			kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, mmu,
+ 				     ctx->addr, ctx->level);
++		}
+ 	}
+ 
+ 	if (stage2_pte_is_counted(ctx->old))
 
 
