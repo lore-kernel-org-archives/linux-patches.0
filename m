@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A280F7BB1F;
-	Mon,  8 Apr 2024 13:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6656B7C08B;
+	Mon,  8 Apr 2024 13:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581292; cv=none; b=nU6m5GvyoQLabHYSFvCxtUHQ4tr7ywK4c8vP8r2Vn679lQzmcxBgnMuP6yhSV3Se1E2mjkeNwSkto5orWuxnGTPy7cETBl7CmSzOqhBvDan1rxN4hRB2LERMl0lst0Dflz+jLyS1kqL0+yL9Ys4ISnEGNr0idzzh3Qmj4rf4qHg=
+	t=1712581294; cv=none; b=KYgjqtOBMG7YZvRHofHPDEcZ1cfcJTA78gmorGPh49rbF2sY1QlTCa1YkX7iPnaE6p3u4+ctglp5qqBqPQREK2gd/tJ8mLF5xvNWI+6lrOoYDNbXYO50F4mnS6MFBvOUXeZyxodXRyoK6295lP66f5J87nWZaMqf4KSldi4KzOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581292; c=relaxed/simple;
-	bh=K71eucy/Xo4fYgXKzCeOeQu2Fgvr66YBl/7534jttIU=;
+	s=arc-20240116; t=1712581294; c=relaxed/simple;
+	bh=VgMR1rDFEV1y3GJzoQEmQDA38KOg0Wdjm115F+JmlVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bwv+dAdbzyZQW3vSxEMdZ5XmMIgP+5nepIx3lssKU8WYlFrBN+99sGx8OWzx/SNIWkYsQCv7XiWzIZX+PfRD0jvGViDGaqVor5oySIy6f1RWEj5bdkrrBBFqNP0SysDzq2SYOfLTe0tjpmMqDKhr47vAZrmHJLhAQMABNKj34Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlOQKtjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AD4x11bfTZe+tfz5iaEbbxIBvN/Z2oRLceHGe2RIbORaPkSsDJdtU8btVck4IGvv4qydbp7nycRy9hMcJ/Lt9qfwWPYjQCe+w1/LGMuP75y/7jvNp2ng8nNKNukCsWH9JRCxhPWwu/Nxp2DpYI0iLPYPXV4zrsp7c3RHAwAMJGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzqCkkx6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlOQKtjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1754C43390;
-	Mon,  8 Apr 2024 13:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzqCkkx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D49EC433F1;
+	Mon,  8 Apr 2024 13:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581291;
-	bh=K71eucy/Xo4fYgXKzCeOeQu2Fgvr66YBl/7534jttIU=;
+	s=korg; t=1712581294;
+	bh=VgMR1rDFEV1y3GJzoQEmQDA38KOg0Wdjm115F+JmlVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wlOQKtjMkaI+4sJksBmeniyyHwABwqzptmrBs/E0FFc5Z2G9BIFq0uPBXoggPgtH2
-	 bgFoBWUpX0Ht/uAV0hicDpZEIWuS1VKIDyqgb8n/fyPpx9MBBi8QVMRTSK04onXqjX
-	 J7zHAcYOQuUIIQci2Hh4cbf7CvuYzRRITOzttsjw=
+	b=TzqCkkx6Edb2hrvsrs8O9bHomX/vv21zCXsRI9aaE1H0YeI6DlH+7jlwpebUxsqOo
+	 1pm3tr2SLTtdX+V0VIycGdj5HcwmpDvFYJ40ScKgwemcIHzQkD6bIM773BZkq7Crf4
+	 6uEe/ge5WVNnCpyk4/pa5iP7JMIe2p2XLZrroCNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jim Mattson <jmattson@google.com>,
-	Chao Gao <chao.gao@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 005/690] KVM: x86: Advertise CPUID.(EAX=7,ECX=2):EDX[5:0] to userspace
-Date: Mon,  8 Apr 2024 14:47:51 +0200
-Message-ID: <20240408125359.743894157@linuxfoundation.org>
+Subject: [PATCH 5.15 006/690] KVM: x86: Use a switch statement and macros in __feature_translate()
+Date: Mon,  8 Apr 2024 14:47:52 +0200
+Message-ID: <20240408125359.778217488@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,118 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Jim Mattson <jmattson@google.com>
 
-commit eefe5e6682099445f77f2d97d4c525f9ac9d9b07 upstream.
+commit 80c883db87d9ffe2d685e91ba07a087b1c246c78 upstream.
 
-The low five bits {INTEL_PSFD, IPRED_CTRL, RRSBA_CTRL, DDPD_U, BHI_CTRL}
-advertise the availability of specific bits in IA32_SPEC_CTRL. Since KVM
-dynamically determines the legal IA32_SPEC_CTRL bits for the underlying
-hardware, the hard work has already been done. Just let userspace know
-that a guest can use these IA32_SPEC_CTRL bits.
+Use a switch statement with macro-generated case statements to handle
+translating feature flags in order to reduce the probability of runtime
+errors due to copy+paste goofs, to make compile-time errors easier to
+debug, and to make the code more readable.
 
-The sixth bit (MCDT_NO) states that the processor does not exhibit MXCSR
-Configuration Dependent Timing (MCDT) behavior. This is an inherent
-property of the physical processor that is inherited by the virtual
-CPU. Pass that information on to userspace.
+E.g. the compiler won't directly generate an error for duplicate if
+statements
+
+	if (x86_feature == X86_FEATURE_SGX1)
+		return KVM_X86_FEATURE_SGX1;
+	else if (x86_feature == X86_FEATURE_SGX2)
+		return KVM_X86_FEATURE_SGX1;
+
+and so instead reverse_cpuid_check() will fail due to the untranslated
+entry pointing at a Linux-defined leaf, which provides practically no
+hint as to what is broken
+
+  arch/x86/kvm/reverse_cpuid.h:108:2: error: call to __compiletime_assert_450 declared with 'error' attribute:
+                                      BUILD_BUG_ON failed: x86_leaf == CPUID_LNX_4
+          BUILD_BUG_ON(x86_leaf == CPUID_LNX_4);
+          ^
+whereas duplicate case statements very explicitly point at the offending
+code:
+
+  arch/x86/kvm/reverse_cpuid.h:125:2: error: duplicate case value '361'
+          KVM_X86_TRANSLATE_FEATURE(SGX2);
+          ^
+  arch/x86/kvm/reverse_cpuid.h:124:2: error: duplicate case value '360'
+          KVM_X86_TRANSLATE_FEATURE(SGX1);
+          ^
+
+And without macros, the opposite type of copy+paste goof doesn't generate
+any error at compile-time, e.g. this yields no complaints:
+
+        case X86_FEATURE_SGX1:
+                return KVM_X86_FEATURE_SGX1;
+        case X86_FEATURE_SGX2:
+                return KVM_X86_FEATURE_SGX1;
+
+Note, __feature_translate() is forcibly inlined and the feature is known
+at compile-time, so the code generation between an if-elif sequence and a
+switch statement should be identical.
 
 Signed-off-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Link: https://lore.kernel.org/r/20231024001636.890236-1-jmattson@google.com
+Link: https://lore.kernel.org/r/20231024001636.890236-2-jmattson@google.com
+[sean: use a macro, rewrite changelog]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c         |   21 ++++++++++++++++++---
- arch/x86/kvm/reverse_cpuid.h |   12 ++++++++++++
- 2 files changed, 30 insertions(+), 3 deletions(-)
+ arch/x86/kvm/reverse_cpuid.h |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -469,6 +469,11 @@ void kvm_set_cpu_caps(void)
- 		F(AVX_VNNI) | F(AVX512_BF16)
- 	);
- 
-+	kvm_cpu_cap_init_kvm_defined(CPUID_7_2_EDX,
-+		F(INTEL_PSFD) | F(IPRED_CTRL) | F(RRSBA_CTRL) | F(DDPD_U) |
-+		F(BHI_CTRL) | F(MCDT_NO)
-+	);
-+
- 	kvm_cpu_cap_mask(CPUID_D_1_EAX,
- 		F(XSAVEOPT) | F(XSAVEC) | F(XGETBV1) | F(XSAVES)
- 	);
-@@ -710,13 +715,13 @@ static inline int __do_cpuid_func(struct
- 		break;
- 	/* function 7 has additional index. */
- 	case 7:
--		entry->eax = min(entry->eax, 1u);
-+		max_idx = entry->eax = min(entry->eax, 2u);
- 		cpuid_entry_override(entry, CPUID_7_0_EBX);
- 		cpuid_entry_override(entry, CPUID_7_ECX);
- 		cpuid_entry_override(entry, CPUID_7_EDX);
- 
--		/* KVM only supports 0x7.0 and 0x7.1, capped above via min(). */
--		if (entry->eax == 1) {
-+		/* KVM only supports up to 0x7.2, capped above via min(). */
-+		if (max_idx >= 1) {
- 			entry = do_host_cpuid(array, function, 1);
- 			if (!entry)
- 				goto out;
-@@ -726,6 +731,16 @@ static inline int __do_cpuid_func(struct
- 			entry->ecx = 0;
- 			entry->edx = 0;
- 		}
-+		if (max_idx >= 2) {
-+			entry = do_host_cpuid(array, function, 2);
-+			if (!entry)
-+				goto out;
-+
-+			cpuid_entry_override(entry, CPUID_7_2_EDX);
-+			entry->ecx = 0;
-+			entry->ebx = 0;
-+			entry->eax = 0;
-+		}
- 		break;
- 	case 0xa: { /* Architectural Performance Monitoring */
- 		struct x86_pmu_capability cap;
 --- a/arch/x86/kvm/reverse_cpuid.h
 +++ b/arch/x86/kvm/reverse_cpuid.h
-@@ -13,6 +13,7 @@
+@@ -97,14 +97,16 @@ static __always_inline void reverse_cpui
   */
- enum kvm_only_cpuid_leafs {
- 	CPUID_12_EAX	 = NCAPINTS,
-+	CPUID_7_2_EDX,
- 	NR_KVM_CPU_CAPS,
+ static __always_inline u32 __feature_translate(int x86_feature)
+ {
+-	if (x86_feature == X86_FEATURE_SGX1)
+-		return KVM_X86_FEATURE_SGX1;
+-	else if (x86_feature == X86_FEATURE_SGX2)
+-		return KVM_X86_FEATURE_SGX2;
+-	else if (x86_feature == X86_FEATURE_RRSBA_CTRL)
+-		return KVM_X86_FEATURE_RRSBA_CTRL;
++#define KVM_X86_TRANSLATE_FEATURE(f)	\
++	case X86_FEATURE_##f: return KVM_X86_FEATURE_##f
  
- 	NKVMCAPINTS = NR_KVM_CPU_CAPS - NCAPINTS,
-@@ -36,6 +37,14 @@ enum kvm_only_cpuid_leafs {
- #define KVM_X86_FEATURE_SGX1		KVM_X86_FEATURE(CPUID_12_EAX, 0)
- #define KVM_X86_FEATURE_SGX2		KVM_X86_FEATURE(CPUID_12_EAX, 1)
- 
-+/* Intel-defined sub-features, CPUID level 0x00000007:2 (EDX) */
-+#define X86_FEATURE_INTEL_PSFD		KVM_X86_FEATURE(CPUID_7_2_EDX, 0)
-+#define X86_FEATURE_IPRED_CTRL		KVM_X86_FEATURE(CPUID_7_2_EDX, 1)
-+#define KVM_X86_FEATURE_RRSBA_CTRL	KVM_X86_FEATURE(CPUID_7_2_EDX, 2)
-+#define X86_FEATURE_DDPD_U		KVM_X86_FEATURE(CPUID_7_2_EDX, 3)
-+#define X86_FEATURE_BHI_CTRL		KVM_X86_FEATURE(CPUID_7_2_EDX, 4)
-+#define X86_FEATURE_MCDT_NO		KVM_X86_FEATURE(CPUID_7_2_EDX, 5)
-+
- struct cpuid_reg {
- 	u32 function;
- 	u32 index;
-@@ -61,6 +70,7 @@ static const struct cpuid_reg reverse_cp
- 	[CPUID_12_EAX]        = {0x00000012, 0, CPUID_EAX},
- 	[CPUID_8000_001F_EAX] = {0x8000001f, 0, CPUID_EAX},
- 	[CPUID_8000_0021_EAX] = {0x80000021, 0, CPUID_EAX},
-+	[CPUID_7_2_EDX]       = {         7, 2, CPUID_EDX},
- };
- 
- /*
-@@ -91,6 +101,8 @@ static __always_inline u32 __feature_tra
- 		return KVM_X86_FEATURE_SGX1;
- 	else if (x86_feature == X86_FEATURE_SGX2)
- 		return KVM_X86_FEATURE_SGX2;
-+	else if (x86_feature == X86_FEATURE_RRSBA_CTRL)
-+		return KVM_X86_FEATURE_RRSBA_CTRL;
- 
- 	return x86_feature;
+-	return x86_feature;
++	switch (x86_feature) {
++	KVM_X86_TRANSLATE_FEATURE(SGX1);
++	KVM_X86_TRANSLATE_FEATURE(SGX2);
++	KVM_X86_TRANSLATE_FEATURE(RRSBA_CTRL);
++	default:
++		return x86_feature;
++	}
  }
+ 
+ static __always_inline u32 __feature_leaf(int x86_feature)
 
 
