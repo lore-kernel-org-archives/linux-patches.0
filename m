@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015B47BAE7;
-	Mon,  8 Apr 2024 13:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1BC84D07;
+	Mon,  8 Apr 2024 13:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583725; cv=none; b=E40G03beMGEIuPxgNa3mR8BKZmPNM/5xOZlb7eBOyQY/yT8YSWNQiXwcqKhkZAMsrfwN+8qxKNkryjKRvam3xYJXiwxRonB8o+p9tla25Br1ZsOJk7dQ0QjCor04dIP7JfOeQeGyEUvCwbZwNQjNSsLFFv5MJ6idWrtJbTS6jDk=
+	t=1712583728; cv=none; b=ZZSTuBP6Lg3cmi8ppUdDvhSKZdu0olWEDkxT9TtLukpg0FWHiunQQ533EXKODKYoJ4oqsxLrQrK2FPm7dmBNxf8EnqP0GROLigfIOkOhbABoeAWe6n7E3WKJbr/oGFSZG+zwuNIUjE3wYJ7Et/nhikVzSLxgwRo5k/XzI5E6r20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583725; c=relaxed/simple;
-	bh=o8j2DR3uykvRaA7g07T9L4NnSUsmSRPqXnUrKP3YD+g=;
+	s=arc-20240116; t=1712583728; c=relaxed/simple;
+	bh=9FNdKlUmmoUy1Ym/yJLlvTBU76wUpCd8u2OTVtnjsGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TL4atss9w8E2VpzhtMBrEiWk+itaVgj6v5zZQQc43JKPAam6OHsmUO7wMdIjcMH+RK6kIWPvvcMialYdYxVkoaoLg9MPIrHgbS+Bm9KhGxQnBYU6pcg7TVXGXlw6r62tS4aK+IG+JQ4g5lW5sghFwxDde7TtzuAGv1HYY0sE5Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4hoUWbq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNe2T8ATeFb5VkWO/S+GFrQluSkqN2qDw61oWD30MB+E4oPGMd3GxDGsJ+XA2OXM9C+6Tu4KdevvT01DTJtWQgcH+HIaqhsQUfvEgKI/AMr2nGgcebfThI7P1b2XPk3PBfQTNVpm21siOHizmaoFvWp3HezDpxLMoU99QxEvHd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orTFHh10; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4hoUWbq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F9C43609;
-	Mon,  8 Apr 2024 13:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orTFHh10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65349C433F1;
+	Mon,  8 Apr 2024 13:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583724;
-	bh=o8j2DR3uykvRaA7g07T9L4NnSUsmSRPqXnUrKP3YD+g=;
+	s=korg; t=1712583727;
+	bh=9FNdKlUmmoUy1Ym/yJLlvTBU76wUpCd8u2OTVtnjsGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4hoUWbqd52CbVCdjbVIQWnXS9rwH4e50K20NJMyMtGIZRR6WsyD1uTWM1djML9OM
-	 q9dmSQJdzMpQSULJvZrzle/6UsAu+Gjs50Xu+w0e/C+rrIkzffHEB0smZhD9POoPsh
-	 7HaTwXZCrFoI6GLQppsjAOuoiFYjTBvCX2G6pXns=
+	b=orTFHh10vRogkyFRGOxZ8QS9MgbTfCO+gX32o+jwx737cEenAI3mMtGIUD6bH6yXr
+	 J6j3lSvQ388fuqFLKJEEAbIBztcNrNAkS/r93Brks1lJoWQaqEwF6h/P4eqrdb1ZvC
+	 xuk46xFjiUcmxTUET3uo1ltaMTl7JYp3cltLECpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Brown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 278/690] NFSD: Remove svc_serv_ops::svo_module
-Date: Mon,  8 Apr 2024 14:52:24 +0200
-Message-ID: <20240408125409.671085502@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 227/252] smb: client: serialise cifs_construct_tcon() with cifs_mount_mutex
+Date: Mon,  8 Apr 2024 14:58:46 +0200
+Message-ID: <20240408125313.702060660@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,181 +46,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit f49169c97fceb21ad6a0aaf671c50b0f520f15a5 ]
+commit 93cee45ccfebc62a3bb4cd622b89e00c8c7d8493 upstream.
 
-struct svc_serv_ops is about to be removed.
+Serialise cifs_construct_tcon() with cifs_mount_mutex to handle
+parallel mounts that may end up reusing the session and tcon created
+by it.
 
-Neil Brown says:
-> I suspect svo_module can go as well - I don't think the thread is
-> ever the thing that primarily keeps a module active.
-
-A random sample of kthread_create() callers shows sunrpc is the only
-one that manages module reference count in this way.
-
-Suggested-by: Neil Brown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org # 6.4+
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svc.c             | 4 +---
- fs/nfs/callback.c          | 7 ++-----
- fs/nfs/nfs4state.c         | 1 -
- fs/nfsd/nfssvc.c           | 3 ---
- include/linux/sunrpc/svc.h | 5 -----
- kernel/module.c            | 2 +-
- net/sunrpc/svc.c           | 2 --
- 7 files changed, 4 insertions(+), 20 deletions(-)
+ fs/smb/client/connect.c    |   13 ++++++++++++-
+ fs/smb/client/fs_context.c |    6 +++---
+ fs/smb/client/fs_context.h |   12 ++++++++++++
+ 3 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index c83ec4a375bc1..bfde31124f3af 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -184,8 +184,7 @@ lockd(void *vrqstp)
- 	dprintk("lockd_down: service stopped\n");
- 
- 	svc_exit_thread(rqstp);
--
--	module_put_and_kthread_exit(0);
-+	return 0;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3981,7 +3981,7 @@ cifs_set_vol_auth(struct smb3_fs_context
  }
  
- static int create_lockd_listener(struct svc_serv *serv, const char *name,
-@@ -352,7 +351,6 @@ static struct notifier_block lockd_inet6addr_notifier = {
- 
- static const struct svc_serv_ops lockd_sv_ops = {
- 	.svo_function		= lockd,
--	.svo_module		= THIS_MODULE,
- };
- 
- static int lockd_get(void)
-diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
-index c98c68513590f..a494f9e7bd0a0 100644
---- a/fs/nfs/callback.c
-+++ b/fs/nfs/callback.c
-@@ -17,7 +17,6 @@
- #include <linux/errno.h>
- #include <linux/mutex.h>
- #include <linux/freezer.h>
--#include <linux/kthread.h>
- #include <linux/sunrpc/svcauth_gss.h>
- #include <linux/sunrpc/bc_xprt.h>
- 
-@@ -92,8 +91,8 @@ nfs4_callback_svc(void *vrqstp)
- 			continue;
- 		svc_process(rqstp);
- 	}
-+
- 	svc_exit_thread(rqstp);
--	module_put_and_kthread_exit(0);
- 	return 0;
- }
- 
-@@ -136,8 +135,8 @@ nfs41_callback_svc(void *vrqstp)
- 			finish_wait(&serv->sv_cb_waitq, &wq);
- 		}
- 	}
-+
- 	svc_exit_thread(rqstp);
--	module_put_and_kthread_exit(0);
- 	return 0;
- }
- 
-@@ -234,12 +233,10 @@ static int nfs_callback_up_net(int minorversion, struct svc_serv *serv,
- 
- static const struct svc_serv_ops nfs40_cb_sv_ops = {
- 	.svo_function		= nfs4_callback_svc,
--	.svo_module		= THIS_MODULE,
- };
- #if defined(CONFIG_NFS_V4_1)
- static const struct svc_serv_ops nfs41_cb_sv_ops = {
- 	.svo_function		= nfs41_callback_svc,
--	.svo_module		= THIS_MODULE,
- };
- 
- static const struct svc_serv_ops *nfs4_cb_sv_ops[] = {
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index d7868cc527805..61050ffac93ef 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2766,6 +2766,5 @@ static int nfs4_run_state_manager(void *ptr)
- 		goto again;
- 
- 	nfs_put_client(clp);
--	module_put_and_kthread_exit(0);
- 	return 0;
- }
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 38895372ec393..d25d4c12a499a 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -614,7 +614,6 @@ static int nfsd_get_default_max_blksize(void)
- 
- static const struct svc_serv_ops nfsd_thread_sv_ops = {
- 	.svo_function		= nfsd,
--	.svo_module		= THIS_MODULE,
- };
- 
- void nfsd_shutdown_threads(struct net *net)
-@@ -1018,8 +1017,6 @@ nfsd(void *vrqstp)
- 		msleep(20);
- 	}
- 
--	/* Release module */
--	module_put_and_kthread_exit(0);
- 	return 0;
- }
- 
-diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index fd7ccba415f51..61768495354a0 100644
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -57,11 +57,6 @@ struct svc_serv;
- struct svc_serv_ops {
- 	/* function for service threads to run */
- 	int		(*svo_function)(void *);
--
--	/* optional module to count when adding threads.
--	 * Thread function must call module_put_and_kthread_exit() to exit.
--	 */
--	struct module	*svo_module;
- };
- 
- /*
-diff --git a/kernel/module.c b/kernel/module.c
-index f2b8314546f17..2226b591b52e0 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -335,7 +335,7 @@ static inline void add_taint_module(struct module *mod, unsigned flag,
- 
- /*
-  * A thread that wants to hold a reference to a module only while it
-- * is running can call this to safely exit.  nfsd and lockd use this.
-+ * is running can call this to safely exit.
-  */
- void __noreturn __module_put_and_kthread_exit(struct module *mod, long code)
+ static struct cifs_tcon *
+-cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
++__cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
  {
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 6f45f3f45514c..239d10018216a 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -736,11 +736,9 @@ svc_start_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
- 		if (IS_ERR(rqstp))
- 			return PTR_ERR(rqstp);
+ 	int rc;
+ 	struct cifs_tcon *master_tcon = cifs_sb_master_tcon(cifs_sb);
+@@ -4079,6 +4079,17 @@ out:
+ 	return tcon;
+ }
  
--		__module_get(serv->sv_ops->svo_module);
- 		task = kthread_create_on_node(serv->sv_ops->svo_function, rqstp,
- 					      node, "%s", serv->sv_name);
- 		if (IS_ERR(task)) {
--			module_put(serv->sv_ops->svo_module);
- 			svc_exit_thread(rqstp);
- 			return PTR_ERR(task);
- 		}
--- 
-2.43.0
-
++static struct cifs_tcon *
++cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
++{
++	struct cifs_tcon *ret;
++
++	cifs_mount_lock();
++	ret = __cifs_construct_tcon(cifs_sb, fsuid);
++	cifs_mount_unlock();
++	return ret;
++}
++
+ struct cifs_tcon *
+ cifs_sb_master_tcon(struct cifs_sb_info *cifs_sb)
+ {
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -37,7 +37,7 @@
+ #include "rfc1002pdu.h"
+ #include "fs_context.h"
+ 
+-static DEFINE_MUTEX(cifs_mount_mutex);
++DEFINE_MUTEX(cifs_mount_mutex);
+ 
+ static const match_table_t cifs_smb_version_tokens = {
+ 	{ Smb_1, SMB1_VERSION_STRING },
+@@ -752,9 +752,9 @@ static int smb3_get_tree(struct fs_conte
+ 
+ 	if (err)
+ 		return err;
+-	mutex_lock(&cifs_mount_mutex);
++	cifs_mount_lock();
+ 	ret = smb3_get_tree_common(fc);
+-	mutex_unlock(&cifs_mount_mutex);
++	cifs_mount_unlock();
+ 	return ret;
+ }
+ 
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -293,4 +293,16 @@ extern void smb3_update_mnt_flags(struct
+ #define MAX_CACHED_FIDS 16
+ extern char *cifs_sanitize_prepath(char *prepath, gfp_t gfp);
+ 
++extern struct mutex cifs_mount_mutex;
++
++static inline void cifs_mount_lock(void)
++{
++	mutex_lock(&cifs_mount_mutex);
++}
++
++static inline void cifs_mount_unlock(void)
++{
++	mutex_unlock(&cifs_mount_mutex);
++}
++
+ #endif
 
 
