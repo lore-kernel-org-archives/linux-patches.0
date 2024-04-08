@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00FA7CF39;
-	Mon,  8 Apr 2024 13:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803837CF29;
+	Mon,  8 Apr 2024 13:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583302; cv=none; b=ezeUEFh4Vcu3/hljffcVPlJgOUTtmYMp1S69HLZIo83AgGFdFITJrBgLiTDpQe9tFdI/9f9mazsddgVJSF3wJPdARO3Xwgw28KmiWUXlSmD8boCPgyaP1digQDF/ZMaZzvgo49aQVLKtmLMUv8oeLCS5kLrn4ynOtcBWbRZr8wc=
+	t=1712583305; cv=none; b=P6dxx3QN8NER2GfmYSgBNV9DeVKWI05NYE8LToCS7Qo9CXoLZMTlAikZgFqA5tgbRSooE/lmk8Owi8L+LEDVlTxWDBkNqZzrLhJPMT2ob54YO+Y3UYjjruedm2C0q8RfrpZAn7+jzTs+MkP59v9WUG5B+/mEP02QLVQ3S69f4ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583302; c=relaxed/simple;
-	bh=xFh26j1aVUdc+r2b9IOhsPvIc9H66iRdU302tUjzPDY=;
+	s=arc-20240116; t=1712583305; c=relaxed/simple;
+	bh=3lrdOp5x6O77jQ+7ObWFJ1qiQZl0eH2NlTaXcXJwfWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=isleBtdCK9OZK4FJrwbEcrKq5gdGkJGjCyAv8WUnXwzBIPHtgayU35lZgqg/gXx7fwUSCGZ/cCXlJv+OWvizg7obMKa5o1iqg8h1rno9357pngIhC4gGksqDn4lp8DwTMSmqFZMA1CfK4GQjs1jBWm0V1DU3rGnTpJkOLPInlpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Zi7DGwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGXiolQplVudFmovuMWW4WdLJD9A/QW8m3vYB+jCo8XvKwxDPZVaFnH185mfNL5hvZ5Gg6920HhKCLYhqMJFuVnTdL64tn9LiAFVSk2LmnIyFRucxH6xL8Q/CVqxPN1Q3yc2+jkrA77bjz9k4wnyAVci6UMbu+sfyZX60T+TZ1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABAMR3Uu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Zi7DGwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2C8C433C7;
-	Mon,  8 Apr 2024 13:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABAMR3Uu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09134C433F1;
+	Mon,  8 Apr 2024 13:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583302;
-	bh=xFh26j1aVUdc+r2b9IOhsPvIc9H66iRdU302tUjzPDY=;
+	s=korg; t=1712583305;
+	bh=3lrdOp5x6O77jQ+7ObWFJ1qiQZl0eH2NlTaXcXJwfWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Zi7DGweaKwzFQU4KxvhFNCPGSQPK4ztX7UvGA2wx8n45pUHaFSs+u0DXrt9+FA4j
-	 C2QBt7+WyTLDom3LsT6f4pG0jG/Q1nUvY9cQXpQmsGrbgroAdNxqnH6hvJCURvYeTr
-	 ZU312JP8XJbUpVsMtvHrfikqHw5oElQlOKO7qhsc=
+	b=ABAMR3UuVdkNEwDv2PanB9KaoDwOUin9abU6wZipq5kmUL7/hoHaDIbYXDbFrPjkw
+	 7DzgcCXWxVow5iwnwHPjBVXgBxfHl6CwEj2PTmhjVznYNT5fV4uzH4CNVqcS/HmrnJ
+	 qV9JUF4CBm7rat9ABlk7EaAy+KGAqwDicr65syWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 232/690] NFSD: narrow nfsd_mutex protection in nfsd thread
-Date: Mon,  8 Apr 2024 14:51:38 +0200
-Message-ID: <20240408125408.034291444@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Chao Song <chao.song@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 162/273] ASoC: rt722-sdca-sdw: fix locking sequence
+Date: Mon,  8 Apr 2024 14:57:17 +0200
+Message-ID: <20240408125314.301506222@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 9d3792aefdcda71d20c2b1ecc589c17ae71eb523 ]
+[ Upstream commit adb354bbc231b23d3a05163ce35c1d598512ff64 ]
 
-There is nothing happening in the start of nfsd() that requires
-protection by the mutex, so don't take it until shutting down the thread
-- which does still require protection - but only for nfsd_put().
+The disable_irq_lock protects the 'disable_irq' value, we need to lock
+before testing it.
 
-Signed-off-by: NeilBrown <neilb@suse.de>
-[ cel: address merge conflict with fd2468fa1301 ]
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: a0b7c59ac1a9 ("ASoC: rt722-sdca: fix for JD event handling in ClockStop Mode0")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@linux.intel.com>
+Link: https://msgid.link/r/20240325221817.206465-6-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ sound/soc/codecs/rt722-sdca-sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 16884a90e1ab0..eb8cc4d914fee 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -932,9 +932,6 @@ nfsd(void *vrqstp)
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 	int err;
+diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
+index e24b9cbdc10c9..e33836fffd5f2 100644
+--- a/sound/soc/codecs/rt722-sdca-sdw.c
++++ b/sound/soc/codecs/rt722-sdca-sdw.c
+@@ -467,13 +467,13 @@ static int __maybe_unused rt722_sdca_dev_resume(struct device *dev)
+ 		return 0;
  
--	/* Lock module and set up kernel thread */
--	mutex_lock(&nfsd_mutex);
--
- 	/* At this point, the thread shares current->fs
- 	 * with the init process. We need to create files with the
- 	 * umask as defined by the client instead of init's umask. */
-@@ -954,7 +951,6 @@ nfsd(void *vrqstp)
- 	allow_signal(SIGINT);
- 	allow_signal(SIGQUIT);
+ 	if (!slave->unattach_request) {
++		mutex_lock(&rt722->disable_irq_lock);
+ 		if (rt722->disable_irq == true) {
+-			mutex_lock(&rt722->disable_irq_lock);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK1, SDW_SCP_SDCA_INTMASK_SDCA_6);
+ 			sdw_write_no_pm(slave, SDW_SCP_SDCA_INTMASK2, SDW_SCP_SDCA_INTMASK_SDCA_8);
+ 			rt722->disable_irq = false;
+-			mutex_unlock(&rt722->disable_irq_lock);
+ 		}
++		mutex_unlock(&rt722->disable_irq_lock);
+ 		goto regmap_sync;
+ 	}
  
--	mutex_unlock(&nfsd_mutex);
- 	atomic_inc(&nfsdstats.th_cnt);
- 
- 	set_freezable();
-@@ -983,7 +979,6 @@ nfsd(void *vrqstp)
- 	flush_signals(current);
- 
- 	atomic_dec(&nfsdstats.th_cnt);
--	mutex_lock(&nfsd_mutex);
- 
- out:
- 	/* Take an extra ref so that the svc_put in svc_exit_thread()
-@@ -995,10 +990,11 @@ nfsd(void *vrqstp)
- 	svc_exit_thread(rqstp);
- 
- 	/* Now if needed we call svc_destroy in appropriate context */
-+	mutex_lock(&nfsd_mutex);
- 	nfsd_put(net);
-+	mutex_unlock(&nfsd_mutex);
- 
- 	/* Release module */
--	mutex_unlock(&nfsd_mutex);
- 	module_put_and_kthread_exit(0);
- 	return 0;
- }
 -- 
 2.43.0
 
