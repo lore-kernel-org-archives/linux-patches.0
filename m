@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B1E823A8;
-	Mon,  8 Apr 2024 13:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62A48287F;
+	Mon,  8 Apr 2024 13:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584081; cv=none; b=ivAzVdHuliFkEuUiwKJyI47Kps4CyDWmDfvkS7mmQfVhgn+Ap4fZnzxUxBRoMiIV23b6BZyk2EkMO3FsFGp6oFNdJ4eTAcIWK0SGEXZav1LGdevMX+lm0rFcqgh3gI1Q4kfLPGfURM652y38fw63EvrF/uN3uBKkyzFDV3RJKn8=
+	t=1712584083; cv=none; b=tb0qPDBS3I9IHEay9FZPP5r3eAPolbQNK7nTV6IL0N2uuP9mGfk89+SbyfBAVOGlhs4LTUwxHQhF8wc77rayAQ8IBrg1hD1csNcfbD9S2Zm9DoMLkKM2amCRcmWCX3TK3GXkLF/GoQjHQJDEDoeVuNlPUYn465g3JDEjxeVgicA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584081; c=relaxed/simple;
-	bh=wMo6FpBTf9J+JmB7orybW2Ctq9t9J4YpN9nSS+CBIzI=;
+	s=arc-20240116; t=1712584083; c=relaxed/simple;
+	bh=Kbbhv0xm7Gxs5jbMbyJeJ7f+8ccB0C6K0lp/EZUGzMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AVjWO+WCb8Wml8/qnVnoo17DqcqsJbD+o0GO06Bbqe0aeyg3rmTubVhygIzAAuSgMR8+721kM2Y6QfSypilGmdyWem/YEXq1gsGzq4aYyhpJHRb5SZ/wzGyu/WaWPTrv5psFLCWpCDe/Z5ka/WMaq1T8Pdxdeeg1DUR/JLPDzCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x26aO29Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUtVY7Hvt3QwUKAG67RBke1isterXNLiR2deHrwy6oIQZyOxGUUrmtVng466Q1+GmAfVAiZy+zRp3FanUX6fFO27aBfk7UjU4yfGjGnoZCKxPBSij7K4NQhhcMeElsSqhANoC+e/wZOfpJ1zvMFYE3UvFx88InTl8nt7oIXj4PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7boxs/F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x26aO29Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1880BC43390;
-	Mon,  8 Apr 2024 13:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7boxs/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C3DC433F1;
+	Mon,  8 Apr 2024 13:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584080;
-	bh=wMo6FpBTf9J+JmB7orybW2Ctq9t9J4YpN9nSS+CBIzI=;
+	s=korg; t=1712584083;
+	bh=Kbbhv0xm7Gxs5jbMbyJeJ7f+8ccB0C6K0lp/EZUGzMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x26aO29Z+NxuvuocOM/e5uCQ3ZdgottHcXEJs0JgQeV4xmIJxh3ant/3WtUbCymoM
-	 pRGoUIwdMT0qRoNhPJBiA/dU9ioKVl30RRK2d2Y+ZuP3KokPK+SFlAtrvYvu3oWjYj
-	 85BqYFSDIyn+iMFe7iZXmqUiK/kj6dbOaiqqax0w=
+	b=X7boxs/FxOauyUodYSRsw4ACG5e3c9s9JbPMSYmYaStr1zdb3zHHPCuVelcguV1u+
+	 dDZjYKTeTNb7RoskwqByGCU/GZGLPNofJWTktwyteNqSnQSf1ixK3epwz9hgIzcDJS
+	 P1AuDQItF1VvsBTpGjchLSyqcnDXIfJZE7zZhmrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uma Shankar <uma.shankar@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.8 258/273] drm/i915/mst: Limit MST+DSC to TGL+
-Date: Mon,  8 Apr 2024 14:58:53 +0200
-Message-ID: <20240408125317.481385068@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 331/690] NFSD: nfsd_file_put() can sleep
+Date: Mon,  8 Apr 2024 14:53:17 +0200
+Message-ID: <20240408125411.592972718@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 51bc63392e96ca45d7be98bc43c180b174ffca09 upstream.
+[ Upstream commit 08af54b3e5729bc1d56ad3190af811301bdc37a1 ]
 
-The MST code currently assumes that glk+ already supports MST+DSC,
-which is incorrect. We need to check for TGL+ actually. ICL does
-support SST+DSC, but supposedly it can't do MST+FEC which will
-also rule out MST+DSC.
+Now that there are no more callers of nfsd_file_put() that might
+hold a spin lock, ensure the lockdep infrastructure can catch
+newly introduced calls to nfsd_file_put() made while a spinlock
+is held.
 
-Note that a straight TGL+ check doesn't work here because DSC
-support can get fused out, so we do need to also check 'has_dsc'.
-
-Cc: stable@vger.kernel.org
-Fixes: d51f25eb479a ("drm/i915: Add DSC support to MST path")
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240402135148.23011-6-ville.syrjala@linux.intel.com
-(cherry picked from commit c9c92f286dbdf872390ef3e74dbe5f0641e46f55)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-nfs/ece7fd1d-5fb3-5155-54ba-347cfc19bd9a@oracle.com/T/#mf1855552570cf9a9c80d1e49d91438cd9085aada
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/gpu/drm/i915/display/intel_display_device.h |    1 +
- drivers/gpu/drm/i915/display/intel_dp_mst.c         |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/filecache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_display_device.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_device.h
-@@ -47,6 +47,7 @@ struct drm_printer;
- #define HAS_DPT(i915)			(DISPLAY_VER(i915) >= 13)
- #define HAS_DSB(i915)			(DISPLAY_INFO(i915)->has_dsb)
- #define HAS_DSC(__i915)			(DISPLAY_RUNTIME_INFO(__i915)->has_dsc)
-+#define HAS_DSC_MST(__i915)		(DISPLAY_VER(__i915) >= 12 && HAS_DSC(__i915))
- #define HAS_FBC(i915)			(DISPLAY_RUNTIME_INFO(i915)->fbc_mask != 0)
- #define HAS_FPGA_DBG_UNCLAIMED(i915)	(DISPLAY_INFO(i915)->has_fpga_dbg)
- #define HAS_FW_BLC(i915)		(DISPLAY_VER(i915) >= 3)
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -1338,7 +1338,7 @@ intel_dp_mst_mode_valid_ctx(struct drm_c
- 		return 0;
- 	}
- 
--	if (DISPLAY_VER(dev_priv) >= 10 &&
-+	if (HAS_DSC_MST(dev_priv) &&
- 	    drm_dp_sink_supports_dsc(intel_connector->dp.dsc_dpcd)) {
- 		/*
- 		 * TBD pass the connector BPC,
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 0863bf5050935..27952e2f3aa14 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -296,6 +296,8 @@ nfsd_file_put_noref(struct nfsd_file *nf)
+ void
+ nfsd_file_put(struct nfsd_file *nf)
+ {
++	might_sleep();
++
+ 	set_bit(NFSD_FILE_REFERENCED, &nf->nf_flags);
+ 	if (test_bit(NFSD_FILE_HASHED, &nf->nf_flags) == 0) {
+ 		nfsd_file_flush(nf);
+-- 
+2.43.0
+
 
 
