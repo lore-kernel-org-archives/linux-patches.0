@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F150C7E118;
-	Mon,  8 Apr 2024 13:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25897E118;
+	Mon,  8 Apr 2024 13:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584040; cv=none; b=RA5qevv0Xdh/P2Xq8LBuAXBFb2SyOfjl2UQ919epk61zETdUh/EsnlSTd9lCcG20IVPu8R4+Oq5jpu5YUia7Tw8JuO3pyS+zkGvAmZUNLYk6PQdZ4uVU0d7uKN4FIruxjZ87uQ7q3PxAtxrMuvPvUJ5MlHVYmpiwoGJEbjrAWaU=
+	t=1712584042; cv=none; b=P886oFjOa5m1fWpYP1CdcfD3BaiR7lvPEDP/LxJFpjWSCnzPYDHlL9OwZyyX8ZaO8/1NG7yt06VOwunE65bnyNLMNR9nxsdTguMlRUUJV/IONKyVZC1yW4K2po7W9mcRp/D+kk8sV9u6m0GZsTlJcd4TwWsoCdTnwME77W9W3Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584040; c=relaxed/simple;
-	bh=9xWntgzwNwXvZVR5dhr+SDxY5AB1u2+IcG7DTjZv/FI=;
+	s=arc-20240116; t=1712584042; c=relaxed/simple;
+	bh=MLysgIV+uAKj94uDo/CL4kzGWc2pXnpef3nXsSRwZ7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3D1kJmw0tE8j/qJXzKO2Yuxr4d4+ZYrxFynrMwpyQiiC2QVwRfMcXrI0NjpcSRcs+Hg8U7KIK6pRGdRnsmFmLoU0Lu/Bhxv3QX8zrUA+B7JO8Sp9J4WXTISB0LwNrbhln+LqAqZeL+aXV+9lDGNZCIjBWocda1FYzTPKPStiVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kQ6TIG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4fFvf5J+deAwO43K8mMFsW9cU5i7wRGNFUNO1y1RggmejcEE/BCe8VzM3gB6rf/5erE0lA+Jz1IjPV2QFFljjXkiWmjAMZsyElLYFGswjtG2qdZ5u/BunhZaVPeBnfRA0c9hwft3rsPhSNRQzlhjtfOHlQ4WsmBkPU32xoOcTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0+1EEXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kQ6TIG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CF7C433F1;
-	Mon,  8 Apr 2024 13:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0+1EEXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FB1C433C7;
+	Mon,  8 Apr 2024 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584039;
-	bh=9xWntgzwNwXvZVR5dhr+SDxY5AB1u2+IcG7DTjZv/FI=;
+	s=korg; t=1712584042;
+	bh=MLysgIV+uAKj94uDo/CL4kzGWc2pXnpef3nXsSRwZ7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kQ6TIG18bO48szu2cZBLySWLmD03NtRkVtIiv0bxHJOyukZlGDLNRFyTvVxxJJSD
-	 XRD3Zqz+PxVT8IHjsmtraLVghNGna5UgHYfpHPBLtM34I3fZElqOgfl6MI0gBT+o65
-	 YU3rfE39nIDOPFrmpOPxJpIKlVbvc0Sgf2vd8YMY=
+	b=U0+1EEXG9m/HZMPF1fEHDs2kA6NO6C3DI4c1m3FacRIgPuv19hoO6/4/RIHGLvCFh
+	 cyGaB5lSD3de0jGpeRnk+Proe3y9sLtb++VG8bl42aA3t6S7rb30TRWVIV6DdgCMnD
+	 f76JTkxyWoQp89Yu9fpr69HdcwzNs3hkR+gDE0Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.8 252/273] smb: client: fix potential UAF in cifs_dump_full_key()
-Date: Mon,  8 Apr 2024 14:58:47 +0200
-Message-ID: <20240408125317.274997517@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 315/690] NFSD: Avoid calling fh_drop_write() twice in do_nfsd_create()
+Date: Mon,  8 Apr 2024 14:53:01 +0200
+Message-ID: <20240408125411.009467089@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +45,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 58acd1f497162e7d282077f816faa519487be045 upstream.
+[ Upstream commit 14ee45b70dd0d9ae76fb066cd8c0652d657353f6 ]
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+Clean up: The "out" label already invokes fh_drop_write().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Note that fh_drop_write() is already careful not to invoke
+mnt_drop_write() if either it has already been done or there is
+nothing to drop. Therefore no change in behavior is expected.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/smb/client/ioctl.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nfsd/vfs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/fs/smb/client/ioctl.c
-+++ b/fs/smb/client/ioctl.c
-@@ -247,7 +247,9 @@ static int cifs_dump_full_key(struct cif
- 		spin_lock(&cifs_tcp_ses_lock);
- 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
- 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
--				if (ses_it->Suid == out.session_id) {
-+				spin_lock(&ses_it->ses_lock);
-+				if (ses_it->ses_status != SES_EXITING &&
-+				    ses_it->Suid == out.session_id) {
- 					ses = ses_it;
- 					/*
- 					 * since we are using the session outside the crit
-@@ -255,9 +257,11 @@ static int cifs_dump_full_key(struct cif
- 					 * so increment its refcount
- 					 */
- 					cifs_smb_ses_inc_refcount(ses);
-+					spin_unlock(&ses_it->ses_lock);
- 					found = true;
- 					goto search_end;
- 				}
-+				spin_unlock(&ses_it->ses_lock);
- 			}
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 541f39ab450ce..a46ab32216dee 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1487,7 +1487,6 @@ do_nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		case NFS3_CREATE_GUARDED:
+ 			err = nfserr_exist;
  		}
- search_end:
+-		fh_drop_write(fhp);
+ 		goto out;
+ 	}
+ 
+@@ -1495,10 +1494,8 @@ do_nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		iap->ia_mode &= ~current_umask();
+ 
+ 	host_err = vfs_create(&init_user_ns, dirp, dchild, iap->ia_mode, true);
+-	if (host_err < 0) {
+-		fh_drop_write(fhp);
++	if (host_err < 0)
+ 		goto out_nfserr;
+-	}
+ 	if (created)
+ 		*created = true;
+ 
+-- 
+2.43.0
+
 
 
