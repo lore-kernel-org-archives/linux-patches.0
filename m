@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055E27C092;
-	Mon,  8 Apr 2024 13:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1DB7C6C8;
+	Mon,  8 Apr 2024 13:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584151; cv=none; b=SR4YXwsidwPUwzogHJJKciox3Tgz+utgyPmD3xcC61g9Tw+8NBPdpV2zcvuejKbLYQkqen6maF5baeJFwbqmCv9bP7bFjWyDDg7Wavd1HT0LEzB3bHlhQuq4k409AyFaF03xzTJ+ZM22I2Zdm8l7W5LeftXTxqe51hsMjCuLdn0=
+	t=1712584154; cv=none; b=bDH3umThC+j4523K8cwrWJIK/FdbebxAY/TM6bwb6K3trb2oBINO8fLE1/KAGtHaNoibyE1N+Mqb8QPKd6OPsaKdjCyO5RwxLybynnhPgk7KP/J88p95mj4vYVbqfQdAi/rLsvM4iZ42PzmvmtDcoZV4LhyDtc2lhFoJE2aPCRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584151; c=relaxed/simple;
-	bh=sa2gfoyc4hMgKN5pr/Mt0gTiRl709w2aX30xhk+k7NA=;
+	s=arc-20240116; t=1712584154; c=relaxed/simple;
+	bh=R9jQTtDJlqEcOD40B8MgNBdYjhSeDFhgv4x0SOvDUcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4KoE1l5tPIdjtBwC6ys9Y8hyDF1vZnaLoM4Ri38oz4DlTnocymTZrsjqqE5DUUAINeCrY+ucuOfUtXplOnok+cIjShEcz6cMLSfbOKH5myA/fIS8oHb7PQ7/24EYaCjmUGn9A375GtY7vIugWxZt7Kz87NKIznDpxmfyAyuTfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSlYySyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjQOa+eUCVlPhE0StKA1l4J+WRH0ayCX69KvAtI6/XWm+uS/d7rK256JIX8fbMm+Cq6n1pW4x06R01r3RWo/d+6nKOGjwvZJzBVTKgll3w0HOj9etF/L0mGunnS/Su3L0PWaTmkpWXxbD659UkoZfuzzdVqnQKZR1fT0ZhK5TSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4n6drN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSlYySyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9E3C43390;
-	Mon,  8 Apr 2024 13:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4n6drN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C631C433F1;
+	Mon,  8 Apr 2024 13:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584150;
-	bh=sa2gfoyc4hMgKN5pr/Mt0gTiRl709w2aX30xhk+k7NA=;
+	s=korg; t=1712584153;
+	bh=R9jQTtDJlqEcOD40B8MgNBdYjhSeDFhgv4x0SOvDUcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSlYySynoxzjpn/FZHQLqeCFfzqEhoxNeFynWvx8sClkGLjYoLkHFhNAeNrmC4tQt
-	 W+eQUcn6gysl5G/29CKQBW5wVw4UdWS2JVkqZmfmjJRf/JQ+4p2Nknw1pdPvyiyf5t
-	 UMRhB8Xl8NBe3fHPoe0A9Mc+Pjk8xGob3eG628VE=
+	b=o4n6drN+yKpqfEPvg7SbTI+dihKPUDUVF6EpwsEU0vRtGo+XYI0X9SI8yPiSelF2v
+	 EiEZpm4iww5JVw7A/9r7aPdG+PUQowsW4cfwp4KPyJpA2BdON31/AFOB4ZTp9fe62W
+	 CmEcVGNRz68EDUO8Alq433e+CyL0RJFs5WOm6hJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PATCH 6.8 269/273] efi/libstub: Add generic support for parsing mem_encrypt=
-Date: Mon,  8 Apr 2024 14:59:04 +0200
-Message-ID: <20240408125317.857527557@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 342/690] NFSD: Instrument fh_verify()
+Date: Mon,  8 Apr 2024 14:53:28 +0200
+Message-ID: <20240408125412.003210090@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +45,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 7205f06e847422b66c1506eee01b9998ffc75d76 upstream.
+[ Upstream commit 051382885552e12541cc0ebf82092be374a9ed2a ]
 
-Parse the mem_encrypt= command line parameter from the EFI stub if
-CONFIG_ARCH_HAS_MEM_ENCRYPT=y, so that it can be passed to the early
-boot code by the arch code in the stub.
+Capture file handles and how they map to local inodes. In particular,
+NFSv4 PUTFH uses fh_verify() so we can now observe which file handles
+are the target of OPEN, LOOKUP, RENAME, and so on.
 
-This avoids the need for the core kernel to do any string parsing very
-early in the boot.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20240227151907.387873-16-ardb+git@google.com
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/firmware/efi/libstub/efi-stub-helper.c |    8 ++++++++
- drivers/firmware/efi/libstub/efistub.h         |    2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsfh.c |  5 +++--
+ fs/nfsd/trace.h | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/efi/libstub/efi-stub-helper.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
-@@ -24,6 +24,8 @@ static bool efi_noinitrd;
- static bool efi_nosoftreserve;
- static bool efi_disable_pci_dma = IS_ENABLED(CONFIG_EFI_DISABLE_PCI_DMA);
+diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
+index c29baa03dfafd..5e2ed4b2a925c 100644
+--- a/fs/nfsd/nfsfh.c
++++ b/fs/nfsd/nfsfh.c
+@@ -331,8 +331,6 @@ fh_verify(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type, int access)
+ 	struct dentry	*dentry;
+ 	__be32		error;
  
-+int efi_mem_encrypt;
-+
- bool __pure __efi_soft_reserve_enabled(void)
- {
- 	return !efi_nosoftreserve;
-@@ -75,6 +77,12 @@ efi_status_t efi_parse_options(char cons
- 			efi_noinitrd = true;
- 		} else if (IS_ENABLED(CONFIG_X86_64) && !strcmp(param, "no5lvl")) {
- 			efi_no5lvl = true;
-+		} else if (IS_ENABLED(CONFIG_ARCH_HAS_MEM_ENCRYPT) &&
-+			   !strcmp(param, "mem_encrypt") && val) {
-+			if (parse_option_str(val, "on"))
-+				efi_mem_encrypt = 1;
-+			else if (parse_option_str(val, "off"))
-+				efi_mem_encrypt = -1;
- 		} else if (!strcmp(param, "efi") && val) {
- 			efi_nochunk = parse_option_str(val, "nochunk");
- 			efi_novamap |= parse_option_str(val, "novamap");
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -37,8 +37,8 @@ extern bool efi_no5lvl;
- extern bool efi_nochunk;
- extern bool efi_nokaslr;
- extern int efi_loglevel;
-+extern int efi_mem_encrypt;
- extern bool efi_novamap;
+-	dprintk("nfsd: fh_verify(%s)\n", SVCFH_fmt(fhp));
 -
- extern const efi_system_table_t *efi_system_table;
+ 	if (!fhp->fh_dentry) {
+ 		error = nfsd_set_fh_dentry(rqstp, fhp);
+ 		if (error)
+@@ -340,6 +338,9 @@ fh_verify(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type, int access)
+ 	}
+ 	dentry = fhp->fh_dentry;
+ 	exp = fhp->fh_export;
++
++	trace_nfsd_fh_verify(rqstp, fhp, type, access);
++
+ 	/*
+ 	 * We still have to do all these permission checks, even when
+ 	 * fh_dentry is already set:
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index 3cff3ada00a85..593218d8a54d0 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -171,6 +171,52 @@ TRACE_EVENT(nfsd_compound_encode_err,
+ 		__entry->opnum, __entry->status)
+ );
  
- typedef union efi_dxe_services_table efi_dxe_services_table_t;
++#define show_fs_file_type(x) \
++	__print_symbolic(x, \
++		{ S_IFLNK,		"LNK" }, \
++		{ S_IFREG,		"REG" }, \
++		{ S_IFDIR,		"DIR" }, \
++		{ S_IFCHR,		"CHR" }, \
++		{ S_IFBLK,		"BLK" }, \
++		{ S_IFIFO,		"FIFO" }, \
++		{ S_IFSOCK,		"SOCK" })
++
++TRACE_EVENT(nfsd_fh_verify,
++	TP_PROTO(
++		const struct svc_rqst *rqstp,
++		const struct svc_fh *fhp,
++		umode_t type,
++		int access
++	),
++	TP_ARGS(rqstp, fhp, type, access),
++	TP_STRUCT__entry(
++		__field(unsigned int, netns_ino)
++		__sockaddr(server, rqstp->rq_xprt->xpt_remotelen)
++		__sockaddr(client, rqstp->rq_xprt->xpt_remotelen)
++		__field(u32, xid)
++		__field(u32, fh_hash)
++		__field(void *, inode)
++		__field(unsigned long, type)
++		__field(unsigned long, access)
++	),
++	TP_fast_assign(
++		__entry->netns_ino = SVC_NET(rqstp)->ns.inum;
++		__assign_sockaddr(server, &rqstp->rq_xprt->xpt_local,
++		       rqstp->rq_xprt->xpt_locallen);
++		__assign_sockaddr(client, &rqstp->rq_xprt->xpt_remote,
++				  rqstp->rq_xprt->xpt_remotelen);
++		__entry->xid = be32_to_cpu(rqstp->rq_xid);
++		__entry->fh_hash = knfsd_fh_hash(&fhp->fh_handle);
++		__entry->inode = d_inode(fhp->fh_dentry);
++		__entry->type = type;
++		__entry->access = access;
++	),
++	TP_printk("xid=0x%08x fh_hash=0x%08x inode=%p type=%s access=%s",
++		__entry->xid, __entry->fh_hash, __entry->inode,
++		show_fs_file_type(__entry->type),
++		show_nfsd_may_flags(__entry->access)
++	)
++);
+ 
+ DECLARE_EVENT_CLASS(nfsd_fh_err_class,
+ 	TP_PROTO(struct svc_rqst *rqstp,
+-- 
+2.43.0
+
 
 
