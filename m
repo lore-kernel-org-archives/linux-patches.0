@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8ACF7F47A;
-	Mon,  8 Apr 2024 14:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B987EF00;
+	Mon,  8 Apr 2024 14:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584993; cv=none; b=KJOfVX6LBuQHdA9NNTRrwv+HlSQoklthLpIl/S9gd8eZ/Z8mBLpozuO2x3cHV2NsBZNSAWgrmQ4wcp8t1Cwo7O2T473Rh1UukMuYT9Ncq43NiqRvbD/1Wmvw37sPolNul0yS4OqmlwzLSrRtf3NqRjmRCU0kUsQ0XPuZEX2Q/II=
+	t=1712584996; cv=none; b=lTGNb2AJTs1yALeU3GqOT8Zo3xpR+AvgRlr7JmXJCY058Yz2UdYLLybDPo1F9kH421Wp0q1zTwu7m0gY6rxk+6TBjzO37mqjQ/R6veWT+XMycNbM1uBAa9QoD2qRsmd1YcyurvTCSZyqErrdsEVGMswpUiisotdzwtB8KvZK4lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584993; c=relaxed/simple;
-	bh=6NrhKXS8tWmwRqz3JgQoiuLA7IbcI5gjBUBHJnEeGC0=;
+	s=arc-20240116; t=1712584996; c=relaxed/simple;
+	bh=MkT1pwEIAxPA6Sr1YTmSwL85GeJCoOHWEIUjJr/wBLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beokJbr1Og4+7nvi+z8ttDe0TYyLoy4+f7Hp8fVFDJPloM4N9ilxmMBUyxpMRI9KkLPhjPXCOYA0bKxyxSYrPcdBTk5oSBNB09QgkrDByIFeFvvV7W7+ldBsGbLM1IzDhp+lSvlhW3WHgFtmbMJjejiKpg7hDqRFwVlNmYkENwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgp1KYIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DqT9AMWMv8KyaYLRc9yVpH5GA/aN3fTzQ864dKKi10Nr2KI84/NVh0wxSYGvXN07v550DkTke2/kbTeq7zausDdWaoYNr/6KFm3Cswo3ruyeHo/EBcB6+5k43BOFUCWFgWczMqFLyUNANYJpyBcMqRxglLs2vy3rZpsdPbB3shE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAY7Y26d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgp1KYIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E6CC433C7;
-	Mon,  8 Apr 2024 14:03:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAY7Y26d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFB3C433C7;
+	Mon,  8 Apr 2024 14:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584993;
-	bh=6NrhKXS8tWmwRqz3JgQoiuLA7IbcI5gjBUBHJnEeGC0=;
+	s=korg; t=1712584996;
+	bh=MkT1pwEIAxPA6Sr1YTmSwL85GeJCoOHWEIUjJr/wBLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgp1KYIKUMmgkg0GaBROEIGyQ3xBYT9J9gOJqxN/8k7x3Ae/mzCjEfXQwznU4gRax
-	 DC/4nHz7nIDJFc9iJ4mFUhJ3vjCY4VU4XigcBTTGoDEWoZxPrTJTM8UpsIy1Z+6x6I
-	 /G+Dw7j6QikYz9Eg4TZT7XACP+4/CvaMQUlRxg1o=
+	b=jAY7Y26d2t9R74sphwf/15giSEhaZ/8Qkb4BEsLIk8zdUihXCBQr/zaWq0811+qMu
+	 7IsGUDwNw55RGjV3fJ7siCrAYOZcg98/u9/2/QTUYf9AmZV6FB8zrrQY7/U4mhjv/9
+	 6USRojJFbXO+aAaSUnvQnMCKemQ8fpTaiIJyFLUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonidas Spyropoulos <artafinde@archlinux.com>,
-	Arthur Borsboom <arthurborsboom@gmail.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Mahmoud Adam <mngyadam@amazon.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 627/690] xen-netfront: Add missing skb_mark_for_recycle
-Date: Mon,  8 Apr 2024 14:58:13 +0200
-Message-ID: <20240408125422.376640263@linuxfoundation.org>
+Subject: [PATCH 5.15 628/690] net/rds: fix possible cp null dereference
+Date: Mon,  8 Apr 2024 14:58:14 +0200
+Message-ID: <20240408125422.412376565@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,45 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesper Dangaard Brouer <hawk@kernel.org>
+From: Mahmoud Adam <mngyadam@amazon.com>
 
-commit 037965402a010898d34f4e35327d22c0a95cd51f upstream.
+commit 62fc3357e079a07a22465b9b6ef71bb6ea75ee4b upstream.
 
-Notice that skb_mark_for_recycle() is introduced later than fixes tag in
-commit 6a5bcd84e886 ("page_pool: Allow drivers to hint on SKB recycling").
+cp might be null, calling cp->cp_conn would produce null dereference
 
-It is believed that fixes tag were missing a call to page_pool_release_page()
-between v5.9 to v5.14, after which is should have used skb_mark_for_recycle().
-Since v6.6 the call page_pool_release_page() were removed (in
-commit 535b9c61bdef ("net: page_pool: hide page_pool_release_page()")
-and remaining callers converted (in commit 6bfef2ec0172 ("Merge branch
-'net-page_pool-remove-page_pool_release_page'")).
+[Simon Horman adds:]
 
-This leak became visible in v6.8 via commit dba1b8a7ab68 ("mm/page_pool: catch
-page_pool memory leaks").
+Analysis:
 
-Cc: stable@vger.kernel.org
-Fixes: 6c5aa6fc4def ("xen networking: add basic XDP support for xen-netfront")
-Reported-by: Leonidas Spyropoulos <artafinde@archlinux.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218654
-Reported-by: Arthur Borsboom <arthurborsboom@gmail.com>
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/r/171154167446.2671062.9127105384591237363.stgit@firesoul
+* cp is a parameter of __rds_rdma_map and is not reassigned.
+
+* The following call-sites pass a NULL cp argument to __rds_rdma_map()
+
+  - rds_get_mr()
+  - rds_get_mr_for_dest
+
+* Prior to the code above, the following assumes that cp may be NULL
+  (which is indicative, but could itself be unnecessary)
+
+	trans_private = rs->rs_transport->get_mr(
+		sg, nents, rs, &mr->r_key, cp ? cp->cp_conn : NULL,
+		args->vec.addr, args->vec.bytes,
+		need_odp ? ODP_ZEROBASED : ODP_NOT_NEEDED);
+
+* The code modified by this patch is guarded by IS_ERR(trans_private),
+  where trans_private is assigned as per the previous point in this analysis.
+
+  The only implementation of get_mr that I could locate is rds_ib_get_mr()
+  which can return an ERR_PTR if the conn (4th) argument is NULL.
+
+* ret is set to PTR_ERR(trans_private).
+  rds_ib_get_mr can return ERR_PTR(-ENODEV) if the conn (4th) argument is NULL.
+  Thus ret may be -ENODEV in which case the code in question will execute.
+
+Conclusion:
+* cp may be NULL at the point where this patch adds a check;
+  this patch does seem to address a possible bug
+
+Fixes: c055fc00c07b ("net/rds: fix WARNING in rds_conn_connect_if_down")
+Cc: stable@vger.kernel.org # v4.19+
+Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240326153132.55580-1-mngyadam@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netfront.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/rds/rdma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/xen-netfront.c
-+++ b/drivers/net/xen-netfront.c
-@@ -287,6 +287,7 @@ static struct sk_buff *xennet_alloc_one_
- 		return NULL;
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -302,7 +302,7 @@ static int __rds_rdma_map(struct rds_soc
+ 		}
+ 		ret = PTR_ERR(trans_private);
+ 		/* Trigger connection so that its ready for the next retry */
+-		if (ret == -ENODEV)
++		if (ret == -ENODEV && cp)
+ 			rds_conn_connect_if_down(cp->cp_conn);
+ 		goto out;
  	}
- 	skb_add_rx_frag(skb, 0, page, 0, 0, PAGE_SIZE);
-+	skb_mark_for_recycle(skb);
- 
- 	/* Align ip header to a 16 bytes boundary */
- 	skb_reserve(skb, NET_IP_ALIGN);
 
 
