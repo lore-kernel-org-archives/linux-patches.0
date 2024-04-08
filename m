@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520FD745D6;
-	Mon,  8 Apr 2024 13:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD85974C09;
+	Mon,  8 Apr 2024 13:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581542; cv=none; b=Dnnwn+gdugjn9KBnlec0kZXWe8JLLmlNOeSbO24q/cy3XPQsrN4+RPKYaXgu/YsHsrQVAm3xD/1Cd4Jv60sykVXt/wETcQKBHIRFZCR1nFjAcwDVTNjtXFbeCob+FSQR7QaWIxqnEQ/T8TDSAqFnILdGhPPX9rkytqutytnjuVo=
+	t=1712581545; cv=none; b=h/R6PbrTTZXzrA26vwhYlE8BoBFfhGohi0igngmJK8ja/Ly5Cgt1SEpAcRX9C3CM/ikpk8J0cgyySu7q1JpZMbn9q5JFKEu8Flt6zCNggiiK5yZUtNevCMOd25fYS4rQvBcDKbYTFvV4Z5YHswJSx4yGOMZjjAsBeZ8Uk5O+e/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581542; c=relaxed/simple;
-	bh=Cj9b2ATFjAEd7hnG0Am3IQ0iKKktBn9KmIvr0Fk0pYk=;
+	s=arc-20240116; t=1712581545; c=relaxed/simple;
+	bh=LH0dqiSLObYlrEt45ap0YdiLBZubSumSc7wWnYdPqxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkbdLtllMyfZWOpQOIJ87dT2bD4SnqIhkUVefin64kNlRqyV8oxyz5tqcTKrcqYAsoT2x9jDMnmFM+viO/VJSgyZpr2iKqmYbc+M0T+JiNlEjfbIdmvsyQ9oJxzPAjVq9arNagzjrKooCULLZW/HHe8YUGhoAsHBKWlY7ZGdAR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9p9bN1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3+LK1nIzzdgAktIfYSJJJdbeUB4EN8KMPH6GnLGYUzCNA5VhsmVIDJmdei2RYEYGBn43oKI444SpIx2qfpnbqXFO1oKDvCtMaTW3fVV39wbrpfJwEvw0/dAnSyaHVvIydcA73uencBVqXCqx/zHJqbFg+cjd3TnCDYt095lwe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuAfWidN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9p9bN1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF74C433C7;
-	Mon,  8 Apr 2024 13:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuAfWidN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A13CC433C7;
+	Mon,  8 Apr 2024 13:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581541;
-	bh=Cj9b2ATFjAEd7hnG0Am3IQ0iKKktBn9KmIvr0Fk0pYk=;
+	s=korg; t=1712581544;
+	bh=LH0dqiSLObYlrEt45ap0YdiLBZubSumSc7wWnYdPqxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9p9bN1dF5FqNCowK566IA8KDdtd839xnygqIPEoMD5sSG7Me6GGtArsTdq9O8j3H
-	 GEf1M53ZPy1daL8pB1Pd0AC4e2Za/tk9EEJ4eDixyUlaG8EBW5XvqZuPZAdmFSU1qj
-	 XhJRblwdOVsh1hS9jxP04udcSPcPEZdw/1Kt7GYM=
+	b=EuAfWidNb9/7GoRjxcmpsHwE3iVeTiqzoQ7b1RYn8J65Qm3BKV1giD9c2rApcwhOb
+	 rQVky0XA5+Kl067pbR1hnhqCqq98MkHUSyuOJ685EVfj+IYUGWqx6vZaFlqN2mtJaj
+	 GNxnUiRA3DzQAnetHyCweSCvMACy8foGEOdv9XcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/690] PCI/PM: Drain runtime-idle callbacks before driver removal
-Date: Mon,  8 Apr 2024 14:48:47 +0200
-Message-ID: <20240408125401.724212713@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 032/138] Bluetooth: add quirk for broken address properties
+Date: Mon,  8 Apr 2024 14:57:26 +0200
+Message-ID: <20240408125257.224971302@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +47,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 9d5286d4e7f68beab450deddbb6a32edd5ecf4bf ]
+commit 39646f29b100566451d37abc4cc8cdd583756dfe upstream.
 
-A race condition between the .runtime_idle() callback and the .remove()
-callback in the rtsx_pcr PCI driver leads to a kernel crash due to an
-unhandled page fault [1].
+Some Bluetooth controllers lack persistent storage for the device
+address and instead one can be provided by the boot firmware using the
+'local-bd-address' devicetree property.
 
-The problem is that rtsx_pci_runtime_idle() is not expected to be running
-after pm_runtime_get_sync() has been called, but the latter doesn't really
-guarantee that.  It only guarantees that the suspend and resume callbacks
-will not be running when it returns.
+The Bluetooth devicetree bindings clearly states that the address should
+be specified in little-endian order, but due to a long-standing bug in
+the Qualcomm driver which reversed the address some boot firmware has
+been providing the address in big-endian order instead.
 
-However, if a .runtime_idle() callback is already running when
-pm_runtime_get_sync() is called, the latter will notice that the runtime PM
-status of the device is RPM_ACTIVE and it will return right away without
-waiting for the former to complete.  In fact, it cannot wait for
-.runtime_idle() to complete because it may be called from that callback (it
-arguably does not make much sense to do that, but it is not strictly
-prohibited).
+Add a new quirk that can be set on platforms with broken firmware and
+use it to reverse the address when parsing the property so that the
+underlying driver bug can be fixed.
 
-Thus in general, whoever is providing a .runtime_idle() callback needs
-to protect it from running in parallel with whatever code runs after
-pm_runtime_get_sync().  [Note that .runtime_idle() will not start after
-pm_runtime_get_sync() has returned, but it may continue running then if it
-has started earlier.]
-
-One way to address that race condition is to call pm_runtime_barrier()
-after pm_runtime_get_sync() (not before it, because a nonzero value of the
-runtime PM usage counter is necessary to prevent runtime PM callbacks from
-being invoked) to wait for the .runtime_idle() callback to complete should
-it be running at that point.  A suitable place for doing that is in
-pci_device_remove() which calls pm_runtime_get_sync() before removing the
-driver, so it may as well call pm_runtime_barrier() subsequently, which
-will prevent the race in question from occurring, not just in the rtsx_pcr
-driver, but in any PCI drivers providing .runtime_idle() callbacks.
-
-Link: https://lore.kernel.org/lkml/20240229062201.49500-1-kai.heng.feng@canonical.com/ # [1]
-Link: https://lore.kernel.org/r/5761426.DvuYhMxLoT@kreacher
-Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Ricky Wu <ricky_wu@realtek.com>
-Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
+Cc: stable@vger.kernel.org      # 5.1
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-driver.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/bluetooth/hci.h |    9 +++++++++
+ net/bluetooth/hci_sync.c    |    5 ++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 3a9c49b0d05b0..46b82bacaff68 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -461,6 +461,13 @@ static void pci_device_remove(struct device *dev)
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -175,6 +175,15 @@ enum {
+ 	 */
+ 	HCI_QUIRK_USE_BDADDR_PROPERTY,
  
- 	if (drv->remove) {
- 		pm_runtime_get_sync(dev);
-+		/*
-+		 * If the driver provides a .runtime_idle() callback and it has
-+		 * started to run already, it may continue to run in parallel
-+		 * with the code below, so wait until all of the runtime PM
-+		 * activity has completed.
-+		 */
-+		pm_runtime_barrier(dev);
- 		drv->remove(pci_dev);
- 		pm_runtime_put_noidle(dev);
- 	}
--- 
-2.43.0
-
++	/* When this quirk is set, the Bluetooth Device Address provided by
++	 * the 'local-bd-address' fwnode property is incorrectly specified in
++	 * big-endian order.
++	 *
++	 * This quirk can be set before hci_register_dev is called or
++	 * during the hdev->setup vendor callback.
++	 */
++	HCI_QUIRK_BDADDR_PROPERTY_BROKEN,
++
+ 	/* When this quirk is set, the duplicate filtering during
+ 	 * scanning is based on Bluetooth devices addresses. To allow
+ 	 * RSSI based updates, restart scanning if needed.
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3293,7 +3293,10 @@ static void hci_dev_get_bd_addr_from_pro
+ 	if (ret < 0 || !bacmp(&ba, BDADDR_ANY))
+ 		return;
+ 
+-	bacpy(&hdev->public_addr, &ba);
++	if (test_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks))
++		baswap(&hdev->public_addr, &ba);
++	else
++		bacpy(&hdev->public_addr, &ba);
+ }
+ 
+ struct hci_init_stage {
 
 
