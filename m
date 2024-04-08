@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0F08063B;
-	Mon,  8 Apr 2024 14:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F3F80BF3;
+	Mon,  8 Apr 2024 14:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585202; cv=none; b=XofpwQK3V5LHHGhtxPc8xrVQnpJsuxRv4I06+pS+V6f1zXsYsUGPhBaV/R/KjVFSQVPAG9VQMe8gtHUztw/XbL4UEM0w2Qw7fDPqE9BeWNW8wv4z8UZ5qECcLMdnSnCxbs2bg84FKKR6jUFFhdy40JviD9xHgToxxOoPabmN1SY=
+	t=1712585203; cv=none; b=HFHWqyOEDcaPkf83xFefRjtiYGYZzYE99u3BDt3su+z0QECRiWM2sxt3lF33dIhAQu3hMl+5X5JI1tZ4Y82wVer2wXDnZmJllN+xNJ9bsBG6/b/Q/ArImqqKkyVikOeZAFqXC07ItbFo2sUxtRcYtJZdRdXsWxJRHkxfBSiu8QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585202; c=relaxed/simple;
-	bh=dxDU2PwRAiFE30XYaWdCEnkXbXC29wzdUMzsgNYZY1w=;
+	s=arc-20240116; t=1712585203; c=relaxed/simple;
+	bh=3J3q2m6c7esPnt4G/qDDxy89Uu/p1ALbyQGlqyo1eUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR/QnuwriV5z3Rdynu/oZN9VvzCIxoZ45uyRllT3K3hn6yDSN1qo8NrMQkR83JrW5VIFrgWWHn6IcNyX1bbLUwEGeqH+Cw79o35lj15yadm0M8AyETwJMBX8rdlUBi1/belt6PB+j1xoLhSrlFSi8l2zsw0x5ZGyo3RTQPXeWXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCPB5vPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hE7Wlx7fEROeWjOeJI3Eb5MWoXZP1P6Uz3MYBEjrfPc/0UhzHK0QVBcFQ5IyTnkMKA7Mi5t99jOYSoKfxX0YCMsvj/HjX3gi2PIO5geWzKpwgITCIPBoLycG+5vywalUaVyFQPy7nV9KEms58hBQI2ynziun8K1Fro596O9Cs+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJoEIUbH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCPB5vPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F92BC43390;
-	Mon,  8 Apr 2024 14:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJoEIUbH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C280C43399;
+	Mon,  8 Apr 2024 14:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585200;
-	bh=dxDU2PwRAiFE30XYaWdCEnkXbXC29wzdUMzsgNYZY1w=;
+	s=korg; t=1712585203;
+	bh=3J3q2m6c7esPnt4G/qDDxy89Uu/p1ALbyQGlqyo1eUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCPB5vPptw+5+TdDpe5Ypq6x/lNRzTBKeSx/9XSpTVBqgrYlqC9A5XAfYZrR+4SWO
-	 Uj2tvneLsqZambLfKAIsS/WF4pS5EbsaEUufdzqDMXJRyN20QPuH2WR2kYVSx8Sx5y
-	 yBklOvjP4/v60gvtU4KLzciax1LPWM0aYSoyYRNQ=
+	b=uJoEIUbHu/OeAeM9H4psqKq6Yq7A6MuOTmlDWPUe9q13a1Qb7vg3R9Qq+WDQyHoCq
+	 QyF250ttIL1uimfqkecFlbsNeE2Cu0k/DqyJXgUcyHVh1rvvN0JKhdei3Av6LBTWdU
+	 307hIZlML/3JR3YPT3AlSD9pvbeRdFjPCsPLH2AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 687/690] mptcp: dont account accept() of non-MPC client as fallback to TCP
-Date: Mon,  8 Apr 2024 14:59:13 +0200
-Message-ID: <20240408125424.621951185@linuxfoundation.org>
+	I Gede Agastya Darma Laksana <gedeagas22@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 678/690] ALSA: hda/realtek: Update Panasonic CF-SZ6 quirk to support headset with microphone
+Date: Mon,  8 Apr 2024 14:59:04 +0200
+Message-ID: <20240408125424.281637076@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,93 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
 
-commit 7a1b3490f47e88ec4cbde65f1a77a0f4bc972282 upstream.
+commit 1576f263ee2147dc395531476881058609ad3d38 upstream.
 
-Current MPTCP servers increment MPTcpExtMPCapableFallbackACK when they
-accept non-MPC connections. As reported by Christoph, this is "surprising"
-because the counter might become greater than MPTcpExtMPCapableSYNRX.
+This patch addresses an issue with the Panasonic CF-SZ6's existing quirk,
+specifically its headset microphone functionality. Previously, the quirk
+used ALC269_FIXUP_HEADSET_MODE, which does not support the CF-SZ6's design
+of a single 3.5mm jack for both mic and audio output effectively. The
+device uses pin 0x19 for the headset mic without jack detection.
 
-MPTcpExtMPCapableFallbackACK counter's name suggests it should only be
-incremented when a connection was seen using MPTCP options, then a
-fallback to TCP has been done. Let's do that by incrementing it when
-the subflow context of an inbound MPC connection attempt is dropped.
-Also, update mptcp_connect.sh kselftest, to ensure that the
-above MIB does not increment in case a pure TCP client connects to a
-MPTCP server.
+Following verification on the CF-SZ6 and discussions with the original
+patch author, i determined that the update to
+ALC269_FIXUP_ASPIRE_HEADSET_MIC is the appropriate solution. This change
+is custom-designed for the CF-SZ6's unique hardware setup, which includes
+a single 3.5mm jack for both mic and audio output, connecting the headset
+microphone to pin 0x19 without the use of jack detection.
 
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
-Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/449
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240329-upstream-net-20240329-fallback-mib-v1-1-324a8981da48@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: 0fca97a29b83 ("ALSA: hda/realtek - Add Panasonic CF-SZ6 headset jack quirk")
+Signed-off-by: I Gede Agastya Darma Laksana <gedeagas22@gmail.com>
+Cc: <stable@vger.kernel.org>
+Message-ID: <20240401174602.14133-1-gedeagas22@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c                               |    3 ---
- net/mptcp/subflow.c                                |    3 +++
- tools/testing/selftests/net/mptcp/mptcp_connect.sh |    7 +++++++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3018,9 +3018,6 @@ static struct sock *mptcp_accept(struct
- 		sock_hold(new_mptcp_sock);
- 		newsk = new_mptcp_sock;
- 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEPASSIVEACK);
--	} else {
--		MPTCP_INC_STATS(sock_net(sk),
--				MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
- 	}
- 
- out:
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -725,6 +725,9 @@ create_child:
- 				goto dispose_child;
- 			}
- 
-+			if (fallback)
-+				SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPCAPABLEPASSIVEFALLBACK);
-+
- 			subflow_drop_ctx(child);
- 			goto out;
- 		}
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -451,6 +451,7 @@ do_transfer()
- 	local stat_cookierx_last=$(get_mib_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	local stat_csum_err_s=$(get_mib_counter "${listener_ns}" "MPTcpExtDataCsumErr")
- 	local stat_csum_err_c=$(get_mib_counter "${connector_ns}" "MPTcpExtDataCsumErr")
-+	local stat_tcpfb_last_l=$(get_mib_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	timeout ${timeout_test} \
- 		ip netns exec ${listener_ns} \
-@@ -516,6 +517,7 @@ do_transfer()
- 	local stat_cookietx_now=$(get_mib_counter "${listener_ns}" "TcpExtSyncookiesSent")
- 	local stat_cookierx_now=$(get_mib_counter "${listener_ns}" "TcpExtSyncookiesRecv")
- 	local stat_ooo_now=$(get_mib_counter "${listener_ns}" "TcpExtTCPOFOQueue")
-+	local stat_tcpfb_now_l=$(get_mib_counter "${listener_ns}" "MPTcpExtMPCapableFallbackACK")
- 
- 	expect_synrx=$((stat_synrx_last_l))
- 	expect_ackrx=$((stat_ackrx_last_l))
-@@ -560,6 +562,11 @@ do_transfer()
- 		fi
- 	fi
- 
-+	if [ ${stat_ooo_now} -eq 0 ] && [ ${stat_tcpfb_last_l} -ne ${stat_tcpfb_now_l} ]; then
-+		printf "[ FAIL ]\nunexpected fallback to TCP"
-+		rets=1
-+	fi
-+
- 	if [ $retc -eq 0 ] && [ $rets -eq 0 ]; then
- 		printf "[ OK ]"
- 	fi
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9270,7 +9270,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1254, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+-	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_HEADSET_MODE),
++	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
 
 
