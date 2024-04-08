@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1747CF29;
-	Mon,  8 Apr 2024 13:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697527CF29;
+	Mon,  8 Apr 2024 13:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583317; cv=none; b=u2FVtNMORhy2LuLd2Cxmf8e9h3a6e+3GoHovKWwJoJ45wTEsIXQbETUKV4vONd3a1bK9l1Lpug0BUDlqxmIjHjLK4w9YCotwd08eCnKlj9HS+UmvRnyDC7ZFgSwSzQ6HqK7FzjSbiKfll8sYb0R6DzRwieACWQqB9hugZUZaZNI=
+	t=1712583320; cv=none; b=bo++5FkGsMKFfAiMz/RfGyrgUdFeaaqxvXvQeOIO2zkosIZPPMcdWpfV7fUMU8tL4muPB1SyGF/lUv8pMbVmQjnCqfmY198kQwTeUAAGomiQoxx60Zv4TxB73mjf2U3xKtMiDulCpOLruOAjsxPa3oPht5LITdDiq2OJfduZcZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583317; c=relaxed/simple;
-	bh=8+xeJDpg/WNC9wqfC5wG/yO26Mfgxy9ita7WS6dRHCc=;
+	s=arc-20240116; t=1712583320; c=relaxed/simple;
+	bh=FN27wrmFzJ84Pe99AvInlX0ushFh+bk5XIyS17z6UFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QeEuPZ09tWqNN7T1h2kJkAVzU+vEjb70zW/9usXSl6ZjnIIWotULS5H4PhIlYYcui3W5DQgg7lZF4newEHeTvVtHP7X5edVs6MJTrwbI+DZ3lXT9kn1Oxkcf9lMc2nbdoOErWbdRbJm9Zqw3iAQdYQWP5j7mQiuOAOC2eivuULk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiUpAp5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJRRLQhAHKisxwVuKoObyaVKE8QZbdrgpVSveswdeygVOG12q4UM/pVT2UmXdZqeE+paDJQvE0PGSwdraV2eX5+Qan9N4dInm5wro7UjdNevTtB4hS+N/xsAdeXYvTQlLtrrvPn0C0gNU91ZHAVF/PKxLEAVO3r0zIIiH9JHUqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GZ5CexY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiUpAp5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0227C433C7;
-	Mon,  8 Apr 2024 13:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GZ5CexY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72E9C433C7;
+	Mon,  8 Apr 2024 13:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583317;
-	bh=8+xeJDpg/WNC9wqfC5wG/yO26Mfgxy9ita7WS6dRHCc=;
+	s=korg; t=1712583320;
+	bh=FN27wrmFzJ84Pe99AvInlX0ushFh+bk5XIyS17z6UFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiUpAp5AVLO579Ndc54k4Qcf2bzTlpIfXvUQLrD3ktZYItEh02Hdb5Mwm08x6Qwa4
-	 ziEhEhZzwT4F1iukrG67l5hoGg99i15f56j0J8RkDD1a0gzVAneQfYdAtKbMvkWIlT
-	 q3+FhtaH9LVNytL4b2i2+dc1Fp4ly7Af3shjBrLs=
+	b=0GZ5CexY9IAE98B4zJR393dsL2uzOvB7YTTGJ1LY/Se4rXzTrg09D9EvbPhPtFdmR
+	 2ptQturrOpeN7g9OQrQCcYnMCm/0s7f4EVcFTvrbJq24cd7DmrUzjn2nAJaLWQ1DQg
+	 CCLEPlkjsb34bbRoMiYhmUkmQCRAX18bQTJB8G3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Jaewon Kim <jaewon02.kim@samsung.com>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/252] regmap: maple: Fix cache corruption in regcache_maple_drop()
-Date: Mon,  8 Apr 2024 14:57:42 +0200
-Message-ID: <20240408125311.710379904@linuxfoundation.org>
+Subject: [PATCH 6.6 181/252] spi: s3c64xx: Use DMA mode from fifo size
+Date: Mon,  8 Apr 2024 14:58:00 +0200
+Message-ID: <20240408125312.284236250@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -51,43 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Jaewon Kim <jaewon02.kim@samsung.com>
 
-[ Upstream commit 00bb549d7d63a21532e76e4a334d7807a54d9f31 ]
+[ Upstream commit a3d3eab627bbbb0cb175910cf8d0f7022628a642 ]
 
-When keeping the upper end of a cache block entry, the entry[] array
-must be indexed by the offset from the base register of the block,
-i.e. max - mas.index.
+If the SPI data size is smaller than FIFO, it operates in PIO mode,
+and if it is larger than FIFO size, it oerates in DMA mode.
 
-The code was indexing entry[] by only the register address, leading
-to an out-of-bounds access that copied some part of the kernel
-memory over the cache contents.
+If the SPI data size is equal to fifo, it operates in PIO mode and it is
+separated to 2 transfers. To prevent it, it must operate in DMA mode
+from the case where the data size and the fifo size are the same.
 
-This bug was not detected by the regmap KUnit test because it only
-tests with a block of registers starting at 0, so mas.index == 0.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: f033c26de5a5 ("regmap: Add maple tree based register cache")
-Link: https://msgid.link/r/20240327114406.976986-1-rf@opensource.cirrus.com
+Fixes: 1ee806718d5e ("spi: s3c64xx: support interrupt based pio mode")
+Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Link: https://lore.kernel.org/r/20240329085840.65856-1-jaewon02.kim@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-s3c64xx.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 41edd6a430eb4..c1776127a5724 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -145,7 +145,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 			upper_index = max + 1;
- 			upper_last = mas.last;
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index e059fb9db1da1..652eadbefe24c 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -424,7 +424,7 @@ static bool s3c64xx_spi_can_dma(struct spi_controller *host,
+ 	struct s3c64xx_spi_driver_data *sdd = spi_controller_get_devdata(host);
  
--			upper = kmemdup(&entry[max + 1],
-+			upper = kmemdup(&entry[max - mas.index + 1],
- 					((mas.last - max) *
- 					 sizeof(unsigned long)),
- 					map->alloc_flags);
+ 	if (sdd->rx_dma.ch && sdd->tx_dma.ch)
+-		return xfer->len > sdd->fifo_depth;
++		return xfer->len >= sdd->fifo_depth;
+ 
+ 	return false;
+ }
+@@ -783,10 +783,9 @@ static int s3c64xx_spi_transfer_one(struct spi_controller *host,
+ 			return status;
+ 	}
+ 
+-	if (!is_polling(sdd) && (xfer->len > fifo_len) &&
++	if (!is_polling(sdd) && xfer->len >= fifo_len &&
+ 	    sdd->rx_dma.ch && sdd->tx_dma.ch) {
+ 		use_dma = 1;
+-
+ 	} else if (xfer->len >= fifo_len) {
+ 		tx_buf = xfer->tx_buf;
+ 		rx_buf = xfer->rx_buf;
 -- 
 2.43.0
 
