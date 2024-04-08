@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AA47D085;
-	Mon,  8 Apr 2024 14:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9787D3FE;
+	Mon,  8 Apr 2024 14:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584841; cv=none; b=AqWXvHrbQn23Zb6s8I6CiCP4S5xoYcFWiA4EEvrjJozACdJcrUSONM6x8eK26Lu3QhnLWRaEZOAs6WiV4Aafxah6E7rVY3sR/f4vGmFjqwyzjyNx0NhKbh0KYX3RYwjFRcF9+2kHcHpCFMcMFnCCpMwh7vgpBDFisNnTZdIfU4M=
+	t=1712584844; cv=none; b=XQfyVowq/q1QocBWdparxWoKrcBXXUattZMPvjV3XHHCXMsXmO9moAA62+B0zTWxJt7lXH9Sz/TcdFBCmzu8yMwdAkC0ahXjxk2BroNT16S26w4M/FgFNXDYPkSf+V0e5jPlPXIdMsIaW90PiqFsEhj4x8YSag5E+NviQt6Bd58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584841; c=relaxed/simple;
-	bh=GhBr9hAirzDcs5quPhdh/G7RMEE5u+Fmm/+b34wDhtg=;
+	s=arc-20240116; t=1712584844; c=relaxed/simple;
+	bh=ea8aiDlL4oIE2vsqvWd1mxRa6jomX9pvUdgOEUiFRWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2I3A8r5GKpBQ+0g3KO7MjORyfQxh5dhd7+koNZfqpf0jhemUbCeriUn41bTUPENfcgbOs63rHn/e6cSpsU8X2zIlj5z9qyUM8ACZsYvb3gtNhSYL111ceFnAJb3PyIMRJTc3MYsFnDQZCqWFteXaKZtrWz9fo0StbnWHvv64IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8/VYX3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWidVUwLKpJTyI4K7aN8jnb/bVnpibs70O6Y6Szn14W5mwZfLDDyfgSmWOHJSCDwIRrm1G/8pOdgouuqz56SZJ3mpIF/WEp2ejo2wRjYasdRyj9k3IRoDZQ/Sz/XhXF/a5KDqyrxrr+qCIesTmpZSYVDt/alKghhm0NnUzTWsCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgWvmD3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8/VYX3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBF0C433F1;
-	Mon,  8 Apr 2024 14:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgWvmD3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45039C433F1;
+	Mon,  8 Apr 2024 14:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584841;
-	bh=GhBr9hAirzDcs5quPhdh/G7RMEE5u+Fmm/+b34wDhtg=;
+	s=korg; t=1712584844;
+	bh=ea8aiDlL4oIE2vsqvWd1mxRa6jomX9pvUdgOEUiFRWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8/VYX3WNpEa4gju0WwpmZfS/C56EsJk+bPPFE4N6Ev5LLcX1z8HcDGY3Kjxo0wJY
-	 gnmpJQAC01pkfWZN5dXXIBH8m38MNEFgcHjzpP2XK9A4yZ2u5XfzHVX/9d/2Nhf1eU
-	 1yNBpWDVtDCxnRmUY5/lC8CRMf7/4++T+SHjvEhc=
+	b=vgWvmD3QHqV84/KypMUCeZMCUpTi4Rs4sa9Xrcs3nZeQQYjOWvqOChjVtfK8uTzxG
+	 x7z4hDkXrsUfsOGGpsZrh9LYgVneAAfa4GpXomywjYaFeAja2wlMT0qlwYzaPUwXfh
+	 ReDKAimif5T8hC15vUtUMCyDwqNLjJgIY8DDGrgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Rapeli <mikko.rapeli@linaro.org>,
-	Avri Altman <avri.altman@wdc.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 575/690] mmc: core: Avoid negative index with array access
-Date: Mon,  8 Apr 2024 14:57:21 +0200
-Message-ID: <20240408125420.437278241@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 549/690] NFSD: fix possible oops when nfsd/pool_stats is closed.
+Date: Mon,  8 Apr 2024 14:56:55 +0200
+Message-ID: <20240408125419.518748990@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Rapeli <mikko.rapeli@linaro.org>
+From: NeilBrown <neilb@suse.de>
 
-commit cf55a7acd1ed38afe43bba1c8a0935b51d1dc014 upstream.
+[ Upstream commit 88956eabfdea7d01d550535af120d4ef265b1d02 ]
 
-Commit 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu") assigns
-prev_idata = idatas[i - 1], but doesn't check that the iterator i is
-greater than zero. Let's fix this by adding a check.
+If /proc/fs/nfsd/pool_stats is open when the last nfsd thread exits, then
+when the file is closed a NULL pointer is dereferenced.
+This is because nfsd_pool_stats_release() assumes that the
+pointer to the svc_serv cannot become NULL while a reference is held.
 
-Fixes: 4d0c8d0aef63 ("mmc: core: Use mrq.sbc in close-ended ffu")
-Link: https://lore.kernel.org/all/20231129092535.3278-1-avri.altman@wdc.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240313133744.2405325-2-mikko.rapeli@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This used to be the case but a recent patch split nfsd_last_thread() out
+from nfsd_put(), and clearing the pointer is done in nfsd_last_thread().
+
+This is easily reproduced by running
+   rpc.nfsd 8 ; ( rpc.nfsd 0;true) < /proc/fs/nfsd/pool_stats
+
+Fortunately nfsd_pool_stats_release() has easy access to the svc_serv
+pointer, and so can call svc_put() on it directly.
+
+Fixes: 9f28a971ee9f ("nfsd: separate nfsd_last_thread() from nfsd_put()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/mmc/core/block.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfssvc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -485,7 +485,7 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 	if (idata->flags & MMC_BLK_IOC_DROP)
- 		return 0;
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index ee5713fca1870..2a1dd580dfb94 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -1084,11 +1084,12 @@ int nfsd_pool_stats_open(struct inode *inode, struct file *file)
  
--	if (idata->flags & MMC_BLK_IOC_SBC)
-+	if (idata->flags & MMC_BLK_IOC_SBC && i > 0)
- 		prev_idata = idatas[i - 1];
+ int nfsd_pool_stats_release(struct inode *inode, struct file *file)
+ {
++	struct seq_file *seq = file->private_data;
++	struct svc_serv *serv = seq->private;
+ 	int ret = seq_release(inode, file);
+-	struct net *net = inode->i_sb->s_fs_info;
  
- 	/*
+ 	mutex_lock(&nfsd_mutex);
+-	nfsd_put(net);
++	svc_put(serv);
+ 	mutex_unlock(&nfsd_mutex);
+ 	return ret;
+ }
+-- 
+2.43.0
+
 
 
