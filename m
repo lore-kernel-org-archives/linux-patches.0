@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3236FE35;
-	Mon,  8 Apr 2024 13:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023097BAEE;
+	Mon,  8 Apr 2024 13:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584107; cv=none; b=nwIH5d8LvIIUd7FATxfYEKv2Ra6/iaw6zjKmYldXECB96KLBvXwcGhuRV5UvD4wyekmv5pssR1s2s1/ajozNFSQparYyId5tu2o0pzgcKgF7oiY5epjhgH6Q1nNDkCY/y96/36mOxbS8btLrBYOEUKk9dHFqRjo3zgHpUuTQ7o4=
+	t=1712584110; cv=none; b=AGOEl4tblQbpotT4947E3WLmXEIW3IpVBgvKeyPCKO58BR7PUrLPJXduk3BarjQvOiR/38oHfT0M+IHUmuugmi/75OK3p6Jy22B2vatWKr6IVkzpynkppriYvjm+oabogb5A18cnNfp6FCh6odNRc1b7WUEp38YG3LA0e9lDMcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584107; c=relaxed/simple;
-	bh=Gciw2LSVKgPqCj/BXFd3p5bTyQc64/c5dtawljDSrLo=;
+	s=arc-20240116; t=1712584110; c=relaxed/simple;
+	bh=2KQwLutt+oKU4479H+IPEDkqbFK8L3JKJPklv+DPnf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrX4czJvxR8XoALdhW8hHoBSkLW/5kbcOtM4QV+4eSmuktqsjKtdzupCI59kcILEWuq1WwHgIrK4saKF3vt9e71FLwsuH6GnbuC34LqzfkePJHfBsnyDa9/yv4njyb5H/QnnBBWNheDTH35xFoI4U2LoyfmB1baauZHQbVwThfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVwjTHm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUK/GmBs0eeqRJKZKS7z+WpDbrQ1IS9CUCS35p13KWpQkWuL1WAH9/QOvpJs3ZQEcHHIc8Pd+Tv8FnIh16vX4VaYOx/F4QaIPs9kUeTQZ+A08WjyvRYT2BC+nEwH1WGc/PY0OhrZA8U5efM1iNxeZvbyMYiDD+sXsaAs/t96vO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7ZjsZCU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVwjTHm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BB1C433C7;
-	Mon,  8 Apr 2024 13:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7ZjsZCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515ACC433F1;
+	Mon,  8 Apr 2024 13:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584106;
-	bh=Gciw2LSVKgPqCj/BXFd3p5bTyQc64/c5dtawljDSrLo=;
+	s=korg; t=1712584109;
+	bh=2KQwLutt+oKU4479H+IPEDkqbFK8L3JKJPklv+DPnf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVwjTHm6OJnSetxSOOLZar+CMxDfVAZzC2LACtvojq1lkooPVwIc/UJwnST8kFVk8
-	 VoIIZKZaBUmzH93N6YVcUbqyDQoaC8gpT+RdTGvzeQOYYWXPwxkqyCXdaagZcI+ia6
-	 uE0GfqvOUm5bxPDseNCf/gPXaYgbXZJobE1P8iAM=
+	b=K7ZjsZCUWZHAkVLjsX4dlyF4HoYn5tcHUU8bZO8HLzFvcI+JefKqjW85RmisBvcdQ
+	 66Zzyfu2VTMPaLzGW3HpdSusefJeyzYQTWCBvDmiFNob47ATZ6tqx71FFMdPUDHx7u
+	 1/YCvsqh4zwiR6Evy8SthZn1nOHmtBZOQOSF3Tfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Igor Mammedov <imammedo@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 317/690] NFSD: Refactor NFSv3 CREATE
-Date: Mon,  8 Apr 2024 14:53:03 +0200
-Message-ID: <20240408125411.098301030@linuxfoundation.org>
+Subject: [PATCH 5.15 335/690] NFSD: Decode NFSv4 birth time attribute
+Date: Mon,  8 Apr 2024 14:53:21 +0200
+Message-ID: <20240408125411.742648421@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,177 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit df9606abddfb01090d5ece7dcc2441d848f690f0 ]
+[ Upstream commit 5b2f3e0777da2a5dd62824bbe2fdab1d12caaf8f ]
 
-The NFSv3 CREATE and NFSv4 OPEN(CREATE) use cases are about to
-diverge such that it makes sense to split do_nfsd_create() into one
-version for NFSv3 and one for NFSv4.
+NFSD has advertised support for the NFSv4 time_create attribute
+since commit e377a3e698fb ("nfsd: Add support for the birth time
+attribute").
 
-As a first step, copy do_nfsd_create() to nfs3proc.c and remove
-NFSv4-specific logic.
+Igor Mammedov reports that Mac OS clients attempt to set the NFSv4
+birth time attribute via OPEN(CREATE) and SETATTR if the server
+indicates that it supports it, but since the above commit was
+merged, those attempts now fail.
 
-One immediate legibility benefit is that the logic for handling
-NFSv3 createhow is now quite straightforward. NFSv4 createhow
-has some subtleties that IMO do not belong in generic code.
+Table 5 in RFC 8881 lists the time_create attribute as one that can
+be both set and retrieved, but the above commit did not add server
+support for clients to provide a time_create attribute. IMO that's
+a bug in our implementation of the NFSv4 protocol, which this commit
+addresses.
 
+Whether NFSD silently ignores the new birth time or actually sets it
+is another matter. I haven't found another filesystem service in the
+Linux kernel that enables users or clients to modify a file's birth
+time attribute.
+
+This commit reflects my (perhaps incorrect) understanding of whether
+Linux users can set a file's birth time. NFSD will now recognize a
+time_create attribute but it ignores its value. It clears the
+time_create bit in the returned attribute bitmask to indicate that
+the value was not used.
+
+Reported-by: Igor Mammedov <imammedo@redhat.com>
+Fixes: e377a3e698fb ("nfsd: Add support for the birth time attribute")
+Tested-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs3proc.c | 127 ++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 121 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4xdr.c | 9 +++++++++
+ fs/nfsd/nfsd.h    | 3 ++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index 86163ecbb015d..57854ca022d18 100644
---- a/fs/nfsd/nfs3proc.c
-+++ b/fs/nfsd/nfs3proc.c
-@@ -8,6 +8,7 @@
- #include <linux/fs.h>
- #include <linux/ext2_fs.h>
- #include <linux/magic.h>
-+#include <linux/namei.h>
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 96d41b1cc2d17..07f891d7fa0ae 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -470,6 +470,15 @@ nfsd4_decode_fattr4(struct nfsd4_compoundargs *argp, u32 *bmval, u32 bmlen,
+ 			return nfserr_bad_xdr;
+ 		}
+ 	}
++	if (bmval[1] & FATTR4_WORD1_TIME_CREATE) {
++		struct timespec64 ts;
++
++		/* No Linux filesystem supports setting this attribute. */
++		bmval[1] &= ~FATTR4_WORD1_TIME_CREATE;
++		status = nfsd4_decode_nfstime4(argp, &ts);
++		if (status)
++			return status;
++	}
+ 	if (bmval[1] & FATTR4_WORD1_TIME_MODIFY_SET) {
+ 		u32 set_it;
  
- #include "cache.h"
- #include "xdr3.h"
-@@ -220,10 +221,126 @@ nfsd3_proc_write(struct svc_rqst *rqstp)
- }
- 
- /*
-- * With NFSv3, CREATE processing is a lot easier than with NFSv2.
-- * At least in theory; we'll see how it fares in practice when the
-- * first reports about SunOS compatibility problems start to pour in...
-+ * Implement NFSv3's unchecked, guarded, and exclusive CREATE
-+ * semantics for regular files. Except for the created file,
-+ * this operation is stateless on the server.
-+ *
-+ * Upon return, caller must release @fhp and @resfhp.
-  */
-+static __be32
-+nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+		  struct svc_fh *resfhp, struct nfsd3_createargs *argp)
-+{
-+	struct iattr *iap = &argp->attrs;
-+	struct dentry *parent, *child;
-+	__u32 v_mtime, v_atime;
-+	struct inode *inode;
-+	__be32 status;
-+	int host_err;
-+
-+	if (isdotent(argp->name, argp->len))
-+		return nfserr_exist;
-+	if (!(iap->ia_valid & ATTR_MODE))
-+		iap->ia_mode = 0;
-+
-+	status = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_EXEC);
-+	if (status != nfs_ok)
-+		return status;
-+
-+	parent = fhp->fh_dentry;
-+	inode = d_inode(parent);
-+
-+	host_err = fh_want_write(fhp);
-+	if (host_err)
-+		return nfserrno(host_err);
-+
-+	fh_lock_nested(fhp, I_MUTEX_PARENT);
-+
-+	child = lookup_one_len(argp->name, parent, argp->len);
-+	if (IS_ERR(child)) {
-+		status = nfserrno(PTR_ERR(child));
-+		goto out;
-+	}
-+
-+	if (d_really_is_negative(child)) {
-+		status = fh_verify(rqstp, fhp, S_IFDIR, NFSD_MAY_CREATE);
-+		if (status != nfs_ok)
-+			goto out;
-+	}
-+
-+	status = fh_compose(resfhp, fhp->fh_export, child, fhp);
-+	if (status != nfs_ok)
-+		goto out;
-+
-+	v_mtime = 0;
-+	v_atime = 0;
-+	if (argp->createmode == NFS3_CREATE_EXCLUSIVE) {
-+		u32 *verifier = (u32 *)argp->verf;
-+
-+		/*
-+		 * Solaris 7 gets confused (bugid 4218508) if these have
-+		 * the high bit set, as do xfs filesystems without the
-+		 * "bigtime" feature. So just clear the high bits.
-+		 */
-+		v_mtime = verifier[0] & 0x7fffffff;
-+		v_atime = verifier[1] & 0x7fffffff;
-+	}
-+
-+	if (d_really_is_positive(child)) {
-+		status = nfs_ok;
-+
-+		switch (argp->createmode) {
-+		case NFS3_CREATE_UNCHECKED:
-+			if (!d_is_reg(child))
-+				break;
-+			iap->ia_valid &= ATTR_SIZE;
-+			goto set_attr;
-+		case NFS3_CREATE_GUARDED:
-+			status = nfserr_exist;
-+			break;
-+		case NFS3_CREATE_EXCLUSIVE:
-+			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
-+			    d_inode(child)->i_atime.tv_sec == v_atime &&
-+			    d_inode(child)->i_size == 0) {
-+				break;
-+			}
-+			status = nfserr_exist;
-+		}
-+		goto out;
-+	}
-+
-+	if (!IS_POSIXACL(inode))
-+		iap->ia_mode &= ~current_umask();
-+
-+	host_err = vfs_create(&init_user_ns, inode, child, iap->ia_mode, true);
-+	if (host_err < 0) {
-+		status = nfserrno(host_err);
-+		goto out;
-+	}
-+
-+	/* A newly created file already has a file size of zero. */
-+	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
-+		iap->ia_valid &= ~ATTR_SIZE;
-+	if (argp->createmode == NFS3_CREATE_EXCLUSIVE) {
-+		iap->ia_valid = ATTR_MTIME | ATTR_ATIME |
-+				ATTR_MTIME_SET | ATTR_ATIME_SET;
-+		iap->ia_mtime.tv_sec = v_mtime;
-+		iap->ia_atime.tv_sec = v_atime;
-+		iap->ia_mtime.tv_nsec = 0;
-+		iap->ia_atime.tv_nsec = 0;
-+	}
-+
-+set_attr:
-+	status = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
-+
-+out:
-+	fh_unlock(fhp);
-+	if (child && !IS_ERR(child))
-+		dput(child);
-+	fh_drop_write(fhp);
-+	return status;
-+}
-+
- static __be32
- nfsd3_proc_create(struct svc_rqst *rqstp)
- {
-@@ -239,9 +356,7 @@ nfsd3_proc_create(struct svc_rqst *rqstp)
- 	dirfhp = fh_copy(&resp->dirfh, &argp->fh);
- 	newfhp = fh_init(&resp->fh, NFS3_FHSIZE);
- 
--	resp->status = do_nfsd_create(rqstp, dirfhp, argp->name, argp->len,
--				      &argp->attrs, newfhp, argp->createmode,
--				      (u32 *)argp->verf, NULL, NULL);
-+	resp->status = nfsd3_create_file(rqstp, dirfhp, newfhp, argp);
- 	return rpc_success;
- }
- 
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 847b482155ae9..9a8b09afc1733 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -465,7 +465,8 @@ static inline bool nfsd_attrs_supported(u32 minorversion, const u32 *bmval)
+ 	(FATTR4_WORD0_SIZE | FATTR4_WORD0_ACL)
+ #define NFSD_WRITEABLE_ATTRS_WORD1 \
+ 	(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER | FATTR4_WORD1_OWNER_GROUP \
+-	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_MODIFY_SET)
++	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_CREATE \
++	| FATTR4_WORD1_TIME_MODIFY_SET)
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+ #define MAYBE_FATTR4_WORD2_SECURITY_LABEL \
+ 	FATTR4_WORD2_SECURITY_LABEL
 -- 
 2.43.0
 
