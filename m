@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D52757E3;
-	Mon,  8 Apr 2024 13:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF0A84D35;
+	Mon,  8 Apr 2024 13:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582189; cv=none; b=hRFXVRsi6khIRynWepwkB/kCQ2gM9TLx88ruwlFYsdoOwZb19gQhX5kJQYFu4oRtW34belCSxoH3FNjMXiLxicnmFChysLslsk0ZABa9QBYw8h/2mf1NCdFiz6GbJfd5a4vkQZF36rcjMei0ABub/KFSNXY8oSAE1Q5gpYoOlYA=
+	t=1712582191; cv=none; b=qSgWxyU9VHkhEGhlbaNl5tVuFTWpDj+CS6GTAkI8GhTPV7K0zWrAY8ELFAsZUkzRYhHth7mm07eBjEfm7Hm6qEW/tW5Nml8AQ96c0XLqzWlZq4PppHn2e/k7Z13vcLqhsnq5CD/oon4h+kLVjVtfExIDKDt8eIkL4sGCwMNTxvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582189; c=relaxed/simple;
-	bh=06ni3DCbQ3ig9NBb3rJXHn1IFQkHFqei2QnMHNmMJ9k=;
+	s=arc-20240116; t=1712582191; c=relaxed/simple;
+	bh=wIYT7nDJiNbgKvNPeCcWisb3qCDZzVqBvBY1AJQkJPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QthGybNYlxGXaRJ6fNcxUn9vKxmNldD8KiWaxv/tg+8NnUHODMQuCalh+XRKg1pA41ObjcIEl5GcABl23MJyW1UAvW3b5HjwOMlWvE1Hz5+jsC47GZTrTmVk2PiuU9hSwXTT6KBcAMA4eRUVpsovqd1QIIzaAUYnU6ObZXP/T5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpDwv0c4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kto3PYxget6jQe4wUrl2cxyyjKNUmELlTUEOmfKcyJOjC/YMXtIe1TYb9BZlvf2PPvSUaFLFzScLuolvzoGLN4Rs6mDfG/PiUsIoRKJaa6h1IGN1h4lyPmu/cl8UTvn+u9LrIRlwLOeE/wbbabgb9q8YCA2aQn5TYpln7AmLGp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQEKDYuF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpDwv0c4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572ADC433F1;
-	Mon,  8 Apr 2024 13:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQEKDYuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436BFC433C7;
+	Mon,  8 Apr 2024 13:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582188;
-	bh=06ni3DCbQ3ig9NBb3rJXHn1IFQkHFqei2QnMHNmMJ9k=;
+	s=korg; t=1712582191;
+	bh=wIYT7nDJiNbgKvNPeCcWisb3qCDZzVqBvBY1AJQkJPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpDwv0c40rj46UZFN8n7yHh3quugYciGDS0Uka5UM0wMkTyop0K/dgg8vH5DSk7jb
-	 qJ6LrxUYyrpf0++naXPrIGa3HUWwclxFX71sMX1t3xApqBuDgoMwBCwNZfmlvl9BWq
-	 u5fgF9b2vRXg/RnAaEad6X2Wvvi8vSKS5e9lV+/g=
+	b=wQEKDYuF7aYERYnCPz7b7oDDZEDviGJMi/BpJtmQy34Dz8UEFN363176UzoQkgRBL
+	 zRA2dgV2X+/QGrrPeNKjdo8qlF7YLGT8DC7n29dR7HO4BOhPg+zVxHMqlwZVRQafE0
+	 5YGl+34MxngfLLZCbf8JbeSc3tL9EYkQlqinxXBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	=?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@ubuntu.com>,
-	kvm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/138] KVM: SVM: enhance info printks in SEV init
-Date: Mon,  8 Apr 2024 14:58:19 +0200
-Message-ID: <20240408125258.869451928@linuxfoundation.org>
+Subject: [PATCH 6.8 034/273] net: hns3: fix index limit to support all queue stats
+Date: Mon,  8 Apr 2024 14:55:09 +0200
+Message-ID: <20240408125310.354180660@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +49,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 6d1bc9754b04075d938b47cf7f7800814b8911a7 ]
+[ Upstream commit 47e39d213e09c6cae0d6b4d95e454ea404013312 ]
 
-Let's print available ASID ranges for SEV/SEV-ES guests.
-This information can be useful for system administrator
-to debug if SEV/SEV-ES fails to enable.
+Currently, hns hardware supports more than 512 queues and the index limit
+in hclge_comm_tqps_update_stats is wrong. So this patch removes it.
 
-There are a few reasons.
-SEV:
-- NPT is disabled (module parameter)
-- CPU lacks some features (sev, decodeassists)
-- Maximum SEV ASID is 0
-
-SEV-ES:
-- mmio_caching is disabled (module parameter)
-- CPU lacks sev_es feature
-- Minimum SEV ASID value is 1 (can be adjusted in BIOS/UEFI)
-
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stéphane Graber <stgraber@ubuntu.com>
-Cc: kvm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Link: https://lore.kernel.org/r/20230522161249.800829-3-aleksandr.mikhalitsyn@canonical.com
-[sean: print '0' for min SEV-ES ASID if there are no available ASIDs]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: 0aa6b90ef9d7 ("KVM: SVM: Add support for allowing zero SEV ASIDs")
+Fixes: 287db5c40d15 ("net: hns3: create new set of common tqp stats APIs for PF and VF reuse")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 3dc0ee1fe9db9..1fe9257d87b2d 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2217,7 +2217,6 @@ void __init sev_hardware_setup(void)
- 	if (misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count))
- 		goto out;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
+index f3c9395d8351c..618f66d9586b3 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
+@@ -85,7 +85,7 @@ int hclge_comm_tqps_update_stats(struct hnae3_handle *handle,
+ 		hclge_comm_cmd_setup_basic_desc(&desc, HCLGE_OPC_QUERY_TX_STATS,
+ 						true);
  
--	pr_info("SEV supported: %u ASIDs\n", sev_asid_count);
- 	sev_supported = true;
- 
- 	/* SEV-ES support requested? */
-@@ -2245,10 +2244,18 @@ void __init sev_hardware_setup(void)
- 	if (misc_cg_set_capacity(MISC_CG_RES_SEV_ES, sev_es_asid_count))
- 		goto out;
- 
--	pr_info("SEV-ES supported: %u ASIDs\n", sev_es_asid_count);
- 	sev_es_supported = true;
- 
- out:
-+	if (boot_cpu_has(X86_FEATURE_SEV))
-+		pr_info("SEV %s (ASIDs %u - %u)\n",
-+			sev_supported ? "enabled" : "disabled",
-+			min_sev_asid, max_sev_asid);
-+	if (boot_cpu_has(X86_FEATURE_SEV_ES))
-+		pr_info("SEV-ES %s (ASIDs %u - %u)\n",
-+			sev_es_supported ? "enabled" : "disabled",
-+			min_sev_asid > 1 ? 1 : 0, min_sev_asid - 1);
-+
- 	sev_enabled = sev_supported;
- 	sev_es_enabled = sev_es_supported;
- #endif
+-		desc.data[0] = cpu_to_le32(tqp->index & 0x1ff);
++		desc.data[0] = cpu_to_le32(tqp->index);
+ 		ret = hclge_comm_cmd_send(hw, &desc, 1);
+ 		if (ret) {
+ 			dev_err(&hw->cmq.csq.pdev->dev,
 -- 
 2.43.0
 
