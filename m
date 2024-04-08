@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2457B7C6EB;
-	Mon,  8 Apr 2024 13:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1888A76058;
+	Mon,  8 Apr 2024 13:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582206; cv=none; b=FtSzJYTO92NYn/vFf+arhM+LsVkfyOehpF/UdKJls35hTzPrF/PCM/u04bY0qlnr/cNB0HKRPkH78+x8BlhXZnA1r748nfu0FMdjSJ6BHuJ8onyUTCDbZpzw5ruI29sIfoZnMxAmU6Ii2530gbd9PQMemVvoWOXiMm8MjPXCMIU=
+	t=1712582209; cv=none; b=o3d2VKgPGDKU01C5ixMrr/iEq8prA+voJ4hsygar4VVuwwFA8EqARKFf4XJoHwqDPfugBvofni0S9yTlP0ZhFHtfzL/MQBxsAno6tFDEQh9HuNmub4N2slpSuwpaWcm6/tkHivin0LhmCU3GTABUxoKvK1DwsHWiwE+pbO3VhEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582206; c=relaxed/simple;
-	bh=qRTJ9+6rTbsAU3hdunc36l0yPNe2IKfR5AQz6C68y+c=;
+	s=arc-20240116; t=1712582209; c=relaxed/simple;
+	bh=fiICyYnrnpQL9udXb8CQKbHcAZd1oz/HJFNc0Bmwzw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htELbeWOkUI+sETFLObAVDsH2pMaLqnBiob+aJMPOTl5RsKy1uEioyC5hV/lJnvwCUDI2O1dGVLl1Dx4YjAgWFVDl4pH1Qu/T+Mdv8FEO988leC8tqs/VCTjykiKPKvqqOfJT53ryXbhYQAOz1zeAvat51P78toi49N0vGUJqjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvr8uuDd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOxK+0BYn2tUs7SPSHl5k6qMdbH4uFzIjvFeUsFOhyKculr9AGfy6Vw1XRB6pFXEV5cpcXVsodg/L7J89GrNVTmbJpa1Pt+FxYfSFZ8kTNZuNtPD/rP93Y8uVQJqIPs7knid3PwK1qhDSVtyejfLy9PzKY7HR+ykyJ8fFAjniAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EenrzUKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvr8uuDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CACDC433F1;
-	Mon,  8 Apr 2024 13:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EenrzUKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C638C433F1;
+	Mon,  8 Apr 2024 13:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582206;
-	bh=qRTJ9+6rTbsAU3hdunc36l0yPNe2IKfR5AQz6C68y+c=;
+	s=korg; t=1712582209;
+	bh=fiICyYnrnpQL9udXb8CQKbHcAZd1oz/HJFNc0Bmwzw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lvr8uuDd4U+NzwvTRZtBxFWS9MTxwM0HyOf/5LeI0v+lYKWHjXodmh6tnRQDetCmJ
-	 JFczl5oAKI8OIY0jUU4v/ZEmlmrFZ/iqB4EueUVOHQQbnH/yGE+oS10EcvRrDcKThw
-	 v+v63n6tEYKhsrAmgqfXUdwTnIoC6IDMg2CVUlic=
+	b=EenrzUKXamlmQamYpP3PIkd4c9prLffllth3743kNzNpTC57LY9CuklRZCR01uPcY
+	 Yi0ZQkns85FJD0MIPQ3EqR3dTSxuNT8sh953cCz16dmvB3sH64aqGTiWJMydF5fgkO
+	 8M58ol4qXf129ui/m0E26nJT5FpLrMUp89LIBYx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabe Kirkpatrick <gkirkpatrick@google.com>,
-	Josh Eads <josheads@google.com>,
-	Peter Gonda <pgonda@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 123/690] KVM: SVM: Flush pages under kvm->lock to fix UAF in svm_register_enc_region()
-Date: Mon,  8 Apr 2024 14:49:49 +0200
-Message-ID: <20240408125404.015070012@linuxfoundation.org>
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 056/273] drm/i915/mtl: Update workaround 14018575942
+Date: Mon,  8 Apr 2024 14:55:31 +0200
+Message-ID: <20240408125311.042147132@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-commit 5ef1d8c1ddbf696e47b226e11888eaf8d9e8e807 upstream.
+[ Upstream commit 186bce682772e7346bf7ced5325b5f4ff050ccfb ]
 
-Do the cache flush of converted pages in svm_register_enc_region() before
-dropping kvm->lock to fix use-after-free issues where region and/or its
-array of pages could be freed by a different task, e.g. if userspace has
-__unregister_enc_region_locked() already queued up for the region.
+Applying WA 14018575942 only on Compute engine has impact on
+some apps like chrome. Updating this WA to apply on Render
+engine as well as it is helping with performance on Chrome.
 
-Note, the "obvious" alternative of using local variables doesn't fully
-resolve the bug, as region->pages is also dynamically allocated.  I.e. the
-region structure itself would be fine, but region->pages could be freed.
+Note: There is no concern from media team thus not applying
+WA on media engines. We will revisit if any issues reported
+from media team.
 
-Flushing multiple pages under kvm->lock is unfortunate, but the entire
-flow is a rare slow path, and the manual flush is only needed on CPUs that
-lack coherency for encrypted memory.
+V2(Matt):
+ - Use correct WA number
 
-Fixes: 19a23da53932 ("Fix unsynchronized access to sev members through svm_register_enc_region")
-Reported-by: Gabe Kirkpatrick <gkirkpatrick@google.com>
-Cc: Josh Eads <josheads@google.com>
-Cc: Peter Gonda <pgonda@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20240217013430.2079561-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 668f37e1ee11 ("drm/i915/mtl: Update workaround 14018778641")
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228103738.2018458-1-tejas.upadhyay@intel.com
+(cherry picked from commit 71271280175aa0ed6673e40cce7c01296bcd05f6)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_workarounds.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -1662,20 +1662,22 @@ int svm_register_enc_region(struct kvm *
- 		goto e_free;
- 	}
+diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+index 72dac27d9332f..c7561d7c55f5e 100644
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -1649,6 +1649,7 @@ static void
+ xelpg_gt_workarounds_init(struct intel_gt *gt, struct i915_wa_list *wal)
+ {
+ 	/* Wa_14018575942 / Wa_18018781329 */
++	wa_mcr_write_or(wal, RENDER_MOD_CTRL, FORCE_MISS_FTLB);
+ 	wa_mcr_write_or(wal, COMP_MOD_CTRL, FORCE_MISS_FTLB);
  
--	region->uaddr = range->addr;
--	region->size = range->size;
--
--	list_add_tail(&region->list, &sev->regions_list);
--	mutex_unlock(&kvm->lock);
--
- 	/*
- 	 * The guest may change the memory encryption attribute from C=0 -> C=1
- 	 * or vice versa for this memory range. Lets make sure caches are
- 	 * flushed to ensure that guest data gets written into memory with
--	 * correct C-bit.
-+	 * correct C-bit.  Note, this must be done before dropping kvm->lock,
-+	 * as region and its array of pages can be freed by a different task
-+	 * once kvm->lock is released.
- 	 */
- 	sev_clflush_pages(region->pages, region->npages);
- 
-+	region->uaddr = range->addr;
-+	region->size = range->size;
-+
-+	list_add_tail(&region->list, &sev->regions_list);
-+	mutex_unlock(&kvm->lock);
-+
- 	return ret;
- 
- e_free:
+ 	/* Wa_22016670082 */
+-- 
+2.43.0
+
 
 
