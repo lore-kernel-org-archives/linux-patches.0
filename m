@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0407862148;
-	Mon,  8 Apr 2024 13:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D674676413;
+	Mon,  8 Apr 2024 13:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582390; cv=none; b=nodLlibH4DfOf0+KpBIHl8U4RhveoTMaOg9KNlxe/TdURCCoj1zCo/hv4tb9MnUPYXjk40Uy7vOlU6lO+aEQtFBc4DJhQjIlpjiSEW9btUpyhY/TMnm1T0kjio3b504lIaLXd25xQevhKMAnxJHNStT5Piom+ovDLN9jY6xpZec=
+	t=1712582392; cv=none; b=F8291AROVfmdALPiJUoAngBHWpY8RSJg2yEFWPCEym8QCqDb/blWdTc7xi8ccbvXZ1tg/URH/lS5zzbgzwTEnGJ1tEFFb852N7CDFPoD+wdKqBR+THOkw88aktGTCMIdvh0yiJy7UfOOoiXiKqp/NygiLYallLH7ZP4EKIoXb7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582390; c=relaxed/simple;
-	bh=7C5G34ju1RmwHPFcIgQ0ksWe6UvklGp+OAsY8XU9c34=;
+	s=arc-20240116; t=1712582392; c=relaxed/simple;
+	bh=gDa1I6FkFp46onJlH9QQZR4kixDZd32f+9MDqO9kKuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaqGZpD1w6iTNxUrLowZiCO2KcfyH5Qf6TYjFbq5fN07z+c3otmiLeIsNbihCWR78/pKliBo4OoimdQWQKDyT6dCokU8mSvYUcUU5Fe1G+DV6g8L1qsldkeePv4QXbs1aUJfumWT0EeEeX1Dv98EpuDm0eCytIwEzJFaYg7ZMxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrg77bZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxZj7Aoexd6lPnKLs60Z9gtfLDX6h/QZERz/GTFZ+F7qje307uWeHPexUGJorz4Tkv0Y5f3C1uHWJ9MNWBHyDLLEueLfpMVg9AKCCDBw6YDkFGVPHgko39s3LUgFC5xRaaxIVhwZWLZCvmbFwe+RUmpS8dVhXNzBh6X7cpsmrFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/YE1Szs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrg77bZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77881C433C7;
-	Mon,  8 Apr 2024 13:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/YE1Szs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB85C433F1;
+	Mon,  8 Apr 2024 13:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582389;
-	bh=7C5G34ju1RmwHPFcIgQ0ksWe6UvklGp+OAsY8XU9c34=;
+	s=korg; t=1712582392;
+	bh=gDa1I6FkFp46onJlH9QQZR4kixDZd32f+9MDqO9kKuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrg77bZWKKjZsxkVgUN+B9LJB2M0O/4QOyC5BJr1B4Xr9sprZag7LZbnLMg/A5pT/
-	 7zc+kTy86sPdFmN9WtlbCTQovlQw4Hmx9Y6LHBDdV3s+51+sA/tivRILHuJh+WBCj+
-	 fptru38vFFYMY/HdffT0HGR3d6sxicHWxjs7xJwE=
+	b=G/YE1SzsSqkhd7SvIGkQctUFYhaBcAOvXJv/YcUavB7Ew0ahhxTbgmP1sOBHntJ1Q
+	 Cng6x6gPgrgcLedmhqQsmJpYOziLm5UWA7pMUiYiDNI4/86XvULVM7qoMCfyCFI4bE
+	 v12wsETZtUUSWOpxAp77HFNDgPvFGzSeGD/TkAPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	stable@vge.kernel.org,
+	Marco Pinna <marco.pinn95@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 073/252] r8169: fix issue caused by buggy BIOS on certain boards with RTL8168d
-Date: Mon,  8 Apr 2024 14:56:12 +0200
-Message-ID: <20240408125308.897304607@linuxfoundation.org>
+Subject: [PATCH 6.6 089/252] vsock/virtio: fix packet delivery to tap device
+Date: Mon,  8 Apr 2024 14:56:28 +0200
+Message-ID: <20240408125309.416922471@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -51,43 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Marco Pinna <marco.pinn95@gmail.com>
 
-commit 5d872c9f46bd2ea3524af3c2420a364a13667135 upstream.
+commit b32a09ea7c38849ff925489a6bf5bd8914bc45df upstream.
 
-On some boards with this chip version the BIOS is buggy and misses
-to reset the PHY page selector. This results in the PHY ID read
-accessing registers on a different page, returning a more or
-less random value. Fix this by resetting the page selector first.
+Commit 82dfb540aeb2 ("VSOCK: Add virtio vsock vsockmon hooks") added
+virtio_transport_deliver_tap_pkt() for handing packets to the
+vsockmon device. However, in virtio_transport_send_pkt_work(),
+the function is called before actually sending the packet (i.e.
+before placing it in the virtqueue with virtqueue_add_sgs() and checking
+whether it returned successfully).
+Queuing the packet in the virtqueue can fail even multiple times.
+However, in virtio_transport_deliver_tap_pkt() we deliver the packet
+to the monitoring tap interface only the first time we call it.
+This certainly avoids seeing the same packet replicated multiple times
+in the monitoring interface, but it can show the packet sent with the
+wrong timestamp or even before we succeed to queue it in the virtqueue.
 
-Fixes: f1e911d5d0df ("r8169: add basic phylib support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/64f2055e-98b8-45ec-8568-665e3d54d4e6@gmail.com
+Move virtio_transport_deliver_tap_pkt() after calling virtqueue_add_sgs()
+and making sure it returned successfully.
+
+Fixes: 82dfb540aeb2 ("VSOCK: Add virtio vsock vsockmon hooks")
+Cc: stable@vge.kernel.org
+Signed-off-by: Marco Pinna <marco.pinn95@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20240329161259.411751-1-marco.pinn95@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/vmw_vsock/virtio_transport.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -5055,6 +5055,15 @@ static int r8169_mdio_register(struct rt
- 	struct mii_bus *new_bus;
- 	int ret;
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -109,7 +109,6 @@ virtio_transport_send_pkt_work(struct wo
+ 		if (!skb)
+ 			break;
  
-+	/* On some boards with this chip version the BIOS is buggy and misses
-+	 * to reset the PHY page selector. This results in the PHY ID read
-+	 * accessing registers on a different page, returning a more or
-+	 * less random value. Fix this by resetting the page selector first.
-+	 */
-+	if (tp->mac_version == RTL_GIGA_MAC_VER_25 ||
-+	    tp->mac_version == RTL_GIGA_MAC_VER_26)
-+		r8169_mdio_write(tp, 0x1f, 0);
+-		virtio_transport_deliver_tap_pkt(skb);
+ 		reply = virtio_vsock_skb_reply(skb);
+ 
+ 		sg_init_one(&hdr, virtio_vsock_hdr(skb), sizeof(*virtio_vsock_hdr(skb)));
+@@ -128,6 +127,8 @@ virtio_transport_send_pkt_work(struct wo
+ 			break;
+ 		}
+ 
++		virtio_transport_deliver_tap_pkt(skb);
 +
- 	new_bus = devm_mdiobus_alloc(&pdev->dev);
- 	if (!new_bus)
- 		return -ENOMEM;
+ 		if (reply) {
+ 			struct virtqueue *rx_vq = vsock->vqs[VSOCK_VQ_RX];
+ 			int val;
 
 
