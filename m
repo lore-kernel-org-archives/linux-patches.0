@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C067174BF5;
-	Mon,  8 Apr 2024 13:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A597D7C6E9;
+	Mon,  8 Apr 2024 13:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581887; cv=none; b=j/+6m+NPLQMoExv89WFa4jlj2cS8bNo+V63w4ldL/pZApSqqR4DnsYfafriPKQYFd5KkTdxRLSqMribDz31uQzq7tsggtjC4gfPP1lTMgSznnMybvn1G0QGS8cqsfpeMOQe7VPJEotqD92bYUyYn+zVoGawgOrM8wFh9UxCbyWg=
+	t=1712581890; cv=none; b=VAxJFPuTo3DHpZf/LNpayuITMCoASD8MiVlz1Fq6rUhBDoSxEGQuIIfXgqSBYmJDPiRz3mZ3DITHf0DheGa3NGYxhlcfACvVzKNHYyvvRWVkp5m64ISwP3IpD3HosJ+ldUCrock0gF83sj5PhkIVxQyLydKwGjmRkvmiaeKnfPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581887; c=relaxed/simple;
-	bh=crPQFB4PTScj6pCxuA8fxZDRUb74o/R9bGHmtW0QDk0=;
+	s=arc-20240116; t=1712581890; c=relaxed/simple;
+	bh=FcelkXqw0l/vMGD3eb8ryjE3EV2HZfqEsWhCTIubHSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2X2XS1t0p7RHaviqoEo9bJuvvZ6HnUQ1MCQ+GE538ke6hKpUKqZNYSunmj1176SliUBfHhtqDFYrHP0hz7SL05zwZ7tDzES7hiAfQMo/9D3ofRq8+R/OMq88OHONSGs7BdkzvC5/9c4bYAT4o6K/5/qknL+SFlyIenaSerd4/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9+iCm/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Av4Sk1HZk4HbwdOGU7J5mNcXGyDosxC845+0zckn/b03wOnC9hxpYl/ztkA9ryQaGs0jRi7ajt79UUIraL/rM0PDdmxpzYkgVuhAzBbdD3RC4tmfHsUkZmo7g5lhJAYtJwrAlJEHFUMhzMSnTFNHotDmTHnr/VfFqVM64HYe/48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUFA9Foa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9+iCm/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F47C433F1;
-	Mon,  8 Apr 2024 13:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUFA9Foa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEA6C43390;
+	Mon,  8 Apr 2024 13:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581887;
-	bh=crPQFB4PTScj6pCxuA8fxZDRUb74o/R9bGHmtW0QDk0=;
+	s=korg; t=1712581890;
+	bh=FcelkXqw0l/vMGD3eb8ryjE3EV2HZfqEsWhCTIubHSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9+iCm/U6S+qvoYCga2pnJwxGVOWwkOthOf/kGNKMwafEelv+2UTMhgm8paz/EVN4
-	 P7agjc2JnOX+6VILfIRYDuvlsfSR+cBFwFVPe4s+2dGjciULEQ7CQcfyJt3uTOgGdl
-	 gmpQbZZUrgqJam5+XA2wxrKg/xLcgtp40vw86EGM=
+	b=xUFA9FoaN2cvG1y3mFLX3/MJI9R3dbzgv3lwiKumnJivfail5iaC+y9VsIaAnunHS
+	 YG5hLuaG36FgY8wf03HjqEIealDtqufNOCVnBW2bUAc1zcskTDCfE5wwIjfMz/PeyS
+	 dvinmGXiqePdobgPJV31NhZqL0C9mnCHfhF00fZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linke li <lilinke99@qq.com>,
-	Rabin Vincent <rabin@rab.in>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/690] ring-buffer: Use wait_event_interruptible() in ring_buffer_wait()
-Date: Mon,  8 Apr 2024 14:49:16 +0200
-Message-ID: <20240408125402.745845470@linuxfoundation.org>
+Subject: [PATCH 6.8 028/273] tcp: properly terminate timers for kernel sockets
+Date: Mon,  8 Apr 2024 14:55:03 +0200
+Message-ID: <20240408125310.164647553@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,205 +49,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7af9ded0c2caac0a95f33df5cb04706b0f502588 ]
+[ Upstream commit 151c9c724d05d5b0dd8acd3e11cb69ef1f2dbada ]
 
-Convert ring_buffer_wait() over to wait_event_interruptible(). The default
-condition is to execute the wait loop inside __wait_event() just once.
+We had various syzbot reports about tcp timers firing after
+the corresponding netns has been dismantled.
 
-This does not change the ring_buffer_wait() prototype yet, but
-restructures the code so that it can take a "cond" and "data" parameter
-and will call wait_event_interruptible() with a helper function as the
-condition.
+Fortunately Josef Bacik could trigger the issue more often,
+and could test a patch I wrote two years ago.
 
-The helper function (rb_wait_cond) takes the cond function and data
-parameters. It will first check if the buffer hit the watermark defined by
-the "full" parameter and then call the passed in condition parameter. If
-either are true, it returns true.
+When TCP sockets are closed, we call inet_csk_clear_xmit_timers()
+to 'stop' the timers.
 
-If rb_wait_cond() does not return true, it will set the appropriate
-"waiters_pending" flag and returns false.
+inet_csk_clear_xmit_timers() can be called from any context,
+including when socket lock is held.
+This is the reason it uses sk_stop_timer(), aka del_timer().
+This means that ongoing timers might finish much later.
 
-Link: https://lore.kernel.org/linux-trace-kernel/CAHk-=wgsNgewHFxZAJiAQznwPMqEtQmi1waeS2O1v6L4c_Um5A@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20240312121703.399598519@goodmis.org
+For user sockets, this is fine because each running timer
+holds a reference on the socket, and the user socket holds
+a reference on the netns.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linke li <lilinke99@qq.com>
-Cc: Rabin Vincent <rabin@rab.in>
-Fixes: f3ddb74ad0790 ("tracing: Wake up ring buffer waiters on closing of the file")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+For kernel sockets, we risk that the netns is freed before
+timer can complete, because kernel sockets do not hold
+reference on the netns.
+
+This patch adds inet_csk_clear_xmit_timers_sync() function
+that using sk_stop_timer_sync() to make sure all timers
+are terminated before the kernel socket is released.
+Modules using kernel sockets close them in their netns exit()
+handler.
+
+Also add sock_not_owned_by_me() helper to get LOCKDEP
+support : inet_csk_clear_xmit_timers_sync() must not be called
+while socket lock is held.
+
+It is very possible we can revert in the future commit
+3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
+which attempted to solve the issue in rds only.
+(net/smc/af_smc.c and net/mptcp/subflow.c have similar code)
+
+We probably can remove the check_net() tests from
+tcp_out_of_resources() and __tcp_close() in the future.
+
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Closes: https://lore.kernel.org/netdev/20240314210740.GA2823176@perftesting/
+Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
+Fixes: 8a68173691f0 ("net: sk_clone_lock() should only do get_net() if the parent is not a kernel socket")
+Link: https://lore.kernel.org/bpf/CANn89i+484ffqb93aQm1N-tjxxvb3WDKX0EbD7318RwRgsatjw@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/r/20240322135732.1535772-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |   1 +
- kernel/trace/ring_buffer.c  | 116 +++++++++++++++++++++---------------
- 2 files changed, 69 insertions(+), 48 deletions(-)
+ include/net/inet_connection_sock.h |  1 +
+ include/net/sock.h                 |  7 +++++++
+ net/ipv4/inet_connection_sock.c    | 14 ++++++++++++++
+ net/ipv4/tcp.c                     |  2 ++
+ 4 files changed, 24 insertions(+)
 
-diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-index 3c7d295746f67..3e7bfc0f65aee 100644
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -98,6 +98,7 @@ __ring_buffer_alloc(unsigned long size, unsigned flags, struct lock_class_key *k
- 	__ring_buffer_alloc((size), (flags), &__key);	\
- })
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 9ab4bf704e864..ccf171f7eb60d 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -175,6 +175,7 @@ void inet_csk_init_xmit_timers(struct sock *sk,
+ 			       void (*delack_handler)(struct timer_list *),
+ 			       void (*keepalive_handler)(struct timer_list *));
+ void inet_csk_clear_xmit_timers(struct sock *sk);
++void inet_csk_clear_xmit_timers_sync(struct sock *sk);
  
-+typedef bool (*ring_buffer_cond_fn)(void *data);
- int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full);
- __poll_t ring_buffer_poll_wait(struct trace_buffer *buffer, int cpu,
- 			  struct file *filp, poll_table *poll_table, int full);
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 4ffedcd255b3e..80ec515ae81e7 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -960,43 +960,15 @@ static bool rb_watermark_hit(struct trace_buffer *buffer, int cpu, int full)
- 	return ret;
- }
- 
--/**
-- * ring_buffer_wait - wait for input to the ring buffer
-- * @buffer: buffer to wait on
-- * @cpu: the cpu buffer to wait on
-- * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-- *
-- * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-- * as data is added to any of the @buffer's cpu buffers. Otherwise
-- * it will wait for data to be added to a specific cpu buffer.
-- */
--int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
-+static inline bool
-+rb_wait_cond(struct rb_irq_work *rbwork, struct trace_buffer *buffer,
-+	     int cpu, int full, ring_buffer_cond_fn cond, void *data)
+ static inline void inet_csk_schedule_ack(struct sock *sk)
  {
--	struct ring_buffer_per_cpu *cpu_buffer;
--	DEFINE_WAIT(wait);
--	struct rb_irq_work *work;
--	int ret = 0;
--
--	/*
--	 * Depending on what the caller is waiting for, either any
--	 * data in any cpu buffer, or a specific buffer, put the
--	 * caller on the appropriate wait queue.
--	 */
--	if (cpu == RING_BUFFER_ALL_CPUS) {
--		work = &buffer->irq_work;
--		/* Full only makes sense on per cpu reads */
--		full = 0;
--	} else {
--		if (!cpumask_test_cpu(cpu, buffer->cpumask))
--			return -ENODEV;
--		cpu_buffer = buffer->buffers[cpu];
--		work = &cpu_buffer->irq_work;
--	}
-+	if (rb_watermark_hit(buffer, cpu, full))
-+		return true;
- 
--	if (full)
--		prepare_to_wait(&work->full_waiters, &wait, TASK_INTERRUPTIBLE);
--	else
--		prepare_to_wait(&work->waiters, &wait, TASK_INTERRUPTIBLE);
-+	if (cond(data))
-+		return true;
- 
- 	/*
- 	 * The events can happen in critical sections where
-@@ -1019,27 +991,75 @@ int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
- 	 * a task has been queued. It's OK for spurious wake ups.
- 	 */
- 	if (full)
--		work->full_waiters_pending = true;
-+		rbwork->full_waiters_pending = true;
- 	else
--		work->waiters_pending = true;
-+		rbwork->waiters_pending = true;
- 
--	if (rb_watermark_hit(buffer, cpu, full))
--		goto out;
-+	return false;
-+}
- 
--	if (signal_pending(current)) {
--		ret = -EINTR;
--		goto out;
-+/*
-+ * The default wait condition for ring_buffer_wait() is to just to exit the
-+ * wait loop the first time it is woken up.
-+ */
-+static bool rb_wait_once(void *data)
-+{
-+	long *once = data;
-+
-+	/* wait_event() actually calls this twice before scheduling*/
-+	if (*once > 1)
-+		return true;
-+
-+	(*once)++;
-+	return false;
-+}
-+
-+/**
-+ * ring_buffer_wait - wait for input to the ring buffer
-+ * @buffer: buffer to wait on
-+ * @cpu: the cpu buffer to wait on
-+ * @full: wait until the percentage of pages are available, if @cpu != RING_BUFFER_ALL_CPUS
-+ *
-+ * If @cpu == RING_BUFFER_ALL_CPUS then the task will wake up as soon
-+ * as data is added to any of the @buffer's cpu buffers. Otherwise
-+ * it will wait for data to be added to a specific cpu buffer.
-+ */
-+int ring_buffer_wait(struct trace_buffer *buffer, int cpu, int full)
-+{
-+	struct ring_buffer_per_cpu *cpu_buffer;
-+	struct wait_queue_head *waitq;
-+	ring_buffer_cond_fn cond;
-+	struct rb_irq_work *rbwork;
-+	void *data;
-+	long once = 0;
-+	int ret = 0;
-+
-+	cond = rb_wait_once;
-+	data = &once;
-+
-+	/*
-+	 * Depending on what the caller is waiting for, either any
-+	 * data in any cpu buffer, or a specific buffer, put the
-+	 * caller on the appropriate wait queue.
-+	 */
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
-+		rbwork = &buffer->irq_work;
-+		/* Full only makes sense on per cpu reads */
-+		full = 0;
-+	} else {
-+		if (!cpumask_test_cpu(cpu, buffer->cpumask))
-+			return -ENODEV;
-+		cpu_buffer = buffer->buffers[cpu];
-+		rbwork = &cpu_buffer->irq_work;
- 	}
- 
--	schedule();
-- out:
- 	if (full)
--		finish_wait(&work->full_waiters, &wait);
-+		waitq = &rbwork->full_waiters;
- 	else
--		finish_wait(&work->waiters, &wait);
-+		waitq = &rbwork->waiters;
- 
--	if (!ret && !rb_watermark_hit(buffer, cpu, full) && signal_pending(current))
--		ret = -EINTR;
-+	ret = wait_event_interruptible((*waitq),
-+				rb_wait_cond(rbwork, buffer, cpu, full, cond, data));
- 
- 	return ret;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 54ca8dcbfb433..4afb4376c97e8 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1779,6 +1779,13 @@ static inline void sock_owned_by_me(const struct sock *sk)
+ #endif
  }
+ 
++static inline void sock_not_owned_by_me(const struct sock *sk)
++{
++#ifdef CONFIG_LOCKDEP
++	WARN_ON_ONCE(lockdep_sock_is_held(sk) && debug_locks);
++#endif
++}
++
+ static inline bool sock_owned_by_user(const struct sock *sk)
+ {
+ 	sock_owned_by_me(sk);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 459af1f897395..17eb9ae912239 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -771,6 +771,20 @@ void inet_csk_clear_xmit_timers(struct sock *sk)
+ }
+ EXPORT_SYMBOL(inet_csk_clear_xmit_timers);
+ 
++void inet_csk_clear_xmit_timers_sync(struct sock *sk)
++{
++	struct inet_connection_sock *icsk = inet_csk(sk);
++
++	/* ongoing timer handlers need to acquire socket lock. */
++	sock_not_owned_by_me(sk);
++
++	icsk->icsk_pending = icsk->icsk_ack.pending = 0;
++
++	sk_stop_timer_sync(sk, &icsk->icsk_retransmit_timer);
++	sk_stop_timer_sync(sk, &icsk->icsk_delack_timer);
++	sk_stop_timer_sync(sk, &sk->sk_timer);
++}
++
+ void inet_csk_delete_keepalive_timer(struct sock *sk)
+ {
+ 	sk_stop_timer(sk, &sk->sk_timer);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index a4f4185923144..5887eac87bd28 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2930,6 +2930,8 @@ void tcp_close(struct sock *sk, long timeout)
+ 	lock_sock(sk);
+ 	__tcp_close(sk, timeout);
+ 	release_sock(sk);
++	if (!sk->sk_net_refcnt)
++		inet_csk_clear_xmit_timers_sync(sk);
+ 	sock_put(sk);
+ }
+ EXPORT_SYMBOL(tcp_close);
 -- 
 2.43.0
 
