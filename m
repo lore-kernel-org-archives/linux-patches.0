@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8F279F0;
-	Mon,  8 Apr 2024 13:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E36371742;
+	Mon,  8 Apr 2024 13:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584712; cv=none; b=LrL5YmmJ+uYBVYoAdd+190I7ICq8rFMJ2mLSqcT5fOX9wfS4vebSIAdPNscEWTgd/v4/rxK+pgESyXh4zurPD9lmELNAWu4WXcRa6T5cq7xwylcNv3g9+MvbPPp58hh+hCXlld8EDyyW2hcf2YHfzq49Q3x3+++D32IWJRsPAD8=
+	t=1712584715; cv=none; b=FAiXivYr7rQzjAvI9jNyhnFTzJhsg/zXk3a2ou00xhRes28S87lt7XKBR6Q/XFFMmlv5Ls7RDA1WqafmSBUH1a0dekBKrd1kDZn+ddIFZ9zGPSkG1kBFkMYQp+JrMQeVV0S2MXafcaAgpqCINeMHWQqTv/PvrcYytYBoMiFDKY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584712; c=relaxed/simple;
-	bh=EJKBdnmlUFF0i8weXBst+zhN7LXUMAybML/KHAVHTVc=;
+	s=arc-20240116; t=1712584715; c=relaxed/simple;
+	bh=GNIVkZUNURupYhkK81LJEr8+Z0ArZvOjuKMeKDn3vJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tO3LFfnYn3NNDa4rBIhjKW9PPUWEq+ko9lEgSB+Y1yahktTfxFD2vNReTjPKNPawBACPPDdXnbwcgcSMEzED1psEQTl6zO4awKTE4OE0aVcUBJCbSEUQyYn52+du8QDO7re7bpkIrZ8NAqX2YLqEUx1FR8Rdt44oyANvezZmqfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIfmpsw4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hk2sKy1JtDPnNM8FAB3naRsH1LhUGteoHBFBxqVTb51oQwwoMg0JITNaLLbsnVAC3uw7oiJhS9r2hJkk2ddDYpVmgwpBi/gqFLJRYrar0Mj1w8A9FIqZWLFm8KrPPwdpQxBHNnMpRhouz4lvxbVEJ8zLpc5y5//XhyABBSkuS8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3Ptyfvd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIfmpsw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A55C433F1;
-	Mon,  8 Apr 2024 13:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3Ptyfvd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2E4C43394;
+	Mon,  8 Apr 2024 13:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584712;
-	bh=EJKBdnmlUFF0i8weXBst+zhN7LXUMAybML/KHAVHTVc=;
+	s=korg; t=1712584715;
+	bh=GNIVkZUNURupYhkK81LJEr8+Z0ArZvOjuKMeKDn3vJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QIfmpsw4VajWx5EE0OcG8bIKdYJGOjqG8zPpTIdw4oJRT+vsNKCxst4+yesrUJJmK
-	 tstp8PBSnGg3wCYLRXH6jq75wDtH8lpCV4dXzu5ZcraZKNR7SF715HGiSx5ylKJKOG
-	 SqpFbWNbCZaaRU74rTYa09Z7T0N3R/tj6tqExzwU=
+	b=y3PtyfvddMfuerHMILJIUDkn5h4AdRTs+UEJCBL7RGTvaI3Q/0ixWjvAHjMs5Dehc
+	 kwBETHl6icyV/vTAZtRnRA1TNAk8+U9iNWK7B6FKd4Qc26a4RUOUeCG7jReJHB8ZQs
+	 edhXt0e2blF+XvD1YphcC/oyDA35JxBbQEn1LPcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ruben Vestergaard <rubenv@drcmr.dk>,
+	Torkil Svensgaard <torkil@drcmr.dk>,
+	Shachar Kagan <skagan@nvidia.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 532/690] nfsd: dont kill nfsd_files because of lease break error
-Date: Mon,  8 Apr 2024 14:56:38 +0200
-Message-ID: <20240408125418.933509443@linuxfoundation.org>
+Subject: [PATCH 5.15 515/690] nfsd: dont free files unconditionally in __nfsd_file_cache_purge
+Date: Mon,  8 Apr 2024 14:56:21 +0200
+Message-ID: <20240408125418.307946959@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,95 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit c6593366c0bf222be9c7561354dfb921c611745e ]
+[ Upstream commit 4bdbba54e9b1c769da8ded9abd209d765715e1d6 ]
 
-An error from break_lease is non-fatal, so we needn't destroy the
-nfsd_file in that case. Just put the reference like we normally would
-and return the error.
+nfsd_file_cache_purge is called when the server is shutting down, in
+which case, tearing things down is generally fine, but it also gets
+called when the exports cache is flushed.
 
+Instead of walking the cache and freeing everything unconditionally,
+handle it the same as when we have a notification of conflicting access.
+
+Fixes: ac3a2585f018 ("nfsd: rework refcounting in filecache")
+Reported-by: Ruben Vestergaard <rubenv@drcmr.dk>
+Reported-by: Torkil Svensgaard <torkil@drcmr.dk>
+Reported-by: Shachar Kagan <skagan@nvidia.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Shachar Kagan <skagan@nvidia.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/filecache.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ fs/nfsd/filecache.c | 61 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 36 insertions(+), 25 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index d61c8223082a4..43bb2fd47cf58 100644
+index 6a62d95d5ce64..68c7c82f8b3bb 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -1101,7 +1101,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	nf = nfsd_file_alloc(&key, may_flags);
- 	if (!nf) {
- 		status = nfserr_jukebox;
--		goto out_status;
-+		goto out;
- 	}
+@@ -660,6 +660,39 @@ static struct shrinker	nfsd_file_shrinker = {
+ 	.seeks = 1,
+ };
  
- 	ret = rhashtable_lookup_insert_key(&nfsd_file_rhash_tbl,
-@@ -1110,13 +1110,11 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (likely(ret == 0))
- 		goto open_file;
- 
--	nfsd_file_slab_free(&nf->nf_rcu);
--	nf = NULL;
- 	if (ret == -EEXIST)
- 		goto retry;
- 	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, ret);
- 	status = nfserr_jukebox;
--	goto out_status;
-+	goto construction_err;
- 
- wait_for_construction:
- 	wait_on_bit(&nf->nf_flags, NFSD_FILE_PENDING, TASK_UNINTERRUPTIBLE);
-@@ -1126,29 +1124,25 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		trace_nfsd_file_cons_err(rqstp, key.inode, may_flags, nf);
- 		if (!open_retry) {
- 			status = nfserr_jukebox;
--			goto out;
-+			goto construction_err;
- 		}
- 		open_retry = false;
--		if (refcount_dec_and_test(&nf->nf_ref))
--			nfsd_file_free(nf);
- 		goto retry;
- 	}
--
- 	this_cpu_inc(nfsd_file_cache_hits);
- 
- 	status = nfserrno(nfsd_open_break_lease(file_inode(nf->nf_file), may_flags));
-+	if (status != nfs_ok) {
-+		nfsd_file_put(nf);
-+		nf = NULL;
++/**
++ * nfsd_file_cond_queue - conditionally unhash and queue a nfsd_file
++ * @nf: nfsd_file to attempt to queue
++ * @dispose: private list to queue successfully-put objects
++ *
++ * Unhash an nfsd_file, try to get a reference to it, and then put that
++ * reference. If it's the last reference, queue it to the dispose list.
++ */
++static void
++nfsd_file_cond_queue(struct nfsd_file *nf, struct list_head *dispose)
++	__must_hold(RCU)
++{
++	int decrement = 1;
++
++	/* If we raced with someone else unhashing, ignore it */
++	if (!nfsd_file_unhash(nf))
++		return;
++
++	/* If we can't get a reference, ignore it */
++	if (!nfsd_file_get(nf))
++		return;
++
++	/* Extra decrement if we remove from the LRU */
++	if (nfsd_file_lru_remove(nf))
++		++decrement;
++
++	/* If refcount goes to 0, then put on the dispose list */
++	if (refcount_sub_and_test(decrement, &nf->nf_ref)) {
++		list_add(&nf->nf_lru, dispose);
++		trace_nfsd_file_closing(nf);
 +	}
++}
 +
- out:
- 	if (status == nfs_ok) {
- 		this_cpu_inc(nfsd_file_acquisitions);
- 		nfsd_file_check_write_error(nf);
- 		*pnf = nf;
--	} else {
--		if (refcount_dec_and_test(&nf->nf_ref))
--			nfsd_file_free(nf);
--		nf = NULL;
- 	}
+ /**
+  * nfsd_file_queue_for_close: try to close out any open nfsd_files for an inode
+  * @inode:   inode on which to close out nfsd_files
+@@ -687,30 +720,11 @@ nfsd_file_queue_for_close(struct inode *inode, struct list_head *dispose)
+ 
+ 	rcu_read_lock();
+ 	do {
+-		int decrement = 1;
 -
--out_status:
- 	put_cred(key.cred);
- 	trace_nfsd_file_acquire(rqstp, key.inode, may_flags, nf, status);
- 	return status;
-@@ -1178,6 +1172,13 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (status != nfs_ok)
- 		nfsd_file_unhash(nf);
- 	clear_and_wake_up_bit(NFSD_FILE_PENDING, &nf->nf_flags);
-+	if (status == nfs_ok)
-+		goto out;
-+
-+construction_err:
-+	if (refcount_dec_and_test(&nf->nf_ref))
-+		nfsd_file_free(nf);
-+	nf = NULL;
- 	goto out;
+ 		nf = rhashtable_lookup(&nfsd_file_rhash_tbl, &key,
+ 				       nfsd_file_rhash_params);
+ 		if (!nf)
+ 			break;
+-
+-		/* If we raced with someone else unhashing, ignore it */
+-		if (!nfsd_file_unhash(nf))
+-			continue;
+-
+-		/* If we can't get a reference, ignore it */
+-		if (!nfsd_file_get(nf))
+-			continue;
+-
+-		/* Extra decrement if we remove from the LRU */
+-		if (nfsd_file_lru_remove(nf))
+-			++decrement;
+-
+-		/* If refcount goes to 0, then put on the dispose list */
+-		if (refcount_sub_and_test(decrement, &nf->nf_ref)) {
+-			list_add(&nf->nf_lru, dispose);
+-			trace_nfsd_file_closing(nf);
+-		}
++		nfsd_file_cond_queue(nf, dispose);
+ 	} while (1);
+ 	rcu_read_unlock();
  }
+@@ -927,11 +941,8 @@ __nfsd_file_cache_purge(struct net *net)
+ 
+ 		nf = rhashtable_walk_next(&iter);
+ 		while (!IS_ERR_OR_NULL(nf)) {
+-			if (!net || nf->nf_net == net) {
+-				nfsd_file_unhash(nf);
+-				nfsd_file_lru_remove(nf);
+-				list_add(&nf->nf_lru, &dispose);
+-			}
++			if (!net || nf->nf_net == net)
++				nfsd_file_cond_queue(nf, &dispose);
+ 			nf = rhashtable_walk_next(&iter);
+ 		}
  
 -- 
 2.43.0
