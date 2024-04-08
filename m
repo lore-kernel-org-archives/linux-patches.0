@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5797CF1A;
-	Mon,  8 Apr 2024 13:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E197071742;
+	Mon,  8 Apr 2024 13:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582503; cv=none; b=upU58OFPO70JPVDz8dYhIE8obfEsJLBpktcHRlT6phmL3IMfaDtZ2Zc4Mo5E8LyhmgaLM9eGYI3mz6AmSq2F7CxN65/GshGlwDfm7oj0rR5qBymkyrxSMUE+4p9+56y9kCI9KXUr7nk+zqukqQA7f3xdlQOWqGkcWe1OMtM8X9w=
+	t=1712582507; cv=none; b=n/YrLzzhXTj96tHsBkSsyLhM6G0QZ6h8bGZ1dNZkyyIlICKXYgywUJCPcQTDLp0pjOQx1Mqq7mQfdFucLS+MvWChbrbCQzlfRkwhiIAlaqJrHQdfxoJi4bmerFBXjRBvnoUDRPmxbTlLjH65af3L58/DVNBn+hrvVeQJ4qgnuc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582503; c=relaxed/simple;
-	bh=nXnMnsoPhflygAwgGehr5gjqtep/GMwIqU+sub0stoE=;
+	s=arc-20240116; t=1712582507; c=relaxed/simple;
+	bh=wGgnbDM9xrLqA6ntgrsxQ+DyfXcnuTE/oarJdn/Mb7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SL0gz0HylLZ4kEcVH/LuKLc+2sUrBLLR/aICKglxcZix+pus08y4NgZ2aX+dObq0Qgc/sMHwjH9f2xb4bZBg//+BQtzW0/nrT+Jg9K9L6X8wKO+dn7pPvg3pU6p+mZZ94kviSTKoceChF8V+5fNWA0xRLWfQObrBD7QUjcyRSxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5nylBPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKtDA6GbRDPTnVqXuuF9prEySleV+gBuGr1gMdvc2yJ8yCm6e9prA8DZXkEqEXkBHnOWIk6gQFzzb1FNqn8kwtmlnhqtsvkAbHH/5ntu1HGOVVCSkQmDJh8KyvQRhKXchKir5IxJrFSo9oMMfIacZmBDq1i1efsDUAm/8fMMv0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3REGYgh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5nylBPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DF0C433F1;
-	Mon,  8 Apr 2024 13:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3REGYgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAEDC433F1;
+	Mon,  8 Apr 2024 13:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582503;
-	bh=nXnMnsoPhflygAwgGehr5gjqtep/GMwIqU+sub0stoE=;
+	s=korg; t=1712582506;
+	bh=wGgnbDM9xrLqA6ntgrsxQ+DyfXcnuTE/oarJdn/Mb7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5nylBPx+ctGtddppnFBzi8RvG5/M3CRuZQr2+yb8bGRLsYlq77ce26pfDC+liddD
-	 QQjQEsGpJWYyQMaErWkv6MFdhb9Uq6PRDIjZKQb2ot4U7EZKIrlADIhc9C4oM2B76Z
-	 +hjDHlPt+Jh4u57tjalj4VnMS8s0bKLakenHrpjc=
+	b=s3REGYghRDME7AZ5Y4N/nWuu1Cm4XW2hsd2hHPaJrKLWzePjrKlZd3kJdogCFHtWR
+	 nRBEiWlJy2VHI70hsS4xjxD3SLpldEsDbTa8BecGxONgXVklKtG0rODNM7sj/yy9dX
+	 WWjK4xSesyRYt34YrI1YzxMOORZ32sAwBN+vj5/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 098/252] netfilter: validate user input for expected length
-Date: Mon,  8 Apr 2024 14:56:37 +0200
-Message-ID: <20240408125309.692429330@linuxfoundation.org>
+	Alyssa Milburn <alyssa.milburn@intel.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 5.15 151/690] x86/bugs: Add asm helpers for executing VERW
+Date: Mon,  8 Apr 2024 14:50:17 +0200
+Message-ID: <20240408125404.987345472@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,257 +49,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 0c83842df40f86e529db6842231154772c20edcc upstream.
+commit baf8361e54550a48a7087b603313ad013cc13386 upstream.
 
-I got multiple syzbot reports showing old bugs exposed
-by BPF after commit 20f2505fb436 ("bpf: Try to avoid kzalloc
-in cgroup/{s,g}etsockopt")
+MDS mitigation requires clearing the CPU buffers before returning to
+user. This needs to be done late in the exit-to-user path. Current
+location of VERW leaves a possibility of kernel data ending up in CPU
+buffers for memory accesses done after VERW such as:
 
-setsockopt() @optlen argument should be taken into account
-before copying data.
+  1. Kernel data accessed by an NMI between VERW and return-to-user can
+     remain in CPU buffers since NMI returning to kernel does not
+     execute VERW to clear CPU buffers.
+  2. Alyssa reported that after VERW is executed,
+     CONFIG_GCC_PLUGIN_STACKLEAK=y scrubs the stack used by a system
+     call. Memory accesses during stack scrubbing can move kernel stack
+     contents into CPU buffers.
+  3. When caller saved registers are restored after a return from
+     function executing VERW, the kernel stack accesses can remain in
+     CPU buffers(since they occur after VERW).
 
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
- BUG: KASAN: slab-out-of-bounds in do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
- BUG: KASAN: slab-out-of-bounds in do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-Read of size 96 at addr ffff88802cd73da0 by task syz-executor.4/7238
+To fix this VERW needs to be moved very late in exit-to-user path.
 
-CPU: 1 PID: 7238 Comm: syz-executor.4 Not tainted 6.9.0-rc2-next-20240403-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:488
-  kasan_report+0x143/0x180 mm/kasan/report.c:601
-  kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
-  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
-  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
-  copy_from_sockptr include/linux/sockptr.h:55 [inline]
-  do_replace net/ipv4/netfilter/ip_tables.c:1111 [inline]
-  do_ipt_set_ctl+0x902/0x3dd0 net/ipv4/netfilter/ip_tables.c:1627
-  nf_setsockopt+0x295/0x2c0 net/netfilter/nf_sockopt.c:101
-  do_sock_setsockopt+0x3af/0x720 net/socket.c:2311
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
-RIP: 0033:0x7fd22067dde9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fd21f9ff0c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
-RAX: ffffffffffffffda RBX: 00007fd2207abf80 RCX: 00007fd22067dde9
-RDX: 0000000000000040 RSI: 0000000000000000 RDI: 0000000000000003
-RBP: 00007fd2206ca47a R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000020000880 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fd2207abf80 R15: 00007ffd2d0170d8
- </TASK>
+In preparation for moving VERW to entry/exit asm code, create macros
+that can be used in asm. Also make VERW patching depend on a new feature
+flag X86_FEATURE_CLEAR_CPU_BUF.
 
-Allocated by task 7238:
-  kasan_save_stack mm/kasan/common.c:47 [inline]
-  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-  poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
-  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:387
-  kasan_kmalloc include/linux/kasan.h:211 [inline]
-  __do_kmalloc_node mm/slub.c:4069 [inline]
-  __kmalloc_noprof+0x200/0x410 mm/slub.c:4082
-  kmalloc_noprof include/linux/slab.h:664 [inline]
-  __cgroup_bpf_run_filter_setsockopt+0xd47/0x1050 kernel/bpf/cgroup.c:1869
-  do_sock_setsockopt+0x6b4/0x720 net/socket.c:2293
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x72/0x7a
+  [pawan: - Runtime patch jmp instead of verw in macro CLEAR_CPU_BUFFERS
+	    due to lack of relative addressing support for relocations
+	    in kernels < v6.5.
+	  - Add UNWIND_HINT_EMPTY to avoid warning:
+	    arch/x86/entry/entry.o: warning: objtool: mds_verw_sel+0x0: unreachable instruction]
 
-The buggy address belongs to the object at ffff88802cd73da0
- which belongs to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes inside of
- allocated 1-byte region [ffff88802cd73da0, ffff88802cd73da1)
-
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88802cd73020 pfn:0x2cd73
-flags: 0xfff80000000000(node=0|zone=1|lastcpupid=0xfff)
-page_type: 0xffffefff(slab)
-raw: 00fff80000000000 ffff888015041280 dead000000000100 dead000000000122
-raw: ffff88802cd73020 000000008080007f 00000001ffffefff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5103, tgid 2119833701 (syz-executor.4), ts 5103, free_ts 70804600828
-  set_page_owner include/linux/page_owner.h:32 [inline]
-  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1490
-  prep_new_page mm/page_alloc.c:1498 [inline]
-  get_page_from_freelist+0x2e7e/0x2f40 mm/page_alloc.c:3454
-  __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4712
-  __alloc_pages_node_noprof include/linux/gfp.h:244 [inline]
-  alloc_pages_node_noprof include/linux/gfp.h:271 [inline]
-  alloc_slab_page+0x5f/0x120 mm/slub.c:2249
-  allocate_slab+0x5a/0x2e0 mm/slub.c:2412
-  new_slab mm/slub.c:2465 [inline]
-  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3615
-  __slab_alloc+0x58/0xa0 mm/slub.c:3705
-  __slab_alloc_node mm/slub.c:3758 [inline]
-  slab_alloc_node mm/slub.c:3936 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  kmalloc_node_track_caller_noprof+0x286/0x450 mm/slub.c:4089
-  kstrdup+0x3a/0x80 mm/util.c:62
-  device_rename+0xb5/0x1b0 drivers/base/core.c:4558
-  dev_change_name+0x275/0x860 net/core/dev.c:1232
-  do_setlink+0xa4b/0x41f0 net/core/rtnetlink.c:2864
-  __rtnl_newlink net/core/rtnetlink.c:3680 [inline]
-  rtnl_newlink+0x180b/0x20a0 net/core/rtnetlink.c:3727
-  rtnetlink_rcv_msg+0x89b/0x10d0 net/core/rtnetlink.c:6594
-  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2559
-  netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
-  netlink_unicast+0x7ea/0x980 net/netlink/af_netlink.c:1361
-page last free pid 5146 tgid 5146 stack trace:
-  reset_page_owner include/linux/page_owner.h:25 [inline]
-  free_pages_prepare mm/page_alloc.c:1110 [inline]
-  free_unref_page+0xd3c/0xec0 mm/page_alloc.c:2617
-  discard_slab mm/slub.c:2511 [inline]
-  __put_partials+0xeb/0x130 mm/slub.c:2980
-  put_cpu_partial+0x17c/0x250 mm/slub.c:3055
-  __slab_free+0x2ea/0x3d0 mm/slub.c:4254
-  qlink_free mm/kasan/quarantine.c:163 [inline]
-  qlist_free_all+0x9e/0x140 mm/kasan/quarantine.c:179
-  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
-  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:322
-  kasan_slab_alloc include/linux/kasan.h:201 [inline]
-  slab_post_alloc_hook mm/slub.c:3888 [inline]
-  slab_alloc_node mm/slub.c:3948 [inline]
-  __do_kmalloc_node mm/slub.c:4068 [inline]
-  __kmalloc_node_noprof+0x1d7/0x450 mm/slub.c:4076
-  kmalloc_node_noprof include/linux/slab.h:681 [inline]
-  kvmalloc_node_noprof+0x72/0x190 mm/util.c:634
-  bucket_table_alloc lib/rhashtable.c:186 [inline]
-  rhashtable_rehash_alloc+0x9e/0x290 lib/rhashtable.c:367
-  rht_deferred_worker+0x4e1/0x2440 lib/rhashtable.c:427
-  process_one_work kernel/workqueue.c:3218 [inline]
-  process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3299
-  worker_thread+0x86d/0xd70 kernel/workqueue.c:3380
-  kthread+0x2f0/0x390 kernel/kthread.c:388
-  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:243
-
-Memory state around the buggy address:
- ffff88802cd73c80: 07 fc fc fc 05 fc fc fc 05 fc fc fc fa fc fc fc
- ffff88802cd73d00: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
->ffff88802cd73d80: fa fc fc fc 01 fc fc fc fa fc fc fc fa fc fc fc
-                               ^
- ffff88802cd73e00: fa fc fc fc fa fc fc fc 05 fc fc fc 07 fc fc fc
- ffff88802cd73e80: 07 fc fc fc 07 fc fc fc 07 fc fc fc 07 fc fc fc
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://lore.kernel.org/r/20240404122051.2303764-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Alyssa Milburn <alyssa.milburn@intel.com>
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20240213-delay-verw-v8-1-a6216d83edb7%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- net/ipv4/netfilter/arp_tables.c |    4 ++++
- net/ipv4/netfilter/ip_tables.c  |    4 ++++
- net/ipv6/netfilter/ip6_tables.c |    4 ++++
- 4 files changed, 18 insertions(+)
+ arch/x86/entry/entry.S               |   23 +++++++++++++++++++++++
+ arch/x86/include/asm/cpufeatures.h   |    2 +-
+ arch/x86/include/asm/nospec-branch.h |   15 +++++++++++++++
+ 3 files changed, 39 insertions(+), 1 deletion(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1111,6 +1111,8 @@ static int do_replace(struct net *net, s
- 	struct ebt_table_info *newinfo;
- 	struct ebt_replace tmp;
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -6,6 +6,9 @@
+ #include <linux/linkage.h>
+ #include <asm/export.h>
+ #include <asm/msr-index.h>
++#include <asm/unwind_hints.h>
++#include <asm/segment.h>
++#include <asm/cache.h>
  
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
+ .pushsection .noinstr.text, "ax"
  
-@@ -1423,6 +1425,8 @@ static int update_counters(struct net *n
- {
- 	struct ebt_replace hlp;
+@@ -20,3 +23,23 @@ SYM_FUNC_END(entry_ibpb)
+ EXPORT_SYMBOL_GPL(entry_ibpb);
  
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+ .popsection
++
++/*
++ * Define the VERW operand that is disguised as entry code so that
++ * it can be referenced with KPTI enabled. This ensure VERW can be
++ * used late in exit-to-user path after page tables are switched.
++ */
++.pushsection .entry.text, "ax"
++
++.align L1_CACHE_BYTES, 0xcc
++SYM_CODE_START_NOALIGN(mds_verw_sel)
++	UNWIND_HINT_EMPTY
++	ANNOTATE_NOENDBR
++	.word __KERNEL_DS
++.align L1_CACHE_BYTES, 0xcc
++SYM_CODE_END(mds_verw_sel);
++/* For KVM */
++EXPORT_SYMBOL_GPL(mds_verw_sel);
++
++.popsection
++
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -302,7 +302,7 @@
+ #define X86_FEATURE_UNRET		(11*32+15) /* "" AMD BTB untrain return */
+ #define X86_FEATURE_USE_IBPB_FW		(11*32+16) /* "" Use IBPB during runtime firmware calls */
+ #define X86_FEATURE_RSB_VMEXIT_LITE	(11*32+17) /* "" Fill RSB on VM exit when EIBRS is enabled */
+-
++#define X86_FEATURE_CLEAR_CPU_BUF	(11*32+18) /* "" Clear CPU buffers using VERW */
  
-@@ -2352,6 +2356,8 @@ static int compat_update_counters(struct
- {
- 	struct compat_ebt_replace hlp;
+ #define X86_FEATURE_MSR_TSX_CTRL	(11*32+20) /* "" MSR IA32_TSX_CTRL (Intel) implemented */
  
-+	if (len < sizeof(hlp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -182,6 +182,19 @@
+ #endif
+ .endm
  
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -956,6 +956,8 @@ static int do_replace(struct net *net, s
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
++/*
++ * Macro to execute VERW instruction that mitigate transient data sampling
++ * attacks such as MDS. On affected systems a microcode update overloaded VERW
++ * instruction to also clear the CPU buffers. VERW clobbers CFLAGS.ZF.
++ *
++ * Note: Only the memory operand variant of VERW clears the CPU buffers.
++ */
++.macro CLEAR_CPU_BUFFERS
++	ALTERNATIVE "jmp .Lskip_verw_\@", "", X86_FEATURE_CLEAR_CPU_BUF
++	verw _ASM_RIP(mds_verw_sel)
++.Lskip_verw_\@:
++.endm
++
+ #else /* __ASSEMBLY__ */
  
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
+ #define ANNOTATE_RETPOLINE_SAFE					\
+@@ -364,6 +377,8 @@ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_
  
-@@ -1254,6 +1256,8 @@ static int compat_do_replace(struct net
- 	void *loc_cpu_entry;
- 	struct arpt_entry *iter;
+ DECLARE_STATIC_KEY_FALSE(mmio_stale_data_clear);
  
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
++extern u16 mds_verw_sel;
++
+ #include <asm/segment.h>
  
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1108,6 +1108,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1492,6 +1494,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ipt_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1125,6 +1125,8 @@ do_replace(struct net *net, sockptr_t ar
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
-@@ -1501,6 +1503,8 @@ compat_do_replace(struct net *net, sockp
- 	void *loc_cpu_entry;
- 	struct ip6t_entry *iter;
- 
-+	if (len < sizeof(tmp))
-+		return -EINVAL;
- 	if (copy_from_sockptr(&tmp, arg, sizeof(tmp)) != 0)
- 		return -EFAULT;
- 
+ /**
 
 
