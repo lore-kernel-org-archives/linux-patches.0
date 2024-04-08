@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8E7B3E5;
-	Mon,  8 Apr 2024 13:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E044A7B3E5;
+	Mon,  8 Apr 2024 13:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582092; cv=none; b=OJIddCFfoUS53BWHZxFe3so5xlefHi5JmZXLPFGBHYxYsMDSaLRItiNZ/1vTbW1XPEPtFM2hWWtEMlFCPqod3oQK3cxYzkOle63mkM01QlhJb+QU0wTfU/xfCsPCdRBAUG+WCGdHvwvalty9XxFME05q3Ik4YdeFEsv4hqIisXA=
+	t=1712582096; cv=none; b=hXvYci1wZ/35ehdrLnBliTDLe+Jg/oY+eDkphNDfhG3anYIqQd2ZEms17An1IHP8eHqq6HJBgv+SJ4gRGu+APQgsMz0zFrcqjmzXNcxcuRzVjqOPkKBt0RyZYJERVIaHPAQmjuO/AgZsEYK+9TF+L0uSyQCiApUaz1dlyrxChYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582092; c=relaxed/simple;
-	bh=Pvjhx1ino9ZTFP40zi6L9wqn+nuI6nuoSe3jZks5nGc=;
+	s=arc-20240116; t=1712582096; c=relaxed/simple;
+	bh=C8OWFhUMtlDCxrThbC7F+k99c2CUPPjt4GwqFCGdZs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mA1+1O6iRuPGnTA5vPl6J6rEI7vI4LYhtvrVaWrzSFTrRFdbrtKhMDPMhaB0In/6c0T6XKhxs9tyfRuzQVfbcdU2n632z95WyPJ9/SnzrL0dkT9iNy5NDs2EAuFnB5M45kymF1I813RWPVou91wjgNHtAmsHNlvrXbS6cZ/CKCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwMZUEGF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iyN3XXnkrMnXT8Sgalpap5nzqHRl4iy+32rtTsYbFVhCjd8yJgOf+Z0QJ0Hx6mdf9GVTrGSUHHelLqVUGI4j3E0XdfjZQlDHqmve/t9XWr+3NxLS+tjNlqlF/UquRLHQq3lrI/MUc/4SoGnf0A/yeiuz73jShsQ0C4KRn722rmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rryCR7zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwMZUEGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32349C433F1;
-	Mon,  8 Apr 2024 13:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rryCR7zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0E2C433F1;
+	Mon,  8 Apr 2024 13:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582092;
-	bh=Pvjhx1ino9ZTFP40zi6L9wqn+nuI6nuoSe3jZks5nGc=;
+	s=korg; t=1712582095;
+	bh=C8OWFhUMtlDCxrThbC7F+k99c2CUPPjt4GwqFCGdZs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwMZUEGFNmVjSg8Xy44rr6Fj57Ek8x5pfjqaCt9qC5pyfZuX5mbY8TO9CoNDNEXyY
-	 XK1j5kPOmGl8arYc4Yz5vigYxXkHthN9ypf1ZiGnxBMVtUJb4qDyPiaPFo1JbhSpKw
-	 HLEYlCmyhJSX5pPXa878bdEH2L7T4NKFVcOVfPrA=
+	b=rryCR7zkfvU0AGhrYPj+fiE5OjSzWtGUektrBJkhCw0tg7cO3yG8m0j5H5o7AZ8sB
+	 Tu0U+PWSG3V8gtB7Exy+tMFffixYnHUKmR1vLkjzLbA320EtvzLJLXejDbe9irolA9
+	 vLEiqak87MdFH6bHwpTo82ZYBlX4kPtkSZxOxPYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/252] perf/x86/amd/core: Update and fix stalled-cycles-* events for Zen 2 and later
-Date: Mon,  8 Apr 2024 14:56:02 +0200
-Message-ID: <20240408125308.595243470@linuxfoundation.org>
+Subject: [PATCH 6.8 046/273] netfilter: nf_tables: reject table flag and netdev basechain updates
+Date: Mon,  8 Apr 2024 14:55:21 +0200
+Message-ID: <20240408125310.727931386@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +46,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c7b2edd8377be983442c1344cb940cd2ac21b601 ]
+[ Upstream commit 1e1fb6f00f52812277963365d9bd835b9b0ea4e0 ]
 
-AMD processors based on Zen 2 and later microarchitectures do not
-support PMCx087 (instruction pipe stalls) which is used as the backing
-event for "stalled-cycles-frontend" and "stalled-cycles-backend".
+netdev basechain updates are stored in the transaction object hook list.
+When setting on the table dormant flag, it iterates over the existing
+hooks in the basechain. Thus, skipping the hooks that are being
+added/deleted in this transaction, which leaves hook registration in
+inconsistent state.
 
-Use PMCx0A9 (cycles where micro-op queue is empty) instead to count
-frontend stalls and remove the entry for backend stalls since there
-is no direct replacement.
+Reject table flag updates in combination with netdev basechain updates
+in the same batch:
 
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Fixes: 3fe3331bb285 ("perf/x86/amd: Add event map for AMD Family 17h")
-Link: https://lore.kernel.org/r/03d7fc8fa2a28f9be732116009025bdec1b3ec97.1711352180.git.sandipan.das@amd.com
+- Update table flags and add/delete basechain: Check from basechain update
+  path if there are pending flag updates for this table.
+- add/delete basechain and update table flags: Iterate over the transaction
+  list to search for basechain updates from the table update path.
+
+In both cases, the batch is rejected. Based on suggestion from Florian Westphal.
+
+Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
+Fixes: 7d937b107108f ("netfilter: nf_tables: support for deleting devices in an existing netdev chain")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index 5365d6acbf090..b30349eeb7678 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -250,7 +250,7 @@ static const u64 amd_perfmon_event_map[PERF_COUNT_HW_MAX] =
- /*
-  * AMD Performance Monitor Family 17h and later:
-  */
--static const u64 amd_f17h_perfmon_event_map[PERF_COUNT_HW_MAX] =
-+static const u64 amd_zen1_perfmon_event_map[PERF_COUNT_HW_MAX] =
- {
- 	[PERF_COUNT_HW_CPU_CYCLES]		= 0x0076,
- 	[PERF_COUNT_HW_INSTRUCTIONS]		= 0x00c0,
-@@ -262,10 +262,24 @@ static const u64 amd_f17h_perfmon_event_map[PERF_COUNT_HW_MAX] =
- 	[PERF_COUNT_HW_STALLED_CYCLES_BACKEND]	= 0x0187,
- };
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 00288b31f734c..db233965631bb 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1198,6 +1198,25 @@ static void nf_tables_table_disable(struct net *net, struct nft_table *table)
+ #define __NFT_TABLE_F_UPDATE		(__NFT_TABLE_F_WAS_DORMANT | \
+ 					 __NFT_TABLE_F_WAS_AWAKEN)
  
-+static const u64 amd_zen2_perfmon_event_map[PERF_COUNT_HW_MAX] =
++static bool nft_table_pending_update(const struct nft_ctx *ctx)
 +{
-+	[PERF_COUNT_HW_CPU_CYCLES]		= 0x0076,
-+	[PERF_COUNT_HW_INSTRUCTIONS]		= 0x00c0,
-+	[PERF_COUNT_HW_CACHE_REFERENCES]	= 0xff60,
-+	[PERF_COUNT_HW_CACHE_MISSES]		= 0x0964,
-+	[PERF_COUNT_HW_BRANCH_INSTRUCTIONS]	= 0x00c2,
-+	[PERF_COUNT_HW_BRANCH_MISSES]		= 0x00c3,
-+	[PERF_COUNT_HW_STALLED_CYCLES_FRONTEND]	= 0x00a9,
-+};
++	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
++	struct nft_trans *trans;
 +
- static u64 amd_pmu_event_map(int hw_event)
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return true;
++
++	list_for_each_entry(trans, &nft_net->commit_list, list) {
++		if ((trans->msg_type == NFT_MSG_NEWCHAIN ||
++		     trans->msg_type == NFT_MSG_DELCHAIN) &&
++		    trans->ctx.table == ctx->table &&
++		    nft_trans_chain_update(trans))
++			return true;
++	}
++
++	return false;
++}
++
+ static int nf_tables_updtable(struct nft_ctx *ctx)
  {
--	if (boot_cpu_data.x86 >= 0x17)
--		return amd_f17h_perfmon_event_map[hw_event];
-+	if (cpu_feature_enabled(X86_FEATURE_ZEN2) || boot_cpu_data.x86 >= 0x19)
-+		return amd_zen2_perfmon_event_map[hw_event];
-+
-+	if (cpu_feature_enabled(X86_FEATURE_ZEN1))
-+		return amd_zen1_perfmon_event_map[hw_event];
+ 	struct nft_trans *trans;
+@@ -1221,7 +1240,7 @@ static int nf_tables_updtable(struct nft_ctx *ctx)
+ 		return -EOPNOTSUPP;
  
- 	return amd_perfmon_event_map[hw_event];
- }
+ 	/* No dormant off/on/off/on games in single transaction */
+-	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++	if (nft_table_pending_update(ctx))
+ 		return -EINVAL;
+ 
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWTABLE,
+@@ -2619,6 +2638,13 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
+ 		}
+ 	}
+ 
++	if (table->flags & __NFT_TABLE_F_UPDATE &&
++	    !list_empty(&hook.list)) {
++		NL_SET_BAD_ATTR(extack, attr);
++		err = -EOPNOTSUPP;
++		goto err_hooks;
++	}
++
+ 	if (!(table->flags & NFT_TABLE_F_DORMANT) &&
+ 	    nft_is_base_chain(chain) &&
+ 	    !list_empty(&hook.list)) {
+@@ -2848,6 +2874,9 @@ static int nft_delchain_hook(struct nft_ctx *ctx,
+ 	struct nft_trans *trans;
+ 	int err;
+ 
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return -EOPNOTSUPP;
++
+ 	err = nft_chain_parse_hook(ctx->net, basechain, nla, &chain_hook,
+ 				   ctx->family, chain->flags, extack);
+ 	if (err < 0)
 -- 
 2.43.0
 
