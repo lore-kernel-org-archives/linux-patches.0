@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5C379F0;
-	Mon,  8 Apr 2024 13:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2887771753;
+	Mon,  8 Apr 2024 13:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583952; cv=none; b=LbMSsPFH9VnuPXzpHyowm+ip60EPOo4kn3UDE7WsXHNI8eV7kCvgs6efVlJwD/lRSNtkXb8nH/56AzVMlQgMJjI5oMPtiZTmeJ6Xkaf6MKoFjRIh9WbvfXd/O4x29lJN07JMGfuCvokCREujHFwOSq2Zhkr3eW25uYtjiawvhMo=
+	t=1712583955; cv=none; b=VdzpCteKiZmnDzvuVuiMGA0gZwJuqVt2CYJpYmxxVDpJ8voPo9pkjPqeXTke78vy16SByda81mNZUnUsqG2FELZwabcpOFbcGMNBUtes8tzI77RuvBx8wJgLIDko1TgoqGkXJopvaFzN0y4ccofOY0y93tcy60sOage/Lh90O+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583952; c=relaxed/simple;
-	bh=lktuGZ+v7Pqv8Gz8hgbXivd7xL5DJwFj4aapl22aJwY=;
+	s=arc-20240116; t=1712583955; c=relaxed/simple;
+	bh=6X1Dedy6Ju8ohZ0KGBRarU7uLRfNnxYbPf/vdVHByFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qd26iLRh9O34TwE7rdwzdt/7Q0YMDYJPrWUmoKMDl1jIggLu+Zrq9TXYQ43zEJIjNtzAbRkxASeqLtvLg36eHyuaF7lnwDUnQP288vzYCO4Nb8pCtdBj0t8x2jfn6eGEKuavVtY+8c5z/4y/hZpgSSnin8Xb+ho3wiKB6cZhuB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOJ7rzqT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfHZMxEwyVenJzH2H5noO+9KhfAulKL36oyndcn3nTSDBqyZc5Iyvxriu3xvELu+a2zfFbR1oL8C7mRCEhAXL3I/vmX0KFntijL1T3yefK+1CNfpdSO1af4hf7y6aoVTz7kyOaViduCki0G06ZK9u24JF3lbbI5Bu2Go96cWnmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKoMcVgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOJ7rzqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD01C433C7;
-	Mon,  8 Apr 2024 13:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKoMcVgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DFEC433C7;
+	Mon,  8 Apr 2024 13:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583952;
-	bh=lktuGZ+v7Pqv8Gz8hgbXivd7xL5DJwFj4aapl22aJwY=;
+	s=korg; t=1712583955;
+	bh=6X1Dedy6Ju8ohZ0KGBRarU7uLRfNnxYbPf/vdVHByFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOJ7rzqTKH7ySG3aSudl/I9OQfxFtNJlLAsh4ye2zpzeClRpnk8IM3H7uvZmMAPU2
-	 cmTfEAvUnoFk8DvwOdavA86fLAKZ8phPRcxg9SbfJKjRLGUQNWmpegEgBW8prED2qC
-	 xalssm4Ch6TMRCVxiYF5qnPr6lVrYgfCA9OgVM9E=
+	b=XKoMcVgZpzOVkRqrtmrWtafmguG6iSYtQugpyqxLax8HfKIIGNY7QtIh8QGyr7ADx
+	 MO2N66a7pSsQ5Q2wUni8MMcdB/xnVTnu17Q8qm7yyvIpyK6qdp8r2G2WUpb2/j4ZTK
+	 2LvUO6kxjr0KjmACDZGTKIXOiVJ9jyNFVKjvlAqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.8 237/273] arm64/ptrace: Use saved floating point state type to determine SVE layout
-Date: Mon,  8 Apr 2024 14:58:32 +0200
-Message-ID: <20240408125316.790034148@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 306/690] NFSD: Clean up nfsd_splice_actor()
+Date: Mon,  8 Apr 2024 14:52:52 +0200
+Message-ID: <20240408125410.678925597@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,65 +45,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit b017a0cea627fcbe158fc2c214fe893e18c4d0c4 upstream.
+[ Upstream commit 91e23b1c39820bfed642119ff6b6ef9f43cf09ce ]
 
-The SVE register sets have two different formats, one of which is a wrapped
-version of the standard FPSIMD register set and another with actual SVE
-register data. At present we check TIF_SVE to see if full SVE register
-state should be provided when reading the SVE regset but if we were in a
-syscall we may have saved only floating point registers even though that is
-set.
+nfsd_splice_actor() checks that the page being spliced does not
+match the previous element in the svc_rqst::rq_pages array. We
+believe this is to prevent a double put_page() in cases where the
+READ payload is partially contained in the xdr_buf's head buffer.
 
-Fix this and simplify the logic by checking and using the format which we
-recorded when deciding if we should use FPSIMD or SVE format.
+However, the NFSD READ proc functions no longer place any part of
+the READ payload in the head buffer, in order to properly support
+NFS/RDMA READ with Write chunks. Therefore, simplify the logic in
+nfsd_splice_actor() to remove this unnecessary check.
 
-Fixes: 8c845e273104 ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240325-arm64-ptrace-fp-type-v1-1-8dc846caf11f@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/arm64/kernel/ptrace.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/nfsd/vfs.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -729,7 +729,6 @@ static void sve_init_header_from_task(st
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 00e956bdefaae..541f39ab450ce 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -856,17 +856,11 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
+ 		  struct splice_desc *sd)
  {
- 	unsigned int vq;
- 	bool active;
--	bool fpsimd_only;
- 	enum vec_type task_type;
+ 	struct svc_rqst *rqstp = sd->u.data;
+-	struct page **pp = rqstp->rq_next_page;
+-	struct page *page = buf->page;
  
- 	memset(header, 0, sizeof(*header));
-@@ -745,12 +744,10 @@ static void sve_init_header_from_task(st
- 	case ARM64_VEC_SVE:
- 		if (test_tsk_thread_flag(target, TIF_SVE_VL_INHERIT))
- 			header->flags |= SVE_PT_VL_INHERIT;
--		fpsimd_only = !test_tsk_thread_flag(target, TIF_SVE);
- 		break;
- 	case ARM64_VEC_SME:
- 		if (test_tsk_thread_flag(target, TIF_SME_VL_INHERIT))
- 			header->flags |= SVE_PT_VL_INHERIT;
--		fpsimd_only = false;
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
-@@ -758,7 +755,7 @@ static void sve_init_header_from_task(st
- 	}
+-	if (rqstp->rq_res.page_len == 0) {
+-		svc_rqst_replace_page(rqstp, page);
++	svc_rqst_replace_page(rqstp, buf->page);
++	if (rqstp->rq_res.page_len == 0)
+ 		rqstp->rq_res.page_base = buf->offset;
+-	} else if (page != pp[-1]) {
+-		svc_rqst_replace_page(rqstp, page);
+-	}
+ 	rqstp->rq_res.page_len += sd->len;
+-
+ 	return sd->len;
+ }
  
- 	if (active) {
--		if (fpsimd_only) {
-+		if (target->thread.fp_type == FP_STATE_FPSIMD) {
- 			header->flags |= SVE_PT_REGS_FPSIMD;
- 		} else {
- 			header->flags |= SVE_PT_REGS_SVE;
+-- 
+2.43.0
+
 
 
