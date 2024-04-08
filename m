@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69366CDA8;
-	Mon,  8 Apr 2024 13:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05206214E;
+	Mon,  8 Apr 2024 13:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581273; cv=none; b=P2YLw4AMkAyqk6h1MRjTISx4Hy/fcP7NcX6I12xv5JYA5z5BW1m0lGx7j17/JpzlvGwtwcIBhmqk9otk9uzw2EqdMiA8lN76QLgQANl4UV2vI0MKYwbKidMhF7K8EUkIPo++BqhoO4TDxBGtCoEpEEyGEsoafvmBY4GJLjnTsdg=
+	t=1712581276; cv=none; b=s+1XBfqaZlkdgiypuRIp8YqePMttc4ibYyRWnI0iJOV9/Y/pKHZ2keKKXSp0grlGh25sd0B4M+YvdwN28FEx2W3O/xhtFIybfDphtH18ax1DWBmrAmufQh8XM1FBBXBEc17vy4XwH47xWfbTiaE3FLh0/kXaBRyKBou8RDBzU/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581273; c=relaxed/simple;
-	bh=0SuGBsuVsq9kRwpetWNvUjteVZdtCHwmn2c8m5ijG6w=;
+	s=arc-20240116; t=1712581276; c=relaxed/simple;
+	bh=uXpcPycxOh+8UbN784v7V0+P3UH9QGsZ2pyovsn54f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZG9P3/Q8kNozr8jNzPSd2jAUZospq9o+m/vq216jqEPPi8lsMehyzLGRkuUapp1U0wH29Hl0rpAvHxKQe/WyrK5IsoXQYgXEG5mKng5RcNj5+0WirLv4NKglopmjXLo7R8mDJq7GOXSW9VlcspaF8gsk/H3tprGLyYm01ZtaZOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XO1WOIC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjlThScUE6kNSDvPEqk8Ltsg8UmXKNHlsxIv71v5G8UW5WTmas9NBMN1IA+ivwVQX68aMM6MHQasUAaVEgDV5WLasq0xrJdkICXEvYBJA2PexToEWDo+h1eaTcBN7p2Hm/cNx9EZ/ueY1q2px+/ym7w0EtfWvpRTP8eIofZPYBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfbYtgWA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XO1WOIC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0194BC433F1;
-	Mon,  8 Apr 2024 13:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfbYtgWA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D642C433F1;
+	Mon,  8 Apr 2024 13:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581273;
-	bh=0SuGBsuVsq9kRwpetWNvUjteVZdtCHwmn2c8m5ijG6w=;
+	s=korg; t=1712581276;
+	bh=uXpcPycxOh+8UbN784v7V0+P3UH9QGsZ2pyovsn54f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XO1WOIC9gmXHMcevgWF1aUhCVsTpAJtBKkwuzwSo6A7WdlPh0Ycv/qOGGOE40TD3w
-	 M+1umLfcRABuqaDRnwKGrirmSRNJCROy/tt2rQhYn8KuhFxFK4GdxVwAQyx4IkpmzK
-	 hlQKl6Ct++MMO66bufBolIzhTW5ScCy+2RsMwdYs=
+	b=bfbYtgWAIzTGNfCmEWfRcmX7gby7elq0kGfscpjVqU/3kuHzaN0ktshqBzt42dUmf
+	 Jc3gI18LXZwp7Wes4XNl5rPfWrzo0TRtUuqENAmJTaeDxgbswJMca60l9aBD7TOq0h
+	 ZrYRr6TItkMAoSz7HLK7MWVccXr+URFI1LN3wiAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niels De Graef <ndegraef@redhat.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
+	Danilo Krummrich <dakr@redhat.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Philipp Stanner <pstanner@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/690] drm/vmwgfx: Fix possible null pointer derefence with invalid contexts
-Date: Mon,  8 Apr 2024 14:48:02 +0200
-Message-ID: <20240408125400.132490561@linuxfoundation.org>
+Subject: [PATCH 5.15 017/690] pci_iounmap(): Fix MMIO mapping leak
+Date: Mon,  8 Apr 2024 14:48:03 +0200
+Message-ID: <20240408125400.183067079@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -56,101 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Philipp Stanner <pstanner@redhat.com>
 
-[ Upstream commit 517621b7060096e48e42f545fa6646fc00252eac ]
+[ Upstream commit 7626913652cc786c238e2dd7d8740b17d41b2637 ]
 
-vmw_context_cotable can return either an error or a null pointer and its
-usage sometimes went unchecked. Subsequent code would then try to access
-either a null pointer or an error value.
+The #ifdef ARCH_HAS_GENERIC_IOPORT_MAP accidentally also guards iounmap(),
+which means MMIO mappings are leaked.
 
-The invalid dereferences were only possible with malformed userspace
-apps which never properly initialized the rendering contexts.
+Move the guard so we call iounmap() for MMIO mappings.
 
-Check the results of vmw_context_cotable to fix the invalid derefs.
-
-Thanks:
-ziming zhang(@ezrak1e) from Ant Group Light-Year Security Lab
-who was the first person to discover it.
-Niels De Graef who reported it and helped to track down the poc.
-
-Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
-Cc: <stable@vger.kernel.org> # v4.20+
-Reported-by: Niels De Graef  <ndegraef@redhat.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Martin Krastev <martin.krastev@broadcom.com>
-Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Cc: Ian Forbes <ian.forbes@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240110200305.94086-1-zack.rusin@broadcom.com
+Fixes: 316e8d79a095 ("pci_iounmap'2: Electric Boogaloo: try to make sense of it all")
+Link: https://lore.kernel.org/r/20240131090023.12331-2-pstanner@redhat.com
+Reported-by: Danilo Krummrich <dakr@redhat.com>
+Suggested-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Philipp Stanner <pstanner@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Cc: <stable@vger.kernel.org> # v5.15+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ lib/pci_iomap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index b91f8d17404d6..21134c7f18382 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -472,7 +472,7 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
- 	    vmw_res_type(ctx) == vmw_res_dx_context) {
- 		for (i = 0; i < cotable_max; ++i) {
- 			res = vmw_context_cotable(ctx, i);
--			if (IS_ERR(res))
-+			if (IS_ERR_OR_NULL(res))
- 				continue;
+diff --git a/lib/pci_iomap.c b/lib/pci_iomap.c
+index ce39ce9f3526e..2829ddb0e316b 100644
+--- a/lib/pci_iomap.c
++++ b/lib/pci_iomap.c
+@@ -170,8 +170,8 @@ void pci_iounmap(struct pci_dev *dev, void __iomem *p)
  
- 			ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
-@@ -1277,6 +1277,8 @@ static int vmw_cmd_dx_define_query(struct vmw_private *dev_priv,
- 		return -EINVAL;
+ 	if (addr >= start && addr < start + IO_SPACE_LIMIT)
+ 		return;
+-	iounmap(p);
+ #endif
++	iounmap(p);
+ }
+ EXPORT_SYMBOL(pci_iounmap);
  
- 	cotable_res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXQUERY);
-+	if (IS_ERR_OR_NULL(cotable_res))
-+		return cotable_res ? PTR_ERR(cotable_res) : -EINVAL;
- 	ret = vmw_cotable_notify(cotable_res, cmd->body.queryId);
- 
- 	return ret;
-@@ -2455,6 +2457,8 @@ static int vmw_cmd_dx_view_define(struct vmw_private *dev_priv,
- 		return ret;
- 
- 	res = vmw_context_cotable(ctx_node->ctx, vmw_view_cotables[view_type]);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->defined_id);
- 	if (unlikely(ret != 0))
- 		return ret;
-@@ -2540,8 +2544,8 @@ static int vmw_cmd_dx_so_define(struct vmw_private *dev_priv,
- 
- 	so_type = vmw_so_cmd_to_type(header->id);
- 	res = vmw_context_cotable(ctx_node->ctx, vmw_so_cotables[so_type]);
--	if (IS_ERR(res))
--		return PTR_ERR(res);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	cmd = container_of(header, typeof(*cmd), header);
- 	ret = vmw_cotable_notify(res, cmd->defined_id);
- 
-@@ -2660,6 +2664,8 @@ static int vmw_cmd_dx_define_shader(struct vmw_private *dev_priv,
- 		return -EINVAL;
- 
- 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_DXSHADER);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->body.shaderId);
- 	if (ret)
- 		return ret;
-@@ -2981,6 +2987,8 @@ static int vmw_cmd_dx_define_streamoutput(struct vmw_private *dev_priv,
- 	}
- 
- 	res = vmw_context_cotable(ctx_node->ctx, SVGA_COTABLE_STREAMOUTPUT);
-+	if (IS_ERR_OR_NULL(res))
-+		return res ? PTR_ERR(res) : -EINVAL;
- 	ret = vmw_cotable_notify(res, cmd->body.soid);
- 	if (ret)
- 		return ret;
 -- 
 2.43.0
 
