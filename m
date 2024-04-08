@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B3274BE8;
-	Mon,  8 Apr 2024 13:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741C7C098;
+	Mon,  8 Apr 2024 13:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581882; cv=none; b=H6LaVuESxiTiQmXg7DY8cetGv4dN2f+7AJp1kUI6bF69LKPaSvdZUdvSkwF50aPLrrHb98ZsQEPQGLJJuIo7OWQpuGVCnuyBaxsm1ZxYkptifAfsULW7chilxBFre/QUSJSlwIAV8noH226wrcaQs0hTAQ/hDF8AKeBRi8U3Yaw=
+	t=1712581884; cv=none; b=ENCOFH1R7An/OFhQfIc25830x08NH8ZhbF/q1RVAYBsfdGkI0Pg4Xa3wx7Aj+G20i22H0kHF3nyLiJhrmN6R9t/Ay1lhAXe8wKwznrkf4JtrmikDx5wK/lNEAc6U3XMIa0XX6bjSCdDI18kd4+L0vlMkRuuD8a7GgRWTZaS+jxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581882; c=relaxed/simple;
-	bh=O2RQ8UoGZeRqPocfXoIN5zyKgqJlBw8JopgmA/ed5XY=;
+	s=arc-20240116; t=1712581884; c=relaxed/simple;
+	bh=APSgdtPkUyBelO096cON3JQdcxwtD0DVeK4rNDTy9UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnXRoGRJb0AXQyoV7oCccpgjbQbWMqI/4uPrfShg0WDA4OdXORHLTrYKeInKjOGxKPozjDUwyA7EfbmOSHg3mxOJQnElL5DAdvkiBosBEJCqix7DLtms+odZkj1MqQGBgoMUTqmTWK4sxZ4b6vvvM94cIiksrUir4pSsUR/90WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnTRQqOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bf9Z6Yr/rJ7xW6VNJ1wS50vKvRA2YDo+ezRUorzbkSzT4cgxKAm5KdZtXQdkpfTSM3j2ADPLrZDSx6qVipVndxUXmg/3fg7GuBUqAtnKGip9ITqbS0PneiGNeuWWMkatzATRKvQg7AS54dcBxkCcPRnBNPhflsGWEw9S/PnNSVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX1w/JtY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnTRQqOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B01AC433F1;
-	Mon,  8 Apr 2024 13:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX1w/JtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB53C433F1;
+	Mon,  8 Apr 2024 13:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581881;
-	bh=O2RQ8UoGZeRqPocfXoIN5zyKgqJlBw8JopgmA/ed5XY=;
+	s=korg; t=1712581884;
+	bh=APSgdtPkUyBelO096cON3JQdcxwtD0DVeK4rNDTy9UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnTRQqOXWPGFNJFtyKcys2/ZboeHAZO+CmNh8eFkQhCnguJCphQb3vYfMF2NYx3L6
-	 ZRHR96B1zvGmgMxb/UkRKyCAbNNtN2jYYq1nA7qTyMbuhNjooeL87gsdYxKA2mTfdE
-	 r9vb283vTi5/lnbTfd0FxNJiAIa08e65EU7xoZPM=
+	b=XX1w/JtYAalISwwFG0GixwrugvqVACU5rcv4ckc8yA7iRTPQGTlJLeL9GLMOg43CN
+	 GcwIdOCEEMVSQ2pfChg+5sah1HSsNRrZZdEYkdSPfwzpGjrX8Bg3oJcVgn5Yj/lX1I
+	 oay9hn7nif2EX6SDAw9aNt2qty6dtDBbbuPXnwBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Srivathsa Dara <srivathsa.d.dara@oracle.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/690] ext4: fix corruption during on-line resize
-Date: Mon,  8 Apr 2024 14:49:00 +0200
-Message-ID: <20240408125402.199205226@linuxfoundation.org>
+Subject: [PATCH 6.6 047/252] drm/i915: Replace several IS_METEORLAKE with proper IP version checks
+Date: Mon,  8 Apr 2024 14:55:46 +0200
+Message-ID: <20240408125308.097539150@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +47,167 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit a6b3bfe176e8a5b05ec4447404e412c2a3fc92cc ]
+[ Upstream commit 14128d64090fa88445376cb8ccf91c50c08bd410 ]
 
-We observed a corruption during on-line resize of a file system that is
-larger than 16 TiB with 4k block size. With having more then 2^32 blocks
-resize_inode is turned off by default by mke2fs. The issue can be
-reproduced on a smaller file system for convenience by explicitly
-turning off resize_inode. An on-line resize across an 8 GiB boundary (the
-size of a meta block group in this setup) then leads to a corruption:
+Many of the IS_METEORLAKE conditions throughout the driver are supposed
+to be checks for Xe_LPG and/or Xe_LPM+ IP, not for the MTL platform
+specifically.  Update those checks to ensure that the code will still
+operate properly if/when these IP versions show up on future platforms.
 
-  dev=/dev/<some_dev> # should be >= 16 GiB
-  mkdir -p /corruption
-  /sbin/mke2fs -t ext4 -b 4096 -O ^resize_inode $dev $((2 * 2**21 - 2**15))
-  mount -t ext4 $dev /corruption
+v2:
+ - Update two more conditions (one for pg_enable, one for MTL HuC
+   compatibility).
+v3:
+ - Don't change GuC/HuC compatibility check, which sounds like it truly
+   is specific to the MTL platform.  (Gustavo)
+ - Drop a non-lineage workaround number for the OA timestamp frequency
+   workaround.  (Gustavo)
 
-  dd if=/dev/zero bs=4096 of=/corruption/test count=$((2*2**21 - 4*2**15))
-  sha1sum /corruption/test
-  # 79d2658b39dcfd77274e435b0934028adafaab11  /corruption/test
-
-  /sbin/resize2fs $dev $((2*2**21))
-  # drop page cache to force reload the block from disk
-  echo 1 > /proc/sys/vm/drop_caches
-
-  sha1sum /corruption/test
-  # 3c2abc63cbf1a94c9e6977e0fbd72cd832c4d5c3  /corruption/test
-
-2^21 = 2^15*2^6 equals 8 GiB whereof 2^15 is the number of blocks per
-block group and 2^6 are the number of block groups that make a meta
-block group.
-
-The last checksum might be different depending on how the file is laid
-out across the physical blocks. The actual corruption occurs at physical
-block 63*2^15 = 2064384 which would be the location of the backup of the
-meta block group's block descriptor. During the on-line resize the file
-system will be converted to meta_bg starting at s_first_meta_bg which is
-2 in the example - meaning all block groups after 16 GiB. However, in
-ext4_flex_group_add we might add block groups that are not part of the
-first meta block group yet. In the reproducer we achieved this by
-substracting the size of a whole block group from the point where the
-meta block group would start. This must be considered when updating the
-backup block group descriptors to follow the non-meta_bg layout. The fix
-is to add a test whether the group to add is already part of the meta
-block group or not.
-
-Fixes: 01f795f9e0d67 ("ext4: add online resizing support for meta_bg and 64-bit file systems")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Tested-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
-Reviewed-by: Srivathsa Dara <srivathsa.d.dara@oracle.com>
-Link: https://lore.kernel.org/r/20240215155009.94493-1-mheyne@amazon.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230821180619.650007-20-matthew.d.roper@intel.com
+Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_create.c |  4 ++--
+ drivers/gpu/drm/i915/gt/intel_engine_pm.c  |  2 +-
+ drivers/gpu/drm/i915/gt/intel_mocs.c       |  2 +-
+ drivers/gpu/drm/i915/gt/intel_rc6.c        |  2 +-
+ drivers/gpu/drm/i915/gt/intel_reset.c      |  2 +-
+ drivers/gpu/drm/i915/gt/intel_rps.c        |  2 +-
+ drivers/gpu/drm/i915/i915_debugfs.c        |  2 +-
+ drivers/gpu/drm/i915/i915_perf.c           | 11 +++++------
+ 8 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index 70d4f6e3aaa7f..4687d5972074d 100644
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1559,7 +1559,8 @@ static int ext4_flex_group_add(struct super_block *sb,
- 		int gdb_num = group / EXT4_DESC_PER_BLOCK(sb);
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
--		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		int meta_bg = ext4_has_feature_meta_bg(sb) &&
-+			      gdb_num >= le32_to_cpu(es->s_first_meta_bg);
- 		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
- 					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_create.c b/drivers/gpu/drm/i915/gem/i915_gem_create.c
+index d24c0ce8805c7..19156ba4b9ef4 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_create.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_create.c
+@@ -405,8 +405,8 @@ static int ext_set_pat(struct i915_user_extension __user *base, void *data)
+ 	BUILD_BUG_ON(sizeof(struct drm_i915_gem_create_ext_set_pat) !=
+ 		     offsetofend(struct drm_i915_gem_create_ext_set_pat, rsvd));
+ 
+-	/* Limiting the extension only to Meteor Lake */
+-	if (!IS_METEORLAKE(i915))
++	/* Limiting the extension only to Xe_LPG and beyond */
++	if (GRAPHICS_VER_FULL(i915) < IP_VER(12, 70))
+ 		return -ENODEV;
+ 
+ 	if (copy_from_user(&ext, base, sizeof(ext)))
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_pm.c b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
+index a95615b345cd7..5a3a5b29d1507 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_pm.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_pm.c
+@@ -21,7 +21,7 @@ static void intel_gsc_idle_msg_enable(struct intel_engine_cs *engine)
+ {
+ 	struct drm_i915_private *i915 = engine->i915;
+ 
+-	if (IS_METEORLAKE(i915) && engine->id == GSC0) {
++	if (MEDIA_VER(i915) >= 13 && engine->id == GSC0) {
+ 		intel_uncore_write(engine->gt->uncore,
+ 				   RC_PSMI_CTRL_GSCCS,
+ 				   _MASKED_BIT_DISABLE(IDLE_MSG_DISABLE));
+diff --git a/drivers/gpu/drm/i915/gt/intel_mocs.c b/drivers/gpu/drm/i915/gt/intel_mocs.c
+index bf8b42d2d3279..07269ff3be136 100644
+--- a/drivers/gpu/drm/i915/gt/intel_mocs.c
++++ b/drivers/gpu/drm/i915/gt/intel_mocs.c
+@@ -495,7 +495,7 @@ static unsigned int get_mocs_settings(const struct drm_i915_private *i915,
+ 	memset(table, 0, sizeof(struct drm_i915_mocs_table));
+ 
+ 	table->unused_entries_index = I915_MOCS_PTE;
+-	if (IS_METEORLAKE(i915)) {
++	if (IS_GFX_GT_IP_RANGE(&i915->gt0, IP_VER(12, 70), IP_VER(12, 71))) {
+ 		table->size = ARRAY_SIZE(mtl_mocs_table);
+ 		table->table = mtl_mocs_table;
+ 		table->n_entries = MTL_NUM_MOCS_ENTRIES;
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index b8c9338176bd6..9e113e9473260 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -123,7 +123,7 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
+ 	 * temporary wa and should be removed after fixing real cause
+ 	 * of forcewake timeouts.
+ 	 */
+-	if (IS_METEORLAKE(gt->i915))
++	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)))
+ 		pg_enable =
+ 			GEN9_MEDIA_PG_ENABLE |
+ 			GEN11_MEDIA_SAMPLER_PG_ENABLE;
+diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
+index 63d0892d3c45a..13fb8e5042c58 100644
+--- a/drivers/gpu/drm/i915/gt/intel_reset.c
++++ b/drivers/gpu/drm/i915/gt/intel_reset.c
+@@ -705,7 +705,7 @@ static int __reset_guc(struct intel_gt *gt)
+ 
+ static bool needs_wa_14015076503(struct intel_gt *gt, intel_engine_mask_t engine_mask)
+ {
+-	if (!IS_METEORLAKE(gt->i915) || !HAS_ENGINE(gt, GSC0))
++	if (MEDIA_VER_FULL(gt->i915) != IP_VER(13, 0) || !HAS_ENGINE(gt, GSC0))
+ 		return false;
+ 
+ 	if (!__HAS_ENGINE(engine_mask, GSC0))
+diff --git a/drivers/gpu/drm/i915/gt/intel_rps.c b/drivers/gpu/drm/i915/gt/intel_rps.c
+index 092542f53aad9..4feef874e6d69 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rps.c
++++ b/drivers/gpu/drm/i915/gt/intel_rps.c
+@@ -1161,7 +1161,7 @@ void gen6_rps_get_freq_caps(struct intel_rps *rps, struct intel_rps_freq_caps *c
+ {
+ 	struct drm_i915_private *i915 = rps_to_i915(rps);
+ 
+-	if (IS_METEORLAKE(i915))
++	if (GRAPHICS_VER_FULL(i915) >= IP_VER(12, 70))
+ 		return mtl_get_freq_caps(rps, caps);
+ 	else
+ 		return __gen6_rps_get_freq_caps(rps, caps);
+diff --git a/drivers/gpu/drm/i915/i915_debugfs.c b/drivers/gpu/drm/i915/i915_debugfs.c
+index 4de44cf1026dc..7a90a2e32c9f1 100644
+--- a/drivers/gpu/drm/i915/i915_debugfs.c
++++ b/drivers/gpu/drm/i915/i915_debugfs.c
+@@ -144,7 +144,7 @@ static const char *i915_cache_level_str(struct drm_i915_gem_object *obj)
+ {
+ 	struct drm_i915_private *i915 = obj_to_i915(obj);
+ 
+-	if (IS_METEORLAKE(i915)) {
++	if (IS_GFX_GT_IP_RANGE(to_gt(i915), IP_VER(12, 70), IP_VER(12, 71))) {
+ 		switch (obj->pat_index) {
+ 		case 0: return " WB";
+ 		case 1: return " WT";
+diff --git a/drivers/gpu/drm/i915/i915_perf.c b/drivers/gpu/drm/i915/i915_perf.c
+index 8f4a25d2cfc24..48ea17b49b3a0 100644
+--- a/drivers/gpu/drm/i915/i915_perf.c
++++ b/drivers/gpu/drm/i915/i915_perf.c
+@@ -3255,11 +3255,10 @@ get_sseu_config(struct intel_sseu *out_sseu,
+  */
+ u32 i915_perf_oa_timestamp_frequency(struct drm_i915_private *i915)
+ {
+-	/*
+-	 * Wa_18013179988:dg2
+-	 * Wa_14015846243:mtl
+-	 */
+-	if (IS_DG2(i915) || IS_METEORLAKE(i915)) {
++	struct intel_gt *gt = to_gt(i915);
++
++	/* Wa_18013179988 */
++	if (IS_DG2(i915) || IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71))) {
+ 		intel_wakeref_t wakeref;
+ 		u32 reg, shift;
+ 
+@@ -4564,7 +4563,7 @@ static bool xehp_is_valid_b_counter_addr(struct i915_perf *perf, u32 addr)
+ 
+ static bool gen12_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
+ {
+-	if (IS_METEORLAKE(perf->i915))
++	if (GRAPHICS_VER_FULL(perf->i915) >= IP_VER(12, 70))
+ 		return reg_in_range_table(addr, mtl_oa_mux_regs);
+ 	else
+ 		return reg_in_range_table(addr, gen12_oa_mux_regs);
 -- 
 2.43.0
 
