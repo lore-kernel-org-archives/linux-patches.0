@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5C96F08B;
-	Mon,  8 Apr 2024 13:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1DF71727;
+	Mon,  8 Apr 2024 13:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581356; cv=none; b=ZBrPmAg6BUudQTy+hvNFvZBPTRlh9HcNTafcU694m3DDHFKwcp5Od/LRkLZExEDGTrlO8SH2QYMk8CNcVkxRc3/MRY5waIyhQmsjjl04iicDXWQbV+vCiS531rUjLXWyOPQeMUE+L5a0MbEava/MO6ot6KdankCsykXCtX0XOLQ=
+	t=1712581358; cv=none; b=sT9+7thKzjVQP+ITN8orv8h08IOyWHskVWL0jiqrA2NKdileS3lRLBYnedWA7qm4/pC9Fbizh9NisaH6k5ikbkLlt+KThlEmbiEVAwBZ9KA3N0KEiDTUJL+cvcf299px/QO6AH6qo0Y0fPW8uCp0eoh+dh4z3DWL4adKF+U9zqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581356; c=relaxed/simple;
-	bh=he+zHfL3tDShvQ7q0MNP0c2Oprn9hdhxEArWpSGCW5M=;
+	s=arc-20240116; t=1712581358; c=relaxed/simple;
+	bh=4DeeosRJhjzIgWBlhJDjYKhTumUMcb6d1ujmg+OtHn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snplA6Pt/220zIX9KcI0o2wVd2seiIWNtYOaCTpDTDxksgW8YBMZWRB139Mled6KWwCjkv2RZ8qfTI0zBzSqC1Llx9Us9vQpXvcDeOKGXIvPJeeCZE3JRIyMaeJJhkwzQtwwkxNjeNDhmefVHqVa8+B06CDs71RlKmA4GeJmEjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeYZOtOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQRqd/Mup4sel+sPlT6aIEeWQnW9/ZydiwhFeGhJ2/DVyIo33Utt5RBUEqaj3MGjWBFfLrw0le86cVqpjmssZFvIK9n2fWH7UaKNYtXZ7oVpwWDF+X4ojYIEwbldWBkA/bSySgK6WetgafQHMFqrQuDGQoF7Bfpw5lNEWFsomKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jw2FBQcF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeYZOtOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D171C433C7;
-	Mon,  8 Apr 2024 13:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw2FBQcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC00C43390;
+	Mon,  8 Apr 2024 13:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581355;
-	bh=he+zHfL3tDShvQ7q0MNP0c2Oprn9hdhxEArWpSGCW5M=;
+	s=korg; t=1712581358;
+	bh=4DeeosRJhjzIgWBlhJDjYKhTumUMcb6d1ujmg+OtHn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JeYZOtObYLl89H265qeYI1P4fAgCzckgOjhm6ADhyreh2qqkpVFN8zhLsUUd91jpT
-	 1Ywu5NayYv2Ger93CL0NT+9Ht2doxPam2NVHk6Q9a3dUbJrKVJDl0RNvYIVl+ldInQ
-	 qho4ufDus+ILl59+l5+kHGfoIQpnuKdyMorwJqgA=
+	b=Jw2FBQcF8/4AJqbYd6Y13scfGU/XQV5nbFNMS1sXC8RlcVxOfG8WvnIP741fJMvNB
+	 MLoGfS5JPOef7QAFoLSmqN98Iai/32BuX8dzN6u77vzG+AhY0kKHc0Ye8sfy+Dw4lo
+	 Ybk3rQqYHTKdR/f9d0fauAfYqoe08CM/KiQO3NkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Thorsten Winkler <twinkler@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/138] s390/qeth: handle deferred cc1
-Date: Mon,  8 Apr 2024 14:57:01 +0200
-Message-ID: <20240408125256.455719289@linuxfoundation.org>
+Subject: [PATCH 5.15 038/690] parisc: Fix csum_ipv6_magic on 64-bit systems
+Date: Mon,  8 Apr 2024 14:48:24 +0200
+Message-ID: <20240408125400.913686977@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,118 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit afb373ff3f54c9d909efc7f810dc80a9742807b2 ]
+[ Upstream commit 4b75b12d70506e31fc02356bbca60f8d5ca012d0 ]
 
-The IO subsystem expects a driver to retry a ccw_device_start, when the
-subsequent interrupt response block (irb) contains a deferred
-condition code 1.
+hppa 64-bit systems calculates the IPv6 checksum using 64-bit add
+operations. The last add folds protocol and length fields into the 64-bit
+result. While unlikely, this operation can overflow. The overflow can be
+triggered with a code sequence such as the following.
 
-Symptoms before this commit:
-On the read channel we always trigger the next read anyhow, so no
-different behaviour here.
-On the write channel we may experience timeout errors, because the
-expected reply will never be received without the retry.
-Other callers of qeth_send_control_data() may wrongly assume that the ccw
-was successful, which may cause problems later.
+	/* try to trigger massive overflows */
+	memset(tmp_buf, 0xff, sizeof(struct in6_addr));
+	csum_result = csum_ipv6_magic((struct in6_addr *)tmp_buf,
+				      (struct in6_addr *)tmp_buf,
+				      0xffff, 0xff, 0xffffffff);
 
-Note that since
-commit 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
-and
-commit 5ef1dc40ffa6 ("s390/cio: fix invalid -EBUSY on ccw_device_start")
-deferred CC1s are much more likely to occur. See the commit message of the
-latter for more background information.
+Fix the problem by adding any overflows from the final add operation into
+the calculated checksum. Fortunately, we can do this without additional
+cost by replacing the add operation used to fold the checksum into 32 bit
+with "add,dc" to add in the missing carry.
 
-Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Co-developed-by: Thorsten Winkler <twinkler@linux.ibm.com>
-Signed-off-by: Thorsten Winkler <twinkler@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240321115337.3564694-1-wintera@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/qeth_core_main.c | 38 +++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/checksum.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/net/qeth_core_main.c b/drivers/s390/net/qeth_core_main.c
-index ae4b6d24bc902..1e6340e2c2588 100644
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -1179,6 +1179,20 @@ static int qeth_check_irb_error(struct qeth_card *card, struct ccw_device *cdev,
- 	}
- }
+diff --git a/arch/parisc/include/asm/checksum.h b/arch/parisc/include/asm/checksum.h
+index e619e67440db9..c949aa20fa162 100644
+--- a/arch/parisc/include/asm/checksum.h
++++ b/arch/parisc/include/asm/checksum.h
+@@ -137,8 +137,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ "	add,dc		%3, %0, %0\n"  /* fold in proto+len | carry bit */
+ "	extrd,u		%0, 31, 32, %4\n"/* copy upper half down */
+ "	depdi		0, 31, 32, %0\n"/* clear upper half */
+-"	add		%4, %0, %0\n"	/* fold into 32-bits */
+-"	addc		0, %0, %0\n"	/* add carry */
++"	add,dc		%4, %0, %0\n"	/* fold into 32-bits, plus carry */
++"	addc		0, %0, %0\n"	/* add final carry */
  
-+/**
-+ * qeth_irq() - qeth interrupt handler
-+ * @cdev: ccw device
-+ * @intparm: expect pointer to iob
-+ * @irb: Interruption Response Block
-+ *
-+ * In the good path:
-+ * corresponding qeth channel is locked with last used iob as active_cmd.
-+ * But this function is also called for error interrupts.
-+ *
-+ * Caller ensures that:
-+ * Interrupts are disabled; ccw device lock is held;
-+ *
-+ */
- static void qeth_irq(struct ccw_device *cdev, unsigned long intparm,
- 		struct irb *irb)
- {
-@@ -1220,11 +1234,10 @@ static void qeth_irq(struct ccw_device *cdev, unsigned long intparm,
- 		iob = (struct qeth_cmd_buffer *) (addr_t)intparm;
- 	}
+ #else
  
--	qeth_unlock_channel(card, channel);
--
- 	rc = qeth_check_irb_error(card, cdev, irb);
- 	if (rc) {
- 		/* IO was terminated, free its resources. */
-+		qeth_unlock_channel(card, channel);
- 		if (iob)
- 			qeth_cancel_cmd(iob, rc);
- 		return;
-@@ -1268,6 +1281,7 @@ static void qeth_irq(struct ccw_device *cdev, unsigned long intparm,
- 		rc = qeth_get_problem(card, cdev, irb);
- 		if (rc) {
- 			card->read_or_write_problem = 1;
-+			qeth_unlock_channel(card, channel);
- 			if (iob)
- 				qeth_cancel_cmd(iob, rc);
- 			qeth_clear_ipacmd_list(card);
-@@ -1276,6 +1290,26 @@ static void qeth_irq(struct ccw_device *cdev, unsigned long intparm,
- 		}
- 	}
- 
-+	if (scsw_cmd_is_valid_cc(&irb->scsw) && irb->scsw.cmd.cc == 1 && iob) {
-+		/* channel command hasn't started: retry.
-+		 * active_cmd is still set to last iob
-+		 */
-+		QETH_CARD_TEXT(card, 2, "irqcc1");
-+		rc = ccw_device_start_timeout(cdev, __ccw_from_cmd(iob),
-+					      (addr_t)iob, 0, 0, iob->timeout);
-+		if (rc) {
-+			QETH_DBF_MESSAGE(2,
-+					 "ccw retry on %x failed, rc = %i\n",
-+					 CARD_DEVID(card), rc);
-+			QETH_CARD_TEXT_(card, 2, " err%d", rc);
-+			qeth_unlock_channel(card, channel);
-+			qeth_cancel_cmd(iob, rc);
-+		}
-+		return;
-+	}
-+
-+	qeth_unlock_channel(card, channel);
-+
- 	if (iob) {
- 		/* sanity check: */
- 		if (irb->scsw.cmd.count > iob->length) {
 -- 
 2.43.0
 
