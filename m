@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200127FBBB;
-	Mon,  8 Apr 2024 13:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566967EEF2;
+	Mon,  8 Apr 2024 13:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584025; cv=none; b=UTTwTB/W7VIKUkDwZoA5piSO32ylXrK0UtI5KOscRqox4/TqjZewu4SEmkJZ82tyTD+DRdbJSDWRLJHZo0aywOn0/7KibVQWktjZfgB5YTaDWb25AZTtOohuO05WbJI1PihZ8xtSOumMrdlINsZ4xbWj6H+ZXNeAsebGSyCTuzc=
+	t=1712584028; cv=none; b=kO5FDKJd2+Pf30fknB3VVTmJUkzY0lVBvdytzZJD8ZldXlVWIF00a9tMuNNmw7n5k/bOI5kTKfUoYWqILlWSLZ/9gABd/xVd0vD977/p6M+riIDh40dxfd3WxYpjUd+R+ulhihaXKWCMLZeJ9G3tquG4WdhsnLtZBTPoDmp26gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584025; c=relaxed/simple;
-	bh=aiynq9ohYylBLI9X1Ovt6i/2PC6JVVjE/Yc1NorMcNA=;
+	s=arc-20240116; t=1712584028; c=relaxed/simple;
+	bh=ZwUILrMwVKJz2KujSalkHUXphMabkP/AZ4+n/OaZMv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHZk/Ne2a2JJWrP0UumwwQt++oFI0rEGSpT1xYlP8m4QTPevZLq8G3p9MUcbha59/OPEyNqs9FHKN/TvrN1A+peEbfputw8vNix7aLajJRZKxNDuGQWQm5fPIt+8RpRGqSVJoL8COWfGRX/W+fEORfKdbjZcB5X9dc1tskFSbag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI8hCJNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUC398/AgvPPaaC0sXPSghAgR9HKS7PiFo8SV284SYlTPMwcDrE5QrfRIH/cEV+zTWEbsfQdg6J+4X98bXILtIHGxiZubYlhLOCH+2Ge9NgznyuvSyVOf3Jiri8E8/p6K3170hYedbVNzl1RkrnkLF6G40HnonUXBkCXmeYqHSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8+0ypZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI8hCJNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C54EC43390;
-	Mon,  8 Apr 2024 13:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8+0ypZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B05C433C7;
+	Mon,  8 Apr 2024 13:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584025;
-	bh=aiynq9ohYylBLI9X1Ovt6i/2PC6JVVjE/Yc1NorMcNA=;
+	s=korg; t=1712584027;
+	bh=ZwUILrMwVKJz2KujSalkHUXphMabkP/AZ4+n/OaZMv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cI8hCJNzLuc/jHI/oNxJ5nelj2vrVCWkUDlbaTq0UQKMsVF/I9Hs+OTCt0lTpnM1a
-	 O9yu5YQxa6HOkxJnWVvRSXltittbWkCSsHqBoTTQwvTg4r44KW1a/W4JQ7P5f8XPvq
-	 wst7Vru8enxQ6VgZUUmHboABXdbZG46GQsfbSf9g=
+	b=x8+0ypZ6cV8qs3+uzoKBxla3i+rFT5/cPLdjaVpMdy3BTfKolAJxstCHTgZRO2eZy
+	 WDEISdH/YnsEZwUHqyI/aW7ujZ9PqpwEjn6T/2pNLiwqA/H9AhxECjJVIU4hpxbbOg
+	 x1bzPJJ2Lwc2jBj00jHXkLKWfHaxQZpT+s/TW9Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 322/690] NFSD: Remove dprintk call sites from tail of nfsd4_open()
-Date: Mon,  8 Apr 2024 14:53:08 +0200
-Message-ID: <20240408125411.287087210@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.8 250/273] smb: client: fix potential UAF in cifs_stats_proc_write()
+Date: Mon,  8 Apr 2024 14:58:45 +0200
+Message-ID: <20240408125317.214388145@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit f67a16b147045815b6aaafeef8663e5faeb6d569 ]
+commit d3da25c5ac84430f89875ca7485a3828150a7e0a upstream.
 
-Clean up: These relics are not likely to benefit server
-administrators.
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/smb/client/cifs_debug.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index f0cb92466da84..611aedeab406b 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -622,13 +622,9 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			break;
- 		case NFS4_OPEN_CLAIM_DELEG_PREV_FH:
-              	case NFS4_OPEN_CLAIM_DELEGATE_PREV:
--			dprintk("NFSD: unsupported OPEN claim type %d\n",
--				open->op_claim_type);
- 			status = nfserr_notsupp;
- 			goto out;
- 		default:
--			dprintk("NFSD: Invalid OPEN claim type %d\n",
--				open->op_claim_type);
- 			status = nfserr_inval;
- 			goto out;
- 	}
--- 
-2.43.0
-
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -658,6 +658,8 @@ static ssize_t cifs_stats_proc_write(str
+ 			}
+ #endif /* CONFIG_CIFS_STATS2 */
+ 			list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
++				if (cifs_ses_exiting(ses))
++					continue;
+ 				list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+ 					atomic_set(&tcon->num_smbs_sent, 0);
+ 					spin_lock(&tcon->stat_lock);
 
 
