@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6516B7CF0F;
-	Mon,  8 Apr 2024 13:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FBD7BB17;
+	Mon,  8 Apr 2024 13:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584609; cv=none; b=a0CSjaRXdQqfhVvBKQfIL4H0088sVfc/zvTyXwW2UCLHZDvhNnrOg94xRCWCi1a9xXdcFprVlC9Z2SGVh2WXaGQLNRjYhrDsyb8JZpXIM0DOYzzNZ158vhVHxbMu+KTUAl/drO4lldo31DkpUFkoIlBSRtvbhsTMUznxVIX2JuE=
+	t=1712584612; cv=none; b=khZWuL4gmiqo6GbLVVviWwWmid57QREclEZdMbFwf/qQBiiBsl+muf6vVZFKedPxmSadnPxEhAoBDyklpHkg+I9GWt20ZgKbx/h7k87wCGtgzyF9d9LU1uSZ4+F+eitZf0sAdyusFeN7eUP30XMsQEJSXh28AaByQ1ELFpd3pU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584609; c=relaxed/simple;
-	bh=g7rNNnVkxsq5neRf2vBWVfch2RxLhjNDEmV6iMiQ6bA=;
+	s=arc-20240116; t=1712584612; c=relaxed/simple;
+	bh=S+Gre6jP/FKNvB+hey9Jq8Ri5r58DcGwZwe32mT6aOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NExRha7Ddw14Tz92AWg9pRmJiiP7ZmbAUa1GwFVCJYrWpsc+IAzFi2n/eEhxLJdmIEq2+tBhGunC3C5DebA/QTP3C/esBCOiLlKk6bjtCkZEeOkBjME9+YgZKaPUWk3e4AJ+/601nb+W/8EaKPPk457DQKEr+OYszflqH05urX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbqNUvcP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYivqY+o7oSJGWgFAEhqIdhWnXz99YqrjQYFRts/oyeEzATifanAlPMouQjrDo3qb1AhMnVuU/JMC0q3TcUeeAwtPVpRfCLPuOP/QrmAcClVS5MjncwkOKPPUqE77eGIjMwnQCuYV6tl5V4wwQu3ycOobs1KhajHrW3l+9p0q9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJaBizq5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbqNUvcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E39C43390;
-	Mon,  8 Apr 2024 13:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJaBizq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E721C433C7;
+	Mon,  8 Apr 2024 13:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584609;
-	bh=g7rNNnVkxsq5neRf2vBWVfch2RxLhjNDEmV6iMiQ6bA=;
+	s=korg; t=1712584611;
+	bh=S+Gre6jP/FKNvB+hey9Jq8Ri5r58DcGwZwe32mT6aOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbqNUvcPh2WlOPdzZuEts9kPhomDWkE0HfdzKxI7DCJ/Eu1vKxbsyHMaj0bVwdxTo
-	 Nyycd57ET8/J8PFnB8D86qSJE5+uhZiLNz2nW8vp/cUS9NoO69pSVAz+SmkChoXpEm
-	 KDlevz2phAM8+w2AzbEPOJ8qzjiJo8QtFoPFVRnc=
+	b=bJaBizq5+0/Ii5eY0IxneZy6ZRgRgProGJF4rtpAnGpidZE3j79Uke3Iz/IEPV2MI
+	 8QfFmRcVtpCswWbZ/ZNZGeDMR29BT2a9UPXfutjEEOCJOn1eA/pZMtP2VMpw+I0YWJ
+	 OBRnsBiAZ+Gxq9Hs/pFgrOV8RaAw4eIQbeL2uXPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Brown <neilb@suse.de>,
-	Yongcheng Yang <yoyang@redhat.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 497/690] nfsd: return error if nfs4_setacl fails
-Date: Mon,  8 Apr 2024 14:56:03 +0200
-Message-ID: <20240408125417.652620489@linuxfoundation.org>
+Subject: [PATCH 5.15 498/690] NFSD: Use struct_size() helper in alloc_session()
+Date: Mon,  8 Apr 2024 14:56:04 +0200
+Message-ID: <20240408125417.683753705@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,36 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 01d53a88c08951f88f2a42f1f1e6568928e0590e ]
+[ Upstream commit 85a0d0c9a58002ef7d1bf5e3ea630f4fbd42a4f0 ]
 
-With the addition of POSIX ACLs to struct nfsd_attrs, we no longer
-return an error if setting the ACL fails. Ensure we return the na_aclerr
-error on SETATTR if there is one.
+Use struct_size() helper to simplify the code, no functional changes.
 
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
-Cc: Neil Brown <neilb@suse.de>
-Reported-by: Yongcheng Yang <yoyang@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4state.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 92d4eb1032ff9..eeff0ba0be558 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1135,6 +1135,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				0, (time64_t)0);
- 	if (!status)
- 		status = nfserrno(attrs.na_labelerr);
-+	if (!status)
-+		status = nfserrno(attrs.na_aclerr);
- out:
- 	nfsd_attrs_free(&attrs);
- 	fh_drop_write(&cstate->current_fh);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 39b315e3471f5..524865c7211ef 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1833,13 +1833,12 @@ static struct nfsd4_session *alloc_session(struct nfsd4_channel_attrs *fattrs,
+ 	int numslots = fattrs->maxreqs;
+ 	int slotsize = slot_bytes(fattrs);
+ 	struct nfsd4_session *new;
+-	int mem, i;
++	int i;
+ 
+-	BUILD_BUG_ON(NFSD_MAX_SLOTS_PER_SESSION * sizeof(struct nfsd4_slot *)
+-			+ sizeof(struct nfsd4_session) > PAGE_SIZE);
+-	mem = numslots * sizeof(struct nfsd4_slot *);
++	BUILD_BUG_ON(struct_size(new, se_slots, NFSD_MAX_SLOTS_PER_SESSION)
++		     > PAGE_SIZE);
+ 
+-	new = kzalloc(sizeof(*new) + mem, GFP_KERNEL);
++	new = kzalloc(struct_size(new, se_slots, numslots), GFP_KERNEL);
+ 	if (!new)
+ 		return NULL;
+ 	/* allocate each struct nfsd4_slot and data cache in one piece */
 -- 
 2.43.0
 
