@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A116D62148;
-	Mon,  8 Apr 2024 13:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABBD62148;
+	Mon,  8 Apr 2024 13:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582369; cv=none; b=iud2csFYetM9RQa3nbPJ/uVeLH+5anJ0aDEdhBynr6qQQcmfVevEVq4x4WjBY1MEgC20Bz0VoyZtrWQPWfX4EPGfwQtuoOoX+JSBnB1uxH7Oj7Rt1BA/dRKq51sS59uLmTj3auLU6zxQh/x3tEFxFmdD+JmRB3hKUSx+VwR1ozg=
+	t=1712582372; cv=none; b=byiAAvVQyyXkp1obJbQsn9kGh1qukkuUe3gjuhMZ5avke2qBxqtq2w7uhS16dFuQVo4XUdnm0nI9gJO9nyfpwGAoQ1wwsa/GboBampWdZWFhMu8nRg3aSsj5RCq4v651X4HUWWpSArRDRs5SVvzORONa9zMFuXQOSBvV8Za8lx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582369; c=relaxed/simple;
-	bh=oTwLBR8aEsWqgmf3NTA+K7Vqbo5muT+r96GEYn78J3k=;
+	s=arc-20240116; t=1712582372; c=relaxed/simple;
+	bh=3Vy4hd/I8dtZB0ZxUQv0Zw6dxPPA9whZpKKfrWH+tvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwVuJy+7lC7Otk30y7MHx2Psf9sEKPp1zWl6w7b4AeAhyI9w5KTCFjxAToStubc6iPKOtXLLv8K66TmoU5g42Wgj1T9pzByq+UdSC3UqB2cx0V0sjioQXsD8p7ftn7o+ZDaqhKXFpgaow7eTmrvyn1YhqliHUAOR/H+rtk0Ksag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwduV6cd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZztatN9QAFlOQmIvUgC0W/mdX9j7dkHtNEaMd3I+i8SdbtzTNfQkEm/wjpjYXPhROHYcdqPsE4ge5ddu9brfkY1pr1//RYB+mY8Ewtbqpq/LIWbfp6kGDSNqqCWSAQYz3VaTnKde8frn4j4OuYUcz8OYAP7O1jDWvW+P3H5nyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kY60gIAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwduV6cd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3BAC43390;
-	Mon,  8 Apr 2024 13:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kY60gIAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E21C433F1;
+	Mon,  8 Apr 2024 13:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582369;
-	bh=oTwLBR8aEsWqgmf3NTA+K7Vqbo5muT+r96GEYn78J3k=;
+	s=korg; t=1712582372;
+	bh=3Vy4hd/I8dtZB0ZxUQv0Zw6dxPPA9whZpKKfrWH+tvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwduV6cdvv9QpvkcyuhFTySGVTQ5cDmdU1EWPnIYBE/hVhQ4LuxbdYYND5Mq/w2FZ
-	 2IRw52n4M+dPqs4BVYHnna813zbCesBUikNG+iAf/cs1JwAiomVH5Kb8bOELFgVUku
-	 4fB3/6Ys/43jxc/hI7gp1rVLAbXSFwU/1XQZpSBs=
+	b=kY60gIAao/ytNHLdXOFAiZb+oA4Wi5aCNREgktLwT4UFLhgpHG1pYW1gYgSX0j/qc
+	 8tqhrRSj1PxUTGtfVHSC6+snNb8M+M+G7V2k7ohSqIiNvPAlvVBv43LRwuzbHu2lMs
+	 5bnMNXPOIHhCtPk/H9hTGtVBASjEwEmIK9VBt9Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Subject: [PATCH 5.15 136/690] i2c: i801: Avoid potential double call to gpiod_remove_lookup_table
-Date: Mon,  8 Apr 2024 14:50:02 +0200
-Message-ID: <20240408125404.450770732@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.8 069/273] r8169: fix issue caused by buggy BIOS on certain boards with RTL8168d
+Date: Mon,  8 Apr 2024 14:55:44 +0200
+Message-ID: <20240408125311.445245128@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit ceb013b2d9a2946035de5e1827624edc85ae9484 upstream.
+commit 5d872c9f46bd2ea3524af3c2420a364a13667135 upstream.
 
-If registering the platform device fails, the lookup table is
-removed in the error path. On module removal we would try to
-remove the lookup table again. Fix this by setting priv->lookup
-only if registering the platform device was successful.
-In addition free the memory allocated for the lookup table in
-the error path.
+On some boards with this chip version the BIOS is buggy and misses
+to reset the PHY page selector. This results in the PHY ID read
+accessing registers on a different page, returning a more or
+less random value. Fix this by resetting the page selector first.
 
-Fixes: d308dfbf62ef ("i2c: mux/i801: Switch to use descriptor passing")
+Fixes: f1e911d5d0df ("r8169: add basic phylib support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/64f2055e-98b8-45ec-8568-665e3d54d4e6@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1416,7 +1416,6 @@ static int i801_add_mux(struct i801_priv
- 				    mux_config->gpios[i], "mux", 0);
- 	}
- 	gpiod_add_lookup_table(lookup);
--	priv->lookup = lookup;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -5027,6 +5027,15 @@ static int r8169_mdio_register(struct rt
+ 	struct mii_bus *new_bus;
+ 	int ret;
  
- 	/*
- 	 * Register the mux device, we use PLATFORM_DEVID_NONE here
-@@ -1430,7 +1429,10 @@ static int i801_add_mux(struct i801_priv
- 				sizeof(struct i2c_mux_gpio_platform_data));
- 	if (IS_ERR(priv->mux_pdev)) {
- 		gpiod_remove_lookup_table(lookup);
-+		devm_kfree(dev, lookup);
- 		dev_err(dev, "Failed to register i2c-mux-gpio device\n");
-+	} else {
-+		priv->lookup = lookup;
- 	}
- 
- 	return PTR_ERR_OR_ZERO(priv->mux_pdev);
++	/* On some boards with this chip version the BIOS is buggy and misses
++	 * to reset the PHY page selector. This results in the PHY ID read
++	 * accessing registers on a different page, returning a more or
++	 * less random value. Fix this by resetting the page selector first.
++	 */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_25 ||
++	    tp->mac_version == RTL_GIGA_MAC_VER_26)
++		r8169_mdio_write(tp, 0x1f, 0);
++
+ 	new_bus = devm_mdiobus_alloc(&pdev->dev);
+ 	if (!new_bus)
+ 		return -ENOMEM;
 
 
