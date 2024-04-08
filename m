@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DACF7E0E4;
-	Mon,  8 Apr 2024 13:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EDB77F1B;
+	Mon,  8 Apr 2024 13:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582008; cv=none; b=Z4qqa87rlE8WarY5nEQGeiyjw8XtuJLatGTfdcWIONT8rzPjzjPncfEWj8DzlPQKW7ylRRTvNx0/cIefbbNlk+znWXMeoIbaok2ydKS4rY+OSAdXaJu02cgoha9TzyLLIvxFcHXi4bZwfk4sWI5GtwmBUEyYiGUwZTQwKcCJBn4=
+	t=1712582011; cv=none; b=OB9AMvRoumNcwt6sWrzP5Dh/w6f9R6Hket4pp2VSvJf31K7Q3sSGdF3Bq7v+mwc7jLhC8ppzAtapG1EDcqnBmtqvYwIR/2OtY7gBU55aS7YTQZLKCysuHXbDVpEFG1/1pKbdwoWUQKuoxKqTxljXxswgAXBsecSGoPiZmFXmJ0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582008; c=relaxed/simple;
-	bh=i0EhxiBI+UMasAsJOwXCWRkP+pxjm/TmSgMhxQJ7w1A=;
+	s=arc-20240116; t=1712582011; c=relaxed/simple;
+	bh=4SyZfx+9InlhIBsJpau/cJ+3HybbgM0oTbHSmEgBOvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPBciubHS/z0OueE6fOZVT3C4vyI4HnNO73Q/iplrIl/ZShQL2VIHSItK5BhqXkASBrnQCsUJ+UWo+hI6J4F/3fbL1s+2xodfWFXU+1mPSUsir0uSSOFP3TpEe7A8xyVLFO+1kDaPqzAfTJANQiu3l9pAogsSICnUsJyf+8c0Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGnZzxEK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FDeJ9WCNEPONIORJ3kv/vh/6Y10iabdL9FIomMwseYfipiAIqhmkADM53ad0i7SMgMhZng9MoFM1mwKIiwG7id8Tk6MZtWdPzXKLU/YzzXP3zHUrwSwVGG/It9eQ1dzfowzpPewC7h7WSMnpdVzde9nI9HanA4xFU/D92lSMUrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZniIDCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGnZzxEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F9DC433F1;
-	Mon,  8 Apr 2024 13:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZniIDCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D60BC433F1;
+	Mon,  8 Apr 2024 13:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582008;
-	bh=i0EhxiBI+UMasAsJOwXCWRkP+pxjm/TmSgMhxQJ7w1A=;
+	s=korg; t=1712582011;
+	bh=4SyZfx+9InlhIBsJpau/cJ+3HybbgM0oTbHSmEgBOvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGnZzxEKNwWIvno2eWe8QsuJxjZGhQoMY6MTx43GGfk+gr/cVvKuecOjmRgKu5i4d
-	 jvo5lUl1Futw3q75H/0QQcwBKnlPLxcOOUdBkv2upg7+bLETBunpq9fIsTapZkXsYJ
-	 7rxYHDrOovKNdOqRgMNPDqd2/MFTrR21Fn7fT3jo=
+	b=BZniIDCcGoz5M6u2U+1jvFTZFWL5YfD3AipdInQMrjCdvACgLfMYbWVGoHgWeypYY
+	 +iFWusqYGwpRyc7kP4KCSp63REINQeYwNPp5KbOoCcFvEHN/7EBsqjK1N96n0jzZaC
+	 SaMl8ZobQndXr1dqXJqmJ4kkVzNOtY9XWuX36Zz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Toth <ftoth@exalondelft.nl>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 032/273] gpiolib: Fix debug messaging in gpiod_find_and_request()
-Date: Mon,  8 Apr 2024 14:55:07 +0200
-Message-ID: <20240408125310.293501768@linuxfoundation.org>
+Subject: [PATCH 6.1 071/138] drm/amd: Add concept of running prepare_suspend() sequence for IP blocks
+Date: Mon,  8 Apr 2024 14:58:05 +0200
+Message-ID: <20240408125258.430163089@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,157 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 5c887b65bbd1a3fc28e2e20399acede0baa83edb ]
+[ Upstream commit cb11ca3233aa3303dc11dca25977d2e7f24be00f ]
 
-When consolidating GPIO lookups in ACPI code, the debug messaging
-had been reworked that the user may see
+If any IP blocks allocate memory during their hw_fini() sequence
+this can cause the suspend to fail under memory pressure.  Introduce
+a new phase that IP blocks can use to allocate memory before suspend
+starts so that it can potentially be evicted into swap instead.
 
-  [   13.401147] (NULL device *): using ACPI '\_SB.LEDS.led-0' for '(null)' GPIO lookup
-  [   13.401378] gpio gpiochip0: Persistence not supported for GPIO 40
-  [   13.401402] gpio-40 (?): no flags found for (null)
-
-instead of
-
-  [   14.182962] gpio gpiochip0: Persistence not supported for GPIO 40
-  [   14.182994] gpio-40 (?): no flags found for gpios
-
-The '(null)' parts are less informative and likely scare the users.
-Replace them by '(default)' which can point out to the default connection
-IDs, such as 'gpios'.
-
-While at it, amend other places where con_id is used in the messages.
-
-Reported-by: Ferry Toth <ftoth@exalondelft.nl>
-Fixes: 8eb1f71e7acc ("gpiolib: consolidate GPIO lookups")
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Tested-by: Ferry Toth <ftoth@exalondelft.nl>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: ca299b4512d4 ("drm/amd: Flush GFXOFF requests in prepare stage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c |   31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 12 +++++++++++-
+ drivers/gpu/drm/amd/include/amd_shared.h   |  1 +
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -2402,6 +2402,11 @@ char *gpiochip_dup_line_label(struct gpi
- }
- EXPORT_SYMBOL_GPL(gpiochip_dup_line_label);
- 
-+static inline const char *function_name_or_default(const char *con_id)
-+{
-+	return con_id ?: "(default)";
-+}
-+
- /**
-  * gpiochip_request_own_desc - Allow GPIO chip to request its own descriptor
-  * @gc: GPIO chip
-@@ -2430,10 +2435,11 @@ struct gpio_desc *gpiochip_request_own_d
- 					    enum gpiod_flags dflags)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 902a446cc4d38..77e35b919b064 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4180,7 +4180,7 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ int amdgpu_device_prepare(struct drm_device *dev)
  {
- 	struct gpio_desc *desc = gpiochip_get_desc(gc, hwnum);
-+	const char *name = function_name_or_default(label);
- 	int ret;
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+-	int r;
++	int i, r;
  
- 	if (IS_ERR(desc)) {
--		chip_err(gc, "failed to get GPIO descriptor\n");
-+		chip_err(gc, "failed to get GPIO %s descriptor\n", name);
- 		return desc;
- 	}
- 
-@@ -2443,8 +2449,8 @@ struct gpio_desc *gpiochip_request_own_d
- 
- 	ret = gpiod_configure_flags(desc, label, lflags, dflags);
- 	if (ret) {
--		chip_err(gc, "setup of own GPIO %s failed\n", label);
- 		gpiod_free_commit(desc);
-+		chip_err(gc, "setup of own GPIO %s failed\n", name);
- 		return ERR_PTR(ret);
- 	}
- 
-@@ -4119,19 +4125,17 @@ static struct gpio_desc *gpiod_find_by_f
- 					      enum gpiod_flags *flags,
- 					      unsigned long *lookupflags)
- {
-+	const char *name = function_name_or_default(con_id);
- 	struct gpio_desc *desc = ERR_PTR(-ENOENT);
- 
- 	if (is_of_node(fwnode)) {
--		dev_dbg(consumer, "using DT '%pfw' for '%s' GPIO lookup\n",
--			fwnode, con_id);
-+		dev_dbg(consumer, "using DT '%pfw' for '%s' GPIO lookup\n", fwnode, name);
- 		desc = of_find_gpio(to_of_node(fwnode), con_id, idx, lookupflags);
- 	} else if (is_acpi_node(fwnode)) {
--		dev_dbg(consumer, "using ACPI '%pfw' for '%s' GPIO lookup\n",
--			fwnode, con_id);
-+		dev_dbg(consumer, "using ACPI '%pfw' for '%s' GPIO lookup\n", fwnode, name);
- 		desc = acpi_find_gpio(fwnode, con_id, idx, flags, lookupflags);
- 	} else if (is_software_node(fwnode)) {
--		dev_dbg(consumer, "using swnode '%pfw' for '%s' GPIO lookup\n",
--			fwnode, con_id);
-+		dev_dbg(consumer, "using swnode '%pfw' for '%s' GPIO lookup\n", fwnode, name);
- 		desc = swnode_find_gpio(fwnode, con_id, idx, lookupflags);
- 	}
- 
-@@ -4147,6 +4151,7 @@ struct gpio_desc *gpiod_find_and_request
- 					 bool platform_lookup_allowed)
- {
- 	unsigned long lookupflags = GPIO_LOOKUP_FLAGS_DEFAULT;
-+	const char *name = function_name_or_default(con_id);
- 	struct gpio_desc *desc;
- 	int ret;
- 
-@@ -4162,7 +4167,7 @@ struct gpio_desc *gpiod_find_and_request
- 	}
- 
- 	if (IS_ERR(desc)) {
--		dev_dbg(consumer, "No GPIO consumer %s found\n", con_id);
-+		dev_dbg(consumer, "No GPIO consumer %s found\n", name);
- 		return desc;
- 	}
- 
-@@ -4183,15 +4188,14 @@ struct gpio_desc *gpiod_find_and_request
- 		 *
- 		 * FIXME: Make this more sane and safe.
- 		 */
--		dev_info(consumer,
--			 "nonexclusive access to GPIO for %s\n", con_id);
-+		dev_info(consumer, "nonexclusive access to GPIO for %s\n", name);
- 		return desc;
- 	}
- 
- 	ret = gpiod_configure_flags(desc, con_id, lookupflags, flags);
- 	if (ret < 0) {
--		dev_dbg(consumer, "setup of GPIO %s failed\n", con_id);
- 		gpiod_put(desc);
-+		dev_dbg(consumer, "setup of GPIO %s failed\n", name);
- 		return ERR_PTR(ret);
- 	}
- 
-@@ -4307,6 +4311,7 @@ EXPORT_SYMBOL_GPL(gpiod_get_optional);
- int gpiod_configure_flags(struct gpio_desc *desc, const char *con_id,
- 		unsigned long lflags, enum gpiod_flags dflags)
- {
-+	const char *name = function_name_or_default(con_id);
- 	int ret;
- 
- 	if (lflags & GPIO_ACTIVE_LOW)
-@@ -4350,7 +4355,7 @@ int gpiod_configure_flags(struct gpio_de
- 
- 	/* No particular flag request, return here... */
- 	if (!(dflags & GPIOD_FLAGS_BIT_DIR_SET)) {
--		gpiod_dbg(desc, "no flags found for %s\n", con_id);
-+		gpiod_dbg(desc, "no flags found for GPIO %s\n", name);
+ 	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
  		return 0;
- 	}
+@@ -4190,6 +4190,16 @@ int amdgpu_device_prepare(struct drm_device *dev)
+ 	if (r)
+ 		return r;
  
++	for (i = 0; i < adev->num_ip_blocks; i++) {
++		if (!adev->ip_blocks[i].status.valid)
++			continue;
++		if (!adev->ip_blocks[i].version->funcs->prepare_suspend)
++			continue;
++		r = adev->ip_blocks[i].version->funcs->prepare_suspend((void *)adev);
++		if (r)
++			return r;
++	}
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/include/amd_shared.h b/drivers/gpu/drm/amd/include/amd_shared.h
+index f175e65b853a0..34467427c9f97 100644
+--- a/drivers/gpu/drm/amd/include/amd_shared.h
++++ b/drivers/gpu/drm/amd/include/amd_shared.h
+@@ -294,6 +294,7 @@ struct amd_ip_funcs {
+ 	int (*hw_init)(void *handle);
+ 	int (*hw_fini)(void *handle);
+ 	void (*late_fini)(void *handle);
++	int (*prepare_suspend)(void *handle);
+ 	int (*suspend)(void *handle);
+ 	int (*resume)(void *handle);
+ 	bool (*is_idle)(void *handle);
+-- 
+2.43.0
+
 
 
