@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F2F79955;
-	Mon,  8 Apr 2024 13:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A6379955;
+	Mon,  8 Apr 2024 13:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584579; cv=none; b=TeJ/04qXabxZhgJrybJhelrrwKcvJIY0lKyy06NSNg3YA2k2ziJRuyt1jypOZ/SK3yUmtXqAnjELg2SZNP6v89V5V7+qeHPxHWat6L4Ne5mOmqqT4ib9a11Iq5HKgs3uVXJYl/sHVRul9Vh/3I4L+4GMYQbhsJMNj8qlSHyIJUk=
+	t=1712584582; cv=none; b=sQ4GLjO8G/4c+4/IZeM2iOjmxiyyl5yU20UAyyaUIfBOd/W5T4Ql0dRASO2mc/ldXmiFHzr5CFx8h1Kh8P3lmuTLqseVg6e0vv3nfKp2nHBQRx3dchVadEUV58AsCRZlZ0CgFvx+l+UHx7peUR7aMTTfccjODjoS2xprXKQ8QOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584579; c=relaxed/simple;
-	bh=6qUhdZ9AnB/Gs6tnVNw1n5e5cR6FnFlGeRMzy38ShnY=;
+	s=arc-20240116; t=1712584582; c=relaxed/simple;
+	bh=uFae4jTLDBWSijdfJzKgPhoopWZal7pXlfUnjPcYH5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INVUtpNika5LTKTQJTSeRQJjEGHElALFf9cM8rLpNWmsWN8aJi7PxmNvgaxSWnXuTfD6D0d26+tf27Uqf7Kc4bKVwifbQrrd5DkHXNLFTLITgQizvBIl9tIhOD5Qt+Ygko33ZvRZEpGcDF9l7oA7FOQUfmDuru/VeRMu1TMepnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAsnVBSf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0tl7EnTcNJgd4nuFiciEa3WzALE6kjlsqEgm90Ajo3kshjcyYH3tsJU3oScw9sJk3MAqbvzkIZYolXYOrnhKawzpldJuoOl3ExLmIZd3cGFzoSkZNC6DfFwF4nZZJ3z00s6zgJhpS2qDQ4LIhMMv52bxou6SVGPUc14Ap0maSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCtKhq8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAsnVBSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F943C433F1;
-	Mon,  8 Apr 2024 13:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCtKhq8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A758C433C7;
+	Mon,  8 Apr 2024 13:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584579;
-	bh=6qUhdZ9AnB/Gs6tnVNw1n5e5cR6FnFlGeRMzy38ShnY=;
+	s=korg; t=1712584582;
+	bh=uFae4jTLDBWSijdfJzKgPhoopWZal7pXlfUnjPcYH5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAsnVBSfjaVTCLXlzj99EI/ecgW93xNM7A62DbmZi0g1fjwldVbKoWaUWOio1+Lr0
-	 xcAMG9HbkbYqfEAn02x0ABxNG0C9zc/GnhYWVezvE9Hr3Sz+9uhDH/GbtDFaUVl8hy
-	 YjB+Ofkc2oy4wcvjxcStHUOrReSqkc2j/e8xAmgA=
+	b=FCtKhq8j/1X5BgUAzT0g6XUkJPMtAKykeHPDXBs6uh2SpricZj0eQKrKqUe74sDsM
+	 dyfvpxByg2FxpGIOS1PORs0sVbMdT0D74eI+Je7LynJySvNMVvqikal9HCmPkpoTEO
+	 76kIJEu4jzmWFPrefXj/vvGynSGsNlNUoNae1hYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bobrowski <repnop@google.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 456/690] fs/notify: constify path
-Date: Mon,  8 Apr 2024 14:55:22 +0200
-Message-ID: <20240408125416.153679277@linuxfoundation.org>
+Subject: [PATCH 5.15 457/690] fsnotify: remove unused declaration
+Date: Mon,  8 Apr 2024 14:55:23 +0200
+Message-ID: <20240408125416.192983292@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,77 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit d5bf88895f24686641c39420ee6df716dc1d95d8 ]
+[ Upstream commit f847c74d6e89f10926db58649a05b99237258691 ]
 
-Reviewed-by: Matthew Bobrowski <repnop@google.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+fsnotify_alloc_event_holder() and fsnotify_destroy_event_holder()
+has been removed since commit 7053aee26a35 ("fsnotify: do not share
+events between notification groups"), so remove it.
+
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/notify/fanotify/fanotify.c      | 2 +-
- fs/notify/fanotify/fanotify.h      | 2 +-
- fs/notify/fanotify/fanotify_user.c | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ fs/notify/fsnotify.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index cd7d09a569fff..a2a15bc4df280 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -18,7 +18,7 @@
+diff --git a/fs/notify/fsnotify.h b/fs/notify/fsnotify.h
+index 87d8a50ee8038..fde74eb333cc9 100644
+--- a/fs/notify/fsnotify.h
++++ b/fs/notify/fsnotify.h
+@@ -76,10 +76,6 @@ static inline void fsnotify_clear_marks_by_sb(struct super_block *sb)
+  */
+ extern void __fsnotify_update_child_dentry_flags(struct inode *inode);
  
- #include "fanotify.h"
+-/* allocate and destroy and event holder to attach events to notification/access queues */
+-extern struct fsnotify_event_holder *fsnotify_alloc_event_holder(void);
+-extern void fsnotify_destroy_event_holder(struct fsnotify_event_holder *holder);
+-
+ extern struct kmem_cache *fsnotify_mark_connector_cachep;
  
--static bool fanotify_path_equal(struct path *p1, struct path *p2)
-+static bool fanotify_path_equal(const struct path *p1, const struct path *p2)
- {
- 	return p1->mnt == p2->mnt && p1->dentry == p2->dentry;
- }
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 1d9f11255c64f..bf6d4d38afa04 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -458,7 +458,7 @@ static inline bool fanotify_event_has_path(struct fanotify_event *event)
- 		event->type == FANOTIFY_EVENT_TYPE_PATH_PERM;
- }
- 
--static inline struct path *fanotify_event_path(struct fanotify_event *event)
-+static inline const struct path *fanotify_event_path(struct fanotify_event *event)
- {
- 	if (event->type == FANOTIFY_EVENT_TYPE_PATH)
- 		return &FANOTIFY_PE(event)->path;
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 879cd65b15187..d93418f213863 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -245,7 +245,7 @@ static struct fanotify_event *get_one_event(struct fsnotify_group *group,
- 	return event;
- }
- 
--static int create_fd(struct fsnotify_group *group, struct path *path,
-+static int create_fd(struct fsnotify_group *group, const struct path *path,
- 		     struct file **file)
- {
- 	int client_fd;
-@@ -615,7 +615,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 				  char __user *buf, size_t count)
- {
- 	struct fanotify_event_metadata metadata;
--	struct path *path = fanotify_event_path(event);
-+	const struct path *path = fanotify_event_path(event);
- 	struct fanotify_info *info = fanotify_event_info(event);
- 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
- 	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
-@@ -1549,7 +1549,7 @@ static int fanotify_test_fid(struct dentry *dentry)
- }
- 
- static int fanotify_events_supported(struct fsnotify_group *group,
--				     struct path *path, __u64 mask,
-+				     const struct path *path, __u64 mask,
- 				     unsigned int flags)
- {
- 	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
+ #endif	/* __FS_NOTIFY_FSNOTIFY_H_ */
 -- 
 2.43.0
 
