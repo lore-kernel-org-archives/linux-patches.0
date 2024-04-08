@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABD980617;
-	Mon,  8 Apr 2024 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E08680603;
+	Mon,  8 Apr 2024 14:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585142; cv=none; b=uYOWBl1/rr436yWZNNByiGC7RD2wNpXcdKG1XnmW1YAjObmMoE/eCccPC1IasKieyhK9UPKJqFTajyCAIGw8/9bjfIvbfcRhNaj77U8ptUpq49OX75tJj/5jhNNKQpEeB4zSeUNMBRQJxVLtk2VZQe5EZ9J8NaRfS4gTgsvk7zg=
+	t=1712585145; cv=none; b=p2FDF8PN75QoeOXnkJtRwhY/F5tiJaDc1TzaH9Evij1tcA9SBNkW9aeK+o1DkRjx86t2cfiwU68kOo9wOSOxQViFg5Lh8Z00ONiAEA6wm9khRKbRIxDMrji5p4jb1pMbWHzAfhhyWuECEDT6ZuGoqgeC6WUfW8yjRKAXBjZUNVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585142; c=relaxed/simple;
-	bh=BjQS7e01G7c5lldkMD2vn99bzs6EsHMuC+HCskdrzD4=;
+	s=arc-20240116; t=1712585145; c=relaxed/simple;
+	bh=kQsR7o+W2GLyhsJU0qCw0IG5QPazfMqIf+CezEz/EqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KI0WdmEYkYK6hKKJi79I2LYag+D591mYGG2RUjAI2YTW6QARrl8kRhsd/hhZ1I9Ro3YupEPD6juKIdZj//YzXE7fegFbRKk5DASfUdQmQc258+B0N5Nle4GWohrxJERj6oI2P1Tt3EYISYVq6yLkUdoxcZOOouSjRC+dW+3Xbw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J03HqzC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vAz4k/SDRdya8WpvFeuafB6YKLaBonpHYqU6SYO2Mo6LnP8LAUvobIwE0FSI6AHLXNROTdKuWb09w/cFX1Sr0Pm9CYEGl1QE9zUYQ849YgEkh1YHXjGh7uKwvdT75m9NFiAz40FdPue7t2VCqwcAddzzHzBOm8nPUoFym1WFRFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wn/2P/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J03HqzC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC357C433F1;
-	Mon,  8 Apr 2024 14:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wn/2P/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3EC433F1;
+	Mon,  8 Apr 2024 14:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585142;
-	bh=BjQS7e01G7c5lldkMD2vn99bzs6EsHMuC+HCskdrzD4=;
+	s=korg; t=1712585145;
+	bh=kQsR7o+W2GLyhsJU0qCw0IG5QPazfMqIf+CezEz/EqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J03HqzC0awT750aITyGufN6taLNItijNFqdBuvZrY48U3htwZbu9Hg7AInak5n4qU
-	 Sz6VeBHUwtT7darXx5+wEi42Rpf/K3Ebipjw/b0V6ci1489poNhd1pLiGhpoi4SUQ3
-	 2m4YxI5cu8JKAFnMrC+PLla0Qj9kFaTJewK/FlkQ=
+	b=0Wn/2P/tCMqBY43gjqw6IwGcxymXcOFnWa7ucKuuiO0GEya2AaGf2kQE/q74KC4e4
+	 EXegMzvLHgEB1MjClZfp+syn8MG+yF6oQv78630l3s7xXivRoem8dvWgABd6m4fnAf
+	 keu4u6fnB2Aj2ZycknYlhPxL5TyC19t2JQkpuDeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jann Horn <jannh@google.com>,
-	Stafford Horne <shorne@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 676/690] openrisc: Fix pagewalk usage in arch_dma_{clear, set}_uncached
-Date: Mon,  8 Apr 2024 14:59:02 +0200
-Message-ID: <20240408125424.199793721@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+011e4ea1da6692cf881c@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 677/690] fs/pipe: Fix lockdep false-positive in watchqueue pipe_write()
+Date: Mon,  8 Apr 2024 14:59:03 +0200
+Message-ID: <20240408125424.243001626@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,58 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 28148a17c988b614534f457da86893f83664ad43 ]
+[ Upstream commit 055ca83559912f2cfd91c9441427bac4caf3c74e ]
 
-Since commit 8782fb61cc848 ("mm: pagewalk: Fix race between unmap and page
-walker"), walk_page_range() on kernel ranges won't work anymore,
-walk_page_range_novma() must be used instead.
+When you try to splice between a normal pipe and a notification pipe,
+get_pipe_info(..., true) fails, so splice() falls back to treating the
+notification pipe like a normal pipe - so we end up in
+iter_file_splice_write(), which first locks the input pipe, then calls
+vfs_iter_write(), which locks the output pipe.
 
-Note: I don't have an openrisc development setup, so this is completely
-untested.
+Lockdep complains about that, because we're taking a pipe lock while
+already holding another pipe lock.
 
-Fixes: 8782fb61cc848 ("mm: pagewalk: Fix race between unmap and page walker")
+I think this probably (?) can't actually lead to deadlocks, since you'd
+need another way to nest locking a normal pipe into locking a
+watch_queue pipe, but the lockdep annotations don't make that clear.
+
+Bail out earlier in pipe_write() for notification pipes, before taking
+the pipe lock.
+
+Reported-and-tested-by: <syzbot+011e4ea1da6692cf881c@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=011e4ea1da6692cf881c
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
 Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Link: https://lore.kernel.org/r/20231124150822.2121798-1-jannh@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/dma.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/pipe.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/openrisc/kernel/dma.c b/arch/openrisc/kernel/dma.c
-index a82b2caaa560d..b3edbb33b621d 100644
---- a/arch/openrisc/kernel/dma.c
-+++ b/arch/openrisc/kernel/dma.c
-@@ -74,10 +74,10 @@ void *arch_dma_set_uncached(void *cpu_addr, size_t size)
- 	 * We need to iterate through the pages, clearing the dcache for
- 	 * them and setting the cache-inhibit bit.
- 	 */
--	mmap_read_lock(&init_mm);
--	error = walk_page_range(&init_mm, va, va + size, &set_nocache_walk_ops,
--			NULL);
--	mmap_read_unlock(&init_mm);
-+	mmap_write_lock(&init_mm);
-+	error = walk_page_range_novma(&init_mm, va, va + size,
-+			&set_nocache_walk_ops, NULL, NULL);
-+	mmap_write_unlock(&init_mm);
+diff --git a/fs/pipe.c b/fs/pipe.c
+index a8b8ef2dae7b7..0a8095070b70e 100644
+--- a/fs/pipe.c
++++ b/fs/pipe.c
+@@ -423,6 +423,18 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
+ 	bool was_empty = false;
+ 	bool wake_next_writer = false;
  
- 	if (error)
- 		return ERR_PTR(error);
-@@ -88,11 +88,11 @@ void arch_dma_clear_uncached(void *cpu_addr, size_t size)
- {
- 	unsigned long va = (unsigned long)cpu_addr;
++	/*
++	 * Reject writing to watch queue pipes before the point where we lock
++	 * the pipe.
++	 * Otherwise, lockdep would be unhappy if the caller already has another
++	 * pipe locked.
++	 * If we had to support locking a normal pipe and a notification pipe at
++	 * the same time, we could set up lockdep annotations for that, but
++	 * since we don't actually need that, it's simpler to just bail here.
++	 */
++	if (pipe_has_watch_queue(pipe))
++		return -EXDEV;
++
+ 	/* Null write succeeds. */
+ 	if (unlikely(total_len == 0))
+ 		return 0;
+@@ -435,11 +447,6 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
+ 		goto out;
+ 	}
  
--	mmap_read_lock(&init_mm);
-+	mmap_write_lock(&init_mm);
- 	/* walk_page_range shouldn't be able to fail here */
--	WARN_ON(walk_page_range(&init_mm, va, va + size,
--			&clear_nocache_walk_ops, NULL));
--	mmap_read_unlock(&init_mm);
-+	WARN_ON(walk_page_range_novma(&init_mm, va, va + size,
-+			&clear_nocache_walk_ops, NULL, NULL));
-+	mmap_write_unlock(&init_mm);
- }
- 
- void arch_sync_dma_for_device(phys_addr_t addr, size_t size,
+-	if (pipe_has_watch_queue(pipe)) {
+-		ret = -EXDEV;
+-		goto out;
+-	}
+-
+ 	/*
+ 	 * If it wasn't empty we try to merge new data into
+ 	 * the last buffer.
 -- 
 2.43.0
 
