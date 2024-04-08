@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCCA79F0;
-	Mon,  8 Apr 2024 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011887D085;
+	Mon,  8 Apr 2024 13:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584700; cv=none; b=IS8nAi3IS9AV7glAZfGTed1UQdFPbQu/xV3cxcBzBMqRtgxAmHe3FiA6cOKvby9Xge1IWb5t1AOH3faF5wteWPfSlCsSIkvyUZoXu0Ovtu6F7T3tT/40Wqs19pXJPYTm51rmr6RQDSTYCMk+IVi/TffZzVIP1YipAfcu1mK78Pw=
+	t=1712584704; cv=none; b=J7tm+W3XOyE+dfdn0K+m8huiIw52Fy0RVUfJk+8NFBxL14YE12e9Dzr79cPjp1DAxrJWjQn4/YU6PgmeW94pI+Mvju3cnABPQ97/D8dPz3S3KzyC99tCfAOyIoZE1HNLZ63/Rvu71QCmcJxGwgm7UnMDStWjMKXlcdUBWqXmy4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584700; c=relaxed/simple;
-	bh=KjbviYmJ2nc6t7MbxU31MzGMbqKDGHgMmTCiDcIv8xQ=;
+	s=arc-20240116; t=1712584704; c=relaxed/simple;
+	bh=VEOPYr17wUsqOChQ8sITIkHxTYkIPepZESHWdc5QGds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC8/dLoOGz8wgcr9gVdDJc5qKWac23VD9I8BdEwoJm2vE7mu2p0RG2x/77itSN9D5Ov0ov1Mg0QGebZYIw7VKw+Q2l/H1UcFTBMcZvLge++MEmMe0G70ZH1eChmaDzvGFCEnWm0vL5CjnsCPDHfStFjkXqF4fyosdz/ckPS8AGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c40nYdjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LVaaeSdOLowdNFPQcgOECJ7WPB8sr+kYQqGZMeU+AKl8+kthXKQk0mMCP4Vw0oDlnE1ZAEeT9PkWE9WvZiqCwkwyDXflhPuiGQKNm8hJs8YkUvPnKLfDERdPPw+Gcogngk5nsNk9dqe9UR2MKrmlmbw+lhMhMcgIRiYvKNd05Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O39lKH+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c40nYdjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B36C433F1;
-	Mon,  8 Apr 2024 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O39lKH+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A741C433F1;
+	Mon,  8 Apr 2024 13:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584700;
-	bh=KjbviYmJ2nc6t7MbxU31MzGMbqKDGHgMmTCiDcIv8xQ=;
+	s=korg; t=1712584703;
+	bh=VEOPYr17wUsqOChQ8sITIkHxTYkIPepZESHWdc5QGds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c40nYdjo16xQ7HkRClTyClpIvXc+fredQSPJklqdoiXGsS1lOqpyFJtSsnFfzgVxs
-	 weJifm3EMswnPOIXVVogEiyQpXMMsH2u/iBBqntQEe74OIkOK7hb8tNEUVNgI1+Dbq
-	 EohnYYMjkmvR5MZsHH053pdmDNKoUi1a1cZ542sY=
+	b=O39lKH+OWNtoDWBbu7QocNHK2zQh4WcGdAuFliK/3je9h37GMzQgyxS3Mf+m+vtJf
+	 nDSI1+1Fo3S/6H1r1FoAuG0qArQZD/7e0dRbpTas8UtZTV0z3G2LnNmWnRj+Yn51a2
+	 m0ztbzdd79pNfRrRHXO1H7IQHzD/zun6ZvpLJ2Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 528/690] nfsd: call op_release, even when op_func returns an error
-Date: Mon,  8 Apr 2024 14:56:34 +0200
-Message-ID: <20240408125418.774399350@linuxfoundation.org>
+Subject: [PATCH 5.15 529/690] nfsd: dont open-code clear_and_wake_up_bit
+Date: Mon,  8 Apr 2024 14:56:35 +0200
+Message-ID: <20240408125418.813037080@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -53,65 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 15a8b55dbb1ba154d82627547c5761cac884d810 ]
+[ Upstream commit b8bea9f6cdd7236c7c2238d022145e9b2f8aac22 ]
 
-For ops with "trivial" replies, nfsd4_encode_operation will shortcut
-most of the encoding work and skip to just marshalling up the status.
-One of the things it skips is calling op_release. This could cause a
-memory leak in the layoutget codepath if there is an error at an
-inopportune time.
-
-Have the compound processing engine always call op_release, even when
-op_func sets an error in op->status. With this change, we also need
-nfsd4_block_get_device_info_scsi to set the gd_device pointer to NULL
-on error to avoid a double free.
-
-Reported-by: Zhi Li <yieli@redhat.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2181403
-Fixes: 34b1744c91cc ("nfsd4: define ->op_release for compound ops")
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: adjusted to apply to v5.15.y ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfs4xdr.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/nfsd/filecache.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 9c9ff3bdc62a9..30c64c3f5fa05 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5398,10 +5398,8 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
- 	__be32 *p;
- 
- 	p = xdr_reserve_space(xdr, 8);
--	if (!p) {
--		WARN_ON_ONCE(1);
--		return;
--	}
-+	if (!p)
-+		goto release;
- 	*p++ = cpu_to_be32(op->opnum);
- 	post_err_offset = xdr->buf->len;
- 
-@@ -5416,8 +5414,6 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
- 	op->status = encoder(resp, op->status, &op->u);
- 	if (op->status)
- 		trace_nfsd_compound_encode_err(rqstp, op->opnum, op->status);
--	if (opdesc && opdesc->op_release)
--		opdesc->op_release(&op->u);
- 	xdr_commit_encode(xdr);
- 
- 	/* nfsd4_check_resp_size guarantees enough room for error status */
-@@ -5458,6 +5454,9 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
- 	}
- status:
- 	*p = op->status;
-+release:
-+	if (opdesc && opdesc->op_release)
-+		opdesc->op_release(&op->u);
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 4a3796c6bd957..677a8d935ccc2 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -1173,9 +1173,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		status = nfserr_jukebox;
+ 	if (status != nfs_ok)
+ 		nfsd_file_unhash(nf);
+-	clear_bit_unlock(NFSD_FILE_PENDING, &nf->nf_flags);
+-	smp_mb__after_atomic();
+-	wake_up_bit(&nf->nf_flags, NFSD_FILE_PENDING);
++	clear_and_wake_up_bit(NFSD_FILE_PENDING, &nf->nf_flags);
+ 	goto out;
  }
  
- /* 
 -- 
 2.43.0
 
