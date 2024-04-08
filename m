@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2943F81754;
-	Mon,  8 Apr 2024 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEE781745;
+	Mon,  8 Apr 2024 13:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584075; cv=none; b=DdXthcxW8hH7m/TMzI4S98nGFIEO7lxwIcs68K8SeNu68XrepqaAfs+tfBJShLEai1aCALdUR3Fskv3IO5Gkep/R/zAKFVkCI5DZBm1Kf71BwsuoPG3zxPwkGPgCkPTjbFJo4+SepD8s0FfW6unJ34i0RerUNdhtB9DFKYTpsTg=
+	t=1712584078; cv=none; b=IbfFC0TkorVgX0Z7x1faEd6KNCXwLCTyMPTorxT82YUAaPkOiVQKa63wpljX84KPDHkjsBkZhIItYtWK6b+dEunlRkb2ZTlQQH0YJ2vev2jxIc2VD9UajkBl6xl/q5GFXuG4JEYfoqOSVcv2flHKp29ZtDLSerbxVCYHzv56Cag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584075; c=relaxed/simple;
-	bh=oyDtS4OKyzxux7Zm9jFzBja0ww/UQRumeesEEnTtGtM=;
+	s=arc-20240116; t=1712584078; c=relaxed/simple;
+	bh=2RmQqspAo7/FDVT/GKR1m93mdmS17KeZvP4NjtK9/9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5ZVWB6Or/GckcRWx+S0sO+2IZXbO1X+kmf8gWc2ERnH9abaayHywrZbf3e9RiAuOXtQJxnTbn4QJ6r4g5EoyUl2SYNwjVNeKTLGwRH8r6lHt8EGlPx62OvHJtjtTfWH0d2pj/zqqb7kKUds92GQCl9WGIW0aWz45rBNgdMMCuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuMLIy9J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rge9esFkvxtHww3Qst4VZT36gw3/0XY06MItKHdfWnwzX5wazpI+rrmcDYstbaiv9e/HRlLVNIVq/6R37xIOuRE1MYGRrdJZtQM15Pk/1NXPymnBqvZ7PmKT/Nm/iqOx1HL3a3K81+kXWlXr+lT9S34tibXTI/ll390Ij+nEcDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVeGQ9tG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuMLIy9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54905C433F1;
-	Mon,  8 Apr 2024 13:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVeGQ9tG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392A7C433F1;
+	Mon,  8 Apr 2024 13:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584074;
-	bh=oyDtS4OKyzxux7Zm9jFzBja0ww/UQRumeesEEnTtGtM=;
+	s=korg; t=1712584077;
+	bh=2RmQqspAo7/FDVT/GKR1m93mdmS17KeZvP4NjtK9/9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuMLIy9J9fDStmXmnqO4Z8PwfkBfiHdsFj1OAPgIyOK/aWQpUlv0EGu3jb/szWHl8
-	 hVurdgt6GYzuKTMzoxm6mTTdVLJq5TLsEJ1p9A330PDalAcgoXVIxu+fugdpkTnxIF
-	 KXvVgmVTe8bG8NGeBWQF0Cecnx/BeDD0C0WComYA=
+	b=pVeGQ9tGed/Kz9EnV5U54w+Lqmww2hyJ6gCMl3LIx2PXTeEWxrQHdpS7mJZ3TNsop
+	 HYeqwuDVKjECLXOpfQV90QMo9pXeBP1I/StsOGt7HlXGIHTN7DXJc5U/AT847cFW0s
+	 sa3mSImwDBTcv5yuJ7JY6c8qj2JKjVn2JOcRE4FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 316/690] NFSD: Refactor nfsd_create_setattr()
-Date: Mon,  8 Apr 2024 14:53:02 +0200
-Message-ID: <20240408125411.048901863@linuxfoundation.org>
+Subject: [PATCH 5.15 330/690] NFSD: Add documenting comment for nfsd4_release_lockowner()
+Date: Mon,  8 Apr 2024 14:53:16 +0200
+Message-ID: <20240408125411.563542079@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -51,158 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5f46e950c395b9c14c282b53ba78c5fd46d6c256 ]
+[ Upstream commit 043862b09cc00273e35e6c3a6389957953a34207 ]
 
-I'd like to move do_nfsd_create() out of vfs.c. Therefore
-nfsd_create_setattr() needs to be made publicly visible.
-
-Note that both call sites in vfs.c commit both the new object and
-its parent directory, so just combine those common metadata commits
-into nfsd_create_setattr().
+And return explicit nfserr values that match what is documented in the
+new comment / API contract.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/vfs.c | 79 +++++++++++++++++++++++++++------------------------
- fs/nfsd/vfs.h |  2 ++
- 2 files changed, 44 insertions(+), 37 deletions(-)
+ fs/nfsd/nfs4state.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index a46ab32216dee..e4f100a43ce52 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1189,14 +1189,26 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, u64 offset,
- 	return err;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 2d52656095340..08700b6acba31 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7542,6 +7542,23 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+ 	return status;
  }
  
--static __be32
--nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *resfhp,
--			struct iattr *iap)
 +/**
-+ * nfsd_create_setattr - Set a created file's attributes
-+ * @rqstp: RPC transaction being executed
-+ * @fhp: NFS filehandle of parent directory
-+ * @resfhp: NFS filehandle of new object
-+ * @iap: requested attributes of new object
++ * nfsd4_release_lockowner - process NFSv4.0 RELEASE_LOCKOWNER operations
++ * @rqstp: RPC transaction
++ * @cstate: NFSv4 COMPOUND state
++ * @u: RELEASE_LOCKOWNER arguments
 + *
-+ * Returns nfs_ok on success, or an nfsstat in network byte order.
++ * The lockowner's so_count is bumped when a lock record is added
++ * or when copying a conflicting lock. The latter case is brief,
++ * but can lead to fleeting false positives when looking for
++ * locks-in-use.
++ *
++ * Return values:
++ *   %nfs_ok: lockowner released or not found
++ *   %nfserr_locks_held: lockowner still in use
++ *   %nfserr_stale_clientid: clientid no longer active
++ *   %nfserr_expired: clientid not recognized
 + */
-+__be32
-+nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+		    struct svc_fh *resfhp, struct iattr *iap)
- {
-+	__be32 status;
+ __be32
+ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 			struct nfsd4_compound_state *cstate,
+@@ -7568,7 +7585,7 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
+ 	if (!lo) {
+ 		spin_unlock(&clp->cl_lock);
+-		return status;
++		return nfs_ok;
+ 	}
+ 	if (atomic_read(&lo->lo_owner.so_count) != 2) {
+ 		spin_unlock(&clp->cl_lock);
+@@ -7584,11 +7601,11 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 		put_ol_stateid_locked(stp, &reaplist);
+ 	}
+ 	spin_unlock(&clp->cl_lock);
 +
- 	/*
--	 * Mode has already been set earlier in create:
-+	 * Mode has already been set by file creation.
- 	 */
- 	iap->ia_valid &= ~ATTR_MODE;
-+
- 	/*
- 	 * Setting uid/gid works only for root.  Irix appears to
- 	 * send along the gid on create when it tries to implement
-@@ -1204,10 +1216,31 @@ nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *resfhp,
- 	 */
- 	if (!uid_eq(current_fsuid(), GLOBAL_ROOT_UID))
- 		iap->ia_valid &= ~(ATTR_UID|ATTR_GID);
-+
-+	/*
-+	 * Callers expect new file metadata to be committed even
-+	 * if the attributes have not changed.
-+	 */
- 	if (iap->ia_valid)
--		return nfsd_setattr(rqstp, resfhp, iap, 0, (time64_t)0);
--	/* Callers expect file metadata to be committed here */
--	return nfserrno(commit_metadata(resfhp));
-+		status = nfsd_setattr(rqstp, resfhp, iap, 0, (time64_t)0);
-+	else
-+		status = nfserrno(commit_metadata(resfhp));
-+
-+	/*
-+	 * Transactional filesystems had a chance to commit changes
-+	 * for both parent and child simultaneously making the
-+	 * following commit_metadata a noop in many cases.
-+	 */
-+	if (!status)
-+		status = nfserrno(commit_metadata(fhp));
-+
-+	/*
-+	 * Update the new filehandle to pick up the new attributes.
-+	 */
-+	if (!status)
-+		status = fh_update(resfhp);
-+
-+	return status;
+ 	free_ol_stateid_reaplist(&reaplist);
+ 	remove_blocked_locks(lo);
+ 	nfs4_put_stateowner(&lo->lo_owner);
+-
+-	return status;
++	return nfs_ok;
  }
  
- /* HPUX client sometimes creates a file in mode 000, and sets size to 0.
-@@ -1234,7 +1267,6 @@ nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	struct dentry	*dentry, *dchild;
- 	struct inode	*dirp;
- 	__be32		err;
--	__be32		err2;
- 	int		host_err;
- 
- 	dentry = fhp->fh_dentry;
-@@ -1307,22 +1339,8 @@ nfsd_create_locked(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (host_err < 0)
- 		goto out_nfserr;
- 
--	err = nfsd_create_setattr(rqstp, resfhp, iap);
-+	err = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
- 
--	/*
--	 * nfsd_create_setattr already committed the child.  Transactional
--	 * filesystems had a chance to commit changes for both parent and
--	 * child simultaneously making the following commit_metadata a
--	 * noop.
--	 */
--	err2 = nfserrno(commit_metadata(fhp));
--	if (err2)
--		err = err2;
--	/*
--	 * Update the file handle to get the new inode info.
--	 */
--	if (!err)
--		err = fh_update(resfhp);
- out:
- 	dput(dchild);
- 	return err;
-@@ -1513,20 +1531,7 @@ do_nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	}
- 
-  set_attr:
--	err = nfsd_create_setattr(rqstp, resfhp, iap);
--
--	/*
--	 * nfsd_create_setattr already committed the child
--	 * (and possibly also the parent).
--	 */
--	if (!err)
--		err = nfserrno(commit_metadata(fhp));
--
--	/*
--	 * Update the filehandle to get the new inode info.
--	 */
--	if (!err)
--		err = fh_update(resfhp);
-+	err = nfsd_create_setattr(rqstp, fhp, resfhp, iap);
- 
-  out:
- 	fh_unlock(fhp);
-diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index ccb87b2864f64..1f32a83456b03 100644
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -69,6 +69,8 @@ __be32		nfsd_create(struct svc_rqst *, struct svc_fh *,
- 				char *name, int len, struct iattr *attrs,
- 				int type, dev_t rdev, struct svc_fh *res);
- __be32		nfsd_access(struct svc_rqst *, struct svc_fh *, u32 *, u32 *);
-+__be32		nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+				struct svc_fh *resfhp, struct iattr *iap);
- __be32		do_nfsd_create(struct svc_rqst *, struct svc_fh *,
- 				char *name, int len, struct iattr *attrs,
- 				struct svc_fh *res, int createmode,
+ static inline struct nfs4_client_reclaim *
 -- 
 2.43.0
 
