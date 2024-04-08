@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3AA7C6D4;
-	Mon,  8 Apr 2024 13:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F4D524AF;
+	Mon,  8 Apr 2024 13:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583268; cv=none; b=dsiXycSauHa5+JeAlC3U+7Oom6airr6RhStaT7+COeSL1eC1BQD4CnBrxOzc5dYMfRt9rnm/4k/5zFZdaY/GPnijgXjD6kq5isHPwg0ZZrBjxCxkqPzpLWTgFoz1c6cCNsaz/+9D4exTIVkQM+CtqLRYemVh+EnL/4nFA8N2Fi8=
+	t=1712583271; cv=none; b=EAgY9spFht+c9hVB/YQtRYLiSdqYWKYLOHgSXD6H1z+sv8Ffw8wDvmkEDYixITwvCXt8XEFFPjjT5V4hX3xuIx3FzXIgWS4P3YZ13lpmrw65YeEEEiG4tZdkwi8Ahtzy/J1gsla7OWaFZbFXvovZPrUuijMSdNCNtOgA4N5nbY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583268; c=relaxed/simple;
-	bh=GPifiWNWE84n9VtwzqefCYLTMwCOGfmyu/WvuRHClXw=;
+	s=arc-20240116; t=1712583271; c=relaxed/simple;
+	bh=faAPl0wlLM8jRN7GLcUQ5/WzGH2VQ4rxlY+w/UCCzUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7+2HuRO//VsjznYVyOKpbwaAxz0JhPdn4KPjR/6egnlXfG4wFNj9oT+pGo7jwVqbPVvPNQmOlUO+m6PRvVKzPDfTP2T7jXkhbx6d8ypmQ4hQbKfChXQL43dOBOmvC+BMB8kL003CH8NVQQpUg2VxUQb5cJxu88ZMViSqt3T/8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ophxcuDq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVsyaJZnPV07INhekBlcL/r+QrhEVITj2UkWQ/Bv+S3UUBEWeMBhgDbbnK2QUrz5WBmi0lpAbWgo/PmItiUxEpmaqpN33lZgMtH0CCUBXIZeBMs0t/gb2AuwIAR8XSo/IKlQd9O4gLRO2OBYOGBoKASGbO2sA45EA+HF3NyNPsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILOClTtN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ophxcuDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39191C433F1;
-	Mon,  8 Apr 2024 13:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILOClTtN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20898C433F1;
+	Mon,  8 Apr 2024 13:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583267;
-	bh=GPifiWNWE84n9VtwzqefCYLTMwCOGfmyu/WvuRHClXw=;
+	s=korg; t=1712583270;
+	bh=faAPl0wlLM8jRN7GLcUQ5/WzGH2VQ4rxlY+w/UCCzUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ophxcuDq91rhymZq6M0Nebvb+9WL0KHUqGhTj8RtHLtBrwZby1IuqCJlmN5pLi8lX
-	 3vL/n8q4HpfGRyciHHm610rPS/J1NEgeQn4sBO0IWJpj/sHkvdxAHb2+vx2CWJbUzF
-	 Kuccb1OF1oWK9uCA1VGwq6hLIvMDKpGENuKVLLZU=
+	b=ILOClTtNF6m56BJ0zpvdym1hatmzSsbSxmhgeGq463l4Eei6/SXQnaePJA34nfWOQ
+	 Voc4gHrL5/o94TBz3e86xlK7vhdrqAogziYou3KBgQm7TahzQiO2XvDnzfT6sDhRSx
+	 DTH78fO3RKYU2ZNgW6Tnvu+JC8tJ71TPp8kUyS88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Chao Song <chao.song@linux.intel.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 158/273] ASoC: rt5682-sdw: fix locking sequence
-Date: Mon,  8 Apr 2024 14:57:13 +0200
-Message-ID: <20240408125314.180247889@linuxfoundation.org>
+Subject: [PATCH 6.6 176/252] spi: s3c64xx: explicitly include <linux/bits.h>
+Date: Mon,  8 Apr 2024 14:57:55 +0200
+Message-ID: <20240408125312.119914211@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 310a5caa4e861616a27a83c3e8bda17d65026fa8 ]
+[ Upstream commit 4568fa574fcef3811a8140702979f076ef0f5bc0 ]
 
-The disable_irq_lock protects the 'disable_irq' value, we need to lock
-before testing it.
+The driver uses GENMASK() but does not include <linux/bits.h>.
 
-Fixes: 02fb23d72720 ("ASoC: rt5682-sdw: fix for JD event handling in ClockStop Mode0")
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Chao Song <chao.song@linux.intel.com>
-Link: https://msgid.link/r/20240325221817.206465-2-pierre-louis.bossart@linux.intel.com
+It is good practice to directly include all headers used, it avoids
+implicit dependencies and spurious breakage if someone rearranges
+headers and causes the implicit include to vanish.
+
+Include the missing header.
+
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20240207120431.2766269-4-tudor.ambarus@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: a3d3eab627bb ("spi: s3c64xx: Use DMA mode from fifo size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5682-sdw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-s3c64xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt5682-sdw.c b/sound/soc/codecs/rt5682-sdw.c
-index e67c2e19cb1a7..1fdbef5fd6cba 100644
---- a/sound/soc/codecs/rt5682-sdw.c
-+++ b/sound/soc/codecs/rt5682-sdw.c
-@@ -763,12 +763,12 @@ static int __maybe_unused rt5682_dev_resume(struct device *dev)
- 		return 0;
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index 26d389d95af92..1e519b1537e71 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -3,6 +3,7 @@
+ // Copyright (c) 2009 Samsung Electronics Co., Ltd.
+ //      Jaswinder Singh <jassi.brar@samsung.com>
  
- 	if (!slave->unattach_request) {
-+		mutex_lock(&rt5682->disable_irq_lock);
- 		if (rt5682->disable_irq == true) {
--			mutex_lock(&rt5682->disable_irq_lock);
- 			sdw_write_no_pm(slave, SDW_SCP_INTMASK1, SDW_SCP_INT1_IMPL_DEF);
- 			rt5682->disable_irq = false;
--			mutex_unlock(&rt5682->disable_irq_lock);
- 		}
-+		mutex_unlock(&rt5682->disable_irq_lock);
- 		goto regmap_sync;
- 	}
- 
++#include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
 -- 
 2.43.0
 
