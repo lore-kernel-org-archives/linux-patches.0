@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8527E112;
-	Mon,  8 Apr 2024 13:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9737EEF2;
+	Mon,  8 Apr 2024 13:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584191; cv=none; b=d17sqIsbiXzvro7tkVti9PhCaY/jq65Duk3aT19HRPZZSajx/V2ejQ6J2FTvGtVNroM98mm4sa6wuJZ/GrPD6IUoytiEI/FcQtK7jBfATR/qr8kSmKrFrOQKtmfaRYTSxPef7gmotpjCccg/EHJCmAKmbkdeFhJRN7/Nu6Cmwp8=
+	t=1712584195; cv=none; b=YhatAb/kaZNcJCvwOCHHjKQ2PJwzh1PIbdSTWUZaMWaXSrpTtIrepUXsGOUfOO6K76lZibgZfec/eENGh032nN1d9t/azqEHkHcSgR+y3wsqINhhaisWojgeiiynbDd3yv9zdT/I/n9P6LlWDklWAc8Y5AZAxTwVrGK8GTc/bwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584191; c=relaxed/simple;
-	bh=QtPAFOpK7BUroYXCc9gL8h9U8NirJfF/SLL34VG+YmA=;
+	s=arc-20240116; t=1712584195; c=relaxed/simple;
+	bh=0Wf4Op1smJIoKeT1mWF598WF9h01LERGExaXUXCQa+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkc8ZAragnTlpkwLIPyqsBoOwjwtHeyMMmgiXFiX1SV1yswCAnJzEKu+E04QmmPGQ15kP8ZoFW6/Gwj3S4rbR5WNpePYuHQV9eecNU4awfEOtAxWInngvKbQES9qzWSmIP+3IV+LAjz6Lv7HzdyalBux8hTHynR4K+G9sottQqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oK7RUNcA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCFD+C4zEguFLVQX2bQsz8t3O5Z8vsrOLO3i9sBKB1tF3q7h41svG+bF4VEIMVLeluob99voUsSyNdh3ta4FKwFrzo9yk1E2Xc5qMzZ5nynnsjYJOcP4duf4JuhKKtHFqrugqCxnET5KCI7zBetVvRjoKW5eh8fCrhvrlc2Bc6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zI2dTFTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oK7RUNcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66599C433C7;
-	Mon,  8 Apr 2024 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zI2dTFTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44353C433F1;
+	Mon,  8 Apr 2024 13:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584191;
-	bh=QtPAFOpK7BUroYXCc9gL8h9U8NirJfF/SLL34VG+YmA=;
+	s=korg; t=1712584194;
+	bh=0Wf4Op1smJIoKeT1mWF598WF9h01LERGExaXUXCQa+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oK7RUNcAI3TfpSjTlzouzX+FQrHGAEh2P3Tgyz2o3zMNULRWylJ7YGWTSKtfxcxrs
-	 Lmat0chgr7/IchQhbGYeaJ6fCFsrcwp3lOW7sPblLXv1M8Kagy1apfx1OtXeW3bxDR
-	 1TyCxN2e7VA0eL41yWm9T+8iRyy3O2+keDQ22h94=
+	b=zI2dTFTkCyKR3so1dn1WBQ1UKErGDAcF9pxRXN5fcolK4Lvw8ymHaEvMPedaGbB70
+	 04n1h2IHKrdfvhESzYzmWRdr+B6HELKEMG+VSrvBj6Lowk5HBbswhBZUzXUvJ3Yk1k
+	 i20mEPxVVdYKwX3R2CA4fN/P2rzAilA/aa1vuTLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 355/690] NFSD: Zero counters when the filecache is re-initialized
-Date: Mon,  8 Apr 2024 14:53:41 +0200
-Message-ID: <20240408125412.457917988@linuxfoundation.org>
+Subject: [PATCH 5.15 356/690] NFSD: Hook up the filecache stat file
+Date: Mon,  8 Apr 2024 14:53:42 +0200
+Message-ID: <20240408125412.492674137@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,46 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 8b330f78040cbe16cf8029df70391b2a491f17e2 ]
+[ Upstream commit 2e6c6e4c4375bfd3defa5b1ff3604d9f33d1c936 ]
 
-If nfsd_file_cache_init() is called after a shutdown, be sure the
-stat counters are reset.
+There has always been the capability of exporting filecache metrics
+via /proc, but it was never hooked up. Let's surface these metrics
+to enable better observability of the filecache.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/filecache.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/nfsd/nfsctl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index b9941d4ef20d6..60c51a4d8e0d7 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -823,6 +823,8 @@ nfsd_file_cache_shutdown_net(struct net *net)
- void
- nfsd_file_cache_shutdown(void)
- {
-+	int i;
-+
- 	set_bit(NFSD_FILE_SHUTDOWN, &nfsd_file_lru_flags);
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 66c352bf61b1d..7002edbf26870 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -25,6 +25,7 @@
+ #include "state.h"
+ #include "netns.h"
+ #include "pnfs.h"
++#include "filecache.h"
  
- 	lease_unregister_notifier(&nfsd_file_lease_notifier);
-@@ -846,6 +848,15 @@ nfsd_file_cache_shutdown(void)
- 	nfsd_file_hashtbl = NULL;
- 	destroy_workqueue(nfsd_filecache_wq);
- 	nfsd_filecache_wq = NULL;
-+
-+	for_each_possible_cpu(i) {
-+		per_cpu(nfsd_file_cache_hits, i) = 0;
-+		per_cpu(nfsd_file_acquisitions, i) = 0;
-+		per_cpu(nfsd_file_releases, i) = 0;
-+		per_cpu(nfsd_file_total_age, i) = 0;
-+		per_cpu(nfsd_file_pages_flushed, i) = 0;
-+		per_cpu(nfsd_file_evictions, i) = 0;
-+	}
- }
+ /*
+  *	We have a single directory with several nodes in it.
+@@ -45,6 +46,7 @@ enum {
+ 	NFSD_Ports,
+ 	NFSD_MaxBlkSize,
+ 	NFSD_MaxConnections,
++	NFSD_Filecache,
+ 	NFSD_SupportedEnctypes,
+ 	/*
+ 	 * The below MUST come last.  Otherwise we leave a hole in nfsd_files[]
+@@ -229,6 +231,13 @@ static const struct file_operations reply_cache_stats_operations = {
+ 	.release	= single_release,
+ };
  
- static bool
++static const struct file_operations filecache_ops = {
++	.open		= nfsd_file_cache_stats_open,
++	.read		= seq_read,
++	.llseek		= seq_lseek,
++	.release	= single_release,
++};
++
+ /*----------------------------------------------------------------------------*/
+ /*
+  * payload - write methods
+@@ -1370,6 +1379,7 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		[NFSD_Ports] = {"portlist", &transaction_ops, S_IWUSR|S_IRUGO},
+ 		[NFSD_MaxBlkSize] = {"max_block_size", &transaction_ops, S_IWUSR|S_IRUGO},
+ 		[NFSD_MaxConnections] = {"max_connections", &transaction_ops, S_IWUSR|S_IRUGO},
++		[NFSD_Filecache] = {"filecache", &filecache_ops, S_IRUGO},
+ #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
+ 		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes", &supported_enctypes_ops, S_IRUGO},
+ #endif /* CONFIG_SUNRPC_GSS or CONFIG_SUNRPC_GSS_MODULE */
 -- 
 2.43.0
 
