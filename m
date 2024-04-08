@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE730762DA;
-	Mon,  8 Apr 2024 13:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA94C7D408;
+	Mon,  8 Apr 2024 13:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582217; cv=none; b=pkOlgQtYk558YD5o/PrEBosJHoiSkeV4fqu8EsoJKNEIibyKrP2yX9T5HaR3mT229BzNKcgSLtDsI4dIWVT8zkz1zY4taqPm7SitMjKd/tmtkd8qhn3WWr9YTP5UQSctLW2zEyzvJEheqevo+wMYQOED2iKFIPuQhV2qNDWcW6w=
+	t=1712582221; cv=none; b=AbIy2I/PLqUwHdkCH6ThYzldWuELCERmhn12U9/R7iFLtN8h271/HaXY0M+N0Z8cy1y1Hq+Dvc4HQPcXzxilZFh9k9HI0UI0d4zB2deaN3xIzI5OCk430nL3sVRXDn2/cOAoAiwGN4zam9A2dH5B8TbcxNz9aZS43wr1vOBqCo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582217; c=relaxed/simple;
-	bh=6D++A2YjSPcrP85himGLW48Jse9hQw1guWVUbeZEJLg=;
+	s=arc-20240116; t=1712582221; c=relaxed/simple;
+	bh=VHZ44TRLWmsp8d5+F2YfVriVZkUGFXclV9gqkZ7JIx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JwR0JAJC4Y73eBWJAcnlOnVeltLjfsNBpm1VbgBW963iMFU7eBd4ex+uQO8MvL4pZgTWlZEQA8cCuhDGyR9bJlS1bIT/3ZfczsaXCa/s6CPNStCmksUu7a4Odri1YyvIcGB9qKS2d7QHL5aJceMZCjGj43++47kYbGLCGBE7PqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDaBL5qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/+TwMDzioLbOqDRUxZYzGAJsBtpk7Fqpv5DGg4N1sIL9g98zHG48nD4FjQp8eyLRGETko4xIcvG2mV2mJOW8dyo//PfNpqFWt0N400twVuuFtEY6uOgxMXvfl6fhxCy1p2qTl605pO41MtxAARDA2RzbWKha2A/NzgETvxkYmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuephu0C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDaBL5qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35984C433F1;
-	Mon,  8 Apr 2024 13:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuephu0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F6DC433C7;
+	Mon,  8 Apr 2024 13:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582217;
-	bh=6D++A2YjSPcrP85himGLW48Jse9hQw1guWVUbeZEJLg=;
+	s=korg; t=1712582220;
+	bh=VHZ44TRLWmsp8d5+F2YfVriVZkUGFXclV9gqkZ7JIx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDaBL5qupDfv2pISz/Lnj90EHzoA/u0aC4FEVP6AeSFmTrPpJFKFdm83utmJqCxTF
-	 qEf3m2jjfbKLxkcBLCuNgsJIGTvIgmU4HtLcerPEn6UrCNR1SffsPM2vBwZSUQ6MY/
-	 0eXtYVYfBhY8BP0eLwOt0HzbQUdCZefw7t4XQfv4=
+	b=yuephu0CUtVsV228zZFlXwSSEqsU0idM2s7+SQ3xw4m8ZtO/9m9+1SI/6LFw8NvIK
+	 IwOXiz1bB76qgzoKcvnHMDxjwIINr3m460l15m03ssEMp5wr2BUP52M9bkguLpeEVi
+	 i7zxqT1SHPZFGArAvj1ydaKT2ll0Qefc+92EJ4/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 057/273] drm/i915: Do not print pxp init failed with 0 when it succeed
-Date: Mon,  8 Apr 2024 14:55:32 +0200
-Message-ID: <20240408125311.071999967@linuxfoundation.org>
+Subject: [PATCH 6.1 088/138] KVM: SVM: Add support for allowing zero SEV ASIDs
+Date: Mon,  8 Apr 2024 14:58:22 +0200
+Message-ID: <20240408125258.962150037@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +46,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Roberto de Souza <jose.souza@intel.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit d392e1b9c2e8c60550a2a467732107f0f98b8e97 ]
+[ Upstream commit 0aa6b90ef9d75b4bd7b6d106d85f2a3437697f91 ]
 
-It is misleading, if the intention was to also print something
-in case it succeed it should have a different string.
+Some BIOSes allow the end user to set the minimum SEV ASID value
+(CPUID 0x8000001F_EDX) to be greater than the maximum number of
+encrypted guests, or maximum SEV ASID value (CPUID 0x8000001F_ECX)
+in order to dedicate all the SEV ASIDs to SEV-ES or SEV-SNP.
 
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Fixes: 698e19da2914 ("drm/i915: Skip pxp init if gt is wedged")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240320210547.71937-1-jose.souza@intel.com
-(cherry picked from commit d437099ab21cd4c6ce5d578b765df642d759c929)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The SEV support, as coded, does not handle the case where the minimum
+SEV ASID value can be greater than the maximum SEV ASID value.
+As a result, the following confusing message is issued:
+
+[   30.715724] kvm_amd: SEV enabled (ASIDs 1007 - 1006)
+
+Fix the support to properly handle this case.
+
+Fixes: 916391a2d1dc ("KVM: SVM: Add support for SEV-ES capability in KVM")
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Cc: stable@vger.kernel.org
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20240104190520.62510-1-Ashish.Kalra@amd.com
+Link: https://lore.kernel.org/r/20240131235609.4161407-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-index c7d7c3b7ecc63..9967148aedf15 100644
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -799,7 +799,7 @@ int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto out_cleanup_modeset2;
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 9e50eaf967f22..d8e192ad59538 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -136,10 +136,21 @@ static void sev_misc_cg_uncharge(struct kvm_sev_info *sev)
  
- 	ret = intel_pxp_init(i915);
--	if (ret != -ENODEV)
-+	if (ret && ret != -ENODEV)
- 		drm_dbg(&i915->drm, "pxp init failed with %d\n", ret);
+ static int sev_asid_new(struct kvm_sev_info *sev)
+ {
+-	unsigned int asid, min_asid, max_asid;
++	/*
++	 * SEV-enabled guests must use asid from min_sev_asid to max_sev_asid.
++	 * SEV-ES-enabled guest can use from 1 to min_sev_asid - 1.
++	 * Note: min ASID can end up larger than the max if basic SEV support is
++	 * effectively disabled by disallowing use of ASIDs for SEV guests.
++	 */
++	unsigned int min_asid = sev->es_active ? 1 : min_sev_asid;
++	unsigned int max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
++	unsigned int asid;
+ 	bool retry = true;
+ 	int ret;
  
- 	ret = intel_display_driver_probe(i915);
++	if (min_asid > max_asid)
++		return -ENOTTY;
++
+ 	WARN_ON(sev->misc_cg);
+ 	sev->misc_cg = get_current_misc_cg();
+ 	ret = sev_misc_cg_try_charge(sev);
+@@ -151,12 +162,6 @@ static int sev_asid_new(struct kvm_sev_info *sev)
+ 
+ 	mutex_lock(&sev_bitmap_lock);
+ 
+-	/*
+-	 * SEV-enabled guests must use asid from min_sev_asid to max_sev_asid.
+-	 * SEV-ES-enabled guest can use from 1 to min_sev_asid - 1.
+-	 */
+-	min_asid = sev->es_active ? 1 : min_sev_asid;
+-	max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
+ again:
+ 	asid = find_next_zero_bit(sev_asid_bitmap, max_asid + 1, min_asid);
+ 	if (asid > max_asid) {
+@@ -2215,8 +2220,10 @@ void __init sev_hardware_setup(void)
+ 		goto out;
+ 	}
+ 
+-	sev_asid_count = max_sev_asid - min_sev_asid + 1;
+-	WARN_ON_ONCE(misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count));
++	if (min_sev_asid <= max_sev_asid) {
++		sev_asid_count = max_sev_asid - min_sev_asid + 1;
++		WARN_ON_ONCE(misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count));
++	}
+ 	sev_supported = true;
+ 
+ 	/* SEV-ES support requested? */
+@@ -2247,7 +2254,9 @@ void __init sev_hardware_setup(void)
+ out:
+ 	if (boot_cpu_has(X86_FEATURE_SEV))
+ 		pr_info("SEV %s (ASIDs %u - %u)\n",
+-			sev_supported ? "enabled" : "disabled",
++			sev_supported ? min_sev_asid <= max_sev_asid ? "enabled" :
++								       "unusable" :
++								       "disabled",
+ 			min_sev_asid, max_sev_asid);
+ 	if (boot_cpu_has(X86_FEATURE_SEV_ES))
+ 		pr_info("SEV-ES %s (ASIDs %u - %u)\n",
 -- 
 2.43.0
 
