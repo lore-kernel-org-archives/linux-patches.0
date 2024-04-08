@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D9E81754;
-	Mon,  8 Apr 2024 13:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F7474BE5;
+	Mon,  8 Apr 2024 13:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583198; cv=none; b=Ir5mB2Iv2FR+pTTR8lcchMKoH8rSX+hn91bM4Ol2w9LogCFTCPtsxXqX09lk2Lx+mNj7md26c1qgzDWmgFmiR0u7AJzN7ldPtRHbo0ltdtY1+KKQxNt4+XcTjXLBlpmRndjqvd/jcSrwip8EEhoun4IZ1geF+0PS6FYRoJRLhoE=
+	t=1712583201; cv=none; b=BFvcDngSOiPTWqmcYRm4/dvvn+L9vpcPmnPytVtj80MqhcJoaf15PU5Vr1SYkZijL4vZBN+OS0c8C2uG8lwql4ivLT+Ht+GxEa7oeCRuaa2p26dofEnYlI6eD1IvRI0Y+QczPKhUnyOHrxOU42LDzHGOjdgwj5lm00ZwCwH5ZSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583198; c=relaxed/simple;
-	bh=Bh5ToopYyg/eEYJzjuxg9lHSNUrTPJq7mjC+yEiASEs=;
+	s=arc-20240116; t=1712583201; c=relaxed/simple;
+	bh=ZRCycMPPD/jZpX48ZH6ohdd2zHAa0klTgJDXW5f5wIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btZ77rNzwXcDDncGHrknGsodzyvqr45Bx7EGI+8KOGn6bJ78GtqEblEVu3EIJg9KiJFK0Prx2z+iw76rkNCTKvKf7AWd8rzBeS+HYm363K23z6sBx71PqcQ7osA0DiYOSfTMLmYh6wYcX4HMhUEz4HwvdRGoKvkAriPjZ8FEsTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNbMR+Fa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PXDq98shKGVgTSh22Qhuu04hZpFEdX5T5CCkrI9xorlBH5W+YlRgA8H3Jahi4yz7nYTd1LxUm/6oYS9UgaD1nPSl30ANzk422v9d8UmuumlY4eiK5i9uMRWIMnmretZ6k4A0yE+uGAnrerYnFs2P4rCfhFeiqyVawe6WGxYjxlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMOZFER7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNbMR+Fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD97C43390;
-	Mon,  8 Apr 2024 13:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMOZFER7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA04C433F1;
+	Mon,  8 Apr 2024 13:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583197;
-	bh=Bh5ToopYyg/eEYJzjuxg9lHSNUrTPJq7mjC+yEiASEs=;
+	s=korg; t=1712583200;
+	bh=ZRCycMPPD/jZpX48ZH6ohdd2zHAa0klTgJDXW5f5wIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNbMR+Faqo2oqVSokB4LKv2qASTpWEPcCP/Vp15i/Mf69eb59RjltujPV/U/ulXBi
-	 AeBQiiF4f/pGSuGYTGIyczJuxPmO5dZQ/KLGTbX50reklGN40RZzXIA810RMJoobbh
-	 7IvUbq2X+taBxhBRjl8RTN6b/JCdQJvYg4n+6twk=
+	b=WMOZFER7ZPz4N4T3/Ne1J2ghjbi/J5SScG5NtlyaE5NWGXp/3Bt5MWdMkPwWjbGSX
+	 n6MyOt8ib1Tu9lh6x/7857rvRdcyIMLi68xDf6DraoGeMBRwrtkc+9CMsFLcOqrhOf
+	 rcciXpnOWlptYeU23xgM1Kvt9ahyAMqPbbTSKtQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 221/690] fanotify: record either old name new name or both for FAN_RENAME
-Date: Mon,  8 Apr 2024 14:51:27 +0200
-Message-ID: <20240408125407.556826137@linuxfoundation.org>
+	Ivan Komarov <ivan.komarov@dfyz.info>,
+	Victor Isaev <isv@google.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 151/273] RISC-V: Update AT_VECTOR_SIZE_ARCH for new AT_MINSIGSTKSZ
+Date: Mon,  8 Apr 2024 14:57:06 +0200
+Message-ID: <20240408125313.972133691@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,150 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Victor Isaev <victor@torrio.net>
 
-[ Upstream commit 2bfbcccde6e7a787feabad4645f628f963fe0663 ]
+[ Upstream commit 13dddf9319808badd2c1f5d7007b4e82838a648e ]
 
-We do not want to report the dirfid+name of a directory whose
-inode/sb are not watched, because watcher may not have permissions
-to see the directory content.
+"riscv: signal: Report signal frame size to userspace via auxv" (e92f469)
+has added new constant AT_MINSIGSTKSZ but failed to increment the size of
+auxv, keeping AT_VECTOR_SIZE_ARCH at 9.
+This fix correctly increments AT_VECTOR_SIZE_ARCH to 10, following the
+approach in the commit 94b07c1 ("arm64: signal: Report signal frame size
+to userspace via auxv").
 
-Use an internal iter_info to indicate to fanotify_alloc_event()
-which marks of this group are watching FAN_RENAME, so it can decide
-if we need to record only the old parent+name, new parent+name or both.
-
-Link: https://lore.kernel.org/r/20211129201537.1932819-10-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[JK: Modified code to pass around only mask of mark types matching
-generated event]
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/73883406.20231215232720@torrio.net
+Link: https://lore.kernel.org/all/20240102133617.3649-1-victor@torrio.net/
+Reported-by: Ivan Komarov <ivan.komarov@dfyz.info>
+Closes: https://lore.kernel.org/linux-riscv/CY3Z02NYV1C4.11BLB9PLVW9G1@fedora/
+Fixes: e92f469b0771 ("riscv: signal: Report signal frame size to userspace via auxv")
+Signed-off-by: Victor Isaev <isv@google.com>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c | 59 ++++++++++++++++++++++++++---------
- 1 file changed, 44 insertions(+), 15 deletions(-)
+ arch/riscv/include/uapi/asm/auxvec.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index db81eab905442..14bc0f12cc9f3 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -284,8 +284,9 @@ static int fanotify_get_response(struct fsnotify_group *group,
-  */
- static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 				     struct fsnotify_iter_info *iter_info,
--				     u32 event_mask, const void *data,
--				     int data_type, struct inode *dir)
-+				     u32 *match_mask, u32 event_mask,
-+				     const void *data, int data_type,
-+				     struct inode *dir)
- {
- 	__u32 marks_mask = 0, marks_ignored_mask = 0;
- 	__u32 test_mask, user_mask = FANOTIFY_OUTGOING_EVENTS |
-@@ -335,6 +336,9 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 			continue;
+diff --git a/arch/riscv/include/uapi/asm/auxvec.h b/arch/riscv/include/uapi/asm/auxvec.h
+index 10aaa83db89ef..95050ebe9ad00 100644
+--- a/arch/riscv/include/uapi/asm/auxvec.h
++++ b/arch/riscv/include/uapi/asm/auxvec.h
+@@ -34,7 +34,7 @@
+ #define AT_L3_CACHEGEOMETRY	47
  
- 		marks_mask |= mark->mask;
-+
-+		/* Record the mark types of this group that matched the event */
-+		*match_mask |= 1U << type;
- 	}
+ /* entries in ARCH_DLINFO */
+-#define AT_VECTOR_SIZE_ARCH	9
++#define AT_VECTOR_SIZE_ARCH	10
+ #define AT_MINSIGSTKSZ		51
  
- 	test_mask = event_mask & marks_mask & ~marks_ignored_mask;
-@@ -701,11 +705,11 @@ static struct fanotify_event *fanotify_alloc_error_event(
- 	return &fee->fae;
- }
- 
--static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
--						   u32 mask, const void *data,
--						   int data_type, struct inode *dir,
--						   const struct qstr *file_name,
--						   __kernel_fsid_t *fsid)
-+static struct fanotify_event *fanotify_alloc_event(
-+				struct fsnotify_group *group,
-+				u32 mask, const void *data, int data_type,
-+				struct inode *dir, const struct qstr *file_name,
-+				__kernel_fsid_t *fsid, u32 match_mask)
- {
- 	struct fanotify_event *event = NULL;
- 	gfp_t gfp = GFP_KERNEL_ACCOUNT;
-@@ -753,13 +757,36 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 		}
- 
- 		/*
--		 * In the special case of FAN_RENAME event, we record both
--		 * old and new parent+name.
-+		 * In the special case of FAN_RENAME event, use the match_mask
-+		 * to determine if we need to report only the old parent+name,
-+		 * only the new parent+name or both.
- 		 * 'dirid' and 'file_name' are the old parent+name and
- 		 * 'moved' has the new parent+name.
- 		 */
--		if (mask & FAN_RENAME)
--			moved = fsnotify_data_dentry(data, data_type);
-+		if (mask & FAN_RENAME) {
-+			bool report_old, report_new;
-+
-+			if (WARN_ON_ONCE(!match_mask))
-+				return NULL;
-+
-+			/* Report both old and new parent+name if sb watching */
-+			report_old = report_new =
-+				match_mask & (1U << FSNOTIFY_ITER_TYPE_SB);
-+			report_old |=
-+				match_mask & (1U << FSNOTIFY_ITER_TYPE_INODE);
-+			report_new |=
-+				match_mask & (1U << FSNOTIFY_ITER_TYPE_INODE2);
-+
-+			if (!report_old) {
-+				/* Do not report old parent+name */
-+				dirid = NULL;
-+				file_name = NULL;
-+			}
-+			if (report_new) {
-+				/* Report new parent+name */
-+				moved = fsnotify_data_dentry(data, data_type);
-+			}
-+		}
- 	}
- 
- 	/*
-@@ -872,6 +899,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	struct fanotify_event *event;
- 	struct fsnotify_event *fsn_event;
- 	__kernel_fsid_t fsid = {};
-+	u32 match_mask = 0;
- 
- 	BUILD_BUG_ON(FAN_ACCESS != FS_ACCESS);
- 	BUILD_BUG_ON(FAN_MODIFY != FS_MODIFY);
-@@ -897,12 +925,13 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 
- 	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
- 
--	mask = fanotify_group_event_mask(group, iter_info, mask, data,
--					 data_type, dir);
-+	mask = fanotify_group_event_mask(group, iter_info, &match_mask,
-+					 mask, data, data_type, dir);
- 	if (!mask)
- 		return 0;
- 
--	pr_debug("%s: group=%p mask=%x\n", __func__, group, mask);
-+	pr_debug("%s: group=%p mask=%x report_mask=%x\n", __func__,
-+		 group, mask, match_mask);
- 
- 	if (fanotify_is_perm_event(mask)) {
- 		/*
-@@ -921,7 +950,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	}
- 
- 	event = fanotify_alloc_event(group, mask, data, data_type, dir,
--				     file_name, &fsid);
-+				     file_name, &fsid, match_mask);
- 	ret = -ENOMEM;
- 	if (unlikely(!event)) {
- 		/*
+ #endif /* _UAPI_ASM_RISCV_AUXVEC_H */
 -- 
 2.43.0
 
