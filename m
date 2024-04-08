@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672747C0BE;
-	Mon,  8 Apr 2024 13:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67E67C6D5;
+	Mon,  8 Apr 2024 13:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581896; cv=none; b=eTsBn7Knelh84qsGJ5SNHAoTJZ/2Ywq7UHm1Zt7MpmRMbGxcjMszOdbLbFuBZb/EKpdNEb2x0m+CYQFa/3r8UUS50hpFS35huYZvKQ0qNS3kVmVv/IUJ8PxOyWq5qMYp3tBxxPzg+x453hKh2KsLLcFWP9mwTI5VZMJy8Q0ks/c=
+	t=1712581899; cv=none; b=WtmAYFP2d9MVSnxEvhYguQDuVrsBtw2PulaZd8Oz86RCd6dgVQN/wyltYS5HuT4V15F1+pQD9gXuLX0BGp+CiClQf3uOxF4nMiJScJ/4m0/cYm9+/tCAFs2rIhY09RF4R/9XgznNlnPIwPhPsc60nNMgppIne1scVlBbrwhDb90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581896; c=relaxed/simple;
-	bh=IaQlqgZmoruSz/ZpwZtKZW1lkQzm/fio3km6PDSAkK0=;
+	s=arc-20240116; t=1712581899; c=relaxed/simple;
+	bh=neHzhRHBGuHZY8rzfJal3IhPN5qafXoXS0X5xe5mSQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxC5OHsA8/vWGVWgdq7zIoLuhjNfV1B7tZpAY+Y+6BAaamZokqavDoiE2B6N1eqJaFCvhyNUq2gpPDxn0kjli7h1kk/JbGBQV+Xic9D0TcjfaUCDpGZKJAvXwN6+OGNNANM98CBbDvXUDOVkhcZU0lIWE7V2M4V+1DGZmAmgH3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pD68NY0h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqsqvKQ0AsFm5Hwiv9zS1KKZkJA+D+bJGm0Xjw1KUNaBN8raCkZp+wOSMLC3kCp7EpB1Z0Nf+1XKNGKulOgL8bgw0Ba3Apap2s+kfAfaA5zEDKKVbalCN9+FFOw3XAd2YV7BDvVPp0w43DIuLymRhGM1yBf0MwniEJalgrJ4+rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cudjrpfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pD68NY0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13C3C433F1;
-	Mon,  8 Apr 2024 13:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cudjrpfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC883C433F1;
+	Mon,  8 Apr 2024 13:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581896;
-	bh=IaQlqgZmoruSz/ZpwZtKZW1lkQzm/fio3km6PDSAkK0=;
+	s=korg; t=1712581899;
+	bh=neHzhRHBGuHZY8rzfJal3IhPN5qafXoXS0X5xe5mSQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD68NY0hiXuTXvjMs9BjthkfcKohlYHmm1T5cX80QAnn77dbV2eeD5maloOVZyfga
-	 pWMdASkc0vRr6wBGn+XbSHmic/mHkpeGWzVV3LqdlZukwAyjeUtsrQ99OW1+pLbFvd
-	 p4sIaH8pH2+0U/2iTvZxssGmI9tsec7JSiGWUQAU=
+	b=cudjrpfWTrQ+hROcs3t+8Aw8traTVzNXPzGQHZr+9slhkuwtr9uo1yW+mM7aggPI2
+	 wROLtZd+b+aUKacDK9G8ExojFQp1YyKfGbgqVS0LaF/nXCTjo0HBfzG9c93YxRPS2S
+	 rIYP0kdnLmOUQ6X+iS2GjtQEOaaWbfa1mPqShRRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Camelia Groza <camelia.groza@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/252] drm/i915/mtl: Update workaround 14016712196
-Date: Mon,  8 Apr 2024 14:55:47 +0200
-Message-ID: <20240408125308.128219188@linuxfoundation.org>
+Subject: [PATCH 5.15 091/690] soc: fsl: qbman: Always disable interrupts when taking cgr_lock
+Date: Mon,  8 Apr 2024 14:49:17 +0200
+Message-ID: <20240408125402.783422077@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 7467e1da906468bcbd311023b30708193103ecf9 ]
+[ Upstream commit 584c2a9184a33a40fceee838f856de3cffa19be3 ]
 
-Now this workaround is permanent workaround on MTL and DG2,
-earlier we used to apply on MTL A0 step only.
-VLK-45480
+smp_call_function_single disables IRQs when executing the callback. To
+prevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.
+This is already done by qman_update_cgr and qman_delete_cgr; fix the
+other lockers.
 
-Fixes: d922b80b1010 ("drm/i915/gt: Add workaround 14016712196")
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Acked-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230828063450.2642748-1-tejas.upadhyay@intel.com
-Stable-dep-of: 186bce682772 ("drm/i915/mtl: Update workaround 14018575942")
+Fixes: 96f413f47677 ("soc/fsl/qbman: fix issue in qman_delete_cgr_safe()")
+CC: stable@vger.kernel.org
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/gen8_engine_cs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/soc/fsl/qbman/qman.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-index 3ac3e12d9c524..ba4c2422b3402 100644
---- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-@@ -226,8 +226,8 @@ u32 *gen12_emit_aux_table_inv(struct intel_engine_cs *engine, u32 *cs)
- static int mtl_dummy_pipe_control(struct i915_request *rq)
- {
- 	/* Wa_14016712196 */
--	if (IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
--	    IS_GFX_GT_IP_STEP(rq->engine->gt, IP_VER(12, 71), STEP_A0, STEP_B0)) {
-+	if (IS_GFX_GT_IP_RANGE(rq->engine->gt, IP_VER(12, 70), IP_VER(12, 71)) ||
-+	    IS_DG2(rq->i915)) {
- 		u32 *cs;
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index fde4edd83c14c..d04a1a39dc286 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1456,11 +1456,11 @@ static void qm_congestion_task(struct work_struct *work)
+ 	union qm_mc_result *mcr;
+ 	struct qman_cgr *cgr;
  
- 		/* dummy PIPE_CONTROL + depth flush */
-@@ -819,8 +819,7 @@ u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
- 		     PIPE_CONTROL_FLUSH_ENABLE);
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 	qm_mc_start(&p->p);
+ 	qm_mc_commit(&p->p, QM_MCC_VERB_QUERYCONGESTION);
+ 	if (!qm_mc_result_timeout(&p->p, &mcr)) {
+-		spin_unlock(&p->cgr_lock);
++		spin_unlock_irq(&p->cgr_lock);
+ 		dev_crit(p->config->dev, "QUERYCONGESTION timeout\n");
+ 		qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ 		return;
+@@ -1476,7 +1476,7 @@ static void qm_congestion_task(struct work_struct *work)
+ 	list_for_each_entry(cgr, &p->cgr_cbs, node)
+ 		if (cgr->cb && qman_cgrs_get(&c, cgr->cgrid))
+ 			cgr->cb(p, cgr, qman_cgrs_get(&rr, cgr->cgrid));
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	qman_p_irqsource_add(p, QM_PIRQ_CSCI);
+ }
  
- 	/* Wa_14016712196 */
--	if (IS_GFX_GT_IP_STEP(gt, IP_VER(12, 70), STEP_A0, STEP_B0) ||
--	    IS_GFX_GT_IP_STEP(gt, IP_VER(12, 71), STEP_A0, STEP_B0))
-+	if (IS_GFX_GT_IP_RANGE(gt, IP_VER(12, 70), IP_VER(12, 71)) || IS_DG2(i915))
- 		/* dummy PIPE_CONTROL + depth flush */
- 		cs = gen12_emit_pipe_control(cs, 0,
- 					     PIPE_CONTROL_DEPTH_CACHE_FLUSH, 0);
+@@ -2440,7 +2440,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	preempt_enable();
+ 
+ 	cgr->chan = p->config->channel;
+-	spin_lock(&p->cgr_lock);
++	spin_lock_irq(&p->cgr_lock);
+ 
+ 	if (opts) {
+ 		struct qm_mcc_initcgr local_opts = *opts;
+@@ -2477,7 +2477,7 @@ int qman_create_cgr(struct qman_cgr *cgr, u32 flags,
+ 	    qman_cgrs_get(&p->cgrs[1], cgr->cgrid))
+ 		cgr->cb(p, cgr, 1);
+ out:
+-	spin_unlock(&p->cgr_lock);
++	spin_unlock_irq(&p->cgr_lock);
+ 	put_affine_portal();
+ 	return ret;
+ }
 -- 
 2.43.0
 
