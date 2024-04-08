@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E9562148;
-	Mon,  8 Apr 2024 13:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CFF7E0E4;
+	Mon,  8 Apr 2024 13:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582352; cv=none; b=p8Rj2bOS0d7ny1t7sf8QcsVdwqAR/p0eG1AxrNlDWVBX0DiN535yOU/OsPKxmR3tWBtH+TQatb8pzoeJirxQcq0Bvc7AztTHZX4EdrBL1jWiDzsUx4btCYv6CP1NUENKFH/ne6D36t5CkgULxAYXvk7WxKxUPLTSO4hj0aeZUR4=
+	t=1712582355; cv=none; b=uFZe2M7p4Zrt0xNdi6s+MvZDEd3X9kaSjaF9uuZYQp9k/AGOkMtbe9JgfN0RWm9h3PaodwM5WWTHCl7GpuSeG1oDuwSPt4WFaiyvuI85yoQ7tshl5njup59rERP8V7tmwIGO3rKHUo1+ZQwzk6gaJnCvk55cqhq5L9rKNqKAzLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582352; c=relaxed/simple;
-	bh=KjPSBnoTuxBT6iMVdvOeNLiRMavrTHxZ/Oj8sZX5z1k=;
+	s=arc-20240116; t=1712582355; c=relaxed/simple;
+	bh=fP06mTCRRo+X2Q8rO1kWK/Vjk7ig4McT+GY14vlZSKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuN19YnmQmFoVNx3w6CKgb044rLV8bhTQpIF2d/wRiASzmCMwT7HSAi1VXsVGgY3yrk48JkbfRMH+LKXHVf1M7hMbgqmI+sYa/N3INDEQqVykyRFT0QpVhZuY64F3tv5wqKFnOoOTueLt+lmjSUi+hRhUceqiO8E7JPlUtvHeSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gv1xpQid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n5GRtuCF5XrNyqtZyaym+c4CZIGQb6ZSarnujlVLhg7hse8bZq7m/qaFbpbuvSyuHTACGAqxxlE770U3Y1SaQOOfXyg77XUSVpUFDMlg0cxETQXt60GTOpFzv5yhWVJaAOjc8W01YXITV8Ge66pnXQwS4zHH23GDfm2aHyh0HNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaNpSo7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gv1xpQid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F142C433F1;
-	Mon,  8 Apr 2024 13:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaNpSo7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A1AC433F1;
+	Mon,  8 Apr 2024 13:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582352;
-	bh=KjPSBnoTuxBT6iMVdvOeNLiRMavrTHxZ/Oj8sZX5z1k=;
+	s=korg; t=1712582355;
+	bh=fP06mTCRRo+X2Q8rO1kWK/Vjk7ig4McT+GY14vlZSKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gv1xpQid2WNBsAwAONTCsvbfvYc02JAYG11/T9/3um1VgHAAIEj3uKlMHILauWty5
-	 KyhRALSDsFYGFAgc4IJiZWYcCCPC8BOybK0mdBI141nN7rh8cpyZBbHC+OvomKwvLt
-	 HVYPA/Qwnu4jIzfivpbJKjReJhRILj9J/5ihNO+E=
+	b=VaNpSo7HANLvM6buCrkEvqXcrur9xGI6c3ybDyHWCFY+QeMTYIZAUilcmbxmjOlXS
+	 FGS1eks4B1DPoulRKPgj6p1O0+j4ZTJzz614Q1KigQikJl/FkZFpvNq7BMYpz9gDH1
+	 Tf9SRVAY9lbrPdY7lJLUKc+MsYpv6rQlIOiUxVos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahmoud Adam <mngyadam@amazon.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 086/252] net/rds: fix possible cp null dereference
-Date: Mon,  8 Apr 2024 14:56:25 +0200
-Message-ID: <20240408125309.313637542@linuxfoundation.org>
+	Mikko Rapeli <mikko.rapeli@linaro.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 5.15 135/690] tee: optee: Fix kernel panic caused by incorrect error handling
+Date: Mon,  8 Apr 2024 14:50:01 +0200
+Message-ID: <20240408125404.417318374@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +47,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mahmoud Adam <mngyadam@amazon.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit 62fc3357e079a07a22465b9b6ef71bb6ea75ee4b upstream.
+commit 95915ba4b987cf2b222b0f251280228a1ff977ac upstream.
 
-cp might be null, calling cp->cp_conn would produce null dereference
+The error path while failing to register devices on the TEE bus has a
+bug leading to kernel panic as follows:
 
-[Simon Horman adds:]
+[   15.398930] Unable to handle kernel paging request at virtual address ffff07ed00626d7c
+[   15.406913] Mem abort info:
+[   15.409722]   ESR = 0x0000000096000005
+[   15.413490]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   15.418814]   SET = 0, FnV = 0
+[   15.421878]   EA = 0, S1PTW = 0
+[   15.425031]   FSC = 0x05: level 1 translation fault
+[   15.429922] Data abort info:
+[   15.432813]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[   15.438310]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   15.443372]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   15.448697] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000d9e3e000
+[   15.455413] [ffff07ed00626d7c] pgd=1800000bffdf9003, p4d=1800000bffdf9003, pud=0000000000000000
+[   15.464146] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
 
-Analysis:
+Commit 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+lead to the introduction of this bug. So fix it appropriately.
 
-* cp is a parameter of __rds_rdma_map and is not reassigned.
-
-* The following call-sites pass a NULL cp argument to __rds_rdma_map()
-
-  - rds_get_mr()
-  - rds_get_mr_for_dest
-
-* Prior to the code above, the following assumes that cp may be NULL
-  (which is indicative, but could itself be unnecessary)
-
-	trans_private = rs->rs_transport->get_mr(
-		sg, nents, rs, &mr->r_key, cp ? cp->cp_conn : NULL,
-		args->vec.addr, args->vec.bytes,
-		need_odp ? ODP_ZEROBASED : ODP_NOT_NEEDED);
-
-* The code modified by this patch is guarded by IS_ERR(trans_private),
-  where trans_private is assigned as per the previous point in this analysis.
-
-  The only implementation of get_mr that I could locate is rds_ib_get_mr()
-  which can return an ERR_PTR if the conn (4th) argument is NULL.
-
-* ret is set to PTR_ERR(trans_private).
-  rds_ib_get_mr can return ERR_PTR(-ENODEV) if the conn (4th) argument is NULL.
-  Thus ret may be -ENODEV in which case the code in question will execute.
-
-Conclusion:
-* cp may be NULL at the point where this patch adds a check;
-  this patch does seem to address a possible bug
-
-Fixes: c055fc00c07b ("net/rds: fix WARNING in rds_conn_connect_if_down")
-Cc: stable@vger.kernel.org # v4.19+
-Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240326153132.55580-1-mngyadam@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Mikko Rapeli <mikko.rapeli@linaro.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218542
+Fixes: 7269cba53d90 ("tee: optee: Fix supplicant based device enumeration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tee/optee/device.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -302,7 +302,7 @@ static int __rds_rdma_map(struct rds_soc
- 		}
- 		ret = PTR_ERR(trans_private);
- 		/* Trigger connection so that its ready for the next retry */
--		if (ret == -ENODEV)
-+		if (ret == -ENODEV && cp)
- 			rds_conn_connect_if_down(cp->cp_conn);
- 		goto out;
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -90,13 +90,14 @@ static int optee_register_device(const u
+ 	if (rc) {
+ 		pr_err("device registration failed, err: %d\n", rc);
+ 		put_device(&optee_device->dev);
++		return rc;
  	}
+ 
+ 	if (func == PTA_CMD_GET_DEVICES_SUPP)
+ 		device_create_file(&optee_device->dev,
+ 				   &dev_attr_need_supplicant);
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static int __optee_enumerate_devices(u32 func)
 
 
