@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3128594E;
-	Mon,  8 Apr 2024 13:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651207D414;
+	Mon,  8 Apr 2024 13:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583786; cv=none; b=bUziSNTYGm0srzRkrJ7jIp0be1pyd79XqyKS+h8tyUy8oKIyG5JjCRbI9/TNHptdw8/eTlBr8teOEA5/M2B2Tiqv3nzeoMrdKsHsfMFDX9Xs69tN1SAj6zgeXMIbxtt+WjRKetcTR2tgr+V2N+Z0ZBlep82rT+XZuEMINceLfkU=
+	t=1712583789; cv=none; b=h7jmj/mMnhR97vX9dBGgJWA96ZwvAb56/3bsRIR+WFylBURwfsjoPm7YFwUhES9xBX6AMVvKiI0ASxyzfvWx6o/MnDPF1UMXGwnp/vEg3oEfPVcjY4V1gyHT8qfW87QuwOchCFupzI+nweotJa6nmhj2cbgfr8+xnD+zdgsaYPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583786; c=relaxed/simple;
-	bh=tk2S5H29r2Mage2gYZ/5MFOFCykSzXGfUG/bV8zjnxs=;
+	s=arc-20240116; t=1712583789; c=relaxed/simple;
+	bh=L1f0ankWjk8cVffmAezo81gnONLIjxy/AZdt94fQTic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWm3M/4emCGI8jntjVHynn6ozpsMgICxK8HNvniw4ZS/1r8FmAs8r+5whSZVv1Qg8ne4LqsCYCFFG/ZnP78mN4oSc75O4KvRg0eS2KhpG09AFnu6TepjvjudoIDLaioUZhUyk/97hYpIcq27n6A6zxhaNOaq9A5QVp15t3RgjiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVT4KxWI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7xlFt2pL82CZJVj3CIoVZS7LzMfRfteFCFtlTwkFTbemdonBgAwr1tBFtoYRodo/JRs/KKc0AhSCC12VEYvJ2w7AoKAoafEIGey5/ljNe9Y3HuekttWGY0DePQpYpIeBPM5pKfu4eBXC469WIq0/lAPf4fN+6QwUJg7gW4nvG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcJhPbcF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVT4KxWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B8C433F1;
-	Mon,  8 Apr 2024 13:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcJhPbcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF911C433F1;
+	Mon,  8 Apr 2024 13:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583786;
-	bh=tk2S5H29r2Mage2gYZ/5MFOFCykSzXGfUG/bV8zjnxs=;
+	s=korg; t=1712583789;
+	bh=L1f0ankWjk8cVffmAezo81gnONLIjxy/AZdt94fQTic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVT4KxWIP0P7tkxzA7ndNDDuslWlh/dkqHEOWR2BqTJyx9J4oXF4GKKC2daumneLP
-	 25N2RF2CBGJPAdc04Mq8BEdB7Di76omIGQRyRrQXHp/bmJ3t6YRviJsM1C1tbRjDSI
-	 /coaNTudb3F384Z4zSH8rVyQQSxWZN+ydq2QdHBY=
+	b=YcJhPbcFpVAl9qyQxWBNC3eEja8vE/mLKNZbhCLBhf5KiY4sMAT+dgQzSN0pnum6A
+	 eJp7FjVpR/uG0yrguvSsd8nj4XmfhlbMhO0Xn50beYzWejiPUhx/CbnV1ASH941m+c
+	 N8xsCHuTXEcFl8ycQ8r0gPBEwUVoqG7T1zWbeSsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.8 198/273] ksmbd: dont send oplock break if rename fails
-Date: Mon,  8 Apr 2024 14:57:53 +0200
-Message-ID: <20240408125315.472847776@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.8 219/273] ASoC: SOF: Intel: hda-common-ops: Do not set the get_stream_position callback
+Date: Mon,  8 Apr 2024 14:58:14 +0200
+Message-ID: <20240408125316.192769819@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
 References: <20240408125309.280181634@linuxfoundation.org>
@@ -50,33 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit c1832f67035dc04fb89e6b591b64e4d515843cda upstream.
+commit 4ab6c38c664442c1fc9911eb3c5c6953d3dbcca5 upstream.
 
-Don't send oplock break if rename fails. This patch fix
-smb2.oplock.batch20 test.
+The get_stream_position has been replaced by get_dai_frame_counter, it
+should not be set to allow it to be dropped from core code.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org # 6.8
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240321130814.4412-10-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/sof/intel/hda-common-ops.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5632,8 +5632,9 @@ static int smb2_rename(struct ksmbd_work
- 	if (!file_info->ReplaceIfExists)
- 		flags = RENAME_NOREPLACE;
+diff --git a/sound/soc/sof/intel/hda-common-ops.c b/sound/soc/sof/intel/hda-common-ops.c
+index 4d7ea18604ee..d71bb66b9991 100644
+--- a/sound/soc/sof/intel/hda-common-ops.c
++++ b/sound/soc/sof/intel/hda-common-ops.c
+@@ -57,7 +57,6 @@ struct snd_sof_dsp_ops sof_hda_common_ops = {
+ 	.pcm_pointer	= hda_dsp_pcm_pointer,
+ 	.pcm_ack	= hda_dsp_pcm_ack,
  
--	smb_break_all_levII_oplock(work, fp, 0);
- 	rc = ksmbd_vfs_rename(work, &fp->filp->f_path, new_name, flags);
-+	if (!rc)
-+		smb_break_all_levII_oplock(work, fp, 0);
- out:
- 	kfree(new_name);
- 	return rc;
+-	.get_stream_position = hda_dsp_get_stream_llp,
+ 	.get_dai_frame_counter = hda_dsp_get_stream_llp,
+ 	.get_host_byte_counter = hda_dsp_get_stream_ldp,
+ 
+-- 
+2.44.0
+
 
 
