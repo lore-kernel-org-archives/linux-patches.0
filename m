@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EDB77F1B;
-	Mon,  8 Apr 2024 13:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34F077F1B;
+	Mon,  8 Apr 2024 13:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582011; cv=none; b=OB9AMvRoumNcwt6sWrzP5Dh/w6f9R6Hket4pp2VSvJf31K7Q3sSGdF3Bq7v+mwc7jLhC8ppzAtapG1EDcqnBmtqvYwIR/2OtY7gBU55aS7YTQZLKCysuHXbDVpEFG1/1pKbdwoWUQKuoxKqTxljXxswgAXBsecSGoPiZmFXmJ0c=
+	t=1712582014; cv=none; b=L4RVsLB/hPlV3K5Mhheglg1OAU7f50vd01wsaLbEvdJrIWZwCbkKc5Y/sI0ccE1WKP0oWdz0/O5QCeetSuuX/IpBVbThdg0Mibegb+iGoZHtjp9kTOLsjJu09i8m9Xa5ligtpdXiuuLX0P6pGeJi+Ks5o1YcagQBqmXCLJulWdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582011; c=relaxed/simple;
-	bh=4SyZfx+9InlhIBsJpau/cJ+3HybbgM0oTbHSmEgBOvM=;
+	s=arc-20240116; t=1712582014; c=relaxed/simple;
+	bh=WQRUDgrJtiVurlZjtxnP/YehHUgAUIfnHsyrLN3QAiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FDeJ9WCNEPONIORJ3kv/vh/6Y10iabdL9FIomMwseYfipiAIqhmkADM53ad0i7SMgMhZng9MoFM1mwKIiwG7id8Tk6MZtWdPzXKLU/YzzXP3zHUrwSwVGG/It9eQ1dzfowzpPewC7h7WSMnpdVzde9nI9HanA4xFU/D92lSMUrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZniIDCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWJ5no/JwVYXwqEuBd8NYP+JItKwNJ3bB0IYGSuDm5+xvEQ2UVDbToQ4QJWlRwdtaCYv5nemaJq9AlA39mM3XNjkFGMMxLKViCkXqbBh6S9/T6yi3nPYzt08hmCQ2rGcMIEmfvduwSrNO6ySAxexKsIug1jk9DecLnIoeKOLmpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPABBSpl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZniIDCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D60BC433F1;
-	Mon,  8 Apr 2024 13:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPABBSpl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E65C433C7;
+	Mon,  8 Apr 2024 13:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582011;
-	bh=4SyZfx+9InlhIBsJpau/cJ+3HybbgM0oTbHSmEgBOvM=;
+	s=korg; t=1712582013;
+	bh=WQRUDgrJtiVurlZjtxnP/YehHUgAUIfnHsyrLN3QAiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZniIDCcGoz5M6u2U+1jvFTZFWL5YfD3AipdInQMrjCdvACgLfMYbWVGoHgWeypYY
-	 +iFWusqYGwpRyc7kP4KCSp63REINQeYwNPp5KbOoCcFvEHN/7EBsqjK1N96n0jzZaC
-	 SaMl8ZobQndXr1dqXJqmJ4kkVzNOtY9XWuX36Zz8=
+	b=QPABBSplCjcZm8VZGJVyojvy/88hXp+eA7XJ0cyRdVYjMzQWObm6phW8XlGmnNst+
+	 iBXJ5MUP2OTZgW7GMEPaesCsKYfGZnHOFUQ2HYLAe8ppA+oWz6Al7sKOJrTgwRjVI5
+	 T/fbRTIbrM4gy5Sl47T49azyg7G9fwF4F1n/F3Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/138] drm/amd: Add concept of running prepare_suspend() sequence for IP blocks
-Date: Mon,  8 Apr 2024 14:58:05 +0200
-Message-ID: <20240408125258.430163089@linuxfoundation.org>
+Subject: [PATCH 5.15 104/690] x86/CPU/AMD: Update the Zenbleed microcode revisions
+Date: Mon,  8 Apr 2024 14:49:30 +0200
+Message-ID: <20240408125403.263580431@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit cb11ca3233aa3303dc11dca25977d2e7f24be00f ]
+[ Upstream commit 5c84b051bd4e777cf37aaff983277e58c99618d5 ]
 
-If any IP blocks allocate memory during their hw_fini() sequence
-this can cause the suspend to fail under memory pressure.  Introduce
-a new phase that IP blocks can use to allocate memory before suspend
-starts so that it can potentially be evicted into swap instead.
+Update them to the correct revision numbers.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: ca299b4512d4 ("drm/amd: Flush GFXOFF requests in prepare stage")
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 12 +++++++++++-
- drivers/gpu/drm/amd/include/amd_shared.h   |  1 +
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/amd.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 902a446cc4d38..77e35b919b064 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4180,7 +4180,7 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
- int amdgpu_device_prepare(struct drm_device *dev)
- {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
--	int r;
-+	int i, r;
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index dba7fe7ecea91..9fb890574f36b 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1021,11 +1021,11 @@ static bool cpu_has_zenbleed_microcode(void)
+ 	u32 good_rev = 0;
  
- 	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
- 		return 0;
-@@ -4190,6 +4190,16 @@ int amdgpu_device_prepare(struct drm_device *dev)
- 	if (r)
- 		return r;
+ 	switch (boot_cpu_data.x86_model) {
+-	case 0x30 ... 0x3f: good_rev = 0x0830107a; break;
+-	case 0x60 ... 0x67: good_rev = 0x0860010b; break;
+-	case 0x68 ... 0x6f: good_rev = 0x08608105; break;
+-	case 0x70 ... 0x7f: good_rev = 0x08701032; break;
+-	case 0xa0 ... 0xaf: good_rev = 0x08a00008; break;
++	case 0x30 ... 0x3f: good_rev = 0x0830107b; break;
++	case 0x60 ... 0x67: good_rev = 0x0860010c; break;
++	case 0x68 ... 0x6f: good_rev = 0x08608107; break;
++	case 0x70 ... 0x7f: good_rev = 0x08701033; break;
++	case 0xa0 ... 0xaf: good_rev = 0x08a00009; break;
  
-+	for (i = 0; i < adev->num_ip_blocks; i++) {
-+		if (!adev->ip_blocks[i].status.valid)
-+			continue;
-+		if (!adev->ip_blocks[i].version->funcs->prepare_suspend)
-+			continue;
-+		r = adev->ip_blocks[i].version->funcs->prepare_suspend((void *)adev);
-+		if (r)
-+			return r;
-+	}
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/amd/include/amd_shared.h b/drivers/gpu/drm/amd/include/amd_shared.h
-index f175e65b853a0..34467427c9f97 100644
---- a/drivers/gpu/drm/amd/include/amd_shared.h
-+++ b/drivers/gpu/drm/amd/include/amd_shared.h
-@@ -294,6 +294,7 @@ struct amd_ip_funcs {
- 	int (*hw_init)(void *handle);
- 	int (*hw_fini)(void *handle);
- 	void (*late_fini)(void *handle);
-+	int (*prepare_suspend)(void *handle);
- 	int (*suspend)(void *handle);
- 	int (*resume)(void *handle);
- 	bool (*is_idle)(void *handle);
+ 	default:
+ 		return false;
 -- 
 2.43.0
 
