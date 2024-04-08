@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCB36F08E;
-	Mon,  8 Apr 2024 13:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F352745C5;
+	Mon,  8 Apr 2024 13:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712581724; cv=none; b=cxG7c+CuO7ZRtJgPeZduXD2/MDJpyaTDI1DrYo87yLcj5WZtabGPSXVIduC45R+pwvuJU1jjjoRquqhOhul6Tyj7mwg/ks4D4LHQbCXz6rN54iZjIE9UtdysJmXqiZGtG8v/1m6mg3uevQF1LinJNyg9JSBeAl5JHXuzMpGI7jQ=
+	t=1712581727; cv=none; b=UrzaaW/Hv6t6tC7YDeqzZkhJ0NqOYk2UaEyU1ooO+9Q0YidraphHnKRBSoOZ6IqWfi9tp4MkN+7j6zdq6JOWGCi5XSRo8QudfGGsNqDrASicAs8bds1zFmhP7iwFEEdDpOg7Z5sIZdlgMYzzUcVbqLjDhmOyDGPFWeOFz7CcYOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712581724; c=relaxed/simple;
-	bh=M8ZfY1WtVqoDi368xxOFBIS17vMge/QmlQnaLZO6/P0=;
+	s=arc-20240116; t=1712581727; c=relaxed/simple;
+	bh=fj7V0ejjORC+LythzLkIofrg1o1kzy/suHjCqFZJZ8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frnmJrQQYSlTzOej8ZBv+3JhnTK+pqEzVeu/X/Y2SSVshCSYvFh6TvfG6Y9jkOkGAwMv/8MkrKoJfPAJ2/GQP3U9gxbdBUil1VF/6Mc8zqnU4uqen8KEhWG5MokbQxfkWFqGZ7c2Ivt1W12hu9Kb+cUwwhDPptwpRdFR3kBbM+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvqE45XS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DvPB92sGuNLXnFz1yNeDH9E2gNJR54/8R7jUHp44z1UvEosR//gUCejbJeCE7AGtf6LWDxPN5mPS3JO85hDB88kHm7hqwUQ0Z5S/YatMEyjqeXQ1mFwonI/T1k51LyudoXn8EyTi4F5Ab12wpLFCWRNVb3ckvhAaBygLTfqjNa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g43XlivN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvqE45XS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E39DC43394;
-	Mon,  8 Apr 2024 13:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g43XlivN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81963C433F1;
+	Mon,  8 Apr 2024 13:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712581724;
-	bh=M8ZfY1WtVqoDi368xxOFBIS17vMge/QmlQnaLZO6/P0=;
+	s=korg; t=1712581726;
+	bh=fj7V0ejjORC+LythzLkIofrg1o1kzy/suHjCqFZJZ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvqE45XSbpWUK/IdyMsv7+VFRmTnRRfE4tNu+1HPhSGiYfiqTGFGNLsn4MiDBQ/2Z
-	 9GYpTyKeME/AC3i28Zz5UuBMiVm9bw6WJyi1PvXYiJtAthqHbcogsim02dn/AFxm9I
-	 aqLyUMUjjv1IO2IxqlLjz861rp9Via7qjAfO093I=
+	b=g43XlivN4AHNNJdF4lpATzw57VzpkPHJhKLYsp10QrV81yTQ4CkV7ToAX+5Dtcnq6
+	 6O/d7CJIIiQgGNSAn7UX1rmT4b5v3tLom7HTvrH9kXNw2nlEfcvr1VepIfCo9lb9F1
+	 sGtXIpQrd/pZIBzlfHpIb7n+MhjWneJVCN5Zzt4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Jan Sokolowski <jan.sokolowski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Steven Zou <steven.zou@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 015/273] ice: Refactor FW data type and fix bitmap casting issue
-Date: Mon,  8 Apr 2024 14:54:50 +0200
-Message-ID: <20240408125309.757537647@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 047/138] net/sched: fix lockdep splat in qdisc_tree_reduce_backlog()
+Date: Mon,  8 Apr 2024 14:57:41 +0200
+Message-ID: <20240408125257.692154459@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
+References: <20240408125256.218368873@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,192 +49,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Zou <steven.zou@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 817b18965b58a6e5fb6ce97abf01b03a205a6aea ]
+commit 7eb322360b0266481e560d1807ee79e0cef5742b upstream.
 
-According to the datasheet, the recipe association data is an 8-byte
-little-endian value. It is described as 'Bitmap of the recipe indexes
-associated with this profile', it is from 24 to 31 byte area in FW.
-Therefore, it is defined to '__le64 recipe_assoc' in struct
-ice_aqc_recipe_to_profile. And then fix the bitmap casting issue, as we
-must never ever use castings for bitmap type.
+qdisc_tree_reduce_backlog() is called with the qdisc lock held,
+not RTNL.
 
-Fixes: 1e0f9881ef79 ("ice: Flesh out implementation of support for SRIOV on bonded interface")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Andrii Staikov <andrii.staikov@intel.com>
-Reviewed-by: Jan Sokolowski <jan.sokolowski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steven Zou <steven.zou@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We must use qdisc_lookup_rcu() instead of qdisc_lookup()
+
+syzbot reported:
+
+WARNING: suspicious RCU usage
+6.1.74-syzkaller #0 Not tainted
+-----------------------------
+net/sched/sch_api.c:305 suspicious rcu_dereference_protected() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+3 locks held by udevd/1142:
+  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
+  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
+  #0: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: net_tx_action+0x64a/0x970 net/core/dev.c:5282
+  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: spin_lock include/linux/spinlock.h:350 [inline]
+  #1: ffff888171861108 (&sch->q.lock){+.-.}-{2:2}, at: net_tx_action+0x754/0x970 net/core/dev.c:5297
+  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:306 [inline]
+  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:747 [inline]
+  #2: ffffffff87c729a0 (rcu_read_lock){....}-{1:2}, at: qdisc_tree_reduce_backlog+0x84/0x580 net/sched/sch_api.c:792
+
+stack backtrace:
+CPU: 1 PID: 1142 Comm: udevd Not tainted 6.1.74-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
+Call Trace:
+ <TASK>
+  [<ffffffff85b85f14>] __dump_stack lib/dump_stack.c:88 [inline]
+  [<ffffffff85b85f14>] dump_stack_lvl+0x1b1/0x28f lib/dump_stack.c:106
+  [<ffffffff85b86007>] dump_stack+0x15/0x1e lib/dump_stack.c:113
+  [<ffffffff81802299>] lockdep_rcu_suspicious+0x1b9/0x260 kernel/locking/lockdep.c:6592
+  [<ffffffff84f0054c>] qdisc_lookup+0xac/0x6f0 net/sched/sch_api.c:305
+  [<ffffffff84f037c3>] qdisc_tree_reduce_backlog+0x243/0x580 net/sched/sch_api.c:811
+  [<ffffffff84f5b78c>] pfifo_tail_enqueue+0x32c/0x4b0 net/sched/sch_fifo.c:51
+  [<ffffffff84fbcf63>] qdisc_enqueue include/net/sch_generic.h:833 [inline]
+  [<ffffffff84fbcf63>] netem_dequeue+0xeb3/0x15d0 net/sched/sch_netem.c:723
+  [<ffffffff84eecab9>] dequeue_skb net/sched/sch_generic.c:292 [inline]
+  [<ffffffff84eecab9>] qdisc_restart net/sched/sch_generic.c:397 [inline]
+  [<ffffffff84eecab9>] __qdisc_run+0x249/0x1e60 net/sched/sch_generic.c:415
+  [<ffffffff84d7aa96>] qdisc_run+0xd6/0x260 include/net/pkt_sched.h:125
+  [<ffffffff84d85d29>] net_tx_action+0x7c9/0x970 net/core/dev.c:5313
+  [<ffffffff85e002bd>] __do_softirq+0x2bd/0x9bd kernel/softirq.c:616
+  [<ffffffff81568bca>] invoke_softirq kernel/softirq.c:447 [inline]
+  [<ffffffff81568bca>] __irq_exit_rcu+0xca/0x230 kernel/softirq.c:700
+  [<ffffffff81568ae9>] irq_exit_rcu+0x9/0x20 kernel/softirq.c:712
+  [<ffffffff85b89f52>] sysvec_apic_timer_interrupt+0x42/0x90 arch/x86/kernel/apic/apic.c:1107
+  [<ffffffff85c00ccb>] asm_sysvec_apic_timer_interrupt+0x1b/0x20 arch/x86/include/asm/idtentry.h:656
+
+Fixes: d636fc5dd692 ("net: sched: add rcu annotations around qdisc->qdisc_sleeping")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240402134133.2352776-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/intel/ice/ice_adminq_cmd.h   |  3 ++-
- drivers/net/ethernet/intel/ice/ice_lag.c      |  4 ++--
- drivers/net/ethernet/intel/ice/ice_switch.c   | 24 +++++++++++--------
- drivers/net/ethernet/intel/ice/ice_switch.h   |  4 ++--
- 4 files changed, 20 insertions(+), 15 deletions(-)
+ net/sched/sch_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-index 8040317c95617..1f3e7a6903e56 100644
---- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-+++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-@@ -593,8 +593,9 @@ struct ice_aqc_recipe_data_elem {
- struct ice_aqc_recipe_to_profile {
- 	__le16 profile_id;
- 	u8 rsvd[6];
--	DECLARE_BITMAP(recipe_assoc, ICE_MAX_NUM_RECIPES);
-+	__le64 recipe_assoc;
- };
-+static_assert(sizeof(struct ice_aqc_recipe_to_profile) == 16);
- 
- /* Add/Update/Remove/Get switch rules (indirect 0x02A0, 0x02A1, 0x02A2, 0x02A3)
-  */
-diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 467372d541d21..a7a342809935f 100644
---- a/drivers/net/ethernet/intel/ice/ice_lag.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lag.c
-@@ -2041,7 +2041,7 @@ int ice_init_lag(struct ice_pf *pf)
- 	/* associate recipes to profiles */
- 	for (n = 0; n < ICE_PROFID_IPV6_GTPU_IPV6_TCP_INNER; n++) {
- 		err = ice_aq_get_recipe_to_profile(&pf->hw, n,
--						   (u8 *)&recipe_bits, NULL);
-+						   &recipe_bits, NULL);
- 		if (err)
- 			continue;
- 
-@@ -2049,7 +2049,7 @@ int ice_init_lag(struct ice_pf *pf)
- 			recipe_bits |= BIT(lag->pf_recipe) |
- 				       BIT(lag->lport_recipe);
- 			ice_aq_map_recipe_to_profile(&pf->hw, n,
--						     (u8 *)&recipe_bits, NULL);
-+						     recipe_bits, NULL);
- 		}
- 	}
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index f84bab80ca423..ba0ef91e4c19c 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -2025,12 +2025,12 @@ ice_update_recipe_lkup_idx(struct ice_hw *hw,
-  * ice_aq_map_recipe_to_profile - Map recipe to packet profile
-  * @hw: pointer to the HW struct
-  * @profile_id: package profile ID to associate the recipe with
-- * @r_bitmap: Recipe bitmap filled in and need to be returned as response
-+ * @r_assoc: Recipe bitmap filled in and need to be returned as response
-  * @cd: pointer to command details structure or NULL
-  * Recipe to profile association (0x0291)
-  */
- int
--ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
-+ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u64 r_assoc,
- 			     struct ice_sq_cd *cd)
- {
- 	struct ice_aqc_recipe_to_profile *cmd;
-@@ -2042,7 +2042,7 @@ ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
- 	/* Set the recipe ID bit in the bitmask to let the device know which
- 	 * profile we are associating the recipe to
- 	 */
--	memcpy(cmd->recipe_assoc, r_bitmap, sizeof(cmd->recipe_assoc));
-+	cmd->recipe_assoc = cpu_to_le64(r_assoc);
- 
- 	return ice_aq_send_cmd(hw, &desc, NULL, 0, cd);
- }
-@@ -2051,12 +2051,12 @@ ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
-  * ice_aq_get_recipe_to_profile - Map recipe to packet profile
-  * @hw: pointer to the HW struct
-  * @profile_id: package profile ID to associate the recipe with
-- * @r_bitmap: Recipe bitmap filled in and need to be returned as response
-+ * @r_assoc: Recipe bitmap filled in and need to be returned as response
-  * @cd: pointer to command details structure or NULL
-  * Associate profile ID with given recipe (0x0293)
-  */
- int
--ice_aq_get_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
-+ice_aq_get_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u64 *r_assoc,
- 			     struct ice_sq_cd *cd)
- {
- 	struct ice_aqc_recipe_to_profile *cmd;
-@@ -2069,7 +2069,7 @@ ice_aq_get_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
- 
- 	status = ice_aq_send_cmd(hw, &desc, NULL, 0, cd);
- 	if (!status)
--		memcpy(r_bitmap, cmd->recipe_assoc, sizeof(cmd->recipe_assoc));
-+		*r_assoc = le64_to_cpu(cmd->recipe_assoc);
- 
- 	return status;
- }
-@@ -2108,6 +2108,7 @@ int ice_alloc_recipe(struct ice_hw *hw, u16 *rid)
- static void ice_get_recp_to_prof_map(struct ice_hw *hw)
- {
- 	DECLARE_BITMAP(r_bitmap, ICE_MAX_NUM_RECIPES);
-+	u64 recp_assoc;
- 	u16 i;
- 
- 	for (i = 0; i < hw->switch_info->max_used_prof_index + 1; i++) {
-@@ -2115,8 +2116,9 @@ static void ice_get_recp_to_prof_map(struct ice_hw *hw)
- 
- 		bitmap_zero(profile_to_recipe[i], ICE_MAX_NUM_RECIPES);
- 		bitmap_zero(r_bitmap, ICE_MAX_NUM_RECIPES);
--		if (ice_aq_get_recipe_to_profile(hw, i, (u8 *)r_bitmap, NULL))
-+		if (ice_aq_get_recipe_to_profile(hw, i, &recp_assoc, NULL))
- 			continue;
-+		bitmap_from_arr64(r_bitmap, &recp_assoc, ICE_MAX_NUM_RECIPES);
- 		bitmap_copy(profile_to_recipe[i], r_bitmap,
- 			    ICE_MAX_NUM_RECIPES);
- 		for_each_set_bit(j, r_bitmap, ICE_MAX_NUM_RECIPES)
-@@ -5390,22 +5392,24 @@ ice_add_adv_recipe(struct ice_hw *hw, struct ice_adv_lkup_elem *lkups,
- 	 */
- 	list_for_each_entry(fvit, &rm->fv_list, list_entry) {
- 		DECLARE_BITMAP(r_bitmap, ICE_MAX_NUM_RECIPES);
-+		u64 recp_assoc;
- 		u16 j;
- 
- 		status = ice_aq_get_recipe_to_profile(hw, fvit->profile_id,
--						      (u8 *)r_bitmap, NULL);
-+						      &recp_assoc, NULL);
- 		if (status)
- 			goto err_unroll;
- 
-+		bitmap_from_arr64(r_bitmap, &recp_assoc, ICE_MAX_NUM_RECIPES);
- 		bitmap_or(r_bitmap, r_bitmap, rm->r_bitmap,
- 			  ICE_MAX_NUM_RECIPES);
- 		status = ice_acquire_change_lock(hw, ICE_RES_WRITE);
- 		if (status)
- 			goto err_unroll;
- 
-+		bitmap_to_arr64(&recp_assoc, r_bitmap, ICE_MAX_NUM_RECIPES);
- 		status = ice_aq_map_recipe_to_profile(hw, fvit->profile_id,
--						      (u8 *)r_bitmap,
--						      NULL);
-+						      recp_assoc, NULL);
- 		ice_release_change_lock(hw);
- 
- 		if (status)
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.h b/drivers/net/ethernet/intel/ice/ice_switch.h
-index db7e501b7e0a4..89ffa1b51b5ad 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.h
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.h
-@@ -424,10 +424,10 @@ int ice_aq_add_recipe(struct ice_hw *hw,
- 		      struct ice_aqc_recipe_data_elem *s_recipe_list,
- 		      u16 num_recipes, struct ice_sq_cd *cd);
- int
--ice_aq_get_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
-+ice_aq_get_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u64 *r_assoc,
- 			     struct ice_sq_cd *cd);
- int
--ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u8 *r_bitmap,
-+ice_aq_map_recipe_to_profile(struct ice_hw *hw, u32 profile_id, u64 r_assoc,
- 			     struct ice_sq_cd *cd);
- 
- #endif /* _ICE_SWITCH_H_ */
--- 
-2.43.0
-
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -806,7 +806,7 @@ void qdisc_tree_reduce_backlog(struct Qd
+ 		notify = !sch->q.qlen && !WARN_ON_ONCE(!n &&
+ 						       !qdisc_is_offloaded);
+ 		/* TODO: perform the search on a per txq basis */
+-		sch = qdisc_lookup(qdisc_dev(sch), TC_H_MAJ(parentid));
++		sch = qdisc_lookup_rcu(qdisc_dev(sch), TC_H_MAJ(parentid));
+ 		if (sch == NULL) {
+ 			WARN_ON_ONCE(parentid != TC_H_ROOT);
+ 			break;
 
 
