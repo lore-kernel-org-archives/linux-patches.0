@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8104D7EF02;
-	Mon,  8 Apr 2024 13:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CA574C09;
+	Mon,  8 Apr 2024 13:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584090; cv=none; b=HiZNvNn+paNXu1CtmIfvGy9a7VN7O76oj7Rrk0aZKoqT/2cygj2ejNYt/SOczYEZ6V223igLDgFHdJOPjDu0OdOhKtN1yBwRQf/G1VpYnd/iS4k2oem08pTTZi3EA70PBCIknefoUN7ohcmHaN7c2OCd4H5JX2MeFzSIAsgP5QM=
+	t=1712584092; cv=none; b=sndx3XhA+Oo0rpOjRMsS5P6rzqy0O8PDyk7lHYuwNzCwQu01eoHFsYQ6thS9bK/zR0yr9ceDmitaTYt1isOonAjZ094oepxBOhl5cb4ZLxyp2k4ocP9Z0rMi6l2lQT3qQfXzifVZHTrxTDb/zUxtipGyy9O+Kxe96HrRW3Ec5Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584090; c=relaxed/simple;
-	bh=qqMelK+x0EpMJ8l1YYUBZcDdrL3Qm/8YB/s6+W5URXo=;
+	s=arc-20240116; t=1712584092; c=relaxed/simple;
+	bh=uAOepB3I9Yyh4ONCho3/oPyvYnNDJZtLQnp2i+N2HTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zbc7KVUwnKxdIITDswpNBP7jbThNUHRwOKkCZiy01z+emaU2cRG8eb3MZir0UmT95D8KHgL84+bBgA2u7gXPguZ5cKoIOMJo2x5wUN9xDz/QEp1eleMZX7FeU+ohbdCHyQtQZJw3MSzjX/pRu7ZRIO9I4I4miWwaUpUdS+tw7UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I783YBoG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G6WmQiTBtxF1LjWwYXSSs6eRIU2j4WRMSeyj848KpgRVhFIrFs/ugcrMwPEDU1KymiwncyfKHVOjpwVklZJGhihdVTI0C7u95f+/PF4uMgHHPCrormaRvP4J1ISp/78cPLnxeL2UVHXJo6A3kzvuujLTbKG4WJ36eno3VVaW1yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10WHhml4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I783YBoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC23C433F1;
-	Mon,  8 Apr 2024 13:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10WHhml4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09D2C43394;
+	Mon,  8 Apr 2024 13:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584089;
-	bh=qqMelK+x0EpMJ8l1YYUBZcDdrL3Qm/8YB/s6+W5URXo=;
+	s=korg; t=1712584092;
+	bh=uAOepB3I9Yyh4ONCho3/oPyvYnNDJZtLQnp2i+N2HTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I783YBoGIaGbXlTUa2mSYl8/fJ3uUSn0ju1+oYn+imbXqUimuDOCJvioIhdfLs/S+
-	 PXBvbCClxeIgtmolbpxDzLxWHnMhDIVZCgzBrTM9uKa6EB2f7ynUytByeFAgTcmqpk
-	 OX/PP7s/z0G32/1PfJDiQXjs7cVRGCqcLJrk+zAo=
+	b=10WHhml4ryVMgPtRfdeXJB6KFr1U9c62+oJhW3GzzUZznlCJLnXljt127E8JUJhLH
+	 wH+n+5J+RF1CSv6Xs9Dj8PX4Zb8r1S9lJYmAE5wR6gym4SG+ndR3i5rm72O063AMFm
+	 JWSDqZv8ioWm8RL1VhXP96O6A6q+V0kfy5NZw30o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 332/690] NFSD: Fix potential use-after-free in nfsd_file_put()
-Date: Mon,  8 Apr 2024 14:53:18 +0200
-Message-ID: <20240408125411.630313466@linuxfoundation.org>
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.8 260/273] drm/i915/dp: Fix the computation for compressed_bpp for DISPLAY < 13
+Date: Mon,  8 Apr 2024 14:58:55 +0200
+Message-ID: <20240408125317.553547993@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
 
-[ Upstream commit b6c71c66b0ad8f2b59d9bc08c7a5079b110bec01 ]
+commit f7caddfd558e32db0ae944256e623a259538b357 upstream.
 
-nfsd_file_put_noref() can free @nf, so don't dereference @nf
-immediately upon return from nfsd_file_put_noref().
+For DISPLAY < 13, compressed bpp is chosen from a list of
+supported compressed bpps. Fix the condition to choose the
+appropriate compressed bpp from the list.
 
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Fixes: 999397926ab3 ("nfsd: Clean up nfsd_file_put()")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 1c56e9a39833 ("drm/i915/dp: Get optimal link config to have best compressed bpp")
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.7+
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10162
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240305054443.2489895-1-ankit.k.nautiyal@intel.com
+(cherry picked from commit 5a1da42b50f3594e18738885c2f23ed36629dd00)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 27952e2f3aa14..1d3d13b78be0e 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -302,11 +302,12 @@ nfsd_file_put(struct nfsd_file *nf)
- 	if (test_bit(NFSD_FILE_HASHED, &nf->nf_flags) == 0) {
- 		nfsd_file_flush(nf);
- 		nfsd_file_put_noref(nf);
--	} else {
-+	} else if (nf->nf_file) {
- 		nfsd_file_put_noref(nf);
--		if (nf->nf_file)
--			nfsd_file_schedule_laundrette();
--	}
-+		nfsd_file_schedule_laundrette();
-+	} else
-+		nfsd_file_put_noref(nf);
-+
- 	if (atomic_long_read(&nfsd_filecache_count) >= NFSD_FILE_LRU_LIMIT)
- 		nfsd_file_gc();
- }
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -1916,8 +1916,9 @@ icl_dsc_compute_link_config(struct intel
+ 	dsc_max_bpp = min(dsc_max_bpp, pipe_bpp - 1);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(valid_dsc_bpp); i++) {
+-		if (valid_dsc_bpp[i] < dsc_min_bpp ||
+-		    valid_dsc_bpp[i] > dsc_max_bpp)
++		if (valid_dsc_bpp[i] < dsc_min_bpp)
++			continue;
++		if (valid_dsc_bpp[i] > dsc_max_bpp)
+ 			break;
+ 
+ 		ret = dsc_compute_link_config(intel_dp,
 
 
