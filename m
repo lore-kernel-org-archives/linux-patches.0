@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B240A7E58E;
-	Mon,  8 Apr 2024 13:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AAB7E105;
+	Mon,  8 Apr 2024 13:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582842; cv=none; b=Py1SzOrYNSv2LYHmVRYgNjS9lk1GlribLuKk2jhvGQVxps7FhPewm5xT+00gz3uMrgt77TiYUd8UGnIieIbrhA1EbkrteKt7b+MGFAmpx+QEcbJNsgh3S0RyurWBi6qMt2RfACeRZ75S7M6gy86Fx3rzlhsxihXlQ8Ca30pxPD0=
+	t=1712582845; cv=none; b=UDvTtrwS+1ngZK4G6TUyKBx/WDb24pVr8KVBREbTBxWplWtdw+ezTPtBFMWmI/XKNnw78U/kk+i33eLh3+z58okH8JH1T3GBmiBfrT/Cn3XHN9k+5R/Vgf2Cf5Ok429aa6C6j5v+H9Z+OgK1EJQOq1/VLtNVF61ShNIvkuanQM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582842; c=relaxed/simple;
-	bh=k4plPOWPcH9YGQm4plbF/vUIeCDRjMndxdCYPnSE6kw=;
+	s=arc-20240116; t=1712582845; c=relaxed/simple;
+	bh=zKWW2+vhAHU0tGheOHQGDV6lBehIwwJm12jsw8jcPcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doEOJjH/d6SMnhInJcRMZRfvHO0AFpMpd+YMzx4sIzQcC3DeBS7iscPPYpiiRdwevbNG4QlibfTcMpQ62Ny53zNYGdHxEIxgMoWcIGWnKW26zs+Jm+FzI/9R9gSBs6+OJEGsrFy9XV3edaACk6eyigwvr6OpaWQbjjOL+EukPtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EITVZLDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qFb6L4SrlkWWuHApi6BXoE8YID5izb5gRAZfqoh+P1p0R/RFUvUXG9vHnTumKSY0AWM4BFNk+rVPpvTDjn4j+cPViHjbJrm3bPP27hzWDaVWyIHo2GdXhZCn4UZin5ahi2qCsk/7eSzWdFzn2Tzfi6/4PJmGoBOIKMrL1/aB8mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxUnElMY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EITVZLDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B2BC433C7;
-	Mon,  8 Apr 2024 13:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxUnElMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313C4C433F1;
+	Mon,  8 Apr 2024 13:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582842;
-	bh=k4plPOWPcH9YGQm4plbF/vUIeCDRjMndxdCYPnSE6kw=;
+	s=korg; t=1712582845;
+	bh=zKWW2+vhAHU0tGheOHQGDV6lBehIwwJm12jsw8jcPcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EITVZLDoEOLFKTCITVRC1pwekQ9H2rv16ojsrbEmzuU4UQR4QZeIHSv+x2OO5UBIO
-	 yPRpb52+XjtdKG7jycTnseCFmbGfvvh2T4Lcnla+b2Ts9X9GwRjSpQtJEGxQAZowgG
-	 AhTMyhUW25BZbv7J9fqbBzJR4vv2S/T9Mc7Ek4d8=
+	b=KxUnElMYjiG3bMwsAlsK0W+vBbdFrO6PTy4ItGdFFD2BH2+OmjW15iXrd2giIqlV1
+	 6/MSLgqpQjCAaQyxbwnEkHmBdR6zLFLCnxSgZgtNmZQDCZ33+YjXma+XMXW+pr6kRd
+	 cyOj85X9OQqKYjUMYDNI4IMH46A2AKG/LKvLqIUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 128/252] octeontx2-af: Add array index check
-Date: Mon,  8 Apr 2024 14:57:07 +0200
-Message-ID: <20240408125310.594902811@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 180/690] fanotify: Encode empty file handle when no inode is provided
+Date: Mon,  8 Apr 2024 14:50:46 +0200
+Message-ID: <20240408125406.081413625@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
-References: <20240408125306.643546457@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit ef15ddeeb6bee87c044bf7754fac524545bf71e8 upstream.
+[ Upstream commit 272531ac619b374ab474e989eb387162fded553f ]
 
-In rvu_map_cgx_lmac_pf() the 'iter', which is used as an array index, can reach
-value (up to 14) that exceed the size (MAX_LMAC_COUNT = 8) of the array.
-Fix this bug by adding 'iter' value check.
+Instead of failing, encode an invalid file handle in fanotify_encode_fh
+if no inode is provided.  This bogus file handle will be reported by
+FAN_FS_ERROR for non-inode errors.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 91c6945ea1f9 ("octeontx2-af: cn10k: Add RPM MAC support")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20211025192746.66445-16-krisman@collabora.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/notify/fanotify/fanotify.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -160,6 +160,8 @@ static int rvu_map_cgx_lmac_pf(struct rv
- 			continue;
- 		lmac_bmap = cgx_get_lmac_bmap(rvu_cgx_pdata(cgx, rvu));
- 		for_each_set_bit(iter, &lmac_bmap, rvu->hw->lmac_per_cgx) {
-+			if (iter >= MAX_LMAC_COUNT)
-+				continue;
- 			lmac = cgx_get_lmacid(rvu_cgx_pdata(cgx, rvu),
- 					      iter);
- 			rvu->pf2cgxlmac_map[pf] = cgxlmac_id_to_bmap(cgx, lmac);
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index ec84fee7ad01c..c64d61b673caf 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -370,8 +370,14 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
+ 	fh->type = FILEID_ROOT;
+ 	fh->len = 0;
+ 	fh->flags = 0;
++
++	/*
++	 * Invalid FHs are used by FAN_FS_ERROR for errors not
++	 * linked to any inode. The f_handle won't be reported
++	 * back to userspace.
++	 */
+ 	if (!inode)
+-		return 0;
++		goto out;
+ 
+ 	/*
+ 	 * !gpf means preallocated variable size fh, but fh_len could
+@@ -403,6 +409,7 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
+ 	fh->type = type;
+ 	fh->len = fh_len;
+ 
++out:
+ 	/*
+ 	 * Mix fh into event merge key.  Hash might be NULL in case of
+ 	 * unhashed FID events (i.e. FAN_FS_ERROR).
+-- 
+2.43.0
+
 
 
