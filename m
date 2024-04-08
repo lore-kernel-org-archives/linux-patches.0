@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41E86D1A9;
-	Mon,  8 Apr 2024 13:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B1A13957F;
+	Mon,  8 Apr 2024 13:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583564; cv=none; b=cORRvwtiWamaTUemF8EdCcqnE4dY8zMhcxCPUZHqeNOhmfnNJaMIIzauRgFj+PxagOV7QbBdFRPfz28jFWnVjDBaJ1DRXUMwZ6XQgQb8HAhTeUPzl3HYpObqkyNF0/kjJwgIxKj0+19KNsevmUyh5d09BS+0A3GPiH5FKKOOzLg=
+	t=1712583567; cv=none; b=Hw2EezqTsPEL1RqdzJ7DcLC2OGxMGfzLjvLXTChxJThU/pUSf1jqdbiHPP18kg0nqXe5OWMwx3pNLoSdR6sIpX4uycFrW0BZE3XEgexFv7PQZOGcxgTaubtgPN8Z9ALniBlyQ/bbMrEDAqgnemLFvnJDkhQ/Hm/K7Am64reBiw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583564; c=relaxed/simple;
-	bh=Pfsp9Cu3Qr5gui09chKEIspDH/FEiEYq/cb+T0+MoiE=;
+	s=arc-20240116; t=1712583567; c=relaxed/simple;
+	bh=EEmbfV3uQpwgGCJO7dnHWa+5UKtHYq3/CeiV/4Cwsf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYpeIG/3tTRMJRbKqEJ1OXsWbkW73fX0hiDtsPqenQDgdt9iLNDDv2lqknrfsEmhBD2wMQah7RNawnZyBP2kmtATVb8Zzu80M5qfeC5+AGjYaI+Udo110HMxdOV1Hn+k8rHeMi0xMLpzNr2dpAGiiLi4hP144ffq1fS61wf+ZVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyqXAFKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayrolShWi21zcYLIEaxElFxxV8JeJCLAyrXD8674KQj5BnWZUP0BZiVeV6+j28h9MhVW6tDAHZ3v1W7uJBW8g/EZvhmFK3JZ7EES15HH49hGwMhiFpL2u/5oTHOhUu+Bdc3NW3qxORr+wc+HW9u3chc87HpeOvmIUlrbhtf/xpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNk0Zb2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyqXAFKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F42C433C7;
-	Mon,  8 Apr 2024 13:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNk0Zb2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08DDC433C7;
+	Mon,  8 Apr 2024 13:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583564;
-	bh=Pfsp9Cu3Qr5gui09chKEIspDH/FEiEYq/cb+T0+MoiE=;
+	s=korg; t=1712583567;
+	bh=EEmbfV3uQpwgGCJO7dnHWa+5UKtHYq3/CeiV/4Cwsf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyqXAFKb8ZBuLStmxs6BPep+WcHkcGV2/O+jIpDTQJobKH4B1MY+RYliQ+3WxE4DL
-	 nS5I1lay58zH/dvmV+d4r2OVnHcfKpH9J2y+UQvxm+zd/UyiQyepMzDY2SeT4LOls7
-	 kNgzIEHzMgjIEf9jdOJDSHkvLUNzTv5rRqBpSAGk=
+	b=TNk0Zb2vg7ccGdLUZGfPmfQRGdLnguA7yDONhYnk69uDKf8G/2VMPL5cb/oX6MeGp
+	 jdkzoasVVCc5ui1f8ADwhHm6sU3nAYaMwXWrsIZ7dDMSk3ndHJseoFxj8bo6kXLzna
+	 hUzQdVVsqpFXaYU9QUxrSk/IoGDVHWI9aLi9oHF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Salvador <osalvador@suse.de>,
-	Marco Elver <elver@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Rohith Surabattula <rohiths.msft@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 192/273] lib/stackdepot: move stack_record struct definition into the header
-Date: Mon,  8 Apr 2024 14:57:47 +0200
-Message-ID: <20240408125315.278750402@linuxfoundation.org>
+Subject: [PATCH 6.6 188/252] cifs: Fix caching to try to do open O_WRONLY as rdwr on server
+Date: Mon,  8 Apr 2024 14:58:07 +0200
+Message-ID: <20240408125312.497212281@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,152 +54,253 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 8151c7a35d8bd8a12e93538ef7963ea209b6ab41 ]
+[ Upstream commit e9e62243a3e2322cf639f653a0b0a88a76446ce7 ]
 
-In order to move the heavy lifting into page_owner code, this one needs to
-have access to the stack_record structure, which right now sits in
-lib/stackdepot.c.  Move it to the stackdepot.h header so page_owner can
-access stack_record's struct fields.
+When we're engaged in local caching of a cifs filesystem, we cannot perform
+caching of a partially written cache granule unless we can read the rest of
+the granule.  This can result in unexpected access errors being reported to
+the user.
 
-Link: https://lkml.kernel.org/r/20240215215907.20121-3-osalvador@suse.de
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Marco Elver <elver@google.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: a6c1d9cb9a68 ("stackdepot: rename pool_index to pool_index_plus_1")
+Fix this by the following: if a file is opened O_WRONLY locally, but the
+mount was given the "-o fsc" flag, try first opening the remote file with
+GENERIC_READ|GENERIC_WRITE and if that returns -EACCES, try dropping the
+GENERIC_READ and doing the open again.  If that last succeeds, invalidate
+the cache for that file as for O_DIRECT.
+
+Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Steve French <sfrench@samba.org>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Rohith Surabattula <rohiths.msft@gmail.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/stackdepot.h | 47 ++++++++++++++++++++++++++++++++++++++
- lib/stackdepot.c           | 43 ----------------------------------
- 2 files changed, 47 insertions(+), 43 deletions(-)
+ fs/smb/client/dir.c     | 15 +++++++++++++
+ fs/smb/client/file.c    | 48 ++++++++++++++++++++++++++++++++---------
+ fs/smb/client/fscache.h |  6 ++++++
+ 3 files changed, 59 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
-index adcbb8f236000..c4b5ad57c0660 100644
---- a/include/linux/stackdepot.h
-+++ b/include/linux/stackdepot.h
-@@ -30,6 +30,53 @@ typedef u32 depot_stack_handle_t;
-  */
- #define STACK_DEPOT_EXTRA_BITS 5
+diff --git a/fs/smb/client/dir.c b/fs/smb/client/dir.c
+index 580a27a3a7e62..855468a32904e 100644
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -189,6 +189,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 	int disposition;
+ 	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_open_parms oparms;
++	int rdwr_for_fscache = 0;
  
-+#define DEPOT_HANDLE_BITS (sizeof(depot_stack_handle_t) * 8)
-+
-+#define DEPOT_POOL_ORDER 2 /* Pool size order, 4 pages */
-+#define DEPOT_POOL_SIZE (1LL << (PAGE_SHIFT + DEPOT_POOL_ORDER))
-+#define DEPOT_STACK_ALIGN 4
-+#define DEPOT_OFFSET_BITS (DEPOT_POOL_ORDER + PAGE_SHIFT - DEPOT_STACK_ALIGN)
-+#define DEPOT_POOL_INDEX_BITS (DEPOT_HANDLE_BITS - DEPOT_OFFSET_BITS - \
-+			       STACK_DEPOT_EXTRA_BITS)
-+
-+#ifdef CONFIG_STACKDEPOT
-+/* Compact structure that stores a reference to a stack. */
-+union handle_parts {
-+	depot_stack_handle_t handle;
-+	struct {
-+		/* pool_index is offset by 1 */
-+		u32 pool_index	: DEPOT_POOL_INDEX_BITS;
-+		u32 offset	: DEPOT_OFFSET_BITS;
-+		u32 extra	: STACK_DEPOT_EXTRA_BITS;
-+	};
-+};
-+
-+struct stack_record {
-+	struct list_head hash_list;	/* Links in the hash table */
-+	u32 hash;			/* Hash in hash table */
-+	u32 size;			/* Number of stored frames */
-+	union handle_parts handle;	/* Constant after initialization */
-+	refcount_t count;
-+	union {
-+		unsigned long entries[CONFIG_STACKDEPOT_MAX_FRAMES];	/* Frames */
-+		struct {
-+			/*
-+			 * An important invariant of the implementation is to
-+			 * only place a stack record onto the freelist iff its
-+			 * refcount is zero. Because stack records with a zero
-+			 * refcount are never considered as valid, it is safe to
-+			 * union @entries and freelist management state below.
-+			 * Conversely, as soon as an entry is off the freelist
-+			 * and its refcount becomes non-zero, the below must not
-+			 * be accessed until being placed back on the freelist.
-+			 */
-+			struct list_head free_list;	/* Links in the freelist */
-+			unsigned long rcu_state;	/* RCU cookie */
-+		};
-+	};
-+};
-+#endif
-+
- typedef u32 depot_flags_t;
+ 	*oplock = 0;
+ 	if (tcon->ses->server->oplocks)
+@@ -200,6 +201,10 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 		return PTR_ERR(full_path);
+ 	}
  
- /*
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index c1ec2b4b6dabf..ee4bbe6513aa4 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -36,55 +36,12 @@
- #include <linux/memblock.h>
- #include <linux/kasan-enabled.h>
++	/* If we're caching, we need to be able to fill in around partial writes. */
++	if (cifs_fscache_enabled(inode) && (oflags & O_ACCMODE) == O_WRONLY)
++		rdwr_for_fscache = 1;
++
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+ 	if (tcon->unix_ext && cap_unix(tcon->ses) && !tcon->broken_posix_open &&
+ 	    (CIFS_UNIX_POSIX_PATH_OPS_CAP &
+@@ -276,6 +281,8 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 		desired_access |= GENERIC_READ; /* is this too little? */
+ 	if (OPEN_FMODE(oflags) & FMODE_WRITE)
+ 		desired_access |= GENERIC_WRITE;
++	if (rdwr_for_fscache == 1)
++		desired_access |= GENERIC_READ;
  
--#define DEPOT_HANDLE_BITS (sizeof(depot_stack_handle_t) * 8)
--
--#define DEPOT_POOL_ORDER 2 /* Pool size order, 4 pages */
--#define DEPOT_POOL_SIZE (1LL << (PAGE_SHIFT + DEPOT_POOL_ORDER))
--#define DEPOT_STACK_ALIGN 4
--#define DEPOT_OFFSET_BITS (DEPOT_POOL_ORDER + PAGE_SHIFT - DEPOT_STACK_ALIGN)
--#define DEPOT_POOL_INDEX_BITS (DEPOT_HANDLE_BITS - DEPOT_OFFSET_BITS - \
--			       STACK_DEPOT_EXTRA_BITS)
- #define DEPOT_POOLS_CAP 8192
- /* The pool_index is offset by 1 so the first record does not have a 0 handle. */
- #define DEPOT_MAX_POOLS \
- 	(((1LL << (DEPOT_POOL_INDEX_BITS)) - 1 < DEPOT_POOLS_CAP) ? \
- 	 (1LL << (DEPOT_POOL_INDEX_BITS)) - 1 : DEPOT_POOLS_CAP)
+ 	disposition = FILE_OVERWRITE_IF;
+ 	if ((oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
+@@ -304,6 +311,7 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 	if (!tcon->unix_ext && (mode & S_IWUGO) == 0)
+ 		create_options |= CREATE_OPTION_READONLY;
  
--/* Compact structure that stores a reference to a stack. */
--union handle_parts {
--	depot_stack_handle_t handle;
--	struct {
--		u32 pool_index	: DEPOT_POOL_INDEX_BITS; /* pool_index is offset by 1 */
--		u32 offset	: DEPOT_OFFSET_BITS;
--		u32 extra	: STACK_DEPOT_EXTRA_BITS;
--	};
--};
--
--struct stack_record {
--	struct list_head hash_list;	/* Links in the hash table */
--	u32 hash;			/* Hash in hash table */
--	u32 size;			/* Number of stored frames */
--	union handle_parts handle;	/* Constant after initialization */
--	refcount_t count;
--	union {
--		unsigned long entries[CONFIG_STACKDEPOT_MAX_FRAMES];	/* Frames */
--		struct {
--			/*
--			 * An important invariant of the implementation is to
--			 * only place a stack record onto the freelist iff its
--			 * refcount is zero. Because stack records with a zero
--			 * refcount are never considered as valid, it is safe to
--			 * union @entries and freelist management state below.
--			 * Conversely, as soon as an entry is off the freelist
--			 * and its refcount becomes non-zero, the below must not
--			 * be accessed until being placed back on the freelist.
--			 */
--			struct list_head free_list;	/* Links in the freelist */
--			unsigned long rcu_state;	/* RCU cookie */
--		};
--	};
--};
--
- static bool stack_depot_disabled;
- static bool __stack_depot_early_init_requested __initdata = IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT);
- static bool __stack_depot_early_init_passed __initdata;
++retry_open:
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+ 		.cifs_sb = cifs_sb,
+@@ -317,8 +325,15 @@ static int cifs_do_create(struct inode *inode, struct dentry *direntry, unsigned
+ 	rc = server->ops->open(xid, &oparms, oplock, buf);
+ 	if (rc) {
+ 		cifs_dbg(FYI, "cifs_create returned 0x%x\n", rc);
++		if (rc == -EACCES && rdwr_for_fscache == 1) {
++			desired_access &= ~GENERIC_READ;
++			rdwr_for_fscache = 2;
++			goto retry_open;
++		}
+ 		goto out;
+ 	}
++	if (rdwr_for_fscache == 2)
++		cifs_invalidate_cache(inode, FSCACHE_INVAL_DIO_WRITE);
+ 
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+ 	/*
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index c711d5eb2987e..606972a95465b 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -206,12 +206,12 @@ cifs_mark_open_files_invalid(struct cifs_tcon *tcon)
+ 	 */
+ }
+ 
+-static inline int cifs_convert_flags(unsigned int flags)
++static inline int cifs_convert_flags(unsigned int flags, int rdwr_for_fscache)
+ {
+ 	if ((flags & O_ACCMODE) == O_RDONLY)
+ 		return GENERIC_READ;
+ 	else if ((flags & O_ACCMODE) == O_WRONLY)
+-		return GENERIC_WRITE;
++		return rdwr_for_fscache == 1 ? (GENERIC_READ | GENERIC_WRITE) : GENERIC_WRITE;
+ 	else if ((flags & O_ACCMODE) == O_RDWR) {
+ 		/* GENERIC_ALL is too much permission to request
+ 		   can cause unnecessary access denied on create */
+@@ -348,11 +348,16 @@ static int cifs_nt_open(const char *full_path, struct inode *inode, struct cifs_
+ 	int create_options = CREATE_NOT_DIR;
+ 	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_open_parms oparms;
++	int rdwr_for_fscache = 0;
+ 
+ 	if (!server->ops->open)
+ 		return -ENOSYS;
+ 
+-	desired_access = cifs_convert_flags(f_flags);
++	/* If we're caching, we need to be able to fill in around partial writes. */
++	if (cifs_fscache_enabled(inode) && (f_flags & O_ACCMODE) == O_WRONLY)
++		rdwr_for_fscache = 1;
++
++	desired_access = cifs_convert_flags(f_flags, rdwr_for_fscache);
+ 
+ /*********************************************************************
+  *  open flag mapping table:
+@@ -389,6 +394,7 @@ static int cifs_nt_open(const char *full_path, struct inode *inode, struct cifs_
+ 	if (f_flags & O_DIRECT)
+ 		create_options |= CREATE_NO_BUFFER;
+ 
++retry_open:
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+ 		.cifs_sb = cifs_sb,
+@@ -400,8 +406,16 @@ static int cifs_nt_open(const char *full_path, struct inode *inode, struct cifs_
+ 	};
+ 
+ 	rc = server->ops->open(xid, &oparms, oplock, buf);
+-	if (rc)
++	if (rc) {
++		if (rc == -EACCES && rdwr_for_fscache == 1) {
++			desired_access = cifs_convert_flags(f_flags, 0);
++			rdwr_for_fscache = 2;
++			goto retry_open;
++		}
+ 		return rc;
++	}
++	if (rdwr_for_fscache == 2)
++		cifs_invalidate_cache(inode, FSCACHE_INVAL_DIO_WRITE);
+ 
+ 	/* TODO: Add support for calling posix query info but with passing in fid */
+ 	if (tcon->unix_ext)
+@@ -834,11 +848,11 @@ int cifs_open(struct inode *inode, struct file *file)
+ use_cache:
+ 	fscache_use_cookie(cifs_inode_cookie(file_inode(file)),
+ 			   file->f_mode & FMODE_WRITE);
+-	if (file->f_flags & O_DIRECT &&
+-	    (!((file->f_flags & O_ACCMODE) != O_RDONLY) ||
+-	     file->f_flags & O_APPEND))
+-		cifs_invalidate_cache(file_inode(file),
+-				      FSCACHE_INVAL_DIO_WRITE);
++	if (!(file->f_flags & O_DIRECT))
++		goto out;
++	if ((file->f_flags & (O_ACCMODE | O_APPEND)) == O_RDONLY)
++		goto out;
++	cifs_invalidate_cache(file_inode(file), FSCACHE_INVAL_DIO_WRITE);
+ 
+ out:
+ 	free_dentry_path(page);
+@@ -903,6 +917,7 @@ cifs_reopen_file(struct cifsFileInfo *cfile, bool can_flush)
+ 	int disposition = FILE_OPEN;
+ 	int create_options = CREATE_NOT_DIR;
+ 	struct cifs_open_parms oparms;
++	int rdwr_for_fscache = 0;
+ 
+ 	xid = get_xid();
+ 	mutex_lock(&cfile->fh_mutex);
+@@ -966,7 +981,11 @@ cifs_reopen_file(struct cifsFileInfo *cfile, bool can_flush)
+ 	}
+ #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
+ 
+-	desired_access = cifs_convert_flags(cfile->f_flags);
++	/* If we're caching, we need to be able to fill in around partial writes. */
++	if (cifs_fscache_enabled(inode) && (cfile->f_flags & O_ACCMODE) == O_WRONLY)
++		rdwr_for_fscache = 1;
++
++	desired_access = cifs_convert_flags(cfile->f_flags, rdwr_for_fscache);
+ 
+ 	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
+ 	if (cfile->f_flags & O_SYNC)
+@@ -978,6 +997,7 @@ cifs_reopen_file(struct cifsFileInfo *cfile, bool can_flush)
+ 	if (server->ops->get_lease_key)
+ 		server->ops->get_lease_key(inode, &cfile->fid);
+ 
++retry_open:
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+ 		.cifs_sb = cifs_sb,
+@@ -1003,6 +1023,11 @@ cifs_reopen_file(struct cifsFileInfo *cfile, bool can_flush)
+ 		/* indicate that we need to relock the file */
+ 		oparms.reconnect = true;
+ 	}
++	if (rc == -EACCES && rdwr_for_fscache == 1) {
++		desired_access = cifs_convert_flags(cfile->f_flags, 0);
++		rdwr_for_fscache = 2;
++		goto retry_open;
++	}
+ 
+ 	if (rc) {
+ 		mutex_unlock(&cfile->fh_mutex);
+@@ -1011,6 +1036,9 @@ cifs_reopen_file(struct cifsFileInfo *cfile, bool can_flush)
+ 		goto reopen_error_exit;
+ 	}
+ 
++	if (rdwr_for_fscache == 2)
++		cifs_invalidate_cache(inode, FSCACHE_INVAL_DIO_WRITE);
++
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+ reopen_success:
+ #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
+diff --git a/fs/smb/client/fscache.h b/fs/smb/client/fscache.h
+index a3d73720914f8..1f2ea9f5cc9a8 100644
+--- a/fs/smb/client/fscache.h
++++ b/fs/smb/client/fscache.h
+@@ -109,6 +109,11 @@ static inline void cifs_readahead_to_fscache(struct inode *inode,
+ 		__cifs_readahead_to_fscache(inode, pos, len);
+ }
+ 
++static inline bool cifs_fscache_enabled(struct inode *inode)
++{
++	return fscache_cookie_enabled(cifs_inode_cookie(inode));
++}
++
+ #else /* CONFIG_CIFS_FSCACHE */
+ static inline
+ void cifs_fscache_fill_coherency(struct inode *inode,
+@@ -124,6 +129,7 @@ static inline void cifs_fscache_release_inode_cookie(struct inode *inode) {}
+ static inline void cifs_fscache_unuse_inode_cookie(struct inode *inode, bool update) {}
+ static inline struct fscache_cookie *cifs_inode_cookie(struct inode *inode) { return NULL; }
+ static inline void cifs_invalidate_cache(struct inode *inode, unsigned int flags) {}
++static inline bool cifs_fscache_enabled(struct inode *inode) { return false; }
+ 
+ static inline int cifs_fscache_query_occupancy(struct inode *inode,
+ 					       pgoff_t first, unsigned int nr_pages,
 -- 
 2.43.0
 
