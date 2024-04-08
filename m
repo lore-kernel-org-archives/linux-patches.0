@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FF47F47C;
-	Mon,  8 Apr 2024 14:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BCF7F495;
+	Mon,  8 Apr 2024 14:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712585075; cv=none; b=BMfFh5mdF1qG9Vml+Y75razmqq6omUzluvB+u6S3o2Erx3MDnQnyWj8GbWpoLEObPyKXhs9RX4Ht3oR7g6HWgJ7+MiCb5IMW4L9Zw0MhRaYe7zSNism8tDbdCgbBgL0F4HhGAuq+ioovPQUo/tXT30LL2Jvm6l3df6EESxYXDrY=
+	t=1712585078; cv=none; b=QMKI8GcQg7tssF5jkKGQxfO+S55VQFB+ptXcvdS1Fdg8AbVC9In+QFw+qtHqamg0UIPAHjrtIOBXwfb4wes+J22PGlzupGZK3qmrGgyOEdrfwON1DFzEIEv2R0S2Tc9yvGj5MZupimgulO48zR4VcXXbrbwuUOHbr+IPBff22m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712585075; c=relaxed/simple;
-	bh=rCPytSHaON4jfLYCFehFYxBfpHjK7THyRs1cRcl7FTs=;
+	s=arc-20240116; t=1712585078; c=relaxed/simple;
+	bh=TwlorOTyyVCUCmXD8634zE6ZUUrx5HKVpulD31f+woc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pdcl56hxEllbi6OQk/RKmFA77ymXwg2Wvz982J34P9MY1j2mIgMQSVOcJSFcJL5Ost9lPYGbETWj+vlMtTfK1Dnzoo2wMqY31juHR71hxoiyUSF9nqM2CUIr+oAhNR7SSjicVKiwxMXdXh2pU04c9BP+dmLqy8JnME0RZQ6lNoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIEuU44z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PyZQPIK5g+KKT0VjPJASfCRDcnrge5YlRJ1pkNuKauxLdudw4goNMlzCyw149LO+3Kwu5E6q9ceRWlZqB58g6W+WD8HE1GxWnUGhcF4+pFFaRP12phGpfhtlkQ2l66wZQoWAU2fWcGHe1Aq04UBhz/BLa0mbislRSdf5jz/zRnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWyH/T+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIEuU44z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2950C433C7;
-	Mon,  8 Apr 2024 14:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWyH/T+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6EFC433F1;
+	Mon,  8 Apr 2024 14:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712585075;
-	bh=rCPytSHaON4jfLYCFehFYxBfpHjK7THyRs1cRcl7FTs=;
+	s=korg; t=1712585078;
+	bh=TwlorOTyyVCUCmXD8634zE6ZUUrx5HKVpulD31f+woc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIEuU44zP9JK6WNUYjJh0vXnlCtTr378jV8XIS31TIHrrRYW/hH2sI6x0w00vuot/
-	 imOdTchU13UoE3j+CPbE9MQ+KjyAc55yPqTABOgTEWjgfNM3jhgQgL8CGSRvtiEL2e
-	 Irt85+rpjAQxf/sVTomI3USi0XYT7n35eTWNCu10=
+	b=GWyH/T+YKQxfoeUaUEJil9gKWNWmP/M0Y9gaZyY9WBLFwsY/idSkc6/iOWJOb2f/v
+	 NdKNuI8s+gyzlnMjp1J8QlIQZfGAh1bOhTkfeNpYRql3USisQLYEf7Oo3cA/BRpwjM
+	 Yfm8PSGHJwIeMfzOuOoQT1vkFExWDy4oZ4Wel7xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.15 655/690] i40e: fix vf may be used uninitialized in this function warning
-Date: Mon,  8 Apr 2024 14:58:41 +0200
-Message-ID: <20240408125423.384369144@linuxfoundation.org>
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Bikash Hazarika <bhazarika@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 656/690] scsi: qla2xxx: Update manufacturer details
+Date: Mon,  8 Apr 2024 14:58:42 +0200
+Message-ID: <20240408125423.423274391@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -54,146 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Bikash Hazarika <bhazarika@marvell.com>
 
-commit f37c4eac99c258111d414d31b740437e1925b8e8 upstream.
+[ Upstream commit 1ccad27716ecad1fd58c35e579bedb81fa5e1ad5 ]
 
-To fix the regression introduced by commit 52424f974bc5, which causes
-servers hang in very hard to reproduce conditions with resets races.
-Using two sources for the information is the root cause.
-In this function before the fix bumping v didn't mean bumping vf
-pointer. But the code used this variables interchangeably, so stale vf
-could point to different/not intended vf.
+Update manufacturer details to indicate Marvell Semiconductors.
 
-Remove redundant "v" variable and iterate via single VF pointer across
-whole function instead to guarantee VF pointer validity.
-
-Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20220713052045.10683-10-njavali@marvell.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 688fa069fda6 ("scsi: qla2xxx: Update manufacturer detail")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   34 +++++++++------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h | 2 +-
+ drivers/scsi/qla2xxx/qla_gs.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -1626,8 +1626,8 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- {
- 	struct i40e_hw *hw = &pf->hw;
- 	struct i40e_vf *vf;
--	int i, v;
- 	u32 reg;
-+	int i;
+diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
+index 3c876967e8b16..bab890f1110a1 100644
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -78,7 +78,7 @@ typedef union {
+ #include "qla_nvme.h"
+ #define QLA2XXX_DRIVER_NAME	"qla2xxx"
+ #define QLA2XXX_APIDEV		"ql2xapidev"
+-#define QLA2XXX_MANUFACTURER	"QLogic Corporation"
++#define QLA2XXX_MANUFACTURER	"Marvell Semiconductor, Inc."
  
- 	/* If we don't have any VFs, then there is nothing to reset */
- 	if (!pf->num_alloc_vfs)
-@@ -1638,11 +1638,10 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 		return false;
- 
- 	/* Begin reset on all VFs at once */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
--		vf = &pf->vf[v];
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* If VF is being reset no need to trigger reset again */
- 		if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
--			i40e_trigger_vf_reset(&pf->vf[v], flr);
-+			i40e_trigger_vf_reset(vf, flr);
- 	}
- 
- 	/* HW requires some time to make sure it can flush the FIFO for a VF
-@@ -1651,14 +1650,13 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	 * the VFs using a simple iterator that increments once that VF has
- 	 * finished resetting.
- 	 */
--	for (i = 0, v = 0; i < 10 && v < pf->num_alloc_vfs; i++) {
-+	for (i = 0, vf = &pf->vf[0]; i < 10 && vf < &pf->vf[pf->num_alloc_vfs]; ++i) {
- 		usleep_range(10000, 20000);
- 
- 		/* Check each VF in sequence, beginning with the VF to fail
- 		 * the previous check.
- 		 */
--		while (v < pf->num_alloc_vfs) {
--			vf = &pf->vf[v];
-+		while (vf < &pf->vf[pf->num_alloc_vfs]) {
- 			if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states)) {
- 				reg = rd32(hw, I40E_VPGEN_VFRSTAT(vf->vf_id));
- 				if (!(reg & I40E_VPGEN_VFRSTAT_VFRD_MASK))
-@@ -1668,7 +1666,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 			/* If the current VF has finished resetting, move on
- 			 * to the next VF in sequence.
- 			 */
--			v++;
-+			++vf;
- 		}
- 	}
- 
-@@ -1678,39 +1676,39 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	/* Display a warning if at least one VF didn't manage to reset in
- 	 * time, but continue on with the operation.
- 	 */
--	if (v < pf->num_alloc_vfs)
-+	if (vf < &pf->vf[pf->num_alloc_vfs])
- 		dev_err(&pf->pdev->dev, "VF reset check timeout on VF %d\n",
--			pf->vf[v].vf_id);
-+			vf->vf_id);
- 	usleep_range(10000, 20000);
- 
- 	/* Begin disabling all the rings associated with VFs, but do not wait
- 	 * between each VF.
- 	 */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* On initial reset, we don't have any queues to disable */
--		if (pf->vf[v].lan_vsi_idx == 0)
-+		if (vf->lan_vsi_idx == 0)
- 			continue;
- 
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
- 
--		i40e_vsi_stop_rings_no_wait(pf->vsi[pf->vf[v].lan_vsi_idx]);
-+		i40e_vsi_stop_rings_no_wait(pf->vsi[vf->lan_vsi_idx]);
- 	}
- 
- 	/* Now that we've notified HW to disable all of the VF rings, wait
- 	 * until they finish.
- 	 */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* On initial reset, we don't have any queues to disable */
--		if (pf->vf[v].lan_vsi_idx == 0)
-+		if (vf->lan_vsi_idx == 0)
- 			continue;
- 
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
- 
--		i40e_vsi_wait_queues_disabled(pf->vsi[pf->vf[v].lan_vsi_idx]);
-+		i40e_vsi_wait_queues_disabled(pf->vsi[vf->lan_vsi_idx]);
- 	}
- 
- 	/* Hw may need up to 50ms to finish disabling the RX queues. We
-@@ -1719,12 +1717,12 @@ bool i40e_reset_all_vfs(struct i40e_pf *
- 	mdelay(50);
- 
- 	/* Finish the reset on each VF */
--	for (v = 0; v < pf->num_alloc_vfs; v++) {
-+	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
- 		/* If VF is reset in another thread just continue */
- 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
- 			continue;
- 
--		i40e_cleanup_reset_vf(&pf->vf[v]);
-+		i40e_cleanup_reset_vf(vf);
- 	}
- 
- 	i40e_flush(hw);
+ /*
+  * We have MAILBOX_REGISTER_COUNT sized arrays in a few places,
+diff --git a/drivers/scsi/qla2xxx/qla_gs.c b/drivers/scsi/qla2xxx/qla_gs.c
+index d3742a83d2fd7..b0f3bf42c3405 100644
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -1615,7 +1615,7 @@ qla2x00_hba_attributes(scsi_qla_host_t *vha, void *entries,
+ 	eiter->type = cpu_to_be16(FDMI_HBA_MANUFACTURER);
+ 	alen = scnprintf(
+ 		eiter->a.manufacturer, sizeof(eiter->a.manufacturer),
+-		"%s", "QLogic Corporation");
++		"%s", QLA2XXX_MANUFACTURER);
+ 	alen += FDMI_ATTR_ALIGNMENT(alen);
+ 	alen += FDMI_ATTR_TYPELEN(eiter);
+ 	eiter->len = cpu_to_be16(alen);
+-- 
+2.43.0
+
 
 
