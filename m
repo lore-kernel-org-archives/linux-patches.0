@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA94C7D408;
-	Mon,  8 Apr 2024 13:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC82E70CDA;
+	Mon,  8 Apr 2024 13:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582221; cv=none; b=AbIy2I/PLqUwHdkCH6ThYzldWuELCERmhn12U9/R7iFLtN8h271/HaXY0M+N0Z8cy1y1Hq+Dvc4HQPcXzxilZFh9k9HI0UI0d4zB2deaN3xIzI5OCk430nL3sVRXDn2/cOAoAiwGN4zam9A2dH5B8TbcxNz9aZS43wr1vOBqCo8=
+	t=1712582223; cv=none; b=cj46DXu877QtGnnWtQ2APBH64w71cVS0SD9eZgSOI0Frk3xgrDlD/TVW2hPhZ+H4kpR2X8jSNBVpi80grNdemtCILxppOt3MYmhlg9ivguYvznMFL7zlwvhCEqtr9Qj1ZMhm2N9kG33ss5owFLujiLENkTcZLmW87U/b+APJJNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582221; c=relaxed/simple;
-	bh=VHZ44TRLWmsp8d5+F2YfVriVZkUGFXclV9gqkZ7JIx0=;
+	s=arc-20240116; t=1712582223; c=relaxed/simple;
+	bh=a7O8nGvMIsm8GK0cSK7qBmzaWf7L9WOijZ2wWz4ImLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/+TwMDzioLbOqDRUxZYzGAJsBtpk7Fqpv5DGg4N1sIL9g98zHG48nD4FjQp8eyLRGETko4xIcvG2mV2mJOW8dyo//PfNpqFWt0N400twVuuFtEY6uOgxMXvfl6fhxCy1p2qTl605pO41MtxAARDA2RzbWKha2A/NzgETvxkYmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuephu0C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPhFm1h+2KVpCYSYbX/nhZRP+6vmM/qTp+hDCeRi6h1Mo10xRn6VvDNfRNvbVIa5AlCmnL653NOyg8oeirxfaJZZdVJ9x0KIrPIK7HV1ydhwHtjBRTLpELe0op+6aNyT7tbETWyQ4RXNUtY5BTPD/qPXF1ZBTCVs8DTlOuQvocE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhklFARm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuephu0C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F6DC433C7;
-	Mon,  8 Apr 2024 13:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhklFARm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFD7C433F1;
+	Mon,  8 Apr 2024 13:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582220;
-	bh=VHZ44TRLWmsp8d5+F2YfVriVZkUGFXclV9gqkZ7JIx0=;
+	s=korg; t=1712582223;
+	bh=a7O8nGvMIsm8GK0cSK7qBmzaWf7L9WOijZ2wWz4ImLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuephu0CUtVsV228zZFlXwSSEqsU0idM2s7+SQ3xw4m8ZtO/9m9+1SI/6LFw8NvIK
-	 IwOXiz1bB76qgzoKcvnHMDxjwIINr3m460l15m03ssEMp5wr2BUP52M9bkguLpeEVi
-	 i7zxqT1SHPZFGArAvj1ydaKT2ll0Qefc+92EJ4/o=
+	b=UhklFARm2pAt7HbvydKa/N8T2WGMpvTgLe8ReeehhI4YYkmNjuHdLhFaF4oPP2OVa
+	 ki1jVnGhDKOBUx6Oe+lEr0vluZMh+TB3vqqWPWA46cUBAF2/HkAeyaVf8zIN+WgOp7
+	 C4TGhYI1pW2j1exgIkdUg8ptK/khfFJu6b8lkTyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/138] KVM: SVM: Add support for allowing zero SEV ASIDs
-Date: Mon,  8 Apr 2024 14:58:22 +0200
-Message-ID: <20240408125258.962150037@linuxfoundation.org>
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Clayton Craft <clayton@craftyguy.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 076/252] Revert "Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT"
+Date: Mon,  8 Apr 2024 14:56:15 +0200
+Message-ID: <20240408125308.988543258@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125256.218368873@linuxfoundation.org>
-References: <20240408125256.218368873@linuxfoundation.org>
+In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
+References: <20240408125306.643546457@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,106 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 0aa6b90ef9d75b4bd7b6d106d85f2a3437697f91 ]
+commit 4790a73ace86f3d165bbedba898e0758e6e1b82d upstream.
 
-Some BIOSes allow the end user to set the minimum SEV ASID value
-(CPUID 0x8000001F_EDX) to be greater than the maximum number of
-encrypted guests, or maximum SEV ASID value (CPUID 0x8000001F_ECX)
-in order to dedicate all the SEV ASIDs to SEV-ES or SEV-SNP.
+This reverts commit 7dcd3e014aa7faeeaf4047190b22d8a19a0db696.
 
-The SEV support, as coded, does not handle the case where the minimum
-SEV ASID value can be greater than the maximum SEV ASID value.
-As a result, the following confusing message is issued:
+Qualcomm Bluetooth controllers like WCN6855 do not have persistent
+storage for the Bluetooth address and must therefore start as
+unconfigured to allow the user to set a valid address unless one has
+been provided by the boot firmware in the devicetree.
 
-[   30.715724] kvm_amd: SEV enabled (ASIDs 1007 - 1006)
+A recent change snuck into v6.8-rc7 and incorrectly started marking the
+default (non-unique) address as valid. This specifically also breaks the
+Bluetooth setup for some user of the Lenovo ThinkPad X13s.
 
-Fix the support to properly handle this case.
+Note that this is the second time Qualcomm breaks the driver this way
+and that this was fixed last year by commit 6945795bc81a ("Bluetooth:
+fix use-bdaddr-property quirk"), which also has some further details.
 
-Fixes: 916391a2d1dc ("KVM: SVM: Add support for SEV-ES capability in KVM")
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/20240104190520.62510-1-Ashish.Kalra@amd.com
-Link: https://lore.kernel.org/r/20240131235609.4161407-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7dcd3e014aa7 ("Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT")
+Cc: stable@vger.kernel.org      # 6.8
+Cc: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reported-by: Clayton Craft <clayton@craftyguy.net>
+Tested-by: Clayton Craft <clayton@craftyguy.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/bluetooth/hci_qca.c |   13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 9e50eaf967f22..d8e192ad59538 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -136,10 +136,21 @@ static void sev_misc_cg_uncharge(struct kvm_sev_info *sev)
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -7,7 +7,6 @@
+  *
+  *  Copyright (C) 2007 Texas Instruments, Inc.
+  *  Copyright (c) 2010, 2012, 2018 The Linux Foundation. All rights reserved.
+- *  Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  *
+  *  Acknowledgements:
+  *  This file is based on hci_ll.c, which was...
+@@ -1882,17 +1881,7 @@ retry:
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-
+-		/* Set BDA quirk bit for reading BDA value from fwnode property
+-		 * only if that property exist in DT.
+-		 */
+-		if (fwnode_property_present(dev_fwnode(hdev->dev.parent), "local-bd-address")) {
+-			set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+-			bt_dev_info(hdev, "setting quirk bit to read BDA from fwnode later");
+-		} else {
+-			bt_dev_dbg(hdev, "local-bd-address` is not present in the devicetree so not setting quirk bit for BDA");
+-		}
+-
++		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+ 		hci_set_aosp_capable(hdev);
  
- static int sev_asid_new(struct kvm_sev_info *sev)
- {
--	unsigned int asid, min_asid, max_asid;
-+	/*
-+	 * SEV-enabled guests must use asid from min_sev_asid to max_sev_asid.
-+	 * SEV-ES-enabled guest can use from 1 to min_sev_asid - 1.
-+	 * Note: min ASID can end up larger than the max if basic SEV support is
-+	 * effectively disabled by disallowing use of ASIDs for SEV guests.
-+	 */
-+	unsigned int min_asid = sev->es_active ? 1 : min_sev_asid;
-+	unsigned int max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
-+	unsigned int asid;
- 	bool retry = true;
- 	int ret;
- 
-+	if (min_asid > max_asid)
-+		return -ENOTTY;
-+
- 	WARN_ON(sev->misc_cg);
- 	sev->misc_cg = get_current_misc_cg();
- 	ret = sev_misc_cg_try_charge(sev);
-@@ -151,12 +162,6 @@ static int sev_asid_new(struct kvm_sev_info *sev)
- 
- 	mutex_lock(&sev_bitmap_lock);
- 
--	/*
--	 * SEV-enabled guests must use asid from min_sev_asid to max_sev_asid.
--	 * SEV-ES-enabled guest can use from 1 to min_sev_asid - 1.
--	 */
--	min_asid = sev->es_active ? 1 : min_sev_asid;
--	max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
- again:
- 	asid = find_next_zero_bit(sev_asid_bitmap, max_asid + 1, min_asid);
- 	if (asid > max_asid) {
-@@ -2215,8 +2220,10 @@ void __init sev_hardware_setup(void)
- 		goto out;
- 	}
- 
--	sev_asid_count = max_sev_asid - min_sev_asid + 1;
--	WARN_ON_ONCE(misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count));
-+	if (min_sev_asid <= max_sev_asid) {
-+		sev_asid_count = max_sev_asid - min_sev_asid + 1;
-+		WARN_ON_ONCE(misc_cg_set_capacity(MISC_CG_RES_SEV, sev_asid_count));
-+	}
- 	sev_supported = true;
- 
- 	/* SEV-ES support requested? */
-@@ -2247,7 +2254,9 @@ void __init sev_hardware_setup(void)
- out:
- 	if (boot_cpu_has(X86_FEATURE_SEV))
- 		pr_info("SEV %s (ASIDs %u - %u)\n",
--			sev_supported ? "enabled" : "disabled",
-+			sev_supported ? min_sev_asid <= max_sev_asid ? "enabled" :
-+								       "unusable" :
-+								       "disabled",
- 			min_sev_asid, max_sev_asid);
- 	if (boot_cpu_has(X86_FEATURE_SEV_ES))
- 		pr_info("SEV-ES %s (ASIDs %u - %u)\n",
--- 
-2.43.0
-
+ 		ret = qca_read_soc_version(hdev, &ver, soc_type);
 
 
