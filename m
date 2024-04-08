@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743B980029;
-	Mon,  8 Apr 2024 13:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E00A80023;
+	Mon,  8 Apr 2024 13:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583160; cv=none; b=ZFJZltv1rs13vPwWCeVVLKnQceSrC7P/SVLYnWSqJIQs45UPNOCXgZChD4r/8LoEHFz5PHK9sw6M9PXjw2iptgmQe26yayvBgOtdNBo59+fssOUXc439TcmC4dLOlw6hve76A/gg99YOcVloECWnzWF/ytjN8SvpixpohLMJqGY=
+	t=1712583163; cv=none; b=obraU5kGXwzFk3dodsTYqHfh7gTSIE2p8qEXiH4xGGK2KCMS9DcI/1EniEr759SO6pv2SphhRvYgmfOvh9ScsOH0CTmuGg9v/VTYM45M+MjmpdF+tLahSAkUE2+IpNyXS8f3MlJaohIRtF4OGCXhZgNC4f64tL3hSJjNvKMeeTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583160; c=relaxed/simple;
-	bh=RozhS/fFB1GHbzp7pcw/3CnLTFvuJ1c6ePNewJ27+h8=;
+	s=arc-20240116; t=1712583163; c=relaxed/simple;
+	bh=lVFvH+NLq8qT154B9G8JEIz/JGg9s1/pnkJUuwr+JXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9Q5ts5kEmpJkE6QHWB1AbFdvkMRBqZu9LPjLD29EJmU9joKBye0rbQ8g/yqjARiY3cY9k0NYSOxUey01K5gH4mpNKICdn7/7AYR+6xzPxseAazvjJANLTaUbnEFc2Z/n26G/0KcaluclYUIDCYxQk8EK123bEbnn5ufIJo2rgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=db8xkxSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J9DwsgAIRUeKaEHLzGp7Ka9MeQ82+/eYed9OLTkZTZjWbrPTuvqZZFqGs5IxM+ct3bHBe8c79Cw1C/ueXcV7Lc1lV8dG5BxRyODq/kwHg5+Xh/wDkRwn7aeMvvptArU72kuoKqwIaxdtm6UwWuIZ28KBVdRaZxj+7vH2zQJ0ofM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvRnP+9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="db8xkxSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5F4C433F1;
-	Mon,  8 Apr 2024 13:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvRnP+9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C82C43390;
+	Mon,  8 Apr 2024 13:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583160;
-	bh=RozhS/fFB1GHbzp7pcw/3CnLTFvuJ1c6ePNewJ27+h8=;
+	s=korg; t=1712583163;
+	bh=lVFvH+NLq8qT154B9G8JEIz/JGg9s1/pnkJUuwr+JXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=db8xkxSdMz6m02M1uIDe+xPspmrQZnaDCOUmyL8M5/NJdKo6GXCBag825oAqaYlY1
-	 MKx9vsaZHXfZyUDm+nwKwqj+voZt1lNPrWVAc4BECDqmsSQF5vrzyesPMG/8nvcDEQ
-	 9zfeXfa0v1l4WeCZrB22K20sMlp/p5NZmoxVVHJs=
+	b=zvRnP+9owflGYx6WmvGIi4EetBBovZNbM0yt57E33pTDYMhfy+H33To+fJtbBATGr
+	 IBLg57i6CAb6+SsZey6tXEjgFgC+m0usniLPIycszi8TNYGlyXF903mfK/yoeaqz9y
+	 ao8p7hPuwliHDDMd7IdszMDQMHjDSHqvfAKU0wMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 217/690] fanotify: use macros to get the offset to fanotify_info buffer
-Date: Mon,  8 Apr 2024 14:51:23 +0200
-Message-ID: <20240408125407.399451003@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 147/273] riscv: mm: Fix prototype to avoid discarding const
+Date: Mon,  8 Apr 2024 14:57:02 +0200
+Message-ID: <20240408125313.852384716@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
-References: <20240408125359.506372836@linuxfoundation.org>
+In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
+References: <20240408125309.280181634@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,127 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 2d9374f095136206a02eb0b6cd9ef94632c1e9f7 ]
+[ Upstream commit 674bc0168e6b68070c75df22e97ab63b6eb60d89 ]
 
-The fanotify_info buffer contains up to two file handles and a name.
-Use macros to simplify the code that access the different items within
-the buffer.
+__flush_tlb_range() does not modify the provided cpumask, so its cmask
+parameter can be pointer-to-const. This avoids the unsafe cast of
+cpu_online_mask.
 
-Add assertions to verify that stored fh len and name len do not overflow
-the u8 stored value in fanotify_info header.
-
-Remove the unused fanotify_info_len() helper.
-
-Link: https://lore.kernel.org/r/20211129201537.1932819-6-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 54d7431af73e ("riscv: Add support for BATCHED_UNMAP_TLB_FLUSH")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240301201837.2826172-1-samuel.holland@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c |  2 +-
- fs/notify/fanotify/fanotify.h | 41 +++++++++++++++++++++++++----------
- 2 files changed, 31 insertions(+), 12 deletions(-)
+ arch/riscv/mm/tlbflush.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 85e542b164c8c..ffad224be0149 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -411,7 +411,7 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
- 	 * be zero in that case if encoding fh len failed.
- 	 */
- 	err = -ENOENT;
--	if (fh_len < 4 || WARN_ON_ONCE(fh_len % 4))
-+	if (fh_len < 4 || WARN_ON_ONCE(fh_len % 4) || fh_len > MAX_HANDLE_SZ)
- 		goto out_err;
- 
- 	/* No external buffer in a variable size allocated fh */
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index d25f500bf7e79..dd23ba659e76b 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -49,6 +49,22 @@ struct fanotify_info {
- 	 * (optional) file_fh starts at buf[dir_fh_totlen]
- 	 * name starts at buf[dir_fh_totlen + file_fh_totlen]
- 	 */
-+#define FANOTIFY_DIR_FH_SIZE(info)	((info)->dir_fh_totlen)
-+#define FANOTIFY_FILE_FH_SIZE(info)	((info)->file_fh_totlen)
-+#define FANOTIFY_NAME_SIZE(info)	((info)->name_len + 1)
-+
-+#define FANOTIFY_DIR_FH_OFFSET(info)	0
-+#define FANOTIFY_FILE_FH_OFFSET(info) \
-+	(FANOTIFY_DIR_FH_OFFSET(info) + FANOTIFY_DIR_FH_SIZE(info))
-+#define FANOTIFY_NAME_OFFSET(info) \
-+	(FANOTIFY_FILE_FH_OFFSET(info) + FANOTIFY_FILE_FH_SIZE(info))
-+
-+#define FANOTIFY_DIR_FH_BUF(info) \
-+	((info)->buf + FANOTIFY_DIR_FH_OFFSET(info))
-+#define FANOTIFY_FILE_FH_BUF(info) \
-+	((info)->buf + FANOTIFY_FILE_FH_OFFSET(info))
-+#define FANOTIFY_NAME_BUF(info) \
-+	((info)->buf + FANOTIFY_NAME_OFFSET(info))
- } __aligned(4);
- 
- static inline bool fanotify_fh_has_ext_buf(struct fanotify_fh *fh)
-@@ -87,7 +103,7 @@ static inline struct fanotify_fh *fanotify_info_dir_fh(struct fanotify_info *inf
- {
- 	BUILD_BUG_ON(offsetof(struct fanotify_info, buf) % 4);
- 
--	return (struct fanotify_fh *)info->buf;
-+	return (struct fanotify_fh *)FANOTIFY_DIR_FH_BUF(info);
+diff --git a/arch/riscv/mm/tlbflush.c b/arch/riscv/mm/tlbflush.c
+index 893566e004b73..07d743f87b3f6 100644
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -99,7 +99,7 @@ static void __ipi_flush_tlb_range_asid(void *info)
+ 	local_flush_tlb_range_asid(d->start, d->size, d->stride, d->asid);
  }
  
- static inline int fanotify_info_file_fh_len(struct fanotify_info *info)
-@@ -101,32 +117,35 @@ static inline int fanotify_info_file_fh_len(struct fanotify_info *info)
- 
- static inline struct fanotify_fh *fanotify_info_file_fh(struct fanotify_info *info)
+-static void __flush_tlb_range(struct cpumask *cmask, unsigned long asid,
++static void __flush_tlb_range(const struct cpumask *cmask, unsigned long asid,
+ 			      unsigned long start, unsigned long size,
+ 			      unsigned long stride)
  {
--	return (struct fanotify_fh *)(info->buf + info->dir_fh_totlen);
-+	return (struct fanotify_fh *)FANOTIFY_FILE_FH_BUF(info);
+@@ -200,7 +200,7 @@ void flush_tlb_range(struct vm_area_struct *vma, unsigned long start,
+ 
+ void flush_tlb_kernel_range(unsigned long start, unsigned long end)
+ {
+-	__flush_tlb_range((struct cpumask *)cpu_online_mask, FLUSH_TLB_NO_ASID,
++	__flush_tlb_range(cpu_online_mask, FLUSH_TLB_NO_ASID,
+ 			  start, end - start, PAGE_SIZE);
  }
  
--static inline const char *fanotify_info_name(struct fanotify_info *info)
-+static inline char *fanotify_info_name(struct fanotify_info *info)
- {
--	return info->buf + info->dir_fh_totlen + info->file_fh_totlen;
-+	if (!info->name_len)
-+		return NULL;
-+
-+	return FANOTIFY_NAME_BUF(info);
- }
- 
- static inline void fanotify_info_init(struct fanotify_info *info)
- {
-+	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
-+	BUILD_BUG_ON(NAME_MAX > U8_MAX);
-+
- 	info->dir_fh_totlen = 0;
- 	info->file_fh_totlen = 0;
- 	info->name_len = 0;
- }
- 
--static inline unsigned int fanotify_info_len(struct fanotify_info *info)
--{
--	return info->dir_fh_totlen + info->file_fh_totlen + info->name_len;
--}
--
- static inline void fanotify_info_copy_name(struct fanotify_info *info,
- 					   const struct qstr *name)
- {
-+	if (WARN_ON_ONCE(name->len > NAME_MAX))
-+		return;
-+
- 	info->name_len = name->len;
--	strcpy(info->buf + info->dir_fh_totlen + info->file_fh_totlen,
--	       name->name);
-+	strcpy(fanotify_info_name(info), name->name);
- }
- 
- /*
 -- 
 2.43.0
 
