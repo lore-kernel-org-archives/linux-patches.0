@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95B474438;
-	Mon,  8 Apr 2024 13:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A6D42046;
+	Mon,  8 Apr 2024 13:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712584465; cv=none; b=pb+A01A0ezoARWaOWUmI/RBDVf4bBUSI31/ev+yF11XAVOxCk0pU0ZdMUYyWESmEVKgjzZSNPZnaQjEXqQ0Au2j71o9p1qADNy7yY/ROx+TJCIW87hSTnwtECanfds0FFuUThdOUmrDknghv/S3C+SBQXJYvfO31HgDEgOPlPZ4=
+	t=1712584469; cv=none; b=kuvsUyCtgI98UkfxvHBhQLTYDpPGuCiiWBeqKYLLTI3Ydw6LMGbDrD6fi3xXh23ZLayx/ViJK8EYWELUvLZkVHLnxYtqPJ6TV9Ue/jkSq7lqWL6wqgR8rQ2Wdjm+XTwhvtK78G+i8dWUkdZ+Lf73DVm6kpTHdb7ML2+BRjk1qI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712584465; c=relaxed/simple;
-	bh=6qUVCdzn6nfwJTG/qVv4BUYceqGFbJpDW2TTAriusZ8=;
+	s=arc-20240116; t=1712584469; c=relaxed/simple;
+	bh=313xyx46Vy4DkI2B0fbGr/NDIjwY3Rz0fjs3IPO28lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KflQTJ8tYkjJCn4aqF01p4MDSgagtJ46PX75kX2rWWy4/F2iV6BC6xK5b2wQ2E56rWWSsVbX2koH2H3pA4KGtjamnsV7o/LDTEivl+kaKkHeX9T+sZGekaMD9CvHJttTYSp0vi+vuWhja7P5SUD1a/VbhVZGcJqdfOyEhOKTyCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LlsIVYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFW/2llSHDah/GlChTD+dcMu0+NEn6FnczxB5W9mKF5bx+Na/XBPj2cV7/MQ6yhjs3Kwz5qnONK3i6GiRVNejUPRHdbwk2Cy0hV57UYFs+6rPoQtHF8zCzxeuw1ITaWQOZieSA78Z7Glv2WpEd8AhIBavTwbIsdH7tXTM9m2KDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOGYheDq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LlsIVYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58788C433C7;
-	Mon,  8 Apr 2024 13:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOGYheDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E19EC433F1;
+	Mon,  8 Apr 2024 13:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712584465;
-	bh=6qUVCdzn6nfwJTG/qVv4BUYceqGFbJpDW2TTAriusZ8=;
+	s=korg; t=1712584468;
+	bh=313xyx46Vy4DkI2B0fbGr/NDIjwY3Rz0fjs3IPO28lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LlsIVYDk+RNex6dMyf+ySb7iSiPATFMK9RLpf+pPT08TtxjQk1+iI3q1giyJ3qfu
-	 FpGZNU83Lk7tER7CrWUBHbmvmpFY9Qke/XpkJN0aZnYl6WzIX7J4R1+zvwstqPpRxw
-	 VTHzvyIwlUmON3mPnJtYuHrpWIx8Vgy761ZzAl1c=
+	b=xOGYheDq+cWXWb6g4QHogR1LEdHtJRCDBmpW9EV94rOpQq8ZVCAJmvxunln0F5dd4
+	 OpKAEd6n84mUGawl8LbM18Ntg60J8w3tN/GYUG4yT+GVeBa7D974vgxKYGCCOWdigs
+	 Sbg9WlAdLbkTyyvZCG5Ewdpxb3Tj3j9vyiFItKnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	ChenXiaoSong <chenxiaosong2@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 446/690] nfsd: use DEFINE_SHOW_ATTRIBUTE to define export_features_fops and supported_enctypes_fops
-Date: Mon,  8 Apr 2024 14:55:12 +0200
-Message-ID: <20240408125415.808899572@linuxfoundation.org>
+Subject: [PATCH 5.15 447/690] nfsd: use DEFINE_SHOW_ATTRIBUTE to define client_info_fops
+Date: Mon,  8 Apr 2024 14:55:13 +0200
+Message-ID: <20240408125415.839246844@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
 References: <20240408125359.506372836@linuxfoundation.org>
@@ -52,78 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit 9beeaab8e05d353d709103cafa1941714b4d5d94 ]
+[ Upstream commit 1d7f6b302b75ff7acb9eb3cab0c631b10cfa7542 ]
 
 Use DEFINE_SHOW_ATTRIBUTE helper macro to simplify the code.
 
+inode is converted from seq_file->file instead of seq_file->private in
+client_info_show().
+
 Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-[ cel: reduce line length ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- fs/nfsd/nfsctl.c | 29 +++++------------------------
- 1 file changed, 5 insertions(+), 24 deletions(-)
+ fs/nfsd/nfs4state.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 597a26ad4183f..3ed0cfdb0c0b5 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -185,17 +185,7 @@ static int export_features_show(struct seq_file *m, void *v)
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 8cbb66b07d519..cc258f2988c73 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2503,7 +2503,7 @@ static const char *cb_state2str(int state)
+ 
+ static int client_info_show(struct seq_file *m, void *v)
+ {
+-	struct inode *inode = m->private;
++	struct inode *inode = file_inode(m->file);
+ 	struct nfs4_client *clp;
+ 	u64 clid;
+ 
+@@ -2543,17 +2543,7 @@ static int client_info_show(struct seq_file *m, void *v)
  	return 0;
  }
  
--static int export_features_open(struct inode *inode, struct file *file)
+-static int client_info_open(struct inode *inode, struct file *file)
 -{
--	return single_open(file, export_features_show, NULL);
+-	return single_open(file, client_info_show, inode);
 -}
 -
--static const struct file_operations export_features_operations = {
--	.open		= export_features_open,
+-static const struct file_operations client_info_fops = {
+-	.open		= client_info_open,
 -	.read		= seq_read,
 -	.llseek		= seq_lseek,
 -	.release	= single_release,
 -};
-+DEFINE_SHOW_ATTRIBUTE(export_features);
++DEFINE_SHOW_ATTRIBUTE(client_info);
  
- #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
- static int supported_enctypes_show(struct seq_file *m, void *v)
-@@ -204,17 +194,7 @@ static int supported_enctypes_show(struct seq_file *m, void *v)
- 	return 0;
- }
- 
--static int supported_enctypes_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, supported_enctypes_show, NULL);
--}
--
--static const struct file_operations supported_enctypes_ops = {
--	.open		= supported_enctypes_open,
--	.read		= seq_read,
--	.llseek		= seq_lseek,
--	.release	= single_release,
--};
-+DEFINE_SHOW_ATTRIBUTE(supported_enctypes);
- #endif /* CONFIG_SUNRPC_GSS or CONFIG_SUNRPC_GSS_MODULE */
- 
- static const struct file_operations pool_stats_operations = {
-@@ -1365,7 +1345,7 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- 		/* Per-export io stats use same ops as exports file */
- 		[NFSD_Export_Stats] = {"export_stats", &exports_nfsd_operations, S_IRUGO},
- 		[NFSD_Export_features] = {"export_features",
--					&export_features_operations, S_IRUGO},
-+					&export_features_fops, S_IRUGO},
- 		[NFSD_FO_UnlockIP] = {"unlock_ip",
- 					&transaction_ops, S_IWUSR|S_IRUSR},
- 		[NFSD_FO_UnlockFS] = {"unlock_filesystem",
-@@ -1381,7 +1361,8 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- 		[NFSD_MaxConnections] = {"max_connections", &transaction_ops, S_IWUSR|S_IRUGO},
- 		[NFSD_Filecache] = {"filecache", &filecache_ops, S_IRUGO},
- #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
--		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes", &supported_enctypes_ops, S_IRUGO},
-+		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes",
-+					&supported_enctypes_fops, S_IRUGO},
- #endif /* CONFIG_SUNRPC_GSS or CONFIG_SUNRPC_GSS_MODULE */
- #ifdef CONFIG_NFSD_V4
- 		[NFSD_Leasetime] = {"nfsv4leasetime", &transaction_ops, S_IWUSR|S_IRUSR},
+ static void *states_start(struct seq_file *s, loff_t *pos)
+ 	__acquires(&clp->cl_lock)
 -- 
 2.43.0
 
