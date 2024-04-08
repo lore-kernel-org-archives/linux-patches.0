@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E877F49B;
-	Mon,  8 Apr 2024 13:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C55D7FBB0;
+	Mon,  8 Apr 2024 13:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712582863; cv=none; b=gB6zyHjZCdxx1/hCstsNNLZiVdYEja9K6vu/fq5yJ8CI6CPg547CXuevIsPBcJYFrVhGSWOCy8ncv7/tv8rd2xvoWGGqIFS/kGw3TRgpcjVgsYZQy1CQhkStgr8nNPYHxga2kiNXIujdPBZUeuccZB3XeMi3qDLVEbIxlTn5jzI=
+	t=1712582866; cv=none; b=Xj2lKAwcVZTIPjByU5InlL+P5xUb6rYtn5tIjx0ckj3TABG/e1C6K1HhV4/ALh4g50LqVF9R47QTLwYzz6rKq8TqFFUKAPXnf4jNfp/SnVKCGcXCbCDvuOYsKYfGIK62lDdY1XPOAw907q8VROfcjsSHe9FpnsN+he4QUjiELYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712582863; c=relaxed/simple;
-	bh=AlQ9wX9Lsgqt/bgdyZUfyATy47SByO4UgOrWD8HGAnY=;
+	s=arc-20240116; t=1712582866; c=relaxed/simple;
+	bh=bU4Knkmyx1swVDwsO8OzOwSscjaPQO3NXHUzh3iqNu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlIdqd0eFixb+dcl5ZrCdRXxGDju3Gl4VwsSsJbaQvtLs1s3cUAj7mF0LQ9gTPMM29xVlGFLQSbXWLtecvsd2DcnedmHPqbOxa2v1LOq0elCS6bmmAjfsirEBqQoYfIuVVZsVQh3nxwpLhW/OoEZIkT/laClUcjIhRsOLNOCQ14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOCalfeQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snonGe+1KMIzoTBJkANmMGMdrAFog1GudmyhlWb4uI6LhU4VZ8n/wWhAcKLC+nEjBfUrEI1LYw0/3Psgc8EW3czSq8ADCeJs3o4DWWjtW0Xirt7cK1hNsC11SMx3/Cx8mF4STYm8Nr5LG3PEuVdxV1FDbtKEW1zcItSbYJVqmro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYe4ixcx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOCalfeQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C4EC433C7;
-	Mon,  8 Apr 2024 13:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYe4ixcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD29FC433F1;
+	Mon,  8 Apr 2024 13:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712582863;
-	bh=AlQ9wX9Lsgqt/bgdyZUfyATy47SByO4UgOrWD8HGAnY=;
+	s=korg; t=1712582866;
+	bh=bU4Knkmyx1swVDwsO8OzOwSscjaPQO3NXHUzh3iqNu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOCalfeQDUPrxWYYMrHJ+hGkk23PTa9nX49I2aeLq6GbQS9+DZqgJ+NrC6G6kxieB
-	 RChStVcNRYLRavM2wsKvL0tjFaqbpQocTPgJJ3wRTim8rSZqqF7eFffEzdtBLBcPuU
-	 EM4i//dZHTEvcSoY9BjQB06aW6eGWg/mEMKyyEgM=
+	b=iYe4ixcx4LugTY3N3+sVIzws3ZIi5HP76pTv8cUz8QnGA29pDGsKPqFFOOCYcu6Vd
+	 CLDVrK4qVMvQ0T1jLrG8/TNaUJkaE1W93Dqen673GA+klWFKzBPtwTUtaAQPttY+D/
+	 uW/6JIz8s1asc1HcD0aAfMzmHxHu24fQ3dLpMAQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 116/252] erspan: make sure erspan_base_hdr is present in skb->head
-Date: Mon,  8 Apr 2024 14:56:55 +0200
-Message-ID: <20240408125310.233175554@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.6 130/252] i40e: fix vf may be used uninitialized in this function warning
+Date: Mon,  8 Apr 2024 14:57:09 +0200
+Message-ID: <20240408125310.666048534@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408125306.643546457@linuxfoundation.org>
 References: <20240408125306.643546457@linuxfoundation.org>
@@ -52,121 +54,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-commit 17af420545a750f763025149fa7b833a4fc8b8f0 upstream.
+commit f37c4eac99c258111d414d31b740437e1925b8e8 upstream.
 
-syzbot reported a problem in ip6erspan_rcv() [1]
+To fix the regression introduced by commit 52424f974bc5, which causes
+servers hang in very hard to reproduce conditions with resets races.
+Using two sources for the information is the root cause.
+In this function before the fix bumping v didn't mean bumping vf
+pointer. But the code used this variables interchangeably, so stale vf
+could point to different/not intended vf.
 
-Issue is that ip6erspan_rcv() (and erspan_rcv()) no longer make
-sure erspan_base_hdr is present in skb linear part (skb->head)
-before getting @ver field from it.
+Remove redundant "v" variable and iterate via single VF pointer across
+whole function instead to guarantee VF pointer validity.
 
-Add the missing pskb_may_pull() calls.
-
-v2: Reload iph pointer in erspan_rcv() after pskb_may_pull()
-    because skb->head might have changed.
-
-[1]
-
- BUG: KMSAN: uninit-value in pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
- BUG: KMSAN: uninit-value in pskb_may_pull include/linux/skbuff.h:2756 [inline]
- BUG: KMSAN: uninit-value in ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
- BUG: KMSAN: uninit-value in gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
-  pskb_may_pull_reason include/linux/skbuff.h:2742 [inline]
-  pskb_may_pull include/linux/skbuff.h:2756 [inline]
-  ip6erspan_rcv net/ipv6/ip6_gre.c:541 [inline]
-  gre_rcv+0x11f8/0x1930 net/ipv6/ip6_gre.c:610
-  ip6_protocol_deliver_rcu+0x1d4c/0x2ca0 net/ipv6/ip6_input.c:438
-  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-  dst_input include/net/dst.h:460 [inline]
-  ip6_rcv_finish+0x955/0x970 net/ipv6/ip6_input.c:79
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ipv6_rcv+0xde/0x390 net/ipv6/ip6_input.c:310
-  __netif_receive_skb_one_core net/core/dev.c:5538 [inline]
-  __netif_receive_skb+0x1da/0xa00 net/core/dev.c:5652
-  netif_receive_skb_internal net/core/dev.c:5738 [inline]
-  netif_receive_skb+0x58/0x660 net/core/dev.c:5798
-  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1549
-  tun_get_user+0x5566/0x69e0 drivers/net/tun.c:2002
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2108 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0xb63/0x1520 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:3804 [inline]
-  slab_alloc_node mm/slub.c:3845 [inline]
-  kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
-  __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
-  alloc_skb include/linux/skbuff.h:1318 [inline]
-  alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
-  sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
-  tun_alloc_skb drivers/net/tun.c:1525 [inline]
-  tun_get_user+0x209a/0x69e0 drivers/net/tun.c:1846
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2108 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0xb63/0x1520 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xe0 fs/read_write.c:652
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-CPU: 1 PID: 5045 Comm: syz-executor114 Not tainted 6.9.0-rc1-syzkaller-00021-g962490525cff #0
-
-Fixes: cb73ee40b1b3 ("net: ip_gre: use erspan key field for tunnel lookup")
-Reported-by: syzbot+1c1cf138518bf0c53d68@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000772f2c0614b66ef7@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20240328112248.1101491-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52424f974bc5 ("i40e: Fix VF hang when reset is triggered on another VF")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_gre.c  |    5 +++++
- net/ipv6/ip6_gre.c |    3 +++
- 2 files changed, 8 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   34 +++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -280,8 +280,13 @@ static int erspan_rcv(struct sk_buff *sk
- 					  tpi->flags | TUNNEL_NO_KEY,
- 					  iph->saddr, iph->daddr, 0);
- 	} else {
-+		if (unlikely(!pskb_may_pull(skb,
-+					    gre_hdr_len + sizeof(*ershdr))))
-+			return PACKET_REJECT;
-+
- 		ershdr = (struct erspan_base_hdr *)(skb->data + gre_hdr_len);
- 		ver = ershdr->ver;
-+		iph = ip_hdr(skb);
- 		tunnel = ip_tunnel_lookup(itn, skb->dev->ifindex,
- 					  tpi->flags | TUNNEL_KEY,
- 					  iph->saddr, iph->daddr, tpi->key);
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -528,6 +528,9 @@ static int ip6erspan_rcv(struct sk_buff
- 	struct ip6_tnl *tunnel;
- 	u8 ver;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1628,8 +1628,8 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ {
+ 	struct i40e_hw *hw = &pf->hw;
+ 	struct i40e_vf *vf;
+-	int i, v;
+ 	u32 reg;
++	int i;
  
-+	if (unlikely(!pskb_may_pull(skb, sizeof(*ershdr))))
-+		return PACKET_REJECT;
-+
- 	ipv6h = ipv6_hdr(skb);
- 	ershdr = (struct erspan_base_hdr *)skb->data;
- 	ver = ershdr->ver;
+ 	/* If we don't have any VFs, then there is nothing to reset */
+ 	if (!pf->num_alloc_vfs)
+@@ -1640,11 +1640,10 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 		return false;
+ 
+ 	/* Begin reset on all VFs at once */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
+-		vf = &pf->vf[v];
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is being reset no need to trigger reset again */
+ 		if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+-			i40e_trigger_vf_reset(&pf->vf[v], flr);
++			i40e_trigger_vf_reset(vf, flr);
+ 	}
+ 
+ 	/* HW requires some time to make sure it can flush the FIFO for a VF
+@@ -1653,14 +1652,13 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	 * the VFs using a simple iterator that increments once that VF has
+ 	 * finished resetting.
+ 	 */
+-	for (i = 0, v = 0; i < 10 && v < pf->num_alloc_vfs; i++) {
++	for (i = 0, vf = &pf->vf[0]; i < 10 && vf < &pf->vf[pf->num_alloc_vfs]; ++i) {
+ 		usleep_range(10000, 20000);
+ 
+ 		/* Check each VF in sequence, beginning with the VF to fail
+ 		 * the previous check.
+ 		 */
+-		while (v < pf->num_alloc_vfs) {
+-			vf = &pf->vf[v];
++		while (vf < &pf->vf[pf->num_alloc_vfs]) {
+ 			if (!test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states)) {
+ 				reg = rd32(hw, I40E_VPGEN_VFRSTAT(vf->vf_id));
+ 				if (!(reg & I40E_VPGEN_VFRSTAT_VFRD_MASK))
+@@ -1670,7 +1668,7 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 			/* If the current VF has finished resetting, move on
+ 			 * to the next VF in sequence.
+ 			 */
+-			v++;
++			++vf;
+ 		}
+ 	}
+ 
+@@ -1680,39 +1678,39 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	/* Display a warning if at least one VF didn't manage to reset in
+ 	 * time, but continue on with the operation.
+ 	 */
+-	if (v < pf->num_alloc_vfs)
++	if (vf < &pf->vf[pf->num_alloc_vfs])
+ 		dev_err(&pf->pdev->dev, "VF reset check timeout on VF %d\n",
+-			pf->vf[v].vf_id);
++			vf->vf_id);
+ 	usleep_range(10000, 20000);
+ 
+ 	/* Begin disabling all the rings associated with VFs, but do not wait
+ 	 * between each VF.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_stop_rings_no_wait(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_stop_rings_no_wait(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Now that we've notified HW to disable all of the VF rings, wait
+ 	 * until they finish.
+ 	 */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* On initial reset, we don't have any queues to disable */
+-		if (pf->vf[v].lan_vsi_idx == 0)
++		if (vf->lan_vsi_idx == 0)
+ 			continue;
+ 
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_vsi_wait_queues_disabled(pf->vsi[pf->vf[v].lan_vsi_idx]);
++		i40e_vsi_wait_queues_disabled(pf->vsi[vf->lan_vsi_idx]);
+ 	}
+ 
+ 	/* Hw may need up to 50ms to finish disabling the RX queues. We
+@@ -1721,12 +1719,12 @@ bool i40e_reset_all_vfs(struct i40e_pf *
+ 	mdelay(50);
+ 
+ 	/* Finish the reset on each VF */
+-	for (v = 0; v < pf->num_alloc_vfs; v++) {
++	for (vf = &pf->vf[0]; vf < &pf->vf[pf->num_alloc_vfs]; ++vf) {
+ 		/* If VF is reset in another thread just continue */
+ 		if (test_bit(I40E_VF_STATE_RESETTING, &vf->vf_states))
+ 			continue;
+ 
+-		i40e_cleanup_reset_vf(&pf->vf[v]);
++		i40e_cleanup_reset_vf(vf);
+ 	}
+ 
+ 	i40e_flush(hw);
 
 
