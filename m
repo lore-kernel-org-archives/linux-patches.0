@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E8B7EF06;
-	Mon,  8 Apr 2024 13:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1639F78285;
+	Mon,  8 Apr 2024 13:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712583914; cv=none; b=g41yl7tGZmrd6XBh5deGhuRksaU6oohfz/Jql3zZDV2sOQH5HdQpjsDpMqDyfVDtl7/jzzEUX+l+argi/+7f1BaRHvNVYgpdrm4Eta7Bjv/zvl1vCm9GhZUO0tvl5LKAA9TQn4rXjRH34EnXowKDTzNftojM04KSNC6O4fHQRp8=
+	t=1712583917; cv=none; b=Zr5ZmusEgjs/pbtJ3kYxCsTrLLOWgGBnmjfuDUbuTP7mz2cR5nRKR1iThg/n1ztmdqUMfj32rzrd+BFOem0D376R3aKupY3G5jXnrsaWq01C/cpqMNkdVhTI/r0hEHj8P+GhXuDg93ttaver5ED2NhZiZyuq0ArxjscSQz/0q+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712583914; c=relaxed/simple;
-	bh=HuQV/kFnMx8St8cDGtrP90BoGWtSrCfmx8O0X7bVCM4=;
+	s=arc-20240116; t=1712583917; c=relaxed/simple;
+	bh=+qwZ4vMiT5qVJBZGkTlfKTlMTYvbA/0lD1yA17w/34c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGyagd1JkcoEjsXRDSAh1zdP5AfsVOhG/JJX9FoeeRhQiareKVjabTc1ff4W6sTYKeWABlDjuXF88lhg0J49AViyqmb6aII5jZYk5IXfQhsYTtCDNRiLNgdEgXUmPUKBlzjVmVu484skyA2gJYUEoXvLwstRF/0rGk5uXbiWOOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCgCDhEK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+K+hXjFTtYqNWBY+iJI4Bqh/jx3gsiyafD12240oFZf1cJHjniubax+aG8oN6Q0pa+xNE/SPix/IxryZkrr6ugNy4R5qZVJULx5UFYMMVE8ERb4s5NgLMI7dj7AqO2WtxjKbMgqyDWOUzk22gIje58UdlyWyVyNB7JsggHTTBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKexc9MZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCgCDhEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A312AC433C7;
-	Mon,  8 Apr 2024 13:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKexc9MZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9284DC433F1;
+	Mon,  8 Apr 2024 13:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1712583914;
-	bh=HuQV/kFnMx8St8cDGtrP90BoGWtSrCfmx8O0X7bVCM4=;
+	s=korg; t=1712583917;
+	bh=+qwZ4vMiT5qVJBZGkTlfKTlMTYvbA/0lD1yA17w/34c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCgCDhEKa56lNwtZIlRlVIjY5ilK2pbqcW4BQZ5u2eZfvh6qVzHfjLAq+AeBlEono
-	 4SIO9KqD+bKJcEiEJgqMVUdZJeIFnocG938KkvQDS/5Yd+m9WXyMWN1DKZ5Yv4jpvt
-	 dXWD1N5vYVKFld1431MmAq9kwfSXmsmJFjjsEZto=
+	b=dKexc9MZmdg7OX6YGBzplY2K1nP2BdZoL0R+st7iA3VbzqXVW0QOGwiSJ/wz9Gv3B
+	 BQF7KqlinVPJnnMSf3OeE+0uDwC3S2zea54evQdRXt0n3ACKEygXgQ/ur31uZPR2uj
+	 lJD4mpBuvrHOOWNLVMbWmXrQK0+jSDjmMlqdzTT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Elena Reshetova <elena.reshetova@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.8 233/273] x86/coco: Require seeding RNG with RDRAND on CoCo systems
-Date: Mon,  8 Apr 2024 14:58:28 +0200
-Message-ID: <20240408125316.667515064@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 302/690] fanotify: enable "evictable" inode marks
+Date: Mon,  8 Apr 2024 14:52:48 +0200
+Message-ID: <20240408125410.536698578@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240408125309.280181634@linuxfoundation.org>
-References: <20240408125309.280181634@linuxfoundation.org>
+In-Reply-To: <20240408125359.506372836@linuxfoundation.org>
+References: <20240408125359.506372836@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,157 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.8-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 99485c4c026f024e7cb82da84c7951dbe3deb584 upstream.
+[ Upstream commit 5f9d3bd520261fd7a850818c71809fd580e0f30c ]
 
-There are few uses of CoCo that don't rely on working cryptography and
-hence a working RNG. Unfortunately, the CoCo threat model means that the
-VM host cannot be trusted and may actively work against guests to
-extract secrets or manipulate computation. Since a malicious host can
-modify or observe nearly all inputs to guests, the only remaining source
-of entropy for CoCo guests is RDRAND.
+Now that the direct reclaim path is handled we can enable evictable
+inode marks.
 
-If RDRAND is broken -- due to CPU hardware fault -- the RNG as a whole
-is meant to gracefully continue on gathering entropy from other sources,
-but since there aren't other sources on CoCo, this is catastrophic.
-This is mostly a concern at boot time when initially seeding the RNG, as
-after that the consequences of a broken RDRAND are much more
-theoretical.
-
-So, try at boot to seed the RNG using 256 bits of RDRAND output. If this
-fails, panic(). This will also trigger if the system is booted without
-RDRAND, as RDRAND is essential for a safe CoCo boot.
-
-Add this deliberately to be "just a CoCo x86 driver feature" and not
-part of the RNG itself. Many device drivers and platforms have some
-desire to contribute something to the RNG, and add_device_randomness()
-is specifically meant for this purpose.
-
-Any driver can call it with seed data of any quality, or even garbage
-quality, and it can only possibly make the quality of the RNG better or
-have no effect, but can never make it worse.
-
-Rather than trying to build something into the core of the RNG, consider
-the particular CoCo issue just a CoCo issue, and therefore separate it
-all out into driver (well, arch/platform) code.
-
-  [ bp: Massage commit message. ]
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Elena Reshetova <elena.reshetova@intel.com>
-Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240326160735.73531-1-Jason@zx2c4.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20220422120327.3459282-17-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 ---
- arch/x86/coco/core.c        |   41 +++++++++++++++++++++++++++++++++++++++++
- arch/x86/include/asm/coco.h |    2 ++
- arch/x86/kernel/setup.c     |    2 ++
- 3 files changed, 45 insertions(+)
+ fs/notify/fanotify/fanotify_user.c | 2 +-
+ include/linux/fanotify.h           | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/coco/core.c
-+++ b/arch/x86/coco/core.c
-@@ -3,13 +3,17 @@
-  * Confidential Computing Platform Capability checks
-  *
-  * Copyright (C) 2021 Advanced Micro Devices, Inc.
-+ * Copyright (C) 2024 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  *
-  * Author: Tom Lendacky <thomas.lendacky@amd.com>
-  */
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index b4d16caa98d80..4471043955f87 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1814,7 +1814,7 @@ static int __init fanotify_user_setup(void)
  
- #include <linux/export.h>
- #include <linux/cc_platform.h>
-+#include <linux/string.h>
-+#include <linux/random.h>
+ 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
+ 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 12);
+-	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 9);
++	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 10);
  
-+#include <asm/archrandom.h>
- #include <asm/coco.h>
- #include <asm/processor.h>
+ 	fanotify_mark_cache = KMEM_CACHE(fsnotify_mark,
+ 					 SLAB_PANIC|SLAB_ACCOUNT);
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 3afdf339d53c9..81f45061c1b18 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -68,6 +68,7 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+ 				 FAN_MARK_ONLYDIR | \
+ 				 FAN_MARK_IGNORED_MASK | \
+ 				 FAN_MARK_IGNORED_SURV_MODIFY | \
++				 FAN_MARK_EVICTABLE | \
+ 				 FAN_MARK_FLUSH)
  
-@@ -148,3 +152,40 @@ u64 cc_mkdec(u64 val)
- 	}
- }
- EXPORT_SYMBOL_GPL(cc_mkdec);
-+
-+__init void cc_random_init(void)
-+{
-+	/*
-+	 * The seed is 32 bytes (in units of longs), which is 256 bits, which
-+	 * is the security level that the RNG is targeting.
-+	 */
-+	unsigned long rng_seed[32 / sizeof(long)];
-+	size_t i, longs;
-+
-+	if (!cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
-+		return;
-+
-+	/*
-+	 * Since the CoCo threat model includes the host, the only reliable
-+	 * source of entropy that can be neither observed nor manipulated is
-+	 * RDRAND. Usually, RDRAND failure is considered tolerable, but since
-+	 * CoCo guests have no other unobservable source of entropy, it's
-+	 * important to at least ensure the RNG gets some initial random seeds.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(rng_seed); i += longs) {
-+		longs = arch_get_random_longs(&rng_seed[i], ARRAY_SIZE(rng_seed) - i);
-+
-+		/*
-+		 * A zero return value means that the guest doesn't have RDRAND
-+		 * or the CPU is physically broken, and in both cases that
-+		 * means most crypto inside of the CoCo instance will be
-+		 * broken, defeating the purpose of CoCo in the first place. So
-+		 * just panic here because it's absolutely unsafe to continue
-+		 * executing.
-+		 */
-+		if (longs == 0)
-+			panic("RDRAND is defective.");
-+	}
-+	add_device_randomness(rng_seed, sizeof(rng_seed));
-+	memzero_explicit(rng_seed, sizeof(rng_seed));
-+}
---- a/arch/x86/include/asm/coco.h
-+++ b/arch/x86/include/asm/coco.h
-@@ -21,6 +21,7 @@ static inline void cc_set_mask(u64 mask)
- 
- u64 cc_mkenc(u64 val);
- u64 cc_mkdec(u64 val);
-+void cc_random_init(void);
- #else
- #define cc_vendor (CC_VENDOR_NONE)
- 
-@@ -33,6 +34,7 @@ static inline u64 cc_mkdec(u64 val)
- {
- 	return val;
- }
-+static inline void cc_random_init(void) { }
- #endif
- 
- #endif /* _ASM_X86_COCO_H */
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -35,6 +35,7 @@
- #include <asm/bios_ebda.h>
- #include <asm/bugs.h>
- #include <asm/cacheinfo.h>
-+#include <asm/coco.h>
- #include <asm/cpu.h>
- #include <asm/efi.h>
- #include <asm/gart.h>
-@@ -993,6 +994,7 @@ void __init setup_arch(char **cmdline_p)
- 	 * memory size.
- 	 */
- 	mem_encrypt_setup_arch();
-+	cc_random_init();
- 
- 	efi_fake_memmap();
- 	efi_find_mirror();
+ /*
+-- 
+2.43.0
+
 
 
